@@ -1,7 +1,15 @@
-# Contributing to CodeIgniter
+# Contributing to CodeIgniter4
 
 
-CodeIgniter is a community driven project and accepts contributions of code and documentation from the community. These contributions are made in the form of Issues or [Pull Requests](http://help.github.com/send-pull-requests/) on the [CodeIgniter repository](https://github.com/bcit-ci/CodeIgniter>) on GitHub.
+## Contributions (not)
+
+We are not accepting contributions from the public until a stable enough base has been formed, and our plans fleshed out and things settle down a little bit. 
+At that point, we will welcome your comments and help creating the best framework for our community.
+
+Once the repository is opened to the community, we expect all contributions to conform to our style guide, be commented (inside the PHP source files), 
+be documented (in the user guide), and unit tested (in the test folder).
+
+## Issues
 
 Issues are a quick way to point out a bug. If you find a bug or documentation error in CodeIgniter then please check a few things first:
 
@@ -20,8 +28,8 @@ for us to maintain quality of the code-base.
 
 ### PHP Style
 
-All code must meet the [Style Guide](http://codeigniter.com/user_guide/general/styleguide.html), which is
-essentially the [Allman indent style](http://en.wikipedia.org/wiki/Indent_style#Allman_style), underscores and readable operators. This makes certain that all code is the same format as the existing code and means it will be as readable as possible.
+All code must meet the Style Guide, which will be an early part of the User Guide. 
+This makes certain that all code is the same format as the existing code and means it will be as readable as possible.
 
 ### Documentation
 
@@ -29,14 +37,11 @@ If you change anything that requires a change to documentation then you will nee
 
 ### Compatibility
 
-CodeIgniter recommends PHP 5.4 or newer to be used, but it should be
-compatible with PHP 5.2.4 so all code supplied must stick to this
-requirement. If PHP 5.3 (and above) functions or features are used then
-there must be a fallback for PHP 5.2.4.
+CodeIgniter4 requires PHP 7.
 
 ### Branching
 
-CodeIgniter uses the [Git-Flow](http://nvie.com/posts/a-successful-git-branching-model/) branching model which requires all pull requests to be sent to the "develop" branch. This is
+CodeIgniter4 uses the [Git-Flow](http://nvie.com/posts/a-successful-git-branching-model/) branching model which requires all pull requests to be sent to the "develop" branch. This is
 where the next planned version will be developed. The "master" branch will always contain the latest stable version and is kept clean so a "hotfix" (e.g: an emergency security patch) can be applied to master to create a new version, without worrying about other features holding it up. For this reason all commits need to be made to "develop" and any sent to "master" will be closed automatically. If you have multiple changes to submit, please place all changes into their own branch on your fork.
 
 One thing at a time: A pull request should only contain one change. That does not mean only one commit, but one change - however many commits it took. The reason for this is that if you change X and Y but send a pull request for both at the same time, we might really want X but disagree with Y, meaning we cannot merge the request. Using the Git-Flow branching model you can create new branches for both of these features and send two requests.
