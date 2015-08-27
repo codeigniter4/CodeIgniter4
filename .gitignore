@@ -88,3 +88,4 @@ nb-configuration.xml
 *.stTheme.cache
 *.sublime-workspace
 *.sublime-project
+/nbproject/
