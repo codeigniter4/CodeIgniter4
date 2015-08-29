@@ -61,3 +61,22 @@ if ( ! function_exists('get_config'))
 }
 
 //--------------------------------------------------------------------
+
+if (! function_exists('DI'))
+{
+	/**
+	 * A convenience method for getting the current instance
+	 * of the dependency injection container.
+	 *
+	 * @return \CodeIgniter\DI\DI instance
+	 */
+	function DI()
+	{
+		static $instance =& \CodeIgniter\DI\DI::getInstance();
+
+		return $instance;
+	}
+}
+
+//--------------------------------------------------------------------
+
