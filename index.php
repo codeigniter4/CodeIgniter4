@@ -40,7 +40,7 @@ switch (ENVIRONMENT)
 		break;
 
 	default:
-		header('HTTP/1.1 503 Service Unavailable.', TRUE, 503);
+		header('HTTP/1.1 503 Service Unavailable.', true, 503);
 		echo 'The application environment is not set correctly.';
 		exit(1); // EXIT_ERROR
 }
@@ -84,7 +84,6 @@ $application_folder = 'application';
  */
 $writable_directory = 'writable';
 
-
 // --------------------------------------------------------------------
 // END OF USER CONFIGURABLE SETTINGS.  DO NOT EDIT BELOW THIS LINE
 // --------------------------------------------------------------------
@@ -101,7 +100,7 @@ if (defined('STDIN'))
 	chdir(dirname(__FILE__));
 }
 
-if (($_temp = realpath($system_path)) !== FALSE)
+if (($_temp = realpath($system_path)) !== false)
 {
 	$system_path = $_temp.'/';
 }
@@ -114,8 +113,9 @@ else
 // Is the system path correct?
 if ( ! is_dir($system_path))
 {
-	header('HTTP/1.1 503 Service Unavailable.', TRUE, 503);
-	echo 'Your system folder path does not appear to be set correctly. Please open the following file and correct this: '.pathinfo(__FILE__, PATHINFO_BASENAME);
+	header('HTTP/1.1 503 Service Unavailable.', true, 503);
+	echo 'Your system folder path does not appear to be set correctly. Please open the following file and correct this: '.
+	     pathinfo(__FILE__, PATHINFO_BASENAME);
 	exit(3); // EXIT_CONFIG
 }
 
@@ -134,7 +134,7 @@ define('BASEPATH', str_replace('\\', '/', $system_path));
 define('FCPATH', dirname(__FILE__).'/');
 
 // Path to the writable directory.
-define('WRITEPATH', realpath(str_replace('\\', '/', $writable_directory)) .'/');
+define('WRITEPATH', realpath(str_replace('\\', '/', $writable_directory)).'/');
 
 // Name of the "system folder"
 define('SYSDIR', trim(strrchr(trim(BASEPATH, '/'), '/'), '/'));
@@ -142,7 +142,7 @@ define('SYSDIR', trim(strrchr(trim(BASEPATH, '/'), '/'), '/'));
 // The path to the "application" folder
 if (is_dir($application_folder))
 {
-	if (($_temp = realpath($application_folder)) !== FALSE)
+	if (($_temp = realpath($application_folder)) !== false)
 	{
 		$application_folder = $_temp;
 	}
@@ -153,8 +153,9 @@ else
 {
 	if ( ! is_dir(BASEPATH.$application_folder.DIRECTORY_SEPARATOR))
 	{
-		header('HTTP/1.1 503 Service Unavailable.', TRUE, 503);
-		echo 'Your application folder path does not appear to be set correctly. Please open the following file and correct this: '.SELF;
+		header('HTTP/1.1 503 Service Unavailable.', true, 503);
+		echo 'Your application folder path does not appear to be set correctly. Please open the following file and correct this: '.
+		     SELF;
 		exit(3); // EXIT_CONFIG
 	}
 
