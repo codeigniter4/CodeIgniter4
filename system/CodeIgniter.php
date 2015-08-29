@@ -45,7 +45,7 @@ require_once BASEPATH.'Common.php';
 
 require_once BASEPATH.'Autoloader/Autoloader.php';
 
-$loader = new \CodeIgniter\Autoloader\Autoloader( get_config('autoload') );
+$loader = new \CodeIgniter\Autoloader\Autoloader(get_config('autoload'));
 $loader->register();
 
 //--------------------------------------------------------------------
