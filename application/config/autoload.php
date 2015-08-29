@@ -31,7 +31,7 @@
  */
 $config['psr4'] = [
 	'App'         => realpath(APPPATH),
-	'CodeIgniter' => realpath(SYSPATH),
+	'CodeIgniter' => realpath(BASEPATH),
 ];
 
 /**
