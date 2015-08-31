@@ -72,9 +72,7 @@ if (! function_exists('DI'))
 	 */
 	function DI()
 	{
-		static $instance =& \CodeIgniter\DI\DI::getInstance();
-
-		return $instance;
+		return \CodeIgniter\DI\DI::getInstance();
 	}
 }
 
