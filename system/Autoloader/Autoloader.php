@@ -107,6 +107,9 @@ class Autoloader
 	 */
 	public function loadClass($class)
 	{
+		$class = trim($class, '\\');
+		$class = str_ireplace('.php', '', $class);
+
 		// Try loading through class map
 		$mapped_file = $this->loadFromClassmap($class);
 
@@ -136,14 +139,7 @@ class Autoloader
 			return false;
 		}
 
-		if ( ! file_exists($this->classmap[$class]))
-		{
-			return false;
-		}
-
-		require $this->classmap[$class];
-
-		return $this->classmap[$class];
+		return $this->requireFile($this->classmap[$class]);
 	}
 
 	//--------------------------------------------------------------------
@@ -200,6 +196,8 @@ class Autoloader
 	 */
 	protected function loadMappedFile($prefix, $relative_class)
 	{
+		$prefix = rtrim($prefix, '\\');
+
 		// are there any base directories for this namespace prefix?
 		if ( ! isset($this->prefixes[$prefix]))
 		{
@@ -207,9 +205,21 @@ class Autoloader
 		}
 
 		// look through base directories for this namespace prefix
-		$file = $this->prefixes[$prefix].str_replace('\\', '/', $relative_class).'.php';
+		$file = $this->prefixes[$prefix].'/'.str_replace('\\', '/', $relative_class).'.php';
 
-		// if the mapped file exists, grab it
+		return $this->requireFile($file);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * A central way to require a file is loaded. Split out primarily
+	 * for testing purposes.
+	 *
+	 * @param $file
+	 */
+	protected function requireFile($file)
+	{
 		if (file_exists($file))
 		{
 			require $file;
