@@ -5,7 +5,7 @@ Modern PHP applications are full of objects. One object might handle communicati
 The DI object actually handles two main purposes. It is a combination of a Dependency Injection container and Service Locater. These terms both have lots of confusion surrounding them. Taking a little bit of time to understand how this container works will allow you a great measure of freedom and power in your applications.
 
 ## What Is Dependency Injection
-The concept behind this is simple: it's providing a class' dependency to it through the constructor or through a setter method. 
+The concept behind this is simple: it's providing a class' dependency to it through the constructor or through one of a few other patterns. 
 
 	class Mailer {
 	
@@ -24,6 +24,8 @@ In this example, the Mailer class allows you to send out emails. It contains all
 In plain PHP, this can be handled quite easily for this example. 
 
 	$mailer = new Mailer ( new SMTPMailService() );
+
+The DI container in CodeIgniter, only supports constructor injection, and not any of the other types of injection like setter injection, interface injection, etc.
 
 ## Why Use A DI Container?
 
@@ -80,7 +82,9 @@ When you create your own classes that you expect to be used with the container, 
 		}
 	}
 
-For each parameter we do two things. First, we specify what type of class this parameter must be. This lets the interpreter find any errors for us as fast as possible when the script is ran, and ensures we get what we need. In this case, we are saying that the classes must implement the specified interfaces. This ensures we get the API we need, but doesn't limit us to any single implementation of that class. The second thing is that we name the parameter exactly the same as the service is aliased in the container. The name of the mail service, `$mail_service`, exactly matches the alias `mail_service` in the services configuration file. That is how the DI container can determine which class it should create.
+For each parameter we do two things. First, we specify what type of class this parameter must be. This lets the interpreter find any errors for us as fast as possible when the script is ran, and ensures we get what we need. In this case, we are saying that the classes must implement the specified interfaces. This ensures we get the API we need, but doesn't limit us to any single implementation of that class. 
+
+The second thing to notice is that we name the parameter exactly the same as the service is aliased in the container. The name of the mail service, `$mail_service`, exactly matches the alias `mail_service` in the services configuration file. That is how the DI container can determine which class it should create.
 
 ## Overriding Core Classes
 
@@ -94,7 +98,7 @@ Imagine that you created a new TemplateParser library that provides much more fu
 	// To this
 	'parser' => 'App\Libraries\Parser'
 
-While this example is unlikely to affect the way the core classes work, this same method can be used to replace the Router or the FormValidation library. 
+While this example is unlikely to affect the way the core classes work, this same method can be used to replace the Router or FormValidation libraries, or any other core classes.
 
 ## Class Reuse Through the DI
 
@@ -171,5 +175,5 @@ While the container is very powerful and very flexible, it should not be used wi
 
 **Never use the container when you won't use multiple types of a class.** If you are only ever going to have one type of Themer in your application, using the DI container is unnecessary and a waste of performance and memory, not to mention making things more difficult to read and understand. If, however, different parts of your application might use completely different themers, then the container is a good solution. This might happen if you are adding new areas to an existing application, and the company has decided to migrate to a different theme engine. 
 
-**Never pass the container into a class as a dependency.** The container is designed to help you manage your classes and dependencies. It should not *become* a dependency of any of your classes. Typically, you will only use the container within your controllers. Libraries, models, and other uses for classes should have their dependencies passed into them. They shouldn't call the DI from within the class themselves. That leads defeats the purpose of dependency injection altogether and simply moves the location of the dependency. This also would cause you to implement the Service Locater anti-pattern. While Service Locater's are a fine part of a framework, they are considered a problem when passed into classes or used as an internal dependency.
+**Never pass the container into a class as a dependency.** The container is designed to help you manage your classes and dependencies. It should not *become* a dependency of any of your classes. Typically, you will only use the container within your controllers. Libraries, models, and other uses for classes should have their dependencies passed into them. They shouldn't call the DI from within the class themselves. That defeats the purpose of dependency injection altogether and simply moves the location of the dependency. This also would cause you to implement the Service Locater anti-pattern. While Service Locater's are a fine part of a framework, they are considered a problem when passed into classes or used as an internal dependency.
 	
