@@ -33,7 +33,7 @@ class Timer
 	 */
 	public function start($name)
 	{
-		$this->timers[strtolower($name)][] = [
+		$this->timers[strtolower($name)] = [
 			'start' => microtime(true),
 			'end'   => null,
 		];
@@ -89,7 +89,7 @@ class Timer
 			$timer['end'] = microtime(true);
 		}
 
-		return number_format($timer['start'] - $timer['start'], $decimals);
+		return (float)number_format($timer['end'] - $timer['start'], $decimals);
 	}
 
 	//--------------------------------------------------------------------
@@ -112,7 +112,7 @@ class Timer
 				$timer['end'] = microtime(true);
 			}
 
-			$timer['duration'] = number_format($timer['end'] - $timer['start'], $decimals);
+			$timer['duration'] = (float)number_format($timer['end'] - $timer['start'], $decimals);
 		}
 
 		return $timers;
