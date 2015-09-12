@@ -23,6 +23,23 @@ class MockAutoloaderClass extends \CodeIgniter\Autoloader\Autoloader
 
 	//--------------------------------------------------------------------
 
+	public function addClass($class, $path)
+	{
+	    $this->files[] = $path;
+
+		return parent::addClass($class, $path);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function removeClass($class)
+	{
+
+	}
+
+	//--------------------------------------------------------------------
+
+
 }
 
 //--------------------------------------------------------------------
@@ -54,6 +71,7 @@ class AutoloaderTest extends \PHPUnit_Framework_TestCase
 			'/application/somewhere/Classname.php',
 			'/app/dir/First.php',
 			'/app/namespace/Class.php',
+		    '/my/app/Class.php'
 		]);
 	}
 
@@ -105,9 +123,6 @@ class AutoloaderTest extends \PHPUnit_Framework_TestCase
 	// Classmaps
 	//--------------------------------------------------------------------
 
-	/**
-	 * @group single
-	 */
 	public function testExistingClassmapFile()
 	{
 		$actual   = $this->loader->loadClass('FirstClass');
@@ -117,9 +132,6 @@ class AutoloaderTest extends \PHPUnit_Framework_TestCase
 
 	//--------------------------------------------------------------------
 
-	/**
-	 * @group single
-	 */
 	public function testExistingClassmapFileWithNamespace()
 	{
 		$actual   = $this->loader->loadClass('Name\Spaced\Class');
@@ -130,4 +142,32 @@ class AutoloaderTest extends \PHPUnit_Framework_TestCase
 
 	//--------------------------------------------------------------------
 
+	public function testAddClassWorks()
+	{
+		$this->loader->addClass('myClass', '/path/to/class.php');
+
+	    $actual = $this->loader->loadClass('myClass');
+		$expected = '/path/to/class.php';
+
+		$this->assertSame($expected, $actual);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * @group single
+	 */
+	public function testAddNamespaceWorks()
+	{
+		$this->assertFalse($this->loader->loadClass('My\App\Class'));
+
+		$this->loader->addNamespace('My\App', '/my/app');
+
+		$actual = $this->loader->loadClass('My\App\Class');
+		$expected = '/my/app/Class.php';
+
+		$this->assertSame($expected, $actual);
+	}
+
+	//--------------------------------------------------------------------
 }
