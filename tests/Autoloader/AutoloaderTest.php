@@ -2,6 +2,8 @@
 
 require_once "system/Autoloader/Autoloader.php";
 
+define('APPPATH', 'application/');
+
 class MockAutoloaderClass extends \CodeIgniter\Autoloader\Autoloader
 {
 
@@ -71,7 +73,9 @@ class AutoloaderTest extends \PHPUnit_Framework_TestCase
 			'/application/somewhere/Classname.php',
 			'/app/dir/First.php',
 			'/app/namespace/Class.php',
-		    '/my/app/Class.php'
+		    '/my/app/Class.php',
+		    'application/libraries/someLibrary.php',
+		    'application/models/someModel.php',
 		]);
 	}
 
@@ -154,9 +158,6 @@ class AutoloaderTest extends \PHPUnit_Framework_TestCase
 
 	//--------------------------------------------------------------------
 
-	/**
-	 * @group single
-	 */
 	public function testAddNamespaceWorks()
 	{
 		$this->assertFalse($this->loader->loadClass('My\App\Class'));
@@ -170,4 +171,15 @@ class AutoloaderTest extends \PHPUnit_Framework_TestCase
 	}
 
 	//--------------------------------------------------------------------
+
+	public function testLoadLegacy()
+	{
+	    $this->assertFalse((bool)$this->loader->loadClass('someLibraries'));
+	    $this->assertTrue((bool)$this->loader->loadClass('someLibrary'));
+	    $this->assertTrue((bool)$this->loader->loadClass('someModel'));
+	}
+
+	//--------------------------------------------------------------------
+
+
 }

@@ -107,7 +107,7 @@ class Autoloader
 	 */
 	public function addClass($class, $path)
 	{
-	    $this->classmap[$class] = $path;
+		$this->classmap[$class] = $path;
 
 		return $this;
 	}
@@ -123,7 +123,7 @@ class Autoloader
 	 */
 	public function removeClass($class)
 	{
-	    unset($this->classmap[$class]);
+		unset($this->classmap[$class]);
 
 		return $this;
 	}
@@ -140,7 +140,7 @@ class Autoloader
 	 */
 	public function addNamespace($namespace, $path)
 	{
-	    $this->prefixes[$namespace] = $path;
+		$this->prefixes[$namespace] = $path;
 
 		return $this;
 	}
@@ -156,13 +156,12 @@ class Autoloader
 	 */
 	public function removeNamespace($namespace)
 	{
-	    unset($this->prefixes[$namespace]);
+		unset($this->prefixes[$namespace]);
 
 		return $this;
 	}
 
 	//--------------------------------------------------------------------
-
 
 	/**
 	 * Loads the class file for a given class name.
@@ -184,6 +183,13 @@ class Autoloader
 		if ( ! $mapped_file)
 		{
 			$mapped_file = $this->loadInNamespace($class);
+		}
+
+		// Still nothing? One last chance by looking
+		// in common CodeIgniter folders.
+		if ( ! $mapped_file)
+		{
+			$mapped_file = $this->loadLegacy($class);
 		}
 
 		return $mapped_file;
@@ -280,10 +286,50 @@ class Autoloader
 	//--------------------------------------------------------------------
 
 	/**
+	 * Attempts to load the class from common locations in previous
+	 * version of CodeIgniter, namely 'application/libraries', and
+	 * 'application/models'.
+	 *
+	 * @param $class    The class name. This typically should NOT have a namespace.
+	 *
+	 * @return mixed    The mapped file name on success, or boolean false on failure
+	 */
+	protected function loadLegacy($class)
+	{
+		// If there is a namespace on this class, then
+		// we cannot load it from traditional locations.
+		if (strpos('\\', $class) !== false)
+		{
+			return false;
+		}
+
+		$paths = [
+			APPPATH.'libraries/',
+			APPPATH.'models/',
+		];
+
+		$class = str_replace('\\', '/', $class).'.php';
+
+		foreach ($paths as $path)
+		{
+			if ($file = $this->requireFile($path.$class))
+			{
+				return $file;
+			}
+		}
+
+		return false;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * A central way to require a file is loaded. Split out primarily
 	 * for testing purposes.
 	 *
 	 * @param $file
+	 *
+	 * @return bool
 	 */
 	protected function requireFile($file)
 	{
