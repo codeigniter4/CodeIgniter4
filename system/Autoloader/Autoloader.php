@@ -92,7 +92,8 @@ class Autoloader
 	 */
 	public function register()
 	{
-		spl_autoload_register([$this, 'loadClass']);
+		// Prepend our autoloader for maximum performance.
+		spl_autoload_register([$this, 'loadClass'], true, true);
 	}
 
 	//--------------------------------------------------------------------
