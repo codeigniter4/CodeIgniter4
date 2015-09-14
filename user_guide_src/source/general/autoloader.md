@@ -26,15 +26,10 @@ The key of each row is the namespace itself. This does not need a trailing slash
 The classmap is used extensively by CodeIgniter to eek the last ounces of performance out of the system by not hitting the file-system with extra `file_exists()` calls. You can use the classmap to link to third-party libraries that are not namespaced. 
 
 	$config['classmap'] = [
-		'Markdown' => APPPATH .'third_party/mardown.php'
+		'Markdown' => APPPATH .'third_party/markdown.php'
 	];
 
 The key of each row is the name of the class that you want to locate. The value is the path to locate it at.
-
-You can manage additional classes at runtime with the `addClass()` and `removeClass()` methods. 
-
-	$loader->addClass('Markdown', APPPATH .'third_party/mardown.php');
-	$loader->removeClass('Markdown');
 
 ### Legacy Support
 If neither of the above methods find the class, and the class is not namespace, the autoloader will look in the `/application/libraries` and `/application/models` directories to attempt to locate the files. This provides a measure to help ease the transition from previous versions. 

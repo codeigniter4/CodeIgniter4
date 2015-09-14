@@ -25,22 +25,6 @@ class MockAutoloaderClass extends \CodeIgniter\Autoloader\Autoloader
 
 	//--------------------------------------------------------------------
 
-	public function addClass($class, $path)
-	{
-	    $this->files[] = $path;
-
-		return parent::addClass($class, $path);
-	}
-
-	//--------------------------------------------------------------------
-
-	public function removeClass($class)
-	{
-
-	}
-
-	//--------------------------------------------------------------------
-
 
 }
 
@@ -140,18 +124,6 @@ class AutoloaderTest extends \PHPUnit_Framework_TestCase
 	{
 		$actual   = $this->loader->loadClass('Name\Spaced\Class');
 		$expected = '/app/namespace/Class.php';
-
-		$this->assertSame($expected, $actual);
-	}
-
-	//--------------------------------------------------------------------
-
-	public function testAddClassWorks()
-	{
-		$this->loader->addClass('myClass', '/path/to/class.php');
-
-	    $actual = $this->loader->loadClass('myClass');
-		$expected = '/path/to/class.php';
 
 		$this->assertSame($expected, $actual);
 	}

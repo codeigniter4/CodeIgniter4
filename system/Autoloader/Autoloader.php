@@ -106,39 +106,6 @@ class Autoloader
 	//--------------------------------------------------------------------
 
 	/**
-	 * Adds a new item to the class map.
-	 *
-	 * @param $class
-	 * @param $path
-	 *
-	 * @return $this
-	 */
-	public function addClass($class, $path)
-	{
-		$this->classmap[$class] = $path;
-
-		return $this;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Removes an entry from the classmap.
-	 *
-	 * @param $class
-	 *
-	 * @return $this
-	 */
-	public function removeClass($class)
-	{
-		unset($this->classmap[$class]);
-
-		return $this;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
 	 * Registers a namespace with the autoloader.
 	 *
 	 * @param $namespace
