@@ -39,13 +39,30 @@ require_once BASEPATH.'Common.php';
 
 /*
  * ------------------------------------------------------
+ *  Get the DI Container ready for use
+ * ------------------------------------------------------
+ */
+
+require_once BASEPATH.'DI/DI.php';
+
+// This is the only time that services array will need
+// to be passed into the class. All other uses can
+// simply call getInstance().
+$di = CodeIgniter\DI\DI::getInstance(get_config('services'));
+
+/*
+ * ------------------------------------------------------
  *  Setup the autoloader
  * ------------------------------------------------------
  */
 
+// The autloader isn't initialized yet, so load the file manually.
 require_once BASEPATH.'Autoloader/Autoloader.php';
 
-$loader = new \CodeIgniter\Autoloader\Autoloader(get_config('autoload'));
+$loader = $di->single('autoloader');
+$loader->initialize(get_config('autoload'));
+
+// Assign us to the SPL autoload stack
 $loader->register();
 
 //--------------------------------------------------------------------

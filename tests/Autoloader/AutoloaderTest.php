@@ -50,7 +50,8 @@ class AutoloaderTest extends \PHPUnit_Framework_TestCase
 			],
 		];
 
-		$this->loader = new MockAutoloaderClass($config);
+		$this->loader = new MockAutoloaderClass();
+		$this->loader->initialize($config);
 
 		$this->loader->setFiles([
 			'/application/controllers/Classname.php',

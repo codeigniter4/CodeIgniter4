@@ -23,9 +23,9 @@ if ( ! function_exists('get_config'))
 	 */
 	function &get_config($file)
 	{
-		static $config;
+		$config = [];
 
-		if (empty($config))
+		if (empty($config[$file]))
 		{
 			$file_path = APPPATH.'config/'.$file.'.php';
 			$found     = false;

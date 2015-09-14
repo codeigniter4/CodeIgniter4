@@ -63,7 +63,7 @@ class Autoloader
 	 *
 	 * @param $config
 	 */
-	public function __construct($config)
+	public function initialize($config)
 	{
 		// We have to have one or the other, though we don't enforce the need
 		// to have both present in order to work.
@@ -86,6 +86,8 @@ class Autoloader
 	}
 
 	//--------------------------------------------------------------------
+
+
 
 	/**
 	 * Register the loader with the SPL autoloader stack.
