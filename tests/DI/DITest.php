@@ -9,8 +9,10 @@ use \CodeIgniter\DI\DI;
 class DITest extends PHPUnit_Framework_TestCase {
 
     protected $config = [
-        'simple' => '\Tests\Support\SimpleClass',
-        'depend' => '\Tests\Support\DependingClass',
+        'services' => [
+            'simple' => '\Tests\Support\SimpleClass',
+            'depend' => '\Tests\Support\DependingClass',
+        ]
     ];
 
     //--------------------------------------------------------------------
@@ -30,7 +32,7 @@ class DITest extends PHPUnit_Framework_TestCase {
     {
         $di = DI::getInstance( $this->config );
 
-        $this->assertInstanceOf($this->config['simple'], $di->make('simple'));
+        $this->assertInstanceOf($this->config['services']['simple'], $di->make('simple'));
     }
 
     //--------------------------------------------------------------------
@@ -55,8 +57,8 @@ class DITest extends PHPUnit_Framework_TestCase {
         $second = $di->single('simple');
 
         $this->assertTrue($first === $second);
-        $this->assertInstanceOf($this->config['simple'], $first);
-        $this->assertInstanceOf($this->config['simple'], $second);
+        $this->assertInstanceOf($this->config['services']['simple'], $first);
+        $this->assertInstanceOf($this->config['services']['simple'], $second);
     }
 
     //--------------------------------------------------------------------
@@ -67,7 +69,7 @@ class DITest extends PHPUnit_Framework_TestCase {
 
         $depends = $di->make('depend');
 
-        $this->assertInstanceOf($this->config['simple'], $depends->child);
+        $this->assertInstanceOf($this->config['services']['simple'], $depends->child);
     }
 
     //--------------------------------------------------------------------
@@ -80,8 +82,8 @@ class DITest extends PHPUnit_Framework_TestCase {
         $depends = $di->make('depend', true);
 
         $this->assertTrue($simple === $depends->child);
-        $this->assertInstanceOf($this->config['simple'], $simple);
-        $this->assertInstanceOf($this->config['simple'], $depends->child);
+        $this->assertInstanceOf($this->config['services']['simple'], $simple);
+        $this->assertInstanceOf($this->config['services']['simple'], $depends->child);
     }
 
     //--------------------------------------------------------------------
@@ -94,8 +96,8 @@ class DITest extends PHPUnit_Framework_TestCase {
         $depends = $di->make('depend');
 
         $this->assertFalse($simple === $depends->child);
-        $this->assertInstanceOf($this->config['simple'], $simple);
-        $this->assertInstanceOf($this->config['simple'], $depends->child);
+        $this->assertInstanceOf($this->config['services']['simple'], $simple);
+        $this->assertInstanceOf($this->config['services']['simple'], $depends->child);
     }
 
     //--------------------------------------------------------------------
@@ -110,8 +112,8 @@ class DITest extends PHPUnit_Framework_TestCase {
         $another = $di->make('another');
 
         $this->assertTrue($simple === $another);
-        $this->assertInstanceOf($this->config['simple'], $simple);
-        $this->assertInstanceOf($this->config['simple'], $another);
+        $this->assertInstanceOf($this->config['services']['simple'], $simple);
+        $this->assertInstanceOf($this->config['services']['simple'], $another);
     }
 
     //--------------------------------------------------------------------

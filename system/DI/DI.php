@@ -76,7 +76,12 @@ class DI
 	 */
 	private function __construct(array $config = [])
 	{
-		$this->services = $config;
+		if (empty($config['services']))
+		{
+			throw new \InvalidArgumentException('The services configuration file does not contain a valid services array.');
+		}
+
+		$this->services = $config['services'];
 	}
 
 	//--------------------------------------------------------------------
@@ -416,7 +421,7 @@ class DI
 				$params[] = $single ? $this->single($alias) : $this->make($alias);
 				continue;
 			}
-
+var_dump($param);
 			// Is this a normal class we can give them?
 			$class = $param->getClass()->name;
 
