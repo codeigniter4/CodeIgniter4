@@ -92,6 +92,13 @@ class Autoloader
 	 */
 	public function register()
 	{
+		// Since the default file extensions are searched
+		// in order of .inc then .php, but we always use .php,
+		// put the .php extension first to eek out a bit
+		// better performance.
+		// http://php.net/manual/en/function.spl-autoload.php#78053
+		spl_autoload_extensions('.php,.inc');
+
 		// Prepend our autoloader for maximum performance.
 		spl_autoload_register([$this, 'loadClass'], true, true);
 	}
