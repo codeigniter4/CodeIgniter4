@@ -81,4 +81,4 @@ $benchmark->start('total_execution');
 
 echo '<h1>Hello CodeIgniter</h1>';
 
-echo $benchmark->elapsedTime('total_execution', 6);
+echo $benchmark->elapsedTime('total_execution');

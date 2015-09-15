@@ -34,7 +34,7 @@ class Iterator
 	{
 		$name = strtolower($name);
 
-		$tests[$name] = $closure;
+		$this->tests[$name] = $closure;
 
 		return $this;
 	}
@@ -48,7 +48,7 @@ class Iterator
 	 *
 	 * @param int $iterations
 	 */
-	public function run($iterations = 1000)
+	public function run($iterations = 1000, $output=true)
 	{
 		foreach ($this->tests as $name => $test)
 		{
@@ -73,8 +73,53 @@ class Iterator
 				'n'      => $iterations,
 			];
 		}
+
+		if ($output)
+		{
+			return $this->report();
+		}
 	}
 
 	//--------------------------------------------------------------------
+
+	public function report()
+	{
+		if (empty($this->results))
+		{
+			return 'No results to display.';
+		}
+
+		// Template
+		$tpl = "<table>
+			<thead>
+				<tr>
+					<td>Test</td>
+					<td>Time</td>
+					<td>Memory</td>
+				</tr>
+			</thead>
+			<tbody>
+				{rows}
+			</tbody>
+		</table>";
+
+		$rows = "";
+
+		foreach ($this->results as $name => $result)
+		{
+			$rows .= "<tr>
+				<td>{$name}</td>
+				<td>".number_format($result['time'], 4)."</td>
+				<td>{$result['memory']}</td>
+			</tr>";
+		}
+
+		$tpl = str_replace('{rows}', $rows, $tpl);
+
+		return $tpl ."<br/>";
+	}
+
+	//--------------------------------------------------------------------
+
 
 }
