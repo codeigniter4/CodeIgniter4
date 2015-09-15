@@ -59,14 +59,26 @@ $di = CodeIgniter\DI\DI::getInstance(get_config('services'));
 // The autloader isn't initialized yet, so load the file manually.
 require_once BASEPATH.'Autoloader/Autoloader.php';
 
+// The Autoloader class only handles namespaces
+// and "legacy" support.
 $loader = $di->single('autoloader');
 $loader->initialize(get_config('autoload'));
 
-// Assign us to the SPL autoload stack
+// The register function will prepend
+// the psr4 loader.
 $loader->register();
+
+//--------------------------------------------------------------------
+// Start the Benchmark
+//--------------------------------------------------------------------
+
+$benchmark = new CodeIgniter\Benchmark\Timer();
+$benchmark->start('total_execution');
 
 //--------------------------------------------------------------------
 // TEMPORARY - SAY HI!
 //--------------------------------------------------------------------
 
-die('<h1>Hello CodeIgniter</h1>');
+echo '<h1>Hello CodeIgniter</h1>';
+
+echo $benchmark->elapsedTime('total_execution', 6);

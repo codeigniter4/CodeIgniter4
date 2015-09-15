@@ -109,27 +109,6 @@ class AutoloaderTest extends \PHPUnit_Framework_TestCase
 	//--------------------------------------------------------------------
 
 	//--------------------------------------------------------------------
-	// Classmaps
-	//--------------------------------------------------------------------
-
-	public function testExistingClassmapFile()
-	{
-		$actual   = $this->loader->loadClass('FirstClass');
-		$expected = '/app/dir/First.php';
-		$this->assertSame($expected, $actual);
-	}
-
-	//--------------------------------------------------------------------
-
-	public function testExistingClassmapFileWithNamespace()
-	{
-		$actual   = $this->loader->loadClass('Name\Spaced\Class');
-		$expected = '/app/namespace/Class.php';
-
-		$this->assertSame($expected, $actual);
-	}
-
-	//--------------------------------------------------------------------
 
 	public function testAddNamespaceWorks()
 	{

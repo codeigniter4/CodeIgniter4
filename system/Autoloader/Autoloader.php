@@ -101,8 +101,29 @@ class Autoloader
 		// http://php.net/manual/en/function.spl-autoload.php#78053
 		spl_autoload_extensions('.php,.inc');
 
-		// Prepend our autoloader for maximum performance.
+		// Prepend the PSR4  autoloader for maximum performance.
 		spl_autoload_register([$this, 'loadClass'], true, true);
+
+		// Now prepend another loader for the files in our class map.
+		$config = is_array($this->classmap) ? $this->classmap : [];
+
+		spl_autoload_register(function($class) use ($config)
+		{
+			if (! array_key_exists($class, $config))
+			{
+				return false;
+			}
+
+			if (! file_exists($config[$class]))
+			{
+				return false;
+			}
+
+			include $config[$class];
+		},
+			true,   // Throw exception
+			true    // Prepend
+		);
 	}
 
 	//--------------------------------------------------------------------
@@ -153,16 +174,9 @@ class Autoloader
 		$class = trim($class, '\\');
 		$class = str_ireplace('.php', '', $class);
 
-		// Try loading through class map
-		$mapped_file = $this->loadFromClassmap($class);
+		$mapped_file = $this->loadInNamespace($class);
 
-		// Nothing? Then try PSR4.
-		if ( ! $mapped_file)
-		{
-			$mapped_file = $this->loadInNamespace($class);
-		}
-
-		// Still nothing? One last chance by looking
+		// Nothing? One last chance by looking
 		// in common CodeIgniter folders.
 		if ( ! $mapped_file)
 		{
@@ -170,26 +184,6 @@ class Autoloader
 		}
 
 		return $mapped_file;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Attempts to locate the file as one in our classmap and loads it
-	 * if possible.
-	 *
-	 * @param string $class The fully-qualified class name
-	 *
-	 * @return mixed        The mapped file name on success, or boolean false on failure
-	 */
-	protected function loadFromClassmap($class)
-	{
-		if ( ! array_key_exists($class, $this->classmap))
-		{
-			return false;
-		}
-
-		return $this->requireFile($this->classmap[$class]);
 	}
 
 	//--------------------------------------------------------------------

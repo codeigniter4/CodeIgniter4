@@ -50,4 +50,6 @@ $config['psr4'] = [
  *       'MyClass'   => '/path/to/class/file.php'
  *   ];
  */
-$config['classmap'] = [];
+$config['classmap'] = [
+	'CodeIgniter\Benchmark\Timer' => BASEPATH.'Benchmark/Timer.php'
+];
