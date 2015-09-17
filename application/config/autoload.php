@@ -51,5 +51,6 @@ $config['psr4'] = [
  *   ];
  */
 $config['classmap'] = [
-	'CodeIgniter\Benchmark\Timer' => BASEPATH.'Benchmark/Timer.php'
+	'CodeIgniter\Benchmark\Timer'    => BASEPATH.'Benchmark/Timer.php',
+	'CodeIgniter\Benchmark\Iterator' => BASEPATH.'Benchmark/Iterator.php',
 ];
