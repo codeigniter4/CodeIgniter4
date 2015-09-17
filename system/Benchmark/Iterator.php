@@ -47,6 +47,8 @@ class Iterator
 	 * memory usage used during those iterations.
 	 *
 	 * @param int $iterations
+	 *
+	 * @return string
 	 */
 	public function run($iterations = 1000, $output=true)
 	{
