@@ -27,7 +27,9 @@ $config['services'] = [
 	// The core CodeIgniter files
 	'autoloader' => '\CodeIgniter\Autoloader\Autoloader',
 	'bmtimer'    => '\CodeIgniter\Benchmark\Timer',
-	'bmiterator' => '\CodeIgniter\Benchmark\Iterator'
+	'bmiterator' => '\CodeIgniter\Benchmark\Iterator',
+    'router'     => '\CodeIgniter\Router\Router',
+    'routes'     => '\CodeIgniter\Router\RouteCollection'
 
 	// Your custom files can be added here.
 ];

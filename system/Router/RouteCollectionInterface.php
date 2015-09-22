@@ -12,17 +12,19 @@
  *
  * @package CodeIgniter\Router
  */
-interface RouteCollectionInterface {
+interface RouteCollectionInterface
+{
 
 	/**
 	 * Adds a single route to the collection.
 	 *
 	 * @param       $route
 	 * @param       $map
+	 * @param       $method
 	 *
 	 * @return mixed
 	 */
-	public function add($route, $map);
+	public function add($route, $map, $method = 'get');
 
 	//--------------------------------------------------------------------
 
@@ -35,7 +37,7 @@ interface RouteCollectionInterface {
 	 *
 	 * @return mixed
 	 */
-	public function map(array $routes=null);
+	public function map(array $routes = null);
 
 	//--------------------------------------------------------------------
 
@@ -49,7 +51,7 @@ interface RouteCollectionInterface {
 	 *
 	 * @return mixed
 	 */
-	public function addConstraint($name, $pattern);
+	public function addPlaceholder($name, $pattern);
 
 	//--------------------------------------------------------------------
 
@@ -86,6 +88,15 @@ interface RouteCollectionInterface {
 	 * @return mixed
 	 */
 	public function setDefaultMethod($value);
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns the raw array of available routes.
+	 *
+	 * @return mixed
+	 */
+	public function routes();
 
 	//--------------------------------------------------------------------
 
