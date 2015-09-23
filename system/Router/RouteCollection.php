@@ -172,7 +172,7 @@ class RouteCollection implements RouteCollectionInterface
 
 		// If a hostname is provided as an option,
 		// then don't waste time if our hostname doesn't match.
-		if (! empty($options['hostname']) && strtolower($current_host) != strtolower($options['hostname']))
+		if ( ! empty($options['hostname']) && strtolower($current_host) != strtolower($options['hostname']))
 		{
 			return;
 		}
@@ -182,7 +182,7 @@ class RouteCollection implements RouteCollectionInterface
 		// the user specifies here.
 		$old_namespace = $this->defaultNamespace;
 
-		if (! empty($options['namespace']))
+		if ( ! empty($options['namespace']))
 		{
 			$this->defaultNamespace = $options['namespace'];
 		}
