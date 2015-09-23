@@ -217,4 +217,232 @@ class RouteCollectionTest extends PHPUnit_Framework_TestCase {
 	}
 
 	//--------------------------------------------------------------------
+
+	//--------------------------------------------------------------------
+	// Map Tests
+	//--------------------------------------------------------------------
+
+	public function testMapAddsRoutes()
+	{
+	    $map = [
+		    'one'   => '\controller::index',
+	        'two'   => '\controller::method'
+	    ];
+
+		$collection = new RouteCollection();
+
+		$collection->map($map);
+
+		$routes = $collection->routes();
+
+		$this->assertEquals($map, $routes);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testMapAddsPrefix()
+	{
+		$map = [
+			'one'   => '\controller::index',
+			'two'   => '\controller::method'
+		];
+
+		$expected = [
+			'my_one'   => '\controller::index',
+			'my_two'   => '\controller::method'
+		];
+
+		$collection = new RouteCollection();
+
+		$collection->map($map, ['prefix' => 'my_']);
+
+		$routes = $collection->routes();
+
+		$this->assertEquals($expected, $routes);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testMapAddsIgnoresOnBadHost()
+	{
+		$map = [
+			'one'   => '\controller::index',
+			'two'   => '\controller::method'
+		];
+
+		$expected = [];
+
+		$_SERVER['SERVER_NAME'] = 'mickeymouse.com';
+
+		$collection = new RouteCollection();
+
+		$collection->map($map, ['hostname' => 'google.com']);
+
+		$routes = $collection->routes();
+
+		$this->assertEquals($expected, $routes);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testMapAddsAddsOnMatchingHost()
+	{
+		$map = [
+			'one'   => '\controller::index',
+			'two'   => '\controller::method'
+		];
+
+		$_SERVER['SERVER_NAME'] = 'mickeymouse.com';
+
+		$collection = new RouteCollection();
+
+		$collection->map($map, ['hostname' => 'mickeymouse.com']);
+
+		$routes = $collection->routes();
+
+		$this->assertEquals($map, $routes);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testMapAddsNamespace()
+	{
+		$map = [
+			'one'   => 'controller::index',
+			'two'   => 'controller::method'
+		];
+
+		$expected = [
+			'one'   => '\App\Controllers\controller::index',
+			'two'   => '\App\Controllers\controller::method'
+		];
+
+		$collection = new RouteCollection();
+
+		$collection->map($map, ['namespace' => 'App\Controllers']);
+
+		$routes = $collection->routes();
+
+		$this->assertEquals($expected, $routes);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testMapAddsNamespaceWithLeadingSlash()
+	{
+		$map = [
+			'one'   => 'controller::index',
+			'two'   => 'controller::method'
+		];
+
+		$expected = [
+			'one'   => '\App\Controllers\controller::index',
+			'two'   => '\App\Controllers\controller::method'
+		];
+
+		$collection = new RouteCollection();
+
+		$collection->map($map, ['namespace' => '\App\Controllers']);
+
+		$routes = $collection->routes();
+
+		$this->assertEquals($expected, $routes);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testMapResetsNamespace()
+	{
+		$map = [
+			'one'   => 'controller::index',
+			'two'   => 'controller::method'
+		];
+
+		$expected = [
+			'one'   => '\App\Controllers\controller::index',
+			'two'   => '\App\Controllers\controller::method',
+		];
+
+		$collection = new RouteCollection();
+
+		$collection->map($map, ['namespace' => 'App\Controllers']);
+
+		$routes = $collection->routes();
+
+		$this->assertEquals($expected, $routes);
+
+		// Ensure it resets...
+		$expected = [
+			'one'   => '\App\Controllers\controller::index',
+			'two'   => '\App\Controllers\controller::method',
+			'three' => '\controller::index',
+			'four'  => '\controller::method'
+		];
+
+		$map = [
+			'three'  => 'controller::index',
+			'four'   => 'controller::method'
+		];
+
+		$collection->map($map);
+
+		$routes = $collection->routes();
+
+		$this->assertEquals($expected, $routes);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testMapWorksWithHTTPVerbs()
+	{
+		$map = [
+			'one'   => 'controller::index',
+			'delete'   => [
+				'two'    => 'controller::delete',
+			]
+		];
+
+		$expected = [
+			'one'   => '\controller::index',
+		    'two'   => '\controller::delete'
+		];
+
+		$_SERVER['REQUEST_METHOD'] = 'DELETE';
+
+		$collection = new RouteCollection();
+
+		$collection->map($map);
+
+		$routes = $collection->routes();
+
+		$this->assertEquals($expected, $routes);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testMapSkipsWithBadHTTPVerbs()
+	{
+		$map = [
+			'one'   => 'controller::index',
+			'delete'   => [
+				'two'    => 'controller::delete',
+			]
+		];
+
+		$expected = [
+			'one'   => '\controller::index',
+		];
+
+		$_SERVER['REQUEST_METHOD'] = 'GET';
+
+		$collection = new RouteCollection();
+
+		$collection->map($map);
+
+		$routes = $collection->routes();
+
+		$this->assertEquals($expected, $routes);
+	}
+
+	//--------------------------------------------------------------------
 }

@@ -137,7 +137,7 @@ class RouteCollection implements RouteCollectionInterface
 
 		// We need to ensure that the current namespace is added to the final mapping
 		// so that it won't try to use the current namespace for the class.
-		if ( is_string($map) && strpos($map, '\\') === false)
+		if (is_string($map) && strpos($map, '\\') === false)
 		{
 			$map = $this->defaultNamespace.'\\'.$map;
 
@@ -146,7 +146,7 @@ class RouteCollection implements RouteCollectionInterface
 
 			// To make the map as compatible as possible, we
 			// prefix with a backslash to ensure we get out of the current namespace.
-			$map = '\\'. ltrim($map, '\\ ');
+			$map = '\\'.ltrim($map, '\\ ');
 		}
 
 		$this->routes[$route] = $map;
@@ -158,16 +158,66 @@ class RouteCollection implements RouteCollectionInterface
 	 * Adds an array of routes to the class all at once. This allows additional
 	 * settings to be specified for all incoming routes, including:
 	 *
-	 *  _namespace  Sets the namespace for all routes
-	 *  _hostname   Route must be on the set domain
-	 *  _prefix     Sets a string that will be prefixed to all routes (left side)
+	 *  namespace  Sets the namespace for all routes
+	 *  hostname   Route must be on the set domain
+	 *  prefix     Sets a string that will be prefixed to all routes (left side)
 	 *
 	 * @param array|null $routes
 	 *
 	 * @return mixed
 	 */
-	public function map(array $routes = null)
+	public function map(array $routes = null, array $options = [])
 	{
+		$current_host = ! empty($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : $_SERVER['HTTP_HOST'];
+
+		// If a hostname is provided as an option,
+		// then don't waste time if our hostname doesn't match.
+		if (! empty($options['hostname']) && strtolower($current_host) != strtolower($options['hostname']))
+		{
+			return;
+		}
+
+		// Save the current default namespace so
+		// that we are able to replace it with one
+		// the user specifies here.
+		$old_namespace = $this->defaultNamespace;
+
+		if (! empty($options['namespace']))
+		{
+			$this->defaultNamespace = $options['namespace'];
+		}
+
+		$prefix = ! empty($options['prefix']) ? $options['prefix'] : '';
+
+		foreach ($routes as $route => $map)
+		{
+			// Also need to trim any leading slashes to ensure
+			// that the add() method adds the namespace correctly.
+			if (is_string($map) && ! empty($options['namespace']))
+			{
+				$map = ltrim($map, '\\ ');
+			}
+
+			// If an array is passed in, that means that we are
+			// dealing with HTTP verb routing so we need
+			// to send all of them into the add() method
+			// separately.
+			if (is_array($map))
+			{
+				foreach ($map as $left => $right)
+				{
+					// $route will now be the HTTP verb used.
+					$this->add($prefix.$left, $right, $route);
+				}
+
+				continue;
+			}
+
+			$this->add($prefix.$route, $map);
+		}
+
+		// Put our namespace back.
+		$this->defaultNamespace = $old_namespace;
 	}
 
 	//--------------------------------------------------------------------

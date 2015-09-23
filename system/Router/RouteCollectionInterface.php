@@ -34,10 +34,11 @@ interface RouteCollectionInterface
 	 * performance gain.
 	 *
 	 * @param array|null $routes
+	 * @param array|null $options
 	 *
 	 * @return mixed
 	 */
-	public function map(array $routes = null);
+	public function map(array $routes = null, array $options = []);
 
 	//--------------------------------------------------------------------
 
