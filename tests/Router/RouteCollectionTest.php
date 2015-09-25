@@ -397,8 +397,8 @@ class RouteCollectionTest extends PHPUnit_Framework_TestCase {
 	{
 		$map = [
 			'one'   => 'controller::index',
-			'delete'   => [
-				'two'    => 'controller::delete',
+			'two'   => [
+				'delete'    => 'controller::delete',
 			]
 		];
 

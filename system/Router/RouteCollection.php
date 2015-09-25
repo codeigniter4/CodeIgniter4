@@ -204,10 +204,10 @@ class RouteCollection implements RouteCollectionInterface
 			// separately.
 			if (is_array($map))
 			{
-				foreach ($map as $left => $right)
+				foreach ($map as $verb => $right)
 				{
 					// $route will now be the HTTP verb used.
-					$this->add($prefix.$left, $right, $route);
+					$this->add($prefix.$route, $right, $verb);
 				}
 
 				continue;
