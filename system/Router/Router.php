@@ -1,14 +1,38 @@
 <?php namespace CodeIgniter\Router;
 
-interface RouterInterface
+class Router implements RouterInterface
 {
+	/**
+	 * A RouteCollection instance.
+	 *
+	 * @var RouteCollectionInterface
+	 */
+	protected $collection;
+
+	protected $controller;
+
+	protected $method;
+
+	protected $params = [];
+
+	protected $indexPage = 'index.php';
+
+	protected $uriProtocol = 'REQUEST_URI';
+
+	//--------------------------------------------------------------------
 
 	/**
 	 * Stores a reference to the RouteCollection object.
 	 *
 	 * @param RouteCollectionInterface $routes
 	 */
-	public function __construct(RouteCollectionInterface $routes);
+	public function __construct(RouteCollectionInterface $routes)
+	{
+		$this->collection = $routes;
+
+		$this->controller = $this->collection->defaultController();
+		$this->method     = $this->collection->defaultMethod();
+	}
 
 	//--------------------------------------------------------------------
 
@@ -20,7 +44,9 @@ interface RouterInterface
 	 *
 	 * @return mixed
 	 */
-	public function handle($uri = null);
+	public function handle($uri = null)
+	{
+	}
 
 	//--------------------------------------------------------------------
 
@@ -29,7 +55,10 @@ interface RouterInterface
 	 *
 	 * @return mixed
 	 */
-	public function controllerName();
+	public function controllerName()
+	{
+		return $this->controller;
+	}
 
 	//--------------------------------------------------------------------
 
@@ -39,7 +68,10 @@ interface RouterInterface
 	 *
 	 * @return mixed
 	 */
-	public function methodName();
+	public function methodName()
+	{
+		return $this->method;
+	}
 
 	//--------------------------------------------------------------------
 
@@ -50,7 +82,10 @@ interface RouterInterface
 	 *
 	 * @return mixed
 	 */
-	public function params();
+	public function params()
+	{
+		return $this->params;
+	}
 
 	//--------------------------------------------------------------------
 
@@ -64,7 +99,12 @@ interface RouterInterface
 	 *
 	 * @return mixed
 	 */
-	public function setIndexPage($page);
+	public function setIndexPage($page)
+	{
+		$this->indexPage = $page;
+
+		return $this;
+	}
 
 	//--------------------------------------------------------------------
 
@@ -79,7 +119,17 @@ interface RouterInterface
 	 *
 	 * @return mixed
 	 */
-	public function setURIProtocol($protocol);
+	public function setURIProtocol($protocol)
+	{
+		if ( ! in_array($protocol, ['REQUEST_URI', 'QUERY_STRING', 'PATH_INFO']))
+		{
+			throw new \InvalidArgumentException('The URI Protocol is not one of the valid options.');
+		}
+
+		$this->uriProtocol = $protocol;
+
+		return $this;
+	}
 
 	//--------------------------------------------------------------------
 

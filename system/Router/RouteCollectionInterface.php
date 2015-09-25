@@ -93,6 +93,24 @@ interface RouteCollectionInterface
 	//--------------------------------------------------------------------
 
 	/**
+	 * Returns the name of the default controller. With Namespace.
+	 *
+	 * @return string
+	 */
+	public function defaultController();
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns the name of the default method to use within the controller.
+	 *
+	 * @return string
+	 */
+	public function defaultMethod();
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Returns the raw array of available routes.
 	 *
 	 * @return mixed

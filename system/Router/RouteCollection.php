@@ -278,6 +278,32 @@ class RouteCollection implements RouteCollectionInterface
 	//--------------------------------------------------------------------
 
 	/**
+	 * Returns the name of the default controller. With Namespace.
+	 *
+	 * @return string
+	 */
+	public function defaultController()
+	{
+	    return $this->defaultController;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns the name of the default method to use within the controller.
+	 *
+	 * @return string
+	 */
+	public function defaultMethod()
+	{
+	    return $this->defaultMethod;
+	}
+
+	//--------------------------------------------------------------------
+
+
+
+	/**
 	 * Sets the default method to call on the controller when no other
 	 * method has been set in the route.
 	 *
