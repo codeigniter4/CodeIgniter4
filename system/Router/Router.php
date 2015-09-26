@@ -17,7 +17,7 @@ class Router implements RouterInterface
 
 	protected $indexPage = 'index.php';
 
-	protected $uriProtocol = 'REQUEST_URI';
+	protected $translateURIDashes = false;
 
 	//--------------------------------------------------------------------
 
@@ -46,6 +46,45 @@ class Router implements RouterInterface
 	 */
 	public function handle($uri = null)
 	{
+		if (is_null($uri))
+		{
+			// @todo Get the URI from the HTTP\Request object.
+		}
+
+		// If we cannot find a URI to match against, then
+		// everything runs off of it's default settings.
+		if (empty($uri))
+		{
+			return;
+		}
+
+		$http_verb = $this->collection->HTTPVerb();
+
+		$routes = $this->collection->routes();
+
+		// Loop through the route array looking for wildcards
+		foreach ($routes as $key => $val)
+		{
+			// Does the RegEx match?
+			if (preg_match('#^'.$key.'$#', $uri, $matches))
+			{
+				// Are we using Closures? If so, then we need
+				// to collect the params into an array
+				// so it can be passed to the controller method later.
+				if ( ! is_string($val) && is_callable($val))
+				{
+					// Remove the original string from the matches array
+					array_shift($matches);
+
+					$this->params = $matches;
+				}
+				// Are we using the default method for back-references?
+				elseif (strpos($val, '$') !== false && strpos($key, '(') !== false)
+				{
+					$val = preg_replace('#^'.$key.'$#', $val, $uri);
+				}
+			}
+		}
 	}
 
 	//--------------------------------------------------------------------
@@ -109,28 +148,84 @@ class Router implements RouterInterface
 	//--------------------------------------------------------------------
 
 	/**
-	 * Sets the method used to determine the current page. Valid options are:
+	 * Tells the system whether we should translate URI dashes or not
+	 * in the URI from a dash to an underscore.
 	 *
-	 *  - REQUEST_URI
-	 *  - QUERY_STRING  // Expects a var of $_GET['_url'] to contain the URL
-	 *  - PATH_INFO
+	 * @param bool|false $val
 	 *
-	 * @param $protocol
-	 *
-	 * @return mixed
+	 * @return $this
 	 */
-	public function setURIProtocol($protocol)
+	public function setTranslateURIDashes($val=false)
 	{
-		if ( ! in_array($protocol, ['REQUEST_URI', 'QUERY_STRING', 'PATH_INFO']))
-		{
-			throw new \InvalidArgumentException('The URI Protocol is not one of the valid options.');
-		}
-
-		$this->uriProtocol = $protocol;
+	    $this->translateURIDashes = (bool)$val;
 
 		return $this;
 	}
 
 	//--------------------------------------------------------------------
 
+
+	/**
+	 * Set request route
+	 *
+	 * Takes an array of URI segments as input and sets the class/method
+	 * to be called.
+	 *
+	 * @param    array $segments URI segments
+	 */
+	protected function setRequest(array $segments = [])
+	{
+		// If we don't have any segments left - try the default controller;
+		// WARNING: Directories get shifted out of the segments array!
+		if (empty($segments))
+		{
+			$this->setDefaultController();
+
+			return;
+		}
+
+		if ($this->translate_uri_dashes === true)
+		{
+			$segments[0] = str_replace('-', '_', $segments[0]);
+			if (isset($segments[1]))
+			{
+				$segments[1] = str_replace('-', '_', $segments[1]);
+			}
+		}
+
+		$this->controller = str_replace(['/', '.'], '', $segments[0]);
+
+		if (isset($segments[1]))
+		{
+			$this->method = $segments[1];
+		}
+		else
+		{
+			// $this->method already holds the default
+			// method name so we don't need to fetch it
+			$segments[1] = $this->method;
+		}
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Sets the default controller based on the info set in the RouteCollection.
+	 */
+	protected function setDefaultController()
+	{
+		if (empty($this->controller))
+		{
+			throw new \RuntimeException('Unable to determine what should be displayed. A default route has not been specified in the routing file.');
+		}
+
+		// Is the method being specified?
+		if (sscanf($this->controller, '%[^/]/%s') !== 2)
+		{
+			$this->method = 'index';
+		}
+		// @todo log that NO URI present and using default controller.
+	}
+
+	//--------------------------------------------------------------------
 }

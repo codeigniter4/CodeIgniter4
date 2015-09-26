@@ -93,6 +93,22 @@ interface RouteCollectionInterface
 	//--------------------------------------------------------------------
 
 	/**
+	 * Tells the system whether to convert dashes in URI strings into
+	 * underscores. In some search engines, including Google, dashes
+	 * create more meaning and make it easier for the search engine to
+	 * find words and meaning in the URI for better SEO. But it
+	 * doesn't work well with PHP method names....
+	 *
+	 * @param $value
+	 *
+	 * @return mixed
+	 */
+	public function setTranslateURIDashes($value);
+
+	//--------------------------------------------------------------------
+
+
+	/**
 	 * Returns the name of the default controller. With Namespace.
 	 *
 	 * @return string
@@ -111,6 +127,17 @@ interface RouteCollectionInterface
 	//--------------------------------------------------------------------
 
 	/**
+	 * Returns the current value of the translateURIDashses setting.
+	 *
+	 * @param bool|false $val
+	 *
+	 * @return mixed
+	 */
+	public function translateURIDashes();
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Returns the raw array of available routes.
 	 *
 	 * @return mixed
@@ -119,4 +146,12 @@ interface RouteCollectionInterface
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Returns the current HTTP Verb being used.
+	 *
+	 * @return string
+	 */
+	public function HTTPVerb();
+
+	//--------------------------------------------------------------------
 }

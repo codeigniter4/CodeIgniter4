@@ -40,6 +40,13 @@ class RouteCollection implements RouteCollectionInterface
 	protected $defaultMethod = 'index';
 
 	/**
+	 * Whether to convert dashes to underscores in URI.
+	 *
+	 * @var bool
+	 */
+	protected $translateURIDashes = false;
+
+	/**
 	 * Defined placeholders that can be used
 	 * within the
 	 *
@@ -321,6 +328,26 @@ class RouteCollection implements RouteCollectionInterface
 	//--------------------------------------------------------------------
 
 	/**
+	 * Tells the system whether to convert dashes in URI strings into
+	 * underscores. In some search engines, including Google, dashes
+	 * create more meaning and make it easier for the search engine to
+	 * find words and meaning in the URI for better SEO. But it
+	 * doesn't work well with PHP method names....
+	 *
+	 * @param $value
+	 *
+	 * @return mixed
+	 */
+	public function setTranslateURIDashes($value)
+	{
+		$this->translateURIDashes = (bool)$value;
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Returns the raw array of available routes.
 	 *
 	 * @return array
@@ -331,5 +358,30 @@ class RouteCollection implements RouteCollectionInterface
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Returns the current HTTP Verb being used.
+	 *
+	 * @return string
+	 */
+	public function HTTPVerb()
+	{
+	    return $this->http_verb;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns the current Translate URI Dashes setting.
+	 *
+	 * @return bool
+	 */
+	public function translateURIDashes()
+	{
+	    return $this->translateURIDashes;
+	}
+
+	//--------------------------------------------------------------------
+
 
 }

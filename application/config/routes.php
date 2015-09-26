@@ -45,6 +45,7 @@ $routes = DI()->single('routes');
  * Assigns the method inside the controller that is ran when the
  * Router is unable to determine the appropriate method to run.
  */
-$routes->defaultNamespace('\\');
-$routes->defaultController('Welcome');
-$routes->defaultMethod('index');
+$routes->setDefaultNamespace('\\');
+$routes->setDefaultController('Welcome');
+$routes->setDefaultMethod('index');
+$routes->setTranslateURIDashses(false);

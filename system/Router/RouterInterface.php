@@ -68,19 +68,4 @@ interface RouterInterface
 
 	//--------------------------------------------------------------------
 
-	/**
-	 * Sets the method used to determine the current page. Valid options are:
-	 *
-	 *  - REQUEST_URI
-	 *  - QUERY_STRING  // Expects a var of $_GET['_url'] to contain the URL
-	 *  - PATH_INFO
-	 *
-	 * @param $protocol
-	 *
-	 * @return mixed
-	 */
-	public function setURIProtocol($protocol);
-
-	//--------------------------------------------------------------------
-
 }
