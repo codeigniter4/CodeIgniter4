@@ -7,7 +7,7 @@ require_once 'system/Router/RouteCollection.php';
 
 use CodeIgniter\Router\Router;
 
-class RouteCollectionTest extends PHPUnit_Framework_TestCase
+class RouterTest extends PHPUnit_Framework_TestCase
 {
 
 	/**

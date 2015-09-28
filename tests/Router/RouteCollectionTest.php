@@ -62,7 +62,7 @@ class RouteCollectionTest extends PHPUnit_Framework_TestCase {
 		$collection->add('home', 'my\controller');
 
 		$expects = [
-			'home' => 'my\controller'
+			'home' => '\my\controller'
 		];
 
 		$routes = $collection->routes();
