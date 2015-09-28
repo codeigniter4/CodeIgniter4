@@ -83,6 +83,10 @@ class Router implements RouterInterface
 				{
 					$val = preg_replace('#^'.$key.'$#', $val, $uri);
 				}
+
+				$this->setRequest(explode('/', $val));
+
+				return;
 			}
 		}
 	}
@@ -155,15 +159,14 @@ class Router implements RouterInterface
 	 *
 	 * @return $this
 	 */
-	public function setTranslateURIDashes($val=false)
+	public function setTranslateURIDashes($val = false)
 	{
-	    $this->translateURIDashes = (bool)$val;
+		$this->translateURIDashes = (bool)$val;
 
 		return $this;
 	}
 
 	//--------------------------------------------------------------------
-
 
 	/**
 	 * Set request route
@@ -175,8 +178,7 @@ class Router implements RouterInterface
 	 */
 	protected function setRequest(array $segments = [])
 	{
-		// If we don't have any segments left - try the default controller;
-		// WARNING: Directories get shifted out of the segments array!
+		// If we don't have any segments - try the default controller;
 		if (empty($segments))
 		{
 			$this->setDefaultController();
@@ -193,18 +195,20 @@ class Router implements RouterInterface
 			}
 		}
 
-		$this->controller = str_replace(['/', '.'], '', $segments[0]);
+		list($controller, $method) = explode('::', $segments[0]);
 
-		if (isset($segments[1]))
+		$this->controller = $controller;
+
+		// $this->method already contains the default method name,
+		// so don't overwrite it with emptiness.
+		if ( ! empty($method))
 		{
-			$this->method = $segments[1];
+			$this->method = $method;
 		}
-		else
-		{
-			// $this->method already holds the default
-			// method name so we don't need to fetch it
-			$segments[1] = $this->method;
-		}
+
+		array_shift($segments);
+
+		$this->params = $segments;
 	}
 
 	//--------------------------------------------------------------------

@@ -150,9 +150,12 @@ class RouteCollection implements RouteCollectionInterface
 
 			// Trim out any double back-slashes
 			$map = str_replace('\\\\', '\\', $map);
+		}
 
-			// To make the map as compatible as possible, we
-			// prefix with a backslash to ensure we get out of the current namespace.
+		// Ensure that any strings are prefixed with backslash to get
+		// out of the current namespace and into the proper one.
+		if (is_string($map))
+		{
 			$map = '\\'.ltrim($map, '\\ ');
 		}
 
