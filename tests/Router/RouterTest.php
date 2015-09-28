@@ -26,6 +26,7 @@ class RouteCollectionTest extends PHPUnit_Framework_TestCase
 			'posts/(:num)'                 => 'Blog::show/$1',
 			'posts/(:num)/edit'            => 'Blog::edit/$1',
 			'books/(:num)/(:alpha)/(:num)' => 'Blog::show/$3/$1',
+			'closure/(:num)/(:alpha)'      => function ($num, $str) { return $num.'-'.$str; },
 		];
 
 		$this->collection->map($routes);
@@ -111,9 +112,6 @@ class RouteCollectionTest extends PHPUnit_Framework_TestCase
 
 	//--------------------------------------------------------------------
 
-	/**
-	 * @group single
-	 */
 	public function testURIMapsParamsToBackReferencesWithUnused()
 	{
 		$router = new Router($this->collection);
@@ -121,7 +119,26 @@ class RouteCollectionTest extends PHPUnit_Framework_TestCase
 		$router->handle('books/123/sometitle/456');
 
 		$this->assertEquals('show', $router->methodName());
-		$this->assertEquals([456,123], $router->params());
+		$this->assertEquals([456, 123], $router->params());
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * @group single
+	 */
+	public function testClosures()
+	{
+		$router = new Router($this->collection);
+
+		$router->handle('closure/123/alpha');
+
+		$closure = $router->controllerName();
+
+		$expects = call_user_func_array($closure, $router->params());
+
+		$this->assertTrue(is_callable($router->controllerName()));
+		$this->assertEquals($expects, '123-alpha');
 	}
 
 	//--------------------------------------------------------------------

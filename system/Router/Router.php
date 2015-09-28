@@ -73,10 +73,14 @@ class Router implements RouterInterface
 				// so it can be passed to the controller method later.
 				if ( ! is_string($val) && is_callable($val))
 				{
+					$this->controller = $val;
+
 					// Remove the original string from the matches array
 					array_shift($matches);
 
 					$this->params = $matches;
+
+					return;
 				}
 				// Are we using the default method for back-references?
 				elseif (strpos($val, '$') !== false && strpos($key, '(') !== false)
