@@ -4,7 +4,7 @@ class Home {
 
 	public function index()
 	{
-	    die('<h1>Welcome Home</h1>');
+	    echo '<h1>Welcome Home</h1>';
 	}
 
 	//--------------------------------------------------------------------
