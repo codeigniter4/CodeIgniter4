@@ -48,4 +48,4 @@ $routes = DI()->single('routes');
 $routes->setDefaultNamespace('\\');
 $routes->setDefaultController('Welcome');
 $routes->setDefaultMethod('index');
-$routes->setTranslateURIDashses(false);
+$routes->setTranslateURIDashes(false);

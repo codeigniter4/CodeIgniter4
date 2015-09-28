@@ -76,9 +76,26 @@ $benchmark = new CodeIgniter\Benchmark\Timer();
 $benchmark->start('total_execution');
 
 //--------------------------------------------------------------------
-// TEMPORARY - SAY HI!
+// Try to Route It
 //--------------------------------------------------------------------
 
-echo '<h1>Hello CodeIgniter</h1>';
+require APPPATH.'config/routes.php';
+
+$router = $di->single('router');
+
+$controller = $router->controllerName();
+
+// Is it routed to a Closure?
+if (is_callable($controller))
+{
+	call_user_func_array($controller, $router->params());
+}
+else
+{
+	$class = $di->single($controller);
+	$method = $router->methodName();
+	$params = $router->params();
+	$class->$method(...$params);
+}
 
 echo $benchmark->elapsedTime('total_execution');
