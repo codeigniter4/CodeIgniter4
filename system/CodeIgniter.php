@@ -92,7 +92,7 @@ if (is_callable($controller))
 }
 else
 {
-	$class = $di->single($controller);
+	$class = $di->make($controller);
 	$method = $router->methodName();
 	$params = $router->params();
 	$class->$method(...$params);

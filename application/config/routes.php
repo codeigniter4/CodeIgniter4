@@ -46,6 +46,6 @@ $routes = DI()->single('routes');
  * Router is unable to determine the appropriate method to run.
  */
 $routes->setDefaultNamespace('\\');
-$routes->setDefaultController('Welcome');
+$routes->setDefaultController('Home');
 $routes->setDefaultMethod('index');
 $routes->setTranslateURIDashes(false);

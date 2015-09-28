@@ -207,16 +207,25 @@ class DI
 	 */
 	public function make($alias, $use_singletons = false)
 	{
+		$orig_alias = $alias;
 		$alias = strtolower($alias);
 
 		if ( ! array_key_exists($alias, $this->services))
 		{
-			throw new \InvalidArgumentException('No Service is registered for alias: '.$alias);
-		}
+			// Can we include a new instance of the specified class?
+			if (! class_exists($orig_alias))
+			{
+				throw new \InvalidArgumentException('No Service is registered for alias: '.$alias);
+			}
 
-		// The provider could be either a string (namespaced class)
-		// or a Closure that returns an instance of the desired class.
-		$service = $this->services[$alias];
+			$service = $orig_alias;
+		}
+		else
+		{
+			// The provider could be either a string (namespaced class)
+			// or a Closure that returns an instance of the desired class.
+			$service = $this->services[$alias];
+		}
 
 		if (is_string($service))
 		{
@@ -421,7 +430,7 @@ class DI
 				$params[] = $single ? $this->single($alias) : $this->make($alias);
 				continue;
 			}
-var_dump($param);
+
 			// Is this a normal class we can give them?
 			$class = $param->getClass()->name;
 

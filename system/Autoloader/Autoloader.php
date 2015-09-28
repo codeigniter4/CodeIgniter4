@@ -275,6 +275,7 @@ class Autoloader
 		}
 
 		$paths = [
+			APPPATH.'controllers/',
 			APPPATH.'libraries/',
 			APPPATH.'models/',
 		];
