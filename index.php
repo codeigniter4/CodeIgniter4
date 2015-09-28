@@ -169,4 +169,4 @@ else
  *
  * And away we go...
  */
-require_once BASEPATH.'CodeIgniter.php';
+require BASEPATH.'CodeIgniter.php';
