@@ -107,7 +107,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @return void
 	 */
-	public function add($route, $map, $methods = null)
+	public function add(string $route, $map, $methods = null)
 	{
 		// If methods is null, than it should work
 		// for any of the available methods.
@@ -250,7 +250,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @return mixed
 	 */
-	public function addPlaceholder($name, $pattern): self
+	public function addPlaceholder(string $name, string $pattern): self
 	{
 		$this->placeholders[$name] = $pattern;
 
@@ -267,7 +267,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @return mixed
 	 */
-	public function setDefaultNamespace($value): self
+	public function setDefaultNamespace(string $value): self
 	{
 		$this->defaultNamespace = $value;
 
@@ -284,7 +284,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @return mixed
 	 */
-	public function setDefaultController($value): self
+	public function setDefaultController(string $value): self
 	{
 		$this->defaultController = $value;
 
@@ -327,7 +327,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @return mixed
 	 */
-	public function setDefaultMethod($value): self
+	public function setDefaultMethod(string $value): self
 	{
 		$this->defaultMethod = $value;
 

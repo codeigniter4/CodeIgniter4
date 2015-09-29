@@ -18,13 +18,13 @@ interface RouteCollectionInterface
 	/**
 	 * Adds a single route to the collection.
 	 *
-	 * @param       $route
-	 * @param       $map
-	 * @param       $method
+	 * @param string $route
+	 * @param array|string $map
+	 * @param string|array $method
 	 *
 	 * @return mixed
 	 */
-	public function add($route, $map, $method = 'get');
+	public function add(string $route, $map, $method = 'get');
 
 	//--------------------------------------------------------------------
 
@@ -52,7 +52,7 @@ interface RouteCollectionInterface
 	 *
 	 * @return mixed
 	 */
-	public function addPlaceholder($name, $pattern);
+	public function addPlaceholder(string $name, string $pattern);
 
 	//--------------------------------------------------------------------
 
@@ -64,7 +64,7 @@ interface RouteCollectionInterface
 	 *
 	 * @return mixed
 	 */
-	public function setDefaultNamespace($value);
+	public function setDefaultNamespace(string $value);
 
 	//--------------------------------------------------------------------
 
@@ -76,7 +76,7 @@ interface RouteCollectionInterface
 	 *
 	 * @return mixed
 	 */
-	public function setDefaultController($value);
+	public function setDefaultController(string $value);
 
 	//--------------------------------------------------------------------
 
@@ -88,7 +88,7 @@ interface RouteCollectionInterface
 	 *
 	 * @return mixed
 	 */
-	public function setDefaultMethod($value);
+	public function setDefaultMethod(string $value);
 
 	//--------------------------------------------------------------------
 
