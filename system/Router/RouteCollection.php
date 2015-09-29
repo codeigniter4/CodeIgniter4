@@ -180,7 +180,7 @@ class RouteCollection implements RouteCollectionInterface
 	{
 		if (empty($_SERVER['HTTP_HOST']))
 		{
-			$_SERVER['HTTP_HOST'] = 'cli';
+			$_SERVER['HTTP_HOST'] = null;
 		}
 
 		$current_host = ! empty($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : null;
