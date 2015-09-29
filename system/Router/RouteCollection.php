@@ -250,7 +250,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @return mixed
 	 */
-	public function addPlaceholder($name, $pattern)
+	public function addPlaceholder($name, $pattern): self
 	{
 		$this->placeholders[$name] = $pattern;
 
@@ -267,7 +267,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @return mixed
 	 */
-	public function setDefaultNamespace($value)
+	public function setDefaultNamespace($value): self
 	{
 		$this->defaultNamespace = $value;
 
@@ -284,7 +284,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @return mixed
 	 */
-	public function setDefaultController($value)
+	public function setDefaultController($value): self
 	{
 		$this->defaultController = $value;
 
@@ -298,7 +298,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @return string
 	 */
-	public function defaultController()
+	public function defaultController(): string
 	{
 	    return $this->defaultController;
 	}
@@ -310,7 +310,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @return string
 	 */
-	public function defaultMethod()
+	public function defaultMethod(): string
 	{
 	    return $this->defaultMethod;
 	}
@@ -327,7 +327,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @return mixed
 	 */
-	public function setDefaultMethod($value)
+	public function setDefaultMethod($value): self
 	{
 		$this->defaultMethod = $value;
 
@@ -347,9 +347,9 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @return mixed
 	 */
-	public function setTranslateURIDashes($value)
+	public function setTranslateURIDashes(bool $value): self
 	{
-		$this->translateURIDashes = (bool)$value;
+		$this->translateURIDashes = $value;
 
 		return $this;
 	}

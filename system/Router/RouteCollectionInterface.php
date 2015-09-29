@@ -99,11 +99,11 @@ interface RouteCollectionInterface
 	 * find words and meaning in the URI for better SEO. But it
 	 * doesn't work well with PHP method names....
 	 *
-	 * @param $value
+	 * @param bool $value
 	 *
 	 * @return mixed
 	 */
-	public function setTranslateURIDashes($value);
+	public function setTranslateURIDashes(bool $value);
 
 	//--------------------------------------------------------------------
 
