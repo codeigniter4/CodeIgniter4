@@ -178,7 +178,13 @@ class RouteCollection implements RouteCollectionInterface
 	 */
 	public function map(array $routes = null, array $options = [])
 	{
-		$current_host = ! empty($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : $_SERVER['HTTP_HOST'];
+		if (empty($_SERVER['HTTP_HOST']))
+		{
+			$_SERVER['HTTP_HOST'] = 'cli';
+		}
+
+		$current_host = ! empty($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : null;
+
 
 		// If a hostname is provided as an option,
 		// then don't waste time if our hostname doesn't match.

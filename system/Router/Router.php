@@ -190,7 +190,7 @@ class Router implements RouterInterface
 			return;
 		}
 
-		if ($this->translate_uri_dashes === true)
+		if ($this->translateURIDashes === true)
 		{
 			$segments[0] = str_replace('-', '_', $segments[0]);
 			if (isset($segments[1]))
