@@ -103,7 +103,7 @@ class DI
 	 *          $this->di = $di;
 	 *      }
 	 */
-	public static function getInstance(array $config = [])
+	public static function getInstance(array $config = []): self
 	{
 		if (empty(static::$instance))
 		{
@@ -123,12 +123,12 @@ class DI
 	 * Registers a specific class name with the corresponding alias
 	 * for the dependency inversion.
 	 *
-	 * @param $name
-	 * @param $class
+	 * @param string $name
+	 * @param string|Closure $class
 	 *
 	 * @return $this
 	 */
-	public function register($alias, $class)
+	public function register(string $alias, $class): self
 	{
 		$alias = strtolower($alias);
 
@@ -148,11 +148,12 @@ class DI
 	 * Unregisters a single service provider. If an instance of that
 	 * provider has already been created, it will be destroyed.
 	 *
-	 * @param $alias
+	 * @param string $alias
+	 * @param bool   $remove_instances
 	 *
-	 * @return $this
+	 * @return $this|DI
 	 */
-	public function unregister($alias, $remove_instances = false)
+	public function unregister(string $alias, bool $remove_instances = false): self
 	{
 		$alias = strtolower($alias);
 
@@ -174,12 +175,12 @@ class DI
 	 *
 	 * todo Register savedInstance class with the services array.
 	 *
-	 * @param $alias
-	 * @param $class
+	 * @param string $alias
+	 * @param        $class
 	 *
 	 * @return $this
 	 */
-	public function saveInstance($alias, &$class)
+	public function saveInstance(string $alias, &$class)
 	{
 		$alias = strtolower($alias);
 
@@ -200,20 +201,20 @@ class DI
 	 * return it. Does not check for an existing instance but always
 	 * returns a new one.
 	 *
-	 * @param      $alias
-	 * @param bool $use_singletons
+	 * @param string $alias
+	 * @param bool   $use_singletons
 	 *
 	 * @return null
 	 */
-	public function make($alias, $use_singletons = false)
+	public function make(string $alias, bool $use_singletons = false)
 	{
 		$orig_alias = $alias;
-		$alias = strtolower($alias);
+		$alias      = strtolower($alias);
 
 		if ( ! array_key_exists($alias, $this->services))
 		{
 			// Can we include a new instance of the specified class?
-			if (! class_exists($orig_alias))
+			if ( ! class_exists($orig_alias))
 			{
 				throw new \InvalidArgumentException('No Service is registered for alias: '.$alias);
 			}
@@ -251,11 +252,11 @@ class DI
 	 * Allows you to create a new instance of an object as a singleton,
 	 * passing in arguments.
 	 *
-	 * @param $alias
+	 * @param string $alias
 	 *
 	 * @return mixed
 	 */
-	public function single($alias)
+	public function single(string $alias)
 	{
 		$alias = strtolower($alias);
 
@@ -300,7 +301,7 @@ class DI
 	 *
 	 * @return null
 	 */
-	public function __get($alias)
+	public function __get(string $alias)
 	{
 		// If a parameter exists by this name,
 		// we'll return it.
@@ -326,10 +327,10 @@ class DI
 	 *      $di->session_id = 'MySessionID';
 	 *      echo $di->session_id;
 	 *
-	 * @param $key
-	 * @param $value
+	 * @param string $key
+	 * @param mixed  $value
 	 */
-	public function __set($key, $value)
+	public function __set(string $key, $value)
 	{
 		if (array_key_exists($key, $this->services))
 		{
@@ -353,7 +354,7 @@ class DI
 	 *
 	 * @return bool|mixed
 	 */
-	public function __call($name, $arguments)
+	public function __call(string $name, $arguments)
 	{
 		if (array_key_exists($name, $this->parameters) &&
 		    is_callable($this->parameters[$name])
@@ -376,7 +377,7 @@ class DI
 	 *
 	 * @return null|object
 	 */
-	protected function inject($service, $single = false)
+	protected function inject(string $service, $single = false)
 	{
 		$mirror      = new \ReflectionClass($service);
 		$constructor = $mirror->getConstructor();
@@ -416,7 +417,7 @@ class DI
 	 *
 	 * @return array
 	 */
-	protected function getParams(\ReflectionMethod $mirror, $single = false)
+	protected function getParams(\ReflectionMethod $mirror, bool $single = false): array
 	{
 		$params = [];
 
