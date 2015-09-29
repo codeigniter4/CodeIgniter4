@@ -44,7 +44,7 @@ class Router implements RouterInterface
 	 *
 	 * @return mixed
 	 */
-	public function handle($uri = null)
+	public function handle(string $uri = null)
 	{
 		if (is_null($uri))
 		{
@@ -115,7 +115,7 @@ class Router implements RouterInterface
 	 *
 	 * @return mixed
 	 */
-	public function methodName()
+	public function methodName(): string
 	{
 		return $this->method;
 	}
@@ -129,7 +129,7 @@ class Router implements RouterInterface
 	 *
 	 * @return mixed
 	 */
-	public function params()
+	public function params(): array
 	{
 		return $this->params;
 	}
@@ -146,7 +146,7 @@ class Router implements RouterInterface
 	 *
 	 * @return mixed
 	 */
-	public function setIndexPage($page)
+	public function setIndexPage($page): self
 	{
 		$this->indexPage = $page;
 
@@ -163,7 +163,7 @@ class Router implements RouterInterface
 	 *
 	 * @return $this
 	 */
-	public function setTranslateURIDashes($val = false)
+	public function setTranslateURIDashes($val = false): self
 	{
 		$this->translateURIDashes = (bool)$val;
 

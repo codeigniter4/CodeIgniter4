@@ -20,7 +20,7 @@ interface RouterInterface
 	 *
 	 * @return mixed
 	 */
-	public function handle($uri = null);
+	public function handle(string $uri = null);
 
 	//--------------------------------------------------------------------
 
