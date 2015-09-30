@@ -88,14 +88,13 @@ $controller = $router->controllerName();
 // Is it routed to a Closure?
 if (is_callable($controller))
 {
-	call_user_func_array($controller, $router->params());
+	$controller(...$router->params());
 }
 else
 {
-	$class = $di->make($controller);
+	$class  = $di->make($controller);
 	$method = $router->methodName();
-	$params = $router->params();
-	$class->$method(...$params);
+	$class->$method(...$router->params());
 }
 
 echo $benchmark->elapsedTime('total_execution');
