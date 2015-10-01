@@ -63,23 +63,23 @@ class Autoloader
 	 *
 	 * @param $config
 	 */
-	public function initialize($config)
+	public function initialize(\AutoloadConfig $config)
 	{
 		// We have to have one or the other, though we don't enforce the need
 		// to have both present in order to work.
-		if (empty($config['psr4']) && empty($config['classmap']))
+		if (empty($config->psr4) && empty($config->classmap))
 		{
 			throw new \InvalidArgumentException('Config array must contain either the \'psr4\' key or the \'classmap\' key.');
 		}
 
-		if (isset($config['psr4']))
+		if (isset($config->psr4))
 		{
-			$this->prefixes = $config['psr4'];
+			$this->prefixes = $config->psr4;
 		}
 
-		if (isset($config['classmap']))
+		if (isset($config->classmap))
 		{
-			$this->classmap = $config['classmap'];
+			$this->classmap = $config->classmap;
 		}
 
 		unset($config);

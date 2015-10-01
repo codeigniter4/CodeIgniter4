@@ -59,11 +59,12 @@ $di = CodeIgniter\DI\DI::getInstance(new ServicesConfig());
 
 // The autloader isn't initialized yet, so load the file manually.
 require_once BASEPATH.'Autoloader/Autoloader.php';
+require_once APPPATH.'config/autoload.php';
 
 // The Autoloader class only handles namespaces
 // and "legacy" support.
 $loader = $di->single('autoloader');
-$loader->initialize(get_config('autoload'));
+$loader->initialize(new AutoloadConfig());
 
 // The register function will prepend
 // the psr4 loader.
