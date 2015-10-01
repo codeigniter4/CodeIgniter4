@@ -6,18 +6,28 @@ require_once dirname(__FILE__) .'/support/DependingClass.php';
 
 use \CodeIgniter\DI\DI;
 
+class ServicesConfig {
+	public $services = [];
+};
+
 class DITest extends PHPUnit_Framework_TestCase {
 
-    protected $config = [
-        'services' => [
-            'simple' => '\Tests\Support\SimpleClass',
-            'depend' => '\Tests\Support\DependingClass',
-        ]
-    ];
+	protected $config;
 
     //--------------------------------------------------------------------
 
-    public function setUp() {}
+    public function setUp()
+    {
+		$this->config = new ServicesConfig();
+
+	    $this->config->services = [
+		    'simple' => '\Tests\Support\SimpleClass',
+		    'depend' => '\Tests\Support\DependingClass',
+	    ];
+    }
+
+	//--------------------------------------------------------------------
+
     public function tearDown() {
         DI::getInstance()->reset();
     }
@@ -32,7 +42,7 @@ class DITest extends PHPUnit_Framework_TestCase {
     {
         $di = DI::getInstance( $this->config );
 
-        $this->assertInstanceOf($this->config['services']['simple'], $di->make('simple'));
+        $this->assertInstanceOf($this->config->services['simple'], $di->make('simple'));
     }
 
     //--------------------------------------------------------------------
@@ -57,8 +67,8 @@ class DITest extends PHPUnit_Framework_TestCase {
         $second = $di->single('simple');
 
         $this->assertTrue($first === $second);
-        $this->assertInstanceOf($this->config['services']['simple'], $first);
-        $this->assertInstanceOf($this->config['services']['simple'], $second);
+        $this->assertInstanceOf($this->config->services['simple'], $first);
+        $this->assertInstanceOf($this->config->services['simple'], $second);
     }
 
     //--------------------------------------------------------------------
@@ -69,7 +79,7 @@ class DITest extends PHPUnit_Framework_TestCase {
 
         $depends = $di->make('depend');
 
-        $this->assertInstanceOf($this->config['services']['simple'], $depends->child);
+        $this->assertInstanceOf($this->config->services['simple'], $depends->child);
     }
 
     //--------------------------------------------------------------------
@@ -82,8 +92,8 @@ class DITest extends PHPUnit_Framework_TestCase {
         $depends = $di->make('depend', true);
 
         $this->assertTrue($simple === $depends->child);
-        $this->assertInstanceOf($this->config['services']['simple'], $simple);
-        $this->assertInstanceOf($this->config['services']['simple'], $depends->child);
+        $this->assertInstanceOf($this->config->services['simple'], $simple);
+        $this->assertInstanceOf($this->config->services['simple'], $depends->child);
     }
 
     //--------------------------------------------------------------------
@@ -96,8 +106,8 @@ class DITest extends PHPUnit_Framework_TestCase {
         $depends = $di->make('depend');
 
         $this->assertFalse($simple === $depends->child);
-        $this->assertInstanceOf($this->config['services']['simple'], $simple);
-        $this->assertInstanceOf($this->config['services']['simple'], $depends->child);
+        $this->assertInstanceOf($this->config->services['simple'], $simple);
+        $this->assertInstanceOf($this->config->services['simple'], $depends->child);
     }
 
     //--------------------------------------------------------------------
@@ -112,8 +122,8 @@ class DITest extends PHPUnit_Framework_TestCase {
         $another = $di->make('another');
 
         $this->assertTrue($simple === $another);
-        $this->assertInstanceOf($this->config['services']['simple'], $simple);
-        $this->assertInstanceOf($this->config['services']['simple'], $another);
+        $this->assertInstanceOf($this->config->services['simple'], $simple);
+        $this->assertInstanceOf($this->config->services['simple'], $another);
     }
 
     //--------------------------------------------------------------------
@@ -125,7 +135,11 @@ class DITest extends PHPUnit_Framework_TestCase {
     public function testGetInstanceMatches()
     {
         $first = DI::getInstance();
-        $second = DI::getInstance(['some' => 'one']);
+
+	    $config = new ServicesConfig();
+	    $config->services = ['some' => 'one'];
+
+        $second = DI::getInstance($config);
 
         $this->assertTrue($first === $second);
     }
