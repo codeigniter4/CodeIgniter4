@@ -332,14 +332,12 @@ class Autoloader
 	 *
 	 * @return string       The sanitized filename
 	 */
-	protected function sanitizeFilename(string $filename): string
+	public function sanitizeFilename(string $filename): string
 	{
-		$raw = $filename;
-
-		$special_chars = array("?", "[", "]", "/", "\\", "=", "<", ">", ":", ";", ",", "'", "\"", "&", "$", "#", "*", "(", ")", "|", "~", "`", "!", "{", "}");
-
-		// Remove illegal/dangerous characters
-		$filename = str_replace($special_chars, '', $filename);
+		// Only allow characters deemed safe for POSIX portable filenames.
+		// Plus the forward slash for directory separators since this might
+		// be a path.
+		$filename = preg_replace('/[^a-zA-Z0-9\s\/\-\_\.]/', '', $filename);
 
 		// Replace one or more spaces with a dash
 		$filename = preg_replace('/[\s-]+/', '-', $filename);

@@ -133,5 +133,15 @@ class AutoloaderTest extends \PHPUnit_Framework_TestCase
 
 	//--------------------------------------------------------------------
 
+	public function testSanitizationSimply()
+	{
+		$test = '${../path}!#:/to/some/file.php_';
+		$expected = '/path/to/some/file.php';
+
+		$this->assertEquals($expected, $this->loader->sanitizeFilename($test));
+	}
+
+	//--------------------------------------------------------------------
+
 
 }
