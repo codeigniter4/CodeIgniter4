@@ -87,8 +87,6 @@ class Autoloader
 
 	//--------------------------------------------------------------------
 
-
-
 	/**
 	 * Register the loader with the SPL autoloader stack.
 	 */
@@ -107,14 +105,14 @@ class Autoloader
 		// Now prepend another loader for the files in our class map.
 		$config = is_array($this->classmap) ? $this->classmap : [];
 
-		spl_autoload_register(function($class) use ($config)
+		spl_autoload_register(function ($class) use ($config)
 		{
-			if (! array_key_exists($class, $config))
+			if ( ! array_key_exists($class, $config))
 			{
 				return false;
 			}
 
-			if (! file_exists($config[$class]))
+			if ( ! file_exists($config[$class]))
 			{
 				return false;
 			}
@@ -305,6 +303,8 @@ class Autoloader
 	 */
 	protected function requireFile($file)
 	{
+		$file = $this->sanitizeFilename($file);
+
 		if (file_exists($file))
 		{
 			require $file;
@@ -313,6 +313,41 @@ class Autoloader
 		}
 
 		return false;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Sanitizes a filename, replacing spaces with dashes.
+	 *
+	 * Removes special characters that are illegal in filenames on certain
+	 * operating systems and special characters requiring special escaping
+	 * to manipulate at the command line. Replaces spaces and consecutive
+	 * dashes with a single dash. Trim period, dash and underscore from beginning
+	 * and end of filename.
+	 *
+	 * @todo Move to a helper?
+	 *
+	 * @param string $filename
+	 *
+	 * @return string       The sanitized filename
+	 */
+	protected function sanitizeFilename(string $filename): string
+	{
+		$raw = $filename;
+
+		$special_chars = array("?", "[", "]", "/", "\\", "=", "<", ">", ":", ";", ",", "'", "\"", "&", "$", "#", "*", "(", ")", "|", "~", "`", "!", "{", "}");
+
+		// Remove illegal/dangerous characters
+		$filename = str_replace($special_chars, '', $filename);
+
+		// Replace one or more spaces with a dash
+		$filename = preg_replace('/[\s-]+/', '-', $filename);
+
+		// Clean up our filename edges.
+		$filename = trim($filename, '.-_');
+
+		return $filename;
 	}
 
 	//--------------------------------------------------------------------
