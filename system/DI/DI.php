@@ -74,14 +74,16 @@ class DI
 	 * The constructor is kept private to ensure that
 	 * this class can only be used as a singleton DI container.
 	 */
-	private function __construct(array $config = [])
+	private function __construct(\ServicesConfig $config)
 	{
-		if (empty($config['services']))
+		if (empty($config->services))
 		{
 			throw new \InvalidArgumentException('The services configuration file does not contain a valid services array.');
 		}
 
-		$this->services = $config['services'];
+		$this->services = $config->services;
+
+		unset($config);
 	}
 
 	//--------------------------------------------------------------------
@@ -103,7 +105,7 @@ class DI
 	 *          $this->di = $di;
 	 *      }
 	 */
-	public static function getInstance(array $config = []): self
+	public static function getInstance(\ServicesConfig $config=null): self
 	{
 		if (empty(static::$instance))
 		{

@@ -44,11 +44,12 @@ require_once BASEPATH.'Common.php';
  */
 
 require_once BASEPATH.'DI/DI.php';
+require_once APPPATH.'config/services.php';
 
 // This is the only time that services array will need
 // to be passed into the class. All other uses can
 // simply call getInstance().
-$di = CodeIgniter\DI\DI::getInstance(get_config('services'));
+$di = CodeIgniter\DI\DI::getInstance(new ServicesConfig());
 
 /*
  * ------------------------------------------------------
