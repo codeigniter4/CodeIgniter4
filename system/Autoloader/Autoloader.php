@@ -337,6 +337,7 @@ class Autoloader
 		// Only allow characters deemed safe for POSIX portable filenames.
 		// Plus the forward slash for directory separators since this might
 		// be a path.
+		// http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap03.html#tag_03_278
 		$filename = preg_replace('/[^a-zA-Z0-9\s\/\-\_\.]/', '', $filename);
 
 		// Replace one or more spaces with a dash
