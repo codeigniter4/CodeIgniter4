@@ -49,7 +49,7 @@ require_once APPPATH.'config/services.php';
 // This is the only time that services array will need
 // to be passed into the class. All other uses can
 // simply call getInstance().
-$di = CodeIgniter\DI\DI::getInstance(new ServicesConfig());
+$di = CodeIgniter\DI\DI::getInstance(new App\Config\ServicesConfig());
 
 /*
  * ------------------------------------------------------
@@ -64,7 +64,7 @@ require_once APPPATH.'config/autoload.php';
 // The Autoloader class only handles namespaces
 // and "legacy" support.
 $loader = $di->single('autoloader');
-$loader->initialize(new AutoloadConfig());
+$loader->initialize(new App\Config\AutoloadConfig());
 
 // The register function will prepend
 // the psr4 loader.

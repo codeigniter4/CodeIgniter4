@@ -74,7 +74,7 @@ class DI
 	 * The constructor is kept private to ensure that
 	 * this class can only be used as a singleton DI container.
 	 */
-	private function __construct(\ServicesConfig $config)
+	private function __construct(\App\Config\ServicesConfig $config)
 	{
 		if (empty($config->services))
 		{
@@ -105,7 +105,7 @@ class DI
 	 *          $this->di = $di;
 	 *      }
 	 */
-	public static function getInstance(\ServicesConfig $config=null): self
+	public static function getInstance(\App\Config\ServicesConfig $config=null): self
 	{
 		if (empty(static::$instance))
 		{

@@ -1,4 +1,4 @@
-<?php
+<?php namespace App\Config;
 
 /**
  * -------------------------------------------------------------------
@@ -38,11 +38,12 @@ class AutoloadConfig
 		 *       'CodeIgniter' => SYSPATH
 		 *   `];
 		 */
-	    $this->psr4 = [
-		    'App'         => realpath(APPPATH),
-		    'App\Controllers' => APPPATH.'Controllers',
-		    'CodeIgniter' => realpath(BASEPATH),
-	    ];
+		$this->psr4 = [
+			'App'             => realpath(APPPATH),
+			'App\Config'      => APPPATH.'config',
+			'App\Controllers' => APPPATH.'controllers',
+			'CodeIgniter'     => realpath(BASEPATH),
+		];
 
 		/**
 		 * -------------------------------------------------------------------
@@ -66,11 +67,8 @@ class AutoloadConfig
 			'CodeIgniter\Router\RouteCollection' => BASEPATH.'Router/RouteCollection.php',
 			'CodeIgniter\Router\Router'          => BASEPATH.'Router/Router.php',
 		];
-
 	}
 
 	//--------------------------------------------------------------------
-
-
 
 }
