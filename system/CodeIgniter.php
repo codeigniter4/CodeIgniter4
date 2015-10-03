@@ -39,6 +39,21 @@ require_once BASEPATH.'Common.php';
 
 /*
  * ------------------------------------------------------
+ *  Load any environment-specific settings from .env file
+ * ------------------------------------------------------
+ */
+if (ENVIRONMENT !== 'production')
+{
+	// Load environment settings from .env files
+	// into $_SERVER and $_ENV
+	require_once BASEPATH.'Config/DotEnv.php';
+	$env = new \CodeIgniter\Config\DotEnv(APPPATH);
+	$env->load();
+	unset($env);
+}
+
+/*
+ * ------------------------------------------------------
  *  Get the DI Container ready for use
  * ------------------------------------------------------
  */
