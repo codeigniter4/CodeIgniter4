@@ -317,6 +317,8 @@ class Logger implements LoggerInterface
 
 		foreach ($context as $key => $val)
 		{
+			// todo - handle logging exceptions
+
 			// todo - sanitize input before writing to file
 			$replace['{'.$key.'}'] = $val;
 		}
