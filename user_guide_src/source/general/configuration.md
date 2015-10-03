@@ -30,7 +30,7 @@ If you need to create a new configuration file you would create a new simple cla
 ### Handling Different Environments
 Because your site can operate within multiple different environments, you can modify your values based on the environment. Within these environments you will have settings that might change per the environment. This can include database settings, API credentials, and other settings that will vary between deploys. 
 
-You can store values in a `.env` file at the project root. This file should NOT be checked into any type of version control systems. The file is simply a collection of name/value pairs separated by an equal sign, much like a .ini file. **Make sure the .env file is added to your .gitignore so it is not checked-in the code**
+You can store values in a `.env` file in the `/application` directory. This file should NOT be checked into any type of version control systems. The file is simply a collection of name/value pairs separated by an equal sign, much like a .ini file. **Make sure the .env file is added to your .gitignore so it is not checked-in the code**
 
 	S3_BUCKET="dotenv"
 	SECRET_KEY="super_secret_key"
