@@ -70,6 +70,7 @@ class AutoloadConfig
 			'CodeIgniter\Router\Router'                   => BASEPATH.'Router/Router.php',
 			'CodeIgniter\Router\RouterInterface'          => BASEPATH.'Router/RouterInterface.php',
 			'CodeIgniter\Log\LoggerInterface'             => BASEPATH.'Log/LoggerInterface.php',
+			'PSR\Log\LoggerInterface'                     => BASEPATH.'Log/LoggerInterface.php',
 			'CodeIgniter\Log\Logger'                      => BASEPATH.'Log/Logger.php',
 		];
 	}
