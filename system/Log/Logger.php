@@ -317,9 +317,14 @@ class Logger implements LoggerInterface
 
 		foreach ($context as $key => $val)
 		{
-			// todo - handle logging exceptions
+			// Verify that the 'exception' key is actually an exception
+			// or error, both of which implement the 'Throwable' interface.
+			if ($key == 'exception' && $val instanceof \Throwable)
+			{
+				$val = $val->getMessage().' '.$val->getFile().':'. $val->getLine();
+			}
 
-			// todo - sanitize input before writing to file
+			// todo - sanitize input before writing to file?
 			$replace['{'.$key.'}'] = $val;
 		}
 
