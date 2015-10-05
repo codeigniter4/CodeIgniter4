@@ -72,6 +72,7 @@ class AutoloadConfig
 			'CodeIgniter\Log\Logger'                      => BASEPATH.'Log/Logger.php',
 			'PSR\Log\LoggerInterface'                     => BASEPATH.'Log/LoggerInterface.php',
 		    'PSR\Log\LogLevel'                            => BASEPATH.'Log/LogLevel.php',
+		    'PSR\Log\LoggerAwareInterface'                => BASEPATH.'Log/LoggerAwareInterface.php',
 		];
 	}
 

@@ -48,11 +48,15 @@ If you want to log an Exception or an Error, you can use the key of 'exception',
 Three placeholders will be automatically expanded for you to display the contents of the $_POST, $_GET, and $_SESSION values. They are `{post_vars}`, `{get_vars}`, and `{session_vars}`, respectively.
 
 ### Using Third-Party Loggers
-You can use any other logger that you might like as long as it extends from either `CodeIgniter\Log\LoggerInterface` or `Psr\Log\LoggerInterface`, which is an alias for the first class. This means that you can easily drop in use for any PSR3-compatible logger, or create your own.
+You can use any other logger that you might like as long as it extends from either `PSR\Log\LoggerInterface` and is [PSR3](http://www.php-fig.org/psr/psr-3/) compatible. This means that you can easily drop in use for any PSR3-compatible logger, or create your own.
 
 You must ensure that the third-party logger can be found by the system, by adding it to either our `/application/config/autoload.php` configuration file, or through another autoloader, like Composer. Next, you should modify `/application/config/services.php` to point the `logger` alias to your new class name. 
 
 Now, any call that is done through the `log_message()` function will use your library instead.
+
+### LoggerAware Trait
+If you would like to implement your libraries in a framework-agnostic method, you can use the `CodeIgniter\Log\LoggerAwareTrait` which implements the `setLogger()` method for you. Then, when you use your library under different environments for frameworks, your library should still be able to log as it would expect, as long as it can find a PSR3 compatible logger.
+
 
 
 
