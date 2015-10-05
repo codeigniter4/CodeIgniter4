@@ -32,3 +32,32 @@ if (! function_exists('DI'))
 
 //--------------------------------------------------------------------
 
+if (! function_exists('log_message'))
+{
+	/**
+	 * A convenience/compatibility method for logging events through
+	 * the Log system.
+	 *
+	 * Allowed log levels are:
+	 *  - emergency
+	 *  - alert
+	 *  - critical
+	 *  - error
+	 *  - warning
+	 *  - notice
+	 *  - info
+	 *  - debug
+	 *
+	 * @param string $level
+	 * @param        $message
+	 * @param array  $context
+	 *
+	 * @return mixed
+	 */
+	function log_message(string $level, $message, array $context=[])
+	{
+		return DI('logger')->log($level, $message, $context);
+	}
+}
+
+//--------------------------------------------------------------------
