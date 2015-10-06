@@ -62,6 +62,7 @@ class AutoloadConfig
 		 *   ];
 		 */
 		$this->classmap = [
+			'CodeIgniter\Loader'                          => BASEPATH.'Loader.php',
 			'CodeIgniter\Benchmark\Timer'                 => BASEPATH.'Benchmark/Timer.php',
 			'CodeIgniter\Benchmark\Iterator'              => BASEPATH.'Benchmark/Iterator.php',
 			'CodeIgniter\Config\BaseConfig'               => BASEPATH.'Config/BaseConfig.php',
@@ -70,6 +71,8 @@ class AutoloadConfig
 			'CodeIgniter\Router\Router'                   => BASEPATH.'Router/Router.php',
 			'CodeIgniter\Router\RouterInterface'          => BASEPATH.'Router/RouterInterface.php',
 			'CodeIgniter\Log\Logger'                      => BASEPATH.'Log/Logger.php',
+			'CodeIgniter\View\RenderableInterface'        => BASEPATH.'View/RenderableInterface.php',
+			'CodeIgniter\View\View'                       => BASEPATH.'View/View.php',
 			'PSR\Log\LoggerInterface'                     => BASEPATH.'Log/LoggerInterface.php',
 		    'PSR\Log\LogLevel'                            => BASEPATH.'Log/LogLevel.php',
 		    'PSR\Log\LoggerAwareInterface'                => BASEPATH.'Log/LoggerAwareInterface.php',

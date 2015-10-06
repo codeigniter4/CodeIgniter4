@@ -61,3 +61,28 @@ if (! function_exists('log_message'))
 }
 
 //--------------------------------------------------------------------
+
+if (! function_exists('view'))
+{
+	/**
+	 * Grabs the current RenderableInterface-compatible class
+	 * and tells it to render the specified view. Simply provides
+	 * a convenience method that can be used in controllers,
+	 * libraries, and routed closures.
+	 *
+	 * @param string $name
+	 * @param array  $data
+	 *
+	 * @return string
+	 */
+	function view(string $name, array $data=[])
+	{
+		/**
+		 * @var CodeIgniter\View\View $renderer
+		 */
+		$renderer = DI('renderer');
+
+		return $renderer->setData($data)
+						->render($name);
+	}
+}

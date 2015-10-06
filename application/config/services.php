@@ -31,7 +31,8 @@ class ServicesConfig {
 		'bmiterator' => '\CodeIgniter\Benchmark\Iterator',
 		'logger'     => '\CodeIgniter\Log\Logger',
 		'router'     => '\CodeIgniter\Router\Router',
-		'routes'     => '\CodeIgniter\Router\RouteCollection'
+		'routes'     => '\CodeIgniter\Router\RouteCollection',
+	    'renderer'   => '\CodeIgniter\View\View'
 
 		// Your custom files can be added here.
 	];
