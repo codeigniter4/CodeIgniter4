@@ -17,7 +17,7 @@ interface RenderableInterface {
 	 *
 	 * @return string
 	 */
-	public function render(string $view): string;
+	public function render(string $view, array $data=[]): string;
 
 	//--------------------------------------------------------------------
 

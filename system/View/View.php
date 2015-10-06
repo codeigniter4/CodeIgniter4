@@ -46,15 +46,18 @@ class View implements RenderableInterface {
 	 *
 	 * @return string
 	 */
-	public function render(string $view): string
+	public function render(string $view, array $data=[]): string
 	{
-		$output = '';
-
 		$file = APPPATH.'views/'.str_replace('.php', '', $view).'.php';
 
 		if (! file_exists($file))
 		{
 			throw new \InvalidArgumentException('View file not found: '. $file);
+		}
+
+		if (! empty($data))
+		{
+			$this->data = array_merge($this->data, $data);
 		}
 
 		// Make our view data available to the view.
