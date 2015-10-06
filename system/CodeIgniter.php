@@ -102,6 +102,8 @@ $router = $di->single('router');
 
 $controller = $router->controllerName();
 
+ob_start();
+
 // Is it routed to a Closure?
 if (is_callable($controller))
 {
@@ -114,4 +116,9 @@ else
 	$class->$method(...$router->params());
 }
 
-echo $benchmark->elapsedTime('total_execution');
+$output = ob_get_contents();
+ob_end_clean();
+
+$output = str_replace('{elapsed_time}', $benchmark->elapsedTime('total_execution'), $output);
+
+echo $output;
