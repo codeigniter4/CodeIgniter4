@@ -4,7 +4,7 @@ class Home {
 
 	public function index()
 	{
-	    echo view('home');
+	    echo view('welcome_message');
 	}
 
 	//--------------------------------------------------------------------
