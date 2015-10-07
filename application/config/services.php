@@ -20,21 +20,32 @@ class ServicesConfig {
 	 *      $bm = $ci->benchmark;
 	 *      $ci->benchmark->mark('some_mark_start');
 	 */
-	public $services = [
+	public $services = [];
 
-		// alias            class name
-		//--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
-		// The core CodeIgniter files
-		'autoloader' => '\CodeIgniter\Autoloader\Autoloader',
-		'bmtimer'    => '\CodeIgniter\Benchmark\Timer',
-		'bmiterator' => '\CodeIgniter\Benchmark\Iterator',
-		'logger'     => '\CodeIgniter\Log\Logger',
-		'router'     => '\CodeIgniter\Router\Router',
-		'routes'     => '\CodeIgniter\Router\RouteCollection',
-	    'renderer'   => '\CodeIgniter\View\View'
+	public function __construct()
+	{
+	    $this->services = [
+		    // alias            class name
+		    //--------------------------------------------------------------------
 
-		// Your custom files can be added here.
-	];
+		    // The core CodeIgniter files
+		    'autoloader' => '\CodeIgniter\Autoloader\Autoloader',
+		    'bmtimer'    => '\CodeIgniter\Benchmark\Timer',
+		    'bmiterator' => '\CodeIgniter\Benchmark\Iterator',
+		    'logger'     => '\CodeIgniter\Log\Logger',
+		    'router'     => '\CodeIgniter\Router\Router',
+		    'routes'     => '\CodeIgniter\Router\RouteCollection',
+		    'renderer'   => function ($di)
+		    {
+				return new \CodeIgniter\View\View(APPPATH.'views/');
+		    },
+
+		    // Your custom files can be added here.
+	    ];
+	}
+
+	//--------------------------------------------------------------------
 
 }

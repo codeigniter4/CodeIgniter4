@@ -19,6 +19,12 @@ class View implements RenderableInterface {
 	protected $data = [];
 
 	/**
+	 * The base directory to look in for our views.
+	 *
+	 * @var
+	 */
+	protected $viewPath;
+	/**
 	 * Instance of CodeIgniter\Loader for when
 	 * we need to attempt to find a view
 	 * that's not in standard place.
@@ -28,9 +34,9 @@ class View implements RenderableInterface {
 
 	//--------------------------------------------------------------------
 
-	public function __construct()
+	public function __construct(string $viewPath=null)
 	{
-//	    $this->loader = $loader;
+		$this->viewPath = rtrim($viewPath, '/ ').'/';
 	}
 
 	//--------------------------------------------------------------------
@@ -49,7 +55,7 @@ class View implements RenderableInterface {
 	 */
 	public function render(string $view, array $data=[], bool $escape=true): string
 	{
-		$file = APPPATH.'views/'.str_replace('.php', '', $view).'.php';
+		$file = $this->viewPath.str_replace('.php', '', $view).'.php';
 
 		if (! file_exists($file))
 		{
