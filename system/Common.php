@@ -72,17 +72,18 @@ if (! function_exists('view'))
 	 *
 	 * @param string $name
 	 * @param array  $data
+	 * @param bool   $escape Whether the data values should be escaped.
 	 *
 	 * @return string
 	 */
-	function view(string $name, array $data=[])
+	function view(string $name, array $data=[], bool $escape=true)
 	{
 		/**
 		 * @var CodeIgniter\View\View $renderer
 		 */
 		$renderer = DI('renderer');
 
-		return $renderer->setData($data)
+		return $renderer->setData($data, $escape)
 						->render($name);
 	}
 }
