@@ -150,7 +150,10 @@ class View implements RenderableInterface {
 		{
 			foreach ($data as $key => &$value)
 			{
-				$value = htmlspecialchars($value, ENT_SUBSTITUTE, 'UTF-8');
+				if (is_string($value) || is_numeric($value))
+				{
+					$value = htmlspecialchars($value, ENT_SUBSTITUTE, 'UTF-8');
+				}
 			}
 		}
 		else if (is_string($data))
