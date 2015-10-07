@@ -5,7 +5,6 @@ use CodeIgniter\Loader;
 /**
  * Class View
  *
- * @todo Add data escaping in setData and setVar methods.
  * @todo integrate parsing somehow
  *
  * @package CodeIgniter\View
