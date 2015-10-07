@@ -14,10 +14,12 @@ interface RenderableInterface {
 	 * data that has already been set.
 	 *
 	 * @param string $view
+	 * @param array  $data
+	 * @param bool   $escape Whether the values should be escaped.
 	 *
 	 * @return string
 	 */
-	public function render(string $view, array $data=[]): string;
+	public function render(string $view, array $data=[], bool $escape=true): string;
 
 	//--------------------------------------------------------------------
 
@@ -25,10 +27,11 @@ interface RenderableInterface {
 	 * Sets several pieces of view data at once.
 	 *
 	 * @param array $data
+	 * @param bool  $escape Whether the values should be escaped
 	 *
 	 * @return RenderableInterface
 	 */
-	public function setData(array $data=[]): self;
+	public function setData(array $data=[], bool $escape=true): self;
 
 	//--------------------------------------------------------------------
 
@@ -37,10 +40,11 @@ interface RenderableInterface {
 	 *
 	 * @param string $name
 	 * @param null   $value
+	 * @param bool   $escape Whether the value should be escaped
 	 *
 	 * @return RenderableInterface
 	 */
-	public function setVar(string $name, $value=null): self;
+	public function setVar(string $name, $value=null, bool $escape=true): self;
 
 	//--------------------------------------------------------------------
 

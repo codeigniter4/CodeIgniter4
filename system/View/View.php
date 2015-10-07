@@ -43,10 +43,12 @@ class View implements RenderableInterface {
 	 * data that has already been set.
 	 *
 	 * @param string $view
+	 * @param array  $data
+	 * @param bool   $escape Whether the $data values should be escaped
 	 *
 	 * @return string
 	 */
-	public function render(string $view, array $data=[]): string
+	public function render(string $view, array $data=[], bool $escape=true): string
 	{
 		$file = APPPATH.'views/'.str_replace('.php', '', $view).'.php';
 
@@ -57,6 +59,11 @@ class View implements RenderableInterface {
 
 		if (! empty($data))
 		{
+			if ($escape === true)
+			{
+				$data = $this->escapeData($data);
+			}
+
 			$this->data = array_merge($this->data, $data);
 		}
 
@@ -79,11 +86,17 @@ class View implements RenderableInterface {
 	 * Sets several pieces of view data at once.
 	 *
 	 * @param array $data
+	 * @param bool  $escape Whether values should be escaped
 	 *
 	 * @return RenderableInterface
 	 */
-	public function setData(array $data=[]): RenderableInterface
+	public function setData(array $data=[], bool $escape=true): RenderableInterface
 	{
+		if ($escape === true)
+		{
+			$data = $this->escapeData($data);
+		}
+
 		$this->data = array_merge($this->data, $data);
 
 		return $this;
@@ -96,15 +109,53 @@ class View implements RenderableInterface {
 	 *
 	 * @param string $name
 	 * @param null   $value
+	 * @param bool   $escape Whether value should be escaped.
 	 *
 	 * @return RenderableInterface
 	 */
-	public function setVar(string $name, $value=null): RenderableInterface
+	public function setVar(string $name, $value=null, bool $escape=true): RenderableInterface
 	{
+		if ($escape === true)
+		{
+			$value = $this->escapeData($value);
+		}
+
 		$this->data[$name] = $value;
 
 		return $this;
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Performs simple auto-escaping of data for security reasons.
+	 * Might consider making this more complex at a later date.
+	 *
+	 * If $data is a string, then it simply escapes and returns it.
+	 * If $data is an array, then it loops over it, escaping each
+	 * 'value' of the key/value pairs.
+	 *
+	 * @param $data
+	 *
+	 * @return $data
+	 */
+	protected function escapeData($data)
+	{
+		if (is_array($data))
+		{
+			foreach ($data as $key => &$value)
+			{
+				$value = htmlspecialchars($value, ENT_SUBSTITUTE, 'UTF-8');
+			}
+		}
+		else if (is_string($data))
+		{
+			$data = htmlspecialchars($data, ENT_SUBSTITUTE, 'UTF-8');
+		}
+
+		return $data;
+	}
+
+	//--------------------------------------------------------------------
+
 }
