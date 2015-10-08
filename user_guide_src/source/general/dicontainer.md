@@ -108,6 +108,8 @@ The `make()` method will always return a new instance of the class. The `single(
 
 	// Share the application's database connection.
 	$db = DI()->single('database');
+	// Can also be called like: 
+	$db = DI('database');
 	
 	// Create two connections, usually to different databases.
 	$db1 = DI()->make('database');
