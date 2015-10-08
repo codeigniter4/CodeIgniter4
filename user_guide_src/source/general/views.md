@@ -104,32 +104,6 @@ Now open your view file and change the text to variables that correspond to the 
 
 Then load the page at the URL you've been using and you should see the variables replaced.
 
-### Escaping Data
-When you pass data to the `view()` function it is automatically escaped to protect against cross-site scripting attacks. This  is done by looping over the $data array and running all values through the `htmlspecialchars()` function if it is a string.
-
-If you don't want the data to be escaped, you can pass `false` as the third parameter to the `view()` function.
-
-	echo view('blogview', $data, false);
-
-If you choose not to escape data, or you are passing in an object instance, you can manually escape the data within the view with the `esc()` function. The first parameter is the string to escape.
-
-	<?= esc($object->getStat()) ?>
-
-### Escaping Contexts
-By default, the `esc()` function assumes that the data you want to escape is intended to be used within standard HTML. However, if the data is intended for use in Javascript, CSS, or in an href attribute, you would need different escaping rules to be effective. You can pass in the name of the context as the second parameter. Valid contexts are 'html', 'js', 'css', 'url'. 
-
-	<a href="<?= esc($url, 'url') ?>">Some Link</a>
-	
-	<script>
-		var siteName = '<?= esc($siteName, 'js') ?>';
-	</script>
-	
-	<style>
-		body {
-			background-color: <?= esc('bgColor', 'css') ?>
-		}
-	</style>
-
 ## Direct Access To View Class
 The `view()` function is a convenience method that grabs an instance of the View class from the DI Container, sets the data, and renders the view. While this is often exactly what you want, you may find times where you want to work with it more directly. In that case you can access the View class through the DI Container with the `renderer` alias: 
 
@@ -148,6 +122,32 @@ The `setVar()` and `setData()` methods are chainable, allowing you to combine a 
 	DI('renderer')->setVar('one', $one)
 	                        ->setVar('two', $two)
 	                        ->render('myView');
+
+### Escaping Data
+When you pass data to the `setVar()` and `setData()` functions it is automatically escaped to protect against cross-site scripting attacks. This  is done by looping over the $data array and running all values through the `htmlspecialchars()` function if it is a string. 
+
+If you don't want the data to be escaped, you can pass `null` or `'raw'` as the final parameter to each function.
+
+	echo $renderer->setVar('one', $one, 'raw');
+
+If you choose not to escape data, or you are passing in an object instance, you can manually escape the data within the view with the `esc()` function. The first parameter is the string to escape. The second parameter is the context to escape the data for (see below).
+
+	<?= esc($object->getStat()) ?>
+
+### Escaping Contexts
+By default, the `esc()` and, in turn, the `setVar()` and `setData()` functions assume that the data you want to escape is intended to be used within standard HTML. However, if the data is intended for use in Javascript, CSS, or in an href attribute, you would need different escaping rules to be effective. You can pass in the name of the context as the second parameter. Valid contexts are 'html', 'js', 'css', 'url'. 
+
+	<a href="<?= esc($url, 'url') ?>">Some Link</a>
+	
+	<script>
+		var siteName = '<?= esc($siteName, 'js') ?>';
+	</script>
+	
+	<style>
+		body {
+			background-color: <?= esc('bgColor', 'css') ?>
+		}
+	</style>
 
 ## Creating Loops
 The data array you pass to your view files is not limited to simple variables. You can pass multi dimensional arrays, which can be looped to generate multiple rows. For example, if you pull data from your database it will typically be in the form of a multi-dimensional array.

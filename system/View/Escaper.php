@@ -15,7 +15,7 @@ namespace
 		 * If $data is an array, then it loops over it, escaping each
 		 * 'value' of the key/value pairs.
 		 *
-		 * Valid context values: html, js, css, url
+		 * Valid context values: html, js, css, url, raw, null
 		 *
 		 * @param string|array $data
 		 * @param string       $context
@@ -35,6 +35,14 @@ namespace
 			if (is_string($data))
 			{
 				$context = strtoupper($context);
+
+				// Provide a way to NOT escape data since
+				// this could be called automatically by
+				// the View library.
+				if (empty($context) || $context == 'RAW')
+				{
+					return $data;
+				}
 
 				if ( ! in_array($context, ['HTML', 'JS', 'CSS', 'URL']))
 				{

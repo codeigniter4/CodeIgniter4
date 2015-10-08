@@ -29,7 +29,7 @@ interface RenderableInterface {
 	 *
 	 * @param array $data
 	 * @param string $context The context to escape it for: html, css, js, url
-	 *                        If null, no escaping will happen
+	 *                        If 'raw', no escaping will happen
 	 *
 	 * @return RenderableInterface
 	 */
@@ -43,7 +43,7 @@ interface RenderableInterface {
 	 * @param string $name
 	 * @param null   $value
 	 * @param string $escape The context to escape it for: html, css, js, url
-	 *                        If null, no escaping will happen
+	 *                        If 'raw' no escaping will happen
 	 *
 	 * @return RenderableInterface
 	 */

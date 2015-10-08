@@ -70,20 +70,23 @@ if (! function_exists('view'))
 	 * a convenience method that can be used in controllers,
 	 * libraries, and routed closures.
 	 *
+	 * NOTE: Does not provide any escaping of the data, so that must
+	 * all be handled manually by the developer.
+	 *
 	 * @param string $name
 	 * @param array  $data
-	 * @param bool   $escape Whether the data values should be escaped.
+	 * @param array  $options Unused - reserved for third-party extensions.
 	 *
 	 * @return string
 	 */
-	function view(string $name, array $data=[], bool $escape=true)
+	function view(string $name, array $data=[], array $options=[])
 	{
 		/**
 		 * @var CodeIgniter\View\View $renderer
 		 */
 		$renderer = DI('renderer');
 
-		return $renderer->setData($data, $escape)
-						->render($name);
+		return $renderer->setData($data, 'raw')
+						->render($name, $options);
 	}
 }
