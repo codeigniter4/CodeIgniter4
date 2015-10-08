@@ -50,28 +50,17 @@ class View implements RenderableInterface {
 	 * data that has already been set.
 	 *
 	 * @param string $view
-	 * @param array  $data
-	 * @param bool   $escape Whether the $data values should be escaped
+	 * @param array  $options  // Unused in this implementation
 	 *
 	 * @return string
 	 */
-	public function render(string $view, array $data=[], bool $escape=true): string
+	public function render(string $view, array $options=[]): string
 	{
 		$file = $this->viewPath.str_replace('.php', '', $view).'.php';
 
 		if (! file_exists($file))
 		{
 			throw new \InvalidArgumentException('View file not found: '. $file);
-		}
-
-		if (! empty($data))
-		{
-			if ($escape === true)
-			{
-				$data = $this->escapeData($data);
-			}
-
-			$this->data = array_merge($this->data, $data);
 		}
 
 		// Make our view data available to the view.

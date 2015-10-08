@@ -1,39 +1,137 @@
 <?php
 
-if (! function_exists('esc'))
+namespace
 {
-	/**
-	 * Performs simple auto-escaping of data for security reasons.
-	 * Might consider making this more complex at a later date.
-	 *
-	 * If $data is a string, then it simply escapes and returns it.
-	 * If $data is an array, then it loops over it, escaping each
-	 * 'value' of the key/value pairs.
-	 *
-	 * @param $data
-	 *
-	 * @return $data
-	 */
-	function esc($data)
+
+	use CodeIgniter\View\Escaper;
+
+	if ( ! function_exists('esc'))
 	{
-		if (is_array($data))
+		/**
+		 * Performs simple auto-escaping of data for security reasons.
+		 * Might consider making this more complex at a later date.
+		 *
+		 * If $data is a string, then it simply escapes and returns it.
+		 * If $data is an array, then it loops over it, escaping each
+		 * 'value' of the key/value pairs.
+		 *
+		 * Valid context values: html, js, css, url
+		 *
+		 * @param string|array $data
+		 * @param string       $context
+		 *
+		 * @return $data
+		 */
+		function esc($data, $context = 'html')
 		{
-			foreach ($data as $key => &$value)
+			if (is_array($data))
 			{
-				if (is_string($value) || is_numeric($value))
+				foreach ($data as $key => &$value)
 				{
-					$value = htmlspecialchars($value, ENT_SUBSTITUTE, 'UTF-8');
+					$value = esc($value, $context);
 				}
 			}
-		}
-		else if (is_string($data))
-		{
-			$data = htmlspecialchars($data, ENT_SUBSTITUTE, 'UTF-8');
-		}
 
-		return $data;
+			if (is_string($data))
+			{
+				$context = strtoupper($context);
+
+				if ( ! in_array($context, ['HTML', 'JS', 'CSS', 'URL']))
+				{
+					throw new \InvalidArgumentException('Invalid escape context provided.');
+				}
+
+				$method = 'escape'.$context;
+
+				$data = Escaper::$method($data);
+			}
+
+			return $data;
+		}
 	}
 }
 
 //--------------------------------------------------------------------
 
+namespace CodeIgniter\View
+{
+
+	/**
+	 * Class Escaper
+	 *
+	 * Provides common escaping routines for view data.
+	 * The actual methods used to filter were borrowed from
+	 * the Nette Framework. (https://nette.org/en/)
+	 *
+	 * @package CodeIgniter\View
+	 */
+	class Escaper
+	{
+
+		/**
+		 * Escapes a string for use inside of standard HTML.
+		 *
+		 * @param string $str
+		 *
+		 * @return string
+		 */
+		public static function escapeHTML(string $str): string
+		{
+			return htmlspecialchars($str, ENT_SUBSTITUTE, 'UTF-8');
+		}
+
+		//--------------------------------------------------------------------
+
+		/**
+		 * Escapes a string for use as an href value.
+		 *
+		 * @param string $str
+		 *
+		 * @return string
+		 */
+		public static function escapeURL(string $str): string
+		{
+			return preg_match('~^(?:(?:https?|ftp)://[^@]+(?:/.*)?|mailto:.+|[/?#].*|[^:]+)\z~i', $str) ? $str : '';
+		}
+
+		//--------------------------------------------------------------------
+
+		/**
+		 * Escapes a string for use within CSS.
+		 *
+		 * @param string $str
+		 *
+		 * @return string
+		 */
+		public static function escapeCSS(string $str): string
+		{
+			// http://www.w3.org/TR/2006/WD-CSS21-20060411/syndata.html#q6
+			return addcslashes($str, "\x00..\x1F!\"#$%&'()*+,./:;<=>?@[\\]^`{|}~");
+		}
+
+		//--------------------------------------------------------------------
+
+		/**
+		 * Escapes a string for use within Javascript.
+		 *
+		 * @param string $str
+		 *
+		 * @return string
+		 */
+		public static function escapeJS(string $str): string
+		{
+			$json = json_encode($str, JSON_UNESCAPED_UNICODE);
+
+			if ($error = json_last_error())
+			{
+				throw new \RuntimeException(json_last_error_msg(), $error);
+			}
+
+			return str_replace(["\xe2\x80\xa8", "\xe2\x80\xa9", ']]>', '<!'], ['\u2028', '\u2029', ']]\x3E', '\x3C!'],
+				$json);
+		}
+
+		//--------------------------------------------------------------------
+
+	}
+}

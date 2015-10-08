@@ -14,12 +14,13 @@ interface RenderableInterface {
 	 * data that has already been set.
 	 *
 	 * @param string $view
-	 * @param array  $data
-	 * @param bool   $escape Whether the values should be escaped.
+	 * @param array  $options  Reserved for 3rd-party uses since
+	 *                         it might be needed to pass additional info
+	 *                         to other template engines.
 	 *
 	 * @return string
 	 */
-	public function render(string $view, array $data=[], bool $escape=true): string;
+	public function render(string $view, array $options=[]): string;
 
 	//--------------------------------------------------------------------
 
@@ -27,7 +28,7 @@ interface RenderableInterface {
 	 * Sets several pieces of view data at once.
 	 *
 	 * @param array $data
-	 * @param bool  $escape Whether the values should be escaped
+	 * @param bool $escape Whether the values should be escaped
 	 *
 	 * @return RenderableInterface
 	 */
