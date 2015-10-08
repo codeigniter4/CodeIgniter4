@@ -82,15 +82,16 @@ class View implements RenderableInterface {
 	 * Sets several pieces of view data at once.
 	 *
 	 * @param array $data
-	 * @param bool  $escape Whether values should be escaped
+	 * @param string $context The context to escape it for: html, css, js, url
+	 *                        If null, no escaping will happen
 	 *
 	 * @return RenderableInterface
 	 */
-	public function setData(array $data=[], bool $escape=true): RenderableInterface
+	public function setData(array $data=[], string $context='html'): RenderableInterface
 	{
-		if ($escape === true)
+		if (! empty($context))
 		{
-			$data = esc($data);
+			$data = \esc($data, $context);
 		}
 
 		$this->data = array_merge($this->data, $data);
@@ -105,15 +106,16 @@ class View implements RenderableInterface {
 	 *
 	 * @param string $name
 	 * @param null   $value
-	 * @param bool   $escape Whether value should be escaped.
+	 * @param string $context The context to escape it for: html, css, js, url
+	 *                        If null, no escaping will happen
 	 *
 	 * @return RenderableInterface
 	 */
-	public function setVar(string $name, $value=null, bool $escape=true): RenderableInterface
+	public function setVar(string $name, $value=null, string $context='html'): RenderableInterface
 	{
-		if ($escape === true)
+		if (! empty($context))
 		{
-			$value = esc($value);
+			$value = \esc($value, $context);
 		}
 
 		$this->data[$name] = $value;
