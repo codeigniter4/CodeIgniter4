@@ -1,5 +1,7 @@
 <?php namespace CodeIgniter\View;
 
+require dirname(__FILE__).'/Escaper.php';
+
 use CodeIgniter\Loader;
 
 /**
@@ -99,7 +101,7 @@ class View implements RenderableInterface {
 	{
 		if ($escape === true)
 		{
-			$data = $this->escapeData($data);
+			$data = esc($data);
 		}
 
 		$this->data = array_merge($this->data, $data);
@@ -122,46 +124,12 @@ class View implements RenderableInterface {
 	{
 		if ($escape === true)
 		{
-			$value = $this->escapeData($value);
+			$value = esc($value);
 		}
 
 		$this->data[$name] = $value;
 
 		return $this;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Performs simple auto-escaping of data for security reasons.
-	 * Might consider making this more complex at a later date.
-	 *
-	 * If $data is a string, then it simply escapes and returns it.
-	 * If $data is an array, then it loops over it, escaping each
-	 * 'value' of the key/value pairs.
-	 *
-	 * @param $data
-	 *
-	 * @return $data
-	 */
-	protected function escapeData($data)
-	{
-		if (is_array($data))
-		{
-			foreach ($data as $key => &$value)
-			{
-				if (is_string($value) || is_numeric($value))
-				{
-					$value = htmlspecialchars($value, ENT_SUBSTITUTE, 'UTF-8');
-				}
-			}
-		}
-		else if (is_string($data))
-		{
-			$data = htmlspecialchars($data, ENT_SUBSTITUTE, 'UTF-8');
-		}
-
-		return $data;
 	}
 
 	//--------------------------------------------------------------------
