@@ -90,3 +90,23 @@ if (! function_exists('view'))
 						->render($name, $options);
 	}
 }
+
+//--------------------------------------------------------------------
+
+if ( ! function_exists('is_cli'))
+{
+
+	/**
+	 * Is CLI?
+	 *
+	 * Test to see if a request was made from the command line.
+	 *
+	 * @return 	bool
+	 */
+	function is_cli()
+	{
+		return (PHP_SAPI === 'cli' OR defined('STDIN'));
+	}
+}
+
+//--------------------------------------------------------------------

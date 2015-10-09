@@ -85,6 +85,13 @@ $loader->initialize(new App\Config\AutoloadConfig());
 // the psr4 loader.
 $loader->register();
 
+/*
+ * ------------------------------------------------------
+ *  Set custom exception handling
+ * ------------------------------------------------------
+ */
+$di->single('exceptions')->initialize();
+
 //--------------------------------------------------------------------
 // Start the Benchmark
 //--------------------------------------------------------------------
