@@ -80,7 +80,7 @@ class Exceptions
 		}
 
 		// Make a nicer title based on the type of Exception.
-		$title = preg_replace('/(\w+)([A-Z])/U', '\\1 \\2', get_class($exception));
+		$title = get_class($exception);
 
 		if (is_cli())
 		{
