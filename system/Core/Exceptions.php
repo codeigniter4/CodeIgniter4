@@ -122,7 +122,7 @@ class Exceptions
 	//--------------------------------------------------------------------
 
 	/**
-	 * Debug Path
+	 * Clean Path
 	 *
 	 * This makes nicer looking paths for the error output.
 	 *
@@ -130,7 +130,7 @@ class Exceptions
 	 *
 	 * @return    string
 	 */
-	public static function debugPath($file)
+	public static function cleanPath($file)
 	{
 		if (strpos($file, APPPATH) === 0)
 		{
@@ -150,6 +150,15 @@ class Exceptions
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Creates a syntax-highlighted version of a PHP file.
+	 *
+	 * @param     $file
+	 * @param     $lineNumber
+	 * @param int $lines
+	 *
+	 * @return bool|string
+	 */
 	public static function highlightFile($file, $lineNumber, $lines = 15)
 	{
 		if (empty ($file) || ! is_readable($file))
