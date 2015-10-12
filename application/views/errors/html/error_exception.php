@@ -8,8 +8,12 @@
 	<style type="text/css">
 		<?= preg_replace('#[\r\n\t ]+#', ' ', file_get_contents(__DIR__.DIRECTORY_SEPARATOR.'debug.css')) ?>
 	</style>
+
+	<script type="text/javascript">
+		<?= file_get_contents(__DIR__.DIRECTORY_SEPARATOR.'debug.js') ?>
+	</script>
 </head>
-<body>
+<body onload="init()">
 
 	<!-- Header -->
 	<div class="header">
@@ -36,21 +40,20 @@
 
 	<div class="container">
 
-		<ul class="tabs">
-			<li>
-				<a href="#backtrace" class="active">Backtrace</a>
-				<a href="#server">Server</a>
-				<a href="#request">Request</a>
-				<a href="#response">Response</a>
-				<a href="#files">Files</a>
-				<a href="#memory">Memory</a>
+		<ul class="tabs" id="tabs">
+			<li><a href="#backtrace">Backtrace</a></li>
+				<li><a href="#server">Server</a></li>
+				<li><a href="#request">Request</a></li>
+				<li><a href="#response">Response</a></li>
+				<li><a href="#files">Files</a></li>
+				<li><a href="#memory">Memory</a></li>
 			</li>
 		</ul>
 
 		<div class="tab-content">
 
 			<!-- Backtrace -->
-			<div class="content active">
+			<div class="content" id="backtrace">
 
 				<ol class="trace">
 				<?php foreach ($trace as $row) : ?>
@@ -84,7 +87,7 @@
 			</div>
 
 			<!-- Server -->
-			<div class="content">
+			<div class="content" id="server">
 				<?php foreach (['_SERVER', '_SESSION', '_COOKIE'] as $var) : ?>
 					<?php if (empty($GLOBALS[$var]) || ! is_array($GLOBALS[$var])) continue; ?>
 
@@ -117,7 +120,7 @@
 			</div>
 
 			<!-- Request -->
-			<div class="content">
+			<div class="content" id="request">
 				<?php $empty = true; ?>
 				<?php foreach (['_GET', '_POST'] as $var) : ?>
 					<?php if (empty($GLOBALS[$var]) || ! is_array($GLOBALS[$var])) continue; ?>
@@ -161,12 +164,12 @@
 			</div>
 
 			<!-- Response -->
-			<div class="content">
+			<div class="content" id="response">
 
 			</div>
 
 			<!-- Files -->
-			<div class="content">
+			<div class="content" id="files">
 				<?php $files = get_included_files(); ?>
 
 				<ol>
@@ -177,7 +180,7 @@
 			</div>
 
 			<!-- Memory -->
-			<div class="content">
+			<div class="content" id="memory">
 
 			</div>
 
