@@ -64,3 +64,35 @@ h1 {
 .source span.highlight .number {
     color: #fff;
 }
+
+.tabs {
+    list-style: none;
+    list-style-position: inside;
+    margin: 0;
+    padding: 0;
+}
+.tabs a:link,
+.tabs a:visited {
+    padding: 0rem 1rem;
+    line-height: 2.7;
+    text-decoration: none;
+    color: #a7a7a7;
+    background: #f1f1f1;
+    border: 1px solid #e7e7e7;
+    border-bottom: 0;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    display: inline-block;
+}
+.tabs a:hover {
+    background: #e7e7e7;
+    border-color: #e1e1e1;
+}
+.tabs a.active {
+    background: #fff;
+}
+.tab-content {
+    background: #fff;
+    padding: 1rem 2rem 1rem 0;
+    border: 1px solid #efefef;
+}

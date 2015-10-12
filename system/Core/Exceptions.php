@@ -55,7 +55,7 @@ class Exceptions
 		$file    = $exception->getFile();
 		$line    = $exception->getLine();
 		$trace   = $exception->getTrace();
-
+//die('<pre>'. print_r($trace, true));
 		if (empty($message))
 		{
 			$message = '(null)';
@@ -136,6 +136,10 @@ class Exceptions
 		{
 			$file = 'APPPATH/'.substr($file, strlen(APPPATH));
 		}
+		elseif (strpos($file, BASEPATH) === 0)
+		{
+			$file = 'BASEPATH/'.substr($file, strlen(BASEPATH));
+		}
 		elseif (strpos($file, SYSDIR) === 0)
 		{
 			$file = 'SYSDIR/'.substr($file, strlen(SYSDIR));
@@ -215,14 +219,14 @@ class Exceptions
 			{
 				preg_match_all('#<[^>]+>#', $row, $tags);
 				$out .= sprintf("<span class='line highlight'><span class='number'>{$format}</span> %s\n</span>%s",
-						$n,
+						$n + $start,
 						strip_tags($row),
 						implode('', $tags[0])
 				);
 			}
 			else
 			{
-				$out .= sprintf('<span class="line"><span class="number">'.$format.'</span> %s', $n, $row) ."\n";
+				$out .= sprintf('<span class="line"><span class="number">'.$format.'</span> %s', $n + $start, $row) ."\n";
 			}
 		}
 
