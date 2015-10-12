@@ -62,7 +62,16 @@
 						<p>
 							<!-- Trace info -->
 							<?php if (isset($row['file']) && is_file($row['file'])) :?>
-								<?= self::cleanPath($row['file']).' : '.$row['line'] ?>
+								<?php
+									if (isset($row['function']) && in_array($row['function'], ['include', 'include_once', 'require', 'require_once']))
+									{
+										echo $row['function'].' '. self::cleanPath($row['file']);
+									}
+									else
+									{
+										echo self::cleanPath($row['file']).' : '.$row['line'];
+									}
+								?>
 							<?php else : ?>
 								{PHP internal code} : <?= $row['line'] ?>
 							<?php endif; ?>
