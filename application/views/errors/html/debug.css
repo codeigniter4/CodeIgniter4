@@ -119,3 +119,19 @@ h1 {
 ul, ol {
     line-height: 1.8;
 }
+
+table {
+    width: 100%;
+    overflow: hidden;
+}
+th {
+    text-align: left;
+    border-bottom: 1px solid #e7e7e7;
+    padding-bottom: 0.5rem;
+}
+td {
+    padding: 0.2rem 0.5rem 0.2rem 0;
+}
+tr:hover td {
+    background: #f1f1f1;
+}

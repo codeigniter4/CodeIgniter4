@@ -165,7 +165,16 @@
 
 			<!-- Response -->
 			<div class="content" id="response">
+				<p>Response Code: <?= http_response_code() ?></p>
 
+				<p>Headers:</p>
+				<?php if (! empty(headers_list())) : ?>
+					<ul>
+					<?php foreach (headers_list() as $header) : ?>
+						<li><?= htmlspecialchars($header, ENT_SUBSTITUTE, 'UTF-8') ?></li>
+					<?php endforeach; ?>
+					</ul>
+				<?php endif; ?>
 			</div>
 
 			<!-- Files -->
