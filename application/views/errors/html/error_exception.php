@@ -167,7 +167,13 @@
 
 			<!-- Files -->
 			<div class="content">
+				<?php $files = get_included_files(); ?>
 
+				<ol>
+				<?php foreach ($files as $file) :?>
+					<li><?= htmlspecialchars( self::cleanPath($file), ENT_SUBSTITUTE, 'UTF-8') ?></li>
+				<?php endforeach ?>
+				</ol>
 			</div>
 
 			<!-- Memory -->

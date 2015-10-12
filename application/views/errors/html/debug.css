@@ -109,3 +109,6 @@ h1 {
     border-radius: 5px;
     color: #31708f;
 }
+ul, ol {
+    line-height: 1.8;
+}
