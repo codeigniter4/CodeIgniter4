@@ -114,7 +114,7 @@
 							<tr>
 								<td><?= htmlspecialchars($key, ENT_IGNORE, 'UTF-8') ?></td>
 								<td>
-									<?php if (!is_array($value) && ! is_object($value)) : ?>
+									<?php if (! is_array($value) && ! is_object($value)) : ?>
 										<?= htmlspecialchars($value, ENT_SUBSTITUTE, 'UTF-8') ?>
 									<?php else: ?>
 										<?= '<pre>'.print_r($value, true) ?>
@@ -126,6 +126,35 @@
 					</table>
 
 				<?php endforeach ?>
+
+				<!-- Constants -->
+				<?php $constants = get_defined_constants(true); ?>
+				<?php if (! empty($constants['user'])) : ?>
+					<h3>Constants</h3>
+
+					<table>
+						<thead>
+							<tr>
+								<th>Key</th>
+								<th>Value</th>
+							</tr>
+						</thead>
+						<tbody>
+						<?php foreach ($constants['user'] as $key => $value) : ?>
+							<tr>
+								<td><?= htmlspecialchars($key, ENT_IGNORE, 'UTF-8') ?></td>
+								<td>
+									<?php if (!is_array($value) && ! is_object($value)) : ?>
+										<?= htmlspecialchars($value, ENT_SUBSTITUTE, 'UTF-8') ?>
+									<?php else: ?>
+										<?= '<pre>'.print_r($value, true) ?>
+									<?php endif; ?>
+								</td>
+							</tr>
+						<?php endforeach; ?>
+						</tbody>
+					</table>
+				<?php endif; ?>
 			</div>
 
 			<!-- Request -->
