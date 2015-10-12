@@ -97,7 +97,7 @@
 
 			<!-- Server -->
 			<div class="content" id="server">
-				<?php foreach (['_SERVER', '_SESSION', '_COOKIE'] as $var) : ?>
+				<?php foreach (['_SERVER', '_SESSION'] as $var) : ?>
 					<?php if (empty($GLOBALS[$var]) || ! is_array($GLOBALS[$var])) continue; ?>
 
 					<h3>$<?= $var ?></h3>
@@ -160,7 +160,7 @@
 			<!-- Request -->
 			<div class="content" id="request">
 				<?php $empty = true; ?>
-				<?php foreach (['_GET', '_POST'] as $var) : ?>
+				<?php foreach (['_GET', '_POST', '_COOKIE'] as $var) : ?>
 					<?php if (empty($GLOBALS[$var]) || ! is_array($GLOBALS[$var])) continue; ?>
 
 					<?php $empty = false; ?>
@@ -195,7 +195,7 @@
 				<?php if ($empty) : ?>
 
 					<div class="alert">
-						No $_GET or $_POST Information to show.
+						No $_GET, $_POST, or $_COOKIE Information to show.
 					</div>
 
 				<?php endif; ?>
