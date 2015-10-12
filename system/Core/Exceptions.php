@@ -155,6 +155,31 @@ class Exceptions
 	//--------------------------------------------------------------------
 
 	/**
+	 * Describes memory usage in real-world units. Intended for use
+	 * with memory_get_usage, etc.
+	 *
+	 * @param $bytes
+	 *
+	 * @return string
+	 */
+	public static function describeMemory(int $bytes): string
+	{
+		if ($bytes < 1024)
+		{
+			return $bytes.'B';
+		}
+		else if ($bytes < 1048576)
+		{
+			return round($bytes/1024, 2).'KB';
+		}
+
+		return round($bytes/1048576, 2).'MB';
+	}
+
+	//--------------------------------------------------------------------
+
+
+	/**
 	 * Creates a syntax-highlighted version of a PHP file.
 	 *
 	 * @param     $file

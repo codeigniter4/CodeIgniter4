@@ -191,6 +191,23 @@
 			<!-- Memory -->
 			<div class="content" id="memory">
 
+				<table>
+					<tbody>
+						<tr>
+							<td>Memory Usage</td>
+							<td><?= self::describeMemory(memory_get_usage(true)) ?></td>
+						</tr>
+						<tr>
+							<td style="width: 12em">Peak Memory Usage:</td>
+							<td><?= self::describeMemory(memory_get_peak_usage(true)) ?></td>
+						</tr>
+						<tr>
+							<td>Memory Limit:</td>
+							<td><?= ini_get('memory_limit') ?></td>
+						</tr>
+					</tbody>
+				</table>
+
 			</div>
 
 		</div>  <!-- /tab-content -->
