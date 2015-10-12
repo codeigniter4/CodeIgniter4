@@ -55,7 +55,7 @@ class Exceptions
 		$file    = $exception->getFile();
 		$line    = $exception->getLine();
 		$trace   = $exception->getTrace();
-//die('<pre>'. print_r($trace, true));
+
 		if (empty($message))
 		{
 			$message = '(null)';
