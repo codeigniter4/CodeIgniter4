@@ -93,6 +93,19 @@ h1 {
 }
 .tab-content {
     background: #fff;
-    padding: 1rem 2rem 1rem 0;
     border: 1px solid #efefef;
+}
+.content {
+    padding: 1rem;
+}
+
+.alert {
+    margin-top: 2rem;
+    display: block;
+    text-align: center;
+    line-height: 3.0;
+    background: #d9edf7;
+    border: 1px solid #bcdff1;
+    border-radius: 5px;
+    color: #31708f;
 }

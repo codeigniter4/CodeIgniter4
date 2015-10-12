@@ -85,12 +85,79 @@
 
 			<!-- Server -->
 			<div class="content">
+				<?php foreach (['_SERVER', '_SESSION', '_COOKIE'] as $var) : ?>
+					<?php if (empty($GLOBALS[$var]) || ! is_array($GLOBALS[$var])) continue; ?>
 
+					<h3>$<?= $var ?></h3>
+
+					<table>
+						<thead>
+							<tr>
+								<th>Key</th>
+								<th>Value</th>
+							</tr>
+						</thead>
+						<tbody>
+						<?php foreach ($GLOBALS[$var] as $key => $value) : ?>
+							<tr>
+								<td><?= htmlspecialchars($key, ENT_IGNORE, 'UTF-8') ?></td>
+								<td>
+									<?php if (!is_array($value) && ! is_object($value)) : ?>
+										<?= htmlspecialchars($value, ENT_SUBSTITUTE, 'UTF-8') ?>
+									<?php else: ?>
+										<?= '<pre>'.print_r($value, true) ?>
+									<?php endif; ?>
+								</td>
+							</tr>
+						<?php endforeach; ?>
+						</tbody>
+					</table>
+
+				<?php endforeach ?>
 			</div>
 
 			<!-- Request -->
 			<div class="content">
+				<?php $empty = true; ?>
+				<?php foreach (['_GET', '_POST'] as $var) : ?>
+					<?php if (empty($GLOBALS[$var]) || ! is_array($GLOBALS[$var])) continue; ?>
 
+					<?php $empty = false; ?>
+
+					<h3>$<?= $var ?></h3>
+
+					<table style="width: 100%">
+						<thead>
+							<tr>
+								<th>Key</th>
+								<th>Value</th>
+							</tr>
+						</thead>
+						<tbody>
+						<?php foreach ($GLOBALS[$var] as $key => $value) : ?>
+							<tr>
+								<td><?= htmlspecialchars($key, ENT_IGNORE, 'UTF-8') ?></td>
+								<td>
+									<?php if (!is_array($value) && ! is_object($value)) : ?>
+										<?= htmlspecialchars($value, ENT_SUBSTITUTE, 'UTF-8') ?>
+									<?php else: ?>
+										<?= '<pre>'.print_r($value, true) ?>
+									<?php endif; ?>
+								</td>
+							</tr>
+						<?php endforeach; ?>
+						</tbody>
+					</table>
+
+				<?php endforeach ?>
+
+				<?php if ($empty) : ?>
+
+					<div class="alert">
+						No $_GET or $_POST Information to show.
+					</div>
+
+				<?php endif; ?>
 			</div>
 
 			<!-- Response -->
