@@ -4,7 +4,7 @@ class Home {
 
 	public function index()
 	{
-		throw new RuntimeException('Do not know whats going on.');
+		stil
 	    echo view('welcome_message');
 	}
 

@@ -73,12 +73,16 @@
 									}
 								?>
 							<?php else : ?>
-								{PHP internal code} : <?= $row['line'] ?>
+								{PHP internal code}
 							<?php endif; ?>
 
 							<!-- Class/Method -->
 							<?php if (isset($row['class'])) : ?>
 								&nbsp;&nbsp;&mdash;&nbsp;&nbsp;<?= $row['class'].$row['type'].$row['function'] ?>()
+							<?php endif; ?>
+
+							<?php if (! isset($row['class']) && isset($row['function'])) : ?>
+								&nbsp;&nbsp;&mdash;&nbsp;&nbsp;	<?= $row['function'] ?>()
 							<?php endif; ?>
 						</p>
 
