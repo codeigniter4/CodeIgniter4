@@ -34,7 +34,7 @@ class ServicesConfig {
 		    'autoloader' => '\CodeIgniter\Autoloader\Autoloader',
 		    'bmtimer'    => '\CodeIgniter\Benchmark\Timer',
 		    'bmiterator' => '\CodeIgniter\Benchmark\Iterator',
-		    'exceptions' => '\CodeIgniter\Core\Exceptions',
+		    'exceptions' => '\CodeIgniter\Debug\Exceptions',
 		    'logger'     => '\CodeIgniter\Log\Logger',
 		    'router'     => '\CodeIgniter\Router\Router',
 		    'routes'     => '\CodeIgniter\Router\RouteCollection',

@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Core;
+<?php namespace CodeIgniter\Debug;
 
 class Exceptions
 {

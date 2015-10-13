@@ -29,7 +29,7 @@
 
 	<!-- Source -->
 	<div class="container">
-		<p><b><?= \CodeIgniter\Core\Exceptions::cleanPath($file, $line) ?></b> at line <b><?= $line ?></b></p>
+		<p><b><?= self::cleanPath($file, $line) ?></b> at line <b><?= $line ?></b></p>
 
 		<?php if (is_file($file)) : ?>
 			<div class="source">

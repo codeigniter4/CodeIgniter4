@@ -66,7 +66,7 @@ class AutoloadConfig
 			'CodeIgniter\Benchmark\Timer'                 => BASEPATH.'Benchmark/Timer.php',
 			'CodeIgniter\Benchmark\Iterator'              => BASEPATH.'Benchmark/Iterator.php',
 			'CodeIgniter\Config\BaseConfig'               => BASEPATH.'Config/BaseConfig.php',
-			'CodeIgniter\Core\Exceptions'                 => BASEPATH.'Core/Exceptions.php',
+			'CodeIgniter\Debug\Exceptions'                => BASEPATH.'Debug/Exceptions.php',
 			'CodeIgniter\Router\RouteCollection'          => BASEPATH.'Router/RouteCollection.php',
 			'CodeIgniter\Router\RouteCollectionInterface' => BASEPATH.'Router/RouteCollectionInterface.php',
 			'CodeIgniter\Router\Router'                   => BASEPATH.'Router/Router.php',
