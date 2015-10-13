@@ -140,3 +140,6 @@ td {
 tr:hover td {
     background: #f1f1f1;
 }
+td pre {
+    white-space: pre-wrap;
+}
