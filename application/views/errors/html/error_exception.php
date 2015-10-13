@@ -252,5 +252,17 @@
 
 	</div> <!-- /container -->
 
+	<div class="footer">
+		<div class="container">
+
+			<p>
+				Displayed at <?= date('H:i:sa') ?> &mdash;
+				PHP: <?= phpversion() ?>  &mdash;
+				CodeIgniter: <?= CI_VERSION ?>
+			</p>
+
+		</div>
+	</div>
+
 </body>
 </html>
