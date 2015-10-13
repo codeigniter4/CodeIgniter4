@@ -1,3 +1,4 @@
+<?php $error_id = uniqid('error'); ?>
 <!doctype html>
 <html>
 <head>
@@ -56,7 +57,7 @@
 			<div class="content" id="backtrace">
 
 				<ol class="trace">
-				<?php foreach ($trace as $row) : ?>
+				<?php foreach ($trace as $index => $row) : ?>
 
 					<li>
 						<p>
@@ -78,7 +79,30 @@
 
 							<!-- Class/Method -->
 							<?php if (isset($row['class'])) : ?>
-								&nbsp;&nbsp;&mdash;&nbsp;&nbsp;<?= $row['class'].$row['type'].$row['function'] ?>()
+								&nbsp;&nbsp;&mdash;&nbsp;&nbsp;<?= $row['class'].$row['type'].$row['function'] ?>
+								<?php if (! empty($row['args'])) : ?>
+									<?php $args_id = $error_id.'args'.$index ?>
+									( <a href="#" onclick="return toggle('<?= $args_id ?>');">arguments</a> )
+									<div class="args" id="<?= $args_id ?>">
+										<table cellspacing="0">
+
+										<?php foreach ($row['args'] as $key => $value) : ?>
+											<?php
+												$mirror = isset($row['class']) ? new \ReflectionMethod($row['class'], $row['function']) :
+													new \ReflectionFunction($row['function']);
+												$params = $mirror->getParameters();
+											?>
+											<tr>
+												<td><code><?= htmlspecialchars(isset($params[$key]) ? '$'.$params[$key]->name : "#$key", ENT_SUBSTITUTE, 'UTF-8') ?></code></td>
+												<td><pre><?= print_r($value, true) ?></pre></td>
+											</tr>
+										<?php endforeach ?>
+
+										</table>
+									</div>
+								<?php else : ?>
+									()
+								<?php endif; ?>
 							<?php endif; ?>
 
 							<?php if (! isset($row['class']) && isset($row['function'])) : ?>

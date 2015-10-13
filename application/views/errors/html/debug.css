@@ -153,3 +153,24 @@ tr:hover td {
 td pre {
     white-space: pre-wrap;
 }
+
+.trace a {
+    color: inherit;
+}
+.trace table {
+    width: auto;
+}
+.trace tr td:first-child {
+    min-width: 5em;
+    font-weight: bold;
+}
+.trace td {
+    background: #e7e7e7;
+    padding: 0 1rem;
+}
+.trace td pre {
+    margin: 0;
+}
+.args {
+    display: none;
+}
