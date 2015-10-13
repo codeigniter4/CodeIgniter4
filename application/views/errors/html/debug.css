@@ -14,6 +14,16 @@ h1 {
     color: #222;
     margin: 0;
 }
+h1.headline {
+    margin-top: 20%;
+    font-size: 5rem;
+}
+.text-center {
+    text-align: center;
+}
+p.lead {
+    font-size: 1.6rem;
+}
 .container {
     max-width: 75rem;
     margin: 0 auto;

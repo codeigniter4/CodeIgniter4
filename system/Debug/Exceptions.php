@@ -65,11 +65,11 @@ class Exceptions
 
 		// Fire an Event
 
-		$view = 'production.html';
+		$view = 'production.php';
 
 		if (str_ireplace(['off', 'none', 'no', 'false', 'null'], '', ini_get('display_errors')))
 		{
-			$view = 'exception';
+			$view = 'error_exception.php';
 		}
 
 		// @todo Get template path from config
@@ -98,7 +98,7 @@ class Exceptions
 		}
 
 		ob_start();
-		include($templates_path.'error_exception.php');
+		include($templates_path.$view);
 		$buffer = ob_get_contents();
 		ob_end_clean();
 		echo $buffer;
