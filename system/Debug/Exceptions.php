@@ -85,6 +85,10 @@ class Exceptions
 		if (is_cli())
 		{
 			$templates_path .= 'cli'.DIRECTORY_SEPARATOR;
+
+			// CLI will never accessed by general public
+			// while in production.
+			$view = 'error_exception.php';
 		}
 		else
 		{
