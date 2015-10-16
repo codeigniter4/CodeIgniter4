@@ -90,7 +90,8 @@ $loader->register();
  *  Set custom exception handling
  * ------------------------------------------------------
  */
-$di->single('exceptions')->initialize();
+$di->single('exceptions')
+   ->initialize();
 
 //--------------------------------------------------------------------
 // Start the Benchmark
@@ -98,6 +99,13 @@ $di->single('exceptions')->initialize();
 
 $benchmark = new CodeIgniter\Benchmark\Timer();
 $benchmark->start('total_execution');
+
+//--------------------------------------------------------------------
+// Get our Request and Response objects
+//--------------------------------------------------------------------
+
+$request  = DI('request');
+//$response = DI('response');
 
 //--------------------------------------------------------------------
 // Try to Route It

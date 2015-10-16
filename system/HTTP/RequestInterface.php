@@ -27,7 +27,7 @@ interface RequestInterface extends MessageInterface
 	/**
 	 * @param $protocolVersion
 	 */
-	public function __construct(HeaderCollection $headers, string $protocolVersion);
+	public function __construct();
 
 	//--------------------------------------------------------------------
 

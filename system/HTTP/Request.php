@@ -24,20 +24,17 @@ class Request implements RequestInterface
 
 	protected $method;
 
-	protected $uri;
+	public $uri;
+
+	protected $headers;
+
+	protected $protocol_version;
 
 	//--------------------------------------------------------------------
 
-	public function __construct(HeaderCollection $headers, string $protocolVersion)
+	public function __construct()
 	{
-		if (! in_array($protocolVersion, ['HTTP/1.0', 'HTTP/1.1'], true))
-		{
-			throw new \RuntimeException('Unsupported HTTP version.');
-		}
 
-		$this->protocolVersion = $protocolVersion;
-
-		$this->headers = $headers;
 	}
 
 	//--------------------------------------------------------------------
