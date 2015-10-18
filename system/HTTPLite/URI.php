@@ -1,6 +1,89 @@
 <?php namespace CodeIgniter\HTTPLite;
 
-class URI {
+class URI
+{
+
+	/**
+	 * Current URI string
+	 *
+	 * @var string
+	 */
+	protected $uriString;
+
+	/**
+	 * List of URI segments.
+	 *
+	 * Starts at 1 instead of 0
+	 *
+	 * @var array
+	 */
+	protected $segments = [];
+
+	/**
+	 * The URI Scheme.
+	 *
+	 * @var
+	 */
+	protected $scheme;
+
+	/**
+	 * URI User Info
+	 *
+	 * @var
+	 */
+	protected $userInfo;
+
+	/**
+	 * URI Host
+	 *
+	 * @var
+	 */
+	protected $host;
+
+	/**
+	 * URI Port
+	 *
+	 * @var
+	 */
+	protected $port;
+
+	/**
+	 * URI path.
+	 *
+	 * @var
+	 */
+	protected $path;
+
+	/**
+	 * Permitted URI chars
+	 *
+	 * PCRE character group allowed in URI segments.
+	 *
+	 * @var
+	 */
+	protected $permittedURIChars;
+
+	//--------------------------------------------------------------------
+
+	public function __construct(string $uri = null)
+	{
+		if (is_null($uri))
+		{
+		}
+		else
+		{
+			$parts = parse_url($uri);
+
+			if ($parts === false)
+			{
+				throw new \InvalidArgumentException("Unable to parse URI: {$uri}");
+			}
+
+			$this->applyParts($parts);
+		}
+	}
+
+	//--------------------------------------------------------------------
 
 	/**
 	 * Retrieve the scheme component of the URI.
@@ -18,7 +101,6 @@ class URI {
 	 */
 	public function scheme()
 	{
-
 	}
 
 	//--------------------------------------------------------------------
@@ -43,7 +125,6 @@ class URI {
 	 */
 	public function authority()
 	{
-
 	}
 
 	//--------------------------------------------------------------------
@@ -65,7 +146,6 @@ class URI {
 	 */
 	public function userInfo()
 	{
-
 	}
 
 	//--------------------------------------------------------------------
@@ -83,7 +163,6 @@ class URI {
 	 */
 	public function host()
 	{
-
 	}
 
 	//--------------------------------------------------------------------
@@ -105,7 +184,6 @@ class URI {
 	 */
 	public function port()
 	{
-
 	}
 
 	//--------------------------------------------------------------------
@@ -137,31 +215,86 @@ class URI {
 	 */
 	public function path()
 	{
-
 	}
 
 	//--------------------------------------------------------------------
 
 	public function segments()
 	{
-
 	}
 
 	//--------------------------------------------------------------------
 
 	public function segment(int $number)
 	{
-
 	}
 
 	//--------------------------------------------------------------------
 
 	public function totalSegments(): int
 	{
-
 	}
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Saves our parts from a parse_url call.
+	 *
+	 * @param $parts
+	 */
+	protected function applyParts($parts)
+	{
+		$this->host     = isset($parts['host']) ?? '';
+		$this->userInfo = isset($parts['user']) ?? '';
+		$this->path     = isset($parts['path']) ? $this->filterURI($parts['path']) : '';
+		$this->query    = isset($parts['query']) ? $this->filterURI($parts['query']) : '';
+		$this->fragment = isset($parts['fragment']) ? $this->filterURI($parts['fragment']) : '';
+
+		// Scheme
+		if (isset($parts['scheme']))
+		{
+			$this->scheme = rtrim(strtolower($parts['scheme']), ':/');
+		}
+
+		// Port
+		if (isset($parts['port']))
+		{
+			if ( ! is_null($parts['port']))
+			{
+				$port = (int)$parts['port'];
+
+				if (1 > $port || 0xffff < $port)
+				{
+					throw new \InvalidArgumentException('Ports must be between 1 and 65535');
+				}
+
+				$this->port = $port;
+			}
+		}
+
+		if (isset($parts['pass']))
+		{
+			$this->userInfo .= ':'.$parts['pass'];
+		}
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Filters segments for malicious characters
+	 *
+	 * @param $str
+	 */
+	protected function filterURI(&$str)
+	{
+		if ( ! empty($str) && ! empty($this->_permittedURIChars) &&
+		     ! preg_match('/^['.$this->permittedURIChars.']+$/i'.(UTF8_ENABLED ? 'u' : ''), $str)
+		)
+		{
+			throw new \InvalidArgumentException('The URI you submitted has disallowed characters.', 400);
+		}
+	}
+
+	//--------------------------------------------------------------------
 
 }
