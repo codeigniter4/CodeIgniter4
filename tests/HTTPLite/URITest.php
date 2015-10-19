@@ -1,6 +1,8 @@
 <?php
 
 require_once 'system/HTTPLite/URI.php';
+require_once 'system/Config/BaseConfig.php';
+require_once 'application/config/AppConfig.php';
 
 use CodeIgniter\HTTPLite\URI;
 
@@ -22,7 +24,7 @@ class URITest extends PHPUnit_Framework_TestCase {
 
 	public function testConstructorSetsAllParts()
 	{
-	    $uri = new URI('http://username:password@hostname:9090/path?arg=value#anchor');
+	    $uri = new URI('http://username:password@hostname:9090/path?arg=value#anchor', new \App\Config\AppConfig());
 
 		$this->assertEquals('http', $uri->scheme());
 		$this->assertEquals('username:password', $uri->userInfo());
@@ -40,7 +42,7 @@ class URITest extends PHPUnit_Framework_TestCase {
 
 	public function testSegmentsIsPopulatedRightForMultipleSegments()
 	{
-	    $uri = new URI('http://hostname/path/to/script');
+	    $uri = new URI('http://hostname/path/to/script', new \App\Config\AppConfig());
 
 		$this->assertEquals(['path', 'to', 'script'], $uri->segments());
 		$this->assertEquals('path', $uri->segment(1));
@@ -55,7 +57,7 @@ class URITest extends PHPUnit_Framework_TestCase {
 	public function testCanCastAsString()
 	{
 		$url = 'http://username:password@hostname:9090/path?arg=value#anchor';
-	    $uri = new URI($url);
+	    $uri = new URI($url, new \App\Config\AppConfig());
 
 		$this->assertEquals($url, (string)$uri);
 	}

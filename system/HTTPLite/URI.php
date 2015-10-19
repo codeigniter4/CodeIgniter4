@@ -1,5 +1,7 @@
 <?php namespace CodeIgniter\HTTPLite;
 
+use App\Config\AppConfig;
+
 class URI
 {
 
@@ -70,10 +72,20 @@ class URI
 	 */
 	protected $permittedURIChars;
 
+	/**
+	 * Holds the app config variables.
+	 *
+	 * @var
+	 */
+	protected $uriProtocol;
+
 	//--------------------------------------------------------------------
 
-	public function __construct(string $uri = null)
+	public function __construct(string $uri = null, AppConfig $config)
 	{
+		$this->uriProtocol = $config->uriProtocol;
+		$this->permittedURIChars = $config->permittedURIChars;
+
 		if (is_null($uri))
 		{
 		}
@@ -430,7 +442,6 @@ class URI
 	 */
 	protected function filterURI(&$str)
 	{
-		// @todo Get the permitted chars loaded into the class.
 		if ( ! empty($str) && ! empty($this->_permittedURIChars) &&
 		     ! preg_match('/^['.$this->permittedURIChars.']+$/i'.(UTF8_ENABLED ? 'u' : ''), $str)
 		)
