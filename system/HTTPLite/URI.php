@@ -55,6 +55,13 @@ class URI
 	protected $path;
 
 	/**
+	 * The name of any fragment.
+	 *
+	 * @var
+	 */
+	protected $fragment = '';
+
+	/**
 	 * Permitted URI chars
 	 *
 	 * PCRE character group allowed in URI segments.
@@ -99,8 +106,9 @@ class URI
 	 * @see https://tools.ietf.org/html/rfc3986#section-3.1
 	 * @return string The URI scheme.
 	 */
-	public function scheme()
+	public function scheme(): string
 	{
+		return $this->scheme;
 	}
 
 	//--------------------------------------------------------------------
@@ -123,8 +131,26 @@ class URI
 	 * @see https://tools.ietf.org/html/rfc3986#section-3.2
 	 * @return string The URI authority, in "[user-info@]host[:port]" format.
 	 */
-	public function authority()
+	public function authority(): string
 	{
+		if (empty($this->host))
+		{
+			return '';
+		}
+
+		$authority = $this->host;
+
+		if ( ! empty($this->userInfo))
+		{
+			$authority = $this->userInfo.'@'.$authority;
+		}
+
+		if ( ! empty($this->port))
+		{
+			$authority .= ':'.$this->port;
+		}
+
+		return $authority;
 	}
 
 	//--------------------------------------------------------------------
@@ -146,6 +172,7 @@ class URI
 	 */
 	public function userInfo()
 	{
+		return $this->userInfo;
 	}
 
 	//--------------------------------------------------------------------
@@ -163,6 +190,7 @@ class URI
 	 */
 	public function host()
 	{
+		return $this->host;
 	}
 
 	//--------------------------------------------------------------------
@@ -184,6 +212,7 @@ class URI
 	 */
 	public function port()
 	{
+		return $this->port;
 	}
 
 	//--------------------------------------------------------------------
@@ -213,29 +242,137 @@ class URI
 	 * @see https://tools.ietf.org/html/rfc3986#section-3.3
 	 * @return string The URI path.
 	 */
-	public function path()
+	public function path(): string
 	{
+		return (is_null($this->path)) ? '' : $this->path;
 	}
 
 	//--------------------------------------------------------------------
 
-	public function segments()
+	public function query(): string
 	{
+		return is_null($this->query) ? '' : $this->query;
 	}
 
 	//--------------------------------------------------------------------
 
-	public function segment(int $number)
+	public function fragment(): string
 	{
+		return is_null($this->fragment) ? '' : $this->fragment;
 	}
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Returns the segments of the path as an array.
+	 *
+	 * @return array
+	 */
+	public function segments(): array
+	{
+		return $this->segments;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns the value of a specific segment of the URI path.
+	 *
+	 * @param int $number
+	 *
+	 * @return string     The value of the segment. If no segment is found,
+	 *                    throws InvalidArgumentError
+	 */
+	public function segment(int $number): string
+	{
+		// The segment should treat the array as 1-based for the user
+		// but we still have to deal with a zero-based array.
+		$number -= 1;
+
+		if ($number > count($this->segments))
+		{
+			throw new \InvalidArgumentException('Request URI segment is our of range.');
+		}
+
+		return $this->segments[$number];
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns the total number of segments.
+	 *
+	 * @return int
+	 */
 	public function totalSegments(): int
 	{
+		return count($this->segments);
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Allow the URI to be output as a string by simply casting it to a string
+	 * or echoing out.
+	 */
+	public function __toString(): string
+	{
+		return $this->createUriString(
+			$this->scheme(),
+			$this->authority(),
+			$this->path(), // Absolute URIs should use a "/" for an empty path
+			$this->query(),
+			$this->fragment()
+		);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Builds a representation of the string from the component parts.
+	 *
+	 * @param $scheme
+	 * @param $authority
+	 * @param $path
+	 * @param $query
+	 * @param $fragment
+	 *
+	 * @return string
+	 */
+	protected function createUriString($scheme, $authority, $path, $query, $fragment)
+	{
+		$uri = '';
+		if ( ! empty($scheme))
+		{
+			$uri .= $scheme.'://';
+		}
+
+		if ( ! empty($authority))
+		{
+			$uri .= $authority;
+		}
+
+		if ($path)
+		{
+			if (empty($path) || '/' !== substr($path, 0, 1))
+			{
+				$path = '/'.$path;
+			}
+			$uri .= $path;
+		}
+
+		if ($query)
+		{
+			$uri .= '?'.$query;
+		}
+
+		if ($fragment)
+		{
+			$uri .= '#'. $fragment;
+		}
+
+		return $uri;
+	}
 
 	/**
 	 * Saves our parts from a parse_url call.
@@ -244,8 +381,8 @@ class URI
 	 */
 	protected function applyParts($parts)
 	{
-		$this->host     = isset($parts['host']) ?? '';
-		$this->userInfo = isset($parts['user']) ?? '';
+		$this->host     = isset($parts['host']) ? $parts['host'] : '';
+		$this->userInfo = isset($parts['user']) ? $parts['user'] : '';
 		$this->path     = isset($parts['path']) ? $this->filterURI($parts['path']) : '';
 		$this->query    = isset($parts['query']) ? $this->filterURI($parts['query']) : '';
 		$this->fragment = isset($parts['fragment']) ? $this->filterURI($parts['fragment']) : '';
@@ -276,6 +413,12 @@ class URI
 		{
 			$this->userInfo .= ':'.$parts['pass'];
 		}
+
+		// Populate our segments array
+		if ( ! empty($parts['path']))
+		{
+			$this->segments = explode('/', trim($parts['path'], '/'));
+		}
 	}
 
 	//--------------------------------------------------------------------
@@ -287,12 +430,15 @@ class URI
 	 */
 	protected function filterURI(&$str)
 	{
+		// @todo Get the permitted chars loaded into the class.
 		if ( ! empty($str) && ! empty($this->_permittedURIChars) &&
 		     ! preg_match('/^['.$this->permittedURIChars.']+$/i'.(UTF8_ENABLED ? 'u' : ''), $str)
 		)
 		{
 			throw new \InvalidArgumentException('The URI you submitted has disallowed characters.', 400);
 		}
+
+		return $str;
 	}
 
 	//--------------------------------------------------------------------
