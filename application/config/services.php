@@ -42,7 +42,7 @@ class ServicesConfig {
 		    {
 				return new \CodeIgniter\View\View(APPPATH.'views/');
 		    },
-	        'request'   => '\CodeIgniter\HTTPLite\HTTPRequest',
+	        'request'   => '\CodeIgniter\HTTPLite\IncomingRequest',
 	        'response'  => '\CodeIgniter\HTTP\Response'
 
 		    // Your custom files can be added here.
