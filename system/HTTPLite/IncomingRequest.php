@@ -1,5 +1,7 @@
 <?php namespace CodeIgniter\HTTPLite;
 
+use App\Config\AppConfig;
+
 /**
  * Class IncomingRequest
  *
@@ -39,13 +41,43 @@ class IncomingRequest extends Request {
 	 */
 	protected $enableCSRF = false;
 
+	/**
+	 * A \CodeIgniter\HTTPLite\URI instance.
+	 *
+	 * @var URI
+	 */
+	public $uri;
+
 	//--------------------------------------------------------------------
 
-	public function __construct()
+	public function __construct(AppConfig $config)
 	{
 		// @todo get values from configuration
 
 		// @todo perform csrf check
+
+		// Determine our requested URI
+		$protocol = $config->uriProtocol;
+
+		if (empty($protocol)) $protocol = 'REQUEST_URI';
+
+		switch ($protocol)
+		{
+			case 'REQUEST_URI':
+				$uri = $this->parseRequestURI();
+				break;
+			case 'QUERY_STRING':
+				$uri = $this->parseQueryString();
+				break;
+			case 'PATH_INFO':
+			default:
+				$uri = isset($_SERVER[$protocol])
+					? $_SERVER[$protocol]
+					: $this->parseRequestURI();
+				break;
+		}
+
+		$this->uri = new URI($uri);
 	}
 
 	//--------------------------------------------------------------------
@@ -292,4 +324,124 @@ class IncomingRequest extends Request {
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Will parse the REQUEST_URI and automatically detect the URI from it,
+	 * fixing the query string if necessary.
+	 *
+	 * @return string The URI it found.
+	 */
+	protected function parseRequestURI(): string
+	{
+		if ( ! isset($_SERVER['REQUEST_URI'], $_SERVER['SCRIPT_NAME']))
+		{
+			return '';
+		}
+
+		// parse_url() returns false if no host is present, but the path or query string
+		// contains a colon followed by a number
+		$parts = parse_url('http://dummy'.$_SERVER['REQUEST_URI']);
+		$query = isset($parts['query']) ? $parts['query'] : '';
+		$uri = isset($parts['path']) ? $parts['path'] : '';
+
+		if (isset($_SERVER['SCRIPT_NAME'][0]))
+		{
+			if (strpos($uri, $_SERVER['SCRIPT_NAME']) === 0)
+			{
+				$uri = (string) substr($uri, strlen($_SERVER['SCRIPT_NAME']));
+			}
+			elseif (strpos($uri, dirname($_SERVER['SCRIPT_NAME'])) === 0)
+			{
+				$uri = (string) substr($uri, strlen(dirname($_SERVER['SCRIPT_NAME'])));
+			}
+		}
+
+		// This section ensures that even on servers that require the URI to be in the query string (Nginx) a correct
+		// URI is found, and also fixes the QUERY_STRING server var and $_GET array.
+		if (trim($uri, '/') === '' && strncmp($query, '/', 1) === 0)
+		{
+			$query = explode('?', $query, 2);
+			$uri = $query[0];
+			$_SERVER['QUERY_STRING'] = isset($query[1]) ? $query[1] : '';
+		}
+		else
+		{
+			$_SERVER['QUERY_STRING'] = $query;
+		}
+
+		parse_str($_SERVER['QUERY_STRING'], $_GET);
+
+		if ($uri === '/' OR $uri === '')
+		{
+			return '/';
+		}
+
+		$uri = $this->removeRelativeDirectory($uri);
+
+		return URI::createURIString(
+			isset($parts['scheme']) ? $parts['scheme'] : null,
+			isset($parts['authority']) ? $parts['authority'] : null,
+			isset($parts['host']) ? $parts['host'] : null,
+			isset($parts['path']) ? $uri : null,
+			isset($parts['query']) ? $parts['query'] : null,
+			isset($parts['fragment']) ? $parts['fragment'] : null
+		);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Parse QUERY_STRING
+	 *
+	 * Will parse QUERY_STRING and automatically detect the URI from it.
+	 *
+	 * @return	string
+	 */
+	protected function parseQueryString(): string
+	{
+		$uri = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : @getenv('QUERY_STRING');
+
+		if (trim($uri, '/') === '')
+		{
+			return '';
+		}
+		elseif (strncmp($uri, '/', 1) === 0)
+		{
+			$uri = explode('?', $uri, 2);
+			$_SERVER['QUERY_STRING'] = isset($uri[1]) ? $uri[1] : '';
+			$uri = $uri[0];
+		}
+
+		parse_str($_SERVER['QUERY_STRING'], $_GET);
+
+		return $this->removeRelativeDirectory($uri);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Remove relative directory (../) and multi slashes (///)
+	 *
+	 * Do some final cleaning of the URI and return it, currently only used in self::_parse_request_uri()
+	 *
+	 * @param	string	$url
+	 * @return	string
+	 */
+	protected function removeRelativeDirectory($uri)
+	{
+		$uris = array();
+		$tok = strtok($uri, '/');
+		while ($tok !== FALSE)
+		{
+			if (( ! empty($tok) OR $tok === '0') && $tok !== '..')
+			{
+				$uris[] = $tok;
+			}
+			$tok = strtok('/');
+		}
+
+		return implode('/', $uris);
+	}
+
+	// --------------------------------------------------------------------
 }

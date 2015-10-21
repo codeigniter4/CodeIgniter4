@@ -81,15 +81,12 @@ class URI
 
 	//--------------------------------------------------------------------
 
-	public function __construct(string $uri = null, AppConfig $config)
+	public function __construct(string $uri = null)
 	{
-		$this->uriProtocol = $config->uriProtocol;
-		$this->permittedURIChars = $config->permittedURIChars;
+//		$this->uriProtocol = $config->uriProtocol;
+//		$this->permittedURIChars = $config->permittedURIChars;
 
-		if (is_null($uri))
-		{
-		}
-		else
+		if (! is_null($uri))
 		{
 			$parts = parse_url($uri);
 
@@ -329,9 +326,10 @@ class URI
 	 */
 	public function __toString(): string
 	{
-		return $this->createUriString(
+		return self::createURIString(
 			$this->scheme(),
 			$this->authority(),
+			$this->host(),
 			$this->path(), // Absolute URIs should use a "/" for an empty path
 			$this->query(),
 			$this->fragment()
@@ -351,7 +349,7 @@ class URI
 	 *
 	 * @return string
 	 */
-	protected function createUriString($scheme, $authority, $path, $query, $fragment)
+	public static function createURIString($scheme, $authority, $host, $path, $query, $fragment)
 	{
 		$uri = '';
 		if ( ! empty($scheme))
@@ -362,6 +360,11 @@ class URI
 		if ( ! empty($authority))
 		{
 			$uri .= $authority;
+		}
+
+		if (! empty($host))
+		{
+			$uri .= $host;
 		}
 
 		if ($path)

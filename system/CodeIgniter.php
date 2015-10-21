@@ -104,7 +104,7 @@ $benchmark->start('total_execution');
 // Get our Request and Response objects
 //--------------------------------------------------------------------
 
-$request  = DI('request');
+$request  = $di->single('request');
 //$response = DI('response');
 
 //--------------------------------------------------------------------
