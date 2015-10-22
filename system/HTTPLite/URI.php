@@ -389,6 +389,115 @@ class URI
 		return $uri;
 	}
 
+	//--------------------------------------------------------------------
+
+	/**
+	 * Sets the scheme for this URI.
+	 *
+	 * Because of the large number of valid schemes we cannot limit this
+	 * to only http or https.
+	 *
+	 * @see https://www.iana.org/assignments/uri-schemes/uri-schemes.xhtml
+	 *
+	 * @param $str
+	 *
+	 * @return $this
+	 */
+	public function setScheme(string $str)
+	{
+	    $this->scheme = strtolower($str);
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Sets the userInfo/Authority portion of the URI.
+	 *
+	 * @param string $user  The user's username
+	 * @param string $pass  The user's password
+	 *
+	 * @return $this
+	 */
+	public function setUserInfo(string $user, string $pass)
+	{
+		$this->userInfo = trim($user).':'.trim($pass);
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Sets the host name to use.
+	 *
+	 * @param string $str
+	 *
+	 * @return $this
+	 */
+	public function setHost(string $str)
+	{
+		$this->host = trim($str);
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Sets the port portion of the URI.
+	 *
+	 * @param int $port
+	 *
+	 * @return $this
+	 */
+	public function setPort(int $port)
+	{
+	    if ($port < 0 || $port > 65535)
+	    {
+		    throw new \InvalidArgumentException('Invalid port given.');
+	    }
+
+		$this->port = $port;
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Sets the path portion of the URI.
+	 *
+	 * @param string $path
+	 *
+	 * @return $this
+	 */
+	public function setPath(string $path)
+	{
+	    $this->path = trim($path);
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Sets the fragment portion of the URI.
+	 *
+	 * @param string $string
+	 *
+	 * @return $this
+	 */
+	public function setFragment(string $string)
+	{
+	    $this->fragment = trim($string, '# ');
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
 	/**
 	 * Saves our parts from a parse_url call.
 	 *
