@@ -29,6 +29,13 @@ use App\Config\AppConfig;
  */
 class IncomingRequest extends Request {
 
+	/**
+	 * Parsed input stream data
+	 *
+	 * Parsed from php://input at runtime
+	 *
+	 * @var
+	 */
 	protected $inputStream;
 
 	/**
@@ -177,7 +184,7 @@ class IncomingRequest extends Request {
 	//--------------------------------------------------------------------
 
 	/**
-	 * Fetch an iterm from the php://input stream
+	 * Fetch an item from the php://input stream
 	 *
 	 * Useful when you need to access PUT, DELETE or PATCH request data.
 	 *
@@ -187,6 +194,22 @@ class IncomingRequest extends Request {
 	 */
 	public function inputStream($index = null, $filter = null)
 	{
+		if (! is_array($this->inputStream))
+		{
+			$this->inputStream = file_get_contents('php://input');
+
+			if (! empty($this->inputStream))
+			{
+				parse_str($this->inputStream, $this->inputStream);
+			}
+		}
+
+		if (! isset($this->inputStream[$index]))
+		{
+			return null;
+		}
+
+		return filter_var($this->inputStream[$index], $filter);
 	}
 
 	//--------------------------------------------------------------------
