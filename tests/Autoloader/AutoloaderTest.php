@@ -1,8 +1,11 @@
 <?php
 
 require_once "system/Autoloader/Autoloader.php";
+require_once "system/Config/BaseConfig.php";
+require_once "application/config/autoload.php";
 
 define('APPPATH', 'application/');
+define('BASEPATH', 'system/');
 
 class MockAutoloaderClass extends \CodeIgniter\Autoloader\Autoloader
 {
@@ -39,15 +42,15 @@ class AutoloaderTest extends \PHPUnit_Framework_TestCase
 
 	protected function setUp()
 	{
-		$config = [
-			'classmap' => [
-				'FirstClass'        => '/app/dir/First.php',
-				'Name\Spaced\Class' => '/app/namespace/Class.php',
-			],
-			'psr4'     => [
-				'App\Controllers' => '/application/controllers',
-				'App\Libraries'   => '/application/somewhere',
-			],
+		$config = new App\Config\AutoloadConfig();
+
+		$config->classmap = [
+			'FirstClass'        => '/app/dir/First.php',
+			'Name\Spaced\Class' => '/app/namespace/Class.php',
+		];
+		$config->psr4 = [
+			'App\Controllers' => '/application/controllers',
+			'App\Libraries'   => '/application/somewhere',
 		];
 
 		$this->loader = new MockAutoloaderClass();
