@@ -87,7 +87,7 @@ class View implements RenderableInterface {
 	 *
 	 * @return RenderableInterface
 	 */
-	public function setData(array $data=[], string $context='html'): RenderableInterface
+	public function setData(array $data=[], string $context=null): RenderableInterface
 	{
 		if (! empty($context))
 		{
@@ -111,7 +111,7 @@ class View implements RenderableInterface {
 	 *
 	 * @return RenderableInterface
 	 */
-	public function setVar(string $name, $value=null, string $context='html'): RenderableInterface
+	public function setVar(string $name, $value=null, string $context=null): RenderableInterface
 	{
 		if (! empty($context))
 		{

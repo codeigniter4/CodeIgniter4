@@ -33,7 +33,7 @@ interface RenderableInterface {
 	 *
 	 * @return RenderableInterface
 	 */
-	public function setData(array $data=[], string $context='html'): self;
+	public function setData(array $data=[], string $context=null): self;
 
 	//--------------------------------------------------------------------
 
@@ -47,7 +47,7 @@ interface RenderableInterface {
 	 *
 	 * @return RenderableInterface
 	 */
-	public function setVar(string $name, $value=null, string $context='html'): self;
+	public function setVar(string $name, $value=null, string $context=null): self;
 
 	//--------------------------------------------------------------------
 
