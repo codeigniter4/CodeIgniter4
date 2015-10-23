@@ -57,7 +57,7 @@ class IncomingRequest extends Request {
 
 	//--------------------------------------------------------------------
 
-	public function __construct(AppConfig $config)
+	public function __construct(AppConfig $config, URI $uri)
 	{
 		// @todo get values from configuration
 
@@ -71,14 +71,14 @@ class IncomingRequest extends Request {
 		switch ($protocol)
 		{
 			case 'REQUEST_URI':
-				$uri = $this->parseRequestURI();
+				$path = $this->parseRequestURI();
 				break;
 			case 'QUERY_STRING':
-				$uri = $this->parseQueryString();
+				$path = $this->parseQueryString();
 				break;
 			case 'PATH_INFO':
 			default:
-				$uri = isset($_SERVER[$protocol])
+				$path = isset($_SERVER[$protocol])
 					? $_SERVER[$protocol]
 					: $this->parseRequestURI();
 				break;

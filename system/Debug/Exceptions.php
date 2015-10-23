@@ -30,11 +30,11 @@ class Exceptions
 
 		// Set the Error Handler
 		// Don't think this is needed in PHP7?
-//		set_error_handler(['\CodeIgniter\Core\Exceptions', 'errorHandler']);
+//		set_error_handler([$this, 'exceptionHandler']);
 
 		// Set the handler for shutdown to catch Parse errors
 		// Do we need this in PHP7?
-//		register_shutdown_function(['\CodeIgniter\Core\Exceptions', 'shutdownHandler']);
+//		register_shutdown_function([$this, 'exceptionHandler']);
 	}
 
 	//--------------------------------------------------------------------

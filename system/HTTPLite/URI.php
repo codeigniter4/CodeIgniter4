@@ -1,7 +1,5 @@
 <?php namespace CodeIgniter\HTTPLite;
 
-use App\Config\AppConfig;
-
 class URI
 {
 
@@ -39,7 +37,7 @@ class URI
 	 *
 	 * @var
 	 */
-	protected $scheme;
+	protected $scheme = '';
 
 	/**
 	 * URI User Info
@@ -112,8 +110,6 @@ class URI
 
 	public function __construct(string $uri = null)
 	{
-//		$this->permittedURIChars = $config->permittedURIChars;
-
 		if ( ! is_null($uri))
 		{
 			$parts = parse_url($uri);
@@ -382,7 +378,7 @@ class URI
 	 * Allow the URI to be output as a string by simply casting it to a string
 	 * or echoing out.
 	 */
-	public function __toString(): string
+	public function __toString()
 	{
 		return self::createURIString(
 			$this->scheme(),
@@ -406,7 +402,7 @@ class URI
 	 *
 	 * @return string
 	 */
-	public static function createURIString($scheme, $authority, $path, $query, $fragment)
+	public static function createURIString($scheme=null, $authority=null, $path=null, $query=null, $fragment=null)
 	{
 		$uri = '';
 		if ( ! empty($scheme))

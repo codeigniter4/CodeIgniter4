@@ -1,5 +1,7 @@
 <?php namespace App\Config;
 
+use CodeIgniter\HTTPLite\URI;
+
 class ServicesConfig {
 
 	/**
@@ -42,9 +44,14 @@ class ServicesConfig {
 		    {
 				return new \CodeIgniter\View\View(APPPATH.'views/');
 		    },
-	        'request'   => '\CodeIgniter\HTTPLite\IncomingRequest',
+	        'request'   => function ($di)
+	        {
+		        return new \CodeIgniter\HTTPLite\IncomingRequest(
+			        new AppConfig(), new URI()
+		        );
+			},
+		    'uri'       => '\CodeIgniter\HTTPLite\URI',
 	        'response'  => '\CodeIgniter\HTTP\Response',
-//	        'uri'       => '\CodeIgniter\HTTPLite\URI'
 
 		    // Your custom files can be added here.
 	    ];
