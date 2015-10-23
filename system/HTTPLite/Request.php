@@ -223,18 +223,6 @@ class Request
 	//--------------------------------------------------------------------
 
 	/**
-	 * Fetch the user agent string
-	 *
-	 * @param null $filter
-	 */
-	public function userAgent($filter = null)
-	{
-		return $this->fetchGlobal(INPUT_SERVER, 'HTTP_USER_AGENT', $filter);
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
 	 * Returns an array containing all headers.
 	 *
 	 * @param null $filter

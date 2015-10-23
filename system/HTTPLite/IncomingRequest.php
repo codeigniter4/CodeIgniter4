@@ -201,6 +201,18 @@ class IncomingRequest extends Request {
 	//--------------------------------------------------------------------
 
 	/**
+	 * Fetch the user agent string
+	 *
+	 * @param null $filter
+	 */
+	public function userAgent($filter = null)
+	{
+		return $this->fetchGlobal(INPUT_SERVER, 'HTTP_USER_AGENT', $filter);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Set a cookie
 	 *
 	 * Accepts an arbitrary number of parameters (up to 7) or an associateive
