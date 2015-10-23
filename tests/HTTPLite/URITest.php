@@ -24,7 +24,7 @@ class URITest extends PHPUnit_Framework_TestCase {
 
 	public function testConstructorSetsAllParts()
 	{
-	    $uri = new URI('http://username:password@hostname:9090/path?arg=value#anchor', new \App\Config\AppConfig());
+	    $uri = new URI('http://username:password@hostname:9090/path?arg=value#anchor');
 
 		$this->assertEquals('http', $uri->scheme());
 		$this->assertEquals('username:password', $uri->userInfo());
@@ -42,7 +42,7 @@ class URITest extends PHPUnit_Framework_TestCase {
 
 	public function testSegmentsIsPopulatedRightForMultipleSegments()
 	{
-	    $uri = new URI('http://hostname/path/to/script', new \App\Config\AppConfig());
+	    $uri = new URI('http://hostname/path/to/script');
 
 		$this->assertEquals(['path', 'to', 'script'], $uri->segments());
 		$this->assertEquals('path', $uri->segment(1));
@@ -54,10 +54,13 @@ class URITest extends PHPUnit_Framework_TestCase {
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * @group single
+	 */
 	public function testCanCastAsString()
 	{
 		$url = 'http://username:password@hostname:9090/path?arg=value#anchor';
-	    $uri = new URI($url, new \App\Config\AppConfig());
+	    $uri = new URI($url);
 
 		$this->assertEquals($url, (string)$uri);
 	}

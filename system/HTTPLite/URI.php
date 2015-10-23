@@ -72,18 +72,10 @@ class URI
 	 */
 	protected $permittedURIChars;
 
-	/**
-	 * Holds the app config variables.
-	 *
-	 * @var
-	 */
-	protected $uriProtocol;
-
 	//--------------------------------------------------------------------
 
 	public function __construct(string $uri = null)
 	{
-//		$this->uriProtocol = $config->uriProtocol;
 //		$this->permittedURIChars = $config->permittedURIChars;
 
 		if (! is_null($uri))
@@ -329,7 +321,6 @@ class URI
 		return self::createURIString(
 			$this->scheme(),
 			$this->authority(),
-			$this->host(),
 			$this->path(), // Absolute URIs should use a "/" for an empty path
 			$this->query(),
 			$this->fragment()
@@ -349,7 +340,7 @@ class URI
 	 *
 	 * @return string
 	 */
-	public static function createURIString($scheme, $authority, $host, $path, $query, $fragment)
+	public static function createURIString($scheme, $authority, $path, $query, $fragment)
 	{
 		$uri = '';
 		if ( ! empty($scheme))
@@ -360,11 +351,6 @@ class URI
 		if ( ! empty($authority))
 		{
 			$uri .= $authority;
-		}
-
-		if (! empty($host))
-		{
-			$uri .= $host;
 		}
 
 		if ($path)
