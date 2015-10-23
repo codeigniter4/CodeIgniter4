@@ -434,16 +434,7 @@ class IncomingRequest extends Request
 			return '/';
 		}
 
-		$uri = $this->removeRelativeDirectory($uri);
-
-		return URI::createURIString(
-			isset($parts['scheme']) ? $parts['scheme'] : null,
-			isset($parts['authority']) ? $parts['authority'] : null,
-			isset($parts['host']) ? $parts['host'] : null,
-			isset($parts['path']) ? $uri : null,
-			isset($parts['query']) ? $parts['query'] : null,
-			isset($parts['fragment']) ? $parts['fragment'] : null
-		);
+		return $this->removeRelativeDirectory($uri);
 	}
 
 	//--------------------------------------------------------------------
