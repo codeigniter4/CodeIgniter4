@@ -6,6 +6,19 @@ class URI
 {
 
 	/**
+	 * Sub-delimiters used in query strings and fragments.
+	 *
+	 * @const string
+	 */
+	const CHAR_SUB_DELIMS = '!\$&\'\(\)\*\+,;=';
+	/**
+	 * Unreserved characters used in paths, query strings, and fragments.
+	 *
+	 * @const string
+	 */
+	const CHAR_UNRESERVED = 'a-zA-Z0-9_\-\.~';
+
+	/**
 	 * Current URI string
 	 *
 	 * @var string
@@ -64,6 +77,13 @@ class URI
 	protected $fragment = '';
 
 	/**
+	 * The query string.
+	 *
+	 * @var array
+	 */
+	protected $query = '';
+
+	/**
 	 * Permitted URI chars
 	 *
 	 * PCRE character group allowed in URI segments.
@@ -71,6 +91,11 @@ class URI
 	 * @var
 	 */
 	protected $permittedURIChars;
+
+	protected $defaultPorts = [
+		'http'  => 80,
+	    'https' => 443
+	];
 
 	//--------------------------------------------------------------------
 
@@ -148,7 +173,12 @@ class URI
 
 		if ( ! empty($this->port))
 		{
-			$authority .= ':'.$this->port;
+			// Don't add port if it's a standard port for
+			// this scheme
+			if ($this->port != $this->defaultPorts[$this->scheme])
+			{
+				$authority .= ':'.$this->port;
+			}
 		}
 
 		return $authority;
@@ -391,7 +421,10 @@ class URI
 	 */
 	public function setScheme(string $str)
 	{
-	    $this->scheme = strtolower($str);
+	    $str = strtolower($str);
+		$str = preg_replace('#:(//)?$#', '', $str);
+
+		$this->scheme = $str;
 
 		return $this;
 	}
@@ -440,7 +473,7 @@ class URI
 	 */
 	public function setPort(int $port)
 	{
-	    if ($port < 0 || $port > 65535)
+	    if ($port <= 0 || $port > 65535)
 	    {
 		    throw new \InvalidArgumentException('Invalid port given.');
 	    }
@@ -467,6 +500,115 @@ class URI
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Sets the query portion of the URI, while attempting
+	 * to clean the various parts of the query keys and values.
+	 *
+	 * @param string $query
+	 *
+	 * @return $this
+	 */
+	public function setQuery(string $query)
+	{
+		if (strpos($query, '#') !== false)
+		{
+			throw new \InvalidArgumentException('Query strings may not include URI fragments.');
+		}
+
+		// Can't have leading ?
+		if (! empty($query) && strpos($query, '?') === 0)
+		{
+			$query = substr($query, 1);
+		}
+
+		$parts = explode('&', $query);
+
+		foreach ($parts as $index => $part)
+		{
+			list($key, $value) = $this->splitQueryPart($part);
+
+			// Only 1 part?
+			if (is_null($value))
+			{
+				$parts[$index] = $this->filterQuery($key);
+				continue;
+			}
+
+			$parts[$index] = $this->filterQuery($key).'='.$this->filterQuery($value);
+		}
+
+	    $this->query = implode('&', $parts);
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Split a query value into it's key/value elements, if both
+	 * are present.
+	 *
+	 * @param $part
+	 *
+	 * @return array|null
+	 */
+	protected function splitQueryPart(string $part)
+	{
+		$parts = explode('=', $part, 2);
+
+		// If there's only a single element, no pair,
+		// then we return null
+		if (count($parts) === 1)
+		{
+			$parts = null;
+		}
+
+		return $parts;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Ensures the query string has only acceptable characters
+	 * per RFC 3986
+	 *
+	 * @see http://tools.ietf.org/html/rfc3986
+	 * @param $str
+	 *
+	 * @return string The filtered query value.
+	 */
+	protected function filterQuery($str)
+	{
+		return preg_replace_callback(
+			'/(?:[^' . self::CHAR_UNRESERVED . self::CHAR_SUB_DELIMS . '%:@\/\?]+|%(?![A-Fa-f0-9]{2}))/',
+			function (array $matches)
+			{
+				return rawurlencode($matches[0]);
+			},
+			$str
+		);
+	}
+
+	//--------------------------------------------------------------------
+
+
+	/**
+	 * A convenience method to pass an array of items in as the Query
+	 * portion of the URI.
+	 *
+	 * @param array $query
+	 */
+	public function setQueryArray(array $query)
+	{
+	    $query = http_build_query($query);
+
+		return $this->setQuery($query);
+	}
+
+	//--------------------------------------------------------------------
+
+
 
 	/**
 	 * Sets the fragment portion of the URI.
