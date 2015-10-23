@@ -6,25 +6,24 @@ require_once 'application/config/AppConfig.php';
 
 use CodeIgniter\HTTPLite\URI;
 
-class URITest extends PHPUnit_Framework_TestCase {
+class URITest extends PHPUnit_Framework_TestCase
+{
 
 	public function setUp()
 	{
-
 	}
 
 	//--------------------------------------------------------------------
 
 	public function tearDown()
 	{
-
 	}
 
 	//--------------------------------------------------------------------
 
 	public function testConstructorSetsAllParts()
 	{
-	    $uri = new URI('http://username:password@hostname:9090/path?arg=value#anchor');
+		$uri = new URI('http://username:password@hostname:9090/path?arg=value#anchor');
 
 		$this->assertEquals('http', $uri->scheme());
 		$this->assertEquals('username', $uri->userInfo());
@@ -44,7 +43,7 @@ class URITest extends PHPUnit_Framework_TestCase {
 
 	public function testSegmentsIsPopulatedRightForMultipleSegments()
 	{
-	    $uri = new URI('http://hostname/path/to/script');
+		$uri = new URI('http://hostname/path/to/script');
 
 		$this->assertEquals(['path', 'to', 'script'], $uri->segments());
 		$this->assertEquals('path', $uri->segment(1));
@@ -59,7 +58,7 @@ class URITest extends PHPUnit_Framework_TestCase {
 	public function testCanCastAsString()
 	{
 		$url = 'http://username:password@hostname:9090/path?arg=value#anchor';
-	    $uri = new URI($url);
+		$uri = new URI($url);
 
 		$expected = 'http://username@hostname:9090/path?arg=value#anchor';
 
@@ -70,7 +69,7 @@ class URITest extends PHPUnit_Framework_TestCase {
 
 	public function testSetSchemeSetsValue()
 	{
-	    $url = 'http://example.com/path';
+		$url = 'http://example.com/path';
 		$uri = new URI($url);
 
 		$expected = 'https://example.com/path';
@@ -96,9 +95,6 @@ class URITest extends PHPUnit_Framework_TestCase {
 
 	//--------------------------------------------------------------------
 
-	/**
-	 * @group single
-	 */
 	public function testUserInfoCanShowPassword()
 	{
 		$url = 'http://example.com/path';
@@ -195,6 +191,33 @@ class URITest extends PHPUnit_Framework_TestCase {
 
 	//--------------------------------------------------------------------
 
+	public function invalidPaths()
+	{
+		return [
+			'dot-segment'  => ['/./path/to/nowhere', '/path/to/nowhere'],
+			'double-dots'  => ['/../path/to/nowhere', '/path/to/nowhere'],
+			'start-dot'    => ['./path/to/nowhere', '/path/to/nowhere'],
+			'start-double' => ['../path/to/nowhere', '/path/to/nowhere'],
+			'decoded'      => ['../%41path', '/Apath'],
+		    'encoded'      => ['/path^here', '/path%5Ehere'],
+		];
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * @dataProvider invalidPaths
+	 * @group        single
+	 */
+	public function testPathGetsFiltered($path, $expected)
+	{
+		$uri = new URI();
+		$uri->setPath($path);
+		$this->assertEquals($expected, $uri->path());
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testSetFragmentSetsValue()
 	{
 		$url = 'http://example.com/path';
@@ -249,17 +272,17 @@ class URITest extends PHPUnit_Framework_TestCase {
 	}
 
 	//--------------------------------------------------------------------
-	
+
 	public function authorityInfo()
 	{
-	    return [
-		    'host-only'      => [ 'http://foo.com/bar',         'foo.com' ],
-		    'host-port'      => [ 'http://foo.com:3000/bar',    'foo.com:3000' ],
-		    'user-host'      => [ 'http://me@foo.com/bar',      'me@foo.com' ],
-		    'user-host-port' => [ 'http://me@foo.com:3000/bar', 'me@foo.com:3000' ],  
-	    ];
+		return [
+			'host-only'      => ['http://foo.com/bar', 'foo.com'],
+			'host-port'      => ['http://foo.com:3000/bar', 'foo.com:3000'],
+			'user-host'      => ['http://me@foo.com/bar', 'me@foo.com'],
+			'user-host-port' => ['http://me@foo.com:3000/bar', 'me@foo.com:3000'],
+		];
 	}
-	
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -267,18 +290,18 @@ class URITest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testAuthorityReturnsExceptedValues($url, $expected)
 	{
-	    $uri = new URI($url);
+		$uri = new URI($url);
 		$this->assertEquals($expected, $uri->authority());
 	}
-	
+
 	//--------------------------------------------------------------------
 
 	public function defaultPorts()
 	{
-	    return [
-		    'http'  => ['http', 80],
-	        'https' => ['https', 443]
-	    ];
+		return [
+			'http'  => ['http', 80],
+			'https' => ['https', 443],
+		];
 	}
 
 	//--------------------------------------------------------------------
@@ -297,7 +320,5 @@ class URITest extends PHPUnit_Framework_TestCase {
 	}
 
 	//--------------------------------------------------------------------
-
-
 
 }

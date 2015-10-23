@@ -91,14 +91,10 @@ class URI
 	protected $query = '';
 
 	/**
-	 * Permitted URI chars
+	 * Default schemes/ports.
 	 *
-	 * PCRE character group allowed in URI segments.
-	 *
-	 * @var
+	 * @var array
 	 */
-	protected $permittedURIChars;
-
 	protected $defaultPorts = [
 		'http'  => 80,
 		'https' => 443,
@@ -535,7 +531,7 @@ class URI
 	 */
 	public function setPath(string $path)
 	{
-		$this->path = trim($path);
+		$this->path = $this->filterPath($path);
 
 		return $this;
 	}
@@ -666,6 +662,41 @@ class URI
 	//--------------------------------------------------------------------
 
 	/**
+	 * Encodes any dangerous characters, and removes dot segments.
+	 * While dot segments have valid uses according to the spec,
+	 * this URI class does not allow them.
+	 *
+	 * @param $path
+	 */
+	protected function filterPath($path)
+	{
+		// Decode/normalize percent-encoded chars so
+		// we can always have matching for Routes, etc.
+		$path = urldecode($path);
+
+		// Remove dot segments
+		$path = str_replace('../', '/', $path);
+		$path = str_replace('./', '/', $path);
+		$path = str_replace('//', '/', $path);
+
+		// Encode characters
+		$path = preg_replace_callback(
+			'/(?:[^' . self::CHAR_UNRESERVED . ':@&=\+\$,\/;%]+|%(?![A-Fa-f0-9]{2}))/',
+			function (array $matches)
+			{
+				return rawurlencode($matches[0]);
+			},
+			$path
+		);
+
+		return $path;
+	}
+
+	//--------------------------------------------------------------------
+
+
+
+	/**
 	 * Saves our parts from a parse_url call.
 	 *
 	 * @param $parts
@@ -674,9 +705,9 @@ class URI
 	{
 		$this->host     = isset($parts['host']) ? $parts['host'] : '';
 		$this->user     = isset($parts['user']) ? $parts['user'] : '';
-		$this->path     = isset($parts['path']) ? $this->filterURI($parts['path']) : '';
-		$this->query    = isset($parts['query']) ? $this->filterURI($parts['query']) : '';
-		$this->fragment = isset($parts['fragment']) ? $this->filterURI($parts['fragment']) : '';
+		$this->path     = isset($parts['path']) ? $this->filterPath($parts['path']) : '';
+		$this->query    = isset($parts['query']) ? $this->filterQuery($parts['query']) : '';
+		$this->fragment = isset($parts['fragment']) ? $this->filterQuery($parts['fragment']) : '';
 
 		// Scheme
 		if (isset($parts['scheme']))
@@ -710,25 +741,6 @@ class URI
 		{
 			$this->segments = explode('/', trim($parts['path'], '/'));
 		}
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Filters segments for malicious characters
-	 *
-	 * @param $str
-	 */
-	protected function filterURI(&$str)
-	{
-		if ( ! empty($str) && ! empty($this->_permittedURIChars) &&
-		     ! preg_match('/^['.$this->permittedURIChars.']+$/i'.(UTF8_ENABLED ? 'u' : ''), $str)
-		)
-		{
-			throw new \InvalidArgumentException('The URI you submitted has disallowed characters.', 400);
-		}
-
-		return $str;
 	}
 
 	//--------------------------------------------------------------------
