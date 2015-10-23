@@ -27,7 +27,8 @@ use App\Config\AppConfig;
  *
  * @package CodeIgniter\HTTPLite
  */
-class IncomingRequest extends Request {
+class IncomingRequest extends Request
+{
 
 	/**
 	 * Parsed input stream data
@@ -63,28 +64,9 @@ class IncomingRequest extends Request {
 
 		// @todo perform csrf check
 
-		// Determine our requested URI
-		$protocol = $config->uriProtocol;
+		$this->uri = $uri;
 
-		if (empty($protocol)) $protocol = 'REQUEST_URI';
-
-		switch ($protocol)
-		{
-			case 'REQUEST_URI':
-				$path = $this->parseRequestURI();
-				break;
-			case 'QUERY_STRING':
-				$path = $this->parseQueryString();
-				break;
-			case 'PATH_INFO':
-			default:
-				$path = isset($_SERVER[$protocol])
-					? $_SERVER[$protocol]
-					: $this->parseRequestURI();
-				break;
-		}
-
-		$this->uri = new URI($uri);
+		$this->detectURI($config->uriProtocol, $config->baseURL);
 	}
 
 	//--------------------------------------------------------------------
@@ -92,8 +74,9 @@ class IncomingRequest extends Request {
 	/**
 	 * Fetch an item from GET data.
 	 *
-	 * @param null $index   Index for item to fetch from $_GET.
-	 * @param null $filter  A filter name to apply.
+	 * @param null $index  Index for item to fetch from $_GET.
+	 * @param null $filter A filter name to apply.
+	 *
 	 * @return mixed
 	 */
 	public function get($index = null, $filter = null)
@@ -106,8 +89,9 @@ class IncomingRequest extends Request {
 	/**
 	 * Fetch an item from POST.
 	 *
-	 * @param null $index   Index for item to fetch from $_POST.
-	 * @param null $filter  A filter name to apply
+	 * @param null $index  Index for item to fetch from $_POST.
+	 * @param null $filter A filter name to apply
+	 *
 	 * @return mixed
 	 */
 	public function post($index = null, $filter = null)
@@ -120,8 +104,9 @@ class IncomingRequest extends Request {
 	/**
 	 * Fetch an item from POST data with fallback to GET.
 	 *
-	 * @param null $index   Index for item to fetch from $_POST or $_GET
-	 * @param null $filter  A filter name to apply
+	 * @param null $index  Index for item to fetch from $_POST or $_GET
+	 * @param null $filter A filter name to apply
+	 *
 	 * @return mixed
 	 */
 	public function postGet($index = null, $filter = null)
@@ -139,8 +124,9 @@ class IncomingRequest extends Request {
 	/**
 	 * Fetch an item from GET data with fallback to POST.
 	 *
-	 * @param null $index   Index for item to be fetched from $_GET or $_POST
-	 * @param null $filter  A filter name to apply
+	 * @param null $index  Index for item to be fetched from $_GET or $_POST
+	 * @param null $filter A filter name to apply
+	 *
 	 * @return mixed
 	 */
 	public function getPost($index = null, $filter = null)
@@ -158,8 +144,9 @@ class IncomingRequest extends Request {
 	/**
 	 * Fetch an item from the COOKIE array.
 	 *
-	 * @param null $index   Index for item to be fetched from $_COOKIE
-	 * @param null $filter  A filter name to be applied
+	 * @param null $index  Index for item to be fetched from $_COOKIE
+	 * @param null $filter A filter name to be applied
+	 *
 	 * @return mixed
 	 */
 	public function cookie($index = null, $filter = null)
@@ -174,23 +161,24 @@ class IncomingRequest extends Request {
 	 *
 	 * Useful when you need to access PUT, DELETE or PATCH request data.
 	 *
-	 * @param null $index   Index for item to be fetched
-	 * @param null $filter  A filter to apply
+	 * @param null $index  Index for item to be fetched
+	 * @param null $filter A filter to apply
+	 *
 	 * @return mixed
 	 */
 	public function inputStream($index = null, $filter = null)
 	{
-		if (! is_array($this->inputStream))
+		if ( ! is_array($this->inputStream))
 		{
 			$this->inputStream = file_get_contents('php://input');
 
-			if (! empty($this->inputStream))
+			if ( ! empty($this->inputStream))
 			{
 				parse_str($this->inputStream, $this->inputStream);
 			}
 		}
 
-		if (! isset($this->inputStream[$index]))
+		if ( ! isset($this->inputStream[$index]))
 		{
 			return null;
 		}
@@ -227,12 +215,21 @@ class IncomingRequest extends Request {
 	 * @param bool|false $secure    Whether to only transfer cookies via SSL
 	 * @param bool|false $httponly  Whether only make the cookie accessible via HTTP (no javascript)
 	 */
-	public function setCookie($name, $value = '', $expire = '', $domain = '', $path = '/', $prefix = '', $secure = FALSE, $httponly = FALSE)
+	public function setCookie(
+		$name,
+		$value = '',
+		$expire = '',
+		$domain = '',
+		$path = '/',
+		$prefix = '',
+		$secure = false,
+		$httponly = false
+	)
 	{
 		if (is_array($name))
 		{
 			// always leave 'name' in last place, as the loop will break otherwise, due to $$item
-			foreach (array('value', 'expire', 'domain', 'path', 'prefix', 'secure', 'httponly', 'name') as $item)
+			foreach (['value', 'expire', 'domain', 'path', 'prefix', 'secure', 'httponly', 'name'] as $item)
 			{
 				if (isset($name[$item]))
 				{
@@ -256,12 +253,12 @@ class IncomingRequest extends Request {
 			$path = config_item('cookie_path');
 		}
 
-		if ($secure === FALSE && config_item('cookie_secure') === TRUE)
+		if ($secure === false && config_item('cookie_secure') === true)
 		{
 			$secure = config_item('cookie_secure');
 		}
 
-		if ($httponly === FALSE && config_item('cookie_httponly') !== FALSE)
+		if ($httponly === false && config_item('cookie_httponly') !== false)
 		{
 			$httponly = config_item('cookie_httponly');
 		}
@@ -281,6 +278,112 @@ class IncomingRequest extends Request {
 	//--------------------------------------------------------------------
 
 	/**
+	 * Attempts to detect if the current connection is secure through
+	 * a few different methods.
+	 *
+	 * @return bool
+	 */
+	public function is_secure(): bool
+	{
+		if (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == '443')
+		{
+			return true;
+		}
+		elseif (isset($_SERVER['HTTP_X_FORWARDED_PORT']) && $_SERVER['HTTP_X_FORWARDED_PORT'] == '443')
+		{
+			return true;
+		}
+		elseif (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on')
+		{
+			return true;
+		}
+		elseif (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https')
+		{
+			return true;
+		}
+
+		return false;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Sets up our URI object based on the information we have. This is
+	 * either provided by the user in the baseURL config setting, or
+	 * determined from the environment as needed.
+	 *
+	 * @param $protocol
+	 * @param $baseURL
+	 */
+	protected function detectURI($protocol, $baseURL)
+	{
+		$this->uri->setPath($this->detectPath($protocol));
+
+		// Based on our baseURL provided by the developer (if set)
+		// set our current domain name, scheme
+		if (! empty($baseURL))
+		{
+			$this->uri->setScheme(parse_url($baseURL, PHP_URL_SCHEME));
+			$this->uri->setHost(parse_url($baseURL, PHP_URL_HOST));
+			$this->uri->setPort(parse_url($baseURL, PHP_URL_PORT));
+		}
+		else
+		{
+			$this->is_secure() ? $this->uri->setScheme('https') : $this->uri->setScheme('http');
+
+			// While both SERVER_NAME and HTTP_HOST are open to security issues,
+			// if we have to choose, we will go with the server-controller version first.
+			! empty($_SERVER['SERVER_NAME'])
+				? $this->uri->setHost($_SERVER['SERVER_NAME'])
+				: $this->uri->setHost($_SERVER['HTTP_HOST']);
+
+			if (! empty($_SERVER['SERVER_PORT']))
+			{
+				$this->uri->setPort($_SERVER['SERVER_PORT']);
+			}
+		}
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Based on the URIProtocol config setting, will attempt to
+	 * detect the path portion of the current URI.
+	 *
+	 * @param $protocol
+	 *
+	 * @return string|string
+	 */
+	public function detectPath($protocol)
+	{
+		if (empty($protocol))
+		{
+			$protocol = 'REQUEST_URI';
+		}
+
+		switch ($protocol)
+		{
+			case 'REQUEST_URI':
+				$path = $this->parseRequestURI();
+				break;
+			case 'QUERY_STRING':
+				$path = $this->parseQueryString();
+				break;
+			case 'PATH_INFO':
+			default:
+				$path = isset($_SERVER[$protocol])
+					? $_SERVER[$protocol]
+					: $this->parseRequestURI();
+				break;
+		}
+
+		return $path;
+	}
+
+	//--------------------------------------------------------------------
+
+
+	/**
 	 * Will parse the REQUEST_URI and automatically detect the URI from it,
 	 * fixing the query string if necessary.
 	 *
@@ -297,17 +400,17 @@ class IncomingRequest extends Request {
 		// contains a colon followed by a number
 		$parts = parse_url('http://dummy'.$_SERVER['REQUEST_URI']);
 		$query = isset($parts['query']) ? $parts['query'] : '';
-		$uri = isset($parts['path']) ? $parts['path'] : '';
+		$uri   = isset($parts['path']) ? $parts['path'] : '';
 
 		if (isset($_SERVER['SCRIPT_NAME'][0]))
 		{
 			if (strpos($uri, $_SERVER['SCRIPT_NAME']) === 0)
 			{
-				$uri = (string) substr($uri, strlen($_SERVER['SCRIPT_NAME']));
+				$uri = (string)substr($uri, strlen($_SERVER['SCRIPT_NAME']));
 			}
 			elseif (strpos($uri, dirname($_SERVER['SCRIPT_NAME'])) === 0)
 			{
-				$uri = (string) substr($uri, strlen(dirname($_SERVER['SCRIPT_NAME'])));
+				$uri = (string)substr($uri, strlen(dirname($_SERVER['SCRIPT_NAME'])));
 			}
 		}
 
@@ -315,8 +418,8 @@ class IncomingRequest extends Request {
 		// URI is found, and also fixes the QUERY_STRING server var and $_GET array.
 		if (trim($uri, '/') === '' && strncmp($query, '/', 1) === 0)
 		{
-			$query = explode('?', $query, 2);
-			$uri = $query[0];
+			$query                   = explode('?', $query, 2);
+			$uri                     = $query[0];
 			$_SERVER['QUERY_STRING'] = isset($query[1]) ? $query[1] : '';
 		}
 		else
@@ -350,7 +453,7 @@ class IncomingRequest extends Request {
 	 *
 	 * Will parse QUERY_STRING and automatically detect the URI from it.
 	 *
-	 * @return	string
+	 * @return    string
 	 */
 	protected function parseQueryString(): string
 	{
@@ -362,9 +465,9 @@ class IncomingRequest extends Request {
 		}
 		elseif (strncmp($uri, '/', 1) === 0)
 		{
-			$uri = explode('?', $uri, 2);
+			$uri                     = explode('?', $uri, 2);
 			$_SERVER['QUERY_STRING'] = isset($uri[1]) ? $uri[1] : '';
-			$uri = $uri[0];
+			$uri                     = $uri[0];
 		}
 
 		parse_str($_SERVER['QUERY_STRING'], $_GET);
@@ -379,14 +482,15 @@ class IncomingRequest extends Request {
 	 *
 	 * Do some final cleaning of the URI and return it, currently only used in self::_parse_request_uri()
 	 *
-	 * @param	string	$url
-	 * @return	string
+	 * @param    string $url
+	 *
+	 * @return    string
 	 */
 	protected function removeRelativeDirectory($uri)
 	{
-		$uris = array();
-		$tok = strtok($uri, '/');
-		while ($tok !== FALSE)
+		$uris = [];
+		$tok  = strtok($uri, '/');
+		while ($tok !== false)
 		{
 			if (( ! empty($tok) OR $tok === '0') && $tok !== '..')
 			{
