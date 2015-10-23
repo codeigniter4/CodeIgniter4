@@ -46,7 +46,14 @@ class URI
 	 *
 	 * @var
 	 */
-	protected $userInfo;
+	protected $user;
+
+	/**
+	 * URI User Password
+	 *
+	 * @var
+	 */
+	protected $password;
 
 	/**
 	 * URI Host
@@ -94,8 +101,16 @@ class URI
 
 	protected $defaultPorts = [
 		'http'  => 80,
-	    'https' => 443
+		'https' => 443,
 	];
+
+	/**
+	 * Whether passwords should be shown in userInfo/authority calls.
+	 * Default to false because URIs often show up in logs
+	 *
+	 * @var bool
+	 */
+	protected $showPassword = false;
 
 	//--------------------------------------------------------------------
 
@@ -103,7 +118,7 @@ class URI
 	{
 //		$this->permittedURIChars = $config->permittedURIChars;
 
-		if (! is_null($uri))
+		if ( ! is_null($uri))
 		{
 			$parts = parse_url($uri);
 
@@ -166,9 +181,9 @@ class URI
 
 		$authority = $this->host;
 
-		if ( ! empty($this->userInfo))
+		if ( ! empty($this->userInfo()))
 		{
-			$authority = $this->userInfo.'@'.$authority;
+			$authority = $this->userInfo().'@'.$authority;
 		}
 
 		if ( ! empty($this->port))
@@ -180,6 +195,8 @@ class URI
 				$authority .= ':'.$this->port;
 			}
 		}
+
+		$this->showPassword = false;
 
 		return $authority;
 	}
@@ -196,6 +213,11 @@ class URI
 	 * additionally, if the password is also present, it will be appended to the
 	 * user value, with a colon (":") separating the values.
 	 *
+	 * NOTE that be default, the password, if available, will NOT be shown
+	 * as a security measure as discussed in RFC 3986, Section 7.5. If you know
+	 * the password is not a security issue, you can force it to be shown
+	 * with $this->showPassword();
+	 *
 	 * The trailing "@" character is not part of the user information and MUST
 	 * NOT be added.
 	 *
@@ -203,7 +225,25 @@ class URI
 	 */
 	public function userInfo()
 	{
-		return $this->userInfo;
+		$userInfo = $this->user;
+
+		if ($this->showPassword === true && ! empty($this->password))
+		{
+			$userInfo .= ':'.$this->password;
+		}
+
+		return $userInfo;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Temporarily sets the URI to show a password in userInfo. Will
+	 * reset itself after the first call to authority().
+	 */
+	public function showPassword()
+	{
+		$this->showPassword = true;
 	}
 
 	//--------------------------------------------------------------------
@@ -399,7 +439,7 @@ class URI
 
 		if ($fragment)
 		{
-			$uri .= '#'. $fragment;
+			$uri .= '#'.$fragment;
 		}
 
 		return $uri;
@@ -421,7 +461,7 @@ class URI
 	 */
 	public function setScheme(string $str)
 	{
-	    $str = strtolower($str);
+		$str = strtolower($str);
 		$str = preg_replace('#:(//)?$#', '', $str);
 
 		$this->scheme = $str;
@@ -434,14 +474,15 @@ class URI
 	/**
 	 * Sets the userInfo/Authority portion of the URI.
 	 *
-	 * @param string $user  The user's username
-	 * @param string $pass  The user's password
+	 * @param string $user The user's username
+	 * @param string $pass The user's password
 	 *
 	 * @return $this
 	 */
 	public function setUserInfo(string $user, string $pass)
 	{
-		$this->userInfo = trim($user).':'.trim($pass);
+		$this->user     = trim($user);
+		$this->password = trim($pass);
 
 		return $this;
 	}
@@ -473,10 +514,10 @@ class URI
 	 */
 	public function setPort(int $port)
 	{
-	    if ($port <= 0 || $port > 65535)
-	    {
-		    throw new \InvalidArgumentException('Invalid port given.');
-	    }
+		if ($port <= 0 || $port > 65535)
+		{
+			throw new \InvalidArgumentException('Invalid port given.');
+		}
 
 		$this->port = $port;
 
@@ -494,7 +535,7 @@ class URI
 	 */
 	public function setPath(string $path)
 	{
-	    $this->path = trim($path);
+		$this->path = trim($path);
 
 		return $this;
 	}
@@ -517,7 +558,7 @@ class URI
 		}
 
 		// Can't have leading ?
-		if (! empty($query) && strpos($query, '?') === 0)
+		if ( ! empty($query) && strpos($query, '?') === 0)
 		{
 			$query = substr($query, 1);
 		}
@@ -538,7 +579,7 @@ class URI
 			$parts[$index] = $this->filterQuery($key).'='.$this->filterQuery($value);
 		}
 
-	    $this->query = implode('&', $parts);
+		$this->query = implode('&', $parts);
 
 		return $this;
 	}
@@ -574,6 +615,7 @@ class URI
 	 * per RFC 3986
 	 *
 	 * @see http://tools.ietf.org/html/rfc3986
+	 *
 	 * @param $str
 	 *
 	 * @return string The filtered query value.
@@ -581,7 +623,7 @@ class URI
 	protected function filterQuery($str)
 	{
 		return preg_replace_callback(
-			'/(?:[^' . self::CHAR_UNRESERVED . self::CHAR_SUB_DELIMS . '%:@\/\?]+|%(?![A-Fa-f0-9]{2}))/',
+			'/(?:[^'.self::CHAR_UNRESERVED.self::CHAR_SUB_DELIMS.'%:@\/\?]+|%(?![A-Fa-f0-9]{2}))/',
 			function (array $matches)
 			{
 				return rawurlencode($matches[0]);
@@ -592,7 +634,6 @@ class URI
 
 	//--------------------------------------------------------------------
 
-
 	/**
 	 * A convenience method to pass an array of items in as the Query
 	 * portion of the URI.
@@ -601,14 +642,12 @@ class URI
 	 */
 	public function setQueryArray(array $query)
 	{
-	    $query = http_build_query($query);
+		$query = http_build_query($query);
 
 		return $this->setQuery($query);
 	}
 
 	//--------------------------------------------------------------------
-
-
 
 	/**
 	 * Sets the fragment portion of the URI.
@@ -619,7 +658,7 @@ class URI
 	 */
 	public function setFragment(string $string)
 	{
-	    $this->fragment = trim($string, '# ');
+		$this->fragment = trim($string, '# ');
 
 		return $this;
 	}
@@ -634,7 +673,7 @@ class URI
 	protected function applyParts($parts)
 	{
 		$this->host     = isset($parts['host']) ? $parts['host'] : '';
-		$this->userInfo = isset($parts['user']) ? $parts['user'] : '';
+		$this->user     = isset($parts['user']) ? $parts['user'] : '';
 		$this->path     = isset($parts['path']) ? $this->filterURI($parts['path']) : '';
 		$this->query    = isset($parts['query']) ? $this->filterURI($parts['query']) : '';
 		$this->fragment = isset($parts['fragment']) ? $this->filterURI($parts['fragment']) : '';
@@ -663,7 +702,7 @@ class URI
 
 		if (isset($parts['pass']))
 		{
-			$this->userInfo .= ':'.$parts['pass'];
+			$this->password = $parts['pass'];
 		}
 
 		// Populate our segments array

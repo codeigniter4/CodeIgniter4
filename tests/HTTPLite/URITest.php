@@ -27,13 +27,15 @@ class URITest extends PHPUnit_Framework_TestCase {
 	    $uri = new URI('http://username:password@hostname:9090/path?arg=value#anchor');
 
 		$this->assertEquals('http', $uri->scheme());
-		$this->assertEquals('username:password', $uri->userInfo());
+		$this->assertEquals('username', $uri->userInfo());
 		$this->assertEquals('hostname', $uri->host());
 		$this->assertEquals('/path', $uri->path());
 		$this->assertEquals('arg=value', $uri->query());
 		$this->assertEquals('9090', $uri->port());
 		$this->assertEquals('anchor', $uri->fragment());
-		$this->assertEquals('username:password@hostname:9090', $uri->authority());
+
+		// Password ignored by default for security reasons.
+		$this->assertEquals('username@hostname:9090', $uri->authority());
 
 		$this->assertEquals(['path'], $uri->segments());
 	}
@@ -59,7 +61,9 @@ class URITest extends PHPUnit_Framework_TestCase {
 		$url = 'http://username:password@hostname:9090/path?arg=value#anchor';
 	    $uri = new URI($url);
 
-		$this->assertEquals($url, (string)$uri);
+		$expected = 'http://username@hostname:9090/path?arg=value#anchor';
+
+		$this->assertEquals($expected, (string)$uri);
 	}
 
 	//--------------------------------------------------------------------
@@ -83,9 +87,33 @@ class URITest extends PHPUnit_Framework_TestCase {
 		$url = 'http://example.com/path';
 		$uri = new URI($url);
 
-		$expected = 'http://user:password@example.com/path';
+		$expected = 'http://user@example.com/path';
 
 		$uri->setUserInfo('user', 'password');
+		$this->assertEquals('user', $uri->userInfo());
+		$this->assertEquals($expected, (string)$uri);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * @group single
+	 */
+	public function testUserInfoCanShowPassword()
+	{
+		$url = 'http://example.com/path';
+		$uri = new URI($url);
+
+		$expected = 'http://user@example.com/path';
+
+		$uri->setUserInfo('user', 'password');
+		$this->assertEquals('user', $uri->userInfo());
+		$this->assertEquals($expected, (string)$uri);
+
+		$uri->showPassword();
+
+		$expected = 'http://user:password@example.com/path';
+
 		$this->assertEquals('user:password', $uri->userInfo());
 		$this->assertEquals($expected, (string)$uri);
 	}
