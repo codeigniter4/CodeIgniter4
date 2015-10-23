@@ -114,8 +114,8 @@ The `view()` function is a convenience method that grabs an instance of the View
 Then you can use any of the three standard methods that it provides. 
 
 * **render('view_name', array $options)** Performs the rendering of the view and its data. The $options array is unused by default, but provided for third-party libraries to use when integrating with different template engines.
-* **setVar('name', 'value', $context='html')** Sets a single piece of dynamic data.  $context specifies the context to escape for. Defaults to 'html'. Set to empty value to skip escaping.
-* **setData($array, $context='html')** Takes an array of key/value pairs for dynamic data and optionally escapes it. $context specifies the context to escape for. Defaults to 'html'. Set to empty value to skip escaping.
+* **setVar('name', 'value', $context=null)** Sets a single piece of dynamic data.  $context specifies the context to escape for. Defaults to no escaping. Set to empty value to skip escaping.
+* **setData($array, $context=null)** Takes an array of key/value pairs for dynamic data and optionally escapes it. $context specifies the context to escape for. Defaults to no escaping. Set to empty value to skip escaping.
 
 The `setVar()` and `setData()` methods are chainable, allowing you to combine a number of different calls together in a chain: 
 
@@ -124,7 +124,7 @@ The `setVar()` and `setData()` methods are chainable, allowing you to combine a 
 	                        ->render('myView');
 
 ### Escaping Data
-When you pass data to the `setVar()` and `setData()` functions it is automatically escaped to protect against cross-site scripting attacks. This  is done by looping over the $data array and running all values through the `htmlspecialchars()` function if it is a string. 
+When you pass data to the `setVar()` and `setData()` functions you have the option to escape the data to protect against cross-site scripting attacks. As the last parameter in either method, you can pass the desired context to escape the data for. See below for context descriptions.
 
 If you don't want the data to be escaped, you can pass `null` or `'raw'` as the final parameter to each function.
 
