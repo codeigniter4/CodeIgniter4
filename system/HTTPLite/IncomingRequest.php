@@ -224,7 +224,7 @@ class IncomingRequest extends Request {
 			{
 				if (isset($name[$item]))
 				{
-					$$item = $name[$item];
+					$item = $name[$item];
 				}
 			}
 		}
