@@ -185,7 +185,7 @@ class Request
 	 *
 	 * @return bool
 	 */
-	public function validIP($ip, string $which = ''): bool
+	public function validIP(string $ip, string $which = ''): bool
 	{
 		switch (strtolower($which))
 		{
@@ -265,7 +265,7 @@ class Request
 				$header = str_replace('_', ' ', strtolower($header));
 				$header = str_replace(' ', '-', ucwords($header));
 
-				$this->headers[$header] = $this->fetchGlobal($_SERVER, $key, $filter);
+				$this->headers[$header] = $this->fetchGlobal(INPUT_SERVER, $key, $filter);
 			}
 		}
 
@@ -305,4 +305,83 @@ class Request
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Fetch an item from the $_SERVER array.
+	 *
+	 * @param null $index   Index for item to be fetched from $_SERVER
+	 * @param null $filter  A filter name to be applied
+	 * @return mixed
+	 */
+	public function server($index = null, $filter = null)
+	{
+		return $this->fetchGlobal(INPUT_SERVER, $index, $filter);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Fetches one or more items from a global, like cookies, get, post, etc.
+	 * Can optionally filter the input when you retrieve it by passing in
+	 * a filter.
+	 *
+	 * If $type is an array, it must conform to the input allowed by the
+	 * filter_input_array method.
+	 *
+	 * http://php.net/manual/en/filter.filters.sanitize.php
+	 *
+	 * @param      $type
+	 * @param null $index
+	 * @param null $filter
+	 *
+	 * @return mixed
+	 */
+	protected function fetchGlobal($type, $index = null, $filter = null)
+	{
+		// If $index is null, it means that the whole input type array is requested
+		if (is_null($index))
+		{
+			return filter_input_array($type, is_null($filter) ? FILTER_FLAG_NONE : $filter);
+		}
+
+		// allow fetching multiple keys at once
+		if (is_array($index))
+		{
+			$output = [];
+
+			foreach ($index as $key)
+			{
+				$output[$key] = filter_input($type, $key, $filter);
+			}
+
+			return $output;
+		}
+//
+//		// Does the index contain array notation?
+//		if (($count = preg_match_all('/(?:^[^\[]+)|\[[^]]*\]/', $index, $matches)) > 1) // Does the index contain array notation
+//		{
+//			$value = $array;
+//			for ($i = 0; $i < $count; $i++)
+//			{
+//				$key = trim($matches[0][$i], '[]');
+//				if ($key === '') // Empty notation will return the value as array
+//				{
+//					break;
+//				}
+//
+//				if (isset($value[$key]))
+//				{
+//					$value = $value[$key];
+//				}
+//				else
+//				{
+//					return NULL;
+//				}
+//			}
+//		}
+
+		// Single key to retrieve
+		return filter_input($type, $index, $filter);
+	}
+
+	//--------------------------------------------------------------------
 }
