@@ -56,17 +56,56 @@ class IncomingRequest extends Request
 	 */
 	public $uri;
 
+	/**
+	 * Set a cookie name prefix if you need to avoid collisions
+	 *
+	 * @var string
+	 */
+	protected $cookiePrefix = '';
+
+	/**
+	 * Set to .your-domain.com for site-wide cookies
+	 *
+	 * @var string
+	 */
+	protected $cookieDomain = '';
+
+	/**
+	 * Typically will be a forward slash
+	 *
+	 * @var string
+	 */
+	protected $cookiePath = '/';
+
+	/**
+	 * Cookie will only be set if a secure HTTPS connection exists.
+	 *
+	 * @var bool
+	 */
+	protected $cookieSecure = false;
+
+	/**
+	 * Cookie will only be accessible via HTTP(S) (no javascript)
+	 *
+	 * @var bool
+	 */
+	protected $cookieHTTPOnly = false;
+
 	//--------------------------------------------------------------------
 
 	public function __construct(AppConfig $config, URI $uri)
 	{
-		// @todo get values from configuration
-
 		// @todo perform csrf check
 
 		$this->uri = $uri;
 
 		$this->detectURI($config->uriProtocol, $config->baseURL);
+
+		$this->cookiePrefix   = $config->cookiePrefix;
+		$this->cookieDomain   = $config->cookieDomain;
+		$this->cookiePath     = $config->cookiePath;
+		$this->cookieSecure   = $config->cookieSecure;
+		$this->cookieHTTPOnly = $config->cookieHTTPOnly;
 	}
 
 	//--------------------------------------------------------------------
@@ -238,29 +277,29 @@ class IncomingRequest extends Request
 			}
 		}
 
-		if ($prefix === '' && config_item('cookie_prefix') !== '')
+		if ($prefix === '' && $this->cookiePrefix !== '')
 		{
-			$prefix = config_item('cookie_prefix');
+			$prefix = $this->cookiePrefix;
 		}
 
-		if ($domain == '' && config_item('cookie_domain') != '')
+		if ($domain == '' && $this->cookieDomain != '')
 		{
-			$domain = config_item('cookie_domain');
+			$domain = $this->cookieDomain;
 		}
 
-		if ($path === '/' && config_item('cookie_path') !== '/')
+		if ($path === '/' && $this->cookiePath !== '/')
 		{
-			$path = config_item('cookie_path');
+			$path = $this->cookiePath;
 		}
 
-		if ($secure === false && config_item('cookie_secure') === true)
+		if ($secure === false && $this->cookieSecure === true)
 		{
-			$secure = config_item('cookie_secure');
+			$secure = $this->cookieSecure;
 		}
 
-		if ($httponly === false && config_item('cookie_httponly') !== false)
+		if ($httponly === false && $this->cookieHTTPOnly !== false)
 		{
-			$httponly = config_item('cookie_httponly');
+			$httponly = $this->cookieHTTPOnly;
 		}
 
 		if ( ! is_numeric($expire))
@@ -321,7 +360,7 @@ class IncomingRequest extends Request
 
 		// Based on our baseURL provided by the developer (if set)
 		// set our current domain name, scheme
-		if (! empty($baseURL))
+		if ( ! empty($baseURL))
 		{
 			$this->uri->setScheme(parse_url($baseURL, PHP_URL_SCHEME));
 			$this->uri->setHost(parse_url($baseURL, PHP_URL_HOST));
@@ -337,7 +376,7 @@ class IncomingRequest extends Request
 				? $this->uri->setHost($_SERVER['SERVER_NAME'])
 				: $this->uri->setHost($_SERVER['HTTP_HOST']);
 
-			if (! empty($_SERVER['SERVER_PORT']))
+			if ( ! empty($_SERVER['SERVER_PORT']))
 			{
 				$this->uri->setPort($_SERVER['SERVER_PORT']);
 			}
@@ -381,7 +420,6 @@ class IncomingRequest extends Request
 	}
 
 	//--------------------------------------------------------------------
-
 
 	/**
 	 * Will parse the REQUEST_URI and automatically detect the URI from it,

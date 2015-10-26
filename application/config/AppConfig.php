@@ -2,7 +2,8 @@
 
 use CodeIgniter\Config\BaseConfig;
 
-class AppConfig extends BaseConfig {
+class AppConfig extends BaseConfig
+{
 
 	/*
 	|--------------------------------------------------------------------------
@@ -41,24 +42,23 @@ class AppConfig extends BaseConfig {
 
 	/*
 	|--------------------------------------------------------------------------
-	| Allowed URL Characters
+	| Cookie Related Variables
 	|--------------------------------------------------------------------------
 	|
-	| This lets you specify which characters are permitted within your URLs.
-	| When someone tries to submit a URL with disallowed characters they will
-	| get a warning message.
+	| 'cookiePrefix'   = Set a cookie name prefix if you need to avoid collisions
+	| 'cookieDomain'   = Set to .your-domain.com for site-wide cookies
+	| 'cookiePath'     = Typically will be a forward slash
+	| 'cookieSecure'   = Cookie will only be set if a secure HTTPS connection exists.
+	| 'cookieHTTPOnly' = Cookie will only be accessible via HTTP(S) (no javascript)
 	|
-	| As a security measure you are STRONGLY encouraged to restrict URLs to
-	| as few characters as possible.  By default only these are allowed: a-z 0-9~%.:_-
-	|
-	| Leave blank to allow all characters -- but only if you are insane.
-	|
-	| The configured value is actually a regular expression character group
-	| and it will be executed as: ! preg_match('/^[<permitted_uri_chars>]+$/i
-	|
-	| DO NOT CHANGE THIS UNLESS YOU FULLY UNDERSTAND THE REPERCUSSIONS!!
+	| Note: These settings (with the exception of 'cookie_prefix' and
+	|       'cookie_httponly') will also affect sessions.
 	|
 	*/
-	public $permittedURIChars = 'a-z 0-9~%.:_\-';
+	public $cookiePrefix   = '';
+	public $cookieDomain   = '';
+	public $cookiePath     = '/';
+	public $cookieSecure   = false;
+	public $cookieHTTPOnly = false;
 
 }
