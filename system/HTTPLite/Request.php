@@ -1,5 +1,10 @@
 <?php namespace CodeIgniter\HTTPLite;
 
+require_once 'system/Config/BaseConfig.php';
+require_once 'application/config/AppConfig.php';
+
+use App\Config\AppConfig;
+
 class Request
 {
 	/**
@@ -7,7 +12,7 @@ class Request
 	 *
 	 * @var string
 	 */
-	protected $ipAddress;
+	protected $ipAddress = '';
 
 	/**
 	 * List of all HTTP request headers
@@ -16,7 +21,17 @@ class Request
 	 */
 	protected $headers = [];
 
+	protected $proxyIPs;
+
 	//--------------------------------------------------------------------
+
+	public function __construct(AppConfig $config)
+	{
+	    $this->proxyIPs = $config->proxyIPs;
+	}
+
+	//--------------------------------------------------------------------
+
 
 	/**
 	 * Determines if this request was made from the command line (CLI).
@@ -49,18 +64,18 @@ class Request
 	 */
 	public function ipAddress(): string
 	{
-		if ($this->ipAddress !== FALSE)
+		if (! empty($this->ipAddress))
 		{
 			return $this->ipAddress;
 		}
 
-		$proxy_ips = config_item('proxy_ips');
-		if ( ! empty($proxy_ips) && ! is_array($proxy_ips))
+		$proxy_ips = $this->proxyIPs;
+		if ( ! empty($this->proxyIPs) && ! is_array($this->proxyIPs))
 		{
-			$proxy_ips = explode(',', str_replace(' ', '', $proxy_ips));
+			$proxy_ips = explode(',', str_replace(' ', '', $this->proxyIPs));
 		}
 
-		$this->ip_address = $this->server('REMOTE_ADDR');
+		$this->ipAddress = $this->server('REMOTE_ADDR');
 
 		if ($proxy_ips)
 		{
@@ -86,7 +101,7 @@ class Request
 
 			if ($spoof)
 			{
-				for ($i = 0, $c = count($proxy_ips); $i < $c; $i++)
+				for ($i = 0, $c = count($this->proxyIPs); $i < $c; $i++)
 				{
 					// Check if we have an IP address or a subnet
 					if (strpos($proxy_ips[$i], '/') === FALSE)
@@ -160,7 +175,7 @@ class Request
 					// Convert to binary and finally compare
 					if (strncmp($ip, vsprintf($sprintf, $netaddr), $masklen) === 0)
 					{
-						$this->ip_address = $spoof;
+						$this->ipAddress = $spoof;
 						break;
 					}
 				}
@@ -172,7 +187,7 @@ class Request
 			return $this->ipAddress = '0.0.0.0';
 		}
 
-		return $this->ipAddress;
+		return empty($this->ipAddress) ? '' : $this->ipAddress;
 	}
 
 	//--------------------------------------------------------------------
@@ -185,7 +200,7 @@ class Request
 	 *
 	 * @return bool
 	 */
-	public function validIP(string $ip, string $which = ''): bool
+	public function validIP(string $ip, string $which = null): bool
 	{
 		switch (strtolower($which))
 		{

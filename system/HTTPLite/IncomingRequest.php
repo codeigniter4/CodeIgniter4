@@ -95,6 +95,8 @@ class IncomingRequest extends Request
 
 	public function __construct(AppConfig $config, URI $uri)
 	{
+		parent::__construct($config);
+
 		// @todo perform csrf check
 
 		$this->uri = $uri;
