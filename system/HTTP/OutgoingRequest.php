@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\HTTPLite;
+<?php namespace CodeIgniter\HTTP;
 
 /**
  * Class OutgoingRequest

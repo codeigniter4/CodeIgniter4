@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\HTTPLite;
+<?php namespace CodeIgniter\HTTP;
 
 require_once 'system/Config/BaseConfig.php';
 require_once 'application/config/AppConfig.php';

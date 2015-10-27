@@ -44,18 +44,18 @@ class ServicesConfig {
 		    },
 		    'clirequest' => function ($di)
 		    {
-			    return new \CodeIgniter\HTTPLite\CLIRequest(
-				    new AppConfig(), new \CodeIgniter\HTTPLite\URI()
+			    return new \CodeIgniter\HTTP\CLIRequest(
+				    new AppConfig(), new \CodeIgniter\HTTP\URI()
 			    );
 		    },
 	        'request'   => function ($di)
 	        {
-		        return new \CodeIgniter\HTTPLite\IncomingRequest(
-			        new AppConfig(), new \CodeIgniter\HTTPLite\URI()
+		        return new \CodeIgniter\HTTP\IncomingRequest(
+			        new AppConfig(), new \CodeIgniter\HTTP\URI()
 		        );
 			},
-		    'uri'       => '\CodeIgniter\HTTPLite\URI',
-	        'response'  => '\CodeIgniter\HTTPLite\Response',
+		    'uri'       => '\CodeIgniter\HTTP\URI',
+	        'response'  => '\CodeIgniter\HTTP\Response',
 
 		    // Your custom files can be added here.
 	    ];

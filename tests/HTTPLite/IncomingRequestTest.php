@@ -2,23 +2,23 @@
 
 require_once 'system/Config/BaseConfig.php';
 require_once 'application/config/AppConfig.php';
-require_once 'system/HTTPLite/URI.php';
-require_once 'system/HTTPLite/Request.php';
-require_once 'system/HTTPLite/IncomingRequest.php';
+require_once 'system/HTTP/URI.php';
+require_once 'system/HTTP/Request.php';
+require_once 'system/HTTP/IncomingRequest.php';
 
 use App\Config\AppConfig;
-use CodeIgniter\HTTPLite\URI;
+use CodeIgniter\HTTP\URI;
 
 class IncomingRequestTest extends PHPUnit_Framework_TestCase
 {
 	/**
-	 * @var \CodeIgniter\HTTPLite\IncomingRequest
+	 * @var \CodeIgniter\HTTP\IncomingRequest
 	 */
 	protected $request;
 
 	public function setUp()
 	{
-	    $this->request = new \CodeIgniter\HTTPLite\IncomingRequest(new AppConfig(), new URI());
+	    $this->request = new \CodeIgniter\HTTP\IncomingRequest(new AppConfig(), new URI());
 	}
 
 	//--------------------------------------------------------------------

@@ -1,17 +1,17 @@
 <?php
 
-require_once 'system/HTTPLite/Request.php';
+require_once 'system/HTTP/Request.php';
 
 class RequestTest extends PHPUnit_Framework_TestCase
 {
 	/**
-	 * @var CodeIgniter\HTTPLite\Request
+	 * @var CodeIgniter\HTTP\Request
 	 */
 	protected $request;
 
 	public function setUp()
 	{
-	    $this->request = new \CodeIgniter\HTTPLite\Request(new \App\Config\AppConfig());
+	    $this->request = new \CodeIgniter\HTTP\Request(new \App\Config\AppConfig());
 	}
 
 	//--------------------------------------------------------------------
