@@ -1,7 +1,7 @@
 <?php namespace CodeIgniter;
 
-use CodeIgniter\HTTPLite\Request;
-use CodeIgniter\HTTPLite\Response;
+use CodeIgniter\HTTP\Request;
+use CodeIgniter\HTTP\Response;
 
 class Controller
 {
