@@ -375,8 +375,8 @@ class IncomingRequest extends Request
 			// While both SERVER_NAME and HTTP_HOST are open to security issues,
 			// if we have to choose, we will go with the server-controller version first.
 			! empty($_SERVER['SERVER_NAME'])
-				? $this->uri->setHost($_SERVER['SERVER_NAME'])
-				: $this->uri->setHost($_SERVER['HTTP_HOST']);
+				? (isset($_SERVER['SERVER_NAME']) ? $this->uri->setHost($_SERVER['SERVER_NAME']) : null)
+				: (isset($_SERVER['HTTP_HOST']) ? $this->uri->setHost($_SERVER['HTTP_HOST']) : null);
 
 			if ( ! empty($_SERVER['SERVER_PORT']))
 			{

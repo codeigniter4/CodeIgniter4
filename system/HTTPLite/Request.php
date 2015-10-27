@@ -345,6 +345,12 @@ class Request
 	 */
 	protected function fetchGlobal($type, $index = null, $filter = null)
 	{
+		// Null filters cause null values to return.
+		if (is_null($filter))
+		{
+			$filter = FILTER_DEFAULT;
+		}
+
 		// If $index is null, it means that the whole input type array is requested
 		if (is_null($index))
 		{
@@ -387,26 +393,37 @@ class Request
 //			}
 //		}
 
-		// Null filters cause null values to return.
-		if (is_null($filter))
+		// Due to issues with FastCGI and testing,
+		// we need to do these all manually instead
+		// of the simpler filter_input();
+		switch ($type)
 		{
-			$filter = FILTER_DEFAULT;
+			case INPUT_GET:
+				$value = isset($_GET[$index]) ? $_GET[$index] : null;
+				break;
+			case INPUT_POST:
+				$value = isset($_POST[$index]) ? $_POST[$index] : null;
+				break;
+			case INPUT_SERVER:
+				$value = isset($_SERVER[$index]) ? $_SERVER[$index] : null;
+				break;
+			case INPUT_ENV:
+				$value = isset($_ENV[$index]) ? $_ENV[$index] : null;
+				break;
+			case INPUT_COOKIE:
+				$value = isset($_COOKIE[$index]) ? $_COOKIE[$index] : null;
+				break;
+			case INPUT_REQUEST:
+				$value = isset($_REQUEST[$index]) ? $_REQUEST[$index] : null;
+				break;
+			case INPUT_SESSION:
+				$value = isset($_SESSION[$index]) ? $_SESSION[$index] : null;
+				break;
+			default:
+				$value = '';
 		}
 
-		// FastCGI seems to have problems on some servers
-		// using the filter_input on SERVER and ENV vars,
-		// so do those manually.
-		if (in_array($type, [INPUT_SERVER, INPUT_ENV]))
-		{
-			$value = $type == INPUT_SERVER
-				? (isset($_SERVER[$index]) ? $_SERVER[$index] : null)
-				: (isset($_ENV[$index]) ? $_ENV[$index] : null);
-
-			return filter_var($value, $filter);
-		}
-
-		// Single key to retrieve
-		return filter_input($type, $index, $filter);
+		return filter_var($value, $filter);
 	}
 
 	//--------------------------------------------------------------------
