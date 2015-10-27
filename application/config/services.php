@@ -55,7 +55,7 @@ class ServicesConfig {
 		        );
 			},
 		    'uri'       => '\CodeIgniter\HTTPLite\URI',
-	        'response'  => '\CodeIgniter\HTTP\Response',
+	        'response'  => '\CodeIgniter\HTTPLite\Response',
 
 		    // Your custom files can be added here.
 	    ];

@@ -5,7 +5,7 @@ require_once 'application/config/AppConfig.php';
 
 use App\Config\AppConfig;
 
-class Request
+class Request implements RequestInterface
 {
 	/**
 	 * IP address of the current user.
@@ -25,7 +25,7 @@ class Request
 
 	//--------------------------------------------------------------------
 
-	public function __construct(AppConfig $config)
+	public function __construct(AppConfig $config, URI $uri=null)
 	{
 	    $this->proxyIPs = $config->proxyIPs;
 	}

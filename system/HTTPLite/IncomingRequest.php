@@ -93,7 +93,7 @@ class IncomingRequest extends Request
 
 	//--------------------------------------------------------------------
 
-	public function __construct(AppConfig $config, URI $uri)
+	public function __construct(AppConfig $config, URI $uri=null)
 	{
 		parent::__construct($config);
 
