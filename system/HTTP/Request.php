@@ -14,13 +14,6 @@ class Request implements RequestInterface
 	 */
 	protected $ipAddress = '';
 
-	/**
-	 * List of all HTTP request headers
-	 *
-	 * @var array
-	 */
-	protected $headers = [];
-
 	protected $proxyIPs;
 
 	//--------------------------------------------------------------------
@@ -233,82 +226,6 @@ class Request implements RequestInterface
 		return ($upper)
 			? strtoupper($this->server('REQUEST_METHOD'))
 			: strtolower($this->server('REQUEST_METHOD'));
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Returns an array containing all headers.
-	 *
-	 * @param null $filter
-	 *
-	 * @return array        An array of the request headers
-	 */
-	public function headers($filter = null) : array
-	{
-		// If header is already defined, return it immediately
-		if ( ! empty($this->headers))
-		{
-			return $this->headers;
-		}
-
-		// In Apache, you can simply call apache_request_headers()
-		if (function_exists('apache_request_headers'))
-		{
-			return $this->headers = apache_request_headers();
-		}
-
-		$this->headers['Content-Type'] = isset($_SERVER['CONTENT_TYPE']) ? $_SERVER['CONTENT_TYPE'] : @getenv('CONTENT_TYPE');
-
-		foreach ($_SERVER as $key => $val)
-		{
-			if (sscanf($key, 'HTTP_%s', $header) === 1)
-			{
-				// take SOME_HEADER and turn it into Some-Header
-				$header = str_replace('_', ' ', strtolower($header));
-				$header = str_replace(' ', '-', ucwords($header));
-
-				$this->headers[$header] = $this->fetchGlobal(INPUT_SERVER, $key, $filter);
-			}
-		}
-
-		return $this->headers;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Returns a single header.
-	 *
-	 * @param      $index
-	 * @param null $filter
-	 */
-	public function header($index, $filter = null)
-	{
-		static $headers;
-
-		if ( ! isset($headers))
-		{
-			empty($this->headers) && $this->headers($filter);
-			foreach ($this->headers as $key => $value)
-			{
-				$headers[strtolower($key)] = $value;
-			}
-		}
-
-		$index = strtolower($index);
-
-		if ( ! isset($headers[$index]))
-		{
-			return NULL;
-		}
-
-		if (is_null($filter))
-		{
-			$filter = FILTER_DEFAULT;
-		}
-
-		return filter_var($headers[$index], $filter);
 	}
 
 	//--------------------------------------------------------------------
