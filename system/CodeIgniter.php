@@ -104,7 +104,7 @@ $benchmark->start('total_execution');
 // Get our Request and Response objects
 //--------------------------------------------------------------------
 
-$request  = $di->single('request');
+$request  = is_cli() ? $di->single('clirequest') : $di->single('request');
 //$response = DI('response');
 
 //--------------------------------------------------------------------
