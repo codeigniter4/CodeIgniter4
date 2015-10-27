@@ -38,6 +38,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
 	        'zeroed_ipv4' => [true, '0.0.0.0'],
 	        'large_ipv6' => [false, 'h123:0000:0000:0000:0000:0000:0000:0000', 'ipv6'],
 	        'good_ipv6' => [true, '2001:0db8:85a3:0000:0000:8a2e:0370:7334'],
+	        'confused_ipv6' => [false, '255.255.255.255', 'ipv6'],
 	    ];
 	}
 
@@ -52,6 +53,46 @@ class RequestTest extends PHPUnit_Framework_TestCase
 	}
 
 	//--------------------------------------------------------------------
+
+	public function testMethodReturnsRightStuff()
+	{
+	    $this->assertEquals('', $this->request->method());
+
+		$_SERVER['REQUEST_METHOD'] = 'GET';
+
+		$this->assertEquals('get', $this->request->method());
+		$this->assertEquals('GET', $this->request->method(true));
+	}
+
+	//--------------------------------------------------------------------
+
+	// We can only test the headers retrieved from $_SERVER
+	// This test might fail under apache.
+	public function testHeadersRetrievesHeaders()
+	{
+	    $_SERVER['HTTP_HOST'] = 'daisyduke.com';
+		$_SERVER['HTTP_REFERER'] = 'RoscoePekoTrain.com';
+
+		$headers = $this->request->headers();
+
+		// Content-Type is likely set...
+		$this->assertTrue(count($headers) >= 2);
+
+		$this->assertTrue($headers['Host'] == $_SERVER['HTTP_HOST']);
+		$this->assertTrue($headers['Referer'] == $_SERVER['HTTP_REFERER']);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testCanGrabSingleHeader()
+	{
+		$_SERVER['HTTP_HOST'] = 'daisyduke.com';
+
+	    $this->assertEquals('daisyduke.com', $this->request->header('Host'));
+	}
+
+	//--------------------------------------------------------------------
+
 
 
 }

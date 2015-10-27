@@ -303,6 +303,11 @@ class Request
 			return NULL;
 		}
 
+		if (is_null($filter))
+		{
+			$filter = FILTER_DEFAULT;
+		}
+
 		return filter_var($headers[$index], $filter);
 	}
 
@@ -381,6 +386,24 @@ class Request
 //				}
 //			}
 //		}
+
+		// Null filters cause null values to return.
+		if (is_null($filter))
+		{
+			$filter = FILTER_DEFAULT;
+		}
+
+		// FastCGI seems to have problems on some servers
+		// using the filter_input on SERVER and ENV vars,
+		// so do those manually.
+		if (in_array($type, [INPUT_SERVER, INPUT_ENV]))
+		{
+			$value = $type == INPUT_SERVER
+				? (isset($_SERVER[$index]) ? $_SERVER[$index] : null)
+				: (isset($_ENV[$index]) ? $_ENV[$index] : null);
+
+			return filter_var($value, $filter);
+		}
 
 		// Single key to retrieve
 		return filter_input($type, $index, $filter);
