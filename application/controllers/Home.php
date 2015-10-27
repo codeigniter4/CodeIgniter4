@@ -1,6 +1,6 @@
 <?php
 
-class Home {
+class Home extends \CodeIgniter\Controller {
 
 	public function index()
 	{
