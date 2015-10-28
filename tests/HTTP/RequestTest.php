@@ -64,31 +64,4 @@ class RequestTest extends PHPUnit_Framework_TestCase
 
 	//--------------------------------------------------------------------
 
-	// We can only test the headers retrieved from $_SERVER
-	// This test might fail under apache.
-	public function testHeadersRetrievesHeaders()
-	{
-	    $_SERVER['HTTP_HOST'] = 'daisyduke.com';
-		$_SERVER['HTTP_REFERER'] = 'RoscoePekoTrain.com';
-
-		$headers = $this->request->headers();
-
-		// Content-Type is likely set...
-		$this->assertTrue(count($headers) >= 2);
-
-		$this->assertTrue($headers['Host'] == $_SERVER['HTTP_HOST']);
-		$this->assertTrue($headers['Referer'] == $_SERVER['HTTP_REFERER']);
-	}
-
-	//--------------------------------------------------------------------
-
-	public function testCanGrabSingleHeader()
-	{
-		$_SERVER['HTTP_HOST'] = 'daisyduke.com';
-
-	    $this->assertEquals('daisyduke.com', $this->request->header('Host'));
-	}
-
-	//--------------------------------------------------------------------
-
 }

@@ -47,6 +47,11 @@ class Message
 
 		$this->headers['Content-Type'] = isset($_SERVER['CONTENT_TYPE']) ? $_SERVER['CONTENT_TYPE'] : @getenv('CONTENT_TYPE');
 
+		if (is_null($filter))
+		{
+			$filter = FILTER_DEFAULT;
+		}
+
 		foreach ($_SERVER as $key => $val)
 		{
 			if (sscanf($key, 'HTTP_%s', $header) === 1)
@@ -55,7 +60,9 @@ class Message
 				$header = str_replace('_', ' ', strtolower($header));
 				$header = str_replace(' ', '-', ucwords($header));
 
-				$this->headers[$header] = $this->fetchGlobal(INPUT_SERVER, $key, $filter);
+				$this->headers[$header] = array_key_exists($key, $_SERVER)
+					? filter_var($_SERVER[$key], $filter)
+					: '';
 			}
 		}
 
@@ -70,22 +77,11 @@ class Message
 	 * @param      $index
 	 * @param null $filter
 	 */
-	public function header($index, $filter = null)
+	public function header($name, $filter = null)
 	{
-		static $headers;
+		$orig_name = $this->getHeaderName($name);
 
-		if ( ! isset($headers))
-		{
-			empty($this->headers) && $this->headers($filter);
-			foreach ($this->headers as $key => $value)
-			{
-				$headers[strtolower($key)] = $value;
-			}
-		}
-
-		$index = strtolower($index);
-
-		if ( ! isset($headers[$index]))
+		if ( ! isset($this->headers[$orig_name]))
 		{
 			return NULL;
 		}
@@ -95,7 +91,9 @@ class Message
 			$filter = FILTER_DEFAULT;
 		}
 
-		return filter_var($headers[$index], $filter);
+		return is_array($this->headers[$orig_name])
+			? filter_var_array($this->headers[$orig_name], $filter)
+			: filter_var($this->headers[$orig_name], $filter);
 	}
 
 	//--------------------------------------------------------------------
@@ -124,7 +122,7 @@ class Message
 			return '';
 		}
 
-		if (is_array($this->headers) || $this->headers[$orig_name] instanceof \ArrayAccess)
+		if (is_array($this->headers[$orig_name]) || $this->headers[$orig_name] instanceof \ArrayAccess)
 		{
 			return implode(', ', $this->headers[$orig_name]);
 		}
@@ -182,7 +180,7 @@ class Message
 	 *
 	 * @return string
 	 */
-	public function appendHeader(string $name, $value): string
+	public function appendHeader(string $name, $value): self
 	{
 		$orig_name = $this->getHeaderName($name);
 
