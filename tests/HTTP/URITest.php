@@ -1,9 +1,5 @@
 <?php
 
-require_once 'system/HTTP/URI.php';
-require_once 'system/Config/BaseConfig.php';
-require_once 'application/config/AppConfig.php';
-
 use CodeIgniter\HTTP\URI;
 
 class URITest extends PHPUnit_Framework_TestCase

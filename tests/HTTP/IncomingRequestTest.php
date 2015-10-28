@@ -1,13 +1,5 @@
 <?php
 
-require_once 'system/Config/BaseConfig.php';
-require_once 'application/config/AppConfig.php';
-require_once 'system/HTTP/URI.php';
-require_once 'system/HTTP/Message.php';
-require_once 'system/HTTP/RequestInterface.php';
-require_once 'system/HTTP/Request.php';
-require_once 'system/HTTP/IncomingRequest.php';
-
 use App\Config\AppConfig;
 use CodeIgniter\HTTP\URI;
 

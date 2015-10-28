@@ -1,8 +1,5 @@
 <?php
 
-require_once 'system/Router/RouteCollectionInterface.php';
-require_once 'system/Router/RouteCollection.php';
-
 use CodeIgniter\Router\RouteCollection;
 
 class RouteCollectionTest extends PHPUnit_Framework_TestCase {

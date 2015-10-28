@@ -1,12 +1,5 @@
 <?php
 
-require_once "system/Autoloader/Autoloader.php";
-require_once "system/Config/BaseConfig.php";
-require_once "application/config/autoload.php";
-
-define('APPPATH', 'application/');
-define('BASEPATH', 'system/');
-
 class MockAutoloaderClass extends \CodeIgniter\Autoloader\Autoloader
 {
 
@@ -62,8 +55,8 @@ class AutoloaderTest extends \PHPUnit_Framework_TestCase
 			'/app/dir/First.php',
 			'/app/namespace/Class.php',
 		    '/my/app/Class.php',
-		    'application/libraries/someLibrary.php',
-		    'application/models/someModel.php',
+		    APPPATH.'libraries/someLibrary.php',
+		    APPPATH.'models/someModel.php',
 		]);
 	}
 
@@ -127,6 +120,9 @@ class AutoloaderTest extends \PHPUnit_Framework_TestCase
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * @group single
+	 */
 	public function testLoadLegacy()
 	{
 	    $this->assertFalse((bool)$this->loader->loadClass('someLibraries'));

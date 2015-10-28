@@ -1,9 +1,5 @@
 <?php
 
-require_once 'system/HTTP/Message.php';
-require_once 'system/HTTP/RequestInterface.php';
-require_once 'system/HTTP/Request.php';
-
 class RequestTest extends PHPUnit_Framework_TestCase
 {
 	/**

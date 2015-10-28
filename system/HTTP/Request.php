@@ -1,7 +1,7 @@
 <?php namespace CodeIgniter\HTTP;
 
-require_once 'system/Config/BaseConfig.php';
-require_once 'application/config/AppConfig.php';
+require_once BASEPATH.'Config/BaseConfig.php';
+require_once APPPATH.'/config/AppConfig.php';
 
 use App\Config\AppConfig;
 

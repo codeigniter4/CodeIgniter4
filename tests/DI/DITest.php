@@ -1,17 +1,7 @@
 <?php
 
-namespace App\Config
-{
-
-    class ServicesConfig
-    {
-        public $services = [];
-    };
-}
-
 namespace
 {
-    require_once 'system/DI/DI.php';
     require_once dirname(__FILE__) .'/support/SimpleClass.php';
     require_once dirname(__FILE__) .'/support/DependingClass.php';
 

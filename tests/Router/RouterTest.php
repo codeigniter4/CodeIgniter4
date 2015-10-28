@@ -1,10 +1,5 @@
 <?php
 
-require_once 'system/Router/RouterInterface.php';
-require_once 'system/Router/Router.php';
-require_once 'system/Router/RouteCollectionInterface.php';
-require_once 'system/Router/RouteCollection.php';
-
 use CodeIgniter\Router\Router;
 
 class RouterTest extends PHPUnit_Framework_TestCase
