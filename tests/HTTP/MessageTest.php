@@ -82,9 +82,6 @@ class MessageTest extends PHPUnit_Framework_TestCase
 
 	//--------------------------------------------------------------------
 
-	/**
-	 * @group single
-	 */
 	public function testCanRemoveHeader()
 	{
 		$this->message->setHeader('Host', 'daisyduke.com');
@@ -103,6 +100,34 @@ class MessageTest extends PHPUnit_Framework_TestCase
 		$this->message->appendHeader('Accept', 'xml');
 
 		$this->assertEquals(['json', 'html', 'xml'], $this->message->header('accept'));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testAppendHeaderThrowsExceptionOnNotArray()
+	{
+	    $this->message->setHeader('accept', 'json');
+
+		$this->setExpectedException('LogicException');
+
+		$this->message->appendHeader('Accept', 'xml');
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testSetProtocolWorks()
+	{
+	    $this->message->setProtocolVersion('1.1');
+
+		$this->assertEquals('1.1', $this->message->protocolVersion());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testSetProtocolThrowsExceptionWithInvalidProtocol()
+	{
+		$this->setExpectedException('InvalidArgumentException');
+	    $this->message->setProtocolVersion('1.2');
 	}
 
 	//--------------------------------------------------------------------
