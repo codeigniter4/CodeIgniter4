@@ -1,4 +1,7 @@
 # CodeIgniter 4 Development
+
+[![Build Status](https://travis-ci.org/lonnieezell/CodeIgniter4.svg?branch=develop)](https://travis-ci.org/lonnieezell/CodeIgniter4)
+
 This repo contains work that may or may not make it into the official version of CodeIgniter. 
 
 More information about the plans for version 4 can be found in [the announcement](http://forum.codeigniter.com/thread-62615.html) on the forums.
