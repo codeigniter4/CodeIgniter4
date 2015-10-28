@@ -8,25 +8,6 @@ interface RequestInterface {
 
 	//--------------------------------------------------------------------
 
-
-	/**
-	 * Determines if this request was made from the command line (CLI).
-	 *
-	 * @return bool
-	 */
-	public function isCLI(): bool;
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Test to see if a request contains the HTTP_X_REQUESTED_WITH header.
-	 *
-	 * @return bool
-	 */
-	public function isAJAX(): bool;
-
-	//--------------------------------------------------------------------
-
 	/**
 	 * Gets the user's IP address.
 	 *

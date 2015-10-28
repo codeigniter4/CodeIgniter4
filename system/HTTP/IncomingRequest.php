@@ -119,6 +119,30 @@ class IncomingRequest extends Request
 	//--------------------------------------------------------------------
 
 	/**
+	 * Determines if this request was made from the command line (CLI).
+	 *
+	 * @return bool
+	 */
+	public function isCLI(): bool
+	{
+		return (PHP_SAPI === 'cli' OR defined('STDIN'));
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Test to see if a request contains the HTTP_X_REQUESTED_WITH header.
+	 *
+	 * @return bool
+	 */
+	public function isAJAX(): bool
+	{
+		return ( ! empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest');
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Fetch an item from GET data.
 	 *
 	 * @param null $index  Index for item to fetch from $_GET.
