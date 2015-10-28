@@ -14,17 +14,6 @@ class RequestTest extends PHPUnit_Framework_TestCase
 
 	//--------------------------------------------------------------------
 
-	public function testIsAJAXRecognizesAJAX()
-	{
-		$this->assertFalse($this->request->isAJAX());
-
-		$_SERVER['HTTP_X_REQUESTED_WITH'] = 'xmlhttprequest';
-
-		$this->assertTrue($this->request->isAJAX());
-	}
-
-	//--------------------------------------------------------------------
-
 	public function ipAddressChecks()
 	{
 	    return [
