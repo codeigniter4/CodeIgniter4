@@ -48,7 +48,6 @@ interface RequestInterface {
 
 	//--------------------------------------------------------------------
 
-
 	/**
 	 * Get the request method.
 	 *
@@ -57,27 +56,6 @@ interface RequestInterface {
 	 * @return string
 	 */
 	public function method($upper = false): string;
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Returns an array containing all headers.
-	 *
-	 * @param null $filter
-	 *
-	 * @return array        An array of the request headers
-	 */
-	public function headers($filter = null) : array;
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Returns a single header.
-	 *
-	 * @param      $index
-	 * @param null $filter
-	 */
-	public function header($index, $filter = null);
 
 	//--------------------------------------------------------------------
 

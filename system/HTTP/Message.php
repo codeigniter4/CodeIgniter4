@@ -4,7 +4,7 @@ class Message
 {
 	/**
 	 * List of all HTTP request headers
-	 * @todo Allow for case-insensitive header access while retaining existing case.
+	 *
 	 * @var array
 	 */
 	protected $headers = [];
@@ -247,6 +247,5 @@ class Message
 	}
 
 	//--------------------------------------------------------------------
-
 
 }

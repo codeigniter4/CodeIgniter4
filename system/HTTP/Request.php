@@ -5,7 +5,7 @@ require_once 'application/config/AppConfig.php';
 
 use App\Config\AppConfig;
 
-class Request implements RequestInterface
+class Request extends Message implements RequestInterface
 {
 	/**
 	 * IP address of the current user.

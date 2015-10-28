@@ -67,6 +67,7 @@ class AutoloadConfig
 			'CodeIgniter\Benchmark\Timer'                 => BASEPATH.'Benchmark/Timer.php',
 			'CodeIgniter\Benchmark\Iterator'              => BASEPATH.'Benchmark/Iterator.php',
 			'CodeIgniter\Config\BaseConfig'               => BASEPATH.'Config/BaseConfig.php',
+			'CodeIgniter\HTTP\Message'                    => BASEPATH.'HTTP/Message.php',
 			'CodeIgniter\HTTP\Request'                    => BASEPATH.'HTTP/Request.php',
 			'CodeIgniter\HTTP\IncomingRequest'            => BASEPATH.'HTTP/IncomingRequest.php',
 			'CodeIgniter\HTTP\RequestInterface'           => BASEPATH.'HTTP/RequestInterface.php',
