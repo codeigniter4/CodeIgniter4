@@ -4,7 +4,7 @@ use App\Config\AppConfig;
 
 interface RequestInterface {
 
-	public function __construct(AppConfig $config, URI $uri=null);
+	public function __construct(AppConfig $config, $uri=null, $body=null);
 
 	//--------------------------------------------------------------------
 

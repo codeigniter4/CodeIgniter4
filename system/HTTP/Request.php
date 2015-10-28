@@ -18,9 +18,11 @@ class Request extends Message implements RequestInterface
 
 	//--------------------------------------------------------------------
 
-	public function __construct(AppConfig $config, URI $uri=null)
+	public function __construct(AppConfig $config, $uri=null, $body=null)
 	{
 	    $this->proxyIPs = $config->proxyIPs;
+
+		$this->setBody($body);
 	}
 
 	//--------------------------------------------------------------------

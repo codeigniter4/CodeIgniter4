@@ -93,9 +93,15 @@ class IncomingRequest extends Request
 
 	//--------------------------------------------------------------------
 
-	public function __construct(AppConfig $config, URI $uri=null)
+	public function __construct(AppConfig $config, $uri=null, $body='php://input')
 	{
-		parent::__construct($config);
+		// Get our body from php://input
+		if ($body == 'php://input')
+		{
+			$body = file_get_contents('php://input');
+		}
+
+		parent::__construct($config, $uri, $body);
 
 		// @todo perform csrf check
 
@@ -193,38 +199,6 @@ class IncomingRequest extends Request
 	public function cookie($index = null, $filter = null)
 	{
 		return $this->fetchGlobal(INPUT_COOKIE, $index, $filter);
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Fetch an item from the php://input stream
-	 *
-	 * Useful when you need to access PUT, DELETE or PATCH request data.
-	 *
-	 * @param null $index  Index for item to be fetched
-	 * @param null $filter A filter to apply
-	 *
-	 * @return mixed
-	 */
-	public function inputStream($index = null, $filter = null)
-	{
-		if ( ! is_array($this->inputStream))
-		{
-			$this->inputStream = file_get_contents('php://input');
-
-			if ( ! empty($this->inputStream))
-			{
-				parse_str($this->inputStream, $this->inputStream);
-			}
-		}
-
-		if ( ! isset($this->inputStream[$index]))
-		{
-			return null;
-		}
-
-		return filter_var($this->inputStream[$index], $filter);
 	}
 
 	//--------------------------------------------------------------------
