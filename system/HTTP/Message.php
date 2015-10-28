@@ -22,6 +22,8 @@ class Message
 
 	protected $validProtocolVersions = ['1.0', '1.1'];
 
+	protected $body;
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -245,5 +247,34 @@ class Message
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Returns the Message's body.
+	 *
+	 * @return mixed
+	 */
+	public function body()
+	{
+	    return $this->body;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Sets the body of the current message.
+	 *
+	 * @param $data
+	 *
+	 * @return Message
+	 */
+	public function setBody(&$data): self
+	{
+	    $this->body = $data;
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
 
 }

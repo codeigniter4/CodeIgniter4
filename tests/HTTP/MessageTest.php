@@ -132,6 +132,15 @@ class MessageTest extends PHPUnit_Framework_TestCase
 
 	//--------------------------------------------------------------------
 
+	public function testBodyBasics()
+	{
+		$body = 'a strange little fellow.';
 
+	    $this->message->setBody($body);
+
+		$this->assertEquals($body, $this->message->body());
+	}
+
+	//--------------------------------------------------------------------
 
 }
