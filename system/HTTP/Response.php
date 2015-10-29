@@ -1,6 +1,19 @@
 <?php namespace CodeIgniter\HTTP;
 
-class Response
+/**
+ * Representation of an outgoing, server-side response.
+ *
+ * Per the HTTP specification, this interface includes properties for
+ * each of the following:
+ *
+ * - Protocol version
+ * - Status code and reason phrase
+ * - Headers
+ * - Message body
+ *
+ * @package CodeIgniter\HTTP
+ */
+class Response extends Message
 {
 	protected static $statusCodes = [
 		// 1xx: Informational
@@ -126,6 +139,23 @@ class Response
 	 */
 	public function setStatusCode(int $code, string $reason = ''): self
 	{
+		if (! array_key_exists($code, static::$statusCodes))
+		{
+			throw new \InvalidArgumentException($code.' is not a valid status code.');
+		}
+
+		$this->statusCode = $code;
+
+		if (! empty($reason))
+		{
+			$this->reason = $reason;
+		}
+		else
+		{
+			$this->reason = static::$statusCodes[$code];
+		}
+
+		return $this;
 	}
 
 	//--------------------------------------------------------------------
