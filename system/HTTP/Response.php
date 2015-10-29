@@ -101,9 +101,20 @@ class Response extends Message
 	 *
 	 * @var int
 	 */
-	protected $statusCode = 200;
+	protected $statusCode;
 
 	//--------------------------------------------------------------------
+
+	public function __construct()
+	{
+	    // Default to a non-caching page.
+		// Also ensures that a Cache-control header exists.
+		$this->noCache();
+	}
+
+	//--------------------------------------------------------------------
+
+
 
 	/**
 	 * Gets the response status code.
@@ -115,6 +126,11 @@ class Response extends Message
 	 */
 	public function statusCode(): int
 	{
+		if (empty($this->statusCode))
+		{
+			throw new \BadMethodCallException('HTTP Response is missing a status code');
+		}
+
 		return $this->statusCode;
 	}
 
@@ -139,9 +155,16 @@ class Response extends Message
 	 */
 	public function setStatusCode(int $code, string $reason = ''): self
 	{
-		if (! array_key_exists($code, static::$statusCodes))
+		// Valid range?
+		if ($code < 100 || $code > 599)
 		{
-			throw new \InvalidArgumentException($code.' is not a valid status code.');
+			throw new \InvalidArgumentException($code.' is not a valid HTTP return status code');
+		}
+
+		// Unknown and no message?
+		if (! array_key_exists($code, static::$statusCodes) && empty($reason))
+		{
+			throw new \InvalidArgumentException('Unknown HTTP status code provided with no message');
 		}
 
 		$this->statusCode = $code;
@@ -181,6 +204,227 @@ class Response extends Message
 	}
 
 	//--------------------------------------------------------------------
+
+	//--------------------------------------------------------------------
+	// Convenience Methods
+	//--------------------------------------------------------------------
+
+	/**
+	 * Sets the date header
+	 *
+	 * @param \DateTime $date
+	 *
+	 * @return Response
+	 */
+	public function setDate(\DateTime $date): self
+	{
+		$date->setTimezone(new \DateTimeZone('UTC'));
+
+		$this->setHeader('Date', $date->format('D, d M Y H:i:s').' GMT');
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Sets the Content Type header for this response with the mime type
+	 * and, optionally, the charset.
+	 *
+	 * @param string $mime
+	 * @param string $charset
+	 *
+	 * @return Response
+	 */
+	public function setContentType(string $mime, string $charset='UTF-8'): self
+	{
+	    if (! empty($charset))
+	    {
+		    $mime .= '; charset='. $charset;
+	    }
+
+		$this->setHeader('Content-Type', $mime);
+
+		return $this;
+	}
+	
+	//--------------------------------------------------------------------
+	
+	
+	//--------------------------------------------------------------------
+	// Cache Control Methods
+	//
+	// http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.9
+	//--------------------------------------------------------------------
+
+	/**
+	 * Sets the appropriate headers to ensure this response
+	 * is not cached by the browsers.
+	 */
+	public function noCache(): self
+	{
+	    $this->removeHeader('Cache-control');
+
+		$this->setHeader('Cache-control', ['no-store', 'max-age=0', 'no-cache']);
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * A shortcut method that allows the developer to set all of the
+	 * cache-control headers in one method call.
+	 *
+	 * The options array is used to provide the cache-control directives
+	 * for the header. It might look something like:
+	 *
+	 *      $options = [
+	 *          'max-age'  => 300,
+	 *          's-maxage' => 900
+	 *          'etag'     => 'abcde',
+	 *      ];
+	 *
+	 * Typical options are:
+	 *  - etag
+	 *  - last-modified
+	 *  - max-age
+	 *  - s-maxage
+	 *  - private
+	 *  - public
+	 *  - must-revalidate
+	 *  - proxy-revalidate
+	 *  - no-transform
+	 *
+	 * @param array $options
+	 *
+	 * @return $this
+	 */
+	public function setCache(array $options=[]): self
+	{
+		if (empty($options))
+		{
+			return $this;
+		}
+
+		$this->removeHeader('Cache-Control');
+		$this->removeHeader('ETag');
+
+		// ETag
+		if (isset($options['etag']))
+		{
+			$this->setHeader('ETag', $options['etag']);
+			unset($options['etag']);
+		}
+
+		// Last Modified
+		if (isset($options['last-modified']))
+		{
+			$this->setLastModified($options['last-modified']);
+
+			unset($options['last-modified']);
+		}
+
+		$this->setHeader('Cache-control', $options);
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Sets the Last-Modified date header.
+	 *
+	 * $date can be either a string representation of the date or,
+	 * preferably, an instance of DateTime.
+	 *
+	 * @param $date
+	 */
+	public function setLastModified($date): self
+	{
+		if ($date instanceof \DateTime)
+		{
+			$date->setTimezone(new \DateTimeZone('UTC'));
+			$this->setHeader('Last-Modified', $date->format('D, d M Y H:i:s').' GMT');
+		}
+		elseif (is_string($date))
+		{
+			$this->setHeader('Last-Modified', $date);
+		}
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+
+	//--------------------------------------------------------------------
+	// Output Methods
+	//--------------------------------------------------------------------
+
+	/**
+	 * Sends the output to the browser.
+	 *
+	 * @return Response
+	 */
+	public function send(): self
+	{
+	    $this->sendHeaders();
+		$this->sendBody();
+
+		return $this;
+	}
+	
+	//--------------------------------------------------------------------
+
+	/**
+	 * Sends the headers of this HTTP request to the browser.
+	 *
+	 * @return Response
+	 */
+	public function sendHeaders(): self
+	{
+	    // Have the headers already been sent?
+		if (headers_sent())
+		{
+			return $this;
+		}
+
+		// Per spec, MUST be sent with each request, if possible.
+		// http://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html
+		if (isset($this->headers['Date']))
+		{
+			$this->setDate(\DateTime::createFromFormat('U', time()));
+		}
+
+		// HTTP Status
+		header(sprintf('HTTP/%s %s %s', $this->protocolVersion, $this->statusCode, $this->reason), true, $this->statusCode);
+
+		// Send all of our headers
+		foreach ($this->headers() as $name => $values)
+		{
+			header($name.': '.$this->headerLine($name), false, $this->statusCode);
+		}
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Sends the Body of the message to the browser.
+	 *
+	 * @return $this
+	 */
+	public function sendBody()
+	{
+	    echo $this->body;
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
 
 
 }

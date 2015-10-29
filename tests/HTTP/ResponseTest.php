@@ -47,4 +47,45 @@ class ResponseTest extends PHPUnit_Framework_TestCase
 	}
 
 	//--------------------------------------------------------------------
+
+	public function testRequiresMessageWithUnknownStatusCode()
+	{
+		$response = new Response();
+
+		$this->setExpectedException('InvalidArgumentException', 'Unknown HTTP status code provided with no message');
+		$response->setStatusCode(115);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testRequiresMessageWithSmallStatusCode()
+	{
+		$response = new Response();
+
+		$this->setExpectedException('InvalidArgumentException', '95 is not a valid HTTP return status code');
+		$response->setStatusCode(95);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testRequiresMessageWithLargeStatusCode()
+	{
+		$response = new Response();
+
+		$this->setExpectedException('InvalidArgumentException', '695 is not a valid HTTP return status code');
+		$response->setStatusCode(695);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testExceptionThrownWhenNoStatusCode()
+	{
+		$response = new Response();
+
+		$this->setExpectedException('BadMethodCallException', 'HTTP Response is missing a status code');
+		$response->statusCode();
+	}
+
+	//--------------------------------------------------------------------
+
 }
