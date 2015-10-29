@@ -105,7 +105,7 @@ $benchmark->start('total_execution');
 //--------------------------------------------------------------------
 
 $request  = is_cli() ? $di->single('clirequest') : $di->single('request');
-//$response = DI('response');
+$response = $di->single('response');
 
 //--------------------------------------------------------------------
 // Try to Route It
@@ -126,7 +126,7 @@ if (is_callable($controller))
 }
 else
 {
-	$class  = $di->make($controller);
+	$class  = new $controller($request, $response);
 	$method = $router->methodName();
 	$class->$method(...$router->params());
 }
@@ -136,4 +136,6 @@ ob_end_clean();
 
 $output = str_replace('{elapsed_time}', $benchmark->elapsedTime('total_execution'), $output);
 
-echo $output;
+$response->setBody($output);
+
+$response->send();
