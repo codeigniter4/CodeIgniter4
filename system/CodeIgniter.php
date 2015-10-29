@@ -126,6 +126,8 @@ if (is_callable($controller))
 }
 else
 {
+	// @todo handle controller not found situations...
+
 	$class  = new $controller($request, $response);
 	$method = $router->methodName();
 	$class->$method(...$router->params());
