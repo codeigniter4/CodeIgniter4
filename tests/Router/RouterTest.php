@@ -119,9 +119,6 @@ class RouterTest extends PHPUnit_Framework_TestCase
 
 	//--------------------------------------------------------------------
 
-	/**
-	 * @group single
-	 */
 	public function testClosures()
 	{
 		$router = new Router($this->collection);

@@ -203,7 +203,6 @@ class URITest extends PHPUnit_Framework_TestCase
 
 	/**
 	 * @dataProvider invalidPaths
-	 * @group        single
 	 */
 	public function testPathGetsFiltered($path, $expected)
 	{

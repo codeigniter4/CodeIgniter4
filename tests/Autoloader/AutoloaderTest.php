@@ -120,9 +120,6 @@ class AutoloaderTest extends \PHPUnit_Framework_TestCase
 
 	//--------------------------------------------------------------------
 
-	/**
-	 * @group single
-	 */
 	public function testLoadLegacy()
 	{
 	    $this->assertFalse((bool)$this->loader->loadClass('someLibraries'));
