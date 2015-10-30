@@ -25,7 +25,43 @@ class Message
 	protected $body;
 
 	//--------------------------------------------------------------------
+	
+	//--------------------------------------------------------------------
+	// Body
+	//--------------------------------------------------------------------
+	
+	/**
+	 * Returns the Message's body.
+	 *
+	 * @return mixed
+	 */
+	public function body()
+	{
+		return $this->body;
+	}
 
+	//--------------------------------------------------------------------
+
+	/**
+	 * Sets the body of the current message.
+	 *
+	 * @param $data
+	 *
+	 * @return Message
+	 */
+	public function setBody(&$data): self
+	{
+		$this->body = $data;
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+	
+	//--------------------------------------------------------------------
+	// Headers
+	//--------------------------------------------------------------------
+	
 	/**
 	 * Populates the $headers array with any headers the server knows about.
 	 */
@@ -43,6 +79,10 @@ class Message
 		{
 			if (sscanf($key, 'HTTP_%s', $header) === 1)
 			{
+				// take SOME_HEADER and turn it into Some-Header
+				$header = str_replace('_', ' ', strtolower($header));
+				$header = str_replace(' ', '-', ucwords($header));
+
 				if (array_key_exists($key, $_SERVER))
 				{
 					$this->setHeader($header, $_SERVER[$key]);
@@ -236,34 +276,92 @@ class Message
 	
 	//--------------------------------------------------------------------
 
+	//--------------------------------------------------------------------
+	// Content Negotiation
+	//
+	// @see http://tools.ietf.org/html/rfc7231#section-5.3
+	//--------------------------------------------------------------------
+
 	/**
-	 * Returns the Message's body.
+	 * Determines the best content-type to use based on the $supported
+	 * types the application says it supports, and the types requested
+	 * by the client.
 	 *
-	 * @return mixed
+	 * If no match is found, the first, highest-ranking client requested
+	 * type is returned.
+	 *
+	 * @param array $supported
+	 *
+	 * @return string
 	 */
-	public function body()
+	public function negotiateMedia(array $supported): string
 	{
-	    return $this->body;
+		return $this->getBestMatch($supported, $this->header('accept'));
 	}
 
 	//--------------------------------------------------------------------
 
 	/**
-	 * Sets the body of the current message.
+	 * Determines the best charset to use based on the $supported
+	 * types the application says it supports, and the types requested
+	 * by the client.
 	 *
-	 * @param $data
+	 * If no match is found, the first, highest-ranking client requested
+	 * type is returned.
 	 *
-	 * @return Message
+	 * @param array $supported
+	 *
+	 * @return string
 	 */
-	public function setBody(&$data): self
+	public function negotiateCharset(array $supported): string
 	{
-	    $this->body = $data;
-
-		return $this;
+		return $this->getBestMatch($supported, $this->header('accept-charset'));
 	}
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Determines the best encoding type to use based on the $supported
+	 * types the application says it supports, and the types requested
+	 * by the client.
+	 *
+	 * If no match is found, the first, highest-ranking client requested
+	 * type is returned.
+	 *
+	 * @param array $supported
+	 *
+	 * @return string
+	 */
+	public function negotiateEncoding(array $supported): string
+	{
+		return $this->getBestMatch($supported, $this->header('accept-encoding'));
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Determines the best language to use based on the $supported
+	 * types the application says it supports, and the types requested
+	 * by the client.
+	 *
+	 * If no match is found, the first, highest-ranking client requested
+	 * type is returned.
+	 *
+	 * @param array $supported
+	 *
+	 * @return string
+	 */
+	public function negotiateLanguage(array $supported): string
+	{
+	    return $this->getBestMatch($supported, $this->header('accept-language'));
+	}
+	
+	//--------------------------------------------------------------------
+	
+	//--------------------------------------------------------------------
+	// Protected
+	//--------------------------------------------------------------------
+	
 	/**
 	 * Takes a header name in any case, and returns the
 	 * normal-case version of the header.
@@ -280,4 +378,177 @@ class Message
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Does the grunt work of comparing any of the app-supported values
+	 * against a given Accept* header string.
+	 *
+	 * Portions of this code base on Aura.Accept library.
+	 *
+	 * @param array  $supported  App-supported values
+	 * @param string $header     header string
+	 *
+	 * @return string Best match
+	 */
+	protected function getBestMatch(array $supported, string $header=null): string
+	{
+		if (empty($supported))
+		{
+			throw new \InvalidArgumentException('You must provide an array of supported values to all Negotiations.');
+		}
+
+		if (empty($header))
+		{
+			throw new \InvalidArgumentException('Header values must not be empty in Negotiations.');
+		}
+
+		$acceptable = $this->parseHeader($header);
+
+		// If no acceptable values exist, return the
+		// first that we support.
+		if (empty($acceptable))
+		{
+			return $supported[0];
+		}
+
+		foreach ($acceptable as $accept)
+		{
+			// if acceptable quality is zero, skip it.
+			if ($accept['q'] == 0)
+			{
+				continue;
+			}
+
+			// if acceptable value is "anything", return the first available
+			if ($acceptable['value'] = '*' || $acceptable['value'] = '*/*')
+			{
+				return $supported[0];
+			}
+
+			// If an acceptable value is supported, return it
+			foreach ($supported as $available)
+			{
+				if ($this->match($accept, $available))
+				{
+					return $available;
+				}
+			}
+		}
+
+//		die('<pre>'. print_r($acceptable, true));
+		return false;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Parses an Accept* header into it's multiple values.
+	 *
+	 * This is based on code from Aura.Accept library.
+	 *
+	 * @param string $header
+	 *
+	 * @return array
+	 */
+	protected function parseHeader(string $header)
+	{
+		$results = [];
+		$acceptable = explode(',', $header);
+
+		foreach ($acceptable as $value)
+		{
+			$pairs = explode(';', $value);
+
+			$value = $pairs[0];
+
+			unset($pairs[0]);
+
+			$parameters = array();
+
+			foreach ($pairs as $pair)
+			{
+				$param = array();
+				preg_match(
+					'/^(?P<name>.+?)=(?P<quoted>"|\')?(?P<value>.*?)(?:\k<quoted>)?$/',
+					$pair,
+					$param
+				);
+				$parameters[$param['name']] = $param['value'];
+			}
+
+			$quality = 1.0;
+
+			if (isset($parameters['q']))
+			{
+				$quality = $parameters['q'];
+				unset($parameters['q']);
+			}
+
+			$results[] = [
+				'value' => trim($value),
+				'q' => (float)$quality,
+			    'params' => $parameters
+			];
+		}
+
+		// Sort to get the highest results first
+		usort($results, function ($a, $b)
+		{
+			if ($a['q'] == $b['q'])
+			{
+				return 0;
+			}
+
+			return ($a['q'] > $b['q']) ? -1 : 1;
+		});
+
+		return $results;
+	}
+
+	//--------------------------------------------------------------------
+
+	protected function match($acceptable, $supported)
+	{
+		$supported = $this->parseHeader($supported);
+		if (is_array($supported) && count($supported) == 1)
+		{
+			$supported = $supported[0];
+		}
+
+		// Is it an exact match?
+		if ($acceptable['value'] == $supported['value'])
+		{
+			return $this->matchParameters($acceptable, $supported);
+		}
+
+
+
+		var_dump($acceptable);
+		die(var_dump($supported));
+	}
+
+	//--------------------------------------------------------------------
+
+	protected function matchParameters($acceptable, $supported)
+	{
+		if (count($acceptable['params']) != count($supported['params']))
+		{
+			return false;
+		}
+
+		foreach ($supported['params'] as $label => $value)
+		{
+			if (! isset($acceptable['params'][$label]) ||
+			    $acceptable['params'][$label] != $value)
+			{
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	//--------------------------------------------------------------------
+
+
 }
