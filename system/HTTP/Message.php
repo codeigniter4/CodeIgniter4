@@ -241,9 +241,9 @@ class Message
 	 */
 	protected function getHeaderName($name): string
 	{
-		$name = strtolower($name);
+		$lower_name = strtolower($name);
 
-	    return isset($this->headerMap[$name]) ? $this->headerMap[$name] : '';
+	    return isset($this->headerMap[$lower_name]) ? $this->headerMap[$lower_name] : $name;
 	}
 
 	//--------------------------------------------------------------------
