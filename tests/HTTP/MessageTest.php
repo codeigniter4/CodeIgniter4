@@ -143,4 +143,20 @@ class MessageTest extends PHPUnit_Framework_TestCase
 
 	//--------------------------------------------------------------------
 
+	public function testNegotiateMediaFindsHighestMatch()
+	{
+	    $this->message->setHeader('Accept', 'text/plain; q=0.5, text/html, text/x-dvi; q=0.8, text/x-c');
+
+		$this->assertEquals('text/html', $this->message->negotiateMedia(['text/html', 'text/x-c', 'text/x-dvi', 'text/plain']));
+		$this->assertEquals('text/x-c', $this->message->negotiateMedia(['text/x-c', 'text/x-dvi', 'text/plain']));
+		$this->assertEquals('text/x-dvi', $this->message->negotiateMedia(['text/plain', 'text/x-dvi']));
+		$this->assertEquals('text/x-dvi', $this->message->negotiateMedia(['text/x-dvi']));
+
+		// No matches? Return the first that we support...
+		$this->assertEquals('text/md', $this->message->negotiateMedia(['text/md']));
+	}
+	
+	//--------------------------------------------------------------------
+
+
 }

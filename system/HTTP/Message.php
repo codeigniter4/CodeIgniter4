@@ -420,7 +420,7 @@ class Message
 			}
 
 			// if acceptable value is "anything", return the first available
-			if ($acceptable['value'] = '*' || $acceptable['value'] = '*/*')
+			if ($accept['value'] == '*' || $accept['value'] == '*/*')
 			{
 				return $supported[0];
 			}
@@ -435,8 +435,8 @@ class Message
 			}
 		}
 
-//		die('<pre>'. print_r($acceptable, true));
-		return false;
+		// No matches? return the first supported type
+		return $supported[0];
 	}
 
 	//--------------------------------------------------------------------
@@ -473,12 +473,12 @@ class Message
 					$pair,
 					$param
 				);
-				$parameters[$param['name']] = $param['value'];
+				$parameters[trim($param['name'])] = trim($param['value']);
 			}
 
 			$quality = 1.0;
 
-			if (isset($parameters['q']))
+			if (array_key_exists('q', $parameters))
 			{
 				$quality = $parameters['q'];
 				unset($parameters['q']);
@@ -496,6 +496,7 @@ class Message
 		{
 			if ($a['q'] == $b['q'])
 			{
+				// @ todo Modify to have more specificity be higher value...
 				return 0;
 			}
 
@@ -523,8 +524,8 @@ class Message
 
 
 
-		var_dump($acceptable);
-		die(var_dump($supported));
+//		var_dump($acceptable);
+//		die(var_dump($supported));
 	}
 
 	//--------------------------------------------------------------------
