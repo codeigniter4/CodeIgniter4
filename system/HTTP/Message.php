@@ -27,20 +27,10 @@ class Message
 	//--------------------------------------------------------------------
 
 	/**
-	 * Returns an array containing all headers.
-	 *
-	 * @param null $filter
-	 *
-	 * @return array        An array of the request headers
+	 * Populates the $headers array with any headers the server knows about.
 	 */
-	public function headers($filter = null) : array
+	public function populateHeaders()
 	{
-		// If header is already defined, return it immediately
-		if ( ! empty($this->headers))
-		{
-			return $this->headers;
-		}
-
 		// In Apache, you can simply call apache_request_headers()
 		if (function_exists('apache_request_headers'))
 		{
@@ -49,23 +39,38 @@ class Message
 
 		$this->headers['Content-Type'] = isset($_SERVER['CONTENT_TYPE']) ? $_SERVER['CONTENT_TYPE'] : @getenv('CONTENT_TYPE');
 
-		if (is_null($filter))
-		{
-			$filter = FILTER_DEFAULT;
-		}
-
 		foreach ($_SERVER as $key => $val)
 		{
 			if (sscanf($key, 'HTTP_%s', $header) === 1)
 			{
-				// take SOME_HEADER and turn it into Some-Header
-				$header = str_replace('_', ' ', strtolower($header));
-				$header = str_replace(' ', '-', ucwords($header));
-
-				$this->headers[$header] = array_key_exists($key, $_SERVER)
-					? filter_var($_SERVER[$key], $filter)
-					: '';
+				if (array_key_exists($key, $_SERVER))
+				{
+					$this->setHeader($header, $_SERVER[$key]);
+				}
+				else
+				{
+					$this->setHeader($header, '');
+				}
 			}
+		}
+	}
+
+	//--------------------------------------------------------------------
+
+
+	/**
+	 * Returns an array containing all headers.
+	 *
+	 * @return array        An array of the request headers
+	 */
+	public function headers() : array
+	{
+		// If no headers are defined, but the user is
+		// requesting it, then it's likely they want
+		// it to be populated so do that...
+		if (empty($this->headers))
+		{
+			$this->populateHeaders();
 		}
 
 		return $this->headers;
@@ -232,23 +237,6 @@ class Message
 	//--------------------------------------------------------------------
 
 	/**
-	 * Takes a header name in any case, and returns the
-	 * normal-case version of the header.
-	 *
-	 * @param $name
-	 *
-	 * @return string
-	 */
-	protected function getHeaderName($name): string
-	{
-		$lower_name = strtolower($name);
-
-	    return isset($this->headerMap[$lower_name]) ? $this->headerMap[$lower_name] : $name;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
 	 * Returns the Message's body.
 	 *
 	 * @return mixed
@@ -276,5 +264,20 @@ class Message
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Takes a header name in any case, and returns the
+	 * normal-case version of the header.
+	 *
+	 * @param $name
+	 *
+	 * @return string
+	 */
+	protected function getHeaderName($name): string
+	{
+		$lower_name = strtolower($name);
 
+		return isset($this->headerMap[$lower_name]) ? $this->headerMap[$lower_name] : $name;
+	}
+
+	//--------------------------------------------------------------------
 }

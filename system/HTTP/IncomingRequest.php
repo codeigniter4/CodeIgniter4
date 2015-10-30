@@ -103,6 +103,8 @@ class IncomingRequest extends Request
 
 		parent::__construct($config, $uri, $body);
 
+		$this->populateHeaders();
+
 		// @todo perform csrf check
 
 		$this->uri = $uri;
