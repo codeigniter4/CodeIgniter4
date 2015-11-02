@@ -158,7 +158,7 @@ class MessageTest extends PHPUnit_Framework_TestCase
 	
 	//--------------------------------------------------------------------
 
-	public function testNegotiateMediaDeterminesCorrectPrecedence()
+	public function testParseHeaderDeterminesCorrectPrecedence()
 	{
 	    $header =$this->message->parseHeader('text/*, text/plain, text/plain;format=flowed, */*');
 
@@ -166,6 +166,28 @@ class MessageTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals('flowed', $header[0]['params']['format']);
 		$this->assertEquals('text/plain', $header[1]['value']);
 		$this->assertEquals('*/*', $header[3]['value']);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testNegotiateMediaReturnsSupportedMatchWhenAsterisksInAvailable()
+	{
+	    $this->message->setHeader('Accept', 'image/*, text/*');
+
+		$this->assertEquals('text/plain', $this->message->negotiateMedia(['text/plain']));
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * @group single
+	 */
+	public function testNegotiateMediaRecognizesMediaTypes()
+	{
+		// Image has a higher specificity, but is the wrong type...
+	    $this->message->setHeader('Accept', 'text/*, image/jpeg');
+
+		$this->assertEquals('text/plain', $this->message->negotiateMedia(['text/plain']));
 	}
 
 	//--------------------------------------------------------------------

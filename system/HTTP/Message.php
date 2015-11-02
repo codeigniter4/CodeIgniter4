@@ -296,7 +296,7 @@ class Message
 	 */
 	public function negotiateMedia(array $supported): string
 	{
-		return $this->getBestMatch($supported, $this->header('accept'));
+		return $this->getBestMatch($supported, $this->header('accept'), true);
 	}
 
 	//--------------------------------------------------------------------
@@ -385,12 +385,13 @@ class Message
 	 *
 	 * Portions of this code base on Aura.Accept library.
 	 *
-	 * @param array  $supported  App-supported values
-	 * @param string $header     header string
+	 * @param array  $supported    App-supported values
+	 * @param string $header       header string
+	 * @param bool   $enforceTypes If TRUE, will compare media types and sub-types.
 	 *
 	 * @return string Best match
 	 */
-	protected function getBestMatch(array $supported, string $header=null): string
+	protected function getBestMatch(array $supported, string $header=null, bool $enforceTypes=false): string
 	{
 		if (empty($supported))
 		{
@@ -428,14 +429,14 @@ class Message
 			// If an acceptable value is supported, return it
 			foreach ($supported as $available)
 			{
-				if ($this->match($accept, $available))
+				if ($this->match($accept, $available, $enforceTypes))
 				{
 					return $available;
 				}
 			}
 		}
 
-		// No matches? return the first supported type
+		// No matches? Return the first supported element.
 		return $supported[0];
 	}
 
@@ -533,7 +534,7 @@ class Message
 
 	//--------------------------------------------------------------------
 
-	protected function match($acceptable, $supported)
+	protected function match(array $acceptable, string $supported, bool $enforceTypes=false)
 	{
 		$supported = $this->parseHeader($supported);
 		if (is_array($supported) && count($supported) == 1)
@@ -547,15 +548,28 @@ class Message
 			return $this->matchParameters($acceptable, $supported);
 		}
 
+		// Do we need to compare types/sub-types? Only used
+		// by negotiateMedia().
+		if ($enforceTypes)
+		{
+			return $this->matchTypes($acceptable, $supported);
+		}
 
-
-//		var_dump($acceptable);
-//		die(var_dump($supported));
+		return false;
 	}
 
 	//--------------------------------------------------------------------
 
-	protected function matchParameters($acceptable, $supported)
+	/**
+	 * Checks two Accept values with matching 'values' to see if their
+	 * 'params' are the same.
+	 *
+	 * @param array $acceptable
+	 * @param array $supported
+	 *
+	 * @return bool
+	 */
+	protected function matchParameters(array $acceptable, array $supported): bool
 	{
 		if (count($acceptable['params']) != count($supported['params']))
 		{
@@ -572,6 +586,38 @@ class Message
 		}
 
 		return true;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Compares the types/subtypes of an acceptable Media type and
+	 * the supported string.
+	 *
+	 * @param array $acceptable
+	 * @param array $supported
+	 *
+	 * @return bool
+	 */
+	public function matchTypes(array $acceptable, array $supported): bool
+	{
+	    list($aType, $aSubType) = explode('/', $acceptable['value']);
+	    list($sType, $sSubType) = explode('/', $supported['value']);
+
+		// If the types don't match, we're done.
+		if ($aType != $sType)
+		{
+			return false;
+		}
+
+		// If there's an asterisk, we're cool
+		if ($aSubType == '*')
+		{
+			return true;
+		}
+
+		// Otherwise, subtypes must match also.
+		return $aSubType == $sSubType;
 	}
 
 	//--------------------------------------------------------------------
