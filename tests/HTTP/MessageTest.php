@@ -158,5 +158,17 @@ class MessageTest extends PHPUnit_Framework_TestCase
 	
 	//--------------------------------------------------------------------
 
+	public function testNegotiateMediaDeterminesCorrectPrecedence()
+	{
+	    $header =$this->message->parseHeader('text/*, text/plain, text/plain;format=flowed, */*');
+
+		$this->assertEquals('text/plain', $header[0]['value']);
+		$this->assertEquals('flowed', $header[0]['params']['format']);
+		$this->assertEquals('text/plain', $header[1]['value']);
+		$this->assertEquals('*/*', $header[3]['value']);
+	}
+
+	//--------------------------------------------------------------------
+
 
 }

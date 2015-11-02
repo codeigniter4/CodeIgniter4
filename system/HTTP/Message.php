@@ -450,7 +450,7 @@ class Message
 	 *
 	 * @return array
 	 */
-	protected function parseHeader(string $header)
+	public function parseHeader(string $header)
 	{
 		$results = [];
 		$acceptable = explode(',', $header);
@@ -496,10 +496,35 @@ class Message
 		{
 			if ($a['q'] == $b['q'])
 			{
-				// @ todo Modify to have more specificity be higher value...
+				$a_ast = substr_count($a['value'], '*');
+				$b_ast = substr_count($b['value'], '*');
+
+				// '*/*' has lower precedence than 'text/*',
+				// and 'text/*' has lower priority than 'text/plain'
+				//
+				// This seems backwards, but needs to be that way
+				// due to the way PHP7 handles ordering or array
+				// elements created by reference.
+				if ($a_ast > $b_ast)
+				{
+					return 1;
+				}
+
+				// If the counts are the same, but one element
+				// has more params than another, it has higher precedence.
+				//
+				// This seems backwards, but needs to be that way
+				// due to the way PHP7 handles ordering or array
+				// elements created by reference.
+				if ($a_ast == $b_ast)
+				{
+					return count($b['params']) - count($a['params']);
+				}
+
 				return 0;
 			}
 
+			// Still here? Higher q values have precedence.
 			return ($a['q'] > $b['q']) ? -1 : 1;
 		});
 
