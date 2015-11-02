@@ -291,12 +291,14 @@ class Message
 	 * type is returned.
 	 *
 	 * @param array $supported
+	 * @param bool  $strictMatch If TRUE, will return an empty string when no match found.
+	 *                           If FALSE, will return the first supported element.
 	 *
 	 * @return string
 	 */
-	public function negotiateMedia(array $supported): string
+	public function negotiateMedia(array $supported, bool $strictMatch=false): string
 	{
-		return $this->getBestMatch($supported, $this->header('accept'), true);
+		return $this->getBestMatch($supported, $this->header('accept'), true, $strictMatch);
 	}
 
 	//--------------------------------------------------------------------
@@ -388,10 +390,12 @@ class Message
 	 * @param array  $supported    App-supported values
 	 * @param string $header       header string
 	 * @param bool   $enforceTypes If TRUE, will compare media types and sub-types.
+	 * @param bool   $strictMatch  If TRUE, will return empty string on no match.
+	 *                             If FALSE, will return the first supported element.
 	 *
 	 * @return string Best match
 	 */
-	protected function getBestMatch(array $supported, string $header=null, bool $enforceTypes=false): string
+	protected function getBestMatch(array $supported, string $header=null, bool $enforceTypes=false, bool $strictMatch=false): string
 	{
 		if (empty($supported))
 		{
@@ -437,7 +441,7 @@ class Message
 		}
 
 		// No matches? Return the first supported element.
-		return $supported[0];
+		return $strictMatch ? '' : $supported[0];
 	}
 
 	//--------------------------------------------------------------------

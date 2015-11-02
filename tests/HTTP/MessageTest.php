@@ -179,9 +179,6 @@ class MessageTest extends PHPUnit_Framework_TestCase
 
 	//--------------------------------------------------------------------
 
-	/**
-	 * @group single
-	 */
 	public function testNegotiateMediaRecognizesMediaTypes()
 	{
 		// Image has a higher specificity, but is the wrong type...
@@ -192,5 +189,14 @@ class MessageTest extends PHPUnit_Framework_TestCase
 
 	//--------------------------------------------------------------------
 
+	public function testNegotiateMediaSupportsStrictMatching()
+	{
+		// Image has a higher specificity, but is the wrong type...
+		$this->message->setHeader('Accept', 'text/md, image/jpeg');
 
+		$this->assertEquals('text/plain', $this->message->negotiateMedia(['text/plain']));
+		$this->assertEquals('', $this->message->negotiateMedia(['text/plain'], true));
+	}
+
+	//--------------------------------------------------------------------
 }
