@@ -317,7 +317,16 @@ class Message
 	 */
 	public function negotiateCharset(array $supported): string
 	{
-		return $this->getBestMatch($supported, $this->header('accept-charset'));
+		$match = $this->getBestMatch($supported, $this->header('accept-charset'), false, true);
+
+		// If no charset is shown as a match, ignore the directive
+		// as allowed by the RFC, and tell it a default value.
+		if (empty($match))
+		{
+			return 'utf-8';
+		}
+
+		return $match;
 	}
 
 	//--------------------------------------------------------------------
@@ -334,8 +343,10 @@ class Message
 	 *
 	 * @return string
 	 */
-	public function negotiateEncoding(array $supported): string
+	public function negotiateEncoding(array $supported=[]): string
 	{
+		array_push($supported, 'identity');
+
 		return $this->getBestMatch($supported, $this->header('accept-encoding'));
 	}
 
@@ -404,7 +415,7 @@ class Message
 
 		if (empty($header))
 		{
-			throw new \InvalidArgumentException('Header values must not be empty in Negotiations.');
+			return $strictMatch ? '' : $supported[0];
 		}
 
 		$acceptable = $this->parseHeader($header);

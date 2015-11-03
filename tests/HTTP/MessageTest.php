@@ -199,4 +199,48 @@ class MessageTest extends PHPUnit_Framework_TestCase
 	}
 
 	//--------------------------------------------------------------------
+
+	public function testAcceptCharsetMatchesBasics()
+	{
+	    $this->message->setHeader('Accept-Charset', 'iso-8859-5, unicode-1-1;q=0.8');
+
+		$this->assertEquals('iso-8859-5', $this->message->negotiateCharset(['iso-8859-5', 'unicode-1-1']));
+		$this->assertEquals('unicode-1-1', $this->message->negotiateCharset(['utf-8', 'unicode-1-1']));
+
+		// No match will default to utf-8
+		$this->assertEquals('utf-8', $this->message->negotiateCharset(['iso-8859', 'unicode-1-2']));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testNegotiateEncodingReturnsFirstIfNoAcceptHeaderExists()
+	{
+		$this->assertEquals('compress', $this->message->negotiateEncoding(['compress', 'gzip']));
+	}
+	
+	//--------------------------------------------------------------------
+	
+	public function testNegotiatesEncodingBasics()
+	{
+	    $this->message->setHeader('Accept-Encoding', 'gzip;q=1.0, identity; q=0.4, compress;q=0.5');
+
+		$this->assertEquals('gzip', $this->message->negotiateEncoding(['gzip', 'compress']));
+		$this->assertEquals('compress', $this->message->negotiateEncoding(['compress']));
+		$this->assertEquals('identity', $this->message->negotiateEncoding());
+	}
+	
+	//--------------------------------------------------------------------
+	
+	public function testAcceptLanguageBasics()
+	{
+	    $this->message->setHeader('Accept-Language', 'da, en-gb;q=0.8, en;q=0.7');
+
+		$this->assertEquals('da', $this->message->negotiateLanguage(['da', 'en']));
+		$this->assertEquals('en-gb', $this->message->negotiateLanguage(['en-gb', 'en']));
+		$this->assertEquals('en', $this->message->negotiateLanguage(['en']));
+	}
+	
+	//--------------------------------------------------------------------
+	
+	
 }
