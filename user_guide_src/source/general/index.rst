@@ -7,7 +7,6 @@ General Topics
 
 	autoloader
 	configuration
-	Dependency Injection <dicontainer>
 	urls
 	controllers
 	reserved_names

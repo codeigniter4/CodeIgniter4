@@ -54,15 +54,14 @@ Tutorial
 
 	tutorial/index
 
-***************************
-Contributing to CodeIgniter
-***************************
-
+**************
+Basic Concepts
+**************
 .. toctree::
-	:glob:
-	:titlesonly:
+   :glob:
+   :titlesonly:
 
-	contributing/index
+   concepts/index
 
 **************
 General Topics
@@ -120,3 +119,14 @@ Helper Reference
 	database/index
 	tutorial/index
 	general/credits
+
+
+***************************
+Contributing to CodeIgniter
+***************************
+
+.. toctree::
+	:glob:
+	:titlesonly:
+
+   	contributing/index

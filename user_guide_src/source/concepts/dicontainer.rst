@@ -243,7 +243,9 @@ The container will always pass a reference to itself into the anonymous function
 use the container while creating new class instances. The function must return a class instance.
 Everything else is up to you.
 
-### Using Parameters
+Using Parameters
+================
+
 What happens when you need to pass a configuration array, or other simple variable, to a class?
 You can do this through the closure as well. For this example, we will assume that the Themer
 class accepts the name of the theme to use as the only parameter::
