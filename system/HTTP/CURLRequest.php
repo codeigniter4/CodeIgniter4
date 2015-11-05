@@ -1,5 +1,7 @@
 <?php namespace CodeIgniter\HTTP;
 
+use App\Config\AppConfig;
+
 /**
  * Class OutgoingRequest
  *
@@ -10,7 +12,7 @@
  *
  * @package CodeIgniter\HTTPLite
  */
-class OutgoingRequest extends Request
+class CURLRequest extends Request
 {
 	protected $baseURI;
 
@@ -27,12 +29,14 @@ class OutgoingRequest extends Request
 	 *
 	 * @param array $options
 	 */
-	public function __construct(array $options = [])
+	public function __construct(AppConfig $config, $uri=null, $body=null)
 	{
 		if (! function_exists('curl_version'))
 		{
 			throw new \RuntimeException('CURL must be enabled to use the OutgoingRequest class.');
 		}
+
+		parent::__construct($config, $uri, $body);
 	}
 
 	//--------------------------------------------------------------------
