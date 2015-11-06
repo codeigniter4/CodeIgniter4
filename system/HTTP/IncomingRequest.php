@@ -324,7 +324,7 @@ class IncomingRequest extends Request
 	 *
 	 * @return bool
 	 */
-	public function is_secure(): bool
+	public function isSecure(): bool
 	{
 		if (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == '443')
 		{
@@ -370,7 +370,7 @@ class IncomingRequest extends Request
 		}
 		else
 		{
-			$this->is_secure() ? $this->uri->setScheme('https') : $this->uri->setScheme('http');
+			$this->isSecure() ? $this->uri->setScheme('https') : $this->uri->setScheme('http');
 
 			// While both SERVER_NAME and HTTP_HOST are open to security issues,
 			// if we have to choose, we will go with the server-controller version first.
