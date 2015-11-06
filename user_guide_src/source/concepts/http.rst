@@ -64,3 +64,54 @@ to have a very specific meaning to the client. This can tell them that it was su
 wasn't found (404). Head over to IANA for a `full list of HTTP status codes
 <https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml>`_.
 
+Working with Requests and Responses
+-----------------------------------
+
+While PHP provides ways to interact with the request and response headers, CodeIgniter, like most frameworks,
+abstract them so that you have a consistent, simple interface to them. The :doc:`Request class </libraries/request>`_
+is an object-oriented representation of the HTTP request. It provides everything you need::
+
+  use CodeIgniter\HTTP\IncomingRequest;
+
+  $request = new IncomingRequest(new \App\Config\AppConfig(), new \CodeIgniter\HTTP\URI());
+
+  // the URI being requested (i.e. /about)
+  $request->uri->path();
+
+  // Retrieve $_GET and $_POST variables
+  $request->get('foo');
+  $request->post('bar');
+
+  // Retrieve server variables
+  $request->server('Host');
+
+  // Retrieve an HTTP Request header, with case-insensitive names
+  $request->header('host');
+  $request->header('Content-Type');
+
+  $request->method();  // GET, POST, PUT, etc
+
+  // Determine the best format to use based on content negotiation
+  $request->negotiateMedia(['application/json', 'application/xml', 'text/xml']);
+
+
+The request class does a lot of work in the background for you, that you never need to worry about.
+The ``negotiate...`` methods ensure that the priorities are matched correctly. The ``isAJAX()`` and ``isSecure()``
+methods check several different methods to determine the correct answer.
+
+CodeIgniter also provides a :doc:`Response class </libraries/response>`_ that is an object-oriented representation
+of the HTTP response. This gives you an easy and powerful way to construct your response to the client::
+
+  use CodeIgniter\HTTP\Response;
+
+  $response = new Response();
+
+  $response->setStatusCode(Response::HTTP_OK);
+  $response->setBody($output);
+  $response->setHeader('Content-type', 'text/html');
+  $response->noCache();
+
+  // Sends the output to the browser
+  $response->send();
+
+In addition, the Response class allows you to work the HTTP cache layer for the best performance.
