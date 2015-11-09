@@ -258,7 +258,7 @@ class Request extends Message implements RequestInterface
 
 			foreach ($index as $key)
 			{
-				$output[$key] = filter_input($type, $key, $filter);
+				$output[$key] = $this->fetchGlobal($type, $key, $filter);
 			}
 
 			return $output;
