@@ -68,7 +68,7 @@ Working with Requests and Responses
 -----------------------------------
 
 While PHP provides ways to interact with the request and response headers, CodeIgniter, like most frameworks,
-abstract them so that you have a consistent, simple interface to them. The :doc:`Request class </libraries/request>`
+abstract them so that you have a consistent, simple interface to them. The :doc:`IncomingRequest class </libraries/incomingrequest>`
 is an object-oriented representation of the HTTP request. It provides everything you need::
 
   use CodeIgniter\HTTP\IncomingRequest;

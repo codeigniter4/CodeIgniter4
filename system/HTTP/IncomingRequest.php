@@ -93,7 +93,7 @@ class IncomingRequest extends Request
 
 	//--------------------------------------------------------------------
 
-	public function __construct(AppConfig $config, $uri=null, $body='php://input')
+	public function __construct(AppConfig $config, $uri = null, $body = 'php://input')
 	{
 		// Get our body from php://input
 		if ($body == 'php://input')
@@ -139,7 +139,8 @@ class IncomingRequest extends Request
 	 */
 	public function isAJAX(): bool
 	{
-		return ( ! empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest');
+		return ( ! empty($_SERVER['HTTP_X_REQUESTED_WITH']) &&
+		         strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest');
 	}
 
 	//--------------------------------------------------------------------
