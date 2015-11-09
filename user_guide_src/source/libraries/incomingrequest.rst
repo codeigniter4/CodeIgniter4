@@ -3,7 +3,7 @@ IncomingRequest Class
 =====================
 
 The IncomingRequest class provides an object-oriented representation of an HTTP request from a client, like a browser.
-It extends from, and has access to all the methods of the :doc:`Request <libraries/request>` and :doc:`Message <libraries/message>`
+It extends from, and has access to all the methods of the :doc:`Request </libraries/request>` and :doc:`Message </libraries/message>`
 classes, in addition to the methods listed below.
 
 Accessing the Request
@@ -118,7 +118,7 @@ Class Reference
 ***************
 
 .. note:: In addition to the methods listed here, this class inherits the methods from the
-	:doc:`Request Class <libraries/request>` and the :doc: `Message Class <libraries/message>`.
+	:doc:`Request Class </libraries/request>` and the :doc: `Message Class </libraries/message>`.
 
 .. php:class:: CodeIgniter\\HTTP\\IncomingRequest
 
