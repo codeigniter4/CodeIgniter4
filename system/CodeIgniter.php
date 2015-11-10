@@ -54,17 +54,11 @@ if (ENVIRONMENT !== 'production')
 
 /*
  * ------------------------------------------------------
- *  Get the DI Container ready for use
+ *  Get the Services Factory ready for use
  * ------------------------------------------------------
  */
 
-require_once BASEPATH.'DI/DI.php';
 require_once APPPATH.'config/services.php';
-
-// This is the only time that services array will need
-// to be passed into the class. All other uses can
-// simply call getInstance().
-$di = CodeIgniter\DI\DI::getInstance(new App\Config\ServicesConfig());
 
 /*
  * ------------------------------------------------------
@@ -78,7 +72,7 @@ require_once APPPATH.'config/autoload.php';
 
 // The Autoloader class only handles namespaces
 // and "legacy" support.
-$loader = $di->single('autoloader');
+$loader = \App\Config\Services::autoloader();
 $loader->initialize(new App\Config\AutoloadConfig());
 
 // The register function will prepend
@@ -90,22 +84,24 @@ $loader->register();
  *  Set custom exception handling
  * ------------------------------------------------------
  */
-$di->single('exceptions')
+\App\Config\Services::exceptions()
    ->initialize();
 
 //--------------------------------------------------------------------
 // Start the Benchmark
 //--------------------------------------------------------------------
 
-$benchmark = new CodeIgniter\Benchmark\Timer();
+$benchmark = \App\Config\Services::timer();
 $benchmark->start('total_execution');
 
 //--------------------------------------------------------------------
 // Get our Request and Response objects
 //--------------------------------------------------------------------
 
-$request  = is_cli() ? $di->single('clirequest') : $di->single('request');
-$response = $di->single('response');
+$request  = is_cli()
+		? \App\Config\Services::clirequest()
+		: \App\Config\Services::request();
+$response = \App\Config\Services::response();
 
 //--------------------------------------------------------------------
 // Try to Route It
@@ -113,7 +109,7 @@ $response = $di->single('response');
 
 require APPPATH.'config/routes.php';
 
-$router = $di->single('router');
+$router = \App\Config\Services::router($routes);
 
 $controller = $router->controllerName();
 

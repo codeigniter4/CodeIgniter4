@@ -8,30 +8,6 @@
  * @category Common Functions
  */
 
-if (! function_exists('DI'))
-{
-	/**
-	 * A convenience method for getting the current instance
-	 * of the dependency injection container.
-	 *
-	 * If a class "alias" is passed in as the first parameter
-	 * then try to create that class using the single() method.
-	 *
-	 * @return \CodeIgniter\DI\DI instance
-	 */
-	function DI($alias=null)
-	{
-		if (! empty($alias) && is_string($alias))
-		{
-			return \CodeIgniter\DI\DI::getInstance()->single($alias);
-		}
-
-		return \CodeIgniter\DI\DI::getInstance();
-	}
-}
-
-//--------------------------------------------------------------------
-
 if (! function_exists('log_message'))
 {
 	/**
@@ -56,7 +32,8 @@ if (! function_exists('log_message'))
 	 */
 	function log_message(string $level, $message, array $context=[])
 	{
-		return DI('logger')->log($level, $message, $context);
+		// @todo Don't create a new class each time!
+		return \App\Config\Services::logger()->log($level, $message, $context);
 	}
 }
 
@@ -84,7 +61,7 @@ if (! function_exists('view'))
 		/**
 		 * @var CodeIgniter\View\View $renderer
 		 */
-		$renderer = DI('renderer');
+		$renderer = \App\Config\Services::renderer();
 
 		return $renderer->setData($data, 'raw')
 						->render($name, $options);

@@ -13,7 +13,7 @@ trait LoggerAwareTrait {
 	 */
 	public function setLogger(LoggerInterface $logger)
 	{
-		$this->logger = DI('logger');
+		$this->logger = $logger;
 	}
 
 	//--------------------------------------------------------------------

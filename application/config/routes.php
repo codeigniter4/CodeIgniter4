@@ -19,7 +19,7 @@
  */
 
 // Create a new instance of our RouteCollection class.
-$routes = DI()->single('routes');
+$routes = \App\Config\Services::routes();
 
 /**
  * --------------------------------------------------------------------
