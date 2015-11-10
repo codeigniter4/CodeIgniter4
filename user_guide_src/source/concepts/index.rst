@@ -2,5 +2,4 @@
 	:titlesonly:
 
 	autoloader
-	dicontainer
 	http
