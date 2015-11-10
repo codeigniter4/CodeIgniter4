@@ -19,6 +19,10 @@
  */
 class Services {
 
+	protected $logger;
+
+	//--------------------------------------------------------------------
+
 	public static function autoloader()
 	{
 	    return new \CodeIgniter\Autoloader\Autoloader();
@@ -49,7 +53,13 @@ class Services {
 
 	public static function logger()
 	{
-	    return new \PSR\Log\Logger(new \App\Config\LoggerConfig());
+		// We only ever want a single instance of the logger.
+		if (empty(static::$logger))
+		{
+			static::$logger = new \PSR\Log\Logger(new \App\Config\LoggerConfig());
+		}
+
+	    return static::$logger;
 	}
 
 	//--------------------------------------------------------------------
