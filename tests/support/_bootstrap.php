@@ -165,7 +165,6 @@ if (ENVIRONMENT !== 'production')
  * ------------------------------------------------------
  */
 
-require_once BASEPATH.'DI/DI.php';
 require_once APPPATH.'config/services.php';
 
 /*
