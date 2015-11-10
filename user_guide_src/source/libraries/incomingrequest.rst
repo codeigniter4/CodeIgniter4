@@ -139,13 +139,12 @@ Class Reference
 
 	.. php:method:: post([$index = null[, $filter = null])
 
-		:param  string  The name of the variable/key to look for.
-		:param  int     The type of filter to apply. A list of filters can be found `here <http://php.net/manual/en/filter.filters.php>`_.
+		:param  string  $index: The name of the variable/key to look for.
+		:param  int     $filter: The type of filter to apply. A list of filters can be found `here <http://php.net/manual/en/filter.filters.php>`_.
 		:returns:   $_POST if no parameters supplied, otherwise the POST value if found, or null if not
 		:rtype: mixed|null
 
-		The first parameter will contain the name of the POST item you are
-			looking for::
+		The first parameter will contain the name of the POST item you are looking for::
 
 			$request->post('some_data');
 
@@ -176,8 +175,8 @@ Class Reference
 
 	.. php:method:: get([$index = null[, $filter = null]])
 
-		:param  string  The name of the variable/key to look for.
-		:param  int     The typ eof filter to apply. A list of filters can be found `here <http://php.net/manual/en/filter.filters.php>`_.
+		:param  string  $index: The name of the variable/key to look for.
+		:param  int  $filter: The type of filter to apply. A list of filters can be found `here <http://php.net/manual/en/filter.filters.php>`_.
 		:returns:   $_POST if no parameters supplied, otherwise the POST value if found, or null if not
 		:rtype: mixed|null
 
@@ -185,8 +184,8 @@ Class Reference
 
 	.. php:method:: postGet([$index = null[, $filter = null]])
 
-		:param  string  The name of the variable/key to look for.
-		:param  int     The typ eof filter to apply. A list of filters can be found `here <http://php.net/manual/en/filter.filters.php>`_.
+		:param  string  $index: The name of the variable/key to look for.
+		:param  int     $filter: The type of filter to apply. A list of filters can be found `here <http://php.net/manual/en/filter.filters.php>`_.
 		:returns:   $_POST if no parameters supplied, otherwise the POST value if found, or null if not
 		:rtype: mixed|null
 
@@ -198,8 +197,8 @@ Class Reference
 
 	.. php:method:: getPost([$index = null[, $filter = null]])
 
-		:param  string  The name of the variable/key to look for.
-		:param  int     The typ eof filter to apply. A list of filters can be found `here <http://php.net/manual/en/filter.filters.php>`_.
+		:param  string  $index: The name of the variable/key to look for.
+		:param  int     $filter: The type of filter to apply. A list of filters can be found `here <http://php.net/manual/en/filter.filters.php>`_.
 		:returns:   $_POST if no parameters supplied, otherwise the POST value if found, or null if not
 		:rtype: mixed|null
 
@@ -212,7 +211,7 @@ Class Reference
 	.. php:method:: cookie([$index = null[, $filter = NULL]])
 
 		:param	mixed	$index: COOKIE name
-		:param  int     The typ eof filter to apply. A list of filters can be found `here <http://php.net/manual/en/filter.filters.php>`_.
+		:param  int     $filter: The type of filter to apply. A list of filters can be found `here <http://php.net/manual/en/filter.filters.php>`_.
 		:returns:	$_COOKIE if no parameters supplied, otherwise the COOKIE value if found or null if not
 		:rtype:	mixed
 
@@ -232,7 +231,7 @@ Class Reference
 	.. php:method:: server($index[, $filter = null])
 
 		:param	mixed	$index: Value name
-		:param  int     The type of filter to apply. A list of filters can be found `here <http://php.net/manual/en/filter.filters.php>`_.
+		:param  int     $filter: The type of filter to apply. A list of filters can be found `here <http://php.net/manual/en/filter.filters.php>`_.
 		:returns:	$_SERVER item value if found, NULL if not
 		:rtype:	mixed
 
@@ -249,7 +248,7 @@ Class Reference
 
 	.. php:method:: userAgent([$filter = null])
 
-		:param  int     The type of filter to apply. A list of filters can be found `here <http://php.net/manual/en/filter.filters.php>`_.
+		:param  int  $filter: The type of filter to apply. A list of filters can be found `here <http://php.net/manual/en/filter.filters.php>`_.
 		:returns:  The User Agent string, as found in the SERVER data, or null if not found.
 		:rtype: mixed
 

@@ -75,7 +75,7 @@ Class Reference
 	.. php:method:: server($index[, $filter = NULL])
 
 		:param	mixed	$index: Value name
-		:param  int     The type of filter to apply. A list of filters can be found `here <http://php.net/manual/en/filter.filters.php>`_.
+		:param  int     $filter: The type of filter to apply. A list of filters can be found `here <http://php.net/manual/en/filter.filters.php>`_.
 		:returns:	$_SERVER item value if found, NULL if not
 		:rtype:	mixed
 
