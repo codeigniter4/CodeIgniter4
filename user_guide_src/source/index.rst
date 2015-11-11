@@ -58,7 +58,6 @@ Tutorial
 Basic Concepts
 **************
 .. toctree::
-   :glob:
    :titlesonly:
 
    concepts/index
@@ -68,7 +67,6 @@ General Topics
 **************
 
 .. toctree::
-	:glob:
 	:titlesonly:
 
 	general/index
@@ -78,7 +76,6 @@ Library Reference
 *****************
 
 .. toctree::
-	:glob:
 	:titlesonly:
 
 	libraries/index
@@ -88,7 +85,6 @@ Database Reference
 ******************
 
 .. toctree::
-	:glob:
 	:titlesonly:
 
 	database/index
@@ -98,13 +94,12 @@ Helper Reference
 ****************
 
 .. toctree::
-	:glob:
 	:titlesonly:
 
 	helpers/index
 
 .. toctree::
-	:glob:
+    :glob:
 	:titlesonly:
 	:hidden:
 
