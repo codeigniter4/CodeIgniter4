@@ -3,3 +3,4 @@
 
 	autoloader
 	http
+	services
