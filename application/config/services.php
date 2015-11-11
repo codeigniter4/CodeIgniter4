@@ -19,7 +19,11 @@
  */
 class Services {
 
-	protected $logger;
+	/**
+	 * Holds the Logger instance.
+	 * @var
+	 */
+	static protected $logger;
 
 	//--------------------------------------------------------------------
 
