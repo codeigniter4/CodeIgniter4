@@ -1,0 +1,177 @@
+=============
+HTTP Response
+=============
+
+The Response class extends the :doc:`HTTP Message Class </libraries/message>` with methods only appropriate for
+ a server responding to the client that called it.
+
+Working with the Response
+=========================
+
+A Response class is instantiated for you and passed into your controllers. It can be accessed through
+``$this->response``. Many times you will not need to touch the class directly, since CodeIgniter takes care of
+sending the headers and the body for you. This is great if the page successfully created the content it was asked to.
+When things go wrong, or you need to send very specific status codes back, or even take advantage of the
+powerful HTTP caching, it's there for you.
+
+Setting the Output
+------------------
+
+When you need to set the output of the script directly, and not rely on CodeIgniter to automatically get it, you
+do it manually with the ``setBody`` method. This is usually used in conjuction with setting the status code of
+the response::
+
+	$this->response->setStatusCode(404)
+	               ->setBody($body);
+
+The reason phrase ('OK', 'Created', 'Moved Permenantly') will be automatically added, but you can add custom reasons
+as the second parameter of the ``setStatusCode()`` method::
+
+	$this->response->setStatusCode(404, 'Nope. Not here.');
+
+HTTP Caching
+============
+
+Built into the HTTP specification are tools help the client (often the web browser) cache the results. Used correctly,
+this can lend a huge performance boost to your application because it will tell the client that they don't need
+to contact the server at all since nothing has changed. And you can't get faster than that.
+
+This are handled through the ``Cache-Control`` and ``ETag`` headers. This guide is not the proper place for a thorough
+introduction to all of the cache headers power, but you can get a good understanding over at
+`Google Developers <https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/http-caching>`_
+and the `Mobify Blog <https://www.mobify.com/blog/beginners-guide-to-http-cache-headers/>`_.
+
+By default, all response objects sent through CodeIgniter have HTTP caching turned off. The options and exact
+circumstances are too varied for us to be able to create a good default other than turning it off. It's simple
+to set the Cache values to what you need, though, through the ``setCache()`` method::
+
+	$options = [
+		'max-age'  => 300,
+	    's-maxage' => 900
+	    'etag'     => 'abcde',
+	];
+	$this->response->setCache($options);
+
+The ``$options`` array simply takes an array of key/value pairs that are, with a couple of exceptions, assigned
+to the ``Cache-Control`` header. You are free to set all of the options exactly as you need for you specific
+situation. While most of the options are applied to the ``Cache-Control`` header, it intelligently handles
+the ``etag`` and ``last-modified`` options to their appropriate header.
+
+***************
+Class Reference
+***************
+
+.. note:: In addition to the methods listed here, this class inherits the methods from the
+	:doc:`Message Class </libraries/message>`.
+
+.. php:class:: CodeIgniter\\HTTP\\Response
+
+	.. php:method:: statusCode()
+
+		:returns: The current HTTP status code for this response
+		:rtype: int
+
+		Returns the currently status code for this response. If no status code has been set, a BadMethodCallException
+		will be thrown.::
+
+			echo $response->statusCode();
+
+	.. php:method:: setStatusCode($code[, $reason=''])
+
+		:param int $code: The HTTP status code
+		:param string $reason: An optional reason phrase.
+		:returns: The current Response instance
+		:rtype: CodeIgniter\\HTTP\\Response
+
+		Sets the HTTP status code that should be sent with this response::
+
+		    $response->setStatusCode(404);
+
+		The reason phrase will be automatically generated based upon the official lists. If you need to set your own
+		for a custom status code, you can pass the reason phrase as the second parameter::
+
+			$response->setStatusCode(230, "Tardis initiated");
+
+	.. php:method:: reason()
+
+		:returns: The current reason phrase.
+		:rtype: string
+
+		Returns the current status code for this response. If not status has been set, will return an empty string::
+
+			echo $response->reason();
+
+	.. php:method:: setDate($date)
+
+		:param DateTime $date: A DateTime instance with the time to set for this response.
+		:returns: The current response instance.
+		:rtype: CodeIgniter\HTTP\Response
+
+		Sets the date used for this response. The ``$date`` argument must be an instance of ``DateTime``.::
+
+			$date = DateTime::createFromFormat('j-M-Y', '15-Feb-2016');
+			$response->setDate($date);
+
+	.. php:method:: setContentType($mime[, $charset='UTF-8'])
+
+		:param string $mime: The content type this response represents.
+		:param string $charset: The character set this response uses.
+		:returns: The current response instance.
+		:rtype: CodeIgniter\HTTP\Response
+
+		Sets the content type this response represents.::
+
+			$response->setContentType('text/plain');
+			$response->setContentType('text/html');
+			$response->setContentType('application/json');
+
+		By default, the method sets the character set to ``UTF-8``. If you need to change this, you can
+		pass the character set as the second parameter::
+
+			$response->setContentType('text/plain', 'x-pig-latin');
+
+	.. php:method:: noCache()
+
+		:returns: The current response instance.
+		:rtype: CodeIgniter\HTTP\Response
+
+		Sets the ``Cache-Control`` header to turn off all HTTP caching. This is the default setting
+		of all response messages.::
+
+		    $response->noCache();
+
+		    // Sets the following header:
+			Cache-Control: no-store, max-age=0, no-cache
+
+	.. php:method:: setCache($options)
+
+		:param array $options: An array of key/value cache control settings
+		:returns: The current response instance.
+		:rtype: CodeIgniter\HTTP\Response
+
+		Sets the ``Cache-Control`` headers, including ``ETags`` and ``Last-Modified``. Typical keys are:
+
+		* etag
+		* last-modified
+		* max-age
+		* s-maxage
+		* private
+		* public
+		* must-revalidate
+		* proxy-revalidate
+		* no-transform
+
+		When passing the last-modified option, it can be either a date string, or a DateTime object.
+
+	.. php:method:: setLastModified($date)
+
+		:param string|DateTime $date: The date to set the Last-Modified header to
+		:returns: The current response instance.
+		:rtype: CodeIgniter\HTTP\Response
+
+		Sets the ``Last-Modified`` header. The ``$date`` object can be either a string or a ``DateTime``
+		instance::
+
+			$response->setLastModified(date('D, d M Y H:i:s'));
+			$response->setLastModified(DateTime::createFromFormat('u', $time));
+
