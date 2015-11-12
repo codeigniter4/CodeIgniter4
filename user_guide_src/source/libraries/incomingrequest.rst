@@ -118,7 +118,7 @@ Class Reference
 ***************
 
 .. note:: In addition to the methods listed here, this class inherits the methods from the
-	:doc:`Request Class </libraries/request>` and the :doc: `Message Class </libraries/message>`.
+	:doc:`Request Class </libraries/request>` and the :doc:`Message Class </libraries/message>`.
 
 .. php:class:: CodeIgniter\\HTTP\\IncomingRequest
 
