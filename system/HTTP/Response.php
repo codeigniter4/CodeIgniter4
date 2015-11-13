@@ -13,7 +13,7 @@
  *
  * @package CodeIgniter\HTTP
  */
-class Response extends Message
+class Response extends Message implements ResponseInterface
 {
 	protected static $statusCodes = [
 		// 1xx: Informational

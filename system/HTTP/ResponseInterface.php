@@ -13,7 +13,7 @@
  *
  * @package CodeIgniter\HTTP
  */
-interface Response
+interface ResponseInterface
 {
 	/**
 	 * Gets the response status code.
@@ -44,7 +44,7 @@ interface Response
 	 * @return self
 	 * @throws \InvalidArgumentException For invalid status code arguments.
 	 */
-	public function setStatusCode(int $code, string $reason = ''): self;
+	public function setStatusCode(int $code, string $reason = ''): Response;
 
 	//--------------------------------------------------------------------
 
@@ -71,7 +71,7 @@ interface Response
 	 *
 	 * @return Response
 	 */
-	public function setDate(\DateTime $date): self;
+	public function setDate(\DateTime $date): Response;
 
 	//--------------------------------------------------------------------
 
@@ -84,7 +84,7 @@ interface Response
 	 *
 	 * @return Response
 	 */
-	public function setContentType(string $mime, string $charset='UTF-8'): self;
+	public function setContentType(string $mime, string $charset='UTF-8'): Response;
 	
 	//--------------------------------------------------------------------
 	
@@ -99,7 +99,7 @@ interface Response
 	 * Sets the appropriate headers to ensure this response
 	 * is not cached by the browsers.
 	 */
-	public function noCache(): self;
+	public function noCache(): Response;
 
 	//--------------------------------------------------------------------
 
@@ -131,7 +131,7 @@ interface Response
 	 *
 	 * @return $this
 	 */
-	public function setCache(array $options=[]): self;
+	public function setCache(array $options=[]): Response;
 
 	//--------------------------------------------------------------------
 
@@ -143,7 +143,7 @@ interface Response
 	 *
 	 * @param $date
 	 */
-	public function setLastModified($date): self;
+	public function setLastModified($date): Response;
 
 	//--------------------------------------------------------------------
 
@@ -157,7 +157,7 @@ interface Response
 	 *
 	 * @return Response
 	 */
-	public function send(): self;
+	public function send(): Response;
 
 	//--------------------------------------------------------------------
 
