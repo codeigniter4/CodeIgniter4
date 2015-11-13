@@ -473,7 +473,15 @@ class URI
 	{
 	    $parts = parse_url($str);
 
+		if (empty($parts['host']) && ! empty($parts['path']))
+		{
+			$parts['host'] = $parts['path'];
+			unset($parts['path']);
+		}
+
 		$this->applyParts($parts);
+
+		return $this;
 	}
 
 	//--------------------------------------------------------------------
@@ -706,14 +714,18 @@ class URI
 	 */
 	protected function filterPath($path)
 	{
+		$orig = $path;
+
 		// Decode/normalize percent-encoded chars so
 		// we can always have matching for Routes, etc.
 		$path = urldecode($path);
 
 		// Remove dot segments
-		$path = str_replace('../', '/', $path);
-		$path = str_replace('./', '/', $path);
-		$path = str_replace('//', '/', $path);
+		$path = $this->removeDotSegments($path);
+
+		// Fix up some leading slash edge cases...
+		if (strpos($orig, './') === 0) $path = '/'. $path;
+		if (strpos($orig, '../') === 0) $path = '/'. $path;
 
 		// Encode characters
 		$path = preg_replace_callback(
@@ -739,11 +751,11 @@ class URI
 	 */
 	protected function applyParts($parts)
 	{
-		$this->host     = isset($parts['host']) ? $parts['host'] : '';
-		$this->user     = isset($parts['user']) ? $parts['user'] : '';
-		$this->path     = isset($parts['path']) ? $this->filterPath($parts['path']) : '';
-		$this->query    = isset($parts['query']) ? $this->filterQuery($parts['query']) : '';
-		$this->fragment = isset($parts['fragment']) ? $this->filterQuery($parts['fragment']) : '';
+		if (! empty($parts['host'])) $this->host = $parts['host'];
+		if (! empty($parts['user'])) $this->user = $parts['user'];
+		if (! empty($parts['path'])) $this->path = $this->filterPath($parts['path']);
+		if (! empty($parts['query'])) $this->query = $this->filterQuery($parts['query']);
+		if (! empty($parts['fragment'])) $this->fragment = $this->filterQuery($parts['fragment']);
 
 		// Scheme
 		if (isset($parts['scheme']))
@@ -791,21 +803,158 @@ class URI
 	 */
 	public function resolveRelativeURI(string $uri)
 	{
-		$relative    = new URI($uri);
+		/*
+		 * NOTE: We don't use removeDotSegments in this
+		 * algorithm since it's already done by this line!
+		 */
+		$relative    = new URI();
+		$relative->setURI($uri);
 
 		if ($relative->scheme() == $this->scheme())
 		{
 			$relative->setScheme('');
 		}
 
+		$transformed = clone $relative;
+
 		// 5.2.2 Transform References
 		if (! empty($relative->scheme()))
 		{
 			$transformed->setScheme($relative->scheme())
-						->setAuth;
+						->setAuthority($relative->authority())
+						->setPath($relative->path())
+						->setQuery($relative->query());
+		}
+		else
+		{
+			if (! empty($relative->authority()))
+			{
+				$transformed->setAuthority($relative->authority())
+							->setPath($relative->path())
+							->setQuery($relative->query());
+			}
+			else
+			{
+				if ($relative->path() == '')
+				{
+					$transformed->setPath($this->path());
+
+					if (! is_null($relative->query()))
+					{
+						$transformed->setQuery($relative->query());
+					}
+					else
+					{
+						$transformed->setQuery($this->query());
+					}
+				}
+				else
+				{
+					if (substr($relative->path(), 0, 1) == '/')
+					{
+						$transformed->setPath($relative->path());
+					}
+					else
+					{
+						$transformed->setPath($this->mergePaths($this, $relative));
+					}
+
+					$transformed->setQuery($relative->query());
+				}
+
+				$transformed->setAuthority($this->authority());
+			}
+
+			$transformed->setScheme($this->scheme());
 		}
 
-		die((string)$relative ."\n");
+		$transformed->setFragment($relative->fragment());
+
+		return $transformed;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Given 2 paths, will merge them according to rules set out in RFC 2986,
+	 * Section 5.2
+	 *
+	 * @see http://tools.ietf.org/html/rfc3986#section-5.2.3
+	 *
+	 * @param $path1
+	 * @param $path2
+	 */
+	protected function mergePaths(URI $base, URI $reference)
+	{
+		if (! empty($base->authority()) && empty($base->path()))
+		{
+			return '/'. ltrim($base->path(), '/ ');
+		}
+
+		$path = explode('/', $base->path());
+
+		if (empty($path[0])) unset($path[0]);
+
+		array_pop($path);
+		array_push($path, $reference->path());
+
+		return implode('/', $path);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Used when resolving and merging paths to correctly interpret and
+	 * remove single and double dot segments from the path per
+	 * RFC 3986 Section 5.2.4
+	 *
+	 * @see http://tools.ietf.org/html/rfc3986#section-5.2.4
+	 *
+	 * @param URI $uri
+	 */
+	public function removeDotSegments(string $path): string
+	{
+		if (empty($path) || $path == '/') return $path;
+
+		$output = [];
+
+		$input = explode('/', $path);
+
+		if (empty($input[0]))
+		{
+			unset($input[0]);
+			$input = array_values($input);
+		}
+
+		// This is not a perfect representation of the
+		// RFC, but matches most cases and is pretty
+		// much what Guzzle uses. Should be good enough
+		// for almost every real use case.
+		foreach ($input as $segment)
+		{
+			if ($segment == '..')
+			{
+				array_pop($output);
+			}
+			else if ($segment != '.' && $segment != '')
+			{
+				array_push($output, $segment);
+			}
+		}
+
+		$output = implode('/', $output);
+		$output = ltrim($output, '/ ');
+
+		if ($output != '/')
+		{
+			// Add leading slash if necessary
+			if (substr($path, 0, 1) == '/') $output = '/'. $output;
+
+			// Add trailing slash if necessary
+			if (substr($path, -1, 1) == '/') $output .= '/';
+		}
+
+		return $output;
 	}
 
 	//--------------------------------------------------------------------

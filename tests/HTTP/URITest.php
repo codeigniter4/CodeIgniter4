@@ -316,15 +316,6 @@ class URITest extends PHPUnit_Framework_TestCase
 
 	//--------------------------------------------------------------------
 
-	public function defaultResolutions()
-	{
-	    return [
-		    'replace_last'  => ['q', 'http://a/b/c/q']
-	    ];
-	}
-
-	//--------------------------------------------------------------------
-
 	public function testSetAuthorityReconstitutes()
 	{
 	    $authority = 'me@foo.com:3000';
@@ -337,19 +328,66 @@ class URITest extends PHPUnit_Framework_TestCase
 
 	//--------------------------------------------------------------------
 
+	public function defaultDots()
+	{
+		return array(
+				array('/foo/..', '/'),
+				array('//foo//..', '/'),
+				array('/foo/../..', '/'),
+				array('/foo/../.', '/'),
+				array('/./foo/..', '/'),
+				array('/./foo', '/foo'),
+				array('/./foo/', '/foo/'),
+				array('/./foo/bar/baz/pho/../..', '/foo/bar'),
+				array('*', '*'),
+				array('/foo', '/foo'),
+				array('/abc/123/../foo/', '/abc/foo/'),
+				array('/a/b/c/./../../g', '/a/g'),
+				array('/b/c/./../../g', '/g'),
+				array('/b/c/./../../g', '/g'),
+				array('/c/./../../g', '/g'),
+				array('/./../../g', '/g'),
+		);
+	}
+	
+	//--------------------------------------------------------------------
+
+	/**
+	 * @dataProvider defaultDots
+	 */
+	public function testRemoveDotSegments($path, $expected)
+	{
+		$uri = new URI();
+		$this->assertEquals($expected, $uri->removeDotSegments($path));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function defaultResolutions()
+	{
+		return [
+			['g', 'http://a/b/c/g'],
+	        ['g/', 'http://a/b/c/g/'],
+	        ['/g', 'http://a/g'],
+		    ['#s', 'http://a/b/c/d#s'],
+		];
+	}
+
+	//--------------------------------------------------------------------
 
 	/**
 	 * @dataProvider defaultResolutions
+	 * @group single
 	 */
 	public function testResolveRelativeURI($rel, $expected)
 	{
-//		$base = 'http://a/b/c/d;p?q';
-//
-//	    $uri = new URI($base);
-//
-//		$uri->resolveRelativeURI($rel);
-//
-//		$this->assertEquals($expected, (string)$uri);
+		$base = 'http://a/b/c/d';
+
+	    $uri = new URI($base);
+
+		$new = $uri->resolveRelativeURI($rel);
+
+		$this->assertEquals($expected, (string)$new);
 	}
 	
 	//--------------------------------------------------------------------
