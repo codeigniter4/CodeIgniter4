@@ -37,7 +37,7 @@ class URI
 	 *
 	 * @var
 	 */
-	protected $scheme = '';
+	protected $scheme = 'http';
 
 	/**
 	 * URI User Info
@@ -124,6 +124,31 @@ class URI
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Sets and overwrites any current URI information.
+	 *
+	 * @param string|null $uri
+	 */
+	public function setURI(string $uri = null)
+	{
+		if ( ! is_null($uri))
+		{
+			$parts = parse_url($uri);
+
+			if ($parts === false)
+			{
+				throw new \InvalidArgumentException("Unable to parse URI: {$uri}");
+			}
+
+			$this->applyParts($parts);
+		}
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
 
 	/**
 	 * Retrieve the scheme component of the URI.
@@ -440,6 +465,21 @@ class URI
 	//--------------------------------------------------------------------
 
 	/**
+	 * Parses the given string an saves the appropriate authority pieces.
+	 *
+	 * @param string $str
+	 */
+	public function setAuthority(string $str)
+	{
+	    $parts = parse_url($str);
+
+		$this->applyParts($parts);
+	}
+
+	//--------------------------------------------------------------------
+
+
+	/**
 	 * Sets the scheme for this URI.
 	 *
 	 * Because of the large number of valid schemes we cannot limit this
@@ -737,6 +777,35 @@ class URI
 		{
 			$this->segments = explode('/', trim($parts['path'], '/'));
 		}
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Combines one URI string with this one based on the rules set out in
+	 * RFC 3986 Section 2
+	 *
+	 * @see http://tools.ietf.org/html/rfc3986#section-5.2
+	 *
+	 * @param string $uri
+	 */
+	public function resolveRelativeURI(string $uri)
+	{
+		$relative    = new URI($uri);
+
+		if ($relative->scheme() == $this->scheme())
+		{
+			$relative->setScheme('');
+		}
+
+		// 5.2.2 Transform References
+		if (! empty($relative->scheme()))
+		{
+			$transformed->setScheme($relative->scheme())
+						->setAuth;
+		}
+
+		die((string)$relative ."\n");
 	}
 
 	//--------------------------------------------------------------------

@@ -316,4 +316,43 @@ class URITest extends PHPUnit_Framework_TestCase
 
 	//--------------------------------------------------------------------
 
+	public function defaultResolutions()
+	{
+	    return [
+		    'replace_last'  => ['q', 'http://a/b/c/q']
+	    ];
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testSetAuthorityReconstitutes()
+	{
+	    $authority = 'me@foo.com:3000';
+
+		$uri = new URI();
+		$uri->setAuthority($authority);
+
+		$this->assertEquals($authority, $uri->authority());
+	}
+
+	//--------------------------------------------------------------------
+
+
+	/**
+	 * @dataProvider defaultResolutions
+	 */
+	public function testResolveRelativeURI($rel, $expected)
+	{
+//		$base = 'http://a/b/c/d;p?q';
+//
+//	    $uri = new URI($base);
+//
+//		$uri->resolveRelativeURI($rel);
+//
+//		$this->assertEquals($expected, (string)$uri);
+	}
+	
+	//--------------------------------------------------------------------
+	
+	
 }
