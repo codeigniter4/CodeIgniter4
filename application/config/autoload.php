@@ -73,6 +73,8 @@ class AutoloadConfig
 			'CodeIgniter\HTTP\RequestInterface'           => BASEPATH.'HTTP/RequestInterface.php',
 			'CodeIgniter\HTTP\URI'                        => BASEPATH.'HTTP/URI.php',
 			'CodeIgniter\HTTP\Response'                   => BASEPATH.'HTTP/Response.php',
+			'CodeIgniter\HTTP\ResponseInterface'          => BASEPATH.'HTTP/ResponseInterface.php',
+			'CodeIgniter\HTTP\CURLRequest'                => BASEPATH.'HTTP/CURLRequest.php',
 			'CodeIgniter\Debug\Exceptions'                => BASEPATH.'Debug/Exceptions.php',
 			'CodeIgniter\Router\RouteCollection'          => BASEPATH.'Router/RouteCollection.php',
 			'CodeIgniter\Router\RouteCollectionInterface' => BASEPATH.'Router/RouteCollectionInterface.php',

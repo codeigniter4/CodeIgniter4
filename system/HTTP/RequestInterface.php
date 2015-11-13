@@ -1,13 +1,7 @@
 <?php namespace CodeIgniter\HTTP;
 
-use App\Config\AppConfig;
-
-interface RequestInterface {
-
-	public function __construct(AppConfig $config, $uri=null, $body=null);
-
-	//--------------------------------------------------------------------
-
+interface RequestInterface
+{
 	/**
 	 * Gets the user's IP address.
 	 *

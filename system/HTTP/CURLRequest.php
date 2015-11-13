@@ -29,14 +29,14 @@ class CURLRequest extends Request
 	 *
 	 * @param array $options
 	 */
-	public function __construct(AppConfig $config, $uri = null, $body = null)
+	public function __construct(AppConfig $config, URI $uri = null, $response=null)
 	{
 		if (! function_exists('curl_version'))
 		{
 			throw new \RuntimeException('CURL must be enabled to use the CURLRequest class.');
 		}
 
-		parent::__construct($config, $uri, $body);
+		parent::__construct($config, $uri);
 	}
 
 	//--------------------------------------------------------------------
@@ -53,6 +53,7 @@ class CURLRequest extends Request
 	 */
 	public function request($method, string $url, array $options = []): Response
 	{
+
 	}
 
 	//--------------------------------------------------------------------

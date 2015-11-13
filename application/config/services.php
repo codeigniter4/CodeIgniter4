@@ -1,5 +1,7 @@
 <?php namespace App\Config;
 
+use CodeIgniter\HTTP\Response;
+
 /**
  * Services Configuration file.
  *
@@ -88,6 +90,24 @@ class Services {
 	}
 
 	//--------------------------------------------------------------------
+
+	public static function curlrequest($response=null)
+	{
+		if (! is_object($response))
+		{
+			$response = new Response();
+		}
+
+	    return new \CodeIgniter\HTTP\CURLRequest(
+		    new AppConfig(),
+			    null,
+			    null,
+			    $response
+	    );
+	}
+
+	//--------------------------------------------------------------------
+
 
 	public static function clirequest()
 	{
