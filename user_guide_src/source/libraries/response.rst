@@ -64,6 +64,25 @@ Class Reference
 .. note:: In addition to the methods listed here, this class inherits the methods from the
 	:doc:`Message Class </libraries/message>`.
 
+The methods provided by the parent class that are available are:
+
+* :meth:`CodeIgniter\\HTTP\\Message::body`
+* :meth:`CodeIgniter\\HTTP\\Message::setBody`
+* :meth:`CodeIgniter\\HTTP\\Message::populateHeaders`
+* :meth:`CodeIgniter\\HTTP\\Message::headers`
+* :meth:`CodeIgniter\\HTTP\\Message::header`
+* :meth:`CodeIgniter\\HTTP\\Message::headerLine`
+* :meth:`CodeIgniter\\HTTP\\Message::setHeader`
+* :meth:`CodeIgniter\\HTTP\\Message::removeHeader`
+* :meth:`CodeIgniter\\HTTP\\Message::appendHeader`
+* :meth:`CodeIgniter\\HTTP\\Message::protocolVersion`
+* :meth:`CodeIgniter\\HTTP\\Message::setProtocolVersion`
+* :meth:`CodeIgniter\\HTTP\\Message::negotiateMedia`
+* :meth:`CodeIgniter\\HTTP\\Message::negotiateCharset`
+* :meth:`CodeIgniter\\HTTP\\Message::negotiateEncoding`
+* :meth:`CodeIgniter\\HTTP\\Message::negotiateLanguage`
+* :meth:`CodeIgniter\\HTTP\\Message::negotiateLanguage`
+
 .. php:class:: CodeIgniter\\HTTP\\Response
 
 	.. php:method:: statusCode()
