@@ -175,3 +175,11 @@ Class Reference
 			$response->setLastModified(date('D, d M Y H:i:s'));
 			$response->setLastModified(DateTime::createFromFormat('u', $time));
 
+	.. php:method:: send()
+
+		:returns: The current response instance.
+		:rtype: CodeIgniter\HTTP\Response
+
+		Tells the response to send everything back to the client. This will first send the headers,
+		followed by the response body. For the main application response, you do not need to call
+		this as it is handled automatically by CodeIgniter.
