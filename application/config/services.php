@@ -1,6 +1,7 @@
 <?php namespace App\Config;
 
 use CodeIgniter\HTTP\Response;
+use CodeIgniter\HTTP\URI;
 
 /**
  * Services Configuration file.
@@ -91,7 +92,7 @@ class Services {
 
 	//--------------------------------------------------------------------
 
-	public static function curlrequest($response=null)
+	public static function curlrequest(array $options=[], $response=null)
 	{
 		if (! is_object($response))
 		{
@@ -100,9 +101,9 @@ class Services {
 
 	    return new \CodeIgniter\HTTP\CURLRequest(
 		    new AppConfig(),
-			    null,
-			    null,
-			    $response
+	        new URI(),
+			    $response,
+			    $options
 	    );
 	}
 
