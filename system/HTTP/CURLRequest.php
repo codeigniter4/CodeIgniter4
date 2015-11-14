@@ -25,6 +25,13 @@ class CURLRequest extends Request
 	 */
 	protected $base_uri;
 
+	/**
+	 * If TRUE, turns on VERBOSE reporting through cURL
+	 * and output to STDOUT
+	 * @var bool
+	 */
+	protected $debug = false;
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -46,11 +53,7 @@ class CURLRequest extends Request
 		parent::__construct($config);
 
 		$this->response = $response;
-
-		if (array_key_exists('base_uri', $options))
-		{
-			$this->base_uri = $uri->setURI($options['base_uri']);
-		}
+		$this->base_uri = $uri;
 
 		$this->parseOptions($options);
 	}
@@ -193,6 +196,12 @@ class CURLRequest extends Request
 	 */
 	protected function parseOptions(array $options)
 	{
+		if (array_key_exists('base_uri', $options))
+		{
+			$this->base_uri = $this->base_uri->setURI($options['base_uri']);
+			unset($options['base_uri']);
+		}
+
 		foreach ($options as $key => $value)
 		{
 			if (isset($this->$key))
@@ -220,7 +229,9 @@ class CURLRequest extends Request
 			return $url;
 		}
 
-		return (string)$this->base_uri->resolveRelativeURI($url);
+		$uri = $this->base_uri->resolveRelativeURI($url);
+
+		return (string)$uri;
 	}
 
 	//--------------------------------------------------------------------
@@ -237,14 +248,21 @@ class CURLRequest extends Request
 		curl_setopt($ch, CURLOPT_URL, $url);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER,true);
 		curl_setopt($ch, CURLOPT_HEADER, true);
+		curl_setopt($ch, CURLOPT_FRESH_CONNECT, true);
+
+		$this->setCURLOptions($ch);
 
 		// Send the request and wait for a response.
 		$output = curl_exec($ch);
 
+		if ($this->debug)
+		{
+			echo $output;
+		}
+
 		if($output === false)
 		{
-			echo "Error Number:".curl_errno($ch)."<br>";
-			echo "Error String:".curl_error($ch);
+			throw new \RuntimeException(curl_errno($ch) .': '. curl_error($ch));
 		}
 
 		curl_close($ch);
@@ -301,6 +319,14 @@ class CURLRequest extends Request
 				}
 			}
 		}
+	}
+
+	//--------------------------------------------------------------------
+
+	protected function setCURLOptions($handle)
+	{
+		// Debug
+		curl_setopt($handle, CURLOPT_VERBOSE, (bool)$this->debug);
 	}
 
 	//--------------------------------------------------------------------
