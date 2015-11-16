@@ -14,23 +14,21 @@ use App\Config\AppConfig;
  */
 class CURLRequest extends Request
 {
-	protected $timeout = 2.0;
-
+	/**
+	 * @var ResponseInterface
+	 */
 	protected $response;
 
 	/**
-	 * The first poriton of URI that is prepended
-	 * to all relative requests.
-	 * @var string
+	 * @var URI
 	 */
 	protected $base_uri;
 
-	/**
-	 * If TRUE, turns on VERBOSE reporting through cURL
-	 * and output to STDOUT
-	 * @var bool
-	 */
-	protected $debug = false;
+	protected $config = [
+	    'timeout' => 0.0,
+	    'connect_timeout' => 150,
+	    'debug' => false
+	];
 
 	//--------------------------------------------------------------------
 
@@ -76,7 +74,7 @@ class CURLRequest extends Request
 
 		$url = $this->prepareURL($url);
 
-		$this->send($url);
+		$this->send($method, $url);
 
 		return $this->response;
 	}
@@ -202,12 +200,19 @@ class CURLRequest extends Request
 			unset($options['base_uri']);
 		}
 
+		if (array_key_exists('headers', $options) && is_array($options['headers']))
+		{
+			foreach ($options['headers'] as $name => $value)
+			{
+				$this->setHeader($name, $value);
+			}
+
+			unset($options['headers']);
+		}
+
 		foreach ($options as $key => $value)
 		{
-			if (isset($this->$key))
-			{
-				$this->$key = $value;
-			}
+			$this->config[$key] = $value;
 		}
 	}
 
@@ -241,7 +246,7 @@ class CURLRequest extends Request
 	 *
 	 * @param string $url
 	 */
-	public function send(string $url)
+	public function send(string $method, string $url)
 	{
 		$ch = curl_init();
 
@@ -251,14 +256,11 @@ class CURLRequest extends Request
 		curl_setopt($ch, CURLOPT_FRESH_CONNECT, true);
 
 		$this->setCURLOptions($ch);
+		$this->applyMethod($method, $ch);
+		$this->applyRequestHeaders($ch);
 
 		// Send the request and wait for a response.
 		$output = curl_exec($ch);
-
-		if ($this->debug)
-		{
-			echo $output;
-		}
 
 		if($output === false)
 		{
@@ -281,8 +283,80 @@ class CURLRequest extends Request
 			$body = substr($output, $break+4);
 			$this->response->setBody($body);
 		}
+		else
+		{
+			$this->response->setBody($output);
+		}
 
 		return true;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Takes all headers current part of this request and adds them
+	 * to the cURL request.
+	 *
+	 * @param $handle
+	 */
+	protected function applyRequestHeaders($handle)
+	{
+	    $headers = $this->headers();
+
+		if (empty($head)) return;
+
+		$set = [];
+
+		foreach ($headers as $name => $value)
+		{
+			$set[] = $name.': '. $this->headerLine($name);
+		}
+
+		curl_setopt($handle, CURLOPT_HTTPHEADER, $set);
+	}
+
+	//--------------------------------------------------------------------
+
+	protected function applyMethod($method, $handle)
+	{
+		$method = strtoupper($method);
+
+		curl_setopt($handle, CURLOPT_CUSTOMREQUEST, $method);
+
+		$size = strlen($this->body);
+
+		// Have content?
+		if ($size === null || $size > 0)
+		{
+			$this->applyBody($handle);
+			return;
+		}
+
+		if ($method == 'PUT' || $method == 'POST')
+		{
+			// See http://tools.ietf.org/html/rfc7230#section-3.3.2
+			if (is_null($this->header('content-length')))
+			{
+				$this->setHeader('Content-Length', 0);
+			}
+		}
+		else if ($method == 'HEAD')
+		{
+			curl_setopt($handle, CURLOPT_NOBODY, 1);
+		}
+	}
+
+	//--------------------------------------------------------------------
+
+	protected function applyBody($handle)
+	{
+		if (! empty($this->body))
+		{
+			curl_setopt($handle, CURLOPT_POSTFIELDS, (string)$this->body());
+		}
+
+		// curl sometimes adds a content type by default, prevent this
+		$this->setHeader('Content-Type', '');
 	}
 
 	//--------------------------------------------------------------------
@@ -325,8 +399,68 @@ class CURLRequest extends Request
 
 	protected function setCURLOptions($handle)
 	{
+		// Auth Headers
+		if (! empty($this->config['auth']))
+		{
+			curl_setopt($handle, CURLOPT_USERPWD, $this->config['auth'][0].':'.$this->config['auth'][1]);
+
+			if (! empty($this->config['auth'][2]) && strtolower($this->config['auth'][2]) == 'digest')
+			{
+				curl_setopt($handle, CURLOPT_HTTPAUTH, CURLAUTH_DIGEST);
+			}
+			else
+			{
+				curl_setopt($handle, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+			}
+		}
+
+		// Certificate
+		if (! empty($this->config['cert']))
+		{
+			$cert = $this->config['cert'];
+
+			if (is_array($cert))
+			{
+				curl_setopt($handle, CURLOPT_SSLCERTPASSWD, $cert[1]);
+				$cert = $cert[0];
+			}
+
+			if (! file_exists($cert))
+			{
+				throw new \InvalidArgumentException('SSL certificate not found at: '. $cert);
+			}
+
+			curl_setopt($handle, CURLOPT_SSLCERT, $cert);
+		}
+
 		// Debug
-		curl_setopt($handle, CURLOPT_VERBOSE, (bool)$this->debug);
+		if (isset($this->config['debug']))
+		{
+			curl_setopt($handle, CURLOPT_VERBOSE, 1);
+			curl_setopt($handle, CURLOPT_STDERR, is_bool($this->config['debug']) ? fopen('php://output', 'w+') : $this->config['debug']);
+		}
+
+		// Decode Content
+		if (! empty($this->config['decode_content']))
+		{
+			$accept = $this->headerLine('Accept-Encoding');
+
+			if ($accept)
+			{
+				curl_setopt($handle, CURLOPT_ENCODING, $accept);
+			}
+			else
+			{
+				curl_setopt($handle, CURLOPT_ENCODING, '');
+				curl_setopt($handle, CURLOPT_HTTPHEADER, 'Accept-Encoding:');
+			}
+		}
+
+		// Timeout
+		curl_setopt($handle, CURLOPT_TIMEOUT_MS, (float)$this->config['timeout'] * 1000);
+
+		// Connection Timeout
+		curl_setopt($handle, CURLOPT_CONNECTTIMEOUT, (float)$this->config['connect_timeout'] * 1000);
 	}
 
 	//--------------------------------------------------------------------

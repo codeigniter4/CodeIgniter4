@@ -90,7 +90,7 @@ Base URI
 
 A ``base_uri`` can be set as one of the options during the instantiation of the class. This allows you to
 set a base URI, and then make all requests with that client using relative URLs. This is especially handy
-when working with APIs.
+when working with APIs.::
 
 	$client = Services::curlrequest([
 		'base_uri' => 'https://example.com/api/v1/'
@@ -158,4 +158,89 @@ Request Options
 
 This section describes all of the available options you may pass into the constructor, the ``request()`` method,
 or any of the shortcut methods.
+
+
+Auth
+====
+
+Allows you to provide Authentication details for `HTTP Basic <http://www.ietf.org/rfc/rfc2069.txt>`_ and
+`Digest <http://www.ietf.org/rfc/rfc2069.txt>`_ and authentication. Your script may have to do extra to support
+Digest authentication - this simply passes the username and password along for you. The value must be an
+array where the first element is the username, and the second is the password. The third parameter should be
+the type of authentication to use, either ``basic`` or ``digest``.::
+
+	$client->request('GET', 'http://example.com', ['auth' => ['username', 'password', 'digest']]);
+
+Body
+====
+
+There are two ways to set the body of the request for request types that support them, like PUT, OR POST.
+The first way is to use the ``setBody()`` method::
+
+	$client->setBody($body)
+	       ->request('put', 'http://example.com');
+
+The second method is by passing a ``body`` option in. This is provided to maintain Guzzle API compatibility,
+and functions the exact same way as the previous example. The value must be a string.::
+
+	$client->request('put', 'http://example.com', ['body' => $body]);
+
+
+
+Certificates
+============
+
+To specify the location of a PEM formatted client-side certificate, pass a string with the full path to the
+file as the ``cert`` option. If a password is required, set the value to an array with the first element
+ as the path to the certificate, and the second as the password::
+
+    $client->request('get', '/', ['cert' => ['/path/server.pem', 'password']);
+
+Connection Timeout
+==================
+
+By default, CodeIgniter does not impose a limit for cURL to attempt to connect to a website. If you need to
+modify this value, you can do so by passing the amount of time in seconds with the ``connect_timeout`` option.
+You can pass 0 to wait indefinitely::
+
+	$response->request('GET', 'http://example.com', ['connect_timeout' => 0]);
+
+Debug
+=====
+
+When ``debug`` is passed and set to ``true``, this will enable additional debugging to echo to STDOUT during the
+script execution. This is done by passing CURLOPT_VERBOSE and echoing the output::
+
+	$response->request('GET', 'http://example.com', ['debug' => true]);
+
+You can pass a filename as the value for debug to have the output written to a file::
+
+	$response->request('GET', 'http://example.com', ['debug' => '/usr/local/curl_log.txt']);
+
+Headers
+=======
+
+While you can set any headers this request needs by using the ``setHeader()`` method, you can also pass an associative
+array of headers in as an option. Each key is the name of a header, and each value is a string or array of strings
+representing the header field values.::
+
+	$client->request('get', '/', [
+		'headers' => [
+			'User-Agent' => 'testing/1.0',
+			'Accept'     => 'application/json',
+			'X-Foo'      => ['Bar', 'Baz']
+		]
+	]);
+
+If headers are passed into the constructor they are treated as default values that will be overridden later by any
+further headers arrays or calls to ``setHeader()``.
+
+Timeout
+=======
+
+By default, cURL functions are allowed to run as long as they take, with no time limit. You can modify this with the ``timeout``
+option. The value should be the number of seconds you want the functions to execute for. Use 0 to wait indefinitely::
+
+	$response->request('GET', 'http://example.com', ['timeout' => 5]);
+
 
