@@ -307,7 +307,7 @@ class CURLRequest extends Request
 	 * Takes all headers current part of this request and adds them
 	 * to the cURL request.
 	 *
-	 * @param $handle
+	 * @param array $curl_options
 	 */
 	protected function applyRequestHeaders(array $curl_options=[]): array
 	{
@@ -366,7 +366,7 @@ class CURLRequest extends Request
 	{
 		if (! empty($this->body))
 		{
-			$this->curl_options[CURLOPT_POSTFIELDS] = (string)$this->body();
+			$curl_options[CURLOPT_POSTFIELDS] = (string)$this->body();
 		}
 
 		// curl sometimes adds a content type by default, prevent this
@@ -473,10 +473,10 @@ class CURLRequest extends Request
 		}
 
 		// Timeout
-		$curl_options[CURLOPT_TIMEOUT_MS] = (float)$this->config['timeout'] * 1000;
+		$curl_options[CURLOPT_TIMEOUT_MS] = (float)$config['timeout'] * 1000;
 
 		// Connection Timeout
-		$curl_options[CURLOPT_CONNECTTIMEOUT_MS] = (float)$this->config['connect_timeout'] * 1000;
+		$curl_options[CURLOPT_CONNECTTIMEOUT_MS] = (float)$config['connect_timeout'] * 1000;
 
 		return $curl_options;
 	}
