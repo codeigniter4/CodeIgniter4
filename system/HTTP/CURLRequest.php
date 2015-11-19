@@ -24,6 +24,10 @@ class CURLRequest extends Request
 	 */
 	protected $base_uri;
 
+	/**
+	 * The setting values
+	 * @var array
+	 */
 	protected $config = [
 	    'timeout' => 0.0,
 	    'connect_timeout' => 150,
@@ -248,16 +252,22 @@ class CURLRequest extends Request
 	 */
 	public function send(string $method, string $url)
 	{
+		// Reset our curl options so we're on a fresh slate.
+		$curl_options = [];
+
 		$ch = curl_init();
 
-		curl_setopt($ch, CURLOPT_URL, $url);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER,true);
-		curl_setopt($ch, CURLOPT_HEADER, true);
-		curl_setopt($ch, CURLOPT_FRESH_CONNECT, true);
+		$curl_options[CURLOPT_URL] = $url;
+		$curl_options[CURLOPT_RETURNTRANSFER] = true;
+		$curl_options[CURLOPT_HEADER] = true;
+		$curl_options[CURLOPT_FRESH_CONNECT] = true;
 
-		$this->setCURLOptions($ch);
-		$this->applyMethod($method, $ch);
-		$this->applyRequestHeaders($ch);
+		$curl_options = $this->setCURLOptions($curl_options, $this->config);
+		$curl_options = $this->applyMethod($method, $curl_options);
+		$curl_options = $this->applyRequestHeaders($curl_options);
+
+		// Actually apply the curl options
+		curl_setopt_array($ch, $curl_options);
 
 		// Send the request and wait for a response.
 		$output = curl_exec($ch);
@@ -299,11 +309,11 @@ class CURLRequest extends Request
 	 *
 	 * @param $handle
 	 */
-	protected function applyRequestHeaders($handle)
+	protected function applyRequestHeaders(array $curl_options=[]): array
 	{
 	    $headers = $this->headers();
 
-		if (empty($head)) return;
+		if (empty($head)) return $curl_options;
 
 		$set = [];
 
@@ -312,24 +322,26 @@ class CURLRequest extends Request
 			$set[] = $name.': '. $this->headerLine($name);
 		}
 
-		curl_setopt($handle, CURLOPT_HTTPHEADER, $set);
+		$curl_options[CURLOPT_HTTPHEADER] = $set;
+
+		return $curl_options;
 	}
 
 	//--------------------------------------------------------------------
 
-	protected function applyMethod($method, $handle)
+	protected function applyMethod($method, array $curl_options): array
 	{
 		$method = strtoupper($method);
 
-		curl_setopt($handle, CURLOPT_CUSTOMREQUEST, $method);
+		$curl_options[CURLOPT_CUSTOMREQUEST] = $method;
 
 		$size = strlen($this->body);
 
 		// Have content?
 		if ($size === null || $size > 0)
 		{
-			$this->applyBody($handle);
-			return;
+			$curl_options = $this->applyBody($curl_options);
+			return $curl_options;
 		}
 
 		if ($method == 'PUT' || $method == 'POST')
@@ -342,21 +354,25 @@ class CURLRequest extends Request
 		}
 		else if ($method == 'HEAD')
 		{
-			curl_setopt($handle, CURLOPT_NOBODY, 1);
+			$curl_options[CURLOPT_NOBODY] = 1;
 		}
+
+		return $curl_options;
 	}
 
 	//--------------------------------------------------------------------
 
-	protected function applyBody($handle)
+	protected function applyBody(array $curl_options=[]): array
 	{
 		if (! empty($this->body))
 		{
-			curl_setopt($handle, CURLOPT_POSTFIELDS, (string)$this->body());
+			$this->curl_options[CURLOPT_POSTFIELDS] = (string)$this->body();
 		}
 
 		// curl sometimes adds a content type by default, prevent this
 		$this->setHeader('Content-Type', '');
+
+		return $curl_options;
 	}
 
 	//--------------------------------------------------------------------
@@ -397,31 +413,31 @@ class CURLRequest extends Request
 
 	//--------------------------------------------------------------------
 
-	protected function setCURLOptions($handle)
+	protected function setCURLOptions(array $curl_options=[], array $config=[])
 	{
 		// Auth Headers
-		if (! empty($this->config['auth']))
+		if (! empty($config['auth']))
 		{
-			curl_setopt($handle, CURLOPT_USERPWD, $this->config['auth'][0].':'.$this->config['auth'][1]);
+			$curl_options[CURLOPT_USERPWD] = $config['auth'][0].':'.$config['auth'][1];
 
-			if (! empty($this->config['auth'][2]) && strtolower($this->config['auth'][2]) == 'digest')
+			if (! empty($config['auth'][2]) && strtolower($config['auth'][2]) == 'digest')
 			{
-				curl_setopt($handle, CURLOPT_HTTPAUTH, CURLAUTH_DIGEST);
+				$curl_options[CURLOPT_HTTPAUTH] = CURLAUTH_DIGEST;
 			}
 			else
 			{
-				curl_setopt($handle, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+				$curl_options[CURLOPT_HTTPAUTH] = CURLAUTH_BASIC;
 			}
 		}
 
 		// Certificate
-		if (! empty($this->config['cert']))
+		if (! empty($config['cert']))
 		{
-			$cert = $this->config['cert'];
+			$cert = $config['cert'];
 
 			if (is_array($cert))
 			{
-				curl_setopt($handle, CURLOPT_SSLCERTPASSWD, $cert[1]);
+				$curl_options[CURLOPT_SSLCERTPASSWD] = $cert[1];
 				$cert = $cert[0];
 			}
 
@@ -430,37 +446,39 @@ class CURLRequest extends Request
 				throw new \InvalidArgumentException('SSL certificate not found at: '. $cert);
 			}
 
-			curl_setopt($handle, CURLOPT_SSLCERT, $cert);
+			$curl_options[CURLOPT_SSLCERT] = $cert;
 		}
 
 		// Debug
-		if (isset($this->config['debug']))
+		if (isset($config['debug']))
 		{
-			curl_setopt($handle, CURLOPT_VERBOSE, 1);
-			curl_setopt($handle, CURLOPT_STDERR, is_bool($this->config['debug']) ? fopen('php://output', 'w+') : $this->config['debug']);
+			$curl_options[CURLOPT_VERBOSE] = 1;
+			$curl_options[CURLOPT_STDERR] = is_bool($config['debug']) ? fopen('php://output', 'w+') : $config['debug'];
 		}
 
 		// Decode Content
-		if (! empty($this->config['decode_content']))
+		if (! empty($config['decode_content']))
 		{
 			$accept = $this->headerLine('Accept-Encoding');
 
 			if ($accept)
 			{
-				curl_setopt($handle, CURLOPT_ENCODING, $accept);
+				$curl_options[CURLOPT_ENCODING] = $accept;
 			}
 			else
 			{
-				curl_setopt($handle, CURLOPT_ENCODING, '');
-				curl_setopt($handle, CURLOPT_HTTPHEADER, 'Accept-Encoding:');
+				$curl_options[CURLOPT_ENCODING] = '';
+				$curl_options[CURLOPT_HTTPHEADER] = 'Accept-Encoding';
 			}
 		}
 
 		// Timeout
-		curl_setopt($handle, CURLOPT_TIMEOUT_MS, (float)$this->config['timeout'] * 1000);
+		$curl_options[CURLOPT_TIMEOUT_MS] = (float)$this->config['timeout'] * 1000;
 
 		// Connection Timeout
-		curl_setopt($handle, CURLOPT_CONNECTTIMEOUT, (float)$this->config['connect_timeout'] * 1000);
+		$curl_options[CURLOPT_CONNECTTIMEOUT_MS] = (float)$this->config['connect_timeout'] * 1000;
+
+		return $curl_options;
 	}
 
 	//--------------------------------------------------------------------
