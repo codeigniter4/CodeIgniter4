@@ -255,8 +255,6 @@ class CURLRequest extends Request
 		// Reset our curl options so we're on a fresh slate.
 		$curl_options = [];
 
-		$ch = curl_init();
-
 		$curl_options[CURLOPT_URL] = $url;
 		$curl_options[CURLOPT_RETURNTRANSFER] = true;
 		$curl_options[CURLOPT_HEADER] = true;
@@ -266,18 +264,7 @@ class CURLRequest extends Request
 		$curl_options = $this->applyMethod($method, $curl_options);
 		$curl_options = $this->applyRequestHeaders($curl_options);
 
-		// Actually apply the curl options
-		curl_setopt_array($ch, $curl_options);
-
-		// Send the request and wait for a response.
-		$output = curl_exec($ch);
-
-		if($output === false)
-		{
-			throw new \RuntimeException(curl_errno($ch) .': '. curl_error($ch));
-		}
-
-		curl_close($ch);
+		$output = $this->sendRequest($curl_options);
 
 		// Split out our headers and body
 		$break = strpos($output, "\r\n\r\n");
@@ -479,6 +466,35 @@ class CURLRequest extends Request
 		$curl_options[CURLOPT_CONNECTTIMEOUT_MS] = (float)$config['connect_timeout'] * 1000;
 
 		return $curl_options;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Does the actual work of initializing cURL, setting the options,
+	 * and grabbing the output.
+	 *
+	 * @param array $curl_options
+	 *
+	 * @return string
+	 */
+	protected function sendRequest(array $curl_options = []): string
+	{
+		$ch = curl_init();
+
+		curl_setopt_array($ch, $curl_options);
+
+		// Send the request and wait for a response.
+		$output = curl_exec($ch);
+
+		if($output === false)
+		{
+			throw new \RuntimeException(curl_errno($ch) .': '. curl_error($ch));
+		}
+
+		curl_close($ch);
+
+		return $output;
 	}
 
 	//--------------------------------------------------------------------
