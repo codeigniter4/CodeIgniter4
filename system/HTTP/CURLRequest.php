@@ -285,7 +285,7 @@ class CURLRequest extends Request
 			$this->response->setBody($output);
 		}
 
-		return true;
+		return $this->response;
 	}
 
 	//--------------------------------------------------------------------
