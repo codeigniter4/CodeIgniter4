@@ -78,6 +78,8 @@ class CURLRequest extends Request
 
 		$url = $this->prepareURL($url);
 
+		$method = filter_var($method, FILTER_SANITIZE_STRING);
+
 		$this->send($method, $url);
 
 		return $this->response;
@@ -246,6 +248,24 @@ class CURLRequest extends Request
 	//--------------------------------------------------------------------
 
 	/**
+	 * Get the request method. Overrides the Request class' method
+	 * since users expect a different answer here.
+	 *
+	 * @param bool|false $upper Whether to return in upper or lower case.
+	 *
+	 * @return string
+	 */
+	public function method($upper = false): string
+	{
+		return ($upper)
+				? strtoupper($this->method)
+				: strtolower($this->method);
+	}
+
+	//--------------------------------------------------------------------
+
+
+	/**
 	 * Fires the actual cURL request.
 	 *
 	 * @param string $url
@@ -320,6 +340,7 @@ class CURLRequest extends Request
 	{
 		$method = strtoupper($method);
 
+		$this->method = $method;
 		$curl_options[CURLOPT_CUSTOMREQUEST] = $method;
 
 		$size = strlen($this->body);
