@@ -26,12 +26,25 @@ class CURLRequest extends Request
 
 	/**
 	 * The setting values
+	 *
 	 * @var array
 	 */
 	protected $config = [
-	    'timeout' => 0.0,
-	    'connect_timeout' => 150,
-	    'debug' => false
+		'timeout'         => 0.0,
+		'connect_timeout' => 150,
+		'debug'           => false,
+	];
+
+	/**
+	 * Default values for when 'allow_redirects'
+	 * option is true.
+	 *
+	 * @var array
+	 */
+	protected $redirectDefaults = [
+		'max'       => 5,
+		'strict'    => true,
+		'protocols' => ['http', 'https'],
 	];
 
 	//--------------------------------------------------------------------
@@ -45,9 +58,9 @@ class CURLRequest extends Request
 	 *
 	 * @param array $options
 	 */
-	public function __construct(AppConfig $config, URI $uri, ResponseInterface $response=null, array $options=[])
+	public function __construct(AppConfig $config, URI $uri, ResponseInterface $response = null, array $options = [])
 	{
-		if (! function_exists('curl_version'))
+		if ( ! function_exists('curl_version'))
 		{
 			throw new \RuntimeException('CURL must be enabled to use the CURLRequest class.');
 		}
@@ -258,12 +271,11 @@ class CURLRequest extends Request
 	public function method($upper = false): string
 	{
 		return ($upper)
-				? strtoupper($this->method)
-				: strtolower($this->method);
+			? strtoupper($this->method)
+			: strtolower($this->method);
 	}
 
 	//--------------------------------------------------------------------
-
 
 	/**
 	 * Fires the actual cURL request.
@@ -275,10 +287,10 @@ class CURLRequest extends Request
 		// Reset our curl options so we're on a fresh slate.
 		$curl_options = [];
 
-		$curl_options[CURLOPT_URL] = $url;
+		$curl_options[CURLOPT_URL]            = $url;
 		$curl_options[CURLOPT_RETURNTRANSFER] = true;
-		$curl_options[CURLOPT_HEADER] = true;
-		$curl_options[CURLOPT_FRESH_CONNECT] = true;
+		$curl_options[CURLOPT_HEADER]         = true;
+		$curl_options[CURLOPT_FRESH_CONNECT]  = true;
 
 		$curl_options = $this->setCURLOptions($curl_options, $this->config);
 		$curl_options = $this->applyMethod($method, $curl_options);
@@ -297,7 +309,7 @@ class CURLRequest extends Request
 			$this->setResponseHeaders($headers);
 
 			// Our body
-			$body = substr($output, $break+4);
+			$body = substr($output, $break + 4);
 			$this->response->setBody($body);
 		}
 		else
@@ -316,17 +328,20 @@ class CURLRequest extends Request
 	 *
 	 * @param array $curl_options
 	 */
-	protected function applyRequestHeaders(array $curl_options=[]): array
+	protected function applyRequestHeaders(array $curl_options = []): array
 	{
-	    $headers = $this->headers();
+		$headers = $this->headers();
 
-		if (empty($head)) return $curl_options;
+		if (empty($head))
+		{
+			return $curl_options;
+		}
 
 		$set = [];
 
 		foreach ($headers as $name => $value)
 		{
-			$set[] = $name.': '. $this->headerLine($name);
+			$set[] = $name.': '.$this->headerLine($name);
 		}
 
 		$curl_options[CURLOPT_HTTPHEADER] = $set;
@@ -340,7 +355,7 @@ class CURLRequest extends Request
 	{
 		$method = strtoupper($method);
 
-		$this->method = $method;
+		$this->method                        = $method;
 		$curl_options[CURLOPT_CUSTOMREQUEST] = $method;
 
 		$size = strlen($this->body);
@@ -349,6 +364,7 @@ class CURLRequest extends Request
 		if ($size === null || $size > 0)
 		{
 			$curl_options = $this->applyBody($curl_options);
+
 			return $curl_options;
 		}
 
@@ -370,9 +386,9 @@ class CURLRequest extends Request
 
 	//--------------------------------------------------------------------
 
-	protected function applyBody(array $curl_options=[]): array
+	protected function applyBody(array $curl_options = []): array
 	{
-		if (! empty($this->body))
+		if ( ! empty($this->body))
 		{
 			$curl_options[CURLOPT_POSTFIELDS] = (string)$this->body();
 		}
@@ -398,7 +414,7 @@ class CURLRequest extends Request
 			if (($pos = strpos($header, ':')) !== false)
 			{
 				$title = substr($header, 0, $pos);
-				$value = substr($header, $pos+1);
+				$value = substr($header, $pos + 1);
 
 				$this->response->setHeader($title, $value);
 			}
@@ -421,14 +437,14 @@ class CURLRequest extends Request
 
 	//--------------------------------------------------------------------
 
-	protected function setCURLOptions(array $curl_options=[], array $config=[])
+	protected function setCURLOptions(array $curl_options = [], array $config = [])
 	{
 		// Auth Headers
-		if (! empty($config['auth']))
+		if ( ! empty($config['auth']))
 		{
 			$curl_options[CURLOPT_USERPWD] = $config['auth'][0].':'.$config['auth'][1];
 
-			if (! empty($config['auth'][2]) && strtolower($config['auth'][2]) == 'digest')
+			if ( ! empty($config['auth'][2]) && strtolower($config['auth'][2]) == 'digest')
 			{
 				$curl_options[CURLOPT_HTTPAUTH] = CURLAUTH_DIGEST;
 			}
@@ -439,19 +455,19 @@ class CURLRequest extends Request
 		}
 
 		// Certificate
-		if (! empty($config['cert']))
+		if ( ! empty($config['cert']))
 		{
 			$cert = $config['cert'];
 
 			if (is_array($cert))
 			{
 				$curl_options[CURLOPT_SSLCERTPASSWD] = $cert[1];
-				$cert = $cert[0];
+				$cert                                = $cert[0];
 			}
 
-			if (! file_exists($cert))
+			if ( ! file_exists($cert))
 			{
-				throw new \InvalidArgumentException('SSL certificate not found at: '. $cert);
+				throw new \InvalidArgumentException('SSL certificate not found at: '.$cert);
 			}
 
 			$curl_options[CURLOPT_SSLCERT] = $cert;
@@ -461,11 +477,11 @@ class CURLRequest extends Request
 		if (isset($config['debug']))
 		{
 			$curl_options[CURLOPT_VERBOSE] = 1;
-			$curl_options[CURLOPT_STDERR] = is_bool($config['debug']) ? fopen('php://output', 'w+') : $config['debug'];
+			$curl_options[CURLOPT_STDERR]  = is_bool($config['debug']) ? fopen('php://output', 'w+') : $config['debug'];
 		}
 
 		// Decode Content
-		if (! empty($config['decode_content']))
+		if ( ! empty($config['decode_content']))
 		{
 			$accept = $this->headerLine('Accept-Encoding');
 
@@ -475,8 +491,42 @@ class CURLRequest extends Request
 			}
 			else
 			{
-				$curl_options[CURLOPT_ENCODING] = '';
+				$curl_options[CURLOPT_ENCODING]   = '';
 				$curl_options[CURLOPT_HTTPHEADER] = 'Accept-Encoding';
+			}
+		}
+
+		// Allow Redirects
+		if (array_key_exists('allow_redirects', $config))
+		{
+			$settings = $this->redirectDefaults;
+
+			if (is_array($config['allow_redirects']))
+			{
+				$settings = array_merge($settings, $config['allow_redirects']);
+			}
+
+			if ($config['allow_redirects'] === false)
+			{
+				$curl_options[CURLOPT_FOLLOWLOCATION] = 0;
+			}
+			else
+			{
+				$curl_options[CURLOPT_FOLLOWLOCATION] = 1;
+				$curl_options[CURLOPT_MAXREDIRS]      = $settings['max'];
+
+				if ($settings['strict'] == true)
+				{
+					$curl_options[CURLOPT_POSTREDIR] = 1|2|4;
+				}
+
+				$protocols = 0;
+				foreach ($settings['protocols'] as $proto)
+				{
+					$protocols += constant('CURLPROTO_'.strtoupper($proto));
+				}
+
+				$curl_options[CURLOPT_REDIR_PROTOCOLS] = $protocols;
 			}
 		}
 
@@ -508,9 +558,9 @@ class CURLRequest extends Request
 		// Send the request and wait for a response.
 		$output = curl_exec($ch);
 
-		if($output === false)
+		if ($output === false)
 		{
-			throw new \RuntimeException(curl_errno($ch) .': '. curl_error($ch));
+			throw new \RuntimeException(curl_errno($ch).': '.curl_error($ch));
 		}
 
 		curl_close($ch);

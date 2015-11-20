@@ -322,4 +322,56 @@ class CURLRequestTest extends PHPUnit_Framework_TestCase
 
 	//--------------------------------------------------------------------
 
+	public function testAllowRedirectsOptionFalse()
+	{
+		$response = $this->request->request('get', 'http://example.com', [
+				'allow_redirects' => false
+		]);
+
+		$options = $this->request->curl_options;
+
+		$this->assertTrue(isset($options[CURLOPT_FOLLOWLOCATION]));
+		$this->assertEquals(0, $options[CURLOPT_FOLLOWLOCATION]);
+
+		$this->assertFalse(isset($options[CURLOPT_MAXREDIRS]));
+		$this->assertFalse(isset($options[CURLOPT_REDIR_PROTOCOLS]));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testAllowRedirectsOptionTrue()
+	{
+		$response = $this->request->request('get', 'http://example.com', [
+				'allow_redirects' => true
+		]);
+
+		$options = $this->request->curl_options;
+
+		$this->assertTrue(isset($options[CURLOPT_FOLLOWLOCATION]));
+		$this->assertEquals(1, $options[CURLOPT_FOLLOWLOCATION]);
+
+		$this->assertTrue(isset($options[CURLOPT_MAXREDIRS]));
+		$this->assertEquals(5, $options[CURLOPT_MAXREDIRS]);
+		$this->assertTrue(isset($options[CURLOPT_REDIR_PROTOCOLS]));
+		$this->assertEquals(CURLPROTO_HTTP|CURLPROTO_HTTPS, $options[CURLOPT_REDIR_PROTOCOLS]);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testAllowRedirectsOptionDefaults()
+	{
+		$response = $this->request->request('get', 'http://example.com', [
+				'allow_redirects' => true
+		]);
+
+		$options = $this->request->curl_options;
+
+		$this->assertTrue(isset($options[CURLOPT_FOLLOWLOCATION]));
+		$this->assertEquals(1, $options[CURLOPT_FOLLOWLOCATION]);
+
+		$this->assertTrue(isset($options[CURLOPT_MAXREDIRS]));
+		$this->assertTrue(isset($options[CURLOPT_REDIR_PROTOCOLS]));
+	}
+
+	//--------------------------------------------------------------------
 }

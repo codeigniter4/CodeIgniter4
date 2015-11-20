@@ -159,8 +159,34 @@ Request Options
 This section describes all of the available options you may pass into the constructor, the ``request()`` method,
 or any of the shortcut methods.
 
+allow_redirects
+===============
 
-Auth
+By default, cURL will follow all "Location:" headers the remote servers send back. The ``allow_redirects`` option
+allows you to modify how that works.
+
+If you set the value to ``false``, then it will not follow any redirects at all::
+
+	$client->request('GET', 'http://example.com', ['allow_redirects' => false]);
+
+Setting it to ``true`` will apply the default settings to the request::
+
+	$client->request('GET', 'http://example.com', ['allow_redirects' => true]);
+
+	// Sets the following defaults:
+	'max'       => 5,   // Maximum number of redirects to follow before stopping
+	'strict' => true,   // Ensure POST requests stay POST requests through redirects
+	'protocols' => ['http', 'https'] // Restrict redirects to one or more protocols
+
+You can pass in array as the value of the ``allow_redirects`` option to specify new settings in place of the defaults::
+
+	$client->request('GET', 'http://example.com', ['allow_redirects' => [
+		'max' => 10,
+		'protocols => ['https'] // Force HTTPS domains only.
+	]]);
+
+.. :note::  Following redirects does not work when PHP is in safe_mode or open_basedir is enabled.
+auth
 ====
 
 Allows you to provide Authentication details for `HTTP Basic <http://www.ietf.org/rfc/rfc2069.txt>`_ and
@@ -171,7 +197,7 @@ the type of authentication to use, either ``basic`` or ``digest``.::
 
 	$client->request('GET', 'http://example.com', ['auth' => ['username', 'password', 'digest']]);
 
-Body
+body
 ====
 
 There are two ways to set the body of the request for request types that support them, like PUT, OR POST.
@@ -187,8 +213,8 @@ and functions the exact same way as the previous example. The value must be a st
 
 
 
-Certificates
-============
+cert
+====
 
 To specify the location of a PEM formatted client-side certificate, pass a string with the full path to the
 file as the ``cert`` option. If a password is required, set the value to an array with the first element
@@ -196,8 +222,8 @@ file as the ``cert`` option. If a password is required, set the value to an arra
 
     $client->request('get', '/', ['cert' => ['/path/server.pem', 'password']);
 
-Connection Timeout
-==================
+Connect_timeout
+===============
 
 By default, CodeIgniter does not impose a limit for cURL to attempt to connect to a website. If you need to
 modify this value, you can do so by passing the amount of time in seconds with the ``connect_timeout`` option.
@@ -205,7 +231,7 @@ You can pass 0 to wait indefinitely::
 
 	$response->request('GET', 'http://example.com', ['connect_timeout' => 0]);
 
-Debug
+debug
 =====
 
 When ``debug`` is passed and set to ``true``, this will enable additional debugging to echo to STDOUT during the
@@ -217,7 +243,7 @@ You can pass a filename as the value for debug to have the output written to a f
 
 	$response->request('GET', 'http://example.com', ['debug' => '/usr/local/curl_log.txt']);
 
-Headers
+headers
 =======
 
 While you can set any headers this request needs by using the ``setHeader()`` method, you can also pass an associative
@@ -235,7 +261,7 @@ representing the header field values.::
 If headers are passed into the constructor they are treated as default values that will be overridden later by any
 further headers arrays or calls to ``setHeader()``.
 
-Timeout
+timeout
 =======
 
 By default, cURL functions are allowed to run as long as they take, with no time limit. You can modify this with the ``timeout``
