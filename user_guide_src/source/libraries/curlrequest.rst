@@ -251,6 +251,24 @@ Allows you to pause a number of milliseconds before sending the request.::
 	// Delay for 2 seconds
 	$response->request('GET', 'http://example.com', ['delay' => 2000]);
 
+form_params
+===========
+
+You can send form data in an application/x-www-form-urlencoded POST request by passing an associative array in
+the ``form_params`` option. This will set the ``Content-Type`` header to ``application/x-www-form-urlencoded``
+if it's not already set.::
+
+	$client->request('POST', '/post', [
+		'form_params' => [
+			'foo' => 'bar',
+			'baz' => ['hi', 'there']
+		]
+	]);
+
+.. :note:: ``form_params`` cannot be used with the ``multipart`` option. You will need to use one or the other.
+Use ``form_params`` for ``application/x-www-form-urlencoded`` request, and ``multipart`` for ``multipart/form-data``
+requests.
+
 headers
 =======
 

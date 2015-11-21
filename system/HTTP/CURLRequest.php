@@ -306,6 +306,8 @@ class CURLRequest extends Request
 		$curl_options[CURLOPT_RETURNTRANSFER] = true;
 		$curl_options[CURLOPT_HEADER]         = true;
 		$curl_options[CURLOPT_FRESH_CONNECT]  = true;
+		// Disable @file uploads in post data.
+		$curl_options[CURLOPT_SAFE_UPLOAD]    = true;
 
 		$curl_options = $this->setCURLOptions($curl_options, $this->config);
 		$curl_options = $this->applyMethod($method, $curl_options);
@@ -556,6 +558,17 @@ class CURLRequest extends Request
 
 		// Connection Timeout
 		$curl_options[CURLOPT_CONNECTTIMEOUT_MS] = (float)$config['connect_timeout'] * 1000;
+
+		// Post Data - application/x-www-form-urlencoded
+		if (! empty($config['form_params']) && is_array($config['form_params']))
+		{
+			$curl_options[CURLOPT_POSTFIELDS] = http_build_query($config['form_params']);
+
+			if (empty($this->header('Content-Type')))
+			{
+				$this->setHeader('Content-Type', 'application/x-www-form-urlencoded');
+			}
+		}
 
 		return $curl_options;
 	}
