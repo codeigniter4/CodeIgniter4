@@ -222,7 +222,7 @@ file as the ``cert`` option. If a password is required, set the value to an arra
 
     $client->request('get', '/', ['cert' => ['/path/server.pem', 'password']);
 
-Connect_timeout
+connect_timeout
 ===============
 
 By default, CodeIgniter does not impose a limit for cURL to attempt to connect to a website. If you need to
@@ -242,6 +242,14 @@ script execution. This is done by passing CURLOPT_VERBOSE and echoing the output
 You can pass a filename as the value for debug to have the output written to a file::
 
 	$response->request('GET', 'http://example.com', ['debug' => '/usr/local/curl_log.txt']);
+
+delay
+=====
+
+Allows you to pause a number of milliseconds before sending the request.::
+
+	// Delay for 2 seconds
+	$response->request('GET', 'http://example.com', ['delay' => 2000]);
 
 headers
 =======

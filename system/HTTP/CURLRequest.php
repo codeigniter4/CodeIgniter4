@@ -47,6 +47,13 @@ class CURLRequest extends Request
 		'protocols' => ['http', 'https'],
 	];
 
+	/**
+	 * The number of milliseconds to delay before
+	 * sending the request.
+	 * @var float
+	 */
+	protected $delay = 0.0;
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -229,6 +236,14 @@ class CURLRequest extends Request
 			unset($options['headers']);
 		}
 
+		if (array_key_exists('delay', $options))
+		{
+			// Convert from the milliseconds passed in
+			// to the seconds that sleep requires.
+			$this->delay = (float)$options['delay'] / 1000;
+			unset($options['delay']);
+		}
+
 		foreach ($options as $key => $value)
 		{
 			$this->config[$key] = $value;
@@ -295,6 +310,12 @@ class CURLRequest extends Request
 		$curl_options = $this->setCURLOptions($curl_options, $this->config);
 		$curl_options = $this->applyMethod($method, $curl_options);
 		$curl_options = $this->applyRequestHeaders($curl_options);
+
+		// Do we need to delay this request?
+		if ($this->delay > 0)
+		{
+			sleep($this->delay);
+		}
 
 		$output = $this->sendRequest($curl_options);
 
