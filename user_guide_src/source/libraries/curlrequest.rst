@@ -287,6 +287,20 @@ representing the header field values.::
 If headers are passed into the constructor they are treated as default values that will be overridden later by any
 further headers arrays or calls to ``setHeader()``.
 
+http_errors
+===========
+
+By default, CURLRequest will fail if the HTTP code returned is greater than or equal to 400. You can set
+``http_errors`` to ``false`` to return the content instead.::
+
+    $client->request('GET', '/status/500');
+	// Will fail verbosely
+
+	$res = $client->request('GET', '/status/500', ['http_errors' => false]);
+	echo $res->statusCode();
+	// 500
+
+
 timeout
 =======
 

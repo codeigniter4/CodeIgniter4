@@ -570,6 +570,11 @@ class CURLRequest extends Request
 			}
 		}
 
+		// HTTP Errors
+		$curl_options[CURLOPT_FAILONERROR] = array_key_exists('http_errors', $config)
+			? (bool)$config['http_errors']
+			: true;
+
 		return $curl_options;
 	}
 
