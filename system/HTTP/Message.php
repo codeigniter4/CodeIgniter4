@@ -20,7 +20,7 @@ class Message
 
 	protected $protocolVersion;
 
-	protected $validProtocolVersions = ['1.0', '1.1'];
+	protected $validProtocolVersions = ['1.0', '1.1', '2'];
 
 	protected $body;
 
