@@ -300,6 +300,18 @@ By default, CURLRequest will fail if the HTTP code returned is greater than or e
 	echo $res->statusCode();
 	// 500
 
+json
+====
+
+The ``json`` option is used to easily upload JSON encoded data as the body of a request. A Content-Type header
+of ``application/json`` is added, overwriting any Content-Type that might be already set. The data provided to
+this option can be any value that ``json_encode()`` accepts.::
+
+	$response = $client->request('PUT, '/put', ['json' => ['foo' => 'bar']]);
+
+.. :note:: This option does not allow for any customization of the ``json_encode()`` function, or the Content-Type
+header. If you need that ability, you will need to encode the data manually, passing it through the ``setBody()``
+method of CURLRequest, and set the Content-Type header with the ``setHeader()`` method.
 
 timeout
 =======

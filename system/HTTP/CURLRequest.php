@@ -416,9 +416,6 @@ class CURLRequest extends Request
 			$curl_options[CURLOPT_POSTFIELDS] = (string)$this->body();
 		}
 
-		// curl sometimes adds a content type by default, prevent this
-		$this->setHeader('Content-Type', '');
-
 		return $curl_options;
 	}
 
@@ -443,7 +440,7 @@ class CURLRequest extends Request
 			}
 			else if (substr($header, 0, 4) == 'HTTP')
 			{
-				preg_match('#^HTTP\/(1\.[01]) ([0-9]+) (.+)#', $header, $matches);
+				preg_match('#^HTTP\/([12]\.[01]) ([0-9]+) (.+)#', $header, $matches);
 
 				if (isset($matches[1]))
 				{
@@ -574,6 +571,14 @@ class CURLRequest extends Request
 		$curl_options[CURLOPT_FAILONERROR] = array_key_exists('http_errors', $config)
 			? (bool)$config['http_errors']
 			: true;
+
+		// JSON
+		if (isset($config['json']))
+		{
+			// Will be set as the body in `applyBody()`
+			$this->setBody(json_encode($config['json']));
+			$this->setHeader('Content-Type', 'application/json');
+		}
 
 		return $curl_options;
 	}
