@@ -598,6 +598,13 @@ class CURLRequest extends Request
 			}
 		}
 
+		// Post Data - multipart/form-data
+		if (! empty($config['multipart']) && is_array($config['multipart']))
+		{
+			// setting the POSTFIELDS option automatically sets multipart
+			$curl_options[CURLOPT_POSTFIELDS] = $config['multipart'];
+		}
+
 		// HTTP Errors
 		$curl_options[CURLOPT_FAILONERROR] = array_key_exists('http_errors', $config)
 			? (bool)$config['http_errors']

@@ -313,6 +313,23 @@ this option can be any value that ``json_encode()`` accepts.::
 header. If you need that ability, you will need to encode the data manually, passing it through the ``setBody()``
 method of CURLRequest, and set the Content-Type header with the ``setHeader()`` method.
 
+multipart
+=========
+
+When you need to send files and other data via a POST request, you can use the ``multipart`` option, along with
+the `CURLFile Class <http://php.net/manual/en/class.curlfile.php>`_. The values should be an associative array
+of POST data to send. For safer usage, the legacy method of uploading files by prefixing their name with an `@`
+has been disabled. Any files that you want to send must be passed as instances of CURLFile.::
+
+	$post_data = [
+		'foo' => 'bar',
+		'userfile' => new CURLFile('/path/to/file.txt')
+	];
+
+.. :note:: ``multipart`` cannot be used with the ``form_params`` option. You can only use one or the other. Use
+``form_params`` for ``application/x-www-form-urlencoded`` requests, and ``multipart`` for ``multipart/form-data``
+requests.
+
 query
 =====
 
