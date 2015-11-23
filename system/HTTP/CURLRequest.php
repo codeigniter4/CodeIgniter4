@@ -502,6 +502,19 @@ class CURLRequest extends Request
 			$curl_options[CURLOPT_SSLCERT] = $cert;
 		}
 
+		// SSL Key
+		if (isset($config['ssl_key']))
+		{
+			$file = realpath($config['ssl_key']);
+
+			if (! $file)
+			{
+				throw new \InvalidArgumentException('Cannot set SSL Key. '. $config['ssl_key'] .' is not a valid file.');
+			}
+			$curl_options[CURLOPT_CAINFO] = $file;
+			$curl_options[CURLOPT_SSL_VERIFYPEER] = 1;
+		}
+
 		// Debug
 		if (isset($config['debug']))
 		{

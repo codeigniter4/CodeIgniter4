@@ -321,6 +321,14 @@ You can pass along data to send as query string variables by passing an associat
 	// Send a GET request to /get?foo=bar
 	$client->request('GET', '/get', ['query' => ['foo' => 'bar']]);
 
+ssl_key
+=======
+
+When you need to specify the location of a file containing a private SSL key, you can use the ``ssl_key`` option. This
+attempts to turn the path into a full server path, and sets the CURLOPT_CAINFO AND CULROPT_SSL_VERIFYPEER options on.::
+
+	$client->request('GET', '/get', ['ssl_key' => '/usr/local/ssl_key']);
+
 timeout
 =======
 
