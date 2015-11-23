@@ -313,6 +313,14 @@ this option can be any value that ``json_encode()`` accepts.::
 header. If you need that ability, you will need to encode the data manually, passing it through the ``setBody()``
 method of CURLRequest, and set the Content-Type header with the ``setHeader()`` method.
 
+query
+=====
+
+You can pass along data to send as query string variables by passing an associative array as the ``query`` option.::
+
+	// Send a GET request to /get?foo=bar
+	$client->request('GET', '/get', ['query' => ['foo' => 'bar']]);
+
 timeout
 =======
 

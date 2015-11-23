@@ -302,6 +302,15 @@ class CURLRequest extends Request
 		// Reset our curl options so we're on a fresh slate.
 		$curl_options = [];
 
+		if (! empty($this->config['query']) && is_array($this->config['query']))
+		{
+			// This is likely too naive a solution.
+			// Should look into handling when $url already
+			// has query vars on it.
+			$url .= '?'. http_build_query($this->config['query']);
+			unset($this->config['query']);
+		}
+
 		$curl_options[CURLOPT_URL]            = $url;
 		$curl_options[CURLOPT_RETURNTRANSFER] = true;
 		$curl_options[CURLOPT_HEADER]         = true;
