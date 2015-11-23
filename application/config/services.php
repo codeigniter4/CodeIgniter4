@@ -2,6 +2,7 @@
 
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\URI;
+use CodeIgniter\Router\RouteCollectionInterface;
 
 /**
  * Services Configuration file.
@@ -78,9 +79,14 @@ class Services {
 
 	//--------------------------------------------------------------------
 
-	public static function router()
+	public static function router(RouteCollectionInterface $routes=null)
 	{
-	    return new \CodeIgniter\Router\Router(self::routes());
+		if (empty($routes))
+		{
+			$routes = self::routes();
+		}
+
+	    return new \CodeIgniter\Router\Router($routes);
 	}
 
 	//--------------------------------------------------------------------
