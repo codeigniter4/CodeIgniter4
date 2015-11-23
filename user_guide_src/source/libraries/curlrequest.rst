@@ -347,3 +347,13 @@ is true.::
 
 	// Disable validation entirely. (Insecure!)
 	$client->request('GET', '/', ['verify' => false]);
+
+version
+=======
+
+To set the HTTP protocol to use, you can pass a string or float with the version number (typically either 1.0
+or 1.1, 2.0 is currently unsupported.)
+
+	// Force HTTP/1.0
+	$client->request('GET', '/', ['version' => 1.0]);
+

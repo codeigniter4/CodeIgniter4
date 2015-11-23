@@ -611,6 +611,19 @@ class CURLRequest extends Request
 			$this->setHeader('Content-Type', 'application/json');
 		}
 
+		// version
+		if (! empty($config['version']))
+		{
+			if ($config['version'] == 1.0)
+			{
+				$curl_options[CURLOPT_HTTP_VERSION] = CURL_HTTP_VERSION_1_0;
+			}
+			else if ($config['version'] == 1.1)
+			{
+				$curl_options[CURLOPT_HTTP_VERSION] = CURL_HTTP_VERSION_1_1;
+			}
+		}
+
 		return $curl_options;
 	}
 
