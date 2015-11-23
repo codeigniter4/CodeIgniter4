@@ -9,6 +9,14 @@ class Router implements RouterInterface
 	 */
 	protected $collection;
 
+	/**
+	 * Sub-directory that contains the requested controller class.
+	 * Primarily used by 'autoRoute'.
+	 *
+	 * @var string
+	 */
+	protected $directory;
+
 	protected $controller;
 
 	protected $method;
@@ -58,7 +66,17 @@ class Router implements RouterInterface
 			return $this->controller;
 		}
 
-		return null;
+		// Still here? Then we can try to match the URI against
+		// controllers/directories, but the application may not
+		// want this, like in the case of API's.
+		if ( ! $this->collection->shouldAutoRoute())
+		{
+			return null;
+		}
+
+		$this->autoRoute($uri);
+
+		return $this->controller;
 	}
 
 	//--------------------------------------------------------------------
@@ -188,6 +206,92 @@ class Router implements RouterInterface
 				return true;
 			}
 		}
+
+		return false;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Attempts to match a URI path against controllers and directories
+	 * found in APPPATH/controllers, to find a matching route.
+	 *
+	 * @param string $uri
+	 *
+	 * @return string
+	 */
+	public function autoRoute(string $uri)
+	{
+		$segments = explode('/', $uri);
+
+		$segments = $this->validateRequest($segments);
+
+		// If we don't have aany segments left - try the default controller;
+		// WARNING: Directories get shifted out of tge segments array.
+		if (empty($segments))
+		{
+			$this->setDefaultController();
+		}
+
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Attempts to valide the URI request and determine the controller path.
+	 *
+	 * @param array $segments URI segments
+	 *
+	 * @return array URI segments
+	 */
+	protected function validateRequest(array $segments)
+	{
+		$c                  = count($segments);
+		$directory_override = isset($this->directory);
+
+		// Loop through our segments and return as soon as a controller
+		// is found or when such a directory doesn't exist
+		while ($c-- > 0)
+		{
+			$test = $this->directory.ucfirst($this->translateURIDashes === true
+					? str_replace('-', '_', $segments[0])
+					: $segments[0]
+				);
+
+			if ( ! file_exists(APPPATH.'controllers/'.$test.'.php')
+			     && $directory_override === false
+			     && is_dir(APPPATH.'controllers/'.$this->directory.$segments[0])
+			)
+			{
+				$this->setDirectory(array_shift($segments), true);
+				continue;
+			}
+
+			return $segments;
+		}
+
+		// This means that all segments were actually directories
+		return $segments;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Sets the sub-directory that the controller is in.
+	 *
+	 * @param string|null $dir
+	 * @param bool|false  $append
+	 */
+	protected function setDirectory(string $dir = null, $append = false)
+	{
+		if ($append !== TRUE OR empty($this->directory))
+		{
+			$this->directory = str_replace('.', '', trim($dir, '/')).'/';
+		}
+		else
+		{
+			$this->directory .= str_replace('.', '', trim($dir, '/')).'/';
+		}
 	}
 
 	//--------------------------------------------------------------------
@@ -248,11 +352,19 @@ class Router implements RouterInterface
 		}
 
 		// Is the method being specified?
-		if (sscanf($this->controller, '%[^/]/%s') !== 2)
+		if (sscanf($this->controller, '%[^/]/%s', $class, $this->method) !== 2)
 		{
 			$this->method = 'index';
 		}
-		// @todo log that NO URI present and using default controller.
+
+		if (! file_exists(APPPATH.'controllers/'.$this->directory.ucfirst($class).'.php'))
+		{
+			return;
+		}
+
+		$this->controller = ucfirst($class);
+
+		// @todo log message that default controller was set.
 	}
 
 	//--------------------------------------------------------------------

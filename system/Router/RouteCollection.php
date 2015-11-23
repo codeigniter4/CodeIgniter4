@@ -47,6 +47,13 @@ class RouteCollection implements RouteCollectionInterface
 	protected $translateURIDashes = false;
 
 	/**
+	 * Whether to match URI against controllers
+	 * when it doesn't match defined routes.
+	 * @var bool
+	 */
+	protected $autoRoute = true;
+
+	/**
 	 * Defined placeholders that can be used
 	 * within the
 	 *
@@ -320,6 +327,18 @@ class RouteCollection implements RouteCollectionInterface
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Returns the flag that tells whether to autoRoute URI against controllers.
+	 *
+	 * @return bool
+	 */
+	public function shouldAutoRoute()
+	{
+	    return $this->autoRoute;
+	}
+
+	//--------------------------------------------------------------------
+
 
 
 	/**
@@ -358,6 +377,28 @@ class RouteCollection implements RouteCollectionInterface
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * If TRUE, the system will attempt to match the URI against
+	 * controllers by matching each segment against folders/files
+	 * in APPPATH/controllers, when a match wasn't found against
+	 * defined routes.
+	 *
+	 * If FALSE, will stop searching and do NO automatic routing.
+	 *
+	 * @param bool $value
+	 *
+	 * @return RouteCollection
+	 */
+	public function setAutoRoute(bool $value): self
+	{
+	    $this->autoRoute = $value;
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
 
 	/**
 	 * Returns the raw array of available routes.

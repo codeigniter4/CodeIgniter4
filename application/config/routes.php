@@ -49,6 +49,7 @@ $routes->setDefaultNamespace('');
 $routes->setDefaultController('Home');
 $routes->setDefaultMethod('index');
 $routes->setTranslateURIDashes(false);
+$routes->setAutoRoute(true);
 
 $routes->add('close', function(){
 	return view('welcome_message');
