@@ -111,7 +111,7 @@ require APPPATH.'config/routes.php';
 
 $router = \App\Config\Services::router($routes);
 
-$controller = $router->controllerName();
+$controller = $router->handle($request->uri->path());
 
 ob_start();
 
@@ -122,11 +122,26 @@ if (is_callable($controller))
 }
 else
 {
-	// @todo handle controller not found situations...
+	if (empty($controller))
+	{
+		// Show the 404 error page
+		if (is_cli())
+		{
+			require APPPATH.'views/errors/cli/error_404.php';
+		}
+		else
+		{
+			require APPPATH.'views/errors/html/error_404.php';
+		}
 
-	$class  = new $controller($request, $response);
-	$method = $router->methodName();
-	$class->$method(...$router->params());
+		$response->setStatusCode(404);
+	}
+	else
+	{
+		$class  = new $controller($request, $response);
+		$method = $router->methodName();
+		$class->$method(...$router->params());
+	}
 }
 
 $output = ob_get_contents();

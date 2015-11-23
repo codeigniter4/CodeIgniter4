@@ -46,11 +46,6 @@ class Router implements RouterInterface
 	 */
 	public function handle(string $uri = null)
 	{
-		if (is_null($uri))
-		{
-			// @todo Get the URI from the HTTP\Request object.
-		}
-
 		// If we cannot find a URI to match against, then
 		// everything runs off of it's default settings.
 		if (empty($uri))
@@ -58,40 +53,9 @@ class Router implements RouterInterface
 			return;
 		}
 
-		$http_verb = $this->collection->HTTPVerb();
-
-		$routes = $this->collection->routes();
-
-		// Loop through the route array looking for wildcards
-		foreach ($routes as $key => $val)
+		if ($this->checkRoutes($uri))
 		{
-			// Does the RegEx match?
-			if (preg_match('#^'.$key.'$#', $uri, $matches))
-			{
-				// Are we using Closures? If so, then we need
-				// to collect the params into an array
-				// so it can be passed to the controller method later.
-				if ( ! is_string($val) && is_callable($val))
-				{
-					$this->controller = $val;
-
-					// Remove the original string from the matches array
-					array_shift($matches);
-
-					$this->params = $matches;
-
-					return;
-				}
-				// Are we using the default method for back-references?
-				elseif (strpos($val, '$') !== false && strpos($key, '(') !== false)
-				{
-					$val = preg_replace('#^'.$key.'$#', $val, $uri);
-				}
-
-				$this->setRequest(explode('/', $val));
-
-				return;
-			}
+			return;
 		}
 	}
 
@@ -168,6 +132,60 @@ class Router implements RouterInterface
 		$this->translateURIDashes = (bool)$val;
 
 		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Compares the uri string against the routes that the
+	 * RouteCollection class defined for us, attempting to find a match.
+	 * This method will modify $this->controller, etal as needed.
+	 *
+	 * @param string $uri The URI path to compare against the routes
+	 *
+	 * @return bool Whether the route was matched or not.
+	 */
+	protected function checkRoutes(string $uri)
+	{
+		$routes = $this->collection->routes();
+
+		// Don't waste any time
+		if (empty($routes))
+		{
+			return false;
+		}
+
+		// Loop through the route array looking for wildcards
+		foreach ($routes as $key => $val)
+		{
+			// Does the RegEx match?
+			if (preg_match('#^'.$key.'$#', $uri, $matches))
+			{
+				// Are we using Closures? If so, then we need
+				// to collect the params into an array
+				// so it can be passed to the controller method later.
+				if ( ! is_string($val) && is_callable($val))
+				{
+					$this->controller = $val;
+
+					// Remove the original string from the matches array
+					array_shift($matches);
+
+					$this->params = $matches;
+
+					return true;
+				}
+				// Are we using the default method for back-references?
+				elseif (strpos($val, '$') !== false && strpos($key, '(') !== false)
+				{
+					$val = preg_replace('#^'.$key.'$#', $val, $uri);
+				}
+
+				$this->setRequest(explode('/', $val));
+
+				return true;
+			}
+		}
 	}
 
 	//--------------------------------------------------------------------
