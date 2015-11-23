@@ -33,6 +33,7 @@ class CURLRequest extends Request
 		'timeout'         => 0.0,
 		'connect_timeout' => 150,
 		'debug'           => false,
+	    'verify'          => true
 	];
 
 	/**
@@ -502,17 +503,25 @@ class CURLRequest extends Request
 			$curl_options[CURLOPT_SSLCERT] = $cert;
 		}
 
-		// SSL Key
-		if (isset($config['ssl_key']))
+		// SSL Verification
+		if (isset($config['verify']))
 		{
-			$file = realpath($config['ssl_key']);
-
-			if (! $file)
+			if (is_string($config['verify']))
 			{
-				throw new \InvalidArgumentException('Cannot set SSL Key. '. $config['ssl_key'] .' is not a valid file.');
+				$file = realpath($config['ssl_key']);
+
+				if ( ! $file)
+				{
+					throw new \InvalidArgumentException('Cannot set SSL Key. '.$config['ssl_key'].
+					                                    ' is not a valid file.');
+				}
+				$curl_options[CURLOPT_CAINFO]         = $file;
+				$curl_options[CURLOPT_SSL_VERIFYPEER] = 1;
 			}
-			$curl_options[CURLOPT_CAINFO] = $file;
-			$curl_options[CURLOPT_SSL_VERIFYPEER] = 1;
+			else if (is_bool($config['verify']))
+			{
+				$curl_options[CURLOPT_SSL_VERIFYPEER] = $config['verify'];
+			}
 		}
 
 		// Debug

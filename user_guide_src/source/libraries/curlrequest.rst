@@ -321,13 +321,6 @@ You can pass along data to send as query string variables by passing an associat
 	// Send a GET request to /get?foo=bar
 	$client->request('GET', '/get', ['query' => ['foo' => 'bar']]);
 
-ssl_key
-=======
-
-When you need to specify the location of a file containing a private SSL key, you can use the ``ssl_key`` option. This
-attempts to turn the path into a full server path, and sets the CURLOPT_CAINFO AND CULROPT_SSL_VERIFYPEER options on.::
-
-	$client->request('GET', '/get', ['ssl_key' => '/usr/local/ssl_key']);
 
 timeout
 =======
@@ -337,4 +330,20 @@ option. The value should be the number of seconds you want the functions to exec
 
 	$response->request('GET', 'http://example.com', ['timeout' => 5]);
 
+verify
+======
 
+This option describes the SSL certificate verification behavior. If the ``verify`` option is ``true``, it enables the
+SSL certificate verification and uses the default CA bundle provided by the operating system. If set to ``false`` it
+will disable the certificate verification (this is insecure, and allows man-in-the-middle attacks!). You can set it
+to a string that contains the path to a CA bundle to enable verification with a custom certificate. The default value
+is true.::
+
+	// Use the system's CA bundle (this is the default setting)
+	$client->request('GET', '/', ['verify' => true]);
+
+	// Use a custom SSL certificate on disk.
+	$client->request('GET', '/', ['verify' => '/path/to/cert.pem']);
+
+	// Disable validation entirely. (Insecure!)
+	$client->request('GET', '/', ['verify' => false]);
