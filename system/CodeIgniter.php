@@ -103,6 +103,9 @@ $request  = is_cli()
 		: \App\Config\Services::request();
 $response = \App\Config\Services::response();
 
+// Assume success until proven otherwise.
+$response->setStatusCode(200);
+
 //--------------------------------------------------------------------
 // Try to Route It
 //--------------------------------------------------------------------
@@ -118,7 +121,7 @@ ob_start();
 // Is it routed to a Closure?
 if (is_callable($controller))
 {
-	$controller(...$router->params());
+	echo $controller(...$router->params());
 }
 else
 {

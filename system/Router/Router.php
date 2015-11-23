@@ -55,7 +55,7 @@ class Router implements RouterInterface
 
 		if ($this->checkRoutes($uri))
 		{
-			return;
+			return $this->controller;
 		}
 	}
 
