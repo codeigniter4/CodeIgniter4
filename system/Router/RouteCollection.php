@@ -146,15 +146,18 @@ class RouteCollection implements RouteCollectionInterface
 		// so that it won't try to use the current namespace for the class.
 		if (is_string($map) && strpos($map, '\\') === false)
 		{
-			$map = $this->defaultNamespace.'\\'.$map;
+			if (! empty($this->defaultNamespace))
+			{
+				$map = $this->defaultNamespace.'\\'.$map;
 
-			// Trim out any double back-slashes
-			$map = str_replace('\\\\', '\\', $map);
+				// Trim out any double back-slashes
+				$map = str_replace('\\\\', '\\', $map);
+			}
 		}
 
 		// Ensure that any strings are prefixed with backslash to get
 		// out of the current namespace and into the proper one.
-		if (is_string($map))
+		if (is_string($map) && ! empty($this->defaultNamespace))
 		{
 			$map = '\\'.ltrim($map, '\\ ');
 		}
@@ -198,7 +201,7 @@ class RouteCollection implements RouteCollectionInterface
 		// the user specifies here.
 		$old_namespace = $this->defaultNamespace;
 
-		if ( ! empty($options['namespace']))
+		if ( isset($options['namespace']))
 		{
 			$this->defaultNamespace = $options['namespace'];
 		}

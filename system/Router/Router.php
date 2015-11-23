@@ -50,13 +50,15 @@ class Router implements RouterInterface
 		// everything runs off of it's default settings.
 		if (empty($uri))
 		{
-			return;
+			return null;
 		}
 
 		if ($this->checkRoutes($uri))
 		{
 			return $this->controller;
 		}
+
+		return null;
 	}
 
 	//--------------------------------------------------------------------
@@ -217,7 +219,7 @@ class Router implements RouterInterface
 			}
 		}
 
-		list($controller, $method) = explode('::', $segments[0]);
+		list($controller, $method) = array_pad(explode('::', $segments[0]), 2, null);
 
 		$this->controller = $controller;
 

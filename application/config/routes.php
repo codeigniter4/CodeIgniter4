@@ -45,7 +45,7 @@ $routes = \App\Config\Services::routes();
  * Assigns the method inside the controller that is ran when the
  * Router is unable to determine the appropriate method to run.
  */
-$routes->setDefaultNamespace('\\');
+$routes->setDefaultNamespace('');
 $routes->setDefaultController('Home');
 $routes->setDefaultMethod('index');
 $routes->setTranslateURIDashes(false);
@@ -53,3 +53,4 @@ $routes->setTranslateURIDashes(false);
 $routes->add('close', function(){
 	return view('welcome_message');
 });
+$routes->add('home', 'home/index');
