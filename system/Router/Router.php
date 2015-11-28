@@ -182,7 +182,7 @@ class Router implements RouterInterface
 	 *
 	 * @return bool Whether the route was matched or not.
 	 */
-	protected function checkRoutes(string $uri)
+	protected function checkRoutes(string $uri): bool
 	{
 		$routes = $this->collection->routes();
 
@@ -234,8 +234,6 @@ class Router implements RouterInterface
 	 * found in APPPATH/controllers, to find a matching route.
 	 *
 	 * @param string $uri
-	 *
-	 * @return string
 	 */
 	public function autoRoute(string $uri)
 	{
@@ -250,12 +248,22 @@ class Router implements RouterInterface
 			$this->setDefaultController();
 		}
 
+		// If not empty, then the first segment should be the controller
+		$this->controller = $segments[0];
+
+		// Use the method name if it exists.
+		// If it doesn't, no biggie - the default method name
+		// has already been set.
+		if (! empty($segments[1]))
+		{
+			$this->method = $segments[1];
+		}
 	}
 
 	//--------------------------------------------------------------------
 
 	/**
-	 * Attempts to valide the URI request and determine the controller path.
+	 * Attempts to validate the URI request and determine the controller path.
 	 *
 	 * @param array $segments URI segments
 	 *
