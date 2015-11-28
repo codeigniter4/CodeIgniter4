@@ -57,7 +57,12 @@ $routes->setDefaultMethod('index');
 $routes->setTranslateURIDashes(false);
 $routes->setAutoRoute(true);
 
-$routes->add('close', function(){
-	return view('welcome_message');
-});
-$routes->add('home', 'home/index');
+/**
+ * --------------------------------------------------------------------
+ * Route Definitions
+ * --------------------------------------------------------------------
+ */
+
+// We get a performance increase by specifying the default
+// route since we don't have to scan directories.
+$routes->add('/', 'home/index');
