@@ -178,4 +178,25 @@ interface RouteCollectionInterface
 	public function HTTPVerb();
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Attempts to look up a route based on it's destination.
+	 *
+	 * If a route exists:
+	 *
+	 *      'path/(:any)/(:any)' => 'Controller::method/$1/$2'
+	 *
+	 * This method allows you to know the Controller and method
+	 * and get the route that leads to it.
+	 *
+	 *      // Equals 'path/$param1/$param2'
+	 *      reverseRoute('Controller::method', $param1, $param2);
+	 *
+	 * @param string $route
+	 * @param        ...$params
+	 */
+	public function reverseRoute(string $search, ...$params): string;
+
+	//--------------------------------------------------------------------
+
 }

@@ -436,5 +436,65 @@ class RouteCollection implements RouteCollectionInterface
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Attempts to look up a route based on it's destination.
+	 *
+	 * If a route exists:
+	 *
+	 *      'path/(:any)/(:any)' => 'Controller::method/$1/$2'
+	 *
+	 * This method allows you to know the Controller and method
+	 * and get the route that leads to it.
+	 *
+	 *      // Equals 'path/$param1/$param2'
+	 *      reverseRoute('Controller::method', $param1, $param2);
+	 *
+	 * @param string $route
+	 * @param        ...$params
+	 */
+	public function reverseRoute(string $search, ...$params): string
+	{
+		foreach ($this->routes as $from => $to)
+		{
+			// If there's any chance of a match, then it will
+			// be with $search at the beginning of the $to string.
+			if (strpos($to, $search) !== 0)
+			{
+				continue;
+			}
+
+			// Ensure that the number of $params given here
+			// matches the number of back-references in the route
+			if (substr_count($to, '$') != count($params))
+			{
+				continue;
+			}
+
+			// Find all of our back-references in the original route
+			preg_match_all('/\(([^)]+)\)/', $from, $matches);
+
+			if (empty($matches[0]))
+			{
+				continue;
+			}
+
+			// Build our resulting string, inserting the $params in
+			// the appropriate places.
+			$route = $from;
+
+			foreach ($matches[0] as $index => $pattern)
+			{
+				$route = str_replace($pattern, $params[$index], $route);
+			}
+
+			return $route;
+		}
+
+		// If we're still here, then we did not find a match.
+		throw new \InvalidArgumentException('Unable to locate a valid route.');
+	}
+
+	//--------------------------------------------------------------------
+
 
 }
