@@ -107,6 +107,21 @@ interface RouteCollectionInterface
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * If TRUE, the system will attempt to match the URI against
+	 * controllers by matching each segment against folders/files
+	 * in APPPATH/controllers, when a match wasn't found against
+	 * defined routes.
+	 *
+	 * If FALSE, will stop searching and do NO automatic routing.
+	 *
+	 * @param bool $value
+	 *
+	 * @return RouteCollection
+	 */
+	public function setAutoRoute(bool $value): self;
+
+	//--------------------------------------------------------------------
 
 	/**
 	 * Returns the name of the default controller. With Namespace.
@@ -134,6 +149,15 @@ interface RouteCollectionInterface
 	 * @return mixed
 	 */
 	public function translateURIDashes();
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns the flag that tells whether to autoRoute URI against controllers.
+	 *
+	 * @return bool
+	 */
+	public function shouldAutoRoute();
 
 	//--------------------------------------------------------------------
 

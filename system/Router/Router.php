@@ -137,7 +137,6 @@ class Router implements RouterInterface
 
 	//--------------------------------------------------------------------
 
-
 	/**
 	 * Sets the value that should be used to match the index.php file. Defaults
 	 * to index.php but this allows you to modify it in case your are using

@@ -260,7 +260,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @return mixed
 	 */
-	public function addPlaceholder(string $name, string $pattern): self
+	public function addPlaceholder(string $name, string $pattern): RouteCollectionInterface
 	{
 		$this->placeholders[$name] = $pattern;
 
@@ -277,7 +277,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @return mixed
 	 */
-	public function setDefaultNamespace(string $value): self
+	public function setDefaultNamespace(string $value): RouteCollectionInterface
 	{
 		$this->defaultNamespace = $value;
 
@@ -294,7 +294,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @return mixed
 	 */
-	public function setDefaultController(string $value): self
+	public function setDefaultController(string $value): RouteCollectionInterface
 	{
 		$this->defaultController = $value;
 
@@ -349,7 +349,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @return mixed
 	 */
-	public function setDefaultMethod(string $value): self
+	public function setDefaultMethod(string $value): RouteCollectionInterface
 	{
 		$this->defaultMethod = $value;
 
@@ -369,7 +369,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @return mixed
 	 */
-	public function setTranslateURIDashes(bool $value): self
+	public function setTranslateURIDashes(bool $value): RouteCollectionInterface
 	{
 		$this->translateURIDashes = $value;
 
@@ -390,7 +390,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @return RouteCollection
 	 */
-	public function setAutoRoute(bool $value): self
+	public function setAutoRoute(bool $value): RouteCollectionInterface
 	{
 	    $this->autoRoute = $value;
 
