@@ -48,6 +48,8 @@ class Router implements RouterInterface
 	 * Scans the URI and attempts to match the current URI to the
 	 * one of the defined routes in the RouteCollection.
 	 *
+	 * This is the main entry point when using the Router.
+	 *
 	 * @param null $uri
 	 *
 	 * @return mixed
@@ -119,6 +121,22 @@ class Router implements RouterInterface
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Returns the name of the sub-directory the controller is in,
+	 * if any. Relative to APPPATH.'controllers'.
+	 *
+	 * Only used when auto-routing is turned on.
+	 *
+	 * @return string
+	 */
+	public function directory(): string
+	{
+	    return ! empty($this->directory) ? $this->directory : '';
+	}
+
+	//--------------------------------------------------------------------
+
 
 	/**
 	 * Sets the value that should be used to match the index.php file. Defaults
