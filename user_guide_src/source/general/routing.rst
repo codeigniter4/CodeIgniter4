@@ -206,7 +206,9 @@ You can still use HTTP verbs in your routing when you do it this way, though the
 	
 	$collection->map($routes);
 
-### Prefixing Routes
+Prefixing Routes
+================
+
 You can prefix your routes with a common string by passing an array with the key of 'prefix' and it's value in
 as the second parameter to the map() method. This allows you to reduce the typing needed to build out an
 extensive set of routes that all share the opening string, like when building an admin area::
@@ -242,3 +244,23 @@ by passing the "hostname" option along with the desired domain to allow it on::
 
 This example would only allow the specified hosts to work if the domain exactly matched "accounts.example.com".
  It would not work under the main site at "example.com".
+
+
+Reverse Routing
+===============
+
+Reverse routing allows you to define the controller and method, as well as any parameters, that a link should go
+to, and have the router lookup the current route to it. This allows route definitions to change without you having
+to update your application code. This is typically used within views to create links.
+
+For example, if you have a route to a photo gallery that you want to link to, you can use the ``route_to()`` helper
+function to get the current route that should be used. The first parameter is the Controller and method, written
+just as it would be defined the destination of a route. Any parameters that should be passed to the route are
+passed in next::
+
+	// The route is defined as:
+	$routes->add('users/(:id)/gallery(:any)', 'Galleries::showUserGallery/$1/$2');
+
+	// Generate the relative URL to link to user ID 15, gallery 12
+	// Generates: /users/15/gallery/12
+	<a href="<?= route_to('Galleries::showUserGallery', 15, 12) ?>">View Gallery</a>

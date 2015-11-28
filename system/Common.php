@@ -87,3 +87,26 @@ if ( ! function_exists('is_cli'))
 }
 
 //--------------------------------------------------------------------
+
+if ( ! function_exists('route_to'))
+{
+	/**
+	 * Given a controller/method string and any params,
+	 * will attempt to build the relative URL to the
+	 * matching route.
+	 *
+	 * NOTE: This requires the controller/method to
+	 * have a route defined in the routes config file.
+	 *
+	 * @param string $method
+	 * @param        ...$params
+	 *
+	 * @return \CodeIgniter\Router\string
+	 */
+	function route_to(string $method, ...$params): string
+	{
+		global $routes;
+
+		return $routes->reverseRoute($method, ...$params);
+	}
+}
