@@ -249,7 +249,7 @@ class Router implements RouterInterface
 		}
 
 		// If not empty, then the first segment should be the controller
-		$this->controller = $segments[0];
+		$this->controller = ucfirst($segments[0]);
 
 		// Use the method name if it exists.
 		// If it doesn't, no biggie - the default method name

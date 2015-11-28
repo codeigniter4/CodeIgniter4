@@ -141,6 +141,11 @@ else
 	}
 	else
 	{
+		if (! class_exists($controller))
+		{
+			require APPPATH.'controllers/'.$router->directory().$router->controllerName().'.php';
+		}
+
 		$class  = new $controller($request, $response);
 		$method = $router->methodName();
 		$class->$method(...$router->params());
