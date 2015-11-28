@@ -44,6 +44,12 @@ $routes = \App\Config\Services::routes();
  *
  * Assigns the method inside the controller that is ran when the
  * Router is unable to determine the appropriate method to run.
+ *
+ *    $routes->setAutoRoute()
+ *
+ * Determines whether the Router will attempt to match URIs to
+ * controllers when no specific route has been defined. If false,
+ * only routes that have been defined here will be available.
  */
 $routes->setDefaultNamespace('');
 $routes->setDefaultController('Home');
