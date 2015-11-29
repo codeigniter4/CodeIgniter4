@@ -10,6 +10,7 @@
 		"source": "https://github.com/bcit-ci/CodeIgniter"
 	},
 	"require": {
-		"php": ">=7.0"
+		"php": ">=7.0",
+		"zendframework/zend-escaper": "^2.5"
 	}
 }
