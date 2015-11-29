@@ -63,6 +63,7 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 # Composer
 #-------------------------
 vendor/
+composer.lock
 
 #-------------------------
 # IDE Files
