@@ -1,7 +1,5 @@
 <?php namespace CodeIgniter\View;
 
-require dirname(__FILE__).'/Escaper.php';
-
 use CodeIgniter\Loader;
 
 /**
