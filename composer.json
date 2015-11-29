@@ -9,8 +9,16 @@
 		"irc": "irc://irc.freenode.net/codeigniter",
 		"source": "https://github.com/bcit-ci/CodeIgniter"
 	},
+	"autoload": {
+		"psr-4": {
+			"CodeIgniter\\": "system/"
+		}
+	},
 	"require": {
 		"php": ">=7.0",
 		"zendframework/zend-escaper": "^2.5"
+	},
+	"scripts": {
+		"post-update-cmd": "CodeIgniter\\ComposerScripts::postUpdate"
 	}
 }
