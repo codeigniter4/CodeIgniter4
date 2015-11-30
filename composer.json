@@ -18,6 +18,9 @@
 		"php": ">=7.0",
 		"zendframework/zend-escaper": "^2.5"
 	},
+	"require-dev": {
+		"mikey179/vfsStream": "^1.6"
+	},
 	"scripts": {
 		"post-update-cmd": "CodeIgniter\\ComposerScripts::postUpdate"
 	}
