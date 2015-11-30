@@ -123,18 +123,20 @@ if ( ! is_dir($system_path))
  * -------------------------------------------------------------------
  *  Now that we know the path, set the main path constants
  * -------------------------------------------------------------------
+ * Always use 'realpath' on the paths to help ensure that we can
+ * take advantage of PHP's realpath cache for slight performance boost.
  */
 // The name of THIS file
 define('SELF', pathinfo(__FILE__, PATHINFO_BASENAME));
 
 // Path to the system folder
-define('BASEPATH', str_replace('\\', '/', $system_path));
+define('BASEPATH', realpath(str_replace('\\', '/', $system_path)).DIRECTORY_SEPARATOR);
 
 // Path to the front controller (this file)
-define('FCPATH', dirname(__FILE__).'/');
+define('FCPATH', realpath(dirname(__FILE__)).DIRECTORY_SEPARATOR);
 
 // Path to the writable directory.
-define('WRITEPATH', realpath(str_replace('\\', '/', $writable_directory)).'/');
+define('WRITEPATH', realpath(str_replace('\\', '/', $writable_directory)).DIRECTORY_SEPARATOR);
 
 // Name of the "system folder"
 define('SYSDIR', trim(strrchr(trim(BASEPATH, '/'), '/'), '/'));
@@ -147,7 +149,7 @@ if (is_dir($application_folder))
 		$application_folder = $_temp;
 	}
 
-	define('APPPATH', $application_folder.DIRECTORY_SEPARATOR);
+	define('APPPATH', realpath($application_folder).DIRECTORY_SEPARATOR);
 }
 else
 {
@@ -159,7 +161,7 @@ else
 		exit(3); // EXIT_CONFIG
 	}
 
-	define('APPPATH', BASEPATH.$application_folder.DIRECTORY_SEPARATOR);
+	define('APPPATH', realpath(BASEPATH.$application_folder).DIRECTORY_SEPARATOR);
 }
 
 /*
