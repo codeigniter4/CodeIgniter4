@@ -377,7 +377,6 @@ class URITest extends PHPUnit_Framework_TestCase
 
 	/**
 	 * @dataProvider defaultResolutions
-	 * @group single
 	 */
 	public function testResolveRelativeURI($rel, $expected)
 	{
