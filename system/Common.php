@@ -32,7 +32,6 @@ if ( ! function_exists('log_message'))
 	 */
 	function log_message(string $level, $message, array $context = [])
 	{
-		// @todo Don't create a new class each time!
 		return \App\Config\Services::logger()
 		                           ->log($level, $message, $context);
 	}
