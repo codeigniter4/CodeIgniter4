@@ -1,9 +1,6 @@
 <?php
 
-require_once '../../vendor/autoload.php';
-
 use CodeIgniter\Router\Router;
-use org\bovigo\vfs\vfsStream;
 
 
 class RouterTest extends PHPUnit_Framework_TestCase
@@ -35,8 +32,6 @@ class RouterTest extends PHPUnit_Framework_TestCase
 		];
 
 		$this->collection->map($routes);
-
-		$this->root = vfsStream::setup(APPPATH.'controllers');
 	}
 
 	//--------------------------------------------------------------------
