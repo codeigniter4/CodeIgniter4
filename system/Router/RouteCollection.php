@@ -49,6 +49,7 @@ class RouteCollection implements RouteCollectionInterface
 	/**
 	 * Whether to match URI against controllers
 	 * when it doesn't match defined routes.
+	 *
 	 * @var bool
 	 */
 	protected $autoRoute = true;
@@ -153,7 +154,7 @@ class RouteCollection implements RouteCollectionInterface
 		// so that it won't try to use the current namespace for the class.
 		if (is_string($map) && strpos($map, '\\') === false)
 		{
-			if (! empty($this->defaultNamespace))
+			if ( ! empty($this->defaultNamespace))
 			{
 				$map = $this->defaultNamespace.'\\'.$map;
 
@@ -195,7 +196,6 @@ class RouteCollection implements RouteCollectionInterface
 
 		$current_host = ! empty($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : null;
 
-
 		// If a hostname is provided as an option,
 		// then don't waste time if our hostname doesn't match.
 		if ( ! empty($options['hostname']) && strtolower($current_host) != strtolower($options['hostname']))
@@ -208,7 +208,7 @@ class RouteCollection implements RouteCollectionInterface
 		// the user specifies here.
 		$old_namespace = $this->defaultNamespace;
 
-		if ( isset($options['namespace']))
+		if (isset($options['namespace']))
 		{
 			$this->defaultNamespace = $options['namespace'];
 		}
@@ -310,7 +310,7 @@ class RouteCollection implements RouteCollectionInterface
 	 */
 	public function defaultController(): string
 	{
-	    return $this->defaultController;
+		return $this->defaultController;
 	}
 
 	//--------------------------------------------------------------------
@@ -322,7 +322,7 @@ class RouteCollection implements RouteCollectionInterface
 	 */
 	public function defaultMethod(): string
 	{
-	    return $this->defaultMethod;
+		return $this->defaultMethod;
 	}
 
 	//--------------------------------------------------------------------
@@ -334,12 +334,10 @@ class RouteCollection implements RouteCollectionInterface
 	 */
 	public function shouldAutoRoute()
 	{
-	    return $this->autoRoute;
+		return $this->autoRoute;
 	}
 
 	//--------------------------------------------------------------------
-
-
 
 	/**
 	 * Sets the default method to call on the controller when no other
@@ -392,13 +390,12 @@ class RouteCollection implements RouteCollectionInterface
 	 */
 	public function setAutoRoute(bool $value): RouteCollectionInterface
 	{
-	    $this->autoRoute = $value;
+		$this->autoRoute = $value;
 
 		return $this;
 	}
 
 	//--------------------------------------------------------------------
-
 
 	/**
 	 * Returns the raw array of available routes.
@@ -419,7 +416,7 @@ class RouteCollection implements RouteCollectionInterface
 	 */
 	public function HTTPVerb()
 	{
-	    return $this->http_verb;
+		return $this->http_verb;
 	}
 
 	//--------------------------------------------------------------------
@@ -431,7 +428,7 @@ class RouteCollection implements RouteCollectionInterface
 	 */
 	public function translateURIDashes()
 	{
-	    return $this->translateURIDashes;
+		return $this->translateURIDashes;
 	}
 
 	//--------------------------------------------------------------------
@@ -456,6 +453,11 @@ class RouteCollection implements RouteCollectionInterface
 	{
 		foreach ($this->routes as $from => $to)
 		{
+			// Lose any namespace slash at beginning of strings
+			// to ensure more consistent match.
+			$to     = ltrim($to, '\\');
+			$search = ltrim($search, '\\');
+
 			// If there's any chance of a match, then it will
 			// be with $search at the beginning of the $to string.
 			if (strpos($to, $search) !== 0)
@@ -484,7 +486,16 @@ class RouteCollection implements RouteCollectionInterface
 
 			foreach ($matches[0] as $index => $pattern)
 			{
-				$route = str_replace($pattern, $params[$index], $route);
+				// Ensure that the param we're inserting matches
+				// the expected param type.
+				if (preg_match("/{$pattern}/", $params[$index]))
+				{
+					$route = str_replace($pattern, $params[$index], $route);
+				}
+				else
+				{
+					throw new \LogicException('A parameter does not match the expected type.');
+				}
 			}
 
 			return $route;
@@ -495,6 +506,5 @@ class RouteCollection implements RouteCollectionInterface
 	}
 
 	//--------------------------------------------------------------------
-
 
 }
