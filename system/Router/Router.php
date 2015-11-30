@@ -241,7 +241,7 @@ class Router implements RouterInterface
 
 		$segments = $this->validateRequest($segments);
 
-		// If we don't have aany segments left - try the default controller;
+		// If we don't have any segments left - try the default controller;
 		// WARNING: Directories get shifted out of tge segments array.
 		if (empty($segments))
 		{

@@ -1,6 +1,10 @@
 <?php
 
+require_once '../../vendor/autoload.php';
+
 use CodeIgniter\Router\Router;
+use org\bovigo\vfs\vfsStream;
+
 
 class RouterTest extends PHPUnit_Framework_TestCase
 {
@@ -9,6 +13,12 @@ class RouterTest extends PHPUnit_Framework_TestCase
 	 * @var \CodeIgniter\Router\RouteCollection $collection
 	 */
 	protected $collection;
+
+	/**
+	 * vfsStream root directory
+	 * @var
+	 */
+	protected $root;
 
 	public function setUp()
 	{
@@ -25,6 +35,8 @@ class RouterTest extends PHPUnit_Framework_TestCase
 		];
 
 		$this->collection->map($routes);
+
+		$this->root = vfsStream::setup(APPPATH.'controllers');
 	}
 
 	//--------------------------------------------------------------------
@@ -131,6 +143,46 @@ class RouterTest extends PHPUnit_Framework_TestCase
 
 		$this->assertTrue(is_callable($router->controllerName()));
 		$this->assertEquals($expects, '123-alpha');
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testAutoRouteFindsControllerWithFileAndMethod()
+	{
+	    $router = new Router($this->collection);
+
+		$router->autoRoute('myController/someMethod');
+
+		$this->assertEquals('MyController', $router->controllerName());
+		$this->assertEquals('someMethod', $router->methodName());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testAutoRouteFindsControllerWithFile()
+	{
+		$router = new Router($this->collection);
+
+		$router->autoRoute('myController');
+
+		$this->assertEquals('MyController', $router->controllerName());
+		$this->assertEquals('index', $router->methodName());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testAutoRouteFindsControllerWithSubfolder()
+	{
+		$router = new Router($this->collection);
+
+		mkdir(APPPATH.'controllers/subfolder');
+
+		$router->autoRoute('subfolder/myController/someMethod');
+
+		rmdir(APPPATH.'controllers/subfolder');
+
+		$this->assertEquals('MyController', $router->controllerName());
+		$this->assertEquals('someMethod', $router->methodName());
 	}
 
 	//--------------------------------------------------------------------
