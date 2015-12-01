@@ -62,7 +62,7 @@ class CURLRequestTest extends PHPUnit_Framework_TestCase
 		                 ->send('get', 'http://example.com');
 
 		$this->assertInstanceOf('CodeIgniter\\HTTP\\Response', $response);
-		$this->assertEquals($output, $response->body());
+		$this->assertEquals($output, $response->getBody());
 	}
 
 	//--------------------------------------------------------------------

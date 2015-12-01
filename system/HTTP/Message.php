@@ -35,7 +35,7 @@ class Message
 	 *
 	 * @return mixed
 	 */
-	public function body()
+	public function getBody()
 	{
 		return $this->body;
 	}
@@ -103,7 +103,7 @@ class Message
 	 *
 	 * @return array        An array of the request headers
 	 */
-	public function headers() : array
+	public function getHeaders() : array
 	{
 		// If no headers are defined, but the user is
 		// requesting it, then it's likely they want
@@ -124,7 +124,7 @@ class Message
 	 * @param      $index
 	 * @param null $filter
 	 */
-	public function header($name, $filter = null)
+	public function getHeader($name, $filter = null)
 	{
 		$orig_name = $this->getHeaderName($name);
 
@@ -160,7 +160,7 @@ class Message
 	 *
 	 * @return string
 	 */
-	public function headerLine(string $name): string
+	public function getHeaderLine(string $name): string
 	{
 		$orig_name = $this->getHeaderName($name);
 
@@ -248,7 +248,7 @@ class Message
 	 *
 	 * @return string
 	 */
-	public function protocolVersion(): string
+	public function getProtocolVersion(): string
 	{
 	    return $this->protocolVersion;
 	}
@@ -298,7 +298,7 @@ class Message
 	 */
 	public function negotiateMedia(array $supported, bool $strictMatch=false): string
 	{
-		return $this->getBestMatch($supported, $this->header('accept'), true, $strictMatch);
+		return $this->getBestMatch($supported, $this->getHeader('accept'), true, $strictMatch);
 	}
 
 	//--------------------------------------------------------------------
@@ -317,7 +317,7 @@ class Message
 	 */
 	public function negotiateCharset(array $supported): string
 	{
-		$match = $this->getBestMatch($supported, $this->header('accept-charset'), false, true);
+		$match = $this->getBestMatch($supported, $this->getHeader('accept-charset'), false, true);
 
 		// If no charset is shown as a match, ignore the directive
 		// as allowed by the RFC, and tell it a default value.
@@ -347,7 +347,7 @@ class Message
 	{
 		array_push($supported, 'identity');
 
-		return $this->getBestMatch($supported, $this->header('accept-encoding'));
+		return $this->getBestMatch($supported, $this->getHeader('accept-encoding'));
 	}
 
 	//--------------------------------------------------------------------
@@ -366,7 +366,7 @@ class Message
 	 */
 	public function negotiateLanguage(array $supported): string
 	{
-	    return $this->getBestMatch($supported, $this->header('accept-language'));
+	    return $this->getBestMatch($supported, $this->getHeader('accept-language'));
 	}
 	
 	//--------------------------------------------------------------------

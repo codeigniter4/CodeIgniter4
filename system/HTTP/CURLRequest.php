@@ -363,7 +363,7 @@ class CURLRequest extends Request
 	 */
 	protected function applyRequestHeaders(array $curl_options = []): array
 	{
-		$headers = $this->headers();
+		$headers = $this->getHeaders();
 
 		if (empty($head))
 		{
@@ -374,7 +374,7 @@ class CURLRequest extends Request
 
 		foreach ($headers as $name => $value)
 		{
-			$set[] = $name.': '.$this->headerLine($name);
+			$set[] = $name.': '.$this->getHeaderLine($name);
 		}
 
 		$curl_options[CURLOPT_HTTPHEADER] = $set;
@@ -404,7 +404,7 @@ class CURLRequest extends Request
 		if ($method == 'PUT' || $method == 'POST')
 		{
 			// See http://tools.ietf.org/html/rfc7230#section-3.3.2
-			if (is_null($this->header('content-length')))
+			if (is_null($this->getHeader('content-length')))
 			{
 				$this->setHeader('Content-Length', 0);
 			}
@@ -423,7 +423,7 @@ class CURLRequest extends Request
 	{
 		if ( ! empty($this->body))
 		{
-			$curl_options[CURLOPT_POSTFIELDS] = (string)$this->body();
+			$curl_options[CURLOPT_POSTFIELDS] = (string)$this->getBody();
 		}
 
 		return $curl_options;
@@ -534,7 +534,7 @@ class CURLRequest extends Request
 		// Decode Content
 		if ( ! empty($config['decode_content']))
 		{
-			$accept = $this->headerLine('Accept-Encoding');
+			$accept = $this->getHeaderLine('Accept-Encoding');
 
 			if ($accept)
 			{

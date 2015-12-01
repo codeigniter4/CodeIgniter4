@@ -30,7 +30,7 @@ class MessageTest extends PHPUnit_Framework_TestCase
 		$this->message->setHeader('Host', 'daisyduke.com');
 		$this->message->setHeader('Referer', 'RoscoePekoTrain.com');
 
-		$headers = $this->message->headers();
+		$headers = $this->message->getHeaders();
 
 		// Content-Type is likely set...
 		$this->assertTrue(count($headers) >= 2);
@@ -45,7 +45,7 @@ class MessageTest extends PHPUnit_Framework_TestCase
 	{
 		$this->message->setHeader('Host', 'daisyduke.com');
 
-	    $this->assertEquals('daisyduke.com', $this->message->header('Host'));
+	    $this->assertEquals('daisyduke.com', $this->message->getHeader('Host'));
 	}
 
 	//--------------------------------------------------------------------
@@ -54,8 +54,8 @@ class MessageTest extends PHPUnit_Framework_TestCase
 	{
 		$this->message->setHeader('Host', 'daisyduke.com');
 
-		$this->assertEquals('daisyduke.com', $this->message->header('host'));
-		$this->assertEquals('daisyduke.com', $this->message->header('HOST'));
+		$this->assertEquals('daisyduke.com', $this->message->getHeader('host'));
+		$this->assertEquals('daisyduke.com', $this->message->getHeader('HOST'));
 	}
 
 	//--------------------------------------------------------------------
@@ -65,8 +65,8 @@ class MessageTest extends PHPUnit_Framework_TestCase
 	    $this->message->setHeader('first', 'kiss');
 		$this->message->setHeader('second', ['black', 'book']);
 
-		$this->assertEquals('kiss', $this->message->header('FIRST'));
-		$this->assertEquals(['black', 'book'], $this->message->header('Second'));
+		$this->assertEquals('kiss', $this->message->getHeader('FIRST'));
+		$this->assertEquals(['black', 'book'], $this->message->getHeader('Second'));
 	}
 
 	//--------------------------------------------------------------------
@@ -76,8 +76,8 @@ class MessageTest extends PHPUnit_Framework_TestCase
 		$this->message->setHeader('Accept', ['json', 'html']);
 		$this->message->setHeader('Host', 'daisyduke.com');
 
-		$this->assertEquals('json, html', $this->message->headerLine('Accept'));
-		$this->assertEquals('daisyduke.com', $this->message->headerLine('Host'));
+		$this->assertEquals('json, html', $this->message->getHeaderLine('Accept'));
+		$this->assertEquals('daisyduke.com', $this->message->getHeaderLine('Host'));
 	}
 
 	//--------------------------------------------------------------------
@@ -88,7 +88,7 @@ class MessageTest extends PHPUnit_Framework_TestCase
 
 		$this->message->removeHeader('host');
 
-		$this->assertEquals('', $this->message->header('host'));
+		$this->assertEquals('', $this->message->getHeader('host'));
 	}
 
 	//--------------------------------------------------------------------
@@ -99,7 +99,7 @@ class MessageTest extends PHPUnit_Framework_TestCase
 
 		$this->message->appendHeader('Accept', 'xml');
 
-		$this->assertEquals(['json', 'html', 'xml'], $this->message->header('accept'));
+		$this->assertEquals(['json', 'html', 'xml'], $this->message->getHeader('accept'));
 	}
 
 	//--------------------------------------------------------------------
@@ -119,7 +119,7 @@ class MessageTest extends PHPUnit_Framework_TestCase
 	{
 	    $this->message->setProtocolVersion('1.1');
 
-		$this->assertEquals('1.1', $this->message->protocolVersion());
+		$this->assertEquals('1.1', $this->message->getProtocolVersion());
 	}
 
 	//--------------------------------------------------------------------
@@ -138,7 +138,7 @@ class MessageTest extends PHPUnit_Framework_TestCase
 
 	    $this->message->setBody($body);
 
-		$this->assertEquals($body, $this->message->body());
+		$this->assertEquals($body, $this->message->getBody());
 	}
 
 	//--------------------------------------------------------------------

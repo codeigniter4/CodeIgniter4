@@ -401,9 +401,9 @@ class Response extends Message implements ResponseInterface
 		header(sprintf('HTTP/%s %s %s', $this->protocolVersion, $this->statusCode, $this->reason), true, $this->statusCode);
 
 		// Send all of our headers
-		foreach ($this->headers() as $name => $values)
+		foreach ($this->getHeaders() as $name => $values)
 		{
-			header($name.': '.$this->headerLine($name), false, $this->statusCode);
+			header($name.': '.$this->getHeaderLine($name), false, $this->statusCode);
 		}
 
 		return $this;
