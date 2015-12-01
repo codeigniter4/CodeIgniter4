@@ -696,7 +696,7 @@ class URI
 	 *
 	 * @return $this
 	 */
-	public function setFragment(\string $string)
+	public function setFragment(string $string)
 	{
 		$this->fragment = trim($string, '# ');
 
@@ -712,7 +712,7 @@ class URI
 	 *
 	 * @param $path
 	 */
-	protected function filterPath(\string $path=null)
+	protected function filterPath(string $path=null)
 	{
 		$orig = $path;
 
@@ -801,7 +801,7 @@ class URI
 	 *
 	 * @param string $uri
 	 */
-	public function resolveRelativeURI(\string $uri)
+	public function resolveRelativeURI(string $uri)
 	{
 		/*
 		 * NOTE: We don't use removeDotSegments in this
@@ -912,7 +912,7 @@ class URI
 	 *
 	 * @param URI $uri
 	 */
-	public function removeDotSegments(\string $path): string
+	public function removeDotSegments(string $path): string
 	{
 		if (empty($path) || $path == '/') return $path;
 
