@@ -40,14 +40,14 @@ class Services {
 
 	public static function timer()
 	{
-	    return new \CodeIgniter\Benchmark\Timer();
+	    return new \CodeIgniter\Debug\Timer();
 	}
 
 	//--------------------------------------------------------------------
 
 	public static function iterator()
 	{
-	    return new \CodeIgniter\Benchmark\Iterator();
+	    return new \CodeIgniter\Debug\Iterator();
 	}
 
 	//--------------------------------------------------------------------

@@ -155,7 +155,7 @@ else
 $output = ob_get_contents();
 ob_end_clean();
 
-$output = str_replace('{elapsed_time}', $benchmark->elapsedTime('total_execution'), $output);
+$output = str_replace('{elapsed_time}', $benchmark->getElapsedTime('total_execution'), $output);
 
 $response->setBody($output);
 

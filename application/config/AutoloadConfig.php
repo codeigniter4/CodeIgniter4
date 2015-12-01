@@ -64,8 +64,8 @@ class AutoloadConfig
 		$this->classmap = [
 			'CodeIgniter\Loader'                          => BASEPATH.'Loader.php',
 			'CodeIgniter\Controller'                      => BASEPATH.'Controller.php',
-			'CodeIgniter\Benchmark\Timer'                 => BASEPATH.'Benchmark/Timer.php',
-			'CodeIgniter\Benchmark\Iterator'              => BASEPATH.'Benchmark/Iterator.php',
+			'CodeIgniter\Debug\Timer'                     => BASEPATH.'Debug/Timer.php',
+			'CodeIgniter\Debug\Iterator'                  => BASEPATH.'Debug/Iterator.php',
 			'CodeIgniter\Config\BaseConfig'               => BASEPATH.'Config/BaseConfig.php',
 			'CodeIgniter\HTTP\Message'                    => BASEPATH.'HTTP/Message.php',
 			'CodeIgniter\HTTP\Request'                    => BASEPATH.'HTTP/Request.php',

@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Benchmark;
+<?php namespace CodeIgniter\Debug;
 
 /**
  * Class Timer
@@ -31,7 +31,7 @@ class Timer
 	 *
 	 * @param string $name  The name of this timer.
 	 */
-	public function start($name)
+	public function start(string $name)
 	{
 		$this->timers[strtolower($name)] = [
 			'start' => microtime(true),
@@ -49,7 +49,7 @@ class Timer
 	 *
 	 * @param string $name   The name of this timer.
 	 */
-	public function stop($name)
+	public function stop(string $name)
 	{
 		$name = strtolower($name);
 
@@ -73,7 +73,7 @@ class Timer
 	 *                          Returns a float representing the number of
 	 *                          seconds elapsed while that timer was running.
 	 */
-	public function elapsedTime($name, $decimals = 4)
+	public function getElapsedTime(string $name, int $decimals = 4)
 	{
 	    $name = strtolower($name);
 
@@ -101,7 +101,7 @@ class Timer
 	 *
 	 * @return array
 	 */
-	public function timers($decimals = 4)
+	public function getTimers(int $decimals = 4)
 	{
 		$timers = $this->timers;
 

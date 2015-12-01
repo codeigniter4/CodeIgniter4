@@ -2,7 +2,7 @@
 
 require_once 'system/Benchmark/Timer.php';
 
-use CodeIgniter\Benchmark\Timer;
+use CodeIgniter\Debug\Timer;
 
 class DITest extends PHPUnit_Framework_TestCase {
 
@@ -27,7 +27,7 @@ class DITest extends PHPUnit_Framework_TestCase {
 		sleep(1);
 		$timer->stop('test1');
 
-		$timers = $timer->timers();
+		$timers = $timer->getTimers();
 
 		$this->assertTrue(count($timers) === 1, "No timers were stored.");
 		$this->assertArrayHasKey('test1', $timers, 'No "test1" array found.');
@@ -49,7 +49,7 @@ class DITest extends PHPUnit_Framework_TestCase {
 		$timer->start('test1');
 		sleep(1);
 
-		$timers = $timer->timers();
+		$timers = $timer->getTimers();
 
 		$this->assertArrayHasKey('duration', $timers['test1'], "No duration was calculated.");
 		$this->assertGreaterThanOrEqual(1.0, $timers['test1']['duration']);
@@ -65,11 +65,11 @@ class DITest extends PHPUnit_Framework_TestCase {
 		sleep(1);
 		$timer->stop('test1');
 
-		$timers = $timer->timers();
+		$timers = $timer->getTimers();
 
 		$expected = $timers['test1']['duration'];
 
-		$this->assertEquals($expected, $timer->elapsedTime('test1'));
+		$this->assertEquals($expected, $timer->getElapsedTime('test1'));
 	}
 
 	//--------------------------------------------------------------------

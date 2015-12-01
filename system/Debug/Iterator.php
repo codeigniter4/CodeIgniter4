@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Benchmark;
+<?php namespace CodeIgniter\Debug;
 
 class Iterator
 {
