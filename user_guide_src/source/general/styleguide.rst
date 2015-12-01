@@ -1,5 +1,6 @@
+######################
 PHP Coding style guide
-----------------------
+######################
 
 The following document declares a set of coding convention rules to be
 followed when contributing PHP code to the CodeIgniter project.
@@ -20,11 +21,12 @@ be interpreted as described in `RFC 2119 <http://www.ietf.org/rfc/rfc2119.txt>`_
 *Note: When used below, the term "class" refers to all kinds of classes,
 interfaces and traits.*
 
+*****
 Files
-=====
+*****
 
 Formatting
-##########
+==========
 
 - Files MUST use UTF-8 character set encoding without BOM.
 - Files MUST use UNIX line endings (LF: `\n`).
@@ -33,14 +35,14 @@ Formatting
 TODO: Add (links for?) instructions to configure popular IDEs and plain-text editors.
 
 Structure
-#########
+=========
 
 - A single file SHOULD NOT declare more than one class.
 - Files SHOULD either declare symbols (i.e. classes, functions, constants)
   or execute non-declarative logic, but SHOULD NOT do both.
 
 Naming
-######
+======
 
 - File names MUST end with a ".php" name extension and MUST NOT have
   multiple name extensions.
@@ -49,8 +51,9 @@ Naming
   the ".php" name extension).
 - Files declaring functions SHOULD be named in *snake_case.php*.
 
+*************************************
 Whitespace, indentation and alignment
-=====================================
+*************************************
 
 - Indentation MUST use only tabs.
 - Alignment MUST use only spaces.
@@ -65,11 +68,12 @@ TODO: Add examples for indentation vs. alignment.
   well as any other whitespace usage that is not functionally required or
   explicitly described in this document.
 
+****
 Code
-====
+****
 
 PHP tags
-########
+========
 
 - Opening tags MUST only use the `<?php` and `<?=` forms.
 
@@ -83,7 +87,7 @@ PHP tags
   - Scripts that don't produce output MUST NOT use the closing `?>` tag.
 
 Namespaces and classes
-######################
+======================
 
 - Class names and namespaces SHOULD be declared in `UpperCamelCase`, unless
   another form is *functionally* required.
@@ -98,7 +102,7 @@ Namespaces and classes
   `public`, `private` or `protected`).
 
 Procedural code
-###############
+===============
 
 - Function and variable names SHOULD be declared in `snake_case()` (all
   lowercase letters, separated by underscores), unless another form is
@@ -106,10 +110,10 @@ Procedural code
 - Constants MUST be declared in `CAPITALS_SEPARATED_BY_UNDERSCORES`.
 
 Formatting
-##########
+==========
 
 Keywords
-********
+========
 
 - All keywords MUST be written in lowercase letters. This includes "scalar"
   types, but does NOT include core PHP classes such as `stdClass` or
@@ -125,7 +129,7 @@ Keywords
   on the same line.
 
 Operators
-*********
+=========
 
 - The single dot concatenation, incrementing, decrementing, error
   suppression operators and references MUST NOT be separated from their
@@ -137,7 +141,7 @@ Operators
 - An operator MAY be the first set of printable characters on a line.
 
 Other
-*****
+=====
 
 - Argument separators (comma: `,`) MUST NOT be preceeded by a whitespace
   character and MUST be followed by a space character or a newline
