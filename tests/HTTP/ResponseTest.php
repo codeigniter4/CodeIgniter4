@@ -10,7 +10,7 @@ class ResponseTest extends PHPUnit_Framework_TestCase
 
 		$response->setStatusCode(200);
 
-		$this->assertEquals(200, $response->statusCode());
+		$this->assertEquals(200, $response->getStatusCode());
 	}
 
 	//--------------------------------------------------------------------
@@ -32,7 +32,7 @@ class ResponseTest extends PHPUnit_Framework_TestCase
 
 		$response->setStatusCode(200);
 
-		$this->assertEquals('OK', $response->reason());
+		$this->assertEquals('OK', $response->getReason());
 	}
 
 	//--------------------------------------------------------------------
@@ -43,7 +43,7 @@ class ResponseTest extends PHPUnit_Framework_TestCase
 
 		$response->setStatusCode(200, 'Not the mama');
 
-		$this->assertEquals('Not the mama', $response->reason());
+		$this->assertEquals('Not the mama', $response->getReason());
 	}
 
 	//--------------------------------------------------------------------
@@ -83,7 +83,7 @@ class ResponseTest extends PHPUnit_Framework_TestCase
 		$response = new Response();
 
 		$this->setExpectedException('BadMethodCallException', 'HTTP Response is missing a status code');
-		$response->statusCode();
+		$response->getStatusCode();
 	}
 
 	//--------------------------------------------------------------------

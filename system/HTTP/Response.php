@@ -124,7 +124,7 @@ class Response extends Message implements ResponseInterface
 	 *
 	 * @return int Status code.
 	 */
-	public function statusCode(): int
+	public function getStatusCode(): int
 	{
 		if (empty($this->statusCode))
 		{
@@ -191,7 +191,7 @@ class Response extends Message implements ResponseInterface
 	 *
 	 * @return string
 	 */
-	public function reason(): string
+	public function getReason(): string
 	{
 		if (empty($this->reason))
 		{

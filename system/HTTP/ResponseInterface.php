@@ -23,7 +23,7 @@ interface ResponseInterface
 	 *
 	 * @return int Status code.
 	 */
-	public function statusCode(): int;
+	public function getStatusCode(): int;
 
 	//--------------------------------------------------------------------
 
@@ -56,7 +56,7 @@ interface ResponseInterface
 	 *
 	 * @return string
 	 */
-	public function reason(): string;
+	public function getReason(): string;
 
 	//--------------------------------------------------------------------
 
