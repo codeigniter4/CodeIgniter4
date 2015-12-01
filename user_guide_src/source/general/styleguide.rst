@@ -101,6 +101,23 @@ Namespaces and classes
 - Class methods and properties MUST have visibility declarations (i.e.
   `public`, `private` or `protected`).
 
+Methods
+-------
+
+To maintain consistency between core classes the following method names
+MUST be used where applicable:
+
+- `getX()` when the method returns returns a property value, or null if not set
+- `setX(value)` changes a property value, doesn't return anything, and can
+  throw exceptions
+- `hasX()` returns a boolean to if a property exists
+- `newX()` creates an instance of a/the component object and returns it,
+  and can throw exceptions
+- `isX()` returns true/false for boolean properties
+
+- Methods SHOULD use type hints and return type hints
+
+
 Procedural code
 ===============
 
