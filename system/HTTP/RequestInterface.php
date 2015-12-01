@@ -7,7 +7,7 @@ interface RequestInterface
 	 *
 	 * @return string IP address
 	 */
-	public function ipAddress(): string;
+	public function getIPAddress(): string;
 
 	//--------------------------------------------------------------------
 
@@ -19,7 +19,7 @@ interface RequestInterface
 	 *
 	 * @return bool
 	 */
-	public function validIP(string $ip, string $which = null): bool;
+	public function isValidIP(string $ip, string $which = null): bool;
 
 	//--------------------------------------------------------------------
 
@@ -30,7 +30,7 @@ interface RequestInterface
 	 *
 	 * @return string
 	 */
-	public function method($upper = false): string;
+	public function getMethod($upper = false): string;
 
 	//--------------------------------------------------------------------
 

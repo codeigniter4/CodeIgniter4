@@ -30,7 +30,7 @@ class Request extends Message implements RequestInterface
 	 *
 	 * @return string IP address
 	 */
-	public function ipAddress(): string
+	public function getIPAddress(): string
 	{
 		if (! empty($this->ipAddress))
 		{
@@ -168,7 +168,7 @@ class Request extends Message implements RequestInterface
 	 *
 	 * @return bool
 	 */
-	public function validIP(string $ip, string $which = null): bool
+	public function isValidIP(string $ip, string $which = null): bool
 	{
 		switch (strtolower($which))
 		{
@@ -196,7 +196,7 @@ class Request extends Message implements RequestInterface
 	 *
 	 * @return string
 	 */
-	public function method($upper = false): string
+	public function getMethod($upper = false): string
 	{
 		return ($upper)
 			? strtoupper($this->server('REQUEST_METHOD'))

@@ -36,19 +36,19 @@ class RequestTest extends PHPUnit_Framework_TestCase
 	 */
 	public function testValidIPAddress($expected, $address, $type=null)
 	{
-		$this->assertEquals($expected, $this->request->validIP($address, $type));
+		$this->assertEquals($expected, $this->request->isValidIP($address, $type));
 	}
 
 	//--------------------------------------------------------------------
 
 	public function testMethodReturnsRightStuff()
 	{
-	    $this->assertEquals('', $this->request->method());
+	    $this->assertEquals('', $this->request->getMethod());
 
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 
-		$this->assertEquals('get', $this->request->method());
-		$this->assertEquals('GET', $this->request->method(true));
+		$this->assertEquals('get', $this->request->getMethod());
+		$this->assertEquals('GET', $this->request->getMethod(true));
 	}
 
 	//--------------------------------------------------------------------
