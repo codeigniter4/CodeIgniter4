@@ -38,8 +38,8 @@ class Router implements RouterInterface
 	{
 		$this->collection = $routes;
 
-		$this->controller = $this->collection->defaultController();
-		$this->method     = $this->collection->defaultMethod();
+		$this->controller = $this->collection->getDefaultController();
+		$this->method     = $this->collection->getDefaultMethod();
 	}
 
 	//--------------------------------------------------------------------
@@ -184,7 +184,7 @@ class Router implements RouterInterface
 	 */
 	protected function checkRoutes(string $uri): bool
 	{
-		$routes = $this->collection->routes();
+		$routes = $this->collection->getRoutes();
 
 		// Don't waste any time
 		if (empty($routes))

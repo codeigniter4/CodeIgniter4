@@ -128,7 +128,7 @@ interface RouteCollectionInterface
 	 *
 	 * @return string
 	 */
-	public function defaultController();
+	public function getDefaultController();
 
 	//--------------------------------------------------------------------
 
@@ -137,7 +137,7 @@ interface RouteCollectionInterface
 	 *
 	 * @return string
 	 */
-	public function defaultMethod();
+	public function getDefaultMethod();
 
 	//--------------------------------------------------------------------
 
@@ -148,7 +148,7 @@ interface RouteCollectionInterface
 	 *
 	 * @return mixed
 	 */
-	public function translateURIDashes();
+	public function shouldTranslateURIDashes();
 
 	//--------------------------------------------------------------------
 
@@ -166,7 +166,7 @@ interface RouteCollectionInterface
 	 *
 	 * @return mixed
 	 */
-	public function routes();
+	public function getRoutes();
 
 	//--------------------------------------------------------------------
 
@@ -175,7 +175,7 @@ interface RouteCollectionInterface
 	 *
 	 * @return string
 	 */
-	public function HTTPVerb();
+	public function getHTTPVerb();
 
 	//--------------------------------------------------------------------
 

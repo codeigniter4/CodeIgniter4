@@ -48,8 +48,8 @@ class RouterTest extends PHPUnit_Framework_TestCase
 
 		$router->handle('');
 
-		$this->assertEquals($this->collection->defaultController(), $router->controllerName());
-		$this->assertEquals($this->collection->defaultMethod(), $router->methodName());
+		$this->assertEquals($this->collection->getDefaultController(), $router->controllerName());
+		$this->assertEquals($this->collection->getDefaultMethod(), $router->methodName());
 	}
 
 	//--------------------------------------------------------------------

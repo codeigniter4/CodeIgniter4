@@ -308,7 +308,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @return string
 	 */
-	public function defaultController(): string
+	public function getDefaultController(): string
 	{
 		return $this->defaultController;
 	}
@@ -320,7 +320,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @return string
 	 */
-	public function defaultMethod(): string
+	public function getDefaultMethod(): string
 	{
 		return $this->defaultMethod;
 	}
@@ -402,7 +402,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @return array
 	 */
-	public function routes()
+	public function getRoutes()
 	{
 		return $this->routes;
 	}
@@ -414,7 +414,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @return string
 	 */
-	public function HTTPVerb()
+	public function getHTTPVerb()
 	{
 		return $this->http_verb;
 	}
@@ -426,7 +426,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @return bool
 	 */
-	public function translateURIDashes()
+	public function shouldTranslateURIDashes()
 	{
 		return $this->translateURIDashes;
 	}

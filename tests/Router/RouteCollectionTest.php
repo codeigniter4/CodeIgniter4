@@ -27,7 +27,7 @@ class RouteCollectionTest extends PHPUnit_Framework_TestCase
 			'home' => '\my\controller',
 		];
 
-		$routes = $collection->routes();
+		$routes = $collection->getRoutes();
 
 		$this->assertEquals($expects, $routes);
 	}
@@ -44,7 +44,7 @@ class RouteCollectionTest extends PHPUnit_Framework_TestCase
 			'home' => '\controller',
 		];
 
-		$routes = $collection->routes();
+		$routes = $collection->getRoutes();
 
 		$this->assertEquals($expects, $routes);
 	}
@@ -61,7 +61,7 @@ class RouteCollectionTest extends PHPUnit_Framework_TestCase
 			'home' => '\my\controller',
 		];
 
-		$routes = $collection->routes();
+		$routes = $collection->getRoutes();
 
 		$this->assertEquals($expects, $routes);
 	}
@@ -80,7 +80,7 @@ class RouteCollectionTest extends PHPUnit_Framework_TestCase
 			'home' => '\controller',
 		];
 
-		$routes = $collection->routes();
+		$routes = $collection->getRoutes();
 
 		$this->assertEquals($expects, $routes);
 	}
@@ -95,7 +95,7 @@ class RouteCollectionTest extends PHPUnit_Framework_TestCase
 
 		$collection->add('home', 'controller', 'post');
 
-		$routes = $collection->routes();
+		$routes = $collection->getRoutes();
 
 		$this->assertEquals([], $routes);
 	}
@@ -114,7 +114,7 @@ class RouteCollectionTest extends PHPUnit_Framework_TestCase
 			'home' => '\controller',
 		];
 
-		$routes = $collection->routes();
+		$routes = $collection->getRoutes();
 
 		$this->assertEquals($expects, $routes);
 	}
@@ -131,7 +131,7 @@ class RouteCollectionTest extends PHPUnit_Framework_TestCase
 			'home/(.*)' => '\controller',
 		];
 
-		$routes = $collection->routes();
+		$routes = $collection->getRoutes();
 
 		$this->assertEquals($expects, $routes);
 	}
@@ -149,7 +149,7 @@ class RouteCollectionTest extends PHPUnit_Framework_TestCase
 			'home/(:-))' => '\controller',
 		];
 
-		$routes = $collection->routes();
+		$routes = $collection->getRoutes();
 
 		$this->assertEquals($expects, $routes);
 	}
@@ -167,7 +167,7 @@ class RouteCollectionTest extends PHPUnit_Framework_TestCase
 			'home' => '\CodeIgniter\controller',
 		];
 
-		$routes = $collection->routes();
+		$routes = $collection->getRoutes();
 
 		$this->assertEquals($expects, $routes);
 	}
@@ -185,7 +185,7 @@ class RouteCollectionTest extends PHPUnit_Framework_TestCase
 			'home' => '\CodeIgniter\controller',
 		];
 
-		$routes = $collection->routes();
+		$routes = $collection->getRoutes();
 
 		$this->assertEquals($expects, $routes);
 	}
@@ -207,7 +207,7 @@ class RouteCollectionTest extends PHPUnit_Framework_TestCase
 			'home' => $map,
 		];
 
-		$routes = $collection->routes();
+		$routes = $collection->getRoutes();
 
 		$this->assertEquals($expects, $routes);
 	}
@@ -229,7 +229,7 @@ class RouteCollectionTest extends PHPUnit_Framework_TestCase
 
 		$collection->map($map);
 
-		$routes = $collection->routes();
+		$routes = $collection->getRoutes();
 
 		$this->assertEquals($map, $routes);
 	}
@@ -252,7 +252,7 @@ class RouteCollectionTest extends PHPUnit_Framework_TestCase
 
 		$collection->map($map, ['prefix' => 'my_']);
 
-		$routes = $collection->routes();
+		$routes = $collection->getRoutes();
 
 		$this->assertEquals($expected, $routes);
 	}
@@ -274,7 +274,7 @@ class RouteCollectionTest extends PHPUnit_Framework_TestCase
 
 		$collection->map($map, ['hostname' => 'google.com']);
 
-		$routes = $collection->routes();
+		$routes = $collection->getRoutes();
 
 		$this->assertEquals($expected, $routes);
 	}
@@ -294,7 +294,7 @@ class RouteCollectionTest extends PHPUnit_Framework_TestCase
 
 		$collection->map($map, ['hostname' => 'mickeymouse.com']);
 
-		$routes = $collection->routes();
+		$routes = $collection->getRoutes();
 
 		$this->assertEquals($map, $routes);
 	}
@@ -317,7 +317,7 @@ class RouteCollectionTest extends PHPUnit_Framework_TestCase
 
 		$collection->map($map, ['namespace' => 'App\Controllers']);
 
-		$routes = $collection->routes();
+		$routes = $collection->getRoutes();
 
 		$this->assertEquals($expected, $routes);
 	}
@@ -340,7 +340,7 @@ class RouteCollectionTest extends PHPUnit_Framework_TestCase
 
 		$collection->map($map, ['namespace' => '\App\Controllers']);
 
-		$routes = $collection->routes();
+		$routes = $collection->getRoutes();
 
 		$this->assertEquals($expected, $routes);
 	}
@@ -363,7 +363,7 @@ class RouteCollectionTest extends PHPUnit_Framework_TestCase
 
 		$collection->map($map, ['namespace' => 'App\Controllers']);
 
-		$routes = $collection->routes();
+		$routes = $collection->getRoutes();
 
 		$this->assertEquals($expected, $routes);
 
@@ -382,7 +382,7 @@ class RouteCollectionTest extends PHPUnit_Framework_TestCase
 
 		$collection->map($map);
 
-		$routes = $collection->routes();
+		$routes = $collection->getRoutes();
 
 		$this->assertEquals($expected, $routes);
 	}
@@ -409,7 +409,7 @@ class RouteCollectionTest extends PHPUnit_Framework_TestCase
 
 		$collection->map($map);
 
-		$routes = $collection->routes();
+		$routes = $collection->getRoutes();
 
 		$this->assertEquals($expected, $routes);
 	}
@@ -435,7 +435,7 @@ class RouteCollectionTest extends PHPUnit_Framework_TestCase
 
 		$collection->map($map);
 
-		$routes = $collection->routes();
+		$routes = $collection->getRoutes();
 
 		$this->assertEquals($expected, $routes);
 	}
