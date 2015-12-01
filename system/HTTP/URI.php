@@ -164,7 +164,7 @@ class URI
 	 * @see https://tools.ietf.org/html/rfc3986#section-3.1
 	 * @return string The URI scheme.
 	 */
-	public function scheme(): string
+	public function getScheme(): string
 	{
 		return $this->scheme;
 	}
@@ -189,7 +189,7 @@ class URI
 	 * @see https://tools.ietf.org/html/rfc3986#section-3.2
 	 * @return string The URI authority, in "[user-info@]host[:port]" format.
 	 */
-	public function authority(): string
+	public function getAuthority(): string
 	{
 		if (empty($this->host))
 		{
@@ -198,9 +198,9 @@ class URI
 
 		$authority = $this->host;
 
-		if ( ! empty($this->userInfo()))
+		if ( ! empty($this->getUserInfo()))
 		{
-			$authority = $this->userInfo().'@'.$authority;
+			$authority = $this->getUserInfo().'@'.$authority;
 		}
 
 		if ( ! empty($this->port))
@@ -240,7 +240,7 @@ class URI
 	 *
 	 * @return string The URI user information, in "username[:password]" format.
 	 */
-	public function userInfo()
+	public function getUserInfo()
 	{
 		$userInfo = $this->user;
 
@@ -276,7 +276,7 @@ class URI
 	 * @see http://tools.ietf.org/html/rfc3986#section-3.2.2
 	 * @return string The URI host.
 	 */
-	public function host()
+	public function getHost()
 	{
 		return $this->host;
 	}
@@ -298,7 +298,7 @@ class URI
 	 *
 	 * @return null|int The URI port.
 	 */
-	public function port()
+	public function getPort()
 	{
 		return $this->port;
 	}
@@ -330,21 +330,21 @@ class URI
 	 * @see https://tools.ietf.org/html/rfc3986#section-3.3
 	 * @return string The URI path.
 	 */
-	public function path(): string
+	public function getPath(): string
 	{
 		return (is_null($this->path)) ? '' : $this->path;
 	}
 
 	//--------------------------------------------------------------------
 
-	public function query(): string
+	public function getQuery(): string
 	{
 		return is_null($this->query) ? '' : $this->query;
 	}
 
 	//--------------------------------------------------------------------
 
-	public function fragment(): string
+	public function getFragment(): string
 	{
 		return is_null($this->fragment) ? '' : $this->fragment;
 	}
@@ -356,7 +356,7 @@ class URI
 	 *
 	 * @return array
 	 */
-	public function segments(): array
+	public function getSegments(): array
 	{
 		return $this->segments;
 	}
@@ -371,7 +371,7 @@ class URI
 	 * @return string     The value of the segment. If no segment is found,
 	 *                    throws InvalidArgumentError
 	 */
-	public function segment(int $number): string
+	public function getSegment(int $number): string
 	{
 		// The segment should treat the array as 1-based for the user
 		// but we still have to deal with a zero-based array.
@@ -392,7 +392,7 @@ class URI
 	 *
 	 * @return int
 	 */
-	public function totalSegments(): int
+	public function getTotalSegments(): int
 	{
 		return count($this->segments);
 	}
@@ -406,11 +406,11 @@ class URI
 	public function __toString()
 	{
 		return self::createURIString(
-			$this->scheme(),
-			$this->authority(),
-			$this->path(), // Absolute URIs should use a "/" for an empty path
-			$this->query(),
-			$this->fragment()
+			$this->getScheme(),
+			$this->getAuthority(),
+			$this->getPath(), // Absolute URIs should use a "/" for an empty path
+			$this->getQuery(),
+			$this->getFragment()
 		);
 	}
 
@@ -696,7 +696,7 @@ class URI
 	 *
 	 * @return $this
 	 */
-	public function setFragment(string $string)
+	public function setFragment(\string $string)
 	{
 		$this->fragment = trim($string, '# ');
 
@@ -712,7 +712,7 @@ class URI
 	 *
 	 * @param $path
 	 */
-	protected function filterPath($path)
+	protected function filterPath(\string $path=null)
 	{
 		$orig = $path;
 
@@ -801,7 +801,7 @@ class URI
 	 *
 	 * @param string $uri
 	 */
-	public function resolveRelativeURI(string $uri)
+	public function resolveRelativeURI(\string $uri)
 	{
 		/*
 		 * NOTE: We don't use removeDotSegments in this
@@ -810,7 +810,7 @@ class URI
 		$relative    = new URI();
 		$relative->setURI($uri);
 
-		if ($relative->scheme() == $this->scheme())
+		if ($relative->getScheme() == $this->getScheme())
 		{
 			$relative->setScheme('');
 		}
@@ -818,57 +818,57 @@ class URI
 		$transformed = clone $relative;
 
 		// 5.2.2 Transform References
-		if (! empty($relative->scheme()))
+		if (! empty($relative->getScheme()))
 		{
-			$transformed->setScheme($relative->scheme())
-						->setAuthority($relative->authority())
-						->setPath($relative->path())
-						->setQuery($relative->query());
+			$transformed->setScheme($relative->getScheme())
+						->setAuthority($relative->getAuthority())
+						->setPath($relative->getPath())
+						->setQuery($relative->getQuery());
 		}
 		else
 		{
-			if (! empty($relative->authority()))
+			if (! empty($relative->getAuthority()))
 			{
-				$transformed->setAuthority($relative->authority())
-							->setPath($relative->path())
-							->setQuery($relative->query());
+				$transformed->setAuthority($relative->getAuthority())
+							->setPath($relative->getPath())
+							->setQuery($relative->getQuery());
 			}
 			else
 			{
-				if ($relative->path() == '')
+				if ($relative->getPath() == '')
 				{
-					$transformed->setPath($this->path());
+					$transformed->setPath($this->getPath());
 
-					if (! is_null($relative->query()))
+					if (! is_null($relative->getQuery()))
 					{
-						$transformed->setQuery($relative->query());
+						$transformed->setQuery($relative->getQuery());
 					}
 					else
 					{
-						$transformed->setQuery($this->query());
+						$transformed->setQuery($this->getQuery());
 					}
 				}
 				else
 				{
-					if (substr($relative->path(), 0, 1) == '/')
+					if (substr($relative->getPath(), 0, 1) == '/')
 					{
-						$transformed->setPath($relative->path());
+						$transformed->setPath($relative->getPath());
 					}
 					else
 					{
 						$transformed->setPath($this->mergePaths($this, $relative));
 					}
 
-					$transformed->setQuery($relative->query());
+					$transformed->setQuery($relative->getQuery());
 				}
 
-				$transformed->setAuthority($this->authority());
+				$transformed->setAuthority($this->getAuthority());
 			}
 
-			$transformed->setScheme($this->scheme());
+			$transformed->setScheme($this->getScheme());
 		}
 
-		$transformed->setFragment($relative->fragment());
+		$transformed->setFragment($relative->getFragment());
 
 		return $transformed;
 	}
@@ -886,17 +886,17 @@ class URI
 	 */
 	protected function mergePaths(URI $base, URI $reference)
 	{
-		if (! empty($base->authority()) && empty($base->path()))
+		if (! empty($base->getAuthority()) && empty($base->getPath()))
 		{
-			return '/'. ltrim($base->path(), '/ ');
+			return '/'. ltrim($base->getPath(), '/ ');
 		}
 
-		$path = explode('/', $base->path());
+		$path = explode('/', $base->getPath());
 
 		if (empty($path[0])) unset($path[0]);
 
 		array_pop($path);
-		array_push($path, $reference->path());
+		array_push($path, $reference->getPath());
 
 		return implode('/', $path);
 	}
@@ -912,7 +912,7 @@ class URI
 	 *
 	 * @param URI $uri
 	 */
-	public function removeDotSegments(string $path): string
+	public function removeDotSegments(\string $path): string
 	{
 		if (empty($path) || $path == '/') return $path;
 

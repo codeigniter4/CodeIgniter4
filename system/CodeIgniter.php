@@ -114,7 +114,7 @@ require APPPATH.'config/Routes.php';
 
 $router = \App\Config\Services::router($routes);
 
-$controller = $router->handle($request->uri->path());
+$controller = $router->handle($request->uri->getPath());
 
 ob_start();
 

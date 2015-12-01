@@ -21,18 +21,18 @@ class URITest extends PHPUnit_Framework_TestCase
 	{
 		$uri = new URI('http://username:password@hostname:9090/path?arg=value#anchor');
 
-		$this->assertEquals('http', $uri->scheme());
-		$this->assertEquals('username', $uri->userInfo());
-		$this->assertEquals('hostname', $uri->host());
-		$this->assertEquals('/path', $uri->path());
-		$this->assertEquals('arg=value', $uri->query());
-		$this->assertEquals('9090', $uri->port());
-		$this->assertEquals('anchor', $uri->fragment());
+		$this->assertEquals('http', $uri->getScheme());
+		$this->assertEquals('username', $uri->getUserInfo());
+		$this->assertEquals('hostname', $uri->getHost());
+		$this->assertEquals('/path', $uri->getPath());
+		$this->assertEquals('arg=value', $uri->getQuery());
+		$this->assertEquals('9090', $uri->getPort());
+		$this->assertEquals('anchor', $uri->getFragment());
 
 		// Password ignored by default for security reasons.
-		$this->assertEquals('username@hostname:9090', $uri->authority());
+		$this->assertEquals('username@hostname:9090', $uri->getAuthority());
 
-		$this->assertEquals(['path'], $uri->segments());
+		$this->assertEquals(['path'], $uri->getSegments());
 	}
 
 	//--------------------------------------------------------------------
@@ -41,12 +41,12 @@ class URITest extends PHPUnit_Framework_TestCase
 	{
 		$uri = new URI('http://hostname/path/to/script');
 
-		$this->assertEquals(['path', 'to', 'script'], $uri->segments());
-		$this->assertEquals('path', $uri->segment(1));
-		$this->assertEquals('to', $uri->segment(2));
-		$this->assertEquals('script', $uri->segment(3));
+		$this->assertEquals(['path', 'to', 'script'], $uri->getSegments());
+		$this->assertEquals('path', $uri->getSegment(1));
+		$this->assertEquals('to', $uri->getSegment(2));
+		$this->assertEquals('script', $uri->getSegment(3));
 
-		$this->assertEquals(3, $uri->totalSegments());
+		$this->assertEquals(3, $uri->getTotalSegments());
 	}
 
 	//--------------------------------------------------------------------
@@ -71,7 +71,7 @@ class URITest extends PHPUnit_Framework_TestCase
 		$expected = 'https://example.com/path';
 
 		$uri->setScheme('https');
-		$this->assertEquals('https', $uri->scheme());
+		$this->assertEquals('https', $uri->getScheme());
 		$this->assertEquals($expected, (string)$uri);
 	}
 
@@ -85,7 +85,7 @@ class URITest extends PHPUnit_Framework_TestCase
 		$expected = 'http://user@example.com/path';
 
 		$uri->setUserInfo('user', 'password');
-		$this->assertEquals('user', $uri->userInfo());
+		$this->assertEquals('user', $uri->getUserInfo());
 		$this->assertEquals($expected, (string)$uri);
 	}
 
@@ -99,14 +99,14 @@ class URITest extends PHPUnit_Framework_TestCase
 		$expected = 'http://user@example.com/path';
 
 		$uri->setUserInfo('user', 'password');
-		$this->assertEquals('user', $uri->userInfo());
+		$this->assertEquals('user', $uri->getUserInfo());
 		$this->assertEquals($expected, (string)$uri);
 
 		$uri->showPassword();
 
 		$expected = 'http://user:password@example.com/path';
 
-		$this->assertEquals('user:password', $uri->userInfo());
+		$this->assertEquals('user:password', $uri->getUserInfo());
 		$this->assertEquals($expected, (string)$uri);
 	}
 
@@ -120,7 +120,7 @@ class URITest extends PHPUnit_Framework_TestCase
 		$expected = 'http://another.com/path';
 
 		$uri->setHost('another.com');
-		$this->assertEquals('another.com', $uri->host());
+		$this->assertEquals('another.com', $uri->getHost());
 		$this->assertEquals($expected, (string)$uri);
 	}
 
@@ -134,7 +134,7 @@ class URITest extends PHPUnit_Framework_TestCase
 		$expected = 'http://example.com:9000/path';
 
 		$uri->setPort(9000);
-		$this->assertEquals(9000, $uri->port());
+		$this->assertEquals(9000, $uri->getPort());
 		$this->assertEquals($expected, (string)$uri);
 	}
 
@@ -181,7 +181,7 @@ class URITest extends PHPUnit_Framework_TestCase
 		$expected = 'http://example.com/somewhere/else';
 
 		$uri->setPath('somewhere/else');
-		$this->assertEquals('somewhere/else', $uri->path());
+		$this->assertEquals('somewhere/else', $uri->getPath());
 		$this->assertEquals($expected, (string)$uri);
 	}
 
@@ -208,7 +208,7 @@ class URITest extends PHPUnit_Framework_TestCase
 	{
 		$uri = new URI();
 		$uri->setPath($path);
-		$this->assertEquals($expected, $uri->path());
+		$this->assertEquals($expected, $uri->getPath());
 	}
 
 	//--------------------------------------------------------------------
@@ -221,7 +221,7 @@ class URITest extends PHPUnit_Framework_TestCase
 		$expected = 'http://example.com/path#good-stuff';
 
 		$uri->setFragment('#good-stuff');
-		$this->assertEquals('good-stuff', $uri->fragment());
+		$this->assertEquals('good-stuff', $uri->getFragment());
 		$this->assertEquals($expected, (string)$uri);
 	}
 
@@ -235,7 +235,7 @@ class URITest extends PHPUnit_Framework_TestCase
 		$expected = 'http://example.com/path?key=value';
 
 		$uri->setQuery('?key=value');
-		$this->assertEquals('key=value', $uri->query());
+		$this->assertEquals('key=value', $uri->getQuery());
 		$this->assertEquals($expected, (string)$uri);
 	}
 
@@ -249,7 +249,7 @@ class URITest extends PHPUnit_Framework_TestCase
 		$expected = 'http://example.com/path?key=value';
 
 		$uri->setQueryArray(['key' => 'value']);
-		$this->assertEquals('key=value', $uri->query());
+		$this->assertEquals('key=value', $uri->getQuery());
 		$this->assertEquals($expected, (string)$uri);
 	}
 
@@ -286,7 +286,7 @@ class URITest extends PHPUnit_Framework_TestCase
 	public function testAuthorityReturnsExceptedValues($url, $expected)
 	{
 		$uri = new URI($url);
-		$this->assertEquals($expected, $uri->authority());
+		$this->assertEquals($expected, $uri->getAuthority());
 	}
 
 	//--------------------------------------------------------------------
@@ -323,7 +323,7 @@ class URITest extends PHPUnit_Framework_TestCase
 		$uri = new URI();
 		$uri->setAuthority($authority);
 
-		$this->assertEquals($authority, $uri->authority());
+		$this->assertEquals($authority, $uri->getAuthority());
 	}
 
 	//--------------------------------------------------------------------
