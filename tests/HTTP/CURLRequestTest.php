@@ -71,7 +71,7 @@ class CURLRequestTest extends PHPUnit_Framework_TestCase
 	{
 	    $response = $this->request->get('http://example.com');
 
-		$this->assertEquals('get', $this->request->method());
+		$this->assertEquals('get', $this->request->getMethod());
 
 		$options = $this->request->curl_options;
 
@@ -85,7 +85,7 @@ class CURLRequestTest extends PHPUnit_Framework_TestCase
 	{
 		$response = $this->request->delete('http://example.com');
 
-		$this->assertEquals('delete', $this->request->method());
+		$this->assertEquals('delete', $this->request->getMethod());
 
 		$options = $this->request->curl_options;
 
@@ -99,7 +99,7 @@ class CURLRequestTest extends PHPUnit_Framework_TestCase
 	{
 		$response = $this->request->head('http://example.com');
 
-		$this->assertEquals('head', $this->request->method());
+		$this->assertEquals('head', $this->request->getMethod());
 
 		$options = $this->request->curl_options;
 
@@ -113,7 +113,7 @@ class CURLRequestTest extends PHPUnit_Framework_TestCase
 	{
 		$response = $this->request->options('http://example.com');
 
-		$this->assertEquals('options', $this->request->method());
+		$this->assertEquals('options', $this->request->getMethod());
 
 		$options = $this->request->curl_options;
 
@@ -127,7 +127,7 @@ class CURLRequestTest extends PHPUnit_Framework_TestCase
 	{
 		$response = $this->request->patch('http://example.com');
 
-		$this->assertEquals('patch', $this->request->method());
+		$this->assertEquals('patch', $this->request->getMethod());
 
 		$options = $this->request->curl_options;
 
@@ -141,7 +141,7 @@ class CURLRequestTest extends PHPUnit_Framework_TestCase
 	{
 		$response = $this->request->post('http://example.com');
 
-		$this->assertEquals('post', $this->request->method());
+		$this->assertEquals('post', $this->request->getMethod());
 
 		$options = $this->request->curl_options;
 
@@ -155,7 +155,7 @@ class CURLRequestTest extends PHPUnit_Framework_TestCase
 	{
 		$response = $this->request->put('http://example.com');
 
-		$this->assertEquals('put', $this->request->method());
+		$this->assertEquals('put', $this->request->getMethod());
 
 		$options = $this->request->curl_options;
 
@@ -169,7 +169,7 @@ class CURLRequestTest extends PHPUnit_Framework_TestCase
 	{
 		$response = $this->request->request('custom', 'http://example.com');
 
-		$this->assertEquals('custom', $this->request->method());
+		$this->assertEquals('custom', $this->request->getMethod());
 
 		$options = $this->request->curl_options;
 
@@ -183,7 +183,7 @@ class CURLRequestTest extends PHPUnit_Framework_TestCase
 	{
 		$response = $this->request->request('<script>Custom</script>', 'http://example.com');
 
-		$this->assertEquals('custom', $this->request->method());
+		$this->assertEquals('custom', $this->request->getMethod());
 
 		$options = $this->request->curl_options;
 

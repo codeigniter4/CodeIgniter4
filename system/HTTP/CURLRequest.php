@@ -22,7 +22,7 @@ class CURLRequest extends Request
 	/**
 	 * @var URI
 	 */
-	protected $base_uri;
+	protected $baseURI;
 
 	/**
 	 * The setting values
@@ -76,7 +76,7 @@ class CURLRequest extends Request
 		parent::__construct($config);
 
 		$this->response = $response;
-		$this->base_uri = $uri;
+		$this->baseURI = $uri;
 
 		$this->parseOptions($options);
 	}
@@ -93,7 +93,7 @@ class CURLRequest extends Request
 	 *
 	 * @return Response
 	 */
-	public function request($method, string $url, array $options = []): Response
+	public function request($method, string $url, array $options = []): ResponseInterface
 	{
 		$this->parseOptions($options);
 
@@ -116,7 +116,7 @@ class CURLRequest extends Request
 	 *
 	 * @return Response
 	 */
-	public function get(string $url, array $options = []): Response
+	public function get(string $url, array $options = []): ResponseInterface
 	{
 		return $this->request('get', $url, $options);
 	}
@@ -131,7 +131,7 @@ class CURLRequest extends Request
 	 *
 	 * @return Response
 	 */
-	public function delete(string $url, array $options = []): Response
+	public function delete(string $url, array $options = []): ResponseInterface
 	{
 		return $this->request('delete', $url, $options);
 	}
@@ -146,7 +146,7 @@ class CURLRequest extends Request
 	 *
 	 * @return Response
 	 */
-	public function head(string $url, array $options = []): Response
+	public function head(string $url, array $options = []): ResponseInterface
 	{
 		return $this->request('head', $url, $options);
 	}
@@ -161,7 +161,7 @@ class CURLRequest extends Request
 	 *
 	 * @return Response
 	 */
-	public function options(string $url, array $options = []): Response
+	public function options(string $url, array $options = []): ResponseInterface
 	{
 		return $this->request('options', $url, $options);
 	}
@@ -176,7 +176,7 @@ class CURLRequest extends Request
 	 *
 	 * @return Response
 	 */
-	public function patch(string $url, array $options = []): Response
+	public function patch(string $url, array $options = []): ResponseInterface
 	{
 		return $this->request('patch', $url, $options);
 	}
@@ -191,7 +191,7 @@ class CURLRequest extends Request
 	 *
 	 * @return Response
 	 */
-	public function post(string $url, array $options = []): Response
+	public function post(string $url, array $options = []): ResponseInterface
 	{
 		return $this->request('post', $url, $options);
 	}
@@ -206,7 +206,7 @@ class CURLRequest extends Request
 	 *
 	 * @return Response
 	 */
-	public function put(string $url, array $options = []): Response
+	public function put(string $url, array $options = []): ResponseInterface
 	{
 		return $this->request('put', $url, $options);
 	}
@@ -221,10 +221,10 @@ class CURLRequest extends Request
 	 */
 	protected function parseOptions(array $options)
 	{
-		if (array_key_exists('base_uri', $options))
+		if (array_key_exists('baseURI', $options))
 		{
-			$this->base_uri = $this->base_uri->setURI($options['base_uri']);
-			unset($options['base_uri']);
+			$this->baseURI = $this->baseURI->setURI($options['baseURI']);
+			unset($options['baseURI']);
 		}
 
 		if (array_key_exists('headers', $options) && is_array($options['headers']))
@@ -255,7 +255,7 @@ class CURLRequest extends Request
 
 	/**
 	 * If the $url is a relative URL, will attempt to create
-	 * a full URL by prepending $this->base_uri to it.
+	 * a full URL by prepending $this->baseURI to it.
 	 *
 	 * @param string $url
 	 *
@@ -269,7 +269,7 @@ class CURLRequest extends Request
 			return $url;
 		}
 
-		$uri = $this->base_uri->resolveRelativeURI($url);
+		$uri = $this->baseURI->resolveRelativeURI($url);
 
 		return (string)$uri;
 	}
@@ -284,7 +284,7 @@ class CURLRequest extends Request
 	 *
 	 * @return string
 	 */
-	public function method($upper = false): string
+	public function getMethod($upper = false): string
 	{
 		return ($upper)
 			? strtoupper($this->method)
