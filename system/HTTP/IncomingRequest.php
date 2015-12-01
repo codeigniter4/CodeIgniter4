@@ -101,7 +101,9 @@ class IncomingRequest extends Request
 			$body = file_get_contents('php://input');
 		}
 
-		parent::__construct($config, $uri, $body);
+		$this->body = $body;
+
+		parent::__construct($config, $uri);
 
 		$this->populateHeaders();
 
@@ -223,7 +225,7 @@ class IncomingRequest extends Request
 	 *
 	 * @return mixed
 	 */
-	public function cookie($index = null, $filter = null)
+	public function getCookie($index = null, $filter = null)
 	{
 		return $this->fetchGlobal(INPUT_COOKIE, $index, $filter);
 	}
@@ -235,7 +237,7 @@ class IncomingRequest extends Request
 	 *
 	 * @param null $filter
 	 */
-	public function userAgent($filter = null)
+	public function getUserAgent($filter = null)
 	{
 		return $this->fetchGlobal(INPUT_SERVER, 'HTTP_USER_AGENT', $filter);
 	}
