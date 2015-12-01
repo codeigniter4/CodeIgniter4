@@ -84,7 +84,7 @@ class Iterator
 
 	//--------------------------------------------------------------------
 
-	public function report()
+	public function getReport()
 	{
 		if (empty($this->results))
 		{
