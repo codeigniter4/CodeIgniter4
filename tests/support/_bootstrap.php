@@ -129,9 +129,9 @@ define('CI_VERSION', '4.0-dev');
  * ------------------------------------------------------
  */
 
-if (file_exists(APPPATH.'config/'.ENVIRONMENT.'/constants.php'))
+if (file_exists(APPPATH.'config/'.ENVIRONMENT.'/Constants.php'))
 {
-	require_once APPPATH.'config/'.ENVIRONMENT.'/constants.php';
+	require_once APPPATH.'config/'.ENVIRONMENT.'/Constants.php';
 }
 
 //require_once(APPPATH.'config/constants.php');
@@ -165,7 +165,7 @@ if (ENVIRONMENT !== 'production')
  * ------------------------------------------------------
  */
 
-require_once APPPATH.'config/services.php';
+require_once APPPATH.'config/Services.php';
 
 /*
  * ------------------------------------------------------
@@ -175,7 +175,7 @@ require_once APPPATH.'config/services.php';
 
 // The autloader isn't initialized yet, so load the file manually.
 require_once BASEPATH.'Autoloader/Autoloader.php';
-require_once APPPATH.'config/autoload.php';
+require_once APPPATH.'config/AutoloadConfig.php';
 
 // The Autoloader class only handles namespaces
 // and "legacy" support.

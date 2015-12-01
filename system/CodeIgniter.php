@@ -58,7 +58,7 @@ if (ENVIRONMENT !== 'production')
  * ------------------------------------------------------
  */
 
-require_once APPPATH.'config/services.php';
+require_once APPPATH.'config/Services.php';
 
 /*
  * ------------------------------------------------------
@@ -68,7 +68,7 @@ require_once APPPATH.'config/services.php';
 
 // The autloader isn't initialized yet, so load the file manually.
 require_once BASEPATH.'Autoloader/Autoloader.php';
-require_once APPPATH.'config/autoload.php';
+require_once APPPATH.'config/AutoloadConfig.php';
 
 // The Autoloader class only handles namespaces
 // and "legacy" support.
@@ -110,7 +110,7 @@ $response->setStatusCode(200);
 // Try to Route It
 //--------------------------------------------------------------------
 
-require APPPATH.'config/routes.php';
+require APPPATH.'config/Routes.php';
 
 $router = \App\Config\Services::router($routes);
 
