@@ -84,14 +84,14 @@ $loader->register();
  *  Set custom exception handling
  * ------------------------------------------------------
  */
-\App\Config\Services::exceptions()
+\App\Config\Services::exceptions(true)
    ->initialize();
 
 //--------------------------------------------------------------------
 // Start the Benchmark
 //--------------------------------------------------------------------
 
-$benchmark = \App\Config\Services::timer();
+$benchmark = \App\Config\Services::timer(true);
 $benchmark->start('total_execution');
 
 //--------------------------------------------------------------------
@@ -112,7 +112,7 @@ $response->setStatusCode(200);
 
 require APPPATH.'config/Routes.php';
 
-$router = \App\Config\Services::router($routes);
+$router = \App\Config\Services::router($routes, true);
 
 $controller = $router->handle($request->uri->getPath());
 
