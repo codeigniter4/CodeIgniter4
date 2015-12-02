@@ -315,6 +315,11 @@ class Request extends Message implements RequestInterface
 				$value = '';
 		}
 
+		if (is_array($value) || is_object($value))
+		{
+			return $value;
+		}
+
 		return filter_var($value, $filter);
 	}
 
