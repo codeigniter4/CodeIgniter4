@@ -83,6 +83,7 @@ class AutoloadConfig
 			'CodeIgniter\Log\Logger'                      => BASEPATH.'Log/Logger.php',
 			'CodeIgniter\View\RenderableInterface'        => BASEPATH.'View/RenderableInterface.php',
 			'CodeIgniter\View\View'                       => BASEPATH.'View/View.php',
+			'CodeIgniter\CLI\CLI'                         => BASEPATH.'CLI/CLI.php',
 			'Zend\Escaper\Escaper'                        => BASEPATH.'View/Escaper.php',
 			'PSR\Log\LoggerInterface'                     => BASEPATH.'Log/LoggerInterface.php',
 		    'PSR\Log\LogLevel'                            => BASEPATH.'Log/LogLevel.php',

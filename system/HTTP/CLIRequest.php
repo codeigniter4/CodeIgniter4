@@ -2,6 +2,21 @@
 
 use App\Config\AppConfig;
 
+/**
+ * Class CLIRequest
+ *
+ * Represents a request from the command-line. Provides additional
+ * tools to interact with that request since CLI requests are not
+ * static like HTTP requests might be.
+ *
+ * Portions of this code were initially from the FuelPHP Framework,
+ * version 1.7.x, and used here under the MIT license they were
+ * originally made available under.
+ *
+ * http://fuelphp.com
+ *
+ * @package CodeIgniter\HTTP
+ */
 class CLIRequest extends Request
 {
 
@@ -125,8 +140,6 @@ class CLIRequest extends Request
 	}
 
 	//--------------------------------------------------------------------
-
-
 
 	/**
 	 * Parses the command line it was called from and collects all options
