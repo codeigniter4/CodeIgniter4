@@ -292,16 +292,41 @@
 			</div>
 
 			<!-- Response -->
+			<?php
+				global $response;
+				$response->setStatusCode(http_response_code());
+			?>
 			<div class="content" id="response">
-				<p>Response Code: <?= http_response_code() ?></p>
+				<table>
+					<tr>
+						<td style="width: 15em">Response Status</td>
+						<td><?= $response->getStatusCode().' - '.$response->getReason() ?></td>
+					</tr>
+				</table>
 
-				<p>Headers:</p>
-				<?php if (! empty(headers_list())) : ?>
-					<ul>
-					<?php foreach (headers_list() as $header) : ?>
-						<li><?= htmlspecialchars($header, ENT_SUBSTITUTE, 'UTF-8') ?></li>
-					<?php endforeach; ?>
-					</ul>
+				<?php $headers = $response->getHeaders(); ?>
+				<?php if (! empty($headers)) : ?>
+					<?php natsort($headers) ?>
+
+					<h3>Headers</h3>
+
+					<table>
+						<thead>
+							<tr>
+								<th>Header</th>
+								<th>Value</th>
+							</tr>
+						</thead>
+						<tbody>
+						<?php foreach ($headers as $name => $value) : ?>
+							<tr>
+								<td><?= esc($name, 'html') ?></td>
+								<td><?= esc($request->getHeaderLine($name), 'html') ?></td>
+							</tr>
+						<?php endforeach; ?>
+						</tbody>
+					</table>
+
 				<?php endif; ?>
 			</div>
 
