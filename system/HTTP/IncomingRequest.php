@@ -191,8 +191,8 @@ class IncomingRequest extends Request
 		// checks the initial POST data, not anything that might
 		// have been added since.
 		return isset($_POST[$index])
-			? $this->post($index, $filter)
-			: $this->get($index, $filter);
+			? $this->getPost($index, $filter)
+			: $this->getGet($index, $filter);
 	}
 
 	//--------------------------------------------------------------------
@@ -211,8 +211,8 @@ class IncomingRequest extends Request
 		// checks the initial GET data, not anything that might
 		// have been added since.
 		return isset($_GET[$index])
-			? $this->get($index, $filter)
-			: $this->post($index, $filter);
+			? $this->getGet($index, $filter)
+			: $this->getPost($index, $filter);
 	}
 
 	//--------------------------------------------------------------------

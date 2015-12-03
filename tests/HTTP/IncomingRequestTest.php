@@ -21,8 +21,8 @@ class IncomingRequestTest extends PHPUnit_Framework_TestCase
 	{
 	    $_GET['TEST'] = 5;
 
-		$this->assertEquals(5, $this->request->get('TEST'));
-		$this->assertEquals(null, $this->request->get('TESTY'));
+		$this->assertEquals(5, $this->request->getGet('TEST'));
+		$this->assertEquals(null, $this->request->getGEt('TESTY'));
 	}
 
 	//--------------------------------------------------------------------
@@ -31,8 +31,8 @@ class IncomingRequestTest extends PHPUnit_Framework_TestCase
 	{
 		$_POST['TEST'] = 5;
 
-		$this->assertEquals(5, $this->request->post('TEST'));
-		$this->assertEquals(null, $this->request->post('TESTY'));
+		$this->assertEquals(5, $this->request->getPost('TEST'));
+		$this->assertEquals(null, $this->request->getPost('TESTY'));
 	}
 
 	//--------------------------------------------------------------------
@@ -42,8 +42,8 @@ class IncomingRequestTest extends PHPUnit_Framework_TestCase
 		$_POST['TEST'] = 5;
 		$_GET['TEST'] = 3;
 
-		$this->assertEquals(5, $this->request->postGet('TEST'));
-		$this->assertEquals(3, $this->request->getPost('TEST'));
+		$this->assertEquals(5, $this->request->getPostGet('TEST'));
+		$this->assertEquals(3, $this->request->getGetPost('TEST'));
 	}
 
 	//--------------------------------------------------------------------
