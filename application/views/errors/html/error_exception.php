@@ -187,6 +187,43 @@
 
 			<!-- Request -->
 			<div class="content" id="request">
+				<?php global $request; ?>
+
+				<table>
+					<tbody>
+						<tr>
+							<td style="width: 10em">Path</td>
+							<td><?= $request->uri ?></td>
+						</tr>
+						<tr>
+							<td>HTTP Method</td>
+							<td><?= $request->getMethod(true) ?></td>
+						</tr>
+						<tr>
+							<td>IP Address</td>
+							<td><?= $request->getIPAddress() ?></td>
+						</tr>
+						<tr>
+							<td style="width: 10em">Is AJAX Request?</td>
+							<td><?= $request->isAJAX() ? 'yes' : 'no' ?></td>
+						</tr>
+						<tr>
+							<td>Is CLI Request?</td>
+							<td><?= $request->isCLI() ? 'yes' : 'no' ?></td>
+						</tr>
+						<tr>
+							<td>Is Secure Request?</td>
+							<td><?= $request->isSecure() ? 'yes' : 'no' ?></td>
+						</tr>
+						<tr>
+							<td>User Agent</td>
+							<td><?= $request->getUserAgent() ?></td>
+						</tr>
+
+					</tbody>
+				</table>
+
+
 				<?php $empty = true; ?>
 				<?php foreach (['_GET', '_POST', '_COOKIE'] as $var) : ?>
 					<?php if (empty($GLOBALS[$var]) || ! is_array($GLOBALS[$var])) continue; ?>
@@ -225,6 +262,31 @@
 					<div class="alert">
 						No $_GET, $_POST, or $_COOKIE Information to show.
 					</div>
+
+				<?php endif; ?>
+
+				<?php $headers = $request->getHeaders(); ?>
+				<?php if (! empty($headers)) : ?>
+					<?php natsort($headers) ?>
+
+					<h3>Headers</h3>
+
+					<table>
+						<thead>
+							<tr>
+								<th>Header</th>
+								<th>Value</th>
+							</tr>
+						</thead>
+						<tbody>
+						<?php foreach ($headers as $name => $value) : ?>
+							<tr>
+								<td><?= esc($name, 'html') ?></td>
+								<td><?= esc($request->getHeaderLine($name), 'html') ?></td>
+							</tr>
+						<?php endforeach; ?>
+						</tbody>
+					</table>
 
 				<?php endif; ?>
 			</div>

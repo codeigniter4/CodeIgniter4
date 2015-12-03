@@ -155,7 +155,7 @@ class IncomingRequest extends Request
 	 *
 	 * @return mixed
 	 */
-	public function get($index = null, $filter = null)
+	public function getGet($index = null, $filter = null)
 	{
 		return $this->fetchGlobal(INPUT_GET, $index, $filter);
 	}
@@ -170,7 +170,7 @@ class IncomingRequest extends Request
 	 *
 	 * @return mixed
 	 */
-	public function post($index = null, $filter = null)
+	public function getPost($index = null, $filter = null)
 	{
 		return $this->fetchGlobal(INPUT_POST, $index, $filter);
 	}
@@ -185,7 +185,7 @@ class IncomingRequest extends Request
 	 *
 	 * @return mixed
 	 */
-	public function postGet($index = null, $filter = null)
+	public function getPostGet($index = null, $filter = null)
 	{
 		// Use $_POST directly here, since filter_has_var only
 		// checks the initial POST data, not anything that might
@@ -205,7 +205,7 @@ class IncomingRequest extends Request
 	 *
 	 * @return mixed
 	 */
-	public function getPost($index = null, $filter = null)
+	public function getGetPost($index = null, $filter = null)
 	{
 		// Use $_GET directly here, since filter_has_var only
 		// checks the initial GET data, not anything that might

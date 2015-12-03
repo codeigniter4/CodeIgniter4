@@ -56,7 +56,7 @@ class Request extends Message implements RequestInterface
 					// e.g. client_ip, proxy_ip1, proxy_ip2, etc.
 					sscanf($spoof, '%[^,]', $spoof);
 
-					if ( ! $this->validIP($spoof))
+					if ( ! $this->isValidIP($spoof))
 					{
 						$spoof = NULL;
 					}
@@ -86,7 +86,7 @@ class Request extends Message implements RequestInterface
 					}
 
 					// We have a subnet ... now the heavy lifting begins
-					isset($separator) OR $separator = $this->validIP($this->ipAddress, 'ipv6') ? ':' : '.';
+					isset($separator) OR $separator = $this->isValidIP($this->ipAddress, 'ipv6') ? ':' : '.';
 
 					// If the proxy entry doesn't match the IP protocol - skip it
 					if (strpos($proxy_ips[$i], $separator) === FALSE)
@@ -150,7 +150,7 @@ class Request extends Message implements RequestInterface
 			}
 		}
 
-		if ( ! $this->validIP($this->ipAddress))
+		if ( ! $this->isValidIP($this->ipAddress))
 		{
 			return $this->ipAddress = '0.0.0.0';
 		}
