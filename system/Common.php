@@ -32,7 +32,7 @@ if ( ! function_exists('log_message'))
 	 */
 	function log_message(string $level, $message, array $context = [])
 	{
-		return \App\Config\Services::logger()
+		return \App\Config\Services::logger(false)
 		                           ->log($level, $message, $context);
 	}
 }

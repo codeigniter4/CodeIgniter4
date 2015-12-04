@@ -1,6 +1,7 @@
 <?php namespace App\Config;
 
 use CodeIgniter\Config\BaseConfig;
+use Psr\Log\LogLevel;
 
 class LoggerConfig extends BaseConfig
 {
@@ -32,44 +33,18 @@ class LoggerConfig extends BaseConfig
 	| your log files will fill up very fast.
 	|
 	*/
-	public $threshold = 0;
+	public $threshold = 9;
 
 	/*
 	|--------------------------------------------------------------------------
 	| Error Logging Directory Path
 	|--------------------------------------------------------------------------
 	|
-	| Leave this BLANK unless you would like to set something other than the default
-	| application/logs/ directory. Use a full server path with trailing slash.
+	|
 	|
 	*/
 	public $path = '';
 
-	/*
-	|--------------------------------------------------------------------------
-	| Log File Extension
-	|--------------------------------------------------------------------------
-	|
-	| The default filename extension for log files. The default 'php' allows for
-	| protecting the log files via basic scripting, when they are to be stored
-	| under a publicly accessible directory.
-	|
-	| Note: Leaving it blank will default to 'php'.
-	|
-	*/
-	public $fileExtension = '';
-
-	/*
-	|--------------------------------------------------------------------------
-	| Log File Permissions
-	|--------------------------------------------------------------------------
-	|
-	| The file system permissions to be applied on newly created log files.
-	|
-	| IMPORTANT: This MUST be an integer (no quotes) and you MUST use octal
-	|            integer notation (i.e. 0700, 0644, etc.)
-	*/
-	public $filePermissions = 0644;
 
 	/*
 	|--------------------------------------------------------------------------
@@ -81,4 +56,67 @@ class LoggerConfig extends BaseConfig
 	|
 	*/
 	public $dateFormat = 'Y-m-d H:i:s';
+
+	/*
+	|--------------------------------------------------------------------------
+	| Log Handlers
+	|--------------------------------------------------------------------------
+	|
+	| The logging system supports multiple actions to be taken when something
+	| is logged. This is done by allowing for multiple Handlers, special classes
+	| designed to write the log to their chosen destinations, whether that is
+	| a file on the server, a cloud-based service, or even taking actions such
+	| as emailing the dev team.
+	|
+	| Each handler is defined by the class name used for that handler, and it
+	| MUST implement the CodeIgniter\Log\Handlers\HandlerInterface interface.
+	|
+	| The value of each key is an array of configuration items that are sent
+	| to the constructor of each handler. The only required configuration item
+	| is the 'handles' element, which must be an array of integer log levels.
+	| This is most easily handled by using the constants defined in the
+	| Psr\Log\LogLevel class.
+	|
+	| Handlers are executed in the order defined in this array, starting with
+	| the handler on top and continuing down.
+	|
+	*/
+	public $handlers = [
+
+		//--------------------------------------------------------------------
+		// File Handler
+		//--------------------------------------------------------------------
+
+		'CodeIgniter\Log\Handlers\FileHandler' => [
+
+			/*
+			 * The log levels that this handler will handle.
+			 */
+			'handles' => [LogLevel::CRITICAL, LogLevel::ALERT, LogLevel::EMERGENCY, LogLevel::DEBUG,
+							LogLevel::ERROR, LogLevel::INFO, LogLevel::NOTICE, LogLevel::WARNING],
+
+			/*
+			 * Leave this BLANK unless you would like to set something other than the default
+			 * writeable/logs/ directory. Use a full server path with trailing slash.
+			 */
+		    'path' => WRITEPATH.'logs/',
+
+		    /*
+		     * The default filename extension for log files. The default 'php' allows for
+		     * protecting the log files via basic scripting, when they are to be stored
+		     * under a publicly accessible directory.
+		     *
+		     * Note: Leaving it blank will default to 'php'.
+		     */
+		    'fileExtension' => 'php',
+
+		    /*
+		     * The file system permissions to be applied on newly created log files.
+		     *
+		     * IMPORTANT: This MUST be an integer (no quotes) and you MUST use octal
+		     * integer notation (i.e. 0700, 0644, etc.)
+		     */
+		    'filePermissions' => 0644
+		]
+	];
 }

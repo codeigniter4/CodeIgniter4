@@ -42,7 +42,7 @@ class AutoloadConfig
 			'App'             => realpath(APPPATH),
 			'App\Config'      => APPPATH.'config',
 			'App\Controllers' => APPPATH.'controllers',
-			'CodeIgniter'     => realpath(BASEPATH),
+			'CodeIgniter'     => realpath(BASEPATH)
 		];
 
 		/**
@@ -80,14 +80,14 @@ class AutoloadConfig
 			'CodeIgniter\Router\RouteCollectionInterface' => BASEPATH.'Router/RouteCollectionInterface.php',
 			'CodeIgniter\Router\Router'                   => BASEPATH.'Router/Router.php',
 			'CodeIgniter\Router\RouterInterface'          => BASEPATH.'Router/RouterInterface.php',
-			'CodeIgniter\Log\Logger'                      => BASEPATH.'Log/Logger.php',
 			'CodeIgniter\View\RenderableInterface'        => BASEPATH.'View/RenderableInterface.php',
 			'CodeIgniter\View\View'                       => BASEPATH.'View/View.php',
 			'CodeIgniter\CLI\CLI'                         => BASEPATH.'CLI/CLI.php',
 			'Zend\Escaper\Escaper'                        => BASEPATH.'View/Escaper.php',
-			'PSR\Log\LoggerInterface'                     => BASEPATH.'Log/LoggerInterface.php',
-		    'PSR\Log\LogLevel'                            => BASEPATH.'Log/LogLevel.php',
-		    'PSR\Log\LoggerAwareInterface'                => BASEPATH.'Log/LoggerAwareInterface.php',
+			'CodeIgniter\Log\Logger'                      => BASEPATH.'Log/Logger.php',
+			'Psr\Log\LoggerInterface'                     => BASEPATH.'Log/LoggerInterface.php',
+		    'Psr\Log\LogLevel'                            => BASEPATH.'Log/LogLevel.php',
+		    'Psr\Log\LoggerAwareInterface'                => BASEPATH.'Log/LoggerAwareInterface.php',
 		];
 	}
 

@@ -1,4 +1,8 @@
-<?php namespace PSR\Log;
+<?php namespace CodeIgniter\Log;
+
+use App\Config\LoggerConfig;
+use CodeIgniter\Log\Handlers\HandlerInterface;
+use Psr\Log\LoggerInterface;
 
 /**
  * The CodeIgntier Logger
@@ -71,20 +75,39 @@ class Logger implements LoggerInterface
 	 */
 	protected $fileExt;
 
+	/**
+	 * Caches instances of the handlers.
+	 *
+	 * @var array
+	 */
+	protected $handlers = [];
+
+	/**
+	 * Holds the configuration for each handler.
+	 * The key is the handler's class name. The
+	 * value is an associative array of configuration
+	 * items.
+	 *
+	 * @var array
+	 */
+	protected $handlerConfig = [];
+
 	//--------------------------------------------------------------------
 
-	public function __construct(\App\Config\LoggerConfig $config)
+	public function __construct(LoggerConfig $config)
 	{
-		$this->logPath = ! empty($config->path) ? rtrim($config->path).'/' : WRITEPATH.'logs/';
-
 		$this->loggableLevels = is_array($config->threshold) ? $config->threshold : range(0, (int)$config->threshold);
-
-		$this->fileExt = ! empty($config->fileExtension) ? ltrim($config->fileExtension, '.') : 'php';
 
 		$this->dateFormat = ! empty($config->dateFormat) ?? $this->dateFormat;
 
-		$this->filePermissions = ! empty($config->filePermissions) && is_int($config->filePermissions)
-			? $config->filePermissions : $this->filePermissions;
+		if (! is_array($config->handlers) || empty($config->handlers))
+		{
+			throw new \RuntimeException('LoggerConfig must provide at least one Handler.');
+		}
+
+		// Save the handler configuration for later.
+		// Instances will be created on demand.
+		$this->handlerConfig = $config->handlers;
 	}
 
 	//--------------------------------------------------------------------
@@ -229,7 +252,7 @@ class Logger implements LoggerInterface
 	 *
 	 * @return bool
 	 */
-	public function log(string $level, $message, array $context = []): bool
+	public function log(\string $level, $message, array $context = []): bool
 	{
 		if ( ! in_array($level, $this->loggableLevels))
 		{
@@ -239,60 +262,32 @@ class Logger implements LoggerInterface
 		// Parse our placeholders
 		$message = $this->interpolate($message, $context);
 
-		$filepath = $this->logPath.'log-'.date('Y-m-d').'.'.$this->fileExt;
-
-		$msg = '';
-
-		if ( ! file_exists($filepath))
+		foreach ($this->handlerConfig as $className => $config)
 		{
-			$newfile = true;
-
-			// Only add protection to php files
-			if ($this->fileExt === 'php')
+			if (! $className instanceof HandlerInterface)
 			{
-				$msg .= "<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>\n\n";
+				continue;
 			}
-		}
 
-		if ( ! $fp = @fopen($filepath, 'ab'))
-		{
-			return false;
-		}
+			/**
+			 * @var \CodeIgniter\Log\Handlers\HandlerInterface
+			 */
+			$handler = new $className($config);
 
-		// Instantiating DateTime with microseconds appended to initial date is needed for proper support of this format
-		if (strpos($this->dateFormat, 'u') !== false)
-		{
-			$microtime_full  = microtime(true);
-			$microtime_short = sprintf("%06d", ($microtime_full - floor($microtime_full)) * 1000000);
-			$date            = new DateTime(date('Y-m-d H:i:s.'.$microtime_short, $microtime_full));
-			$date            = $date->format($this->dateFormat);
-		}
-		else
-		{
-			$date = date($this->dateFormat);
-		}
+			if (! $handler->canHandle($level))
+			{
+				continue;
+			}
 
-		$msg .= strtoupper($level).' - '.$date.' --> '.$message."\n";
-
-		flock($fp, LOCK_EX);
-
-		for ($written = 0, $length = strlen($msg); $written < $length; $written += $result)
-		{
-			if (($result = fwrite($fp, substr($msg, $written))) === false)
+			// If the handler returns false, then we
+			// don't execute any other handlers.
+			if (! $handler->setDateFormat($this->dateFormat)->handle($level, $message))
 			{
 				break;
 			}
 		}
 
-		flock($fp, LOCK_UN);
-		fclose($fp);
-
-		if (isset($newfile) && $newfile === true)
-		{
-			chmod($filepath, $this->filePermissions);
-		}
-
-		return is_int($result);
+		return false;
 	}
 
 	//--------------------------------------------------------------------
@@ -342,4 +337,17 @@ class Logger implements LoggerInterface
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Acts as a factory for Handlers so we only load them if we need them.
+	 *
+	 * @param string $name  The class name of the Handler to get.
+	 */
+	protected function getHandler(string $name): Hand
+	{
+
+	}
+
+	//--------------------------------------------------------------------
+
 }

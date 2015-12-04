@@ -123,7 +123,7 @@ interface LoggerInterface {
 	 * @param array $context
 	 * @return null
 	 */
-	public function log(string $level, $message, array $context = array());
+	public function log(\string $level, $message, array $context = array());
 
 	//--------------------------------------------------------------------
 

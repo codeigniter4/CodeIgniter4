@@ -85,7 +85,7 @@ class Services
 	{
 		if (! $getShared)
 		{
-			return new \PSR\Log\Logger(new \App\Config\LoggerConfig());
+			return new \CodeIgniter\Log\Logger(new \App\Config\LoggerConfig());
 		}
 
 		return self::getSharedInstance('logger');
