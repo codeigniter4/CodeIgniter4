@@ -113,7 +113,7 @@ class ChromeLoggerHandler extends BaseHandler implements HandlerInterface
 			$type = $this->levels[$level];
 		}
 
-		$this->rows[] = [$message, $backtraceMessage, $type];
+		$this->json['rows'][] = [$message, $backtraceMessage, $type];
 
 		// Don't continue
 		return false;
