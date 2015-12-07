@@ -254,6 +254,15 @@ class Logger implements LoggerInterface
 	 */
 	public function log(\string $level, $message, array $context = []): bool
 	{
+		$level = strtolower($level);
+
+		// Is the level a valid level?
+		if (! array_key_exists($level, $this->logLevels))
+		{
+			throw new \InvalidArgumentException($level.' is an invalid log level.');
+		}
+
+		// Does the app want to log this right now?
 		if ( ! in_array($level, $this->loggableLevels))
 		{
 			return false;
