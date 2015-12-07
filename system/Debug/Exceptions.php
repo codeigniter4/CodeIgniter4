@@ -29,18 +29,17 @@ class Exceptions
 		set_exception_handler([$this, 'exceptionHandler']);
 
 		// Set the Error Handler
-		// Don't think this is needed in PHP7?
-//		set_error_handler([$this, 'exceptionHandler']);
+		set_error_handler([$this, 'errorHandler']);
 
 		// Set the handler for shutdown to catch Parse errors
 		// Do we need this in PHP7?
-//		register_shutdown_function([$this, 'exceptionHandler']);
+		register_shutdown_function([$this, 'shutdownHandler']);
 	}
 
 	//--------------------------------------------------------------------
 
 	/**
-	 * Catches any uncaught errors and exceptions, including Fatal errors
+	 * Catches any uncaught errors and exceptions, including most Fatal errors
 	 * (Yay PHP7!). Will log the error, display it if display_errors is on,
 	 * and fire an event that allows custom actions to be taken at this point.
 	 *
@@ -111,6 +110,30 @@ class Exceptions
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Even in PHP7, some errors make it through to the errorHandler, so
+	 * convert these to Exceptions and let the exception handler log it and
+	 * display it.
+	 *
+	 * This seems to be primarily when a user triggers it with trigger_error().
+	 *
+	 * @param int         $severity
+	 * @param string      $message
+	 * @param string|null $file
+	 * @param int|null    $line
+	 * @param null        $context
+	 *
+	 * @throws \ErrorException
+	 */
+	public function errorHandler(int $severity, string $message, string $file = null, int $line = null, $context = null)
+	{
+		// Convert it to an exception and pass it along.
+		throw new \ErrorException($message, 0, $severity, $file, $line);
+	}
+	
+	//--------------------------------------------------------------------
+	
+	
 	/**
 	 * Checks to see if any errors have happened during shutdown that
 	 * need to be caught and handle them.
