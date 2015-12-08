@@ -304,4 +304,24 @@ class Services
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Provides the ability to perform case-insensitive calling of service
+	 * names.
+	 *
+	 * @param string $name
+	 * @param array  $arguments
+	 */
+	public static function __callStatic(string $name, array $arguments)
+	{
+		$name = strtolower($name);
+
+		if (method_exists('App\Config\Services', $name))
+		{
+			return Services::$name(...$arguments);
+		}
+	}
+
+	//--------------------------------------------------------------------
+
+
 }
