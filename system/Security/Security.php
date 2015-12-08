@@ -91,13 +91,6 @@ class Security
 	 */
 	protected $cookieSecure = false;
 
-	/**
-	 * Cookie will only be accessible via HTTP(S) (no javascript)
-	 *
-	 * @var bool
-	 */
-	protected $cookieHTTPOnly = false;
-
 	//--------------------------------------------------------------------
 
 	/**
@@ -127,7 +120,6 @@ class Security
 		$this->cookiePath = $config->cookiePath;
 		$this->cookieDomain = $config->cookieDomain;
 		$this->cookieSecure = $config->cookieSecure;
-		$this->cookieHTTPOnly = $config->cookieHTTPOnly;
 
 		$this->CSRFSetHash();
 
@@ -215,7 +207,7 @@ class Security
 			$this->cookiePath,
 			$this->cookieDomain,
 			$secure_cookie,
-			$this->cookieHTTPOnly   // @todo Determine if we can default to true
+			true                // Enforce HTTP only cookie for security
 		);
 
 		log_message('info', 'CSRF cookie sent');
