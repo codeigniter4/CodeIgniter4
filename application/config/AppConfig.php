@@ -55,10 +55,14 @@ class AppConfig extends BaseConfig
 	|       'cookie_httponly') will also affect sessions.
 	|
 	*/
-	public $cookiePrefix   = '';
-	public $cookieDomain   = '';
-	public $cookiePath     = '/';
-	public $cookieSecure   = false;
+	public $cookiePrefix = '';
+
+	public $cookieDomain = '';
+
+	public $cookiePath = '/';
+
+	public $cookieSecure = false;
+
 	public $cookieHTTPOnly = false;
 
 	/*
@@ -78,4 +82,25 @@ class AppConfig extends BaseConfig
 	| Array:		array('10.0.1.200', '192.168.5.0/24')
 	*/
 	public $proxyIPs = '';
+
+	/*
+	|--------------------------------------------------------------------------
+	| Cross Site Request Forgery
+	|--------------------------------------------------------------------------
+	| Enables a CSRF cookie token to be set. When set to TRUE, token will be
+	| checked on a submitted form. If you are accepting user data, it is strongly
+	| recommended CSRF protection be enabled.
+	|
+	| CSRFTokenName   = The token name
+	| CSRFCookieName  = The cookie name
+	| CSRFExpire      = The number in seconds the token should expire.
+	| CSRFRegenerate  = Regenerate token on every submission
+	| CSRFExcludeURIs = Array of URIs which ignore CSRF checks
+	*/
+	public $CSRFProtection  = false;
+	public $CSRFTokenName   = 'csrf_test_name';
+	public $CSRFCookieName  = 'csrf_cookie_name';
+	public $CSRFExpire      = 7200;
+	public $CSRFRegenerate  = true;
+	public $CSRFExcludeURIs = [];
 }

@@ -210,6 +210,20 @@ class Services
 
 	//--------------------------------------------------------------------
 
+	public function security($getShared = false)
+	{
+	    if (! $getShared)
+	    {
+		    return new \CodeIgniter\Security\Security(new AppConfig());
+	    }
+
+		return self::getSharedInstance('security');
+	}
+
+	//--------------------------------------------------------------------
+
+
+
 	//--------------------------------------------------------------------
 	// Utility Methods - DO NOT EDIT
 	//--------------------------------------------------------------------
