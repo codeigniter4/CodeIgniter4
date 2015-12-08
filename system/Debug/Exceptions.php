@@ -132,15 +132,26 @@ class Exceptions
 	}
 	
 	//--------------------------------------------------------------------
-	
-	
+
 	/**
 	 * Checks to see if any errors have happened during shutdown that
 	 * need to be caught and handle them.
 	 */
 	public function shutdownHandler()
 	{
-		die('In Shutdown Handler');
+		$error = error_get_last();
+
+		// If we've got an error that hasn't been displayed, then convert
+		// it to an Exception and use the Exception handler to display it
+		// to the user.
+		if (! is_null($error))
+		{
+			// Fatal Error?
+			if (in_array($error['type'], [E_ERROR, E_CORE_ERROR, E_COMPILE_ERROR, E_PARSE]))
+			{
+				$this->exceptionHandler(new \ErrorException($error['message'], $error['type'], 0, $error['file'], $error['line']));
+			}
+		}
 	}
 
 	//--------------------------------------------------------------------
