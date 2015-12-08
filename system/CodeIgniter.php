@@ -27,7 +27,7 @@ if (file_exists(APPPATH.'config/'.ENVIRONMENT.'/constants.php'))
 	require_once APPPATH.'config/'.ENVIRONMENT.'/constants.php';
 }
 
-//require_once(APPPATH.'config/constants.php');
+require_once(APPPATH.'config/Constants.php');
 
 /*
  * ------------------------------------------------------
