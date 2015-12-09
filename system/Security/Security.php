@@ -1,7 +1,6 @@
 <?php namespace CodeIgniter\Security;
 
 use App\Config\AppConfig;
-use App\Config\Services;
 
 class Security
 {
@@ -19,7 +18,7 @@ class Security
 	 *
 	 * Random hash for Cross Site Request Forgery protection cookie
 	 *
-	 * @var	string
+	 * @var    string
 	 */
 	protected $CSRFHash;
 
@@ -29,27 +28,27 @@ class Security
 	 * Expiration time for Cross Site Request Forgery protection cookie.
 	 * Defaults to two hours (in seconds).
 	 *
-	 * @var	int
+	 * @var    int
 	 */
-	protected $CSRFExpire =	7200;
+	protected $CSRFExpire = 7200;
 
 	/**
 	 * CSRF Token name
 	 *
 	 * Token name for Cross Site Request Forgery protection cookie.
 	 *
-	 * @var	string
+	 * @var    string
 	 */
-	protected $CSRFTokenName =	'CSRFToken';
+	protected $CSRFTokenName = 'CSRFToken';
 
 	/**
 	 * CSRF Cookie name
 	 *
 	 * Cookie name for Cross Site Request Forgery protection cookie.
 	 *
-	 * @var	string
+	 * @var    string
 	 */
-	protected $CSRFCookieName =	'CSRFToken';
+	protected $CSRFCookieName = 'CSRFToken';
 
 	/**
 	 * CSRF Regenerate
@@ -91,6 +90,30 @@ class Security
 	 */
 	protected $cookieSecure = false;
 
+	/**
+	 * List of sanitize filename strings
+	 *
+	 * @var	array
+	 */
+	public $filenameBadChars = array(
+		'../', '<!--', '-->', '<', '>',
+		"'", '"', '&', '$', '#',
+		'{', '}', '[', ']', '=',
+		';', '?', '%20', '%22',
+		'%3c',      // <
+		'%253c',    // <
+		'%3e',      // >
+		'%0e',      // >
+		'%28',      // (
+		'%29',      // )
+		'%2528',    // (
+		'%26',      // &
+		'%24',      // $
+		'%3f',      // ?
+		'%3b',      // ;
+		'%3d'       // =
+	);
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -104,7 +127,7 @@ class Security
 	public function __construct(AppConfig $config)
 	{
 		// Store our CSRF-related settings
-	    $this->CSRFEnabled     = $config->CSRFProtection;
+		$this->CSRFEnabled     = $config->CSRFProtection;
 		$this->CSRFExpire      = $config->CSRFExpire;
 		$this->CSRFTokenName   = $config->CSRFTokenName;
 		$this->CSRFCookieName  = $config->CSRFCookieName;
@@ -117,7 +140,7 @@ class Security
 		}
 
 		// Store cookie-related settings
-		$this->cookiePath = $config->cookiePath;
+		$this->cookiePath   = $config->cookiePath;
 		$this->cookieDomain = $config->cookieDomain;
 		$this->cookieSecure = $config->cookieSecure;
 
@@ -159,7 +182,8 @@ class Security
 
 		// Do the tokens exist in both the _POST and _COOKIE arrays?
 		if ( ! isset($_POST[$this->CSRFTokenName], $_COOKIE[$this->CSRFCookieName])
-		     OR $_POST[$this->CSRFTokenName] !== $_COOKIE[$this->CSRFCookieName]) // Do the tokens match?
+		     OR $_POST[$this->CSRFTokenName] !== $_COOKIE[$this->CSRFCookieName]
+		) // Do the tokens match?
 		{
 			throw new \LogicException('The action you requested is not allowed', 403);
 		}
@@ -172,13 +196,14 @@ class Security
 		{
 			// Nothing should last forever
 			unset($_COOKIE[$this->CSRFCookieName]);
-			$this->_csrf_hash = NULL;
+			$this->_csrf_hash = null;
 		}
 
 		$this->CSRFSetHash();
 		$this->CSRFSetCookie();
 
 		log_message('info', 'CSRF token verified');
+
 		return $this;
 	}
 
@@ -188,18 +213,18 @@ class Security
 	 * CSRF Set Cookie
 	 *
 	 * @codeCoverageIgnore
-	 * @return	$this
+	 * @return    $this
 	 */
 	public function CSRFSetCookie()
 	{
-		$expire = time() + $this->CSRFExpire;
+		$expire        = time() + $this->CSRFExpire;
 		$secure_cookie = (bool)$this->cookieSecure;
 
 		global $request;
 
 		if ($secure_cookie && ! $request->isSecure())
 		{
-			return FALSE;
+			return false;
 		}
 
 		setcookie(
@@ -226,7 +251,7 @@ class Security
 	 */
 	public function getCSRFHash()
 	{
-	    return $this->CSRFHash;
+		return $this->CSRFHash;
 	}
 
 	//--------------------------------------------------------------------
@@ -238,9 +263,9 @@ class Security
 	 */
 	public function getCSRFTokenName()
 	{
-	    return $this->CSRFTokenName;
+		return $this->CSRFTokenName;
 	}
-	
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -257,16 +282,57 @@ class Security
 			// each page load since a page could contain embedded
 			// sub-pages causing this feature to fail
 			if (isset($_COOKIE[$this->CSRFCookieName]) && is_string($_COOKIE[$this->CSRFCookieName])
-			    && preg_match('#^[0-9a-f]{32}$#iS', $_COOKIE[$this->CSRFCookieName]) === 1)
+			    && preg_match('#^[0-9a-f]{32}$#iS', $_COOKIE[$this->CSRFCookieName]) === 1
+			)
 			{
 				return $this->CSRFHash = $_COOKIE[$this->CSRFCookieName];
 			}
 
-			$rand = random_bytes(16);
+			$rand           = random_bytes(16);
 			$this->CSRFHash = bin2hex($rand);
 		}
 
 		return $this->CSRFHash;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Sanitize Filename
+	 *
+	 * Tries to sanitize filenames in order to prevent directory traversal attempts
+	 * and other security threats, which is particularly useful for files that
+	 * were supplied via user input.
+	 *
+	 * If it is acceptable for the user input to include relative paths,
+	 * e.g. file/in/some/approved/folder.txt, you can set the second optional
+	 * parameter, $relative_path to TRUE.
+	 *
+	 * @param    string $str           Input file name
+	 * @param    bool   $relative_path Whether to preserve paths
+	 *
+	 * @return string
+	 */
+	public function sanitizeFilename($str, $relative_path = false)
+	{
+		$bad = $this->filenameBadChars;
+
+		if ( ! $relative_path)
+		{
+			$bad[] = './';
+			$bad[] = '/';
+		}
+
+		$str = remove_invisible_characters($str, false);
+
+		do
+		{
+			$old = $str;
+			$str = str_replace($bad, '', $str);
+		}
+		while ($old !== $str);
+
+		return stripslashes($str);
 	}
 
 	//--------------------------------------------------------------------
