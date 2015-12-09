@@ -146,9 +146,11 @@ class Security
 		{
 			global $request;
 
+			$uri = $request->uri->getPath();
+
 			foreach ($this->CSRFExcludeURIs as $excluded)
 			{
-				if (preg_match('#^'.$excluded.'$#i'.(UTF8_ENABLED ? 'u' : ''), $request->uri->getPath()))
+				if (preg_match('#^'.$excluded.'$#i'.(UTF8_ENABLED ? 'u' : ''), $uri))
 				{
 					return $this;
 				}
@@ -162,7 +164,7 @@ class Security
 			throw new \LogicException('The action you requested is not allowed', 403);
 		}
 
-		// We kill this since we're done and we don't want to polute the _POST array
+		// We kill this since we're done and we don't want to pollute the _POST array
 		unset($_POST[$this->CSRFTokenName]);
 
 		// Regenerate on every submission?
@@ -240,8 +242,6 @@ class Security
 	}
 	
 	//--------------------------------------------------------------------
-	
-	
 
 	/**
 	 * Sets the CSRF Hash and cookie.

@@ -95,12 +95,25 @@ $benchmark = \App\Config\Services::timer(true);
 $benchmark->start('total_execution');
 
 //--------------------------------------------------------------------
+// CSRF Protection
+//--------------------------------------------------------------------
+
+$config = new \App\Config\AppConfig();
+
+if ($config->CSRFProtection === true && ! is_cli())
+{
+	$security = \App\Config\Services::security($config);
+
+	$security->CSRFVerify();
+}
+
+//--------------------------------------------------------------------
 // Get our Request and Response objects
 //--------------------------------------------------------------------
 
 $request  = is_cli()
-		? \App\Config\Services::clirequest()
-		: \App\Config\Services::request();
+		? \App\Config\Services::clirequest($config)
+		: \App\Config\Services::request($config);
 $response = \App\Config\Services::response();
 
 // Assume success until proven otherwise.

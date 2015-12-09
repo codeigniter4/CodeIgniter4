@@ -1,7 +1,6 @@
 <?php namespace App\Config;
 
-use CodeIgniter\HTTP\Response;
-use CodeIgniter\HTTP\URI;
+use CodeIgniter\HTTP\{Response, URI};
 use CodeIgniter\Router\RouteCollectionInterface;
 
 /**
@@ -53,12 +52,17 @@ class Services
 	 * The CLI Request class provides for ways to interact with
 	 * a command line request.
 	 */
-	public static function clirequest($getShared = false)
+	public static function clirequest(AppConfig $config=null, $getShared = false)
 	{
+		if (! is_object($config))
+		{
+			$config = new AppConfig();
+		}
+
 		if (! $getShared)
 		{
 			return new \CodeIgniter\HTTP\CLIRequest(
-					new AppConfig(),
+					$config,
 					new \CodeIgniter\HTTP\URI()
 			);
 		}
@@ -72,7 +76,7 @@ class Services
 	 * The CURL Request class acts as a simple HTTP client for interacting
 	 * with other servers, typically through APIs.
 	 */
-	public static function curlrequest(array $options = [], $response = null, $getShared = false)
+	public static function curlrequest(array $options = [], $response = null, AppConfig $config = null, $getShared = false)
 	{
 		if ($getShared === true)
 		{
@@ -84,8 +88,13 @@ class Services
 			$response = new Response();
 		}
 
+		if (! is_object($config))
+		{
+			$config = new AppConfig();
+		}
+
 		return new \CodeIgniter\HTTP\CURLRequest(
-				new AppConfig(),
+				$config,
 				new URI(),
 				$response,
 				$options
@@ -166,12 +175,17 @@ class Services
 	/**
 	 * The Request class models an HTTP request.
 	 */
-	public static function request($getShared = false)
+	public static function request(AppConfig $config = null, $getShared = false)
 	{
+		if (! is_object($config))
+		{
+			$config = new AppConfig();
+		}
+
 		if (! $getShared)
 		{
 			return new \CodeIgniter\HTTP\IncomingRequest(
-					new AppConfig(),
+					$config,
 					new \CodeIgniter\HTTP\URI()
 			);
 		}
@@ -237,11 +251,16 @@ class Services
 	 * The Security class provides a few handy tools for keeping the site
 	 * secure, most notably the CSRF protection tools.
 	 */
-	public function security($getShared = false)
+	public static function security(AppConfig $config = null, $getShared = false)
 	{
+		if (! is_object($config))
+		{
+			$config = new AppConfig();
+		}
+
 		if (! $getShared)
 		{
-			return new \CodeIgniter\Security\Security(new AppConfig());
+			return new \CodeIgniter\Security\Security($config);
 		}
 
 		return self::getSharedInstance('security');

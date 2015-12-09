@@ -107,8 +107,6 @@ class IncomingRequest extends Request
 
 		$this->populateHeaders();
 
-		// @todo perform csrf check
-
 		$this->uri = $uri;
 
 		$this->detectURI($config->uriProtocol, $config->baseURL);
