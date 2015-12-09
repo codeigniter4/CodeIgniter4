@@ -17,14 +17,41 @@ class Router implements RouterInterface
 	 */
 	protected $directory;
 
+	/**
+	 * The name of the controller class.
+	 *
+	 * @var string
+	 */
 	protected $controller;
 
+	/**
+	 * The name of the method to use.
+	 *
+	 * @var string
+	 */
 	protected $method;
 
+	/**
+	 * An array of parameters that were collected
+	 * so they can be sent to closure routes.
+	 *
+	 * @var array
+	 */
 	protected $params = [];
 
+	/**
+	 * The name of the front controller.
+	 *
+	 * @var string
+	 */
 	protected $indexPage = 'index.php';
 
+	/**
+	 * Whether dashes in URI's should be converted
+	 * to underscores when determining method names.
+	 *
+	 * @var bool
+	 */
 	protected $translateURIDashes = false;
 
 	//--------------------------------------------------------------------
@@ -391,7 +418,7 @@ class Router implements RouterInterface
 
 		$this->controller = ucfirst($class);
 
-		// @todo log message that default controller was set.
+		log_message('common', 'Used the default controller.');
 	}
 
 	//--------------------------------------------------------------------
