@@ -37,6 +37,12 @@ $RECYCLE.BIN/
 .Trash-*
 
 #-------------------------
+# Environment Files
+#-------------------------
+
+application/config/development/*
+
+#-------------------------
 # Temporary Files
 #-------------------------
 writeable/cache/*
