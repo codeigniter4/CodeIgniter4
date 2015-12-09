@@ -255,14 +255,22 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * Once created, they can be used within curly brackets in routes.
 	 *
-	 * @param $name
-	 * @param $pattern
+	 * You can pass an associative array as $placeholder, and have
+	 * multiple placeholders added at once.
+	 *
+	 * @param string|array $placeholder
+	 * @param string       $pattern
 	 *
 	 * @return mixed
 	 */
-	public function addPlaceholder(string $name, string $pattern): RouteCollectionInterface
+	public function addPlaceholder($placeholder, string $pattern=null): RouteCollectionInterface
 	{
-		$this->placeholders[$name] = $pattern;
+		if (! is_array($placeholder))
+		{
+			$placeholder = [$placeholder => $pattern];
+		}
+
+		$this->placeholders = array_merge($this->placeholders, $placeholder);
 
 		return $this;
 	}

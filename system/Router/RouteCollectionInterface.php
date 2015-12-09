@@ -47,12 +47,15 @@ interface RouteCollectionInterface
 	 * by the routes as placeholders for regular expressions to make defining
 	 * the routes more human-friendly.
 	 *
-	 * @param $name
-	 * @param $pattern
+	 * You can pass an associative array as $placeholder, and have
+	 * multiple placeholders added at once.
+	 *
+	 * @param string|array $placeholder
+	 * @param string       $pattern
 	 *
 	 * @return mixed
 	 */
-	public function addPlaceholder(string $name, string $pattern);
+	public function addPlaceholder($placeholder, string $pattern=null);
 
 	//--------------------------------------------------------------------
 
