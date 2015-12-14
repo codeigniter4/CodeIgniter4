@@ -14,6 +14,8 @@ class AltCollection implements RouteCollectionInterface
 	 * The name of the default controller to use
 	 * when no other controller is specified.
 	 *
+	 * Not used here. Pass-thru value for Router class.
+	 *
 	 * @var string
 	 */
 	protected $defaultController = 'Home';
@@ -21,6 +23,8 @@ class AltCollection implements RouteCollectionInterface
 	/**
 	 * The name of the default method to use
 	 * when no other method has been specified.
+	 *
+	 * Not used here. Pass-thru value for Router class.
 	 *
 	 * @var string
 	 */
@@ -37,6 +41,8 @@ class AltCollection implements RouteCollectionInterface
 	/**
 	 * Whether to convert dashes to underscores in URI.
 	 *
+	 * Not used here. Pass-thru value for Router class.
+	 *
 	 * @var bool
 	 */
 	protected $translateURIDashes = false;
@@ -44,6 +50,8 @@ class AltCollection implements RouteCollectionInterface
 	/**
 	 * Whether to match URI against controllers
 	 * when it doesn't match defined routes.
+	 *
+	 * Not used here. Pass-thru value for Router class.
 	 *
 	 * @var bool
 	 */
@@ -75,7 +83,7 @@ class AltCollection implements RouteCollectionInterface
 	 *
 	 * @var
 	 */
-	protected $http_verb;
+	protected $HTTPVerb;
 
 	/**
 	 * The default list of HTTP methods (and CLI for command line usage)
@@ -83,7 +91,7 @@ class AltCollection implements RouteCollectionInterface
 	 *
 	 * @var array
 	 */
-	protected $default_http_methods = ['options', 'get', 'head', 'post', 'put', 'delete', 'trace', 'connect', 'cli'];
+	protected $defaultHTTPMethods = ['options', 'get', 'head', 'post', 'put', 'delete', 'trace', 'connect', 'cli'];
 
 	/**
 	 * The name of the current group, if any.
@@ -104,7 +112,7 @@ class AltCollection implements RouteCollectionInterface
 	public function __construct()
 	{
 		// Get HTTP verb
-		$this->http_verb = isset($_SERVER['REQUEST_METHOD']) ? strtolower($_SERVER['REQUEST_METHOD']) : 'cli';
+		$this->HTTPVerb = isset($_SERVER['REQUEST_METHOD']) ? strtolower($_SERVER['REQUEST_METHOD']) : 'cli';
 	}
 
 	//--------------------------------------------------------------------
@@ -315,7 +323,7 @@ class AltCollection implements RouteCollectionInterface
 	 */
 	public function getHTTPVerb(): string
 	{
-		return $this->http_verb;
+		return $this->HTTPVerb;
 	}
 
 	//--------------------------------------------------------------------
@@ -394,7 +402,6 @@ class AltCollection implements RouteCollectionInterface
 	 *
 	 * Possible Options:
 	 *      'controller'    - Customize the name of the controller used in the 'to' route
-	 *      'module'        - Prepend a module name to the generate 'to' routes
 	 *      'placeholder'   - The regex used by the Router. Defaults to '(:any)'
 	 *
 	 * Example:
@@ -403,7 +410,7 @@ class AltCollection implements RouteCollectionInterface
 	 *      // Generates the following routes:
 	 *      HTTP Verb | Path        | Action        | Used for...
 	 *      ----------+-------------+---------------+-----------------
-	 *      GET         /photos             index           display a list of photos
+	 *      GET         /photos             list_all        display a list of photos
 	 *      GET         /photos/{id}        show            display a specific photo
 	 *      POST        /photos             create          create a new photo
 	 *      PUT         /photos/{id}        update          update an existing photo
@@ -419,18 +426,12 @@ class AltCollection implements RouteCollectionInterface
 		// In order to allow customization of the route the
 		// resources are sent to, we need to have a new name
 		// to store the values in.
-		$new_name = $name;
+		$new_name = ucfirst($name);
 
 		// If a new controller is specified, then we replace the
 		// $name value with the name of the new controller.
 		if (isset($options['controller'])) {
-			$new_name = $options['controller'];
-		}
-
-		// If a new module was specified, simply put that path
-		// in front of the controller.
-		if (isset($options['module'])) {
-			$new_name = $options['module'] . '/' . $new_name;
+			$new_name = ucfirst(filter_var($options['controller'], FILTER_SANITIZE_STRING));
 		}
 
 		// In order to allow customization of allowed id values
@@ -442,11 +443,14 @@ class AltCollection implements RouteCollectionInterface
 			$id = $options['placeholder'];
 		}
 
-		$this->get($name, $new_name . '/list_all', $options)
-		     ->get($name . '/' . $id, $new_name . '/show/$1', $options)
-		     ->post($name, $new_name . '/create', $options)
-		     ->put($name . '/' . $id, $new_name . '/update/$1', $options)
-		     ->delete($name . '/' . $id, $new_name . '/delete/$1', $options);
+		// Make sure we capture back-references
+		$id = '('.trim($id, '()').')';
+
+		$this->get($name, $new_name . '::list_all', $options)
+		     ->get($name . '/' . $id, $new_name . '::show/$1', $options)
+		     ->post($name, $new_name . '::create', $options)
+		     ->put($name . '/' . $id, $new_name . '::update/$1', $options)
+		     ->delete($name . '/' . $id, $new_name . '::delete/$1', $options);
 
 		return $this;
 	}
@@ -718,7 +722,7 @@ class AltCollection implements RouteCollectionInterface
 	{
 		$prefix = is_null($this->group) ? '' : $this->group.'/';
 
-		$from = $prefix.$from;
+		$from = filter_var($prefix.$from, FILTER_SANITIZE_STRING);
 
 		// Limiting to subdomains?
 		if (isset($options['subdomain']) && ! empty($options['subdomain']))
