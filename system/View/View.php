@@ -1,5 +1,6 @@
 <?php namespace CodeIgniter\View;
 
+use App\Config\Services;
 use CodeIgniter\Loader;
 
 /**
@@ -34,9 +35,18 @@ class View implements RenderableInterface {
 
 	//--------------------------------------------------------------------
 
-	public function __construct(string $viewPath=null)
+	public function __construct(string $viewPath=null, $loader=null)
 	{
 		$this->viewPath = rtrim($viewPath, '/ ').'/';
+
+		if (! is_null($loader))
+		{
+			$this->loader = $loader;
+		}
+		else
+		{
+			$this->loader = Services::loader(true);
+		}
 	}
 
 	//--------------------------------------------------------------------
@@ -54,9 +64,17 @@ class View implements RenderableInterface {
 	 */
 	public function render(string $view, array $options=[]): string
 	{
-		$file = $this->viewPath.str_replace('.php', '', $view).'.php';
+		$view = str_replace('.php', '', $view).'.php';
+
+		$file = $this->viewPath.$view;
 
 		if (! file_exists($file))
+		{
+			$file = $this->loader->locateFile($view);
+		}
+
+		// locateFile will return an empty string if the file cannot be found.
+		if (empty($file))
 		{
 			throw new \InvalidArgumentException('View file not found: '. $file);
 		}

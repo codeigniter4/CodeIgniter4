@@ -42,7 +42,8 @@ class AutoloadConfig
 			'App'             => realpath(APPPATH),
 			'App\Config'      => APPPATH.'config',
 			'App\Controllers' => APPPATH.'controllers',
-			'CodeIgniter'     => realpath(BASEPATH)
+			'CodeIgniter'     => realpath(BASEPATH),
+		    'Blog'            => APPPATH.'../_modules/blog'
 		];
 
 		/**
@@ -83,6 +84,7 @@ class AutoloadConfig
 			'CodeIgniter\View\RenderableInterface'        => BASEPATH.'View/RenderableInterface.php',
 			'CodeIgniter\View\View'                       => BASEPATH.'View/View.php',
 			'CodeIgniter\CLI\CLI'                         => BASEPATH.'CLI/CLI.php',
+			'CodeIgniter\Logger'                          => BASEPATH.'Loader.php',
 			'Zend\Escaper\Escaper'                        => BASEPATH.'View/Escaper.php',
 			'CodeIgniter\Log\Logger'                      => BASEPATH.'Log/Logger.php',
 			'Psr\Log\LoggerInterface'                     => BASEPATH.'Log/LoggerInterface.php',
