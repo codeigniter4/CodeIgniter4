@@ -134,7 +134,7 @@ if (file_exists(APPPATH.'config/'.ENVIRONMENT.'/Constants.php'))
 	require_once APPPATH.'config/'.ENVIRONMENT.'/Constants.php';
 }
 
-//require_once(APPPATH.'config/constants.php');
+require_once(APPPATH.'config/constants.php');
 
 /*
  * ------------------------------------------------------
