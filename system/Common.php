@@ -256,3 +256,30 @@ if ( ! function_exists('remove_invisible_characters'))
 		return $str;
 	}
 }
+
+//--------------------------------------------------------------------
+
+if (! function_exists('load_helper'))
+{
+	/**
+	 * Loads a helper file into memory. Supports namespaced helpers,
+	 * both in and out of the 'helpers' directory of a namespaced directory.
+	 *
+	 * @param string $filename
+	 *
+	 * @return string
+	 */
+	function load_helper(string $filename): string
+	{
+		$loader = \App\Config\Services::loader(true);
+
+		$path = $loader->locateFile($filename, 'helpers');
+
+		if (! empty($path))
+		{
+			include $path;
+		}
+	}
+}
+
+//--------------------------------------------------------------------
