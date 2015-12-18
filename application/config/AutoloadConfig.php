@@ -39,11 +39,11 @@ class AutoloadConfig
 		 *   `];
 		 */
 		$this->psr4 = [
-			'App'             => realpath(APPPATH),
-			'App\Config'      => APPPATH.'config',
-			'App\Controllers' => APPPATH.'controllers',
-			'CodeIgniter'     => realpath(BASEPATH),
-		    'Blog'            => APPPATH.'../_modules/blog'
+			APP_NAMESPACE                => realpath(APPPATH),
+			APP_NAMESPACE.'\Config'      => APPPATH.'config',
+			APP_NAMESPACE.'\Controllers' => APPPATH.'controllers',
+			'CodeIgniter'                => realpath(BASEPATH),
+		    'Blog'                       => APPPATH.'../_modules/blog'
 		];
 
 		/**
