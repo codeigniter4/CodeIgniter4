@@ -173,7 +173,7 @@ class RouteCollection implements RouteCollectionInterface
 
 		// Ensure that any strings are prefixed with backslash to get
 		// out of the current namespace and into the proper one.
-		if (is_string($map) && ! empty($this->defaultNamespace))
+		if (is_string($map))
 		{
 			$map = '\\'.ltrim($map, '\\ ');
 		}
