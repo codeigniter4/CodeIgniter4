@@ -70,7 +70,7 @@ class View implements RenderableInterface {
 
 		if (! file_exists($file))
 		{
-			$file = $this->loader->locateFile($view);
+			$file = $this->loader->locateFile($view, 'views');
 		}
 
 		// locateFile will return an empty string if the file cannot be found.

@@ -37,11 +37,12 @@ class Loader {
 	 * Attempts to locate a file by examining the name for a namespace
 	 * and looking through the PSR-4 namespaced files that we know about.
 	 *
-	 * @param string $file  The namespaced file to locate
+	 * @param string $file   The namespaced file to locate
+	 * @param string $folder The folder within the namespace that we should look for the file.
 	 *
 	 * @return string       The path to the file if found, or an empty string.
 	 */
-	public function locateFile(string $file): string
+	public function locateFile(string $file, string $folder=null): string
 	{
 		// No namespaceing? Get out.
 		if (strpos($file, '\\') === false) return '';
@@ -51,8 +52,9 @@ class Loader {
 		// The first segment will be empty if a slash started the filename.
 		if (empty($segments[0])) unset($segments[0]);
 
-		$path   = '';
-		$prefix = '';
+		$path     = '';
+		$prefix   = '';
+		$filename = '';
 
 		while (! empty($segments))
 		{
@@ -65,9 +67,26 @@ class Loader {
 				continue;
 			}
 
-			$path = realpath($this->namespaces[$prefix]).'/'.implode('/', $segments);
+			$path = realpath($this->namespaces[$prefix]).'/';
+			$filename = implode('/', $segments);
 			break;
 		}
+
+		// IF we have a folder name, then the calling function
+		// expects this file to be within that folder, like 'views',
+		// or 'libraries'.
+		if (! empty($folder))
+		{
+			// Strip the folder from the filename if it's there.
+			if (strpos($filename, $folder) === 0)
+			{
+				$filename = substr($filename, strlen($folder) +1);
+			}
+
+			$filename = $folder.'/'.$filename;
+		}
+
+		$path .= $filename;
 
 		if (! file_exists($path))
 		{
