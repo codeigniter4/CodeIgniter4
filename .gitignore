@@ -72,8 +72,11 @@ vendor/
 composer.lock
 
 #-------------------------
-# IDE Files
+# IDE / Development Files
 #-------------------------
+
+# Modules Testing
+_modules/*
 
 # Jetbrains editors (PHPStorm, etc)
 .idea/
