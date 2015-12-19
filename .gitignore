@@ -66,6 +66,11 @@ user_guide_src/cilexer/dist/*
 user_guide_src/cilexer/pycilexer.egg-info/*
 
 #-------------------------
+# Test Files
+#-------------------------
+tests/support/coverage*
+
+#-------------------------
 # Composer
 #-------------------------
 vendor/
