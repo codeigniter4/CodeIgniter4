@@ -8,6 +8,8 @@ use App\Config\AutoloadConfig;
  * Allows loading non-class files in a namespaced manner.
  * Works with Helpers, Views, etc.
  *
+ * @todo sanitize filenames prior to checking them...
+ *
  * @package CodeIgniter
  */
 class Loader {
@@ -39,13 +41,24 @@ class Loader {
 	 *
 	 * @param string $file   The namespaced file to locate
 	 * @param string $folder The folder within the namespace that we should look for the file.
+	 * @param string $ext    The file extension the file should have.
 	 *
 	 * @return string       The path to the file if found, or an empty string.
 	 */
-	public function locateFile(string $file, string $folder=null): string
+	public function locateFile(string $file, string $folder=null, string $ext = 'php'): string
 	{
-		// No namespaceing? Get out.
-		if (strpos($file, '\\') === false) return '';
+		$file = strpos($file, '.'.$ext) !== false
+				? $file
+				: $file.'.'.$ext;
+
+		// No namespaceing? Try the application folder.
+		if (strpos($file, '\\') === false)
+		{
+			return $this->legacyLocate($file, $folder);
+		}
+
+		// Standardize slashes to handle nested directories.
+		$file = str_replace('/', '\\', $file);
 
 		$segments = explode('\\', $file);
 
@@ -67,7 +80,7 @@ class Loader {
 				continue;
 			}
 
-			$path = realpath($this->namespaces[$prefix]).'/';
+			$path = $this->namespaces[$prefix].'/';
 			$filename = implode('/', $segments);
 			break;
 		}
@@ -88,7 +101,7 @@ class Loader {
 
 		$path .= $filename;
 
-		if (! file_exists($path))
+		if (! $this->requireFile($path))
 		{
 			$path = '';
 		}
@@ -98,15 +111,44 @@ class Loader {
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Checks the application folder to see if the file can be found.
+	 * Only for use with filenames that DO NOT include namespacing.
+	 *
+	 * @param string      $file
+	 * @param string|null $folder
+	 * @param string      $ext
+	 *
+	 * @return string
+	 */
+	protected function legacyLocate(string $file, string $folder=null): string
+	{
+		$path = APPPATH;
+
+		$path .= empty($folder)
+				? $file
+				: $folder.'/'.$file;
+
+		return $this->requireFile($path) === true
+				? $path
+				: '';
+	}
 
 	//--------------------------------------------------------------------
-	// Helpers
-	//--------------------------------------------------------------------
 
+	/**
+	 * Checks to see if a file exists on the file system. This is split
+	 * out to it's own method to make testing simpler.
+	 *
+	 * @param string $path
+	 *
+	 * @return bool
+	 */
+	protected function requireFile(string $path): bool
+	{
+		return file_exists($path);
+	}
 
 	//--------------------------------------------------------------------
-	// Views
-	//--------------------------------------------------------------------
-
 
 }
