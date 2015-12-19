@@ -16,14 +16,15 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
 	{
 		$config = new MockAutoloadConfig();
 		$config->psr4 = [
-			'App'             => '/application',
 			'App\Libraries'   => '/application/somewhere',
+			'App'             => '/application',
 		    'Blog'            => '/modules/blog'
 		];
 
 	    $this->loader = new MockLoader($config);
 
 		$this->loader->setFiles([
+			APPPATH.'index.php',
 			APPPATH.'views/index.php',
 		    APPPATH.'views/admin/users/create.php',
 		    '/modules/blog/views/index.php',
@@ -40,6 +41,17 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
 		$expected = APPPATH.'views/index.php';
 
 		$this->assertEquals($expected, $this->loader->locateFile($file, 'views'));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testLocateFileWorksInApplicationDirectoryWithoutFolder()
+	{
+		$file = 'index';
+
+		$expected = APPPATH.'index.php';
+
+		$this->assertEquals($expected, $this->loader->locateFile($file));
 	}
 
 	//--------------------------------------------------------------------
@@ -66,9 +78,6 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
 
 	//--------------------------------------------------------------------
 
-	/**
-	 * @group single
-	 */
 	public function testLocateFileReplacesFolderNameLegacy()
 	{
 		$file = 'views/index.php';
@@ -102,5 +111,13 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
 
 	//--------------------------------------------------------------------
 
+	public function testLocateFileReturnsEmptyWithBadNamespace()
+	{
+		$file = '\Blogger\admin/posts.php';
+
+		$this->assertEquals('', $this->loader->locateFile($file, 'views'));
+	}
+
+	//--------------------------------------------------------------------
 }
 

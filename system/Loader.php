@@ -97,12 +97,6 @@ class Loader {
 		// or 'libraries'.
 		if (! empty($folder))
 		{
-			// Strip the folder from the filename if it's there.
-			if (strpos($filename, $folder) === 0)
-			{
-				$filename = substr($filename, strlen($folder) +1);
-			}
-
 			$filename = $folder.'/'.$filename;
 		}
 
@@ -147,6 +141,7 @@ class Loader {
 	 * Checks to see if a file exists on the file system. This is split
 	 * out to it's own method to make testing simpler.
 	 *
+	 * @codeCoverageIgnore
 	 * @param string $path
 	 *
 	 * @return bool
