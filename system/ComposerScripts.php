@@ -8,6 +8,7 @@
  * do not need to use Composer to install a package, but can simply
  * download
  *
+ * @codeCoverageIgnore
  * @package CodeIgniter
  */
 class ComposerScripts

@@ -89,6 +89,8 @@ class Autoloader
 
 	/**
 	 * Register the loader with the SPL autoloader stack.
+	 *
+	 * @codeCoverageIgnore
 	 */
 	public function register()
 	{
@@ -296,6 +298,8 @@ class Autoloader
 	/**
 	 * A central way to require a file is loaded. Split out primarily
 	 * for testing purposes.
+	 *
+	 * @codeCoverageIgnore
 	 *
 	 * @param $file
 	 *
