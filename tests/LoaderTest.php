@@ -55,6 +55,31 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
 
 	//--------------------------------------------------------------------
 
+	public function testLocateFileReplacesFolderName()
+	{
+		$file = '\Blog\views/admin/posts.php';
+
+		$expected = '/modules/blog/views/admin/posts.php';
+
+		$this->assertEquals($expected, $this->loader->locateFile($file, 'views'));
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * @group single
+	 */
+	public function testLocateFileReplacesFolderNameLegacy()
+	{
+		$file = 'views/index.php';
+
+		$expected = APPPATH.'views/index.php';
+
+		$this->assertEquals($expected, $this->loader->locateFile($file, 'views'));
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testLocateFileCanFindNamespacedView()
 	{
 	    $file = '\Blog\index';

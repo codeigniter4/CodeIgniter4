@@ -47,9 +47,16 @@ class Loader {
 	 */
 	public function locateFile(string $file, string $folder=null, string $ext = 'php'): string
 	{
+		// Ensure the extension is on the filename
 		$file = strpos($file, '.'.$ext) !== false
 				? $file
 				: $file.'.'.$ext;
+
+		// Clean the folder name from the filename
+		if (! empty($folder))
+		{
+			$file = str_replace($folder.'/', '', $file);
+		}
 
 		// No namespaceing? Try the application folder.
 		if (strpos($file, '\\') === false)
