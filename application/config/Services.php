@@ -216,11 +216,16 @@ class Services
 	/**
 	 * The Response class models an HTTP response.
 	 */
-	public static function response($getShared = false)
+	public static function response(AppConfig $config = null, $getShared = false)
 	{
+		if (! is_object($config))
+		{
+			$config = new AppConfig();
+		}
+
 		if (! $getShared)
 		{
-			return new \CodeIgniter\HTTP\Response();
+			return new \CodeIgniter\HTTP\Response($config);
 		}
 
 		return self::getSharedInstance('response');

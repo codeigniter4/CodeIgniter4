@@ -1,5 +1,7 @@
 <?php namespace CodeIgniter\HTTP;
 
+use App\Config\AppConfig;
+
 /**
  * Representation of an outgoing, server-side response.
  *
@@ -103,13 +105,30 @@ class Response extends Message implements ResponseInterface
 	 */
 	protected $statusCode;
 
+	/**
+	 * Whether Content Security Policy is being enforced.
+	 * @var bool
+	 */
+	protected $CSPEnabled = false;
+
+	/**
+	 * @var \CodeIgniter\HTTP\ContentSecurityPolicy
+	 */
+	protected $CSP;
+
 	//--------------------------------------------------------------------
 
-	public function __construct()
+	public function __construct(AppConfig $config)
 	{
 	    // Default to a non-caching page.
 		// Also ensures that a Cache-control header exists.
 		$this->noCache();
+
+		// Are we enforcing a Content Security Policy?
+		if ($config->CSPEnabled === true)
+		{
+			$this->CSP = new ContentSecurityPolicy();
+		}
 	}
 
 	//--------------------------------------------------------------------
@@ -369,6 +388,13 @@ class Response extends Message implements ResponseInterface
 	 */
 	public function send(): self
 	{
+		// If we're enforcing a Content Security Policy,
+		// we need to give it a chance to build out it's headers.
+		if ($this->CSPEnabled === true)
+		{
+			$this->CSP->finalize($this);
+		}
+
 	    $this->sendHeaders();
 		$this->sendBody();
 
