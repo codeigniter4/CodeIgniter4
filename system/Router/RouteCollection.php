@@ -27,6 +27,8 @@ class RouteCollection implements RouteCollectionInterface
 	 * The name of the default controller to use
 	 * when no other controller is specified.
 	 *
+	 * Not used here. Pass-thru value for Router class.
+	 *
 	 * @var string
 	 */
 	protected $defaultController = 'Home';
@@ -35,12 +37,16 @@ class RouteCollection implements RouteCollectionInterface
 	 * The name of the default method to use
 	 * when no other method has been specified.
 	 *
+	 * Not used here. Pass-thru value for Router class.
+	 *
 	 * @var string
 	 */
 	protected $defaultMethod = 'index';
 
 	/**
 	 * Whether to convert dashes to underscores in URI.
+	 *
+	 * Not used here. Pass-thru value for Router class.
 	 *
 	 * @var bool
 	 */
@@ -49,6 +55,8 @@ class RouteCollection implements RouteCollectionInterface
 	/**
 	 * Whether to match URI against controllers
 	 * when it doesn't match defined routes.
+	 *
+	 * Not used here. Pass-thru value for Router class.
 	 *
 	 * @var bool
 	 */
@@ -165,7 +173,7 @@ class RouteCollection implements RouteCollectionInterface
 
 		// Ensure that any strings are prefixed with backslash to get
 		// out of the current namespace and into the proper one.
-		if (is_string($map) && ! empty($this->defaultNamespace))
+		if (is_string($map))
 		{
 			$map = '\\'.ltrim($map, '\\ ');
 		}

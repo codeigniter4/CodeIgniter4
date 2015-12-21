@@ -3,6 +3,12 @@
 use CodeIgniter\HTTP\Request;
 use CodeIgniter\HTTP\Response;
 
+/**
+ * Class Controller
+ *
+ * @codeCoverageIgnore
+ * @package CodeIgniter
+ */
 class Controller
 {
 	protected $request;

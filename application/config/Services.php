@@ -140,6 +140,24 @@ class Services
 	//--------------------------------------------------------------------
 
 	/**
+	 * The loader provides utility methods for looking for non-classes
+	 * within namespaced folders, as well as convenience methods for
+	 * loading 'helpers', and 'libraries'.
+	 */
+	public static function loader($getShared = false)
+	{
+	    if (! $getShared)
+	    {
+		    return new \CodeIgniter\Loader(new \App\Config\AutoloadConfig());
+	    }
+
+		return self::getSharedInstance('loader');
+	}
+
+	//--------------------------------------------------------------------
+
+
+	/**
 	 * The Logger class is a PSR-3 compatible Logging class that supports
 	 * multiple handlers that process the actual logging.
 	 */
@@ -164,7 +182,7 @@ class Services
 	{
 		if (! $getShared)
 		{
-			return new \CodeIgniter\View\View($viewPath);
+			return new \CodeIgniter\View\View($viewPath, self::loader(true));
 		}
 
 		return self::getSharedInstance('renderer');

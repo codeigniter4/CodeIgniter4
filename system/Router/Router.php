@@ -418,7 +418,7 @@ class Router implements RouterInterface
 
 		$this->controller = ucfirst($class);
 
-		log_message('common', 'Used the default controller.');
+		log_message('info', 'Used the default controller.');
 	}
 
 	//--------------------------------------------------------------------

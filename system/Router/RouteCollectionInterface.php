@@ -18,27 +18,12 @@ interface RouteCollectionInterface
 	/**
 	 * Adds a single route to the collection.
 	 *
-	 * @param string $route
-	 * @param array|string $map
-	 * @param string|array $method
+	 * @param string $from
+	 * @param array|string $to
 	 *
 	 * @return mixed
 	 */
-	public function add(string $route, $map, $method = 'get');
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Adds an array of routes to the class all at once. This can be used
-	 * by less complex routing systems to add all routes at once for a tiny
-	 * performance gain.
-	 *
-	 * @param array|null $routes
-	 * @param array|null $options
-	 *
-	 * @return mixed
-	 */
-	public function map(array $routes = null, array $options = []);
+	public function add(string $from, $to);
 
 	//--------------------------------------------------------------------
 

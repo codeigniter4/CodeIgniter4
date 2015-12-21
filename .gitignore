@@ -66,14 +66,22 @@ user_guide_src/cilexer/dist/*
 user_guide_src/cilexer/pycilexer.egg-info/*
 
 #-------------------------
+# Test Files
+#-------------------------
+tests/support/coverage*
+
+#-------------------------
 # Composer
 #-------------------------
 vendor/
 composer.lock
 
 #-------------------------
-# IDE Files
+# IDE / Development Files
 #-------------------------
+
+# Modules Testing
+_modules/*
 
 # Jetbrains editors (PHPStorm, etc)
 .idea/
