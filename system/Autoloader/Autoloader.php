@@ -277,7 +277,7 @@ class Autoloader
 		$paths = [
 			APPPATH.'controllers/',
 			APPPATH.'libraries/',
-			APPPATH.'models/',x
+			APPPATH.'models/',
 		];
 
 		$class = str_replace('\\', '/', $class).'.php';
