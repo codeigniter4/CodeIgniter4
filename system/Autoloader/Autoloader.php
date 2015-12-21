@@ -203,7 +203,7 @@ class Autoloader
 		while (false !== $pos = strrpos($prefix, '\\'))
 		{
 			// retain trailing namespace separator in the prefix
-			$prefix = substr($class, 0, $pos + 1);
+			$prefix = substr($class, 0, $pos);
 
 			// the rest is the relative class name
 			$relative_class = substr($class, $pos + 1);
@@ -275,7 +275,7 @@ class Autoloader
 		$paths = [
 			APPPATH.'controllers/',
 			APPPATH.'libraries/',
-			APPPATH.'models/',
+			APPPATH.'models/',x
 		];
 
 		$class = str_replace('\\', '/', $class).'.php';
