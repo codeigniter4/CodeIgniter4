@@ -10,6 +10,13 @@ tasks, as well as a simple interface and logical structure to access
 these libraries. CodeIgniter lets you creatively focus on your project
 by minimizing the amount of code needed for a given task.
 
+Where possible, CodeIgniter has been kept as flexible as possible,
+allowing you to work in the way you want, not being forced into working
+any certain way. The framework can have core parts easily extended
+or completely replaced to make the system work the way you need it to.
+In short, CodeIgniter is the malleable framework that tries to provide
+the tools you need while staying out of the way.
+
 ***********************
 Who is CodeIgniter For?
 ***********************
@@ -18,8 +25,6 @@ CodeIgniter is right for you if:
 
 -  You want a framework with a small footprint.
 -  You need exceptional performance.
--  You need broad compatibility with standard hosting accounts that run
-   a variety of PHP versions and configurations.
 -  You want a framework that requires nearly zero configuration.
 -  You want a framework that does not require you to use the command
    line.

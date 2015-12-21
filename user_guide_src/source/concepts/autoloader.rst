@@ -37,7 +37,7 @@ etc. The ``psr4`` array in the configuration file allows you to map the namespac
 those classes can be found in::
 
 	$config['psr4'] = [
-		'My\App' => APPPATH,
+		'App'         => APPPATH,
 		'CodeIgniter' => BASEPATH,
 	];
 
@@ -45,6 +45,17 @@ The key of each row is the namespace itself. This does not need a trailing slash
 to define the array, be sure to escape the backwards slash. That means that it would be ``My\\App``,
 not ``My\App``. The value is the location to the directory the classes can be found in. They should
 have a trailing slash.
+
+By default, the application folder is namespace to the ``App`` namespace. The only place this is used
+in a fresh installation is in the configuration files. While you are not forced to namespace the controllers,
+libraries, or models in the application directory, if you do, they will be found under the ``App`` namespace.
+You may change this namespace by editing the ``/application/config/Constants.php`` file and setting the
+new namespace value under the ``APP_NAMESPACE`` setting.::
+
+	define('APP_NAMESPACE', 'App');
+
+You will need to modify any existing files that are referencing the current namespace. In a fresh install,
+those are found in the config directory.
 
 Classmap
 ========
@@ -62,7 +73,7 @@ The key of each row is the name of the class that you want to locate. The value 
 Legacy Support
 ==============
 
-If neither of the above methods find the class, and the class is not namespace, the autoloader will look in the
+If neither of the above methods find the class, and the class is not namespaced, the autoloader will look in the
 ``/application/libraries`` and ``/application/models`` directories to attempt to locate the files. This provides
 a measure to help ease the transition from previous versions.
 
