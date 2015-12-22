@@ -129,6 +129,7 @@ class Response extends Message implements ResponseInterface
 		if ($config->CSPEnabled === true)
 		{
 			$this->CSP = new ContentSecurityPolicy(new ContentSecurityPolicyConfig());
+			$this->CSPEnabled = true;
 		}
 	}
 

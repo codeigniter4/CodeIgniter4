@@ -8,8 +8,6 @@ use App\Config\ContentSecurityPolicyConfig;
  * Provides tools for working with the Content-Security-Policy header
  * to help defeat XSS attacks.
  *
- * @todo    Ensure all src items have the option to report only.
- *
  * @see     http://www.w3.org/TR/CSP/
  * @see     http://www.html5rocks.com/en/tutorials/security/content-security-policy/
  * @see     http://content-security-policy.com/
@@ -18,7 +16,7 @@ use App\Config\ContentSecurityPolicyConfig;
  */
 class ContentSecurityPolicy
 {
-	protected $base_uri = '';
+	protected $baseURI = [];
 
 	protected $childSrc = [];
 
@@ -52,6 +50,10 @@ class ContentSecurityPolicy
 
 	protected $reportOnly = false;
 
+	protected $validSources = ['self', 'none', 'unsafe-inline', 'unsafe-eval'];
+
+	protected $nonces = [];
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -63,18 +65,17 @@ class ContentSecurityPolicy
 	 */
 	public function __construct(ContentSecurityPolicyConfig $config)
 	{
-	    foreach ($config as $setting => $value)
-	    {
-		    if (isset($this->{$setting}))
-		    {
-			    $this->{$setting} = $value;
-		    }
-	    }
+		foreach ($config as $setting => $value)
+		{
+			if (isset($this->{$setting}))
+			{
+				$this->{$setting} = $value;
+			}
+		}
 	}
-	
+
 	//--------------------------------------------------------------------
-	
-	
+
 	/**
 	 * Compiles and sets the appropriate headers in the request.
 	 *
@@ -84,6 +85,9 @@ class ContentSecurityPolicy
 	 */
 	public function finalize(ResponseInterface &$response)
 	{
+		$this->generateNonces($response);
+
+		$this->buildHeaders($response);
 	}
 
 	//--------------------------------------------------------------------
@@ -123,9 +127,9 @@ class ContentSecurityPolicy
 	 *
 	 * @return $this
 	 */
-	public function setBaseURI($uri)
+	public function setBaseURI($uri, bool $reportOnly)
 	{
-		$this->base_uri = (string)$uri;
+		$this->baseURI = [(string)$uri => $reportOnly];
 
 		return $this;
 	}
@@ -193,10 +197,9 @@ class ContentSecurityPolicy
 	 *
 	 * @return $this
 	 */
-	public function addDefaultSrc($uri, bool $reportOnly = false)
+	public function setDefaultSrc($uri, bool $reportOnly = false)
 	{
-		// @todo Determine how to save reportOnly defaults...
-		$this->defaultSrc = (string)$uri;
+		$this->defaultSrc = [(string)$uri => $reportOnly];
 
 		return $this;
 	}
@@ -331,7 +334,7 @@ class ContentSecurityPolicy
 	 *
 	 * @see http://www.w3.org/TR/CSP/#directive-plugin-types
 	 *
-	 * @param string $mime        One or more plugin mime types, separate by spaces
+	 * @param string $mime One or more plugin mime types, separate by spaces
 	 * @param bool   $reportOnly
 	 *
 	 * @return $this
@@ -397,8 +400,8 @@ class ContentSecurityPolicy
 	 *
 	 * @see http://www.w3.org/TR/CSP/#directive-connect-src
 	 *
-	 * @param $uri
-	 * @param bool reportOnly
+	 * @param      $uri
+	 * @param bool $reportOnly
 	 *
 	 * @return $this
 	 */
@@ -417,7 +420,7 @@ class ContentSecurityPolicy
 	 *
 	 * @see http://www.w3.org/TR/CSP/#directive-connect-src
 	 *
-	 * @param $uri
+	 * @param      $uri
 	 * @param bool $reportOnly
 	 *
 	 * @return $this
@@ -455,8 +458,6 @@ class ContentSecurityPolicy
 	/**
 	 * DRY method to add an string or array to a class property.
 	 *
-	 * @todo store things with reportOnly flags.
-	 *
 	 * @param        $options
 	 * @param string $target
 	 * @param bool   $reportOnly If TRUE, this item will be reported, not restricted
@@ -477,6 +478,119 @@ class ContentSecurityPolicy
 		else
 		{
 			$this->{$target}[] = [$options => $reportOnly];
+		}
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Scans the body of the request message and replaces any nonce
+	 * placeholders with actual nonces, that we'll then add to our
+	 * headers.
+	 *
+	 * @param ResponseInterface $response
+	 */
+	protected function generateNonces(ResponseInterface &$response)
+	{
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Based on the current state of the elements, will add the appropriate
+	 * Content-Security-Policy and Content-Security-Policy-Report-Only headers
+	 * with their values to the response object.
+	 *
+	 * @param ResponseInterface $response
+	 */
+	protected function buildHeaders(ResponseInterface &$response)
+	{
+		// Ensure both headers are available and arrays...
+		$response->setHeader('Content-Security-Policy', []);
+		$response->setHeader('Content-Security-Policy-Report-Only', []);
+
+		$directives = [
+			'base-uri' => 'baseURI',
+		    'child-src' => 'childSrc',
+		    'connect-src' => 'connectSrc',
+		    'default-src' => 'defaultSrc',
+		    'font-src' => 'fontSrc',
+		    'form-action' => 'formAction',
+		    'frame-ancestors' => 'frameAncestors',
+		    'img-src' => 'imageSrc',
+		    'media-src' => 'mediaSrc',
+		    'object-src' => 'objectSrc',
+		    'plugin-types' => 'pluginTypes',
+		    'script-src' => 'scriptSrc',
+		    'style-src' => 'styleSrc',
+		    'sandbox' => 'sandbox',
+		    'report-uri' => 'reportURI'
+		];
+
+		foreach ($directives as $name => $property)
+		{
+			// base_uri
+			if ( ! empty($this->{$property}))
+			{
+				$this->addToHeader($name, $this->{$property}, $response);
+			}
+		}
+
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Adds a directive and it's options to the appropriate header. The $values
+	 * array might have options that are geared toward either the regular or the
+	 * reportOnly header, since it's viable to have both simultaneously.
+	 *
+	 * @param string            $name
+	 * @param array|string|null $values
+	 * @param ResponseInterface $response
+	 */
+	protected function addToHeader(\string $name, $values = null, ResponseInterface &$response)
+	{
+		if ( empty($values))
+		{
+			// It's possible that directives like 'sandbox' will not
+			// have any values passed in, so add them to the main policy.
+			$response->appendHeader('Content-Security-Policy', $name);
+			return;
+		}
+
+		if (is_string($values))
+		{
+			$values = [$values => 0];
+		}
+
+		$sources       = [];
+		$reportSources = [];
+
+		foreach ($values as $value => $reportOnly)
+		{
+			if ($reportOnly === true)
+			{
+				$reportSources[] = in_array($value, $this->validSources)
+					? "'{$value}'"
+					: $value;
+			}
+			else
+			{
+				$sources[] = in_array($value, $this->validSources)
+					? "'{$value}'"
+					: $value;;
+			}
+		}
+
+		if (count($sources))
+		{
+			$response->appendHeader('Content-Security-Policy', $name.' '.implode(' ', $sources));
+		}
+
+		if (count($reportSources))
+		{
+			$response->appendHeader('Content-Security-Policy-Report-Only', $name.' '.implode(' ', $reportSources));
 		}
 	}
 

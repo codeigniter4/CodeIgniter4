@@ -15,21 +15,25 @@ class ContentSecurityPolicyConfig extends BaseConfig
 {
 	public $reportOnly = false;
 
+	public $defaultSrc = 'none';
+
+	public $scriptSrc = 'self';
+
+	public $styleSrc = 'self';
+
+	public $imageSrc = 'self';
+
 	public $base_uri = null;
 
 	public $childSrc = null;
 
-	public $connectSrc = null;
-
-	public $defaultSrc = null;
+	public $connectSrc = 'self';
 
 	public $fontSrc = null;
 
 	public $formAction = null;
 
 	public $frameAncestors = null;
-
-	public $imageSrc = null;
 
 	public $mediaSrc = null;
 
@@ -40,10 +44,6 @@ class ContentSecurityPolicyConfig extends BaseConfig
 	public $reportURI = null;
 
 	public $sandbox = false;
-
-	public $scriptSrc = null;
-
-	public $styleSrc = null;
 
 	public $upgradeInsecureRequests = false;
 }
