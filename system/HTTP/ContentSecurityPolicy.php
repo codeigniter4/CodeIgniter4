@@ -1,13 +1,19 @@
 <?php namespace CodeIgniter\HTTP;
 
+use App\Config\ContentSecurityPolicyConfig;
+
 /**
  * Class ContentSecurityPolicy
  *
  * Provides tools for working with the Content-Security-Policy header
  * to help defeat XSS attacks.
  *
- * @see http://www.w3.org/TR/CSP/
- * @see http://www.html5rocks.com/en/tutorials/security/content-security-policy/
+ * @todo    Ensure all src items have the option to report only.
+ *
+ * @see     http://www.w3.org/TR/CSP/
+ * @see     http://www.html5rocks.com/en/tutorials/security/content-security-policy/
+ * @see     http://content-security-policy.com/
+ * @see     https://www.owasp.org/index.php/Content_Security_Policy
  * @package CodeIgniter\HTTP
  */
 class ContentSecurityPolicy
@@ -49,6 +55,27 @@ class ContentSecurityPolicy
 	//--------------------------------------------------------------------
 
 	/**
+	 * ContentSecurityPolicy constructor.
+	 *
+	 * Stores our default values from the config file.
+	 *
+	 * @param ContentSecurityPolicyConfig $config
+	 */
+	public function __construct(ContentSecurityPolicyConfig $config)
+	{
+	    foreach ($config as $setting => $value)
+	    {
+		    if (isset($this->{$setting}))
+		    {
+			    $this->{$setting} = $value;
+		    }
+	    }
+	}
+	
+	//--------------------------------------------------------------------
+	
+	
+	/**
 	 * Compiles and sets the appropriate headers in the request.
 	 *
 	 * Should be called just prior to sending the response to the user agent.
@@ -57,12 +84,9 @@ class ContentSecurityPolicy
 	 */
 	public function finalize(ResponseInterface &$response)
 	{
-
 	}
 
 	//--------------------------------------------------------------------
-
-
 
 	//--------------------------------------------------------------------
 	// Setters
@@ -79,15 +103,14 @@ class ContentSecurityPolicy
 	 *
 	 * @return $this
 	 */
-	public function reportOnly(bool $value=true)
+	public function reportOnly(bool $value = true)
 	{
-	    $this->reportOnly = $value;
+		$this->reportOnly = $value;
 
 		return $this;
 	}
 
 	//--------------------------------------------------------------------
-
 
 	/**
 	 * Sets the base_uri value. Can be either a URI class or a simple string.
@@ -95,13 +118,14 @@ class ContentSecurityPolicy
 	 * base_uri restricts the URLs that can appear in a page’s <base> element.
 	 *
 	 * @see http://www.w3.org/TR/CSP/#directive-base-uri
+	 *
 	 * @param $uri
 	 *
 	 * @return $this
 	 */
 	public function setBaseURI($uri)
 	{
-	    $this->base_uri = (string)$uri;
+		$this->base_uri = (string)$uri;
 
 		return $this;
 	}
@@ -118,13 +142,14 @@ class ContentSecurityPolicy
 	 *
 	 * @see http://www.w3.org/TR/CSP/#directive-child-src
 	 *
-	 * @param $uri
+	 * @param      $uri
+	 * @param bool $reportOnly
 	 *
 	 * @return $this
 	 */
-	public function addChildSrc($uri)
+	public function addChildSrc($uri, bool $reportOnly = false)
 	{
-		$this->addOption($uri, 'childSrc');
+		$this->addOption($uri, 'childSrc', $reportOnly);
 
 		return $this;
 	}
@@ -140,13 +165,14 @@ class ContentSecurityPolicy
 	 *
 	 * @see http://www.w3.org/TR/CSP/#directive-connect-src
 	 *
-	 * @param $uri
+	 * @param      $uri
+	 * @param bool $reportOnly
 	 *
 	 * @return $this
 	 */
-	public function addConnectSrc($uri)
+	public function addConnectSrc($uri, bool $reportOnly = false)
 	{
-		$this->addOption($uri, 'connectSrc');
+		$this->addOption($uri, 'connectSrc', $reportOnly);
 
 		return $this;
 	}
@@ -161,13 +187,16 @@ class ContentSecurityPolicy
 	 * no other source has been set.
 	 *
 	 * @see http://www.w3.org/TR/CSP/#directive-default-src
-	 * @param $uri
+	 *
+	 * @param      $uri
+	 * @param bool $reportOnly
 	 *
 	 * @return $this
 	 */
-	public function addDefaultSrc($uri)
+	public function addDefaultSrc($uri, bool $reportOnly = false)
 	{
-		$this->defaultSrc[] = (string)$uri;
+		// @todo Determine how to save reportOnly defaults...
+		$this->defaultSrc = (string)$uri;
 
 		return $this;
 	}
@@ -181,13 +210,15 @@ class ContentSecurityPolicy
 	 * font-src specifies the origins that can serve web fonts.
 	 *
 	 * @see http://www.w3.org/TR/CSP/#directive-font-src
-	 * @param $uri
+	 *
+	 * @param      $uri
+	 * @param bool $reportOnly
 	 *
 	 * @return $this
 	 */
-	public function addFontSrc($uri)
+	public function addFontSrc($uri, bool $reportOnly = false)
 	{
-		$this->addOption($uri, 'fontSrc');
+		$this->addOption($uri, 'fontSrc', $reportOnly);
 
 		return $this;
 	}
@@ -199,17 +230,19 @@ class ContentSecurityPolicy
 	 * a URI class or a simple string.
 	 *
 	 * @see http://www.w3.org/TR/CSP/#directive-form-action
-	 * @param $uri
+	 *
+	 * @param      $uri
+	 * @param bool $reportOnly
 	 *
 	 * @return $this
 	 */
-	public function addFormAction($uri)
+	public function addFormAction($uri, bool $reportOnly = false)
 	{
-		$this->addOption($uri, 'formAction');
-		
+		$this->addOption($uri, 'formAction', $reportOnly);
+
 		return $this;
 	}
-	
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -217,17 +250,19 @@ class ContentSecurityPolicy
 	 * <frame>, <iframe>, <object>, <embed>, or <applet>
 	 *
 	 * @see http://www.w3.org/TR/CSP/#directive-frame-ancestors
-	 * @param $uri
+	 *
+	 * @param      $uri
+	 * @param bool $reportOnly
 	 *
 	 * @return $this
 	 */
-	public function addFrameAncestor($uri)
+	public function addFrameAncestor($uri, bool $reportOnly = false)
 	{
-		$this->addOption($uri, 'frameAncestors');
+		$this->addOption($uri, 'frameAncestors', $reportOnly);
 
 		return $this;
 	}
-	
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -235,13 +270,15 @@ class ContentSecurityPolicy
 	 * a URI class or a simple string.
 	 *
 	 * @see http://www.w3.org/TR/CSP/#directive-img-src
-	 * @param $uri
+	 *
+	 * @param      $uri
+	 * @param bool $reportOnly
 	 *
 	 * @return $this
 	 */
-	public function addImageSrc($uri)
+	public function addImageSrc($uri, bool $reportOnly = false)
 	{
-		$this->addOption($uri, 'imageSrc');
+		$this->addOption($uri, 'imageSrc', $reportOnly);
 
 		return $this;
 	}
@@ -253,13 +290,15 @@ class ContentSecurityPolicy
 	 * a URI class or a simple string.
 	 *
 	 * @see http://www.w3.org/TR/CSP/#directive-media-src
-	 * @param $uri
+	 *
+	 * @param      $uri
+	 * @param bool $reportOnly
 	 *
 	 * @return $this
 	 */
-	public function addMediaSrc($uri)
+	public function addMediaSrc($uri, bool $reportOnly = false)
 	{
-		$this->addOption($uri, 'mediaSrc');
+		$this->addOption($uri, 'mediaSrc', $reportOnly);
 
 		return $this;
 	}
@@ -271,13 +310,15 @@ class ContentSecurityPolicy
 	 * a URI class or a simple string.
 	 *
 	 * @see http://www.w3.org/TR/CSP/#directive-object-src
-	 * @param $uri
+	 *
+	 * @param      $uri
+	 * @param bool $reportOnly
 	 *
 	 * @return $this
 	 */
-	public function addObjectSrc($uri)
+	public function addObjectSrc($uri, bool $reportOnly = false)
 	{
-		$this->addOption($uri, 'objectSrc');
+		$this->addOption($uri, 'objectSrc', $reportOnly);
 
 		return $this;
 	}
@@ -289,13 +330,15 @@ class ContentSecurityPolicy
 	 * a URI class or a simple string.
 	 *
 	 * @see http://www.w3.org/TR/CSP/#directive-plugin-types
-	 * @param string $mime  One or more plugin mime types, separate by spaces
+	 *
+	 * @param string $mime        One or more plugin mime types, separate by spaces
+	 * @param bool   $reportOnly
 	 *
 	 * @return $this
 	 */
-	public function addPluginType($mime)
+	public function addPluginType($mime, bool $reportOnly = false)
 	{
-		$this->addOption($mime, 'pluginTypes');
+		$this->addOption($mime, 'pluginTypes', $reportOnly);
 
 		return $this;
 	}
@@ -327,7 +370,7 @@ class ContentSecurityPolicy
 	 *
 	 * @see http://www.w3.org/TR/CSP/#directive-sandbox
 	 *
-	 * @param bool $value
+	 * @param bool  $value
 	 * @param array $flags An array of sandbox flags that can be added to the directive.
 	 *
 	 * @return $this
@@ -353,13 +396,15 @@ class ContentSecurityPolicy
 	 * a URI class or a simple string.
 	 *
 	 * @see http://www.w3.org/TR/CSP/#directive-connect-src
+	 *
 	 * @param $uri
+	 * @param bool reportOnly
 	 *
 	 * @return $this
 	 */
-	public function addScriptSrc($uri)
+	public function addScriptSrc($uri, bool $reportOnly = false)
 	{
-		$this->addOption($uri, 'scriptSrc');
+		$this->addOption($uri, 'scriptSrc', $reportOnly);
 
 		return $this;
 	}
@@ -371,13 +416,15 @@ class ContentSecurityPolicy
 	 * a URI class or a simple string.
 	 *
 	 * @see http://www.w3.org/TR/CSP/#directive-connect-src
+	 *
 	 * @param $uri
+	 * @param bool $reportOnly
 	 *
 	 * @return $this
 	 */
-	public function addStyleSrc($uri)
+	public function addStyleSrc($uri, bool $reportOnly = false)
 	{
-		$this->addOption($uri, 'styleSrc');
+		$this->addOption($uri, 'styleSrc', $reportOnly);
 
 		return $this;
 	}
@@ -394,7 +441,7 @@ class ContentSecurityPolicy
 	 */
 	public function upgradeInsecureRequests(bool $value = true)
 	{
-	    $this->upgradeInsecureRequests = $value;
+		$this->upgradeInsecureRequests = $value;
 
 		return $this;
 	}
@@ -408,18 +455,28 @@ class ContentSecurityPolicy
 	/**
 	 * DRY method to add an string or array to a class property.
 	 *
+	 * @todo store things with reportOnly flags.
+	 *
 	 * @param        $options
 	 * @param string $target
+	 * @param bool   $reportOnly If TRUE, this item will be reported, not restricted
 	 */
-	protected function addOption($options, string $target)
+	protected function addOption($options, string $target, bool $reportOnly = false)
 	{
 		if (is_array($options))
 		{
-			$this->{$target} = array_merge($this->{$target}, $options);
+			$newOptions = [];
+			foreach ($options as $opt)
+			{
+				$newOptions[] = [$opt => $reportOnly];
+			}
+
+			$this->{$target} = array_merge($this->{$target}, $newOptions);
+			unset($newOptions);
 		}
 		else
 		{
-			$this->{$target}[] = $options;
+			$this->{$target}[] = [$options => $reportOnly];
 		}
 	}
 

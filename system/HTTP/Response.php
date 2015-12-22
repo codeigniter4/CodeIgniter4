@@ -1,6 +1,7 @@
 <?php namespace CodeIgniter\HTTP;
 
 use App\Config\AppConfig;
+use App\Config\ContentSecurityPolicyConfig;
 
 /**
  * Representation of an outgoing, server-side response.
@@ -127,7 +128,7 @@ class Response extends Message implements ResponseInterface
 		// Are we enforcing a Content Security Policy?
 		if ($config->CSPEnabled === true)
 		{
-			$this->CSP = new ContentSecurityPolicy();
+			$this->CSP = new ContentSecurityPolicy(new ContentSecurityPolicyConfig());
 		}
 	}
 
