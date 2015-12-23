@@ -492,6 +492,42 @@ class ContentSecurityPolicy
 	 */
 	protected function generateNonces(ResponseInterface &$response)
 	{
+		$body = $response->getBody();
+
+		if (empty($body)) return;
+
+		if (! is_array($this->styleSrc)) $this->styleSrc = [$this->styleSrc];
+		if (! is_array($this->scriptSrc)) $this->scriptSrc = [$this->scriptSrc];
+
+		// Replace style placeholders with nonces
+		$body = preg_replace_callback(
+			'/{csp-style-nonce}/',
+			function ($matches)
+			{
+				$nonce = bin2hex(random_bytes(12));
+
+				$this->styleSrc[] = 'nonce-'. $nonce;
+
+				return 'nonce='.$nonce;
+			},
+			$body
+		);
+
+		// Replace script placeholders with nonces
+		$body = preg_replace_callback(
+				'/{csp-script-nonce}/',
+				function ($matches)
+				{
+					$nonce = bin2hex(random_bytes(12));
+
+					$this->scriptSrc[] = 'nonce-'. $nonce;
+
+					return 'nonce='.$nonce;
+				},
+				$body
+		);
+
+		$response->setBody($body);
 	}
 
 	//--------------------------------------------------------------------
@@ -569,7 +605,13 @@ class ContentSecurityPolicy
 
 		foreach ($values as $value => $reportOnly)
 		{
-			if ($reportOnly === true)
+			if (is_numeric($value) && is_string($reportOnly) && ! empty($reportOnly))
+			{
+				$value      = $reportOnly;
+				$reportOnly = 0;
+			}
+
+			if ($reportOnly == true)
 			{
 				$reportSources[] = in_array($value, $this->validSources)
 					? "'{$value}'"
@@ -577,9 +619,16 @@ class ContentSecurityPolicy
 			}
 			else
 			{
-				$sources[] = in_array($value, $this->validSources)
-					? "'{$value}'"
-					: $value;;
+				if (strpos($value, 'nonce-') === 0)
+				{
+					$sources[] = "'{$value}'";
+				}
+				else
+				{
+					$sources[] = in_array($value, $this->validSources)
+							? "'{$value}'"
+							: $value;
+				}
 			}
 		}
 
