@@ -83,14 +83,14 @@ class Services
 			return self::getSharedInstance('curlrequest', $options, $response);
 		}
 
-		if ( ! is_object($response))
-		{
-			$response = new Response();
-		}
-
 		if (! is_object($config))
 		{
 			$config = new AppConfig();
+		}
+
+		if ( ! is_object($response))
+		{
+			$response = new Response($config);
 		}
 
 		return new \CodeIgniter\HTTP\CURLRequest(

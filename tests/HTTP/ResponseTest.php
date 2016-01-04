@@ -6,7 +6,7 @@ class ResponseTest extends PHPUnit_Framework_TestCase
 {
 	public function testCanSetStatusCode()
 	{
-	    $response = new Response();
+	    $response = new Response(new \App\Config\AppConfig());
 
 		$response->setStatusCode(200);
 
@@ -17,7 +17,7 @@ class ResponseTest extends PHPUnit_Framework_TestCase
 
 	public function testSetStatusCodeThrowsExceptionForBadCodes()
 	{
-		$response = new Response();
+		$response = new Response(new \App\Config\AppConfig());
 
 		$this->setExpectedException('InvalidArgumentException');
 		$response->setStatusCode(54322);
@@ -28,7 +28,7 @@ class ResponseTest extends PHPUnit_Framework_TestCase
 
 	public function testSetStatusCodeSetsReason()
 	{
-		$response = new Response();
+		$response = new Response(new \App\Config\AppConfig());
 
 		$response->setStatusCode(200);
 
@@ -39,7 +39,7 @@ class ResponseTest extends PHPUnit_Framework_TestCase
 
 	public function testCanSetCustomReasonCode()
 	{
-		$response = new Response();
+		$response = new Response(new \App\Config\AppConfig());
 
 		$response->setStatusCode(200, 'Not the mama');
 
@@ -50,7 +50,7 @@ class ResponseTest extends PHPUnit_Framework_TestCase
 
 	public function testRequiresMessageWithUnknownStatusCode()
 	{
-		$response = new Response();
+		$response = new Response(new \App\Config\AppConfig());
 
 		$this->setExpectedException('InvalidArgumentException', 'Unknown HTTP status code provided with no message');
 		$response->setStatusCode(115);
@@ -60,7 +60,7 @@ class ResponseTest extends PHPUnit_Framework_TestCase
 
 	public function testRequiresMessageWithSmallStatusCode()
 	{
-		$response = new Response();
+		$response = new Response(new \App\Config\AppConfig());
 
 		$this->setExpectedException('InvalidArgumentException', '95 is not a valid HTTP return status code');
 		$response->setStatusCode(95);
@@ -70,7 +70,7 @@ class ResponseTest extends PHPUnit_Framework_TestCase
 
 	public function testRequiresMessageWithLargeStatusCode()
 	{
-		$response = new Response();
+		$response = new Response(new \App\Config\AppConfig());
 
 		$this->setExpectedException('InvalidArgumentException', '695 is not a valid HTTP return status code');
 		$response->setStatusCode(695);
@@ -80,7 +80,7 @@ class ResponseTest extends PHPUnit_Framework_TestCase
 
 	public function testExceptionThrownWhenNoStatusCode()
 	{
-		$response = new Response();
+		$response = new Response(new \App\Config\AppConfig());
 
 		$this->setExpectedException('BadMethodCallException', 'HTTP Response is missing a status code');
 		$response->getStatusCode();

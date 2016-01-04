@@ -49,7 +49,7 @@ class CURLRequestTest extends PHPUnit_Framework_TestCase
 
 	public function setUp()
 	{
-	    $this->request = new MockCURLRequest(new AppConfig(), new URI(), new Response());
+	    $this->request = new MockCURLRequest(new AppConfig(), new URI(), new Response(new \App\Config\AppConfig()));
 	}
 
 	//--------------------------------------------------------------------
