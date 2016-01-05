@@ -51,8 +51,6 @@ class View implements RenderableInterface {
 
 	//--------------------------------------------------------------------
 
-
-
 	/**
 	 * Builds the output based upon a file name and any
 	 * data that has already been set.
@@ -140,5 +138,18 @@ class View implements RenderableInterface {
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Returns the current data that will be displayed in the view.
+	 *
+	 * @return array
+	 */
+	public function getData()
+	{
+	    return $this->data;
+	}
+
+	//--------------------------------------------------------------------
+
 
 }
