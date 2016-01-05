@@ -40,7 +40,7 @@ class DotEnv
 		// they should be optional.
 		if ( ! is_file($this->path))
 		{
-			return;
+			return false;
 		}
 
 		// Ensure file is readable
@@ -81,12 +81,6 @@ class DotEnv
 	protected function setVariable(string $name, string $value = '')
 	{
 		list($name, $value) = $this->normaliseVariable($name, $value);
-
-		// Don't overwrite existing environment variables.
-		if ( ! is_null($this->getVariable($name)))
-		{
-			return;
-		}
 
 		putenv("$name=$value");
 		$_ENV[$name] = $value;
@@ -147,7 +141,7 @@ class DotEnv
 		}
 
 		// Does it begin with a quote?
-		if ($this->strpbrk($value[0], '"\'') !== false)
+		if (strpbrk($value[0], '"\'') !== false)
 		{
 			// value starts with a quote
 			$quote        = $value[0];
@@ -239,9 +233,9 @@ class DotEnv
 	 *
 	 * @param string $name
 	 *
-	 * @return string
+	 * @return string|null
 	 */
-	protected function getVariable(string $name): string
+	protected function getVariable(string $name)
 	{
 		switch (true)
 		{
