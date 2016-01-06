@@ -2,7 +2,7 @@
 
 use CodeIgniter\Debug\Timer;
 
-class TimerTest extends PHPUnit_Framework_TestCase {
+class TimerTest extends CIUnitTestCase {
 
 	public function setUp() { }
 

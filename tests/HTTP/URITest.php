@@ -2,7 +2,7 @@
 
 use CodeIgniter\HTTP\URI;
 
-class URITest extends PHPUnit_Framework_TestCase
+class URITest extends CIUnitTestCase
 {
 
 	public function setUp()

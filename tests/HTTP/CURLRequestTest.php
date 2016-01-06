@@ -43,7 +43,7 @@ class MockCURLRequest extends \CodeIgniter\HTTP\CURLRequest {
 //--------------------------------------------------------------------
 
 
-class CURLRequestTest extends PHPUnit_Framework_TestCase
+class CURLRequestTest extends CIUnitTestCase
 {
 	protected $request;
 

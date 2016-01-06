@@ -2,7 +2,7 @@
 
 use CodeIgniter\View\View;
 
-class ViewTest extends PHPUnit_Framework_TestCase
+class ViewTest extends CIUnitTestCase
 {
 	protected $loader;
 	protected $viewsDir;

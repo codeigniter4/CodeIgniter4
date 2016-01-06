@@ -2,7 +2,7 @@
 
 use CodeIgniter\HTTP\Response;
 
-class ResponseTest extends PHPUnit_Framework_TestCase
+class ResponseTest extends CIUnitTestCase
 {
 	public function testCanSetStatusCode()
 	{

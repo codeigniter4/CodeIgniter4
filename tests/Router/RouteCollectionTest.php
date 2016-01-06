@@ -2,7 +2,7 @@
 
 use CodeIgniter\Router\RouteCollection;
 
-class RouteCollectionTest extends PHPUnit_Framework_TestCase
+class RouteCollectionTest extends CIUnitTestCase
 {
 
 	public function setUp()

@@ -2,7 +2,7 @@
 
 use CodeIgniter\Router\AltCollection as RouteCollection;
 
-class AltCollectionTest extends PHPUnit_Framework_TestCase
+class AltCollectionTest extends CIUnitTestCase
 {
 
 	public function setUp()

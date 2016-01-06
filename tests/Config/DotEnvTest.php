@@ -4,7 +4,7 @@
 
 use CodeIgniter\Config\DotEnv;
 
-class DotEnvTest extends PHPUnit_Framework_TestCase {
+class DotEnvTest extends CIUnitTestCase {
 	
 	protected $fixturesFolder;
 	

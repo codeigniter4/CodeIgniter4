@@ -1,6 +1,6 @@
 <?php
 
-class NegotiateTest extends PHPUnit_Framework_TestCase
+class NegotiateTest extends CIUnitTestCase
 {
 	/**
 	 * @var CodeIgniter\HTTP\Request

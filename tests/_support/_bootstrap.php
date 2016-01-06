@@ -191,5 +191,5 @@ $loader->register();
 // Load our TestCase
 //--------------------------------------------------------------------
 
-
+require_once dirname(__FILE__) .'/CIUnitTestCase.php';
 

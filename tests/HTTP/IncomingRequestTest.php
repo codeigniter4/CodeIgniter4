@@ -3,7 +3,7 @@
 use App\Config\AppConfig;
 use CodeIgniter\HTTP\URI;
 
-class IncomingRequestTest extends PHPUnit_Framework_TestCase
+class IncomingRequestTest extends CIUnitTestCase
 {
 	/**
 	 * @var \CodeIgniter\HTTP\IncomingRequest

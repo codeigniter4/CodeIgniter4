@@ -26,7 +26,7 @@ class MockAutoloaderClass extends \CodeIgniter\Autoloader\Autoloader
 
 //--------------------------------------------------------------------
 
-class AutoloaderTest extends \PHPUnit_Framework_TestCase
+class AutoloaderTest extends \CIUnitTestCase
 {
 
 	protected $loader;
