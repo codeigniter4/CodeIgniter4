@@ -1,10 +1,8 @@
 <?php
 
-require_once 'system/Benchmark/Timer.php';
-
 use CodeIgniter\Debug\Timer;
 
-class DITest extends PHPUnit_Framework_TestCase {
+class TimerTest extends PHPUnit_Framework_TestCase {
 
 	public function setUp() { }
 
