@@ -1,7 +1,7 @@
 <?php
 
-require 'support/MockLoader.php';
-require 'support/Config/MockAutoloadConfig.php';
+require '_support/MockLoader.php';
+require '_support/Config/MockAutoloadConfig.php';
 
 class LoaderTest extends \PHPUnit_Framework_TestCase
 {
