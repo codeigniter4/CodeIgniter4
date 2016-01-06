@@ -3,8 +3,6 @@
 require_once BASEPATH.'Config/BaseConfig.php';
 require_once APPPATH.'/config/AppConfig.php';
 
-use App\Config\AppConfig;
-
 class Request extends Message implements RequestInterface
 {
 	/**
@@ -18,7 +16,7 @@ class Request extends Message implements RequestInterface
 
 	//--------------------------------------------------------------------
 
-	public function __construct(AppConfig $config, $uri=null)
+	public function __construct($config, $uri=null)
 	{
 	    $this->proxyIPs = $config->proxyIPs;
 	}

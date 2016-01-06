@@ -1,6 +1,6 @@
 <?php namespace CodeIgniter\Security;
 
-use App\Config\AppConfig;
+use CodeIgniter\HTTP\RequestInterface;
 
 class Security
 {
@@ -124,7 +124,7 @@ class Security
 	 *
 	 * @param AppConfig $config
 	 */
-	public function __construct(AppConfig $config)
+	public function __construct($config)
 	{
 		// Store our CSRF-related settings
 		$this->CSRFEnabled     = $config->CSRFProtection;
@@ -156,19 +156,17 @@ class Security
 	 *
 	 * @return $this
 	 */
-	public function CSRFVerify()
+	public function CSRFVerify(RequestInterface $request)
 	{
 		// If it's not a POST request we will set the CSRF cookie
 		if (strtoupper($_SERVER['REQUEST_METHOD']) !== 'POST')
 		{
-			return $this->CSRFSetCookie();
+			return $this->CSRFSetCookie($request);
 		}
 
 		// Check if URI has been whitelisted from CSRF checks
 		if (is_array($this->CSRFExcludeURIs) && count($this->CSRFExcludeURIs))
 		{
-			global $request;
-
 			$uri = $request->uri->getPath();
 
 			foreach ($this->CSRFExcludeURIs as $excluded)
@@ -200,7 +198,7 @@ class Security
 		}
 
 		$this->CSRFSetHash();
-		$this->CSRFSetCookie();
+		$this->CSRFSetCookie($request);
 
 		log_message('info', 'CSRF token verified');
 
@@ -215,12 +213,10 @@ class Security
 	 * @codeCoverageIgnore
 	 * @return    $this
 	 */
-	public function CSRFSetCookie()
+	public function CSRFSetCookie(RequestInterface $request)
 	{
 		$expire        = time() + $this->CSRFExpire;
 		$secure_cookie = (bool)$this->cookieSecure;
-
-		global $request;
 
 		if ($secure_cookie && ! $request->isSecure())
 		{

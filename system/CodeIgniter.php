@@ -95,21 +95,10 @@ $benchmark = \App\Config\Services::timer(true);
 $benchmark->start('total_execution');
 
 //--------------------------------------------------------------------
-// CSRF Protection
+// Get our Request and Response objects
 //--------------------------------------------------------------------
 
 $config = new \App\Config\AppConfig();
-
-if ($config->CSRFProtection === true && ! is_cli())
-{
-	$security = \App\Config\Services::security($config);
-
-	$security->CSRFVerify();
-}
-
-//--------------------------------------------------------------------
-// Get our Request and Response objects
-//--------------------------------------------------------------------
 
 $request  = is_cli()
 		? \App\Config\Services::clirequest($config)
@@ -118,6 +107,17 @@ $response = \App\Config\Services::response();
 
 // Assume success until proven otherwise.
 $response->setStatusCode(200);
+
+//--------------------------------------------------------------------
+// CSRF Protection
+//--------------------------------------------------------------------
+
+if ($config->CSRFProtection === true && ! is_cli())
+{
+	$security = \App\Config\Services::security($config);
+
+	$security->CSRFVerify($request);
+}
 
 //--------------------------------------------------------------------
 // Try to Route It
