@@ -98,6 +98,7 @@ class AutoloadConfig
 			'CodeIgniter\View\RenderableInterface'        => BASEPATH.'View/RenderableInterface.php',
 			'CodeIgniter\View\View'                       => BASEPATH.'View/View.php',
 			'Zend\Escaper\Escaper'                        => BASEPATH.'View/Escaper.php',
+		    'TestLogger'                                  => BASEPATH.'../tests/_support/Log/TestLogger.php'
 		];
 	}
 

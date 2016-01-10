@@ -32,6 +32,15 @@ if ( ! function_exists('log_message'))
 	 */
 	function log_message(string $level, $message, array $context = [])
 	{
+		// When running tests, we want to always ensure that the
+		// TestLogger is running, which provides utilities for
+		// for asserting that logs were called in the test code.
+		if (ENVIRONMENT == 'testing')
+		{
+			$logger = new TestLogger(new \App\Config\LoggerConfig());
+			return $logger->log($level, $message, $context);
+		}
+
 		return \App\Config\Services::logger(false)
 		                           ->log($level, $message, $context);
 	}

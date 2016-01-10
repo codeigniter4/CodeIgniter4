@@ -20,7 +20,7 @@ class MockSecurity extends Security
 
 //--------------------------------------------------------------------
 
-class SecurityTest extends PHPUnit_Framework_TestCase {
+class SecurityTest extends CIUnitTestCase {
 
 	public function setUp()
 	{
@@ -115,6 +115,7 @@ class SecurityTest extends PHPUnit_Framework_TestCase {
 		];
 
 		$this->assertInstanceOf('CodeIgniter\Security\Security' ,$security->CSRFVerify($request));
+		$this->assertLogged('info', 'CSRF token verified');
 	}
 
 	//--------------------------------------------------------------------
