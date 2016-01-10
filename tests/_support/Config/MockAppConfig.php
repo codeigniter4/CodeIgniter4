@@ -19,7 +19,7 @@ class MockAppConfig
 	public $CSRFCookieName  = 'csrf_cookie_name';
 	public $CSRFExpire      = 7200;
 	public $CSRFRegenerate  = true;
-	public $CSRFExcludeURIs = [];
+	public $CSRFExcludeURIs = ['http://example.com'];
 
 	public $CSPEnabled = false;
 }

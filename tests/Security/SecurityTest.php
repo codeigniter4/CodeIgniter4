@@ -67,5 +67,68 @@ class SecurityTest extends PHPUnit_Framework_TestCase {
 
 	//--------------------------------------------------------------------
 
+	public function testCSRFVerifyAllowsWhitelistedURLs()
+	{
+		$white_uri = 'http://example.com';
+
+		$security = new MockSecurity(new MockAppConfig());
+		$request  = new \CodeIgniter\HTTP\IncomingRequest(new MockAppConfig(), new \CodeIgniter\HTTP\URI($white_uri));
+
+		// Post will get us to the check.
+		// Invalid matching fields should throw error or return false.
+		$_SERVER['REQUEST_METHOD'] = 'POST';
+		$_COOKIE = [
+			'csrf_cookie_name' => '8b9218a55906f9dcc1dc263dce7f005a'
+		];
+
+		$this->assertInstanceOf('CodeIgniter\Security\Security', $security->CSRFVerify($request));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testCSRFVerifyThrowsExceptionOnNoMatch()
+	{
+		$security = new MockSecurity(new MockAppConfig());
+		$request  = new \CodeIgniter\HTTP\IncomingRequest(new MockAppConfig(), new \CodeIgniter\HTTP\URI('http://badurl.com'));
+
+		$_SERVER['REQUEST_METHOD'] = 'POST';
+		$_POST['csrf_test_name']  = '8b9218a55906f9dcc1dc263dce7f005a';
+		$_COOKIE = [
+			'csrf_cookie_name' => '8b9218a55906f9dcc1dc263dce7f005b'
+		];
+
+		$this->setExpectedException('LogicException');
+		$security->CSRFVerify($request);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testCSRFVerifyReturnsSelfOnMatch()
+	{
+		$security = new MockSecurity(new MockAppConfig());
+		$request  = new \CodeIgniter\HTTP\IncomingRequest(new MockAppConfig(), new \CodeIgniter\HTTP\URI('http://badurl.com'));
+
+		$_SERVER['REQUEST_METHOD'] = 'POST';
+		$_POST['csrf_test_name']  = '8b9218a55906f9dcc1dc263dce7f005a';
+		$_COOKIE = [
+			'csrf_cookie_name' => '8b9218a55906f9dcc1dc263dce7f005a'
+		];
+
+		$this->assertInstanceOf('CodeIgniter\Security\Security' ,$security->CSRFVerify($request));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testSanitizeFilename()
+	{
+		$security = new MockSecurity(new MockAppConfig());
+
+		$filename = './<!--foo-->';
+
+		$this->assertEquals('foo', $security->sanitizeFilename($filename));
+	}
+
+	//--------------------------------------------------------------------
+
 
 }

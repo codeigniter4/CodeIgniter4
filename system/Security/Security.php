@@ -167,11 +167,14 @@ class Security
 		// Check if URI has been whitelisted from CSRF checks
 		if (is_array($this->CSRFExcludeURIs) && count($this->CSRFExcludeURIs))
 		{
-			$uri = $request->uri->getPath();
+			$uri = (string)$request->uri;
 
 			foreach ($this->CSRFExcludeURIs as $excluded)
 			{
-				if (preg_match('#^'.$excluded.'$#i'.(UTF8_ENABLED ? 'u' : ''), $uri))
+				// @TODO modify to support UTF8 once our method of determining this
+				// has been determined.
+//				if (preg_match('#^'.$excluded.'$#i'.(UTF8_ENABLED ? 'u' : ''), $uri))
+				if (preg_match('#^'.$excluded.'$#i', $uri))
 				{
 					return $this;
 				}

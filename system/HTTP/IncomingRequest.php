@@ -1,7 +1,5 @@
 <?php namespace CodeIgniter\HTTP;
 
-use App\Config\AppConfig;
-
 /**
  * Class IncomingRequest
  *
@@ -93,7 +91,7 @@ class IncomingRequest extends Request
 
 	//--------------------------------------------------------------------
 
-	public function __construct(AppConfig $config, $uri = null, $body = 'php://input')
+	public function __construct($config, $uri = null, $body = 'php://input')
 	{
 		// Get our body from php://input
 		if ($body == 'php://input')
