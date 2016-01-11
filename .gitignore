@@ -45,17 +45,17 @@ application/config/development/*
 #-------------------------
 # Temporary Files
 #-------------------------
-writeable/cache/*
-!writeable/cache/index.html
-!writeable/cache/.htaccess
+writable/cache/*
+!writable/cache/index.html
+!writable/cache/.htaccess
 
-writeable/logs/*
-!writeable/logs/index.html
-!writeable/logs/.htaccess
+writable/logs/*
+!writable/logs/index.html
+!writable/logs/.htaccess
 
-writeable/uploads/*
-!writeable/uploads/index.html
-!writeable/uploads/.htaccess
+writable/uploads/*
+!writable/uploads/index.html
+!writable/uploads/.htaccess
 
 #-------------------------
 # User Guide Temp Files
