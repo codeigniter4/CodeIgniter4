@@ -1,8 +1,13 @@
-<?php namespace CodeIgniter\Log\Handlers;
+<?php
 
-abstract class BaseHandler implements HandlerInterface
+/**
+ * Class TestHandler
+ *
+ * A simple LogHandler that stores the logs in memory.
+ * Only used for testing purposes.
+ */
+class TestHandler implements \CodeIgniter\Log\Handlers\HandlerInterface
 {
-
 	/**
 	 * @var array
 	 */
@@ -13,11 +18,19 @@ abstract class BaseHandler implements HandlerInterface
 	 */
 	protected $dateFormat = 'Y-m-d H:i:s';
 
+	/**
+	 * Local storage for logs.
+	 * @var array
+	 */
+	protected static $logs = [];
+
 	//--------------------------------------------------------------------
 
 	public function __construct(array $config)
 	{
-	    $this->handles = $config['handles'] ?? [];
+		$this->handles = $config['handles'] ?? [];
+
+		self::$logs = [];
 	}
 
 	//--------------------------------------------------------------------
@@ -38,6 +51,22 @@ abstract class BaseHandler implements HandlerInterface
 	//--------------------------------------------------------------------
 
 	/**
+	 * Stores the date format to use while logging messages.
+	 *
+	 * @param string $format
+	 *
+	 * @return HandlerInterface
+	 */
+	public function setDateFormat(string $format)
+	{
+		$this->dateFormat = $format;
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Handles logging the message.
 	 * If the handler returns false, then execution of handlers
 	 * will stop. Any handlers that have not run, yet, will not
@@ -48,22 +77,20 @@ abstract class BaseHandler implements HandlerInterface
 	 *
 	 * @return bool
 	 */
-	abstract public function handle($level, $message): bool;
+	public function handle($level, $message): bool
+	{
+		$date = date($this->dateFormat);
+
+		self::$logs[] = strtoupper($level).' - '.$date.' --> '.$message;
+
+		return true;
+	}
 
 	//--------------------------------------------------------------------
 
-	/**
-	 * Stores the date format to use while logging messages.
-	 *
-	 * @param string $format
-	 *
-	 * @return HandlerInterface
-	 */
-	public function setDateFormat(string $format): HandlerInterface
+	public static function getLogs()
 	{
-	    $this->dateFormat = $format;
-
-		return $this;
+	    return self::$logs;
 	}
 
 	//--------------------------------------------------------------------

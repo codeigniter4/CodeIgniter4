@@ -91,6 +91,8 @@ else
 	define('APPPATH', BASEPATH.$application_folder.DIRECTORY_SEPARATOR);
 }
 
+define('SUPPORTPATH', realpath(BASEPATH.'../tests/_support/').'/');
+
 //--------------------------------------------------------------------
 // Load Autoloaders
 //--------------------------------------------------------------------

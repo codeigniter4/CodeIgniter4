@@ -25,7 +25,7 @@ interface HandlerInterface
 	 *
 	 * @return bool
 	 */
-	public function canHandle(int $level): bool;
+	public function canHandle(string $level): bool;
 
 	//--------------------------------------------------------------------
 
@@ -36,7 +36,7 @@ interface HandlerInterface
 	 *
 	 * @return HandlerInterface
 	 */
-	public function setDateFormat(string $format): HandlerInterface;
+	public function setDateFormat(string $format);
 
 	//--------------------------------------------------------------------
 

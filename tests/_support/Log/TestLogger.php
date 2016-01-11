@@ -16,7 +16,7 @@ class TestLogger extends \CodeIgniter\Log\Logger {
 	 *
 	 * @return bool
 	 */
-	public function log(\string $level, $message, array $context = []): bool
+	public function log($level, $message, array $context = []): bool
 	{
 		// While this requires duplicate work, we want to ensure
 		// we have the final message to test against.

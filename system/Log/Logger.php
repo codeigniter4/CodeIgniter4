@@ -1,6 +1,5 @@
 <?php namespace CodeIgniter\Log;
 
-use App\Config\LoggerConfig;
 use CodeIgniter\Log\Handlers\HandlerInterface;
 use Psr\Log\LoggerInterface;
 
@@ -94,11 +93,25 @@ class Logger implements LoggerInterface
 
 	//--------------------------------------------------------------------
 
-	public function __construct(LoggerConfig $config)
+	public function __construct($config)
 	{
-		$this->loggableLevels = is_array($config->threshold) ? $config->threshold : range(0, (int)$config->threshold);
+		$this->loggableLevels = is_array($config->threshold) ? $config->threshold : range(1, (int)$config->threshold);
 
-		$this->dateFormat = ! empty($config->dateFormat) ?? $this->dateFormat;
+		// Now convert loggable levels to strings.
+		// We only use numbers to make the threshold setting convenient for users.
+		if (count($this->loggableLevels))
+		{
+			$temp = [];
+			foreach ($this->loggableLevels as $level)
+			{
+				$temp[] = array_search((int)$level, $this->logLevels);
+			}
+
+			$this->loggableLevels = $temp;
+			unset($temp);
+		}
+
+		$this->dateFormat = $config->dateFormat ?? $this->dateFormat;
 
 		if (! is_array($config->handlers) || empty($config->handlers))
 		{
@@ -252,9 +265,12 @@ class Logger implements LoggerInterface
 	 *
 	 * @return bool
 	 */
-	public function log(\string $level, $message, array $context = []): bool
+	public function log($level, $message, array $context = []): bool
 	{
-		$level = strtolower($level);
+		if (is_numeric($level))
+		{
+			$level = array_search((int)$level, $this->logLevels);
+		}
 
 		// Is the level a valid level?
 		if (! array_key_exists($level, $this->logLevels))
@@ -273,11 +289,6 @@ class Logger implements LoggerInterface
 
 		foreach ($this->handlerConfig as $className => $config)
 		{
-			if (! $className instanceof HandlerInterface)
-			{
-				continue;
-			}
-
 			/**
 			 * @var \CodeIgniter\Log\Handlers\HandlerInterface
 			 */
@@ -296,7 +307,7 @@ class Logger implements LoggerInterface
 			}
 		}
 
-		return false;
+		return true;
 	}
 
 	//--------------------------------------------------------------------
@@ -343,18 +354,6 @@ class Logger implements LoggerInterface
 
 		// interpolate replacement values into the message and return
 		return strtr($message, $replace);
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Acts as a factory for Handlers so we only load them if we need them.
-	 *
-	 * @param string $name  The class name of the Handler to get.
-	 */
-	protected function getHandler(string $name): Hand
-	{
-
 	}
 
 	//--------------------------------------------------------------------
