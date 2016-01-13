@@ -319,6 +319,10 @@ class Logger implements LoggerInterface
 	 * {session_vars}
 	 * {post_vars}
 	 * {get_vars}
+	 * {env}
+	 * {env:foo}
+	 * {file}
+	 * {line}
 	 *
 	 * @param       $message
 	 * @param array $context
@@ -336,7 +340,7 @@ class Logger implements LoggerInterface
 			// or error, both of which implement the 'Throwable' interface.
 			if ($key == 'exception' && $val instanceof \Throwable)
 			{
-				$val = $val->getMessage().' '.$val->getFile().':'. $val->getLine();
+				$val = $val->getMessage().' '.$this->cleanFileNames($val->getFile()).':'. $val->getLine();
 			}
 
 			// todo - sanitize input before writing to file?
@@ -346,6 +350,31 @@ class Logger implements LoggerInterface
 		// Add special placeholders
 		$replace['{post_vars}'] = '$_POST: '.print_r($_POST, true);
 		$replace['{get_vars}']  = '$_GET: '.print_r($_GET, true);
+		$replace['{env}']       = ENVIRONMENT;
+
+		// Allow us to log the file/line that we are logging from
+		if (strpos($message, '{file}') !== false)
+		{
+			list($file, $line) = $this->determineFile();
+
+			$replace['{file}'] = $file;
+			$replace['{line}'] = $line;
+		}
+
+		// Match up environment variables in {env:foo} tags.
+		if (strpos($message, 'env:') !== false)
+		{
+			preg_match('/env:[^}]+/', $message, $matches);
+
+			if (count($matches))
+			{
+				foreach ($matches as $str)
+				{
+					$key = str_replace('env:', '', $str);
+					$replace["{{$str}}"] = $_ENV[$key] ?? 'n/a';
+				}
+			}
+		}
 
 		if (isset($_SESSION))
 		{
@@ -357,5 +386,64 @@ class Logger implements LoggerInterface
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Determines the current file/line that the log method was called from.
+	 * by analyzing the backtrace.
+	 *
+	 * @return array
+	 */
+	public function determineFile()
+	{
+		// Determine the file and line by finding the first
+		// backtrace that is not part of our logging system.
+		$trace = debug_backtrace();
+		$file = null;
+		$line = null;
+
+		foreach ($trace as $row)
+		{
+			if (in_array($row['function'], ['interpolate', 'determineFile', 'log', 'log_message']))
+			{
+				continue;
+			}
+
+			$file = $row['file'] ?? isset($row['object']) ? get_class($row['object']) : 'unknown';
+			$line = $row['line'] ?? $row['function'] ?? 'unknown';
+			break;
+		}
+
+		return [
+			$file,
+		    $line
+		];
+	}
+
+	//--------------------------------------------------------------------
+
+
+	/**
+	 * Cleans the paths of filenames by replacing APPPATH, BASEPATH, FCPATH
+	 * with the actual var. i.e.
+	 *
+	 *  /var/www/site/application/controllers/Home.php
+	 *      becomes:
+	 *  APPPATH/controllers/Home.php
+	 *
+	 * @param $file
+	 *
+	 * @return mixed
+	 */
+	protected function cleanFileNames($file)
+	{
+		$file = str_replace(APPPATH, 'APPPATH/', $file);
+		$file = str_replace(BASEPATH, 'BASEPATH/', $file);
+		$file = str_replace(FCPATH, 'FCPATH/', $file);
+
+	    return $file;
+	}
+
+	//--------------------------------------------------------------------
+
 
 }

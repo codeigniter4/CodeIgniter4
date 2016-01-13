@@ -162,6 +162,65 @@ class LoggerTest extends CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testLogInterpolatesCurrentEnvironment()
+	{
+		$config = new LoggerConfig();
+
+		$logger = new Logger($config);
+
+		$expected = 'DEBUG - '.date('Y-m-d').' --> Test message '. ENVIRONMENT;
+
+		$logger->log('debug', 'Test message {env}');
+
+		$logs = TestHandler::getLogs();
+
+		$this->assertEquals(1, count($logs));
+		$this->assertEquals($expected, $logs[0]);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testLogInterpolatesEnvironmentVars()
+	{
+		$config = new LoggerConfig();
+
+		$logger = new Logger($config);
+
+		$_ENV['foo'] = 'bar';
+
+		$expected = 'DEBUG - '.date('Y-m-d').' --> Test message bar';
+
+		$logger->log('debug', 'Test message {env:foo}');
+
+		$logs = TestHandler::getLogs();
+
+		$this->assertEquals(1, count($logs));
+		$this->assertEquals($expected, $logs[0]);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testLogInterpolatesFileAndLine()
+	{
+		$config = new LoggerConfig();
+
+		$logger = new Logger($config);
+
+		$_ENV['foo'] = 'bar';
+
+		// For whatever reason, this will often be the class/function instead of file and line.
+		$expected = 'DEBUG - '.date('Y-m-d').' --> Test message LoggerTest testLogInterpolatesFileAndLine';
+
+		$logger->log('debug', 'Test message {file} {line}');
+
+		$logs = TestHandler::getLogs();
+
+		$this->assertEquals(1, count($logs));
+		$this->assertEquals($expected, $logs[0]);
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testEmergencyLogsCorrectly()
 	{
 		$config = new LoggerConfig();
