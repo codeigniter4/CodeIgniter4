@@ -155,8 +155,8 @@ class CLIRequest extends Request
 		// we have found the first dash.
 		$options_found = false;
 
-		$argc = $this->server('argc', FILTER_SANITIZE_NUMBER_INT);
-		$argv = $this->server('argv');
+		$argc = $this->getServer('argc', FILTER_SANITIZE_NUMBER_INT);
+		$argv = $this->getServer('argv');
 
 		// We start at 1 since we never want to include index.php
 		for ($i = 1; $i < $argc; $i++)

@@ -19,7 +19,7 @@ resource to serve more than one type of content, allowing the clients to request
 data that works best for them.
 
 A classic example of this is a browser than cannot display PNG files can request only GIF or
-JPEG images. When the server receives the request, it looks at the available file types the client
+JPEG images. When the getServer receives the request, it looks at the available file types the client
 is requesting and selects the best match from the image formats that it supports, in this case
 likely choosing a JPEG image to return.
 

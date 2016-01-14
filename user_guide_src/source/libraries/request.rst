@@ -72,7 +72,7 @@ Class Reference
 			echo $request->method(FALSE); // Outputs: post
 			echo $request->method(); // Outputs: post
 
-	.. php:method:: server($index[, $filter = NULL])
+	.. php:method:: getServer($index[, $filter = NULL])
 
 		:param	mixed	$index: Value name
 		:param  int     $filter: The type of filter to apply. A list of filters can be found `here <http://php.net/manual/en/filter.filters.php>`_.
@@ -80,13 +80,13 @@ Class Reference
 		:rtype:	mixed
 
 		This method is identical to the ``post()``, ``get()`` and ``cookie()`` methods from the
-		:doc:`IncomingRequest Class </libraries/incomingrequest>`, only it fetches server data (``$_SERVER``)::
+		:doc:`IncomingRequest Class </libraries/incomingrequest>`, only it fetches getServer data (``$_SERVER``)::
 
-			$request->server('some_data');
+			$request->getServer('some_data');
 
 		To return an array of multiple ``$_SERVER`` values, pass all the required keys
 		as an array.
 		::
 
-			$require->server(array('SERVER_PROTOCOL', 'REQUEST_URI'));
+			$require->getServer(array('SERVER_PROTOCOL', 'REQUEST_URI'));
 

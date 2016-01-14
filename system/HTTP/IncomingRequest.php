@@ -3,7 +3,7 @@
 /**
  * Class IncomingRequest
  *
- * Represents an incoming, server-side HTTP request.
+ * Represents an incoming, getServer-side HTTP request.
  *
  * Per the HTTP specification, this interface includes properties for
  * each of the following:
@@ -372,7 +372,7 @@ class IncomingRequest extends Request
 			$this->isSecure() ? $this->uri->setScheme('https') : $this->uri->setScheme('http');
 
 			// While both SERVER_NAME and HTTP_HOST are open to security issues,
-			// if we have to choose, we will go with the server-controller version first.
+			// if we have to choose, we will go with the getServer-controller version first.
 			! empty($_SERVER['SERVER_NAME'])
 				? (isset($_SERVER['SERVER_NAME']) ? $this->uri->setHost($_SERVER['SERVER_NAME']) : null)
 				: (isset($_SERVER['HTTP_HOST']) ? $this->uri->setHost($_SERVER['HTTP_HOST']) : null);
@@ -454,7 +454,7 @@ class IncomingRequest extends Request
 		}
 
 		// This section ensures that even on servers that require the URI to be in the query string (Nginx) a correct
-		// URI is found, and also fixes the QUERY_STRING server var and $_GET array.
+		// URI is found, and also fixes the QUERY_STRING getServer var and $_GET array.
 		if (trim($uri, '/') === '' && strncmp($query, '/', 1) === 0)
 		{
 			$query                   = explode('?', $query, 2);

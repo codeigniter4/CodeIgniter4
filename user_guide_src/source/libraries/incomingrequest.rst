@@ -98,7 +98,7 @@ The main methods are:
 
 * ``$request->get()``
 * ``$request->post()``
-* ``$request->server()``
+* ``$request->getServer()``
 * ``$request->cookie()``
 
 Filtering Input Data
@@ -125,8 +125,8 @@ The methods provided by the parent classes that are available are:
 * :meth:`CodeIgniter\\HTTP\\Request::ipAddress`
 * :meth:`CodeIgniter\\HTTP\\Request::validIP`
 * :meth:`CodeIgniter\\HTTP\\Request::method`
-* :meth:`CodeIgniter\\HTTP\\Request::server`
-* :meth:`CodeIgniter\\HTTP\\Request::server`
+* :meth:`CodeIgniter\\HTTP\\Request::getServer`
+* :meth:`CodeIgniter\\HTTP\\Request::getServer`
 * :meth:`CodeIgniter\\HTTP\\Message::body`
 * :meth:`CodeIgniter\\HTTP\\Message::setBody`
 * :meth:`CodeIgniter\\HTTP\\Message::populateHeaders`
@@ -252,7 +252,7 @@ The methods provided by the parent classes that are available are:
 			function :php:func:`get_cookie()`, this method does NOT prepend
 			your configured ``$config['cookie_prefix']`` value.
 
-	.. php:method:: server($index[, $filter = null])
+	.. php:method:: getServer($index[, $filter = null])
 
 		:param	mixed	$index: Value name
 		:param  int     $filter: The type of filter to apply. A list of filters can be found `here <http://php.net/manual/en/filter.filters.php>`_.
@@ -260,15 +260,15 @@ The methods provided by the parent classes that are available are:
 		:rtype:	mixed
 
 		This method is identical to the ``post()``, ``get()`` and ``cookie()``
-		methods, only it fetches server data (``$_SERVER``)::
+		methods, only it fetches getServer data (``$_SERVER``)::
 
-			$request->server('some_data');
+			$request->getServer('some_data');
 
 		To return an array of multiple ``$_SERVER`` values, pass all the required keys
 		as an array.
 		::
 
-			$request->server(['SERVER_PROTOCOL', 'REQUEST_URI']);
+			$request->getServer(['SERVER_PROTOCOL', 'REQUEST_URI']);
 
 	.. php:method:: userAgent([$filter = null])
 
@@ -331,7 +331,7 @@ The methods provided by the parent classes that are available are:
 		The path is usually not needed since the method sets a root path.
 
 		The prefix is only needed if you need to avoid name collisions with
-		other identically named cookies for your server.
+		other identically named cookies for your getServer.
 
 		The secure boolean is only needed if you want to make it a secure cookie
 		by setting it to TRUE.

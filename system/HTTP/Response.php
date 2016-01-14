@@ -4,7 +4,7 @@ use App\Config\AppConfig;
 use App\Config\ContentSecurityPolicyConfig;
 
 /**
- * Representation of an outgoing, server-side response.
+ * Representation of an outgoing, getServer-side response.
  *
  * Per the HTTP specification, this interface includes properties for
  * each of the following:
@@ -140,7 +140,7 @@ class Response extends Message implements ResponseInterface
 	/**
 	 * Gets the response status code.
 	 *
-	 * The status code is a 3-digit integer result code of the server's attempt
+	 * The status code is a 3-digit integer result code of the getServer's attempt
 	 * to understand and satisfy the request.
 	 *
 	 * @return int Status code.

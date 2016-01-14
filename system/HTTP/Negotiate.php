@@ -5,7 +5,7 @@
  *
  * Provides methods to negotiate with the HTTP headers to determine the best
  * type match between what the application supports and what the requesting
- * server wants.
+ * getServer wants.
  *
  * @see http://tools.ietf.org/html/rfc7231#section-5.3
  * @package CodeIgniter\HTTP

@@ -41,7 +41,7 @@ interface RequestInterface
 	 * @param null $filter  A filter name to be applied
 	 * @return mixed
 	 */
-	public function server($index = null, $filter = null);
+	public function getServer($index = null, $filter = null);
 
 	//--------------------------------------------------------------------
 

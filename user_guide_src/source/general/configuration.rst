@@ -26,9 +26,9 @@ that ship with CodeIgniter are namespaced with ``App\Config``. Using this namesp
 application will provide the best performance since it knows exactly what folder to find the
 files in and doesn't have to scan several locations in the filesystem to get there.
 
-You can locate the configuration files any place on your server by using a different namespace.
-This allows you to pull configuration files on the production server to a folder that is not in
-the web server space at all, while keeping it under ``/application`` for ease of access during development.
+You can locate the configuration files any place on your getServer by using a different namespace.
+This allows you to pull configuration files on the production getServer to a folder that is not in
+the web getServer space at all, while keeping it under ``/application`` for ease of access during development.
 
 Creating Configuration Files
 ============================
@@ -68,7 +68,7 @@ appropriate data.
 
 When your application runs, this file will be automatically loaded and the variables will be put into
 the environment. This will work in any environment except for production, where the variables should be
-set in the environment through whatever means your server supports, such as .htaccess files, etc. These
+set in the environment through whatever means your getServer supports, such as .htaccess files, etc. These
 variables are then available through ``getenv()``, ``$_SERVER``, and ``$_ENV``. Of the three, ``getenv()`` function
 is recommended since it is not case-sensitive::
 

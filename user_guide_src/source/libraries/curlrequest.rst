@@ -144,7 +144,7 @@ The body can be retrieved using the ``body()`` method::
 
 	$body = $response->body();
 
-The body is the raw body provided by the remote server. If the content type requires formatting, you will need
+The body is the raw body provided by the remote getServer. If the content type requires formatting, you will need
 to ensure that your script handles that::
 
 	if (strpos($response->header('content-type'), 'application/json') !== false)
@@ -220,7 +220,7 @@ To specify the location of a PEM formatted client-side certificate, pass a strin
 file as the ``cert`` option. If a password is required, set the value to an array with the first element
  as the path to the certificate, and the second as the password::
 
-    $client->request('get', '/', ['cert' => ['/path/server.pem', 'password']);
+    $client->request('get', '/', ['cert' => ['/path/getServer.pem', 'password']);
 
 connect_timeout
 ===============

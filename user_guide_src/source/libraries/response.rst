@@ -3,7 +3,7 @@ HTTP Response
 =============
 
 The Response class extends the :doc:`HTTP Message Class </libraries/message>` with methods only appropriate for
- a server responding to the client that called it.
+ a getServer responding to the client that called it.
 
 Working with the Response
 =========================
@@ -34,7 +34,7 @@ HTTP Caching
 
 Built into the HTTP specification are tools help the client (often the web browser) cache the results. Used correctly,
 this can lend a huge performance boost to your application because it will tell the client that they don't need
-to contact the server at all since nothing has changed. And you can't get faster than that.
+to contact the getServer at all since nothing has changed. And you can't get faster than that.
 
 This are handled through the ``Cache-Control`` and ``ETag`` headers. This guide is not the proper place for a thorough
 introduction to all of the cache headers power, but you can get a good understanding over at
