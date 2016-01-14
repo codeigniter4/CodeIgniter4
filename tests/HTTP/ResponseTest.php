@@ -88,4 +88,109 @@ class ResponseTest extends CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testSetStatusCodeInterpretsReason()
+	{
+		$response = new Response(new \App\Config\AppConfig());
+
+		$response->setStatusCode(300);
+
+		$this->assertEquals('Multiple Choices', $response->getReason());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testSetStatusCodeSavesCustomReason()
+	{
+		$response = new Response(new \App\Config\AppConfig());
+
+		$response->setStatusCode(300, 'My Little Pony');
+
+		$this->assertEquals('My Little Pony', $response->getReason());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testGetReasonReturnsEmptyStringWithNoStatus()
+	{
+		$response = new Response(new \App\Config\AppConfig());
+
+		$this->assertEquals('', $response->getReason());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testSetDateRemembersDateInUTC()
+	{
+		$response = new Response(new \App\Config\AppConfig());
+
+		$response->setDate(DateTime::createFromFormat('Y-m-d', '2000-03-10'));
+
+		$date = DateTime::createFromFormat('Y-m-d', '2000-03-10');
+		$date->setTimezone(new \DateTimeZone('UTC'));
+
+		$header = $response->getHeaderLine('Date');
+
+		$this->assertEquals($date->format('D, d M Y H:i:s').' GMT', $header);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testSetContentType()
+	{
+		$response = new Response(new \App\Config\AppConfig());
+
+		$response->setContentType('text/json');
+
+		$this->assertEquals('text/json; charset=UTF-8', $response->getHeaderLine('Content-Type'));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testNoCache()
+	{
+		$response = new Response(new \App\Config\AppConfig());
+
+		$response->noCache();
+
+		$this->assertEquals('no-store, max-age=0, no-cache', $response->getHeaderLine('Cache-control'));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testSetCache()
+	{
+		$response = new Response(new \App\Config\AppConfig());
+
+		$date = date('r');
+
+		$options = [
+			'etag' => '12345678',
+		    'last-modified' => $date,
+		    'max-age' => 300,
+		    'must-revalidate'
+		];
+
+		$response->setCache($options);
+
+		$this->assertEquals('12345678', $response->getHeaderLine('ETag'));
+		$this->assertEquals($date, $response->getHeaderLine('Last-Modified'));
+		$this->assertEquals('max-age=300, must-revalidate', $response->getHeaderLine('Cache-Control'));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testSetLastModifiedWithDateTimeObject()
+	{
+		$response = new Response(new \App\Config\AppConfig());
+
+		$response->setLastModified(DateTime::createFromFormat('Y-m-d', '2000-03-10'));
+
+		$date = DateTime::createFromFormat('Y-m-d', '2000-03-10');
+		$date->setTimezone(new \DateTimeZone('UTC'));
+
+		$header = $response->getHeaderLine('Last-Modified');
+
+		$this->assertEquals($date->format('D, d M Y H:i:s').' GMT', $header);
+	}
+
 }

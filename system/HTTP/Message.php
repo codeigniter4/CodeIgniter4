@@ -171,7 +171,21 @@ class Message
 
 		if (is_array($this->headers[$orig_name]) || $this->headers[$orig_name] instanceof \ArrayAccess)
 		{
-			return implode(', ', $this->headers[$orig_name]);
+			$options = [];
+
+			foreach ($this->headers[$orig_name] as $key => $value)
+			{
+				if (is_numeric($key))
+				{
+					$options[] = $value;
+				}
+				else
+				{
+					$options[] = $key.'='.$value;
+				}
+			}
+
+			return implode(', ', $options);
 		}
 
 		return (string)$this->headers[$orig_name];
