@@ -20,7 +20,14 @@ class Hooks
 	 *
 	 * @var bool
 	 */
-	protected static $have_read_from_file = false;
+	protected static $haveReadFromFile = false;
+
+	/**
+	 * The path to the file containing the hooks to load in.
+	 *
+	 * @var string
+	 */
+	protected static $hooksFile;
 
 	//--------------------------------------------------------------------
 
@@ -67,16 +74,16 @@ class Hooks
 	 *
 	 * @return bool
 	 */
-	public static function trigger($event_name, array $arguments = [])
+	public static function trigger($event_name, array $arguments=[])
 	{
 		// Read in our config/events file so that we have them all!
-		if ( ! self::$have_read_from_file)
+		if ( ! self::$haveReadFromFile)
 		{
-			if (is_file(APPPATH.'config/events.php'))
+			if (is_file(self::$hooksFile))
 			{
-				include APPPATH.'config/events.php';
+				include self::$hooksFile;
 			}
-			self::$have_read_from_file = true;
+			self::$haveReadFromFile = true;
 		}
 
 		foreach (self::listeners($event_name) as $listener)
@@ -179,6 +186,18 @@ class Hooks
 		{
 			self::$listeners = [];
 		}
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Sets the path to the file that routes are read from.
+	 *
+	 * @param string $path
+	 */
+	public function setFile(string $path)
+	{
+		self::$hooksFile = $path;
 	}
 
 	//--------------------------------------------------------------------
