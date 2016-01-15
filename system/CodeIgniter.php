@@ -95,6 +95,12 @@ $benchmark = \App\Config\Services::timer(true);
 $benchmark->start('total_execution');
 
 //--------------------------------------------------------------------
+// Is there a "pre-system" hook?
+//--------------------------------------------------------------------
+
+\CodeIgniter\Hooks\Hooks::trigger('pre_system');
+
+//--------------------------------------------------------------------
 // Get our Request and Response objects
 //--------------------------------------------------------------------
 
@@ -161,6 +167,12 @@ else
 		}
 
 		$class  = new $controller($request, $response);
+
+		//--------------------------------------------------------------------
+		// Is there a "post_controller_constructor" hook?
+		//--------------------------------------------------------------------
+		\CodeIgniter\Hooks\Hooks::trigger('post_controller_constructor');
+
 		$method = $router->methodName();
 		$class->$method(...$router->params());
 	}
@@ -170,6 +182,12 @@ $output = ob_get_contents();
 ob_end_clean();
 
 $output = str_replace('{elapsed_time}', $benchmark->getElapsedTime('total_execution'), $output);
+
+//--------------------------------------------------------------------
+// Is there a post-system hook?
+//--------------------------------------------------------------------
+
+\CodeIgniter\Hooks\Hooks::trigger('post_system');
 
 $response->setBody($output);
 
