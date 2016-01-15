@@ -35,10 +35,10 @@ class Hooks
 	 * Registers an action to happen on an event. The action can be any sort
 	 * of callable:
 	 *
-	 *  Events::on('create', 'myFunction');               // procedural function
-	 *  Events::on('create', ['myClass', 'myMethod']);    // Class::method
-	 *  Events::on('create', [$myInstance, 'myMethod']);  // Method on an existing instance
-	 *  Events::on('create', function() {});              // Closure
+	 *  Hooks::on('create', 'myFunction');               // procedural function
+	 *  Hooks::on('create', ['myClass', 'myMethod']);    // Class::method
+	 *  Hooks::on('create', [$myInstance, 'myMethod']);  // Method on an existing instance
+	 *  Hooks::on('create', function() {});              // Closure
 	 *
 	 * @param          $event_name
 	 * @param callable $callback
