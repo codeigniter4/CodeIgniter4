@@ -13,7 +13,7 @@ What is HTTP?
 =============
 
 HTTP is simply a text-based language that allows two machines to talk to each other. When a browser
-requests a page, it asks the getServer if it can get the page. The getServer then prepares the page and sends
+requests a page, it asks the server if it can get the page. The server then prepares the page and sends
 response back to the browser that asked for it. That's pretty much it. Obviously, there are some complexities
 that you can use, but the basics are really pretty simple.
 
@@ -24,7 +24,7 @@ respond appropriately.
 The Request
 -----------
 Whenever a client makes a request (a web browser, smartphone app, etc), it is sending a small text message
-to the getServer and waits for a response.
+to the server and waits for a response.
 
 The request would look something like this::
 
@@ -44,8 +44,8 @@ client accepts, and much more. Wikipedia has an article that lists `all header f
 The Response
 ------------
 
-Once the getServer receives the request, your application will take that information and generate some output.
-The getServer will bundle your output as part of its response to the client. This is also represented as
+Once the server receives the request, your application will take that information and generate some output.
+The server will bundle your output as part of its response to the client. This is also represented as
 a simple text message that looks something like this::
 
 	HTTP/1.1 200 OK
@@ -82,8 +82,8 @@ is an object-oriented representation of the HTTP request. It provides everything
   $request->get('foo');
   $request->post('bar');
 
-  // Retrieve getServer variables
-  $request->getServer('Host');
+  // Retrieve server variables
+  $request->server('Host');
 
   // Retrieve an HTTP Request header, with case-insensitive names
   $request->header('host');
