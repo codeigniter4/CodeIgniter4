@@ -66,7 +66,7 @@ require APPPATH.'config/Services.php';
  * ------------------------------------------------------
  */
 
-// The autloader isn't initialized yet, so load the file manually.
+// The autoloader isn't initialized yet, so load the file manually.
 require BASEPATH.'Autoloader/Autoloader.php';
 require APPPATH.'config/AutoloadConfig.php';
 
@@ -136,6 +136,12 @@ $router = \App\Config\Services::router($routes, true);
 $path = is_cli() ? $request->getPath() : $request->uri->getPath();
 $controller = $router->handle($path);
 
+//--------------------------------------------------------------------
+// Are there any "pre-system" hooks?
+//--------------------------------------------------------------------
+
+\CodeIgniter\Hooks\Hooks::trigger('pre_system');
+
 ob_start();
 
 // Is it routed to a Closure?
@@ -178,17 +184,27 @@ else
 	}
 }
 
+//--------------------------------------------------------------------
+// Is there a "post_controller" hook?
+//--------------------------------------------------------------------
+
+\CodeIgniter\Hooks\Hooks::trigger('post_controller');
+
+//--------------------------------------------------------------------
+// Output gathering and cleanup
+//--------------------------------------------------------------------
+
 $output = ob_get_contents();
 ob_end_clean();
 
 $output = str_replace('{elapsed_time}', $benchmark->getElapsedTime('total_execution'), $output);
+
+$response->setBody($output);
+
+$response->send();
 
 //--------------------------------------------------------------------
 // Is there a post-system hook?
 //--------------------------------------------------------------------
 
 \CodeIgniter\Hooks\Hooks::trigger('post_system');
-
-$response->setBody($output);
-
-$response->send();
