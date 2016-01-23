@@ -1,12 +1,13 @@
-##############
-Basic Concepts
-##############
+######################
+Architectural Concepts
+######################
 
 .. toctree::
 	:titlesonly:
 
+	http
+	mvc
 	structure
 	autoloader
 	services
-	http
 	security

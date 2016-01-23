@@ -54,9 +54,9 @@ Tutorial
 
 	tutorial/index
 
-**************
-Basic Concepts
-**************
+**********************
+Architectural Concepts
+**********************
 .. toctree::
    :titlesonly:
 
