@@ -345,7 +345,11 @@ class Autoloader
 		$filename = preg_replace('/[^a-zA-Z0-9\s\/\-\_\.]/', '', $filename);
 
 		// Replace one or more spaces with a dash
-		$filename = preg_replace('/[\s-]+/', '-', $filename);
+		// @todo needs further research
+		// per http://twiki.org/cgi-bin/view/Plugins/SlashFilenamePlugin
+		// Windows and OS X can both support spaces in filenames/paths
+		// so this breaks compatibility in those OS's.
+//		$filename = preg_replace('/[\s-]+/', '-', $filename);
 
 		// Clean up our filename edges.
 		$filename = trim($filename, '.-_');
