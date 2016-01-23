@@ -90,7 +90,6 @@ class AutoloadConfig
 			'CodeIgniter\Log\Handlers\FileHandler'        => BASEPATH.'Log/Handlers/FileHandler.php',
 			'CodeIgniter\Log\Handlers\HandlerInterface'   => BASEPATH.'Log/Handlers/HandlerInterface.php',
 			'CodeIgniter\Router\RouteCollection'          => BASEPATH.'Router/RouteCollection.php',
-			'CodeIgniter\Router\AltCollection'            => BASEPATH.'Router/AltCollection.php',
 			'CodeIgniter\Router\RouteCollectionInterface' => BASEPATH.'Router/RouteCollectionInterface.php',
 			'CodeIgniter\Router\Router'                   => BASEPATH.'Router/Router.php',
 			'CodeIgniter\Router\RouterInterface'          => BASEPATH.'Router/RouterInterface.php',

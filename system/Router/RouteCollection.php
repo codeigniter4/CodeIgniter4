@@ -1,20 +1,7 @@
 <?php namespace CodeIgniter\Router;
 
-/**
- * Interface RouteCollectionInterface
- *
- * A Route Collection's sole job is to hold a series of routes. The required
- * number of methods is kept very small on purpose, but implementors may
- * add a number of additional methods to customize how the routes are defined.
- *
- * The RouteCollection provides the Router with the routes so that it can determine
- * which controller should be ran.
- *
- * @package CodeIgniter\Router
- */
 class RouteCollection implements RouteCollectionInterface
 {
-
 	/**
 	 * The namespace to be added to any controllers.
 	 * Defaults to the global namespaces (\)
@@ -42,6 +29,14 @@ class RouteCollection implements RouteCollectionInterface
 	 * @var string
 	 */
 	protected $defaultMethod = 'index';
+
+	/**
+	 * The placeholder used when routing 'resources'
+	 * when no other placeholder has been specified.
+	 *
+	 * @var string
+	 */
+	protected $defaultPlaceholder = 'any';
 
 	/**
 	 * Whether to convert dashes to underscores in URI.
@@ -88,7 +83,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @var
 	 */
-	protected $http_verb;
+	protected $HTTPVerb;
 
 	/**
 	 * The default list of HTTP methods (and CLI for command line usage)
@@ -96,162 +91,28 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @var array
 	 */
-	protected $default_http_methods = ['options', 'get', 'head', 'post', 'put', 'delete', 'trace', 'connect', 'cli'];
+	protected $defaultHTTPMethods = ['options', 'get', 'head', 'post', 'put', 'delete', 'trace', 'connect', 'cli'];
+
+	/**
+	 * The name of the current group, if any.
+	 *
+	 * @var string
+	 */
+	protected $group = null;
+
+	/**
+	 * The current subdomain.
+	 *
+	 * @var string
+	 */
+	protected $currentSubdomain = null;
 
 	//--------------------------------------------------------------------
 
 	public function __construct()
 	{
 		// Get HTTP verb
-		$this->http_verb = isset($_SERVER['REQUEST_METHOD']) ? strtolower($_SERVER['REQUEST_METHOD']) : 'cli';
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Adds a single route to the collection.
-	 *
-	 * This provides a fairly simplistic solution without a lot of options.
-	 * A much more flexible version is to present an array elements and
-	 * multiple options to the 'map' method below.
-	 *
-	 * @param string       $route  The pattern to match against the URI
-	 * @param string       $map    The controller or path to map to.
-	 * @param string|array $method One of more HTTP methods that are allowed. If one,
-	 *                             present as a single string (i.e. 'get').
-	 *                             Otherwise, present an array of methods.
-	 *
-	 * @return void
-	 */
-	public function add(string $route, $map, $methods = null)
-	{
-		// If methods is null, than it should work
-		// for any of the available methods.
-		if (empty($methods))
-		{
-			$methods = $this->default_http_methods;
-		}
-
-		if ( ! is_array($methods))
-		{
-			$methods = [$methods];
-		}
-
-		// Ensure that all of our methods are lower-cased for compatibility
-		array_walk($methods, function (&$item)
-		{
-			$item = strtolower($item);
-		}
-		);
-
-		// To save on memory and processing later, we only add
-		// the routes that are actually available at this time.
-		if ( ! in_array($this->http_verb, $methods))
-		{
-			return;
-		}
-
-		// Replace our regex pattern placeholders with the actual thing
-		// so that the Router doesn't need to know about any of this.
-		foreach ($this->placeholders as $tag => $pattern)
-		{
-			$route = str_ireplace(':'.$tag, $pattern, $route);
-		}
-
-		// We need to ensure that the current namespace is added to the final mapping
-		// so that it won't try to use the current namespace for the class.
-		if (is_string($map) && strpos($map, '\\') === false)
-		{
-			if ( ! empty($this->defaultNamespace))
-			{
-				$map = $this->defaultNamespace.'\\'.$map;
-
-				// Trim out any double back-slashes
-				$map = str_replace('\\\\', '\\', $map);
-			}
-		}
-
-		// Ensure that any strings are prefixed with backslash to get
-		// out of the current namespace and into the proper one.
-		if (is_string($map))
-		{
-			$map = '\\'.ltrim($map, '\\ ');
-		}
-
-		$this->routes[$route] = $map;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Adds an array of routes to the class all at once. This allows additional
-	 * settings to be specified for all incoming routes, including:
-	 *
-	 *  namespace  Sets the namespace for all routes
-	 *  hostname   Route must be on the set domain
-	 *  prefix     Sets a string that will be prefixed to all routes (left side)
-	 *
-	 * @param array|null $routes
-	 *
-	 * @return mixed
-	 */
-	public function map(array $routes = null, array $options = [])
-	{
-		if (empty($_SERVER['HTTP_HOST']))
-		{
-			$_SERVER['HTTP_HOST'] = null;
-		}
-
-		$current_host = ! empty($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : null;
-
-		// If a hostname is provided as an option,
-		// then don't waste time if our hostname doesn't match.
-		if ( ! empty($options['hostname']) && strtolower($current_host) != strtolower($options['hostname']))
-		{
-			return;
-		}
-
-		// Save the current default namespace so
-		// that we are able to replace it with one
-		// the user specifies here.
-		$old_namespace = $this->defaultNamespace;
-
-		if (isset($options['namespace']))
-		{
-			$this->defaultNamespace = $options['namespace'];
-		}
-
-		$prefix = ! empty($options['prefix']) ? $options['prefix'] : '';
-
-		foreach ($routes as $route => $map)
-		{
-			// Also need to trim any leading slashes to ensure
-			// that the add() method adds the namespace correctly.
-			if (is_string($map) && ! empty($options['namespace']))
-			{
-				$map = ltrim($map, '\\ ');
-			}
-
-			// If an array is passed in, that means that we are
-			// dealing with HTTP verb routing so we need
-			// to send all of them into the add() method
-			// separately.
-			if (is_array($map))
-			{
-				foreach ($map as $verb => $right)
-				{
-					// $route will now be the HTTP verb used.
-					$this->add($prefix.$route, $right, $verb);
-				}
-
-				continue;
-			}
-
-			$this->add($prefix.$route, $map);
-		}
-
-		// Put our namespace back.
-		$this->defaultNamespace = $old_namespace;
+		$this->HTTPVerb = isset($_SERVER['REQUEST_METHOD']) ? strtolower($_SERVER['REQUEST_METHOD']) : 'cli';
 	}
 
 	//--------------------------------------------------------------------
@@ -261,8 +122,6 @@ class RouteCollection implements RouteCollectionInterface
 	 * by the routes as placeholders for regular expressions to make defining
 	 * the routes more human-friendly.
 	 *
-	 * Once created, they can be used within curly brackets in routes.
-	 *
 	 * You can pass an associative array as $placeholder, and have
 	 * multiple placeholders added at once.
 	 *
@@ -271,9 +130,9 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @return mixed
 	 */
-	public function addPlaceholder($placeholder, string $pattern=null): RouteCollectionInterface
+	public function addPlaceholder($placeholder, string $pattern = null): RouteCollectionInterface
 	{
-		if (! is_array($placeholder))
+		if ( ! is_array($placeholder))
 		{
 			$placeholder = [$placeholder => $pattern];
 		}
@@ -295,7 +154,8 @@ class RouteCollection implements RouteCollectionInterface
 	 */
 	public function setDefaultNamespace(string $value): RouteCollectionInterface
 	{
-		$this->defaultNamespace = $value;
+		$this->defaultNamespace = filter_var($value, FILTER_SANITIZE_STRING);
+		$this->defaultNamespace = rtrim($this->defaultNamespace, '\\') . '\\';
 
 		return $this;
 	}
@@ -312,45 +172,9 @@ class RouteCollection implements RouteCollectionInterface
 	 */
 	public function setDefaultController(string $value): RouteCollectionInterface
 	{
-		$this->defaultController = $value;
+		$this->defaultController = filter_var($value, FILTER_SANITIZE_STRING);
 
 		return $this;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Returns the name of the default controller. With Namespace.
-	 *
-	 * @return string
-	 */
-	public function getDefaultController(): string
-	{
-		return $this->defaultController;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Returns the name of the default method to use within the controller.
-	 *
-	 * @return string
-	 */
-	public function getDefaultMethod(): string
-	{
-		return $this->defaultMethod;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Returns the flag that tells whether to autoRoute URI against controllers.
-	 *
-	 * @return bool
-	 */
-	public function shouldAutoRoute()
-	{
-		return $this->autoRoute;
 	}
 
 	//--------------------------------------------------------------------
@@ -365,7 +189,7 @@ class RouteCollection implements RouteCollectionInterface
 	 */
 	public function setDefaultMethod(string $value): RouteCollectionInterface
 	{
-		$this->defaultMethod = $value;
+		$this->defaultMethod = filter_var($value, FILTER_SANITIZE_STRING);
 
 		return $this;
 	}
@@ -379,7 +203,7 @@ class RouteCollection implements RouteCollectionInterface
 	 * find words and meaning in the URI for better SEO. But it
 	 * doesn't work well with PHP method names....
 	 *
-	 * @param $value
+	 * @param bool $value
 	 *
 	 * @return mixed
 	 */
@@ -414,11 +238,78 @@ class RouteCollection implements RouteCollectionInterface
 	//--------------------------------------------------------------------
 
 	/**
+	 * Sets the default constraint to be used in the system. Typically
+	 * for use with the 'resources' method.
+	 *
+	 * @param $constraint
+	 */
+	public function setDefaultConstraint(string $placeholder): RouteCollectionInterface
+	{
+		if (array_key_exists($placeholder, $this->placeholders)) {
+			$this->defaultPlaceholder = $placeholder;
+		}
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns the name of the default controller. With Namespace.
+	 *
+	 * @return string
+	 */
+	public function getDefaultController(): string
+	{
+		return $this->defaultController;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns the name of the default method to use within the controller.
+	 *
+	 * @return string
+	 */
+	public function getDefaultMethod(): string
+	{
+		return $this->defaultMethod;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns the current value of the translateURIDashses setting.
+	 *
+	 * @param bool|false $val
+	 *
+	 * @return mixed
+	 */
+	public function shouldTranslateURIDashes(): bool
+	{
+		return $this->translateURIDashes;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns the flag that tells whether to autoRoute URI against controllers.
+	 *
+	 * @return bool
+	 */
+	public function shouldAutoRoute(): bool
+	{
+		return $this->autoRoute;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Returns the raw array of available routes.
 	 *
 	 * @return array
 	 */
-	public function getRoutes()
+	public function getRoutes(): array
 	{
 		return $this->routes;
 	}
@@ -430,21 +321,316 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @return string
 	 */
-	public function getHTTPVerb()
+	public function getHTTPVerb(): string
 	{
-		return $this->http_verb;
+		return $this->HTTPVerb;
 	}
 
 	//--------------------------------------------------------------------
 
 	/**
-	 * Returns the current Translate URI Dashes setting.
+	 * Adds a single route to the collection.
 	 *
-	 * @return bool
+	 * Example:
+	 *      $routes->add('news', 'Posts::index');
+	 *
+	 * @param string       $route
+	 * @param array|string $map
+	 * @param string|array $method
+	 *
+	 * @return self RouteCollectionInterface
 	 */
-	public function shouldTranslateURIDashes()
+	public function add(string $from, $to, array $options = []): RouteCollectionInterface
 	{
-		return $this->translateURIDashes;
+		$this->create($from, $to, $options);
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	//--------------------------------------------------------------------
+	// Grouping Routes
+	//--------------------------------------------------------------------
+
+	/**
+	 * Group a series of routes under a single URL segment. This is handy
+	 * for grouping items into an admin area, like:
+	 *
+	 * Example:
+	 *     // Creates route: admin/users
+	 *     $route->group('admin', function() {
+	 *            $route->resources('users');
+	 *     });
+	 *
+	 * @param  string   $name     The name to group/prefix the routes with.
+	 * @param  \Closure $callback An anonymous function that allows you route inside of this group.
+	 *
+	 * @return void
+	 */
+	public function group($name, \Closure $callback)
+	{
+		$old_group = $this->group;
+
+		// To register a route, we'll set a flag so that our router
+		// so it will see the group name.
+		$this->group = ltrim($old_group.'/'.$name, '/');
+
+		call_user_func($callback, $this);
+
+		// Make sure to clear the group name so we don't accidentally
+		// group any ones we didn't want to.
+		$this->group = $old_group;
+	}
+
+	//--------------------------------------------------------------------
+
+	//--------------------------------------------------------------------
+	// HTTP Verb-based routing
+	//--------------------------------------------------------------------
+	// Routing works here because, as the routes config file is read in,
+	// the various HTTP verb-based routes will only be added to the in-memory
+	// routes if it is a call that should respond to that verb.
+	//
+	// The options array is typically used to pass in an 'as' or var, but may
+	// be expanded in the future. See the docblock for 'add' method above for
+	// current list of globally available options.
+	//
+
+	/**
+	 * Creates a collections of HTTP-verb based routes for a controller.
+	 *
+	 * Possible Options:
+	 *      'controller'    - Customize the name of the controller used in the 'to' route
+	 *      'placeholder'   - The regex used by the Router. Defaults to '(:any)'
+	 *
+	 * Example:
+	 *      $route->resources('photos');
+	 *
+	 *      // Generates the following routes:
+	 *      HTTP Verb | Path        | Action        | Used for...
+	 *      ----------+-------------+---------------+-----------------
+	 *      GET         /photos             list_all        display a list of photos
+	 *      GET         /photos/{id}        show            display a specific photo
+	 *      POST        /photos             create          create a new photo
+	 *      PUT         /photos/{id}        update          update an existing photo
+	 *      DELETE      /photos/{id}/delete delete          delete an existing photo
+	 *
+	 * @param  string $name    The name of the controller to route to.
+	 * @param  array  $options An list of possible ways to customize the routing.
+	 *
+	 * @return RouteCollectionInterface
+	 */
+	public function resources($name, $options = []): RouteCollectionInterface
+	{
+		// In order to allow customization of the route the
+		// resources are sent to, we need to have a new name
+		// to store the values in.
+		$new_name = ucfirst($name);
+
+		// If a new controller is specified, then we replace the
+		// $name value with the name of the new controller.
+		if (isset($options['controller'])) {
+			$new_name = ucfirst(filter_var($options['controller'], FILTER_SANITIZE_STRING));
+		}
+
+		// In order to allow customization of allowed id values
+		// we need someplace to store them.
+		$id = isset($this->placeholders[$this->defaultPlaceholder]) ? $this->placeholders[$this->defaultPlaceholder] :
+				'(:any)';
+
+		if (isset($options['placeholder'])) {
+			$id = $options['placeholder'];
+		}
+
+		// Make sure we capture back-references
+		$id = '('.trim($id, '()').')';
+
+		$this->get($name, $new_name . '::list_all', $options)
+		     ->get($name . '/' . $id, $new_name . '::show/$1', $options)
+		     ->post($name, $new_name . '::create', $options)
+		     ->put($name . '/' . $id, $new_name . '::update/$1', $options)
+		     ->delete($name . '/' . $id, $new_name . '::delete/$1', $options);
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Specifies a single route to match for multiple HTTP Verbs.
+	 *
+	 * Example:
+	 *  $route->match( ['get', 'post'], 'users/(:num)', 'users/$1);
+	 *
+	 * @param array $verbs
+	 * @param       $from
+	 * @param       $to
+	 * @param array $options
+	 */
+	public function match($verbs = [], $from, $to, $options = []): RouteCollectionInterface
+	{
+		foreach ($verbs as $verb)
+		{
+			$verb = strtolower($verb);
+
+			$this->{$verb}($from, $to, $options);
+		}
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Specifies a route that is only available to GET requests.
+	 *
+	 * @param       $from
+	 * @param       $to
+	 * @param array $options
+	 */
+	public function get($from, $to, $options = []): RouteCollectionInterface
+	{
+		if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] == 'GET')
+		{
+			$this->create($from, $to, $options);
+		}
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Specifies a route that is only available to POST requests.
+	 *
+	 * @param       $from
+	 * @param       $to
+	 * @param array $options
+	 */
+	public function post($from, $to, $options = []): RouteCollectionInterface
+	{
+		if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] == 'POST')
+		{
+			$this->create($from, $to, $options);
+		}
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Specifies a route that is only available to PUT requests.
+	 *
+	 * @param       $from
+	 * @param       $to
+	 * @param array $options
+	 */
+	public function put($from, $to, $options = []): RouteCollectionInterface
+	{
+		if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] == 'PUT')
+		{
+			$this->create($from, $to, $options);
+		}
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Specifies a route that is only available to DELETE requests.
+	 *
+	 * @param       $from
+	 * @param       $to
+	 * @param array $options
+	 */
+	public function delete($from, $to, $options = []): RouteCollectionInterface
+	{
+		if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] == 'DELETE')
+		{
+			$this->create($from, $to, $options);
+		}
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Specifies a route that is only available to HEAD requests.
+	 *
+	 * @param       $from
+	 * @param       $to
+	 * @param array $options
+	 */
+	public function head($from, $to, $options = []): RouteCollectionInterface
+	{
+		if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] == 'HEAD')
+		{
+			$this->create($from, $to, $options);
+		}
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Specifies a route that is only available to PATCH requests.
+	 *
+	 * @param       $from
+	 * @param       $to
+	 * @param array $options
+	 */
+	public function patch($from, $to, $options = []): RouteCollectionInterface
+	{
+		if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] == 'PATCH')
+		{
+			$this->create($from, $to, $options);
+		}
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Specifies a route that is only available to OPTIONS requests.
+	 *
+	 * @param       $from
+	 * @param       $to
+	 * @param array $options
+	 */
+	public function options($from, $to, $options = []): RouteCollectionInterface
+	{
+		if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] == 'OPTIONS')
+		{
+			$this->create($from, $to, $options);
+		}
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Limits the routes to a specified ENVIRONMENT or they won't run.
+	 *
+	 * @param $env
+	 * @param callable $callback
+	 *
+	 * @return $this
+	 */
+	public function environment($env, \Closure $callback): RouteCollectionInterface
+	{
+		if (ENVIRONMENT == $env)
+		{
+			call_user_func($callback, $this);
+		}
+
+		return $this;
 	}
 
 	//--------------------------------------------------------------------
@@ -523,4 +709,149 @@ class RouteCollection implements RouteCollectionInterface
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Does the heavy lifting of creating an actual route. You must specify
+	 * the request method(s) that this route will work for. They can be separated
+	 * by a pipe character "|" if there is more than one.
+	 *
+	 * @param  string $from
+	 * @param  array  $to
+	 * @param array   $options
+	 */
+	protected function create(string $from, $to, array $options = [])
+	{
+		$prefix = is_null($this->group) ? '' : $this->group.'/';
+
+		$from = filter_var($prefix.$from, FILTER_SANITIZE_STRING);
+
+		// Limiting to subdomains?
+		if (isset($options['subdomain']) && ! empty($options['subdomain']))
+		{
+			// If we don't match the current subdomain, then
+			// we don't need to add the route.
+			if ( ! $this->checkSubdomains($options['subdomain']))
+			{
+				return;
+			}
+		}
+
+		// Are we offsetting the parameters?
+		// If so, take care of them here in one
+		// fell swoop.
+		if (isset($options['offset']) && is_string($to))
+		{
+			// Get a constant string to work with.
+			$to = preg_replace('/(\$\d+)/', '$X', $to);
+
+			for ($i = (int)$options['offset'] + 1; $i < (int)$options['offset'] + 7; $i++)
+			{
+				$to = preg_replace_callback(
+					'/\$X/',
+					function ($m) use ($i)
+					{
+						return '$'.$i;
+					},
+					$to,
+					1
+				);
+			}
+		}
+
+		// Replace our regex pattern placeholders with the actual thing
+		// so that the Router doesn't need to know about any of this.
+		// @todo - Check if strtr is any faster
+		foreach ($this->placeholders as $tag => $pattern)
+		{
+			$from = str_ireplace(':'.$tag, $pattern, $from);
+		}
+
+		// If no namespace found, add the default namespace
+		if (is_string($to) && strpos($to, '\\') === false)
+		{
+			$to = $this->defaultNamespace.$to;
+		}
+
+		// Always ensure that we escape our namespace so we're not pointing to
+		// \CodeIgniter\Routes\Controller::method.
+		if (is_string($to))
+		{
+			$to = '\\'.ltrim($to, '\\');
+		}
+
+		$this->routes[$from] = $to;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Compares the subdomain(s) passed in against the current subdomain
+	 * on this page request.
+	 *
+	 * @param $subdomains
+	 *
+	 * @return bool
+	 */
+	private function checkSubdomains($subdomains)
+	{
+		if (is_null($this->currentSubdomain))
+		{
+			$this->currentSubdomain = $this->determineCurrentSubdomain();
+		}
+
+		if ( ! is_array($subdomains))
+		{
+			$subdomains = [$subdomains];
+		}
+
+		// Routes can be limited to any sub-domain. In that case, though,
+		// it does require a sub-domain to be present.
+		if (! empty($this->currentSubdomain) && in_array('*', $subdomains))
+		{
+			return true;
+		}
+
+		foreach ($subdomains as $subdomain)
+		{
+			if ($subdomain == $this->currentSubdomain)
+			{
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Examines the HTTP_HOST to get a best match for the subdomain. It
+	 * won't be perfect, but should work for our needs.
+	 *
+	 * It's especially not perfect since it's possible to register a domain
+	 * with a period (.) as part of the domain name.
+	 */
+	private function determineCurrentSubdomain()
+	{
+		$parsedUrl = parse_url($_SERVER['HTTP_HOST']);
+
+		$host = explode('.', $parsedUrl['host']);
+
+		if ($host[0] == 'www') unset($host[0]);
+
+		// Get rid of any domains, which will be the last
+		unset($host[count($host)]);
+
+		// Account for .co.uk, .co.nz, etc. domains
+		if (end($host) == 'co') $host = array_slice($host, 0, -1);
+
+		// If we only have 1 part left, then we don't have a sub-domain.
+		if (count($host) == 1)
+		{
+			// Set it to false so we don't make it back here again.
+			return false;
+		}
+
+		return array_shift($host);
+	}
+	//--------------------------------------------------------------------
 }
