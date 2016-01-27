@@ -42,6 +42,65 @@ class AppConfig extends BaseConfig
 
 	/*
 	|--------------------------------------------------------------------------
+	| Session Variables
+	|--------------------------------------------------------------------------
+	|
+	| 'sessionDriver'
+	|
+	|	The storage driver to use: files, database, redis, memcached
+	|
+	| 'sessionCookieName'
+	|
+	|	The session cookie name, must contain only [0-9a-z_-] characters
+	|
+	| 'sessionExpiration'
+	|
+	|	The number of SECONDS you want the session to last.
+	|	Setting to 0 (zero) means expire when the browser is closed.
+	|
+	| 'sessionSavePath'
+	|
+	|	The location to save sessions to, driver dependent.
+	|
+	|	For the 'files' driver, it's a path to a writable directory.
+	|	WARNING: Only absolute paths are supported!
+	|
+	|	For the 'database' driver, it's a table name.
+	|	Please read up the manual for the format with other session drivers.
+	|
+	|	IMPORTANT: You are REQUIRED to set a valid save path!
+	|
+	| 'sessionMatchIP'
+	|
+	|	Whether to match the user's IP address when reading the session data.
+	|
+	|	WARNING: If you're using the database driver, don't forget to update
+	|	         your session table's PRIMARY KEY when changing this setting.
+	|
+	| 'sessionTimeToUpdate'
+	|
+	|	How many seconds between CI regenerating the session ID.
+	|
+	| 'sessionRegenerateDestroy'
+	|
+	|	Whether to destroy session data associated with the old session ID
+	|	when auto-regenerating the session ID. When set to FALSE, the data
+	|	will be later deleted by the garbage collector.
+	|
+	| Other session cookie settings are shared with the rest of the application,
+	| except for 'cookie_prefix' and 'cookie_httponly', which are ignored here.
+	|
+	*/
+	public $sessionDriver = 'files';
+	public $sessionCookieName = 'ci_session';
+	public $sessionExpiration = 7200;
+	public $sessionSavePath = NULL;
+	public $sessionMatchIP = FALSE;
+	public $sessionTimeToUpdate = 300;
+	public $sessionRegenerateDestroy = FALSE;
+
+	/*
+	|--------------------------------------------------------------------------
 	| Cookie Related Variables
 	|--------------------------------------------------------------------------
 	|
@@ -56,13 +115,9 @@ class AppConfig extends BaseConfig
 	|
 	*/
 	public $cookiePrefix = '';
-
 	public $cookieDomain = '';
-
 	public $cookiePath = '/';
-
 	public $cookieSecure = false;
-
 	public $cookieHTTPOnly = false;
 
 	/*

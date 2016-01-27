@@ -292,6 +292,35 @@ class Services
 	//--------------------------------------------------------------------
 
 	/**
+	 * @param AppConfig|null $config
+	 * @param bool           $getShared
+	 *
+	 * @return \CodeIgniter\Session\Session
+	 */
+	public static function session(AppConfig $config = null, $getShared = true)
+	{
+		if (! is_object($config))
+		{
+			$config = new AppConfig();
+		}
+
+		if (! $getShared)
+		{
+			$driverName = $config->sessionDriver;
+
+			$session = new \CodeIgniter\Session\Session(new $driverName(), $config);
+			$session->setLogger(self::logger());
+			$session->initialize();
+
+			return $session;
+		}
+
+		return self::getSharedInstance('session');
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * The Timer class provides a simple way to Benchmark portions of your
 	 * application.
 	 */
