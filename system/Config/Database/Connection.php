@@ -88,6 +88,28 @@ abstract class Connection extends \CodeIgniter\Config\BaseConfig
 	protected $adapter;
 
 	/**
+	 * Allows a Database Connection configuration to be built from a parameter array
+	 * at run-time from one of the extending classes.
+	 *
+	 * @param array $params Property name/value pairs to set in the database config.
+	 */
+	public function __construct($params = [])
+	{
+		parent::__construct();
+
+		// Allow $params to override environment variables.
+		$properties = array_keys(get_object_vars($this));
+
+		foreach ($properties as $property)
+		{
+			if (array_key_exists($property, $params))
+			{
+				$this->{$property} = $params[$property];
+			}
+		}
+	}
+
+	/**
 	 * Get the name of the adapter to be used by the connection.
 	 *
 	 * @return string The name of the adapter.

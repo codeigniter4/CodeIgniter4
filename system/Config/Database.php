@@ -18,6 +18,9 @@ class Database extends \CodeIgniter\Config\BaseConfig
 	/**
 	 * Allows a Database configuration to be built from a parameter array at run-time.
 	 *
+	 * @todo consider using something like the \CodeIgniter\Config\Database\Connection
+	 * constructor...
+	 *
 	 * @param array $params Property name/value pairs to set in the database config.
 	 */
 	public function __construct($params = [])
