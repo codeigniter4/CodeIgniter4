@@ -1,5 +1,6 @@
 <?php namespace CodeIgniter\Log\Handlers;
 
+use CodeIgniter\Hooks\Hooks;
 use CodeIgniter\HTTP\RequestInterface;
 
 /**
@@ -72,7 +73,7 @@ class ChromeLoggerHandler extends BaseHandler implements HandlerInterface
 
 		$this->json['request_uri'] = (string)$request->uri;
 
-		// @todo Tap us into the the PostController hook when we have that available.
+		Hooks::on('post_controller', [$this, 'sendLogs'], HOOKS_PRIORITY_HIGH);
 	}
 
 	//--------------------------------------------------------------------
@@ -97,7 +98,8 @@ class ChromeLoggerHandler extends BaseHandler implements HandlerInterface
 		$message = $this->format($message);
 
 		// Generate Backtrace info
-		$backtrace = end(debug_backtrace(false, $this->backtraceLevel));
+		$backtrace = debug_backtrace(false, $this->backtraceLevel);
+		$backtrace = end($backtrace);
 
 		$backtraceMessage = 'unknown';
 		if (isset($backtrace['file']) && isset($backtrace['line']))
@@ -115,8 +117,7 @@ class ChromeLoggerHandler extends BaseHandler implements HandlerInterface
 
 		$this->json['rows'][] = [$message, $backtraceMessage, $type];
 
-		// Don't continue
-		return false;
+		return true;
 	}
 
 	//--------------------------------------------------------------------
@@ -145,19 +146,17 @@ class ChromeLoggerHandler extends BaseHandler implements HandlerInterface
 
 	/**
 	 * Attaches the header and the content to the passed in request object.
-	 *
-	 * @todo Should be called during a post-controller hook.
 	 */
-	public function sendLogs(RequestInterface &$request=null)
+	public function sendLogs(ResponseInterface &$response=null)
 	{
-		if (is_null($request))
+		if (is_null($response))
 		{
-			global $request;
+			global $response;
 		}
 
 		$data = base64_encode(utf8_encode(json_encode($this->json)));
 
-	    $request->setHeader($this->header, $data);
+	    $response->setHeader($this->header, $data);
 	}
 
 	//--------------------------------------------------------------------

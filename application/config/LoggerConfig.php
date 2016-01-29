@@ -117,6 +117,13 @@ class LoggerConfig extends BaseConfig
 		     * integer notation (i.e. 0700, 0644, etc.)
 		     */
 		    'filePermissions' => 0644
-		]
+		],
+	    'CodeIgniter\Log\Handlers\ChromeLoggerHandler' => [
+		    /*
+			 * The log levels that this handler will handle.
+			 */
+		    'handles' => ['critical', 'alert', 'emergency', 'debug',
+		                  'error', 'info', 'notice', 'warning'],
+	    ]
 	];
 }

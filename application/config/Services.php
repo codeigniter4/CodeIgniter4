@@ -161,7 +161,7 @@ class Services
 	 * The Logger class is a PSR-3 compatible Logging class that supports
 	 * multiple handlers that process the actual logging.
 	 */
-	public static function logger($getShared = true)
+	public static function logger($getShared = false)
 	{
 		if (! $getShared)
 		{
