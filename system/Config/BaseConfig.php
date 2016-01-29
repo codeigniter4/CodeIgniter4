@@ -20,10 +20,15 @@ class BaseConfig
 	public function __construct()
 	{
 		$properties = array_keys(get_object_vars($this));
+		$prefix = get_class($this);
 
 		foreach ($properties as $property)
 		{
-			if ($value = getenv($property))
+			if ($value = getenv("{$prefix}.{$property}"))
+			{
+				$this->{$property} = $value;
+			}
+			elseif ($value = getenv($property))
 			{
 				$this->{$property} = $value;
 			}
