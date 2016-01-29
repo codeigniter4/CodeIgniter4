@@ -329,6 +329,28 @@ class RouteCollection implements RouteCollectionInterface
 	//--------------------------------------------------------------------
 
 	/**
+	 * A shortcut method to add a number of routes at a single time.
+	 * It does not allow any options to be set on the route, or to
+	 * define the method used.
+	 *
+	 * @param array $routes
+	 *
+	 * @return RouteCollectionInterface
+	 */
+	public function map(array $routes = []): RouteCollectionInterface
+	{
+	    foreach ($routes as $from => $to)
+	    {
+		    $this->add($from, $to);
+	    }
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+
+	/**
 	 * Adds a single route to the collection.
 	 *
 	 * Example:

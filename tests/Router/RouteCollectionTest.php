@@ -1,6 +1,6 @@
 <?php
 
-use CodeIgniter\Router\RouteCollection;
+use CodeIgniter\Router\RouteCollection as RouteCollection;
 
 class RouteCollectionTest extends CIUnitTestCase
 {
@@ -19,15 +19,15 @@ class RouteCollectionTest extends CIUnitTestCase
 
 	public function testBasicAdd()
 	{
-		$collection = new RouteCollection();
+		$routes = new RouteCollection();
 
-		$collection->add('home', '\my\controller');
+		$routes->add('home', '\my\controller');
 
 		$expects = [
 			'home' => '\my\controller',
 		];
 
-		$routes = $collection->getRoutes();
+		$routes = $routes->getRoutes();
 
 		$this->assertEquals($expects, $routes);
 	}
@@ -36,15 +36,15 @@ class RouteCollectionTest extends CIUnitTestCase
 
 	public function testAddPrefixesDefaultNamespaceWhenNoneExist()
 	{
-		$collection = new RouteCollection();
+		$routes = new RouteCollection();
 
-		$collection->add('home', 'controller');
+		$routes->add('home', 'controller');
 
 		$expects = [
 			'home' => '\controller',
 		];
 
-		$routes = $collection->getRoutes();
+		$routes = $routes->getRoutes();
 
 		$this->assertEquals($expects, $routes);
 	}
@@ -53,15 +53,15 @@ class RouteCollectionTest extends CIUnitTestCase
 
 	public function testAddIgnoresDefaultNamespaceWhenExists()
 	{
-		$collection = new RouteCollection();
+		$routes = new RouteCollection();
 
-		$collection->add('home', 'my\controller');
+		$routes->add('home', 'my\controller');
 
 		$expects = [
 			'home' => '\my\controller',
 		];
 
-		$routes = $collection->getRoutes();
+		$routes = $routes->getRoutes();
 
 		$this->assertEquals($expects, $routes);
 	}
@@ -72,30 +72,30 @@ class RouteCollectionTest extends CIUnitTestCase
 	{
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 
-		$collection = new RouteCollection();
+		$routes = new RouteCollection();
 
-		$collection->add('home', 'controller', 'get');
+		$routes->match(['get'], 'home', 'controller');
 
 		$expects = [
 			'home' => '\controller',
 		];
 
-		$routes = $collection->getRoutes();
+		$routes = $routes->getRoutes();
 
 		$this->assertEquals($expects, $routes);
 	}
 
 	//--------------------------------------------------------------------
 
-	public function testAddIgnoresInvalidHTTPMethods()
+	public function testMatchIgnoresInvalidHTTPMethods()
 	{
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 
-		$collection = new RouteCollection();
+		$routes = new RouteCollection();
 
-		$collection->add('home', 'controller', 'post');
+		$routes->match(['put'], 'home', 'controller');
 
-		$routes = $collection->getRoutes();
+		$routes = $routes->getRoutes();
 
 		$this->assertEquals([], $routes);
 	}
@@ -106,15 +106,15 @@ class RouteCollectionTest extends CIUnitTestCase
 	{
 		$_SERVER['REQUEST_METHOD'] = 'POST';
 
-		$collection = new RouteCollection();
+		$routes = new RouteCollection();
 
-		$collection->add('home', 'controller', ['get', 'post']);
+		$routes->add('home', 'controller', ['get', 'post']);
 
 		$expects = [
 			'home' => '\controller',
 		];
 
-		$routes = $collection->getRoutes();
+		$routes = $routes->getRoutes();
 
 		$this->assertEquals($expects, $routes);
 	}
@@ -123,15 +123,15 @@ class RouteCollectionTest extends CIUnitTestCase
 
 	public function testAddReplacesDefaultPlaceholders()
 	{
-		$collection = new RouteCollection();
+		$routes = new RouteCollection();
 
-		$collection->add('home/(:any)', 'controller');
+		$routes->add('home/(:any)', 'controller');
 
 		$expects = [
 			'home/(.*)' => '\controller',
 		];
 
-		$routes = $collection->getRoutes();
+		$routes = $routes->getRoutes();
 
 		$this->assertEquals($expects, $routes);
 	}
@@ -140,16 +140,16 @@ class RouteCollectionTest extends CIUnitTestCase
 
 	public function testAddReplacesCustomPlaceholders()
 	{
-		$collection = new RouteCollection();
-		$collection->addPlaceholder('smiley', ':-)');
+		$routes = new RouteCollection();
+		$routes->addPlaceholder('smiley', ':-)');
 
-		$collection->add('home/(:smiley)', 'controller');
+		$routes->add('home/(:smiley)', 'controller');
 
 		$expects = [
 			'home/(:-))' => '\controller',
 		];
 
-		$routes = $collection->getRoutes();
+		$routes = $routes->getRoutes();
 
 		$this->assertEquals($expects, $routes);
 	}
@@ -158,301 +158,334 @@ class RouteCollectionTest extends CIUnitTestCase
 
 	public function testAddRecognizesCustomNamespaces()
 	{
-		$collection = new RouteCollection();
-		$collection->setDefaultNamespace('\CodeIgniter');
+		$routes = new RouteCollection();
+		$routes->setDefaultNamespace('\CodeIgniter');
 
-		$collection->add('home', 'controller');
+		$routes->add('home', 'controller');
 
 		$expects = [
 			'home' => '\CodeIgniter\controller',
 		];
 
-		$routes = $collection->getRoutes();
+		$routes = $routes->getRoutes();
 
 		$this->assertEquals($expects, $routes);
 	}
 
 	//--------------------------------------------------------------------
 
-	public function testAddPrefixesNamespacesWithBackslash()
+	public function testSetDefaultControllerStoresIt()
 	{
-		$collection = new RouteCollection();
-		$collection->setDefaultNamespace('CodeIgniter');
+	    $routes = new RouteCollection();
+		$routes->setDefaultController('godzilla');
 
-		$collection->add('home', 'controller');
-
-		$expects = [
-			'home' => '\CodeIgniter\controller',
-		];
-
-		$routes = $collection->getRoutes();
-
-		$this->assertEquals($expects, $routes);
+		$this->assertEquals('godzilla', $routes->getDefaultController());
 	}
 
 	//--------------------------------------------------------------------
 
-	public function testAddStoresFunctionsForMaps()
+	public function testSetDefaultMethodStoresIt()
 	{
-		$map = function ()
+		$routes = new RouteCollection();
+		$routes->setDefaultMethod('biggerBox');
+
+		$this->assertEquals('biggerBox', $routes->getDefaultMethod());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testTranslateURIDashesWorks()
+	{
+	    $routes = new RouteCollection();
+		$routes->setTranslateURIDashes(true);
+
+		$this->assertEquals(true, $routes->shouldTranslateURIDashes());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testAutoRouteStoresIt()
+	{
+		$routes = new RouteCollection();
+		$routes->setAutoRoute(true);
+
+		$this->assertEquals(true, $routes->shouldAutoRoute());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testGroupingWorks()
+	{
+	    $routes = new RouteCollection();
+
+		$routes->group('admin', function($routes)
 		{
-			return 1;
-		};
-
-		$collection = new RouteCollection();
-
-		$collection->add('home', $map);
-
-		$expects = [
-			'home' => $map,
-		];
-
-		$routes = $collection->getRoutes();
-
-		$this->assertEquals($expects, $routes);
-	}
-
-	//--------------------------------------------------------------------
-
-	//--------------------------------------------------------------------
-	// Map Tests
-	//--------------------------------------------------------------------
-
-	public function testMapAddsRoutes()
-	{
-		$map = [
-			'one' => '\controller::index',
-			'two' => '\controller::method',
-		];
-
-		$collection = new RouteCollection();
-
-		$collection->map($map);
-
-		$routes = $collection->getRoutes();
-
-		$this->assertEquals($map, $routes);
-	}
-
-	//--------------------------------------------------------------------
-
-	public function testMapAddsPrefix()
-	{
-		$map = [
-			'one' => '\controller::index',
-			'two' => '\controller::method',
-		];
+			$routes->add('users/list', '\Users::list');
+		});
 
 		$expected = [
-			'my_one' => '\controller::index',
-			'my_two' => '\controller::method',
+			'admin/users/list' => '\Users::list'
 		];
 
-		$collection = new RouteCollection();
-
-		$collection->map($map, ['prefix' => 'my_']);
-
-		$routes = $collection->getRoutes();
-
-		$this->assertEquals($expected, $routes);
+		$this->assertEquals($expected, $routes->getRoutes());
 	}
 
 	//--------------------------------------------------------------------
 
-	public function testMapAddsIgnoresOnBadHost()
+	public function testGroupGetsSanitized()
 	{
-		$map = [
-			'one' => '\controller::index',
-			'two' => '\controller::method',
-		];
+		$routes = new RouteCollection();
 
-		$expected = [];
-
-		$_SERVER['SERVER_NAME'] = 'mickeymouse.com';
-
-		$collection = new RouteCollection();
-
-		$collection->map($map, ['hostname' => 'google.com']);
-
-		$routes = $collection->getRoutes();
-
-		$this->assertEquals($expected, $routes);
-	}
-
-	//--------------------------------------------------------------------
-
-	public function testMapAddsAddsOnMatchingHost()
-	{
-		$map = [
-			'one' => '\controller::index',
-			'two' => '\controller::method',
-		];
-
-		$_SERVER['SERVER_NAME'] = 'mickeymouse.com';
-
-		$collection = new RouteCollection();
-
-		$collection->map($map, ['hostname' => 'mickeymouse.com']);
-
-		$routes = $collection->getRoutes();
-
-		$this->assertEquals($map, $routes);
-	}
-
-	//--------------------------------------------------------------------
-
-	public function testMapAddsNamespace()
-	{
-		$map = [
-			'one' => 'controller::index',
-			'two' => 'controller::method',
-		];
+		$routes->group('<script>admin', function($routes)
+		{
+			$routes->add('users/list', '\Users::list');
+		});
 
 		$expected = [
-			'one' => '\App\Controllers\controller::index',
-			'two' => '\App\Controllers\controller::method',
+				'admin/users/list' => '\Users::list'
 		];
 
-		$collection = new RouteCollection();
-
-		$collection->map($map, ['namespace' => 'App\Controllers']);
-
-		$routes = $collection->getRoutes();
-
-		$this->assertEquals($expected, $routes);
+		$this->assertEquals($expected, $routes->getRoutes());
 	}
 
 	//--------------------------------------------------------------------
 
-	public function testMapAddsNamespaceWithLeadingSlash()
+	public function testResourcesScaffoldsCorrectly()
 	{
-		$map = [
-			'one' => 'controller::index',
-			'two' => 'controller::method',
-		];
+	    $routes = new RouteCollection();
+
+		$_SERVER['REQUEST_METHOD'] = 'GET';
+		$routes->resources('photos');
 
 		$expected = [
-			'one' => '\App\Controllers\controller::index',
-			'two' => '\App\Controllers\controller::method',
+			'photos' => '\Photos::list_all',
+		    'photos/(.*)' => '\Photos::show/$1'
 		];
 
-		$collection = new RouteCollection();
+		$this->assertEquals($expected, $routes->getRoutes());
 
-		$collection->map($map, ['namespace' => '\App\Controllers']);
+		$routes = new RouteCollection();
+		$_SERVER['REQUEST_METHOD'] = 'POST';
+		$routes->resources('photos');
 
-		$routes = $collection->getRoutes();
+		$expected = [
+				'photos' => '\Photos::create'
+		];
 
-		$this->assertEquals($expected, $routes);
+		$this->assertEquals($expected, $routes->getRoutes());
+
+		$routes = new RouteCollection();
+		$_SERVER['REQUEST_METHOD'] = 'PUT';
+		$routes->resources('photos');
+
+		$expected = [
+				'photos/(.*)' => '\Photos::update/$1'
+		];
+
+		$this->assertEquals($expected, $routes->getRoutes());
+
+		$routes = new RouteCollection();
+		$_SERVER['REQUEST_METHOD'] = 'DELETE';
+		$routes->resources('photos');
+
+		$expected = [
+				'photos/(.*)' => '\Photos::delete/$1'
+		];
+
+		$this->assertEquals($expected, $routes->getRoutes());
 	}
 
 	//--------------------------------------------------------------------
 
-	public function testMapResetsNamespace()
+	public function testResourcesWithCustomController()
 	{
-		$map = [
-			'one' => 'controller::index',
-			'two' => 'controller::method',
-		];
+		$routes = new RouteCollection();
+
+		$_SERVER['REQUEST_METHOD'] = 'GET';
+		$routes->resources('photos', ['controller' => '<script>gallery']);
 
 		$expected = [
-			'one' => '\App\Controllers\controller::index',
-			'two' => '\App\Controllers\controller::method',
+				'photos' => '\Gallery::list_all',
+				'photos/(.*)' => '\Gallery::show/$1'
 		];
 
-		$collection = new RouteCollection();
-
-		$collection->map($map, ['namespace' => 'App\Controllers']);
-
-		$routes = $collection->getRoutes();
-
-		$this->assertEquals($expected, $routes);
-
-		// Ensure it resets...
-		$expected = [
-			'one'   => '\App\Controllers\controller::index',
-			'two'   => '\App\Controllers\controller::method',
-			'three' => '\controller::index',
-			'four'  => '\controller::method',
-		];
-
-		$map = [
-			'three' => 'controller::index',
-			'four'  => 'controller::method',
-		];
-
-		$collection->map($map);
-
-		$routes = $collection->getRoutes();
-
-		$this->assertEquals($expected, $routes);
+		$this->assertEquals($expected, $routes->getRoutes());
 	}
 
 	//--------------------------------------------------------------------
 
-	public function testMapWorksWithHTTPVerbs()
+	public function testResourcesWithCustomPlaceholder()
 	{
-		$map = [
-			'one' => 'controller::index',
-			'two' => [
-				'delete' => 'controller::delete',
-			],
-		];
+		$routes = new RouteCollection();
+
+		$_SERVER['REQUEST_METHOD'] = 'GET';
+		$routes->resources('photos', ['placeholder' => ':num']);
 
 		$expected = [
-			'one' => '\controller::index',
-			'two' => '\controller::delete',
+				'photos' => '\Photos::list_all',
+				'photos/([0-9]+)' => '\Photos::show/$1'
 		];
+
+		$this->assertEquals($expected, $routes->getRoutes());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testMatchSupportsMultipleMethods()
+	{
+		$routes = new RouteCollection();
+
+		$expected = ['here' => '\there'];
+
+		$_SERVER['REQUEST_METHOD'] = 'GET';
+		$routes->match(['get', 'post'], 'here', 'there');
+		$this->assertEquals($expected, $routes->getRoutes());
+
+		$routes = new RouteCollection();
+		$_SERVER['REQUEST_METHOD'] = 'POST';
+		$routes->match(['get', 'post'], 'here', 'there');
+		$this->assertEquals($expected, $routes->getRoutes());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testGet()
+	{
+		$routes = new RouteCollection();
+
+		$expected = ['here' => '\there'];
+
+		$_SERVER['REQUEST_METHOD'] = 'GET';
+		$routes->get('here', 'there');
+		$this->assertEquals($expected, $routes->getRoutes());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testPost()
+	{
+		$routes = new RouteCollection();
+
+		$expected = ['here' => '\there'];
+
+		$_SERVER['REQUEST_METHOD'] = 'POST';
+		$routes->post('here', 'there');
+		$this->assertEquals($expected, $routes->getRoutes());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testGetDoesntAllowOtherMethods()
+	{
+		$routes = new RouteCollection();
+
+		$expected = ['here' => '\there'];
+
+		$_SERVER['REQUEST_METHOD'] = 'GET';
+		$routes->get('here', 'there');
+		$routes->post('from', 'to');
+		$this->assertEquals($expected, $routes->getRoutes());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testPut()
+	{
+		$routes = new RouteCollection();
+
+		$expected = ['here' => '\there'];
+
+		$_SERVER['REQUEST_METHOD'] = 'PUT';
+		$routes->put('here', 'there');
+		$this->assertEquals($expected, $routes->getRoutes());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testDelete()
+	{
+		$routes = new RouteCollection();
+
+		$expected = ['here' => '\there'];
 
 		$_SERVER['REQUEST_METHOD'] = 'DELETE';
-
-		$collection = new RouteCollection();
-
-		$collection->map($map);
-
-		$routes = $collection->getRoutes();
-
-		$this->assertEquals($expected, $routes);
+		$routes->delete('here', 'there');
+		$this->assertEquals($expected, $routes->getRoutes());
 	}
 
 	//--------------------------------------------------------------------
 
-	public function testMapSkipsWithBadHTTPVerbs()
+	public function testHead()
 	{
-		$map = [
-			'one'    => 'controller::index',
-			'delete' => [
-				'two' => 'controller::delete',
-			],
-		];
+		$routes = new RouteCollection();
 
-		$expected = [
-			'one' => '\controller::index',
-		];
+		$expected = ['here' => '\there'];
+
+		$_SERVER['REQUEST_METHOD'] = 'HEAD';
+		$routes->head('here', 'there');
+		$this->assertEquals($expected, $routes->getRoutes());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testPatch()
+	{
+		$routes = new RouteCollection();
+
+		$expected = ['here' => '\there'];
+
+		$_SERVER['REQUEST_METHOD'] = 'PATCH';
+		$routes->patch('here', 'there');
+		$this->assertEquals($expected, $routes->getRoutes());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testOptions()
+	{
+		$routes = new RouteCollection();
+
+		$expected = ['here' => '\there'];
+
+		$_SERVER['REQUEST_METHOD'] = 'OPTIONS';
+		$routes->options('here', 'there');
+		$this->assertEquals($expected, $routes->getRoutes());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testEnvironmentRestricts()
+	{
+		// ENVIRONMENT should be 'testing'
+
+		$routes = new RouteCollection();
+
+		$expected = ['here' => '\there'];
 
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 
-		$collection = new RouteCollection();
+		$routes->environment('testing', function($routes)
+		{
+			$routes->get('here', 'there');
+		});
 
-		$collection->map($map);
+		$routes->environment('badenvironment', function($routes)
+		{
+			$routes->get('from', 'to');
+		});
 
-		$routes = $collection->getRoutes();
-
-		$this->assertEquals($expected, $routes);
+		$this->assertEquals($expected, $routes->getRoutes());
 	}
 
 	//--------------------------------------------------------------------
 
 	public function testReverseRoutingFindsSimpleMatch()
 	{
-		$map = [
-			'path/(:any)/to/(:num)' => 'myController::goto/$1/$2',
-		];
+		$routes = new RouteCollection();
 
-		$collection = new RouteCollection();
+		$routes->add('path/(:any)/to/(:num)', 'myController::goto/$1/$2');
 
-		$collection->map($map);
-
-		$match = $collection->reverseRoute('myController::goto', 'string', 13);
+		$match = $routes->reverseRoute('myController::goto', 'string', 13);
 
 		$this->assertEquals('path/string/to/13', $match);
 	}
@@ -461,53 +494,39 @@ class RouteCollectionTest extends CIUnitTestCase
 
 	public function testReverseRoutingThrowsExceptionWithBadParamCount()
 	{
-		$map = [
-			'path/(:any)/to/(:num)' => 'myController::goto/$1',
-		];
+		$routes = new RouteCollection();
 
-		$collection = new RouteCollection();
-
-		$collection->map($map);
+		$routes->add('path/(:any)/to/(:num)', 'myController::goto/$1');
 
 		$this->setExpectedException('InvalidArgumentException');
-		$match = $collection->reverseRoute('myController::goto', 'string', 13);
+		$match = $routes->reverseRoute('myController::goto', 'string', 13);
 	}
 
 	//--------------------------------------------------------------------
 
 	public function testReverseRoutingThrowsExceptionWithNoMatch()
 	{
-		$map = [
-			'path/(:any)/to/(:num)' => 'myController::goto/$1/$2',
-		];
+		$routes = new RouteCollection();
 
-		$collection = new RouteCollection();
-
-		$collection->map($map);
+		$routes->add('path/(:any)/to/(:num)', 'myController::goto/$1/$2');
 
 		$this->setExpectedException('InvalidArgumentException');
-		$match = $collection->reverseRoute('myBadController::goto', 'string', 13);
+		$match = $routes->reverseRoute('myBadController::goto', 'string', 13);
 	}
 
 	//--------------------------------------------------------------------
 
-	/**
-	 * @group single
-	 */
 	public function testReverseRoutingThrowsExceptionWithBadParamTypes()
 	{
-		$map = [
-			'path/(:any)/to/(:num)' => 'myController::goto/$1/$2',
-		];
+		$routes = new RouteCollection();
 
-		$collection = new RouteCollection();
-
-		$collection->map($map);
+		$routes->add('path/(:any)/to/(:num)', 'myController::goto/$1/$2');
 
 		$this->setExpectedException('LogicException');
-		$match = $collection->reverseRoute('myController::goto', 13, 'string');
+		$match = $routes->reverseRoute('myController::goto', 13, 'string');
 	}
 
 	//--------------------------------------------------------------------
-
+	
+	
 }
