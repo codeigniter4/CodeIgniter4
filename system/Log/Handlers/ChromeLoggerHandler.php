@@ -91,9 +91,6 @@ class ChromeLoggerHandler extends BaseHandler implements HandlerInterface
 	 */
 	public function handle($level, $message): bool
 	{
-		// Grab the app's main request object.
-		global $request;
-
 		// Format our message
 		$message = $this->format($message);
 
