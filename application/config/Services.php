@@ -297,7 +297,7 @@ class Services
 	 *
 	 * @return \CodeIgniter\Session\Session
 	 */
-	public static function session(AppConfig $config = null, $getShared = true)
+	public static function session(AppConfig $config = null, $getShared = false)
 	{
 		if (! is_object($config))
 		{
@@ -307,8 +307,10 @@ class Services
 		if (! $getShared)
 		{
 			$driverName = $config->sessionDriver;
+			$driver = new $driverName($config);
+			$driver->setLogger(self::logger(true));
 
-			$session = new \CodeIgniter\Session\Session(new $driverName(), $config);
+			$session = new \CodeIgniter\Session\Session($driver, $config);
 			$session->setLogger(self::logger());
 			$session->initialize();
 

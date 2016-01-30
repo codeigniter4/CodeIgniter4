@@ -91,7 +91,7 @@ class AppConfig extends BaseConfig
 	| except for 'cookie_prefix' and 'cookie_httponly', which are ignored here.
 	|
 	*/
-	public $sessionDriver = 'files';
+	public $sessionDriver = 'CodeIgniter\Session\Handlers\FileHandler';
 	public $sessionCookieName = 'ci_session';
 	public $sessionExpiration = 7200;
 	public $sessionSavePath = NULL;

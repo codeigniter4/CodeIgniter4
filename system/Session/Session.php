@@ -53,7 +53,7 @@ class Session implements SessionInterface
 	{
 		$this->driver = $driver;
 
-		$this->sessionDriverName        = $config->sessionDriverName;
+		$this->sessionDriverName        = $config->sessionDriver;
 		$this->sessionCookieName        = $config->sessionCookieName;
 		$this->sessionExpiration        = $config->sessionExpiration;
 		$this->sessionSavePath          = $config->sessionSavePath;
@@ -62,7 +62,7 @@ class Session implements SessionInterface
 		$this->sessionRegenerateDestroy = $config->sessionRegenerateDestroy;
 
 		$this->cookiePrefix = $config->cookiePrefix;
-		$this->cookieDomain = $config->cookoieDomain;
+		$this->cookieDomain = $config->cookieDomain;
 		$this->cookiePath   = $config->cookiePath;
 		$this->cookieSecure = $config->cookieSecure;
 	}
