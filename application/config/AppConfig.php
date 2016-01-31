@@ -48,6 +48,10 @@ class AppConfig extends BaseConfig
 	| 'sessionDriver'
 	|
 	|	The storage driver to use: files, database, redis, memcached
+	|       - CodeIgniter\Session\Handlers\FileHandler
+	|       - CodeIgniter\Session\Handlers\DatabaseHandler
+	|       - CodeIgniter\Session\Handlers\MemcachedHandler
+	|       - CodeIgniter\Session\Handlers\RedisHandler
 	|
 	| 'sessionCookieName'
 	|
