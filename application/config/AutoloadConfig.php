@@ -1,5 +1,7 @@
 <?php namespace App\Config;
 
+require BASEPATH.'Config/AutoloadConfig.php';
+
 /**
  * -------------------------------------------------------------------
  * AUTO-LOADER
@@ -7,7 +9,7 @@
  * This file defines the namespaces and class maps so the Autoloader
  * can find the files as needed.
  */
-class AutoloadConfig
+class AutoloadConfig extends \CodeIgniter\Config\AutoloadConfig
 {
 	public $psr4 = [];
 
@@ -15,8 +17,17 @@ class AutoloadConfig
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Collects the application-specific autoload settings and merges
+	 * them with the framework's required settings.
+	 *
+	 * NOTE: If you use an identical key in $psr4 or $classmap, then
+	 * the values in this file will overwrite the framework's values.
+	 */
 	public function __construct()
 	{
+		parent::__construct();
+
 		/**
 		 * -------------------------------------------------------------------
 		 * Namespaces
@@ -38,12 +49,10 @@ class AutoloadConfig
 		 *       'CodeIgniter' => SYSPATH
 		 *   `];
 		 */
-		$this->psr4 = [
+		$psr4 = [
 			APP_NAMESPACE                => realpath(APPPATH),
 			APP_NAMESPACE.'\Config'      => APPPATH.'config',
 			APP_NAMESPACE.'\Controllers' => APPPATH.'controllers',
-			'CodeIgniter'                => realpath(BASEPATH),
-		    'Blog'                       => APPPATH.'../_modules/blog'
 		];
 
 		/**
@@ -62,43 +71,16 @@ class AutoloadConfig
 		 *       'MyClass'   => '/path/to/class/file.php'
 		 *   ];
 		 */
-		$this->classmap = [
-			'CodeIgniter\CLI\CLI'                         => BASEPATH.'CLI/CLI.php',
-			'CodeIgniter\Loader'                          => BASEPATH.'Loader.php',
-			'CodeIgniter\Controller'                      => BASEPATH.'Controller.php',
-			'CodeIgniter\Config\BaseConfig'               => BASEPATH.'Config/BaseConfig.php',
-			'CodeIgniter\Config\DotEnv'                   => BASEPATH.'Config/DotEnv.php',
-			'CodeIgniter\Debug\Exceptions'                => BASEPATH.'Debug/Exceptions.php',
-			'CodeIgniter\Debug\Timer'                     => BASEPATH.'Debug/Timer.php',
-			'CodeIgniter\Debug\Iterator'                  => BASEPATH.'Debug/Iterator.php',
-			'CodeIgniter\HTTP\CLIRequest'                 => BASEPATH.'HTTP/CLIRequest.php',
-			'CodeIgniter\HTTP\CURLRequest'                => BASEPATH.'HTTP/CURLRequest.php',
-			'CodeIgniter\HTTP\IncomingRequest'            => BASEPATH.'HTTP/IncomingRequest.php',
-			'CodeIgniter\HTTP\Message'                    => BASEPATH.'HTTP/Message.php',
-			'CodeIgniter\HTTP\Request'                    => BASEPATH.'HTTP/Request.php',
-			'CodeIgniter\HTTP\RequestInterface'           => BASEPATH.'HTTP/RequestInterface.php',
-			'CodeIgniter\HTTP\Response'                   => BASEPATH.'HTTP/Response.php',
-			'CodeIgniter\HTTP\ResponseInterface'          => BASEPATH.'HTTP/ResponseInterface.php',
-			'CodeIgniter\HTTP\URI'                        => BASEPATH.'HTTP/URI.php',
-			'CodeIgniter\Log\Logger'                      => BASEPATH.'Log/Logger.php',
-			'Psr\Log\LoggerAwareInterface'                => BASEPATH.'Log/LoggerAwareInterface.php',
-			'CodeIgniter\Log\LoggerAwareTrait'            => BASEPATH.'Log/LoggerAwareTrait.php',
-			'Psr\Log\LoggerInterface'                     => BASEPATH.'Log/LoggerInterface.php',
-			'Psr\Log\LogLevel'                            => BASEPATH.'Log/LogLevel.php',
-			'CodeIgniter\Log\Handlers\BaseHandler'        => BASEPATH.'Log/Handlers/BaseHandler.php',
-			'CodeIgniter\Log\Handlers\ChromeLoggerHandler'=> BASEPATH.'Log/Handlers/ChromeLoggerHandler.php',
-			'CodeIgniter\Log\Handlers\FileHandler'        => BASEPATH.'Log/Handlers/FileHandler.php',
-			'CodeIgniter\Log\Handlers\HandlerInterface'   => BASEPATH.'Log/Handlers/HandlerInterface.php',
-			'CodeIgniter\Router\RouteCollection'          => BASEPATH.'Router/RouteCollection.php',
-			'CodeIgniter\Router\RouteCollectionInterface' => BASEPATH.'Router/RouteCollectionInterface.php',
-			'CodeIgniter\Router\Router'                   => BASEPATH.'Router/Router.php',
-			'CodeIgniter\Router\RouterInterface'          => BASEPATH.'Router/RouterInterface.php',
-			'CodeIgniter\Security\Security'               => BASEPATH.'Security/Security.php',
-			'CodeIgniter\View\RenderableInterface'        => BASEPATH.'View/RenderableInterface.php',
-			'CodeIgniter\View\View'                       => BASEPATH.'View/View.php',
-			'Zend\Escaper\Escaper'                        => BASEPATH.'View/Escaper.php',
-		    'TestLogger'                                  => BASEPATH.'../tests/_support/Log/TestLogger.php'
-		];
+		$classmap = [];
+
+		//--------------------------------------------------------------------
+		// Do Not Edit Below This Line
+		//--------------------------------------------------------------------
+
+		$this->psr4 = array_merge($this->psr4, $psr4);
+		$this->classmap = array_merge($this->classmap, $classmap);
+
+		unset($psr4, $classmap);
 	}
 
 	//--------------------------------------------------------------------
