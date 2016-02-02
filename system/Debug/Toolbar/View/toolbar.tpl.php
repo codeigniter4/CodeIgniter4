@@ -89,7 +89,7 @@
 
 	<!-- Response -->
 	<div id="ci-response" class="tab">
-		<h2>Response</h2>
+		<h2>Response <span>( <?= $response->getStatusCode().' - '. esc($response->getReason()) ?> )</span></h2>
 
 		<?php if ($headers = $response->getHeaders()) : ?>
 			<h3>Headers</h3>
