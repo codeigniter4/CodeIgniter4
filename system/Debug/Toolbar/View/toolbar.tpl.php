@@ -13,6 +13,11 @@
 		<span class="ci-label"><?= $totalTime ?> ms</span>
 		<span class="ci-label"><?= $totalMemory ?> MB</span>
 		<span class="ci-label"><a href="javascript: void(0)" data-tab="ci-timeline">Timeline</a></span>
+		<?php foreach ($this->collectors as $c) : ?>
+			<?php if ($c->hasTabContent()) : ?>
+				<span class="ci-label"><a href="javascript: void(0)" data-tab="ci-<?= esc($c->getTitle(true)) ?>"><?= esc($c->getTitle()) ?></a></span>
+			<?php endif; ?>
+		<?php endforeach; ?>
 		<span class="ci-label"><a href="javascript: void(0)" data-tab="ci-request">Request</a></span>
 		<span class="ci-label"><a href="javascript: void(0)" data-tab="ci-response">Response</a></span>
 	</div>
@@ -21,6 +26,17 @@
 	<div id="ci-timeline" class="tab">
 
 	</div>
+
+	<!-- Collector-provided Tabs -->
+	<?php foreach ($this->collectors as $c) : ?>
+		<?php if  ($c->hasTabContent()) : ?>
+			<div id="ci-<?= esc($c->getTitle(true)) ?>" class="tab">
+				<h2><?= esc($c->getTitle()) ?></h2>
+
+				<?= $c->display() ?>
+			</div>
+		<?php endif ?>
+	<?php endforeach ?>
 
 	<!-- Request -->
 	<div id="ci-request" class="tab">

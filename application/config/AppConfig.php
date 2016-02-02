@@ -194,6 +194,6 @@ class AppConfig extends BaseConfig
 //		'CodeIgniter\Debug\Toolbar\Collectors\Request',
 //		'CodeIgniter\Debug\Toolbar\Collectors\Response',
 //		'CodeIgniter\Debug\Toolbar\Collectors\Cache',
-//		'CodeIgniter\Debug\Toolbar\Collectors\Files',
+		'CodeIgniter\Debug\Toolbar\Collectors\Files',
 	];
 }

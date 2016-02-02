@@ -23,7 +23,16 @@ class Toolbar
 
 	public function __construct(BaseConfig $config)
 	{
-		$this->collectors = $config->toolbarCollectors;
+		foreach ($config->toolbarCollectors as $collector)
+		{
+			if (! class_exists($collector))
+			{
+				// @todo Log this!
+				continue;
+			}
+
+			$this->collectors[] = new $collector();
+		}
 	}
 
 	//--------------------------------------------------------------------
@@ -37,6 +46,7 @@ class Toolbar
 		global $totalTime, $startMemory, $request, $response;
 		$totalTime = $totalTime * 1000;
 		$totalMemory = number_format((memory_get_peak_usage() - $startMemory) / 1048576, 3);
+//		$collectors = $this->collectors;
 
 		ob_start();
 		include(dirname(__FILE__).'/Toolbar/View/toolbar.tpl.php');
