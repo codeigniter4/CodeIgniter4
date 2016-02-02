@@ -114,3 +114,7 @@
 #debug-bar tr:hover {
     background-color: #f3f3f3;
 }
+#debug-bar .muted,
+#debug-bar .muted td {
+    color: #bbb !important;
+}

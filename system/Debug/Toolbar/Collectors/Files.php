@@ -58,9 +58,20 @@ class Files extends BaseCollector
 		{
 			++$count;
 
-			$output .= "<td style='width: 3em; text-align: right;'>{$count}</td>";
+			$path = $this->cleanPath($file);
+
+			if (strpos($path, 'BASEPATH') !== false)
+			{
+				$output .= "<tr class='muted'>";
+			}
+			else
+			{
+				$output .= "<tr>";
+			}
+
 			$output .= "<td style='width: 20em;'>". htmlspecialchars(str_replace('.php', '', basename($file)), ENT_SUBSTITUTE, 'UTF-8')."</td>";
-			$output .= "<td>".htmlspecialchars($this->cleanPath($file), ENT_SUBSTITUTE, 'UTF-8')."</td></tr>";
+			$output .= "<td>".htmlspecialchars($path, ENT_SUBSTITUTE, 'UTF-8')."</td>";
+			$output .= "</tr>";
 		}
 
 		$output .= "</tbody></table>";
