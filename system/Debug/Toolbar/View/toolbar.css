@@ -46,6 +46,9 @@
     margin: 0;
     padding: 0;
 }
+#debug-bar h2 span {
+    font-size: 80%;
+}
 #debug-bar h3 {
     text-transform: uppercase;
     font-size: 0.8rem;

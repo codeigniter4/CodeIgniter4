@@ -145,6 +145,7 @@ $config = new \App\Config\AppConfig();
 $request  = is_cli()
 		? \App\Config\Services::clirequest($config)
 		: \App\Config\Services::request($config);
+$request->setProtocolVersion($_SERVER['SERVER_PROTOCOL']);
 $response = \App\Config\Services::response();
 
 // Assume success until proven otherwise.

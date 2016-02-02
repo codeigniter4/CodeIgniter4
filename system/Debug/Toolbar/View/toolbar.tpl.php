@@ -24,7 +24,7 @@
 
 	<!-- Request -->
 	<div id="ci-request" class="tab">
-		<h2>Request</h2>
+		<h2>Request <span>( <?= ($request->isSecure() ? 'HTTPS' : 'HTTP').'/'.$request->getProtocolVersion() ?> )</span></h2>
 
 		<?php if ($get = $request->getGet()) : ?>
 			<h3>$_GET</h3>
