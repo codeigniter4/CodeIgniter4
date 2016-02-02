@@ -52,6 +52,8 @@
 
 define('CI_VERSION', '4.0-dev');
 
+$startMemory = memory_get_usage(true);
+
 /*
  * ------------------------------------------------------
  *  Load the framework constants

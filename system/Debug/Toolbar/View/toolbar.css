@@ -11,25 +11,48 @@
     right: 0;
     z-index: 10000;
     box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    overflow: hidden;
+    overflow-y: auto;
+    max-height: 62%;
+}
+#debug-bar h1,
+#debug-bar h2,
+#debug-bar h3{
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+    color: #666;
 }
 #debug-bar .toolbar {
     display: block;
     position: relative;
     overflow: hidden;
+    overflow-y: auto;
     white-space: nowrap;
     border-bottom: 1px solid #eee;
     padding: 3px 20px;
+    text-align: right;
 }
 #debug-bar h1 {
     font-size: 13pt;
     font-weight: 300;
-    color: #666;
     margin: 0 2em 0 0;
     padding: 0;
     text-align: left;
     display: inline-block;
+    float: left;
 }
-#debug-bar .label {
+#debug-bar h2 {
+    font-size: 1.1rem;
+    font-weight: 200;
+    margin: 0;
+    padding: 0;
+}
+#debug-bar h3 {
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    font-weight: 200;
+    margin-left: 10pt;
+}
+#debug-bar .ci-label {
     display: inline-block;
     font-size: 10pt;
     padding: .3em 1em .3em;
@@ -39,13 +62,45 @@
     text-shadow: none;
     background-color: #eee;
 }
-#debug-bar .label a {
+#debug-bar .ci-label a {
     display: block;
     width: 100%;
     height: 100%;
     color: inherit;
     text-decoration: none;
 }
-#debug-bar .label a:hover {
+#debug-bar .ci-label a:hover {
     text-decoration: underline;
+}
+#debug-bar .tab {
+    display: none;
+    background: inherit;
+    padding: 1em 2em;
+}
+
+#debug-bar table {
+    display: block;
+    margin: 0 0 0 20pt;
+    font-size: 10pt;
+    border-collapse:collapse;
+    width: 100%;
+}
+#debug-bar td,
+#debug-bar th {
+    display: table-cell;
+}
+#debug-bar tr {
+    border: none;
+}
+#debug-bar td {
+    border: none;
+    padding: 2pt 10pt 2pt 5pt;
+    margin: 0;
+
+}
+#debug-bar tr td:first-child {
+    width: 20%;
+}
+#debug-bar tr:hover {
+    background-color: #f3f3f3;
 }

@@ -34,8 +34,9 @@ class Toolbar
 		// Data items used within the view.
 		$collectors = $this->collectors;
 
-		global $totalTime;
+		global $totalTime, $startMemory, $request, $response;
 		$totalTime = $totalTime * 1000;
+		$totalMemory = number_format(round(memory_get_peak_usage(true) / 1048576, 4), 3);
 
 		ob_start();
 		include(dirname(__FILE__).'/Toolbar/View/toolbar.tpl.php');
