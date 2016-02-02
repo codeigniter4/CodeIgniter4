@@ -61,6 +61,8 @@
     border-radius: 0.25em;
     text-shadow: none;
     background-color: #eee;
+    border: 1px solid #ddd;
+    margin-left: 0.4em;
 }
 #debug-bar .ci-label a {
     display: block;
@@ -73,7 +75,9 @@
     text-decoration: underline;
 }
 #debug-bar .ci-label.active {
-    font-weight: 500;
+    font-weight: 400;
+    border-color: #bbb;
+    padding: .3em 0.9em .3em;
 }
 #debug-bar .tab {
     display: none;
