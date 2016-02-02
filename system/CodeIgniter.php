@@ -240,7 +240,7 @@ $output = str_replace('{elapsed_time}', $totalTime, $output);
 // Display the Debug Toolbar?
 //--------------------------------------------------------------------
 
-if (ENVIRONMENT != 'production')
+if (ENVIRONMENT != 'production' && $config->toolbarEnabled)
 {
 	$toolbar = \App\Config\Services::toolbar($config);
 	$output .= $toolbar->run();

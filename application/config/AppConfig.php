@@ -185,7 +185,7 @@ class AppConfig extends BaseConfig
 	|--------------------------------------------------------------------------
 	|
 	*/
-	public $toolbarEnabled = ENVIRONMENT != 'production';
+	public $toolbarEnabled = true;
 
 	public $toolbarCollectors = [
 		'CodeIgniter\Debug\Toolbar\Collectors\Timers',
