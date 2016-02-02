@@ -72,6 +72,9 @@
 #debug-bar .ci-label a:hover {
     text-decoration: underline;
 }
+#debug-bar .ci-label.active {
+    font-weight: 500;
+}
 #debug-bar .tab {
     display: none;
     background: inherit;

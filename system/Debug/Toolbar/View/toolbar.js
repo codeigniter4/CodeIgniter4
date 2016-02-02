@@ -50,11 +50,49 @@ var ciDebugBar = {
             tabs[i].style.display = 'none';
         }
 
+        // Mark all labels as inactive
+        var labels = document.querySelectorAll('#debug-bar .ci-label');
+
+        for (var i=0; i < labels.length; i++)
+        {
+            ciDebugBar.removeClass(labels[i], 'active');
+        }
+
         // Show/hide the selected tab
         if (state != 'block')
         {
             document.getElementById(tab).style.display = 'block';
+            ciDebugBar.addClass(this.parentNode, 'active');
         }
+    },
+
+    //--------------------------------------------------------------------
+
+    addClass : function(el, className)
+    {
+        if (el.classList)
+        {
+            el.classList.add(className);
+        }
+        else
+        {
+            el.className += ' ' + className;
+        }
+    },
+
+    //--------------------------------------------------------------------
+
+    removeClass : function(el, className)
+    {
+        if (el.classList)
+        {
+            el.classList.remove(className);
+        }
+        else
+        {
+            el.className = el.className.replace(new RegExp('(^|\\b)' + className.split(' ').join('|') + '(\\b|$)', 'gi'), ' ');
+        }
+
     }
 
     //--------------------------------------------------------------------
