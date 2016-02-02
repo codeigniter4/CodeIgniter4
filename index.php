@@ -1,4 +1,8 @@
 <?php
+
+// Used by the debug toolbar. Do not remove.
+$startMemory = memory_get_usage();
+
 /*
  *---------------------------------------------------------------
  * APPLICATION ENVIRONMENT
