@@ -37,6 +37,9 @@ var ciDebugBar = {
         // Get the target tab, if any
         var tab = this.getAttribute('data-tab');
 
+        // Check our current state.
+        var state = document.getElementById(tab).style.display;
+
         if (tab == undefined) return true;
 
         // Hide all tabs
@@ -47,8 +50,11 @@ var ciDebugBar = {
             tabs[i].style.display = 'none';
         }
 
-        // Show the selected tab
-        document.getElementById(tab).style.display = 'block';
+        // Show/hide the selected tab
+        if (state != 'block')
+        {
+            document.getElementById(tab).style.display = 'block';
+        }
     }
 
     //--------------------------------------------------------------------
