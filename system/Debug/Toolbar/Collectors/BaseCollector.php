@@ -45,6 +45,19 @@ class BaseCollector
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Returns any information that should be shown next to the title.
+	 *
+	 * @return string
+	 */
+	public function getTitleDetails(): string
+	{
+	    return '';
+	}
+
+	//--------------------------------------------------------------------
+
+
 
 	/**
 	 * Does this collector need it's own tab?

@@ -31,7 +31,7 @@
 	<?php foreach ($this->collectors as $c) : ?>
 		<?php if  ($c->hasTabContent()) : ?>
 			<div id="ci-<?= esc($c->getTitle(true)) ?>" class="tab">
-				<h2><?= esc($c->getTitle()) ?></h2>
+				<h2><?= esc($c->getTitle()) ?> <span><?= esc($c->getTitleDetails()) ?></span></h2>
 
 				<?= $c->display() ?>
 			</div>
