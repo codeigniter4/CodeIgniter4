@@ -338,6 +338,23 @@ class Services
 
 	//--------------------------------------------------------------------
 
+	public static function toolbar(AppConfig $config = null, $getShared = false)
+	{
+		if (! is_object($config))
+		{
+			$config = new AppConfig();
+		}
+
+		if (! $getShared)
+		{
+			return new \CodeIgniter\Debug\Toolbar($config);
+		}
+
+		return self::getSharedInstance('security');
+	}
+
+	//--------------------------------------------------------------------
+
 	/**
 	 * The URI class provides a way to model and manipulate URIs.
 	 */

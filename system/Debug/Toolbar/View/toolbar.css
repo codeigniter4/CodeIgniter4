@@ -1,0 +1,51 @@
+#debug-bar {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+    font-size: 12pt;
+    line-height: 1.5;
+    background: #fff;
+    border-bottom: 1px solid #ddd;
+    margin: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10000;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+#debug-bar .toolbar {
+    display: block;
+    position: relative;
+    overflow: hidden;
+    white-space: nowrap;
+    border-bottom: 1px solid #eee;
+    padding: 3px 20px;
+}
+#debug-bar h1 {
+    font-size: 13pt;
+    font-weight: 300;
+    color: #666;
+    margin: 0 2em 0 0;
+    padding: 0;
+    text-align: left;
+    display: inline-block;
+}
+#debug-bar .label {
+    display: inline-block;
+    font-size: 10pt;
+    padding: .3em 1em .3em;
+    line-height: 1.0;
+    vertical-align: baseline;
+    border-radius: 0.25em;
+    text-shadow: none;
+    background-color: #eee;
+}
+#debug-bar .label a {
+    display: block;
+    width: 100%;
+    height: 100%;
+    color: inherit;
+    text-decoration: none;
+}
+#debug-bar .label a:hover {
+    text-decoration: underline;
+}

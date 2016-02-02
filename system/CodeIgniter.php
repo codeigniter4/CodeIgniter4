@@ -233,7 +233,18 @@ else
 $output = ob_get_contents();
 ob_end_clean();
 
-$output = str_replace('{elapsed_time}', $benchmark->getElapsedTime('total_execution'), $output);
+$totalTime = $benchmark->getElapsedTime('total_execution');
+$output = str_replace('{elapsed_time}', $totalTime, $output);
+
+//--------------------------------------------------------------------
+// Display the Debug Toolbar?
+//--------------------------------------------------------------------
+
+if (ENVIRONMENT != 'production')
+{
+	$toolbar = \App\Config\Services::toolbar($config);
+	$output .= $toolbar->run();
+}
 
 $response->setBody($output);
 
