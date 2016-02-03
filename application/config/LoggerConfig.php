@@ -57,6 +57,13 @@ class LoggerConfig extends BaseConfig
 	*/
 	public $dateFormat = 'Y-m-d H:i:s';
 
+	/**
+	 * When true, will collect the logs for display in the debug toolbar.
+	 *
+	 * @var bool
+	 */
+	public $debug = true;
+
 	/*
 	|--------------------------------------------------------------------------
 	| Log Handlers

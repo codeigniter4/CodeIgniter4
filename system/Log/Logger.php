@@ -127,6 +127,20 @@ class Logger implements LoggerInterface
 	 */
 	protected $handlerConfig = [];
 
+	/**
+	 * Caches logging calls for debugbar.
+	 *
+	 * @var array
+	 */
+	public $logCache;
+
+	/**
+	 * Should we cache our logged items?
+	 *
+	 * @var bool
+	 */
+	protected $cacheLogs = false;
+
 	//--------------------------------------------------------------------
 
 	public function __construct($config)
@@ -157,6 +171,12 @@ class Logger implements LoggerInterface
 		// Save the handler configuration for later.
 		// Instances will be created on demand.
 		$this->handlerConfig = $config->handlers;
+
+		$this->cacheLogs = $config->debug;
+		if ($this->cacheLogs)
+		{
+			$this->logCache = [];
+		}
 	}
 
 	//--------------------------------------------------------------------
@@ -322,6 +342,14 @@ class Logger implements LoggerInterface
 
 		// Parse our placeholders
 		$message = $this->interpolate($message, $context);
+
+		if ($this->cacheLogs)
+		{
+			$this->logCache[] = [
+				'level' => $level,
+			    'msg'   => $message
+			];
+		}
 
 		foreach ($this->handlerConfig as $className => $config)
 		{
