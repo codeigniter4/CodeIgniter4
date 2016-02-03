@@ -27,9 +27,9 @@
 		<table class="timeline">
 			<thead>
 				<tr>
-					<th>NAME</th>
-					<th>COMPONENT</th>
-					<th style="width: 4em;">DURATION</th>
+					<th style="width: 30%">NAME</th>
+					<th style="width: 10%">COMPONENT</th>
+					<th style="width: 10%;">DURATION</th>
 					<?php for ($i=0; $i < $segmentCount; $i++) : ?>
 						<th><?= $i * $segmentDuration ?> ms</th>
 					<?php endfor; ?>
