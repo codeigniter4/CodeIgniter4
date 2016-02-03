@@ -43,8 +43,10 @@ class Timers extends BaseCollector
 
 		foreach ($rows as $name => $info)
 		{
+			if ($name == 'total_execution') continue;
+
 			$data[] = [
-				'name' => $name,
+				'name' => ucwords(str_replace('_', ' ', $name)),
 			    'component' => 'Timer',
 			    'start'     => $info['start'],
 			    'duration'  => $info['end'] - $info['start']

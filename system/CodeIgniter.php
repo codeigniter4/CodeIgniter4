@@ -133,6 +133,7 @@ $startTime   = microtime(true);
 
 $benchmark = \App\Config\Services::timer(true);
 $benchmark->start('total_execution');
+$benchmark->start('bootstrap');
 
 //--------------------------------------------------------------------
 // Is there a "pre-system" hook?
@@ -175,7 +176,13 @@ require APPPATH.'config/Routes.php';
 $router = \App\Config\Services::router($routes, true);
 
 $path = is_cli() ? $request->getPath() : $request->uri->getPath();
+
+$benchmark->stop('bootstrap');
+$benchmark->start('routing');
+
 $controller = $router->handle($path);
+
+$benchmark->stop('routing');
 
 //--------------------------------------------------------------------
 // Are there any "pre-system" hooks?
@@ -184,6 +191,8 @@ $controller = $router->handle($path);
 \CodeIgniter\Hooks\Hooks::trigger('pre_system');
 
 ob_start();
+
+$benchmark->start('controller');
 
 // Is it routed to a Closure?
 if (is_callable($controller))
@@ -224,6 +233,8 @@ else
 		$class->$method(...$router->params());
 	}
 }
+
+$benchmark->stop('controller');
 
 //--------------------------------------------------------------------
 // Is there a "post_controller" hook?
