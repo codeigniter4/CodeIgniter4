@@ -84,7 +84,7 @@ class Toolbar
 			$offset = ((($row['start'] - $startTime) * 1000) / $displayTime) * 100;
 			$length = (($row['duration'] * 1000) / $displayTime) * 100;
 
-			$output .= "<span class='timer' style='left: {$offset}%; width: {$length}%;'></span>";
+			$output .= "<span class='timer' style='left: {$offset}%; width: {$length}%;' title='".number_format($length, 2)."%'></span>";
 
 			$output .= "</td>";
 
