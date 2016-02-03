@@ -127,6 +127,10 @@ $loader->register();
 // Start the Benchmark
 //--------------------------------------------------------------------
 
+// Record app start time here. It's a little bit off, but
+// keeps it lining up with the benchmark timers.
+$startTime   = microtime(true);
+
 $benchmark = \App\Config\Services::timer(true);
 $benchmark->start('total_execution');
 
@@ -234,7 +238,8 @@ else
 $output = ob_get_contents();
 ob_end_clean();
 
-$totalTime = $benchmark->getElapsedTime('total_execution');
+$totalTime = $benchmark->stop('total_execution')
+					   ->getElapsedTime('total_execution');
 $output = str_replace('{elapsed_time}', $totalTime, $output);
 
 //--------------------------------------------------------------------

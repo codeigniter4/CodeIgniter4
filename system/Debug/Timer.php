@@ -73,6 +73,8 @@ class Timer
 			'start' => microtime(true),
 			'end'   => null,
 		];
+
+		return $this;
 	}
 
 	//--------------------------------------------------------------------
@@ -95,6 +97,8 @@ class Timer
 		}
 
 		$this->timers[$name]['end'] = microtime(true);
+
+		return $this;
 	}
 
 	//--------------------------------------------------------------------

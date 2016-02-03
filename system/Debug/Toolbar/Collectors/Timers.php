@@ -24,7 +24,7 @@ class Timers extends BaseCollector
 	 *
 	 * @var string
 	 */
-	protected $title = 'timers';
+	protected $title = 'Timers';
 
 	//--------------------------------------------------------------------
 
@@ -36,7 +36,22 @@ class Timers extends BaseCollector
 	 */
 	protected function formatTimelineData(): array
 	{
-		return [];
+		$data = [];
+
+		global $benchmark;
+		$rows = $benchmark->getTimers(6);
+
+		foreach ($rows as $name => $info)
+		{
+			$data[] = [
+				'name' => $name,
+			    'component' => 'Timer',
+			    'start'     => $info['start'],
+			    'duration'  => $info['end'] - $info['start']
+			];
+		}
+
+		return $data;
 	}
 
 	//--------------------------------------------------------------------

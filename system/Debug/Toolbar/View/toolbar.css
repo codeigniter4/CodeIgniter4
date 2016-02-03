@@ -21,6 +21,10 @@
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
     color: #666;
 }
+#debug-bar .muted,
+#debug-bar .muted td {
+    color: #bbb !important;
+}
 #debug-bar .toolbar {
     display: block;
     position: relative;
@@ -114,7 +118,35 @@
 #debug-bar tr:hover {
     background-color: #f3f3f3;
 }
-#debug-bar .muted,
-#debug-bar .muted td {
-    color: #bbb !important;
+#debug-bar table.timeline {
+    width: 100%;
+    margin-left: 0;
+}
+#debug-bar table.timeline th {
+    font-size: 0.7em;
+    font-weight: 200;
+    text-align: left;
+    padding-bottom: 1em;
+}
+#debug-bar table.timeline td,
+#debug-bar table.timeline th {
+    border-left: 1px solid #ddd;
+    padding: 0 1em;
+    position: relative;
+}
+#debug-bar table.timeline tr td:first-child,
+#debug-bar table.timeline tr th:first-child {
+    border-left: 0;
+    padding-left: 0;
+}
+#debug-bar table.timeline td {
+    padding: 5px !important;
+}
+#debug-bar table.timeline .timer {
+    position: absolute;
+    display: inline-block;
+    padding: 3px;
+    bottom: 9px;
+    border-radius: 3px;
+    background-color: #999;
 }

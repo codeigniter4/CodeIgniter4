@@ -24,7 +24,21 @@
 
 	<!-- Timeline -->
 	<div id="ci-timeline" class="tab">
-
+		<table class="timeline">
+			<thead>
+				<tr>
+					<th>NAME</th>
+					<th>COMPONENT</th>
+					<th style="width: 4em;">DURATION</th>
+					<?php for ($i=0; $i < $segmentCount; $i++) : ?>
+						<th><?= $i * $segmentDuration ?> ms</th>
+					<?php endfor; ?>
+				</tr>
+			</thead>
+			<tbody>
+				<?= $this->renderTimeline($segmentCount, $segmentDuration, $totalTime) ?>
+			</tbody>
+		</table>
 	</div>
 
 	<!-- Collector-provided Tabs -->

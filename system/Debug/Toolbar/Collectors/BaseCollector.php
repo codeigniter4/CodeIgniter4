@@ -106,6 +106,15 @@ class BaseCollector
 	 * Child classes should implement this to return the timeline data
 	 * formatted for correct usage.
 	 *
+	 * Timeline data should be formatted into arrays that look like:
+	 *
+	 *  [
+	 *      'name'      => 'Database::Query',
+	 *      'component' => 'Database',
+	 *      'start'     => 10       // milliseconds
+	 *      'duration'  => 15       // milliseconds
+	 *  ]
+	 *
 	 * @return mixed
 	 */
 	 protected function formatTimelineData(): array
