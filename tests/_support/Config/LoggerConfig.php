@@ -57,6 +57,13 @@ class LoggerConfig
 	*/
 	public $dateFormat = 'Y-m-d';
 
+	/**
+	 * When true, will collect the logs for display in the debug toolbar.
+	 *
+	 * @var bool
+	 */
+	public $debug = false;
+
 	/*
 	|--------------------------------------------------------------------------
 	| Log Handlers

@@ -314,7 +314,10 @@ class Message
 	 */
 	public function setProtocolVersion(string $version): self
 	{
-		$version = substr($version, strpos($version, '/') +1);
+		if (! is_numeric($version))
+		{
+			$version = substr($version, strpos($version, '/') + 1);
+		}
 
 	    if (! in_array($version, $this->validProtocolVersions))
 	    {
