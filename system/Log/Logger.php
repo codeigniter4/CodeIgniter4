@@ -343,6 +343,11 @@ class Logger implements LoggerInterface
 		// Parse our placeholders
 		$message = $this->interpolate($message, $context);
 
+		if (! is_string($message))
+		{
+			$message = print_r($message, true);
+		}
+
 		if ($this->cacheLogs)
 		{
 			$this->logCache[] = [
@@ -395,6 +400,8 @@ class Logger implements LoggerInterface
 	 */
 	protected function interpolate($message, array $context = [])
 	{
+		if (! is_string($message)) return $message;
+
 		// build a replacement array with braces around the context keys
 		$replace = [];
 
