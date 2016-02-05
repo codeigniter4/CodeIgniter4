@@ -59,12 +59,14 @@
     font-weight: 200;
     margin-left: 10pt;
 }
-#debug-bar .ci-label {
+#debug-bar span {
     display: inline-block;
     font-size: 10pt;
     padding: .3em 1em .3em;
     line-height: 1.0;
     vertical-align: baseline;
+}
+#debug-bar .ci-label {
     border-radius: 0.25em;
     text-shadow: none;
     background-color: #eee;

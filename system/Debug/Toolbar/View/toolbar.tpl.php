@@ -10,8 +10,8 @@
 	<div class="toolbar">
 		<h1>Debug Bar</h1>
 
-		<span class="ci-label"><?= $totalTime ?> ms</span>
-		<span class="ci-label"><?= $totalMemory ?> MB</span>
+		<span><?= $totalTime ?> ms</span>
+		<span><?= $totalMemory ?> MB</span>
 		<span class="ci-label"><a href="javascript: void(0)" data-tab="ci-timeline">Timeline</a></span>
 		<?php foreach ($this->collectors as $c) : ?>
 			<?php if ($c->hasTabContent()) : ?>
