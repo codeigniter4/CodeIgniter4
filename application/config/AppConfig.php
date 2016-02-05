@@ -183,9 +183,12 @@ class AppConfig extends BaseConfig
 	|--------------------------------------------------------------------------
 	| Debug Toolbar
 	|--------------------------------------------------------------------------
-	|
+	| The Debug Toolbar provides a way to see information about the performance
+	| and state of your application during that page display. By default it will
+	| be displayed under production environments, and will only display if
+	| CI_DEBIG is true, since if it's not, there's not much to display anyway.
 	*/
-	public $toolbarEnabled = true;
+	public $toolbarEnabled = (ENVIRONMENT != 'production' && CI_DEBUG);
 
 	public $toolbarCollectors = [
 		'CodeIgniter\Debug\Toolbar\Collectors\Timers',
