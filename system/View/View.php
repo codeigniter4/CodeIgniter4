@@ -38,6 +38,7 @@
 
 use App\Config\Services;
 use CodeIgniter\Loader;
+use CodeIgniter\Log\Logger;
 
 /**
  * Class View
@@ -69,9 +70,28 @@ class View implements RenderableInterface {
 	 */
 	protected $loader;
 
+	/**
+	 * Logger instance.
+	 * @var Logger
+	 */
+	protected $logger;
+
+	/**
+	 * Should we store performance info?
+	 * @var bool
+	 */
+	protected $debug = false;
+
+	/**
+	 * Cache stats about our performance here,
+	 * when CI_DEBUG = true
+	 * @var array
+	 */
+	protected $performanceData = [];
+
 	//--------------------------------------------------------------------
 
-	public function __construct(string $viewPath=null, $loader=null)
+	public function __construct(string $viewPath=null, $loader=null, bool $debug = null, Logger $logger = null)
 	{
 		$this->viewPath = rtrim($viewPath, '/ ').'/';
 
@@ -83,6 +103,10 @@ class View implements RenderableInterface {
 		{
 			$this->loader = Services::loader(true);
 		}
+
+		$this->logger = is_null($logger) ? Services::logger(true) : $logger;
+
+		$this->debug = is_null($debug) ? CI_DEBUG : $debug;
 	}
 
 	//--------------------------------------------------------------------
@@ -98,6 +122,8 @@ class View implements RenderableInterface {
 	 */
 	public function render(string $view, array $options=[]): string
 	{
+		$start = microtime(true);
+
 		$view = str_replace('.php', '', $view).'.php';
 
 		$file = $this->viewPath.$view;
@@ -122,6 +148,8 @@ class View implements RenderableInterface {
 
 		$output = ob_get_contents();
 		@ob_end_clean();
+
+		$this->logPerformance($start, microtime(true), $view);
 
 		return $output;
 	}
@@ -187,5 +215,37 @@ class View implements RenderableInterface {
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Returns the performance data that might have been collected
+	 * during the execution. Used primarily in the Debug Toolbar.
+	 *
+	 * @return array
+	 */
+	public function getPerformanceData(): array
+	{
+	    return $this->performanceData;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Logs performance data for rendering a view.
+	 *
+	 * @param float  $start
+	 * @param float  $end
+	 * @param string $view
+	 */
+	protected function logPerformance(float $start, float $end, string $view)
+	{
+		if (! $this->debug) return;
+
+		$this->performanceData[] = [
+			'start' => $start,
+		    'end'   => $end,
+		    'view'  => $view
+		];
+	}
+
+	//--------------------------------------------------------------------
 
 }

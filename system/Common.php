@@ -106,7 +106,7 @@ if ( ! function_exists('view'))
 		/**
 		 * @var CodeIgniter\View\View $renderer
 		 */
-		$renderer = \App\Config\Services::renderer();
+		$renderer = \App\Config\Services::renderer(null, true);
 
 		return $renderer->setData($data, 'raw')
 		                ->render($name, $options);
