@@ -21,6 +21,8 @@ switch (ENVIRONMENT)
 		break;
 }
 
+define('CI_DEBUG', 1);
+
 $system_path = '../../system';
 
 $application_folder = '../../application';

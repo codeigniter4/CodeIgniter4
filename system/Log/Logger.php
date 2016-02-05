@@ -143,7 +143,7 @@ class Logger implements LoggerInterface
 
 	//--------------------------------------------------------------------
 
-	public function __construct($config)
+	public function __construct($config, bool $debug = CI_DEBUG)
 	{
 		$this->loggableLevels = is_array($config->threshold) ? $config->threshold : range(1, (int)$config->threshold);
 
@@ -172,7 +172,7 @@ class Logger implements LoggerInterface
 		// Instances will be created on demand.
 		$this->handlerConfig = $config->handlers;
 
-		$this->cacheLogs = $config->debug;
+		$this->cacheLogs = (bool)$debug;
 		if ($this->cacheLogs)
 		{
 			$this->logCache = [];
