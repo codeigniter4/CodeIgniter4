@@ -36,8 +36,10 @@
  * @filesource
  */
 
+use App\Config\Services;
 use CodeIgniter\HTTP\Request;
 use CodeIgniter\HTTP\Response;
+use CodeIgniter\Log\Logger;
 
 /**
  * Class Controller
@@ -51,13 +53,23 @@ class Controller
 
 	protected $response;
 
+	/**
+	 * Instance of logger to use.
+	 * @var Log\Logger
+	 */
+	protected $logger;
+
 	//--------------------------------------------------------------------
 
-	public function __construct(Request $request, Response $response)
+	public function __construct(Request $request, Response $response, Logger $logger = null)
 	{
 	    $this->request = $request;
 
 		$this->response = $response;
+
+		$this->logger = is_null($logger) ? Services::logger(true) : $logger;
+
+		$this->logger->info('Controller "'.get_class($this).'" loaded.');
 	}
 	
 	//--------------------------------------------------------------------

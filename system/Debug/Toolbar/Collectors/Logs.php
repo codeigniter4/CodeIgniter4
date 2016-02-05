@@ -52,7 +52,7 @@ class Logs extends BaseCollector
 		{
 			$output .= "<tr>";
 			$output .= "<td>{$log['level']}</td>";
-			$output .= "<td>".htmlspecialchars($log['message'], ENT_SUBSTITUTE, 'UTF-8')."</td>";
+			$output .= "<td>".htmlspecialchars($log['msg'], ENT_SUBSTITUTE, 'UTF-8')."</td>";
 			$output .= "</tr>";
 		}
 

@@ -102,6 +102,7 @@
 #debug-bar td,
 #debug-bar th {
     display: table-cell;
+    text-align: left;
 }
 #debug-bar tr {
     border: none;
@@ -111,6 +112,9 @@
     padding: 2pt 10pt 2pt 5pt;
     margin: 0;
 
+}
+#debug-bar th {
+    padding-bottom: 0.7em;
 }
 #debug-bar tr td:first-child {
     width: 20%;
