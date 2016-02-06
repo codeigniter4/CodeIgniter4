@@ -37,7 +37,7 @@
  */
 
 require_once BASEPATH.'Config/BaseConfig.php';
-require_once APPPATH.'/config/AppConfig.php';
+require_once APPPATH.'/Config/AppConfig.php';
 
 class Request extends Message implements RequestInterface
 {

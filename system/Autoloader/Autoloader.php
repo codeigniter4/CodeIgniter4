@@ -233,61 +233,17 @@ class Autoloader
 	 */
 	protected function loadInNamespace($class)
 	{
-		// the current namespace prefix
-		$prefix = $class;
-
-		// work backwards through the namespace names of the fully-qualified
-		// class name to find a mapped file name.
-		while (false !== $pos = strrpos($prefix, '\\'))
+		foreach ($this->prefixes as $namespace => $directory)
 		{
-			// retain trailing namespace separator in the prefix
-			$prefix = substr($class, 0, $pos);
-
-			// the rest is the relative class name
-			$relative_class = substr($class, $pos + 1);
-
-			// try to load the mapped file for prefix and relative class
-			$mapped_file = $this->loadMappedFile($prefix, $relative_class);
-
-			if ($mapped_file)
+			if (strpos($class, $namespace) === 0)
 			{
-				return $mapped_file;
+				$filePath = $directory.\strtr(\substr($class, \strlen($namespace)), '\\', '/').'.php';
+				return $this->requireFile($filePath);
 			}
-
-			// remove the trailing namespace separator for the next iteration
-			// of strpos()
-			$prefix = rtrim($prefix, '\\');
 		}
 
 		// never found a mapped file
 		return false;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Loads the mapped file for a namespace prefix and relative class.
-	 *
-	 * @param string $prefix         The namespace prefix
-	 * @param string $relative_class The relative class name
-	 *
-	 * @return mixed                    Boolean false if no mapped file can be loaded,
-	 *                                  or the name of the mapped file that was loaded.
-	 */
-	protected function loadMappedFile($prefix, $relative_class)
-	{
-		$prefix = rtrim($prefix, '\\');
-
-		// are there any base directories for this namespace prefix?
-		if ( ! isset($this->prefixes[$prefix]))
-		{
-			return false;
-		}
-
-		// look through base directories for this namespace prefix
-		$file = $this->prefixes[$prefix].'/'.str_replace('\\', '/', $relative_class).'.php';
-
-		return $this->requireFile($file);
 	}
 
 	//--------------------------------------------------------------------
@@ -347,7 +303,7 @@ class Autoloader
 
 		if (file_exists($file))
 		{
-			require $file;
+			require_once $file;
 
 			return $file;
 		}
