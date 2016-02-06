@@ -108,7 +108,7 @@ class AutoloadConfig
 			'CodeIgniter\Debug\Exceptions'                  => BASEPATH.'Debug/Exceptions.php',
 			'CodeIgniter\Debug\Timer'                       => BASEPATH.'Debug/Timer.php',
 			'CodeIgniter\Debug\Iterator'                    => BASEPATH.'Debug/Iterator.php',
-			'CodeIgniter\Hooks\Hooks'                       => BASEPATH.'Debug/Hooks/Hooks.php',
+			'CodeIgniter\Hooks\Hooks'                       => BASEPATH.'Hooks/Hooks.php',
 			'CodeIgniter\HTTP\CLIRequest'                   => BASEPATH.'HTTP/CLIRequest.php',
 			'CodeIgniter\HTTP\ContentSecurityPolicy'        => BASEPATH.'HTTP/ContentSecurityPolicy.php',
 			'CodeIgniter\HTTP\CURLRequest'                  => BASEPATH.'HTTP/CURLRequest.php',
