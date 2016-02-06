@@ -18,8 +18,7 @@
 				<span class="ci-label"><a href="javascript: void(0)" data-tab="ci-<?= esc($c->getTitle(true)) ?>"><?= esc($c->getTitle()) ?></a></span>
 			<?php endif; ?>
 		<?php endforeach; ?>
-		<span class="ci-label"><a href="javascript: void(0)" data-tab="ci-request">Request</a></span>
-		<span class="ci-label"><a href="javascript: void(0)" data-tab="ci-response">Response</a></span>
+		<span class="ci-label"><a href="javascript: void(0)" data-tab="ci-vars">Vars</a></span>
 	</div>
 
 	<!-- Timeline -->
@@ -52,8 +51,75 @@
 		<?php endif ?>
 	<?php endforeach ?>
 
-	<!-- Request -->
-	<div id="ci-request" class="tab">
+	<!-- In & Out -->
+	<div id="ci-vars" class="tab">
+
+		<!-- VarData from Collectors -->
+		<?php foreach ($varData as $heading => $items) : ?>
+			<h2><?= esc($heading) ?></h2>
+
+			<?php if (is_array($items)) : ?>
+
+				<table>
+					<tbody>
+					<?php foreach ($items as $key => $value) : ?>
+						<tr>
+							<td><?= esc($key) ?></td>
+							<td>
+							<?php
+								if (is_string($value))
+								{
+									echo esc($value);
+								}
+								else
+								{
+									echo print_r($value, true);
+								}
+							?>
+							</td>
+						</tr>
+					<?php endforeach; ?>
+					</tbody>
+				</table>
+
+			<?php else: ?>
+				<p class="muted">No data to display.</p>
+			<?php endif; ?>
+		<?php endforeach; ?>
+
+		<!-- Session -->
+		<h2>Session User Data</h2>
+
+		<?php if (isset($_SESSION)) : ?>
+			<?php if (count($_SESSION)) : ?>
+				<table>
+					<tbody>
+					<?php foreach ($_SESSION as $key => $value) : ?>
+						<tr>
+							<td><?= esc($key) ?></td>
+							<td>
+							<?php
+								if (is_string($value))
+								{
+									echo esc($value);
+								}
+								else
+								{
+									echo print_r($value, true);
+								}
+							?>
+							</td>
+						</tr>
+					<?php endforeach; ?>
+					</tbody>
+				</table>
+			<?php else : ?>
+				<p class="muted">No data to display.</p>
+			<?php endif; ?>
+		<?php else : ?>
+			<p class="muted">Session doesn't seem to be active.</p>
+		<?php endif; ?>
+
 		<h2>Request <span>( <?= ($request->isSecure() ? 'HTTPS' : 'HTTP').'/'.$request->getProtocolVersion() ?> )</span></h2>
 
 		<?php if ($get = $request->getGet()) : ?>
@@ -115,10 +181,7 @@
 				</tbody>
 			</table>
 		<?php endif ?>
-	</div>
 
-	<!-- Response -->
-	<div id="ci-response" class="tab">
 		<h2>Response <span>( <?= $response->getStatusCode().' - '. esc($response->getReason()) ?> )</span></h2>
 
 		<?php if ($headers = $response->getHeaders()) : ?>
@@ -135,6 +198,11 @@
 				</tbody>
 			</table>
 		<?php endif; ?>
+	</div>
+
+	<!-- Response -->
+	<div id="ci-response" class="tab">
+
 	</div>
 </div>
 

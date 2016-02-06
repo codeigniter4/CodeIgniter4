@@ -48,6 +48,7 @@ class Toolbar
 		$totalMemory     = number_format((memory_get_peak_usage() - $startMemory) / 1048576, 3);
 		$segmentDuration = $this->roundTo($totalTime / 7, 5);
 		$segmentCount    = (int)ceil($totalTime / $segmentDuration);
+		$varData         = $this->collectVarData();
 
 		ob_start();
 		include(dirname(__FILE__).'/Toolbar/View/toolbar.tpl.php');
@@ -118,6 +119,31 @@ class Toolbar
 
 		// Sort it
 
+
+		return $data;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns an array of data from all of the modules
+	 * that should be displayed in the 'Vars' tab.
+	 *
+	 * @return array
+	 */
+	protected function collectVarData() : array
+	{
+		$data = [];
+
+		foreach ($this->collectors as $collector)
+		{
+			if (! $collector->hasVarData())
+			{
+				continue;
+			}
+
+			$data = array_merge($data, $collector->getVarData());
+		}
 
 		return $data;
 	}

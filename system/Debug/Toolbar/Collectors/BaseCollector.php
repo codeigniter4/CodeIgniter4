@@ -19,6 +19,14 @@ class BaseCollector
 	protected $hasTabContent = false;
 
 	/**
+	 * Whether this collector has data that
+	 * should be shown in the Vars tab.
+	 *
+	 * @var bool
+	 */
+	protected $hasVarData = false;
+
+	/**
 	 * The 'title' of this Collector.
 	 * Used to name things in the toolbar HTML.
 	 *
@@ -101,6 +109,45 @@ class BaseCollector
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Does this Collector have data that should be shown in the
+	 * 'Vars' tab?
+	 *
+	 * @return mixed
+	 */
+	public function hasVarData()
+	{
+	    return (bool)$this->hasVarData;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Gets a collection of data that should be shown in the 'Vars' tab.
+	 * The format is an array of sections, each with their own array
+	 * of key/value pairs:
+	 *
+	 *  $data = [
+	 *      'section 1' => [
+	 *          'foo' => 'bar,
+	 *          'bar' => 'baz'
+	 *      ],
+	 *      'section 2' => [
+	 *          'foo' => 'bar,
+	 *          'bar' => 'baz'
+	 *      ],
+	 *  ];
+	 *
+	 * @return null
+	 */
+	public function getVarData()
+	{
+	    return null;
+	}
+
+	//--------------------------------------------------------------------
+
 
 	/**
 	 * Child classes should implement this to return the timeline data

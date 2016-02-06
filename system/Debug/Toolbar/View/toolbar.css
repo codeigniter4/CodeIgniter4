@@ -21,6 +21,11 @@
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
     color: #666;
 }
+#debug-bar p {
+    font-size: 10pt;
+    margin: 0 0 10pt 20pt;
+    padding: 0;
+}
 #debug-bar .muted,
 #debug-bar .muted td {
     color: #bbb !important;
@@ -96,7 +101,7 @@
 
 #debug-bar table {
     display: block;
-    margin: 0 0 0 20pt;
+    margin: 0 0 10pt 20pt;
     font-size: 10pt;
     border-collapse:collapse;
     width: 100%;

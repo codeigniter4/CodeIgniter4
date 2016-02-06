@@ -1,6 +1,7 @@
 <?php namespace CodeIgniter\Debug\Toolbar\Collectors;
 
 use App\Config\Services;
+use CodeIgniter\View\RenderableInterface;
 
 class Views extends BaseCollector
 {
@@ -21,6 +22,14 @@ class Views extends BaseCollector
 	protected $hasTabContent = false;
 
 	/**
+	 * Whether this collector has data that
+	 * should be shown in the Vars tab.
+	 *
+	 * @var bool
+	 */
+	protected $hasVarData = true;
+
+	/**
 	 * The 'title' of this Collector.
 	 * Used to name things in the toolbar HTML.
 	 *
@@ -28,7 +37,21 @@ class Views extends BaseCollector
 	 */
 	protected $title = 'Views';
 
+	/**
+	 * Instance of the Renderer service
+	 * @var RenderableInterface
+	 */
+	protected $viewer;
+
 	//--------------------------------------------------------------------
+
+	public function __construct()
+	{
+	    $this->viewer = Services::renderer(null, true);
+	}
+
+	//--------------------------------------------------------------------
+
 
 	/**
 	 * Child classes should implement this to return the timeline data
@@ -40,8 +63,7 @@ class Views extends BaseCollector
 	{
 		$data = [];
 
-		$viewer = Services::renderer(null, true);
-		$rows = $viewer->getPerformanceData();
+		$rows = $this->viewer->getPerformanceData();
 
 		foreach ($rows as $name => $info)
 		{
@@ -57,4 +79,33 @@ class Views extends BaseCollector
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Gets a collection of data that should be shown in the 'Vars' tab.
+	 * The format is an array of sections, each with their own array
+	 * of key/value pairs:
+	 *
+	 *  $data = [
+	 *      'section 1' => [
+	 *          'foo' => 'bar,
+	 *          'bar' => 'baz'
+	 *      ],
+	 *      'section 2' => [
+	 *          'foo' => 'bar,
+	 *          'bar' => 'baz'
+	 *      ],
+	 *  ];
+	 *
+	 * @return null
+	 */
+	public function getVarData()
+	{
+		return [
+			'View Data' => $this->viewer->getData()
+		];
+	}
+
+	//--------------------------------------------------------------------
+
+
 }
