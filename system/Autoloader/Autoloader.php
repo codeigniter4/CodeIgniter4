@@ -150,12 +150,7 @@ class Autoloader
 				return false;
 			}
 
-			if ( ! file_exists($config[$class]))
-			{
-				return false;
-			}
-
-			include $config[$class];
+			include_once $config[$class];
 		},
 			true,   // Throw exception
 			true    // Prepend
