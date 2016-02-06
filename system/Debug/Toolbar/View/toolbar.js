@@ -93,6 +93,25 @@ var ciDebugBar = {
             el.className = el.className.replace(new RegExp('(^|\\b)' + className.split(' ').join('|') + '(\\b|$)', 'gi'), ' ');
         }
 
+    },
+
+    //--------------------------------------------------------------------
+
+    /**
+     * Toggle display of a data table
+     * @param obj
+     */
+    toggleDataTable : function(obj)
+    {
+        if (typeof obj == 'string')
+        {
+            obj = document.getElementById(obj + '_table');
+        }
+
+        if (obj)
+        {
+            obj.style.display = obj.style.display == 'none' ? 'block' : 'none';
+        }
     }
 
     //--------------------------------------------------------------------

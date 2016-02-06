@@ -56,11 +56,14 @@
 
 		<!-- VarData from Collectors -->
 		<?php foreach ($varData as $heading => $items) : ?>
-			<h2><?= esc($heading) ?></h2>
+
+			<a href="#" onclick="ciDebugBar.toggleDataTable('<?= strtolower(str_replace(' ', '-', $heading)) ?>'); return false;">
+				<h2><?= esc($heading) ?></h2>
+			</a>
 
 			<?php if (is_array($items)) : ?>
 
-				<table>
+				<table id="<?= strtolower(str_replace(' ', '-', $heading.'_table')) ?>">
 					<tbody>
 					<?php foreach ($items as $key => $value) : ?>
 						<tr>
@@ -88,11 +91,13 @@
 		<?php endforeach; ?>
 
 		<!-- Session -->
-		<h2>Session User Data</h2>
+		<a href="#" onclick="ciDebugBar.toggleDataTable('session'); return false;">
+			<h2>Session User Data</h2>
+		</a>
 
 		<?php if (isset($_SESSION)) : ?>
 			<?php if (count($_SESSION)) : ?>
-				<table>
+				<table id="session_table">
 					<tbody>
 					<?php foreach ($_SESSION as $key => $value) : ?>
 						<tr>
@@ -123,9 +128,11 @@
 		<h2>Request <span>( <?= ($request->isSecure() ? 'HTTPS' : 'HTTP').'/'.$request->getProtocolVersion() ?> )</span></h2>
 
 		<?php if ($get = $request->getGet()) : ?>
-			<h3>$_GET</h3>
+			<a href="#" onclick="ciDebugBar.toggleDataTable('get'); return false;">
+				<h3>$_GET</h3>
+			</a>
 
-			<table>
+			<table id="get_table">
 				<tbody>
 				<?php foreach ($get as $name => $value) : ?>
 					<tr>
@@ -138,9 +145,11 @@
 		<?php endif ?>
 
 		<?php if ($post = $request->getPost()) : ?>
-			<h3>$_POST</h3>
+			<a href="#" onclick="ciDebugBar.toggleDataTable('post'); return false;">
+				<h3>$_POST</h3>
+			</a>
 
-			<table>
+			<table id="post_table">
 				<tbody>
 				<?php foreach ($post as $name => $value) : ?>
 					<tr>
@@ -153,9 +162,11 @@
 		<?php endif ?>
 
 		<?php if ($headers = $request->getHeaders()) : ?>
-			<h3>Headers</h3>
+			<a href="#" onclick="ciDebugBar.toggleDataTable('request_headers'); return false;">
+				<h3>Headers</h3>
+			</a>
 
-			<table>
+			<table id="request_headers_table">
 				<tbody>
 				<?php foreach ($headers as $header => $value) : ?>
 					<tr>
@@ -168,9 +179,11 @@
 		<?php endif ?>
 
 		<?php if ($get = $request->getCookie()) : ?>
-			<h3>Cookies</h3>
+			<a href="#" onclick="ciDebugBar.toggleDataTable('cookie'); return false;">
+				<h3>Cookies</h3>
+			</a>
 
-			<table>
+			<table id="cookie_table">
 				<tbody>
 				<?php foreach ($get as $name => $value) : ?>
 					<tr>
@@ -185,9 +198,11 @@
 		<h2>Response <span>( <?= $response->getStatusCode().' - '. esc($response->getReason()) ?> )</span></h2>
 
 		<?php if ($headers = $response->getHeaders()) : ?>
-			<h3>Headers</h3>
+			<a href="#" onclick="ciDebugBar.toggleDataTable('response_headers'); return false;">
+				<h3>Headers</h3>
+			</a>
 
-			<table>
+			<table id="response_headers_table">
 				<tbody>
 				<?php foreach ($headers as $header => $value) : ?>
 					<tr>
@@ -198,11 +213,6 @@
 				</tbody>
 			</table>
 		<?php endif; ?>
-	</div>
-
-	<!-- Response -->
-	<div id="ci-response" class="tab">
-
 	</div>
 </div>
 

@@ -26,6 +26,13 @@
     margin: 0 0 10pt 20pt;
     padding: 0;
 }
+#debug-bar a {
+    text-decoration: none;
+}
+#debug-bar a:hover {
+    text-decoration: underline;
+    text-decoration-color: #4e4a4a !important;
+}
 #debug-bar .muted,
 #debug-bar .muted td {
     color: #bbb !important;
