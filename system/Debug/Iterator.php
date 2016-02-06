@@ -115,7 +115,7 @@ class Iterator
 
 		if ($output)
 		{
-			return $this->report();
+			return $this->getReport();
 		}
 	}
 
