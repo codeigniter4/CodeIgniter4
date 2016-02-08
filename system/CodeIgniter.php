@@ -44,6 +44,12 @@
  * @package CodeIgniter
  */
 
+use CodeIgniter\Config\DotEnv;
+use App\Config\Services;
+use CodeIgniter\Hooks\Hooks;
+use App\Config\AutoloadConfig;
+use App\Config\AppConfig;
+
 /**
  * CodeIgniter version
  *
@@ -82,7 +88,7 @@ require_once BASEPATH.'Common.php';
 // Load environment settings from .env files
 // into $_SERVER and $_ENV
 require BASEPATH.'Config/DotEnv.php';
-$env = new \CodeIgniter\Config\DotEnv(APPPATH);
+$env = new DotEnv(APPPATH);
 $env->load();
 unset($env);
 
@@ -106,8 +112,8 @@ require APPPATH.'config/AutoloadConfig.php';
 
 // The Autoloader class only handles namespaces
 // and "legacy" support.
-$loader = \App\Config\Services::autoloader();
-$loader->initialize(new App\Config\AutoloadConfig());
+$loader = Services::autoloader();
+$loader->initialize(new AutoloadConfig());
 
 // The register function will prepend
 // the psr4 loader.
@@ -118,7 +124,7 @@ $loader->register();
  *  Set custom exception handling
  * ------------------------------------------------------
  */
-\App\Config\Services::exceptions(true)
+Services::exceptions(true)
    ->initialize();
 
 //--------------------------------------------------------------------
@@ -129,7 +135,7 @@ $loader->register();
 // keeps it lining up with the benchmark timers.
 $startTime   = microtime(true);
 
-$benchmark = \App\Config\Services::timer(true);
+$benchmark = Services::timer(true);
 $benchmark->start('total_execution');
 $benchmark->start('bootstrap');
 
@@ -137,19 +143,19 @@ $benchmark->start('bootstrap');
 // Is there a "pre-system" hook?
 //--------------------------------------------------------------------
 
-\CodeIgniter\Hooks\Hooks::trigger('pre_system');
+Hooks::trigger('pre_system');
 
 //--------------------------------------------------------------------
 // Get our Request and Response objects
 //--------------------------------------------------------------------
 
-$config = new \App\Config\AppConfig();
+$config = new AppConfig();
 
 $request  = is_cli()
-		? \App\Config\Services::clirequest($config)
-		: \App\Config\Services::request($config);
+		? Services::clirequest($config)
+		: Services::request($config);
 $request->setProtocolVersion($_SERVER['SERVER_PROTOCOL']);
-$response = \App\Config\Services::response();
+$response = Services::response();
 
 // Assume success until proven otherwise.
 $response->setStatusCode(200);
@@ -160,7 +166,7 @@ $response->setStatusCode(200);
 
 if ($config->CSRFProtection === true && ! is_cli())
 {
-	$security = \App\Config\Services::security($config);
+	$security = Services::security($config);
 
 	$security->CSRFVerify($request);
 }
@@ -171,7 +177,7 @@ if ($config->CSRFProtection === true && ! is_cli())
 
 require APPPATH.'config/Routes.php';
 
-$router = \App\Config\Services::router($routes, true);
+$router = Services::router($routes, true);
 
 $path = is_cli() ? $request->getPath() : $request->uri->getPath();
 
@@ -186,7 +192,7 @@ $benchmark->stop('routing');
 // Are there any "pre-system" hooks?
 //--------------------------------------------------------------------
 
-\CodeIgniter\Hooks\Hooks::trigger('pre_system');
+Hooks::trigger('pre_system');
 
 ob_start();
 
@@ -225,7 +231,7 @@ else
 		//--------------------------------------------------------------------
 		// Is there a "post_controller_constructor" hook?
 		//--------------------------------------------------------------------
-		\CodeIgniter\Hooks\Hooks::trigger('post_controller_constructor');
+		Hooks::trigger('post_controller_constructor');
 
 		$method = $router->methodName();
 		$class->$method(...$router->params());
@@ -238,7 +244,7 @@ $benchmark->stop('controller');
 // Is there a "post_controller" hook?
 //--------------------------------------------------------------------
 
-\CodeIgniter\Hooks\Hooks::trigger('post_controller');
+Hooks::trigger('post_controller');
 
 //--------------------------------------------------------------------
 // Output gathering and cleanup
@@ -257,7 +263,7 @@ $output = str_replace('{elapsed_time}', $totalTime, $output);
 
 if (ENVIRONMENT != 'production' && $config->toolbarEnabled)
 {
-	$toolbar = \App\Config\Services::toolbar($config);
+	$toolbar = Services::toolbar($config);
 	$output .= $toolbar->run();
 }
 
@@ -269,4 +275,4 @@ $response->send();
 // Is there a post-system hook?
 //--------------------------------------------------------------------
 
-\CodeIgniter\Hooks\Hooks::trigger('post_system');
+Hooks::trigger('post_system');
