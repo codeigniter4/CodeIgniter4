@@ -298,7 +298,7 @@ class Autoloader
 
 		if (file_exists($file))
 		{
-			require $file;
+			require_once $file;
 
 			return $file;
 		}
