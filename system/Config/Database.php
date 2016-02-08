@@ -1,4 +1,5 @@
 <?php namespace CodeIgniter\Config;
+
 /**
  * CodeIgniter
  *
@@ -26,12 +27,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2016, British Columbia Institute of Technology (http://bcit.ca/)
- * @license	http://opensource.org/licenses/MIT	MIT License
- * @link	http://codeigniter.com
- * @since	Version 3.0.0
+ * @package	  CodeIgniter
+ * @author	  CodeIgniter Dev Team
+ * @copyright Copyright (c) 2014 - 2016, British Columbia Institute of Technology (http://bcit.ca/)
+ * @license	  http://opensource.org/licenses/MIT	MIT License
+ * @link	  http://codeigniter.com
+ * @since	  Version 4.0.0
  * @filesource
  */
 

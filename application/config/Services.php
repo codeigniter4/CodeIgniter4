@@ -103,6 +103,18 @@ class Services
 
 	//--------------------------------------------------------------------
 
+	public static function database($connectionConfig = null, $dbConfig = null, $getShared = false): \CodeIgniter\Data\Database
+	{
+		if ($getShared)
+		{
+			return self::getSharedInstance('database');
+		}
+
+		return \CodeIgniter\Data\DatabaseFactory::build($connectionConfig, $dbConfig);
+	}
+
+	//--------------------------------------------------------------------
+
 	/**
 	 * The Exceptions class holds the methods that handle:
 	 *
