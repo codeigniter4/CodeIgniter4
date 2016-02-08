@@ -110,7 +110,7 @@ class Hooks
 	 *
 	 * @return bool
 	 */
-	public static function trigger($event_name, array $arguments=[])
+	public static function trigger($event_name, array $arguments=[]): bool
 	{
 		// Read in our config/events file so that we have them all!
 		if ( ! self::$haveReadFromFile)
@@ -122,9 +122,11 @@ class Hooks
 			self::$haveReadFromFile = true;
 		}
 
-		foreach (self::listeners($event_name) as $listener)
+		$listeners = self::listeners($event_name);
+
+		foreach ($listeners as $listener)
 		{
-			$result = call_user_func_array($listener, $arguments);
+			$result = $listener(...$arguments);
 
 			if ($result === false)
 			{
@@ -148,7 +150,7 @@ class Hooks
 	 *
 	 * @return array
 	 */
-	public static function listeners($event_name)
+	public static function listeners($event_name): array
 	{
 		if ( ! isset(self::$listeners[$event_name]))
 		{
@@ -181,7 +183,7 @@ class Hooks
 	 *
 	 * @return bool
 	 */
-	public static function removeListener($event_name, callable $listener)
+	public static function removeListener($event_name, callable $listener): bool
 	{
 		if ( ! isset(self::$listeners[$event_name]))
 		{
