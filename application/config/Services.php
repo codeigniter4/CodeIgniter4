@@ -306,12 +306,14 @@ class Services
 
 		if (! $getShared)
 		{
+			$logger = self::logger(true);
+
 			$driverName = $config->sessionDriver;
 			$driver = new $driverName($config);
-			$driver->setLogger(self::logger(true));
+			$driver->setLogger($logger);
 
 			$session = new \CodeIgniter\Session\Session($driver, $config);
-			$session->setLogger(self::logger());
+			$session->setLogger($logger);
 			$session->initialize();
 
 			return $session;
