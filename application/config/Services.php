@@ -182,7 +182,7 @@ class Services
 	{
 		if (! $getShared)
 		{
-			return new \CodeIgniter\View\View($viewPath, self::loader(true));
+			return new \CodeIgniter\View\View($viewPath, self::loader(true), CI_DEBUG, self::logger(true));
 		}
 
 		return self::getSharedInstance('renderer');

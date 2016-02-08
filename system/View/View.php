@@ -95,14 +95,7 @@ class View implements RenderableInterface {
 	{
 		$this->viewPath = rtrim($viewPath, '/ ').'/';
 
-		if (! is_null($loader))
-		{
-			$this->loader = $loader;
-		}
-		else
-		{
-			$this->loader = Services::loader(true);
-		}
+		$this->loader = is_null($loader) ? Services::loader(true) : $loader;
 
 		$this->logger = is_null($logger) ? Services::logger(true) : $logger;
 
