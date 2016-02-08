@@ -232,7 +232,7 @@ class Autoloader
 		{
 			if (strpos($class, $namespace) === 0)
 			{
-				$filePath = $directory.strtr(substr($class, strlen($namespace)), '\\', '/').'.php';
+				$filePath = $directory.str_replace('\\', '/', substr($class, strlen($namespace))).'.php';
 				return $this->requireFile($filePath);
 			}
 		}
