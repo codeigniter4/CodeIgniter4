@@ -298,7 +298,7 @@ class Autoloader
 
 		if (file_exists($file))
 		{
-			require_once $file;
+			require $file;
 
 			return $file;
 		}
@@ -330,13 +330,6 @@ class Autoloader
 		// be a path.
 		// http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap03.html#tag_03_278
 		$filename = preg_replace('/[^a-zA-Z0-9\s\/\-\_\.]/', '', $filename);
-
-		// Replace one or more spaces with a dash
-		// @todo needs further research
-		// per http://twiki.org/cgi-bin/view/Plugins/SlashFilenamePlugin
-		// Windows and OS X can both support spaces in filenames/paths
-		// so this breaks compatibility in those OS's.
-//		$filename = preg_replace('/[\s-]+/', '-', $filename);
 
 		// Clean up our filename edges.
 		$filename = trim($filename, '.-_');
