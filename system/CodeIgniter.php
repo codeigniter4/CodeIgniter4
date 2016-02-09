@@ -64,9 +64,9 @@ define('CI_VERSION', '4.0-dev');
  * better performance by minimizing filesystem lookups.
  * ------------------------------------------------------
  */
-if (ini_get('realpath_cache_size') == '16K')
+if (ini_get('realpath_cache_size') == '16k')
 {
-	ini_set('realpath_cache_size', '64K');
+	ini_set('realpath_cache_size', '64k');
 }
 
 /*

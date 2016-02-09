@@ -107,7 +107,6 @@
 }
 
 #debug-bar table {
-    display: block;
     margin: 0 0 10pt 20pt;
     font-size: 10pt;
     border-collapse:collapse;
