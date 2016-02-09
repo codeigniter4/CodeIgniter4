@@ -43,7 +43,7 @@ class Logs extends BaseCollector
 
 		if (empty($logs) || ! is_array($logs))
 		{
-			return '';
+			return '<p>Nothing was logged. If you were expecting logged items, ensure that LoggerConfig file has the correct threshold set.</p>';
 		}
 
 		$output = "<table><theader><tr><th>Severity</th><th>Message</th></tr></theader><tbody>";
