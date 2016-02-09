@@ -196,6 +196,7 @@ $benchmark->stop('bootstrap');
 $benchmark->start('routing');
 
 $controller = $router->handle($path);
+$method = $router->methodName();
 
 $benchmark->stop('routing');
 
@@ -209,6 +210,8 @@ ob_start();
 
 $benchmark->start('controller');
 
+$e404 = false;
+
 // Is it routed to a Closure?
 if (is_callable($controller))
 {
@@ -218,23 +221,62 @@ else
 {
 	if (empty($controller))
 	{
-		// Show the 404 error page
-		if (is_cli())
-		{
-			require APPPATH.'views/errors/cli/error_404.php';
-		}
-		else
-		{
-			require APPPATH.'views/errors/html/error_404.php';
-		}
-
-		$response->setStatusCode(404);
+		$e404 = true;
 	}
 	else
 	{
+		// Try to autoload the class
 		if (! class_exists($controller))
 		{
-			require APPPATH.'controllers/'.$router->directory().$router->controllerName().'.php';
+			// Autoloading should already try the "legacy" directories...do we need this still?
+			$path = APPPATH.'controllers/'.$router->directory().$router->controllerName().'.php';
+
+			if (file_exists($path))
+			{
+				require $path;
+			}
+			else
+			{
+				$e404 = true;
+			}
+		}
+
+		if (! class_exists($controller, false) || $method[0] === '_')
+		{
+			$e404 = true;
+		}
+		else if (! method_exists($controller, '_remap') && ! is_callable([$controller, $method], false))
+		{
+			$e404 = true;
+		}
+
+		// Display 404 Errors
+		if ($e404)
+		{
+			$response->setStatusCode(404);
+
+			if (ob_get_level() > 0)
+			{
+				ob_end_flush();
+			}
+			ob_start();
+
+			// Show the 404 error page
+			if (is_cli())
+			{
+				require APPPATH.'views/errors/cli/error_404.php';
+			}
+			else
+			{
+				require APPPATH.'views/errors/html/error_404.php';
+			}
+
+			$buffer = ob_get_contents();
+			ob_end_clean();
+
+			echo $buffer;
+
+			exit(4);    // Unknown file
 		}
 
 		$class  = new $controller($request, $response);
@@ -243,8 +285,6 @@ else
 		// Is there a "post_controller_constructor" hook?
 		//--------------------------------------------------------------------
 		Hooks::trigger('post_controller_constructor');
-
-		$method = $router->methodName();
 
 		if (method_exists($class, '_remap'))
 		{
