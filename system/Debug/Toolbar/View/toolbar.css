@@ -1,3 +1,16 @@
+body {
+    /*
+        Make room for the debug bar.
+        This height should be good.
+        Tried JS but wasn't having any luck
+        setting it to the true height.
+        Don't think this will interfere with
+        the vast majority of sites out there
+        but there is a possibility, so we'll
+        have to keep an eye out.
+    */
+    padding-top: 30pt;
+}
 #debug-bar {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
     font-size: 12pt;

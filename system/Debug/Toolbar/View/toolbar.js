@@ -13,7 +13,7 @@ var ciDebugBar = {
         this.toolbar = document.getElementById('debug-bar');
 
         // Pad the body to make room for the toolbar.
-        document.getElementsByTagName("body")[0].style.marginTop = this.toolbar.offsetHeight+"px !important";
+        //document.getElementsByTagName("html")[0].style.paddingTop = this.toolbar.offsetHeight+"px !important";
 
         ciDebugBar.createListeners();
     },
