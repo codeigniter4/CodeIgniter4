@@ -245,7 +245,15 @@ else
 		Hooks::trigger('post_controller_constructor');
 
 		$method = $router->methodName();
-		$class->$method(...$router->params());
+
+		if (method_exists($class, '_remap'))
+		{
+			$class->_remap($method, ...$router->params());
+		}
+		else
+		{
+			$class->$method(...$router->params());
+		}
 	}
 }
 
