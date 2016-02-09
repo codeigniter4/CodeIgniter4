@@ -77,7 +77,7 @@ if ( ! function_exists('log_message'))
 			return $logger->log($level, $message, $context);
 		}
 
-		return \App\Config\Services::logger(false)
+		return \App\Config\Services::logger(true)
 		                           ->log($level, $message, $context);
 	}
 }
