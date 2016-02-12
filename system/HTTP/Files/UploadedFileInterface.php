@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\HTTP;
+<?php namespace CodeIgniter\HTTP\Files;
 
 /**
  * Value object representing a single file uploaded through an
@@ -48,14 +48,23 @@ interface UploadedFileInterface
 	 *
 	 * @param string $targetPath Path to which to move the uploaded file.
 	 * @param string $name       the name to rename the file to.
-	 * @param int    $perm       The file permissions to set the file to once moved.
-	 *                           Used to make the file un-executable for security.
 	 *
 	 * @throws \InvalidArgumentException if the $path specified is invalid.
 	 * @throws \RuntimeException on any error during the move operation.
 	 * @throws \RuntimeException on the second or subsequent call to the method.
 	 */
-	public function move(string $targetPath, string $name = null, int $perm = 0644): bool;
+	public function move(string $targetPath, string $name = null): bool;
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns whether the file has been moved or not. If it has,
+	 * the move() method will not work and certain properties, like
+	 * the tempName, will no longer be available.
+	 *
+	 * @return bool
+	 */
+	public function hasMoved(): bool;
 
 	//--------------------------------------------------------------------
 
@@ -66,9 +75,14 @@ interface UploadedFileInterface
 	 * the file in the $_FILES array if available, as PHP calculates this based
 	 * on the actual size transmitted.
 	 *
+	 * @param string $unit The unit to return:
+	 *      - b   Bytes
+	 *      - kb  Kilobytes
+	 *      - mb  Megabytes
+	 *
 	 * @return int|null The file size in bytes or null if unknown.
 	 */
-	public function getSize(): int;
+	public function getSize(string $unit='b'): int;
 
 	//--------------------------------------------------------------------
 
@@ -86,7 +100,7 @@ interface UploadedFileInterface
 	 * @see http://php.net/manual/en/features.file-upload.errors.php
 	 * @return int One of PHP's UPLOAD_ERR_XXX constants.
 	 */
-	public function getError();
+	public function getError(): int;
 
 	//--------------------------------------------------------------------
 
@@ -167,17 +181,6 @@ interface UploadedFileInterface
 	 * @return string|null
 	 */
 	public function getClientType(): string;
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Attempts to determine whether this file is an image or not. Does
-	 * not trust the file extension, but uses other tools to better
-	 * verify if it is an image or not.
-	 *
-	 * @return bool
-	 */
-	public function isImage(): bool;
 
 	//--------------------------------------------------------------------
 
