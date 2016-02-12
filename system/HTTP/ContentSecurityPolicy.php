@@ -36,7 +36,7 @@
  * @filesource
  */
 
-use App\Config\ContentSecurityPolicyConfig;
+use App\Config\ContentSecurityPolicy;
 
 /**
  * Class ContentSecurityPolicy
@@ -97,9 +97,9 @@ class ContentSecurityPolicy
 	 *
 	 * Stores our default values from the config file.
 	 *
-	 * @param ContentSecurityPolicyConfig $config
+	 * @param ContentSecurityPolicy $config
 	 */
-	public function __construct(ContentSecurityPolicyConfig $config)
+	public function __construct(ContentSecurityPolicy $config)
 	{
 		foreach ($config as $setting => $value)
 		{

@@ -11,7 +11,7 @@ use CodeIgniter\Config\BaseConfig;
  *
  * @package App\Config
  */
-class ContentSecurityPolicyConfig extends BaseConfig
+class ContentSecurityPolicy extends BaseConfig
 {
 	public $reportOnly = false;
 

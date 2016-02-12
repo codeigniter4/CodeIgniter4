@@ -37,7 +37,7 @@
  */
 
 use App\Config\App;
-use App\Config\ContentSecurityPolicyConfig;
+use App\Config\ContentSecurityPolicy;
 
 /**
  * Representation of an outgoing, getServer-side response.
@@ -164,7 +164,7 @@ class Response extends Message implements ResponseInterface
 		// Are we enforcing a Content Security Policy?
 		if ($config->CSPEnabled === true)
 		{
-			$this->CSP = new ContentSecurityPolicy(new ContentSecurityPolicyConfig());
+			$this->CSP = new ContentSecurityPolicy(new ContentSecurityPolicy());
 			$this->CSPEnabled = true;
 		}
 	}
