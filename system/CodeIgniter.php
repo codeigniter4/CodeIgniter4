@@ -45,10 +45,10 @@
  */
 
 use CodeIgniter\Config\DotEnv;
-use App\Config\Services;
+use Config\Services;
 use CodeIgniter\Hooks\Hooks;
-use App\Config\Autoload;
-use App\Config\App;
+use Config\Autoload;
+use Config\App;
 
 /**
  * CodeIgniter version

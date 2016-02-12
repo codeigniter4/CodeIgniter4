@@ -36,8 +36,8 @@
  * @filesource
  */
 
-use App\Config\App;
-use App\Config\ContentSecurityPolicy;
+use Config\App;
+use Config\ContentSecurityPolicy;
 
 /**
  * Representation of an outgoing, getServer-side response.

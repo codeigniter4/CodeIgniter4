@@ -45,7 +45,7 @@
  *
  * These can be set within the .env file.
  *
- * @package App\Config
+ * @package Config
  */
 class BaseConfig
 {

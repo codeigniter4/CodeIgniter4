@@ -1,4 +1,4 @@
-<?php namespace App\Config;
+<?php namespace Config;
 
 /**
  * Database configuration class.

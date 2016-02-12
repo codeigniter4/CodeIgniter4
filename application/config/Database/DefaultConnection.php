@@ -1,4 +1,4 @@
-<?php namespace App\Config\Database;
+<?php namespace Config\Database;
 
 /**
  * The default connection configuration for the application.

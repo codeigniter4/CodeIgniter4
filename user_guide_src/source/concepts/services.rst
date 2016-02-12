@@ -26,7 +26,7 @@ class for us. This class is kept very simple. It only contains a method for each
 to use as a service. The method typically returns a new instance of that class, passing any dependencies
 it might have into it. Then, we would replace our timer creation code with code that calls this new class::
 
-	$timer = App\Config\Services::timer();
+	$timer = Config\Services::timer();
 
 When you need to change the implementation used, you can modify the services configuration file, and
 the change happens automatically throughout your application without you having to do anything. Now
@@ -108,7 +108,7 @@ as a constructor parameter. The service method looks like this::
 This sets the default path in the method constructor, but allows for easily changing
 the path it uses::
 
-	$renderer = \App\Config\Services::renderer('/shared/views');
+	$renderer = \Config\Services::renderer('/shared/views');
 
 Singleton Classes
 -----------------

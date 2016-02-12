@@ -1,6 +1,6 @@
 <?php
 
-use App\Config\App;
+use Config\App;
 use CodeIgniter\HTTP\URI;
 
 class IncomingRequestTest extends CIUnitTestCase

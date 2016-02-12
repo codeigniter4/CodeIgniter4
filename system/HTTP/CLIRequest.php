@@ -36,7 +36,7 @@
  * @filesource
  */
 
-use App\Config\App;
+use Config\App;
 
 /**
  * Class CLIRequest

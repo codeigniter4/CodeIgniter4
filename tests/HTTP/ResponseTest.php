@@ -6,7 +6,7 @@ class ResponseTest extends CIUnitTestCase
 {
 	public function testCanSetStatusCode()
 	{
-	    $response = new Response(new \App\Config\App());
+	    $response = new Response(new \Config\App());
 
 		$response->setStatusCode(200);
 
@@ -17,7 +17,7 @@ class ResponseTest extends CIUnitTestCase
 
 	public function testSetStatusCodeThrowsExceptionForBadCodes()
 	{
-		$response = new Response(new \App\Config\App());
+		$response = new Response(new \Config\App());
 
 		$this->setExpectedException('InvalidArgumentException');
 		$response->setStatusCode(54322);
@@ -28,7 +28,7 @@ class ResponseTest extends CIUnitTestCase
 
 	public function testSetStatusCodeSetsReason()
 	{
-		$response = new Response(new \App\Config\App());
+		$response = new Response(new \Config\App());
 
 		$response->setStatusCode(200);
 
@@ -39,7 +39,7 @@ class ResponseTest extends CIUnitTestCase
 
 	public function testCanSetCustomReasonCode()
 	{
-		$response = new Response(new \App\Config\App());
+		$response = new Response(new \Config\App());
 
 		$response->setStatusCode(200, 'Not the mama');
 
@@ -50,7 +50,7 @@ class ResponseTest extends CIUnitTestCase
 
 	public function testRequiresMessageWithUnknownStatusCode()
 	{
-		$response = new Response(new \App\Config\App());
+		$response = new Response(new \Config\App());
 
 		$this->setExpectedException('InvalidArgumentException', 'Unknown HTTP status code provided with no message');
 		$response->setStatusCode(115);
@@ -60,7 +60,7 @@ class ResponseTest extends CIUnitTestCase
 
 	public function testRequiresMessageWithSmallStatusCode()
 	{
-		$response = new Response(new \App\Config\App());
+		$response = new Response(new \Config\App());
 
 		$this->setExpectedException('InvalidArgumentException', '95 is not a valid HTTP return status code');
 		$response->setStatusCode(95);
@@ -70,7 +70,7 @@ class ResponseTest extends CIUnitTestCase
 
 	public function testRequiresMessageWithLargeStatusCode()
 	{
-		$response = new Response(new \App\Config\App());
+		$response = new Response(new \Config\App());
 
 		$this->setExpectedException('InvalidArgumentException', '695 is not a valid HTTP return status code');
 		$response->setStatusCode(695);
@@ -80,7 +80,7 @@ class ResponseTest extends CIUnitTestCase
 
 	public function testExceptionThrownWhenNoStatusCode()
 	{
-		$response = new Response(new \App\Config\App());
+		$response = new Response(new \Config\App());
 
 		$this->setExpectedException('BadMethodCallException', 'HTTP Response is missing a status code');
 		$response->getStatusCode();
@@ -90,7 +90,7 @@ class ResponseTest extends CIUnitTestCase
 
 	public function testSetStatusCodeInterpretsReason()
 	{
-		$response = new Response(new \App\Config\App());
+		$response = new Response(new \Config\App());
 
 		$response->setStatusCode(300);
 
@@ -101,7 +101,7 @@ class ResponseTest extends CIUnitTestCase
 
 	public function testSetStatusCodeSavesCustomReason()
 	{
-		$response = new Response(new \App\Config\App());
+		$response = new Response(new \Config\App());
 
 		$response->setStatusCode(300, 'My Little Pony');
 
@@ -112,7 +112,7 @@ class ResponseTest extends CIUnitTestCase
 
 	public function testGetReasonReturnsEmptyStringWithNoStatus()
 	{
-		$response = new Response(new \App\Config\App());
+		$response = new Response(new \Config\App());
 
 		$this->assertEquals('', $response->getReason());
 	}
@@ -121,7 +121,7 @@ class ResponseTest extends CIUnitTestCase
 
 	public function testSetDateRemembersDateInUTC()
 	{
-		$response = new Response(new \App\Config\App());
+		$response = new Response(new \Config\App());
 
 		$response->setDate(DateTime::createFromFormat('Y-m-d', '2000-03-10'));
 
@@ -137,7 +137,7 @@ class ResponseTest extends CIUnitTestCase
 
 	public function testSetContentType()
 	{
-		$response = new Response(new \App\Config\App());
+		$response = new Response(new \Config\App());
 
 		$response->setContentType('text/json');
 
@@ -148,7 +148,7 @@ class ResponseTest extends CIUnitTestCase
 
 	public function testNoCache()
 	{
-		$response = new Response(new \App\Config\App());
+		$response = new Response(new \Config\App());
 
 		$response->noCache();
 
@@ -159,7 +159,7 @@ class ResponseTest extends CIUnitTestCase
 
 	public function testSetCache()
 	{
-		$response = new Response(new \App\Config\App());
+		$response = new Response(new \Config\App());
 
 		$date = date('r');
 
@@ -181,7 +181,7 @@ class ResponseTest extends CIUnitTestCase
 
 	public function testSetLastModifiedWithDateTimeObject()
 	{
-		$response = new Response(new \App\Config\App());
+		$response = new Response(new \Config\App());
 
 		$response->setLastModified(DateTime::createFromFormat('Y-m-d', '2000-03-10'));
 

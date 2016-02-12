@@ -173,7 +173,7 @@ require_once APPPATH.'config/Autoload.php';
 // The Autoloader class only handles namespaces
 // and "legacy" support.
 $loader = new \CodeIgniter\Autoloader\Autoloader();
-$loader->initialize(new App\Config\Autoload());
+$loader->initialize(new Config\Autoload());
 
 // The register function will prepend
 // the psr4 loader.

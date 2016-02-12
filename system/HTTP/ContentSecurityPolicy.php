@@ -36,7 +36,7 @@
  * @filesource
  */
 
-use App\Config\ContentSecurityPolicy;
+use Config\ContentSecurityPolicy;
 
 /**
  * Class ContentSecurityPolicy

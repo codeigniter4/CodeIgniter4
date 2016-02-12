@@ -1,4 +1,4 @@
-<?php
+<?php namespace Config;
 
 /**
  * --------------------------------------------------------------------
@@ -19,7 +19,7 @@
  */
 
 // Create a new instance of our RouteCollection class.
-$routes = \App\Config\Services::routes();
+$routes = Services::routes();
 
 /**
  * --------------------------------------------------------------------

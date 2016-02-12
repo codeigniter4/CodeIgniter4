@@ -73,7 +73,7 @@ is an object-oriented representation of the HTTP request. It provides everything
 
   use CodeIgniter\HTTP\IncomingRequest;
 
-  $request = new IncomingRequest(new \App\Config\App(), new \CodeIgniter\HTTP\URI());
+  $request = new IncomingRequest(new \Config\App(), new \CodeIgniter\HTTP\URI());
 
   // the URI being requested (i.e. /about)
   $request->uri->path();

@@ -1,4 +1,4 @@
-<?php
+<?php namespace Config;
 
 use CodeIgniter\Hooks\Hooks;
 

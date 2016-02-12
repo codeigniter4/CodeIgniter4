@@ -22,7 +22,7 @@ are public, so you access the settings like any other property::
 
 If no namespace is provided, it will look for the files in all available namespaces that have
 been defined, as well as the traditional ``/application/config/``. All of the configuration files
-that ship with CodeIgniter are namespaced with ``App\Config``. Using this namespace in your
+that ship with CodeIgniter are namespaced with ``Config``. Using this namespace in your
 application will provide the best performance since it knows exactly what folder to find the
 files in and doesn't have to scan several locations in the filesystem to get there.
 
@@ -37,7 +37,7 @@ If you need to create a new configuration file you would create a new simple cla
 file at your desired location, ``/application/config`` by default. Then create the class and fill it
 with public properties that represent your settings::
 
-	<?php namespace App\Config;
+	<?php namespace Config;
 	
 	class App extends \CodeIgniter\Config\BaseConfig {
 	

@@ -73,11 +73,11 @@ if ( ! function_exists('log_message'))
 		// for asserting that logs were called in the test code.
 		if (ENVIRONMENT == 'testing')
 		{
-			$logger = new TestLogger(new \App\Config\Logger());
+			$logger = new TestLogger(new \Config\Logger());
 			return $logger->log($level, $message, $context);
 		}
 
-		return \App\Config\Services::logger(true)
+		return \Config\Services::logger(true)
 		                           ->log($level, $message, $context);
 	}
 }
@@ -106,7 +106,7 @@ if ( ! function_exists('view'))
 		/**
 		 * @var CodeIgniter\View\View $renderer
 		 */
-		$renderer = \App\Config\Services::renderer(null, true);
+		$renderer = \Config\Services::renderer(null, true);
 
 		return $renderer->setData($data, 'raw')
 		                ->render($name, $options);
@@ -230,7 +230,7 @@ if (! function_exists('service'))
 	 *
 	 * These are equal:
 	 *  - $timer = service('timer')
-	 *  - $timer = App\Config\Services::timer();
+	 *  - $timer = Config\Services::timer();
 	 *
 	 * @param string $name
 	 * @param        ...$params
@@ -239,7 +239,7 @@ if (! function_exists('service'))
 	 */
 	function service(string $name, ...$params)
 	{
-		return App\Config\Services::$name(...$params);
+		return Config\Services::$name(...$params);
 	}
 }
 
@@ -253,7 +253,7 @@ if (! function_exists('sharedService'))
 		// meets the number the method expects, since
 		// we have to add a 'true' as the final value
 		// to return a shared instance.
-		$mirror = new ReflectionMethod('App\Config\Services', $name);
+		$mirror = new ReflectionMethod('Config\Services', $name);
 		$count = -$mirror->getNumberOfParameters();
 
 		$params = array_pad($params, $count + 1, null);
@@ -262,7 +262,7 @@ if (! function_exists('sharedService'))
 		// we are getting a shared instance.
 		array_push($params, true);
 
-		return App\Config\Services::$name(...$params);
+		return Config\Services::$name(...$params);
 	}
 }
 
@@ -316,7 +316,7 @@ if (! function_exists('load_helper'))
 	 */
 	function load_helper(string $filename): string
 	{
-		$loader = \App\Config\Services::loader(true);
+		$loader = \Config\Services::loader(true);
 
 		$path = $loader->locateFile($filename, 'helpers');
 
@@ -340,7 +340,7 @@ if (! function_exists('get_csrf_token_name'))
 	 */
 	function get_csrf_token_name()
 	{
-		$config = new \App\Config\App();
+		$config = new \Config\App();
 
 		return $config->CSRFTokenName;
 	}
@@ -359,7 +359,7 @@ if (! function_exists('get_csrf_hash'))
 	 */
 	function get_csrf_hash()
 	{
-		$security = \App\Config\Services::security(null, true);
+		$security = \Config\Services::security(null, true);
 
 		return $security->getCSRFHash();
 	}

@@ -69,7 +69,7 @@ class DatabaseFactory
 	 * - The database configuration class name
 	 * - An array of database configuration parameters
 	 * If null/omitted and the connection configuration can not be found, attempts
-	 * to load \App\Config\Database.
+	 * to load \Config\Database.
 	 *
 	 * @param array $validNamespaces  An array of namespaces which will be searched
 	 * for the Database library.
@@ -205,7 +205,7 @@ class DatabaseFactory
 	 * - The database configuration class name
 	 * - An array of database configuration parameters
 	 * If null/omitted and the connection configuration can not be found, attempts
-	 * to load \App\Config\Database.
+	 * to load \Config\Database.
 	 *
 	 * @return \CodeIgniter\Config\Database\Connection The connection configuration.
 	 */
@@ -269,7 +269,7 @@ class DatabaseFactory
 	 * - The database configuration class name
 	 * - An array of database configuration parameters
 	 * If null/omitted and the connection configuration can not be found, attempts
-	 * to load \App\Config\Database.
+	 * to load \Config\Database.
 	 *
 	 * @return \CodeIgniter\Config\Database\Connection The connection configuration.
 	 */
@@ -333,7 +333,7 @@ class DatabaseFactory
 	 * - An instance of \CodeIgniter\Config\Database
 	 * - The database configuration class name
 	 * - An array of database configuration parameters
-	 * If null/omitted, returns \App\Config\Database
+	 * If null/omitted, returns \Config\Database
 	 *
 	 * @return \CodeIgniter\Config\Database The database configuration.
 	 */
@@ -365,7 +365,7 @@ class DatabaseFactory
 	 *
 	 * @param string $dbConfig The name of the database configuration class. This
 	 * should be either the fully-namespaced class name, or the name of a class
-	 * within either App\Config or App\Config\Database.
+	 * within either Config or Config\Database.
 	 *
 	 * @return \CodeIgniter\Config\Database The database configuration.
 	 */
@@ -388,7 +388,7 @@ class DatabaseFactory
 	/**
 	 * Get the default database configuration for the application.
 	 * @return \CodeIgniter\Config\Database The application's default database configuration.
-	 * Looks for and attempts to load \App\Config\Database.
+	 * Looks for and attempts to load \Config\Database.
 	 */
 	protected static function getDefaultDbConfig(): \CodeIgniter\Config\Database
 	{

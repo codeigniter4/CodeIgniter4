@@ -1,4 +1,4 @@
-<?php namespace App\Config;
+<?php namespace Config;
 
 use CodeIgniter\HTTP\{Response, URI};
 use CodeIgniter\Router\RouteCollectionInterface;
@@ -160,7 +160,7 @@ class Services
 	{
 	    if (! $getShared)
 	    {
-		    return new \CodeIgniter\Loader(new \App\Config\Autoload());
+		    return new \CodeIgniter\Loader(new \Config\Autoload());
 	    }
 
 		return self::getSharedInstance('loader');
@@ -177,7 +177,7 @@ class Services
 	{
 		if (! $getShared)
 		{
-			return new \CodeIgniter\Log\Logger(new \App\Config\Logger());
+			return new \CodeIgniter\Log\Logger(new \Config\Logger());
 		}
 
 		return self::getSharedInstance('logger');
@@ -419,7 +419,7 @@ class Services
 	{
 		$name = strtolower($name);
 
-		if (method_exists('App\Config\Services', $name))
+		if (method_exists('Config\Services', $name))
 		{
 			return Services::$name(...$arguments);
 		}

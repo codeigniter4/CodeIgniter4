@@ -36,7 +36,7 @@
  * @filesource
  */
 
-use App\Config\Autoload;
+use Config\Autoload;
 
 /**
  * Class Loader
