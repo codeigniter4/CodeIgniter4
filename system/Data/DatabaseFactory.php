@@ -109,7 +109,7 @@ class DatabaseFactory
 	): \CodeIgniter\Data\Database\Adapter
 	{
 		$adapterClass = self::buildClass($config, 'Adapter', $adapterNamespaces);
-		$adapterClass = new $adapterClass($config, $connection);
+		$adapterClass = new $adapterClass($connection);
 		if ( ! ($adapterClass instanceof \CodeIgniter\Data\Database\Adapter))
 		{
 			throw new \Exception('Invalid database adapter.');
@@ -282,7 +282,7 @@ class DatabaseFactory
 			{
 				return new $connectionConfig();
 			}
-			elseif (class_exists($configClass = "\\App\\Config\\Database\\{$connectionConfig}"))
+			elseif (class_exists($configClass = "\\Config\\Database\\{$connectionConfig}"))
 			{
 				return new $configClass();
 			}
@@ -375,8 +375,8 @@ class DatabaseFactory
 		{
 			return new $dbConfig();
 		}
-		elseif (class_exists($dbConf = "\\App\\Config\\{$dbConfig}")
-			|| class_exists($dbConf = "\\App\\Config\\Database\\{$dbConfig}")
+		elseif (class_exists($dbConf = "\\Config\\{$dbConfig}")
+			|| class_exists($dbConf = "\\Config\\Database\\{$dbConfig}")
 		)
 		{
 			return new $dbConf();
@@ -392,7 +392,7 @@ class DatabaseFactory
 	 */
 	protected static function getDefaultDbConfig(): \CodeIgniter\Config\Database
 	{
-		if (class_exists($dbConf = "\\App\\Config\\Database"))
+		if (class_exists($dbConf = "\\Config\\Database"))
 		{
 			return new $dbConf();
 		}

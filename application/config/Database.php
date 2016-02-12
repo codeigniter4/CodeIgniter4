@@ -30,6 +30,6 @@ class Database extends \CodeIgniter\Config\Database
 	 * @var array
 	 */
 	public $availableConnections = [
-		'default' => "\\App\\Config\\Database\\DefaultConnection",
+		'default' => "\\Config\\Database\\DefaultConnection",
 	];
 }
