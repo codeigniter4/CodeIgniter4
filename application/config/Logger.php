@@ -1,9 +1,9 @@
-<?php
+<?php namespace App\Config;
 
 use CodeIgniter\Config\BaseConfig;
 use Psr\Log\LogLevel;
 
-class LoggerConfig
+class Logger extends BaseConfig
 {
 	/*
 	|--------------------------------------------------------------------------
@@ -33,7 +33,7 @@ class LoggerConfig
 	| your log files will fill up very fast.
 	|
 	*/
-	public $threshold = 9;
+	public $threshold = 0;
 
 	/*
 	|--------------------------------------------------------------------------
@@ -55,7 +55,7 @@ class LoggerConfig
 	| codes to set your own date formatting
 	|
 	*/
-	public $dateFormat = 'Y-m-d';
+	public $dateFormat = 'Y-m-d H:i:s';
 
 	/*
 	|--------------------------------------------------------------------------
@@ -87,13 +87,48 @@ class LoggerConfig
 		// File Handler
 		//--------------------------------------------------------------------
 
-		'TestHandler' => [
+		'CodeIgniter\Log\Handlers\FileHandler' => [
 
 			/*
 			 * The log levels that this handler will handle.
 			 */
 			'handles' => ['critical', 'alert', 'emergency', 'debug',
 							'error', 'info', 'notice', 'warning'],
-		]
+
+			/*
+			 * Leave this BLANK unless you would like to set something other than the default
+			 * writeable/logs/ directory. Use a full getServer path with trailing slash.
+			 */
+		    'path' => WRITEPATH.'logs/',
+
+		    /*
+		     * The default filename extension for log files. The default 'php' allows for
+		     * protecting the log files via basic scripting, when they are to be stored
+		     * under a publicly accessible directory.
+		     *
+		     * Note: Leaving it blank will default to 'php'.
+		     */
+		    'fileExtension' => 'php',
+
+		    /*
+		     * The file system permissions to be applied on newly created log files.
+		     *
+		     * IMPORTANT: This MUST be an integer (no quotes) and you MUST use octal
+		     * integer notation (i.e. 0700, 0644, etc.)
+		     */
+		    'filePermissions' => 0644
+		],
+
+		/**
+		 * The ChromeLoggerHandler requires the use of the Chrome web browser
+		 * and the ChromeLogger extension. Uncomment this block to use it.
+		 */
+//	    'CodeIgniter\Log\Handlers\ChromeLoggerHandler' => [
+//		    /*
+//			 * The log levels that this handler will handle.
+//			 */
+//		    'handles' => ['critical', 'alert', 'emergency', 'debug',
+//		                  'error', 'info', 'notice', 'warning'],
+//	    ]
 	];
 }

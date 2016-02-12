@@ -1,9 +1,10 @@
 <?php
 
 use CodeIgniter\Log\Logger;
+use \Logger as LoggerConfig;
 use Psr\Log\LogLevel;
 
-require_once SUPPORTPATH.'Config/LoggerConfig.php';
+require_once SUPPORTPATH.'Config/Logger.php';
 require_once SUPPORTPATH.'Log/TestHandler.php';
 
 class LoggerTest extends CIUnitTestCase
@@ -24,9 +25,9 @@ class LoggerTest extends CIUnitTestCase
 
 		$logger = new Logger($config);
 	}
-	
+
 	//--------------------------------------------------------------------
-	
+
 	public function testLogThrowsExceptionOnInvalidLevel()
 	{
 		$config = new LoggerConfig();

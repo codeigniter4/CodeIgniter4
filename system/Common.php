@@ -73,7 +73,7 @@ if ( ! function_exists('log_message'))
 		// for asserting that logs were called in the test code.
 		if (ENVIRONMENT == 'testing')
 		{
-			$logger = new TestLogger(new \App\Config\LoggerConfig());
+			$logger = new TestLogger(new \App\Config\Logger());
 			return $logger->log($level, $message, $context);
 		}
 
