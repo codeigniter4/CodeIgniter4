@@ -328,3 +328,41 @@ if (! function_exists('load_helper'))
 }
 
 //--------------------------------------------------------------------
+
+if (! function_exists('get_csrf_token_name'))
+{
+	/**
+	 * Returns the CSRF token name.
+	 * Can be used in views when building hidden inputs manually,
+	 * or used in javascript vars when using APIs.
+	 *
+	 * @return string
+	 */
+	function get_csrf_token_name()
+	{
+		$config = new \App\Config\AppConfig();
+
+		return $config->CSRFTokenName;
+	}
+}
+
+//--------------------------------------------------------------------
+
+if (! function_exists('get_csrf_hash'))
+{
+	/**
+	 * Returns the current hash value for the CSRF protection.
+	 * Can be used in views when building hidden inputs manually,
+	 * or used in javascript vars for API usage.
+	 *
+	 * @return string
+	 */
+	function get_csrf_hash()
+	{
+		$security = \App\Config\Services::security(null, true);
+
+		return $security->getCSRFHash();
+	}
+}
+
+//--------------------------------------------------------------------
