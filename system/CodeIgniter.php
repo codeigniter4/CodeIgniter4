@@ -47,7 +47,7 @@
 use CodeIgniter\Config\DotEnv;
 use App\Config\Services;
 use CodeIgniter\Hooks\Hooks;
-use App\Config\AutoloadConfig;
+use App\Config\Autoload;
 use App\Config\App;
 
 /**
@@ -119,12 +119,12 @@ require APPPATH.'config/Services.php';
 
 // The autoloader isn't initialized yet, so load the file manually.
 require BASEPATH.'Autoloader/Autoloader.php';
-require APPPATH.'config/AutoloadConfig.php';
+require APPPATH.'config/Autoload.php';
 
 // The Autoloader class only handles namespaces
 // and "legacy" support.
 $loader = Services::autoloader();
-$loader->initialize(new AutoloadConfig());
+$loader->initialize(new Autoload());
 
 // The register function will prepend
 // the psr4 loader.

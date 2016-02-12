@@ -35,7 +35,7 @@ class AutoloaderTest extends \CIUnitTestCase
 
 	protected function setUp()
 	{
-		$config = new App\Config\AutoloadConfig();
+		$config = new App\Config\Autoload();
 
 		$config->classmap = [
 			'FirstClass'        => '/app/dir/First.php',

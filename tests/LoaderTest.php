@@ -14,7 +14,7 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
 
 	public function setUp()
 	{
-		$config = new MockAutoloadConfig();
+		$config = new MockAutoload();
 		$config->psr4 = [
 			'App\Libraries'   => '/application/somewhere',
 			'App'             => '/application',

@@ -99,7 +99,7 @@ class Autoloader
 	 *
 	 * @param $config
 	 */
-	public function initialize(\App\Config\AutoloadConfig $config)
+	public function initialize(\App\Config\Autoload $config)
 	{
 		// We have to have one or the other, though we don't enforce the need
 		// to have both present in order to work.

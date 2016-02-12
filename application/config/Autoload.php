@@ -9,7 +9,7 @@ require BASEPATH.'Config/AutoloadConfig.php';
  * This file defines the namespaces and class maps so the Autoloader
  * can find the files as needed.
  */
-class AutoloadConfig extends \CodeIgniter\Config\AutoloadConfig
+class Autoload extends \CodeIgniter\Config\AutoloadConfig
 {
 	public $psr4 = [];
 

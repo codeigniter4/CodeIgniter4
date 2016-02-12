@@ -160,7 +160,7 @@ class Services
 	{
 	    if (! $getShared)
 	    {
-		    return new \CodeIgniter\Loader(new \App\Config\AutoloadConfig());
+		    return new \CodeIgniter\Loader(new \App\Config\Autoload());
 	    }
 
 		return self::getSharedInstance('loader');

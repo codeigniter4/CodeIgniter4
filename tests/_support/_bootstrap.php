@@ -168,12 +168,12 @@ require_once APPPATH.'config/Services.php';
 
 // The autloader isn't initialized yet, so load the file manually.
 require_once BASEPATH.'Autoloader/Autoloader.php';
-require_once APPPATH.'config/AutoloadConfig.php';
+require_once APPPATH.'config/Autoload.php';
 
 // The Autoloader class only handles namespaces
 // and "legacy" support.
 $loader = new \CodeIgniter\Autoloader\Autoloader();
-$loader->initialize(new App\Config\AutoloadConfig());
+$loader->initialize(new App\Config\Autoload());
 
 // The register function will prepend
 // the psr4 loader.

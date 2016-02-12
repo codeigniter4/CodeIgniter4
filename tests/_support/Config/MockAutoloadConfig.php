@@ -1,6 +1,6 @@
 <?php
 
-class MockAutoloadConfig extends \App\Config\AutoloadConfig
+class MockAutoload extends \App\Config\Autoload
 {
 	public $psr4 = [];
 

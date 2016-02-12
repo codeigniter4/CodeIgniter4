@@ -11,7 +11,7 @@ class ViewTest extends CIUnitTestCase
 
 	public function setUp()
 	{
-		$this->loader = new \CodeIgniter\Loader(new \App\Config\AutoloadConfig());
+		$this->loader = new \CodeIgniter\Loader(new \App\Config\Autoload());
 		$this->viewsDir = dirname(__FILE__).'/views';
 	}
 

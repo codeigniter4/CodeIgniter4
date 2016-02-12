@@ -36,7 +36,7 @@
  * @filesource
  */
 
-use App\Config\AutoloadConfig;
+use App\Config\Autoload;
 
 /**
  * Class Loader
@@ -59,7 +59,7 @@ class Loader {
 
 	//--------------------------------------------------------------------
 
-	public function __construct(AutoloadConfig $autoload)
+	public function __construct(Autoload $autoload)
 	{
 	    $this->namespaces = $autoload->psr4;
 

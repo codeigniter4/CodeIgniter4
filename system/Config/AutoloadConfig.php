@@ -99,7 +99,7 @@ class AutoloadConfig
 			'CodeIgniter\CLI\CLI'                           => BASEPATH.'CLI/CLI.php',
 			'CodeIgniter\Loader'                            => BASEPATH.'Loader.php',
 			'CodeIgniter\Controller'                        => BASEPATH.'Controller.php',
-			'CodeIgniter\Config\AutoloadConfig'             => BASEPATH.'Config/AutoloadConfig.php',
+			'CodeIgniter\Config\AutoloadConfig'             => BASEPATH.'Config/Autoload.php',
 			'CodeIgniter\Config\BaseConfig'                 => BASEPATH.'Config/BaseConfig.php',
 			'CodeIgniter\Config\Database'                   => BASEPATH.'Config/Database.php',
 			'CodeIgniter\Config\Database\Connection'        => BASEPATH.'Config/Database/Connection.php',
