@@ -227,22 +227,7 @@ else
 	else
 	{
 		// Try to autoload the class
-		if (! class_exists($controller))
-		{
-			// Autoloading should already try the "legacy" directories...do we need this still?
-			$path = APPPATH.'controllers/'.$router->directory().$router->controllerName().'.php';
-
-			if (file_exists($path))
-			{
-				require $path;
-			}
-			else
-			{
-				$e404 = true;
-			}
-		}
-
-		if (! class_exists($controller, false) || $method[0] === '_')
+		if (! class_exists($controller, true) || $method[0] === '_')
 		{
 			$e404 = true;
 		}
