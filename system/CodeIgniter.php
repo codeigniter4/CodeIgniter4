@@ -209,6 +209,7 @@ Hooks::trigger('pre_system');
 ob_start();
 
 $benchmark->start('controller');
+$benchmark->start('controller_constructor');
 
 $e404 = false;
 
@@ -280,6 +281,8 @@ else
 		}
 
 		$class  = new $controller($request, $response);
+
+		$benchmark->stop('controller_constructor');
 
 		//--------------------------------------------------------------------
 		// Is there a "post_controller_constructor" hook?
