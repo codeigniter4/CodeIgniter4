@@ -1,6 +1,6 @@
 <?php
 
-use App\Config\AppConfig;
+use App\Config\App;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\HTTP\Response;
 
@@ -49,7 +49,7 @@ class CURLRequestTest extends CIUnitTestCase
 
 	public function setUp()
 	{
-	    $this->request = new MockCURLRequest(new AppConfig(), new URI(), new Response(new \App\Config\AppConfig()));
+	    $this->request = new MockCURLRequest(new App(), new URI(), new Response(new \App\Config\App()));
 	}
 
 	//--------------------------------------------------------------------

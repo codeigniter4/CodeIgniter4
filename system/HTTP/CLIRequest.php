@@ -36,7 +36,7 @@
  * @filesource
  */
 
-use App\Config\AppConfig;
+use App\Config\App;
 
 /**
  * Class CLIRequest
@@ -71,7 +71,7 @@ class CLIRequest extends Request
 
 	//--------------------------------------------------------------------
 
-	public function __construct(AppConfig $config)
+	public function __construct(App $config)
 	{
 		parent::__construct($config, null);
 

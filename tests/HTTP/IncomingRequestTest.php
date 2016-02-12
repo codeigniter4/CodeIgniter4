@@ -1,6 +1,6 @@
 <?php
 
-use App\Config\AppConfig;
+use App\Config\App;
 use CodeIgniter\HTTP\URI;
 
 class IncomingRequestTest extends CIUnitTestCase
@@ -12,7 +12,7 @@ class IncomingRequestTest extends CIUnitTestCase
 
 	public function setUp()
 	{
-	    $this->request = new \CodeIgniter\HTTP\IncomingRequest(new AppConfig(), new URI());
+	    $this->request = new \CodeIgniter\HTTP\IncomingRequest(new App(), new URI());
 
 		$_POST = $_GET = $_SERVER = $_REQUEST = $_ENV = $_COOKIE = $_SESSION = [];
 	}

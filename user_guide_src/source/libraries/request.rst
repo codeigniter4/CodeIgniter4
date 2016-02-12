@@ -28,7 +28,7 @@ Class Reference
 
 			echo $request->ipAddress();
 
-		.. important:: This method takes into account the ``AppConfig->proxy_ips`` setting and will
+		.. important:: This method takes into account the ``App->proxy_ips`` setting and will
 			return the reported HTTP_X_FORWARDED_FOR, HTTP_CLIENT_IP, HTTP_X_CLIENT_IP, or
 			HTTP_X_CLUSTER_CLIENT_IP address for the allowed IP address.
 

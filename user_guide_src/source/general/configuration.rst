@@ -39,7 +39,7 @@ with public properties that represent your settings::
 
 	<?php namespace App\Config;
 	
-	class AppConfig extends \CodeIgniter\Config\BaseConfig {
+	class App extends \CodeIgniter\Config\BaseConfig {
 	
 		public $siteName = 'My Great Site';
 		public $siteEmail = 'webmaster@example.com';

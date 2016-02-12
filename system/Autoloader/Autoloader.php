@@ -228,6 +228,11 @@ class Autoloader
 	 */
 	protected function loadInNamespace($class)
 	{
+		if (strpos($class, '\\') === false)
+		{
+			return false;
+		}
+
 		foreach ($this->prefixes as $namespace => $directory)
 		{
 			if (strpos($class, $namespace) === 0)

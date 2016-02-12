@@ -52,11 +52,11 @@ class Services
 	 * The CLI Request class provides for ways to interact with
 	 * a command line request.
 	 */
-	public static function clirequest(AppConfig $config=null, $getShared = false)
+	public static function clirequest(App $config=null, $getShared = false)
 	{
 		if (! is_object($config))
 		{
-			$config = new AppConfig();
+			$config = new App();
 		}
 
 		if (! $getShared)
@@ -76,7 +76,7 @@ class Services
 	 * The CURL Request class acts as a simple HTTP client for interacting
 	 * with other servers, typically through APIs.
 	 */
-	public static function curlrequest(array $options = [], $response = null, AppConfig $config = null, $getShared = false)
+	public static function curlrequest(array $options = [], $response = null, App $config = null, $getShared = false)
 	{
 		if ($getShared === true)
 		{
@@ -85,7 +85,7 @@ class Services
 
 		if (! is_object($config))
 		{
-			$config = new AppConfig();
+			$config = new App();
 		}
 
 		if ( ! is_object($response))
@@ -205,11 +205,11 @@ class Services
 	/**
 	 * The Request class models an HTTP request.
 	 */
-	public static function request(AppConfig $config = null, $getShared = false)
+	public static function request(App $config = null, $getShared = false)
 	{
 		if (! is_object($config))
 		{
-			$config = new AppConfig();
+			$config = new App();
 		}
 
 		if (! $getShared)
@@ -228,11 +228,11 @@ class Services
 	/**
 	 * The Response class models an HTTP response.
 	 */
-	public static function response(AppConfig $config = null, $getShared = false)
+	public static function response(App $config = null, $getShared = false)
 	{
 		if (! is_object($config))
 		{
-			$config = new AppConfig();
+			$config = new App();
 		}
 
 		if (! $getShared)
@@ -286,11 +286,11 @@ class Services
 	 * The Security class provides a few handy tools for keeping the site
 	 * secure, most notably the CSRF protection tools.
 	 */
-	public static function security(AppConfig $config = null, $getShared = false)
+	public static function security(App $config = null, $getShared = false)
 	{
 		if (! is_object($config))
 		{
-			$config = new AppConfig();
+			$config = new App();
 		}
 
 		if (! $getShared)
@@ -304,16 +304,16 @@ class Services
 	//--------------------------------------------------------------------
 
 	/**
-	 * @param AppConfig|null $config
-	 * @param bool           $getShared
+	 * @param App|null $config
+	 * @param bool     $getShared
 	 *
 	 * @return \CodeIgniter\Session\Session
 	 */
-	public static function session(AppConfig $config = null, $getShared = false)
+	public static function session(App $config = null, $getShared = false)
 	{
 		if (! is_object($config))
 		{
-			$config = new AppConfig();
+			$config = new App();
 		}
 
 		if (! $getShared)
@@ -352,11 +352,11 @@ class Services
 
 	//--------------------------------------------------------------------
 
-	public static function toolbar(AppConfig $config = null, $getShared = false)
+	public static function toolbar(App $config = null, $getShared = false)
 	{
 		if (! is_object($config))
 		{
-			$config = new AppConfig();
+			$config = new App();
 		}
 
 		if (! $getShared)

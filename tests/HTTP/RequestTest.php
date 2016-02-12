@@ -9,7 +9,7 @@ class RequestTest extends CIUnitTestCase
 
 	public function setUp()
 	{
-	    $this->request = new \CodeIgniter\HTTP\Request(new \App\Config\AppConfig());
+	    $this->request = new \CodeIgniter\HTTP\Request(new \App\Config\App());
 	}
 
 	//--------------------------------------------------------------------

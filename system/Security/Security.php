@@ -158,7 +158,7 @@ class Security
 	 * Stores our configuration and fires off the init() method to
 	 * setup initial state.
 	 *
-	 * @param AppConfig $config
+	 * @param \App\Config\App $config
 	 */
 	public function __construct($config)
 	{

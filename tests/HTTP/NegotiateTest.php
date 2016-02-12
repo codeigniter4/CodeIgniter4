@@ -14,7 +14,7 @@ class NegotiateTest extends CIUnitTestCase
 
 	public function setUp()
 	{
-		$this->request = new \CodeIgniter\HTTP\Request(new \App\Config\AppConfig());
+		$this->request = new \CodeIgniter\HTTP\Request(new \App\Config\App());
 
 		$this->negotiate = new \CodeIgniter\HTTP\Negotiate($this->request);
 	}

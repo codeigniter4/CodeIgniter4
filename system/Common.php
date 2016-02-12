@@ -340,7 +340,7 @@ if (! function_exists('get_csrf_token_name'))
 	 */
 	function get_csrf_token_name()
 	{
-		$config = new \App\Config\AppConfig();
+		$config = new \App\Config\App();
 
 		return $config->CSRFTokenName;
 	}

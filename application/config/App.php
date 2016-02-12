@@ -2,7 +2,7 @@
 
 use CodeIgniter\Config\BaseConfig;
 
-class AppConfig extends BaseConfig
+class App extends BaseConfig
 {
 
 	/*

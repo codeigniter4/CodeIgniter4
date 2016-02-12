@@ -36,7 +36,7 @@
  * @filesource
  */
 
-use App\Config\AppConfig;
+use App\Config\App;
 
 /**
  * Class OutgoingRequest
@@ -102,7 +102,7 @@ class CURLRequest extends Request
 	 *
 	 * @param array $options
 	 */
-	public function __construct(AppConfig $config, URI $uri, ResponseInterface $response = null, array $options = [])
+	public function __construct(App $config, URI $uri, ResponseInterface $response = null, array $options = [])
 	{
 		if ( ! function_exists('curl_version'))
 		{

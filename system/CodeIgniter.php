@@ -48,7 +48,7 @@ use CodeIgniter\Config\DotEnv;
 use App\Config\Services;
 use CodeIgniter\Hooks\Hooks;
 use App\Config\AutoloadConfig;
-use App\Config\AppConfig;
+use App\Config\App;
 
 /**
  * CodeIgniter version
@@ -160,7 +160,7 @@ Hooks::trigger('pre_system');
 // Get our Request and Response objects
 //--------------------------------------------------------------------
 
-$config = new AppConfig();
+$config = new App();
 
 $request  = is_cli()
 		? Services::clirequest($config)

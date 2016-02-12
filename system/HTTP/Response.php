@@ -36,7 +36,7 @@
  * @filesource
  */
 
-use App\Config\AppConfig;
+use App\Config\App;
 use App\Config\ContentSecurityPolicyConfig;
 
 /**
@@ -155,7 +155,7 @@ class Response extends Message implements ResponseInterface
 
 	//--------------------------------------------------------------------
 
-	public function __construct(AppConfig $config)
+	public function __construct(App $config)
 	{
 	    // Default to a non-caching page.
 		// Also ensures that a Cache-control header exists.
