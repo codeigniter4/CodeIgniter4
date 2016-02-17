@@ -97,6 +97,42 @@ class FileCollection
 	//--------------------------------------------------------------------
 
 	/**
+	 * Checks whether an uploaded file with name $fileID exists in
+	 * this request.
+	 *
+	 * @param string $fileID The name of the uploaded file (from the input)
+	 *
+	 * @return bool
+	 */
+	public function hasFile(string $fileID): bool
+	{
+		$this->populateFiles();
+
+		if (strpos($fileID, '.') !== false)
+		{
+			$segments = explode('.', $fileID);
+
+			$el = $this->files;
+
+			foreach ($segments as $segment)
+			{
+				if (! array_key_exists($segment, $el))
+				{
+					return false;
+				}
+
+				$el = $el[$segment];
+			}
+
+			return true;
+		}
+
+		return isset($this->files[$fileID]);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Taking information from the $_FILES array, it creates an instance
 	 * of UploadedFile for each one, saving the results to this->files.
 	 *

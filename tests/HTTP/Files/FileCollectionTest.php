@@ -170,4 +170,91 @@ class FileCollectionTest extends CIUnitTestCase
 	}
 
 	//--------------------------------------------------------------------
+
+	public function testHasFileWithSingleFile()
+	{
+		$_FILES = [
+			'userfile' => [
+				'name' => 'someFile.txt',
+				'type' => 'text/plain',
+				'size' => '124',
+				'tmp_name' => '/tmp/myTempFile.txt',
+				'error' => 0
+			]
+		];
+
+		$collection = new \CodeIgniter\HTTP\Files\FileCollection();
+
+		$this->assertTrue($collection->hasFile('userfile'));
+		$this->assertFalse($collection->hasFile('foo'));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testHasFileWithMultipleFilesWithDifferentNames()
+	{
+		$_FILES = [
+			'userfile1' => [
+				'name' => 'fileA.txt',
+				'type' => 'text/plain',
+				'size' => 124,
+				'tmp_name' => '/tmp/fileA.txt',
+				'error' => 0
+			],
+			'userfile2' => [
+				'name' => 'fileB.txt',
+				'type' => 'text/csv',
+				'size' => 248,
+				'tmp_name' => '/tmp/fileB.txt',
+				'error' => 0
+			],
+		];
+
+		$collection = new \CodeIgniter\HTTP\Files\FileCollection();
+
+		$this->assertTrue($collection->hasFile('userfile1'));
+		$this->assertTrue($collection->hasFile('userfile2'));
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * @group single
+	 */
+	public function testHasFileWithSingleFileNestedName()
+	{
+		$_FILES = [
+			'userfile' => [
+				'name' => [
+					'foo' => [
+						'bar' => 'fileA.txt'
+					]
+				],
+				'type' => [
+					'foo' => [
+						'bar' => 'text/plain'
+					]
+				],
+				'size' => [
+					'foo' => [
+						'bar' => 124
+					]
+				],
+				'tmp_name' => [
+					'foo' => [
+						'bar' => '/tmp/fileA.txt'
+					]
+				],
+				'error' => 0
+			]
+		];
+
+		$collection = new \CodeIgniter\HTTP\Files\FileCollection();
+
+		$this->assertTrue($collection->hasFile('userfile'));
+		$this->assertTrue($collection->hasFile('userfile.foo'));
+		$this->assertTrue($collection->hasFile('userfile.foo.bar'));
+	}
+
+	//--------------------------------------------------------------------
 }

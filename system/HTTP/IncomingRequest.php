@@ -35,6 +35,8 @@
  * @since	Version 3.0.0
  * @filesource
  */
+use CodeIgniter\HTTP\Files\FileCollection;
+use CodeIgniter\HTTP\Files\UploadedFile;
 
 /**
  * Class IncomingRequest
@@ -124,6 +126,11 @@ class IncomingRequest extends Request
 	 * @var bool
 	 */
 	protected $cookieHTTPOnly = false;
+
+	/**
+	 * @var Files\FileCollection
+	 */
+	protected $files;
 
 	//--------------------------------------------------------------------
 
@@ -379,6 +386,49 @@ class IncomingRequest extends Request
 		}
 
 		return false;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns an array of all files that have been uploaded with this
+	 * request. Each file is represented by an UploadedFile instance.
+	 *
+	 * @return array
+	 */
+	public function getFiles(): array
+	{
+		if (is_null($this->files))
+		{
+			$this->files = new FileCollection();
+		}
+
+		return $this->files->all();
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Retrieves a single file by the name of the input field used
+	 * to upload it.
+	 *
+	 * @param string $fileID
+	 *
+	 * @return UploadedFile|null
+	 */
+	public function getFile(string $fileID)
+	{
+		if (is_null($this->files))
+		{
+			$this->files = new FileCollection();
+		}
+
+		if (! $this->files->hasFile($fileID))
+		{
+			return null;
+		}
+
+		return $this->files->getFile($fileID);
 	}
 
 	//--------------------------------------------------------------------
