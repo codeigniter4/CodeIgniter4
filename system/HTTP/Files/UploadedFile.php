@@ -228,6 +228,28 @@ class UploadedFile implements UploadedFileInterface
 
 	//--------------------------------------------------------------------
 
+	public function getErrorString()
+	{
+		static $errors = [
+			UPLOAD_ERR_INI_SIZE   => 'The file "%s" exceeds your upload_max_filesize ini directive.',
+			UPLOAD_ERR_FORM_SIZE  => 'The file "%s" exceeds the upload limit defined in your form.',
+			UPLOAD_ERR_PARTIAL    => 'The file "%s" was only partially uploaded.',
+			UPLOAD_ERR_NO_FILE    => 'No file was uploaded.',
+			UPLOAD_ERR_CANT_WRITE => 'The file "%s" could not be written on disk.',
+			UPLOAD_ERR_NO_TMP_DIR => 'File could not be uploaded: missing temporary directory.',
+			UPLOAD_ERR_EXTENSION  => 'File upload was stopped by a PHP extension.',
+		];
+
+	    $error = is_null($this->error) ? UPLOAD_ERR_OK : $this->error;
+
+		return isset($errors[$error])
+			? sprintf($errors[$error], $this->getName())
+			: sprintf('The file "%s" was not uploaded due to an unknown error.', $this->getName());
+	}
+
+	//--------------------------------------------------------------------
+
+
 	/**
 	 * Retrieve the filename. This will typically be the filename sent
 	 * by the client, and should not be trusted. If the file has been

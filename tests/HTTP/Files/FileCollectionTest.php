@@ -257,4 +257,26 @@ class FileCollectionTest extends CIUnitTestCase
 	}
 
 	//--------------------------------------------------------------------
+
+	public function testErrorString()
+	{
+		$_FILES = [
+			'userfile' => [
+				'name' => 'someFile.txt',
+				'type' => 'text/plain',
+				'size' => '124',
+				'tmp_name' => '/tmp/myTempFile.txt',
+				'error' => UPLOAD_ERR_INI_SIZE
+			]
+		];
+
+		$expected = 'The file "someFile.txt" exceeds your upload_max_filesize ini directive.';
+
+		$collection = new \CodeIgniter\HTTP\Files\FileCollection();
+		$file = $collection->getFile('userfile');
+
+		$this->assertEquals($expected, $file->getErrorString());
+	}
+
+	//--------------------------------------------------------------------
 }
