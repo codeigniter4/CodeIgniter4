@@ -1,3 +1,4 @@
+#####
 Views
 #####
 
@@ -7,14 +8,14 @@ this type of hierarchy.
 
 Views are never called directly, they must be loaded by a controller. Remember that in an MVC framework,
 the Controller acts as the traffic cop, so it is responsible for fetching a particular view. If you have
-not read the Controllers page you should do so before continuing.
+not read the :doc:`Controllers`_ page, you should do so before continuing.
 
 Using the example controller you created in the controller page, let’s add a view to it.
 
 Creating a View
 ===============
 
-Using your text editor, create a file called blogview.php and put this in it::
+Using your text editor, create a file called ``blogview.php`` and put this in it::
 
 	<html>
 	<head>
@@ -38,7 +39,7 @@ Where _name_ is the name of your view file.
 
 .. important:: The .php file extension does not need to be specified, but all views are expected to end with the .php extension.
 
-Now, open the controller file you made earlier called Blog.php, and replace the echo statement with the view function::
+Now, open the controller file you made earlier called ``Blog.php``, and replace the echo statement with the view function::
 
 	class Blog extends \CodeIgniter\Controller 
 	{
@@ -52,7 +53,9 @@ If you visit your site using the URL you did earlier you should see your new vie
 
 	example.com/index.php/blog/
 
-## Loading Multiple Views
+Loading Multiple Views
+======================
+
 CodeIgniter will intelligently handle multiple calls to ``view()`` from within a controller. If more than one
 call happens they will be appended together. For example, you may wish to have a header view, a menu view, a
 content view, and a footer view. That might look something like this::
@@ -61,7 +64,10 @@ content view, and a footer view. That might look something like this::
 	{
 		public function index()
 		{
-			$data['page_title'] = 'Your title';
+			$data = [
+				'page_title' = 'Your title'
+			];
+
 			echo view('header');
 			echo view('menu');
 			echo view('content', $data);
@@ -79,7 +85,9 @@ When doing so you will need to include the directory name loading the view.  Exa
 
 	view('directory_name/file_name');
 
-## Adding Dynamic Data to the View
+Adding Dynamic Data to the View
+===============================
+
 Data is passed from the controller to the view by way of an array in the second parameter of the view
 loading function.  Here's an example::
 
@@ -108,10 +116,10 @@ Now open your view file and change the text to variables that correspond to the 
 
 	<html>
 	<head>
-        <title><?php echo $title;?></title>
+        <title><?= $title ?></title>
 	</head>
 	<body>
-        <h1><?php echo $heading;?></h1>
+        <h1><?= $heading ?></h1>
 	</body>
 	</html>
 
@@ -120,15 +128,14 @@ Then load the page at the URL you've been using and you should see the variables
 Direct Access To View Class
 ===========================
 
-The ``view()`` function is a convenience method that grabs an instance of the View class from the DI Container,
+The ``view()`` function is a convenience method that grabs an instance of the ``renderer`` service,
 sets the data, and renders the view. While this is often exactly what you want, you may find times where you
-want to work with it more directly. In that case you can access the View class through the DI Container
-with the ``renderer`` alias::
+want to work with it more directly. In that case you can access the View service directly::
 
-	$renderer = DI('renderer');
+	$renderer = \Config\Services::renderer();
 	
-.. important:: You should only use the DI class within your controllers. If you need access to the View class
-from a library, you should set that as a dependency in the constructor.
+.. important:: You should created services only within controllers. If you need access to the View class
+	from a library, you should set that as a dependency in the constructor.
 
 Then you can use any of the three standard methods that it provides. 
 
@@ -166,9 +173,9 @@ Escaping Contexts
 =================
 
 By default, the `esc()` and, in turn, the `setVar()` and `setData()` functions assume that the data you want to
- escape is intended to be used within standard HTML. However, if the data is intended for use in Javascript, CSS,
- or in an href attribute, you would need different escaping rules to be effective. You can pass in the name of the
- context as the second parameter. Valid contexts are 'html', 'js', 'css', 'url'::
+escape is intended to be used within standard HTML. However, if the data is intended for use in Javascript, CSS,
+or in an href attribute, you would need different escaping rules to be effective. You can pass in the name of the
+context as the second parameter. Valid contexts are 'html', 'js', 'css', 'url'::
 
 	<a href="<?= esc($url, 'url') ?>">Some Link</a>
 	
@@ -195,10 +202,11 @@ Here’s a simple example. Add this to your controller::
 	{
 		public function index()
 		{
-			$data['todo_list'] = array('Clean House', 'Call Mom', 'Run Errands');
-
-			$data['title'] = "My Real Title";
-			$data['heading'] = "My Real Heading";
+			$data = [
+				'todo_list' => ['Clean House', 'Call Mom', 'Run Errands'],
+				'title'     => "My Real Title",
+				'heading'   => "My Real Heading"
+			];
 
 			echo view('blogview', $data);
 		}
@@ -208,17 +216,17 @@ Now open your view file and create a loop::
 
 	<html>
 	<head>
-		<title><?php echo $title;?></title>
+		<title><?= $title ?></title>
 	</head>
 	<body>
-		<h1><?php echo $heading;?></h1>
+		<h1><?= $heading ?></h1>
 
 		<h3>My Todo List</h3>
 
 		<ul>
 		<?php foreach ($todo_list as $item):?>
 
-			<li><?php echo $item;?></li>
+			<li><?= $item ?></li>
 
 		<?php endforeach;?>
 		</ul>
