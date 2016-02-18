@@ -91,13 +91,9 @@ is an object-oriented representation of the HTTP request. It provides everything
 
   $request->method();  // GET, POST, PUT, etc
 
-  // Determine the best format to use based on content negotiation
-  $request->negotiateMedia(['application/json', 'application/xml', 'text/xml']);
-
 
 The request class does a lot of work in the background for you, that you never need to worry about.
-The ``negotiate...`` methods ensure that the priorities are matched correctly. The ``isAJAX()`` and ``isSecure()``
-methods check several different methods to determine the correct answer.
+The ``isAJAX()`` and ``isSecure()`` methods check several different methods to determine the correct answer.
 
 CodeIgniter also provides a :doc:`Response class </libraries/response>` that is an object-oriented representation
 of the HTTP response. This gives you an easy and powerful way to construct your response to the client::
