@@ -65,6 +65,8 @@ it's saved to meet company standards, or formatting a column in a certain way be
 By keeping these business requirements in the model, you won't repeat code throughout several controllers and accidentally
 miss updating an area.
 
+Models are typically stored in `/application/models`, though they can use a namespace to be grouped however you need.
+
 :doc:`Find out more about models </general/models>`
 
 
@@ -79,5 +81,8 @@ then determine what to do with it. This often involves passing the data to a mod
 The other responsibility of the controller is to handles everything that pertains to HTTP requests - redirects,
 authentication, web safety, encoding, etc. In short, the controller is where you make sure that people are allowed to
 be there, and they get the data they need in a format they can use.
+
+Controllers are typically stored in `/application/controllers`, though they can use a namespace to be grouped however
+you need.
 
 :doc:`Find out more about controllers </general/controllers>`
