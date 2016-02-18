@@ -46,16 +46,18 @@ to define the array, be sure to escape the backwards slash. That means that it w
 not ``My\App``. The value is the location to the directory the classes can be found in. They should
 have a trailing slash.
 
-By default, the application folder is namespace to the ``App`` namespace. The only place this is used
-in a fresh installation is in the configuration files. While you are not forced to namespace the controllers,
+By default, the application folder is namespace to the ``App`` namespace. While you are not forced to namespace the controllers,
 libraries, or models in the application directory, if you do, they will be found under the ``App`` namespace.
 You may change this namespace by editing the ``/application/config/Constants.php`` file and setting the
 new namespace value under the ``APP_NAMESPACE`` setting.::
 
 	define('APP_NAMESPACE', 'App');
 
-You will need to modify any existing files that are referencing the current namespace. In a fresh install,
-those are found in the config directory.
+You will need to modify any existing files that are referencing the current namespace.
+
+.. important:: Config files are namespaced in the ``Config`` namespace, not in ``App\Config`` as you might
+	expect. This allows the core system files to always be able to locate them, even when the application
+	namespace has changed.
 
 Classmap
 ========
