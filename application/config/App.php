@@ -197,5 +197,6 @@ class App extends BaseConfig
 		'CodeIgniter\Debug\Toolbar\Collectors\Views',
 //		'CodeIgniter\Debug\Toolbar\Collectors\Cache',
 		'CodeIgniter\Debug\Toolbar\Collectors\Files',
+		'CodeIgniter\Debug\Toolbar\Collectors\Routes',
 	];
 }

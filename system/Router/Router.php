@@ -90,6 +90,12 @@ class Router implements RouterInterface
 	 */
 	protected $translateURIDashes = false;
 
+	/**
+	 * The route that was matched for this request.
+	 * @var array|null
+	 */
+	protected $matchedRoute = null;
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -201,6 +207,21 @@ class Router implements RouterInterface
 	//--------------------------------------------------------------------
 
 	/**
+	 * Returns the routing information that was matched for this
+	 * request, if a route was defined.
+	 *
+	 * @return array|null
+	 */
+	public function getMatchedRoute()
+	{
+	    return $this->matchedRoute;
+	}
+
+	//--------------------------------------------------------------------
+
+
+
+	/**
 	 * Sets the value that should be used to match the index.php file. Defaults
 	 * to index.php but this allows you to modify it in case your are using
 	 * something like mod_rewrite to remove the page. This allows you to set
@@ -273,6 +294,8 @@ class Router implements RouterInterface
 
 					$this->params = $matches;
 
+					$this->matchedRoute = [$key, $val];
+
 					return true;
 				}
 				// Are we using the default method for back-references?
@@ -282,6 +305,8 @@ class Router implements RouterInterface
 				}
 
 				$this->setRequest(explode('/', $val));
+
+				$this->matchedRoute = [$key, $val];
 
 				return true;
 			}

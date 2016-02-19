@@ -274,7 +274,7 @@ class Services
 
 		if (empty($routes))
 		{
-			$routes = self::routes();
+			$routes = self::routes(true);
 		}
 
 		return new \CodeIgniter\Router\Router($routes);

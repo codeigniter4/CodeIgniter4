@@ -19,7 +19,7 @@
  */
 
 // Create a new instance of our RouteCollection class.
-$routes = Services::routes();
+$routes = Services::routes(true);
 
 /**
  * --------------------------------------------------------------------
