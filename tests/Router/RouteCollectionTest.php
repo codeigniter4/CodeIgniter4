@@ -250,22 +250,60 @@ class RouteCollectionTest extends CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testGroupSetsOptions()
+	{
+		$routes = new RouteCollection();
+
+		$routes->group('admin', ['namespace' => 'Admin'], function($routes)
+		{
+			$routes->add('users/list', 'Users::list');
+		});
+
+		$expected = [
+			'admin/users/list' => '\Admin\Users::list'
+		];
+
+		$this->assertEquals($expected, $routes->getRoutes());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testHostnameOption()
+	{
+	    $_SERVER['HTTP_HOST'] = 'example.com';
+
+		$routes = new RouteCollection();
+
+		$routes->add('from', 'to', ['hostname' => 'example.com']);
+		$routes->add('foo', 'bar', ['hostname' => 'foobar.com']);
+
+		$expected = [
+			'from' => '\to'
+		];
+
+		$this->assertEquals($expected, $routes->getRoutes());
+	}
+
+	//--------------------------------------------------------------------
+
+
+
 	public function testResourcesScaffoldsCorrectly()
 	{
-	    $routes = new RouteCollection();
-
 		$_SERVER['REQUEST_METHOD'] = 'GET';
+		$routes = new RouteCollection();
+
 		$routes->resources('photos');
 
 		$expected = [
-			'photos' => '\Photos::list_all',
+			'photos' => '\Photos::listAll',
 		    'photos/(.*)' => '\Photos::show/$1'
 		];
 
 		$this->assertEquals($expected, $routes->getRoutes());
 
-		$routes = new RouteCollection();
 		$_SERVER['REQUEST_METHOD'] = 'POST';
+		$routes = new RouteCollection();
 		$routes->resources('photos');
 
 		$expected = [
@@ -274,8 +312,8 @@ class RouteCollectionTest extends CIUnitTestCase
 
 		$this->assertEquals($expected, $routes->getRoutes());
 
-		$routes = new RouteCollection();
 		$_SERVER['REQUEST_METHOD'] = 'PUT';
+		$routes = new RouteCollection();
 		$routes->resources('photos');
 
 		$expected = [
@@ -284,8 +322,8 @@ class RouteCollectionTest extends CIUnitTestCase
 
 		$this->assertEquals($expected, $routes->getRoutes());
 
-		$routes = new RouteCollection();
 		$_SERVER['REQUEST_METHOD'] = 'DELETE';
+		$routes = new RouteCollection();
 		$routes->resources('photos');
 
 		$expected = [
@@ -299,13 +337,13 @@ class RouteCollectionTest extends CIUnitTestCase
 
 	public function testResourcesWithCustomController()
 	{
+		$_SERVER['REQUEST_METHOD'] = 'GET';
 		$routes = new RouteCollection();
 
-		$_SERVER['REQUEST_METHOD'] = 'GET';
 		$routes->resources('photos', ['controller' => '<script>gallery']);
 
 		$expected = [
-				'photos' => '\Gallery::list_all',
+				'photos' => '\Gallery::listAll',
 				'photos/(.*)' => '\Gallery::show/$1'
 		];
 
@@ -316,13 +354,13 @@ class RouteCollectionTest extends CIUnitTestCase
 
 	public function testResourcesWithCustomPlaceholder()
 	{
+		$_SERVER['REQUEST_METHOD'] = 'GET';
 		$routes = new RouteCollection();
 
-		$_SERVER['REQUEST_METHOD'] = 'GET';
 		$routes->resources('photos', ['placeholder' => ':num']);
 
 		$expected = [
-				'photos' => '\Photos::list_all',
+				'photos' => '\Photos::listAll',
 				'photos/([0-9]+)' => '\Photos::show/$1'
 		];
 
@@ -333,16 +371,16 @@ class RouteCollectionTest extends CIUnitTestCase
 
 	public function testMatchSupportsMultipleMethods()
 	{
+		$_SERVER['REQUEST_METHOD'] = 'GET';
 		$routes = new RouteCollection();
 
 		$expected = ['here' => '\there'];
 
-		$_SERVER['REQUEST_METHOD'] = 'GET';
 		$routes->match(['get', 'post'], 'here', 'there');
 		$this->assertEquals($expected, $routes->getRoutes());
 
-		$routes = new RouteCollection();
 		$_SERVER['REQUEST_METHOD'] = 'POST';
+		$routes = new RouteCollection();
 		$routes->match(['get', 'post'], 'here', 'there');
 		$this->assertEquals($expected, $routes->getRoutes());
 	}
@@ -351,11 +389,11 @@ class RouteCollectionTest extends CIUnitTestCase
 
 	public function testGet()
 	{
+		$_SERVER['REQUEST_METHOD'] = 'GET';
 		$routes = new RouteCollection();
 
 		$expected = ['here' => '\there'];
 
-		$_SERVER['REQUEST_METHOD'] = 'GET';
 		$routes->get('here', 'there');
 		$this->assertEquals($expected, $routes->getRoutes());
 	}
@@ -364,11 +402,11 @@ class RouteCollectionTest extends CIUnitTestCase
 
 	public function testPost()
 	{
+		$_SERVER['REQUEST_METHOD'] = 'POST';
 		$routes = new RouteCollection();
 
 		$expected = ['here' => '\there'];
 
-		$_SERVER['REQUEST_METHOD'] = 'POST';
 		$routes->post('here', 'there');
 		$this->assertEquals($expected, $routes->getRoutes());
 	}
@@ -377,11 +415,11 @@ class RouteCollectionTest extends CIUnitTestCase
 
 	public function testGetDoesntAllowOtherMethods()
 	{
+		$_SERVER['REQUEST_METHOD'] = 'GET';
 		$routes = new RouteCollection();
 
 		$expected = ['here' => '\there'];
 
-		$_SERVER['REQUEST_METHOD'] = 'GET';
 		$routes->get('here', 'there');
 		$routes->post('from', 'to');
 		$this->assertEquals($expected, $routes->getRoutes());
@@ -391,11 +429,11 @@ class RouteCollectionTest extends CIUnitTestCase
 
 	public function testPut()
 	{
+		$_SERVER['REQUEST_METHOD'] = 'PUT';
 		$routes = new RouteCollection();
 
 		$expected = ['here' => '\there'];
 
-		$_SERVER['REQUEST_METHOD'] = 'PUT';
 		$routes->put('here', 'there');
 		$this->assertEquals($expected, $routes->getRoutes());
 	}
@@ -404,11 +442,11 @@ class RouteCollectionTest extends CIUnitTestCase
 
 	public function testDelete()
 	{
+		$_SERVER['REQUEST_METHOD'] = 'DELETE';
 		$routes = new RouteCollection();
 
 		$expected = ['here' => '\there'];
 
-		$_SERVER['REQUEST_METHOD'] = 'DELETE';
 		$routes->delete('here', 'there');
 		$this->assertEquals($expected, $routes->getRoutes());
 	}
@@ -417,11 +455,11 @@ class RouteCollectionTest extends CIUnitTestCase
 
 	public function testHead()
 	{
+		$_SERVER['REQUEST_METHOD'] = 'HEAD';
 		$routes = new RouteCollection();
 
 		$expected = ['here' => '\there'];
 
-		$_SERVER['REQUEST_METHOD'] = 'HEAD';
 		$routes->head('here', 'there');
 		$this->assertEquals($expected, $routes->getRoutes());
 	}
@@ -430,11 +468,11 @@ class RouteCollectionTest extends CIUnitTestCase
 
 	public function testPatch()
 	{
+		$_SERVER['REQUEST_METHOD'] = 'PATCH';
 		$routes = new RouteCollection();
 
 		$expected = ['here' => '\there'];
 
-		$_SERVER['REQUEST_METHOD'] = 'PATCH';
 		$routes->patch('here', 'there');
 		$this->assertEquals($expected, $routes->getRoutes());
 	}
@@ -443,12 +481,24 @@ class RouteCollectionTest extends CIUnitTestCase
 
 	public function testOptions()
 	{
+		$_SERVER['REQUEST_METHOD'] = 'OPTIONS';
 		$routes = new RouteCollection();
 
 		$expected = ['here' => '\there'];
 
-		$_SERVER['REQUEST_METHOD'] = 'OPTIONS';
 		$routes->options('here', 'there');
+		$this->assertEquals($expected, $routes->getRoutes());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testCLI()
+	{
+		$routes = new RouteCollection();
+
+		$expected = ['here' => '\there'];
+
+		$routes->cli('here', 'there');
 		$this->assertEquals($expected, $routes->getRoutes());
 	}
 
@@ -458,11 +508,10 @@ class RouteCollectionTest extends CIUnitTestCase
 	{
 		// ENVIRONMENT should be 'testing'
 
+		$_SERVER['REQUEST_METHOD'] = 'GET';
 		$routes = new RouteCollection();
 
 		$expected = ['here' => '\there'];
-
-		$_SERVER['REQUEST_METHOD'] = 'GET';
 
 		$routes->environment('testing', function($routes)
 		{
