@@ -373,11 +373,11 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @return RouteCollectionInterface
 	 */
-	public function map(array $routes = []): RouteCollectionInterface
+	public function map(array $routes = [], array $options = []): RouteCollectionInterface
 	{
 	    foreach ($routes as $from => $to)
 	    {
-		    $this->add($from, $to);
+		    $this->add($from, $to, $options);
 	    }
 
 		return $this;
@@ -468,7 +468,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *      // Generates the following routes:
 	 *      HTTP Verb | Path        | Action        | Used for...
 	 *      ----------+-------------+---------------+-----------------
-	 *      GET         /photos             list_all        display a list of photos
+	 *      GET         /photos             listAll         display a list of photos
 	 *      GET         /photos/{id}        show            display a specific photo
 	 *      POST        /photos             create          create a new photo
 	 *      PUT         /photos/{id}        update          update an existing photo
@@ -495,7 +495,7 @@ class RouteCollection implements RouteCollectionInterface
 		// In order to allow customization of allowed id values
 		// we need someplace to store them.
 		$id = isset($this->placeholders[$this->defaultPlaceholder]) ? $this->placeholders[$this->defaultPlaceholder] :
-				'(:any)';
+				'(:segment)';
 
 		if (isset($options['placeholder'])) {
 			$id = $options['placeholder'];
@@ -504,7 +504,7 @@ class RouteCollection implements RouteCollectionInterface
 		// Make sure we capture back-references
 		$id = '('.trim($id, '()').')';
 
-		$this->get($name, $new_name . '::list_all', $options)
+		$this->get($name, $new_name . '::listAll', $options)
 		     ->get($name . '/' . $id, $new_name . '::show/$1', $options)
 		     ->post($name, $new_name . '::create', $options)
 		     ->put($name . '/' . $id, $new_name . '::update/$1', $options)

@@ -23,7 +23,7 @@ above it instead has a product ID. To overcome this, CodeIgniter allows you to r
 Setting your own routing rules
 ==============================
 
-Routing rules are defined in the ``application/config/routes.php`` file. In it you'll see that
+Routing rules are defined in the ``application/config/Routes.php`` file. In it you'll see that
 it creates an instance of the RouteCollection class that permits you to specify your own routing criteria.
 Routes can be specified using placeholders or Regular Expressions.
 
@@ -43,7 +43,7 @@ Placeholders
 
 A typical route might look something like this::
 
-    $collection->add('product/:num', 'App\Catalog::productLookup');
+    $routes->add('product/:num', 'App\Catalog::productLookup');
    
 In a route, the first parameter contains the URI to be matched, while the second parameter
 contains the destination it should be re-routed to. In the above example, if the literal word
@@ -67,22 +67,22 @@ Examples
 
 Here are a few basic routing examples::
 
-	$collection->add('journals', 'App\Blogs');
+	$routes->add('journals', 'App\Blogs');
 
 A URL containing the word "journals" in the first segment will be remapped to the "App\Blogs" class,
 and the default method, which is usually ``index()``::
 
-	$collection->add('blog/joe', 'Blogs::users/34');
+	$routes->add('blog/joe', 'Blogs::users/34');
 
 A URL containing the segments "blog/joe" will be remapped to the “\Blogs” class and the “users” method.
 The ID will be set to “34”::
 
-	$collection->add('product/(:any)', 'Catalog/productLookup');
+	$routes->add('product/(:any)', 'Catalog/productLookup');
 	
 A URL with “product” as the first segment, and anything in the second will be remapped to the “\Catalog” class
 and the “productLookup” method::
 
-	$collection->add('product/(:num)', 'Catalog/productLookupByID/$1';
+	$routes->add('product/(:num)', 'Catalog/productLookupByID/$1';
 	
 A URL with “product” as the first segment, and a number in the second will be remapped to the “\Catalog” class
 and the “productLookupByID” method passing in the match as a variable to the method.
@@ -98,8 +98,8 @@ You add new placeholders with the ``addPlaceholder`` method. The first parameter
 the placeholder. The second parameter is the Regular Expression pattern it should be replaced with.
 This must be called before you add the route::
 
-	$collection->addPlaceholder('uuid', '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}');
-	$collection->add('users/(:uuid)', 'Users::show/$1');
+	$routes->addPlaceholder('uuid', '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}');
+	$routes->add('users/(:uuid)', 'Users::show/$1');
 
 
 Regular Expressions
@@ -111,7 +111,7 @@ is allowed, as are back-references.
 .. important::Note: If you use back-references you must use the dollar syntax rather than the double backslash syntax.
 A typical RegEx route might look something like this::
 
-	$collection->add('products/([a-z]+)/(\d+)', '$1/id_$2');
+	$routes->add('products/([a-z]+)/(\d+)', '$1/id_$2');
 
 In the above example, a URI similar to products/shirts/123 would instead call the “\Shirts” controller class
 and the “id_123” method.
@@ -122,31 +122,13 @@ represent the delimiter between multiple segments.
 For example, if a user accesses a password protected area of your web application and you wish to be able to
 redirect them back to the same page after they log in, you may find this example useful::
 
-	$collection->add('login/(.+)', 'Auth::login/$1');
+	$routes->add('login/(.+)', 'Auth::login/$1');
 	
 For those of you who don’t know regular expressions and want to learn more about them,
 `regular-expressions.info <http://www.regular-expressions.info/>`_ might be a good starting point.
 
 .. important:: Note: You can also mix and match wildcards with regular expressions.
 
-
-Using HTTP verbs in routes
-==========================
-
-It is possible to use HTTP verbs (request method) to define your routing rules. This is particularly
-useful when building RESTFUL applications. You can use any standard HTTP verbs (GET, POST, PUT, DELETE, etc).
-HTTP verb rules are case-insensitive. All you need to do is supply the verb as the third parameter in the add()
-method::
-
-	$collection->add('products', 'Product::feature', 'put');
-
-In this example, a PUT request to the URI "products" would call the ``Product::feature()`` controller method.
-
-You can supply multiple verbs that a route should match by passing them in as an array::
-
-	$collection->add('products', 'Product::feature', ['get', 'put']);
-
-If no HTTP verb is specified, it will match any request method.
 
 Closures
 ========
@@ -155,7 +137,7 @@ You can use an anonymous function, or Closure, as the destination that a route m
 executed when the user visits that URI. This is handy for quickly executing small tasks, or even just showing
 a simple view::
 
-	$collection->add('feed', function() 
+	$routes->add('feed', function()
 		{
 			$rss = new RSSFeeder();
 			return $rss->feed('general');
@@ -166,59 +148,42 @@ Mapping multiple routes
 =======================
 
 While the add() method is simple to use, it is often handier to work with multiple routes at once, using
-the ``map()`` method. This also provides additional options that are not available in the ``add()`` method
-and is the preferred way to add routes.
-
-Instead of calling the ``add()`` method for each route that you need to add, you can define an array of
-routes and then pass it as the first parameter to the `map()` method::
+the ``map()`` method. Instead of calling the ``add()`` method for each route that you need to add, you can
+define an array of routes and then pass it as the first parameter to the `map()` method::
 
 	$routes = [];
-	$routes['product/(:num)'] = 'Catalog/productLookupById';
-	$routes['product/(:alphanum)'] = 'Catalog/productLookupByName';
-	
-	$collection->map($routes);
-	
-The second parameter of the map method takes an array of options that will modify or restrict the routes
-in one way or another. The options are discussed below. Any options passed to the map() method only affect
-the routes passed in along with those options. This allows you to segment your routes into multiple chunks
-that are each processed slightly differently::
-
-	$routes = [];
-	$routes['products'] = 'Products';
-	$routes['products/(:num)'] = 'Products::edit/$1';
-	
-	$collection->map($routes, ['prefix' => 'admin');
-	
-	$routes = [];
-	$routes['products'] = 'Products';
-	$routes['products/(:num)'] = 'Products::edit/$1';
-	
-	$collection->map($routes, ['prefix' => 'manage');
-
-	
-HTTP Verbs
-==========
-
-You can still use HTTP verbs in your routing when you do it this way, though the syntax is necessarily different::
-
-	$routes['product']['put'] = 'Product::insert';
-	$routes['product']['delete'] = 'Product::delete/$1';
+	$routes['product/(:num)']      = 'Catalog::productLookupById';
+	$routes['product/(:alphanum)'] = 'Catalog::productLookupByName';
 	
 	$collection->map($routes);
 
-Prefixing Routes
-================
 
-You can prefix your routes with a common string by passing an array with the key of 'prefix' and it's value in
-as the second parameter to the map() method. This allows you to reduce the typing needed to build out an
+Grouping Routes
+===============
+
+You can group your routes under a common name with the ``group()`` method. The group name becomes a segment that
+appears prior to the routes defined inside of the group. This allows you to reduce the typing needed to build out an
 extensive set of routes that all share the opening string, like when building an admin area::
 
-	$routes['products'] = 'Admin\Products';
-	$routes['products/(:num)'] = 'Admin\Products::edit/$1';
+	$routes->group('admin', function($routes)
+	{
+		$routes->add('users', 'Admin\Users::index');
+		$routes->add('blog',  'Admin\Blog::index');
+	});
 	
-	$collection->map($routes, ['prefix' => 'admin']);
-	
-This would prefix both of the "products" URIs with "admin", handling URLs like "/admin/products" and "/admin/products/34". 
+This would prefix the 'users' and 'blog" URIs with "admin", handling URLs like ``/admin/users`` and ``/admin/blog``.
+It is possible to nest groups within groups for finer organization if you need it::
+
+	$routes->group('admin', function($routes)
+	{
+		$routes->group('users', function($routes)
+		{
+			$routes->add('list', 'Admin\Users::list');
+		});
+
+	});
+
+This would handle the URL at ``admin/users/list``.
 
 Modify Namespace
 ================
@@ -233,6 +198,19 @@ the map() method::
 
 This example applies the '\App\Admin' namespace to the "users" and "products" controllers. This would cause
 the router to look for '\App\Admin\Products' instead of the default '\Products' controller.
+
+Environment Restrictions
+========================
+
+You can create a set of routes that will only be viewable under a certain environment. This allows you to create
+tools that only the developer can use on their local machines that are not reachable on testing or production servers.
+This can be done with the ``environment()`` method. The first parameter is the name of the environment. Any
+routes defined within this closure are only accessible from the given environment::
+
+	$routes->environment('development', function($routes)
+	{
+		$routes->add('builder', 'Tools\Builder::index');
+	});
 
 Hostname Restriction
 ====================
@@ -264,3 +242,113 @@ passed in next::
 	// Generate the relative URL to link to user ID 15, gallery 12
 	// Generates: /users/15/gallery/12
 	<a href="<?= route_to('Galleries::showUserGallery', 15, 12) ?>">View Gallery</a>
+
+Using HTTP verbs in routes
+==========================
+
+It is possible to use HTTP verbs (request method) to define your routing rules. This is particularly
+useful when building RESTFUL applications. You can use any standard HTTP verb (GET, POST, PUT, DELETE, etc).
+Each verb has its own method you can use::
+
+	$routes->get('products', 'Product::feature');
+	$routes->post('products', 'Product::feature');
+	$routes->put('products/(:num)', 'Product::feature');
+	$routes->delete('products/(:num)', 'Product::feature');
+
+You can supply multiple verbs that a route should match by passing them in as an array to the ``match`` method::
+
+	$routes->match(['get', 'put'], 'products', 'Product::feature');
+
+Resource Routes
+===============
+
+You can quickly create a handful of RESTful routes for a single resource with the ``resources()`` method. This
+creates the five most common routes needed for full CRUD of a resource: create a new resource, update an existing one,
+list all of that resource, show a single resource, and delete a single resource. The first parameter is the resource
+name::
+
+	$routes->resources('photos');
+
+	// Equivalent to the following:
+	$routes->get('photos',               'Photos::listAll');
+	$routes->get('photos/(:segment)',    'Photos::show/$1');
+	$routes->post('photos',              'Photos::create');
+	$routes->put('photos/(:segment)',    'Photos::update/$1');
+	$routes->delete('photos/(:segment)', 'Photos::delete/$1');
+
+The second parameter accepts an array of options that can be used to modify the routes that are generated.
+
+Change the Controller Used
+--------------------------
+
+You can specify the controller that should be used by passing in the ``controller`` option with the name of
+the controller that should be used::
+
+	$routes->resources('photos', ['controller' =>'App\Gallery']);
+
+	// Would create routes like:
+	$routes->get('photos', 'App\Gallery::listAll');
+
+Change the Placeholder Used
+---------------------------
+
+By default, the ``segment`` placeholder is used when a resource ID is needed. You can change this by passing
+in the ``placeholder`` option with the new string to use::
+
+	$routes->resources('photos', ['placeholder' => '(:id)']);
+
+	// Generates routes like:
+	$routes->get('photos/(:id)', 'Photos::show/$1');
+
+Global Options
+==============
+
+All of the methods for creating a route (add, get, post, resources, etc) can take an array of options that
+can modify the generated routes, or further restrict them. The ``$options`` array is always the last parameter::
+
+	$routes->add('from', 'to', $options);
+	$routes->get('from', 'to', $options);
+	$routes->post('from', 'to', $options);
+	$routes->put('from', 'to', $options);
+	$routes->head('from', 'to', $options);
+	$routes->options('from', 'to', $options);
+	$routes->delete('from', 'to', $options);
+	$routes->patch('from', 'to', $options);
+	$routes->match(['get, 'put'], 'from', 'to', $options);
+	$routes->resources('photos', $options);
+	$routes->map($array, $options);
+
+Limit to Subdomains
+-------------------
+
+When the ``subdomain`` option is present, the system will restrict the routes to only be available on that
+sub-domain. The route will only be matched if the subdomain is the one the application is being viewed through::
+
+	// Limit to media.example.com
+	$routes->add('from', 'to', ['subdomain' => 'media']);
+
+You can restrict it to any subdomain by setting the value to an asterisk, (*). If you are viewing from a URL
+that does not have any subdomain present, this will not be matched::
+
+	// Limit to any sub-domain
+	$routes->add('from', 'to', ['subdomain' => '*']);
+
+.. important:: The system is not perfect and should be tested for your specific domain before being used in production.
+	Most domains should work fine but some edge case ones, especially with a period in the domain itself (not used
+	to separate suffixes or www) can potentially lead to false positives.
+
+Offsetting the Matched Parameters
+---------------------------------
+
+You can offset the matched parameters in your route by any numeric value with the ``offset`` option, with the
+value being the number of segments to offset.
+
+This can be beneficial when developing API's with the first URI segment being the version number. It can also
+be used when the first parameter is a language string.::
+
+	$route->get('users/(:num)', 'users/show/$1', ['offset' => 1]);
+
+	// Creates:
+	$route['users/(:num)'] = 'users/show/$2);
+
+
