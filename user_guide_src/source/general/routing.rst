@@ -222,6 +222,23 @@ passed in next::
 	// Generates: /users/15/gallery/12
 	<a href="<?= route_to('Galleries::showUserGallery', 15, 12) ?>">View Gallery</a>
 
+Using Named Routes
+==================
+
+You can name routes to make your application less fragile. This applies a name to a route that can be called
+later, and even if the route definition changes, all of the links in your application built with ``route_to``
+will still work without you having to make any changes. A route is named by passing in the ``as`` option
+with the name of the route::
+
+    // The route is defined as:
+    $routes->add('users/(:id)/gallery(:any)', 'Galleries::showUserGallery/$1/$2', ['as' => 'user_gallery');
+
+	// Generate the relative URL to link to user ID 15, gallery 12
+	// Generates: /users/15/gallery/12
+	<a href="<?= route_to('user_gallery', 15, 12) ?>">View Gallery</a>
+
+This has the added benefit of making the views more readable, too.
+
 Using HTTP verbs in routes
 ==========================
 

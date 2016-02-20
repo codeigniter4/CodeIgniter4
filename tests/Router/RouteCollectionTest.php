@@ -593,5 +593,29 @@ class RouteCollectionTest extends CIUnitTestCase
 
 	//--------------------------------------------------------------------
 	
+	public function testNamedRoutes()
+	{
+	    $routes = new RouteCollection();
+
+		$routes->add('users', 'Users::index', ['as' => 'namedRoute']);
+
+		$this->assertEquals('users', $routes->reverseRoute('namedRoute'));
+	}
 	
+	//--------------------------------------------------------------------
+	
+	public function testNamedRoutesFillInParams()
+	{
+		$routes = new RouteCollection();
+
+		$routes->add('path/(:any)/to/(:num)', 'myController::goto/$1/$2', ['as' => 'namedRoute']);
+
+		$match = $routes->reverseRoute('namedRoute', 'string', 13);
+
+		$this->assertEquals('path/string/to/13', $match);
+	}
+
+	//--------------------------------------------------------------------
+
+
 }
