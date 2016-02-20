@@ -533,11 +533,15 @@ class RouteCollection implements RouteCollectionInterface
 		// Make sure we capture back-references
 		$id = '('.trim($id, '()').')';
 
-		$this->get($name, $new_name . '::listAll', $options)
-		     ->get($name . '/' . $id, $new_name . '::show/$1', $options)
-		     ->post($name, $new_name . '::create', $options)
-		     ->put($name . '/' . $id, $new_name . '::update/$1', $options)
-		     ->delete($name . '/' . $id, $new_name . '::delete/$1', $options);
+		$methods = isset($options['only'])
+			? is_string($options['only']) ? explode(',', $options['only']) : $options['only']
+			: ['listAll', 'show', 'create', 'update', 'delete'];
+
+		if (in_array('listAll', $methods)) $this->get($name, $new_name . '::listAll', $options);
+		if (in_array('show', $methods))    $this->get($name . '/' . $id, $new_name . '::show/$1', $options);
+		if (in_array('create', $methods))  $this->post($name, $new_name . '::create', $options);
+		if (in_array('update', $methods))  $this->put($name . '/' . $id, $new_name . '::update/$1', $options);
+		if (in_array('delete', $methods))  $this->delete($name . '/' . $id, $new_name . '::delete/$1', $options);
 
 		return $this;
 	}

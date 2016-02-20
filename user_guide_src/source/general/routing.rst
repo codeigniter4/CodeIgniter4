@@ -289,6 +289,16 @@ in the ``placeholder`` option with the new string to use::
 	// Generates routes like:
 	$routes->get('photos/(:id)', 'Photos::show/$1');
 
+Limit the Routes Made
+---------------------
+
+You can restrict the routes generated with the ``only`` option. This should be an array of method names that should
+be created. Only routes that match one of these methods will be created. The rest will be ignored.::
+
+    $routes->resources('photos', ['only' => ['listAll', 'show']]);
+
+Valid methods are: listAll, show, create, update, and delete.
+
 Global Options
 ==============
 

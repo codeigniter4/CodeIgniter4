@@ -369,6 +369,22 @@ class RouteCollectionTest extends CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testResourcesWithOnly()
+	{
+		$_SERVER['REQUEST_METHOD'] = 'GET';
+		$routes = new RouteCollection();
+
+		$routes->resources('photos', ['only' => 'listAll']);
+
+		$expected = [
+			'photos' => '\Photos::listAll'
+		];
+
+		$this->assertEquals($expected, $routes->getRoutes());
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testMatchSupportsMultipleMethods()
 	{
 		$_SERVER['REQUEST_METHOD'] = 'GET';
