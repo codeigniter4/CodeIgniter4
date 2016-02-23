@@ -201,6 +201,9 @@ try
 }
 catch (\CodeIgniter\Router\RedirectException $e)
 {
+	$logger = Services::logger();
+	$logger->info('REDIRECTED ROUTE at '. $e->getMessage());
+
 	// If the route is a 'redirect' route, it throws
 	// the exception with the $to as the message
 	$response->redirect($e->getMessage(), 'auto', $e->getCode());
