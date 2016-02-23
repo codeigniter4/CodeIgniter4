@@ -617,5 +617,22 @@ class RouteCollectionTest extends CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testAddRedirect()
+	{
+	    $routes = new RouteCollection();
+
+		$routes->addRedirect('users', 'Users::index', 307);
+
+		$expected = [
+			'users' => '\Users::index'
+		];
+
+		$this->assertEquals($expected, $routes->getRoutes());
+		$this->assertTrue($routes->isRedirect('users'));
+		$this->assertEquals(307, $routes->getRedirectCode('users'));
+	}
+
+	//--------------------------------------------------------------------
+
 
 }

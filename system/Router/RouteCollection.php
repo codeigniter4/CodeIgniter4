@@ -41,7 +41,6 @@
  *
  * @todo Implement 404Override functionality
  * @todo Implement 'secure' option?
- * @todo Implement named routes, and allow use in reverse_routing
  * @todo Implement nested resource routing (See CakePHP)
  * @todo Implmenent redirect routing to generate 30x redirects for routes to other routes.
  *
@@ -432,6 +431,78 @@ class RouteCollection implements RouteCollectionInterface
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Adds a temporary redirect from one route to another. Used for
+	 * redirecting traffic from old, non-existing routes to the new
+	 * moved routes.
+	 *
+	 * @param string $from     The pattern to match against
+	 * @param string $to       Either a route name or a URI to redirect to
+	 * @param int    $status   The HTTP status code that should be returned with this redirect
+	 */
+	public function addRedirect(string $from, string $to, int $status = 302)
+	{
+		// Use the named route's pattern if this is a named route.
+		if (array_key_exists($to, $this->routes))
+		{
+			$to = $this->routes[$to]['route'];
+		}
+
+	    $this->create($from, $to, ['redirect' => $status]);
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Determines if the route is a redirecting route.
+	 *
+	 * @param string $from
+	 *
+	 * @return bool
+	 */
+	public function isRedirect(string $from): bool
+	{
+		foreach ($this->routes as $name => $route)
+		{
+			// Named route?
+			if ($name == $from || key($route['route']) == $from)
+			{
+				return isset($route['redirect']) && is_numeric($route['redirect']);
+			}
+		}
+
+		return false;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Grabs the HTTP status code from a redirecting Route.
+	 *
+	 * @param string $from
+	 *
+	 * @return int
+	 */
+	public function getRedirectCode(string $from) : int
+	{
+		foreach ($this->routes as $name => $route)
+		{
+			// Named route?
+			if ($name == $from || key($route['route']) == $from)
+			{
+				return $route['redirect'] ?? 0;
+			}
+		}
+
+		return 0;
+	}
+
+	//--------------------------------------------------------------------
+
+
 
 	//--------------------------------------------------------------------
 	// Grouping Routes
@@ -939,6 +1010,12 @@ class RouteCollection implements RouteCollectionInterface
 		$this->routes[$name] = [
 			'route' => [$from => $to]
 		];
+
+		// Is this a redirect?
+		if (isset($options['redirect']) && is_numeric($options['redirect']))
+		{
+			$this->routes[$name]['redirect'] = $options['redirect'];
+		}
 	}
 
 	//--------------------------------------------------------------------
