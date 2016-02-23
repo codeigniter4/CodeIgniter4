@@ -1,5 +1,7 @@
 <?php namespace CodeIgniter\Router;
 
+class RedirectException extends \Exception {}
+
 /**
  * CodeIgniter
  *
@@ -302,6 +304,12 @@ class Router implements RouterInterface
 				elseif (strpos($val, '$') !== false && strpos($key, '(') !== false)
 				{
 					$val = preg_replace('#^'.$key.'$#', $val, $uri);
+				}
+
+				// Is this route supposed to redirect to another?
+				if ($this->collection->isRedirect($key))
+				{
+					throw new RedirectException($val, $this->collection->getRedirectCode($key));
 				}
 
 				$this->setRequest(explode('/', $val));

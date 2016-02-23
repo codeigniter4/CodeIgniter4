@@ -223,4 +223,25 @@ interface RouteCollectionInterface
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Determines if the route is a redirecting route.
+	 *
+	 * @param string $from
+	 *
+	 * @return bool
+	 */
+	public function isRedirect(string $from): bool;
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Grabs the HTTP status code from a redirecting Route.
+	 *
+	 * @param string $from
+	 *
+	 * @return int
+	 */
+	public function getRedirectCode(string $from) : int;
+
+	//--------------------------------------------------------------------
 }

@@ -195,7 +195,19 @@ $path = is_cli() ? $request->getPath() : $request->uri->getPath();
 $benchmark->stop('bootstrap');
 $benchmark->start('routing');
 
-$controller = $router->handle($path);
+try
+{
+	$controller = $router->handle($path);
+}
+catch (\CodeIgniter\Router\RedirectException $e)
+{
+	// If the route is a 'redirect' route, it throws
+	// the exception with the $to as the message
+	$response->redirect($e->getMessage(), 'auto', $e->getCode());
+	$response->sendHeaders();
+	exit;
+}
+
 $method = $router->methodName();
 
 $benchmark->stop('routing');

@@ -42,7 +42,6 @@
  * @todo Implement 404Override functionality
  * @todo Implement 'secure' option?
  * @todo Implement nested resource routing (See CakePHP)
- * @todo Implmenent redirect routing to generate 30x redirects for routes to other routes.
  *
  * @package CodeIgniter\Router
  */
