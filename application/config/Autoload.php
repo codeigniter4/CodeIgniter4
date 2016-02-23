@@ -45,13 +45,13 @@ class Autoload extends \CodeIgniter\Config\AutoloadConfig
 		 * WILL break. *
 		 * Prototype:
 		 *
-		 *   $config['psr4'] = [
+		 *   $Config['psr4'] = [
 		 *       'CodeIgniter' => SYSPATH
 		 *   `];
 		 */
 		$psr4 = [
-			'Config'                     => APPPATH.'config',
-			APP_NAMESPACE.'\Controllers' => APPPATH.'controllers',
+			'Config'                     => APPPATH.'Config',
+			APP_NAMESPACE.'\Controllers' => APPPATH.'Controllers',
 			APP_NAMESPACE                => realpath(APPPATH),
 		];
 
@@ -67,7 +67,7 @@ class Autoload extends \CodeIgniter\Config\AutoloadConfig
 		 *
 		 * Prototype:
 		 *
-		 *   $config['classmap'] = [
+		 *   $Config['classmap'] = [
 		 *       'MyClass'   => '/path/to/class/file.php'
 		 *   ];
 		 */

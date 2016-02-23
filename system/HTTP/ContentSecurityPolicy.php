@@ -95,7 +95,7 @@ class ContentSecurityPolicy
 	/**
 	 * ContentSecurityPolicy constructor.
 	 *
-	 * Stores our default values from the config file.
+	 * Stores our default values from the Config file.
 	 *
 	 * @param ContentSecurityPolicy $config
 	 */

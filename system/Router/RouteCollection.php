@@ -48,7 +48,7 @@
 class RouteCollection implements RouteCollectionInterface
 {
 	/**
-	 * The namespace to be added to any controllers.
+	 * The namespace to be added to any Controllers.
 	 * Defaults to the global namespaces (\)
 	 *
 	 * @var string
@@ -93,7 +93,7 @@ class RouteCollection implements RouteCollectionInterface
 	protected $translateURIDashes = false;
 
 	/**
-	 * Whether to match URI against controllers
+	 * Whether to match URI against Controllers
 	 * when it doesn't match defined routes.
 	 *
 	 * Not used here. Pass-thru value for Router class.
@@ -197,7 +197,7 @@ class RouteCollection implements RouteCollectionInterface
 	//--------------------------------------------------------------------
 
 	/**
-	 * Sets the default namespace to use for controllers when no other
+	 * Sets the default namespace to use for Controllers when no other
 	 * namespace has been specified.
 	 *
 	 * @param $value
@@ -270,8 +270,8 @@ class RouteCollection implements RouteCollectionInterface
 
 	/**
 	 * If TRUE, the system will attempt to match the URI against
-	 * controllers by matching each segment against folders/files
-	 * in APPPATH/controllers, when a match wasn't found against
+	 * Controllers by matching each segment against folders/files
+	 * in APPPATH/Controllers, when a match wasn't found against
 	 * defined routes.
 	 *
 	 * If FALSE, will stop searching and do NO automatic routing.
@@ -345,7 +345,7 @@ class RouteCollection implements RouteCollectionInterface
 	//--------------------------------------------------------------------
 
 	/**
-	 * Returns the flag that tells whether to autoRoute URI against controllers.
+	 * Returns the flag that tells whether to autoRoute URI against Controllers.
 	 *
 	 * @return bool
 	 */
@@ -552,7 +552,7 @@ class RouteCollection implements RouteCollectionInterface
 	//--------------------------------------------------------------------
 	// HTTP Verb-based routing
 	//--------------------------------------------------------------------
-	// Routing works here because, as the routes config file is read in,
+	// Routing works here because, as the routes Config file is read in,
 	// the various HTTP verb-based routes will only be added to the in-memory
 	// routes if it is a call that should respond to that verb.
 	//

@@ -129,7 +129,7 @@ class Loader {
 		}
 
 		// IF we have a folder name, then the calling function
-		// expects this file to be within that folder, like 'views',
+		// expects this file to be within that folder, like 'Views',
 		// or 'libraries'.
 		if (! empty($folder))
 		{

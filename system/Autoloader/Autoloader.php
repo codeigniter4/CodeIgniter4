@@ -50,10 +50,10 @@
  *                  Quux.php    # Foo\Bar\Qux\Quux
  *
  * you can add the path to the configuration array that is passed in the constructor.
- * The config array consists of 2 primary keys, both of which are associative arrays:
+ * The Config array consists of 2 primary keys, both of which are associative arrays:
  * 'psr4', and 'classmap'.
  *
- *      $config = [
+ *      $Config = [
  *          'psr4' => [
  *              'Foo\Bar'   => '/path/to/packages/foo-bar'
  *          ],
@@ -66,8 +66,8 @@
  *
  *      <?php
  *      // our configuration array
- *      $config = [ ... ];
- *      $loader = new \CodeIgniter\Autoloader\Autoloader($config);
+ *      $Config = [ ... ];
+ *      $loader = new \CodeIgniter\Autoloader\Autoloader($Config);
  *
  *      // register the autoloader
  *      $loader->register();
@@ -267,7 +267,7 @@ class Autoloader
 		}
 
 		$paths = [
-			APPPATH.'controllers/',
+			APPPATH.'Controllers/',
 			APPPATH.'libraries/',
 			APPPATH.'models/',
 		];

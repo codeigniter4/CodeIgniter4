@@ -89,7 +89,7 @@ if ( ! function_exists('view'))
 	/**
 	 * Grabs the current RenderableInterface-compatible class
 	 * and tells it to render the specified view. Simply provides
-	 * a convenience method that can be used in controllers,
+	 * a convenience method that can be used in Controllers,
 	 * libraries, and routed closures.
 	 *
 	 * NOTE: Does not provide any escaping of the data, so that must
@@ -206,7 +206,7 @@ if ( ! function_exists('route_to'))
 	 * matching route.
 	 *
 	 * NOTE: This requires the controller/method to
-	 * have a route defined in the routes config file.
+	 * have a route defined in the routes Config file.
 	 *
 	 * @param string $method
 	 * @param        ...$params
@@ -226,7 +226,7 @@ if ( ! function_exists('route_to'))
 if (! function_exists('service'))
 {
 	/**
-	 * Allows cleaner access to the Services config file.
+	 * Allows cleaner access to the Services Config file.
 	 *
 	 * These are equal:
 	 *  - $timer = service('timer')
@@ -333,7 +333,7 @@ if (! function_exists('get_csrf_token_name'))
 {
 	/**
 	 * Returns the CSRF token name.
-	 * Can be used in views when building hidden inputs manually,
+	 * Can be used in Views when building hidden inputs manually,
 	 * or used in javascript vars when using APIs.
 	 *
 	 * @return string
@@ -352,7 +352,7 @@ if (! function_exists('get_csrf_hash'))
 {
 	/**
 	 * Returns the current hash value for the CSRF protection.
-	 * Can be used in views when building hidden inputs manually,
+	 * Can be used in Views when building hidden inputs manually,
 	 * or used in javascript vars for API usage.
 	 *
 	 * @return string

@@ -75,12 +75,12 @@ if (ini_get('realpath_cache_size') == '16k')
  * ------------------------------------------------------
  */
 
-if (file_exists(APPPATH.'config/'.ENVIRONMENT.'/constants.php'))
+if (file_exists(APPPATH.'Config/'.ENVIRONMENT.'/constants.php'))
 {
-	require_once APPPATH.'config/'.ENVIRONMENT.'/constants.php';
+	require_once APPPATH.'Config/'.ENVIRONMENT.'/constants.php';
 }
 
-require_once(APPPATH.'config/Constants.php');
+require_once(APPPATH.'Config/Constants.php');
 
 /*
  * ------------------------------------------------------
@@ -109,7 +109,7 @@ unset($env);
  * ------------------------------------------------------
  */
 
-require APPPATH.'config/Services.php';
+require APPPATH.'Config/Services.php';
 
 /*
  * ------------------------------------------------------
@@ -119,7 +119,7 @@ require APPPATH.'config/Services.php';
 
 // The autoloader isn't initialized yet, so load the file manually.
 require BASEPATH.'Autoloader/Autoloader.php';
-require APPPATH.'config/Autoload.php';
+require APPPATH.'Config/Autoload.php';
 
 // The Autoloader class only handles namespaces
 // and "legacy" support.
@@ -186,7 +186,7 @@ if ($config->CSRFProtection === true && ! is_cli())
 // Try to Route It
 //--------------------------------------------------------------------
 
-require APPPATH.'config/Routes.php';
+require APPPATH.'Config/Routes.php';
 
 $router = Services::router($routes, true);
 
@@ -265,11 +265,11 @@ else
 			// Show the 404 error page
 			if (is_cli())
 			{
-				require APPPATH.'views/errors/cli/error_404.php';
+				require APPPATH.'Views/errors/cli/error_404.php';
 			}
 			else
 			{
-				require APPPATH.'views/errors/html/error_404.php';
+				require APPPATH.'Views/errors/html/error_404.php';
 			}
 
 			$buffer = ob_get_contents();

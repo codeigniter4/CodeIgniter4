@@ -6,14 +6,14 @@
  * This file will contain the settings needed to access your database.
  *
  * Mapping values from CI3 database configuration:
- * $active_group  - not set here, see $activeConnection in the application's Database config
+ * $active_group  - not set here, see $activeConnection in the application's Database Config
  * $query_builder - currently not supported
  * $db            - set by a combination of $availableConnections in the application's
- *                  Database config and files like this one to set the configuration
+ *                  Database Config and files like this one to set the configuration
  *                  of the individual connections.
  *
  * The following are the keys used in configuring connection groups in CI3's $db
- * property and their equivalent properties in CI4's Database Connection config:
+ * property and their equivalent properties in CI4's Database Connection Config:
  * 'dsn'          - $dsn
  * 'hostname'     - $hostname
  * 'username'     - $username
@@ -49,7 +49,7 @@
  * $deleteHack    - (MySQLi-only)
  *
  * The order of the properties below has been arranged (and their values have been
- * set) to match the default connection group in CI3's database config.
+ * set) to match the default connection group in CI3's database Config.
  */
 class DefaultConnection extends \CodeIgniter\Config\Database\Connection\MySQLi
 {
@@ -101,7 +101,7 @@ class DefaultConnection extends \CodeIgniter\Config\Database\Connection\MySQLi
 	 * List of connections to use if this one fails to connect.
 	 *
 	 * The values in this array should match the keys used in the application's
-	 * Database config to reference other connection configuration classes.
+	 * Database Config to reference other connection configuration classes.
 	 *
 	 * @var array
 	 */

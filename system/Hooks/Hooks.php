@@ -51,7 +51,7 @@ class Hooks
 	protected static $listeners = [];
 
 	/**
-	 * Flag to let us know if we've read from the config file
+	 * Flag to let us know if we've read from the Config file
 	 * and have all of the defined events.
 	 *
 	 * @var bool
@@ -112,7 +112,7 @@ class Hooks
 	 */
 	public static function trigger($event_name, array $arguments=[]): bool
 	{
-		// Read in our config/events file so that we have them all!
+		// Read in our Config/events file so that we have them all!
 		if ( ! self::$haveReadFromFile)
 		{
 			if (is_file(self::$hooksFile))

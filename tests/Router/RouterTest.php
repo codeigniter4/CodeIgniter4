@@ -170,11 +170,11 @@ class RouterTest extends CIUnitTestCase
 	{
 		$router = new Router($this->collection);
 
-		mkdir(APPPATH.'controllers/subfolder');
+		mkdir(APPPATH.'Controllers/subfolder');
 
 		$router->autoRoute('subfolder/myController/someMethod');
 
-		rmdir(APPPATH.'controllers/subfolder');
+		rmdir(APPPATH.'Controllers/subfolder');
 
 		$this->assertEquals('MyController', $router->controllerName());
 		$this->assertEquals('someMethod', $router->methodName());

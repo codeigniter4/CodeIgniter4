@@ -48,7 +48,7 @@ $routes = Services::routes(true);
  *    $routes->setAutoRoute()
  *
  * Determines whether the Router will attempt to match URIs to
- * controllers when no specific route has been defined. If false,
+ * Controllers when no specific route has been defined. If false,
  * only routes that have been defined here will be available.
  */
 $routes->setDefaultNamespace('');
@@ -80,7 +80,7 @@ $routes->add('/', 'Home::index');
  * You will have access to the $routes object within that file without
  * needing to reload it.
  */
-if (file_exists(APPPATH.'config/'.ENVIRONMENT.'/Routes.php'))
+if (file_exists(APPPATH.'Config/'.ENVIRONMENT.'/Routes.php'))
 {
-	require APPPATH.'config/'.ENVIRONMENT.'/Routes.php';
+	require APPPATH.'Config/'.ENVIRONMENT.'/Routes.php';
 }

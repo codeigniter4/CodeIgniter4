@@ -140,7 +140,7 @@ class Router implements RouterInterface
 		}
 
 		// Still here? Then we can try to match the URI against
-		// controllers/directories, but the application may not
+		// Controllers/directories, but the application may not
 		// want this, like in the case of API's.
 		if ( ! $this->collection->shouldAutoRoute())
 		{
@@ -195,7 +195,7 @@ class Router implements RouterInterface
 
 	/**
 	 * Returns the name of the sub-directory the controller is in,
-	 * if any. Relative to APPPATH.'controllers'.
+	 * if any. Relative to APPPATH.'Controllers'.
 	 *
 	 * Only used when auto-routing is turned on.
 	 *
@@ -326,8 +326,8 @@ class Router implements RouterInterface
 	//--------------------------------------------------------------------
 
 	/**
-	 * Attempts to match a URI path against controllers and directories
-	 * found in APPPATH/controllers, to find a matching route.
+	 * Attempts to match a URI path against Controllers and directories
+	 * found in APPPATH/Controllers, to find a matching route.
 	 *
 	 * @param string $uri
 	 */
@@ -381,9 +381,9 @@ class Router implements RouterInterface
 					: $segments[0]
 				);
 
-			if ( ! file_exists(APPPATH.'controllers/'.$test.'.php')
+			if ( ! file_exists(APPPATH.'Controllers/'.$test.'.php')
 			     && $directory_override === false
-			     && is_dir(APPPATH.'controllers/'.$this->directory.$segments[0])
+			     && is_dir(APPPATH.'Controllers/'.$this->directory.$segments[0])
 			)
 			{
 				$this->setDirectory(array_shift($segments), true);
@@ -480,7 +480,7 @@ class Router implements RouterInterface
 			$this->method = 'index';
 		}
 
-		if (! file_exists(APPPATH.'controllers/'.$this->directory.ucfirst($class).'.php'))
+		if (! file_exists(APPPATH.'Controllers/'.$this->directory.ucfirst($class).'.php'))
 		{
 			return;
 		}

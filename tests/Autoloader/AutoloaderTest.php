@@ -42,7 +42,7 @@ class AutoloaderTest extends \CIUnitTestCase
 			'Name\Spaced\Class' => '/app/namespace/Class.php',
 		];
 		$config->psr4 = [
-			'App\Controllers' => '/application/controllers',
+			'App\Controllers' => '/application/Controllers',
 			'App\Libraries'   => '/application/somewhere',
 		];
 
@@ -50,7 +50,7 @@ class AutoloaderTest extends \CIUnitTestCase
 		$this->loader->initialize($config);
 
 		$this->loader->setFiles([
-			'/application/controllers/Classname.php',
+			'/application/Controllers/Classname.php',
 			'/application/somewhere/Classname.php',
 			'/app/dir/First.php',
 			'/app/namespace/Class.php',
@@ -69,7 +69,7 @@ class AutoloaderTest extends \CIUnitTestCase
 	public function testExistingFile()
 	{
 		$actual   = $this->loader->loadClass('App\Controllers\Classname');
-		$expected = '/application/controllers/Classname.php';
+		$expected = '/application/Controllers/Classname.php';
 		$this->assertSame($expected, $actual);
 
 		$actual   = $this->loader->loadClass('App\Libraries\Classname');
@@ -82,7 +82,7 @@ class AutoloaderTest extends \CIUnitTestCase
 	public function testMatchesWithPreceedingSlash()
 	{
 		$actual   = $this->loader->loadClass('\App\Controllers\Classname');
-		$expected = '/application/controllers/Classname.php';
+		$expected = '/application/Controllers/Classname.php';
 		$this->assertSame($expected, $actual);
 	}
 
@@ -91,7 +91,7 @@ class AutoloaderTest extends \CIUnitTestCase
 	public function testMatchesWithFileExtension()
 	{
 		$actual   = $this->loader->loadClass('\App\Controllers\Classname.php');
-		$expected = '/application/controllers/Classname.php';
+		$expected = '/application/Controllers/Classname.php';
 		$this->assertSame($expected, $actual);
 	}
 

@@ -190,7 +190,7 @@ class Services
 	 * The default View class within CodeIgniter is intentionally simple, but this
 	 * service could easily be replaced by a template engine if the user needed to.
 	 */
-	public static function renderer($viewPath = APPPATH.'views/', $getShared = false)
+	public static function renderer($viewPath = APPPATH.'Views/', $getShared = false)
 	{
 		if (! $getShared)
 		{

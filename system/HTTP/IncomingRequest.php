@@ -79,7 +79,7 @@ class IncomingRequest extends Request
 	 * Enable CSRF flag
 	 *
 	 * Enables a CSRF cookie token to be set.
-	 * Set automatically based on config setting.
+	 * Set automatically based on Config setting.
 	 *
 	 * @var bool
 	 */
@@ -435,7 +435,7 @@ class IncomingRequest extends Request
 
 	/**
 	 * Sets up our URI object based on the information we have. This is
-	 * either provided by the user in the baseURL config setting, or
+	 * either provided by the user in the baseURL Config setting, or
 	 * determined from the environment as needed.
 	 *
 	 * @param $protocol
@@ -473,7 +473,7 @@ class IncomingRequest extends Request
 	//--------------------------------------------------------------------
 
 	/**
-	 * Based on the URIProtocol config setting, will attempt to
+	 * Based on the URIProtocol Config setting, will attempt to
 	 * detect the path portion of the current URI.
 	 *
 	 * @param $protocol

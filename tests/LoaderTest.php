@@ -25,10 +25,10 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
 
 		$this->loader->setFiles([
 			APPPATH.'index.php',
-			APPPATH.'views/index.php',
-		    APPPATH.'views/admin/users/create.php',
-		    '/modules/blog/views/index.php',
-		    '/modules/blog/views/admin/posts.php'
+			APPPATH.'Views/index.php',
+		    APPPATH.'Views/admin/users/create.php',
+		    '/modules/blog/Views/index.php',
+		    '/modules/blog/Views/admin/posts.php'
 		]);
 	}
 
@@ -38,9 +38,9 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
 	{
 		$file = 'index';
 
-		$expected = APPPATH.'views/index.php';
+		$expected = APPPATH.'Views/index.php';
 
-		$this->assertEquals($expected, $this->loader->locateFile($file, 'views'));
+		$this->assertEquals($expected, $this->loader->locateFile($file, 'Views'));
 	}
 
 	//--------------------------------------------------------------------
@@ -60,9 +60,9 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
 	{
 		$file = 'admin/users/create';
 
-		$expected = APPPATH.'views/admin/users/create.php';
+		$expected = APPPATH.'Views/admin/users/create.php';
 
-		$this->assertEquals($expected, $this->loader->locateFile($file, 'views'));
+		$this->assertEquals($expected, $this->loader->locateFile($file, 'Views'));
 	}
 
 	//--------------------------------------------------------------------
@@ -71,20 +71,20 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
 	{
 		$file = '\Blog\views/admin/posts.php';
 
-		$expected = '/modules/blog/views/admin/posts.php';
+		$expected = '/modules/blog/Views/admin/posts.php';
 
-		$this->assertEquals($expected, $this->loader->locateFile($file, 'views'));
+		$this->assertEquals($expected, $this->loader->locateFile($file, 'Views'));
 	}
 
 	//--------------------------------------------------------------------
 
 	public function testLocateFileReplacesFolderNameLegacy()
 	{
-		$file = 'views/index.php';
+		$file = 'Views/index.php';
 
-		$expected = APPPATH.'views/index.php';
+		$expected = APPPATH.'Views/index.php';
 
-		$this->assertEquals($expected, $this->loader->locateFile($file, 'views'));
+		$this->assertEquals($expected, $this->loader->locateFile($file, 'Views'));
 	}
 
 	//--------------------------------------------------------------------
@@ -93,9 +93,9 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
 	{
 	    $file = '\Blog\index';
 
-		$expected = '/modules/blog/views/index.php';
+		$expected = '/modules/blog/Views/index.php';
 
-		$this->assertEquals($expected, $this->loader->locateFile($file, 'views'));
+		$this->assertEquals($expected, $this->loader->locateFile($file, 'Views'));
 	}
 
 	//--------------------------------------------------------------------
@@ -104,9 +104,9 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
 	{
 		$file = '\Blog\admin/posts.php';
 
-		$expected = '/modules/blog/views/admin/posts.php';
+		$expected = '/modules/blog/Views/admin/posts.php';
 
-		$this->assertEquals($expected, $this->loader->locateFile($file, 'views'));
+		$this->assertEquals($expected, $this->loader->locateFile($file, 'Views'));
 	}
 
 	//--------------------------------------------------------------------
@@ -115,7 +115,7 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
 	{
 		$file = '\Blogger\admin/posts.php';
 
-		$this->assertEquals('', $this->loader->locateFile($file, 'views'));
+		$this->assertEquals('', $this->loader->locateFile($file, 'Views'));
 	}
 
 	//--------------------------------------------------------------------

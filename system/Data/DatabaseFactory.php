@@ -275,7 +275,7 @@ class DatabaseFactory
 	 */
 	protected static function getConnectionConfig($connectionConfig = null, $dbConfig = null): \CodeIgniter\Config\Database\Connection
 	{
-		// Check for any resolutions which don't require the database config.
+		// Check for any resolutions which don't require the database Config.
 		if (is_string($connectionConfig))
 		{
 			if (class_exists($connectionConfig))
@@ -288,7 +288,7 @@ class DatabaseFactory
 			}
 		}
 
-		// $connectionConfig is null or a connection name, so the database config
+		// $connectionConfig is null or a connection name, so the database Config
 		// must be loaded.
 
 		return self::getConnectionConfigFromDbConfig(self::getDbConfig($dbConfig), $connectionConfig);

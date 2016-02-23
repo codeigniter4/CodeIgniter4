@@ -122,9 +122,9 @@ define('CI_VERSION', '4.0-dev');
  * ------------------------------------------------------
  */
 
-if (file_exists(APPPATH.'config/'.ENVIRONMENT.'/Constants.php'))
+if (file_exists(APPPATH.'Config/'.ENVIRONMENT.'/Constants.php'))
 {
-	require_once APPPATH.'config/'.ENVIRONMENT.'/Constants.php';
+	require_once APPPATH.'Config/'.ENVIRONMENT.'/Constants.php';
 }
 
 require_once(APPPATH.'config/Constants.php');

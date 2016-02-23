@@ -108,11 +108,11 @@ class Exceptions
 			$view = 'error_exception.php';
 		}
 
-		// @todo Get template path from config
+		// @todo Get template path from Config
 		$templates_path = '';
 		if (empty($templates_path))
 		{
-			$templates_path = APPPATH.'views/errors/';
+			$templates_path = APPPATH.'Views/errors/';
 		}
 
 		// Make a nicer title based on the type of Exception.

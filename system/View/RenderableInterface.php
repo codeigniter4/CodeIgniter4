@@ -39,7 +39,7 @@
 /**
  * Interface RenderableInterface
  *
- * The interface used for displaying views and/or theme files.
+ * The interface used for displaying Views and/or theme files.
  *
  * @package CodeIgniter\View
  */
@@ -69,7 +69,7 @@ interface RenderableInterface {
 	 *
 	 * @return RenderableInterface
 	 */
-	public function setData(array $data=[], string $context=null): self;
+	public function setData(array $data=[], string $context=null);
 
 	//--------------------------------------------------------------------
 
@@ -83,7 +83,7 @@ interface RenderableInterface {
 	 *
 	 * @return RenderableInterface
 	 */
-	public function setVar(string $name, $value=null, string $context=null): self;
+	public function setVar(string $name, $value=null, string $context=null);
 
 	//--------------------------------------------------------------------
 

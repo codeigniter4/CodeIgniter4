@@ -71,7 +71,7 @@ class AutoloadConfig
 		 * WILL break. *
 		 * Prototype:
 		 *
-		 *   $config['psr4'] = [
+		 *   $Config['psr4'] = [
 		 *       'CodeIgniter' => SYSPATH
 		 *   `];
 		 */
@@ -91,7 +91,7 @@ class AutoloadConfig
 		 *
 		 * Prototype:
 		 *
-		 *   $config['classmap'] = [
+		 *   $Config['classmap'] = [
 		 *       'MyClass'   => '/path/to/class/file.php'
 		 *   ];
 		 */

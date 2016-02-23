@@ -50,14 +50,14 @@ use CodeIgniter\Log\Logger;
 class View implements RenderableInterface {
 
 	/**
-	 * Data that is made available to the views.
+	 * Data that is made available to the Views.
 	 *
 	 * @var array
 	 */
 	protected $data = [];
 
 	/**
-	 * The base directory to look in for our views.
+	 * The base directory to look in for our Views.
 	 *
 	 * @var
 	 */
@@ -123,7 +123,7 @@ class View implements RenderableInterface {
 
 		if (! file_exists($file))
 		{
-			$file = $this->loader->locateFile($view, 'views');
+			$file = $this->loader->locateFile($view, 'Views');
 		}
 
 		// locateFile will return an empty string if the file cannot be found.

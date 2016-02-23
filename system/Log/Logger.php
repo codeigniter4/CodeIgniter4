@@ -64,7 +64,7 @@ class Logger implements LoggerInterface
 	protected $logPath;
 
 	/**
-	 * Used by the logThreshold config setting to define
+	 * Used by the logThreshold Config setting to define
 	 * which errors to show.
 	 *
 	 * @var array
@@ -83,7 +83,7 @@ class Logger implements LoggerInterface
 	/**
 	 * Array of levels to be logged.
 	 * The rest will be ignored.
-	 * Set in config/logger.php
+	 * Set in Config/logger.php
 	 *
 	 * @var array
 	 */
@@ -497,9 +497,9 @@ class Logger implements LoggerInterface
 	 * Cleans the paths of filenames by replacing APPPATH, BASEPATH, FCPATH
 	 * with the actual var. i.e.
 	 *
-	 *  /var/www/site/application/controllers/Home.php
+	 *  /var/www/site/application/Controllers/Home.php
 	 *      becomes:
-	 *  APPPATH/controllers/Home.php
+	 *  APPPATH/Controllers/Home.php
 	 *
 	 * @param $file
 	 *

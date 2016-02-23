@@ -81,7 +81,7 @@ interface RouteCollectionInterface
 	//--------------------------------------------------------------------
 
 	/**
-	 * Sets the default namespace to use for controllers when no other
+	 * Sets the default namespace to use for Controllers when no other
 	 * namespace has been specified.
 	 *
 	 * @param $value
@@ -133,8 +133,8 @@ interface RouteCollectionInterface
 
 	/**
 	 * If TRUE, the system will attempt to match the URI against
-	 * controllers by matching each segment against folders/files
-	 * in APPPATH/controllers, when a match wasn't found against
+	 * Controllers by matching each segment against folders/files
+	 * in APPPATH/Controllers, when a match wasn't found against
 	 * defined routes.
 	 *
 	 * If FALSE, will stop searching and do NO automatic routing.
@@ -177,7 +177,7 @@ interface RouteCollectionInterface
 	//--------------------------------------------------------------------
 
 	/**
-	 * Returns the flag that tells whether to autoRoute URI against controllers.
+	 * Returns the flag that tells whether to autoRoute URI against Controllers.
 	 *
 	 * @return bool
 	 */
