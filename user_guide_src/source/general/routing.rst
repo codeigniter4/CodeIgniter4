@@ -162,6 +162,25 @@ define an array of routes and then pass it as the first parameter to the `map()`
 	$collection->map($routes);
 
 
+Redirecting Routes
+==================
+
+Any site that lives long enough is bound to have pages that move. You can specify routes that should redirect
+to other routes with the ``addRedirect()`` method. The first parameter is the URI pattern for the old route. The
+second parameter is either the new URI to redirect to, or the name of a named route. The third parameter is
+the HTTP status code that should be sent along with the redirect. The default value is ``302`` which is a temporary
+redirect and is recommended in most cases.::
+
+    $routes->add('users/profile', 'Users::profile', ['as' => 'profile']);
+
+    // Redirect to a named route
+    $routes->addRedirect('users/about', 'profile');
+    // Redirect to a URI
+    $routes->addRedirect('users/about', 'users/profile');
+
+If a redirect route is matched during a page load, the user will be immediately redirected to the new page before a
+controller can be loaded.
+
 Grouping Routes
 ===============
 
