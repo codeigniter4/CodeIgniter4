@@ -69,7 +69,7 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
 
 	public function testLocateFileReplacesFolderName()
 	{
-		$file = '\Blog\views/admin/posts.php';
+		$file = '\Blog\Views/admin/posts.php';
 
 		$expected = '/modules/blog/Views/admin/posts.php';
 
