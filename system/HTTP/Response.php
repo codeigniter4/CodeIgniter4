@@ -304,10 +304,10 @@ class Response extends Message implements ResponseInterface
 
 		return $this;
 	}
-	
+
 	//--------------------------------------------------------------------
-	
-	
+
+
 	//--------------------------------------------------------------------
 	// Cache Control Methods
 	//
@@ -438,7 +438,7 @@ class Response extends Message implements ResponseInterface
 
 		return $this;
 	}
-	
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -485,6 +485,50 @@ class Response extends Message implements ResponseInterface
 	    echo $this->body;
 
 		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Perform a redirect to a new URL, in two flavors: header or location.
+	 *
+	 * NOTE: You must call exit after this for it to work correctly!
+	 *
+	 * @param string $url    The URL to redirect to
+	 * @param int    $code   The type of redirection, defaults to 302
+	 */
+	public function redirect(string $uri, string $method='auto', int $code = null)
+	{
+		// IIS environment likely? Use 'refresh' for better compatibility
+		if ($method === 'auto' && isset($_SERVER['SERVER_SOFTWARE']) && strpos($_SERVER['SERVER_SOFTWARE'], 'Microsoft-IIS') !== FALSE)
+		{
+			$method = 'refresh';
+		}
+		elseif ($method !== 'refresh' && (empty($code) OR ! is_numeric($code)))
+		{
+			if (isset($_SERVER['SERVER_PROTOCOL'], $_SERVER['REQUEST_METHOD']) && $_SERVER['SERVER_PROTOCOL'] === 'HTTP/1.1')
+			{
+				$code = ($_SERVER['REQUEST_METHOD'] !== 'GET')
+					? 303	// reference: http://en.wikipedia.org/wiki/Post/Redirect/Get
+					: 307;
+			}
+			else
+			{
+				$code = 302;
+			}
+		}
+
+		switch ($method)
+		{
+			case 'refresh':
+				$this->setHeader('Refresh', '0;url='.$uri);
+				break;
+			default:
+				$this->setHeader('Location', $uri);
+				break;
+		}
+
+		$this->setStatusCode($code);
 	}
 
 	//--------------------------------------------------------------------

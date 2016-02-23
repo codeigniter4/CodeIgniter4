@@ -193,4 +193,31 @@ class ResponseTest extends CIUnitTestCase
 		$this->assertEquals($date->format('D, d M Y H:i:s').' GMT', $header);
 	}
 
+	//--------------------------------------------------------------------
+
+	public function testRedirectSetsDefaultCodeAndLocationHeader()
+	{
+		$response = new Response(new \Config\App());
+
+		$response->redirect('example.com');
+
+		$this->assertTrue($response->hasHeader('location'));
+		$this->assertEquals('example.com', $response->getHeaderLine('Location'));
+		$this->assertEquals(302, $response->getStatusCode());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testRedirectSetsCode()
+	{
+		$response = new Response(new \Config\App());
+
+		$response->redirect('example.com', 'auto', 307);
+
+		$this->assertTrue($response->hasHeader('location'));
+		$this->assertEquals('example.com', $response->getHeaderLine('Location'));
+		$this->assertEquals(307, $response->getStatusCode());
+	}
+
+	//--------------------------------------------------------------------
 }

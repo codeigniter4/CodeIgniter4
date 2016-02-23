@@ -182,6 +182,23 @@ class Message
 	//--------------------------------------------------------------------
 
 	/**
+	 * Determines whether a header exists.
+	 *
+	 * @param $name
+	 *
+	 * @return bool
+	 */
+	public function hasHeader($name): bool
+	{
+		$orig_name = $this->getHeaderName($name);
+
+		return isset($this->headers[$orig_name]);
+	}
+
+	//--------------------------------------------------------------------
+
+
+	/**
 	 * Retrieves a comma-separated string of the values for a single header.
 	 *
 	 * This method returns all of the header values of the given
