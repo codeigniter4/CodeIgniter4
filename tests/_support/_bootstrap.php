@@ -127,7 +127,7 @@ if (file_exists(APPPATH.'Config/'.ENVIRONMENT.'/Constants.php'))
 	require_once APPPATH.'Config/'.ENVIRONMENT.'/Constants.php';
 }
 
-require_once(APPPATH.'config/Constants.php');
+require_once(APPPATH.'Config/Constants.php');
 
 /*
  * ------------------------------------------------------
@@ -158,7 +158,7 @@ if (ENVIRONMENT !== 'production')
  * ------------------------------------------------------
  */
 
-require_once APPPATH.'config/Services.php';
+require_once APPPATH.'Config/Services.php';
 
 /*
  * ------------------------------------------------------
@@ -168,7 +168,7 @@ require_once APPPATH.'config/Services.php';
 
 // The autloader isn't initialized yet, so load the file manually.
 require_once BASEPATH.'Autoloader/Autoloader.php';
-require_once APPPATH.'config/Autoload.php';
+require_once APPPATH.'Config/Autoload.php';
 
 // The Autoloader class only handles namespaces
 // and "legacy" support.
