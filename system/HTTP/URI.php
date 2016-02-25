@@ -225,7 +225,7 @@ class URI
 	 * @see https://tools.ietf.org/html/rfc3986#section-3.2
 	 * @return string The URI authority, in "[user-info@]host[:port]" format.
 	 */
-	public function getAuthority(): string
+	public function getAuthority(bool $ignorePort = false): string
 	{
 		if (empty($this->host))
 		{
@@ -239,7 +239,7 @@ class URI
 			$authority = $this->getUserInfo().'@'.$authority;
 		}
 
-		if ( ! empty($this->port))
+		if ( ! empty($this->port) && ! $ignorePort)
 		{
 			// Don't add port if it's a standard port for
 			// this scheme
@@ -460,6 +460,7 @@ class URI
 	 * @param $path
 	 * @param $query
 	 * @param $fragment
+	 * @param $ignorePort
 	 *
 	 * @return string
 	 */

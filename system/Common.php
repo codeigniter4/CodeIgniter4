@@ -35,6 +35,9 @@
  * @filesource
  */
 
+use CodeIgniter\HTTP\RequestInterface;
+use CodeIgniter\HTTP\ResponseInterface;
+
 /**
  * Common Functions
  *
@@ -366,3 +369,47 @@ if (! function_exists('get_csrf_hash'))
 }
 
 //--------------------------------------------------------------------
+
+if (! function_exists('force_secure'))
+{
+	/**
+	 * Used to force a page to be accessed in via HTTPS.
+	 * Uses a standard redirect, plus will set the HSTS header
+	 * for modern browsers that support, which gives best
+	 * protection against man-in-the-middle attacks.
+	 *
+	 * @see https://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security
+	 *
+	 * @param int $duration How long should the SSL header be set for? (in seconds)
+	 *                      Defaults to 1 year.
+	 */
+	function force_secure(int $duration = 31536000, RequestInterface $request = null, ResponseInterface $response = null)
+	{
+		if (is_null($request)) global $request;
+		if (is_null($response)) global $response;
+
+		if ($request->isSecure())
+		{
+			return;
+		}
+
+		$uri = $request->uri;
+		$uri->setScheme('https');
+
+		$uri = \CodeIgniter\HTTP\URI::createURIString(
+			$uri->getScheme(),
+			$uri->getAuthority(true),
+			$uri->getPath(), // Absolute URIs should use a "/" for an empty path
+			$uri->getQuery(),
+			$uri->getFragment()
+		);
+
+		// Set an HSTS header
+		$response->setHeader('Strict-Transport-Security', 'max-age='.$duration);
+		$response->redirect($uri);
+		exit();
+	}
+}
+
+//--------------------------------------------------------------------
+

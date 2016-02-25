@@ -160,7 +160,7 @@ Hooks::trigger('pre_system');
 // Get our Request and Response objects
 //--------------------------------------------------------------------
 
-$config = new App();
+$config = new \Config\App();
 
 $request  = is_cli()
 		? Services::clirequest($config)
@@ -170,6 +170,15 @@ $response = Services::response();
 
 // Assume success until proven otherwise.
 $response->setStatusCode(200);
+
+//--------------------------------------------------------------------
+// Force Secure Site Access?
+//--------------------------------------------------------------------
+
+if ($config->forceGlobalSecureRequests === true)
+{
+	force_secure(31536000, $request, $response);
+}
 
 //--------------------------------------------------------------------
 // CSRF Protection
@@ -207,7 +216,6 @@ catch (\CodeIgniter\Router\RedirectException $e)
 	// If the route is a 'redirect' route, it throws
 	// the exception with the $to as the message
 	$response->redirect($e->getMessage(), 'auto', $e->getCode());
-	$response->sendHeaders();
 	exit;
 }
 
