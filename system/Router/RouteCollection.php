@@ -40,7 +40,6 @@
  * Class RouteCollection
  *
  * @todo Implement 404Override functionality
- * @todo Implement 'secure' option?
  * @todo Implement nested resource routing (See CakePHP)
  *
  * @package CodeIgniter\Router
