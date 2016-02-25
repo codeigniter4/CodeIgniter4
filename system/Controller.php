@@ -36,9 +36,9 @@
  * @filesource
  */
 
+use CodeIgniter\HTTP\RequestInterface;
+use CodeIgniter\HTTP\ResponseInterface;
 use Config\Services;
-use CodeIgniter\HTTP\Request;
-use CodeIgniter\HTTP\Response;
 use CodeIgniter\Log\Logger;
 
 /**
@@ -49,8 +49,18 @@ use CodeIgniter\Log\Logger;
  */
 class Controller
 {
+	/**
+	 * Instance of the main Request object.
+	 *
+	 * @var RequestInterface
+	 */
 	protected $request;
 
+	/**
+	 * Instance of the main response object.
+	 *
+	 * @var ResponseInterface
+	 */
 	protected $response;
 
 	/**
@@ -59,9 +69,17 @@ class Controller
 	 */
 	protected $logger;
 
+	/**
+	 * Whether HTTPS access should be enforced
+	 * for all methods in this controller.
+	 *
+	 * @var int  Number of seconds to set HSTS header
+	 */
+	protected $forceHTTPS = 0;
+
 	//--------------------------------------------------------------------
 
-	public function __construct(Request $request, Response $response, Logger $logger = null)
+	public function __construct(RequestInterface $request, ResponseInterface $response, Logger $logger = null)
 	{
 	    $this->request = $request;
 
@@ -70,9 +88,31 @@ class Controller
 		$this->logger = is_null($logger) ? Services::logger(true) : $logger;
 
 		$this->logger->info('Controller "'.get_class($this).'" loaded.');
+
+		if ($this->forceHTTPS > 0)
+		{
+			$this->forceHTTPS($this->forceHTTPS);
+		}
 	}
 	
 	//--------------------------------------------------------------------
-	
-	
+
+	/**
+	 * A convenience method to use when you need to ensure that a single
+	 * method is reached only via HTTPS. If it isn't, then a redirect
+	 * will happen back to this method and HSTS header will be sent
+	 * to have modern browsers transform requests automatically.
+	 *
+	 * @param int $duration The number of seconds this link should be
+	 *                      considered secure for. Only with HSTS header.
+	 *                      Default value is 1 year.
+	 */
+	public function forceHTTPS(int $duration = 31536000)
+	{
+	    force_https($duration, $this->request, $this->response);
+	}
+
+	//--------------------------------------------------------------------
+
+
 }

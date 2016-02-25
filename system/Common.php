@@ -370,7 +370,7 @@ if (! function_exists('get_csrf_hash'))
 
 //--------------------------------------------------------------------
 
-if (! function_exists('force_secure'))
+if (! function_exists('force_https'))
 {
 	/**
 	 * Used to force a page to be accessed in via HTTPS.
@@ -383,7 +383,7 @@ if (! function_exists('force_secure'))
 	 * @param int $duration How long should the SSL header be set for? (in seconds)
 	 *                      Defaults to 1 year.
 	 */
-	function force_secure(int $duration = 31536000, RequestInterface $request = null, ResponseInterface $response = null)
+	function force_https(int $duration = 31536000, RequestInterface $request = null, ResponseInterface $response = null)
 	{
 		if (is_null($request)) global $request;
 		if (is_null($response)) global $response;
