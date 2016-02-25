@@ -148,6 +148,33 @@ interface RouteCollectionInterface
 	//--------------------------------------------------------------------
 
 	/**
+	 * Sets the class/method that should be called if routing doesn't
+	 * find a match. It can be either a closure or the controller/method
+	 * name exactly like a route is defined: Users::index
+	 *
+	 * This setting is passed to the Router class and handled there.
+	 *
+	 * @param callable|null $callable
+	 *
+	 * @return $this
+	 */
+	public function set404Override($callable = null): self;
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns the 404 Override setting, which can be null, a closure
+	 * or the controller/string.
+	 *
+	 * @return string|\Closure|null
+	 */
+	public function get4040Override();
+
+	//--------------------------------------------------------------------
+
+
+
+	/**
 	 * Returns the name of the default controller. With Namespace.
 	 *
 	 * @return string

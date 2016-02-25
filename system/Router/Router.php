@@ -180,6 +180,35 @@ class Router implements RouterInterface
 	//--------------------------------------------------------------------
 
 	/**
+	 * Returns the 404 Override settings from the Collection.
+	 * If the override is a string, will split to controller/index array.
+	 */
+	public function get404Override()
+	{
+		$route = $this->collection->get4040Override();
+
+		if (is_string($route))
+		{
+			$routeArray = explode('::', $route);
+
+			return [
+				$routeArray[0],             // Controller
+				$routeArray[1] ?? 'index'   // Method
+			];
+		}
+
+		if (is_callable($route))
+		{
+			return $route;
+		}
+
+		return null;
+	}
+
+	//--------------------------------------------------------------------
+
+
+	/**
 	 * Returns the parameters that have been matched and collected
 	 * during the parsing process as an array, ready to send to
 	 * call_user_func_array().

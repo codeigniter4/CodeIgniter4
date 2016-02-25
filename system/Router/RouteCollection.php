@@ -102,6 +102,14 @@ class RouteCollection implements RouteCollectionInterface
 	protected $autoRoute = true;
 
 	/**
+	 * A callable that will be shown
+	 * when the route cannot be matched.
+	 *
+	 * @var string|closure
+	 */
+	protected $override404;
+
+	/**
 	 * Defined placeholders that can be used
 	 * within the
 	 *
@@ -284,6 +292,39 @@ class RouteCollection implements RouteCollectionInterface
 		$this->autoRoute = $value;
 
 		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Sets the class/method that should be called if routing doesn't
+	 * find a match. It can be either a closure or the controller/method
+	 * name exactly like a route is defined: Users::index
+	 *
+	 * This setting is passed to the Router class and handled there.
+	 *
+	 * @param callable|null $callable
+	 *
+	 * @return $this
+	 */
+	public function set404Override($callable = null): RouteCollectionInterface
+	{
+	    $this->override404 = $callable;
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns the 404 Override setting, which can be null, a closure
+	 * or the controller/string.
+	 *
+	 * @return string|\Closure|null
+	 */
+	public function get4040Override()
+	{
+		return $this->override404;
 	}
 
 	//--------------------------------------------------------------------

@@ -259,6 +259,24 @@ else
 			$e404 = true;
 		}
 
+		// Is there a 404 Override available?
+		if ($override = $router->get404Override())
+		{
+			if ($override instanceof Closure)
+			{
+				echo $override();
+			}
+			else if (is_array($override))
+			{
+				$controller = $override[0];
+				$method     = $override[1];
+
+				unset($override);
+			}
+
+			$e404 = false;
+		}
+
 		// Display 404 Errors
 		if ($e404)
 		{
@@ -284,26 +302,28 @@ else
 			ob_end_clean();
 
 			echo $buffer;
-
 			exit(4);    // Unknown file
 		}
 
-		$class  = new $controller($request, $response);
-
-		$benchmark->stop('controller_constructor');
-
-		//--------------------------------------------------------------------
-		// Is there a "post_controller_constructor" hook?
-		//--------------------------------------------------------------------
-		Hooks::trigger('post_controller_constructor');
-
-		if (method_exists($class, '_remap'))
+		if (! $e404 && ! isset($override))
 		{
-			$class->_remap($method, ...$router->params());
-		}
-		else
-		{
-			$class->$method(...$router->params());
+			$class = new $controller($request, $response);
+
+			$benchmark->stop('controller_constructor');
+
+			//--------------------------------------------------------------------
+			// Is there a "post_controller_constructor" hook?
+			//--------------------------------------------------------------------
+			Hooks::trigger('post_controller_constructor');
+
+			if (method_exists($class, '_remap'))
+			{
+				$class->_remap($method, ...$router->params());
+			}
+			else
+			{
+				$class->$method(...$router->params());
+			}
 		}
 	}
 }
