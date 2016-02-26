@@ -127,7 +127,7 @@ abstract class Connection extends \CodeIgniter\Config\BaseConfig
 	 * Allows a Database Connection configuration to be built from a parameter array
 	 * at run-time from one of the extending classes.
 	 *
-	 * @param array $params Property name/value pairs to set in the database Config.
+	 * @param array $params Property name/value pairs to set in the database config.
 	 */
 	public function __construct($params = [])
 	{

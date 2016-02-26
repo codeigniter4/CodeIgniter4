@@ -57,7 +57,7 @@ class Database extends \CodeIgniter\Config\BaseConfig
 	 * @todo consider using something like the \CodeIgniter\Config\Database\Connection
 	 * constructor...
 	 *
-	 * @param array $params Property name/value pairs to set in the database Config.
+	 * @param array $params Property name/value pairs to set in the database config.
 	 */
 	public function __construct($params = [])
 	{

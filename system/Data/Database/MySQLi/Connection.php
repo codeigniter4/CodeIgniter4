@@ -73,16 +73,9 @@ class Connection extends \CodeIgniter\Data\Database\Connection
 			$this->clientFlags
 		))
 		{
-			// Prior to version 5.7.3, MySQL silently downgrades to an unencrypted
-			// connection if SSL setup fails.
-			if (
-				($this->clientFlags & MYSQLI_CLIENT_SSL)
-				&& version_compare($this->mysqli->client_info, '5.7.3', '<=')
-				&& empty($this->mysqli->query("SHOW STATUS LIKE 'ssl_cipher'")->fetch_object()->Value)
-			)
+			if ($this->clientFlags & MYSQLI_CLIENT_SSL)
 			{
-				$this->mysqli->close();
-				throw new \Exception('MySQLi was configured for an SSL connection, but got an unencrypted connection instead!');
+				$this->verifySSLConnection();
 			}
 
 			$this->id = $this->mysqli;
@@ -190,33 +183,76 @@ class Connection extends \CodeIgniter\Data\Database\Connection
 
 		if ( ! empty($ssl))
 		{
-			if (isset($this->connectionConfig->sslVerify))
-			{
-				if ($this->connectionConfig->sslVerify)
-				{
-					defined('MYSQLI_OPT_SSL_VERIFY_SERVER_CERT') &&
-						$this->mysqli->options(MYSQLI_OPT_SSL_VERIFY_SERVER_CERT, true);
-				}
-				elseif (defined('MYSQLI_CLIENT_SSL_DONT_VERIFY_SERVER_CERT'))
-				{
-					// Apparently (when it exists), setting MYSQLI_OPT_SSL_VERIFY_SERVER_CERT
-					// to FALSE didn't do anything, so PHP 5.6.16 introduced yet another
-					// constant...
-					//
-					// https://secure.php.net/ChangeLog-5.php#5.6.16
-					// https://bugs.php.net/bug.php?id=68344
-					$this->_mysqli->options(MYSQLI_CLIENT_SSL_DONT_VERIFY_SERVER_CERT, TRUE);
-				}
-			}
+			$this->initializeSSLConnection($ssl);
+		}
+	}
 
-			$this->clientFlags |= MYSQLI_CLIENT_SSL;
-			$this->mysqli->ssl_set(
-				isset($ssl['key'])    ? $ssl['key']    : null,
-				isset($ssl['cert'])   ? $ssl['cert']   : null,
-				isset($ssl['ca'])     ? $ssl['ca']     : null,
-				isset($ssl['capath']) ? $ssl['capath'] : null,
-				isset($ssl['cipher']) ? $ssl['cipher'] : null
-			);
+	protected function initializeSSLConnection(array $ssl)
+	{
+		if (isset($this->connectionConfig->sslVerify))
+		{
+			if ($this->connectionConfig->sslVerify)
+			{
+				defined('MYSQLI_OPT_SSL_VERIFY_SERVER_CERT') &&
+					$this->mysqli->options(MYSQLI_OPT_SSL_VERIFY_SERVER_CERT, true);
+			}
+			elseif (defined('MYSQLI_CLIENT_SSL_DONT_VERIFY_SERVER_CERT'))
+			{
+				// Apparently (when it exists), setting MYSQLI_OPT_SSL_VERIFY_SERVER_CERT
+				// to FALSE didn't do anything, so PHP 5.6.16 introduced yet another
+				// constant...
+				//
+				// https://secure.php.net/ChangeLog-5.php#5.6.16
+				// https://bugs.php.net/bug.php?id=68344
+				$this->_mysqli->options(MYSQLI_CLIENT_SSL_DONT_VERIFY_SERVER_CERT, TRUE);
+			}
+		}
+
+		$this->clientFlags |= MYSQLI_CLIENT_SSL;
+		$this->mysqli->ssl_set(
+			isset($ssl['key'])    ? $ssl['key']    : null,
+			isset($ssl['cert'])   ? $ssl['cert']   : null,
+			isset($ssl['ca'])     ? $ssl['ca']     : null,
+			isset($ssl['capath']) ? $ssl['capath'] : null,
+			isset($ssl['cipher']) ? $ssl['cipher'] : null
+		);
+	}
+
+	/**
+	 * In some older MySQL clients, the an unencrypted connection is silently accepted
+	 * if SSL setup fails. This method will throw an exception if that occurs.
+	 *
+	 * @throws \Exception
+	 * @return void
+	 */
+	protected function verifySSLConnection()
+	{
+		// The MySQL Native Driver in PHP7 should not return an unencrypted connection
+		// when configured to use SSL.
+		if (strpos($this->mysqli->client_info, 'mysqlnd ') !== false)
+		{
+			return;
+		}
+
+		// If using libmysqlclient greater than 5.7.3, the real_connect() call
+		// would have failed if an SSL connection could not be established.
+		//
+		// Note: from 5.7.4 on, if the client was distributed with MySQL server,
+		// the version number should match the server's version number. Connector/C,
+		// will use a different number. For instance, 6.1.3 is the Connector/C client
+		// which matches the version distributed with MySQL Server 5.7.4.
+		//
+		// http://dev.mysql.com/doc/relnotes/connector-c/en/news-6-1-3.html
+		if (version_compare($this->mysqli->client_info, '5.7.3', '>'))
+		{
+			return;
+		}
+
+		// Issue a query to check whether the connection was made using SSL.
+		if (empty($this->mysqli->query("SHOW STATUS LIKE 'ssl_cipher'")->fetch_object()->Value))
+		{
+			$this->mysqli->close();
+			throw new \Exception('MySQLi was configured for an SSL connection, but got an unencrypted connection instead!');
 		}
 	}
 }
