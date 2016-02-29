@@ -490,4 +490,17 @@ to only those defined by you, by setting the ``setAutoRoute()`` option to false:
 
 	$routes->setAutoRoute(false);
 
+404 Override
+------------
 
+When a page is not found that matches the current URI, the system will show a generic 404 view. You can change
+what happens by specifying an action to happen with the ``set404Override()`` option. The value can be either
+a valid class/method pair, just like you would show in any route, or a Closure::
+
+    // Would execute the show404 method of the App\Errors class
+    $routes->set404Override('App\Errors::show404');
+
+    // Will display a custom view
+    $routes->set404Override(function(){
+        echo view('my_errors/not_found.html');
+    });
