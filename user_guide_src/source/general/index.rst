@@ -23,6 +23,7 @@ General Topics
 	common_functions
 	compatibility_functions
 	routing
+	logging
 	errors
 	Caching <caching>
 	profiling
