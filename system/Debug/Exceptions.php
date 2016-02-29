@@ -35,6 +35,7 @@
  * @filesource
  */
 
+require dirname(__FILE__).'/CustomExceptions.php';
 
 class Exceptions
 {
@@ -79,6 +80,8 @@ class Exceptions
 	 * (Yay PHP7!). Will log the error, display it if display_errors is on,
 	 * and fire an event that allows custom actions to be taken at this point.
 	 *
+	 * @todo implement exit codes throughout application with new Exceptions.
+	 *
 	 * @param \Throwable $e
 	 */
 	public function exceptionHandler(\Throwable $exception)
@@ -86,11 +89,15 @@ class Exceptions
 		// Get Exception Info - these are available
 		// directly in the template that's displayed.
 		$type    = get_class($exception);
+		$codes   = $this->determineCodes($exception);
+		$code    = $codes[0];
+		$exit    = $codes[1];
 		$code    = $exception->getCode();
 		$message = $exception->getMessage();
 		$file    = $exception->getFile();
 		$line    = $exception->getLine();
 		$trace   = $exception->getTrace();
+		$title   = get_class($exception);
 
 		if (empty($message))
 		{
@@ -101,13 +108,6 @@ class Exceptions
 
 		// Fire an Event
 
-		$view = 'production.php';
-
-		if (str_ireplace(['off', 'none', 'no', 'false', 'null'], '', ini_get('display_errors')))
-		{
-			$view = 'error_exception.php';
-		}
-
 		// @todo Get template path from Config
 		$templates_path = '';
 		if (empty($templates_path))
@@ -115,22 +115,17 @@ class Exceptions
 			$templates_path = APPPATH.'Views/errors/';
 		}
 
-		// Make a nicer title based on the type of Exception.
-		$title = get_class($exception);
-
 		if (is_cli())
 		{
 			$templates_path .= 'cli/';
-
-			// CLI will never accessed by general public
-			// while in production.
-			$view = 'error_exception.php';
 		}
 		else
 		{
-			header('HTTP/1.1 401 Unauthorized', true, 500);
+			header('HTTP/1.1 500 Internal Server Error', true, 500);
 			$templates_path .= 'html/';
 		}
+
+		$view = $this->determineView($exception, $templates_path);
 
 		if (ob_get_level() > $this->ob_level + 1)
 		{
@@ -142,6 +137,8 @@ class Exceptions
 		$buffer = ob_get_contents();
 		ob_end_clean();
 		echo $buffer;
+
+		exit($exit);
 	}
 
 	//--------------------------------------------------------------------
@@ -188,6 +185,76 @@ class Exceptions
 				$this->exceptionHandler(new \ErrorException($error['message'], $error['type'], 0, $error['file'], $error['line']));
 			}
 		}
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Determines the view to display based on the exception thrown,
+	 * whether an HTTP or CLI request, etc.
+	 *
+	 * @param \Throwable $exception
+	 * @param string     $template_path
+	 *
+	 * @return string       The path and filename of the view file to use
+	 */
+	protected function determineView(\Throwable $exception, string $template_path): string
+	{
+		// Production environments should have a custom exception file.
+		$view = 'production.php';
+		$template_path = rtrim($template_path, '/ ').'/';
+
+		if (str_ireplace(['off', 'none', 'no', 'false', 'null'], '', ini_get('display_errors')))
+		{
+			$view = 'error_exception.php';
+		}
+
+		// 404 Errors
+		if ($exception instanceof \CodeIgniter\PageNotFoundException)
+		{
+			return 'error_404.php';
+		}
+
+		// Allow for custom views based upon the status code
+		else if (is_file($template_path.'error_'.$exception->getCode().'.php'))
+		{
+			return 'error_'.$exception->getCode().'.php';
+		}
+
+		return $view;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Determines the HTTP status code and the exit status code for this request.
+	 *
+	 * @param \Throwable $exception
+	 *
+	 * @return array
+	 */
+	protected function determineCodes(\Throwable $exception): array
+	{
+		$statusCode = abs($exception->getCode());
+
+		if ($statusCode < 100)
+		{
+			$exitStatus = $statusCode + EXIT__AUTO_MIN; // 9 is EXIT__AUTO_MIN
+			if ($exitStatus > EXIT__AUTO_MAX) // 125 is EXIT__AUTO_MAX
+			{
+				$exitStatus = EXIT_ERROR; // EXIT_ERROR
+			}
+			$statusCode = 500;
+		}
+		else
+		{
+			$exitStatus = 1; // EXIT_ERROR
+		}
+
+		return [
+			$statusCode ?? 500,
+		    $exitStatus
+		];
 	}
 
 	//--------------------------------------------------------------------
@@ -315,18 +382,18 @@ class Exceptions
 			$spans += substr_count($row, '<span') - substr_count($row, '</span');
 			$row = str_replace(["\r", "\n"], ['', ''], $row);
 
-			if ($n == $lineNumber)
+			if (($n+$start+1) == $lineNumber)
 			{
 				preg_match_all('#<[^>]+>#', $row, $tags);
 				$out .= sprintf("<span class='line highlight'><span class='number'>{$format}</span> %s\n</span>%s",
-						$n + $start,
+						$n + $start + 1,
 						strip_tags($row),
 						implode('', $tags[0])
 				);
 			}
 			else
 			{
-				$out .= sprintf('<span class="line"><span class="number">'.$format.'</span> %s', $n + $start, $row) ."\n";
+				$out .= sprintf('<span class="line"><span class="number">'.$format.'</span> %s', $n + $start +1, $row) ."\n";
 			}
 		}
 
