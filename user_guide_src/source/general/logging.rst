@@ -1,9 +1,6 @@
-##################
-Errors and Logging
-##################
-
-Logging
-=======
+###################
+Logging Information
+###################
 
 You can log information to the local log files by using the ``log_message()`` method. You must supply
 the "level" of the error in the first parameter, indicating what type of message it is (debug, error, etc).
@@ -60,7 +57,7 @@ be set to handle specific levels and ignore the rest. Currently, two handlers co
 
 - File Handler - is the default handler and will create a single file for every day locally. This is the
 	recommended method of logging.
-- ChromeLogger Handler - If you have the `ChromeLogger extension <https://craig.is/writing/chrome-logger>`
+- ChromeLogger Handler - If you have the `ChromeLogger extension <https://craig.is/writing/chrome-logger>`_
 	installed in the Chrome web browser, you can use this handler to display the log information in
 	Chrome's console window.
 
@@ -118,13 +115,19 @@ Several core placeholders exist that will be automatically expanded for you base
 
 +----------------+---------------------------------------------------+
 | Placeholder    | Inserted value                                    |
-+----------------+---------------------------------------------------+
++================+===================================================+
 | {post_vars}    | $_POST variables                                  |
++----------------+---------------------------------------------------+
 | {get_vars}     | $_GET variables                                   |
++----------------+---------------------------------------------------+
 | {session_vars} | $_SESSION variables                               |
++----------------+---------------------------------------------------+
 | {env}          | Current environment name, i.e. development        |
++----------------+---------------------------------------------------+
 | {file}         | The name of file calling the logger               |
++----------------+---------------------------------------------------+
 | {line}         | The line in {file} where the logger was called    |
++----------------+---------------------------------------------------+
 | {env:foo}      | The value of 'foo' in $_ENV                       |
 +----------------+---------------------------------------------------+
 
