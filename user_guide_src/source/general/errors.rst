@@ -29,6 +29,61 @@ The logging system does not provide ways to alert sysadmins or webmasters about 
 the information. For many of the more critical event levels, the logging happens automatically by the
 Error Handler, described above.
 
+Configuration
+=============
+
+You can modify which levels are actually logged, as well as assign different Loggers to handle different levels, within
+the ``/application/Config/Logger.php`` configuration file.
+
+The ``threshold`` value of the config file determines which levels are logged across your application. If any levels
+are requested to be logged by the application, but the threshold doesn't allow them to log currently, they will be
+ignored. The simplest method to use is to set this value to the minimum level that you want to have logged. For example,
+if you want to log debug messages, and not information messages, you would set the threshold to ``5``. Any log requests with
+a level of 5 or less (which includes runtime errors, system errors, etc) would be logged and info, notices, and warnings
+would be ignored.::
+
+	public $threshold = 5;
+
+A complete list of levels and their corresponding threshold value is in the configuration file for your reference.
+
+You can pick and choose the specific levels that you would like logged by assigning an array of log level numbers
+to the threshold value::
+
+	// Log only debug and info type messages
+	public $threshold = [5, 8];
+
+Using Multiple Log Handlers
+---------------------------
+
+The logging system can support multiple methods of handling logging running at the same time. Each handler can
+be set to handle specific levels and ignore the rest. Currently, two handlers come with a default install:
+
+- File Handler - is the default handler and will create a single file for every day locally. This is the
+	recommended method of logging.
+- ChromeLogger Handler - If you have the `ChromeLogger extension <https://craig.is/writing/chrome-logger>`
+	installed in the Chrome web browser, you can use this handler to display the log information in
+	Chrome's console window.
+
+The handlers are configured in the main configuration file, in the ``$handlers`` property, which is simply
+an array of handlers and their configuration. Each handler is specified with the key being the fully
+name-spaced class name. The value will be an array of varying properties, specific to each handler.
+Each handler's section will have one property in common: ``handles``, which is an array of log level
+__names__ that the handler will log information for.::
+
+	public $handlers = [
+
+		//--------------------------------------------------------------------
+		// File Handler
+		//--------------------------------------------------------------------
+
+		'CodeIgniter\Log\Handlers\FileHandler' => [
+
+			'handles' => ['critical', 'alert', 'emergency', 'debug', 'error', 'info', 'notice', 'warning'],
+		]
+	];
+
+
+
 Modifying the Message With Context
 ==================================
 
@@ -59,8 +114,20 @@ file name and line number.  You must still provide the exception placeholder in 
 		log_message('error', '[ERROR] {exception}', ['exception' => $e]);
 	}
 
-Three placeholders will be automatically expanded for you to display the contents of the $_POST, $_GET,
-and $_SESSION values. They are `{post_vars}`, `{get_vars}`, and `{session_vars}`, respectively.
+Several core placeholders exist that will be automatically expanded for you based on the current page request:
+
++----------------+---------------------------------------------------+
+| Placeholder    | Inserted value                                    |
++----------------+---------------------------------------------------+
+| {post_vars}    | $_POST variables                                  |
+| {get_vars}     | $_GET variables                                   |
+| {session_vars} | $_SESSION variables                               |
+| {env}          | Current environment name, i.e. development        |
+| {file}         | The name of file calling the logger               |
+| {line}         | The line in {file} where the logger was called    |
+| {env:foo}      | The value of 'foo' in $_ENV                       |
++----------------+---------------------------------------------------+
+
 
 Using Third-Party Loggers
 =========================
