@@ -80,8 +80,6 @@ class Exceptions
 	 * (Yay PHP7!). Will log the error, display it if display_errors is on,
 	 * and fire an event that allows custom actions to be taken at this point.
 	 *
-	 * @todo implement exit codes throughout application with new Exceptions.
-	 *
 	 * @param \Throwable $e
 	 */
 	public function exceptionHandler(\Throwable $exception)
