@@ -73,7 +73,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <body>
 	<div class="wrap">
 		<h1>404 - File Not Found</h1>
-		<p>Sorry! Cannot seem to find the page you were looking for.</p>
+
+		<p>
+			<?php if (! empty($message) && $message != '(null)') : ?>
+				<?= $message ?>
+			<?php else : ?>
+				Sorry! Cannot seem to find the page you were looking for.
+			<?php endif ?>
+		</p>
 	</div>
 </body>
 </html>

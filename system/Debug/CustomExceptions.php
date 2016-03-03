@@ -36,6 +36,16 @@
  * @filesource
  */
 
+/**
+ * Custom Exceptions
+ *
+ * These exceptions are provided for you use, and work to provide a consistent
+ * experience across the application. The default error codes are already set,
+ * and will be used to provide both HTTP status codes and CLI exit codes.
+ *
+ * @package CodeIgniter
+ */
+
 class PageNotFoundException  extends \OutOfBoundsException { protected $code = 404; };
 class ConfigException        extends \OutOfBoundsException { protected $code = 3; };
 class UnknownFileException   extends \LogicException       { protected $code = 4; };
