@@ -112,6 +112,7 @@ class Response extends Message implements ResponseInterface
 		428 => 'Precondition Required',           // 1.1; http://www.ietf.org/rfc/rfc6585.txt
 		429 => 'Too Many Requests',               // 1.1; http://www.ietf.org/rfc/rfc6585.txt
 		431 => 'Request Header Fields Too Large', // 1.1; http://www.ietf.org/rfc/rfc6585.txt
+	    451 => 'Unavailable For Legal Reasons',    // http://tools.ietf.org/html/rfc7725
 
 		// 5xx: Server error
 		500 => 'Internal Server Error',
