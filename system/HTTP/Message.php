@@ -106,7 +106,16 @@ class Message
 		// In Apache, you can simply call apache_request_headers()
 		if (function_exists('apache_request_headers'))
 		{
-			return $this->headers = apache_request_headers();
+			$result = $this->headers = apache_request_headers();
+
+			if ($result)
+			{
+				// Populate our header map
+				foreach ($this->headers as $key => $value)
+				{
+					$this->headerMap[strtolower($key)] = $key;
+				}
+			}
 		}
 
 		$this->headers['Content-Type'] = isset($_SERVER['CONTENT_TYPE']) ? $_SERVER['CONTENT_TYPE'] : @getenv('CONTENT_TYPE');
@@ -127,6 +136,9 @@ class Message
 				{
 					$this->setHeader($header, '');
 				}
+
+				// Add us to the header map so we can find them case-insensitively
+				$this->headerMap[strtolower($header)] = $header;
 			}
 		}
 	}
