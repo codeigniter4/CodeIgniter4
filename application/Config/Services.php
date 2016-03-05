@@ -1,6 +1,7 @@
 <?php namespace Config;
 
 use CodeIgniter\HTTP\{Response, URI};
+use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\Router\RouteCollectionInterface;
 
 /**
@@ -181,6 +182,28 @@ class Services
 		}
 
 		return self::getSharedInstance('logger');
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * The Negotiate class provides the content negotiation features for
+	 * working the request to determine correct language, encoding, charset,
+	 * and more.
+	 */
+	public static function negotiator(RequestInterface $request=null, $getShared = false)
+	{
+		if (! $getShared)
+		{
+			if (is_null($request))
+			{
+				$request = self::request();
+			}
+
+			return new \CodeIgniter\HTTP\Negotiate($request);
+		}
+
+		return self::getSharedInstance('negotiator');
 	}
 
 	//--------------------------------------------------------------------

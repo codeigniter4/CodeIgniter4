@@ -37,6 +37,7 @@
  */
 use CodeIgniter\HTTP\Files\FileCollection;
 use CodeIgniter\HTTP\Files\UploadedFile;
+use Config\Services;
 
 /**
  * Class IncomingRequest
@@ -131,6 +132,11 @@ class IncomingRequest extends Request
 	 * @var Files\FileCollection
 	 */
 	protected $files;
+
+	/**
+	 * @var \CodeIgniter\HTTP\Negotiate
+	 */
+	protected $negotiate;
 
 	//--------------------------------------------------------------------
 
@@ -400,6 +406,7 @@ class IncomingRequest extends Request
 	{
 		if (is_null($this->files))
 		{
+			// @todo modify to use the Services, at the very least.
 			$this->files = new FileCollection();
 		}
 
@@ -420,6 +427,7 @@ class IncomingRequest extends Request
 	{
 		if (is_null($this->files))
 		{
+			// @todo modify to use the Services, at the very least.
 			$this->files = new FileCollection();
 		}
 
@@ -507,6 +515,45 @@ class IncomingRequest extends Request
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Provides a convenient way to work with the Negotiate class
+	 * for content negotiation.
+	 *
+	 * @param string $type
+	 * @param array  $supported
+	 * @param bool   $strictMatch
+	 *
+	 * @return mixed
+	 */
+	public function negotiate(string $type, array $supported, bool $strictMatch=false)
+	{
+	    if (is_null($this->negotiate))
+	    {
+		    $this->negotiate = Services::negotiator($this, true);
+	    }
+
+		switch (strtolower($type))
+		{
+			case 'media':
+				return $this->negotiate->media($supported, $strictMatch);
+				break;
+			case 'charset':
+				return $this->negotiate->charset($supported);
+				break;
+			case 'encoding':
+				return $this->negotiate->encoding($supported);
+				break;
+			case 'language':
+				return $this->negotiate->language($supported);
+				break;
+		}
+
+		throw new \InvalidArgumentException($type .' is not a valid negotiation type.');
+	}
+
+	//--------------------------------------------------------------------
+
 
 	/**
 	 * Will parse the REQUEST_URI and automatically detect the URI from it,
