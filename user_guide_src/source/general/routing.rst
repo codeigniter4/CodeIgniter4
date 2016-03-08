@@ -289,12 +289,12 @@ available from the command line.::
 Resource Routes
 ===============
 
-You can quickly create a handful of RESTful routes for a single resource with the ``resources()`` method. This
+You can quickly create a handful of RESTful routes for a single resource with the ``resource()`` method. This
 creates the five most common routes needed for full CRUD of a resource: create a new resource, update an existing one,
 list all of that resource, show a single resource, and delete a single resource. The first parameter is the resource
 name::
 
-	$routes->resources('photos');
+	$routes->resource('photos');
 
 	// Equivalent to the following:
 	$routes->get('photos',               'Photos::listAll');
@@ -303,7 +303,15 @@ name::
 	$routes->put('photos/(:segment)',    'Photos::update/$1');
 	$routes->delete('photos/(:segment)', 'Photos::delete/$1');
 
-The second parameter accepts an array of options that can be used to modify the routes that are generated.
+The second parameter accepts an array of options that can be used to modify the routes that are generated. While these
+routes are geared toward API-usage, where more methods are allowed, you can pass in the 'websafe' option to have it
+generate update and delete methods that work with HTML forms.
+
+    $routes->resource('photos', ['websafe' => 1]);
+
+    // The following equivalent routes are created:
+    $routes->post('photos/(:segment)',        'Photos::update/$1');
+	$routes->post('photos/(:segment)/delete', 'Photos::delete/$1');
 
 Change the Controller Used
 --------------------------
