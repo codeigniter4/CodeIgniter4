@@ -17,26 +17,26 @@ System Class List
 
 The following is a list of the core system files that are invoked every time CodeIgniter runs:
 
-* Config\Services
-* CodeIgniter\Autoloader\Autoloader
-* CodeIgniter\Config\DotEnv
-* CodeIgniter\Controller
-* CodeIgniter\Debug\Exceptions
-* CodeIgniter\Debug\Timer
-* CodeIgniter\Hooks\Hooks
-* CodeIgniter\HTTP\CLIRequest (if launched from command line only)
-* CodeIgniter\HTTP\IncomingRequest (if launched over HTTP)
-* CodeIgniter\HTTP\Request
-* CodeIgniter\HTTP\Response
-* CodeIgniter\HTTP\Message
-* CodeIgniter\Log\Logger
-* CodeIgniter\Log\Handlers\BaseHandler
-* CodeIgniter\Log\Handlers\FileHandler
-* CodeIgniter\Router\RouteCollection
-* CodeIgniter\Router\Router
-* CodeIgniter\Security\Security
-* CodeIgniter\View\View
-* CodeIgniter\View\Escaper
+* Config\\Services
+* CodeIgniter\\Autoloader\Autoloader
+* CodeIgniter\\Config\DotEnv
+* CodeIgniter\\Controller
+* CodeIgniter\\Debug\\Exceptions
+* CodeIgniter\\Debug\\Timer
+* CodeIgniter\\Hooks\\Hooks
+* CodeIgniter\\HTTP\\CLIRequest (if launched from command line only)
+* CodeIgniter\\HTTP\\IncomingRequest (if launched over HTTP)
+* CodeIgniter\\HTTP\\Request
+* CodeIgniter\\HTTP\\Response
+* CodeIgniter\\HTTP\\Message
+* CodeIgniter\\Log\\Logger
+* CodeIgniter\\Log\\Handlers\\BaseHandler
+* CodeIgniter\\Log\\Handlers\\FileHandler
+* CodeIgniter\\Router\\RouteCollection
+* CodeIgniter\\Router\\Router
+* CodeIgniter\\Security\\Security
+* CodeIgniter\\View\\View
+* CodeIgniter\\View\\Escaper
 
 Replacing Core Classes
 ======================
