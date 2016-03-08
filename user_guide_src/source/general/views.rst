@@ -134,7 +134,7 @@ want to work with it more directly. In that case you can access the View service
 
 	$renderer = \Config\Services::renderer();
 	
-.. important:: You should created services only within controllers. If you need access to the View class
+.. important:: You should create services only within controllers. If you need access to the View class
 	from a library, you should set that as a dependency in the constructor.
 
 Then you can use any of the three standard methods that it provides. 
@@ -159,7 +159,7 @@ When you pass data to the ``setVar()`` and ``setData()`` functions you have the 
 against cross-site scripting attacks. As the last parameter in either method, you can pass the desired context to
 escape the data for. See below for context descriptions.
 
-If you don't want the data to be escaped, you can pass `null` or `'raw'` as the final parameter to each function::
+If you don't want the data to be escaped, you can pass `null` or `raw` as the final parameter to each function::
 
 	echo $renderer->setVar('one', $one, 'raw');
 
@@ -170,14 +170,14 @@ context to escape the data for (see below)::
 	<?= esc($object->getStat()) ?>
 
 Escaping Contexts
-=================
+-----------------
 
 By default, the `esc()` and, in turn, the `setVar()` and `setData()` functions assume that the data you want to
 escape is intended to be used within standard HTML. However, if the data is intended for use in Javascript, CSS,
 or in an href attribute, you would need different escaping rules to be effective. You can pass in the name of the
-context as the second parameter. Valid contexts are 'html', 'js', 'css', 'url'::
+context as the second parameter. Valid contexts are 'html', 'js', 'css', 'url', and 'attr'::
 
-	<a href="<?= esc($url, 'url') ?>">Some Link</a>
+	<a href="<?= esc($url, 'url') ?>" data-foo="<?= esc($bar, 'attr') ?>">Some Link</a>
 	
 	<script>
 		var siteName = '<?= esc($siteName, 'js') ?>';
