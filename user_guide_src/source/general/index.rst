@@ -13,8 +13,6 @@ General Topics
 	views
 	models
 	Helpers <helpers>
-	libraries
-	creating_libraries
 	drivers
 	creating_drivers
 	core_classes
