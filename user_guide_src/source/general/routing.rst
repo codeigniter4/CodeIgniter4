@@ -2,6 +2,8 @@
 URI Routing
 ###########
 
+.. contents:: Page Contents
+
 Typically there is a one-to-one relationship between a URL string and its corresponding
 controller class/method. The segments in a URI normally follow this pattern::
 
