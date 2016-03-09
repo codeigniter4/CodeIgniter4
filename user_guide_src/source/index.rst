@@ -52,7 +52,7 @@ Tutorial
 	:includehidden:
 	:titlesonly:
 
-	tutorial/index
+    	tutorial/index
 
 **********************
 Architectural Concepts
