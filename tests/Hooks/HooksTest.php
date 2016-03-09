@@ -37,7 +37,7 @@ class HooksTest extends \CIUnitTestCase
 			$result = $arg;
 		});
 
-		$this->assertTrue(Hooks::trigger('foo', ['bar']) );
+		$this->assertTrue(Hooks::trigger('foo', 'bar') );
 
 		$this->assertEquals('bar', $result);
 	}
@@ -58,7 +58,7 @@ class HooksTest extends \CIUnitTestCase
 			$result = 2;
 		});
 
-		$this->assertFalse(Hooks::trigger('foo', ['bar']));
+		$this->assertFalse(Hooks::trigger('foo', 'bar'));
 		$this->assertEquals(1, $result);
 	}
 
@@ -79,7 +79,7 @@ class HooksTest extends \CIUnitTestCase
 			return false;
 		}, HOOKS_PRIORITY_HIGH);
 
-		$this->assertFalse(Hooks::trigger('foo', ['bar']));
+		$this->assertFalse(Hooks::trigger('foo', 'bar'));
 		$this->assertEquals(2, $result);
 	}
 

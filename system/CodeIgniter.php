@@ -224,10 +224,10 @@ $method = $router->methodName();
 $benchmark->stop('routing');
 
 //--------------------------------------------------------------------
-// Are there any "pre-system" hooks?
+// Are there any "pre-controller" hooks?
 //--------------------------------------------------------------------
 
-Hooks::trigger('pre_system');
+Hooks::trigger('pre_controller');
 
 ob_start();
 
