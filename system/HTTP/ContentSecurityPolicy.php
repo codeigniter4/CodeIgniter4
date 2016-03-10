@@ -621,7 +621,7 @@ class ContentSecurityPolicy
 	 * @param array|string|null $values
 	 * @param ResponseInterface $response
 	 */
-	protected function addToHeader(\string $name, $values = null, ResponseInterface &$response)
+	protected function addToHeader(string $name, $values = null, ResponseInterface &$response)
 	{
 		if ( empty($values))
 		{
