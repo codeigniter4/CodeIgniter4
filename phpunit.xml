@@ -23,6 +23,7 @@
                 <file>./system/ComposerScripts.php</file>
                 <file>./system/View/Escaper.php</file>
                 <directory suffix=".php">./system/View/Exception</directory>
+                <directory suffix=".php">./system/Debug/Toolbar/View</directory>
             </exclude>
         </whitelist>
     </filter>
