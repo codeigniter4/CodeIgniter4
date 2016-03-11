@@ -168,8 +168,6 @@ class Response extends Message implements ResponseInterface
 			$this->CSP = new ContentSecurityPolicy(new ContentSecurityPolicy());
 			$this->CSPEnabled = true;
 		}
-
-		$this->setProtocolVersion($config->HTTPProtocolVersion);
 	}
 
 	//--------------------------------------------------------------------

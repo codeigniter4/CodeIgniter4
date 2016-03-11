@@ -221,14 +221,4 @@ class ResponseTest extends CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	public function testResponseHasDefaultProtocolVersionSet()
-	{
-		$config = new \Config\App();
-		$response = new Response($config);
-
-		$this->assertNotEmpty($response->getProtocolVersion());
-		$this->assertEquals($config->HTTPProtocolVersion, $response->getProtocolVersion());
-	}
-
-	//---------------------------------------------
 }

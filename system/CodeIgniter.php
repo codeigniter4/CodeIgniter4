@@ -166,7 +166,9 @@ $request  = is_cli()
 		? Services::clirequest($config)
 		: Services::request($config);
 $request->setProtocolVersion($_SERVER['SERVER_PROTOCOL']);
+
 $response = Services::response($config);
+$response->setProtocolVersion($request->getProtocolVersion());
 
 // Assume success until proven otherwise.
 $response->setStatusCode(200);
