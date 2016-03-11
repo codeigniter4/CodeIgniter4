@@ -42,6 +42,17 @@ class App extends BaseConfig
 
 	/*
 	|--------------------------------------------------------------------------
+	| HTTP PROTOCOL
+	|--------------------------------------------------------------------------
+	|
+	| This is the highest value of the HTTP protocol that your application
+	| supports. Currently, most applications will be running under 1.1, but
+	| support for 2 is quickly growing.
+	*/
+	public $HTTPProtocolVersion = '1.1';
+
+	/*
+	|--------------------------------------------------------------------------
 	| URI PROTOCOL
 	|--------------------------------------------------------------------------
 	|
