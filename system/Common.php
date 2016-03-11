@@ -393,6 +393,13 @@ if (! function_exists('force_https'))
 			return;
 		}
 
+		// If the session library is loaded, we should regenerate
+		// the session ID for safety sake.
+		if (class_exists('Session', false))
+		{
+			\Config\Services::session(null, true)->regenerate();
+		}
+
 		$uri = $request->uri;
 		$uri->setScheme('https');
 
