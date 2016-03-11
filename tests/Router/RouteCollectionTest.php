@@ -293,7 +293,7 @@ class RouteCollectionTest extends CIUnitTestCase
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 		$routes = new RouteCollection();
 
-		$routes->resources('photos');
+		$routes->resource('photos');
 
 		$expected = [
 			'photos' => '\Photos::listAll',
@@ -304,7 +304,7 @@ class RouteCollectionTest extends CIUnitTestCase
 
 		$_SERVER['REQUEST_METHOD'] = 'POST';
 		$routes = new RouteCollection();
-		$routes->resources('photos');
+		$routes->resource('photos');
 
 		$expected = [
 				'photos' => '\Photos::create'
@@ -314,7 +314,7 @@ class RouteCollectionTest extends CIUnitTestCase
 
 		$_SERVER['REQUEST_METHOD'] = 'PUT';
 		$routes = new RouteCollection();
-		$routes->resources('photos');
+		$routes->resource('photos');
 
 		$expected = [
 				'photos/(.*)' => '\Photos::update/$1'
@@ -324,7 +324,7 @@ class RouteCollectionTest extends CIUnitTestCase
 
 		$_SERVER['REQUEST_METHOD'] = 'DELETE';
 		$routes = new RouteCollection();
-		$routes->resources('photos');
+		$routes->resource('photos');
 
 		$expected = [
 				'photos/(.*)' => '\Photos::delete/$1'
@@ -340,7 +340,7 @@ class RouteCollectionTest extends CIUnitTestCase
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 		$routes = new RouteCollection();
 
-		$routes->resources('photos', ['controller' => '<script>gallery']);
+		$routes->resource('photos', ['controller' => '<script>gallery']);
 
 		$expected = [
 				'photos' => '\Gallery::listAll',
@@ -357,7 +357,7 @@ class RouteCollectionTest extends CIUnitTestCase
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 		$routes = new RouteCollection();
 
-		$routes->resources('photos', ['placeholder' => ':num']);
+		$routes->resource('photos', ['placeholder' => ':num']);
 
 		$expected = [
 				'photos' => '\Photos::listAll',
@@ -374,7 +374,7 @@ class RouteCollectionTest extends CIUnitTestCase
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 		$routes = new RouteCollection();
 
-		$routes->resources('photos', ['only' => 'listAll']);
+		$routes->resource('photos', ['only' => 'listAll']);
 
 		$expected = [
 			'photos' => '\Photos::listAll'

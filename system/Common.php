@@ -248,9 +248,9 @@ if (! function_exists('service'))
 
 //--------------------------------------------------------------------
 
-if (! function_exists('sharedService'))
+if (! function_exists('shared_service'))
 {
-	function sharedService(string $name, ...$params)
+	function shared_service(string $name, ...$params)
 	{
 		// Ensure the number of params we are passing
 		// meets the number the method expects, since

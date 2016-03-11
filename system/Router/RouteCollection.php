@@ -617,14 +617,19 @@ class RouteCollection implements RouteCollectionInterface
 	 *      GET         /photos/{id}        show            display a specific photo
 	 *      POST        /photos             create          create a new photo
 	 *      PUT         /photos/{id}        update          update an existing photo
-	 *      DELETE      /photos/{id}/delete delete          delete an existing photo
+	 *      DELETE      /photos/{id}        delete          delete an existing photo
+	 *
+	 *  If 'websafe' option is present, the following paths are also available:
+	 *
+	 *      POST        /photos/{id}        update
+	 *      DELETE      /photos/{id}/delete delete
 	 *
 	 * @param  string $name    The name of the controller to route to.
 	 * @param  array  $options An list of possible ways to customize the routing.
 	 *
 	 * @return RouteCollectionInterface
 	 */
-	public function resources(string $name, array $options = null): RouteCollectionInterface
+	public function resource(string $name, array $options = null): RouteCollectionInterface
 	{
 		// In order to allow customization of the route the
 		// resources are sent to, we need to have a new name
@@ -658,6 +663,13 @@ class RouteCollection implements RouteCollectionInterface
 		if (in_array('create', $methods))  $this->post($name, $new_name . '::create', $options);
 		if (in_array('update', $methods))  $this->put($name . '/' . $id, $new_name . '::update/$1', $options);
 		if (in_array('delete', $methods))  $this->delete($name . '/' . $id, $new_name . '::delete/$1', $options);
+
+		// Web Safe?
+		if (isset($options['websafe']))
+		{
+			if (in_array('update', $methods))  $this->post($name . '/' . $id, $new_name . '::update/$1', $options);
+			if (in_array('delete', $methods))  $this->post($name . '/' . $id .'/delete', $new_name . '::delete/$1', $options);
+		}
 
 		return $this;
 	}

@@ -177,7 +177,7 @@ $response->setStatusCode(200);
 
 if ($config->forceGlobalSecureRequests === true)
 {
-	force_secure(31536000, $request, $response);
+	force_https(31536000, $request, $response);
 }
 
 //--------------------------------------------------------------------
@@ -224,10 +224,10 @@ $method = $router->methodName();
 $benchmark->stop('routing');
 
 //--------------------------------------------------------------------
-// Are there any "pre-system" hooks?
+// Are there any "pre-controller" hooks?
 //--------------------------------------------------------------------
 
-Hooks::trigger('pre_system');
+Hooks::trigger('pre_controller');
 
 ob_start();
 
