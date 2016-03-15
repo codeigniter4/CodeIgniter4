@@ -169,9 +169,10 @@
 			<table id="request_headers_table">
 				<tbody>
 				<?php foreach ($headers as $header => $value) : ?>
+					<?php if (empty($value)) continue; ?>
 					<tr>
-						<td><?= esc($header) ?></td>
-						<td><?= esc($request->getHeaderLine($header)) ?></td>
+						<td><?= esc($value->getName()) ?></td>
+						<td><?= esc($value->getValueLine()) ?></td>
 					</tr>
 				<?php endforeach; ?>
 				</tbody>

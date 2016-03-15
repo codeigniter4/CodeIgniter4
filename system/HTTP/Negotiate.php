@@ -99,7 +99,7 @@ class Negotiate
 	 */
 	public function media(array $supported, bool $strictMatch=false): string
 	{
-		return $this->getBestMatch($supported, $this->request->getHeader('accept'), true, $strictMatch);
+		return $this->getBestMatch($supported, $this->request->getHeaderLine('accept'), true, $strictMatch);
 	}
 
 	//--------------------------------------------------------------------
@@ -118,7 +118,7 @@ class Negotiate
 	 */
 	public function charset(array $supported): string
 	{
-		$match = $this->getBestMatch($supported, $this->request->getHeader('accept-charset'), false, true);
+		$match = $this->getBestMatch($supported, $this->request->getHeaderLine('accept-charset'), false, true);
 
 		// If no charset is shown as a match, ignore the directive
 		// as allowed by the RFC, and tell it a default value.
@@ -148,7 +148,7 @@ class Negotiate
 	{
 		array_push($supported, 'identity');
 
-		return $this->getBestMatch($supported, $this->request->getHeader('accept-encoding'));
+		return $this->getBestMatch($supported, $this->request->getHeaderLine('accept-encoding'));
 	}
 
 	//--------------------------------------------------------------------
@@ -167,7 +167,7 @@ class Negotiate
 	 */
 	public function language(array $supported): string
 	{
-		return $this->getBestMatch($supported, $this->request->getHeader('accept-language'));
+		return $this->getBestMatch($supported, $this->request->getHeaderLine('accept-language'));
 	}
 
 	//--------------------------------------------------------------------

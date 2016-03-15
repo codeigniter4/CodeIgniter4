@@ -86,6 +86,9 @@ class NegotiateTest extends CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * @group single
+	 */
 	public function testAcceptCharsetMatchesBasics()
 	{
 		$this->request->setHeader('Accept-Charset', 'iso-8859-5, unicode-1-1;q=0.8');

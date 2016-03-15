@@ -35,8 +35,8 @@ class MessageTest extends CIUnitTestCase
 		// Content-Type is likely set...
 		$this->assertTrue(count($headers) >= 2);
 
-		$this->assertTrue($headers['Host'] == 'daisyduke.com');
-		$this->assertTrue($headers['Referer'] == 'RoscoePekoTrain.com');
+		$this->assertTrue($headers['Host']->getValue() == 'daisyduke.com');
+		$this->assertTrue($headers['Referer']->getValue() == 'RoscoePekoTrain.com');
 	}
 
 	//--------------------------------------------------------------------
@@ -45,7 +45,10 @@ class MessageTest extends CIUnitTestCase
 	{
 		$this->message->setHeader('Host', 'daisyduke.com');
 
-	    $this->assertEquals('daisyduke.com', $this->message->getHeader('Host'));
+		$header = $this->message->getHeader('Host');
+
+		$this->assertTrue($header instanceof \CodeIgniter\HTTP\Header);
+	    $this->assertEquals('daisyduke.com', $header->getValue());
 	}
 
 	//--------------------------------------------------------------------
@@ -54,8 +57,8 @@ class MessageTest extends CIUnitTestCase
 	{
 		$this->message->setHeader('Host', 'daisyduke.com');
 
-		$this->assertEquals('daisyduke.com', $this->message->getHeader('host'));
-		$this->assertEquals('daisyduke.com', $this->message->getHeader('HOST'));
+		$this->assertEquals('daisyduke.com', $this->message->getHeader('host')->getValue());
+		$this->assertEquals('daisyduke.com', $this->message->getHeader('HOST')->getValue());
 	}
 
 	//--------------------------------------------------------------------
@@ -65,8 +68,8 @@ class MessageTest extends CIUnitTestCase
 	    $this->message->setHeader('first', 'kiss');
 		$this->message->setHeader('second', ['black', 'book']);
 
-		$this->assertEquals('kiss', $this->message->getHeader('FIRST'));
-		$this->assertEquals(['black', 'book'], $this->message->getHeader('Second'));
+		$this->assertEquals('kiss', $this->message->getHeader('FIRST')->getValue());
+		$this->assertEquals(['black', 'book'], $this->message->getHeader('Second')->getValue());
 	}
 
 	//--------------------------------------------------------------------
@@ -76,8 +79,8 @@ class MessageTest extends CIUnitTestCase
 		$this->message->setHeader('Accept', ['json', 'html']);
 		$this->message->setHeader('Host', 'daisyduke.com');
 
-		$this->assertEquals('json, html', $this->message->getHeaderLine('Accept'));
-		$this->assertEquals('daisyduke.com', $this->message->getHeaderLine('Host'));
+		$this->assertEquals('json, html', $this->message->getHeader('Accept')->getValueLine());
+		$this->assertEquals('daisyduke.com', $this->message->getHeader('Host')->getValueLine());
 	}
 
 	//--------------------------------------------------------------------
@@ -99,18 +102,18 @@ class MessageTest extends CIUnitTestCase
 
 		$this->message->appendHeader('Accept', 'xml');
 
-		$this->assertEquals(['json', 'html', 'xml'], $this->message->getHeader('accept'));
+		$this->assertEquals(['json', 'html', 'xml'], $this->message->getHeader('accept')->getValue());
 	}
 
 	//--------------------------------------------------------------------
 
-	public function testAppendHeaderThrowsExceptionOnNotArray()
+	public function testCanPrependHeader()
 	{
-	    $this->message->setHeader('accept', 'json');
+		$this->message->setHeader('accept', ['json', 'html']);
 
-		$this->setExpectedException('LogicException');
+		$this->message->prependHeader('Accept', 'xml');
 
-		$this->message->appendHeader('Accept', 'xml');
+		$this->assertEquals(['xml', 'json', 'html'], $this->message->getHeader('accept')->getValue());
 	}
 
 	//--------------------------------------------------------------------

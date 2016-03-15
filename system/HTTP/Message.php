@@ -39,7 +39,7 @@
 class Message
 {
 	/**
-	 * List of all HTTP request headers
+	 * List of all HTTP request headers.
 	 *
 	 * @var array
 	 */
@@ -167,12 +167,15 @@ class Message
 	//--------------------------------------------------------------------
 
 	/**
-	 * Returns a single header.
+	 * Returns a single header object. If multiple headers with the same
+	 * name exist, then will return an array of header objects.
 	 *
 	 * @param      $index
 	 * @param null $filter
+	 *
+	 * @return array|\CodeIgniter\HTTP\Header
 	 */
-	public function getHeader($name, $filter = null)
+	public function getHeader($name)
 	{
 		$orig_name = $this->getHeaderName($name);
 
@@ -181,14 +184,7 @@ class Message
 			return NULL;
 		}
 
-		if (is_null($filter))
-		{
-			$filter = FILTER_DEFAULT;
-		}
-
-		return is_array($this->headers[$orig_name])
-			? filter_var_array($this->headers[$orig_name], $filter)
-			: filter_var($this->headers[$orig_name], $filter);
+		return $this->headers[$orig_name];
 	}
 
 	//--------------------------------------------------------------------
@@ -234,26 +230,14 @@ class Message
 			return '';
 		}
 
-		if (is_array($this->headers[$orig_name]) || $this->headers[$orig_name] instanceof \ArrayAccess)
+		// If there are more than 1 headers with this name,
+		// then return the value of the first.
+		if (is_array($this->headers[$orig_name]))
 		{
-			$options = [];
-
-			foreach ($this->headers[$orig_name] as $key => $value)
-			{
-				if (is_numeric($key))
-				{
-					$options[] = $value;
-				}
-				else
-				{
-					$options[] = $key.'='.$value;
-				}
-			}
-
-			return implode(', ', $options);
+			return $this->headers[$orig_name][0]->getValueLine();
 		}
 
-		return (string)$this->headers[$orig_name];
+		return $this->headers[$orig_name]->getValueLine();
 	}
 
 	//--------------------------------------------------------------------
@@ -269,9 +253,21 @@ class Message
 	 */
 	public function setHeader(string $name, $value): self
 	{
-		$this->headers[$name] = $value;
+		if (! isset($this->headers[$name]))
+		{
+			$this->headers[$name] = new Header($name, $value);
 
-		$this->headerMap[strtolower($name)] = $name;
+			$this->headerMap[strtolower($name)] = $name;
+
+			return $this;
+		}
+
+		if (! is_array($this->headers[$name]))
+		{
+			$this->headers[$name] = [$this->headers[$name]];
+		}
+
+		$this->headers[$name][] = new Header($name, $value);
 
 		return $this;
 	}
@@ -310,12 +306,27 @@ class Message
 	{
 		$orig_name = $this->getHeaderName($name);
 
-		if (! is_array($this->headers[$orig_name]) && ! ($this->headers[$orig_name] instanceof \ArrayAccess))
-		{
-			throw new \LogicException("Header '{$orig_name}' does not support multiple values.");
-		}
+		$this->headers[$orig_name]->appendValue($value);
 
-		$this->headers[$orig_name][] = $value;
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Adds an additional header value to any headers that accept
+	 * multiple values (i.e. are an array or implement ArrayAccess)
+	 *
+	 * @param string $name
+	 * @param        $value
+	 *
+	 * @return string
+	 */
+	public function prependHeader(string $name, $value): self
+	{
+		$orig_name = $this->getHeaderName($name);
+
+		$this->headers[$orig_name]->prependValue($value);
 
 		return $this;
 	}
