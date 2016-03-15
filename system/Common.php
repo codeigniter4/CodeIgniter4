@@ -420,3 +420,32 @@ if (! function_exists('force_https'))
 
 //--------------------------------------------------------------------
 
+if (! function_exists('redirect'))
+{
+	/**
+	 * Convenience method that works with the current global $request and
+	 * $router instances to redirect using named/reverse-routed routes
+	 * to determine the URL to go to. If nothing is found, will treat
+	 * as a traditional redirect and pass the string in, letting
+	 * $response->redirect() determine the correct method and code.
+	 *
+	 * If more control is needed, you must use $response->redirect explicitly.
+	 *
+	 * @param string   $uri
+	 */
+	function redirect (string $uri, ...$params)
+	{
+		global $response, $routes;
+
+		if ($route = $routes->reverseRoute($uri, ...$params))
+		{
+			$uri = $route;
+		}
+
+		$response->redirect($uri);
+		exit(EXIT_SUCCESS);
+	}
+}
+
+//--------------------------------------------------------------------
+
