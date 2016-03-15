@@ -76,12 +76,12 @@ if ( ! function_exists('log_message'))
 		// for asserting that logs were called in the test code.
 		if (ENVIRONMENT == 'testing')
 		{
-			$logger = new TestLogger(new \Config\Logger());
+			$logger = new \CodeIgniter\Log\TestLogger(new \Config\Logger());
 			return $logger->log($level, $message, $context);
 		}
 
 		return \Config\Services::logger(true)
-		                           ->log($level, $message, $context);
+									->log($level, $message, $context);
 	}
 }
 

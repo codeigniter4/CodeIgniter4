@@ -1,8 +1,6 @@
-<?php
+<?php namespace CodeIgniter\HTTP;
 
-use CodeIgniter\HTTP\URI;
-
-class URITest extends CIUnitTestCase
+class URITest extends \CIUnitTestCase
 {
 
 	public function setUp()
@@ -195,7 +193,7 @@ class URITest extends CIUnitTestCase
 			'start-dot'    => ['./path/to/nowhere', '/path/to/nowhere'],
 			'start-double' => ['../path/to/nowhere', '/path/to/nowhere'],
 			'decoded'      => ['../%41path', '/Apath'],
-		    'encoded'      => ['/path^here', '/path%5Ehere'],
+			'encoded'      => ['/path^here', '/path%5Ehere'],
 		];
 	}
 
@@ -318,7 +316,7 @@ class URITest extends CIUnitTestCase
 
 	public function testSetAuthorityReconstitutes()
 	{
-	    $authority = 'me@foo.com:3000';
+		$authority = 'me@foo.com:3000';
 
 		$uri = new URI();
 		$uri->setAuthority($authority);
@@ -367,9 +365,9 @@ class URITest extends CIUnitTestCase
 	{
 		return [
 			['g', 'http://a/b/c/g'],
-	        ['g/', 'http://a/b/c/g/'],
-	        ['/g', 'http://a/g'],
-		    ['#s', 'http://a/b/c/d#s'],
+			['g/', 'http://a/b/c/g/'],
+			['/g', 'http://a/g'],
+			['#s', 'http://a/b/c/d#s'],
 		];
 	}
 
@@ -382,7 +380,7 @@ class URITest extends CIUnitTestCase
 	{
 		$base = 'http://a/b/c/d';
 
-	    $uri = new URI($base);
+		$uri = new URI($base);
 
 		$new = $uri->resolveRelativeURI($rel);
 

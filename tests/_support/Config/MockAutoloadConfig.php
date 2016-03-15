@@ -1,6 +1,6 @@
-<?php
+<?php namespace Config;
 
-class MockAutoload extends \Config\Autoload
+class MockAutoload extends Autoload
 {
 	public $psr4 = [];
 
@@ -10,7 +10,7 @@ class MockAutoload extends \Config\Autoload
 
 	public function __construct()
 	{
-	    // Don't call the parent since we don't want the default mappings.
+		// Don't call the parent since we don't want the default mappings.
 		// parent::__construct();
 	}
 

@@ -1,5 +1,7 @@
 <?php
 
+use CodeIgniter\Log\TestLogger;
+
 class CIUnitTestCase extends PHPUnit_Framework_TestCase
 {
 	/**

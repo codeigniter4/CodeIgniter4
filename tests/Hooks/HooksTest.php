@@ -1,6 +1,4 @@
-<?php
-
-use \CodeIgniter\Hooks\Hooks;
+<?php namespace CodeIgniter\Hooks;
 
 class HooksTest extends \CIUnitTestCase
 {

@@ -1,6 +1,6 @@
-<?php
+<?php namespace CodeIgniter\HTTP;
 
-class MessageTest extends CIUnitTestCase
+class MessageTest extends \CIUnitTestCase
 {
 	/**
 	 * @var CodeIgniter\HTTP\Message
@@ -9,7 +9,7 @@ class MessageTest extends CIUnitTestCase
 
 	public function setUp()
 	{
-	    $this->message = new \CodeIgniter\HTTP\Message();
+		$this->message = new Message();
 	}
 
 	//--------------------------------------------------------------------
@@ -17,7 +17,7 @@ class MessageTest extends CIUnitTestCase
 	public function tearDown()
 	{
 		$this->message = null;
-	    unset($this->message);
+		unset($this->message);
 	}
 
 	//--------------------------------------------------------------------
@@ -47,8 +47,8 @@ class MessageTest extends CIUnitTestCase
 
 		$header = $this->message->getHeader('Host');
 
-		$this->assertTrue($header instanceof \CodeIgniter\HTTP\Header);
-	    $this->assertEquals('daisyduke.com', $header->getValue());
+		$this->assertTrue($header instanceof Header);
+		$this->assertEquals('daisyduke.com', $header->getValue());
 	}
 
 	//--------------------------------------------------------------------
@@ -65,7 +65,7 @@ class MessageTest extends CIUnitTestCase
 
 	public function testCanSetHeaders()
 	{
-	    $this->message->setHeader('first', 'kiss');
+		$this->message->setHeader('first', 'kiss');
 		$this->message->setHeader('second', ['black', 'book']);
 
 		$this->assertEquals('kiss', $this->message->getHeader('FIRST')->getValue());
@@ -98,7 +98,7 @@ class MessageTest extends CIUnitTestCase
 
 	public function testCanAppendHeader()
 	{
-	    $this->message->setHeader('accept', ['json', 'html']);
+		$this->message->setHeader('accept', ['json', 'html']);
 
 		$this->message->appendHeader('Accept', 'xml');
 
@@ -120,7 +120,7 @@ class MessageTest extends CIUnitTestCase
 
 	public function testSetProtocolWorks()
 	{
-	    $this->message->setProtocolVersion('1.1');
+		$this->message->setProtocolVersion('1.1');
 
 		$this->assertEquals('1.1', $this->message->getProtocolVersion());
 	}
@@ -130,7 +130,7 @@ class MessageTest extends CIUnitTestCase
 	public function testSetProtocolThrowsExceptionWithInvalidProtocol()
 	{
 		$this->setExpectedException('InvalidArgumentException');
-	    $this->message->setProtocolVersion('1.2');
+		$this->message->setProtocolVersion('1.2');
 	}
 
 	//--------------------------------------------------------------------
@@ -139,7 +139,7 @@ class MessageTest extends CIUnitTestCase
 	{
 		$body = 'a strange little fellow.';
 
-	    $this->message->setBody($body);
+		$this->message->setBody($body);
 
 		$this->assertEquals($body, $this->message->getBody());
 	}
@@ -155,8 +155,8 @@ class MessageTest extends CIUnitTestCase
 
 		$this->assertTrue(is_array($headers));
 		$this->assertEquals(2, count($headers));
-		$this->assertTrue($headers[0] instanceof \CodeIgniter\HTTP\Header);
-		$this->assertTrue($headers[1] instanceof \CodeIgniter\HTTP\Header);
+		$this->assertTrue($headers[0] instanceof Header);
+		$this->assertTrue($headers[1] instanceof Header);
 		$this->assertEquals('foo1', $headers[0]->getValueLine());
 		$this->assertEquals('foo2', $headers[1]->getValueLine());
 	}

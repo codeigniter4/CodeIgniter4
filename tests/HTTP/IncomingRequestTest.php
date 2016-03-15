@@ -1,9 +1,8 @@
-<?php
+<?php namespace CodeIgniter\HTTP;
 
 use Config\App;
-use CodeIgniter\HTTP\URI;
 
-class IncomingRequestTest extends CIUnitTestCase
+class IncomingRequestTest extends \CIUnitTestCase
 {
 	/**
 	 * @var \CodeIgniter\HTTP\IncomingRequest
@@ -12,7 +11,7 @@ class IncomingRequestTest extends CIUnitTestCase
 
 	public function setUp()
 	{
-	    $this->request = new \CodeIgniter\HTTP\IncomingRequest(new App(), new URI());
+		$this->request = new IncomingRequest(new App(), new URI());
 
 		$_POST = $_GET = $_SERVER = $_REQUEST = $_ENV = $_COOKIE = $_SESSION = [];
 	}
@@ -21,7 +20,7 @@ class IncomingRequestTest extends CIUnitTestCase
 
 	public function testCanGrabGetVars()
 	{
-	    $_GET['TEST'] = 5;
+		$_GET['TEST'] = 5;
 
 		$this->assertEquals(5, $this->request->getGet('TEST'));
 		$this->assertEquals(null, $this->request->getGEt('TESTY'));

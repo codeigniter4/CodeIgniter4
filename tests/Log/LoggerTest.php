@@ -1,24 +1,23 @@
-<?php
+<?php namespace CodeIgniter\Log;
 
-use CodeIgniter\Log\Logger;
-use \Logger as LoggerConfig;
+use Config\Logger as LoggerConfig;
 use Psr\Log\LogLevel;
+use CodeIgniter\Log\Handlers\TestHandler;
 
 require_once SUPPORTPATH.'Config/Logger.php';
-require_once SUPPORTPATH.'Log/TestHandler.php';
+require_once SUPPORTPATH.'Log/Handlers/TestHandler.php';
 
-class LoggerTest extends CIUnitTestCase
+class LoggerTest extends \CIUnitTestCase
 {
-	public function setUp() 
+	public function setUp()
 	{
-	    
 	}
 	
 	//--------------------------------------------------------------------
 	
 	public function testThrowsExceptionWithBadHandlerSettings()
 	{
-	    $config = new LoggerConfig();
+		$config = new LoggerConfig();
 		$config->handlers = null;
 
 		$this->setExpectedException('RuntimeException', 'LoggerConfig must provide at least one Handler.');
@@ -75,7 +74,7 @@ class LoggerTest extends CIUnitTestCase
 	public function testLogDoesnotLogUnhandledLevels()
 	{
 		$config = new LoggerConfig();
-		$config->handlers['TestHandler']['handles'] =  ['critical'];
+		$config->handlers['CodeIgniter\Log\Handlers\TestHandler']['handles'] =  ['critical'];
 
 		$logger = new Logger($config);
 
@@ -210,7 +209,7 @@ class LoggerTest extends CIUnitTestCase
 		$_ENV['foo'] = 'bar';
 
 		// For whatever reason, this will often be the class/function instead of file and line.
-		$expected = 'DEBUG - '.date('Y-m-d').' --> Test message LoggerTest testLogInterpolatesFileAndLine';
+		$expected = 'DEBUG - '.date('Y-m-d').' --> Test message CodeIgniter\Log\LoggerTest testLogInterpolatesFileAndLine';
 
 		$logger->log('debug', 'Test message {file} {line}');
 

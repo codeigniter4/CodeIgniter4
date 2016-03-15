@@ -1,17 +1,17 @@
-<?php
+<?php namespace CodeIgniter\HTTP\Files;
 
-class FileCollectionTest extends CIUnitTestCase
+class FileCollectionTest extends \CIUnitTestCase
 {
 	public function setUp()
 	{
-	    $_FILES = [];
+		$_FILES = [];
 	}
 
 	//--------------------------------------------------------------------
 
 	public function testAllReturnsNullWithNoFiles()
 	{
-	    $files = new \CodeIgniter\HTTP\Files\FileCollection();
+	    $files = new FileCollection();
 
 		$this->assertNull($files->all());
 	}
@@ -23,19 +23,19 @@ class FileCollectionTest extends CIUnitTestCase
 		$_FILES = [
 			'userfile' => [
 				'name' => 'someFile.txt',
-			    'type' => 'text/plain',
-			    'size' => '124',
-			    'tmp_name' => '/tmp/myTempFile.txt',
-			    'error' => 0
+				'type' => 'text/plain',
+				'size' => '124',
+				'tmp_name' => '/tmp/myTempFile.txt',
+				'error' => 0
 			]
 		];
 
-	    $collection = new \CodeIgniter\HTTP\Files\FileCollection();
+		$collection = new FileCollection();
 		$files      = $collection->all();
 		$this->assertEquals(1, count($files));
 
 		$file = array_shift($files);
-		$this->assertTrue($file instanceof \CodeIgniter\HTTP\Files\UploadedFile);
+		$this->assertTrue($file instanceof UploadedFile);
 
 		$this->assertEquals('someFile.txt', $file->getName());
 		$this->assertEquals(124, $file->getSize());
@@ -55,7 +55,7 @@ class FileCollectionTest extends CIUnitTestCase
 			]
 		];
 
-		$collection = new \CodeIgniter\HTTP\Files\FileCollection();
+		$collection = new FileCollection();
 		$files      = $collection->all();
 		$this->assertEquals(1, count($files));
 		$this->assertEquals('userfile', key($files));
@@ -64,7 +64,7 @@ class FileCollectionTest extends CIUnitTestCase
 		$this->assertEquals(2, count($files));
 
 		$file = $files[0];
-		$this->assertTrue($file instanceof \CodeIgniter\HTTP\Files\UploadedFile);
+		$this->assertTrue($file instanceof UploadedFile);
 
 		$this->assertEquals('fileA.txt', $file->getName());
 		$this->assertEquals('/tmp/fileA.txt', $file->getTempName());
@@ -95,13 +95,13 @@ class FileCollectionTest extends CIUnitTestCase
 			],
 		];
 
-		$collection = new \CodeIgniter\HTTP\Files\FileCollection();
+		$collection = new FileCollection();
 		$files      = $collection->all();
 		$this->assertEquals(2, count($files));
 		$this->assertEquals('userfile1', key($files));
 
 		$file = array_shift($files);
-		$this->assertTrue($file instanceof \CodeIgniter\HTTP\Files\UploadedFile);
+		$this->assertTrue($file instanceof UploadedFile);
 
 		$this->assertEquals('fileA.txt', $file->getName());
 		$this->assertEquals('/tmp/fileA.txt', $file->getTempName());
@@ -110,7 +110,7 @@ class FileCollectionTest extends CIUnitTestCase
 		$this->assertEquals(124, $file->getSize());
 
 		$file = array_pop($files);
-		$this->assertTrue($file instanceof \CodeIgniter\HTTP\Files\UploadedFile);
+		$this->assertTrue($file instanceof UploadedFile);
 
 		$this->assertEquals('fileB.txt', $file->getName());
 		$this->assertEquals('/tmp/fileB.txt', $file->getTempName());
@@ -152,7 +152,7 @@ class FileCollectionTest extends CIUnitTestCase
 			]
 		];
 
-		$collection = new \CodeIgniter\HTTP\Files\FileCollection();
+		$collection = new FileCollection();
 		$files      = $collection->all();
 		$this->assertEquals(1, count($files));
 		$this->assertEquals('userfile', key($files));
@@ -160,7 +160,7 @@ class FileCollectionTest extends CIUnitTestCase
 		$this->assertTrue(isset($files['userfile']['foo']['bar']));
 
 		$file = $files['userfile']['foo']['bar'];
-		$this->assertTrue($file instanceof \CodeIgniter\HTTP\Files\UploadedFile);
+		$this->assertTrue($file instanceof UploadedFile);
 
 		$this->assertEquals('fileA.txt', $file->getName());
 		$this->assertEquals('/tmp/fileA.txt', $file->getTempName());
@@ -183,7 +183,7 @@ class FileCollectionTest extends CIUnitTestCase
 			]
 		];
 
-		$collection = new \CodeIgniter\HTTP\Files\FileCollection();
+		$collection = new FileCollection();
 
 		$this->assertTrue($collection->hasFile('userfile'));
 		$this->assertFalse($collection->hasFile('foo'));
@@ -210,7 +210,7 @@ class FileCollectionTest extends CIUnitTestCase
 			],
 		];
 
-		$collection = new \CodeIgniter\HTTP\Files\FileCollection();
+		$collection = new FileCollection();
 
 		$this->assertTrue($collection->hasFile('userfile1'));
 		$this->assertTrue($collection->hasFile('userfile2'));
@@ -249,7 +249,7 @@ class FileCollectionTest extends CIUnitTestCase
 			]
 		];
 
-		$collection = new \CodeIgniter\HTTP\Files\FileCollection();
+		$collection = new FileCollection();
 
 		$this->assertTrue($collection->hasFile('userfile'));
 		$this->assertTrue($collection->hasFile('userfile.foo'));
@@ -272,7 +272,7 @@ class FileCollectionTest extends CIUnitTestCase
 
 		$expected = 'The file "someFile.txt" exceeds your upload_max_filesize ini directive.';
 
-		$collection = new \CodeIgniter\HTTP\Files\FileCollection();
+		$collection = new FileCollection();
 		$file = $collection->getFile('userfile');
 
 		$this->assertEquals($expected, $file->getErrorString());

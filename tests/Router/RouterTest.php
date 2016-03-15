@@ -1,9 +1,6 @@
-<?php
+<?php namespace CodeIgniter\Router;
 
-use CodeIgniter\Router\Router;
-
-
-class RouterTest extends CIUnitTestCase
+class RouterTest extends \CIUnitTestCase
 {
 
 	/**
@@ -19,7 +16,7 @@ class RouterTest extends CIUnitTestCase
 
 	public function setUp()
 	{
-		$this->collection = new \CodeIgniter\Router\RouteCollection();
+		$this->collection = new RouteCollection();
 
 		$routes = [
 			'users'                        => 'Users::index',
