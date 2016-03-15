@@ -1,10 +1,9 @@
-<?php
+<?php namespace CodeIgniter\Config;
 
 //require_once 'system/Benchmark/Timer.php';
 
-use CodeIgniter\Config\DotEnv;
-
-class DotEnvTest extends CIUnitTestCase {
+class DotEnvTest extends \CIUnitTestCase
+{
 	
 	protected $fixturesFolder;
 	
@@ -12,14 +11,14 @@ class DotEnvTest extends CIUnitTestCase {
 	
 	public function setup()
 	{
-	    $this->fixturesFolder = dirname(__FILE__).'/fixtures';
+		$this->fixturesFolder = dirname(__FILE__).'/fixtures';
 	}
 	
 	//--------------------------------------------------------------------
 	
 	public function testReturnsFalseIfCannotFindFile()
 	{
-	    $dotenv = new DotEnv(__DIR__);
+		$dotenv = new DotEnv(__DIR__);
 		$this->assertFalse($dotenv->load());
 	}
 

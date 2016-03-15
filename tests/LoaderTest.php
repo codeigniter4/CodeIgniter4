@@ -1,7 +1,9 @@
-<?php
+<?php namespace CodeIgniter;
 
 require '_support/MockLoader.php';
 require '_support/Config/MockAutoloadConfig.php';
+
+use Config\MockAutoload;
 
 class LoaderTest extends \PHPUnit_Framework_TestCase
 {
@@ -18,17 +20,17 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
 		$config->psr4 = [
 			'App\Libraries'   => '/application/somewhere',
 			'App'             => '/application',
-		    'Blog'            => '/modules/blog'
+			'Blog'            => '/modules/blog'
 		];
 
-	    $this->loader = new MockLoader($config);
+		$this->loader = new MockLoader($config);
 
 		$this->loader->setFiles([
 			APPPATH.'index.php',
 			APPPATH.'Views/index.php',
-		    APPPATH.'Views/admin/users/create.php',
-		    '/modules/blog/Views/index.php',
-		    '/modules/blog/Views/admin/posts.php'
+			APPPATH.'Views/admin/users/create.php',
+			'/modules/blog/Views/index.php',
+			'/modules/blog/Views/admin/posts.php'
 		]);
 	}
 
@@ -91,7 +93,7 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
 
 	public function testLocateFileCanFindNamespacedView()
 	{
-	    $file = '\Blog\index';
+		$file = '\Blog\index';
 
 		$expected = '/modules/blog/Views/index.php';
 
@@ -120,4 +122,3 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
 
 	//--------------------------------------------------------------------
 }
-

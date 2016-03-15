@@ -1,6 +1,7 @@
-<?php
+<?php namespace CodeIgniter\Log;
 
-class TestLogger extends \CodeIgniter\Log\Logger {
+class TestLogger extends Logger
+{
 
 	protected static $op_logs = [];
 

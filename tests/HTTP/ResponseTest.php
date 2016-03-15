@@ -1,12 +1,14 @@
-<?php
+<?php namespace CodeIgniter\HTTP;
 
-use CodeIgniter\HTTP\Response;
+use Config\App;
+use DateTime;
+use DateTimeZone;
 
-class ResponseTest extends CIUnitTestCase
+class ResponseTest extends \CIUnitTestCase
 {
 	public function testCanSetStatusCode()
 	{
-	    $response = new Response(new \Config\App());
+		$response = new Response(new App());
 
 		$response->setStatusCode(200);
 
@@ -17,7 +19,7 @@ class ResponseTest extends CIUnitTestCase
 
 	public function testSetStatusCodeThrowsExceptionForBadCodes()
 	{
-		$response = new Response(new \Config\App());
+		$response = new Response(new App());
 
 		$this->setExpectedException('InvalidArgumentException');
 		$response->setStatusCode(54322);
@@ -28,7 +30,7 @@ class ResponseTest extends CIUnitTestCase
 
 	public function testSetStatusCodeSetsReason()
 	{
-		$response = new Response(new \Config\App());
+		$response = new Response(new App());
 
 		$response->setStatusCode(200);
 
@@ -39,7 +41,7 @@ class ResponseTest extends CIUnitTestCase
 
 	public function testCanSetCustomReasonCode()
 	{
-		$response = new Response(new \Config\App());
+		$response = new Response(new App());
 
 		$response->setStatusCode(200, 'Not the mama');
 
@@ -50,7 +52,7 @@ class ResponseTest extends CIUnitTestCase
 
 	public function testRequiresMessageWithUnknownStatusCode()
 	{
-		$response = new Response(new \Config\App());
+		$response = new Response(new App());
 
 		$this->setExpectedException('InvalidArgumentException', 'Unknown HTTP status code provided with no message');
 		$response->setStatusCode(115);
@@ -60,7 +62,7 @@ class ResponseTest extends CIUnitTestCase
 
 	public function testRequiresMessageWithSmallStatusCode()
 	{
-		$response = new Response(new \Config\App());
+		$response = new Response(new App());
 
 		$this->setExpectedException('InvalidArgumentException', '95 is not a valid HTTP return status code');
 		$response->setStatusCode(95);
@@ -70,7 +72,7 @@ class ResponseTest extends CIUnitTestCase
 
 	public function testRequiresMessageWithLargeStatusCode()
 	{
-		$response = new Response(new \Config\App());
+		$response = new Response(new App());
 
 		$this->setExpectedException('InvalidArgumentException', '695 is not a valid HTTP return status code');
 		$response->setStatusCode(695);
@@ -80,7 +82,7 @@ class ResponseTest extends CIUnitTestCase
 
 	public function testExceptionThrownWhenNoStatusCode()
 	{
-		$response = new Response(new \Config\App());
+		$response = new Response(new App());
 
 		$this->setExpectedException('BadMethodCallException', 'HTTP Response is missing a status code');
 		$response->getStatusCode();
@@ -90,7 +92,7 @@ class ResponseTest extends CIUnitTestCase
 
 	public function testSetStatusCodeInterpretsReason()
 	{
-		$response = new Response(new \Config\App());
+		$response = new Response(new App());
 
 		$response->setStatusCode(300);
 
@@ -101,7 +103,7 @@ class ResponseTest extends CIUnitTestCase
 
 	public function testSetStatusCodeSavesCustomReason()
 	{
-		$response = new Response(new \Config\App());
+		$response = new Response(new App());
 
 		$response->setStatusCode(300, 'My Little Pony');
 
@@ -112,7 +114,7 @@ class ResponseTest extends CIUnitTestCase
 
 	public function testGetReasonReturnsEmptyStringWithNoStatus()
 	{
-		$response = new Response(new \Config\App());
+		$response = new Response(new App());
 
 		$this->assertEquals('', $response->getReason());
 	}
@@ -121,12 +123,12 @@ class ResponseTest extends CIUnitTestCase
 
 	public function testSetDateRemembersDateInUTC()
 	{
-		$response = new Response(new \Config\App());
+		$response = new Response(new App());
 
 		$response->setDate(DateTime::createFromFormat('Y-m-d', '2000-03-10'));
 
 		$date = DateTime::createFromFormat('Y-m-d', '2000-03-10');
-		$date->setTimezone(new \DateTimeZone('UTC'));
+		$date->setTimezone(new DateTimeZone('UTC'));
 
 		$header = $response->getHeaderLine('Date');
 
@@ -137,7 +139,7 @@ class ResponseTest extends CIUnitTestCase
 
 	public function testSetContentType()
 	{
-		$response = new Response(new \Config\App());
+		$response = new Response(new App());
 
 		$response->setContentType('text/json');
 
@@ -148,7 +150,7 @@ class ResponseTest extends CIUnitTestCase
 
 	public function testNoCache()
 	{
-		$response = new Response(new \Config\App());
+		$response = new Response(new App());
 
 		$response->noCache();
 
@@ -159,15 +161,15 @@ class ResponseTest extends CIUnitTestCase
 
 	public function testSetCache()
 	{
-		$response = new Response(new \Config\App());
+		$response = new Response(new App());
 
 		$date = date('r');
 
 		$options = [
 			'etag' => '12345678',
-		    'last-modified' => $date,
-		    'max-age' => 300,
-		    'must-revalidate'
+			'last-modified' => $date,
+			'max-age' => 300,
+			'must-revalidate'
 		];
 
 		$response->setCache($options);
@@ -181,12 +183,12 @@ class ResponseTest extends CIUnitTestCase
 
 	public function testSetLastModifiedWithDateTimeObject()
 	{
-		$response = new Response(new \Config\App());
+		$response = new Response(new App());
 
 		$response->setLastModified(DateTime::createFromFormat('Y-m-d', '2000-03-10'));
 
 		$date = DateTime::createFromFormat('Y-m-d', '2000-03-10');
-		$date->setTimezone(new \DateTimeZone('UTC'));
+		$date->setTimezone(new DateTimeZone('UTC'));
 
 		$header = $response->getHeaderLine('Last-Modified');
 
@@ -197,7 +199,7 @@ class ResponseTest extends CIUnitTestCase
 
 	public function testRedirectSetsDefaultCodeAndLocationHeader()
 	{
-		$response = new Response(new \Config\App());
+		$response = new Response(new App());
 
 		$response->redirect('example.com');
 
@@ -210,7 +212,7 @@ class ResponseTest extends CIUnitTestCase
 
 	public function testRedirectSetsCode()
 	{
-		$response = new Response(new \Config\App());
+		$response = new Response(new App());
 
 		$response->redirect('example.com', 'auto', 307);
 

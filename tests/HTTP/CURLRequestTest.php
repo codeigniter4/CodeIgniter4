@@ -1,8 +1,6 @@
-<?php
+<?php namespace CodeIgniter\HTTP;
 
 use Config\App;
-use CodeIgniter\HTTP\URI;
-use CodeIgniter\HTTP\Response;
 
 /**
  * Class MockCURLRequest
@@ -11,8 +9,8 @@ use CodeIgniter\HTTP\Response;
  * test runs. Instead, we can set the desired output
  * and get back the set options.
  */
-class MockCURLRequest extends \CodeIgniter\HTTP\CURLRequest {
-
+class MockCURLRequest extends CURLRequest
+{
 	public $curl_options;
 
 	protected $output = '';
@@ -43,7 +41,7 @@ class MockCURLRequest extends \CodeIgniter\HTTP\CURLRequest {
 //--------------------------------------------------------------------
 
 
-class CURLRequestTest extends CIUnitTestCase
+class CURLRequestTest extends \CIUnitTestCase
 {
 	protected $request;
 
@@ -58,8 +56,8 @@ class CURLRequestTest extends CIUnitTestCase
 	{
 		$output = "Howdy Stranger.";
 
-	    $response = $this->request->setOutput($output)
-		                 ->send('get', 'http://example.com');
+		$response = $this->request->setOutput($output)
+						->send('get', 'http://example.com');
 
 		$this->assertInstanceOf('CodeIgniter\\HTTP\\Response', $response);
 		$this->assertEquals($output, $response->getBody());
@@ -69,7 +67,7 @@ class CURLRequestTest extends CIUnitTestCase
 
 	public function testGetSetsCorrectMethod()
 	{
-	    $response = $this->request->get('http://example.com');
+		$response = $this->request->get('http://example.com');
 
 		$this->assertEquals('get', $this->request->getMethod());
 

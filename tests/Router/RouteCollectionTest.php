@@ -1,8 +1,6 @@
-<?php
+<?php namespace CodeIgniter\Router;
 
-use CodeIgniter\Router\RouteCollection as RouteCollection;
-
-class RouteCollectionTest extends CIUnitTestCase
+class RouteCollectionTest extends \CIUnitTestCase
 {
 
 	public function setUp()
@@ -176,7 +174,7 @@ class RouteCollectionTest extends CIUnitTestCase
 
 	public function testSetDefaultControllerStoresIt()
 	{
-	    $routes = new RouteCollection();
+		$routes = new RouteCollection();
 		$routes->setDefaultController('godzilla');
 
 		$this->assertEquals('godzilla', $routes->getDefaultController());
@@ -196,7 +194,7 @@ class RouteCollectionTest extends CIUnitTestCase
 
 	public function testTranslateURIDashesWorks()
 	{
-	    $routes = new RouteCollection();
+		$routes = new RouteCollection();
 		$routes->setTranslateURIDashes(true);
 
 		$this->assertEquals(true, $routes->shouldTranslateURIDashes());
@@ -216,7 +214,7 @@ class RouteCollectionTest extends CIUnitTestCase
 
 	public function testGroupingWorks()
 	{
-	    $routes = new RouteCollection();
+		$routes = new RouteCollection();
 
 		$routes->group('admin', function($routes)
 		{
@@ -270,7 +268,7 @@ class RouteCollectionTest extends CIUnitTestCase
 
 	public function testHostnameOption()
 	{
-	    $_SERVER['HTTP_HOST'] = 'example.com';
+		$_SERVER['HTTP_HOST'] = 'example.com';
 
 		$routes = new RouteCollection();
 
@@ -297,7 +295,7 @@ class RouteCollectionTest extends CIUnitTestCase
 
 		$expected = [
 			'photos' => '\Photos::listAll',
-		    'photos/(.*)' => '\Photos::show/$1'
+			'photos/(.*)' => '\Photos::show/$1'
 		];
 
 		$this->assertEquals($expected, $routes->getRoutes());
@@ -595,7 +593,7 @@ class RouteCollectionTest extends CIUnitTestCase
 	
 	public function testNamedRoutes()
 	{
-	    $routes = new RouteCollection();
+		$routes = new RouteCollection();
 
 		$routes->add('users', 'Users::index', ['as' => 'namedRoute']);
 
@@ -619,7 +617,7 @@ class RouteCollectionTest extends CIUnitTestCase
 
 	public function testAddRedirect()
 	{
-	    $routes = new RouteCollection();
+		$routes = new RouteCollection();
 
 		$routes->addRedirect('users', 'Users::index', 307);
 

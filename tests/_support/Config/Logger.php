@@ -1,4 +1,4 @@
-<?php
+<?php namespace Config;
 
 use CodeIgniter\Config\BaseConfig;
 use Psr\Log\LogLevel;
@@ -87,7 +87,7 @@ class Logger
 		// File Handler
 		//--------------------------------------------------------------------
 
-		'TestHandler' => [
+		'CodeIgniter\Log\Handlers\TestHandler' => [
 
 			/*
 			 * The log levels that this handler will handle.

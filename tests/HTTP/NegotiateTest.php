@@ -1,6 +1,8 @@
-<?php
+<?php namespace CodeIgniter\HTTP;
 
-class NegotiateTest extends CIUnitTestCase
+use Config\App;
+
+class NegotiateTest extends \CIUnitTestCase
 {
 	/**
 	 * @var CodeIgniter\HTTP\Request
@@ -14,9 +16,9 @@ class NegotiateTest extends CIUnitTestCase
 
 	public function setUp()
 	{
-		$this->request = new \CodeIgniter\HTTP\Request(new \Config\App());
+		$this->request = new Request(new App());
 
-		$this->negotiate = new \CodeIgniter\HTTP\Negotiate($this->request);
+		$this->negotiate = new Negotiate($this->request);
 	}
 
 	//--------------------------------------------------------------------

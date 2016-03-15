@@ -1,4 +1,4 @@
-<?php
+<?php namespace CodeIgniter\Log\Handlers;
 
 /**
  * Class TestHandler
@@ -6,7 +6,7 @@
  * A simple LogHandler that stores the logs in memory.
  * Only used for testing purposes.
  */
-class TestHandler implements \CodeIgniter\Log\Handlers\HandlerInterface
+class TestHandler implements HandlerInterface
 {
 	/**
 	 * @var array

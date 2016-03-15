@@ -1,14 +1,13 @@
-<?php
+<?php namespace CodeIgniter\HTTP;
 
-
-class HeaderTest extends CIUnitTestCase {
-
+class HeaderTest extends \CIUnitTestCase
+{
 	public function testHeaderStoresBasics()
 	{
 		$name  = 'foo';
 		$value = 'bar';
 
-	    $header = new \CodeIgniter\HTTP\Header($name, $value);
+		$header = new \CodeIgniter\HTTP\Header($name, $value);
 
 		$this->assertEquals($name, $header->getName());
 		$this->assertEquals($value, $header->getValue());

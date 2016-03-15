@@ -1,6 +1,6 @@
-<?php
+<?php namespace CodeIgniter;
 
-class MockLoader extends \CodeIgniter\Loader
+class MockLoader extends Loader
 {
 	protected $files = [];
 

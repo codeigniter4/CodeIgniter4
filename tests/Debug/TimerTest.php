@@ -1,8 +1,7 @@
-<?php
+<?php namespace CodeIgniter\Debug;
 
-use CodeIgniter\Debug\Timer;
-
-class TimerTest extends CIUnitTestCase {
+class TimerTest extends \CIUnitTestCase
+{
 
 	public function setUp() { }
 
@@ -19,7 +18,7 @@ class TimerTest extends CIUnitTestCase {
 	 */
 	public function testStoresTimers()
 	{
-	    $timer = new Timer();
+		$timer = new Timer();
 
 		$timer->start('test1');
 		sleep(1);
@@ -77,7 +76,7 @@ class TimerTest extends CIUnitTestCase {
 	 */
 	public function testThrowsExceptionStoppingNonTimer()
 	{
-	    $timer = new Timer();
+		$timer = new Timer();
 
 		$timer->stop('test1');
 	}

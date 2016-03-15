@@ -1,6 +1,6 @@
-<?php
+<?php namespace CodeIgniter\Autoloader;
 
-class MockAutoloaderClass extends \CodeIgniter\Autoloader\Autoloader
+class MockAutoloaderClass extends Autoloader
 {
 
 	protected $files = [];
@@ -24,6 +24,8 @@ class MockAutoloaderClass extends \CodeIgniter\Autoloader\Autoloader
 
 }
 
+use Config\Autoload;
+
 //--------------------------------------------------------------------
 
 class AutoloaderTest extends \CIUnitTestCase
@@ -35,7 +37,7 @@ class AutoloaderTest extends \CIUnitTestCase
 
 	protected function setUp()
 	{
-		$config = new Config\Autoload();
+		$config = new Autoload();
 
 		$config->classmap = [
 			'FirstClass'        => '/app/dir/First.php',
