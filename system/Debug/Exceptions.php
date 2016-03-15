@@ -35,7 +35,7 @@
  * @filesource
  */
 
-require_once dirname(__FILE__).'/CustomExceptions.php';
+require dirname(__FILE__).'/CustomExceptions.php';
 
 class Exceptions
 {
