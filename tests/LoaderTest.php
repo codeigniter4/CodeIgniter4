@@ -1,8 +1,5 @@
 <?php namespace CodeIgniter;
 
-require '_support/MockLoader.php';
-require '_support/Config/MockAutoloadConfig.php';
-
 use Config\MockAutoload;
 
 class LoaderTest extends \PHPUnit_Framework_TestCase

@@ -175,6 +175,10 @@ require_once APPPATH.'Config/Autoload.php';
 $loader = new \CodeIgniter\Autoloader\Autoloader();
 $loader->initialize(new Config\Autoload());
 
+// Add namespace paths to autoload mocks for testing
+$loader->addNamespace('CodeIgniter', SUPPORTPATH);
+$loader->addNamespace('Config', SUPPORTPATH.'Config');
+
 // The register function will prepend
 // the psr4 loader.
 $loader->register();

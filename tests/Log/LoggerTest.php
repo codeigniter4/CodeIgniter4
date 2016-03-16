@@ -1,11 +1,8 @@
 <?php namespace CodeIgniter\Log;
 
-use Config\Logger as LoggerConfig;
+use Config\MockLogger as LoggerConfig;
 use Psr\Log\LogLevel;
 use CodeIgniter\Log\Handlers\TestHandler;
-
-require_once SUPPORTPATH.'Config/Logger.php';
-require_once SUPPORTPATH.'Log/Handlers/TestHandler.php';
 
 class LoggerTest extends \CIUnitTestCase
 {
