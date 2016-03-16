@@ -68,7 +68,7 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 #-------------------------
 # Test Files
 #-------------------------
-tests/support/coverage*
+tests/_support/coverage*
 
 #-------------------------
 # Composer
@@ -88,7 +88,7 @@ _modules/*
 *.iml
 
 # Netbeans
-nbproject/private/
+nbproject/
 build/
 nbbuild/
 dist/
@@ -103,4 +103,3 @@ nb-configuration.xml
 *.stTheme.cache
 *.sublime-workspace
 *.sublime-project
-/nbproject/
