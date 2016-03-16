@@ -104,7 +104,7 @@ if ( ! function_exists('view'))
 	 *
 	 * @return string
 	 */
-	function view(string $name, array $data = [], array $options = [])
+	function load_view(string $name, array $data = [], array $options = [])
 	{
 		/**
 		 * @var CodeIgniter\View\View $renderer
