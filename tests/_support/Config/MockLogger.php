@@ -3,7 +3,7 @@
 use CodeIgniter\Config\BaseConfig;
 use Psr\Log\LogLevel;
 
-class Logger
+class MockLogger
 {
 	/*
 	|--------------------------------------------------------------------------

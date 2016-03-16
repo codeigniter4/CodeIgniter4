@@ -1,7 +1,5 @@
 <?php namespace CodeIgniter\Security;
 
-require_once dirname(__FILE__) .'/../_support/Config/MockAppConfig.php';
-
 class MockSecurity extends Security
 {
 	public function CSRFSetCookie(\CodeIgniter\HTTP\RequestInterface $request)
