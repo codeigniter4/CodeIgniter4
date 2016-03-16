@@ -27,12 +27,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2016, British Columbia Institute of Technology (http://bcit.ca/)
- * @license	http://opensource.org/licenses/MIT	MIT License
- * @link	http://codeigniter.com
- * @since	Version 3.0.0
+ * @package      CodeIgniter
+ * @author       CodeIgniter Dev Team
+ * @copyright    Copyright (c) 2014 - 2016, British Columbia Institute of Technology (http://bcit.ca/)
+ * @license      http://opensource.org/licenses/MIT	MIT License
+ * @link         http://codeigniter.com
+ * @since        Version 3.0.0
  * @filesource
  */
 use CodeIgniter\HTTP\Files\FileCollection;
@@ -374,19 +374,15 @@ class IncomingRequest extends Request
 	 */
 	public function isSecure(): bool
 	{
-		if (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == '443')
+		if ( ! empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) !== 'off')
 		{
 			return true;
 		}
-		elseif (isset($_SERVER['HTTP_X_FORWARDED_PORT']) && $_SERVER['HTTP_X_FORWARDED_PORT'] == '443')
+		elseif (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https')
 		{
 			return true;
 		}
-		elseif (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on')
-		{
-			return true;
-		}
-		elseif (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https')
+		elseif ( ! empty($_SERVER['HTTP_FRONT_END_HTTPS']) && strtolower($_SERVER['HTTP_FRONT_END_HTTPS']) !== 'off')
 		{
 			return true;
 		}
@@ -431,7 +427,7 @@ class IncomingRequest extends Request
 			$this->files = new FileCollection();
 		}
 
-		if (! $this->files->hasFile($fileID))
+		if ( ! $this->files->hasFile($fileID))
 		{
 			return null;
 		}
@@ -526,12 +522,12 @@ class IncomingRequest extends Request
 	 *
 	 * @return mixed
 	 */
-	public function negotiate(string $type, array $supported, bool $strictMatch=false)
+	public function negotiate(string $type, array $supported, bool $strictMatch = false)
 	{
-	    if (is_null($this->negotiate))
-	    {
-		    $this->negotiate = Services::negotiator($this, true);
-	    }
+		if (is_null($this->negotiate))
+		{
+			$this->negotiate = Services::negotiator($this, true);
+		}
 
 		switch (strtolower($type))
 		{
@@ -549,11 +545,10 @@ class IncomingRequest extends Request
 				break;
 		}
 
-		throw new \InvalidArgumentException($type .' is not a valid negotiation type.');
+		throw new \InvalidArgumentException($type.' is not a valid negotiation type.');
 	}
 
 	//--------------------------------------------------------------------
-
 
 	/**
 	 * Will parse the REQUEST_URI and automatically detect the URI from it,
