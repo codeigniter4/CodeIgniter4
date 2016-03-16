@@ -169,7 +169,20 @@ class Autoloader
 	 */
 	public function addNamespace($namespace, $path)
 	{
-		$this->prefixes[$namespace] = $path;
+		if (isset($this->prefixes[$namespace]))
+		{
+			if (is_string($this->prefixes[$namespace]))
+			{
+				$this->prefixes[$namespace] = [$this->prefixes[$namespace]];
+			}
+
+			$this->prefixes[$namespace] = array_merge($this->prefixes[$namespace], [$path]);
+		}
+		else
+		{
+			$this->prefixes[$namespace] = [$path];
+		}
+
 
 		return $this;
 	}
@@ -233,12 +246,23 @@ class Autoloader
 			return false;
 		}
 
-		foreach ($this->prefixes as $namespace => $directory)
+		foreach ($this->prefixes as $namespace => $directories)
 		{
-			if (strpos($class, $namespace) === 0)
+			if (is_string($directories))
 			{
-				$filePath = $directory.str_replace('\\', '/', substr($class, strlen($namespace))).'.php';
-				return $this->requireFile($filePath);
+				$directories = [$directories];
+			}
+
+			foreach ($directories as $directory)
+			{
+				if (strpos($class, $namespace) === 0) {
+					$filePath = $directory . str_replace('\\', '/', substr($class, strlen($namespace))) . '.php';
+					$filename = $this->requireFile($filePath);
+
+					if ($filename) {
+						return $filename;
+					}
+				}
 			}
 		}
 
