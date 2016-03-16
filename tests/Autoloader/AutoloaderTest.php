@@ -120,6 +120,24 @@ class AutoloaderTest extends \CIUnitTestCase
 		$this->assertSame($expected, $actual);
 	}
 
+	public function testAddNamespaceMultiplePathsWorks()
+	{
+		$this->loader->addNamespace('My\App', '/my/app');
+		$this->loader->addNamespace('My\App', '/test/app');
+		$this->loader->setFiles([
+			'/my/app/Class.php',
+			'/test/app/ClassTest.php',
+		]);
+
+		$actual = $this->loader->loadClass('My\App\ClassTest');
+		$expected = '/test/app/ClassTest.php';
+		$this->assertSame($expected, $actual);
+
+		$actual = $this->loader->loadClass('My\App\Class');
+		$expected = '/my/app/Class.php';
+		$this->assertSame($expected, $actual);
+	}
+
 	//--------------------------------------------------------------------
 
 	public function testLoadLegacy()
