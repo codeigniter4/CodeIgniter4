@@ -131,6 +131,7 @@ class Loader {
 		// IF we have a folder name, then the calling function
 		// expects this file to be within that folder, like 'Views',
 		// or 'libraries'.
+		// @todo Allow it to check with and without the nested folder.
 		if (! empty($folder))
 		{
 			$filename = $folder.'/'.$filename;
