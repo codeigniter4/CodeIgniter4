@@ -175,6 +175,7 @@ class Autoloader
 			{
 				$this->prefixes[$namespace] = [$this->prefixes[$namespace]];
 			}
+
 			$this->prefixes[$namespace] = array_merge($this->prefixes[$namespace], [$path]);
 		}
 		else
@@ -251,11 +252,13 @@ class Autoloader
 			{
 				$directories = [$directories];
 			}
+
 			foreach ($directories as $directory)
 			{
 				if (strpos($class, $namespace) === 0) {
 					$filePath = $directory . str_replace('\\', '/', substr($class, strlen($namespace))) . '.php';
 					$filename = $this->requireFile($filePath);
+
 					if ($filename) {
 						return $filename;
 					}
