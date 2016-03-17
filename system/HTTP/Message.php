@@ -103,21 +103,6 @@ class Message
 	 */
 	public function populateHeaders()
 	{
-		// In Apache, you can simply call apache_request_headers()
-		if (function_exists('apache_request_headers'))
-		{
-			$result = $this->headers = apache_request_headers();
-
-			if ($result)
-			{
-				// Populate our header map
-				foreach ($this->headers as $key => $value)
-				{
-					$this->headerMap[strtolower($key)] = $key;
-				}
-			}
-		}
-
 		$contentType = isset($_SERVER['CONTENT_TYPE']) ? $_SERVER['CONTENT_TYPE'] : @getenv('CONTENT_TYPE');
 		if (! empty($contentType))
 		{
