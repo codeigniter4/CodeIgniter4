@@ -118,7 +118,12 @@ class Message
 			}
 		}
 
-		$this->headers['Content-Type'] = isset($_SERVER['CONTENT_TYPE']) ? $_SERVER['CONTENT_TYPE'] : @getenv('CONTENT_TYPE');
+		$contentType = isset($_SERVER['CONTENT_TYPE']) ? $_SERVER['CONTENT_TYPE'] : @getenv('CONTENT_TYPE');
+		if (! empty($contentType))
+		{
+			$this->setHeader('Content-Type', $contentType);
+		}
+		unset($contentType);
 
 		foreach ($_SERVER as $key => $val)
 		{
