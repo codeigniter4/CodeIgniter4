@@ -67,9 +67,6 @@ define('SELF', pathinfo(FCPATH.'index.php', PATHINFO_BASENAME));
 // Path to the writable directory.
 define('WRITEPATH', realpath(str_replace('\\', '/', $writable_directory)).'/');
 
-// Name of the "system folder"
-define('SYSDIR', trim(strrchr(trim(BASEPATH, '/'), '/'), '/'));
-
 // The path to the "application" folder
 if (is_dir($application_folder))
 {

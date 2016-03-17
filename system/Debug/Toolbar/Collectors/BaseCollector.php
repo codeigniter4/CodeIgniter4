@@ -203,10 +203,6 @@ class BaseCollector
 		{
 			$file = 'BASEPATH/'.substr($file, strlen(BASEPATH));
 		}
-		elseif (strpos($file, SYSDIR) === 0)
-		{
-			$file = 'SYSDIR/'.substr($file, strlen(SYSDIR));
-		}
 		elseif (strpos($file, FCPATH) === 0)
 		{
 			$file = 'FCPATH/'.substr($file, strlen(FCPATH));

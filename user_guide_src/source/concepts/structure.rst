@@ -86,5 +86,5 @@ need to edit the variables to the following values to get your application runni
 
 All three are modified to say that they are a single directory up from ``index.php``. When the application
 is ran, the full server paths will be computed from these, being converted to something like
-``/var/www/sitea/application``. The constants, ``BASEPATH``, ``WRITEPATH``,  ``SYSDIR``, and ``APPPATH``
+``/var/www/sitea/application``. The constants, ``BASEPATH``, ``WRITEPATH``, and ``APPPATH``
 will also point to the modified location.

@@ -144,9 +144,6 @@ define('FCPATH', realpath(dirname(__FILE__)).DIRECTORY_SEPARATOR);
 // Path to the writable directory.
 define('WRITEPATH', realpath(str_replace('\\', '/', $writable_directory)).DIRECTORY_SEPARATOR);
 
-// Name of the "system folder"
-define('SYSDIR', trim(strrchr(trim(BASEPATH, '/'), '/'), '/'));
-
 // The path to the "application" folder
 if (is_dir($application_folder))
 {
