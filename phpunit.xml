@@ -9,8 +9,8 @@
         stopOnIncomplete="false"
         stopOnSkipped="false">
     <testsuites>
-        <testsuite name="AllTests">
-            <directory>./tests</directory>
+        <testsuite name="system">
+            <directory>./tests/system</directory>
         </testsuite>
     </testsuites>
 
