@@ -101,7 +101,7 @@ class FileHandler extends BaseHandler implements HandlerInterface
 		{
 			$microtime_full  = microtime(true);
 			$microtime_short = sprintf("%06d", ($microtime_full - floor($microtime_full)) * 1000000);
-			$date            = new DateTime(date('Y-m-d H:i:s.'.$microtime_short, $microtime_full));
+			$date            = new \DateTime(date('Y-m-d H:i:s.'.$microtime_short, $microtime_full));
 			$date            = $date->format($this->dateFormat);
 		}
 		else

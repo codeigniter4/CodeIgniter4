@@ -107,7 +107,7 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 		}
 		elseif ( ! is_writable($savePath))
 		{
-			throw new Exception("Session: Configured save path '".$this->savePath.
+			throw new \Exception("Session: Configured save path '".$this->savePath.
 			                    "' is not writable by the PHP process.");
 		}
 

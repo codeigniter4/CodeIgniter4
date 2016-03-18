@@ -37,7 +37,7 @@
  */
 
 use CodeIgniter\Hooks\Hooks;
-use CodeIgniter\HTTP\RequestInterface;
+use CodeIgniter\HTTP\ResponseInterface;
 
 /**
  * Class ChromeLoggerHandler

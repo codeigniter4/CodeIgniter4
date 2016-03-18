@@ -304,7 +304,7 @@ else
 			ob_end_clean();
 
 			echo $buffer;
-			exit(4);    // Unknown file
+			exit(EXIT_UNKNOWN_FILE);    // Unknown file
 		}
 
 		if (! $e404 && ! isset($override))
