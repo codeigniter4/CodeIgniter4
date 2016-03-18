@@ -1,29 +1,5 @@
 <?php namespace CodeIgniter\Autoloader;
 
-class MockAutoloaderClass extends Autoloader
-{
-
-	protected $files = [];
-
-	//--------------------------------------------------------------------
-
-	public function setFiles($files)
-	{
-		$this->files = $files;
-	}
-
-	//--------------------------------------------------------------------
-
-	protected function requireFile($file)
-	{
-		return in_array($file, $this->files) ? $file : false;
-	}
-
-	//--------------------------------------------------------------------
-
-
-}
-
 use Config\Autoload;
 
 //--------------------------------------------------------------------
@@ -48,7 +24,7 @@ class AutoloaderTest extends \CIUnitTestCase
 			'App\Libraries'   => '/application/somewhere',
 		];
 
-		$this->loader = new MockAutoloaderClass();
+		$this->loader = new MockAutoloader();
 		$this->loader->initialize($config);
 
 		$this->loader->setFiles([
