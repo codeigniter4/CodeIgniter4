@@ -218,7 +218,7 @@ catch (\CodeIgniter\Router\RedirectException $e)
 	// If the route is a 'redirect' route, it throws
 	// the exception with the $to as the message
 	$response->redirect($e->getMessage(), 'auto', $e->getCode());
-	exit;
+	exit(EXIT_SUCCESS);
 }
 
 $method = $router->methodName();
