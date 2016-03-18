@@ -346,8 +346,6 @@ class Autoloader
 	 * dashes with a single dash. Trim period, dash and underscore from beginning
 	 * and end of filename.
 	 *
-	 * @todo Move to a helper?
-	 *
 	 * @param string $filename
 	 *
 	 * @return string       The sanitized filename
@@ -358,7 +356,8 @@ class Autoloader
 		// Plus the forward slash for directory separators since this might
 		// be a path.
 		// http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap03.html#tag_03_278
-		$filename = preg_replace('/[^a-zA-Z0-9\s\/\-\_\.]/', '', $filename);
+		// Modified to allow backslash and colons for on Windows machines.
+		$filename = preg_replace('/[^a-zA-Z0-9\s\/\-\_\.\:\\\\]/', '', $filename);
 
 		// Clean up our filename edges.
 		$filename = trim($filename, '.-_');

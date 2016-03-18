@@ -127,13 +127,20 @@ class AutoloaderTest extends \CIUnitTestCase
 
 	public function testSanitizationSimply()
 	{
-		$test = '${../path}!#:/to/some/file.php_';
+		$test = '${../path}!#/to/some/file.php_';
 		$expected = '/path/to/some/file.php';
 
 		$this->assertEquals($expected, $this->loader->sanitizeFilename($test));
 	}
 
 	//--------------------------------------------------------------------
+	
+	public function testSanitizationAllowsWindowsFilepaths()
+	{
+		$test = 'C:\path\to\some/file.php';
 
+		$this->assertEquals($test, $this->loader->sanitizeFilename($test));
+	}
 
+	//--------------------------------------------------------------------
 }
