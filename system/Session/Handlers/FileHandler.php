@@ -201,7 +201,7 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 	{
 		// If the two IDs don't match, we have a session_regenerate_id() call
 		// and we need to close the old handle and open a new one
-		if ($session_id !== $this->sessionID && ( ! $this->close() OR $this->read($session_id) === false))
+		if ($session_id !== $this->sessionID && ( ! $this->close() || $this->read($session_id) === false))
 		{
 			return false;
 		}
@@ -315,7 +315,7 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 	 */
 	public function gc($maxlifetime): bool
 	{
-		if ( ! is_dir($this->savePath) OR ($directory = opendir($this->savePath)) === false)
+		if ( ! is_dir($this->savePath) || ($directory = opendir($this->savePath)) === false)
 		{
 			$this->logger->debug("Session: Garbage collector couldn't list files under directory '".$this->savePath."'.");
 
@@ -334,9 +334,9 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 		{
 			// If the filename doesn't match this pattern, it's either not a session file or is not ours
 			if ( ! preg_match($pattern, $file)
-			     OR ! is_file($this->savePath.'/'.$file)
-			     OR ($mtime = filemtime($this->savePath.'/'.$file)) === false
-			     OR $mtime > $ts
+			     || ! is_file($this->savePath.'/'.$file)
+			     || ($mtime = filemtime($this->savePath.'/'.$file)) === false
+			     || $mtime > $ts
 			)
 			{
 				continue;

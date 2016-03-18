@@ -174,7 +174,7 @@ class IncomingRequest extends Request
 	 */
 	public function isCLI(): bool
 	{
-		return (PHP_SAPI === 'cli' OR defined('STDIN'));
+		return (PHP_SAPI === 'cli' || defined('STDIN'));
 	}
 
 	//--------------------------------------------------------------------
@@ -596,7 +596,7 @@ class IncomingRequest extends Request
 
 		parse_str($_SERVER['QUERY_STRING'], $_GET);
 
-		if ($uri === '/' OR $uri === '')
+		if ($uri === '/' || $uri === '')
 		{
 			return '/';
 		}
@@ -650,7 +650,7 @@ class IncomingRequest extends Request
 		$tok  = strtok($uri, '/');
 		while ($tok !== false)
 		{
-			if (( ! empty($tok) OR $tok === '0') && $tok !== '..')
+			if (( ! empty($tok) || $tok === '0') && $tok !== '..')
 			{
 				$uris[] = $tok;
 			}

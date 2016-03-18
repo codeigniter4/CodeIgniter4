@@ -505,7 +505,7 @@ class Response extends Message implements ResponseInterface
 		{
 			$method = 'refresh';
 		}
-		elseif ($method !== 'refresh' && (empty($code) OR ! is_numeric($code)))
+		elseif ($method !== 'refresh' && (empty($code) || ! is_numeric($code)))
 		{
 			if (isset($_SERVER['SERVER_PROTOCOL'], $_SERVER['REQUEST_METHOD']) && $_SERVER['SERVER_PROTOCOL'] === 'HTTP/1.1')
 			{

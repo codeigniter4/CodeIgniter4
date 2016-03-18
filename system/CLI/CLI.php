@@ -183,7 +183,7 @@ class CLI
 		$required = end($args) === true;
 
 		// Reduce the argument count if required was passed, we don't care about that anymore
-		$required === true and --$arg_count;
+		$required === true && --$arg_count;
 
 		// This method can take a few crazy combinations of arguments, so lets work it out
 		switch ($arg_count)
@@ -245,7 +245,7 @@ class CLI
 		$input = trim(static::input()) ? : $default;
 
 		// No input provided and we require one (default will stop this being called)
-		if (empty($input) and $required === true)
+		if (empty($input) && $required === true)
 		{
 			static::write('This is required.');
 			static::newLine();
@@ -254,7 +254,7 @@ class CLI
 		}
 
 		// If options are provided and the choice is not in the array, tell them to try again
-		if ( ! empty($options) and ! in_array($input, $options))
+		if ( ! empty($options) && ! in_array($input, $options))
 		{
 			static::write('This is not a valid option. Please try again.');
 			static::newLine();
@@ -280,7 +280,7 @@ class CLI
 			$text = implode(PHP_EOL, $text);
 		}
 
-		if ($foreground or $background)
+		if ($foreground || $background)
 		{
 			$text = static::color($text, $foreground, $background);
 		}
@@ -302,7 +302,7 @@ class CLI
 			$text = implode(PHP_EOL, $text);
 		}
 
-		if ($foreground OR $background)
+		if ($foreground || $background)
 		{
 			$text = static::color($text, $foreground, $background);
 		}
@@ -422,7 +422,7 @@ class CLI
 	 */
 	public static function color(string $text, string $foreground, string $background = null, string $format = null)
 	{
-		if (static::is_windows() and ! isset($_SERVER['ANSICON']))
+		if (static::is_windows() && ! isset($_SERVER['ANSICON']))
 		{
 			return $text;
 		}
@@ -432,7 +432,7 @@ class CLI
 			throw new \RuntimeException('Invalid CLI foreground color: '.$foreground);
 		}
 
-		if ($background !== null and ! array_key_exists($background, static::$background_colors))
+		if ($background !== null && ! array_key_exists($background, static::$background_colors))
 		{
 			throw new \RuntimeException('Invalid CLI background color: '.$background);
 		}

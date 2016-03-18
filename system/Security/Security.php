@@ -219,7 +219,7 @@ class Security
 
 		// Do the tokens exist in both the _POST and _COOKIE arrays?
 		if ( ! isset($_POST[$this->CSRFTokenName], $_COOKIE[$this->CSRFCookieName])
-		     OR $_POST[$this->CSRFTokenName] !== $_COOKIE[$this->CSRFCookieName]
+		     || $_POST[$this->CSRFTokenName] !== $_COOKIE[$this->CSRFCookieName]
 		) // Do the tokens match?
 		{
 			throw new \LogicException('The action you requested is not allowed', 403);

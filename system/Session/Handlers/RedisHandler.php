@@ -193,7 +193,7 @@ class RedisHandler extends BaseHandler implements \SessionHandlerInterface
 		// Was the ID regenerated?
 		elseif ($session_id !== $this->sessionID)
 		{
-			if ( ! $this->releaseLock() OR ! $this->lockSession($session_id))
+			if ( ! $this->releaseLock() || ! $this->lockSession($session_id))
 			{
 				return FALSE;
 			}

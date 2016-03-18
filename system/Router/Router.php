@@ -436,7 +436,7 @@ class Router implements RouterInterface
 	 */
 	protected function setDirectory(string $dir = null, $append = false)
 	{
-		if ($append !== TRUE OR empty($this->directory))
+		if ($append !== TRUE || empty($this->directory))
 		{
 			$this->directory = str_replace('.', '', trim($dir, '/')).'/';
 		}

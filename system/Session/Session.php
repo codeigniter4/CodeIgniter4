@@ -134,7 +134,7 @@ class Session implements SessionInterface
 		if (isset($_COOKIE[$this->sessionCookieName])
 		    && (
 			    ! is_string($_COOKIE[$this->sessionCookieName])
-			    OR ! preg_match('/^[0-9a-f]{40}$/', $_COOKIE[$this->sessionCookieName])
+			    || ! preg_match('/^[0-9a-f]{40}$/', $_COOKIE[$this->sessionCookieName])
 		    )
 		)
 		{
@@ -144,7 +144,7 @@ class Session implements SessionInterface
 		session_start();
 
 		// Is session ID auto-regeneration configured? (ignoring ajax requests)
-		if ((empty($_SERVER['HTTP_X_REQUESTED_WITH']) OR
+		if ((empty($_SERVER['HTTP_X_REQUESTED_WITH']) ||
 		     strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) !== 'xmlhttprequest')
 		    && ($regenerate_time = $this->sessionTimeToUpdate) > 0
 		)

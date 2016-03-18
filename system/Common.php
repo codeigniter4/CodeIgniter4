@@ -195,7 +195,7 @@ if ( ! function_exists('is_cli'))
 	 */
 	function is_cli()
 	{
-		return (PHP_SAPI === 'cli' OR defined('STDIN'));
+		return (PHP_SAPI === 'cli' || defined('STDIN'));
 	}
 }
 
