@@ -37,7 +37,6 @@
  */
 
 use Config\Services;
-use CodeIgniter\Loader;
 use CodeIgniter\Log\Logger;
 
 /**
