@@ -65,7 +65,7 @@ class Toolbar
 	 *
 	 * @return string
 	 */
-	protected function renderTimeline(int $segmentCount, int $segmentDuration, int $totalTime): string
+	protected function renderTimeline(int $segmentCount, int $segmentDuration): string
 	{
 		global $startTime;
 		$displayTime = $segmentCount * $segmentDuration;
