@@ -135,7 +135,9 @@ $loader->register();
  *  Set custom exception handling
  * ------------------------------------------------------
  */
-Services::exceptions(true)
+$config = new \Config\App();
+
+Services::exceptions($config, true)
    ->initialize();
 
 //--------------------------------------------------------------------
@@ -159,8 +161,6 @@ Hooks::trigger('pre_system');
 //--------------------------------------------------------------------
 // Get our Request and Response objects
 //--------------------------------------------------------------------
-
-$config = new \Config\App();
 
 $request  = is_cli()
 		? Services::clirequest($config, true)

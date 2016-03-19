@@ -47,11 +47,21 @@ class Exceptions
 	 */
 	public $ob_level;
 
+	/**
+	 * The path to the directory containing the
+	 * cli and html error view directories.
+	 *
+	 * @var string
+	 */
+	protected $viewPath;
+
 	//--------------------------------------------------------------------
 
-	public function __construct()
+	public function __construct(\Config\App $config)
 	{
 		$this->ob_level = ob_get_level();
+
+		$this->viewPath = trim($config->errorViewPath, '/ ').'/';
 	}
 
 	//--------------------------------------------------------------------
@@ -105,9 +115,8 @@ class Exceptions
 		// Log it
 
 		// Fire an Event
-
-		// @todo Get template path from Config
-		$templates_path = '';
+		
+		$templates_path = $this->viewPath;
 		if (empty($templates_path))
 		{
 			$templates_path = APPPATH.'Views/errors/';

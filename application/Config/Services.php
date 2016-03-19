@@ -119,11 +119,16 @@ class Services
 	 *  - set_error_handler
 	 *  - register_shutdown_function
 	 */
-	public static function exceptions($getShared = false)
+	public static function exceptions(App $config = null, $getShared = false)
 	{
+		if (empty($config))
+		{
+			$config = new App();
+		}
+
 		if (! $getShared)
 		{
-			return new \CodeIgniter\Debug\Exceptions();
+			return new \CodeIgniter\Debug\Exceptions($config);
 		}
 
 		return self::getSharedInstance('exceptions');
