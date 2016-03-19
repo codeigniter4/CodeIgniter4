@@ -647,7 +647,7 @@ class ContentSecurityPolicy
 				$reportOnly = 0;
 			}
 
-			if ($reportOnly == true)
+			if ($reportOnly === true)
 			{
 				$reportSources[] = in_array($value, $this->validSources)
 					? "'{$value}'"

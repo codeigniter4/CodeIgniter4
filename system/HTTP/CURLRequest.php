@@ -602,7 +602,7 @@ class CURLRequest extends Request
 				$curl_options[CURLOPT_FOLLOWLOCATION] = 1;
 				$curl_options[CURLOPT_MAXREDIRS]      = $settings['max'];
 
-				if ($settings['strict'] == true)
+				if ($settings['strict'] === true)
 				{
 					$curl_options[CURLOPT_POSTREDIR] = 1|2|4;
 				}
