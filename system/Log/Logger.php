@@ -36,7 +36,6 @@
  * @filesource
  */
 
-use CodeIgniter\Log\Handlers\HandlerInterface;
 use Psr\Log\LoggerInterface;
 
 /**

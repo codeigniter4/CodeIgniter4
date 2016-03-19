@@ -1,9 +1,5 @@
 <?php namespace Config;
 
-use CodeIgniter\HTTP\{Response, URI};
-use CodeIgniter\HTTP\RequestInterface;
-use CodeIgniter\Router\RouteCollectionInterface;
-
 /**
  * Services Configuration file.
  *
@@ -91,12 +87,12 @@ class Services
 
 		if ( ! is_object($response))
 		{
-			$response = new Response($config);
+			$response = new \CodeIgniter\HTTP\Response($config);
 		}
 
 		return new \CodeIgniter\HTTP\CURLRequest(
 				$config,
-				new URI(),
+				new \CodeIgniter\HTTP\URI(),
 				$response,
 				$options
 		);
@@ -178,7 +174,7 @@ class Services
 	{
 		if (! $getShared)
 		{
-			return new \CodeIgniter\Log\Logger(new \Config\Logger());
+			return new \CodeIgniter\Log\Logger(new Logger());
 		}
 
 		return self::getSharedInstance('logger');
@@ -191,7 +187,7 @@ class Services
 	 * working the request to determine correct language, encoding, charset,
 	 * and more.
 	 */
-	public static function negotiator(RequestInterface $request=null, $getShared = false)
+	public static function negotiator(\CodeIgniter\HTTP\RequestInterface $request=null, $getShared = false)
 	{
 		if (! $getShared)
 		{
@@ -288,7 +284,7 @@ class Services
 	 * The Router class uses a RouteCollection's array of routes, and determines
 	 * the correct Controller and Method to execute.
 	 */
-	public static function router(RouteCollectionInterface $routes = null, $getShared = false)
+	public static function router(\CodeIgniter\Router\RouteCollectionInterface $routes = null, $getShared = false)
 	{
 		if ($getShared === true)
 		{
