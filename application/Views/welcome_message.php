@@ -2,6 +2,8 @@
 <html>
 <head>
 	<title>Welcome to CodeIgniter</title>
+
+	<link rel="shortcut icon" type="image/png" href="/favicon.ico"/>
 </head>
 <body>
 
