@@ -1,7 +1,8 @@
 # CodeIgniter 4 Development
 
 [![Build Status](https://travis-ci.org/lonnieezell/CodeIgniter4.svg?branch=develop)](https://travis-ci.org/lonnieezell/CodeIgniter4)
-<a href="https://insight.sensiolabs.com/account/widget?project=53c99b56-769f-4e88-93d8-a6423644d610"><img src="https://insight.sensiolabs.com/projects/53c99b56-769f-4e88-93d8-a6423644d610/big.png" style="margin-top: 1em" data-pin-nopin="true"></a>
+<br>
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/53c99b56-769f-4e88-93d8-a6423644d610/mini.png)](https://insight.sensiolabs.com/projects/53c99b56-769f-4e88-93d8-a6423644d610)
 
 This repo contains work that may or may not make it into the official version of CodeIgniter. 
 
