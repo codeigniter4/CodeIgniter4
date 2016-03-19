@@ -38,6 +38,7 @@
 
 use CodeIgniter\Hooks\Hooks;
 use CodeIgniter\HTTP\ResponseInterface;
+use Config\Services;
 
 /**
  * Class ChromeLoggerHandler
@@ -105,7 +106,7 @@ class ChromeLoggerHandler extends BaseHandler implements HandlerInterface
 	{
 		parent::__construct($config);
 
-		global $request;
+		$request = Services::request(null, true);
 
 		$this->json['request_uri'] = (string)$request->uri;
 
@@ -184,7 +185,7 @@ class ChromeLoggerHandler extends BaseHandler implements HandlerInterface
 	{
 		if (is_null($response))
 		{
-			global $response;
+			$response = Services::response(null, true);
 		}
 
 		$data = base64_encode(utf8_encode(json_encode($this->json)));
