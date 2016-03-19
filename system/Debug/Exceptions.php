@@ -341,9 +341,11 @@ class Exceptions
 			ini_set('highlight.string', '#869d6a');
 		}
 
-		$source = @file_get_contents($file);
-
-		if (empty($source))
+		try
+		{
+			$source = file_get_contents($file);
+		}
+		catch (\Throwable)
 		{
 			return false;
 		}
