@@ -163,11 +163,11 @@ Hooks::trigger('pre_system');
 $config = new \Config\App();
 
 $request  = is_cli()
-		? Services::clirequest($config)
-		: Services::request($config);
+		? Services::clirequest($config, true)
+		: Services::request($config, true);
 $request->setProtocolVersion($_SERVER['SERVER_PROTOCOL']);
 
-$response = Services::response($config);
+$response = Services::response($config, true);
 $response->setProtocolVersion($request->getProtocolVersion());
 
 // Assume success until proven otherwise.

@@ -218,7 +218,7 @@ if ( ! function_exists('route_to'))
 	 */
 	function route_to(string $method, ...$params): string
 	{
-		global $routes;
+		$routes = \Config\Services::routes(true);
 
 		return $routes->reverseRoute($method, ...$params);
 	}
@@ -385,8 +385,8 @@ if (! function_exists('force_https'))
 	 */
 	function force_https(int $duration = 31536000, RequestInterface $request = null, ResponseInterface $response = null)
 	{
-		if (is_null($request)) global $request;
-		if (is_null($response)) global $response;
+		if (is_null($request)) $request = \Config\Services::request(null, true);
+		if (is_null($response)) $response = \Config\Services::response(null, true);
 
 		if ($request->isSecure())
 		{
@@ -435,7 +435,8 @@ if (! function_exists('redirect'))
 	 */
 	function redirect (string $uri, ...$params)
 	{
-		global $response, $routes;
+		$response = \Config\Services::response(null, true);
+		$routes   = \Config\Services::routes(true);
 
 		if ($route = $routes->reverseRoute($uri, ...$params))
 		{
