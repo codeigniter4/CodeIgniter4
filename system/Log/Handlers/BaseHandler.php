@@ -53,7 +53,7 @@ abstract class BaseHandler implements HandlerInterface
 
 	public function __construct(array $config)
 	{
-	    $this->handles = $config['handles'] ?? [];
+		$this->handles = $config['handles'] ?? [];
 	}
 
 	//--------------------------------------------------------------------
@@ -97,12 +97,11 @@ abstract class BaseHandler implements HandlerInterface
 	 */
 	public function setDateFormat(string $format): HandlerInterface
 	{
-	    $this->dateFormat = $format;
+		$this->dateFormat = $format;
 
 		return $this;
 	}
 
 	//--------------------------------------------------------------------
-
 
 }

@@ -271,4 +271,5 @@ interface RouteCollectionInterface
 	public function getRedirectCode(string $from) : int;
 
 	//--------------------------------------------------------------------
+
 }
