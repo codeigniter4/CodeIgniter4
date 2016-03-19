@@ -160,7 +160,7 @@ class Security
 	 *
 	 * @param \Config\App $config
 	 */
-	public function __construct(\Config\App $config)
+	public function __construct($config)
 	{
 		// Store our CSRF-related settings
 		$this->CSRFEnabled     = $config->CSRFProtection;
