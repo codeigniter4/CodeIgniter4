@@ -366,7 +366,7 @@ class CLI
 	/**
 	 * if operating system === windows
 	 */
-	public static function is_windows()
+	public static function isWindows()
 	{
 		return 'win' === strtolower(substr(php_uname("s"), 0, 3));
 	}
@@ -396,9 +396,9 @@ class CLI
 	 *
 	 * @return    void
 	 */
-	public static function clear_screen()
+	public static function clearScreen()
 	{
-		static::is_windows()
+		static::isWindows()
 
 			// Windows is a bit crap at this, but their terminal is tiny so shove this in
 			? static::newLine(40)
@@ -422,7 +422,7 @@ class CLI
 	 */
 	public static function color(string $text, string $foreground, string $background = null, string $format = null)
 	{
-		if (static::is_windows() && ! isset($_SERVER['ANSICON']))
+		if (static::isWindows() && ! isset($_SERVER['ANSICON']))
 		{
 			return $text;
 		}
@@ -467,7 +467,7 @@ class CLI
 	 */
 	public static function getWidth(int $default = 80): int
 	{
-		if (static::is_windows())
+		if (static::isWindows())
 		{
 			return $default;
 		}
@@ -488,7 +488,7 @@ class CLI
 	 */
 	public static function getHeight(int $default = 32): int
 	{
-		if (static::is_windows())
+		if (static::isWindows())
 		{
 			return $default;
 		}
