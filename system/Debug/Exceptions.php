@@ -345,7 +345,7 @@ class Exceptions
 		{
 			$source = file_get_contents($file);
 		}
-		catch (\Throwable)
+		catch (\Throwable $e)
 		{
 			return false;
 		}
