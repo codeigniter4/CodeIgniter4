@@ -33,7 +33,7 @@ $writable_directory = '../../writable';
 // Set the current directory correctly for CLI requests
 if (defined('STDIN'))
 {
-	chdir(dirname(__FILE__));
+	chdir(__DIR__);
 }
 
 if (($_temp = realpath($system_path)) !== false)
@@ -59,7 +59,7 @@ if ( ! is_dir($system_path))
 define('BASEPATH', str_replace('\\', '/', $system_path));
 
 // Path to the front controller (this file)
-define('FCPATH', realpath(dirname(__FILE__).'/../../') .'/');
+define('FCPATH', realpath(__DIR__.'/../../') .'/');
 
 // The name of the INDEX file
 define('SELF', pathinfo(FCPATH.'index.php', PATHINFO_BASENAME));
@@ -185,5 +185,5 @@ $loader->register();
 // Load our TestCase
 //--------------------------------------------------------------------
 
-require_once dirname(__FILE__) .'/CIUnitTestCase.php';
+require_once __DIR__ .'/CIUnitTestCase.php';
 

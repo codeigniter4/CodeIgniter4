@@ -11,7 +11,7 @@ class DotEnvTest extends \CIUnitTestCase
 	
 	public function setup()
 	{
-		$this->fixturesFolder = dirname(__FILE__).'/fixtures';
+		$this->fixturesFolder = __DIR__.'/fixtures';
 	}
 	
 	//--------------------------------------------------------------------
