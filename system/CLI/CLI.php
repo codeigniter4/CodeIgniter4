@@ -135,7 +135,7 @@ class CLI
 	 *
 	 * @return    string
 	 */
-	public static function input(string $prefix = ''): string
+	public static function input(string $prefix = null): string
 	{
 		if (static::$readline_support)
 		{
@@ -273,13 +273,8 @@ class CLI
 	 *
 	 * @param    string|array $text the text to output, or array of lines
 	 */
-	public static function write(string $text = '', string $foreground = null, string $background = null)
+	public static function write(string $text, string $foreground = null, string $background = null)
 	{
-		if (is_array($text))
-		{
-			$text = implode(PHP_EOL, $text);
-		}
-
 		if ($foreground || $background)
 		{
 			$text = static::color($text, $foreground, $background);
@@ -295,13 +290,8 @@ class CLI
 	 *
 	 * @param    string|array $text the text to output, or array of errors
 	 */
-	public static function error(string $text = '', string $foreground = 'light_red', string $background = null)
+	public static function error(string $text, string $foreground = 'light_red', string $background = null)
 	{
-		if (is_array($text))
-		{
-			$text = implode(PHP_EOL, $text);
-		}
-
 		if ($foreground || $background)
 		{
 			$text = static::color($text, $foreground, $background);
@@ -331,7 +321,7 @@ class CLI
 	 * @param    int  $seconds   number of seconds
 	 * @param    bool $countdown show a countdown or not
 	 */
-	public static function wait(int $seconds = 0, bool $countdown = false)
+	public static function wait(int $seconds, bool $countdown = false)
 	{
 		if ($countdown === true)
 		{
