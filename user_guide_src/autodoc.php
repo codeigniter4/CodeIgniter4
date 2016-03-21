@@ -1,16 +1,30 @@
 <?php
 
-error_reporting(-1);
-ini_set('display_errors', 1);
-
 /**
  * This is a helper script that will build out the base information needed
  * for a library reference user guide source file.
  */
 
-require '../system/CLI/CLI.php';
+error_reporting(-1);
+ini_set('display_errors', 1);
+define('APPPATH', '../application/');
+define('BASEPATH', '../system/');
+define('APP_NAMESPACE', 'App');
 
 use CodeIgniter\CLI\CLI;
+use Config\Autoload;
+
+require BASEPATH.'CLI/CLI.php';
+
+//--------------------------------------------------------------------
+// Autoloader
+//--------------------------------------------------------------------
+require_once BASEPATH.'Autoloader/Autoloader.php';
+require_once APPPATH.'Config/Autoload.php';
+
+$loader = new \CodeIgniter\Autoloader\Autoloader();
+$loader->initialize(new Autoload());
+$loader->register();
 
 //--------------------------------------------------------------------
 // The Class
@@ -32,6 +46,12 @@ class Document
 {
 	protected $source;
 	protected $destination;
+
+	/**
+	 * @var string The current text of the parsed docComment, if any.
+	 */
+	protected $currentDocString;
+	protected $currentDocAttributes = [];
 
 	public $prose = '';
 
@@ -82,18 +102,31 @@ class Document
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * @todo Needs to describe interface and parent methods?
+	 * @todo Needs to describe parent class, if any
+	 * @param string $className
+	 */
 	public function build(string $className)
 	{
 		require_once $this->source;
 
 		$mirror = new ReflectionClass($className);
 
-		$output  = str_replace('\\', '\\\\', $className)." Class\n";
+		$this->parseDocComment($mirror->getDocComment(), 0);
+
+		$namespace = $mirror->getNamespaceName();
+		$className = str_replace($namespace.'\\', '', $mirror->getName());
+		$namespace = str_replace('\\', '\\\\', $namespace);
+
+		$output  = $className." Class\n";
 		$output .= str_repeat('#', strlen($output))."\n\n";
 
-		$output .= $this->cleanDocBlock($mirror->getDocComment())."\n";
+		$output .= $this->currentDocString."\n";
 
-		$output .= ".. php:class:: ". str_replace('\\', '\\\\', $className)."\n\n";
+		$output .= ".. php:class:: ". $namespace.'\\\\'.$className."\n\n";
+
+		$output .= $this->describeInterfaces($mirror);
 
 		$methods = $mirror->getMethods();
 
@@ -107,9 +140,30 @@ class Document
 
 	//--------------------------------------------------------------------
 
-	protected function describeMethod($methodMirror): string
+	public function describeInterfaces(ReflectionClass $mirror): string
+	{
+		$interfaces = $mirror->getInterfaceNames();
+
+		if (! count($interfaces)) return '';
+
+		$output = "\tImplements: ". implode(', ', $interfaces);
+
+		return $output."\n\n";
+	}
+
+	//--------------------------------------------------------------------
+
+
+	/**
+	 * @param $methodMirror
+	 *
+	 * @return string
+	 */
+	protected function describeMethod(ReflectionMethod $methodMirror): string
 	{
 		if ($methodMirror->isProtected() || $methodMirror->isPrivate()) return '';
+
+		$this->parseDocComment($methodMirror->getDocComment(), 2);
 
 		$output = "\t.. php:method:: ".$methodMirror->name." ( ";
 
@@ -124,7 +178,7 @@ class Document
 
 		$output .= "\n\n";
 
-		$output .= $this->cleanDocBlock($methodMirror->getDocComment())."\n\n";
+		$output .= $this->currentDocString."\n\n";
 
 		return $output;
 	}
@@ -191,10 +245,15 @@ class Document
 
 	//--------------------------------------------------------------------
 
-	protected function cleanDocBlock(string $docblock): string
+	protected function parseDocComment(string $docblock, $nesting=0)
 	{
+		$this->currentDocString = '';
+		$this->currentDocAttributes = [];
+
 		$lines = explode("\n", $docblock);
+
 		$output = '';
+		$attributes = [];
 
 		foreach ($lines as $line)
 		{
@@ -215,12 +274,28 @@ class Document
 				$line = trim(substr($line, 1));
 			}
 
-			if (substr($line, 0, 1) == '@') continue;
+			if (substr($line, 0, 1) == '@')
+			{
+				$tempLine = trim(substr($line, 1));
+				$segments = explode(' ', $tempLine);
 
-			$output .= "\t\t{$line}\n";
+				$att = [
+					'paramType' => array_shift($segments),
+					'valueType' => array_shift($segments)
+				];
+
+				if (count($segments)) $att['valueName'] = array_shift($segments);
+				if (count($segments)) $att['valueDesc'] = implode(' ', $segments);
+
+				$attributes[] = $att;
+				continue;
+			}
+
+			$output .= str_repeat("\t", $nesting)."{$line}\n";
 		}
 
-		return $output;
+		$this->currentDocString = $output;
+		$this->currentDocAttributes = $attributes;
 	}
 
 	//--------------------------------------------------------------------
@@ -240,12 +315,10 @@ if (empty($source_file))
 	die();
 }
 
-$source_file = '../system/CLI/CLI.php';
-
 /*
  * Try to determine the class name based on the file
  */
-$class_name = 'CodeIgniter\\'. str_ireplace('../system/', '', $source_file);
+$class_name = 'CodeIgniter\\'. str_ireplace(realpath(BASEPATH).'/', '', $source_file);
 $class_name = str_replace('.php', '', $class_name);
 $class_name = str_replace('/', '\\', $class_name);
 
