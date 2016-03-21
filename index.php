@@ -103,7 +103,7 @@ $writable_directory = 'writable';
 // Set the current directory correctly for CLI requests
 if (defined('STDIN'))
 {
-	chdir(dirname(__FILE__));
+	chdir(__DIR__);
 }
 
 if (($_temp = realpath($system_path)) !== false)
@@ -139,7 +139,7 @@ define('SELF', pathinfo(__FILE__, PATHINFO_BASENAME));
 define('BASEPATH', realpath(str_replace('\\', '/', $system_path)).DIRECTORY_SEPARATOR);
 
 // Path to the front controller (this file)
-define('FCPATH', realpath(dirname(__FILE__)).DIRECTORY_SEPARATOR);
+define('FCPATH', realpath(__DIR__).DIRECTORY_SEPARATOR);
 
 // Path to the writable directory.
 define('WRITEPATH', realpath(str_replace('\\', '/', $writable_directory)).DIRECTORY_SEPARATOR);

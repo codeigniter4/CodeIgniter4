@@ -51,7 +51,7 @@ class Toolbar
 		$varData         = $this->collectVarData();
 
 		ob_start();
-		include(dirname(__FILE__).'/Toolbar/View/toolbar.tpl.php');
+		include(__DIR__.'/Toolbar/View/toolbar.tpl.php');
 		$output = ob_get_contents();
 		ob_end_clean();
 
