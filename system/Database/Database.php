@@ -23,7 +23,7 @@ class Database
 	//--------------------------------------------------------------------
 
 	/**
-	 * Parses the connection parameters and returns an instance of
+	 * Parses the connection binds and returns an instance of
 	 * the driver ready to go.
 	 *
 	 * @param array $params

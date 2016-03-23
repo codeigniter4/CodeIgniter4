@@ -183,7 +183,7 @@ class Session implements SessionInterface
 	/**
 	 * Configuration
 	 *
-	 * Handle input parameters and configuration defaults.
+	 * Handle input binds and configuration defaults.
 	 */
 	protected function configure()
 	{

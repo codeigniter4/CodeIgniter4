@@ -1012,7 +1012,7 @@ class RouteCollection implements RouteCollectionInterface
 			}
 		}
 
-		// Are we offsetting the parameters?
+		// Are we offsetting the binds?
 		// If so, take care of them here in one
 		// fell swoop.
 		if (isset($options['offset']) && is_string($to))

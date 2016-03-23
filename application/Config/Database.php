@@ -32,14 +32,14 @@ class Database extends \CodeIgniter\Database\Config
 		'db_debug'     => (ENVIRONMENT !== 'production'),
 		'cache_on'     => false,
 		'cachedir'     => '',
-		'char_set'     => 'utf8',
+		'charset'      => 'utf8',
 		'dbcollat'     => 'utf8_general_ci',
-		'swap_pre'     => '',
+		'swapPre'      => '',
 		'encrypt'      => false,
 		'compress'     => false,
 		'stricton'     => false,
 		'failover'     => [],
-		'save_queries' => true,
+		'saveQueries' => true,
 	];
 
 	//--------------------------------------------------------------------

@@ -60,7 +60,7 @@ use Config\Services;
  * - Any cookies provided (generally via $_COOKIE)
  * - Query string arguments (generally via $_GET, or as parsed via parse_str())
  * - Upload files, if any (as represented by $_FILES)
- * - Deserialized body parameters (generally from $_POST)
+ * - Deserialized body binds (generally from $_POST)
  *
  * @package CodeIgniter\HTTPLite
  */
@@ -292,10 +292,10 @@ class IncomingRequest extends Request
 	/**
 	 * Set a cookie
 	 *
-	 * Accepts an arbitrary number of parameters (up to 7) or an associateive
+	 * Accepts an arbitrary number of binds (up to 7) or an associateive
 	 * array in the first parameter containing all the values.
 	 *
-	 * @param            $name      Cookie name or array containing parameters
+	 * @param            $name      Cookie name or array containing binds
 	 * @param string     $value     Cookie value
 	 * @param string     $expire    Cookie expiration time in seconds
 	 * @param string     $domain    Cookie domain (e.g.: '.yourdomain.com')
