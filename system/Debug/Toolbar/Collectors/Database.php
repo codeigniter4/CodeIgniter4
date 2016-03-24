@@ -27,12 +27,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	  CodeIgniter
- * @author	  CodeIgniter Dev Team
- * @copyright Copyright (c) 2014 - 2016, British Columbia Institute of Technology (http://bcit.ca/)
- * @license	  http://opensource.org/licenses/MIT	MIT License
- * @link	  http://codeigniter.com
- * @since	  Version 4.0.0
+ * @package      CodeIgniter
+ * @author       CodeIgniter Dev Team
+ * @copyright    Copyright (c) 2014 - 2016, British Columbia Institute of Technology (http://bcit.ca/)
+ * @license      http://opensource.org/licenses/MIT	MIT License
+ * @link         http://codeigniter.com
+ * @since        Version 4.0.0
  * @filesource
  */
 
@@ -43,42 +43,50 @@ use Config\Services;
  */
 class Database extends BaseCollector
 {
-	/** @var boolean Whether this collector has timeline data. */
+	/**
+	 * Whether this collector has timeline data.
+	 *
+	 * @var boolean
+	 */
 	protected $hasTimeline = true;
 
-	/** @var boolean Whether this collector should display its own tab. */
+	/**
+	 * Whether this collector should display its own tab.
+	 *
+	 * @var boolean
+	 */
 	protected $hasTabContent = true;
 
-	/** @var boolean Whether this collector has data for the Vars tab. */
+	/**
+	 * Whether this collector has data for the Vars tab.
+	 *
+	 * @var boolean
+	 */
 	protected $hasVarData = false;
 
-	/** @var string The name used to reference this collector in the toolbar. */
+	/**
+	 * The name used to reference this collector in the toolbar.
+	 *
+	 * @var string
+	 */
 	protected $title = 'Database';
 
-	/** @var \system\Data\Database The database object. */
-	protected $db;
+	/**
+	 * Array of database connections.
+	 *
+	 * @var array
+	 */
+	protected $connections;
 
-	/** @var integer The number of queries included in the data. */
-	protected $numberOfQueries = 0;
-
-	/** @var array The performance data for the timeline. */
-	protected $performanceData;
-
-	/** @var array The debug data (query times and text) for the tab. */
-	protected $debugData;
 
 	//--------------------------------------------------------------------
 
 	public function __construct()
 	{
-		$this->db = Services::database(null, null, true);
-		$this->performanceData = $this->db->getPerformanceData();
-		$this->debugData = $this->db->getDebugData();
-		if ( ! empty($this->debugData['queries']) && is_array($this->debugData['queries']))
-		{
-			$this->numberOfQueries = count($this->debugData['queries']);
-		}
+		$this->connections = \Config\Database::getConnections();
 	}
+
+	//--------------------------------------------------------------------
 
 	/**
 	 * Returns timeline data formatted for the toolbar.
@@ -89,18 +97,25 @@ class Database extends BaseCollector
 	{
 		$data = [];
 
-		foreach ($this->performanceData as $name => $info)
+		foreach ($this->connections as $connection)
 		{
-			$data[] = [
-				'name'      => $info['tag'],
-				'component' => 'Database',
-				'start'     => $info['start'],
-				'duration'  => $info['end'] - $info['start'],
-			];
+			$queries = $connection->getQueries();
+
+			foreach ($queries as $query)
+			{
+				$data[] = [
+					'name' => 'Query',
+				    'component' => 'Database',
+				    'start' => $query->getStartTime(true),
+				    'duration' => $query->getDuration()
+				];
+			}
 		}
 
 		return $data;
 	}
+
+	//--------------------------------------------------------------------
 
 	/**
 	 * Returns the HTML to fill the Database tab in the toolbar.
@@ -109,39 +124,40 @@ class Database extends BaseCollector
 	 */
 	public function display(): string
 	{
-		if (empty($this->debugData) || ! is_array($this->debugData))
-		{
-			return '<p>No debug data available. Either the database connection does not have this feature enabled, or the connection was not found.</p>';
-		}
-
 		$output = '';
-		if ( ! empty($this->debugData['queries']) && is_array($this->debugData['queries']))
+
+		foreach ($this->connections as $alias => $connection)
 		{
-			$count = 0;
-			$output .= "<table class='queries'><thead><tr><th>Time</th><th>Query</th></tr></thead><tbody>";
-			foreach ($this->debugData['queries'] as $query)
+			$output .= '<h3>'.$alias.': <span>'.$connection->getPlatform().' '.$connection->getVersion().'</span></h3>';
+
+			$output .= '<table>';
+
+			$output .= '<thead><tr>';
+			$output .= '<th style="width: 6rem;">Time</th>';
+			$output .= '<th>Query String</th>';
+			$output .= '</tr></thead>';
+
+			$output .= '<body>';
+
+			$queries = $connection->getQueries();
+
+			foreach ($queries as $query)
 			{
-				$output .= "<tr><td class='query-time'>" . (isset($this->debugData['queryTimes'][$count]) ? $this->debugData['queryTimes'][$count] : '') . "</td><td class='query-text'>" . esc($query, 'html') . "</td></tr>";
-				$count++;
+				$output .= '<tr>';
+				$output .='<td class="narrow">'.($query->getDuration(5) * 1000).' ms</td>';
+				$output .= '<td>'.$query->getQuery().'</td>';
+				$output .= '</tr>';
 			}
-			$output .= "</tbody></table>";
-			unset($this->debugData['queryTimes'], $this->debugData['queries']);
+
+			$output .= '</body>';
+
+			$output .= '</table>';
 		}
 
-		if (empty($this->debugData) || ! is_array($this->debugData))
-		{
-			return $output;
-		}
-
-		// placeholder for eventual handling of the data.
-		$output .= '<table><thead><tr><th>Heading</th></tr></thead><tbody>';
-
-		foreach ($this->debugData as $data)
-		{
-			$output .= "<tr><td>" . print_r($data, true) . "</td></tr>";
-		}
-		return "{$output}</tbody></table>";
+		return $output;
 	}
+
+	//--------------------------------------------------------------------
 
 	/**
 	 * Information to be displayed next to the title.
@@ -150,6 +166,17 @@ class Database extends BaseCollector
 	 */
 	public function getTitleDetails(): string
 	{
-		return $this->numberOfQueries > 0 ? " ({$this->numberOfQueries})" : '';
+		$queryCount = 0;
+
+		foreach ($this->connections as $connection)
+		{
+			$queryCount += $connection->getQueryCount();
+		}
+
+		return '('.$queryCount.' Queries across '.count($this->connections).' Connection'.
+		       (count($this->connections) > 1 ? 's' : '').')';
 	}
+
+	//--------------------------------------------------------------------
+
 }

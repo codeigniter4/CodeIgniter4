@@ -204,7 +204,7 @@ class App extends BaseConfig
 
 	public $toolbarCollectors = [
 		'CodeIgniter\Debug\Toolbar\Collectors\Timers',
-//		'CodeIgniter\Debug\Toolbar\Collectors\Database',
+		'CodeIgniter\Debug\Toolbar\Collectors\Database',
 		'CodeIgniter\Debug\Toolbar\Collectors\Logs',
 		'CodeIgniter\Debug\Toolbar\Collectors\Views',
 //		'CodeIgniter\Debug\Toolbar\Collectors\Cache',

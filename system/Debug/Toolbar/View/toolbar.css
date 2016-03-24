@@ -145,6 +145,9 @@ body {
 #debug-bar tr td:first-child {
     width: 20%;
 }
+#debug-bar tr td:first-child.narrow {
+    width: 7em;
+}
 #debug-bar tr:hover {
     background-color: #f3f3f3;
 }

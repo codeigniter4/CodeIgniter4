@@ -49,10 +49,27 @@ class Config extends BaseConfig
 			throw new \InvalidArgumentException($group.' is not a valid database connection group.');
 		}
 
-		return self::$factory->load($config->$group, $group, $useBuilder);
+		$connection = self::$factory->load($config->$group, $group, $useBuilder);
+
+		self::$instances[$group] =& $connection;
+
+		return $connection;
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Returns an array of all db connections currently made.
+	 *
+	 * @return array
+	 */
+	public static function getConnections()
+	{
+	    return self::$instances;
+	}
+
+	//--------------------------------------------------------------------
+
 
 	/**
 	 * Ensures the database Connection Manager/Factory is loaded and ready to use.

@@ -170,6 +170,24 @@ class BaseQuery implements QueryInterface
 	//--------------------------------------------------------------------
 
 	/**
+	 * Returns the start time in seconds with microseconds.
+	 *
+	 * @param int $decimals
+	 *
+	 * @return mixed
+	 */
+	public function getStartTime($returnRaw = false, int $decimals = 6)
+	{
+		if ($returnRaw)
+		{
+			return $this->startTime;
+		}
+
+		return number_format($this->startTime, $decimals);
+	}
+
+	//--------------------------------------------------------------------
+	/**
 	 * Returns the duration of this query during execution, or null if
 	 * the query has not been executed yet.
 	 *

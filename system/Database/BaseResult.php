@@ -1,6 +1,6 @@
 <?php namespace CodeIgniter\Database;
 
-abstract class BaseResult implements ResultInterface, \ArrayAccess
+abstract class BaseResult implements ResultInterface
 {
 
 	/**
