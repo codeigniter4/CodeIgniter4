@@ -61,7 +61,7 @@ class Exceptions
 	{
 		$this->ob_level = ob_get_level();
 
-		$this->viewPath = trim($config->errorViewPath, '/ ').'/';
+		$this->viewPath = rtrim($config->errorViewPath, '/ ').'/';
 	}
 
 	//--------------------------------------------------------------------
@@ -115,7 +115,7 @@ class Exceptions
 		// Log it
 
 		// Fire an Event
-		
+		var_dump($this->viewPath);
 		$templates_path = $this->viewPath;
 		if (empty($templates_path))
 		{
