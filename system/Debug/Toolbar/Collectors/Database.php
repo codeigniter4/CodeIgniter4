@@ -132,10 +132,15 @@ class Database extends BaseCollector
 		              'IN', 'LIKE', 'NOT&nbsp;LIKE', 'COUNT', 'MAX', 'MIN', 'ON', 'AS', 'AVG', 'SUM', '(', ')'
 		];
 
+		$connectionCount = count($this->connections);
 
 		foreach ($this->connections as $alias => $connection)
 		{
-			$output .= '<h3>'.$alias.': <span>'.$connection->getPlatform().' '.$connection->getVersion().'</span></h3>';
+			if ($connectionCount > 1)
+			{
+				$output .= '<h3>'.$alias.': <span>'.$connection->getPlatform().' '.$connection->getVersion().
+				           '</span></h3>';
+			}
 
 			$output .= '<table>';
 
