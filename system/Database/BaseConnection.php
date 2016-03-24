@@ -164,6 +164,10 @@ abstract class BaseConnection implements ConnectionInterface
 	 */
 	protected $dataCache = [];
 
+	protected $connectTime;
+
+	protected $connectDuration;
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -202,6 +206,8 @@ abstract class BaseConnection implements ConnectionInterface
 
 		//--------------------------------------------------------------------
 
+		$this->connectTime = microtime(true);
+
 		// Connect to the database and set the connection ID
 		$this->connID = $this->connect($this->pconnect);
 
@@ -237,6 +243,8 @@ abstract class BaseConnection implements ConnectionInterface
 				throw new \RuntimeException('Unable to connect to the database.');
 			}
 		}
+
+		$this->connectDuration = microtime(true) - $this->connectTime;
 	}
 
 	//--------------------------------------------------------------------
@@ -511,4 +519,21 @@ abstract class BaseConnection implements ConnectionInterface
 	}
 
 	//--------------------------------------------------------------------
+
+	public function getConnectStart()
+	{
+	    return $this->connectTime;
+	}
+
+	//--------------------------------------------------------------------
+
+	public function getConnectDuration($decimals = 6)
+	{
+	    return number_format($this->connectDuration, $decimals);
+	}
+
+	//--------------------------------------------------------------------
+
+
+
 }

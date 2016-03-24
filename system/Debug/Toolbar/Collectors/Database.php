@@ -97,8 +97,16 @@ class Database extends BaseCollector
 	{
 		$data = [];
 
-		foreach ($this->connections as $connection)
+		foreach ($this->connections as $alias => $connection)
 		{
+			// Connection Time
+			$data[] = [
+				'name' => 'Connecting to Database: "'.$alias.'"',
+				'component' => 'Database',
+				'start' => $connection->getConnectStart(),
+				'duration' => $connection->getConnectDuration()
+			];
+
 			$queries = $connection->getQueries();
 
 			foreach ($queries as $query)
