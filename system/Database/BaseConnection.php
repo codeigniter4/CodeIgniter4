@@ -421,9 +421,9 @@ abstract class BaseConnection implements ConnectionInterface
 			$this->queries[] = $query;
 		}
 
-		// @todo return an actual result object
+		$resultClass = str_replace('Connection', 'Result', get_class($this));
 
-		return $this->resultID;
+		return new $resultClass($this->connID, $this->resultID);
 	}
 
 	//--------------------------------------------------------------------
