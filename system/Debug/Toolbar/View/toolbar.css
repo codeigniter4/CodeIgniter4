@@ -114,6 +114,7 @@ body {
 }
 #debug-bar .ci-label.active {
     font-weight: 400;
+    background-color: #ccc;
     border-color: #bbb;
     padding: .3em 0.9em .3em;
 }
