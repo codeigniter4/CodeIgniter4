@@ -1,20 +1,8 @@
 <?php namespace CodeIgniter\Database\MySQLi;
 
-use CodeIgniter\Database\BuilderTrait;
+use CodeIgniter\Database\BaseBuilder;
 
-class Builder extends Query
+class Builder extends BaseBuilder
 {
-	use BuilderTrait;
-
-	//--------------------------------------------------------------------
-
-	public function __construct(string $tableName)
-	{
-		$this->trackAliases($tableName);
-		$this->from($tableName);
-	}
-
-	//--------------------------------------------------------------------
-
 
 }

@@ -465,9 +465,7 @@ abstract class BaseConnection implements ConnectionInterface
 	{
 		$className = str_replace('Connection', 'Builder', get_class($this));
 
-		$builder = new $className($tableName);
-
-		return $builder->setProtectIdentifiers($this->protectIdentifiers);
+		return new $className($tableName, $this);
 	}
 
 	//--------------------------------------------------------------------

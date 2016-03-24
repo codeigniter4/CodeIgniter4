@@ -1,7 +1,7 @@
 <?php namespace CodeIgniter\Database;
 
 /**
- * Class BuilderTrait
+ * Class BaseBuilder
  *
  * Provides the core Query Builder methods.
  * Database-specific Builders might need to override
@@ -9,7 +9,7 @@
  *
  * @package CodeIgniter\Database
  */
-trait BuilderTrait
+class BaseBuilder
 {
 	/**
 	 * Return DELETE SQL flag
@@ -217,19 +217,20 @@ trait BuilderTrait
 	protected $QBCacheNoEscape = [];
 
 	/**
-	 * If identifiers should be escaped.
-	 *
-	 * @var bool
+	 * A reference to the database connection.
+	 * 
+	 * @var ConnectionInterface
 	 */
-	protected $protectIdentifiers = true;
+	protected $db;
 
 	//--------------------------------------------------------------------
 
-	public function setProtectIdentifiers($protect = true)
+	public function __construct(string $tableName, ConnectionInterface &$db)
 	{
-		$this->protectIdentifiers = $protect;
+		$this->trackAliases($tableName);
+		$this->from($tableName);
 
-		return $this;
+		$this->db = $db;
 	}
 
 	//--------------------------------------------------------------------
@@ -470,7 +471,7 @@ trait BuilderTrait
 				// in the protect_identifiers to know whether to add a table prefix
 				$this->trackAliases($val);
 
-				$this->QBFrom[] = $val = $this->protect_identifiers($val, true, null, false);
+				$this->QBFrom[] = $val; // = $this->protect_identifiers($val, true, null, false);
 
 				if ($this->QBCaching === true)
 				{
@@ -1380,7 +1381,8 @@ trait BuilderTrait
 			$this->limit($limit, $offset);
 		}
 
-		$result = $this->query($this->compileSelect());
+		// @todo Refactor system to collect binds that are passed to Connection, which are then inserted into the Query object, which does the escaping.
+		$result = $this->db->query($this->compileSelect());
 		$this->resetSelect();
 
 		return $result;
