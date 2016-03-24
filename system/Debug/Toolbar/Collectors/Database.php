@@ -126,6 +126,13 @@ class Database extends BaseCollector
 	{
 		$output = '';
 
+		// Key words we want bolded
+		$highlight = ['SELECT', 'DISTINCT', 'FROM', 'WHERE', 'AND', 'LEFT&nbsp;JOIN', 'ORDER&nbsp;BY', 'GROUP&nbsp;BY',
+		              'LIMIT', 'INSERT', 'INTO', 'VALUES', 'UPDATE', 'OR&nbsp;', 'HAVING', 'OFFSET', 'NOT&nbsp;IN',
+		              'IN', 'LIKE', 'NOT&nbsp;LIKE', 'COUNT', 'MAX', 'MIN', 'ON', 'AS', 'AVG', 'SUM', '(', ')'
+		];
+
+
 		foreach ($this->connections as $alias => $connection)
 		{
 			$output .= '<h3>'.$alias.': <span>'.$connection->getPlatform().' '.$connection->getVersion().'</span></h3>';
@@ -145,7 +152,15 @@ class Database extends BaseCollector
 			{
 				$output .= '<tr>';
 				$output .='<td class="narrow">'.($query->getDuration(5) * 1000).' ms</td>';
-				$output .= '<td>'.$query->getQuery().'</td>';
+
+				$sql = $query->getQuery();
+
+				foreach ($highlight as $term)
+				{
+					$sql = str_replace($term, "<strong>{$term}</strong>", $sql);
+				}
+
+				$output .= '<td>'.$sql.'</td>';
 				$output .= '</tr>';
 			}
 

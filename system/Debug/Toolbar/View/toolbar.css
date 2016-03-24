@@ -91,6 +91,10 @@ body {
     line-height: 1.0;
     vertical-align: baseline;
 }
+#debug-bar table strong {
+    font-weight: 500;
+    color: rgba(0,0,0,0.3);
+}
 #debug-bar .ci-label {
     border-radius: 0.25em;
     text-shadow: none;
