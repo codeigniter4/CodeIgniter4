@@ -95,7 +95,7 @@ class WhereTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	public function testWhereOr()
+	public function testOrWhere()
 	{
 		$builder = new BaseBuilder('jobs', $this->db);
 
@@ -111,18 +111,63 @@ class WhereTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-//	public function testWhereIn()
-//	{
-//		$builder = new BaseBuilder('jobs', $this->db);
-//
-//		$builder->whereIn('name', ['Politician', 'Accountant']);
-//
-//		$expectedSQL   = "SELECT * FROM jobs WHERE \"name\" IN :name";
-//		$expectedBinds = ['name' => ['Politician', 'Accountant']];
-//
-//		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
-//		$this->assertSame($expectedBinds, $builder->getBinds());
-//	}
+	public function testWhereIn()
+	{
+		$builder = new BaseBuilder('jobs', $this->db);
+
+		$builder->whereIn('name', ['Politician', 'Accountant']);
+
+		$expectedSQL   = "SELECT * FROM jobs WHERE \"name\" IN :name";
+		$expectedBinds = ['name' => ['Politician', 'Accountant']];
+
+		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+		$this->assertSame($expectedBinds, $builder->getBinds());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testWhereNotIn()
+	{
+		$builder = new BaseBuilder('jobs', $this->db);
+
+		$builder->whereNotIn('name', ['Politician', 'Accountant']);
+
+		$expectedSQL   = "SELECT * FROM jobs WHERE \"name\" NOT IN :name";
+		$expectedBinds = ['name' => ['Politician', 'Accountant']];
+
+		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+		$this->assertSame($expectedBinds, $builder->getBinds());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testOrWhereIn()
+	{
+		$builder = new BaseBuilder('jobs', $this->db);
+
+		$builder->where('id', 2)->orWhereIn('name', ['Politician', 'Accountant']);
+
+		$expectedSQL   = "SELECT * FROM jobs WHERE \"id\" = :id OR \"name\" IN :name";
+		$expectedBinds = ['id' => 2, 'name' => ['Politician', 'Accountant']];
+
+		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+		$this->assertSame($expectedBinds, $builder->getBinds());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testOrWhereNotIn()
+	{
+		$builder = new BaseBuilder('jobs', $this->db);
+
+		$builder->where('id', 2)->orWhereNotIn('name', ['Politician', 'Accountant']);
+
+		$expectedSQL   = "SELECT * FROM jobs WHERE \"id\" = :id OR \"name\" NOT IN :name";
+		$expectedBinds = ['id' => 2, 'name' => ['Politician', 'Accountant']];
+
+		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+		$this->assertSame($expectedBinds, $builder->getBinds());
+	}
 
 	//--------------------------------------------------------------------
 }

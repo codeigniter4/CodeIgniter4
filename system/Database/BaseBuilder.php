@@ -903,28 +903,25 @@ class BaseBuilder
 
 		is_bool($escape) OR $escape = $this->protectIdentifiers;
 
-		$not = ($not) ? ' NOT' : '';
+		$ok = $key;
 
 		if ($escape === true)
 		{
-			$where_in = [];
-			foreach ($values as $value)
-			{
-				$where_in[] = $this->escape($value);
-			}
+			$key = $this->protectIdentifiers($key);
 		}
-		else
-		{
-			$where_in = array_values($values);
-		}
+
+		$not = ($not) ? ' NOT' : '';
+
+		$where_in = array_values($values);
+		$this->binds[$ok] = $where_in;
 
 		$prefix = (count($this->QBWhere) === 0 && count($this->QBCacheWhere) === 0)
 			? $this->groupGetType('')
 			: $this->groupGetType($type);
 
 		$where_in = [
-			'condition' => $prefix.$key.$not.' IN('.implode(', ', $where_in).')',
-			'escape'    => $escape,
+			'condition' => $prefix.$key.$not.' IN :'.$ok,
+			'escape'    => false,
 		];
 
 		$this->QBWhere[] = $where_in;
