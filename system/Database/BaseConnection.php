@@ -465,7 +465,12 @@ abstract class BaseConnection implements ConnectionInterface
 	{
 		$className = str_replace('Connection', 'Builder', get_class($this));
 
-		return new $className($tableName, $this);
+		$options = [
+			'swapPre' => $this->swapPre,
+		    'dbprefix' => $this->dbprefix
+		];
+
+		return new $className($tableName, $this, $options);
 	}
 
 	//--------------------------------------------------------------------
