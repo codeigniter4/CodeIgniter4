@@ -317,7 +317,7 @@ class BaseQuery implements QueryInterface
 
 		if ($hasNamedBinds)
 		{
-			$sql = $this->matchNamedBinds($sql, $binds, $bindCount);
+			$sql = $this->matchNamedBinds($sql, $binds);
 		}
 		else
 		{
@@ -329,7 +329,7 @@ class BaseQuery implements QueryInterface
 
 	//--------------------------------------------------------------------
 
-	protected function matchNamedBinds(string $sql, array $binds, int $bindCount)
+	protected function matchNamedBinds(string $sql, array $binds)
 	{
 		foreach ($binds as $placeholder => $value)
 		{

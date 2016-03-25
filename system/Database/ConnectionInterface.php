@@ -122,7 +122,7 @@ interface ConnectionInterface
 	 *
 	 * @return mixed
 	 */
-	public function query(string $sql, ...$binds);
+	public function query(string $sql, $binds);
 
 	//--------------------------------------------------------------------
 

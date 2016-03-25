@@ -392,7 +392,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 *
 	 * @return mixed
 	 */
-	public function query(string $sql, ...$binds)
+	public function query(string $sql, $binds)
 	{
 		$queryClass = str_replace('Connection', 'Query', get_class($this));
 
