@@ -519,6 +519,17 @@ abstract class BaseConnection implements ConnectionInterface
 	 */
 	public function escape($str)
 	{
+		if (count($this->queries))
+		{
+			$query = end($this->queries);
+		}
+		else
+		{
+			$queryClass = str_replace('Connection', 'Query', get_class($this));
+			$query = new $queryClass();
+		}
+
+		return $query->escape($str);
 	}
 
 	//--------------------------------------------------------------------
