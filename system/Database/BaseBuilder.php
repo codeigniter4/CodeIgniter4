@@ -218,7 +218,7 @@ class BaseBuilder
 
 	/**
 	 * A reference to the database connection.
-	 * 
+	 *
 	 * @var ConnectionInterface
 	 */
 	protected $db;
@@ -236,45 +236,45 @@ class BaseBuilder
 	 *
 	 * Identifiers that must NOT be escaped.
 	 *
-	 * @var	string[]
+	 * @var    string[]
 	 */
-	protected $reservedIdentifiers	= array('*');
+	protected $reservedIdentifiers = ['*'];
 
 	/**
 	 * Identifier escape character
 	 *
-	 * @var	string
+	 * @var    string
 	 */
 	protected $escapeChar = '"';
 
 	/**
 	 * ESCAPE statement string
 	 *
-	 * @var	string
+	 * @var    string
 	 */
 	protected $likeEscapeStr = " ESCAPE '%s' ";
 
 	/**
 	 * ESCAPE character
 	 *
-	 * @var	string
+	 * @var    string
 	 */
 	protected $likeEscapeChar = '!';
 
 	/**
 	 * ORDER BY random keyword
 	 *
-	 * @var	array
+	 * @var    array
 	 */
-	protected $randomKeyword = array('RAND()', 'RAND(%d)');
+	protected $randomKeyword = ['RAND()', 'RAND(%d)'];
 
 	/**
 	 * COUNT string
 	 *
-	 * @used-by	CI_DB_driver::count_all()
-	 * @used-by	CI_DB_query_builder::count_all_results()
+	 * @used-by    CI_DB_driver::count_all()
+	 * @used-by    CI_DB_query_builder::count_all_results()
 	 *
-	 * @var	string
+	 * @var    string
 	 */
 	protected $countString = 'SELECT COUNT(*) AS ';
 
@@ -283,14 +283,23 @@ class BaseBuilder
 	 *
 	 * @var    string
 	 */
-	public $swapPre = '';
+	protected $swapPre = '';
 
 	/**
 	 * Table prefix
 	 *
 	 * @var    string
 	 */
-	public $dbprefix = '';
+	protected $dbprefix = '';
+
+	/**
+	 * Collects the named parameters and
+	 * their values for later binding
+	 * in the Query object.
+	 *
+	 * @var array
+	 */
+	protected $binds = [];
 
 	//--------------------------------------------------------------------
 
@@ -308,6 +317,19 @@ class BaseBuilder
 				$this->$key = $value;
 			}
 		}
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns an array of bind values and their
+	 * named parameters for binding in the Query object later.
+	 *
+	 * @return array
+	 */
+	public function getBinds(): array
+	{
+		return $this->binds;
 	}
 
 	//--------------------------------------------------------------------
@@ -723,7 +745,7 @@ class BaseBuilder
 		}
 
 		// If the escape value was not set will base it on the global setting
-		is_bool($escape) OR $escape = $this->_protect_identifiers;
+		is_bool($escape) OR $escape = $this->protectIdentifiers;
 
 		foreach ($key as $k => $v)
 		{
@@ -731,19 +753,26 @@ class BaseBuilder
 				? $this->groupGetType('')
 				: $this->groupGetType($type);
 
+			$ok = null;
+
 			if ($v !== null)
 			{
-				if ($escape === true)
-				{
-					$v = ' '.$this->escape($v);
-				}
+				$op = $this->getOperator($k);
+				$k  = trim(str_replace($op, '', $k));
+				$ok = $k;
 
-				if ( ! $this->_has_operator($k))
+				$this->binds[$k] = $v;
+
+				if (empty($op))
 				{
-					$k .= ' = ';
+					$k .= ' =';
+				}
+				else
+				{
+					$k .= $op;
 				}
 			}
-			elseif ( ! $this->_has_operator($k))
+			elseif ( ! $this->hasOperator($k))
 			{
 				// value appears not to have been set, assign the test to IS NULL
 				$k .= ' IS NULL';
@@ -752,6 +781,8 @@ class BaseBuilder
 			{
 				$k = substr($k, 0, $match[0][1]).($match[1][0] === '=' ? ' IS NULL' : ' IS NOT NULL');
 			}
+
+			$v = ! is_null($v) ? ' :'.$ok : $v;
 
 			$this->{$qb_key}[] = ['condition' => $prefix.$k.$v, 'escape' => $escape];
 			if ($this->QBCaching === true)
@@ -870,7 +901,7 @@ class BaseBuilder
 			$values = [$values];
 		}
 
-		is_bool($escape) OR $escape = $this->_protect_identifiers;
+		is_bool($escape) OR $escape = $this->protectIdentifiers;
 
 		$not = ($not) ? ' NOT' : '';
 
@@ -1458,8 +1489,7 @@ class BaseBuilder
 			$this->limit($limit, $offset);
 		}
 
-		// @todo Refactor system to collect binds that are passed to Connection, which are then inserted into the Query object, which does the escaping.
-		$result = $this->db->query($this->compileSelect());
+		$result = $this->db->query($this->compileSelect(), $this->binds);
 		$this->resetSelect();
 
 		return $result;
@@ -2527,7 +2557,7 @@ class BaseBuilder
 
 				for ($ci = 0, $cc = count($conditions); $ci < $cc; $ci++)
 				{
-					if (($op = $this->_get_operator($conditions[$ci])) === false
+					if (($op = $this->getOperator($conditions[$ci])) === false
 					    OR
 					    ! preg_match('/^(\(?)(.*)('.preg_quote($op, '/').')\s*(.*(?<!\)))?(\)?)$/i', $conditions[$ci],
 						    $matches)
@@ -2547,11 +2577,11 @@ class BaseBuilder
 
 					if ( ! empty($matches[4]))
 					{
-						$this->isLiteral($matches[4]) OR $matches[4] = $this->protect_identifiers(trim($matches[4]));
+//						$this->isLiteral($matches[4]) OR $matches[4] = $this->protectIdentifiers(trim($matches[4]));
 						$matches[4] = ' '.$matches[4];
 					}
 
-					$conditions[$ci] = $matches[1].$this->protect_identifiers(trim($matches[2]))
+					$conditions[$ci] = $matches[1].$this->protectIdentifiers(trim($matches[2]))
 					                   .' '.trim($matches[3]).$matches[4].$matches[5];
 				}
 
@@ -2957,13 +2987,16 @@ class BaseBuilder
 	 * insert the table prefix (if it exists) in the proper position, and escape only
 	 * the correct identifiers.
 	 *
-	 * @param	string|array
-	 * @param	bool
-	 * @param	mixed
-	 * @param	bool
-	 * @return	string
+	 * @todo     Should this move back to the Connection, since we have a link to that now?
+	 *
+	 * @param    string|array
+	 * @param    bool
+	 * @param    mixed
+	 * @param    bool
+	 *
+	 * @return    string
 	 */
-	protected function protectIdentifiers($item, $prefixSingle = FALSE, $protectIdentifiers = NULL, $fieldExists = TRUE)
+	protected function protectIdentifiers($item, $prefixSingle = false, $protectIdentifiers = null, $fieldExists = true)
 	{
 		if ( ! is_bool($protectIdentifiers))
 		{
@@ -2972,10 +3005,11 @@ class BaseBuilder
 
 		if (is_array($item))
 		{
-			$escaped_array = array();
+			$escaped_array = [];
 			foreach ($item as $k => $v)
 			{
-				$escaped_array[$this->protectIdentifiers($k)] = $this->protectIdentifiers($v, $prefixSingle, $protectIdentifiers, $fieldExists);
+				$escaped_array[$this->protectIdentifiers($k)] = $this->protectIdentifiers($v, $prefixSingle,
+					$protectIdentifiers, $fieldExists);
 			}
 
 			return $escaped_array;
@@ -3003,14 +3037,14 @@ class BaseBuilder
 			$alias = ($protectIdentifiers)
 				? substr($item, $offset, 4).$this->escape_identifiers(substr($item, $offset + 4))
 				: substr($item, $offset);
-			$item = substr($item, 0, $offset);
+			$item  = substr($item, 0, $offset);
 		}
 		elseif ($offset = strrpos($item, ' '))
 		{
 			$alias = ($protectIdentifiers)
 				? ' '.$this->escape_identifiers(substr($item, $offset + 1))
 				: substr($item, $offset);
-			$item = substr($item, 0, $offset);
+			$item  = substr($item, 0, $offset);
 		}
 		else
 		{
@@ -3020,7 +3054,7 @@ class BaseBuilder
 		// Break the string apart if it contains periods, then insert the table prefix
 		// in the correct location, assuming the period doesn't indicate that we're dealing
 		// with an alias. While we're at it, we will escape the components
-		if (strpos($item, '.') !== FALSE)
+		if (strpos($item, '.') !== false)
 		{
 			$parts = explode('.', $item);
 
@@ -3032,7 +3066,7 @@ class BaseBuilder
 			//       from breaking when QB isn't enabled.
 			if ( ! empty($this->qb_aliased_tables) && in_array($parts[0], $this->qb_aliased_tables))
 			{
-				if ($protectIdentifiers === TRUE)
+				if ($protectIdentifiers === true)
 				{
 					foreach ($parts as $key => $val)
 					{
@@ -3073,7 +3107,7 @@ class BaseBuilder
 
 				// This flag is set when the supplied $item does not contain a field name.
 				// This can happen when this function is being called from a JOIN.
-				if ($fieldExists === FALSE)
+				if ($fieldExists === false)
 				{
 					$i++;
 				}
@@ -3093,7 +3127,7 @@ class BaseBuilder
 				$item = implode('.', $parts);
 			}
 
-			if ($protectIdentifiers === TRUE)
+			if ($protectIdentifiers === true)
 			{
 				$item = $this->escape_identifiers($item);
 			}
@@ -3110,13 +3144,13 @@ class BaseBuilder
 				$item = preg_replace('/^'.$this->swapPre.'(\S+?)/', $this->dbprefix.'\\1', $item);
 			}
 			// Do we prefix an item with no segments?
-			elseif ($prefixSingle === TRUE && strpos($item, $this->dbprefix) !== 0)
+			elseif ($prefixSingle === true && strpos($item, $this->dbprefix) !== 0)
 			{
 				$item = $this->dbprefix.$item;
 			}
 		}
 
-		if ($protectIdentifiers === TRUE && ! in_array($item, $this->reservedIdentifiers))
+		if ($protectIdentifiers === true && ! in_array($item, $this->reservedIdentifiers))
 		{
 			$item = $this->escape_identifiers($item);
 		}
@@ -3131,8 +3165,9 @@ class BaseBuilder
 	 *
 	 * This function escapes column and table names
 	 *
-	 * @param	mixed
-	 * @return	mixed
+	 * @param    mixed
+	 *
+	 * @return    mixed
 	 */
 	public function escape_identifiers($item)
 	{
@@ -3150,23 +3185,25 @@ class BaseBuilder
 			return $item;
 		}
 		// Avoid breaking functions and literal values inside queries
-		elseif (ctype_digit($item) OR $item[0] === "'" OR ($this->escapeChar !== '"' && $item[0] === '"') OR strpos($item, '(') !== FALSE)
+		elseif (ctype_digit($item) OR $item[0] === "'" OR ($this->escapeChar !== '"' && $item[0] === '"') OR
+		        strpos($item, '(') !== false
+		)
 		{
 			return $item;
 		}
 
-		static $preg_ec = array();
+		static $preg_ec = [];
 
 		if (empty($preg_ec))
 		{
 			if (is_array($this->escapeChar))
 			{
-				$preg_ec = array(
+				$preg_ec = [
 					preg_quote($this->escapeChar[0], '/'),
 					preg_quote($this->escapeChar[1], '/'),
 					$this->escapeChar[0],
-					$this->escapeChar[1]
-				);
+					$this->escapeChar[1],
+				];
 			}
 			else
 			{
@@ -3177,15 +3214,69 @@ class BaseBuilder
 
 		foreach ($this->reservedIdentifiers as $id)
 		{
-			if (strpos($item, '.'.$id) !== FALSE)
+			if (strpos($item, '.'.$id) !== false)
 			{
-				return preg_replace('/'.$preg_ec[0].'?([^'.$preg_ec[1].'\.]+)'.$preg_ec[1].'?\./i', $preg_ec[2].'$1'.$preg_ec[3].'.', $item);
+				return preg_replace('/'.$preg_ec[0].'?([^'.$preg_ec[1].'\.]+)'.$preg_ec[1].'?\./i',
+					$preg_ec[2].'$1'.$preg_ec[3].'.', $item);
 			}
 		}
 
-		return preg_replace('/'.$preg_ec[0].'?([^'.$preg_ec[1].'\.]+)'.$preg_ec[1].'?(\.)?/i', $preg_ec[2].'$1'.$preg_ec[3].'$2', $item);
+		return preg_replace('/'.$preg_ec[0].'?([^'.$preg_ec[1].'\.]+)'.$preg_ec[1].'?(\.)?/i',
+			$preg_ec[2].'$1'.$preg_ec[3].'$2', $item);
 	}
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Tests whether the string has an SQL operator
+	 *
+	 * @param    string
+	 *
+	 * @return    bool
+	 */
+	protected function hasOperator($str)
+	{
+		return (bool)preg_match('/(<|>|!|=|\sIS NULL|\sIS NOT NULL|\sEXISTS|\sBETWEEN|\sLIKE|\sIN\s*\(|\s)/i',
+			trim($str));
+	}
+
+	// --------------------------------------------------------------------
+
+	/**
+	 * Returns the SQL string operator
+	 *
+	 * @param    string
+	 *
+	 * @return    string
+	 */
+	protected function getOperator($str)
+	{
+		static $_operators;
+
+		if (empty($_operators))
+		{
+			$_les       = ($this->likeEscapeStr !== '')
+				? '\s+'.preg_quote(trim(sprintf($this->likeEscapeStr, $this->likeEscapeChar)), '/')
+				: '';
+			$_operators = [
+				'\s*(?:<|>|!)?=\s*',             // =, <=, >=, !=
+				'\s*<>?\s*',                     // <, <>
+				'\s*>\s*',                       // >
+				'\s+IS NULL',                    // IS NULL
+				'\s+IS NOT NULL',                // IS NOT NULL
+				'\s+EXISTS\s*\(.*\)',        // EXISTS(sql)
+				'\s+NOT EXISTS\s*\(.*\)',    // NOT EXISTS(sql)
+				'\s+BETWEEN\s+',                 // BETWEEN value AND value
+				'\s+IN\s*\(.*\)',            // IN(list)
+				'\s+NOT IN\s*\(.*\)',        // NOT IN (list)
+				'\s+LIKE\s+\S.*('.$_les.')?',    // LIKE 'expr'[ ESCAPE '%s']
+				'\s+NOT LIKE\s+\S.*('.$_les.')?' // NOT LIKE 'expr'[ ESCAPE '%s']
+			];
+		}
+
+		return preg_match('/'.implode('|', $_operators).'/i', $str, $match)
+			? $match[0] : false;
+	}
+
+	// --------------------------------------------------------------------
 }
