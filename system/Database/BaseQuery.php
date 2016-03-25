@@ -289,8 +289,13 @@ class BaseQuery implements QueryInterface
 	 */
 	protected function compileBinds()
 	{
+		$sql = $this->finalQueryString;
+
+		$hasNamedBinds  = strpos($sql, ':') !== false;
+
 		if (empty($this->binds) || empty($this->bindMarker) ||
-		    strpos($this->finalQueryString, $this->bindMarker) === false
+		    (strpos($sql, $this->bindMarker) === false &&
+		     $hasNamedBinds === false)
 		)
 		{
 			return;
@@ -303,16 +308,46 @@ class BaseQuery implements QueryInterface
 		}
 		else
 		{
-			// Make sure we're using numeric keys
-			$binds     = array_values($this->binds);
+			$binds     = $this->binds;
 			$bindCount = count($binds);
 		}
 
 		// We'll need marker length later
 		$ml = strlen($this->bindMarker);
 
-		$sql = $this->finalQueryString;
+		if ($hasNamedBinds)
+		{
+			$sql = $this->matchNamedBinds($sql, $binds, $bindCount);
+		}
+		else
+		{
+			$sql = $this->matchSimpleBinds($sql, $binds, $bindCount, $ml);
+		}
 
+		$this->finalQueryString = $sql;
+	}
+
+	//--------------------------------------------------------------------
+
+	protected function matchNamedBinds(string $sql, array $binds, int $bindCount)
+	{
+		foreach ($binds as $placeholder => $value)
+		{
+			$escapedValue = $this->escape($value);
+			if (is_array($escapedValue))
+			{
+				$escapedValue = '('.implode(',', $escapedValue).')';
+			}
+			$sql = str_replace(':'.$placeholder, $escapedValue, $sql);
+		}
+
+		return $sql;
+	}
+
+	//--------------------------------------------------------------------
+
+	protected function matchSimpleBinds(string $sql, array $binds, int $bindCount, int $ml)
+	{
 		// Make sure not to replace a chunk inside a string that happens to match the bind marker
 		if ($c = preg_match_all("/'[^']*'/i", $sql, $matches))
 		{
@@ -325,7 +360,7 @@ class BaseQuery implements QueryInterface
 			// Bind values' count must match the count of markers in the query
 			if ($bindCount !== $c)
 			{
-				return;
+				return $sql;
 			}
 		}
 		// Number of binds must match bindMarkers in the string.
@@ -333,7 +368,7 @@ class BaseQuery implements QueryInterface
 				PREG_OFFSET_CAPTURE)) !== $bindCount
 		)
 		{
-			return;
+			return $sql;
 		}
 
 		do
@@ -348,7 +383,7 @@ class BaseQuery implements QueryInterface
 		}
 		while ($c !== 0);
 
-		$this->finalQueryString = $sql;
+		return $sql;
 	}
 
 	//--------------------------------------------------------------------
@@ -434,7 +469,7 @@ class BaseQuery implements QueryInterface
 	 */
 	protected function _escapeString(string $str): string
 	{
-		return str_replace("'", "''", remove_invisible_characters($str));
+		return str_replace("'", "\\'", remove_invisible_characters($str));
 	}
 
 	//--------------------------------------------------------------------

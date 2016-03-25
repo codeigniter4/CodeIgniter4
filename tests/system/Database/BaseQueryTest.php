@@ -102,5 +102,69 @@ class BaseQueryTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testSingleBindingOutsideOfArray()
+	{
+	    $query = new BaseQuery();
 
+		$query->setQuery('SELECT * FROM users WHERE id = ?', 13);
+
+		$expected = 'SELECT * FROM users WHERE id = 13';
+
+		$this->assertEquals($expected, $query->getQuery());
+	}
+
+	//--------------------------------------------------------------------
+
+
+	public function testBindingSingleElementInArray()
+	{
+		$query = new BaseQuery();
+
+		$query->setQuery('SELECT * FROM users WHERE id = ?', [13]);
+
+		$expected = 'SELECT * FROM users WHERE id = 13';
+
+		$this->assertEquals($expected, $query->getQuery());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testBindingMultipleItems()
+	{
+		$query = new BaseQuery();
+
+		$query->setQuery('SELECT * FROM users WHERE id = ? OR name = ?', [13, 'Vader']);
+
+		$expected = "SELECT * FROM users WHERE id = 13 OR name = 'Vader'";
+
+		$this->assertEquals($expected, $query->getQuery());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testBindingAutoEscapesParameters()
+	{
+		$query = new BaseQuery();
+
+		$query->setQuery('SELECT * FROM users WHERE name = ?', ["O'Reilly"]);
+
+		$expected = "SELECT * FROM users WHERE name = 'O\'Reilly'";
+
+		$this->assertEquals($expected, $query->getQuery());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testNamedBinds()
+	{
+		$query = new BaseQuery();
+
+		$query->setQuery('SELECT * FROM users WHERE id = :id OR name = :name', ['id' => 13, 'name' => 'Geoffrey']);
+
+		$expected = "SELECT * FROM users WHERE id = 13 OR name = 'Geoffrey'";
+
+		$this->assertEquals($expected, $query->getQuery());
+	}
+
+	//--------------------------------------------------------------------
 }
