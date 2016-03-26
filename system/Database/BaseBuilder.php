@@ -1409,7 +1409,7 @@ class BaseBuilder
 	 *
 	 * @return    CI_DB_query_builder
 	 */
-	public function set($key, $value = '', $escape = null)
+	public function  set($key, $value = '', $escape = null)
 	{
 		$key = $this->objectToArray($key);
 
@@ -1941,14 +1941,14 @@ class BaseBuilder
 	 *
 	 * Compiles an update string and runs the query.
 	 *
-	 * @param    string $table
 	 * @param    array  $set An associative array of update values
 	 * @param    mixed  $where
 	 * @param    int    $limit
+	 * @param    bool   $test  Are we testing the code?
 	 *
 	 * @return    bool    TRUE on success, FALSE on failure
 	 */
-	public function update($table = '', $set = null, $where = null, $limit = null)
+	public function update($set = null, $where = null, $limit = null, $test = false)
 	{
 		// Combine any cached components with the current statements
 		$this->mergeCache();
@@ -1958,7 +1958,7 @@ class BaseBuilder
 			$this->set($set);
 		}
 
-		if ($this->validateUpdate($table) === false)
+		if ($this->validateUpdate() === false)
 		{
 			return false;
 		}
@@ -1974,9 +1974,37 @@ class BaseBuilder
 		}
 
 		$sql = $this->_update($this->QBFrom[0], $this->QBSet);
-		$this->resetWrite();
 
-		return $this->query($sql);
+		if (! $test)
+		{
+			$this->resetWrite();
+
+			return $this->db->query($sql, $this->binds);
+		}
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Update statement
+	 *
+	 * Generates a platform-specific update string from the supplied data
+	 *
+	 * @param	string	the table name
+	 * @param	array	the update data
+	 * @return	string
+	 */
+	protected function _update($table, $values)
+	{
+		foreach ($values as $key => $val)
+		{
+			$valstr[] = $key.' = '.$val;
+		}
+
+		return 'UPDATE '.$table.' SET '.implode(', ', $valstr)
+		       .$this->compileWhereHaving('QBWhere')
+		       .$this->compileOrderBy()
+		       .($this->QBLimit ? ' LIMIT '.$this->QBLimit : '');
 	}
 
 	//--------------------------------------------------------------------
@@ -1988,24 +2016,14 @@ class BaseBuilder
 	 * validate that data is actually being set and that a table has been
 	 * chosen to be update.
 	 *
-	 * @param    string    the table to update data on
 	 *
 	 * @return    bool
 	 */
-	protected function validateUpdate($table)
+	protected function validateUpdate()
 	{
 		if (count($this->QBSet) === 0)
 		{
-			return ($this->db_debug) ? $this->display_error('db_must_use_set') : false;
-		}
-
-		if ($table !== '')
-		{
-			$this->QBFrom = [$this->protect_identifiers($table, true, null, false)];
-		}
-		elseif ( ! isset($this->QBFrom[0]))
-		{
-			return ($this->db_debug) ? $this->display_error('db_must_set_table') : false;
+			return (CI_DEBUG) ? '' /*$this->display_error('db_must_use_set')*/ : false;
 		}
 
 		return true;
