@@ -115,7 +115,6 @@ class Exceptions
 		// Log it
 
 		// Fire an Event
-		var_dump($this->viewPath);
 		$templates_path = $this->viewPath;
 		if (empty($templates_path))
 		{
