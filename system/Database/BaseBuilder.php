@@ -16,7 +16,7 @@ class BaseBuilder
 	 *
 	 * @var    bool
 	 */
-	protected $returnDeleteSQL = false;
+	public $returnDeleteSQL = false;
 
 	/**
 	 * Reset DELETE data flag
@@ -2329,42 +2329,19 @@ class BaseBuilder
 	 *
 	 * Compiles a delete string and runs the query
 	 *
-	 * @param    mixed    the table(s) to delete from. String or array
 	 * @param    mixed    the where clause
 	 * @param    mixed    the limit clause
 	 * @param    bool
 	 *
 	 * @return    mixed
 	 */
-	public function delete($table = '', $where = '', $limit = null, $reset_data = true)
+	public function delete($where = '', $limit = null, $reset_data = true)
 	{
 		// Combine any cached components with the current statements
 		$this->mergeCache();
 
-		if ($table === '')
-		{
-			if ( ! isset($this->QBFrom[0]))
-			{
-				return ($this->db_debug) ? $this->display_error('db_must_set_table') : false;
-			}
 
-			$table = $this->QBFrom[0];
-		}
-		elseif (is_array($table))
-		{
-			empty($where) && $reset_data = false;
-
-			foreach ($table as $single_table)
-			{
-				$this->delete($single_table, $where, $limit, $reset_data);
-			}
-
-			return;
-		}
-		else
-		{
-			$table = $this->protect_identifiers($table, true, null, false);
-		}
+		$table = $this->protectIdentifiers($this->QBFrom[0], true, null, false);
 
 		if ($where !== '')
 		{
@@ -2378,7 +2355,7 @@ class BaseBuilder
 
 		if (count($this->QBWhere) === 0)
 		{
-			return ($this->db_debug) ? $this->display_error('db_del_must_use_where') : false;
+			return (CI_DEBUG) ? $this->display_error('db_del_must_use_where') : false;
 		}
 
 		$sql = $this->_delete($table);
@@ -2387,7 +2364,7 @@ class BaseBuilder
 			$this->resetWrite();
 		}
 
-		return ($this->returnDeleteSQL === true) ? $sql : $this->query($sql);
+		return ($this->returnDeleteSQL === true) ? $sql : $this->db->query($sql, $this->binds);
 	}
 
 	//--------------------------------------------------------------------
