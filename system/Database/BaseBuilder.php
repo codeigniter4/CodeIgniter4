@@ -539,11 +539,18 @@ class BaseBuilder
 	 * Generates the FROM portion of the query
 	 *
 	 * @param    mixed $from can be a string or array
+	 * @param    bool  $overwrite Should we remove the first table existing?
 	 *
 	 * @return    CI_DB_query_builder
 	 */
-	public function from($from)
+	public function from($from, $overwrite = false)
 	{
+		if ($overwrite === true)
+		{
+			$this->QBFrom = [];
+			$this->QBAliasedTables = [];
+		}
+
 		foreach ((array)$from as $val)
 		{
 			if (strpos($val, ',') !== false)
