@@ -626,7 +626,7 @@ class BaseBuilder
 
 		is_bool($escape) OR $escape = $this->protectIdentifiers;
 
-		if ( ! $this->_has_operator($cond))
+		if ( ! $this->hasOperator($cond))
 		{
 			$cond = ' USING ('.($escape ? $this->escapeIdentifiers($cond) : $cond).')';
 		}
@@ -660,10 +660,10 @@ class BaseBuilder
 			$cond = ' ON ';
 			for ($i = 0, $c = count($conditions); $i < $c; $i++)
 			{
-				$operator = $this->_get_operator($conditions[$i]);
+				$operator = $this->getOperator($conditions[$i]);
 				$cond .= $joints[$i];
 				$cond .= preg_match("/(\(*)?([\[\]\w\.'-]+)".preg_quote($operator)."(.*)/i", $conditions[$i], $match)
-					? $match[1].$this->protect_identifiers($match[2]).$operator.$this->protect_identifiers($match[3])
+					? $match[1].$this->protectIdentifiers($match[2]).$operator.$this->protectIdentifiers($match[3])
 					: $conditions[$i];
 			}
 		}
@@ -671,7 +671,7 @@ class BaseBuilder
 		// Do we want to escape the table name?
 		if ($escape === true)
 		{
-			$table = $this->protect_identifiers($table, true, null, false);
+			$table = $this->protectIdentifiers($table, true, null, false);
 		}
 
 		// Assemble the JOIN statement
