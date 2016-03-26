@@ -3,7 +3,7 @@
 use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\MockConnection;
 
-class CountTest extends \CIUnitTestCase
+class EmptyTest extends \CIUnitTestCase
 {
 	protected $db;
 
@@ -16,24 +16,28 @@ class CountTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	public function testCountAll()
+	public function testEmptyWithNoTable()
 	{
 		$builder = new BaseBuilder('jobs', $this->db);
+		$builder->returnDeleteSQL = true;
 
-		$expectedSQL   = "SELECT COUNT(*) AS \"numrows\" FROM \"jobs\"";
+		$answer = $builder->emptyTable(null, true);
 
-		$this->assertEquals($expectedSQL, $builder->countAll(true));
+		$expectedSQL   = "DELETE FROM \"jobs\"";
+
+		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $answer));
 	}
 
 	//--------------------------------------------------------------------
 
-	public function testCountAllResults()
+	public function testEmptyWithTable()
 	{
 		$builder = new BaseBuilder('jobs', $this->db);
+		$builder->returnDeleteSQL = true;
 
-		$answer = $builder->where('id >', 3)->countAllResults(null, true);
+		$answer = $builder->emptyTable('users', true);
 
-		$expectedSQL   = "SELECT COUNT(*) AS \"numrows\" FROM \"jobs\" WHERE \"id\" > :id";
+		$expectedSQL   = "DELETE FROM \"users\"";
 
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $answer));
 	}

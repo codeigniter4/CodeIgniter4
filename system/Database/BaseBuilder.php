@@ -553,7 +553,7 @@ class BaseBuilder
 					$v = trim($v);
 					$this->trackAliases($v);
 
-					$this->QBFrom[] = $v = $this->protect_identifiers($v, true, null, false);
+					$this->QBFrom[] = $v = $this->protectIdentifiers($v, true, null, false);
 
 					if ($this->QBCaching === true)
 					{
@@ -570,7 +570,7 @@ class BaseBuilder
 				// in the protect_identifiers to know whether to add a table prefix
 				$this->trackAliases($val);
 
-				$this->QBFrom[] = $val; // = $this->protect_identifiers($val, true, null, false);
+				$this->QBFrom[] = $this->protectIdentifiers($val, true, null, false);
 
 				if ($this->QBCaching === true)
 				{
@@ -2225,26 +2225,29 @@ class BaseBuilder
 	 *
 	 * @return    bool    TRUE on success, FALSE on failure
 	 */
-	public function emptyTable($table = '')
+	public function emptyTable($table = '', $test = false)
 	{
-		if ($table === '')
+		if (empty($table))
 		{
 			if ( ! isset($this->QBFrom[0]))
 			{
-				return ($this->db_debug) ? $this->display_error('db_must_set_table') : false;
+				return (CI_DEBUG) ? $this->display_error('db_must_set_table') : false;
 			}
 
 			$table = $this->QBFrom[0];
 		}
 		else
 		{
-			$table = $this->protect_identifiers($table, true, null, false);
+			$table = $this->protectIdentifiers($table, true, null, false);
 		}
 
 		$sql = $this->_delete($table);
+
+		if ($test) return $sql;
+
 		$this->resetWrite();
 
-		return $this->query($sql);
+		return $this->db->query($sql);
 	}
 
 	//--------------------------------------------------------------------

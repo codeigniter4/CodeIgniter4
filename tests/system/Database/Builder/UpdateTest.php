@@ -22,7 +22,7 @@ class UpdateTest extends \CIUnitTestCase
 		
 		$builder->where('id', 1)->update(['name' => 'Programmer'], null, null, true);
 
-		$expectedSQL = "UPDATE jobs SET \"name\" = :name WHERE \"id\" = :id";
+		$expectedSQL = "UPDATE \"jobs\" SET \"name\" = :name WHERE \"id\" = :id";
 		$expectedBinds = ['id' => 1, 'name' => 'Programmer'];
 
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledUpdate()));
@@ -37,7 +37,7 @@ class UpdateTest extends \CIUnitTestCase
 
 		$builder->update(['name' => 'Programmer'], ['id' => 1], 5, true);
 
-		$expectedSQL = "UPDATE jobs SET \"name\" = :name WHERE \"id\" = :id LIMIT 5";
+		$expectedSQL = "UPDATE \"jobs\" SET \"name\" = :name WHERE \"id\" = :id LIMIT 5";
 		$expectedBinds = ['id' => 1, 'name' => 'Programmer'];
 
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledUpdate()));
@@ -52,7 +52,7 @@ class UpdateTest extends \CIUnitTestCase
 
 		$builder->set('name', 'Programmer')->where('id', 1)->update(null, null, null, true);
 
-		$expectedSQL = "UPDATE jobs SET \"name\" = :name WHERE \"id\" = :id";
+		$expectedSQL = "UPDATE \"jobs\" SET \"name\" = :name WHERE \"id\" = :id";
 		$expectedBinds = ['id' => 1, 'name' => 'Programmer'];
 
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledUpdate()));
