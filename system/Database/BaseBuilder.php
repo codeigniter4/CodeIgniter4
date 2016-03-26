@@ -624,7 +624,7 @@ class BaseBuilder
 		// in the protect_identifiers to know whether to add a table prefix
 		$this->trackAliases($table);
 
-		is_bool($escape) OR $escape = $this->_protect_identifiers;
+		is_bool($escape) OR $escape = $this->protectIdentifiers;
 
 		if ( ! $this->_has_operator($cond))
 		{
@@ -1047,7 +1047,7 @@ class BaseBuilder
 			$field = [$field => $match];
 		}
 
-		is_bool($escape) OR $escape = $this->_protect_identifiers;
+		is_bool($escape) OR $escape = $this->protectIdentifiers;
 		// lowercase $side in case somebody writes e.g. 'BEFORE' instead of 'before' (doh)
 		$side = strtolower($side);
 
@@ -1223,7 +1223,7 @@ class BaseBuilder
 	 */
 	public function groupBy($by, $escape = null)
 	{
-		is_bool($escape) OR $escape = $this->_protect_identifiers;
+		is_bool($escape) OR $escape = $this->protectIdentifiers;
 
 		if (is_string($by))
 		{
@@ -2193,7 +2193,7 @@ class BaseBuilder
 			// @todo error
 		}
 
-		is_bool($escape) OR $escape = $this->_protect_identifiers;
+		is_bool($escape) OR $escape = $this->protectIdentifiers;
 
 		foreach ($key as $k => $v)
 		{
@@ -2657,7 +2657,7 @@ class BaseBuilder
 				$this->QBGroupBy[$i] = ($this->QBGroupBy[$i]['escape'] === false OR
 				                        $this->isLiteral($this->QBGroupBy[$i]['field']))
 					? $this->QBGroupBy[$i]['field']
-					: $this->protect_identifiers($this->QBGroupBy[$i]['field']);
+					: $this->protectIdentifiers($this->QBGroupBy[$i]['field']);
 			}
 
 			return "\nGROUP BY ".implode(', ', $this->QBGroupBy);
