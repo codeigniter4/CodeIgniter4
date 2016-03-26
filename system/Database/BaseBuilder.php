@@ -478,7 +478,7 @@ class BaseBuilder
 			$alias = $this->createAliasFromTable(trim($select));
 		}
 
-		$sql = $type.'('.$this->protectIdentifiers(trim($select)).') AS '.$this->escape_identifiers(trim($alias));
+		$sql = $type.'('.$this->protectIdentifiers(trim($select)).') AS '.$this->escapeIdentifiers(trim($alias));
 
 		$this->QBSelect[]   = $sql;
 		$this->QBNoEscape[] = null;
@@ -621,7 +621,7 @@ class BaseBuilder
 
 		if ( ! $this->_has_operator($cond))
 		{
-			$cond = ' USING ('.($escape ? $this->escape_identifiers($cond) : $cond).')';
+			$cond = ' USING ('.($escape ? $this->escapeIdentifiers($cond) : $cond).')';
 		}
 		elseif ($escape === false)
 		{
@@ -1495,6 +1495,36 @@ class BaseBuilder
 	//--------------------------------------------------------------------
 
 	/**
+	 * "Count All" query
+	 *
+	 * Generates a platform-specific query string that counts all records in
+	 * the specified database
+	 *
+	 * @param	bool $test Are we running automated tests?
+	 * @return	int
+	 */
+	public function countAll($test = false)
+	{
+		$table = $this->QBFrom[0];
+
+		$sql = $this->countString.$this->escapeIdentifiers('numrows').' FROM '.$this->protectIdentifiers($table, TRUE, NULL, FALSE);
+
+		if ($test) return $sql;
+
+		$query = $this->db->query($sql);
+		if (count($query->result()) === 0)
+		{
+			return 0;
+		}
+
+		$query = $query->row();
+		$this->resetSelect();
+		return (int) $query->numrows;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * "Count All Results" query
 	 *
 	 * Generates a platform-specific query string that counts all records
@@ -1505,13 +1535,9 @@ class BaseBuilder
 	 *
 	 * @return    int
 	 */
-	public function countAllResults($table = '', $reset = true)
+	public function countAllResults($reset = true, $test = false)
 	{
-		if ($table !== '')
-		{
-			$this->trackAliases($table);
-			$this->from($table);
-		}
+		$table = $this->QBFrom[0];
 
 		// ORDER BY usage is often problematic here (most notably
 		// on Microsoft SQL Server) and ultimately unnecessary
@@ -1522,10 +1548,14 @@ class BaseBuilder
 			$this->QBOrderBy = null;
 		}
 
-		$result = ($this->QBDistinct === true)
-			? $this->query($this->countString.$this->protect_identifiers('numrows')."\nFROM (\n".
-			               $this->compileSelect()."\n) CI_count_all_results")
-			: $this->query($this->compileSelect($this->countString.$this->protect_identifiers('numrows')));
+		$sql = ($this->QBDistinct === true)
+			? $this->countString.$this->protectIdentifiers('numrows')."\nFROM (\n".
+			               $this->compileSelect()."\n) CI_count_all_results"
+			: $this->compileSelect($this->countString.$this->protectIdentifiers('numrows'));
+
+		if ($test) return $sql;
+
+		$result = $this->db->query($sql, $this->binds);
 
 		if ($reset === true)
 		{
@@ -3052,14 +3082,14 @@ class BaseBuilder
 		if ($offset = strripos($item, ' AS '))
 		{
 			$alias = ($protectIdentifiers)
-				? substr($item, $offset, 4).$this->escape_identifiers(substr($item, $offset + 4))
+				? substr($item, $offset, 4).$this->escapeIdentifiers(substr($item, $offset + 4))
 				: substr($item, $offset);
 			$item  = substr($item, 0, $offset);
 		}
 		elseif ($offset = strrpos($item, ' '))
 		{
 			$alias = ($protectIdentifiers)
-				? ' '.$this->escape_identifiers(substr($item, $offset + 1))
+				? ' '.$this->escapeIdentifiers(substr($item, $offset + 1))
 				: substr($item, $offset);
 			$item  = substr($item, 0, $offset);
 		}
@@ -3089,7 +3119,7 @@ class BaseBuilder
 					{
 						if ( ! in_array($val, $this->reservedIdentifiers))
 						{
-							$parts[$key] = $this->escape_identifiers($val);
+							$parts[$key] = $this->escapeIdentifiers($val);
 						}
 					}
 
@@ -3146,7 +3176,7 @@ class BaseBuilder
 
 			if ($protectIdentifiers === true)
 			{
-				$item = $this->escape_identifiers($item);
+				$item = $this->escapeIdentifiers($item);
 			}
 
 			return $item.$alias;
@@ -3169,7 +3199,7 @@ class BaseBuilder
 
 		if ($protectIdentifiers === true && ! in_array($item, $this->reservedIdentifiers))
 		{
-			$item = $this->escape_identifiers($item);
+			$item = $this->escapeIdentifiers($item);
 		}
 
 		return $item.$alias;
@@ -3186,7 +3216,7 @@ class BaseBuilder
 	 *
 	 * @return    mixed
 	 */
-	public function escape_identifiers($item)
+	public function escapeIdentifiers($item)
 	{
 		if ($this->escapeChar === '' OR empty($item) OR in_array($item, $this->reservedIdentifiers))
 		{
@@ -3196,7 +3226,7 @@ class BaseBuilder
 		{
 			foreach ($item as $key => $value)
 			{
-				$item[$key] = $this->escape_identifiers($value);
+				$item[$key] = $this->escapeIdentifiers($value);
 			}
 
 			return $item;
