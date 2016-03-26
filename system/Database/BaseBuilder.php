@@ -1418,12 +1418,12 @@ class BaseBuilder
 			$key = [$key => $value];
 		}
 
-		is_bool($escape) OR $escape = $this->_protect_identifiers;
+		$escape = is_bool($escape) ? $escape : $this->protectIdentifiers;
 
 		foreach ($key as $k => $v)
 		{
-			$this->QBSet[$this->protect_identifiers($k, false, $escape)] = ($escape)
-				? $this->escape($v) : $v;
+			$this->binds[$k] = $v;
+			$this->QBSet[$this->protectIdentifiers($k, false, $escape)] = ':'.$k;
 		}
 
 		return $this;
@@ -1591,40 +1591,31 @@ class BaseBuilder
 	 *
 	 * Compiles batch insert strings and runs the queries
 	 *
-	 * @param    string $table  Table to insert into
 	 * @param    array  $set    An associative array of insert values
 	 * @param    bool   $escape Whether to escape values and identifiers
 	 *
 	 * @return    int    Number of rows inserted or FALSE on failure
 	 */
-	public function insertBatch($table, $set = null, $escape = null, $batch_size = 100)
+	public function insertBatch($set = null, $escape = null, $batch_size = 100)
 	{
 		if ($set === null)
 		{
 			if (empty($this->QBSet))
 			{
-				return ($this->db_debug) ? $this->display_error('db_must_use_set') : false;
+				return (CI_DEBUG) ? $this->display_error('db_must_use_set') : false;
 			}
 		}
 		else
 		{
 			if (empty($set))
 			{
-				return ($this->db_debug) ? $this->display_error('insertBatch() called with no data') : false;
+				return (CI_DEBUG) ? $this->display_error('insertBatch() called with no data') : false;
 			}
 
 			$this->setInsertBatch($set, '', $escape);
 		}
 
-		if (strlen($table) === 0)
-		{
-			if ( ! isset($this->QBFrom[0]))
-			{
-				return ($this->db_debug) ? $this->display_error('db_must_set_table') : false;
-			}
-
-			$table = $this->QBFrom[0];
-		}
+		$table = $this->QBFrom[0];
 
 		// Batch this baby
 		$affected_rows = 0;
@@ -1678,7 +1669,7 @@ class BaseBuilder
 			$key = [$key => $value];
 		}
 
-		is_bool($escape) OR $escape = $this->_protect_identifiers;
+		$escape = is_bool($escape) ? $escape : $this->protectIdentifiers;
 
 		$keys = array_keys($this->objectToArray(current($key)));
 		sort($keys);
@@ -1686,7 +1677,7 @@ class BaseBuilder
 		foreach ($key as $row)
 		{
 			$row = $this->objectToArray($row);
-			if (count(array_diff($keys, array_keys($row))) > 0 OR count(array_diff(array_keys($row), $keys)) > 0)
+			if (count(array_diff($keys, array_keys($row))) > 0 || count(array_diff(array_keys($row), $keys)) > 0)
 			{
 				// batch function above returns an error on an empty array
 				$this->QBSet[] = [];
@@ -1712,7 +1703,7 @@ class BaseBuilder
 
 		foreach ($keys as $k)
 		{
-			$this->QBKeys[] = $this->protect_identifiers($k, false, $escape);
+			$this->QBKeys[] = $this->protectIdentifiers($k, false, $escape);
 		}
 
 		return $this;
@@ -1738,7 +1729,7 @@ class BaseBuilder
 		}
 
 		$sql = $this->_insert(
-			$this->protect_identifiers(
+			$this->protectIdentifiers(
 				$this->QBFrom[0], true, null, false
 			),
 			array_keys($this->QBSet),
@@ -1760,35 +1751,38 @@ class BaseBuilder
 	 *
 	 * Compiles an insert string and runs the query
 	 *
-	 * @param         string    the table to insert data into
 	 * @param         array     an associative array of insert values
 	 * @param    bool $escape   Whether to escape values and identifiers
+	 * @param    bool $test     Used when running tests
 	 *
 	 * @return    bool    TRUE on success, FALSE on failure
 	 */
-	public function insert($table = '', $set = null, $escape = null)
+	public function insert($set = null, $escape = null, $test = false)
 	{
 		if ($set !== null)
 		{
 			$this->set($set, '', $escape);
 		}
 
-		if ($this->validateInsert($table) === false)
+		if ($this->validateInsert() === false)
 		{
 			return false;
 		}
 
 		$sql = $this->_insert(
-			$this->protect_identifiers(
+			$this->protectIdentifiers(
 				$this->QBFrom[0], true, $escape, false
 			),
 			array_keys($this->QBSet),
 			array_values($this->QBSet)
 		);
 
-		$this->resetWrite();
+		if ($test === false)
+		{
+			$this->resetWrite();
 
-		return $this->query($sql);
+			return $this->db->query($sql, $this->binds);
+		}
 	}
 
 	//--------------------------------------------------------------------
@@ -1808,19 +1802,27 @@ class BaseBuilder
 	{
 		if (count($this->QBSet) === 0)
 		{
-			return ($this->db_debug) ? $this->display_error('db_must_use_set') : false;
-		}
-
-		if ($table !== '')
-		{
-			$this->QBFrom[0] = $table;
-		}
-		elseif ( ! isset($this->QBFrom[0]))
-		{
-			return ($this->db_debug) ? $this->display_error('db_must_set_table') : false;
+			return (CI_DEBUG) ? $this->display_error('db_must_use_set') : false;
 		}
 
 		return true;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Insert statement
+	 *
+	 * Generates a platform-specific insert string from the supplied data
+	 *
+	 * @param	string	the table name
+	 * @param	array	the insert keys
+	 * @param	array	the insert values
+	 * @return	string
+	 */
+	protected function _insert($table, array $keys, array $unescapedKeys)
+	{
+		return 'INSERT INTO '.$table.' ('.implode(', ', $keys).') VALUES ('.implode(', ', $unescapedKeys).')';
 	}
 
 	//--------------------------------------------------------------------
