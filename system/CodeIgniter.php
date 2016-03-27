@@ -1,4 +1,4 @@
-<?php
+<?php namespace CodeIgniter;
 
 /**
  * CodeIgniter
@@ -50,343 +50,415 @@ use CodeIgniter\Hooks\Hooks;
 use Config\Autoload;
 use Config\App;
 
-/**
- * CodeIgniter version
- *
- * @var string
- */
-
-define('CI_VERSION', '4.0-dev');
-
-/*
- * ------------------------------------------------------
- *  Increase the realpath cache size to allow
- * better performance by minimizing filesystem lookups.
- * ------------------------------------------------------
- */
-if (ini_get('realpath_cache_size') == '16k')
+class CodeIgniter
 {
-	ini_set('realpath_cache_size', '64k');
-}
+	/**
+	 * @var int
+	 */
+	protected $startMemory;
 
-/*
- * ------------------------------------------------------
- *  Load the framework constants
- * ------------------------------------------------------
- */
+	/**
+	 * @var \Config\App
+	 */
+	protected $config;
 
-if (file_exists(APPPATH.'Config/'.ENVIRONMENT.'/constants.php'))
-{
-	require_once APPPATH.'Config/'.ENVIRONMENT.'/constants.php';
-}
+	/**
+	 * @var float App start time
+	 */
+	protected $startTime;
 
-require_once(APPPATH.'Config/Constants.php');
+	/**
+	 * @var \CodeIgniter\HTTP\Request
+	 */
+	protected $request;
 
-/*
- * ------------------------------------------------------
- *  Load the global functions
- * ------------------------------------------------------
- */
+	/**
+	 * @var \CodeIgniter\HTTP\Response
+	 */
+	protected $response;
 
-require_once BASEPATH.'Common.php';
+	/**
+	 * @var \CodeIgniter\Router\Router
+	 */
+	protected $router;
 
-/*
- * ------------------------------------------------------
- *  Load any environment-specific settings from .env file
- * ------------------------------------------------------
- */
+	/**
+	 * @var string
+	 */
+	protected $controller;
 
-// Load environment settings from .env files
-// into $_SERVER and $_ENV
-require BASEPATH.'Config/DotEnv.php';
-$env = new DotEnv(APPPATH);
-$env->load();
-unset($env);
+	/**
+	 * @var string
+	 */
+	protected $method;
 
-/*
- * ------------------------------------------------------
- *  Get the Services Factory ready for use
- * ------------------------------------------------------
- */
+	/**
+	 * @var string
+	 */
+	protected $output;
 
-require APPPATH.'Config/Services.php';
-
-/*
- * ------------------------------------------------------
- *  Setup the autoloader
- * ------------------------------------------------------
- */
-
-// The autoloader isn't initialized yet, so load the file manually.
-require BASEPATH.'Autoloader/Autoloader.php';
-require APPPATH.'Config/Autoload.php';
-
-// The Autoloader class only handles namespaces
-// and "legacy" support.
-$loader = Services::autoloader();
-$loader->initialize(new Autoload());
-
-// The register function will prepend
-// the psr4 loader.
-$loader->register();
-
-/*
- * ------------------------------------------------------
- *  Set custom exception handling
- * ------------------------------------------------------
- */
-$config = new \Config\App();
-
-Services::exceptions($config, true)
-   ->initialize();
-
-//--------------------------------------------------------------------
-// Start the Benchmark
-//--------------------------------------------------------------------
-
-// Record app start time here. It's a little bit off, but
-// keeps it lining up with the benchmark timers.
-$startTime   = microtime(true);
-
-$benchmark = Services::timer(true);
-$benchmark->start('total_execution');
-$benchmark->start('bootstrap');
-
-//--------------------------------------------------------------------
-//Should we use a Composer autoloader?
-//--------------------------------------------------------------------
-
-if ($composer_autoload = $config->composerAutoload)
-{
-	if ($composer_autoload === TRUE)
+	/**
+	 * CodeIgniter constructor.
+	 * @param int $startMemory
+     */
+	public function __construct(int $startMemory)
 	{
-		file_exists(APPPATH.'vendor/autoload.php')
-			? require_once(APPPATH.'vendor/autoload.php')
-			: log_message('error', '$config->\'composerAutoload\' is set to TRUE but '.APPPATH.'vendor/autoload.php was not found.');
+		$this->startMemory = $startMemory;
 	}
-	elseif (file_exists($composer_autoload))
+
+	/**
+	 * CodeIgniter version
+	 */
+	protected function defineCiVersion()
 	{
-		require_once($composer_autoload);
+		/**
+		 * @var string
+		 */
+		define('CI_VERSION', '4.0-dev');
 	}
-	else
+
+	/**
+	 * Increase the realpath cache size to allow
+	 * better performance by minimizing filesystem lookups.
+	 */
+	protected function increaseRealpathCache()
 	{
-		log_message('error', 'Could not find the specified $config->\'composerAutoload\' path: '.$composer_autoload);
-	}
-}
-
-//--------------------------------------------------------------------
-// Is there a "pre-system" hook?
-//--------------------------------------------------------------------
-
-Hooks::trigger('pre_system');
-
-//--------------------------------------------------------------------
-// Get our Request and Response objects
-//--------------------------------------------------------------------
-
-$request  = is_cli()
-		? Services::clirequest($config, true)
-		: Services::request($config, true);
-$request->setProtocolVersion($_SERVER['SERVER_PROTOCOL']);
-
-$response = Services::response($config, true);
-$response->setProtocolVersion($request->getProtocolVersion());
-
-// Assume success until proven otherwise.
-$response->setStatusCode(200);
-
-//--------------------------------------------------------------------
-// Force Secure Site Access?
-//--------------------------------------------------------------------
-
-if ($config->forceGlobalSecureRequests === true)
-{
-	force_https(31536000, $request, $response);
-}
-
-//--------------------------------------------------------------------
-// CSRF Protection
-//--------------------------------------------------------------------
-
-if ($config->CSRFProtection === true && ! is_cli())
-{
-	$security = Services::security($config);
-
-	$security->CSRFVerify($request);
-}
-
-//--------------------------------------------------------------------
-// Try to Route It
-//--------------------------------------------------------------------
-
-require APPPATH.'Config/Routes.php';
-
-$router = Services::router($routes, true);
-
-$path = is_cli() ? $request->getPath() : $request->uri->getPath();
-
-$benchmark->stop('bootstrap');
-$benchmark->start('routing');
-
-try
-{
-	$controller = $router->handle($path);
-}
-catch (\CodeIgniter\Router\RedirectException $e)
-{
-	$logger = Services::logger();
-	$logger->info('REDIRECTED ROUTE at '. $e->getMessage());
-
-	// If the route is a 'redirect' route, it throws
-	// the exception with the $to as the message
-	$response->redirect($e->getMessage(), 'auto', $e->getCode());
-	exit(EXIT_SUCCESS);
-}
-
-$method = $router->methodName();
-
-$benchmark->stop('routing');
-
-//--------------------------------------------------------------------
-// Are there any "pre-controller" hooks?
-//--------------------------------------------------------------------
-
-Hooks::trigger('pre_controller');
-
-ob_start();
-
-$benchmark->start('controller');
-$benchmark->start('controller_constructor');
-
-$e404 = false;
-
-// Is it routed to a Closure?
-if (is_callable($controller))
-{
-	echo $controller(...$router->params());
-}
-else
-{
-	if (empty($controller))
-	{
-		$e404 = true;
-	}
-	else
-	{
-		// Try to autoload the class
-		if (! class_exists($controller, true) || $method[0] === '_')
-		{
-			$e404 = true;
+		if (ini_get('realpath_cache_size') == '16k') {
+			ini_set('realpath_cache_size', '64k');
 		}
-		else if (! method_exists($controller, '_remap') && ! is_callable([$controller, $method], false))
-		{
-			$e404 = true;
+	}
+
+	/**
+	 * Load the framework constants
+	 */
+	protected function loadFrameworkConstants()
+	{
+		if (file_exists(APPPATH . 'Config/' . ENVIRONMENT . '/constants.php')) {
+			require_once APPPATH . 'Config/' . ENVIRONMENT . '/constants.php';
 		}
 
-		// Is there a 404 Override available?
-		if ($override = $router->get404Override())
-		{
-			if ($override instanceof Closure)
-			{
-				echo $override();
-			}
-			else if (is_array($override))
-			{
-				$controller = $override[0];
-				$method     = $override[1];
+		require_once(APPPATH . 'Config/Constants.php');
+	}
 
-				unset($override);
-			}
+	/**
+	 * Load the global functions
+	 */
+	protected function loadGlobalFunctions()
+	{
+		require_once BASEPATH . 'Common.php';
+	}
 
-			$e404 = false;
-		}
+	/**
+	 * Load any environment-specific settings from .env file
+	 */
+	protected function loadDotEnv()
+	{
+		// Load environment settings from .env files
+		// into $_SERVER and $_ENV
+		require BASEPATH . 'Config/DotEnv.php';
+		$env = new DotEnv(APPPATH);
+		$env->load();
+		unset($env);
+	}
 
-		// Display 404 Errors
-		if ($e404)
-		{
-			$response->setStatusCode(404);
+	/**
+	 * Get the Services Factory ready for use
+	 */
+	protected function getServicesFactory()
+	{
+		require APPPATH . 'Config/Services.php';
+	}
 
-			if (ob_get_level() > 0)
-			{
-				ob_end_flush();
-			}
-			ob_start();
+	/**
+	 * Setup the autoloader
+	 */
+	protected function setupAutoloader()
+	{
+		// The autoloader isn't initialized yet, so load the file manually.
+		require BASEPATH . 'Autoloader/Autoloader.php';
+		require APPPATH . 'Config/Autoload.php';
 
-			// Show the 404 error page
-			if (is_cli())
-			{
-				require APPPATH.'Views/errors/cli/error_404.php';
-			}
-			else
-			{
-				require APPPATH.'Views/errors/html/error_404.php';
-			}
+		// The Autoloader class only handles namespaces
+		// and "legacy" support.
+		$loader = Services::autoloader();
+		$loader->initialize(new Autoload());
 
-			$buffer = ob_get_contents();
-			ob_end_clean();
+		// The register function will prepend
+		// the psr4 loader.
+		$loader->register();
+	}
 
-			echo $buffer;
-			exit(EXIT_UNKNOWN_FILE);    // Unknown file
-		}
+	/**
+	 * Set custom exception handling
+	 */
+	protected function setExceptionHandling()
+	{
+		$this->config = new App();
 
-		if (! $e404 && ! isset($override))
-		{
-			$class = new $controller($request, $response);
+		Services::exceptions($this->config, true)
+			->initialize();
+	}
 
-			$benchmark->stop('controller_constructor');
+	/**
+	 * Start the Benchmark
+	 */
+	protected function startBenchmark()
+	{
+		// Record app start time here. It's a little bit off, but
+		// keeps it lining up with the benchmark timers.
+		$this->startTime = microtime(true);
 
-			//--------------------------------------------------------------------
-			// Is there a "post_controller_constructor" hook?
-			//--------------------------------------------------------------------
-			Hooks::trigger('post_controller_constructor');
+		$this->benchmark = Services::timer(true);
+		$this->benchmark->start('total_execution');
+		$this->benchmark->start('bootstrap');
+	}
 
-			if (method_exists($class, '_remap'))
-			{
-				$class->_remap($method, ...$router->params());
-			}
-			else
-			{
-				$class->$method(...$router->params());
+	/**
+	 * Should we use a Composer autoloader?
+	 */
+	protected function loadComposerAutoloader()
+	{
+		if ($composer_autoload = $this->config->composerAutoload) {
+			if ($composer_autoload === TRUE) {
+				file_exists(APPPATH . 'vendor/autoload.php')
+					? require_once(APPPATH . 'vendor/autoload.php')
+					: log_message('error', '$this->config->\'composerAutoload\' is set to TRUE but ' . APPPATH . 'vendor/autoload.php was not found.');
+			} elseif (file_exists($composer_autoload)) {
+				require_once($composer_autoload);
+			} else {
+				log_message('error', 'Could not find the specified $this->config->\'composerAutoload\' path: ' . $composer_autoload);
 			}
 		}
 	}
+
+	/**
+	 * Get our Request object
+	 */
+	protected function getRequestObject()
+	{
+		$this->request = is_cli()
+			? Services::clirequest($this->config, true)
+			: Services::request($this->config, true);
+		$this->request->setProtocolVersion($_SERVER['SERVER_PROTOCOL']);
+	}
+
+	/**
+	 * Get our Response object
+	 */
+	protected function getResponseObject()
+	{
+		$this->response = Services::response($this->config, true);
+		$this->response->setProtocolVersion($this->request->getProtocolVersion());
+
+		// Assume success until proven otherwise.
+		$this->response->setStatusCode(200);
+	}
+
+	/**
+	 * Force Secure Site Access?
+	 */
+	protected function forceSecureAccess()
+	{
+		if ($this->config->forceGlobalSecureRequests === true) {
+			force_https(31536000, $this->request, $this->response);
+		}
+	}
+
+	/**
+	 * CSRF Protection
+	 */
+	protected function CsrfProtection()
+	{
+		if ($this->config->CSRFProtection === true && !is_cli()) {
+			$security = Services::security($this->config);
+
+			$security->CSRFVerify($this->request);
+		}
+	}
+
+	/**
+	 * Try to Route It
+	 */
+	protected function tryToRouteIt()
+	{
+		require APPPATH . 'Config/Routes.php';
+
+		$this->router = Services::router($routes, true);
+
+		$path = is_cli() ? $this->request->getPath() : $this->request->uri->getPath();
+
+		$this->benchmark->stop('bootstrap');
+		$this->benchmark->start('routing');
+
+		try {
+			$this->controller = $this->router->handle($path);
+		} catch (\CodeIgniter\Router\RedirectException $e) {
+			$logger = Services::logger();
+			$logger->info('REDIRECTED ROUTE at ' . $e->getMessage());
+
+			// If the route is a 'redirect' route, it throws
+			// the exception with the $to as the message
+			$this->response->redirect($e->getMessage(), 'auto', $e->getCode());
+			exit(EXIT_SUCCESS);
+		}
+
+		$this->method = $this->router->methodName();
+
+		$this->benchmark->stop('routing');
+	}
+
+	protected function startController()
+	{
+		ob_start();
+
+		$this->benchmark->start('controller');
+		$this->benchmark->start('controller_constructor');
+
+		$e404 = false;
+
+		// Is it routed to a Closure?
+		if (is_callable($this->controller)) {
+			echo $this->controller(...$this->router->params());
+		} else {
+			if (empty($this->controller)) {
+				$e404 = true;
+			} else {
+				// Try to autoload the class
+				if (!class_exists($this->controller, true) || $this->method[0] === '_') {
+					$e404 = true;
+				} else if (!method_exists($this->controller, '_remap') && !is_callable([$this->controller, $this->method], false)) {
+					$e404 = true;
+				}
+
+				// Is there a 404 Override available?
+				if ($override = $this->router->get404Override()) {
+					if ($override instanceof Closure) {
+						echo $override();
+					} else if (is_array($override)) {
+						$this->controller = $override[0];
+						$this->method = $override[1];
+
+						unset($override);
+					}
+
+					$e404 = false;
+				}
+
+				// Display 404 Errors
+				if ($e404) {
+					$this->response->setStatusCode(404);
+
+					if (ob_get_level() > 0) {
+						ob_end_flush();
+					}
+					ob_start();
+
+					// Show the 404 error page
+					if (is_cli()) {
+						require APPPATH . 'Views/errors/cli/error_404.php';
+					} else {
+						require APPPATH . 'Views/errors/html/error_404.php';
+					}
+
+					$buffer = ob_get_contents();
+					ob_end_clean();
+
+					echo $buffer;
+					exit(EXIT_UNKNOWN_FILE);    // Unknown file
+				}
+
+				if (!$e404 && !isset($override)) {
+					$class = new $this->controller($this->request, $this->response);
+
+					$this->benchmark->stop('controller_constructor');
+
+					//--------------------------------------------------------------------
+					// Is there a "post_controller_constructor" hook?
+					//--------------------------------------------------------------------
+					Hooks::trigger('post_controller_constructor');
+
+					if (method_exists($class, '_remap')) {
+						$class->_remap($this->method, ...$this->router->params());
+					} else {
+						$class->{$this->method}(...$this->router->params());
+					}
+				}
+			}
+		}
+
+		$this->benchmark->stop('controller');
+	}
+
+	/**
+	 * Output gathering and cleanup
+	 */
+	protected function gatherOutput()
+	{
+		$this->output = ob_get_contents();
+		ob_end_clean();
+
+		$totalTime = $this->benchmark->stop('total_execution')
+			->getElapsedTime('total_execution');
+		$this->output = str_replace('{elapsed_time}', $totalTime, $this->output);
+
+		//--------------------------------------------------------------------
+		// Display the Debug Toolbar?
+		//--------------------------------------------------------------------
+		if (ENVIRONMENT != 'production' && $this->config->toolbarEnabled) {
+			$toolbar = Services::toolbar($this->config);
+			$this->output .= $toolbar->run($this->startTime, $totalTime,
+				$this->startMemory, $this->request,
+				$this->response);
+		}
+	}
+
+	protected function sendResponse()
+	{
+		$this->response->setBody($this->output);
+
+		$this->response->send();
+	}
+
+	public function exec()
+	{
+		$this->defineCiVersion();
+		$this->increaseRealpathCache();
+		$this->loadFrameworkConstants();
+		$this->loadGlobalFunctions();
+		$this->getServicesFactory();
+		$this->setupAutoloader();
+		$this->setExceptionHandling();
+		$this->startBenchmark();
+		$this->loadComposerAutoloader();
+
+		//--------------------------------------------------------------------
+		// Is there a "pre-system" hook?
+		//--------------------------------------------------------------------
+		Hooks::trigger('pre_system');
+
+		$this->getRequestObject();
+		$this->getResponseObject();
+		$this->forceSecureAccess();
+		$this->tryToRouteIt();
+
+		//--------------------------------------------------------------------
+		// Are there any "pre-controller" hooks?
+		//--------------------------------------------------------------------
+		Hooks::trigger('pre_controller');
+
+		$this->startController();
+
+		//--------------------------------------------------------------------
+		// Is there a "post_controller" hook?
+		//--------------------------------------------------------------------
+		Hooks::trigger('post_controller');
+
+		$this->gatherOutput();
+		$this->sendResponse();
+
+		//--------------------------------------------------------------------
+		// Is there a post-system hook?
+		//--------------------------------------------------------------------
+		Hooks::trigger('post_system');
+	}
 }
-
-$benchmark->stop('controller');
-
-//--------------------------------------------------------------------
-// Is there a "post_controller" hook?
-//--------------------------------------------------------------------
-
-Hooks::trigger('post_controller');
-
-//--------------------------------------------------------------------
-// Output gathering and cleanup
-//--------------------------------------------------------------------
-
-$output = ob_get_contents();
-ob_end_clean();
-
-$totalTime = $benchmark->stop('total_execution')
-					   ->getElapsedTime('total_execution');
-$output = str_replace('{elapsed_time}', $totalTime, $output);
-
-//--------------------------------------------------------------------
-// Display the Debug Toolbar?
-//--------------------------------------------------------------------
-
-if (ENVIRONMENT != 'production' && $config->toolbarEnabled)
-{
-	$toolbar = Services::toolbar($config);
-	$output .= $toolbar->run();
-}
-
-$response->setBody($output);
-
-$response->send();
-
-//--------------------------------------------------------------------
-// Is there a post-system hook?
-//--------------------------------------------------------------------
-
-Hooks::trigger('post_system');
