@@ -137,7 +137,6 @@ class CodeIgniter
 		require_once BASEPATH.'Common.php';
 		require_once APPPATH.'Config/Services.php';
 
-		$this->increaseRealpathCache();
 		$this->loadFrameworkConstants();
 		$this->setupAutoloader();
 		$this->setExceptionHandling();
@@ -173,20 +172,6 @@ class CodeIgniter
 		// Is there a post-system hook?
 		//--------------------------------------------------------------------
 		Hooks::trigger('post_system');
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Increase the realpath cache size to allow
-	 * better performance by minimizing filesystem lookups.
-	 */
-	protected function increaseRealpathCache()
-	{
-		if (ini_get('realpath_cache_size') == '16k')
-		{
-			ini_set('realpath_cache_size', '64k');
-		}
 	}
 
 	//--------------------------------------------------------------------
@@ -436,7 +421,7 @@ class CodeIgniter
 				// Is there a 404 Override available?
 				if ($override = $this->router->get404Override())
 				{
-					if ($override instanceof Closure)
+					if ($override instanceof \Closure)
 					{
 						echo $override();
 					}
