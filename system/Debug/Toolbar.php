@@ -20,6 +20,11 @@ class Toolbar
 	 */
 	protected $collectors = [];
 
+	/**
+	 * @var float App start time
+	 */
+	protected $startTime;
+
 	//--------------------------------------------------------------------
 
 	public function __construct(BaseConfig $config)
@@ -38,12 +43,14 @@ class Toolbar
 
 	//--------------------------------------------------------------------
 
-	public function run(): string
+	public function run($startTime, $totalTime, $startMemory, $request,
+$response): string
 	{
+		$this->startTime = $startTime;
+
 		// Data items used within the view.
 		$collectors = $this->collectors;
 
-		global $totalTime, $startMemory, $request, $response;
 		$totalTime       = $totalTime * 1000;
 		$totalMemory     = number_format((memory_get_peak_usage() - $startMemory) / 1048576, 3);
 		$segmentDuration = $this->roundTo($totalTime / 7, 5);
@@ -67,7 +74,6 @@ class Toolbar
 	 */
 	protected function renderTimeline(int $segmentCount, int $segmentDuration): string
 	{
-		global $startTime;
 		$displayTime = $segmentCount * $segmentDuration;
 
 		$rows = $this->collectTimelineData();
@@ -82,7 +88,8 @@ class Toolbar
 			$output .= "<td style='text-align: right'>".number_format($row['duration'] * 1000, 2)." ms</td>";
 			$output .= "<td colspan='{$segmentCount}' style='overflow: hidden'>";
 
-			$offset = ((($row['start'] - $startTime) * 1000) / $displayTime) * 100;
+			$offset = ((($row['start'] - $this->startTime) * 1000) /
+					$displayTime)	* 100;
 			$length = (($row['duration'] * 1000) / $displayTime) * 100;
 
 			$output .= "<span class='timer' style='left: {$offset}%; width: {$length}%;' title='".number_format($length, 2)."%'></span>";
