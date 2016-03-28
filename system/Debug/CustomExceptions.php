@@ -46,10 +46,20 @@
  * @package CodeIgniter
  */
 
+
+/*
+	The Error Exceptions below are primarily to provide a way to have information logged
+	automatically by the application's log system.
+*/
+class EmergencyError extends \Error {};  // system is unusable
+class AlertError     extends \Error {};  // Action must be taken immediately (system/db down, etc)
+class CriticalError  extends \Error {};  // Critical conditions, like component unavailble, etc.
+class Error          extends \Error {};  // Runtime errors that do not require immediate action
+
 class PageNotFoundException  extends \OutOfBoundsException { protected $code = 404; };
-class ConfigException        extends \OutOfBoundsException { protected $code = 3; };
-class UnknownFileException   extends \LogicException       { protected $code = 4; };
-class UnknownClassException  extends \LogicException       { protected $code = 5; };
-class UnknownMethodException extends \LogicException       { protected $code = 6; };
+class ConfigException        extends CriticalError         { protected $code = 3; };
+class UnknownFileException   extends CriticalError         { protected $code = 4; };
+class UnknownClassException  extends CriticalError         { protected $code = 5; };
+class UnknownMethodException extends CriticalError         { protected $code = 6; };
 class UserInputException     extends \OutOfBoundsException { protected $code = 7; };
-class DatabaseException      extends \RuntimeException     { protected $code = 8; };
+class DatabaseException      extends Error                 { protected $code = 8; };
