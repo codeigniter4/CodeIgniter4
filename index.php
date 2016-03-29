@@ -176,5 +176,5 @@ else
  * And away we go...
  */
 require BASEPATH.'CodeIgniter.php';
-$codeigniter = new CodeIgniter\CodeIgniter($startMemory);
+$codeigniter = new CodeIgniter\CodeIgniter($startMemory, $startTime);
 $codeigniter->run();

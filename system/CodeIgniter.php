@@ -256,6 +256,11 @@ class CodeIgniter
 
 	/**
 	 * Should we use a Composer autoloader?
+	 *
+	 * CodeIgniter provides its own PSR4-compatible autoloader, but many
+	 * third-party scripts will take advantage of the extra flexibility
+	 * that Composer provides. This allows that support to be provided,
+	 * and even with a customizable path to their autoloader.
 	 */
 	protected function loadComposerAutoloader()
 	{
@@ -287,7 +292,9 @@ class CodeIgniter
 	//--------------------------------------------------------------------
 
 	/**
-	 * Get our Request object
+	 * Get our Request object, (either IncomingRequest or CLIRequest)
+	 * and set the server protocol based on tne information provided
+	 * by the server.
 	 */
 	protected function getRequestObject()
 	{
@@ -301,7 +308,8 @@ class CodeIgniter
 	//--------------------------------------------------------------------
 
 	/**
-	 * Get our Response object
+	 * Get our Response object, and set some default values, including
+	 * the HTTP protocol version and a default successful response.
 	 */
 	protected function getResponseObject()
 	{
@@ -315,7 +323,14 @@ class CodeIgniter
 	//--------------------------------------------------------------------
 
 	/**
-	 * Force Secure Site Access?
+	 * Force Secure Site Access? If the config value 'forceGlobalSecureRequests'
+	 * is true, will enforce that all requests to this site are made through
+	 * HTTPS. Will redirect the user to the current page with HTTPS, as well
+	 * as set the HTTP Strict Transport Security header for those browsers
+	 * that support it.
+	 *
+	 * @param int $duration  How long the Strict Transport Security
+	 *                       should be enforced for this URL.
 	 */
 	protected function forceSecureAccess($duration = 31536000)
 	{
@@ -330,7 +345,8 @@ class CodeIgniter
 	//--------------------------------------------------------------------
 
 	/**
-	 * CSRF Protection
+	 * CSRF Protection. Checks if it's enabled globally, and
+	 * enforces the presence of CSRF tokens.
 	 */
 	protected function CsrfProtection()
 	{
@@ -347,12 +363,15 @@ class CodeIgniter
 	//--------------------------------------------------------------------
 
 	/**
-	 * Try to Route It
+	 * Try to Route It - As it sounds like, works with the router to
+	 * match a route against the current URI. If the route is a
+	 * "redirect route", will also handle the redirect.
 	 */
 	protected function tryToRouteIt()
 	{
 		require APPPATH.'Config/Routes.php';
 
+		// $routes is defined in Config/Routes.php
 		$this->router = Services::router($routes, true);
 
 		$path = is_cli() ? $this->request->getPath() : $this->request->uri->getPath();
@@ -382,6 +401,11 @@ class CodeIgniter
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Now that everything has been setup, this method attempts to run the
+	 * controller method and make the script go. If it's not able to, will
+	 * show the appropriate Page Not Found error.
+	 */
 	protected function startController()
 	{
 		ob_start();
@@ -491,15 +515,15 @@ class CodeIgniter
 	//--------------------------------------------------------------------
 
 	/**
-	 * Output gathering and cleanup
+	 * Gathers the script output from the buffer, replaces some execution
+	 * time tag in the output and displays the debug toolbar, if required.
 	 */
 	protected function gatherOutput()
 	{
 		$this->output = ob_get_contents();
 		ob_end_clean();
 
-		$totalTime    = $this->benchmark->stop('total_execution')
-		                                ->getElapsedTime('total_execution');
+		$totalTime    = $this->benchmark->getElapsedTime('total_execution');
 
 		$this->output = str_replace('{elapsed_time}', $totalTime, $this->output);
 
@@ -519,6 +543,7 @@ class CodeIgniter
 
 	/**
 	 * Sends the output of this request back to the client.
+	 * This is what they've been waiting for!
 	 */
 	protected function sendResponse()
 	{
