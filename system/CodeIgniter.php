@@ -157,15 +157,22 @@ class CodeIgniter
 		//--------------------------------------------------------------------
 		Hooks::trigger('pre_controller');
 
-		$this->startController();
+		try
+		{
+			$this->startController();
 
-		//--------------------------------------------------------------------
-		// Is there a "post_controller" hook?
-		//--------------------------------------------------------------------
-		Hooks::trigger('post_controller');
+			//--------------------------------------------------------------------
+			// Is there a "post_controller" hook?
+			//--------------------------------------------------------------------
+			Hooks::trigger('post_controller');
 
-		$this->gatherOutput();
-		$this->sendResponse();
+			$this->gatherOutput();
+			$this->sendResponse();
+		}
+		catch (PageNotFoundException $e)
+		{
+			$this->display404errors($e);
+		}
 
 		//--------------------------------------------------------------------
 		// Is there a post-system hook?
@@ -300,11 +307,15 @@ class CodeIgniter
 	 */
 	protected function getRequestObject()
 	{
-		$this->request = is_cli()
-			? Services::clirequest($this->config, true)
-			: Services::request($this->config, true);
-
-		$this->request->setProtocolVersion($_SERVER['SERVER_PROTOCOL']);
+		if (is_cli())
+		{
+			$this->request = Services::clirequest($this->config, true);
+		}
+		else
+		{
+			$this->request = Services::request($this->config, true);
+			$this->request->setProtocolVersion($_SERVER['SERVER_PROTOCOL']);
+		}
 	}
 
 	//--------------------------------------------------------------------
@@ -316,7 +327,10 @@ class CodeIgniter
 	protected function getResponseObject()
 	{
 		$this->response = Services::response($this->config, true);
-		$this->response->setProtocolVersion($this->request->getProtocolVersion());
+		if ( ! is_cli())
+		{
+			$this->response->setProtocolVersion($this->request->getProtocolVersion());
+		}
 
 		// Assume success until proven otherwise.
 		$this->response->setStatusCode(200);
@@ -415,8 +429,6 @@ class CodeIgniter
 		$this->benchmark->start('controller');
 		$this->benchmark->start('controller_constructor');
 
-		$e404 = false;
-
 		// Is it routed to a Closure?
 		if (is_callable($this->controller))
 		{
@@ -426,92 +438,100 @@ class CodeIgniter
 		{
 			if (empty($this->controller))
 			{
-				$e404 = true;
+				throw new PageNotFoundException('Controller is empty.');
 			}
 			else
 			{
 				// Try to autoload the class
 				if ( ! class_exists($this->controller, true) || $this->method[0] === '_')
 				{
-					$e404 = true;
+					throw new PageNotFoundException('Controller or its method is not found.');
 				}
 				else if ( ! method_exists($this->controller, '_remap') &&
 					! is_callable([$this->controller, $this->method], false)
 				)
 				{
-					$e404 = true;
-				}
-			}
-
-			// Is there a 404 Override available?
-			if ($e404 && $override = $this->router->get404Override())
-			{
-				if ($override instanceof \Closure)
-				{
-					echo $override();
-				}
-				else if (is_array($override))
-				{
-					$this->controller = $override[0];
-					$this->method = $override[1];
-
-					unset($override);
-				}
-
-				$e404 = false;
-			}
-
-			// Display 404 Errors
-			if ($e404)
-			{
-				$this->response->setStatusCode(404);
-
-				if (ob_get_level() > 0)
-				{
-					ob_end_flush();
-				}
-				ob_start();
-
-				// Show the 404 error page
-				if (is_cli())
-				{
-					require APPPATH.'Views/errors/cli/error_404.php';
-				}
-				else
-				{
-					require APPPATH.'Views/errors/html/error_404.php';
-				}
-
-				$buffer = ob_get_contents();
-				ob_end_clean();
-
-				echo $buffer;
-				exit(EXIT_UNKNOWN_FILE);    // Unknown file
-			}
-
-			if ( ! $e404 && ! isset($override))
-			{
-				$class = new $this->controller($this->request, $this->response);
-
-				$this->benchmark->stop('controller_constructor');
-
-				//--------------------------------------------------------------------
-				// Is there a "post_controller_constructor" hook?
-				//--------------------------------------------------------------------
-				Hooks::trigger('post_controller_constructor');
-
-				if (method_exists($class, '_remap'))
-				{
-					$class->_remap($this->method, ...$this->router->params());
-				}
-				else
-				{
-					$class->{$this->method}(...$this->router->params());
+					throw new PageNotFoundException('Controller method is not found.');
 				}
 			}
 		}
 
+		$this->createControllerAndRun();
+	}
+
+	protected function createControllerAndRun()
+	{
+		$class = new $this->controller($this->request, $this->response);
+
+		$this->benchmark->stop('controller_constructor');
+
+		//--------------------------------------------------------------------
+		// Is there a "post_controller_constructor" hook?
+		//--------------------------------------------------------------------
+		Hooks::trigger('post_controller_constructor');
+
+		if (method_exists($class, '_remap'))
+		{
+			$class->_remap($this->method, ...$this->router->params());
+		}
+		else
+		{
+			$class->{$this->method}(...$this->router->params());
+		}
+
 		$this->benchmark->stop('controller');
+	}
+
+	protected function display404errors(PageNotFoundException $e)
+	{
+		// Is there a 404 Override available?
+		if ($override = $this->router->get404Override())
+		{
+			if ($override instanceof \Closure)
+			{
+				echo $override();
+			}
+			else if (is_array($override))
+			{
+				$this->controller = $override[0];
+				$this->method = $override[1];
+
+				unset($override);
+			}
+
+			$this->createControllerAndRun();
+			$this->gatherOutput();
+			$this->sendResponse();
+			return;
+		}
+
+		// Display 404 Errors
+		$this->response->setStatusCode(404);
+
+		if (ob_get_level() > 0)
+		{
+			ob_end_flush();
+		}
+		ob_start();
+
+		$heading = 'Page Not Found';
+		$message = $e->getMessage();
+
+		// Show the 404 error page
+		if (is_cli())
+		{
+			require APPPATH.'Views/errors/cli/error_404.php';
+		}
+		else
+		{
+			require APPPATH.'Views/errors/html/error_404.php';
+		}
+
+		$buffer = ob_get_contents();
+		ob_end_clean();
+
+		echo $buffer;
+		exit(EXIT_UNKNOWN_FILE);    // Unknown file
 	}
 
 	//--------------------------------------------------------------------
@@ -532,7 +552,7 @@ class CodeIgniter
 		//--------------------------------------------------------------------
 		// Display the Debug Toolbar?
 		//--------------------------------------------------------------------
-		if (ENVIRONMENT != 'production' && $this->config->toolbarEnabled)
+		if ( ! is_cli() && ENVIRONMENT != 'production' && $this->config->toolbarEnabled)
 		{
 			$toolbar = Services::toolbar($this->config);
 			$this->output .= $toolbar->run($this->startTime, $totalTime,
