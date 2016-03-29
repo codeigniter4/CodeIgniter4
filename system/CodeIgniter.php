@@ -139,8 +139,8 @@ class CodeIgniter
 		$this->loadFrameworkConstants();
 		$this->setupAutoloader();
 		$this->setExceptionHandling();
-		$this->startBenchmark();
 		$this->loadComposerAutoloader();
+		$this->startBenchmark();
 
 		//--------------------------------------------------------------------
 		// Is there a "pre-system" hook?
@@ -247,9 +247,11 @@ class CodeIgniter
 	 */
 	protected function startBenchmark()
 	{
+		$this->startTime = microtime(true);
+
 		$this->benchmark = Services::timer(true);
 		$this->benchmark->start('total_execution', $this->startTime);
-		$this->benchmark->start('bootstrap', $this->startTime);
+		$this->benchmark->start('bootstrap');
 	}
 
 	//--------------------------------------------------------------------
