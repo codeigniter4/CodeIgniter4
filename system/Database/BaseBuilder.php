@@ -760,8 +760,6 @@ class BaseBuilder
 				? $this->groupGetType('')
 				: $this->groupGetType($type);
 
-			$ok = null;
-
 			if ($v !== null)
 			{
 				$op = $this->getOperator($k);
