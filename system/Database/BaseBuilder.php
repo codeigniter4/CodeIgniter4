@@ -766,9 +766,8 @@ class BaseBuilder
 			{
 				$op = $this->getOperator($k);
 				$k  = trim(str_replace($op, '', $k));
-				$ok = $k;
 
-				$this->binds[$k] = $v;
+				$bind = $this->setBind($k, $v);
 
 				if (empty($op))
 				{
@@ -789,7 +788,7 @@ class BaseBuilder
 				$k = substr($k, 0, $match[0][1]).($match[1][0] === '=' ? ' IS NULL' : ' IS NOT NULL');
 			}
 
-			$v = ! is_null($v) ? ' :'.$ok : $v;
+			$v = ! is_null($v) ? ' :'.$bind : $v;
 
 			$this->{$qb_key}[] = ['condition' => $prefix.$k.$v, 'escape' => $escape];
 			if ($this->QBCaching === true)
@@ -1047,7 +1046,8 @@ class BaseBuilder
 			$field = [$field => $match];
 		}
 
-		is_bool($escape) OR $escape = $this->protectIdentifiers;
+		$escape = is_bool($escape) ? $escape : $this->protectIdentifiers;
+
 		// lowercase $side in case somebody writes e.g. 'BEFORE' instead of 'before' (doh)
 		$side = strtolower($side);
 
@@ -1056,26 +1056,23 @@ class BaseBuilder
 			$prefix = (count($this->QBWhere) === 0 && count($this->QBCacheWhere) === 0)
 				? $this->groupGetType('') : $this->groupGetType($type);
 
-			if ($escape === true)
-			{
-				$v = $this->escape_like_str($v);
-			}
+			$bind = $this->setBind($k, $v);
 
 			if ($side === 'none')
 			{
-				$like_statement = "{$prefix} {$k} {$not} LIKE '{$v}'";
+				$like_statement = "{$prefix} {$k} {$not} LIKE ':{$bind}'";
 			}
 			elseif ($side === 'before')
 			{
-				$like_statement = "{$prefix} {$k} {$not} LIKE '%{$v}'";
+				$like_statement = "{$prefix} {$k} {$not} LIKE '%:{$bind}'";
 			}
 			elseif ($side === 'after')
 			{
-				$like_statement = "{$prefix} {$k} {$not} LIKE '{$v}%'";
+				$like_statement = "{$prefix} {$k} {$not} LIKE ':{$bind}%'";
 			}
 			else
 			{
-				$like_statement = "{$prefix} {$k} {$not} LIKE '%{$v}%'";
+				$like_statement = "{$prefix} {$k} {$not} LIKE '%:{$bind}%'";
 			}
 
 			// some platforms require an escape sequence definition for LIKE wildcards
@@ -3313,4 +3310,33 @@ class BaseBuilder
 	}
 
 	// --------------------------------------------------------------------
+
+	/**
+	 * Stores a bind value after ensuring that it's unique.
+	 *
+	 * @param string $key
+	 * @param null   $value
+	 */
+	protected function setBind(string $key, $value = null)
+	{
+		if (! array_key_exists($key, $this->binds))
+		{
+			$this->binds[$key] = $value;
+			return $key;
+		}
+
+		$count = 0;
+
+		while (array_key_exists($key.$count, $this->binds))
+		{
+			++$count;
+		}
+
+		$this->binds[$key.$count] = $value;
+
+		return $key.$count;
+	}
+
+	//--------------------------------------------------------------------
+
 }
