@@ -56,40 +56,17 @@ class Bootstrap
 	protected $config;
 
 	//--------------------------------------------------------------------
-	
-	public function __construct()
+
+	public function __construct(App $config)
 	{
+		$this->config = $config;
+
 		require_once BASEPATH.'Common.php';
 
-		$this->getServicesFactory();
-		$this->loadFrameworkConstants();
-		$this->setupAutoloader();
 		$this->setExceptionHandling();
 		$this->loadComposerAutoloader();
 	}
-
-	//--------------------------------------------------------------------
-
-	protected function getServicesFactory()
-	{
-		require_once APPPATH.'Config/Services.php';
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Load the framework constants
-	 */
-	protected function loadFrameworkConstants()
-	{
-		if (file_exists(APPPATH.'Config/'.ENVIRONMENT.'/constants.php'))
-		{
-			require_once APPPATH.'Config/'.ENVIRONMENT.'/constants.php';
-		}
-
-		require_once(APPPATH.'Config/Constants.php');
-	}
-
+	
 	//--------------------------------------------------------------------
 
 	/**
@@ -108,35 +85,10 @@ class Bootstrap
 	//--------------------------------------------------------------------
 
 	/**
-	 * Setup the autoloader
-	 */
-	protected function setupAutoloader()
-	{
-		// The autoloader isn't initialized yet, so load the file manually.
-		require BASEPATH.'Autoloader/Autoloader.php';
-		require APPPATH.'Config/Autoload.php';
-
-		// The Autoloader class only handles namespaces
-		// and "legacy" support.
-		$loader = Services::autoloader();
-		$loader->initialize(new Autoload());
-
-		// The register function will prepend
-		// the psr4 loader.
-		$loader->register();
-
-		return $loader;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
 	 * Set custom exception handling
 	 */
 	protected function setExceptionHandling()
 	{
-		$this->config = new App();
-
 		Services::exceptions($this->config, true)
 			->initialize();
 	}

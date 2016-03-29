@@ -1,5 +1,7 @@
 <?php namespace CodeIgniter;
 
+use Config\App;
+
 class CodeIgniterTest extends \PHPUnit_Framework_TestCase
 {
 	/**
@@ -11,7 +13,8 @@ class CodeIgniterTest extends \PHPUnit_Framework_TestCase
 
 	public function setUp()
 	{
-		$this->codeigniter = new MockCodeIgniter(memory_get_usage(), microtime(true));
+		$config = new App();
+		$this->codeigniter = new MockCodeIgniter(memory_get_usage(), microtime(true), $config);
 	}
 
 	//--------------------------------------------------------------------

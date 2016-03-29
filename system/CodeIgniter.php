@@ -114,18 +114,17 @@ class CodeIgniter
 	 *
 	 * @param int $startMemory
 	 */
-	public function __construct(int $startMemory, float $startTime)
+	public function __construct(int $startMemory, float $startTime, App $config)
 	{
 		$this->startMemory = $startMemory;
 		$this->startTime   = $startTime;
+		$this->config = $config;
 
 		// When testing, we need to create more than one instance.
 		if ( ! defined('CI_VERSION'))
 		{
 			define('CI_VERSION', $this->CIVersion);
 		}
-
-		$this->config = new App();
 	}
 
 	//--------------------------------------------------------------------

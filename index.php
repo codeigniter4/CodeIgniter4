@@ -145,14 +145,44 @@ define('WRITEPATH', realpath($writable_directory).DIRECTORY_SEPARATOR);
 define('APPPATH', realpath($application_folder).DIRECTORY_SEPARATOR);
 
 /*
+ * ------------------------------------------------------
+ *  Load the framework constants
+ * ------------------------------------------------------
+ */
+if (file_exists(APPPATH.'Config/'.ENVIRONMENT.'/Constants.php'))
+{
+	require_once APPPATH.'Config/'.ENVIRONMENT.'/Constants.php';
+}
+
+require_once(APPPATH.'Config/Constants.php');
+
+/*
+ * ------------------------------------------------------
+ *  Setup the autoloader
+ * ------------------------------------------------------
+ */
+// The autoloader isn't initialized yet, so load the file manually.
+require BASEPATH.'Autoloader/Autoloader.php';
+require APPPATH.'Config/Autoload.php';
+require APPPATH.'Config/Services.php';
+
+// The Autoloader class only handles namespaces
+// and "legacy" support.
+$loader = Config\Services::autoloader();
+$loader->initialize(new Config\Autoload());
+
+// The register function will prepend
+// the psr4 loader.
+$loader->register();
+
+/*
  * --------------------------------------------------------------------
  * LOAD THE BOOTSTRAP FILE
  * --------------------------------------------------------------------
  *
  * And away we go...
  */
-require BASEPATH.'Bootstrap.php';
-require BASEPATH.'CodeIgniter.php';
-new CodeIgniter\Bootstrap();
-$codeigniter = new CodeIgniter\CodeIgniter($startMemory, $startTime);
+$config = new Config\App();
+new CodeIgniter\Bootstrap($config);
+$codeigniter = new CodeIgniter\CodeIgniter($startMemory, $startTime, $config);
 $codeigniter->run();

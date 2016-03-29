@@ -94,15 +94,48 @@ else
 
 define('SUPPORTPATH', realpath(BASEPATH.'../tests/_support/').'/');
 
+/*
+ * ------------------------------------------------------
+ *  Load the framework constants
+ * ------------------------------------------------------
+ */
+if (file_exists(APPPATH.'Config/'.ENVIRONMENT.'/Constants.php'))
+{
+	require_once APPPATH.'Config/'.ENVIRONMENT.'/Constants.php';
+}
+
+require_once(APPPATH.'Config/Constants.php');
+
+/*
+ * ------------------------------------------------------
+ *  Setup the autoloader
+ * ------------------------------------------------------
+ */
+// The autoloader isn't initialized yet, so load the file manually.
+require BASEPATH.'Autoloader/Autoloader.php';
+require APPPATH.'Config/Autoload.php';
+// Use special Services for testing.
+require SUPPORTPATH.'Config/Services.php';
+
+// The Autoloader class only handles namespaces
+// and "legacy" support.
+$loader = Config\Services::autoloader();
+$loader->initialize(new Config\Autoload());
+
+// The register function will prepend
+// the psr4 loader.
+$loader->register();
+
+// Add namespace paths to autoload mocks for testing.
+$loader->addNamespace('CodeIgniter', SUPPORTPATH);
+$loader->addNamespace('Config', SUPPORTPATH.'Config');
+
 //--------------------------------------------------------------------
 // LOAD THE BOOTSTRAP FILE
 //--------------------------------------------------------------------
 
-require BASEPATH.'Bootstrap.php';
-require BASEPATH.'CodeIgniter.php';
-require SUPPORTPATH.'MockBootstrap.php';
-require SUPPORTPATH.'MockCodeIgniter.php';
-new CodeIgniter\MockBootstrap();
+$config = new Config\App();
+new CodeIgniter\MockBootstrap($config);
 
 //--------------------------------------------------------------------
 // Load our TestCase
