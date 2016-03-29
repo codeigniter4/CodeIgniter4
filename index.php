@@ -105,7 +105,7 @@ $writable_directory = 'writable';
 chdir(__DIR__);
 
 // Are the system and application paths correct?
-if ( ! is_dir($system_path))
+if ( ! realpath($system_path) OR ! is_dir($system_path))
 {
 	header('HTTP/1.1 503 Service Unavailable.', true, 503);
 	echo 'Your system folder path does not appear to be set correctly. Please open the following file and correct this: '.
@@ -113,7 +113,7 @@ if ( ! is_dir($system_path))
 	exit(3); // EXIT_CONFIG
 }
 
-if ( ! is_dir($application_folder))
+if ( ! realpath($application_folder) OR ! is_dir($application_folder))
 {
 	header('HTTP/1.1 503 Service Unavailable.', true, 503);
 	echo 'Your application folder path does not appear to be set correctly. Please open the following file and correct this: '.
