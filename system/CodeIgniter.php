@@ -412,77 +412,77 @@ class CodeIgniter
 					$e404 = true;
 				}
 				else if ( ! method_exists($this->controller, '_remap') &&
-				          ! is_callable([$this->controller, $this->method], false)
+					! is_callable([$this->controller, $this->method], false)
 				)
 				{
 					$e404 = true;
 				}
+			}
 
-				// Is there a 404 Override available?
-				if ($override = $this->router->get404Override())
+			// Is there a 404 Override available?
+			if ($e404 && $override = $this->router->get404Override())
+			{
+				if ($override instanceof \Closure)
 				{
-					if ($override instanceof \Closure)
-					{
-						echo $override();
-					}
-					else if (is_array($override))
-					{
-						$this->controller = $override[0];
-						$this->method     = $override[1];
+					echo $override();
+				}
+				else if (is_array($override))
+				{
+					$this->controller = $override[0];
+					$this->method = $override[1];
 
-						unset($override);
-					}
-
-					$e404 = false;
+					unset($override);
 				}
 
-				// Display 404 Errors
-				if ($e404)
+				$e404 = false;
+			}
+
+			// Display 404 Errors
+			if ($e404)
+			{
+				$this->response->setStatusCode(404);
+
+				if (ob_get_level() > 0)
 				{
-					$this->response->setStatusCode(404);
+					ob_end_flush();
+				}
+				ob_start();
 
-					if (ob_get_level() > 0)
-					{
-						ob_end_flush();
-					}
-					ob_start();
-
-					// Show the 404 error page
-					if (is_cli())
-					{
-						require APPPATH.'Views/errors/cli/error_404.php';
-					}
-					else
-					{
-						require APPPATH.'Views/errors/html/error_404.php';
-					}
-
-					$buffer = ob_get_contents();
-					ob_end_clean();
-
-					echo $buffer;
-					exit(EXIT_UNKNOWN_FILE);    // Unknown file
+				// Show the 404 error page
+				if (is_cli())
+				{
+					require APPPATH.'Views/errors/cli/error_404.php';
+				}
+				else
+				{
+					require APPPATH.'Views/errors/html/error_404.php';
 				}
 
-				if ( ! $e404 && ! isset($override))
+				$buffer = ob_get_contents();
+				ob_end_clean();
+
+				echo $buffer;
+				exit(EXIT_UNKNOWN_FILE);    // Unknown file
+			}
+
+			if ( ! $e404 && ! isset($override))
+			{
+				$class = new $this->controller($this->request, $this->response);
+
+				$this->benchmark->stop('controller_constructor');
+
+				//--------------------------------------------------------------------
+				// Is there a "post_controller_constructor" hook?
+				//--------------------------------------------------------------------
+				Hooks::trigger('post_controller_constructor');
+
+				if (method_exists($class, '_remap'))
 				{
-					$class = new $this->controller($this->request, $this->response);
-
-					$this->benchmark->stop('controller_constructor');
-
-					//--------------------------------------------------------------------
-					// Is there a "post_controller_constructor" hook?
-					//--------------------------------------------------------------------
-					Hooks::trigger('post_controller_constructor');
-
-					if (method_exists($class, '_remap'))
-					{
-						$class->_remap($this->method, ...$this->router->params());
-					}
-					else
-					{
-						$class->{$this->method}(...$this->router->params());
-					}
+					$class->_remap($this->method, ...$this->router->params());
+				}
+				else
+				{
+					$class->{$this->method}(...$this->router->params());
 				}
 			}
 		}
