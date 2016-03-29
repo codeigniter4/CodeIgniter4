@@ -7,6 +7,8 @@
 // tests should have all they need at their fingertips.
 //
 
+$startMemory = memory_get_usage();
+$startTime   = microtime(true);
 
 if (! defined('ENVIRONMENT'))
 {
@@ -93,97 +95,17 @@ else
 define('SUPPORTPATH', realpath(BASEPATH.'../tests/_support/').'/');
 
 //--------------------------------------------------------------------
-// Load Autoloaders
+// LOAD THE BOOTSTRAP FILE
 //--------------------------------------------------------------------
-// CodeIgniter uses 2 autoloaders - a classmap and a PSR4-compatible
-// autoloader, to help it load files in your application and the
-// framework itself. To make testing easier, we need to get these
-// loaded up so the files can be found without us having to require
-// a lot of files in the tests.
-//
-// Below we load a fair chunk of the CodeIgniter.php file to
-// get lots of moving pieces up and ready.
-//
 
-/**
- * CodeIgniter version
- *
- * @var string
- */
-
-define('CI_VERSION', '4.0-dev');
-
-/*
- * ------------------------------------------------------
- *  Load the framework constants
- * ------------------------------------------------------
- */
-
-if (file_exists(APPPATH.'Config/'.ENVIRONMENT.'/Constants.php'))
-{
-	require_once APPPATH.'Config/'.ENVIRONMENT.'/Constants.php';
-}
-
-require_once(APPPATH.'Config/Constants.php');
-
-/*
- * ------------------------------------------------------
- *  Load the global functions
- * ------------------------------------------------------
- */
-
-require_once BASEPATH.'Common.php';
-
-/*
- * ------------------------------------------------------
- *  Load any environment-specific settings from .env file
- * ------------------------------------------------------
- */
-if (ENVIRONMENT !== 'production')
-{
-	// Load environment settings from .env files
-	// into $_SERVER and $_ENV
-	require_once BASEPATH.'Config/DotEnv.php';
-	$env = new \CodeIgniter\Config\DotEnv(APPPATH);
-	$env->load();
-	unset($env);
-}
-
-/*
- * ------------------------------------------------------
- *  Get the DI Container ready for use
- * ------------------------------------------------------
- */
-
-require_once APPPATH.'Config/Services.php';
-
-/*
- * ------------------------------------------------------
- *  Setup the autoloader
- * ------------------------------------------------------
- */
-
-// The autloader isn't initialized yet, so load the file manually.
-require_once BASEPATH.'Autoloader/Autoloader.php';
-require_once APPPATH.'Config/Autoload.php';
-
-// The Autoloader class only handles namespaces
-// and "legacy" support.
-$loader = new \CodeIgniter\Autoloader\Autoloader();
-$loader->initialize(new Config\Autoload());
-
-// Add namespace paths to autoload mocks for testing
-$loader->addNamespace('CodeIgniter', SUPPORTPATH);
-$loader->addNamespace('Config', SUPPORTPATH.'Config');
-
-// The register function will prepend
-// the psr4 loader.
-$loader->register();
-
+require BASEPATH.'Bootstrap.php';
+require BASEPATH.'CodeIgniter.php';
+require SUPPORTPATH.'MockBootstrap.php';
+require SUPPORTPATH.'MockCodeIgniter.php';
+new CodeIgniter\MockBootstrap();
 
 //--------------------------------------------------------------------
 // Load our TestCase
 //--------------------------------------------------------------------
 
 require_once __DIR__ .'/CIUnitTestCase.php';
-

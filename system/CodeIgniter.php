@@ -39,9 +39,7 @@
 
 use Config\App;
 use Config\Services;
-use Config\Autoload;
 use CodeIgniter\Hooks\Hooks;
-use CodeIgniter\Config\DotEnv;
 
 /**
  * System Initialization Class
@@ -120,6 +118,14 @@ class CodeIgniter
 	{
 		$this->startMemory = $startMemory;
 		$this->startTime   = $startTime;
+
+		// When testing, we need to create more than one instance.
+		if ( ! defined('CI_VERSION'))
+		{
+			define('CI_VERSION', $this->CIVersion);
+		}
+
+		$this->config = new App();
 	}
 
 	//--------------------------------------------------------------------
@@ -131,15 +137,6 @@ class CodeIgniter
 	 */
 	public function run()
 	{
-		define('CI_VERSION', $this->CIVersion);
-
-		require_once BASEPATH.'Common.php';
-		require_once APPPATH.'Config/Services.php';
-
-		$this->loadFrameworkConstants();
-		$this->setupAutoloader();
-		$this->setExceptionHandling();
-		$this->loadComposerAutoloader();
 		$this->startBenchmark();
 
 		//--------------------------------------------------------------------
@@ -183,70 +180,6 @@ class CodeIgniter
 	//--------------------------------------------------------------------
 
 	/**
-	 * Load the framework constants
-	 */
-	protected function loadFrameworkConstants()
-	{
-		if (file_exists(APPPATH.'Config/'.ENVIRONMENT.'/constants.php'))
-		{
-			require_once APPPATH.'Config/'.ENVIRONMENT.'/constants.php';
-		}
-
-		require_once(APPPATH.'Config/Constants.php');
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Load any environment-specific settings from .env file
-	 */
-	protected function loadDotEnv()
-	{
-		// Load environment settings from .env files
-		// into $_SERVER and $_ENV
-		require BASEPATH.'Config/DotEnv.php';
-		$env = new DotEnv(APPPATH);
-		$env->load();
-		unset($env);
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Setup the autoloader
-	 */
-	protected function setupAutoloader()
-	{
-		// The autoloader isn't initialized yet, so load the file manually.
-		require BASEPATH.'Autoloader/Autoloader.php';
-		require APPPATH.'Config/Autoload.php';
-
-		// The Autoloader class only handles namespaces
-		// and "legacy" support.
-		$loader = Services::autoloader();
-		$loader->initialize(new Autoload());
-
-		// The register function will prepend
-		// the psr4 loader.
-		$loader->register();
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Set custom exception handling
-	 */
-	protected function setExceptionHandling()
-	{
-		$this->config = new App();
-
-		Services::exceptions($this->config, true)
-		        ->initialize();
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
 	 * Start the Benchmark
 	 * 
 	 * The timer is used to display total script execution both in the
@@ -259,43 +192,6 @@ class CodeIgniter
 		$this->benchmark = Services::timer(true);
 		$this->benchmark->start('total_execution', $this->startTime);
 		$this->benchmark->start('bootstrap');
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Should we use a Composer autoloader?
-	 *
-	 * CodeIgniter provides its own PSR4-compatible autoloader, but many
-	 * third-party scripts will take advantage of the extra flexibility
-	 * that Composer provides. This allows that support to be provided,
-	 * and even with a customizable path to their autoloader.
-	 */
-	protected function loadComposerAutoloader()
-	{
-		$composer_autoload = $this->config->composerAutoload;
-
-		if (empty($composer_autoload))
-		{
-			return;
-		}
-
-		if ($composer_autoload === true)
-		{
-			file_exists(APPPATH.'vendor/autoload.php')
-				? require_once(APPPATH.'vendor/autoload.php')
-				: log_message('error', '$this->config->\'composerAutoload\' is set to TRUE but '.APPPATH.
-				                       'vendor/autoload.php was not found.');
-		}
-		elseif (file_exists($composer_autoload))
-		{
-			require_once($composer_autoload);
-		}
-		else
-		{
-			log_message('error',
-				'Could not find the specified $this->config->\'composerAutoload\' path: '.$composer_autoload);
-		}
 	}
 
 	//--------------------------------------------------------------------

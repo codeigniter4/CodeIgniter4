@@ -38,6 +38,7 @@ switch (ENVIRONMENT)
 		error_reporting(-1);
 		ini_set('display_errors', 1);
 		define('CI_DEBUG', 1);
+		define('SHOW_DEBUG_BACKTRACE', TRUE);
 		break;
 
 	case 'production':
@@ -150,6 +151,8 @@ define('APPPATH', realpath($application_folder).DIRECTORY_SEPARATOR);
  *
  * And away we go...
  */
+require BASEPATH.'Bootstrap.php';
 require BASEPATH.'CodeIgniter.php';
+new CodeIgniter\Bootstrap();
 $codeigniter = new CodeIgniter\CodeIgniter($startMemory, $startTime);
 $codeigniter->run();
