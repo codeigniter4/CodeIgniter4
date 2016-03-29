@@ -249,7 +249,7 @@ class CodeIgniter
 	{
 		$this->benchmark = Services::timer(true);
 		$this->benchmark->start('total_execution', $this->startTime);
-		$this->benchmark->start('bootstrap');
+		$this->benchmark->start('bootstrap', $this->startTime);
 	}
 
 	//--------------------------------------------------------------------
