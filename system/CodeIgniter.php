@@ -36,20 +36,18 @@
 	 * @filesource
 	 */
 
+
+use Config\App;
+use Config\Services;
+use Config\Autoload;
+use CodeIgniter\Hooks\Hooks;
+use CodeIgniter\Config\DotEnv;
+
 /**
- * System Initialization File
+ * System Initialization Class
  *
  * Loads the base classes and executes the request.
- *
- * @package CodeIgniter
  */
-
-use CodeIgniter\Config\DotEnv;
-use Config\Services;
-use CodeIgniter\Hooks\Hooks;
-use Config\Autoload;
-use Config\App;
-
 class CodeIgniter
 {
 	/**
@@ -118,9 +116,10 @@ class CodeIgniter
 	 *
 	 * @param int $startMemory
 	 */
-	public function __construct(int $startMemory)
+	public function __construct(int $startMemory, float $startTime)
 	{
 		$this->startMemory = $startMemory;
+		$this->startTime   = $startTime;
 	}
 
 	//--------------------------------------------------------------------
@@ -242,15 +241,14 @@ class CodeIgniter
 
 	/**
 	 * Start the Benchmark
+	 * 
+	 * The timer is used to display total script execution both in the
+	 * debug toolbar, and potentially on the displayed page.
 	 */
 	protected function startBenchmark()
 	{
-		// Record app start time here. It's a little bit off, but
-		// keeps it lining up with the benchmark timers.
-		$this->startTime = microtime(true);
-
 		$this->benchmark = Services::timer(true);
-		$this->benchmark->start('total_execution');
+		$this->benchmark->start('total_execution', $this->startTime);
 		$this->benchmark->start('bootstrap');
 	}
 

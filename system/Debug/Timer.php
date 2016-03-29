@@ -66,11 +66,12 @@ class Timer
 	 * execution points can be measured.
 	 *
 	 * @param string $name  The name of this timer.
+	 * @param float  $time  Allows user to provide time.
 	 */
-	public function start(string $name)
+	public function start(string $name, float $time = null)
 	{
 		$this->timers[strtolower($name)] = [
-			'start' => microtime(true),
+			'start' => ! empty($time) ? $time : microtime(true),
 			'end'   => null,
 		];
 

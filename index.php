@@ -2,6 +2,7 @@
 
 // Used by the debug toolbar. Do not remove.
 $startMemory = memory_get_usage();
+$startTime   = microtime(true);
 
 /*
  *---------------------------------------------------------------
