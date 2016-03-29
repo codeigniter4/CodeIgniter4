@@ -12,4 +12,10 @@ class MockBootstrap extends Bootstrap
 	}
 
 	//--------------------------------------------------------------------
+
+	protected function getServicesFactory()
+	{
+		// Use Services class for testing
+		require_once SUPPORTPATH.'Config/Services.php';
+	}
 }

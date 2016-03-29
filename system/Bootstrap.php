@@ -54,17 +54,28 @@ class Bootstrap
 	 * @var \Config\App
 	 */
 	protected $config;
+
+	//--------------------------------------------------------------------
 	
 	public function __construct()
 	{
 		require_once BASEPATH.'Common.php';
-		require_once APPPATH.'Config/Services.php';
 
+		$this->getServicesFactory();
 		$this->loadFrameworkConstants();
 		$this->setupAutoloader();
 		$this->setExceptionHandling();
 		$this->loadComposerAutoloader();
 	}
+
+	//--------------------------------------------------------------------
+
+	protected function getServicesFactory()
+	{
+		require_once APPPATH.'Config/Services.php';
+	}
+
+	//--------------------------------------------------------------------
 
 	/**
 	 * Load the framework constants
