@@ -70,21 +70,6 @@ class Bootstrap
 	//--------------------------------------------------------------------
 
 	/**
-	 * Load any environment-specific settings from .env file
-	 */
-	protected function loadDotEnv()
-	{
-		// Load environment settings from .env files
-		// into $_SERVER and $_ENV
-		require BASEPATH.'Config/DotEnv.php';
-		$env = new DotEnv(APPPATH);
-		$env->load();
-		unset($env);
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
 	 * Set custom exception handling
 	 */
 	protected function setExceptionHandling()

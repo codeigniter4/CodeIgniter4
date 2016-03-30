@@ -146,6 +146,19 @@ define('APPPATH', realpath($application_folder).DIRECTORY_SEPARATOR);
 
 /*
  * ------------------------------------------------------
+ *  Load any environment-specific settings from .env file
+ * ------------------------------------------------------
+ */
+
+// Load environment settings from .env files
+// into $_SERVER and $_ENV
+require BASEPATH.'Config/DotEnv.php';
+$env = new CodeIgniter\Config\DotEnv(APPPATH);
+$env->load();
+unset($env);
+
+/*
+ * ------------------------------------------------------
  *  Load the framework constants
  * ------------------------------------------------------
  */
