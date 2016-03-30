@@ -2261,30 +2261,29 @@ class BaseBuilder
 	 * If the database does not support the truncate() command
 	 * This function maps to "DELETE FROM table"
 	 *
-	 * @param    string    the table to truncate
+	 * @param    bool    Whether we're in test mode or not.
 	 *
 	 * @return    bool    TRUE on success, FALSE on failure
 	 */
-	public function truncate($table = '')
+	public function truncate($test = false)
 	{
-		if ($table === '')
+		if ( ! isset($this->QBFrom[0]))
 		{
-			if ( ! isset($this->QBFrom[0]))
-			{
-				return ($this->db_debug) ? $this->display_error('db_must_set_table') : false;
-			}
+			return (CI_DEBUG) ? $this->display_error('db_must_set_table') : false;
+		}
 
-			$table = $this->QBFrom[0];
-		}
-		else
-		{
-			$table = $this->protect_identifiers($table, true, null, false);
-		}
+		$table = $this->QBFrom[0];
 
 		$sql = $this->_truncate($table);
+
+		if ($test === true)
+		{
+			return $sql;
+		}
+
 		$this->resetWrite();
 
-		return $this->query($sql);
+		return $this->db->query($sql);
 	}
 
 	//--------------------------------------------------------------------
