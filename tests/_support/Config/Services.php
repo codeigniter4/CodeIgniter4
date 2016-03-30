@@ -1,7 +1,7 @@
 <?php namespace Config;
 
 /**
- * Services Configuration file for testing
+ * Services Configuration file for testing.
  *
  * We can't extend \Config\Services in APPPATH, becasuse we can't change the
  * classname.
@@ -34,6 +34,8 @@ class Services
 		static::$mocks = [];
 	}
 
+	//--------------------------------------------------------------------
+
 	/**
 	 * Inject mock object for testing.
 	 *
@@ -45,6 +47,8 @@ class Services
 		$name = strtolower($name);
 		static::$mocks[$name] = $mock;
 	}
+
+	//--------------------------------------------------------------------
 
 	/**
 	 * The Autoloader class is the central class that handles our
@@ -86,8 +90,8 @@ class Services
 		if (! $getShared)
 		{
 			return new \CodeIgniter\HTTP\CLIRequest(
-					$config,
-					new \CodeIgniter\HTTP\URI()
+				$config,
+				new \CodeIgniter\HTTP\URI()
 			);
 		}
 
@@ -123,10 +127,10 @@ class Services
 		}
 
 		return new \CodeIgniter\HTTP\CURLRequest(
-				$config,
-				new \CodeIgniter\HTTP\URI(),
-				$response,
-				$options
+			$config,
+			new \CodeIgniter\HTTP\URI(),
+			$response,
+			$options
 		);
 	}
 
@@ -212,10 +216,10 @@ class Services
 			return static::$mocks[__FUNCTION__];
 		}
 
-	    if (! $getShared)
-	    {
-		    return new \CodeIgniter\Loader(new \Config\Autoload());
-	    }
+		if (! $getShared)
+		{
+			return new \CodeIgniter\Loader(new \Config\Autoload());
+		}
 
 		return self::getSharedInstance('loader');
 	}
@@ -311,8 +315,8 @@ class Services
 		if (! $getShared)
 		{
 			return new \CodeIgniter\HTTP\IncomingRequest(
-					$config,
-					new \CodeIgniter\HTTP\URI()
+				$config,
+				new \CodeIgniter\HTTP\URI()
 			);
 		}
 
