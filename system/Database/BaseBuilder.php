@@ -272,7 +272,7 @@ class BaseBuilder
 	 * COUNT string
 	 *
 	 * @used-by    CI_DB_driver::count_all()
-	 * @used-by    CI_DB_query_builder::count_all_results()
+	 * @used-by    BaseBuilder::count_all_results()
 	 *
 	 * @var    string
 	 */
@@ -342,7 +342,7 @@ class BaseBuilder
 	 * @param    string|array
 	 * @param    mixed
 	 *
-	 * @return    CI_DB_query_builder
+	 * @return    BaseBuilder
 	 */
 	public function select($select = '*', $escape = null)
 	{
@@ -385,7 +385,7 @@ class BaseBuilder
 	 * @param    string    the field
 	 * @param    string    an alias
 	 *
-	 * @return    CI_DB_query_builder
+	 * @return    BaseBuilder
 	 */
 	public function selectMax($select = '', $alias = '')
 	{
@@ -402,7 +402,7 @@ class BaseBuilder
 	 * @param    string    the field
 	 * @param    string    an alias
 	 *
-	 * @return    CI_DB_query_builder
+	 * @return    BaseBuilder
 	 */
 	public function selectMin($select = '', $alias = '')
 	{
@@ -419,7 +419,7 @@ class BaseBuilder
 	 * @param    string    the field
 	 * @param    string    an alias
 	 *
-	 * @return    CI_DB_query_builder
+	 * @return    BaseBuilder
 	 */
 	public function selectAvg($select = '', $alias = '')
 	{
@@ -436,7 +436,7 @@ class BaseBuilder
 	 * @param    string    the field
 	 * @param    string    an alias
 	 *
-	 * @return    CI_DB_query_builder
+	 * @return    BaseBuilder
 	 */
 	public function selectSum($select = '', $alias = '')
 	{
@@ -457,7 +457,7 @@ class BaseBuilder
 	 * @param    string $alias
 	 * @param    string $type
 	 *
-	 * @return    CI_DB_query_builder
+	 * @return    BaseBuilder
 	 */
 	protected function maxMinAvgSum($select = '', $alias = '', $type = 'MAX')
 	{
@@ -522,7 +522,7 @@ class BaseBuilder
 	 *
 	 * @param    bool $val
 	 *
-	 * @return    CI_DB_query_builder
+	 * @return    BaseBuilder
 	 */
 	public function distinct($val = true)
 	{
@@ -541,7 +541,7 @@ class BaseBuilder
 	 * @param    mixed $from can be a string or array
 	 * @param    bool  $overwrite Should we remove the first table existing?
 	 *
-	 * @return    CI_DB_query_builder
+	 * @return    BaseBuilder
 	 */
 	public function from($from, $overwrite = false)
 	{
@@ -602,7 +602,7 @@ class BaseBuilder
 	 * @param    string    the type of join
 	 * @param    string    whether not to try to escape identifiers
 	 *
-	 * @return    CI_DB_query_builder
+	 * @return    BaseBuilder
 	 */
 	public function join($table, $cond, $type = '', $escape = null)
 	{
@@ -698,7 +698,7 @@ class BaseBuilder
 	 * @param    mixed
 	 * @param    bool
 	 *
-	 * @return    CI_DB_query_builder
+	 * @return    BaseBuilder
 	 */
 	public function where($key, $value = null, $escape = null)
 	{
@@ -717,7 +717,7 @@ class BaseBuilder
 	 * @param    mixed
 	 * @param    bool
 	 *
-	 * @return    CI_DB_query_builder
+	 * @return    BaseBuilder
 	 */
 	public function orWhere($key, $value = null, $escape = null)
 	{
@@ -740,7 +740,7 @@ class BaseBuilder
 	 * @param    string $type
 	 * @param    bool   $escape
 	 *
-	 * @return    CI_DB_query_builder
+	 * @return    BaseBuilder
 	 */
 	protected function whereHaving($qb_key, $key, $value = null, $type = 'AND ', $escape = null)
 	{
@@ -811,7 +811,7 @@ class BaseBuilder
 	 * @param    array  $values The values searched on
 	 * @param    bool   $escape
 	 *
-	 * @return    CI_DB_query_builder
+	 * @return    BaseBuilder
 	 */
 	public function whereIn($key = null, $values = null, $escape = null)
 	{
@@ -830,7 +830,7 @@ class BaseBuilder
 	 * @param    array  $values The values searched on
 	 * @param    bool   $escape
 	 *
-	 * @return    CI_DB_query_builder
+	 * @return    BaseBuilder
 	 */
 	public function orWhereIn($key = null, $values = null, $escape = null)
 	{
@@ -849,7 +849,7 @@ class BaseBuilder
 	 * @param    array  $values The values searched on
 	 * @param    bool   $escape
 	 *
-	 * @return    CI_DB_query_builder
+	 * @return    BaseBuilder
 	 */
 	public function whereNotIn($key = null, $values = null, $escape = null)
 	{
@@ -868,7 +868,7 @@ class BaseBuilder
 	 * @param    array  $values The values searched on
 	 * @param    bool   $escape
 	 *
-	 * @return    CI_DB_query_builder
+	 * @return    BaseBuilder
 	 */
 	public function orWhereNotIn($key = null, $values = null, $escape = null)
 	{
@@ -891,7 +891,7 @@ class BaseBuilder
 	 * @param    string $type
 	 * @param    bool   $escape
 	 *
-	 * @return    CI_DB_query_builder
+	 * @return    BaseBuilder
 	 */
 	protected function _whereIn($key = null, $values = null, $not = false, $type = 'AND ', $escape = null)
 	{
@@ -951,7 +951,7 @@ class BaseBuilder
 	 * @param    string $side
 	 * @param    bool   $escape
 	 *
-	 * @return    CI_DB_query_builder
+	 * @return    BaseBuilder
 	 */
 	public function like($field, $match = '', $side = 'both', $escape = null)
 	{
@@ -971,7 +971,7 @@ class BaseBuilder
 	 * @param    string $side
 	 * @param    bool   $escape
 	 *
-	 * @return    CI_DB_query_builder
+	 * @return    BaseBuilder
 	 */
 	public function notLike($field, $match = '', $side = 'both', $escape = null)
 	{
@@ -991,7 +991,7 @@ class BaseBuilder
 	 * @param    string $side
 	 * @param    bool   $escape
 	 *
-	 * @return    CI_DB_query_builder
+	 * @return    BaseBuilder
 	 */
 	public function orLike($field, $match = '', $side = 'both', $escape = null)
 	{
@@ -1011,7 +1011,7 @@ class BaseBuilder
 	 * @param    string $side
 	 * @param    bool   $escape
 	 *
-	 * @return    CI_DB_query_builder
+	 * @return    BaseBuilder
 	 */
 	public function orNotLike($field, $match = '', $side = 'both', $escape = null)
 	{
@@ -1035,7 +1035,7 @@ class BaseBuilder
 	 * @param    string $not
 	 * @param    bool   $escape
 	 *
-	 * @return    CI_DB_query_builder
+	 * @return    BaseBuilder
 	 */
 	protected function _like($field, $match = '', $type = 'AND ', $side = 'both', $not = '', $escape = null)
 	{
@@ -1098,7 +1098,7 @@ class BaseBuilder
 	 * @param    string $not  (Internal use only)
 	 * @param    string $type (Internal use only)
 	 *
-	 * @return    CI_DB_query_builder
+	 * @return    BaseBuilder
 	 */
 	public function groupStart($not = '', $type = 'AND ')
 	{
@@ -1126,7 +1126,7 @@ class BaseBuilder
 	/**
 	 * Starts a query group, but ORs the group
 	 *
-	 * @return    CI_DB_query_builder
+	 * @return    BaseBuilder
 	 */
 	public function orGroupStart()
 	{
@@ -1138,7 +1138,7 @@ class BaseBuilder
 	/**
 	 * Starts a query group, but NOTs the group
 	 *
-	 * @return    CI_DB_query_builder
+	 * @return    BaseBuilder
 	 */
 	public function notGroupStart()
 	{
@@ -1150,7 +1150,7 @@ class BaseBuilder
 	/**
 	 * Starts a query group, but OR NOTs the group
 	 *
-	 * @return    CI_DB_query_builder
+	 * @return    BaseBuilder
 	 */
 	public function orNotGroupStart()
 	{
@@ -1162,7 +1162,7 @@ class BaseBuilder
 	/**
 	 * Ends a query group
 	 *
-	 * @return    CI_DB_query_builder
+	 * @return    BaseBuilder
 	 */
 	public function groupEnd()
 	{
@@ -1214,7 +1214,7 @@ class BaseBuilder
 	 * @param    string $by
 	 * @param    bool   $escape
 	 *
-	 * @return    CI_DB_query_builder
+	 * @return    BaseBuilder
 	 */
 	public function groupBy($by, $escape = null)
 	{
@@ -1258,7 +1258,7 @@ class BaseBuilder
 	 * @param    string $value
 	 * @param    bool   $escape
 	 *
-	 * @return    CI_DB_query_builder
+	 * @return    BaseBuilder
 	 */
 	public function having($key, $value = null, $escape = null)
 	{
@@ -1276,7 +1276,7 @@ class BaseBuilder
 	 * @param    string $value
 	 * @param    bool   $escape
 	 *
-	 * @return    CI_DB_query_builder
+	 * @return    BaseBuilder
 	 */
 	public function orHaving($key, $value = null, $escape = null)
 	{
@@ -1292,7 +1292,7 @@ class BaseBuilder
 	 * @param    string $direction ASC, DESC or RANDOM
 	 * @param    bool   $escape
 	 *
-	 * @return    CI_DB_query_builder
+	 * @return    BaseBuilder
 	 */
 	public function orderBy($orderby, $direction = '', $escape = null)
 	{
@@ -1356,7 +1356,7 @@ class BaseBuilder
 	 * @param    int $value  LIMIT value
 	 * @param    int $offset OFFSET value
 	 *
-	 * @return    CI_DB_query_builder
+	 * @return    BaseBuilder
 	 */
 	public function limit($value, $offset = 0)
 	{
@@ -1373,7 +1373,7 @@ class BaseBuilder
 	 *
 	 * @param    int $offset OFFSET value
 	 *
-	 * @return    CI_DB_query_builder
+	 * @return    BaseBuilder
 	 */
 	public function offset($offset)
 	{
@@ -1409,7 +1409,7 @@ class BaseBuilder
 	 * @param    string
 	 * @param    bool
 	 *
-	 * @return    CI_DB_query_builder
+	 * @return    BaseBuilder
 	 */
 	public function  set($key, $value = '', $escape = null)
 	{
@@ -1690,7 +1690,7 @@ class BaseBuilder
 	 * @param    string
 	 * @param    bool
 	 *
-	 * @return    CI_DB_query_builder
+	 * @return    BaseBuilder
 	 */
 	public function setInsertBatch($key, $value = '', $escape = null)
 	{
@@ -2177,7 +2177,7 @@ class BaseBuilder
 	 * @param    string
 	 * @param    bool
 	 *
-	 * @return    CI_DB_query_builder
+	 * @return    BaseBuilder
 	 */
 	public function setUpdateBatch($key, $index = '', $escape = null)
 	{
@@ -2773,7 +2773,7 @@ class BaseBuilder
 	 *
 	 * Starts QB caching
 	 *
-	 * @return    CI_DB_query_builder
+	 * @return    BaseBuilder
 	 */
 	public function startCache()
 	{
@@ -2789,7 +2789,7 @@ class BaseBuilder
 	 *
 	 * Stops QB caching
 	 *
-	 * @return    CI_DB_query_builder
+	 * @return    BaseBuilder
 	 */
 	public function stopCache()
 	{
@@ -2805,7 +2805,7 @@ class BaseBuilder
 	 *
 	 * Empties the QB cache
 	 *
-	 * @return    CI_DB_query_builder
+	 * @return    BaseBuilder
 	 */
 	public function flushCache()
 	{
@@ -2919,7 +2919,7 @@ class BaseBuilder
 	 *
 	 * Publicly-visible method to reset the QB values.
 	 *
-	 * @return    CI_DB_query_builder
+	 * @return    BaseBuilder
 	 */
 	public function resetQuery()
 	{
