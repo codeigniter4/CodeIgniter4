@@ -124,6 +124,8 @@ $loader->addNamespace('Config', SUPPORTPATH.'Config');
  * ------------------------------------------------------
  */
 
+require_once BASEPATH.'Common.php';
+
 // Use special Services for testing.
 require_once SUPPORTPATH.'Config/Services.php';
 
