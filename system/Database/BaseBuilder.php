@@ -2682,7 +2682,7 @@ class BaseBuilder
 			{
 				if ($this->QBOrderBy[$i]['escape'] !== false && ! $this->isLiteral($this->QBOrderBy[$i]['field']))
 				{
-					$this->QBOrderBy[$i]['field'] = $this->protect_identifiers($this->QBOrderBy[$i]['field']);
+					$this->QBOrderBy[$i]['field'] = $this->protectIdentifiers($this->QBOrderBy[$i]['field']);
 				}
 
 				$this->QBOrderBy[$i] = $this->QBOrderBy[$i]['field'].$this->QBOrderBy[$i]['direction'];
