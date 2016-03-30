@@ -38,6 +38,8 @@ class RedirectException extends \Exception {}
  * @filesource
  */
 
+use CodeIgniter\PageNotFoundException;
+
 class Router implements RouterInterface
 {
 	/**
@@ -131,7 +133,7 @@ class Router implements RouterInterface
 		// everything runs off of it's default settings.
 		if (empty($uri))
 		{
-			return null;
+			return $this->controller;
 		}
 
 		if ($this->checkRoutes($uri))
@@ -144,7 +146,7 @@ class Router implements RouterInterface
 		// want this, like in the case of API's.
 		if ( ! $this->collection->shouldAutoRoute())
 		{
-			return null;
+			throw new PageNotFoundException("Can't find a route for '{$uri}'.");
 		}
 
 		$this->autoRoute($uri);
