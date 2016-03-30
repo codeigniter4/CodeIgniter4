@@ -146,15 +146,16 @@ class CodeIgniter
 		$this->getRequestObject();
 		$this->getResponseObject();
 		$this->forceSecureAccess();
-		$this->tryToRouteIt();
-
-		//--------------------------------------------------------------------
-		// Are there any "pre-controller" hooks?
-		//--------------------------------------------------------------------
-		Hooks::trigger('pre_controller');
 
 		try
 		{
+			$this->tryToRouteIt();
+
+			//--------------------------------------------------------------------
+			// Are there any "pre-controller" hooks?
+			//--------------------------------------------------------------------
+			Hooks::trigger('pre_controller');
+
 			$this->startController();
 
 			//--------------------------------------------------------------------
@@ -164,16 +165,26 @@ class CodeIgniter
 
 			$this->gatherOutput();
 			$this->sendResponse();
+
+			//--------------------------------------------------------------------
+			// Is there a post-system hook?
+			//--------------------------------------------------------------------
+			Hooks::trigger('post_system');
+		}
+		catch (Router\RedirectException $e)
+		{
+			$logger = Services::logger();
+			$logger->info('REDIRECTED ROUTE at '.$e->getMessage());
+
+			// If the route is a 'redirect' route, it throws
+			// the exception with the $to as the message
+			$this->response->redirect($e->getMessage(), 'auto', $e->getCode());
+			$this->callExit(EXIT_SUCCESS);
 		}
 		catch (PageNotFoundException $e)
 		{
 			$this->display404errors($e);
 		}
-
-		//--------------------------------------------------------------------
-		// Is there a post-system hook?
-		//--------------------------------------------------------------------
-		Hooks::trigger('post_system');
 	}
 
 	//--------------------------------------------------------------------
@@ -290,24 +301,16 @@ class CodeIgniter
 		$this->benchmark->stop('bootstrap');
 		$this->benchmark->start('routing');
 
-		try
-		{
-			$this->controller = $this->router->handle($path);
-		}
-		catch (\CodeIgniter\Router\RedirectException $e)
-		{
-			$logger = Services::logger();
-			$logger->info('REDIRECTED ROUTE at '.$e->getMessage());
-
-			// If the route is a 'redirect' route, it throws
-			// the exception with the $to as the message
-			$this->response->redirect($e->getMessage(), 'auto', $e->getCode());
-			exit(EXIT_SUCCESS);
-		}
+		$this->controller = $this->router->handle($path);
 
 		$this->method = $this->router->methodName();
 
 		$this->benchmark->stop('routing');
+	}
+
+	protected function callExit($code)
+	{
+		exit($code);
 	}
 
 	//--------------------------------------------------------------------
@@ -426,7 +429,7 @@ class CodeIgniter
 		ob_end_clean();
 
 		echo $buffer;
-		exit(EXIT_UNKNOWN_FILE);    // Unknown file
+		$this->callExit(EXIT_UNKNOWN_FILE);    // Unknown file
 	}
 
 	//--------------------------------------------------------------------
