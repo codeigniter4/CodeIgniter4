@@ -218,7 +218,7 @@ class Services
 
 		if (! $getShared)
 		{
-			return new \CodeIgniter\FileLocator(new \Config\Autoload());
+			return new \CodeIgniter\Autoloader\FileLocator(new \Config\Autoload());
 		}
 
 		return self::getSharedInstance('loader');
