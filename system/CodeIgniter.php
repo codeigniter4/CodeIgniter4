@@ -150,15 +150,16 @@ class CodeIgniter
 		$this->getRequestObject();
 		$this->getResponseObject();
 		$this->forceSecureAccess();
-		$this->tryToRouteIt();
-
-		//--------------------------------------------------------------------
-		// Are there any "pre-controller" hooks?
-		//--------------------------------------------------------------------
-		Hooks::trigger('pre_controller');
 
 		try
 		{
+			$this->tryToRouteIt();
+
+			//--------------------------------------------------------------------
+			// Are there any "pre-controller" hooks?
+			//--------------------------------------------------------------------
+			Hooks::trigger('pre_controller');
+
 			$this->startController();
 
 			//--------------------------------------------------------------------
@@ -168,6 +169,16 @@ class CodeIgniter
 
 			$this->gatherOutput();
 			$this->sendResponse();
+		}
+		catch (Router\RedirectException $e)
+		{
+			$logger = Services::logger();
+			$logger->info('REDIRECTED ROUTE at '.$e->getMessage());
+
+			// If the route is a 'redirect' route, it throws
+			// the exception with the $to as the message
+			$this->response->redirect($e->getMessage(), 'auto', $e->getCode());
+			exit(EXIT_SUCCESS);
 		}
 		catch (PageNotFoundException $e)
 		{
@@ -395,22 +406,8 @@ class CodeIgniter
 		$this->benchmark->stop('bootstrap');
 		$this->benchmark->start('routing');
 
-		try
-		{
-			$this->controller = $this->router->handle($path);
-		}
-		catch (\CodeIgniter\Router\RedirectException $e)
-		{
-			$logger = Services::logger();
-			$logger->info('REDIRECTED ROUTE at '.$e->getMessage());
-
-			// If the route is a 'redirect' route, it throws
-			// the exception with the $to as the message
-			$this->response->redirect($e->getMessage(), 'auto', $e->getCode());
-			exit(EXIT_SUCCESS);
-		}
-
-		$this->method = $this->router->methodName();
+		$this->controller = $this->router->handle($path);
+		$this->method     = $this->router->methodName();
 
 		$this->benchmark->stop('routing');
 	}
