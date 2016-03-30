@@ -134,6 +134,9 @@ class CodeIgniter
 		define('CI_VERSION', $this->CIVersion);
 
 		require_once BASEPATH.'Common.php';
+
+		$this->loadDotEnv();
+
 		require_once APPPATH.'Config/Services.php';
 
 		$this->loadFrameworkConstants();
