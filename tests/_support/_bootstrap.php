@@ -155,7 +155,8 @@ if (ENVIRONMENT !== 'production')
  * ------------------------------------------------------
  */
 
-require_once APPPATH.'Config/Services.php';
+// Use special Services for testing.
+require_once SUPPORTPATH.'Config/Services.php';
 
 /*
  * ------------------------------------------------------
