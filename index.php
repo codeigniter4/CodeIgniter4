@@ -38,6 +38,7 @@ switch (ENVIRONMENT)
 		error_reporting(-1);
 		ini_set('display_errors', 1);
 		define('CI_DEBUG', 1);
+		define('SHOW_DEBUG_BACKTRACE', TRUE);
 		break;
 
 	case 'production':
@@ -144,12 +145,95 @@ define('WRITEPATH', realpath($writable_directory).DIRECTORY_SEPARATOR);
 define('APPPATH', realpath($application_folder).DIRECTORY_SEPARATOR);
 
 /*
+ * ------------------------------------------------------
+ *  Load any environment-specific settings from .env file
+ * ------------------------------------------------------
+ */
+
+// Load environment settings from .env files
+// into $_SERVER and $_ENV
+require BASEPATH.'Config/DotEnv.php';
+$env = new CodeIgniter\Config\DotEnv(APPPATH);
+$env->load();
+unset($env);
+
+/*
+ * ------------------------------------------------------
+ *  Load the framework constants
+ * ------------------------------------------------------
+ */
+if (file_exists(APPPATH.'Config/'.ENVIRONMENT.'/Constants.php'))
+{
+	require_once APPPATH.'Config/'.ENVIRONMENT.'/Constants.php';
+}
+
+require_once(APPPATH.'Config/Constants.php');
+
+/*
+ * ------------------------------------------------------
+ *  Setup the autoloader
+ * ------------------------------------------------------
+ */
+// The autoloader isn't initialized yet, so load the file manually.
+require BASEPATH.'Autoloader/Autoloader.php';
+require APPPATH.'Config/Autoload.php';
+require APPPATH.'Config/Services.php';
+
+// The Autoloader class only handles namespaces
+// and "legacy" support.
+$loader = Config\Services::autoloader();
+$loader->initialize(new Config\Autoload());
+
+// The register function will prepend
+// the psr4 loader.
+$loader->register();
+
+/*
+ * ------------------------------------------------------
+ *  Load the global functions
+ * ------------------------------------------------------
+ */
+
+require_once BASEPATH.'Common.php';
+
+/*
+ * ------------------------------------------------------
+ *  Set custom exception handling
+ * ------------------------------------------------------
+ */
+$config = new \Config\App();
+
+Config\Services::exceptions($config, true)
+	->initialize();
+
+//--------------------------------------------------------------------
+// Should we use a Composer autoloader?
+//--------------------------------------------------------------------
+
+if ($composer_autoload = $config->composerAutoload)
+{
+	if ($composer_autoload === TRUE)
+	{
+		file_exists(APPPATH.'vendor/autoload.php')
+			? require_once(APPPATH.'vendor/autoload.php')
+			: log_message('error', '$config->\'composerAutoload\' is set to TRUE but '.APPPATH.'vendor/autoload.php was not found.');
+	}
+	elseif (file_exists($composer_autoload))
+	{
+		require_once($composer_autoload);
+	}
+	else
+	{
+		log_message('error', 'Could not find the specified $config->\'composerAutoload\' path: '.$composer_autoload);
+	}
+}
+
+/*
  * --------------------------------------------------------------------
  * LOAD THE BOOTSTRAP FILE
  * --------------------------------------------------------------------
  *
  * And away we go...
  */
-require BASEPATH.'CodeIgniter.php';
-$codeigniter = new CodeIgniter\CodeIgniter($startMemory, $startTime);
+$codeigniter = new CodeIgniter\CodeIgniter($startMemory, $startTime, $config);
 $codeigniter->run();

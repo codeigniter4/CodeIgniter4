@@ -39,9 +39,7 @@
 
 use Config\App;
 use Config\Services;
-use Config\Autoload;
 use CodeIgniter\Hooks\Hooks;
-use CodeIgniter\Config\DotEnv;
 
 /**
  * System Initialization Class
@@ -116,10 +114,17 @@ class CodeIgniter
 	 *
 	 * @param int $startMemory
 	 */
-	public function __construct(int $startMemory, float $startTime)
+	public function __construct(int $startMemory, float $startTime, App $config)
 	{
 		$this->startMemory = $startMemory;
 		$this->startTime   = $startTime;
+		$this->config = $config;
+
+		// When testing, we need to create more than one instance.
+		if ( ! defined('CI_VERSION'))
+		{
+			define('CI_VERSION', $this->CIVersion);
+		}
 	}
 
 	//--------------------------------------------------------------------
@@ -131,15 +136,6 @@ class CodeIgniter
 	 */
 	public function run()
 	{
-		define('CI_VERSION', $this->CIVersion);
-
-		require_once BASEPATH.'Common.php';
-		require_once APPPATH.'Config/Services.php';
-
-		$this->loadFrameworkConstants();
-		$this->setupAutoloader();
-		$this->setExceptionHandling();
-		$this->loadComposerAutoloader();
 		$this->startBenchmark();
 
 		//--------------------------------------------------------------------
@@ -150,15 +146,16 @@ class CodeIgniter
 		$this->getRequestObject();
 		$this->getResponseObject();
 		$this->forceSecureAccess();
-		$this->tryToRouteIt();
-
-		//--------------------------------------------------------------------
-		// Are there any "pre-controller" hooks?
-		//--------------------------------------------------------------------
-		Hooks::trigger('pre_controller');
 
 		try
 		{
+			$this->tryToRouteIt();
+
+			//--------------------------------------------------------------------
+			// Are there any "pre-controller" hooks?
+			//--------------------------------------------------------------------
+			Hooks::trigger('pre_controller');
+
 			$this->startController();
 
 			//--------------------------------------------------------------------
@@ -168,80 +165,26 @@ class CodeIgniter
 
 			$this->gatherOutput();
 			$this->sendResponse();
+
+			//--------------------------------------------------------------------
+			// Is there a post-system hook?
+			//--------------------------------------------------------------------
+			Hooks::trigger('post_system');
+		}
+		catch (Router\RedirectException $e)
+		{
+			$logger = Services::logger();
+			$logger->info('REDIRECTED ROUTE at '.$e->getMessage());
+
+			// If the route is a 'redirect' route, it throws
+			// the exception with the $to as the message
+			$this->response->redirect($e->getMessage(), 'auto', $e->getCode());
+			$this->callExit(EXIT_SUCCESS);
 		}
 		catch (PageNotFoundException $e)
 		{
 			$this->display404errors($e);
 		}
-
-		//--------------------------------------------------------------------
-		// Is there a post-system hook?
-		//--------------------------------------------------------------------
-		Hooks::trigger('post_system');
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Load the framework constants
-	 */
-	protected function loadFrameworkConstants()
-	{
-		if (file_exists(APPPATH.'Config/'.ENVIRONMENT.'/constants.php'))
-		{
-			require_once APPPATH.'Config/'.ENVIRONMENT.'/constants.php';
-		}
-
-		require_once(APPPATH.'Config/Constants.php');
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Load any environment-specific settings from .env file
-	 */
-	protected function loadDotEnv()
-	{
-		// Load environment settings from .env files
-		// into $_SERVER and $_ENV
-		require BASEPATH.'Config/DotEnv.php';
-		$env = new DotEnv(APPPATH);
-		$env->load();
-		unset($env);
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Setup the autoloader
-	 */
-	protected function setupAutoloader()
-	{
-		// The autoloader isn't initialized yet, so load the file manually.
-		require BASEPATH.'Autoloader/Autoloader.php';
-		require APPPATH.'Config/Autoload.php';
-
-		// The Autoloader class only handles namespaces
-		// and "legacy" support.
-		$loader = Services::autoloader();
-		$loader->initialize(new Autoload());
-
-		// The register function will prepend
-		// the psr4 loader.
-		$loader->register();
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Set custom exception handling
-	 */
-	protected function setExceptionHandling()
-	{
-		$this->config = new App();
-
-		Services::exceptions($this->config, true)
-		        ->initialize();
 	}
 
 	//--------------------------------------------------------------------
@@ -259,43 +202,6 @@ class CodeIgniter
 		$this->benchmark = Services::timer(true);
 		$this->benchmark->start('total_execution', $this->startTime);
 		$this->benchmark->start('bootstrap');
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Should we use a Composer autoloader?
-	 *
-	 * CodeIgniter provides its own PSR4-compatible autoloader, but many
-	 * third-party scripts will take advantage of the extra flexibility
-	 * that Composer provides. This allows that support to be provided,
-	 * and even with a customizable path to their autoloader.
-	 */
-	protected function loadComposerAutoloader()
-	{
-		$composer_autoload = $this->config->composerAutoload;
-
-		if (empty($composer_autoload))
-		{
-			return;
-		}
-
-		if ($composer_autoload === true)
-		{
-			file_exists(APPPATH.'vendor/autoload.php')
-				? require_once(APPPATH.'vendor/autoload.php')
-				: log_message('error', '$this->config->\'composerAutoload\' is set to TRUE but '.APPPATH.
-				                       'vendor/autoload.php was not found.');
-		}
-		elseif (file_exists($composer_autoload))
-		{
-			require_once($composer_autoload);
-		}
-		else
-		{
-			log_message('error',
-				'Could not find the specified $this->config->\'composerAutoload\' path: '.$composer_autoload);
-		}
 	}
 
 	//--------------------------------------------------------------------
@@ -395,24 +301,16 @@ class CodeIgniter
 		$this->benchmark->stop('bootstrap');
 		$this->benchmark->start('routing');
 
-		try
-		{
-			$this->controller = $this->router->handle($path);
-		}
-		catch (\CodeIgniter\Router\RedirectException $e)
-		{
-			$logger = Services::logger();
-			$logger->info('REDIRECTED ROUTE at '.$e->getMessage());
-
-			// If the route is a 'redirect' route, it throws
-			// the exception with the $to as the message
-			$this->response->redirect($e->getMessage(), 'auto', $e->getCode());
-			exit(EXIT_SUCCESS);
-		}
+		$this->controller = $this->router->handle($path);
 
 		$this->method = $this->router->methodName();
 
 		$this->benchmark->stop('routing');
+	}
+
+	protected function callExit($code)
+	{
+		exit($code);
 	}
 
 	//--------------------------------------------------------------------
@@ -531,7 +429,7 @@ class CodeIgniter
 		ob_end_clean();
 
 		echo $buffer;
-		exit(EXIT_UNKNOWN_FILE);    // Unknown file
+		$this->callExit(EXIT_UNKNOWN_FILE);    // Unknown file
 	}
 
 	//--------------------------------------------------------------------

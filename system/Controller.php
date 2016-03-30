@@ -44,7 +44,6 @@ use CodeIgniter\Log\Logger;
 /**
  * Class Controller
  *
- * @codeCoverageIgnore
  * @package CodeIgniter
  */
 class Controller

@@ -18,8 +18,6 @@
         <whitelist processUncoveredFilesFromWhitelist="true">
             <directory suffix=".php">./system</directory>
             <exclude>
-                <file>./system/CodeIgniter.php</file>
-                <file>./system/Controller.php</file>
                 <file>./system/ComposerScripts.php</file>
                 <file>./system/View/Escaper.php</file>
                 <directory suffix=".php">./system/View/Exception</directory>
