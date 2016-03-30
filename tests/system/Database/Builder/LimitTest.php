@@ -41,4 +41,17 @@ class LimitTest extends \CIUnitTestCase
 	}
 
 	//--------------------------------------------------------------------
+
+	public function testLimitAndOffsetMethod()
+	{
+		$builder = new BaseBuilder('user', $this->db);
+
+		$builder->limit(5)->offset(1);
+
+		$expectedSQL   = "SELECT * FROM \"user\"  LIMIT 1, 5";
+
+		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+	}
+
+	//--------------------------------------------------------------------
 }

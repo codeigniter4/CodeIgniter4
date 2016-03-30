@@ -42,4 +42,16 @@ class OrderTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testOrderRandom()
+	{
+		$builder = new BaseBuilder('user', $this->db);
+
+		$builder->orderBy('name', 'random');
+
+		$expectedSQL   = "SELECT * FROM \"user\" ORDER BY RAND()";
+
+		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+	}
+
+	//--------------------------------------------------------------------
 }

@@ -54,4 +54,17 @@ class FromTest extends \CIUnitTestCase
 	}
 
 	//--------------------------------------------------------------------
+
+	public function testFromWithMultipleTablesAsString()
+	{
+		$builder = new BaseBuilder('user', $this->db);
+
+		$builder->from(['jobs, roles']);
+
+		$expectedSQL   = "SELECT * FROM \"user\", \"jobs\", \"roles\"";
+
+		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+	}
+
+	//--------------------------------------------------------------------
 }

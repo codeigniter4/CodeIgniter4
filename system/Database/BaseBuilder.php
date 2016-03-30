@@ -574,7 +574,7 @@ class BaseBuilder
 				$val = trim($val);
 
 				// Extract any aliases that might exist. We use this information
-				// in the protect_identifiers to know whether to add a table prefix
+				// in the protectIdentifiers to know whether to add a table prefix
 				$this->trackAliases($val);
 
 				$this->QBFrom[] = $this->protectIdentifiers($val, true, null, false);
@@ -621,7 +621,7 @@ class BaseBuilder
 		}
 
 		// Extract any aliases that might exist. We use this information
-		// in the protect_identifiers to know whether to add a table prefix
+		// in the protectIdentifiers to know whether to add a table prefix
 		$this->trackAliases($table);
 
 		is_bool($escape) OR $escape = $this->protectIdentifiers;
@@ -1653,7 +1653,7 @@ class BaseBuilder
 		$affected_rows = 0;
 		for ($i = 0, $total = count($this->QBSet); $i < $total; $i += $batch_size)
 		{
-			$this->query($this->_insertBatch($this->protect_identifiers($table, true, $escape, false), $this->QBKeys,
+			$this->query($this->_insertBatch($this->protectIdentifiers($table, true, $escape, false), $this->QBKeys,
 				array_slice($this->QBSet, $i, $batch_size)));
 			$affected_rows += $this->affected_rows();
 		}
@@ -1891,7 +1891,7 @@ class BaseBuilder
 			$table = $this->QBFrom[0];
 		}
 
-		$sql = $this->_replace($this->protect_identifiers($table, true, null, false), array_keys($this->QBSet),
+		$sql = $this->_replace($this->protectIdentifiers($table, true, null, false), array_keys($this->QBSet),
 			array_values($this->QBSet));
 
 		$this->resetWrite();
@@ -2115,8 +2115,8 @@ class BaseBuilder
 		$affected_rows = 0;
 		for ($i = 0, $total = count($this->QBSet); $i < $total; $i += $batch_size)
 		{
-			$this->query($this->_updateBatch($this->protect_identifiers($table, true, null, false),
-				array_slice($this->QBSet, $i, $batch_size), $this->protect_identifiers($index)));
+			$this->query($this->_updateBatch($this->protectIdentifiers($table, true, null, false),
+				array_slice($this->QBSet, $i, $batch_size), $this->protectIdentifiers($index)));
 			$affected_rows += $this->affected_rows();
 			$this->QBWhere = [];
 		}
@@ -2201,7 +2201,7 @@ class BaseBuilder
 					$index_set = true;
 				}
 
-				$clean[$this->protect_identifiers($k2, false, $escape)] = ($escape === false) ? $v2
+				$clean[$this->protectIdentifiers($k2, false, $escape)] = ($escape === false) ? $v2
 					: $this->escape($v2);
 			}
 
