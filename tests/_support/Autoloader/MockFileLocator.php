@@ -1,6 +1,4 @@
-<?php namespace CodeIgniter;
-
-use CodeIgniter\Autoloader\FileLocator;
+<?php namespace CodeIgniter\Autoloader;
 
 class MockFileLocator extends FileLocator
 {

@@ -1,8 +1,8 @@
-<?php namespace CodeIgniter;
+<?php namespace CodeIgniter\Autoloader;
 
 use Config\MockAutoload;
 
-class LoaderTest extends \PHPUnit_Framework_TestCase
+class FileLocatorTest extends \PHPUnit_Framework_TestCase
 {
 	/**
 	 * @var MockFileLocator
