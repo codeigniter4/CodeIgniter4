@@ -24,6 +24,7 @@ switch (ENVIRONMENT)
 }
 
 define('CI_DEBUG', 1);
+define('SHOW_DEBUG_BACKTRACE', TRUE);
 
 $system_path = '../../system';
 
@@ -31,68 +32,55 @@ $application_folder = '../../application';
 
 $writable_directory = '../../writable';
 
+// Ensure the current directory is pointing to the front controller's directory
+chdir(__DIR__);
 
-// Set the current directory correctly for CLI requests
-if (defined('STDIN'))
-{
-	chdir(__DIR__);
-}
-
-if (($_temp = realpath($system_path)) !== false)
-{
-	$system_path = $_temp.'/';
-}
-else
-{
-	// Ensure there's a trailing slash
-	$system_path = rtrim($system_path, '/').'/';
-}
-
-// Is the system path correct?
-if ( ! is_dir($system_path))
+// Are the system and application paths correct?
+if ( ! realpath($system_path) OR ! is_dir($system_path))
 {
 	header('HTTP/1.1 503 Service Unavailable.', true, 503);
 	echo 'Your system folder path does not appear to be set correctly. Please open the following file and correct this: '.
-	     pathinfo(__FILE__, PATHINFO_BASENAME);
+		pathinfo(__FILE__, PATHINFO_BASENAME);
 	exit(3); // EXIT_CONFIG
 }
 
+if ( ! realpath($application_folder) OR ! is_dir($application_folder))
+{
+	header('HTTP/1.1 503 Service Unavailable.', true, 503);
+	echo 'Your application folder path does not appear to be set correctly. Please open the following file and correct this: '.
+		pathinfo(__FILE__, PATHINFO_BASENAME);
+	exit(3); // EXIT_CONFIG
+}
+
+// The name of THIS file
+define('SELF', pathinfo(__FILE__, PATHINFO_BASENAME));
+
 // Path to the system folder
-define('BASEPATH', str_replace('\\', '/', $system_path));
+define('BASEPATH', realpath($system_path).DIRECTORY_SEPARATOR);
 
 // Path to the front controller (this file)
-define('FCPATH', realpath(__DIR__.'/../../') .'/');
-
-// The name of the INDEX file
-define('SELF', pathinfo(FCPATH.'index.php', PATHINFO_BASENAME));
+define('FCPATH', __DIR__.DIRECTORY_SEPARATOR);
 
 // Path to the writable directory.
-define('WRITEPATH', realpath(str_replace('\\', '/', $writable_directory)).'/');
+define('WRITEPATH', realpath($writable_directory).DIRECTORY_SEPARATOR);
 
 // The path to the "application" folder
-if (is_dir($application_folder))
-{
-	if (($_temp = realpath($application_folder)) !== false)
-	{
-		$application_folder = $_temp;
-	}
-
-	define('APPPATH', $application_folder.DIRECTORY_SEPARATOR);
-}
-else
-{
-	if ( ! is_dir(BASEPATH.$application_folder.DIRECTORY_SEPARATOR))
-	{
-		header('HTTP/1.1 503 Service Unavailable.', true, 503);
-		echo 'Your application folder path does not appear to be set correctly. Please open the following file and correct this: '.
-		     SELF;
-		exit(3); // EXIT_CONFIG
-	}
-
-	define('APPPATH', BASEPATH.$application_folder.DIRECTORY_SEPARATOR);
-}
+define('APPPATH', realpath($application_folder).DIRECTORY_SEPARATOR);
 
 define('SUPPORTPATH', realpath(BASEPATH.'../tests/_support/').'/');
+
+/*
+ * ------------------------------------------------------
+ *  Load any environment-specific settings from .env file
+ * ------------------------------------------------------
+ */
+
+// Load environment settings from .env files
+// into $_SERVER and $_ENV
+require BASEPATH.'Config/DotEnv.php';
+$env = new CodeIgniter\Config\DotEnv(APPPATH);
+$env->load();
+unset($env);
 
 /*
  * ------------------------------------------------------
@@ -130,12 +118,45 @@ $loader->register();
 $loader->addNamespace('CodeIgniter', SUPPORTPATH);
 $loader->addNamespace('Config', SUPPORTPATH.'Config');
 
+/*
+ * ------------------------------------------------------
+ *  Load the global functions
+ * ------------------------------------------------------
+ */
+
+require_once BASEPATH.'Common.php';
+
+/*
+ * ------------------------------------------------------
+ *  Set custom exception handling
+ * ------------------------------------------------------
+ */
+$config = new \Config\App();
+
+Config\Services::exceptions($config, true)
+	->initialize();
+
 //--------------------------------------------------------------------
-// LOAD THE BOOTSTRAP FILE
+// Should we use a Composer autoloader?
 //--------------------------------------------------------------------
 
-$config = new Config\App();
-new CodeIgniter\MockBootstrap($config);
+if ($composer_autoload = $config->composerAutoload)
+{
+	if ($composer_autoload === TRUE)
+	{
+		file_exists(APPPATH.'vendor/autoload.php')
+			? require_once(APPPATH.'vendor/autoload.php')
+			: log_message('error', '$config->\'composerAutoload\' is set to TRUE but '.APPPATH.'vendor/autoload.php was not found.');
+	}
+	elseif (file_exists($composer_autoload))
+	{
+		require_once($composer_autoload);
+	}
+	else
+	{
+		log_message('error', 'Could not find the specified $config->\'composerAutoload\' path: '.$composer_autoload);
+	}
+}
 
 //--------------------------------------------------------------------
 // Load our TestCase

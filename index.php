@@ -189,13 +189,51 @@ $loader->initialize(new Config\Autoload());
 $loader->register();
 
 /*
+ * ------------------------------------------------------
+ *  Load the global functions
+ * ------------------------------------------------------
+ */
+
+require_once BASEPATH.'Common.php';
+
+/*
+ * ------------------------------------------------------
+ *  Set custom exception handling
+ * ------------------------------------------------------
+ */
+$config = new \Config\App();
+
+Config\Services::exceptions($config, true)
+	->initialize();
+
+//--------------------------------------------------------------------
+// Should we use a Composer autoloader?
+//--------------------------------------------------------------------
+
+if ($composer_autoload = $config->composerAutoload)
+{
+	if ($composer_autoload === TRUE)
+	{
+		file_exists(APPPATH.'vendor/autoload.php')
+			? require_once(APPPATH.'vendor/autoload.php')
+			: log_message('error', '$config->\'composerAutoload\' is set to TRUE but '.APPPATH.'vendor/autoload.php was not found.');
+	}
+	elseif (file_exists($composer_autoload))
+	{
+		require_once($composer_autoload);
+	}
+	else
+	{
+		log_message('error', 'Could not find the specified $config->\'composerAutoload\' path: '.$composer_autoload);
+	}
+}
+
+/*
  * --------------------------------------------------------------------
  * LOAD THE BOOTSTRAP FILE
  * --------------------------------------------------------------------
  *
  * And away we go...
  */
-$config = new Config\App();
-new CodeIgniter\Bootstrap($config);
 $codeigniter = new CodeIgniter\CodeIgniter($startMemory, $startTime, $config);
 $codeigniter->run();
