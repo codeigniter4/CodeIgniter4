@@ -101,27 +101,22 @@ $writable_directory = 'writable';
  * ---------------------------------------------------------------
  */
 
-// Set the current directory correctly for CLI requests
-if (defined('STDIN'))
-{
-	chdir(__DIR__);
-}
+// Ensure the current directory is pointing to the front controller's directory
+chdir(__DIR__);
 
-if (($_temp = realpath($system_path)) !== false)
-{
-	$system_path = $_temp.'/';
-}
-else
-{
-	// Ensure there's a trailing slash
-	$system_path = rtrim($system_path, '/').'/';
-}
-
-// Is the system path correct?
-if ( ! is_dir($system_path))
+// Are the system and application paths correct?
+if ( ! realpath($system_path) OR ! is_dir($system_path))
 {
 	header('HTTP/1.1 503 Service Unavailable.', true, 503);
 	echo 'Your system folder path does not appear to be set correctly. Please open the following file and correct this: '.
+	     pathinfo(__FILE__, PATHINFO_BASENAME);
+	exit(3); // EXIT_CONFIG
+}
+
+if ( ! realpath($application_folder) OR ! is_dir($application_folder))
+{
+	header('HTTP/1.1 503 Service Unavailable.', true, 503);
+	echo 'Your application folder path does not appear to be set correctly. Please open the following file and correct this: '.
 	     pathinfo(__FILE__, PATHINFO_BASENAME);
 	exit(3); // EXIT_CONFIG
 }
@@ -137,36 +132,16 @@ if ( ! is_dir($system_path))
 define('SELF', pathinfo(__FILE__, PATHINFO_BASENAME));
 
 // Path to the system folder
-define('BASEPATH', realpath(str_replace('\\', '/', $system_path)).DIRECTORY_SEPARATOR);
+define('BASEPATH', realpath($system_path).DIRECTORY_SEPARATOR);
 
 // Path to the front controller (this file)
-define('FCPATH', realpath(__DIR__).DIRECTORY_SEPARATOR);
+define('FCPATH', __DIR__.DIRECTORY_SEPARATOR);
 
 // Path to the writable directory.
-define('WRITEPATH', realpath(str_replace('\\', '/', $writable_directory)).DIRECTORY_SEPARATOR);
+define('WRITEPATH', realpath($writable_directory).DIRECTORY_SEPARATOR);
 
 // The path to the "application" folder
-if (is_dir($application_folder))
-{
-	if (($_temp = realpath($application_folder)) !== false)
-	{
-		$application_folder = $_temp;
-	}
-
-	define('APPPATH', realpath($application_folder).DIRECTORY_SEPARATOR);
-}
-else
-{
-	if ( ! is_dir(BASEPATH.$application_folder.DIRECTORY_SEPARATOR))
-	{
-		header('HTTP/1.1 503 Service Unavailable.', true, 503);
-		echo 'Your application folder path does not appear to be set correctly. Please open the following file and correct this: '.
-		     SELF;
-		exit(3); // EXIT_CONFIG
-	}
-
-	define('APPPATH', realpath(BASEPATH.$application_folder).DIRECTORY_SEPARATOR);
-}
+define('APPPATH', realpath($application_folder).DIRECTORY_SEPARATOR);
 
 /*
  * --------------------------------------------------------------------
