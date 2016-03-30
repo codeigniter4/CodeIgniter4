@@ -48,7 +48,7 @@ use Config\Autoload;
  *
  * @package CodeIgniter
  */
-class Loader {
+class FileLocator {
 
 	/**
 	 * Stores our namespaces

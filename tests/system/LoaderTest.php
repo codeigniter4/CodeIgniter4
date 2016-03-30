@@ -5,7 +5,7 @@ use Config\MockAutoload;
 class LoaderTest extends \PHPUnit_Framework_TestCase
 {
 	/**
-	 * @var MockLoader
+	 * @var MockFileLocator
 	 */
 	protected $loader;
 
@@ -20,7 +20,7 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
 			'Blog'            => '/modules/blog'
 		];
 
-		$this->loader = new MockLoader($config);
+		$this->loader = new MockFileLocator($config);
 
 		$this->loader->setFiles([
 			APPPATH.'index.php',
