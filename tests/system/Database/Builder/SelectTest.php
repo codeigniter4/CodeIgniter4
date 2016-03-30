@@ -195,4 +195,15 @@ class SelectTest extends \CIUnitTestCase
 	}
 
 	//--------------------------------------------------------------------
+
+	public function testSelectMinThrowsExceptionOnEmptyValue()
+	{
+		$builder = new BaseBuilder('invoices', $this->db);
+
+		$this->setExpectedException('CodeIgniter\DatabaseException', 'The query you submitted is not valid.');
+
+		$builder->selectSum('');
+	}
+
+	//--------------------------------------------------------------------
 }

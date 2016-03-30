@@ -35,6 +35,17 @@ class InsertTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testThrowsExceptionOnNoValuesSet()
+	{
+		$builder = new BaseBuilder('jobs', $this->db);
+
+		$this->setExpectedException('CodeIgniter\DatabaseException', 'You must use the "set" method to update an entry.');
+
+		$builder->insert(null, true, true);
+	}
+
+	//--------------------------------------------------------------------
+
 	// @todo Come back and revisit insert Batch later.
 //	public function testInsertBatch()
 //	{

@@ -1,5 +1,7 @@
 <?php namespace CodeIgniter\Database;
 
+use CodeIgniter\DatabaseException;
+
 /**
  * Class BaseBuilder
  *
@@ -463,14 +465,14 @@ class BaseBuilder
 	{
 		if ( ! is_string($select) OR $select === '')
 		{
-			$this->display_error('db_invalid_query');
+			throw new DatabaseException('The query you submitted is not valid.');
 		}
 
 		$type = strtoupper($type);
 
 		if ( ! in_array($type, ['MAX', 'MIN', 'AVG', 'SUM']))
 		{
-			show_error('Invalid function type: '.$type);
+			throw new DatabaseException('Invalid function type: '.$type);
 		}
 
 		if ($alias === '')
@@ -1830,11 +1832,16 @@ class BaseBuilder
 	 *
 	 * @return    string
 	 */
-	protected function validateInsert($table = '')
+	protected function validateInsert()
 	{
 		if (count($this->QBSet) === 0)
 		{
-			return (CI_DEBUG) ? $this->display_error('db_must_use_set') : false;
+			if (CI_DEBUG)
+			{
+				throw new DatabaseException('You must use the "set" method to update an entry.');
+			}
+
+			return false;
 		}
 
 		return true;
@@ -2055,7 +2062,12 @@ class BaseBuilder
 	{
 		if (count($this->QBSet) === 0)
 		{
-			return (CI_DEBUG) ? '' /*$this->display_error('db_must_use_set')*/ : false;
+			if (CI_DEBUG)
+			{
+				throw new DatabaseException('You must use the "set" method to update an entry.');
+			}
+
+			return false;
 		}
 
 		return true;
@@ -2267,11 +2279,6 @@ class BaseBuilder
 	 */
 	public function truncate($test = false)
 	{
-		if ( ! isset($this->QBFrom[0]))
-		{
-			return (CI_DEBUG) ? $this->display_error('db_must_set_table') : false;
-		}
-
 		$table = $this->QBFrom[0];
 
 		$sql = $this->_truncate($table);

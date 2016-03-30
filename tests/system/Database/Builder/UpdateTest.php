@@ -60,4 +60,15 @@ class UpdateTest extends \CIUnitTestCase
 	}
 
 	//--------------------------------------------------------------------
+
+	public function testUpdateThrowsExceptionWithNoData()
+	{
+		$builder = new BaseBuilder('jobs', $this->db);
+
+		$this->setExpectedException('CodeIgniter\DatabaseException', 'You must use the "set" method to update an entry.');
+
+		$builder->update(null, null, null, true);
+	}
+
+	//--------------------------------------------------------------------
 }

@@ -1,5 +1,7 @@
 <?php namespace CodeIgniter\Database;
 
+use CodeIgniter\DatabaseException;
+
 abstract class BaseConnection implements ConnectionInterface
 {
 	/**
@@ -459,10 +461,15 @@ abstract class BaseConnection implements ConnectionInterface
 	 *
 	 * @param string $tableName
 	 *
-	 * @return QueryBuilder
+	 * @return BaseBuilder
 	 */
 	public function table(string $tableName)
 	{
+		if (empty($table))
+		{
+			throw new DatabaseException('You must set the database table to be used with your query.');
+		}
+
 		$className = str_replace('Connection', 'Builder', get_class($this));
 
 		$options = [
