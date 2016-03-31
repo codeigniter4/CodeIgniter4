@@ -206,4 +206,17 @@ class SelectTest extends \CIUnitTestCase
 	}
 
 	//--------------------------------------------------------------------
+
+	public function testSelectMaxWithDotNameAndNoAlias()
+	{
+		$builder = new BaseBuilder('invoices', $this->db);
+
+		$builder->selectMax('db.payments');
+
+		$expected = "SELECT MAX(\"db\".\"payments\") AS \"payments\" FROM \"invoices\"";
+
+		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+	}
+
+	//--------------------------------------------------------------------
 }

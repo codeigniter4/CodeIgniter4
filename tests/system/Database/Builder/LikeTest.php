@@ -31,6 +31,21 @@ class LikeTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testLikeNoSide()
+	{
+		$builder = new BaseBuilder('job', $this->db);
+
+		$builder->like('name', 'veloper', 'none');
+
+		$expectedSQL   = "SELECT * FROM \"job\" WHERE \"name\" LIKE ':name' ESCAPE '!'";
+		$expectedBinds = ['name' => 'veloper'];
+
+		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+		$this->assertSame($expectedBinds, $builder->getBinds());
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testLikeBeforeOnly()
 	{
 		$builder = new BaseBuilder('job', $this->db);
