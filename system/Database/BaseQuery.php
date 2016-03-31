@@ -328,7 +328,10 @@ class BaseQuery implements QueryInterface
 
 		// Reverse the binds so that duplicate named binds
 		// will be processed prior to the original binds.
-		$binds = array_reverse($binds);
+		if (! is_numeric(key(array_slice($binds, 0, 1))))
+		{
+			$binds = array_reverse($binds);
+		}
 
 		// We'll need marker length later
 		$ml = strlen($this->bindMarker);
