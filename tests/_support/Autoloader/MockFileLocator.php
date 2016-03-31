@@ -1,6 +1,6 @@
-<?php namespace CodeIgniter;
+<?php namespace CodeIgniter\Autoloader;
 
-class MockLoader extends Loader
+class MockFileLocator extends FileLocator
 {
 	protected $files = [];
 

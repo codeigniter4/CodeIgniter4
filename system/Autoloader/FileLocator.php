@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter;
+<?php namespace CodeIgniter\Autoloader;
 
 /**
  * CodeIgniter
@@ -48,7 +48,7 @@ use Config\Autoload;
  *
  * @package CodeIgniter
  */
-class Loader {
+class FileLocator {
 
 	/**
 	 * Stores our namespaces
