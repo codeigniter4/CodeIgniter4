@@ -375,15 +375,20 @@ class Router implements RouterInterface
 		// If not empty, then the first segment should be the controller
 		else
 		{
-			$this->controller = ucfirst($segments[0]);
+			$this->controller = ucfirst(array_shift($segments));
 		}
 
 		// Use the method name if it exists.
 		// If it doesn't, no biggie - the default method name
 		// has already been set.
-		if (! empty($segments[1]))
+		if (! empty($segments))
 		{
-			$this->method = $segments[1];
+			$this->method = array_shift($segments);
+		}
+
+		if (! empty($segments))
+		{
+			$this->params = $segments;
 		}
 	}
 
