@@ -1,24 +1,8 @@
 <?php
 
-use CodeIgniter\Log\TestLogger;
+use CodeIgniter\Test;
 
-class CIUnitTestCase extends PHPUnit_Framework_TestCase
+class CIUnitTestCase extends Test\CIUnitTestCase
 {
-	/**
-	 * Custom function to hook into CodeIgniter's Logging mechanism
-	 * to check if certain messages were logged during code execution.
-	 *
-	 * @param string $level
-	 * @param null   $expectedMessage
-	 */
-	public function assertLogged(string $level, $expectedMessage = null)
-	{
-		$result = TestLogger::didLog($level, $expectedMessage);
-
-		$this->assertTrue($result);
-	}
-
-	//--------------------------------------------------------------------
-
-
+	
 }
