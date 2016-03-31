@@ -307,6 +307,11 @@ class BaseBuilder
 
 	public function __construct(string $tableName, ConnectionInterface &$db, array $options = null)
 	{
+		if (empty($tableName))
+		{
+			throw new DatabaseException('A table must be specified when creating a new Query Builder.');
+		}
+
 		$this->trackAliases($tableName);
 		$this->from($tableName);
 
@@ -1440,19 +1445,12 @@ class BaseBuilder
 	 *
 	 * Compiles a SELECT query string and returns the sql.
 	 *
-	 * @param    string    the table name to select from (optional)
 	 * @param    bool      TRUE: resets QB values; FALSE: leave QB values alone
 	 *
 	 * @return    string
 	 */
-	public function getCompiledSelect($table = '', $reset = true)
+	public function getCompiledSelect($reset = true)
 	{
-		if ($table !== '')
-		{
-			$this->trackAliases($table);
-			$this->from($table);
-		}
-
 		$select = $this->compileSelect();
 
 		if ($reset === true)
@@ -1471,20 +1469,13 @@ class BaseBuilder
 	 * Compiles the select statement based on the other functions called
 	 * and runs the query
 	 *
-	 * @param    string    the table
 	 * @param    string    the limit clause
 	 * @param    string    the offset clause
 	 *
 	 * @return    CI_DB_result
 	 */
-	public function get($table = '', $limit = null, $offset = null)
+	public function get($limit = null, $offset = null)
 	{
-		if ($table !== '')
-		{
-			$this->trackAliases($table);
-			$this->from($table);
-		}
-
 		if ( ! empty($limit))
 		{
 			$this->limit($limit, $offset);
@@ -1588,20 +1579,14 @@ class BaseBuilder
 	 *
 	 * Allows the where clause, limit and offset to be added directly
 	 *
-	 * @param    string $table
 	 * @param    string $where
 	 * @param    int    $limit
 	 * @param    int    $offset
 	 *
 	 * @return    CI_DB_result
 	 */
-	public function getWhere($table = '', $where = null, $limit = null, $offset = null)
+	public function getWhere($where = null, $limit = null, $offset = null)
 	{
-		if ($table !== '')
-		{
-			$this->from($table);
-		}
-
 		if ($where !== null)
 		{
 			$this->where($where);
@@ -1750,14 +1735,13 @@ class BaseBuilder
 	 *
 	 * Compiles an insert query and returns the sql
 	 *
-	 * @param    string    the table to insert into
 	 * @param    bool      TRUE: reset QB values; FALSE: leave QB values alone
 	 *
 	 * @return    string
 	 */
-	public function getCompiledInsert($table = '', $reset = true)
+	public function getCompiledInsert($reset = true)
 	{
-		if ($this->validateInsert($table) === false)
+		if ($this->validateInsert() === false)
 		{
 			return false;
 		}
@@ -1871,12 +1855,11 @@ class BaseBuilder
 	 *
 	 * Compiles an replace into string and runs the query
 	 *
-	 * @param    string    the table to replace data into
 	 * @param    array     an associative array of insert values
 	 *
 	 * @return    bool    TRUE on success, FALSE on failure
 	 */
-	public function replace($table = '', $set = null)
+	public function replace($set = null)
 	{
 		if ($set !== null)
 		{
@@ -1888,15 +1871,7 @@ class BaseBuilder
 			return ($this->db_debug) ? $this->display_error('db_must_use_set') : false;
 		}
 
-		if ($table === '')
-		{
-			if ( ! isset($this->QBFrom[0]))
-			{
-				return ($this->db_debug) ? $this->display_error('db_must_set_table') : false;
-			}
-
-			$table = $this->QBFrom[0];
-		}
+		$table = $this->QBFrom[0];
 
 		$sql = $this->_replace($this->protectIdentifiers($table, true, null, false), array_keys($this->QBSet),
 			array_values($this->QBSet));
@@ -1948,17 +1923,16 @@ class BaseBuilder
 	 *
 	 * Compiles an update query and returns the sql
 	 *
-	 * @param    string    the table to update
 	 * @param    bool      TRUE: reset QB values; FALSE: leave QB values alone
 	 *
 	 * @return    string
 	 */
-	public function getCompiledUpdate($table = '', $reset = true)
+	public function getCompiledUpdate($reset = true)
 	{
 		// Combine any cached components with the current statements
 		$this->mergeCache();
 
-		if ($this->validateUpdate($table) === false)
+		if ($this->validateUpdate() === false)
 		{
 			return false;
 		}
@@ -2080,13 +2054,12 @@ class BaseBuilder
 	 *
 	 * Compiles an update string and runs the query
 	 *
-	 * @param    string    the table to retrieve the results from
 	 * @param    array     an associative array of update values
 	 * @param    string    the where key
 	 *
 	 * @return    int    number of rows affected or FALSE on failure
 	 */
-	public function updateBatch($table, $set = null, $index = null, $batch_size = 100)
+	public function updateBatch($set = null, $index = null, $batch_size = 100)
 	{
 		// Combine any cached components with the current statements
 		$this->mergeCache();
@@ -2113,15 +2086,7 @@ class BaseBuilder
 			$this->setUpdateBatch($set, $index);
 		}
 
-		if (strlen($table) === 0)
-		{
-			if ( ! isset($this->QBFrom[0]))
-			{
-				return ($this->db_debug) ? $this->display_error('db_must_set_table') : false;
-			}
-
-			$table = $this->QBFrom[0];
-		}
+		$table = $this->QBFrom[0];
 
 		// Batch this baby
 		$affected_rows = 0;
@@ -2324,8 +2289,10 @@ class BaseBuilder
 	 *
 	 * @return    string
 	 */
-	public function getCompiledDelete($table = '', $reset = true)
+	public function getCompiledDelete($reset = true)
 	{
+		$table = $this->QBFrom[0];
+
 		$this->returnDeleteSQL = true;
 		$sql                   = $this->delete($table, '', null, $reset);
 		$this->returnDeleteSQL = false;
