@@ -1615,20 +1615,29 @@ class BaseBuilder
 	 *
 	 * @return    int    Number of rows inserted or FALSE on failure
 	 */
-	public function insertBatch($set = null, $escape = null, $batch_size = 100)
+	public function insertBatch($set = null, $escape = null, $batch_size = 100, $testing = false)
 	{
 		if ($set === null)
 		{
 			if (empty($this->QBSet))
 			{
-				return (CI_DEBUG) ? $this->display_error('db_must_use_set') : false;
+				if (CI_DEBUG)
+				{
+					throw new DatabaseException('You must use the "set" method to update an entry.');
+				}
+
+				return false;
 			}
 		}
 		else
 		{
 			if (empty($set))
 			{
-				return (CI_DEBUG) ? $this->display_error('insertBatch() called with no data') : false;
+				if (CI_DEBUG)
+				{
+					throw new DatabaseException('insertBatch() called with no data');
+				}
+				return false;
 			}
 
 			$this->setInsertBatch($set, '', $escape);
@@ -1640,12 +1649,24 @@ class BaseBuilder
 		$affected_rows = 0;
 		for ($i = 0, $total = count($this->QBSet); $i < $total; $i += $batch_size)
 		{
-			$this->query($this->_insertBatch($this->protectIdentifiers($table, true, $escape, false), $this->QBKeys,
-				array_slice($this->QBSet, $i, $batch_size)));
-			$affected_rows += $this->affected_rows();
+			$sql = $this->_insertBatch($this->protectIdentifiers($table, true, $escape, false), $this->QBKeys,
+				array_slice($this->QBSet, $i, $batch_size));
+
+			if ($testing)
+			{
+				++$affected_rows;
+			}
+			else
+			{
+				$this->db->query($sql, $this->binds);
+				$affected_rows += $this->db->affectedRows();
+			}
 		}
 
-		$this->resetWrite();
+		if (! $testing)
+		{
+			$this->resetWrite();
+		}
 
 		return $affected_rows;
 	}
@@ -1706,16 +1727,13 @@ class BaseBuilder
 
 			ksort($row); // puts $row in the same order as our keys
 
-			if ($escape !== false)
+			$clean = [];
+			foreach ($row as $k => $value)
 			{
-				$clean = [];
-				foreach ($row as $value)
-				{
-					$clean[] = $this->escape($value);
-				}
-
-				$row = $clean;
+				$clean[] = ':'.$this->setBind($k, $value);
 			}
+
+			$row = $clean;
 
 			$this->QBSet[] = '('.implode(',', $row).')';
 		}
@@ -2317,7 +2335,6 @@ class BaseBuilder
 	{
 		// Combine any cached components with the current statements
 		$this->mergeCache();
-
 
 		$table = $this->protectIdentifiers($this->QBFrom[0], true, null, false);
 

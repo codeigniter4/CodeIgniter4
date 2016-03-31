@@ -560,6 +560,15 @@ abstract class BaseConnection implements ConnectionInterface
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Returns the total number of rows affected by this query.
+	 *
+	 * @return mixed
+	 */
+	abstract public function affectedRows(): int;
+
+	//--------------------------------------------------------------------
+
 
 
 }

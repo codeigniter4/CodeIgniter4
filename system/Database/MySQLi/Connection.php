@@ -284,4 +284,15 @@ class Connection extends BaseConnection implements ConnectionInterface
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Returns the total number of rows affected by this query.
+	 *
+	 * @return mixed
+	 */
+	public function affectedRows(): int
+	{
+		return $this->connID->affected_rows;
+	}
+
+	//--------------------------------------------------------------------
 }

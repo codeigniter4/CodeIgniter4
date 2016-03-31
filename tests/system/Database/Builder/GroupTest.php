@@ -45,6 +45,22 @@ class GroupTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testOrHavingBy()
+	{
+		$builder = new BaseBuilder('user', $this->db);
+
+		$builder->select('name')
+		        ->groupBy('name')
+				->having('id >', 3)
+		        ->orHaving('SUM(id) > 2');
+
+		$expectedSQL   = "SELECT \"name\" FROM \"user\" GROUP BY \"name\" HAVING \"id\" > :id OR SUM(id) > 2";
+
+		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testAndGroups()
 	{
 		$builder = new BaseBuilder('user', $this->db);

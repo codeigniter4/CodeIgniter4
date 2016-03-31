@@ -2,15 +2,19 @@
 
 class MockConnection extends BaseConnection
 {
-	protected $returnValues;
+	protected $returnValue;
 
 	public $database;
+
+	protected $saveQueries = true;
 
 	//--------------------------------------------------------------------
 
 	public function shouldReturn(string $method, $return)
 	{
-		$this->returnValue = $return;
+		$this->returnValue[$method] = $return;
+
+		return $this;
 	}
 
 	//--------------------------------------------------------------------
@@ -123,6 +127,18 @@ class MockConnection extends BaseConnection
 	protected function execute($sql)
 	{
 		return $this->returnValue;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns the total number of rows affected by this query.
+	 *
+	 * @return mixed
+	 */
+	public function affectedRows(): int
+	{
+		return 1;
 	}
 
 	//--------------------------------------------------------------------

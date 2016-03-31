@@ -285,6 +285,20 @@ class BaseQuery implements QueryInterface
 	//--------------------------------------------------------------------
 
 	/**
+	 * Returns the original SQL that was passed into the system.
+	 *
+	 * @return string
+	 */
+	public function getOriginalQuery()
+	{
+	    return $this->originalQueryString;
+	}
+
+	//--------------------------------------------------------------------
+
+
+
+	/**
 	 * Escapes and inserts any binds into the finalQueryString object.
 	 */
 	protected function compileBinds()
@@ -311,6 +325,10 @@ class BaseQuery implements QueryInterface
 			$binds     = $this->binds;
 			$bindCount = count($binds);
 		}
+
+		// Reverse the binds so that duplicate named binds
+		// will be processed prior to the original binds.
+		$binds = array_reverse($binds);
 
 		// We'll need marker length later
 		$ml = strlen($this->bindMarker);
