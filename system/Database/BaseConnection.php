@@ -465,7 +465,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 */
 	public function table(string $tableName)
 	{
-		if (empty($table))
+		if (empty($tableName))
 		{
 			throw new DatabaseException('You must set the database table to be used with your query.');
 		}
