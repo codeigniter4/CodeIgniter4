@@ -319,7 +319,7 @@ if (! function_exists('load_helper'))
 	 */
 	function load_helper(string $filename): string
 	{
-		$loader = \Config\Services::loader(true);
+		$loader = \Config\Services::locator(true);
 
 		$path = $loader->locateFile($filename, 'helpers');
 

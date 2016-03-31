@@ -302,8 +302,7 @@ class CodeIgniter
 		$this->benchmark->start('routing');
 
 		$this->controller = $this->router->handle($path);
-
-		$this->method = $this->router->methodName();
+		$this->method     = $this->router->methodName();
 
 		$this->benchmark->stop('routing');
 	}
@@ -406,10 +405,19 @@ class CodeIgniter
 		// Display 404 Errors
 		$this->response->setStatusCode(404);
 
-		if (ob_get_level() > 0)
-		{
-			ob_end_flush();
+		if (ENVIRONMENT !== 'testing') {
+			if (ob_get_level() > 0) {
+				ob_end_flush();
+			}
 		}
+		else
+		{
+			// When testing, one is for phpunit, another is for test case.
+			if (ob_get_level() > 2) {
+				ob_end_flush();
+			}
+		}
+
 		ob_start();
 
 		$heading = 'Page Not Found';

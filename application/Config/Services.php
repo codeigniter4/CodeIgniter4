@@ -154,15 +154,15 @@ class Services
 	//--------------------------------------------------------------------
 
 	/**
-	 * The loader provides utility methods for looking for non-classes
+	 * The file locator provides utility methods for looking for non-classes
 	 * within namespaced folders, as well as convenience methods for
 	 * loading 'helpers', and 'libraries'.
 	 */
-	public static function loader($getShared = false)
+	public static function locator($getShared = false)
 	{
 	    if (! $getShared)
 	    {
-		    return new \CodeIgniter\Loader(new \Config\Autoload());
+		    return new \CodeIgniter\Autoloader\FileLocator(new \Config\Autoload());
 	    }
 
 		return self::getSharedInstance('loader');
@@ -218,7 +218,7 @@ class Services
 	{
 		if (! $getShared)
 		{
-			return new \CodeIgniter\View\View($viewPath, self::loader(true), CI_DEBUG, self::logger(true));
+			return new \CodeIgniter\View\View($viewPath, self::locator(true), CI_DEBUG, self::logger(true));
 		}
 
 		return self::getSharedInstance('renderer');
