@@ -1441,17 +1441,21 @@ class BaseBuilder
 	 *
 	 * @param    string    the limit clause
 	 * @param    string    the offset clause
+	 * @param    bool      If true, returns the generate SQL, otherwise executes the query.
 	 *
 	 * @return    CI_DB_result
 	 */
-	public function get($limit = null, $offset = null)
+	public function get($limit = null, $offset = null, $returnSQL = false)
 	{
 		if ( ! empty($limit))
 		{
 			$this->limit($limit, $offset);
 		}
 
-		$result = $this->db->query($this->compileSelect(), $this->binds);
+		$result = $returnSQL
+			? $this->getCompiledSelect()
+			: $this->db->query($this->compileSelect(), $this->binds);
+
 		$this->resetSelect();
 
 		return $result;
@@ -2821,8 +2825,8 @@ class BaseBuilder
 
 		foreach (array_unique($this->QBCacheExists) as $val) // select, from, etc.
 		{
-			$qb_variable  = 'qb_'.$val;
-			$qb_cache_var = 'qb_cache_'.$val;
+			$qb_variable  = 'QB'.ucfirst($val);
+			$qb_cache_var = 'QBCache'.ucfirst($val);
 			$qb_new       = $this->$qb_cache_var;
 
 			for ($i = 0, $c = count($this->$qb_variable); $i < $c; $i++)
@@ -2846,7 +2850,7 @@ class BaseBuilder
 
 		// If we are "protecting identifiers" we need to examine the "from"
 		// portion of the query to determine if there are any aliases
-		if ($this->protectIdentifiers === true && count($this->QBCacheFrom) > 0)
+		if ($this->db->protectIdentifiers === true && count($this->QBCacheFrom) > 0)
 		{
 			$this->trackAliases($this->QBFrom);
 		}
@@ -2930,7 +2934,6 @@ class BaseBuilder
 	{
 		$this->resetRun([
 			'QBSelect'        => [],
-			'QBFrom'          => [],
 			'QBJoin'          => [],
 			'QBWhere'         => [],
 			'QBGroupBy'       => [],
@@ -2957,7 +2960,6 @@ class BaseBuilder
 	{
 		$this->resetRun([
 			'QBSet'     => [],
-			'QBFrom'    => [],
 			'QBJoin'    => [],
 			'QBWhere'   => [],
 			'QBOrderBy' => [],
