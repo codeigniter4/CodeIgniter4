@@ -181,6 +181,11 @@ class CodeIgniter
 			$this->response->redirect($e->getMessage(), 'auto', $e->getCode());
 			$this->callExit(EXIT_SUCCESS);
 		}
+		// Catch Response::redirect()
+		catch (HTTP\RedirectException $e)
+		{
+			$this->callExit(EXIT_SUCCESS);
+		}
 		catch (PageNotFoundException $e)
 		{
 			$this->display404errors($e);

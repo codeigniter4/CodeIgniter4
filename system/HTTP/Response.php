@@ -1,5 +1,7 @@
 <?php namespace CodeIgniter\HTTP;
 
+class RedirectException extends \Exception {}
+
 /**
  * CodeIgniter
  *
@@ -493,12 +495,10 @@ class Response extends Message implements ResponseInterface
 	/**
 	 * Perform a redirect to a new URL, in two flavors: header or location.
 	 *
-	 * NOTE: You must call exit after this for it to work correctly!
-	 *
 	 * @param string $url    The URL to redirect to
 	 * @param int    $code   The type of redirection, defaults to 302
 	 */
-	public function redirect(string $uri, string $method='auto', int $code = null)
+	public function redirect(string $uri, string $method = 'auto', int $code = null)
 	{
 		// IIS environment likely? Use 'refresh' for better compatibility
 		if ($method === 'auto' && isset($_SERVER['SERVER_SOFTWARE']) && strpos($_SERVER['SERVER_SOFTWARE'], 'Microsoft-IIS') !== FALSE)
@@ -532,6 +532,9 @@ class Response extends Message implements ResponseInterface
 		$this->setStatusCode($code);
 
 		$this->sendHeaders();
+
+		// CodeIgniter will catch this exception and exit.
+		throw new RedirectException('Redirect to ' . $uri, $code);
 	}
 
 	//--------------------------------------------------------------------
