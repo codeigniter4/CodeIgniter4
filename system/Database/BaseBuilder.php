@@ -2788,7 +2788,6 @@ class BaseBuilder
 	{
 		$this->resetRun([
 			'QBCacheSelect'   => [],
-			'QBCacheFrom'     => [],
 			'QBCacheJoin'     => [],
 			'QBCacheWhere'    => [],
 			'QBCacheGroup'    => [],
