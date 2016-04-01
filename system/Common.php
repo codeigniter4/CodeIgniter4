@@ -37,6 +37,7 @@
 
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
+use CodeIgniter\HTTP\RedirectException;
 
 /**
  * Common Functions
@@ -433,7 +434,7 @@ if (! function_exists('redirect'))
 	 *
 	 * @param string   $uri
 	 */
-	function redirect (string $uri, ...$params)
+	function redirect(string $uri, ...$params)
 	{
 		$response = \Config\Services::response(null, true);
 		$routes   = \Config\Services::routes(true);
@@ -444,9 +445,7 @@ if (! function_exists('redirect'))
 		}
 
 		$response->redirect($uri);
-		exit(EXIT_SUCCESS);
 	}
 }
 
 //--------------------------------------------------------------------
-

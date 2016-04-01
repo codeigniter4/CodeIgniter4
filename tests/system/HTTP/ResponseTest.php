@@ -201,7 +201,11 @@ class ResponseTest extends \CIUnitTestCase
 	{
 		$response = new Response(new App());
 
-		$response->redirect('example.com');
+		try
+		{
+			$response->redirect('example.com');
+		}
+		catch (RedirectException $e) {}
 
 		$this->assertTrue($response->hasHeader('location'));
 		$this->assertEquals('example.com', $response->getHeaderLine('Location'));
@@ -214,7 +218,11 @@ class ResponseTest extends \CIUnitTestCase
 	{
 		$response = new Response(new App());
 
-		$response->redirect('example.com', 'auto', 307);
+		try
+		{
+			$response->redirect('example.com', 'auto', 307);
+		}
+		catch (RedirectException $e) {}
 
 		$this->assertTrue($response->hasHeader('location'));
 		$this->assertEquals('example.com', $response->getHeaderLine('Location'));

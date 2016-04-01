@@ -493,8 +493,6 @@ class Response extends Message implements ResponseInterface
 	/**
 	 * Perform a redirect to a new URL, in two flavors: header or location.
 	 *
-	 * NOTE: You must call exit after this for it to work correctly!
-	 *
 	 * @param string $url    The URL to redirect to
 	 * @param int    $code   The type of redirection, defaults to 302
 	 */
@@ -532,6 +530,9 @@ class Response extends Message implements ResponseInterface
 		$this->setStatusCode($code);
 
 		$this->sendHeaders();
+
+		// CodeIgniter will catch this exception and exit.
+		throw new RedirectException();
 	}
 
 	//--------------------------------------------------------------------
