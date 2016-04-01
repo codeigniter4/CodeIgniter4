@@ -96,6 +96,7 @@ class AutoloadConfig
 		 *   ];
 		 */
 		$this->classmap = [
+			'CodeIgniter\CodeIgniter'                       => BASEPATH.'CodeIgniter.php',
 			'CodeIgniter\CLI\CLI'                           => BASEPATH.'CLI/CLI.php',
 			'CodeIgniter\Loader'                            => BASEPATH.'Loader.php',
 			'CodeIgniter\Controller'                        => BASEPATH.'Controller.php',
