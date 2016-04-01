@@ -1855,10 +1855,11 @@ class BaseBuilder
 	 * Compiles an replace into string and runs the query
 	 *
 	 * @param    array     an associative array of insert values
+	 * @param    bool      true returns the generated SQL, false executes the query.
 	 *
 	 * @return    bool    TRUE on success, FALSE on failure
 	 */
-	public function replace($set = null)
+	public function replace($set = null, $returnSQL = false)
 	{
 		if ($set !== null)
 		{
@@ -1867,17 +1868,21 @@ class BaseBuilder
 
 		if (count($this->QBSet) === 0)
 		{
-			return ($this->db_debug) ? $this->display_error('db_must_use_set') : false;
+			if (CI_DEBUG)
+			{
+				throw new DatabaseException('You must use the "set" method to update an entry.');
+			}
+			return false;
 		}
 
 		$table = $this->QBFrom[0];
 
-		$sql = $this->_replace($this->db->protectIdentifiers($table, true, null, false), array_keys($this->QBSet),
+		$sql = $this->_replace($table, array_keys($this->QBSet),
 			array_values($this->QBSet));
 
 		$this->resetWrite();
 
-		return $this->query($sql);
+		return $returnSQL ? $sql : $this->db->query($sql, $this->binds);
 	}
 
 	//--------------------------------------------------------------------
