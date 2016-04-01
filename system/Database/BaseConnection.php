@@ -484,7 +484,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 *
 	 * @return BaseBuilder
 	 */
-	public function table(string $tableName)
+	public function table($tableName)
 	{
 		if (empty($tableName))
 		{

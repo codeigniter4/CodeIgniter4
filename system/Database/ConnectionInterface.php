@@ -142,11 +142,11 @@ interface ConnectionInterface
 	/**
 	 * Returns an instance of the query builder for this connection.
 	 *
-	 * @param string $tableName
+	 * @param string|array $tableName
 	 *
 	 * @return QueryBuilder
 	 */
-	public function table(string $tableName);
+	public function table($tableName);
 
 	//--------------------------------------------------------------------
 

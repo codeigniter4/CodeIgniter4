@@ -275,7 +275,7 @@ class BaseBuilder
 
 	//--------------------------------------------------------------------
 
-	public function __construct(string $tableName, ConnectionInterface &$db, array $options = null)
+	public function __construct($tableName, ConnectionInterface &$db, array $options = null)
 	{
 		if (empty($tableName))
 		{
