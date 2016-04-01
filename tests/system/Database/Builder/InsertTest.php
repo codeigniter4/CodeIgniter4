@@ -19,7 +19,7 @@ class InsertTest extends \CIUnitTestCase
 
 	public function testSimpleInsert()
 	{
-		$builder = new BaseBuilder('jobs', $this->db);
+		$builder = $this->db->table('jobs');
 
 		$insertData = [
 			'id' => 1,
@@ -38,7 +38,7 @@ class InsertTest extends \CIUnitTestCase
 
 	public function testThrowsExceptionOnNoValuesSet()
 	{
-		$builder = new BaseBuilder('jobs', $this->db);
+		$builder = $this->db->table('jobs');
 
 		$this->setExpectedException('CodeIgniter\DatabaseException', 'You must use the "set" method to update an entry.');
 
@@ -49,7 +49,7 @@ class InsertTest extends \CIUnitTestCase
 	
 	public function testInsertBatch()
 	{
-		$builder = new BaseBuilder('jobs', $this->db);
+		$builder = $this->db->table('jobs');
 
 		$insertData = array(
 			['id' => 2, 'name' => 'Commedian', 'description' => 'Theres something in your teeth'],
@@ -80,6 +80,26 @@ class InsertTest extends \CIUnitTestCase
 
 		$this->assertEquals($expected1, str_replace("\n", ' ', $q1->getQuery() ));
 		$this->assertEquals($expected2, str_replace("\n", ' ', $q2->getQuery() ));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testInsertBatchThrowsExceptionOnNoData()
+	{
+	    $builder = $this->db->table('jobs');
+
+		$this->setExpectedException('CodeIgniter\DatabaseException', 'You must use the "set" method to update an entry.');
+		$builder->insertBatch();
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testInsertBatchThrowsExceptionOnEmptData()
+	{
+		$builder = $this->db->table('jobs');
+
+		$this->setExpectedException('CodeIgniter\DatabaseException', 'insertBatch() called with no data');
+		$builder->insertBatch([]);
 	}
 
 	//--------------------------------------------------------------------
