@@ -204,6 +204,7 @@ class ResponseTest extends \CIUnitTestCase
 		try
 		{
 			$response->redirect('example.com');
+			$this->fail('RedirectException should be raised.');
 		}
 		catch (RedirectException $e) {}
 
@@ -221,6 +222,7 @@ class ResponseTest extends \CIUnitTestCase
 		try
 		{
 			$response->redirect('example.com', 'auto', 307);
+			$this->fail('RedirectException should be raised.');
 		}
 		catch (RedirectException $e) {}
 
