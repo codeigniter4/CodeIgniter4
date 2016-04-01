@@ -8,11 +8,17 @@
         stopOnFailure="false"
         stopOnIncomplete="false"
         stopOnSkipped="false">
+
     <testsuites>
         <testsuite name="system">
             <directory>./tests/system</directory>
         </testsuite>
     </testsuites>
+
+    <logging>
+        <log type="coverage-html" target="tests/_support/coverage"/>
+        <log type="coverage-text" target="tests/_support/coverage.txt"/>
+    </logging>
 
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
