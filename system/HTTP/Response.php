@@ -496,7 +496,7 @@ class Response extends Message implements ResponseInterface
 	 * @param string $url    The URL to redirect to
 	 * @param int    $code   The type of redirection, defaults to 302
 	 */
-	public function redirect(string $uri, string $method='auto', int $code = null)
+	public function redirect(string $uri, string $method = 'auto', int $code = null)
 	{
 		// IIS environment likely? Use 'refresh' for better compatibility
 		if ($method === 'auto' && isset($_SERVER['SERVER_SOFTWARE']) && strpos($_SERVER['SERVER_SOFTWARE'], 'Microsoft-IIS') !== FALSE)
@@ -532,7 +532,7 @@ class Response extends Message implements ResponseInterface
 		$this->sendHeaders();
 
 		// CodeIgniter will catch this exception and exit.
-		throw new RedirectException();
+		throw new RedirectException('Redirect to ' . $uri, $code);
 	}
 
 	//--------------------------------------------------------------------
