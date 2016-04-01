@@ -46,7 +46,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 *
 	 * @var    string
 	 */
-	protected $escapeChar = '`';
+	public $escapeChar = '`';
 
 	// --------------------------------------------------------------------
 

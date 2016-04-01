@@ -18,7 +18,7 @@ class WhereTest extends \CIUnitTestCase
 
 	public function testSimpleWhere()
 	{
-		$builder = new BaseBuilder('users', $this->db);
+		$builder = $this->db->table('users');
 
 		$expectedSQL   = "SELECT * FROM \"users\" WHERE \"id\" = :id";
 		$expectedBinds = ['id' => 3];
@@ -32,7 +32,7 @@ class WhereTest extends \CIUnitTestCase
 
 	public function testWhereNoEscape()
 	{
-		$builder = new BaseBuilder('users', $this->db);
+		$builder = $this->db->table('users');
 
 		$expectedSQL   = "SELECT * FROM \"users\" WHERE id = :id";
 		$expectedBinds = ['id' => 3];
@@ -46,7 +46,7 @@ class WhereTest extends \CIUnitTestCase
 
 	public function testWhereCustomKeyOperator()
 	{
-		$builder = new BaseBuilder('users', $this->db);
+		$builder = $this->db->table('users');
 
 		$expectedSQL   = "SELECT * FROM \"users\" WHERE \"id\" != :id";
 		$expectedBinds = ['id' => 3];
@@ -60,7 +60,7 @@ class WhereTest extends \CIUnitTestCase
 
 	public function testWhereAssociateArray()
 	{
-		$builder = new BaseBuilder('jobs', $this->db);
+		$builder = $this->db->table('jobs');
 
 		$where = [
 			'id' => 2,
@@ -80,7 +80,7 @@ class WhereTest extends \CIUnitTestCase
 
 	public function testWhereCustomString()
 	{
-		$builder = new BaseBuilder('jobs', $this->db);
+		$builder = $this->db->table('jobs');
 
 		$where = "id > 2 AND name != 'Accountant'";
 
@@ -97,7 +97,7 @@ class WhereTest extends \CIUnitTestCase
 
 	public function testOrWhere()
 	{
-		$builder = new BaseBuilder('jobs', $this->db);
+		$builder = $this->db->table('jobs');
 
 		$builder->where('name !=', 'Accountant')
 				->orWhere('id >', 3);
@@ -113,7 +113,7 @@ class WhereTest extends \CIUnitTestCase
 
 	public function testWhereIn()
 	{
-		$builder = new BaseBuilder('jobs', $this->db);
+		$builder = $this->db->table('jobs');
 
 		$builder->whereIn('name', ['Politician', 'Accountant']);
 
@@ -128,7 +128,7 @@ class WhereTest extends \CIUnitTestCase
 
 	public function testWhereNotIn()
 	{
-		$builder = new BaseBuilder('jobs', $this->db);
+		$builder = $this->db->table('jobs');
 
 		$builder->whereNotIn('name', ['Politician', 'Accountant']);
 
@@ -143,7 +143,7 @@ class WhereTest extends \CIUnitTestCase
 
 	public function testOrWhereIn()
 	{
-		$builder = new BaseBuilder('jobs', $this->db);
+		$builder = $this->db->table('jobs');
 
 		$builder->where('id', 2)->orWhereIn('name', ['Politician', 'Accountant']);
 
@@ -158,7 +158,7 @@ class WhereTest extends \CIUnitTestCase
 
 	public function testOrWhereNotIn()
 	{
-		$builder = new BaseBuilder('jobs', $this->db);
+		$builder = $this->db->table('jobs');
 
 		$builder->where('id', 2)->orWhereNotIn('name', ['Politician', 'Accountant']);
 
