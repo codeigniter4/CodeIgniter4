@@ -124,6 +124,8 @@ $loader->addNamespace('Config', SUPPORTPATH.'Config');
  * ------------------------------------------------------
  */
 
+// Use special global functions for testing.
+require_once SUPPORTPATH.'MockCommon.php';
 require_once BASEPATH.'Common.php';
 
 /*
