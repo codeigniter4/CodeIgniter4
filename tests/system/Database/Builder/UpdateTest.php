@@ -119,4 +119,38 @@ WHERE "id" IN(2,3)';
 	}
 
 	//--------------------------------------------------------------------
+
+	public function testUpdateBatchThrowsExceptionWithNoData()
+	{
+		$builder = new BaseBuilder('jobs', $this->db);
+
+		$this->setExpectedException('CodeIgniter\DatabaseException', 'You must use the "set" method to update an entry.');
+
+		$builder->updateBatch(null, 'id');
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testUpdateBatchThrowsExceptionWithNoID()
+	{
+		$builder = new BaseBuilder('jobs', $this->db);
+
+		$this->setExpectedException('CodeIgniter\DatabaseException', 'You must specify an index to match on for batch updates.');
+
+		$builder->updateBatch([]);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testUpdateBatchThrowsExceptionWithEmptySetArray()
+	{
+		$builder = new BaseBuilder('jobs', $this->db);
+
+		$this->setExpectedException('CodeIgniter\DatabaseException', 'updateBatch() called with no data');
+
+		$builder->updateBatch([], 'id');
+	}
+
+	//--------------------------------------------------------------------
+
 }
