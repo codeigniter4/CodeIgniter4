@@ -545,7 +545,7 @@ class BaseBuilder
 	 *
 	 * Generates the FROM portion of the query
 	 *
-	 * @param    mixed $from can be a string or array
+	 * @param    mixed $from      can be a string or array
 	 * @param    bool  $overwrite Should we remove the first table existing?
 	 *
 	 * @return    BaseBuilder
@@ -554,7 +554,7 @@ class BaseBuilder
 	{
 		if ($overwrite === true)
 		{
-			$this->QBFrom = [];
+			$this->QBFrom          = [];
 			$this->QBAliasedTables = [];
 		}
 
@@ -923,7 +923,7 @@ class BaseBuilder
 
 		$not = ($not) ? ' NOT' : '';
 
-		$where_in = array_values($values);
+		$where_in         = array_values($values);
 		$this->binds[$ok] = $where_in;
 
 		$prefix = (count($this->QBWhere) === 0 && count($this->QBCacheWhere) === 0)
@@ -1418,7 +1418,7 @@ class BaseBuilder
 	 *
 	 * @return    BaseBuilder
 	 */
-	public function  set($key, $value = '', $escape = null)
+	public function set($key, $value = '', $escape = null)
 	{
 		$key = $this->objectToArray($key);
 
@@ -1431,7 +1431,7 @@ class BaseBuilder
 
 		foreach ($key as $k => $v)
 		{
-			$this->binds[$k] = $v;
+			$this->binds[$k]                                            = $v;
 			$this->QBSet[$this->protectIdentifiers($k, false, $escape)] = ':'.$k;
 		}
 
@@ -1495,16 +1495,21 @@ class BaseBuilder
 	 * Generates a platform-specific query string that counts all records in
 	 * the specified database
 	 *
-	 * @param	bool $test Are we running automated tests?
-	 * @return	int
+	 * @param    bool $test Are we running automated tests?
+	 *
+	 * @return    int
 	 */
 	public function countAll($test = false)
 	{
 		$table = $this->QBFrom[0];
 
-		$sql = $this->countString.$this->escapeIdentifiers('numrows').' FROM '.$this->protectIdentifiers($table, TRUE, NULL, FALSE);
+		$sql = $this->countString.$this->escapeIdentifiers('numrows').' FROM '.
+		       $this->protectIdentifiers($table, true, null, false);
 
-		if ($test) return $sql;
+		if ($test)
+		{
+			return $sql;
+		}
 
 		$query = $this->db->query($sql);
 		if (count($query->result()) === 0)
@@ -1514,7 +1519,8 @@ class BaseBuilder
 
 		$query = $query->row();
 		$this->resetSelect();
-		return (int) $query->numrows;
+
+		return (int)$query->numrows;
 	}
 
 	//--------------------------------------------------------------------
@@ -1545,10 +1551,13 @@ class BaseBuilder
 
 		$sql = ($this->QBDistinct === true)
 			? $this->countString.$this->protectIdentifiers('numrows')."\nFROM (\n".
-			               $this->compileSelect()."\n) CI_count_all_results"
+			  $this->compileSelect()."\n) CI_count_all_results"
 			: $this->compileSelect($this->countString.$this->protectIdentifiers('numrows'));
 
-		if ($test) return $sql;
+		if ($test)
+		{
+			return $sql;
+		}
 
 		$result = $this->db->query($sql, $this->binds);
 
@@ -1610,8 +1619,8 @@ class BaseBuilder
 	 *
 	 * Compiles batch insert strings and runs the queries
 	 *
-	 * @param    array  $set    An associative array of insert values
-	 * @param    bool   $escape Whether to escape values and identifiers
+	 * @param    array $set    An associative array of insert values
+	 * @param    bool  $escape Whether to escape values and identifiers
 	 *
 	 * @return    int    Number of rows inserted or FALSE on failure
 	 */
@@ -1637,6 +1646,7 @@ class BaseBuilder
 				{
 					throw new DatabaseException('insertBatch() called with no data');
 				}
+
 				return false;
 			}
 
@@ -1663,7 +1673,7 @@ class BaseBuilder
 			}
 		}
 
-		if (! $testing)
+		if ( ! $testing)
 		{
 			$this->resetWrite();
 		}
@@ -1856,10 +1866,11 @@ class BaseBuilder
 	 *
 	 * Generates a platform-specific insert string from the supplied data
 	 *
-	 * @param	string	the table name
-	 * @param	array	the insert keys
-	 * @param	array	the insert values
-	 * @return	string
+	 * @param    string    the table name
+	 * @param    array     the insert keys
+	 * @param    array     the insert values
+	 *
+	 * @return    string
 	 */
 	protected function _insert($table, array $keys, array $unescapedKeys)
 	{
@@ -1972,10 +1983,10 @@ class BaseBuilder
 	 *
 	 * Compiles an update string and runs the query.
 	 *
-	 * @param    array  $set An associative array of update values
-	 * @param    mixed  $where
-	 * @param    int    $limit
-	 * @param    bool   $test  Are we testing the code?
+	 * @param    array $set  An associative array of update values
+	 * @param    mixed $where
+	 * @param    int   $limit
+	 * @param    bool  $test Are we testing the code?
 	 *
 	 * @return    bool    TRUE on success, FALSE on failure
 	 */
@@ -2006,7 +2017,7 @@ class BaseBuilder
 
 		$sql = $this->_update($this->QBFrom[0], $this->QBSet);
 
-		if (! $test)
+		if ( ! $test)
 		{
 			$this->resetWrite();
 
@@ -2021,9 +2032,10 @@ class BaseBuilder
 	 *
 	 * Generates a platform-specific update string from the supplied data
 	 *
-	 * @param	string	the table name
-	 * @param	array	the update data
-	 * @return	string
+	 * @param    string    the table name
+	 * @param    array     the update data
+	 *
+	 * @return    string
 	 */
 	protected function _update($table, $values)
 	{
@@ -2074,31 +2086,46 @@ class BaseBuilder
 	 *
 	 * @param    array     an associative array of update values
 	 * @param    string    the where key
+	 * @param    int       The size of the batch to run
+	 * @param    bool      true means SQL is returned, false will execute the query
 	 *
 	 * @return    int    number of rows affected or FALSE on failure
 	 */
-	public function updateBatch($set = null, $index = null, $batch_size = 100)
+	public function updateBatch($set = null, $index = null, $batch_size = 100, $returnSQL = false)
 	{
 		// Combine any cached components with the current statements
 		$this->mergeCache();
 
 		if ($index === null)
 		{
-			return ($this->db_debug) ? $this->display_error('db_must_use_index') : false;
+			if (CI_DEBUG)
+			{
+				throw new DatabaseException('You must specify an index to match on for batch updates.');
+			}
+
+			return false;
 		}
 
 		if ($set === null)
 		{
 			if (empty($this->QBSet))
 			{
-				return ($this->db_debug) ? $this->display_error('db_must_use_set') : false;
+				if (CI_DEBUG)
+				{
+					throw new DatabaseException('You must use the "set" method to update an entry.');
+				}
+				return false;
 			}
 		}
 		else
 		{
 			if (empty($set))
 			{
-				return ($this->db_debug) ? $this->display_error('updateBatch() called with no data') : false;
+				if (CI_DEBUG)
+				{
+					throw new DatabaseException('updateBatch() called with no data');
+				}
+				return false;
 			}
 
 			$this->setUpdateBatch($set, $index);
@@ -2108,17 +2135,30 @@ class BaseBuilder
 
 		// Batch this baby
 		$affected_rows = 0;
+		$savedSQL = [];
 		for ($i = 0, $total = count($this->QBSet); $i < $total; $i += $batch_size)
 		{
-			$this->query($this->_updateBatch($this->protectIdentifiers($table, true, null, false),
-				array_slice($this->QBSet, $i, $batch_size), $this->protectIdentifiers($index)));
-			$affected_rows += $this->affected_rows();
+			$sql = $this->_updateBatch($table,
+				array_slice($this->QBSet, $i, $batch_size),
+				$this->protectIdentifiers($index)
+			);
+
+			if ($returnSQL)
+			{
+				$savedSQL[] = $sql;
+			}
+			else
+			{
+				$this->db->query($sql, $this->binds);
+				$affected_rows += $this->db->affectedRows();
+			}
+
 			$this->QBWhere = [];
 		}
 
 		$this->resetWrite();
 
-		return $affected_rows;
+		return $returnSQL ? $savedSQL : $affected_rows;
 	}
 
 	//--------------------------------------------------------------------
@@ -2196,13 +2236,14 @@ class BaseBuilder
 					$index_set = true;
 				}
 
-				$clean[$this->protectIdentifiers($k2, false, $escape)] = ($escape === false) ? $v2
-					: $this->escape($v2);
+				$bind = $this->setBind($k2, $v2);
+
+				$clean[$this->protectIdentifiers($k2, false, $escape)] = ':'.$bind;
 			}
 
 			if ($index_set === false)
 			{
-				return $this->display_error('db_batch_missing_index');
+				throw new DatabaseException('One or more rows submitted for batch updating is missing the specified index.');
 			}
 
 			$this->QBSet[] = $clean;
@@ -2240,7 +2281,10 @@ class BaseBuilder
 
 		$sql = $this->_delete($table);
 
-		if ($test) return $sql;
+		if ($test)
+		{
+			return $sql;
+		}
 
 		$this->resetWrite();
 
@@ -3307,9 +3351,10 @@ class BaseBuilder
 	 */
 	protected function setBind(string $key, $value = null)
 	{
-		if (! array_key_exists($key, $this->binds))
+		if ( ! array_key_exists($key, $this->binds))
 		{
 			$this->binds[$key] = $value;
+
 			return $key;
 		}
 

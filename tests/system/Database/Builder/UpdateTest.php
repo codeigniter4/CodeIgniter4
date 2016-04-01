@@ -2,6 +2,7 @@
 
 use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\MockConnection;
+use CodeIgniter\Database\MockQuery;
 
 class UpdateTest extends \CIUnitTestCase
 {
@@ -68,6 +69,53 @@ class UpdateTest extends \CIUnitTestCase
 		$this->setExpectedException('CodeIgniter\DatabaseException', 'You must use the "set" method to update an entry.');
 
 		$builder->update(null, null, null, true);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testUpdateBatch()
+	{
+		$builder = new BaseBuilder('jobs', $this->db);
+
+		$updateData = array(
+			['id' => 2, 'name' => 'Comedian', 'description' => 'Theres something in your teeth'],
+			['id' => 3, 'name' => 'Cab Driver', 'description' => 'Iam yellow'],
+		);
+
+		$this->db->shouldReturn('query', 1)
+		         ->shouldReturn('affectedRows', 1);
+
+		$builder->updateBatch($updateData, 'id');
+
+		$query = $this->db->getQueries();
+
+		$this->assertTrue(is_array($query));
+
+		$query = $query[0];
+
+		$this->assertTrue($query instanceof MockQuery);
+
+		$expected = 'UPDATE "jobs" SET "name" = CASE 
+WHEN "id" = :id THEN :name
+WHEN "id" = :id0 THEN :name0
+ELSE "name" END, "description" = CASE 
+WHEN "id" = :id THEN :description
+WHEN "id" = :id0 THEN :description0
+ELSE "description" END
+WHERE "id" IN(:id,:id0)';
+
+		$this->assertEquals($expected, $query->getOriginalQuery() );
+
+		$expected = 'UPDATE "jobs" SET "name" = CASE 
+WHEN "id" = 2 THEN \'Comedian\'
+WHEN "id" = 3 THEN \'Cab Driver\'
+ELSE "name" END, "description" = CASE 
+WHEN "id" = 2 THEN \'Theres something in your teeth\'
+WHEN "id" = 3 THEN \'Iam yellow\'
+ELSE "description" END
+WHERE "id" IN(2,3)';
+
+		$this->assertEquals($expected, $query->getQuery() );
 	}
 
 	//--------------------------------------------------------------------
