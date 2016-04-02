@@ -38,7 +38,7 @@
 
 
 use Config\App;
-use Config\Services;
+use CodeIgniter\Services;
 use CodeIgniter\Hooks\Hooks;
 
 /**

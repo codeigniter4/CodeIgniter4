@@ -102,12 +102,13 @@ require_once(APPPATH.'Config/Constants.php');
 // The autoloader isn't initialized yet, so load the file manually.
 require BASEPATH.'Autoloader/Autoloader.php';
 require APPPATH.'Config/Autoload.php';
+require APPPATH.'Config/Services.php';
 // Use special Services for testing.
-require SUPPORTPATH.'Config/Services.php';
+require SUPPORTPATH.'Services.php';
 
 // The Autoloader class only handles namespaces
 // and "legacy" support.
-$loader = Config\Services::autoloader();
+$loader = CodeIgniter\Services::autoloader();
 $loader->initialize(new Config\Autoload());
 
 // The register function will prepend

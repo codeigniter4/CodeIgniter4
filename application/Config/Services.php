@@ -443,7 +443,7 @@ class Services
 	{
 		$name = strtolower($name);
 
-		if (method_exists('Config\Services', $name))
+		if (method_exists(__CLASS__, $name))
 		{
 			return Services::$name(...$arguments);
 		}

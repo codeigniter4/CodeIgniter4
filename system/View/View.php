@@ -36,7 +36,7 @@
  * @filesource
  */
 
-use Config\Services;
+use CodeIgniter\Services;
 use CodeIgniter\Log\Logger;
 
 /**

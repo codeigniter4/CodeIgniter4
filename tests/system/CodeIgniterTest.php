@@ -1,7 +1,6 @@
 <?php namespace CodeIgniter;
 
 use Config\App;
-use Config\Services;
 
 class CodeIgniterTest extends \PHPUnit_Framework_TestCase
 {
