@@ -14,13 +14,6 @@ use CodeIgniter\DatabaseException;
 class BaseBuilder
 {
 	/**
-	 * Return DELETE SQL flag
-	 *
-	 * @var    bool
-	 */
-	public $returnDeleteSQL = false;
-
-	/**
 	 * Reset DELETE data flag
 	 *
 	 * @var    bool
@@ -226,14 +219,6 @@ class BaseBuilder
 	protected $db;
 
 	/**
-	 * Whether we should escape and modify
-	 * identifiers within queries.
-	 *
-	 * @var bool
-	 */
-	protected $protectIdentifiers = true;
-
-	/**
 	 * ORDER BY random keyword
 	 *
 	 * @var    array
@@ -249,20 +234,6 @@ class BaseBuilder
 	 * @var    string
 	 */
 	protected $countString = 'SELECT COUNT(*) AS ';
-
-	/**
-	 * Swap Prefix
-	 *
-	 * @var    string
-	 */
-	protected $swapPre = '';
-
-	/**
-	 * Table prefix
-	 *
-	 * @var    string
-	 */
-	protected $dbprefix = '';
 
 	/**
 	 * Collects the named parameters and
@@ -329,7 +300,7 @@ class BaseBuilder
 		}
 
 		// If the escape value was not set, we will base it on the global setting
-		is_bool($escape) OR $escape = $this->protectIdentifiers;
+		is_bool($escape) OR $escape = $this->db->protectIdentifiers;
 
 		foreach ($select as $val)
 		{
@@ -601,7 +572,7 @@ class BaseBuilder
 		// in the protectIdentifiers to know whether to add a table prefix
 		$this->trackAliases($table);
 
-		is_bool($escape) OR $escape = $this->protectIdentifiers;
+		is_bool($escape) OR $escape = $this->db->protectIdentifiers;
 
 		if ( ! $this->hasOperator($cond))
 		{
@@ -882,7 +853,7 @@ class BaseBuilder
 			$values = [$values];
 		}
 
-		is_bool($escape) OR $escape = $this->protectIdentifiers;
+		is_bool($escape) OR $escape = $this->db->protectIdentifiers;
 
 		$ok = $key;
 
@@ -1021,7 +992,7 @@ class BaseBuilder
 			$field = [$field => $match];
 		}
 
-		$escape = is_bool($escape) ? $escape : $this->protectIdentifiers;
+		$escape = is_bool($escape) ? $escape : $this->db->protectIdentifiers;
 
 		// lowercase $side in case somebody writes e.g. 'BEFORE' instead of 'before' (doh)
 		$side = strtolower($side);
@@ -1195,7 +1166,7 @@ class BaseBuilder
 	 */
 	public function groupBy($by, $escape = null)
 	{
-		is_bool($escape) OR $escape = $this->protectIdentifiers;
+		is_bool($escape) OR $escape = $this->db->protectIdentifiers;
 
 		if (is_string($by))
 		{
@@ -1293,7 +1264,7 @@ class BaseBuilder
 			$direction = in_array($direction, ['ASC', 'DESC'], true) ? ' '.$direction : '';
 		}
 
-		is_bool($escape) OR $escape = $this->protectIdentifiers;
+		is_bool($escape) OR $escape = $this->db->protectIdentifiers;
 
 		if ($escape === false)
 		{
@@ -1397,7 +1368,7 @@ class BaseBuilder
 			$key = [$key => $value];
 		}
 
-		$escape = is_bool($escape) ? $escape : $this->protectIdentifiers;
+		$escape = is_bool($escape) ? $escape : $this->db->protectIdentifiers;
 
 		foreach ($key as $k => $v)
 		{
@@ -1693,7 +1664,7 @@ class BaseBuilder
 			$key = [$key => $value];
 		}
 
-		$escape = is_bool($escape) ? $escape : $this->protectIdentifiers;
+		$escape = is_bool($escape) ? $escape : $this->db->protectIdentifiers;
 
 		$keys = array_keys($this->objectToArray(current($key)));
 		sort($keys);
@@ -2202,7 +2173,7 @@ class BaseBuilder
 			// @todo error
 		}
 
-		is_bool($escape) OR $escape = $this->protectIdentifiers;
+		is_bool($escape) OR $escape = $this->db->protectIdentifiers;
 
 		foreach ($key as $k => $v)
 		{
@@ -2354,7 +2325,7 @@ class BaseBuilder
 	 *
 	 * @return    mixed
 	 */
-	public function delete($where = '', $limit = null, $reset_data = true)
+	public function delete($where = '', $limit = null, $reset_data = true, $returnSQL = false)
 	{
 		// Combine any cached components with the current statements
 		$this->mergeCache();
@@ -2373,7 +2344,12 @@ class BaseBuilder
 
 		if (count($this->QBWhere) === 0)
 		{
-			return (CI_DEBUG) ? $this->display_error('db_del_must_use_where') : false;
+			if (CI_DEBUG)
+			{
+				throw new DatabaseException('Deletes are not allowed unless they contain a "where" or "like" clause.');
+			}
+
+			return false;
 		}
 
 		$sql = $this->_delete($table);
@@ -2382,7 +2358,7 @@ class BaseBuilder
 			$this->resetWrite();
 		}
 
-		return ($this->returnDeleteSQL === true) ? $sql : $this->db->query($sql, $this->binds);
+		return ($returnSQL === true) ? $sql : $this->db->query($sql, $this->binds);
 	}
 
 	//--------------------------------------------------------------------

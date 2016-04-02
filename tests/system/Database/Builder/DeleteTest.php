@@ -18,10 +18,9 @@ class DeleteTest extends \CIUnitTestCase
 
 	public function testDelete()
 	{
-		$builder = new BaseBuilder('jobs', $this->db);
-		$builder->returnDeleteSQL = true;
+		$builder = $this->db->table('jobs');
 
-		$answer = $builder->delete(['id' => 1]);
+		$answer = $builder->delete(['id' => 1], null, true, true);
 
 		$expectedSQL   = "DELETE FROM \"jobs\" WHERE \"id\" = :id";
 		$expectedBinds = ['id' => 1];
