@@ -1,6 +1,6 @@
 <?php namespace CodeIgniter\Debug\Toolbar\Collectors;
 
-use Config\Services;
+use CodeIgniter\Services;
 use CodeIgniter\View\RenderableInterface;
 
 class Views extends BaseCollector

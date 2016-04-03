@@ -38,7 +38,7 @@
 
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
-use Config\Services;
+use CodeIgniter\Services;
 use CodeIgniter\Log\Logger;
 
 /**

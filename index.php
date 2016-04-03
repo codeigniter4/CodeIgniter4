@@ -181,7 +181,7 @@ require APPPATH.'Config/Services.php';
 
 // The Autoloader class only handles namespaces
 // and "legacy" support.
-$loader = Config\Services::autoloader();
+$loader = CodeIgniter\Services::autoloader();
 $loader->initialize(new Config\Autoload());
 
 // The register function will prepend
@@ -203,7 +203,7 @@ require_once BASEPATH.'Common.php';
  */
 $config = new \Config\App();
 
-Config\Services::exceptions($config, true)
+CodeIgniter\Services::exceptions($config, true)
 	->initialize();
 
 //--------------------------------------------------------------------

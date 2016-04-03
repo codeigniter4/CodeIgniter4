@@ -37,7 +37,7 @@
  */
 use CodeIgniter\HTTP\Files\FileCollection;
 use CodeIgniter\HTTP\Files\UploadedFile;
-use Config\Services;
+use CodeIgniter\Services;
 
 /**
  * Class IncomingRequest

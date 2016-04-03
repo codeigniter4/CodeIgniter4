@@ -36,7 +36,7 @@
  * @filesource
  */
 
-use Config\Services;
+use CodeIgniter\Services;
 
 /**
  * Collector for the Database tab of the Debug Toolbar.
