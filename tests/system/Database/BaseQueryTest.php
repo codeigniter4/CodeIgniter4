@@ -1,10 +1,22 @@
 <?php namespace CodeIgniter\Database;
 
-class BaseQueryTest extends \CIUnitTestCase
+class QueryTest extends \CIUnitTestCase
 {
+
+	protected $db;
+
+	//--------------------------------------------------------------------
+
+	public function setUp()
+	{
+		$this->db = new MockConnection([]);
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testQueryStoresSQL()
 	{
-	    $query = new BaseQuery();
+	    $query = new Query($this->db);
 
 		$sql = "SELECT * FROM users";
 
@@ -17,7 +29,7 @@ class BaseQueryTest extends \CIUnitTestCase
 
 	public function testStoresDuration()
 	{
-	    $query = new BaseQuery();
+	    $query = new Query($this->db);
 
 		$start = microtime(true);
 
@@ -30,7 +42,7 @@ class BaseQueryTest extends \CIUnitTestCase
 
 	public function testsStoresErrorInformation()
 	{
-	    $query = new BaseQuery();
+	    $query = new Query($this->db);
 
 		$code = 13;
 		$msg  = 'Oops, yo!';
@@ -47,7 +59,7 @@ class BaseQueryTest extends \CIUnitTestCase
 
 	public function testSwapPrefix()
 	{
-	    $query = new BaseQuery();
+	    $query = new Query($this->db);
 
 		$origPrefix = 'db_';
 		$newPrefix  = 'ci_';
@@ -94,7 +106,7 @@ class BaseQueryTest extends \CIUnitTestCase
 	 */
 	public function testIsWriteType($expected, $sql)
 	{
-	    $query = new BaseQuery();
+	    $query = new Query($this->db);
 
 		$query->setQuery($sql);
 		$this->assertSame($expected, $query->isWriteType());
@@ -104,7 +116,7 @@ class BaseQueryTest extends \CIUnitTestCase
 
 	public function testSingleBindingOutsideOfArray()
 	{
-	    $query = new BaseQuery();
+	    $query = new Query($this->db);
 
 		$query->setQuery('SELECT * FROM users WHERE id = ?', 13);
 
@@ -118,7 +130,7 @@ class BaseQueryTest extends \CIUnitTestCase
 
 	public function testBindingSingleElementInArray()
 	{
-		$query = new BaseQuery();
+		$query = new Query($this->db);
 
 		$query->setQuery('SELECT * FROM users WHERE id = ?', [13]);
 
@@ -131,7 +143,7 @@ class BaseQueryTest extends \CIUnitTestCase
 
 	public function testBindingMultipleItems()
 	{
-		$query = new BaseQuery();
+		$query = new Query($this->db);
 
 		$query->setQuery('SELECT * FROM users WHERE id = ? OR name = ?', [13, 'Vader']);
 
@@ -144,7 +156,7 @@ class BaseQueryTest extends \CIUnitTestCase
 
 	public function testBindingAutoEscapesParameters()
 	{
-		$query = new BaseQuery();
+		$query = new Query($this->db);
 
 		$query->setQuery('SELECT * FROM users WHERE name = ?', ["O'Reilly"]);
 
@@ -157,7 +169,7 @@ class BaseQueryTest extends \CIUnitTestCase
 
 	public function testNamedBinds()
 	{
-		$query = new BaseQuery();
+		$query = new Query($this->db);
 
 		$query->setQuery('SELECT * FROM users WHERE id = :id OR name = :name', ['id' => 13, 'name' => 'Geoffrey']);
 

@@ -112,18 +112,4 @@ interface QueryInterface
 
 	//--------------------------------------------------------------------
 
-	/**
-	 * "Smart" Escape String
-	 *
-	 * Escapes data based on type.
-	 * Sets boolean and null types
-	 *
-	 * @param $str
-	 *
-	 * @return mixed
-	 */
-	public function escape($str);
-
-	//--------------------------------------------------------------------
-
 }

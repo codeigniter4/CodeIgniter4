@@ -6,7 +6,7 @@ class MockConnection extends BaseConnection
 
 	public $database;
 
-	protected $saveQueries = true;
+	public $saveQueries = true;
 
 	//--------------------------------------------------------------------
 
@@ -23,7 +23,7 @@ class MockConnection extends BaseConnection
 	{
 		$queryClass = str_replace('Connection', 'Query', get_class($this));
 
-		$query = new $queryClass();
+		$query = new $queryClass($this);
 
 		$query->setQuery($sql, $binds);
 

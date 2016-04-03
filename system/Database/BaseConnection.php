@@ -12,6 +12,20 @@ abstract class BaseConnection implements ConnectionInterface
 	public $dsn;
 
 	/**
+	 * Database port
+	 *
+	 * @var    int
+	 */
+	public $port = '';
+
+	/**
+	 * Hostname
+	 *
+	 * @var    string
+	 */
+	public $hostname;
+
+	/**
 	 * Username
 	 *
 	 * @var    string
@@ -24,13 +38,6 @@ abstract class BaseConnection implements ConnectionInterface
 	 * @var    string
 	 */
 	public $password;
-
-	/**
-	 * Hostname
-	 *
-	 * @var    string
-	 */
-	public $hostname;
 
 	/**
 	 * Database name
@@ -62,6 +69,36 @@ abstract class BaseConnection implements ConnectionInterface
 	public $dbprefix = '';
 
 	/**
+	 * Persistent connection flag
+	 *
+	 * @var    bool
+	 */
+	public $pconnect = false;
+
+	/**
+	 * Debug flag
+	 *
+	 * Whether to display error messages.
+	 *
+	 * @var    bool
+	 */
+	public $db_debug = false;
+
+	/**
+	 * Should we cache results?
+	 *
+	 * @var bool
+	 */
+	protected $cache_on = false;
+
+	/**
+	 * Path to store cache files.
+	 *
+	 * @var string
+	 */
+	public $cachedir;
+
+	/**
 	 * Character set
 	 *
 	 * @var    string
@@ -76,13 +113,6 @@ abstract class BaseConnection implements ConnectionInterface
 	public $dbcollat = 'utf8_general_ci';
 
 	/**
-	 * Encryption flag/data
-	 *
-	 * @var    mixed
-	 */
-	public $encrypt = false;
-
-	/**
 	 * Swap Prefix
 	 *
 	 * @var    string
@@ -90,18 +120,45 @@ abstract class BaseConnection implements ConnectionInterface
 	public $swapPre = '';
 
 	/**
-	 * Database port
+	 * Encryption flag/data
 	 *
-	 * @var    int
+	 * @var    mixed
 	 */
-	public $port = '';
+	public $encrypt = false;
 
 	/**
-	 * Persistent connection flag
+	 * Compression flag
 	 *
 	 * @var    bool
 	 */
-	public $pconnect = false;
+	public $compress = false;
+
+	/**
+	 * Strict ON flag
+	 *
+	 * Whether we're running in strict SQL mode.
+	 *
+	 * @var    bool
+	 */
+	public $stricton;
+
+	/**
+	 * Whether to keep an in-memory history of queries
+	 * for debugging and timeline purposes.
+	 *
+	 * @var bool
+	 */
+	public $saveQueries = false;
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Array of query objects that have executed
+	 * on this connection.
+	 *
+	 * @var array
+	 */
+	protected $queries = [];
 
 	/**
 	 * Connection ID
@@ -116,22 +173,6 @@ abstract class BaseConnection implements ConnectionInterface
 	 * @var    object|resource
 	 */
 	public $resultID = false;
-
-	/**
-	 * Array of query objects that have executed
-	 * on this connection.
-	 *
-	 * @var array
-	 */
-	protected $queries = [];
-
-	/**
-	 * Whether to keep an in-memory history of queries
-	 * for debugging and timeline purposes.
-	 *
-	 * @var bool
-	 */
-	protected $saveQueries = false;
 
 	/**
 	 * Protect identifiers flag
@@ -171,15 +212,6 @@ abstract class BaseConnection implements ConnectionInterface
 	public $likeEscapeChar = '!';
 
 	/**
-	 * Debug flag
-	 *
-	 * Whether to display error messages.
-	 *
-	 * @var    bool
-	 */
-	protected $db_debug = false;
-
-	/**
 	 * Holds previously looked up data
 	 * for performance reasons.
 	 *
@@ -187,8 +219,17 @@ abstract class BaseConnection implements ConnectionInterface
 	 */
 	protected $dataCache = [];
 
+	/**
+	 * Microtime when connection was made
+	 * @var float
+	 */
 	protected $connectTime;
 
+	/**
+	 * How long it took to establish connection.
+	 *
+	 * @var float
+	 */
 	protected $connectDuration;
 
 	//--------------------------------------------------------------------
@@ -417,7 +458,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 */
 	public function query(string $sql, $binds = null)
 	{
-		$queryClass = str_replace('Connection', 'Query', get_class($this));
+		$queryClass = array_slice(explode('\\', get_class($this)), 0, -1).'Query';
 
 		$query = new $queryClass();
 
@@ -536,32 +577,13 @@ abstract class BaseConnection implements ConnectionInterface
 	//--------------------------------------------------------------------
 
 	/**
-	 * "Smart" Escaping
+	 * Returns the time we started to connect to this database in
+	 * seconds with microseconds.
 	 *
-	 * Escapes data based on type.
-	 * Sets boolean and null types.
+	 * Used by the Debug Toolbar's timeline.
 	 *
-	 * @param $str
-	 *
-	 * @return mixed
+	 * @return float
 	 */
-	public function escape($str)
-	{
-		if (count($this->queries))
-		{
-			$query = end($this->queries);
-		}
-		else
-		{
-			$queryClass = str_replace('Connection', 'Query', get_class($this));
-			$query = new $queryClass();
-		}
-
-		return $query->escape($str);
-	}
-
-	//--------------------------------------------------------------------
-
 	public function getConnectStart()
 	{
 	    return $this->connectTime;
@@ -569,6 +591,16 @@ abstract class BaseConnection implements ConnectionInterface
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Returns the number of seconds with microseconds that it took
+	 * to connect to the database.
+	 *
+	 * Used by the Debug Toolbar's timeline.
+	 *
+	 * @param int $decimals
+	 *
+	 * @return mixed
+	 */
 	public function getConnectDuration($decimals = 6)
 	{
 	    return number_format($this->connectDuration, $decimals);
@@ -595,8 +627,6 @@ abstract class BaseConnection implements ConnectionInterface
 	 * or also have an alias prefix, we need to do a bit of work to figure this out and
 	 * insert the table prefix (if it exists) in the proper position, and escape only
 	 * the correct identifiers.
-	 *
-	 * @todo     Should this move back to the Connection, since we have a link to that now?
 	 *
 	 * @param    string|array
 	 * @param    bool
@@ -849,7 +879,7 @@ abstract class BaseConnection implements ConnectionInterface
 	{
 		if ($table === '')
 		{
-			$this->display_error('db_table_name_required');
+			throw new DatabaseException('A table name is required for that operation.');
 		}
 
 		return $this->dbprefix.$table;
@@ -882,6 +912,92 @@ abstract class BaseConnection implements ConnectionInterface
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * "Smart" Escape String
+	 *
+	 * Escapes data based on type.
+	 * Sets boolean and null types
+	 *
+	 * @param $str
+	 *
+	 * @return mixed
+	 */
+	public function escape($str)
+	{
+		if (is_array($str))
+		{
+			$str = array_map([&$this, 'escape'], $str);
 
+			return $str;
+		}
+		else if (is_string($str) OR (is_object($str) && method_exists($str, '__toString')))
+		{
+			return "'".$this->escapeString($str)."'";
+		}
+		else if (is_bool($str))
+		{
+			return ($str === false) ? 0 : 1;
+		}
+		else if ($str === null)
+		{
+			return 'NULL';
+		}
+
+		return $str;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Escape String
+	 *
+	 * @param	string|string[]	$str	Input string
+	 * @param	bool	$like	Whether or not the string will be used in a LIKE condition
+	 * @return	string
+	 */
+	protected function escapeString($str, $like = FALSE)
+	{
+		if (is_array($str))
+		{
+			foreach ($str as $key => $val)
+			{
+				$str[$key] = $this->escapeString($val, $like);
+			}
+
+			return $str;
+		}
+
+		$str = $this->_escapeString($str);
+
+		// escape LIKE condition wildcards
+		if ($like === true)
+		{
+			return str_replace(
+				[$this->likeEscapeChar, '%', '_'],
+				[$this->likeEscapeChar.$this->likeEscapeChar, $this->likeEscapeChar.'%', $this->likeEscapeChar.'_'],
+				$str
+			);
+		}
+
+		return $str;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Platform independent string escape.
+	 *
+	 * Will likely be overridden in child classes.
+	 *
+	 * @param string $str
+	 *
+	 * @return string
+	 */
+	protected function _escapeString(string $str): string
+	{
+		return str_replace("'", "\\'", remove_invisible_characters($str));
+	}
+
+	//--------------------------------------------------------------------
 
 }

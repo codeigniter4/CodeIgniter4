@@ -1,6 +1,6 @@
 <?php namespace CodeIgniter\Database;
 
-class BaseQuery implements QueryInterface
+class Query implements QueryInterface
 {
 	/**
 	 * The query string, as provided by the user.
@@ -63,45 +63,28 @@ class BaseQuery implements QueryInterface
 	protected $errorString;
 
 	/**
-	 * Identifier escape character
+	 * Pointer to database connection.
+	 * Mainly for escaping features.
 	 *
-	 * @var    string
+	 * @var ConnectionInterface
 	 */
-	protected $escapeChar = '"';
-
-	/**
-	 * ESCAPE statement string
-	 *
-	 * @var    string
-	 */
-	protected $likeEscapeStr = " ESCAPE '%s' ";
-
-	/**
-	 * ESCAPE character
-	 *
-	 * @var    string
-	 */
-	protected $likeEscapeChar = '!';
-
-	/**
-	 * ORDER BY random keyword
-	 *
-	 * @var    array
-	 */
-	protected $randomKeyword = ['RAND()', 'RAND(%d)'];
-
-	/**
-	 * COUNT string
-	 *
-	 * @used-by    CI_DB_driver::count_all()
-	 * @used-by    CI_DB_query_builder::count_all_results()
-	 *
-	 * @var    string
-	 */
-	protected $countString = 'SELECT COUNT(*) AS ';
+	public $db;
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * BaseQuery constructor.
+	 *
+	 * @param $db ConnectionInterface
+	 */
+	public function __construct(&$db)
+	{
+	    $this->db = $db;
+	}
+	
+	//--------------------------------------------------------------------
+	
+	
 	/**
 	 * Sets the raw query string to use for this statement.
 	 *
@@ -296,8 +279,6 @@ class BaseQuery implements QueryInterface
 
 	//--------------------------------------------------------------------
 
-
-
 	/**
 	 * Escapes and inserts any binds into the finalQueryString object.
 	 */
@@ -354,7 +335,7 @@ class BaseQuery implements QueryInterface
 	{
 		foreach ($binds as $placeholder => $value)
 		{
-			$escapedValue = $this->escape($value);
+			$escapedValue = $this->db->escape($value);
 			if (is_array($escapedValue))
 			{
 				$escapedValue = '('.implode(',', $escapedValue).')';
@@ -386,8 +367,7 @@ class BaseQuery implements QueryInterface
 		}
 		// Number of binds must match bindMarkers in the string.
 		else if (($c = preg_match_all('/'.preg_quote($this->bindMarker, '/').'/i', $sql, $matches,
-				PREG_OFFSET_CAPTURE)) !== $bindCount
-		)
+				PREG_OFFSET_CAPTURE)) !== $bindCount)
 		{
 			return $sql;
 		}
@@ -395,102 +375,16 @@ class BaseQuery implements QueryInterface
 		do
 		{
 			$c--;
-			$escaped_value = $this->escape($binds[$c]);
-			if (is_array($escaped_value))
+			$escapedValue = $this->db->escape($binds[$c]);
+			if (is_array($escapedValue))
 			{
-				$escaped_value = '('.implode(',', $escaped_value).')';
+				$escapedValue = '('.implode(',', $escapedValue).')';
 			}
-			$sql = substr_replace($sql, $escaped_value, $matches[0][$c][1], $ml);
+			$sql = substr_replace($sql, $escapedValue, $matches[0][$c][1], $ml);
 		}
 		while ($c !== 0);
 
 		return $sql;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * "Smart" Escape String
-	 *
-	 * Escapes data based on type.
-	 * Sets boolean and null types
-	 *
-	 * @param $str
-	 *
-	 * @return mixed
-	 */
-	public function escape($str)
-	{
-		if (is_array($str))
-		{
-			$str = array_map([&$this, 'escape'], $str);
-
-			return $str;
-		}
-		else if (is_string($str) OR (is_object($str) && method_exists($str, '__toString')))
-		{
-			return "'".$this->escapeString($str)."'";
-		}
-		else if (is_bool($str))
-		{
-			return ($str === false) ? 0 : 1;
-		}
-		else if ($str === null)
-		{
-			return 'NULL';
-		}
-
-		return $str;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Escape String
-	 *
-	 * @param	string|string[]	$str	Input string
-	 * @param	bool	$like	Whether or not the string will be used in a LIKE condition
-	 * @return	string
-	 */
-	protected function escapeString($str, $like = FALSE)
-	{
-		if (is_array($str))
-		{
-			foreach ($str as $key => $val)
-			{
-				$str[$key] = $this->escapeString($val, $like);
-			}
-
-			return $str;
-		}
-
-		$str = $this->_escapeString($str);
-
-		// escape LIKE condition wildcards
-		if ($like === true)
-		{
-			return str_replace(
-				[$this->likeEscapeChar, '%', '_'],
-				[$this->likeEscapeChar.$this->likeEscapeChar, $this->likeEscapeChar.'%', $this->likeEscapeChar.'_'],
-				$str
-			);
-		}
-
-		return $str;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Platform independent string escape.
-	 *
-	 * @param string $str
-	 *
-	 * @return string
-	 */
-	protected function _escapeString(string $str): string
-	{
-		return str_replace("'", "\\'", remove_invisible_characters($str));
 	}
 
 	//--------------------------------------------------------------------

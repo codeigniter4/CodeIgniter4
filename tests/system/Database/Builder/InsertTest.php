@@ -1,7 +1,7 @@
 <?php namespace Builder;
 
 use CodeIgniter\Database\BaseBuilder;
-use CodeIgniter\Database\BaseQuery;
+use CodeIgniter\Database\Query;
 use CodeIgniter\Database\MockConnection;
 
 class InsertTest extends \CIUnitTestCase
@@ -66,8 +66,8 @@ class InsertTest extends \CIUnitTestCase
 		$q1 = $queries[0];
 		$q2 = $queries[1];
 
-		$this->assertTrue($q1 instanceof BaseQuery);
-		$this->assertTrue($q2 instanceof BaseQuery);
+		$this->assertTrue($q1 instanceof Query);
+		$this->assertTrue($q2 instanceof Query);
 
 		$raw1 = "INSERT INTO \"jobs\" (\"description\", \"id\", \"name\") VALUES (:description,:id,:name)";
 		$raw2 = "INSERT INTO \"jobs\" (\"description\", \"id\", \"name\") VALUES (:description0,:id0,:name0)";

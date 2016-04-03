@@ -2,6 +2,7 @@
 
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\ConnectionInterface;
+use CodeIgniter\DatabaseException;
 
 class Connection extends BaseConnection implements ConnectionInterface
 {
@@ -13,13 +14,6 @@ class Connection extends BaseConnection implements ConnectionInterface
 	public $dbdriver = 'mysqli';
 
 	/**
-	 * Compression flag
-	 *
-	 * @var    bool
-	 */
-	public $compress = false;
-
-	/**
 	 * DELETE hack flag
 	 *
 	 * Whether to use the MySQL "delete hack" which allows the number
@@ -29,15 +23,6 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 * @var    bool
 	 */
 	public $deleteHack = true;
-
-	/**
-	 * Strict ON flag
-	 *
-	 * Whether we're running in strict SQL mode.
-	 *
-	 * @var    bool
-	 */
-	public $stricton;
 
 	// --------------------------------------------------------------------
 
@@ -169,7 +154,11 @@ class Connection extends BaseConnection implements ConnectionInterface
 				$message = 'MySQLi was configured for an SSL connection, but got an unencrypted connection instead!';
 				log_message('error', $message);
 
-				return ($this->db->db_debug) ? $this->db->display_error($message, '', true) : false;
+				if ($this->db->db_debug)
+				{
+					throw new DatabaseException($message);
+				}
+				return false;
 			}
 
 			if ( ! $this->mysqli->set_charset($this->charset))
@@ -177,7 +166,11 @@ class Connection extends BaseConnection implements ConnectionInterface
 				log_message('error', "Database: Unable to set the configured connection charset ('{$this->charset}').");
 				$this->mysqli->close();
 
-				return ($this->db_debug) ? $this->display_error('db_unable_to_set_charset', $this->charset) : false;
+				if ($this->db->debug)
+				{
+					throw new DatabaseException('Unable to set client connection character set: '.$this->charset);
+				}
+				return false;
 			}
 
 			return $this->mysqli;
@@ -292,6 +285,19 @@ class Connection extends BaseConnection implements ConnectionInterface
 	public function affectedRows(): int
 	{
 		return $this->connID->affected_rows;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Platform-dependant string escape
+	 *
+	 * @param	string
+	 * @return	string
+	 */
+	protected function _escapeString($str)
+	{
+		return $this->connID->real_escape_string($str);
 	}
 
 	//--------------------------------------------------------------------
