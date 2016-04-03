@@ -93,7 +93,7 @@ class CodeIgniter
 	protected $router;
 
 	/**
-	 * @var string
+	 * @var string|\Closure
 	 */
 	protected $controller;
 
@@ -157,6 +157,19 @@ class CodeIgniter
 			Hooks::trigger('pre_controller');
 
 			$this->startController();
+
+			// Closure controller has run in startController().
+			if ( ! is_callable($this->controller))
+			{
+				$controller = $this->createController();
+
+				//--------------------------------------------------------------------
+				// Is there a "post_controller_constructor" hook?
+				//--------------------------------------------------------------------
+				Hooks::trigger('post_controller_constructor');
+
+				$this->runController($controller);
+			}
 
 			//--------------------------------------------------------------------
 			// Is there a "post_controller" hook?
@@ -334,7 +347,8 @@ class CodeIgniter
 		// Is it routed to a Closure?
 		if (is_callable($this->controller))
 		{
-			echo $this->controller(...$this->router->params());
+			$controller = $this->controller;
+			echo $controller(...$this->router->params());
 		}
 		else
 		{
@@ -357,21 +371,19 @@ class CodeIgniter
 				}
 			}
 		}
-
-		$this->createControllerAndRun();
 	}
 
-	protected function createControllerAndRun()
+	protected function createController()
 	{
 		$class = new $this->controller($this->request, $this->response);
 
 		$this->benchmark->stop('controller_constructor');
 
-		//--------------------------------------------------------------------
-		// Is there a "post_controller_constructor" hook?
-		//--------------------------------------------------------------------
-		Hooks::trigger('post_controller_constructor');
+		return $class;
+	}
 
+	protected function runController($class)
+	{
 		if (method_exists($class, '_remap'))
 		{
 			$class->_remap($this->method, ...$this->router->params());
@@ -396,12 +408,13 @@ class CodeIgniter
 			else if (is_array($override))
 			{
 				$this->controller = $override[0];
-				$this->method = $override[1];
+				$this->method     = $override[1];
 
 				unset($override);
 			}
 
-			$this->createControllerAndRun();
+			$controller = $this->createController();
+			$this->runController($controller);
 			$this->gatherOutput();
 			$this->sendResponse();
 			return;

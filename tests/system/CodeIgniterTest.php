@@ -2,7 +2,7 @@
 
 use Config\App;
 
-class CodeIgniterTest extends \PHPUnit_Framework_TestCase
+class CodeIgniterTest extends \CIUnitTestCase
 {
 	/**
 	 * @var \CodeIgniter\CodeIgniter
@@ -29,11 +29,6 @@ class CodeIgniterTest extends \PHPUnit_Framework_TestCase
 		];
 		$_SERVER['argc'] = 2;
 
-		// Inject mock router.
-		$routes = Services::routes();
-		$router = Services::router($routes);
-		Services::injectMock('router', $router);
-
 		ob_start();
 		$this->codeigniter->run();
 		$output = ob_get_clean();
@@ -49,11 +44,6 @@ class CodeIgniterTest extends \PHPUnit_Framework_TestCase
 			'index.php',
 		];
 		$_SERVER['argc'] = 1;
-
-		// Inject mock router.
-		$routes = Services::routes();
-		$router = Services::router($routes);
-		Services::injectMock('router', $router);
 
 		ob_start();
 		$this->codeigniter->run();
@@ -83,6 +73,32 @@ class CodeIgniterTest extends \PHPUnit_Framework_TestCase
 		$output = ob_get_clean();
 
 		$this->assertContains("Can't find a route for '/'.", $output);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testRunClosureRoute()
+	{
+		$_SERVER['argv'] = [
+			'index.php',
+			'pages/about',
+		];
+		$_SERVER['argc'] = 2;
+
+		// Inject mock router.
+		$routes = Services::routes();
+		$routes->add('pages/(:segment)', function($segment)
+		{
+			echo 'You want to see "'.esc($segment).'" page.';
+		});
+		$router = Services::router($routes);
+		Services::injectMock('router', $router);
+
+		ob_start();
+		$this->codeigniter->run();
+		$output = ob_get_clean();
+
+		$this->assertContains('You want to see "about" page.', $output);
 	}
 
 	//--------------------------------------------------------------------
