@@ -100,7 +100,7 @@ class Result extends BaseResult implements ResultInterface
 	 *
 	 * @return array
 	 */
-	protected function fetchAssoc(): array
+	protected function fetchAssoc()
 	{
 		return $this->resultID->fetch_assoc();
 	}

@@ -554,7 +554,7 @@ abstract class BaseResult implements ResultInterface
 	 *
 	 * @return array
 	 */
-	abstract protected function fetchAssoc(): array;
+	abstract protected function fetchAssoc();
 
 	//--------------------------------------------------------------------
 

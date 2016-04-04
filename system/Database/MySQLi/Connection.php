@@ -301,4 +301,74 @@ class Connection extends BaseConnection implements ConnectionInterface
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Generates the SQL for listing tables in a platform-dependent manner.
+	 *
+	 * @param bool $constrainByPrefix
+	 *
+	 * @return string
+	 */
+	protected function _listTables($prefixLimit = false): string
+	{
+		$sql = 'SHOW TABLES FROM '.$this->escapeIdentifiers($this->database);
+
+		if ($prefixLimit !== FALSE && $this->DBPrefix !== '')
+		{
+			return $sql." LIKE '".$this->escapeLikeStr($this->DBPrefix)."%'";
+		}
+
+		return $sql;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Generates a platform-specific query string so that the column names can be fetched.
+	 *
+	 * @param string $table
+	 *
+	 * @return string
+	 */
+	protected function _listColumns(string $table = ''): string
+	{
+		return 'SHOW COLUMNS FROM '.$this->protectIdentifiers($table, TRUE, NULL, FALSE);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns an object with field data
+	 *
+	 * @param	string	$table
+	 * @return	array
+	 */
+	public function fieldData(string $table)
+	{
+		if (($query = $this->query('SHOW COLUMNS FROM '.$this->protectIdentifiers($table, TRUE, NULL, FALSE))) === FALSE)
+		{
+			return FALSE;
+		}
+		$query = $query->getResultObject();
+
+		$retval = array();
+		for ($i = 0, $c = count($query); $i < $c; $i++)
+		{
+			$retval[$i]			= new \stdClass();
+			$retval[$i]->name		= $query[$i]->Field;
+
+			sscanf($query[$i]->Type, '%[a-z](%d)',
+				$retval[$i]->type,
+				$retval[$i]->max_length
+			);
+
+			$retval[$i]->default		= $query[$i]->Default;
+			$retval[$i]->primary_key	= (int) ($query[$i]->Key === 'PRI');
+		}
+
+		return $retval;
+	}
+
+	//--------------------------------------------------------------------
+
 }

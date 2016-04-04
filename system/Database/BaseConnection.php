@@ -463,11 +463,9 @@ abstract class BaseConnection implements ConnectionInterface
 	 *
 	 * @return mixed
 	 */
-	public function query(string $sql, $binds = null)
+	public function query(string $sql, $binds = null, $queryClass = 'CodeIgniter\\Database\\Query')
 	{
-		$queryClass = array_slice(explode('\\', get_class($this)), 0, -1).'Query';
-
-		$query = new $queryClass();
+		$query = new $queryClass($this);
 
 		$query->setQuery($sql, $binds);
 
@@ -1041,6 +1039,186 @@ abstract class BaseConnection implements ConnectionInterface
 
 		return $functionName(...$params);
 	}
+
+	//--------------------------------------------------------------------
+
+	//--------------------------------------------------------------------
+	// META Methods
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns an array of table names
+	 *
+	 * @param	string	$constrain_by_prefix = FALSE
+	 * @return	array
+	 */
+	public function listTables($constrain_by_prefix = FALSE)
+	{
+		// Is there a cached result?
+		if (isset($this->dataCache['table_names']))
+		{
+			return $this->dataCache['table_names'];
+		}
+
+		if (FALSE === ($sql = $this->_listTables($constrain_by_prefix)))
+		{
+			if ($this->DBDebug)
+			{
+				throw new DatabaseException('This feature is not available for the database you are using.');
+			}
+			return false;
+		}
+
+		$this->dataCache['table_names'] = array();
+		$query = $this->query($sql);
+
+		foreach ($query->getResultArray() as $row)
+		{
+			// Do we know from which column to get the table name?
+			if ( ! isset($key))
+			{
+				if (isset($row['table_name']))
+				{
+					$key = 'table_name';
+				}
+				elseif (isset($row['TABLE_NAME']))
+				{
+					$key = 'TABLE_NAME';
+				}
+				else
+				{
+					/* We have no other choice but to just get the first element's key.
+					 * Due to array_shift() accepting its argument by reference, if
+					 * E_STRICT is on, this would trigger a warning. So we'll have to
+					 * assign it first.
+					 */
+					$key = array_keys($row);
+					$key = array_shift($key);
+				}
+			}
+
+			$this->dataCache['table_names'][] = $row[$key];
+		}
+
+		return $this->dataCache['table_names'];
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Determine if a particular table exists
+	 *
+	 * @param	string	$table_name
+	 * @return	bool
+	 */
+	public function tableExists($table_name)
+	{
+		return in_array($this->protectIdentifiers($table_name, TRUE, FALSE, FALSE), $this->listTables());
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Fetch Field Names
+	 *
+	 * @param	string	$table	Table name
+	 * @return	array
+	 */
+	public function listFields($table)
+	{
+		// Is there a cached result?
+		if (isset($this->dataCache['field_names'][$table]))
+		{
+			return $this->dataCache['field_names'][$table];
+		}
+
+		if (FALSE === ($sql = $this->_listColumns($table)))
+		{
+			if ($this->DBDebug)
+			{
+				throw new DatabaseException('This feature is not available for the database you are using.');
+			}
+			return false;
+		}
+
+		$query = $this->query($sql);
+		$this->dataCache['field_names'][$table] = array();
+
+		foreach ($query->getResultArray() as $row)
+		{
+			// Do we know from where to get the column's name?
+			if ( ! isset($key))
+			{
+				if (isset($row['column_name']))
+				{
+					$key = 'column_name';
+				}
+				elseif (isset($row['COLUMN_NAME']))
+				{
+					$key = 'COLUMN_NAME';
+				}
+				else
+				{
+					// We have no other choice but to just get the first element's key.
+					$key = key($row);
+				}
+			}
+
+			$this->dataCache['field_names'][$table][] = $row[$key];
+		}
+
+		return $this->dataCache['field_names'][$table];
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Determine if a particular field exists
+	 *
+	 * @param	string
+	 * @param	string
+	 * @return	bool
+	 */
+	public function fieldExists($fieldName, $tableName)
+	{
+		return in_array($fieldName, $this->listFields($tableName));
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns an object with field data
+	 *
+	 * @param	string	$table	the table name
+	 * @return	array
+	 */
+	public function fieldData(string $table)
+	{
+		$query = $this->query($this->_fieldData($this->protect_identifiers($table, TRUE, NULL, FALSE)));
+		return ($query) ? $query->field_data() : FALSE;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Generates the SQL for listing tables in a platform-dependent manner.
+	 *
+	 * @param bool $constrainByPrefix
+	 *
+	 * @return string
+	 */
+	abstract protected function _listTables($constrainByPrefix = false): string;
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Generates a platform-specific query string so that the column names can be fetched.
+	 *
+	 * @param string $table
+	 *
+	 * @return string
+	 */
+	abstract protected function _listColumns(string $table = ''): string;
 
 	//--------------------------------------------------------------------
 
