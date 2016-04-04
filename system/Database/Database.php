@@ -32,14 +32,14 @@ class Database
 	public function load(array $params = [], string $alias, $useBuilder = false)
 	{
 		// No DB specified? Beat them senseless...
-		if (empty($params['dbdriver']))
+		if (empty($params['DBDriver']))
 		{
 			throw new InvalidArgumentException('You have not selected a database type to connect to.');
 		}
 		
-		$className = strpos($params['dbdriver'], '\\') === false
-			? '\CodeIgniter\Database\\'.$params['dbdriver'].'\\Connection'
-			: $params['dbdriver'].'\\Connection';
+		$className = strpos($params['DBDriver'], '\\') === false
+			? '\CodeIgniter\Database\\'.$params['DBDriver'].'\\Connection'
+			: $params['DBDriver'].'\\Connection';
 
 		$class = new $className($params);
 

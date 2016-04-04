@@ -9,7 +9,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 *
 	 * @var    string
 	 */
-	public $dsn;
+	public $DSN;
 
 	/**
 	 * Database port
@@ -51,7 +51,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 *
 	 * @var    string
 	 */
-	public $dbdriver = 'mysqli';
+	public $DBDriver = 'mysqli';
 
 	/**
 	 * Sub-driver
@@ -66,14 +66,14 @@ abstract class BaseConnection implements ConnectionInterface
 	 *
 	 * @var    string
 	 */
-	public $dbprefix = '';
+	public $DBPrefix = '';
 
 	/**
 	 * Persistent connection flag
 	 *
 	 * @var    bool
 	 */
-	public $pconnect = false;
+	public $pConnect = false;
 
 	/**
 	 * Debug flag
@@ -82,21 +82,21 @@ abstract class BaseConnection implements ConnectionInterface
 	 *
 	 * @var    bool
 	 */
-	public $db_debug = false;
+	public $DBDebug = false;
 
 	/**
 	 * Should we cache results?
 	 *
 	 * @var bool
 	 */
-	protected $cache_on = false;
+	protected $cacheOn = false;
 
 	/**
 	 * Path to store cache files.
 	 *
 	 * @var string
 	 */
-	public $cachedir;
+	public $cacheDir;
 
 	/**
 	 * Character set
@@ -110,7 +110,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 *
 	 * @var    string
 	 */
-	public $dbcollat = 'utf8_general_ci';
+	public $DBCollat = 'utf8_general_ci';
 
 	/**
 	 * Swap Prefix
@@ -140,7 +140,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 *
 	 * @var    bool
 	 */
-	public $stricton;
+	public $strictOn;
 
 	/**
 	 * Whether to keep an in-memory history of queries
@@ -273,7 +273,7 @@ abstract class BaseConnection implements ConnectionInterface
 		$this->connectTime = microtime(true);
 
 		// Connect to the database and set the connection ID
-		$this->connID = $this->connect($this->pconnect);
+		$this->connID = $this->connect($this->pConnect);
 
 		// No connection resource? Check if there is a failover else throw an error
 		if ( ! $this->connID)
@@ -291,7 +291,7 @@ abstract class BaseConnection implements ConnectionInterface
 					}
 
 					// Try to connect
-					$this->conn_id = $this->connect($this->pconnect);
+					$this->conn_id = $this->connect($this->pConnect);
 
 					// If a connection is made break the foreach loop
 					if ($this->connID)
@@ -403,7 +403,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 */
 	public function getPlatform()
 	{
-		return $this->dbdriver;
+		return $this->DBDriver;
 	}
 
 	//--------------------------------------------------------------------
@@ -464,9 +464,9 @@ abstract class BaseConnection implements ConnectionInterface
 
 		$query->setQuery($sql, $binds);
 
-		if (! empty($this->swapPre) && ! empty($this->dbprefix))
+		if (! empty($this->swapPre) && ! empty($this->DBPrefix))
 		{
-			$query->swapPrefix($this->dbprefix, $this->swapPre);
+			$query->swapPrefix($this->DBPrefix, $this->swapPre);
 		}
 		
 		$startTime = microtime(true);
@@ -722,7 +722,7 @@ abstract class BaseConnection implements ConnectionInterface
 			}
 
 			// Is there a table prefix defined in the config file? If not, no need to do anything
-			if ($this->dbprefix !== '')
+			if ($this->DBPrefix !== '')
 			{
 				// We now add the table prefix based on some logic.
 				// Do we have 4 segments (hostname.database.table.column)?
@@ -754,12 +754,12 @@ abstract class BaseConnection implements ConnectionInterface
 				// Verify table prefix and replace if necessary
 				if ($this->swapPre !== '' && strpos($parts[$i], $this->swapPre) === 0)
 				{
-					$parts[$i] = preg_replace('/^'.$this->swapPre.'(\S+?)/', $this->dbprefix.'\\1', $parts[$i]);
+					$parts[$i] = preg_replace('/^'.$this->swapPre.'(\S+?)/', $this->DBPrefix.'\\1', $parts[$i]);
 				}
 				// We only add the table prefix if it does not already exist
-				elseif (strpos($parts[$i], $this->dbprefix) !== 0)
+				elseif (strpos($parts[$i], $this->DBPrefix) !== 0)
 				{
-					$parts[$i] = $this->dbprefix.$parts[$i];
+					$parts[$i] = $this->DBPrefix.$parts[$i];
 				}
 
 				// Put the parts back together
@@ -775,17 +775,17 @@ abstract class BaseConnection implements ConnectionInterface
 		}
 
 		// Is there a table prefix? If not, no need to insert it
-		if ($this->dbprefix !== '')
+		if ($this->DBPrefix !== '')
 		{
 			// Verify table prefix and replace if necessary
 			if ($this->swapPre !== '' && strpos($item, $this->swapPre) === 0)
 			{
-				$item = preg_replace('/^'.$this->swapPre.'(\S+?)/', $this->dbprefix.'\\1', $item);
+				$item = preg_replace('/^'.$this->swapPre.'(\S+?)/', $this->DBPrefix.'\\1', $item);
 			}
 			// Do we prefix an item with no segments?
-			elseif ($prefixSingle === true && strpos($item, $this->dbprefix) !== 0)
+			elseif ($prefixSingle === true && strpos($item, $this->DBPrefix) !== 0)
 			{
-				$item = $this->dbprefix.$item;
+				$item = $this->DBPrefix.$item;
 			}
 		}
 
@@ -882,7 +882,7 @@ abstract class BaseConnection implements ConnectionInterface
 			throw new DatabaseException('A table name is required for that operation.');
 		}
 
-		return $this->dbprefix.$table;
+		return $this->DBPrefix.$table;
 	}
 
 	//--------------------------------------------------------------------
@@ -898,7 +898,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 */
 	public function setPrefix($prefix = '')
 	{
-		return $this->dbprefix = $prefix;
+		return $this->DBPrefix = $prefix;
 	}
 
 	//--------------------------------------------------------------------

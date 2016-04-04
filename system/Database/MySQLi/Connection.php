@@ -11,7 +11,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 *
 	 * @var    string
 	 */
-	public $dbdriver = 'mysqli';
+	public $DBDriver = 'mysqli';
 
 	/**
 	 * DELETE hack flag
@@ -74,9 +74,9 @@ class Connection extends BaseConnection implements ConnectionInterface
 
 		$this->mysqli->options(MYSQLI_OPT_CONNECT_TIMEOUT, 10);
 
-		if (isset($this->stricton))
+		if (isset($this->strictOn))
 		{
-			if ($this->stricton)
+			if ($this->strictOn)
 			{
 				$this->mysqli->options(MYSQLI_INIT_COMMAND,
 					'SET SESSION sql_mode = CONCAT(@@sql_mode, ",", "STRICT_ALL_TABLES")');

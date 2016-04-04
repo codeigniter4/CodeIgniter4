@@ -27,9 +27,9 @@ class MockConnection extends BaseConnection
 
 		$query->setQuery($sql, $binds);
 
-		if (! empty($this->swapPre) && ! empty($this->dbprefix))
+		if (! empty($this->swapPre) && ! empty($this->DBPrefix))
 		{
-			$query->swapPrefix($this->dbprefix, $this->swapPre);
+			$query->swapPrefix($this->DBPrefix, $this->swapPre);
 		}
 
 		$startTime = microtime(true);

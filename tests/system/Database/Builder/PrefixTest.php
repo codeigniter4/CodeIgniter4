@@ -11,7 +11,7 @@ class PrefixTest extends \CIUnitTestCase
 
 	public function setUp()
 	{
-		$this->db = new MockConnection(['dbprefix' => 'ci_']);
+		$this->db = new MockConnection(['DBPrefix' => 'ci_']);
 	}
 
 	//--------------------------------------------------------------------
