@@ -192,4 +192,17 @@ interface ConnectionInterface
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Allows for custom calls to the database engine that are not
+	 * supported through our database layer.
+	 *
+	 * @param string $functionName
+	 * @param array  ...$params
+	 *
+	 * @return mixed
+	 */
+	public function callFunction(string $functionName, ...$params);
+
+	//--------------------------------------------------------------------
+
 }

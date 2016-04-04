@@ -1010,4 +1010,39 @@ abstract class BaseConnection implements ConnectionInterface
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * This function enables you to call PHP database functions that are not natively included
+	 * in CodeIgniter, in a platform independent manner.
+	 *
+	 * @param string $functionName
+	 * @param array  ...$params
+	 *
+	 * @return bool
+	 * @throws DatabaseException
+	 */
+	public function callFunction(string $functionName, ...$params)
+	{
+		$driver = ($this->DBDriver === 'postgre') ? 'pg_' : strtolower($this->DBDriver).'_';
+
+		if (FALSE === strpos($driver, $functionName))
+		{
+			$functionName = $driver.$functionName;
+		}
+
+		if ( ! function_exists($functionName))
+		{
+			if ($this->DBDebug)
+			{
+				throw new DatabaseException('This feature is not available for the database you are using.');
+			}
+
+			return false;
+		}
+
+		return $functionName(...$params);
+	}
+
+	//--------------------------------------------------------------------
+
+
 }
