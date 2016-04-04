@@ -151,4 +151,31 @@ class MockConnection extends BaseConnection
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Generates the SQL for listing tables in a platform-dependent manner.
+	 *
+	 * @param bool $constrainByPrefix
+	 *
+	 * @return string
+	 */
+	protected function _listTables($constrainByPrefix = false): string
+	{
+		return '';
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Generates a platform-specific query string so that the column names can be fetched.
+	 *
+	 * @param string $table
+	 *
+	 * @return string
+	 */
+	protected function _listColumns(string $table = ''): string
+	{
+		return '';
+	}
+
+	//--------------------------------------------------------------------
 }
