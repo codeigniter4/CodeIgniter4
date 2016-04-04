@@ -70,6 +70,20 @@ class Config extends BaseConfig
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Loads and returns an instance of the Forge for the specified
+	 * database group, and loads the group if it hasn't been loaded yet.
+	 *
+	 * @param string|null $group
+	 */
+	public static function forge(string $group = null)
+	{
+
+	}
+
+	//--------------------------------------------------------------------
+
+
 
 	/**
 	 * Ensures the database Connection Manager/Factory is loaded and ready to use.
