@@ -103,4 +103,55 @@ class CodeIgniterTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testRun404Override()
+	{
+		$_SERVER['argv'] = [
+			'index.php',
+			'/',
+		];
+		$_SERVER['argc'] = 2;
+
+		// Inject mock router.
+		$routes = Services::routes();
+		$routes->setAutoRoute(false);
+		$routes->set404Override('Home::index');
+		$router = Services::router($routes);
+		Services::injectMock('router', $router);
+
+		ob_start();
+		$this->codeigniter->run();
+		$output = ob_get_clean();
+
+		$this->assertContains('<h1>Welcome to CodeIgniter</h1>', $output);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testRun404OverrideByClosure()
+	{
+		$_SERVER['argv'] = [
+			'index.php',
+			'/',
+		];
+		$_SERVER['argc'] = 2;
+
+		// Inject mock router.
+		$routes = Services::routes();
+		$routes->setAutoRoute(false);
+		$routes->set404Override(function()
+		{
+			echo '404 Override by Closure.';
+		});
+		$router = Services::router($routes);
+		Services::injectMock('router', $router);
+
+		ob_start();
+		$this->codeigniter->run();
+		$output = ob_get_clean();
+
+		$this->assertContains('404 Override by Closure.', $output);
+	}
+
+	//--------------------------------------------------------------------
+
 }
