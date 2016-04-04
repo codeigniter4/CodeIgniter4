@@ -3,9 +3,7 @@
 /**
  * Class Services
  *
- * This class just uses \Config\Services methods, but you should use this class
- * instead of using \Config\Services directly. If you use it, you could replace
- * the services (objects) with your mocks when testing.
+ * This class is only for IDE auto completion. We don't load this file.
  *
  * @package CodeIgniter
  */
