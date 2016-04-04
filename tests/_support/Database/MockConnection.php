@@ -2,7 +2,7 @@
 
 class MockConnection extends BaseConnection
 {
-	protected $returnValue;
+	protected $returnValues = [];
 
 	public $database;
 
@@ -12,7 +12,7 @@ class MockConnection extends BaseConnection
 
 	public function shouldReturn(string $method, $return)
 	{
-		$this->returnValue[$method] = $return;
+		$this->returnValues[$method] = $return;
 
 		return $this;
 	}
@@ -70,8 +70,16 @@ class MockConnection extends BaseConnection
 	 */
 	public function connect($persistant = false)
 	{
-		// ?
-		return $this;
+		$return = $this->returnValues['connect'] ?? true;
+
+		if (is_array($return))
+		{
+			// By removing the top item here, we can
+			// get a different value for, say, testing failover connections.
+			$return = array_shift($this->returnValues['connect']);
+		}
+
+		return $return;
 	}
 
 	//--------------------------------------------------------------------
@@ -126,7 +134,7 @@ class MockConnection extends BaseConnection
 	 */
 	protected function execute($sql)
 	{
-		return $this->returnValue;
+		return $this->returnValues['execute'];
 	}
 
 	//--------------------------------------------------------------------

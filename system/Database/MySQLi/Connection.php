@@ -295,7 +295,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 * @param	string
 	 * @return	string
 	 */
-	protected function _escapeString($str)
+	protected function _escapeString(string $str): string
 	{
 		return $this->connID->real_escape_string($str);
 	}

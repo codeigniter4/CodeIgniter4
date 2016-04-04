@@ -56,7 +56,7 @@ class InsertTest extends \CIUnitTestCase
 			['id' => 3, 'name' => 'Cab Driver', 'description' => 'Iam yellow'],
 		);
 
-		$this->db->shouldReturn('query', 1)
+		$this->db->shouldReturn('execute', 1)
 				 ->shouldReturn('affectedRows', 1);
 
 		$builder->insertBatch($insertData, true, true);

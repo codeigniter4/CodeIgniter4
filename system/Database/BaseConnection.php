@@ -89,7 +89,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 *
 	 * @var bool
 	 */
-	protected $cacheOn = false;
+	public $cacheOn = false;
 
 	/**
 	 * Path to store cache files.
@@ -141,6 +141,13 @@ abstract class BaseConnection implements ConnectionInterface
 	 * @var    bool
 	 */
 	public $strictOn;
+
+	/**
+	 * Settings for a failover connection.
+	 *
+	 * @var array
+	 */
+	public $failover = [];
 
 	/**
 	 * Whether to keep an in-memory history of queries
@@ -291,7 +298,7 @@ abstract class BaseConnection implements ConnectionInterface
 					}
 
 					// Try to connect
-					$this->conn_id = $this->connect($this->pConnect);
+					$this->connID = $this->connect($this->pConnect);
 
 					// If a connection is made break the foreach loop
 					if ($this->connID)
@@ -304,7 +311,7 @@ abstract class BaseConnection implements ConnectionInterface
 			// We still don't have a connection?
 			if ( ! $this->connID)
 			{
-				throw new \RuntimeException('Unable to connect to the database.');
+				throw new DatabaseException('Unable to connect to the database.');
 			}
 		}
 
@@ -511,7 +518,10 @@ abstract class BaseConnection implements ConnectionInterface
 	 */
 	public function simpleQuery(string $sql)
 	{
-		empty($this->connID) && $this->initialize();
+		if (empty($this->connID))
+		{
+			$this->initialize();
+		}
 
 		return $this->execute($sql);
 	}
