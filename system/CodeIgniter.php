@@ -319,6 +319,8 @@ class CodeIgniter
 		$this->benchmark->stop('bootstrap');
 		$this->benchmark->start('routing');
 
+		ob_start();
+
 		$this->controller = $this->router->handle($path);
 		$this->method     = $this->router->methodName();
 
@@ -339,8 +341,6 @@ class CodeIgniter
 	 */
 	protected function startController()
 	{
-		ob_start();
-
 		$this->benchmark->start('controller');
 		$this->benchmark->start('controller_constructor');
 
@@ -407,16 +407,21 @@ class CodeIgniter
 			}
 			else if (is_array($override))
 			{
+				$this->benchmark->start('controller');
+				$this->benchmark->start('controller_constructor');
+
 				$this->controller = $override[0];
 				$this->method     = $override[1];
 
 				unset($override);
+
+				$controller = $this->createController();
+				$this->runController($controller);
 			}
 
-			$controller = $this->createController();
-			$this->runController($controller);
 			$this->gatherOutput();
 			$this->sendResponse();
+
 			return;
 		}
 

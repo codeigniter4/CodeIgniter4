@@ -179,6 +179,9 @@ require BASEPATH.'Autoloader/Autoloader.php';
 require APPPATH.'Config/Autoload.php';
 require APPPATH.'Config/Services.php';
 
+// Use Config\Services as CodeIgniter\Services
+class_alias('Config\Services', 'CodeIgniter\Services');
+
 // The Autoloader class only handles namespaces
 // and "legacy" support.
 $loader = CodeIgniter\Services::autoloader();
