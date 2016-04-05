@@ -35,12 +35,12 @@ class Services
 	 */
 	public static function autoloader($getShared = false)
 	{
-		if (! $getShared)
+		if ($getShared)
 		{
-			return new \CodeIgniter\Autoloader\Autoloader();
+			return self::getSharedInstance('autoloader');
 		}
 
-		return self::getSharedInstance('autoloader');
+		return new \CodeIgniter\Autoloader\Autoloader();
 	}
 
 	//--------------------------------------------------------------------
@@ -51,20 +51,20 @@ class Services
 	 */
 	public static function clirequest(App $config=null, $getShared = false)
 	{
+		if ($getShared)
+		{
+			return self::getSharedInstance('clirequest');
+		}
+
 		if (! is_object($config))
 		{
 			$config = new App();
 		}
 
-		if (! $getShared)
-		{
-			return new \CodeIgniter\HTTP\CLIRequest(
-					$config,
-					new \CodeIgniter\HTTP\URI()
-			);
-		}
-
-		return self::getSharedInstance('clirequest');
+		return new \CodeIgniter\HTTP\CLIRequest(
+			$config,
+			new \CodeIgniter\HTTP\URI()
+		);
 	}
 
 	//--------------------------------------------------------------------
@@ -109,17 +109,17 @@ class Services
 	 */
 	public static function exceptions(App $config = null, $getShared = false)
 	{
+		if ($getShared)
+		{
+			return self::getSharedInstance('exceptions');
+		}
+
 		if (empty($config))
 		{
 			$config = new App();
 		}
 
-		if (! $getShared)
-		{
-			return new \CodeIgniter\Debug\Exceptions($config);
-		}
-
-		return self::getSharedInstance('exceptions');
+		return new \CodeIgniter\Debug\Exceptions($config);
 	}
 
 	//--------------------------------------------------------------------
@@ -131,12 +131,12 @@ class Services
 	 */
 	public static function iterator($getShared = false)
 	{
-		if (! $getShared)
+		if ($getShared)
 		{
-			return new \CodeIgniter\Debug\Iterator();
+			return self::getSharedInstance('iterator');
 		}
 
-		return self::getSharedInstance('iterator');
+		return new \CodeIgniter\Debug\Iterator();
 	}
 
 	//--------------------------------------------------------------------
@@ -148,12 +148,12 @@ class Services
 	 */
 	public static function locator($getShared = false)
 	{
-	    if (! $getShared)
+	    if ($getShared)
 	    {
-		    return new \CodeIgniter\Autoloader\FileLocator(new \Config\Autoload());
+		    return self::getSharedInstance('loader');
 	    }
 
-		return self::getSharedInstance('loader');
+		return new \CodeIgniter\Autoloader\FileLocator(new \Config\Autoload());
 	}
 
 	//--------------------------------------------------------------------
@@ -164,12 +164,12 @@ class Services
 	 */
 	public static function logger($getShared = false)
 	{
-		if (! $getShared)
+		if ($getShared)
 		{
-			return new \CodeIgniter\Log\Logger(new Logger());
+			return self::getSharedInstance('logger');
 		}
 
-		return self::getSharedInstance('logger');
+		return new \CodeIgniter\Log\Logger(new Logger());
 	}
 
 	//--------------------------------------------------------------------
@@ -181,17 +181,17 @@ class Services
 	 */
 	public static function negotiator(\CodeIgniter\HTTP\RequestInterface $request=null, $getShared = false)
 	{
-		if (! $getShared)
+		if ($getShared)
 		{
-			if (is_null($request))
-			{
-				$request = self::request();
-			}
-
-			return new \CodeIgniter\HTTP\Negotiate($request);
+			return self::getSharedInstance('negotiator');
 		}
 
-		return self::getSharedInstance('negotiator');
+		if (is_null($request))
+		{
+			$request = self::request();
+		}
+
+		return new \CodeIgniter\HTTP\Negotiate($request);
 	}
 
 	//--------------------------------------------------------------------
@@ -203,12 +203,12 @@ class Services
 	 */
 	public static function renderer($viewPath = APPPATH.'Views/', $getShared = false)
 	{
-		if (! $getShared)
+		if ($getShared)
 		{
-			return new \CodeIgniter\View\View($viewPath, self::locator(true), CI_DEBUG, self::logger(true));
+			return self::getSharedInstance('renderer');
 		}
 
-		return self::getSharedInstance('renderer');
+		return new \CodeIgniter\View\View($viewPath, self::locator(true), CI_DEBUG, self::logger(true));
 	}
 
 	//--------------------------------------------------------------------
@@ -218,20 +218,20 @@ class Services
 	 */
 	public static function request(App $config = null, $getShared = false)
 	{
+		if ($getShared)
+		{
+			return self::getSharedInstance('request');
+		}
+
 		if (! is_object($config))
 		{
 			$config = new App();
 		}
 
-		if (! $getShared)
-		{
-			return new \CodeIgniter\HTTP\IncomingRequest(
-					$config,
-					new \CodeIgniter\HTTP\URI()
-			);
-		}
-
-		return self::getSharedInstance('request');
+		return new \CodeIgniter\HTTP\IncomingRequest(
+			$config,
+			new \CodeIgniter\HTTP\URI()
+		);
 	}
 
 	//--------------------------------------------------------------------
@@ -241,17 +241,17 @@ class Services
 	 */
 	public static function response(App $config = null, $getShared = false)
 	{
+		if ($getShared)
+		{
+			return self::getSharedInstance('response');
+		}
+
 		if (! is_object($config))
 		{
 			$config = new App();
 		}
 
-		if (! $getShared)
-		{
-			return new \CodeIgniter\HTTP\Response($config);
-		}
-
-		return self::getSharedInstance('response');
+		return new \CodeIgniter\HTTP\Response($config);
 	}
 
 	//--------------------------------------------------------------------
@@ -262,12 +262,12 @@ class Services
 	 */
 	public static function routes($getShared = false)
 	{
-		if (! $getShared)
+		if ($getShared)
 		{
-			return new \CodeIgniter\Router\RouteCollection();
+			return self::getSharedInstance('routes');
 		}
 
-		return self::getSharedInstance('routes');
+		return new \CodeIgniter\Router\RouteCollection();
 	}
 
 	//--------------------------------------------------------------------
@@ -278,7 +278,7 @@ class Services
 	 */
 	public static function router(\CodeIgniter\Router\RouteCollectionInterface $routes = null, $getShared = false)
 	{
-		if ($getShared === true)
+		if ($getShared)
 		{
 			return self::getSharedInstance('router', $routes);
 		}
@@ -299,17 +299,17 @@ class Services
 	 */
 	public static function security(App $config = null, $getShared = false)
 	{
+		if ($getShared)
+		{
+			return self::getSharedInstance('security');
+		}
+
 		if (! is_object($config))
 		{
 			$config = new App();
 		}
 
-		if (! $getShared)
-		{
-			return new \CodeIgniter\Security\Security($config);
-		}
-
-		return self::getSharedInstance('security');
+		return new \CodeIgniter\Security\Security($config);
 	}
 
 	//--------------------------------------------------------------------
@@ -322,27 +322,27 @@ class Services
 	 */
 	public static function session(App $config = null, $getShared = false)
 	{
+		if ($getShared)
+		{
+			return self::getSharedInstance('session');
+		}
+
 		if (! is_object($config))
 		{
 			$config = new App();
 		}
 
-		if (! $getShared)
-		{
-			$logger = self::logger(true);
+		$logger = self::logger(true);
 
-			$driverName = $config->sessionDriver;
-			$driver = new $driverName($config);
-			$driver->setLogger($logger);
+		$driverName = $config->sessionDriver;
+		$driver = new $driverName($config);
+		$driver->setLogger($logger);
 
-			$session = new \CodeIgniter\Session\Session($driver, $config);
-			$session->setLogger($logger);
-			$session->initialize();
+		$session = new \CodeIgniter\Session\Session($driver, $config);
+		$session->setLogger($logger);
+		$session->initialize();
 
-			return $session;
-		}
-
-		return self::getSharedInstance('session');
+		return $session;
 	}
 
 	//--------------------------------------------------------------------
@@ -353,29 +353,29 @@ class Services
 	 */
 	public static function timer($getShared = false)
 	{
-		if (! $getShared)
+		if ($getShared)
 		{
-			return new \CodeIgniter\Debug\Timer();
+			return self::getSharedInstance('timer');
 		}
 
-		return self::getSharedInstance('timer');
+		return new \CodeIgniter\Debug\Timer();
 	}
 
 	//--------------------------------------------------------------------
 
 	public static function toolbar(App $config = null, $getShared = false)
 	{
+		if ($getShared)
+		{
+			return self::getSharedInstance('security');
+		}
+
 		if (! is_object($config))
 		{
 			$config = new App();
 		}
 
-		if (! $getShared)
-		{
-			return new \CodeIgniter\Debug\Toolbar($config);
-		}
-
-		return self::getSharedInstance('security');
+		return new \CodeIgniter\Debug\Toolbar($config);
 	}
 
 	//--------------------------------------------------------------------
@@ -385,12 +385,12 @@ class Services
 	 */
 	public static function uri($uri = null, $getShared = false)
 	{
-		if (! $getShared)
+		if ($getShared)
 		{
-			return new \CodeIgniter\HTTP\URI($uri);
+			return self::getSharedInstance('uri', $uri);
 		}
 
-		return self::getSharedInstance('uri', $uri);
+		return new \CodeIgniter\HTTP\URI($uri);
 	}
 
 	//--------------------------------------------------------------------
