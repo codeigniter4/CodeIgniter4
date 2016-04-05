@@ -33,7 +33,7 @@ class Services
 	 * The Autoloader class is the central class that handles our
 	 * spl_autoload_register method, and helper methods.
 	 */
-	public static function autoloader($getShared = false)
+	public static function autoloader($getShared = true)
 	{
 		if ($getShared)
 		{
@@ -49,11 +49,11 @@ class Services
 	 * The CLI Request class provides for ways to interact with
 	 * a command line request.
 	 */
-	public static function clirequest(App $config=null, $getShared = false)
+	public static function clirequest(App $config=null, $getShared = true)
 	{
 		if ($getShared)
 		{
-			return self::getSharedInstance('clirequest');
+			return self::getSharedInstance('clirequest', $config);
 		}
 
 		if (! is_object($config))
@@ -73,11 +73,11 @@ class Services
 	 * The CURL Request class acts as a simple HTTP client for interacting
 	 * with other servers, typically through APIs.
 	 */
-	public static function curlrequest(array $options = [], $response = null, App $config = null, $getShared = false)
+	public static function curlrequest(array $options = [], $response = null, App $config = null, $getShared = true)
 	{
 		if ($getShared === true)
 		{
-			return self::getSharedInstance('curlrequest', $options, $response);
+			return self::getSharedInstance('curlrequest', $options, $response, $config);
 		}
 
 		if (! is_object($config))
@@ -107,11 +107,11 @@ class Services
 	 *  - set_error_handler
 	 *  - register_shutdown_function
 	 */
-	public static function exceptions(App $config = null, $getShared = false)
+	public static function exceptions(App $config = null, $getShared = true)
 	{
 		if ($getShared)
 		{
-			return self::getSharedInstance('exceptions');
+			return self::getSharedInstance('exceptions', $config);
 		}
 
 		if (empty($config))
@@ -129,7 +129,7 @@ class Services
 	 * and timing the results and memory usage. Used when debugging and
 	 * optimizing applications.
 	 */
-	public static function iterator($getShared = false)
+	public static function iterator($getShared = true)
 	{
 		if ($getShared)
 		{
@@ -146,7 +146,7 @@ class Services
 	 * within namespaced folders, as well as convenience methods for
 	 * loading 'helpers', and 'libraries'.
 	 */
-	public static function locator($getShared = false)
+	public static function locator($getShared = true)
 	{
 	    if ($getShared)
 	    {
@@ -162,7 +162,7 @@ class Services
 	 * The Logger class is a PSR-3 compatible Logging class that supports
 	 * multiple handlers that process the actual logging.
 	 */
-	public static function logger($getShared = false)
+	public static function logger($getShared = true)
 	{
 		if ($getShared)
 		{
@@ -179,11 +179,11 @@ class Services
 	 * working the request to determine correct language, encoding, charset,
 	 * and more.
 	 */
-	public static function negotiator(\CodeIgniter\HTTP\RequestInterface $request=null, $getShared = false)
+	public static function negotiator(\CodeIgniter\HTTP\RequestInterface $request=null, $getShared = true)
 	{
 		if ($getShared)
 		{
-			return self::getSharedInstance('negotiator');
+			return self::getSharedInstance('negotiator', $request);
 		}
 
 		if (is_null($request))
@@ -201,11 +201,11 @@ class Services
 	 * The default View class within CodeIgniter is intentionally simple, but this
 	 * service could easily be replaced by a template engine if the user needed to.
 	 */
-	public static function renderer($viewPath = APPPATH.'Views/', $getShared = false)
+	public static function renderer($viewPath = APPPATH.'Views/', $getShared = true)
 	{
 		if ($getShared)
 		{
-			return self::getSharedInstance('renderer');
+			return self::getSharedInstance('renderer', $viewPath);
 		}
 
 		return new \CodeIgniter\View\View($viewPath, self::locator(true), CI_DEBUG, self::logger(true));
@@ -216,11 +216,11 @@ class Services
 	/**
 	 * The Request class models an HTTP request.
 	 */
-	public static function request(App $config = null, $getShared = false)
+	public static function request(App $config = null, $getShared = true)
 	{
 		if ($getShared)
 		{
-			return self::getSharedInstance('request');
+			return self::getSharedInstance('request', $config);
 		}
 
 		if (! is_object($config))
@@ -239,11 +239,11 @@ class Services
 	/**
 	 * The Response class models an HTTP response.
 	 */
-	public static function response(App $config = null, $getShared = false)
+	public static function response(App $config = null, $getShared = true)
 	{
 		if ($getShared)
 		{
-			return self::getSharedInstance('response');
+			return self::getSharedInstance('response', $config);
 		}
 
 		if (! is_object($config))
@@ -260,7 +260,7 @@ class Services
 	 * The Routes service is a class that allows for easily building
 	 * a collection of routes.
 	 */
-	public static function routes($getShared = false)
+	public static function routes($getShared = true)
 	{
 		if ($getShared)
 		{
@@ -276,7 +276,7 @@ class Services
 	 * The Router class uses a RouteCollection's array of routes, and determines
 	 * the correct Controller and Method to execute.
 	 */
-	public static function router(\CodeIgniter\Router\RouteCollectionInterface $routes = null, $getShared = false)
+	public static function router(\CodeIgniter\Router\RouteCollectionInterface $routes = null, $getShared = true)
 	{
 		if ($getShared)
 		{
@@ -297,11 +297,11 @@ class Services
 	 * The Security class provides a few handy tools for keeping the site
 	 * secure, most notably the CSRF protection tools.
 	 */
-	public static function security(App $config = null, $getShared = false)
+	public static function security(App $config = null, $getShared = true)
 	{
 		if ($getShared)
 		{
-			return self::getSharedInstance('security');
+			return self::getSharedInstance('security', $config);
 		}
 
 		if (! is_object($config))
@@ -320,11 +320,11 @@ class Services
 	 *
 	 * @return \CodeIgniter\Session\Session
 	 */
-	public static function session(App $config = null, $getShared = false)
+	public static function session(App $config = null, $getShared = true)
 	{
 		if ($getShared)
 		{
-			return self::getSharedInstance('session');
+			return self::getSharedInstance('session', $config);
 		}
 
 		if (! is_object($config))
@@ -351,7 +351,7 @@ class Services
 	 * The Timer class provides a simple way to Benchmark portions of your
 	 * application.
 	 */
-	public static function timer($getShared = false)
+	public static function timer($getShared = true)
 	{
 		if ($getShared)
 		{
@@ -363,11 +363,11 @@ class Services
 
 	//--------------------------------------------------------------------
 
-	public static function toolbar(App $config = null, $getShared = false)
+	public static function toolbar(App $config = null, $getShared = true)
 	{
 		if ($getShared)
 		{
-			return self::getSharedInstance('security');
+			return self::getSharedInstance('toolbar', $config);
 		}
 
 		if (! is_object($config))
@@ -383,7 +383,7 @@ class Services
 	/**
 	 * The URI class provides a way to model and manipulate URIs.
 	 */
-	public static function uri($uri = null, $getShared = false)
+	public static function uri($uri = null, $getShared = true)
 	{
 		if ($getShared)
 		{
@@ -411,6 +411,9 @@ class Services
 	{
 		if (! isset(static::$instances[$key]))
 		{
+			// Make sure $getShared is false
+			array_push($params, false);
+
 			static::$instances[$key] = self::$key(...$params);
 		}
 

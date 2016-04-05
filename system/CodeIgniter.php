@@ -217,7 +217,7 @@ class CodeIgniter
 	{
 		$this->startTime = microtime(true);
 
-		$this->benchmark = Services::timer(true);
+		$this->benchmark = Services::timer();
 		$this->benchmark->start('total_execution', $this->startTime);
 		$this->benchmark->start('bootstrap');
 	}
@@ -233,11 +233,11 @@ class CodeIgniter
 	{
 		if (is_cli())
 		{
-			$this->request = Services::clirequest($this->config, true);
+			$this->request = Services::clirequest($this->config);
 		}
 		else
 		{
-			$this->request = Services::request($this->config, true);
+			$this->request = Services::request($this->config);
 			$this->request->setProtocolVersion($_SERVER['SERVER_PROTOCOL']);
 		}
 	}
@@ -250,7 +250,7 @@ class CodeIgniter
 	 */
 	protected function getResponseObject()
 	{
-		$this->response = Services::response($this->config, true);
+		$this->response = Services::response($this->config);
 		if ( ! is_cli())
 		{
 			$this->response->setProtocolVersion($this->request->getProtocolVersion());
@@ -312,7 +312,7 @@ class CodeIgniter
 		require APPPATH.'Config/Routes.php';
 
 		// $routes is defined in Config/Routes.php
-		$this->router = Services::router($routes, true);
+		$this->router = Services::router($routes);
 
 		$path = is_cli() ? $this->request->getPath() : $this->request->uri->getPath();
 

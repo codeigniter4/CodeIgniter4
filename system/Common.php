@@ -111,7 +111,7 @@ if ( ! function_exists('load_view'))
 		/**
 		 * @var CodeIgniter\View\View $renderer
 		 */
-		$renderer = Services::renderer(null, true);
+		$renderer = Services::renderer();
 
 		return $renderer->setData($data, 'raw')
 		                ->render($name, $options);
@@ -220,7 +220,7 @@ if ( ! function_exists('route_to'))
 	 */
 	function route_to(string $method, ...$params): string
 	{
-		$routes = Services::routes(true);
+		$routes = Services::routes();
 
 		return $routes->reverseRoute($method, ...$params);
 	}
@@ -244,6 +244,9 @@ if (! function_exists('service'))
 	 */
 	function service(string $name, ...$params)
 	{
+		// Ensure it's not a shared instance
+		array_push($params, false);
+
 		return Services::$name(...$params);
 	}
 }
@@ -254,19 +257,6 @@ if (! function_exists('shared_service'))
 {
 	function shared_service(string $name, ...$params)
 	{
-		// Ensure the number of params we are passing
-		// meets the number the method expects, since
-		// we have to add a 'true' as the final value
-		// to return a shared instance.
-		$mirror = new ReflectionMethod(Services::class, $name);
-		$count = -$mirror->getNumberOfParameters();
-
-		$params = array_pad($params, $count + 1, null);
-
-		// We add true as the final parameter to ensure
-		// we are getting a shared instance.
-		array_push($params, true);
-
 		return Services::$name(...$params);
 	}
 }
