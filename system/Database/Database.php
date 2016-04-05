@@ -29,7 +29,7 @@ class Database
 	 * @param array $params
 	 * @param bool  $useBuilder
 	 */
-	public function load(array $params = [], string $alias, $useBuilder = false)
+	public function load(array $params = [], string $alias)
 	{
 		// No DB specified? Beat them senseless...
 		if (empty($params['DBDriver']))
@@ -50,5 +50,32 @@ class Database
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Creates a new Forge instance for the current database type.
+	 *
+	 * @param ConnectionInterface $db
+	 *
+	 * @return mixed
+	 */
+	public function loadForge(ConnectionInterface $db)
+	{
+		$className = strpos($db->DBDriver, '\\') === false
+			? '\CodeIgniter\Database\\'.$db->DBDriver.'\\Forge'
+			: $db->DBDriver.'\\Connection';
+
+		// Make sure a connection exists
+		if (! $db->connID)
+		{
+			$db->initialize();
+		}
+
+		$class = new $className($db);
+
+		return $class;
+	}
+
+	//--------------------------------------------------------------------
+
 
 }

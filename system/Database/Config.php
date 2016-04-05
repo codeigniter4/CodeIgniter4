@@ -78,7 +78,30 @@ class Config extends BaseConfig
 	 */
 	public static function forge(string $group = null)
 	{
+		$config = new \Config\Database();
 
+		self::ensureFactory();
+
+		if (empty($group))
+		{
+			$group = $config->defaultGroup;
+		}
+
+		if (! isset($config->$group))
+		{
+			throw new \InvalidArgumentException($group.' is not a valid database connection group.');
+		}
+
+		if (! isset(self::$instances[$group]))
+		{
+			$db = self::connect($group);
+		}
+		else 
+		{
+			$db = self::$instances[$group];
+		}
+		
+		return self::$factory->loadForge($db);
 	}
 
 	//--------------------------------------------------------------------
