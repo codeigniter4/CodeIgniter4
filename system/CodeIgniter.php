@@ -50,10 +50,8 @@ class CodeIgniter
 {
 	/**
 	 * The current version of CodeIgniter Framework
-	 *
-	 * @var string
 	 */
-	protected $CIVersion = '4.0-dev';
+        const CI_VERSION = '4.0-dev';
 
 	/**
 	 * UNIX timestamp for the start of script execution
@@ -119,12 +117,6 @@ class CodeIgniter
 		$this->startMemory = $startMemory;
 		$this->startTime   = $startTime;
 		$this->config = $config;
-
-		// When testing, we need to create more than one instance.
-		if ( ! defined('CI_VERSION'))
-		{
-			define('CI_VERSION', $this->CIVersion);
-		}
 	}
 
 	//--------------------------------------------------------------------

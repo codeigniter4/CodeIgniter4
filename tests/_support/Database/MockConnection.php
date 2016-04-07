@@ -120,7 +120,7 @@ class MockConnection extends BaseConnection
 	 */
 	public function getVersion()
 	{
-		return CI_VERSION;
+		return \CodeIgniter\CodeIgniter::CI_VERSION;
 	}
 
 	//--------------------------------------------------------------------
