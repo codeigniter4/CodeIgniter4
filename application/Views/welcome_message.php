@@ -83,7 +83,7 @@
 
 		<h1>Welcome to CodeIgniter</h1>
 
-		<p class="version">version <?= CI_VERSION ?></p>
+                <p class="version">version <?= CodeIgniter\CodeIgniter::CI_VERSION ?></p>
 
 		<div class="logo">
 			<svg version="1.0" xmlns="http://www.w3.org/2000/svg"
