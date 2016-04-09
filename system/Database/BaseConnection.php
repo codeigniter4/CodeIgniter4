@@ -465,6 +465,11 @@ abstract class BaseConnection implements ConnectionInterface
 	 */
 	public function query(string $sql, $binds = null, $queryClass = 'CodeIgniter\\Database\\Query')
 	{
+		if (empty($this->connID))
+		{
+			$this->initialize();
+		}
+
 		$query = new $queryClass($this);
 
 		$query->setQuery($sql, $binds);
