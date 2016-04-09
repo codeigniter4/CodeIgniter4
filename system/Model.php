@@ -37,13 +37,6 @@ class Model
 	protected $primaryKey = 'id';
 
 	/**
-	 * Should this model provide access to
-	 * the query builder?
-	 * @var bool
-	 */
-	protected $useBuilder = true;
-
-	/**
 	 * The Database connection group that
 	 * should be instantiated.
 	 * @var string
@@ -352,11 +345,6 @@ class Model
 	 */
 	protected function builder(string $table = null)
 	{
-		if (! $this->useBuilder)
-		{
-			throw new \RuntimeException('The model is not allowed to use the Query Builder.');
-		}
-
 		if ($this->builder instanceof BaseBuilder)
 		{
 			return $this->builder;
