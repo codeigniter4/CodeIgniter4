@@ -4,6 +4,8 @@
 $startMemory = memory_get_usage();
 $startTime   = microtime(true);
 
+$useKint = false;
+
 /*
  *---------------------------------------------------------------
  * APPLICATION ENVIRONMENT
@@ -39,6 +41,7 @@ switch (ENVIRONMENT)
 		ini_set('display_errors', 1);
 		define('CI_DEBUG', 1);
 		define('SHOW_DEBUG_BACKTRACE', TRUE);
+		$useKint = true;
 		break;
 
 	case 'production':
@@ -149,7 +152,7 @@ define('APPPATH', realpath($application_folder).DIRECTORY_SEPARATOR);
  * Load the Kint Debugger
  * ------------------------------------------------------
  */
-if (ENVIRONMENT == 'development')
+if ($useKint === true)
 {
 	require_once BASEPATH.'Debug/Kint/Kint.class.php';
 }
