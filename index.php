@@ -146,6 +146,16 @@ define('APPPATH', realpath($application_folder).DIRECTORY_SEPARATOR);
 
 /*
  * ------------------------------------------------------
+ * Load the Kint Debugger
+ * ------------------------------------------------------
+ */
+if (ENVIRONMENT == 'development')
+{
+	require_once BASEPATH.'Debug/Kint/Kint.class.php';
+}
+
+/*
+ * ------------------------------------------------------
  *  Load any environment-specific settings from .env file
  * ------------------------------------------------------
  */
