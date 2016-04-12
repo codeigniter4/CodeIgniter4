@@ -334,7 +334,10 @@ class Model
 
 			foreach ($rows as $row)
 			{
-				$userFunc($row);
+				if ($userFunc($row) === false)
+				{
+					return;
+				}
 			}
 		}
 	}
