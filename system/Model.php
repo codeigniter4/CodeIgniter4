@@ -309,9 +309,34 @@ class Model
 	 *
 	 * @param int $size
 	 */
-	public function chunk($size = 100, \Closure $func)
+	public function chunk($size = 100, \Closure $userFunc)
 	{
+		$total = $this->builder()->countAllResults(false);
 
+		$offset = 0;
+
+		while ($offset <= $total)
+		{
+			$builder = clone($this->builder());
+
+			$rows = $builder->get($size, $offset);
+
+			if ($rows === false)
+			{
+				throw new DatabaseException('Unable to get results from the query.');
+			}
+
+			$rows = $rows->getResult();
+
+			if (empty($rows)) continue;
+
+			$offset += $size;
+
+			foreach ($rows as $row)
+			{
+				$userFunc($row);
+			}
+		}
 	}
 
 	//--------------------------------------------------------------------

@@ -1516,12 +1516,12 @@ class BaseBuilder
 			$this->QBOrderBy = $orderby;
 		}
 
-		if ($result->num_rows() === 0)
+		$row = $result->getRow();
+
+		if (empty($row))
 		{
 			return 0;
 		}
-
-		$row = $result->row();
 
 		return (int)$row->numrows;
 	}

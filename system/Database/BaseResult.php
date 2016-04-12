@@ -346,7 +346,7 @@ abstract class BaseResult implements ResultInterface
 	 */
 	public function getRowObject($n = 0)
 	{
-		$result = $this->resultObject();
+		$result = $this->getResultObject();
 		if (count($result) === 0)
 		{
 			return null;
