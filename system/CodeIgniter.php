@@ -37,6 +37,7 @@
 	 */
 
 
+use CodeIgniter\Router\RouteCollectionInterface;
 use Config\App;
 use CodeIgniter\Services;
 use CodeIgniter\Hooks\Hooks;
@@ -126,7 +127,7 @@ class CodeIgniter
 	 * of the framework pieces are pulled together and shown how to
 	 * make beautiful music together. Or something like that. :)
 	 */
-	public function run()
+	public function run(RouteCollectionInterface $routes = null)
 	{
 		$this->startBenchmark();
 
@@ -141,7 +142,7 @@ class CodeIgniter
 
 		try
 		{
-			$this->tryToRouteIt();
+			$this->tryToRouteIt($routes);
 
 			//--------------------------------------------------------------------
 			// Are there any "pre-controller" hooks?
@@ -298,10 +299,16 @@ class CodeIgniter
 	 * Try to Route It - As it sounds like, works with the router to
 	 * match a route against the current URI. If the route is a
 	 * "redirect route", will also handle the redirect.
+	 *
+	 * @param RouteCollectionInterface $routes  An collection interface to use in place
+	 *                                          of the config file.
 	 */
-	protected function tryToRouteIt()
+	protected function tryToRouteIt(RouteCollectionInterface $routes = null)
 	{
-		require APPPATH.'Config/Routes.php';
+		if (empty($routes) || ! $routes instanceof RouteCollectionInterface)
+		{
+			require APPPATH.'Config/Routes.php';
+		}
 
 		// $routes is defined in Config/Routes.php
 		$this->router = Services::router($routes);
@@ -318,6 +325,8 @@ class CodeIgniter
 
 		$this->benchmark->stop('routing');
 	}
+
+	//--------------------------------------------------------------------
 
 	protected function callExit($code)
 	{

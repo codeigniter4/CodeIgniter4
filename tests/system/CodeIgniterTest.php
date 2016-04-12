@@ -1,5 +1,6 @@
 <?php namespace CodeIgniter;
 
+use CodeIgniter\Router\RouteCollection;
 use Config\App;
 
 class CodeIgniterTest extends \CIUnitTestCase
@@ -69,7 +70,7 @@ class CodeIgniterTest extends \CIUnitTestCase
 		Services::injectMock('router', $router);
 
 		ob_start();
-		$this->codeigniter->run();
+		$this->codeigniter->run($routes);
 		$output = ob_get_clean();
 
 		$this->assertContains("Can't find a route for '/'.", $output);
@@ -101,9 +102,9 @@ class CodeIgniterTest extends \CIUnitTestCase
 		$this->assertContains('You want to see "about" page.', $output);
 	}
 
-	//--------------------------------------------------------------------
+		//--------------------------------------------------------------------
 
-	public function testRun404Override()
+		public function testRun404Override()
 	{
 		$_SERVER['argv'] = [
 			'index.php',
@@ -136,7 +137,7 @@ class CodeIgniterTest extends \CIUnitTestCase
 		$_SERVER['argc'] = 2;
 
 		// Inject mock router.
-		$routes = Services::routes();
+		$routes = new RouteCollection();
 		$routes->setAutoRoute(false);
 		$routes->set404Override(function()
 		{
@@ -146,7 +147,7 @@ class CodeIgniterTest extends \CIUnitTestCase
 		Services::injectMock('router', $router);
 
 		ob_start();
-		$this->codeigniter->run();
+		$this->codeigniter->run($routes);
 		$output = ob_get_clean();
 
 		$this->assertContains('404 Override by Closure.', $output);
