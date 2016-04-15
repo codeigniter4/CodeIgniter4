@@ -113,8 +113,15 @@ if ( ! function_exists('load_view'))
 		 */
 		$renderer = Services::renderer();
 
+		$saveData = false;
+		if (array_key_exists('saveData', $options))
+		{
+			$saveData = (bool)$options['saveData'];
+			unset($options['saveData']);
+		}
+
 		return $renderer->setData($data, 'raw')
-		                ->render($name, $options);
+		                ->render($name, $options, $saveData);
 	}
 }
 
