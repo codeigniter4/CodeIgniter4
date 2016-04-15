@@ -125,92 +125,6 @@ class BaseBuilder
 	 */
 	protected $QBWhereGroupCount = 0;
 
-	// Query Builder Caching variables
-
-	/**
-	 * QB Caching flag
-	 *
-	 * @var    bool
-	 */
-	protected $QBCaching = false;
-
-	/**
-	 * QB Cache exists list
-	 *
-	 * @var    array
-	 */
-	protected $QBCacheExists = [];
-
-	/**
-	 * QB Cache SELECT data
-	 *
-	 * @var    array
-	 */
-	protected $QBCacheSelect = [];
-
-	/**
-	 * QB Cache FROM data
-	 *
-	 * @var    array
-	 */
-	protected $QBCacheFrom = [];
-
-	/**
-	 * QB Cache JOIN data
-	 *
-	 * @var    array
-	 */
-	protected $QBCacheJoin = [];
-
-	/**
-	 * QB Cache WHERE data
-	 *
-	 * @var    array
-	 */
-	protected $QBCacheWhere = [];
-
-	/**
-	 * QB Cache GROUP BY data
-	 *
-	 * @var    array
-	 */
-	protected $QBCacheGroup = [];
-
-	/**
-	 * QB Cache HAVING data
-	 *
-	 * @var    array
-	 */
-	protected $QBCacheHaving = [];
-
-	/**
-	 * QB Cache ORDER BY data
-	 *
-	 * @var    array
-	 */
-	protected $QBCacheOrderBy = [];
-
-	/**
-	 * QB Cache data sets
-	 *
-	 * @var    array
-	 */
-	protected $QBCacheSet = [];
-
-	/**
-	 * QB No Escape data
-	 *
-	 * @var    array
-	 */
-	protected $QBNoEscape = [];
-
-	/**
-	 * QB Cache No Escape data
-	 *
-	 * @var    array
-	 */
-	protected $QBCacheNoEscape = [];
-
 	/**
 	 * A reference to the database connection.
 	 *
@@ -310,13 +224,6 @@ class BaseBuilder
 			{
 				$this->QBSelect[]   = $val;
 				$this->QBNoEscape[] = $escape;
-
-				if ($this->QBCaching === true)
-				{
-					$this->QBCacheSelect[]   = $val;
-					$this->QBCacheExists[]   = 'select';
-					$this->QBCacheNoEscape[] = $escape;
-				}
 			}
 		}
 
@@ -431,12 +338,6 @@ class BaseBuilder
 		$this->QBSelect[]   = $sql;
 		$this->QBNoEscape[] = null;
 
-		if ($this->QBCaching === true)
-		{
-			$this->QBCacheSelect[] = $sql;
-			$this->QBCacheExists[] = 'select';
-		}
-
 		return $this;
 	}
 
@@ -509,12 +410,6 @@ class BaseBuilder
 					$this->trackAliases($v);
 
 					$this->QBFrom[] = $v = $this->db->protectIdentifiers($v, true, null, false);
-
-					if ($this->QBCaching === true)
-					{
-						$this->QBCacheFrom[]   = $v;
-						$this->QBCacheExists[] = 'from';
-					}
 				}
 			}
 			else
@@ -526,12 +421,6 @@ class BaseBuilder
 				$this->trackAliases($val);
 
 				$this->QBFrom[] = $this->db->protectIdentifiers($val, true, null, false);
-
-				if ($this->QBCaching === true)
-				{
-					$this->QBCacheFrom[]   = $val;
-					$this->QBCacheExists[] = 'from';
-				}
 			}
 		}
 
@@ -625,12 +514,6 @@ class BaseBuilder
 		// Assemble the JOIN statement
 		$this->QBJoin[] = $join = $type.'JOIN '.$table.$cond;
 
-		if ($this->QBCaching === true)
-		{
-			$this->QBCacheJoin[]   = $join;
-			$this->QBCacheExists[] = 'join';
-		}
-
 		return $this;
 	}
 
@@ -692,8 +575,6 @@ class BaseBuilder
 	 */
 	protected function whereHaving($qb_key, $key, $value = null, $type = 'AND ', $escape = null)
 	{
-		$qb_cache_key = ($qb_key === 'QBHaving') ? 'QBCacheHaving' : 'QBCacheWhere';
-
 		if ( ! is_array($key))
 		{
 			$key = [$key => $value];
@@ -704,7 +585,7 @@ class BaseBuilder
 
 		foreach ($key as $k => $v)
 		{
-			$prefix = (count($this->$qb_key) === 0 && count($this->$qb_cache_key) === 0)
+			$prefix = (count($this->$qb_key) === 0)
 				? $this->groupGetType('')
 				: $this->groupGetType($type);
 
@@ -737,11 +618,6 @@ class BaseBuilder
 			$v = ! is_null($v) ? ' :'.$bind : $v;
 
 			$this->{$qb_key}[] = ['condition' => $prefix.$k.$v, 'escape' => $escape];
-			if ($this->QBCaching === true)
-			{
-				$this->{$qb_cache_key}[] = ['condition' => $prefix.$k.$v, 'escape' => $escape];
-				$this->QBCacheExists[]   = substr($qb_key, 3);
-			}
 		}
 
 		return $this;
@@ -867,7 +743,7 @@ class BaseBuilder
 		$where_in         = array_values($values);
 		$this->binds[$ok] = $where_in;
 
-		$prefix = (count($this->QBWhere) === 0 && count($this->QBCacheWhere) === 0)
+		$prefix = (count($this->QBWhere) === 0)
 			? $this->groupGetType('')
 			: $this->groupGetType($type);
 
@@ -877,11 +753,6 @@ class BaseBuilder
 		];
 
 		$this->QBWhere[] = $where_in;
-		if ($this->QBCaching === true)
-		{
-			$this->QBCacheWhere[]  = $where_in;
-			$this->QBCacheExists[] = 'where';
-		}
 
 		return $this;
 	}
@@ -999,7 +870,7 @@ class BaseBuilder
 
 		foreach ($field as $k => $v)
 		{
-			$prefix = (count($this->QBWhere) === 0 && count($this->QBCacheWhere) === 0)
+			$prefix = (count($this->QBWhere) === 0)
 				? $this->groupGetType('') : $this->groupGetType($type);
 
 			$bind = $this->setBind($k, $v);
@@ -1028,11 +899,6 @@ class BaseBuilder
 			}
 
 			$this->QBWhere[] = ['condition' => $like_statement, 'escape' => $escape];
-			if ($this->QBCaching === true)
-			{
-				$this->QBCacheWhere[]  = ['condition' => $like_statement, 'escape' => $escape];
-				$this->QBCacheExists[] = 'where';
-			}
 		}
 
 		return $this;
@@ -1053,7 +919,7 @@ class BaseBuilder
 		$type = $this->groupGetType($type);
 
 		$this->QBWhereGroupStarted = true;
-		$prefix                    = (count($this->QBWhere) === 0 && count($this->QBCacheWhere) === 0) ? ''
+		$prefix                    = count($this->QBWhere) === 0 ? ''
 			: $type;
 		$where                     = [
 			'condition' => $prefix.$not.str_repeat(' ', ++$this->QBWhereGroupCount).' (',
@@ -1061,10 +927,6 @@ class BaseBuilder
 		];
 
 		$this->QBWhere[] = $where;
-		if ($this->QBCaching)
-		{
-			$this->QBCacheWhere[] = $where;
-		}
 
 		return $this;
 	}
@@ -1121,10 +983,6 @@ class BaseBuilder
 		];
 
 		$this->QBWhere[] = $where;
-		if ($this->QBCaching)
-		{
-			$this->QBCacheWhere[] = $where;
-		}
 
 		return $this;
 	}
@@ -1184,11 +1042,6 @@ class BaseBuilder
 				$val = ['field' => $val, 'escape' => $escape];
 
 				$this->QBGroupBy[] = $val;
-				if ($this->QBCaching === true)
-				{
-					$this->QBCacheGroup[]  = $val;
-					$this->QBCacheExists[] = 'groupby';
-				}
 			}
 		}
 
@@ -1287,11 +1140,6 @@ class BaseBuilder
 		}
 
 		$this->QBOrderBy = array_merge($this->QBOrderBy, $qb_orderby);
-		if ($this->QBCaching === true)
-		{
-			$this->QBCacheOrderBy  = array_merge($this->QBCacheOrderBy, $qb_orderby);
-			$this->QBCacheExists[] = 'orderby';
-		}
 
 		return $this;
 	}
@@ -1908,9 +1756,6 @@ class BaseBuilder
 	 */
 	public function getCompiledUpdate($reset = true)
 	{
-		// Combine any cached components with the current statements
-		$this->mergeCache();
-
 		if ($this->validateUpdate() === false)
 		{
 			return false;
@@ -1942,9 +1787,6 @@ class BaseBuilder
 	 */
 	public function update($set = null, $where = null, $limit = null, $test = false)
 	{
-		// Combine any cached components with the current statements
-		$this->mergeCache();
-
 		if ($set !== null)
 		{
 			$this->set($set);
@@ -2043,9 +1885,6 @@ class BaseBuilder
 	 */
 	public function updateBatch($set = null, $index = null, $batch_size = 100, $returnSQL = false)
 	{
-		// Combine any cached components with the current statements
-		$this->mergeCache();
-
 		if ($index === null)
 		{
 			if (CI_DEBUG)
@@ -2327,9 +2166,6 @@ class BaseBuilder
 	 */
 	public function delete($where = '', $limit = null, $reset_data = true, $returnSQL = false)
 	{
-		// Combine any cached components with the current statements
-		$this->mergeCache();
-
 		$table = $this->db->protectIdentifiers($this->QBFrom[0], true, null, false);
 
 		if ($where !== '')
@@ -2439,9 +2275,6 @@ class BaseBuilder
 	 */
 	protected function compileSelect($select_override = false)
 	{
-		// Combine any cached components with the current statements
-		$this->mergeCache();
-
 		// Write the "select" portion of the query
 		if ($select_override !== false)
 		{
@@ -2717,118 +2550,6 @@ class BaseBuilder
 		}
 
 		return $array;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Start Cache
-	 *
-	 * Starts QB caching
-	 *
-	 * @return    BaseBuilder
-	 */
-	public function startCache()
-	{
-		$this->QBCaching = true;
-
-		return $this;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Stop Cache
-	 *
-	 * Stops QB caching
-	 *
-	 * @return    BaseBuilder
-	 */
-	public function stopCache()
-	{
-		$this->QBCaching = false;
-
-		return $this;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Flush Cache
-	 *
-	 * Empties the QB cache
-	 *
-	 * @return    BaseBuilder
-	 */
-	public function flushCache()
-	{
-		$this->resetRun([
-			'QBCacheSelect'   => [],
-			'QBCacheJoin'     => [],
-			'QBCacheWhere'    => [],
-			'QBCacheGroup'    => [],
-			'QBCacheHaving'   => [],
-			'QBCacheOrderBy'  => [],
-			'QBCacheSet'      => [],
-			'QBCacheExists'   => [],
-			'QBCacheNoEscape' => [],
-		]);
-
-		return $this;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Merge Cache
-	 *
-	 * When called, this function merges any cached QB arrays with
-	 * locally called ones.
-	 *
-	 * @return    void
-	 */
-	protected function mergeCache()
-	{
-		if (count($this->QBCacheExists) === 0)
-		{
-			return;
-		}
-		elseif (in_array('select', $this->QBCacheExists, true))
-		{
-			$qb_no_escape = $this->QBCacheNoEscape;
-		}
-
-		foreach (array_unique($this->QBCacheExists) as $val) // select, from, etc.
-		{
-			$qb_variable  = 'QB'.ucfirst($val);
-			$qb_cache_var = 'QBCache'.ucfirst($val);
-			$qb_new       = $this->$qb_cache_var;
-
-			for ($i = 0, $c = count($this->$qb_variable); $i < $c; $i++)
-			{
-				if ( ! in_array($this->{$qb_variable}[$i], $qb_new, true))
-				{
-					$qb_new[] = $this->{$qb_variable}[$i];
-					if ($val === 'select')
-					{
-						$qb_no_escape[] = $this->QBNoEscape[$i];
-					}
-				}
-			}
-
-			$this->$qb_variable = $qb_new;
-			if ($val === 'select')
-			{
-				$this->QBNoEscape = $qb_no_escape;
-			}
-		}
-
-		// If we are "protecting identifiers" we need to examine the "from"
-		// portion of the query to determine if there are any aliases
-		if ($this->db->protectIdentifiers === true && count($this->QBCacheFrom) > 0)
-		{
-			$this->trackAliases($this->QBFrom);
-		}
 	}
 
 	//--------------------------------------------------------------------
