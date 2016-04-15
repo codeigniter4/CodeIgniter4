@@ -150,4 +150,44 @@ class ViewTest extends \CIUnitTestCase
 	}
 
 	//--------------------------------------------------------------------
+
+	public function testRenderScrapsDataByDefault()
+	{
+		$view = new View($this->viewsDir, $this->loader);
+
+		$view->setVar('testString', 'Hello World');
+		$view->render('simple');
+
+		$this->assertTrue(empty($view->getData()));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testRenderCanSaveData()
+	{
+		$view = new View($this->viewsDir, $this->loader);
+
+		$view->setVar('testString', 'Hello World');
+		$view->render('simple', null, true);
+
+		$expected = ['testString' => 'Hello World'];
+
+		$this->assertEquals($expected, $view->getData());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testCanDeleteData()
+	{
+		$view = new View($this->viewsDir, $this->loader);
+
+		$view->setVar('testString', 'Hello World');
+		$view->render('simple', null, true);
+
+		$view->resetData();
+
+		$this->assertEquals([], $view->getData());
+	}
+
+	//--------------------------------------------------------------------
 }

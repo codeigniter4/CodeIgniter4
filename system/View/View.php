@@ -112,7 +112,7 @@ class View implements RenderableInterface {
 	 *
 	 * @return string
 	 */
-	public function render(string $view, array $options=[]): string
+	public function render(string $view, array $options=null, $saveData=false): string
 	{
 		$start = microtime(true);
 
@@ -133,6 +133,11 @@ class View implements RenderableInterface {
 
 		// Make our view data available to the view.
 		extract($this->data);
+
+		if (! $saveData)
+		{
+			$this->data = [];
+		}
 
 		ob_start();
 
@@ -189,6 +194,20 @@ class View implements RenderableInterface {
 		}
 
 		$this->data[$name] = $value;
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Removes all of the view data from the system.
+	 *
+	 * @return RenderableInterface
+	 */
+	public function resetData()
+	{
+		$this->data = [];
 
 		return $this;
 	}

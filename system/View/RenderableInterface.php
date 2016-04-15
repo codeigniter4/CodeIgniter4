@@ -53,10 +53,12 @@ interface RenderableInterface {
 	 * @param array  $options  Reserved for 3rd-party uses since
 	 *                         it might be needed to pass additional info
 	 *                         to other template engines.
+	 * @param bool   $saveData If true, will save data for use with any other calls,
+	 *                         if false, will clean the data after displaying the view.
 	 *
 	 * @return string
 	 */
-	public function render(string $view, array $options=[]): string;
+	public function render(string $view, array $options=null, $saveData=false): string;
 
 	//--------------------------------------------------------------------
 
@@ -84,6 +86,15 @@ interface RenderableInterface {
 	 * @return RenderableInterface
 	 */
 	public function setVar(string $name, $value=null, string $context=null);
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Removes all of the view data from the system.
+	 *
+	 * @return RenderableInterface
+	 */
+	public function resetData();
 
 	//--------------------------------------------------------------------
 
