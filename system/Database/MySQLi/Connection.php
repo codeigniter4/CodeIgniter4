@@ -371,4 +371,27 @@ class Connection extends BaseConnection implements ConnectionInterface
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Returns the last error code and message.
+	 *
+	 * Must return an array with keys 'code' and 'message':
+	 *
+	 *  return ['code' => null, 'message' => null);
+	 *
+	 * @return	array
+	 */
+	public function error()
+	{
+		if ( ! empty($this->mysqli->connect_errno))
+		{
+			return array(
+				'code' => $this->mysqli->connect_errno,
+				'message' => $this->_mysqli->connect_error
+			);
+		}
+
+		return array('code' => $this->connID->errno, 'message' => $this->connID->error);
+	}
+
+	//--------------------------------------------------------------------
 }

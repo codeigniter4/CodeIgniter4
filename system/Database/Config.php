@@ -25,14 +25,16 @@ class Config extends BaseConfig
 	/**
 	 * Creates the default
 	 *
-	 * @param string $group      The name of the connection group to use.
-	 * @param bool   $useBuilder If the QueryBuilder should be returned
+	 * @param string $group     The name of the connection group to use.
+	 * @param bool   $getShared Whether to return a shared instance of the connection.
+	 *
+	 * @return mixed
 	 */
-	public static function connect(string $group = null, $useBuilder = true, $getShared = false)
+	public static function connect(string $group = null, $getShared = true)
 	{
-		if ($getShared)
+		if ($getShared && isset(self::$instances[$group]))
 		{
-			return self::getSharedInstance('default');
+			return self::$instances[$group];
 		}
 
 		self::ensureFactory();
@@ -49,7 +51,7 @@ class Config extends BaseConfig
 			throw new \InvalidArgumentException($group.' is not a valid database connection group.');
 		}
 
-		$connection = self::$factory->load($config->$group, $group, $useBuilder);
+		$connection = self::$factory->load($config->$group, $group);
 
 		self::$instances[$group] =& $connection;
 
@@ -119,25 +121,6 @@ class Config extends BaseConfig
 		}
 
 		self::$factory = new \CodeIgniter\Database\Database();
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Returns a shared instance of any of the class' connections.
-	 *
-	 * $key must be a name matching a db connection.
-	 *
-	 * @param string $key
-	 */
-	protected static function getSharedInstance(string $key, ...$params)
-	{
-		if (! isset(static::$instances[$key]))
-		{
-			static::$instances[$key] = self::$key(...$params);
-		}
-
-		return static::$instances[$key];
 	}
 
 	//--------------------------------------------------------------------

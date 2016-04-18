@@ -26,8 +26,12 @@ class Database
 	 * Parses the connection binds and returns an instance of
 	 * the driver ready to go.
 	 *
-	 * @param array $params
-	 * @param bool  $useBuilder
+	 * @param array  $params
+	 * @param string $alias
+	 *
+	 * @return mixed
+	 * @internal param bool $useBuilder
+	 *
 	 */
 	public function load(array $params = [], string $alias)
 	{

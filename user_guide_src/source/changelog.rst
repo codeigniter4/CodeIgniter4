@@ -45,10 +45,10 @@ Bug fixes for 3.0.2
 -  Fixed a bug (#4065) - :doc:`Database <database/index>` method ``protect_identifiers()`` treats a traling space as an alias separator if the input doesn't contain ' AS '.
 -  Fixed a bug (#4066) - :doc:`Cache Library <libraries/caching>` couldn't fallback to a backup driver if the primary one is Memcache(d) or Redis.
 -  Fixed a bug (#4073) - :doc:`Email Library <libraries/email>` method ``send()`` could return TRUE in case of an actual failure when an SMTP command fails.
--  Fixed a bug (#4086) - :doc:`Query Builder <database/query_builder>` didn't apply *dbprefix* to LIKE conditions if the pattern included spaces.
+-  Fixed a bug (#4086) - :doc:`Query Builder <database/query_builder>` didn't apply *DBPrefix* to LIKE conditions if the pattern included spaces.
 -  Fixed a bug (#4091) - :doc:`Cache Library <libraries/caching>` 'file' driver could be tricked into accepting empty cache item IDs.
 -  Fixed a bug (#4093) - :doc:`Query Builder <database/query_builder>` modified string values containing 'AND', 'OR' while compiling WHERE conditions.
--  Fixed a bug (#4096) - :doc:`Query Builder <database/query_builder>` didn't apply *dbprefix* when compiling BETWEEN conditions.
+-  Fixed a bug (#4096) - :doc:`Query Builder <database/query_builder>` didn't apply *DBPrefix* when compiling BETWEEN conditions.
 -  Fixed a bug (#4105) - :doc:`Form Validation Library <libraries/form_validation>` didn't allow pipe characters inside "bracket parameters" when using a string ruleset.
 -  Fixed a bug (#4109) - :doc:`Routing <general/routing>` to *default_controller* didn't work when *enable_query_strings* is set to TRUE.
 -  Fixed a bug (#4044) - :doc:`Cache Library <libraries/caching>` 'redis' driver didn't catch ``RedisException`` that could be thrown during authentication.
@@ -118,7 +118,7 @@ Bug fixes for 3.0.1
 -  Fixed a bug (#3955) - :doc:`Cache Library <libraries/caching>` methods ``increment()`` and ``decrement()`` ignored the 'key_prefix' setting.
 -  Fixed a bug (#3963) - :doc:`Unit Testing Library <libraries/unit_testing>` wrongly tried to translate filenames, line numbers and notes values in test results.
 -  Fixed a bug (#3965) - :doc:`File Uploading Library <libraries/file_uploading>` ignored the "encrypt_name" setting when "overwrite" is enabled.
--  Fixed a bug (#3968) - :doc:`Database Forge <database/forge>` method ``add_key()`` didn't treat array inputs as composite keys unless it's a PRIMARY KEY.
+-  Fixed a bug (#3968) - :doc:`Database Forge <database/forge>` method ``addKey()`` didn't treat array inputs as composite keys unless it's a PRIMARY KEY.
 -  Fixed a bug (#3715) - :doc:`Pagination Library <libraries/pagination>` could generate broken link when a protocol-relative base URL is used.
 -  Fixed a bug (#3828) - :doc:`Output Library <libraries/output>` method ``delete_cache()`` couldn't delete index page caches.
 -  Fixed a bug (#3704) - :doc:`Database <database/index>` method ``stored_procedure()`` in the 'oci8' driver didn't properly bind parameters.
@@ -187,7 +187,7 @@ Release Date: March 30, 2015
    -  Changed environment defaults to report all errors in *development* and only fatal ones in *testing*, *production* but only display them in *development*.
    -  Updated *ip_address* database field lengths from 16 to 45 for supporting IPv6 address on :doc:`Trackback Library <libraries/trackback>` and :doc:`Captcha Helper <helpers/captcha_helper>`.
    -  Removed *cheatsheets* and *quick_reference* PDFs from the documentation.
-   -  Added availability checks where usage of dangerous functions like ``eval()`` and ``exec()`` is required.
+   -  Added availability checks where usage of dangerous functions like ``eval()`` and ``run()`` is required.
    -  Added support for changing the file extension of log files using ``$config['log_file_extension']``.
    -  Added support for turning newline standardization on/off via ``$config['standardize_newlines']`` and set it to FALSE by default.
    -  Added configuration setting ``$config['composer_autoload']`` to enable loading of a `Composer <https://getcomposer.org>`_ auto-loader.
@@ -287,15 +287,15 @@ Release Date: March 30, 2015
 -  Database
 
    -  DEPRECATED the 'mysql', 'sqlite', 'mssql' and 'pdo/dblib' (also known as 'pdo/mssql' or 'pdo/sybase') drivers.
-   -  Added **dsn** configuration setting for drivers that support DSN strings (PDO, PostgreSQL, Oracle, ODBC, CUBRID).
+   -  Added **DSN** configuration setting for drivers that support DSN strings (PDO, PostgreSQL, Oracle, ODBC, CUBRID).
    -  Added **schema** configuration setting (defaults to *public*) for drivers that might need it (currently used by PostgreSQL and ODBC).
    -  Added **save_queries** configuration setting to *application/config/database.php* (defaults to ``TRUE``).
    -  Removed **autoinit** configuration setting as it doesn't make sense to instantiate the database class but not connect to the database.
    -  Added subdrivers support (currently only used by PDO).
    -  Added an optional database name parameter to ``db_select()``.
    -  Removed ``protect_identifiers()`` and renamed internal method ``_protect_identifiers()`` to it instead - it was just an alias.
-   -  Renamed internal method ``_escape_identifiers()`` to ``escape_identifiers()``.
-   -  Updated ``escape_identifiers()`` to accept an array of fields as well as strings.
+   -  Renamed internal method ``_escape_identifiers()`` to ``escapeIdentifiers()``.
+   -  Updated ``escapeIdentifiers()`` to accept an array of fields as well as strings.
    -  MySQL and MySQLi drivers now require at least MySQL version 5.1.
    -  Added a ``$persistent`` parameter to ``db_connect()`` and changed ``db_pconnect()`` to be an alias for ``db_connect(TRUE)``.
    -  ``db_set_charset()`` now only requires one parameter (collation was only needed due to legacy support for MySQL versions prior to 5.1).
@@ -308,7 +308,7 @@ Release Date: March 30, 2015
    -  Removed :doc:`Loader Class <libraries/loader>` from Database error tracing to better find the likely culprit.
    -  Added support for SQLite3 database driver.
    -  Added Interbase/Firebird database support via the *ibase* driver.
-   -  Added ODBC support for ``create_database()``, ``drop_database()`` and ``drop_table()`` in :doc:`Database Forge <database/forge>`.
+   -  Added ODBC support for ``createDatabase()``, ``dropDatabase()`` and ``dropTable()`` in :doc:`Database Forge <database/forge>`.
    -  Added support to binding arrays as ``IN()`` sets in ``query()``.
 
    -  :doc:`Query Builder <database/query_builder>` changes include:
@@ -345,7 +345,7 @@ Release Date: March 30, 2015
 
    -  Improved support of the PDO driver, including:
 
-      - Added support for ``create_database()``, ``drop_database()`` and ``drop_table()`` in :doc:`Database Forge <database/forge>`.
+      - Added support for ``createDatabase()``, ``dropDatabase()`` and ``dropTable()`` in :doc:`Database Forge <database/forge>`.
       - Added support for ``list_fields()`` in :doc:`Database Results <database/results>`.
       - Subdrivers are now isolated from each other instead of being in one large class.
 
@@ -382,7 +382,7 @@ Release Date: March 30, 2015
    -  Improved support of the Oracle (OCI8) driver, including:
 
       - Added DSN string support (Easy Connect and TNS).
-      - Added support for ``drop_table()`` in :doc:`Database Forge <database/forge>`.
+      - Added support for ``dropTable()`` in :doc:`Database Forge <database/forge>`.
       - Added support for ``list_databases()`` in :doc:`Database Utilities <database/utilities>`.
       - Generally improved for speed and cleaned up all of its components.
       - ``num_rows()`` is now only called explicitly by the developer and no longer re-executes statements.
@@ -390,16 +390,16 @@ Release Date: March 30, 2015
    -  Improved support of the SQLite driver, including:
 
       - Added support for ``replace()`` in :doc:`Query Builder <database/query_builder>`.
-      - Added support for ``drop_table()`` in :doc:`Database Forge <database/forge>`.
+      - Added support for ``dropTable()`` in :doc:`Database Forge <database/forge>`.
 
    -  :doc:`Database Forge <database/forge>` changes include:
 
-      - Added an optional second parameter to ``drop_table()`` that allows adding the **IF EXISTS** condition, which is no longer the default.
+      - Added an optional second parameter to ``dropTable()`` that allows adding the **IF EXISTS** condition, which is no longer the default.
       - Added support for passing a custom database object to the loader.
-      - Added support for passing custom table attributes (such as ``ENGINE`` for MySQL) to ``create_table()``.
-      - Added support for usage of the *FIRST* clause in ``add_column()`` for MySQL and CUBRID.
+      - Added support for passing custom table attributes (such as ``ENGINE`` for MySQL) to ``createTable()``.
+      - Added support for usage of the *FIRST* clause in ``addColumn()`` for MySQL and CUBRID.
       - Added partial support for field comments (MySQL, PostgreSQL, Oracle).
-      - Deprecated ``add_column()``'s third method. *AFTER* clause should now be added to the field definition array instead.
+      - Deprecated ``addColumn()``'s third method. *AFTER* clause should now be added to the field definition array instead.
       - Overall improved support for all of the drivers.
 
    -  :doc:`Database Utility <database/utilities>` changes include:
@@ -514,7 +514,7 @@ Release Date: March 30, 2015
       -  Added possibility to send attachment as buffer string in ``attach()`` as ``$this->email->attach($buffer, $disposition, $newname, $mime)``.
       -  Added possibility to attach remote files by passing a URL.
       -  Added method ``attachment_cid()`` to enable embedding inline attachments into HTML.
-      -  Added dsn (delivery status notification) option.
+      -  Added DSN (delivery status notification) option.
       -  Renamed method ``_set_header()`` to ``set_header()`` and made it public to enable adding custom headers.
       -  Successfully sent emails will automatically clear the parameters.
       -  Added a *return_path* parameter to the ``from()`` method.
@@ -723,7 +723,7 @@ Bug fixes for 3.0
 -  Fixed a bug (#724) - :doc:`Form Validation Library <libraries/form_validation>` rule **is_unique** didn't check if a database connection exists.
 -  Fixed a bug (#647) - :doc:`Zip Library <libraries/zip>` internal method ``_get_mod_time()`` didn't suppress possible "stat failed" errors generated by ``filemtime()``.
 -  Fixed a bug (#157, #174) - :doc:`Image Manipulation Library <libraries/image_lib>` method ``clear()`` didn't completely clear properties.
--  Fixed a bug where :doc:`Database Forge <database/forge>` method ``create_table()`` with PostgreSQL database could lead to fetching the whole table.
+-  Fixed a bug where :doc:`Database Forge <database/forge>` method ``createTable()`` with PostgreSQL database could lead to fetching the whole table.
 -  Fixed a bug (#795) - :doc:`Form Helper <helpers/form_helper>` :php:func:`form_open()` didn't add the default form *method* and *accept-charset* when an empty array is passed to it.
 -  Fixed a bug (#797) - :doc:`Date Helper <helpers/date_helper>` :php:func:`timespan()` was using incorrect seconds for year and month.
 -  Fixed a bug in :doc:`Cart Library <libraries/cart>` method ``contents()`` where if called without a TRUE (or equal) parameter, it would fail due to a typo.
@@ -750,7 +750,7 @@ Bug fixes for 3.0
 -  Fixed a bug (#638) - ``db_set_charset()`` ignored its arguments and always used the configured charset instead.
 -  Fixed a bug (#413) - Oracle's error handling methods used to only return connection-related errors.
 -  Fixed a bug (#1101) - :doc:`Database Result <database/results>` method ``field_data()`` for 'mysql', 'mysqli' drivers was implemented as if it was handling a DESCRIBE result instead of the actual result set.
--  Fixed a bug in Oracle's :doc:`Database Forge <database/forge>` method ``_create_table()`` where it failed with AUTO_INCREMENT as it's not supported.
+-  Fixed a bug in Oracle's :doc:`Database Forge <database/forge>` method ``createTableStr()`` where it failed with AUTO_INCREMENT as it's not supported.
 -  Fixed a bug (#1080) - when using the SMTP protocol, :doc:`Email Library <libraries/email>` method ``send()`` was returning TRUE even if the connection/authentication against the getServer failed.
 -  Fixed a bug (#306) - ODBC's ``insert_id()`` method was calling non-existent function ``odbc_insert_id()``, which resulted in a fatal error.
 -  Fixed a bug in Oracle's :doc:`Database Result <database/results>` implementation where the cursor ID passed to it was always NULL.
@@ -760,7 +760,7 @@ Bug fixes for 3.0
 -  Fixed a bug (#136) - PostgreSQL and MySQL's ``escape_str()`` method didn't properly escape LIKE wild characters.
 -  Fixed a bug in :doc:`Loader Library <libraries/loader>` method ``library()`` where some PHP versions wouldn't execute the class constructor.
 -  Fixed a bug (#88) - An unexisting property was used for configuration of the Memcache cache driver.
--  Fixed a bug (#14) - :doc:`Database Forge <database/forge>` method ``create_database()`` didn't utilize the configured database character set.
+-  Fixed a bug (#14) - :doc:`Database Forge <database/forge>` method ``createDatabase()`` didn't utilize the configured database character set.
 -  Fixed a bug (#23, #1238) - :doc:`Database Caching <database/caching>` method ``delete_all()`` used to delete .htaccess and index.html files, which is a potential security risk.
 -  Fixed a bug in :doc:`Trackback Library <libraries/trackback>` method ``validate_url()`` where it didn't actually do anything, due to input not being passed by reference.
 -  Fixed a bug (#11, #183, #863) - :doc:`Form Validation Library <libraries/form_validation>` method ``_execute()`` silently continued to the next rule, if a rule method/function is not found.
@@ -772,7 +772,7 @@ Bug fixes for 3.0
 -  Fixed a bug (#798) - :doc:`Query Builder <database/query_builder>` method ``update()`` used to ignore LIKE conditions that were set with ``like()``.
 -  Fixed a bug in Oracle's and MSSQL's ``delete()`` methods where an erroneous SQL statement was generated when used with ``limit()``.
 -  Fixed a bug in SQLSRV's ``delete()`` method where ``like()`` and ``limit()`` conditions were ignored.
--  Fixed a bug (#1265) - Database connections were always closed, regardless of the 'pconnect' option value.
+-  Fixed a bug (#1265) - Database connections were always closed, regardless of the 'pConnect' option value.
 -  Fixed a bug (#128) - :doc:`Language Library <libraries/language>` did not correctly keep track of loaded language files.
 -  Fixed a bug (#1349) - :doc:`File Uploading Library <libraries/file_uploading>` method ``get_extension()`` returned the original filename when it didn't have an actual extension.
 -  Fixed a bug (#1273) - :doc:`Query Builder <database/query_builder>` method ``set_update_batch()`` generated an E_NOTICE message.
@@ -780,12 +780,12 @@ Bug fixes for 3.0
 -  Fixed a bug (#121) - :doc:`Database Results <database/results>` method ``row()`` returned an array when there's no actual result to be returned.
 -  Fixed a bug (#319) - SQLSRV's ``affected_rows()`` method failed due to a scrollable cursor being created for write-type queries.
 -  Fixed a bug (#356) - :doc:`Database <database/index>` driver 'postgre' didn't have an ``_update_batch()`` method, which resulted in fatal error being triggered when ``update_batch()`` is used with it.
--  Fixed a bug (#784, #862) - :doc:`Database Forge <database/forge>` method ``create_table()`` failed on SQLSRV/MSSQL when used with 'IF NOT EXISTS'.
+-  Fixed a bug (#784, #862) - :doc:`Database Forge <database/forge>` method ``createTable()`` failed on SQLSRV/MSSQL when used with 'IF NOT EXISTS'.
 -  Fixed a bug (#1419) - :doc:`Driver Library <general/creating_drivers>` had a static variable that was causing an error.
 -  Fixed a bug (#1411) - the :doc:`Email Library <libraries/email>` used its own short list of MIMEs instead the one from *config/mimes.php*.
 -  Fixed a bug where php.ini setting *magic_quotes_runtime* wasn't turned off for PHP 5.3 (where it is indeed deprecated, but not non-existent).
 -  Fixed a bug (#666) - :doc:`Output Library <libraries/output>` method ``set_content_type()`` didn't set the document charset.
--  Fixed a bug (#784, #861) - :doc:`Database Forge <database/forge>` method ``create_table()`` used to accept constraints for MSSQL/SQLSRV integer-type columns.
+-  Fixed a bug (#784, #861) - :doc:`Database Forge <database/forge>` method ``createTable()`` used to accept constraints for MSSQL/SQLSRV integer-type columns.
 -  Fixed a bug (#706) - SQLSRV/MSSSQL :doc:`Database <database/index>` drivers didn't escape field names.
 -  Fixed a bug (#1452) - :doc:`Query Builder <database/query_builder>` method ``protect_identifiers()`` didn't properly detect identifiers with spaces in their names.
 -  Fixed a bug where :doc:`Query Builder <database/query_builder>` method ``protect_identifiers()`` ignored its extra arguments when the value passed to it is an array.
@@ -829,9 +829,9 @@ Bug fixes for 3.0
 -  Fixed a bug (#1409) - :doc:`Email Library <libraries/email>` didn't properly handle multibyte characters when applying Q-encoding to headers.
 -  Fixed a bug where :doc:`Email Library <libraries/email>` ignored its *wordwrap* setting while handling alternative messages.
 -  Fixed a bug (#1476, #1909) - :doc:`Pagination Library <libraries/pagination>` didn't take into account actual routing when determining the current page.
--  Fixed a bug (#1766) - :doc:`Query Builder <database/query_builder>` didn't always take into account the *dbprefix* setting.
+-  Fixed a bug (#1766) - :doc:`Query Builder <database/query_builder>` didn't always take into account the *DBPrefix* setting.
 -  Fixed a bug (#779) - :doc:`URI Class <libraries/uri>` didn't always trim slashes from the *uri_string* as shown in the documentation.
--  Fixed a bug (#134) - :doc:`Database Caching <database/caching>` method ``delete_cache()`` didn't work in some cases due to *cachedir* not being initialized properly.
+-  Fixed a bug (#134) - :doc:`Database Caching <database/caching>` method ``delete_cache()`` didn't work in some cases due to *cacheDir* not being initialized properly.
 -  Fixed a bug (#191) - :doc:`Loader Library <libraries/loader>` ignored attempts for (re)loading databases to ``get_instance()->db`` even when the old database connection is dead.
 -  Fixed a bug (#1255) - :doc:`User Agent Library <libraries/user_agent>` method ``is_referral()`` only checked if ``$_SERVER['HTTP_REFERER']`` exists.
 -  Fixed a bug (#1146) - :doc:`Download Helper <helpers/download_helper>` function :php:func:`force_download()` incorrectly sent *Cache-Control* directives *pre-check* and *post-check* to Internet Explorer.
@@ -862,13 +862,13 @@ Bug fixes for 3.0
 -  Fixed a bug (#2234) - :doc:`Query Builder <database/query_builder>` didn't reset JOIN cache for write-type queries.
 -  Fixed a bug (#2298) - :doc:`Database Results <database/results>` method ``next_row()`` kept returning the last row, allowing for infinite loops.
 -  Fixed a bug (#2236, #2639) - :doc:`Form Helper <helpers/form_helper>` functions :php:func:`set_value()`, :php:func:`set_select()`, :php:func:`set_radio()`, :php:func:`set_checkbox()` didn't parse array notation for keys if the rule was not present in the :doc:`Form Validation Library <libraries/form_validation>`.
--  Fixed a bug (#2353) - :doc:`Query Builder <database/query_builder>` erroneously prefixed literal strings with **dbprefix**.
+-  Fixed a bug (#2353) - :doc:`Query Builder <database/query_builder>` erroneously prefixed literal strings with **DBPrefix**.
 -  Fixed a bug (#78) - :doc:`Cart Library <libraries/cart>` didn't allow non-English letters in product names.
 -  Fixed a bug (#77) - :doc:`Database Class <database/index>` didn't properly handle the transaction "test mode" flag.
 -  Fixed a bug (#2380) - :doc:`URI Routing <general/routing>` method ``fetch_method()`` returned 'index' if the requested method name matches its controller name.
 -  Fixed a bug (#2388) - :doc:`Email Library <libraries/email>` used to ignore attachment errors, resulting in broken emails being sent.
 -  Fixed a bug (#2498) - :doc:`Form Validation Library <libraries/form_validation>` rule **valid_base64** only checked characters instead of actual validity.
--  Fixed a bug (#2425) - OCI8 :doc:`database <database/index>` driver method ``stored_procedure()`` didn't log an error unless **db_debug** was set to TRUE.
+-  Fixed a bug (#2425) - OCI8 :doc:`database <database/index>` driver method ``stored_procedure()`` didn't log an error unless **DBDebug** was set to TRUE.
 -  Fixed a bug (#2490) - :doc:`Database Class <database/queries>` method ``query()`` returning boolean instead of a result object for PostgreSQL-specific *INSERT INTO ... RETURNING* statements.
 -  Fixed a bug (#249) - :doc:`Cache Library <libraries/caching>` didn't properly handle Memcache(d) configurations with missing options.
 -  Fixed a bug (#180) - :php:func:`config_item()` didn't take into account run-time configuration changes.
@@ -879,10 +879,10 @@ Bug fixes for 3.0
 -  Fixed a bug (#2609) - :doc:`Common function <general/common_functions>` :php:func:`get_config()` optional argument was only effective on first function call. Also, it can now add items, in addition to updating existing items.
 -  Fixed a bug in the 'postgre' :doc:`database <database/index>` driver where the connection ID wasn't passed to ``pg_escape_string()``.
 -  Fixed a bug (#33) - Script execution was terminated when an invalid cookie key was encountered.
--  Fixed a bug (#2691) - nested :doc:`database <database/index>` transactions could end in a deadlock when an error is encountered with *db_debug* set to TRUE.
+-  Fixed a bug (#2691) - nested :doc:`database <database/index>` transactions could end in a deadlock when an error is encountered with *DBDebug* set to TRUE.
 -  Fixed a bug (#2515) - ``_exception_handler()`` used to send the 200 "OK" HTTP status code and didn't stop script exection even on fatal errors.
 -  Fixed a bug - Redis :doc:`Caching <libraries/caching>` driver didn't handle connection failures properly.
--  Fixed a bug (#2756) - :doc:`Database Class <database/index>` executed the MySQL-specific `SET SESSION sql_mode` query for all drivers when the 'stricton' option is set.
+-  Fixed a bug (#2756) - :doc:`Database Class <database/index>` executed the MySQL-specific `SET SESSION sql_mode` query for all drivers when the 'strictOn' option is set.
 -  Fixed a bug (#2579) - :doc:`Query Builder <database/query_builder>` "no escape" functionality didn't work properly with query cache.
 -  Fixed a bug (#2237) - :doc:`Parser Library <libraries/parser>` failed if the same tag pair is used more than once within a template.
 -  Fixed a bug (#2143) - :doc:`Form Validation Library <libraries/form_validation>` didn't check for rule groups named in a *controller/method* manner when trying to load from a config file.
@@ -972,7 +972,7 @@ Bug fixes for 2.2.0
 
 -  Fixed an edge case (#2583) in the :doc:`Email Library <libraries/email>` where `Suhosin <http://www.hardened-php.net/suhosin/>` blocked messages sent via ``mail()`` due to trailing newspaces in headers.
 -  Fixed a bug (#696) - make ``oci_execute()`` calls inside ``num_rows()`` non-committing, since they are only there to reset which row is next in line for oci_fetch calls and thus don't need to be committed.
--  Fixed a bug (#2689) - :doc:`Database Force <database/forge>` methods ``create_table()``, ``drop_table()`` and ``rename_table()`` produced broken SQL for tge 'sqlsrv' driver.
+-  Fixed a bug (#2689) - :doc:`Database Force <database/forge>` methods ``createTable()``, ``dropTable()`` and ``renameTable()`` produced broken SQL for tge 'sqlsrv' driver.
 -  Fixed a bug (#2427) - PDO :doc:`Database driver <database/index>` didn't properly check for query failures.
 -  Fixed a bug in the :doc:`Session Library <libraries/sessions>` where authentication was not performed for encrypted cookies.
 
@@ -1397,7 +1397,7 @@ Hg Tag: v2.0.0
       now be set without an extension, the extension will be taken from
       the uploaded file instead of the given name.
    -  In :doc:`Database Forge <database/forge>` the name can be omitted
-      from $this->dbforge->modify_column()'s 2nd param if you aren't
+      from $this->dbforge->modifyColumn()'s 2nd param if you aren't
       changing the name.
    -  $config['base_url'] is now empty by default and will guess what
       it should be.
@@ -1489,7 +1489,7 @@ Hg Tag: v2.0.0
    -  :doc:`database configuration <./database/configuration>`.
    -  Added autoinit value to :doc:`database
       configuration <./database/configuration>`.
-   -  Added stricton value to :doc:`database
+   -  Added strictOn value to :doc:`database
       configuration <./database/configuration>`.
    -  Added database_exists() to the :doc:`Database Utilities
       Class <database/utilities>`.
@@ -1505,9 +1505,9 @@ Hg Tag: v2.0.0
       of the problematic query.
    -  Removed the following deprecated functions: orwhere, orlike,
       groupby, orhaving, orderby, getwhere.
-   -  Removed deprecated _drop_database() and _create_database()
+   -  Removed deprecated dropDatabaseStr() and createDatabaseStr()
       functions from the db utility drivers.
-   -  Improved dbforge create_table() function for the Postgres driver.
+   -  Improved dbforge createTable() function for the Postgres driver.
 
 -  Helpers
 
@@ -1728,7 +1728,7 @@ Bug fixes for 1.7.2
 -  Fixed a fatal error in the Oracle and ODBC drivers (#6752)
 -  Fixed a bug where xml_from_result() was checking for a nonexistent
    method.
--  Fixed a bug where Database Forge's add_column and modify_column
+-  Fixed a bug where Database Forge's addColumn and modifyColumn
    were not looping through when sent multiple fields.
 -  Fixed a bug where the File Helper was using '/' instead of the
    DIRECTORY_SEPARATOR constant.
@@ -2135,7 +2135,7 @@ Hg Tag: 1.6.2
 -  Active Record
 
    -  Added the ability to prevent escaping in having() clauses.
-   -  Added rename_table() into :doc:`DBForge <./database/forge>`.
+   -  Added renameTable() into :doc:`DBForge <./database/forge>`.
    -  Fixed a bug that wasn't allowing escaping to be turned off if the
       value of a query was NULL.
    -  DB Forge is now assigned to any models that exist after loading
@@ -2350,10 +2350,10 @@ Release Date: January 30, 2008
 -  DBForge
 
    -  Added :doc:`DBForge <./database/forge>` to the database tools.
-   -  Moved create_database() and drop_database() into
+   -  Moved createDatabase() and dropDatabase() into
       :doc:`DBForge <./database/forge>`.
-   -  Added add_field(), add_key(), create_table(), drop_table(),
-      add_column(), drop_column(), modify_column() into
+   -  Added addField(), addKey(), createTable(), dropTable(),
+      addColumn(), dropColumn(), modifyColumn() into
       :doc:`DBForge <./database/forge>`.
 
 -  Active Record
@@ -2389,7 +2389,7 @@ Release Date: January 30, 2008
    -  MySQL driver now requires MySQL 4.1+
    -  Added $this->DB->save_queries variable to DB driver, enabling
       queries to get saved or not. Previously they were always saved.
-   -  Added $this->db->dbprefix() to manually add database prefixes.
+   -  Added $this->db->DBPrefix() to manually add database prefixes.
    -  Added 'random' as an order_by() option , and removed "rand()" as
       a listed option as it was MySQL only.
    -  Added a check for NULL fields in the MySQL database backup
@@ -2403,7 +2403,7 @@ Release Date: January 30, 2008
       or_like().
    -  Modified csv_from_result() to output CSV data more in the spirit
       of basic rules of RFC 4180.
-   -  Added 'char_set' and 'dbcollat' database configuration settings,
+   -  Added 'char_set' and 'DBCollat' database configuration settings,
       to explicitly set the client communication properly.
    -  Removed 'active_r' configuration setting and replaced with a
       global $active_record setting, which is more in harmony with the

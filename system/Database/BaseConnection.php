@@ -537,6 +537,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 * @param string $tableName
 	 *
 	 * @return BaseBuilder
+	 * @throws DatabaseException
 	 */
 	public function table($tableName)
 	{
@@ -968,7 +969,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 * @param	bool	$like	Whether or not the string will be used in a LIKE condition
 	 * @return	string
 	 */
-	protected function escapeString($str, $like = FALSE)
+	public function escapeString($str, $like = FALSE)
 	{
 		if (is_array($str))
 		{
@@ -996,6 +997,23 @@ abstract class BaseConnection implements ConnectionInterface
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Escape LIKE String
+	 *
+	 * Calls the individual driver for platform
+	 * specific escaping for LIKE conditions
+	 *
+	 * @param	string|string[]
+	 * @return	mixed
+	 */
+	public function escapeLikeString($str)
+	{
+		return $this->escapeString($str, TRUE);
+	}
+
+	//--------------------------------------------------------------------
+
 
 	/**
 	 * Platform independent string escape.
@@ -1202,6 +1220,19 @@ abstract class BaseConnection implements ConnectionInterface
 		$query = $this->query($this->_fieldData($this->protect_identifiers($table, TRUE, NULL, FALSE)));
 		return ($query) ? $query->field_data() : FALSE;
 	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns the last error code and message.
+	 *
+	 * Must return an array with keys 'code' and 'message':
+	 *
+	 *  return ['code' => null, 'message' => null);
+	 *
+	 * @return	array
+	 */
+	abstract public function error();
 
 	//--------------------------------------------------------------------
 
