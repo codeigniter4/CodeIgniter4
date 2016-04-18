@@ -186,3 +186,104 @@ example::
 		$error = $db->error(); // Has keys 'code' and 'message'
 	}
 
+
+**************************
+Working with Query Objects
+**************************
+
+Internally, all queries are processed and stored as instances of
+\CodeIgniter\Database\Query. This class is responsible for binding
+the parameters, otherwise preparing the query, and storing performance
+data about its query.
+
+**getQueries()**
+
+You can retrieve all Query objects from the database connection with the
+getQueries() method. This has no parameters and returns an array of
+all of the queries that have ran::
+
+	$queries = $db->getQueries();
+
+.. note:: If the saveQueries setting in the database configuraiton is set
+	to false, this and the following two methods, will not return any results.
+
+**getQueryCount()**
+
+Returns the total number of queries that have been ran on this connection
+during this request::
+
+	$count = $db->getQueryCount();
+
+**getLastQuery()**
+
+When you just need to retrieve the last Query object, use the
+getLastQuery() method::
+
+	$query = $db->getLastQuery();
+	echo (string)$query;
+
+The Query Class
+===============
+
+Each query object stores several pieces of information about the query itself.
+This is used, in part, by the Timeline feature, but is available for your use
+as well.
+
+**getQuery()**
+
+Returns the final query, after all processing has happened. This is the exact
+query that was sent to the database::
+
+	$sql = $query->getQuery();
+
+This same value can be retrieved by casting the Query object to a string::
+
+	$sql = (string)$query;
+
+**getOriginalQuery()**
+
+Returns the raw SQL that was passed into the object. This will not have any
+binds in it, or prefixes swapped out, etc::
+
+	$sql = $query->getOriginalQuery();
+
+**hasError()**
+
+If an error was encountered during the execution of this query, this method
+will return true::
+
+	if ($query->hasError())
+	{
+		echo 'Code: '. $query->getErrorCode();
+		echo 'Error: '. $query->getErrorMessage();
+	}
+
+**isWriteType()**
+
+Returns true if the query was determined to be a write-type query (i.e.
+INSERT, UPDATE, DELETE, etc)::
+
+	if ($query->isWriteType())
+	{
+		... do something
+	}
+
+**swapPrefix()**
+
+Replaces one table prefix with another value in the final SQL. The first
+parameter is the original prefix that you want replaced, and the second
+parameter is the value you want it replaced with::
+
+	$sql = $query->swapPrefix('ci3_', 'ci4_');
+
+**getStartTime()**
+
+Gets the time the query was executed in seconds with microseconds::
+
+	$microtime = $query->getStartTime();
+
+**getDuration()**
+
+Returns a float with the duration of the query in seconds with microseconds::
+
+	$microtime = $query->getDuration();
