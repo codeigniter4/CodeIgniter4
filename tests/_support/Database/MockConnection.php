@@ -152,6 +152,34 @@ class MockConnection extends BaseConnection
 	//--------------------------------------------------------------------
 
 	/**
+	 * Returns the last error code and message.
+	 *
+	 * Must return an array with keys 'code' and 'message':
+	 *
+	 *  return ['code' => null, 'message' => null);
+	 *
+	 * @return	array
+	 */
+	public function error()
+	{
+		return ['code' => null, 'message' => null];
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Insert ID
+	 *
+	 * @return	int
+	 */
+	public function insertID()
+	{
+		return $this->conn_id->insert_id;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Generates the SQL for listing tables in a platform-dependent manner.
 	 *
 	 * @param bool $constrainByPrefix

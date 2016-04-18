@@ -1237,6 +1237,15 @@ abstract class BaseConnection implements ConnectionInterface
 	//--------------------------------------------------------------------
 
 	/**
+	 * Insert ID
+	 *
+	 * @return	int
+	 */
+	abstract public function insertID();
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Generates the SQL for listing tables in a platform-dependent manner.
 	 *
 	 * @param bool $constrainByPrefix

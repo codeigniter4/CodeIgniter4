@@ -394,4 +394,18 @@ class Connection extends BaseConnection implements ConnectionInterface
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Insert ID
+	 *
+	 * @return	int
+	 */
+	public function insertID()
+	{
+		return $this->connID->insert_id;
+	}
+
+	//--------------------------------------------------------------------
+
+
 }
