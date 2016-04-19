@@ -192,7 +192,7 @@ interface ResultInterface
 	 *
 	 * @return array
 	 */
-	public function getFieldMeta(): array;
+	public function getFieldData(): array;
 
 	//--------------------------------------------------------------------
 
