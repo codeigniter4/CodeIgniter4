@@ -23,9 +23,9 @@ Displays the number of affected rows, when doing "write" type queries
 	affected rows. By default this hack is enabled but it can be turned off
 	in the database driver file.
 
-**$db->lastQuery()**
+**$db->getLastQuery()**
 
-Returns a Query class that represents the last query that was run (the query string, not the result).
+Returns a Query object that represents the last query that was run (the query string, not the result).
 
 
 .. note:: Disabling the **saveQueries** setting in your database
