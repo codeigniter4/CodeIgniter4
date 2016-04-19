@@ -521,7 +521,7 @@ abstract class BaseResult implements ResultInterface
 	 *
 	 * @return array
 	 */
-	abstract public function getFieldMeta(): array;
+	abstract public function getFieldData(): array;
 
 	//--------------------------------------------------------------------
 

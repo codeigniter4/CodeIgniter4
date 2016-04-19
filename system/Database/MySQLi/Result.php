@@ -41,7 +41,7 @@ class Result extends BaseResult implements ResultInterface
 	 *
 	 * @return array
 	 */
-	public function getFieldMeta(): array
+	public function getFieldData(): array
 	{
 		$retval    = [];
 		$fieldData = $this->resultID->fetch_fields();

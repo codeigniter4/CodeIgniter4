@@ -1144,10 +1144,12 @@ abstract class BaseConnection implements ConnectionInterface
 	/**
 	 * Fetch Field Names
 	 *
-	 * @param	string	$table	Table name
-	 * @return	array
+	 * @param    string $table Table name
+	 *
+	 * @return array
+	 * @throws DatabaseException
 	 */
-	public function listFields($table)
+	public function getFieldNames($table)
 	{
 		// Is there a cached result?
 		if (isset($this->dataCache['field_names'][$table]))
@@ -1215,7 +1217,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 * @param	string	$table	the table name
 	 * @return	array
 	 */
-	public function fieldData(string $table)
+	public function getFieldData(string $table)
 	{
 		$query = $this->query($this->_fieldData($this->protect_identifiers($table, TRUE, NULL, FALSE)));
 		return ($query) ? $query->field_data() : FALSE;
