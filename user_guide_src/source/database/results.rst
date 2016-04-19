@@ -492,7 +492,7 @@ Class Reference
 		Returns an array containing the field names in the
 		result set.
 
-	.. php:method:: getFieldMeta()
+	.. php:method:: getFieldData()
 
 		:returns:	Array containing field meta-data
 		:rtype:	array
