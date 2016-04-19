@@ -266,6 +266,31 @@ class Model
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Deletes multiple records from $this->table where the specified
+	 * key/value matches.
+	 *
+	 * @param      $key
+	 * @param null $value
+	 *
+	 * @return mixed
+	 * @throws DatabaseException
+	 */
+	public function deleteWhere($key, $value = null)
+	{
+		// Don't let them shoot themselves in the foot...
+		if (empty($key))
+		{
+			throw new DatabaseException('You must provided a valid key to deleteWhere.');
+		}
+
+	    return $this->builder()->where($key, $value)
+		                        ->delete();
+	}
+
+	//--------------------------------------------------------------------
+
+
 	
 	//--------------------------------------------------------------------
 	// Utility

@@ -15,7 +15,7 @@ Release Date: Not Released
 
 -  Database
 
-   -  Optimized :doc:`Database Utility <database/utilities>` method ``csv_from_result()`` for speed with larger result sets.
+   -  Optimized :doc:`Database Utility <database/utilities>` method ``getCSVFromResult()`` for speed with larger result sets.
 
 Bug fixes for 3.0.3
 -------------------
@@ -106,7 +106,7 @@ Bug fixes for 3.0.1
 -  Fixed a bug (#3823) - :doc:`Session Library <libraries/sessions>` drivers Redis and Memcached didn't properly handle locks that are blocking the request for more than 30 seconds.
 -  Fixed a bug (#3846) - :doc:`Image Manipulation Library <libraries/image_lib>` method `image_mirror_gd()` didn't properly initialize its variables.
 -  Fixed a bug (#3854) - `field_data()` didn't work properly with the Oracle (OCI8) database driver.
--  Fixed a bug in the :doc:`Database Utility Class <database/utilities>` method ``csv_from_result()`` didn't work with a whitespace CSV delimiter.
+-  Fixed a bug in the :doc:`Database Utility Class <database/utilities>` method ``getCSVFromResult()`` didn't work with a whitespace CSV delimiter.
 -  Fixed a bug (#3890) - :doc:`Input Library <libraries/input>` method ``get_request_header()`` treated header names as case-sensitive.
 -  Fixed a bug (#3903) - :doc:`Form Validation Library <libraries/form_validation>` ignored "unnamed" closure validation rules.
 -  Fixed a bug (#3904) - :doc:`Form Validation Library <libraries/form_validation>` ignored "named" callback rules when the field is empty and there's no 'required' rule.
@@ -353,7 +353,7 @@ Release Date: March 30, 2015
 
       - ``pg_version()`` is now used to get the database version number, when possible.
       - Added ``db_set_charset()`` support.
-      - Added support for ``optimize_table()`` in :doc:`Database Utilities <database/utilities>` (rebuilds table indexes).
+      - Added support for ``optimizeTable()`` in :doc:`Database Utilities <database/utilities>` (rebuilds table indexes).
       - Added boolean data type support in ``escape()``.
       - Added ``update_batch()`` support.
       - Removed ``limit()`` and ``order_by()`` support for *UPDATE* and *DELETE* queries as PostgreSQL does not support those features.
@@ -365,12 +365,12 @@ Release Date: March 30, 2015
 
       - Added DSN string support.
       - Added persistent connections support.
-      - Improved ``list_databases()`` in :doc:`Database Utility <database/utilities>` (until now only the currently used database was returned).
+      - Improved ``listDatabases()`` in :doc:`Database Utility <database/utilities>` (until now only the currently used database was returned).
 
    -  Improved support of the MSSQL and SQLSRV drivers, including:
 
       - Added random ordering support.
-      - Added support for ``optimize_table()`` in :doc:`Database Utility <database/utilities>`.
+      - Added support for ``optimizeTable()`` in :doc:`Database Utility <database/utilities>`.
       - Added escaping with *QUOTE_IDENTIFIER* setting detection.
       - Added port handling support for UNIX-based systems (MSSQL driver).
       - Added *OFFSET* support for SQL Server 2005 and above.
@@ -383,7 +383,7 @@ Release Date: March 30, 2015
 
       - Added DSN string support (Easy Connect and TNS).
       - Added support for ``dropTable()`` in :doc:`Database Forge <database/forge>`.
-      - Added support for ``list_databases()`` in :doc:`Database Utilities <database/utilities>`.
+      - Added support for ``listDatabases()`` in :doc:`Database Utilities <database/utilities>`.
       - Generally improved for speed and cleaned up all of its components.
       - ``num_rows()`` is now only called explicitly by the developer and no longer re-executes statements.
 
@@ -1491,7 +1491,7 @@ Hg Tag: v2.0.0
       configuration <./database/configuration>`.
    -  Added strictOn value to :doc:`database
       configuration <./database/configuration>`.
-   -  Added database_exists() to the :doc:`Database Utilities
+   -  Added databaseExists() to the :doc:`Database Utilities
       Class <database/utilities>`.
    -  Semantic change to db->version() function to allow a list of
       exceptions for databases with functions to return version string
@@ -1726,7 +1726,7 @@ Bug fixes for 1.7.2
 -  Fixed a bug with ORIG_PATH_INFO that was allowing URIs of just a
    slash through.
 -  Fixed a fatal error in the Oracle and ODBC drivers (#6752)
--  Fixed a bug where xml_from_result() was checking for a nonexistent
+-  Fixed a bug where getXMLFromResult() was checking for a nonexistent
    method.
 -  Fixed a bug where Database Forge's addColumn and modifyColumn
    were not looping through when sent multiple fields.
@@ -1820,7 +1820,7 @@ Bug fixes for 1.7.1
    -  Fixed a bug when using DB cache on multiple databases (#5737).
    -  Fixed a bug where TRUNCATE was not considered a "write" query
       (#6619).
-   -  Fixed a bug where csv_from_result() was checking for a
+   -  Fixed a bug where getCSVFromResult() was checking for a
       nonexistent method.
    -  Fixed a bug _protect_identifiers() where it was improperly
       removing all pipe symbols from items
@@ -2401,7 +2401,7 @@ Release Date: January 30, 2008
       groupby() for group_by(); havingor() for having_or(); orderby()
       for order_by; orwhere() for or_where(); and orlike() for
       or_like().
-   -  Modified csv_from_result() to output CSV data more in the spirit
+   -  Modified getCSVFromResult() to output CSV data more in the spirit
       of basic rules of RFC 4180.
    -  Added 'char_set' and 'DBCollat' database configuration settings,
       to explicitly set the client communication properly.
@@ -2504,7 +2504,7 @@ Bug fixes for Version 1.6.0
    implicit method.
 -  Fixed a bug (#1872) where word_limiter() was not retaining
    whitespace.
--  Fixed a bug (#1890) in csv_from_result() where content that
+-  Fixed a bug (#1890) in getCSVFromResult() where content that
    included the delimiter would break the file.
 -  Fixed a bug (#2542)in the clean_email() method of the Email class to
    allow for non-numeric / non-sequential array keys.
