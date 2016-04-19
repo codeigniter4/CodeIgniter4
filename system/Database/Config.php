@@ -107,9 +107,7 @@ class Config extends BaseConfig
 	}
 
 	//--------------------------------------------------------------------
-
-
-
+	
 	/**
 	 * Ensures the database Connection Manager/Factory is loaded and ready to use.
 	 */
@@ -125,22 +123,4 @@ class Config extends BaseConfig
 
 	//--------------------------------------------------------------------
 
-	/**
-	 * Provides the ability to perform case-insensitive calling of service
-	 * names.
-	 *
-	 * @param string $name
-	 * @param array  $arguments
-	 */
-	public static function __callStatic(string $name, array $arguments)
-	{
-		$name = strtolower($name);
-
-		if (method_exists('Config\Database', $name))
-		{
-			return Services::$name(...$arguments);
-		}
-	}
-
-	//--------------------------------------------------------------------
 }
