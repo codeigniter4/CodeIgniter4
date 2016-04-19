@@ -107,7 +107,39 @@ class Config extends BaseConfig
 	}
 
 	//--------------------------------------------------------------------
-	
+
+	public static function utils(string $group = null)
+	{
+	    $config = new \Config\Database();
+
+		self::ensureFactory();
+
+		if (empty($group))
+		{
+			$group = $config->defaultGroup;
+		}
+
+		if (! isset($config->group))
+		{
+			throw new \InvalidArgumentException($group.' is not a valid database connection group.');
+		}
+
+		if (! isset(self::$instances[$group]))
+		{
+			$db = self::connect($group);
+		}
+		else
+		{
+			$db = self::$instances[$group];
+		}
+
+		return self::$factory->loadUtils($db);
+	}
+
+	//--------------------------------------------------------------------
+
+
+
 	/**
 	 * Ensures the database Connection Manager/Factory is loaded and ready to use.
 	 */

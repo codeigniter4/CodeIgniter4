@@ -81,5 +81,31 @@ class Database
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Loads the Database Utilities class.
+	 *
+	 * @param ConnectionInterface $db
+	 *
+	 * @return mixed
+	 */
+	public function loadUtils(ConnectionInterface $db)
+	{
+		$className = strpos($db->DBDriver, '\\') === false
+			? '\CodeIgniter\Database\\'.$db->DBDriver.'\\Utils'
+			: $db->DBDriver.'\\Utils';
+
+		// Make sure a connection exists
+		if (! $db->connID)
+		{
+			$db->initialize();
+		}
+
+		$class = new $className($db);
+
+		return $class;
+	}
+
+	//--------------------------------------------------------------------
+
 
 }
