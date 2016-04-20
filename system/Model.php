@@ -66,7 +66,7 @@ class Model
 	/**
 	 * An array of field names that are allowed
 	 * to be set by the user in inserts/updates.
-	 * 
+	 *
 	 * @var array
 	 */
 	protected $allowedFields = [];
@@ -93,12 +93,14 @@ class Model
 
 	/**
 	 * The column used for insert timestampes
+	 *
 	 * @var string
 	 */
 	protected $createdField = 'created_at';
 
 	/**
 	 * The column used for update timestamps
+	 *
 	 * @var string
 	 */
 	protected $updatedField = 'updated_at';
@@ -165,7 +167,7 @@ class Model
 	 * Fetches the row of database from $this->table with a primary key
 	 * matching $id.
 	 *
-	 * @param mixed|array $id       One primary key or an array of primary keys
+	 * @param mixed|array $id One primary key or an array of primary keys
 	 *
 	 * @return array|object|null    The resulting row of data, or null.
 	 */
@@ -181,7 +183,7 @@ class Model
 		if (is_array($id))
 		{
 			$row = $builder->whereIn($this->primaryKey, $id)
-				           ->get();
+			               ->get();
 			$row = $row->getResult();
 		}
 		else
@@ -474,14 +476,13 @@ class Model
 	 */
 	public function onlyDeleted()
 	{
-	    $this->builder()->where('deleted', 1);
+		$this->builder()
+		     ->where('deleted', 1);
 
 		return $this;
 	}
 
 	//--------------------------------------------------------------------
-
-
 
 	//--------------------------------------------------------------------
 	// Utility
@@ -636,7 +637,7 @@ class Model
 
 		foreach ($data as $key => $val)
 		{
-			if (! in_array($key, $this->allowedFields))
+			if ( ! in_array($key, $this->allowedFields))
 			{
 				unset($data[$key]);
 			}
@@ -665,7 +666,7 @@ class Model
 	protected function setDate($userData = null)
 	{
 		$currentDate = is_numeric($userData) ? (int)$userData : time();
-		
+
 		switch ($this->dateFormat)
 		{
 			case 'int':
@@ -708,7 +709,7 @@ class Model
 	}
 
 	//--------------------------------------------------------------------
-	
+
 	/**
 	 * Provides direct access to method in the builder (if available)
 	 * and the database connection.
