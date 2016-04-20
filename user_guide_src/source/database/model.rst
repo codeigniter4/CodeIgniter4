@@ -87,6 +87,8 @@ what table and how we can find the required records.::
 		protected $useSoftDeletes = true;
 
 		protected $allowedFields = ['name', 'email'];
+
+		protected $useTimestamps = false;
 	}
 
 **$table**
@@ -125,6 +127,19 @@ This array should be updated with the field names that can be set during save, i
 update methods. Any field names other than these will be discarded. This helps to protect
 against just taking input from a form and throwing it all at the model, resulting in
 potential mass assignment vulnerabilities.
+
+**$useTimestamps**
+
+This boolean value determines whether the current date is automatically added to all inserts
+and updates. If true, will set the current time in the format specified by $datFormat. This
+requires that the table have columns named 'created_at' and 'updated_at' in the appropriate
+data type.
+
+**$dateFormat**
+
+This value works with $useTimestamps to ensure that the correct type of date value gets
+inserted into the database. By default, this creates DATETIME values, but valid options
+are: datetime, date, or int (a PHP timestamp).
 
 Working With Data
 =================

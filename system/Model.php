@@ -71,7 +71,37 @@ class Model
 	 */
 	protected $allowedFields = [];
 
+	/**
+	 * If true, will set created_at, and updated_at
+	 * values during insert and update routines.
+	 *
+	 * @var bool
+	 */
+	protected $useTimestamps = false;
+
+	/**
+	 * The type of column that created_at and updated_at
+	 * are expected to.
+	 *
+	 * Allowed: 'datetime', 'date', 'int'
+	 *
+	 * @var string
+	 */
+	protected $dateFormat = 'datetime';
+
 	//--------------------------------------------------------------------
+
+	/**
+	 * The column used for insert timestampes
+	 * @var string
+	 */
+	protected $createdField = 'created_at';
+
+	/**
+	 * The column used for update timestamps
+	 * @var string
+	 */
+	protected $updatedField = 'updated_at';
 
 	/**
 	 * Used by withDeleted to override the
@@ -291,11 +321,20 @@ class Model
 	 *
 	 * @return bool
 	 */
-	public function insert($data)
+	public function insert(array $data)
 	{
+		// Must be called first so we don't
+		// strip out created_at values.
+		$data = $this->protectFields($data);
+
+		if ($this->useTimestamps && ! array_key_exists($this->createdField, $data))
+		{
+			$data[$this->createdField] = $this->setDate();
+		}
+
 		// Must use the set() method to ensure objects get converted to arrays
 		return $this->builder()
-		            ->set($this->protectFields($data))
+		            ->set($data)
 		            ->insert();
 	}
 
@@ -310,12 +349,21 @@ class Model
 	 *
 	 * @return bool
 	 */
-	public function update($id, $data)
+	public function update($id, array $data)
 	{
+		// Must be called first so we don't
+		// strip out updated_at values.
+		$data = $this->protectFields($data);
+
+		if ($this->useTimestamps && ! array_key_exists($this->updatedField, $data))
+		{
+			$data[$this->updatedField] = $this->setDate();
+		}
+
 		// Must use the set() method to ensure objects get converted to arrays
 		return $this->builder()
 		            ->where($this->primaryKey, $id)
-		            ->set($this->protectFields($data))
+		            ->set($data)
 		            ->update();
 	}
 
@@ -599,6 +647,41 @@ class Model
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * A utility function to allow child models to use the type of
+	 * date/time format that they prefer. This is primarily used for
+	 * setting created_at and updated_at values, but can be used
+	 * by inheriting classes.
+	 *
+	 * The available time formats are:
+	 *  - 'int'      - Stores the date as an integer timestamp
+	 *  - 'datetime' - Stores the data in the SQL datetime format
+	 *  - 'date'     - Stores the date (only) in the SQL date format.
+	 *
+	 * @param int $userData An optional PHP timestamp to be converted.
+	 *
+	 * @return mixed
+	 */
+	protected function setDate($userData = null)
+	{
+		$currentDate = is_numeric($userData) ? (int)$userData : time();
+		
+		switch ($this->dateFormat)
+		{
+			case 'int':
+				return $currentDate;
+				break;
+			case 'datetime':
+				return date('Y-m-d H:i:s', $currentDate);
+				break;
+			case 'date':
+				return date('Y-m-d', $currentDate);
+				break;
+		}
+	}
+
+	//--------------------------------------------------------------------
+
 	//--------------------------------------------------------------------
 	// Magic
 	//--------------------------------------------------------------------
@@ -625,7 +708,7 @@ class Model
 	}
 
 	//--------------------------------------------------------------------
-
+	
 	/**
 	 * Provides direct access to method in the builder (if available)
 	 * and the database connection.
