@@ -191,6 +191,14 @@ temporarily override this, you can use the withDeleted() method prior to calling
 	$allUsers = $userModel->withDeleted()
 	                      ->findAll();
 
+**onlyDeleted()**
+
+Whereas withDeleted() will return both deleted and not-deleted rows, this method modifies
+the next find* methods to return only soft deleted rows.::
+
+	$deletedUsers = $userModel->onlyDeleted()
+							  ->findAll();
+
 Saving Data
 -----------
 
