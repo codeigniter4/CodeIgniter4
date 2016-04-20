@@ -142,15 +142,15 @@ class Model
 	 *
 	 * @param ConnectionInterface $db
 	 */
-	public function __construct(ConnectionInterface $db = null)
+	public function __construct(ConnectionInterface &$db = null)
 	{
 		if ($db instanceof ConnectionInterface)
 		{
-			$this->db = $db;
+			$this->db =& $db;
 		}
 		else
 		{
-			$this->db = Database::connect($this->DBGroup);
+			$this->db =& Database::connect($this->DBGroup);
 		}
 
 		$this->tempReturnType     = $this->returnType;
