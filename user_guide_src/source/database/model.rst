@@ -84,6 +84,8 @@ what table and how we can find the required records.::
 		protected $primaryKey = 'id';
 
 		protected $returnType = 'array';
+
+		protected $useSoftDeletes = true;
 	}
 
 **$table**
@@ -105,6 +107,16 @@ the resulting data, instead of the Result object. This setting allows you to def
 the type of data that is returned. Valid values are 'array', 'object', or the fully
 qualified name of a class that can be used with the Result object's getCustomResultObject()
 method.
+
+**$useSoftDeletes**
+
+If true, then any delete* method calls will simply set a flag in the database, instead of
+actually deleting the row. This can preserve data when it might be referenced elsewhere, or
+can maintain a "recylce bin" of objects that can be restored, or even simply preserve it as
+part of a security trail. If true, the find* methods will only return non-deleted rows, unless
+the withDeleted() method is called prior to calling the find* method.
+
+This requires an INT or TINYINT field named ``deleted`` to be present in the table.
 
 Working With Data
 =================
@@ -153,7 +165,18 @@ Returns the first row in the result set. This is best used in combination with t
 	                  ->first();
 
 
+**withDeleted()**
 
+If $useSoftDeletes is true, then the find* methods will not return any rows where 'deleted = 1'. To
+temporarily override this, you can use the withDeleted() method prior to calling the find* method.
+::
+
+	// Only gets non-deleted rows (deleted = 0)
+	$activeUsers = $userModel->findAll();
+
+	// Gets all rows
+	$allUsers = $userModel->withDeleted()
+	                      ->findAll();
 
 Saving Data
 -----------
@@ -217,6 +240,9 @@ Takes a primary key value as the first parameter and deletes the matching record
 
 	$userModel->delete(12);
 
+If the model's $useSoftDeletes value is true, this will update the row to set 'deleted = 1'. You can force
+a permanent delete by setting the second parameter as true.
+
 **deleteWhere()**
 
 Deletes multiple records from the model's table based on the criteria pass into the first two parameters.
@@ -231,6 +257,14 @@ Deletes multiple records from the model's table based on the criteria pass into 
 		'warn_lvl >=' => 50
 	]);
 
+If the model's $useSoftDeletes value is true, this will update the rows to set 'deleted = 1'. You can force
+a permanent delete by setting the third parameter as true.
+
+**purgeDeleted()**
+
+Cleans out the database table by permanently removing all rows that have 'deleted = 1'. ::
+
+	$userModel->purgeDeleted();
 
 Working With Query Builder
 --------------------------

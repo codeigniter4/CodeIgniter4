@@ -51,7 +51,23 @@ class Model
 	 */
 	protected $returnType = 'array';
 
+	/**
+	 * If this model should use "softDeletes" and 
+	 * simply set a flag when rows are deleted, or
+	 * do hard deletes.
+	 * 
+	 * @var bool
+	 */
+	protected $useSoftDeletes = true;
+
 	//--------------------------------------------------------------------
+
+	/**
+	 * Used by withDeleted to override the
+	 * model's softDelete setting.
+	 * @var bool
+	 */
+	protected $tempUseSoftDeletes;
 
 	/**
 	 * Used by asArray and asObject to provide
@@ -91,7 +107,8 @@ class Model
 			$this->db = Database::connect($this->DBGroup);
 		}
 
-		$this->tempReturnType = $this->returnType;
+		$this->tempReturnType     = $this->returnType;
+		$this->tempUseSoftDeletes = $this->useSoftDeletes;
 	}
 
 	//--------------------------------------------------------------------
@@ -110,12 +127,20 @@ class Model
 	 */
 	public function find($id)
 	{
-		$row = $this->builder()->where($this->primaryKey, $id)
-		                       ->get();
+		$builder = $this->builder();
+
+		if ($this->tempUseSoftDeletes === true)
+		{
+			$builder->where('deleted', 0);
+		}
+
+		$row = $builder->where($this->primaryKey, $id)
+		               ->get();
 
 		$row = $row->getFirstRow($this->tempReturnType);
 
-		$this->tempReturnType = $this->returnType;
+		$this->tempReturnType     = $this->returnType;
+		$this->tempUseSoftDeletes = $this->useSoftDeletes;
 
 		return $row;
 	}
@@ -130,12 +155,20 @@ class Model
 	 */
 	public function findWhere($key, $value = null)
 	{
-		$rows = $this->builder()->where($key, $value)
-		            ->get();
+		$builder = $this->builder();
+
+		if ($this->tempUseSoftDeletes === true)
+		{
+			$builder->where('deleted', 0);
+		}
+
+		$rows = $builder->where($key, $value)
+		                ->get();
 
 		$rows = $rows->getResult($this->tempReturnType);
 
-		$this->tempReturnType = $this->returnType;
+		$this->tempReturnType     = $this->returnType;
+		$this->tempUseSoftDeletes = $this->useSoftDeletes;
 
 		return $rows;
 	}
@@ -153,11 +186,19 @@ class Model
 	 */
 	public function findAll($limit = 0, $offset = 0)
 	{
-		$row = $this->builder()->limit($limit, $offset)->get();
+		$builder = $this->builder();
+
+		if ($this->tempUseSoftDeletes === true)
+		{
+			$builder->where('deleted', 0);
+		}
+
+		$row = $builder->limit($limit, $offset)->get();
 
 		$row = $row->getResult($this->tempReturnType);
 
-		$this->tempReturnType = $this->returnType;
+		$this->tempReturnType     = $this->returnType;
+		$this->tempUseSoftDeletes = $this->useSoftDeletes;
 
 		return $row;
 	}
@@ -172,8 +213,15 @@ class Model
 	 */
 	public function first()
 	{
-		$row = $this->builder()->limit(1, 0)
-		            ->get();
+		$builder = $this->builder();
+
+		if ($this->tempUseSoftDeletes === true)
+		{
+			$builder->where('deleted', 0);
+		}
+
+		$row = $builder->limit(1, 0)
+		               ->get();
 
 		$row = $row->getFirstRow($this->tempReturnType);
 
@@ -253,13 +301,20 @@ class Model
 	 * Deletes a single record from $this->table where $id matches
 	 * the table's primaryKey
 	 *
-	 * @param $id
+	 * @param mixed $id   The rows primary key
+	 * @param bool $purge Allows overriding the soft deletes setting.
 	 *
 	 * @return mixed
 	 * @throws DatabaseException
 	 */
-	public function delete($id)
+	public function delete($id, $purge = false)
 	{
+		if ($this->useSoftDeletes && ! $purge)
+		{
+			return $this->builder()->where($this->primaryKey, $id)
+			                       ->update(['deleted', 1]);
+		}
+
 		return $this->builder()->where($this->primaryKey, $id)
 								->delete();
 	}
@@ -272,11 +327,12 @@ class Model
 	 *
 	 * @param      $key
 	 * @param null $value
+	 * @param bool $purge Allows overriding the soft deletes setting.
 	 *
 	 * @return mixed
 	 * @throws DatabaseException
 	 */
-	public function deleteWhere($key, $value = null)
+	public function deleteWhere($key, $value = null, $purge = false)
 	{
 		// Don't let them shoot themselves in the foot...
 		if (empty($key))
@@ -284,8 +340,52 @@ class Model
 			throw new DatabaseException('You must provided a valid key to deleteWhere.');
 		}
 
+		if ($this->useSoftDeletes && ! $purge)
+		{
+			return $this->builder()->where($key, $value)
+			                       ->update(['deleted', 1]);
+		}
+
 	    return $this->builder()->where($key, $value)
 		                        ->delete();
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Permanently deletes all rows that have been marked as deleted
+	 * through soft deletes (deleted = 1)
+	 *
+	 * @return bool|mixed
+	 * @throws DatabaseException
+	 */
+	public function purgeDeleted()
+	{
+	    if (! $this->useSoftDeletes)
+	    {
+		    return true;
+	    }
+
+		return $this->builder()->where('deleted', 1)
+							   ->delete();
+	}
+
+	//--------------------------------------------------------------------
+
+
+	/**
+	 * Sets $useSoftDeletes value so that we can temporarily override
+	 * the softdeletes settings. Can be used for all find* methods.
+	 *
+	 * @param bool $val
+	 *
+	 * @return $this
+	 */
+	public function withDeleted($val = true)
+	{
+	    $this->tempUseSoftDeletes = ! $val;
+
+		return $this;
 	}
 
 	//--------------------------------------------------------------------
@@ -332,7 +432,10 @@ class Model
 	 * Works with $this->builder to get the Compiled select to
 	 * determine the rows to operate on.
 	 *
-	 * @param int $size
+	 * @param int      $size
+	 * @param \Closure $userFunc
+	 *
+	 * @throws DatabaseException
 	 */
 	public function chunk($size = 100, \Closure $userFunc)
 	{
