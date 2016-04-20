@@ -84,8 +84,9 @@ what table and how we can find the required records.::
 		protected $primaryKey = 'id';
 
 		protected $returnType = 'array';
-
 		protected $useSoftDeletes = true;
+
+		protected $allowedFields = ['name', 'email'];
 	}
 
 **$table**
@@ -117,6 +118,13 @@ part of a security trail. If true, the find* methods will only return non-delete
 the withDeleted() method is called prior to calling the find* method.
 
 This requires an INT or TINYINT field named ``deleted`` to be present in the table.
+
+**$allowedFields**
+
+This array should be updated with the field names that can be set during save, insert, or
+update methods. Any field names other than these will be discarded. This helps to protect
+against just taking input from a form and throwing it all at the model, resulting in
+potential mass assignment vulnerabilities.
 
 Working With Data
 =================

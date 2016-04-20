@@ -63,6 +63,14 @@ class Model
 	 */
 	protected $useSoftDeletes = true;
 
+	/**
+	 * An array of field names that are allowed
+	 * to be set by the user in inserts/updates.
+	 * 
+	 * @var array
+	 */
+	protected $allowedFields = [];
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -263,14 +271,10 @@ class Model
 	{
 		if (is_object($data) && isset($data->{$this->primaryKey}))
 		{
-			unset($data->{$this->primaryKey});
-
 			return $this->update($data->{$this->primaryKey}, $data);
 		}
-		elseif (is_array($data) && isset($data[$this->primaryKey]))
+		elseif (is_array($data) && array_key_exists($this->primaryKey, $data))
 		{
-			unset($data[$this->primaryKey]);
-
 			return $this->update($data[$this->primaryKey], $data);
 		}
 
@@ -291,7 +295,7 @@ class Model
 	{
 		// Must use the set() method to ensure objects get converted to arrays
 		return $this->builder()
-		            ->set($data)
+		            ->set($this->protectFields($data))
 		            ->insert();
 	}
 
@@ -311,7 +315,7 @@ class Model
 		// Must use the set() method to ensure objects get converted to arrays
 		return $this->builder()
 		            ->where($this->primaryKey, $id)
-		            ->set($data)
+		            ->set($this->protectFields($data))
 		            ->update();
 	}
 
@@ -543,6 +547,37 @@ class Model
 		$this->builder = $this->db->table($table);
 
 		return $this->builder;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Ensures that only the fields that are allowed to be updated
+	 * are in the data array.
+	 *
+	 * Used by insert() and update() to protect against mass assignment
+	 * vulnerabilities.
+	 *
+	 * @param $data
+	 *
+	 * @return mixed
+	 */
+	protected function protectFields($data)
+	{
+		if (empty($this->allowedFields))
+		{
+			return $data;
+		}
+
+		foreach ($data as $key => $val)
+		{
+			if (! in_array($key, $this->allowedFields))
+			{
+				unset($data[$key]);
+			}
+		}
+
+		return $data;
 	}
 
 	//--------------------------------------------------------------------
