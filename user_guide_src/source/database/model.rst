@@ -133,7 +133,12 @@ Returns a single row where the primary key matches the value passed in as the fi
 
 	$user = $userModel->find($user_id);
 
-The value is returned in the format specified in $returnArray.
+The value is returned in the format specified in $returnType.
+
+You can specify more than one row to return by passing an array of primaryKey values instead
+of just one.::
+
+	$users = $userModel->find([1,2,3]);
 
 **findWhere()**
 

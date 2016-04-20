@@ -26,12 +26,14 @@ class Model
 {
 	/**
 	 * Name of database table
+	 *
 	 * @var string
 	 */
 	protected $table;
 
 	/**
 	 * The table's primary key.
+	 *
 	 * @var string
 	 */
 	protected $primaryKey = 'id';
@@ -39,6 +41,7 @@ class Model
 	/**
 	 * The Database connection group that
 	 * should be instantiated.
+	 *
 	 * @var string
 	 */
 	protected $DBGroup;
@@ -52,10 +55,10 @@ class Model
 	protected $returnType = 'array';
 
 	/**
-	 * If this model should use "softDeletes" and 
+	 * If this model should use "softDeletes" and
 	 * simply set a flag when rows are deleted, or
 	 * do hard deletes.
-	 * 
+	 *
 	 * @var bool
 	 */
 	protected $useSoftDeletes = true;
@@ -65,6 +68,7 @@ class Model
 	/**
 	 * Used by withDeleted to override the
 	 * model's softDelete setting.
+	 *
 	 * @var bool
 	 */
 	protected $tempUseSoftDeletes;
@@ -72,22 +76,24 @@ class Model
 	/**
 	 * Used by asArray and asObject to provide
 	 * temporary overrides of model default.
+	 *
 	 * @var string
 	 */
 	protected $tempReturnType;
 
 	/**
 	 * Database Connection
+	 *
 	 * @var ConnectionInterface
 	 */
 	protected $db;
 
 	/**
 	 * Query Builder object
+	 *
 	 * @var BaseBuilder
 	 */
 	protected $builder;
-
 
 	//--------------------------------------------------------------------
 
@@ -98,10 +104,10 @@ class Model
 	 */
 	public function __construct(ConnectionInterface $db = null)
 	{
-	    if ($db instanceof ConnectionInterface)
-	    {
-		    $this->db = $db;
-	    }
+		if ($db instanceof ConnectionInterface)
+		{
+			$this->db = $db;
+		}
 		else
 		{
 			$this->db = Database::connect($this->DBGroup);
@@ -121,7 +127,7 @@ class Model
 	 * Fetches the row of database from $this->table with a primary key
 	 * matching $id.
 	 *
-	 * @param $id
+	 * @param mixed|array $id       One primary key or an array of primary keys
 	 *
 	 * @return array|object|null    The resulting row of data, or null.
 	 */
@@ -134,10 +140,19 @@ class Model
 			$builder->where('deleted', 0);
 		}
 
-		$row = $builder->where($this->primaryKey, $id)
-		               ->get();
+		if (is_array($id))
+		{
+			$row = $builder->whereIn($this->primaryKey, $id)
+				           ->get();
+			$row = $row->getResult();
+		}
+		else
+		{
+			$row = $builder->where($this->primaryKey, $id)
+			               ->get();
 
-		$row = $row->getFirstRow($this->tempReturnType);
+			$row = $row->getFirstRow($this->tempReturnType);
+		}
 
 		$this->tempReturnType     = $this->returnType;
 		$this->tempUseSoftDeletes = $this->useSoftDeletes;
@@ -193,7 +208,8 @@ class Model
 			$builder->where('deleted', 0);
 		}
 
-		$row = $builder->limit($limit, $offset)->get();
+		$row = $builder->limit($limit, $offset)
+		               ->get();
 
 		$row = $row->getResult($this->tempReturnType);
 
@@ -248,11 +264,13 @@ class Model
 		if (is_object($data) && isset($data->{$this->primaryKey}))
 		{
 			unset($data->{$this->primaryKey});
+
 			return $this->update($data->{$this->primaryKey}, $data);
 		}
 		elseif (is_array($data) && isset($data[$this->primaryKey]))
 		{
 			unset($data[$this->primaryKey]);
+
 			return $this->update($data[$this->primaryKey], $data);
 		}
 
@@ -272,8 +290,9 @@ class Model
 	public function insert($data)
 	{
 		// Must use the set() method to ensure objects get converted to arrays
-		return $this->builder()->set($data)
-		                       ->insert();
+		return $this->builder()
+		            ->set($data)
+		            ->insert();
 	}
 
 	//--------------------------------------------------------------------
@@ -290,9 +309,10 @@ class Model
 	public function update($id, $data)
 	{
 		// Must use the set() method to ensure objects get converted to arrays
-		return $this->builder()->where($this->primaryKey, $id)
-		                       ->set($data)
-		                       ->update();
+		return $this->builder()
+		            ->where($this->primaryKey, $id)
+		            ->set($data)
+		            ->update();
 	}
 
 	//--------------------------------------------------------------------
@@ -301,8 +321,8 @@ class Model
 	 * Deletes a single record from $this->table where $id matches
 	 * the table's primaryKey
 	 *
-	 * @param mixed $id   The rows primary key
-	 * @param bool $purge Allows overriding the soft deletes setting.
+	 * @param mixed $id    The rows primary key
+	 * @param bool  $purge Allows overriding the soft deletes setting.
 	 *
 	 * @return mixed
 	 * @throws DatabaseException
@@ -311,12 +331,14 @@ class Model
 	{
 		if ($this->useSoftDeletes && ! $purge)
 		{
-			return $this->builder()->where($this->primaryKey, $id)
-			                       ->update(['deleted', 1]);
+			return $this->builder()
+			            ->where($this->primaryKey, $id)
+			            ->update(['deleted', 1]);
 		}
 
-		return $this->builder()->where($this->primaryKey, $id)
-								->delete();
+		return $this->builder()
+		            ->where($this->primaryKey, $id)
+		            ->delete();
 	}
 
 	//--------------------------------------------------------------------
@@ -342,12 +364,14 @@ class Model
 
 		if ($this->useSoftDeletes && ! $purge)
 		{
-			return $this->builder()->where($key, $value)
-			                       ->update(['deleted', 1]);
+			return $this->builder()
+			            ->where($key, $value)
+			            ->update(['deleted', 1]);
 		}
 
-	    return $this->builder()->where($key, $value)
-		                        ->delete();
+		return $this->builder()
+		            ->where($key, $value)
+		            ->delete();
 	}
 
 	//--------------------------------------------------------------------
@@ -361,17 +385,17 @@ class Model
 	 */
 	public function purgeDeleted()
 	{
-	    if (! $this->useSoftDeletes)
-	    {
-		    return true;
-	    }
+		if ( ! $this->useSoftDeletes)
+		{
+			return true;
+		}
 
-		return $this->builder()->where('deleted', 1)
-							   ->delete();
+		return $this->builder()
+		            ->where('deleted', 1)
+		            ->delete();
 	}
 
 	//--------------------------------------------------------------------
-
 
 	/**
 	 * Sets $useSoftDeletes value so that we can temporarily override
@@ -383,15 +407,13 @@ class Model
 	 */
 	public function withDeleted($val = true)
 	{
-	    $this->tempUseSoftDeletes = ! $val;
+		$this->tempUseSoftDeletes = ! $val;
 
 		return $this;
 	}
 
 	//--------------------------------------------------------------------
 
-
-	
 	//--------------------------------------------------------------------
 	// Utility
 	//--------------------------------------------------------------------
@@ -439,7 +461,8 @@ class Model
 	 */
 	public function chunk($size = 100, \Closure $userFunc)
 	{
-		$total = $this->builder()->countAllResults(false);
+		$total = $this->builder()
+		              ->countAllResults(false);
 
 		$offset = 0;
 
@@ -456,7 +479,10 @@ class Model
 
 			$rows = $rows->getResult();
 
-			if (empty($rows)) continue;
+			if (empty($rows))
+			{
+				continue;
+			}
 
 			$offset += $size;
 
@@ -509,7 +535,7 @@ class Model
 		$table = empty($table) ? $this->table : $table;
 
 		// Ensure we have a good db connection
-		if (! $this->db instanceof BaseConnection)
+		if ( ! $this->db instanceof BaseConnection)
 		{
 			$this->db = Database::connect($this->DBGroup);
 		}
@@ -577,14 +603,14 @@ class Model
 		{
 			return $result;
 		}
-		if (! $result instanceof BaseBuilder)
+		if ( ! $result instanceof BaseBuilder)
 		{
 			return $result;
 		}
 
 		return $this;
 	}
-	
+
 	//--------------------------------------------------------------------
 
 }
