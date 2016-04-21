@@ -1,5 +1,7 @@
 <?php namespace Config;
 
+use CodeIgniter\Database\MigrationRunner;
+
 /**
  * Services Configuration file.
  *
@@ -174,6 +176,19 @@ class Services
 
 	//--------------------------------------------------------------------
 
+	public static function migrations(bool $getShared = true) 
+	{
+	    if ($getShared)
+	    {
+		    return self::getSharedInstance('migrations');
+	    }
+		
+		return new MigrationRunner(new \Config\Migrations());
+	}
+	
+	//--------------------------------------------------------------------
+	
+	
 	/**
 	 * The Negotiate class provides the content negotiation features for
 	 * working the request to determine correct language, encoding, charset,
