@@ -107,6 +107,19 @@ class Forge
 	//--------------------------------------------------------------------
 
 	/**
+	 * Provides access to the forge's current database connection.
+	 *
+	 * @return ConnectionInterface
+	 */
+	public function getConnection()
+	{
+	    return $this->db;
+	}
+
+	//--------------------------------------------------------------------
+
+
+	/**
 	 * Create database
 	 *
 	 * @param    string $db_name

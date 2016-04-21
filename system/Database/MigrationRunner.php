@@ -67,11 +67,6 @@ class MigrationRunner
 
 		$this->path = rtrim($this->path, '/').'/';
 
-		if ($this->enabled !== true)
-		{
-			throw new ConfigException('Migrations have been loaded but are disabled or setup incorrectly.');
-		}
-
 		if (empty($this->table))
 		{
 			throw new ConfigException('Migrations table must be set.');
@@ -89,9 +84,11 @@ class MigrationRunner
 
 		// If no db connection passed in, use
 		// default database group.
-		$this->db =& ! empty($db)
+		$this->db = ! empty($db)
 			? $db
 			: Database::connect();
+
+		$this->ensureTable();
 	}
 
 	//--------------------------------------------------------------------
@@ -104,14 +101,20 @@ class MigrationRunner
 	 *
 	 * @param    string $targetVersion Target schema version
 	 *
-	 * @return    mixed    TRUE if no migrations are found, current version string on success, FALSE on failure
+	 * @return mixed TRUE if no migrations are found, current version string on success, FALSE on failure
+	 * @throws ConfigException
 	 */
 	public function version($targetVersion)
 	{
+		if (! $this->enabled)
+		{
+			throw new ConfigException('Migrations have been loaded but are disabled or setup incorrectly.');
+		}
+
 		// Note: We use strings, so that timestamp versions work on 32-bit systems
 		$currentVersion = $this->getVersion();
 
-		if ($this->_migration_type === 'sequential')
+		if ($this->type === 'sequential')
 		{
 			$targetVersion = sprintf('%03d', $targetVersion);
 		}
@@ -155,7 +158,7 @@ class MigrationRunner
 				throw new \RuntimeException('There is a gap in the migration sequence near version number: '.$number);
 			}
 
-			include_once($file);
+			include_once $file;
 			$class = 'Migration_'.($this->getMigrationName(basename($file, '.php')));
 
 			// Validate the migration file structure
@@ -182,16 +185,9 @@ class MigrationRunner
 				call_user_func([$instance, $method]);
 
 				$currentVersion = $number;
-				$this->updateVersion($currentVersion);
+				if ($method === 'up') $this->addHistory($currentVersion);
+				elseif ($method === 'down') $this->removeHistory($currentVersion);
 			}
-		}
-
-		// This is necessary when moving down, since the the last migration applied
-		// will be the down() method for the next migration up from the target
-		if ($currentVersion <> $targetVersion)
-		{
-			$currentVersion = $targetVersion;
-			$this->updateVersion($currentVersion);
 		}
 
 		return $currentVersion;
@@ -286,7 +282,25 @@ class MigrationRunner
 	}
 
 	//--------------------------------------------------------------------
-	
+
+	/**
+	 * Grabs the full migration history from the database.
+	 *
+	 * @return mixed
+	 */
+	public function getHistory()
+	{
+	    $query = $this->db->table($this->table)
+		                ->get();
+
+		if (! $query) return [];
+
+		return $query->getResultArray();
+	}
+
+	//--------------------------------------------------------------------
+
+
 	/**
 	 * Extracts the migration number from a filename
 	 *
@@ -339,16 +353,62 @@ class MigrationRunner
 	/**
 	 * Stores the current schema version.
 	 *
-	 * @param    string $migration Migration reached
+	 * @param $version
 	 *
-	 * @return    void
+	 * @internal param string $migration Migration reached
+	 *
 	 */
-	protected function updateVersion($migration)
+	protected function addHistory($version)
 	{
 		$this->db->table($this->table)
-		         ->update([
-			         'version' => $migration,
+		         ->insert([
+			         'version' => $version,
+		             'time' => date('Y-m-d H:i:s')
 		         ]);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Removes a single history
+	 *
+	 * @param $version
+	 */
+	protected function removeHistory($version)
+	{
+		$this->db->table($this->table)
+				 ->where('version', $version)
+				 ->delete();
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Ensures that we have created our migrations table
+	 * in the database.
+	 */
+	protected function ensureTable()
+	{
+		if ($this->db->tableExists($this->table))
+		{
+			return;
+		}
+
+		$forge = Database::forge();
+
+		$forge->addField([
+			'version' => [
+				'type' => 'BIGINT',
+			    'constraint' => 20,
+			    'null' => false
+			],
+			'time' => [
+				'type' => 'datetime',
+			    'null' => false
+			]
+		]);
+
+		$forge->createTable($this->table, true);
 	}
 
 	//--------------------------------------------------------------------
