@@ -67,6 +67,9 @@ class BaseConfig
 				{
 					if ($value = $this->getEnvValue("{$property}.{$key}", $prefix, $shortPrefix))
 					{
+						if ($value === 'false')    $value = false;
+						elseif ($value === 'true') $value = true;
+
 						$this->$property[$key] = $value;
 					}
 				}
@@ -75,6 +78,9 @@ class BaseConfig
 			{
 				if ($value = $this->getEnvValue($property, $prefix, $shortPrefix))
 				{
+					if ($value === 'false')    $value = false;
+					elseif ($value === 'true') $value = true;
+
 					$this->$property = $value;
 				}
 			}
