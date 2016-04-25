@@ -1,7 +1,5 @@
 <?php namespace CodeIgniter\Database;
 
-use \Config\Database;
-
 abstract class Migration
 {
 	/**
@@ -28,7 +26,7 @@ abstract class Migration
 	{
 	    $this->forge = ! is_null($forge)
 		    ? $forge 
-		    : Database::forge($this->DBGroup);
+		    : \Config\Database::forge($this->DBGroup);
 
 		$this->db = $this->forge->getConnection();
 	}
