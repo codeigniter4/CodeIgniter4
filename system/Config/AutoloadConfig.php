@@ -115,6 +115,8 @@ class AutoloadConfig
 			'CodeIgniter\Database\Query'                    => BASEPATH.'Database/Query.php',
 			'CodeIgniter\Database\QueryInterface'           => BASEPATH.'Database/QueryInterface.php',
 			'CodeIgniter\Database\ResultInterface'          => BASEPATH.'Database/ResultInterface.php',
+			'CodeIgniter\Database\Migration'                => BASEPATH.'Database/Migration.php',
+			'CodeIgniter\Database\MigrationRunner'          => BASEPATH.'Database/MigrationRunner.php',
 			'CodeIgniter\Debug\Exceptions'                  => BASEPATH.'Debug/Exceptions.php',
 			'CodeIgniter\Debug\Timer'                       => BASEPATH.'Debug/Timer.php',
 			'CodeIgniter\Debug\Iterator'                    => BASEPATH.'Debug/Iterator.php',
@@ -154,6 +156,7 @@ class AutoloadConfig
 			'CodeIgniter\View\View'                         => BASEPATH.'View/View.php',
 			'Zend\Escaper\Escaper'                          => BASEPATH.'View/Escaper.php',
 			'CodeIgniter\Log\TestLogger'                    => BASEPATH.'../tests/_support/Log/TestLogger.php',
+		    'CIDatabaseTestCase'                            => BASEPATH.'../tests/_support/CIDatabaseTestCase.php'
 		];
 	}
 

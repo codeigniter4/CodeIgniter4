@@ -185,8 +185,8 @@ class MigrationRunner
 				call_user_func([$instance, $method]);
 
 				$currentVersion = $number;
-				if ($method === 'up') $this->addHistory($currentVersion);
-				elseif ($method === 'down') $this->removeHistory($currentVersion);
+				if ($method === 'up') $this->addHistory($currentVersion, $instance->getDBGroup());
+				elseif ($method === 'down') $this->removeHistory($currentVersion, $instance->getDBGroup());
 			}
 		}
 
@@ -288,9 +288,10 @@ class MigrationRunner
 	 *
 	 * @return mixed
 	 */
-	public function getHistory()
+	public function getHistory($group = 'default')
 	{
 	    $query = $this->db->table($this->table)
+		                ->where('group', $group)
 		                ->get();
 
 		if (! $query) return [];
@@ -338,10 +339,11 @@ class MigrationRunner
 	 *
 	 * @return    string    Current migration version
 	 */
-	protected function getVersion()
+	protected function getVersion($group = 'default')
 	{
 		$row = $this->db->table($this->table)
 		                ->select('version')
+					    ->where('group', $group)
 		                ->get()
 		                ->getRow();
 
@@ -353,17 +355,19 @@ class MigrationRunner
 	/**
 	 * Stores the current schema version.
 	 *
-	 * @param $version
+	 * @param string $version
+	 * @param string $group     The database group
 	 *
 	 * @internal param string $migration Migration reached
 	 *
 	 */
-	protected function addHistory($version)
+	protected function addHistory($version, $group = 'default')
 	{
 		$this->db->table($this->table)
 		         ->insert([
 			         'version' => $version,
-		             'time' => date('Y-m-d H:i:s')
+			         'group'   => $group,
+		             'time'    => date('Y-m-d H:i:s')
 		         ]);
 	}
 
@@ -372,12 +376,14 @@ class MigrationRunner
 	/**
 	 * Removes a single history
 	 *
-	 * @param $version
+	 * @param string $version
+	 * @param string $group     The database group
 	 */
-	protected function removeHistory($version)
+	protected function removeHistory($version, $group = 'default')
 	{
 		$this->db->table($this->table)
 				 ->where('version', $version)
+				 ->where('group', $group)
 				 ->delete();
 	}
 
@@ -400,6 +406,11 @@ class MigrationRunner
 			'version' => [
 				'type' => 'BIGINT',
 			    'constraint' => 20,
+			    'null' => false
+			],
+			'group' => [
+				'type' => 'varchar',
+			    'constraint' => 255,
 			    'null' => false
 			],
 			'time' => [

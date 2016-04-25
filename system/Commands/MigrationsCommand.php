@@ -31,7 +31,7 @@ class MigrationsCommand extends \CodeIgniter\Controller
 		}
 		catch (\Exception $e)
 		{
-			CLI::error($e->getMessage());
+			$this->showError($e);
 		}
 
 		CLI::write('Done');
@@ -59,7 +59,7 @@ class MigrationsCommand extends \CodeIgniter\Controller
 		}
 		catch (\Exception $e)
 		{
-			CLI::error($e->getMessage());
+			$this->showError($e);
 		}
 
 		CLI::write('Done');
@@ -80,7 +80,7 @@ class MigrationsCommand extends \CodeIgniter\Controller
 		}
 		catch (\Exception $e)
 		{
-			CLI::error($e->getMessage());
+			$this->showError($e);
 		}
 
 		CLI::write('Done');
@@ -101,7 +101,7 @@ class MigrationsCommand extends \CodeIgniter\Controller
 		}
 		catch (\Exception $e)
 		{
-			CLI::error($e->getMessage());
+			$this->showError($e);
 		}
 
 		CLI::write('Done');
@@ -175,5 +175,17 @@ class MigrationsCommand extends \CodeIgniter\Controller
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Displays a caught exception.
+	 *
+	 * @param \Exception $e
+	 */
+	protected function showError(\Exception $e)
+	{
+		CLI::error($e->getMessage());
+		CLI::write($e->getFile().' - '.$e->getLine(), 'white');
+	}
+
+	//--------------------------------------------------------------------
 
 }

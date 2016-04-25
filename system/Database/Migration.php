@@ -1,6 +1,6 @@
 <?php namespace CodeIgniter\Database;
 
-use Config\Database;
+use \Config\Database;
 
 abstract class Migration
 {
@@ -30,11 +30,24 @@ abstract class Migration
 		    ? $forge 
 		    : Database::forge($this->DBGroup);
 
-		$this->db =& $this->forge->getConnection();
+		$this->db = $this->forge->getConnection();
 	}
 	
 	//--------------------------------------------------------------------
-	
+
+	/**
+	 * Returns the database group name this migration uses.
+	 *
+	 * @return string
+	 */
+	public function getDBGroup()
+	{
+	    return $this->DBGroup;
+	}
+
+	//--------------------------------------------------------------------
+
+
 	abstract public function up();
 
 	//--------------------------------------------------------------------
