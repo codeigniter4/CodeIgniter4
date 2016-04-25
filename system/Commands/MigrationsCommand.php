@@ -1,7 +1,9 @@
 <?php namespace CodeIgniter\Commands;
 
 use CodeIgniter\CLI\CLI;
+use CodeIgniter\Database\Seeder;
 use CodeIgniter\Services;
+use Config\Database;
 
 class MigrationsCommand extends \CodeIgniter\Controller
 {
@@ -168,9 +170,18 @@ class MigrationsCommand extends \CodeIgniter\Controller
 	 *
 	 * @param string $seedName
 	 */
-	public function seed(string $seedName)
+	public function seed(string $seedName = null)
 	{
-		CLI::write('seed');
+		$seeder = new Seeder(new \Config\Database());
+
+		try
+		{
+			$seeder->call($seedName);
+		}
+		catch (\Exception $e)
+		{
+			$this->showError($e);
+		}
 	}
 
 	//--------------------------------------------------------------------

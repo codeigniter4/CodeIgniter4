@@ -8,6 +8,13 @@
 class Database extends \CodeIgniter\Database\Config
 {
 	/**
+	 * The directory that holds the Migrations
+	 * and Seeds directories.
+	 * @var string
+	 */
+	public $filesPath = APPPATH.'Database/';
+
+	/**
 	 * Lets you choose which connection group to
 	 * use if no other is specified.
 	 *
