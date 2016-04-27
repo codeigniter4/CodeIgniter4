@@ -157,7 +157,7 @@ class Config extends BaseConfig
 	{
 		$config = new \Config\Database();
 
-		return new Seeder($config, self::forge($group));
+		return new Seeder($config, self::connect($group));
 	}
 
 	//--------------------------------------------------------------------

@@ -43,7 +43,7 @@ class Seeder
 	 * @param BaseConfig $config
 	 * @param Forge|null $forge
 	 */
-	public function __construct(BaseConfig $config, Forge $forge = null)
+	public function __construct(BaseConfig $config, BaseConnection $db = null)
 	{
 	    $this->seedPath = $config->filesPath ?? APPPATH.'Database/';
 
@@ -61,11 +61,12 @@ class Seeder
 
 		$this->config =& $config;
 
-		$this->forge = ! is_null($forge)
-			? $forge
-			: \Config\Database::forge($this->DBGroup);
+		if (is_null($db))
+		{
+			$db = \Config\Database::connect($this->DBGroup);
+		}
 
-		$this->db = $this->forge->getConnection();
+		$this->db =& $db;
 	}
 
 	//--------------------------------------------------------------------

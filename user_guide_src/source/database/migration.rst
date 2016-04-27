@@ -1,6 +1,6 @@
-################
-Migrations Class
-################
+###################
+Database Migrations
+###################
 
 Migrations are a convenient way for you to alter your database in a 
 structured and organized manner. You could edit fragments of SQL by hand 
