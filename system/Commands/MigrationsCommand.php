@@ -50,6 +50,11 @@ class MigrationsCommand extends \CodeIgniter\Controller
 	{
 		if (is_null($version))
 		{
+			$version = CLI::prompt('Version');
+		}
+
+		if (is_null($version))
+		{
 			CLI::error('Invalid version number provided.');
 			exit();
 		}
