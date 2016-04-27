@@ -179,6 +179,17 @@ class MigrationsCommand extends \CodeIgniter\Controller
 	{
 		$seeder = new Seeder(new \Config\Database());
 
+		if (empty($seedName))
+		{
+			$seedName = CLI::prompt('Seeder name');
+		}
+
+		if (empty($seedName))
+		{
+			CLI::error('You must provide a seeder name.');
+			return;
+		}
+
 		try
 		{
 			$seeder->call($seedName);

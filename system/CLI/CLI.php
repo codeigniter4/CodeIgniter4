@@ -262,7 +262,7 @@ class CLI
 			$input = forward_static_call_array([__CLASS__, 'prompt'], $args);
 		}
 
-		return $input;
+		return empty($input) ? '' : $input;
 	}
 
 	//--------------------------------------------------------------------

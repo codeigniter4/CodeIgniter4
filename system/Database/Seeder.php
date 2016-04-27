@@ -1,17 +1,49 @@
 <?php namespace CodeIgniter\Database;
 
+use CodeIgniter\CLI\CLI;
 use CodeIgniter\Config\BaseConfig;
-use CodeIgniter\ConfigException;
 
 class Seeder
 {
+	/**
+	 * The name of the database group to use.
+	 * @var string
+	 */
+	protected $DBGroup = 'default';
+
+	/**
+	 * Where we can find the Seed files.
+	 * @var string
+	 */
 	protected $seedPath;
 
+	/**
+	 * An instance of the main Database configuration
+	 * @var BaseConfig
+	 */
 	protected $config;
+
+	/**
+	 * Database Connection instance
+	 * @var BaseConnection
+	 */
+	protected $db;
+
+	/**
+	 * Database Forge instance.
+	 * @var Forge
+	 */
+	protected $forge;
 
 	//--------------------------------------------------------------------
 
-	public function __construct(BaseConfig $config)
+	/**
+	 * Seeder constructor.
+	 *
+	 * @param BaseConfig $config
+	 * @param Forge|null $forge
+	 */
+	public function __construct(BaseConfig $config, Forge $forge = null)
 	{
 	    $this->seedPath = $config->filesPath ?? APPPATH.'Database/';
 
@@ -28,6 +60,12 @@ class Seeder
 		}
 
 		$this->config =& $config;
+
+		$this->forge = ! is_null($forge)
+			? $forge
+			: \Config\Database::forge($this->DBGroup);
+
+		$this->db = $this->forge->getConnection();
 	}
 
 	//--------------------------------------------------------------------
@@ -43,46 +81,35 @@ class Seeder
 	{
 	    if (empty($class))
 	    {
-		    // Ask the user...
-		    $class = trim(CLI::prompt("Seeder name"));
-
-			if (empty($class))
-			{
-				throw new \InvalidArgumentException('No Seeder was specified.');
-			}
+			throw new \InvalidArgumentException('No Seeder was specified.');
 	    }
 		
 		$path = $this->seedPath.str_replace('.php', '', $class).'.php';
 		
 		if (! is_file($path))
 		{
-			throw new RuntimeException('The specified Seeder is not a valid file: '. $path);
+			throw new \InvalidArgumentException('The specified Seeder is not a valid file: '. $path);
 		}
 
-		try
+		require $path;
+
+		$seeder = new $class($this->config);
+
+		$seeder->run();
+
+		unset($seeder);
+
+		if (is_cli())
 		{
-			require $path;
-
-			$seeder = new $class($this->config);
-
-			$seeder->run();
-
-			unset($seeder);
+			CLI::write("Seeded: {$class}", 'green');
 		}
-		catch (\Exception $e)
-		{
-			CLI::error($e->getMessage());
-			CLI::write($e->getFile().' - '.$e->getLine(), 'white');
-		}
-
-		CLI::write("Seeded: {$class}", 'green');
 	}
 
 	//--------------------------------------------------------------------
 
 
 	/**
-	 * Run the database seeds. This is where the magic happends.
+	 * Run the database seeds. This is where the magic happens.
 	 *
 	 * Child classes must implement this method and take care
 	 * of inserting their data here.

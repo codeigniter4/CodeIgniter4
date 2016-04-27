@@ -1,6 +1,7 @@
 <?php namespace CodeIgniter\Database;
 
 use CodeIgniter\Config\BaseConfig;
+use Config\Database;
 
 class Config extends BaseConfig
 {
@@ -108,6 +109,13 @@ class Config extends BaseConfig
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Returns a new instance of the Database Utilities class.
+	 * 
+	 * @param string|null $group
+	 *
+	 * @return mixed
+	 */
 	public static function utils(string $group = null)
 	{
 	    $config = new \Config\Database();
@@ -134,6 +142,22 @@ class Config extends BaseConfig
 		}
 
 		return self::$factory->loadUtils($db);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns a new instance of the Database Seeder.
+	 *
+	 * @param string|null $group
+	 *
+	 * @return Seeder
+	 */
+	public static function seeder(string $group = null)
+	{
+		$config = new \Config\Database();
+
+		return new Seeder($config, self::forge($group));
 	}
 
 	//--------------------------------------------------------------------
