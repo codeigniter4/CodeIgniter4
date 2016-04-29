@@ -38,7 +38,7 @@ class CIDatabaseTestCase extends CIUnitTestCase
 	 *
 	 * @var string
 	 */
-	protected $DBGroup;
+	protected $DBGroup = 'tests';
 
 	/**
 	 * Our database connection.
@@ -75,18 +75,13 @@ class CIDatabaseTestCase extends CIUnitTestCase
 	{
 	    parent::__construct();
 
-		if (empty($this->DBGroup))
-		{
-			$this->DBGroup = 'tests';
-		}
-
 		$this->db = \Config\Database::connect($this->DBGroup);
 
 		// Ensure that we can run migrations
 		$config = new \Config\Migrations();
 		$config->enabled = true;
 
-		$this->migrations = Services::migrations($this->db);
+		$this->migrations = Services::migrations($config, $this->db);
 		$this->migrations->setSilent(true);
 
 		$this->seeder = \Config\Database::seeder($this->DBGroup);
