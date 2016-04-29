@@ -68,12 +68,17 @@ class CIDatabaseTestCase extends CIUnitTestCase
 	 * @var array
 	 */
 	protected $insertCache = [];
-	
+
 	//--------------------------------------------------------------------
 
 	public function __construct()
 	{
 	    parent::__construct();
+
+		if (empty($this->DBGroup))
+		{
+			$this->DBGroup = 'tests';
+		}
 
 		$this->db = \Config\Database::connect($this->DBGroup);
 
