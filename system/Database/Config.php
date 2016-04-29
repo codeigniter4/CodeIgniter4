@@ -87,7 +87,7 @@ class Config extends BaseConfig
 
 		if (empty($group))
 		{
-			$group = $config->defaultGroup;
+			$group = ENVIRONMENT == 'testing' ? 'tests' : $config->defaultGroup;
 		}
 
 		if (! isset($config->$group))
