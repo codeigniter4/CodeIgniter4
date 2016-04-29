@@ -35,6 +35,12 @@ class Seeder
 	 */
 	protected $forge;
 
+	/**
+	 * If true, will not display CLI messages.
+	 * @var bool
+	 */
+	protected $silent = false;
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -92,7 +98,10 @@ class Seeder
 			throw new \InvalidArgumentException('The specified Seeder is not a valid file: '. $path);
 		}
 
-		require $path;
+		if (! class_exists($class, false))
+		{
+			require $path;
+		}
 
 		$seeder = new $class($this->config);
 
@@ -100,7 +109,7 @@ class Seeder
 
 		unset($seeder);
 
-		if (is_cli())
+		if (is_cli() && ! $this->silent)
 		{
 			CLI::write("Seeded: {$class}", 'green');
 		}
@@ -118,6 +127,22 @@ class Seeder
 	public function setPath(string $path)
 	{
 		$this->seedPath = rtrim($path, '/').'/';
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Sets the silent treatment.
+	 *
+	 * @param bool $silent
+	 *
+	 * @return $this
+	 */
+	public function setSilent(bool $silent)
+	{
+	    $this->silent = $silent;
 
 		return $this;
 	}

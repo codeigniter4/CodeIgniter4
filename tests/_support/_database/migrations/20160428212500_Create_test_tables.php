@@ -8,7 +8,8 @@ class Migration_Create_test_tables extends \CodeIgniter\Database\Migration
 		$this->forge->addField(array(
 			'id' => array(
 				'type' => 'INTEGER',
-				'constraint' => 3
+				'constraint' => 3,
+				'auto_increment' => true
 			),
 			'name' => array(
 				'type' => 'VARCHAR',
@@ -30,7 +31,8 @@ class Migration_Create_test_tables extends \CodeIgniter\Database\Migration
 		$this->forge->addField(array(
 			'id' => array(
 				'type' => 'INTEGER',
-				'constraint' => 3
+				'constraint' => 3,
+				'auto_increment' => true
 			),
 			'name' => array(
 				'type' => 'VARCHAR',
@@ -47,7 +49,8 @@ class Migration_Create_test_tables extends \CodeIgniter\Database\Migration
 		$this->forge->addField(array(
 			'id' => array(
 				'type' => 'INTEGER',
-				'constraint' => 3
+				'constraint' => 3,
+				'auto_increment' => true
 			),
 			'key' => array(
 				'type' => 'VARCHAR',
