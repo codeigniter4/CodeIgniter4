@@ -57,10 +57,10 @@ class Database extends \CodeIgniter\Database\Config
 	 */
 	public $tests = [
 		'DSN'          => '',
-		'hostname'     => 'localhost',
-		'username'     => '',
+		'hostname'     => '127.0.0.1',
+		'username'     => 'travis',
 		'password'     => '',
-		'database'     => '',
+		'database'     => 'test',
 		'DBDriver'     => 'MySQLi',
 		'DBPrefix'     => '',
 		'pConnect'     => false,
