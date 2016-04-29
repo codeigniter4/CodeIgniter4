@@ -108,6 +108,21 @@ class Seeder
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Sets the location of the directory that seed files can be located in.
+	 *
+	 * @param sting $path
+	 *
+	 * @return $this
+	 */
+	public function setPath(string $path)
+	{
+		$this->seedPath = rtrim($path, '/').'/';
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
 
 	/**
 	 * Run the database seeds. This is where the magic happens.

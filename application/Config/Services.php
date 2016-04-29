@@ -1,5 +1,6 @@
 <?php namespace Config;
 
+use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Database\MigrationRunner;
 
 /**
@@ -176,14 +177,14 @@ class Services
 
 	//--------------------------------------------------------------------
 
-	public static function migrations(bool $getShared = true) 
+	public static function migrations(ConnectionInterface $db = null, bool $getShared = true)
 	{
 	    if ($getShared)
 	    {
-		    return self::getSharedInstance('migrations');
+		    return self::getSharedInstance('migrations', $db);
 	    }
 		
-		return new MigrationRunner(new \Config\Migrations());
+		return new MigrationRunner(new \Config\Migrations(), $db);
 	}
 	
 	//--------------------------------------------------------------------

@@ -2,7 +2,6 @@
 
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\ConfigException;
-use Config\Database;
 
 class MigrationRunner
 {
@@ -55,6 +54,13 @@ class MigrationRunner
 	 */
 	protected $db;
 
+	/**
+	 * If true, will continue instead of throwing
+	 * exceptions.
+	 * @var bool
+	 */
+	protected $silent = false;
+
 	//--------------------------------------------------------------------
 
 	public function __construct(BaseConfig $config, ConnectionInterface $db = null)
@@ -86,7 +92,7 @@ class MigrationRunner
 		// default database group.
 		$this->db = ! empty($db)
 			? $db
-			: Database::connect();
+			: \Config\Database::connect();
 
 		$this->ensureTable();
 	}
@@ -147,8 +153,6 @@ class MigrationRunner
 			return true;
 		}
 
-		$previous = false;
-
 		// Validate all available migrations, and run the ones within our target range
 		foreach ($migrations as $number => $file)
 		{
@@ -206,6 +210,8 @@ class MigrationRunner
 
 		if (empty($migrations))
 		{
+			if ($this->silent) return false;
+
 			throw new \RuntimeException('No migrations were found.');
 		}
 
@@ -300,6 +306,24 @@ class MigrationRunner
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * If $silent == true, then will not throw exceptions and will
+	 * attempt to continue gracefully.
+	 *
+	 * @param bool $silent
+	 *
+	 * @return $this
+	 */
+	public function setSilent(bool $silent)
+	{
+	    $this->silent = $silent;
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
 
 
 	/**
@@ -400,7 +424,7 @@ class MigrationRunner
 			return;
 		}
 
-		$forge = Database::forge();
+		$forge = \Config\Database::forge();
 
 		$forge->addField([
 			'version' => [
