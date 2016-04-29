@@ -4,8 +4,6 @@ class CIDbTestCaseTest extends \CIDatabaseTestCase
 {
 	protected $refresh = true;
 
-	protected $basePath = APPPATH.'../tests/_support/_database';
-
 	protected $seed = 'CITestSeeder';
 
 	public function testNothing() 

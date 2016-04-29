@@ -30,7 +30,7 @@ class CIDatabaseTestCase extends CIUnitTestCase
 	 *
 	 * @var string
 	 */
-	protected $basePath;
+	protected $basePath = APPPATH.'../tests/_support/_database';
 
 	/**
 	 * The name of the database group to connect to.
@@ -68,6 +68,7 @@ class CIDatabaseTestCase extends CIUnitTestCase
 	 * @var array
 	 */
 	protected $insertCache = [];
+	
 	//--------------------------------------------------------------------
 
 	public function __construct()

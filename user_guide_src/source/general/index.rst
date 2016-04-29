@@ -30,4 +30,5 @@ General Topics
 	environments
 	alternative_php
 	security
+	testing
 	PHP Style Guide <styleguide>
