@@ -9,7 +9,7 @@ class Seeder
 	 * The name of the database group to use.
 	 * @var string
 	 */
-	protected $DBGroup = 'default';
+	protected $DBGroup;
 
 	/**
 	 * Where we can find the Seed files.
