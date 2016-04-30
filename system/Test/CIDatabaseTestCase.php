@@ -77,7 +77,7 @@ class CIDatabaseTestCase extends CIUnitTestCase
 
 		$this->db = \Config\Database::connect($this->DBGroup);
 		$this->db->initialize();
-die(var_dump($this->db));
+
 		// Ensure that we can run migrations
 		$config = new \Config\Migrations();
 		$config->enabled = true;
