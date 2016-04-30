@@ -34,9 +34,6 @@ else
 	define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'development');
 }
 
-$fp=fopen("php://output","w");
-fwrite($fp, "Current Environment = ". ENVIRONMENT);
-fclose($fp);
 /*
  *---------------------------------------------------------------
  * ERROR REPORTING
