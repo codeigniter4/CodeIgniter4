@@ -873,24 +873,24 @@ class BaseBuilder
 			$prefix = (count($this->QBWhere) === 0)
 				? $this->groupGetType('') : $this->groupGetType($type);
 
-			$bind = $this->setBind($k, $v);
-
 			if ($side === 'none')
 			{
-				$like_statement = "{$prefix} {$k} {$not} LIKE ':{$bind}'";
+				$bind = $this->setBind($k, $v);
 			}
 			elseif ($side === 'before')
 			{
-				$like_statement = "{$prefix} {$k} {$not} LIKE '%:{$bind}'";
+				$bind = $this->setBind($k, "%$v");
 			}
 			elseif ($side === 'after')
 			{
-				$like_statement = "{$prefix} {$k} {$not} LIKE ':{$bind}%'";
+				$bind = $this->setBind($k, "$v%");
 			}
 			else
 			{
-				$like_statement = "{$prefix} {$k} {$not} LIKE '%:{$bind}%'";
+				$bind = $this->setBind($k, "%$v%");
 			}
+
+			$like_statement = "{$prefix} {$k} {$not} LIKE :{$bind}";
 
 			// some platforms require an escape sequence definition for LIKE wildcards
 			if ($escape === true && $this->db->likeEscapeStr !== '')
@@ -1305,12 +1305,12 @@ class BaseBuilder
 		}
 
 		$query = $this->db->query($sql);
-		if (count($query->result()) === 0)
+		if (count($query->getResult()) === 0)
 		{
 			return 0;
 		}
 
-		$query = $query->row();
+		$query = $query->getRow();
 		$this->resetSelect();
 
 		return (int)$query->numrows;
@@ -1331,8 +1331,6 @@ class BaseBuilder
 	 */
 	public function countAllResults($reset = true, $test = false)
 	{
-		$table = $this->QBFrom[0];
-
 		// ORDER BY usage is often problematic here (most notably
 		// on Microsoft SQL Server) and ultimately unnecessary
 		// for selecting COUNT(*) ...
