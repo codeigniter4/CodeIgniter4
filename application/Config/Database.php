@@ -79,4 +79,17 @@ class Database extends \CodeIgniter\Database\Config
 
 	//--------------------------------------------------------------------
 
+	public function __construct()
+	{
+	    parent::__construct();
+
+		if (ENVIRONMENT == 'testing')
+		{
+			$this->defaultGroup = 'tests';
+		}
+	}
+
+	//--------------------------------------------------------------------
+
+
 }

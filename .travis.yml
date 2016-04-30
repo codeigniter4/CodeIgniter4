@@ -11,6 +11,3 @@ services:
 
 before_install:
   - mysql -e "create database IF NOT EXISTS test;" -uroot
-
-env:
-  - CI_ENV=testing
