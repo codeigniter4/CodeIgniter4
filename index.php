@@ -23,7 +23,16 @@ $useKint = false;
  *
  * NOTE: If you change these, also change the error_reporting() code below
  */
-define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'development');
+
+// running under Continuous Integration server?
+if (getenv('CI') !== false)
+{
+	define('ENVIRONMENT', 'testing');
+}
+else
+{
+	define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'development');
+}
 
 /*
  *---------------------------------------------------------------
