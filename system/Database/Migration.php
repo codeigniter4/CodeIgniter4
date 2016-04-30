@@ -6,7 +6,7 @@ abstract class Migration
 	 * The name of the database group to use.
 	 * @var string
 	 */
-	protected $DBGroup = 'default';
+	protected $DBGroup;
 
 	/**
 	 * Database Connection instance
