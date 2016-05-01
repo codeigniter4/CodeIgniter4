@@ -2191,6 +2191,44 @@ class BaseBuilder
 	//--------------------------------------------------------------------
 
 	/**
+	 * Increments a numeric column by the specified value.
+	 *
+	 * @param string $column
+	 * @param int    $value
+	 *
+	 * @return bool
+	 */
+	public function increment(string $column, int $value = 1)
+	{
+		$column = $this->db->protectIdentifiers($column);
+
+		$sql = $this->_update($this->QBFrom[0], [$column => "{$column}+{$value}"]);
+
+		return $this->db->query($sql, $this->binds);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Decrements a numeric column by the specified value.
+	 *
+	 * @param string $column
+	 * @param int    $value
+	 *
+	 * @return bool
+	 */
+	public function decrement(string $column, int $value = 1)
+	{
+		$column = $this->db->protectIdentifiers($column);
+
+		$sql = $this->_update($this->QBFrom[0], [$column => "{$column}-{$value}"]);
+
+		return $this->db->query($sql, $this->binds);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Delete statement
 	 *
 	 * Generates a platform-specific delete string from the supplied data
@@ -2715,6 +2753,8 @@ class BaseBuilder
 	 *
 	 * @param string $key
 	 * @param null   $value
+	 *
+	 * @return string
 	 */
 	protected function setBind(string $key, $value = null)
 	{

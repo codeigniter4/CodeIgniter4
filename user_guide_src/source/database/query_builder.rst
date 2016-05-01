@@ -1390,6 +1390,24 @@ Class Reference
 
 		Compiles and executes a DELETE query.
 
+    .. php:method:: increment($column[, $value = 1])
+
+        :param string $column: The name of the column to increment
+        :param int    $value:  The amount to increment the column by
+
+        Increments the value of a field by the specified amount. If the field
+        is not a numeric field, like a VARCHAR, it will likely be replaced
+        with $value.
+
+    .. php:method:: decrement($column[, $value = 1])
+
+        :param string $column: The name of the column to decrement
+        :param int    $value:  The amount to decrement the column by
+
+        Decrements the value of a field by the specified amount. If the field
+        is not a numeric field, like a VARCHAR, it will likely be replaced
+        with $value.
+
 	.. php:method:: truncate()
 
 		:returns:	TRUE on success, FALSE on failure
