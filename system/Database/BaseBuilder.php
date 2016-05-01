@@ -1397,7 +1397,7 @@ class BaseBuilder
 			$this->limit($limit, $offset);
 		}
 
-		$result = $this->query($this->compileSelect());
+		$result = $this->db->query($this->compileSelect(), $this->binds);
 		$this->resetSelect();
 
 		return $result;
@@ -1413,7 +1413,11 @@ class BaseBuilder
 	 * @param    array $set    An associative array of insert values
 	 * @param    bool  $escape Whether to escape values and identifiers
 	 *
-	 * @return    int    Number of rows inserted or FALSE on failure
+	 * @param int      $batch_size
+	 * @param bool     $testing
+	 *
+	 * @return int Number of rows inserted or FALSE on failure
+	 * @throws DatabaseException
 	 */
 	public function insertBatch($set = null, $escape = null, $batch_size = 100, $testing = false)
 	{
@@ -1675,10 +1679,13 @@ class BaseBuilder
 	 *
 	 * Compiles an replace into string and runs the query
 	 *
-	 * @param    array     an associative array of insert values
-	 * @param    bool      true returns the generated SQL, false executes the query.
+	 * @param      array     an associative array of insert values
+	 * @param bool $returnSQL
 	 *
-	 * @return    bool    TRUE on success, FALSE on failure
+	 * @return bool TRUE on success, FALSE on failure
+	 * @throws DatabaseException
+	 * @internal param true $bool returns the generated SQL, false executes the query.
+	 *
 	 */
 	public function replace($set = null, $returnSQL = false)
 	{
@@ -2046,25 +2053,11 @@ class BaseBuilder
 	 *
 	 * Compiles a delete string and runs "DELETE FROM table"
 	 *
-	 * @param    string    the table to empty
-	 *
 	 * @return    bool    TRUE on success, FALSE on failure
 	 */
-	public function emptyTable($table = '', $test = false)
+	public function emptyTable($test = false)
 	{
-		if (empty($table))
-		{
-			if ( ! isset($this->QBFrom[0]))
-			{
-				return (CI_DEBUG) ? $this->display_error('db_must_set_table') : false;
-			}
-
-			$table = $this->QBFrom[0];
-		}
-		else
-		{
-			$table = $this->db->protectIdentifiers($table, true, null, false);
-		}
+		$table = $this->QBFrom[0];
 
 		$sql = $this->_delete($table);
 
