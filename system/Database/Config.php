@@ -26,13 +26,20 @@ class Config extends BaseConfig
 	/**
 	 * Creates the default
 	 *
-	 * @param string $group     The name of the connection group to use.
-	 * @param bool   $getShared Whether to return a shared instance of the connection.
+	 * @param string|array  $group     The name of the connection group to use,
+	 *                                 or an array of configuration settings.
+	 * @param bool          $getShared Whether to return a shared instance of the connection.
 	 *
 	 * @return mixed
 	 */
-	public static function connect(string $group = null, $getShared = true)
+	public static function connect($group = null, $getShared = true)
 	{
+		if (is_array($group))
+		{
+			$config = $group;
+			$group = 'custom';
+		}
+
 		if ($getShared && isset(self::$instances[$group]))
 		{
 			return self::$instances[$group];
@@ -40,19 +47,24 @@ class Config extends BaseConfig
 
 		self::ensureFactory();
 
-		$config = new \Config\Database();
+		$config = $config ?? new \Config\Database();
 
 		if (empty($group))
 		{
 			$group = ENVIRONMENT == 'testing' ? 'tests' : $config->defaultGroup;
 		}
 
-		if (! isset($config->$group))
+		if (is_string($group) && ! isset($config->$group) && $group != 'custom')
 		{
 			throw new \InvalidArgumentException($group.' is not a valid database connection group.');
 		}
 
-		$connection = self::$factory->load($config->$group, $group);
+		if (isset($config->$group))
+		{
+			$config = $config->$group;
+		}
+
+		$connection = self::$factory->load($config, $group);
 
 		self::$instances[$group] =& $connection;
 
