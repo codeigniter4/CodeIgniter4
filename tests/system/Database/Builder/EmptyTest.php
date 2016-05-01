@@ -21,7 +21,7 @@ class EmptyTest extends \CIUnitTestCase
 		$builder = new BaseBuilder('jobs', $this->db);
 		$builder->returnDeleteSQL = true;
 
-		$answer = $builder->emptyTable(null, true);
+		$answer = $builder->emptyTable(true);
 
 		$expectedSQL   = "DELETE FROM \"jobs\"";
 
@@ -30,17 +30,4 @@ class EmptyTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	public function testEmptyWithTable()
-	{
-		$builder = new BaseBuilder('jobs', $this->db);
-		$builder->returnDeleteSQL = true;
-
-		$answer = $builder->emptyTable('users', true);
-
-		$expectedSQL   = "DELETE FROM \"users\"";
-
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $answer));
-	}
-
-	//--------------------------------------------------------------------
 }

@@ -34,20 +34,4 @@ class LimitTest extends \CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
-	public function testOffsetSolo()
-	{
-		$jobs = $this->db->table('job')
-		                 ->offset(2)
-		                 ->get()
-		                 ->getResult();
-
-		$this->assertEquals(2, count($jobs));
-		$this->assertEquals('Accountant', $jobs[0]->name);
-		$this->assertEquals('Musician', $jobs[1]->name);
-	}
-
-	//--------------------------------------------------------------------
-
-
-
 }
