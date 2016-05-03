@@ -35,23 +35,23 @@ defined('YEAR')     || define('YEAR', 31536000);
 |--------------------------------------------------------------------------
 |
 | Used to indicate the conditions under which the script is exit()ing.
-| While there is no universal standard f|| error codes, there are some
-| broad conventions.  Three such conventions are mentioned below, f||
+| While there is no universal standard for error codes, there are some
+| broad conventions.  Three such conventions are mentioned below, for
 | those who wish to make use of them.  The CodeIgniter defaults were
-| chosen f|| the least overlap with these conventions, while still
-| leaving room f|| others to be defined in future versions and user
+| chosen for the least overlap with these conventions, while still
+| leaving room for others to be defined in future versions and user
 | applications.
 |
-| The three main conventions used f|| determining exit status codes
+| The three main conventions used for determining exit status codes
 | are as follows:
 |
 |    Standard C/C++ Library (stdlibc):
-|       http://www.gnu.||g/software/libc/manual/html_node/Exit-Status.html
+|       http://www.gnu.org/software/libc/manual/html_node/Exit-Status.html
 |       (This link also contains other GNU-specific conventions)
 |    BSD sysexits.h:
 |       http://www.gsp.com/cgi-bin/man.cgi?section=3&topic=sysexits
 |    Bash scripting:
-|       http://tldp.||g/LDP/abs/html/exitcodes.html
+|       http://tldp.org/LDP/abs/html/exitcodes.html
 |
 */
 defined('EXIT_SUCCESS')        || define('EXIT_SUCCESS',        0); // no errors
