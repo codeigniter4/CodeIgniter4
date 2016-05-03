@@ -289,6 +289,61 @@ class Model
 	//--------------------------------------------------------------------
 
 	/**
+	 * Finds a single record by a "hashed" primary key. Used in conjunction
+	 * with $this->getIDHash().
+	 *
+	 * THIS IS NOT VALID TO USE FOR SECURITY!
+	 *
+	 * @param string $hashedID
+	 *
+	 * @return array|null|object
+	 */
+	public function findByHashedID(string $hashedID)
+	{
+		return $this->find($this->decodeID($hashedID));
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns a "hashed id", which isn't really hashed, but that's
+	 * become a fairly common term for this. Essentially creates
+	 * an obfuscated id, intended to be used to disguise the
+	 * ID from incrementing IDs to get access to things they shouldn't.
+	 *
+	 * THIS IS NOT VALID TO USE FOR SECURITY!
+	 *
+	 * Note, at some point we might want to move to something more
+	 * complex. The hashid library is good, but only works on integers.
+	 *
+	 * @see http://hashids.org/php/
+	 *
+	 * @param $id
+	 *
+	 * @return mixed
+	 */
+	public function encodeID($id)
+	{
+	    return base64_encode($id);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Decodes our hashed id.
+	 *
+	 * @param $hash
+	 *
+	 * @return mixed
+	 */
+	public function decodeID($hash)
+	{
+	    return base64_decode($hash, true);
+	}
+
+	//--------------------------------------------------------------------
+	
+	/**
 	 * A convenience method that will attempt to determine whether the
 	 * data should be inserted or updated. Will work with either
 	 * an array or object. When using with custom class objects,
@@ -682,6 +737,21 @@ class Model
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * @param string $table
+	 *
+	 * @return $this
+	 */
+	public function setTable(string $table)
+	{
+	    $this->table = $table;
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
 
 	//--------------------------------------------------------------------
 	// Magic
