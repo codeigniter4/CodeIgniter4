@@ -156,6 +156,41 @@ class Response extends Message implements ResponseInterface
 	 */
 	protected $CSP;
 
+	/**
+	 * Set a cookie name prefix if you need to avoid collisions
+	 *
+	 * @var string
+	 */
+	protected $cookiePrefix = '';
+
+	/**
+	 * Set to .your-domain.com for site-wide cookies
+	 *
+	 * @var string
+	 */
+	protected $cookieDomain = '';
+
+	/**
+	 * Typically will be a forward slash
+	 *
+	 * @var string
+	 */
+	protected $cookiePath = '/';
+
+	/**
+	 * Cookie will only be set if a secure HTTPS connection exists.
+	 *
+	 * @var bool
+	 */
+	protected $cookieSecure = false;
+
+	/**
+	 * Cookie will only be accessible via HTTP(S) (no javascript)
+	 *
+	 * @var bool
+	 */
+	protected $cookieHTTPOnly = false;
+
 	//--------------------------------------------------------------------
 
 	public function __construct(App $config)
@@ -170,11 +205,15 @@ class Response extends Message implements ResponseInterface
 			$this->CSP = new ContentSecurityPolicy(new ContentSecurityPolicy());
 			$this->CSPEnabled = true;
 		}
+
+		$this->cookiePrefix   = $config->cookiePrefix;
+		$this->cookieDomain   = $config->cookieDomain;
+		$this->cookiePath     = $config->cookiePath;
+		$this->cookieSecure   = $config->cookieSecure;
+		$this->cookieHTTPOnly = $config->cookieHTTPOnly;
 	}
 
 	//--------------------------------------------------------------------
-
-
 
 	/**
 	 * Gets the response status code.
@@ -539,6 +578,81 @@ class Response extends Message implements ResponseInterface
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Set a cookie
+	 *
+	 * Accepts an arbitrary number of binds (up to 7) or an associateive
+	 * array in the first parameter containing all the values.
+	 *
+	 * @param            $name      Cookie name or array containing binds
+	 * @param string     $value     Cookie value
+	 * @param string     $expire    Cookie expiration time in seconds
+	 * @param string     $domain    Cookie domain (e.g.: '.yourdomain.com')
+	 * @param string     $path      Cookie path (default: '/')
+	 * @param string     $prefix    Cookie name prefix
+	 * @param bool|false $secure    Whether to only transfer cookies via SSL
+	 * @param bool|false $httponly  Whether only make the cookie accessible via HTTP (no javascript)
+	 */
+	public function setCookie(
+		$name,
+		$value = '',
+		$expire = '',
+		$domain = '',
+		$path = '/',
+		$prefix = '',
+		$secure = false,
+		$httponly = false
+	)
+	{
+		if (is_array($name))
+		{
+			// always leave 'name' in last place, as the loop will break otherwise, due to $$item
+			foreach (['value', 'expire', 'domain', 'path', 'prefix', 'secure', 'httponly', 'name'] as $item)
+			{
+				if (isset($name[$item]))
+				{
+					$item = $name[$item];
+				}
+			}
+		}
 
+		if ($prefix === '' && $this->cookiePrefix !== '')
+		{
+			$prefix = $this->cookiePrefix;
+		}
+
+		if ($domain == '' && $this->cookieDomain != '')
+		{
+			$domain = $this->cookieDomain;
+		}
+
+		if ($path === '/' && $this->cookiePath !== '/')
+		{
+			$path = $this->cookiePath;
+		}
+
+		if ($secure === false && $this->cookieSecure === true)
+		{
+			$secure = $this->cookieSecure;
+		}
+
+		if ($httponly === false && $this->cookieHTTPOnly !== false)
+		{
+			$httponly = $this->cookieHTTPOnly;
+		}
+
+		if ( ! is_numeric($expire))
+		{
+			$expire = time() - 86500;
+		}
+		else
+		{
+			$expire = ($expire > 0) ? time() + $expire : 0;
+		}
+
+		setcookie($prefix.$name, $value, $expire, $path, $domain, $secure, $httponly);
+	}
+
+	//--------------------------------------------------------------------
 
 }
