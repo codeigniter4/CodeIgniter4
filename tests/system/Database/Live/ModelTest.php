@@ -2,7 +2,7 @@
 
 use CodeIgniter\Model;
 
-class DeleteTest extends \CIDatabaseTestCase
+class ModelTest extends \CIDatabaseTestCase
 {
 	protected $refresh = true;
 
