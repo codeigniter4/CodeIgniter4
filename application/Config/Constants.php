@@ -11,7 +11,7 @@
 // NOTE: changing this will require manually modifying the
 // existing namespaces of App\* namespaced-classes.
 //
-	define('APP_NAMESPACE', 'App');
+define('APP_NAMESPACE', 'App');
 
 /*
 |--------------------------------------------------------------------------
@@ -55,7 +55,7 @@ defined('YEAR')     || define('YEAR', 31536000);
 |
 */
 defined('EXIT_SUCCESS')        || define('EXIT_SUCCESS',        0); // no errors
-defined('EXIT_error')          || define('EXIT_error',          1); // generic error
+defined('EXIT_ERROR')          || define('EXIT_ERROR',          1); // generic error
 defined('EXIT_CONFIG')         || define('EXIT_CONFIG',         3); // configuration error
 defined('EXIT_UNKNOWN_FILE')   || define('EXIT_UNKNOWN_FILE',   4); // file not found
 defined('EXIT_UNKNOWN_CLASS')  || define('EXIT_UNKNOWN_CLASS',  5); // unknown class

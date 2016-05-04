@@ -2,12 +2,14 @@
 Common Functions
 ################
 
-CodeIgniter uses provides a few functions that are globally defined, and are available to you at any point. These
-do not require loading any additional libraries or helpers.
+CodeIgniter uses provides a few functions and variables that are globally defined, and are available to you at any point.
+These do not require loading any additional libraries or helpers.
 
 .. contents:: Page Contents
 	:local:
 
+Global Functions
+================
 
 .. php:function:: log_message ($level, $message [, array $context])
 
@@ -153,3 +155,75 @@ do not require loading any additional libraries or helpers.
 	but through HTTPS. Will set the HTTP Strict Transport Security header, which instructs
 	modern browsers to automatically modify any HTTP requests to HTTPS requests for the $duration.
 
+.. php:function:: redirect( $uri[, ...$params ] )
+
+	:param  string  $uri: The URI to redirect the user to.
+	:param  mixed   $params: one or more additional parameters that can be used with the :meth:`RouteCollection::reverseRoute` method.
+
+	Convenience method that works with the current global ``$request`` and
+	``$router`` instances to redirect using named/reverse-routed routes
+	to determine the URL to go to. If nothing is found, will treat
+	as a traditional redirect and pass the string in, letting
+	``$response->redirect()`` determine the correct method and code.
+
+	If more control is needed, you must use ``$response->redirect()`` explicitly.
+
+Global Constants
+================
+
+The following constants are always available anywhere within your application.
+
+Core Constants
+--------------
+
+.. php:const:: SELF
+
+	The path to the front controller, **index.php**.
+
+.. php:const:: BASEPATH
+
+	The path to the **system** directory.
+
+.. php:const:: FCPATH
+
+	The path to the directory that holds the front controller.
+
+.. php:const:: APPPATH
+
+	The path to the **application** directory.
+
+.. php:const:: WRITEPATH
+
+	The path to the **writable** directory.
+
+
+Time Constants
+--------------
+
+.. php:const:: SECOND
+
+	Equals 1.
+
+.. php:const:: MINUTE
+
+	Equals 60.
+
+.. php:const:: HOUR
+
+	Equals 3600.
+
+.. php:const:: DAY
+
+	Equals 86400.
+
+.. php:const:: WEEK
+
+	Equals 604800.
+
+.. php:const:: MONTH
+
+	Equals 2592000.
+
+.. php:const:: YEAR
+
+	Equals 31536000.
