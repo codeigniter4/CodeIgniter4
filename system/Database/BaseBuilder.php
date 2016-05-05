@@ -1818,7 +1818,10 @@ class BaseBuilder
 		{
 			$this->resetWrite();
 
-			return $this->db->query($sql, $this->binds);
+			if ($this->db->query($sql, $this->binds))
+			{
+				return true;
+			}
 		}
 	}
 

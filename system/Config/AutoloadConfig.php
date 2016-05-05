@@ -76,8 +76,13 @@ class AutoloadConfig
 		 *   `];
 		 */
 		$this->psr4 = [
-			'CodeIgniter' => realpath(BASEPATH),
+			'CodeIgniter' => realpath(BASEPATH)
 		];
+
+		if (ENVIRONMENT == 'testing')
+		{
+			$this->psr4['Tests\Support'] = BASEPATH.'../tests/_support/';
+		}
 
 		/**
 		 * -------------------------------------------------------------------
@@ -161,5 +166,4 @@ class AutoloadConfig
 	}
 
 	//--------------------------------------------------------------------
-
 }

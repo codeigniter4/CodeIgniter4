@@ -150,7 +150,7 @@ class Model
 		}
 		else
 		{
-			$this->db =& Database::connect($this->DBGroup);
+			$this->db = Database::connect($this->DBGroup);
 		}
 
 		$this->tempReturnType     = $this->returnType;
@@ -342,7 +342,7 @@ class Model
 	}
 
 	//--------------------------------------------------------------------
-	
+
 	/**
 	 * A convenience method that will attempt to determine whether the
 	 * data should be inserted or updated. Will work with either
@@ -378,7 +378,7 @@ class Model
 	 *
 	 * @return bool
 	 */
-	public function insert(array $data)
+	public function insert($data)
 	{
 		// Must be called first so we don't
 		// strip out created_at values.
@@ -390,9 +390,13 @@ class Model
 		}
 
 		// Must use the set() method to ensure objects get converted to arrays
-		return $this->builder()
+		$return = $this->builder()
 		            ->set($data)
 		            ->insert();
+
+		if (! $return) return $return;
+
+		return $this->db->insertID();
 	}
 
 	//--------------------------------------------------------------------
@@ -406,7 +410,7 @@ class Model
 	 *
 	 * @return bool
 	 */
-	public function update($id, array $data)
+	public function update($id, $data)
 	{
 		// Must be called first so we don't
 		// strip out updated_at values.
@@ -442,7 +446,7 @@ class Model
 		{
 			return $this->builder()
 			            ->where($this->primaryKey, $id)
-			            ->update(['deleted', 1]);
+			            ->update(['deleted' => 1]);
 		}
 
 		return $this->builder()
@@ -475,7 +479,7 @@ class Model
 		{
 			return $this->builder()
 			            ->where($key, $value)
-			            ->update(['deleted', 1]);
+			            ->update(['deleted' => 1]);
 		}
 
 		return $this->builder()
@@ -531,6 +535,8 @@ class Model
 	 */
 	public function onlyDeleted()
 	{
+		$this->tempUseSoftDeletes = false;
+
 		$this->builder()
 		     ->where('deleted', 1);
 
@@ -604,12 +610,12 @@ class Model
 
 			$rows = $rows->getResult();
 
+			$offset += $size;
+			
 			if (empty($rows))
 			{
 				continue;
 			}
-
-			$offset += $size;
 
 			foreach ($rows as $row)
 			{
