@@ -302,6 +302,24 @@ Cleans out the database table by permanently removing all rows that have 'delete
 
 	$userModel->purgeDeleted();
 
+Protecting Fields
+-----------------
+
+To help protect against Mass Assignment Attacks, the Model class requires that you list all of the field names
+that can be changed during inserts and updates in the ``$allowedFields`` class property. Any data provided
+in addition to these will be removed prior to hitting the database. This is great for ensuring that timestamps,
+or primary keys do not get changed.
+::
+
+	protected $allowedFields = ['name', 'email', 'address'];
+
+Occasionally, you will find times where you need to be able to change these elements. This is often during
+testing, migrations, or seeds. In these cases, you can turn the protection on or off::
+
+	$model->protect(false)
+		  ->insert($data)
+		  ->protect(true);
+
 Working With Query Builder
 --------------------------
 
