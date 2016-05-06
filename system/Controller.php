@@ -49,6 +49,16 @@ use CodeIgniter\Log\Logger;
 class Controller
 {
 	/**
+	 * An array of helpers to be automatically loaded
+	 * upon class instantiation.
+	 *
+	 * @var array
+	 */
+	protected $helpers = [];
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Instance of the main Request object.
 	 *
 	 * @var RequestInterface
@@ -92,6 +102,8 @@ class Controller
 		{
 			$this->forceHTTPS($this->forceHTTPS);
 		}
+
+		$this->loadHelpers();
 	}
 	
 	//--------------------------------------------------------------------
@@ -112,5 +124,21 @@ class Controller
 	}
 
 	//--------------------------------------------------------------------
-	
+
+	/**
+	 * Handles "auto-loading" helper files.
+	 */
+	protected function loadHelpers()
+	{
+	    if (empty($this->helpers)) return;
+
+		foreach ($this->helpers as $helper)
+		{
+			load_helper($helper);
+		}
+	}
+
+	//--------------------------------------------------------------------
+
+
 }
