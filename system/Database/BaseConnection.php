@@ -325,16 +325,16 @@ abstract class BaseConnection implements ConnectionInterface
 	 *
 	 * @return mixed
 	 */
-	abstract public function connect($persistant = false);
+	abstract public function connect($persistent = false);
 
 	//--------------------------------------------------------------------
 
 	/**
-	 * Create a persistant database connection.
+	 * Create a persistent database connection.
 	 *
 	 * @return mixed
 	 */
-	public function persistantConnect()
+	public function persistentConnect()
 	{
 		return $this->connect(true);
 	}
@@ -478,7 +478,7 @@ abstract class BaseConnection implements ConnectionInterface
 		{
 			$query->swapPrefix($this->DBPrefix, $this->swapPre);
 		}
-		
+
 		$startTime = microtime(true);
 
 		// Run the query
@@ -916,7 +916,7 @@ abstract class BaseConnection implements ConnectionInterface
 	}
 
 	//--------------------------------------------------------------------
-	
+
 	/**
 	 * Returns the total number of rows affected by this query.
 	 *

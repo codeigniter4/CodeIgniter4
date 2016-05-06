@@ -68,7 +68,7 @@ class MockConnection extends BaseConnection
 	 *
 	 * @return mixed
 	 */
-	public function connect($persistant = false)
+	public function connect($persistent = false)
 	{
 		$return = $this->returnValues['connect'] ?? true;
 
