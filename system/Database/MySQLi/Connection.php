@@ -204,7 +204,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 *
 	 * @return mixed
 	 */
-	function setDatabase(string $databaseName)
+	public function setDatabase(string $databaseName)
 	{
 		if ($databaseName === '')
 		{
@@ -228,7 +228,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 *
 	 * @return mixed
 	 */
-	function getVersion()
+	public function getVersion()
 	{
 		if (isset($this->dataCache['version']))
 		{

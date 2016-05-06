@@ -376,7 +376,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 *
 	 * @return mixed
 	 */
-	abstract function setDatabase(string $databaseName);
+	abstract public function setDatabase(string $databaseName);
 
 	//--------------------------------------------------------------------
 
@@ -420,7 +420,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 *
 	 * @return mixed
 	 */
-	abstract function getVersion();
+	abstract public function getVersion();
 
 	//--------------------------------------------------------------------
 
@@ -1043,7 +1043,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 */
 	public function callFunction(string $functionName, ...$params)
 	{
-		$driver = ($this->DBDriver === 'postgre') ? 'pg_' : strtolower($this->DBDriver).'_';
+		$driver = ($this->DBDriver === 'postgre' ? 'pg' : strtolower($this->DBDriver)).'_';
 
 		if (FALSE === strpos($driver, $functionName))
 		{
