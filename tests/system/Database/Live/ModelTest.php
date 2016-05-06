@@ -257,7 +257,7 @@ class ModelTest extends \CIDatabaseTestCase
 		$data->name = 'Magician';
 		$data->description = 'Makes peoples things dissappear.';
 		
-		$result = $model->save($data);
+		$result = $model->protect(false)->save($data);
 
 		$this->seeInDatabase('job', ['name' => 'Magician']);
 		$this->assertEquals(5, $result);
@@ -274,7 +274,7 @@ class ModelTest extends \CIDatabaseTestCase
 		    'description' => 'That thing you do.'
 		];
 
-		$result = $model->save($data);
+		$result = $model->protect(false)->save($data);
 
 		$this->seeInDatabase('job', ['name' => 'Apprentice']);
 		$this->assertEquals(5, $result);
@@ -292,7 +292,7 @@ class ModelTest extends \CIDatabaseTestCase
 			'description' => 'That thing you do.'
 		];
 
-		$result = $model->save($data);
+		$result = $model->protect(false)->save($data);
 
 		$this->seeInDatabase('job', ['name' => 'Apprentice']);
 		$this->assertTrue($result);
@@ -309,10 +309,26 @@ class ModelTest extends \CIDatabaseTestCase
 		$data->name = 'Engineer';
 		$data->description = 'A fancier term for Developer.';
 
-		$result = $model->save($data);
+		$result = $model->protect(false)->save($data);
 
 		$this->seeInDatabase('job', ['name' => 'Engineer']);
 		$this->assertTrue($result);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testSaveProtected()
+	{
+		$model = new JobModel();
+
+		$data = new \stdClass();
+		$data->id = 1;
+		$data->name = 'Engineer';
+		$data->description = 'A fancier term for Developer.';
+
+		$this->setExpectedException('CodeIgniter\DatabaseException');
+
+		$model->protect(true)->save($data);
 	}
 
 	//--------------------------------------------------------------------

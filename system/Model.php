@@ -122,6 +122,14 @@ class Model
 	protected $tempReturnType;
 
 	/**
+	 * Whether we should limit fields in inserts
+	 * and updates to those available in $allowedFields or not.
+	 *
+	 * @var bool
+	 */
+	protected $protectFields = true;
+
+	/**
 	 * Database Connection
 	 *
 	 * @var ConnectionInterface
@@ -382,11 +390,16 @@ class Model
 	{
 		// Must be called first so we don't
 		// strip out created_at values.
-		$data = $this->protectFields($data);
+		$data = $this->doProtectFields($data);
 
 		if ($this->useTimestamps && ! array_key_exists($this->createdField, $data))
 		{
 			$data[$this->createdField] = $this->setDate();
+		}
+
+		if (empty($data))
+		{
+			throw new \InvalidArgumentException('No data to insert.');
 		}
 
 		// Must use the set() method to ensure objects get converted to arrays
@@ -414,11 +427,16 @@ class Model
 	{
 		// Must be called first so we don't
 		// strip out updated_at values.
-		$data = $this->protectFields($data);
+		$data = $this->doProtectFields($data);
 
 		if ($this->useTimestamps && ! array_key_exists($this->updatedField, $data))
 		{
 			$data[$this->updatedField] = $this->setDate();
+		}
+
+		if (empty($data))
+		{
+			throw new \InvalidArgumentException('No data to update.');
 		}
 
 		// Must use the set() method to ensure objects get converted to arrays
@@ -650,6 +668,24 @@ class Model
 	//--------------------------------------------------------------------
 
 	/**
+	 * Sets whether or not we should whitelist data set during
+	 * updates or inserts against $this->availableFields.
+	 *
+	 * @param bool $protect
+	 *
+	 * @return $this
+	 */
+	public function protect(bool $protect = true)
+	{
+	    $this->protectFields = $protect;
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+
+	/**
 	 * Provides a shared instance of the Query Builder.
 	 *
 	 * @param string $table
@@ -688,12 +724,15 @@ class Model
 	 * @param $data
 	 *
 	 * @return mixed
+	 * @throws DatabaseException
 	 */
-	protected function protectFields($data)
+	protected function doProtectFields($data)
 	{
 		if (empty($this->allowedFields))
 		{
-			return $data;
+			if ($this->protectFields === false) return $data;
+
+			throw new DatabaseException('No Allowed fields specified for model: '. get_class($this));
 		}
 
 		foreach ($data as $key => $val)
