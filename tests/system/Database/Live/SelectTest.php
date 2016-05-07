@@ -1,5 +1,7 @@
 <?php namespace CodeIgniter\Database\Live;
 
+use CodeIgniter\Database\BaseResult;
+
 class SelectTest extends \CIDatabaseTestCase
 {
 	protected $refresh = true;
@@ -39,11 +41,11 @@ class SelectTest extends \CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
-	public function testSelectingReturnsFalseWhatDoesntExist()
+	public function testSelectingReturnsResultEventWhenDoesntExist()
 	{
 		$row = $this->db->table('job')->select('email')->get();
 
-		$this->assertFalse($row);
+		$this->assertTrue($row instanceof BaseResult);
 	}
 
 	//--------------------------------------------------------------------
