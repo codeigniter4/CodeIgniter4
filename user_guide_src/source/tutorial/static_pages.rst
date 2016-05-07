@@ -39,7 +39,7 @@ code.
 
 You have created a class named ``Pages``, with a view method that accepts
 one argument named ``$page``. The ``Pages`` class is extending the
-``CodeIgniter\Controller`` class. This means that the new pages class can access the
+``CodeIgniter\Controller`` class. This means that the new Pages class can access the
 methods and variables defined in the ``CodeIgniter\Controller`` class
 (*system/Controller.php*).
 
@@ -63,7 +63,7 @@ the following code:
 	</head>
 	<body>
 
-		<h1><?php echo $title; ?></h1>
+		<h1><?= $title; ?></h1>
 
 The header contains the basic HTML code that you'll want to display
 before loading the main view, together with a heading. It will also
@@ -85,7 +85,7 @@ accepts one parameter, which is the name of the page to be loaded. The
 static page templates will be located in the *application/Views/Pages/*
 directory.
 
-In that directory, create two files named *home.php* and *about.php*.
+In that directory, create two files named *Home.php* and *AHJomebout.php*.
 Within those files, type some text − anything you'd like − and save them.
 If you like to be particularly un-original, try "Hello World!".
 
@@ -104,9 +104,9 @@ page actually exists:
 
 		$data['title'] = ucfirst($page); // Capitalize the first letter
 
-		echo view('templates/header', $data);
-		echo view('pages/'.$page, $data);
-		echo view('templates/footer', $data);
+		echo load_view('templates/header', $data);
+		echo load_view('pages/'.$page, $data);
+		echo load_view('templates/footer', $data);
 	}
 
 Now, when the page does exist, it is loaded, including the header and
@@ -164,6 +164,14 @@ More information about routing can be found in the URI Routing
 Here, the second rule in the ``$routes`` array matches **any** request
 using the wildcard string ``(:any)``. and passes the parameter to the
 ``view()`` method of the ``Pages`` class.
+
+In order for the default controller to be used, though, you have to make
+sure that no other routes are defined that handle the route. By default,
+the Routes file **does** have a route that handles the site root (/).
+Delete the following route to make sure that the Pages controller handles
+our home page::
+
+	$routes->add('/', 'Home::index');
 
 Now visit ``index.php/about``. Did it get routed correctly to the ``view()``
 method in the pages controller? Awesome!

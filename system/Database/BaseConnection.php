@@ -470,6 +470,8 @@ abstract class BaseConnection implements ConnectionInterface
 			$this->initialize();
 		}
 
+		$resultClass = str_replace('Connection', 'Result', get_class($this));
+
 		$query = new $queryClass($this);
 
 		$query->setQuery($sql, $binds);
@@ -478,7 +480,7 @@ abstract class BaseConnection implements ConnectionInterface
 		{
 			$query->swapPrefix($this->DBPrefix, $this->swapPre);
 		}
-		
+
 		$startTime = microtime(true);
 
 		// Run the query
@@ -493,7 +495,7 @@ abstract class BaseConnection implements ConnectionInterface
 				$this->queries[] = $query;
 			}
 
-			return false;
+			return new $resultClass($this->connID, $this->resultID);
 		}
 
 		$query->setDuration($startTime);
@@ -502,8 +504,6 @@ abstract class BaseConnection implements ConnectionInterface
 		{
 			$this->queries[] = $query;
 		}
-
-		$resultClass = str_replace('Connection', 'Result', get_class($this));
 
 		return new $resultClass($this->connID, $this->resultID);
 	}
@@ -916,7 +916,7 @@ abstract class BaseConnection implements ConnectionInterface
 	}
 
 	//--------------------------------------------------------------------
-	
+
 	/**
 	 * Returns the total number of rows affected by this query.
 	 *

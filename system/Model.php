@@ -61,7 +61,7 @@ class Model
 	 *
 	 * @var bool
 	 */
-	protected $useSoftDeletes = true;
+	protected $useSoftDeletes = false;
 
 	/**
 	 * An array of field names that are allowed
@@ -629,7 +629,7 @@ class Model
 			$rows = $rows->getResult();
 
 			$offset += $size;
-			
+
 			if (empty($rows))
 			{
 				continue;
