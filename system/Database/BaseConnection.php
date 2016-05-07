@@ -325,16 +325,16 @@ abstract class BaseConnection implements ConnectionInterface
 	 *
 	 * @return mixed
 	 */
-	abstract public function connect($persistant = false);
+	abstract public function connect($persistent = false);
 
 	//--------------------------------------------------------------------
 
 	/**
-	 * Create a persistant database connection.
+	 * Create a persistent database connection.
 	 *
 	 * @return mixed
 	 */
-	public function persistantConnect()
+	public function persistentConnect()
 	{
 		return $this->connect(true);
 	}
@@ -376,7 +376,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 *
 	 * @return mixed
 	 */
-	abstract function setDatabase(string $databaseName);
+	abstract public function setDatabase(string $databaseName);
 
 	//--------------------------------------------------------------------
 
@@ -420,7 +420,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 *
 	 * @return mixed
 	 */
-	abstract function getVersion();
+	abstract public function getVersion();
 
 	//--------------------------------------------------------------------
 
@@ -1043,7 +1043,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 */
 	public function callFunction(string $functionName, ...$params)
 	{
-		$driver = ($this->DBDriver === 'postgre') ? 'pg_' : strtolower($this->DBDriver).'_';
+		$driver = ($this->DBDriver === 'postgre' ? 'pg' : strtolower($this->DBDriver)).'_';
 
 		if (FALSE === strpos($driver, $functionName))
 		{

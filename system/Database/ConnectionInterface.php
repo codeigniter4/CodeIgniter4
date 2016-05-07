@@ -16,16 +16,16 @@ interface ConnectionInterface
 	 *
 	 * @return mixed
 	 */
-	public function connect($persistant = false);
+	public function connect($persistent = false);
 
 	//--------------------------------------------------------------------
 
 	/**
-	 * Create a persistant database connection.
+	 * Create a persistent database connection.
 	 *
 	 * @return mixed
 	 */
-	public function persistantConnect();
+	public function persistentConnect();
 
 	//--------------------------------------------------------------------
 
