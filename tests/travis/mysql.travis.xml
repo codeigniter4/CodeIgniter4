@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit bootstrap="tests/_support/_bootstrap.php"
+<phpunit bootstrap="../_support/_bootstrap.php"
         colors="true"
         convertErrorsToExceptions="true"
         convertNoticesToExceptions="true"
@@ -20,18 +20,18 @@
 
     <testsuites>
         <testsuite name="system">
-            <directory>./tests/system</directory>
+            <directory>../system</directory>
         </testsuite>
     </testsuites>
 
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">./system</directory>
+            <directory suffix=".php">../system</directory>
             <exclude>
-                <file>./system/ComposerScripts.php</file>
-                <file>./system/View/Escaper.php</file>
-                <directory suffix=".php">./system/View/Exception</directory>
-                <directory suffix=".php">./system/Debug/Toolbar/View</directory>
+                <file>../../system/ComposerScripts.php</file>
+                <file>../../system/View/Escaper.php</file>
+                <directory suffix=".php">../../system/View/Exception</directory>
+                <directory suffix=".php">../../system/Debug/Toolbar/View</directory>
             </exclude>
         </whitelist>
     </filter>

@@ -26,14 +26,14 @@ switch (ENVIRONMENT)
 define('CI_DEBUG', 1);
 define('SHOW_DEBUG_BACKTRACE', TRUE);
 
-$system_path = '../../system';
+$system_path = 'system';
 
-$application_folder = '../../application';
+$application_folder = 'application';
 
-$writable_directory = '../../writable';
+$writable_directory = 'writable';
 
 // Ensure the current directory is pointing to the front controller's directory
-chdir(__DIR__);
+//chdir(__DIR__);
 
 // Are the system and application paths correct?
 if ( ! realpath($system_path) OR ! is_dir($system_path))
