@@ -4,8 +4,8 @@ php:
   - 7
 
 env:
-  - DB_GROUP=mysql
-  - DB_GROUP=postgre
+  - DB_GROUP=mysqli
+  - DB_GROUP=postgres
 
 script:
   - php phpunit.phar -v
