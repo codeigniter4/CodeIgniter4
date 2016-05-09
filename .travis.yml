@@ -11,9 +11,9 @@ script:
   - php phpunit.phar -v -c tests/travis/$DB.travis.xml
 
 services:
-  - if [[$DB = 'mysql']] mysql; fi
-  - if [[$DB = 'mysql']] postgresql; fi
+  - mysql
+  - postgresql
 
 before_install:
-  - if [[$DB = 'mysql']] mysql -e "create database IF NOT EXISTS test;" -uroot; fi
-  - if [[$DB = 'postgre']] psql -c 'create database test;' -U postgres; fi
+  - if [[$DB = 'mysql']]; then mysql -e "create database IF NOT EXISTS test;" -uroot; fi
+  - if [[$DB = 'postgre']]; then psql -c 'create database test;' -U postgres; fi
