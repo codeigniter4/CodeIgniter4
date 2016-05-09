@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit bootstrap="tests/_support/_bootstrap.php"
+        colors="true"
+        convertErrorsToExceptions="true"
+        convertNoticesToExceptions="true"
+        convertWarningsToExceptions="true"
+        stopOnError="false"
+        stopOnFailure="false"
+        stopOnIncomplete="false"
+        stopOnSkipped="false">
+
+    <php>
+        <env name="database.tests.dbdriver" value="Postgre" />
+        <env name="database.tests.host"     value="localhost" />
+        <env name="database.tests.username" value="root" />
+        <env name="database.tests.password" value="" />
+        <env name="database.tests.database" value="test" />
+        <env name="database.tests.port"     value="3306" />
+    </php>
+
+    <testsuites>
+        <testsuite name="system">
+            <directory>./tests/system</directory>
+        </testsuite>
+    </testsuites>
+
+    <filter>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">./system</directory>
+            <exclude>
+                <file>./system/ComposerScripts.php</file>
+                <file>./system/View/Escaper.php</file>
+                <directory suffix=".php">./system/View/Exception</directory>
+                <directory suffix=".php">./system/Debug/Toolbar/View</directory>
+            </exclude>
+        </whitelist>
+    </filter>
+</phpunit>

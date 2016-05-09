@@ -3,8 +3,12 @@ language: php
 php:
   - 7
 
+env:
+  - DB=mysql
+  - DB=postgre
+
 script:
-  - php phpunit.phar
+  - php phpunit.phar -v -c tests/travis/$DB.travis.xml
 
 services:
   - mysql
