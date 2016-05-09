@@ -7,6 +7,10 @@ you haven't written any information to the database yet. In this section
 you'll expand your news controller and model created earlier to include
 this functionality.
 
+.. note:: This section of the tutorial cannot be completed as certain
+    portions of the framework, like the form helper and the validation
+    library have not been completed yet.
+
 Create a form
 -------------
 
@@ -14,23 +18,23 @@ To input data into the database you need to create a form where you can
 input the information to be stored. This means you'll be needing a form
 with two fields, one for the title and one for the text. You'll derive
 the slug from our title in the model. Create the new view at
-*application/views/news/create.php*.
+*application/Views/News/Create.php*.
 
 ::
 
-    <h2><?php echo $title; ?></h2>
+    <h2><?= esc($title); ?></h2>
 
-    <?php echo validation_errors(); ?>
+    <?= validation_errors(); ?>
 
-    <?php echo form_open('news/create'); ?>
+    <?= form_open('news/create'); ?>
 
-        <label for="title">Title</label> 
+        <label for="title">Title</label>
         <input type="input" name="title" /><br />
 
         <label for="text">Text</label>
         <textarea name="text"></textarea><br />
 
-        <input type="submit" name="submit" value="Create news item" /> 
+        <input type="submit" name="submit" value="Create news item" />
 
     </form>
 
@@ -52,31 +56,36 @@ validation <../libraries/form_validation>` library to do this.
 
     public function create()
     {
-        $this->load->helper('form');
-        $this->load->library('form_validation');
-        
+        load_helper('form');
+        $validator = new \CodeIgniter\Form\Validator();
+        $model = new NewsModel();
+
         $data['title'] = 'Create a news item';
-        
-        $this->form_validation->set_rules('title', 'Title', 'required');
-        $this->form_validation->set_rules('text', 'Text', 'required');
-        
-        if ($this->form_validation->run() === FALSE)
+
+        $validator->setRules('title', 'Title', 'required');
+        $validator->setRules('text', 'Text', 'required');
+
+        if ($validator->run() === FALSE)
         {
-            $this->load->view('templates/header', $data);   
-            $this->load->view('news/create');
-            $this->load->view('templates/footer');
-            
+            load_view('Templates/Header', $data);
+            load_view('News/Create');
+            load_view('Templates/Footer');
+
         }
         else
         {
-            $this->news_model->set_news();
-            $this->load->view('news/success');
+            $model->save([
+                'title' => $this->request->getPost('title'),
+                'slug'  => urlTitle($this->request->getPost('title')),
+                'text'  => $this->request->getPost('text'),
+            ]);
+            echo load_view('News/Success');
         }
     }
 
 The code above adds a lot of functionality. The first few lines load the
 form helper and the form validation library. After that, rules for the
-form validation are set. The ``set\_rules()`` method takes three arguments;
+form validation are set. The ``setRules()`` method takes three arguments;
 the name of the input field, the name to be used in error messages, and
 the rule. In this case the title and text fields are required.
 
@@ -86,66 +95,63 @@ here <../libraries/form_validation>`.
 
 Continuing down, you can see a condition that checks whether the form
 validation ran successfully. If it did not, the form is displayed, if it
-was submitted **and** passed all the rules, the model is called. After
-this, a view is loaded to display a success message. Create a view at
-*application/views/news/success.php* and write a success message.
-
-Model
------
-
-The only thing that remains is writing a method that writes the data to
-the database. You'll use the Query Builder class to insert the
-information and use the input library to get the posted data. Open up
-the model created earlier and add the following:
-
-::
-
-    public function set_news()
-    {
-        $this->load->helper('url');
-        
-        $slug = url_title($this->input->post('title'), 'dash', TRUE);
-        
-        $data = array(
-            'title' => $this->input->post('title'),
-            'slug' => $slug,
-            'text' => $this->input->post('text')
-        );
-        
-        return $this->db->insert('news', $data);
-    }
-
-This new method takes care of inserting the news item into the database.
-The third line contains a new function, url\_title(). This function -
+was submitted **and** passed all the rules, the model is called. This
+takes care of passing the news item into the model.
+This contains a new function, url\_title(). This function -
 provided by the :doc:`URL helper <../helpers/url_helper>` - strips down
 the string you pass it, replacing all spaces by dashes (-) and makes
 sure everything is in lowercase characters. This leaves you with a nice
 slug, perfect for creating URIs.
 
-Let's continue with preparing the record that is going to be inserted
-later, inside the ``$data`` array. Each element corresponds with a column in
-the database table created earlier. You might notice a new method here,
-namely the ``post()`` method from the :doc:`input
-library <../libraries/input>`. This method makes sure the data is
-sanitized, protecting you from nasty attacks from others. The input
-library is loaded by default. At last, you insert our ``$data`` array into
-our database.
+After this, a view is loaded to display a success message. Create a view at
+*application/Views/News/Success.php* and write a success message.
+
+Model
+-----
+
+The only thing that remains is ensuring that your model is setup
+to allow data to be saved properly. The ``save()`` method that was
+used will determine whether the information should be inserted
+or if the row already exists and should be updated, based on the presence
+of a primary key. In this case, there is no ``id`` field passed to it,
+so it will insert a new row into it's table, **news**.
+
+However, by default the insert and update methods in the model will
+not actually save any data because it doesn't know what fields are
+safe to be updated. Edit the model to provide it a list of updatable
+fields in the ``$allowedFields`` property.
+
+::
+
+    <?php
+    class NewsModel extends \CodeIgniter\Model
+    {
+        protected $table = 'news';
+
+        protected $allowedFields = ['title', 'slug', 'text'];
+    }
+
+This new property now contains the fields that we allow to be saved to the
+database. Notice that we leave out the ``id``? That's because you will almost
+never need to do that, since it is an auto-incrementing field in the database.
+This helps protect against Mass Assignment Vulnerabilities. If your model is
+handling your timestamps, you would also leave those out.
+
 
 Routing
 -------
 
 Before you can start adding news items into your CodeIgniter application
-you have to add an extra rule to *config/routes.php* file. Make sure your
+you have to add an extra rule to *Config/Routes.php* file. Make sure your
 file contains the following. This makes sure CodeIgniter sees 'create'
 as a method instead of a news item's slug.
 
 ::
 
-    $route['news/create'] = 'news/create';
-    $route['news/(:any)'] = 'news/view/$1';
-    $route['news'] = 'news';
-    $route['(:any)'] = 'pages/view/$1';
-    $route['default_controller'] = 'pages/view';
+    $routes->post('news/create', 'News::create');
+    $routes->add('news/(:segment)'], 'News::view/$1');
+    $routes->get('news', 'News::index');
+    $routes->add('(:any)', 'Pages::view/$1');
 
 Now point your browser to your local development environment where you
 installed CodeIgniter and add index.php/news/create to the URL.
