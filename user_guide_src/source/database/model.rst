@@ -76,7 +76,7 @@ Configuring Your Model
 
 The model class has a few configuration options that can be set to allow the class' methods
 to work seamlessly for you. The first two are used by all of the CRUD methods to determine
-what table and how we can find the required records.::
+what table to use and how we can find the required records.::
 
 	class UserModel extends \CodeIgniter\Model
 	{
@@ -94,7 +94,7 @@ what table and how we can find the required records.::
 **$table**
 
 Specifies the database table that this model primarily works with. This only applies to the
-built-in CRUD methods. You are not restricted to using only this table, though, in your own
+built-in CRUD methods. You are not restricted to using only this table in your own
 queries.
 
 **$primaryKey**
@@ -131,7 +131,7 @@ potential mass assignment vulnerabilities.
 **$useTimestamps**
 
 This boolean value determines whether the current date is automatically added to all inserts
-and updates. If true, will set the current time in the format specified by $datFormat. This
+and updates. If true, will set the current time in the format specified by $dateFormat. This
 requires that the table have columns named 'created_at' and 'updated_at' in the appropriate
 data type.
 
@@ -179,10 +179,19 @@ all rows that match::
 
 **findAll()**
 
-Returns all results. You can pass in a limit and offset values as the first and second
-parameters, respectively::
+Returns all results.
 
 	$users = $userModel->findAll();
+
+This query may be modified by interjecting Query Builder commands as needed prior to calling this method.::
+
+	$users = $userModel->where('active', 1)
+	                   ->findAll();
+
+You can pass in a limit and offset values as the first and second
+parameters, respectively::
+
+	$users = $userModel->findAll($limit, $offset);
 
 **first()**
 
