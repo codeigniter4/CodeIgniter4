@@ -74,7 +74,7 @@ switch (ENVIRONMENT)
  * Include the path if the folder is not in the same directory
  * as this file.
  */
-$system_path = 'system';
+$system_directory = 'system';
 
 /*
  *---------------------------------------------------------------
@@ -89,7 +89,7 @@ $system_path = 'system';
  *
  * NO TRAILING SLASH!
  */
-$application_folder = 'application';
+$application_directory = 'application';
 
 /*
  * ---------------------------------------------------------------
@@ -103,6 +103,19 @@ $application_folder = 'application';
  * system directories.
  */
 $writable_directory = 'writable';
+
+/*
+ * ---------------------------------------------------------------
+ * TESTS DIRECTORY NAME
+ * ---------------------------------------------------------------
+ *
+ * This variable must contain the name of your "tests" directory.
+ * The writable directory allows you to group all directories that
+ * need write permission to a single place that can be tucked away
+ * for maximum security, keeping it out of the application and/or
+ * system directories.
+ */
+$tests_directory = 'tests';
 
 // --------------------------------------------------------------------
 // END OF USER CONFIGURABLE SETTINGS.  DO NOT EDIT BELOW THIS LINE
@@ -118,7 +131,7 @@ $writable_directory = 'writable';
 chdir(__DIR__);
 
 // Are the system and application paths correct?
-if ( ! realpath($system_path) OR ! is_dir($system_path))
+if ( ! realpath($system_directory) OR ! is_dir($system_directory))
 {
 	header('HTTP/1.1 503 Service Unavailable.', true, 503);
 	echo 'Your system folder path does not appear to be set correctly. Please open the following file and correct this: '.
@@ -126,7 +139,7 @@ if ( ! realpath($system_path) OR ! is_dir($system_path))
 	exit(3); // EXIT_CONFIG
 }
 
-if ( ! realpath($application_folder) OR ! is_dir($application_folder))
+if ( ! realpath($application_directory) OR ! is_dir($application_directory))
 {
 	header('HTTP/1.1 503 Service Unavailable.', true, 503);
 	echo 'Your application folder path does not appear to be set correctly. Please open the following file and correct this: '.
@@ -145,7 +158,7 @@ if ( ! realpath($application_folder) OR ! is_dir($application_folder))
 define('SELF', pathinfo(__FILE__, PATHINFO_BASENAME));
 
 // Path to the system folder
-define('BASEPATH', realpath($system_path).DIRECTORY_SEPARATOR);
+define('BASEPATH', realpath($system_directory).DIRECTORY_SEPARATOR);
 
 // Path to the front controller (this file)
 define('FCPATH', __DIR__.DIRECTORY_SEPARATOR);
@@ -154,7 +167,10 @@ define('FCPATH', __DIR__.DIRECTORY_SEPARATOR);
 define('WRITEPATH', realpath($writable_directory).DIRECTORY_SEPARATOR);
 
 // The path to the "application" folder
-define('APPPATH', realpath($application_folder).DIRECTORY_SEPARATOR);
+define('APPPATH', realpath($application_directory).DIRECTORY_SEPARATOR);
+
+// The path to the "tests" directory
+define('TESTPATH', realpath($tests_directory).DIRECTORY_SEPARATOR);
 
 /*
  * ------------------------------------------------------

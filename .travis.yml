@@ -4,11 +4,11 @@ php:
   - 7
 
 env:
-  - DB=mysql
-  - DB=postgre
+  - DB_GROUP=mysql
+  - DB_GROUP=postgre
 
 script:
-  - php phpunit.phar -v -c tests/travis/$DB.travis.xml
+  - php phpunit.phar -v
 
 services:
   - mysql

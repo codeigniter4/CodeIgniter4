@@ -1,7 +1,5 @@
 <?php namespace CodeIgniter\Database;
 
-use Zend\Escaper\Exception\InvalidArgumentException;
-
 /**
  * Database Connection Factory
  *
@@ -38,7 +36,7 @@ class Database
 		// No DB specified? Beat them senseless...
 		if (empty($params['DBDriver']))
 		{
-			throw new InvalidArgumentException('You have not selected a database type to connect to.');
+			throw new \InvalidArgumentException('You have not selected a database type to connect to.');
 		}
 		
 		$className = strpos($params['DBDriver'], '\\') === false

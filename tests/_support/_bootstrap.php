@@ -6,7 +6,6 @@
 // This section gets the environment setup and ready so that your
 // tests should have all they need at their fingertips.
 //
-
 $startMemory = memory_get_usage();
 $startTime   = microtime(true);
 
@@ -26,17 +25,19 @@ switch (ENVIRONMENT)
 define('CI_DEBUG', 1);
 define('SHOW_DEBUG_BACKTRACE', TRUE);
 
-$system_path = 'system';
+$system_directory = 'system';
 
-$application_folder = 'application';
+$application_directory = 'application';
 
 $writable_directory = 'writable';
+
+$tests_directory = 'tests';
 
 // Ensure the current directory is pointing to the front controller's directory
 //chdir(__DIR__);
 
 // Are the system and application paths correct?
-if ( ! realpath($system_path) OR ! is_dir($system_path))
+if ( ! realpath($system_directory) OR ! is_dir($system_directory))
 {
 	header('HTTP/1.1 503 Service Unavailable.', true, 503);
 	echo 'Your system folder path does not appear to be set correctly. Please open the following file and correct this: '.
@@ -44,7 +45,7 @@ if ( ! realpath($system_path) OR ! is_dir($system_path))
 	exit(3); // EXIT_CONFIG
 }
 
-if ( ! realpath($application_folder) OR ! is_dir($application_folder))
+if ( ! realpath($application_directory) OR ! is_dir($application_directory))
 {
 	header('HTTP/1.1 503 Service Unavailable.', true, 503);
 	echo 'Your application folder path does not appear to be set correctly. Please open the following file and correct this: '.
@@ -56,7 +57,7 @@ if ( ! realpath($application_folder) OR ! is_dir($application_folder))
 define('SELF', pathinfo(__FILE__, PATHINFO_BASENAME));
 
 // Path to the system folder
-define('BASEPATH', realpath($system_path).DIRECTORY_SEPARATOR);
+define('BASEPATH', realpath($system_directory).DIRECTORY_SEPARATOR);
 
 // Path to the front controller (this file)
 define('FCPATH', __DIR__.DIRECTORY_SEPARATOR);
@@ -65,9 +66,12 @@ define('FCPATH', __DIR__.DIRECTORY_SEPARATOR);
 define('WRITEPATH', realpath($writable_directory).DIRECTORY_SEPARATOR);
 
 // The path to the "application" folder
-define('APPPATH', realpath($application_folder).DIRECTORY_SEPARATOR);
+define('APPPATH', realpath($application_directory).DIRECTORY_SEPARATOR);
 
-define('SUPPORTPATH', realpath(BASEPATH.'../tests/_support/').'/');
+// The path to the "tests" directory
+define('TESTPATH', realpath($tests_directory).DIRECTORY_SEPARATOR);
+
+define('SUPPORTPATH', realpath(TESTPATH.'_support/').'/');
 
 /*
  * ------------------------------------------------------

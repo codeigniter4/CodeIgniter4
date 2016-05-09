@@ -1,5 +1,7 @@
 <?php namespace Config;
 
+use phpDocumentor\Reflection\DocBlock\Tag\VarTag;
+
 /**
  * Database Configuration
  *
@@ -58,10 +60,10 @@ class Database extends \CodeIgniter\Database\Config
 	public $tests = [
 		'DSN'          => '',
 		'hostname'     => '127.0.0.1',
-		'username'     => 'root',
+		'username'     => '',
 		'password'     => '',
-		'database'     => 'test',
-		'DBDriver'     => 'MySQLi',
+		'database'     => '',
+		'DBDriver'     => '',
 		'DBPrefix'     => '',
 		'pConnect'     => false,
 		'DBDebug'     => (ENVIRONMENT !== 'production'),
@@ -83,9 +85,27 @@ class Database extends \CodeIgniter\Database\Config
 	{
 	    parent::__construct();
 
+		// Ensure that we always set the database group to 'tests' if
+		// we are currently running an automated test suite, so that
+		// we don't overwrite live data on accident.
 		if (ENVIRONMENT == 'testing')
 		{
 			$this->defaultGroup = 'tests';
+
+			// Under Travis-CI, we can set an ENV var named 'DB_GROUP'
+			// so that we can test against multiple databases. 
+			if ($group = getenv('DB_GROUP'))
+			{
+				if (is_file(TESTPATH.'travis/Database.php'))
+				{
+					require TESTPATH.'travis/Database.php';
+
+					if ( ! empty($dbconfig) && array_key_exists($group, $dbconfig))
+					{
+						$this->tests = $dbconfig[$group];
+					}
+				}
+			}
 		}
 	}
 
