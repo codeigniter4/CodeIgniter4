@@ -12,7 +12,7 @@ class Result extends BaseResult implements ResultInterface
 	 */
 	public function getFieldCount(): int
 	{
-		return return pg_num_fields($this->resultID);
+		return pg_num_fields($this->resultID);
 	}
 
 	//--------------------------------------------------------------------
