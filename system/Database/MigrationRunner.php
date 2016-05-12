@@ -438,7 +438,7 @@ class MigrationRunner
 			    'null' => false
 			],
 			'time' => [
-				'type' => 'datetime',
+				'type' => 'timestamp',
 			    'null' => false
 			]
 		]);
