@@ -9,5 +9,6 @@ class UserModel extends Model
 	protected $returnType = 'object';
 
 	protected $useSoftDeletes = true;
-	
+
+	protected $dateFormat = 'integer';
 }

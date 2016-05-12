@@ -9,5 +9,6 @@ class JobModel extends Model
 	protected $returnType = 'object';
 
 	protected $useSoftDeletes = false;
-	
+
+	protected $dateFormat = 'integer';
 }
