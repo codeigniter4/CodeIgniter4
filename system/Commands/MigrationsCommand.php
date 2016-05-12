@@ -22,6 +22,23 @@ class MigrationsCommand extends \CodeIgniter\Controller
 	//--------------------------------------------------------------------
 
 	/**
+	 * Provides a list of available commands.
+	 */
+	public function index()
+	{
+		CLI::write('Migration Commands',  'white');
+	    CLI::write(CLI::color('latest',   'yellow'). "\t\tMigrates database to latest available migration.");
+	    CLI::write(CLI::color('current',  'yellow'). "\t\tMigrates database to version set as 'current' in configuration.");
+	    CLI::write(CLI::color('version [v]',  'yellow'). "\tMigrates database to version {v}.");
+	    CLI::write(CLI::color('rollback', 'yellow'). "\tRuns all migrations 'down' to version 0.");
+	    CLI::write(CLI::color('refresh',  'yellow'). "\t\tUninstalls and re-runs all migrations to freshen database.");
+	    CLI::write(CLI::color('seed [name]',  'yellow'). "\tRuns the seeder named [name].");
+	}
+
+	//--------------------------------------------------------------------
+
+
+	/**
 	 * Ensures that all migrations have been run.
 	 */
 	public function latest()

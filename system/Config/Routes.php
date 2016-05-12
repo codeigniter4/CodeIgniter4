@@ -14,3 +14,4 @@
 // Migrations
 $routes->cli('migrations/(:segment)/(:segment)', '\CodeIgniter\Commands\MigrationsCommand::$1/$2');
 $routes->cli('migrations/(:segment)',            '\CodeIgniter\Commands\MigrationsCommand::$1');
+$routes->cli('migrations',                       '\CodeIgniter\Commands\MigrationsCommand::index');
