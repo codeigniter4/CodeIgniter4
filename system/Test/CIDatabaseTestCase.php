@@ -263,7 +263,7 @@ class CIDatabaseTestCase extends CIUnitTestCase
 		                  ->where($where)
 		                  ->countAllResults();
 
-		$this->assertEquals($count, $expected, 'Wrong number of matching rows in database.');
+		$this->assertEquals($expected, $count, 'Wrong number of matching rows in database.');
 	}
 	
 	//--------------------------------------------------------------------

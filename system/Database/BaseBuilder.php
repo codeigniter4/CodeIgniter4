@@ -2205,7 +2205,7 @@ class BaseBuilder
 	{
 		$column = $this->db->protectIdentifiers($column);
 
-		$sql = $this->_update($this->QBFrom[0], [$column => "{$column}+{$value}"]);
+		$sql = $this->_update($this->QBFrom[0], [$column => "{$column} + {$value}"]);
 
 		return $this->db->query($sql, $this->binds);
 	}

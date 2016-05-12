@@ -48,6 +48,44 @@ class Builder extends BaseBuilder
 	//--------------------------------------------------------------------
 
 	/**
+	 * Increments a numeric column by the specified value.
+	 *
+	 * @param string $column
+	 * @param int    $value
+	 *
+	 * @return bool
+	 */
+	public function increment(string $column, int $value = 1)
+	{
+		$column = $this->db->protectIdentifiers($column);
+
+		$sql = $this->_update($this->QBFrom[0], [$column => "to_number({$column}, '9999999') + {$value}"]);
+
+		return $this->db->query($sql, $this->binds);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Decrements a numeric column by the specified value.
+	 *
+	 * @param string $column
+	 * @param int    $value
+	 *
+	 * @return bool
+	 */
+	public function decrement(string $column, int $value = 1)
+	{
+		$column = $this->db->protectIdentifiers($column);
+
+		$sql = $this->_update($this->QBFrom[0], [$column => "to_number({$column}, '9999999') - {$value}"]);
+
+		return $this->db->query($sql, $this->binds);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * LIMIT string
 	 *
 	 * Generates a platform-specific LIMIT clause.

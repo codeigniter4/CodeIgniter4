@@ -387,6 +387,13 @@ class MigrationRunner
 	 */
 	protected function addHistory($version, $group = 'default')
 	{
+		if (empty($group))
+		{
+			$config = new \Config\Database();
+			$group = $config->defaultGroup;
+			unset($config);
+		}
+
 		$this->db->table($this->table)
 		         ->insert([
 			         'version' => $version,

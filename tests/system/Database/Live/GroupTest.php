@@ -36,7 +36,7 @@ class GroupTest extends \CIDatabaseTestCase
 	public function testOrHavingBy()
 	{
 		$result = $this->db->table('user')
-		                ->groupBy('name')
+		                ->groupBy('id')
 		                ->having('id >', 3)
 		                ->orHaving('SUM(id) > 2')
 						->get()

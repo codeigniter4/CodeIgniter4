@@ -22,6 +22,13 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 */
 	public $schema = 'public';
 
+	/**
+	 * Identifier escape character
+	 *
+	 * @var    string
+	 */
+	public $escapeChar = '"';
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -313,7 +320,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 		}
 
 		$query = $this->query($sql);
-		$query = $query->row();
+		$query = $query->getRow();
 		return (int) $query->ins_id;
 	}
 

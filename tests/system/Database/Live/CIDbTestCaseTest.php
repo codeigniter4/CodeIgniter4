@@ -6,7 +6,7 @@ class CIDbTestCaseTest extends \CIDatabaseTestCase
 
 	protected $seed = 'CITestSeeder';
 
-	public function testNothing() 
+	public function testHasInDatabase()
 	{
 		$this->hasInDatabase('user', ['name' => 'Ricky', 'email' => 'sofine@example.com', 'country' => 'US']);
 
