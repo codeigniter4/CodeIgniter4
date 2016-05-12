@@ -117,6 +117,8 @@ class Forge extends \CodeIgniter\Database\Forge
 				$attributes['TYPE'] = 'INTEGER';
 				$attributes['UNSIGNED'] = false;
 				return;
+			case 'DATETIME':
+					$attributes['TYPE'] = 'TIMESTAMP';
 			default:
 				return;
 		}
