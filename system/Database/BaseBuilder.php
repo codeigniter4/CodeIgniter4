@@ -1270,7 +1270,6 @@ class BaseBuilder
 		{
 			$this->limit($limit, $offset);
 		}
-
 		$result = $returnSQL
 			? $this->getCompiledSelect()
 			: $this->db->query($this->compileSelect(), $this->binds);

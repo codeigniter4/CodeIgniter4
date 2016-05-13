@@ -86,6 +86,65 @@ class Builder extends BaseBuilder
 	//--------------------------------------------------------------------
 
 	/**
+	 * Replace
+	 *
+	 * Compiles an replace into string and runs the query.
+	 * Because PostgreSQL doesn't support the replace into command,
+	 * we simply do a DELETE and an INSERT on the first key/value
+	 * combo, assuming that it's either the primary key or a unique key.
+	 *
+	 * @param      array     an associative array of insert values
+	 * @param bool $returnSQL
+	 *
+	 * @return bool TRUE on success, FALSE on failure
+	 * @throws DatabaseException
+	 * @internal param true $bool returns the generated SQL, false executes the query.
+	 *
+	 */
+	public function replace($set = null, $returnSQL = false)
+	{
+		if ($set !== null)
+		{
+			$this->set($set);
+		}
+
+		if (count($this->QBSet) === 0)
+		{
+			if (CI_DEBUG)
+			{
+				throw new DatabaseException('You must use the "set" method to update an entry.');
+			}
+			return false;
+		}
+
+		$table = $this->QBFrom[0];
+
+		$set = $this->binds;
+		$keys = array_keys($set);
+		$values = array_values($set);
+
+		$builder = $this->db->table($table);
+		$exists = $builder->where("$keys[0] = $values[0]", null, false)->get()->getFirstRow();
+
+		if (empty($exists))
+		{
+			$result = $builder->insert($set, false);
+		}
+		else
+		{
+			array_pop($set);
+			$result = $builder->update($set, "$keys[0] = $values[0]");
+		}
+
+		unset($builder);
+		$this->resetWrite();
+
+		return $result;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * LIMIT string
 	 *
 	 * Generates a platform-specific LIMIT clause.
@@ -178,4 +237,5 @@ class Builder extends BaseBuilder
 	}
 
 	//--------------------------------------------------------------------
+
 }

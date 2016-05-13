@@ -31,7 +31,7 @@ class InsertTest extends \CIDatabaseTestCase
 	}
 
 	//--------------------------------------------------------------------
-
+	
 	public function testReplaceWithNoMatchingData()
 	{
 		$data = array('id' => 5, 'name' => 'Cab Driver', 'description' => 'Iam yellow');
