@@ -1,5 +1,7 @@
 <?php namespace CodeIgniter\Database\Live;
 
+use CodeIgniter\DatabaseException;
+
 class DeleteTest extends \CIDatabaseTestCase
 {
 	protected $refresh = true;
@@ -37,30 +39,30 @@ class DeleteTest extends \CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * @group single
+	 * @throws \CodeIgniter\DatabaseException
+	 */
 	public function testDeleteWithLimit()
 	{
 		$this->seeNumRecords(2, 'user', ['country' => 'US']);
 
-		$this->db->table('user')->delete(['country' => 'US'], 1);
+		try
+		{
+			$this->db->table('user')
+			         ->delete(['country' => 'US'], 1);
+		}
+		catch (DatabaseException $e)
+		{
+			if (strpos($e->getMessage(), 'does not allow LIMITs on DELETE queries.') !== false)
+			{
+				return;
+			}
+		}
 
 		$this->seeNumRecords(1, 'user', ['country' => 'US']);
 	}
 
 	//--------------------------------------------------------------------
-
-	public function testCanReuseDeleteCriteria()
-	{
-	    $this->seeNumRecords(2, 'user', ['country' => 'US']);
-
-		$builder = $this->db->table('user');
-
-		$builder->delete(['country' => 'US'], 1, false);
-		$this->seeNumRecords(1, 'user', ['country' => 'US']);
-
-		$this->assertEquals(1, $builder->countAllResults());
-	}
-
-	//--------------------------------------------------------------------
-
 
 }

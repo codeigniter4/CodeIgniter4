@@ -1156,8 +1156,15 @@ class BaseBuilder
 	 */
 	public function limit($value, $offset = 0)
 	{
-		is_null($value) OR $this->QBLimit = (int)$value;
-		empty($offset) OR $this->QBOffset = (int)$offset;
+		if (! is_null($value))
+		{
+			$this->QBLimit = (int)$value;
+		}
+
+		if (! empty($offset))
+		{
+			$this->QBOffset = (int)$offset;
+		}
 
 		return $this;
 	}
@@ -1173,7 +1180,10 @@ class BaseBuilder
 	 */
 	public function offset($offset)
 	{
-		empty($offset) OR $this->QBOffset = (int)$offset;
+		if (! empty($offset))
+		{
+			$this->QBOffset = (int)$offset;
+		}
 
 		return $this;
 	}
@@ -2166,11 +2176,6 @@ class BaseBuilder
 			$this->where($where);
 		}
 
-		if ( ! empty($limit))
-		{
-			$this->limit($limit);
-		}
-
 		if (count($this->QBWhere) === 0)
 		{
 			if (CI_DEBUG)
@@ -2182,6 +2187,17 @@ class BaseBuilder
 		}
 
 		$sql = $this->_delete($table);
+
+		if ( ! empty($limit))
+		{
+			$this->QBLimit = $limit;
+		}
+
+		if (! empty($this->QBLimit))
+		{
+			$sql = $this->_limit($sql);
+		}
+		
 		if ($reset_data)
 		{
 			$this->resetWrite();

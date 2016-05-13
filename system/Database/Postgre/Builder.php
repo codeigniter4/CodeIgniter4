@@ -1,6 +1,7 @@
 <?php namespace CodeIgniter\Database\Postgre;
 
 use CodeIgniter\Database\BaseBuilder;
+use CodeIgniter\DatabaseException;
 
 class Builder extends BaseBuilder
 {
@@ -140,6 +141,35 @@ class Builder extends BaseBuilder
 		$this->resetWrite();
 
 		return $result;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Delete
+	 *
+	 * Compiles a delete string and runs the query
+	 *
+	 * @param string $where
+	 * @param null   $limit
+	 * @param bool   $reset_data
+	 * @param bool   $returnSQL
+	 *
+	 * @return mixed
+	 * @throws DatabaseException
+	 * @internal param the $mixed where clause
+	 * @internal param the $mixed limit clause
+	 * @internal param $bool
+	 *
+	 */
+	public function delete($where = '', $limit = null, $reset_data = true, $returnSQL = false)
+	{
+		if (! empty($limit) || ! empty($this->QBLimit))
+		{
+			throw new DatabaseException('PostgreSQL does not allow LIMITs on DELETE queries.');
+		}
+
+		return parent::delete($where, $limit, $reset_data, $returnSQL);
 	}
 
 	//--------------------------------------------------------------------

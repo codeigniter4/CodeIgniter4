@@ -41,15 +41,6 @@ class SelectTest extends \CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
-	public function testSelectingReturnsResultEventWhenDoesntExist()
-	{
-		$row = $this->db->table('job')->select('email')->get();
-
-		$this->assertTrue($row instanceof BaseResult);
-	}
-
-	//--------------------------------------------------------------------
-
 	public function testSelectMax()
 	{
 	    $result = $this->db->table('job')->selectMax('id')->get()->getRow();
