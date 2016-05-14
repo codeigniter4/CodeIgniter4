@@ -195,14 +195,22 @@ class Builder extends BaseBuilder
 	 *
 	 * Generates a platform-specific update string from the supplied data
 	 *
-	 * @param    string    the table name
-	 * @param    array     the update data
+	 * @param $table
+	 * @param $values
 	 *
-	 * @return    string
+	 * @return string
+	 * @throws DatabaseException
+	 * @internal param the $string table name
+	 * @internal param the $array update data
+	 *
 	 */
 	protected function _update($table, $values)
 	{
-		$this->QBLimit = false;
+		if (! empty($this->QBLimit))
+		{
+			throw new DatabaseException('Postgres does not support LIMITs with UPDATE queries.');
+		}
+
 		$this->QBOrderBy = [];
 		return parent::_update($table, $values);
 	}
@@ -268,4 +276,22 @@ class Builder extends BaseBuilder
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Truncate statement
+	 *
+	 * Generates a platform-specific truncate string from the supplied data
+	 *
+	 * If the database does not support the truncate() command,
+	 * then this method maps to 'DELETE FROM table'
+	 *
+	 * @param    string    the table name
+	 *
+	 * @return    string
+	 */
+	protected function _truncate($table)
+	{
+		return 'TRUNCATE '.$table.' RESTART IDENTITY';
+	}
+
+	//--------------------------------------------------------------------
 }

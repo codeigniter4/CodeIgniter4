@@ -106,8 +106,9 @@ class CIDatabaseTestCase extends CIUnitTestCase
 				$this->migrations->setPath(rtrim($this->basePath, '/').'/migrations');
 			}
 
-			$this->migrations->version(0);
-			$this->migrations->latest();
+			$this->db->table('migrations')->truncate();
+			$this->migrations->version(0, 'tests');
+			$this->migrations->latest('tests');
 		}
 
 		if (! empty($this->seed))

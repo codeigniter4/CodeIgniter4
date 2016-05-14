@@ -47,9 +47,7 @@ class ModelTest extends \CIDatabaseTestCase
 
 	public function testHashedIdsWithFind()
 	{
-	    $this->hasInDatabase('job', ['name' => 'Hasher', 'description' => 'One who hashes']);
-
-		$hash = $this->model->encodeId(5);
+		$hash = $this->model->encodeId(4);
 
 		$this->model->setTable('job')
 					->withDeleted();
@@ -58,7 +56,7 @@ class ModelTest extends \CIDatabaseTestCase
 							->findByHashedID($hash);
 
 		$this->assertNotEmpty($user);
-		$this->assertEquals(5, $user->id);
+		$this->assertEquals(4, $user->id);
 	}
 
 	//--------------------------------------------------------------------
@@ -249,6 +247,9 @@ class ModelTest extends \CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * @group single
+	 */
 	public function testSaveNewRecordObject()
 	{
 	    $model = new JobModel();
@@ -257,10 +258,9 @@ class ModelTest extends \CIDatabaseTestCase
 		$data->name = 'Magician';
 		$data->description = 'Makes peoples things dissappear.';
 		
-		$result = $model->protect(false)->save($data);
+		$model->protect(false)->save($data);
 
 		$this->seeInDatabase('job', ['name' => 'Magician']);
-		$this->assertEquals(5, $result);
 	}
 
 	//--------------------------------------------------------------------
@@ -277,7 +277,6 @@ class ModelTest extends \CIDatabaseTestCase
 		$result = $model->protect(false)->save($data);
 
 		$this->seeInDatabase('job', ['name' => 'Apprentice']);
-		$this->assertEquals(5, $result);
 	}
 
 	//--------------------------------------------------------------------

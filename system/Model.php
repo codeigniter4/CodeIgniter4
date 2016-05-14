@@ -284,6 +284,13 @@ class Model
 			$builder->where('deleted', 0);
 		}
 
+		// Some databases, like PostgreSQL, need order
+		// information to consistently return correct results.
+		if (empty($builder->QBOrderBy))
+		{
+			$builder->orderBy($this->primaryKey, 'asc');
+		}
+		
 		$row = $builder->limit(1, 0)
 		               ->get();
 

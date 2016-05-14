@@ -38,7 +38,7 @@ class UpdateTest extends \CIUnitTestCase
 
 		$builder->update(['name' => 'Programmer'], ['id' => 1], 5, true);
 
-		$expectedSQL = "UPDATE \"jobs\" SET \"name\" = :name WHERE \"id\" = :id LIMIT 5";
+		$expectedSQL = "UPDATE \"jobs\" SET \"name\" = :name WHERE \"id\" = :id  LIMIT 5";
 		$expectedBinds = ['id' => 1, 'name' => 'Programmer'];
 
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledUpdate()));

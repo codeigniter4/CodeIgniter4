@@ -110,7 +110,7 @@ class MigrationRunner
 	 * @return mixed TRUE if no migrations are found, current version string on success, FALSE on failure
 	 * @throws ConfigException
 	 */
-	public function version($targetVersion)
+	public function version($targetVersion, $group='default')
 	{
 		if (! $this->enabled)
 		{
@@ -118,7 +118,7 @@ class MigrationRunner
 		}
 
 		// Note: We use strings, so that timestamp versions work on 32-bit systems
-		$currentVersion = $this->getVersion();
+		$currentVersion = $this->getVersion($group);
 
 		if ($this->type === 'sequential')
 		{

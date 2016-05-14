@@ -95,7 +95,7 @@ class BaseBuilder
 	 *
 	 * @var    array
 	 */
-	protected $QBOrderBy = [];
+	public $QBOrderBy = [];
 
 	/**
 	 * QB data sets
@@ -1856,7 +1856,7 @@ class BaseBuilder
 		return 'UPDATE '.$table.' SET '.implode(', ', $valstr)
 		       .$this->compileWhereHaving('QBWhere')
 		       .$this->compileOrderBy()
-		       .($this->QBLimit ? ' LIMIT '.$this->QBLimit : '');
+		       .($this->QBLimit ? $this->_limit(' ') : '');
 	}
 
 	//--------------------------------------------------------------------
