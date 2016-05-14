@@ -591,6 +591,20 @@ abstract class BaseConnection implements ConnectionInterface
 	//--------------------------------------------------------------------
 
 	/**
+	 * Returns a string representation of the last query's statement object.
+	 *
+	 * @return string
+	 */
+	public function showLastQuery()
+	{
+	    return (string)end($this->queries);
+	}
+
+	//--------------------------------------------------------------------
+
+
+
+	/**
 	 * Returns the time we started to connect to this database in
 	 * seconds with microseconds.
 	 *
