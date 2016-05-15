@@ -23,6 +23,7 @@
                 <file>./system/View/Escaper.php</file>
                 <directory suffix=".php">./system/View/Exception</directory>
                 <directory suffix=".php">./system/Debug/Toolbar/View</directory>
+                <directory>./system/Debug/Kint</directory>
             </exclude>
         </whitelist>
     </filter>
