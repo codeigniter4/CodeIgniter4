@@ -11,6 +11,7 @@
     <testsuites>
         <testsuite name="system">
             <directory>./tests/system</directory>
+            <!-- <exclude>./tests/system/Database/Live</exclude> -->
         </testsuite>
     </testsuites>
 

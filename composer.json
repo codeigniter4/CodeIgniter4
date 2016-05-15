@@ -20,7 +20,7 @@
 		"zendframework/zend-escaper": "^2.5"
 	},
 	"require-dev": {
-		"mikey179/vfsStream": "^1.6"
+		"phpunit/phpunit": "5.3.*"
 	},
 	"scripts": {
 		"post-update-cmd": "CodeIgniter\\ComposerScripts::postUpdate"
