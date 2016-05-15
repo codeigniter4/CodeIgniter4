@@ -70,7 +70,7 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 #-------------------------
 # Test Files
 #-------------------------
-tests/_support/coverage*
+tests/coverage*
 
 # Don't save phpunit under version control.
 phpunit
