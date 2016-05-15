@@ -2,8 +2,8 @@
 Credits
 #######
 
-CodeIgniter was originally developed by `Rick Ellis <https://ellislab.com/>`_
-(CEO of `EllisLab, Inc. <https://ellislab.com/>`_). The framework was written for
+CodeIgniter was originally developed by `EllisLab  <https://ellislab.com/>`_). 
+The framework was written for
 performance in the real world, with many of the class libraries, helpers, and
 sub-systems borrowed from the code-base of `ExpressionEngine
 <https://ellislab.com/expressionengine>`_.
@@ -17,6 +17,3 @@ project.
 
 Bleeding edge development is spearheaded by the handpicked contributors
 of the Reactor Team.
-
-A hat tip goes to Ruby on Rails for inspiring us to create a PHP framework, and
-for bringing frameworks into the general consciousness of the web community.

@@ -1,6 +1,6 @@
-######################
-Welcome to CodeIgniter
-######################
+#######################
+Welcome to CodeIgniter4
+#######################
 
 CodeIgniter is an Application Development Framework - a toolkit - for
 people who build web sites using PHP. Its goal is to enable you to
@@ -35,3 +35,12 @@ CodeIgniter is right for you if:
    a template parser is optionally available if you desire one).
 -  You eschew complexity, favoring simple solutions.
 -  You need clear, thorough documentation.
+
+.. toctree::
+	:hidden:
+	:titlesonly:
+
+	self
+	requirements
+	credits
+

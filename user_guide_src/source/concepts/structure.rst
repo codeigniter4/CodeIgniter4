@@ -8,8 +8,8 @@ can change to meet the needs of your application.
 Default Directories
 ===================
 
-A fresh install has four directories: ``/application``, ``/system``, ``/writable``, and ``/tests``. Each of these
-directories has a very specific part to play.
+A fresh install has five directories: ``/application``, ``/system``, ``/writable``, ``/tests`` and ``/docs``. 
+Each of these directories has a very specific part to play.
 
 application
 -----------
@@ -52,6 +52,10 @@ This directory is setup to hold your test files. The ``_support`` directory hold
 utilities that you can use while writing your tests. This directory does not need to be transferred to your
 production servers.
 
+docs
+----
+This directory holds the CodeIgniter documentation. The ``user_guide`` subfolder contains a local copy of the
+User Guide, and the ``api_docs`` subfolder contains a local copy of the CodeIgniter components API reference.
 
 Security Considerations
 =======================

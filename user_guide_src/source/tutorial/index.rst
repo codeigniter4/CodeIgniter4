@@ -36,11 +36,10 @@ through the following pages:
 Enjoy your exploration of the CodeIgniter framework.
 
 .. toctree::
-	:glob:
 	:hidden:
-		:titlesonly:
+	:titlesonly:
 
-		static_pages
-		news_section
-		create_news_items
-		conclusion
+	static_pages
+	news_section
+	create_news_items
+	conclusion
