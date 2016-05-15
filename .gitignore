@@ -39,8 +39,10 @@ $RECYCLE.BIN/
 #-------------------------
 # Environment Files
 #-------------------------
-
-application/config/development/*
+# These should never be under version control,
+# as it poses a security risk.
+.env
+application/.env
 
 #-------------------------
 # Temporary Files
@@ -69,6 +71,9 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 # Test Files
 #-------------------------
 tests/_support/coverage*
+
+# Don't save phpunit under version control.
+phpunit
 
 #-------------------------
 # Composer
