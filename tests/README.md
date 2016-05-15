@@ -36,8 +36,8 @@ Individual tests can be ran by including the relative path to the test file.
 
 To generate coverage information, including HTML reports you can view in your browser, you can use the following command: 
 
-	> phpunit --colors --coverage-text=coverage.txt --coverage-html=coverage/
+	> phpunit --colors --coverage-text=tests/coverage.txt --coverage-html=tests/coverage/
 
 This runs all of the tests again, collecting information about how many lines, functions, and files are tested, and the percent of the code that is covered by the tests. It is collected in two formats: a simple text file that provides an overview, as well as comprehensive collection of HTML files that show the status of every line of code in the project. 
 
-The text file can be found at **./coverage.txt**. The HTML files can be viewed by opening **tests/_support/coverage/index.html** in your favorite browser.
+The text file can be found at **tests/coverage.txt**. The HTML files can be viewed by opening **tests/coverage/index.html** in your favorite browser.
