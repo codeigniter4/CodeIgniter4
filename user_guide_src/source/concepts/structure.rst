@@ -80,8 +80,8 @@ For this example, you've created a new directory called ``public`` that will ser
 ``.htaccess`` and ``index.php`` into the new directory, and point your web server to ``public``. You would
 need to edit the variables to the following values to get your application running again::
 
-	$system_path = '../system';
-	$application_folder = '../application';
+	$system_directory = '../system';
+	$application_directory = '../application';
 	$writable_directory = '../writable';
 
 All three are modified to say that they are a single directory up from ``index.php``. When the application
