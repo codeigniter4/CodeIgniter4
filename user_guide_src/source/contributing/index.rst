@@ -47,7 +47,7 @@ Please *don't* disclose it publicly, but e-mail us at security@codeigniter.com,
 or report it via our page on `HackerOne <https://hackerone.com/codeigniter>`_.
 
 If you've found a critical vulnerability, we'd be happy to credit you in our
-`ChangeLog <../changelog>`.
+`ChangeLog <../changelog.html>`_.
 
 ****************************
 Tips for a Good Issue Report
@@ -87,7 +87,7 @@ PHP Style
 =========
 
 All code must meet the `Style Guide
-<https://codeigniter.com/userguide3/general/styleguide.html>`_, which is
+<./styleguide.html>`_, which is
 essentially the `Allman indent style
 <https://en.wikipedia.org/wiki/Indent_style#Allman_style>`_, underscores and
 readable operators. This makes certain that all code is the same format as the
@@ -104,10 +104,7 @@ must also be updated for every change. Also PHPDoc blocks must be maintained.
 Compatibility
 =============
 
-CodeIgniter recommends PHP 5.5 or newer to be used, but it should be
-compatible with PHP 5.2.4 so all code supplied must stick to this
-requirement. If PHP 5.3 (and above) functions or features are used then
-there must be a fallback for PHP 5.2.4.
+CodeIgniter4 requires PHP 7.
 
 Branching
 =========
