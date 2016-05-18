@@ -66,16 +66,6 @@ use CodeIgniter\Services;
  */
 class IncomingRequest extends Request
 {
-
-	/**
-	 * Parsed input stream data
-	 *
-	 * Parsed from php://input at runtime
-	 *
-	 * @var
-	 */
-	protected $inputStream;
-
 	/**
 	 * Enable CSRF flag
 	 *
@@ -194,6 +184,27 @@ class IncomingRequest extends Request
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * A convenience method that grabs the raw input stream and decodes
+	 * the JSON into an array.
+	 *
+	 * If $assoc == true, then all objects in the response will be converted
+	 * to associative arrays.
+	 *
+	 * @param int  $depth   How many levels deep to decode
+	 * @param bool $assoc   Whether to return objects as associative arrays
+	 * @param int  $options Bitmask of options
+	 *
+	 * @see http://php.net/manual/en/function.json-decode.php
+	 *
+	 * @return mixed
+	 */
+	public function getJSON(int $depth = 512, bool $assoc = false, int $options = 0)
+	{
+	    return json_decode(file_get_contents('php://input'), $assoc, $depth, $options);
+	}
+
+	//--------------------------------------------------------------------
 
 	/**
 	 * Fetch an item from GET data.
