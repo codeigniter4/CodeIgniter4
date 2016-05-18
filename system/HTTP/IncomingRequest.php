@@ -152,6 +152,32 @@ class IncomingRequest extends Request
 	//--------------------------------------------------------------------
 
 	/**
+	 * Attempts to detect if the current connection is secure through
+	 * a few different methods.
+	 *
+	 * @return bool
+	 */
+	public function isSecure(): bool
+	{
+		if ( ! empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) !== 'off')
+		{
+			return true;
+		}
+		elseif (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https')
+		{
+			return true;
+		}
+		elseif ( ! empty($_SERVER['HTTP_FRONT_END_HTTPS']) && strtolower($_SERVER['HTTP_FRONT_END_HTTPS']) !== 'off')
+		{
+			return true;
+		}
+
+		return false;
+	}
+
+	//--------------------------------------------------------------------
+	
+	/**
 	 * Fetch an item from the $_REQUEST object. This is the simplest way
 	 * to grab data from the request object and can be used in lieu of the
 	 * other get* methods in most cases.
@@ -262,32 +288,6 @@ class IncomingRequest extends Request
 	public function getUserAgent($filter = null)
 	{
 		return $this->fetchGlobal(INPUT_SERVER, 'HTTP_USER_AGENT', $filter);
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Attempts to detect if the current connection is secure through
-	 * a few different methods.
-	 *
-	 * @return bool
-	 */
-	public function isSecure(): bool
-	{
-		if ( ! empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) !== 'off')
-		{
-			return true;
-		}
-		elseif (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https')
-		{
-			return true;
-		}
-		elseif ( ! empty($_SERVER['HTTP_FRONT_END_HTTPS']) && strtolower($_SERVER['HTTP_FRONT_END_HTTPS']) !== 'off')
-		{
-			return true;
-		}
-
-		return false;
 	}
 
 	//--------------------------------------------------------------------
