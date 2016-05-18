@@ -92,14 +92,15 @@ like this::
 
 With CodeIgniter’s built in methods you can simply do this::
 
-	$something = $request->post('something');
+	$something = $request->getVar('something');
 
 The main methods are:
 
-* ``$request->get()``
-* ``$request->post()``
+* ``$request->getVar()``
+* ``$request->getGet()``
+* ``$request->getPost()``
 * ``$request->getServer()``
-* ``$request->cookie()``
+* ``$request->getCookie()``
 
 Filtering Input Data
 --------------------
@@ -111,7 +112,7 @@ filter types <http://php.net/manual/en/filter.filters.php>`_.
 
 Filter a POST variable would look like this::
 
-	$email = $request->post('email', FILTER_SANITIZE_EMAIL);
+	$email = $request->getVar('email', FILTER_SANITIZE_EMAIL);
 
 ***************
 Class Reference
@@ -161,16 +162,16 @@ The methods provided by the parent classes that are available are:
 		:returns: True if the request is an HTTPS request, otherwise false.
 		:rtype: bool
 
-	.. php:method:: post([$index = null[, $filter = null])
+	.. php:method:: getVar([$index = null[, $filter = null])
 
 		:param  string  $index: The name of the variable/key to look for.
 		:param  int     $filter: The type of filter to apply. A list of filters can be found `here <http://php.net/manual/en/filter.filters.php>`_.
-		:returns:   $_POST if no parameters supplied, otherwise the POST value if found, or null if not
+		:returns:   $_REQUEST if no parameters supplied, otherwise the REQUEST value if found, or null if not
 		:rtype: mixed|null
 
-		The first parameter will contain the name of the POST item you are looking for::
+		The first parameter will contain the name of the REQUEST item you are looking for::
 
-			$request->post('some_data');
+			$request->getVar('some_data');
 
 		The method returns null if the item you are attempting to retrieve
 		does not exist.
@@ -178,7 +179,7 @@ The methods provided by the parent classes that are available are:
 		The second optional parameter lets you run the data through the PHP's
 		filters. Pass in the desired filter type as the second parameter::
 
-			$request->post('some_data', FILTER_SANITIZE_STRING);
+			$request->getVar('some_data', FILTER_SANITIZE_STRING);
 
 		To return an array of all POST items call without any parameters.
 
@@ -186,67 +187,76 @@ The methods provided by the parent classes that are available are:
 		first parameter to null while setting the second parameter to the filter
 		you want to use.::
 
-			$request->post(null, FILTER_SANITIZE_STRING); // returns all POST items with string sanitation
+			$request->getVar(null, FILTER_SANITIZE_STRING); // returns all POST items with string sanitation
 
 		To return an array of multiple  POST parameters, pass all the required keys as an array.::
 
-			$request->post(['field1', 'field2']);
+			$request->getVar(['field1', 'field2']);
 
 		Same rule applied here, to retrieve the parameters with filtering, set the second parameter to
 		the filter type to apply.::
 
-			$request->post(['field1', 'field2'], FILTER_SANITIZE_STRING);
+			$request->getVar(['field1', 'field2'], FILTER_SANITIZE_STRING);
 
-	.. php:method:: get([$index = null[, $filter = null]])
+	.. php:method:: getGet([$index = null[, $filter = null]])
+
+		:param  string  $index: The name of the variable/key to look for.
+		:param  int  $filter: The type of filter to apply. A list of filters can be found `here <http://php.net/manual/en/filter.filters.php>`_.
+		:returns:   $_GET if no parameters supplied, otherwise the GET value if found, or null if not
+		:rtype: mixed|null
+
+		This method is identical to ``getVar()``, only it fetches GET data.
+
+	.. php:method:: getPost([$index = null[, $filter = null]])
 
 		:param  string  $index: The name of the variable/key to look for.
 		:param  int  $filter: The type of filter to apply. A list of filters can be found `here <http://php.net/manual/en/filter.filters.php>`_.
 		:returns:   $_POST if no parameters supplied, otherwise the POST value if found, or null if not
 		:rtype: mixed|null
 
-		This method is identical to ``post()``, only it fetches GET data.
+			This method is identical to ``getVar()``, only it fetches POST data.
 
-	.. php:method:: postGet([$index = null[, $filter = null]])
+	.. php:method:: getPostGet([$index = null[, $filter = null]])
 
 		:param  string  $index: The name of the variable/key to look for.
 		:param  int     $filter: The type of filter to apply. A list of filters can be found `here <http://php.net/manual/en/filter.filters.php>`_.
 		:returns:   $_POST if no parameters supplied, otherwise the POST value if found, or null if not
 		:rtype: mixed|null
 
-		This method works pretty much the same way as ``post()`` and ``get()``, only combined.
+		This method works pretty much the same way as ``getPost()`` and ``getGet()``, only combined.
 		It will search through both POST and GET streams for data, looking first in POST, and
 		then in GET::
 
-			$request->postGet('field1');
+			$request->getPostGet('field1');
 
-	.. php:method:: getPost([$index = null[, $filter = null]])
+	.. php:method:: getGetPost([$index = null[, $filter = null]])
 
 		:param  string  $index: The name of the variable/key to look for.
 		:param  int     $filter: The type of filter to apply. A list of filters can be found `here <http://php.net/manual/en/filter.filters.php>`_.
 		:returns:   $_POST if no parameters supplied, otherwise the POST value if found, or null if not
 		:rtype: mixed|null
 
-		This method works pretty much the same way as ``post()`` and ``get()``, only combined.
+		This method works pretty much the same way as ``getPost()`` and ``getGet()``, only combined.
 		It will search through both POST and GET streams for data, looking first in GET, and
 		then in POST::
 
-			$request->getPost('field1');
+			$request->getGetPost('field1');
 
-	.. php:method:: cookie([$index = null[, $filter = NULL]])
+	.. php:method:: getCookie([$index = null[, $filter = NULL]])
 
 		:param	mixed	$index: COOKIE name
 		:param  int     $filter: The type of filter to apply. A list of filters can be found `here <http://php.net/manual/en/filter.filters.php>`_.
 		:returns:	$_COOKIE if no parameters supplied, otherwise the COOKIE value if found or null if not
 		:rtype:	mixed
 
-		This method is identical to ``post()`` and ``get()``, only it fetches cookie data::
+		This method is identical to ``getPost()`` and ``getGet()``, only it fetches cookie data::
 
-			$request->cookie('some_cookie');
-			$request->cookie('some_cookie, FILTER_SANITIZE_STRING); // with filter
+			$request->getCookie('some_cookie');
+			$request->getCookie('some_cookie, FILTER_SANITIZE_STRING); // with filter
 
 		To return an array of multiple cookie values, pass all the required keys as an array.::
 
-			$request->cookie(array('some_cookie', 'some_cookie2'));
+			$request->getCookie(array('some_cookie', 'some_cookie2'));
 
 		.. note:: Unlike the :doc:`Cookie Helper <../helpers/cookie_helper>`
 			function :php:func:`get_cookie()`, this method does NOT prepend
@@ -259,7 +269,7 @@ The methods provided by the parent classes that are available are:
 		:returns:	$_SERVER item value if found, NULL if not
 		:rtype:	mixed
 
-		This method is identical to the ``post()``, ``get()`` and ``cookie()``
+		This method is identical to the ``getPost()``, ``getGet()`` and ``getCookie()``
 		methods, only it fetches getServer data (``$_SERVER``)::
 
 			$request->getServer('some_data');
@@ -270,7 +280,7 @@ The methods provided by the parent classes that are available are:
 
 			$request->getServer(['SERVER_PROTOCOL', 'REQUEST_URI']);
 
-	.. php:method:: userAgent([$filter = null])
+	.. php:method:: getUserAgent([$filter = null])
 
 		:param  int  $filter: The type of filter to apply. A list of filters can be found `here <http://php.net/manual/en/filter.filters.php>`_.
 		:returns:  The User Agent string, as found in the SERVER data, or null if not found.
@@ -278,68 +288,6 @@ The methods provided by the parent classes that are available are:
 
 		This method returns the User Agent string from the SERVER data.::
 
-			$request->userAgent();
+			$request->getUserAgent();
 
-	.. php:method:: setCookie($name = ''[, $value = ''[, $expire = ''[, $domain = ''[, $path = '/'[, $prefix = ''[, $secure = FALSE[, $httponly = FALSE]]]]]]])
-
-		:param	mixed	$name: Cookie name or an array of parameters
-		:param	string	$value: Cookie value
-		:param	int	$expire: Cookie expiration time in seconds
-		:param	string	$domain: Cookie domain
-		:param	string	$path: Cookie path
-		:param	string	$prefix: Cookie name prefix
-		:param	bool	$secure: Whether to only transfer the cookie through HTTPS
-		:param	bool	$httponly: Whether to only make the cookie accessible for HTTP requests (no JavaScript)
-		:rtype:	void
-
-
-		Sets a cookie containing the values you specify. There are two ways to
-		pass information to this method so that a cookie can be set: Array
-		Method, and Discrete Parameters:
-
-		**Array Method**
-
-		Using this method, an associative array is passed to the first
-		parameter::
-
-			$cookie = array(
-				'name'   => 'The Cookie Name',
-				'value'  => 'The Value',
-				'expire' => '86500',
-				'domain' => '.some-domain.com',
-				'path'   => '/',
-				'prefix' => 'myprefix_',
-				'secure' => TRUE
-			);
-
-			$request->set_cookie($cookie);
-
-		**Notes**
-
-		Only the name and value are required. To delete a cookie set it with the
-		expiration blank.
-
-		The expiration is set in **seconds**, which will be added to the current
-		time. Do not include the time, but rather only the number of seconds
-		from *now* that you wish the cookie to be valid. If the expiration is
-		set to zero the cookie will only last as long as the browser is open.
-
-		For site-wide cookies regardless of how your site is requested, add your
-		URL to the **domain** starting with a period, like this:
-		.your-domain.com
-
-		The path is usually not needed since the method sets a root path.
-
-		The prefix is only needed if you need to avoid name collisions with
-		other identically named cookies for your getServer.
-
-		The secure boolean is only needed if you want to make it a secure cookie
-		by setting it to TRUE.
-
-		**Discrete Parameters**
-
-		If you prefer, you can set the cookie by passing data using individual
-		parameters::
-
-			$request->set_cookie($name, $value, $expire, $domain, $path, $prefix, $secure);
 

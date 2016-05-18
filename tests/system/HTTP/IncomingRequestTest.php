@@ -18,6 +18,16 @@ class IncomingRequestTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testCanGrabRequestVars()
+	{
+		$_REQUEST['TEST'] = 5;
+
+		$this->assertEquals(5, $this->request->getVar('TEST'));
+		$this->assertEquals(null, $this->request->getVar('TESTY'));
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testCanGrabGetVars()
 	{
 		$_GET['TEST'] = 5;

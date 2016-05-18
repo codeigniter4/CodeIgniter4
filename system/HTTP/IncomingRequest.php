@@ -152,6 +152,24 @@ class IncomingRequest extends Request
 	//--------------------------------------------------------------------
 
 	/**
+	 * Fetch an item from the $_REQUEST object. This is the simplest way
+	 * to grab data from the request object and can be used in lieu of the
+	 * other get* methods in most cases.
+	 *
+	 * @param null $index
+	 * @param null $filter
+	 *
+	 * @return mixed
+	 */
+	public function getVar($index = null, $filter = null)
+	{
+		return $this->fetchGlobal(INPUT_REQUEST, $index, $filter);
+	}
+
+	//--------------------------------------------------------------------
+
+
+	/**
 	 * Fetch an item from GET data.
 	 *
 	 * @param null $index  Index for item to fetch from $_GET.
