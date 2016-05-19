@@ -7,7 +7,7 @@ Server Requirements
 A database is required for most web application programming.
 Currently supported databases are:
 
-  - MySQL (5.1+) via the *mysql* (deprecated), *mysqli* and *pdo* drivers
+  - MySQL (5.1+) via the *mysqli* and *pdo* drivers
   - Oracle via the *oci8* and *pdo* drivers
   - PostgreSQL via the *postgre* and *pdo* drivers
   - MS SQL via the *mssql*, *sqlsrv* (version 2005 and above only) and *pdo* drivers

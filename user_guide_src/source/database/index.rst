@@ -19,10 +19,7 @@ patterns. The database functions offer clear, simple syntax.
 	Transactions <transactions>
 	Getting MetaData <metadata>
 	Custom Function Calls <call_function>
-	Query Caching <caching>
 	Using CodeIgniter's Model <model>
 	Database Manipulation with Database Forge <forge>
-	Database Utilities Class <utilities>
 	Database Migrations <migration>
 	Database Seeding <seeds>
-	Database Driver Reference <db_driver_reference>
