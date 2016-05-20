@@ -11,6 +11,55 @@ as painless as possible.
     :local:
     :depth: 1
 
+========================
+Testing Your Application
+========================
+
+The Test Class
+==============
+
+In order to take advantage of the additional tools provided, your tests must extend ``\CIUnitTestCase``::
+
+    class MyTests extends \CIUnitTestCase
+    {
+        . . .
+    }
+
+.. note:: More features are planned, but are not implemented yet. Stay tuned.
+
+Mocking Services
+================
+
+You will often find that you need to mock one of the services defined in **application/Config/Services.php** to limit
+your tests to only the code in question, while simulating various responses from the services. This is especially
+true when testing controllers and other integration testing. CodeIgniter makes this simple.
+
+While in test mode, the system loads a wrapper around the **Services** class that provides two new methods,
+``injectMock()``, and ``reset()``.
+
+**injectMock()**
+
+This method allows you to define the exact instance that will be returned by the Services class. You can use this to
+set properties of a service so that it behaves in a certain way, or replace a service with a mocked class.
+::
+
+    public function testSomething()
+    {
+        $curlrequest = $this->getMockBuilder('CodeIgniter\HTTP\CURLRequest')
+                            ->setMethods(['request'])
+                            ->getMock();
+        Services::injectMock('curlrequest', $curlrequest);
+
+        // Do normal testing here....
+    }
+
+The first parameter is the service that you are replacing. The name must match the function name in the Services
+class exactly. The second parameter is the instance to replace it with.
+
+**reset()**
+
+Removes all mocked classes from the Services class, bringing it back to its original state.
+
 =====================
 Testing Your Database
 =====================
@@ -100,7 +149,7 @@ the path to the single directory that holds both of those sub-directories.
 Helper Methods
 ==============
 
-The **CIDBTestCase** class provides several helper methods to aid in testing your database.
+The **CIDatabaseTestCase** class provides several helper methods to aid in testing your database.
 
 **seed($name)**
 
