@@ -33,7 +33,7 @@
  * @link	http://http://www.php-fig.org/
  */
 
-use PSR\Log\LoggerInterface;
+use Psr\Log\LoggerInterface;
 
 trait LoggerAwareTrait {
 

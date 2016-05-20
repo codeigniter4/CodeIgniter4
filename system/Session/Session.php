@@ -79,7 +79,7 @@ class Session implements SessionInterface
 	protected $cookieSecure = false;
 
 	/**
-	 * @var \PSR\Log\LoggerInterface
+	 * @var \Psr\Log\LoggerInterface
 	 */
 	protected $logger;
 

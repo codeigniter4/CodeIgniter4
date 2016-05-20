@@ -1,4 +1,4 @@
-<?php namespace PSR\Log;
+<?php namespace Psr\Log;
 
 /**
  * CodeIgniter
