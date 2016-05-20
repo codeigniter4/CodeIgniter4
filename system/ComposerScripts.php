@@ -59,7 +59,7 @@ class ComposerScripts
 		/*
 		 * Zend/Escaper
 		 */
-		if (file_exists('vendor/zendframework/zend-escaper/src/Escaper.php'))
+		if (class_exists('\\Zend\\Escaper\\Escaper') && file_exists(self::getClassFilePath('\\Zend\\Escaper\\Escaper')))
 		{
 			if (! is_dir('system/View/Exception'))
 			{
@@ -67,10 +67,10 @@ class ComposerScripts
 			}
 
 			$files = [
-				'./vendor/zendframework/zend-escaper/src/Exception/ExceptionInterface.php' => './system/View/Exception/ExceptionInterface.php',
-				'vendor/zendframework/zend-escaper/src/Exception/InvalidArgumentException.php' => 'system/View/Exception/InvalidArgumentException.php',
-				'vendor/zendframework/zend-escaper/src/Exception/RuntimeException.php' => 'system/View/Exception/RuntimeException.php',
-				'vendor/zendframework/zend-escaper/src/Escaper.php' => 'system/View/Escaper.php'
+				self::getClassFilePath('\\Zend\\Escaper\\Exception\\ExceptionInterface') => './system/View/Exception/ExceptionInterface.php',
+				self::getClassFilePath('\\Zend\\Escaper\\Exception\\InvalidArgumentException') => 'system/View/Exception/InvalidArgumentException.php',
+				self::getClassFilePath('\\Zend\\Escaper\\Exception\\RuntimeException') => 'system/View/Exception/RuntimeException.php',
+				self::getClassFilePath('\\Zend\\Escaper\\Escaper')=> 'system/View/Escaper.php'
 			];
 
 			foreach ($files as $source => $dest)
@@ -102,6 +102,14 @@ class ComposerScripts
 		return rename($source, $destination);
 	}
 
+	//--------------------------------------------------------------------
+	
+	protected static function getClassFilePath( string $class )
+	{
+		$reflector = new \ReflectionClass($class);
+		return $reflector->getFileName();
+	}
+	
 	//--------------------------------------------------------------------
 
 }
