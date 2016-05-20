@@ -33,7 +33,7 @@ The request would look something like this::
 	Accept: text/html
 	User-Agent: Chrome/46.0.2490.80
 
-This message displays all of the information necessary to know what the client is existing. It tells the
+This message displays all of the information necessary to know what the client is requesting. It tells the
 method for the request (GET, POST, DELETE, etc), and the version of HTTP it supports.
 
 The request also includes a number of optional request headers that can contain a wide variety of
@@ -76,20 +76,24 @@ is an object-oriented representation of the HTTP request. It provides everything
   $request = new IncomingRequest(new \Config\App(), new \CodeIgniter\HTTP\URI());
 
   // the URI being requested (i.e. /about)
-  $request->uri->path();
+  $request->uri->getPath();
 
   // Retrieve $_GET and $_POST variables
-  $request->get('foo');
-  $request->post('bar');
+  $request->getVar('foo');
+  $request->getGet('foo');
+  $request->getPost('foo');
+
+  // Retrieve JSON from AJAX calls
+  $request->getJSON();
 
   // Retrieve server variables
-  $request->server('Host');
+  $request->getServer('Host');
 
   // Retrieve an HTTP Request header, with case-insensitive names
-  $request->header('host');
-  $request->header('Content-Type');
+  $request->getHeader('host');
+  $request->getHeader('Content-Type');
 
-  $request->method();  // GET, POST, PUT, etc
+  $request->getMethod();  // GET, POST, PUT, etc
 
 
 The request class does a lot of work in the background for you, that you never need to worry about.

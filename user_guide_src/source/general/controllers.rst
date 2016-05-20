@@ -199,7 +199,7 @@ In order to achieve this, simply declare the method as being private
 or protected and it will not be served via a URL request. For example,
 if you were to have a method like this::
 
-	private function utility()
+	protected function utility()
 	{
 		// some code
 	}
@@ -304,6 +304,18 @@ modify this by passing the duration (in seconds) as the first parameter::
 	if (! $this->request->isSecure())
 	{
 		$this->forceHTTPS(31536000);    // one year
+	}
+
+helpers
+-------
+
+You can define an array of helper files as a class property. Whenever the controller is loaded,
+these helper files will be automatically loaded into memory so that you can use their methods anywhere
+inside the controller::
+
+	class MyController extends \CodeIgniter\Controller
+	{
+		protected $helpers = ['url', 'form'];
 	}
 
 That's it!

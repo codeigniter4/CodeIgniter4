@@ -75,9 +75,9 @@ validation <../libraries/form_validation>` library to do this.
         else
         {
             $model->save([
-                'title' => $this->request->getPost('title'),
-                'slug'  => urlTitle($this->request->getPost('title')),
-                'text'  => $this->request->getPost('text'),
+                'title' => $this->request->getVar('title'),
+                'slug'  => urlTitle($this->request->getVar('title')),
+                'text'  => $this->request->getVar('text'),
             ]);
             echo load_view('News/Success');
         }
@@ -104,7 +104,7 @@ sure everything is in lowercase characters. This leaves you with a nice
 slug, perfect for creating URIs.
 
 After this, a view is loaded to display a success message. Create a view at
-*application/Views/News/Success.php* and write a success message.
+**application/Views/News/Success.php** and write a success message.
 
 Model
 -----

@@ -5,7 +5,7 @@ Working With Configuration Files
 Every application needs a way to define various settings that affect the application.
 These are handled through configuration files. Configuration files simply
 hold a class that contains its settings as public properties. Unlike in many other frameworks,
-there is not a single class that you need to use to access your settings. Instead, you simply
+there is no single class that you need to use to access your settings. Instead, you simply
 create an instance of the class and all your settings are there for you.
 
 Accessing Config Files
@@ -21,20 +21,20 @@ are public, so you access the settings like any other property::
 	$mailpath = $config->mailpath;
 
 If no namespace is provided, it will look for the files in all available namespaces that have
-been defined, as well as ``/application/config/``. All of the configuration files
+been defined, as well as **/application/Config/**. All of the configuration files
 that ship with CodeIgniter are namespaced with ``Config``. Using this namespace in your
 application will provide the best performance since it knows exactly what directory to find the
 files in and doesn't have to scan several locations in the filesystem to get there.
 
 You can locate the configuration files any place on your server by using a different namespace.
 This allows you to pull configuration files on the production server to a folder that is not in
-the web-accessible space at all, while keeping it under ``/application`` for ease of access during development.
+the web-accessible space at all, while keeping it under **/application** for ease of access during development.
 
 Creating Configuration Files
 ============================
 
 If you need to create a new configuration file you would create a new file at your desired location,
-``/application/config`` by default. Then create the class and fill it with public properties that
+**/application/Config** by default. Then create the class and fill it with public properties that
 represent your settings::
 
 	<?php namespace Config;
@@ -57,7 +57,7 @@ the server used for the production site, you can modify your values based on the
 you will have settings that might change depending on the server it's running on.This can include
 database settings, API credentials, and other settings that will vary between deploys.
 
-You can store values in a ``.env`` file in the ``/application`` directory. It is simply a collection of name/value pairs separated by an equal
+You can store values in a **.env** file in the **/application** directory. It is simply a collection of name/value pairs separated by an equal
 sign, much like a .ini file::
 
 	S3_BUCKET="dotenv"
@@ -65,12 +65,12 @@ sign, much like a .ini file::
 
 If the variable exists in the environment already, it will NOT be overwritten. 
 
-.. important:: Make sure the ``.env`` file is added to ``.gitignore`` (or your version control system's equivalent)
+.. important:: Make sure the **.env** file is added to **.gitignore** (or your version control system's equivalent)
 	so it is not checked-in the code. Failure to do so could result in sensitive credentials being stored in the
 	repository for anyone to find.
 
-You are encouraged to create a template file, like ``env.example``, that has all of the variables your project
-needs with empty or dummy data. In each environment, you can then copy the file to ``.env`` and fill in the
+You are encouraged to create a template file, like **env.example**, that has all of the variables your project
+needs with empty or dummy data. In each environment, you can then copy the file to **.env** and fill in the
 appropriate data.
 
 When your application runs, this file will be automatically loaded and the variables will be put into

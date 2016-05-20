@@ -16,4 +16,4 @@ In 2014, CodeIgniter was acquired by the `British Columbia Institute of Technolo
 project.
 
 Bleeding edge development is spearheaded by the handpicked contributors
-of the Reactor Team.
+of the CodeIgniter Council.

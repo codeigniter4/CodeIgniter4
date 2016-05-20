@@ -14,7 +14,7 @@ of the Timer class. The simplest method would simply be to create a new instance
 
 	$timer = new CodeIgniter\Debug\Timer();
 
-And this works great. Until you decide that you want to user a different timer class in its place.
+And this works great. Until you decide that you want to use a different timer class in its place.
 Maybe this one has some advanced reporting the default timer does not provide. In order to do this,
 you now have to locate all of the locations in your application that you have used the timer class.
 Since you might have left them in place to keep a performance log of your application constantly
@@ -52,10 +52,10 @@ If the creation method requires additional parameters, they can be passed after 
 
 	$renderer = service('renderer', APPPATH.'views/');
 
-The second function, ``sharedService()`` works just like ``service()`` but returns a shared
+The second function, ``shared_service()`` works just like ``service()`` but returns a shared
 instance of the desired service::
 
-    $logger = sharedService('logger');
+    $logger = shared_service('logger');
 
 
 
@@ -78,7 +78,7 @@ create a new class that implements the ``RouterCollectionInterface``::
 	    // Implement required methods here.
 	}
 
-Finally, modify ``/application/config/services.php`` to create a new instance of ``MyRouter``
+Finally, modify **/application/Config/Services.php** to create a new instance of ``MyRouter``
 instead of ``CodeIgniter\\Router\\RouterCollection``::
 
 	public static function routes()
@@ -119,17 +119,17 @@ factory method. This handles checking if an instance has been created and saved
 within the class, and, if not, creates a new one. All of the factory methods provide a
 ``$getShared = false`` value as the last parameter. You should stick to the method also.::
 
-	class Services
-	{
-		public static function routes($getShared = false)
-	    {
-	    	if (! $getShared)
-		    {
-			    return new \CodeIgniter\Router\RouteCollection();
-		    }
+    class Services
+    {
+        public static function routes($getShared = false)
+        {
+            if (! $getShared)
+            {
+                return new \CodeIgniter\Router\RouteCollection();
+            }
 
-		    return self::getSharedInstance('routes');
-	    }
-	}
+            return self::getSharedInstance('routes');
+        }
+    }
 
 
