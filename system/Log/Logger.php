@@ -36,7 +36,7 @@
  * @filesource
  */
 
-use Psr\Log\LoggerInterface;
+use PSR\Log\LoggerInterface;
 
 /**
  * The CodeIgntier Logger
