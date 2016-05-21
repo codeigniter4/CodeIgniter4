@@ -219,7 +219,7 @@ class CodeIgniter
 
 	/**
 	 * Get our Request object, (either IncomingRequest or CLIRequest)
-	 * and set the server protocol based on tne information provided
+	 * and set the server protocol based on the information provided
 	 * by the server.
 	 */
 	protected function getRequestObject()
@@ -244,6 +244,7 @@ class CodeIgniter
 	protected function getResponseObject()
 	{
 		$this->response = Services::response($this->config);
+
 		if ( ! is_cli())
 		{
 			$this->response->setProtocolVersion($this->request->getProtocolVersion());
@@ -328,13 +329,6 @@ class CodeIgniter
 
 	//--------------------------------------------------------------------
 
-	protected function callExit($code)
-	{
-		exit($code);
-	}
-
-	//--------------------------------------------------------------------
-
 	/**
 	 * Now that everything has been setup, this method attempts to run the
 	 * controller method and make the script go. If it's not able to, will
@@ -374,6 +368,13 @@ class CodeIgniter
 		}
 	}
 
+	//--------------------------------------------------------------------
+
+	/**
+	 * Instantiates the controller class.
+	 *
+	 * @return mixed
+	 */
 	protected function createController()
 	{
 		$class = new $this->controller($this->request, $this->response);
@@ -383,6 +384,13 @@ class CodeIgniter
 		return $class;
 	}
 
+	//--------------------------------------------------------------------
+
+	/**
+	 * Runs the controller, allowing for _remap methods to function.
+	 *
+	 * @param $class
+	 */
 	protected function runController($class)
 	{
 		if (method_exists($class, '_remap'))
@@ -397,6 +405,14 @@ class CodeIgniter
 		$this->benchmark->stop('controller');
 	}
 
+	//--------------------------------------------------------------------
+
+	/**
+	 * Displays a 404 Page Not Found error. If set, will try to
+	 * call the 404Override controller/method that was set in routing config.
+	 *
+	 * @param PageNotFoundException $e
+	 */
 	protected function display404errors(PageNotFoundException $e)
 	{
 		// Is there a 404 Override available?
@@ -444,6 +460,8 @@ class CodeIgniter
 
 		ob_start();
 
+		// These might show as unused here - but don't delete!
+		// They are used within the view files.
 		$heading = 'Page Not Found';
 		$message = $e->getMessage();
 
@@ -506,4 +524,19 @@ class CodeIgniter
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Exits the application, setting the exit code for CLI-based applications
+	 * that might be watching.
+	 *
+	 * Made into a separate method so that it can be mocked during testing
+	 * without actually stopping script execution.
+	 *
+	 * @param $code
+	 */
+	protected function callExit($code)
+	{
+		exit($code);
+	}
+
+	//--------------------------------------------------------------------
 }
