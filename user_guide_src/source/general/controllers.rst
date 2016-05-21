@@ -34,7 +34,7 @@ and put the following code in it::
 		}
 	}
 
-Then save the file to your ``/application/Controllers/`` directory.
+Then save the file to your **/application/Controllers/** directory.
 
 .. important:: The file must be called 'Blog.php', with a capital 'B'.
 
@@ -174,9 +174,7 @@ be passed as a parameter to the ``_remap()`` method::
 		}
 	}
 
-Any extra segments after the method name are passed into ``_remap()`` as an
-optional second parameter. This array can be used in combination with
-PHP's `call_user_func_array() <http://php.net/call_user_func_array>`_
+Any extra segments after the method name are passed into ``_remap()``. These parameters can be passed to the method
 to emulate CodeIgniter's default behavior.
 
 Example::
@@ -234,8 +232,7 @@ called if the URL contains *only* the sub-directory. Simply put a controller
 in there that matches the name of your 'default_controller' as specified in
 your *application/Config/Routes.php* file.
 
-CodeIgniter also permits you to remap your URIs using its :doc:`URI
-	Routing <routing>` feature.
+CodeIgniter also permits you to remap your URIs using its :doc:`URI Routing <routing>` feature.
 
 Class Constructors
 ==================

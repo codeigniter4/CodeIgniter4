@@ -36,7 +36,7 @@
  * @filesource
  */
 
-use CodeIgniter\Services;
+use Config\Services;
 use CodeIgniter\Log\Logger;
 
 /**
@@ -94,9 +94,9 @@ class View implements RenderableInterface {
 	{
 		$this->viewPath = rtrim($viewPath, '/ ').'/';
 
-		$this->loader = is_null($loader) ? Services::locator(true) : $loader;
+		$this->loader = is_null($loader) ? Services::locator() : $loader;
 
-		$this->logger = is_null($logger) ? Services::logger(true) : $logger;
+		$this->logger = is_null($logger) ? Services::logger() : $logger;
 
 		$this->debug = is_null($debug) ? CI_DEBUG : $debug;
 	}

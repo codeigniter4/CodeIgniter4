@@ -18,8 +18,8 @@ System Class List
 The following is a list of the core system files that are invoked every time CodeIgniter runs:
 
 * Config\\Services
-* CodeIgniter\\Autoloader\Autoloader
-* CodeIgniter\\Config\DotEnv
+* CodeIgniter\\Autoloader\\Autoloader
+* CodeIgniter\\Config\\DotEnv
 * CodeIgniter\\Controller
 * CodeIgniter\\Debug\\Exceptions
 * CodeIgniter\\Debug\\Timer

@@ -8,14 +8,14 @@ this type of hierarchy.
 
 Views are never called directly, they must be loaded by a controller. Remember that in an MVC framework,
 the Controller acts as the traffic cop, so it is responsible for fetching a particular view. If you have
-not read the :doc:`Controllers`_ page, you should do so before continuing.
+not read the :doc:`Controllers <controllers>` page, you should do so before continuing.
 
 Using the example controller you created in the controller page, let’s add a view to it.
 
 Creating a View
 ===============
 
-Using your text editor, create a file called ``blogview.php`` and put this in it::
+Using your text editor, create a file called ``BlogView.php`` and put this in it::
 
 	<html>
 	<head>
@@ -26,7 +26,7 @@ Using your text editor, create a file called ``blogview.php`` and put this in it
 	</body>
 	</html>
 
-Then save the file in your ``application/views`` directory.
+Then save the file in your **application/Views** directory.
 
 Loading a View
 ==============
@@ -45,7 +45,7 @@ Now, open the controller file you made earlier called ``Blog.php``, and replace 
 	{
 		public function index()
 		{
-			echo view('blogview');
+			echo view('BlogView');
 		}
 	}
 
@@ -83,7 +83,7 @@ Storing Views within Sub-directories
 Your view files can also be stored within sub-directories if you prefer that type of organization.
 When doing so you will need to include the directory name loading the view.  Example::
 
-	view('directory_name/file_name');
+	load_view('directory_name/file_name');
 
 Adding Dynamic Data to the View
 ===============================
@@ -97,7 +97,7 @@ loading function.  Here's an example::
 		'message' => 'My Message'
 	];
 	
-	echo view('blogview', $data);
+	echo load_view('blogview', $data);
 
 Let's try it with your controller file. Open it and add this code::
 
@@ -108,7 +108,7 @@ Let's try it with your controller file. Open it and add this code::
 			$data['title'] = "My Real Title";
 			$data['heading'] = "My Real Heading";
 			
-			echo view('blogview', $data);
+			echo load_view('blogview', $data);
 		}
 	}
 	
@@ -148,9 +148,9 @@ Then you can use any of the three standard methods that it provides.
 
 The `setVar()` and `setData()` methods are chainable, allowing you to combine a number of different calls together in a chain::
 
-	DI('renderer')->setVar('one', $one)
-	              ->setVar('two', $two)
-	              ->render('myView');
+	service('renderer')->setVar('one', $one)
+	                   ->setVar('two', $two)
+	                   ->render('myView');
 
 Escaping Data
 =============
@@ -161,7 +161,7 @@ escape the data for. See below for context descriptions.
 
 If you don't want the data to be escaped, you can pass `null` or `raw` as the final parameter to each function::
 
-	echo $renderer->setVar('one', $one, 'raw');
+	$renderer->setVar('one', $one, 'raw');
 
 If you choose not to escape data, or you are passing in an object instance, you can manually escape the data within
 the view with the ``esc()`` function. The first parameter is the string to escape. The second parameter is the
@@ -172,7 +172,7 @@ context to escape the data for (see below)::
 Escaping Contexts
 -----------------
 
-By default, the `esc()` and, in turn, the `setVar()` and `setData()` functions assume that the data you want to
+By default, the ``esc()`` and, in turn, the ``setVar()`` and ``setData()`` functions assume that the data you want to
 escape is intended to be used within standard HTML. However, if the data is intended for use in Javascript, CSS,
 or in an href attribute, you would need different escaping rules to be effective. You can pass in the name of the
 context as the second parameter. Valid contexts are 'html', 'js', 'css', 'url', and 'attr'::
@@ -208,7 +208,7 @@ Here’s a simple example. Add this to your controller::
 				'heading'   => "My Real Heading"
 			];
 
-			echo view('blogview', $data);
+			echo load_view('blogview', $data);
 		}
 	}
 

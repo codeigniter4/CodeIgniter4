@@ -25,7 +25,7 @@ above it instead has a product ID. To overcome this, CodeIgniter allows you to r
 Setting your own routing rules
 ==============================
 
-Routing rules are defined in the ``application/config/Routes.php`` file. In it you'll see that
+Routing rules are defined in the **application/config/Routes.php** file. In it you'll see that
 it creates an instance of the RouteCollection class that permits you to specify your own routing criteria.
 Routes can be specified using placeholders or Regular Expressions.
 
@@ -79,12 +79,12 @@ and the default method, which is usually ``index()``::
 A URL containing the segments "blog/joe" will be remapped to the “\Blogs” class and the “users” method.
 The ID will be set to “34”::
 
-	$routes->add('product/(:any)', 'Catalog/productLookup');
+	$routes->add('product/(:any)', 'Catalog::productLookup');
 	
 A URL with “product” as the first segment, and anything in the second will be remapped to the “\Catalog” class
 and the “productLookup” method::
 
-	$routes->add('product/(:num)', 'Catalog/productLookupByID/$1';
+	$routes->add('product/(:num)', 'Catalog::productLookupByID/$1';
 	
 A URL with “product” as the first segment, and a number in the second will be remapped to the “\Catalog” class
 and the “productLookupByID” method passing in the match as a variable to the method.
@@ -117,7 +117,7 @@ is allowed, as are back-references.
 .. important::Note: If you use back-references you must use the dollar syntax rather than the double backslash syntax.
 A typical RegEx route might look something like this::
 
-	$routes->add('products/([a-z]+)/(\d+)', '$1/id_$2');
+	$routes->add('products/([a-z]+)/(\d+)', '$1::id_$2');
 
 In the above example, a URI similar to products/shirts/123 would instead call the “\Shirts” controller class
 and the “id_123” method.

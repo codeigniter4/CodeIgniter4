@@ -53,8 +53,8 @@ it.
 Loading from Non-standard Locations
 -----------------------------------
 
-Helpers can be loaded from directories outside of ``application/Helpers`` and
-``system/Helpers``, as long as that path can be found through a namespace that
+Helpers can be loaded from directories outside of **application/Helpers** and
+**system/Helpers**, as long as that path can be found through a namespace that
 has been setup within the PSR-4 section of the :doc:`Autoloader config file <../concepts/autoloader>`.
 You would prefix the name of the Helper with the namespace that it can be located
 in. Within that namespaced directory, the loader expects it to live within a
@@ -62,9 +62,9 @@ sub-directory named ``Helpers``. An example will help understand this.
 
 For this example, assume that we have grouped together all of our Blog-related
 code into its own namespace, ``Example\Blog``. The files exist on our server at
-``/Modules/Blog/``. So, we would put our Helper files for the blog module in
-``/Modules/Blog/Helpers/``. A ``blog_helper`` file would be at
-``/Modules/Blog/Helpers/blog_helper.php``. Within our controller we could
+**/Modules/Blog/**. So, we would put our Helper files for the blog module in
+**/Modules/Blog/Helpers/**. A **blog_helper** file would be at
+**/Modules/Blog/Helpers/blog_helper.php**. Within our controller we could
 use the following command to load the helper for us::
 
 	load_helper('Modules\Blog\blog');
