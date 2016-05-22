@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Session;
+<?php
+
+namespace CodeIgniter\Session;
 
 /**
  * CodeIgniter
@@ -36,8 +38,15 @@
  * @filesource
  */
 
+/**
+ * Expected behavior of a session container used with CodeIgniter.
+ */
 interface SessionInterface
 {
+
+	/**
+	 * Initialize the session container.
+	 */
 	public function initialize();
 
 	//--------------------------------------------------------------------
@@ -47,7 +56,7 @@ interface SessionInterface
 	 *
 	 * @param bool $destroy Should old session data be destroyed?
 	 */
-	public function regenerate($destroy = false);
+	public function regenerate(bool $destroy = false);
 
 	//--------------------------------------------------------------------
 
@@ -60,22 +69,31 @@ interface SessionInterface
 
 	/**
 	 * Sets user data into the session.
+	 * 
+	 * If $data is a string, then it is interpreted as a session property
+	 * key, and  $value is expected to be non-null.
+	 * 
+	 * If $data is an array, it is expected to be an array of key/value pairs
+	 * to be set as session properties.
 	 *
-	 * @param      $data
-	 * @param null $value
+	 * @param      $data	Property name or associative array of properties
+	 * @param null $value	Property value if single key provided
 	 */
 	public function set($data, $value = null);
 
 	//--------------------------------------------------------------------
 
 	/**
-	 * Get any user data that has been set in the session.
+	 * Get user data that has been set in the session.
 	 *
+	 * If the property exists as "normal", returns it.
+	 * Otherwise, returns an array of any temp or flash data values with the
+	 * property key.
+	 * 
 	 * Replaces the legacy method $session->userdata();
 	 *
-	 * @param null $key
-	 *
-	 * @return array|null
+	 * @param  $key	Identifier of the session property to retrieve
+	 * @return array|null	The property value(s)
 	 */
 	public function get($key = null);
 
@@ -84,20 +102,24 @@ interface SessionInterface
 	/**
 	 * Returns whether an index exists in the session array.
 	 *
-	 * @param $key
+	 * @param string	$key	Identifier of the session property we are interested in.
 	 *
 	 * @return bool
 	 */
-	public function has($key);
+	public function has(string $key);
 
 	//--------------------------------------------------------------------
 
 	/**
-	 * Unsets one or more bits of session data.
+	 * Remove one or more session properties.
 	 *
-	 * @param $key
+	 * If $key is an array, it is interpreted as an array of string property
+	 * identifiers to remove. Otherwise, it is interpreted as the identifier
+	 * of a specific session property to remove.
+	 * 
+	 * @param  $key Identifier of the session property or properties to remove.
 	 */
-	public function unset($key);
+	public function remove($key);
 
 	//--------------------------------------------------------------------
 
@@ -105,39 +127,45 @@ interface SessionInterface
 	 * Sets data into the session that will only last for a single request.
 	 * Perfect for use with single-use status update messages.
 	 *
-	 * @param      $data
-	 * @param null $value
+	 * If $data is an array, it is interpreted as an associative array of 
+	 * key/value pairs for flashdata properties.
+	 * Otherwise, it is interpreted as the identifier of a specific 
+	 * flashdata property, with $value containing the property value.
+	 * 
+	 * @param      $data	Property identifier or associative array of properties
+	 * @param null $value	Property value if $data is a scalar
 	 */
 	public function setFlashdata($data, $value = null);
 
 	//--------------------------------------------------------------------
 
 	/**
-	 * Grabs one or more items of flash data from the session.
+	 * Retrieve one or more items of flash data from the session.
+	 * 
+	 * If the item key is null, return all flashdata.
 	 *
-	 * @param null $key
-	 *
-	 * @return array|null
+	 * @param string $key	Property identifier
+	 * @return array|null	The requested property value, or an associative 
+	 * 	array  of them
 	 */
-	public function getFlashdata($key = null);
+	public function getFlashdata(string $key = null);
 
 	//--------------------------------------------------------------------
 
 	/**
 	 * Keeps a single piece of flash data alive for one more request.
 	 *
-	 * @param $key
-	 *
-	 * @return $this
+	 * @param string $key	Property identifier or array of them
 	 */
-	public function keepFlashdata($key);
+	public function keepFlashdata(string $key);
 
 	//--------------------------------------------------------------------
 
 	/**
-	 * @param $key
-	 *
-	 * @return bool
+	 * Mark a session property or properties as flashdata.
+	 * 
+	 * @param $key	Property identifier or array of them
+	 * @return False if any of the properties are not already set
 	 */
 	public function markAsFlashdata($key);
 
@@ -146,16 +174,16 @@ interface SessionInterface
 	/**
 	 * Unmark data in the session as flashdata.
 	 *
-	 * @param mixed $key
+	 * @param mixed $key	Property identifier or array of them
 	 */
 	public function unmarkFlashdata($key);
 
 	//--------------------------------------------------------------------
 
 	/**
-	 * Grabs all of the keys for session data marked as flashdata.
+	 * Retrieve all of the keys for session data marked as flashdata.
 	 *
-	 * @return array
+	 * @return array	The property names of all flashdata
 	 */
 	public function getFlashKeys();
 
@@ -174,10 +202,10 @@ interface SessionInterface
 	//--------------------------------------------------------------------
 
 	/**
-	 * Returns either a single piece of tempdata, or all temp data currently in the session.
+	 * Returns either a single piece of tempdata, or all temp data currently 
+	 * in the session.
 	 *
-	 * @param string $key   Session data key
-	 *
+	 * @param  $key   Session data key
 	 * @return mixed        Session data value or null if not found.
 	 */
 	public function getTempdata($key = null);
@@ -187,9 +215,9 @@ interface SessionInterface
 	/**
 	 * Removes a single piece of temporary data from the session.
 	 *
-	 * @param $key
+	 * @param string $key Session data key
 	 */
-	public function unsetTempdata($key);
+	public function removeTempdata($key);
 
 	//--------------------------------------------------------------------
 
@@ -197,10 +225,9 @@ interface SessionInterface
 	 * Mark one of more pieces of data as being temporary, meaning that
 	 * it has a set lifespan within the session.
 	 *
-	 * @param     $key
-	 * @param int $ttl
-	 *
-	 * @return bool
+	 * @param     $key	Property identifier or array of them
+	 * @param int $ttl	Time to live, in seconds
+	 * @return bool	False if any of the properties were not set
 	 */
 	public function markAsTempdata($key, $ttl = 300);
 
@@ -210,19 +237,18 @@ interface SessionInterface
 	 * Unmarks temporary data in the session, effectively removing its
 	 * lifespan and allowing it to live as long as the session does.
 	 *
-	 * @param $key
+	 * @param $key	Property identifier or array of them
 	 */
 	public function unmarkTempdata($key);
 
 	//--------------------------------------------------------------------
 
 	/**
-	 * Grabs the keys of all session data that has been marked as temporary data.
+	 * Retrieve the keys of all session data that have been marked as temporary data.
 	 *
 	 * @return array
 	 */
 	public function getTempKeys();
 
 	//--------------------------------------------------------------------
-
 }
