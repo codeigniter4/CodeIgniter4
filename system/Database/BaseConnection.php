@@ -51,7 +51,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 *
 	 * @var    string
 	 */
-	public $DBDriver = 'mysqli';
+	public $DBDriver = 'MySQLi';
 
 	/**
 	 * Sub-driver
@@ -404,7 +404,7 @@ abstract class BaseConnection implements ConnectionInterface
 	//--------------------------------------------------------------------
 
 	/**
-	 * The name of the platform in use (mysqli, mssql, etc)
+	 * The name of the platform in use (MySQLi, mssql, etc)
 	 *
 	 * @return mixed
 	 */
