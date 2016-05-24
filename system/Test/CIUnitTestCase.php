@@ -39,6 +39,9 @@
 use PHPUnit_Framework_TestCase;
 use CodeIgniter\Log\TestLogger;
 
+/**
+ * PHPunit test case.
+ */
 class CIUnitTestCase extends PHPUnit_Framework_TestCase
 {
 	use ReflectionHelper;

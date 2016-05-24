@@ -49,12 +49,17 @@ use Config\Database;
 class MigrationsCommand extends \CodeIgniter\Controller
 {
 	/**
+	 * Migration runner.
+	 * 
 	 * @var \CodeIgniter\Database\MigrationRunner
 	 */
 	protected $runner;
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Constructor.
+	 */
 	public function __construct()
 	{
 	    $this->runner = Services::migrations();

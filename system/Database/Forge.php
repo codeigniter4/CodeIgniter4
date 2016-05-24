@@ -51,14 +51,30 @@ class Forge
 	protected $db;
 
 	/**
+	 * List of fields.
+	 * 
 	 * @var array
 	 */
 	protected $fields = [];
 
+	/**
+	 * List of keys.
+	 * @var type 
+	 */
 	protected $keys = [];
 
+	/**
+	 * List of primary keys.
+	 * 
+	 * @var type 
+	 */
 	protected $primaryKeys = [];
 
+	/**
+	 * Character set used.
+	 * 
+	 * @var type 
+	 */
 	protected $charset = '';
 
 	//--------------------------------------------------------------------
@@ -138,6 +154,11 @@ class Forge
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Constructor.
+	 * 
+	 * @param \CodeIgniter\Database\ConnectionInterface $db
+	 */
 	public function __construct(ConnectionInterface $db)
 	{
 		$this->db =& $db;

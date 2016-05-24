@@ -51,15 +51,128 @@
 	The Error Exceptions below are primarily to provide a way to have information logged
 	automatically by the application's log system.
 */
+
+/**
+ * Exception for automatic logging.
+ */
 class EmergencyError extends \Error {};  // system is unusable
+
+/**
+ * Exception for automatic logging.
+ */
 class AlertError     extends \Error {};  // Action must be taken immediately (system/db down, etc)
+
+/**
+ * Exception for automatic logging.
+ */
 class CriticalError  extends \Error {};  // Critical conditions, like component unavailble, etc.
+
+/**
+ * Exception for automatic logging.
+ */
 class Error          extends \Error {};  // Runtime errors that do not require immediate action
 
-class PageNotFoundException  extends \OutOfBoundsException { protected $code = 404; };
-class ConfigException        extends CriticalError         { protected $code = 3; };
-class UnknownFileException   extends CriticalError         { protected $code = 4; };
-class UnknownClassException  extends CriticalError         { protected $code = 5; };
-class UnknownMethodException extends CriticalError         { protected $code = 6; };
-class UserInputException     extends \OutOfBoundsException { protected $code = 7; };
-class DatabaseException      extends Error                 { protected $code = 8; };
+/**
+ * Exception for automatic logging.
+ */
+class PageNotFoundException extends \OutOfBoundsException
+{
+	/**
+	 * Error code
+	 * @var int 
+	 */
+	protected $code = 404;
+
+}
+
+;
+
+/**
+ * Exception for automatic logging.
+ */
+class ConfigException extends CriticalError
+{
+	/**
+	 * Error code
+	 * @var int 
+	 */
+	protected $code = 3;
+
+}
+
+;
+
+/**
+ * Exception for automatic logging.
+ */
+class UnknownFileException extends CriticalError
+{
+	/**
+	 * Error code
+	 * @var int 
+	 */
+	protected $code = 4;
+
+}
+
+;
+
+/**
+ * Exception for automatic logging.
+ */
+class UnknownClassException extends CriticalError
+{
+	/**
+	 * Error code
+	 * @var int 
+	 */
+	protected $code = 5;
+
+}
+
+;
+
+/**
+ * Exception for automatic logging.
+ */
+class UnknownMethodException extends CriticalError
+{
+	/**
+	 * Error code
+	 * @var int 
+	 */
+	protected $code = 6;
+
+}
+
+;
+
+/**
+ * Exception for automatic logging.
+ */
+class UserInputException extends \OutOfBoundsException
+{
+	/**
+	 * Error code
+	 * @var int 
+	 */
+	protected $code = 7;
+
+}
+
+;
+
+/**
+ * Exception for automatic logging.
+ */
+class DatabaseException extends Error
+{
+	/**
+	 * Error code
+	 * @var int 
+	 */
+	protected $code = 8;
+
+}
+
+;

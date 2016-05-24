@@ -88,6 +88,13 @@ class Controller
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Constructor.
+	 * 
+	 * @param RequestInterface $request
+	 * @param ResponseInterface $response
+	 * @param Logger $logger
+	 */
 	public function __construct(RequestInterface $request, ResponseInterface $response, Logger $logger = null)
 	{
 	    $this->request = $request;

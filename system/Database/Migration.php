@@ -61,6 +61,11 @@ abstract class Migration
 	
 	//--------------------------------------------------------------------
 	
+	/**
+	 * Constructor.
+	 * 
+	 * @param \CodeIgniter\Database\Forge $forge
+	 */
 	public function __construct(Forge $forge = null) 
 	{
 	    $this->forge = ! is_null($forge)
@@ -84,11 +89,16 @@ abstract class Migration
 
 	//--------------------------------------------------------------------
 
-
+	/**
+	 * Perform a migration step.
+	 */
 	abstract public function up();
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Revert a migration step.
+	 */
 	abstract public function down();
 
 	//--------------------------------------------------------------------
