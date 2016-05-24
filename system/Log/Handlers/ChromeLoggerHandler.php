@@ -102,6 +102,11 @@ class ChromeLoggerHandler extends BaseHandler implements HandlerInterface
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Constructor
+	 * 
+	 * @param array $config
+	 */
 	public function __construct(array $config = [])
 	{
 		parent::__construct($config);
@@ -126,7 +131,7 @@ class ChromeLoggerHandler extends BaseHandler implements HandlerInterface
 	 *
 	 * @return bool
 	 */
-	public function handle($level, $message): bool
+	public function handle($level, $message)//: bool
 	{
 		// Format our message
 		$message = $this->format($message);
@@ -180,6 +185,8 @@ class ChromeLoggerHandler extends BaseHandler implements HandlerInterface
 
 	/**
 	 * Attaches the header and the content to the passed in request object.
+	 * 
+	 * @param ResponseInterface response
 	 */
 	public function sendLogs(ResponseInterface &$response=null)
 	{

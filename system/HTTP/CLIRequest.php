@@ -71,6 +71,11 @@ class CLIRequest extends Request
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Constructor 
+	 * 
+	 * @param App $config
+	 */
 	public function __construct(App $config)
 	{
 		parent::__construct($config, null);
@@ -95,8 +100,10 @@ class CLIRequest extends Request
 	 *
 	 *      // Routes to /users/21/profile (index is removed for routing sake)
 	 *      // with the option foo = bar.
+	 * 
+	 * @return string
 	 */
-	public function getPath(): string
+	public function getPath()//: string
 	{
 		$path = implode('/', $this->segments);
 
@@ -111,7 +118,7 @@ class CLIRequest extends Request
 	 *
 	 * @return array
 	 */
-	public function getOptions(): array
+	public function getOptions()//: array
 	{
 	    return $this->options;
 	}
@@ -151,7 +158,7 @@ class CLIRequest extends Request
 	 *
 	 * @return string
 	 */
-	public function getOptionString(): string
+	public function getOptionString()//: string
 	{
 	    if (empty($this->options))
 	    {

@@ -44,8 +44,6 @@
  * from the environment.
  *
  * These can be set within the .env file.
- *
- * @package Config
  */
 class BaseConfig
 {

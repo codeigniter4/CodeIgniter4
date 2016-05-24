@@ -2,10 +2,10 @@
 <phpdoc>
     <title>CodeIgniter v4.0.0 API</title>
     <parser>
-        <target>./api/data/</target>
+        <target>api/data/</target>
     </parser>
     <transformer>
-        <target>./api/build/</target>
+        <target>api/build/</target>
     </transformer>
     <files>
         <directory>./system</directory>
@@ -17,8 +17,8 @@
     <logging>
         <level>warn</level>
         <paths>
-            <default>./api/log/{DATE}.log</default>
-            <errors>./api/{DATE}.errors.log</errors>
+            <default>api/log/{DATE}.log</default>
+            <errors>api/{DATE}.errors.log</errors>
         </paths>
     </logging>
     

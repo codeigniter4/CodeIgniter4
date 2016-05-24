@@ -80,6 +80,10 @@ class CLI
 	 */
 	protected static $inProgress = false;
 
+	/**
+	 * Foreground color list
+	 * @var array
+	 */
 	protected static $foreground_colors = [
 		'black'        => '0;30',
 		'dark_gray'    => '1;30',
@@ -100,6 +104,10 @@ class CLI
 		'white'        => '1;37',
 	];
 
+	/**
+	 * Background color list
+	 * @var array
+	 */
 	protected static $background_colors = [
 		'black'      => '40',
 		'red'        => '41',
@@ -131,11 +139,11 @@ class CLI
 	 * Named options must be in the following formats:
 	 * php index.php user -v --v -name=John --name=John
 	 *
-	 * @param    string|int $name the name of the option (int if unnamed)
+	 * @param    string $prefix
 	 *
 	 * @return    string
 	 */
-	public static function input(string $prefix = null): string
+	public static function input(string $prefix = null)//: string
 	{
 		if (static::$readline_support)
 		{
@@ -168,7 +176,7 @@ class CLI
 	 *
 	 * @return    string    the user input
 	 */
-	public static function prompt(): string
+	public static function prompt()//: string
 	{
 		$args = func_get_args();
 
@@ -272,6 +280,8 @@ class CLI
 	 * with a line break.
 	 *
 	 * @param    string|array $text the text to output, or array of lines
+	 * @param string $foreground
+	 * @param string $background
 	 */
 	public static function write(string $text, string $foreground = null, string $background = null)
 	{
@@ -289,6 +299,8 @@ class CLI
 	 * Outputs an error to the CLI using STDERR instead of STDOUT
 	 *
 	 * @param    string|array $text the text to output, or array of errors
+	 * @param string $foreground
+	 * @param string $background
 	 */
 	public static function error(string $text, string $foreground = 'light_red', string $background = null)
 	{
@@ -366,7 +378,7 @@ class CLI
 	/**
 	 * Enter a number of empty lines
 	 *
-	 * @param    integer    Number of lines to output
+	 * @param    int $num   Number of lines to output
 	 *
 	 * @return    void
 	 */
@@ -455,7 +467,7 @@ class CLI
 	 *
 	 * @return int
 	 */
-	public static function getWidth(int $default = 80): int
+	public static function getWidth(int $default = 80)//: int
 	{
 		if (static::isWindows())
 		{
@@ -476,7 +488,7 @@ class CLI
 	 *
 	 * @return int
 	 */
-	public static function getHeight(int $default = 32): int
+	public static function getHeight(int $default = 32)//: int
 	{
 		if (static::isWindows())
 		{
@@ -549,7 +561,7 @@ class CLI
 	 *
 	 * @return string
 	 */
-	public static function wrap(string $string = null, int $max = 0, int $pad_left = 0): string
+	public static function wrap(string $string = null, int $max = 0, int $pad_left = 0)//: string
 	{
 		if (empty($string))
 		{

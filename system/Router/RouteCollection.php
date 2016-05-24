@@ -188,7 +188,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @return mixed
 	 */
-	public function addPlaceholder(string $placeholder, string $pattern = null): RouteCollectionInterface
+	public function addPlaceholder(string $placeholder, string $pattern = null)//: RouteCollectionInterface
 	{
 		if ( ! is_array($placeholder))
 		{
@@ -210,7 +210,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @return mixed
 	 */
-	public function setDefaultNamespace(string $value): RouteCollectionInterface
+	public function setDefaultNamespace(string $value)//: RouteCollectionInterface
 	{
 		$this->defaultNamespace = filter_var($value, FILTER_SANITIZE_STRING);
 		$this->defaultNamespace = rtrim($this->defaultNamespace, '\\') . '\\';
@@ -228,7 +228,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @return mixed
 	 */
-	public function setDefaultController(string $value): RouteCollectionInterface
+	public function setDefaultController(string $value)//: RouteCollectionInterface
 	{
 		$this->defaultController = filter_var($value, FILTER_SANITIZE_STRING);
 
@@ -245,7 +245,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @return mixed
 	 */
-	public function setDefaultMethod(string $value): RouteCollectionInterface
+	public function setDefaultMethod(string $value)//: RouteCollectionInterface
 	{
 		$this->defaultMethod = filter_var($value, FILTER_SANITIZE_STRING);
 
@@ -265,7 +265,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @return mixed
 	 */
-	public function setTranslateURIDashes(bool $value): RouteCollectionInterface
+	public function setTranslateURIDashes(bool $value)//: RouteCollectionInterface
 	{
 		$this->translateURIDashes = $value;
 
@@ -286,7 +286,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @return RouteCollection
 	 */
-	public function setAutoRoute(bool $value): RouteCollectionInterface
+	public function setAutoRoute(bool $value)//: RouteCollectionInterface
 	{
 		$this->autoRoute = $value;
 
@@ -306,7 +306,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @return $this
 	 */
-	public function set404Override($callable = null): RouteCollectionInterface
+	public function set404Override($callable = null)//: RouteCollectionInterface
 	{
 	    $this->override404 = $callable;
 
@@ -334,7 +334,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @param $constraint
 	 */
-	public function setDefaultConstraint(string $placeholder): RouteCollectionInterface
+	public function setDefaultConstraint(string $placeholder)//: RouteCollectionInterface
 	{
 		if (array_key_exists($placeholder, $this->placeholders)) {
 			$this->defaultPlaceholder = $placeholder;
@@ -350,7 +350,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @return string
 	 */
-	public function getDefaultController(): string
+	public function getDefaultController()//: string
 	{
 		return $this->defaultController;
 	}
@@ -362,7 +362,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @return string
 	 */
-	public function getDefaultMethod(): string
+	public function getDefaultMethod()//: string
 	{
 		return $this->defaultMethod;
 	}
@@ -376,7 +376,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @return mixed
 	 */
-	public function shouldTranslateURIDashes(): bool
+	public function shouldTranslateURIDashes()//: bool
 	{
 		return $this->translateURIDashes;
 	}
@@ -388,7 +388,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @return bool
 	 */
-	public function shouldAutoRoute(): bool
+	public function shouldAutoRoute()//: bool
 	{
 		return $this->autoRoute;
 	}
@@ -400,7 +400,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @return array
 	 */
-	public function getRoutes(): array
+	public function getRoutes()//: array
 	{
 		$routes = [];
 
@@ -420,7 +420,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @return string
 	 */
-	public function getHTTPVerb(): string
+	public function getHTTPVerb()//: string
 	{
 		return $this->HTTPVerb;
 	}
@@ -436,7 +436,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @return RouteCollectionInterface
 	 */
-	public function map(array $routes = [], array $options = null): RouteCollectionInterface
+	public function map(array $routes = [], array $options = null)//: RouteCollectionInterface
 	{
 	    foreach ($routes as $from => $to)
 	    {
@@ -461,7 +461,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @return self RouteCollectionInterface
 	 */
-	public function add(string $from, $to, array $options = null): RouteCollectionInterface
+	public function add(string $from, $to, array $options = null)//: RouteCollectionInterface
 	{
 		$this->create($from, $to, $options);
 
@@ -501,7 +501,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @return bool
 	 */
-	public function isRedirect(string $from): bool
+	public function isRedirect(string $from)//: bool
 	{
 		foreach ($this->routes as $name => $route)
 		{
@@ -524,7 +524,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @return int
 	 */
-	public function getRedirectCode(string $from) : int
+	public function getRedirectCode(string $from)//: int
 	{
 		foreach ($this->routes as $name => $route)
 		{
@@ -629,7 +629,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @return RouteCollectionInterface
 	 */
-	public function resource(string $name, array $options = null): RouteCollectionInterface
+	public function resource(string $name, array $options = null)//: RouteCollectionInterface
 	{
 		// In order to allow customization of the route the
 		// resources are sent to, we need to have a new name
@@ -687,7 +687,7 @@ class RouteCollection implements RouteCollectionInterface
 	 * @param       $to
 	 * @param array $options
 	 */
-	public function match(array $verbs = [], string $from, string $to, array $options = null): RouteCollectionInterface
+	public function match(array $verbs = [], string $from, string $to, array $options = null)//: RouteCollectionInterface
 	{
 		foreach ($verbs as $verb)
 		{
@@ -708,7 +708,7 @@ class RouteCollection implements RouteCollectionInterface
 	 * @param       $to
 	 * @param array $options
 	 */
-	public function get(string $from, string $to, array $options = null): RouteCollectionInterface
+	public function get(string $from, string $to, array $options = null)//: RouteCollectionInterface
 	{
 		if ($this->HTTPVerb == 'get')
 		{
@@ -727,7 +727,7 @@ class RouteCollection implements RouteCollectionInterface
 	 * @param       $to
 	 * @param array $options
 	 */
-	public function post(string $from, string $to, array $options = null): RouteCollectionInterface
+	public function post(string $from, string $to, array $options = null)//: RouteCollectionInterface
 	{
 		if ($this->HTTPVerb == 'post')
 		{
@@ -746,7 +746,7 @@ class RouteCollection implements RouteCollectionInterface
 	 * @param       $to
 	 * @param array $options
 	 */
-	public function put(string $from, string $to, array $options = null): RouteCollectionInterface
+	public function put(string $from, string $to, array $options = null)//: RouteCollectionInterface
 	{
 		if ($this->HTTPVerb == 'put')
 		{
@@ -765,7 +765,7 @@ class RouteCollection implements RouteCollectionInterface
 	 * @param       $to
 	 * @param array $options
 	 */
-	public function delete(string $from, string $to, array $options = null): RouteCollectionInterface
+	public function delete(string $from, string $to, array $options = null)//: RouteCollectionInterface
 	{
 		if ($this->HTTPVerb == 'delete')
 		{
@@ -784,7 +784,7 @@ class RouteCollection implements RouteCollectionInterface
 	 * @param       $to
 	 * @param array $options
 	 */
-	public function head(string $from, string $to, array $options = null): RouteCollectionInterface
+	public function head(string $from, string $to, array $options = null)//: RouteCollectionInterface
 	{
 		if ($this->HTTPVerb == 'head')
 		{
@@ -803,7 +803,7 @@ class RouteCollection implements RouteCollectionInterface
 	 * @param       $to
 	 * @param array $options
 	 */
-	public function patch(string $from, string $to, array $options = null): RouteCollectionInterface
+	public function patch(string $from, string $to, array $options = null)//: RouteCollectionInterface
 	{
 		if ($this->HTTPVerb == 'patch')
 		{
@@ -822,7 +822,7 @@ class RouteCollection implements RouteCollectionInterface
 	 * @param       $to
 	 * @param array $options
 	 */
-	public function options(string $from, string $to, array $options = null): RouteCollectionInterface
+	public function options(string $from, string $to, array $options = null)//: RouteCollectionInterface
 	{
 		if ($this->HTTPVerb == 'options')
 		{
@@ -841,7 +841,7 @@ class RouteCollection implements RouteCollectionInterface
 	 * @param       $to
 	 * @param array $options
 	 */
-	public function cli(string $from, string $to, array $options = null): RouteCollectionInterface
+	public function cli(string $from, string $to, array $options = null)//: RouteCollectionInterface
 	{
 		if ($this->HTTPVerb == 'cli')
 		{
@@ -861,7 +861,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @return $this
 	 */
-	public function environment(string $env, \Closure $callback): RouteCollectionInterface
+	public function environment(string $env, \Closure $callback)//: RouteCollectionInterface
 	{
 		if (ENVIRONMENT == $env)
 		{
@@ -889,7 +889,7 @@ class RouteCollection implements RouteCollectionInterface
 	 * @param string $route
 	 * @param        ...$params
 	 */
-	public function reverseRoute(string $search, ...$params): string
+	public function reverseRoute(string $search, ...$params)//: string
 	{
 		// Named routes get higher priority.
 		if (array_key_exists($search, $this->routes))
@@ -940,7 +940,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @return string
 	 */
-	protected function fillRouteParams(string $from, array $params = null): string
+	protected function fillRouteParams(string $from, array $params = null)//: string
 	{
 		// Find all of our back-references in the original route
 		preg_match_all('/\(([^)]+)\)/', $from, $matches);

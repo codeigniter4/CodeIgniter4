@@ -89,7 +89,7 @@ interface UploadedFileInterface
 	 * @throws \RuntimeException on any error during the move operation.
 	 * @throws \RuntimeException on the second or subsequent call to the method.
 	 */
-	public function move(string $targetPath, string $name = null): bool;
+	public function move(string $targetPath, string $name = null);//: bool;
 
 	//--------------------------------------------------------------------
 
@@ -100,7 +100,7 @@ interface UploadedFileInterface
 	 *
 	 * @return bool
 	 */
-	public function hasMoved(): bool;
+	public function hasMoved();//: bool;
 
 	//--------------------------------------------------------------------
 
@@ -118,7 +118,7 @@ interface UploadedFileInterface
 	 *
 	 * @return int|null The file size in bytes or null if unknown.
 	 */
-	public function getSize(string $unit='b'): int;
+	public function getSize(string $unit='b');//: int;
 
 	//--------------------------------------------------------------------
 
@@ -136,7 +136,7 @@ interface UploadedFileInterface
 	 * @see http://php.net/manual/en/features.file-upload.errors.php
 	 * @return int One of PHP's UPLOAD_ERR_XXX constants.
 	 */
-	public function getError(): int;
+	public function getError();//: int;
 
 	//--------------------------------------------------------------------
 
@@ -153,7 +153,7 @@ interface UploadedFileInterface
 	 * @return string|null The filename sent by the client or null if none
 	 *     was provided.
 	 */
-	public function getName(): string;
+	public function getName();//: string;
 
 	//--------------------------------------------------------------------
 
@@ -162,7 +162,7 @@ interface UploadedFileInterface
 	 *
 	 * @return string
 	 */
-	public function getTempName(): string;
+	public function getTempName();//: string;
 
 	//--------------------------------------------------------------------
 
@@ -172,7 +172,7 @@ interface UploadedFileInterface
 	 *
 	 * @return string
 	 */
-	public function getRandomName(): string;
+	public function getRandomName();//: string;
 
 	//--------------------------------------------------------------------
 
@@ -182,7 +182,7 @@ interface UploadedFileInterface
 	 *
 	 * @return string
 	 */
-	public function getExtension(): string;
+	public function getExtension();//: string;
 
 	//--------------------------------------------------------------------
 
@@ -193,7 +193,7 @@ interface UploadedFileInterface
 	 *
 	 * @return string|null
 	 */
-	public function getClientExtension(): string;
+	public function getClientExtension();//: string;
 
 	//--------------------------------------------------------------------
 
@@ -205,7 +205,7 @@ interface UploadedFileInterface
 	 * @return string|null The media type sent by the client or null if none
 	 *     was provided.
 	 */
-	public function getType(): string;
+	public function getType();//: string;
 
 	//--------------------------------------------------------------------
 
@@ -216,7 +216,7 @@ interface UploadedFileInterface
 	 *
 	 * @return string|null
 	 */
-	public function getClientType(): string;
+	public function getClientType();//: string;
 
 	//--------------------------------------------------------------------
 
@@ -226,7 +226,7 @@ interface UploadedFileInterface
 	 *
 	 * @return bool
 	 */
-	public function isValid(): bool;
+	public function isValid();//: bool;
 
 	//--------------------------------------------------------------------
 

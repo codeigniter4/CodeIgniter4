@@ -88,6 +88,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	/**
 	 * Connect to the database.
 	 *
+	 * @param bool $persistent
 	 * @return mixed
 	 */
 	public function connect($persistent = false)
@@ -321,7 +322,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 *
 	 * @return mixed
 	 */
-	public function affectedRows(): int
+	public function affectedRows()//: int
 	{
 		return $this->connID->affected_rows;
 	}
@@ -331,10 +332,10 @@ class Connection extends BaseConnection implements ConnectionInterface
 	/**
 	 * Platform-dependant string escape
 	 *
-	 * @param	string
+	 * @param	string $str
 	 * @return	string
 	 */
-	protected function _escapeString(string $str): string
+	protected function _escapeString(string $str)//: string
 	{
 		return $this->connID->real_escape_string($str);
 	}
@@ -348,7 +349,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 *
 	 * @return string
 	 */
-	protected function _listTables($prefixLimit = false): string
+	protected function _listTables($prefixLimit = false)//: string
 	{
 		$sql = 'SHOW TABLES FROM '.$this->escapeIdentifiers($this->database);
 
@@ -369,7 +370,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 *
 	 * @return string
 	 */
-	protected function _listColumns(string $table = ''): string
+	protected function _listColumns(string $table = '')//: string
 	{
 		return 'SHOW COLUMNS FROM '.$this->protectIdentifiers($table, TRUE, NULL, FALSE);
 	}

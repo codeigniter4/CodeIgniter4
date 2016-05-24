@@ -66,7 +66,7 @@ abstract class BaseHandler implements HandlerInterface
 	 *
 	 * @return bool
 	 */
-	public function canHandle(string $level): bool
+	public function canHandle(string $level)//: bool
 	{
 		return in_array($level, $this->handles);
 	}
@@ -84,7 +84,7 @@ abstract class BaseHandler implements HandlerInterface
 	 *
 	 * @return bool
 	 */
-	abstract public function handle($level, $message): bool;
+	abstract public function handle($level, $message);//: bool;
 
 	//--------------------------------------------------------------------
 
@@ -95,7 +95,7 @@ abstract class BaseHandler implements HandlerInterface
 	 *
 	 * @return HandlerInterface
 	 */
-	public function setDateFormat(string $format): HandlerInterface
+	public function setDateFormat(string $format)//: HandlerInterface
 	{
 		$this->dateFormat = $format;
 
