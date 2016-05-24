@@ -36,6 +36,9 @@
  * @filesource
  */
 
+/**
+ * Class DotEnv
+ */
 
 class DotEnv
 {

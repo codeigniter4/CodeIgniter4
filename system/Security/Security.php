@@ -38,6 +38,9 @@
 
 use CodeIgniter\HTTP\RequestInterface;
 
+/**
+ * HTTP security handler.
+ */
 class Security
 {
 	/**
@@ -189,8 +192,10 @@ class Security
 
 	/**
 	 * CSRF Verify
-	 *
+	 *  
+	 * @param RequestInterface $request
 	 * @return $this
+	 * @throws \LogicException
 	 */
 	public function CSRFVerify(RequestInterface $request)
 	{
@@ -250,6 +255,7 @@ class Security
 	 * CSRF Set Cookie
 	 *
 	 * @codeCoverageIgnore
+	 * @param RequestInterface $request
 	 * @return    $this
 	 */
 	public function CSRFSetCookie(RequestInterface $request)
