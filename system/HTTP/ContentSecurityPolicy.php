@@ -52,42 +52,118 @@ use Config\ContentSecurityPolicy;
  */
 class ContentSecurityPolicy
 {
+	/**
+	 * Used for security enforcement
+	 * @var type 
+	 */
 	protected $baseURI = [];
 
+	/**
+	 * Used for security enforcement
+	 * @var type 
+	 */
 	protected $childSrc = [];
 
+	/**
+	 * Used for security enforcement
+	 * @var type 
+	 */
 	protected $connectSrc = [];
 
+	/**
+	 * Used for security enforcement
+	 * @var type 
+	 */
 	protected $defaultSrc = [];
 
+	/**
+	 * Used for security enforcement
+	 * @var type 
+	 */
 	protected $fontSrc = [];
 
+	/**
+	 * Used for security enforcement
+	 * @var type 
+	 */
 	protected $formAction = [];
 
+	/**
+	 * Used for security enforcement
+	 * @var type 
+	 */
 	protected $frameAncestors = null;
 
+	/**
+	 * Used for security enforcement
+	 * @var type 
+	 */
 	protected $imageSrc = [];
 
+	/**
+	 * Used for security enforcement
+	 * @var type 
+	 */
 	protected $mediaSrc = [];
 
+	/**
+	 * Used for security enforcement
+	 * @var type 
+	 */
 	protected $objectSrc = [];
 
+	/**
+	 * Used for security enforcement
+	 * @var type 
+	 */
 	protected $pluginTypes = null;
 
+	/**
+	 * Used for security enforcement
+	 * @var type 
+	 */
 	protected $reportURI = null;
 
+	/**
+	 * Used for security enforcement
+	 * @var type 
+	 */
 	protected $sandbox = false;
 
+	/**
+	 * Used for security enforcement
+	 * @var type 
+	 */
 	protected $scriptSrc = [];
 
+	/**
+	 * Used for security enforcement
+	 * @var type 
+	 */
 	protected $styleSrc = [];
 
+	/**
+	 * Used for security enforcement
+	 * @var type 
+	 */
 	protected $upgradeInsecureRequests = false;
 
+	/**
+	 * Used for security enforcement
+	 * @var type 
+	 */
 	protected $reportOnly = false;
 
+	/**
+	 * Used for security enforcement
+	 * @var type 
+	 */
 	protected $validSources = ['self', 'none', 'unsafe-inline', 'unsafe-eval'];
 
+	/**
+	 * Used for security enforcement
+	 * @var type 
+	 */
 	protected $nonces = [];
 
 	//--------------------------------------------------------------------
@@ -159,7 +235,8 @@ class ContentSecurityPolicy
 	 *
 	 * @see http://www.w3.org/TR/CSP/#directive-base-uri
 	 *
-	 * @param $uri
+	 * @param string $uri
+	 * @param bool $reportOnly
 	 *
 	 * @return $this
 	 */

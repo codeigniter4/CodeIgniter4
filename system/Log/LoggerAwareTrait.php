@@ -35,6 +35,9 @@
 
 use Psr\Log\LoggerInterface;
 
+/**
+ * Trait LoggerAwareTrait
+ */
 trait LoggerAwareTrait {
 
 	/**

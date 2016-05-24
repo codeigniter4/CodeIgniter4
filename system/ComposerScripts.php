@@ -85,6 +85,13 @@ class ComposerScripts
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Move a file.
+	 * 
+	 * @param string $source
+	 * @param string $destination
+	 * @return boolean
+	 */
 	protected static function moveFile(string $source, string $destination)
 	{
 		$source = realpath($source);
@@ -104,6 +111,12 @@ class ComposerScripts
 
 	//--------------------------------------------------------------------
 	
+	/**
+	 * Determine file path of a class.
+	 * 
+	 * @param string $class
+	 * @return type
+	 */
 	protected static function getClassFilePath( string $class )
 	{
 		$reflector = new \ReflectionClass($class);

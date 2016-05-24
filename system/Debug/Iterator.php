@@ -36,6 +36,9 @@
  * @filesource
  */
 
+/**
+ * Iterator for debugging.
+ */
 
 class Iterator
 {
@@ -84,6 +87,7 @@ class Iterator
 	 * memory usage used during those iterations.
 	 *
 	 * @param int $iterations
+	 * @param bool $output
 	 *
 	 * @return string
 	 */
@@ -121,6 +125,11 @@ class Iterator
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Get results.
+	 * 
+	 * @return string
+	 */
 	public function getReport()
 	{
 		if (empty($this->results))
