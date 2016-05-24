@@ -38,6 +38,9 @@
 
 use CodeIgniter\Log\LoggerAwareTrait;
 
+/**
+ * Class Session
+ */
 class Session implements SessionInterface
 {
 	use LoggerAwareTrait;
