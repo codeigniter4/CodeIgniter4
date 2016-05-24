@@ -83,7 +83,7 @@ if ( ! function_exists('log_message'))
 		}
 
 		return Services::logger(true)
-									->log($level, $message, $context);
+		               ->log($level, $message, $context);
 	}
 }
 
@@ -114,7 +114,7 @@ if ( ! function_exists('load_view'))
 		$renderer = Services::renderer();
 
 		$saveData = false;
-		if (array_key_exists('saveData', $options))
+		if (array_key_exists('saveData', $options) && $options['saveData'] === true)
 		{
 			$saveData = (bool)$options['saveData'];
 			unset($options['saveData']);
@@ -331,7 +331,7 @@ if (! function_exists('load_helper'))
 
 //--------------------------------------------------------------------
 
-if (! function_exists('get_csrf_token_name'))
+if (! function_exists('csrf_token'))
 {
 	/**
 	 * Returns the CSRF token name.
@@ -340,7 +340,7 @@ if (! function_exists('get_csrf_token_name'))
 	 *
 	 * @return string
 	 */
-	function get_csrf_token_name()
+	function csrf_token()
 	{
 		$config = new \Config\App();
 
@@ -350,7 +350,7 @@ if (! function_exists('get_csrf_token_name'))
 
 //--------------------------------------------------------------------
 
-if (! function_exists('get_csrf_hash'))
+if (! function_exists('csrf_hash'))
 {
 	/**
 	 * Returns the current hash value for the CSRF protection.
@@ -359,7 +359,7 @@ if (! function_exists('get_csrf_hash'))
 	 *
 	 * @return string
 	 */
-	function get_csrf_hash()
+	function csrf_hash()
 	{
 		$security = Services::security(null, true);
 

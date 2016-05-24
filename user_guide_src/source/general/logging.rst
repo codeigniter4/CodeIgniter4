@@ -55,9 +55,9 @@ Using Multiple Log Handlers
 The logging system can support multiple methods of handling logging running at the same time. Each handler can
 be set to handle specific levels and ignore the rest. Currently, two handlers come with a default install:
 
-- File Handler - is the default handler and will create a single file for every day locally. This is the
+- **File Handler** is the default handler and will create a single file for every day locally. This is the
 	recommended method of logging.
-- ChromeLogger Handler - If you have the `ChromeLogger extension <https://craig.is/writing/chrome-logger>`_
+- **ChromeLogger Handler** If you have the `ChromeLogger extension <https://craig.is/writing/chrome-logger>`_
 	installed in the Chrome web browser, you can use this handler to display the log information in
 	Chrome's console window.
 
@@ -65,7 +65,8 @@ The handlers are configured in the main configuration file, in the ``$handlers``
 an array of handlers and their configuration. Each handler is specified with the key being the fully
 name-spaced class name. The value will be an array of varying properties, specific to each handler.
 Each handler's section will have one property in common: ``handles``, which is an array of log level
-__names__ that the handler will log information for.::
+__names__ that the handler will log information for.
+::
 
 	public $handlers = [
 
@@ -136,7 +137,7 @@ Using Third-Party Loggers
 =========================
 
 You can use any other logger that you might like as long as it extends from either
-``PSR\Log\LoggerInterface`` and is `PSR3 <http://www.php-fig.org/psr/psr-3/>`_ compatible. This means
+``Psr\Log\LoggerInterface`` and is `PSR3 <http://www.php-fig.org/psr/psr-3/>`_ compatible. This means
 that you can easily drop in use for any PSR3-compatible logger, or create your own.
 
 You must ensure that the third-party logger can be found by the system, by adding it to either
