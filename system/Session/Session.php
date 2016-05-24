@@ -188,14 +188,15 @@ class Session implements SessionInterface
 			$this->logger->debug('Session: Initialization under CLI aborted.');
 
 			return;
-		} else if ((bool) ini_get('session.auto_start'))
+		} 
+		elseif ((bool) ini_get('session.auto_start'))
 		{
 			$this->logger->error('Session: session.auto_start is enabled in php.ini. Aborting.');
 
 			return;
 		}
 
-		if (!$this->driver instanceof \SessionHandlerInterface)
+		if (! $this->driver instanceof \SessionHandlerInterface)
 		{
 			$this->logger->error("Session: Handler '".$this->driver.
 					"' doesn't implement SessionHandlerInterface. Aborting.");
@@ -207,7 +208,7 @@ class Session implements SessionInterface
 
 		// Sanitize the cookie, because apparently PHP doesn't do that for userspace handlers
 		if (isset($_COOKIE[$this->sessionCookieName]) && (
-				!is_string($_COOKIE[$this->sessionCookieName]) || !preg_match('/^[0-9a-f]{40}$/', $_COOKIE[$this->sessionCookieName])
+				! is_string($_COOKIE[$this->sessionCookieName]) || ! preg_match('/^[0-9a-f]{40}$/', $_COOKIE[$this->sessionCookieName])
 				)
 		)
 		{
@@ -221,10 +222,11 @@ class Session implements SessionInterface
 				strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) !== 'xmlhttprequest') && ($regenerate_time = $this->sessionTimeToUpdate) > 0
 		)
 		{
-			if (!isset($_SESSION['__ci_last_regenerate']))
+			if (! isset($_SESSION['__ci_last_regenerate']))
 			{
 				$_SESSION['__ci_last_regenerate'] = time();
-			} elseif ($_SESSION['__ci_last_regenerate'] < (time() - $regenerate_time))
+			} 
+			elseif ($_SESSION['__ci_last_regenerate'] < (time() - $regenerate_time))
 			{
 				$this->regenerate((bool) $this->sessionRegenerateDestroy);
 			}
@@ -234,7 +236,13 @@ class Session implements SessionInterface
 		elseif (isset($_COOKIE[$this->sessionCookieName]) && $_COOKIE[$this->sessionCookieName] === session_id())
 		{
 			setcookie(
-					$this->sessionCookieName, session_id(), (empty($this->sessionExpiration) ? 0 : time() + $this->sessionExpiration), $this->cookiePath, $this->cookieDomain, $this->cookieSecure, true
+					$this->sessionCookieName, 
+					session_id(), 
+					(empty($this->sessionExpiration) ? 0 : time() + $this->sessionExpiration), 
+					$this->cookiePath, 
+					$this->cookieDomain, 
+					$this->cookieSecure, 
+					true
 			);
 		}
 
@@ -255,19 +263,25 @@ class Session implements SessionInterface
 		if (empty($this->sessionCookieName))
 		{
 			$this->sessionCookieName = ini_get('session.name');
-		} else
+		} 
+		else
 		{
 			ini_set('session.name', $this->sessionCookieName);
 		}
 
 		session_set_cookie_params(
-				$this->sessionExpiration, $this->cookiePath, $this->cookieDomain, $this->cookieSecure, true // HTTP only; Yes, this is intentional and not configurable for security reasons.
+				$this->sessionExpiration, 
+				$this->cookiePath, 
+				$this->cookieDomain, 
+				$this->cookieSecure, 
+				true // HTTP only; Yes, this is intentional and not configurable for security reasons.
 		);
 
 		if (empty($this->sessionExpiration))
 		{
 			$this->sessionExpiration = (int) ini_get('session.gc_maxlifetime');
-		} else
+		} 
+		else
 		{
 			ini_set('session.gc_maxlifetime', (int) $this->sessionExpiration);
 		}
@@ -291,7 +305,7 @@ class Session implements SessionInterface
 	 */
 	protected function initVars()
 	{
-		if (!empty($_SESSION['__ci_vars']))
+		if (! empty($_SESSION['__ci_vars']))
 		{
 			$current_time = time();
 
@@ -395,7 +409,8 @@ class Session implements SessionInterface
 		if (isset($key))
 		{
 			return isset($_SESSION[$key]) ? $_SESSION[$key] : null;
-		} elseif (empty($_SESSION))
+		} 
+		elseif (empty($_SESSION))
 		{
 			return [];
 		}
@@ -407,7 +422,7 @@ class Session implements SessionInterface
 
 		foreach (array_keys($_SESSION) as $key)
 		{
-			if (!in_array($key, $_exclude, true))
+			if (! in_array($key, $_exclude, true))
 			{
 				$userdata[$key] = $_SESSION[$key];
 			}
@@ -487,7 +502,8 @@ class Session implements SessionInterface
 		if (isset($_SESSION[$key]))
 		{
 			return $_SESSION[$key];
-		} else if ($key === 'session_id')
+		} 
+		elseif ($key === 'session_id')
 		{
 			return session_id();
 		}
@@ -533,12 +549,12 @@ class Session implements SessionInterface
 		if (isset($key))
 		{
 			return (isset($_SESSION['__ci_vars'], $_SESSION['__ci_vars'][$key], $_SESSION[$key]) &&
-					!is_int($_SESSION['__ci_vars'][$key])) ? $_SESSION[$key] : null;
+					! is_int($_SESSION['__ci_vars'][$key])) ? $_SESSION[$key] : null;
 		}
 
 		$flashdata = [];
 
-		if (!empty($_SESSION['__ci_vars']))
+		if (! empty($_SESSION['__ci_vars']))
 		{
 			foreach ($_SESSION['__ci_vars'] as $key => &$value)
 			{
@@ -575,7 +591,7 @@ class Session implements SessionInterface
 		{
 			for ($i = 0, $c = count($key); $i < $c; $i++)
 			{
-				if (!isset($_SESSION[$key[$i]]))
+				if (! isset($_SESSION[$key[$i]]))
 				{
 					return false;
 				}
@@ -588,7 +604,7 @@ class Session implements SessionInterface
 			return true;
 		}
 
-		if (!isset($_SESSION[$key]))
+		if (! isset($_SESSION[$key]))
 		{
 			return false;
 		}
@@ -616,7 +632,7 @@ class Session implements SessionInterface
 
 		foreach ($key as $k)
 		{
-			if (isset($_SESSION['__ci_vars'][$k]) && !is_int($_SESSION['__ci_vars'][$k]))
+			if (isset($_SESSION['__ci_vars'][$k]) && ! is_int($_SESSION['__ci_vars'][$k]))
 			{
 				unset($_SESSION['__ci_vars'][$k]);
 			}
@@ -637,7 +653,7 @@ class Session implements SessionInterface
 	 */
 	public function getFlashKeys()
 	{
-		if (!isset($_SESSION['__ci_vars']))
+		if (! isset($_SESSION['__ci_vars']))
 		{
 			return [];
 		}
@@ -689,7 +705,7 @@ class Session implements SessionInterface
 
 		$tempdata = [];
 
-		if (!empty($_SESSION['__ci_vars']))
+		if (! empty($_SESSION['__ci_vars']))
 		{
 			foreach ($_SESSION['__ci_vars'] as $key => &$value)
 			{
@@ -738,12 +754,13 @@ class Session implements SessionInterface
 				{
 					$k = $v;
 					$v = $ttl;
-				} else
+				} 
+				else
 				{
 					$v += time();
 				}
 
-				if (!isset($_SESSION[$k]))
+				if (! isset($_SESSION[$k]))
 				{
 					return false;
 				}
@@ -756,7 +773,7 @@ class Session implements SessionInterface
 			return true;
 		}
 
-		if (!isset($_SESSION[$key]))
+		if (! isset($_SESSION[$key]))
 		{
 			return false;
 		}
@@ -806,7 +823,7 @@ class Session implements SessionInterface
 	 */
 	public function getTempKeys()
 	{
-		if (!isset($_SESSION['__ci_vars']))
+		if (! isset($_SESSION['__ci_vars']))
 		{
 			return [];
 		}
