@@ -74,7 +74,7 @@ class Logger extends BaseConfig
 	| to the constructor of each handler. The only required configuration item
 	| is the 'handles' element, which must be an array of integer log levels.
 	| This is most easily handled by using the constants defined in the
-	| Psr\Log\LogLevel class.
+	| PSR\Log\LogLevel class.
 	|
 	| Handlers are executed in the order defined in this array, starting with
 	| the handler on top and continuing down.
