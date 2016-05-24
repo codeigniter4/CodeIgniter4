@@ -38,6 +38,8 @@
 
 /**
  * Interface ConnectionInterface
+ *
+ * @package CodeIgniter\Database
  */
 interface ConnectionInterface
 {

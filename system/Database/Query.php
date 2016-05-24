@@ -37,7 +37,9 @@
  */
 
 /**
- * Query builder.
+ * Query builder
+ *
+ * @package CodeIgniter\Database
  */
 class Query implements QueryInterface
 {
