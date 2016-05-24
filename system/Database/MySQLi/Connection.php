@@ -11,7 +11,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 *
 	 * @var    string
 	 */
-	public $DBDriver = 'mysqli';
+	public $DBDriver = 'MySQLi';
 
 	/**
 	 * DELETE hack flag
