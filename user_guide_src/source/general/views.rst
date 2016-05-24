@@ -88,8 +88,8 @@ When doing so you will need to include the directory name loading the view.  Exa
 Adding Dynamic Data to the View
 ===============================
 
-Data is passed from the controller to the view by way of an array in the second parameter of the view
-loading function.  Here's an example::
+Data is passed from the controller to the view by way of an array in the second parameter of the load_view function.
+Here's an example::
 
 	$data = [
 		'title' => 'My title',
@@ -124,6 +124,20 @@ Now open your view file and change the text to variables that correspond to the 
 	</html>
 
 Then load the page at the URL you've been using and you should see the variables replaced.
+
+The data passed in is only available during one call to `load_view`. If you call the function multiple times
+in a single request, you will have to pass the desired data to each view. This keeps any data from "bleeding" into
+other views, potentially causing issues. If you would prefer the data to persist, you can pass the `saveData` option
+into the `$option` array in the third parameter.
+::
+
+	$data = [
+		'title' => 'My title',
+		'heading' => 'My Heading',
+		'message' => 'My Message'
+	];
+
+	echo load_view('blogview', $data, ['saveData' => true]);
 
 Direct Access To View Class
 ===========================

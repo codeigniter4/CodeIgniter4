@@ -2,19 +2,19 @@
 Error Handling
 ##############
 
-CodeIgniter builds error reporting into your system through Exceptions, both the SPL collection, as
+CodeIgniter builds error reporting into your system through Exceptions, both the `SPL collection <http://php.net/manual/en/spl.exceptions.php>`_, as
 well as a few custom exceptions that are provided by the framework. Depending on your environment's setup, the
 default action when an error or exception is thrown is to display a detailed error report, unless the application
-is running under the ``production`` environment. In this case a more generic  message is displayed to
+is running under the ``production`` environment. In this case, a more generic  message is displayed to
 keep the best user experience for your users.
 
 
 Using Exceptions
 ================
 
-This section is a quick overview for newer programmers, or developer who are not experienced with using exceptions.
+This section is a quick overview for newer programmers, or developers who are not experienced with using exceptions.
 
-Exceptions are simply events happen when the exception is "thrown". This halts the current flow of the script, and
+Exceptions are simply events that happen when the exception is "thrown". This halts the current flow of the script, and
 execution is then sent to the error handler which displays the appropriate error page::
 
 	throw new \Exception("Some message goes here");
@@ -29,8 +29,8 @@ If you are calling a method that might throw an exception, you can catch that ex
 		die($e->getMessage());
 	}
 
-If the $userModel throws an exception, it is caught and the code within the catch block is executed. In this example,
-the scripts dies, echoing the error message that the UserModel defined.
+If the ``$userModel`` throws an exception, it is caught and the code within the catch block is executed. In this example,
+the scripts dies, echoing the error message that the ``UserModel`` defined.
 
 In this example, we catch any type of Exception. If we only want to watch for specific types of exceptions, like
 a UnknownFileException, we can specify that in the catch parameter. Any other exceptions that are thrown and are

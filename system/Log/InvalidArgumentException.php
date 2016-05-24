@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Log;
+<?php
+
+namespace Psr\Log;
 
 /**
  * CodeIgniter
@@ -33,22 +35,10 @@
  * @link	http://http://www.php-fig.org/
  */
 
-use Psr\Log\LoggerInterface;
-
-trait LoggerAwareTrait {
-
-	/**
-	 * Sets a logger instance on the object
-	 *
-	 * @param LoggerInterface $logger
-	 *
-	 * @return null
-	 */
-	public function setLogger(LoggerInterface $logger)
-	{
-		$this->logger = $logger;
-	}
-
-	//--------------------------------------------------------------------
-
+/**
+ * Marker class, in Psr namespace.
+ */
+class InvalidArgumentException extends \InvalidArgumentException
+{
+	
 }

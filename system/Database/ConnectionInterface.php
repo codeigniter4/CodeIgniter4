@@ -83,7 +83,7 @@ interface ConnectionInterface
 	//--------------------------------------------------------------------
 
 	/**
-	 * The name of the platform in use (mysqli, mssql, etc)
+	 * The name of the platform in use (MySQLi, mssql, etc)
 	 *
 	 * @return mixed
 	 */

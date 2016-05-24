@@ -11,6 +11,88 @@ These do not require loading any additional libraries or helpers.
 Global Functions
 ================
 
+.. php:function:: csrf_token ()
+
+	:returns: The name of the current CSRF token.
+		:rtype: string
+
+		Returns the name of the current CSRF token.
+
+.. php:function:: csrf_hash ()
+
+	:returns: The current value of the CSRF hash.
+		:rtype: string
+
+		Returns the current CSRF hash value.
+
+.. php:function:: esc ( $data, $context='html' [, $encoding])
+
+	:param   string|array   $data: The information to be escaped.
+		:param   string   $context: The escaping context. Default is 'html'.
+		:param   string   $encoding: The character encoding of the string.
+		:returns: The escaped data.
+		:rtype: string
+
+		Escapes data for inclusion in web pages, to help prevent XSS attacks.
+		This uses the Zend Escaper library to handle the actual filtering of the data.
+
+		If $data is a string, then it simply escapes and returns it.
+		If $data is an array, then it loops over it, escaping each 'value' of the key/value pairs.
+
+		Valid context values: html, js, css, url, attr, raw, null
+
+.. php:function:: force_https ( $duration = 31536000 [, $request = null [, $response = null]] )
+
+	:param  int  $duration: The number of seconds browsers should convert links to this resource to HTTPS.
+			:param  RequestInterface $request: An instance of the current Request object.
+			:param  ResponseInterface $response: An instance of the current Response object.
+
+			Checks to see if the page is currently being accessed via HTTPS. If it is, then
+			nothing happens. If it is not, then the user is redirected back to the current URI
+			but through HTTPS. Will set the HTTP Strict Transport Security header, which instructs
+			modern browsers to automatically modify any HTTP requests to HTTPS requests for the $duration.
+
+.. php:function:: is_cli ()
+
+	:returns: TRUE if the script is being executed from the command line or FALSE otherwise.
+		:rtype: bool
+
+.. php:function:: load_helper( $filename )
+
+	:param   string   $filename: The name of the helper file to load.
+
+		Loads a helper file.
+
+		For full details, see the :doc:`helpers` page.
+
+.. php:function:: load_view ($name [, $data [, $options ]])
+
+	:param   string   $name: The name of the file to load
+		:param   array    $data: An array of key/value pairs to make available within the view.
+		:param   array    $options: An array of options that will be passed to the rendering class.
+		:returns: The output from the view.
+		:rtype: string
+
+		Grabs the current RenderableInterface-compatible class
+		and tells it to render the specified view. Simply provides
+		a convenience method that can be used in Controllers,
+		libraries, and routed closures.
+
+		Currently, only one option is available for use within the `$options` array, `saveData` which specifies
+	that data will persistent between multiple calls to `load_view()` within the same request. By default, the
+	data for that view is forgotten after displaying that single view file.
+
+	The $option array is provided primarily to facilitate third-party integrations with
+	libraries like Twig.
+
+	Example::
+
+		$data = ['user' => $user];
+
+		echo view('user_profile', $data);
+
+	For more details, see the :doc:`Views <views>` page.
+
 .. php:function:: log_message ($level, $message [, array $context])
 
 	:param   string   $level: The level of severity
@@ -27,50 +109,33 @@ Global Functions
 	Context can be used to substitute values in the message string. For full details, see the
 	:doc:`Logging Information <logging>` page.
 
-.. php:function:: view ($name [, $data [, $options ]])
+.. php:function:: redirect( $uri[, ...$params ] )
 
-	:param   string   $name: The name of the file to load
-	:param   array    $data: An array of key/value pairs to make available within the view.
-	:param   array    $options: An array of options that will be passed to the rendering class.
-	:returns: The output from the view.
-	:rtype: string
+	:param  string  $uri: The URI to redirect the user to.
+		:param  mixed   $params: one or more additional parameters that can be used with the :meth:`RouteCollection::reverseRoute` method.
 
-	Grabs the current RenderableInterface-compatible class
-	and tells it to render the specified view. Simply provides
-	a convenience method that can be used in Controllers,
-	libraries, and routed closures.
+	Convenience method that works with the current global ``$request`` and
+	``$router`` instances to redirect using named/reverse-routed routes
+	to determine the URL to go to. If nothing is found, will treat
+	as a traditional redirect and pass the string in, letting
+	``$response->redirect()`` determine the correct method and code.
 
-	The $option array is not used by CodeIgniter, but is provided to facilitate third-party integrations with
-	libraries like Twig.
+	If more control is needed, you must use ``$response->redirect()`` explicitly.
 
-	Example::
+.. php:function:: remove_invisible_characters($str[, $url_encoded = TRUE])
 
-		$data = ['user' => $user];
+	:param	string	$str: Input string
+			:param	bool	$url_encoded: Whether to remove URL-encoded characters as well
+			:returns:	Sanitized string
+			:rtype:	string
 
-		echo view('user_profile', $data);
+			This function prevents inserting NULL characters between ASCII
+			characters, like Java\\0script.
 
-	For more details, see the :doc:`Views <views>` page.
+			Example::
 
-.. php:function:: esc ( $data, $context='html' [, $encoding])
-
-	:param   string|array   $data: The information to be escaped.
-	:param   string   $context: The escaping context. Default is 'html'.
-	:param   string   $encoding: The character encoding of the string.
-	:returns: The escaped data.
-	:rtype: string
-
-	Escapes data for inclusion in web pages, to help prevent XSS attacks.
-	This uses the Zend Escaper library to handle the actual filtering of the data.
-
-	If $data is a string, then it simply escapes and returns it.
-	If $data is an array, then it loops over it, escaping each 'value' of the key/value pairs.
-
-	Valid context values: html, js, css, url, attr, raw, null
-
-.. php:function:: is_cli ()
-
-	:returns: TRUE if the script is being executed from the command line or FALSE otherwise.
-	:rtype: bool
+		remove_invisible_characters('Java\\0script');
+		// Returns: 'Javascript'
 
 .. php:function:: route_to ( $method [, ...$params] )
 
@@ -107,67 +172,6 @@ Global Functions
 	function will share the same instance of the service, where **service** returns a new
 	instance every time.
 
-.. php:function:: remove_invisible_characters($str[, $url_encoded = TRUE])
-
-	:param	string	$str: Input string
-		:param	bool	$url_encoded: Whether to remove URL-encoded characters as well
-		:returns:	Sanitized string
-		:rtype:	string
-
-		This function prevents inserting NULL characters between ASCII
-		characters, like Java\\0script.
-
-		Example::
-
-		remove_invisible_characters('Java\\0script');
-		// Returns: 'Javascript'
-
-.. php:function:: load_helper( $filename )
-
-	:param   string   $filename: The name of the helper file to load.
-
-	Loads a helper file.
-
-	For full details, see the :doc:`helpers` page.
-
-.. php:function:: get_csrf_token_name ()
-
-	:returns: The name of the current CSRF token.
-	:rtype: string
-
-	Returns the name of the current CSRF token.
-
-.. php:function:: get_csrf_hash ()
-
-	:returns: The current value of the CSRF hash.
-	:rtype: string
-
-	Returns the current CSRF hash value.
-
-.. php:function:: force_https ( $duration = 31536000 [, $request = null [, $response = null]] )
-
-	:param  int  $duration: The number of seconds browsers should convert links to this resource to HTTPS.
-	:param  RequestInterface $request: An instance of the current Request object.
-	:param  ResponseInterface $response: An instance of the current Response object.
-
-	Checks to see if the page is currently being accessed via HTTPS. If it is, then
-	nothing happens. If it is not, then the user is redirected back to the current URI
-	but through HTTPS. Will set the HTTP Strict Transport Security header, which instructs
-	modern browsers to automatically modify any HTTP requests to HTTPS requests for the $duration.
-
-.. php:function:: redirect( $uri[, ...$params ] )
-
-	:param  string  $uri: The URI to redirect the user to.
-	:param  mixed   $params: one or more additional parameters that can be used with the :meth:`RouteCollection::reverseRoute` method.
-
-	Convenience method that works with the current global ``$request`` and
-	``$router`` instances to redirect using named/reverse-routed routes
-	to determine the URL to go to. If nothing is found, will treat
-	as a traditional redirect and pass the string in, letting
-	``$response->redirect()`` determine the correct method and code.
-
-	If more control is needed, you must use ``$response->redirect()`` explicitly.
-
 Global Constants
 ================
 
@@ -176,9 +180,9 @@ The following constants are always available anywhere within your application.
 Core Constants
 --------------
 
-.. php:const:: SELF
+.. php:const:: APPPATH
 
-	The path to the front controller, **index.php**.
+	The path to the **application** directory.
 
 .. php:const:: BASEPATH
 
@@ -188,9 +192,9 @@ Core Constants
 
 	The path to the directory that holds the front controller.
 
-.. php:const:: APPPATH
+.. php:const:: SELF
 
-	The path to the **application** directory.
+	The path to the front controller, **index.php**.
 
 .. php:const:: WRITEPATH
 
