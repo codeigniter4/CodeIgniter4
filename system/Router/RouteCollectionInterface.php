@@ -268,7 +268,7 @@ interface RouteCollectionInterface
 	 *
 	 * @return int
 	 */
-	public function getRedirectCode(string $from) : int;
+	public function getRedirectCode(string $from);//: int;
 
 	//--------------------------------------------------------------------
 
