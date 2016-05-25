@@ -11,3 +11,4 @@ Library Reference
 	message
 	request
         response
+        sessions
