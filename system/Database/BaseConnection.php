@@ -424,7 +424,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 *
 	 * @return string
 	 */
-	public function getDatabase(): string
+	public function getDatabase()//: string
 	{
 		return empty($this->database) ? '' : $this->database;
 	}
@@ -597,7 +597,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 *
 	 * @return array
 	 */
-	public function getQueries(): array
+	public function getQueries()//: array
 	{
 		return $this->queries;
 	}
@@ -975,7 +975,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 *
 	 * @return mixed
 	 */
-	abstract public function affectedRows(): int;
+	abstract public function affectedRows();//: int;
 
 	//--------------------------------------------------------------------
 
@@ -1077,7 +1077,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 *
 	 * @return string
 	 */
-	protected function _escapeString(string $str): string
+	protected function _escapeString(string $str)//: string
 	{
 		return str_replace("'", "\\'", remove_invisible_characters($str));
 	}
@@ -1307,7 +1307,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 *
 	 * @return string
 	 */
-	abstract protected function _listTables($constrainByPrefix = false): string;
+	abstract protected function _listTables($constrainByPrefix = false);//: string;
 
 	//--------------------------------------------------------------------
 
@@ -1318,7 +1318,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 *
 	 * @return string
 	 */
-	abstract protected function _listColumns(string $table = ''): string;
+	abstract protected function _listColumns(string $table = '');//: string;
 
 	//--------------------------------------------------------------------
 

@@ -1,7 +1,5 @@
 <?php namespace CodeIgniter\HTTP;
 
-class RedirectException extends \Exception {}
-
 /**
  * CodeIgniter
  *
@@ -42,6 +40,12 @@ use Config\App;
 use Config\ContentSecurityPolicy;
 
 /**
+ * Redirect exception
+ * 
+ */
+class RedirectException extends \Exception {}
+
+/**
  * Representation of an outgoing, getServer-side response.
  *
  * Per the HTTP specification, this interface includes properties for
@@ -56,6 +60,10 @@ use Config\ContentSecurityPolicy;
  */
 class Response extends Message implements ResponseInterface
 {
+	/**
+	 * HTTP status codes
+	 * @var type 
+	 */
 	protected static $statusCodes = [
 		// 1xx: Informational
 		100 => 'Continue',
@@ -152,6 +160,8 @@ class Response extends Message implements ResponseInterface
 	protected $CSPEnabled = false;
 
 	/**
+	 * Content security policy handler
+	 * 
 	 * @var \CodeIgniter\HTTP\ContentSecurityPolicy
 	 */
 	protected $CSP;
@@ -193,6 +203,11 @@ class Response extends Message implements ResponseInterface
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Constructor
+	 * 
+	 * @param App $config
+	 */
 	public function __construct(App $config)
 	{
 	    // Default to a non-caching page.
@@ -223,7 +238,7 @@ class Response extends Message implements ResponseInterface
 	 *
 	 * @return int Status code.
 	 */
-	public function getStatusCode(): int
+	public function getStatusCode()//: int
 	{
 		if (empty($this->statusCode))
 		{
@@ -245,14 +260,14 @@ class Response extends Message implements ResponseInterface
 	 * @see http://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
 	 *
 	 * @param int    $code         The 3-digit integer result code to set.
-	 * @param string $reasonPhrase The reason phrase to use with the
+	 * @param string $reason       The reason phrase to use with the
 	 *                             provided status code; if none is provided, will
 	 *                             default to the IANA name.
 	 *
 	 * @return self
 	 * @throws \InvalidArgumentException For invalid status code arguments.
 	 */
-	public function setStatusCode(int $code, string $reason = ''): self
+	public function setStatusCode(int $code, string $reason = '')//: self
 	{
 		// Valid range?
 		if ($code < 100 || $code > 599)
@@ -290,7 +305,7 @@ class Response extends Message implements ResponseInterface
 	 *
 	 * @return string
 	 */
-	public function getReason(): string
+	public function getReason()//: string
 	{
 		if (empty($this->reason))
 		{
@@ -315,7 +330,7 @@ class Response extends Message implements ResponseInterface
 	 *
 	 * @return Response
 	 */
-	public function setDate(\DateTime $date): self
+	public function setDate(\DateTime $date)//: self
 	{
 		$date->setTimezone(new \DateTimeZone('UTC'));
 
@@ -335,7 +350,7 @@ class Response extends Message implements ResponseInterface
 	 *
 	 * @return Response
 	 */
-	public function setContentType(string $mime, string $charset='UTF-8'): self
+	public function setContentType(string $mime, string $charset='UTF-8')//: self
 	{
 	    if (! empty($charset))
 	    {
@@ -360,7 +375,7 @@ class Response extends Message implements ResponseInterface
 	 * Sets the appropriate headers to ensure this response
 	 * is not cached by the browsers.
 	 */
-	public function noCache(): self
+	public function noCache()//: self
 	{
 	    $this->removeHeader('Cache-control');
 
@@ -399,7 +414,7 @@ class Response extends Message implements ResponseInterface
 	 *
 	 * @return $this
 	 */
-	public function setCache(array $options=[]): self
+	public function setCache(array $options=[])//: self
 	{
 		if (empty($options))
 		{
@@ -439,7 +454,7 @@ class Response extends Message implements ResponseInterface
 	 *
 	 * @param $date
 	 */
-	public function setLastModified($date): self
+	public function setLastModified($date)//: self
 	{
 		if ($date instanceof \DateTime)
 		{
@@ -466,7 +481,7 @@ class Response extends Message implements ResponseInterface
 	 *
 	 * @return Response
 	 */
-	public function send(): self
+	public function send()//: self
 	{
 		// If we're enforcing a Content Security Policy,
 		// we need to give it a chance to build out it's headers.
@@ -488,7 +503,7 @@ class Response extends Message implements ResponseInterface
 	 *
 	 * @return Response
 	 */
-	public function sendHeaders(): self
+	public function sendHeaders()//: self
 	{
 	    // Have the headers already been sent?
 		if (headers_sent())
@@ -534,7 +549,8 @@ class Response extends Message implements ResponseInterface
 	/**
 	 * Perform a redirect to a new URL, in two flavors: header or location.
 	 *
-	 * @param string $url    The URL to redirect to
+	 * @param string $uri    The URI to redirect to
+	 * @param string $method
 	 * @param int    $code   The type of redirection, defaults to 302
 	 */
 	public function redirect(string $uri, string $method = 'auto', int $code = null)

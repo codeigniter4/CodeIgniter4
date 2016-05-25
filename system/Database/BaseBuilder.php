@@ -196,6 +196,14 @@ class BaseBuilder
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Constructor
+	 * 
+	 * @param type $tableName
+	 * @param \CodeIgniter\Database\ConnectionInterface $db
+	 * @param array $options
+	 * @throws DatabaseException
+	 */
 	public function __construct($tableName, ConnectionInterface &$db, array $options = null)
 	{
 		if (empty($tableName))
@@ -225,7 +233,7 @@ class BaseBuilder
 	 *
 	 * @return array
 	 */
-	public function getBinds(): array
+	public function getBinds()//: array
 	{
 		return $this->binds;
 	}
@@ -2101,6 +2109,7 @@ class BaseBuilder
 	 *
 	 * Compiles a delete string and runs "DELETE FROM table"
 	 *
+	 * @param bool $test
 	 * @return    bool    TRUE on success, FALSE on failure
 	 */
 	public function emptyTable($test = false)
@@ -2197,9 +2206,10 @@ class BaseBuilder
 	 *
 	 * Compiles a delete string and runs the query
 	 *
-	 * @param    mixed    the where clause
-	 * @param    mixed    the limit clause
-	 * @param    bool
+	 * @param    mixed $where    the where clause
+	 * @param    mixed $limit    the limit clause
+	 * @param    bool  $reset_data
+	 * @param    bool  $returnSQL
 	 *
 	 * @return    mixed
 	 */

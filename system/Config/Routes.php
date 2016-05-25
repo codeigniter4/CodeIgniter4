@@ -36,10 +36,9 @@
  * @filesource
  */
 
-/**
- * --------------------------------------------------------------------
+ /**
  * System URI Routing
- * --------------------------------------------------------------------
+ * 
  * This file contains any routing to system tools, such as command-line
  * tools for migrations, etc.
  *

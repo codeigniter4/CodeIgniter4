@@ -110,7 +110,7 @@ interface ConnectionInterface
 	 *
 	 * @return string
 	 */
-	public function getDatabase(): string;
+	public function getDatabase();//: string;
 
 	//--------------------------------------------------------------------
 
@@ -196,7 +196,7 @@ interface ConnectionInterface
 	 *
 	 * @return array
 	 */
-	public function getQueries(): array;
+	public function getQueries();//: array;
 
 	//--------------------------------------------------------------------
 

@@ -27,6 +27,11 @@ class Toolbar
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Constructor
+	 * 
+	 * @param BaseConfig $config
+	 */
 	public function __construct(BaseConfig $config)
 	{
 		foreach ($config->toolbarCollectors as $collector)
@@ -43,8 +48,17 @@ class Toolbar
 
 	//--------------------------------------------------------------------
 
-	public function run($startTime, $totalTime, $startMemory, $request,
-$response): string
+	/**
+	 * Run
+	 * 
+	 * @param type $startTime
+	 * @param type $totalTime
+	 * @param type $startMemory
+	 * @param type $request
+	 * @param type $response
+	 * @return type
+	 */
+	public function run($startTime, $totalTime, $startMemory, $request, $response)//: string
 	{
 		$this->startTime = $startTime;
 
@@ -70,9 +84,11 @@ $response): string
 	/**
 	 * Called within the view to display the timeline itself.
 	 *
+	 * @param int $segmentCount
+	 * @param int $segmentDuration
 	 * @return string
 	 */
-	protected function renderTimeline(int $segmentCount, int $segmentDuration): string
+	protected function renderTimeline(int $segmentCount, int $segmentDuration)//: string
 	{
 		$displayTime = $segmentCount * $segmentDuration;
 
@@ -109,7 +125,7 @@ $response): string
 	 *
 	 * @return array
 	 */
-	protected function collectTimelineData(): array
+	protected function collectTimelineData()//: array
 	{
 		$data = [];
 
@@ -138,7 +154,7 @@ $response): string
 	 *
 	 * @return array
 	 */
-	protected function collectVarData() : array
+	protected function collectVarData()// : array
 	{
 		$data = [];
 

@@ -50,7 +50,7 @@ interface ResultInterface
 	 *
 	 * @return mixed
 	 */
-	public function getResult($type = 'object'): array;
+	public function getResult($type = 'object');//: array;
 
 	//--------------------------------------------------------------------
 
@@ -72,7 +72,7 @@ interface ResultInterface
 	 *
 	 * @return array
 	 */
-	public function getResultArray(): array;
+	public function getResultArray();//: array;
 
 	//--------------------------------------------------------------------
 
@@ -83,7 +83,7 @@ interface ResultInterface
 	 *
 	 * @return array
 	 */
-	public function getResultObject(): array;
+	public function getResultObject();//: array;
 
 	//--------------------------------------------------------------------
 
@@ -107,6 +107,7 @@ interface ResultInterface
 	 *
 	 * If row doesn't exists, returns null.
 	 *
+	 * @param int $n
 	 * @param string $className
 	 *
 	 * @return mixed
@@ -213,7 +214,7 @@ interface ResultInterface
 	 *
 	 * @return int
 	 */
-	public function getFieldCount(): int;
+	public function getFieldCount();//: int;
 
 	//--------------------------------------------------------------------
 
@@ -222,7 +223,7 @@ interface ResultInterface
 	 *
 	 * @return array
 	 */
-	public function getFieldNames(): array;
+	public function getFieldNames();//: array;
 
 	//--------------------------------------------------------------------
 
@@ -231,7 +232,7 @@ interface ResultInterface
 	 *
 	 * @return array
 	 */
-	public function getFieldData(): array;
+	public function getFieldData();//: array;
 
 	//--------------------------------------------------------------------
 

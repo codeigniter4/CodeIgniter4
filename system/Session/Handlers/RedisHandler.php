@@ -311,7 +311,7 @@ class RedisHandler extends BaseHandler implements \SessionHandlerInterface
 	 * @param	string	$session_id	Session ID
 	 * @return	bool
 	 */
-	protected function lockSession(string $session_id): bool
+	protected function lockSession(string $session_id)//: bool
 	{
 		if (isset($this->lockKey))
 		{
@@ -364,7 +364,7 @@ class RedisHandler extends BaseHandler implements \SessionHandlerInterface
 	 *
 	 * @return	bool
 	 */
-	protected function releaseLock(): bool
+	protected function releaseLock()//: bool
 	{
 		if (isset($this->redis, $this->lockKey) && $this->lock)
 		{

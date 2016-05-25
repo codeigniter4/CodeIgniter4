@@ -59,6 +59,11 @@ class FileLocator {
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Constructor
+	 * 
+	 * @param Autoload $autoload
+	 */
 	public function __construct(Autoload $autoload)
 	{
 	    $this->namespaces = $autoload->psr4;
@@ -81,7 +86,7 @@ class FileLocator {
 	 *
 	 * @return string       The path to the file if found, or an empty string.
 	 */
-	public function locateFile(string $file, string $folder=null, string $ext = 'php'): string
+	public function locateFile(string $file, string $folder=null, string $ext = 'php')//: string
 	{
 		// Ensure the extension is on the filename
 		$file = strpos($file, '.'.$ext) !== false
@@ -159,7 +164,7 @@ class FileLocator {
 	 *
 	 * @return string
 	 */
-	protected function legacyLocate(string $file, string $folder=null): string
+	protected function legacyLocate(string $file, string $folder=null)//: string
 	{
 		$path = APPPATH;
 
@@ -183,7 +188,7 @@ class FileLocator {
 	 *
 	 * @return bool
 	 */
-	protected function requireFile(string $path): bool
+	protected function requireFile(string $path)//: bool
 	{
 		return file_exists($path);
 	}

@@ -130,6 +130,7 @@ class Query implements QueryInterface
 	 * Sets the raw query string to use for this statement.
 	 *
 	 * @param string $sql
+	 * @param array $binds
 	 *
 	 * @return mixed
 	 */
@@ -196,6 +197,7 @@ class Query implements QueryInterface
 	/**
 	 * Returns the start time in seconds with microseconds.
 	 *
+	 * @param bool $returnRaw
 	 * @param int $decimals
 	 *
 	 * @return mixed
@@ -228,6 +230,9 @@ class Query implements QueryInterface
 
 	/**
 	 * Stores the error description that happened for this query.
+	 * 
+	 * @param int $code
+	 * @param string $error
 	 */
 	public function setError(int $code, string $error)
 	{
@@ -244,7 +249,7 @@ class Query implements QueryInterface
 	 *
 	 * @return bool
 	 */
-	public function hasError(): bool
+	public function hasError()//: bool
 	{
 		return ! empty($this->errorString);
 	}
@@ -256,7 +261,7 @@ class Query implements QueryInterface
 	 *
 	 * @return string
 	 */
-	public function getErrorCode(): int
+	public function getErrorCode()//: int
 	{
 		return $this->errorCode;
 	}
@@ -268,7 +273,7 @@ class Query implements QueryInterface
 	 *
 	 * @return string
 	 */
-	public function getErrorMessage(): string
+	public function getErrorMessage()//: string
 	{
 		return $this->errorString;
 	}
@@ -280,7 +285,7 @@ class Query implements QueryInterface
 	 *
 	 * @return bool
 	 */
-	public function isWriteType(): bool
+	public function isWriteType()//: bool
 	{
 		return (bool)preg_match(
 			'/^\s*"?(SET|INSERT|UPDATE|DELETE|REPLACE|CREATE|DROP|TRUNCATE|LOAD|COPY|ALTER|RENAME|GRANT|REVOKE|LOCK|UNLOCK|REINDEX)\s/i',
@@ -372,6 +377,12 @@ class Query implements QueryInterface
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Match binfings
+	 * @param string $sql
+	 * @param array $binds
+	 * @return string
+	 */
 	protected function matchNamedBinds(string $sql, array $binds)
 	{
 		foreach ($binds as $placeholder => $value)
@@ -389,6 +400,14 @@ class Query implements QueryInterface
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Match bindings
+	 * @param string $sql
+	 * @param array $binds
+	 * @param int $bindCount
+	 * @param int $ml
+	 * @return string
+	 */
 	protected function matchSimpleBinds(string $sql, array $binds, int $bindCount, int $ml)
 	{
 		// Make sure not to replace a chunk inside a string that happens to match the bind marker
@@ -430,6 +449,11 @@ class Query implements QueryInterface
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Return text representation of the query
+	 * 
+	 * @return type
+	 */
 	public function __toString()
 	{
 	    return $this->getQuery();

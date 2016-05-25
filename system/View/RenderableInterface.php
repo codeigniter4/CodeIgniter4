@@ -58,7 +58,7 @@ interface RenderableInterface {
 	 *
 	 * @return string
 	 */
-	public function render(string $view, array $options=null, $saveData=false): string;
+	public function render(string $view, array $options=null, $saveData=false);//: string;
 
 	//--------------------------------------------------------------------
 
@@ -79,8 +79,8 @@ interface RenderableInterface {
 	 * Sets a single piece of view data.
 	 *
 	 * @param string $name
-	 * @param null   $value
-	 * @param string $escape The context to escape it for: html, css, js, url
+	 * @param mixed   $value
+	 * @param string $context The context to escape it for: html, css, js, url
 	 *                        If 'raw' no escaping will happen
 	 *
 	 * @return RenderableInterface

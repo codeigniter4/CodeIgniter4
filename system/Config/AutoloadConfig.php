@@ -38,9 +38,8 @@
 
 
 /**
- * -------------------------------------------------------------------
  * AUTO-LOADER
- * -------------------------------------------------------------------
+ * 
  * This file defines the namespaces and class maps so the Autoloader
  * can find the files as needed.
  */

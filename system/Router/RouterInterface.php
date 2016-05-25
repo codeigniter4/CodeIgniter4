@@ -36,6 +36,9 @@
  * @filesource
  */
 
+/**
+ * Expected behaviour of a Router.
+ */
 interface RouterInterface
 {
 

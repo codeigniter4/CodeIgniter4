@@ -50,6 +50,7 @@ interface QueryInterface
 	 * Sets the raw query string to use for this statement.
 	 *
 	 * @param string $sql
+	 * @param array $binds
 	 *
 	 * @return mixed
 	 */
@@ -95,6 +96,9 @@ interface QueryInterface
 
 	/**
 	 * Stores the error description that happened for this query.
+	 * 
+	 * @param int $code
+	 * @param string $error
 	 */
 	public function setError(int $code, string $error);
 
@@ -105,7 +109,7 @@ interface QueryInterface
 	 *
 	 * @return bool
 	 */
-	public function hasError(): bool;
+	public function hasError();//: bool;
 
 	//--------------------------------------------------------------------
 
@@ -114,7 +118,7 @@ interface QueryInterface
 	 *
 	 * @return string
 	 */
-	public function getErrorCode(): int;
+	public function getErrorCode();//: int;
 
 	//--------------------------------------------------------------------
 
@@ -123,7 +127,7 @@ interface QueryInterface
 	 *
 	 * @return string
 	 */
-	public function getErrorMessage(): string;
+	public function getErrorMessage();//: string;
 
 	//--------------------------------------------------------------------
 
@@ -132,7 +136,7 @@ interface QueryInterface
 	 *
 	 * @return bool
 	 */
-	public function isWriteType(): bool;
+	public function isWriteType();//: bool;
 
 	//--------------------------------------------------------------------
 

@@ -144,6 +144,12 @@ class URI
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Constructor.
+	 * 
+	 * @param string $uri
+	 * @throws \InvalidArgumentException
+	 */
 	public function __construct(string $uri = null)
 	{
 		if ( ! is_null($uri))
@@ -200,7 +206,7 @@ class URI
 	 * @see https://tools.ietf.org/html/rfc3986#section-3.1
 	 * @return string The URI scheme.
 	 */
-	public function getScheme(): string
+	public function getScheme()//: string
 	{
 		return $this->scheme;
 	}
@@ -223,9 +229,10 @@ class URI
 	 * scheme, it SHOULD NOT be included.
 	 *
 	 * @see https://tools.ietf.org/html/rfc3986#section-3.2
+	 * @param bool $ignorePort
 	 * @return string The URI authority, in "[user-info@]host[:port]" format.
 	 */
-	public function getAuthority(bool $ignorePort = false): string
+	public function getAuthority(bool $ignorePort = false)//: string
 	{
 		if (empty($this->host))
 		{
@@ -366,21 +373,30 @@ class URI
 	 * @see https://tools.ietf.org/html/rfc3986#section-3.3
 	 * @return string The URI path.
 	 */
-	public function getPath(): string
+	public function getPath()//: string
 	{
 		return (is_null($this->path)) ? '' : $this->path;
 	}
 
 	//--------------------------------------------------------------------
 
-	public function getQuery(): string
+	/**
+	 * Retrieve the query string
+	 * @return type
+	 */
+	public function getQuery()//: string
 	{
 		return is_null($this->query) ? '' : $this->query;
 	}
 
 	//--------------------------------------------------------------------
 
-	public function getFragment(): string
+	/**
+	 * Retrieve a URI fragment
+	 * 
+	 * @return type
+	 */
+	public function getFragment()//: string
 	{
 		return is_null($this->fragment) ? '' : $this->fragment;
 	}
@@ -392,7 +408,7 @@ class URI
 	 *
 	 * @return array
 	 */
-	public function getSegments(): array
+	public function getSegments()//: array
 	{
 		return $this->segments;
 	}
@@ -407,7 +423,7 @@ class URI
 	 * @return string     The value of the segment. If no segment is found,
 	 *                    throws InvalidArgumentError
 	 */
-	public function getSegment(int $number): string
+	public function getSegment(int $number)//: string
 	{
 		// The segment should treat the array as 1-based for the user
 		// but we still have to deal with a zero-based array.
@@ -428,7 +444,7 @@ class URI
 	 *
 	 * @return int
 	 */
-	public function getTotalSegments(): int
+	public function getTotalSegments()//: int
 	{
 		return count($this->segments);
 	}
@@ -918,8 +934,8 @@ class URI
 	 *
 	 * @see http://tools.ietf.org/html/rfc3986#section-5.2.3
 	 *
-	 * @param $path1
-	 * @param $path2
+	 * @param URI $base
+	 * @param URI $reference
 	 */
 	protected function mergePaths(URI $base, URI $reference)
 	{
@@ -947,9 +963,10 @@ class URI
 	 *
 	 * @see http://tools.ietf.org/html/rfc3986#section-5.2.4
 	 *
+	 * @param string $path
 	 * @param URI $uri
 	 */
-	public function removeDotSegments(string $path): string
+	public function removeDotSegments(string $path)//: string
 	{
 		if (empty($path) || $path == '/') return $path;
 

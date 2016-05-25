@@ -143,7 +143,7 @@ interface RouteCollectionInterface
 	 *
 	 * @return RouteCollection
 	 */
-	public function setAutoRoute(bool $value): self;
+	public function setAutoRoute(bool $value);//: self;
 
 	//--------------------------------------------------------------------
 
@@ -158,7 +158,7 @@ interface RouteCollectionInterface
 	 *
 	 * @return $this
 	 */
-	public function set404Override($callable = null): self;
+	public function set404Override($callable = null);//: self;
 
 	//--------------------------------------------------------------------
 
@@ -246,7 +246,7 @@ interface RouteCollectionInterface
 	 * @param string $route
 	 * @param        ...$params
 	 */
-	public function reverseRoute(string $search, ...$params): string;
+	public function reverseRoute(string $search, ...$params);//: string;
 
 	//--------------------------------------------------------------------
 
@@ -257,7 +257,7 @@ interface RouteCollectionInterface
 	 *
 	 * @return bool
 	 */
-	public function isRedirect(string $from): bool;
+	public function isRedirect(string $from);//: bool;
 
 	//--------------------------------------------------------------------
 
@@ -268,7 +268,7 @@ interface RouteCollectionInterface
 	 *
 	 * @return int
 	 */
-	public function getRedirectCode(string $from) : int;
+	public function getRedirectCode(string $from);//: int;
 
 	//--------------------------------------------------------------------
 

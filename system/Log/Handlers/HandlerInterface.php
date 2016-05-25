@@ -49,7 +49,7 @@ interface HandlerInterface
 	 *
 	 * @return bool
 	 */
-	public function handle($level, $message): bool;
+	public function handle($level, $message);//: bool;
 
 	//--------------------------------------------------------------------
 
@@ -61,7 +61,7 @@ interface HandlerInterface
 	 *
 	 * @return bool
 	 */
-	public function canHandle(string $level): bool;
+	public function canHandle(string $level);//: bool;
 
 	//--------------------------------------------------------------------
 

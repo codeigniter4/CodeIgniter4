@@ -59,7 +59,7 @@ interface ResponseInterface
 	 *
 	 * @return int Status code.
 	 */
-	public function getStatusCode(): int;
+	public function getStatusCode();//: int;
 
 	//--------------------------------------------------------------------
 
@@ -73,14 +73,14 @@ interface ResponseInterface
 	 * @see http://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
 	 *
 	 * @param int    $code         The 3-digit integer result code to set.
-	 * @param string $reasonPhrase The reason phrase to use with the
+	 * @param string $reason       The reason phrase to use with the
 	 *                             provided status code; if none is provided, will
 	 *                             default to the IANA name.
 	 *
 	 * @return self
 	 * @throws \InvalidArgumentException For invalid status code arguments.
 	 */
-	public function setStatusCode(int $code, string $reason = ''): Response;
+	public function setStatusCode(int $code, string $reason = '');//: Response;
 
 	//--------------------------------------------------------------------
 
@@ -92,7 +92,7 @@ interface ResponseInterface
 	 *
 	 * @return string
 	 */
-	public function getReason(): string;
+	public function getReason();//: string;
 
 	//--------------------------------------------------------------------
 
@@ -107,7 +107,7 @@ interface ResponseInterface
 	 *
 	 * @return Response
 	 */
-	public function setDate(\DateTime $date): Response;
+	public function setDate(\DateTime $date);//: Response;
 
 	//--------------------------------------------------------------------
 
@@ -120,7 +120,7 @@ interface ResponseInterface
 	 *
 	 * @return Response
 	 */
-	public function setContentType(string $mime, string $charset='UTF-8'): Response;
+	public function setContentType(string $mime, string $charset='UTF-8');//: Response;
 	
 	//--------------------------------------------------------------------
 	
@@ -135,7 +135,7 @@ interface ResponseInterface
 	 * Sets the appropriate headers to ensure this response
 	 * is not cached by the browsers.
 	 */
-	public function noCache(): Response;
+	public function noCache();//: Response;
 
 	//--------------------------------------------------------------------
 
@@ -167,7 +167,7 @@ interface ResponseInterface
 	 *
 	 * @return $this
 	 */
-	public function setCache(array $options=[]): Response;
+	public function setCache(array $options=[]);//: Response;
 
 	//--------------------------------------------------------------------
 
@@ -179,7 +179,7 @@ interface ResponseInterface
 	 *
 	 * @param $date
 	 */
-	public function setLastModified($date): Response;
+	public function setLastModified($date);//: Response;
 
 	//--------------------------------------------------------------------
 
@@ -193,7 +193,7 @@ interface ResponseInterface
 	 *
 	 * @return Response
 	 */
-	public function send(): Response;
+	public function send();//: Response;
 
 	//--------------------------------------------------------------------
 

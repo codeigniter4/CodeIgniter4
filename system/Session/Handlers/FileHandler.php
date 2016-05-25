@@ -95,7 +95,7 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 	 *
 	 * @return    bool
 	 */
-	public function open($savePath, $name): bool
+	public function open($savePath, $name)//: bool
 	{
 		if ( ! is_dir($savePath))
 		{
@@ -197,7 +197,7 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 	 *
 	 * @return    bool
 	 */
-	public function write($session_id, $session_data): bool
+	public function write($session_id, $session_data)//: bool
 	{
 		// If the two IDs don't match, we have a session_regenerate_id() call
 		// and we need to close the old handle and open a new one
@@ -256,7 +256,7 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 	 *
 	 * @return    bool
 	 */
-	public function close(): bool
+	public function close()//: bool
 	{
 		if (is_resource($this->fileHandle))
 		{
@@ -282,7 +282,7 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 	 *
 	 * @return    bool
 	 */
-	public function destroy($session_id): bool
+	public function destroy($session_id)//: bool
 	{
 		if ($this->close())
 		{
@@ -313,7 +313,7 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 	 *
 	 * @return    bool
 	 */
-	public function gc($maxlifetime): bool
+	public function gc($maxlifetime)//: bool
 	{
 		if ( ! is_dir($this->savePath) || ($directory = opendir($this->savePath)) === false)
 		{

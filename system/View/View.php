@@ -90,6 +90,14 @@ class View implements RenderableInterface {
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Constructor
+	 * 
+	 * @param string $viewPath
+	 * @param type $loader
+	 * @param bool $debug
+	 * @param Logger $logger
+	 */
 	public function __construct(string $viewPath=null, $loader=null, bool $debug = null, Logger $logger = null)
 	{
 		$this->viewPath = rtrim($viewPath, '/ ').'/';
@@ -109,10 +117,11 @@ class View implements RenderableInterface {
 	 *
 	 * @param string $view
 	 * @param array  $options  // Unused in this implementation
+	 * @param bool $saveData
 	 *
 	 * @return string
 	 */
-	public function render(string $view, array $options=null, $saveData=false): string
+	public function render(string $view, array $options=null, $saveData=false)//: string
 	{
 		$start = microtime(true);
 
@@ -162,7 +171,7 @@ class View implements RenderableInterface {
 	 *
 	 * @return RenderableInterface
 	 */
-	public function setData(array $data=[], string $context=null): RenderableInterface
+	public function setData(array $data=[], string $context=null)//: RenderableInterface
 	{
 		if (! empty($context))
 		{
@@ -186,7 +195,7 @@ class View implements RenderableInterface {
 	 *
 	 * @return RenderableInterface
 	 */
-	public function setVar(string $name, $value=null, string $context=null): RenderableInterface
+	public function setVar(string $name, $value=null, string $context=null)//: RenderableInterface
 	{
 		if (! empty($context))
 		{
@@ -232,7 +241,7 @@ class View implements RenderableInterface {
 	 *
 	 * @return array
 	 */
-	public function getPerformanceData(): array
+	public function getPerformanceData()//: array
 	{
 	    return $this->performanceData;
 	}

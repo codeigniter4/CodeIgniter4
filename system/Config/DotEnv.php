@@ -27,17 +27,17 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2016, British Columbia Institute of Technology (http://bcit.ca/)
- * @license	http://opensource.org/licenses/MIT	MIT License
- * @link	http://codeigniter.com
- * @since	Version 3.0.0
+ * @package      CodeIgniter
+ * @author       CodeIgniter Dev Team
+ * @copyright    Copyright (c) 2014 - 2016, British Columbia Institute of Technology (http://bcit.ca/)
+ * @license      http://opensource.org/licenses/MIT	MIT License
+ * @link         http://codeigniter.com
+ * @since        Version 3.0.0
  * @filesource
  */
 
 /**
- * Class DotEnv
+ * Environment-specific configuration
  */
 
 class DotEnv
@@ -135,10 +135,9 @@ class DotEnv
 	 *
 	 * @param string $name
 	 * @param string $value
-	 *
 	 * @return array
 	 */
-	public function normaliseVariable(string $name, string $value = ''): array
+	public function normaliseVariable(string $name, string $value = '')//: array
 	{
 		// Split our compound string into it's parts.
 		if (strpos($name, '=') !== false)
@@ -173,7 +172,7 @@ class DotEnv
 	 * @return string
 	 * @throws \InvalidArgumentException
 	 */
-	protected function sanitiseValue(string $value): string
+	protected function sanitiseValue(string $value)//: string
 	{
 		if ( ! $value)
 		{
@@ -235,7 +234,7 @@ class DotEnv
 	 *
 	 * @return string
 	 */
-	protected function resolveNestedVariables(string $value): string
+	protected function resolveNestedVariables(string $value)//: string
 	{
 		if (strpos($value, '$') !== false)
 		{
@@ -296,4 +295,3 @@ class DotEnv
 	//--------------------------------------------------------------------
 
 }
-
