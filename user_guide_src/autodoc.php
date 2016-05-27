@@ -10,6 +10,7 @@ ini_set('display_errors', 1);
 define('APPPATH', '../application/');
 define('BASEPATH', '../system/');
 define('APP_NAMESPACE', 'App');
+define('ENVIRONMENT', 'development');
 
 use CodeIgniter\CLI\CLI;
 use Config\Autoload;

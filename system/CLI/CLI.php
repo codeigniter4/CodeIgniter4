@@ -276,10 +276,9 @@ class CLI
 	//--------------------------------------------------------------------
 
 	/**
-	 * Outputs a string to the cli.     If you send an array it will implode them
-	 * with a line break.
+	 * Outputs a string to the cli. 
 	 *
-	 * @param    string|array $text the text to output, or array of lines
+	 * @param string $text          the text to output
 	 * @param string $foreground
 	 * @param string $background
 	 */

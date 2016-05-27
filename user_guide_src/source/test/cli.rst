@@ -19,43 +19,41 @@ http://fuelphp.com
 
 
 
-Static "constructor".
+		Static "constructor".
 
 
 	.. php:method:: input ( [ string $prefix ] )
 
 		:param string $prefix: 
-		:returns: 
-		:rtype: string
 
-Get input from the shell, using readline or the standard STDIN
 
-Named options must be in the following formats:
-php index.php user -v --v -name=John --name=John
+		Get input from the shell, using readline or the standard STDIN
+
+		Named options must be in the following formats:
+		php index.php user -v --v -name=John --name=John
 
 
 
 
 	.. php:method:: prompt (  )
 
-		:returns: 
-		:rtype: string
 
-Asks the user for input.  This can have either 1 or 2 arguments.
 
-Usage:
+		Asks the user for input.  This can have either 1 or 2 arguments.
 
-// Waits for any key press
-CLI::prompt();
+		Usage:
 
-// Takes any input
-$color = CLI::prompt('What is your favorite color?');
+		// Waits for any key press
+		CLI::prompt();
 
-// Takes any input, but offers default
-$color = CLI::prompt('What is your favourite color?', 'white');
+		// Takes any input
+		$color = CLI::prompt('What is your favorite color?');
 
-// Will only accept the options in the array
-$ready = CLI::prompt('Are you ready?', array('y','n'));
+		// Takes any input, but offers default
+		$color = CLI::prompt('What is your favourite color?', 'white');
+
+		// Will only accept the options in the array
+		$ready = CLI::prompt('Are you ready?', array('y','n'));
 
 
 
@@ -66,8 +64,8 @@ $ready = CLI::prompt('Are you ready?', array('y','n'));
 		:param string $background: 
 
 
-Outputs a string to the cli.     If you send an array it will implode them
-with a line break.
+		Outputs a string to the cli.     If you send an array it will implode them
+		with a line break.
 
 
 
@@ -78,7 +76,7 @@ with a line break.
 		:param string $background: 
 
 
-Outputs an error to the CLI using STDERR instead of STDOUT
+		Outputs an error to the CLI using STDERR instead of STDOUT
 
 
 
@@ -87,7 +85,7 @@ Outputs an error to the CLI using STDERR instead of STDOUT
 		:param int $num: 
 
 
-Beeps a certain number of times.
+		Beeps a certain number of times.
 
 
 
@@ -97,8 +95,8 @@ Beeps a certain number of times.
 		:param bool $countdown: 
 
 
-Waits a certain number of seconds, optionally showing a wait message and
-waiting for a key press.
+		Waits a certain number of seconds, optionally showing a wait message and
+		waiting for a key press.
 
 
 
@@ -106,7 +104,7 @@ waiting for a key press.
 
 
 
-if operating system === windows
+		if operating system === windows
 
 
 	.. php:method:: newLine ( [ int $num ] )
@@ -114,7 +112,7 @@ if operating system === windows
 		:param int $num: 
 
 
-Enter a number of empty lines
+		Enter a number of empty lines
 
 
 
@@ -123,7 +121,7 @@ Enter a number of empty lines
 
 
 
-Clears the screen of output
+		Clears the screen of output
 
 
 
@@ -135,8 +133,8 @@ Clears the screen of output
 		:param string $format: 
 
 
-Returns the given text with the correct color codes for a foreground and
-optionally a background color.
+		Returns the given text with the correct color codes for a foreground and
+		optionally a background color.
 
 
 
@@ -144,12 +142,11 @@ optionally a background color.
 	.. php:method:: getWidth ( [ int $default ] )
 
 		:param int $default: 
-		:returns: 
-		:rtype: int
 
-Attempts to determine the width of the viewable CLI window.
-This only works on *nix-based systems, so return a sane default
-for Windows environments.
+
+		Attempts to determine the width of the viewable CLI window.
+		This only works on *nix-based systems, so return a sane default
+		for Windows environments.
 
 
 
@@ -157,12 +154,11 @@ for Windows environments.
 	.. php:method:: getHeight ( [ int $default ] )
 
 		:param int $default: 
-		:returns: 
-		:rtype: int
 
-Attempts to determine the height of the viewable CLI window.
-This only works on *nix-based systems, so return a sane default
-for Windows environments.
+
+		Attempts to determine the height of the viewable CLI window.
+		This only works on *nix-based systems, so return a sane default
+		for Windows environments.
 
 
 
@@ -173,8 +169,8 @@ for Windows environments.
 		:param int $totalSteps: 
 
 
-Displays a progress bar on the CLI. You must call it repeatedly
-to update it. Set $thisStep = false to erase the progress bar.
+		Displays a progress bar on the CLI. You must call it repeatedly
+		to update it. Set $thisStep = false to erase the progress bar.
 
 
 
@@ -183,16 +179,15 @@ to update it. Set $thisStep = false to erase the progress bar.
 		:param string $string: 
 		:param int $max: 
 		:param int $pad_left: 
-		:returns: 
-		:rtype: string
 
-Takes a string and writes it to the command line, wrapping to a maximum
-width. If no maximum width is specified, will wrap to the window's max
-width.
 
-If an int is passed into $pad_left, then all strings after the first
-will padded with that many spaces to the left. Useful when printing
-short descriptions that need to start on an existing line.
+		Takes a string and writes it to the command line, wrapping to a maximum
+		width. If no maximum width is specified, will wrap to the window's max
+		width.
+
+		If an int is passed into $pad_left, then all strings after the first
+		will padded with that many spaces to the left. Useful when printing
+		short descriptions that need to start on an existing line.
 
 
 

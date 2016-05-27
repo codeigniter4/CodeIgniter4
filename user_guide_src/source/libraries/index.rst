@@ -6,9 +6,10 @@ Library Reference
 	:titlesonly:
 
 	benchmark
-        curlrequest 
+	cli
+	curlrequest
 	incomingrequest
 	message
 	request
-        response
-        sessions
+	response
+	sessions
