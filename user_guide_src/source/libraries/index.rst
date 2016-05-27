@@ -3,12 +3,12 @@ Library Reference
 #################
 
 .. toctree::
-	:titlesonly:
+    :titlesonly:
 
-	benchmark
-        curlrequest 
-	incomingrequest
-	message
-	request
-        response
-        sessions
+    benchmark
+    curlrequest 
+    incomingrequest
+    message
+    request
+    response
+    sessions
