@@ -5,10 +5,11 @@ Library Reference
 .. toctree::
     :titlesonly:
 
-    benchmark
-    curlrequest 
-    incomingrequest
-    message
-    request
-    response
-    sessions
+	benchmark
+	cli
+	curlrequest
+	incomingrequest
+	message
+	request
+	response
+	sessions

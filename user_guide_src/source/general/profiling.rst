@@ -100,7 +100,7 @@ is true, you will need to implement the ``getVarData()`` method.
 
 
 Displaying a Toolbar Tab
-------------------------
+========================
 
 To display a toolbar tab you must:
 
@@ -117,7 +117,7 @@ it can be used to provide additional overview information. For example, the Data
 number of queries across all connections, while the Files tab displays the total number of files.
 
 Providing Timeline Data
------------------------
+=======================
 
 To provide information to be displayed in the Timeline you must:
 
@@ -135,7 +135,7 @@ it to sort it correctly and display the correct information. The inner arrays mu
 	];
 
 Providing Vars
---------------
+==============
 
 To add data to the Vars tab you must:
 
