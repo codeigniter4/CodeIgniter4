@@ -59,7 +59,7 @@ interface ResponseInterface
 	 *
 	 * @return int Status code.
 	 */
-	public function getStatusCode();//: int;
+	public function getStatusCode(): int;
 
 	//--------------------------------------------------------------------
 
@@ -80,7 +80,7 @@ interface ResponseInterface
 	 * @return self
 	 * @throws \InvalidArgumentException For invalid status code arguments.
 	 */
-	public function setStatusCode(int $code, string $reason = '');//: Response;
+	public function setStatusCode(int $code, string $reason = ''): Response;
 
 	//--------------------------------------------------------------------
 
@@ -92,7 +92,7 @@ interface ResponseInterface
 	 *
 	 * @return string
 	 */
-	public function getReason();//: string;
+	public function getReason(): string;
 
 	//--------------------------------------------------------------------
 
@@ -107,7 +107,7 @@ interface ResponseInterface
 	 *
 	 * @return Response
 	 */
-	public function setDate(\DateTime $date);//: Response;
+	public function setDate(\DateTime $date): Response;
 
 	//--------------------------------------------------------------------
 
@@ -120,7 +120,7 @@ interface ResponseInterface
 	 *
 	 * @return Response
 	 */
-	public function setContentType(string $mime, string $charset='UTF-8');//: Response;
+	public function setContentType(string $mime, string $charset='UTF-8'): Response;
 	
 	//--------------------------------------------------------------------
 	
@@ -135,7 +135,7 @@ interface ResponseInterface
 	 * Sets the appropriate headers to ensure this response
 	 * is not cached by the browsers.
 	 */
-	public function noCache();//: Response;
+	public function noCache(): Response;
 
 	//--------------------------------------------------------------------
 
@@ -167,7 +167,7 @@ interface ResponseInterface
 	 *
 	 * @return $this
 	 */
-	public function setCache(array $options=[]);//: Response;
+	public function setCache(array $options=[]): Response;
 
 	//--------------------------------------------------------------------
 
@@ -179,7 +179,7 @@ interface ResponseInterface
 	 *
 	 * @param $date
 	 */
-	public function setLastModified($date);//: Response;
+	public function setLastModified($date): Response;
 
 	//--------------------------------------------------------------------
 
@@ -193,7 +193,7 @@ interface ResponseInterface
 	 *
 	 * @return Response
 	 */
-	public function send();//: Response;
+	public function send(): Response;
 
 	//--------------------------------------------------------------------
 

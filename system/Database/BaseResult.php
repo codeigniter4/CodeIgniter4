@@ -123,7 +123,7 @@ abstract class BaseResult implements ResultInterface
 	 *
 	 * @return mixed
 	 */
-	public function getResult($type = 'object')//: array
+	public function getResult($type = 'object'): array
 	{
 		if ($type === 'array')
 		{
@@ -203,7 +203,7 @@ abstract class BaseResult implements ResultInterface
 	 *
 	 * @return array
 	 */
-	public function getResultArray()//: array
+	public function getResultArray(): array
 	{
 		if (count($this->resultArray) > 0)
 		{
@@ -246,7 +246,7 @@ abstract class BaseResult implements ResultInterface
 	 *
 	 * @return array
 	 */
-	public function getResultObject()//: array
+	public function getResultObject(): array
 	{
 		if (count($this->resultObject) > 0)
 		{
@@ -549,7 +549,7 @@ abstract class BaseResult implements ResultInterface
 	 *
 	 * @return int
 	 */
-	abstract public function getFieldCount();//: int;
+	abstract public function getFieldCount(): int;
 
 	//--------------------------------------------------------------------
 
@@ -558,7 +558,7 @@ abstract class BaseResult implements ResultInterface
 	 *
 	 * @return array
 	 */
-	abstract public function getFieldNames();//: array;
+	abstract public function getFieldNames(): array;
 
 	//--------------------------------------------------------------------
 
@@ -567,7 +567,7 @@ abstract class BaseResult implements ResultInterface
 	 *
 	 * @return array
 	 */
-	abstract public function getFieldData();//: array;
+	abstract public function getFieldData(): array;
 
 	//--------------------------------------------------------------------
 

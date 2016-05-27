@@ -103,7 +103,7 @@ class CLIRequest extends Request
 	 * 
 	 * @return string
 	 */
-	public function getPath()//: string
+	public function getPath(): string
 	{
 		$path = implode('/', $this->segments);
 
@@ -118,7 +118,7 @@ class CLIRequest extends Request
 	 *
 	 * @return array
 	 */
-	public function getOptions()//: array
+	public function getOptions(): array
 	{
 	    return $this->options;
 	}
@@ -158,7 +158,7 @@ class CLIRequest extends Request
 	 *
 	 * @return string
 	 */
-	public function getOptionString()//: string
+	public function getOptionString(): string
 	{
 	    if (empty($this->options))
 	    {

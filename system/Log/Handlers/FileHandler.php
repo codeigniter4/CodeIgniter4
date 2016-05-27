@@ -74,7 +74,7 @@ class FileHandler extends BaseHandler implements HandlerInterface
 	 *
 	 * @return bool
 	 */
-	public function handle($level, $message)//: bool
+	public function handle($level, $message): bool
 	{
 		$filepath = $this->path.'log-'.date('Y-m-d').'.'.$this->fileExtension;
 

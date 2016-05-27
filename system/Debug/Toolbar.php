@@ -58,7 +58,7 @@ class Toolbar
 	 * @param type $response
 	 * @return type
 	 */
-	public function run($startTime, $totalTime, $startMemory, $request, $response)//: string
+	public function run($startTime, $totalTime, $startMemory, $request, $response): string
 	{
 		$this->startTime = $startTime;
 
@@ -88,7 +88,7 @@ class Toolbar
 	 * @param int $segmentDuration
 	 * @return string
 	 */
-	protected function renderTimeline(int $segmentCount, int $segmentDuration)//: string
+	protected function renderTimeline(int $segmentCount, int $segmentDuration): string
 	{
 		$displayTime = $segmentCount * $segmentDuration;
 
@@ -125,7 +125,7 @@ class Toolbar
 	 *
 	 * @return array
 	 */
-	protected function collectTimelineData()//: array
+	protected function collectTimelineData(): array
 	{
 		$data = [];
 

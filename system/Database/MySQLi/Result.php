@@ -49,7 +49,7 @@ class Result extends BaseResult implements ResultInterface
 	 *
 	 * @return int
 	 */
-	public function getFieldCount()//: int
+	public function getFieldCount(): int
 	{
 		return $this->resultID->field_count;
 	}
@@ -61,7 +61,7 @@ class Result extends BaseResult implements ResultInterface
 	 *
 	 * @return array
 	 */
-	public function getFieldNames()//: array
+	public function getFieldNames(): array
 	{
 		$fieldNames = [];
 		$this->resultID->field_seek(0);
@@ -80,7 +80,7 @@ class Result extends BaseResult implements ResultInterface
 	 *
 	 * @return array
 	 */
-	public function getFieldData()//: array
+	public function getFieldData(): array
 	{
 		$retval    = [];
 		$fieldData = $this->resultID->fetch_fields();

@@ -233,7 +233,7 @@ class BaseBuilder
 	 *
 	 * @return array
 	 */
-	public function getBinds()//: array
+	public function getBinds(): array
 	{
 		return $this->binds;
 	}

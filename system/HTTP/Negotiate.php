@@ -104,7 +104,7 @@ class Negotiate
 	 *
 	 * @return string
 	 */
-	public function media(array $supported, bool $strictMatch=false)//: string
+	public function media(array $supported, bool $strictMatch=false): string
 	{
 		return $this->getBestMatch($supported, $this->request->getHeaderLine('accept'), true, $strictMatch);
 	}
@@ -123,7 +123,7 @@ class Negotiate
 	 *
 	 * @return string
 	 */
-	public function charset(array $supported)//: string
+	public function charset(array $supported): string
 	{
 		$match = $this->getBestMatch($supported, $this->request->getHeaderLine('accept-charset'), false, true);
 
@@ -151,7 +151,7 @@ class Negotiate
 	 *
 	 * @return string
 	 */
-	public function encoding(array $supported=[])//: string
+	public function encoding(array $supported=[]): string
 	{
 		array_push($supported, 'identity');
 
@@ -172,7 +172,7 @@ class Negotiate
 	 *
 	 * @return string
 	 */
-	public function language(array $supported)//: string
+	public function language(array $supported): string
 	{
 		return $this->getBestMatch($supported, $this->request->getHeaderLine('accept-language'));
 	}
@@ -197,7 +197,7 @@ class Negotiate
 	 *
 	 * @return string Best match
 	 */
-	protected function getBestMatch(array $supported, string $header=null, bool $enforceTypes=false, bool $strictMatch=false)//: string
+	protected function getBestMatch(array $supported, string $header=null, bool $enforceTypes=false, bool $strictMatch=false): string
 	{
 		if (empty($supported))
 		{
@@ -383,7 +383,7 @@ class Negotiate
 	 *
 	 * @return bool
 	 */
-	protected function matchParameters(array $acceptable, array $supported)//: bool
+	protected function matchParameters(array $acceptable, array $supported): bool
 	{
 		if (count($acceptable['params']) != count($supported['params']))
 		{
@@ -413,7 +413,7 @@ class Negotiate
 	 *
 	 * @return bool
 	 */
-	public function matchTypes(array $acceptable, array $supported)//: bool
+	public function matchTypes(array $acceptable, array $supported): bool
 	{
 		list($aType, $aSubType) = explode('/', $acceptable['value']);
 		list($sType, $sSubType) = explode('/', $supported['value']);

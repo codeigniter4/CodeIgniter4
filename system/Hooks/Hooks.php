@@ -40,6 +40,9 @@ define('HOOKS_PRIORITY_LOW', 200);
 define('HOOKS_PRIORITY_NORMAL', 100);
 define('HOOKS_PRIORITY_HIGH', 10);
 
+/**
+ * Hooks
+ */
 class Hooks
 {
 
@@ -107,10 +110,11 @@ class Hooks
 	 *  b) a method returns false, at which point execution of subscribers stops.
 	 *
 	 * @param $event_name
+	 * @param $arguments
 	 *
 	 * @return bool
 	 */
-	public static function trigger($event_name, ...$arguments)//: bool
+	public static function trigger($event_name, ...$arguments): bool
 	{
 		// Read in our Config/events file so that we have them all!
 		if ( ! self::$haveReadFromFile)
@@ -150,7 +154,7 @@ class Hooks
 	 *
 	 * @return array
 	 */
-	public static function listeners($event_name)//: array
+	public static function listeners($event_name): array
 	{
 		if ( ! isset(self::$listeners[$event_name]))
 		{
@@ -183,7 +187,7 @@ class Hooks
 	 *
 	 * @return bool
 	 */
-	public static function removeListener($event_name, callable $listener)//: bool
+	public static function removeListener($event_name, callable $listener): bool
 	{
 		if ( ! isset(self::$listeners[$event_name]))
 		{

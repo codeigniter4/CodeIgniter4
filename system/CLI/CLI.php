@@ -143,7 +143,7 @@ class CLI
 	 *
 	 * @return    string
 	 */
-	public static function input(string $prefix = null)//: string
+	public static function input(string $prefix = null): string
 	{
 		if (static::$readline_support)
 		{
@@ -176,7 +176,7 @@ class CLI
 	 *
 	 * @return    string    the user input
 	 */
-	public static function prompt()//: string
+	public static function prompt(): string
 	{
 		$args = func_get_args();
 
@@ -466,7 +466,7 @@ class CLI
 	 *
 	 * @return int
 	 */
-	public static function getWidth(int $default = 80)//: int
+	public static function getWidth(int $default = 80): int
 	{
 		if (static::isWindows())
 		{
@@ -487,7 +487,7 @@ class CLI
 	 *
 	 * @return int
 	 */
-	public static function getHeight(int $default = 32)//: int
+	public static function getHeight(int $default = 32): int
 	{
 		if (static::isWindows())
 		{
@@ -560,7 +560,7 @@ class CLI
 	 *
 	 * @return string
 	 */
-	public static function wrap(string $string = null, int $max = 0, int $pad_left = 0)//: string
+	public static function wrap(string $string = null, int $max = 0, int $pad_left = 0): string
 	{
 		if (empty($string))
 		{

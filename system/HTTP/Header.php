@@ -187,7 +187,7 @@ class Header
 	 *
 	 * @see https://www.w3.org/Protocols/rfc2616/rfc2616-sec4.html#sec4.2
 	 */
-	public function getValueLine()//: string
+	public function getValueLine(): string
 	{
 		if (is_string($this->value))
 		{
@@ -228,7 +228,7 @@ class Header
 	 *
 	 * @return string
 	 */
-	public function __toString()//: string
+	public function __toString(): string
 	{
 	    return $this->name.': '.$this->getValueLine();
 	}

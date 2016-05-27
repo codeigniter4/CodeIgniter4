@@ -225,7 +225,7 @@ if ( ! function_exists('route_to'))
 	 *
 	 * @return \CodeIgniter\Router\string
 	 */
-	function route_to(string $method, ...$params)//: string
+	function route_to(string $method, ...$params): string
 	{
 		$routes = Services::routes();
 
@@ -316,7 +316,7 @@ if (! function_exists('load_helper'))
 	 *
 	 * @return string
 	 */
-	function load_helper(string $filename)//: string
+	function load_helper(string $filename): string
 	{
 		$loader = Services::locator(true);
 

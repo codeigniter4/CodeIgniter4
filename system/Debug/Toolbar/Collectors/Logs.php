@@ -75,7 +75,7 @@ class Logs extends BaseCollector
 	 *
 	 * @return string
 	 */
-	public function display()//: string
+	public function display(): string
 	{
 		$logger = Services::logger(true);
 		$logs = $logger->logCache;

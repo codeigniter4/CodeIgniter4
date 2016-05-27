@@ -180,7 +180,7 @@ class Router implements RouterInterface
 	 *
 	 * @return mixed
 	 */
-	public function methodName()//: string
+	public function methodName(): string
 	{
 		return $this->method;
 	}
@@ -223,7 +223,7 @@ class Router implements RouterInterface
 	 *
 	 * @return mixed
 	 */
-	public function params()//: array
+	public function params(): array
 	{
 		return $this->params;
 	}
@@ -238,7 +238,7 @@ class Router implements RouterInterface
 	 *
 	 * @return string
 	 */
-	public function directory()//: string
+	public function directory(): string
 	{
 	    return ! empty($this->directory) ? $this->directory : '';
 	}
@@ -270,7 +270,7 @@ class Router implements RouterInterface
 	 *
 	 * @return mixed
 	 */
-	public function setIndexPage($page)//: self
+	public function setIndexPage($page): self
 	{
 		$this->indexPage = $page;
 
@@ -287,7 +287,7 @@ class Router implements RouterInterface
 	 *
 	 * @return $this
 	 */
-	public function setTranslateURIDashes($val = false)//: self
+	public function setTranslateURIDashes($val = false): self
 	{
 		$this->translateURIDashes = (bool)$val;
 
@@ -305,7 +305,7 @@ class Router implements RouterInterface
 	 *
 	 * @return bool Whether the route was matched or not.
 	 */
-	protected function checkRoutes(string $uri)//: bool
+	protected function checkRoutes(string $uri): bool
 	{
 		$routes = $this->collection->getRoutes();
 

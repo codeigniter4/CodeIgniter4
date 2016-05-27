@@ -81,7 +81,7 @@ class BaseCollector
 	 * @param bool $safe
 	 * @return string
 	 */
-	public function getTitle($safe=false)//: string
+	public function getTitle($safe=false): string
 	{
 		if ($safe)
 		{
@@ -98,7 +98,7 @@ class BaseCollector
 	 *
 	 * @return string
 	 */
-	public function getTitleDetails()//: string
+	public function getTitleDetails(): string
 	{
 	    return '';
 	}
@@ -112,7 +112,7 @@ class BaseCollector
 	 *
 	 * @return bool
 	 */
-	public function hasTabContent()//: bool
+	public function hasTabContent(): bool
 	{
 		return (bool)$this->hasTabContent;
 	}
@@ -124,7 +124,7 @@ class BaseCollector
 	 *
 	 * @return bool
 	 */
-	public function hasTimelineData()//: bool
+	public function hasTimelineData(): bool
 	{
 	    return (bool)$this->hasTimeline;
 	}
@@ -138,7 +138,7 @@ class BaseCollector
 	 *
 	 * @return bool
 	 */
-	public function timelineData()//: array
+	public function timelineData(): array
 	{
 		if (! $this->hasTimeline)
 		{
@@ -204,7 +204,7 @@ class BaseCollector
 	 *
 	 * @return mixed
 	 */
-	 protected function formatTimelineData()//: array
+	 protected function formatTimelineData(): array
 	 {
 		 return [];
 	 }
@@ -217,7 +217,7 @@ class BaseCollector
 	 *
 	 * @return string
 	 */
-	public function display()//: string
+	public function display(): string
 	{
 		return '';
 	}

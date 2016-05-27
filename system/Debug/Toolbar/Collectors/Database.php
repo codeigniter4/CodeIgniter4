@@ -96,7 +96,7 @@ class Database extends BaseCollector
 	 *
 	 * @return array The formatted data or an empty array.
 	 */
-	protected function formatTimelineData()//: array
+	protected function formatTimelineData(): array
 	{
 		$data = [];
 
@@ -133,7 +133,7 @@ class Database extends BaseCollector
 	 *
 	 * @return string The data formatted for the toolbar.
 	 */
-	public function display()//: string
+	public function display(): string
 	{
 		$output = '';
 
@@ -195,7 +195,7 @@ class Database extends BaseCollector
 	 *
 	 * @return string The number of queries (in parentheses) or an empty string.
 	 */
-	public function getTitleDetails()//: string
+	public function getTitleDetails(): string
 	{
 		$queryCount = 0;
 
