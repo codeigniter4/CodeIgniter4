@@ -245,4 +245,29 @@ class App extends BaseConfig
 	*/
 	public $composerAutoload = false;
 
+	/*
+	|--------------------------------------------------------------------------
+	| Encryption Key
+	|--------------------------------------------------------------------------
+	|
+	| If you use the Encryption class, or hashed IDs in the model you must set
+	| an encryption key. See the user guide for more info.
+	|
+	| This will be available in a global constant, CRYPT_KEY.
+	*/
+	public $encryptionKey = '';
+
+	//--------------------------------------------------------------------
+
+	public function __construct()
+	{
+	    if (! defined('CRYPT_KEY'))
+	    {
+		    define('CRYPT_KEY', $this->encryptionKey);
+	    }
+	}
+
+	//--------------------------------------------------------------------
+
+
 }
