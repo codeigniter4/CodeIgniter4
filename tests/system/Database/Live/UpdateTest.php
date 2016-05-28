@@ -2,6 +2,9 @@
 
 use CodeIgniter\DatabaseException;
 
+/**
+ * @group DatabaseLive
+ */
 class UpdateTest extends \CIDatabaseTestCase
 {
 	protected $refresh = true;

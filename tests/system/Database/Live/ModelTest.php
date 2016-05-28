@@ -4,6 +4,9 @@ use CodeIgniter\Model;
 use Tests\Support\Models\JobModel;
 use Tests\Support\Models\UserModel;
 
+/**
+ * @group DatabaseLive
+ */
 class ModelTest extends \CIDatabaseTestCase
 {
 	protected $refresh = true;
