@@ -91,7 +91,7 @@ abstract class BaseHandler implements \SessionHandlerInterface
 	 *
 	 * @return bool
 	 */
-	protected function destroyCookie()//: bool
+	protected function destroyCookie(): bool
 	{
 	    return setcookie(
 		    $this->cookieName,
@@ -115,7 +115,7 @@ abstract class BaseHandler implements \SessionHandlerInterface
 	 *
 	 * @return bool
 	 */
-	protected function lockSession(string $session_id)//: bool
+	protected function lockSession(string $session_id): bool
 	{
 		$this->lock = true;
 		return true;
@@ -128,7 +128,7 @@ abstract class BaseHandler implements \SessionHandlerInterface
 	 *
 	 * @return bool
 	 */
-	protected function releaseLock()//: bool
+	protected function releaseLock(): bool
 	{
 		$this->lock = false;
 

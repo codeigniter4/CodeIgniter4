@@ -75,7 +75,7 @@ class Routes extends BaseCollector
 	*
 	* @return string
 	*/
-	public function display()//: string
+	public function display(): string
 	{
 		$routes = Services::routes(true);
 		$router = Services::router(null, true);

@@ -137,7 +137,7 @@ class DotEnv
 	 * @param string $value
 	 * @return array
 	 */
-	public function normaliseVariable(string $name, string $value = '')//: array
+	public function normaliseVariable(string $name, string $value = ''): array
 	{
 		// Split our compound string into it's parts.
 		if (strpos($name, '=') !== false)
@@ -172,7 +172,7 @@ class DotEnv
 	 * @return string
 	 * @throws \InvalidArgumentException
 	 */
-	protected function sanitiseValue(string $value)//: string
+	protected function sanitiseValue(string $value): string
 	{
 		if ( ! $value)
 		{
@@ -234,7 +234,7 @@ class DotEnv
 	 *
 	 * @return string
 	 */
-	protected function resolveNestedVariables(string $value)//: string
+	protected function resolveNestedVariables(string $value): string
 	{
 		if (strpos($value, '$') !== false)
 		{

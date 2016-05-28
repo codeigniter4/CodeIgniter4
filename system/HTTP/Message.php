@@ -98,7 +98,7 @@ class Message
 	 *
 	 * @return Message
 	 */
-	public function setBody(&$data)//: self
+	public function setBody(&$data): self
 	{
 		$this->body = $data;
 
@@ -154,7 +154,7 @@ class Message
 	 *
 	 * @return array        An array of the request headers
 	 */
-	public function getHeaders()//: array
+	public function getHeaders(): array
 	{
 		// If no headers are defined, but the user is
 		// requesting it, then it's likely they want
@@ -199,7 +199,7 @@ class Message
 	 *
 	 * @return bool
 	 */
-	public function hasHeader($name)//: bool
+	public function hasHeader($name): bool
 	{
 		$orig_name = $this->getHeaderName($name);
 
@@ -224,7 +224,7 @@ class Message
 	 *
 	 * @return string
 	 */
-	public function getHeaderLine(string $name)//: string
+	public function getHeaderLine(string $name): string
 	{
 		$orig_name = $this->getHeaderName($name);
 
@@ -254,7 +254,7 @@ class Message
 	 *
 	 * @return Message
 	 */
-	public function setHeader(string $name, $value)//: self
+	public function setHeader(string $name, $value): self
 	{
 		if (! isset($this->headers[$name]))
 		{
@@ -284,7 +284,7 @@ class Message
 	 *
 	 * @return Message
 	 */
-	public function removeHeader(string $name)//: self
+	public function removeHeader(string $name): self
 	{
 		$orig_name = $this->getHeaderName($name);
 
@@ -305,7 +305,7 @@ class Message
 	 *
 	 * @return string
 	 */
-	public function appendHeader(string $name, $value)//: self
+	public function appendHeader(string $name, $value): self
 	{
 		$orig_name = $this->getHeaderName($name);
 
@@ -325,7 +325,7 @@ class Message
 	 *
 	 * @return string
 	 */
-	public function prependHeader(string $name, $value)//: self
+	public function prependHeader(string $name, $value): self
 	{
 		$orig_name = $this->getHeaderName($name);
 
@@ -341,7 +341,7 @@ class Message
 	 *
 	 * @return string
 	 */
-	public function getProtocolVersion()//: string
+	public function getProtocolVersion(): string
 	{
 		return $this->protocolVersion;
 	}
@@ -355,7 +355,7 @@ class Message
 	 *
 	 * @return Message
 	 */
-	public function setProtocolVersion(string $version)//: self
+	public function setProtocolVersion(string $version): self
 	{
 		if (! is_numeric($version))
 		{
@@ -382,7 +382,7 @@ class Message
 	 *
 	 * @return string
 	 */
-	protected function getHeaderName($name)//: string
+	protected function getHeaderName($name): string
 	{
 		$lower_name = strtolower($name);
 

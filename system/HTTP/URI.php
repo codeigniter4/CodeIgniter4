@@ -206,7 +206,7 @@ class URI
 	 * @see https://tools.ietf.org/html/rfc3986#section-3.1
 	 * @return string The URI scheme.
 	 */
-	public function getScheme()//: string
+	public function getScheme(): string
 	{
 		return $this->scheme;
 	}
@@ -232,7 +232,7 @@ class URI
 	 * @param bool $ignorePort
 	 * @return string The URI authority, in "[user-info@]host[:port]" format.
 	 */
-	public function getAuthority(bool $ignorePort = false)//: string
+	public function getAuthority(bool $ignorePort = false): string
 	{
 		if (empty($this->host))
 		{
@@ -373,7 +373,7 @@ class URI
 	 * @see https://tools.ietf.org/html/rfc3986#section-3.3
 	 * @return string The URI path.
 	 */
-	public function getPath()//: string
+	public function getPath(): string
 	{
 		return (is_null($this->path)) ? '' : $this->path;
 	}
@@ -384,7 +384,7 @@ class URI
 	 * Retrieve the query string
 	 * @return type
 	 */
-	public function getQuery()//: string
+	public function getQuery(): string
 	{
 		return is_null($this->query) ? '' : $this->query;
 	}
@@ -396,7 +396,7 @@ class URI
 	 * 
 	 * @return type
 	 */
-	public function getFragment()//: string
+	public function getFragment(): string
 	{
 		return is_null($this->fragment) ? '' : $this->fragment;
 	}
@@ -408,7 +408,7 @@ class URI
 	 *
 	 * @return array
 	 */
-	public function getSegments()//: array
+	public function getSegments(): array
 	{
 		return $this->segments;
 	}
@@ -423,7 +423,7 @@ class URI
 	 * @return string     The value of the segment. If no segment is found,
 	 *                    throws InvalidArgumentError
 	 */
-	public function getSegment(int $number)//: string
+	public function getSegment(int $number): string
 	{
 		// The segment should treat the array as 1-based for the user
 		// but we still have to deal with a zero-based array.
@@ -444,7 +444,7 @@ class URI
 	 *
 	 * @return int
 	 */
-	public function getTotalSegments()//: int
+	public function getTotalSegments(): int
 	{
 		return count($this->segments);
 	}
@@ -966,7 +966,7 @@ class URI
 	 * @param string $path
 	 * @param URI $uri
 	 */
-	public function removeDotSegments(string $path)//: string
+	public function removeDotSegments(string $path): string
 	{
 		if (empty($path) || $path == '/') return $path;
 

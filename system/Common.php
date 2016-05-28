@@ -225,7 +225,7 @@ if ( ! function_exists('route_to'))
 	 *
 	 * @return \CodeIgniter\Router\string
 	 */
-	function route_to(string $method, ...$params)//: string
+	function route_to(string $method, ...$params): string
 	{
 		$routes = Services::routes();
 

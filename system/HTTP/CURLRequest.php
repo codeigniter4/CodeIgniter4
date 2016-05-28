@@ -136,7 +136,7 @@ class CURLRequest extends Request
 	 *
 	 * @return Response
 	 */
-	public function request($method, string $url, array $options = [])//: ResponseInterface
+	public function request($method, string $url, array $options = []): ResponseInterface
 	{
 		$this->parseOptions($options);
 
@@ -159,7 +159,7 @@ class CURLRequest extends Request
 	 *
 	 * @return Response
 	 */
-	public function get(string $url, array $options = [])//: ResponseInterface
+	public function get(string $url, array $options = []): ResponseInterface
 	{
 		return $this->request('get', $url, $options);
 	}
@@ -174,7 +174,7 @@ class CURLRequest extends Request
 	 *
 	 * @return Response
 	 */
-	public function delete(string $url, array $options = [])//: ResponseInterface
+	public function delete(string $url, array $options = []): ResponseInterface
 	{
 		return $this->request('delete', $url, $options);
 	}
@@ -189,7 +189,7 @@ class CURLRequest extends Request
 	 *
 	 * @return Response
 	 */
-	public function head(string $url, array $options = [])//: ResponseInterface
+	public function head(string $url, array $options = []): ResponseInterface
 	{
 		return $this->request('head', $url, $options);
 	}
@@ -204,7 +204,7 @@ class CURLRequest extends Request
 	 *
 	 * @return Response
 	 */
-	public function options(string $url, array $options = [])//: ResponseInterface
+	public function options(string $url, array $options = []): ResponseInterface
 	{
 		return $this->request('options', $url, $options);
 	}
@@ -219,7 +219,7 @@ class CURLRequest extends Request
 	 *
 	 * @return Response
 	 */
-	public function patch(string $url, array $options = [])//: ResponseInterface
+	public function patch(string $url, array $options = []): ResponseInterface
 	{
 		return $this->request('patch', $url, $options);
 	}
@@ -234,7 +234,7 @@ class CURLRequest extends Request
 	 *
 	 * @return Response
 	 */
-	public function post(string $url, array $options = [])//: ResponseInterface
+	public function post(string $url, array $options = []): ResponseInterface
 	{
 		return $this->request('post', $url, $options);
 	}
@@ -249,7 +249,7 @@ class CURLRequest extends Request
 	 *
 	 * @return Response
 	 */
-	public function put(string $url, array $options = [])//: ResponseInterface
+	public function put(string $url, array $options = []): ResponseInterface
 	{
 		return $this->request('put', $url, $options);
 	}
@@ -304,7 +304,7 @@ class CURLRequest extends Request
 	 *
 	 * @return string
 	 */
-	protected function prepareURL(string $url)//: string
+	protected function prepareURL(string $url): string
 	{
 		// If it's a full URI, then we have nothing to do here...
 		if (strpos($url, '://') !== false)
@@ -327,7 +327,7 @@ class CURLRequest extends Request
 	 *
 	 * @return string
 	 */
-	public function getMethod($upper = false)//: string
+	public function getMethod($upper = false): string
 	{
 		return ($upper)
 			? strtoupper($this->method)
@@ -405,7 +405,7 @@ class CURLRequest extends Request
 	 *
 	 * @param array $curl_options
 	 */
-	protected function applyRequestHeaders(array $curl_options = [])//: array
+	protected function applyRequestHeaders(array $curl_options = []): array
 	{
 		$headers = $this->getHeaders();
 
@@ -435,7 +435,7 @@ class CURLRequest extends Request
 	 * @param array $curl_options
 	 * @return int
 	 */
-	protected function applyMethod($method, array $curl_options)//: array
+	protected function applyMethod($method, array $curl_options): array
 	{
 		$method = strtoupper($method);
 
@@ -476,7 +476,7 @@ class CURLRequest extends Request
 	 * @param array $curl_options
 	 * @return type
 	 */
-	protected function applyBody(array $curl_options = [])//: array
+	protected function applyBody(array $curl_options = []): array
 	{
 		if ( ! empty($this->body))
 		{
@@ -709,7 +709,7 @@ class CURLRequest extends Request
 	 *
 	 * @return string
 	 */
-	protected function sendRequest(array $curl_options = [])//: string
+	protected function sendRequest(array $curl_options = []): string
 	{
 		$ch = curl_init();
 

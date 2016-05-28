@@ -9,8 +9,8 @@
     </transformer>
     <files>
         <directory>./system</directory>
-        <ignore>vendor/*</ignore>
-        <ignore>test/*</ignore>
+        <ignore>./vendor/*</ignore>
+        <ignore>./tests/*</ignore>
         <ignore>Kint/*</ignore>
     </files>
 

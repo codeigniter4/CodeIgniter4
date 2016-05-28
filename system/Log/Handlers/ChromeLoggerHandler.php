@@ -131,7 +131,7 @@ class ChromeLoggerHandler extends BaseHandler implements HandlerInterface
 	 *
 	 * @return bool
 	 */
-	public function handle($level, $message)//: bool
+	public function handle($level, $message): bool
 	{
 		// Format our message
 		$message = $this->format($message);

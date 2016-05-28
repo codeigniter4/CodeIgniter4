@@ -182,6 +182,7 @@ If you have a long-running task that you would like to keep the user updated wit
 ``showProgress()`` method which displays something like the following:
 
 .. code-block:: bash
+
 	[####......] 40% Complete
 
 This block is animated in place for a very nice effect.

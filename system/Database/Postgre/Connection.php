@@ -181,7 +181,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 *
 	 * @return mixed
 	 */
-	public function affectedRows()//: int
+	public function affectedRows(): int
 	{
 		return pg_affected_rows($this->resultID);
 	}
@@ -217,7 +217,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 * @param	string $str
 	 * @return	string
 	 */
-	protected function _escapeString(string $str)//: string
+	protected function _escapeString(string $str): string
 	{
 		return pg_escape_string($this->connID, $str);
 	}
@@ -231,7 +231,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 *
 	 * @return string
 	 */
-	protected function _listTables($prefixLimit = false)//: string
+	protected function _listTables($prefixLimit = false): string
 	{
 		$sql = 'SELECT "table_name" FROM "information_schema"."tables" WHERE "table_schema" = \''.$this->schema."'";
 
@@ -254,7 +254,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 *
 	 * @return string
 	 */
-	protected function _listColumns(string $table = '')//: string
+	protected function _listColumns(string $table = ''): string
 	{
 		return 'SELECT "column_name"
 			FROM "information_schema"."columns"

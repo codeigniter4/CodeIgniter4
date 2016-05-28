@@ -320,7 +320,7 @@ class Logger implements LoggerInterface
 	 *
 	 * @return bool
 	 */
-	public function log($level, $message, array $context = [])//: bool
+	public function log($level, $message, array $context = []): bool
 	{
 		if (is_numeric($level))
 		{

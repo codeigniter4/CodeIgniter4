@@ -350,7 +350,7 @@ class Autoloader
 	 *
 	 * @return string       The sanitized filename
 	 */
-	public function sanitizeFilename(string $filename)//: string
+	public function sanitizeFilename(string $filename): string
 	{
 		// Only allow characters deemed safe for POSIX portable filenames.
 		// Plus the forward slash for directory separators since this might
