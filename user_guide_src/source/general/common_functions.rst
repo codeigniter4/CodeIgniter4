@@ -52,46 +52,18 @@ Global Functions
 			but through HTTPS. Will set the HTTP Strict Transport Security header, which instructs
 			modern browsers to automatically modify any HTTP requests to HTTPS requests for the $duration.
 
+.. php:function:: helper( $filename )
+
+	:param   string   $filename: The name of the helper file to load.
+
+			Loads a helper file.
+
+			For full details, see the :doc:`helpers` page.
+
 .. php:function:: is_cli ()
 
 	:returns: TRUE if the script is being executed from the command line or FALSE otherwise.
 		:rtype: bool
-
-.. php:function:: load_helper( $filename )
-
-	:param   string   $filename: The name of the helper file to load.
-
-		Loads a helper file.
-
-		For full details, see the :doc:`helpers` page.
-
-.. php:function:: load_view ($name [, $data [, $options ]])
-
-	:param   string   $name: The name of the file to load
-		:param   array    $data: An array of key/value pairs to make available within the view.
-		:param   array    $options: An array of options that will be passed to the rendering class.
-		:returns: The output from the view.
-		:rtype: string
-
-		Grabs the current RenderableInterface-compatible class
-		and tells it to render the specified view. Simply provides
-		a convenience method that can be used in Controllers,
-		libraries, and routed closures.
-
-		Currently, only one option is available for use within the `$options` array, `saveData` which specifies
-	that data will persistent between multiple calls to `load_view()` within the same request. By default, the
-	data for that view is forgotten after displaying that single view file.
-
-	The $option array is provided primarily to facilitate third-party integrations with
-	libraries like Twig.
-
-	Example::
-
-		$data = ['user' => $user];
-
-		echo view('user_profile', $data);
-
-	For more details, see the :doc:`Views <views>` page.
 
 .. php:function:: log_message ($level, $message [, array $context])
 
@@ -171,6 +143,35 @@ Global Functions
 	Identical to the **service()** function described above, except that all calls to this
 	function will share the same instance of the service, where **service** returns a new
 	instance every time.
+
+.. php:function:: view ($name [, $data [, $options ]])
+
+	:param   string   $name: The name of the file to load
+			:param   array    $data: An array of key/value pairs to make available within the view.
+			:param   array    $options: An array of options that will be passed to the rendering class.
+			:returns: The output from the view.
+			:rtype: string
+
+			Grabs the current RenderableInterface-compatible class
+			and tells it to render the specified view. Simply provides
+			a convenience method that can be used in Controllers,
+			libraries, and routed closures.
+
+			Currently, only one option is available for use within the `$options` array, `saveData` which specifies
+	that data will persistent between multiple calls to `load_view()` within the same request. By default, the
+	data for that view is forgotten after displaying that single view file.
+
+	The $option array is provided primarily to facilitate third-party integrations with
+	libraries like Twig.
+
+	Example::
+
+		$data = ['user' => $user];
+
+		echo view('user_profile', $data);
+
+	For more details, see the :doc:`Views <views>` page.
+
 
 Global Constants
 ================

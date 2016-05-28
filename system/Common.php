@@ -106,7 +106,7 @@ if ( ! function_exists('load_view'))
 	 *
 	 * @return string
 	 */
-	function load_view(string $name, array $data = [], array $options = [])
+	function view(string $name, array $data = [], array $options = [])
 	{
 		/**
 		 * @var CodeIgniter\View\View $renderer
@@ -306,7 +306,7 @@ if ( ! function_exists('remove_invisible_characters'))
 
 //--------------------------------------------------------------------
 
-if (! function_exists('load_helper'))
+if (! function_exists('helper'))
 {
 	/**
 	 * Loads a helper file into memory. Supports namespaced helpers,
@@ -316,7 +316,7 @@ if (! function_exists('load_helper'))
 	 *
 	 * @return string
 	 */
-	function load_helper(string $filename)//: string
+	function helper(string $filename)//: string
 	{
 		$loader = Services::locator(true);
 
