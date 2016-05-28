@@ -193,7 +193,7 @@ class Router implements RouterInterface
 	 */
 	public function get404Override()
 	{
-		$route = $this->collection->get4040Override();
+		$route = $this->collection->get404Override();
 
 		if (is_string($route))
 		{
