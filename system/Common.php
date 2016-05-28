@@ -89,7 +89,7 @@ if ( ! function_exists('log_message'))
 
 //--------------------------------------------------------------------
 
-if ( ! function_exists('load_view'))
+if ( ! function_exists('view'))
 {
 	/**
 	 * Grabs the current RenderableInterface-compatible class
