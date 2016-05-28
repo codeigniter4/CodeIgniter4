@@ -3,7 +3,7 @@ Library Reference
 #################
 
 .. toctree::
-	:titlesonly:
+    :titlesonly:
 
 	benchmark
 	cli
