@@ -141,7 +141,7 @@ class Controller
 
 		foreach ($this->helpers as $helper)
 		{
-			load_helper($helper);
+			helper($helper);
 		}
 	}
 

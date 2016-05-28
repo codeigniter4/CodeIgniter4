@@ -104,9 +104,9 @@ page actually exists:
 
 		$data['title'] = ucfirst($page); // Capitalize the first letter
 
-		echo load_view('templates/header', $data);
-		echo load_view('pages/'.$page, $data);
-		echo load_view('templates/footer', $data);
+		echo view('templates/header', $data);
+		echo view('pages/'.$page, $data);
+		echo view('templates/footer', $data);
 	}
 
 Now, when the page does exist, it is loaded, including the header and

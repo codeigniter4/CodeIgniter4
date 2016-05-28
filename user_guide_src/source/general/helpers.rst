@@ -30,7 +30,7 @@ Loading a Helper
 
 Loading a helper file is quite simple using the following method::
 
-	load_helper('name');
+	helper('name');
 
 Where **name** is the file name of the helper, without the .php file
 extension or the "helper" part.
@@ -38,7 +38,7 @@ extension or the "helper" part.
 For example, to load the **URL Helper** file, which is named
 **url_helper.php**, you would do this::
 
-	load_helper('url');
+	helper('url');
 
 A helper can be loaded anywhere within your controller methods (or
 even within your View files, although that's not a good practice), as
@@ -67,7 +67,7 @@ code into its own namespace, ``Example\Blog``. The files exist on our server at
 **/Modules/Blog/Helpers/blog_helper.php**. Within our controller we could
 use the following command to load the helper for us::
 
-	load_helper('Modules\Blog\blog');
+	helper('Modules\Blog\blog');
 
 .. note:: The functions within files loaded this way are not truly namespaced.
 		The namespace is simply used as a convenient way to locate the files.

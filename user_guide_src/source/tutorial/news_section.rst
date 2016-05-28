@@ -138,9 +138,9 @@ the views. Modify the ``index()`` method to look like this::
 		    'title' => 'News archive',
 		];
 
-		echo load_view('Templates/Header', $data);
-		echo load_view('News/Index', $data);
-		echo load_view('Templates/Footer');
+		echo view('Templates/Header', $data);
+		echo view('News/Index', $data);
+		echo view('Templates/Footer');
 	}
 
 The code above gets all news records from the model and assigns it to a
@@ -200,9 +200,9 @@ add some code to the controller and create a new view. Go back to the
 
 		$data['title'] = $data['news'][0]['title'];
 
-		echo load_view('Templates/Header', $data);
-		echo load_view('News/Index', $data);
-		echo load_view('Templates/Footer');
+		echo view('Templates/Header', $data);
+		echo view('News/Index', $data);
+		echo view('Templates/Footer');
 	}
 
 Instead of calling the ``getNews()`` method without a parameter, the

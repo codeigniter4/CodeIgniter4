@@ -56,7 +56,7 @@ validation <../libraries/form_validation>` library to do this.
 
     public function create()
     {
-        load_helper('form');
+        helper('form');
         $validator = new \CodeIgniter\Form\Validator();
         $model = new NewsModel();
 
@@ -67,9 +67,9 @@ validation <../libraries/form_validation>` library to do this.
 
         if ($validator->run() === FALSE)
         {
-            load_view('Templates/Header', $data);
-            load_view('News/Create');
-            load_view('Templates/Footer');
+            view('Templates/Header', $data);
+            view('News/Create');
+            view('Templates/Footer');
 
         }
         else
@@ -79,7 +79,7 @@ validation <../libraries/form_validation>` library to do this.
                 'slug'  => urlTitle($this->request->getVar('title')),
                 'text'  => $this->request->getVar('text'),
             ]);
-            echo load_view('News/Success');
+            echo view('News/Success');
         }
     }
 

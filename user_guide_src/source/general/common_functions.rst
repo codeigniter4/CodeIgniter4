@@ -168,7 +168,7 @@ Global Functions
 			libraries, and routed closures.
 
 			Currently, only one option is available for use within the `$options` array, `saveData` which specifies
-	that data will persistent between multiple calls to `load_view()` within the same request. By default, the
+	that data will persistent between multiple calls to `view()` within the same request. By default, the
 	data for that view is forgotten after displaying that single view file.
 
 	The $option array is provided primarily to facilitate third-party integrations with

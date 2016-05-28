@@ -83,12 +83,12 @@ Storing Views within Sub-directories
 Your view files can also be stored within sub-directories if you prefer that type of organization.
 When doing so you will need to include the directory name loading the view.  Example::
 
-	load_view('directory_name/file_name');
+	echo view('directory_name/file_name');
 
 Adding Dynamic Data to the View
 ===============================
 
-Data is passed from the controller to the view by way of an array in the second parameter of the load_view function.
+Data is passed from the controller to the view by way of an array in the second parameter of the view function.
 Here's an example::
 
 	$data = [
@@ -97,7 +97,7 @@ Here's an example::
 		'message' => 'My Message'
 	];
 	
-	echo load_view('blogview', $data);
+	echo view('blogview', $data);
 
 Let's try it with your controller file. Open it and add this code::
 
@@ -108,7 +108,7 @@ Let's try it with your controller file. Open it and add this code::
 			$data['title'] = "My Real Title";
 			$data['heading'] = "My Real Heading";
 			
-			echo load_view('blogview', $data);
+			echo view('blogview', $data);
 		}
 	}
 	
@@ -125,7 +125,7 @@ Now open your view file and change the text to variables that correspond to the 
 
 Then load the page at the URL you've been using and you should see the variables replaced.
 
-The data passed in is only available during one call to `load_view`. If you call the function multiple times
+The data passed in is only available during one call to `view`. If you call the function multiple times
 in a single request, you will have to pass the desired data to each view. This keeps any data from "bleeding" into
 other views, potentially causing issues. If you would prefer the data to persist, you can pass the `saveData` option
 into the `$option` array in the third parameter.
@@ -137,7 +137,7 @@ into the `$option` array in the third parameter.
 		'message' => 'My Message'
 	];
 
-	echo load_view('blogview', $data, ['saveData' => true]);
+	echo view('blogview', $data, ['saveData' => true]);
 
 Direct Access To View Class
 ===========================
@@ -222,7 +222,7 @@ Here’s a simple example. Add this to your controller::
 				'heading'   => "My Real Heading"
 			];
 
-			echo load_view('blogview', $data);
+			echo view('blogview', $data);
 		}
 	}
 
