@@ -447,3 +447,32 @@ if (! function_exists('redirect'))
 }
 
 //--------------------------------------------------------------------
+
+if (! function_exists('session'))
+{
+	/**
+	 * A convenience method for accessing the session instance,
+	 * or an item that has been set in the session.
+	 *
+	 * Examples:
+	 *    session()->set('foo', 'bar');
+	 *    $foo = session('bar');
+	 * 
+	 * @param null $val
+	 *
+	 * @return \CodeIgniter\Session\Session|null|void
+	 */
+	function session($val = null)
+	{
+		// Returning a single item?
+		if (is_string($val))
+		{
+			return $_SESSION[$val] ?: null;
+		}
+
+		return \Config\Services::session();
+	}
+}
+
+//--------------------------------------------------------------------
+

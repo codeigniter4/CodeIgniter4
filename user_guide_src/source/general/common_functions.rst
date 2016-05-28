@@ -133,6 +133,16 @@ Global Functions
 		$logger = service('logger');
 		$renderer = service('renderer', APPPATH.'views/');
 
+.. php:function:: session( [$key] )
+
+	:param string $key: The name of the session item to check for.
+	:returns: An instance of the Session object if no $key,
+			  the value found in the session for $key, or null.
+	:rtype: mixed
+
+	Provides a convenient way to access the session class and to retrieve a
+	stored value. For more information, see the :doc:`Sessions </libraries/session>` page.
+
 .. php:function:: shared_service ( $name [, ...$params] )
 
 	:param   string   $name: The name of the service to load
