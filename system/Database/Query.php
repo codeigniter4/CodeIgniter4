@@ -249,7 +249,7 @@ class Query implements QueryInterface
 	 *
 	 * @return bool
 	 */
-	public function hasError()//: bool
+	public function hasError(): bool
 	{
 		return ! empty($this->errorString);
 	}
@@ -261,7 +261,7 @@ class Query implements QueryInterface
 	 *
 	 * @return string
 	 */
-	public function getErrorCode()//: int
+	public function getErrorCode(): int
 	{
 		return $this->errorCode;
 	}
@@ -273,7 +273,7 @@ class Query implements QueryInterface
 	 *
 	 * @return string
 	 */
-	public function getErrorMessage()//: string
+	public function getErrorMessage(): string
 	{
 		return $this->errorString;
 	}
@@ -285,7 +285,7 @@ class Query implements QueryInterface
 	 *
 	 * @return bool
 	 */
-	public function isWriteType()//: bool
+	public function isWriteType(): bool
 	{
 		return (bool)preg_match(
 			'/^\s*"?(SET|INSERT|UPDATE|DELETE|REPLACE|CREATE|DROP|TRUNCATE|LOAD|COPY|ALTER|RENAME|GRANT|REVOKE|LOCK|UNLOCK|REINDEX)\s/i',

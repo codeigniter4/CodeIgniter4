@@ -204,7 +204,7 @@ class Exceptions
 	 *
 	 * @return string       The path and filename of the view file to use
 	 */
-	protected function determineView(\Throwable $exception, string $template_path)//: string
+	protected function determineView(\Throwable $exception, string $template_path): string
 	{
 		// Production environments should have a custom exception file.
 		$view = 'production.php';
@@ -239,7 +239,7 @@ class Exceptions
 	 *
 	 * @return array
 	 */
-	protected function determineCodes(\Throwable $exception)//: array
+	protected function determineCodes(\Throwable $exception): array
 	{
 		$statusCode = abs($exception->getCode());
 
@@ -306,7 +306,7 @@ class Exceptions
 	 *
 	 * @return string
 	 */
-	public static function describeMemory(int $bytes)//: string
+	public static function describeMemory(int $bytes): string
 	{
 		if ($bytes < 1024)
 		{

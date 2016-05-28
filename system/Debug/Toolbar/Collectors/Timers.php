@@ -75,7 +75,7 @@ class Timers extends BaseCollector
 	 *
 	 * @return mixed
 	 */
-	protected function formatTimelineData()//: array
+	protected function formatTimelineData(): array
 	{
 		$data = [];
 

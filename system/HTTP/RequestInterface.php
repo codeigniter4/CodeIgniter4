@@ -47,7 +47,7 @@ interface RequestInterface
 	 *
 	 * @return string IP address
 	 */
-	public function getIPAddress();//: string;
+	public function getIPAddress(): string;
 
 	//--------------------------------------------------------------------
 
@@ -59,7 +59,7 @@ interface RequestInterface
 	 *
 	 * @return bool
 	 */
-	public function isValidIP(string $ip, string $which = null);//: bool;
+	public function isValidIP(string $ip, string $which = null): bool;
 
 	//--------------------------------------------------------------------
 
@@ -70,7 +70,7 @@ interface RequestInterface
 	 *
 	 * @return string
 	 */
-	public function getMethod($upper = false);//: string;
+	public function getMethod($upper = false): string;
 
 	//--------------------------------------------------------------------
 

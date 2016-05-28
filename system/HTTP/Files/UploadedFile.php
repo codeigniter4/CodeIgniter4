@@ -158,7 +158,7 @@ class UploadedFile implements UploadedFileInterface
 	 * @throws \RuntimeException on any error during the move operation.
 	 * @throws \RuntimeException on the second or subsequent call to the method.
 	 */
-	public function move(string $targetPath, string $name = null)//: bool
+	public function move(string $targetPath, string $name = null): bool
 	{
 		if ($this->hasMoved)
 		{
@@ -195,7 +195,7 @@ class UploadedFile implements UploadedFileInterface
 	 *
 	 * @return bool
 	 */
-	public function hasMoved()//: bool
+	public function hasMoved(): bool
 	{
 		return $this->hasMoved;
 	}
@@ -217,7 +217,7 @@ class UploadedFile implements UploadedFileInterface
 	 *
 	 * @return int|null The file size in bytes or null if unknown.
 	 */
-	public function getSize(string $unit='b')//: int
+	public function getSize(string $unit='b'): int
 	{
 		if (is_null($this->size))
 		{
@@ -253,7 +253,7 @@ class UploadedFile implements UploadedFileInterface
 	 * @see http://php.net/manual/en/features.file-upload.errors.php
 	 * @return int One of PHP's UPLOAD_ERR_XXX constants.
 	 */
-	public function getError()//: int
+	public function getError(): int
 	{
 		if (is_null($this->error))
 		{
@@ -301,7 +301,7 @@ class UploadedFile implements UploadedFileInterface
 	 * @return string|null The filename sent by the client or null if none
 	 *     was provided.
 	 */
-	public function getName()//: string
+	public function getName(): string
 	{
 		return $this->name;
 	}
@@ -313,7 +313,7 @@ class UploadedFile implements UploadedFileInterface
 	 *
 	 * @return string
 	 */
-	public function getTempName()//: string
+	public function getTempName(): string
 	{
 		return $this->path;
 	}
@@ -326,7 +326,7 @@ class UploadedFile implements UploadedFileInterface
 	 *
 	 * @return string
 	 */
-	public function getRandomName()//: string
+	public function getRandomName(): string
 	{
 		return time().'_'.random_bytes(8).'.'.$this->$this->getExtension();
 	}
@@ -339,7 +339,7 @@ class UploadedFile implements UploadedFileInterface
 	 *
 	 * @return string
 	 */
-	public function getExtension()//: string
+	public function getExtension(): string
 	{
 		return \Config\Mimes::guessExtensionFromType($this->getType());
 	}
@@ -353,7 +353,7 @@ class UploadedFile implements UploadedFileInterface
 	 *
 	 * @return string|null
 	 */
-	public function getClientExtension()//: string
+	public function getClientExtension(): string
 	{
 		return pathinfo($this->path, PATHINFO_EXTENSION);
 	}
@@ -367,7 +367,7 @@ class UploadedFile implements UploadedFileInterface
 	 *
 	 * @return string|null The media type we determined it to be.
 	 */
-	public function getType()//: string
+	public function getType(): string
 	{
 		if (! is_null($this->mimeType))
 		{
@@ -398,7 +398,7 @@ class UploadedFile implements UploadedFileInterface
 	 * @return string|null The media type sent by the client or null if none
 	 *                     was provided.
 	 */
-	public function getClientType()//: string
+	public function getClientType(): string
 	{
 		return $this->originalMimeType;
 	}
@@ -411,7 +411,7 @@ class UploadedFile implements UploadedFileInterface
 	 *
 	 * @return bool
 	 */
-	public function isValid()//: bool
+	public function isValid(): bool
 	{
 		return is_uploaded_file($this->path) && $this->error === UPLOAD_ERR_OK;
 	}

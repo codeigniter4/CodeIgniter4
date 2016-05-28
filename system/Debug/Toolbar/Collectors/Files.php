@@ -72,7 +72,7 @@ class Files extends BaseCollector
 	 *
 	 * @return string
 	 */
-	public function getTitleDetails()//: string
+	public function getTitleDetails(): string
 	{
 		return '( '.(int)count(get_included_files()).' )';
 	}
@@ -85,7 +85,7 @@ class Files extends BaseCollector
 	 *
 	 * @return string
 	 */
-	 public function display()//: string
+	 public function display(): string
 	 {
 		$output = "<table><tbody>";
 

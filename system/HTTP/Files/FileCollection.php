@@ -104,7 +104,7 @@ class FileCollection
 	 *
 	 * @return bool
 	 */
-	public function hasFile(string $fileID)//: bool
+	public function hasFile(string $fileID): bool
 	{
 		$this->populateFiles();
 
@@ -210,7 +210,7 @@ class FileCollection
 	 *
 	 * @return array
 	 */
-	protected function fixFilesArray(array $data)//: array
+	protected function fixFilesArray(array $data): array
 	{
 		$output = [];
 

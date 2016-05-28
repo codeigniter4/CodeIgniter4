@@ -132,7 +132,7 @@ class IncomingRequest extends Request
 	 *
 	 * @return bool
 	 */
-	public function isCLI()//: bool
+	public function isCLI(): bool
 	{
 		return (PHP_SAPI === 'cli' || defined('STDIN'));
 	}
@@ -144,7 +144,7 @@ class IncomingRequest extends Request
 	 *
 	 * @return bool
 	 */
-	public function isAJAX()//: bool
+	public function isAJAX(): bool
 	{
 		return ( ! empty($_SERVER['HTTP_X_REQUESTED_WITH']) &&
 		         strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest');
@@ -158,7 +158,7 @@ class IncomingRequest extends Request
 	 *
 	 * @return bool
 	 */
-	public function isSecure()//: bool
+	public function isSecure(): bool
 	{
 		if ( ! empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) !== 'off')
 		{
@@ -320,7 +320,7 @@ class IncomingRequest extends Request
 	 *
 	 * @return array
 	 */
-	public function getFiles()//: array
+	public function getFiles(): array
 	{
 		if (is_null($this->files))
 		{
@@ -478,7 +478,7 @@ class IncomingRequest extends Request
 	 *
 	 * @return string The URI it found.
 	 */
-	protected function parseRequestURI()//: string
+	protected function parseRequestURI(): string
 	{
 		if ( ! isset($_SERVER['REQUEST_URI'], $_SERVER['SCRIPT_NAME']))
 		{
@@ -535,7 +535,7 @@ class IncomingRequest extends Request
 	 *
 	 * @return    string
 	 */
-	protected function parseQueryString()//: string
+	protected function parseQueryString(): string
 	{
 		$uri = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : @getenv('QUERY_STRING');
 
