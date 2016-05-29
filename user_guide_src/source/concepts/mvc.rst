@@ -38,9 +38,9 @@ Views get the data to display from the controllers, who pass it to the views as 
 with simple ``echo`` calls. You can also display other views within a view, making it pretty simple to display a
 common header or footer on every page.
 
-Views are generally stored in **/application/views**, but can quickly become unwieldy if not organized in some fashion.
+Views are generally stored in **/application/Views**, but can quickly become unwieldy if not organized in some fashion.
 CodeIgniter does not enforce any type of organization, but a good rule of thumb would be to create a new directory in
-the **views** directory for each controller. Then, name views by the method name. This makes them very easy find later
+the **Views** directory for each controller. Then, name views by the method name. This makes them very easy find later
 on. For example, a user's profile might be displayed in a controller named ``User``, and a method named ``profile``.
 You might store the view file for this method in **/application/Views/User/Profile.php**.
 
