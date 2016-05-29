@@ -8,7 +8,7 @@ can change to meet the needs of your application.
 Default Directories
 ===================
 
-A fresh install has five directories: ``/application``, ``/system``, ``/writable``, ``/tests`` and ``/docs``. 
+A fresh install has five directories: ``/application``, ``public``, ``/system``, ``/writable``, ``/tests`` and ``/docs``.
 Each of these directories has a very specific part to play.
 
 application
@@ -35,6 +35,19 @@ pattern and Entity Models to work with your data. In this case, you could rename
 
 All files in this directory live under the ``App`` namespace, though you are free to change that in
 **application/Config/Constants.php**.
+
+public
+------
+
+This is the directory that keeps only the files that need to be accessed through by the client. This keeps any
+browsers away from the application and system code itself, and is generally considered a best practice for security
+reasons.
+
+The only file here in a default install is the main front-controller, **index.php**. You would keep your CSS, Javascript,
+images, and other assets here.
+
+This is the directory that you will point your web server to and is the one that will be served up to the public. The
+exact way to do this depends on your web server.
 
 system
 ------

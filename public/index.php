@@ -74,7 +74,7 @@ switch (ENVIRONMENT)
  * Include the path if the folder is not in the same directory
  * as this file.
  */
-$system_directory = 'system';
+$system_directory = '../system';
 
 /*
  *---------------------------------------------------------------
@@ -89,7 +89,7 @@ $system_directory = 'system';
  *
  * NO TRAILING SLASH!
  */
-$application_directory = 'application';
+$application_directory = '../application';
 
 /*
  * ---------------------------------------------------------------
@@ -102,7 +102,7 @@ $application_directory = 'application';
  * for maximum security, keeping it out of the application and/or
  * system directories.
  */
-$writable_directory = 'writable';
+$writable_directory = '../writable';
 
 /*
  * ---------------------------------------------------------------
@@ -115,7 +115,7 @@ $writable_directory = 'writable';
  * for maximum security, keeping it out of the application and/or
  * system directories.
  */
-$tests_directory = 'tests';
+$tests_directory = '../tests';
 
 // --------------------------------------------------------------------
 // END OF USER CONFIGURABLE SETTINGS.  DO NOT EDIT BELOW THIS LINE
@@ -151,8 +151,6 @@ if ( ! realpath($application_directory) OR ! is_dir($application_directory))
  * -------------------------------------------------------------------
  *  Now that we know the path, set the main path constants
  * -------------------------------------------------------------------
- * Always use 'realpath' on the paths to help ensure that we can
- * take advantage of PHP's realpath cache for slight performance boost.
  */
 // The name of THIS file
 define('SELF', pathinfo(__FILE__, PATHINFO_BASENAME));
