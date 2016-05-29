@@ -605,8 +605,10 @@ class URI
 	 *
 	 * @return $this
 	 */
-	public function setPort(int $port)
+	public function setPort($port)
 	{
+		if (is_null($port)) return $this;
+
 		if ($port <= 0 || $port > 65535)
 		{
 			throw new \InvalidArgumentException('Invalid port given.');
@@ -629,6 +631,8 @@ class URI
 	public function setPath(string $path)
 	{
 		$this->path = $this->filterPath($path);
+
+		$this->segments = explode('/', $this->path);
 
 		return $this;
 	}
