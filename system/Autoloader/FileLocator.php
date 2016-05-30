@@ -166,15 +166,21 @@ class FileLocator {
 	 */
 	protected function legacyLocate(string $file, string $folder=null): string
 	{
-		$path = APPPATH;
+		$paths = [APPPATH, BASEPATH];
 
-		$path .= empty($folder)
+		foreach ($paths as $path)
+		{
+			$path .= empty($folder)
 				? $file
 				: $folder.'/'.$file;
 
-		return $this->requireFile($path) === true
-				? $path
-				: '';
+			if ($this->requireFile($path) === true)
+			{
+				return $path;
+			}
+		}
+
+		return '';
 	}
 
 	//--------------------------------------------------------------------

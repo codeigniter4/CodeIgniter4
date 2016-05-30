@@ -320,7 +320,12 @@ if (! function_exists('helper'))
 	{
 		$loader = Services::locator(true);
 
-		$path = $loader->locateFile($filename, 'helpers');
+		if (strpos($filename, '_helper') === false)
+		{
+			$filename .= '_helper';
+		}
+
+		$path = $loader->locateFile($filename, 'Helpers');
 
 		if (! empty($path))
 		{
@@ -457,7 +462,7 @@ if (! function_exists('session'))
 	 * Examples:
 	 *    session()->set('foo', 'bar');
 	 *    $foo = session('bar');
-	 * 
+	 *
 	 * @param null $val
 	 *
 	 * @return \CodeIgniter\Session\Session|null|void
