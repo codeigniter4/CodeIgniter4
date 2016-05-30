@@ -434,16 +434,16 @@ Preference                     Default         Options                          
 **sessionDriver**              files           files/database/redis/memcached/*custom*  The session storage driver to use.
 **sessionCookieName**          ci_session      [A-Za-z\_-] characters only              The name used for the session cookie.
 **sessionExpiration**          7200 (2 hours)  Time in seconds (integer)                The number of seconds you would like the session to last.
-                                                                                      If you would like a non-expiring session (until browser is closed) set the value to zero: 0
+                                                                                        If you would like a non-expiring session (until browser is closed) set the value to zero: 0
 **sessionSavePpath**           NULL            None                                     Specifies the storage location, depends on the driver being used.
 **sessionMatchIP**             FALSE           TRUE/FALSE (boolean)                     Whether to validate the user's IP address when reading the session cookie.
-                                                                                      Note that some ISPs dynamically changes the IP, so if you want a non-expiring session you
-                                                                                      will likely set this to FALSE.
+                                                                                        Note that some ISPs dynamically changes the IP, so if you want a non-expiring session you
+                                                                                        will likely set this to FALSE.
 **sessionTimeToUpdate**        300             Time in seconds (integer)                This option controls how often the session class will regenerate itself and create a new
-                                                                                      session ID. Setting it to 0 will disable session ID regeneration.
+                                                                                        session ID. Setting it to 0 will disable session ID regeneration.
 **sessionRegenerateDestroy**   FALSE           TRUE/FALSE (boolean)                     Whether to destroy session data associated with the old session ID when auto-regenerating
-                                                                                      the session ID. When set to FALSE, the data will be later deleted by the garbage collector.
-============================ =============== ======================================== ============================================================================================
+                                                                                        the session ID. When set to FALSE, the data will be later deleted by the garbage collector.
+============================== =============== ======================================== ============================================================================================
 
 .. note:: As a last resort, the Session library will try to fetch PHP's
 	session related INI settings, as well as legacy CI settings such as
@@ -488,9 +488,6 @@ However, any other driver may be selected via the ``$config['sessionDriver']``
 line in your **application/Config/App.php** file, if you chose to do so.
 Have it in mind though, every driver has different caveats, so be sure to
 get yourself familiar with them (below) before you make that choice.
-
-In addition, you may also create and use `Custom Drivers`_, if the ones
-provided by default don't satisfy your use case.
 
 Files Driver
 ------------

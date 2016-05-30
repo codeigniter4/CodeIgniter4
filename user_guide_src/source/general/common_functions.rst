@@ -106,8 +106,8 @@ Global Functions
 
 			Example::
 
-		remove_invisible_characters('Java\\0script');
-		// Returns: 'Javascript'
+                    remove_invisible_characters('Java\\0script');
+                    // Returns: 'Javascript'
 
 .. php:function:: route_to ( $method [, ...$params] )
 
@@ -157,17 +157,17 @@ Global Functions
 .. php:function:: view ($name [, $data [, $options ]])
 
 	:param   string   $name: The name of the file to load
-			:param   array    $data: An array of key/value pairs to make available within the view.
-			:param   array    $options: An array of options that will be passed to the rendering class.
-			:returns: The output from the view.
-			:rtype: string
+	:param   array    $data: An array of key/value pairs to make available within the view.
+	:param   array    $options: An array of options that will be passed to the rendering class.
+	:returns: The output from the view.
+	:rtype: string
 
-			Grabs the current RenderableInterface-compatible class
-			and tells it to render the specified view. Simply provides
-			a convenience method that can be used in Controllers,
-			libraries, and routed closures.
+	Grabs the current RenderableInterface-compatible class
+	and tells it to render the specified view. Simply provides
+	a convenience method that can be used in Controllers,
+	libraries, and routed closures.
 
-			Currently, only one option is available for use within the `$options` array, `saveData` which specifies
+	Currently, only one option is available for use within the `$options` array, `saveData` which specifies
 	that data will persistent between multiple calls to `view()` within the same request. By default, the
 	data for that view is forgotten after displaying that single view file.
 
