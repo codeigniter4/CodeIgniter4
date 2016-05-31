@@ -77,7 +77,7 @@ Legacy Support
 ==============
 
 If neither of the above methods find the class, and the class is not namespaced, the autoloader will look in the
-**/application/Libraries** and **/application/models** directories to attempt to locate the files. This provides
+**/application/Libraries** and **/application/Models** directories to attempt to locate the files. This provides
 a measure to help ease the transition from previous versions.
 
 There are no configuration options for legacy support.

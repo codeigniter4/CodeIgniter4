@@ -33,31 +33,30 @@ Initializing a Session
 ======================
 
 Sessions will typically run globally with each page load, so the Session
-class should either be initialized in your :doc:`controller
-<../general/controllers>` constructors, or it can be :doc:`auto-loaded
-<../general/autoloader>` by the system.
-For the most part the session class will run unattended in the background,
-so simply initializing the class will cause it to read, create, and update
-sessions when necessary.
+class should be magically initialized. Sessions can be individual or shared 
+(a singleton).
 
-To initialize the Session class manually in your controller constructor,
-use the ``$this->load->library()`` method::
+To access and initialize the session::
 
-	$this->load->library('session');
+	$session = Config\Services::session($config, $shared);
+
+The ``$config`` parameter is optional - your application configuration. 
+If not provided, the services register will instantiate your default
+one.
+
+The ``$shared`` parameter, if set to ``false`` lets you request a new session handler rather
+than the one that is shared by the rest of your application. The default
+is to return the session handler singleton.
 
 Once loaded, the Sessions library object will be available using::
 
-	$this->session
+	$session
 
-.. important:: Because the :doc:`Loader Class </libraries/loader>` is instantiated
-	by CodeIgniter's base controller, make sure to call
-	``parent::__construct()`` before trying to load a library from
-	inside a controller constructor.
 
 How do Sessions work?
 =====================
 
-When a page is loaded, the session class will check to see if valid
+When a page is loaded, the session class will check to see if a valid
 session cookie is sent by the user's browser. If a sessions cookie does
 **not** exist (or if it doesn't match one stored on the server or has
 expired) a new session will be created and saved.
@@ -104,8 +103,7 @@ have the session open, while you've already processed it and therefore no
 longer need it. So, what you need is to close the session for the
 current request after you no longer need it.
 
-Long story short - call ``session_write_close()`` once you no longer need
-anything to do with session variables.
+**With CodeIgniter4, you are hooped.**
 
 What is Session Data?
 =====================
@@ -138,13 +136,14 @@ Any piece of information from the session array is available through the
 
 	$_SESSION['item']
 
+Or through the conventional accessor method:L
+
+	$session->get('item');
+
 Or through the magic getter::
 
-	$this->session->item
+	$session->item
 
-And for backwards compatibility, through the ``userdata()`` method::
-
-	$this->session->userdata('item');
 
 Where item is the array key corresponding to the item you wish to fetch.
 For example, to assign a previously stored 'name' item to the ``$name``
@@ -154,13 +153,13 @@ variable, you will do this::
 
 	// or:
 
-	$name = $this->session->name
+	$name = $session->name
 
 	// or:
 
-	$name = $this->session->userdata('name');
+	$name = $session->get('name');
 
-.. note:: The ``userdata()`` method returns NULL if the item you are trying
+.. note:: The ``get()`` method returns NULL if the item you are trying
 	to access does not exist.
 
 If you want to retrieve all of the existing userdata, you can simply
@@ -170,7 +169,7 @@ omit the item key (magic getter only works for properties)::
 
 	// or:
 
-	$this->session->userdata();
+	$session->uget();
 
 Adding Session Data
 ===================
@@ -181,13 +180,13 @@ data globally available to you without having to run a database query when
 you need it.
 
 You can simply assign data to the ``$_SESSION`` array, as with any other
-variable. Or as a property of ``$this->session``.
+variable. Or as a property of ``$session``.
 
 Alternatively, the old method of assigning it as "userdata" is also
 available. That however passing an array containing your new data to the
 ``set_userdata()`` method::
 
-	$this->session->set_userdata($array);
+	$session->set($array);
 
 Where ``$array`` is an associative array containing your new data. Here's
 an example::
@@ -198,12 +197,12 @@ an example::
 		'logged_in' => TRUE
 	);
 
-	$this->session->set_userdata($newdata);
+	$session->set_userdata($newdata);
 
-If you want to add userdata one value at a time, ``set_userdata()`` also
+If you want to add userdata one value at a time, ``set()`` also
 supports this syntax::
 
-	$this->session->set_userdata('some_name', 'some_value');
+	$session->set('some_name', 'some_value');
 
 If you want to verify that a session value exists, simply check with
 ``isset()``::
@@ -212,9 +211,9 @@ If you want to verify that a session value exists, simply check with
 	// TRUE otherwise:
 	isset($_SESSION['some_name'])
 
-Or you can call ``has_userdata()``::
+Or you can call ``has()``::
 
-	$this->session->has_userdata('some_name');
+	$session->has('some_name');
 
 Removing Session Data
 =====================
@@ -231,22 +230,19 @@ done through ``unset()``::
 		$_SESSION['another_name']
 	);
 
-Also, just as ``set_userdata()`` can be used to add information to a
-session, ``unset_userdata()`` can be used to remove it, by passing the
+Also, just as ``set()`` can be used to add information to a
+session, ``remove()`` can be used to remove it, by passing the
 session key. For example, if you wanted to remove 'some_name' from your
 session data array::
 
-	$this->session->unset_userdata('some_name');
+	$session->remove('some_name');
 
 This method also accepts an array of item keys to unset::
 
 	$array_items = array('username', 'email');
 
-	$this->session->unset_userdata($array_items);
+	$session->remove($array_items);
 
-.. note:: In previous versions, the ``unset_userdata()`` method used
-	to accept an associative array of ``key => 'dummy value'``
-	pairs. This is no longer supported.
 
 Flashdata
 =========
@@ -257,58 +253,57 @@ available for the next request, and is then automatically cleared.
 This can be very useful, especially for one-time informational, error or
 status messages (for example: "Record 2 deleted").
 
-It should be noted that flashdata variables are regular session vars,
-only marked in a specific way under the '__ci_vars' key (please don't touch
-that one, you've been warned).
+It should be noted that flashdata variables are regular session variables,
+managed inside the CodeIgniter session handler.
 
 To mark an existing item as "flashdata"::
 
-	$this->session->mark_as_flash('item');
+	$session->markAsFlashdata('item');
 
 If you want to mark multiple items as flashdata, simply pass the keys as an
 array::
 
-	$this->session->mark_as_flash(array('item', 'item2'));
+	$session->markAsFlashdata(array('item', 'item2'));
 
 To add flashdata::
 
 	$_SESSION['item'] = 'value';
-	$this->session->mark_as_flash('item');
+	$session->markAsFlashdata('item');
 
-Or alternatively, using the ``set_flashdata()`` method::
+Or alternatively, using the ``setFlashdata()`` method::
 
-	$this->session->set_flashdata('item', 'value');
+	$session->setFlashdata('item', 'value');
 
-You can also pass an array to ``set_flashdata()``, in the same manner as
-``set_userdata()``.
+You can also pass an array to ``setFlashdata()``, in the same manner as
+``set()``.
 
 Reading flashdata variables is the same as reading regular session data
 through ``$_SESSION``::
 
 	$_SESSION['item']
 
-.. important:: The ``userdata()`` method will NOT return flashdata items.
+.. important:: The ``get()`` method WILL return flashdata items.
 
 However, if you want to be sure that you're reading "flashdata" (and not
-any other kind), you can also use the ``flashdata()`` method::
+any other kind), you can also use the ``getFlashdata()`` method::
 
-	$this->session->flashdata('item');
+	$session->getFlashdata('item');
 
 Or to get an array with all flashdata, simply omit the key parameter::
 
-	$this->session->flashdata();
+	$session->getFlashdata();
 
-.. note:: The ``flashdata()`` method returns NULL if the item cannot be
+.. note:: The ``getFlashdata()`` method returns NULL if the item cannot be
 	found.
 
 If you find that you need to preserve a flashdata variable through an
-additional request, you can do so using the ``keep_flashdata()`` method.
+additional request, you can do so using the ``keepFlashdata()`` method.
 You can either pass a single item or an array of flashdata items to keep.
 
 ::
 
-	$this->session->keep_flashdata('item');
-	$this->session->keep_flashdata(array('item1', 'item2', 'item3'));
+	$session->keepFlashdata('item');
+	$session->keepFlashdata(array('item1', 'item2', 'item3'));
 
 Tempdata
 ========
@@ -317,25 +312,24 @@ CodeIgniter also supports "tempdata", or session data with a specific
 expiration time. After the value expires, or the session expires or is
 deleted, the value is automatically removed.
 
-Similarly to flashdata, tempdata variables are regular session vars that
-are marked in a specific way under the '__ci_vars' key (again, don't touch
-that one).
+Similarly to flashdata, tempdata variables are managed internally by the
+CodeIgniter session handler.
 
 To mark an existing item as "tempdata", simply pass its key and expiry time
 (in seconds!) to the ``mark_as_temp()`` method::
 
 	// 'item' will be erased after 300 seconds
-	$this->session->mark_as_temp('item', 300);
+	$session->markAsTempdata('item', 300);
 
 You can mark multiple items as tempdata in two ways, depending on whether
 you want them all to have the same expiry time or not::
 
 	// Both 'item' and 'item2' will expire after 300 seconds
-	$this->session->mark_as_temp(array('item', 'item2'), 300);
+	$session->markAsTempdata(array('item', 'item2'), 300);
 
 	// 'item' will be erased after 300 seconds, while 'item2'
 	// will do so after only 240 seconds
-	$this->session->mark_as_temp(array(
+	$session->markAsTempdata(array(
 		'item'	=> 300,
 		'item2'	=> 240
 	));
@@ -343,17 +337,16 @@ you want them all to have the same expiry time or not::
 To add tempdata::
 
 	$_SESSION['item'] = 'value';
-	$this->session->mark_as_temp('item', 300); // Expire in 5 minutes
+	$session->markAsTempdata('item', 300); // Expire in 5 minutes
 
-Or alternatively, using the ``set_tempdata()`` method::
+Or alternatively, using the ``setTempdata()`` method::
 
-	$this->session->set_tempdata('item', 'value', 300);
+	$session->setTempdata('item', 'value', 300);
 
 You can also pass an array to ``set_tempdata()``::
 
 	$tempdata = array('newuser' => TRUE, 'message' => 'Thanks for joining!');
-
-	$this->session->set_tempdata($tempdata, NULL, $expire);
+	$session->setTempdata($tempdata, NULL, $expire);
 
 .. note:: If the expiration is omitted or set to 0, the default
 	time-to-live value of 300 seconds (or 5 minutes) will be used.
@@ -363,16 +356,16 @@ To read a tempdata variable, again you can just access it through the
 
 	$_SESSION['item']
 
-.. important:: The ``userdata()`` method will NOT return tempdata items.
+.. important:: The ``get()`` method will NOT return tempdata items.
 
 Or if you want to be sure that you're reading "tempdata" (and not any
-other kind), you can also use the ``tempdata()`` method::
+other kind), you can also use the ``getTempdata()`` method::
 
-	$this->session->tempdata('item');
+	$session->getTempdata('item');
 
 And of course, if you want to retrieve all existing tempdata::
 
-	$this->session->tempdata();
+	$session->getTempdata();
 
 .. note:: The ``tempdata()`` method returns NULL if the item cannot be
 	found.
@@ -387,7 +380,7 @@ tempdata (it will be invalidated on the next HTTP request), so if you
 intend to reuse that same key in the same request, you'd want to use
 ``unset_tempdata()``::
 
-	$this->session->unset_tempdata('item');
+	$session->removeTempdata('item');
 
 Destroying a Session
 ====================
@@ -401,7 +394,7 @@ same way::
 
 	// or
 
-	$this->session->sess_destroy();
+	$session->destroy();
 
 .. note:: This must be the last session-related operation that you do
 	during the same request. All session data (including flashdata and
@@ -433,24 +426,24 @@ careful configuration must be done. Please take your time to consider
 all of the options and their effects.
 
 You'll find the following Session related preferences in your
-**application/config/config.php** file:
+**application/Config/App.php** file:
 
-============================ =============== ======================================== ============================================================================================
-Preference                   Default         Options                                  Description
-============================ =============== ======================================== ============================================================================================
-**sess_driver**              files           files/database/redis/memcached/*custom*  The session storage driver to use.
-**sess_cookie_name**         ci_session      [A-Za-z\_-] characters only              The name used for the session cookie.
-**sess_expiration**          7200 (2 hours)  Time in seconds (integer)                The number of seconds you would like the session to last.
-                                                                                      If you would like a non-expiring session (until browser is closed) set the value to zero: 0
-**sess_save_path**           NULL            None                                     Specifies the storage location, depends on the driver being used.
-**sess_match_ip**            FALSE           TRUE/FALSE (boolean)                     Whether to validate the user's IP address when reading the session cookie.
-                                                                                      Note that some ISPs dynamically changes the IP, so if you want a non-expiring session you
-                                                                                      will likely set this to FALSE.
-**sess_time_to_update**      300             Time in seconds (integer)                This option controls how often the session class will regenerate itself and create a new
-                                                                                      session ID. Setting it to 0 will disable session ID regeneration.
-**sess_regenerate_destroy**  FALSE           TRUE/FALSE (boolean)                     Whether to destroy session data associated with the old session ID when auto-regenerating
-                                                                                      the session ID. When set to FALSE, the data will be later deleted by the garbage collector.
-============================ =============== ======================================== ============================================================================================
+============================== =============== ======================================== ============================================================================================
+Preference                     Default         Options                                  Description
+============================== =============== ======================================== ============================================================================================
+**sessionDriver**              files           files/database/redis/memcached/*custom*  The session storage driver to use.
+**sessionCookieName**          ci_session      [A-Za-z\_-] characters only              The name used for the session cookie.
+**sessionExpiration**          7200 (2 hours)  Time in seconds (integer)                The number of seconds you would like the session to last.
+                                                                                        If you would like a non-expiring session (until browser is closed) set the value to zero: 0
+**sessionSavePpath**           NULL            None                                     Specifies the storage location, depends on the driver being used.
+**sessionMatchIP**             FALSE           TRUE/FALSE (boolean)                     Whether to validate the user's IP address when reading the session cookie.
+                                                                                        Note that some ISPs dynamically changes the IP, so if you want a non-expiring session you
+                                                                                        will likely set this to FALSE.
+**sessionTimeToUpdate**        300             Time in seconds (integer)                This option controls how often the session class will regenerate itself and create a new
+                                                                                        session ID. Setting it to 0 will disable session ID regeneration.
+**sessionRegenerateDestroy**   FALSE           TRUE/FALSE (boolean)                     Whether to destroy session data associated with the old session ID when auto-regenerating
+                                                                                        the session ID. When set to FALSE, the data will be later deleted by the garbage collector.
+============================== =============== ======================================== ============================================================================================
 
 .. note:: As a last resort, the Session library will try to fetch PHP's
 	session related INI settings, as well as legacy CI settings such as
@@ -466,20 +459,20 @@ following configuration values shared by the :doc:`Input <input>` and
 ================== =============== ===========================================================================
 Preference         Default         Description
 ================== =============== ===========================================================================
-**cookie_domain**  ''              The domain for which the session is applicable
-**cookie_path**    /               The path to which the session is applicable
-**cookie_secure**  FALSE           Whether to create the session cookie only on encrypted (HTTPS) connections
+**cookieDomain**   ''              The domain for which the session is applicable
+**cookiePath**     /               The path to which the session is applicable
+**cookieSecure**   FALSE           Whether to create the session cookie only on encrypted (HTTPS) connections
 ================== =============== ===========================================================================
 
-.. note:: The 'cookie_httponly' setting doesn't have an effect on sessions.
+.. note:: The 'cookieHTTPOnly' setting doesn't have an effect on sessions.
 	Instead the HttpOnly parameter is always enabled, for security
-	reasons. Additionaly, the 'cookie_prefix' setting is completely
+	reasons. Additionaly, the 'cookiePrefix' setting is completely
 	ignored.
 
 Session Drivers
 ===============
 
-As already mentioned, the Session library comes with 4 drivers, or storage
+As already mentioned, the Session library comes with 4 handlers, or storage
 engines, that you can use:
 
   - files
@@ -491,20 +484,10 @@ By default, the `Files Driver`_ will be used when a session is initialized,
 because it is the most safe choice and is expected to work everywhere
 (virtually every environment has a file system).
 
-However, any other driver may be selected via the ``$config['sess_driver']``
-line in your **application/config/config.php** file, if you chose to do so.
+However, any other driver may be selected via the ``$config['sessionDriver']``
+line in your **application/Config/App.php** file, if you chose to do so.
 Have it in mind though, every driver has different caveats, so be sure to
 get yourself familiar with them (below) before you make that choice.
-
-In addition, you may also create and use `Custom Drivers`_, if the ones
-provided by default don't satisfy your use case.
-
-.. note:: In previous CodeIgniter versions, a different, "cookie driver"
-	was the only option and we have received negative feedback on not
-	providing that option. While we do listen to feedback from the
-	community, we want to warn you that it was dropped because it is
-	**unsafe** and we advise you NOT to try to replicate it via a
-	custom driver.
 
 Files Driver
 ------------
@@ -525,7 +508,7 @@ absolute paths are supported for ``$config['sess_save_path']``.
 Another important thing that you should know, is to make sure that you
 don't use a publicly-readable or shared directory for storing your session
 files. Make sure that *only you* have access to see the contents of your
-chosen *sess_save_path* directory. Otherwise, anybody who can do that, can
+chosen *sessionSavePath* directory. Otherwise, anybody who can do that, can
 also steal any of the current sessions (also known as "session fixation"
 attack).
 
@@ -539,9 +522,9 @@ permissions will probable break your application.
 Instead, you should do something like this, depending on your environment
 ::
 
-	mkdir /<path to your application directory>/sessions/
-	chmod 0700 /<path to your application directory>/sessions/
-	chown www-data /<path to your application directory>/sessions/
+	mkdir /<path to your application directory>/Writable/sessions/
+	chmod 0700 /<path to your application directory>/Writable/sessions/
+	chown www-data /<path to your application directory>/Writable/sessions/
 
 Bonus Tip
 ^^^^^^^^^
@@ -571,25 +554,17 @@ However, there are some conditions that must be met:
 
   - Only your **default** database connection (or the one that you access
     as ``$this->db`` from your controllers) can be used.
-  - You must have the :doc:`Query Builder </database/query_builder>`
-    enabled.
   - You can NOT use a persistent connection.
-  - You can NOT use a connection with the *cache_on* setting enabled.
+  - You can NOT use a connection with the *cacheOn* setting enabled.
 
 In order to use the 'database' session driver, you must also create this
 table that we already mentioned and then set it as your
-``$config['sess_save_path']`` value.
+``$config['sessionSavePath']`` value.
 For example, if you would like to use 'ci_sessions' as your table name,
 you would do this::
 
-	$config['sess_driver'] = 'database';
-	$config['sess_save_path'] = 'ci_sessions';
-
-.. note:: If you've upgraded from a previous version of CodeIgniter and
-	you don't have 'sess_save_path' configured, then the Session
-	library will look for the old 'sess_table_name' setting and use
-	it instead. Please don't rely on this behavior as it will get
-	removed in the future.
+	$config['sessionDriver'] = 'database';
+	$config['sessionSavePath'] = 'ci_sessions';
 
 And then of course, create the database table ...
 
@@ -614,13 +589,13 @@ For PostgreSQL::
 
 	CREATE INDEX "ci_sessions_timestamp" ON "ci_sessions" ("timestamp");
 
-You will also need to add a PRIMARY KEY **depending on your 'sess_match_ip'
+You will also need to add a PRIMARY KEY **depending on your 'sessionMatchIP'
 setting**. The examples below work both on MySQL and PostgreSQL::
 
-	// When sess_match_ip = TRUE
+	// When sessionMatchIP = TRUE
 	ALTER TABLE ci_sessions ADD PRIMARY KEY (id, ip_address);
 
-	// When sess_match_ip = FALSE
+	// When sessionMatchIP = FALSE
 	ALTER TABLE ci_sessions ADD PRIMARY KEY (id);
 
 	// To drop a previously created primary key (use when changing the setting)
@@ -634,6 +609,7 @@ setting**. The examples below work both on MySQL and PostgreSQL::
 	support such cases. Use ``session_write_close()`` after you've
 	done processing session data if you're having performance
 	issues.
+        NOT SURE HOW THIS IS DONE IN CI4.
 
 Redis Driver
 ------------
@@ -644,18 +620,18 @@ Redis Driver
 
 Redis is a storage engine typically used for caching and popular because
 of its high performance, which is also probably your reason to use the
-'redis' session driver.
+'RedisHandler' session driver.
 
 The downside is that it is not as ubiquitous as relational databases and
 requires the `phpredis <https://github.com/phpredis/phpredis>`_ PHP
 extension to be installed on your system, and that one doesn't come
 bundled with PHP.
-Chances are, you're only be using the 'redis' driver only if you're already
+Chances are, you're only be using the Redis driver only if you're already
 both familiar with Redis and using it for other purposes.
 
 Just as with the 'files' and 'database' drivers, you must also configure
 the storage location for your sessions via the
-``$config['sess_save_path']`` setting.
+``$config['sessionSavePath']`` setting.
 The format here is a bit different and complicated at the same time. It is
 best explained by the *phpredis* extension's README file, so we'll simply
 link you to it:
@@ -669,8 +645,8 @@ link you to it:
 For the most common case however, a simple ``host:port`` pair should be
 sufficient::
 
-	$config['sess_driver'] = 'redis';
-	$config['sess_save_path'] = 'tcp://localhost:6379';
+	$config['sessionDiver'] = 'redis';
+	$config['sessionSavePath'] = 'tcp://localhost:6379';
 
 Memcached Driver
 ----------------
@@ -679,7 +655,7 @@ Memcached Driver
 	for this driver are emulated by a separate value that is kept for
 	up to 300 seconds.
 
-The 'memcached' driver is very similar to the 'redis' one in all of its
+The 'MemcachedHandler' driver is very similar to the 'redis' one in all of its
 properties, except perhaps for availability, because PHP's `Memcached
 <http://php.net/memcached>`_ extension is distributed via PECL and some
 Linux distrubutions make it available as an easy to install package.
@@ -694,11 +670,11 @@ deleted after Y seconds have passed (but not necessarily that it won't
 expire earlier than that time). This happens very rarely, but should be
 considered as it may result in loss of sessions.
 
-The ``$config['sess_save_path']`` format is fairly straightforward here,
+The ``$config['sessionSavePath']`` format is fairly straightforward here,
 being just a ``host:port`` pair::
 
-	$config['sess_driver'] = 'memcached';
-	$config['sess_save_path'] = 'localhost:11211';
+	$config['sessionDriver'] = 'memcached';
+	$config['sessionSavePath'] = 'localhost:11211';
 
 Bonus Tip
 ^^^^^^^^^
@@ -712,105 +688,4 @@ separate the multiple server paths with commas::
 
 	// localhost will be given higher priority (5) here,
 	// compared to 192.0.2.1 with a weight of 1.
-	$config['sess_save_path'] = 'localhost:11211:5,192.0.2.1:11211:1';
-
-Custom Drivers
---------------
-
-You may also create your own, custom session drivers. However, have it in
-mind that this is typically not an easy task, as it takes a lot of
-knowledge to do it properly.
-
-You need to know not only how sessions work in general, but also how they
-work specifically in PHP, how the underlying storage mechanism works, how
-to handle concurrency, avoid deadlocks (but NOT through lack of locks) and
-last but not least - how to handle the potential security issues, which
-is far from trivial.
-
-Long story short - if you don't know how to do that already in raw PHP,
-you shouldn't be trying to do it within CodeIgniter either. You've been
-warned.
-
-If you only want to add some extra functionality to your sessions, just
-extend the base Session class, which is a lot more easier. Read the
-:doc:`Creating Libraries <../general/creating_libraries>` article to
-learn how to do that.
-
-Now, to the point - there are three general rules that you must follow
-when creating a session driver for CodeIgniter:
-
-  - Put your driver's file under **application/libraries/Session/drivers/**
-    and follow the naming conventions used by the Session class.
-
-    For example, if you were to create a 'dummy' driver, you would have
-    a ``Session_dummy_driver`` class name, that is declared in
-    *application/libraries/Session/drivers/Session_dummy_driver.php*.
-
-  - Extend the ``CI_Session_driver`` class.
-
-    This is just a basic class with a few internal helper methods. It is
-    also extendable like any other library, if you really need to do that,
-    but we are not going to explain how ... if you're familiar with how
-    class extensions/overrides work in CI, then you already know how to do
-    it. If not, well, you shouldn't be doing it in the first place.
-
-
-  - Implement the `SessionHandlerInterface
-    <http://php.net/sessionhandlerinterface>`_ interface.
-
-    .. note:: You may notice that ``SessionHandlerInterface`` is provided
-    	by PHP since version 5.4.0. CodeIgniter will automatically declare
-    	the same interface if you're running an older PHP version.
-
-    The link will explain why and how.
-
-So, based on our 'dummy' driver example above, you'd end up with something
-like this::
-
-	// application/libraries/Session/drivers/Session_dummy_driver.php:
-
-	class CI_Session_dummy_driver extends CI_Session_driver implements SessionHandlerInterface
-	{
-
-		public function __construct(&$params)
-		{
-			// DO NOT forget this
-			parent::__construct($params);
-
-			// Configuration & other initializations
-		}
-
-		public function open($save_path, $name)
-		{
-			// Initialize storage mechanism (connection)
-		}
-
-		public function read($session_id)
-		{
-			// Read session data (if exists), acquire locks
-		}
-
-		public function write($session_id, $session_data)
-		{
-			// Create / update session data (it might not exist!)
-		}
-
-		public function close()
-		{
-			// Free locks, close connections / streams / etc.
-		}
-
-		public function destroy($session_id)
-		{
-			// Call close() method & destroy data for current session (order may differ)
-		}
-
-		public function gc($maxlifetime)
-		{
-			// Erase data for expired sessions
-		}
-
-	}
-
-If you've done everything properly, you can now set your *sess_driver*
-configuration value to 'dummy' and use your own driver. Congratulations!
+	$config['sessionSavePath'] = 'localhost:11211:5,192.0.2.1:11211:1';
