@@ -173,7 +173,7 @@ class Message
 	 * Returns a single header object. If multiple headers with the same
 	 * name exist, then will return an array of header objects.
 	 *
-	 * @param      $index
+	 * @param      $name
 	 * @param null $filter
 	 *
 	 * @return array|\CodeIgniter\HTTP\Header

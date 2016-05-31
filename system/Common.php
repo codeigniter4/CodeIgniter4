@@ -211,6 +211,13 @@ if (! function_exists('service'))
 
 if (! function_exists('shared_service'))
 {
+	/**
+	 * Allow cleaner access to shared services
+	 * 
+	 * @param string $name
+	 * @param array|null $params
+	 * @return type
+	 */
 	function shared_service(string $name, ...$params)
 	{
 		return Services::$name(...$params);
@@ -240,12 +247,12 @@ if ( ! function_exists('log_message'))
 	 *  - debug
 	 *
 	 * @param string $level
-	 * @param        $message
-	 * @param array  $context
+	 * @param string $message
+	 * @param array|null  $context
 	 *
 	 * @return mixed
 	 */
-	function log_message(string $level, $message, array $context = [])
+	function log_message(string $level, string $message, array $context = [])
 	{
 		// When running tests, we want to always ensure that the
 		// TestLogger is running, which provides utilities for
@@ -424,6 +431,8 @@ if (! function_exists('force_https'))
 	 *
 	 * @param int $duration How long should the SSL header be set for? (in seconds)
 	 *                      Defaults to 1 year.
+	 * @param RequestInterface $request
+	 * @param ResponseInterface $response
 	 */
 	function force_https(int $duration = 31536000, RequestInterface $request = null, ResponseInterface $response = null)
 	{
@@ -474,6 +483,7 @@ if (! function_exists('redirect'))
 	 * If more control is needed, you must use $response->redirect explicitly.
 	 *
 	 * @param string   $uri
+	 * @param $params
 	 */
 	function redirect(string $uri, ...$params)
 	{

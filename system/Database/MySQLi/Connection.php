@@ -345,7 +345,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	/**
 	 * Generates the SQL for listing tables in a platform-dependent manner.
 	 *
-	 * @param bool $constrainByPrefix
+	 * @param bool $prefixLimit
 	 *
 	 * @return string
 	 */
