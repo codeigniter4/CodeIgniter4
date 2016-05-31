@@ -11,7 +11,7 @@ headache and very error-prone. That's where autoloaders come in.
 
 CodeIgniter provides a very flexible autoloader that can be used with very little configuration.
 It can locate individual non-namespaced classes, namespaced classes that adhere to 
-``PSR4 <http://www.php-fig.org/psr/psr-4/>``_ autoloading
+`PSR4 <http://www.php-fig.org/psr/psr-4/>`_ autoloading
 directory structures, and will even attempt to locate classes in common directories (like Controllers,
 Models, etc). 
 

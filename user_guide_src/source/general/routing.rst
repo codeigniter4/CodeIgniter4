@@ -115,7 +115,7 @@ If you prefer you can use regular expressions to define your routing rules. Any 
 is allowed, as are back-references.
 
 .. important::Note: If you use back-references you must use the dollar syntax rather than the double backslash syntax.
-A typical RegEx route might look something like this::
+    A typical RegEx route might look something like this::
 
 	$routes->add('products/([a-z]+)/(\d+)', '$1::id_$2');
 
@@ -311,7 +311,7 @@ generate update and delete methods that work with HTML forms.
 
     // The following equivalent routes are created:
     $routes->post('photos/(:segment)',        'Photos::update/$1');
-	$routes->post('photos/(:segment)/delete', 'Photos::delete/$1');
+    $routes->post('photos/(:segment)/delete', 'Photos::delete/$1');
 
 Change the Controller Used
 --------------------------

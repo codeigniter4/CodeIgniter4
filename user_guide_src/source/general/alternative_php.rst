@@ -2,8 +2,8 @@
 Alternate PHP Syntax for View Files
 ###################################
 
-If you do not utilize CodeIgniter's :doc:`template
-engine <../libraries/parser>`, you'll be using pure PHP in your
+If you do not utilize a templating engine to simplify output,
+you'll be using pure PHP in your
 View files. To minimize the PHP code in these files, and to make it
 easier to identify the code blocks it is recommended that you use PHPs
 alternative syntax for control structures and short tag echo statements.

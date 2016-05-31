@@ -145,7 +145,7 @@ http://fuelphp.com
 
 
 		Attempts to determine the width of the viewable CLI window.
-		This only works on *nix-based systems, so return a sane default
+		This only works on \*nix-based systems, so return a sane default
 		for Windows environments.
 
 
@@ -157,7 +157,7 @@ http://fuelphp.com
 
 
 		Attempts to determine the height of the viewable CLI window.
-		This only works on *nix-based systems, so return a sane default
+		This only works on \*nix-based systems, so return a sane default
 		for Windows environments.
 
 

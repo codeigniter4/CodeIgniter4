@@ -78,20 +78,20 @@ identical to replacing a class with a one exception:
 
 For example, to extend the native RouteCollection class, you would declare your class with::
 
-	class RouteCollection extends \CodeIgniter\Router\RouteCollection
+    class RouteCollection extends \CodeIgniter\Router\RouteCollection
     {
 
     }
 
-.. note:: If you need to use a constructor in your class make sure you extend the parent constructor::
+If you need to use a constructor in your class make sure you extend the parent constructor::
 
-	class RouteCollection implements \CodeIgniter\Router\RouteCollection
-    {
-		public function __construct()
-		{
-			parent::__construct();
-		}
-    }
+        class RouteCollection implements \CodeIgniter\Router\RouteCollection
+        {
+            public function __construct()
+            {
+                parent::__construct();
+            }
+        }
 
 **Tip:**  Any functions in your class that are named identically to the methods in the parent class will be used
 instead of the native ones (this is known as “method overriding”). This allows you to substantially alter the CodeIgniter core.

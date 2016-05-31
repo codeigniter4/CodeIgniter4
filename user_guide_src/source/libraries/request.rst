@@ -43,15 +43,16 @@ Class Reference
 		on whether it is valid or not.
 
 		.. note:: The $request->ipAddress() method above automatically validates the IP address.
-			::
+
+                ::
 
 			if ( ! $request->validIP($ip))
 			{
-				echo 'Not Valid';
+                            echo 'Not Valid';
 			}
 			else
 			{
-				echo 'Valid';
+                            echo 'Valid';
 			}
 
 		Accepts an optional second string parameter of 'ipv4' or 'ipv6' to specify
