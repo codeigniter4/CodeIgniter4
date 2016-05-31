@@ -2,8 +2,6 @@
 Session Library
 ###############
 
-TODO: Update for CI4!
-
 The Session class permits you maintain a user's "state" and track their
 activity while they browse your site.
 
@@ -13,10 +11,6 @@ CodeIgniter comes with a few session storage drivers:
   - database
   - redis
   - memcached
-
-In addition, you may create your own, custom session drivers based on other
-kinds of storage, while still taking advantage of the features of the
-Session class.
 
 .. contents::
   :local:
@@ -33,21 +27,16 @@ Initializing a Session
 ======================
 
 Sessions will typically run globally with each page load, so the Session
-class should be magically initialized. Sessions can be individual or shared 
-(a singleton).
+class should be magically initialized. 
 
 To access and initialize the session::
 
-	$session = Config\Services::session($config, $shared);
+	$session = Config\Services::session($config);
 	$session->start();
 
 The ``$config`` parameter is optional - your application configuration. 
 If not provided, the services register will instantiate your default
 one.
-
-The ``$shared`` parameter, if set to ``false`` lets you request a new session handler rather
-than the one that is shared by the rest of your application. The default
-is to return the session handler singleton.
 
 Once loaded, the Sessions library object will be available using::
 
@@ -109,8 +98,10 @@ Locking is not the issue, it is a solution. Your issue is that you still
 have the session open, while you've already processed it and therefore no
 longer need it. So, what you need is to close the session for the
 current request after you no longer need it.
+::
 
-**With CodeIgniter4, you are hooped.**
+    $session->destroy();
+
 
 What is Session Data?
 =====================
@@ -129,11 +120,6 @@ array.
 
 In addition, CodeIgniter also provides 2 special types of session data
 that are further explained below: flashdata and tempdata.
-
-.. note:: In previous versions, regular session data in CodeIgniter was
-	referred to as 'userdata'. Have this in mind if that term is used
-	elsewhere in the manual. Most of it is written to explain how
-	the custom 'userdata' methods work.
 
 Retrieving Session Data
 =======================
@@ -155,7 +141,7 @@ Or even through the session helper method::
 
 	session('item');
 
-Where item is the array key corresponding to the item you wish to fetch.
+Where ``item`` is the array key corresponding to the item you wish to fetch.
 For example, to assign a previously stored 'name' item to the ``$name``
 variable, you will do this::
 
@@ -173,7 +159,7 @@ variable, you will do this::
 	to access does not exist.
 
 If you want to retrieve all of the existing userdata, you can simply
-omit the item key (magic getter only works for properties)::
+omit the item key (magic getter only works for single property values)::
 
 	$_SESSION
 
@@ -250,7 +236,6 @@ session data array::
 This method also accepts an array of item keys to unset::
 
 	$array_items = array('username', 'email');
-
 	$session->remove($array_items);
 
 
