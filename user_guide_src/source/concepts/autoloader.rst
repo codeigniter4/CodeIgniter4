@@ -10,9 +10,12 @@ hard-coding that location into your files in a series of ``requires()`` is a mas
 headache and very error-prone. That's where autoloaders come in.
 
 CodeIgniter provides a very flexible autoloader that can be used with very little configuration.
-It can locate individual non-namespaced classes, namespaced classes that adhere to PSR4 autoloading
+It can locate individual non-namespaced classes, namespaced classes that adhere to 
+``PSR4 <http://www.php-fig.org/psr/psr-4/>``_ autoloading
 directory structures, and will even attempt to locate classes in common directories (like Controllers,
-Models, etc).
+Models, etc). 
+
+For performance improvement, the core CodeIgniter components have been added to the classmap.
 
 The autoloader works great by itself, but can also work with other autoloaders, like
 `Composer <https://getcomposer.org>`_, or even your own custom autoloaders, if needed.
@@ -63,7 +66,7 @@ You will need to modify any existing files that are referencing the current name
 Classmap
 ========
 
-The classmap is used extensively by CodeIgniter to eek the last ounces of performance out of the system
+The classmap is used extensively by CodeIgniter to eke the last ounces of performance out of the system
 by not hitting the file-system with extra ``file_exists()`` calls. You can use the classmap to link to
 third-party libraries that are not namespaced::
 
