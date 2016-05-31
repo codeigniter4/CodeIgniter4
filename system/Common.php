@@ -49,44 +49,8 @@ use CodeIgniter\Services;
  * @category Common Functions
  */
 
-if ( ! function_exists('log_message'))
-{
-	/**
-	 * A convenience/compatibility method for logging events through
-	 * the Log system.
-	 *
-	 * Allowed log levels are:
-	 *  - emergency
-	 *  - alert
-	 *  - critical
-	 *  - error
-	 *  - warning
-	 *  - notice
-	 *  - info
-	 *  - debug
-	 *
-	 * @param string $level
-	 * @param        $message
-	 * @param array  $context
-	 *
-	 * @return mixed
-	 */
-	function log_message(string $level, $message, array $context = [])
-	{
-		// When running tests, we want to always ensure that the
-		// TestLogger is running, which provides utilities for
-		// for asserting that logs were called in the test code.
-		if (ENVIRONMENT == 'testing')
-		{
-			$logger = new \CodeIgniter\Log\TestLogger(new \Config\Logger());
-			return $logger->log($level, $message, $context);
-		}
-
-		return Services::logger(true)
-		               ->log($level, $message, $context);
-	}
-}
-
+//--------------------------------------------------------------------
+// Services Convenience Functions
 //--------------------------------------------------------------------
 
 if ( ! function_exists('view'))
@@ -192,6 +156,113 @@ if ( ! function_exists('esc'))
 
 //--------------------------------------------------------------------
 
+if (! function_exists('session'))
+{
+	/**
+	 * A convenience method for accessing the session instance,
+	 * or an item that has been set in the session.
+	 *
+	 * Examples:
+	 *    session()->set('foo', 'bar');
+	 *    $foo = session('bar');
+	 *
+	 * @param null $val
+	 *
+	 * @return \CodeIgniter\Session\Session|null|void
+	 */
+	function session($val = null)
+	{
+		// Returning a single item?
+		if (is_string($val))
+		{
+			return $_SESSION[$val] ?: null;
+		}
+
+		return \Config\Services::session();
+	}
+}
+
+//--------------------------------------------------------------------
+
+if (! function_exists('service'))
+{
+	/**
+	 * Allows cleaner access to the Services Config file.
+	 *
+	 * These are equal:
+	 *  - $timer = service('timer')
+	 *  - $timer = \CodeIgniter\Services::timer();
+	 *
+	 * @param string $name
+	 * @param        ...$params
+	 *
+	 * @return mixed
+	 */
+	function service(string $name, ...$params)
+	{
+		// Ensure it's not a shared instance
+		array_push($params, false);
+
+		return Services::$name(...$params);
+	}
+}
+
+//--------------------------------------------------------------------
+
+if (! function_exists('shared_service'))
+{
+	function shared_service(string $name, ...$params)
+	{
+		return Services::$name(...$params);
+	}
+}
+
+//--------------------------------------------------------------------
+
+
+
+
+
+if ( ! function_exists('log_message'))
+{
+	/**
+	 * A convenience/compatibility method for logging events through
+	 * the Log system.
+	 *
+	 * Allowed log levels are:
+	 *  - emergency
+	 *  - alert
+	 *  - critical
+	 *  - error
+	 *  - warning
+	 *  - notice
+	 *  - info
+	 *  - debug
+	 *
+	 * @param string $level
+	 * @param        $message
+	 * @param array  $context
+	 *
+	 * @return mixed
+	 */
+	function log_message(string $level, $message, array $context = [])
+	{
+		// When running tests, we want to always ensure that the
+		// TestLogger is running, which provides utilities for
+		// for asserting that logs were called in the test code.
+		if (ENVIRONMENT == 'testing')
+		{
+			$logger = new \CodeIgniter\Log\TestLogger(new \Config\Logger());
+			return $logger->log($level, $message, $context);
+		}
+
+		return Services::logger(true)
+		               ->log($level, $message, $context);
+	}
+}
+
+//--------------------------------------------------------------------
+
 if ( ! function_exists('is_cli'))
 {
 
@@ -234,39 +305,6 @@ if ( ! function_exists('route_to'))
 }
 
 //--------------------------------------------------------------------
-
-if (! function_exists('service'))
-{
-	/**
-	 * Allows cleaner access to the Services Config file.
-	 *
-	 * These are equal:
-	 *  - $timer = service('timer')
-	 *  - $timer = \CodeIgniter\Services::timer();
-	 *
-	 * @param string $name
-	 * @param        ...$params
-	 *
-	 * @return mixed
-	 */
-	function service(string $name, ...$params)
-	{
-		// Ensure it's not a shared instance
-		array_push($params, false);
-
-		return Services::$name(...$params);
-	}
-}
-
-//--------------------------------------------------------------------
-
-if (! function_exists('shared_service'))
-{
-	function shared_service(string $name, ...$params)
-	{
-		return Services::$name(...$params);
-	}
-}
 
 if ( ! function_exists('remove_invisible_characters'))
 {
@@ -448,34 +486,6 @@ if (! function_exists('redirect'))
 		}
 
 		$response->redirect($uri);
-	}
-}
-
-//--------------------------------------------------------------------
-
-if (! function_exists('session'))
-{
-	/**
-	 * A convenience method for accessing the session instance,
-	 * or an item that has been set in the session.
-	 *
-	 * Examples:
-	 *    session()->set('foo', 'bar');
-	 *    $foo = session('bar');
-	 *
-	 * @param null $val
-	 *
-	 * @return \CodeIgniter\Session\Session|null|void
-	 */
-	function session($val = null)
-	{
-		// Returning a single item?
-		if (is_string($val))
-		{
-			return $_SESSION[$val] ?: null;
-		}
-
-		return \Config\Services::session();
 	}
 }
 

@@ -359,7 +359,6 @@ class Services
 
 		$session = new \CodeIgniter\Session\Session($driver, $config);
 		$session->setLogger($logger);
-		$session->initialize();
 
 		return $session;
 	}

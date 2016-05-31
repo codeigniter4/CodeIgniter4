@@ -39,6 +39,7 @@ class should be magically initialized. Sessions can be individual or shared
 To access and initialize the session::
 
 	$session = Config\Services::session($config, $shared);
+	$session->start();
 
 The ``$config`` parameter is optional - your application configuration. 
 If not provided, the services register will instantiate your default
@@ -52,6 +53,12 @@ Once loaded, the Sessions library object will be available using::
 
 	$session
 
+Alternatively, you can use the helper function that will use the default
+configuration options. This version is a little friendlier to read,
+but does not take any configuration options.
+::
+
+	$session = session()->start();
 
 How do Sessions work?
 =====================
@@ -136,7 +143,7 @@ Any piece of information from the session array is available through the
 
 	$_SESSION['item']
 
-Or through the conventional accessor method:L
+Or through the conventional accessor method::
 
 	$session->get('item');
 
@@ -144,6 +151,9 @@ Or through the magic getter::
 
 	$session->item
 
+Or even through the session helper method::
+
+	session('item');
 
 Where item is the array key corresponding to the item you wish to fetch.
 For example, to assign a previously stored 'name' item to the ``$name``
@@ -169,7 +179,7 @@ omit the item key (magic getter only works for properties)::
 
 	// or:
 
-	$session->uget();
+	$session->get();
 
 Adding Session Data
 ===================
@@ -400,6 +410,12 @@ same way::
 	during the same request. All session data (including flashdata and
 	tempdata) will be destroyed permanently and functions will be
 	unusable during the same request after you destroy the session.
+
+You may also use the ``stop()`` method to completely kill the session
+by removing the old session_id, destroying all data, and destroying
+the cookie that contained the session id.::
+
+    $session->stop();
 
 Accessing session metadata
 ==========================

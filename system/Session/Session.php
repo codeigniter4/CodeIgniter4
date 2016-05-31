@@ -179,9 +179,9 @@ class Session implements SessionInterface
 	//--------------------------------------------------------------------
 
 	/**
-	 * Initialize the session container.
+	 * Initialize the session container and starts up the session.
 	 */
-	public function initialize()
+	public function start()
 	{
 		if (is_cli())
 		{
@@ -252,6 +252,31 @@ class Session implements SessionInterface
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Does a full stop of the session:
+	 *
+	 * - destroys the session
+	 * - unsets the session id
+	 * - destroys the session cookie
+	 */
+	public function stop()
+	{
+		setcookie(
+			$this->sessionCookieName,
+			session_id(),
+			1,
+			$this->cookiePath,
+			$this->cookieDomain,
+			$this->cookieSecure,
+			true
+		);
+		
+		session_regenerate_id(true);
+	}
+
+	//--------------------------------------------------------------------
+
 
 	/**
 	 * Configuration.
