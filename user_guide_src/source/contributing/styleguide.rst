@@ -11,8 +11,14 @@ enforced (which would be separately documented), but while we would
 recommend it, there's no requirement that you follow these conventions in
 your own applications.
 
-TODO: Add acknowledgement notice in the footer, referencing popular
-      coding style conventions that we've derived content from.
+The `PHP Interop Group <http://www.php-fig.org/>`_ has proposed a number of
+canonical recommendations for PHP code style. CodeIgniter is not a member of
+of PHP-FIG. We commend their efforts to unite the PHP community,
+but no not agree with all of their recommendations.
+
+PSR-2 is PHP-FIG's Coding Style Guide. We do not claim conformance with it,
+although there are a lot of similarities. The differences will be pointed out
+below.
 
 *The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD",
 "SHOULD NOT", "RECOMMENDED",  "MAY", and "OPTIONAL" in this document are to
@@ -31,8 +37,6 @@ Formatting
 - Files MUST use UTF-8 character set encoding without BOM.
 - Files MUST use UNIX line endings (LF: `\n`).
 - Files MUST end with a single empty line (i.e. LF: `\n`).
-
-TODO: Add (links for?) instructions to configure popular IDEs and plain-text editors.
 
 Structure
 =========
@@ -58,7 +62,28 @@ Whitespace, indentation and alignment
 - Indentation MUST use only tabs.
 - Alignment MUST use only spaces.
 
-TODO: Add examples for indentation vs. alignment.
+The code block following would have a single tab at the beginning of
+each line containing braces, and two tabs at the beginning of the
+nested statements. No alignment is implied.::
+
+    {
+        $first = 1;
+        $second = 2;
+        $third = 3;
+    }
+
+The code block following would use spaces to have the assignment
+operators line up with each other::
+
+    {
+        $first    = 1;
+        $second   = 2;
+        $third    = 3;
+    }
+
+
+.. note:: Our indenting and alignment convention differs from PSR-2, which
+    uses spaces for indenting and tabs for alignment.
 
 - Unnecessary whitespace characters MUST NOT be present anywhere within a
   script.
@@ -89,7 +114,8 @@ PHP tags
 Namespaces and classes
 ======================
 
-- Class names and namespaces SHOULD be declared in `UpperCamelCase`, unless
+- Class names and namespaces SHOULD be declared in `UpperCamelCase`, 
+  also called `StudlyCaps`, unless
   another form is *functionally* required.
 
   - Abbreviations in namespaces, class names and method names SHOULD be
@@ -104,8 +130,9 @@ Namespaces and classes
 Methods
 -------
 
-To maintain consistency between core classes the following method names
-MUST be used where applicable:
+To maintain consistency between core classes, class properties MUST
+be private or protected, and the following public methods
+MUST be used for each such property "x"
 
 - `getX()` when the method returns returns a property value, or null if not set
 - `setX(value)` changes a property value, doesn't return anything, and can
@@ -125,9 +152,6 @@ Procedural code
   lowercase letters, separated by underscores), unless another form is
   *functionally* required.
 - Constants MUST be declared in `CAPITALS_SEPARATED_BY_UNDERSCORES`.
-
-Formatting
-==========
 
 Keywords
 ========
@@ -179,3 +203,31 @@ Other
   - When declaring an anonymous function.
   - Inside a "variable variable" (i.e. `${$foo}` or `${'foo'.$bar}`).
   - Around a variable in a double-quoted string (i.e. `"Foo {$bar}"`).
+
+.. note:: Our control structures braces convention differs from PSR-2.
+    We use "Allman style" notation instead.
+
+
+********************
+Configuring Your IDE
+********************
+
+Some guidelines for configuring your text editor or IDE for use with CodeIgniter follow.
+
+NetBeans
+========
+
+phpStorm
+========
+
+Sublime
+=======
+
+Notepad
+=======
+
+Don't!
+
+Notepad++
+=========
+
