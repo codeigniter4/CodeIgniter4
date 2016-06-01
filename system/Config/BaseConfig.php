@@ -65,6 +65,8 @@ class BaseConfig
 				{
 					if ($value = $this->getEnvValue("{$property}.{$key}", $prefix, $shortPrefix))
 					{
+						if (is_null($value)) continue;
+
 						if ($value === 'false')    $value = false;
 						elseif ($value === 'true') $value = true;
 
@@ -74,8 +76,10 @@ class BaseConfig
 			}
 			else
 			{
-				if ($value = $this->getEnvValue($property, $prefix, $shortPrefix))
+				if (($value = $this->getEnvValue($property, $prefix, $shortPrefix)) !== false )
 				{
+					if (is_null($value)) continue;
+
 					if ($value === 'false')    $value = false;
 					elseif ($value === 'true') $value = true;
 
@@ -96,18 +100,20 @@ class BaseConfig
 	 */
 	protected function getEnvValue(string $property, string $prefix, string $shortPrefix)
 	{
-		if ($value = getenv("{$shortPrefix}.{$property}"))
+		if (($value = getenv("{$shortPrefix}.{$property}")) !== false)
 		{
 			return $value;
 		}
-		else if ($value = getenv("{$prefix}.{$property}"))
+		elseif (($value = getenv("{$prefix}.{$property}")) !== false)
 		{
 			return $value;
 		}
-		else if ($value = getenv($property))
+		elseif (($value = getenv($property)) !== false)
 		{
 			return $value;
 		}
+
+		return null;
 	}
 
 	//--------------------------------------------------------------------
