@@ -1,6 +1,6 @@
-=============
+*************
 HTTP Response
-=============
+*************
 
 The Response class extends the :doc:`HTTP Message Class </libraries/message>` with methods only appropriate for
  a getServer responding to the client that called it.

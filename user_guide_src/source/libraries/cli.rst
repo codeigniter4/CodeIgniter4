@@ -33,7 +33,7 @@ Getting Input from the User
 
 Sometimes you need to ask the user for more information. They might not have provided optional command-line
 arguments, or the script may have encountered an existing file and needs confirmation before overwriting. This is
-handled with the ``prompt()`` method::
+handled with the ``prompt()`` method.
 
 The most basic use case is to simply wait for the user to press a key::
 

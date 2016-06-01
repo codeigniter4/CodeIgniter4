@@ -37,6 +37,9 @@
 
 require __DIR__.'/CustomExceptions.php';
 
+/**
+ * Exceptions manager
+ */
 class Exceptions
 {
 
@@ -57,6 +60,11 @@ class Exceptions
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Constructor.
+	 * 
+	 * @param \Config\App $config
+	 */
 	public function __construct(\Config\App $config)
 	{
 		$this->ob_level = ob_get_level();
@@ -90,7 +98,7 @@ class Exceptions
 	 * (Yay PHP7!). Will log the error, display it if display_errors is on,
 	 * and fire an event that allows custom actions to be taken at this point.
 	 *
-	 * @param \Throwable $e
+	 * @param \Throwable $exception
 	 */
 	public function exceptionHandler(\Throwable $exception)
 	{

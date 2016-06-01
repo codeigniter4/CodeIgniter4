@@ -213,17 +213,15 @@ Migration Preferences
 
 The following is a table of all the config options for migrations, available in **application/Config/Migrations.php**.
 
-========================== ====================== ========================== =============================================
+========================== ====================== ========================== =============================================================
 Preference                 Default                Options                    Description
-========================== ====================== ========================== =============================================
+========================== ====================== ========================== =============================================================
 **enabled**                FALSE                  TRUE / FALSE               Enable or disable migrations.
 **path**                   APPPATH.'migrations/'  None                       The path to your migrations folder.
 **currentVersion**         0                      None                       The current version your database should use.
-**table**                  migrations             None                       The table name for storing the schema
-                                                                             version number.
-**type**                  'timestamp'            'timestamp' / 'sequential' The type of numeric identifier used to name
-                                                                             migration files.
-========================== ====================== ========================== =============================================
+**table**                  migrations             None                       The table name for storing the schema version number.
+**type**                  'timestamp'            'timestamp' / 'sequential'  The type of numeric identifier used to name migration files.
+========================== ====================== ========================== =============================================================
 
 ***************
 Class Reference

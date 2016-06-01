@@ -102,6 +102,13 @@ class MigrationRunner
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Constructor.
+	 * 
+	 * @param BaseConfig $config
+	 * @param \CodeIgniter\Database\ConnectionInterface $db
+	 * @throws ConfigException
+	 */
 	public function __construct(BaseConfig $config, ConnectionInterface $db = null)
 	{
 		$this->enabled        = $config->enabled        ?? false;
@@ -145,11 +152,11 @@ class MigrationRunner
 	 * choice
 	 *
 	 * @param    string $targetVersion Target schema version
-	 *
+	 * @param $group
 	 * @return mixed TRUE if no migrations are found, current version string on success, FALSE on failure
 	 * @throws ConfigException
 	 */
-	public function version($targetVersion, $group='default')
+	public function version(string $targetVersion, $group='default')
 	{
 		if (! $this->enabled)
 		{
@@ -331,6 +338,7 @@ class MigrationRunner
 	/**
 	 * Grabs the full migration history from the database.
 	 *
+	 * @param $group
 	 * @return mixed
 	 */
 	public function getHistory($group = 'default')
@@ -400,6 +408,7 @@ class MigrationRunner
 	/**
 	 * Retrieves current schema version
 	 *
+	 * @param $group
 	 * @return    string    Current migration version
 	 */
 	protected function getVersion($group = 'default')

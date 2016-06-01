@@ -281,7 +281,7 @@ as a class property, ``$this->response``.
 
 Logger Object
 -------------
-An instance of the :doc:`Logger <../libraries/logger>` class is available as a class property,
+An instance of the :doc:`Logger <../general/logging>` class is available as a class property,
 ``$this->logger``.
 
 forceHTTPS

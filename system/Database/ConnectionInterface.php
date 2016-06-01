@@ -55,6 +55,7 @@ interface ConnectionInterface
 	/**
 	 * Connect to the database.
 	 *
+	 * @param $persistent
 	 * @return mixed
 	 */
 	public function connect($persistent = false);

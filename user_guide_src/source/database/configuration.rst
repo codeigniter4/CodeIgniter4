@@ -180,8 +180,7 @@ Explanation of Values:
 			installations to share one database.
 **pConnect**		TRUE/FALSE (boolean) - Whether to use a persistent connection.
 **DBDebug**		TRUE/FALSE (boolean) - Whether database errors should be displayed.
-**cacheOn**		TRUE/FALSE (boolean) - Whether database query caching is enabled,
-			see also :doc:`Database Caching Class <caching>`.
+**cacheOn**		TRUE/FALSE (boolean) - Whether database query caching is enabled.
 **cacheDir**		The absolute server path to your database query cache directory.
 **charset**	    	The character set used in communicating with the database.
 **DBCollat**		The character collation used in communicating with the database

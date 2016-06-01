@@ -148,11 +148,11 @@ class DotEnv
 		$name  = trim($name);
 		$value = trim($value);
 
-		// Sanitise the name
+		// Sanitize the name
 		$name = str_replace(['export', '\'', '"'], '', $name);
 
-		// Sanitise the value
-		$value = $this->sanitiseValue($value);
+		// Sanitize the value
+		$value = $this->sanitizeValue($value);
 
 		$value = $this->resolveNestedVariables($value);
 
@@ -172,7 +172,7 @@ class DotEnv
 	 * @return string
 	 * @throws \InvalidArgumentException
 	 */
-	protected function sanitiseValue(string $value): string
+	protected function sanitizeValue(string $value): string
 	{
 		if ( ! $value)
 		{

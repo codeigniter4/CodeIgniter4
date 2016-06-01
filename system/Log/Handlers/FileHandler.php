@@ -39,16 +39,36 @@
 use CodeIgniter\Log\Handlers\BaseHandler;
 use CodeIgniter\Log\Handlers\HandlerInterface;
 
+/**
+ * Log error messages to file system
+ */
 class FileHandler extends BaseHandler implements HandlerInterface
 {
+	/**
+	 * Folder to hold logs
+	 * 
+	 * @var type 
+	 */
 	protected $path;
 
+	/**
+	 * Extension to use for log files
+	 * @var type 
+	 */
 	protected $fileExtension;
 
+	/**
+	 * Permissions for new log files
+	 * @var type 
+	 */
 	protected $filePermissions;
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Constructor
+	 * @param array $config
+	 */
 	public function __construct(array $config = [])
 	{
 		parent::__construct($config);

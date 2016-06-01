@@ -86,7 +86,7 @@ class Seeder
 	 * Seeder constructor.
 	 *
 	 * @param BaseConfig $config
-	 * @param Forge|null $forge
+	 * @param BaseConnection $db
 	 */
 	public function __construct(BaseConfig $config, BaseConnection $db = null)
 	{

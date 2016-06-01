@@ -38,6 +38,9 @@
 
 use CodeIgniter\Config\BaseConfig;
 
+/**
+ * Session handler using Memcache for persistence
+ */
 class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 {
 	/**
@@ -70,6 +73,12 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Constructor
+	 * 
+	 * @param BaseConfig $config
+	 * @throws \Exception
+	 */
 	public function __construct(BaseConfig $config)
 	{
 		parent::__construct($config);

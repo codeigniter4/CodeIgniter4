@@ -160,7 +160,7 @@ remember to manually escape data; the engine does it automatically for
 you.
 
 Named Bindings
---------------
+==============
 
 Instead of using the question mark to mark the location of the bound values,
 you can name the bindings, allowing the keys of the values passed in to match

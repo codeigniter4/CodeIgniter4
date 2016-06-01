@@ -362,6 +362,7 @@ abstract class BaseConnection implements ConnectionInterface
 	/**
 	 * Connect to the database.
 	 *
+	 * @param bool $persistent
 	 * @return mixed
 	 */
 	abstract public function connect($persistent = false);
@@ -466,7 +467,7 @@ abstract class BaseConnection implements ConnectionInterface
 	/**
 	 * Specifies whether this connection should keep queries objects or not.
 	 *
-	 * @param bool $doLog
+	 * @param bool $save
 	 */
 	public function saveQueries($save = false)
 	{
@@ -499,7 +500,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 *
 	 * @param string $sql
 	 * @param array  ...$binds
-	 *
+	 * @param $queryClass
 	 * @return mixed
 	 */
 	public function query(string $sql, $binds = null, $queryClass = 'CodeIgniter\\Database\\Query')

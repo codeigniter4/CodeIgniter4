@@ -275,7 +275,7 @@ class Autoloader
 	/**
 	 * Attempts to load the class from common locations in previous
 	 * version of CodeIgniter, namely 'application/libraries', and
-	 * 'application/models'.
+	 * 'application/Models'.
 	 *
 	 * @param $class    The class name. This typically should NOT have a namespace.
 	 *
@@ -292,8 +292,8 @@ class Autoloader
 
 		$paths = [
 			APPPATH.'Controllers/',
-			APPPATH.'libraries/',
-			APPPATH.'models/',
+			APPPATH.'Libraries/',
+			APPPATH.'Models/',
 		];
 
 		$class = str_replace('\\', '/', $class).'.php';
