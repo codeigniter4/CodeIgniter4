@@ -33,8 +33,8 @@ class AutoloaderTest extends \CIUnitTestCase
 			'/app/dir/First.php',
 			'/app/namespace/Class.php',
 		    '/my/app/Class.php',
-		    APPPATH.'libraries/someLibrary.php',
-		    APPPATH.'models/someModel.php',
+		    APPPATH.'Libraries/someLibrary.php',
+		    APPPATH.'Models/someModel.php',
 		]);
 	}
 

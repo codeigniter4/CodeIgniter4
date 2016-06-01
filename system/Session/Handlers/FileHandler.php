@@ -38,6 +38,9 @@
 
 use CodeIgniter\Config\BaseConfig;
 
+/**
+ * Session handler using file system for storage
+ */
 class FileHandler extends BaseHandler implements \SessionHandlerInterface
 {
 	/**
@@ -70,6 +73,10 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Constructor
+	 * @param BaseConfig $config
+	 */
 	public function __construct(BaseConfig $config)
 	{
 		if ( ! empty($config->sessionSavePath))

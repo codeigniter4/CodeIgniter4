@@ -36,6 +36,11 @@
  * @filesource
  */
 
+/**
+ * Representation of an iHTTP request.
+ *
+ */
+
 class Request extends Message implements RequestInterface
 {
 	/**
@@ -45,10 +50,21 @@ class Request extends Message implements RequestInterface
 	 */
 	protected $ipAddress = '';
 
+	/**
+	 * Proxy IPs
+	 * 
+	 * @var type 
+	 */
 	protected $proxyIPs;
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Constructor.
+	 * 
+	 * @param type $config
+	 * @param type $uri
+	 */
 	public function __construct($config, $uri=null)
 	{
 	    $this->proxyIPs = $config->proxyIPs;

@@ -59,12 +59,12 @@ Class Reference
 
 		Scans and parses the headers found in the SERVER data and stores it for later access.
 		This is used by the :doc:`IncomingRequest Class </libraries/incomingrequest>` to make
-		 the current request's headers available.
+		the current request's headers available.
 
-		 The headers are any SERVER data that starts with ``HTTP_``, like ``HTTP_HOST``. Each message
-		 is converted from it's standard uppercase and underscore format to a ucwords and dash format.
-		 The preceeding ``HTTP_`` is removed from the string. So ``HTTP_ACCEPT_LANGUAGE`` becomes
-		 ``Accept-Language``.
+                The headers are any SERVER data that starts with ``HTTP_``, like ``HTTP_HOST``. Each message
+		is converted from it's standard uppercase and underscore format to a ucwords and dash format.
+		The preceeding ``HTTP_`` is removed from the string. So ``HTTP_ACCEPT_LANGUAGE`` becomes
+		``Accept-Language``.
 
 	.. php:method:: headers()
 

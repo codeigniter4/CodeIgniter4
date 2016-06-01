@@ -247,6 +247,8 @@ class Model
 	//--------------------------------------------------------------------
 
 	/**
+	 * Extract a subset of data
+	 * 
 	 * @param      $key
 	 * @param null $value
 	 *
@@ -891,6 +893,8 @@ class Model
 	//--------------------------------------------------------------------
 
 	/**
+	 * Specify the table associated with a model
+	 * 
 	 * @param string $table
 	 *
 	 * @return $this

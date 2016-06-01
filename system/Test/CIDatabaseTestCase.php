@@ -41,6 +41,9 @@ use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\MigrationRunner;
 use Config\Services;
 
+/**
+ * CIDatabaseTestCase
+ */
 class CIDatabaseTestCase extends CIUnitTestCase
 {
 	/**
@@ -107,6 +110,9 @@ class CIDatabaseTestCase extends CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Constructor
+	 */
 	public function __construct()
 	{
 	    parent::__construct();

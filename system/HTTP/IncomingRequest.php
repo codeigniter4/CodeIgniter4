@@ -562,7 +562,7 @@ class IncomingRequest extends Request
 	 *
 	 * Do some final cleaning of the URI and return it, currently only used in self::_parse_request_uri()
 	 *
-	 * @param    string $url
+	 * @param    string $uri
 	 *
 	 * @return    string
 	 */

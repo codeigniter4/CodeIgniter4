@@ -77,31 +77,41 @@ class CodeIgniter
 	protected $config;
 
 	/**
+	 * Current request.
+	 * 
 	 * @var \CodeIgniter\HTTP\Request
 	 */
 	protected $request;
 
 	/**
+	 * Current response.
+	 * 
 	 * @var \CodeIgniter\HTTP\Response
 	 */
 	protected $response;
 
 	/**
+	 * Router to use.
+	 * 
 	 * @var \CodeIgniter\Router\Router
 	 */
 	protected $router;
 
 	/**
+	 * Controller to use.
 	 * @var string|\Closure
 	 */
 	protected $controller;
 
 	/**
+	 * Controller method to invoke.
+	 * 
 	 * @var string
 	 */
 	protected $method;
 
 	/**
+	 * Output handler to use.
 	 * @var string
 	 */
 	protected $output;
@@ -112,6 +122,8 @@ class CodeIgniter
 	 * CodeIgniter constructor.
 	 *
 	 * @param int $startMemory
+	 * @param float $startTime
+	 * @param App $config
 	 */
 	public function __construct(int $startMemory, float $startTime, App $config)
 	{
@@ -126,6 +138,8 @@ class CodeIgniter
 	 * The class entry point. This is where the magic happens and all
 	 * of the framework pieces are pulled together and shown how to
 	 * make beautiful music together. Or something like that. :)
+	 * 
+	 * @param RouteCollectionInterface $routes
 	 */
 	public function run(RouteCollectionInterface $routes = null)
 	{

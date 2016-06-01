@@ -36,21 +36,33 @@
  * @filesource
  */
 
+/**
+ * Base class for logging
+ */
 abstract class BaseHandler implements HandlerInterface
 {
 
 	/**
+	 * Handles
+	 * 
 	 * @var array
 	 */
 	protected $handles;
 
 	/**
+	 * Date format for logging
+	 * 
 	 * @var string
 	 */
 	protected $dateFormat = 'Y-m-d H:i:s';
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Constructor
+	 * 
+	 * @param array $config
+	 */
 	public function __construct(array $config)
 	{
 		$this->handles = $config['handles'] ?? [];

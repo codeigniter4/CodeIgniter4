@@ -142,6 +142,13 @@ class Logger implements LoggerInterface
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Constructor.
+	 * 
+	 * @param type $config
+	 * @param bool $debug
+	 * @throws \RuntimeException
+	 */
 	public function __construct($config, bool $debug = CI_DEBUG)
 	{
 		$this->loggableLevels = is_array($config->threshold) ? $config->threshold : range(1, (int)$config->threshold);

@@ -38,6 +38,9 @@
 
 use CodeIgniter\Config\BaseConfig;
 
+/**
+ * Session handler using Redis for persistence
+ */
 class RedisHandler extends BaseHandler implements \SessionHandlerInterface
 {
 
@@ -71,6 +74,12 @@ class RedisHandler extends BaseHandler implements \SessionHandlerInterface
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Constructor
+	 * 
+	 * @param BaseConfig $config
+	 * @throws \Exception
+	 */
 	public function __construct(BaseConfig $config)
 	{
 		parent::__construct($config);

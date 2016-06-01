@@ -97,17 +97,17 @@ Global Functions
 .. php:function:: remove_invisible_characters($str[, $url_encoded = TRUE])
 
 	:param	string	$str: Input string
-			:param	bool	$url_encoded: Whether to remove URL-encoded characters as well
-			:returns:	Sanitized string
-			:rtype:	string
+        :param	bool	$url_encoded: Whether to remove URL-encoded characters as well
+        :returns:	Sanitized string
+        :rtype:	string
 
-			This function prevents inserting NULL characters between ASCII
-			characters, like Java\\0script.
+        This function prevents inserting NULL characters between ASCII
+        characters, like Java\\0script.
 
-			Example::
+        Example::
 
-                    remove_invisible_characters('Java\\0script');
-                    // Returns: 'Javascript'
+            remove_invisible_characters('Java\\0script');
+            // Returns: 'Javascript'
 
 .. php:function:: route_to ( $method [, ...$params] )
 
@@ -141,7 +141,7 @@ Global Functions
 	:rtype: mixed
 
 	Provides a convenient way to access the session class and to retrieve a
-	stored value. For more information, see the :doc:`Sessions </libraries/session>` page.
+	stored value. For more information, see the :doc:`Sessions </libraries/sessions>` page.
 
 .. php:function:: shared_service ( $name [, ...$params] )
 
