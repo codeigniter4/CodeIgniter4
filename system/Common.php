@@ -184,6 +184,37 @@ if (! function_exists('session'))
 
 //--------------------------------------------------------------------
 
+if (! function_exists('timer'))
+{
+	/**
+	 * A convenience method for working with the timer.
+	 * If no parameter is passed, it will return the timer instance,
+	 * otherwise will start or stop the timer intelligently.
+	 *
+	 * @param string|null $name
+	 *
+	 * @return $this|\CodeIgniter\Debug\Timer|mixed
+	 */
+	function timer(string $name = null)
+	{
+		$timer = \Config\Services::timer();
+
+		if (empty($name))
+		{
+			return $timer;
+		}
+
+		if ($timer->has($name))
+		{
+			return $timer->stop($name);
+		}
+
+		return $timer->start($name);
+	}
+}
+
+//--------------------------------------------------------------------
+
 if (! function_exists('service'))
 {
 	/**

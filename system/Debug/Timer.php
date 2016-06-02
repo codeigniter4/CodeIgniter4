@@ -161,4 +161,19 @@ class Timer
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Checks whether or not a timer with the specified name exists.
+	 *
+	 * @param string $name
+	 *
+	 * @return bool
+	 */
+	public function has(string $name)
+	{
+	    return array_key_exists(strtolower($name), $this->timers);
+	}
+
+	//--------------------------------------------------------------------
+
+
 }

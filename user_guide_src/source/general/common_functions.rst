@@ -154,6 +154,25 @@ Global Functions
 	function will share the same instance of the service, where **service** returns a new
 	instance every time.
 
+.. php:function:: timer( [$name] )
+
+	:param string $name: The name of the benchmark point.
+	:returns: The Timer instance
+	:rtype: CodeIgniter\Debug\Timer
+
+	A convenience method that provides quick access to the Timer class. You can pass in the name
+	of a benchmark point as the only parameter. This will start timing from this point, or stop
+	timing if a timer with this name is already running.
+	::
+
+	// Get an instance
+	$timer = timer();
+
+	// Set timer start and stop points
+	timer('controller_loading');    // Will start the timer
+	. . .
+	timer('controller_loading');    // Will stop the running timer
+
 .. php:function:: view ($name [, $data [, $options ]])
 
 	:param   string   $name: The name of the file to load
