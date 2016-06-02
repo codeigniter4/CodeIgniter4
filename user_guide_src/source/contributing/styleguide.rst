@@ -55,9 +55,8 @@ Naming
 
 - File names MUST end with a ".php" name extension and MUST NOT have
   multiple name extensions.
-- A file that declares a class (Files declaring classes MUST have names
-  exactly matching the classes that they declare (obviously excluding
-  the ".php" name extension).
+- Files declaring classes MUST have names exactly matching the classes 
+  that they declare (obviously excluding the ".php" name extension).
 - Files declaring functions SHOULD be named in *snake_case.php*.
 
 *************************************
@@ -67,7 +66,7 @@ Whitespace, indentation and alignment
 - Indentation MUST use only tabs.
 - Alignment MUST use only spaces.
 
-The code block following would have a single tab at the beginning of
+The following code block would have a single tab at the beginning of
 each line containing braces, and two tabs at the beginning of the
 nested statements. No alignment is implied.::
 
@@ -77,7 +76,7 @@ nested statements. No alignment is implied.::
         $third = 3;
     }
 
-The code block following would use spaces to have the assignment
+The following code block would use spaces to have the assignment
 operators line up with each other::
 
     {
@@ -88,7 +87,7 @@ operators line up with each other::
 
 
 .. note:: Our indenting and alignment convention differs from PSR-2, which
-    uses spaces for indenting and tabs for alignment.
+    uses spaces for indenting and alignment.
 
 - Unnecessary whitespace characters MUST NOT be present anywhere within a
   script.
@@ -200,7 +199,7 @@ Other
 
 - Opening square brackets SHOULD NOT be followed by a space character,
   unless when using the "short array" declaration syntax.
-- Closing square backets SHOULD NOT be followed by a space character,
+- Closing square backets SHOULD NOT be preceeded by a space character,
   unless when using the "short array" declaration syntax.
 
 - A curly brace SHOULD be the only printable character on a line, unless:
