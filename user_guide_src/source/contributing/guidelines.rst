@@ -77,19 +77,11 @@ PHP Compatibility
 
 CodeIgniter4 requires PHP 7.
 
-There is currently an issue with phpDocumentor and PHP7 ...
+See the `CodeIgniter4-developer-setup <https://github.com/bcit-ci/CodeIgniter4-developer-setup>`_ 
+repository for tips on setting this up on your system.
 
-phpDocumentor2 does not properly recognize the hinted return type in PHP7.
-In order to generate phpdocs for CI4, the return types in method signatures 
-have been commented out for now. They can be restored using a global search 
-& replace once phpDocumentor has addressed their issue.
-
-Desired: ``function banana(): fruit``
-Workaround: ``function banana()//: fruit``
-
-Or, for an interface...
-Desired: ``function banana(): fruit;``
-Workaround: ``function banana();//: fruit;``
+That repository also contains tips for configuring your IDE or editor to work
+better with PHP7 and CodeIgniter4.
 
 Backwards Compatibility
 =======================

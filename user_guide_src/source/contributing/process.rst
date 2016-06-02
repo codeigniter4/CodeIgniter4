@@ -44,7 +44,8 @@ This will sign your commits with the information setup in your git config, e.g.
 
 	Signed-off-by: John Q Public <john.public@example.com>
 
-If you are using Tower there is a "Sign-Off" checkbox in the commit window. You
+Your IDE may have a "Sign-Off" checkbox in the commit window,
+or even an option to automatically sign-off all commits you make. You
 could even alias git commit to use the -s flag so you don’t have to think about
 it.
 

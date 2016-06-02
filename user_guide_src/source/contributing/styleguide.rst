@@ -1,5 +1,5 @@
 ######################
-PHP Coding style guide
+PHP Coding Style Guide
 ######################
 
 The following document declares a set of coding convention rules to be
@@ -19,6 +19,11 @@ but no not agree with all of their recommendations.
 PSR-2 is PHP-FIG's Coding Style Guide. We do not claim conformance with it,
 although there are a lot of similarities. The differences will be pointed out
 below.
+
+.. note:: See the 
+    `CodeIgniter4-developer-setup <https://github.com/bcit-ci/CodeIgniter4-developer-setup>`_ 
+    repository for tips on configuring your IDE or editor to help you conform
+    to the style guide..
 
 *The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD",
 "SHOULD NOT", "RECOMMENDED",  "MAY", and "OPTIONAL" in this document are to
@@ -206,28 +211,3 @@ Other
 
 .. note:: Our control structures braces convention differs from PSR-2.
     We use "Allman style" notation instead.
-
-
-********************
-Configuring Your IDE
-********************
-
-Some guidelines for configuring your text editor or IDE for use with CodeIgniter follow.
-
-NetBeans
-========
-
-phpStorm
-========
-
-Sublime
-=======
-
-Notepad
-=======
-
-Don't!
-
-Notepad++
-=========
-
