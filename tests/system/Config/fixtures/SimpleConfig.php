@@ -9,4 +9,15 @@ class SimpleConfig extends \CodeIgniter\Config\BaseConfig
 
 	public $first = 'foo';
 	public $second = 'bar';
+
+	public $FOO;
+	public $onedeep;
+
+	public $default = [
+		'name' => null
+	];
+
+	public $simple = [
+		'name' => null
+	];
 }

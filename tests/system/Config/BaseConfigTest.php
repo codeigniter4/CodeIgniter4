@@ -20,6 +20,54 @@ class BaseConfigTest extends CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testBasicValues()
+	{
+		$dotenv = new DotEnv($this->fixturesFolder, '.env');
+		$dotenv->load();
+
+		$config = new \SimpleConfig();
+
+		$this->assertEquals('bar', $config->FOO);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testPrefixedValues()
+	{
+		$dotenv = new DotEnv($this->fixturesFolder, '.env');
+		$dotenv->load();
+
+		$config = new \SimpleConfig();
+
+		$this->assertEquals('baz', $config->onedeep);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testPrefixedArrayValues()
+	{
+		$dotenv = new DotEnv($this->fixturesFolder, '.env');
+		$dotenv->load();
+
+		$config = new \SimpleConfig();
+
+		$this->assertEquals('ci4', $config->default['name']);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testArrayValues()
+	{
+		$dotenv = new DotEnv($this->fixturesFolder, '.env');
+		$dotenv->load();
+
+		$config = new \SimpleConfig();
+
+		$this->assertEquals('simpleton', $config->simple['name']);
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testSetsDefaultValues()
 	{
 		$dotenv = new DotEnv($this->fixturesFolder, 'commented.env');
