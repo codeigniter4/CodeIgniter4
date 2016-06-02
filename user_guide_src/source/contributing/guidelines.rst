@@ -77,7 +77,7 @@ PHP Compatibility
 
 CodeIgniter4 requires PHP 7.
 
-See the ``CodeIgniter4-developer-setup <https://github.com/bcit-ci/CodeIgniter4-developer-setup>``_ 
+See the `CodeIgniter4-developer-setup <https://github.com/bcit-ci/CodeIgniter4-developer-setup>`_ 
 repository for tips on setting this up on your system.
 
 That repository also contains tips for configuring your IDE or editor to work
