@@ -13,7 +13,7 @@ New core classes:
 
     - CodeIgniter (bootstrap)
     - Common (shared functions)
-    - CompoaseScripts (integrate third party tools)
+    - ComposerScripts (integrate third party tools)
     - Controller (base controller)
     - Model (base model)
 
