@@ -8,8 +8,96 @@ These do not require loading any additional libraries or helpers.
 .. contents:: Page Contents
 	:local:
 
+================
 Global Functions
 ================
+
+Service Accessors
+=================
+
+.. php:function:: esc ( $data, $context='html' [, $encoding])
+
+	:param   string|array   $data: The information to be escaped.
+			:param   string   $context: The escaping context. Default is 'html'.
+			:param   string   $encoding: The character encoding of the string.
+			:returns: The escaped data.
+			:rtype: string
+
+			Escapes data for inclusion in web pages, to help prevent XSS attacks.
+			This uses the Zend Escaper library to handle the actual filtering of the data.
+
+			If $data is a string, then it simply escapes and returns it.
+			If $data is an array, then it loops over it, escaping each 'value' of the key/value pairs.
+
+			Valid context values: html, js, css, url, attr, raw, null
+
+.. php:function:: helper( $filename )
+
+	:param   string   $filename: The name of the helper file to load.
+
+				Loads a helper file.
+
+				For full details, see the :doc:`helpers` page.
+
+.. php:function:: session( [$key] )
+
+	:param string $key: The name of the session item to check for.
+		:returns: An instance of the Session object if no $key,
+				  the value found in the session for $key, or null.
+		:rtype: mixed
+
+		Provides a convenient way to access the session class and to retrieve a
+		stored value. For more information, see the :doc:`Sessions </libraries/sessions>` page.
+
+.. php:function:: timer( [$name] )
+
+	:param string $name: The name of the benchmark point.
+		:returns: The Timer instance
+		:rtype: CodeIgniter\Debug\Timer
+
+		A convenience method that provides quick access to the Timer class. You can pass in the name
+		of a benchmark point as the only parameter. This will start timing from this point, or stop
+		timing if a timer with this name is already running.
+		::
+
+	// Get an instance
+	$timer = timer();
+
+	// Set timer start and stop points
+	timer('controller_loading');    // Will start the timer
+	. . .
+	timer('controller_loading');    // Will stop the running timer
+
+.. php:function:: view ($name [, $data [, $options ]])
+
+	:param   string   $name: The name of the file to load
+		:param   array    $data: An array of key/value pairs to make available within the view.
+		:param   array    $options: An array of options that will be passed to the rendering class.
+		:returns: The output from the view.
+		:rtype: string
+
+		Grabs the current RenderableInterface-compatible class
+		and tells it to render the specified view. Simply provides
+		a convenience method that can be used in Controllers,
+		libraries, and routed closures.
+
+		Currently, only one option is available for use within the `$options` array, `saveData` which specifies
+	that data will persistent between multiple calls to `view()` within the same request. By default, the
+	data for that view is forgotten after displaying that single view file.
+
+	The $option array is provided primarily to facilitate third-party integrations with
+	libraries like Twig.
+
+	Example::
+
+		$data = ['user' => $user];
+
+		echo view('user_profile', $data);
+
+	For more details, see the :doc:`Views <views>` page.
+
+Miscellaneous Functions
+=======================
 
 .. php:function:: csrf_token ()
 
@@ -25,22 +113,6 @@ Global Functions
 
 		Returns the current CSRF hash value.
 
-.. php:function:: esc ( $data, $context='html' [, $encoding])
-
-	:param   string|array   $data: The information to be escaped.
-		:param   string   $context: The escaping context. Default is 'html'.
-		:param   string   $encoding: The character encoding of the string.
-		:returns: The escaped data.
-		:rtype: string
-
-		Escapes data for inclusion in web pages, to help prevent XSS attacks.
-		This uses the Zend Escaper library to handle the actual filtering of the data.
-
-		If $data is a string, then it simply escapes and returns it.
-		If $data is an array, then it loops over it, escaping each 'value' of the key/value pairs.
-
-		Valid context values: html, js, css, url, attr, raw, null
-
 .. php:function:: force_https ( $duration = 31536000 [, $request = null [, $response = null]] )
 
 	:param  int  $duration: The number of seconds browsers should convert links to this resource to HTTPS.
@@ -51,14 +123,6 @@ Global Functions
 			nothing happens. If it is not, then the user is redirected back to the current URI
 			but through HTTPS. Will set the HTTP Strict Transport Security header, which instructs
 			modern browsers to automatically modify any HTTP requests to HTTPS requests for the $duration.
-
-.. php:function:: helper( $filename )
-
-	:param   string   $filename: The name of the helper file to load.
-
-			Loads a helper file.
-
-			For full details, see the :doc:`helpers` page.
 
 .. php:function:: is_cli ()
 
@@ -133,16 +197,6 @@ Global Functions
 		$logger = service('logger');
 		$renderer = service('renderer', APPPATH.'views/');
 
-.. php:function:: session( [$key] )
-
-	:param string $key: The name of the session item to check for.
-	:returns: An instance of the Session object if no $key,
-			  the value found in the session for $key, or null.
-	:rtype: mixed
-
-	Provides a convenient way to access the session class and to retrieve a
-	stored value. For more information, see the :doc:`Sessions </libraries/sessions>` page.
-
 .. php:function:: shared_service ( $name [, ...$params] )
 
 	:param   string   $name: The name of the service to load
@@ -154,54 +208,8 @@ Global Functions
 	function will share the same instance of the service, where **service** returns a new
 	instance every time.
 
-.. php:function:: timer( [$name] )
 
-	:param string $name: The name of the benchmark point.
-	:returns: The Timer instance
-	:rtype: CodeIgniter\Debug\Timer
-
-	A convenience method that provides quick access to the Timer class. You can pass in the name
-	of a benchmark point as the only parameter. This will start timing from this point, or stop
-	timing if a timer with this name is already running.
-	::
-
-	// Get an instance
-	$timer = timer();
-
-	// Set timer start and stop points
-	timer('controller_loading');    // Will start the timer
-	. . .
-	timer('controller_loading');    // Will stop the running timer
-
-.. php:function:: view ($name [, $data [, $options ]])
-
-	:param   string   $name: The name of the file to load
-	:param   array    $data: An array of key/value pairs to make available within the view.
-	:param   array    $options: An array of options that will be passed to the rendering class.
-	:returns: The output from the view.
-	:rtype: string
-
-	Grabs the current RenderableInterface-compatible class
-	and tells it to render the specified view. Simply provides
-	a convenience method that can be used in Controllers,
-	libraries, and routed closures.
-
-	Currently, only one option is available for use within the `$options` array, `saveData` which specifies
-	that data will persistent between multiple calls to `view()` within the same request. By default, the
-	data for that view is forgotten after displaying that single view file.
-
-	The $option array is provided primarily to facilitate third-party integrations with
-	libraries like Twig.
-
-	Example::
-
-		$data = ['user' => $user];
-
-		echo view('user_profile', $data);
-
-	For more details, see the :doc:`Views <views>` page.
-
-
+================
 Global Constants
 ================
 

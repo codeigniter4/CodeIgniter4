@@ -11,7 +11,7 @@ it is one of the more widely used libraries. Where possible, the syntax has been
 your application needs something a little more powerful than what this library provides, you will have
 to change very little to move over to use Guzzle.
 
-:note: This class requires the `cURL Library <http://php.net/manual/en/book.curl.php>`_ to be installed
+.. note:: This class requires the `cURL Library <http://php.net/manual/en/book.curl.php>`_ to be installed
     in your version of PHP. This is a very common library that is typically available but not all hosts
     will provide it, so please check with your host to verify if you run into problems.
 
@@ -19,7 +19,7 @@ to change very little to move over to use Guzzle.
 Loading the Library
 *******************
 
-The library can be loaded either manually or through the :doc:`Services class </concepts/services>`_.
+The library can be loaded either manually or through the :doc:`Services class </concepts/services>`.
 
 To load with the Services class call the ``curlrequest()` method::
 
@@ -121,7 +121,7 @@ examples of how the combinations are resolved.
 Using Responses
 ===============
 
-Each ``request()`` call returns a Respons object that contains a lot of useful information and some helpful
+Each ``request()`` call returns a Response object that contains a lot of useful information and some helpful
 methods. The most commonly used methods let you determine the response itself.
 
 You can get the status code and reason phrase of the response::
