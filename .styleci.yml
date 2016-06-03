@@ -17,7 +17,6 @@ enabled:
   - align_equals
   - combine_consecutive_unsets
   - no_empty_comment
-  - no_php4_constructor
   - no_useless_else
   - not_operator_with_successor_space
   - phpdoc_no_empty_return
