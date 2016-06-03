@@ -15,7 +15,6 @@ disabled:
 
 enabled:
   - align_equals
-  - blank_line_before_return
   - combine_consecutive_unsets
   - no_empty_comment
   - no_php4_constructor
