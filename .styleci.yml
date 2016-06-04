@@ -10,6 +10,7 @@ disabled:
   - no_tab_indentation
   - phpdoc_var_without_name
   - single_import_per_statement
+  - single_line_after_imports
   - unalign_equals
   - unary_operator_spaces
 
