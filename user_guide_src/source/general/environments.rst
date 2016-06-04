@@ -17,10 +17,11 @@ the value provided in ``$_SERVER['CI_ENV']``, otherwise defaults to
 
 	define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'development');
 
-This server variable can be set in your .htaccess file, or Apache
+This server variable can be set in your ``.htaccess`` file, or Apache
 config using `SetEnv <https://httpd.apache.org/docs/2.2/mod/mod_env.html#setenv>`_.
 Alternative methods are available for nginx and other servers, or you can
-remove this logic entirely and set the constant based on the server's IP address.
+remove this logic entirely and set the constant based on the server's IP address
+(for instance).
 
 In addition to affecting some basic framework behavior (see the next
 section), you may use this constant in your own development to
@@ -39,8 +40,8 @@ Error Reporting
 Setting the ENVIRONMENT constant to a value of 'development' will cause
 all PHP errors to be rendered to the browser when they occur.
 Conversely, setting the constant to 'production' will disable all error
-output. Disabling error reporting in production is a :doc:`good security
-	practice <security>`.
+output. Disabling error reporting in production is a 
+:doc:`good security practice </concepts/security>`.
 
 Configuration Files
 -------------------

@@ -427,7 +427,7 @@ Routes Configuration Options
 ============================
 
 The RoutesCollection class provides several options that affect all routes, and can be modified to meet your
-application's needs. These options are available at the top of `/application/config/Routes.php`.
+application's needs. These options are available at the top of `/application/Config/Routes.php`.
 
 Default Namespace
 -----------------
@@ -461,14 +461,14 @@ Default Controller
 
 When a user visits the root of your site (i.e. example.com) the controller to use is determined by the value set by
 the ``setDefaultController()`` method, unless a route exists for it explicitly. The default value for this is ``Home``
-which matches the controller at ``/application/controllers/Home.php``::
+which matches the controller at ``/application/Controllers/Home.php``::
 
-	// example.com routes to application/controllers/Welcome.php
+	// example.com routes to application/Controllers/Welcome.php
 	$routes->setDefaultController('Welcome');
 
 The default controller is also used when no matching route has been found, and the URI would point to a directory
 in the controllers directory. For example, if the user visits ``example.com/admin``, if a controller was found at
-``/application/controllers/admin/Home.php`` it would be used.
+``/application/Controllers/admin/Home.php`` it would be used.
 
 Default Method
 --------------

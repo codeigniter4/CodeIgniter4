@@ -52,11 +52,11 @@ Now normally you would visit the your site using a URL similar to this::
 	example.com/index.php/tools/message/to
 
 Instead, we are going to open Terminal in Mac/Linux or go to Run > "cmd"
-in Windows and navigate to our CodeIgniter project.
+in Windows and navigate to our CodeIgniter project's web root.
 
 .. code-block:: bash
 
-	$ cd /path/to/project;
+	$ cd /path/to/project/public
 	$ php index.php tools message
 
 If you did it right, you should see *Hello World!* printed.
