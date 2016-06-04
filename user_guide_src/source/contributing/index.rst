@@ -8,6 +8,7 @@ Contributing to CodeIgniter
     guidelines
     process
     roadmap
+    internals
     documentation
     PHP Style Guide <styleguide>
     ../DCO
