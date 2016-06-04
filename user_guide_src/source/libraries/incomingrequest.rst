@@ -173,7 +173,7 @@ Uploaded Files
 ==============
 
 Information about all uploaded files can be retrieved through ``$request->getFiles()``, which returns a
-:doc:`FileCollection <uploaded_files>` instance. This helps to ease the pain of working with uploaded files,
+:doc:`FileCollection </libraries/uploaded_files>` instance. This helps to ease the pain of working with uploaded files,
 and uses best practices to minimize any security risks.
 ::
 
@@ -210,7 +210,7 @@ You can easily negotiate content types with the request through the ``negotiate(
 	$contentType = $request->negotiate('media', ['text/html', 'text/xml']);
 	$encoding    = $request->negotiate('encoding', ['gzip', 'compress']);
 
-See the :doc:`Content Negotiation </general/content_negotiation>` page for more details.
+See the :doc:`Content Negotiation </libraries/content_negotiation>` page for more details.
 
 ***************
 Class Reference

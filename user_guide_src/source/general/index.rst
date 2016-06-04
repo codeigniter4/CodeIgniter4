@@ -16,6 +16,7 @@ General Topics
 	routing
 	logging
 	errors
+	debugging
 	profiling
 	cli
 	managing_apps

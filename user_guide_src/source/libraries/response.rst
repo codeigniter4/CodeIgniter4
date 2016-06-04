@@ -3,7 +3,7 @@ HTTP Response
 *************
 
 The Response class extends the :doc:`HTTP Message Class </libraries/message>` with methods only appropriate for
- a getServer responding to the client that called it.
+ a server responding to the client that called it.
 
 Working with the Response
 =========================
@@ -28,6 +28,11 @@ The reason phrase ('OK', 'Created', 'Moved Permenantly') will be automatically a
 as the second parameter of the ``setStatusCode()`` method::
 
 	$this->response->setStatusCode(404, 'Nope. Not here.');
+
+Setting Headers
+---------------
+
+TODO
 
 HTTP Caching
 ============
@@ -56,6 +61,11 @@ The ``$options`` array simply takes an array of key/value pairs that are, with a
 to the ``Cache-Control`` header. You are free to set all of the options exactly as you need for you specific
 situation. While most of the options are applied to the ``Cache-Control`` header, it intelligently handles
 the ``etag`` and ``last-modified`` options to their appropriate header.
+
+Content Security Policy
+=======================
+
+TODO
 
 ***************
 Class Reference
