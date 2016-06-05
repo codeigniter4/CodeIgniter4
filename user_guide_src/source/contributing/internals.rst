@@ -25,7 +25,7 @@ provide a way for dependencies to override that::
 Type hinting
 ============
 
-PHP7 provides the ability to `type hint <http://php.net/manual/en/functions.arguments.php#functions.arguments.type-declaration?`_
+PHP7 provides the ability to `type hint <http://php.net/manual/en/functions.arguments.php#functions.arguments.type-declaration>`_
 method parameters and return types. Use it where possible. Return type hinting is not always practical, but do try to
 make it work.
 
@@ -61,8 +61,8 @@ CamelCase class and file names. The should be in their own directory that matche
 directory.
 
 The the Router as an example. The Router lives in the ``CodeIgniter\Router`` namespace. It has two classes,
-**RouteCollection** and **Router**, which are in the files, **system/Route/RouteCollection.php** and
-**system/Route/Router.php** respectively.
+**RouteCollection** and **Router**, which are in the files, **system/Router/RouteCollection.php** and
+**system/Router/Router.php** respectively. 
 
 Interfaces
 ----------
@@ -70,6 +70,10 @@ Interfaces
 Most base classes should have an interface defined for them. At the very least this allows them to be easily mocked
 and passed in other classes as a dependency without breaking the type-hinting. The interface names should match
 the name of the class with "Interface" appended to it, like ``RouteCollectionInterface``.
+
+The Router package mentioned above includes the 
+**CodeIgniter\Router\RouterCollectionInterface** and **CodeIgniter\Router\RouterInterface**
+interfaces to provide the abstractions for the two classes in the package.
 
 Handlers
 --------
