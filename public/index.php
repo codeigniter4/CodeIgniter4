@@ -4,7 +4,6 @@
 $startMemory = memory_get_usage();
 $startTime   = microtime(true);
 
- 
 $useKint = false;
 
 /*
