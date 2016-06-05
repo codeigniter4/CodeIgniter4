@@ -405,7 +405,7 @@ class CodeIgniter
 	 *
 	 * @param mixed $class
 	 */
-	protected function runController(mixed $class)
+	protected function runController($class)
 	{
 		if (method_exists($class, '_remap'))
 		{
