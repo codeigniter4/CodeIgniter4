@@ -285,7 +285,7 @@ class Model
 	 *
 	 * @return array|null
 	 */
-	public function findAll($limit = 0, $offset = 0)
+	public function findAll(int $limit = 0, int $offset = 0)
 	{
 		$builder = $this->builder();
 
