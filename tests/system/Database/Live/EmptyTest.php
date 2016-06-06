@@ -1,5 +1,8 @@
 <?php namespace CodeIgniter\Database\Live;
 
+/**
+ * @group DatabaseLive
+ */
 class EmptyTest extends \CIDatabaseTestCase
 {
 	protected $refresh = true;
