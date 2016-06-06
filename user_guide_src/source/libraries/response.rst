@@ -32,7 +32,29 @@ as the second parameter of the ``setStatusCode()`` method::
 Setting Headers
 ---------------
 
-TODO
+Often, you will need to set headers to be set for the response. The Response class makes this very simple to do,
+with the ``setHeader()`` method. The first parameter is the name of the header. The second parameter is the value,
+which can be either a string or an array of values that will be combined correctly when sent to the client.
+Using these functions instead of using the native PHP functions allows you to ensure that no headers are sent
+prematurely, causing errors, and makes testing possible.
+::
+
+	$response->setHeader('Location', 'http://example.com')
+			 ->setHeader('WWW-Authenticate', 'Negotiate');
+
+If the header exists and can have more than one value, you may use the ``appendHeader()`` and ``prependHeader()``
+methods to add the value to the end or beginning of the values list, respectively. The first parameter is the name
+of the header, while the second is the value to append or prepend.
+::
+
+	$response->setHeader('Cache-Control', 'no-cache')
+			->appendHeader('Cache-Control', 'must-revalidate');
+
+Headers can be removed from the response with the ``removeHeader()`` method, which takes the header name as the only
+parameter. This is not case-sensitive.
+::
+
+	$response->removeHeader('Location');
 
 HTTP Caching
 ============
