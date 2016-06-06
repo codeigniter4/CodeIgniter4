@@ -72,7 +72,7 @@ and passed in other classes as a dependency without breaking the type-hinting. T
 the name of the class with "Interface" appended to it, like ``RouteCollectionInterface``.
 
 The Router package mentioned above includes the 
-**CodeIgniter\Router\RouterCollectionInterface** and **CodeIgniter\Router\RouterInterface**
+``CodeIgniter\Router\RouterCollectionInterface`` and ``CodeIgniter\Router\RouterInterface``
 interfaces to provide the abstractions for the two classes in the package.
 
 Handlers
