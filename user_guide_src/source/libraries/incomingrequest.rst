@@ -146,6 +146,46 @@ Filtering a POST variable would look like this::
 All of the methods mentioned above support the filter type passed in as the last parameter, with the
 exception of ``getJSON()``.
 
+Retrieving Headers
+==================
+
+You can get access to any header that was sent with the request with the ``getHeaders()`` method, which returns
+an array of all headers, with the key as the name of the header, and the value being an instance of
+``CodeIgniter\HTTP\Header``::
+
+	var_dump($request->getHeaders());
+
+	[
+		'Host' => CodeIgniter\HTTP\Header,
+		'Cache-Control' => CodeIgniter\HTTP\Header,
+		'Accept' => CodeIgniter\HTTP\Header,
+	]
+
+If you only need a single header, you can pass the name into the ``getHeader()`` method. This will grab the
+specified header object in a case-insensitive manner if it exists. If not, then it will return ``null``::
+
+	// these are all equivalent
+	$host = $request->getHeader('host');
+	$host = $request->getHeader('Host');
+	$host = $request->getHeader('HOST');
+
+You can always use ``hasHeader()`` to see if the header existed in this request::
+
+	if ($request->hasHeader('DNT'))
+	{
+		// Don't track something...
+	}
+
+If you need the value of header as a string with all values on one line, you can use the ``getHeaderLine()`` method::
+
+	// Accept-Encoding: gzip, deflate, sdch
+    echo 'Accept-Encoding: '.$request->getHeaderLine('accept-encoding');
+
+If you need the entire header, with the name and values in a single string, simply cast the header as a string::
+
+	echo (string)$header;
+
+
 The Request URL
 ===============
 
