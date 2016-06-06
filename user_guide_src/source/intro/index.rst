@@ -43,4 +43,5 @@ CodeIgniter is right for you if:
 	self
 	requirements
 	credits
+	psr
 
