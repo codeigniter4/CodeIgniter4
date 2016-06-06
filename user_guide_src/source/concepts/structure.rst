@@ -22,6 +22,7 @@ structure that works well for many applications. The following folders make up t
 		/Controllers    Controllers determine the program flow
 		/Helpers        Helpers store collections of standalone functions
 		/Language       Multiple language support reads the language strings from here
+		/Libraries      Useful classes that don't fit in another category
 		/Models         Models work with the database to represent the business entities.
 		/Views          Views make up the HTML that is displayed to the client.
 
