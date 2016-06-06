@@ -1,5 +1,8 @@
 <?php namespace CodeIgniter\Database\Live;
 
+/**
+ * @group DatabaseLive
+ */
 class JoinTest extends \CIDatabaseTestCase
 {
 	protected $refresh = true;
