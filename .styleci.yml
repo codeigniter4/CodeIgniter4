@@ -13,6 +13,11 @@ disabled:
   - single_line_after_imports
   - unalign_equals
   - unary_operator_spaces
+  # The following were desired but causing too many
+  # in-accurate reports, since they assume spaces
+  # and not tabs for indentation.
+  - phpdoc_indent
+  - braces
 
 enabled:
   - align_equals
