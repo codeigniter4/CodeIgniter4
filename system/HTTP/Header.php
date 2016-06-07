@@ -81,7 +81,7 @@ class Header
 	 *
 	 * @return string
 	 */
-	public function getName()
+	public function getName(): string
 	{
 	    return $this->name;
 	}
@@ -94,7 +94,7 @@ class Header
 	 *
 	 * @return array|null|string
 	 */
-	public function getValue() 
+	public function getValue()
 	{
 	    return $this->value;
 	}
