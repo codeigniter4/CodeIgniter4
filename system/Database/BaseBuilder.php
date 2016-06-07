@@ -258,7 +258,7 @@ class BaseBuilder
 		}
 
 		// If the escape value was not set, we will base it on the global setting
-		is_bool($escape) OR $escape = $this->db->protectIdentifiers;
+		is_bool($escape) || $escape = $this->db->protectIdentifiers;
 
 		foreach ($select as $val)
 		{
@@ -360,7 +360,7 @@ class BaseBuilder
 	 */
 	protected function maxMinAvgSum($select = '', $alias = '', $type = 'MAX')
 	{
-		if ( ! is_string($select) OR $select === '')
+		if ( ! is_string($select) || $select === '')
 		{
 			throw new DatabaseException('The query you submitted is not valid.');
 		}
@@ -505,7 +505,7 @@ class BaseBuilder
 		// in the protectIdentifiers to know whether to add a table prefix
 		$this->trackAliases($table);
 
-		is_bool($escape) OR $escape = $this->db->protectIdentifiers;
+		is_bool($escape) || $escape = $this->db->protectIdentifiers;
 
 		if ( ! $this->hasOperator($cond))
 		{
@@ -625,7 +625,7 @@ class BaseBuilder
 		}
 
 		// If the escape value was not set will base it on the global setting
-		is_bool($escape) OR $escape = $this->db->protectIdentifiers;
+		is_bool($escape) || $escape = $this->db->protectIdentifiers;
 
 		foreach ($key as $k => $v)
 		{
@@ -773,7 +773,7 @@ class BaseBuilder
 			$values = [$values];
 		}
 
-		is_bool($escape) OR $escape = $this->db->protectIdentifiers;
+		is_bool($escape) || $escape = $this->db->protectIdentifiers;
 
 		$ok = $key;
 
@@ -1068,7 +1068,7 @@ class BaseBuilder
 	 */
 	public function groupBy($by, $escape = null)
 	{
-		is_bool($escape) OR $escape = $this->db->protectIdentifiers;
+		is_bool($escape) || $escape = $this->db->protectIdentifiers;
 
 		if (is_string($by))
 		{
@@ -1161,7 +1161,7 @@ class BaseBuilder
 			$direction = in_array($direction, ['ASC', 'DESC'], true) ? ' '.$direction : '';
 		}
 
-		is_bool($escape) OR $escape = $this->db->protectIdentifiers;
+		is_bool($escape) || $escape = $this->db->protectIdentifiers;
 
 		if ($escape === false)
 		{
@@ -2073,7 +2073,7 @@ class BaseBuilder
 			// @todo error
 		}
 
-		is_bool($escape) OR $escape = $this->db->protectIdentifiers;
+		is_bool($escape) || $escape = $this->db->protectIdentifiers;
 
 		foreach ($key as $k => $v)
 		{
@@ -2660,7 +2660,7 @@ class BaseBuilder
 	{
 		$str = trim($str);
 
-		if (empty($str) OR ctype_digit($str) OR (string)(float)$str === $str OR
+		if (empty($str) || ctype_digit($str) || (string)(float)$str === $str ||
 		    in_array(strtoupper($str), ['TRUE', 'FALSE'], true)
 		)
 		{
