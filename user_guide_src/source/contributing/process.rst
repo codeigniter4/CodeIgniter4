@@ -76,7 +76,7 @@ page for directions on doing this. The complete story is part of
 
 The basic steps are
 
--  `generate your GPG key <https://help.github.com/articles/generating-a-new-gpg-key/>`, and copy the ASCII representation of it.
+-  `generate your GPG key <https://help.github.com/articles/generating-a-new-gpg-key/>`_, and copy the ASCII representation of it.
 -  `Add your GPG key to your Github account <https://help.github.com/articles/adding-a-new-gpg-key-to-your-github-account/>`_. 
 -   `Tell Git <https://help.github.com/articles/telling-git-about-your-gpg-key/>`_ about your GPG key.
 -   `Set default signing <https://help.github.com/articles/signing-commits-using-gpg/>`_ to have all of your commits securely signed automatically.
