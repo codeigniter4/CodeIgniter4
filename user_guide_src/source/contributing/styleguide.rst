@@ -47,6 +47,20 @@ Structure
 =========
 
 - A single file SHOULD NOT declare more than one class.
+  Examples where we feel that more than one class in a source file
+  is appropriate:
+
+    -   `system/Debug/CustomExceptions` contains a number of CodeIgniter
+        exceptions and errors, that we want to use for a consistent
+        experience across applications. 
+        If we stick with the purist route, then each of the 13+/- custom 
+        exceptions would require an additional file, which would have a 
+        performance impact at times. 
+    -   `system/HTTP/Response` provides a RedirectException, used with the
+        Response class.
+    -   `system/Router/Router` similarly provides a RedirectException, used with 
+        the Router class.
+
 - Files SHOULD either declare symbols (i.e. classes, functions, constants)
   or execute non-declarative logic, but SHOULD NOT do both.
 
