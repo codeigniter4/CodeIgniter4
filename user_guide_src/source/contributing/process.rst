@@ -23,17 +23,19 @@ at the same time, we might really want X but disagree with Y, meaning we
 cannot merge the request. Using the Git-Flow branching model you can create
 new branches for both of these features and send two requests.
 
-Signing
-=======
+Basic Signing
+=============
 You must sign your work, certifying that you either wrote the work or
 otherwise have the right to pass it on to an open source project. 
 
-You will need to setup a GPG key, and attach it to your github account.
-See the `git tools <https://git-scm.com/book/en/v2/Git-Tools-Signing-Your-Work>`_
-page for directions on doing this. The complete story is part of
-`Github help <https://help.github.com/categories/gpg/>`_.
+Setup your commit message user name and email address. See 
+`Setting your email in Git <https://help.github.com/articles/setting-your-email-in-git/>`_
+to set these up globally or for a single repository.
 
-Should I add an example here?
+.. code-block:: bash
+
+	git config --global user.email "john.public@example.com"
+	git config --global user.name "John Q Public"
  
 Once in place, you merely have to use `--signoff` on your commits to your
 CodeIgniter fork.
@@ -60,3 +62,14 @@ it.
 By signing your work in this manner, you certify to a "Developer's Certificate
 of Origin". The current version of this certificate is in the :doc:`/DCO` file
 in the root of this documentation.
+
+Secure Signing
+==============
+
+You will need to setup a GPG key, and attach it to your github account.
+See the `git tools <https://git-scm.com/book/en/v2/Git-Tools-Signing-Your-Work>`_
+page for directions on doing this. The complete story is part of
+`Github help <https://help.github.com/categories/gpg/>`_.
+
+More coming...
+ 
