@@ -26,8 +26,13 @@ new branches for both of these features and send two requests.
 Signing
 =======
 You must sign your work, certifying that you either wrote the work or
-otherwise have the right to pass it on to an open source project. git makes
-this easy as you merely have to use `--signoff` on your commits to your
+otherwise have the right to pass it on to an open source project. 
+
+You will need to setup a GPG key, and attach it to your github account.
+See the `git tools <https://git-scm.com/book/en/v2/Git-Tools-Signing-Your-Work>`_
+page for directions on doing this.
+ 
+Once in place, you merely have to use `--signoff` on your commits to your
 CodeIgniter fork.
 
 .. code-block:: bash
