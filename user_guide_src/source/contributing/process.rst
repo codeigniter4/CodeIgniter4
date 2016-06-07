@@ -32,6 +32,8 @@ You will need to setup a GPG key, and attach it to your github account.
 See the `git tools <https://git-scm.com/book/en/v2/Git-Tools-Signing-Your-Work>`_
 page for directions on doing this. The complete story is part of
 `Github help <https://help.github.com/categories/gpg/>`_.
+
+Should I add an example here?
  
 Once in place, you merely have to use `--signoff` on your commits to your
 CodeIgniter fork.
