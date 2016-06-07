@@ -199,6 +199,25 @@ Operators
 - An operator MUST NOT be the last set of printable characters on a line.
 - An operator MAY be the first set of printable characters on a line.
 
+Logical Operators
+=================
+
+-   Use the symbol versions (**||** and **&&**) of the logical operators
+    instead of the word versions (**OR** and **AND**).
+
+        -   This is consistent with other programming languages
+        -   It avoids the problem of the assignment operator (**=**) having
+            higher precedence::
+
+                $result = true && false; // $result is false, expected
+                $result = true OR false; // $result is true, evaluated as "($result = true) OR false"
+                $result = (true OR false); // $result is false
+
+-   The logical negation operator MUST be separated from its argument by a
+    single space, as in **! $result** instead of **!$result**
+-   If there is potential confusion with a logical expression, then use
+    parentheses for clarity, as shown above.
+
 Other
 =====
 
