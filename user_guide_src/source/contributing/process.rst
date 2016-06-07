@@ -80,4 +80,7 @@ The basic steps are
 -  `Add your GPG key to your Github account <https://help.github.com/articles/adding-a-new-gpg-key-to-your-github-account/>`_. 
 -   `Tell Git <https://help.github.com/articles/telling-git-about-your-gpg-key/>`_ about your GPG key.
 -   `Set default signing <https://help.github.com/articles/signing-commits-using-gpg/>`_ to have all of your commits securely signed automatically.
--   Provide your GPG key passphrase, as prompted, when you do a commit, 
+-   Provide your GPG key passphrase, as prompted, when you do a commit.
+
+Depending on your IDE, you may have to do your Git commits from your Git bash shell 
+to use the **-S** option to force the secure signing.
