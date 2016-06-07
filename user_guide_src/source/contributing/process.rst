@@ -66,10 +66,18 @@ in the root of this documentation.
 Secure Signing
 ==============
 
-You will need to setup a GPG key, and attach it to your github account.
+The "basic signing" described above cannot be verified, though it is a great start.
+To verify your commits, you will need to 
+setup a GPG key, and attach it to your github account.
+
 See the `git tools <https://git-scm.com/book/en/v2/Git-Tools-Signing-Your-Work>`_
 page for directions on doing this. The complete story is part of
 `Github help <https://help.github.com/categories/gpg/>`_.
 
-More coming...
- 
+The basic steps are
+
+-  `generate your GPG key <https://help.github.com/articles/generating-a-new-gpg-key/>`, and copy the ASCII representation of it.
+-  `Add your GPG key to your Github account <https://help.github.com/articles/adding-a-new-gpg-key-to-your-github-account/>`_. 
+-   `Tell Git <https://help.github.com/articles/telling-git-about-your-gpg-key/>`_ about your GPG key.
+-   `Set default signing <https://help.github.com/articles/signing-commits-using-gpg/>`_ to have all of your commits securely signed automatically.
+-   Provide your GPG key passphrase, as prompted, when you do a commit, 
