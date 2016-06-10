@@ -2,6 +2,9 @@
 
 use CodeIgniter\DatabaseException;
 
+/**
+ * @group DatabaseLive
+ */
 class DeleteTest extends \CIDatabaseTestCase
 {
 	protected $refresh = true;

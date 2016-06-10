@@ -110,27 +110,31 @@ class CIDatabaseTestCase extends CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	/**
-	 * Constructor
-	 */
-	public function __construct()
+	public function loadDependencies()
 	{
-	    parent::__construct();
-		
-		$this->db = \Config\Database::connect($this->DBGroup);
-		$this->db->initialize();
+		if ($this->db === null)
+		{
+			$this->db = \Config\Database::connect($this->DBGroup);
+			$this->db->initialize();
+		}
 
-		// Ensure that we can run migrations
-		$config = new \Config\Migrations();
-		$config->enabled = true;
+		if ($this->migrations === null)
+		{
+			// Ensure that we can run migrations
+			$config = new \Config\Migrations();
+			$config->enabled = true;
 
-		$this->migrations = Services::migrations($config, $this->db);
-		$this->migrations->setSilent(true);
+			$this->migrations = Services::migrations($config, $this->db);
+			$this->migrations->setSilent(true);
+		}
 
-		$this->seeder = \Config\Database::seeder($this->DBGroup);
-		$this->seeder->setSilent(true);
+		if ($this->seeder === null)
+		{
+			$this->seeder = \Config\Database::seeder($this->DBGroup);
+			$this->seeder->setSilent(true);
+		}
 	}
-	
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -141,6 +145,8 @@ class CIDatabaseTestCase extends CIUnitTestCase
 	 */
 	public function setUp()
 	{
+		$this->loadDependencies();
+
 		if ($this->refresh === true)
 		{
 			if (! empty($this->basePath))
@@ -310,6 +316,5 @@ class CIDatabaseTestCase extends CIUnitTestCase
 	}
 	
 	//--------------------------------------------------------------------
-	
 	
 }

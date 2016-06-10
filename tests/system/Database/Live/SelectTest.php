@@ -2,6 +2,9 @@
 
 use CodeIgniter\Database\BaseResult;
 
+/**
+ * @group DatabaseLive
+ */
 class SelectTest extends \CIDatabaseTestCase
 {
 	protected $refresh = true;

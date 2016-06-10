@@ -98,7 +98,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 
 			empty($this->schema) or $this->simpleQuery("SET search_path TO {$this->schema},public");
 
-			if ($this->setClientEncoding($this->charset) == false)
+			if ($this->setClientEncoding($this->charset) === false)
 			{
 				return false;
 			}

@@ -2,8 +2,6 @@
 
 [![Build Status](https://travis-ci.org/lonnieezell/CodeIgniter4.svg?branch=develop)](https://travis-ci.org/lonnieezell/CodeIgniter4)
 <br>
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/53c99b56-769f-4e88-93d8-a6423644d610/mini.png)](https://insight.sensiolabs.com/projects/53c99b56-769f-4e88-93d8-a6423644d610)
-<br>
 [![StyleCI](https://styleci.io/repos/41463886/shield)](https://styleci.io/repos/41463886)	
 
 ## What is CodeIgniter?

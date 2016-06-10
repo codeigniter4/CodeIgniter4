@@ -30,7 +30,7 @@ specify a particular database group from your config file. Examples:
 
 To choose a specific group from your config file you can do this::
 
-	$db = \Config\Database::connect('group_name);
+	$db = \Config\Database::connect('group_name');
 
 Where group_name is the name of the connection group from your config
 file.
