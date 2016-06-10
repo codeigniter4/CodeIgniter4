@@ -60,7 +60,16 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 * @var	resource
 	 */
 	protected $_ibase_trans;
-
+    
+    // --------------------------------------------------------------------
+    
+    /**
+	 * Result ID
+	 *
+	 * @var    object|resource
+	 */
+	public $resultID = false;
+    
 	// --------------------------------------------------------------------
 
 	/**
@@ -71,7 +80,6 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 */
 	public function connect($persistent = FALSE)
 	{
-
 		return ($persistent === TRUE)
 			? ibase_pconnect($this->hostname.':'.$this->database, $this->username, $this->password, $this->charset)
 			: ibase_connect($this->hostname.':'.$this->database, $this->username, $this->password, $this->charset);
@@ -120,6 +128,49 @@ class Connection extends BaseConnection implements ConnectionInterface
 	// --------------------------------------------------------------------
 
 	/**
+	 * Execute the query prepared statement 
+     * Why this?? because ibase blob not survive an escape string
+	 *
+	 * @param string $sql
+	 * @param array  ...$binds
+	 * @param $queryClass
+	 * @return mixed
+	 */
+    public function query(string $sql, $binds = null, $queryClass = 'CodeIgniter\\Database\\Query')
+	{
+        if (empty($this->connID)) {
+			$this->initialize();
+		}
+        
+        $resultClass = str_replace('Connection', 'Result', get_class($this));
+                
+        $query = new $queryClass($this);
+
+		$startTime = microtime(true);
+                        
+        if (!is_null($binds)) {
+            $this->resultID = ibase_prepare(isset($this->_ibase_trans) ? $this->_ibase_trans : $this->connID, $sql);
+            
+            array_unshift($binds, $this->resultID);
+            
+            $this->resultID = call_user_func_array('ibase_execute', $binds);
+            
+        } else {
+            $this->resultID = ibase_query(isset($this->_ibase_trans) ? $this->_ibase_trans : $this->connID, $sql);
+        }
+        
+        $query->setDuration($startTime);
+        
+        if ($this->saveQueries) {
+            $this->queries[] = $query;
+        }
+        
+        return new $resultClass($this->connID, $this->resultID);
+    }
+    
+    // --------------------------------------------------------------------
+
+	/**
 	 * Execute the query
 	 *
 	 * @param	string	$sql	an SQL query
@@ -163,7 +214,6 @@ class Connection extends BaseConnection implements ConnectionInterface
 	{
 		return ibase_affected_rows($this->connID);
 	}
-
 
 	/**
 	 * Insert ID

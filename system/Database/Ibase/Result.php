@@ -72,7 +72,7 @@ class Result extends BaseResult implements ResultInterface
 
 		return $field_names;
 	}
-
+    
 	//--------------------------------------------------------------------
 
 	/**
