@@ -138,7 +138,8 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 */
     public function query(string $sql, $binds = null, $queryClass = 'CodeIgniter\\Database\\Query')
 	{
-        if (empty($this->connID)) {
+        if (empty($this->connID)) 
+        {
 			$this->initialize();
 		}
         
@@ -148,20 +149,24 @@ class Connection extends BaseConnection implements ConnectionInterface
 
 		$startTime = microtime(true);
                         
-        if (!is_null($binds)) {
+        if (!is_null($binds)) 
+        {
             $this->resultID = ibase_prepare(isset($this->_ibase_trans) ? $this->_ibase_trans : $this->connID, $sql);
             
             array_unshift($binds, $this->resultID);
             
             $this->resultID = call_user_func_array('ibase_execute', $binds);
             
-        } else {
+        } 
+        else 
+        {
             $this->resultID = ibase_query(isset($this->_ibase_trans) ? $this->_ibase_trans : $this->connID, $sql);
         }
         
         $query->setDuration($startTime);
         
-        if ($this->saveQueries) {
+        if ($this->saveQueries) 
+        {
             $this->queries[] = $query;
         }
         
@@ -179,6 +184,29 @@ class Connection extends BaseConnection implements ConnectionInterface
 	protected function execute($sql)
 	{
 		return ibase_query(isset($this->_ibase_trans) ? $this->_ibase_trans : $this->connID, $sql);
+	}
+    
+    // --------------------------------------------------------------------
+
+	/**
+	 * Creates a BLOB, reads an entire file into it, closes it and returns the assigned BLOB id 
+	 *
+	 * @param	string	$sql	an SQL query
+	 * @return	resource
+	 */
+	public function create_blob($file_handle)
+	{
+        if (empty($this->connID)) 
+        {
+			$this->initialize();
+		}
+        
+        if(strlen($file_handle) == 0)
+            return false;
+        
+        $this->resultID = ibase_blob_create($this->connID);
+        ibase_blob_add($this->resultID, $file_handle);       
+        return ibase_blob_close($this->resultID);
 	}
 
 	// --------------------------------------------------------------------
