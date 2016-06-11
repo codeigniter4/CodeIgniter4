@@ -43,7 +43,7 @@ use CodeIgniter\DatabaseException;
 /**
  * Connection for Ibase
  */
-class Connection extends BaseConnection implements ConnectionInterface
+class Connection extends BaseConnection
 {
 	/**
 	 * Database driver

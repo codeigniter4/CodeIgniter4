@@ -42,7 +42,7 @@ use CodeIgniter\Database\ResultInterface;
 /**
  * Result for MySQLi
  */
-class Result extends BaseResult implements ResultInterface
+class Result extends BaseResult
 {
 	/**
 	 * Gets the number of fields in the result set.
