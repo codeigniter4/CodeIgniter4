@@ -104,7 +104,7 @@ class Result extends BaseResult implements ResultInterface
 	 *
 	 * @return	int
 	 */
-	public function numRows()
+	public function getNumRows()
 	{
 		return is_int($this->numRows)
 			? $this->numRows
