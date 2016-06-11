@@ -138,6 +138,30 @@ abstract class BaseResult implements ResultInterface
 	}
 
 	//--------------------------------------------------------------------
+    	/**
+	 * Number of rows in the result set
+	 *
+	 * @return	int
+	 */
+	public function getNumRows()
+	{
+		if (is_int($this->numRows))
+		{
+			return $this->numRows;
+		}
+		elseif (count($this->getResultArray()) > 0)
+		{
+			return $this->numRows = count($this->getResultArray());
+		}
+		elseif (count($this->getResultObject()) > 0)
+		{
+			return $this->numRows = count($this->getResultObject());
+		}
+
+		return $this->numRows = count($this->getResultArray());
+	}
+
+	//--------------------------------------------------------------------
 
 	/**
 	 * Returns the results as an array of custom objects.
