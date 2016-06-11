@@ -243,6 +243,58 @@ class Connection extends BaseConnection
 		return ibase_affected_rows($this->connID);
 	}
 
+    //--------------------------------------------------------------------
+
+	/**
+	 * Escape String
+	 *
+	 * @param	string|string[]	$str	Input string
+	 * @param	bool	$like	Whether or not the string will be used in a LIKE condition
+	 * @return	string
+	 */
+	public function escapeString($str, $like = FALSE)
+	{
+		if (is_array($str))
+		{
+			foreach ($str as $key => $val)
+			{
+				$str[$key] = $this->escapeString($val, $like);
+			}
+
+			return $str;
+		}
+
+		$str = $this->_escapeString($str);
+
+		// escape LIKE condition wildcards
+		if ($like === true)
+		{
+			return str_replace(
+				[$this->likeEscapeChar, '%', '_'],
+				[$this->likeEscapeChar.$this->likeEscapeChar, $this->likeEscapeChar.'%', $this->likeEscapeChar.'_'],
+				$str
+			);
+		}
+
+		return "'".$str."'";
+	}
+
+    //--------------------------------------------------------------------
+
+	/**
+	 * Platform independent string escape.
+	 *
+	 * Will likely be overridden in child classes.
+	 *
+	 * @param string $str
+	 *
+	 * @return string
+	 */
+	protected function _escapeString(string $str): string
+	{
+		return str_replace("'", "''", remove_invisible_characters($str));
+	}
+
 	/**
 	 * Insert ID
 	 *
