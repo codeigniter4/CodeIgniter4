@@ -143,7 +143,7 @@ abstract class BaseResult implements ResultInterface
 	 *
 	 * @return	int
 	 */
-	public function numRows()
+	public function getNumRows()
 	{
 		if (is_int($this->numRows))
 		{
