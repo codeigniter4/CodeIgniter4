@@ -164,7 +164,7 @@ class Response extends Message implements ResponseInterface
 	 * 
 	 * @var \CodeIgniter\HTTP\ContentSecurityPolicy
 	 */
-	protected $CSP;
+	public $CSP;
 
 	/**
 	 * Set a cookie name prefix if you need to avoid collisions

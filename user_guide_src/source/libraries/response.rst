@@ -89,7 +89,84 @@ the ``etag`` and ``last-modified`` options to their appropriate header.
 Content Security Policy
 =======================
 
-TODO
+One of the best protections you have against XSS attacks is to implement a Content Security Policy on the site.
+This forces you to whitelist every single source of content that is pulled in from your site's HTML,
+including images, stylesheets, javascript files, etc. The browser will refuse content from sources that don't meet
+the whitelist. This whitelist is created within the response's ``Content-Security-Policy`` header and has many
+different ways it can be configured.
+
+This sounds complex, and on some sites, can definitely be challenging. For many simple sites, though, where all content
+is served by the same domain (http://example.com), it is very simple to integrate.
+
+As this is a complex subject, this user guide will not go over all of the details. For more information, you should
+visit the following sites:
+
+* `Content Security Policy main site <http://content-security-policy.com/>`_
+* `W3C Specification <https://www.w3.org/TR/CSP>`_
+* `Introduction at HTML5Rocks <http://www.html5rocks.com/en/tutorials/security/content-security-policy/>`_
+* `Article at SitePoint <https://www.sitepoint.com/improving-web-security-with-the-content-security-policy/>`_
+
+Turning CSP On
+--------------
+
+By default, support for this is off. To enable support in your application, edit the ``CSPEnabled`` value in
+**application/Config/App.php**::
+
+	public $CSPEnabled = true;
+
+When enabled, the response object will contain an instance of ``CodeIgniter\HTTP\ContentSecurityPolicy``. The
+values set in **application/Config/ContentSecurityPolicy.php** are applied to that instance and, if no changes are
+needed during runtime, then the correctly formatted header is sent and you're all done.
+
+Runtime Configuration
+---------------------
+
+If your application needs to make changes at run-time, you can access the instance at ``$response->CSP``. The
+class holds a number of methods that map pretty clearly to the appropriate header value that you need to set::
+
+	$reportOnly = true;
+
+	$response->CSP->reportOnly($reportOnly);
+	$response->CSP->setBaseURI('example.com', true);
+	$response->CSP->setDefaultSrc('cdn.example.com', $reportOnly);
+	$response->CSP->setReportURI('http://example.com/csp/reports');
+	$response->CSP->setSandbox(true, ['allow-forms', 'allow-scripts']);
+	$response->CSP->upgradeInsecureRequests(true);
+	$response->CSP->addChildSrc('https://youtube.com', $reportOnly);
+	$response->CSP->addConnectSrc('https://*.facebook.com', $reportOnly);
+	$response->CSP->addFontSrc('fonts.example.com', $reportOnly);
+	$response->CSP->addFormAction('self', $reportOnly);
+	$response->CSP->addFrameAncestor('none', $reportOnly);
+	$response->CSP->addImageSrc('cdn.example.com', $reportOnly);
+	$response->CSP->addMediaSrc('cdn.example.com', $reportOnly);
+	$response->CSP->addObjectSrc('cdn.example.com', $reportOnly);
+	$response->CSP->addPluginType('application/pdf', $reportOnly);
+	$response->CSP->addScriptSrc('scripts.example.com', $reportOnly);
+	$response->CSP->addStyleSrc('css.example.com', $reportOnly);
+
+Inline Content
+--------------
+
+It is possible to set a website to not protect even inline scripts and styles on its own pages, since this might have
+been the result of user-generated content. To protect against this, CSP allows you to specify a nonce within the
+``<style>`` and ``<script>`` tags, and to add those values to the response's header. This is a pain to handle in real
+life, and is most secure when generated on the fly. To make this simple, you can include a ``{csp-style-nonce}`` or
+``{csp-script-nonce}`` placeholder in the tag and it will be handled for you automatically::
+
+	// Original
+	<script {csp-script-nonce}>
+	    console.log("Script won't run as it doesn't contain a nonce attribute");
+	</script>
+
+	// Becomes
+	<script nonce="Eskdikejidojdk978Ad8jf">
+	    console.log("Script won't run as it doesn't contain a nonce attribute");
+	</script>
+
+	// OR
+	<style {csp-style-nonce}>
+		. . .
+	</style>
 
 ***************
 Class Reference
