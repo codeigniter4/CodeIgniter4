@@ -23,11 +23,21 @@ at the same time, we might really want X but disagree with Y, meaning we
 cannot merge the request. Using the Git-Flow branching model you can create
 new branches for both of these features and send two requests.
 
-Signing
-=======
+Basic Signing
+=============
 You must sign your work, certifying that you either wrote the work or
-otherwise have the right to pass it on to an open source project. git makes
-this easy as you merely have to use `--signoff` on your commits to your
+otherwise have the right to pass it on to an open source project. 
+
+Setup your commit message user name and email address. See 
+`Setting your email in Git <https://help.github.com/articles/setting-your-email-in-git/>`_
+to set these up globally or for a single repository.
+
+.. code-block:: bash
+
+	git config --global user.email "john.public@example.com"
+	git config --global user.name "John Q Public"
+ 
+Once in place, you merely have to use `--signoff` on your commits to your
 CodeIgniter fork.
 
 .. code-block:: bash
@@ -52,3 +62,25 @@ it.
 By signing your work in this manner, you certify to a "Developer's Certificate
 of Origin". The current version of this certificate is in the :doc:`/DCO` file
 in the root of this documentation.
+
+Secure Signing
+==============
+
+The "basic signing" described above cannot be verified, though it is a great start.
+To verify your commits, you will need to 
+setup a GPG key, and attach it to your github account.
+
+See the `git tools <https://git-scm.com/book/en/v2/Git-Tools-Signing-Your-Work>`_
+page for directions on doing this. The complete story is part of
+`Github help <https://help.github.com/categories/gpg/>`_.
+
+The basic steps are
+
+-  `generate your GPG key <https://help.github.com/articles/generating-a-new-gpg-key/>`_, and copy the ASCII representation of it.
+-  `Add your GPG key to your Github account <https://help.github.com/articles/adding-a-new-gpg-key-to-your-github-account/>`_. 
+-   `Tell Git <https://help.github.com/articles/telling-git-about-your-gpg-key/>`_ about your GPG key.
+-   `Set default signing <https://help.github.com/articles/signing-commits-using-gpg/>`_ to have all of your commits securely signed automatically.
+-   Provide your GPG key passphrase, as prompted, when you do a commit.
+
+Depending on your IDE, you may have to do your Git commits from your Git bash shell 
+to use the **-S** option to force the secure signing.

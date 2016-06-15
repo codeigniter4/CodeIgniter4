@@ -67,6 +67,8 @@ Change Log
 ==========
 
 The change-log, in the user guide root, needs to be kept up-to-date.
+Not all changes will need an entry in it, but new classes, major or BC changes
+to existing classes, and bug fixes should.
 
 See the `CodeIgniter 3 change log 
 <https://github.com/bcit-ci/CodeIgniter/blob/develop/user_guide_src/source/changelog.rst>`_ 
