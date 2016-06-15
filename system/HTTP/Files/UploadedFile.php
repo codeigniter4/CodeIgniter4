@@ -170,7 +170,10 @@ class UploadedFile implements UploadedFileInterface
 			throw new \RuntimeException('The original file is not a valid file.');
 		}
 
-		if (! @move_uploaded_file($this->path, $targetPath))
+		$targetPath = rtrim($targetPath, '/').'/';
+		$name = is_null($name) ? $this->getName() : $name;
+
+		if (! @move_uploaded_file($this->path, $targetPath.$name))
 		{
 			$error = error_get_last();
 			throw new \RuntimeException(sprintf('Could not move file %s to %s (%s)', basename($this->path), $targetPath, strip_tags($error['message'])));
@@ -224,7 +227,7 @@ class UploadedFile implements UploadedFileInterface
 			$this->size = filesize($this->path);
 		}
 
-		switch ($unit)
+		switch (strtolower($unit))
 		{
 			case 'kb':
 				return number_format($this->size / 1024, 3);
@@ -328,7 +331,7 @@ class UploadedFile implements UploadedFileInterface
 	 */
 	public function getRandomName(): string
 	{
-		return time().'_'.random_bytes(8).'.'.$this->$this->getExtension();
+		return time().'_'.random_bytes(10).'.'.$this->$this->getExtension();
 	}
 
 	//--------------------------------------------------------------------
