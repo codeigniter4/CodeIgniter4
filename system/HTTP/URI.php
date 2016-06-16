@@ -132,6 +132,8 @@ class URI
 	protected $defaultPorts = [
 		'http'  => 80,
 		'https' => 443,
+	    'ftp'   => 21,
+	    'sftp'  => 22
 	];
 
 	/**
@@ -301,9 +303,11 @@ class URI
 	 * Temporarily sets the URI to show a password in userInfo. Will
 	 * reset itself after the first call to authority().
 	 */
-	public function showPassword()
+	public function showPassword(bool $val = true)
 	{
-		$this->showPassword = true;
+		$this->showPassword = $val;
+
+		return $this;
 	}
 
 	//--------------------------------------------------------------------
@@ -748,6 +752,8 @@ class URI
 
 	/**
 	 * Sets the fragment portion of the URI.
+	 *
+	 * @see https://tools.ietf.org/html/rfc3986#section-3.5
 	 *
 	 * @param string $string
 	 *
