@@ -6,7 +6,8 @@ Contributing to CodeIgniter
     :titlesonly:
 
     guidelines
-    process
+    workflow
+    signing
     roadmap
     internals
     documentation

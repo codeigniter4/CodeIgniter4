@@ -1,33 +1,9 @@
 ====================
-Contribution Process
+Contribution Signing
 ====================
 
-Branching
-=========
-
-CodeIgniter uses the `Git-Flow
-<http://nvie.com/posts/a-successful-git-branching-model/>`_ branching model
-which requires all pull requests to be sent to the "develop" branch. This is
-where the next planned version will be developed. The "master" branch will
-always contain the latest stable version and is kept clean so a "hotfix" (e.g:
-an emergency security patch) can be applied to master to create a new version,
-without worrying about other features holding it up. For this reason all
-commits need to be made to "develop" and any sent to "master" will be closed
-automatically. If you have multiple changes to submit, please place all
-changes into their own branch on your fork.
-
-One thing at a time: A pull request should only contain one change. That does
-not mean only one commit, but one change - however many commits it took. The
-reason for this is that if you change X and Y but send a pull request for both
-at the same time, we might really want X but disagree with Y, meaning we
-cannot merge the request. Using the Git-Flow branching model you can create
-new branches for both of these features and send two requests.
-
-Why Signing Is Important
-=======================
-
-We ask that contributions have code commits signed. This is important in order
-to prove, as best we can, the provenance of contributions.
+We ask that contributions have code commits signed. **This is important in order
+to prove, as best we can, the provenance of contributions.**
 
 The developer pushing a commit as part of a PR isn't necessarily the person
 who committed it originally, if the commit is not signed. This distorts the
@@ -116,3 +92,18 @@ The basic steps are
 
 Depending on your IDE, you may have to do your Git commits from your Git bash shell 
 to use the **-S** option to force the secure signing.
+
+Commit Messages
+===============
+
+Regardless of how you sign a commit, commit messages are important too. 
+They communicate the intent of a specific change, concisely.
+They make it easier to review code, and to find out why a change was made
+if the code history is examined later.
+
+The audience for your commit messages will be the codebase maintainers, any
+code reviewers, and debuggers trying to figure out when a bug might have been
+introduced.
+
+Do try to make your commit messages meaningful.
+.
