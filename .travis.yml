@@ -8,6 +8,7 @@ env:
   - DB_GROUP=postgres
 
 script:
+  - CI_FIREBIRD_TEST_CONNSTR:STRING="service=LOCALHOST:/tmp/soci_test.fdb user=SYSDBA password=masterkey"
   - php vendor/bin/phpunit -v
 
 services:
@@ -30,6 +31,4 @@ before_install:
 before_script:
   - composer install
   - isql-fb -z -q -i /dev/null # --version
-  - echo 'CREATE DATABASE "LOCALHOST:/tmp/soci_test.fdb" PAGE_SIZE = 16384;' > /tmp/create_soci_test.sql
-  - isql-fb -u SYSDBA -p masterkey -i /tmp/create_soci_test.sql -q
-  - cat /tmp/create_soci_test.sql
+  - echo 'CREATE DATABASE "LOCALHOST:/tmp/ci_test.fdb" PAGE_SIZE = 16384;'
