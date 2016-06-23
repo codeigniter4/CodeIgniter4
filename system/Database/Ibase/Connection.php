@@ -100,7 +100,7 @@ class Connection extends BaseConnection
 	}
 
 	// --------------------------------------------------------------------
-
+    
 	/**
 	 * Execute the query prepared statement
      * Why this?? because ibase blob not survive an escape string

@@ -17,6 +17,19 @@ services:
 before_install:
   - if [ $DB_GROUP = 'mysqli' ]; then mysql -e "create database IF NOT EXISTS test;" -uroot; fi
   - if [ $DB_GROUP = 'postgres' ]; then psql -c 'create database test;' -U postgres; fi
+  - sudo apt-get update -qq
+  - sudo apt-get install -qq libboost-dev libboost-date-time-dev libmyodbc unixodbc-dev odbc-postgresql firebird2.5-super firebird2.5-dev
+  - sudo odbcinst -i -d -f /usr/share/libmyodbc/odbcinst.ini
+  # See: Non-interactive setup for travis-ci.org 
+  # http://tech.groups.yahoo.com/group/firebird-support/message/120883
+  #- sudo dpkg-reconfigure -f noninteractive firebird2.5-super
+  - sudo sed /ENABLE_FIREBIRD_SERVER=/s/no/yes/ -i /etc/default/firebird2.5
+  - cat /etc/default/firebird2.5 | grep ENABLE_FIREBIRD_SERVER
+  - sudo service firebird2.5-super start
 
 before_script:
   - composer install
+  - isql-fb -z -q -i /dev/null # --version
+  - echo 'CREATE DATABASE "LOCALHOST:/tmp/soci_test.fdb" PAGE_SIZE = 16384;' > /tmp/create_soci_test.sql
+  - isql-fb -u SYSDBA -p masterkey -i /tmp/create_soci_test.sql -q
+  - cat /tmp/create_soci_test.sql
