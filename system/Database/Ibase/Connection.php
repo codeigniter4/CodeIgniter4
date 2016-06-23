@@ -99,6 +99,7 @@ class Connection extends BaseConnection
 			: ibase_connect($this->hostname.':'.$this->database, $this->username, $this->password, $this->charset);
 	}
 
+
 	// --------------------------------------------------------------------
 
 	/**
