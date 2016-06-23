@@ -102,32 +102,6 @@ class Connection extends BaseConnection
 	// --------------------------------------------------------------------
 
 	/**
-	 * Database version number
-	 *
-	 * @return	string
-	 */
-	public function version()
-	{
-		if (isset($this->data_cache['version']))
-		{
-			return $this->data_cache['version'];
-		}
-
-		if (($service = ibase_service_attach($this->hostname, $this->username, $this->password)))
-		{
-			$this->data_cache['version'] = ibase_server_info($service, IBASE_SVC_SERVER_VERSION);
-
-			// Don't keep the service open
-			ibase_service_detach($service);
-			return $this->data_cache['version'];
-		}
-
-		return FALSE;
-	}
-
-	// --------------------------------------------------------------------
-
-	/**
 	 * Execute the query prepared statement
      * Why this?? because ibase blob not survive an escape string
 	 *
