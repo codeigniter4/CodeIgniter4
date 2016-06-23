@@ -324,7 +324,7 @@ class IncomingRequest extends Request
 	{
 		if (is_null($this->files))
 		{
-			// @todo modify to use the Services, at the very least.
+			// @todo modify to use Services, at the very least.
 			$this->files = new FileCollection();
 		}
 
@@ -345,13 +345,8 @@ class IncomingRequest extends Request
 	{
 		if (is_null($this->files))
 		{
-			// @todo modify to use the Services, at the very least.
+			// @todo modify to use Services, at the very least.
 			$this->files = new FileCollection();
-		}
-
-		if ( ! $this->files->hasFile($fileID))
-		{
-			return null;
 		}
 
 		return $this->files->getFile($fileID);

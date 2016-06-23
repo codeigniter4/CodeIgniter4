@@ -17,7 +17,6 @@ General Topics
 	logging
 	errors
 	debugging
-	profiling
 	cli
 	managing_apps
 	environments

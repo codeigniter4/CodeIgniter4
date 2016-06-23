@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter;
+<?php
+
+namespace CodeIgniter;
 
 /**
  * CodeIgniter
@@ -35,48 +37,57 @@
  * @since	Version 3.0.0
  * @filesource
  */
-
 /**
  * Custom Exceptions
  *
- * These exceptions are provided for you use, and work to provide a consistent
+ * These exceptions are provided for your use, and work to provide a consistent
  * experience across the application. The default error codes are already set,
  * and will be used to provide both HTTP status codes and CLI exit codes.
  *
+ * The Error Exceptions below are primarily to provide a way to have 
+ * information logged automatically by the application's log system.
+ * 
  * @package CodeIgniter
  */
 
-
-/*
-	The Error Exceptions below are primarily to provide a way to have information logged
-	automatically by the application's log system.
-*/
+/**
+ * Error: system is unusable
+ */
+class EmergencyError extends \Error
+{
+	
+}
 
 /**
- * Exception for automatic logging.
+ * Error: Action must be taken immediately (system/db down, etc)
  */
-class EmergencyError extends \Error {};  // system is unusable
+class AlertError extends \Error
+{
+	
+}
 
 /**
- * Exception for automatic logging.
+ * Error: Critical conditions, like component unavailble, etc.
  */
-class AlertError     extends \Error {};  // Action must be taken immediately (system/db down, etc)
+class CriticalError extends \Error
+{
+	
+}
 
 /**
- * Exception for automatic logging.
+ * Error: Runtime errors that do not require immediate action
  */
-class CriticalError  extends \Error {};  // Critical conditions, like component unavailble, etc.
-
-/**
- * Exception for automatic logging.
- */
-class Error          extends \Error {};  // Runtime errors that do not require immediate action
+class Error extends \Error
+{
+	
+}
 
 /**
  * Exception for automatic logging.
  */
 class PageNotFoundException extends \OutOfBoundsException
 {
+
 	/**
 	 * Error code
 	 * @var int 
@@ -85,13 +96,12 @@ class PageNotFoundException extends \OutOfBoundsException
 
 }
 
-;
-
 /**
  * Exception for automatic logging.
  */
 class ConfigException extends CriticalError
 {
+
 	/**
 	 * Error code
 	 * @var int 
@@ -100,13 +110,12 @@ class ConfigException extends CriticalError
 
 }
 
-;
-
 /**
  * Exception for automatic logging.
  */
 class UnknownFileException extends CriticalError
 {
+
 	/**
 	 * Error code
 	 * @var int 
@@ -115,13 +124,12 @@ class UnknownFileException extends CriticalError
 
 }
 
-;
-
 /**
  * Exception for automatic logging.
  */
 class UnknownClassException extends CriticalError
 {
+
 	/**
 	 * Error code
 	 * @var int 
@@ -130,13 +138,12 @@ class UnknownClassException extends CriticalError
 
 }
 
-;
-
 /**
  * Exception for automatic logging.
  */
 class UnknownMethodException extends CriticalError
 {
+
 	/**
 	 * Error code
 	 * @var int 
@@ -145,13 +152,12 @@ class UnknownMethodException extends CriticalError
 
 }
 
-;
-
 /**
  * Exception for automatic logging.
  */
 class UserInputException extends \OutOfBoundsException
 {
+
 	/**
 	 * Error code
 	 * @var int 
@@ -160,13 +166,12 @@ class UserInputException extends \OutOfBoundsException
 
 }
 
-;
-
 /**
  * Exception for automatic logging.
  */
 class DatabaseException extends Error
 {
+
 	/**
 	 * Error code
 	 * @var int 
@@ -174,5 +179,3 @@ class DatabaseException extends Error
 	protected $code = 8;
 
 }
-
-;
