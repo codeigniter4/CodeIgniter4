@@ -6,9 +6,9 @@ php:
 env:
   - DB_GROUP=mysqli
   - DB_GROUP=postgres
+  - DB_GROUP=firebird
 
 script:
-  - CI_FIREBIRD_TEST_CONNSTR:STRING="service=LOCALHOST:/tmp/ci_test.fdb user=SYSDBA password=masterkey"
   - php vendor/bin/phpunit -v
 
 services:
@@ -30,5 +30,4 @@ before_install:
 
 before_script:
   - composer install
-  - isql-fb -z -q -i /dev/null # --version
-  - echo 'CREATE DATABASE "LOCALHOST:/tmp/ci_test.fdb" PAGE_SIZE = 16384;'
+  - if [ $DB_GROUP = 'firebird' ]; then isql-fb -z -q -i /dev/null; echo 'CREATE DATABASE "LOCALHOST:/tmp/ci_test.fdb" PAGE_SIZE = 16384;'; fi
