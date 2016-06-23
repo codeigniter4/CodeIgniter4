@@ -36,37 +36,6 @@ else
 
 /*
  *---------------------------------------------------------------
- * ERROR REPORTING
- *---------------------------------------------------------------
- *
- * Different environments will require different levels of error reporting.
- * By default development will show errors but testing and live will hide them.
- */
-switch (ENVIRONMENT)
-{
-	case 'development':
-	case 'testing':
-		error_reporting(-1);
-		ini_set('display_errors', 1);
-		define('CI_DEBUG', 1);
-		define('SHOW_DEBUG_BACKTRACE', TRUE);
-		$useKint = true;
-		break;
-
-	case 'production':
-		ini_set('display_errors', 0);
-		error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED & ~E_STRICT & ~E_USER_NOTICE & ~E_USER_DEPRECATED);
-		define('CI_DEBUG', 0);
-		break;
-
-	default:
-		header('HTTP/1.1 503 Service Unavailable.', true, 503);
-		echo 'The application environment is not set correctly.';
-		exit(1); // EXIT_ERROR
-}
-
-/*
- *---------------------------------------------------------------
  * SYSTEM FOLDER NAME
  *---------------------------------------------------------------
  *
@@ -169,6 +138,31 @@ define('APPPATH', realpath($application_directory).DIRECTORY_SEPARATOR);
 
 // The path to the "tests" directory
 define('TESTPATH', realpath($tests_directory).DIRECTORY_SEPARATOR);
+
+/*
+ *---------------------------------------------------------------
+ * BOOT THE ENVIRONMENT
+ *---------------------------------------------------------------
+ *
+ * The boot files allow you completely customize the working
+ * conditions in this environment, including turning error
+ * reporting on or off, loading up extra debugging tools,
+ * and more.
+ *
+ * A file matching the name of the current environment must
+ * be found under application/Config/Boot or the system
+ * will stop execution.
+ */
+if (file_exists(APPPATH.'Config/Boot/'.ENVIRONMENT.'.php'))
+{
+	require APPPATH.'Config/Boot/'.ENVIRONMENT.'.php';
+}
+else
+{
+	header('HTTP/1.1 503 Service Unavailable.', true, 503);
+	echo 'The application environment is not set correctly.';
+	exit(1); // EXIT_ERROR
+}
 
 /*
  * ------------------------------------------------------
