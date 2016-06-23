@@ -168,7 +168,7 @@ class Connection extends BaseConnection
 	 * @param	string	$sql	an SQL query
 	 * @return	resource
 	 */
-	public function create_blob($file_handle)
+	public function createBlob($file_handle)
 	{
         if (empty($this->connID))
         {
