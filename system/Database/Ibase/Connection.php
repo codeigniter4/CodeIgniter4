@@ -180,6 +180,7 @@ class Connection extends BaseConnection
 
         $this->resultID = ibase_blob_create($this->connID);
         ibase_blob_add($this->resultID, $file_handle);
+
         return ibase_blob_close($this->resultID);
 	}
 
