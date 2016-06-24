@@ -36,10 +36,13 @@
  * @filesource
  */
 
+use CodeIgniter\Config\BaseConfig;
+use Config\App;
 use Config\Database;
 use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\ConnectionInterface;
+use phpDocumentor\Reflection\DocBlock\Tag\VarTag;
 
 /**
  * Class Model
@@ -185,8 +188,9 @@ class Model
 	 * Model constructor.
 	 *
 	 * @param ConnectionInterface $db
+	 * @param BaseConfig $config        Config/App()
 	 */
-	public function __construct(ConnectionInterface &$db = null)
+	public function __construct(ConnectionInterface &$db = null, BaseConfig $config = null)
 	{
 		if ($db instanceof ConnectionInterface)
 		{
@@ -196,6 +200,14 @@ class Model
 		{
 			$this->db = Database::connect($this->DBGroup);
 		}
+
+		if (is_null($config) || ! isset($config->salt))
+		{
+			$config = new App();
+		}
+
+		$this->salt = $config->salt ?: '';
+		unset($config);
 
 		$this->tempReturnType     = $this->returnType;
 		$this->tempUseSoftDeletes = $this->useSoftDeletes;
@@ -386,8 +398,14 @@ class Model
 		}
 
 		$id = (int)$id;
-		if ($id < 1) return false;
-		if ($id > pow(2,31)) return false;
+		if ($id < 1)
+		{
+			return false;
+		}
+		if ($id > pow(2,31))
+		{
+			return false;
+		}
 
 		$segment1 = $this->getHash($id,16);
 		$segment2 = $this->getHash($segment1,8);
@@ -424,17 +442,25 @@ class Model
 			return base64_decode($hash);
 		}
 
-		if (! preg_match('/^[A-Z0-9\:\$]{21,23}$/i',$hash)) {return 0;}
+		if (! preg_match('/^[A-Z0-9\:\$]{21,23}$/i',$hash)) {
+			return 0;
+		}
 		$hash     = str_replace(array('$',':'),array('+','/'),$hash);
 		$bin      = base64_decode($hash);
 		$hex      = unpack('H*',$bin); $hex = $hex[1];
-		if (! preg_match('/^[0-9a-f]{32}$/',$hex)) return 0;
+		if (! preg_match('/^[0-9a-f]{32}$/',$hex))
+		{
+			return 0;
+		}
 		$segment1 = substr($hex,0,16);
 		$segment2 = substr($hex,16,8);
 		$segment3 = substr($hex,24,8);
 		$exp2     = $this->getHash($segment1,8);
 		$exp3     = $this->getHash($segment1.$segment2,8);
-		if ($segment3 != $exp3) return 0;
+		if ($segment3 != $exp3)
+		{
+			return 0;
+		}
 		$v1       = (int)base_convert($segment2,16,10);
 		$v2       = (int)base_convert($exp2,16,10);
 		$id       = abs($v1-$v2);
@@ -445,8 +471,8 @@ class Model
 	//--------------------------------------------------------------------
 
 	/**
-	 * Used for our hashed IDs. Requires a CRYPT_KEY to be defined,
-	 * which is handled the first time application/Config/App has been loaded.
+	 * Used for our hashed IDs. Requires $salt to be defined
+	 * within the Config\App file.
 	 *
 	 * @param $str
 	 * @param $len
@@ -455,7 +481,7 @@ class Model
 	 */
 	protected function getHash($str, $len)
 	{
-		return substr(sha1($str.CRYPT_KEY),0,$len);
+		return substr(sha1($str.$this->salt),0,$len);
 	}
 
 	//--------------------------------------------------------------------

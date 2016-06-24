@@ -262,24 +262,24 @@ class App extends BaseConfig
 	| Encryption Key
 	|--------------------------------------------------------------------------
 	|
-	| If you use the Encryption class, or hashed IDs in the model you must set
+	| If you use the Encryption class you must set
 	| an encryption key. See the user guide for more info.
-	|
-	| This will be available in a global constant, CRYPT_KEY.
 	*/
 	public $encryptionKey = '';
 
-	//--------------------------------------------------------------------
-
-	public function __construct()
-	{
-		parent::__construct();
-
-	    if (! defined('CRYPT_KEY'))
-	    {
-		    define('CRYPT_KEY', $this->encryptionKey);
-	    }
-	}
+	/*
+	|--------------------------------------------------------------------------
+	| Application Salt
+	|--------------------------------------------------------------------------
+	|
+	| The $salt can be used anywhere within the application that you need
+	| to provide secure data. It should be different for every application
+	| and can be of any length, though the more random the characters
+	| the better.
+	|
+	| If you use the Model class' hashedID methods, this must be filled out.
+	*/
+	public $salt = '';
 
 	//--------------------------------------------------------------------
 
