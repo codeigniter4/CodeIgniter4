@@ -273,6 +273,8 @@ class App extends BaseConfig
 
 	public function __construct()
 	{
+		parent::__construct();
+
 	    if (! defined('CRYPT_KEY'))
 	    {
 		    define('CRYPT_KEY', $this->encryptionKey);
