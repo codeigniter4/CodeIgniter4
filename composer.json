@@ -24,6 +24,9 @@
 		"phpdocumentor/phpdocumentor": "^2.9"
 	},
 	"scripts": {
-		"post-update-cmd": "CodeIgniter\\ComposerScripts::postUpdate"
+		"post-update-cmd": [
+			"composer dump-autoload",
+			"CodeIgniter\\ComposerScripts::postUpdate"
+		]
 	}
 }

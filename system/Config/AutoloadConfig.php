@@ -169,7 +169,7 @@ class AutoloadConfig
 			'CodeIgniter\Session\Handlers\RedisHandler'     => BASEPATH.'Session/Handlers/RedisHandler.php',
 			'CodeIgniter\View\RenderableInterface'          => BASEPATH.'View/RenderableInterface.php',
 			'CodeIgniter\View\View'                         => BASEPATH.'View/View.php',
-			'Zend\Escaper\Escaper'                          => BASEPATH.'View/Escaper.php',
+			'Zend\Escaper\Escaper'                          => BASEPATH.'ThirdParty/ZendEscaper/Escaper.php',
 			'CodeIgniter\Log\TestLogger'                    => BASEPATH.'../tests/_support/Log/TestLogger.php',
 		    'CIDatabaseTestCase'                            => BASEPATH.'../tests/_support/CIDatabaseTestCase.php'
 		];

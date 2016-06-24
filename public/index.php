@@ -171,7 +171,7 @@ else
  */
 if ($useKint === true)
 {
-	require_once BASEPATH.'Debug/Kint/Kint.class.php';
+	require_once BASEPATH.'ThirdParty/Kint/Kint.class.php';
 }
 
 /*
