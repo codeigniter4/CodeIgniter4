@@ -1,6 +1,6 @@
 # CodeIgniter 4 Development
 
-[![Build Status](https://travis-ci.org/lonnieezell/CodeIgniter4.svg?branch=develop)](https://travis-ci.org/lonnieezell/CodeIgniter4)
+[![Build Status](https://travis-ci.org/bcit-ci/CodeIgniter4.svg?branch=develop)](https://travis-ci.org/bcit-ci/CodeIgniter4)
 <br>
 [![StyleCI](https://styleci.io/repos/41463886/shield)](https://styleci.io/repos/41463886)	
 
