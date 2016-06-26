@@ -22,21 +22,21 @@ the slug from our title in the model. Create the new view at
 
 ::
 
-    <h2><?= esc($title); ?></h2>
+	<h2><?= esc($title); ?></h2>
 
-    <?= validation_errors(); ?>
+	<?= validation_errors(); ?>
 
-    <?= form_open('news/create'); ?>
+	<?= form_open('news/create'); ?>
 
-        <label for="title">Title</label>
-        <input type="input" name="title" /><br />
+		<label for="title">Title</label>
+		<input type="input" name="title" /><br />
 
-        <label for="text">Text</label>
-        <textarea name="text"></textarea><br />
+		<label for="text">Text</label>
+		<textarea name="text"></textarea><br />
 
-        <input type="submit" name="submit" value="Create news item" />
+		<input type="submit" name="submit" value="Create news item" />
 
-    </form>
+	</form>
 
 There are only two things here that probably look unfamiliar to you: the
 ``form_open()`` function and the ``validation_errors()`` function.
@@ -54,34 +54,34 @@ validation <../libraries/form_validation>` library to do this.
 
 ::
 
-    public function create()
-    {
-        helper('form');
-        $validator = new \CodeIgniter\Form\Validator();
-        $model = new NewsModel();
+	public function create()
+	{
+		helper('form');
+		$validator = new \CodeIgniter\Form\Validator();
+		$model = new NewsModel();
 
-        $data['title'] = 'Create a news item';
+		$data['title'] = 'Create a news item';
 
-        $validator->setRules('title', 'Title', 'required');
-        $validator->setRules('text', 'Text', 'required');
+		$validator->setRules('title', 'Title', 'required');
+		$validator->setRules('text', 'Text', 'required');
 
-        if ($validator->run() === FALSE)
-        {
-            view('Templates/Header', $data);
-            view('News/Create');
-            view('Templates/Footer');
+		if ($validator->run() === FALSE)
+		{
+			view('Templates/Header', $data);
+			view('News/Create');
+			view('Templates/Footer');
 
-        }
-        else
-        {
-            $model->save([
-                'title' => $this->request->getVar('title'),
-                'slug'  => urlTitle($this->request->getVar('title')),
-                'text'  => $this->request->getVar('text'),
-            ]);
-            echo view('News/Success');
-        }
-    }
+		}
+		else
+		{
+			$model->save([
+				'title' => $this->request->getVar('title'),
+				'slug'  => urlTitle($this->request->getVar('title')),
+				'text'  => $this->request->getVar('text'),
+			]);
+			echo view('News/Success');
+		}
+	}
 
 The code above adds a lot of functionality. The first few lines load the
 form helper and the form validation library. After that, rules for the
@@ -123,13 +123,13 @@ fields in the ``$allowedFields`` property.
 
 ::
 
-    <?php
-    class NewsModel extends \CodeIgniter\Model
-    {
-        protected $table = 'news';
+	<?php
+	class NewsModel extends \CodeIgniter\Model
+	{
+		protected $table = 'news';
 
-        protected $allowedFields = ['title', 'slug', 'text'];
-    }
+		protected $allowedFields = ['title', 'slug', 'text'];
+	}
 
 This new property now contains the fields that we allow to be saved to the
 database. Notice that we leave out the ``id``? That's because you will almost
@@ -148,10 +148,10 @@ as a method instead of a news item's slug.
 
 ::
 
-    $routes->post('news/create', 'News::create');
-    $routes->add('news/(:segment)'], 'News::view/$1');
-    $routes->get('news', 'News::index');
-    $routes->add('(:any)', 'Pages::view/$1');
+	$routes->post('news/create', 'News::create');
+	$routes->add('news/(:segment)'], 'News::view/$1');
+	$routes->get('news', 'News::index');
+	$routes->add('(:any)', 'Pages::view/$1');
 
 Now point your browser to your local development environment where you
 installed CodeIgniter and add index.php/news/create to the URL.
