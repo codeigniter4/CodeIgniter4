@@ -2,7 +2,6 @@
 
 [![Build Status](https://travis-ci.org/bcit-ci/CodeIgniter4.svg?branch=develop)](https://travis-ci.org/bcit-ci/CodeIgniter4)
 <br>
-[![StyleCI](https://styleci.io/repos/41463886/shield)](https://styleci.io/repos/41463886)	
 
 ## What is CodeIgniter?
 CodeIgniter is a PHP full-stack web framework that is light, fast, flexible, and secure. 
