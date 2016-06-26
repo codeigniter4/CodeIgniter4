@@ -125,7 +125,7 @@
 
 				<p>If you are exploring CodeIgniter for the very first time, you 
 					should start by reading the (in progress) 
-					<a href="http://codeigniter.com/ci4-ug">User Guide</a>.</p>
+					<a href="https://bcit-ci.github.io/CodeIgniter4">User Guide</a>.</p>
 
 			</div>
 
