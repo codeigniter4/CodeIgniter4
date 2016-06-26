@@ -27,18 +27,18 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2016, British Columbia Institute of Technology (http://bcit.ca/)
- * @license	http://opensource.org/licenses/MIT	MIT License
- * @link	http://codeigniter.com
- * @since	Version 3.0.0
+ * @package    CodeIgniter
+ * @author    CodeIgniter Dev Team
+ * @copyright    Copyright (c) 2014 - 2016, British Columbia Institute of Technology (http://bcit.ca/)
+ * @license    http://opensource.org/licenses/MIT   MIT License
+ * @link    http://codeigniter.com
+ * @since    Version 3.0.0
  * @filesource
  */
 
  /**
  * System URI Routing
- * 
+ *
  * This file contains any routing to system tools, such as command-line
  * tools for migrations, etc.
  *
@@ -48,5 +48,5 @@
 
 // Migrations
 $routes->cli('migrations/(:segment)/(:segment)', '\CodeIgniter\Commands\MigrationsCommand::$1/$2');
-$routes->cli('migrations/(:segment)',            '\CodeIgniter\Commands\MigrationsCommand::$1');
-$routes->cli('migrations',                       '\CodeIgniter\Commands\MigrationsCommand::index');
+$routes->cli('migrations/(:segment)', '\CodeIgniter\Commands\MigrationsCommand::$1');
+$routes->cli('migrations', '\CodeIgniter\Commands\MigrationsCommand::index');

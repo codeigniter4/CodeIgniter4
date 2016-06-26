@@ -1,6 +1,4 @@
-<?php
-
-namespace CodeIgniter;
+<?php namespace CodeIgniter;
 
 /**
  * CodeIgniter
@@ -29,14 +27,15 @@ namespace CodeIgniter;
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2016, British Columbia Institute of Technology (http://bcit.ca/)
- * @license	http://opensource.org/licenses/MIT	MIT License
- * @link	http://codeigniter.com
- * @since	Version 3.0.0
+ * @package    CodeIgniter
+ * @author    CodeIgniter Dev Team
+ * @copyright    Copyright (c) 2014 - 2016, British Columbia Institute of Technology (http://bcit.ca/)
+ * @license    http://opensource.org/licenses/MIT  MIT License
+ * @link    http://codeigniter.com
+ * @since    Version 3.0.0
  * @filesource
  */
+
 /**
  * Custom Exceptions
  *
@@ -44,9 +43,9 @@ namespace CodeIgniter;
  * experience across the application. The default error codes are already set,
  * and will be used to provide both HTTP status codes and CLI exit codes.
  *
- * The Error Exceptions below are primarily to provide a way to have 
+ * The Error Exceptions below are primarily to provide a way to have
  * information logged automatically by the application's log system.
- * 
+ *
  * @package CodeIgniter
  */
 
@@ -55,7 +54,7 @@ namespace CodeIgniter;
  */
 class EmergencyError extends \Error
 {
-	
+    
 }
 
 /**
@@ -63,7 +62,7 @@ class EmergencyError extends \Error
  */
 class AlertError extends \Error
 {
-	
+    
 }
 
 /**
@@ -71,7 +70,7 @@ class AlertError extends \Error
  */
 class CriticalError extends \Error
 {
-	
+    
 }
 
 /**
@@ -79,7 +78,7 @@ class CriticalError extends \Error
  */
 class Error extends \Error
 {
-	
+    
 }
 
 /**
@@ -88,12 +87,11 @@ class Error extends \Error
 class PageNotFoundException extends \OutOfBoundsException
 {
 
-	/**
-	 * Error code
-	 * @var int 
-	 */
-	protected $code = 404;
-
+    /**
+     * Error code
+     * @var int
+     */
+    protected $code = 404;
 }
 
 /**
@@ -102,12 +100,11 @@ class PageNotFoundException extends \OutOfBoundsException
 class ConfigException extends CriticalError
 {
 
-	/**
-	 * Error code
-	 * @var int 
-	 */
-	protected $code = 3;
-
+    /**
+     * Error code
+     * @var int
+     */
+    protected $code = 3;
 }
 
 /**
@@ -116,12 +113,11 @@ class ConfigException extends CriticalError
 class UnknownFileException extends CriticalError
 {
 
-	/**
-	 * Error code
-	 * @var int 
-	 */
-	protected $code = 4;
-
+    /**
+     * Error code
+     * @var int
+     */
+    protected $code = 4;
 }
 
 /**
@@ -130,12 +126,11 @@ class UnknownFileException extends CriticalError
 class UnknownClassException extends CriticalError
 {
 
-	/**
-	 * Error code
-	 * @var int 
-	 */
-	protected $code = 5;
-
+    /**
+     * Error code
+     * @var int
+     */
+    protected $code = 5;
 }
 
 /**
@@ -144,12 +139,11 @@ class UnknownClassException extends CriticalError
 class UnknownMethodException extends CriticalError
 {
 
-	/**
-	 * Error code
-	 * @var int 
-	 */
-	protected $code = 6;
-
+    /**
+     * Error code
+     * @var int
+     */
+    protected $code = 6;
 }
 
 /**
@@ -158,12 +152,11 @@ class UnknownMethodException extends CriticalError
 class UserInputException extends \OutOfBoundsException
 {
 
-	/**
-	 * Error code
-	 * @var int 
-	 */
-	protected $code = 7;
-
+    /**
+     * Error code
+     * @var int
+     */
+    protected $code = 7;
 }
 
 /**
@@ -172,10 +165,9 @@ class UserInputException extends \OutOfBoundsException
 class DatabaseException extends Error
 {
 
-	/**
-	 * Error code
-	 * @var int 
-	 */
-	protected $code = 8;
-
+    /**
+     * Error code
+     * @var int
+     */
+    protected $code = 8;
 }

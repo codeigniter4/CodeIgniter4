@@ -27,12 +27,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package      CodeIgniter
- * @author       CodeIgniter Dev Team
+ * @package    CodeIgniter
+ * @author    CodeIgniter Dev Team
  * @copyright    Copyright (c) 2014 - 2016, British Columbia Institute of Technology (http://bcit.ca/)
- * @license      http://opensource.org/licenses/MIT	MIT License
- * @link         http://codeigniter.com
- * @since        Version 3.0.0
+ * @license    http://opensource.org/licenses/MIT  MIT License
+ * @link    http://codeigniter.com
+ * @since    Version 3.0.0
  * @filesource
  */
 
@@ -47,75 +47,72 @@
  */
 class BaseConfig
 {
-	/**
-	 * Will attempt to get environment variables with names
-	 * that match the properties of the child class.
-	 */
-	public function __construct()
-	{
-		$properties  = array_keys(get_object_vars($this));
-		$prefix      = get_class($this);
-		$shortPrefix = strtolower(substr($prefix, strrpos($prefix, '\\') + 1));
+    /**
+     * Will attempt to get environment variables with names
+     * that match the properties of the child class.
+     */
+    public function __construct()
+    {
+        $properties  = array_keys(get_object_vars($this));
+        $prefix      = get_class($this);
+        $shortPrefix = strtolower(substr($prefix, strrpos($prefix, '\\') + 1));
 
-		foreach ($properties as $property)
-		{
-			if (is_array($this->$property))
-			{
-				foreach ($this->$property as $key => $val)
-				{
-					if ($value = $this->getEnvValue("{$property}.{$key}", $prefix, $shortPrefix))
-					{
-						if (is_null($value)) continue;
+        foreach ($properties as $property) {
+            if (is_array($this->$property)) {
+                foreach ($this->$property as $key => $val) {
+                    if ($value = $this->getEnvValue("{$property}.{$key}", $prefix, $shortPrefix)) {
+                        if (is_null($value)) {
+                            continue;
+                        }
 
-						if ($value === 'false')    $value = false;
-						elseif ($value === 'true') $value = true;
+                        if ($value === 'false') {
+                            $value = false;
+                        } elseif ($value === 'true') {
+                            $value = true;
+                        }
 
-						$this->$property[$key] = $value;
-					}
-				}
-			}
-			else
-			{
-				if (($value = $this->getEnvValue($property, $prefix, $shortPrefix)) !== false )
-				{
-					if (is_null($value)) continue;
+                        $this->$property[$key] = $value;
+                    }
+                }
+            } else {
+                if (($value = $this->getEnvValue($property, $prefix, $shortPrefix)) !== false) {
+                    if (is_null($value)) {
+                        continue;
+                    }
 
-					if ($value === 'false')    $value = false;
-					elseif ($value === 'true') $value = true;
+                    if ($value === 'false') {
+                        $value = false;
+                    } elseif ($value === 'true') {
+                        $value = true;
+                    }
 
-					$this->$property = $value;
-				}
-			}
-		}
-	}
+                    $this->$property = $value;
+                }
+            }
+        }
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	/**
-	 * Retrieve an environment-specific configuration setting
-	 * @param string $property
-	 * @param string $prefix
-	 * @param string $shortPrefix
-	 * @return type
-	 */
-	protected function getEnvValue(string $property, string $prefix, string $shortPrefix)
-	{
-		if (($value = getenv("{$shortPrefix}.{$property}")) !== false)
-		{
-			return $value;
-		}
-		elseif (($value = getenv("{$prefix}.{$property}")) !== false)
-		{
-			return $value;
-		}
-		elseif (($value = getenv($property)) !== false)
-		{
-			return $value;
-		}
+    /**
+     * Retrieve an environment-specific configuration setting
+     * @param string $property
+     * @param string $prefix
+     * @param string $shortPrefix
+     * @return type
+     */
+    protected function getEnvValue(string $property, string $prefix, string $shortPrefix)
+    {
+        if (($value = getenv("{$shortPrefix}.{$property}")) !== false) {
+            return $value;
+        } elseif (($value = getenv("{$prefix}.{$property}")) !== false) {
+            return $value;
+        } elseif (($value = getenv($property)) !== false) {
+            return $value;
+        }
 
-		return null;
-	}
+        return null;
+    }
 
-	//--------------------------------------------------------------------
-
+    //--------------------------------------------------------------------
 }
