@@ -69,8 +69,8 @@ following code to your model.
 		}
 
 		return $this->asArray()
-		            ->where(['slug' => $slug])
-		            ->first();
+					->where(['slug' => $slug])
+					->first();
 	}
 
 With this code you can perform two different queries. You can get all
@@ -108,7 +108,7 @@ a new ``News`` controller is defined. Create the new controller at
 
 		public function view($slug = null)
 		{
-		    $model = new NewsModel();
+			$model = new NewsModel();
 
 			$data = ['news'] = $model->getNews($slug);
 		}
@@ -135,7 +135,7 @@ the views. Modify the ``index()`` method to look like this::
 
 		$data = [
 			'news'  => $model->getNews(),
-		    'title' => 'News archive',
+			'title' => 'News archive',
 		];
 
 		echo view('Templates/Header', $data);

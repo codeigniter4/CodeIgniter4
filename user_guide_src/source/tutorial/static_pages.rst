@@ -34,7 +34,7 @@ code.
 
 		public function view($page = 'home')
 		{
-	    }
+		}
 	}
 
 You have created a class named ``Pages``, with a view method that accepts
@@ -96,7 +96,7 @@ page actually exists:
 
 	public function view($page = 'home')
 	{
-	    if ( ! file_exists(APPPATH.'/Views/Pages/'.$page.'.php'))
+		if ( ! file_exists(APPPATH.'/Views/Pages/'.$page.'.php'))
 		{
 			// Whoops, we don't have a page for that!
 			throw new \CodeIgniter\PageNotFoundException($page);
