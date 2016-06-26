@@ -27,12 +27,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package      CodeIgniter
- * @author       CodeIgniter Dev Team
+ * @package    CodeIgniter
+ * @author    CodeIgniter Dev Team
  * @copyright    Copyright (c) 2014 - 2016, British Columbia Institute of Technology (http://bcit.ca/)
- * @license      http://opensource.org/licenses/MIT	MIT License
- * @link         http://codeigniter.com
- * @since        Version 4.0.0
+ * @license    http://opensource.org/licenses/MIT MIT License
+ * @link    http://codeigniter.com
+ * @since    Version 4.0.0
  * @filesource
  */
 
@@ -43,171 +43,163 @@ use CodeIgniter\Services;
  */
 class Database extends BaseCollector
 {
-	/**
-	 * Whether this collector has timeline data.
-	 *
-	 * @var boolean
-	 */
-	protected $hasTimeline = true;
+    /**
+     * Whether this collector has timeline data.
+     *
+     * @var boolean
+     */
+    protected $hasTimeline = true;
 
-	/**
-	 * Whether this collector should display its own tab.
-	 *
-	 * @var boolean
-	 */
-	protected $hasTabContent = true;
+    /**
+     * Whether this collector should display its own tab.
+     *
+     * @var boolean
+     */
+    protected $hasTabContent = true;
 
-	/**
-	 * Whether this collector has data for the Vars tab.
-	 *
-	 * @var boolean
-	 */
-	protected $hasVarData = false;
+    /**
+     * Whether this collector has data for the Vars tab.
+     *
+     * @var boolean
+     */
+    protected $hasVarData = false;
 
-	/**
-	 * The name used to reference this collector in the toolbar.
-	 *
-	 * @var string
-	 */
-	protected $title = 'Database';
+    /**
+     * The name used to reference this collector in the toolbar.
+     *
+     * @var string
+     */
+    protected $title = 'Database';
 
-	/**
-	 * Array of database connections.
-	 *
-	 * @var array
-	 */
-	protected $connections;
+    /**
+     * Array of database connections.
+     *
+     * @var array
+     */
+    protected $connections;
 
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	/**
-	 * Constructor
-	 */
-	public function __construct()
-	{
-		$this->connections = \Config\Database::getConnections();
-	}
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->connections = \Config\Database::getConnections();
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	/**
-	 * Returns timeline data formatted for the toolbar.
-	 *
-	 * @return array The formatted data or an empty array.
-	 */
-	protected function formatTimelineData(): array
-	{
-		$data = [];
+    /**
+     * Returns timeline data formatted for the toolbar.
+     *
+     * @return array The formatted data or an empty array.
+     */
+    protected function formatTimelineData(): array
+    {
+        $data = [];
 
-		foreach ($this->connections as $alias => $connection)
-		{
-			// Connection Time
-			$data[] = [
-				'name' => 'Connecting to Database: "'.$alias.'"',
-				'component' => 'Database',
-				'start' => $connection->getConnectStart(),
-				'duration' => $connection->getConnectDuration()
-			];
+        foreach ($this->connections as $alias => $connection) {
+            // Connection Time
+            $data[] = [
+                'name' => 'Connecting to Database: "'.$alias.'"',
+                'component' => 'Database',
+                'start' => $connection->getConnectStart(),
+                'duration' => $connection->getConnectDuration()
+            ];
 
-			$queries = $connection->getQueries();
+            $queries = $connection->getQueries();
 
-			foreach ($queries as $query)
-			{
-				$data[] = [
-					'name' => 'Query',
-				    'component' => 'Database',
-				    'start' => $query->getStartTime(true),
-				    'duration' => $query->getDuration()
-				];
-			}
-		}
+            foreach ($queries as $query) {
+                $data[] = [
+                    'name' => 'Query',
+                    'component' => 'Database',
+                    'start' => $query->getStartTime(true),
+                    'duration' => $query->getDuration()
+                ];
+            }
+        }
 
-		return $data;
-	}
+        return $data;
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	/**
-	 * Returns the HTML to fill the Database tab in the toolbar.
-	 *
-	 * @return string The data formatted for the toolbar.
-	 */
-	public function display(): string
-	{
-		$output = '';
+    /**
+     * Returns the HTML to fill the Database tab in the toolbar.
+     *
+     * @return string The data formatted for the toolbar.
+     */
+    public function display(): string
+    {
+        $output = '';
 
-		// Key words we want bolded
-		$highlight = ['SELECT', 'DISTINCT', 'FROM', 'WHERE', 'AND', 'LEFT&nbsp;JOIN', 'ORDER&nbsp;BY', 'GROUP&nbsp;BY',
-		              'LIMIT', 'INSERT', 'INTO', 'VALUES', 'UPDATE', 'OR&nbsp;', 'HAVING', 'OFFSET', 'NOT&nbsp;IN',
-		              'IN', 'LIKE', 'NOT&nbsp;LIKE', 'COUNT', 'MAX', 'MIN', 'ON', 'AS', 'AVG', 'SUM', '(', ')'
-		];
+        // Key words we want bolded
+        $highlight = ['SELECT', 'DISTINCT', 'FROM', 'WHERE', 'AND', 'LEFT&nbsp;JOIN', 'ORDER&nbsp;BY', 'GROUP&nbsp;BY',
+                      'LIMIT', 'INSERT', 'INTO', 'VALUES', 'UPDATE', 'OR&nbsp;', 'HAVING', 'OFFSET', 'NOT&nbsp;IN',
+                      'IN', 'LIKE', 'NOT&nbsp;LIKE', 'COUNT', 'MAX', 'MIN', 'ON', 'AS', 'AVG', 'SUM', '(', ')'
+        ];
 
-		$connectionCount = count($this->connections);
+        $connectionCount = count($this->connections);
 
-		foreach ($this->connections as $alias => $connection)
-		{
-			if ($connectionCount > 1)
-			{
-				$output .= '<h3>'.$alias.': <span>'.$connection->getPlatform().' '.$connection->getVersion().
-				           '</span></h3>';
-			}
+        foreach ($this->connections as $alias => $connection) {
+            if ($connectionCount > 1) {
+                $output .= '<h3>'.$alias.': <span>'.$connection->getPlatform().' '.$connection->getVersion().
+                           '</span></h3>';
+            }
 
-			$output .= '<table>';
+            $output .= '<table>';
 
-			$output .= '<thead><tr>';
-			$output .= '<th style="width: 6rem;">Time</th>';
-			$output .= '<th>Query String</th>';
-			$output .= '</tr></thead>';
+            $output .= '<thead><tr>';
+            $output .= '<th style="width: 6rem;">Time</th>';
+            $output .= '<th>Query String</th>';
+            $output .= '</tr></thead>';
 
-			$output .= '<body>';
+            $output .= '<body>';
 
-			$queries = $connection->getQueries();
+            $queries = $connection->getQueries();
 
-			foreach ($queries as $query)
-			{
-				$output .= '<tr>';
-				$output .='<td class="narrow">'.($query->getDuration(5) * 1000).' ms</td>';
+            foreach ($queries as $query) {
+                $output .= '<tr>';
+                $output .='<td class="narrow">'.($query->getDuration(5) * 1000).' ms</td>';
 
-				$sql = $query->getQuery();
+                $sql = $query->getQuery();
 
-				foreach ($highlight as $term)
-				{
-					$sql = str_replace($term, "<strong>{$term}</strong>", $sql);
-				}
+                foreach ($highlight as $term) {
+                    $sql = str_replace($term, "<strong>{$term}</strong>", $sql);
+                }
 
-				$output .= '<td>'.$sql.'</td>';
-				$output .= '</tr>';
-			}
+                $output .= '<td>'.$sql.'</td>';
+                $output .= '</tr>';
+            }
 
-			$output .= '</body>';
+            $output .= '</body>';
 
-			$output .= '</table>';
-		}
+            $output .= '</table>';
+        }
 
-		return $output;
-	}
+        return $output;
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	/**
-	 * Information to be displayed next to the title.
-	 *
-	 * @return string The number of queries (in parentheses) or an empty string.
-	 */
-	public function getTitleDetails(): string
-	{
-		$queryCount = 0;
+    /**
+     * Information to be displayed next to the title.
+     *
+     * @return string The number of queries (in parentheses) or an empty string.
+     */
+    public function getTitleDetails(): string
+    {
+        $queryCount = 0;
 
-		foreach ($this->connections as $connection)
-		{
-			$queryCount += $connection->getQueryCount();
-		}
+        foreach ($this->connections as $connection) {
+            $queryCount += $connection->getQueryCount();
+        }
 
-		return '('.$queryCount.' Queries across '.count($this->connections).' Connection'.
-		       (count($this->connections) > 1 ? 's' : '').')';
-	}
+        return '('.$queryCount.' Queries across '.count($this->connections).' Connection'.
+               (count($this->connections) > 1 ? 's' : '').')';
+    }
 
-	//--------------------------------------------------------------------
-
+    //--------------------------------------------------------------------
 }
