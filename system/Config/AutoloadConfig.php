@@ -148,10 +148,10 @@ class AutoloadConfig
 			'CodeIgniter\HTTP\ResponseInterface'            => BASEPATH.'HTTP/ResponseInterface.php',
 			'CodeIgniter\HTTP\URI'                          => BASEPATH.'HTTP/URI.php',
 			'CodeIgniter\Log\Logger'                        => BASEPATH.'Log/Logger.php',
-			'Psr\Log\LoggerAwareInterface'                  => BASEPATH.'Log/LoggerAwareInterface.php',
-			'CodeIgniter\Log\LoggerAwareTrait'              => BASEPATH.'Log/LoggerAwareTrait.php',
-			'Psr\Log\LoggerInterface'                       => BASEPATH.'Log/LoggerInterface.php',
-			'Psr\Log\LogLevel'                              => BASEPATH.'Log/LogLevel.php',
+			'Psr\Log\LoggerAwareInterface'                  => BASEPATH.'ThirdParty/PSR/Log/LoggerAwareInterface.php',
+			'Psr\Log\LoggerAwareTrait'                      => BASEPATH.'ThirdParty/PSR/Log/LoggerAwareTrait.php',
+			'Psr\Log\LoggerInterface'                       => BASEPATH.'ThirdParty/PSR/Log/LoggerInterface.php',
+			'Psr\Log\LogLevel'                              => BASEPATH.'ThirdParty/PSR/Log/LogLevel.php',
 			'CodeIgniter\Log\Handlers\BaseHandler'          => BASEPATH.'Log/Handlers/BaseHandler.php',
 			'CodeIgniter\Log\Handlers\ChromeLoggerHandler'  => BASEPATH.'Log/Handlers/ChromeLoggerHandler.php',
 			'CodeIgniter\Log\Handlers\FileHandler'          => BASEPATH.'Log/Handlers/FileHandler.php',
@@ -169,7 +169,7 @@ class AutoloadConfig
 			'CodeIgniter\Session\Handlers\RedisHandler'     => BASEPATH.'Session/Handlers/RedisHandler.php',
 			'CodeIgniter\View\RenderableInterface'          => BASEPATH.'View/RenderableInterface.php',
 			'CodeIgniter\View\View'                         => BASEPATH.'View/View.php',
-			'Zend\Escaper\Escaper'                          => BASEPATH.'View/Escaper.php',
+			'Zend\Escaper\Escaper'                          => BASEPATH.'ThirdParty/ZendEscaper/Escaper.php',
 			'CodeIgniter\Log\TestLogger'                    => BASEPATH.'../tests/_support/Log/TestLogger.php',
 		    'CIDatabaseTestCase'                            => BASEPATH.'../tests/_support/CIDatabaseTestCase.php'
 		];

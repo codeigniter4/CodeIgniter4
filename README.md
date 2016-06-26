@@ -1,6 +1,6 @@
 # CodeIgniter 4 Development
 
-[![Build Status](https://travis-ci.org/lonnieezell/CodeIgniter4.svg?branch=develop)](https://travis-ci.org/lonnieezell/CodeIgniter4)
+[![Build Status](https://travis-ci.org/bcit-ci/CodeIgniter4.svg?branch=develop)](https://travis-ci.org/bcit-ci/CodeIgniter4)
 <br>
 [![StyleCI](https://styleci.io/repos/41463886/shield)](https://styleci.io/repos/41463886)	
 
@@ -15,6 +15,18 @@ while still keeping as many of the things intact that has made people love the f
 **This is pre-release code and should not be used in production sites.**
 
 More information about the plans for version 4 can be found in [the announcement](http://forum.codeigniter.com/thread-62615.html) on the forums.
+
+## Important Change with index.php
+
+index.php is no longer in the root of the project! It has been moved inside the *public* folder,
+for better security and separation of components.
+
+This means that you should configure your web server to "point" to your project's *public* folder, and
+not to the project root. A better practice would be to configure a virtual host to point there. A poor practice would be to point your web server to the project root and expect to enter *public/...*, as the rest of your logic and the
+framework are exposed.
+
+**Please** read the user guide for a better explanation of how CI4 works!
+The user guide updating and deployment is a bit awkward at the moment, but we are working on it!
 
 ## Repository Management
 We use Github issues to track **BUGS** and to track approved **DEVELOPMENT** work packages.
