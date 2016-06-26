@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\CLI;/**
+<?php namespace CodeIgniter\CLI;
+
+/**
  * CodeIgniter
  *
  * An open source application development framework for PHP

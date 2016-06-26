@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Config;/**
+<?php namespace CodeIgniter\Config;
+
+/**
  * CodeIgniter
  *
  * An open source application development framework for PHP
