@@ -1,6 +1,4 @@
-<?php namespace CodeIgniter\Autoloader;
-
-/**
+<?php namespace CodeIgniter\Autoloader;/**
  * CodeIgniter
  *
  * An open source application development framework for PHP

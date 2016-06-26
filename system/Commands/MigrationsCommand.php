@@ -1,6 +1,4 @@
-<?php namespace CodeIgniter\Commands;
-
-/**
+<?php namespace CodeIgniter\Commands;/**
  * CodeIgniter
  *
  * An open source application development framework for PHP
