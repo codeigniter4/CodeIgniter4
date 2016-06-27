@@ -44,6 +44,28 @@ $dbconfig = [
 	    'strictOn'     => false,
 	    'failover'     => [],
 	    'saveQueries' => true,
+    ],
+    
+    'firebird' => [
+	    'DSN'          => '',
+	    'hostname'     => 'localhost',
+	    'username'     => 'SYSDBA',
+	    'password'     => 'masterkey',
+	    'database'     => 'ci_test',
+	    'DBDriver'     => 'Ibase',
+	    'DBPrefix'     => '',
+	    'pConnect'     => false,
+	    'DBDebug'     => (ENVIRONMENT !== 'production'),
+	    'cacheOn'     => false,
+	    'cacheDir'     => '',
+	    'charset'      => 'utf8',
+	    'DBCollat'     => 'utf8_general_ci',
+	    'swapPre'      => '',
+	    'encrypt'      => false,
+	    'compress'     => false,
+	    'strictOn'     => false,
+	    'failover'     => [],
+	    'saveQueries' => true,
     ]
 
 ];

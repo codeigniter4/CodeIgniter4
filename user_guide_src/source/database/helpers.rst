@@ -63,3 +63,13 @@ etc...)::
 Outputs the database version you are running::
 
 	echo $db->getVersion();
+    
+Firebird/InterBase Specific Functions
+===============================
+
+**$db->createBlob()**
+
+Create a new BLOB and add data to it. 
+This function returns a string containing the BLOB id that has been assigned to it by the database. On failure, this function returns FALSE. ::
+
+    $db->createBlob(file_get_contents("test.txt"));
