@@ -244,7 +244,7 @@ if (! function_exists('shared_service'))
 {
 	/**
 	 * Allow cleaner access to shared services
-	 * 
+	 *
 	 * @param string $name
 	 * @param array|null $params
 	 * @return type

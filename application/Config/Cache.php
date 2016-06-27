@@ -1,0 +1,84 @@
+<?php namespace Config;
+
+class Cache extends BaseConfig
+{
+	/*
+	|--------------------------------------------------------------------------
+	| Primary Handler
+	|--------------------------------------------------------------------------
+	|
+	| The name of the preferred handler that should be used. If for some reason
+	| it is not available, the $backupHandler will be used in its place.
+	|
+	*/
+	public $handler = 'dummy';
+
+	/*
+	|--------------------------------------------------------------------------
+	| Backup Handler
+	|--------------------------------------------------------------------------
+	|
+	| The name of the handler that will be used in case the first one is
+	| unreachable. Often, 'file' is used here since the filesystem is
+	| always available, though that's not always practical for the app.
+	|
+	*/
+	public $backupHandler = '';
+
+	/*
+	|--------------------------------------------------------------------------
+	| Cache Directory Path
+	|--------------------------------------------------------------------------
+	|
+	| The path to where cache files should be stored, if using a file-based
+	| system.
+	|
+	*/
+	public $path = WRITEPATH.'cache/';
+
+	/*
+	|--------------------------------------------------------------------------
+	| Cache Include Query String
+	|--------------------------------------------------------------------------
+	|
+	| Whether to take the URL query string into consideration when generating
+	| output cache files. Valid options are:
+	|
+	|	false      = Disabled
+	|	true       = Enabled, take all query parameters into account.
+	|	             Please be aware that this may result in numerous cache
+	|	             files generated for the same page over and over again.
+	|	array('q') = Enabled, but only take into account the specified list
+	|	             of query parameters.
+	|
+	*/
+	public $cacheQueryString = false;
+
+	/*
+	|--------------------------------------------------------------------------
+	| Key Prefix
+	|--------------------------------------------------------------------------
+	|
+	| This string is added to all cache item names to help avoid collisions
+	| if you run multiple applications with the same cache engine.
+	|
+	*/
+	public $prefix = '';
+
+	/*
+	|--------------------------------------------------------------------------
+	| Available Cache Handlers
+	|--------------------------------------------------------------------------
+	|
+	| This is an array of cache engine alias' and class names. Only engines
+	| that are listed here are allowed to be used.
+	|
+	*/
+	public $validHandlers = [
+		'dummy'     => \CodeIgniter\Cache\Handlers\DummyHandler::class,
+//		'file'      => \CodeIgniter\Cache\Handlers\FileHandler::class,
+//		'memcached' => \CodeIgniter\Cache\Handlers\MemcachedHandler::class,
+//		'redis'     => \CodeIgniter\Cache\Handlers\RedisHandler::class,
+//		'wincache'  => \CodeIgniter\Cache\Handlers\WincacheHandler::class,
+	];
+}

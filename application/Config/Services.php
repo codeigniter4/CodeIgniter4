@@ -50,6 +50,27 @@ class Services
 	//--------------------------------------------------------------------
 
 	/**
+	 * The cache class provides a simple way to store and retrieve
+	 * complex data for later.
+	 */
+	public static function cache(\Config\Cache $config = null, $getShared = true)
+	{
+		if ($getShared)
+		{
+			return self::getSharedInstance('cache', $config);
+		}
+
+		if (! is_object($config))
+		{
+			$config = new \Config\Cache();
+		}
+
+		return \CodeIgniter\Cache\CacheFactory::getHandler($config);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * The CLI Request class provides for ways to interact with
 	 * a command line request.
 	 */
@@ -189,10 +210,10 @@ class Services
 
 		return new MigrationRunner($config, $db);
 	}
-	
+
 	//--------------------------------------------------------------------
-	
-	
+
+
 	/**
 	 * The Negotiate class provides the content negotiation features for
 	 * working the request to determine correct language, encoding, charset,
