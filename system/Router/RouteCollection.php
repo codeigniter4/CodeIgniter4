@@ -120,6 +120,7 @@ class RouteCollection implements RouteCollectionInterface
 		'num'      => '[0-9]+',
 		'alpha'    => '[a-zA-Z]+',
 		'alphanum' => '[a-zA-Z0-9]+',
+		'hash'     => '[^/]+',
 	];
 
 	/**
