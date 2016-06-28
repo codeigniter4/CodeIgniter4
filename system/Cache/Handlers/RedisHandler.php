@@ -124,7 +124,7 @@ class RedisHandler implements CacheInterface
 	 *
 	 * @return mixed
 	 */
-	public function save(string $key, $value, $ttl = null, $raw = false)
+	public function save(string $key, $value, $ttl = 60, $raw = false)
 	{
 		$key = $this->prefix.$key;
 
