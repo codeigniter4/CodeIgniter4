@@ -1,6 +1,7 @@
 <?php namespace CodeIgniter\Cache\Handlers;
 
 use CodeIgniter\Cache\CacheInterface;
+use CodeIgniter\CriticalError;
 
 class RedisHandler implements CacheInterface
 {
@@ -70,7 +71,7 @@ class RedisHandler implements CacheInterface
 		}
 		catch (RedisException $e)
 		{
-//			log_message('error', 'Cache: Redis connection refused ('.$e->getMessage().')');
+			throw new CriticalError('Cache: Redis connection refused ('.$e->getMessage().')');
 		}
 	}
 
