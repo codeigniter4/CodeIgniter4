@@ -53,6 +53,38 @@ use CodeIgniter\Services;
 // Services Convenience Functions
 //--------------------------------------------------------------------
 
+if (! function_exists('cache'))
+{
+	/**
+	 * A convenience method that provides access to the Cache
+	 * object. If no parameter is provided, will return the object,
+	 * otherwise, will attempt to return the cached value.
+	 *
+	 * Examples:
+	 *    cache()->save('foo', 'bar');
+	 *    $foo = cache('bar');
+	 *
+	 * @param string|null $key
+	 *
+	 * @return mixed
+	 */
+	function cache(string $key = null)
+	{
+		$cache = \Config\Services::cache();
+
+		// No params - return cache object
+		if (is_null($key))
+		{
+			return $cache;
+		}
+
+		// Still here? Retrieve the value.
+		return $cache->get($key);
+	}
+}
+
+//--------------------------------------------------------------------
+
 if ( ! function_exists('view'))
 {
 	/**
