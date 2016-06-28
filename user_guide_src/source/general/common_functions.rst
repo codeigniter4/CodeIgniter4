@@ -15,6 +15,21 @@ Global Functions
 Service Accessors
 =================
 
+.. php:function:: cache ( [$key] )
+
+    :param  string $key: The cache name of the item to retrieve from cache (Optional)
+        :returns: Either the cache object, or the item retrieved from the cache
+        :rtype: mixed
+
+        If no $key is provided, will return the Cache engine instance. If a $key
+        is provided, will return the value of $key as stored in the cache currently,
+        or false if no value is found.
+
+        Examples::
+
+            $foo = cache('foo');
+            $cache = cache();
+
 .. php:function:: esc ( $data, $context='html' [, $encoding])
 
 	:param   string|array   $data: The information to be escaped.
