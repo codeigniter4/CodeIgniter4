@@ -15,7 +15,7 @@ class RedisHandler implements CacheInterface
 	 * @static
 	 * @var    array
 	 */
-	protected $defaultConfig = [
+	protected $config = [
 		'host'     => '127.0.0.1',
 		'password' => null,
 		'port'     => 6379,
@@ -35,18 +35,20 @@ class RedisHandler implements CacheInterface
 	{
 		$this->prefix = $config->prefix ?: '';
 
-		if (! $this->isSupported())
-		{
-//			log_message('error', 'Cache: Failed to create Redis object; extension not loaded?');
-			return;
-		}
-
-		$config = $this->defaultConfig;
-
 		if (isset($config->redis))
 		{
-			$config = array_merge($this->defaultConfig, $config->redis);
+			$this->config = array_merge($this->config, $config->redis);
 		}
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Takes care of any handler-specific setup that must be done.
+	 */
+	public function initialize()
+	{
+		$config = $this->config;
 
 		$this->redis = new Redis();
 
@@ -124,7 +126,7 @@ class RedisHandler implements CacheInterface
 	 *
 	 * @return mixed
 	 */
-	public function save(string $key, $value, $ttl = 60, $raw = false)
+	public function save(string $key, $value, int $ttl = 60, bool $raw = false)
 	{
 		$key = $this->prefix.$key;
 
@@ -183,7 +185,7 @@ class RedisHandler implements CacheInterface
 	 *
 	 * @return mixed
 	 */
-	public function increment(string $key, $offset = 1)
+	public function increment(string $key, int $offset = 1)
 	{
 		$key = $this->prefix.$key;
 
@@ -200,7 +202,7 @@ class RedisHandler implements CacheInterface
 	 *
 	 * @return mixed
 	 */
-	public function decrement(string $key, $offset = 1)
+	public function decrement(string $key, int $offset = 1)
 	{
 		$key = $this->prefix.$key;
 

@@ -54,6 +54,8 @@ class CacheFactory
 			}
 		}
 
+		$adapter->initialize();
+
 		return $adapter;
 	}
 
