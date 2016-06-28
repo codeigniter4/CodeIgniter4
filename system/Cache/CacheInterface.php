@@ -3,6 +3,13 @@
 interface CacheInterface
 {
 	/**
+	 * Takes care of any handler-specific setup that must be done.
+	 */
+	public function initialize();
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Attempts to fetch an item from the cache store.
 	 *
 	 * @param string $key  Cache item name
@@ -26,7 +33,7 @@ interface CacheInterface
 	 *
 	 * @return mixed
 	 */
-	public function save(string $key, $value, $ttl = null, $raw = false);
+	public function save(string $key, $value, int $ttl = 60, bool $raw = false);
 
 	//--------------------------------------------------------------------
 
@@ -49,7 +56,7 @@ interface CacheInterface
 	 *
 	 * @return mixed
 	 */
-	public function increment(string $key, $offset = 1);
+	public function increment(string $key, int $offset = 1);
 
 	//--------------------------------------------------------------------
 
@@ -61,7 +68,7 @@ interface CacheInterface
 	 *
 	 * @return mixed
 	 */
-	public function decrement(string $key, $offset = 1);
+	public function decrement(string $key, int $offset = 1);
 
 	//--------------------------------------------------------------------
 
@@ -96,7 +103,7 @@ interface CacheInterface
 	public function getMetaData(string $key);
 
 	//--------------------------------------------------------------------
-	
+
 	/**
 	 * Determines if the driver is supported on this system.
 	 *

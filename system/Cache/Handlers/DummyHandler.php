@@ -1,5 +1,7 @@
 <?php namespace CodeIgniter\Cache\Handlers;
 
+use CodeIgniter\Cache\CacheInterface;
+
 class DummyHandler implements CacheInterface
 {
 	/**

@@ -27,13 +27,13 @@ class CacheFactory
 
 		if (! isset($config->handler) || ! isset($config->backupHandler))
 		{
-			throw new \InvalidArgumentException('Cache config must have a handler and backupHanlder set.');
+			throw new \InvalidArgumentException('Cache config must have a handler and backupHandler set.');
 		}
 
 		$handler = ! empty($handler) ? $handler : $config->handler;
 		$backup  = ! empty($backup)  ? $backup  : $config->backupHandler;
 
-		if (! in_array($handler, $config->validHandlers) || ! in_array($backup, $config->validHandlers))
+		if (! array_key_exists($handler, $config->validHandlers) || ! array_key_exists($backup, $config->validHandlers))
 		{
 			throw new \InvalidArgumentException('Cache config has an invalid handler or backup handler specified.');
 		}

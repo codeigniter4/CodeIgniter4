@@ -1,5 +1,7 @@
 <?php namespace CodeIgniter\Cache\Handlers;
 
+use CodeIgniter\Cache\CacheInterface;
+
 class FileHandler implements CacheInterface
 {
 	/**
@@ -53,7 +55,7 @@ class FileHandler implements CacheInterface
 
 		$data = $this->getItem($key);
 
-		return is_array($data) ? $data['data'] : null;
+		return is_array($data) ? $data['data'] : false;
 	}
 
 	//--------------------------------------------------------------------
