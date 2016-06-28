@@ -25,7 +25,7 @@ class WincacheHandler implements CacheInterface
 	 */
 	public function initialize()
 	{
-	    // Nothing to see here...
+		// Nothing to see here...
 	}
 
 	//--------------------------------------------------------------------
@@ -41,11 +41,11 @@ class WincacheHandler implements CacheInterface
 	{
 		$key = $this->prefix.$key;
 
-		$success = FALSE;
-		$data = wincache_ucache_get($key, $success);
+		$success = false;
+		$data    = wincache_ucache_get($key, $success);
 
 		// Success returned by reference from wincache_ucache_get()
-		return ($success) ? $data : FALSE;
+		return ($success) ? $data : false;
 	}
 
 	//--------------------------------------------------------------------
@@ -100,10 +100,10 @@ class WincacheHandler implements CacheInterface
 	{
 		$key = $this->prefix.$key;
 
-		$success = FALSE;
-		$value = wincache_ucache_inc($key, $offset, $success);
+		$success = false;
+		$value   = wincache_ucache_inc($key, $offset, $success);
 
-		return ($success === TRUE) ? $value : FALSE;
+		return ($success === true) ? $value : false;
 	}
 
 	//--------------------------------------------------------------------
@@ -120,10 +120,10 @@ class WincacheHandler implements CacheInterface
 	{
 		$key = $this->prefix.$key;
 
-		$success = FALSE;
-		$value = wincache_ucache_dec($key, $offset, $success);
+		$success = false;
+		$value   = wincache_ucache_dec($key, $offset, $success);
 
-		return ($success === TRUE) ? $value : FALSE;
+		return ($success === true) ? $value : false;
 	}
 
 	//--------------------------------------------------------------------
@@ -150,7 +150,7 @@ class WincacheHandler implements CacheInterface
 	 */
 	public function getCacheInfo()
 	{
-		return wincache_ucache_info(TRUE);
+		return wincache_ucache_info(true);
 	}
 
 	//--------------------------------------------------------------------
@@ -166,21 +166,21 @@ class WincacheHandler implements CacheInterface
 	{
 		$key = $this->prefix.$key;
 
-		if ($stored = wincache_ucache_info(FALSE, $key))
+		if ($stored = wincache_ucache_info(false, $key))
 		{
-			$age = $stored['ucache_entries'][1]['age_seconds'];
-			$ttl = $stored['ucache_entries'][1]['ttl_seconds'];
+			$age      = $stored['ucache_entries'][1]['age_seconds'];
+			$ttl      = $stored['ucache_entries'][1]['ttl_seconds'];
 			$hitcount = $stored['ucache_entries'][1]['hitcount'];
 
-			return array(
-				'expire'	=> $ttl - $age,
-				'hitcount'	=> $hitcount,
-				'age'		=> $age,
-				'ttl'		=> $ttl
-			);
+			return [
+				'expire'   => $ttl-$age,
+				'hitcount' => $hitcount,
+				'age'      => $age,
+				'ttl'      => $ttl,
+			];
 		}
 
-		return FALSE;
+		return false;
 	}
 
 	//--------------------------------------------------------------------

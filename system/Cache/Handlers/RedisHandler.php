@@ -91,7 +91,7 @@ class RedisHandler implements CacheInterface
 
 		if (! isset($data['__ci_type'], $data['__ci_value']) OR $data['__ci_value'] === false)
 		{
-			return null;
+			return false;
 		}
 
 		switch ($data['__ci_type'])
@@ -106,10 +106,10 @@ class RedisHandler implements CacheInterface
 			case 'NULL':
 				return settype($data['__ci_value'], $data['__ci_type'])
 					? $data['__ci_value']
-					: null;
+					: false;
 			case 'resource':
 			default:
-				return null;
+				return false;
 		}
 	}
 

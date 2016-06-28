@@ -1,5 +1,7 @@
 <?php namespace Config;
 
+use CodeIgniter\Config\BaseConfig;
+
 class Cache extends BaseConfig
 {
 	/*
@@ -11,7 +13,7 @@ class Cache extends BaseConfig
 	| it is not available, the $backupHandler will be used in its place.
 	|
 	*/
-	public $handler = 'dummy';
+	public $handler = 'file';
 
 	/*
 	|--------------------------------------------------------------------------
@@ -23,7 +25,7 @@ class Cache extends BaseConfig
 	| always available, though that's not always practical for the app.
 	|
 	*/
-	public $backupHandler = '';
+	public $backupHandler = 'dummy';
 
 	/*
 	|--------------------------------------------------------------------------
@@ -109,9 +111,9 @@ class Cache extends BaseConfig
 	*/
 	public $validHandlers = [
 		'dummy'     => \CodeIgniter\Cache\Handlers\DummyHandler::class,
-//		'file'      => \CodeIgniter\Cache\Handlers\FileHandler::class,
-//		'memcached' => \CodeIgniter\Cache\Handlers\MemcachedHandler::class,
-//		'redis'     => \CodeIgniter\Cache\Handlers\RedisHandler::class,
-//		'wincache'  => \CodeIgniter\Cache\Handlers\WincacheHandler::class,
+		'file'      => \CodeIgniter\Cache\Handlers\FileHandler::class,
+		'memcached' => \CodeIgniter\Cache\Handlers\MemcachedHandler::class,
+		'redis'     => \CodeIgniter\Cache\Handlers\RedisHandler::class,
+		'wincache'  => \CodeIgniter\Cache\Handlers\WincacheHandler::class,
 	];
 }
