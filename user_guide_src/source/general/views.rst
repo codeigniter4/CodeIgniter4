@@ -35,13 +35,13 @@ To load a particular view file you will use the following function::
 
 	view('name');
 
-Where _name_ is the name of your view file. 
+Where _name_ is the name of your view file.
 
 .. important:: The .php file extension does not need to be specified, but all views are expected to end with the .php extension.
 
 Now, open the controller file you made earlier called ``Blog.php``, and replace the echo statement with the view function::
 
-	class Blog extends \CodeIgniter\Controller 
+	class Blog extends \CodeIgniter\Controller
 	{
 		public function index()
 		{
@@ -52,6 +52,19 @@ Now, open the controller file you made earlier called ``Blog.php``, and replace 
 If you visit your site using the URL you did earlier you should see your new view. The URL was similar to this::
 
 	example.com/index.php/blog/
+
+Namespaced Views
+----------------
+
+You can store views under a **View** directory that is namespaced, and load that view as if it was namespaced. While
+PHP does not support loading non-class files from a namespace, CodeIgniter provides this feature to make it possible
+to package your views together in a module-like fashion for easy re-use or distribution.
+
+If you have ``Blog`` directory that has a PSR-4 mapping setup in the :doc:`Autoloader </concepts/autoloader>` living
+under the namespace ``Example\Blog``, you could retrieve view files as if they were namespaced also. Following this
+example, you could load the **BlogView** file from **/blog/views** by prepending the namespace to the view name::
+
+    echo view('Example\Blog\BlogView');
 
 Loading Multiple Views
 ======================
@@ -74,7 +87,7 @@ content view, and a footer view. That might look something like this::
 			echo view('footer');
 		}
 	}
-	
+
 In the example above, we are using "dynamically added data", which you will see below.
 
 Storing Views within Sub-directories
@@ -96,7 +109,7 @@ Here's an example::
 		'heading' => 'My Heading',
 		'message' => 'My Message'
 	];
-	
+
 	echo view('blogview', $data);
 
 Let's try it with your controller file. Open it and add this code::
@@ -107,11 +120,11 @@ Let's try it with your controller file. Open it and add this code::
 		{
 			$data['title'] = "My Real Title";
 			$data['heading'] = "My Real Heading";
-			
+
 			echo view('blogview', $data);
 		}
 	}
-	
+
 Now open your view file and change the text to variables that correspond to the array keys in your data::
 
 	<html>
@@ -147,11 +160,11 @@ sets the data, and renders the view. While this is often exactly what you want, 
 want to work with it more directly. In that case you can access the View service directly::
 
 	$renderer = \Config\Services::renderer();
-	
+
 .. important:: You should create services only within controllers. If you need access to the View class
 	from a library, you should set that as a dependency in the constructor.
 
-Then you can use any of the three standard methods that it provides. 
+Then you can use any of the three standard methods that it provides.
 
 * **render('view_name', array $options)** Performs the rendering of the view and its data. The $options array is
 	unused by default, but provided for third-party libraries to use when integrating with different template engines.
@@ -192,11 +205,11 @@ or in an href attribute, you would need different escaping rules to be effective
 context as the second parameter. Valid contexts are 'html', 'js', 'css', 'url', and 'attr'::
 
 	<a href="<?= esc($url, 'url') ?>" data-foo="<?= esc($bar, 'attr') ?>">Some Link</a>
-	
+
 	<script>
 		var siteName = '<?= esc($siteName, 'js') ?>';
 	</script>
-	
+
 	<style>
 		body {
 			background-color: <?= esc('bgColor', 'css') ?>
