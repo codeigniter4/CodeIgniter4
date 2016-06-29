@@ -139,7 +139,9 @@ class Router implements RouterInterface
 		// everything runs off of it's default settings.
 		if (empty($uri))
 		{
-			return $this->controller;
+			return strpos($this->controller, '\\') === false
+				? $this->collection->getDefaultNamespace().$this->controller
+				: $this->controller;
 		}
 
 		if ($this->checkRoutes($uri))

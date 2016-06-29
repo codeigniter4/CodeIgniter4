@@ -374,6 +374,18 @@ class RouteCollection implements RouteCollectionInterface
 	//--------------------------------------------------------------------
 
 	/**
+	 * Returns the default namespace as set in the Routes config file.
+	 *
+	 * @return string
+	 */
+	public function getDefaultNamespace(): string
+	{
+	    return $this->defaultNamespace;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Returns the current value of the translateURIDashses setting.
 	 *
 	 * @param bool|false $val

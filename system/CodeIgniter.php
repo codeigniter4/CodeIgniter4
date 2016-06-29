@@ -78,21 +78,21 @@ class CodeIgniter
 
 	/**
 	 * Current request.
-	 * 
+	 *
 	 * @var \CodeIgniter\HTTP\Request
 	 */
 	protected $request;
 
 	/**
 	 * Current response.
-	 * 
+	 *
 	 * @var \CodeIgniter\HTTP\Response
 	 */
 	protected $response;
 
 	/**
 	 * Router to use.
-	 * 
+	 *
 	 * @var \CodeIgniter\Router\Router
 	 */
 	protected $router;
@@ -105,7 +105,7 @@ class CodeIgniter
 
 	/**
 	 * Controller method to invoke.
-	 * 
+	 *
 	 * @var string
 	 */
 	protected $method;
@@ -138,7 +138,7 @@ class CodeIgniter
 	 * The class entry point. This is where the magic happens and all
 	 * of the framework pieces are pulled together and shown how to
 	 * make beautiful music together. Or something like that. :)
-	 * 
+	 *
 	 * @param RouteCollectionInterface $routes
 	 */
 	public function run(RouteCollectionInterface $routes = null)
@@ -216,7 +216,7 @@ class CodeIgniter
 
 	/**
 	 * Start the Benchmark
-	 * 
+	 *
 	 * The timer is used to display total script execution both in the
 	 * debug toolbar, and potentially on the displayed page.
 	 */
