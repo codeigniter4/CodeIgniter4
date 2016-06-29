@@ -65,7 +65,7 @@ following code to your model.
 	{
 		if ($slug === false)
 		{
-			return $this->findAll();
+			$this->findAll();
 		}
 
 		return $this->asArray()
@@ -195,13 +195,13 @@ add some code to the controller and create a new view. Go back to the
 
 		if (empty($data['news']))
 		{
-			throw new \CodeIgniter\PageNotFoundException('Cannot page the page: '. $slug);
+			throw new \CodeIgniter\PageNotFoundException('Cannot find the page: '. $slug);
 		}
 
-		$data['title'] = $data['news'][0]['title'];
+		$data['title'] = $data['news']['title'];
 
 		echo view('Templates/Header', $data);
-		echo view('News/Index', $data);
+		echo view('News/View', $data);
 		echo view('Templates/Footer');
 	}
 
@@ -214,7 +214,7 @@ The only things left to do is create the corresponding view at
 
 	<?php
 	echo '<h2>'.$news['title'].'</h2>';
-	echo $$news['text'];
+	echo $news['text'];
 
 Routing
 -------
