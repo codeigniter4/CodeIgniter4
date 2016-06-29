@@ -53,19 +53,6 @@ If you visit your site using the URL you did earlier you should see your new vie
 
 	example.com/index.php/blog/
 
-Namespaced Views
-----------------
-
-You can store views under a **View** directory that is namespaced, and load that view as if it was namespaced. While
-PHP does not support loading non-class files from a namespace, CodeIgniter provides this feature to make it possible
-to package your views together in a module-like fashion for easy re-use or distribution.
-
-If you have ``Blog`` directory that has a PSR-4 mapping setup in the :doc:`Autoloader </concepts/autoloader>` living
-under the namespace ``Example\Blog``, you could retrieve view files as if they were namespaced also. Following this
-example, you could load the **BlogView** file from **/blog/views** by prepending the namespace to the view name::
-
-    echo view('Example\Blog\BlogView');
-
 Loading Multiple Views
 ======================
 
@@ -97,6 +84,34 @@ Your view files can also be stored within sub-directories if you prefer that typ
 When doing so you will need to include the directory name loading the view.  Example::
 
 	echo view('directory_name/file_name');
+
+Namespaced Views
+================
+
+You can store views under a **View** directory that is namespaced, and load that view as if it was namespaced. While
+PHP does not support loading non-class files from a namespace, CodeIgniter provides this feature to make it possible
+to package your views together in a module-like fashion for easy re-use or distribution.
+
+If you have ``Blog`` directory that has a PSR-4 mapping setup in the :doc:`Autoloader </concepts/autoloader>` living
+under the namespace ``Example\Blog``, you could retrieve view files as if they were namespaced also. Following this
+example, you could load the **BlogView** file from **/blog/views** by prepending the namespace to the view name::
+
+    echo view('Example\Blog\BlogView');
+
+Caching Views
+=============
+
+You can cache a view with the ``view`` command by passing a ``cache`` option with the number of seconds to cache
+the view for, in the third parameter::
+
+    // Cache the view for 60 seconds
+    echo view('file_name', $data, ['cache' => 60]);
+
+By default, the view will be cached using the same name as the view file itself. You can customize this by passing
+along ``cache_name`` and the cache ID you wish to use::
+
+    // Cache the view for 60 seconds
+    echo view('file_name', $data, ['cache' => 60, 'cache_name' => 'my_cached_view']);
 
 Adding Dynamic Data to the View
 ===============================
