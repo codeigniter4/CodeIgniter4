@@ -10,6 +10,8 @@ class CodeIgniterTest extends \CIUnitTestCase
 	 */
 	protected $codeigniter;
 
+	protected $routes;
+
 	//--------------------------------------------------------------------
 
 	public function setUp()
@@ -39,6 +41,9 @@ class CodeIgniterTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * @group route
+	 */
 	public function testRunEmptyDefaultRoute()
 	{
 		$_SERVER['argv'] = [
