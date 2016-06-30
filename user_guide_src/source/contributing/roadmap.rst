@@ -65,8 +65,7 @@ Phase 3: Expansion (not started)
 ================================
 
 The third phase includes fleshing out and working on the optional packages. 
-At this point, the framework can be released and need not wait for these l
-ibraries to be brought up to date. 
+At this point, the framework can be released and need not wait for these libraries to be brought up to date. 
 
 Each optional package will have its own repository, and will be developed
 and managed independently of the main framework.
