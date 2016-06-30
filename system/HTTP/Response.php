@@ -41,7 +41,7 @@ use Config\ContentSecurityPolicy;
 
 /**
  * Redirect exception
- * 
+ *
  */
 class RedirectException extends \Exception {}
 
@@ -62,7 +62,7 @@ class Response extends Message implements ResponseInterface
 {
 	/**
 	 * HTTP status codes
-	 * @var type 
+	 * @var type
 	 */
 	protected static $statusCodes = [
 		// 1xx: Informational
@@ -161,7 +161,7 @@ class Response extends Message implements ResponseInterface
 
 	/**
 	 * Content security policy handler
-	 * 
+	 *
 	 * @var \CodeIgniter\HTTP\ContentSecurityPolicy
 	 */
 	public $CSP;
@@ -205,7 +205,7 @@ class Response extends Message implements ResponseInterface
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param App $config
 	 */
 	public function __construct(App $config)
@@ -217,7 +217,7 @@ class Response extends Message implements ResponseInterface
 		// Are we enforcing a Content Security Policy?
 		if ($config->CSPEnabled === true)
 		{
-			$this->CSP = new ContentSecurityPolicy(new ContentSecurityPolicy());
+			$this->CSP = new ContentSecurityPolicy();
 			$this->CSPEnabled = true;
 		}
 
