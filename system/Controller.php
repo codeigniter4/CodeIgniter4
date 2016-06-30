@@ -90,7 +90,7 @@ class Controller
 
 	/**
 	 * Constructor.
-	 * 
+	 *
 	 * @param RequestInterface $request
 	 * @param ResponseInterface $response
 	 * @param Logger $logger
@@ -112,7 +112,7 @@ class Controller
 
 		$this->loadHelpers();
 	}
-	
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -128,6 +128,19 @@ class Controller
 	public function forceHTTPS(int $duration = 31536000)
 	{
 	    force_https($duration, $this->request, $this->response);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Provides a simple way to tie into the main CodeIgniter class
+	 * and tell it how long to cache the current page for.
+	 *
+	 * @param int $time
+	 */
+	public function cachePage(int $time)
+	{
+		CodeIgniter::cache($time);
 	}
 
 	//--------------------------------------------------------------------

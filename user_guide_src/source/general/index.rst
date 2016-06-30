@@ -17,6 +17,7 @@ General Topics
 	logging
 	errors
 	debugging
+	caching
 	cli
 	managing_apps
 	environments

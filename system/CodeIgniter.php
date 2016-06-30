@@ -37,10 +37,13 @@
  */
 
 
+use CodeIgniter\HTTP\Response;
+use CodeIgniter\HTTP\URI;
 use CodeIgniter\Router\RouteCollectionInterface;
 use Config\App;
 use CodeIgniter\Services;
 use CodeIgniter\Hooks\Hooks;
+use Config\Cache;
 
 /**
  * System Initialization Class
@@ -116,6 +119,12 @@ class CodeIgniter
 	 */
 	protected $output;
 
+	/**
+	 * Cache expiration time
+	 * @var int
+	 */
+	protected static $cacheTTL = 0;
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -152,6 +161,12 @@ class CodeIgniter
 
 		$this->getRequestObject();
 		$this->getResponseObject();
+
+		// Check for a cached page. Execution will stop
+		// if the page has been cached.
+		$cacheConfig = new Cache();
+		$this->displayCache($cacheConfig);
+
 		$this->forceSecureAccess();
 
 		try
@@ -183,7 +198,8 @@ class CodeIgniter
 			//--------------------------------------------------------------------
 			Hooks::trigger('post_controller');
 
-			$this->gatherOutput();
+			$this->gatherOutput($cacheConfig);
+
 			$this->sendResponse();
 
 			//--------------------------------------------------------------------
@@ -210,6 +226,111 @@ class CodeIgniter
 		{
 			$this->display404errors($e);
 		}
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Determines if a response has been cached for the given URI.
+	 *
+	 * @param \Config\Cache         $config
+	 *
+	 * @return bool
+	 */
+	public function displayCache($config)
+	{
+		$cacheName = $this->generateCacheName($this->request->uri, $config);
+
+		if ($output = cache()->get($cacheName))
+		{
+			$output = $this->displayPerformanceMetrics($output);
+
+			$this->response->setBody($output)
+					       ->send();
+
+			$this->callExit(EXIT_SUCCESS);
+		};
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Tells the app that the final output should be cached.
+	 *
+	 * @param int $time
+	 *
+	 * @return $this
+	 */
+	public static function cache(int $time)
+	{
+	    self::$cacheTTL = (int)$time;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Caches the full response from the current request. Used for
+	 * full-page caching for very high performance.
+	 *
+	 * @param \Config\Cache              $config
+	 */
+	public function cachePage($config)
+	{
+		return cache()->save(
+			$this->generateCacheName($this->request->uri, $config),
+			$this->output,
+			self::$cacheTTL
+		);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Generates the cache name to use for our full-page caching.
+	 *
+	 * @param \CodeIgniter\HTTP\URI $URI
+	 *
+	 * @return string
+	 */
+	protected function generateCacheName(URI $uri, $config): string
+	{
+		if ($config->cacheQueryString)
+		{
+			$name = URI::createURIString(
+				$uri->getScheme(),
+				$uri->getAuthority(),
+				$uri->getPath(),
+				$uri->getQuery()
+			);
+		}
+		else
+		{
+			$name = URI::createURIString(
+				$uri->getScheme(),
+				$uri->getAuthority(),
+				$uri->getPath()
+			);
+		}
+
+		return md5($name);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Replaces the memory_usage and elapsed_time tags.
+	 *
+	 * @param string $output
+	 *
+	 * @return string
+	 */
+	public function displayPerformanceMetrics(string $output): string
+	{
+		$this->totalTime = $this->benchmark->getElapsedTime('total_execution');
+
+		$output = str_replace('{elapsed_time}', $this->totalTime, $output);
+
+	    return $output;
 	}
 
 	//--------------------------------------------------------------------
@@ -502,14 +623,20 @@ class CodeIgniter
 	 * Gathers the script output from the buffer, replaces some execution
 	 * time tag in the output and displays the debug toolbar, if required.
 	 */
-	protected function gatherOutput()
+	protected function gatherOutput($cacheConfig)
 	{
 		$this->output = ob_get_contents();
 		ob_end_clean();
 
-		$totalTime    = $this->benchmark->getElapsedTime('total_execution');
+		// Cache it without the performance metrics replaced
+		// so that we can have live speed updates along the way.
+		if (self::$cacheTTL > 0)
+		{
+			echo '<br><br><br>'. rand(1, 1000);
+			$this->cachePage($cacheConfig);
+		}
 
-		$this->output = str_replace('{elapsed_time}', $totalTime, $this->output);
+		$this->output = $this->displayPerformanceMetrics($this->output);
 
 		//--------------------------------------------------------------------
 		// Display the Debug Toolbar?
@@ -517,7 +644,7 @@ class CodeIgniter
 		if ( ! is_cli() && ENVIRONMENT != 'production' && $this->config->toolbarEnabled)
 		{
 			$toolbar = Services::toolbar($this->config);
-			$this->output .= $toolbar->run($this->startTime, $totalTime,
+			$this->output .= $toolbar->run($this->startTime, $this->totalTime,
 				$this->startMemory, $this->request,
 				$this->response);
 		}
