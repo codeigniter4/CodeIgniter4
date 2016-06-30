@@ -95,8 +95,8 @@ class Routes extends BaseCollector
 		$output .= "<tr><td>Controller:</td><td>".htmlspecialchars($router->controllerName())."</td></tr>";
 		$output .= "<tr><td>Method:</td><td>".htmlspecialchars($router->methodName())."</td></tr>";
 
-        $method = new \ReflectionMethod($router->controllerName(), $router->methodName());
-        $params = $method->getParameters();
+        	$method = new \ReflectionMethod($router->controllerName(), $router->methodName());
+        	$params = $method->getParameters();
 
 		$output .= "<tr><td>Params:</td><td>".count($router->params())."/".count($params)."</td></tr>";
 
