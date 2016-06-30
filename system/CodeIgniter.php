@@ -239,7 +239,7 @@ class CodeIgniter
 	 */
 	public function displayCache($config)
 	{
-		$cacheName = $this->generateCacheName($this->request->uri, $config);
+		$cacheName = $this->generateCacheName($config);
 
 		if ($output = cache()->get($cacheName))
 		{
@@ -277,7 +277,7 @@ class CodeIgniter
 	public function cachePage($config)
 	{
 		return cache()->save(
-			$this->generateCacheName($this->request->uri, $config),
+			$this->generateCacheName($config),
 			$this->output,
 			self::$cacheTTL
 		);
@@ -292,8 +292,15 @@ class CodeIgniter
 	 *
 	 * @return string
 	 */
-	protected function generateCacheName(URI $uri, $config): string
+	protected function generateCacheName($config): string
 	{
+		if (is_cli())
+		{
+			return md5($this->request->getPath());
+		}
+
+		$uri = $this->request->uri;
+
 		if ($config->cacheQueryString)
 		{
 			$name = URI::createURIString(
@@ -623,7 +630,7 @@ class CodeIgniter
 	 * Gathers the script output from the buffer, replaces some execution
 	 * time tag in the output and displays the debug toolbar, if required.
 	 */
-	protected function gatherOutput($cacheConfig)
+	protected function gatherOutput($cacheConfig = null)
 	{
 		$this->output = ob_get_contents();
 		ob_end_clean();
@@ -632,7 +639,6 @@ class CodeIgniter
 		// so that we can have live speed updates along the way.
 		if (self::$cacheTTL > 0)
 		{
-			echo '<br><br><br>'. rand(1, 1000);
 			$this->cachePage($cacheConfig);
 		}
 
