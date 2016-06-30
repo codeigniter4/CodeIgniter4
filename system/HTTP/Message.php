@@ -56,29 +56,29 @@ class Message
 
 	/**
 	 * Protocol version
-	 * @var type 
+	 * @var type
 	 */
 	protected $protocolVersion;
 
 	/**
 	 * List of valid protocol versions
-	 * @var array 
+	 * @var array
 	 */
 	protected $validProtocolVersions = ['1.0', '1.1', '2'];
 
 	/**
 	 * Message body
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	protected $body;
 
 	//--------------------------------------------------------------------
-	
+
 	//--------------------------------------------------------------------
 	// Body
 	//--------------------------------------------------------------------
-	
+
 	/**
 	 * Returns the Message's body.
 	 *
@@ -106,11 +106,28 @@ class Message
 	}
 
 	//--------------------------------------------------------------------
-	
+
+	/**
+	 * Appends data to the body of the current message.
+	 *
+	 * @param $data
+	 *
+	 * @return \CodeIgniter\HTTP\Message
+	 */
+	public function appendBody($data): self
+	{
+	    $this->body .= (string)$data;
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+
 	//--------------------------------------------------------------------
 	// Headers
 	//--------------------------------------------------------------------
-	
+
 	/**
 	 * Populates the $headers array with any headers the getServer knows about.
 	 */
@@ -371,7 +388,7 @@ class Message
 
 		return $this;
 	}
-	
+
 	//--------------------------------------------------------------------
 
 	/**
