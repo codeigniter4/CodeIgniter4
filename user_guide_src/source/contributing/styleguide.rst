@@ -71,7 +71,8 @@ Naming
   multiple name extensions.
 - Files declaring classes MUST have names exactly matching the classes 
   that they declare (obviously excluding the ".php" name extension).
-- Files declaring functions SHOULD be named in *snake_case.php*.
+- Files declaring functions MUST have a name which meaningfully describes the 
+  set of functions contained in it.
 
 *************************************
 Whitespace, indentation and alignment
@@ -141,7 +142,7 @@ Namespaces and classes
 
 - Class constants MUST be declared in `CAPITALS_SEPARATED_BY_UNDERSCORES`.
 - Class methods, property names and other variables MUST be declared in
-  `lowerCamelCase()`.
+  `lowerCamelCase()`, also known as *camelBack*.
 - Class methods and properties MUST have visibility declarations (i.e.
   `public`, `private` or `protected`).
 
@@ -166,10 +167,14 @@ MUST be used for each such property "x"
 Procedural code
 ===============
 
-- Function and variable names SHOULD be declared in `snake_case()` (all
-  lowercase letters, separated by underscores), unless another form is
+- Function and variable names SHOULD be declared in `camelBack()` the same
+  as method names, unless another form is
   *functionally* required.
 - Constants MUST be declared in `CAPITALS_SEPARATED_BY_UNDERSCORES`.
+- Scripts containing functions SHOULD have a namespace declaration,
+  consistent with the script's filename. This would be a namespace
+  under CodeIgniter\ which meaningfully describes the 
+  set of functions defined in the script (for instance a CodeIgniter Helper).
 
 Keywords
 ========
