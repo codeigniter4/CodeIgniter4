@@ -41,9 +41,6 @@ class CodeIgniterTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	/**
-	 * @group route
-	 */
 	public function testRunEmptyDefaultRoute()
 	{
 		$_SERVER['argv'] = [
@@ -83,6 +80,9 @@ class CodeIgniterTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * @group route
+	 */
 	public function testRunClosureRoute()
 	{
 		$_SERVER['argv'] = [
@@ -107,9 +107,9 @@ class CodeIgniterTest extends \CIUnitTestCase
 		$this->assertContains('You want to see "about" page.', $output);
 	}
 
-		//--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
-		public function testRun404Override()
+	public function testRun404Override()
 	{
 		$_SERVER['argv'] = [
 			'index.php',
