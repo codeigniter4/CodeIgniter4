@@ -61,6 +61,16 @@ $system_directory = '../system';
 $application_directory = '../application';
 
 /*
+ *---------------------------------------------------------------
+ * VENDOR FOLDER NAME
+ *---------------------------------------------------------------
+ *
+ * This variable must contain the name of your "vendor" directory.
+ * The vendor directory is usually third-party code used by of composer.
+ */
+$vendor_directory = '../vendor';
+
+/*
  * ---------------------------------------------------------------
  * WRITABLE DIRECTORY NAME
  * ---------------------------------------------------------------
@@ -135,6 +145,9 @@ define('WRITEPATH', realpath($writable_directory).DIRECTORY_SEPARATOR);
 
 // The path to the "application" folder
 define('APPPATH', realpath($application_directory).DIRECTORY_SEPARATOR);
+
+// The path to the "vendor" directory
+define('VENDORPATH', realpath($vendor_directory).DIRECTORY_SEPARATOR);
 
 // The path to the "tests" directory
 define('TESTPATH', realpath($tests_directory).DIRECTORY_SEPARATOR);
@@ -247,9 +260,9 @@ if ($composer_autoload = $config->composerAutoload)
 {
 	if ($composer_autoload === TRUE)
 	{
-		file_exists(APPPATH.'vendor/autoload.php')
-			? require_once(APPPATH.'vendor/autoload.php')
-			: log_message('error', '$config->\'composerAutoload\' is set to TRUE but '.APPPATH.'vendor/autoload.php was not found.');
+		file_exists(VENDORPATH.'autoload.php')
+			? require_once(VENDORPATH.'autoload.php')
+			: log_message('error', '$config->\'composerAutoload\' is set to TRUE but '.VENDORPATH.'autoload.php was not found.');
 	}
 	elseif (file_exists($composer_autoload))
 	{
