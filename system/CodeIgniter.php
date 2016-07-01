@@ -482,7 +482,7 @@ class CodeIgniter
 		$this->benchmark->start('controller_constructor');
 
 		// Is it routed to a Closure?
-		if (is_callable($this->controller))
+		if (is_object($this->controller) && ($this->controller instanceof Closure))
 		{
 			$controller = $this->controller;
 			echo $controller(...$this->router->params());
