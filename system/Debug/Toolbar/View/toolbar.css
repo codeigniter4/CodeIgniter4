@@ -188,3 +188,12 @@ body {
     border-radius: 3px;
     background-color: #999;
 }
+#debug-bar .route-params,
+#debug-bar .route-params-item {
+    vertical-align: top;
+}
+#debug-bar .route-params-item td:first-child {
+    padding-left: 1em;
+    text-align: right;
+    font-style: italic;
+}

@@ -94,7 +94,20 @@ class Routes extends BaseCollector
 		$output .= "<tr><td>Directory:</td><td>".htmlspecialchars($router->directory())."</td></tr>";
 		$output .= "<tr><td>Controller:</td><td>".htmlspecialchars($router->controllerName())."</td></tr>";
 		$output .= "<tr><td>Method:</td><td>".htmlspecialchars($router->methodName())."</td></tr>";
-		$output .= "<tr><td>Params:</td><td>".print_r($router->params(), true)."</td></tr>";
+
+        	$method = new \ReflectionMethod($router->controllerName(), $router->methodName());
+        	$params = $method->getParameters();
+
+		$output .= "<tr><td>Params:</td><td>".count($router->params())."/".count($params)."</td></tr>";
+
+		foreach($params as $key => $param)
+		{
+			$output .= '<tr class="route-params-item"><td>'.$param->getName()." :</td><td>";
+			$output .= isset($router->params()[$key])
+							? $router->params()[$key]
+							: "&lt;empty&gt;&nbsp| default: ".var_export($param->getDefaultValue(), true);
+			$output .= '</td></tr>';
+		}
 
 		$output .= "</table></tbody>";
 
