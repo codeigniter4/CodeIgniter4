@@ -123,6 +123,27 @@ if ( ! function_exists('view'))
 
 //--------------------------------------------------------------------
 
+if (! function_exists('view_cell'))
+{
+	/**
+	 * View cells are used within views to insert HTML chunks that are managed
+	 * by other classes. 
+	 *
+	 * @param string      $library
+	 * @param null        $params
+	 * @param int         $ttl
+	 * @param string|null $cacheName
+	 *
+	 * @return string
+	 */
+	function view_cell(string $library, $params = null, int $ttl = 0, string $cacheName = null)
+	{
+		return Services::viewcell()->render($library, $params, $ttl, $cacheName);
+	}
+}
+
+//--------------------------------------------------------------------
+
 if ( ! function_exists('esc'))
 {
 	/**

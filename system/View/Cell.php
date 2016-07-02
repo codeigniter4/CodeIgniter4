@@ -141,42 +141,6 @@ class Cell
 	//--------------------------------------------------------------------
 
 	/**
-	 * Given the library string, attempts to determine the class and method
-	 * to call.
-	 *
-	 * @param string $library
-	 *
-	 * @return array
-	 */
-	protected function determineClass(string $library)
-	{
-		// We don't want to actually call static methods
-		// by default, so convert any double colons.
-		$library = str_replace('::', ':', $library);
-
-		list($class, $method) = explode(':', $library);
-
-		if (empty($class))
-		{
-			throw new \InvalidArgumentException('No view cell class provided.');
-		}
-
-		if (! class_exists($class, true))
-		{
-			throw new \InvalidArgumentException('Unable to locate view cell class: '.$class.'.');
-		}
-
-		if (empty($method))
-		{
-			$method = 'index';
-		}
-
-		return [$class, $method];
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
 	 * Parses the params attribute. If an array, returns untouched.
 	 * If a string, it should be in the format "key1=value key2=value".
 	 * It will be split and returned as an array.
@@ -226,4 +190,39 @@ class Cell
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Given the library string, attempts to determine the class and method
+	 * to call.
+	 *
+	 * @param string $library
+	 *
+	 * @return array
+	 */
+	protected function determineClass(string $library)
+	{
+		// We don't want to actually call static methods
+		// by default, so convert any double colons.
+		$library = str_replace('::', ':', $library);
+
+		list($class, $method) = explode(':', $library);
+
+		if (empty($class))
+		{
+			throw new \InvalidArgumentException('No view cell class provided.');
+		}
+
+		if (! class_exists($class, true))
+		{
+			throw new \InvalidArgumentException('Unable to locate view cell class: '.$class.'.');
+		}
+
+		if (empty($method))
+		{
+			$method = 'index';
+		}
+
+		return [$class, $method];
+	}
+
+	//--------------------------------------------------------------------
 }
