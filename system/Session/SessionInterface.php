@@ -43,14 +43,6 @@ namespace CodeIgniter\Session;
  */
 interface SessionInterface
 {
-
-	/**
-	 * Initialize the session container.
-	 */
-	public function initialize();
-
-	//--------------------------------------------------------------------
-
 	/**
 	 * Regenerates the session ID.
 	 *
@@ -69,10 +61,10 @@ interface SessionInterface
 
 	/**
 	 * Sets user data into the session.
-	 * 
+	 *
 	 * If $data is a string, then it is interpreted as a session property
 	 * key, and  $value is expected to be non-null.
-	 * 
+	 *
 	 * If $data is an array, it is expected to be an array of key/value pairs
 	 * to be set as session properties.
 	 *
@@ -89,13 +81,13 @@ interface SessionInterface
 	 * If the property exists as "normal", returns it.
 	 * Otherwise, returns an array of any temp or flash data values with the
 	 * property key.
-	 * 
+	 *
 	 * Replaces the legacy method $session->userdata();
 	 *
 	 * @param  $key	Identifier of the session property to retrieve
 	 * @return array|null	The property value(s)
 	 */
-	public function get($key = null);
+	public function get(string $key = null);
 
 	//--------------------------------------------------------------------
 
@@ -116,10 +108,10 @@ interface SessionInterface
 	 * If $key is an array, it is interpreted as an array of string property
 	 * identifiers to remove. Otherwise, it is interpreted as the identifier
 	 * of a specific session property to remove.
-	 * 
+	 *
 	 * @param  $key Identifier of the session property or properties to remove.
 	 */
-	public function remove($key);
+	public function remove(string $key);
 
 	//--------------------------------------------------------------------
 
@@ -127,11 +119,11 @@ interface SessionInterface
 	 * Sets data into the session that will only last for a single request.
 	 * Perfect for use with single-use status update messages.
 	 *
-	 * If $data is an array, it is interpreted as an associative array of 
+	 * If $data is an array, it is interpreted as an associative array of
 	 * key/value pairs for flashdata properties.
-	 * Otherwise, it is interpreted as the identifier of a specific 
+	 * Otherwise, it is interpreted as the identifier of a specific
 	 * flashdata property, with $value containing the property value.
-	 * 
+	 *
 	 * @param      $data	Property identifier or associative array of properties
 	 * @param null $value	Property value if $data is a scalar
 	 */
@@ -141,11 +133,11 @@ interface SessionInterface
 
 	/**
 	 * Retrieve one or more items of flash data from the session.
-	 * 
+	 *
 	 * If the item key is null, return all flashdata.
 	 *
 	 * @param string $key	Property identifier
-	 * @return array|null	The requested property value, or an associative 
+	 * @return array|null	The requested property value, or an associative
 	 * 	array  of them
 	 */
 	public function getFlashdata(string $key = null);
@@ -163,7 +155,7 @@ interface SessionInterface
 
 	/**
 	 * Mark a session property or properties as flashdata.
-	 * 
+	 *
 	 * @param $key	Property identifier or array of them
 	 * @return False if any of the properties are not already set
 	 */
@@ -202,7 +194,7 @@ interface SessionInterface
 	//--------------------------------------------------------------------
 
 	/**
-	 * Returns either a single piece of tempdata, or all temp data currently 
+	 * Returns either a single piece of tempdata, or all temp data currently
 	 * in the session.
 	 *
 	 * @param  $key   Session data key
