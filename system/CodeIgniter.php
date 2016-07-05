@@ -489,14 +489,20 @@ class CodeIgniter
 		}
 		else
 		{
+			// No controller specified - we don't know what to do now.
 			if (empty($this->controller))
 			{
 				throw new PageNotFoundException('Controller is empty.');
 			}
 			else
 			{
-				// Try to autoload the class
-				if ( ! class_exists($this->controller, true) || $this->method[0] === '_')
+				// Try to load manually.
+				include APPPATH.'Controllers/'.$this->router->directory().$this->controller.'.php';
+
+				// Try to autoload the class, both with and
+				// without the namespace
+				if ( (! class_exists($this->controller, true) )
+					 || $this->method[0] === '_')
 				{
 					throw new PageNotFoundException('Controller or its method is not found.');
 				}
