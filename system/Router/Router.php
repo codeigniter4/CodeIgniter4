@@ -377,7 +377,7 @@ class Router implements RouterInterface
 		$segments = $this->validateRequest($segments);
 
 		// If we don't have any segments left - try the default controller;
-		// WARNING: Directories get shifted out of tge segments array.
+		// WARNING: Directories get shifted out of the segments array.
 		if (empty($segments))
 		{
 			$this->setDefaultController();
@@ -451,6 +451,8 @@ class Router implements RouterInterface
 	 */
 	protected function setDirectory(string $dir = null, $append = false)
 	{
+		$dir = ucfirst($dir);
+
 		if ($append !== TRUE || empty($this->directory))
 		{
 			$this->directory = str_replace('.', '', trim($dir, '/')).'/';
