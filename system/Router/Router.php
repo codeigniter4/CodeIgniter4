@@ -400,6 +400,16 @@ class Router implements RouterInterface
 		{
 			$this->params = $segments;
 		}
+
+		// Load the file so that it's available for CodeIgniter.
+		include APPPATH.'Controllers/'.$this->directory.$this->controller.'.php';
+
+		// Ensure the controller stores the fully-qualified class name
+		// We have to check for a length over 1, since by default it will be '\'
+		if (strpos($this->controller, '\\') === false && strlen($this->collection->getDefaultNamespace()) > 1)
+		{
+			$this->controller = str_replace('/', '\\', $this->collection->getDefaultNamespace().$this->directory.$this->controller);
+		}
 	}
 
 	//--------------------------------------------------------------------
