@@ -402,7 +402,11 @@ class Router implements RouterInterface
 		}
 
 		// Load the file so that it's available for CodeIgniter.
-		include APPPATH.'Controllers/'.$this->directory.$this->controller.'.php';
+		$file = APPPATH.'Controllers/'.$this->directory.$this->controller.'.php';
+		if (file_exists($file))
+		{
+			include $file;
+		}
 
 		// Ensure the controller stores the fully-qualified class name
 		// We have to check for a length over 1, since by default it will be '\'
