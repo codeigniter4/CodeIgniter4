@@ -441,7 +441,7 @@ class Router implements RouterInterface
 
 			if ( ! file_exists(APPPATH.'Controllers/'.$test.'.php')
 			     && $directory_override === false
-			     && is_dir(APPPATH.'Controllers/'.$this->directory.$segments[0])
+			     && is_dir(APPPATH.'Controllers/'.$this->directory.ucfirst($segments[0]))
 			)
 			{
 				$this->setDirectory(array_shift($segments), true);
