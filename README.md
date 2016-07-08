@@ -50,9 +50,13 @@ Remember that some components that were part of CodeIgniter 3 are being moved
 to optional packages, with their own repository.
 
 ## Contributing
-We are not accepting contributions from the public until a stable enough base has been formed, 
-and our plans fleshed out and things settle down a little bit. 
-At that point, we will welcome your comments and help creating the best framework for our community.
+We **are** accepting contributions from the community, specifically those identified as part of phase 2.
+
+We will try to manage the process somewhat, by adding a "Help wanted" label to those that we are 
+specifically interested in at any point in time. Join the discussion for those issues, and let us know 
+if you want to take the lead for one of them.
+
+We are not looking for out-of-scope contributions, only those that would be considered part of our controlled evolution!
 
 Please read the *Contributing to CodeIgniter* section in the user guide
 
