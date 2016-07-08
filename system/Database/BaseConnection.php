@@ -842,6 +842,11 @@ abstract class BaseConnection implements ConnectionInterface
 			return $item.$alias;
 		}
 
+		// In some cases, especially 'from', we end up running through
+		// protect_identifiers twice. This algorithm won't work when
+		// it contains the escapeChar so strip it out.
+		$item = trim($item, $this->escapeChar);
+
 		// Is there a table prefix? If not, no need to insert it
 		if ($this->DBPrefix !== '')
 		{

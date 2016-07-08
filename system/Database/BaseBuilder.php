@@ -2,7 +2,7 @@
 
 /**
  * CodeIgniter
- * 
+ *
  * An open source application development framework for PHP
  *
  * This content is released under the MIT License (MIT)
@@ -198,7 +198,7 @@ class BaseBuilder
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param type $tableName
 	 * @param \CodeIgniter\Database\ConnectionInterface $db
 	 * @param array $options
@@ -213,7 +213,6 @@ class BaseBuilder
 
 		$this->db = $db;
 
-		$this->trackAliases($tableName);
 		$this->from($tableName);
 
 		if (count($options))
@@ -1737,8 +1736,6 @@ class BaseBuilder
 	 *
 	 * @return bool TRUE on success, FALSE on failure
 	 * @throws DatabaseException
-	 * @internal param true $bool returns the generated SQL, false executes the query.
-	 *
 	 */
 	public function replace($set = null, $returnSQL = false)
 	{
@@ -2243,7 +2240,7 @@ class BaseBuilder
 		{
 			$sql = $this->_limit($sql);
 		}
-		
+
 		if ($reset_data)
 		{
 			$this->resetWrite();
