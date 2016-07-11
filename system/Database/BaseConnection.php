@@ -1265,7 +1265,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 */
 	public function fieldExists($fieldName, $tableName)
 	{
-		return in_array($fieldName, $this->listFields($tableName));
+		return in_array($fieldName, $this->getFieldNames($tableName));
 	}
 
 	//--------------------------------------------------------------------
