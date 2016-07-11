@@ -79,6 +79,8 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 	 */
 	public function __construct(BaseConfig $config)
 	{
+		parent::__construct($config);
+
 		if ( ! empty($config->sessionSavePath))
 		{
 			$this->savePath = rtrim($config->sessionSavePath, '/\\');
