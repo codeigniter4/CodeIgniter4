@@ -115,7 +115,7 @@ abstract class BaseHandler implements \SessionHandlerInterface
 	public function __construct(BaseConfig $config)
 	{
 		$this->cookiePrefix = $config->cookiePrefix;
-		$this->cookieDomain = $config->cookoieDomain;
+		$this->cookieDomain = $config->cookieDomain;
 		$this->cookiePath   = $config->cookiePath;
 		$this->cookieSecure = $config->cookieSecure;
 		$this->cookieName   = $config->sessionCookieName;
