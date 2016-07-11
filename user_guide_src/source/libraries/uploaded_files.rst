@@ -8,7 +8,7 @@ array directly.
 .. note:: This is not the same as the File Uploading class in previous versions of CodeIgniter. This provides a raw
 	interface to the uploaded files with a few small features. An uploader class will be present in the final release.
 
-.. contents::
+.. contents:: Page Contents
   :local:
 
 ===============

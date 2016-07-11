@@ -6,6 +6,7 @@ Library Reference
     :titlesonly:
 
     benchmark
+    caching
     cli
     content_negotiation
     curlrequest
@@ -17,3 +18,4 @@ Library Reference
     sessions
     uploaded_files
     uri
+	

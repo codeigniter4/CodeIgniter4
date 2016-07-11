@@ -3,7 +3,7 @@ Views
 #####
 
 A view is simply a web page, or a page fragment, like a header, footer, sidebar, etc. In fact,
-views can flexibly be embedded within other views (within other views, etc., etc.) if you need
+views can flexibly be embedded within other views (within other views, etc.) if you need
 this type of hierarchy.
 
 Views are never called directly, they must be loaded by a controller. Remember that in an MVC framework,
@@ -287,7 +287,7 @@ This is intended to be used within views, and is a great aid to modularizing you
 
     <?= view_cell('\App\Libraries\Blog::recentPosts') ?>
 
-In this example, the class ``App\Libraries\Blog` is loaded, and the method ``recentPosts()`` is ran. That method
+In this example, the class ``App\Libraries\Blog`` is loaded, and the method ``recentPosts()`` is ran. That method
 must return a string with the generated HTML. The method used can be either a static method or not. Either way works.
 
 Cell Parameters
