@@ -40,7 +40,7 @@ if (!function_exists('site_url'))
 
 	/**
 	 * Return a site URL to use in views
-	 * 
+	 *
 	 * @param string      $path
 	 * @param string|null $scheme
 	 *
@@ -50,15 +50,15 @@ if (!function_exists('site_url'))
 	{
 		$config = new \Config\App();
 
-		$url = !empty($config->baseURL) ? new \CodeIgniter\HTTP\URI($config->baseURL) : clone(\CodeIgniter\Services::request()->uri);
+		$base = base_url();
 
 		// Add index page
 		if (!empty($config->indexPage))
 		{
-			$path = rtrim($config->indexPage, '/').'/'.$path;
+			$path = rtrim($base, '/').'/'.rtrim($config->indexPage, '/').'/'.$path;
 		}
 
-		$url->setPath($path);
+		$url = new \CodeIgniter\HTTP\URI($path);
 
 		if (!empty($scheme))
 		{
@@ -77,18 +77,19 @@ if (!function_exists('base_url'))
 
 	/**
 	 * Return the base URL to use in views
-	 * 
+	 *
 	 * @param string $path
 	 * @param string $scheme
 	 * @return string
 	 */
 	function base_url(string $path = '', string $scheme = null): string
 	{
-		$config = new \Config\App();
+		$url = \CodeIgniter\Services::request()->uri;
 
-		$url = !empty($config->baseURL) ? new \CodeIgniter\HTTP\URI($config->baseURL) : clone(\CodeIgniter\Services::request()->uri);
-
-		$url->setPath($path);
+		if (! empty($path))
+		{
+			$url = $url->resolveRelativeURI($path);
+		}
 
 		if (!empty($scheme))
 		{
@@ -537,3 +538,5 @@ if (!function_exists('url_title'))
 	}
 
 }
+
+//--------------------------------------------------------------------
