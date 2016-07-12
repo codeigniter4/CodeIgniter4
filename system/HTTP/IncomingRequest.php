@@ -85,14 +85,14 @@ class IncomingRequest extends Request
 
 	/**
 	 * File collection
-	 * 
+	 *
 	 * @var Files\FileCollection
 	 */
 	protected $files;
 
 	/**
 	 * Negotiator
-	 * 
+	 *
 	 * @var \CodeIgniter\HTTP\Negotiate
 	 */
 	protected $negotiate;
@@ -101,7 +101,7 @@ class IncomingRequest extends Request
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param type $config
 	 * @param type $uri
 	 * @param type $body
@@ -177,7 +177,7 @@ class IncomingRequest extends Request
 	}
 
 	//--------------------------------------------------------------------
-	
+
 	/**
 	 * Fetch an item from the $_REQUEST object. This is the simplest way
 	 * to grab data from the request object and can be used in lieu of the
@@ -370,9 +370,14 @@ class IncomingRequest extends Request
 		// set our current domain name, scheme
 		if ( ! empty($baseURL))
 		{
+			// We cannot add the path here, otherwise it's possible
+			// that the routing will not work correctly if we are
+			// within a sub-folder scheme. So it's modified in
+			// the
 			$this->uri->setScheme(parse_url($baseURL, PHP_URL_SCHEME));
 			$this->uri->setHost(parse_url($baseURL, PHP_URL_HOST));
 			$this->uri->setPort(parse_url($baseURL, PHP_URL_PORT));
+			$this->uri->setPath(parse_url($baseURL, PHP_URL_PATH));
 		}
 		else
 		{
@@ -423,7 +428,7 @@ class IncomingRequest extends Request
 					: $this->parseRequestURI();
 				break;
 		}
-		
+
 		return $path;
 	}
 

@@ -456,7 +456,26 @@ class CodeIgniter
 		// $routes is defined in Config/Routes.php
 		$this->router = Services::router($routes);
 
-		$path = is_cli() ? $this->request->getPath() : $this->request->uri->getPath();
+		if (is_cli())
+		{
+			$path = $this->request->getPath();
+		}
+		else
+		{
+			$path = $this->request->uri->getPath();
+
+			// For web requests, we need to remove the path
+			// portion of the baseURL, if set, otherwise
+			// route portions won't be discovered correctly.
+			if (! empty($this->config->baseURL))
+			{
+				$basePath = parse_url($this->config->baseURL, PHP_URL_PATH);
+				$path     = strpos($path, $basePath) === 0
+					        ? substr($path, strlen($basePath) -1)
+       			            : $path;
+			}
+		}
+
 
 		$this->benchmark->stop('bootstrap');
 		$this->benchmark->start('routing');
