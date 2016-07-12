@@ -172,7 +172,7 @@ Any site that lives long enough is bound to have pages that move. You can specif
 to other routes with the ``addRedirect()`` method. The first parameter is the URI pattern for the old route. The
 second parameter is either the new URI to redirect to, or the name of a named route. The third parameter is
 the HTTP status code that should be sent along with the redirect. The default value is ``302`` which is a temporary
-redirect and is recommended in most cases.::
+redirect and is recommended in most cases::
 
     $routes->add('users/profile', 'Users::profile', ['as' => 'profile']);
 
@@ -283,7 +283,7 @@ Command-Line only Routes
 You can create routes that work only from the command-line, and are inaccessible from the web browser, with the
 ``cli()`` method. This is great for building cronjobs or CLI-only tools. Any route created by any of the HTTP-verb-based
 route methods will also be inaccessible from the CLI, but routes created by the ``any()`` method will still be
-available from the command line.::
+available from the command line::
 
 	$routes->cli('migrate', 'App\Database::migrate');
 
@@ -306,7 +306,7 @@ name::
 
 The second parameter accepts an array of options that can be used to modify the routes that are generated. While these
 routes are geared toward API-usage, where more methods are allowed, you can pass in the 'websafe' option to have it
-generate update and delete methods that work with HTML forms.
+generate update and delete methods that work with HTML forms::
 
     $routes->resource('photos', ['websafe' => 1]);
 
@@ -340,7 +340,7 @@ Limit the Routes Made
 ---------------------
 
 You can restrict the routes generated with the ``only`` option. This should be an array of method names that should
-be created. Only routes that match one of these methods will be created. The rest will be ignored.::
+be created. Only routes that match one of these methods will be created. The rest will be ignored::
 
     $routes->resources('photos', ['only' => ['listAll', 'show']]);
 
@@ -416,7 +416,7 @@ You can offset the matched parameters in your route by any numeric value with th
 value being the number of segments to offset.
 
 This can be beneficial when developing API's with the first URI segment being the version number. It can also
-be used when the first parameter is a language string.::
+be used when the first parameter is a language string::
 
 	$routes->get('users/(:num)', 'users/show/$1', ['offset' => 1]);
 
