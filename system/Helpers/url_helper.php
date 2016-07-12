@@ -35,10 +35,9 @@
  * @since	Version 3.0.0
  * @filesource
  */
-
-
-if (! function_exists('site_url'))
+if (!function_exists('site_url'))
 {
+
 	/**
 	 * Return a site URL to use in views
 	 * 
@@ -51,31 +50,31 @@ if (! function_exists('site_url'))
 	{
 		$config = new \Config\App();
 
-		$url = ! empty($config->baseURL)
-			? new \CodeIgniter\HTTP\URI($config->baseURL)
-			: clone(\CodeIgniter\Services::request()->uri);
+		$url = !empty($config->baseURL) ? new \CodeIgniter\HTTP\URI($config->baseURL) : clone(\CodeIgniter\Services::request()->uri);
 
 		// Add index page
-		if (! empty($config->indexPage))
+		if (!empty($config->indexPage))
 		{
 			$path = rtrim($config->indexPage, '/').'/'.$path;
 		}
 
 		$url->setPath($path);
 
-		if (! empty($scheme))
+		if (!empty($scheme))
 		{
 			$url->setScheme($scheme);
 		}
 
-		return (string)$url;
+		return (string) $url;
 	}
+
 }
 
 //--------------------------------------------------------------------
 
-if (! function_exists('base_url'))
+if (!function_exists('base_url'))
 {
+
 	/**
 	 * Return the base URL to use in views
 	 * 
@@ -87,25 +86,25 @@ if (! function_exists('base_url'))
 	{
 		$config = new \Config\App();
 
-		$url = ! empty($config->baseURL)
-			? new \CodeIgniter\HTTP\URI($config->baseURL)
-			: clone(\CodeIgniter\Services::request()->uri);
+		$url = !empty($config->baseURL) ? new \CodeIgniter\HTTP\URI($config->baseURL) : clone(\CodeIgniter\Services::request()->uri);
 
 		$url->setPath($path);
 
-		if (! empty($scheme))
+		if (!empty($scheme))
 		{
 			$url->setScheme($scheme);
 		}
 
-		return (string)$url;
+		return (string) $url;
 	}
+
 }
 
 //--------------------------------------------------------------------
 
-if (! function_exists('current_url'))
+if (!function_exists('current_url'))
 {
+
 	/**
 	 * Current URL
 	 *
@@ -116,15 +115,15 @@ if (! function_exists('current_url'))
 	 */
 	function current_url(bool $returnObject = false)
 	{
-		return $returnObject === true
-			? \CodeIgniter\Services::request()->uri
-			: (string)\CodeIgniter\Services::request()->uri;
+		return $returnObject === true ? \CodeIgniter\Services::request()->uri : (string) \CodeIgniter\Services::request()->uri;
 	}
+
 }
 //--------------------------------------------------------------------
 
-if (! function_exists('uri_string'))
+if (!function_exists('uri_string'))
 {
+
 	/**
 	 * URL String
 	 *
@@ -136,12 +135,14 @@ if (! function_exists('uri_string'))
 	{
 		return \CodeIgniter\Services::request()->uri->getPath();
 	}
+
 }
 
 //--------------------------------------------------------------------
 
-if (! function_exists('index_page'))
+if (!function_exists('index_page'))
 {
+
 	/**
 	 * Index page
 	 *
@@ -155,12 +156,14 @@ if (! function_exists('index_page'))
 
 		return $config->indexPage;
 	}
+
 }
 
 // ------------------------------------------------------------------------
 
-if ( ! function_exists('anchor'))
+if (!function_exists('anchor'))
 {
+
 	/**
 	 * Anchor Link
 	 *
@@ -175,9 +178,7 @@ if ( ! function_exists('anchor'))
 	{
 		$title = (string) $title;
 
-		$site_url = is_array($uri)
-			? site_url($uri)
-			: (preg_match('#^(\w+:)?//#i', $uri) ? $uri : site_url($uri));
+		$site_url = is_array($uri) ? site_url($uri) : (preg_match('#^(\w+:)?//#i', $uri) ? $uri : site_url($uri));
 
 		if ($title === '')
 		{
@@ -191,12 +192,14 @@ if ( ! function_exists('anchor'))
 
 		return '<a href="'.$site_url.'"'.$attributes.'>'.$title.'</a>';
 	}
+
 }
 
 // ------------------------------------------------------------------------
 
-if ( ! function_exists('anchor_popup'))
+if (!function_exists('anchor_popup'))
 {
+
 	/**
 	 * Anchor Link - Pop-up version
 	 *
@@ -210,8 +213,8 @@ if ( ! function_exists('anchor_popup'))
 	 */
 	function anchor_popup($uri = '', $title = '', $attributes = FALSE)
 	{
-		$title = (string) $title;
-		$site_url = preg_match('#^(\w+:)?//#i', $uri) ? $uri : site_url($uri);
+		$title		 = (string) $title;
+		$site_url	 = preg_match('#^(\w+:)?//#i', $uri) ? $uri : site_url($uri);
 
 		if ($title === '')
 		{
@@ -223,14 +226,14 @@ if ( ! function_exists('anchor_popup'))
 			return '<a href="'.$site_url.'" onclick="window.open(\''.$site_url."', '_blank'); return false;\">".$title.'</a>';
 		}
 
-		if ( ! is_array($attributes))
+		if (!is_array($attributes))
 		{
 			$attributes = array($attributes);
 
 			// Ref: http://www.w3schools.com/jsref/met_win_open.asp
 			$window_name = '_blank';
 		}
-		elseif ( ! empty($attributes['window_name']))
+		elseif (!empty($attributes['window_name']))
 		{
 			$window_name = $attributes['window_name'];
 			unset($attributes['window_name']);
@@ -249,15 +252,17 @@ if ( ! function_exists('anchor_popup'))
 		$attributes = _stringify_attributes($attributes);
 
 		return '<a href="'.$site_url
-			.'" onclick="window.open(\''.$site_url."', '".$window_name."', '"._stringify_attributes($atts, TRUE)."'); return false;\""
-			.$attributes.'>'.$title.'</a>';
+				.'" onclick="window.open(\''.$site_url."', '".$window_name."', '"._stringify_attributes($atts, TRUE)."'); return false;\""
+				.$attributes.'>'.$title.'</a>';
 	}
+
 }
 
 // ------------------------------------------------------------------------
 
-if ( ! function_exists('mailto'))
+if (!function_exists('mailto'))
 {
+
 	/**
 	 * Mailto Link
 	 *
@@ -277,12 +282,14 @@ if ( ! function_exists('mailto'))
 
 		return '<a href="mailto:'.$email.'"'._stringify_attributes($attributes).'>'.$title.'</a>';
 	}
+
 }
 
 // ------------------------------------------------------------------------
 
-if ( ! function_exists('safe_mailto'))
+if (!function_exists('safe_mailto'))
 {
+
 	/**
 	 * Encoded Mailto Link
 	 *
@@ -355,23 +362,24 @@ if ( ! function_exists('safe_mailto'))
 				$temp[] = $ordinal;
 				if (count($temp) === $count)
 				{
-					$number = ($count === 3)
-							? (($temp[0] % 16) * 4096) + (($temp[1] % 64) * 64) + ($temp[2] % 64)
-							: (($temp[0] % 32) * 64) + ($temp[1] % 64);
-					$x[] = '|'.$number;
-					$count = 1;
-					$temp = array();
+					$number	 = ($count === 3) ? (($temp[0] % 16) * 4096) + (($temp[1] % 64) * 64) + ($temp[2] % 64) : (($temp[0] % 32) * 64) + ($temp[1] % 64);
+					$x[]	 = '|'.$number;
+					$count	 = 1;
+					$temp	 = array();
 				}
 			}
 		}
 
-		$x[] = '<'; $x[] = '/'; $x[] = 'a'; $x[] = '>';
+		$x[] = '<';
+		$x[] = '/';
+		$x[] = 'a';
+		$x[] = '>';
 
 		$x = array_reverse($x);
 
 		$output = "<script type=\"text/javascript\">\n"
-			."\t//<![CDATA[\n"
-			."\tvar l=new Array();\n";
+				."\t//<![CDATA[\n"
+				."\tvar l=new Array();\n";
 
 		for ($i = 0, $c = count($x); $i < $c; $i++)
 		{
@@ -379,20 +387,22 @@ if ( ! function_exists('safe_mailto'))
 		}
 
 		$output .= "\n\tfor (var i = l.length-1; i >= 0; i=i-1) {\n"
-			."\t\tif (l[i].substring(0, 1) === '|') document.write(\"&#\"+unescape(l[i].substring(1))+\";\");\n"
-			."\t\telse document.write(unescape(l[i]));\n"
-			."\t}\n"
-			."\t//]]>\n"
-			.'</script>';
+				."\t\tif (l[i].substring(0, 1) === '|') document.write(\"&#\"+unescape(l[i].substring(1))+\";\");\n"
+				."\t\telse document.write(unescape(l[i]));\n"
+				."\t}\n"
+				."\t//]]>\n"
+				.'</script>';
 
 		return $output;
 	}
+
 }
 
 // ------------------------------------------------------------------------
 
-if ( ! function_exists('auto_link'))
+if (!function_exists('auto_link'))
 {
+
 	/**
 	 * Auto-linker
 	 *
@@ -424,7 +434,7 @@ if ( ! function_exists('auto_link'))
 				//
 				// With PREG_OFFSET_CAPTURE, both of the above is an array,
 				// where the actual value is held in [0] and its offset at the [1] index.
-				$a = '<a href="'.(strpos($match[1][0], '/') ? '' : 'http://').$match[0][0].'"'.$target.'>'.$match[0][0].'</a>';
+				$a	 = '<a href="'.(strpos($match[1][0], '/') ? '' : 'http://').$match[0][0].'"'.$target.'>'.$match[0][0].'</a>';
 				$str = substr_replace($str, $a, $match[0][1], strlen($match[0][0]));
 			}
 		}
@@ -443,12 +453,14 @@ if ( ! function_exists('auto_link'))
 
 		return $str;
 	}
+
 }
 
 // ------------------------------------------------------------------------
 
-if ( ! function_exists('prep_url'))
+if (!function_exists('prep_url'))
 {
+
 	/**
 	 * Prep URL
 	 *
@@ -459,26 +471,23 @@ if ( ! function_exists('prep_url'))
 	 */
 	function prep_url($str = '')
 	{
-		if ($str === 'http://' OR $str === '')
+		$uri = new \CodeIgniter\HTTP\URI($path);
+
+		if (empty($uri->getScheme()))
 		{
-			return '';
+			$uri->setScheme($scheme);
 		}
 
-		$url = parse_url($str);
-
-		if ( ! $url OR ! isset($url['scheme']))
-		{
-			return 'http://'.$str;
-		}
-
-		return $str;
+		return (string) $uri;
 	}
+
 }
 
 // ------------------------------------------------------------------------
 
-if ( ! function_exists('url_title'))
+if (!function_exists('url_title'))
 {
+
 	/**
 	 * Create URL Title
 	 *
@@ -489,7 +498,7 @@ if ( ! function_exists('url_title'))
 	 * @todo	Remove old 'dash' and 'underscore' usage in 3.1+.
 	 * @param	string	$str		Input string
 	 * @param	string	$separator	Word separator
-	 *			(usually '-' or '_')
+	 * 			(usually '-' or '_')
 	 * @param	bool	$lowercase	Whether to transform the output string to lowercase
 	 * @return	string
 	 */
@@ -507,10 +516,10 @@ if ( ! function_exists('url_title'))
 		$q_separator = preg_quote($separator, '#');
 
 		$trans = array(
-			'&.+?;'			=> '',
-			'[^\w\d _-]'		=> '',
-			'\s+'			=> $separator,
-			'('.$q_separator.')+'	=> $separator
+			'&.+?;'					 => '',
+			'[^\w\d _-]'			 => '',
+			'\s+'					 => $separator,
+			'('.$q_separator.')+'	 => $separator
 		);
 
 		$str = strip_tags($str);
@@ -526,60 +535,5 @@ if ( ! function_exists('url_title'))
 
 		return trim(trim($str, $separator));
 	}
-}
 
-// ------------------------------------------------------------------------
-
-if ( ! function_exists('redirect'))
-{
-	/**
-	 * Header Redirect
-	 *
-	 * Header redirect in two flavors
-	 * For very fine grained control over headers, you could use the Output
-	 * Library's set_header() function.
-	 *
-	 * @param	string	$uri	URL
-	 * @param	string	$method	Redirect method
-	 *			'auto', 'location' or 'refresh'
-	 * @param	int	$code	HTTP Response status code
-	 * @return	void
-	 */
-	function redirect($uri = '', $method = 'auto', $code = NULL)
-	{
-		if ( ! preg_match('#^(\w+:)?//#i', $uri))
-		{
-			$uri = site_url($uri);
-		}
-
-		// IIS environment likely? Use 'refresh' for better compatibility
-		if ($method === 'auto' && isset($_SERVER['SERVER_SOFTWARE']) && strpos($_SERVER['SERVER_SOFTWARE'], 'Microsoft-IIS') !== FALSE)
-		{
-			$method = 'refresh';
-		}
-		elseif ($method !== 'refresh' && (empty($code) OR ! is_numeric($code)))
-		{
-			if (isset($_SERVER['SERVER_PROTOCOL'], $_SERVER['REQUEST_METHOD']) && $_SERVER['SERVER_PROTOCOL'] === 'HTTP/1.1')
-			{
-				$code = ($_SERVER['REQUEST_METHOD'] !== 'GET')
-					? 303	// reference: http://en.wikipedia.org/wiki/Post/Redirect/Get
-					: 307;
-			}
-			else
-			{
-				$code = 302;
-			}
-		}
-
-		switch ($method)
-		{
-			case 'refresh':
-				header('Refresh:0;url='.$uri);
-				break;
-			default:
-				header('Location: '.$uri, TRUE, $code);
-				break;
-		}
-		exit;
-	}
 }
