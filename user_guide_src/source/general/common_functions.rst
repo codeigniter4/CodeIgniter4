@@ -223,6 +223,15 @@ Miscellaneous Functions
 	function will share the same instance of the service, where **service** returns a new
 	instance every time.
 
+.. php:function:: stringify_attributes ( $attributes [, $js] )
+
+	:param   mixed    $attributes: string, array of key value pairs, or object
+	:param   boolean  $js: TRUE if values do not need quotes (Javascript-style)
+	:returns: String containing the attribute key/value pairs, comma-separated
+	:rtype: string
+
+	Helper function used to convert a string, array, or object of attributes to a string.
+
 
 ================
 Global Constants
