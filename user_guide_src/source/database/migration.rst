@@ -220,7 +220,7 @@ Preference                 Default                Options                    Des
 **path**                   APPPATH.'migrations/'  None                       The path to your migrations folder.
 **currentVersion**         0                      None                       The current version your database should use.
 **table**                  migrations             None                       The table name for storing the schema version number.
-**type**                  'timestamp'            'timestamp' / 'sequential'  The type of numeric identifier used to name migration files.
+**type**                   'timestamp'            'timestamp' / 'sequential' The type of numeric identifier used to name migration files.
 ========================== ====================== ========================== =============================================================
 
 ***************

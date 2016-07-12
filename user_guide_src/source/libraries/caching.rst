@@ -7,8 +7,8 @@ fast and dynamic caching. All but file-based caching require specific
 server requirements, and a Fatal Exception will be thrown if server
 requirements are not met.
 
-.. contents::
-:local:
+.. contents:: Page Contents
+	:local:
 
 *************
 Example Usage
@@ -74,129 +74,138 @@ The settings for the Redis server that you wish to use when using the ``Redis`` 
 Class Reference
 ===============
 
-	.. php:method:: isSupported($handler)
+.. php:method:: isSupported($handler)
 
-		:param	string	$handler: the name of the caching handler
-    		:returns:	TRUE if supported, FALSE if not
-    		:rtype:	bool
+	:param	string	$handler: the name of the caching handler
+	:returns:	TRUE if supported, FALSE if not
+	:rtype:	bool
 
-	.. php:method:: get($id)
+.. php:method:: get($id)
 
-		:param	string	$id: Cache item name
-    		:returns:	Item value or FALSE if not found
-    		:rtype:	mixed
+	:param	string	$id: Cache item name
+	:returns:	Item value or FALSE if not found
+	:rtype:	mixed
 
-    		This method will attempt to fetch an item from the cache store. If the
-    		item does not exist, the method will return FALSE.
-    		::
+	This method will attempt to fetch an item from the cache store. If the
+	item does not exist, the method will return FALSE.
+    		
+	Example::
 
-			$foo = $cache->get('my_cached_item');
+		$foo = $cache->get('my_cached_item');
 
-	.. php:method:: save($id, $data[, $ttl = 60[, $raw = FALSE]])
+.. php:method:: save($id, $data[, $ttl = 60[, $raw = FALSE]])
 
-		:param	string	$id: Cache item name
-    		:param	mixed	$data: the data to save
-    		:param	int	$ttl: Time To Live, in seconds (default 60)
-    		:param	bool	$raw: Whether to store the raw value
-    		:returns:	TRUE on success, FALSE on failure
-    		:rtype:	string
+	:param	string	$id: Cache item name
+	:param	mixed	$data: the data to save
+	:param	int	$ttl: Time To Live, in seconds (default 60)
+	:param	bool	$raw: Whether to store the raw value
+	:returns:	TRUE on success, FALSE on failure
+	:rtype:	string
 
-    		This method will save an item to the cache store. If saving fails, the
-    		method will return FALSE.
-    		::
+	This method will save an item to the cache store. If saving fails, the
+	method will return FALSE.
 
-			$cache->save('cache_item_id', 'data_to_cache');
+	Example::
 
-		.. note:: The ``$raw`` parameter is only utilized by Memcache,
-in order to allow usage of ``increment()`` and ``decrement()``.
+		$cache->save('cache_item_id', 'data_to_cache');
 
-	.. php:method:: delete($id)
+.. note:: The ``$raw`` parameter is only utilized by Memcache,
+		  in order to allow usage of ``increment()`` and ``decrement()``.
 
-		:param	string	$id: name of cached item
-		:returns:	TRUE on success, FALSE on failure
-		:rtype:	bool
+.. php:method:: delete($id)
 
-		This method will delete a specific item from the cache store. If item
-		deletion fails, the method will return FALSE.
-		::
+	:param	string	$id: name of cached item
+	:returns:	TRUE on success, FALSE on failure
+	:rtype:	bool
 
-			$cache->delete('cache_item_id');
+	This method will delete a specific item from the cache store. If item
+	deletion fails, the method will return FALSE.
+	
+	Example::
 
-	.. php:method:: increment($id[, $offset = 1])
+		$cache->delete('cache_item_id');
 
-		:param	string	$id: Cache ID
-    		:param	int	$offset: Step/value to add
-    		:returns:	New value on success, FALSE on failure
-    		:rtype:	mixed
+.. php:method:: increment($id[, $offset = 1])
 
-    		Performs atomic incrementation of a raw stored value.
-    		::
+	:param	string	$id: Cache ID
+	:param	int	$offset: Step/value to add
+	:returns:	New value on success, FALSE on failure
+   	:rtype:	mixed
 
-			// 'iterator' has a value of 2
+	Performs atomic incrementation of a raw stored value.
+    
+	Example::
 
-			$cache->increment('iterator'); // 'iterator' is now 3
+		// 'iterator' has a value of 2
 
-			$cache->increment('iterator', 3); // 'iterator' is now 6
+		$cache->increment('iterator'); // 'iterator' is now 3
 
-	.. php:method:: decrement($id[, $offset = 1])
+		$cache->increment('iterator', 3); // 'iterator' is now 6
 
-		:param	string	$id: Cache ID
-    		:param	int	$offset: Step/value to reduce by
-    		:returns:	New value on success, FALSE on failure
-    		:rtype:	mixed
+.. php:method:: decrement($id[, $offset = 1])
 
-    		Performs atomic decrementation of a raw stored value.
-    		::
+	:param	string	$id: Cache ID
+	:param	int	$offset: Step/value to reduce by
+	:returns:	New value on success, FALSE on failure
+	:rtype:	mixed
 
-			// 'iterator' has a value of 6
+	Performs atomic decrementation of a raw stored value.
+    		
+	Example::
 
-			$cache->decrement('iterator'); // 'iterator' is now 5
+		// 'iterator' has a value of 6
 
-			$cache->decrement('iterator', 2); // 'iterator' is now 3
+		$cache->decrement('iterator'); // 'iterator' is now 5
 
-	.. php:method:: clean()
+		$cache->decrement('iterator', 2); // 'iterator' is now 3
 
-		:returns:	TRUE on success, FALSE on failure
-		:rtype:	bool
+.. php:method:: clean()
 
-		This method will 'clean' the entire cache. If the deletion of the
-		cache files fails, the method will return FALSE.
-		::
+	:returns:	TRUE on success, FALSE on failure
+	:rtype:	bool
+
+	This method will 'clean' the entire cache. If the deletion of the
+	cache files fails, the method will return FALSE.
+	
+	Example::
 
 			$cache->clean();
 
-	.. php:method:: cache_info()
+.. php:method:: cache_info()
 
-		:returns:	Information on the entire cache database
-		:rtype:	mixed
+	:returns:	Information on the entire cache database
+	:rtype:	mixed
 
-		This method will return information on the entire cache.
-		::
+	This method will return information on the entire cache.
+	
+	Example::
 
-			var_dump($cache->cache_info());
+		var_dump($cache->cache_info());
 
-		.. note:: The information returned and the structure of the data is dependent
-on which adapter is being used.
+.. note:: The information returned and the structure of the data is dependent
+		  on which adapter is being used.
 
-	.. php:method:: getMetadata($id)
+.. php:method:: getMetadata($id)
 
-		:param	string	$id: Cache item name
-		:returns:	Metadata for the cached item
-		:rtype:	mixed
+	:param	string	$id: Cache item name
+	:returns:	Metadata for the cached item
+	:rtype:	mixed
 
-		This method will return detailed information on a specific item in the
-		cache.
-		::
+	This method will return detailed information on a specific item in the
+	cache.
+	
+	Example::
 
-			var_dump($cache->getMetadata('my_cached_item'));
+		var_dump($cache->getMetadata('my_cached_item'));
 
-		.. note:: The information returned and the structure of the data is dependent
-on which adapter is being used.
+.. note:: The information returned and the structure of the data is dependent
+          on which adapter is being used.
 
 *******
 Drivers
 *******
 
+==================
 File-based Caching
 ==================
 
@@ -205,6 +214,7 @@ allows for pieces of view files to be cached. Use this with care, and
 make sure to benchmark your application, as a point can come where disk
 I/O will negate positive gains by caching.
 
+=================
 Memcached Caching
 =================
 
@@ -213,6 +223,7 @@ Multiple Memcached servers can be specified in the cache configuration file.
 For more information on Memcached, please see
 `http://php.net/memcached <http://php.net/memcached>`_.
 
+================
 WinCache Caching
 ================
 
@@ -221,6 +232,7 @@ Under Windows, you can also utilize the WinCache driver.
 For more information on WinCache, please see
 `http://php.net/wincache <http://php.net/wincache>`_.
 
+=============
 Redis Caching
 =============
 
@@ -238,6 +250,7 @@ Available options are::
 For more information on Redis, please see
 `http://redis.io <http://redis.io>`_.
 
+===========
 Dummy Cache
 ===========
 
