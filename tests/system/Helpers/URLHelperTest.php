@@ -116,6 +116,14 @@ class URLHelperTest extends \CIUnitTestCase
 		$_SERVER['HTTP_HOST']	 = 'example.com';
 		$_SERVER['REQUEST_URI']	 = '/';
 
+		// Since we're on a CLI, we must provide our own URI
+		$config			 = new App();
+		$config->baseURL = 'http://example.com/public';
+		$request		 = Services::request($config);
+		$request->uri	 = new URI('http://example.com/public');
+
+		Services::injectMock('request', $request);
+
 		$this->assertEquals('http://example.com/', current_url());
 	}
 
@@ -123,6 +131,14 @@ class URLHelperTest extends \CIUnitTestCase
 	{
 		$_SERVER['HTTP_HOST']	 = 'example.com';
 		$_SERVER['REQUEST_URI']	 = '/';
+
+		// Since we're on a CLI, we must provide our own URI
+		$config			 = new App();
+		$config->baseURL = 'http://example.com/public';
+		$request		 = Services::request($config);
+		$request->uri	 = new URI('http://example.com/public');
+
+		Services::injectMock('request', $request);
 
 		$url = current_url(true);
 

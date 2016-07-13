@@ -476,7 +476,7 @@ if (!function_exists('prep_url'))
 
 		if (empty($uri->getScheme()))
 		{
-			$uri->setScheme($scheme);
+			$uri->setScheme('http');
 		}
 
 		return (string) $uri;
