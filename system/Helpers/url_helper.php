@@ -472,7 +472,7 @@ if (!function_exists('prep_url'))
 	 */
 	function prep_url($str = '')
 	{
-		$uri = new \CodeIgniter\HTTP\URI($path);
+		$uri = new \CodeIgniter\HTTP\URI($str);
 
 		if (empty($uri->getScheme()))
 		{
@@ -526,7 +526,8 @@ if (!function_exists('url_title'))
 		$str = strip_tags($str);
 		foreach ($trans as $key => $val)
 		{
-			$str = preg_replace('#'.$key.'#i'.(UTF8_ENABLED ? 'u' : ''), $val, $str);
+//			$str = preg_replace('#'.$key.'#i'.( UTF8_ENABLED ? 'u' : ''), $val, $str);
+			$str = preg_replace('#'.$key.'#iu', $val, $str);
 		}
 
 		if ($lowercase === TRUE)
