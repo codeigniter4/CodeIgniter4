@@ -13,21 +13,28 @@ class Filters
 	];
 
 	// Always applied before every request
-	public $global = [
-		'isLoggedIn'               => ['except' => 'login'],
-		'CodeIgniter\Filters\CSRF' => '*'
-	];
-
-	public $routes = [
-		'admin/*' => [
-			'before' => ['isLoggedIn'],
-			'after' => ['somethingElse']
+	public $globals = [
+		'before' => [
+			'isLoggedIn'               => ['except' => 'login'],
+			'CodeIgniter\Filters\CSRF' => '*',
+			'FullPageCache'            => '*'
+		],
+		'after' => [
+			'FullPageCache'            => '*'
 		]
 	];
+
+	// Works on all of a particular HTTP method
+	// (GET, POST, etc) as BEFORE filters only
+	public $methods = [
+		'post' => ['CSRF', 'throttle'],
+		'ajax' => ['restrictToAJAX'],
+		'cli'  => ['restrictToCLI']
+	];
+
+	public $filters = [
+		'isLoggedIn' => ['before' => ['account/*', 'profiles/*']],
+		'adminAuth'  => ['before' => ['admin/*']],
+		'apiPrep'    => ['before' => ['api/*']],
+	];
 }
-
-public $filters = [
-
-	'isLoggedIn'    => ['admin/*', 'profiles/*', 'users/*', 'posts/*/store', 'posts/*/destroy'],
-	'somethignElse' => ['admin/*', 'profiles/*', 'users/*', 'posts/*/store', 'posts/*/destroy'],
-];
