@@ -103,14 +103,14 @@ a new ``News`` controller is defined. Create the new controller at
 		{
 			$model = new NewsModel();
 
-			$data = ['news'] = $model->getNews();
+			$data['news'] = $model->getNews();
 		}
 
 		public function view($slug = null)
 		{
 		    $model = new NewsModel();
 
-			$data = ['news'] = $model->getNews($slug);
+			$data['news'] = $model->getNews($slug);
 		}
 	}
 
