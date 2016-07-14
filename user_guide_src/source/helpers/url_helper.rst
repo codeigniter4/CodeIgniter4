@@ -27,7 +27,7 @@ The following functions are available:
 
 	:param	string	$uri: URI string
 	:param	string	$protocol: Protocol, e.g. 'http' or 'https'
-	:param	\Config\App	$altConfig: Alternate configuration to use
+	:param	\\Config\\App	$altConfig: Alternate configuration to use
 	:returns:	Site URL
 	:rtype:	string
 
@@ -57,7 +57,7 @@ The following functions are available:
         different site than yours, which contains different configuration preferences.
         We use this for unit testing the framework itself.
 
-.. php:function:: base_url($uri = '', $protocol = NULL)
+.. php:function:: base_url([$uri = ''[, $protocol = NULL]])
 
 	:param	string	$uri: URI string
 	:param	string	$protocol: Protocol, e.g. 'http' or 'https'
@@ -87,20 +87,18 @@ The following functions are available:
 	This would give you something like:
 	*http://example.com/images/icons/edit.png*
 
-	This function is an alias for ``CI_Config::base_url()``. For more info,
-	please see the :doc:`Config Library <../libraries/config>` documentation.
+.. php:function:: current_url([$returnObject = false])
 
-.. php:function:: current_url()
-
+	:param	boolean	$returnObject: True if you would like an object returned, instead of a string.
 	:returns:	The current URL
-	:rtype:	string
+	:rtype:	string|URI
 
 	Returns the full URL (including segments) of the page being currently
 	viewed.
 
-	.. note:: Calling this function is the same as doing this:
-		|
-		| site_url(uri_string());
+	.. note:: Calling this function is the same as doing this::
+		
+		base_url(uri_string());
 
 
 .. php:function:: uri_string()
@@ -108,7 +106,7 @@ The following functions are available:
 	:returns:	An URI string
 	:rtype:	string
 
-	Returns the URI segments of any page that contains this function.
+	Returns the path part of your current URL.
 	For example, if your URL was this::
 
 		http://some-site.com/blog/comments/123
@@ -117,12 +115,10 @@ The following functions are available:
 
 		blog/comments/123
 
-	This function is an alias for ``CI_Config::uri_string()``. For more info,
-	please see the :doc:`Config Library <../libraries/config>` documentation.
 
+.. php:function:: index_page([$altConfig = NULL])
 
-.. php:function:: index_page()
-
+	:param	\Config\App	$altConfig: Alternate configuration to use
 	:returns:	'index_page' value
 	:rtype:	mixed
 
@@ -130,6 +126,11 @@ The following functions are available:
 	Example::
 
 		echo index_page();
+
+        As with :php:func:`site_url()`, you may specify an alternate configuration.
+        You may find the alternate configuration useful if generating URLs for a
+        different site than yours, which contains different configuration preferences.
+        We use this for unit testing the framework itself.
 
 .. php:function:: anchor($uri = '', $title = '', $attributes = '')
 

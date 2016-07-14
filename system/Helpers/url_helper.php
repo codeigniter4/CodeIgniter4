@@ -41,14 +41,18 @@ if (!function_exists('site_url'))
 	/**
 	 * Return a site URL to use in views
 	 *
-	 * @param string      $path
+	 * @param string|array      $path
 	 * @param string|null $scheme
-	 * @param \Cpnfig\App|null	$altConfig	Alternate configuration to use
+	 * @param \Config\App|null	$altConfig	Alternate configuration to use
 	 *
 	 * @return string
 	 */
-	function site_url(string $path = '', string $scheme = null, \Config\App $altConfig = null): string
+	function site_url($path = '', string $scheme = null, \Config\App $altConfig = null): string
 	{
+		// convert segment array to string
+		if (is_array($path))
+			$path = implode('/', $path);
+
 		// use alternate config if provided, else default one
 		$config = empty($altConfig) ? new \Config\App() : $altConfig;
 
@@ -83,12 +87,16 @@ if (!function_exists('base_url'))
 	/**
 	 * Return the base URL to use in views
 	 *
-	 * @param string $path
+	 * @param string|array $path
 	 * @param string $scheme
 	 * @return string
 	 */
 	function base_url(string $path = '', string $scheme = null): string
 	{
+		// convert segment array to string
+		if (is_array($path))
+			$path = implode('/', $path);
+
 		$url = \CodeIgniter\Services::request()->uri;
 
 		if (!empty($path))
@@ -117,7 +125,9 @@ if (!function_exists('current_url'))
 	 * Returns the full URL (including segments) of the page where this
 	 * function is placed
 	 *
-	 * @return	string
+	 * @param boolean $returnObject True to return an object instead of a strong
+	 * 
+	 * @return	string|URI
 	 */
 	function current_url(bool $returnObject = false)
 	{
@@ -133,7 +143,7 @@ if (!function_exists('uri_string'))
 	/**
 	 * URL String
 	 *
-	 * Returns the URI segments.
+	 * Returns the path part of the current URL
 	 *
 	 * @return	string
 	 */
@@ -154,11 +164,14 @@ if (!function_exists('index_page'))
 	 *
 	 * Returns the "index_page" from your config file
 	 *
+	 * @param \Config\App|null	$altConfig	Alternate configuration to use
 	 * @return	string
 	 */
-	function index_page()
+	function index_page(\Config\App $altConfig = null)
 	{
-		$config = new \Config\App();
+		// use alternate config if provided, else default one
+		$config = empty($altConfig) ? new \Config\App() : $altConfig;
+
 
 		return $config->indexPage;
 	}
