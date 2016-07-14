@@ -33,6 +33,54 @@ class URLHelperTest extends \CIUnitTestCase
 		$this->assertEquals('http://example.com/index.php/', site_url());
 	}
 
+	public function testSiteURLNoIndex()
+	{
+		$_SERVER['HTTP_HOST']	 = 'example.com';
+		$_SERVER['REQUEST_URI']	 = '/';
+
+		$config				 = new App();
+		$config->baseURL	 = '';
+		$config->indexPage	 = '';
+		$request			 = Services::request($config);
+		$request->uri		 = new URI('http://example.com/');
+
+		Services::injectMock('request', $request);
+
+		$this->assertEquals('http://example.com/', site_url());
+	}
+
+	public function testSiteURLDifferentIndex()
+	{
+		$_SERVER['HTTP_HOST']	 = 'example.com';
+		$_SERVER['REQUEST_URI']	 = '/';
+
+		$config				 = new App();
+		$config->baseURL	 = '';
+		$config->indexPage	 = 'banana.php';
+		$request			 = Services::request($config);
+		$request->uri		 = new URI('http://example.com/banana.php/');
+
+		Services::injectMock('request', $request);
+
+		$this->assertEquals('http://example.com', site_url());
+	}
+
+	public function testSiteURLNoIndexButPath()
+	{
+		$_SERVER['HTTP_HOST']	 = 'example.com';
+		$_SERVER['REQUEST_URI']	 = '/';
+
+		$config				 = new App();
+		$config->baseURL	 = '';
+		$config->indexPage	 = '';
+		$request			 = Services::request($config);
+		$request->uri		 = new URI('http://example.com/');
+
+		Services::injectMock('request', $request);
+
+		$this->assertEquals('http://example.com/abc', site_url('abc'));
+	}
+
 	public function testSiteURLAttachesPath()
 	{
 		$_SERVER['HTTP_HOST']	 = 'example.com';

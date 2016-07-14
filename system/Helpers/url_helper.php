@@ -57,6 +57,8 @@ if (!function_exists('site_url'))
 		{
 			$path = rtrim($base, '/').'/'.rtrim($config->indexPage, '/').'/'.$path;
 		}
+		else
+			$path = rtrim($base, '/').'/'.$path;
 
 		$url = new \CodeIgniter\HTTP\URI($path);
 
@@ -86,7 +88,7 @@ if (!function_exists('base_url'))
 	{
 		$url = \CodeIgniter\Services::request()->uri;
 
-		if (! empty($path))
+		if (!empty($path))
 		{
 			$url = $url->resolveRelativeURI($path);
 		}
