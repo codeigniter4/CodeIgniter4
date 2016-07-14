@@ -43,16 +43,18 @@ if (!function_exists('site_url'))
 	 *
 	 * @param string      $path
 	 * @param string|null $scheme
+	 * @param \Cpnfig\App|null	$altConfig	Alternate configuration to use
 	 *
 	 * @return string
 	 */
-	function site_url(string $path = '', string $scheme = null): string
+	function site_url(string $path = '', string $scheme = null, \Config\App $altConfig = null): string
 	{
-		$config = new \Config\App();
+		// use alternate config if provided, else default one
+		$config = empty($altConfig) ? new \Config\App() : $altConfig;
 
 		$base = base_url();
 
-		// Add index page
+		// Add index page, if so configured
 		if (!empty($config->indexPage))
 		{
 			$path = rtrim($base, '/').'/'.rtrim($config->indexPage, '/').'/'.$path;
@@ -62,6 +64,7 @@ if (!function_exists('site_url'))
 
 		$url = new \CodeIgniter\HTTP\URI($path);
 
+		// allow the scheme to be over-ridden; else, use default
 		if (!empty($scheme))
 		{
 			$url->setScheme($scheme);

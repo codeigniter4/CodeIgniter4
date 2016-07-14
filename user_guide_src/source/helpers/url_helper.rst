@@ -23,10 +23,11 @@ Available Functions
 
 The following functions are available:
 
-.. php:function:: site_url([$uri = ''[, $protocol = NULL]])
+.. php:function:: site_url([$uri = ''[, $protocol = NULL[, $altConfig = NULL]]])
 
 	:param	string	$uri: URI string
 	:param	string	$protocol: Protocol, e.g. 'http' or 'https'
+	:param	\Config\App	$altConfig: Alternate configuration to use
 	:returns:	Site URL
 	:rtype:	string
 
@@ -52,8 +53,9 @@ The following functions are available:
 		$segments = array('news', 'local', '123');
 		echo site_url($segments);
 
-	This function is an alias for ``CI_Config::site_url()``. For more info,
-	please see the :doc:`Config Library <../libraries/config>` documentation.
+        You may find the alternate configuration useful if generating URLs for a
+        different site than yours, which contains different configuration preferences.
+        We use this for unit testing the framework itself.
 
 .. php:function:: base_url($uri = '', $protocol = NULL)
 

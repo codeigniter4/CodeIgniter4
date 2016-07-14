@@ -30,7 +30,7 @@ class URLHelperTest extends \CIUnitTestCase
 
 		Services::injectMock('request', $request);
 
-		$this->assertEquals('http://example.com/index.php/', site_url());
+		$this->assertEquals('http://example.com/index.php/', site_url('',null,$config));
 	}
 
 	public function testSiteURLNoIndex()
@@ -46,7 +46,7 @@ class URLHelperTest extends \CIUnitTestCase
 
 		Services::injectMock('request', $request);
 
-		$this->assertEquals('http://example.com/', site_url());
+		$this->assertEquals('http://example.com/', site_url('',null,$config));
 	}
 
 	public function testSiteURLDifferentIndex()
@@ -58,11 +58,11 @@ class URLHelperTest extends \CIUnitTestCase
 		$config->baseURL	 = '';
 		$config->indexPage	 = 'banana.php';
 		$request			 = Services::request($config);
-		$request->uri		 = new URI('http://example.com/banana.php/');
+		$request->uri		 = new URI('http://example.com/');
 
 		Services::injectMock('request', $request);
 
-		$this->assertEquals('http://example.com', site_url());
+		$this->assertEquals('http://example.com/banana.php/', site_url('',null,$config));
 	}
 
 	public function testSiteURLNoIndexButPath()
@@ -78,7 +78,7 @@ class URLHelperTest extends \CIUnitTestCase
 
 		Services::injectMock('request', $request);
 
-		$this->assertEquals('http://example.com/abc', site_url('abc'));
+		$this->assertEquals('http://example.com/abc', site_url('abc',null,$config));
 	}
 
 	public function testSiteURLAttachesPath()
@@ -94,7 +94,7 @@ class URLHelperTest extends \CIUnitTestCase
 
 		Services::injectMock('request', $request);
 
-		$this->assertEquals('http://example.com/index.php/foo', site_url('foo'));
+		$this->assertEquals('http://example.com/index.php/foo', site_url('foo',null,$config));
 	}
 
 	public function testSiteURLAttachesScheme()
@@ -110,7 +110,7 @@ class URLHelperTest extends \CIUnitTestCase
 
 		Services::injectMock('request', $request);
 
-		$this->assertEquals('ftp://example.com/index.php/foo', site_url('foo', 'ftp'));
+		$this->assertEquals('ftp://example.com/index.php/foo', site_url('foo', 'ftp',$config));
 	}
 
 	//--------------------------------------------------------------------
