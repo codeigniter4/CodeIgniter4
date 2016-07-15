@@ -31,7 +31,7 @@ class should be magically initialized.
 
 To access and initialize the session::
 
-	$session = Config\Services::session($config);
+	$session = \Config\Services::session($config);
 	$session->start();
 
 The ``$config`` parameter is optional - your application configuration. 
