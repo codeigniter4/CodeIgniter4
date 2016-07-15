@@ -139,6 +139,9 @@ define('APPPATH', realpath($application_directory).DIRECTORY_SEPARATOR);
 // The path to the "tests" directory
 define('TESTPATH', realpath($tests_directory).DIRECTORY_SEPARATOR);
 
+// The root path of codeigniter
+define('ROOTPATH', realpath("../").DIRECTORY_SEPARATOR);
+
 /*
  *---------------------------------------------------------------
  * BOOT THE ENVIRONMENT
@@ -247,9 +250,9 @@ if ($composer_autoload = $config->composerAutoload)
 {
 	if ($composer_autoload === TRUE)
 	{
-		file_exists(APPPATH.'vendor/autoload.php')
-			? require_once(APPPATH.'vendor/autoload.php')
-			: log_message('error', '$config->\'composerAutoload\' is set to TRUE but '.APPPATH.'vendor/autoload.php was not found.');
+		file_exists(ROOTPATH.'vendor/autoload.php')
+			? require_once(ROOTPATH.'vendor/autoload.php')
+			: log_message('error', '$config->\'composerAutoload\' is set to TRUE but '.ROOTPATH.'vendor/autoload.php was not found.');
 	}
 	elseif (file_exists($composer_autoload))
 	{
