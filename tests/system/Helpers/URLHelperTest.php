@@ -323,12 +323,12 @@ class URLHelperTest extends \CIUnitTestCase
 	public function anchorNormalPatterns()
 	{
 		return [
-			'normal01'	 => ['<a href="http://example.com/index.php/">http://example.com/index.php/</a>', ''],
-			'normal02'	 => ['<a href="http://example.com/index.php/">Bananas</a>', '/', 'Bananas'],
-			'normal03'	 => ['<a href="http://example.com/index.php/" fruit="peach">http://example.com/index.php/</a>', '/', '', 'fruit="peach"'],
-			'normal04'	 => ['<a href="http://example.com/index.php/" fruit=peach>Bananas</a>', '/', 'Bananas', 'fruit=peach'],
-			'normal05'	 => ['<a href="http://example.com/index.php/" fruit="peach">http://example.com/index.php/</a>', '/', '', ['fruit' => 'peach']],
-			'normal06'	 => ['<a href="http://example.com/index.php/" fruit="peach">Bananas</a>', '/', 'Bananas', ['fruit' => 'peach']],
+			'normal01'	 => ['<a href="http://example.com/index.php">http://example.com/index.php</a>', ''],
+			'normal02'	 => ['<a href="http://example.com/index.php">Bananas</a>', '/', 'Bananas'],
+			'normal03'	 => ['<a href="http://example.com/index.php" fruit="peach">http://example.com/index.php</a>', '/', '', 'fruit="peach"'],
+			'normal04'	 => ['<a href="http://example.com/index.php" fruit=peach>Bananas</a>', '/', 'Bananas', 'fruit=peach'],
+			'normal05'	 => ['<a href="http://example.com/index.php" fruit="peach">http://example.com/index.php</a>', '/', '', ['fruit' => 'peach']],
+			'normal06'	 => ['<a href="http://example.com/index.php" fruit="peach">Bananas</a>', '/', 'Bananas', ['fruit' => 'peach']],
 		];
 	}
 
@@ -353,12 +353,12 @@ class URLHelperTest extends \CIUnitTestCase
 	public function anchorNoindexPatterns()
 	{
 		return [
-			'noindex01'	 => ['<a href="http://example.com/">http://example.com/</a>', ''],
-			'noindex02'	 => ['<a href="http://example.com/">Bananas</a>', '', 'Bananas'],
-			'noindex03'	 => ['<a href="http://example.com/" fruit="peach">http://example.com/</a>', '', '', 'fruit="peach"'],
-			'noindex04'	 => ['<a href="http://example.com/" fruit=peach>Bananas</a>', '', 'Bananas', 'fruit=peach'],
-			'noindex05'	 => ['<a href="http://example.com/" fruit="peach">http://example.com/</a>', '', '', ['fruit' => 'peach']],
-			'noindex06'	 => ['<a href="http://example.com/" fruit="peach">Bananas</a>', '', 'Bananas', ['fruit' => 'peach']],
+			'noindex01'	 => ['<a href="http://example.com">http://example.com</a>', ''],
+			'noindex02'	 => ['<a href="http://example.com">Bananas</a>', '', 'Bananas'],
+			'noindex03'	 => ['<a href="http://example.com" fruit="peach">http://example.com</a>', '', '', 'fruit="peach"'],
+			'noindex04'	 => ['<a href="http://example.com" fruit=peach>Bananas</a>', '', 'Bananas', 'fruit=peach'],
+			'noindex05'	 => ['<a href="http://example.com" fruit="peach">http://example.com</a>', '', '', ['fruit' => 'peach']],
+			'noindex06'	 => ['<a href="http://example.com" fruit="peach">Bananas</a>', '', 'Bananas', ['fruit' => 'peach']],
 		];
 	}
 

@@ -199,7 +199,9 @@ if (!function_exists('anchor'))
 
 		$title = (string) $title;
 
-		$site_url = is_array($uri) ? site_url($uri, null, $config) : (preg_match('#^(\w+:)?//#i', $uri) ? $uri : site_url($uri, null, $config));
+		$site_url	 = is_array($uri) ? site_url($uri, null, $config) : (preg_match('#^(\w+:)?//#i', $uri) ? $uri : site_url($uri, null, $config));
+		// eliminate trailing slash
+		$site_url	 = rtrim($site_url, '/');
 
 		if ($title === '')
 		{
