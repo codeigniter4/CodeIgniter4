@@ -329,6 +329,7 @@ class URLHelperTest extends \CIUnitTestCase
 			'normal04'	 => ['<a href="http://example.com/index.php" fruit=peach>Bananas</a>', '/', 'Bananas', 'fruit=peach'],
 			'normal05'	 => ['<a href="http://example.com/index.php" fruit="peach">http://example.com/index.php</a>', '/', '', ['fruit' => 'peach']],
 			'normal06'	 => ['<a href="http://example.com/index.php" fruit="peach">Bananas</a>', '/', 'Bananas', ['fruit' => 'peach']],
+			'normal07'	 => ['<a href="http://example.com/index.php">http://example.com/index.php</a>', '/'],
 		];
 	}
 
@@ -359,6 +360,7 @@ class URLHelperTest extends \CIUnitTestCase
 			'noindex04'	 => ['<a href="http://example.com" fruit=peach>Bananas</a>', '', 'Bananas', 'fruit=peach'],
 			'noindex05'	 => ['<a href="http://example.com" fruit="peach">http://example.com</a>', '', '', ['fruit' => 'peach']],
 			'noindex06'	 => ['<a href="http://example.com" fruit="peach">Bananas</a>', '', 'Bananas', ['fruit' => 'peach']],
+			'noindex07'	 => ['<a href="http://example.com">http://example.com</a>', '/'],
 		];
 	}
 
@@ -410,8 +412,80 @@ class URLHelperTest extends \CIUnitTestCase
 		$this->assertEquals($expected, anchor($uri, $title, $attributes, $config));
 	}
 
+	public function anchorExamplePatterns()
+	{
+		return [
+			'egpage01'	 => ['<a href="http://example.com/index.php/news/local/123" title="News title">My News</a>', 'news/local/123', 'My News', 'title="News title"'],
+			'egpage02'	 => ['<a href="http://example.com/index.php/news/local/123" title="The best news!">My News</a>', 'news/local/123', 'My News', array ('title' => 'The best news!')],
+			'egpage03'	 => ['<a href="http://example.com/index.php">Click here</a>', '', 'Click here'],
+			'egpage04'	 => ['<a href="http://example.com/index.php">Click here</a>', '/', 'Click here'],
+		];
+	}
+
+	/**
+	 * @dataProvider anchorExamplePatterns
+	 */
+	public function testAnchorExamples($expected = '', $uri = '', $title = '', $attributes = '')
+	{
+		$_SERVER['HTTP_HOST']	 = 'example.com';
+		$_SERVER['REQUEST_URI']	 = '/';
+
+		$config				 = new App();
+		$config->baseURL	 = '';
+		$config->indexPage	 = 'index.php';
+		$request			 = Services::request($config);
+		$request->uri		 = new URI('http://example.com/');
+
+		Services::injectMock('request', $request);
+		$this->assertEquals($expected, anchor($uri, $title, $attributes, $config));
+	}
+
 	//--------------------------------------------------------------------
 	// Test anchor_popup
+
+	public function anchorPopupPatterns()
+	{
+		return [
+			'normal01'	 => ['<a href="http://example.com/index.php" onclick="window.open(\'http://example.com/index.php\', \'_blank\'); return false;">http://example.com/index.php</a>', ''],
+			'normal02'	 => ['<a href="http://example.com/index.php" onclick="window.open(\'http://example.com/index.php\', \'_blank\'); return false;">Bananas</a>', '/', 'Bananas'],
+			'normal07'	 => ['<a href="http://example.com/index.php" onclick="window.open(\'http://example.com/index.php\', \'_blank\'); return false;">http://example.com/index.php</a>', '/'],
+			'normal08'	 => ['<a href="http://example.com/index.php/news/local/123" onclick="window.open(\'http://example.com/index.php/news/local/123\', \'_blank\', \'width=800,height=600,scrollbars=yes,menubar=no,status=yes,resizable=yes,screenx=0,screeny=0\'); return false;">Click Me!</a>',
+				'news/local/123', 'Click Me!', array (
+					'width'			 => 800,
+					'height'		 => 600,
+					'scrollbars'	 => 'yes',
+					'status'		 => 'yes',
+					'resizable'		 => 'yes',
+					'screenx'		 => 0,
+					'screeny'		 => 0,
+					'window_name'	 => '_blank'
+				)],
+			'normal09'	 => [
+				'<a href="http://example.com/index.php/news/local/123" onclick="window.open(\'http://example.com/index.php/news/local/123\', \'_blank\', \'width=800,height=600,scrollbars=yes,menubar=no,status=yes,resizable=yes,screenx=0,screeny=0\'); return false;">Click Me!</a>',
+				'news/local/123',
+				'Click Me!',
+				array ()],
+		];
+	}
+
+	/**
+	 * @dataProvider anchorPopupPatterns
+	 */
+	public function testAnchorPopup($expected = '', $uri = '', $title = '', $attributes = false)
+	{
+		$_SERVER['HTTP_HOST']	 = 'example.com';
+		$_SERVER['REQUEST_URI']	 = '/';
+
+		$config				 = new App();
+		$config->baseURL	 = '';
+		$config->indexPage	 = 'index.php';
+		$request			 = Services::request($config);
+		$request->uri		 = new URI('http://example.com/');
+
+		Services::injectMock('request', $request);
+		$this->assertEquals($expected, anchor_popup($uri, $title, $attributes, $config));
+	}
+
 	//--------------------------------------------------------------------
 	// Test mailto
 	//--------------------------------------------------------------------

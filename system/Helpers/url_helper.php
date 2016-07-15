@@ -167,7 +167,7 @@ if (!function_exists('index_page'))
 	 * @param \Config\App|null	$altConfig	Alternate configuration to use
 	 * @return	string
 	 */
-	function index_page(\Config\App $altConfig = null)
+	function index_page(\Config\App $altConfig = null): string
 	{
 		// use alternate config if provided, else default one
 		$config = empty($altConfig) ? new \Config\App() : $altConfig;
@@ -190,9 +190,10 @@ if (!function_exists('anchor'))
 	 * @param	string	the URL
 	 * @param	string	the link title
 	 * @param	mixed	any attributes
+	 * @param \Config\App|null	$altConfig	Alternate configuration to use
 	 * @return	string
 	 */
-	function anchor($uri = '', $title = '', $attributes = '', \Config\App $altConfig = null)
+	function anchor($uri = '', $title = '', $attributes = '', \Config\App $altConfig = null): string
 	{
 		// use alternate config if provided, else default one
 		$config = empty($altConfig) ? new \Config\App() : $altConfig;
@@ -232,12 +233,17 @@ if (!function_exists('anchor_popup'))
 	 * @param	string	the URL
 	 * @param	string	the link title
 	 * @param	mixed	any attributes
+	 * @param \Config\App|null	$altConfig	Alternate configuration to use
 	 * @return	string
 	 */
-	function anchor_popup($uri = '', $title = '', $attributes = FALSE)
+	function anchor_popup($uri = '', $title = '', $attributes = FALSE, \Config\App $altConfig = null): string
 	{
+		// use alternate config if provided, else default one
+		$config = empty($altConfig) ? new \Config\App() : $altConfig;
+
 		$title		 = (string) $title;
-		$site_url	 = preg_match('#^(\w+:)?//#i', $uri) ? $uri : site_url($uri);
+		$site_url	 = preg_match('#^(\w+:)?//#i', $uri) ? $uri : site_url($uri,'',$config);
+		$site_url	 = rtrim($site_url, '/');
 
 		if ($title === '')
 		{
@@ -272,10 +278,10 @@ if (!function_exists('anchor_popup'))
 			unset($attributes[$key]);
 		}
 
-		$attributes = _stringify_attributes($attributes);
+		$attributes = stringify_attributes($attributes);
 
 		return '<a href="'.$site_url
-			.'" onclick="window.open(\''.$site_url."', '".$window_name."', '"._stringify_attributes($atts, TRUE)."'); return false;\""
+			.'" onclick="window.open(\''.$site_url."', '".$window_name."', '".stringify_attributes($atts, TRUE)."'); return false;\""
 			.$attributes.'>'.$title.'</a>';
 	}
 
@@ -294,7 +300,7 @@ if (!function_exists('mailto'))
 	 * @param	mixed	any attributes
 	 * @return	string
 	 */
-	function mailto($email, $title = '', $attributes = '')
+	function mailto($email, $title = '', $attributes = ''): string
 	{
 		$title = (string) $title;
 
@@ -303,7 +309,7 @@ if (!function_exists('mailto'))
 			$title = $email;
 		}
 
-		return '<a href="mailto:'.$email.'"'._stringify_attributes($attributes).'>'.$title.'</a>';
+		return '<a href="mailto:'.$email.'"'.stringify_attributes($attributes).'>'.$title.'</a>';
 	}
 
 }
@@ -323,7 +329,7 @@ if (!function_exists('safe_mailto'))
 	 * @param	mixed	any attributes
 	 * @return	string
 	 */
-	function safe_mailto($email, $title = '', $attributes = '')
+	function safe_mailto($email, $title = '', $attributes = ''): string
 	{
 		$title = (string) $title;
 
@@ -439,7 +445,7 @@ if (!function_exists('auto_link'))
 	 * @param	bool	whether to create pop-up links
 	 * @return	string
 	 */
-	function auto_link($str, $type = 'both', $popup = FALSE)
+	function auto_link($str, $type = 'both', $popup = FALSE): string
 	{
 		// Find and replace any URLs.
 		if ($type !== 'email' && preg_match_all('#(\w*://|www\.)[^\s()<>;]+\w#i', $str, $matches, PREG_OFFSET_CAPTURE | PREG_SET_ORDER))
@@ -492,7 +498,7 @@ if (!function_exists('prep_url'))
 	 * @param	string	the URL
 	 * @return	string
 	 */
-	function prep_url($str = '')
+	function prep_url($str = ''): string
 	{
 		$uri = new \CodeIgniter\HTTP\URI($str);
 
@@ -525,7 +531,7 @@ if (!function_exists('url_title'))
 	 * @param	bool	$lowercase	Whether to transform the output string to lowercase
 	 * @return	string
 	 */
-	function url_title($str, $separator = '-', $lowercase = FALSE)
+	function url_title($str, $separator = '-', $lowercase = FALSE): string
 	{
 		if ($separator === 'dash')
 		{

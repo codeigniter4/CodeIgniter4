@@ -168,19 +168,19 @@ The following functions are available:
 		// Prints: <a href="http://example.com/index.php/news/local/123" title="The best news!">My News</a>
 
 		echo anchor('', 'Click here');
-		// Prints: <a href="http://example.com">Click Here</a>
+		// Prints: <a href="http://example.com/index.php">Click here</a>
 
         As above, you may specify an alternate configuration.
         You may find the alternate configuration useful if generating links for a
         different site than yours, which contains different configuration preferences.
         We use this for unit testing the framework itself.
 
-
-.. php:function:: anchor_popup($uri = '', $title = '', $attributes = FALSE)
+.. php:function:: anchor_popup([$uri = ''[, $title = ''[, $attributes = FALSE[, $altConfig = NULL]]]])
 
 	:param	string	$uri: URI string
 	:param	string	$title: Anchor title
 	:param	mixed	$attributes: HTML attributes
+	:param	\Config\App	$altConfig: Alternate configuration to use
 	:returns:	Pop-up hyperlink
 	:rtype:	string
 
@@ -208,9 +208,9 @@ The following functions are available:
 	.. note:: The above attributes are the function defaults so you only need to
 		set the ones that are different from what you need. If you want the
 		function to use all of its defaults simply pass an empty array in the
-		third parameter:
-		|
-		| echo anchor_popup('news/local/123', 'Click Me!', array());
+		third parameter::
+		
+                    echo anchor_popup('news/local/123', 'Click Me!', array());
 
 	.. note:: The **window_name** is not really an attribute, but an argument to
 		the JavaScript `window.open() <http://www.w3schools.com/jsref/met_win_open.asp>`
@@ -219,6 +219,10 @@ The following functions are available:
 	.. note:: Any other attribute than the listed above will be parsed as an
 		HTML attribute to the anchor tag.
 
+        As above, you may specify an alternate configuration.
+        You may find the alternate configuration useful if generating links for a
+        different site than yours, which contains different configuration preferences.
+        We use this for unit testing the framework itself.
 
 .. php:function:: mailto($email, $title = '', $attributes = '')
 
