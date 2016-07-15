@@ -1,0 +1,413 @@
+//
+// VARIABLES FOR THEMES TO OVERRIDE
+// --------------------------------------------------
+
+@spacing : 4;
+
+// caret taken from solarized
+@caret-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAA8CAMAAACO5hB7AAAA7VBMVEVYbnWToaH///9YbnVYbnVYbnVYbnVYbnVYbnVYbnVYbnVYbnWToaGToaGToaGToaGToaGToaGToaGToaGToaFYbnWToaFYbnVYbnWToaGToaFYbnWToaFYbnWToaFYbnVYbnVYbnVYbnVYbnVYbnVYbnVYbnVYbnVYbnVYbnVYbnVYbnVYbnWToaGToaGToaGToaGToaGToaGToaGToaGToaGToaGToaGToaGToaGToaFYbnVYbnVYbnVYbnVYbnVYbnVYbnVYbnVYbnWToaGToaGToaGToaGToaGToaGToaGToaGToaFYbnWToaEeRtj1AAAATXRSTlMAAACLab0B7iP2R7CL9iPuaUewAb36F0/QnPoX0JxPYQaurepi6QV8FhV7MzFhM6586RYFMa3qYnsVBpNQ+ZGOGJ3PkM9QkZAY+Y6TnV7gnYsAAAEcSURBVHhebdHVbgMxEEBRu8sUZmqapBBoSuGUmWb+/3NayxtrLOe+Hck745XZgd6/eb3CVcKt7HmR+gKxlCGOETG5vFbOoahR6NxI5zHt6nuq+2dqnqfzzH3mfcz70vb8H6MJt5u6a96hS30E4PjEFgAEp2fKNojKUfVEOoS044ex7u3YPE/nmfvM+5j3pe17T9oe/77O41w+n4vnrbrwZxbTshVhvtx5Kb8vliRLRWmeSQSTjJq/El5x5fUXYmNN9hcQC5y4g/hGvVksNtT8451rns2IScb7mn567ll2GNpWr9YWfvQgzWsKs8HOA/m960g6rjTzA8HAV/NHwiOmPLwDKA/J/gggYsRVgFvqbr/fpWYv90zzZKKs9Qfx00Jx65oxLAAAAABJRU5ErkJggg==");
+
+//
+// SET UP HELPER VARIABLES
+// --------------------------------------------------
+
+@border: 1px solid @border-color;
+
+.selection() {
+  background : @border-color-hover;
+  color      : @text-color;
+}
+
+//
+// BASE STYLES
+// --------------------------------------------------
+
+.kint::selection { .selection() }
+
+.kint::-moz-selection { .selection() }
+
+.kint::-webkit-selection { .selection() }
+
+.kint,
+.kint::before,
+.kint::after,
+.kint *,
+.kint *::before,
+.kint *::after {
+  box-sizing    : border-box;
+  border-radius : 0;
+  color         : @text-color;
+  float         : none !important;
+  font-family   : Consolas, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
+  line-height   : 15px;
+  margin        : 0;
+  padding       : 0;
+  text-align    : left;
+}
+
+.kint {
+  font-size   : 13px;
+  margin      : @spacing * 2px 0;
+  overflow-x  : auto;
+  white-space : nowrap;
+
+  dt {
+    background  : @main-background;
+    border      : @border;
+    color       : @text-color;
+    display     : block;
+    font-weight : bold;
+    list-style  : none outside none;
+    overflow    : auto;
+    padding     : @spacing * 1px;
+
+    &:hover {
+      border-color : @border-color-hover;
+    }
+
+    > var {
+      margin-right : 5px;
+    }
+  }
+
+  > dl dl {
+    padding : 0 0 0 @spacing * 3px;
+  }
+
+  //
+  // DROPDOWN CARET
+  // --------------------------------------------------
+
+  nav {
+    background     : @caret-image no-repeat scroll 0 0 transparent;
+    cursor         : pointer;
+    display        : inline-block;
+    height         : 15px;
+    width          : 15px;
+    margin-right   : 3px;
+    vertical-align : middle;
+  }
+
+  dt.kint-parent:hover nav {
+    background-position : 0 -15px;
+  }
+
+  dt.kint-parent.kint-show:hover > nav {
+    background-position : 0 -45px;
+  }
+
+  dt.kint-show > nav {
+    background-position : 0 -30px;
+  }
+
+  dt.kint-parent + dd {
+    display     : none;
+    border-left : 1px dashed @border-color;
+  }
+
+  dt.kint-parent.kint-show + dd {
+    display : block;
+  }
+
+  //
+  // INDIVIDUAL ITEMS
+  // --------------------------------------------------
+
+  var,
+  var a {
+    color      : @variable-type-color;
+    font-style : normal;
+  }
+
+  dt:hover var,
+  dt:hover var a {
+    color : @variable-type-color-hover;
+  }
+
+  dfn {
+    font-style  : normal;
+    font-family : monospace;
+    color       : @variable-name-color;
+  }
+
+  pre {
+    color      : @text-color;
+    margin     : 0 0 0 @spacing * 3px;
+    padding    : 5px;
+    overflow-y : hidden;
+    border-top : 0;
+    border     : @border;
+    background : @main-background;
+    display    : block;
+    word-break : normal;
+  }
+
+  .kint-popup-trigger {
+    float  : right !important;
+    cursor : pointer;
+    color  : @border-color-hover;
+
+    &:hover {
+      color : @border-color;
+    }
+  }
+
+  dt.kint-parent > .kint-popup-trigger {
+    font-size : 13px;
+  }
+
+  footer {
+    padding   : 0 3px 3px;
+    font-size : 9px;
+
+    > .kint-popup-trigger {
+      font-size : 12px;
+    }
+
+    nav {
+      background-size : 10px;
+      height          : 10px;
+      width           : 10px;
+
+      &:hover {
+        background-position : 0 -10px;
+      }
+    }
+
+    > ol {
+      display     : none;
+      margin-left : 32px;
+    }
+
+    &.kint-show {
+      > ol {
+        display : block;
+      }
+
+      nav {
+        background-position : 0 -20px;
+
+        &:hover {
+          background-position : 0 -30px;
+        }
+      }
+    }
+  }
+
+  a {
+    color       : @text-color;
+    text-shadow : none;
+
+    &:hover {
+      color         : @variable-name-color;
+      border-bottom : 1px dotted @variable-name-color;
+    }
+  }
+
+  //
+  // TABS
+  // --------------------------------------------------
+
+  ul {
+    list-style   : none;
+    padding-left : @spacing * 3px;
+
+    &:not(.kint-tabs) {
+      li {
+        border-left : 1px dashed @border-color;
+
+        > dl {
+          border-left : none;
+        }
+      }
+    }
+
+    &.kint-tabs {
+      margin       : 0 0 0 @spacing * 3px;
+      padding-left : 0;
+      background   : @main-background;
+      border       : @border;
+      border-top   : 0;
+
+      li {
+        background     : @secondary-background;
+        border         : @border;
+        cursor         : pointer;
+        display        : inline-block;
+        height         : @spacing * 6px;
+        margin         : round(@spacing / 2) * 1px;
+        padding        : 0 2px + round(@spacing * 2.5px);
+        vertical-align : top;
+
+        &:hover,
+        &.kint-active-tab:hover {
+          border-color : @border-color-hover;
+          color        : @variable-type-color-hover;
+        }
+
+        &.kint-active-tab {
+          background  : @main-background;
+          border-top  : 0;
+          margin-top  : -1px;
+          height      : 27px;
+          line-height : 24px;
+        }
+
+        &:not(.kint-active-tab) {
+          line-height : @spacing * 5px;
+        }
+      }
+
+      li + li {
+        margin-left : 0
+      }
+    }
+
+    &:not(.kint-tabs) > li:not(:first-child) {
+      display : none;
+    }
+  }
+
+  dt:hover + dd > ul > li.kint-active-tab {
+    border-color : @border-color-hover;
+    color        : @variable-type-color-hover;
+  }
+}
+
+//
+// REPORT
+// --------------------------------------------------
+
+.kint-report {
+  border-collapse : collapse;
+  empty-cells     : show;
+  border-spacing  : 0;
+
+  * {
+    font-size : 12px;
+  }
+
+  dt {
+    background : none;
+    padding    : (@spacing/2) * 1px;
+
+    .kint-parent {
+      min-width     : 100%;
+      overflow      : hidden;
+      text-overflow : ellipsis;
+      white-space   : nowrap;
+    }
+  }
+
+  td,
+  th {
+    border         : @border;
+    padding        : (@spacing/2) * 1px;
+    vertical-align : center;
+  }
+
+  th {
+    cursor : alias;
+  }
+
+  td:first-child,
+  th {
+    font-weight : bold;
+    background  : @secondary-background;
+    color       : @variable-name-color;
+  }
+
+  td {
+    background  : @main-background;
+    white-space : pre;
+
+    > dl {
+      padding : 0;
+    }
+  }
+
+  pre {
+    border-top   : 0;
+    border-right : 0;
+  }
+
+  th:first-child {
+    background : none;
+    border     : 0;
+  }
+
+  td.kint-empty {
+    background : #d33682 !important;
+  }
+
+  tr:hover {
+    > td {
+      box-shadow : 0 0 1px 0 @border-color-hover inset;
+    }
+
+    var {
+      color : @variable-type-color-hover;
+    }
+  }
+  ul.kint-tabs li.kint-active-tab {
+    height      : 20px;
+    line-height : 17px;
+  }
+}
+
+//
+// TRACE
+// --------------------------------------------------
+.kint-trace {
+  .kint-source {
+    line-height : round(@spacing * 3.5) * 1px;
+
+    span {
+      padding-right : 1px;
+      border-right  : 3px inset @variable-type-color;
+    }
+
+    .kint-highlight {
+      background : @secondary-background;
+    }
+  }
+
+  .kint-parent {
+    > b {
+      min-width  : 18px;
+      display    : inline-block;
+      text-align : right;
+      color      : @variable-name-color;
+    }
+
+    > var {
+      > a {
+        color : @variable-type-color;
+      }
+    }
+  }
+}
+
+//
+// MISC
+// --------------------------------------------------
+
+// keyboard navigation caret
+.kint-focused {
+  .keyboard-caret
+}
+
+.kint-microtime,
+.kint-color-preview {
+  box-shadow  : 0 0 2px 0 #b6cedb;
+  height      : 16px;
+  text-align  : center;
+  text-shadow : -1px 0 #839496, 0 1px #839496, 1px 0 #839496, 0 -1px #839496;
+  width       : 230px;
+  color       : #fdf6e3;
+}
+
+// mini trace
+.kint footer li {
+  color : #ddd;
+}

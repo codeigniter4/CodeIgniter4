@@ -1,0 +1,199 @@
+body {
+    /*
+        Make room for the debug bar.
+        This height should be good.
+        Tried JS but wasn't having any luck
+        setting it to the true height.
+        Don't think this will interfere with
+        the vast majority of sites out there
+        but there is a possibility, so we'll
+        have to keep an eye out.
+    */
+    padding-top: 30pt;
+}
+#debug-bar {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+    font-size: 12pt;
+    line-height: 1.5;
+    background: #fff;
+    border-bottom: 1px solid #ddd;
+    margin: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10000;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    overflow: hidden;
+    overflow-y: auto;
+    max-height: 62%;
+}
+#debug-bar h1,
+#debug-bar h2,
+#debug-bar h3{
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+    color: #666;
+}
+#debug-bar p {
+    font-size: 10pt;
+    margin: 0 0 10pt 20pt;
+    padding: 0;
+}
+#debug-bar a {
+    text-decoration: none;
+}
+#debug-bar a:hover {
+    text-decoration: underline;
+    text-decoration-color: #4e4a4a !important;
+}
+#debug-bar .muted,
+#debug-bar .muted td {
+    color: #bbb !important;
+}
+#debug-bar .toolbar {
+    display: block;
+    position: relative;
+    overflow: hidden;
+    overflow-y: auto;
+    white-space: nowrap;
+    border-bottom: 1px solid #eee;
+    padding: 3px 20px;
+    text-align: right;
+}
+#debug-bar h1 {
+    font-size: 13pt;
+    font-weight: 300;
+    margin: 0 2em 0 0;
+    padding: 0;
+    text-align: left;
+    display: inline-block;
+    float: left;
+}
+#debug-bar h2 {
+    font-size: 1.1rem;
+    font-weight: 200;
+    margin: 0;
+    padding: 0;
+}
+#debug-bar h2 span {
+    font-size: 80%;
+}
+#debug-bar h3 {
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    font-weight: 200;
+    margin-left: 10pt;
+}
+#debug-bar span {
+    display: inline-block;
+    font-size: 10pt;
+    padding: .3em 1em .3em;
+    line-height: 1.0;
+    vertical-align: baseline;
+}
+#debug-bar table strong {
+    font-weight: 500;
+    color: rgba(0,0,0,0.3);
+}
+#debug-bar .ci-label {
+    border-radius: 0.25em;
+    text-shadow: none;
+    background-color: #eee;
+    border: 1px solid #ddd;
+    margin-left: 0.4em;
+}
+#debug-bar .ci-label a {
+    display: block;
+    width: 100%;
+    height: 100%;
+    color: inherit;
+    text-decoration: none;
+}
+#debug-bar .ci-label a:hover {
+    text-decoration: underline;
+}
+#debug-bar .ci-label.active {
+    font-weight: 400;
+    background-color: #ccc;
+    border-color: #bbb;
+    padding: .3em 0.9em .3em;
+}
+#debug-bar .tab {
+    display: none;
+    background: inherit;
+    padding: 1em 2em;
+}
+
+#debug-bar table {
+    margin: 0 0 10pt 20pt;
+    font-size: 10pt;
+    border-collapse:collapse;
+    width: 100%;
+}
+#debug-bar td,
+#debug-bar th {
+    display: table-cell;
+    text-align: left;
+}
+#debug-bar tr {
+    border: none;
+}
+#debug-bar td {
+    border: none;
+    padding: 2pt 10pt 2pt 5pt;
+    margin: 0;
+
+}
+#debug-bar th {
+    padding-bottom: 0.7em;
+}
+#debug-bar tr td:first-child {
+    width: 20%;
+}
+#debug-bar tr td:first-child.narrow {
+    width: 7em;
+}
+#debug-bar tr:hover {
+    background-color: #f3f3f3;
+}
+#debug-bar table.timeline {
+    width: 100%;
+    margin-left: 0;
+}
+#debug-bar table.timeline th {
+    font-size: 0.7em;
+    font-weight: 200;
+    text-align: left;
+    padding-bottom: 1em;
+}
+#debug-bar table.timeline td,
+#debug-bar table.timeline th {
+    border-left: 1px solid #ddd;
+    padding: 0 1em;
+    position: relative;
+}
+#debug-bar table.timeline tr td:first-child,
+#debug-bar table.timeline tr th:first-child {
+    border-left: 0;
+    padding-left: 0;
+}
+#debug-bar table.timeline td {
+    padding: 5px !important;
+}
+#debug-bar table.timeline .timer {
+    position: absolute;
+    display: inline-block;
+    padding: 3px;
+    bottom: 9px;
+    border-radius: 3px;
+    background-color: #999;
+}
+#debug-bar .route-params,
+#debug-bar .route-params-item {
+    vertical-align: top;
+}
+#debug-bar .route-params-item td:first-child {
+    padding-left: 1em;
+    text-align: right;
+    font-style: italic;
+}

@@ -1,11 +1,48 @@
 <?php namespace CodeIgniter\HTTP;
 
-use App\Config\AppConfig;
+/**
+ * CodeIgniter
+ *
+ * An open source application development framework for PHP
+ *
+ * This content is released under the MIT License (MIT)
+ *
+ * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ *
+ * @package      CodeIgniter
+ * @author       CodeIgniter Dev Team
+ * @copyright    Copyright (c) 2014 - 2016, British Columbia Institute of Technology (http://bcit.ca/)
+ * @license      http://opensource.org/licenses/MIT	MIT License
+ * @link         http://codeigniter.com
+ * @since        Version 3.0.0
+ * @filesource
+ */
+use CodeIgniter\HTTP\Files\FileCollection;
+use CodeIgniter\HTTP\Files\UploadedFile;
+use CodeIgniter\Services;
 
 /**
  * Class IncomingRequest
  *
- * Represents an incoming, server-side HTTP request.
+ * Represents an incoming, getServer-side HTTP request.
  *
  * Per the HTTP specification, this interface includes properties for
  * each of the following:
@@ -23,27 +60,17 @@ use App\Config\AppConfig;
  * - Any cookies provided (generally via $_COOKIE)
  * - Query string arguments (generally via $_GET, or as parsed via parse_str())
  * - Upload files, if any (as represented by $_FILES)
- * - Deserialized body parameters (generally from $_POST)
+ * - Deserialized body binds (generally from $_POST)
  *
  * @package CodeIgniter\HTTPLite
  */
 class IncomingRequest extends Request
 {
-
-	/**
-	 * Parsed input stream data
-	 *
-	 * Parsed from php://input at runtime
-	 *
-	 * @var
-	 */
-	protected $inputStream;
-
 	/**
 	 * Enable CSRF flag
 	 *
 	 * Enables a CSRF cookie token to be set.
-	 * Set automatically based on config setting.
+	 * Set automatically based on Config setting.
 	 *
 	 * @var bool
 	 */
@@ -57,43 +84,29 @@ class IncomingRequest extends Request
 	public $uri;
 
 	/**
-	 * Set a cookie name prefix if you need to avoid collisions
+	 * File collection
 	 *
-	 * @var string
+	 * @var Files\FileCollection
 	 */
-	protected $cookiePrefix = '';
+	protected $files;
 
 	/**
-	 * Set to .your-domain.com for site-wide cookies
+	 * Negotiator
 	 *
-	 * @var string
+	 * @var \CodeIgniter\HTTP\Negotiate
 	 */
-	protected $cookieDomain = '';
-
-	/**
-	 * Typically will be a forward slash
-	 *
-	 * @var string
-	 */
-	protected $cookiePath = '/';
-
-	/**
-	 * Cookie will only be set if a secure HTTPS connection exists.
-	 *
-	 * @var bool
-	 */
-	protected $cookieSecure = false;
-
-	/**
-	 * Cookie will only be accessible via HTTP(S) (no javascript)
-	 *
-	 * @var bool
-	 */
-	protected $cookieHTTPOnly = false;
+	protected $negotiate;
 
 	//--------------------------------------------------------------------
 
-	public function __construct(AppConfig $config, $uri = null, $body = 'php://input')
+	/**
+	 * Constructor
+	 *
+	 * @param type $config
+	 * @param type $uri
+	 * @param type $body
+	 */
+	public function __construct($config, $uri = null, $body = 'php://input')
 	{
 		// Get our body from php://input
 		if ($body == 'php://input')
@@ -107,17 +120,9 @@ class IncomingRequest extends Request
 
 		$this->populateHeaders();
 
-		// @todo perform csrf check
-
 		$this->uri = $uri;
 
 		$this->detectURI($config->uriProtocol, $config->baseURL);
-
-		$this->cookiePrefix   = $config->cookiePrefix;
-		$this->cookieDomain   = $config->cookieDomain;
-		$this->cookiePath     = $config->cookiePath;
-		$this->cookieSecure   = $config->cookieSecure;
-		$this->cookieHTTPOnly = $config->cookieHTTPOnly;
 	}
 
 	//--------------------------------------------------------------------
@@ -129,7 +134,7 @@ class IncomingRequest extends Request
 	 */
 	public function isCLI(): bool
 	{
-		return (PHP_SAPI === 'cli' OR defined('STDIN'));
+		return (PHP_SAPI === 'cli' || defined('STDIN'));
 	}
 
 	//--------------------------------------------------------------------
@@ -143,6 +148,71 @@ class IncomingRequest extends Request
 	{
 		return ( ! empty($_SERVER['HTTP_X_REQUESTED_WITH']) &&
 		         strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest');
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Attempts to detect if the current connection is secure through
+	 * a few different methods.
+	 *
+	 * @return bool
+	 */
+	public function isSecure(): bool
+	{
+		if ( ! empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) !== 'off')
+		{
+			return true;
+		}
+		elseif (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https')
+		{
+			return true;
+		}
+		elseif ( ! empty($_SERVER['HTTP_FRONT_END_HTTPS']) && strtolower($_SERVER['HTTP_FRONT_END_HTTPS']) !== 'off')
+		{
+			return true;
+		}
+
+		return false;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Fetch an item from the $_REQUEST object. This is the simplest way
+	 * to grab data from the request object and can be used in lieu of the
+	 * other get* methods in most cases.
+	 *
+	 * @param null $index
+	 * @param null $filter
+	 *
+	 * @return mixed
+	 */
+	public function getVar($index = null, $filter = null)
+	{
+		return $this->fetchGlobal(INPUT_REQUEST, $index, $filter);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * A convenience method that grabs the raw input stream and decodes
+	 * the JSON into an array.
+	 *
+	 * If $assoc == true, then all objects in the response will be converted
+	 * to associative arrays.
+	 *
+	 * @param bool $assoc   Whether to return objects as associative arrays
+	 * @param int  $depth   How many levels deep to decode
+	 * @param int  $options Bitmask of options
+	 *
+	 * @see http://php.net/manual/en/function.json-decode.php
+	 *
+	 * @return mixed
+	 */
+	public function getJSON(bool $assoc = false, int $depth = 512, int $options = 0)
+	{
+	    return json_decode($this->body, $assoc, $depth, $options);
 	}
 
 	//--------------------------------------------------------------------
@@ -245,115 +315,48 @@ class IncomingRequest extends Request
 	//--------------------------------------------------------------------
 
 	/**
-	 * Set a cookie
+	 * Returns an array of all files that have been uploaded with this
+	 * request. Each file is represented by an UploadedFile instance.
 	 *
-	 * Accepts an arbitrary number of parameters (up to 7) or an associateive
-	 * array in the first parameter containing all the values.
-	 *
-	 * @param            $name      Cookie name or array containing parameters
-	 * @param string     $value     Cookie value
-	 * @param string     $expire    Cookie expiration time in seconds
-	 * @param string     $domain    Cookie domain (e.g.: '.yourdomain.com')
-	 * @param string     $path      Cookie path (default: '/')
-	 * @param string     $prefix    Cookie name prefix
-	 * @param bool|false $secure    Whether to only transfer cookies via SSL
-	 * @param bool|false $httponly  Whether only make the cookie accessible via HTTP (no javascript)
+	 * @return array
 	 */
-	public function setCookie(
-		$name,
-		$value = '',
-		$expire = '',
-		$domain = '',
-		$path = '/',
-		$prefix = '',
-		$secure = false,
-		$httponly = false
-	)
+	public function getFiles(): array
 	{
-		if (is_array($name))
+		if (is_null($this->files))
 		{
-			// always leave 'name' in last place, as the loop will break otherwise, due to $$item
-			foreach (['value', 'expire', 'domain', 'path', 'prefix', 'secure', 'httponly', 'name'] as $item)
-			{
-				if (isset($name[$item]))
-				{
-					$item = $name[$item];
-				}
-			}
+			// @todo modify to use Services, at the very least.
+			$this->files = new FileCollection();
 		}
 
-		if ($prefix === '' && $this->cookiePrefix !== '')
-		{
-			$prefix = $this->cookiePrefix;
-		}
-
-		if ($domain == '' && $this->cookieDomain != '')
-		{
-			$domain = $this->cookieDomain;
-		}
-
-		if ($path === '/' && $this->cookiePath !== '/')
-		{
-			$path = $this->cookiePath;
-		}
-
-		if ($secure === false && $this->cookieSecure === true)
-		{
-			$secure = $this->cookieSecure;
-		}
-
-		if ($httponly === false && $this->cookieHTTPOnly !== false)
-		{
-			$httponly = $this->cookieHTTPOnly;
-		}
-
-		if ( ! is_numeric($expire))
-		{
-			$expire = time() - 86500;
-		}
-		else
-		{
-			$expire = ($expire > 0) ? time() + $expire : 0;
-		}
-
-		setcookie($prefix.$name, $value, $expire, $path, $domain, $secure, $httponly);
+		return $this->files->all();
 	}
 
 	//--------------------------------------------------------------------
 
 	/**
-	 * Attempts to detect if the current connection is secure through
-	 * a few different methods.
+	 * Retrieves a single file by the name of the input field used
+	 * to upload it.
 	 *
-	 * @return bool
+	 * @param string $fileID
+	 *
+	 * @return UploadedFile|null
 	 */
-	public function isSecure(): bool
+	public function getFile(string $fileID)
 	{
-		if (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == '443')
+		if (is_null($this->files))
 		{
-			return true;
-		}
-		elseif (isset($_SERVER['HTTP_X_FORWARDED_PORT']) && $_SERVER['HTTP_X_FORWARDED_PORT'] == '443')
-		{
-			return true;
-		}
-		elseif (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on')
-		{
-			return true;
-		}
-		elseif (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https')
-		{
-			return true;
+			// @todo modify to use Services, at the very least.
+			$this->files = new FileCollection();
 		}
 
-		return false;
+		return $this->files->getFile($fileID);
 	}
 
 	//--------------------------------------------------------------------
 
 	/**
 	 * Sets up our URI object based on the information we have. This is
-	 * either provided by the user in the baseURL config setting, or
+	 * either provided by the user in the baseURL Config setting, or
 	 * determined from the environment as needed.
 	 *
 	 * @param $protocol
@@ -367,16 +370,21 @@ class IncomingRequest extends Request
 		// set our current domain name, scheme
 		if ( ! empty($baseURL))
 		{
+			// We cannot add the path here, otherwise it's possible
+			// that the routing will not work correctly if we are
+			// within a sub-folder scheme. So it's modified in
+			// the
 			$this->uri->setScheme(parse_url($baseURL, PHP_URL_SCHEME));
 			$this->uri->setHost(parse_url($baseURL, PHP_URL_HOST));
 			$this->uri->setPort(parse_url($baseURL, PHP_URL_PORT));
+			$this->uri->setPath(parse_url($baseURL, PHP_URL_PATH));
 		}
 		else
 		{
 			$this->isSecure() ? $this->uri->setScheme('https') : $this->uri->setScheme('http');
 
 			// While both SERVER_NAME and HTTP_HOST are open to security issues,
-			// if we have to choose, we will go with the server-controller version first.
+			// if we have to choose, we will go with the server-controlled version first.
 			! empty($_SERVER['SERVER_NAME'])
 				? (isset($_SERVER['SERVER_NAME']) ? $this->uri->setHost($_SERVER['SERVER_NAME']) : null)
 				: (isset($_SERVER['HTTP_HOST']) ? $this->uri->setHost($_SERVER['HTTP_HOST']) : null);
@@ -391,7 +399,7 @@ class IncomingRequest extends Request
 	//--------------------------------------------------------------------
 
 	/**
-	 * Based on the URIProtocol config setting, will attempt to
+	 * Based on the URIProtocol Config setting, will attempt to
 	 * detect the path portion of the current URI.
 	 *
 	 * @param $protocol
@@ -422,6 +430,44 @@ class IncomingRequest extends Request
 		}
 
 		return $path;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Provides a convenient way to work with the Negotiate class
+	 * for content negotiation.
+	 *
+	 * @param string $type
+	 * @param array  $supported
+	 * @param bool   $strictMatch
+	 *
+	 * @return mixed
+	 */
+	public function negotiate(string $type, array $supported, bool $strictMatch = false)
+	{
+		if (is_null($this->negotiate))
+		{
+			$this->negotiate = Services::negotiator($this, true);
+		}
+
+		switch (strtolower($type))
+		{
+			case 'media':
+				return $this->negotiate->media($supported, $strictMatch);
+				break;
+			case 'charset':
+				return $this->negotiate->charset($supported);
+				break;
+			case 'encoding':
+				return $this->negotiate->encoding($supported);
+				break;
+			case 'language':
+				return $this->negotiate->language($supported);
+				break;
+		}
+
+		throw new \InvalidArgumentException($type.' is not a valid negotiation type.');
 	}
 
 	//--------------------------------------------------------------------
@@ -458,7 +504,7 @@ class IncomingRequest extends Request
 		}
 
 		// This section ensures that even on servers that require the URI to be in the query string (Nginx) a correct
-		// URI is found, and also fixes the QUERY_STRING server var and $_GET array.
+		// URI is found, and also fixes the QUERY_STRING getServer var and $_GET array.
 		if (trim($uri, '/') === '' && strncmp($query, '/', 1) === 0)
 		{
 			$query                   = explode('?', $query, 2);
@@ -472,7 +518,7 @@ class IncomingRequest extends Request
 
 		parse_str($_SERVER['QUERY_STRING'], $_GET);
 
-		if ($uri === '/' OR $uri === '')
+		if ($uri === '/' || $uri === '')
 		{
 			return '/';
 		}
@@ -516,7 +562,7 @@ class IncomingRequest extends Request
 	 *
 	 * Do some final cleaning of the URI and return it, currently only used in self::_parse_request_uri()
 	 *
-	 * @param    string $url
+	 * @param    string $uri
 	 *
 	 * @return    string
 	 */
@@ -526,7 +572,7 @@ class IncomingRequest extends Request
 		$tok  = strtok($uri, '/');
 		while ($tok !== false)
 		{
-			if (( ! empty($tok) OR $tok === '0') && $tok !== '..')
+			if (( ! empty($tok) || $tok === '0') && $tok !== '..')
 			{
 				$uris[] = $tok;
 			}

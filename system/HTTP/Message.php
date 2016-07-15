@@ -1,9 +1,45 @@
 <?php namespace CodeIgniter\HTTP;
 
+/**
+ * CodeIgniter
+ *
+ * An open source application development framework for PHP
+ *
+ * This content is released under the MIT License (MIT)
+ *
+ * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ *
+ * @package	CodeIgniter
+ * @author	CodeIgniter Dev Team
+ * @copyright	Copyright (c) 2014 - 2016, British Columbia Institute of Technology (http://bcit.ca/)
+ * @license	http://opensource.org/licenses/MIT	MIT License
+ * @link	http://codeigniter.com
+ * @since	Version 3.0.0
+ * @filesource
+ */
+
 class Message
 {
 	/**
-	 * List of all HTTP request headers
+	 * List of all HTTP request headers.
 	 *
 	 * @var array
 	 */
@@ -18,18 +54,31 @@ class Message
 	 */
 	protected $headerMap = [];
 
+	/**
+	 * Protocol version
+	 * @var type
+	 */
 	protected $protocolVersion;
 
+	/**
+	 * List of valid protocol versions
+	 * @var array
+	 */
 	protected $validProtocolVersions = ['1.0', '1.1', '2'];
 
+	/**
+	 * Message body
+	 *
+	 * @var type
+	 */
 	protected $body;
 
 	//--------------------------------------------------------------------
-	
+
 	//--------------------------------------------------------------------
 	// Body
 	//--------------------------------------------------------------------
-	
+
 	/**
 	 * Returns the Message's body.
 	 *
@@ -57,23 +106,39 @@ class Message
 	}
 
 	//--------------------------------------------------------------------
-	
+
+	/**
+	 * Appends data to the body of the current message.
+	 *
+	 * @param $data
+	 *
+	 * @return \CodeIgniter\HTTP\Message
+	 */
+	public function appendBody($data): self
+	{
+	    $this->body .= (string)$data;
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+
 	//--------------------------------------------------------------------
 	// Headers
 	//--------------------------------------------------------------------
-	
+
 	/**
-	 * Populates the $headers array with any headers the server knows about.
+	 * Populates the $headers array with any headers the getServer knows about.
 	 */
 	public function populateHeaders()
 	{
-		// In Apache, you can simply call apache_request_headers()
-		if (function_exists('apache_request_headers'))
+		$contentType = isset($_SERVER['CONTENT_TYPE']) ? $_SERVER['CONTENT_TYPE'] : getenv('CONTENT_TYPE');
+		if (! empty($contentType))
 		{
-			return $this->headers = apache_request_headers();
+			$this->setHeader('Content-Type', $contentType);
 		}
-
-		$this->headers['Content-Type'] = isset($_SERVER['CONTENT_TYPE']) ? $_SERVER['CONTENT_TYPE'] : @getenv('CONTENT_TYPE');
+		unset($contentType);
 
 		foreach ($_SERVER as $key => $val)
 		{
@@ -91,6 +156,9 @@ class Message
 				{
 					$this->setHeader($header, '');
 				}
+
+				// Add us to the header map so we can find them case-insensitively
+				$this->headerMap[strtolower($header)] = $header;
 			}
 		}
 	}
@@ -103,7 +171,7 @@ class Message
 	 *
 	 * @return array        An array of the request headers
 	 */
-	public function getHeaders() : array
+	public function getHeaders(): array
 	{
 		// If no headers are defined, but the user is
 		// requesting it, then it's likely they want
@@ -119,12 +187,15 @@ class Message
 	//--------------------------------------------------------------------
 
 	/**
-	 * Returns a single header.
+	 * Returns a single header object. If multiple headers with the same
+	 * name exist, then will return an array of header objects.
 	 *
-	 * @param      $index
+	 * @param      $name
 	 * @param null $filter
+	 *
+	 * @return array|\CodeIgniter\HTTP\Header
 	 */
-	public function getHeader($name, $filter = null)
+	public function getHeader($name)
 	{
 		$orig_name = $this->getHeaderName($name);
 
@@ -133,17 +204,27 @@ class Message
 			return NULL;
 		}
 
-		if (is_null($filter))
-		{
-			$filter = FILTER_DEFAULT;
-		}
-
-		return is_array($this->headers[$orig_name])
-			? filter_var_array($this->headers[$orig_name], $filter)
-			: filter_var($this->headers[$orig_name], $filter);
+		return $this->headers[$orig_name];
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Determines whether a header exists.
+	 *
+	 * @param $name
+	 *
+	 * @return bool
+	 */
+	public function hasHeader($name): bool
+	{
+		$orig_name = $this->getHeaderName($name);
+
+		return isset($this->headers[$orig_name]);
+	}
+
+	//--------------------------------------------------------------------
+
 
 	/**
 	 * Retrieves a comma-separated string of the values for a single header.
@@ -169,12 +250,14 @@ class Message
 			return '';
 		}
 
-		if (is_array($this->headers[$orig_name]) || $this->headers[$orig_name] instanceof \ArrayAccess)
+		// If there are more than 1 headers with this name,
+		// then return the value of the first.
+		if (is_array($this->headers[$orig_name]))
 		{
-			return implode(', ', $this->headers[$orig_name]);
+			return $this->headers[$orig_name][0]->getValueLine();
 		}
 
-		return (string)$this->headers[$orig_name];
+		return $this->headers[$orig_name]->getValueLine();
 	}
 
 	//--------------------------------------------------------------------
@@ -190,9 +273,21 @@ class Message
 	 */
 	public function setHeader(string $name, $value): self
 	{
-		$this->headers[$name] = $value;
+		if (! isset($this->headers[$name]))
+		{
+			$this->headers[$name] = new Header($name, $value);
 
-		$this->headerMap[strtolower($name)] = $name;
+			$this->headerMap[strtolower($name)] = $name;
+
+			return $this;
+		}
+
+		if (! is_array($this->headers[$name]))
+		{
+			$this->headers[$name] = [$this->headers[$name]];
+		}
+
+		$this->headers[$name][] = new Header($name, $value);
 
 		return $this;
 	}
@@ -231,12 +326,27 @@ class Message
 	{
 		$orig_name = $this->getHeaderName($name);
 
-		if (! is_array($this->headers[$orig_name]) && ! ($this->headers[$orig_name] instanceof \ArrayAccess))
-		{
-			throw new \LogicException("Header '{$orig_name}' does not support multiple values.");
-		}
+		$this->headers[$orig_name]->appendValue($value);
 
-		$this->headers[$orig_name][] = $value;
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Adds an additional header value to any headers that accept
+	 * multiple values (i.e. are an array or implement ArrayAccess)
+	 *
+	 * @param string $name
+	 * @param        $value
+	 *
+	 * @return string
+	 */
+	public function prependHeader(string $name, $value): self
+	{
+		$orig_name = $this->getHeaderName($name);
+
+		$this->headers[$orig_name]->prependValue($value);
 
 		return $this;
 	}
@@ -250,7 +360,7 @@ class Message
 	 */
 	public function getProtocolVersion(): string
 	{
-	    return $this->protocolVersion;
+		return $this->protocolVersion;
 	}
 
 	//--------------------------------------------------------------------
@@ -264,6 +374,11 @@ class Message
 	 */
 	public function setProtocolVersion(string $version): self
 	{
+		if (! is_numeric($version))
+		{
+			$version = substr($version, strpos($version, '/') + 1);
+		}
+
 	    if (! in_array($version, $this->validProtocolVersions))
 	    {
 		    throw new \InvalidArgumentException('Invalid HTTP Protocol Version. Must be one of: '. implode(', ', $this->validProtocolVersions));
@@ -273,108 +388,9 @@ class Message
 
 		return $this;
 	}
-	
-	//--------------------------------------------------------------------
-
-	//--------------------------------------------------------------------
-	// Content Negotiation
-	//
-	// @see http://tools.ietf.org/html/rfc7231#section-5.3
-	//--------------------------------------------------------------------
-
-	/**
-	 * Determines the best content-type to use based on the $supported
-	 * types the application says it supports, and the types requested
-	 * by the client.
-	 *
-	 * If no match is found, the first, highest-ranking client requested
-	 * type is returned.
-	 *
-	 * @param array $supported
-	 * @param bool  $strictMatch If TRUE, will return an empty string when no match found.
-	 *                           If FALSE, will return the first supported element.
-	 *
-	 * @return string
-	 */
-	public function negotiateMedia(array $supported, bool $strictMatch=false): string
-	{
-		return $this->getBestMatch($supported, $this->getHeader('accept'), true, $strictMatch);
-	}
 
 	//--------------------------------------------------------------------
 
-	/**
-	 * Determines the best charset to use based on the $supported
-	 * types the application says it supports, and the types requested
-	 * by the client.
-	 *
-	 * If no match is found, the first, highest-ranking client requested
-	 * type is returned.
-	 *
-	 * @param array $supported
-	 *
-	 * @return string
-	 */
-	public function negotiateCharset(array $supported): string
-	{
-		$match = $this->getBestMatch($supported, $this->getHeader('accept-charset'), false, true);
-
-		// If no charset is shown as a match, ignore the directive
-		// as allowed by the RFC, and tell it a default value.
-		if (empty($match))
-		{
-			return 'utf-8';
-		}
-
-		return $match;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Determines the best encoding type to use based on the $supported
-	 * types the application says it supports, and the types requested
-	 * by the client.
-	 *
-	 * If no match is found, the first, highest-ranking client requested
-	 * type is returned.
-	 *
-	 * @param array $supported
-	 *
-	 * @return string
-	 */
-	public function negotiateEncoding(array $supported=[]): string
-	{
-		array_push($supported, 'identity');
-
-		return $this->getBestMatch($supported, $this->getHeader('accept-encoding'));
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Determines the best language to use based on the $supported
-	 * types the application says it supports, and the types requested
-	 * by the client.
-	 *
-	 * If no match is found, the first, highest-ranking client requested
-	 * type is returned.
-	 *
-	 * @param array $supported
-	 *
-	 * @return string
-	 */
-	public function negotiateLanguage(array $supported): string
-	{
-	    return $this->getBestMatch($supported, $this->getHeader('accept-language'));
-	}
-	
-	//--------------------------------------------------------------------
-	
-	//--------------------------------------------------------------------
-	// Protected
-	//--------------------------------------------------------------------
-	
 	/**
 	 * Takes a header name in any case, and returns the
 	 * normal-case version of the header.
@@ -391,251 +407,5 @@ class Message
 	}
 
 	//--------------------------------------------------------------------
-
-	/**
-	 * Does the grunt work of comparing any of the app-supported values
-	 * against a given Accept* header string.
-	 *
-	 * Portions of this code base on Aura.Accept library.
-	 *
-	 * @param array  $supported    App-supported values
-	 * @param string $header       header string
-	 * @param bool   $enforceTypes If TRUE, will compare media types and sub-types.
-	 * @param bool   $strictMatch  If TRUE, will return empty string on no match.
-	 *                             If FALSE, will return the first supported element.
-	 *
-	 * @return string Best match
-	 */
-	protected function getBestMatch(array $supported, string $header=null, bool $enforceTypes=false, bool $strictMatch=false): string
-	{
-		if (empty($supported))
-		{
-			throw new \InvalidArgumentException('You must provide an array of supported values to all Negotiations.');
-		}
-
-		if (empty($header))
-		{
-			return $strictMatch ? '' : $supported[0];
-		}
-
-		$acceptable = $this->parseHeader($header);
-
-		// If no acceptable values exist, return the
-		// first that we support.
-		if (empty($acceptable))
-		{
-			return $supported[0];
-		}
-
-		foreach ($acceptable as $accept)
-		{
-			// if acceptable quality is zero, skip it.
-			if ($accept['q'] == 0)
-			{
-				continue;
-			}
-
-			// if acceptable value is "anything", return the first available
-			if ($accept['value'] == '*' || $accept['value'] == '*/*')
-			{
-				return $supported[0];
-			}
-
-			// If an acceptable value is supported, return it
-			foreach ($supported as $available)
-			{
-				if ($this->match($accept, $available, $enforceTypes))
-				{
-					return $available;
-				}
-			}
-		}
-
-		// No matches? Return the first supported element.
-		return $strictMatch ? '' : $supported[0];
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Parses an Accept* header into it's multiple values.
-	 *
-	 * This is based on code from Aura.Accept library.
-	 *
-	 * @param string $header
-	 *
-	 * @return array
-	 */
-	public function parseHeader(string $header)
-	{
-		$results = [];
-		$acceptable = explode(',', $header);
-
-		foreach ($acceptable as $value)
-		{
-			$pairs = explode(';', $value);
-
-			$value = $pairs[0];
-
-			unset($pairs[0]);
-
-			$parameters = array();
-
-			foreach ($pairs as $pair)
-			{
-				$param = array();
-				preg_match(
-					'/^(?P<name>.+?)=(?P<quoted>"|\')?(?P<value>.*?)(?:\k<quoted>)?$/',
-					$pair,
-					$param
-				);
-				$parameters[trim($param['name'])] = trim($param['value']);
-			}
-
-			$quality = 1.0;
-
-			if (array_key_exists('q', $parameters))
-			{
-				$quality = $parameters['q'];
-				unset($parameters['q']);
-			}
-
-			$results[] = [
-				'value' => trim($value),
-				'q' => (float)$quality,
-			    'params' => $parameters
-			];
-		}
-
-		// Sort to get the highest results first
-		usort($results, function ($a, $b)
-		{
-			if ($a['q'] == $b['q'])
-			{
-				$a_ast = substr_count($a['value'], '*');
-				$b_ast = substr_count($b['value'], '*');
-
-				// '*/*' has lower precedence than 'text/*',
-				// and 'text/*' has lower priority than 'text/plain'
-				//
-				// This seems backwards, but needs to be that way
-				// due to the way PHP7 handles ordering or array
-				// elements created by reference.
-				if ($a_ast > $b_ast)
-				{
-					return 1;
-				}
-
-				// If the counts are the same, but one element
-				// has more params than another, it has higher precedence.
-				//
-				// This seems backwards, but needs to be that way
-				// due to the way PHP7 handles ordering or array
-				// elements created by reference.
-				if ($a_ast == $b_ast)
-				{
-					return count($b['params']) - count($a['params']);
-				}
-
-				return 0;
-			}
-
-			// Still here? Higher q values have precedence.
-			return ($a['q'] > $b['q']) ? -1 : 1;
-		});
-
-		return $results;
-	}
-
-	//--------------------------------------------------------------------
-
-	protected function match(array $acceptable, string $supported, bool $enforceTypes=false)
-	{
-		$supported = $this->parseHeader($supported);
-		if (is_array($supported) && count($supported) == 1)
-		{
-			$supported = $supported[0];
-		}
-
-		// Is it an exact match?
-		if ($acceptable['value'] == $supported['value'])
-		{
-			return $this->matchParameters($acceptable, $supported);
-		}
-
-		// Do we need to compare types/sub-types? Only used
-		// by negotiateMedia().
-		if ($enforceTypes)
-		{
-			return $this->matchTypes($acceptable, $supported);
-		}
-
-		return false;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Checks two Accept values with matching 'values' to see if their
-	 * 'params' are the same.
-	 *
-	 * @param array $acceptable
-	 * @param array $supported
-	 *
-	 * @return bool
-	 */
-	protected function matchParameters(array $acceptable, array $supported): bool
-	{
-		if (count($acceptable['params']) != count($supported['params']))
-		{
-			return false;
-		}
-
-		foreach ($supported['params'] as $label => $value)
-		{
-			if (! isset($acceptable['params'][$label]) ||
-			    $acceptable['params'][$label] != $value)
-			{
-				return false;
-			}
-		}
-
-		return true;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Compares the types/subtypes of an acceptable Media type and
-	 * the supported string.
-	 *
-	 * @param array $acceptable
-	 * @param array $supported
-	 *
-	 * @return bool
-	 */
-	public function matchTypes(array $acceptable, array $supported): bool
-	{
-	    list($aType, $aSubType) = explode('/', $acceptable['value']);
-	    list($sType, $sSubType) = explode('/', $supported['value']);
-
-		// If the types don't match, we're done.
-		if ($aType != $sType)
-		{
-			return false;
-		}
-
-		// If there's an asterisk, we're cool
-		if ($aSubType == '*')
-		{
-			return true;
-		}
-
-		// Otherwise, subtypes must match also.
-		return $aSubType == $sSubType;
-	}
-
-	//--------------------------------------------------------------------
-
 
 }

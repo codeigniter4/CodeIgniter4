@@ -1,5 +1,41 @@
 <?php namespace CodeIgniter\HTTP;
 
+/**
+ * CodeIgniter
+ *
+ * An open source application development framework for PHP
+ *
+ * This content is released under the MIT License (MIT)
+ *
+ * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ *
+ * @package	CodeIgniter
+ * @author	CodeIgniter Dev Team
+ * @copyright	Copyright (c) 2014 - 2016, British Columbia Institute of Technology (http://bcit.ca/)
+ * @license	http://opensource.org/licenses/MIT	MIT License
+ * @link	http://codeigniter.com
+ * @since	Version 3.0.0
+ * @filesource
+ */
+
 class URI
 {
 
@@ -96,6 +132,8 @@ class URI
 	protected $defaultPorts = [
 		'http'  => 80,
 		'https' => 443,
+	    'ftp'   => 21,
+	    'sftp'  => 22
 	];
 
 	/**
@@ -108,6 +146,12 @@ class URI
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Constructor.
+	 * 
+	 * @param string $uri
+	 * @throws \InvalidArgumentException
+	 */
 	public function __construct(string $uri = null)
 	{
 		if ( ! is_null($uri))
@@ -187,9 +231,10 @@ class URI
 	 * scheme, it SHOULD NOT be included.
 	 *
 	 * @see https://tools.ietf.org/html/rfc3986#section-3.2
+	 * @param bool $ignorePort
 	 * @return string The URI authority, in "[user-info@]host[:port]" format.
 	 */
-	public function getAuthority(): string
+	public function getAuthority(bool $ignorePort = false): string
 	{
 		if (empty($this->host))
 		{
@@ -203,7 +248,7 @@ class URI
 			$authority = $this->getUserInfo().'@'.$authority;
 		}
 
-		if ( ! empty($this->port))
+		if ( ! empty($this->port) && ! $ignorePort)
 		{
 			// Don't add port if it's a standard port for
 			// this scheme
@@ -258,9 +303,11 @@ class URI
 	 * Temporarily sets the URI to show a password in userInfo. Will
 	 * reset itself after the first call to authority().
 	 */
-	public function showPassword()
+	public function showPassword(bool $val = true)
 	{
-		$this->showPassword = true;
+		$this->showPassword = $val;
+
+		return $this;
 	}
 
 	//--------------------------------------------------------------------
@@ -337,6 +384,10 @@ class URI
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Retrieve the query string
+	 * @return type
+	 */
 	public function getQuery(): string
 	{
 		return is_null($this->query) ? '' : $this->query;
@@ -344,6 +395,11 @@ class URI
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Retrieve a URI fragment
+	 * 
+	 * @return type
+	 */
 	public function getFragment(): string
 	{
 		return is_null($this->fragment) ? '' : $this->fragment;
@@ -424,6 +480,7 @@ class URI
 	 * @param $path
 	 * @param $query
 	 * @param $fragment
+	 * @param $ignorePort
 	 *
 	 * @return string
 	 */
@@ -552,8 +609,10 @@ class URI
 	 *
 	 * @return $this
 	 */
-	public function setPort(int $port)
+	public function setPort($port)
 	{
+		if (is_null($port)) return $this;
+
 		if ($port <= 0 || $port > 65535)
 		{
 			throw new \InvalidArgumentException('Invalid port given.');
@@ -576,6 +635,8 @@ class URI
 	public function setPath(string $path)
 	{
 		$this->path = $this->filterPath($path);
+
+		$this->segments = explode('/', $this->path);
 
 		return $this;
 	}
@@ -691,6 +752,8 @@ class URI
 
 	/**
 	 * Sets the fragment portion of the URI.
+	 *
+	 * @see https://tools.ietf.org/html/rfc3986#section-3.5
 	 *
 	 * @param string $string
 	 *
@@ -881,8 +944,8 @@ class URI
 	 *
 	 * @see http://tools.ietf.org/html/rfc3986#section-5.2.3
 	 *
-	 * @param $path1
-	 * @param $path2
+	 * @param URI $base
+	 * @param URI $reference
 	 */
 	protected function mergePaths(URI $base, URI $reference)
 	{
@@ -910,6 +973,7 @@ class URI
 	 *
 	 * @see http://tools.ietf.org/html/rfc3986#section-5.2.4
 	 *
+	 * @param string $path
 	 * @param URI $uri
 	 */
 	public function removeDotSegments(string $path): string

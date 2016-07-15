@@ -40,8 +40,8 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'CodeIgniter'
-copyright = u'2014 - 2015, British Columbia Institute of Technology'
+project = u'CodeIgniter4'
+copyright = u'2014 - 2016, British Columbia Institute of Technology'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -185,7 +185,7 @@ html_copy_source = False
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'CodeIgniter.tex', u'CodeIgniter Documentation',
+  ('index', 'CodeIgniter.tex', u'CodeIgniter4 Documentation',
    u'British Columbia Institute of Technology', 'manual'),
 ]
 
@@ -218,7 +218,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'codeigniter', u'CodeIgniter Documentation',
+    ('index', 'codeigniter', u'CodeIgniter4 Documentation',
      [u'British Columbia Institute of Technology'], 1)
 ]
 
@@ -226,10 +226,10 @@ man_pages = [
 # -- Options for Epub output ---------------------------------------------------
 
 # Bibliographic Dublin Core info.
-epub_title = u'CodeIgniter'
+epub_title = u'CodeIgniter4'
 epub_author = u'British Columbia Institute of Technology'
 epub_publisher = u'British Columbia Institute of Technology'
-epub_copyright = u'2014 - 2015, British Columbia Institute of Technology'
+epub_copyright = u'2014 - 2016, British Columbia Institute of Technology'
 
 # The language of the text. It defaults to the language option
 # or en if the language is not set.

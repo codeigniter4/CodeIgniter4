@@ -1,5 +1,45 @@
 <?php namespace CodeIgniter\Config;
 
+/**
+ * CodeIgniter
+ *
+ * An open source application development framework for PHP
+ *
+ * This content is released under the MIT License (MIT)
+ *
+ * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ *
+ * @package      CodeIgniter
+ * @author       CodeIgniter Dev Team
+ * @copyright    Copyright (c) 2014 - 2016, British Columbia Institute of Technology (http://bcit.ca/)
+ * @license      http://opensource.org/licenses/MIT	MIT License
+ * @link         http://codeigniter.com
+ * @since        Version 3.0.0
+ * @filesource
+ */
+
+/**
+ * Environment-specific configuration
+ */
+
 class DotEnv
 {
 	/**
@@ -40,7 +80,7 @@ class DotEnv
 		// they should be optional.
 		if ( ! is_file($this->path))
 		{
-			return;
+			return false;
 		}
 
 		// Ensure file is readable
@@ -82,12 +122,6 @@ class DotEnv
 	{
 		list($name, $value) = $this->normaliseVariable($name, $value);
 
-		// Don't overwrite existing environment variables.
-		if ( ! is_null($this->getVariable($name)))
-		{
-			return;
-		}
-
 		putenv("$name=$value");
 		$_ENV[$name] = $value;
 		$_SERVER[$name] = $value;
@@ -101,7 +135,6 @@ class DotEnv
 	 *
 	 * @param string $name
 	 * @param string $value
-	 *
 	 * @return array
 	 */
 	public function normaliseVariable(string $name, string $value = ''): array
@@ -115,11 +148,11 @@ class DotEnv
 		$name  = trim($name);
 		$value = trim($value);
 
-		// Sanitise the name
+		// Sanitize the name
 		$name = str_replace(['export', '\'', '"'], '', $name);
 
-		// Sanitise the value
-		$value = $this->sanitiseValue($value);
+		// Sanitize the value
+		$value = $this->sanitizeValue($value);
 
 		$value = $this->resolveNestedVariables($value);
 
@@ -139,7 +172,7 @@ class DotEnv
 	 * @return string
 	 * @throws \InvalidArgumentException
 	 */
-	protected function sanitiseValue(string $value): string
+	protected function sanitizeValue(string $value): string
 	{
 		if ( ! $value)
 		{
@@ -147,7 +180,7 @@ class DotEnv
 		}
 
 		// Does it begin with a quote?
-		if ($this->strpbrk($value[0], '"\'') !== false)
+		if (strpbrk($value[0], '"\'') !== false)
 		{
 			// value starts with a quote
 			$quote        = $value[0];
@@ -239,9 +272,9 @@ class DotEnv
 	 *
 	 * @param string $name
 	 *
-	 * @return string
+	 * @return string|null
 	 */
-	protected function getVariable(string $name): string
+	protected function getVariable(string $name)
 	{
 		switch (true)
 		{
@@ -262,4 +295,3 @@ class DotEnv
 	//--------------------------------------------------------------------
 
 }
-

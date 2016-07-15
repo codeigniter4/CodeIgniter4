@@ -7,31 +7,58 @@ Introduction
 
 All of the classes within CodeIgniter are provided as "services". This simply means that, instead
 of hard-coding a class name to load, the classes to call are defined within a very simple
-configuration file. This file acts as a form of factory to create new instances of the required class.
+configuration file. This file acts as a type of factory to create new instances of the required class.
 
 A quick example will probably make things clearer, so imagine that you need to pull in an instance
-of the Bechmark/Timer class. In the old days, you would simply create a new instance of that class::
+of the Timer class. The simplest method would simply be to create a new instance of that class::
 
 	$timer = new CodeIgniter\Debug\Timer();
 
-And this works great. Until you decide that you want to user a different timer class in its place.
+And this works great. Until you decide that you want to use a different timer class in its place.
 Maybe this one has some advanced reporting the default timer does not provide. In order to do this,
 you now have to locate all of the locations in your application that you have used the timer class.
 Since you might have left them in place to keep a performance log of your application constantly
 running, this might be a time-consuming and error-prone way to handle this. That's where services
 come in handy.
 
-Instead of creating the instance ourself, we let another, central class create an instance of the
+Instead of creating the instance ourself, we let a central class create an instance of the
 class for us. This class is kept very simple. It only contains a method for each class that we want
 to use as a service. The method typically returns a new instance of that class, passing any dependencies
 it might have into it. Then, we would replace our timer creation code with code that calls this new class::
 
-	$timer = App\Config\Services::timer();
+	$timer = Config\Services::timer();
 
 When you need to change the implementation used, you can modify the services configuration file, and
 the change happens automatically throughout your application without you having to do anything. Now
- you just need to take advantage of any new functionality and you're good to go. Very simple and
- error-resistant.
+you just need to take advantage of any new functionality and you're good to go. Very simple and
+error-resistant.
+
+.. note:: It is recommended to only create services within controllers. Other files, like models
+	and libraries should have the dependencies either passed into the constructor or through a
+	setter method.
+
+Convenience Functions
+---------------------
+
+Two functions have been provided for getting a service. These functions are always available.
+
+The first is ``service()`` which returns a new instance of the requested service. The only
+required parameter is the service name. This is the same as the method name within the Services
+file::
+
+	$logger = service('logger');
+
+If the creation method requires additional parameters, they can be passed after the service name::
+
+	$renderer = service('renderer', APPPATH.'views/');
+
+The second function, ``shared_service()`` works just like ``service()`` but returns a shared
+instance of the desired service::
+
+    $logger = shared_service('logger');
+
+
+
 
 Defining Services
 =================
@@ -51,8 +78,8 @@ create a new class that implements the ``RouterCollectionInterface``::
 	    // Implement required methods here.
 	}
 
-Finally, modify ``/application/config/services.php`` to create a new instance of ``MyRouter``
-instead of ``CodeIgniter\\Router\\RouterCollection``::
+Finally, modify **/application/Config/Services.php** to create a new instance of ``MyRouter``
+instead of ``CodeIgniter\Router\RouterCollection``::
 
 	public static function routes()
 	{
@@ -66,7 +93,7 @@ Allowing Parameters
 -------------------
 
 In some instances, you will want the option to pass a setting to the class during instantiation.
-Since the services file is a very simple class, you can very simply make this work.
+Since the services file is a very simple class, it is easy to make this work.
 
 A good example is the ``renderer`` service. By default, we want this class to be able
 to find the views at ``APPPATH.views/``. We want the developer to have the option of
@@ -78,36 +105,31 @@ as a constructor parameter. The service method looks like this::
 	    return new \CodeIgniter\View\View($viewPath);
 	}
 
-This sets the default path in the method constructor, but allows for easily changing
+This sets the default path in the constructor method, but allows for easily changing
 the path it uses::
 
-	$renderer = \App\Config\Services::renderer('/shared/views');
+	$renderer = \Config\Services::renderer('/shared/views');
 
-Singleton Classes
+Shared Classes
 -----------------
 
 There are occasions where you need to require that only a single instance of a service
-is created. While this is typically discouraged, there are cases this is valid need,
-and simply handled with a static class property. The Logger is a perfect example of this::
+is created. This is easily handled with the ``getSharedInstance()`` method that is called from within the
+factory method. This handles checking if an instance has been created and saved
+within the class, and, if not, creates a new one. All of the factory methods provide a
+``$getShared = false`` value as the last parameter. You should stick to the method also.::
 
-	class Services
-	{
-		static protected $logger;
+    class Services
+    {
+        public static function routes($getShared = false)
+        {
+            if (! $getShared)
+            {
+                return new \CodeIgniter\Router\RouteCollection();
+            }
 
-		public static function logger()
-		{
-			// We only ever want a single instance of the logger.
-			if (empty(static::$logger))
-			{
-				static::$logger = new \PSR\Log\Logger(new \App\Config\LoggerConfig());
-			}
+            return self::getSharedInstance('routes');
+        }
+    }
 
-		    return static::$logger;
-		}
-	}
-
-First, a new static class property is created to store an instance of the Logger class.
-Inside the ``logger()`` method, it checks to see if a class has already been created.
-If not, we'll create a new instance and store it with the class. Then it returns the
-instance. With this setup, only a single instance of the Logger class will ever be created.
 

@@ -1,6 +1,42 @@
 <?php namespace CodeIgniter\HTTP;
 
-use App\Config\AppConfig;
+/**
+ * CodeIgniter
+ *
+ * An open source application development framework for PHP
+ *
+ * This content is released under the MIT License (MIT)
+ *
+ * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ *
+ * @package	CodeIgniter
+ * @author	CodeIgniter Dev Team
+ * @copyright	Copyright (c) 2014 - 2016, British Columbia Institute of Technology (http://bcit.ca/)
+ * @license	http://opensource.org/licenses/MIT	MIT License
+ * @link	http://codeigniter.com
+ * @since	Version 3.0.0
+ * @filesource
+ */
+
+use Config\App;
 
 /**
  * Class OutgoingRequest
@@ -15,11 +51,15 @@ use App\Config\AppConfig;
 class CURLRequest extends Request
 {
 	/**
+	 * The response object associated with this request
+	 * 
 	 * @var ResponseInterface
 	 */
 	protected $response;
 
 	/**
+	 * The URI associated with this request
+	 * 
 	 * @var URI
 	 */
 	protected $baseURI;
@@ -64,9 +104,12 @@ class CURLRequest extends Request
 	 *  - timeout
 	 *  - any other request options to use as defaults.
 	 *
+	 * @param App $config
+	 * @param URI $uri
+	 * @param ResponseInterface $response
 	 * @param array $options
 	 */
-	public function __construct(AppConfig $config, URI $uri, ResponseInterface $response = null, array $options = [])
+	public function __construct(App $config, URI $uri, ResponseInterface $response = null, array $options = [])
 	{
 		if ( ! function_exists('curl_version'))
 		{
@@ -296,6 +339,7 @@ class CURLRequest extends Request
 	/**
 	 * Fires the actual cURL request.
 	 *
+	 * @param string $method
 	 * @param string $url
 	 */
 	public function send(string $method, string $url)
@@ -384,6 +428,13 @@ class CURLRequest extends Request
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Apply method
+	 * 
+	 * @param type $method
+	 * @param array $curl_options
+	 * @return int
+	 */
 	protected function applyMethod($method, array $curl_options): array
 	{
 		$method = strtoupper($method);
@@ -419,6 +470,12 @@ class CURLRequest extends Request
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Apply body
+	 * 
+	 * @param array $curl_options
+	 * @return type
+	 */
 	protected function applyBody(array $curl_options = []): array
 	{
 		if ( ! empty($this->body))
@@ -467,6 +524,14 @@ class CURLRequest extends Request
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Set CURL options
+	 * 
+	 * @param array $curl_options
+	 * @param array $config
+	 * @return type
+	 * @throws \InvalidArgumentException
+	 */
 	protected function setCURLOptions(array $curl_options = [], array $config = [])
 	{
 		// Auth Headers
@@ -566,7 +631,7 @@ class CURLRequest extends Request
 				$curl_options[CURLOPT_FOLLOWLOCATION] = 1;
 				$curl_options[CURLOPT_MAXREDIRS]      = $settings['max'];
 
-				if ($settings['strict'] == true)
+				if ($settings['strict'] === true)
 				{
 					$curl_options[CURLOPT_POSTREDIR] = 1|2|4;
 				}

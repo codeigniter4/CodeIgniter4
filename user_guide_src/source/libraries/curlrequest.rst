@@ -11,9 +11,9 @@ it is one of the more widely used libraries. Where possible, the syntax has been
 your application needs something a little more powerful than what this library provides, you will have
 to change very little to move over to use Guzzle.
 
-:note: This class requires the `cURL Library <http://php.net/manual/en/book.curl.php>`_ to be installed
-in your version of PHP. This is a very common library that is typically available but not all hosts
-will provide it, so please check with your host to verify if you run into problems.
+.. note:: This class requires the `cURL Library <http://php.net/manual/en/book.curl.php>`_ to be installed
+    in your version of PHP. This is a very common library that is typically available but not all hosts
+    will provide it, so please check with your host to verify if you run into problems.
 
 *******************
 Loading the Library
@@ -21,7 +21,7 @@ Loading the Library
 
 The library can be loaded either manually or through the :doc:`Services class </concepts/services>`.
 
-To load with the Services class call the ``curlrequest()` method::
+To load with the Services class call the ``curlrequest()`` method::
 
 	$client = CodeIgniter\HTTP\Services::curlrequest();
 
@@ -32,14 +32,14 @@ The options are described later in this document.::
 		'base_uri' => 'http://example.com/api/v1/',
 		'timeout' => 3
 	];
-	$client = App\Config\Services::curlrequest($options);
+	$client = Config\Services::curlrequest($options);
 
 When creating the class manually, you need to pass a few dependencies in. The first parameter is an
-instance of the ``App\Config\AppConfig`` class. The second parameter is a URI instance. The third
+instance of the ``Config\App`` class. The second parameter is a URI instance. The third
 parameter is a Response object. The fourth parameter is the optional ``$options`` array.::
 
 	$client = new CodeIgniter\HTTP\CURLRequest(
-		new App\Config\AppConfig(),
+		new Config\App(),
 		new CodeIgniter\HTTP\URI(),
 		new CodeIgniter\HTTP\Response(),
 		$options
@@ -121,7 +121,7 @@ examples of how the combinations are resolved.
 Using Responses
 ===============
 
-Each ``request()`` call returns a Respons object that contains a lot of useful information and some helpful
+Each ``request()`` call returns a Response object that contains a lot of useful information and some helpful
 methods. The most commonly used methods let you determine the response itself.
 
 You can get the status code and reason phrase of the response::
@@ -144,7 +144,7 @@ The body can be retrieved using the ``body()`` method::
 
 	$body = $response->body();
 
-The body is the raw body provided by the remote server. If the content type requires formatting, you will need
+The body is the raw body provided by the remote getServer. If the content type requires formatting, you will need
 to ensure that your script handles that::
 
 	if (strpos($response->header('content-type'), 'application/json') !== false)
@@ -152,9 +152,9 @@ to ensure that your script handles that::
 		$body = json_decode($body);
 	}
 
-===============
+***************
 Request Options
-===============
+***************
 
 This section describes all of the available options you may pass into the constructor, the ``request()`` method,
 or any of the shortcut methods.
@@ -186,6 +186,7 @@ You can pass in array as the value of the ``allow_redirects`` option to specify 
 	]]);
 
 .. :note::  Following redirects does not work when PHP is in safe_mode or open_basedir is enabled.
+
 auth
 ====
 
@@ -218,9 +219,9 @@ cert
 
 To specify the location of a PEM formatted client-side certificate, pass a string with the full path to the
 file as the ``cert`` option. If a password is required, set the value to an array with the first element
- as the path to the certificate, and the second as the password::
+as the path to the certificate, and the second as the password::
 
-    $client->request('get', '/', ['cert' => ['/path/server.pem', 'password']);
+    $client->request('get', '/', ['cert' => ['/path/getServer.pem', 'password']);
 
 connect_timeout
 ===============
@@ -266,8 +267,8 @@ if it's not already set.::
 	]);
 
 .. :note:: ``form_params`` cannot be used with the ``multipart`` option. You will need to use one or the other.
-Use ``form_params`` for ``application/x-www-form-urlencoded`` request, and ``multipart`` for ``multipart/form-data``
-requests.
+        Use ``form_params`` for ``application/x-www-form-urlencoded`` request, and ``multipart`` for ``multipart/form-data``
+        requests.
 
 headers
 =======
@@ -310,8 +311,8 @@ this option can be any value that ``json_encode()`` accepts.::
 	$response = $client->request('PUT, '/put', ['json' => ['foo' => 'bar']]);
 
 .. :note:: This option does not allow for any customization of the ``json_encode()`` function, or the Content-Type
-header. If you need that ability, you will need to encode the data manually, passing it through the ``setBody()``
-method of CURLRequest, and set the Content-Type header with the ``setHeader()`` method.
+        header. If you need that ability, you will need to encode the data manually, passing it through the ``setBody()``
+        method of CURLRequest, and set the Content-Type header with the ``setHeader()`` method.
 
 multipart
 =========
@@ -327,8 +328,8 @@ has been disabled. Any files that you want to send must be passed as instances o
 	];
 
 .. :note:: ``multipart`` cannot be used with the ``form_params`` option. You can only use one or the other. Use
-``form_params`` for ``application/x-www-form-urlencoded`` requests, and ``multipart`` for ``multipart/form-data``
-requests.
+        ``form_params`` for ``application/x-www-form-urlencoded`` requests, and ``multipart`` for ``multipart/form-data``
+        requests.
 
 query
 =====

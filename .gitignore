@@ -37,19 +37,27 @@ $RECYCLE.BIN/
 .Trash-*
 
 #-------------------------
+# Environment Files
+#-------------------------
+# These should never be under version control,
+# as it poses a security risk.
+.env
+application/.env
+
+#-------------------------
 # Temporary Files
 #-------------------------
-writeable/cache/*
-!writeable/cache/index.html
-!writeable/cache/.htaccess
+writable/cache/*
+!writable/cache/index.html
+!writable/cache/.htaccess
 
-writeable/logs/*
-!writeable/logs/index.html
-!writeable/logs/.htaccess
+writable/logs/*
+!writable/logs/index.html
+!writable/logs/.htaccess
 
-writeable/uploads/*
-!writeable/uploads/index.html
-!writeable/uploads/.htaccess
+writable/uploads/*
+!writable/uploads/index.html
+!writable/uploads/.htaccess
 
 #-------------------------
 # User Guide Temp Files
@@ -60,21 +68,32 @@ user_guide_src/cilexer/dist/*
 user_guide_src/cilexer/pycilexer.egg-info/*
 
 #-------------------------
+# Test Files
+#-------------------------
+tests/coverage*
+
+# Don't save phpunit under version control.
+phpunit
+
+#-------------------------
 # Composer
 #-------------------------
 vendor/
 composer.lock
 
 #-------------------------
-# IDE Files
+# IDE / Development Files
 #-------------------------
+
+# Modules Testing
+_modules/*
 
 # Jetbrains editors (PHPStorm, etc)
 .idea/
 *.iml
 
 # Netbeans
-nbproject/private/
+nbproject/
 build/
 nbbuild/
 dist/
@@ -89,4 +108,4 @@ nb-configuration.xml
 *.stTheme.cache
 *.sublime-workspace
 *.sublime-project
-/nbproject/
+/api/

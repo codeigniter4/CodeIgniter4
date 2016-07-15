@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit bootstrap="tests/_support/_bootstrap.php"
+        colors="true"
+        convertErrorsToExceptions="true"
+        convertNoticesToExceptions="true"
+        convertWarningsToExceptions="true"
+        stopOnError="false"
+        stopOnFailure="false"
+        stopOnIncomplete="false"
+        stopOnSkipped="false">
+    <testsuites>
+        <testsuite name="system">
+            <directory>./tests/system</directory>
+            <!-- <exclude>./tests/system/Database/Live</exclude> -->
+        </testsuite>
+    </testsuites>
+
+    <filter>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">./system</directory>
+            <exclude>
+                <file>./system/ComposerScripts.php</file>
+                <file>./system/View/Escaper.php</file>
+                <directory suffix=".php">./system/View/Exception</directory>
+                <directory suffix=".php">./system/Debug/Toolbar/View</directory>
+                <directory>./system/Debug/Kint</directory>
+            </exclude>
+        </whitelist>
+    </filter>
+</phpunit>

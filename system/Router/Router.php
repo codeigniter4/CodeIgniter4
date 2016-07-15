@@ -1,5 +1,51 @@
 <?php namespace CodeIgniter\Router;
 
+/**
+ * CodeIgniter
+ *
+ * An open source application development framework for PHP
+ *
+ * This content is released under the MIT License (MIT)
+ *
+ * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ *
+ * @package	CodeIgniter
+ * @author	CodeIgniter Dev Team
+ * @copyright	Copyright (c) 2014 - 2016, British Columbia Institute of Technology (http://bcit.ca/)
+ * @license	http://opensource.org/licenses/MIT	MIT License
+ * @link	http://codeigniter.com
+ * @since	Version 3.0.0
+ * @filesource
+ */
+
+use CodeIgniter\PageNotFoundException;
+
+/**
+ * Routing exception
+ */
+class RedirectException extends \Exception {}
+
+/**
+ * Request router.
+ */
 class Router implements RouterInterface
 {
 	/**
@@ -17,15 +63,48 @@ class Router implements RouterInterface
 	 */
 	protected $directory;
 
+	/**
+	 * The name of the controller class.
+	 *
+	 * @var string
+	 */
 	protected $controller;
 
+	/**
+	 * The name of the method to use.
+	 *
+	 * @var string
+	 */
 	protected $method;
 
+	/**
+	 * An array of binds that were collected
+	 * so they can be sent to closure routes.
+	 *
+	 * @var array
+	 */
 	protected $params = [];
 
+	/**
+	 * The name of the front controller.
+	 *
+	 * @var string
+	 */
 	protected $indexPage = 'index.php';
 
+	/**
+	 * Whether dashes in URI's should be converted
+	 * to underscores when determining method names.
+	 *
+	 * @var bool
+	 */
 	protected $translateURIDashes = false;
+
+	/**
+	 * The route that was matched for this request.
+	 * @var array|null
+	 */
+	protected $matchedRoute = null;
 
 	//--------------------------------------------------------------------
 
@@ -60,7 +139,9 @@ class Router implements RouterInterface
 		// everything runs off of it's default settings.
 		if (empty($uri))
 		{
-			return null;
+			return strpos($this->controller, '\\') === false
+				? $this->collection->getDefaultNamespace().$this->controller
+				: $this->controller;
 		}
 
 		if ($this->checkRoutes($uri))
@@ -69,11 +150,11 @@ class Router implements RouterInterface
 		}
 
 		// Still here? Then we can try to match the URI against
-		// controllers/directories, but the application may not
+		// Controllers/directories, but the application may not
 		// want this, like in the case of API's.
 		if ( ! $this->collection->shouldAutoRoute())
 		{
-			return null;
+			throw new PageNotFoundException("Can't find a route for '{$uri}'.");
 		}
 
 		$this->autoRoute($uri);
@@ -109,7 +190,36 @@ class Router implements RouterInterface
 	//--------------------------------------------------------------------
 
 	/**
-	 * Returns the parameters that have been matched and collected
+	 * Returns the 404 Override settings from the Collection.
+	 * If the override is a string, will split to controller/index array.
+	 */
+	public function get404Override()
+	{
+		$route = $this->collection->get404Override();
+
+		if (is_string($route))
+		{
+			$routeArray = explode('::', $route);
+
+			return [
+				$routeArray[0],             // Controller
+				$routeArray[1] ?? 'index'   // Method
+			];
+		}
+
+		if (is_callable($route))
+		{
+			return $route;
+		}
+
+		return null;
+	}
+
+	//--------------------------------------------------------------------
+
+
+	/**
+	 * Returns the binds that have been matched and collected
 	 * during the parsing process as an array, ready to send to
 	 * call_user_func_array().
 	 *
@@ -124,7 +234,7 @@ class Router implements RouterInterface
 
 	/**
 	 * Returns the name of the sub-directory the controller is in,
-	 * if any. Relative to APPPATH.'controllers'.
+	 * if any. Relative to APPPATH.'Controllers'.
 	 *
 	 * Only used when auto-routing is turned on.
 	 *
@@ -136,6 +246,21 @@ class Router implements RouterInterface
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Returns the routing information that was matched for this
+	 * request, if a route was defined.
+	 *
+	 * @return array|null
+	 */
+	public function getMatchedRoute()
+	{
+	    return $this->matchedRoute;
+	}
+
+	//--------------------------------------------------------------------
+
+
 
 	/**
 	 * Sets the value that should be used to match the index.php file. Defaults
@@ -210,6 +335,8 @@ class Router implements RouterInterface
 
 					$this->params = $matches;
 
+					$this->matchedRoute = [$key, $val];
+
 					return true;
 				}
 				// Are we using the default method for back-references?
@@ -218,7 +345,15 @@ class Router implements RouterInterface
 					$val = preg_replace('#^'.$key.'$#', $val, $uri);
 				}
 
+				// Is this route supposed to redirect to another?
+				if ($this->collection->isRedirect($key))
+				{
+					throw new RedirectException($val, $this->collection->getRedirectCode($key));
+				}
+
 				$this->setRequest(explode('/', $val));
+
+				$this->matchedRoute = [$key, $val];
 
 				return true;
 			}
@@ -230,8 +365,8 @@ class Router implements RouterInterface
 	//--------------------------------------------------------------------
 
 	/**
-	 * Attempts to match a URI path against controllers and directories
-	 * found in APPPATH/controllers, to find a matching route.
+	 * Attempts to match a URI path against Controllers and directories
+	 * found in APPPATH/Controllers, to find a matching route.
 	 *
 	 * @param string $uri
 	 */
@@ -242,7 +377,7 @@ class Router implements RouterInterface
 		$segments = $this->validateRequest($segments);
 
 		// If we don't have any segments left - try the default controller;
-		// WARNING: Directories get shifted out of tge segments array.
+		// WARNING: Directories get shifted out of the segments array.
 		if (empty($segments))
 		{
 			$this->setDefaultController();
@@ -250,15 +385,34 @@ class Router implements RouterInterface
 		// If not empty, then the first segment should be the controller
 		else
 		{
-			$this->controller = ucfirst($segments[0]);
+			$this->controller = ucfirst(array_shift($segments));
 		}
 
 		// Use the method name if it exists.
 		// If it doesn't, no biggie - the default method name
 		// has already been set.
-		if (! empty($segments[1]))
+		if (! empty($segments))
 		{
-			$this->method = $segments[1];
+			$this->method = array_shift($segments);
+		}
+
+		if (! empty($segments))
+		{
+			$this->params = $segments;
+		}
+
+		// Load the file so that it's available for CodeIgniter.
+		$file = APPPATH.'Controllers/'.$this->directory.$this->controller.'.php';
+		if (file_exists($file))
+		{
+			include $file;
+		}
+
+		// Ensure the controller stores the fully-qualified class name
+		// We have to check for a length over 1, since by default it will be '\'
+		if (strpos($this->controller, '\\') === false && strlen($this->collection->getDefaultNamespace()) > 1)
+		{
+			$this->controller = str_replace('/', '\\', $this->collection->getDefaultNamespace().$this->directory.$this->controller);
 		}
 	}
 
@@ -285,9 +439,9 @@ class Router implements RouterInterface
 					: $segments[0]
 				);
 
-			if ( ! file_exists(APPPATH.'controllers/'.$test.'.php')
+			if ( ! file_exists(APPPATH.'Controllers/'.$test.'.php')
 			     && $directory_override === false
-			     && is_dir(APPPATH.'controllers/'.$this->directory.$segments[0])
+			     && is_dir(APPPATH.'Controllers/'.$this->directory.ucfirst($segments[0]))
 			)
 			{
 				$this->setDirectory(array_shift($segments), true);
@@ -311,7 +465,9 @@ class Router implements RouterInterface
 	 */
 	protected function setDirectory(string $dir = null, $append = false)
 	{
-		if ($append !== TRUE OR empty($this->directory))
+		$dir = ucfirst($dir);
+
+		if ($append !== TRUE || empty($this->directory))
 		{
 			$this->directory = str_replace('.', '', trim($dir, '/')).'/';
 		}
@@ -384,14 +540,14 @@ class Router implements RouterInterface
 			$this->method = 'index';
 		}
 
-		if (! file_exists(APPPATH.'controllers/'.$this->directory.ucfirst($class).'.php'))
+		if (! file_exists(APPPATH.'Controllers/'.$this->directory.ucfirst($class).'.php'))
 		{
 			return;
 		}
 
 		$this->controller = ucfirst($class);
 
-		// @todo log message that default controller was set.
+		log_message('info', 'Used the default controller.');
 	}
 
 	//--------------------------------------------------------------------

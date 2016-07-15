@@ -1,0 +1,70 @@
+
+
+Code Coverage Report:        
+  2016-03-31 06:36:22        
+                             
+ Summary:                    
+  Classes: 29.51% (18/61)    
+  Methods: 42.91% (227/529)  
+  Lines:   53.58% (1967/3671)
+
+\CodeIgniter::CodeIgniter
+  Methods:  28.57% ( 4/14)   Lines:  69.11% ( 85/123)
+\CodeIgniter::Controller
+  Methods:   0.00% ( 0/ 2)   Lines:  66.67% (  6/  9)
+\CodeIgniter\Autoloader::Autoloader
+  Methods:  42.86% ( 3/ 7)   Lines:  89.36% ( 42/ 47)
+\CodeIgniter\Autoloader::FileLocator
+  Methods: 100.00% ( 3/ 3)   Lines: 100.00% ( 39/ 39)
+\CodeIgniter\CLI::CLI
+  Methods:   6.25% ( 1/16)   Lines:   2.54% (  3/118)
+\CodeIgniter\Config::AutoloadConfig
+  Methods: 100.00% ( 1/ 1)   Lines: 100.00% ( 52/ 52)
+\CodeIgniter\Config::BaseConfig
+  Methods:  50.00% ( 1/ 2)   Lines:  83.33% ( 15/ 18)
+\CodeIgniter\Config::DotEnv
+  Methods:  62.50% ( 5/ 8)   Lines:  89.29% ( 50/ 56)
+\CodeIgniter\Database::BaseBuilder
+  Methods:  43.33% (39/90)   Lines:  62.25% (460/739)
+\CodeIgniter\Database::BaseConnection
+  Methods:   0.00% ( 0/17)   Lines:   3.33% (  2/ 60)
+\CodeIgniter\Database::BaseQuery
+  Methods:  64.71% (11/17)   Lines:  74.44% ( 67/ 90)
+\CodeIgniter\Debug::Exceptions
+  Methods:  10.00% ( 1/10)   Lines:   2.91% (  3/103)
+\CodeIgniter\Debug::Timer
+  Methods:  75.00% ( 3/ 4)   Lines:  95.24% ( 20/ 21)
+\CodeIgniter\HTTP::CLIRequest
+  Methods:  33.33% ( 2/ 6)   Lines:  40.00% ( 14/ 35)
+\CodeIgniter\HTTP::CURLRequest
+  Methods:  62.50% (10/16)   Lines:  68.49% (100/146)
+\CodeIgniter\HTTP::Header
+  Methods:  88.89% ( 8/ 9)   Lines:  96.88% ( 31/ 32)
+\CodeIgniter\HTTP::IncomingRequest
+  Methods:  60.00% ( 6/10)   Lines:  54.05% ( 40/ 74)
+\CodeIgniter\HTTP::Message
+  Methods:  78.57% (11/14)   Lines:  86.21% ( 50/ 58)
+\CodeIgniter\HTTP::Negotiate
+  Methods:  75.00% ( 9/12)   Lines:  87.65% ( 71/ 81)
+\CodeIgniter\HTTP::Request
+  Methods:  57.14% ( 4/ 7)   Lines:  45.79% ( 49/107)
+\CodeIgniter\HTTP::Response
+  Methods:  53.85% ( 7/13)   Lines:  79.01% ( 64/ 81)
+\CodeIgniter\HTTP::URI
+  Methods:  81.82% (27/33)   Lines:  93.44% (171/183)
+\CodeIgniter\HTTP\Files::FileCollection
+  Methods:  66.67% ( 4/ 6)   Lines:  96.49% ( 55/ 57)
+\CodeIgniter\HTTP\Files::UploadedFile
+  Methods:  42.86% ( 6/14)   Lines:  39.22% ( 20/ 51)
+\CodeIgniter\Hooks::Hooks
+  Methods:  66.67% ( 4/ 6)   Lines:  92.31% ( 36/ 39)
+\CodeIgniter\Log::Logger
+  Methods:  76.92% (10/13)   Lines:  92.05% ( 81/ 88)
+\CodeIgniter\Router::RouteCollection
+  Methods:  74.36% (29/39)   Lines:  79.64% (133/167)
+\CodeIgniter\Router::Router
+  Methods:  37.50% ( 6/16)   Lines:  78.57% ( 77/ 98)
+\CodeIgniter\Security::Security
+  Methods: 100.00% ( 6/ 6)   Lines: 100.00% ( 50/ 50)
+\CodeIgniter\View::View
+  Methods:  85.71% ( 6/ 7)   Lines:  97.14% ( 34/ 35)

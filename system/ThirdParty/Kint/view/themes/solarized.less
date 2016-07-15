@@ -1,0 +1,29 @@
+@import "../base";
+
+@spacing : 5;
+
+@main-background: #fdf6e3; // base 3
+@secondary-background : #eee8d5; // base 2
+
+@text-color: #657b83; // base 00
+@variable-name-color: #586e75; // base 01
+@variable-type-color: #268bd2; // blue
+@variable-type-color-hover: #2aa198; // cyan
+
+@border-color: #93a1a1; // base 1
+@border-color-hover: #268bd2; // blue
+
+.keyboard-caret() {
+  box-shadow    : 0 0 3px 2px #859900 inset; // green
+  border-radius : 7px;
+}
+
+.kint > dl > dt,
+.kint ul.kint-tabs {
+  box-shadow : 4px 0 2px -3px @variable-type-color inset;
+}
+
+.kint ul.kint-tabs li.kint-active-tab {
+  padding-top: 7px;
+  height: 34px;
+}

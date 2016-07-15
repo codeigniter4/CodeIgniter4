@@ -1,0 +1,154 @@
+/**
+ * @author Ante Aljinovic https://github.com/aljinovic
+ */
+@import "../base";
+
+@main-background: #f8f8f8;
+@secondary-background : #f8f8f8;
+
+@text-color: #1d1e1e;
+@variable-name-color: #1d1e1e;
+@variable-type-color: #06f;
+@variable-type-color-hover: #f00;
+
+@border-color: #d7d7d7;
+@border-color-hover: #aaa;
+
+@caret-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAA8CAYAAAC5OOBJAAAAvklEQVR42mNgGMFAS0uLLSQk5HxoaOh/XDg4OLgdpwEBAQEGQAN+YtMIFH/i4ODAg9cFQNMbsWkOCgrKJMv5ID5Qipko/6M7PzAw0ImkAIQ5H0hvISv0gZpP+fn5qZAVfcBAkmEYBaNZcjRLjmbJUUCvqAIlDlAiASUWkjWDkiU0eTaSpBGUEZBy1E9QRiFWLzO2LEmU80GZHkcRhN/5oGIGVNzgKIbwOx9UwOErAIl2/igYzZKjWXI0S9IHAAASJijo0Ypj8AAAAABJRU5ErkJggg==");
+
+.keyboard-caret() {
+  box-shadow : 0 0 3px 2px @variable-type-color-hover;
+}
+
+.kint {
+  dt {
+    font-weight : normal;
+
+    &.kint-parent {
+      margin-top : 4px;
+    }
+  }
+
+  > dl {
+    background : linear-gradient(90deg, rgba(255,255,255,0) 0, #fff 15px);
+  }
+
+  dl dl {
+    margin-top   : 4px;
+    padding-left : 25px;
+    border-left  : none;
+  }
+
+  > dl > dt {
+    background : @secondary-background;
+  }
+
+  //
+  // TABS
+  // --------------------------------------------------
+
+  ul {
+    margin       : 0;
+    padding-left : 0;
+
+    &:not(.kint-tabs) > li {
+      border-left : 0;
+    }
+
+    &.kint-tabs {
+      background   : @secondary-background;
+      border       : @border;
+      border-width : 0 1px 1px 1px;
+      padding      : 4px 0 0 12px;
+      margin-left  : -1px;
+      margin-top   : -1px;
+
+      li,
+      li + li {
+        margin : 0 0 0 4px;
+      }
+
+      li {
+        border-bottom-width : 0;
+        height              : @spacing * 6px + 1px;
+
+
+        &:first-child {
+          margin-left : 0;
+        }
+
+        &.kint-active-tab {
+          border-top    : @border;
+          background    : #fff;
+          font-weight   : bold;
+          padding-top   : 0;
+          border-bottom : 1px solid #fff !important;
+          margin-bottom : -1px;
+        }
+
+        &.kint-active-tab:hover {
+          border-bottom : 1px solid #fff;
+        }
+      }
+    }
+
+    > li > pre {
+      border : @border;
+    }
+  }
+
+  dt:hover + dd > ul {
+    border-color : @border-color-hover;
+  }
+
+  pre {
+    background  : #fff;
+    margin-top  : 4px;
+    margin-left : 25px;
+  }
+
+  .kint-popup-trigger:hover {
+    color : @variable-type-color-hover;
+  }
+
+  .kint-source .kint-highlight {
+    background : #cfc;
+  }
+}
+
+//
+// REPORT
+// --------------------------------------------------
+
+.kint-report {
+  td {
+    background : #fff;
+
+    > dl {
+      padding : 0;
+      margin  : 0;
+      > dt.kint-parent {
+        margin: 0;
+      }
+    }
+  }
+
+  td:first-child,
+  td,
+  th {
+    padding    : 2px 4px;
+  }
+
+  td.kint-empty {
+    background : @border-color !important;
+  }
+
+  dd, dt {
+    background: #fff;
+  }
+
+  tr:hover > td {
+    box-shadow : none;
+    background : #cfc;
+  }
+}
