@@ -254,7 +254,7 @@ The following functions are available:
 	version of the *mailto* tag using ordinal numbers written with JavaScript to
 	help prevent the e-mail address from being harvested by spam bots.
 
-.. php:function:: auto_link($str, $type = 'both', $popup = FALSE)
+.. php:function:: auto_link($str[, $type = 'both'[, $popup = FALSE]])
 
 	:param	string	$str: Input string
 	:param	string	$type: Link type ('email', 'url' or 'both')
@@ -285,6 +285,7 @@ The following functions are available:
 
 		$string = auto_link($string, 'both', TRUE);
 
+	.. note:: The only URLs recognized are those that start with "www." or with "://".
 
 .. php:function:: url_title($str, $separator = '-', $lowercase = FALSE)
 
