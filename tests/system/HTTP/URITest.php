@@ -1,16 +1,20 @@
-<?php namespace CodeIgniter\HTTP;
+<?php
+
+namespace CodeIgniter\HTTP;
 
 class URITest extends \CIUnitTestCase
 {
 
 	public function setUp()
 	{
+		
 	}
 
 	//--------------------------------------------------------------------
 
 	public function tearDown()
 	{
+		
 	}
 
 	//--------------------------------------------------------------------
@@ -56,7 +60,39 @@ class URITest extends \CIUnitTestCase
 
 		$expected = 'http://username@hostname:9090/path?arg=value#anchor';
 
-		$this->assertEquals($expected, (string)$uri);
+		$this->assertEquals($expected, (string) $uri);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testSimpleUri()
+	{
+		$url = 'http://example.com';
+		$uri = new URI($url);
+		$this->assertEquals($url, (string) $uri);
+
+		$url = 'http://example.com/';
+		$uri = new URI($url);
+		$this->assertEquals($url, (string) $uri);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testEmptyUri()
+	{
+		$url = '';
+		$uri = new URI($url);
+		$this->assertEquals('http://'.$url, (string) $uri);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testSchemeSub()
+	{
+		$url = 'example.com';
+		$uri = new URI('http://'.$url);
+		$uri->setScheme('x');
+		$this->assertEquals('x://'.$url, (string) $uri);
 	}
 
 	//--------------------------------------------------------------------
@@ -70,7 +106,7 @@ class URITest extends \CIUnitTestCase
 
 		$uri->setScheme('https');
 		$this->assertEquals('https', $uri->getScheme());
-		$this->assertEquals($expected, (string)$uri);
+		$this->assertEquals($expected, (string) $uri);
 	}
 
 	//--------------------------------------------------------------------
@@ -84,7 +120,7 @@ class URITest extends \CIUnitTestCase
 
 		$uri->setUserInfo('user', 'password');
 		$this->assertEquals('user', $uri->getUserInfo());
-		$this->assertEquals($expected, (string)$uri);
+		$this->assertEquals($expected, (string) $uri);
 	}
 
 	//--------------------------------------------------------------------
@@ -98,14 +134,14 @@ class URITest extends \CIUnitTestCase
 
 		$uri->setUserInfo('user', 'password');
 		$this->assertEquals('user', $uri->getUserInfo());
-		$this->assertEquals($expected, (string)$uri);
+		$this->assertEquals($expected, (string) $uri);
 
 		$uri->showPassword();
 
 		$expected = 'http://user:password@example.com/path';
 
 		$this->assertEquals('user:password', $uri->getUserInfo());
-		$this->assertEquals($expected, (string)$uri);
+		$this->assertEquals($expected, (string) $uri);
 	}
 
 	//--------------------------------------------------------------------
@@ -119,7 +155,7 @@ class URITest extends \CIUnitTestCase
 
 		$uri->setHost('another.com');
 		$this->assertEquals('another.com', $uri->getHost());
-		$this->assertEquals($expected, (string)$uri);
+		$this->assertEquals($expected, (string) $uri);
 	}
 
 	//--------------------------------------------------------------------
@@ -133,7 +169,7 @@ class URITest extends \CIUnitTestCase
 
 		$uri->setPort(9000);
 		$this->assertEquals(9000, $uri->getPort());
-		$this->assertEquals($expected, (string)$uri);
+		$this->assertEquals($expected, (string) $uri);
 	}
 
 	//--------------------------------------------------------------------
@@ -180,7 +216,7 @@ class URITest extends \CIUnitTestCase
 
 		$uri->setPath('somewhere/else');
 		$this->assertEquals('somewhere/else', $uri->getPath());
-		$this->assertEquals($expected, (string)$uri);
+		$this->assertEquals($expected, (string) $uri);
 	}
 
 	//--------------------------------------------------------------------
@@ -188,12 +224,12 @@ class URITest extends \CIUnitTestCase
 	public function invalidPaths()
 	{
 		return [
-			'dot-segment'  => ['/./path/to/nowhere', '/path/to/nowhere'],
-			'double-dots'  => ['/../path/to/nowhere', '/path/to/nowhere'],
-			'start-dot'    => ['./path/to/nowhere', '/path/to/nowhere'],
-			'start-double' => ['../path/to/nowhere', '/path/to/nowhere'],
-			'decoded'      => ['../%41path', '/Apath'],
-			'encoded'      => ['/path^here', '/path%5Ehere'],
+			'dot-segment'	 => ['/./path/to/nowhere', '/path/to/nowhere'],
+			'double-dots'	 => ['/../path/to/nowhere', '/path/to/nowhere'],
+			'start-dot'		 => ['./path/to/nowhere', '/path/to/nowhere'],
+			'start-double'	 => ['../path/to/nowhere', '/path/to/nowhere'],
+			'decoded'		 => ['../%41path', '/Apath'],
+			'encoded'		 => ['/path^here', '/path%5Ehere'],
 		];
 	}
 
@@ -220,7 +256,7 @@ class URITest extends \CIUnitTestCase
 
 		$uri->setFragment('#good-stuff');
 		$this->assertEquals('good-stuff', $uri->getFragment());
-		$this->assertEquals($expected, (string)$uri);
+		$this->assertEquals($expected, (string) $uri);
 	}
 
 	//--------------------------------------------------------------------
@@ -234,7 +270,7 @@ class URITest extends \CIUnitTestCase
 
 		$uri->setQuery('?key=value');
 		$this->assertEquals('key=value', $uri->getQuery());
-		$this->assertEquals($expected, (string)$uri);
+		$this->assertEquals($expected, (string) $uri);
 	}
 
 	//--------------------------------------------------------------------
@@ -248,7 +284,7 @@ class URITest extends \CIUnitTestCase
 
 		$uri->setQueryArray(['key' => 'value']);
 		$this->assertEquals('key=value', $uri->getQuery());
-		$this->assertEquals($expected, (string)$uri);
+		$this->assertEquals($expected, (string) $uri);
 	}
 
 	//--------------------------------------------------------------------
@@ -269,9 +305,9 @@ class URITest extends \CIUnitTestCase
 	public function authorityInfo()
 	{
 		return [
-			'host-only'      => ['http://foo.com/bar', 'foo.com'],
-			'host-port'      => ['http://foo.com:3000/bar', 'foo.com:3000'],
-			'user-host'      => ['http://me@foo.com/bar', 'me@foo.com'],
+			'host-only'		 => ['http://foo.com/bar', 'foo.com'],
+			'host-port'		 => ['http://foo.com:3000/bar', 'foo.com:3000'],
+			'user-host'		 => ['http://me@foo.com/bar', 'me@foo.com'],
 			'user-host-port' => ['http://me@foo.com:3000/bar', 'me@foo.com:3000'],
 		];
 	}
@@ -292,8 +328,8 @@ class URITest extends \CIUnitTestCase
 	public function defaultPorts()
 	{
 		return [
-			'http'  => ['http', 80],
-			'https' => ['https', 443],
+			'http'	 => ['http', 80],
+			'https'	 => ['https', 443],
 		];
 	}
 
@@ -309,7 +345,7 @@ class URITest extends \CIUnitTestCase
 
 		$expected = "{$scheme}://example.com/path";
 
-		$this->assertEquals($expected, (string)$uri);
+		$this->assertEquals($expected, (string) $uri);
 	}
 
 	//--------------------------------------------------------------------
@@ -329,25 +365,25 @@ class URITest extends \CIUnitTestCase
 	public function defaultDots()
 	{
 		return array(
-				array('/foo/..', '/'),
-				array('//foo//..', '/'),
-				array('/foo/../..', '/'),
-				array('/foo/../.', '/'),
-				array('/./foo/..', '/'),
-				array('/./foo', '/foo'),
-				array('/./foo/', '/foo/'),
-				array('/./foo/bar/baz/pho/../..', '/foo/bar'),
-				array('*', '*'),
-				array('/foo', '/foo'),
-				array('/abc/123/../foo/', '/abc/foo/'),
-				array('/a/b/c/./../../g', '/a/g'),
-				array('/b/c/./../../g', '/g'),
-				array('/b/c/./../../g', '/g'),
-				array('/c/./../../g', '/g'),
-				array('/./../../g', '/g'),
+			array('/foo/..', '/'),
+			array('//foo//..', '/'),
+			array('/foo/../..', '/'),
+			array('/foo/../.', '/'),
+			array('/./foo/..', '/'),
+			array('/./foo', '/foo'),
+			array('/./foo/', '/foo/'),
+			array('/./foo/bar/baz/pho/../..', '/foo/bar'),
+			array('*', '*'),
+			array('/foo', '/foo'),
+			array('/abc/123/../foo/', '/abc/foo/'),
+			array('/a/b/c/./../../g', '/a/g'),
+			array('/b/c/./../../g', '/g'),
+			array('/b/c/./../../g', '/g'),
+			array('/c/./../../g', '/g'),
+			array('/./../../g', '/g'),
 		);
 	}
-	
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -384,10 +420,8 @@ class URITest extends \CIUnitTestCase
 
 		$new = $uri->resolveRelativeURI($rel);
 
-		$this->assertEquals($expected, (string)$new);
+		$this->assertEquals($expected, (string) $new);
 	}
-	
+
 	//--------------------------------------------------------------------
-	
-	
 }
