@@ -166,6 +166,29 @@ class Services
 	//--------------------------------------------------------------------
 
 	/**
+	 * Filters allow you to run tasks before and/or after a controller
+	 * is executed. During before filters, the request can be modified,
+	 * and actions taken based on the request, while after filters can
+	 * act on or modify the response itself before it is sent to the client.
+	 */
+	public static function filters($config = null, $getShared = true)
+	{
+		if ($getShared)
+		{
+			return self::getSharedInstance('filters', $config);
+		}
+
+		if (empty($config))
+		{
+			$config = new \Config\Filters();
+		}
+
+		return new \CodeIgniter\Filters\Filters($config, self::request(), self::response());
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * The Iterator class provides a simple way of looping over a function
 	 * and timing the results and memory usage. Used when debugging and
 	 * optimizing applications.

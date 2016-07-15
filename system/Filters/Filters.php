@@ -1,6 +1,8 @@
 <?php namespace CodeIgniter\Filters;
 
 use CodeIgniter\Config\BaseConfig;
+use CodeIgniter\HTTP\RequestInterface;
+use CodeIgniter\HTTP\ResponseInterface;
 
 class Filters
 {
@@ -21,6 +23,18 @@ class Filters
 	protected $config;
 
 	/**
+	 * The active IncomingRequest or CLIRequest
+	 * @var RequestInterface
+	 */
+	protected $request;
+
+	/**
+	 * The active Response instance
+	 * @var ResponseInterface
+	 */
+	protected $response;
+
+	/**
 	 * Whether we've done initial processing
 	 * on the filter lists.
 	 * @var bool
@@ -29,9 +43,11 @@ class Filters
 
 	//--------------------------------------------------------------------
 
-	public function __construct($config)
+	public function __construct($config, RequestInterface $request, ResponseInterface $response)
 	{
-		$this->config = $config;
+		$this->config   = $config;
+		$this->request  =& $request;
+		$this->response =& $response;
 	}
 
 	//--------------------------------------------------------------------
@@ -46,6 +62,40 @@ class Filters
 	public function run(string $uri, $position = 'before')
 	{
 	    $this->initialize($uri);
+
+		foreach ($this->filters[$position] as $alias)
+		{
+			if (! array_key_exists($alias, $this->config->aliases))
+			{
+				throw new \InvalidArgumentException("'{$alias}' filter must have a matching alias defined.");
+			}
+
+			$class = new $this->config->aliases[$alias]();
+
+			if ($position == 'before')
+			{
+				$result = $class->before($this->request);
+
+				if ($result instanceof RequestInterface)
+				{
+					$this->request = $result;
+					continue;
+				}
+
+				return $result;
+			}
+
+			elseif ($position == 'after')
+			{
+				$result = $class->after($this->request, $this->response);
+
+				if ($result instanceof ResponseInterface)
+				{
+					$this->response = $result;
+					continue;
+				}
+			}
+		}
 	}
 
 	//--------------------------------------------------------------------

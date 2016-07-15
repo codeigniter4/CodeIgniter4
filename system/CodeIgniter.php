@@ -174,9 +174,10 @@ class CodeIgniter
 			$this->tryToRouteIt($routes);
 
 			//--------------------------------------------------------------------
-			// Are there any "pre-controller" hooks?
+			// Run "before" filters
 			//--------------------------------------------------------------------
-			Hooks::trigger('pre_controller');
+			$filters = Services::filters();
+			$filters->run($this->request->uri->getPath(), 'before');
 
 			$this->startController();
 
@@ -194,9 +195,9 @@ class CodeIgniter
 			}
 
 			//--------------------------------------------------------------------
-			// Is there a "post_controller" hook?
+			// Run "after" filters
 			//--------------------------------------------------------------------
-			Hooks::trigger('post_controller');
+			$filters->run($this->request->uri->getPath(), 'after');
 
 			$this->gatherOutput($cacheConfig);
 

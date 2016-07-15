@@ -19,7 +19,7 @@ interface FilterInterface
 	 *
 	 * @return mixed
 	 */
-	public function before(RequestInterface &$request);
+	public function before(RequestInterface $request);
 
 	//--------------------------------------------------------------------
 
@@ -34,7 +34,7 @@ interface FilterInterface
 	 *
 	 * @return mixed
 	 */
-	public function after(RequestInterface $request, ResponseInterface &$response);
+	public function after(RequestInterface $request, ResponseInterface $response);
 
 	//--------------------------------------------------------------------
 }
