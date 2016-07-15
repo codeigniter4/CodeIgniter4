@@ -178,14 +178,11 @@ class App extends BaseConfig
 	| CSRFCookieName  = The cookie name
 	| CSRFExpire      = The number in seconds the token should expire.
 	| CSRFRegenerate  = Regenerate token on every submission
-	| CSRFExcludeURIs = Array of URIs which ignore CSRF checks
 	*/
-	public $CSRFProtection  = false;
 	public $CSRFTokenName   = 'csrf_test_name';
 	public $CSRFCookieName  = 'csrf_cookie_name';
 	public $CSRFExpire      = 7200;
 	public $CSRFRegenerate  = true;
-	public $CSRFExcludeURIs = [];
 
 	/*
 	|--------------------------------------------------------------------------

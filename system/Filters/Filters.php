@@ -82,6 +82,11 @@ class Filters
 					continue;
 				}
 
+				if (empty($result))
+				{
+					continue;
+				}
+
 				return $result;
 			}
 

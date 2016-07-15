@@ -6,11 +6,15 @@ class Filters extends BaseConfig
 {
 	// Makes reading things below nicer,
 	// and simpler to change out script that's used.
-	public $aliases = [];
+	public $aliases = [
+		'csrf' => \App\Filters\CSRF::class
+	];
 
 	// Always applied before every request
 	public $globals = [
-		'before' => [],
+		'before' => [
+			// 'csrf'
+		],
 		'after'  => []
 	];
 

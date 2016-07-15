@@ -428,24 +428,6 @@ class CodeIgniter
 	//--------------------------------------------------------------------
 
 	/**
-	 * CSRF Protection. Checks if it's enabled globally, and
-	 * enforces the presence of CSRF tokens.
-	 */
-	protected function CsrfProtection()
-	{
-		if ($this->config->CSRFProtection !== true || is_cli())
-		{
-			return;
-		}
-
-		$security = Services::security($this->config);
-
-		$security->CSRFVerify($this->request);
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
 	 * Try to Route It - As it sounds like, works with the router to
 	 * match a route against the current URI. If the route is a
 	 * "redirect route", will also handle the redirect.
