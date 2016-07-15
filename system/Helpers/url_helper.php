@@ -172,7 +172,6 @@ if (!function_exists('index_page'))
 		// use alternate config if provided, else default one
 		$config = empty($altConfig) ? new \Config\App() : $altConfig;
 
-
 		return $config->indexPage;
 	}
 
@@ -193,11 +192,14 @@ if (!function_exists('anchor'))
 	 * @param	mixed	any attributes
 	 * @return	string
 	 */
-	function anchor($uri = '', $title = '', $attributes = '')
+	function anchor($uri = '', $title = '', $attributes = '', \Config\App $altConfig = null)
 	{
+		// use alternate config if provided, else default one
+		$config = empty($altConfig) ? new \Config\App() : $altConfig;
+
 		$title = (string) $title;
 
-		$site_url = is_array($uri) ? site_url($uri) : (preg_match('#^(\w+:)?//#i', $uri) ? $uri : site_url($uri));
+		$site_url = is_array($uri) ? site_url($uri, null, $config) : (preg_match('#^(\w+:)?//#i', $uri) ? $uri : site_url($uri, null, $config));
 
 		if ($title === '')
 		{
@@ -247,7 +249,7 @@ if (!function_exists('anchor_popup'))
 
 		if (!is_array($attributes))
 		{
-			$attributes = array($attributes);
+			$attributes = array ($attributes);
 
 			// Ref: http://www.w3schools.com/jsref/met_win_open.asp
 			$window_name = '_blank';
@@ -262,7 +264,7 @@ if (!function_exists('anchor_popup'))
 			$window_name = '_blank';
 		}
 
-		foreach (array('width' => '800', 'height' => '600', 'scrollbars' => 'yes', 'menubar' => 'no', 'status' => 'yes', 'resizable' => 'yes', 'screenx' => '0', 'screeny' => '0') as $key => $val)
+		foreach (array ('width' => '800', 'height' => '600', 'scrollbars' => 'yes', 'menubar' => 'no', 'status' => 'yes', 'resizable' => 'yes', 'screenx' => '0', 'screeny' => '0') as $key => $val)
 		{
 			$atts[$key] = isset($attributes[$key]) ? $attributes[$key] : $val;
 			unset($attributes[$key]);
@@ -271,8 +273,8 @@ if (!function_exists('anchor_popup'))
 		$attributes = _stringify_attributes($attributes);
 
 		return '<a href="'.$site_url
-				.'" onclick="window.open(\''.$site_url."', '".$window_name."', '"._stringify_attributes($atts, TRUE)."'); return false;\""
-				.$attributes.'>'.$title.'</a>';
+			.'" onclick="window.open(\''.$site_url."', '".$window_name."', '"._stringify_attributes($atts, TRUE)."'); return false;\""
+			.$attributes.'>'.$title.'</a>';
 	}
 
 }
@@ -362,7 +364,7 @@ if (!function_exists('safe_mailto'))
 
 		$x[] = '>';
 
-		$temp = array();
+		$temp = array ();
 		for ($i = 0, $l = strlen($title); $i < $l; $i++)
 		{
 			$ordinal = ord($title[$i]);
@@ -384,7 +386,7 @@ if (!function_exists('safe_mailto'))
 					$number	 = ($count === 3) ? (($temp[0] % 16) * 4096) + (($temp[1] % 64) * 64) + ($temp[2] % 64) : (($temp[0] % 32) * 64) + ($temp[1] % 64);
 					$x[]	 = '|'.$number;
 					$count	 = 1;
-					$temp	 = array();
+					$temp	 = array ();
 				}
 			}
 		}
@@ -397,8 +399,8 @@ if (!function_exists('safe_mailto'))
 		$x = array_reverse($x);
 
 		$output = "<script type=\"text/javascript\">\n"
-				."\t//<![CDATA[\n"
-				."\tvar l=new Array();\n";
+			."\t//<![CDATA[\n"
+			."\tvar l=new Array();\n";
 
 		for ($i = 0, $c = count($x); $i < $c; $i++)
 		{
@@ -406,11 +408,11 @@ if (!function_exists('safe_mailto'))
 		}
 
 		$output .= "\n\tfor (var i = l.length-1; i >= 0; i=i-1) {\n"
-				."\t\tif (l[i].substring(0, 1) === '|') document.write(\"&#\"+unescape(l[i].substring(1))+\";\");\n"
-				."\t\telse document.write(unescape(l[i]));\n"
-				."\t}\n"
-				."\t//]]>\n"
-				.'</script>';
+			."\t\tif (l[i].substring(0, 1) === '|') document.write(\"&#\"+unescape(l[i].substring(1))+\";\");\n"
+			."\t\telse document.write(unescape(l[i]));\n"
+			."\t}\n"
+			."\t//]]>\n"
+			.'</script>';
 
 		return $output;
 	}
@@ -534,7 +536,7 @@ if (!function_exists('url_title'))
 
 		$q_separator = preg_quote($separator, '#');
 
-		$trans = array(
+		$trans = array (
 			'&.+?;'					 => '',
 			'[^\w\d _-]'			 => '',
 			'\s+'					 => $separator,

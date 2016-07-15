@@ -132,11 +132,12 @@ The following functions are available:
         different site than yours, which contains different configuration preferences.
         We use this for unit testing the framework itself.
 
-.. php:function:: anchor($uri = '', $title = '', $attributes = '')
+.. php:function:: anchor([$uri = ''[, $title = ''[, $attributes = ''[, $altConfig = NULL]]]])
 
-	:param	string	$uri: URI string
+	:param	mixed	$uri: URI string or array of URI segments
 	:param	string	$title: Anchor title
 	:param	mixed	$attributes: HTML attributes
+	:param	\Config\App	$altConfig: Alternate configuration to use
 	:returns:	HTML hyperlink (anchor tag)
 	:rtype:	string
 
@@ -147,7 +148,7 @@ The following functions are available:
 	be a string or an array.
 
 	.. note:: If you are building links that are internal to your application
-		do not include the base URL (http&#58;//...). This will be added
+		do not include the base URL (http://...). This will be added
 		automatically from the information specified in your config file.
 		Include only the URI segments you wish appended to the URL.
 
@@ -168,6 +169,11 @@ The following functions are available:
 
 		echo anchor('', 'Click here');
 		// Prints: <a href="http://example.com">Click Here</a>
+
+        As above, you may specify an alternate configuration.
+        You may find the alternate configuration useful if generating links for a
+        different site than yours, which contains different configuration preferences.
+        We use this for unit testing the framework itself.
 
 
 .. php:function:: anchor_popup($uri = '', $title = '', $attributes = FALSE)
