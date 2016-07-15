@@ -247,9 +247,9 @@ if ($composer_autoload = $config->composerAutoload)
 {
 	if ($composer_autoload === TRUE)
 	{
-		file_exists(APPPATH.'vendor/autoload.php')
-			? require_once(APPPATH.'vendor/autoload.php')
-			: log_message('error', '$config->\'composerAutoload\' is set to TRUE but '.APPPATH.'vendor/autoload.php was not found.');
+		file_exists(APPPATH.'../vendor/autoload.php')
+			? require_once(APPPATH.'../vendor/autoload.php')
+			: log_message('error', '$config->\'composerAutoload\' is set to TRUE but '.realpath("../").'vendor/autoload.php was not found.');
 	}
 	elseif (file_exists($composer_autoload))
 	{
