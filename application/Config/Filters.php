@@ -1,6 +1,8 @@
 <?php namespace Config;
 
-class Filters
+use CodeIgniter\Config\BaseConfig;
+
+class Filters extends BaseConfig
 {
 	// Makes reading things below nicer,
 	// and simpler to change out script that's used.
@@ -15,9 +17,9 @@ class Filters
 	// Always applied before every request
 	public $globals = [
 		'before' => [
-			'isLoggedIn'               => ['except' => 'login'],
-			'CodeIgniter\Filters\CSRF' => '*',
-			'FullPageCache'            => '*'
+			'isLoggedIn' => ['except' => 'login'],
+			'CodeIgniter\Filters\CSRF',
+			'FullPageCache'
 		],
 		'after' => [
 			'FullPageCache'            => '*'
