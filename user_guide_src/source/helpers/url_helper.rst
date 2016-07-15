@@ -224,7 +224,7 @@ The following functions are available:
         different site than yours, which contains different configuration preferences.
         We use this for unit testing the framework itself.
 
-.. php:function:: mailto($email, $title = '', $attributes = '')
+.. php:function:: mailto($email[, $title = ''[, $attributes = '']])
 
 	:param	string	$email: E-mail address
 	:param	string	$title: Anchor title
@@ -242,7 +242,7 @@ The following functions are available:
 		$attributes = array('title' => 'Mail me');
 		echo mailto('me@my-site.com', 'Contact Me', $attributes);
 
-.. php:function:: safe_mailto($email, $title = '', $attributes = '')
+.. php:function:: safe_mailto($email[, $title = ''[, $attributes = '']])
 
 	:param	string	$email: E-mail address
 	:param	string	$title: Anchor title

@@ -406,20 +406,21 @@ if (!function_exists('safe_mailto'))
 
 		$x = array_reverse($x);
 
-		$output = "<script type=\"text/javascript\">\n"
-			."\t//<![CDATA[\n"
-			."\tvar l=new Array();\n";
+		// improve obfuscation by eliminating newlines & whitespace
+		$output = "<script type=\"text/javascript\">"
+			."//<![CDATA["
+			."var l=new Array();";
 
 		for ($i = 0, $c = count($x); $i < $c; $i++)
 		{
-			$output .= "\tl[".$i."] = '".$x[$i]."';\n";
+			$output .= "l[".$i."] = '".$x[$i]."';";
 		}
 
-		$output .= "\n\tfor (var i = l.length-1; i >= 0; i=i-1) {\n"
-			."\t\tif (l[i].substring(0, 1) === '|') document.write(\"&#\"+unescape(l[i].substring(1))+\";\");\n"
-			."\t\telse document.write(unescape(l[i]));\n"
-			."\t}\n"
-			."\t//]]>\n"
+		$output .= "for (var i = l.length-1; i >= 0; i=i-1) {"
+			."if (l[i].substring(0, 1) === '|') document.write(\"&#\"+unescape(l[i].substring(1))+\";\");"
+			."else document.write(unescape(l[i]));"
+			."}"
+			."//]]>"
 			.'</script>';
 
 		return $output;
