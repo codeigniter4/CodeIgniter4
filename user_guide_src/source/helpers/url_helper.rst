@@ -287,7 +287,7 @@ The following functions are available:
 
 	.. note:: The only URLs recognized are those that start with "www." or with "://".
 
-.. php:function:: url_title($str, $separator = '-', $lowercase = FALSE)
+.. php:function:: url_title($str[, $separator = '-'[, $lowercase = FALSE]])
 
 	:param	string	$str: Input string
 	:param	string	$separator: Word separator

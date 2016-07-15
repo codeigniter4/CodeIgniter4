@@ -242,7 +242,7 @@ if (!function_exists('anchor_popup'))
 		$config = empty($altConfig) ? new \Config\App() : $altConfig;
 
 		$title		 = (string) $title;
-		$site_url	 = preg_match('#^(\w+:)?//#i', $uri) ? $uri : site_url($uri,'',$config);
+		$site_url	 = preg_match('#^(\w+:)?//#i', $uri) ? $uri : site_url($uri, '', $config);
 		$site_url	 = rtrim($site_url, '/');
 
 		if ($title === '')
@@ -492,23 +492,29 @@ if (!function_exists('prep_url'))
 {
 
 	/**
-	 * Prep URL
+	 * Prep URL - Simply adds the http:// part if no scheme is included.
 	 *
-	 * Simply adds the http:// part if no scheme is included
-	 *
+	 * Formerly used URI, but that does not play nicely with URIs missing
+	 * the scheme.
+	 * 
 	 * @param	string	the URL
 	 * @return	string
 	 */
 	function prep_url($str = ''): string
 	{
-		$uri = new \CodeIgniter\HTTP\URI($str);
+		$pos = strpos('//', $str);
+		if ($pos === false)
+			$str = 'http://'.$str;
 
-		if (empty($uri->getScheme()))
-		{
-			$uri->setScheme('http');
-		}
-
-		return (string) $uri;
+//		$uri = new \CodeIgniter\HTTP\URI($str);
+//
+//		if (empty($uri->getScheme()))
+//		{
+//			$uri->setScheme('http');
+//		}
+//
+//		return (string) $uri;
+		return $str;
 	}
 
 }

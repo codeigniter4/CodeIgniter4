@@ -83,6 +83,21 @@ class URITest extends \CIUnitTestCase
 		$url = '';
 		$uri = new URI($url);
 		$this->assertEquals('http://'.$url, (string) $uri);
+		$url = '/';
+		$uri = new URI($url);
+		$this->assertEquals('http://'.$url, (string) $uri);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testMissingScheme()
+	{
+		$url = 'http://foo.bar/baz';
+		$uri = new URI($url);
+		$this->assertEquals('http', $uri->getScheme());
+		$this->assertEquals('foo.bar', $uri->getAuthority());
+		$this->assertEquals('/baz', $uri->getPath());
+		$this->assertEquals($url, (string) $uri);
 	}
 
 	//--------------------------------------------------------------------
