@@ -110,6 +110,36 @@ class FiltersTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testProcessMethodProcessGlobalsWithExcept()
+	{
+		$_SERVER['REQUEST_METHOD'] = 'GET';
+
+		$config = [
+			'globals' => [
+				'before' => [
+					'foo' => ['except' => ['admin/*']],
+					'bar'
+				],
+				'after' => [
+					'baz'
+				]
+			]
+		];
+		$filters = new Filters((object)$config);
+		$uri = 'admin/foo/bar';
+
+		$expected = [
+			'before' => [
+				'bar'
+			],
+			'after'  => ['baz']
+		];
+
+		$this->assertEquals($expected, $filters->initialize($uri)->getFilters());
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testProcessMethodProcessesFiltersBefore()
 	{
 		$_SERVER['REQUEST_METHOD'] = 'GET';

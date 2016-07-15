@@ -56,6 +56,9 @@ class Filters
 	 * to proper regex, removing those we can from the possibilities
 	 * based on HTTP method, etc.
 	 *
+	 * The resulting $this->filters is an array of only filters
+	 * that should be applied to this request.
+	 *
 	 * We go ahead an process the entire tree because we'll need to
 	 * run through both a before and after and don't want to double
 	 * process the rows.
@@ -67,7 +70,7 @@ class Filters
 			return;
 		}
 
-	    $this->processGlobals();
+	    $this->processGlobals($uri);
 	    $this->processMethods();
 	    $this->processFilters($uri);
 
@@ -94,7 +97,7 @@ class Filters
 	// Processors
 	//--------------------------------------------------------------------
 
-	protected function processGlobals()
+	protected function processGlobals(string $uri = null)
 	{
 		if (! isset($this->config->globals) || ! is_array($this->config->globals))
 		{
@@ -104,6 +107,33 @@ class Filters
 		// Before
 		if (isset($this->config->globals['before']))
 		{
+			// Take any 'except' routes into consideration
+			foreach ($this->config->globals['before'] as $alias => $rules)
+			{
+				if (! is_array($rules) || ! array_key_exists('except', $rules))
+				{
+					continue;
+				}
+
+				$rules = $rules['except'];
+
+				foreach ($rules as $path)
+				{
+					// Prep it for regex
+					$path = str_replace('/*', '*', $path);
+					$path = trim(str_replace('*', '.+', $path), '/ ');
+
+					// Path doesn't match the URI? continue on...
+					if (preg_match('/'.$path.'/', $uri, $match) !== 1)
+					{
+						continue;
+					}
+
+					unset($this->config->globals['before'][$alias]);
+					break;
+				}
+			}
+
 			$this->filters['before'] = array_merge($this->filters['before'], $this->config->globals['before']);
 		}
 
