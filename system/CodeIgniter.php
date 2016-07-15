@@ -37,6 +37,7 @@
  */
 
 
+use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\Router\RouteCollectionInterface;
@@ -177,7 +178,11 @@ class CodeIgniter
 			// Run "before" filters
 			//--------------------------------------------------------------------
 			$filters = Services::filters();
-			$filters->run($this->request->uri->getPath(), 'before');
+			$uri = $this->request instanceof CLIRequest
+				? $this->request->getPath()
+				: $this->request->uri->getPath();
+
+			$filters->run($uri, 'before');
 
 			$this->startController();
 
@@ -197,7 +202,8 @@ class CodeIgniter
 			//--------------------------------------------------------------------
 			// Run "after" filters
 			//--------------------------------------------------------------------
-			$filters->run($this->request->uri->getPath(), 'after');
+			$filters->run($uri, 'after');
+			unset($uri);
 
 			$this->gatherOutput($cacheConfig);
 

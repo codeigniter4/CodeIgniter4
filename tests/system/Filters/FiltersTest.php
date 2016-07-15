@@ -1,9 +1,23 @@
 <?php namespace CodeIgniter\Filters;
 
 use CodeIgniter\HTTP\IncomingRequest;
+use CodeIgniter\Services;
 
 class FiltersTest extends \CIUnitTestCase
 {
+	protected $requeset;
+	protected $response;
+
+	public function __construct()
+	{
+	    parent::__construct();
+
+		$this->request = Services::request();
+		$this->response = Services::response();
+	}
+
+	//--------------------------------------------------------------------
+
 	public function setUp()
 	{
 
@@ -25,7 +39,7 @@ class FiltersTest extends \CIUnitTestCase
 				'cli' => ['foo']
 			]
 		];
-		$filters = new Filters((object)$config);
+		$filters = new Filters((object)$config, $this->request, $this->response);
 
 		$expected = [
 			'before' => ['foo'],
@@ -46,7 +60,7 @@ class FiltersTest extends \CIUnitTestCase
 				'get' => ['foo']
 			]
 		];
-		$filters = new Filters((object)$config);
+		$filters = new Filters((object)$config, $this->request, $this->response);
 
 		$expected = [
 			'before' => ['foo'],
@@ -68,7 +82,7 @@ class FiltersTest extends \CIUnitTestCase
 				'get'  => ['bar']
 			]
 		];
-		$filters = new Filters((object)$config);
+		$filters = new Filters((object)$config, $this->request, $this->response);
 
 		$expected = [
 			'before' => ['bar'],
@@ -95,7 +109,7 @@ class FiltersTest extends \CIUnitTestCase
 				]
 			]
 		];
-		$filters = new Filters((object)$config);
+		$filters = new Filters((object)$config, $this->request, $this->response);
 
 		$expected = [
 			'before' => [
@@ -125,7 +139,7 @@ class FiltersTest extends \CIUnitTestCase
 				]
 			]
 		];
-		$filters = new Filters((object)$config);
+		$filters = new Filters((object)$config, $this->request, $this->response);
 		$uri = 'admin/foo/bar';
 
 		$expected = [
@@ -149,7 +163,7 @@ class FiltersTest extends \CIUnitTestCase
 				'foo' => ['before' => ['admin/*'], 'after' => ['/users/*']]
 			]
 		];
-		$filters = new Filters((object)$config);
+		$filters = new Filters((object)$config, $this->request, $this->response);
 		$uri = 'admin/foo/bar';
 
 		$expected = [
@@ -171,7 +185,7 @@ class FiltersTest extends \CIUnitTestCase
 				'foo' => ['before' => ['admin/*'], 'after' => ['/users/*']]
 			]
 		];
-		$filters = new Filters((object)$config);
+		$filters = new Filters((object)$config, $this->request, $this->response);
 		$uri = 'users/foo/bar';
 
 		$expected = [
@@ -206,7 +220,7 @@ class FiltersTest extends \CIUnitTestCase
 				'foof' => ['before' => ['admin/*'], 'after' => ['/users/*']]
 			]
 		];
-		$filters = new Filters((object)$config);
+		$filters = new Filters((object)$config, $this->request, $this->response);
 		$uri = 'admin/foo/bar';
 
 		$expected = [
