@@ -50,8 +50,7 @@ if ( ! function_exists('site_url'))
 	function site_url($path = '', string $scheme = null, \Config\App $altConfig = null): string
 	{
 		// convert segment array to string
-		if (is_array($path))
-			$path = implode('/', $path);
+		if (is_array($path)) $path = implode('/', $path);
 
 		// use alternate config if provided, else default one
 		$config = empty($altConfig) ? new \Config\App() : $altConfig;
@@ -63,8 +62,7 @@ if ( ! function_exists('site_url'))
 		{
 			$path = rtrim($base, '/').'/'.rtrim($config->indexPage, '/').'/'.$path;
 		}
-		else
-			$path = rtrim($base, '/').'/'.$path;
+		else $path = rtrim($base, '/').'/'.$path;
 
 		$url = new \CodeIgniter\HTTP\URI($path);
 
@@ -94,8 +92,7 @@ if ( ! function_exists('base_url'))
 	function base_url(string $path = '', string $scheme = null): string
 	{
 		// convert segment array to string
-		if (is_array($path))
-			$path = implode('/', $path);
+		if (is_array($path)) $path = implode('/', $path);
 
 		$url = \CodeIgniter\Services::request()->uri;
 
@@ -272,7 +269,8 @@ if ( ! function_exists('anchor_popup'))
 			$window_name = '_blank';
 		}
 
-		foreach (array ('width' => '800', 'height' => '600', 'scrollbars' => 'yes', 'menubar' => 'no', 'status' => 'yes', 'resizable' => 'yes', 'screenx' => '0', 'screeny' => '0') as $key => $val)
+		foreach (array ('width' => '800', 'height' => '600', 'scrollbars' => 'yes', 'menubar' => 'no', 'status' => 'yes', 'resizable' => 'yes', 'screenx' => '0', 'screeny' => '0') as
+				$key => $val)
 		{
 			$atts[$key] = isset($attributes[$key]) ? $attributes[$key] : $val;
 			unset($attributes[$key]);
@@ -340,7 +338,7 @@ if ( ! function_exists('safe_mailto'))
 
 		$x = str_split('<a href="mailto:', 1);
 
-		for ($i = 0, $l = strlen($email); $i < $l; $i ++ )
+		for ($i = 0, $l = strlen($email); $i < $l; $i ++)
 		{
 			$x[] = '|'.ord($email[$i]);
 		}
@@ -354,7 +352,7 @@ if ( ! function_exists('safe_mailto'))
 				foreach ($attributes as $key => $val)
 				{
 					$x[] = ' '.$key.'="';
-					for ($i = 0, $l = strlen($val); $i < $l; $i ++ )
+					for ($i = 0, $l = strlen($val); $i < $l; $i ++)
 					{
 						$x[] = '|'.ord($val[$i]);
 					}
@@ -363,7 +361,7 @@ if ( ! function_exists('safe_mailto'))
 			}
 			else
 			{
-				for ($i = 0, $l = strlen($attributes); $i < $l; $i ++ )
+				for ($i = 0, $l = strlen($attributes); $i < $l; $i ++)
 				{
 					$x[] = $attributes[$i];
 				}
@@ -373,7 +371,7 @@ if ( ! function_exists('safe_mailto'))
 		$x[] = '>';
 
 		$temp = array ();
-		for ($i = 0, $l = strlen($title); $i < $l; $i ++ )
+		for ($i = 0, $l = strlen($title); $i < $l; $i ++)
 		{
 			$ordinal = ord($title[$i]);
 
@@ -411,7 +409,7 @@ if ( ! function_exists('safe_mailto'))
 			."//<![CDATA["
 			."var l=new Array();";
 
-		for ($i = 0, $c = count($x); $i < $c; $i ++ )
+		for ($i = 0, $c = count($x); $i < $c; $i ++)
 		{
 			$output .= "l[".$i."] = '".$x[$i]."';";
 		}

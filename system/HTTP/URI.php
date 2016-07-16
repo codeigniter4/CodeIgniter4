@@ -601,8 +601,7 @@ class URI
 	 */
 	public function setPort($port)
 	{
-		if (is_null($port))
-			return $this;
+		if (is_null($port)) return $this;
 
 		if ($port <= 0 || $port > 65535)
 		{
@@ -776,10 +775,8 @@ class URI
 		$path = $this->removeDotSegments($path);
 
 		// Fix up some leading slash edge cases...
-		if (strpos($orig, './') === 0)
-			$path	 = '/'.$path;
-		if (strpos($orig, '../') === 0)
-			$path	 = '/'.$path;
+		if (strpos($orig, './') === 0) $path	 = '/'.$path;
+		if (strpos($orig, '../') === 0) $path	 = '/'.$path;
 
 		// Encode characters
 		$path = preg_replace_callback(
@@ -801,16 +798,13 @@ class URI
 	 */
 	protected function applyParts($parts)
 	{
-		if ( ! empty($parts['host']))
-			$this->host		 = $parts['host'];
-		if ( ! empty($parts['user']))
-			$this->user		 = $parts['user'];
-		if ( ! empty($parts['path']))
-			$this->path		 = $this->filterPath($parts['path']);
+		if ( ! empty($parts['host'])) $this->host		 = $parts['host'];
+		if ( ! empty($parts['user'])) $this->user		 = $parts['user'];
+		if ( ! empty($parts['path'])) $this->path		 = $this->filterPath($parts['path']);
 		if ( ! empty($parts['query']))
-			$this->query	 = $this->filterQuery($parts['query']);
+				$this->query	 = $this->filterQuery($parts['query']);
 		if ( ! empty($parts['fragment']))
-			$this->fragment	 = $this->filterQuery($parts['fragment']);
+				$this->fragment	 = $this->filterQuery($parts['fragment']);
 
 		// Scheme
 		if (isset($parts['scheme']))
@@ -953,8 +947,7 @@ class URI
 
 		$path = explode('/', $base->getPath());
 
-		if (empty($path[0]))
-			unset($path[0]);
+		if (empty($path[0])) unset($path[0]);
 
 		array_pop($path);
 		array_push($path, $reference->getPath());
@@ -976,8 +969,7 @@ class URI
 	 */
 	public function removeDotSegments(string $path): string
 	{
-		if (empty($path) || $path == '/')
-			return $path;
+		if (empty($path) || $path == '/') return $path;
 
 		$output = [];
 
@@ -1011,12 +1003,10 @@ class URI
 		if ($output != '/')
 		{
 			// Add leading slash if necessary
-			if (substr($path, 0, 1) == '/')
-				$output = '/'.$output;
+			if (substr($path, 0, 1) == '/') $output = '/'.$output;
 
 			// Add trailing slash if necessary
-			if (substr($path, -1, 1) == '/')
-				$output .= '/';
+			if (substr($path, -1, 1) == '/') $output .= '/';
 		}
 
 		return $output;
