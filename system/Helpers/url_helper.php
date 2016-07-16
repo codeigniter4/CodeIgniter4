@@ -502,18 +502,18 @@ if (!function_exists('prep_url'))
 	 */
 	function prep_url($str = ''): string
 	{
-		$pos = strpos('//', $str);
-		if ($pos === false)
-			$str = 'http://'.$str;
+		if ($str === 'http://' OR $str === '')
+		{
+			return '';
+		}
 
-//		$uri = new \CodeIgniter\HTTP\URI($str);
-//
-//		if (empty($uri->getScheme()))
-//		{
-//			$uri->setScheme('http');
-//		}
-//
-//		return (string) $uri;
+		$url = parse_url($str);
+
+		if (!$url OR ! isset($url['scheme']))
+		{
+			return 'http://'.$str;
+		}
+
 		return $str;
 	}
 
