@@ -641,7 +641,7 @@ class URLHelperTest extends \CIUnitTestCase
 	 */
 	public function testAutolinkBoth($in, $out)
 	{
-			$this->assertEquals($out, auto_link($in));
+		$this->assertEquals($out, auto_link($in));
 	}
 
 	public function autolinkPopup()
@@ -671,7 +671,7 @@ class URLHelperTest extends \CIUnitTestCase
 	 */
 	public function testAutoLinkPopup($in, $out)
 	{
-			$this->assertEquals($out, auto_link($in, 'url', true));
+		$this->assertEquals($out, auto_link($in, 'url', true));
 	}
 
 	//--------------------------------------------------------------------

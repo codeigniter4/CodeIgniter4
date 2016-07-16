@@ -156,7 +156,7 @@ class URI
 	 */
 	public function __construct(string $uri = null)
 	{
-		if (!is_null($uri))
+		if ( ! is_null($uri))
 		{
 			$this->setURI($uri);
 		}
@@ -171,10 +171,10 @@ class URI
 	 */
 	public function setURI(string $uri = null)
 	{
-		if (!is_null($uri))
+		if ( ! is_null($uri))
 		{
 			$parts = parse_url($uri);
-			
+
 			if ($parts === false)
 			{
 				throw new \InvalidArgumentException("Unable to parse URI: {$uri}");
@@ -237,12 +237,12 @@ class URI
 
 		$authority = $this->host;
 
-		if (!empty($this->getUserInfo()))
+		if ( ! empty($this->getUserInfo()))
 		{
 			$authority = $this->getUserInfo().'@'.$authority;
 		}
 
-		if (!empty($this->port) && !$ignorePort)
+		if ( ! empty($this->port) && ! $ignorePort)
 		{
 			// Don't add port if it's a standard port for
 			// this scheme
@@ -283,7 +283,7 @@ class URI
 	{
 		$userInfo = $this->user;
 
-		if ($this->showPassword === true && !empty($this->password))
+		if ($this->showPassword === true && ! empty($this->password))
 		{
 			$userInfo .= ':'.$this->password;
 		}
@@ -478,12 +478,12 @@ class URI
 	public static function createURIString($scheme = null, $authority = null, $path = null, $query = null, $fragment = null)
 	{
 		$uri = '';
-		if (!empty($scheme))
+		if ( ! empty($scheme))
 		{
 			$uri .= $scheme.'://';
 		}
 
-		if (!empty($authority))
+		if ( ! empty($authority))
 		{
 			$uri .= $authority;
 		}
@@ -521,7 +521,7 @@ class URI
 	{
 		$parts = parse_url($str);
 
-		if (empty($parts['host']) && !empty($parts['path']))
+		if (empty($parts['host']) && ! empty($parts['path']))
 		{
 			$parts['host'] = $parts['path'];
 			unset($parts['path']);
@@ -650,7 +650,7 @@ class URI
 		}
 
 		// Can't have leading ?
-		if (!empty($query) && strpos($query, '?') === 0)
+		if ( ! empty($query) && strpos($query, '?') === 0)
 		{
 			$query = substr($query, 1);
 		}
@@ -801,15 +801,15 @@ class URI
 	 */
 	protected function applyParts($parts)
 	{
-		if (!empty($parts['host']))
+		if ( ! empty($parts['host']))
 			$this->host		 = $parts['host'];
-		if (!empty($parts['user']))
+		if ( ! empty($parts['user']))
 			$this->user		 = $parts['user'];
-		if (!empty($parts['path']))
+		if ( ! empty($parts['path']))
 			$this->path		 = $this->filterPath($parts['path']);
-		if (!empty($parts['query']))
+		if ( ! empty($parts['query']))
 			$this->query	 = $this->filterQuery($parts['query']);
-		if (!empty($parts['fragment']))
+		if ( ! empty($parts['fragment']))
 			$this->fragment	 = $this->filterQuery($parts['fragment']);
 
 		// Scheme
@@ -826,7 +826,7 @@ class URI
 		// Port
 		if (isset($parts['port']))
 		{
-			if (!is_null($parts['port']))
+			if ( ! is_null($parts['port']))
 			{
 				$port = (int) $parts['port'];
 
@@ -845,7 +845,7 @@ class URI
 		}
 
 		// Populate our segments array
-		if (!empty($parts['path']))
+		if ( ! empty($parts['path']))
 		{
 			$this->segments = explode('/', trim($parts['path'], '/'));
 		}
@@ -878,7 +878,7 @@ class URI
 		$transformed = clone $relative;
 
 		// 5.2.2 Transform References
-		if (!empty($relative->getScheme()))
+		if ( ! empty($relative->getScheme()))
 		{
 			$transformed->setScheme($relative->getScheme())
 				->setAuthority($relative->getAuthority())
@@ -887,7 +887,7 @@ class URI
 		}
 		else
 		{
-			if (!empty($relative->getAuthority()))
+			if ( ! empty($relative->getAuthority()))
 			{
 				$transformed->setAuthority($relative->getAuthority())
 					->setPath($relative->getPath())
@@ -899,7 +899,7 @@ class URI
 				{
 					$transformed->setPath($this->getPath());
 
-					if (!is_null($relative->getQuery()))
+					if ( ! is_null($relative->getQuery()))
 					{
 						$transformed->setQuery($relative->getQuery());
 					}
@@ -946,7 +946,7 @@ class URI
 	 */
 	protected function mergePaths(URI $base, URI $reference)
 	{
-		if (!empty($base->getAuthority()) && empty($base->getPath()))
+		if ( ! empty($base->getAuthority()) && empty($base->getPath()))
 		{
 			return '/'.ltrim($base->getPath(), '/ ');
 		}

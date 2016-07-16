@@ -35,7 +35,7 @@
  * @since	Version 3.0.0
  * @filesource
  */
-if (!function_exists('site_url'))
+if ( ! function_exists('site_url'))
 {
 
 	/**
@@ -59,7 +59,7 @@ if (!function_exists('site_url'))
 		$base = base_url();
 
 		// Add index page, if so configured
-		if (!empty($config->indexPage))
+		if ( ! empty($config->indexPage))
 		{
 			$path = rtrim($base, '/').'/'.rtrim($config->indexPage, '/').'/'.$path;
 		}
@@ -69,7 +69,7 @@ if (!function_exists('site_url'))
 		$url = new \CodeIgniter\HTTP\URI($path);
 
 		// allow the scheme to be over-ridden; else, use default
-		if (!empty($scheme))
+		if ( ! empty($scheme))
 		{
 			$url->setScheme($scheme);
 		}
@@ -81,7 +81,7 @@ if (!function_exists('site_url'))
 
 //--------------------------------------------------------------------
 
-if (!function_exists('base_url'))
+if ( ! function_exists('base_url'))
 {
 
 	/**
@@ -99,12 +99,12 @@ if (!function_exists('base_url'))
 
 		$url = \CodeIgniter\Services::request()->uri;
 
-		if (!empty($path))
+		if ( ! empty($path))
 		{
 			$url = $url->resolveRelativeURI($path);
 		}
 
-		if (!empty($scheme))
+		if ( ! empty($scheme))
 		{
 			$url->setScheme($scheme);
 		}
@@ -116,7 +116,7 @@ if (!function_exists('base_url'))
 
 //--------------------------------------------------------------------
 
-if (!function_exists('current_url'))
+if ( ! function_exists('current_url'))
 {
 
 	/**
@@ -137,7 +137,7 @@ if (!function_exists('current_url'))
 }
 //--------------------------------------------------------------------
 
-if (!function_exists('uri_string'))
+if ( ! function_exists('uri_string'))
 {
 
 	/**
@@ -156,7 +156,7 @@ if (!function_exists('uri_string'))
 
 //--------------------------------------------------------------------
 
-if (!function_exists('index_page'))
+if ( ! function_exists('index_page'))
 {
 
 	/**
@@ -179,7 +179,7 @@ if (!function_exists('index_page'))
 
 // ------------------------------------------------------------------------
 
-if (!function_exists('anchor'))
+if ( ! function_exists('anchor'))
 {
 
 	/**
@@ -221,7 +221,7 @@ if (!function_exists('anchor'))
 
 // ------------------------------------------------------------------------
 
-if (!function_exists('anchor_popup'))
+if ( ! function_exists('anchor_popup'))
 {
 
 	/**
@@ -255,14 +255,14 @@ if (!function_exists('anchor_popup'))
 			return '<a href="'.$site_url.'" onclick="window.open(\''.$site_url."', '_blank'); return false;\">".$title.'</a>';
 		}
 
-		if (!is_array($attributes))
+		if ( ! is_array($attributes))
 		{
 			$attributes = array ($attributes);
 
 			// Ref: http://www.w3schools.com/jsref/met_win_open.asp
 			$window_name = '_blank';
 		}
-		elseif (!empty($attributes['window_name']))
+		elseif ( ! empty($attributes['window_name']))
 		{
 			$window_name = $attributes['window_name'];
 			unset($attributes['window_name']);
@@ -289,7 +289,7 @@ if (!function_exists('anchor_popup'))
 
 // ------------------------------------------------------------------------
 
-if (!function_exists('mailto'))
+if ( ! function_exists('mailto'))
 {
 
 	/**
@@ -316,7 +316,7 @@ if (!function_exists('mailto'))
 
 // ------------------------------------------------------------------------
 
-if (!function_exists('safe_mailto'))
+if ( ! function_exists('safe_mailto'))
 {
 
 	/**
@@ -340,7 +340,7 @@ if (!function_exists('safe_mailto'))
 
 		$x = str_split('<a href="mailto:', 1);
 
-		for ($i = 0, $l = strlen($email); $i < $l; $i++)
+		for ($i = 0, $l = strlen($email); $i < $l; $i ++ )
 		{
 			$x[] = '|'.ord($email[$i]);
 		}
@@ -354,7 +354,7 @@ if (!function_exists('safe_mailto'))
 				foreach ($attributes as $key => $val)
 				{
 					$x[] = ' '.$key.'="';
-					for ($i = 0, $l = strlen($val); $i < $l; $i++)
+					for ($i = 0, $l = strlen($val); $i < $l; $i ++ )
 					{
 						$x[] = '|'.ord($val[$i]);
 					}
@@ -363,7 +363,7 @@ if (!function_exists('safe_mailto'))
 			}
 			else
 			{
-				for ($i = 0, $l = strlen($attributes); $i < $l; $i++)
+				for ($i = 0, $l = strlen($attributes); $i < $l; $i ++ )
 				{
 					$x[] = $attributes[$i];
 				}
@@ -373,7 +373,7 @@ if (!function_exists('safe_mailto'))
 		$x[] = '>';
 
 		$temp = array ();
-		for ($i = 0, $l = strlen($title); $i < $l; $i++)
+		for ($i = 0, $l = strlen($title); $i < $l; $i ++ )
 		{
 			$ordinal = ord($title[$i]);
 
@@ -411,7 +411,7 @@ if (!function_exists('safe_mailto'))
 			."//<![CDATA["
 			."var l=new Array();";
 
-		for ($i = 0, $c = count($x); $i < $c; $i++)
+		for ($i = 0, $c = count($x); $i < $c; $i ++ )
 		{
 			$output .= "l[".$i."] = '".$x[$i]."';";
 		}
@@ -430,7 +430,7 @@ if (!function_exists('safe_mailto'))
 
 // ------------------------------------------------------------------------
 
-if (!function_exists('auto_link'))
+if ( ! function_exists('auto_link'))
 {
 
 	/**
@@ -488,7 +488,7 @@ if (!function_exists('auto_link'))
 
 // ------------------------------------------------------------------------
 
-if (!function_exists('prep_url'))
+if ( ! function_exists('prep_url'))
 {
 
 	/**
@@ -509,7 +509,7 @@ if (!function_exists('prep_url'))
 
 		$url = parse_url($str);
 
-		if (!$url OR ! isset($url['scheme']))
+		if ( ! $url OR ! isset($url['scheme']))
 		{
 			return 'http://'.$str;
 		}
@@ -521,7 +521,7 @@ if (!function_exists('prep_url'))
 
 // ------------------------------------------------------------------------
 
-if (!function_exists('url_title'))
+if ( ! function_exists('url_title'))
 {
 
 	/**
