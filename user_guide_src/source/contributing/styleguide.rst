@@ -77,10 +77,15 @@ Naming
 Whitespace, indentation and alignment
 *************************************
 
-- Indentation MUST use only tabs.
-- Alignment MUST use only spaces.
+- Best practice: indentation SHOULD use only tabs.
+- Best practice: alignment SHOULD use only spaces.
+- If using tabs for anything, you MUST set the tab spacing to 4.
 
-The following code block would have a single tab at the beginning of
+This will accommodate the widest range of developer environment options,
+while maintaining consistency of code appearance.
+
+Following the "best practice" above, 
+the following code block would have a single tab at the beginning of
 each line containing braces, and two tabs at the beginning of the
 nested statements. No alignment is implied.::
 
@@ -90,7 +95,8 @@ nested statements. No alignment is implied.::
         $third = 3;
     }
 
-The following code block would use spaces to have the assignment
+Following the "best practice" above,
+the following code block would use spaces to have the assignment
 operators line up with each other::
 
     {
@@ -101,7 +107,7 @@ operators line up with each other::
 
 
 .. note:: Our indenting and alignment convention differs from PSR-2, which
-    uses spaces for both indenting and alignment.
+    **only** uses spaces for both indenting and alignment.
 
 - Unnecessary whitespace characters MUST NOT be present anywhere within a
   script.
