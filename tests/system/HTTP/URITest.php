@@ -379,23 +379,23 @@ class URITest extends \CIUnitTestCase
 
 	public function defaultDots()
 	{
-		return array(
-			array('/foo/..', '/'),
-			array('//foo//..', '/'),
-			array('/foo/../..', '/'),
-			array('/foo/../.', '/'),
-			array('/./foo/..', '/'),
-			array('/./foo', '/foo'),
-			array('/./foo/', '/foo/'),
-			array('/./foo/bar/baz/pho/../..', '/foo/bar'),
-			array('*', '*'),
-			array('/foo', '/foo'),
-			array('/abc/123/../foo/', '/abc/foo/'),
-			array('/a/b/c/./../../g', '/a/g'),
-			array('/b/c/./../../g', '/g'),
-			array('/b/c/./../../g', '/g'),
-			array('/c/./../../g', '/g'),
-			array('/./../../g', '/g'),
+		return array (
+			array ('/foo/..', '/'),
+			array ('//foo//..', '/'),
+			array ('/foo/../..', '/'),
+			array ('/foo/../.', '/'),
+			array ('/./foo/..', '/'),
+			array ('/./foo', '/foo'),
+			array ('/./foo/', '/foo/'),
+			array ('/./foo/bar/baz/pho/../..', '/foo/bar'),
+			array ('*', '*'),
+			array ('/foo', '/foo'),
+			array ('/abc/123/../foo/', '/abc/foo/'),
+			array ('/a/b/c/./../../g', '/a/g'),
+			array ('/b/c/./../../g', '/g'),
+			array ('/b/c/./../../g', '/g'),
+			array ('/c/./../../g', '/g'),
+			array ('/./../../g', '/g'),
 		);
 	}
 

@@ -27,12 +27,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2016, British Columbia Institute of Technology (http://bcit.ca/)
- * @license	http://opensource.org/licenses/MIT	MIT License
- * @link	http://codeigniter.com
- * @since	Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  Copyright (c) 2014 - 2016, British Columbia Institute of Technology (http://bcit.ca/)
+ * @license    http://opensource.org/licenses/MIT    MIT License
+ * @link       http://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
 if ( ! function_exists('site_url'))
@@ -41,16 +41,19 @@ if ( ! function_exists('site_url'))
 	/**
 	 * Return a site URL to use in views
 	 *
-	 * @param string|array      $path
-	 * @param string|null $scheme
-	 * @param \Config\App|null	$altConfig	Alternate configuration to use
+	 * @param string|array     $path
+	 * @param string|null      $scheme
+	 * @param \Config\App|null $altConfig Alternate configuration to use
 	 *
 	 * @return string
 	 */
 	function site_url($path = '', string $scheme = null, \Config\App $altConfig = null): string
 	{
 		// convert segment array to string
-		if (is_array($path)) $path = implode('/', $path);
+		if (is_array($path))
+		{
+			$path = implode('/', $path);
+		}
 
 		// use alternate config if provided, else default one
 		$config = empty($altConfig) ? new \Config\App() : $altConfig;
@@ -62,7 +65,10 @@ if ( ! function_exists('site_url'))
 		{
 			$path = rtrim($base, '/').'/'.rtrim($config->indexPage, '/').'/'.$path;
 		}
-		else $path = rtrim($base, '/').'/'.$path;
+		else
+		{
+			$path = rtrim($base, '/').'/'.$path;
+		}
 
 		$url = new \CodeIgniter\HTTP\URI($path);
 
@@ -85,14 +91,17 @@ if ( ! function_exists('base_url'))
 	/**
 	 * Return the base URL to use in views
 	 *
-	 * @param string|array $path
-	 * @param string $scheme
+	 * @param  string|array $path
+	 * @param  string       $scheme
 	 * @return string
 	 */
 	function base_url($path = '', string $scheme = null): string
 	{
 		// convert segment array to string
-		if (is_array($path)) $path = implode('/', $path);
+		if (is_array($path))
+		{
+			$path = implode('/', $path);
+		}
 
 		$url = \CodeIgniter\Services::request()->uri;
 
@@ -124,7 +133,7 @@ if ( ! function_exists('current_url'))
 	 *
 	 * @param boolean $returnObject True to return an object instead of a strong
 	 * 
-	 * @return	string|URI
+	 * @return string|URI
 	 */
 	function current_url(bool $returnObject = false)
 	{
@@ -142,7 +151,7 @@ if ( ! function_exists('uri_string'))
 	 *
 	 * Returns the path part of the current URL
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	function uri_string(): string
 	{
@@ -161,8 +170,8 @@ if ( ! function_exists('index_page'))
 	 *
 	 * Returns the "index_page" from your config file
 	 *
-	 * @param \Config\App|null	$altConfig	Alternate configuration to use
-	 * @return	string
+	 * @param  \Config\App|null $altConfig Alternate configuration to use
+	 * @return string
 	 */
 	function index_page(\Config\App $altConfig = null): string
 	{
@@ -184,11 +193,11 @@ if ( ! function_exists('anchor'))
 	 *
 	 * Creates an anchor based on the local URL.
 	 *
-	 * @param	string	the URL
-	 * @param	string	the link title
-	 * @param	mixed	any attributes
-	 * @param \Config\App|null	$altConfig	Alternate configuration to use
-	 * @return	string
+	 * @param  string    the URL
+	 * @param  string    the link title
+	 * @param  mixed    any attributes
+	 * @param  \Config\App|null         $altConfig Alternate configuration to use
+	 * @return string
 	 */
 	function anchor($uri = '', $title = '', $attributes = '', \Config\App $altConfig = null): string
 	{
@@ -197,9 +206,9 @@ if ( ! function_exists('anchor'))
 
 		$title = (string) $title;
 
-		$site_url	 = is_array($uri) ? site_url($uri, null, $config) : (preg_match('#^(\w+:)?//#i', $uri) ? $uri : site_url($uri, null, $config));
+		$site_url = is_array($uri) ? site_url($uri, null, $config) : (preg_match('#^(\w+:)?//#i', $uri) ? $uri : site_url($uri, null, $config));
 		// eliminate trailing slash
-		$site_url	 = rtrim($site_url, '/');
+		$site_url = rtrim($site_url, '/');
 
 		if ($title === '')
 		{
@@ -227,27 +236,27 @@ if ( ! function_exists('anchor_popup'))
 	 * Creates an anchor based on the local URL. The link
 	 * opens a new window based on the attributes specified.
 	 *
-	 * @param	string	the URL
-	 * @param	string	the link title
-	 * @param	mixed	any attributes
-	 * @param \Config\App|null	$altConfig	Alternate configuration to use
-	 * @return	string
+	 * @param  string    the URL
+	 * @param  string    the link title
+	 * @param  mixed    any attributes
+	 * @param  \Config\App|null         $altConfig Alternate configuration to use
+	 * @return string
 	 */
-	function anchor_popup($uri = '', $title = '', $attributes = FALSE, \Config\App $altConfig = null): string
+	function anchor_popup($uri = '', $title = '', $attributes = false, \Config\App $altConfig = null): string
 	{
 		// use alternate config if provided, else default one
 		$config = empty($altConfig) ? new \Config\App() : $altConfig;
 
-		$title		 = (string) $title;
-		$site_url	 = preg_match('#^(\w+:)?//#i', $uri) ? $uri : site_url($uri, '', $config);
-		$site_url	 = rtrim($site_url, '/');
+		$title = (string) $title;
+		$site_url = preg_match('#^(\w+:)?//#i', $uri) ? $uri : site_url($uri, '', $config);
+		$site_url = rtrim($site_url, '/');
 
 		if ($title === '')
 		{
 			$title = $site_url;
 		}
 
-		if ($attributes === FALSE)
+		if ($attributes === false)
 		{
 			return '<a href="'.$site_url.'" onclick="window.open(\''.$site_url."', '_blank'); return false;\">".$title.'</a>';
 		}
@@ -279,7 +288,7 @@ if ( ! function_exists('anchor_popup'))
 		$attributes = stringify_attributes($attributes);
 
 		return '<a href="'.$site_url
-			.'" onclick="window.open(\''.$site_url."', '".$window_name."', '".stringify_attributes($atts, TRUE)."'); return false;\""
+			.'" onclick="window.open(\''.$site_url."', '".$window_name."', '".stringify_attributes($atts, true)."'); return false;\""
 			.$attributes.'>'.$title.'</a>';
 	}
 
@@ -293,10 +302,10 @@ if ( ! function_exists('mailto'))
 	/**
 	 * Mailto Link
 	 *
-	 * @param	string	the email address
-	 * @param	string	the link title
-	 * @param	mixed	any attributes
-	 * @return	string
+	 * @param  string    the email address
+	 * @param  string    the link title
+	 * @param  mixed    any attributes
+	 * @return string
 	 */
 	function mailto($email, $title = '', $attributes = ''): string
 	{
@@ -322,10 +331,10 @@ if ( ! function_exists('safe_mailto'))
 	 *
 	 * Create a spam-protected mailto link written in Javascript
 	 *
-	 * @param	string	the email address
-	 * @param	string	the link title
-	 * @param	mixed	any attributes
-	 * @return	string
+	 * @param  string    the email address
+	 * @param  string    the link title
+	 * @param  mixed    any attributes
+	 * @return string
 	 */
 	function safe_mailto($email, $title = '', $attributes = ''): string
 	{
@@ -338,7 +347,7 @@ if ( ! function_exists('safe_mailto'))
 
 		$x = str_split('<a href="mailto:', 1);
 
-		for ($i = 0, $l = strlen($email); $i < $l; $i ++)
+		for ($i = 0, $l = strlen($email); $i < $l; $i ++ )
 		{
 			$x[] = '|'.ord($email[$i]);
 		}
@@ -352,7 +361,7 @@ if ( ! function_exists('safe_mailto'))
 				foreach ($attributes as $key => $val)
 				{
 					$x[] = ' '.$key.'="';
-					for ($i = 0, $l = strlen($val); $i < $l; $i ++)
+					for ($i = 0, $l = strlen($val); $i < $l; $i ++ )
 					{
 						$x[] = '|'.ord($val[$i]);
 					}
@@ -361,7 +370,7 @@ if ( ! function_exists('safe_mailto'))
 			}
 			else
 			{
-				for ($i = 0, $l = strlen($attributes); $i < $l; $i ++)
+				for ($i = 0, $l = strlen($attributes); $i < $l; $i ++ )
 				{
 					$x[] = $attributes[$i];
 				}
@@ -371,7 +380,7 @@ if ( ! function_exists('safe_mailto'))
 		$x[] = '>';
 
 		$temp = array ();
-		for ($i = 0, $l = strlen($title); $i < $l; $i ++)
+		for ($i = 0, $l = strlen($title); $i < $l; $i ++ )
 		{
 			$ordinal = ord($title[$i]);
 
@@ -389,10 +398,10 @@ if ( ! function_exists('safe_mailto'))
 				$temp[] = $ordinal;
 				if (count($temp) === $count)
 				{
-					$number	 = ($count === 3) ? (($temp[0] % 16) * 4096) + (($temp[1] % 64) * 64) + ($temp[2] % 64) : (($temp[0] % 32) * 64) + ($temp[1] % 64);
-					$x[]	 = '|'.$number;
-					$count	 = 1;
-					$temp	 = array ();
+					$number = ($count === 3) ? (($temp[0] % 16) * 4096) + (($temp[1] % 64) * 64) + ($temp[2] % 64) : (($temp[0] % 32) * 64) + ($temp[1] % 64);
+					$x[] = '|'.$number;
+					$count = 1;
+					$temp = array ();
 				}
 			}
 		}
@@ -409,7 +418,7 @@ if ( ! function_exists('safe_mailto'))
 			."//<![CDATA["
 			."var l=new Array();";
 
-		for ($i = 0, $c = count($x); $i < $c; $i ++)
+		for ($i = 0, $c = count($x); $i < $c; $i ++ )
 		{
 			$output .= "l[".$i."] = '".$x[$i]."';";
 		}
@@ -439,12 +448,12 @@ if ( ! function_exists('auto_link'))
 	 * URLs or emails that end in a period. We'll strip these
 	 * off and add them after the link.
 	 *
-	 * @param	string	the string
-	 * @param	string	the type: email, url, or both
-	 * @param	bool	whether to create pop-up links
-	 * @return	string
+	 * @param  string    the string
+	 * @param  string    the type: email, url, or both
+	 * @param  bool    whether to create pop-up links
+	 * @return string
 	 */
-	function auto_link($str, $type = 'both', $popup = FALSE): string
+	function auto_link($str, $type = 'both', $popup = false): string
 	{
 		// Find and replace any URLs.
 		if ($type !== 'email' && preg_match_all('#(\w*://|www\.)[^\s()<>;]+\w#i', $str, $matches, PREG_OFFSET_CAPTURE | PREG_SET_ORDER))
@@ -460,9 +469,9 @@ if ( ! function_exists('auto_link'))
 				// $match[0] is the matched string/link
 				// $match[1] is either a protocol prefix or 'www.'
 				//
-				// With PREG_OFFSET_CAPTURE, both of the above is an array,
+                // With PREG_OFFSET_CAPTURE, both of the above is an array,
 				// where the actual value is held in [0] and its offset at the [1] index.
-				$a	 = '<a href="'.(strpos($match[1][0], '/') ? '' : 'http://').$match[0][0].'"'.$target.'>'.$match[0][0].'</a>';
+				$a = '<a href="'.(strpos($match[1][0], '/') ? '' : 'http://').$match[0][0].'"'.$target.'>'.$match[0][0].'</a>';
 				$str = substr_replace($str, $a, $match[0][1], strlen($match[0][0]));
 			}
 		}
@@ -472,7 +481,7 @@ if ( ! function_exists('auto_link'))
 		{
 			foreach (array_reverse($matches[0]) as $match)
 			{
-				if (filter_var($match[0], FILTER_VALIDATE_EMAIL) !== FALSE)
+				if (filter_var($match[0], FILTER_VALIDATE_EMAIL) !== false)
 				{
 					$str = substr_replace($str, safe_mailto($match[0]), $match[1], strlen($match[0]));
 				}
@@ -495,8 +504,8 @@ if ( ! function_exists('prep_url'))
 	 * Formerly used URI, but that does not play nicely with URIs missing
 	 * the scheme.
 	 * 
-	 * @param	string	the URL
-	 * @return	string
+	 * @param  string    the URL
+	 * @return string
 	 */
 	function prep_url($str = ''): string
 	{
@@ -529,14 +538,14 @@ if ( ! function_exists('url_title'))
 	 * human-friendly URL string with a "separator" string
 	 * as the word separator.
 	 *
-	 * @todo	Remove old 'dash' and 'underscore' usage in 3.1+.
-	 * @param	string	$str		Input string
-	 * @param	string	$separator	Word separator
-	 * 			(usually '-' or '_')
-	 * @param	bool	$lowercase	Whether to transform the output string to lowercase
-	 * @return	string
+	 * @todo   Remove old 'dash' and 'underscore' usage in 3.1+.
+	 * @param  string $str       Input string
+	 * @param  string $separator Word separator (usually '-' or '_') (usually '-' or '_')
+	 *             (usually '-' or '_')
+	 * @param  bool   $lowercase Whether to transform the output string to lowercase
+	 * @return string
 	 */
-	function url_title($str, $separator = '-', $lowercase = FALSE): string
+	function url_title($str, $separator = '-', $lowercase = false): string
 	{
 		if ($separator === 'dash')
 		{
@@ -550,20 +559,20 @@ if ( ! function_exists('url_title'))
 		$q_separator = preg_quote($separator, '#');
 
 		$trans = array (
-			'&.+?;'					 => '',
-			'[^\w\d _-]'			 => '',
-			'\s+'					 => $separator,
-			'('.$q_separator.')+'	 => $separator
+			'&.+?;' => '',
+			'[^\w\d _-]' => '',
+			'\s+' => $separator,
+			'('.$q_separator.')+' => $separator
 		);
 
 		$str = strip_tags($str);
 		foreach ($trans as $key => $val)
 		{
-//			$str = preg_replace('#'.$key.'#i'.( UTF8_ENABLED ? 'u' : ''), $val, $str);
+			//			$str = preg_replace('#'.$key.'#i'.( UTF8_ENABLED ? 'u' : ''), $val, $str);
 			$str = preg_replace('#'.$key.'#iu', $val, $str);
 		}
 
-		if ($lowercase === TRUE)
+		if ($lowercase === true)
 		{
 			$str = strtolower($str);
 		}

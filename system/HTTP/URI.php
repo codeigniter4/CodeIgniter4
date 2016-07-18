@@ -568,8 +568,8 @@ class URI
 	 */
 	public function setUserInfo(string $user, string $pass)
 	{
-		$this->user		 = trim($user);
-		$this->password	 = trim($pass);
+		$this->user = trim($user);
+		$this->password = trim($pass);
 
 		return $this;
 	}
@@ -775,8 +775,8 @@ class URI
 		$path = $this->removeDotSegments($path);
 
 		// Fix up some leading slash edge cases...
-		if (strpos($orig, './') === 0) $path	 = '/'.$path;
-		if (strpos($orig, '../') === 0) $path	 = '/'.$path;
+		if (strpos($orig, './') === 0) $path = '/'.$path;
+		if (strpos($orig, '../') === 0) $path = '/'.$path;
 
 		// Encode characters
 		$path = preg_replace_callback(
@@ -798,13 +798,11 @@ class URI
 	 */
 	protected function applyParts($parts)
 	{
-		if ( ! empty($parts['host'])) $this->host		 = $parts['host'];
-		if ( ! empty($parts['user'])) $this->user		 = $parts['user'];
-		if ( ! empty($parts['path'])) $this->path		 = $this->filterPath($parts['path']);
-		if ( ! empty($parts['query']))
-				$this->query	 = $this->filterQuery($parts['query']);
-		if ( ! empty($parts['fragment']))
-				$this->fragment	 = $this->filterQuery($parts['fragment']);
+		if ( ! empty($parts['host'])) $this->host = $parts['host'];
+		if ( ! empty($parts['user'])) $this->user = $parts['user'];
+		if ( ! empty($parts['path'])) $this->path = $this->filterPath($parts['path']);
+		if ( ! empty($parts['query'])) $this->query = $this->filterQuery($parts['query']);
+		if ( ! empty($parts['fragment'])) $this->fragment = $this->filterQuery($parts['fragment']);
 
 		// Scheme
 		if (isset($parts['scheme']))
@@ -997,8 +995,8 @@ class URI
 			}
 		}
 
-		$output	 = implode('/', $output);
-		$output	 = ltrim($output, '/ ');
+		$output = implode('/', $output);
+		$output = ltrim($output, '/ ');
 
 		if ($output != '/')
 		{
