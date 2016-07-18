@@ -1216,6 +1216,11 @@ abstract class BaseConnection implements ConnectionInterface
 			return $this->dataCache['field_names'][$table];
 		}
 
+		if (empty($this->connID))
+		{
+			$this->initialize();
+		}
+
 		if (FALSE === ($sql = $this->_listColumns($table)))
 		{
 			if ($this->DBDebug)
