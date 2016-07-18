@@ -69,8 +69,8 @@ Naming
 
 - File names MUST end with a ".php" name extension and MUST NOT have
   multiple name extensions.
-- Files declaring classes MUST have names exactly matching the classes 
-  that they declare (obviously excluding the ".php" name extension).
+- Files declaring classes, interfaces or traits MUST have names exactly matching 
+  the classes that they declare (obviously excluding the ".php" name extension).
 - Files declaring functions SHOULD be named in *snake_case.php*.
 
 *************************************
@@ -101,7 +101,7 @@ operators line up with each other::
 
 
 .. note:: Our indenting and alignment convention differs from PSR-2, which
-    uses spaces for indenting and alignment.
+    uses spaces for both indenting and alignment.
 
 - Unnecessary whitespace characters MUST NOT be present anywhere within a
   script.
@@ -110,6 +110,9 @@ operators line up with each other::
   more spaces used when only one is necessary (excluding alignment), as
   well as any other whitespace usage that is not functionally required or
   explicitly described in this document.
+
+.. note:: Alignment spacing may not be preserved in all development environments.
+    A pull request that deals only with alignment may not be favorably considered.
 
 ****
 Code
@@ -217,6 +220,34 @@ Logical Operators
     single space, as in **! $result** instead of **!$result**
 -   If there is potential confusion with a logical expression, then use
     parentheses for clarity, as shown above.
+
+Control Structures
+==================
+
+-   **if** statements, and those using the related keywords **else** or **elseif**,
+    and which have a body with a single statement, MAY use a single line.
+    Such statements which have a long statement as their body, or which have
+    multiple lines as their body, MUST use a brace-surrounded block.
+
+    Acceptable shortened **if** structures::
+
+        if ( $foo ) $bar += $baz;
+        else $baz = 'bar';
+
+    Not-acceptable control structures::
+
+        if ( $foo ) $bar = $oneThing + $anotherThing + $yetAnotherThing + $evenMore;
+
+    Good control structure examples::
+
+        if ( $foo )
+        {
+            $bar += $baz;
+        }
+        else
+        {
+            $baz = 'bar';
+        }
 
 Other
 =====
