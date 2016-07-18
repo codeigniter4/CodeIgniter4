@@ -89,7 +89,7 @@ if ( ! function_exists('base_url'))
 	 * @param string $scheme
 	 * @return string
 	 */
-	function base_url(string $path = '', string $scheme = null): string
+	function base_url($path = '', string $scheme = null): string
 	{
 		// convert segment array to string
 		if (is_array($path)) $path = implode('/', $path);
