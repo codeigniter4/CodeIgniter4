@@ -8,7 +8,7 @@ can change to meet the needs of your application.
 Default Directories
 ===================
 
-A fresh install has six directories: ``/application``, ``/system``, ``public``, 
+A fresh install has six directories: ``/application``, ``/system``, ``/public``, 
 ``/writable``, ``/tests`` and ``/docs``. 
 Each of these directories has a very specific part to play.
 

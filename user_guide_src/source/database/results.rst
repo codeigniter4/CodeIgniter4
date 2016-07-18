@@ -378,7 +378,7 @@ Class Reference
 		:returns:	The requested row or NULL if it doesn't exist
 		:rtype:	mixed
 
-		A wrapper for the ``getRowArray()``, ``getRowObject() and
+		A wrapper for the ``getRowArray()``, ``getRowObject()`` and
 		``getCustomRowObject()`` methods.
 
 		Usage: see `Result Rows`_.
