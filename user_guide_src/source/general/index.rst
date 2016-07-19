@@ -14,6 +14,7 @@ General Topics
 	hooks
 	common_functions
 	routing
+    filters
 	logging
 	errors
 	debugging
