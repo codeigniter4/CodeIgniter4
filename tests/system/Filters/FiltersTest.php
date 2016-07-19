@@ -3,9 +3,12 @@
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\Services;
 
+require __DIR__.'/fixtures/InvalidClass.php';
+require __DIR__.'/fixtures/GoogleMe.php';
+
 class FiltersTest extends \CIUnitTestCase
 {
-	protected $requeset;
+	protected $request;
 	protected $response;
 
 	public function __construct()
@@ -229,6 +232,94 @@ class FiltersTest extends \CIUnitTestCase
 		];
 
 		$this->assertEquals($expected, $filters->initialize($uri)->getFilters());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testRunThrowsWithInvalidAlias()
+	{
+		$_SERVER['REQUEST_METHOD'] = 'GET';
+
+		$config = [
+			'aliases' => [],
+			'globals' => [
+				'before' => ['invalid'],
+				'after' => []
+			]
+		];
+
+		$filters = new Filters((object)$config, $this->request, $this->response);
+
+		$this->setExpectedException('InvalidArgumentException');
+		$uri = 'admin/foo/bar';
+
+		$filters->run($uri);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testRunThrowsWithInvalidClassType()
+	{
+		$_SERVER['REQUEST_METHOD'] = 'GET';
+
+		$config = [
+			'aliases' => ['invalid' => 'CodeIgniter\Filters\fixtures\InvalidClass'],
+			'globals' => [
+				'before' => ['invalid'],
+				'after' => []
+			]
+		];
+
+		$filters = new Filters((object)$config, $this->request, $this->response);
+
+		$this->setExpectedException('RuntimeException');
+		$uri = 'admin/foo/bar';
+
+		$filters->run($uri);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testRunDoesBefore()
+	{
+		$_SERVER['REQUEST_METHOD'] = 'GET';
+
+		$config = [
+			'aliases' => ['google' => 'CodeIgniter\Filters\fixtures\GoogleMe'],
+			'globals' => [
+				'before' => ['google'],
+				'after' => []
+			]
+		];
+
+		$filters = new Filters((object)$config, $this->request, $this->response);
+		$uri = 'admin/foo/bar';
+
+		$request = $filters->run($uri, 'before');
+
+		$this->assertEquals('http://google.com', $request->url);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testRunDoesAfter()
+	{
+		$_SERVER['REQUEST_METHOD'] = 'GET';
+
+		$config = [
+			'aliases' => ['google' => 'CodeIgniter\Filters\fixtures\GoogleMe'],
+			'globals' => [
+				'before' => [],
+				'after' => ['google']
+			]
+		];
+
+		$filters = new Filters((object)$config, $this->request, $this->response);
+		$uri = 'admin/foo/bar';
+
+		$response = $filters->run($uri, 'after');
+
+		$this->assertEquals('http://google.com', $response->csp);
 	}
 
 	//--------------------------------------------------------------------

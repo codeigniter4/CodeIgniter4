@@ -3,6 +3,7 @@
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
+use Zend\Escaper\Exception\RuntimeException;
 
 class Filters
 {
@@ -72,6 +73,11 @@ class Filters
 
 			$class = new $this->config->aliases[$alias]();
 
+			if (! $class instanceof FilterInterface)
+			{
+				throw new \RuntimeException(get_class($class). ' must implement CodeIgniter\Filters\FilterInterface.');
+			}
+
 			if ($position == 'before')
 			{
 				$result = $class->before($this->request);
@@ -101,6 +107,10 @@ class Filters
 				}
 			}
 		}
+
+		return $position == 'before'
+				? $this->request
+				: $this->response;
 	}
 
 	//--------------------------------------------------------------------
