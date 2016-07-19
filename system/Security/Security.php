@@ -44,15 +44,6 @@ use CodeIgniter\HTTP\RequestInterface;
 class Security
 {
 	/**
-	 * CSRF Enabled
-	 *
-	 * Whether CSRF Protection is enabled.
-	 *
-	 * @var bool
-	 */
-	protected $CSRFEnabled = true;
-
-	/**
 	 * CSRF Hash
 	 *
 	 * Random hash for Cross Site Request Forgery protection cookie
@@ -98,15 +89,6 @@ class Security
 	 * @var bool
 	 */
 	protected $CSRFRegenerate = true;
-
-	/**
-	 * CSRF Exclude URIs
-	 *
-	 * An array of URIs to skip when checking CSRF.
-	 *
-	 * @var array
-	 */
-	protected $CSRFExcludeURIs = [];
 
 	/**
 	 * Typically will be a forward slash
@@ -166,12 +148,10 @@ class Security
 	public function __construct($config)
 	{
 		// Store our CSRF-related settings
-		$this->CSRFEnabled     = $config->CSRFProtection;
 		$this->CSRFExpire      = $config->CSRFExpire;
 		$this->CSRFTokenName   = $config->CSRFTokenName;
 		$this->CSRFCookieName  = $config->CSRFCookieName;
 		$this->CSRFRegenerate  = $config->CSRFRegenerate;
-		$this->CSRFExcludeURIs = $config->CSRFExcludeURIs;
 
 		if (isset($config->cookiePrefix))
 		{
@@ -192,7 +172,7 @@ class Security
 
 	/**
 	 * CSRF Verify
-	 *  
+	 *
 	 * @param RequestInterface $request
 	 * @return $this
 	 * @throws \LogicException
@@ -203,23 +183,6 @@ class Security
 		if (strtoupper($_SERVER['REQUEST_METHOD']) !== 'POST')
 		{
 			return $this->CSRFSetCookie($request);
-		}
-
-		// Check if URI has been whitelisted from CSRF checks
-		if (is_array($this->CSRFExcludeURIs) && count($this->CSRFExcludeURIs))
-		{
-			$uri = (string)$request->uri;
-
-			foreach ($this->CSRFExcludeURIs as $excluded)
-			{
-				// @TODO modify to support UTF8 once our method of determining this
-				// has been determined.
-//				if (preg_match('#^'.$excluded.'$#i'.(UTF8_ENABLED ? 'u' : ''), $uri))
-				if (preg_match('#^'.$excluded.'$#i', $uri))
-				{
-					return $this;
-				}
-			}
 		}
 
 		// Do the tokens exist in both the _POST and _COOKIE arrays?

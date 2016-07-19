@@ -37,6 +37,7 @@
  */
 
 
+use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\Router\RouteCollectionInterface;
@@ -174,9 +175,14 @@ class CodeIgniter
 			$this->tryToRouteIt($routes);
 
 			//--------------------------------------------------------------------
-			// Are there any "pre-controller" hooks?
+			// Run "before" filters
 			//--------------------------------------------------------------------
-			Hooks::trigger('pre_controller');
+			$filters = Services::filters();
+			$uri = $this->request instanceof CLIRequest
+				? $this->request->getPath()
+				: $this->request->uri->getPath();
+
+			$filters->run($uri, 'before');
 
 			$this->startController();
 
@@ -194,9 +200,10 @@ class CodeIgniter
 			}
 
 			//--------------------------------------------------------------------
-			// Is there a "post_controller" hook?
+			// Run "after" filters
 			//--------------------------------------------------------------------
-			Hooks::trigger('post_controller');
+			$filters->run($uri, 'after');
+			unset($uri);
 
 			$this->gatherOutput($cacheConfig);
 
@@ -416,24 +423,6 @@ class CodeIgniter
 		}
 
 		force_https($duration, $this->request, $this->response);
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * CSRF Protection. Checks if it's enabled globally, and
-	 * enforces the presence of CSRF tokens.
-	 */
-	protected function CsrfProtection()
-	{
-		if ($this->config->CSRFProtection !== true || is_cli())
-		{
-			return;
-		}
-
-		$security = Services::security($this->config);
-
-		$security->CSRFVerify($this->request);
 	}
 
 	//--------------------------------------------------------------------
