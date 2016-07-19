@@ -146,7 +146,7 @@ $methods
 
 You can apply filters to all requests of a certain HTTP method, like POST, GET, PUT, etc. In this array, you would
 specify the method name in lowercase. It's value would be an array of filters to run. Unlike the ``$globals`` or the
-``$filters`` properties, these will only run as before filters.
+``$filters`` properties, these will only run as before filters::
 
     public $methods = [
         'post' => ['foo', 'bar'],
