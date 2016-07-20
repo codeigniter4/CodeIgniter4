@@ -56,7 +56,7 @@ class CodeIgniter
 	/**
 	 * The current version of CodeIgniter Framework
 	 */
-        const CI_VERSION = '4.0-dev';
+	const CI_VERSION = '4.0-dev';
 
 	/**
 	 * UNIX timestamp for the start of script execution
@@ -72,6 +72,13 @@ class CodeIgniter
 	 * @var float
 	 */
 	protected $startTime;
+
+	/**
+	 * Total app execution time
+	 *
+	 * @var float
+	 */
+	protected $totalTime;
 
 	/**
 	 * The application configuration object.
@@ -204,7 +211,13 @@ class CodeIgniter
 			//--------------------------------------------------------------------
 			// Run "after" filters
 			//--------------------------------------------------------------------
-			$filters->run($uri, 'after');
+			$response = $filters->run($uri, 'after');
+
+			if ($response instanceof Response)
+			{
+				$this->response = $response;
+			}
+
 			unset($uri);
 
 			$this->sendResponse();
@@ -288,6 +301,17 @@ class CodeIgniter
 			$this->output,
 			self::$cacheTTL
 		);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function getPerfomanceStats()
+	{
+	    return [
+	    	'startTime'	=> $this->startTime,
+			'totalTime' => $this->totalTime,
+			'startMemory' => $this->startMemory
+		];
 	}
 
 	//--------------------------------------------------------------------
@@ -634,16 +658,7 @@ class CodeIgniter
 
 		$this->output = $this->displayPerformanceMetrics($this->output);
 
-		//--------------------------------------------------------------------
-		// Display the Debug Toolbar?
-		//--------------------------------------------------------------------
-		if ( ! is_cli() && ENVIRONMENT != 'production' && $this->config->toolbarEnabled)
-		{
-			$toolbar = Services::toolbar($this->config);
-			$this->output .= $toolbar->run($this->startTime, $this->totalTime,
-				$this->startMemory, $this->request,
-				$this->response);
-		}
+		$this->response->setBody($this->output);
 	}
 
 	//--------------------------------------------------------------------
@@ -654,8 +669,6 @@ class CodeIgniter
 	 */
 	protected function sendResponse()
 	{
-		$this->response->setBody($this->output);
-
 		$this->response->send();
 	}
 

@@ -60,10 +60,13 @@ to help you debug and optimize.
 Enabling the Toolbar
 ====================
 
-The toolbar is enabled by default in any environment _except_ production. You can turn change the environments
-that the toolbar is active on by editing **application/Config/App.php**::
+The toolbar is enabled by default in any environment _except_ production. It will be shown whenever the
+constant CI_DEBUG is defined and it's value is positive. This is defined in the boot files (i.e.
+application/Config/Boot/development.php) and can be modified there to determine what environments it shows
+itself in.
 
-	public $toolbarEnabled = (ENVIRONMENT != 'production' && CI_DEBUG);
+The toolbar itself is displayed as an :doc:`After Filter </general/filters>`. You can stop it from ever
+running by removing it from the ``$globals`` property of **application/Config/Filters.php**.
 
 Choosing What to Show
 ---------------------
