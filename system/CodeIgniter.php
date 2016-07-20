@@ -37,6 +37,7 @@
  */
 
 
+use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\Router\RouteCollectionInterface;
@@ -174,9 +175,14 @@ class CodeIgniter
 			$this->tryToRouteIt($routes);
 
 			//--------------------------------------------------------------------
-			// Are there any "pre-controller" hooks?
+			// Run "before" filters
 			//--------------------------------------------------------------------
-			Hooks::trigger('pre_controller');
+			$filters = Services::filters();
+			$uri = $this->request instanceof CLIRequest
+				? $this->request->getPath()
+				: $this->request->uri->getPath();
+
+			$filters->run($uri, 'before');
 
 			$this->startController();
 
@@ -193,12 +199,13 @@ class CodeIgniter
 				$this->runController($controller);
 			}
 
-			//--------------------------------------------------------------------
-			// Is there a "post_controller" hook?
-			//--------------------------------------------------------------------
-			Hooks::trigger('post_controller');
-
 			$this->gatherOutput($cacheConfig);
+
+			//--------------------------------------------------------------------
+			// Run "after" filters
+			//--------------------------------------------------------------------
+			$filters->run($uri, 'after');
+			unset($uri);
 
 			$this->sendResponse();
 
@@ -421,24 +428,6 @@ class CodeIgniter
 	//--------------------------------------------------------------------
 
 	/**
-	 * CSRF Protection. Checks if it's enabled globally, and
-	 * enforces the presence of CSRF tokens.
-	 */
-	protected function CsrfProtection()
-	{
-		if ($this->config->CSRFProtection !== true || is_cli())
-		{
-			return;
-		}
-
-		$security = Services::security($this->config);
-
-		$security->CSRFVerify($this->request);
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
 	 * Try to Route It - As it sounds like, works with the router to
 	 * match a route against the current URI. If the route is a
 	 * "redirect route", will also handle the redirect.
@@ -456,26 +445,7 @@ class CodeIgniter
 		// $routes is defined in Config/Routes.php
 		$this->router = Services::router($routes);
 
-		if (is_cli())
-		{
-			$path = $this->request->getPath();
-		}
-		else
-		{
-			$path = $this->request->uri->getPath();
-
-			// For web requests, we need to remove the path
-			// portion of the baseURL, if set, otherwise
-			// route portions won't be discovered correctly.
-			if (! empty($this->config->baseURL))
-			{
-				$basePath = parse_url($this->config->baseURL, PHP_URL_PATH);
-				$path     = strpos($path, $basePath) === 0
-					        ? substr($path, strlen($basePath) -1)
-       			            : $path;
-			}
-		}
-
+		$path = is_cli() ? $this->request->getPath() : $this->request->uri->getPath();
 
 		$this->benchmark->stop('bootstrap');
 		$this->benchmark->start('routing');
