@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\HTTP;
+<?php
+
+namespace CodeIgniter\HTTP;
 
 /**
  * CodeIgniter
@@ -35,7 +37,6 @@
  * @since	Version 3.0.0
  * @filesource
  */
-
 class URI
 {
 
@@ -45,6 +46,7 @@ class URI
 	 * @const string
 	 */
 	const CHAR_SUB_DELIMS = '!\$&\'\(\)\*\+,;=';
+
 	/**
 	 * Unreserved characters used in paths, query strings, and fragments.
 	 *
@@ -130,10 +132,10 @@ class URI
 	 * @var array
 	 */
 	protected $defaultPorts = [
-		'http'  => 80,
-		'https' => 443,
-	    'ftp'   => 21,
-	    'sftp'  => 22
+		'http'	 => 80,
+		'https'	 => 443,
+		'ftp'	 => 21,
+		'sftp'	 => 22
 	];
 
 	/**
@@ -156,14 +158,7 @@ class URI
 	{
 		if ( ! is_null($uri))
 		{
-			$parts = parse_url($uri);
-
-			if ($parts === false)
-			{
-				throw new \InvalidArgumentException("Unable to parse URI: {$uri}");
-			}
-
-			$this->applyParts($parts);
+			$this->setURI($uri);
 		}
 	}
 
@@ -192,7 +187,6 @@ class URI
 	}
 
 	//--------------------------------------------------------------------
-
 
 	/**
 	 * Retrieve the scheme component of the URI.
@@ -462,11 +456,8 @@ class URI
 	public function __toString()
 	{
 		return self::createURIString(
-			$this->getScheme(),
-			$this->getAuthority(),
-			$this->getPath(), // Absolute URIs should use a "/" for an empty path
-			$this->getQuery(),
-			$this->getFragment()
+				$this->getScheme(), $this->getAuthority(), $this->getPath(), // Absolute URIs should use a "/" for an empty path
+				$this->getQuery(), $this->getFragment()
 		);
 	}
 
@@ -484,7 +475,7 @@ class URI
 	 *
 	 * @return string
 	 */
-	public static function createURIString($scheme=null, $authority=null, $path=null, $query=null, $fragment=null)
+	public static function createURIString($scheme = null, $authority = null, $path = null, $query = null, $fragment = null)
 	{
 		$uri = '';
 		if ( ! empty($scheme))
@@ -499,7 +490,7 @@ class URI
 
 		if ($path)
 		{
-			if (empty($path) || '/' !== substr($path, 0, 1))
+			if ('/' !== substr($path, 0, 1))
 			{
 				$path = '/'.$path;
 			}
@@ -528,7 +519,7 @@ class URI
 	 */
 	public function setAuthority(string $str)
 	{
-	    $parts = parse_url($str);
+		$parts = parse_url($str);
 
 		if (empty($parts['host']) && ! empty($parts['path']))
 		{
@@ -542,7 +533,6 @@ class URI
 	}
 
 	//--------------------------------------------------------------------
-
 
 	/**
 	 * Sets the scheme for this URI.
@@ -578,7 +568,7 @@ class URI
 	 */
 	public function setUserInfo(string $user, string $pass)
 	{
-		$this->user     = trim($user);
+		$this->user = trim($user);
 		$this->password = trim($pass);
 
 		return $this;
@@ -724,12 +714,10 @@ class URI
 	protected function filterQuery($str)
 	{
 		return preg_replace_callback(
-			'/(?:[^'.self::CHAR_UNRESERVED.self::CHAR_SUB_DELIMS.'%:@\/\?]+|%(?![A-Fa-f0-9]{2}))/',
-			function (array $matches)
-			{
-				return rawurlencode($matches[0]);
-			},
-			$str
+			'/(?:[^'.self::CHAR_UNRESERVED.self::CHAR_SUB_DELIMS.'%:@\/\?]+|%(?![A-Fa-f0-9]{2}))/', function (array $matches)
+		{
+			return rawurlencode($matches[0]);
+		}, $str
 		);
 	}
 
@@ -775,7 +763,7 @@ class URI
 	 *
 	 * @param $path
 	 */
-	protected function filterPath(string $path=null)
+	protected function filterPath(string $path = null)
 	{
 		$orig = $path;
 
@@ -787,25 +775,21 @@ class URI
 		$path = $this->removeDotSegments($path);
 
 		// Fix up some leading slash edge cases...
-		if (strpos($orig, './') === 0) $path = '/'. $path;
-		if (strpos($orig, '../') === 0) $path = '/'. $path;
+		if (strpos($orig, './') === 0) $path = '/'.$path;
+		if (strpos($orig, '../') === 0) $path = '/'.$path;
 
 		// Encode characters
 		$path = preg_replace_callback(
-			'/(?:[^' . self::CHAR_UNRESERVED . ':@&=\+\$,\/;%]+|%(?![A-Fa-f0-9]{2}))/',
-			function (array $matches)
-			{
-				return rawurlencode($matches[0]);
-			},
-			$path
+			'/(?:[^'.self::CHAR_UNRESERVED.':@&=\+\$,\/;%]+|%(?![A-Fa-f0-9]{2}))/', function (array $matches)
+		{
+			return rawurlencode($matches[0]);
+		}, $path
 		);
 
 		return $path;
 	}
 
 	//--------------------------------------------------------------------
-
-
 
 	/**
 	 * Saves our parts from a parse_url call.
@@ -814,16 +798,21 @@ class URI
 	 */
 	protected function applyParts($parts)
 	{
-		if (! empty($parts['host'])) $this->host = $parts['host'];
-		if (! empty($parts['user'])) $this->user = $parts['user'];
-		if (! empty($parts['path'])) $this->path = $this->filterPath($parts['path']);
-		if (! empty($parts['query'])) $this->query = $this->filterQuery($parts['query']);
-		if (! empty($parts['fragment'])) $this->fragment = $this->filterQuery($parts['fragment']);
+		if ( ! empty($parts['host'])) $this->host = $parts['host'];
+		if ( ! empty($parts['user'])) $this->user = $parts['user'];
+		if ( ! empty($parts['path'])) $this->path = $this->filterPath($parts['path']);
+		if ( ! empty($parts['query'])) $this->query = $this->filterQuery($parts['query']);
+		if ( ! empty($parts['fragment'])) $this->fragment = $this->filterQuery($parts['fragment']);
 
 		// Scheme
 		if (isset($parts['scheme']))
 		{
 			$this->scheme = rtrim(strtolower($parts['scheme']), ':/');
+		}
+		else
+		{
+			$this->parts['scheme'] = 'http://';
+			$this->setScheme('http');
 		}
 
 		// Port
@@ -831,7 +820,7 @@ class URI
 		{
 			if ( ! is_null($parts['port']))
 			{
-				$port = (int)$parts['port'];
+				$port = (int) $parts['port'];
 
 				if (1 > $port || 0xffff < $port)
 				{
@@ -870,7 +859,7 @@ class URI
 		 * NOTE: We don't use removeDotSegments in this
 		 * algorithm since it's already done by this line!
 		 */
-		$relative    = new URI();
+		$relative = new URI();
 		$relative->setURI($uri);
 
 		if ($relative->getScheme() == $this->getScheme())
@@ -881,20 +870,20 @@ class URI
 		$transformed = clone $relative;
 
 		// 5.2.2 Transform References
-		if (! empty($relative->getScheme()))
+		if ( ! empty($relative->getScheme()))
 		{
 			$transformed->setScheme($relative->getScheme())
-						->setAuthority($relative->getAuthority())
-						->setPath($relative->getPath())
-						->setQuery($relative->getQuery());
+				->setAuthority($relative->getAuthority())
+				->setPath($relative->getPath())
+				->setQuery($relative->getQuery());
 		}
 		else
 		{
-			if (! empty($relative->getAuthority()))
+			if ( ! empty($relative->getAuthority()))
 			{
 				$transformed->setAuthority($relative->getAuthority())
-							->setPath($relative->getPath())
-							->setQuery($relative->getQuery());
+					->setPath($relative->getPath())
+					->setQuery($relative->getQuery());
 			}
 			else
 			{
@@ -902,7 +891,7 @@ class URI
 				{
 					$transformed->setPath($this->getPath());
 
-					if (! is_null($relative->getQuery()))
+					if ( ! is_null($relative->getQuery()))
 					{
 						$transformed->setQuery($relative->getQuery());
 					}
@@ -949,9 +938,9 @@ class URI
 	 */
 	protected function mergePaths(URI $base, URI $reference)
 	{
-		if (! empty($base->getAuthority()) && empty($base->getPath()))
+		if ( ! empty($base->getAuthority()) && empty($base->getPath()))
 		{
-			return '/'. ltrim($base->getPath(), '/ ');
+			return '/'.ltrim($base->getPath(), '/ ');
 		}
 
 		$path = explode('/', $base->getPath());
@@ -1012,7 +1001,7 @@ class URI
 		if ($output != '/')
 		{
 			// Add leading slash if necessary
-			if (substr($path, 0, 1) == '/') $output = '/'. $output;
+			if (substr($path, 0, 1) == '/') $output = '/'.$output;
 
 			// Add trailing slash if necessary
 			if (substr($path, -1, 1) == '/') $output .= '/';
@@ -1022,5 +1011,4 @@ class URI
 	}
 
 	//--------------------------------------------------------------------
-
 }
