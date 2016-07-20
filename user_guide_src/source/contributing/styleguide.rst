@@ -117,8 +117,10 @@ operators line up with each other::
   well as any other whitespace usage that is not functionally required or
   explicitly described in this document.
 
-.. note:: Alignment spacing may not be preserved in all development environments.
-    A pull request that deals only with alignment may not be favorably considered.
+.. note:: With conforming tab settings, alignment spacing should 
+    be preserved in all development environments.
+    A pull request that deals only with tabs or spaces for alignment
+    will not be favorably considered.
 
 ****
 Code
@@ -230,19 +232,9 @@ Logical Operators
 Control Structures
 ==================
 
--   **if** statements, and those using the related keywords **else** or **elseif**,
-    and which have a body with a single statement, MAY use a single line.
-    Such statements which have a long statement as their body, or which have
-    multiple lines as their body, MUST use a brace-surrounded block.
-
-    Acceptable shortened **if** structures::
-
-        if ( $foo ) $bar += $baz;
-        else $baz = 'bar';
-
-    Not-acceptable control structures::
-
-        if ( $foo ) $bar = $oneThing + $anotherThing + $yetAnotherThing + $evenMore;
+-   Control structures, such as **if/else** statements, **for/foreach** statements, or
+    **while/do** statements, MUST use a brace-surrounded block for their body
+    segments.
 
     Good control structure examples::
 
@@ -254,6 +246,13 @@ Control Structures
         {
             $baz = 'bar';
         }
+
+    Not-acceptable control structures::
+
+        if ( $foo ) $bar = $oneThing + $anotherThing + $yetAnotherThing + $evenMore;
+
+        if ( $foo ) $bar += $baz;
+        else $baz = 'bar';
 
 Other
 =====
