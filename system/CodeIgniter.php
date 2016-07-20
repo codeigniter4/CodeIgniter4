@@ -191,7 +191,7 @@ class CodeIgniter
 
 			$filters->run($uri, 'before');
 
-			$this->startController();
+			$returned = $this->startController();
 
 			// Closure controller has run in startController().
 			if ( ! is_callable($this->controller))
@@ -203,10 +203,13 @@ class CodeIgniter
 				//--------------------------------------------------------------------
 				Hooks::trigger('post_controller_constructor');
 
-				$this->runController($controller);
+				$returned = $this->runController($controller);
 			}
 
-			$this->gatherOutput($cacheConfig);
+			// If $returned is a string, then the controller output something,
+			// probably a view, instead of echoing it directly. Send it along
+			// so it can be used with the output.
+			$this->gatherOutput($cacheConfig, $returned);
 
 			//--------------------------------------------------------------------
 			// Run "after" filters
@@ -498,7 +501,7 @@ class CodeIgniter
 		if (is_object($this->controller) && (get_class($this->controller) == 'Closure'))
 		{
 			$controller = $this->controller;
-			echo $controller(...$this->router->params());
+			return $controller(...$this->router->params());
 		}
 		else
 		{
@@ -546,19 +549,23 @@ class CodeIgniter
 	 * Runs the controller, allowing for _remap methods to function.
 	 *
 	 * @param mixed $class
+	 *
+	 * @return mixed
 	 */
 	protected function runController($class)
 	{
 		if (method_exists($class, '_remap'))
 		{
-			$class->_remap($this->method, ...$this->router->params());
+			$output = $class->_remap($this->method, ...$this->router->params());
 		}
 		else
 		{
-			$class->{$this->method}(...$this->router->params());
+			$output = $class->{$this->method}(...$this->router->params());
 		}
 
 		$this->benchmark->stop('controller');
+
+		return $output;
 	}
 
 	//--------------------------------------------------------------------
@@ -644,7 +651,7 @@ class CodeIgniter
 	 * Gathers the script output from the buffer, replaces some execution
 	 * time tag in the output and displays the debug toolbar, if required.
 	 */
-	protected function gatherOutput($cacheConfig = null)
+	protected function gatherOutput($cacheConfig = null, $returned = null)
 	{
 		$this->output = ob_get_contents();
 		ob_end_clean();
@@ -654,6 +661,11 @@ class CodeIgniter
 		if (self::$cacheTTL > 0)
 		{
 			$this->cachePage($cacheConfig);
+		}
+
+		if (is_string($returned))
+		{
+			$this->output .= $returned;
 		}
 
 		$this->output = $this->displayPerformanceMetrics($this->output);

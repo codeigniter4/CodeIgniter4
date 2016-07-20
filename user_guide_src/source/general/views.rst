@@ -28,8 +28,8 @@ Using your text editor, create a file called ``BlogView.php`` and put this in it
 
 Then save the file in your **application/Views** directory.
 
-Loading a View
-==============
+Displaying a View
+=================
 
 To load a particular view file you will use the following function::
 
@@ -52,6 +52,9 @@ Now, open the controller file you made earlier called ``Blog.php``, and replace 
 If you visit your site using the URL you did earlier you should see your new view. The URL was similar to this::
 
 	example.com/index.php/blog/
+
+.. note:: While all of the examples show echo the view directly, you can also return the output from the view, instead,
+    and it will be appended to any captured output.
 
 Loading Multiple Views
 ======================
