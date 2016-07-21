@@ -96,7 +96,7 @@ Class Reference
 
 			$renderer->setData(['name'=>'George', 'position'=>'Boss']);
 
-		Supported escape contexts: html, css, js, url.
+		Supported escape contexts: html, css, js, url, or attr or raw.
 		If 'raw', no escaping will happen.
 
 	.. php:method:: setVar($name[, $value=null[, $context=null]])
@@ -111,6 +111,6 @@ Class Reference
 
 			$renderer->setVar('name','Joe','html');
 
-		Supported escape contexts: html, css, js, url, or raw.
+		Supported escape contexts: html, css, js, url, attr or raw.
 		If 'raw', no escaping will happen.
 
