@@ -943,12 +943,7 @@ class BaseBuilder
 				$bind = $this->setBind($k, "%$v%");
 			}
 
-			$like_statement = "{$prefix} {$k} {$not} LIKE :{$bind}";
-
-			if ($insensitiveSearch === true)
-			{
-				$like_statement = "{$prefix} LOWER({$k}) {$not} LIKE :{$bind}";
-			}
+			$like_statement = $this->_like_statement($prefix, $k, $not, $bind, $insensitiveSearch);
 
 			// some platforms require an escape sequence definition for LIKE wildcards
 			if ($escape === true && $this->db->likeEscapeStr !== '')
@@ -960,6 +955,31 @@ class BaseBuilder
 		}
 
 		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Platform independent LIKE statement builder.
+	 *
+	 * @param string|null $prefix
+	 * @param string      $column
+	 * @param string|null $not
+	 * @param string      $bind
+	 * @param bool        $insensitiveSearch
+	 *
+	 * @return string     $like_statement
+	 */
+	public function _like_statement(string $prefix=null, string $column, string $not = null, string $bind, bool $insensitiveSearch=false): string
+	{
+		$like_statement = "{$prefix} {$column} {$not} LIKE :{$bind}";
+
+		if ($insensitiveSearch === true)
+		{
+			$like_statement = "{$prefix} LOWER({$column}) {$not} LIKE :{$bind}";
+		}
+
+		return $like_statement;
 	}
 
 	//--------------------------------------------------------------------
