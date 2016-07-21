@@ -18,12 +18,12 @@ Creating a View
 Using your text editor, create a file called ``BlogView.php`` and put this in it::
 
 	<html>
-	<head>
-        <title>My Blog</title>
-	</head>
-	<body>
-        <h1>Welcome to my Blog!</h1>
-	</body>
+        <head>
+            <title>My Blog</title>
+        </head>
+        <body>
+            <h1>Welcome to my Blog!</h1>
+        </body>
 	</html>
 
 Then save the file in your **application/Views** directory.
@@ -65,7 +65,7 @@ content view, and a footer view. That might look something like this::
 		public function index()
 		{
 			$data = [
-				'page_title' = 'Your title'
+				'page_title' => 'Your title'
 			];
 
 			echo view('header');
@@ -143,12 +143,12 @@ Let's try it with your controller file. Open it and add this code::
 Now open your view file and change the text to variables that correspond to the array keys in your data::
 
 	<html>
-	<head>
-        <title><?= $title ?></title>
-	</head>
-	<body>
-        <h1><?= $heading ?></h1>
-	</body>
+        <head>
+            <title><?= $title ?></title>
+        </head>
+        <body>
+            <h1><?= $heading ?></h1>
+        </body>
 	</html>
 
 Then load the page at the URL you've been using and you should see the variables replaced.
@@ -166,70 +166,6 @@ into the `$option` array in the third parameter.
 	];
 
 	echo view('blogview', $data, ['saveData' => true]);
-
-Direct Access To View Class
-===========================
-
-The ``view()`` function is a convenience method that grabs an instance of the ``renderer`` service,
-sets the data, and renders the view. While this is often exactly what you want, you may find times where you
-want to work with it more directly. In that case you can access the View service directly::
-
-	$renderer = \Config\Services::renderer();
-
-.. important:: You should create services only within controllers. If you need access to the View class
-	from a library, you should set that as a dependency in the constructor.
-
-Then you can use any of the three standard methods that it provides.
-
-* **render('view_name', array $options)** Performs the rendering of the view and its data. The $options array is
-	unused by default, but provided for third-party libraries to use when integrating with different template engines.
-* **setVar('name', 'value', $context=null)** Sets a single piece of dynamic data.  $context specifies the context
-	to escape for. Defaults to no escaping. Set to empty value to skip escaping.
-* **setData($array, $context=null)** Takes an array of key/value pairs for dynamic data and optionally escapes it.
-	$context specifies the context to escape for. Defaults to no escaping. Set to empty value to skip escaping.
-
-The `setVar()` and `setData()` methods are chainable, allowing you to combine a number of different calls together in a chain::
-
-	service('renderer')->setVar('one', $one)
-	                   ->setVar('two', $two)
-	                   ->render('myView');
-
-Escaping Data
-=============
-
-When you pass data to the ``setVar()`` and ``setData()`` functions you have the option to escape the data to protect
-against cross-site scripting attacks. As the last parameter in either method, you can pass the desired context to
-escape the data for. See below for context descriptions.
-
-If you don't want the data to be escaped, you can pass `null` or `raw` as the final parameter to each function::
-
-	$renderer->setVar('one', $one, 'raw');
-
-If you choose not to escape data, or you are passing in an object instance, you can manually escape the data within
-the view with the ``esc()`` function. The first parameter is the string to escape. The second parameter is the
-context to escape the data for (see below)::
-
-	<?= esc($object->getStat()) ?>
-
-Escaping Contexts
------------------
-
-By default, the ``esc()`` and, in turn, the ``setVar()`` and ``setData()`` functions assume that the data you want to
-escape is intended to be used within standard HTML. However, if the data is intended for use in Javascript, CSS,
-or in an href attribute, you would need different escaping rules to be effective. You can pass in the name of the
-context as the second parameter. Valid contexts are 'html', 'js', 'css', 'url', and 'attr'::
-
-	<a href="<?= esc($url, 'url') ?>" data-foo="<?= esc($bar, 'attr') ?>">Some Link</a>
-
-	<script>
-		var siteName = '<?= esc($siteName, 'js') ?>';
-	</script>
-
-	<style>
-		body {
-			background-color: <?= esc('bgColor', 'css') ?>
-		}
-	</style>
 
 Creating Loops
 ==============
@@ -275,71 +211,4 @@ Now open your view file and create a loop::
 
 	</body>
 	</html>
-
-View Cells
-==========
-
-View Cells allow you to insert HTML that is generated outside of your controller. It simply calls the specified
-class and method, which must return valid HTML. This method could be in an callable method, found in any class
-that the autoloader can locate. The only restriction is that the class can not have any constructor parameters.
-This is intended to be used within views, and is a great aid to modularizing your code.
-::
-
-    <?= view_cell('\App\Libraries\Blog::recentPosts') ?>
-
-In this example, the class ``App\Libraries\Blog`` is loaded, and the method ``recentPosts()`` is ran. That method
-must return a string with the generated HTML. The method used can be either a static method or not. Either way works.
-
-Cell Parameters
----------------
-
-You can further refine the call by passing a string with a list of parameters in the second parameter that are passed
-to the method as an array of key/value pairs, or a comma-seperated string of key/value pairs::
-
-    // Passing Parameter Array
-    <?= view_cell('\App\Libraries\Blog::recentPosts', ['category' => 'codeigniter', 'limit' => 5]) ?>
-
-    // Passing Parameter String
-    <?= view_cell('\App\Libraries\Blog::recentPosts', 'category=codeigniter, limit=5') ?>
-
-    public function recentPosts(array $params=[])
-    {
-        $posts = $this->blogModel->where('category', $params['category'])
-                                 ->orderBy('published_on', 'desc')
-                                 ->limit($params['limit'])
-                                 ->get();
-
-        return view('recentPosts', ['posts' => $posts]);
-    }
-
-Additionally, you can use parameter names that match the parameter variables in the method for better readability.
-When you use it this way, all of the parameters must always be specified in the view cell call::
-
-    <?= view_cell('\App\Libraries\Blog::recentPosts', 'category=codeigniter, limit=5') ?>
-
-    public function recentPosts(int $limit, string $category)
-    {
-        $posts = $this->blogModel->where('category', $category)
-                                 ->orderBy('published_on', 'desc')
-                                 ->limit($limit)
-                                 ->get();
-
-        return view('recentPosts', ['posts' => $posts]);
-    }
-
-Cell Caching
-------------
-
-You can cache the results of the view cell call by passing the number of seconds to cache the data for as the
-third parameter. This will use the currently configured cache engine.
-::
-
-    // Cache the view for 5 minutes
-    <?= view_cell('\App\Libraries\Blog::recentPosts', 'limit=5', 300) ?>
-
-You can provide a custom name to use instead of the auto-generated one if you like, by passing the new name
-as the fourth parameter.::
-
-    // Cache the view for 5 minutes
-    <?= view_cell('\App\Libraries\Blog::recentPosts', 'limit=5', 300, 'newcacheid') ?>
 
