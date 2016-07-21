@@ -812,12 +812,13 @@ class BaseBuilder
 	 * @param    string $match
 	 * @param    string $side
 	 * @param    bool   $escape
+	 * @param    bool   $insensitiveSearch	IF true, will force a case-insensitive search
 	 *
 	 * @return    BaseBuilder
 	 */
-	public function like($field, $match = '', $side = 'both', $escape = null)
+	public function like($field, $match = '', $side = 'both', $escape = null, $insensitiveSearch = false)
 	{
-		return $this->_like($field, $match, 'AND ', $side, '', $escape);
+		return $this->_like($field, $match, 'AND ', $side, '', $escape, $insensitiveSearch);
 	}
 
 	//--------------------------------------------------------------------
@@ -832,12 +833,13 @@ class BaseBuilder
 	 * @param    string $match
 	 * @param    string $side
 	 * @param    bool   $escape
+	 * @param    bool   $insensitiveSearch	IF true, will force a case-insensitive search
 	 *
 	 * @return    BaseBuilder
 	 */
-	public function notLike($field, $match = '', $side = 'both', $escape = null)
+	public function notLike($field, $match = '', $side = 'both', $escape = null, $insensitiveSearch = false)
 	{
-		return $this->_like($field, $match, 'AND ', $side, 'NOT', $escape);
+		return $this->_like($field, $match, 'AND ', $side, 'NOT', $escape, $insensitiveSearch);
 	}
 
 	//--------------------------------------------------------------------
@@ -852,12 +854,13 @@ class BaseBuilder
 	 * @param    string $match
 	 * @param    string $side
 	 * @param    bool   $escape
+	 * @param    bool   $insensitiveSearch	IF true, will force a case-insensitive search
 	 *
 	 * @return    BaseBuilder
 	 */
-	public function orLike($field, $match = '', $side = 'both', $escape = null)
+	public function orLike($field, $match = '', $side = 'both', $escape = null, $insensitiveSearch = false)
 	{
-		return $this->_like($field, $match, 'OR ', $side, '', $escape);
+		return $this->_like($field, $match, 'OR ', $side, '', $escape, $insensitiveSearch);
 	}
 
 	//--------------------------------------------------------------------
@@ -872,12 +875,13 @@ class BaseBuilder
 	 * @param    string $match
 	 * @param    string $side
 	 * @param    bool   $escape
+	 * @param    bool   $insensitiveSearch	IF true, will force a case-insensitive search
 	 *
 	 * @return    BaseBuilder
 	 */
-	public function orNotLike($field, $match = '', $side = 'both', $escape = null)
+	public function orNotLike($field, $match = '', $side = 'both', $escape = null, $insensitiveSearch = false)
 	{
-		return $this->_like($field, $match, 'OR ', $side, 'NOT', $escape);
+		return $this->_like($field, $match, 'OR ', $side, 'NOT', $escape, $insensitiveSearch);
 	}
 
 	//--------------------------------------------------------------------
@@ -896,10 +900,11 @@ class BaseBuilder
 	 * @param    string $side
 	 * @param    string $not
 	 * @param    bool   $escape
+	 * @param    bool   $insensitiveSearch	IF true, will force a case-insensitive search
 	 *
 	 * @return    BaseBuilder
 	 */
-	protected function _like($field, $match = '', $type = 'AND ', $side = 'both', $not = '', $escape = null)
+	protected function _like($field, $match = '', $type = 'AND ', $side = 'both', $not = '', $escape = null, $insensitiveSearch = false)
 	{
 		if ( ! is_array($field))
 		{
@@ -915,6 +920,11 @@ class BaseBuilder
 		{
 			$prefix = (count($this->QBWhere) === 0)
 				? $this->groupGetType('') : $this->groupGetType($type);
+
+			if ($insensitiveSearch === true)
+			{
+				$v = strtolower($v);
+			}
 
 			if ($side === 'none')
 			{
@@ -934,6 +944,11 @@ class BaseBuilder
 			}
 
 			$like_statement = "{$prefix} {$k} {$not} LIKE :{$bind}";
+
+			if ($insensitiveSearch === true)
+			{
+				$like_statement = "{$prefix} LOWER({$k}) {$not} LIKE :{$bind}";
+			}
 
 			// some platforms require an escape sequence definition for LIKE wildcards
 			if ($escape === true && $this->db->likeEscapeStr !== '')
