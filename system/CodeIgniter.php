@@ -56,7 +56,7 @@ class CodeIgniter
 	/**
 	 * The current version of CodeIgniter Framework
 	 */
-        const CI_VERSION = '4.0-dev';
+	const CI_VERSION = '4.0-dev';
 
 	/**
 	 * UNIX timestamp for the start of script execution
@@ -72,6 +72,13 @@ class CodeIgniter
 	 * @var float
 	 */
 	protected $startTime;
+
+	/**
+	 * Total app execution time
+	 *
+	 * @var float
+	 */
+	protected $totalTime;
 
 	/**
 	 * The application configuration object.
@@ -184,7 +191,7 @@ class CodeIgniter
 
 			$filters->run($uri, 'before');
 
-			$this->startController();
+			$returned = $this->startController();
 
 			// Closure controller has run in startController().
 			if ( ! is_callable($this->controller))
@@ -196,16 +203,25 @@ class CodeIgniter
 				//--------------------------------------------------------------------
 				Hooks::trigger('post_controller_constructor');
 
-				$this->runController($controller);
+				$returned = $this->runController($controller);
 			}
+
+			// If $returned is a string, then the controller output something,
+			// probably a view, instead of echoing it directly. Send it along
+			// so it can be used with the output.
+			$this->gatherOutput($cacheConfig, $returned);
 
 			//--------------------------------------------------------------------
 			// Run "after" filters
 			//--------------------------------------------------------------------
-			$filters->run($uri, 'after');
-			unset($uri);
+			$response = $filters->run($uri, 'after');
 
-			$this->gatherOutput($cacheConfig);
+			if ($response instanceof Response)
+			{
+				$this->response = $response;
+			}
+
+			unset($uri);
 
 			$this->sendResponse();
 
@@ -288,6 +304,17 @@ class CodeIgniter
 			$this->output,
 			self::$cacheTTL
 		);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function getPerfomanceStats()
+	{
+	    return [
+	    	'startTime'	=> $this->startTime,
+			'totalTime' => $this->totalTime,
+			'startMemory' => $this->startMemory
+		];
 	}
 
 	//--------------------------------------------------------------------
@@ -445,26 +472,7 @@ class CodeIgniter
 		// $routes is defined in Config/Routes.php
 		$this->router = Services::router($routes);
 
-		if (is_cli())
-		{
-			$path = $this->request->getPath();
-		}
-		else
-		{
-			$path = $this->request->uri->getPath();
-
-			// For web requests, we need to remove the path
-			// portion of the baseURL, if set, otherwise
-			// route portions won't be discovered correctly.
-			if (! empty($this->config->baseURL))
-			{
-				$basePath = parse_url($this->config->baseURL, PHP_URL_PATH);
-				$path     = strpos($path, $basePath) === 0
-					        ? substr($path, strlen($basePath) -1)
-       			            : $path;
-			}
-		}
-
+		$path = is_cli() ? $this->request->getPath() : $this->request->uri->getPath();
 
 		$this->benchmark->stop('bootstrap');
 		$this->benchmark->start('routing');
@@ -493,7 +501,7 @@ class CodeIgniter
 		if (is_object($this->controller) && (get_class($this->controller) == 'Closure'))
 		{
 			$controller = $this->controller;
-			echo $controller(...$this->router->params());
+			return $controller(...$this->router->params());
 		}
 		else
 		{
@@ -541,19 +549,23 @@ class CodeIgniter
 	 * Runs the controller, allowing for _remap methods to function.
 	 *
 	 * @param mixed $class
+	 *
+	 * @return mixed
 	 */
 	protected function runController($class)
 	{
 		if (method_exists($class, '_remap'))
 		{
-			$class->_remap($this->method, ...$this->router->params());
+			$output = $class->_remap($this->method, ...$this->router->params());
 		}
 		else
 		{
-			$class->{$this->method}(...$this->router->params());
+			$output = $class->{$this->method}(...$this->router->params());
 		}
 
 		$this->benchmark->stop('controller');
+
+		return $output;
 	}
 
 	//--------------------------------------------------------------------
@@ -639,7 +651,7 @@ class CodeIgniter
 	 * Gathers the script output from the buffer, replaces some execution
 	 * time tag in the output and displays the debug toolbar, if required.
 	 */
-	protected function gatherOutput($cacheConfig = null)
+	protected function gatherOutput($cacheConfig = null, $returned = null)
 	{
 		$this->output = ob_get_contents();
 		ob_end_clean();
@@ -651,18 +663,14 @@ class CodeIgniter
 			$this->cachePage($cacheConfig);
 		}
 
+		if (is_string($returned))
+		{
+			$this->output .= $returned;
+		}
+
 		$this->output = $this->displayPerformanceMetrics($this->output);
 
-		//--------------------------------------------------------------------
-		// Display the Debug Toolbar?
-		//--------------------------------------------------------------------
-		if ( ! is_cli() && ENVIRONMENT != 'production' && $this->config->toolbarEnabled)
-		{
-			$toolbar = Services::toolbar($this->config);
-			$this->output .= $toolbar->run($this->startTime, $this->totalTime,
-				$this->startMemory, $this->request,
-				$this->response);
-		}
+		$this->response->setBody($this->output);
 	}
 
 	//--------------------------------------------------------------------
@@ -673,8 +681,6 @@ class CodeIgniter
 	 */
 	protected function sendResponse()
 	{
-		$this->response->setBody($this->output);
-
 		$this->response->send();
 	}
 
