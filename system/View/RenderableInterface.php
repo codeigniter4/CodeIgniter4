@@ -58,7 +58,24 @@ interface RenderableInterface {
 	 *
 	 * @return string
 	 */
-	public function render(string $view, array $options=null, $saveData=false): string;
+	public function render(string $view, array $options=null, bool $saveData=false): string;
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Builds the output based upon a stringand any
+	 * data that has already been set.
+	 *
+	 * @param string $view	The view contents
+	 * @param array  $options  Reserved for 3rd-party uses since
+	 *                         it might be needed to pass additional info
+	 *                         to other template engines.
+	 * @param bool   $saveData If true, will save data for use with any other calls,
+	 *                         if false, will clean the data after displaying the view.
+	 *
+	 * @return string
+	 */
+	public function renderString(string $view, array $options=null, bool $saveData=false): string;
 
 	//--------------------------------------------------------------------
 

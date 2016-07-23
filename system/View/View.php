@@ -120,12 +120,12 @@ class View implements RenderableInterface {
 	 *  - cache_name	Name to use for cache
 	 *
 	 * @param string $view
-	 * @param array  $options  // Unused in this implementation
+	 * @param array  $options  
 	 * @param bool $saveData
 	 *
 	 * @return string
 	 */
-	public function render(string $view, array $options=null, $saveData=false): string
+	public function render(string $view, array $options=null, bool $saveData=false): string
 	{
 		$start = microtime(true);
 
@@ -155,6 +155,68 @@ class View implements RenderableInterface {
 		{
 			throw new \InvalidArgumentException('View file not found: '. $file);
 		}
+
+		// Make our view data available to the view.
+		extract($this->data);
+
+		if (! $saveData)
+		{
+			$this->data = [];
+		}
+
+		ob_start();
+
+		include($file);
+
+		$output = ob_get_contents();
+		@ob_end_clean();
+
+		$this->logPerformance($start, microtime(true), $view);
+
+		// Should we cache?
+		if (isset($options['cache']))
+		{
+			cache()->save($cacheName, $output, (int)$options['cache']);
+		}
+
+		return $output;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Builds the output based upon a file name and any
+	 * data that has already been set.
+	 *
+	 * Valid $options:
+	 * 	- cache 		number of seconds to cache for
+	 *  - cache_name	Name to use for cache
+	 *
+	 * @param string $view
+	 * @param array  $options  
+	 * @param bool $saveData
+	 *
+	 * @return string
+	 */
+	public function renderString(string $view, array $options=null, bool $saveData=false): string
+	{
+		$start = microtime(true);
+
+		$view = str_replace('.php', '', $view).'.php';
+
+		// Was it cached?
+		if (isset($options['cache']))
+		{
+			$cacheName = $options['cache_name'] ?: str_replace('.php', '', $view);
+
+			if ($output = cache($cacheName))
+			{
+				$this->logPerformance($start, microtime(true), $view);
+				return $output;
+			}
+		}
+
+		$file = $this->viewPath.$view;
 
 		// Make our view data available to the view.
 		extract($this->data);
