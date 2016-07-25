@@ -36,8 +36,6 @@
  * @filesource
  */
 
-//use Config\ContentSecurityPolicy;
-
 /**
  * Class ContentSecurityPolicy
  *
