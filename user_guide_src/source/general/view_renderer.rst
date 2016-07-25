@@ -6,7 +6,13 @@ The ``view()`` function is a convenience method that grabs an instance of the ``
 sets the data, and renders the view. While this is often exactly what you want, you may find times where you
 want to work with it more directly. In that case you can access the View service directly::
 
-	$renderer = \Config\Services::renderer();
+	$view = \Config\Services::renderer();
+
+Alternately, if you are not using the ``View`` class as your default renderer, you
+can instantiate it directly::
+
+	$view = new \CodeIgniter\View\View();
+
 
 .. important:: You should create services only within controllers. If you need access to the View class
 	from a library, you should set that as a dependency in the constructor.
@@ -19,9 +25,9 @@ Method Chaining
 
 The `setVar()` and `setData()` methods are chainable, allowing you to combine a number of different calls together in a chain::
 
-	service('renderer')->setVar('one', $one)
-	                   ->setVar('two', $two)
-	                   ->render('myView');
+	$view->setVar('one', $one)
+		->setVar('two', $two)
+		->render('myView');
 
 Escaping Data
 =============
@@ -32,13 +38,13 @@ escape the data for. See below for context descriptions.
 
 If you don't want the data to be escaped, you can pass `null` or `raw` as the final parameter to each function::
 
-	$renderer->setVar('one', $one, 'raw');
+	$view->setVar('one', $one, 'raw');
 
 If you choose not to escape data, or you are passing in an object instance, you can manually escape the data within
 the view with the ``esc()`` function. The first parameter is the string to escape. The second parameter is the
 context to escape the data for (see below)::
 
-	<?= esc($object->getStat()) ?>
+	<?= \esc($object->getStat()) ?>
 
 Escaping Contexts
 -----------------
@@ -64,7 +70,7 @@ context as the second parameter. Valid contexts are 'html', 'js', 'css', 'url', 
 Class Reference
 ***************
 
-.. php:interface:: CodeIgniter\\View\\RendererInterface
+.. php:class:: CodeIgniter\\View\\View
 
 	.. php:method:: render($view[, $options[, $saveData=false]]])
 
@@ -76,7 +82,7 @@ Class Reference
 
 		Builds the output based upon a file name and any data that has already been set::
 
-			echo $renderer->render('myview');
+			echo $view->render('myview');
 
 		Options supported:
 
@@ -94,7 +100,7 @@ Class Reference
 
 		Sets several pieces of view data at once::
 
-			$renderer->setData(['name'=>'George', 'position'=>'Boss']);
+			$view->setData(['name'=>'George', 'position'=>'Boss']);
 
 		Supported escape contexts: html, css, js, url, or attr or raw.
 		If 'raw', no escaping will happen.
@@ -109,7 +115,7 @@ Class Reference
 
 		Sets a single piece of view data::
 
-			$renderer->setVar('name','Joe','html');
+			$view->setVar('name','Joe','html');
 
 		Supported escape contexts: html, css, js, url, attr or raw.
 		If 'raw', no escaping will happen.
