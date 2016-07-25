@@ -36,8 +36,6 @@
  * @filesource
  */
 
-use Config\ContentSecurityPolicy;
-
 /**
  * Class ContentSecurityPolicy
  *
@@ -175,7 +173,7 @@ class ContentSecurityPolicy
 	 *
 	 * @param ContentSecurityPolicy $config
 	 */
-	public function __construct(ContentSecurityPolicy $config)
+	public function __construct(Config\ContentSecurityPolicy $config)
 	{
 		foreach ($config as $setting => $value)
 		{
