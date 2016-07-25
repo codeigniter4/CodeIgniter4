@@ -2,98 +2,169 @@
 
 use CodeIgniter\View\Parser;
 
-class ParserTest extends \CIUnitTestCase {
+class ParserTest extends \CIUnitTestCase
+{
 
 	public function setUp()
 	{
 		$this->loader = new \CodeIgniter\Autoloader\FileLocator(new \Config\Autoload());
 		$this->viewsDir = __DIR__.'/Views';
-	    $this->parser = new Parser($this->viewsDir, $this->loader);
 	}
 
 	// --------------------------------------------------------------------
 
 	public function testSetDelimiters()
 	{
-		
+		$parser = new Parser($this->viewsDir, $this->loader);
+
 		// Make sure default delimiters are there
-		$this->assertEquals('{', $this->parser->leftDelimiter);
-		$this->assertEquals('}', $this->parser->rightDelimiter);
+		$this->assertEquals('{', $parser->leftDelimiter);
+		$this->assertEquals('}', $parser->rightDelimiter);
 
 		// Change them to square brackets
-		$this->parser->setDelimiters('[', ']');
+		$parser->setDelimiters('[', ']');
 
 		// Make sure they changed
-		$this->assertEquals('[', $this->parser->leftDelimiter);
-		$this->assertEquals(']', $this->parser->rightDelimiter);
+		$this->assertEquals('[', $parser->leftDelimiter);
+		$this->assertEquals(']', $parser->rightDelimiter);
 
 		// Reset them
-		$this->parser->setDelimiters();
+		$parser->setDelimiters();
 
 		// Make sure default delimiters are there
-		$this->assertEquals('{', $this->parser->leftDelimiter);
-		$this->assertEquals('}', $this->parser->rightDelimiter);
+		$this->assertEquals('{', $parser->leftDelimiter);
+		$this->assertEquals('}', $parser->rightDelimiter);
+	}
+
+	// --------------------------------------------------------------------
+
+	public function testParseSimple()
+	{
+		$parser = new Parser($this->viewsDir, $this->loader);
+		$parser->setVar('teststring', 'Hello World');
+
+		$expected = '<h1>Hello World</h1>';
+		$this->assertEquals($expected, $parser->render('template1'));
 	}
 
 	// --------------------------------------------------------------------
 
 	public function testParseString()
 	{
-		$data = array(
-			'title' => 'Page Title',
-			'body' => 'Lorem ipsum dolor sit amet.'
+		$parser = new Parser($this->viewsDir, $this->loader);
+		$data = array (
+			'title'	 => 'Page Title',
+			'body'	 => 'Lorem ipsum dolor sit amet.'
 		);
 
 		$template = "{title}\n{body}";
 
 		$result = implode("\n", $data);
 
-		$this->assertEquals($result, $this->parser->renderString($template, $data, TRUE));
+		$parser->setData($data);
+		$this->assertEquals($result, $parser->renderString($template));
 	}
 
 	// --------------------------------------------------------------------
 
-	public function testParse()
+	public function testParseStringMissingData()
 	{
-		$this->_parseNoTemplate();
-		$this->_parseVarPair();
-		$this->_mismatchedVarPair();
+		$parser = new Parser($this->viewsDir, $this->loader);
+		$data = array (
+			'title'	 => 'Page Title',
+			'body'	 => 'Lorem ipsum dolor sit amet.'
+		);
+
+		$template = "{title}\n{body}\n{name}";
+
+		$result = implode("\n", $data)."\n{name}";
+
+		$parser->setData($data);
+		$this->assertEquals($result, $parser->renderString($template));
 	}
 
 	// --------------------------------------------------------------------
 
-	private function _parseNoTemplate()
+	public function testParseStringUnusedData()
 	{
-		$this->assertFalse($this->parser->renderString('', '', TRUE));
+		$parser = new Parser($this->viewsDir, $this->loader);
+		$data = array (
+			'title'	 => 'Page Title',
+			'body'	 => 'Lorem ipsum dolor sit amet.',
+			'name'	 => 'Someone'
+		);
+
+		$template = "{title}\n{body}";
+
+		$result = "Page Title\nLorem ipsum dolor sit amet.";
+
+		$parser->setData($data);
+		$this->assertEquals($result, $parser->renderString($template));
 	}
 
 	// --------------------------------------------------------------------
 
-	private function _parseVarPair()
+	public function testParseNoTemplate()
 	{
-		$data = array(
-			'title'		=> 'Super Heroes',
-			'powers'	=> array(array('invisibility' => 'yes', 'flying' => 'no'))
+		$parser = new Parser($this->viewsDir, $this->loader);
+		$this->assertEquals('', $parser->renderString(''));
+	}
+
+	// --------------------------------------------------------------------
+
+	public function testParseVarPair()
+	{
+		$parser = new Parser($this->viewsDir, $this->loader);
+		$data = array (
+			'title'	 => 'Super Heroes',
+			'powers' => array (
+				array ('invisibility' => 'yes', 'flying' => 'no')
+			)
 		);
 
 		$template = "{title}\n{powers}{invisibility}\n{flying}{/powers}\nsecond:{powers} {invisibility} {flying}{/powers}";
 
-		$this->assertEquals("Super Heroes\nyes\nno\nsecond: yes no", $this->parser->renderString($template, $data, TRUE));
+		$parser->setData($data);
+		$this->assertEquals("Super Heroes\nyes\nno\nsecond: yes no", $parser->renderString($template));
 	}
 
 	// --------------------------------------------------------------------
 
-	private function _mismatchedVarPair()
+	public function testParseVarList()
 	{
-		$data = array(
-			'title'		=> 'Super Heroes',
-			'powers'	=> array(array('invisibility' => 'yes', 'flying' => 'no'))
+		$parser = new Parser($this->viewsDir, $this->loader);
+		$data = array (
+			'title'	 => 'Super Heroes',
+			'powers' => array (
+				array ('name' => 'Tom'),
+				array ('name' => 'Dick'),
+				array ('name' => 'Henry')
+			)
+		);
+
+		$template = "{title}\n{powers}{name} {/powers}";
+
+		$parser->setData($data);
+		$this->assertEquals("Super Heroes\nTom Dick Henry", $parser->renderString($template));
+	}
+
+	// --------------------------------------------------------------------
+
+	public function testMismatchedVarPair()
+	{
+		$parser = new Parser($this->viewsDir, $this->loader);
+		$data = array (
+			'title'	 => 'Super Heroes',
+			'powers' => array (
+				array ('invisibility' => 'yes', 'flying' => 'no')
+			)
 		);
 
 		$template = "{title}\n{powers}{invisibility}\n{flying}";
 		$result = "Super Heroes\n{powers}{invisibility}\n{flying}";
 
-		$this->assertEquals($result, $this->parser->renderString($template, $data, TRUE));
+		$parser->setData($data);
+		$this->assertEquals($result, $parser->renderString($template));
 	}
 
 }

@@ -64,7 +64,7 @@ context as the second parameter. Valid contexts are 'html', 'js', 'css', 'url', 
 Class Reference
 ***************
 
-.. php:interface:: CodeIgniter\\View\\RendererableInterface
+.. php:interface:: CodeIgniter\\View\\RendererInterface
 
 	.. php:method:: render($view[, $options[, $saveData=false]]])
 
@@ -90,7 +90,7 @@ Class Reference
 		:param  array   $data: Array of view data strings, as key/value pairs
 		:param  string  $context: The context to use for data escaping. 
 		:returns: The Renderer, for method chaining
-		:rtype: CodeIgniter\\View\\RenderableInterface.
+		:rtype: CodeIgniter\\View\\RendererInterface.
 
 		Sets several pieces of view data at once::
 
@@ -105,7 +105,7 @@ Class Reference
 		:param  mixed   $value: The value of this view data
 		:param  string  $context: The context to use for data escaping. 
 		:returns: The Renderer, for method chaining
-		:rtype: CodeIgniter\\View\\RenderableInterface.
+		:rtype: CodeIgniter\\View\\RendererInterface.
 
 		Sets a single piece of view data::
 

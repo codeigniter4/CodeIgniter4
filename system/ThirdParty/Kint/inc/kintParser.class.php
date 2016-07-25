@@ -129,7 +129,7 @@ abstract class kintParser extends kintVariableData
 				$parser       = new $className;
 				$parser->name = $name; # the parser may overwrite the name value, so set it first
 
-				if ( $parser->_parse( $variable ) !== false ) {
+				if ( $parser->parse( $variable ) !== false ) {
 					$varData->_alternatives[] = $parser;
 				}
 			}

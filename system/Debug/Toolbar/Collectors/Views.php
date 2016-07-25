@@ -37,7 +37,7 @@
  */
 
 use CodeIgniter\Services;
-use CodeIgniter\View\RenderableInterface;
+use CodeIgniter\View\RendererInterface;
 
 /**
  * Views collector

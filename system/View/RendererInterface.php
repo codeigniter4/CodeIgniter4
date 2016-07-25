@@ -37,13 +37,13 @@
  */
 
 /**
- * Interface RenderableInterface
+ * Interface RendererInterface
  *
  * The interface used for displaying Views and/or theme files.
  *
  * @package CodeIgniter\View
  */
-interface RenderableInterface {
+interface RendererInterface {
 
 	/**
 	 * Builds the output based upon a file name and any
@@ -63,7 +63,7 @@ interface RenderableInterface {
 	//--------------------------------------------------------------------
 
 	/**
-	 * Builds the output based upon a stringand any
+	 * Builds the output based upon a string and any
 	 * data that has already been set.
 	 *
 	 * @param string $view	The view contents
