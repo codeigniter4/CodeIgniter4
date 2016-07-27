@@ -260,7 +260,7 @@ class Model
 
 	/**
 	 * Extract a subset of data
-	 * 
+	 *
 	 * @param      $key
 	 * @param null $value
 	 *
@@ -340,7 +340,7 @@ class Model
 		{
 			$builder->orderBy($this->primaryKey, 'asc');
 		}
-		
+
 		$row = $builder->limit(1, 0)
 		               ->get();
 
@@ -787,11 +787,13 @@ class Model
 	 * Expects a GET variable (?page=2) that specifies the page of results
 	 * to display.
 	 *
-	 * @param int $perPage
+	 * @param int    $perPage
+	 * @param string $alias    Will be used by the pagination library
+	 *                         to identify a unique pagination set.
 	 *
 	 * @return array|null
 	 */
-	public function paginate($perPage = 20)
+	public function paginate(int $perPage = 20, string $alias = null)
 	{
 		$page = $_GET['page'] ?? 1;
 
@@ -920,7 +922,7 @@ class Model
 
 	/**
 	 * Specify the table associated with a model
-	 * 
+	 *
 	 * @param string $table
 	 *
 	 * @return $this
