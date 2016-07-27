@@ -112,7 +112,7 @@ class ParserTest extends \CIUnitTestCase
 
 	// --------------------------------------------------------------------
 
-	public function testParseVarPair()
+	public function testParseNested()
 	{
 		$parser = new Parser($this->viewsDir, $this->loader);
 		$data = array (
@@ -130,7 +130,7 @@ class ParserTest extends \CIUnitTestCase
 
 	// --------------------------------------------------------------------
 
-	public function testParseVarList()
+	public function testParseLoop()
 	{
 		$parser = new Parser($this->viewsDir, $this->loader);
 		$data = array (

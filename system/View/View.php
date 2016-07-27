@@ -168,7 +168,7 @@ class View implements RendererInterface
 		}
 
 		ob_start();
-		include($file);
+		include($file);	// PHP will be processed
 		$output = ob_get_contents();
 		@ob_end_clean();
 

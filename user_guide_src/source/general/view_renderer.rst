@@ -2,9 +2,10 @@
 View Renderer
 #############
 
-The ``view()`` function is a convenience method that grabs an instance of the ``renderer`` service,
-sets the data, and renders the view. While this is often exactly what you want, you may find times where you
-want to work with it more directly. In that case you can access the View service directly::
+The ``view()`` function is a convenience function that grabs an instance of the 
+``renderer`` service, sets the data, and renders the view. While this is often 
+exactly what you want, you may find times where you want to work with it more directly. 
+In that case you can access the View service directly::
 
 	$view = \Config\Services::renderer();
 
@@ -14,16 +15,35 @@ can instantiate it directly::
 	$view = new \CodeIgniter\View\View();
 
 
-.. important:: You should create services only within controllers. If you need access to the View class
-	from a library, you should set that as a dependency in the constructor.
+.. important:: You should create services only within controllers. If you need 
+	access to the View class from a library, you should set that as a dependency 
+	in your library's constructor.
 
 Then you can use any of the three standard methods that it provides: 
 **render(viewpath, options, save)**, **setVar(name, value, context)** and **setData(data, context)**.
 
+What It Does
+============
+
+The ``View`` class processes conventional HTML/PHP scripts stored in the application's view path, 
+after extracting view parameters into PHP variables, accessible inside the scripts.
+This means that your view parameter names need to be legal PHP variable names.
+
+The View class uses an associative array internally, to accumulate view parameters
+until you call its ``render()``. This means that your parameter (or variable) names
+need to be unique, or a later variable setting will over-ride an earlier one.
+
+This also impacts escaping parameter values for different contexts inside your
+script. You will have to give each escaped value a unique parameter name.
+
+No special meaning is attached to parameters whose value is an array. It is up 
+to you to process the array appropriately in your PHP code.
+
 Method Chaining
 ===============
 
-The `setVar()` and `setData()` methods are chainable, allowing you to combine a number of different calls together in a chain::
+The `setVar()` and `setData()` methods are chainable, allowing you to combine a 
+number of different calls together in a chain::
 
 	$view->setVar('one', $one)
 		->setVar('two', $two)
@@ -66,6 +86,18 @@ context as the second parameter. Valid contexts are 'html', 'js', 'css', 'url', 
 		}
 	</style>
 
+View Renderer Options
+=====================
+
+Several options can be passed to the ``render()`` or ``renderString()`` methods:
+
+
+-   ``cache`` - the time in seconds, to save a view's results; ignored for renderString()
+-   ``cache_name`` - the ID used to save/retrieve a cached view result; defaults to the viewpath;
+		ignored for renderString()
+-   ``saveData`` - true if the view data parameters should be retained for subsequent calls
+
+
 ***************
 Class Reference
 ***************
@@ -84,11 +116,17 @@ Class Reference
 
 			echo $view->render('myview');
 
-		Options supported:
+	.. php:method:: renderString($view[, $options[, $saveData=false]]])
 
-	        -   ``cache`` - the time in seconds, to save a view's results
-	        -   ``cache_name`` - the ID used to save/retrieve a cached view result; defaults to the viewpath
-	        -   ``saveData`` - true if the view data parameter should be retained for subsequent calls
+		:param  string  $view: Contents of the view to render
+		:param  array   $options: Array of options, as key/value pairs
+		:param  boolean $saveData: If true, will save data for use with any other calls, if false, will clean the data after rendering the view.
+		:returns: The rendered text for the chosen view
+		:rtype: string
+
+		Builds the output based upon a file name and any data that has already been set::
+
+			echo $view->render('myview');
 
 
 	.. php:method:: setData([$data[, $context=null]])
@@ -105,6 +143,9 @@ Class Reference
 		Supported escape contexts: html, css, js, url, or attr or raw.
 		If 'raw', no escaping will happen.
 
+		Each call adds to the array of data that the object is accumulating,
+		until the view is rendered.
+
 	.. php:method:: setVar($name[, $value=null[, $context=null]])
 
 		:param  string  $name: Name of the view data variable
@@ -119,4 +160,7 @@ Class Reference
 
 		Supported escape contexts: html, css, js, url, attr or raw.
 		If 'raw', no escaping will happen.
+
+		If you use the a view data variable that you have previously used
+		for this object, the new value will replace the existing one.
 

@@ -6,7 +6,7 @@ The View Parser can perform simple text substitution for
 pseudo-variables contained within your view files. 
 It can parse simple variables or variable tag pairs. 
 
-Pseudo-variable names are enclosed in braces, like this::
+Pseudo-variable names or control constructs are enclosed in braces, like this::
 
 	<html>
 		<head>
@@ -61,6 +61,26 @@ is ignored by the parser, and only substitutions are performed.
 
 This is purposeful: view files with no PHP.
 
+What It Does
+============
+
+The ``Parser`` class processes "PHP/HTML scripts" stored in the application's view path.
+These scripts have a ``.php`` extension, but should not contain any PHP.
+
+Each view parameter (which we refer to as a pseudo-variable) triggers a substitution, 
+based on the type of value you provided for it. Pseudo-variables are not
+extracted into PHP variables; instead their value is accessed through the pseudo-variable
+syntax, where its name is referenced inside braces.
+This means that your view parameter names need not be legal PHP variable names.
+
+The Parser class uses an associative array internally, to accumulate pseudo-variable
+settings until you call its ``render()``. This means that your pseudo-variable names
+need to be unique, or a later parameter setting will over-ride an earlier one.
+
+This also impacts escaping parameter values for different contexts inside your
+script. You will have to give each escaped value a unique parameter name.
+
+
 Parser templates
 ================
 
@@ -82,27 +102,41 @@ The first parameter to ``render()`` contains the name of the :doc:`view
 file <../general/views>` (in this example the file would be called
 blog_template.php), 
 
-As with the other renderers, There is no need to "echo" the parser output.
-You can accumulate it and "echo" it before exiting the request
-handling method in your controller, or that method
-could "return" it.
 
 Parser Configuration Options
 ============================
 
-TODO
+Several options can be passed to the ``render()`` or ``renderString()`` methods.
+
+
+-   ``cache`` - the time in seconds, to save a view's results; ignored for renderString()
+-   ``cache_name`` - the ID used to save/retrieve a cached view result; defaults to the viewpath;
+		ignored for renderString()
+-   ``saveData`` - true if the view data parameters should be retained for subsequent calls;
+		default is **false**
+-	``cascadeData`` - true if pseudo-variable settings should be passed on to nested
+		substitutions; default is **true**
+-	``beamMeUp`` - just here to see if anyone is reading the user guide page
+
 
 ***********************
 Substitution Variations
 ***********************
 
-The simplest substitution performed by the parser is a one-to-one
+There are four types of substitution supported: simple, looping, nested
+and conditional. Any conditional substitutions are performed first, before any of
+the others. The other substitutions are performed in the same sequence that
+pseudo-variables were added.
+
+The **simple substitution** performed by the parser is a one-to-one
 replacement of pseudo-variables where the corresponding data parameter
 has either a scalar or string value, as in this example::
 
 	$template = '<head><title>{blog_title}</title></head>';
 	$data = ['blog_title' => 'My ramblings'];
+
 	echo $parser->setData($data)->renderString($template);
+
 	// Result: <head><title>My ramblings</title></head>
 
 The ``Parser`` takes substitution a lot further with "variable pairs",
@@ -117,6 +151,9 @@ When the parser executes, it will generally
 
 Variable Pairs for Looping
 ==========================
+
+A loop substitution happens when the value for a pseudo-variable is
+a sequential array of arrays, like an array of row settings.
 
 The above example code allows simple variables to be replaced. What if
 you would like an entire block of variables to be repeated, with each
@@ -162,6 +199,10 @@ corresponding to your variable pair data. Consider this example::
 	echo $parser->setData($data)
 		->render('blog_template');
 
+The value for the pseudo-variable ``blog_entries`` is a sequential
+array of associative arrays. The outer level does not have keys associated
+with each of the nested "rows".
+
 If your "pair" data is coming from a database result, which is already a
 multi-dimensional array, you can simply use the database ``getResultArray()``
 method::
@@ -180,7 +221,37 @@ method::
 Variable Pairs for Nested Substitutions
 =======================================
 
-TODO
+A nested substitution happens when the value for a pseudo-variable is
+an associative array of values, like a record from a database::
+
+	$data = array(
+		'blog_title'   => 'My Blog Title',
+		'blog_heading' => 'My Blog Heading',
+		'blog_entry' => array(
+			'title' => 'Title 1', 'body' => 'Body 1'
+		)
+	);
+
+	echo $parser->setData($data)
+		->render('blog_template');
+
+The value for the pseudo-variable ``blog_entry`` is an associative
+array. The key/value pairs defined inside it will be exposed inside
+the variable pair loop for that variable.
+
+A ``blog_template`` that might work for the above::
+	
+	<h1>{blog_title} - {blog_heading}</h1>
+	{blog_entry}
+		<div>
+			<h2>{title}</h2>
+			<p>{body}{/p}
+		</div>
+	{/blog_entry}
+
+If you would like the other pseudo-variables accessible inside the "blog_entry"
+scope, then make sure that the "cascadeData" option is set to true.
+
 
 Conditional Substitutions
 =========================

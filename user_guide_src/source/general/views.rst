@@ -33,7 +33,7 @@ Displaying a View
 
 To load a particular view file you will use the following function::
 
-	view('name');
+	echo view('name');
 
 Where _name_ is the name of your view file.
 
