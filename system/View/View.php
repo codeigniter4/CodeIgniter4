@@ -153,7 +153,7 @@ class View implements RenderableInterface {
 		// locateFile will return an empty string if the file cannot be found.
 		if (empty($file))
 		{
-			throw new \InvalidArgumentException('View file not found: '. $file);
+			throw new \InvalidArgumentException('View file not found: '. $view);
 		}
 
 		// Make our view data available to the view.
