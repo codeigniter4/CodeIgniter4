@@ -61,7 +61,7 @@ class FileLocator {
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param Autoload $autoload
 	 */
 	public function __construct(Autoload $autoload)
@@ -137,7 +137,7 @@ class FileLocator {
 		// expects this file to be within that folder, like 'Views',
 		// or 'libraries'.
 		// @todo Allow it to check with and without the nested folder.
-		if (! empty($folder))
+		if (! empty($folder) && strpos($filename, $folder) === false)
 		{
 			$filename = $folder.'/'.$filename;
 		}
