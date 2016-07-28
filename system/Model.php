@@ -36,6 +36,7 @@
  * @filesource
  */
 
+use CodeIgniter\Pager\Pager;
 use Config\App;
 use Config\Database;
 //use Config\Services;
@@ -63,6 +64,14 @@ use CodeIgniter\Database\ConnectionInterface;
  */
 class Model
 {
+	/**
+	 * Pager instance.
+	 * Populated after calling $this->paginate()
+	 *
+	 * @var Pager
+	 */
+	public $pager;
+
 	/**
 	 * Name of database table
 	 *
@@ -803,7 +812,7 @@ class Model
 		// Store it in the Pager library so it can be
 		// paginated in the views.
 		$pager = \Config\Services::pager();
-		$pager->store($group, $page, $perPage, $total);
+		$this->pager = $pager->store($group, $page, $perPage, $total);
 
 		$offset = ($page - 1) * $perPage;
 
