@@ -149,8 +149,8 @@ When the parser executes, it will generally
 -	handle any nested/looping substutions
 -	handle the remaining single substitutions
 
-Variable Pairs for Looping
-==========================
+Loop Substitutions
+==================
 
 A loop substitution happens when the value for a pseudo-variable is
 a sequential array of arrays, like an array of row settings.
@@ -218,8 +218,8 @@ method::
 	echo $parser->setData($data)
 		->render('blog_template');
 
-Variable Pairs for Nested Substitutions
-=======================================
+Nested Substitutions
+====================
 
 A nested substitution happens when the value for a pseudo-variable is
 an associative array of values, like a record from a database::
@@ -252,11 +252,59 @@ A ``blog_template`` that might work for the above::
 If you would like the other pseudo-variables accessible inside the "blog_entry"
 scope, then make sure that the "cascadeData" option is set to true.
 
+Cascading Data
+==============
+
+With both a nested and a loop substitution, you have the option of cascading
+data pairs into the inner substitution. 
+
+The following example is not impacted by cascading::
+
+	$template = '{name} lives in {location}{city} on {planet}{/location}.';
+
+	$data = ['name' => 'George', 
+		'location' => [ 'city' => 'Red City', 'planet' => 'Mars' ] ];
+
+	echo $parser->setData($data)->renderString($template);
+	// Result: George lives in Red City on Mars.
+
+This example gives different results, depending on cascading::
+
+	$template = '{location}{name} lives in {city} on {planet}{/location}.';
+
+	$data = ['name' => 'George', 
+		'location' => [ 'city' => 'Red City', 'planet' => 'Mars' ] ];
+
+	echo $parser->setData($data)->renderString($template, ['cascadeData'=>false]);
+	// Result: {name} lives in Red City on Mars.
+
+	echo $parser->setData($data)->renderString($template, ['cascadeData'=>true]);
+	// Result: George lives in Red City on Mars.
 
 Conditional Substitutions
 =========================
 
-TODO
+A conditional substitution provides a simple if/else capabitlity for including
+a block inside your template. It uses a special syntax for the pseudo-variable:
+prefixing the pseudo-variable name with ``if:``, providing for an option
+``{else)``, and then having a final	``{/if}`` tag.
+
+If the pseudo-variable referenced is``true``, then the first block is kept in
+the template; otherwise the ``else`` block is.
+
+An example::
+
+	$data = [ 'first' => true];
+
+	$template = '{if:first}Yabba dabba{/if} doo';
+
+	echo $parser->setData($data)->renderString($template);
+	// Result: Yabba dabba doo
+
+.. note:: This is a very simple conditional substitution.
+	Future enhancements could provide for a logical expression instead of just
+	a pseudo-variable name, or for more elaborate tags!
+
 
 ***********
 Usage Notes
@@ -309,23 +357,6 @@ pair tag, but the closing variable pair tag is not rendered properly::
 
 	// Result: Hello, John Doe (Mr{degree} {/degrees})
 
-If you name one of your individual substitution parameters the same as one
-used inside a variable pair, the results may not be as expected::
-
-	$template = 'Hello, {firstname} {lastname} ({degrees}{degree} {/degrees})';
-	$data = array(
-		'degree' => 'Mr',
-		'firstname' => 'John',
-		'lastname' => 'Doe',
-		'degrees' => array(
-			array('degree' => 'BSc'),
-			array('degree' => 'PhD')
-		)
-	);
-	echo $parser->setData($data)
-		->renderString($template);
-
-	// Result: Hello, John Doe (Mr Mr )
 
 View Fragments
 ==============
@@ -408,10 +439,27 @@ Class Reference
 
 	        -   ``cache`` - the time in seconds, to save a view's results
 	        -   ``cache_name`` - the ID used to save/retrieve a cached view result; defaults to the viewpath
+	        -   ``cascadeData`` - true if the data pairs in effect when a nested or loop substitution occurs should be propagated
 	        -   ``saveData`` - true if the view data parameter should be retained for subsequent calls
 	        -   ``leftDelimiter`` - the left delimiter to use in pseudo-variable syntax
 	        -   ``rightDelimiter`` - the right delimiter to use in pseudo-variable syntax
 
+		Any conditional substitutions are performed first, then remaining
+		substitutions are performed for each data pair.	
+
+	.. php:method:: renderString($template[, $options[, $saveData=false]]])
+
+		:param  string  $template: View source provided as a string
+		:param  array   $options: Array of options, as key/value pairs
+		:param  boolean $saveData: If true, will save data for use with any other calls, if false, will clean the data after rendering the view.
+		:returns: The rendered text for the chosen view
+		:rtype: string
+
+		Builds the output based upon a provided template source and any data that has already been set::
+
+			echo $parser->render('myview');
+
+		Options supported, and behavior, as above.
 
 	.. php:method:: setData([$data[, $context=null]])
 
@@ -442,13 +490,3 @@ Class Reference
 		Supported escape contexts: html, css, js, url, attr or raw.
 		If 'raw', no escaping will happen.
 
-
-
-	.. php:method:: setDelimiters([$l = '{'[, $r = '}']])
-
-		:param	string	$l: Left delimiter
-		:param	string	$r: Right delimiter
-		:rtype: void
-
-		Sets the delimiters (opening and closing) for a
-		pseudo-variable "tag" in a template.

@@ -215,19 +215,6 @@ class Parser extends View
 
 	// --------------------------------------------------------------------
 
-	/**
-	 * Set the left/right variable delimiters
-	 *
-	 * @param	string
-	 * @param	string
-	 * @return	void
-	 */
-	public function setDelimiters($l = '{', $r = '}')
-	{
-		$this->leftDelimiter = $l;
-		$this->rightDelimiter = $r;
-	}
-
 	// --------------------------------------------------------------------
 
 	/**
