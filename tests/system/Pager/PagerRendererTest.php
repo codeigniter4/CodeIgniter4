@@ -52,6 +52,30 @@ class PagerRendererTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * @group single
+	 */
+	public function testGetPreviousWhenSurroundCountIsZero()
+	{
+		$uri = $this->uri;
+		$uri->addQuery('foo', 'bar');
+
+		$details = [
+			'uri' => $uri,
+			'pageCount' => 50,
+			'currentPage' => 4,
+			'total'	=> 100
+		];
+
+		$pager = new PagerRenderer($details);
+		$pager->setSurroundCount(0);
+
+		$this->assertTrue($pager->hasPrevious());
+		$this->assertEquals('http://example.com/foo?foo=bar&page=3', $pager->getPrevious());
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testHasNextReturnsFalseWhenLastIsTotal()
 	{
 		$uri = $this->uri;
@@ -89,6 +113,27 @@ class PagerRendererTest extends \CIUnitTestCase
 
 		$this->assertTrue($pager->hasNext());
 		$this->assertEquals('http://example.com/foo?foo=bar&page=7', $pager->getNext());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testGetNextWhenSurroundCountIsZero()
+	{
+		$uri = $this->uri;
+		$uri->addQuery('foo', 'bar');
+
+		$details = [
+			'uri' => $uri,
+			'pageCount' => 50,
+			'currentPage' => 4,
+			'total'	=> 100
+		];
+
+		$pager = new PagerRenderer($details);
+		$pager->setSurroundCount(0);
+
+		$this->assertTrue($pager->hasNext());
+		$this->assertEquals('http://example.com/foo?foo=bar&page=5', $pager->getNext());
 	}
 
 	//--------------------------------------------------------------------

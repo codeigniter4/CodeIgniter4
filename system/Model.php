@@ -36,13 +36,13 @@
  * @filesource
  */
 
-use CodeIgniter\Config\BaseConfig;
 use Config\App;
 use Config\Database;
+//use Config\Services;
+use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\ConnectionInterface;
-use phpDocumentor\Reflection\DocBlock\Tag\VarTag;
 
 /**
  * Class Model
@@ -788,14 +788,22 @@ class Model
 	 * to display.
 	 *
 	 * @param int    $perPage
-	 * @param string $alias    Will be used by the pagination library
+	 * @param string $group    Will be used by the pagination library
 	 *                         to identify a unique pagination set.
 	 *
 	 * @return array|null
 	 */
-	public function paginate(int $perPage = 20, string $alias = null)
+	public function paginate(int $perPage = 20, string $group = 'default')
 	{
+		// Get the necessary parts.
 		$page = $_GET['page'] ?? 1;
+
+		$total = $this->countAllResults(false);
+
+		// Store it in the Pager library so it can be
+		// paginated in the views.
+		$pager = \Config\Services::pager();
+		$pager->store($group, $page, $perPage, $total);
 
 		$offset = ($page - 1) * $perPage;
 

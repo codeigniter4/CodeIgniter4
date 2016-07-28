@@ -20,6 +20,7 @@ class PagerTest extends \CIUnitTestCase
 
 	public function setUp()
 	{
+		$_SERVER['HTTP_HOST'] = 'example.com';
 		$_GET = [];
 		$this->config = new Pager();
 	    $this->pager = new \CodeIgniter\Pager\Pager($this->config, Services::renderer());
@@ -27,16 +28,16 @@ class PagerTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * @group single
+	 */
 	public function testSetPathRemembersPath()
 	{
 	    $this->pager->setPath('foo/bar');
 
-		$expected = current_url(true);
-		$expected = $expected->resolveRelativeURI('/foo/bar');
-
 		$details = $this->pager->getDetails();
 
-		$this->assertEquals($expected, $details['uri']);
+		$this->assertEquals('foo/bar', $details['uri']->getPath());
 	}
 
 	//--------------------------------------------------------------------
