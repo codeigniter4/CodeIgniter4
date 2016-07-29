@@ -198,6 +198,8 @@ class MigrationRunner
 		{
 			return true;
 		}
+		
+		$previous = false;
 
 		// Validate all available migrations, and run the ones within our target range
 		foreach ($migrations as $number => $file)
