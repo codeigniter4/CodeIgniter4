@@ -68,6 +68,11 @@ class Filters
 
 		foreach ($this->filters[$position] as $alias => $rules)
 		{
+			if (is_numeric($alias) && is_string($rules))
+			{
+				$alias = $rules;
+			}
+
 			if (! array_key_exists($alias, $this->config->aliases))
 			{
 				throw new \InvalidArgumentException("'{$alias}' filter must have a matching alias defined.");
