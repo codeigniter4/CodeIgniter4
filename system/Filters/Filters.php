@@ -59,12 +59,14 @@ class Filters
 	 *
 	 * @param string $uri
 	 * @param string $position
+	 *
+	 * @return \CodeIgniter\HTTP\RequestInterface|\CodeIgniter\HTTP\ResponseInterface|mixed
 	 */
 	public function run(string $uri, $position = 'before')
 	{
 	    $this->initialize($uri);
 
-		foreach ($this->filters[$position] as $alias)
+		foreach ($this->filters[$position] as $alias => $rules)
 		{
 			if (! array_key_exists($alias, $this->config->aliases))
 			{
@@ -205,6 +207,38 @@ class Filters
 		// After
 		if (isset($this->config->globals['after']))
 		{
+			// Take any 'except' routes into consideration
+			foreach ($this->config->globals['after'] as $alias => $rules)
+			{
+				if (! is_array($rules) || ! array_key_exists('except', $rules))
+				{
+					continue;
+				}
+
+				$rules = $rules['except'];
+
+				if (is_string($rules))
+				{
+					$rules = [$rules];
+				}
+
+				foreach ($rules as $path)
+				{
+					// Prep it for regex
+					$path = str_replace('/*', '*', $path);
+					$path = trim(str_replace('*', '.+', $path), '/ ');
+
+					// Path doesn't match the URI? continue on...
+					if (preg_match('/'.$path.'/', $uri, $match) !== 1)
+					{
+						continue;
+					}
+
+					unset($this->config->globals['after'][$alias]);
+					break;
+				}
+			}
+
 			$this->filters['after'] = array_merge($this->filters['after'], $this->config->globals['after']);
 		}
 	}
