@@ -3,6 +3,7 @@
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Database\MigrationRunner;
+use CodeIgniter\View\RenderableInterface;
 
 /**
  * Services Configuration file.
@@ -271,6 +272,28 @@ class Services
 		}
 
 		return new \CodeIgniter\HTTP\Negotiate($request);
+	}
+
+	//--------------------------------------------------------------------
+
+	public static function pager($config = null, RenderableInterface $view = null, $getShared = true)
+	{
+		if ($getShared)
+		{
+			return self::getSharedInstance('pager', $config, $view);
+		}
+
+		if (empty($config))
+		{
+			$config = new Pager();
+		}
+
+		if (! $view instanceof RenderableInterface)
+		{
+			$view = self::renderer();
+		}
+
+		return new \CodeIgniter\Pager\Pager($config, $view);
 	}
 
 	//--------------------------------------------------------------------

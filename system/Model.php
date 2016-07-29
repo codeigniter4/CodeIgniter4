@@ -36,13 +36,14 @@
  * @filesource
  */
 
-use CodeIgniter\Config\BaseConfig;
+use CodeIgniter\Pager\Pager;
 use Config\App;
 use Config\Database;
+//use Config\Services;
+use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\ConnectionInterface;
-use phpDocumentor\Reflection\DocBlock\Tag\VarTag;
 
 /**
  * Class Model
@@ -63,6 +64,14 @@ use phpDocumentor\Reflection\DocBlock\Tag\VarTag;
  */
 class Model
 {
+	/**
+	 * Pager instance.
+	 * Populated after calling $this->paginate()
+	 *
+	 * @var Pager
+	 */
+	public $pager;
+
 	/**
 	 * Name of database table
 	 *
@@ -260,7 +269,7 @@ class Model
 
 	/**
 	 * Extract a subset of data
-	 * 
+	 *
 	 * @param      $key
 	 * @param null $value
 	 *
@@ -340,7 +349,7 @@ class Model
 		{
 			$builder->orderBy($this->primaryKey, 'asc');
 		}
-		
+
 		$row = $builder->limit(1, 0)
 		               ->get();
 
@@ -787,13 +796,23 @@ class Model
 	 * Expects a GET variable (?page=2) that specifies the page of results
 	 * to display.
 	 *
-	 * @param int $perPage
+	 * @param int    $perPage
+	 * @param string $group    Will be used by the pagination library
+	 *                         to identify a unique pagination set.
 	 *
 	 * @return array|null
 	 */
-	public function paginate($perPage = 20)
+	public function paginate(int $perPage = 20, string $group = 'default')
 	{
+		// Get the necessary parts.
 		$page = $_GET['page'] ?? 1;
+
+		$total = $this->countAllResults(false);
+
+		// Store it in the Pager library so it can be
+		// paginated in the views.
+		$pager = \Config\Services::pager();
+		$this->pager = $pager->store($group, $page, $perPage, $total);
 
 		$offset = ($page - 1) * $perPage;
 
@@ -920,7 +939,7 @@ class Model
 
 	/**
 	 * Specify the table associated with a model
-	 * 
+	 *
 	 * @param string $table
 	 *
 	 * @return $this
