@@ -52,9 +52,6 @@ class PagerRendererTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	/**
-	 * @group single
-	 */
 	public function testGetPreviousWhenSurroundCountIsZero()
 	{
 		$uri = $this->uri;
@@ -173,4 +170,23 @@ class PagerRendererTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testGetFirstAndGetLast()
+	{
+		$uri = $this->uri;
+		$uri->addQuery('foo', 'bar');
+
+		$details = [
+			'uri' => $uri,
+			'pageCount' => 50,
+			'currentPage' => 4,
+			'total'	=> 100
+		];
+
+		$pager = new PagerRenderer($details);
+
+		$this->assertEquals('http://example.com/foo?foo=bar&page=1', $pager->getFirst());
+		$this->assertEquals('http://example.com/foo?foo=bar&page=50', $pager->getLast());
+	}
+
+	//--------------------------------------------------------------------
 }

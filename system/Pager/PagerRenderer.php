@@ -151,6 +151,38 @@ class PagerRenderer
 	//--------------------------------------------------------------------
 
 	/**
+	 * Returns the URI of the first page.
+	 *
+	 * @return string
+	 */
+	public function getFirst(): string
+	{
+		$uri = clone $this->uri;
+
+		$uri->addQuery('page', 1);
+
+		return (string)$uri;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns the URI of the last page.
+	 *
+	 * @return string
+	 */
+	public function getLast(): string
+	{
+		$uri = clone $this->uri;
+
+		$uri->addQuery('page', $this->pageCount);
+
+		return (string)$uri;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Returns an array of links that should be displayed. Each link
 	 * is represented by another array containing of the URI the link
 	 * should go to, the title (number) of the link, and a boolean

@@ -166,6 +166,11 @@ usefullness. It is easiest to demonstrate creating a new view by showing you the
         <ul class="pagination">
             <?php if ($pager->hasPrevious()) : ?>
             <li>
+				<a href="<?= $pager->getFirst() ?>" aria-label="First">
+					<span aria-hidden="true">First</span>
+				</a>
+			</li>
+            <li>
                 <a href="<?= $pager->getPrevious() ?>" aria-label="Previous">
                     <span aria-hidden="true">&laquo;</span>
                 </a>
@@ -186,6 +191,11 @@ usefullness. It is easiest to demonstrate creating a new view by showing you the
                         <span aria-hidden="true">&raquo;</span>
                     </a>
                 </li>
+                <li>
+					<a href="<?= $pager->getLast() ?>" aria-label="Last">
+						<span aria-hidden="true">Last</span>
+					</a>
+				</li>
             <?php endif ?>
         </ul>
     </nav>
@@ -210,6 +220,19 @@ Since the first link displayed is page one, ``hasPrevious()`` would return **fal
 These methods return the URL for the previous or next pages of results on either side of the numbered links. See the
 previous paragraph for a full explanation.
 
+**getFirst()**
+**getLast()**
+
+Much like ``getPrevious()`` and ``getNext()``, these methods return links to the first and last pages in the
+result set.
+
 **links()**
 
-Returns an array of data about all of the numbered links.
+Returns an array of data about all of the numbered links. Each link's array contains the uri for the link, the
+title, which is just the number, and a boolean that tells whether the link is the current/active link or not::
+
+	$link = [
+		'active' => false,
+		'uri'    => 'http://example.com/foo?page=2',
+		'title'  => 1
+	];

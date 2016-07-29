@@ -4,6 +4,11 @@
 	<ul class="pagination">
 		<?php if ($pager->hasPrevious()) : ?>
 		<li>
+			<a href="<?= $pager->getFirst() ?>" aria-label="First">
+				<span aria-hidden="true">First</span>
+			</a>
+		</li>
+		<li>
 			<a href="<?= $pager->getPrevious() ?>" aria-label="Previous">
 				<span aria-hidden="true">&laquo;</span>
 			</a>
@@ -22,6 +27,11 @@
 			<li>
 				<a href="<?= $pager->getNext() ?>" aria-label="Previous">
 					<span aria-hidden="true">&raquo;</span>
+				</a>
+			</li>
+			<li>
+				<a href="<?= $pager->getLast() ?>" aria-label="Last">
+					<span aria-hidden="true">Last</span>
 				</a>
 			</li>
 		<?php endif ?>
