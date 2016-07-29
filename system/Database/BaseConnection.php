@@ -278,6 +278,14 @@ abstract class BaseConnection implements ConnectionInterface
 	 */
 	protected $connectDuration;
 
+	/**
+	 * If true, no queries will actually be
+	 * ran against the database.
+	 *
+	 * @var bool
+	 */
+	protected $pretend = false;
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -523,8 +531,10 @@ abstract class BaseConnection implements ConnectionInterface
 
 		$startTime = microtime(true);
 
-		// Run the query
-		if (false === ($this->resultID = $this->simpleQuery($query->getQuery())))
+
+
+		// Run the query for real
+		if (! $this->pretend && false === ($this->resultID = $this->simpleQuery($query->getQuery())))
 		{
 			$query->setDuration($startTime, $startTime);
 
@@ -545,7 +555,12 @@ abstract class BaseConnection implements ConnectionInterface
 			$this->queries[] = $query;
 		}
 
-		return new $resultClass($this->connID, $this->resultID);
+		// If $pretend is true, then we just want to return
+		// the actual query object here. There won't be
+		// any results to return.
+		return $this->pretend
+			? $query
+			: new $resultClass($this->connID, $this->resultID);
 	}
 
 	//--------------------------------------------------------------------
@@ -1288,6 +1303,26 @@ abstract class BaseConnection implements ConnectionInterface
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Allows the engine to be set into a mode where queries are not
+	 * actually executed, but they are still generated, timed, etc.
+	 *
+	 * This is primarily used by the prepared query functionality.
+	 *
+	 * @param bool $pretend
+	 *
+	 * @return $this
+	 */
+	public function pretend(bool $pretend = true)
+	{
+	    $this->pretend = $pretend;
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
 
 	/**
 	 * Returns the last error code and message.
