@@ -101,6 +101,21 @@ class Cache extends BaseConfig
 	];
 
 	/*
+	| -------------------------------------------------------------------------
+	| Predis settings
+	| -------------------------------------------------------------------------
+	| Your Redis server can be specified below, if you are using
+	| the Predis drivers.
+	|
+	*/
+    public $predis = [
+        'host'     => '127.0.0.1',
+        'password' => null,
+        'port'     => 6379,
+        'timeout'  => 0,
+    ];
+
+	/*
 	|--------------------------------------------------------------------------
 	| Available Cache Handlers
 	|--------------------------------------------------------------------------
@@ -113,6 +128,7 @@ class Cache extends BaseConfig
 		'dummy'     => \CodeIgniter\Cache\Handlers\DummyHandler::class,
 		'file'      => \CodeIgniter\Cache\Handlers\FileHandler::class,
 		'memcached' => \CodeIgniter\Cache\Handlers\MemcachedHandler::class,
+		'predis'    => \CodeIgniter\Cache\Handlers\PredisHandler::class,
 		'redis'     => \CodeIgniter\Cache\Handlers\RedisHandler::class,
 		'wincache'  => \CodeIgniter\Cache\Handlers\WincacheHandler::class,
 	];
