@@ -89,7 +89,9 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 * Connect to the database.
 	 *
 	 * @param bool $persistent
+	 *
 	 * @return mixed
+	 * @throws \CodeIgniter\DatabaseException
 	 */
 	public function connect($persistent = false)
 	{
@@ -446,6 +448,5 @@ class Connection extends BaseConnection implements ConnectionInterface
 	}
 
 	//--------------------------------------------------------------------
-
 
 }

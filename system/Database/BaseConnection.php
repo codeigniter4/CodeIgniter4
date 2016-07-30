@@ -609,6 +609,46 @@ abstract class BaseConnection implements ConnectionInterface
 	//--------------------------------------------------------------------
 
 	/**
+	 * Creates a prepared statement with the database that can then
+	 * be used to execute multiple statements against. Within the
+	 * closure, you would build the query in any normal way, though
+	 * the Query Builder is the expected manner.
+	 *
+	 * Example:
+	 *    $stmt = $db->prepare(function($db)
+	 * 	  	{
+	 *			return $db->table('users')
+	 *   				->where('id', 1)
+	 * 					->get();
+	 * 	  	})
+	 *
+	 * @param \Closure $func
+	 * @param array    $options  Passed to the prepare() method
+	 *
+	 * @return PreparedQueryInterface|null
+	 */
+	public function prepare(\Closure $func, array $options = [])
+	{
+		$this->pretend(true);
+
+	    $sql = $func($this);
+
+		$this->pretend(false);
+
+		if ($sql instanceof QueryInterface)
+		{
+			$sql = $sql->getOriginalQuery();
+		}
+
+		$class = str_ireplace('Connection', 'PreparedQuery', get_class($this));
+		$class = new $class($this);
+
+		return $class->prepare($sql, $options);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Returns an array containing all of the
 	 *
 	 * @return array
@@ -1319,6 +1359,16 @@ abstract class BaseConnection implements ConnectionInterface
 	    $this->pretend = $pretend;
 
 		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	public function __get(string $name)
+	{
+	    if (isset($this->$name))
+		{
+			return $this->$name;
+		}
 	}
 
 	//--------------------------------------------------------------------
