@@ -53,7 +53,7 @@ class RedisHandler implements CacheInterface
 	{
 		$config = $this->config;
 
-		$this->redis = new Redis();
+		$this->redis = new \Redis();
 
 		try
 		{
