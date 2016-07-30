@@ -81,7 +81,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 *
 	 * @var    MySQLi
 	 */
-	protected $mysqli;
+	public $mysqli;
 
 	//--------------------------------------------------------------------
 

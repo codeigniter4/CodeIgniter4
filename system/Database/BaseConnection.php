@@ -1363,17 +1363,6 @@ abstract class BaseConnection implements ConnectionInterface
 
 	//--------------------------------------------------------------------
 
-	public function __get(string $name)
-	{
-	    if (isset($this->$name))
-		{
-			return $this->$name;
-		}
-	}
-
-	//--------------------------------------------------------------------
-
-
 	/**
 	 * Returns the last error code and message.
 	 *
