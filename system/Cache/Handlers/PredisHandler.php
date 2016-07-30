@@ -39,9 +39,9 @@ class PredisHandler implements CacheInterface
     {
         $this->prefix = $config->prefix ?: '';
 
-        if (isset($config->predis))
+        if (isset($config->redis))
         {
-            $this->config = array_merge($this->config, $config->predis);
+            $this->config = array_merge($this->config, $config->redis);
         }
     }
 

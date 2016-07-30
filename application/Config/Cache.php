@@ -90,7 +90,7 @@ class Cache extends BaseConfig
 	| Redis settings
 	| -------------------------------------------------------------------------
 	| Your Redis server can be specified below, if you are using
-	| the Redis drivers.
+	| the Redis or Predis drivers.
 	|
 	*/
 	public $redis = [
@@ -99,21 +99,6 @@ class Cache extends BaseConfig
 		'port'     => 6379,
 		'timeout'  => 0,
 	];
-
-	/*
-	| -------------------------------------------------------------------------
-	| Predis settings
-	| -------------------------------------------------------------------------
-	| Your Redis server can be specified below, if you are using
-	| the Predis drivers.
-	|
-	*/
-    public $predis = [
-        'host'     => '127.0.0.1',
-        'password' => null,
-        'port'     => 6379,
-        'timeout'  => 0,
-    ];
 
 	/*
 	|--------------------------------------------------------------------------
