@@ -90,7 +90,7 @@ class Cache extends BaseConfig
 	| Redis settings
 	| -------------------------------------------------------------------------
 	| Your Redis server can be specified below, if you are using
-	| the Redis drivers.
+	| the Redis or Predis drivers.
 	|
 	*/
 	public $redis = [
@@ -113,6 +113,7 @@ class Cache extends BaseConfig
 		'dummy'     => \CodeIgniter\Cache\Handlers\DummyHandler::class,
 		'file'      => \CodeIgniter\Cache\Handlers\FileHandler::class,
 		'memcached' => \CodeIgniter\Cache\Handlers\MemcachedHandler::class,
+		'predis'    => \CodeIgniter\Cache\Handlers\PredisHandler::class,
 		'redis'     => \CodeIgniter\Cache\Handlers\RedisHandler::class,
 		'wincache'  => \CodeIgniter\Cache\Handlers\WincacheHandler::class,
 	];
