@@ -41,7 +41,7 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 
 		// MySQLi also only supports positional placeholders (?)
 		// so we need to replace our named placeholders (:name)
-		$this->sql = preg_replace('/:[\S]+/', '?', $this->sql);
+		$this->sql = preg_replace('/:[^\s,)]+/', '?', $this->sql);
 
 		if (! $this->statement = $this->db->mysqli->prepare($this->sql))
 		{
