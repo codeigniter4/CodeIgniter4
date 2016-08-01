@@ -179,4 +179,22 @@ class QueryTest extends \CIUnitTestCase
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * @group single
+	 *
+	 * @see https://github.com/bcit-ci/CodeIgniter4/issues/201
+	 */
+	public function testSimilarNamedBinds()
+	{
+		$query = new Query($this->db);
+
+		$query->setQuery('SELECT * FROM users WHERE sitemap = :sitemap OR site = :site', ['sitemap' => 'sitemap', 'site' => 'site']);
+
+		$expected = "SELECT * FROM users WHERE sitemap = 'sitemap' OR site = 'site'";
+
+		$this->assertEquals($expected, $query->getQuery());
+	}
+
+	//--------------------------------------------------------------------
 }

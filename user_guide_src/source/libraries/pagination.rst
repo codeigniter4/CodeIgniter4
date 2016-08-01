@@ -78,7 +78,7 @@ methods to keep the data separate::
         $data = [
             'users' => $userModel->paginate(10, 'group1'),
             'pages' => $pageModel->paginate(15, 'group2'),
-            'pager' => $model->pager
+            'pager' => $userModel->pager
         ];
 
         echo view('users/index', $data);
