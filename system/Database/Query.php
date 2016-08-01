@@ -122,10 +122,10 @@ class Query implements QueryInterface
 	{
 	    $this->db = $db;
 	}
-	
+
 	//--------------------------------------------------------------------
-	
-	
+
+
 	/**
 	 * Sets the raw query string to use for this statement.
 	 *
@@ -230,7 +230,7 @@ class Query implements QueryInterface
 
 	/**
 	 * Stores the error description that happened for this query.
-	 * 
+	 *
 	 * @param int $code
 	 * @param string $error
 	 */
@@ -392,7 +392,8 @@ class Query implements QueryInterface
 			{
 				$escapedValue = '('.implode(',', $escapedValue).')';
 			}
-			$sql = str_replace(':'.$placeholder, $escapedValue, $sql);
+
+			$sql = preg_replace('/:'.$placeholder.'(?!\w)/', $escapedValue, $sql);
 		}
 
 		return $sql;
@@ -451,7 +452,7 @@ class Query implements QueryInterface
 
 	/**
 	 * Return text representation of the query
-	 * 
+	 *
 	 * @return type
 	 */
 	public function __toString()
