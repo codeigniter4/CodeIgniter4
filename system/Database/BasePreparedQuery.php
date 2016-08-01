@@ -54,22 +54,7 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
 	 *
 	 * @return ResultInterface
 	 */
-	abstract public function execute(array $data);
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Takes an array containing multiple rows of data that should
-	 * be inserted, one after the other, using the prepared statement.
-	 *
-	 * @param array $data
-	 *
-	 * @return \CodeIgniter\Database\ResultInterface
-	 */
-	public function executeBatch(array $data): ResultInterface
-	{
-
-	}
+	abstract public function execute(...$data);
 
 	//--------------------------------------------------------------------
 
@@ -86,6 +71,21 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
 	 * @return mixed
 	 */
 	abstract public function prepare(string $sql, array $options = []);
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Explicity closes the statement.
+	 */
+	public function close()
+	{
+		if (! is_object($this->statement))
+		{
+			return;
+		}
+
+	    $this->statement->close();
+	}
 
 	//--------------------------------------------------------------------
 

@@ -6,21 +6,6 @@ use \CodeIgniter\Database\BasePreparedQuery;
 class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 {
 	/**
-	 * Takes a new set of data and runs it against the currently
-	 * prepared query. Upon success, will return a Results object.
-	 *
-	 * @param array $data
-	 *
-	 * @return ResultInterface|null
-	 */
-	public function execute(array $data)
-	{
-
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
 	 * Prepares the query against the database, and saves the connection
 	 * info necessary to execute the query later.
 	 *
@@ -53,4 +38,46 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Takes a new set of data and runs it against the currently
+	 * prepared query. Upon success, will return a Results object.
+	 *
+	 * @param array $data
+	 *
+	 * @return ResultInterface
+	 */
+	public function execute(...$data)
+	{
+		if (is_null($this->statement))
+		{
+			throw new \BadMethodCallException('You must call prepare before trying to execute a prepared statement.');
+		}
+
+		// First off -bind the parameters
+		$bindTypes = '';
+
+		foreach ($data as $item)
+		{
+			if (is_integer($item))
+			{
+				$bindTypes .= 'i';
+			}
+			elseif (is_numeric($item))
+			{
+				$bindTypes .= 'd';
+			}
+			else
+			{
+				$bindTypes .= 's';
+			}
+		}
+die(var_dump($data));
+		$this->statement->bind_param($bindTypes, ...$data);
+
+		return $this->statement->execute();
+	}
+
+	//--------------------------------------------------------------------
+
 }

@@ -10,19 +10,7 @@ interface PreparedQueryInterface
 	 *
 	 * @return ResultInterface
 	 */
-	public function execute(array $data);
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Takes an array containing multiple rows of data that should
-	 * be inserted, one after the other, using the prepared statement.
-	 *
-	 * @param array $data
-	 *
-	 * @return \CodeIgniter\Database\ResultInterface
-	 */
-	public function executeBatch(array $data): ResultInterface;
+	public function execute(...$data);
 
 	//--------------------------------------------------------------------
 
@@ -36,6 +24,13 @@ interface PreparedQueryInterface
 	 * @return mixed
 	 */
 	public function prepare(string $sql, array $options = []);
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Explicity closes the statement.
+	 */
+	public function close();
 
 	//--------------------------------------------------------------------
 
