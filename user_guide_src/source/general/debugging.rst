@@ -19,7 +19,7 @@ Enabling Kint
 =============
 
 By default, Kint is enabled in **development** and **testing** environments only. This can be altered by modifying
-the ``$useKing`` value in the environment configuration section of the main **index.php** file::
+the ``$useKint`` value in the environment configuration section of the main **index.php** file::
 
     $useKint = true;
 

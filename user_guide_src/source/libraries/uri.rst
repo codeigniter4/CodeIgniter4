@@ -22,7 +22,7 @@ Alternatively, you can use the ``service()`` function to return an instance for 
 	$uri = service('uri');
 
 When you create the new instance, you can pass a full or partial URL in the constructor and it will be parsed
-into it's appropriate sections::
+into its appropriate sections::
 
 	$uri = new \CodeIgniter\HTTP\URI('http://www.example.com/some/path');
 	$uri = service('uri', 'http://www.example.com/some/path');
@@ -30,7 +30,7 @@ into it's appropriate sections::
 The Current URI
 ---------------
 
-Many times, all you really want is an object representing the current URL of this request. This can be accesssed
+Many times, all you really want is an object representing the current URL of this request. This can be accessed
 in two different ways. The first, is to grab it directly from the current request object. Assuming that you're in
 a controller that extends ``CodeIgniter\Controller`` you can get it like::
 
@@ -209,7 +209,7 @@ you can use the ``stripQuery()`` and ``keepQuery()`` methods to change the actua
 Fragment
 --------
 
-Fragments are the portion at the end of the URL, preceeded by the pound-sign (#). In HTML URL's these are links
+Fragments are the portion at the end of the URL, preceded by the pound-sign (#). In HTML URL's these are links
 to an on-page anchor. Media URI's can make use of them in various other ways.
 ::
 
@@ -223,7 +223,7 @@ URI Segments
 ============
 
 Each section of the path between the slashes are a single segment. The URI class provides a simple way to determine
-what the value of the segments are. The segments start at 1 being the furthest left of the path.
+what the values of the segments are. The segments start at 1 being the furthest left of the path.
 ::
 
 	// URI = http://example.com/users/15/profile

@@ -195,7 +195,7 @@ Class Reference
 
 		Per the `RFC <http://tools.ietf.org/html/rfc7231#section-5.3>`_ the match has the option of returning a
 		default value, like this method does, or to return an empty string. If you need to have an exact match and
-		would like an empty string returned instead, pass ``true`` as the second parameter.::
+		would like an empty string returned instead, pass ``true`` as the second parameter::
 
 			// Returns empty string if no match.
 			$imageType = $message->negotiateMedia($supported, true);
@@ -243,7 +243,7 @@ Class Reference
 		:rtype: string
 
 		Determines the best match between the application-supported languages and the ``Accept-Language`` header value.
-		If no match is found, will return teh first element of the ``$supported`` array.::
+		If no match is found, will return the first element of the ``$supported`` array::
 
 			$supported = [
 				'en',

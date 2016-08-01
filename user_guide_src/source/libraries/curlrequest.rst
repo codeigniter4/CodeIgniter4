@@ -6,7 +6,7 @@ The ``CURLRequest`` class is a lightweight HTTP client based on CURL that allows
 web sites and servers. It can be used to get the contents of a Google search, retrieve a web page or image,
 or communicate with an API, among many other things.
 
-This class is modeled after the `Guzzle HTTP Client <http://docs.guzzlephp.org/en/latest/>`_ library since
+This class is modelled after the `Guzzle HTTP Client <http://docs.guzzlephp.org/en/latest/>`_ library since
 it is one of the more widely used libraries. Where possible, the syntax has been kept the same so that if
 your application needs something a little more powerful than what this library provides, you will have
 to change very little to move over to use Guzzle.
@@ -26,7 +26,7 @@ To load with the Services class call the ``curlrequest()`` method::
 	$client = CodeIgniter\HTTP\Services::curlrequest();
 
 You can pass in an array of default options as the first parameter to modify how cURL will handle the request.
-The options are described later in this document.::
+The options are described later in this document::
 
 	$options = [
 		'base_uri' => 'http://example.com/api/v1/',
@@ -36,7 +36,7 @@ The options are described later in this document.::
 
 When creating the class manually, you need to pass a few dependencies in. The first parameter is an
 instance of the ``Config\App`` class. The second parameter is a URI instance. The third
-parameter is a Response object. The fourth parameter is the optional ``$options`` array.::
+parameter is a Response object. The fourth parameter is the optional ``$options`` array::
 
 	$client = new CodeIgniter\HTTP\CURLRequest(
 		new Config\App(),
