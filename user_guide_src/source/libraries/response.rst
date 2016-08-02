@@ -202,7 +202,7 @@ The methods provided by the parent class that are available are:
 		:rtype: int
 
 		Returns the currently status code for this response. If no status code has been set, a BadMethodCallException
-		will be thrown.::
+		will be thrown::
 
 			echo $response->statusCode();
 
@@ -237,7 +237,7 @@ The methods provided by the parent class that are available are:
 		:returns: The current response instance.
 		:rtype: CodeIgniter\HTTP\Response
 
-		Sets the date used for this response. The ``$date`` argument must be an instance of ``DateTime``.::
+		Sets the date used for this response. The ``$date`` argument must be an instance of ``DateTime``::
 
 			$date = DateTime::createFromFormat('j-M-Y', '15-Feb-2016');
 			$response->setDate($date);
@@ -249,7 +249,7 @@ The methods provided by the parent class that are available are:
 		:returns: The current response instance.
 		:rtype: CodeIgniter\HTTP\Response
 
-		Sets the content type this response represents.::
+		Sets the content type this response represents::
 
 			$response->setContentType('text/plain');
 			$response->setContentType('text/html');
@@ -266,7 +266,7 @@ The methods provided by the parent class that are available are:
 		:rtype: CodeIgniter\HTTP\Response
 
 		Sets the ``Cache-Control`` header to turn off all HTTP caching. This is the default setting
-		of all response messages.::
+		of all response messages::
 
 		    $response->noCache();
 

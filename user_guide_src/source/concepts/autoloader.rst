@@ -53,7 +53,7 @@ have a trailing slash.
 By default, the application folder is namespace to the ``App`` namespace. While you are not forced to namespace the controllers,
 libraries, or models in the application directory, if you do, they will be found under the ``App`` namespace.
 You may change this namespace by editing the **/application/Config/Constants.php** file and setting the
-new namespace value under the ``APP_NAMESPACE`` setting.::
+new namespace value under the ``APP_NAMESPACE`` setting::
 
 	define('APP_NAMESPACE', 'App');
 

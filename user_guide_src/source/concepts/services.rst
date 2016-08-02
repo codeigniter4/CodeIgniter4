@@ -117,7 +117,7 @@ There are occasions where you need to require that only a single instance of a s
 is created. This is easily handled with the ``getSharedInstance()`` method that is called from within the
 factory method. This handles checking if an instance has been created and saved
 within the class, and, if not, creates a new one. All of the factory methods provide a
-``$getShared = false`` value as the last parameter. You should stick to the method also.::
+``$getShared = false`` value as the last parameter. You should stick to the method also::
 
     class Services
     {

@@ -71,7 +71,7 @@ PageNotFoundException
 This is used to signal a 404, Page Not Found error. When thrown, the system will show the view found at
 ``/application/views/errors/html/error_404.php``. You should customize all of the error views for your site.
 If, in ``Config/Routes.php``, you have specified a 404 Override, that will be called instead of the standard
-404 page.::
+404 page::
 
 	if (! $page = $pageModel->find($id))
 	{
@@ -84,7 +84,7 @@ ConfigException
 ---------------
 
 This exception should be used when the values from the configuration class are invalid, or when the config class
-is not the right type, etc.::
+is not the right type, etc::
 
 	throw new \CodeIgniter\ConfigException();
 
@@ -93,7 +93,7 @@ This provides an HTTP status code of 500, and an exit code of 3.
 UnknownFileException
 --------------------
 
-Use this exception when a file cannot be found.::
+Use this exception when a file cannot be found::
 
 	throw new \CodeIgniter\UnknownFileException();
 
@@ -102,7 +102,7 @@ This provides an HTTP status code of 500, and an exit code of 4.
 UnknownClassException
 ---------------------
 
-Use this exception when a class cannot be found.::
+Use this exception when a class cannot be found::
 
 	throw new \CodeIgniter\UnknownClassException($className);
 
@@ -120,7 +120,7 @@ This provides an HTTP status code of 500, and an exit code of 6.
 UserInputException
 ------------------
 
-Use this exception when the user's input is not valid.::
+Use this exception when the user's input is not valid::
 
 	throw new \CodeIgniter\UserInputException();
 

@@ -71,7 +71,7 @@ Synching
 Within your local repository, Git will have created an alias, **origin**, for the 
 Github repository it is bound to. You want to create an alias for the shared
 repository, so that you can "synch" the two, making sure that your repository
-includes any other contributions that have been merged by us into the shared repo.::
+includes any other contributions that have been merged by us into the shared repo::
 
     git remote add upstream UPSTREAM_URL
 
@@ -102,7 +102,7 @@ change log, etc). This local branch should be named appropriately,
 for instance "fix/problem123" or "new/mind-reader".
 
 For instance, make sure you are in the *develop* branch, and create a
-new feature branch, based on *develop*, for a new feature you are creating.::
+new feature branch, based on *develop*, for a new feature you are creating::
 
     git checkout develop
     git checkout -b new/mind-reader

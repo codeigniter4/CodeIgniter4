@@ -87,7 +87,7 @@ while maintaining consistency of code appearance.
 Following the "best practice" above, 
 the following code block would have a single tab at the beginning of
 each line containing braces, and two tabs at the beginning of the
-nested statements. No alignment is implied.::
+nested statements. No alignment is implied::
 
     {
         $first = 1;

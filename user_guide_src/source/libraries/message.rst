@@ -41,7 +41,7 @@ Class Reference
 		:returns: The current message body
 		:rtype: string
 
-		Returns the current message body, if any has been set. If not body exists, returns null.::
+		Returns the current message body, if any has been set. If not body exists, returns null::
 
 			echo $message->body();
 
@@ -81,7 +81,7 @@ Class Reference
 		:rtype: string|array|null
 
 		Allows you to retrieve the current value of a single message header. ``$name`` is the case-insensitive header name.
-		While the header is converted internally as described above, you can access the header with any type of case.::
+		While the header is converted internally as described above, you can access the header with any type of case::
 
 			// These are all the same:
 			$message->header('HOST');
@@ -89,7 +89,7 @@ Class Reference
 			$message->header('host');
 
 		If the header has multiple values, the values will return as an array of values. You can use the ``headerLine()``
-		method to retrieve the values as a string.::
+		method to retrieve the values as a string::
 
 			echo $message->header('Accept-Language');
 
@@ -126,7 +126,7 @@ Class Reference
 
 		Sets the value of a single header. ``$name`` is the case-insensitive name of the header. If the header
 		doesn't already exist in the collection, it will be created. The ``$value`` can be either a string
-		or an array of strings.::
+		or an array of strings::
 
 			$message->setHeader('Host', 'codeigniter.com');
 
@@ -167,7 +167,7 @@ Class Reference
 		:returns: The current message instance
 		:rtype: CodeIgniter\\HTTP\\Message
 
-		Sets the HTTP protocol version this Message uses. Valid values are ``1.0`` or ``1.1``.::
+		Sets the HTTP protocol version this Message uses. Valid values are ``1.0`` or ``1.1``::
 
 			$message->setProtocolVersion('1.1');
 
@@ -228,7 +228,7 @@ Class Reference
 		:rtype: string
 
 		Determines the best match between the application-supported values and the ``Accept-Encoding`` header value.
-		If no match is found, will return the first element of the ``$supported`` array.::
+		If no match is found, will return the first element of the ``$supported`` array::
 
 			$supported = [
 				'gzip',
