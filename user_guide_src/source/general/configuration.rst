@@ -14,7 +14,7 @@ Accessing Config Files
 You can access config files within your classes by creating a new instance. All of the properties
 are public, so you access the settings like any other property::
 
-	$config = new Config\EmailConfig();
+	$config = new \Config\EmailConfig();
 	
 	// Access settings as class properties
 	$protocol = $config->protocol;
