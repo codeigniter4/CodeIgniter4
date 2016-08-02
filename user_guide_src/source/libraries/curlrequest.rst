@@ -23,7 +23,7 @@ The library can be loaded either manually or through the :doc:`Services class </
 
 To load with the Services class call the ``curlrequest()`` method::
 
-	$client = CodeIgniter\HTTP\Services::curlrequest();
+	$client = \CodeIgniter\HTTP\Services::curlrequest();
 
 You can pass in an array of default options as the first parameter to modify how cURL will handle the request.
 The options are described later in this document::
@@ -32,16 +32,16 @@ The options are described later in this document::
 		'base_uri' => 'http://example.com/api/v1/',
 		'timeout' => 3
 	];
-	$client = Config\Services::curlrequest($options);
+	$client = \Config\Services::curlrequest($options);
 
 When creating the class manually, you need to pass a few dependencies in. The first parameter is an
 instance of the ``Config\App`` class. The second parameter is a URI instance. The third
 parameter is a Response object. The fourth parameter is the optional ``$options`` array::
 
-	$client = new CodeIgniter\HTTP\CURLRequest(
-		new Config\App(),
-		new CodeIgniter\HTTP\URI(),
-		new CodeIgniter\HTTP\Response(),
+	$client = new \CodeIgniter\HTTP\CURLRequest(
+		new \Config\App(),
+		new \CodeIgniter\HTTP\URI(),
+		new \CodeIgniter\HTTP\Response(),
 		$options
 	);
 

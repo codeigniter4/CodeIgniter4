@@ -15,7 +15,7 @@ Loading the Class
 
 You can load an instance of the class manually through the Service class::
 
-	$negotiator = Config\Services::negotiator();
+	$negotiator = \Config\Services::negotiator();
 
 This will grab the current request instance and automatically inject it into the Negotiator class.
 
