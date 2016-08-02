@@ -398,7 +398,7 @@ same way::
 
 You may also use the ``stop()`` method to completely kill the session
 by removing the old session_id, destroying all data, and destroying
-the cookie that contained the session id.::
+the cookie that contained the session id::
 
     $session->stop();
 

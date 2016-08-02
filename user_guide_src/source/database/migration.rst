@@ -126,7 +126,7 @@ Usage Example
 *************
 
 In this example some simple code is placed in **application/controllers/Migrate.php** 
-to update the schema.::
+to update the schema::
 
 	<?php
 	
@@ -167,7 +167,7 @@ Migrates all database groups to the latest available migrations::
 **current**
 
 Migrates all database groups to match the version set in ``$currentVersion``. This will migrate both
-up and down as needed to match the specified version.::
+up and down as needed to match the specified version::
 
   > php index.php migrations current
 
@@ -194,13 +194,13 @@ Rolls back all migrations, taking all database groups to a blank slate, effectiv
 
 **refresh**
 
-Refreshes the database state by first rolling back all migrations, and then migrating to the latest version.::
+Refreshes the database state by first rolling back all migrations, and then migrating to the latest version::
 
   > php index.php migrations refresh
 
 **status**
 
-Displays a list of all migrations and the date and time they were ran, or '--' if they have not be ran.::
+Displays a list of all migrations and the date and time they were ran, or '--' if they have not be ran::
 
   > php index.php migrations status
   Filename                              Migrated On
@@ -271,7 +271,7 @@ Class Reference
 	  :returns:   The current MigrationRunner instance
 	  :rtype:     CodeIgniter\Database\MigrationRunner
 
-	  Sets the path the library should look for migration files.::
+	  Sets the path the library should look for migration files::
 
 	    $migration->setPath($path)
 	              ->latest();

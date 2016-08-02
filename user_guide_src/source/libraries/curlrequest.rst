@@ -75,7 +75,7 @@ available to you::
 	$language = $response->negotiateLanguage(['en', 'fr']);
 
 While the ``request()`` method is the most flexible, you can also use the following shortcut methods. They
-each take the URL as the first parameter and an array of options as the second.::
+each take the URL as the first parameter and an array of options as the second::
 
 * $client->get('http://example.com');
 * $client->delete('http://example.com');
@@ -90,7 +90,7 @@ Base URI
 
 A ``base_uri`` can be set as one of the options during the instantiation of the class. This allows you to
 set a base URI, and then make all requests with that client using relative URLs. This is especially handy
-when working with APIs.::
+when working with APIs::
 
 	$client = Services::curlrequest([
 		'base_uri' => 'https://example.com/api/v1/'
@@ -194,7 +194,7 @@ Allows you to provide Authentication details for `HTTP Basic <http://www.ietf.or
 `Digest <http://www.ietf.org/rfc/rfc2069.txt>`_ and authentication. Your script may have to do extra to support
 Digest authentication - this simply passes the username and password along for you. The value must be an
 array where the first element is the username, and the second is the password. The third parameter should be
-the type of authentication to use, either ``basic`` or ``digest``.::
+the type of authentication to use, either ``basic`` or ``digest``::
 
 	$client->request('GET', 'http://example.com', ['auth' => ['username', 'password', 'digest']]);
 
@@ -208,7 +208,7 @@ The first way is to use the ``setBody()`` method::
 	       ->request('put', 'http://example.com');
 
 The second method is by passing a ``body`` option in. This is provided to maintain Guzzle API compatibility,
-and functions the exact same way as the previous example. The value must be a string.::
+and functions the exact same way as the previous example. The value must be a string::
 
 	$client->request('put', 'http://example.com', ['body' => $body]);
 
@@ -247,7 +247,7 @@ You can pass a filename as the value for debug to have the output written to a f
 delay
 =====
 
-Allows you to pause a number of milliseconds before sending the request.::
+Allows you to pause a number of milliseconds before sending the request::
 
 	// Delay for 2 seconds
 	$response->request('GET', 'http://example.com', ['delay' => 2000]);
@@ -257,7 +257,7 @@ form_params
 
 You can send form data in an application/x-www-form-urlencoded POST request by passing an associative array in
 the ``form_params`` option. This will set the ``Content-Type`` header to ``application/x-www-form-urlencoded``
-if it's not already set.::
+if it's not already set::
 
 	$client->request('POST', '/post', [
 		'form_params' => [
@@ -275,7 +275,7 @@ headers
 
 While you can set any headers this request needs by using the ``setHeader()`` method, you can also pass an associative
 array of headers in as an option. Each key is the name of a header, and each value is a string or array of strings
-representing the header field values.::
+representing the header field values::
 
 	$client->request('get', '/', [
 		'headers' => [
@@ -292,7 +292,7 @@ http_errors
 ===========
 
 By default, CURLRequest will fail if the HTTP code returned is greater than or equal to 400. You can set
-``http_errors`` to ``false`` to return the content instead.::
+``http_errors`` to ``false`` to return the content instead::
 
     $client->request('GET', '/status/500');
 	// Will fail verbosely
@@ -306,7 +306,7 @@ json
 
 The ``json`` option is used to easily upload JSON encoded data as the body of a request. A Content-Type header
 of ``application/json`` is added, overwriting any Content-Type that might be already set. The data provided to
-this option can be any value that ``json_encode()`` accepts.::
+this option can be any value that ``json_encode()`` accepts::
 
 	$response = $client->request('PUT, '/put', ['json' => ['foo' => 'bar']]);
 
@@ -320,7 +320,7 @@ multipart
 When you need to send files and other data via a POST request, you can use the ``multipart`` option, along with
 the `CURLFile Class <http://php.net/manual/en/class.curlfile.php>`_. The values should be an associative array
 of POST data to send. For safer usage, the legacy method of uploading files by prefixing their name with an `@`
-has been disabled. Any files that you want to send must be passed as instances of CURLFile.::
+has been disabled. Any files that you want to send must be passed as instances of CURLFile::
 
 	$post_data = [
 		'foo' => 'bar',
@@ -334,7 +334,7 @@ has been disabled. Any files that you want to send must be passed as instances o
 query
 =====
 
-You can pass along data to send as query string variables by passing an associative array as the ``query`` option.::
+You can pass along data to send as query string variables by passing an associative array as the ``query`` option::
 
 	// Send a GET request to /get?foo=bar
 	$client->request('GET', '/get', ['query' => ['foo' => 'bar']]);
@@ -355,7 +355,7 @@ This option describes the SSL certificate verification behavior. If the ``verify
 SSL certificate verification and uses the default CA bundle provided by the operating system. If set to ``false`` it
 will disable the certificate verification (this is insecure, and allows man-in-the-middle attacks!). You can set it
 to a string that contains the path to a CA bundle to enable verification with a custom certificate. The default value
-is true.::
+is true::
 
 	// Use the system's CA bundle (this is the default setting)
 	$client->request('GET', '/', ['verify' => true]);
@@ -370,7 +370,7 @@ version
 =======
 
 To set the HTTP protocol to use, you can pass a string or float with the version number (typically either 1.0
-or 1.1, 2.0 is currently unsupported.)
+or 1.1, 2.0 is currently unsupported.)::
 
 	// Force HTTP/1.0
 	$client->request('GET', '/', ['version' => 1.0]);

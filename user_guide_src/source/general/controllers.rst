@@ -30,7 +30,7 @@ and put the following code in it::
 	{
 		public function index()
 		{
-			echo 'Hellow World!';
+			echo 'Hello World!';
 		}
 	}
 

@@ -37,7 +37,7 @@ are requested to be logged by the application, but the threshold doesn't allow t
 ignored. The simplest method to use is to set this value to the minimum level that you want to have logged. For example,
 if you want to log debug messages, and not information messages, you would set the threshold to ``5``. Any log requests with
 a level of 5 or less (which includes runtime errors, system errors, etc) would be logged and info, notices, and warnings
-would be ignored.::
+would be ignored::
 
 	public $threshold = 5;
 

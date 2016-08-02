@@ -101,7 +101,7 @@ There will be times when you will have several variables of the same name. When 
 system has no way of knowing what the correct value should be. You can protect against this by
 "namespacing" the variables. This is done by including the name of the config file (all lower case),
 followed by a period (.), and then the variable name itself. This is especially common when you
-have multiple database connections.::
+have multiple database connections::
 
 	// Not namespaced
 	db_name = "my_db"
