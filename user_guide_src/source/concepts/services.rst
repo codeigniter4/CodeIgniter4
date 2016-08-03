@@ -12,7 +12,7 @@ configuration file. This file acts as a type of factory to create new instances 
 A quick example will probably make things clearer, so imagine that you need to pull in an instance
 of the Timer class. The simplest method would simply be to create a new instance of that class::
 
-	$timer = new CodeIgniter\Debug\Timer();
+	$timer = new \CodeIgniter\Debug\Timer();
 
 And this works great. Until you decide that you want to use a different timer class in its place.
 Maybe this one has some advanced reporting the default timer does not provide. In order to do this,
@@ -26,7 +26,7 @@ class for us. This class is kept very simple. It only contains a method for each
 to use as a service. The method typically returns a new instance of that class, passing any dependencies
 it might have into it. Then, we would replace our timer creation code with code that calls this new class::
 
-	$timer = Config\Services::timer();
+	$timer = \Config\Services::timer();
 
 When you need to change the implementation used, you can modify the services configuration file, and
 the change happens automatically throughout your application without you having to do anything. Now
