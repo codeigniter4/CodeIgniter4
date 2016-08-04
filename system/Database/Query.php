@@ -122,10 +122,10 @@ class Query implements QueryInterface
 	{
 	    $this->db = $db;
 	}
-	
+
 	//--------------------------------------------------------------------
-	
-	
+
+
 	/**
 	 * Sets the raw query string to use for this statement.
 	 *
@@ -142,6 +142,22 @@ class Query implements QueryInterface
 		{
 			$this->binds = $binds;
 		}
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Will store the variables to bind into the query later.
+	 *
+	 * @param array $binds
+	 *
+	 * @return $this
+	 */
+	public function setBinds(array $binds)
+	{
+	    $this->binds = $binds;
 
 		return $this;
 	}
@@ -230,7 +246,7 @@ class Query implements QueryInterface
 
 	/**
 	 * Stores the error description that happened for this query.
-	 * 
+	 *
 	 * @param int $code
 	 * @param string $error
 	 */
@@ -451,7 +467,7 @@ class Query implements QueryInterface
 
 	/**
 	 * Return text representation of the query
-	 * 
+	 *
 	 * @return type
 	 */
 	public function __toString()

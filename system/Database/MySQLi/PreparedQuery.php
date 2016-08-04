@@ -18,15 +18,11 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 	 *
 	 * @return mixed
 	 */
-	public function prepare(string $sql, array $options = [])
+	public function _prepare(string $sql, array $options = [])
 	{
 		// Mysqli driver doesn't like statements
 		// with terminating semicolons.
 		$this->sql = rtrim($sql, ';');
-
-		// MySQLi also only supports positional placeholders (?)
-		// so we need to replace our named placeholders (:name)
-		$this->sql = preg_replace('/:[^\s,)]+/', '?', $this->sql);
 
 		if (! $this->statement = $this->db->mysqli->prepare($this->sql))
 		{
@@ -47,7 +43,7 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 	 *
 	 * @return ResultInterface
 	 */
-	public function execute(...$data)
+	public function _execute($data)
 	{
 		if (is_null($this->statement))
 		{
@@ -57,6 +53,7 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 		// First off -bind the parameters
 		$bindTypes = '';
 
+		// Determine the type string
 		foreach ($data as $item)
 		{
 			if (is_integer($item))
@@ -72,10 +69,13 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 				$bindTypes .= 's';
 			}
 		}
-die(var_dump($data));
+
+		// Bind it
 		$this->statement->bind_param($bindTypes, ...$data);
 
-		return $this->statement->execute();
+		$success = $this->statement->execute();
+
+		return $success;
 	}
 
 	//--------------------------------------------------------------------

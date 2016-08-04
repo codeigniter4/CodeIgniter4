@@ -487,6 +487,26 @@ abstract class BaseConnection implements ConnectionInterface
 	//--------------------------------------------------------------------
 
 	/**
+	 * Stores a new query with the object. This is primarily used by
+	 * the prepared queries.
+	 *
+	 * @param \CodeIgniter\Database\Query $query
+	 *
+	 * @return $this
+	 */
+	public function addQuery(Query $query)
+	{
+	    if ($this->saveQueries)
+		{
+			 $this->queries[] = $query;
+		}
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Executes the query against the database.
 	 *
 	 * @param $sql
