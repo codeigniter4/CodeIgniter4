@@ -417,7 +417,8 @@ class MigrationRunner
 	{
 		$row = $this->db->table($this->table)
 		                ->select('version')
-					    ->where('group', $group)
+				->where('group', $group)
+				->orderBy('version', 'DESC')
 		                ->get()
 		                ->getRow();
 
