@@ -415,6 +415,13 @@ class MigrationRunner
 	 */
 	protected function getVersion($group = 'default')
 	{
+		if (empty($group))
+		{
+			$config = new \Config\Database();
+			$group = $config->defaultGroup;
+			unset($config);
+		}
+
 		$row = $this->db->table($this->table)
 		                ->select('version')
 				->where('group', $group)
@@ -463,6 +470,13 @@ class MigrationRunner
 	 */
 	protected function removeHistory($version, $group = 'default')
 	{
+		if (empty($group))
+		{
+			$config = new \Config\Database();
+			$group = $config->defaultGroup;
+			unset($config);
+		}
+
 		$this->db->table($this->table)
 				 ->where('version', $version)
 				 ->where('group', $group)
