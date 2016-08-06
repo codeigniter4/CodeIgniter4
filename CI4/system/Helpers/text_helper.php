@@ -1,4 +1,7 @@
 <?php
+use Zend\I18n\Validator\Int;
+use PhpParser\Node\Expr\Cast\String_;
+
 /**
  * CodeIgniter
  *
@@ -61,7 +64,7 @@ if ( ! function_exists('word_limiter'))
 	 * @param	string	the end character. Usually an ellipsis
 	 * @return	string
 	 */
-	function word_limiter($str, $limit = 100, $end_char = '&#8230;')
+	function word_limiter(string $str, int $limit = 100, string $end_char = '&#8230;'): string
 	{
 		if (trim($str) === '')
 		{
@@ -94,7 +97,7 @@ if ( ! function_exists('character_limiter'))
 	 * @param	string	the end character. Usually an ellipsis
 	 * @return	string
 	 */
-	function character_limiter($str, $n = 500, $end_char = '&#8230;')
+	function character_limiter(string $str, int $n = 500, string $end_char = '&#8230;'): string
 	{
 		if (mb_strlen($str) < $n)
 		{
@@ -135,7 +138,7 @@ if ( ! function_exists('ascii_to_entities'))
 	 * @param	string	$str
 	 * @return	string
 	 */
-	function ascii_to_entities($str)
+	function ascii_to_entities(string $str): string
 	{
 		$out = '';
 		for ($i = 0, $s = strlen($str) - 1, $count = 1, $temp = array(); $i <= $s; $i++)
@@ -200,7 +203,7 @@ if ( ! function_exists('entities_to_ascii'))
 	 * @param	bool
 	 * @return	string
 	 */
-	function entities_to_ascii($str, $all = TRUE)
+	function entities_to_ascii(string $str, bool $all = TRUE): string
 	{
 		if (preg_match_all('/\&#(\d+)\;/', $str, $matches))
 		{
@@ -258,7 +261,7 @@ if ( ! function_exists('word_censor'))
 	 * @param	string	the optional replacement value
 	 * @return	string
 	 */
-	function word_censor($str, $censored, $replacement = '')
+	function word_censor(string $str, string $censored, string $replacement = ''): string
 	{
 		if ( ! is_array($censored))
 		{
@@ -316,7 +319,7 @@ if ( ! function_exists('highlight_code'))
 	 * @param	string	the text string
 	 * @return	string
 	 */
-	function highlight_code($str)
+	function highlight_code(string $str): string
 	{
 		/* The highlight string function encodes and highlights
 		 * brackets so we need them to start raw.
@@ -374,7 +377,8 @@ if ( ! function_exists('highlight_phrase'))
 	 * @param	string	$tag_close	the closing tag to end the phrase with
 	 * @return	string
 	 */
-	function highlight_phrase($str, $phrase, $tag_open = '<mark>', $tag_close = '</mark>')
+	function highlight_phrase(string $str, string $phrase, string $tag_open = '<mark>',
+	        string $tag_close = '</mark>'): string
 	{
 		return ($str !== '' && $phrase !== '')
 			? preg_replace('/('.preg_quote($phrase, '/').')/i'.(UTF8_ENABLED ? 'u' : ''), $tag_open.'\\1'.$tag_close, $str)
@@ -392,7 +396,7 @@ if ( ! function_exists('convert_accented_characters'))
 	 * @param	string	$str	Input string
 	 * @return	string
 	 */
-	function convert_accented_characters($str)
+	function convert_accented_characters(string $str): string
 	{
 		static $array_from, $array_to;
 
@@ -439,7 +443,7 @@ if ( ! function_exists('word_wrap'))
 	 * @param	int	$charlim = 76	the number of characters to wrap at
 	 * @return	string
 	 */
-	function word_wrap($str, $charlim = 76)
+	function word_wrap(string $str, int $charlim = 76): string
 	{
 		// Set the character limit
 		is_numeric($charlim) OR $charlim = 76;
@@ -536,7 +540,7 @@ if ( ! function_exists('ellipsize'))
 	 * @param	string	ellipsis ; Default '...'
 	 * @return	string	ellipsized string
 	 */
-	function ellipsize($str, $max_length, $position = 1, $ellipsis = '&hellip;')
+	function ellipsize(string $str, int $max_length, $position = 1, string $ellipsis = '&hellip;'): string
 	{
 		// Strip tags
 		$str = trim(strip_tags($str));
@@ -603,7 +607,7 @@ if ( ! function_exists('strip_quotes'))
      * @param	string
      * @return	string
      */
-    function strip_quotes($str)
+    function strip_quotes(string $str): string
     {
         return str_replace(['"', "'"], '', $str);
     }
@@ -621,7 +625,7 @@ if ( ! function_exists('quotes_to_entities'))
      * @param	string
      * @return	string
      */
-    function quotes_to_entities($str)
+    function quotes_to_entities(string $str): string
     {
         return str_replace(["\'","\"","'",'"'], ["&#39;","&quot;","&#39;","&quot;"], $str);
     }
@@ -646,7 +650,7 @@ if ( ! function_exists('reduce_double_slashes'))
      * @param	string
      * @return	string
      */
-    function reduce_double_slashes($str)
+    function reduce_double_slashes(string $str): string
     {
         return preg_replace('#(^|[^:])//+#', '\\1/', $str);
     }
@@ -672,7 +676,7 @@ if ( ! function_exists('reduce_multiples'))
      * @param	bool	TRUE/FALSE - whether to trim the character from the beginning/end
      * @return	string
      */
-    function reduce_multiples($str, $character = ',', $trim = FALSE)
+    function reduce_multiples(string $str, string $character = ',', bool $trim = FALSE): string
     {
         $str = preg_replace('#'.preg_quote($character, '#').'{2,}#', $character, $str);
         return ($trim === TRUE) ? trim($str, $character) : $str;
@@ -692,7 +696,7 @@ if ( ! function_exists('random_string'))
      * @param	int	number of characters
      * @return	string
      */
-    function random_string($type = 'alnum', $len = 8)
+    function random_string(string $type = 'alnum', int $len = 8): string
     {
         switch ($type)
         {
@@ -740,7 +744,7 @@ if ( ! function_exists('increment_string'))
      * @param	string	Which number should be used for the first dupe increment
      * @return	string
      */
-    function increment_string($str, $separator = '_', $first = 1)
+    function increment_string(string $str, string $separator = '_', string $first = 1): string
     {
         preg_match('/(.+)'.preg_quote($separator, '/').'([0-9]+)$/', $str, $match);
         return isset($match[2]) ? $match[1].$separator.($match[2] + 1) : $str.$separator.$first;
@@ -759,7 +763,7 @@ if ( ! function_exists('alternator'))
      * @param	string (as many parameters as needed)
      * @return	string
      */
-    function alternator()
+    function alternator(): string
     {
         static $i;
 
@@ -794,7 +798,8 @@ if (! function_exists('excerpt'))
 	 * If no $phrase is passed, will generate an excerpt of $radius characters
 	 * from the begining of $text.
 	 */
-	function excerpt($text, $phrase = false, $radius = 100, $ellipsis = '...')
+	function excerpt(string $text, string $phrase = false, int $radius = 100,
+	        string $ellipsis = '...'): string
 	{
 		if ($phrase)
 		{
