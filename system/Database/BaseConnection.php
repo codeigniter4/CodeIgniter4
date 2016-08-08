@@ -560,7 +560,7 @@ abstract class BaseConnection implements ConnectionInterface
 
 			// @todo deal with errors
 
-			if ($this->saveQueries)
+			if ($this->saveQueries && ! $this->pretend)
 			{
 				$this->queries[] = $query;
 			}
@@ -570,7 +570,7 @@ abstract class BaseConnection implements ConnectionInterface
 
 		$query->setDuration($startTime);
 
-		if ($this->saveQueries)
+		if ($this->saveQueries && ! $this->pretend)
 		{
 			$this->queries[] = $query;
 		}
