@@ -118,10 +118,10 @@ final class InflectorHelperTest extends \CIUnitTestCase
 			'hello world'              => 'hello_world'
 		];
 
-		foreach ($strings as $lowerCasedString => $camelizedString)
+		foreach ($strings as $spaced => $underscore)
 		{
-			$underscored = underscore($lowerCasedString);
-			$this->assertEquals($underscored, $camelizedString);
+			$underscored = underscore($spaced);
+			$this->assertEquals($underscored, $underscore);
 		}
 	}
 
@@ -157,6 +157,73 @@ final class InflectorHelperTest extends \CIUnitTestCase
 		{
 			$this->assertEquals(is_countable($countable), true);
 			$this->assertEquals(is_countable($unCountable), false);
+		}
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testDasherize()
+	{
+		$strings = 
+		[
+			'hello_world'              => 'hello-world',
+			'Hello_From_CodeIgniter_4' => 'Hello-From-CodeIgniter-4'
+		];
+
+		foreach ($strings as $underscored => $dashed)
+		{
+			$dasherized = dasherize($underscored);
+			$this->assertEquals($dasherized, $dashed);
+		}
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testOrdinal()
+	{
+		$suffixes = 
+		[
+			'st' => 1,
+			'nd' => 2,
+			'rd' => 3,
+			'th' => 4,
+			'th' => 11,
+			'th' => 20,
+			'st' => 21,
+			'nd' => 22,
+			'rd' => 23,
+			'th' => 24
+		];
+
+		foreach ($suffixes as $suffix => $number) 
+		{
+			$ordinal = ordinal($number);
+			$this->assertEquals($suffix, $ordinal);
+		}
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testOrdinalize()
+	{
+		$suffixedNumbers = 
+		[
+			'1st'  => 1,
+			'2nd'  => 2,
+			'3rd'  => 3,
+			'4th'  => 4,
+			'11th' => 11,
+			'20th' => 20,
+			'21st' => 21,
+			'22nd' => 22,
+			'23rd' => 23,
+			'24th' => 24
+		];
+
+		foreach ($suffixedNumbers as $suffixed => $number) 
+		{
+			$ordinalized = ordinalize($number);
+			$this->assertEquals($suffixed, $ordinalized);
 		}
 	}
 

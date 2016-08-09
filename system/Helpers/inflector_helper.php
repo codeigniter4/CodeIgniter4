@@ -308,3 +308,78 @@ if ( ! function_exists('is_countable'))
 	}
 
 }
+
+// ------------------------------------------------------------------------
+
+if ( ! function_exists('dasherize'))
+{
+	
+	/**
+	 * Replaces underscores with dashes in the string.
+	 *
+	 * @param	string	$string	Input string
+	 * @return	string
+	 */
+	function dasherize(string $string): string
+	{
+		return str_replace('_', '-', $string);
+	}
+
+}
+
+// ------------------------------------------------------------------------
+
+if ( ! function_exists('ordinal'))
+{
+	
+	/**
+	 * Returns the suffix that should be added to a 
+	 * number to denote the position in an ordered 
+	 * sequence such as 1st, 2nd, 3rd, 4th.
+	 *
+	 * @param	int	$integer	The integer to determine
+	 * the suffix
+	 * @return	string
+	 */
+	function ordinal(int $integer): string
+	{
+		$suffixes = 
+		[
+			'th',
+			'st',
+			'nd',
+			'rd',
+			'th',
+			'th',
+			'th',
+			'th',
+			'th',
+			'th'
+		];
+
+    	return $integer % 100 >= 11 && $integer % 100 <= 13 
+    		? 'th'
+    		: $suffixes[$integer % 10];
+	}
+
+}
+
+// ------------------------------------------------------------------------
+
+if ( ! function_exists('ordinalize'))
+{
+	
+	/**
+	 * Turns a number into an ordinal string used 
+	 * to denote the position in an ordered sequence 
+	 * such as 1st, 2nd, 3rd, 4th.
+	 *
+	 * @param	int	$integer	The integer to ordinalize
+	 * @return	string
+	 */
+	function ordinalize(int $integer): string
+	{
+		return $integer . ordinal($integer);
+	}
+
+}

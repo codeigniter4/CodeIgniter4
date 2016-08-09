@@ -94,3 +94,37 @@ The following functions are available:
 	Checks if the given word has a plural version. Example::
 
 		is_countable('equipment'); // Returns FALSE
+
+.. php:function:: dasherize($string)
+
+	:param	string	$string: Input string
+	:returns:	Dasherized string
+	:rtype:	string
+
+	Replaces underscores with dashes in the string. Example::
+
+		dasherize('hello_world'); // Returns 'hello-world'
+
+.. php:function:: ordinal($integer)
+
+	:param	int	$integer: The integer to determine the suffix
+	:returns:	Ordinal suffix
+	:rtype:	string
+
+	Returns the suffix that should be added to a 
+	number to denote the position such as 
+	1st, 2nd, 3rd, 4th. Example::
+
+		ordinal(1); // Returns 'st'
+
+.. php:function:: ordinalize($integer)
+
+	:param	int	$integer: The integer to ordinalize
+	:returns:	Ordinalized integer
+	:rtype:	string
+
+	Turns a number into an ordinal string used 
+	to denote the position such as 1st, 2nd, 3rd, 4th. 
+	Example::
+
+		ordinal(1); // Returns '1st'
