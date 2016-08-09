@@ -250,7 +250,7 @@ class TextHelperTest extends \CIUnitTestCase
     {
         $string = $this->_long_string;
         $phrase = 'began';
-        $result = '... So some nice people began to write tests. The ...';
+        $result = '... people  began  to write ...';
         $this->assertEquals(excerpt($string, $phrase, 10), $result);
     }
 }
