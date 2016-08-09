@@ -729,22 +729,22 @@ if (! function_exists('excerpt'))
 
 		foreach (array_reverse($pre) as $pr => $e)
 		{
-			if ((strlen($e) + $count) < $radius)
+			if ((strlen($e) + $count + 1) < $radius)
 			{
 				$prev = ' '.$e.$prev;
 			}
-			$count = $count + strlen($e);
+			$count = ++$count + strlen($e);
 		}
 
 		$count = 0;
 
 		foreach ($pos as $po => $s)
 		{
-			if ((strlen($s) + $count) < $radius)
+			if ((strlen($s) + $count + 1) < $radius)
 			{
 				$post .= $s.' ';
 			}
-			$count = $count + strlen($s);
+			$count = ++$count + strlen($s);
 		}
 		
 		$ellPre = $phrase ? $ellipsis : '';
