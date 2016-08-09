@@ -239,9 +239,8 @@ class TextHelperTest extends \CIUnitTestCase
     public function test_excerpt()
     {
         $string = $this->_long_string;
-        $phrase = 'write';
-        $result = '... '.$this->_long_string.' ...';
-        $this->assertEquals(excerpt($string, $phrase), $result);
+        $result = 'Once upon a time, a framework had no tests.  It sad. So some nice people began to write tests.  The  ...';
+        $this->assertEquals(excerpt($string), $result);
     }
     
     // -----------------------------------------------------------------------
