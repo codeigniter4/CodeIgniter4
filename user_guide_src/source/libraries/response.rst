@@ -58,6 +58,34 @@ parameter. This is not case-sensitive.
 
 	$response->removeHeader('Location');
 
+Force File Download
+===================
+
+The Reponse class provides a simple way to send a file to the client, prompting the browser to download the data
+to your computer. This sets the appropriate headers to make it happen.
+
+The first parameter is the **name you want the downloaded file to be named**, the second parameter is the
+file data.
+
+If you set the second parameter to NULL and ``$filename`` is an existing, readable
+file path, then its content will be read instead.
+
+If you set the third parameter to boolean TRUE, then the actual file MIME type
+(based on the filename extension) will be sent, so that if your browser has a
+handler for that type - it can use it.
+
+Example::
+
+	$data = 'Here is some text!';
+	$name = 'mytext.txt';
+	$response->download($name, $data);
+
+If you want to download an existing file from your server you'll need to
+do the following::
+
+	// Contents of photo.jpg will be automatically read
+	$response->download('/path/to/photo.jpg', NULL);
+
 HTTP Caching
 ============
 
