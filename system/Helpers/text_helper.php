@@ -657,10 +657,10 @@ if ( ! function_exists('increment_string'))
      *
      * @param	string	required
      * @param	string	What should the duplicate number be appended with
-     * @param	string	Which number should be used for the first dupe increment
+     * @param	int	Which number should be used for the first dupe increment
      * @return	string
      */
-    function increment_string(string $str, string $separator = '_', string $first = 1): string
+    function increment_string(string $str, string $separator = '_', int $first = 1): string
     {
         preg_match('/(.+)'.preg_quote($separator, '/').'([0-9]+)$/', $str, $match);
         return isset($match[2]) ? $match[1].$separator.($match[2] + 1) : $str.$separator.$first;
