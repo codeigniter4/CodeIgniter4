@@ -149,6 +149,22 @@ class Query implements QueryInterface
 	//--------------------------------------------------------------------
 
 	/**
+	 * Will store the variables to bind into the query later.
+	 *
+	 * @param array $binds
+	 *
+	 * @return $this
+	 */
+	public function setBinds(array $binds)
+	{
+	    $this->binds = $binds;
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Returns the final, processed query string after binding, etal
 	 * has been performed.
 	 *
