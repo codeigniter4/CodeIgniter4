@@ -121,7 +121,7 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
 		// Return a result object
 		$resultClass = str_replace('PreparedQuery', 'Result', get_class($this));
 
-		$resultID = $this->statement->get_result();
+		$resultID = $this->_getResult();
 
 		return new $resultClass($this->db->connID, $resultID);
 	}
@@ -136,6 +136,15 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
 	 * @return ResultInterface
 	 */
 	abstract public function _execute($data);
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns the result object for the prepared query.
+	 *
+	 * @return mixed
+	 */
+	abstract public function _getResult();
 
 	//--------------------------------------------------------------------
 

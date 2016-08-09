@@ -1,10 +1,27 @@
-<?php namespace CodeIgniter\Database\MySQLi;
+<?php namespace CodeIgniter\Database\Postgre;
 
 use CodeIgniter\Database\PreparedQueryInterface;
 use \CodeIgniter\Database\BasePreparedQuery;
 
 class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 {
+	/**
+	 * Stores the name this query can be
+	 * used under by postgres. Only used internally.
+	 *
+	 * @var string
+	 */
+	protected $name;
+
+	/**
+	 * The result resource from a successful
+	 * pg_exec. Or false.
+	 * @var
+	 */
+	protected $result;
+
+	//--------------------------------------------------------------------
+
 	/**
 	 * Prepares the query against the database, and saves the connection
 	 * info necessary to execute the query later.
@@ -20,14 +37,14 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 	 */
 	public function _prepare(string $sql, array $options = [])
 	{
-		// Mysqli driver doesn't like statements
-		// with terminating semicolons.
-		$this->sql = rtrim($sql, ';');
+		$this->name = mt_rand(1, 10000000000000000);
 
-		if (! $this->statement = $this->db->mysqli->prepare($this->sql))
+		$this->sql = $this->parameterize($sql);
+
+		if (! $this->statement = pg_prepare($this->db->connID, $this->name, $this->sql))
 		{
-			$this->errorCode   = $this->db->mysqli->errno;
-			$this->errorString = $this->db->mysqli->error;
+			$this->errorCode   = 0;
+			$this->errorString = pg_last_error($this->db->connID);
 		}
 
 		return $this;
@@ -50,32 +67,9 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 			throw new \BadMethodCallException('You must call prepare before trying to execute a prepared statement.');
 		}
 
-		// First off -bind the parameters
-		$bindTypes = '';
+		$this->result = pg_execute($this->db->connID, $this->name, $data);
 
-		// Determine the type string
-		foreach ($data as $item)
-		{
-			if (is_integer($item))
-			{
-				$bindTypes .= 'i';
-			}
-			elseif (is_numeric($item))
-			{
-				$bindTypes .= 'd';
-			}
-			else
-			{
-				$bindTypes .= 's';
-			}
-		}
-
-		// Bind it
-		$this->statement->bind_param($bindTypes, ...$data);
-
-		$success = $this->statement->execute();
-
-		return $success;
+		return (bool)$this->result;
 	}
 
 	//--------------------------------------------------------------------
@@ -87,7 +81,30 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 	 */
 	public function _getResult()
 	{
-	    return $this->statement->get_result();
+		return $this->result;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Replaces the ? placeholders with $1, $2, etc parameters for use
+	 * within the prepared query.
+	 *
+	 * @param string $sql
+	 *
+	 * @return string
+	 */
+	public function parameterize(string $sql): string
+	{
+		// Track our current value
+		$count = 0;
+
+		$sql = preg_replace_callback('/\?/', function($matches) use (&$count){
+			$count++;
+			return "\${$count}";
+		}, $sql);
+
+	    return $sql;
 	}
 
 	//--------------------------------------------------------------------
