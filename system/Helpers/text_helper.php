@@ -230,7 +230,7 @@ if ( ! function_exists('word_censor'))
 	 * @param	string	the optional replacement value
 	 * @return	string
 	 */
-	function word_censor(string $str, string $censored, string $replacement = ''): string
+	function word_censor(string $str, $censored, string $replacement = ''): string
 	{
 		if ( ! is_array($censored))
 		{
