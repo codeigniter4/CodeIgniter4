@@ -339,7 +339,7 @@ if ( ! function_exists('highlight_phrase'))
 	        string $tag_close = '</mark>'): string
 	{
 		return ($str !== '' && $phrase !== '')
-			? preg_replace('/('.preg_quote($phrase, '/').')/i'.(UTF8_ENABLED ? 'u' : ''), $tag_open.'\\1'.$tag_close, $str)
+			? preg_replace('/('.preg_quote($phrase, '/').')/i', $tag_open.'\\1'.$tag_close, $str)
 			: $str;
 	}
 }
@@ -357,13 +357,13 @@ if ( ! function_exists('convert_accented_characters'))
 		static $array_from, $array_to;
 		if ( ! is_array($array_from))
 		{
-			if (file_exists(APPPATH.'config/foreign_chars.php'))
+			if (file_exists(APPPATH.'Config/ForeignChars.php'))
 			{
-				include(APPPATH.'config/foreign_chars.php');
+				include(APPPATH.'Config/ForeignChars.php');
 			}
-			if (file_exists(APPPATH.'config/'.ENVIRONMENT.'/foreign_chars.php'))
+			if (file_exists(APPPATH.'Config/'.ENVIRONMENT.'/ForeignChars.php'))
 			{
-				include(APPPATH.'config/'.ENVIRONMENT.'/foreign_chars.php');
+				include(APPPATH.'Config/'.ENVIRONMENT.'/ForeignChars.php');
 			}
 			if (empty($foreign_characters) OR ! is_array($foreign_characters))
 			{
@@ -657,7 +657,7 @@ if ( ! function_exists('increment_string'))
      *
      * @param	string	required
      * @param	string	What should the duplicate number be appended with
-     * @param	int	Which number should be used for the first dupe increment
+     * @param	int	    Which number should be used for the first dupe increment
      * @return	string
      */
     function increment_string(string $str, string $separator = '_', int $first = 1): string
