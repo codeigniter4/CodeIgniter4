@@ -2,8 +2,7 @@
 
 class TextHelperTest extends \CIUnitTestCase
 {
-    private $_long_string = 'Once upon a time, a framework had no tests. It sad. So some nice people began to write tests.
-    The more time that went on, the happier it became.  Everyone was happy.';
+    private $_long_string = 'Once upon a time, a framework had no tests. It sad. So some nice people began to write tests. The more time that went on, the happier it became. Everyone was happy.';
     
     public function setUp()
     {
@@ -145,7 +144,7 @@ class TextHelperTest extends \CIUnitTestCase
     // ------------------------------------------------------------------------
     public function test_convert_accented_characters()
     {
-        $this->ci_vfs_clone('application/config/foreign_chars.php');
+        //$this->ci_vfs_clone('application/Config/ForeignChars.php');
         $this->assertEquals('AAAeEEEIIOOEUUUeY', convert_accented_characters('ÀÂÄÈÊËÎÏÔŒÙÛÜŸ'));
         $this->assertEquals('a e i o u n ue', convert_accented_characters('á é í ó ú ñ ü'));
     }
@@ -238,8 +237,7 @@ class TextHelperTest extends \CIUnitTestCase
     public function test_excerpt()
     {
         $string = $this->_long_string;
-     	$result = ' Once upon a time, a framework had no tests. It sad   So some nice people began to write tests.
-     	The more time that went on, the happier it became.  ...';
+        $result = ' Once upon a time, a framework had no tests. It sad   So some nice people began to write tests. The more time that went on, the happier it became. ...';
         $this->assertEquals(excerpt($string), $result);
     }
     
