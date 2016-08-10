@@ -230,7 +230,7 @@ if ( ! function_exists('word_censor'))
 	 * @param	string	the optional replacement value
 	 * @return	string
 	 */
-	function word_censor(string $str, string $censored, string $replacement = ''): string
+	function word_censor(string $str, $censored, string $replacement = ''): string
 	{
 		if ( ! is_array($censored))
 		{
@@ -339,7 +339,7 @@ if ( ! function_exists('highlight_phrase'))
 	        string $tag_close = '</mark>'): string
 	{
 		return ($str !== '' && $phrase !== '')
-			? preg_replace('/('.preg_quote($phrase, '/').')/i'.(UTF8_ENABLED ? 'u' : ''), $tag_open.'\\1'.$tag_close, $str)
+			? preg_replace('/('.preg_quote($phrase, '/').')/i', $tag_open.'\\1'.$tag_close, $str)
 			: $str;
 	}
 }
@@ -357,13 +357,13 @@ if ( ! function_exists('convert_accented_characters'))
 		static $array_from, $array_to;
 		if ( ! is_array($array_from))
 		{
-			if (file_exists(APPPATH.'config/foreign_chars.php'))
+			if (file_exists(APPPATH.'Config/ForeignChars.php'))
 			{
-				include(APPPATH.'config/foreign_chars.php');
+				include(APPPATH.'Config/ForeignChars.php');
 			}
-			if (file_exists(APPPATH.'config/'.ENVIRONMENT.'/foreign_chars.php'))
+			if (file_exists(APPPATH.'Config/'.ENVIRONMENT.'/ForeignChars.php'))
 			{
-				include(APPPATH.'config/'.ENVIRONMENT.'/foreign_chars.php');
+				include(APPPATH.'Config/'.ENVIRONMENT.'/ForeignChars.php');
 			}
 			if (empty($foreign_characters) OR ! is_array($foreign_characters))
 			{
@@ -657,10 +657,10 @@ if ( ! function_exists('increment_string'))
      *
      * @param	string	required
      * @param	string	What should the duplicate number be appended with
-     * @param	string	Which number should be used for the first dupe increment
+     * @param	int	    Which number should be used for the first dupe increment
      * @return	string
      */
-    function increment_string(string $str, string $separator = '_', string $first = 1): string
+    function increment_string(string $str, string $separator = '_', int $first = 1): string
     {
         preg_match('/(.+)'.preg_quote($separator, '/').'([0-9]+)$/', $str, $match);
         return isset($match[2]) ? $match[1].$separator.($match[2] + 1) : $str.$separator.$first;
@@ -706,15 +706,15 @@ if (! function_exists('excerpt'))
 	 * If no $phrase is passed, will generate an excerpt of $radius characters
 	 * from the begining of $text.
 	 */
-	function excerpt(string $text, string $phrase = false, int $radius = 100,
+	function excerpt(string $text, string $phrase = null, int $radius = 100,
 	        string $ellipsis = '...'): string
 	{
-		if ($phrase)
+		if (isset($phrase))
 		{
 			$phrasePos = strpos(strtolower($text), strtolower($phrase));
 			$phraseLen = strlen($phrase);
 		}
-		elseif (! $phrase)
+		elseif (! isset($phrase))
 		{
 			$phrasePos = $radius / 2;
 			$phraseLen = 1;
@@ -729,22 +729,22 @@ if (! function_exists('excerpt'))
 
 		foreach (array_reverse($pre) as $pr => $e)
 		{
-			if ((strlen($e) + $count) < $radius)
+			if ((strlen($e) + $count + 1) < $radius)
 			{
 				$prev = ' '.$e.$prev;
 			}
-			$count = $count + strlen($e);
+			$count = ++$count + strlen($e);
 		}
 
 		$count = 0;
 
 		foreach ($pos as $po => $s)
 		{
-			if ((strlen($s) + $count) < $radius)
+			if ((strlen($s) + $count + 1) < $radius)
 			{
 				$post .= $s.' ';
 			}
-			$count = $count + strlen($s);
+			$count = ++$count + strlen($s);
 		}
 		
 		$ellPre = $phrase ? $ellipsis : '';
