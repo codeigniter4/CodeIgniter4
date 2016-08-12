@@ -423,11 +423,11 @@ class MigrationRunner
 		}
 
 		$row = $this->db->table($this->table)
-						->select('version')
-						->where('group', $group)
-						->orderBy('version', 'DESC')
-						->get()
-						->getRow();
+				->select('version')
+				->where('group', $group)
+				->orderBy('version', 'DESC')
+				->get()
+				->getRow();
 
 		return $row ? $row->version : '0';
 	}
