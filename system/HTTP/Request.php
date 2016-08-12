@@ -57,22 +57,6 @@ class Request extends Message implements RequestInterface
 	 */
 	protected $proxyIPs;
 
-	/**
-	 * The default Locale this request
-	 * should operate under.
-	 *
-	 * @var string
-	 */
-	protected $defaultLocale;
-
-	/**
-	 * The current locale of the application.
-	 * Default value is set in Config\App.php
-	 *
-	 * @var string
-	 */
-	protected $locale;
-
 	//--------------------------------------------------------------------
 
 	/**
@@ -84,8 +68,6 @@ class Request extends Message implements RequestInterface
 	public function __construct($config, $uri=null)
 	{
 	    $this->proxyIPs = $config->proxyIPs;
-
-		$this->locale = $this->defaultLocale = $config->defaultLocale;
 	}
 
 	//--------------------------------------------------------------------

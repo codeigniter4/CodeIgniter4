@@ -9,6 +9,7 @@ Library Reference
     caching
     cli
     content_negotiation
+    localization
     curlrequest
     incomingrequest
     message

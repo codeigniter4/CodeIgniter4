@@ -207,6 +207,21 @@ class Services
 	//--------------------------------------------------------------------
 
 	/**
+	 * Responsible for loading the language string translations.
+	 */
+	public static function language($getShared = true)
+	{
+		if ($getShared)
+		{
+			return self::getSharedInstance('language');
+		}
+
+		return new \CodeIgniter\Language\Loader();
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * The file locator provides utility methods for looking for non-classes
 	 * within namespaced folders, as well as convenience methods for
 	 * loading 'helpers', and 'libraries'.

@@ -187,4 +187,39 @@ class IncomingRequestTest extends \CIUnitTestCase
 	}
 
 	//--------------------------------------------------------------------
+
+	public function testStoresDefaultLocale()
+	{
+		$config = new App();
+
+		$this->assertEquals($config->defaultLocale, $this->request->getDefaultLocale());
+		$this->assertEquals($config->defaultLocale, $this->request->getLocale());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testSetLocaleSaves()
+	{
+		$this->request->setLocale('en');
+
+		$this->assertEquals('en', $this->request->getLocale());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testNegotiatesLocale()
+	{
+		$_SERVER['HTTP_ACCEPT_LANGUAGE'] = 'es; q=1.0, en; q=0.5';
+
+		$config = new App();
+		$config->negotiateLocale = true;
+		$config->supportedLocales = ['en', 'es'];
+
+		$request = new IncomingRequest($config, new URI());
+
+		$this->assertEquals($config->defaultLocale, $request->getDefaultLocale());
+		$this->assertEquals('es', $request->getLocale());
+	}
+
+	//--------------------------------------------------------------------
 }

@@ -310,7 +310,24 @@ if (! function_exists('shared_service'))
 
 //--------------------------------------------------------------------
 
+if (! function_exists('lang'))
+{
+	/**
+	 * A convenience method to translate a string and format it
+	 * with the intl extension's MessageFormatter object.
+	 *
+	 * @param string $line
+	 * @param array  $args
+	 *
+	 * @return string
+	 */
+	function lang(string $line, array $args=[])
+	{
+		return Services::language()->getLine($line, $args);
+	}
+}
 
+//--------------------------------------------------------------------
 
 
 

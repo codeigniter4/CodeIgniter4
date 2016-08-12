@@ -55,24 +55,4 @@ class RequestTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	public function testStoresDefaultLocale()
-	{
-		$config = new App();
-
-		$this->assertEquals($config->defaultLocale, $this->request->getDefaultLocale());
-		$this->assertEquals($config->defaultLocale, $this->request->getLocale());
-	}
-
-	//--------------------------------------------------------------------
-
-	public function testSetLocaleSaves()
-	{
-		$this->request->setLocale('en');
-
-		$this->assertEquals('en', $this->request->getLocale());
-	}
-
-	//--------------------------------------------------------------------
-
-
 }

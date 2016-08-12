@@ -97,6 +97,22 @@ class IncomingRequest extends Request
 	 */
 	protected $negotiate;
 
+	/**
+	 * The default Locale this request
+	 * should operate under.
+	 *
+	 * @var string
+	 */
+	protected $defaultLocale;
+
+	/**
+	 * The current locale of the application.
+	 * Default value is set in Config\App.php
+	 *
+	 * @var string
+	 */
+	protected $locale;
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -123,6 +139,28 @@ class IncomingRequest extends Request
 		$this->uri = $uri;
 
 		$this->detectURI($config->uriProtocol, $config->baseURL);
+
+		$this->detectLocale($config);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Handles setting up the locale, perhaps auto-detecting through
+	 * content negotiation.
+	 *
+	 * @param $config
+	 */
+	public function detectLocale($config)
+	{
+		$this->locale = $this->defaultLocale = $config->defaultLocale;
+
+		if (! $config->negotiateLocale)
+		{
+			return;
+		}
+
+		$this->locale = $this->negotiate('language', $config->supportedLocales);
 	}
 
 	//--------------------------------------------------------------------
