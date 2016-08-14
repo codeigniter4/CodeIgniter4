@@ -73,47 +73,6 @@ class Request extends Message implements RequestInterface
 	//--------------------------------------------------------------------
 
 	/**
-	 * Returns the default locale as set in Config\App.php
-	 *
-	 * @return string
-	 */
-	public function getDefaultLocale(): string
-	{
-		return $this->defaultLocale;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Gets the current locale, with a fallback to the default
-	 * locale if none is set.
-	 *
-	 * @return string
-	 */
-	public function getLocale(): string
-	{
-		return $this->locale ?? $this->defaultLocale;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Sets the locale string for this request.
-	 *
-	 * @param string $locale
-	 *
-	 * @return $this
-	 */
-	public function setLocale(string $locale)
-	{
-		$this->locale = $locale;
-
-		return $this;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
 	 * Gets the user's IP address.
 	 *
 	 * @return string IP address

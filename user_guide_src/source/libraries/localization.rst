@@ -1,12 +1,13 @@
-============
+############
 Localization
-============
+############
 
 .. contents::
     :local:
 
-Introduction
-============
+********************
+Working With Locales
+********************
 
 CodeIgniter provides several tools to help you localize your application for different languages. While full
 localization of an application is a complex subject, it's simple to swap out strings in your application
@@ -22,6 +23,9 @@ supported language::
             /fr
                 app.php
 
+.. important:: Locale detection only works for web-based requests that use the IncomingRequest class.
+    Command-line requests will not have these features.
+
 Configuring the Locale
 ======================
 
@@ -30,10 +34,9 @@ Every site will have a default language/locale they operate in. This can be set 
     public $defaultLocale = 'en';
 
 The value can be any string that your application uses to manage text strings and other formats. It is
-recommended that a [ISO 639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) language code, followed
-by an underscore (_), and the [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1#Current_codes)
-country code is recommended. This results in language codes like en_US for American English, or fr_FR,
-for French/France.
+recommended that a [BCP 47](http://www.rfc-editor.org/rfc/bcp/bcp47.txt) language code is used. This results in
+language codes like en-US for American English, or fr-FR, for French/France. A more readable introduction
+to this can be found on the [W3C's site](https://www.w3.org/International/articles/language-tags/).
 
 The system is smart enough to fallback to more generic language codes if an exact match
 cannot be found. If the locale code was set to **en_US** and we only have language files setup for **en**
@@ -43,7 +46,7 @@ directory existed at **application/Language/en_US** then that we be used first.
 Locale Detection
 ================
 
-There are two methods supported to detect the correct locale during each request. The first is a "set and forget"
+There are two methods supported to detect the correct locale during the request. The first is a "set and forget"
 method that will automatically perform :doc:`content negotiation </libraries/content_negotiation>` for you to
 determine the correct locale to use. The second method allows you to specify a segment in your routes that
 will be used to set the locale.
@@ -66,3 +69,38 @@ the following example, the **en** locale would be used if no match is found::
 In Routes
 ---------
 
+The second method uses a custom placeholder to detect the desired locale and set it on the Request. The
+placeholder ``{locale}`` can be placed as a segment in your route. If present, the contents of the matching
+segment will be your locale::
+
+    $routes->get('{locale}/books', 'App\Books::index');
+
+In this example, if the user tried to visit ``http://example.com/fr/books``, then the locale would be
+set to ``fr``, assuming it was configured as a valid locale.
+
+.. note:: If the value doesn't match a valid locale as defined in the App configuration file, the default
+    locale will be used in it's place.
+
+Retrieving the Current Locale
+=============================
+
+The current locale can always be retrieved from the IncomingRequest object, through the ``getLocale()` method.
+If your controller is extending ``CodeIgniter\Controller``, this will be available through ``$this->request``::
+
+    namespace App\Controllers;
+
+    class UserController extends \CodeIgniter\Controller
+    {
+        public function index()
+        {
+            $locale = $this->request->getLocale();
+        }
+    }
+
+Alternatively, you can use the :doc:`Services class </concepts/services>` to retrieve the current request::
+
+    $locale = service('request')->getLocale();
+
+**************
+Language Tools
+**************
