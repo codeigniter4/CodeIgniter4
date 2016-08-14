@@ -331,7 +331,7 @@ class UploadedFile implements UploadedFileInterface
 	 */
 	public function getRandomName(): string
 	{
-		return time().'_'.random_bytes(10).'.'.$this->$this->getExtension();
+		return time().'_'.bin2hex(random_bytes(10)).'.'.$this->getExtension();
 	}
 
 	//--------------------------------------------------------------------
