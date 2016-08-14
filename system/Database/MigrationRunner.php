@@ -104,7 +104,7 @@ class MigrationRunner
 
 	/**
 	 * Constructor.
-	 * 
+	 *
 	 * @param BaseConfig $config
 	 * @param \CodeIgniter\Database\ConnectionInterface $db
 	 * @throws ConfigException
@@ -198,7 +198,7 @@ class MigrationRunner
 		{
 			return true;
 		}
-		
+
 		$previous = false;
 
 		// Validate all available migrations, and run the ones within our target range
@@ -415,11 +415,19 @@ class MigrationRunner
 	 */
 	protected function getVersion($group = 'default')
 	{
+		if (empty($group))
+		{
+			$config = new \Config\Database();
+			$group = $config->defaultGroup;
+			unset($config);
+		}
+
 		$row = $this->db->table($this->table)
-		                ->select('version')
-					    ->where('group', $group)
-		                ->get()
-		                ->getRow();
+				->select('version')
+				->where('group', $group)
+				->orderBy('version', 'DESC')
+				->get()
+				->getRow();
 
 		return $row ? $row->version : '0';
 	}
@@ -462,6 +470,13 @@ class MigrationRunner
 	 */
 	protected function removeHistory($version, $group = 'default')
 	{
+		if (empty($group))
+		{
+			$config = new \Config\Database();
+			$group = $config->defaultGroup;
+			unset($config);
+		}
+
 		$this->db->table($this->table)
 				 ->where('version', $version)
 				 ->where('group', $group)
