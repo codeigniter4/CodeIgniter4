@@ -22,4 +22,6 @@ class MockAppConfig
 	public $CSRFExcludeURIs = ['http://example.com'];
 
 	public $CSPEnabled = false;
+
+	public $defaultLocale = 'en';
 }
