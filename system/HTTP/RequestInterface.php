@@ -84,34 +84,4 @@ interface RequestInterface
 	public function getServer($index = null, $filter = null);
 
 	//--------------------------------------------------------------------
-
-	/**
-	 * Returns the default locale as set in Config\App.php
-	 *
-	 * @return string
-	 */
-	public function getDefaultLocale(): string;
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Gets the current locale, with a fallback to the default
-	 * locale if none is set.
-	 *
-	 * @return string
-	 */
-	public function getLocale(): string;
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Sets the locale string for this request.
-	 *
-	 * @param string $locale
-	 *
-	 * @return $this
-	 */
-	public function setLocale(string $locale);
-
-	//--------------------------------------------------------------------
 }
