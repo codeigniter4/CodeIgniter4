@@ -223,6 +223,6 @@ Here are a few examples::
     echo lang('Tests.ordinal', [time()]);
 
 You should be sure to read up on the MessageFormatter class and the underlying ICU formatting to get a better
-idea on what capabilities it has, like permorming conditional replacement, and more. Both of the links provided
+idea on what capabilities it has, like permorming conditional replacement, pluralization, and more. Both of the links provided
 earlier will give you an excellent idea as to the options available.
 
