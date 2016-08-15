@@ -101,6 +101,6 @@ Alternatively, you can use the :doc:`Services class </concepts/services>` to ret
 
     $locale = service('request')->getLocale();
 
-**************
-Language Tools
-**************
+*********************
+Language Localization
+*********************

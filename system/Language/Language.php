@@ -2,7 +2,7 @@
 
 use Config\Services;
 
-class Loader
+class Language
 {
 	/**
 	 * Stores the retrieved language lines
@@ -38,24 +38,21 @@ class Loader
 
 	//--------------------------------------------------------------------
 
-	public function __construct()
+	public function __construct(string $locale)
 	{
-		$request = Services::request();
-
-		$this->locale        = $request->getLocale();
+		$this->locale = $locale;
 
 		if (class_exists('\MessageFormatter'))
 		{
 			$this->intlSupport = true;
 		};
-
-		unset($request);
 	}
 
 	//--------------------------------------------------------------------
 
 	/**
-	 *
+	 * Parses the language string for a file, loads the file, if necessary,
+	 * getting
 	 *
 	 * @param string $line
 	 * @param array  $args
@@ -68,7 +65,7 @@ class Loader
 		// Will load the language file and strings.
 		$line = $this->parseLine($line);
 
-		$output = $this->language[$line] ?? '';
+		$output = ! empty($this->language[$line]) ? $this->language[$line] : $line;
 
 		// Do advanced message formatting here
 		// if the 'intl' extension is available.
@@ -94,18 +91,18 @@ class Loader
 	{
 		if (strpos($line, '.') === false)
 		{
-			throw new \InvalidArgumentException('No language file specified in line: '. $line);
+			throw new \InvalidArgumentException('No language file specified in line: '.$line);
 		}
 
 		$file = substr($line, 0, strpos($line, '.'));
-		$line = substr($line, strlen($file));
+		$line = substr($line, strlen($file)+1);
 
-		if (! array_key_exists($this->languages[$this->locale][$line]))
+		if (! array_key_exists($line, $this->language))
 		{
 			$this->load($file, $this->locale);
 		}
 
-		return $line;
+		return $this->language[$line];
 	}
 
 	//--------------------------------------------------------------------
@@ -119,26 +116,20 @@ class Loader
 	 * @param string $locale
 	 * @param bool   $return
 	 *
-	 * @return array
+	 * @return array|null
 	 */
-	public function load(string $file, string $locale, bool $return = false): array
+	protected function load(string $file, string $locale, bool $return = false)
 	{
 		if (in_array($file, $this->loadedFiles))
 		{
-			return;
+			return [];
 		}
 
 		$lang = [];
 
 		$path = APPPATH."Language/{$locale}/{$file}.php";
 
-		// First check the app's Language folder
-		if (is_file($path))
-		{
-			$lang = require $path;
-		}
-
-		// @todo - should look into loading from other locations, also probably...
+		$lang = $this->requireFile($path);
 
 		// Don't load it more than once.
 		$this->loadedFiles[] = $file;
@@ -150,6 +141,28 @@ class Loader
 
 		// Merge our string
 		$this->language = array_merge($this->language, $lang);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * A simple method for including files that can be
+	 * overridden during testing.
+	 *
+	 * @todo - should look into loading from other locations, also probably...
+	 *
+	 * @param string $path
+	 *
+	 * @return array
+	 */
+	protected function requireFile(string $path): array
+	{
+		if (! is_file($path))
+		{
+			return [];
+		}
+
+		return require_once $path;
 	}
 
 	//--------------------------------------------------------------------

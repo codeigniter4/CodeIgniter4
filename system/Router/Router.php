@@ -455,7 +455,7 @@ class Router implements RouterInterface
 		$file = APPPATH.'Controllers/'.$this->directory.$this->controller.'.php';
 		if (file_exists($file))
 		{
-			include $file;
+			include_once $file;
 		}
 
 		// Ensure the controller stores the fully-qualified class name

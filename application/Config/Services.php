@@ -209,14 +209,16 @@ class Services
 	/**
 	 * Responsible for loading the language string translations.
 	 */
-	public static function language($getShared = true)
+	public static function language(string $locale = null, $getShared = true)
 	{
 		if ($getShared)
 		{
-			return self::getSharedInstance('language');
+			return self::getSharedInstance('language', $locale);
 		}
 
-		return new \CodeIgniter\Language\Loader();
+		$locale = ! empty($locale) ? $locale : self::request()->getLocale();
+
+		return new \CodeIgniter\Language\Language($locale);
 	}
 
 	//--------------------------------------------------------------------
