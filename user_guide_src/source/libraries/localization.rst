@@ -104,3 +104,125 @@ Alternatively, you can use the :doc:`Services class </concepts/services>` to ret
 *********************
 Language Localization
 *********************
+
+Creating Language Files
+=======================
+
+Language do not have any specific naming convention that are required. The file should be named logically to
+describe the type of content it holds. For example, let's say you want to create a file containing error messages.
+You might name it simply: **Errors.php**.
+
+Within the file you would return an array, where each element in the array has a language key and the string to return::
+
+        'language_key' => 'The actual message to be shown.'
+
+.. note:: It's good practice to use a common prefix for all messages in a given file to avoid collisions with
+    similarly named items in other files. For example, if you are creating error messages you might prefix them
+    with error\_
+
+::
+
+    return [
+        'errorEmailMissing'    => 'You must submit an email address',
+        'errorURLMissing'      => 'You must submit a URL',
+        'errorUsernameMissing' => 'You must submit a username',
+    ];
+
+Basic Usage
+===========
+
+You can use the ``lang()`` helper function to retrieve text from any of the language files, by passing the
+filename and the language key as the first paremeter, separated by a period (.). For example, to load the
+``errorEmailMissing`` string from the ``Errors`` language file, you would do the following::
+
+    echo lang('Errors.errorEmailMissing');
+
+If the requested language key doesn't exist in the file for the current locale, the string will be passed
+back, unchanged. In this example, it would return 'Errors.errorEmailMissing' if it didn't exist.
+
+Replacing Parameters
+--------------------
+
+.. note:: The following functions all require the `intl <http://php.net/manual/en/book.intl.php>`_ extension to
+    be loaded on your system in order to work. If the extension is not loaded, no replacement will be attempted.
+    A great overview can be found over at `Sitepoint <https://www.sitepoint.com/localization-demystified-understanding-php-intl/>`_.
+
+You can pass an array of values to replace placeholders in the language string as the second parameter to the
+``lang()`` function. This allows for very simple number translations and formatting::
+
+    // The language file, Tests.php:
+    return [
+        "apples"      => "I have {0, number} apples.",
+        "men"         => "I have {1, number} men out-performed the remaining {0, number}",
+        "namedApples" => "I have {number_apples, number, integer} apples.",
+    ];
+
+    // Displays "I have 3 apples."
+    echo lang('Tests.apples', [ 3 ]);
+
+The first item in the placeholder corresponds to the index of the item in the array, if it's numerical::
+
+    // Displays "The top 23 men out-performed the remaining 20"
+    echo lang('Tests.men', [20, 23]);
+
+You can also use named keys to make it easier to keep things straight, if you'd like::
+
+    // Displays "I have 3 apples."
+    echo lang("Tests.namedApples", ['number_apples' => 3]);
+
+Obviously, you can do more than just number replacement. According to the
+`official ICU docs <http://icu-project.org/apiref/icu4c/classMessageFormat.html#details>`_ for the underlying
+library, the following types of data can be replaced:
+
+* numbers - integer, currency, percent
+* dates - short, medium, long, full
+* time - short, medium, long, full
+* spellout - spells out numbers (i.e. 34 becomes thirty-four)
+* ordinal
+* duration
+
+Here are a few examples::
+
+    // The language file, Tests.php
+    return [
+        'shortTime' => 'The time is now {0, time, short}.',
+        'mediumTime' => 'The time is now {0, time, medium}.',
+        'longTime' => 'The time is now {0, time, long}.',
+        'fullTime' => 'The time is now {0, time, full}.',
+        'shortDate' => 'The date is now {0, date, short}.',
+        'mediumDate' => 'The date is now {0, date, medium}.',
+        'longDate' => 'The date is now {0, date, long}.',
+        'fullDate' => 'The date is now {0, date, full}.',
+        'spelledOut' => '34 is {0, spellout}',
+        'ordinal' => 'The ordinal is {0, ordinal}',
+        'duration' => 'It has been {0, duration}',
+    ];
+
+    // Displays "The time is now 11:18 PM"
+    echo lang('Tests.shortTime', [time()]);
+    // Displays "The time is now 11:18:50 PM"
+    echo lang('Tests.mediumTime', [time()]);
+    // Displays "The time is now 11:19:09 PM CDT"
+    echo lang('Tests.longTime', [time()]);
+    // Displays "The time is now 11:19:26 PM Central Daylight Time"
+    echo lang('Tests.fullTime', [time()]);
+
+    // Displays "The date is now 8/14/16"
+    echo lang('Tests.shortDate', [time()]);
+    // Displays "The date is now Aug 14, 2016"
+    echo lang('Tests.mediumDate', [time()]);
+    // Displays "The date is now August 14, 2016"
+    echo lang('Tests.longDate', [time()]);
+    // Displays "The date is now Sunday, August 14, 2016"
+    echo lang('Tests.fullDate', [time()]);
+
+    // Displays "34 is thirty-four"
+    echo lang('Tests.spelledOut', [34]);
+
+    // Displays "It has been 408,676:24:35"
+    echo lang('Tests.ordinal', [time()]);
+
+You should be sure to read up on the MessageFormatter class and the underlying ICU formatting to get a better
+idea on what capabilities it has, like permorming conditional replacement, and more. Both of the links provided
+earlier will give you an excellent idea as to the options available.
+
