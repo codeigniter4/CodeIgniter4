@@ -127,7 +127,7 @@ class Language
 
 		$lang = [];
 
-		$path = APPPATH."Language/{$locale}/{$file}.php";
+		$path = "Language/{$locale}/{$file}.php";
 
 		$lang = $this->requireFile($path);
 
@@ -157,12 +157,17 @@ class Language
 	 */
 	protected function requireFile(string $path): array
 	{
-		if (! is_file($path))
+		foreach ([APPPATH, BASEPATH] as $folder)
 		{
-			return [];
+			if (! is_file($folder.$path))
+			{
+				continue;
+			}
+
+			return require_once $folder.$path;
 		}
 
-		return require_once $path;
+		return [];
 	}
 
 	//--------------------------------------------------------------------
