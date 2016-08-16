@@ -22,12 +22,12 @@ class CacheFactory
 	{
 	    if (! isset($config->validHandlers) || ! is_array($config->validHandlers))
 		{
-			throw new \InvalidArgumentException('Cache config must have an array of $validHandlers.');
+			throw new \InvalidArgumentException(lang('Cache.cacheInvalidHandlers'));
 		}
 
 		if (! isset($config->handler) || ! isset($config->backupHandler))
 		{
-			throw new \InvalidArgumentException('Cache config must have a handler and backupHandler set.');
+			throw new \InvalidArgumentException(lang('Cache.cacheNoBackup'));
 		}
 
 		$handler = ! empty($handler) ? $handler : $config->handler;
@@ -35,7 +35,7 @@ class CacheFactory
 
 		if (! array_key_exists($handler, $config->validHandlers) || ! array_key_exists($backup, $config->validHandlers))
 		{
-			throw new \InvalidArgumentException('Cache config has an invalid handler or backup handler specified.');
+			throw new \InvalidArgumentException(lang('Cache.cacheHandlerNotFound'));
 		}
 
 		// Get an instance of our handler.

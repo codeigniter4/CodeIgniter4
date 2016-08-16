@@ -121,12 +121,12 @@ class MigrationRunner
 
 		if (empty($this->table))
 		{
-			throw new ConfigException('Migrations table must be set.');
+			throw new ConfigException(lang('Migrations.migMissingTable'));
 		}
 
 		if ( ! in_array($this->type, ['sequential', 'timestamp']))
 		{
-			throw new ConfigException('An invalid migration numbering type was specified: '.$this->type);
+			throw new ConfigException(lang('Migrations.migInvalidType').$this->type);
 		}
 
 		// Migration basename regex
@@ -160,7 +160,7 @@ class MigrationRunner
 	{
 		if (! $this->enabled)
 		{
-			throw new ConfigException('Migrations have been loaded but are disabled or setup incorrectly.');
+			throw new ConfigException(lang('Migrations.migDisabled'));
 		}
 
 		// Note: We use strings, so that timestamp versions work on 32-bit systems
@@ -179,7 +179,7 @@ class MigrationRunner
 
 		if ($targetVersion > 0 && ! isset($migrations[$targetVersion]))
 		{
-			throw new \RuntimeException('Migration file not found: '.$targetVersion);
+			throw new \RuntimeException(lang('Migrations.migNotFound').$targetVersion);
 		}
 
 		if ($targetVersion > $currentVersion)
@@ -207,7 +207,7 @@ class MigrationRunner
 			// Check for sequence gaps
 			if ($this->type === 'sequential' && $previous !== false && abs($number - $previous) > 1)
 			{
-				throw new \RuntimeException('There is a gap in the migration sequence near version number: '.$number);
+				throw new \RuntimeException(lang('Migration.migGap').$number);
 			}
 
 			include_once $file;
@@ -216,7 +216,7 @@ class MigrationRunner
 			// Validate the migration file structure
 			if ( ! class_exists($class, false))
 			{
-				throw new \RuntimeException(sprintf('The migration class "%s" could not be found.', $class));
+				throw new \RuntimeException(sprintf(lang('Migrations.migClassNotFound'), $class));
 			}
 
 			$previous = $number;
@@ -231,7 +231,7 @@ class MigrationRunner
 
 				if ( ! is_callable([$instance, $method]))
 				{
-					throw new \RuntimeException("The migration class is missing an \"{$method}\" method.");
+					throw new \RuntimeException(sprintf(lang('Migrations.migMissingMethod'), $method));
 				}
 
 				call_user_func([$instance, $method]);
@@ -260,7 +260,7 @@ class MigrationRunner
 		{
 			if ($this->silent) return false;
 
-			throw new \RuntimeException('No migrations were found.');
+			throw new \RuntimeException(lang('Migrations.migNotFound'));
 		}
 
 		$lastMigration = basename(end($migrations));
@@ -306,7 +306,7 @@ class MigrationRunner
 				// There cannot be duplicate migration numbers
 				if (isset($migrations[$number]))
 				{
-					throw new \RuntimeException('There are multiple migrations with the same version number: '.$number);
+					throw new \RuntimeException(lang('Migrations.migMultiple').$number);
 				}
 
 				$migrations[$number] = $file;
