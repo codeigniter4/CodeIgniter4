@@ -89,7 +89,7 @@ interface UploadedFileInterface
 	 * @throws \RuntimeException on any error during the move operation.
 	 * @throws \RuntimeException on the second or subsequent call to the method.
 	 */
-	public function move(string $targetPath, string $name = null): bool;
+	public function move(string $targetPath, string $name = null);
 
 	//--------------------------------------------------------------------
 
