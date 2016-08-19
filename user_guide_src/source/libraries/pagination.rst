@@ -124,7 +124,7 @@ should be used. The *default_full* and *default_simple* views are used for the `
 methods, respectively. To change the way those are displayed application-wide, you could assign a new view here.
 
 For example, say you create a new view file that works with the Foundation CSS framework, instead of Bootstrap, and
-you place that file at *application/Views/Pagers/foundation_full.php**. Since the **application** directory is
+you place that file at **application/Views/Pagers/foundation_full.php**. Since the **application** directory is
 namespaced as ``App``, and all directories underneath it map directly to segments of the namespace, you can locate
 the view file through it's namespace::
 
