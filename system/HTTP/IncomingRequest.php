@@ -484,7 +484,7 @@ class IncomingRequest extends Request
 			$this->uri->setScheme(parse_url($baseURL, PHP_URL_SCHEME));
 			$this->uri->setHost(parse_url($baseURL, PHP_URL_HOST));
 			$this->uri->setPort(parse_url($baseURL, PHP_URL_PORT));
-			$this->uri->setPath(parse_url($baseURL, PHP_URL_PATH));
+			$this->uri->resolveRelativeURI(parse_url($baseURL, PHP_URL_PATH));
 		}
 		else
 		{
