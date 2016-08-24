@@ -120,6 +120,11 @@ class IncomingRequest extends Request
 	 */
 	protected $validLocales = [];
 
+	/**
+	 * @var \Config\App
+	 */
+	public $config;
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -137,7 +142,8 @@ class IncomingRequest extends Request
 			$body = file_get_contents('php://input');
 		}
 
-		$this->body = $body;
+		$this->body   = $body;
+		$this->config = $config;
 
 		parent::__construct($config, $uri);
 

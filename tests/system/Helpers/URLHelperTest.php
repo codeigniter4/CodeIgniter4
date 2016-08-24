@@ -12,6 +12,7 @@ class URLHelperTest extends \CIUnitTestCase
 	public function setUp()
 	{
 		helper('url');
+		Services::reset();
 	}
 
 	//--------------------------------------------------------------------
@@ -195,6 +196,49 @@ class URLHelperTest extends \CIUnitTestCase
 
 		$this->assertEquals('http://example.com/blog/post/123', base_url('blog/post/123'));
 	}
+
+	/**
+	 * @see https://github.com/bcit-ci/CodeIgniter4/issues/240
+	 */
+	public function testBaseURLWithSegments()
+	{
+		$_SERVER['HTTP_HOST'] = 'example.com';
+		$_SERVER['REQUEST_URI'] = '/test';
+
+		// Since we're on a CLI, we must provide our own URI
+		$config = new App();
+		$config->baseURL = 'http://example.com/';
+		$request = Services::request($config, false);
+		$request->uri = new URI('http://example.com/test');
+
+		Services::injectMock('request', $request);
+
+		$this->assertEquals('http://example.com/', base_url());
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * @see https://github.com/bcit-ci/CodeIgniter4/issues/240
+	 */
+	public function testBaseURLWithSegmentsAgain()
+	{
+		$_SERVER['HTTP_HOST'] = 'example.com';
+		$_SERVER['REQUEST_URI'] = '/test/page';
+
+		// Since we're on a CLI, we must provide our own URI
+		$config = new App();
+		$config->baseURL = '';
+		$request = Services::request($config, false);
+		$request->uri = new URI('http://example.com/test/page');
+
+		Services::injectMock('request', $request);
+
+		$this->assertEquals('http://example.com/', base_url());
+		$this->assertEquals('http://example.com/profile', base_url('profile'));
+	}
+
+	//--------------------------------------------------------------------
 
 	//--------------------------------------------------------------------
 	// Test current_url
