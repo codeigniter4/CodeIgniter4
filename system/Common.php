@@ -85,22 +85,6 @@ if (! function_exists('cache'))
 
 //--------------------------------------------------------------------
 
-if (! function_exists('codeigniter'))
-{
-	/**
-	 * Grabs the current CodeIgniter instance.
-	 * Primarily used by Services to get current App config.
-	 *
-	 * @return \CodeIgniter\CodeIgniter
-	 */
-	function codeigniter()
-	{
-		global $codeigniter;
-
-		return $codeigniter;
-	}
-}
-
 if ( ! function_exists('view'))
 {
 	/**

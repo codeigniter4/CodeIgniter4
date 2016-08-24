@@ -84,7 +84,7 @@ class Services
 
 		if (! is_object($config))
 		{
-			$config = codeigniter()->config;
+			$config = new App();
 		}
 
 		return new \CodeIgniter\HTTP\CLIRequest(
@@ -108,7 +108,7 @@ class Services
 
 		if (! is_object($config))
 		{
-			$config = codeigniter()->config;
+			$config = new App();
 		}
 
 		if ( ! is_object($response))
@@ -142,7 +142,7 @@ class Services
 
 		if (empty($config))
 		{
-			$config = codeigniter()->config;
+			$config = new App();
 		}
 
 		return new \CodeIgniter\Debug\Exceptions($config);
@@ -328,7 +328,7 @@ class Services
 
 		if (! is_object($config))
 		{
-			$config = codeigniter()->config;
+			$config = new App();
 		}
 
 		return new \CodeIgniter\HTTP\IncomingRequest(
@@ -351,7 +351,7 @@ class Services
 
 		if (! is_object($config))
 		{
-			$config = codeigniter()->config;
+			$config = new App();
 		}
 
 		return new \CodeIgniter\HTTP\Response($config);
@@ -409,7 +409,7 @@ class Services
 
 		if (! is_object($config))
 		{
-			$config = codeigniter()->config;
+			$config = new App();
 		}
 
 		return new \CodeIgniter\Security\Security($config);
@@ -432,7 +432,7 @@ class Services
 
 		if (! is_object($config))
 		{
-			$config = codeigniter()->config;
+			$config = new App();
 		}
 
 		$logger = self::logger(true);
@@ -474,7 +474,7 @@ class Services
 
 		if (! is_object($config))
 		{
-			$config = codeigniter()->config;
+			$config = new App();
 		}
 
 		return new \CodeIgniter\Debug\Toolbar($config);
