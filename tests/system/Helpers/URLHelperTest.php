@@ -146,6 +146,49 @@ class URLHelperTest extends \CIUnitTestCase
 		$this->assertEquals('http://example.com/index.php/news/local/123', site_url(['news', 'local', '123'], null, $config));
 	}
 
+	/**
+	 * @see https://github.com/bcit-ci/CodeIgniter4/issues/240
+	 */
+	public function testSiteURLWithSegments()
+	{
+		$_SERVER['HTTP_HOST'] = 'example.com';
+		$_SERVER['REQUEST_URI'] = '/test';
+
+		// Since we're on a CLI, we must provide our own URI
+		$config = new App();
+		$config->baseURL = 'http://example.com/';
+		$request = Services::request($config, false);
+		$request->uri = new URI('http://example.com/test');
+
+		Services::injectMock('request', $request);
+
+		$this->assertEquals('http://example.com/index.php/', site_url());
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * @see https://github.com/bcit-ci/CodeIgniter4/issues/240
+	 */
+	public function testSiteURLWithSegmentsAgain()
+	{
+		$_SERVER['HTTP_HOST'] = 'example.com';
+		$_SERVER['REQUEST_URI'] = '/test/page';
+
+		// Since we're on a CLI, we must provide our own URI
+		$config = new App();
+		$config->baseURL = '';
+		$request = Services::request($config, false);
+		$request->uri = new URI('http://example.com/test/page');
+
+		Services::injectMock('request', $request);
+
+		$this->assertEquals('http://example.com/index.php/', site_url());
+		$this->assertEquals('http://example.com/index.php/profile', site_url('profile'));
+	}
+
+	//--------------------------------------------------------------------
+
 	//--------------------------------------------------------------------
 	// Test base_url
 
