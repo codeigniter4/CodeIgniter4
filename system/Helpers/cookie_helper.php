@@ -83,7 +83,7 @@ if ( ! function_exists('set_cookie'))
         bool   $httpOnly = false
     )
     {
-        (\Config\Services::response(new \Config\App()))->setcookie
+        (\Config\Services::response())->setcookie
         (
             $name, 
             $value, 
@@ -113,13 +113,15 @@ if ( ! function_exists('get_cookie'))
      */
     function get_cookie($index, bool $xssClean = false)
     {
-        $app    = new \Config\App();
-        $prefix = $app->cookiePrefix;
-        $index  = $prefix . $index;
-        
-        $request = \Config\Services::request($app);
+        $app             = new \Config\App();
+        $appCookiePrefix = $app->cookiePrefix;
+        $prefix          = isset($_COOKIE[$index]) 
+            ? '' 
+            : $appCookiePrefix;
+
+        $request = \Config\Services::request();
         $filter  = true === $xssClean ? FILTER_SANITIZE_STRING : null;
-        $cookie  = $request->getCookie($index, $filter);
+        $cookie  = $request->getCookie($prefix . $index, $filter);
 
         return $cookie;
     }
@@ -138,6 +140,7 @@ if ( ! function_exists('delete_cookie'))
      * @param   string  $domain  the cookie domain. Usually: .yourdomain.com
      * @param   string  $path the cookie path
      * @param   string  $prefix  the cookie prefix
+     * @see     (\Config\Services::response())->setCookie()
      * @see     \CodeIgniter\HTTP\Response::setcookie()
      * @return  void
      */
