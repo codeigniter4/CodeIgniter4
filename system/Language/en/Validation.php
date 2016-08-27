@@ -39,6 +39,7 @@
 return [
 	// Core Messages
 	'noRuleSets' => 'No rulesets specified in Validation configuration.',
+	'ruleNotFound' => '{field} is not a valid rule.',
 
 	// Rule Messages
 	'required' => 'The {field} field is required.',

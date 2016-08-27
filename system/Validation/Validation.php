@@ -95,7 +95,7 @@ class Validation implements ValidationInterface
 				continue;
 			}
 
-			$this->processRules($rField, $data[$rField] ?? null, $rules);
+			$this->processRules($rField, $data[$rField] ?? null, $rules, $data);
 		}
 
 		return count($this->errors) > 0
@@ -113,39 +113,68 @@ class Validation implements ValidationInterface
 	 *
 	 * @param            $value
 	 * @param array|null $rules
+	 * @param array      $data // All of the fields to check.
 	 *
 	 * @return bool
 	 */
-	protected function processRules(string $field, $value, $rules = null)
+	protected function processRules(string $field, $value, $rules = null, array $data)
 	{
 		foreach ($rules as $rule)
 		{
-			// If the rules is a callable (like a Closure) or a function
-			// then we can run it and be done with it...
-			if (is_callable($rule))
+			$callable = is_callable($rule);
+
+			// Rules can contain parameters: max_length[5]
+			$param = false;
+			if (! $callable && preg_match('/(.*?)\[(.*)\]/', $rule, $match))
 			{
-				$value = $rule($value);
+				$rule  = $match[1];
+				$param = $match[2];
 			}
 
-			// Check in our rulesets
-			foreach ($this->ruleSetInstances as $set)
+			// If it's a callable, call and and get out of here.
+			if ($callable)
 			{
-				if (! method_exists($set, $rule))
+				$value = $param === false
+					? $rule($value)
+					: $rule($value, $param, $data);
+			}
+			else
+			{
+				$found = false;
+
+				// Check in our rulesets
+				foreach ($this->ruleSetInstances as $set)
 				{
-					continue;
+					if (! method_exists($set, $rule))
+					{
+						continue;
+					}
+
+					$found = true;
+
+					$value = $param === false
+						? $set->$rule($value)
+						: $set->$rule($value, $param, $data);
+					break;
 				}
 
-				$value = $set->$rule($value);
-				break;
+				// If the rule wasn't found anywhere, we
+				// should throw an exception so the developer can find it.
+				if (! $found)
+				{
+					throw new \InvalidArgumentException(lang('Validation.ruleNotFound'));
+				}
 			}
 
 			// Set the error message if we didn't survive.
 			if ($value === false)
 			{
 				$this->errors[$field] = $this->getErrorMessage($rule, $field);
+
 				return false;
 			}
 		}
+
 
 		return true;
 	}
@@ -179,10 +208,10 @@ class Validation implements ValidationInterface
 	 * The custom error message should be just the messages that apply to
 	 * this field, like so:
 	 *
-	 * 	[
-	 * 		'rule' => 'message',
-	 * 		'rule' => 'message'
-	 * 	]
+	 *    [
+	 *        'rule' => 'message',
+	 *        'rule' => 'message'
+	 *    ]
 	 *
 	 * @param string $field
 	 * @param string $rule
@@ -341,21 +370,29 @@ class Validation implements ValidationInterface
 	 *
 	 * @param string $rule
 	 * @param string $field
+	 * @param string $param
 	 *
 	 * @return string
 	 */
-	protected function getErrorMessage(string $rule, string $field): string
+	protected function getErrorMessage(string $rule, string $field, string $param = null): string
 	{
 		// Check if custom message has been defined by user
 		if (isset($this->customErrors[$field][$rule]))
 		{
-			return $this->customErrors[$field][$rule];
+			$message =  $this->customErrors[$field][$rule];
+		}
+		else
+		{
+			// Try to grab a localized version of the message...
+			// lang() will return the rule name back if not found,
+			// so there will always be a string being returned.
+			$message = lang('Validation.'.$rule);
 		}
 
-		// Try to grab a localized version of the message...
-		// lang() will return the rule name back if not found,
-		// so there will always be a string being returned.
-		return lang('Validation.'.$rule);
+		$message = str_replace('{field}', $field, $message);
+		$message = str_replace('{param}', $param, $message);
+
+		return $message;
 	}
 
 	//--------------------------------------------------------------------

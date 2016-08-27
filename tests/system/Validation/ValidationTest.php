@@ -1,5 +1,7 @@
 <?php namespace CodeIgniter\Validation;
 
+use Config\Database;
+
 class ValidationTest extends \CIUnitTestCase
 {
 	/**
@@ -166,9 +168,6 @@ class ValidationTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	/**
-	 * @group single
-	 */
 	public function testRequiredFalseString()
 	{
 		$data = [
@@ -213,4 +212,150 @@ class ValidationTest extends \CIUnitTestCase
 	}
 
 	//--------------------------------------------------------------------
+
+	public function testRegexMatch()
+	{
+	    $data = [
+	    	'foo' => 'abcde'
+		];
+
+		$this->validation->setRules([
+			'foo' => 'regex_match[/[a-z]/]'
+		]);
+
+		$this->assertTrue($this->validation->run($data));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testRegexMatchFalse()
+	{
+		$data = [
+			'foo' => 'abcde'
+		];
+
+		$this->validation->setRules([
+			'foo' => 'regex_match[\d]'
+		]);
+
+		$this->assertFalse($this->validation->run($data));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testMatchesTrue()
+	{
+		$data = [
+			'foo' => 'match',
+			'bar' => 'match'
+		];
+
+		$this->validation->setRules([
+			'foo' => 'matches[bar]'
+		]);
+
+		$this->assertTrue($this->validation->run($data));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testMatchesFalse()
+	{
+		$data = [
+			'foo' => 'match',
+			'bar' => 'nope'
+		];
+
+		$this->validation->setRules([
+			'foo' => 'matches[bar]'
+		]);
+
+		$this->assertFalse($this->validation->run($data));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testDiffersTrue()
+	{
+		$data = [
+			'foo' => 'match',
+			'bar' => 'nope'
+		];
+
+		$this->validation->setRules([
+			'foo' => 'differs[bar]'
+		]);
+
+		$this->assertTrue($this->validation->run($data));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testDiffersFalse()
+	{
+		$data = [
+			'foo' => 'match',
+			'bar' => 'match'
+		];
+
+		$this->validation->setRules([
+			'foo' => 'differs[bar]'
+		]);
+
+		$this->assertFalse($this->validation->run($data));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testIsUniqueFalse()
+	{
+		$data = [
+			'email' => 'derek@world.com',
+		];
+
+		$this->validation->setRules([
+			'email' => 'is_unique[user.email]'
+		]);
+
+		$this->assertFalse($this->validation->run($data));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testIsUniqueTrue()
+	{
+		$data = [
+			'email' => 'derek@world.co.uk',
+		];
+
+		$this->validation->setRules([
+			'email' => 'is_unique[user.email]'
+		]);
+
+		$this->assertTrue($this->validation->run($data));
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * @group single
+	 */
+	public function testIsUniqueIgnoresParams()
+	{
+		$db = Database::connect();
+		$row = $db->table('user')->limit(1)->get()->getRow();
+
+		$data = [
+			'email' => 'derek@world.co.uk',
+		];
+
+		$this->validation->setRules([
+			'email' => "is_unique[user.email,id,{$row->id}]"
+		]);
+
+		$this->assertTrue($this->validation->run($data));
+	}
+
+	//--------------------------------------------------------------------
+
 }
