@@ -188,7 +188,7 @@ class Parser extends View
 	 * @param array $options	Future options
 	 * @return	string
 	 */
-	protected function parse(string $template, array $data = [], array $options = null) : string
+	protected function parse(string $template, array $data = [], array $options = null): string
 	{
 		if ($template === '')
 		{
@@ -196,7 +196,6 @@ class Parser extends View
 		}
 
 		// TODO processing of control structures goes here
-		
 		// build the variable substitution list
 		$replace = array ();
 		foreach ($data as $key => $val)
@@ -215,7 +214,24 @@ class Parser extends View
 
 	// --------------------------------------------------------------------
 
-	// --------------------------------------------------------------------
+	protected function is_assoc($arr)
+	{
+		return array_keys($arr) !== range(0, count($arr) - 1);
+	}
+
+	function strpos_all($haystack, $needle)
+	{
+		$offset = 0;
+		$allpos = array ();
+		while (($pos = strpos($haystack, $needle, $offset)) !== FALSE)
+		{
+			$offset = $pos + 1;
+			$allpos[] = $pos;
+		}
+		return $allpos;
+	}
+
+// --------------------------------------------------------------------
 
 	/**
 	 * Parse a single key/value
@@ -225,7 +241,7 @@ class Parser extends View
 	 * @param	string $template
 	 * @return	array
 	 */
-	protected function parseSingle(string $key, string $val, string $template) : array
+	protected function parseSingle(string $key, string $val, string $template): array
 	{
 		return array ($this->leftDelimiter.$key.$this->rightDelimiter => (string) $val);
 	}
@@ -242,7 +258,7 @@ class Parser extends View
 	 * @param	string	$template
 	 * @return	array
 	 */
-	protected function parsePair(string $variable, string $data, string $template) : array
+	protected function parsePair(string $variable, string $data, string $template): array
 	{
 		$replace = array ();
 		preg_match_all(

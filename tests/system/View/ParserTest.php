@@ -167,4 +167,33 @@ class ParserTest extends \CIUnitTestCase
 		$this->assertEquals($result, $parser->renderString($template));
 	}
 
+		// Test anchor
+
+	public function escValueTypes()
+	{
+		return [
+			'scalar'		 => [42],
+			'string'		 => ['George'],
+			'scalarlist'	 => [ [1, 2, 17, -4]],
+			'stringlist'	 => [ ['George', 'Paul', 'John', 'Ringo']],
+			'associative'	 => [ ['name' => 'George', 'role' => 'guitar']],
+			'compound'		 => [ ['name' => 'George', 'address' => ['line1' => '123 Some St', 'planet' => 'Naboo']]],
+			'pseudo'		 => [ ['name'	 => 'George', 'emails' => [
+						['email' => 'me@here.com', 'type' => 'home'],
+						['email' => 'me@there.com', 'type' => 'work']
+					]]],
+		];
+	}
+
+	/**
+	 * @dataProvider escValueTypes
+	 */
+	public function testEscHandling($value, $expected = null)
+	{
+		if ($expected == null) $expected = $value;
+		$this->assertEquals($expected, \esc($value, 'html'));
+	}
+
+	// ------------------------------------------------------------------------
+
 }
