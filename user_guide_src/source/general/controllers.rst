@@ -30,7 +30,7 @@ and put the following code in it::
 	{
 		public function index()
 		{
-			echo 'Hellow World!';
+			echo 'Hello World!';
 		}
 	}
 
@@ -51,14 +51,14 @@ If you did it right, you should see::
 This is valid::
 
 	<?php
-	class Blog extends CodeIgniter\Controller {
+	class Blog extends \CodeIgniter\Controller {
 
 	}
 
 This is **not** valid::
 
 	<?php
-	class blog extends CodeIgniter\Controller {
+	class blog extends \CodeIgniter\Controller {
 
 	}
 
@@ -80,7 +80,7 @@ controller gets called.**
 Let's try it. Add a new method to your controller::
 
 	<?php
-	class Blog extends CodeIgniter\Controller {
+	class Blog extends \CodeIgniter\Controller {
 
 		public function index()
 		{
@@ -112,7 +112,7 @@ For example, let's say you have a URI like this::
 Your method will be passed URI segments 3 and 4 ("sandals" and "123")::
 
 	<?php
-	class Products extends CodeIgniter\Controller {
+	class Products extends \CodeIgniter\Controller {
 
 		public function shoes($sandals, $id)
 		{
@@ -249,7 +249,7 @@ manually call it.
 Example::
 
 	<?php
-	class Blog extends CodeIgniter\Controller
+	class Blog extends \CodeIgniter\Controller
 	{
 		public function __construct(...$params)
 		{

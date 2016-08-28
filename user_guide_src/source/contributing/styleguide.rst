@@ -23,11 +23,11 @@ below.
 .. note:: See the 
     `CodeIgniter4-developer-setup <https://github.com/bcit-ci/CodeIgniter4-developer-setup>`_ 
     repository for tips on configuring your IDE or editor to help you conform
-    to the style guide..
+    to the style guide.
 
-*The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD",
+The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD",
 "SHOULD NOT", "RECOMMENDED",  "MAY", and "OPTIONAL" in this document are to
-be interpreted as described in `RFC 2119 <http://www.ietf.org/rfc/rfc2119.txt>`_.*
+be interpreted as described in `RFC 2119 <http://www.ietf.org/rfc/rfc2119.txt>`_.
 
 *Note: When used below, the term "class" refers to all kinds of classes,
 interfaces and traits.*
@@ -87,7 +87,7 @@ while maintaining consistency of code appearance.
 Following the "best practice" above, 
 the following code block would have a single tab at the beginning of
 each line containing braces, and two tabs at the beginning of the
-nested statements. No alignment is implied.::
+nested statements. No alignment is implied::
 
     {
         $first = 1;

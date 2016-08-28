@@ -97,7 +97,7 @@ If you need to use a constructor in your class make sure you extend the parent c
 instead of the native ones (this is known as “method overriding”). This allows you to substantially alter the CodeIgniter core.
 
 If you are extending the Controller core class, then be sure to extend your new class in your application controller’s
-constructors.::
+constructors::
 
 	class Home extends App\BaseController {
 

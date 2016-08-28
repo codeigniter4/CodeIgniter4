@@ -127,7 +127,7 @@ if (! function_exists('view_cell'))
 {
 	/**
 	 * View cells are used within views to insert HTML chunks that are managed
-	 * by other classes. 
+	 * by other classes.
 	 *
 	 * @param string      $library
 	 * @param null        $params
@@ -310,7 +310,24 @@ if (! function_exists('shared_service'))
 
 //--------------------------------------------------------------------
 
+if (! function_exists('lang'))
+{
+	/**
+	 * A convenience method to translate a string and format it
+	 * with the intl extension's MessageFormatter object.
+	 *
+	 * @param string $line
+	 * @param array  $args
+	 *
+	 * @return string
+	 */
+	function lang(string $line, array $args=[])
+	{
+		return Services::language()->getLine($line, $args);
+	}
+}
 
+//--------------------------------------------------------------------
 
 
 

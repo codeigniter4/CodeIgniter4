@@ -15,7 +15,7 @@ Loading the Class
 
 You can load an instance of the class manually through the Service class::
 
-	$negotiator = Config\Services::negotiator();
+	$negotiator = \Config\Services::negotiator();
 
 This will grab the current request instance and automatically inject it into the Negotiator class.
 
@@ -47,7 +47,7 @@ from an API endpoint::
 	Accept: application/json
 
 The server now needs to provide a list of what type of content it can provide. In this example, the API might
-be able to return data as raw HTML, JSON, or XML. This list should be provided in order of preference.::
+be able to return data as raw HTML, JSON, or XML. This list should be provided in order of preference::
 
 	$supported = [
 		'application/json',
@@ -79,8 +79,8 @@ header::
 	GET /foo HTTP/1.1
 	Accept-Language: fr; q=1.0, en; q=0.5
 
-In this example, the browser would prefer french, with a second choice of english. If your website supports english
-and german you would do something like::
+In this example, the browser would prefer French, with a second choice of English. If your website supports English
+and German you would do something like::
 
 	$supported = [
 		'en',

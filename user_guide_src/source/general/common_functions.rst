@@ -54,6 +54,15 @@ Service Accessors
 
 	For full details, see the :doc:`helpers` page.
 
+.. php:function:: lang(string $line[, array $args]): string
+
+	:param string $line: The line of text to retrieve
+	:param array  $args: An array of data to substitute for placeholders.
+
+	Retrieves a locale-specific file based on an alias string.
+
+	For more information, see the :doc:`Localization </libraries/localization>` page.
+
 .. php:function:: session( [$key] )
 
 	:param string $key: The name of the session item to check for.
@@ -72,7 +81,7 @@ Service Accessors
 	A convenience method that provides quick access to the Timer class. You can pass in the name
 	of a benchmark point as the only parameter. This will start timing from this point, or stop
 	timing if a timer with this name is already running.
-		
+
 	Example::
 
 		// Get an instance

@@ -108,7 +108,7 @@ a new ``News`` controller is defined. Create the new controller at
 
 		public function view($slug = null)
 		{
-		    $model = new NewsModel();
+			$model = new NewsModel();
 
 			$data['news'] = $model->getNews($slug);
 		}
@@ -135,7 +135,7 @@ the views. Modify the ``index()`` method to look like this::
 
 		$data = [
 			'news'  => $model->getNews(),
-		    'title' => 'News archive',
+			'title' => 'News archive',
 		];
 
 		echo view('Templates/Header', $data);
@@ -222,7 +222,7 @@ Routing
 Because of the wildcard routing rule created earlier, you need an extra
 route to view the controller that you just made. Modify your routing file
 (*application/config/routes.php*) so it looks as follows.
-This makes sure the requests reaches the ``News`` controller instead of
+This makes sure the requests reach the ``News`` controller instead of
 going directly to the ``Pages`` controller. The first line routes URI's
 with a slug to the ``view()`` method in the ``News`` controller.
 

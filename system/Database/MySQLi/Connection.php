@@ -81,7 +81,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 *
 	 * @var    MySQLi
 	 */
-	protected $mysqli;
+	public $mysqli;
 
 	//--------------------------------------------------------------------
 
@@ -89,7 +89,9 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 * Connect to the database.
 	 *
 	 * @param bool $persistent
+	 *
 	 * @return mixed
+	 * @throws \CodeIgniter\DatabaseException
 	 */
 	public function connect($persistent = false)
 	{
@@ -337,6 +339,11 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 */
 	protected function _escapeString(string $str): string
 	{
+		if (is_bool($str))
+		{
+			return $str;
+		}
+
 		return $this->connID->real_escape_string($str);
 	}
 
@@ -446,6 +453,5 @@ class Connection extends BaseConnection implements ConnectionInterface
 	}
 
 	//--------------------------------------------------------------------
-
 
 }

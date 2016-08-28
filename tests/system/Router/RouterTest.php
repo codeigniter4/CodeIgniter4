@@ -26,6 +26,7 @@ class RouterTest extends \CIUnitTestCase
 			'posts/(:num)/edit'            => 'Blog::edit/$1',
 			'books/(:num)/(:alpha)/(:num)' => 'Blog::show/$3/$1',
 			'closure/(:num)/(:alpha)'      => function ($num, $str) { return $num.'-'.$str; },
+			'{locale}/pages'			   => 'App\Pages::list_all',
 		];
 
 		$this->collection->map($routes);
@@ -178,4 +179,20 @@ class RouterTest extends \CIUnitTestCase
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * @group single
+	 */
+	public function testDetectsLocales()
+	{
+	    $router = new Router($this->collection);
+
+		$router->handle('fr/pages');
+
+		$this->assertTrue($router->hasLocale());
+		$this->assertEquals('fr', $router->getLocale());
+	}
+
+	//--------------------------------------------------------------------
+
 }

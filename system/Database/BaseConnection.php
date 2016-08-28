@@ -278,6 +278,14 @@ abstract class BaseConnection implements ConnectionInterface
 	 */
 	protected $connectDuration;
 
+	/**
+	 * If true, no queries will actually be
+	 * ran against the database.
+	 *
+	 * @var bool
+	 */
+	protected $pretend = false;
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -479,6 +487,26 @@ abstract class BaseConnection implements ConnectionInterface
 	//--------------------------------------------------------------------
 
 	/**
+	 * Stores a new query with the object. This is primarily used by
+	 * the prepared queries.
+	 *
+	 * @param \CodeIgniter\Database\Query $query
+	 *
+	 * @return $this
+	 */
+	public function addQuery(Query $query)
+	{
+	    if ($this->saveQueries)
+		{
+			 $this->queries[] = $query;
+		}
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Executes the query against the database.
 	 *
 	 * @param $sql
@@ -523,14 +551,16 @@ abstract class BaseConnection implements ConnectionInterface
 
 		$startTime = microtime(true);
 
-		// Run the query
-		if (false === ($this->resultID = $this->simpleQuery($query->getQuery())))
+
+
+		// Run the query for real
+		if (! $this->pretend && false === ($this->resultID = $this->simpleQuery($query->getQuery())))
 		{
 			$query->setDuration($startTime, $startTime);
 
 			// @todo deal with errors
 
-			if ($this->saveQueries)
+			if ($this->saveQueries && ! $this->pretend)
 			{
 				$this->queries[] = $query;
 			}
@@ -540,12 +570,17 @@ abstract class BaseConnection implements ConnectionInterface
 
 		$query->setDuration($startTime);
 
-		if ($this->saveQueries)
+		if ($this->saveQueries && ! $this->pretend)
 		{
 			$this->queries[] = $query;
 		}
 
-		return new $resultClass($this->connID, $this->resultID);
+		// If $pretend is true, then we just want to return
+		// the actual query object here. There won't be
+		// any results to return.
+		return $this->pretend
+			? $query
+			: new $resultClass($this->connID, $this->resultID);
 	}
 
 	//--------------------------------------------------------------------
@@ -589,6 +624,46 @@ abstract class BaseConnection implements ConnectionInterface
 		$className = str_replace('Connection', 'Builder', get_class($this));
 
 		return new $className($tableName, $this);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Creates a prepared statement with the database that can then
+	 * be used to execute multiple statements against. Within the
+	 * closure, you would build the query in any normal way, though
+	 * the Query Builder is the expected manner.
+	 *
+	 * Example:
+	 *    $stmt = $db->prepare(function($db)
+	 * 	  	{
+	 *			return $db->table('users')
+	 *   				->where('id', 1)
+	 * 					->get();
+	 * 	  	})
+	 *
+	 * @param \Closure $func
+	 * @param array    $options  Passed to the prepare() method
+	 *
+	 * @return PreparedQueryInterface|null
+	 */
+	public function prepare(\Closure $func, array $options = [])
+	{
+		$this->pretend(true);
+
+	    $sql = $func($this);
+
+		$this->pretend(false);
+
+		if ($sql instanceof QueryInterface)
+		{
+			$sql = $sql->getOriginalQuery();
+		}
+
+		$class = str_ireplace('Connection', 'PreparedQuery', get_class($this));
+		$class = new $class($this);
+
+		return $class->prepare($sql, $options);
 	}
 
 	//--------------------------------------------------------------------
@@ -1285,6 +1360,25 @@ abstract class BaseConnection implements ConnectionInterface
 	{
 		$query = $this->query($this->_fieldData($this->protect_identifiers($table, TRUE, NULL, FALSE)));
 		return ($query) ? $query->field_data() : FALSE;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Allows the engine to be set into a mode where queries are not
+	 * actually executed, but they are still generated, timed, etc.
+	 *
+	 * This is primarily used by the prepared query functionality.
+	 *
+	 * @param bool $pretend
+	 *
+	 * @return $this
+	 */
+	public function pretend(bool $pretend = true)
+	{
+	    $this->pretend = $pretend;
+
+		return $this;
 	}
 
 	//--------------------------------------------------------------------

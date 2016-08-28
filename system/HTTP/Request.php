@@ -52,8 +52,8 @@ class Request extends Message implements RequestInterface
 
 	/**
 	 * Proxy IPs
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	protected $proxyIPs;
 
@@ -61,7 +61,7 @@ class Request extends Message implements RequestInterface
 
 	/**
 	 * Constructor.
-	 * 
+	 *
 	 * @param type $config
 	 * @param type $uri
 	 */

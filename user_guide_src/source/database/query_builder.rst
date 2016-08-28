@@ -915,7 +915,7 @@ function, or empty_table().
 **$builder->emptyTable()**
 
 Generates a delete SQL string and runs the
-query.::
+query::
 
 	  $builder->emptyTable('mytable'); // Produces: DELETE FROM mytable
 

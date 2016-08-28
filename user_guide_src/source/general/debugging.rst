@@ -19,7 +19,7 @@ Enabling Kint
 =============
 
 By default, Kint is enabled in **development** and **testing** environments only. This can be altered by modifying
-the ``$useKing`` value in the environment configuration section of the main **index.php** file::
+the ``$useKint`` value in the environment configuration section of the main **index.php** file::
 
     $useKint = true;
 
@@ -189,7 +189,7 @@ To add data to the Vars tab you must:
 2. Implement ``getVarData()`` method.
 
 The ``getVarData()`` method should return an array containing arrays of key/value pairs to display. The name of the
-outer array's key is the name of the section on the Vars tab.::
+outer array's key is the name of the section on the Vars tab::
 
 	$data = [
 		'section 1' => [

@@ -97,6 +97,34 @@ class IncomingRequest extends Request
 	 */
 	protected $negotiate;
 
+	/**
+	 * The default Locale this request
+	 * should operate under.
+	 *
+	 * @var string
+	 */
+	protected $defaultLocale;
+
+	/**
+	 * The current locale of the application.
+	 * Default value is set in Config\App.php
+	 *
+	 * @var string
+	 */
+	protected $locale;
+
+	/**
+	 * Stores the valid locale codes.
+	 *
+	 * @var array
+	 */
+	protected $validLocales = [];
+
+	/**
+	 * @var \Config\App
+	 */
+	public $config;
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -114,7 +142,8 @@ class IncomingRequest extends Request
 			$body = file_get_contents('php://input');
 		}
 
-		$this->body = $body;
+		$this->body   = $body;
+		$this->config = $config;
 
 		parent::__construct($config, $uri);
 
@@ -123,6 +152,90 @@ class IncomingRequest extends Request
 		$this->uri = $uri;
 
 		$this->detectURI($config->uriProtocol, $config->baseURL);
+
+		$this->validLocales = $config->supportedLocales;
+
+		$this->detectLocale($config);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Handles setting up the locale, perhaps auto-detecting through
+	 * content negotiation.
+	 *
+	 * @param $config
+	 */
+	public function detectLocale($config)
+	{
+		$this->locale = $this->defaultLocale = $config->defaultLocale;
+
+		if (! $config->negotiateLocale)
+		{
+			return;
+		}
+
+		$this->setLocale($this->negotiate('language', $config->supportedLocales));
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns the default locale as set in Config\App.php
+	 *
+	 * @return string
+	 */
+	public function getDefaultLocale(): string
+	{
+		return $this->defaultLocale;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Gets the current locale, with a fallback to the default
+	 * locale if none is set.
+	 *
+	 * @return string
+	 */
+	public function getLocale(): string
+	{
+		return $this->locale ?? $this->defaultLocale;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Sets the locale string for this request.
+	 *
+	 * @param string $locale
+	 *
+	 * @return $this
+	 */
+	public function setLocale(string $locale)
+	{
+		// If it's not a valid locale, set it
+		// to the default locale for the site.
+		if (! in_array($locale, $this->validLocales))
+		{
+			$locale = $this->defaultLocale;
+		}
+
+		$this->locale = $locale;
+
+		// If the intl extension is loaded, make sure
+		// that we set the locale for it... if not, though,
+		// don't worry about it.
+		try {
+			if (class_exists('\Locale', false))
+			{
+				\Locale::setDefault($locale);
+			}
+		}
+		catch (\Exception $e)
+		{}
+
+		return $this;
 	}
 
 	//--------------------------------------------------------------------
@@ -377,7 +490,7 @@ class IncomingRequest extends Request
 			$this->uri->setScheme(parse_url($baseURL, PHP_URL_SCHEME));
 			$this->uri->setHost(parse_url($baseURL, PHP_URL_HOST));
 			$this->uri->setPort(parse_url($baseURL, PHP_URL_PORT));
-			$this->uri->setPath(parse_url($baseURL, PHP_URL_PATH));
+			$this->uri->resolveRelativeURI(parse_url($baseURL, PHP_URL_PATH));
 		}
 		else
 		{

@@ -21,8 +21,7 @@ are not aware of. CodeIgniter helps with both of these situations by standardizi
 common interface.
 
 Files are accessed through the current ``IncomingRequest`` instance. To retrieve all files that were uploaded with this
-request, use ``getFiles()``. This will return an array of files represented by instances of ``CodeIgniter\HTTP\Files\UploadedFile``.
-::
+request, use ``getFiles()``. This will return an array of files represented by instances of ``CodeIgniter\HTTP\Files\UploadedFile``::
 
 	$files = $this->request->getFiles();
 
@@ -110,21 +109,20 @@ File Names
 
 You can retrieve the original filename provided by the client with the ``getName()`` method. This will typically be the
 filename sent by the client, and should not be trusted. If the file has been moved, this will return the final name of
-the moved file.::
+the moved file::
 
 	$name = $file->getName();
 
 **getTempName()**
 
-To get the name of the temp file that was created during the upload, you can use the ``getTempName()`` method.::
+To get the name of the temp file that was created during the upload, you can use the ``getTempName()`` method::
 
 	$tempfile = $file->getTempName();
 
 **getRandomName()**
 
 You can generate a cryptographically secure random filename, with the current timestamp prepended, with the ``getRandomName()``
-method. This is especially useful to rename files when moving it so that the filename is unguessable.
-::
+method. This is especially useful to rename files when moving it so that the filename is unguessable::
 
 	// Generates something like: 1465965676_385e33f741.jpg
 	$newName = $file->getRandomName();
@@ -137,8 +135,7 @@ Other File Info
 
 Attempts to determine the file extension based on the trusted ``getType()`` method instead of the value listed
 in ``$_FILES``. If the mime type is unknown, will return null. Uses the values in **application/Config/Mimes.php**
-to determine extension.
-::
+to determine extension::
 
 	// Returns 'jpg' (WITHOUT the period)
 	$ext = $file->getExtension();
@@ -146,16 +143,14 @@ to determine extension.
 **getClientExtension()**
 
 Returns the original file extension, based on the file name that was uploaded. This is NOT a trusted source. For a
-trusted version, use ``getExtension()`` instead.
-::
+trusted version, use ``getExtension()`` instead::
 
 	$ext = $file->getClientExtension();
 
 **getType()**
 
 Retrieve the media type (mime type) of the file. Does not use information from the $_FILES array, but uses other methods to more
-accurately determine the type of file, like ``finfo``, or ``mime_content_type``.
-::
+accurately determine the type of file, like ``finfo``, or ``mime_content_type``::
 
 	$type = $file->getType();
 
@@ -164,8 +159,7 @@ accurately determine the type of file, like ``finfo``, or ``mime_content_type``.
 **getClientType()**
 
 Returns the mime type (mime type) of the file as provided by the client. This is NOT a trusted value. For a trusted
-version, use ``getType()`` instead.
-::
+version, use ``getType()`` instead::
 
 	$type = $file->getClientType();
 
@@ -174,8 +168,7 @@ version, use ``getType()`` instead.
 **getSize()**
 
 Returns the size of the uploaded file in bytes. You can pass in either 'kb' or 'mb' as the first parameter to get
-the results in kilobytes or megabytes, respectively.
-::
+the results in kilobytes or megabytes, respectively::
 
 	$bytes     = $file->getSize();      // 256901
 	$kilobytes = $file->getSize('kb');  // 250.880

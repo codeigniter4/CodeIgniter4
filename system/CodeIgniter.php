@@ -482,6 +482,13 @@ class CodeIgniter
 		$this->controller = $this->router->handle($path);
 		$this->method     = $this->router->methodName();
 
+		// If a {locale} segment was matched in the final route,
+		// then we need to set the correct locale on our Request.
+		if ($this->router->hasLocale())
+		{
+			$this->request->setLocale($this->router->getLocale());
+		}
+
 		$this->benchmark->stop('routing');
 	}
 

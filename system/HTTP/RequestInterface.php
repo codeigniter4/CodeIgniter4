@@ -84,5 +84,4 @@ interface RequestInterface
 	public function getServer($index = null, $filter = null);
 
 	//--------------------------------------------------------------------
-
 }

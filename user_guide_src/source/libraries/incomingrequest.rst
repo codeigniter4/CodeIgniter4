@@ -325,16 +325,16 @@ The methods provided by the parent classes that are available are:
 
 		To return all POST items and pass them through the filter, set the
 		first parameter to null while setting the second parameter to the filter
-		you want to use.::
+		you want to use::
 
 			$request->getVar(null, FILTER_SANITIZE_STRING); // returns all POST items with string sanitation
 
-		To return an array of multiple  POST parameters, pass all the required keys as an array.::
+		To return an array of multiple  POST parameters, pass all the required keys as an array::
 
 			$request->getVar(['field1', 'field2']);
 
 		Same rule applied here, to retrieve the parameters with filtering, set the second parameter to
-		the filter type to apply.::
+		the filter type to apply::
 
 			$request->getVar(['field1', 'field2'], FILTER_SANITIZE_STRING);
 
@@ -394,7 +394,7 @@ The methods provided by the parent classes that are available are:
 			$request->getCookie('some_cookie');
 			$request->getCookie('some_cookie, FILTER_SANITIZE_STRING); // with filter
 
-		To return an array of multiple cookie values, pass all the required keys as an array.::
+		To return an array of multiple cookie values, pass all the required keys as an array::
 
 			$request->getCookie(array('some_cookie', 'some_cookie2'));
 
@@ -426,7 +426,7 @@ The methods provided by the parent classes that are available are:
 		:returns:  The User Agent string, as found in the SERVER data, or null if not found.
 		:rtype: mixed
 
-		This method returns the User Agent string from the SERVER data.::
+		This method returns the User Agent string from the SERVER data::
 
 			$request->getUserAgent();
 

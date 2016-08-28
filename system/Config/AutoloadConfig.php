@@ -119,6 +119,7 @@ class AutoloadConfig
 			'CodeIgniter\Cache\Handlers\DummyHandler'       => BASEPATH.'Cache/Handlers/DummyHandler.php',
 			'CodeIgniter\Cache\Handlers\FileHandler'        => BASEPATH.'Cache/Handlers/FileHandler.php',
 			'CodeIgniter\Cache\Handlers\MemcachedHandler'   => BASEPATH.'Cache/Handlers/MemcachedHandler.php',
+			'CodeIgniter\Cache\Handlers\PredisHandler'      => BASEPATH.'Cache/Handlers/PredisHandler.php',
 			'CodeIgniter\Cache\Handlers\RedisHandler'       => BASEPATH.'Cache/Handlers/RedisHandler.php',
 			'CodeIgniter\Cache\Handlers\WincacheHandler'    => BASEPATH.'Cache/Handlers/WincacheHandler.php',
 			'CodeIgniter\Controller'                        => BASEPATH.'Controller.php',

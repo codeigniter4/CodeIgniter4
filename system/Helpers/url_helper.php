@@ -103,8 +103,24 @@ if ( ! function_exists('base_url'))
 			$path = implode('/', $path);
 		}
 
-		$url = \CodeIgniter\Services::request()->uri;
+		// We should be using the set baseURL the user set
+		// otherwise get rid of the path because we have
+		// no way of knowing the intent...
+		$config = \CodeIgniter\Services::request()->config;
 
+		if (! empty($config->baseURL))
+		{
+			$url = new \CodeIgniter\HTTP\URI($config->baseURL);
+		}
+		else
+		{
+			$url = \CodeIgniter\Services::request()->uri;
+			$url->setPath('/');
+		}
+
+		unset($config);
+
+		// Merge in the path set by the user, if any
 		if ( ! empty($path))
 		{
 			$url = $url->resolveRelativeURI($path);
@@ -132,7 +148,7 @@ if ( ! function_exists('current_url'))
 	 * function is placed
 	 *
 	 * @param boolean $returnObject True to return an object instead of a strong
-	 * 
+	 *
 	 * @return string|URI
 	 */
 	function current_url(bool $returnObject = false)
@@ -503,7 +519,7 @@ if ( ! function_exists('prep_url'))
 	 *
 	 * Formerly used URI, but that does not play nicely with URIs missing
 	 * the scheme.
-	 * 
+	 *
 	 * @param  string    the URL
 	 * @return string
 	 */

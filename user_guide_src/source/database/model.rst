@@ -76,7 +76,7 @@ Configuring Your Model
 
 The model class has a few configuration options that can be set to allow the class' methods
 to work seamlessly for you. The first two are used by all of the CRUD methods to determine
-what table to use and how we can find the required records.::
+what table to use and how we can find the required records::
 
 	class UserModel extends \CodeIgniter\Model
 	{
@@ -159,7 +159,7 @@ Returns a single row where the primary key matches the value passed in as the fi
 The value is returned in the format specified in $returnType.
 
 You can specify more than one row to return by passing an array of primaryKey values instead
-of just one.::
+of just one::
 
 	$users = $userModel->find([1,2,3]);
 
@@ -183,7 +183,7 @@ Returns all results.
 
 	$users = $userModel->findAll();
 
-This query may be modified by interjecting Query Builder commands as needed prior to calling this method.::
+This query may be modified by interjecting Query Builder commands as needed prior to calling this method::
 
 	$users = $userModel->where('active', 1)
 	                   ->findAll();
@@ -218,7 +218,7 @@ temporarily override this, you can use the withDeleted() method prior to calling
 **onlyDeleted()**
 
 Whereas withDeleted() will return both deleted and not-deleted rows, this method modifies
-the next find* methods to return only soft deleted rows.::
+the next find* methods to return only soft deleted rows::
 
 	$deletedUsers = $userModel->onlyDeleted()
 							  ->findAll();

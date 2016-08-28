@@ -106,6 +106,12 @@ class Router implements RouterInterface
 	 */
 	protected $matchedRoute = null;
 
+	/**
+	 * The locale that was detected in a route.
+	 * @var string
+	 */
+	protected $detectedLocale = null;
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -299,6 +305,31 @@ class Router implements RouterInterface
 	//--------------------------------------------------------------------
 
 	/**
+	 * Returns true/false based on whether the current route contained
+	 * a {locale} placeholder.
+	 *
+	 * @return bool
+	 */
+	public function hasLocale()
+	{
+	    return (bool)$this->detectedLocale;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns the detected locale, if any, or null.
+	 *
+	 * @return string
+	 */
+	public function getLocale()
+	{
+	    return $this->detectedLocale;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Compares the uri string against the routes that the
 	 * RouteCollection class defined for us, attempting to find a match.
 	 * This method will modify $this->controller, etal as needed.
@@ -306,6 +337,7 @@ class Router implements RouterInterface
 	 * @param string $uri The URI path to compare against the routes
 	 *
 	 * @return bool Whether the route was matched or not.
+	 * @throws \CodeIgniter\Router\RedirectException
 	 */
 	protected function checkRoutes(string $uri): bool
 	{
@@ -320,9 +352,27 @@ class Router implements RouterInterface
 		// Loop through the route array looking for wildcards
 		foreach ($routes as $key => $val)
 		{
+			// Are we dealing with a locale?
+			if (strpos($key, '{locale}') !== false)
+			{
+				$localeSegment = array_search('{locale}', explode('/', $key));
+
+				// Replace it with a regex so it
+				// will actually match.
+				$key = str_replace('{locale}', '[^/]+', $key);
+			}
+
 			// Does the RegEx match?
 			if (preg_match('#^'.$key.'$#', $uri, $matches))
 			{
+				// Store our locale so CodeIgniter object can
+				// assign it to the Request.
+				if (isset($localeSegment))
+				{
+					$this->detectedLocale = (explode('/', $uri))[$localeSegment];
+					unset($localeSegment);
+				}
+
 				// Are we using Closures? If so, then we need
 				// to collect the params into an array
 				// so it can be passed to the controller method later.
@@ -405,7 +455,7 @@ class Router implements RouterInterface
 		$file = APPPATH.'Controllers/'.$this->directory.$this->controller.'.php';
 		if (file_exists($file))
 		{
-			include $file;
+			include_once $file;
 		}
 
 		// Ensure the controller stores the fully-qualified class name

@@ -481,7 +481,7 @@ class Session implements SessionInterface
 	 *
 	 * @param  $key Identifier of the session property or properties to remove.
 	 */
-	public function remove(string $key)
+	public function remove($key)
 	{
 		if (is_array($key))
 		{

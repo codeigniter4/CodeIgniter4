@@ -47,7 +47,7 @@ Permits you to determine the number of rows in a particular table.
 Submit the table name in the first parameter. This is part of Query Builder.
 Example::
 
-	echo $db->table('my_table')->count_all();
+	echo $db->table('my_table')->countAll();
 	
 	// Produces an integer, like 25
 
