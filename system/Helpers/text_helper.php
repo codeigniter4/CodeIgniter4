@@ -357,9 +357,9 @@ if ( ! function_exists('convert_accented_characters'))
 		static $array_from, $array_to;
 		if ( ! is_array($array_from))
 		{
-			if (file_exists(APPPATH.'Config/ForeignChars.php'))
+			if (file_exists(BASEPATH.'Config/ForeignChars.php'))
 			{
-				include(APPPATH.'Config/ForeignChars.php');
+				include(BASEPATH.'Config/ForeignChars.php');
 			}
 			if (file_exists(APPPATH.'Config/'.ENVIRONMENT.'/ForeignChars.php'))
 			{
