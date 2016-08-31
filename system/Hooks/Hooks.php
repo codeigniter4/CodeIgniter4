@@ -71,6 +71,30 @@ class Hooks
 	//--------------------------------------------------------------------
 
 	/**
+	 * Ensures that we have a hooks file ready.
+	 *
+	 * @param string|null $file
+	 */
+	public static function initialize(string $file=null)
+	{
+		// Don't overwrite anything....
+		if (! empty(self::$hooksFile))
+		{
+			return;
+		}
+
+		// Default value
+	    if (empty($file))
+		{
+			$file = APPPATH.'Config/Hooks.php';
+		}
+
+		self::$hooksFile = $file;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Registers an action to happen on an event. The action can be any sort
 	 * of callable:
 	 *
@@ -119,6 +143,8 @@ class Hooks
 		// Read in our Config/events file so that we have them all!
 		if ( ! self::$haveReadFromFile)
 		{
+			self::initialize();
+
 			if (is_file(self::$hooksFile))
 			{
 				include self::$hooksFile;
