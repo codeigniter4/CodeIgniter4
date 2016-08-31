@@ -331,7 +331,7 @@ The following functions are available:
 	:returns:	Protocol-prefixed URL string
 	:rtype:	string
 
-	This function will add http&#58;// in the event that a protocol prefix
+	This function will add *http://* in the event that a protocol prefix
 	is missing from a URL.
 
 	Pass the URL string to the function like this::
