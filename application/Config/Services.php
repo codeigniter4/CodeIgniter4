@@ -530,6 +530,21 @@ class Services
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * The Typography class provides a way to model and manipulate URIs.
+	 */
+	public static function typography($uri = null, $getShared = true)
+	{
+		if ($getShared)
+		{
+			return self::getSharedInstance('typography');
+		}
+
+		return new \CodeIgniter\Typography\Typography;
+	}
+
+	//--------------------------------------------------------------------
+
 	//--------------------------------------------------------------------
 	// Utility Methods - DO NOT EDIT
 	//--------------------------------------------------------------------
