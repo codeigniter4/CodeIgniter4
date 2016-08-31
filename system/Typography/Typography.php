@@ -144,7 +144,7 @@ class Typography
 		$str = preg_replace_callback('#<.+?>#si', [$this, '_protect_characters'], $str);
 
 		// Do the same with braces if necessary
-		if ($this->protect_braced_quotes === TRUE)
+		if ($this->protectBracedQuotes === TRUE)
 		{
 			$str = preg_replace_callback('#\{.+?\}#si', [$this, '_protect_characters'], $str);
 		}
@@ -152,7 +152,7 @@ class Typography
 		// Convert "ignore" tags to temporary marker.  The parser splits out the string at every tag
 		// it encounters.  Certain inline tags, like image tags, links, span tags, etc. will be
 		// adversely affected if they are split out so we'll convert the opening bracket < temporarily to: {@TAG}
-		$str = preg_replace('#<(/*)('.$this->inline_elements.')([ >])#i', '{@TAG}\\1\\2\\3', $str);
+		$str = preg_replace('#<(/*)('.$this->inlineElements.')([ >])#i', '{@TAG}\\1\\2\\3', $str);
 
 		/* Split the string at every tag. This expression creates an array with this prototype:
 		 *
@@ -174,16 +174,16 @@ class Typography
 		{
 			// Are we dealing with a tag? If so, we'll skip the processing for this cycle.
 			// Well also set the "process" flag which allows us to skip <pre> tags and a few other things.
-			if (preg_match('#<(/*)('.$this->block_elements.').*?>#', $chunks[$i], $match))
+			if (preg_match('#<(/*)('.$this->blockElements.').*?>#', $chunks[$i], $match))
 			{
-				if (preg_match('#'.$this->skip_elements.'#', $match[2]))
+				if (preg_match('#'.$this->skipElements.'#', $match[2]))
 				{
 					$process = ($match[1] === '/');
 				}
 
 				if ($match[1] === '')
 				{
-					$this->last_block_element = $match[2];
+					$this->lastBlockElement = $match[2];
 				}
 
 				$str .= $chunks[$i];
@@ -203,17 +203,17 @@ class Typography
 			}
 
 			//  Convert Newlines into <p> and <br /> tags
-			$str .= $this->_format_newlines($chunks[$i]);
+			$str .= $this->_formatNewlines($chunks[$i]);
 		}
 
 		// No opening block level tag? Add it if needed.
-		if ( ! preg_match('/^\s*<(?:'.$this->block_elements.')/i', $str))
+		if ( ! preg_match('/^\s*<(?:'.$this->blockElements.')/i', $str))
 		{
-			$str = preg_replace('/^(.*?)<('.$this->block_elements.')/i', '<p>$1</p><$2', $str);
+			$str = preg_replace('/^(.*?)<('.$this->blockElements.')/i', '<p>$1</p><$2', $str);
 		}
 
 		// Convert quotes, elipsis, em-dashes, non-breaking spaces, and ampersands
-		$str = $this->format_characters($str);
+		$str = $this->formatCharacters($str);
 
 		// restore HTML comments
 		for ($i = 0, $total = count($html_comments); $i < $total; $i++)
@@ -235,10 +235,10 @@ class Typography
 			'/(<p>\W*<p>)+/'	=> '<p>',
 
 			// Clean up stray paragraph tags that appear before block level elements
-			'#<p></p><('.$this->block_elements.')#'	=> '<$1',
+			'#<p></p><('.$this->blockElements.')#'	=> '<$1',
 
 			// Clean up stray non-breaking spaces preceeding block elements
-			'#(&nbsp;\s*)+<('.$this->block_elements.')#'	=> '  <$2',
+			'#(&nbsp;\s*)+<('.$this->blockElements.')#'	=> '  <$2',
 
 			// Replace the temporary markers we added earlier
 			'/\{@TAG\}/'		=> '<',
@@ -351,8 +351,8 @@ class Typography
 	 */
 	protected function _formatNewlines(string $str): string
 	{
-		if ($str === '' OR (strpos($str, "\n") === FALSE && ! in_array($this->last_block_element,
-		        $this->inner_block_required)))
+		if ($str === '' OR (strpos($str, "\n") === FALSE && ! in_array($this->lastBlockElement,
+		        $this->innerBlockRequired)))
 		{
 			return $str;
 		}

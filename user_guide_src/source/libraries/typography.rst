@@ -1,31 +1,28 @@
-#################
-Typography Helper
-#################
+##########
+Typography
+##########
 
-The Typography Helper file contains functions that help your format text
+The Typography libary contains static functions that help your format text
 in semantically relevant ways.
 
-.. contents::
-  :local:
+*******************
+Loading the Library
+*******************
 
-.. raw:: html
+Like all services in CodeIgniter, it can be loaded via ``Config\Services``, though you usually will not need
+to load it manually::
 
-  <div class="custom-index container"></div>
+    $typography = \Config\Services::typography();
 
-Loading this Helper
-===================
-
-This helper is loaded using the following code::
-
-	$this->load->helper('typography');
-
-Available Functions
-===================
+**************************
+Available static functions
+**************************
 
 The following functions are available:
 
+**autoTypography()**
 
-.. php:function:: auto_typography($str[, $reduce_linebreaks = FALSE])
+.. php:function:: autoTypography($str[, $reduce_linebreaks = FALSE])
 
 	:param	string	$str: Input string
 	:param	bool	$reduce_linebreaks: Whether to reduce multiple instances of double newlines to two
@@ -35,21 +32,34 @@ The following functions are available:
 	Formats text so that it is semantically and typographically correct
 	HTML.
 
-	This function is an alias for ``CI_Typography::auto_typography()``.
-	For more info, please see the :doc:`Typography Library
-	<../libraries/typography>` documentation.
-
 	Usage example::
 
-		$string = auto_typography($string);
+		$string = $typography->autoTypography($string);
 
 	.. note:: Typographic formatting can be processor intensive, particularly if
 		you have a lot of content being formatted. If you choose to use this
 		function you may want to consider :doc:`caching <../general/caching>` your
 		pages.
+		
+**formatCharacters()**
 
+.. php:function:: formatCharacters($str)
 
-.. php:function:: nl2br_except_pre($str)
+	:param	string	$str: Input string
+	:returns:	String with formatted characters.
+	:rtype:	string
+
+	This function mainly converts double and single quotes
+	to curly entities, but it also converts em-dashes,
+	double spaces, and ampersands.
+
+	Usage example::
+
+		$string = $typography->formatCharacters($string);
+		
+**nl2brExceptPre()**
+
+.. php:function:: nl2brExceptPre($str)
 
 	:param	string	$str: Input string
 	:returns:	String with HTML-formatted line breaks
@@ -61,15 +71,4 @@ The following functions are available:
 
 	Usage example::
 
-		$string = nl2br_except_pre($string);
-
-.. php:function:: entity_decode($str, $charset = NULL)
-
-	:param	string	$str: Input string
-	:param	string	$charset: Character set
-	:returns:	String with decoded HTML entities
-	:rtype:	string
-
-	This function is an alias for ``CI_Security::entity_decode()``.
-	Fore more info, please see the :doc:`Security Library
-	<../libraries/security>` documentation.
+		$string = $typography->nl2brExceptPre($string);
