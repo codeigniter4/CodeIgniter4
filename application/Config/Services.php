@@ -531,7 +531,7 @@ class Services
 	//--------------------------------------------------------------------
 
 	/**
-	 * The Typography class provides a way to model and manipulate URIs.
+	 * The Typography class provides a way to format text in semantically relevant ways.
 	 */
 	public static function typography($uri = null, $getShared = true)
 	{
