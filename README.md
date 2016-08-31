@@ -64,4 +64,4 @@ Please read the *Contributing to CodeIgniter* section in the user guide
 PHP version 7 or higher is required. 
 
 ## Running CodeIgniter Tests
-Information on running CodeIgniter test suite can be found in the README.md file in the tests directory.
+Information on running CodeIgniter test suite can be found in the [README.md](tests/README.md) file in the tests directory.

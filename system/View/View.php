@@ -134,7 +134,7 @@ class View implements RenderableInterface {
 		// Was it cached?
 		if (isset($options['cache']))
 		{
-			$cacheName = $options['cache_name'] ?: str_replace('.php', '', $view);
+			$cacheName = $options['cache_name'] ?? str_replace('.php', '', $view);
 
 			if ($output = cache($cacheName))
 			{
