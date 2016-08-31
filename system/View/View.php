@@ -46,7 +46,7 @@ use CodeIgniter\Log\Logger;
  *
  * @package CodeIgniter\View
  */
-class View implements RenderableInterface {
+class View implements RendererInterface {
 
 	/**
 	 * Data that is made available to the Views.
@@ -185,15 +185,66 @@ class View implements RenderableInterface {
 	//--------------------------------------------------------------------
 
 	/**
+	 * Builds the output based upon a string and any
+	 * data that has already been set.
+	 * Cache does not apply, because there is no "key".
+	 *
+	 * @param string $view	The view contents
+	 * @param array  $options  Reserved for 3rd-party uses since
+	 *                         it might be needed to pass additional info
+	 *                         to other template engines.
+	 * @param bool   $saveData If true, will save data for use with any other calls,
+	 *                         if false, will clean the data after displaying the view.
+	 *
+	 * @return string
+	 */
+	public function renderString(string $view, array $options = null, bool $saveData = false): string
+	{
+		$start = microtime(true);
+		extract($this->data);
+
+		if ( ! $saveData)
+		{
+			$this->data = [];
+		}
+
+		ob_start();
+		$incoming = "?>".$view;
+		eval($incoming);
+		$output = ob_get_contents();
+		@ob_end_clean();
+
+		$this->logPerformance($start, microtime(true), $this->excerpt($view));
+
+		return $output;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Extract first bit of a long string and add ellipsis
+	 *
+	 * @param string	$string
+	 * @parm	int		$length
+	 * @return string
+	 */
+	public function excerpt(string $string, int $length = 20): string
+	{
+		return (strlen($string) > $length) ? substr($string, 0, $length - 3).'...' : $string;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Sets several pieces of view data at once.
 	 *
 	 * @param array $data
 	 * @param string $context The context to escape it for: html, css, js, url
 	 *                        If null, no escaping will happen
 	 *
-	 * @return RenderableInterface
+	 * @return RendererInterface
 	 */
-	public function setData(array $data=[], string $context=null): RenderableInterface
+	public function setData(array $data=[], string $context=null): RendererInterface
 	{
 		if (! empty($context))
 		{
@@ -215,9 +266,9 @@ class View implements RenderableInterface {
 	 * @param string $context The context to escape it for: html, css, js, url
 	 *                        If null, no escaping will happen
 	 *
-	 * @return RenderableInterface
+	 * @return RendererInterface
 	 */
-	public function setVar(string $name, $value=null, string $context=null): RenderableInterface
+	public function setVar(string $name, $value=null, string $context=null): RendererInterface
 	{
 		if (! empty($context))
 		{
@@ -234,7 +285,7 @@ class View implements RenderableInterface {
 	/**
 	 * Removes all of the view data from the system.
 	 *
-	 * @return RenderableInterface
+	 * @return RendererInterface
 	 */
 	public function resetData()
 	{

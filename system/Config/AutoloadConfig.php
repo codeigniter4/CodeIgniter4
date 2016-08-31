@@ -175,7 +175,7 @@ class AutoloadConfig
 			'CodeIgniter\Session\Handlers\FileHandler'      => BASEPATH.'Session/Handlers/FileHandler.php',
 			'CodeIgniter\Session\Handlers\MemcachedHandler' => BASEPATH.'Session/Handlers/MemcachedHandler.php',
 			'CodeIgniter\Session\Handlers\RedisHandler'     => BASEPATH.'Session/Handlers/RedisHandler.php',
-			'CodeIgniter\View\RenderableInterface'          => BASEPATH.'View/RenderableInterface.php',
+			'CodeIgniter\View\RendererInterface'          => BASEPATH.'View/RendererInterface.php',
 			'CodeIgniter\View\View'                         => BASEPATH.'View/View.php',
 			'Zend\Escaper\Escaper'                          => BASEPATH.'ThirdParty/ZendEscaper/Escaper.php',
 			'CodeIgniter\Log\TestLogger'                    => BASEPATH.'../tests/_support/Log/TestLogger.php',

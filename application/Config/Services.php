@@ -3,7 +3,7 @@
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Database\MigrationRunner;
-use CodeIgniter\View\RenderableInterface;
+use CodeIgniter\View\RendererInterface;
 
 /**
  * Services Configuration file.
@@ -277,7 +277,7 @@ class Services
 
 	//--------------------------------------------------------------------
 
-	public static function pager($config = null, RenderableInterface $view = null, $getShared = true)
+	public static function pager($config = null, RendererInterface $view = null, $getShared = true)
 	{
 		if ($getShared)
 		{
@@ -289,7 +289,7 @@ class Services
 			$config = new Pager();
 		}
 
-		if (! $view instanceof RenderableInterface)
+		if (! $view instanceof RendererInterface)
 		{
 			$view = self::renderer();
 		}
