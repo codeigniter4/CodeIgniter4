@@ -41,7 +41,7 @@ use CodeIgniter\DatabaseException;
 /**
  * Class Forge
  */
-abstract class Forge
+class Forge
 {
 	/**
 	 * The active database connection.
