@@ -455,7 +455,7 @@ class Forge
 	    foreach ($this->foreignKeys as $fk)
 	    {
 	       $sql = 'ALTER TABLE '.$table.' ADD CONSTRAINT fk_'.$fk['fkey'].' FOREIGN KEY ('.
-	       	        $fk['key'].') REFERENCES '.$this->db->DBPrefix.$fk['table'].' ('.$fk['fkey'].
+	       	        $fk['key'].') REFERENCES '.$this->db->DBPrefix.'.'.$fk['table'].' ('.$fk['fkey'].
 	       	        ') ON UPDATE '.$fk['onUpdate'].' ON DELETE '.$fk['onDelete'];
 	       $this->db->query($sql);
 	    }
