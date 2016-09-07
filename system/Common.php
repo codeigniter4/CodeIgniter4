@@ -88,7 +88,7 @@ if (! function_exists('cache'))
 if ( ! function_exists('view'))
 {
 	/**
-	 * Grabs the current RenderableInterface-compatible class
+	 * Grabs the current RendererInterface-compatible class
 	 * and tells it to render the specified view. Simply provides
 	 * a convenience method that can be used in Controllers,
 	 * libraries, and routed closures.

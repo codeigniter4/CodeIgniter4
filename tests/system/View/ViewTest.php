@@ -139,6 +139,18 @@ class ViewTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testRenderString()
+	{
+		$view = new View($this->viewsDir, $this->loader);
+
+		$view->setVar('testString', 'Hello World');
+		$expected = '<h1>Hello World</h1>';
+
+		$this->assertEquals($expected, $view->renderString('<h1><?= $testString ?></h1>'));
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testRendersThrowsExceptionIfFileNotFound()
 	{
 		$view = new View($this->viewsDir, $this->loader);

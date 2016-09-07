@@ -63,7 +63,7 @@ New packages:
     - View
 
         -   Zend \\ Escaper, Exception \\ ... **third party**
-        -   RenderableInterface, View
+        -   RendererInterface, View
         
 
 User Guide adapted or rewritten.
