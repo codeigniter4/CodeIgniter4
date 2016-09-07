@@ -369,7 +369,9 @@ class Router implements RouterInterface
 				// assign it to the Request.
 				if (isset($localeSegment))
 				{
-					$this->detectedLocale = (explode('/', $uri))[$localeSegment];
+					// The following may be inefficient, but doesn't upset NetBeans :-/
+					$temp = (explode('/', $uri));
+					$this->detectedLocale = $temp[$localeSegment];
 					unset($localeSegment);
 				}
 
