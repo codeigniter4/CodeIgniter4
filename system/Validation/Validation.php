@@ -89,12 +89,6 @@ class Validation implements ValidationInterface
 				$rules = explode('|', $rules);
 			}
 
-			// No data with this key AND it's not required? Move on...
-			if (! in_array('required', $rules) && ! array_key_exists($rField, $data))
-			{
-				continue;
-			}
-
 			$this->processRules($rField, $data[$rField] ?? null, $rules, $data);
 		}
 

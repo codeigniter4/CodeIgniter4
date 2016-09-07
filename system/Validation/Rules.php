@@ -121,7 +121,7 @@ class Rules
 	 *
 	 * @return    bool
 	 */
-	public function greater_than(string $str, string $min): bool
+	public function greater_than(string $str, string $min, array $data): bool
 	{
 		return is_numeric($str) ? ($str > $min) : false;
 	}
@@ -136,7 +136,7 @@ class Rules
 	 *
 	 * @return    bool
 	 */
-	public function greater_than_equal_to(string $str, string $min): bool
+	public function greater_than_equal_to(string $str, string $min, array $data): bool
 	{
 		return is_numeric($str) ? ($str >= $min) : false;
 	}
@@ -376,6 +376,108 @@ class Rules
 	//--------------------------------------------------------------------
 
 	/**
+	 * The field is required when any of the other fields are present
+	 * in the data.
+	 *
+	 * Example (field is required when the password field is present):
+	 *
+	 * 	required_with[password]
+	 *
+	 * @param        $str
+	 * @param string $fields
+	 * @param array  $data
+	 *
+	 * @return bool
+	 */
+	public function required_with($str, string $fields, array $data): bool
+	{
+	    $fields = explode(',', $fields);
+
+		// If the field is present we can safely assume that
+		// the field is here, no matter whether the corresponding
+		// search field is present or not.
+		$present = $this->required($data[$str] ?? null);
+
+		if ($present === true)
+		{
+			return true;
+		}
+
+		// Still here? Then we fail this test if
+		// any of the fields are present in $data
+		$requiredFields = array_intersect($fields, $data);
+
+		$requiredFields = array_filter($requiredFields, function($item)
+		{
+			return ! empty($item);
+		});
+
+		return ! (bool)count($requiredFields);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * The field is required when all of the other fields are not present
+	 * in the data.
+	 *
+	 * Example (field is required when the id or email field is missing):
+	 *
+	 * 	required_without[id,email]
+	 *
+	 * @param        $str
+	 * @param string $fields
+	 * @param array  $data
+	 *
+	 * @return bool
+	 */
+	public function required_without($str, string $fields, array $data): bool
+	{
+		$fields = explode(',', $fields);
+
+		// If the field is present we can safely assume that
+		// the field is here, no matter whether the corresponding
+		// search field is present or not.
+		$present = $this->required($data[$str] ?? null);
+
+		if ($present === true)
+		{
+			return true;
+		}
+
+		// Still here? Then we fail this test if
+		// any of the fields are not present in $data
+		foreach ($fields as $field)
+		{
+			if (! array_key_exists($field, $data))
+			{
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Validates that the string is a valid timezone as per the
+	 * timezone_identifiers_list function.
+	 *
+	 * @see http://php.net/manual/en/datetimezone.listidentifiers.php
+	 *
+	 * @param string $str
+	 *
+	 * @return bool
+	 */
+	public function timezone(string $str): bool
+	{
+		return in_array($str, timezone_identifiers_list());
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Valid Base64
 	 *
 	 * Tests a string for characters outside of the Base64 alphabet
@@ -411,7 +513,10 @@ class Rules
 	//--------------------------------------------------------------------
 
 	/**
-	 * Valid Emails
+	 * Validate a comma-separated list of email addresses.
+	 *
+	 * Example:
+	 * 	valid_emails[one@example.com,two@example.com]
 	 *
 	 * @param    string
 	 *

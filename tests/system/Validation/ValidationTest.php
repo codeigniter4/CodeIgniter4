@@ -337,9 +337,6 @@ class ValidationTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	/**
-	 * @group single
-	 */
 	public function testIsUniqueIgnoresParams()
 	{
 		$db = Database::connect();
@@ -1159,4 +1156,103 @@ class ValidationTest extends \CIUnitTestCase
 
 	//-------------------------------------------------------------------
 
+	/**
+	 * @dataProvider timezoneProvider
+	 *
+	 * @param $value
+	 * @param $expected
+	 */
+	public function testTimeZone($value, $expected)
+	{
+		$data = [
+			'foo' => $value,
+		];
+
+		$this->validation->setRules([
+			'foo' => "timezone"
+		]);
+
+		$this->assertEquals($expected, $this->validation->run($data));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function timezoneProvider()
+	{
+	    return [
+	    	['America/Chicago', true],
+	    	['america/chicago', false],
+			['foo/bar', false],
+		];
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * @dataProvider requiredWithProvider
+	 *
+	 * @param $check
+	 * @param $expected
+	 */
+	public function testRequiredWith($field, $check, $expected=false)
+	{
+		$data = [
+			'foo' => 'bar',
+			'bar' => 'something',
+			'baz' => null,
+		];
+
+		$this->validation->setRules([
+			$field => "required_with[{$check}]"
+		]);
+
+		$this->assertEquals($expected, $this->validation->run($data));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function requiredWithProvider()
+	{
+	    return [
+			['nope', 'bar', false],
+			['foo', 'bar', true],
+			['nope', 'baz', true],
+		];
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * @dataProvider requiredWithoutProvider
+	 * @group single
+	 *
+	 * @param $check
+	 * @param $expected
+	 */
+	public function testRequiredWithout($field, $check, $expected=false)
+	{
+		$data = [
+			'foo' => 'bar',
+			'bar' => 'something',
+			'baz' => null,
+		];
+
+		$this->validation->setRules([
+			$field => "required_without[{$check}]"
+		]);
+
+		$this->assertEquals($expected, $this->validation->run($data));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function requiredWithoutProvider()
+	{
+		return [
+			['nope', 'bars', false],
+			['foo', 'nope', true]
+		];
+	}
+
+	//--------------------------------------------------------------------
 }
