@@ -228,7 +228,7 @@ if (! function_exists('session'))
 		// Returning a single item?
 		if (is_string($val))
 		{
-			return $_SESSION[$val] ?: null;
+			return $_SESSION[$val] ?? null;
 		}
 
 		return \Config\Services::session();
