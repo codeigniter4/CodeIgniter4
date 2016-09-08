@@ -339,6 +339,24 @@ class Security
 		return stripslashes($str);
 	}
 
-	//--------------------------------------------------------------------
+	// ----------------------------------------------------------------
+	
+	/**
+	 * Strip Image Tags
+	 *
+	 * @param	string	$str
+	 * @return	string
+	 */
+	public function stripImageTags($str)
+	{
+	    return preg_replace(
+	        array(
+	            '#<img[\s/]+.*?src\s*=\s*(["\'])([^\\1]+?)\\1.*?\>#i',
+	            '#<img[\s/]+.*?src\s*=\s*?(([^\s"\'=<>`]+)).*?\>#i'
+	        ),
+	        '\\2',
+	        $str
+	        );
+	}
 
 }
