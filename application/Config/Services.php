@@ -533,14 +533,14 @@ class Services
 	/**
 	 * The Typography class provides a way to format text in semantically relevant ways.
 	 */
-	public static function typography($uri = null, $getShared = true)
+	public static function typography($getShared = true)
 	{
 		if ($getShared)
 		{
 			return self::getSharedInstance('typography');
 		}
 
-		return new \CodeIgniter\Typography\Typography;
+		return new \CodeIgniter\Typography\Typography();
 	}
 
 	//--------------------------------------------------------------------
