@@ -76,7 +76,7 @@ class Forge
 	 * 
 	 * @var array
 	 */
-	protected $foreignKeys = [];
+	protected  $foreignKeys = [];
 
 	/**
 	 * Character set used.
@@ -312,12 +312,13 @@ class Forge
 	 * @param string $onUpdate  On update event.
 	 * @param string $onDelete  On delete event.
 	 */
-	public function addForeignKey(string $key, string $fkey, string $ftable,
+	public function addForeignKey(string $key, string $fkey, string $table, string $ftable,
 	        string $onUpdate = 'CASCADE', string $onDelete = 'CASCADE')
 	{
 	    $this->foreignKeys[] = [
 	            'key' => $key,
 	            'fkey' => $fkey,
+	            'table' => $table,
 	            'ftable' => $ftable,
 	            'onUpdate' => $onUpdate,
 	            'onDelete' => $onDelete
@@ -330,6 +331,57 @@ class Forge
 	    }
 	    
 	    return $this;
+	}
+	
+	//--------------------------------------------------------------------
+	
+	/**
+	 * Get foreign Keys
+	 * 
+	 */
+	public function getForeingKeys()
+	{
+	    return $this->foreignKeys;
+	}
+
+	//--------------------------------------------------------------------
+	
+	/**
+	 * Creates foreign keys.
+	 * 
+	 * @param string $table
+	 */
+	public function createForeignKeys()
+	{
+	    foreach ($this->foreignKeys as $fk)
+	    {
+    	    $this->db->query($this->compileFKeyCreate($fk));
+	    }
+	}
+	
+	//-------------------------------------------------------------------
+	
+	public function deleteForeignKey($table, $fkey)
+	{
+	    $this->db->query($this->compileFKeyDrop($table, $fkey));
+	}
+	
+	//-------------------------------------------------------------------
+	
+	public function compileFKeyCreate($fk)
+	{
+	    $prefix = $this->db->DBPrefix ? $this->db->DBPrefix.'.' : '';
+	    
+	    return 'ALTER TABLE '.$prefix.$fk['table'].' ADD CONSTRAINT fk_'.$fk['fkey'].' FOREIGN KEY ('.$fk['key'].') REFERENCES '.$prefix.$fk['ftable'].' ('.$fk['fkey'].') ON UPDATE '.$fk['onUpdate'].' ON DELETE '.$fk['onDelete'];
+	}
+	
+	//--------------------------------------------------------------------
+	
+	public function compileFKeyDrop($table, $fkey)
+	{
+	    $prefix = $this->db->DBPrefix ? $this->db->DBPrefix.'.' : '';
+	    
+	    return "ALTER TABLE $prefix$table DROP FOREIGN KEY $fkey";
 	}
 
 	//--------------------------------------------------------------------
@@ -434,31 +486,13 @@ class Forge
 			// Create foreign keys
 			if ( ! empty($this->foreignKeys))
 			{
-			    $this->_createForeignKeys($table);
+			    $this->createForeignKeys();
 			}
 		}
 
 		$this->_reset();
 
 		return $result;
-	}
-
-	//--------------------------------------------------------------------
-	
-	/**
-	 * Creates foreign keys for the current table.
-	 * 
-	 * @param string $table
-	 */
-	protected function _createForeignKeys(string $table)
-	{
-	    foreach ($this->foreignKeys as $fk)
-	    {
-	       $sql = 'ALTER TABLE '.$table.' ADD CONSTRAINT fk_'.$fk['fkey'].' FOREIGN KEY ('.
-	       	        $fk['key'].') REFERENCES '.$this->db->DBPrefix.'.'.$fk['table'].' ('.$fk['fkey'].
-	       	        ') ON UPDATE '.$fk['onUpdate'].' ON DELETE '.$fk['onDelete'];
-	       $this->db->query($sql);
-	    }
 	}
 
 	//--------------------------------------------------------------------
