@@ -85,7 +85,7 @@ class Typography
 	 *
 	 * @var bool
 	 */
-	public $protectBracedQuotes = FALSE;
+	public $protectBracedQuotes = false;
 
 	/**
 	 * Auto Typography
@@ -102,7 +102,7 @@ class Typography
 	 * @param	bool	whether to reduce more then two consecutive newlines to two
 	 * @return	string
 	 */
-	public function autoTypography(string $str, bool $reduce_linebreaks = FALSE): string
+	public function autoTypography(string $str, bool $reduce_linebreaks = false): string
 	{
 		if ($str === '')
 		{
@@ -110,21 +110,21 @@ class Typography
 		}
 
 		// Standardize Newlines to make matching easier
-		if (strpos($str, "\r") !== FALSE)
+		if (strpos($str, "\r") !== false)
 		{
 			$str = str_replace(["\r\n", "\r"], "\n", $str);
 		}
 
 		// Reduce line breaks.  If there are more than two consecutive linebreaks
 		// we'll compress them down to a maximum of two since there's no benefit to more.
-		if ($reduce_linebreaks === TRUE)
+		if ($reduce_linebreaks === false)
 		{
 			$str = preg_replace("/\n\n+/", "\n\n", $str);
 		}
 
 		// HTML comment tags don't conform to patterns of normal tags, so pull them out separately, only if needed
 		$html_comments = [];
-		if (strpos($str, '<!--') !== FALSE && preg_match_all('#(<!\-\-.*?\-\->)#s', $str, $matches))
+		if (strpos($str, '<!--') !== false && preg_match_all('#(<!\-\-.*?\-\->)#s', $str, $matches))
 		{
 			for ($i = 0, $total = count($matches[0]); $i < $total; $i++)
 			{
@@ -135,7 +135,7 @@ class Typography
 
 		// match and yank <pre> tags if they exist.  It's cheaper to do this separately since most content will
 		// not contain <pre> tags, and it keeps the PCRE patterns below simpler and faster
-		if (strpos($str, '<pre') !== FALSE)
+		if (strpos($str, '<pre') !== false)
 		{
 			$str = preg_replace_callback('#<pre.*?>.*?</pre>#si', [$this, '_protect_characters'], $str);
 		}
@@ -144,7 +144,7 @@ class Typography
 		$str = preg_replace_callback('#<.+?>#si', [$this, '_protect_characters'], $str);
 
 		// Do the same with braces if necessary
-		if ($this->protectBracedQuotes === TRUE)
+		if ($this->protectBracedQuotes === false)
 		{
 			$str = preg_replace_callback('#\{.+?\}#si', [$this, '_protect_characters'], $str);
 		}
@@ -168,7 +168,7 @@ class Typography
 
 		// Build our finalized string.  We cycle through the array, skipping tags, and processing the contained text
 		$str = '';
-		$process = TRUE;
+		$process = true;
 
 		for ($i = 0, $c = count($chunks) - 1; $i <= $c; $i++)
 		{
@@ -190,7 +190,7 @@ class Typography
 				continue;
 			}
 
-			if ($process === FALSE)
+			if ($process === false)
 			{
 				$str .= $chunks[$i];
 				continue;
@@ -259,7 +259,7 @@ class Typography
 		];
 
 		// Do we need to reduce empty lines?
-		if ($reduce_linebreaks === TRUE)
+		if ($reduce_linebreaks === true)
 		{
 			$table['#<p>\n*</p>#'] = '';
 		}
@@ -349,9 +349,9 @@ class Typography
 	 * @param	string
 	 * @return	string
 	 */
-	protected function _formatNewlines(string $str): string
+	protected function formatNewlines(string $str): string
 	{
-		if ($str === '' OR (strpos($str, "\n") === FALSE && ! in_array($this->lastBlockElement,
+		if ($str === '' OR (strpos($str, "\n") === false && ! in_array($this->lastBlockElement,
 		        $this->innerBlockRequired)))
 		{
 			return $str;
@@ -390,7 +390,7 @@ class Typography
 	 * @param	array
 	 * @return	string
 	 */
-	protected function _protectCharacters(array $match): string
+	protected function protectCharacters(array $match): string
 	{
 		return str_replace(["'",'"','--','  '], ['{@SQ}', '{@DQ}', '{@DD}', '{@NBS}'], $match[0]);
 	}
