@@ -73,8 +73,10 @@ class Validation implements ValidationInterface
 	 *
 	 * @return bool
 	 */
-	public function run(array $data, string $group = null): bool
+	public function run(array $data = null, string $group = null): bool
 	{
+	    $data = $data ?? $this->data;
+
 		$this->loadRuleSets();
 
 		// Run through each rule. If we have any field set for
@@ -307,6 +309,20 @@ class Validation implements ValidationInterface
 	//--------------------------------------------------------------------
 	// Errors
 	//--------------------------------------------------------------------
+
+    /**
+     * Checks to see if an error exists for the given field.
+     *
+     * @param string $field
+     *
+     * @return bool
+     */
+    public function hasError(string $field): bool
+    {
+        return array_key_exists($field, $this->errors);
+    }
+
+    //--------------------------------------------------------------------
 
 	/**
 	 * Returns the error(s) for a specified $field (or empty string if not set).
