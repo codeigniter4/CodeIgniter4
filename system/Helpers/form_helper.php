@@ -1,23 +1,5 @@
 <?php
     
-function _get_security()
-{
-     return \Config\Services::security();
-//         $this->config = new \Config\App;
-//         helper('url');
-}
-    
-// -------------------------------------------------------------------------------
-function _get_csrf_state()
-{
-    $getCsrf = new \Config\Filters();
-    $before = $getCsrf->globals->before;
-    
-    if (in_array('csrf', $before) || array_key_exists('csrf', $before))
-    {
-        return true;
-    }
-}
 // -------------------------------------------------------------------------------
 /**
  * Form Declaration
@@ -29,43 +11,50 @@ function _get_csrf_state()
  * @param	array	a key/value pair hidden data
  * @return	string
  */
-function form_open(string $action = '', array $attributes = [], array $hidden = []): string
+if ( ! function_exists('plural'))
 {
-    // If no action is provided then set to the current url
-    if ( ! $action)
+    function form_open(string $action = '', array $attributes = [], array $hidden = []): string
     {
-        $action = current_url(true);
-    }
-    // If an action is not a full URL then turn it into one
-    elseif (strpos($action, '://') === FALSE)
-    {
-        $action = site_url($action);
-    }
-    $attributes = _attributes_to_string($attributes);
-    if (stripos($attributes, 'method=') === FALSE)
-    {
-        $attributes .= ' method="post"';
-    }
-    if (stripos($attributes, 'accept-charset=') === FALSE)
-    {
-        $attributes .= ' accept-charset="'.strtolower(config_item('charset')).'"';
-    }
-    $form = '<form action="'.$action.'"'.$attributes.">\n";
-    
-    // Add CSRF field if enabled, but leave it out for GET requests and requests to external websites
-    if (getCsrfState() === TRUE && strpos($action, base_url()) !== FALSE && ! stripos($form, 'method="get"'))
-    {
-        $security = \Config\Services::security();
-        $hidden[$security->getCsrfTokenName()] = $security->getCsrfHash();
-    }
-    if (is_array($hidden))
-    {
-        foreach ($hidden as $name => $value)
+        // If no action is provided then set to the current url
+        if ( ! $action)
         {
-            $form .= '<input type="hidden" name="'.$name.'" value="'.esc($value, 'html').'" style="display:none;" />'."\n";
+            $action = current_url(true);
         }
+        // If an action is not a full URL then turn it into one
+        elseif (strpos($action, '://') === FALSE)
+        {
+            $action = site_url($action);
+        }
+        $attributes = _attributes_to_string($attributes);
+        if (stripos($attributes, 'method=') === FALSE)
+        {
+            $attributes .= ' method="post"';
+        }
+        if (stripos($attributes, 'accept-charset=') === FALSE)
+        {
+            $attributes .= ' accept-charset="'.strtolower(config_item('charset')).'"';
+        }
+        $form = '<form action="'.$action.'"'.$attributes.">\n";
+        
+        // Add CSRF field if enabled, but leave it out for GET requests and requests to external websites
+        $getCsrf = new \Config\Filters();
+        $before = $getCsrf->globals->before;
+        
+        if (in_array('csrf', $before) || array_key_exists('csrf', $before) && 
+                strpos($action, base_url()) !== FALSE && ! stripos($form, 'method="get"'))
+        {
+            $security = \Config\Services::security();
+            $hidden[$security->getCsrfTokenName()] = $security->getCsrfHash();
+        }
+        if (is_array($hidden))
+        {
+            foreach ($hidden as $name => $value)
+            {
+                $form .= '<input type="hidden" name="'.$name.'" value="'.esc($value, 'html').'" style="display:none;" />'."\n";
+            }
+        }
+        return $form;
     }
-    return $form;
 }
 // ------------------------------------------------------------------------
 /**
