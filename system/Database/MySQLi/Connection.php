@@ -277,6 +277,11 @@ class Connection extends BaseConnection implements ConnectionInterface
 			return $this->dataCache['version'];
 		}
 
+		if (empty($this->mysqli))
+        {
+            $this->initialize();
+        }
+
 		return $this->dataCache['version'] = $this->mysqli->server_info;
 	}
 

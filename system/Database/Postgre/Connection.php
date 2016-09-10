@@ -153,7 +153,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 
 		if ( ! $this->connID or ($pgVersion = pg_version($this->connID)) === false)
 		{
-			return false;
+			$this->initialize();
 		}
 
 		return isset($pgVersion['server'])
