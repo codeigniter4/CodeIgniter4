@@ -307,7 +307,7 @@ if ( ! function_exists('get_file_info'))
      * @param	mixed	array or comma separated string of information returned
      * @return	array
      */
-    function get_file_info(strin $file, $returned_values = ['name', 'server_path', 'size', 'date']): array
+    function get_file_info(string $file, $returned_values = ['name', 'server_path', 'size', 'date']): array
     {
         if ( ! file_exists($file))
         {
