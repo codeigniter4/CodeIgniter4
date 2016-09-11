@@ -1,6 +1,6 @@
-##########
+###########
 Text Helper
-##########
+###########
 
 The Text Helper file contains functions that assist in working with Text.
 
