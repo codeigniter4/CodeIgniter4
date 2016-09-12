@@ -501,12 +501,12 @@ class CLI
 
 	/**
 	 * Displays a progress bar on the CLI. You must call it repeatedly
-	 * to update it. Set $thisStep = 0 to erase the progress bar.
+	 * to update it. Set $thisStep = false to erase the progress bar.
 	 *
 	 * @param int $thisStep
 	 * @param int $totalSteps
 	 */
-	public static function showProgress(int $thisStep = 1, int $totalSteps = 10)
+	public static function showProgress($thisStep = 1, int $totalSteps = 10)
 	{
 		// The first time through, save
 		// our position so the script knows where to go
@@ -521,7 +521,7 @@ class CLI
 		// Restore position
 		fwrite(STDERR, "\0338");
 
-		if ($thisStep !== 0)
+		if ($thisStep !== false)
 		{
 			// Don't allow div by zero or negative numbers....
 			$thisStep   = abs($thisStep);
