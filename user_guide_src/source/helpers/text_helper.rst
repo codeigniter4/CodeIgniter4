@@ -271,7 +271,7 @@ The following functions are available:
 		$string = convert_accented_characters($string);
 
 	.. note:: This function uses a companion config file
-		`application/config/foreign_chars.php` to define the to and
+		`application/Config/ForeignCharacters.php` to define the to and
 		from array for transliteration.
 
 .. php:function:: word_censor($str, $censored[, $replacement = ''])
