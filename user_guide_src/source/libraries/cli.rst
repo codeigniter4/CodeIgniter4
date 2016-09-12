@@ -189,7 +189,7 @@ This block is animated in place for a very nice effect.
 
 To use it, pass in the current step as the first parameter, and the total number of steps as the second parameter.
 The percent complete and the length of the display will be determined based on that number. When you are done,
-pass ``false`` as the first parameter and the progress bar will be removed.
+pass ``0`` as the first parameter and the progress bar will be removed.
 ::
 
 	$totalSteps = count($tasks);
@@ -202,6 +202,6 @@ pass ``false`` as the first parameter and the progress bar will be removed.
 	}
 
 	// Done, so erase it...
-	CLI::showProgress(false);
+	CLI::showProgress(0);
 
 

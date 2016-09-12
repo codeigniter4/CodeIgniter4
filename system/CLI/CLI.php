@@ -501,7 +501,7 @@ class CLI
 
 	/**
 	 * Displays a progress bar on the CLI. You must call it repeatedly
-	 * to update it. Set $thisStep = false to erase the progress bar.
+	 * to update it. Set $thisStep = 0 to erase the progress bar.
 	 *
 	 * @param int $thisStep
 	 * @param int $totalSteps
@@ -521,7 +521,7 @@ class CLI
 		// Restore position
 		fwrite(STDERR, "\0338");
 
-		if ($thisStep !== false)
+		if ($thisStep !== 0)
 		{
 			// Don't allow div by zero or negative numbers....
 			$thisStep   = abs($thisStep);
