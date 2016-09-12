@@ -118,16 +118,20 @@ Class Reference
 
 	.. php:method:: renderString($view[, $options[, $saveData=false]]])
 
-		:param  string  $view: Contents of the view to render
+		:param  string  $view: Contents of the view to render, for instance content retrieved from a database
 		:param  array   $options: Array of options, as key/value pairs
 		:param  boolean $saveData: If true, will save data for use with any other calls, if false, will clean the data after rendering the view.
 		:returns: The rendered text for the chosen view
 		:rtype: string
 
-		Builds the output based upon a file name and any data that has already been set::
+		Builds the output based upon a view fragment and any data that has already been set::
 
-			echo $view->render('myview');
+			echo $view->renderString('<div>My Sharona</div>');
 
+		This could be used for displaying content that might have been stored in a database,
+		but you need to be aware that this is a potential security vulnerability,
+		and that you **must** validate any such data, and probably escape it
+		appropriately!
 
 	.. php:method:: setData([$data[, $context=null]])
 
@@ -163,4 +167,3 @@ Class Reference
 
 		If you use the a view data variable that you have previously used
 		for this object, the new value will replace the existing one.
-

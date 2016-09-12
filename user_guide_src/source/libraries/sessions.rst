@@ -436,7 +436,7 @@ Preference                     Default         Options                          
 **sessionCookieName**          ci_session      [A-Za-z\_-] characters only              The name used for the session cookie.
 **sessionExpiration**          7200 (2 hours)  Time in seconds (integer)                The number of seconds you would like the session to last.
                                                                                         If you would like a non-expiring session (until browser is closed) set the value to zero: 0
-**sessionSavePpath**           NULL            None                                     Specifies the storage location, depends on the driver being used.
+**sessionSavePath**            NULL            None                                     Specifies the storage location, depends on the driver being used.
 **sessionMatchIP**             FALSE           TRUE/FALSE (boolean)                     Whether to validate the user's IP address when reading the session cookie.
                                                                                         Note that some ISPs dynamically changes the IP, so if you want a non-expiring session you
                                                                                         will likely set this to FALSE.

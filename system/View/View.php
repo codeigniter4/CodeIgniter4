@@ -47,8 +47,7 @@ use CodeIgniter\Log\Logger;
  *
  * @package CodeIgniter\View
  */
-class View implements RendererInterface
-{
+class View implements RendererInterface {
 
 	/**
 	 * Data that is made available to the Views.
@@ -210,7 +209,8 @@ class View implements RendererInterface
 		}
 
 		ob_start();
-		include("php://memory:".$view);
+		$incoming = "?>".$view;
+		eval($incoming);
 		$output = ob_get_contents();
 		@ob_end_clean();
 
@@ -242,9 +242,9 @@ class View implements RendererInterface
 	 * @param string $context The context to escape it for: html, css, js, url
 	 *                        If null, no escaping will happen
 	 *
-	 * @return RenderableInterface
+	 * @return RendererInterface
 	 */
-	public function setData(array $data = null, string $context = null): RendererInterface
+	public function setData(array $data=[], string $context=null): RendererInterface
 	{
 		if ( ! empty($context))
 		{
@@ -266,9 +266,9 @@ class View implements RendererInterface
 	 * @param string $context The context to escape it for: html, css, js, url
 	 *                        If null, no escaping will happen
 	 *
-	 * @return RenderableInterface
+	 * @return RendererInterface
 	 */
-	public function setVar(string $name, $value = null, string $context = null): RendererInterface
+	public function setVar(string $name, $value=null, string $context=null): RendererInterface
 	{
 		if ( ! empty($context))
 		{
@@ -285,7 +285,7 @@ class View implements RendererInterface
 	/**
 	 * Removes all of the view data from the system.
 	 *
-	 * @return RenderableInterface
+	 * @return RendererInterface
 	 */
 	public function resetData()
 	{

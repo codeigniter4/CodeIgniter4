@@ -78,7 +78,7 @@ class Views extends BaseCollector
 
 	/**
 	 * Instance of the Renderer service
-	 * @var RenderableInterface
+	 * @var RendererInterface
 	 */
 	protected $viewer;
 

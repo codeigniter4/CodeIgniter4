@@ -31,7 +31,7 @@ Then save the file in your **application/Views** directory.
 Displaying a View
 =================
 
-To load a particular view file you will use the following function::
+To load and display a particular view file you will use the following function::
 
 	echo view('name');
 
