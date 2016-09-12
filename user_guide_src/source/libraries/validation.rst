@@ -63,6 +63,62 @@ data to be validated::
     $validation->withRequest($this->request)
                ->run();
 
+
+**************************************************
+Saving Sets of Validation Rules to the Config File
+**************************************************
+
+A nice feature of the Validation class is that it permits you to store all
+your validation rules for your entire application in a config file. You organize
+the rules into "groups". You can specify a different group every time you run
+the validation.
+
+How to save your rules
+======================
+
+To store your validation rules, simply create a new public property in the ``Config\Validation``
+class with the name of your group. This element will hold an array with your validation
+rules. As shown earlier, the validation array will have this prototype::
+
+    class Validation
+    {
+        public $signup = [
+            'username'     => 'required',
+            'password'     => 'required',
+            'pass_confirm' => 'required|matches[password]',
+            'email'        => 'required|valid_email'
+        ];
+    }
+
+You can specify the group to use when you call the ``run()`` method::
+
+    $validation->run($data, $signup);
+
+You can also store custom error messages in this configuration file by naming the
+property the same as the group, and appended with ``_errors``. These will automatically
+be used for any errors when this group is used::
+
+    class Validation
+    {
+        public $signup = [
+            'username'     => 'required',
+            'password'     => 'required',
+            'pass_confirm' => 'required|matches[password]',
+            'email'        => 'required|valid_email'
+        ];
+
+        public $signup_errors = [
+            'username' => [
+                'required' => 'You must choose a username.',
+            ],
+            'email' => [
+                'valid_email' => 'Please check the Email field. It does not appear to be valid.'
+            ]
+        ]
+    }
+
+See below for details on the formatting of the array.
+
 *******************
 Working With Errors
 *******************

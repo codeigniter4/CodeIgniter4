@@ -40,6 +40,8 @@ return [
 	// Core Messages
 	'noRuleSets' => 'No rulesets specified in Validation configuration.',
 	'ruleNotFound' => '{field} is not a valid rule.',
+    'groupNotFound' => '%s is not a validation rules group.',
+    'groupNotArray' => '%s rule group must be an array.',
 
 	// Rule Messages
 	'required' => 'The {field} field is required.',

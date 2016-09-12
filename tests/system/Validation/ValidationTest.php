@@ -12,7 +12,15 @@ class ValidationTest extends \CIUnitTestCase
 	protected $config = [
 		'ruleSets' => [
 			\CodeIgniter\Validation\Rules::class,
-		]
+		],
+        'groupA' => [
+            'foo' => 'required|min_length[5]'
+        ],
+        'groupA_errors' => [
+            'foo' => [
+                'min_length' => 'Shame, shame. Too short.'
+            ]
+        ]
 	];
 
 	//--------------------------------------------------------------------
@@ -148,6 +156,32 @@ class ValidationTest extends \CIUnitTestCase
 	}
 
 	//--------------------------------------------------------------------
+
+    public function testGroupsReadFromConfig()
+    {
+        $data = [
+            'foo' => 'bar'
+        ];
+
+        $this->assertFalse($this->validation->run($data, 'groupA'));
+        $this->assertEquals('Shame, shame. Too short.', $this->validation->getError('foo'));
+    }
+
+    //--------------------------------------------------------------------
+
+    /**
+     * @group single
+     */
+    public function testGroupsReadFromConfigValid()
+    {
+        $data = [
+            'foo' => 'barsteps'
+        ];
+
+        $this->assertTrue($this->validation->run($data, 'groupA'));
+    }
+
+    //--------------------------------------------------------------------
 
 	//--------------------------------------------------------------------
 	// Rules Tests
@@ -1224,7 +1258,6 @@ class ValidationTest extends \CIUnitTestCase
 
 	/**
 	 * @dataProvider requiredWithoutProvider
-	 * @group single
 	 *
 	 * @param $check
 	 * @param $expected

@@ -50,6 +50,11 @@ class Validation implements ValidationInterface
 	 */
 	protected $customErrors = [];
 
+    /**
+     * @var \Config\Validation
+     */
+    protected $config;
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -60,6 +65,8 @@ class Validation implements ValidationInterface
 	public function __construct($config)
 	{
 		$this->ruleSetFiles = $config->ruleSets;
+
+        $this->config = $config;
 	}
 
 	//--------------------------------------------------------------------
@@ -78,6 +85,8 @@ class Validation implements ValidationInterface
 	    $data = $data ?? $this->data;
 
 		$this->loadRuleSets();
+
+        $this->loadRuleGroup($group);
 
 		// Run through each rule. If we have any field set for
 		// this rule, then we need to run them through!
@@ -118,6 +127,7 @@ class Validation implements ValidationInterface
 		foreach ($rules as $rule)
 		{
 			$callable = is_callable($rule);
+            $passed   = false;
 
 			// Rules can contain parameters: max_length[5]
 			$param = false;
@@ -130,7 +140,7 @@ class Validation implements ValidationInterface
 			// If it's a callable, call and and get out of here.
 			if ($callable)
 			{
-				$value = $param === false
+				$passed = $param === false
 					? $rule($value)
 					: $rule($value, $param, $data);
 			}
@@ -148,7 +158,7 @@ class Validation implements ValidationInterface
 
 					$found = true;
 
-					$value = $param === false
+					$passed = $param === false
 						? $set->$rule($value)
 						: $set->$rule($value, $param, $data);
 					break;
@@ -163,7 +173,7 @@ class Validation implements ValidationInterface
 			}
 
 			// Set the error message if we didn't survive.
-			if ($value === false)
+			if ($passed === false)
 			{
 				$this->errors[$field] = $this->getErrorMessage($rule, $field);
 
@@ -299,11 +309,52 @@ class Validation implements ValidationInterface
 
 		foreach ($this->ruleSetFiles as $file)
 		{
-			$this->ruleSetInstances[] = new $file;
+			$this->ruleSetInstances[] = new $file();
 		}
 	}
 
 	//--------------------------------------------------------------------
+
+    /**
+     * Loads custom rule groups (if set) into the current rules.
+     *
+     * Rules can be pre-defined in Config\Validation and can
+     * be any name, but must all still be an array of the
+     * same format used with setRules(). Additionally, check
+     * for {group}_errors for an array of custom error messages.
+     *
+     * @param string|null $group
+     */
+    protected function loadRuleGroup(string $group = null)
+    {
+        if (empty($group))
+        {
+            return;
+        }
+
+        if (! isset($this->config->$group))
+        {
+            throw new \InvalidArgumentException(sprintf(lang('Validation.groupNotFound'), $group));
+        }
+
+        if (! is_array($this->config->$group))
+        {
+            throw new \InvalidArgumentException(sprintf(lang('Validation.groupNotArray'), $group));
+        }
+
+        $this->rules = $this->config->$group;
+
+        // If {group}_errors exists in the config file,
+        // then override our custom errors with them.
+        $errorName = $group.'_errors';
+
+        if (isset($this->config->$errorName))
+        {
+            $this->customErrors = $this->config->$errorName;
+        }
+    }
+
+    //--------------------------------------------------------------------
 
 
 	//--------------------------------------------------------------------
