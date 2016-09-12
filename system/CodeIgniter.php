@@ -663,16 +663,16 @@ class CodeIgniter
 		$this->output = ob_get_contents();
 		ob_end_clean();
 
+		if (is_string($returned))
+		{
+			$this->output .= $returned;
+		}
+
 		// Cache it without the performance metrics replaced
 		// so that we can have live speed updates along the way.
 		if (self::$cacheTTL > 0)
 		{
 			$this->cachePage($cacheConfig);
-		}
-
-		if (is_string($returned))
-		{
-			$this->output .= $returned;
 		}
 
 		$this->output = $this->displayPerformanceMetrics($this->output);
