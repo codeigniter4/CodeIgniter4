@@ -631,7 +631,7 @@ class Response extends Message implements ResponseInterface
 			{
 				if (isset($name[$item]))
 				{
-					$$item = $name[$item];
+					$item = $name[$item];
 				}
 			}
 		}
