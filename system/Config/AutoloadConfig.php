@@ -86,7 +86,8 @@ class AutoloadConfig
 		 *   `];
 		 */
 		$this->psr4 = [
-			'CodeIgniter' => realpath(BASEPATH)
+			'CodeIgniter' => realpath(BASEPATH),
+			'Intervention\Image' => BASEPATH.'ThirdParty/Intervention/Image',
 		];
 
 		if (ENVIRONMENT == 'testing')
