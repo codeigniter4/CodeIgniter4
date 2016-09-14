@@ -513,6 +513,25 @@ class Services
 
 	//--------------------------------------------------------------------
 
+    /**
+     * The Validation class provides tools for validating input data.
+     */
+    public static function validation(Validation $config = null, $getShared = true)
+    {
+        if ($getShared)
+        {
+            return self::getSharedInstance('validation', $config);
+        }
+
+        if (is_null($config))
+        {
+            $config = new Validation();
+        }
+
+        return new \CodeIgniter\Validation\Validation($config);
+    }
+
+    //--------------------------------------------------------------------
 
 	//--------------------------------------------------------------------
 	// Utility Methods - DO NOT EDIT
