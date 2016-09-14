@@ -12,6 +12,7 @@ Library Reference
     localization
     curlrequest
     incomingrequest
+    imagemanipulation
     message
     pagination
     request
