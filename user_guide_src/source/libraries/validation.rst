@@ -21,6 +21,9 @@ The library is loaded as a service named **validation**::
 This automatically loads the ``Config\Validation`` file which contains settings
 for including multiple Rule sets, and collections of rules that can be easily reused.
 
+.. note:: You may never need to use this method, as both the :doc:`Controller </general/controllers>` and
+    the :doc:`Model </database/model>` provide methods to make validation even easier.
+
 Setting Validation Rules
 ========================
 
@@ -72,6 +75,8 @@ A nice feature of the Validation class is that it permits you to store all
 your validation rules for your entire application in a config file. You organize
 the rules into "groups". You can specify a different group every time you run
 the validation.
+
+.. _validation-array:
 
 How to save your rules
 ======================
@@ -130,6 +135,8 @@ By default, error messages are derived from language strings in ``system/Languag
 each rule has an entry.
 
 **TODO: Determine how to easily add custom rule messages.**
+
+.. _validation-custom-errors:
 
 Setting Custom Error Messages
 =============================
