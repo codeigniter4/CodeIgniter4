@@ -12,6 +12,7 @@ class ValidationTest extends \CIUnitTestCase
 	protected $config = [
 		'ruleSets' => [
 			\CodeIgniter\Validation\Rules::class,
+			\CodeIgniter\Validation\CreditCardRules::class,
 		],
         'groupA' => [
             'foo' => 'required|min_length[5]'
@@ -1288,4 +1289,66 @@ class ValidationTest extends \CIUnitTestCase
 	}
 
 	//--------------------------------------------------------------------
+
+    //--------------------------------------------------------------------
+    // Credit Card Rules
+    //--------------------------------------------------------------------
+
+    /**
+     * @dataProvider creditCardProvider
+     * @group single
+     *
+     * @param      $type
+     * @param      $number
+     * @param bool $expected
+     */
+    public function testValidCCNumber($type, $number, $expected=false)
+    {
+        $data = [
+            'cc' => $number,
+        ];
+
+        $this->validation->setRules([
+            'cc' => "valid_cc_number[{$type}]"
+        ]);
+
+        $this->assertEquals($expected, $this->validation->run($data));
+    }
+
+    //--------------------------------------------------------------------
+
+    /**
+     * Cards shown are test cards found around the web.
+     *
+     * @see https://www.paypalobjects.com/en_US/vhelp/paypalmanager_help/credit_card_numbers.htm
+     *
+     * @return array
+     */
+    public function creditCardProvider()
+    {
+        return [
+            'invalid_type'      => ['shorty', '1111 1111 1111 1111', false],
+            'invalid_length'    => ['amex', '', false],
+            'not_numeric'       => ['amex', 'abcd efgh ijkl mnop', false],
+            'bad_length'        => ['amex', '3782 8224 6310 0051', false],
+            'bad_prefix'        => ['amex', '3582 8224 6310 0051', false],
+            'amex1'             => ['amex', '3782 8224 6310 005', true],
+            'amex2'             => ['amex', '3714 4963 5398 431', true],
+            'dinersclub1'       => ['dinersclub', '3056 9309 0259 04', true],
+            'dinersculb2'       => ['dinersclub', '3852 0000 0232 37', true],
+            'discover1'         => ['discover', '6011 1111 1111 1117', true],
+            'discover2'         => ['discover', '6011 0009 9013 9424', true],
+            'jcb1'              => ['jcb', '3530 1113 3330 0000', true],
+            'jcb2'              => ['jcb', '3566 0020 2036 0505', true],
+            'mastercard1'       => ['mastercard', '5555 5555 5555 4444', true],
+            'mastercard2'       => ['mastercard', '5105 1051 0510 5100', true],
+            'visa1'             => ['visa', '4111 1111 1111 1111', true],
+            'visa2'             => ['visa', '4012 8888 8888 1881', true],
+            'visa3'             => ['visa', '4222 2222 2222 2', true],
+            'dankort1'          => ['dankort', '5019 7170 1010 3742', true],
+        ];
+    }
+
+    //--------------------------------------------------------------------
+
 }

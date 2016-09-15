@@ -14,6 +14,7 @@ class Validation
 	 */
 	public $ruleSets = [
 		\CodeIgniter\Validation\Rules::class,
+        \CodeIgniter\Validation\CreditCardRules::class,
 	];
 
 	//--------------------------------------------------------------------
