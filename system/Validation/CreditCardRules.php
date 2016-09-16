@@ -43,7 +43,7 @@ class CreditCardRules
         'TD Canada Trust Access Card'       => ['name' => 'tdtrust', 'length' => '16', 'prefixes' => '589297', 'checkdigit' => false],
         'Scotiabank Scotia Card'            => ['name' => 'scotia', 'length' => '16', 'prefixes' => '4536', 'checkdigit' => false],
         'BMO ABM Card'                      => ['name' => 'bmoabm', 'length' => '16', 'prefixes' => '500', 'checkdigit' => false],
-        'HSBC Canada Card'                  => ['name' => 'hsbc', 'length' => '16', 'prefixes' => '500', 'checkdigit' => false],
+        'HSBC Canada Card'                  => ['name' => 'hsbc', 'length' => '16', 'prefixes' => '56', 'checkdigit' => false],
     ];
 
     //--------------------------------------------------------------------
