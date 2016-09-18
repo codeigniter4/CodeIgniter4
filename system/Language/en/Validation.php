@@ -45,4 +45,10 @@ return [
 
 	// Rule Messages
 	'required' => 'The {field} field is required.',
+
+    // Credit Cards
+    'valid_cc_num' => '{field} does not appear to be a valid credit card number.',
+
+    // Files
+    'is_file' => '{field} is not a valid uploaded file.',
 ];

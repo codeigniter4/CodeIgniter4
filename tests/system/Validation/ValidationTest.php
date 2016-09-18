@@ -1,5 +1,6 @@
 <?php namespace CodeIgniter\Validation;
 
+use CodeIgniter\Services;
 use Config\Database;
 
 class ValidationTest extends \CIUnitTestCase
@@ -12,6 +13,7 @@ class ValidationTest extends \CIUnitTestCase
     protected $config = [
         'ruleSets'      => [
             \CodeIgniter\Validation\Rules::class,
+            \CodeIgniter\Validation\FileRules::class,
             \CodeIgniter\Validation\CreditCardRules::class,
         ],
         'groupA'        => [
@@ -31,6 +33,8 @@ class ValidationTest extends \CIUnitTestCase
         parent::setUp();
         $this->validation = new Validation((object)$this->config);
         $this->validation->reset();
+
+        $_FILES = [];
     }
 
     //--------------------------------------------------------------------
@@ -170,9 +174,6 @@ class ValidationTest extends \CIUnitTestCase
 
     //--------------------------------------------------------------------
 
-    /**
-     * @group single
-     */
     public function testGroupsReadFromConfigValid()
     {
         $data = [
@@ -1299,7 +1300,6 @@ class ValidationTest extends \CIUnitTestCase
 
     /**
      * @dataProvider creditCardProvider
-     * @group        single
      *
      * @param      $type
      * @param      $number
@@ -1610,4 +1610,47 @@ class ValidationTest extends \CIUnitTestCase
 
     //--------------------------------------------------------------------
 
+    public function testUploadedTrue()
+    {
+        $_FILES = [
+            'avatar' => [
+                'tmp_name' => 'phpUxcOty',
+                'name' => 'my-avatar.png',
+                'size' => 90996,
+                'type' => 'image/png',
+                'error' => 0,
+            ]
+        ];
+
+        $this->validation->setRules([
+            'avatar' => "uploaded[avatar]",
+        ]);
+
+        $this->assertTrue($this->validation->run([]));
+
+    }
+
+    //--------------------------------------------------------------------
+
+    public function testUploadedFalse()
+    {
+        $_FILES = [
+            'avatar' => [
+                'tmp_name' => 'phpUxcOty',
+                'name' => 'my-avatar.png',
+                'size' => 90996,
+                'type' => 'image/png',
+                'error' => 0,
+            ]
+        ];
+
+        $this->validation->setRules([
+            'avatar' => "uploaded[userfile]",
+        ]);
+
+        $this->assertFalse($this->validation->run([]));
+
+    }
+
+    //--------------------------------------------------------------------
 }

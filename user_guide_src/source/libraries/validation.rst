@@ -260,6 +260,7 @@ valid_cc_number         Yes         Verifies that the credit card number matches
                                     CIBC Convenience Card (cibc), Royal Bank of Canada Client Card (rbc),
                                     TD Canada Trust Access Card (tdtrust), Scotiabank Scotia Card (scotia), BMO ABM Card (bmoabm),
                                     HSBC Canada Card (hsbc)
+uploaded                Yes         Fails if the name of the parameter does not match the name of any uploaded files.               uploaded[field_name]
 ======================= =========== =============================================================================================== ====================================
 
 
