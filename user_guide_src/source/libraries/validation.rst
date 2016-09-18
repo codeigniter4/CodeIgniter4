@@ -252,6 +252,14 @@ valid_emails            No          Fails if any value provided in a comma separ
 valid_ip                No          Fails if the supplied IP is not valid. Accepts an optional parameter of ‘ipv4’ or               valid_ip[ipv6]
                                     ‘ipv6’ to specify an IP format.
 valid_url               No          Fails if field does not contain a valid URL.
+valid_cc_number         Yes         Verifies that the credit card number matches the format used by the specified provider.         valid_cc_number[amex]
+                                    Current supported providers are: American Express (amex), China Unionpay (unionpay),
+                                    Diners Club CarteBlance (carteblanche), Diners Club (dinersclub), Discover Card (discover),
+                                    Interpayment (interpayment), JCB (jcb), Maestro (maestro), Dankort (dankort), NSPK MIR (mir),
+                                    MasterCard (mastercard), Visa (visa), UATP (uatp), Verve (verve),
+                                    CIBC Convenience Card (cibc), Royal Bank of Canada Client Card (rbc),
+                                    TD Canada Trust Access Card (tdtrust), Scotiabank Scotia Card (scotia), BMO ABM Card (bmoabm),
+                                    HSBC Canada Card (hsbc)
 ======================= =========== =============================================================================================== ====================================
 
 
