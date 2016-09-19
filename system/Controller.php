@@ -86,6 +86,14 @@ class Controller
 	 */
 	protected $forceHTTPS = 0;
 
+    /**
+     * If validation fails, contains the
+     * validation errors.
+     *
+     * @var array
+     */
+    protected $errors;
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -159,6 +167,34 @@ class Controller
 	}
 
 	//--------------------------------------------------------------------
+
+    /**
+     * A shortcut to performing validation on $_POST input. If validation
+     * is not successful, a $errors property will be set on this class.
+     *
+     * @param \CodeIgniter\HTTP\RequestInterface $request
+     * @param                                    $rules
+     * @param array|null                         $messages
+     *
+     * @return bool
+     */
+    public function validate(RequestInterface $request, $rules, array $messages = null): bool
+    {
+        $validator = Services::validation();
+
+        $success = $validator->withRequest($request)
+                             ->setRules($rules, $messages)
+                             ->run();
+
+        if (! $success)
+        {
+            $this->errors = $validator->getErrors();
+        }
+
+        return $success;
+    }
+
+    //--------------------------------------------------------------------
 
 
 }
