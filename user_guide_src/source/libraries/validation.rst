@@ -260,8 +260,37 @@ valid_cc_number         Yes         Verifies that the credit card number matches
                                     CIBC Convenience Card (cibc), Royal Bank of Canada Client Card (rbc),
                                     TD Canada Trust Access Card (tdtrust), Scotiabank Scotia Card (scotia), BMO ABM Card (bmoabm),
                                     HSBC Canada Card (hsbc)
-uploaded                Yes         Fails if the name of the parameter does not match the name of any uploaded files.               uploaded[field_name]
 ======================= =========== =============================================================================================== ====================================
+
+Rules for File Uploads
+----------------------
+
+These validation rules enable you to do the basic checks you might need to verify that uploaded files meet your business needs.
+Since the value of a file upload HTML field doesn't exist, and is stored in the $_FILES global, the name of the input field will
+need to be used twice. Once to specify the field name as you would for any other rule, but again as the first parameter of all
+file upload related rules::
+
+    // In the HTML
+    <input type="file" name="avatar">
+
+    // In the controller
+    $this->validate($request, [
+        'avatar' => 'uploaded[avatar]|max_size[avatar,1024]'
+    ]);
+
+======================= =========== =============================================================================================== ========================================
+Rule                    Parameter   Description                                                                                     Example
+======================= =========== =============================================================================================== ========================================
+uploaded                Yes         Fails if the name of the parameter does not match the name of any uploaded files.               uploaded[field_name]
+max_size                Yes         Fails if the uploaded file named in the parameter is larger than the second parameter in        max_size[field_name,2048]
+                                    kilobytes (kb).
+max_dims                Yes         Files if the maximum width and height of an uploaded image exceeds values. The first parameter  max_dims[field_name,300,150]
+                                    is the field name. The second is the width, and the third is the height. Will also fail if
+                                    the file cannot be determined to be an image.
+mime_in                 Yes         Fails if the file's mime type is not one listed in the parameter.                               mime_in[field_name,image/png,image/jpg]
+ext_in                  Yes         Fails if the file's extension is not one listed in the parameter.                               ext_in[field_name,png,jpg,gif]
+is_image                Yes         Fails if the file cannot be determined to be an image based on the mime type.                   is_image[field_name]
+======================= =========== =============================================================================================== ========================================
 
 
 .. note:: You can also use any native PHP functions that permit up
