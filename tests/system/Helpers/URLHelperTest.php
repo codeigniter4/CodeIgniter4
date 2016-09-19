@@ -250,7 +250,53 @@ class URLHelperTest extends \CIUnitTestCase
 		$this->assertEquals(base_url(uri_string()), current_url());
 	}
 
+    //--------------------------------------------------------------------
+    // Test previous_url
+
+    public function testPreviousURLUsesSessionFirst()
+    {
+        $uri1 = 'http://example.com/one?two';
+        $uri2 = 'http://example.com/two?foo';
+
+        $_SERVER['HTTP_HOST'] = 'example.com';
+        $_SERVER['REQUEST_URI'] = '/';
+        $_SERVER['HTTP_REFERER'] = $uri1;
+        $_SESSION['_ci_previous_url'] = $uri2;
+
+        // Since we're on a CLI, we must provide our own URI
+        $config = new App();
+        $config->baseURL = 'http://example.com/public';
+        $request = Services::request($config);
+        $request->uri = new URI('http://example.com/public');
+
+        Services::injectMock('request', $request);
+
+        $this->assertEquals($uri2, previous_url());
+    }
+
 	//--------------------------------------------------------------------
+
+    public function testPreviousURLUsesRefererIfNeeded()
+    {
+        $uri1 = 'http://example.com/one?two';
+        $uri2 = 'http://example.com/two?foo';
+
+        $_SERVER['HTTP_HOST'] = 'example.com';
+        $_SERVER['REQUEST_URI'] = '/';
+        $_SERVER['HTTP_REFERER'] = $uri1;
+
+        // Since we're on a CLI, we must provide our own URI
+        $config = new App();
+        $config->baseURL = 'http://example.com/public';
+        $request = Services::request($config);
+        $request->uri = new URI('http://example.com/public');
+
+        Services::injectMock('request', $request);
+
+        $this->assertEquals($uri1, previous_url());
+    }
+
+    //--------------------------------------------------------------------
 	// Test uri_string
 
 	public function testUriString()

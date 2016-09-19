@@ -221,6 +221,10 @@ class CodeIgniter
 				$this->response = $response;
 			}
 
+			// Save our current URI as the previous URI in the session
+            // for safer, more accurate use with `previous_url()` helper function.
+            $this->storePreviousURL($uri);
+
 			unset($uri);
 
 			$this->sendResponse();
@@ -681,6 +685,25 @@ class CodeIgniter
 	}
 
 	//--------------------------------------------------------------------
+
+    /**
+     * If we have a session object to use, store the current URI
+     * as the previous URI. This is called just prior to sending the
+     * response to the client, and will make it available next request.
+     *
+     * This helps provider safer, more reliable previous_url() detection.
+     *
+     * @param \CodeIgniter\HTTP\URI $uri
+     */
+    public function storePreviousURL(URI $uri)
+    {
+        if (isset($_SESSION))
+        {
+            $_SESSION['_ci_previous_url'] = (string)$uri;
+        }
+    }
+
+    //--------------------------------------------------------------------
 
 	/**
 	 * Sends the output of this request back to the client.
