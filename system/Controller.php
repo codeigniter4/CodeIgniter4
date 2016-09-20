@@ -40,6 +40,7 @@ use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Services;
 use CodeIgniter\Log\Logger;
+use CodeIgniter\Validation\Validation;
 
 /**
  * Class Controller
@@ -87,12 +88,12 @@ class Controller
 	protected $forceHTTPS = 0;
 
     /**
-     * If validation fails, contains the
-     * validation errors.
+     * Once validation has been run,
+     * will hold the Validation instance.
      *
-     * @var array
+     * @var Validation
      */
-    protected $errors;
+    protected $validator;
 
 	//--------------------------------------------------------------------
 
@@ -180,16 +181,11 @@ class Controller
      */
     public function validate(RequestInterface $request, $rules, array $messages = null): bool
     {
-        $validator = Services::validation();
+        $this->validator = Services::validation();
 
-        $success = $validator->withRequest($request)
+        $success = $this->validator->withRequest($request)
                              ->setRules($rules, $messages)
                              ->run();
-
-        if (! $success)
-        {
-            $this->errors = $validator->getErrors();
-        }
 
         return $success;
     }

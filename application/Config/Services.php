@@ -528,7 +528,7 @@ class Services
             $config = new Validation();
         }
 
-        return new \CodeIgniter\Validation\Validation($config);
+        return new \CodeIgniter\Validation\Validation($config, self::renderer());
     }
 
     //--------------------------------------------------------------------

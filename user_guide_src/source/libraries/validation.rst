@@ -11,6 +11,184 @@ helps minimize the amount of code you'll write.
 Overview
 ********
 
+Before explaining CodeIgniter's approach to data validation, let's
+describe the ideal scenario:
+
+#. A form is displayed.
+#. You fill it in and submit it.
+#. If you submitted something invalid, or perhaps missed a required
+   item, the form is redisplayed containing your data along with an
+   error message describing the problem.
+#. This process continues until you have submitted a valid form.
+
+On the receiving end, the script must:
+
+#. Check for required data.
+#. Verify that the data is of the correct type, and meets the correct
+   criteria. For example, if a username is submitted it must be
+   validated to contain only permitted characters. It must be of a
+   minimum length, and not exceed a maximum length. The username can't
+   be someone else's existing username, or perhaps even a reserved word.
+   Etc.
+#. Sanitize the data for security.
+#. Pre-format the data if needed (Does the data need to be trimmed? HTML
+   encoded? Etc.)
+#. Prep the data for insertion in the database.
+
+Although there is nothing terribly complex about the above process, it
+usually requires a significant amount of code, and to display error
+messages, various control structures are usually placed within the form
+HTML. Form validation, while simple to create, is generally very messy
+and tedious to implement.
+
+************************
+Form Validation Tutorial
+************************
+
+What follows is a "hands on" tutorial for implementing CodeIgniter's Form
+Validation.
+
+In order to implement form validation you'll need three things:
+
+#. A :doc:`View <../general/views>` file containing a form.
+#. A View file containing a "success" message to be displayed upon
+   successful submission.
+#. A :doc:`controller <../general/controllers>` method to receive and
+   process the submitted data.
+
+Let's create those three things, using a member sign-up form as the
+example.
+
+The Form
+========
+
+Using a text editor, create a form called **Signup.php**. In it, place this
+code and save it to your **application/Views/** folder::
+
+	<html>
+	<head>
+	    <title>My Form</title>
+	</head>
+	<body>
+
+        <?= $validation->listErrors() ?>
+
+        <?= form_open('form') ?>
+
+        <h5>Username</h5>
+        <input type="text" name="username" value="" size="50" />
+
+        <h5>Password</h5>
+        <input type="text" name="password" value="" size="50" />
+
+        <h5>Password Confirm</h5>
+        <input type="text" name="passconf" value="" size="50" />
+
+        <h5>Email Address</h5>
+        <input type="text" name="email" value="" size="50" />
+
+        <div><input type="submit" value="Submit" /></div>
+
+        </form>
+
+	</body>
+	</html>
+
+The Success Page
+================
+
+Using a text editor, create a form called **Success.php**. In it, place
+this code and save it to your **application/Views/** folder::
+
+	<html>
+	<head>
+	    <title>My Form</title>
+	</head>
+	<body>
+
+        <h3>Your form was successfully submitted!</h3>
+
+        <p><?= anchor('form', 'Try it again!') ?></p>
+
+	</body>
+	</html>
+
+The Controller
+==============
+
+Using a text editor, create a controller called **Form.php**. In it, place
+this code and save it to your **application/Controllers/** folder::
+
+	<?php namespace App\Controllers;
+
+    use CodeIgniter\Controller;
+
+	class Form extends Controller
+	{
+		public function index()
+		{
+		    helper(['form', 'url']);
+
+            if (! $this->validate($this->request, []))
+			{
+				echo view('Signup', [
+				    'validation' => $this->validation
+				]);
+			}
+			else
+			{
+				echo view('Success');
+			}
+		}
+	}
+
+Try it!
+=======
+
+To try your form, visit your site using a URL similar to this one::
+
+	example.com/index.php/form/
+
+If you submit the form you should simply see the form reload. That's
+because you haven't set up any validation rules yet.
+
+**Since you haven't told the Validation class to validate anything
+yet, it returns false (boolean false) by default. The ``run()`` method
+only returns true if it has successfully applied your rules without any
+of them failing.**
+
+Explanation
+===========
+
+You'll notice several things about the above pages:
+
+The form (Signup.php) is a standard web form with a couple exceptions:
+
+#. It uses a form helper to create the form opening. Technically, this
+   isn't necessary. You could create the form using standard HTML.
+   However, the benefit of using the helper is that it generates the
+   action URL for you, based on the URL in your config file. This makes
+   your application more portable in the event your URLs change.
+#. At the top of the form you'll notice the following function call:
+   ::
+
+	<?= validation_errors() ?>
+
+   This function will return any error messages sent back by the
+   validator. If there are no messages it returns an empty string.
+
+The controller (Form.php) has one method: ``index()``. This method
+initializes the validation class and loads the form helper and URL
+helper used by your view files. It also runs the validation routine.
+Based on whether the validation was successful it either presents the
+form or the success page.
+
+
+
+
+
+
+
 Loading the Library
 ===================
 
@@ -217,9 +395,9 @@ Available Rules
 
 The following is a list of all the native rules that are available to use:
 
-======================= =========== =============================================================================================== ====================================
+======================= =========== =============================================================================================== ===================================================
 Rule                    Parameter   Description                                                                                     Example
-======================= =========== =============================================================================================== ====================================
+======================= =========== =============================================================================================== ===================================================
 alpha                   No          Fails if field has anything other than alphabetic characters.
 alpha_dash              No          Fails if field contains anything other than alpha-numeric characters, underscores or dashes.
 alpha_numeric           No          Fails if field contains anything other than alpha-numeric characters or numbers.
@@ -260,10 +438,10 @@ valid_cc_number         Yes         Verifies that the credit card number matches
                                     CIBC Convenience Card (cibc), Royal Bank of Canada Client Card (rbc),
                                     TD Canada Trust Access Card (tdtrust), Scotiabank Scotia Card (scotia), BMO ABM Card (bmoabm),
                                     HSBC Canada Card (hsbc)
-======================= =========== =============================================================================================== ====================================
+======================= =========== =============================================================================================== ===================================================
 
 Rules for File Uploads
-----------------------
+======================
 
 These validation rules enable you to do the basic checks you might need to verify that uploaded files meet your business needs.
 Since the value of a file upload HTML field doesn't exist, and is stored in the $_FILES global, the name of the input field will

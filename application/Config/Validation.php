@@ -18,6 +18,17 @@ class Validation
         \CodeIgniter\Validation\CreditCardRules::class,
 	];
 
+    /**
+     * Specifies the views that are used to display the
+     * errors.
+     *
+     * @var array
+     */
+    public $templates = [
+        'list'   => 'CodeIgniter\Validation\Views\list',
+        'single' => 'CodeIgniter\Validation\Views\single'
+    ];
+
 	//--------------------------------------------------------------------
 	// Rules
 	//--------------------------------------------------------------------

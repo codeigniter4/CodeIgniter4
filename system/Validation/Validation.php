@@ -1,6 +1,7 @@
 <?php namespace CodeIgniter\Validation;
 
 use CodeIgniter\HTTP\RequestInterface;
+use CodeIgniter\View\RenderableInterface;
 
 class Validation implements ValidationInterface
 {
@@ -55,18 +56,23 @@ class Validation implements ValidationInterface
      */
     protected $config;
 
+    protected $view;
+
 	//--------------------------------------------------------------------
 
 	/**
 	 * Validation constructor.
 	 *
 	 * @param \Config\Validation $config
+     * @param RenderableInterface $view
 	 */
-	public function __construct($config)
+	public function __construct($config, RenderableInterface $view)
 	{
 		$this->ruleSetFiles = $config->ruleSets;
 
         $this->config = $config;
+
+        $this->view = $view;
 	}
 
 	//--------------------------------------------------------------------
@@ -295,6 +301,53 @@ class Validation implements ValidationInterface
 	}
 
 	//--------------------------------------------------------------------
+
+    /**
+     * Returns the rendered HTML of the errors as defined in $template.
+     *
+     * @param string $template
+     *
+     * @return string
+     */
+    public function listErrors(string $template = 'list'): string
+    {
+        if (! array_key_exists($template, $this->config->templates))
+        {
+            throw new \InvalidArgumentException($template.' is not a valid Validation template.');
+        }
+
+        return $this->view->setVar('errors', $this->getErrors())
+                    ->render($this->config->templates[$template]);
+    }
+
+    //--------------------------------------------------------------------
+
+    /**
+     * Displays a single error in formatted HTML as defined in the $template view.
+     *
+     * @param string $field
+     * @param string $template
+     *
+     * @return string
+     */
+    public function showError(string $field, string $template = 'single'): string
+    {
+        if (! array_key_exists($field, $this->errors))
+        {
+            return '';
+        }
+
+        if (! array_key_exists($template, $this->config->templates))
+        {
+            throw new \InvalidArgumentException($template.' is not a valid Validation template.');
+        }
+
+        return $this->view->setVar('error', $this->getError($field))
+                    ->render($this->config->templates[$template]);
+    }
+
+    //--------------------------------------------------------------------
+
 
 	/**
 	 * Loads all of the rulesets classes that have been defined in the
