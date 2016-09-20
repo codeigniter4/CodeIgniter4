@@ -695,8 +695,14 @@ class CodeIgniter
      *
      * @param \CodeIgniter\HTTP\URI $uri
      */
-    public function storePreviousURL(URI $uri)
+    public function storePreviousURL($uri)
     {
+        // This is mainly needed during testing...
+        if (is_string($uri))
+        {
+            $uri = new URI($uri);
+        }
+
         if (isset($_SESSION))
         {
             $_SESSION['_ci_previous_url'] = (string)$uri;
