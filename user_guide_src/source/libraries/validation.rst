@@ -172,13 +172,14 @@ The form (Signup.php) is a standard web form with a couple exceptions:
 #. At the top of the form you'll notice the following function call:
    ::
 
-	<?= validation_errors() ?>
+	<?= $validation->listErrors() ?>
 
    This function will return any error messages sent back by the
    validator. If there are no messages it returns an empty string.
 
+
 The controller (Form.php) has one method: ``index()``. This method
-initializes the validation class and loads the form helper and URL
+uses the Controller-provided validate method and loads the form helper and URL
 helper used by your view files. It also runs the validation routine.
 Based on whether the validation was successful it either presents the
 form or the success page.
