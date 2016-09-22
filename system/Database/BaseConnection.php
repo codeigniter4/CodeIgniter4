@@ -377,6 +377,29 @@ abstract class BaseConnection implements ConnectionInterface
 
 	//--------------------------------------------------------------------
 
+    /**
+     * Close the database connection.
+     */
+    public function close()
+    {
+        if ($this->connID)
+        {
+            $this->_close();
+            $this->connID = FALSE;
+        }
+    }
+
+    //--------------------------------------------------------------------
+
+    /**
+     * Platform dependent way method for closing the connection.
+     *
+     * @return mixed
+     */
+    abstract protected function _close();
+
+    //--------------------------------------------------------------------
+
 	/**
 	 * Create a persistent database connection.
 	 *

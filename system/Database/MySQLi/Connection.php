@@ -239,6 +239,16 @@ class Connection extends BaseConnection implements ConnectionInterface
 
 	//--------------------------------------------------------------------
 
+    /**
+     * Close the database connection.
+     */
+    protected function _close()
+    {
+        $this->connID->close();
+    }
+
+    //--------------------------------------------------------------------
+
 	/**
 	 * Select a specific database table to use.
 	 *
