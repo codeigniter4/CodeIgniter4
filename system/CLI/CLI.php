@@ -506,7 +506,7 @@ class CLI
 	 * @param int $thisStep
 	 * @param int $totalSteps
 	 */
-	public static function showProgress(int $thisStep = 1, int $totalSteps = 10)
+	public static function showProgress($thisStep = 1, int $totalSteps = 10)
 	{
 		// The first time through, save
 		// our position so the script knows where to go
