@@ -37,7 +37,7 @@
  */
 
 use Config\Services;
-use CodeIgniter\View\RenderableInterface;
+use CodeIgniter\View\RendererInterface;
 
 /**
  * Class Pager
@@ -68,13 +68,13 @@ class Pager implements PagerInterface
 	/**
 	 * The view engine to render the links with.
 	 *
-	 * @var RenderableInterface
+	 * @var RendererInterface
 	 */
 	protected $view;
 
 	//--------------------------------------------------------------------
 
-	public function __construct($config, RenderableInterface $view)
+	public function __construct($config, RendererInterface $view)
 	{
 		$this->config = $config;
 		$this->view   = $view;

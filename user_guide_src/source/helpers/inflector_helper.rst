@@ -127,4 +127,4 @@ The following functions are available:
 	to denote the position such as 1st, 2nd, 3rd, 4th. 
 	Example::
 
-		ordinal(1); // Returns '1st'
+		ordinalize(1); // Returns '1st'

@@ -125,6 +125,16 @@ class Connection extends BaseConnection implements ConnectionInterface
 
 	//--------------------------------------------------------------------
 
+    /**
+     * Close the database connection.
+     */
+    protected function _close()
+    {
+        pg_close($this->connID);
+    }
+
+    //--------------------------------------------------------------------
+
 	/**
 	 * Select a specific database table to use.
 	 *
@@ -153,7 +163,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 
 		if ( ! $this->connID or ($pgVersion = pg_version($this->connID)) === false)
 		{
-			return false;
+			$this->initialize();
 		}
 
 		return isset($pgVersion['server'])

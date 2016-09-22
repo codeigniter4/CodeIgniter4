@@ -1,7 +1,7 @@
 <?php namespace CodeIgniter\Validation;
 
 use CodeIgniter\HTTP\RequestInterface;
-use CodeIgniter\View\RenderableInterface;
+use CodeIgniter\View\RendererInterface;
 
 class Validation implements ValidationInterface
 {
@@ -66,7 +66,7 @@ class Validation implements ValidationInterface
 	 * @param \Config\Validation $config
      * @param RenderableInterface $view
 	 */
-	public function __construct($config, RenderableInterface $view)
+	public function __construct($config, RendererInterface $view)
 	{
 		$this->ruleSetFiles = $config->ruleSets;
 

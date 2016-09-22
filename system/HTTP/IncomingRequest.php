@@ -120,6 +120,11 @@ class IncomingRequest extends Request
 	 */
 	protected $validLocales = [];
 
+	/**
+	 * @var \Config\App
+	 */
+	public $config;
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -137,7 +142,8 @@ class IncomingRequest extends Request
 			$body = file_get_contents('php://input');
 		}
 
-		$this->body = $body;
+		$this->body   = $body;
+		$this->config = $config;
 
 		parent::__construct($config, $uri);
 
@@ -484,7 +490,7 @@ class IncomingRequest extends Request
 			$this->uri->setScheme(parse_url($baseURL, PHP_URL_SCHEME));
 			$this->uri->setHost(parse_url($baseURL, PHP_URL_HOST));
 			$this->uri->setPort(parse_url($baseURL, PHP_URL_PORT));
-			$this->uri->setPath(parse_url($baseURL, PHP_URL_PATH));
+			$this->uri->resolveRelativeURI(parse_url($baseURL, PHP_URL_PATH));
 		}
 		else
 		{

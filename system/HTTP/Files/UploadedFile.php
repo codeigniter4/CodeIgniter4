@@ -152,13 +152,12 @@ class UploadedFile implements UploadedFileInterface
 	 *
 	 * @param string $targetPath Path to which to move the uploaded file.
 	 * @param string $name       the name to rename the file to.
-	 * @return bool
 	 *
 	 * @throws \InvalidArgumentException if the $path specified is invalid.
 	 * @throws \RuntimeException on any error during the move operation.
 	 * @throws \RuntimeException on the second or subsequent call to the method.
 	 */
-	public function move(string $targetPath, string $name = null): bool
+	public function move(string $targetPath, string $name = null)
 	{
 		if ($this->hasMoved)
 		{
@@ -179,14 +178,14 @@ class UploadedFile implements UploadedFileInterface
 			throw new \RuntimeException(sprintf('Could not move file %s to %s (%s)', basename($this->path), $targetPath, strip_tags($error['message'])));
 		}
 
-		@chmod($targetPath, 0666 & ~umask());
-
-		unlink($this->path);
+		@chmod($targetPath, 0777 & ~umask());
 
 		// Success, so store our new information
 		$this->path = $targetPath;
 		$this->name = $name;
 		$this->hasMoved = true;
+
+		return true;
 	}
 
 	//--------------------------------------------------------------------
@@ -270,7 +269,7 @@ class UploadedFile implements UploadedFileInterface
 
 	/**
 	 * Get error string
-	 * 
+	 *
 	 * @staticvar array $errors
 	 * @return type
 	 */
