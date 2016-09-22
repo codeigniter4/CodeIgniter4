@@ -143,6 +143,9 @@ class Validation implements ValidationInterface
 				$param = $match[2];
 			}
 
+			// Placeholder for custom errors from the rules.
+            $error = null;
+
 			// If it's a callable, call and and get out of here.
 			if ($callable)
 			{
@@ -165,8 +168,8 @@ class Validation implements ValidationInterface
 					$found = true;
 
 					$passed = $param === false
-						? $set->$rule($value)
-						: $set->$rule($value, $param, $data);
+						? $set->$rule($value, $error)
+						: $set->$rule($value, $param, $data, $error);
 					break;
 				}
 
@@ -181,7 +184,9 @@ class Validation implements ValidationInterface
 			// Set the error message if we didn't survive.
 			if ($passed === false)
 			{
-				$this->errors[$field] = $this->getErrorMessage($rule, $field);
+				$this->errors[$field] = is_null($error)
+                    ? $this->getErrorMessage($rule, $field)
+                    : $error;
 
 				return false;
 			}

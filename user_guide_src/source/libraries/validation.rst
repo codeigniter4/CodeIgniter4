@@ -322,7 +322,7 @@ Setting Custom Error Messages
 
 Both the ``setRule()`` and ``setRules()`` methods can accept an array of custom messages
 that will be used as errors specific to each field as their last parameter. This allows
-for a very pleasant experience for the user since the errors are tailored to the each
+for a very pleasant experience for the user since the errors are tailored to each
 instance. If not custom error message is provided, the default value will be used.
 
 The array is structured as follows::
@@ -388,7 +388,153 @@ You can check to see if an error exists with the ``hasError()`` method. The only
     }
 
 
+*************************
+Customizing Error Display
+*************************
 
+When you call ``$validation->listErrors()`` or ``$validation->showError()``, it loads a view file in the background
+that determines how the errors are displayed. By default, they display in a manner compatible with the
+[Bootstrap](http://getbootstrap.com/) CSS framework. You can easily create new views and use them throughout your
+application.
+
+Creating the Views
+==================
+
+The first step is to create the custom views. These can be placed anywhere that the ``view()`` method can locate them,
+which means the standard View directory, or any namespaced View folder will work. For example, you could create
+a new view at **/application/Views/_errors_list.php**::
+
+    <div class="alert alert-danger" role="alert">
+        <ul>
+        <?php foreach ($errors as $error) : ?>
+            <li><?= esc($error) ?></li>
+        <?php endforeach ?>
+        </ul>
+    </div>
+
+An array named ``$errors`` is available within the view that contains a list of the errors, where the key is
+the name of the field that had the error, and the value is the error message, like this::
+
+    $errors = [
+        'username' => 'The username field must be unique.',
+        'email' => 'You must provide a valid email address.'
+    ];
+
+There are actually two types of views that you can create. The first has an array of all of the errors, and is what
+we just looked at. The other type is simpler, and only contains a single variable, ``$error`` that contains the
+error message. This is used with the ``showError()`` method where a field must be specified::
+
+    <span class="help-block"><?= esc($error) ?></span>
+
+
+Configuration
+=============
+
+Once you have your views created, you need to let the Validation library know about them. Open ``Config/Validation.php``.
+Inside, you'll find the ``$templates`` property where you can list as many custom views as you want, and provide an
+short alias they can be referenced by. If we were to add our example file from above, it would look something like::
+
+    public $templates = [
+        'list'   => 'CodeIgniter\Validation\Views\list',
+        'single' => 'CodeIgniter\Validation\Views\single',
+        'my_list' => '_errors_list'
+    ];
+
+Specifying the Template
+=======================
+
+You can specify the template to use by passing it's alias as the first parameter in ``listErrors``::
+
+    <?= $validation->listErrors('my_list') ?>
+
+When showing field-specific errors, you can pass the alias as the second parameter to the ``showError`` method,
+right after the name of the field the error should belong to::
+
+    <?= $validation->showError('username', 'my_single') ?>
+
+*********************
+Creating Custom Rules
+*********************
+
+Rules are stored within simple, namespaced classes. They can be stored any location you would like, as long as the
+autoloader can find it. These files are called RuleSets. To add a new RuleSet, edit **Config/Validation.php** and
+add the new file to the ``$ruleSets`` array::
+
+    public $ruleSets = [
+		\CodeIgniter\Validation\Rules::class,
+		\CodeIgniter\Validation\FileRules::class,
+        \CodeIgniter\Validation\CreditCardRules::class,
+	];
+
+You can add it as either a simple string with the fully qualified class name, or using the ``::class`` suffix as
+shown above. The primary benefit here is that it provides some extra navigation capabilities in more advanced IDEs.
+
+Within the file itself, each method is a rule and must accept a string as the first parameter, and must return
+a boolean true or false value signifying true if it passed the test or false if it did not::
+
+    class MyRules
+    {
+        public function even(string $str): bool
+        {
+            return (int)$str % 2 == 0;
+        }
+    }
+
+By default, the system will look within ``CodeIgniter\Language\en\Validation.php`` for the language strings used
+within errors. In custom rules you may provide error messages by accepting an $error variable by reference in the
+second parameter::
+
+    public function even(string $str, string &$error = null): bool
+    {
+        if ((int)$str % 2 != 0)
+        {
+            $error = lang('myerrors.evenError');
+            return false;
+        }
+
+        return true;
+    }
+
+Your new custom rule could now be used just like any other rule::
+
+    $this->validate($request, [
+        'foo' => 'required|even'
+    ]);
+
+Allowing Parameters
+===================
+
+If your method needs to work with parameters, the function will need a minimum of three parameters: the string to validate,
+the parameter string, and an array with all of the data that was submitted the form. The $data array is especially handy
+for rules like ``require_with`` that needs to check the value of another submitted field to base its result on::
+
+    public function required_with($str, string $fields, array $data): bool
+	{
+	    $fields = explode(',', $fields);
+
+		// If the field is present we can safely assume that
+		// the field is here, no matter whether the corresponding
+		// search field is present or not.
+		$present = $this->required($data[$str] ?? null);
+
+		if ($present === true)
+		{
+			return true;
+		}
+
+		// Still here? Then we fail this test if
+		// any of the fields are present in $data
+		$requiredFields = array_intersect($fields, $data);
+
+		$requiredFields = array_filter($requiredFields, function($item)
+		{
+			return ! empty($item);
+		});
+
+		return ! (bool)count($requiredFields);
+	}
+
+Custom errors can be returned as the fourth parameter, just as described above.
 
 ***************
 Available Rules

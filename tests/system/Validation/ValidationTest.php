@@ -15,6 +15,7 @@ class ValidationTest extends \CIUnitTestCase
             \CodeIgniter\Validation\Rules::class,
             \CodeIgniter\Validation\FileRules::class,
             \CodeIgniter\Validation\CreditCardRules::class,
+            \CodeIgniter\Validation\TestRules::class,
         ],
         'groupA'        => [
             'foo' => 'required|min_length[5]',
@@ -158,6 +159,22 @@ class ValidationTest extends \CIUnitTestCase
         $this->validation->setError('foo', 'Nadda');
 
         $this->assertEquals(['foo' => 'Nadda'], $this->validation->getErrors());
+    }
+
+    //--------------------------------------------------------------------
+
+    /**
+     * @group single
+     */
+    public function testRulesReturnErrors()
+    {
+        $this->validation->setRules([
+            'foo' => 'customError'
+        ]);
+
+        $this->validation->run(['foo' => 'bar']);
+
+        $this->assertEquals(['foo' => 'My lovely error'], $this->validation->getErrors());
     }
 
     //--------------------------------------------------------------------
