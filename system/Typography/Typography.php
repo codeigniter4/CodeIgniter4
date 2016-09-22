@@ -35,7 +35,7 @@ namespace CodeIgniter\Typography;
  * @license	http://opensource.org/licenses/MIT	MIT License
  * @link	http://codeigniter.com
  * @since	Version 3.0.0
- * @filesource
+ * @filesource 
  */
 
 /**
