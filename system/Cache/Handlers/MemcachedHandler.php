@@ -50,7 +50,7 @@ class MemcachedHandler implements CacheInterface
 	 */
 	public function initialize()
 	{
-		$defaults = $this->config['defaults'];
+		$defaults = $this->config['default'];
 
 		if (class_exists('Memcached'))
 		{
