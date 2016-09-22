@@ -130,7 +130,7 @@ Defining a Default Controller
 
 CodeIgniter can be told to load a default controller when a URI is not
 present, as will be the case when only your site root URL is requested.
-To specify a default controller, open your **application/config/routes.php**
+To specify a default controller, open your **application/Config/Routes.php**
 file and set this variable::
 
 	$routes->setDefaultController('Blog');
