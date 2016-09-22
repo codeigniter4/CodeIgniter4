@@ -203,7 +203,7 @@ class Typography
 			}
 
 			//  Convert Newlines into <p> and <br /> tags
-			$str .= $this->_formatNewlines($chunks[$i]);
+			$str .= $this->formatNewLines($chunks[$i]);
 		}
 
 		// No opening block level tag? Add it if needed.
@@ -349,7 +349,7 @@ class Typography
 	 * @param	string
 	 * @return	string
 	 */
-	protected function formatNewlines(string $str): string
+	protected function formatNewLines(string $str): string
 	{
 		if ($str === '' OR (strpos($str, "\n") === false && ! in_array($this->lastBlockElement,
 		        $this->innerBlockRequired)))
