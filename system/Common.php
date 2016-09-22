@@ -458,25 +458,33 @@ if (! function_exists('helper'))
 	 * Loads a helper file into memory. Supports namespaced helpers,
 	 * both in and out of the 'helpers' directory of a namespaced directory.
 	 *
-	 * @param string $filename
+	 * @param string|array $filenames
 	 *
 	 * @return string
 	 */
-	function helper(string $filename)//: string
+	function helper($filenames)//: string
 	{
 		$loader = Services::locator(true);
 
-		if (strpos($filename, '_helper') === false)
-		{
-			$filename .= '_helper';
-		}
+        if (! is_array($filenames))
+        {
+            $filenames = [$filenames];
+        }
 
-		$path = $loader->locateFile($filename, 'Helpers');
+        foreach ($filenames as $filename)
+        {
+            if (strpos($filename, '_helper') === false)
+            {
+                $filename .= '_helper';
+            }
 
-		if (! empty($path))
-		{
-			include $path;
-		}
+            $path = $loader->locateFile($filename, 'Helpers');
+
+            if (! empty($path))
+            {
+                include $path;
+            }
+        }
 	}
 }
 

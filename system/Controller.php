@@ -40,6 +40,7 @@ use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Services;
 use CodeIgniter\Log\Logger;
+use CodeIgniter\Validation\Validation;
 
 /**
  * Class Controller
@@ -85,6 +86,14 @@ class Controller
 	 * @var int  Number of seconds to set HSTS header
 	 */
 	protected $forceHTTPS = 0;
+
+    /**
+     * Once validation has been run,
+     * will hold the Validation instance.
+     *
+     * @var Validation
+     */
+    protected $validator;
 
 	//--------------------------------------------------------------------
 
@@ -159,6 +168,29 @@ class Controller
 	}
 
 	//--------------------------------------------------------------------
+
+    /**
+     * A shortcut to performing validation on $_POST input. If validation
+     * is not successful, a $errors property will be set on this class.
+     *
+     * @param \CodeIgniter\HTTP\RequestInterface $request
+     * @param                                    $rules
+     * @param array|null                         $messages
+     *
+     * @return bool
+     */
+    public function validate(RequestInterface $request, $rules, array $messages = null): bool
+    {
+        $this->validator = Services::validation();
+
+        $success = $this->validator->withRequest($request)
+                             ->setRules($rules, $messages)
+                             ->run();
+
+        return $success;
+    }
+
+    //--------------------------------------------------------------------
 
 
 }

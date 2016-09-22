@@ -27,6 +27,9 @@ class LanguageTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * @group single
+	 */
 	public function testGetLineFormatsMessage()
 	{
 		// No intl extension? then we can't test this - go away....
@@ -35,10 +38,10 @@ class LanguageTest extends \CIUnitTestCase
 	    $lang = new MockLanguage('en');
 
 		$lang->setData([
-			'books' => '{0, number, integer} books have been saved.'
+			'bookCount' => '{0, number, integer} books have been saved.'
 		]);
 
-		$this->assertEquals('45 books have been saved.', $lang->getLine('books.books', [91/2]));
+		$this->assertEquals('45 books have been saved.', $lang->getLine('books.bookCount', [91/2]));
 	}
 
 	//--------------------------------------------------------------------
