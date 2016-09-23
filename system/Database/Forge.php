@@ -380,7 +380,9 @@ class Forge
 	{
 	    $prefix = $this->db->DBPrefix ? $this->db->DBPrefix.'.' : '';
 	    
-	    return 'ALTER TABLE '.$prefix.$fk['table'].' ADD CONSTRAINT fk_'.$fk['fkey'].' FOREIGN KEY ('.$fk['key'].') REFERENCES '.$prefix.$fk['ftable'].' ('.$fk['fkey'].') ON UPDATE '.$fk['onUpdate'].' ON DELETE '.$fk['onDelete'];
+	    return 'ALTER TABLE '.$prefix.$fk['table'].' ADD CONSTRAINT fk_'.$fk['ftable'].'_'.$fk['fkey'].
+	    ' FOREIGN KEY ('.$fk['key'].') REFERENCES '.$prefix.$fk['ftable'].
+	    ' ('.$fk['fkey'].') ON UPDATE '.$fk['onUpdate'].' ON DELETE '.$fk['onDelete'];
 	}
 	
 	//--------------------------------------------------------------------

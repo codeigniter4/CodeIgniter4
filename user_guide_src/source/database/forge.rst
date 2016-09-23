@@ -348,7 +348,7 @@ Class Reference
 		:param string	$onUpdate: On update event.
 		:param string	$onDelete: On delete event.
 		
-		Adds a foreign key and sets the corresponding index to the table.
+		Adds a foreign key and sets the corresponding index to the table..
 
 	.. php:method:: createDatabase($db_name)
 
