@@ -195,7 +195,7 @@ Loading the Library
 
 The library is loaded as a service named **validation**::
 
-    $validation =  Config\Services::validation();
+    $validation =  \Config\Services::validation();
 
 This automatically loads the ``Config\Validation`` file which contains settings
 for including multiple Rule sets, and collections of rules that can be easily reused.
