@@ -394,7 +394,7 @@ Customizing Error Display
 
 When you call ``$validation->listErrors()`` or ``$validation->showError()``, it loads a view file in the background
 that determines how the errors are displayed. By default, they display in a manner compatible with the
-[Bootstrap](http://getbootstrap.com/) CSS framework. You can easily create new views and use them throughout your
+`Bootstrap <http://getbootstrap.com/>`_ CSS framework. You can easily create new views and use them throughout your
 application.
 
 Creating the Views
