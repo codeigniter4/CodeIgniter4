@@ -298,7 +298,7 @@ be used for any errors when this group is used::
             'email' => [
                 'valid_email' => 'Please check the Email field. It does not appear to be valid.'
             ]
-        ]
+        ];
     }
 
 See below for details on the formatting of the array.
