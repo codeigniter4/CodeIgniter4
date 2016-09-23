@@ -51,7 +51,7 @@ class QueryTest extends \CIUnitTestCase
 	    
 	    $forge->addForeignKey('key', 'fkey', 'table', 'ftable', 'CASCADE', 'CASCADE');
 	     
-	    $sql = 'ALTER TABLE table ADD CONSTRAINT fk_fkey FOREIGN KEY (key) REFERENCES ftable (fkey) ON UPDATE CASCADE ON DELETE CASCADE';
+	    $sql = 'ALTER TABLE table ADD CONSTRAINT fk_ftable_fkey FOREIGN KEY (key) REFERENCES ftable (fkey) ON UPDATE CASCADE ON DELETE CASCADE';
 	
 	    $this->assertEquals($sql, $forge->compileFKeyCreate($fk));
 	}

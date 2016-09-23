@@ -361,6 +361,10 @@ class Forge
 	
 	//-------------------------------------------------------------------
 	
+	/**
+	 * @param unknown $table
+	 * @param unknown $fkey
+	 */
 	public function deleteForeignKey($table, $fkey)
 	{
 	    $this->db->query($this->compileFKeyDrop($table, $fkey));
@@ -368,6 +372,10 @@ class Forge
 	
 	//-------------------------------------------------------------------
 	
+	/**
+	 * @param unknown $fk
+	 * @return string
+	 */
 	public function compileFKeyCreate($fk)
 	{
 	    $prefix = $this->db->DBPrefix ? $this->db->DBPrefix.'.' : '';
@@ -377,6 +385,11 @@ class Forge
 	
 	//--------------------------------------------------------------------
 	
+	/**
+	 * @param unknown $table
+	 * @param unknown $fkey
+	 * @return string
+	 */
 	public function compileFKeyDrop($table, $fkey)
 	{
 	    $prefix = $this->db->DBPrefix ? $this->db->DBPrefix.'.' : '';
