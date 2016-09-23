@@ -112,8 +112,18 @@ var ciDebugBar = {
         {
             obj.style.display = obj.style.display == 'none' ? 'block' : 'none';
         }
-    }
+    },
 
     //--------------------------------------------------------------------
+    /**
+        *   Toggle tool bar from full to icon and icon to full
+        */
 
+    toggleToolbar : function()
+    {
+        var ciIcon = document.getElementById('debug-icon');
+        var ciBar = document.getElementById('debug-bar');
+        ciIcon.style.display = ciIcon.style.display == 'none' ? 'inline-block' : 'none';
+        ciBar.style.display  = ciBar.style.display == 'none' ? 'inline-block' : 'none';
+    }
 };
