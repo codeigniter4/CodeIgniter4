@@ -339,6 +339,16 @@ Class Reference
 		:rtype:	\CodeIgniter\Database\Forge
 
 		Adds a key to the set that will be used to create a table. Usage:  See `Adding Keys`_.
+		
+	.. php:method:: addForeignKey($key, $fkey, $ftable, $onUpdate = 'CASCADE', $onDelete = 'CASCADE')
+		
+		:param string	$key: Name of a key field to reference
+		:param string	$fkey: Name of the foreign key field
+		:param string	$ftable: Name of the foreign table.
+		:param string	$onUpdate: On update event.
+		:param string	$onDelete: On delete event.
+		
+		Adds a foreign key and sets the corresponding index to the table..
 
 	.. php:method:: createDatabase($db_name)
 
