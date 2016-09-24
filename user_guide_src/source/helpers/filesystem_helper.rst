@@ -82,6 +82,8 @@ The following functions are available:
 					[9] => uri.html
 				)
 
+	If no results are found, this will return an empty array.
+
 .. php:function:: read_file($file)
 
 	:param	string	$file: File path
@@ -214,24 +216,6 @@ The following functions are available:
 
 	Valid ``$returned_values`` options are: `name`, `size`, `date`, `readable`, `writeable`,
 	`executable` and `fileperms`.
-
-.. php:function:: get_mime_by_extension($filename)
-
-	:param	string	$filename: File name
-	:returns:	MIME type string or FALSE on failure
-	:rtype:	string
-
-	Translates a filename extension into a MIME type based on *config/mimes.php*.
-	Returns FALSE if it can't determine the type, or read the MIME config file.
-
-	::
-
-		$file = 'somefile.png';
-		echo $file.' is has a mime type of '.get_mime_by_extension($file);
-
-	.. note:: This is not an accurate way of determining file MIME types, and
-		is here strictly for convenience. It should not be used for security
-		purposes.
 
 .. php:function:: symbolic_permissions($perms)
 

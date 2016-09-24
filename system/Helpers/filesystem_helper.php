@@ -62,6 +62,7 @@ if ( ! function_exists('directory_map'))
      * @param	int	$directory_depth	Depth of directories to traverse
      *						(0 = fully recursive, 1 = current dir, etc)
      * @param	bool	$hidden			Whether to show hidden files
+     *
      * @return	array
      */
     function directory_map(string $source_dir, int $directory_depth = 0, bool $hidden = false): array
@@ -75,14 +76,14 @@ if ( ! function_exists('directory_map'))
             while (false !== ($file = readdir($fp)))
             {
                 // Remove '.', '..', and hidden files [optional]
-                if ($file === '.' OR $file === '..' OR ($hidden === false && $file[0] === '.'))
+                if ($file === '.' || $file === '..' || ($hidden === false && $file[0] === '.'))
                 {
                     continue;
                 }
 
                 is_dir($source_dir.$file) && $file .= DIRECTORY_SEPARATOR;
 
-                if (($directory_depth < 1 OR $new_depth > 0) && is_dir($source_dir.$file))
+                if (($directory_depth < 1 || $new_depth > 0) && is_dir($source_dir.$file))
                 {
                     $filedata[$file] = directory_map($source_dir.$file, $new_depth, $hidden);
                 }
@@ -96,7 +97,7 @@ if ( ! function_exists('directory_map'))
             return $filedata;
         }
 
-        return false;
+        return [];
     }
 }
 
@@ -113,11 +114,12 @@ if ( ! function_exists('write_file'))
      * @param	string	$path	File path
      * @param	string	$data	Data to write
      * @param	string	$mode	fopen() mode (default: 'wb')
+     *
      * @return	bool
      */
     function write_file(string $path, string $data, string $mode = 'wb'): bool
     {
-        if ( ! $fp = @fopen($path, $mode))
+        if (! $fp = @fopen($path, $mode))
         {
             return false;
         }
@@ -152,12 +154,13 @@ if ( ! function_exists('delete_files'))
      * within the supplied base directory will be nuked as well.
      *
      * @param	string	$path		File path
-     * @param	bool	$del_dir	Whether to delete any directories found in the path
+     * @param	bool	$delDir	Whether to delete any directories found in the path
      * @param	bool	$htdocs		Whether to skip deleting .htaccess and index page files
      * @param	int	$_level		Current directory depth level (default: 0; internal use only)
+     *
      * @return	bool
      */
-    function delete_files(string $path, bool $del_dir = false, bool $htdocs = false, int $_level = 0): bool
+    function delete_files(string $path, bool $delDir = false, bool $htdocs = false, int $_level = 0): bool
     {
         // Trim the trailing slash
         $path = rtrim($path, '/\\');
@@ -173,9 +176,9 @@ if ( ! function_exists('delete_files'))
             {
                 if (is_dir($path.DIRECTORY_SEPARATOR.$filename) && $filename[0] !== '.')
                 {
-                    delete_files($path.DIRECTORY_SEPARATOR.$filename, $del_dir, $htdocs, $_level + 1);
+                    delete_files($path.DIRECTORY_SEPARATOR.$filename, $delDir, $htdocs, $_level + 1);
                 }
-                elseif ($htdocs !== true OR ! preg_match('/^(\.htaccess|index\.(html|htm|php)|web\.config)$/i', $filename))
+                elseif ($htdocs !== true || ! preg_match('/^(\.htaccess|index\.(html|htm|php)|web\.config)$/i', $filename))
                 {
                     @unlink($path.DIRECTORY_SEPARATOR.$filename);
                 }
@@ -184,9 +187,9 @@ if ( ! function_exists('delete_files'))
 
         closedir($current_dir);
 
-        return ($del_dir === true && $_level > 0)
-        ? @rmdir($path)
-        : true;
+        return ($delDir === true && $_level > 0)
+            ? @rmdir($path)
+            : true;
     }
 }
 
@@ -205,16 +208,16 @@ if ( ! function_exists('get_filenames'))
      * @param	bool	internal variable to determine recursion status - do not use in calls
      * @return	array
      */
-    function get_filenames(string $source_dir, bool $include_path = false, bool $_recursion = false): array
+    function get_filenames(string $source_dir, bool $include_path = false, bool $recursion = false): array
     {
-        static $_filedata = array();
+        static $filedata = array();
 
         if ($fp = @opendir($source_dir))
         {
             // reset the array and make sure $source_dir has a trailing slash on the initial call
-            if ($_recursion === false)
+            if ($recursion === false)
             {
-                $_filedata = array();
+                $filedata = array();
                 $source_dir = rtrim(realpath($source_dir), DIRECTORY_SEPARATOR).DIRECTORY_SEPARATOR;
             }
 
@@ -226,15 +229,15 @@ if ( ! function_exists('get_filenames'))
                 }
                 elseif ($file[0] !== '.')
                 {
-                    $_filedata[] = ($include_path === true) ? $source_dir.$file : $file;
+                    $filedata[] = ($include_path === true) ? $source_dir.$file : $file;
                 }
             }
 
             closedir($fp);
-            return $_filedata;
+            return $filedata;
         }
 
-        return false;
+        return [];
     }
 }
 
@@ -255,17 +258,17 @@ if ( ! function_exists('get_dir_file_info'))
      * @param	bool	internal variable to determine recursion status - do not use in calls
      * @return	array
      */
-    function get_dir_file_info(string $source_dir, bool $top_level_only = true, bool $_recursion = false): array
+    function get_dir_file_info(string $source_dir, bool $top_level_only = true, bool $recursion = false): array
     {
-        static $_filedata = array();
+        static $filedata = array();
         $relative_path = $source_dir;
 
         if ($fp = @opendir($source_dir))
         {
             // reset the array and make sure $source_dir has a trailing slash on the initial call
-            if ($_recursion === false)
+            if ($recursion === false)
             {
-                $_filedata = array();
+                $filedata = array();
                 $source_dir = rtrim(realpath($source_dir), DIRECTORY_SEPARATOR).DIRECTORY_SEPARATOR;
             }
 
@@ -278,16 +281,16 @@ if ( ! function_exists('get_dir_file_info'))
                 }
                 elseif ($file[0] !== '.')
                 {
-                    $_filedata[$file] = get_file_info($source_dir.$file);
-                    $_filedata[$file]['relative_path'] = $relative_path;
+                    $filedata[$file] = get_file_info($source_dir.$file);
+                    $filedata[$file]['relative_path'] = $relative_path;
                 }
             }
 
             closedir($fp);
-            return $_filedata;
+            return $filedata;
         }
 
-        return false;
+        return [];
     }
 }
 
@@ -311,7 +314,7 @@ if ( ! function_exists('get_file_info'))
     {
         if ( ! file_exists($file))
         {
-            return false;
+            return null;
         }
 
         if (is_string($returned_values))
@@ -356,49 +359,6 @@ if ( ! function_exists('get_file_info'))
 
 // --------------------------------------------------------------------
 
-if ( ! function_exists('get_mime_by_extension'))
-{
-    /**
-     * Get Mime by Extension
-     *
-     * Translates a file extension into a mime type based on config/mimes.php.
-     * Returns false if it can't determine the type, or open the mime config file
-     *
-     * Note: this is NOT an accurate way of determining file mime types, and is here strictly as a convenience
-     * It should NOT be trusted, and should certainly NOT be used for security
-     *
-     * @param	string	$filename	File name
-     * @return	string
-     */
-    function get_mime_by_extension(string $filename): string
-    {
-        static $mimes;
-
-        if ( ! is_array($mimes))
-        {
-            $mimes = get_mimes();
-
-            if (empty($mimes))
-            {
-                return false;
-            }
-        }
-
-        $extension = strtolower(substr(strrchr($filename, '.'), 1));
-
-        if (isset($mimes[$extension]))
-        {
-            return is_array($mimes[$extension])
-            ? current($mimes[$extension]) // Multiple mime types, just give the first one
-            : $mimes[$extension];
-        }
-
-        return false;
-    }
-}
-
-// --------------------------------------------------------------------
-
 if ( ! function_exists('symbolic_permissions'))
 {
     /**
@@ -410,7 +370,7 @@ if ( ! function_exists('symbolic_permissions'))
      * @param	int	$perms	Permissions
      * @return	string
      */
-    function symbolic_permissions($perms): string
+    function symbolic_permissions(int $perms): string
     {
         if (($perms & 0xC000) === 0xC000)
         {
@@ -477,7 +437,7 @@ if ( ! function_exists('octal_permissions'))
      * @param	int	$perms	Permissions
      * @return	string
      */
-    function octal_permissions($perms)
+    function octal_permissions(int $perms): string
     {
         return substr(sprintf('%o', $perms), -3);
     }
@@ -494,12 +454,12 @@ if ( ! function_exists('set_realpath'))
 	 * @param	bool	checks to see if the path exists
 	 * @return	string
 	 */
-	function set_realpath(string $path, bool $check_existance = false): string
+	function set_realpath(string $path, bool $checkExistance = false): string
 	{
 		// Security check to make sure the path is NOT a URL. No remote file inclusion!
-		if (preg_match('#^(http:\/\/|https:\/\/|www\.|ftp)#i', $path) OR filter_var($path, FILTER_VALIDATE_IP) === $path )
+		if (preg_match('#^(http:\/\/|https:\/\/|www\.|ftp)#i', $path) || filter_var($path, FILTER_VALIDATE_IP) === $path )
 		{
-			show_error('The path you submitted must be a local server path, not a URL');
+		    throw new InvalidArgumentException('The path you submitted must be a local server path, not a URL');
 		}
 
 		// Resolve the path
@@ -507,9 +467,9 @@ if ( ! function_exists('set_realpath'))
 		{
 			$path = realpath($path);
 		}
-		elseif ($check_existance && ! is_dir($path) && ! is_file($path))
+		elseif ($checkExistance && ! is_dir($path) && ! is_file($path))
 		{
-			show_error('Not a valid path: '.$path);
+		    throw new InvalidArgumentException('Not a valid path: '.$path);
 		}
 
 		// Add a trailing slash, if this is a directory
