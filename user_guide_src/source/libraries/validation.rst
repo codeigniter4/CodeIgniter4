@@ -195,7 +195,7 @@ Loading the Library
 
 The library is loaded as a service named **validation**::
 
-    $validation =  Config\Services::validation();
+    $validation =  \Config\Services::validation();
 
 This automatically loads the ``Config\Validation`` file which contains settings
 for including multiple Rule sets, and collections of rules that can be easily reused.
@@ -298,7 +298,7 @@ be used for any errors when this group is used::
             'email' => [
                 'valid_email' => 'Please check the Email field. It does not appear to be valid.'
             ]
-        ]
+        ];
     }
 
 See below for details on the formatting of the array.
@@ -394,7 +394,7 @@ Customizing Error Display
 
 When you call ``$validation->listErrors()`` or ``$validation->showError()``, it loads a view file in the background
 that determines how the errors are displayed. By default, they display in a manner compatible with the
-[Bootstrap](http://getbootstrap.com/) CSS framework. You can easily create new views and use them throughout your
+`Bootstrap <http://getbootstrap.com/>`_ CSS framework. You can easily create new views and use them throughout your
 application.
 
 Creating the Views
