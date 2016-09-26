@@ -1,6 +1,40 @@
 <?php namespace CodeIgniter\HTTP;
 
-use App\Config\ContentSecurityPolicyConfig;
+/**
+ * CodeIgniter
+ *
+ * An open source application development framework for PHP
+ *
+ * This content is released under the MIT License (MIT)
+ *
+ * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ *
+ * @package	CodeIgniter
+ * @author	CodeIgniter Dev Team
+ * @copyright	Copyright (c) 2014 - 2016, British Columbia Institute of Technology (http://bcit.ca/)
+ * @license	http://opensource.org/licenses/MIT	MIT License
+ * @link	http://codeigniter.com
+ * @since	Version 3.0.0
+ * @filesource
+ */
 
 /**
  * Class ContentSecurityPolicy
@@ -16,42 +50,118 @@ use App\Config\ContentSecurityPolicyConfig;
  */
 class ContentSecurityPolicy
 {
+	/**
+	 * Used for security enforcement
+	 * @var type 
+	 */
 	protected $baseURI = [];
 
+	/**
+	 * Used for security enforcement
+	 * @var type 
+	 */
 	protected $childSrc = [];
 
+	/**
+	 * Used for security enforcement
+	 * @var type 
+	 */
 	protected $connectSrc = [];
 
+	/**
+	 * Used for security enforcement
+	 * @var type 
+	 */
 	protected $defaultSrc = [];
 
+	/**
+	 * Used for security enforcement
+	 * @var type 
+	 */
 	protected $fontSrc = [];
 
+	/**
+	 * Used for security enforcement
+	 * @var type 
+	 */
 	protected $formAction = [];
 
+	/**
+	 * Used for security enforcement
+	 * @var type 
+	 */
 	protected $frameAncestors = null;
 
+	/**
+	 * Used for security enforcement
+	 * @var type 
+	 */
 	protected $imageSrc = [];
 
+	/**
+	 * Used for security enforcement
+	 * @var type 
+	 */
 	protected $mediaSrc = [];
 
+	/**
+	 * Used for security enforcement
+	 * @var type 
+	 */
 	protected $objectSrc = [];
 
+	/**
+	 * Used for security enforcement
+	 * @var type 
+	 */
 	protected $pluginTypes = null;
 
+	/**
+	 * Used for security enforcement
+	 * @var type 
+	 */
 	protected $reportURI = null;
 
+	/**
+	 * Used for security enforcement
+	 * @var type 
+	 */
 	protected $sandbox = false;
 
+	/**
+	 * Used for security enforcement
+	 * @var type 
+	 */
 	protected $scriptSrc = [];
 
+	/**
+	 * Used for security enforcement
+	 * @var type 
+	 */
 	protected $styleSrc = [];
 
+	/**
+	 * Used for security enforcement
+	 * @var type 
+	 */
 	protected $upgradeInsecureRequests = false;
 
+	/**
+	 * Used for security enforcement
+	 * @var type 
+	 */
 	protected $reportOnly = false;
 
+	/**
+	 * Used for security enforcement
+	 * @var type 
+	 */
 	protected $validSources = ['self', 'none', 'unsafe-inline', 'unsafe-eval'];
 
+	/**
+	 * Used for security enforcement
+	 * @var type 
+	 */
 	protected $nonces = [];
 
 	//--------------------------------------------------------------------
@@ -59,11 +169,11 @@ class ContentSecurityPolicy
 	/**
 	 * ContentSecurityPolicy constructor.
 	 *
-	 * Stores our default values from the config file.
+	 * Stores our default values from the Config file.
 	 *
-	 * @param ContentSecurityPolicyConfig $config
+	 * @param ContentSecurityPolicy $config
 	 */
-	public function __construct(ContentSecurityPolicyConfig $config)
+	public function __construct(Config\ContentSecurityPolicy $config)
 	{
 		foreach ($config as $setting => $value)
 		{
@@ -123,7 +233,8 @@ class ContentSecurityPolicy
 	 *
 	 * @see http://www.w3.org/TR/CSP/#directive-base-uri
 	 *
-	 * @param $uri
+	 * @param string $uri
+	 * @param bool $reportOnly
 	 *
 	 * @return $this
 	 */
@@ -585,7 +696,7 @@ class ContentSecurityPolicy
 	 * @param array|string|null $values
 	 * @param ResponseInterface $response
 	 */
-	protected function addToHeader(\string $name, $values = null, ResponseInterface &$response)
+	protected function addToHeader(string $name, $values = null, ResponseInterface &$response)
 	{
 		if ( empty($values))
 		{
@@ -611,7 +722,7 @@ class ContentSecurityPolicy
 				$reportOnly = 0;
 			}
 
-			if ($reportOnly == true)
+			if ($reportOnly === true)
 			{
 				$reportSources[] = in_array($value, $this->validSources)
 					? "'{$value}'"

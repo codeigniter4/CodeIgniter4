@@ -1,7 +1,41 @@
 <?php namespace CodeIgniter\Log;
 
-use App\Config\LoggerConfig;
-use CodeIgniter\Log\Handlers\HandlerInterface;
+/**
+ * CodeIgniter
+ *
+ * An open source application development framework for PHP
+ *
+ * This content is released under the MIT License (MIT)
+ *
+ * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ *
+ * @package	CodeIgniter
+ * @author	CodeIgniter Dev Team
+ * @copyright	Copyright (c) 2014 - 2016, British Columbia Institute of Technology (http://bcit.ca/)
+ * @license	http://opensource.org/licenses/MIT	MIT License
+ * @link	http://codeigniter.com
+ * @since	Version 3.0.0
+ * @filesource
+ */
+
 use Psr\Log\LoggerInterface;
 
 /**
@@ -29,7 +63,7 @@ class Logger implements LoggerInterface
 	protected $logPath;
 
 	/**
-	 * Used by the logThreshold config setting to define
+	 * Used by the logThreshold Config setting to define
 	 * which errors to show.
 	 *
 	 * @var array
@@ -39,16 +73,16 @@ class Logger implements LoggerInterface
 		'alert'     => 2,
 		'critical'  => 3,
 		'error'     => 4,
-		'warning'   => 5,
-		'notice'    => 6,
-		'info'      => 7,
-		'debug'     => 8,
+		'debug'     => 5,
+		'warning'   => 6,
+		'notice'    => 7,
+		'info'      => 8,
 	];
 
 	/**
 	 * Array of levels to be logged.
 	 * The rest will be ignored.
-	 * Set in config/logger.php
+	 * Set in Config/logger.php
 	 *
 	 * @var array
 	 */
@@ -92,13 +126,48 @@ class Logger implements LoggerInterface
 	 */
 	protected $handlerConfig = [];
 
+	/**
+	 * Caches logging calls for debugbar.
+	 *
+	 * @var array
+	 */
+	public $logCache;
+
+	/**
+	 * Should we cache our logged items?
+	 *
+	 * @var bool
+	 */
+	protected $cacheLogs = false;
+
 	//--------------------------------------------------------------------
 
-	public function __construct(LoggerConfig $config)
+	/**
+	 * Constructor.
+	 * 
+	 * @param type $config
+	 * @param bool $debug
+	 * @throws \RuntimeException
+	 */
+	public function __construct($config, bool $debug = CI_DEBUG)
 	{
-		$this->loggableLevels = is_array($config->threshold) ? $config->threshold : range(0, (int)$config->threshold);
+		$this->loggableLevels = is_array($config->threshold) ? $config->threshold : range(1, (int)$config->threshold);
 
-		$this->dateFormat = ! empty($config->dateFormat) ?? $this->dateFormat;
+		// Now convert loggable levels to strings.
+		// We only use numbers to make the threshold setting convenient for users.
+		if (count($this->loggableLevels))
+		{
+			$temp = [];
+			foreach ($this->loggableLevels as $level)
+			{
+				$temp[] = array_search((int)$level, $this->logLevels);
+			}
+
+			$this->loggableLevels = $temp;
+			unset($temp);
+		}
+
+		$this->dateFormat = $config->dateFormat ?? $this->dateFormat;
 
 		if (! is_array($config->handlers) || empty($config->handlers))
 		{
@@ -108,6 +177,12 @@ class Logger implements LoggerInterface
 		// Save the handler configuration for later.
 		// Instances will be created on demand.
 		$this->handlerConfig = $config->handlers;
+
+		$this->cacheLogs = (bool)$debug;
+		if ($this->cacheLogs)
+		{
+			$this->logCache = [];
+		}
 	}
 
 	//--------------------------------------------------------------------
@@ -252,9 +327,12 @@ class Logger implements LoggerInterface
 	 *
 	 * @return bool
 	 */
-	public function log(\string $level, $message, array $context = []): bool
+	public function log($level, $message, array $context = []): bool
 	{
-		$level = strtolower($level);
+		if (is_numeric($level))
+		{
+			$level = array_search((int)$level, $this->logLevels);
+		}
 
 		// Is the level a valid level?
 		if (! array_key_exists($level, $this->logLevels))
@@ -271,13 +349,21 @@ class Logger implements LoggerInterface
 		// Parse our placeholders
 		$message = $this->interpolate($message, $context);
 
+		if (! is_string($message))
+		{
+			$message = print_r($message, true);
+		}
+
+		if ($this->cacheLogs)
+		{
+			$this->logCache[] = [
+				'level' => $level,
+			    'msg'   => $message
+			];
+		}
+
 		foreach ($this->handlerConfig as $className => $config)
 		{
-			if (! $className instanceof HandlerInterface)
-			{
-				continue;
-			}
-
 			/**
 			 * @var \CodeIgniter\Log\Handlers\HandlerInterface
 			 */
@@ -296,7 +382,7 @@ class Logger implements LoggerInterface
 			}
 		}
 
-		return false;
+		return true;
 	}
 
 	//--------------------------------------------------------------------
@@ -308,6 +394,10 @@ class Logger implements LoggerInterface
 	 * {session_vars}
 	 * {post_vars}
 	 * {get_vars}
+	 * {env}
+	 * {env:foo}
+	 * {file}
+	 * {line}
 	 *
 	 * @param       $message
 	 * @param array $context
@@ -316,6 +406,8 @@ class Logger implements LoggerInterface
 	 */
 	protected function interpolate($message, array $context = [])
 	{
+		if (! is_string($message)) return $message;
+
 		// build a replacement array with braces around the context keys
 		$replace = [];
 
@@ -325,7 +417,7 @@ class Logger implements LoggerInterface
 			// or error, both of which implement the 'Throwable' interface.
 			if ($key == 'exception' && $val instanceof \Throwable)
 			{
-				$val = $val->getMessage().' '.$val->getFile().':'. $val->getLine();
+				$val = $val->getMessage().' '.$this->cleanFileNames($val->getFile()).':'. $val->getLine();
 			}
 
 			// todo - sanitize input before writing to file?
@@ -335,6 +427,31 @@ class Logger implements LoggerInterface
 		// Add special placeholders
 		$replace['{post_vars}'] = '$_POST: '.print_r($_POST, true);
 		$replace['{get_vars}']  = '$_GET: '.print_r($_GET, true);
+		$replace['{env}']       = ENVIRONMENT;
+
+		// Allow us to log the file/line that we are logging from
+		if (strpos($message, '{file}') !== false)
+		{
+			list($file, $line) = $this->determineFile();
+
+			$replace['{file}'] = $file;
+			$replace['{line}'] = $line;
+		}
+
+		// Match up environment variables in {env:foo} tags.
+		if (strpos($message, 'env:') !== false)
+		{
+			preg_match('/env:[^}]+/', $message, $matches);
+
+			if (count($matches))
+			{
+				foreach ($matches as $str)
+				{
+					$key = str_replace('env:', '', $str);
+					$replace["{{$str}}"] = $_ENV[$key] ?? 'n/a';
+				}
+			}
+		}
 
 		if (isset($_SESSION))
 		{
@@ -348,15 +465,62 @@ class Logger implements LoggerInterface
 	//--------------------------------------------------------------------
 
 	/**
-	 * Acts as a factory for Handlers so we only load them if we need them.
+	 * Determines the current file/line that the log method was called from.
+	 * by analyzing the backtrace.
 	 *
-	 * @param string $name  The class name of the Handler to get.
+	 * @return array
 	 */
-	protected function getHandler(string $name): Hand
+	public function determineFile()
 	{
+		// Determine the file and line by finding the first
+		// backtrace that is not part of our logging system.
+		$trace = debug_backtrace();
+		$file = null;
+		$line = null;
 
+		foreach ($trace as $row)
+		{
+			if (in_array($row['function'], ['interpolate', 'determineFile', 'log', 'log_message']))
+			{
+				continue;
+			}
+
+			$file = $row['file'] ?? isset($row['object']) ? get_class($row['object']) : 'unknown';
+			$line = $row['line'] ?? $row['function'] ?? 'unknown';
+			break;
+		}
+
+		return [
+			$file,
+		    $line
+		];
 	}
 
 	//--------------------------------------------------------------------
+
+
+	/**
+	 * Cleans the paths of filenames by replacing APPPATH, BASEPATH, FCPATH
+	 * with the actual var. i.e.
+	 *
+	 *  /var/www/site/application/Controllers/Home.php
+	 *      becomes:
+	 *  APPPATH/Controllers/Home.php
+	 *
+	 * @param $file
+	 *
+	 * @return mixed
+	 */
+	protected function cleanFileNames($file)
+	{
+		$file = str_replace(APPPATH, 'APPPATH/', $file);
+		$file = str_replace(BASEPATH, 'BASEPATH/', $file);
+		$file = str_replace(FCPATH, 'FCPATH/', $file);
+
+	    return $file;
+	}
+
+	//--------------------------------------------------------------------
+
 
 }

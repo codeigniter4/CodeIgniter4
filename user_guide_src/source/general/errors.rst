@@ -1,89 +1,137 @@
-##################
-Errors and Logging
-##################
+##############
+Error Handling
+##############
 
-Logging
-=======
+CodeIgniter builds error reporting into your system through Exceptions, both the `SPL collection <http://php.net/manual/en/spl.exceptions.php>`_, as
+well as a few custom exceptions that are provided by the framework. Depending on your environment's setup, the
+default action when an error or exception is thrown is to display a detailed error report, unless the application
+is running under the ``production`` environment. In this case, a more generic  message is displayed to
+keep the best user experience for your users.
 
-You can log information to the local log files by using the ``log_message()`` method. You must supply
-the "level" of the error in the first parameter, indicating what type of message it is (debug, error, etc).
-The second parameter is the message itself::
 
-	if ($some_var == '')
+Using Exceptions
+================
+
+This section is a quick overview for newer programmers, or developers who are not experienced with using exceptions.
+
+Exceptions are simply events that happen when the exception is "thrown". This halts the current flow of the script, and
+execution is then sent to the error handler which displays the appropriate error page::
+
+	throw new \Exception("Some message goes here");
+
+If you are calling a method that might throw an exception, you can catch that exception using a ``try/catch block``::
+
+	try {
+		$user = $userModel->find($id);
+	}
+	catch (\Exception $e)
 	{
-		log_message('error', 'Some variable did not contain a value.');
+		die($e->getMessage());
 	}
 
-There are eight different log levels, matching to the `RFC 5424 <http://tools.ietf.org/html/rfc5424>`_ levels, and they are as follows:
+If the ``$userModel`` throws an exception, it is caught and the code within the catch block is executed. In this example,
+the scripts dies, echoing the error message that the ``UserModel`` defined.
 
-* debug - Detailed debug information
-* info - Interesting events in your application, like a user logging in, logging SQL queries, etc. 
-* notice - Normal, but significant events in your application.
-* warning - Exceptional occurrences that are not errors, like the user of deprecated APIs, poor use of an API, or other undesirable things that are not necessarily wrong.
-* error - Runtime errors that do not require immediate action but should typically be logged and monitored.
-* critical - Critical conditions, like an application component not available, or an unexpected exception.
-* alert - Action must be taken immediately, like when an entire website is down, the database unavailable, etc. 
-* emergency - The system is unusable.
+In this example, we catch any type of Exception. If we only want to watch for specific types of exceptions, like
+a UnknownFileException, we can specify that in the catch parameter. Any other exceptions that are thrown and are
+not child classes of the caught exception will be passed on to the error handler::
 
-The logging system does not provide ways to alert sysadmins or webmasters about these events, they solely log
-the information. For many of the more critical event levels, the logging happens automatically by the
-Error Handler, described above.
-
-Modifying the Message With Context
-==================================
-
-You will often want to modify the details of your message based on the context of the event being logged.
-You might need to log a user id, an IP address, the current POST variables, etc. You can do this by use
-placeholders in your message. Each placeholder must be wrapped in curly braces. In the third parameter,
-you must provide an array of placeholder names (without the braces) and their values. These will be inserted
-into the message string::
-
-	// Generates a message like: User 123 logged into the system from 127.0.0.1
-	$info = [
-		'id' => $user->id,
-		'ip_address' => $this->request->ip_address()
-	];
-
-	log_message('info', 'User {id} logged into the system from {ip_address}', $info);
-
-If you want to log an Exception or an Error, you can use the key of 'exception', and the value being the
-Exception or Error itself. A string will be generated from that object containing the error message, the
-file name and line number.  You must still provide the exception placeholder in the message::
-
-	try 
+	catch (\CodeIgniter\UnknownFileException $e)
 	{
-		... Something throws error here
-	}
-	catch (\Exception #e)
-	{
-		log_message('error', '[ERROR] {exception}', ['exception' => $e]);
+		// do something here...
 	}
 
-Three placeholders will be automatically expanded for you to display the contents of the $_POST, $_GET,
-and $_SESSION values. They are `{post_vars}`, `{get_vars}`, and `{session_vars}`, respectively.
+This can be handy for handling the error yourself, or for performaing cleanup before the script ends. If you want
+the error handler to function as normal, you can throw a new exception within the catch block::
 
-Using Third-Party Loggers
-=========================
+	catch (\CodeIgniter\UnknownFileException $e)
+	{
+		// do something here...
 
-You can use any other logger that you might like as long as it extends from either
-``PSR\Log\LoggerInterface`` and is `PSR3 <http://www.php-fig.org/psr/psr-3/>`_ compatible. This means
-that you can easily drop in use for any PSR3-compatible logger, or create your own.
+		throw new \RuntimeException($e->getMessage(), $e->getCode());
+	}
 
-You must ensure that the third-party logger can be found by the system, by adding it to either
-the ``/application/config/autoload.php`` configuration file, or through another autoloader,
-like Composer. Next, you should modify ``/application/config/services.php`` to point the ``logger``
-alias to your new class name.
+Configuration
+=============
 
-Now, any call that is done through the ``log_message()`` function will use your library instead.
+By default, CodeIgniter will display all errors in the ``development`` and ``testing`` environments, and will not
+display any errors in the ``production`` environment. You can change this by locating the environment configuration
+portion at the top of the main ``index.php`` file.
 
-LoggerAware Trait
+.. important:: Disabling error reporting DOES NOT stop logs from being written if there are errors.
+
+Custom Exceptions
 =================
 
-If you would like to implement your libraries in a framework-agnostic method, you can use
-the ``CodeIgniter\Log\LoggerAwareTrait`` which implements the ``setLogger()`` method for you.
-Then, when you use your library under different environments for frameworks, your library should
-still be able to log as it would expect, as long as it can find a PSR3 compatible logger.
+The following custom exceptions are available:
 
+PageNotFoundException
+---------------------
 
+This is used to signal a 404, Page Not Found error. When thrown, the system will show the view found at
+``/application/views/errors/html/error_404.php``. You should customize all of the error views for your site.
+If, in ``Config/Routes.php``, you have specified a 404 Override, that will be called instead of the standard
+404 page::
 
+	if (! $page = $pageModel->find($id))
+	{
+		throw new \CodeIgniter\PageNotFoundException();
+	}
 
+You can pass a message into the exception that will be displayed in place of the default message on the 404 page.
+
+ConfigException
+---------------
+
+This exception should be used when the values from the configuration class are invalid, or when the config class
+is not the right type, etc::
+
+	throw new \CodeIgniter\ConfigException();
+
+This provides an HTTP status code of 500, and an exit code of 3.
+
+UnknownFileException
+--------------------
+
+Use this exception when a file cannot be found::
+
+	throw new \CodeIgniter\UnknownFileException();
+
+This provides an HTTP status code of 500, and an exit code of 4.
+
+UnknownClassException
+---------------------
+
+Use this exception when a class cannot be found::
+
+	throw new \CodeIgniter\UnknownClassException($className);
+
+This provides an HTTP status code of 500, and an exit code of 5.
+
+UnknownMethodException
+----------------------
+
+Use this exception when a class' method does not exist::
+
+	throw new \CodeIgniter\UnknownMethodException();
+
+This provides an HTTP status code of 500, and an exit code of 6.
+
+UserInputException
+------------------
+
+Use this exception when the user's input is not valid::
+
+	throw new \CodeIgniter\UserInputException();
+
+This provides an HTTP status code of 500, and an exit code of 7.
+
+DatabaseException
+-----------------
+
+This exception is thrown for database errors, such as when the database connection cannot be created,
+or when it is temporarily lost::
+
+	throw new \CodeIgniter\DatabaseException();
+
+This provides an HTTP status code of 500, and an exit code of 4.

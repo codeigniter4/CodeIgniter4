@@ -1,6 +1,6 @@
-=============
+*************
 Request Class
-=============
+*************
 
 The request class is an object-oriented representation of an HTTP request. This is meant to
 work for both incoming, such as a request to the application from a browser, and outgoing requests,
@@ -11,9 +11,9 @@ from the Request class to add specific functionality.
 See the documentation for the :doc:`IncomingRequest Class </libraries/incomingrequest>` and
 :doc:`CURLRequest Class </libraries/curlrequest>` for more usage details.
 
-***************
+===============
 Class Reference
-***************
+===============
 
 .. php:class:: CodeIgniter\\HTTP\\IncomingRequest
 
@@ -28,7 +28,7 @@ Class Reference
 
 			echo $request->ipAddress();
 
-		.. important:: This method takes into account the ``AppConfig->proxy_ips`` setting and will
+		.. important:: This method takes into account the ``App->proxy_ips`` setting and will
 			return the reported HTTP_X_FORWARDED_FOR, HTTP_CLIENT_IP, HTTP_X_CLIENT_IP, or
 			HTTP_X_CLUSTER_CLIENT_IP address for the allowed IP address.
 
@@ -43,15 +43,16 @@ Class Reference
 		on whether it is valid or not.
 
 		.. note:: The $request->ipAddress() method above automatically validates the IP address.
-			::
+
+                ::
 
 			if ( ! $request->validIP($ip))
 			{
-				echo 'Not Valid';
+                            echo 'Not Valid';
 			}
 			else
 			{
-				echo 'Valid';
+                            echo 'Valid';
 			}
 
 		Accepts an optional second string parameter of 'ipv4' or 'ipv6' to specify
@@ -72,7 +73,7 @@ Class Reference
 			echo $request->method(FALSE); // Outputs: post
 			echo $request->method(); // Outputs: post
 
-	.. php:method:: server($index[, $filter = NULL])
+	.. php:method:: getServer($index[, $filter = NULL])
 
 		:param	mixed	$index: Value name
 		:param  int     $filter: The type of filter to apply. A list of filters can be found `here <http://php.net/manual/en/filter.filters.php>`_.
@@ -80,13 +81,13 @@ Class Reference
 		:rtype:	mixed
 
 		This method is identical to the ``post()``, ``get()`` and ``cookie()`` methods from the
-		:doc:`IncomingRequest Class </libraries/incomingrequest>`, only it fetches server data (``$_SERVER``)::
+		:doc:`IncomingRequest Class </libraries/incomingrequest>`, only it fetches getServer data (``$_SERVER``)::
 
-			$request->server('some_data');
+			$request->getServer('some_data');
 
 		To return an array of multiple ``$_SERVER`` values, pass all the required keys
 		as an array.
 		::
 
-			$require->server(array('SERVER_PROTOCOL', 'REQUEST_URI'));
+			$require->getServer(array('SERVER_PROTOCOL', 'REQUEST_URI'));
 

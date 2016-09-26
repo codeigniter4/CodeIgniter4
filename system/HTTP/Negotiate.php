@@ -1,11 +1,47 @@
 <?php namespace CodeIgniter\HTTP;
 
 /**
+ * CodeIgniter
+ *
+ * An open source application development framework for PHP
+ *
+ * This content is released under the MIT License (MIT)
+ *
+ * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ *
+ * @package	CodeIgniter
+ * @author	CodeIgniter Dev Team
+ * @copyright	Copyright (c) 2014 - 2016, British Columbia Institute of Technology (http://bcit.ca/)
+ * @license	http://opensource.org/licenses/MIT	MIT License
+ * @link	http://codeigniter.com
+ * @since	Version 3.0.0
+ * @filesource
+ */
+
+/**
  * Class Negotiate
  *
  * Provides methods to negotiate with the HTTP headers to determine the best
  * type match between what the application supports and what the requesting
- * server wants.
+ * getServer wants.
  *
  * @see http://tools.ietf.org/html/rfc7231#section-5.3
  * @package CodeIgniter\HTTP
@@ -13,12 +49,19 @@
 class Negotiate
 {
 	/**
+	 * Request
+	 * 
 	 * @var \CodeIgniter\HTTP\RequestInterface
 	 */
 	protected $request;
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Constructor
+	 * 
+	 * @param \CodeIgniter\HTTP\RequestInterface $request
+	 */
 	public function __construct(\CodeIgniter\HTTP\RequestInterface $request = null)
 	{
 	    if (! is_null($request))
@@ -63,7 +106,7 @@ class Negotiate
 	 */
 	public function media(array $supported, bool $strictMatch=false): string
 	{
-		return $this->getBestMatch($supported, $this->request->getHeader('accept'), true, $strictMatch);
+		return $this->getBestMatch($supported, $this->request->getHeaderLine('accept'), true, $strictMatch);
 	}
 
 	//--------------------------------------------------------------------
@@ -82,7 +125,7 @@ class Negotiate
 	 */
 	public function charset(array $supported): string
 	{
-		$match = $this->getBestMatch($supported, $this->request->getHeader('accept-charset'), false, true);
+		$match = $this->getBestMatch($supported, $this->request->getHeaderLine('accept-charset'), false, true);
 
 		// If no charset is shown as a match, ignore the directive
 		// as allowed by the RFC, and tell it a default value.
@@ -112,7 +155,7 @@ class Negotiate
 	{
 		array_push($supported, 'identity');
 
-		return $this->getBestMatch($supported, $this->request->getHeader('accept-encoding'));
+		return $this->getBestMatch($supported, $this->request->getHeaderLine('accept-encoding'));
 	}
 
 	//--------------------------------------------------------------------
@@ -131,7 +174,7 @@ class Negotiate
 	 */
 	public function language(array $supported): string
 	{
-		return $this->getBestMatch($supported, $this->request->getHeader('accept-language'));
+		return $this->getBestMatch($supported, $this->request->getHeaderLine('accept-language'));
 	}
 
 	//--------------------------------------------------------------------
@@ -297,6 +340,14 @@ class Negotiate
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Match-maker
+	 * 
+	 * @param array $acceptable
+	 * @param string $supported
+	 * @param bool $enforceTypes
+	 * @return boolean
+	 */
 	protected function match(array $acceptable, string $supported, bool $enforceTypes=false)
 	{
 		$supported = $this->parseHeader($supported);
@@ -384,4 +435,5 @@ class Negotiate
 	}
 
 	//--------------------------------------------------------------------
+
 }

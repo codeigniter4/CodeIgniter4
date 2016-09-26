@@ -2,12 +2,13 @@
 	"description": "The CodeIgniter framework v4",
 	"name": "codeigniter/framework",
 	"type": "project",
-	"homepage": "http://codeigniter.com",
+	"homepage": "https://codeigniter.com",
+	"license": "MIT",
 	"support": {
 		"forum": "http://forum.codeigniter.com/",
-		"wiki": "https://github.com/bcit-ci/CodeIgniter/wiki",
+		"wiki": "https://github.com/bcit-ci/CodeIgniter4/wiki",
 		"irc": "irc://irc.freenode.net/codeigniter",
-		"source": "https://github.com/bcit-ci/CodeIgniter"
+		"source": "https://github.com/bcit-ci/CodeIgniter4"
 	},
 	"autoload": {
 		"psr-4": {
@@ -19,9 +20,13 @@
 		"zendframework/zend-escaper": "^2.5"
 	},
 	"require-dev": {
-		"mikey179/vfsStream": "^1.6"
+		"phpunit/phpunit": "5.3.*",
+		"phpdocumentor/phpdocumentor": "^2.9"
 	},
 	"scripts": {
-		"post-update-cmd": "CodeIgniter\\ComposerScripts::postUpdate"
+		"post-update-cmd": [
+			"composer dump-autoload",
+			"CodeIgniter\\ComposerScripts::postUpdate"
+		]
 	}
 }

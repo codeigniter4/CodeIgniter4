@@ -1,7 +1,43 @@
 <?php namespace CodeIgniter\Autoloader;
 
 /**
- * Class Autoloader
+ * CodeIgniter
+ *
+ * An open source application development framework for PHP
+ *
+ * This content is released under the MIT License (MIT)
+ *
+ * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ *
+ * @package	CodeIgniter
+ * @author	CodeIgniter Dev Team
+ * @copyright	Copyright (c) 2014 - 2016, British Columbia Institute of Technology (http://bcit.ca/)
+ * @license	http://opensource.org/licenses/MIT	MIT License
+ * @link	http://codeigniter.com
+ * @since	Version 3.0.0
+ * @filesource
+ */
+
+/**
+ * CodeIgniter Autoloader
  *
  * An autoloader that uses both PSR4 autoloading, and traditional classmaps.
  *
@@ -14,10 +50,10 @@
  *                  Quux.php    # Foo\Bar\Qux\Quux
  *
  * you can add the path to the configuration array that is passed in the constructor.
- * The config array consists of 2 primary keys, both of which are associative arrays:
+ * The Config array consists of 2 primary keys, both of which are associative arrays:
  * 'psr4', and 'classmap'.
  *
- *      $config = [
+ *      $Config = [
  *          'psr4' => [
  *              'Foo\Bar'   => '/path/to/packages/foo-bar'
  *          ],
@@ -30,8 +66,8 @@
  *
  *      <?php
  *      // our configuration array
- *      $config = [ ... ];
- *      $loader = new \CodeIgniter\Autoloader\Autoloader($config);
+ *      $Config = [ ... ];
+ *      $loader = new \CodeIgniter\Autoloader\Autoloader($Config);
  *
  *      // register the autoloader
  *      $loader->register();
@@ -63,7 +99,7 @@ class Autoloader
 	 *
 	 * @param $config
 	 */
-	public function initialize(\App\Config\AutoloadConfig $config)
+	public function initialize(\Config\Autoload $config)
 	{
 		// We have to have one or the other, though we don't enforce the need
 		// to have both present in order to work.
@@ -114,12 +150,7 @@ class Autoloader
 				return false;
 			}
 
-			if ( ! file_exists($config[$class]))
-			{
-				return false;
-			}
-
-			include $config[$class];
+			include_once $config[$class];
 		},
 			true,   // Throw exception
 			true    // Prepend
@@ -138,7 +169,20 @@ class Autoloader
 	 */
 	public function addNamespace($namespace, $path)
 	{
-		$this->prefixes[$namespace] = $path;
+		if (isset($this->prefixes[$namespace]))
+		{
+			if (is_string($this->prefixes[$namespace]))
+			{
+				$this->prefixes[$namespace] = [$this->prefixes[$namespace]];
+			}
+
+			$this->prefixes[$namespace] = array_merge($this->prefixes[$namespace], [$path]);
+		}
+		else
+		{
+			$this->prefixes[$namespace] = [$path];
+		}
+
 
 		return $this;
 	}
@@ -197,30 +241,29 @@ class Autoloader
 	 */
 	protected function loadInNamespace($class)
 	{
-		// the current namespace prefix
-		$prefix = $class;
-
-		// work backwards through the namespace names of the fully-qualified
-		// class name to find a mapped file name.
-		while (false !== $pos = strrpos($prefix, '\\'))
+		if (strpos($class, '\\') === false)
 		{
-			// retain trailing namespace separator in the prefix
-			$prefix = substr($class, 0, $pos);
+			return false;
+		}
 
-			// the rest is the relative class name
-			$relative_class = substr($class, $pos + 1);
-
-			// try to load the mapped file for prefix and relative class
-			$mapped_file = $this->loadMappedFile($prefix, $relative_class);
-
-			if ($mapped_file)
+		foreach ($this->prefixes as $namespace => $directories)
+		{
+			if (is_string($directories))
 			{
-				return $mapped_file;
+				$directories = [$directories];
 			}
 
-			// remove the trailing namespace separator for the next iteration
-			// of strpos()
-			$prefix = rtrim($prefix, '\\');
+			foreach ($directories as $directory)
+			{
+				if (strpos($class, $namespace) === 0) {
+					$filePath = $directory . str_replace('\\', '/', substr($class, strlen($namespace))) . '.php';
+					$filename = $this->requireFile($filePath);
+
+					if ($filename) {
+						return $filename;
+					}
+				}
+			}
 		}
 
 		// never found a mapped file
@@ -230,36 +273,9 @@ class Autoloader
 	//--------------------------------------------------------------------
 
 	/**
-	 * Loads the mapped file for a namespace prefix and relative class.
-	 *
-	 * @param string $prefix         The namespace prefix
-	 * @param string $relative_class The relative class name
-	 *
-	 * @return mixed                    Boolean false if no mapped file can be loaded,
-	 *                                  or the name of the mapped file that was loaded.
-	 */
-	protected function loadMappedFile($prefix, $relative_class)
-	{
-		$prefix = rtrim($prefix, '\\');
-
-		// are there any base directories for this namespace prefix?
-		if ( ! isset($this->prefixes[$prefix]))
-		{
-			return false;
-		}
-
-		// look through base directories for this namespace prefix
-		$file = $this->prefixes[$prefix].'/'.str_replace('\\', '/', $relative_class).'.php';
-
-		return $this->requireFile($file);
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
 	 * Attempts to load the class from common locations in previous
 	 * version of CodeIgniter, namely 'application/libraries', and
-	 * 'application/models'.
+	 * 'application/Models'.
 	 *
 	 * @param $class    The class name. This typically should NOT have a namespace.
 	 *
@@ -275,9 +291,9 @@ class Autoloader
 		}
 
 		$paths = [
-			APPPATH.'controllers/',
-			APPPATH.'libraries/',
-			APPPATH.'models/',
+			APPPATH.'Controllers/',
+			APPPATH.'Libraries/',
+			APPPATH.'Models/',
 		];
 
 		$class = str_replace('\\', '/', $class).'.php';
@@ -311,7 +327,7 @@ class Autoloader
 
 		if (file_exists($file))
 		{
-			require $file;
+			require_once $file;
 
 			return $file;
 		}
@@ -330,8 +346,6 @@ class Autoloader
 	 * dashes with a single dash. Trim period, dash and underscore from beginning
 	 * and end of filename.
 	 *
-	 * @todo Move to a helper?
-	 *
 	 * @param string $filename
 	 *
 	 * @return string       The sanitized filename
@@ -342,10 +356,8 @@ class Autoloader
 		// Plus the forward slash for directory separators since this might
 		// be a path.
 		// http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap03.html#tag_03_278
-		$filename = preg_replace('/[^a-zA-Z0-9\s\/\-\_\.]/', '', $filename);
-
-		// Replace one or more spaces with a dash
-		$filename = preg_replace('/[\s-]+/', '-', $filename);
+		// Modified to allow backslash and colons for on Windows machines.
+		$filename = preg_replace('/[^a-zA-Z0-9\s\/\-\_\.\:\\\\]/', '', $filename);
 
 		// Clean up our filename edges.
 		$filename = trim($filename, '.-_');

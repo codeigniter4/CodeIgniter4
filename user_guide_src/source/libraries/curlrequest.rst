@@ -6,14 +6,14 @@ The ``CURLRequest`` class is a lightweight HTTP client based on CURL that allows
 web sites and servers. It can be used to get the contents of a Google search, retrieve a web page or image,
 or communicate with an API, among many other things.
 
-This class is modeled after the `Guzzle HTTP Client <http://docs.guzzlephp.org/en/latest/>`_ library since
+This class is modelled after the `Guzzle HTTP Client <http://docs.guzzlephp.org/en/latest/>`_ library since
 it is one of the more widely used libraries. Where possible, the syntax has been kept the same so that if
 your application needs something a little more powerful than what this library provides, you will have
 to change very little to move over to use Guzzle.
 
-:note: This class requires the `cURL Library <http://php.net/manual/en/book.curl.php>`_ to be installed
-in your version of PHP. This is a very common library that is typically available but not all hosts
-will provide it, so please check with your host to verify if you run into problems.
+.. note:: This class requires the `cURL Library <http://php.net/manual/en/book.curl.php>`_ to be installed
+    in your version of PHP. This is a very common library that is typically available but not all hosts
+    will provide it, so please check with your host to verify if you run into problems.
 
 *******************
 Loading the Library
@@ -21,27 +21,27 @@ Loading the Library
 
 The library can be loaded either manually or through the :doc:`Services class </concepts/services>`.
 
-To load with the Services class call the ``curlrequest()` method::
+To load with the Services class call the ``curlrequest()`` method::
 
-	$client = CodeIgniter\HTTP\Services::curlrequest();
+	$client = \CodeIgniter\HTTP\Services::curlrequest();
 
 You can pass in an array of default options as the first parameter to modify how cURL will handle the request.
-The options are described later in this document.::
+The options are described later in this document::
 
 	$options = [
 		'base_uri' => 'http://example.com/api/v1/',
 		'timeout' => 3
 	];
-	$client = App\Config\Services::curlrequest($options);
+	$client = \Config\Services::curlrequest($options);
 
 When creating the class manually, you need to pass a few dependencies in. The first parameter is an
-instance of the ``App\Config\AppConfig`` class. The second parameter is a URI instance. The third
-parameter is a Response object. The fourth parameter is the optional ``$options`` array.::
+instance of the ``Config\App`` class. The second parameter is a URI instance. The third
+parameter is a Response object. The fourth parameter is the optional ``$options`` array::
 
-	$client = new CodeIgniter\HTTP\CURLRequest(
-		new App\Config\AppConfig(),
-		new CodeIgniter\HTTP\URI(),
-		new CodeIgniter\HTTP\Response(),
+	$client = new \CodeIgniter\HTTP\CURLRequest(
+		new \Config\App(),
+		new \CodeIgniter\HTTP\URI(),
+		new \CodeIgniter\HTTP\Response(),
 		$options
 	);
 
@@ -75,7 +75,7 @@ available to you::
 	$language = $response->negotiateLanguage(['en', 'fr']);
 
 While the ``request()`` method is the most flexible, you can also use the following shortcut methods. They
-each take the URL as the first parameter and an array of options as the second.::
+each take the URL as the first parameter and an array of options as the second::
 
 * $client->get('http://example.com');
 * $client->delete('http://example.com');
@@ -90,7 +90,7 @@ Base URI
 
 A ``base_uri`` can be set as one of the options during the instantiation of the class. This allows you to
 set a base URI, and then make all requests with that client using relative URLs. This is especially handy
-when working with APIs.::
+when working with APIs::
 
 	$client = Services::curlrequest([
 		'base_uri' => 'https://example.com/api/v1/'
@@ -121,7 +121,7 @@ examples of how the combinations are resolved.
 Using Responses
 ===============
 
-Each ``request()`` call returns a Respons object that contains a lot of useful information and some helpful
+Each ``request()`` call returns a Response object that contains a lot of useful information and some helpful
 methods. The most commonly used methods let you determine the response itself.
 
 You can get the status code and reason phrase of the response::
@@ -144,7 +144,7 @@ The body can be retrieved using the ``body()`` method::
 
 	$body = $response->body();
 
-The body is the raw body provided by the remote server. If the content type requires formatting, you will need
+The body is the raw body provided by the remote getServer. If the content type requires formatting, you will need
 to ensure that your script handles that::
 
 	if (strpos($response->header('content-type'), 'application/json') !== false)
@@ -152,9 +152,9 @@ to ensure that your script handles that::
 		$body = json_decode($body);
 	}
 
-===============
+***************
 Request Options
-===============
+***************
 
 This section describes all of the available options you may pass into the constructor, the ``request()`` method,
 or any of the shortcut methods.
@@ -186,6 +186,7 @@ You can pass in array as the value of the ``allow_redirects`` option to specify 
 	]]);
 
 .. :note::  Following redirects does not work when PHP is in safe_mode or open_basedir is enabled.
+
 auth
 ====
 
@@ -193,7 +194,7 @@ Allows you to provide Authentication details for `HTTP Basic <http://www.ietf.or
 `Digest <http://www.ietf.org/rfc/rfc2069.txt>`_ and authentication. Your script may have to do extra to support
 Digest authentication - this simply passes the username and password along for you. The value must be an
 array where the first element is the username, and the second is the password. The third parameter should be
-the type of authentication to use, either ``basic`` or ``digest``.::
+the type of authentication to use, either ``basic`` or ``digest``::
 
 	$client->request('GET', 'http://example.com', ['auth' => ['username', 'password', 'digest']]);
 
@@ -207,7 +208,7 @@ The first way is to use the ``setBody()`` method::
 	       ->request('put', 'http://example.com');
 
 The second method is by passing a ``body`` option in. This is provided to maintain Guzzle API compatibility,
-and functions the exact same way as the previous example. The value must be a string.::
+and functions the exact same way as the previous example. The value must be a string::
 
 	$client->request('put', 'http://example.com', ['body' => $body]);
 
@@ -218,9 +219,9 @@ cert
 
 To specify the location of a PEM formatted client-side certificate, pass a string with the full path to the
 file as the ``cert`` option. If a password is required, set the value to an array with the first element
- as the path to the certificate, and the second as the password::
+as the path to the certificate, and the second as the password::
 
-    $client->request('get', '/', ['cert' => ['/path/server.pem', 'password']);
+    $client->request('get', '/', ['cert' => ['/path/getServer.pem', 'password']);
 
 connect_timeout
 ===============
@@ -246,7 +247,7 @@ You can pass a filename as the value for debug to have the output written to a f
 delay
 =====
 
-Allows you to pause a number of milliseconds before sending the request.::
+Allows you to pause a number of milliseconds before sending the request::
 
 	// Delay for 2 seconds
 	$response->request('GET', 'http://example.com', ['delay' => 2000]);
@@ -256,7 +257,7 @@ form_params
 
 You can send form data in an application/x-www-form-urlencoded POST request by passing an associative array in
 the ``form_params`` option. This will set the ``Content-Type`` header to ``application/x-www-form-urlencoded``
-if it's not already set.::
+if it's not already set::
 
 	$client->request('POST', '/post', [
 		'form_params' => [
@@ -266,15 +267,15 @@ if it's not already set.::
 	]);
 
 .. :note:: ``form_params`` cannot be used with the ``multipart`` option. You will need to use one or the other.
-Use ``form_params`` for ``application/x-www-form-urlencoded`` request, and ``multipart`` for ``multipart/form-data``
-requests.
+        Use ``form_params`` for ``application/x-www-form-urlencoded`` request, and ``multipart`` for ``multipart/form-data``
+        requests.
 
 headers
 =======
 
 While you can set any headers this request needs by using the ``setHeader()`` method, you can also pass an associative
 array of headers in as an option. Each key is the name of a header, and each value is a string or array of strings
-representing the header field values.::
+representing the header field values::
 
 	$client->request('get', '/', [
 		'headers' => [
@@ -291,7 +292,7 @@ http_errors
 ===========
 
 By default, CURLRequest will fail if the HTTP code returned is greater than or equal to 400. You can set
-``http_errors`` to ``false`` to return the content instead.::
+``http_errors`` to ``false`` to return the content instead::
 
     $client->request('GET', '/status/500');
 	// Will fail verbosely
@@ -305,13 +306,13 @@ json
 
 The ``json`` option is used to easily upload JSON encoded data as the body of a request. A Content-Type header
 of ``application/json`` is added, overwriting any Content-Type that might be already set. The data provided to
-this option can be any value that ``json_encode()`` accepts.::
+this option can be any value that ``json_encode()`` accepts::
 
 	$response = $client->request('PUT, '/put', ['json' => ['foo' => 'bar']]);
 
 .. :note:: This option does not allow for any customization of the ``json_encode()`` function, or the Content-Type
-header. If you need that ability, you will need to encode the data manually, passing it through the ``setBody()``
-method of CURLRequest, and set the Content-Type header with the ``setHeader()`` method.
+        header. If you need that ability, you will need to encode the data manually, passing it through the ``setBody()``
+        method of CURLRequest, and set the Content-Type header with the ``setHeader()`` method.
 
 multipart
 =========
@@ -319,7 +320,7 @@ multipart
 When you need to send files and other data via a POST request, you can use the ``multipart`` option, along with
 the `CURLFile Class <http://php.net/manual/en/class.curlfile.php>`_. The values should be an associative array
 of POST data to send. For safer usage, the legacy method of uploading files by prefixing their name with an `@`
-has been disabled. Any files that you want to send must be passed as instances of CURLFile.::
+has been disabled. Any files that you want to send must be passed as instances of CURLFile::
 
 	$post_data = [
 		'foo' => 'bar',
@@ -327,13 +328,13 @@ has been disabled. Any files that you want to send must be passed as instances o
 	];
 
 .. :note:: ``multipart`` cannot be used with the ``form_params`` option. You can only use one or the other. Use
-``form_params`` for ``application/x-www-form-urlencoded`` requests, and ``multipart`` for ``multipart/form-data``
-requests.
+        ``form_params`` for ``application/x-www-form-urlencoded`` requests, and ``multipart`` for ``multipart/form-data``
+        requests.
 
 query
 =====
 
-You can pass along data to send as query string variables by passing an associative array as the ``query`` option.::
+You can pass along data to send as query string variables by passing an associative array as the ``query`` option::
 
 	// Send a GET request to /get?foo=bar
 	$client->request('GET', '/get', ['query' => ['foo' => 'bar']]);
@@ -354,7 +355,7 @@ This option describes the SSL certificate verification behavior. If the ``verify
 SSL certificate verification and uses the default CA bundle provided by the operating system. If set to ``false`` it
 will disable the certificate verification (this is insecure, and allows man-in-the-middle attacks!). You can set it
 to a string that contains the path to a CA bundle to enable verification with a custom certificate. The default value
-is true.::
+is true::
 
 	// Use the system's CA bundle (this is the default setting)
 	$client->request('GET', '/', ['verify' => true]);
@@ -369,7 +370,7 @@ version
 =======
 
 To set the HTTP protocol to use, you can pass a string or float with the version number (typically either 1.0
-or 1.1, 2.0 is currently unsupported.)
+or 1.1, 2.0 is currently unsupported.)::
 
 	// Force HTTP/1.0
 	$client->request('GET', '/', ['version' => 1.0]);

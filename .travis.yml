@@ -3,5 +3,20 @@ language: php
 php:
   - 7
 
+env:
+  - DB_GROUP=mysqli
+  - DB_GROUP=postgres
+
 script:
-  - php phpunit.phar
+  - php vendor/bin/phpunit -v
+
+services:
+  - mysql
+  - postgresql
+
+before_install:
+  - if [ $DB_GROUP = 'mysqli' ]; then mysql -e "create database IF NOT EXISTS test;" -uroot; fi
+  - if [ $DB_GROUP = 'postgres' ]; then psql -c 'create database test;' -U postgres; fi
+
+before_script:
+  - composer install

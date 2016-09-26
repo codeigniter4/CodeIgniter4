@@ -1,10 +1,55 @@
 <?php namespace CodeIgniter\HTTP;
 
-use App\Config\AppConfig;
-use App\Config\ContentSecurityPolicyConfig;
+/**
+ * CodeIgniter
+ *
+ * An open source application development framework for PHP
+ *
+ * This content is released under the MIT License (MIT)
+ *
+ * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ *
+ * @package      CodeIgniter
+ * @author       CodeIgniter Dev Team
+ * @copyright    Copyright (c) 2014 - 2016, British Columbia Institute of Technology (http://bcit.ca/)
+ * @license      http://opensource.org/licenses/MIT	MIT License
+ * @link         http://codeigniter.com
+ * @since        Version 3.0.0
+ * @filesource
+ */
+
+use Config\App;
+use Config\ContentSecurityPolicy;
+use Config\Mimes;
 
 /**
- * Representation of an outgoing, server-side response.
+ * Redirect exception
+ *
+ */
+class RedirectException extends \Exception
+{
+}
+
+/**
+ * Representation of an outgoing, getServer-side response.
  *
  * Per the HTTP specification, this interface includes properties for
  * each of the following:
@@ -18,6 +63,11 @@ use App\Config\ContentSecurityPolicyConfig;
  */
 class Response extends Message implements ResponseInterface
 {
+	/**
+	 * HTTP status codes
+	 *
+	 * @var type
+	 */
 	protected static $statusCodes = [
 		// 1xx: Informational
 		100 => 'Continue',
@@ -76,6 +126,7 @@ class Response extends Message implements ResponseInterface
 		428 => 'Precondition Required',           // 1.1; http://www.ietf.org/rfc/rfc6585.txt
 		429 => 'Too Many Requests',               // 1.1; http://www.ietf.org/rfc/rfc6585.txt
 		431 => 'Request Header Fields Too Large', // 1.1; http://www.ietf.org/rfc/rfc6585.txt
+		451 => 'Unavailable For Legal Reasons',    // http://tools.ietf.org/html/rfc7725
 
 		// 5xx: Server error
 		500 => 'Internal Server Error',
@@ -108,39 +159,86 @@ class Response extends Message implements ResponseInterface
 
 	/**
 	 * Whether Content Security Policy is being enforced.
+	 *
 	 * @var bool
 	 */
 	protected $CSPEnabled = false;
 
 	/**
+	 * Content security policy handler
+	 *
 	 * @var \CodeIgniter\HTTP\ContentSecurityPolicy
 	 */
-	protected $CSP;
+	public $CSP;
+
+	/**
+	 * Set a cookie name prefix if you need to avoid collisions
+	 *
+	 * @var string
+	 */
+	protected $cookiePrefix = '';
+
+	/**
+	 * Set to .your-domain.com for site-wide cookies
+	 *
+	 * @var string
+	 */
+	protected $cookieDomain = '';
+
+	/**
+	 * Typically will be a forward slash
+	 *
+	 * @var string
+	 */
+	protected $cookiePath = '/';
+
+	/**
+	 * Cookie will only be set if a secure HTTPS connection exists.
+	 *
+	 * @var bool
+	 */
+	protected $cookieSecure = false;
+
+	/**
+	 * Cookie will only be accessible via HTTP(S) (no javascript)
+	 *
+	 * @var bool
+	 */
+	protected $cookieHTTPOnly = false;
 
 	//--------------------------------------------------------------------
 
-	public function __construct(AppConfig $config)
+	/**
+	 * Constructor
+	 *
+	 * @param App $config
+	 */
+	public function __construct(App $config)
 	{
-	    // Default to a non-caching page.
+		// Default to a non-caching page.
 		// Also ensures that a Cache-control header exists.
 		$this->noCache();
 
 		// Are we enforcing a Content Security Policy?
 		if ($config->CSPEnabled === true)
 		{
-			$this->CSP = new ContentSecurityPolicy(new ContentSecurityPolicyConfig());
+			$this->CSP        = new ContentSecurityPolicy();
 			$this->CSPEnabled = true;
 		}
+
+		$this->cookiePrefix   = $config->cookiePrefix;
+		$this->cookieDomain   = $config->cookieDomain;
+		$this->cookiePath     = $config->cookiePath;
+		$this->cookieSecure   = $config->cookieSecure;
+		$this->cookieHTTPOnly = $config->cookieHTTPOnly;
 	}
 
 	//--------------------------------------------------------------------
 
-
-
 	/**
 	 * Gets the response status code.
 	 *
-	 * The status code is a 3-digit integer result code of the server's attempt
+	 * The status code is a 3-digit integer result code of the getServer's attempt
 	 * to understand and satisfy the request.
 	 *
 	 * @return int Status code.
@@ -167,7 +265,7 @@ class Response extends Message implements ResponseInterface
 	 * @see http://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
 	 *
 	 * @param int    $code         The 3-digit integer result code to set.
-	 * @param string $reasonPhrase The reason phrase to use with the
+	 * @param string $reason       The reason phrase to use with the
 	 *                             provided status code; if none is provided, will
 	 *                             default to the IANA name.
 	 *
@@ -257,21 +355,21 @@ class Response extends Message implements ResponseInterface
 	 *
 	 * @return Response
 	 */
-	public function setContentType(string $mime, string $charset='UTF-8'): self
+	public function setContentType(string $mime, string $charset = 'UTF-8'): self
 	{
-	    if (! empty($charset))
-	    {
-		    $mime .= '; charset='. $charset;
-	    }
+		if (! empty($charset))
+		{
+			$mime .= '; charset='.$charset;
+		}
 
 		$this->setHeader('Content-Type', $mime);
 
 		return $this;
 	}
-	
+
 	//--------------------------------------------------------------------
-	
-	
+
+
 	//--------------------------------------------------------------------
 	// Cache Control Methods
 	//
@@ -284,7 +382,7 @@ class Response extends Message implements ResponseInterface
 	 */
 	public function noCache(): self
 	{
-	    $this->removeHeader('Cache-control');
+		$this->removeHeader('Cache-control');
 
 		$this->setHeader('Cache-control', ['no-store', 'max-age=0', 'no-cache']);
 
@@ -321,7 +419,7 @@ class Response extends Message implements ResponseInterface
 	 *
 	 * @return $this
 	 */
-	public function setCache(array $options=[]): self
+	public function setCache(array $options = []): self
 	{
 		if (empty($options))
 		{
@@ -397,12 +495,12 @@ class Response extends Message implements ResponseInterface
 			$this->CSP->finalize($this);
 		}
 
-	    $this->sendHeaders();
+		$this->sendHeaders();
 		$this->sendBody();
 
 		return $this;
 	}
-	
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -412,7 +510,7 @@ class Response extends Message implements ResponseInterface
 	 */
 	public function sendHeaders(): self
 	{
-	    // Have the headers already been sent?
+		// Have the headers already been sent?
 		if (headers_sent())
 		{
 			return $this;
@@ -446,13 +544,235 @@ class Response extends Message implements ResponseInterface
 	 */
 	public function sendBody()
 	{
-	    echo $this->body;
+		echo $this->body;
 
 		return $this;
 	}
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Perform a redirect to a new URL, in two flavors: header or location.
+	 *
+	 * @param string $uri  The URI to redirect to
+	 * @param string $method
+	 * @param int    $code The type of redirection, defaults to 302
+	 */
+	public function redirect(string $uri, string $method = 'auto', int $code = null)
+	{
+		// IIS environment likely? Use 'refresh' for better compatibility
+		if ($method === 'auto' && isset($_SERVER['SERVER_SOFTWARE']) && strpos($_SERVER['SERVER_SOFTWARE'], 'Microsoft-IIS') !== false)
+		{
+			$method = 'refresh';
+		}
+		elseif ($method !== 'refresh' && (empty($code) || ! is_numeric($code)))
+		{
+			if (isset($_SERVER['SERVER_PROTOCOL'], $_SERVER['REQUEST_METHOD']) && $_SERVER['SERVER_PROTOCOL'] === 'HTTP/1.1')
+			{
+				$code = ($_SERVER['REQUEST_METHOD'] !== 'GET')
+					? 303    // reference: http://en.wikipedia.org/wiki/Post/Redirect/Get
+					: 307;
+			}
+			else
+			{
+				$code = 302;
+			}
+		}
 
+		switch ($method)
+		{
+			case 'refresh':
+				$this->setHeader('Refresh', '0;url='.$uri);
+				break;
+			default:
+				$this->setHeader('Location', $uri);
+				break;
+		}
+
+		$this->setStatusCode($code);
+
+		$this->sendHeaders();
+
+		// CodeIgniter will catch this exception and exit.
+		throw new RedirectException('Redirect to '.$uri, $code);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Set a cookie
+	 *
+	 * Accepts an arbitrary number of binds (up to 7) or an associateive
+	 * array in the first parameter containing all the values.
+	 *
+	 * @param            $name      Cookie name or array containing binds
+	 * @param string     $value     Cookie value
+	 * @param string     $expire    Cookie expiration time in seconds
+	 * @param string     $domain    Cookie domain (e.g.: '.yourdomain.com')
+	 * @param string     $path      Cookie path (default: '/')
+	 * @param string     $prefix    Cookie name prefix
+	 * @param bool|false $secure    Whether to only transfer cookies via SSL
+	 * @param bool|false $httponly  Whether only make the cookie accessible via HTTP (no javascript)
+	 */
+	public function setCookie(
+		$name,
+		$value = '',
+		$expire = '',
+		$domain = '',
+		$path = '/',
+		$prefix = '',
+		$secure = false,
+		$httponly = false
+	) {
+		if (is_array($name))
+		{
+			// always leave 'name' in last place, as the loop will break otherwise, due to $$item
+			foreach (['value', 'expire', 'domain', 'path', 'prefix', 'secure', 'httponly', 'name'] as $item)
+			{
+				if (isset($name[$item]))
+				{
+					$$item = $name[$item];
+				}
+			}
+		}
+
+		if ($prefix === '' && $this->cookiePrefix !== '')
+		{
+			$prefix = $this->cookiePrefix;
+		}
+
+		if ($domain == '' && $this->cookieDomain != '')
+		{
+			$domain = $this->cookieDomain;
+		}
+
+		if ($path === '/' && $this->cookiePath !== '/')
+		{
+			$path = $this->cookiePath;
+		}
+
+		if ($secure === false && $this->cookieSecure === true)
+		{
+			$secure = $this->cookieSecure;
+		}
+
+		if ($httponly === false && $this->cookieHTTPOnly !== false)
+		{
+			$httponly = $this->cookieHTTPOnly;
+		}
+
+		if (! is_numeric($expire))
+		{
+			$expire = time()-86500;
+		}
+		else
+		{
+			$expire = ($expire > 0) ? time()+$expire : 0;
+		}
+
+		setcookie($prefix.$name, $value, $expire, $path, $domain, $secure, $httponly);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Force a download.
+	 *
+	 * Generates the headers that force a download to happen. And
+	 * sends the file to the browser.
+	 *
+	 * @param string      $filename The path to the file to send
+	 * @param string      $data     The data to be downloaded
+	 * @param        bool $setMime  Whether to try and send the actual MIME type
+	 */
+	public function download(string $filename = '', $data = '', bool $setMime = false)
+	{
+		if ($filename === '' || $data === '')
+		{
+			return;
+		}
+		elseif ($data === null)
+		{
+			if (! @is_file($filename) || ($filesize = @filesize($filename)) === false)
+			{
+				return;
+			}
+
+			$filepath = $filename;
+			$filename = explode('/', str_replace(DIRECTORY_SEPARATOR, '/', $filename));
+			$filename = end($filename);
+		}
+		else
+		{
+			$filesize = strlen($data);
+		}
+
+		// Set the default MIME type to send
+		$mime = 'application/octet-stream';
+
+		$x         = explode('.', $filename);
+		$extension = end($x);
+
+		if ($setMime === true)
+		{
+			if (count($x) === 1 OR $extension === '')
+			{
+				/* If we're going to detect the MIME type,
+				 * we'll need a file extension.
+				 */
+				return;
+			}
+
+			$mime = Mimes::guessTypeFromExtension($extension);
+		}
+
+		/* It was reported that browsers on Android 2.1 (and possibly older as well)
+		 * need to have the filename extension upper-cased in order to be able to
+		 * download it.
+		 *
+		 * Reference: http://digiblog.de/2011/04/19/android-and-the-download-file-headers/
+		 */
+		if (count($x) !== 1 && isset($_SERVER['HTTP_USER_AGENT']) && preg_match('/Android\s(1|2\.[01])/', $_SERVER['HTTP_USER_AGENT']))
+		{
+			$x[count($x)-1] = strtoupper($extension);
+			$filename       = implode('.', $x);
+		}
+
+		if ($data === null && ($fp = @fopen($filepath, 'rb')) === false)
+		{
+			return;
+		}
+
+		// Clean output buffer
+		if (ob_get_level() !== 0 && @ob_end_clean() === false)
+		{
+			@ob_clean();
+		}
+
+		// Generate the server headers
+		header('Content-Type: '.$mime);
+		header('Content-Disposition: attachment; filename="'.$filename.'"');
+		header('Expires: 0');
+		header('Content-Transfer-Encoding: binary');
+		header('Content-Length: '.$filesize);
+		header('Cache-Control: private, no-transform, no-store, must-revalidate');
+
+		// If we have raw data - just dump it
+		if ($data !== null)
+		{
+			exit($data);
+		}
+
+		// Flush 1MB chunks of data
+		while (! feof($fp) && ($data = fread($fp, 1048576)) !== false)
+		{
+			echo $data;
+		}
+
+		fclose($fp);
+		exit;
+	}
+
+	//--------------------------------------------------------------------
 
 }

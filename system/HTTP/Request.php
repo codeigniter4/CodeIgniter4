@@ -1,9 +1,45 @@
 <?php namespace CodeIgniter\HTTP;
 
-require_once BASEPATH.'Config/BaseConfig.php';
-require_once APPPATH.'/config/AppConfig.php';
+/**
+ * CodeIgniter
+ *
+ * An open source application development framework for PHP
+ *
+ * This content is released under the MIT License (MIT)
+ *
+ * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ *
+ * @package	CodeIgniter
+ * @author	CodeIgniter Dev Team
+ * @copyright	Copyright (c) 2014 - 2016, British Columbia Institute of Technology (http://bcit.ca/)
+ * @license	http://opensource.org/licenses/MIT	MIT License
+ * @link	http://codeigniter.com
+ * @since	Version 3.0.0
+ * @filesource
+ */
 
-use App\Config\AppConfig;
+/**
+ * Representation of an iHTTP request.
+ *
+ */
 
 class Request extends Message implements RequestInterface
 {
@@ -14,11 +50,22 @@ class Request extends Message implements RequestInterface
 	 */
 	protected $ipAddress = '';
 
+	/**
+	 * Proxy IPs
+	 *
+	 * @var type
+	 */
 	protected $proxyIPs;
 
 	//--------------------------------------------------------------------
 
-	public function __construct(AppConfig $config, $uri=null)
+	/**
+	 * Constructor.
+	 *
+	 * @param type $config
+	 * @param type $uri
+	 */
+	public function __construct($config, $uri=null)
 	{
 	    $this->proxyIPs = $config->proxyIPs;
 	}
@@ -43,13 +90,13 @@ class Request extends Message implements RequestInterface
 			$proxy_ips = explode(',', str_replace(' ', '', $this->proxyIPs));
 		}
 
-		$this->ipAddress = $this->server('REMOTE_ADDR');
+		$this->ipAddress = $this->getServer('REMOTE_ADDR');
 
 		if ($proxy_ips)
 		{
 			foreach (array('HTTP_X_FORWARDED_FOR', 'HTTP_CLIENT_IP', 'HTTP_X_CLIENT_IP', 'HTTP_X_CLUSTER_CLIENT_IP') as $header)
 			{
-				if (($spoof = $this->server($header)) !== NULL)
+				if (($spoof = $this->getServer($header)) !== NULL)
 				{
 					// Some proxies typically list the whole chain of IP
 					// addresses through which the client has reached us.
@@ -199,8 +246,8 @@ class Request extends Message implements RequestInterface
 	public function getMethod($upper = false): string
 	{
 		return ($upper)
-			? strtoupper($this->server('REQUEST_METHOD'))
-			: strtolower($this->server('REQUEST_METHOD'));
+			? strtoupper($this->getServer('REQUEST_METHOD'))
+			: strtolower($this->getServer('REQUEST_METHOD'));
 	}
 
 	//--------------------------------------------------------------------
@@ -212,9 +259,23 @@ class Request extends Message implements RequestInterface
 	 * @param null $filter  A filter name to be applied
 	 * @return mixed
 	 */
-	public function server($index = null, $filter = null)
+	public function getServer($index = null, $filter = null)
 	{
 		return $this->fetchGlobal(INPUT_SERVER, $index, $filter);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Fetch an item from the $_ENV array.
+	 *
+	 * @param null $index   Index for item to be fetched from $_ENV
+	 * @param null $filter  A filter name to be applied
+	 * @return mixed
+	 */
+	public function getEnv($index = null, $filter = null)
+	{
+		return $this->fetchGlobal(INPUT_ENV, $index, $filter);
 	}
 
 	//--------------------------------------------------------------------
@@ -246,7 +307,23 @@ class Request extends Message implements RequestInterface
 		// If $index is null, it means that the whole input type array is requested
 		if (is_null($index))
 		{
-			return filter_input_array($type, is_null($filter) ? FILTER_FLAG_NONE : $filter);
+			$loopThrough = [];
+			switch ($type)
+			{
+				case INPUT_GET    : $loopThrough = $_GET;    break;
+				case INPUT_POST   : $loopThrough = $_POST;   break;
+				case INPUT_COOKIE : $loopThrough = $_COOKIE; break;
+				case INPUT_SERVER : $loopThrough = $_SERVER; break;
+				case INPUT_ENV    : $loopThrough = $_ENV;    break;
+			}
+
+			$values = [];
+			foreach ($loopThrough as $key => $value)
+			{
+				$values[$key] = filter_var($value, $filter);
+			}
+
+			return $values;
 		}
 
 		// allow fetching multiple keys at once
@@ -291,25 +368,25 @@ class Request extends Message implements RequestInterface
 		switch ($type)
 		{
 			case INPUT_GET:
-				$value = isset($_GET[$index]) ? $_GET[$index] : null;
+				$value = $_GET[$index] ?? null;
 				break;
 			case INPUT_POST:
-				$value = isset($_POST[$index]) ? $_POST[$index] : null;
+				$value = $_POST[$index] ?? null;
 				break;
 			case INPUT_SERVER:
-				$value = isset($_SERVER[$index]) ? $_SERVER[$index] : null;
+				$value = $_SERVER[$index] ?? null;
 				break;
 			case INPUT_ENV:
-				$value = isset($_ENV[$index]) ? $_ENV[$index] : null;
+				$value = $_ENV[$index] ?? null;
 				break;
 			case INPUT_COOKIE:
-				$value = isset($_COOKIE[$index]) ? $_COOKIE[$index] : null;
+				$value = $_COOKIE[$index] ?? null;
 				break;
 			case INPUT_REQUEST:
-				$value = isset($_REQUEST[$index]) ? $_REQUEST[$index] : null;
+				$value = $_REQUEST[$index] ?? null;
 				break;
 			case INPUT_SESSION:
-				$value = isset($_SESSION[$index]) ? $_SESSION[$index] : null;
+				$value = $_SESSION[$index] ?? null;
 				break;
 			default:
 				$value = '';

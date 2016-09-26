@@ -1,6 +1,42 @@
 <?php namespace CodeIgniter\CLI;
 
 /**
+ * CodeIgniter
+ *
+ * An open source application development framework for PHP
+ *
+ * This content is released under the MIT License (MIT)
+ *
+ * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ *
+ * @package	CodeIgniter
+ * @author	CodeIgniter Dev Team
+ * @copyright	Copyright (c) 2014 - 2016, British Columbia Institute of Technology (http://bcit.ca/)
+ * @license	http://opensource.org/licenses/MIT	MIT License
+ * @link	http://codeigniter.com
+ * @since	Version 3.0.0
+ * @filesource
+ */
+
+/**
  * Class CLI
  *
  * Tools to interact with that request since CLI requests are not
@@ -44,6 +80,10 @@ class CLI
 	 */
 	protected static $inProgress = false;
 
+	/**
+	 * Foreground color list
+	 * @var array
+	 */
 	protected static $foreground_colors = [
 		'black'        => '0;30',
 		'dark_gray'    => '1;30',
@@ -64,6 +104,10 @@ class CLI
 		'white'        => '1;37',
 	];
 
+	/**
+	 * Background color list
+	 * @var array
+	 */
 	protected static $background_colors = [
 		'black'      => '40',
 		'red'        => '41',
@@ -95,11 +139,11 @@ class CLI
 	 * Named options must be in the following formats:
 	 * php index.php user -v --v -name=John --name=John
 	 *
-	 * @param    string|int $name the name of the option (int if unnamed)
+	 * @param    string $prefix
 	 *
 	 * @return    string
 	 */
-	public static function input(string $prefix = ''): string
+	public static function input(string $prefix = null): string
 	{
 		if (static::$readline_support)
 		{
@@ -147,7 +191,7 @@ class CLI
 		$required = end($args) === true;
 
 		// Reduce the argument count if required was passed, we don't care about that anymore
-		$required === true and --$arg_count;
+		$required === true && --$arg_count;
 
 		// This method can take a few crazy combinations of arguments, so lets work it out
 		switch ($arg_count)
@@ -209,7 +253,7 @@ class CLI
 		$input = trim(static::input()) ? : $default;
 
 		// No input provided and we require one (default will stop this being called)
-		if (empty($input) and $required === true)
+		if (empty($input) && $required === true)
 		{
 			static::write('This is required.');
 			static::newLine();
@@ -218,7 +262,7 @@ class CLI
 		}
 
 		// If options are provided and the choice is not in the array, tell them to try again
-		if ( ! empty($options) and ! in_array($input, $options))
+		if ( ! empty($options) && ! in_array($input, $options))
 		{
 			static::write('This is not a valid option. Please try again.');
 			static::newLine();
@@ -226,25 +270,21 @@ class CLI
 			$input = forward_static_call_array([__CLASS__, 'prompt'], $args);
 		}
 
-		return $input;
+		return empty($input) ? '' : $input;
 	}
 
 	//--------------------------------------------------------------------
 
 	/**
-	 * Outputs a string to the cli.     If you send an array it will implode them
-	 * with a line break.
+	 * Outputs a string to the cli. 
 	 *
-	 * @param    string|array $text the text to output, or array of lines
+	 * @param string $text          the text to output
+	 * @param string $foreground
+	 * @param string $background
 	 */
-	public static function write(string $text = '', string $foreground = null, string $background = null)
+	public static function write(string $text, string $foreground = null, string $background = null)
 	{
-		if (is_array($text))
-		{
-			$text = implode(PHP_EOL, $text);
-		}
-
-		if ($foreground or $background)
+		if ($foreground || $background)
 		{
 			$text = static::color($text, $foreground, $background);
 		}
@@ -258,15 +298,12 @@ class CLI
 	 * Outputs an error to the CLI using STDERR instead of STDOUT
 	 *
 	 * @param    string|array $text the text to output, or array of errors
+	 * @param string $foreground
+	 * @param string $background
 	 */
-	public static function error(string $text = '', string $foreground = 'light_red', string $background = null)
+	public static function error(string $text, string $foreground = 'light_red', string $background = null)
 	{
-		if (is_array($text))
-		{
-			$text = implode(PHP_EOL, $text);
-		}
-
-		if ($foreground OR $background)
+		if ($foreground || $background)
 		{
 			$text = static::color($text, $foreground, $background);
 		}
@@ -295,7 +332,7 @@ class CLI
 	 * @param    int  $seconds   number of seconds
 	 * @param    bool $countdown show a countdown or not
 	 */
-	public static function wait(int $seconds = 0, bool $countdown = false)
+	public static function wait(int $seconds, bool $countdown = false)
 	{
 		if ($countdown === true)
 		{
@@ -330,7 +367,7 @@ class CLI
 	/**
 	 * if operating system === windows
 	 */
-	public static function is_windows()
+	public static function isWindows()
 	{
 		return 'win' === strtolower(substr(php_uname("s"), 0, 3));
 	}
@@ -340,7 +377,7 @@ class CLI
 	/**
 	 * Enter a number of empty lines
 	 *
-	 * @param    integer    Number of lines to output
+	 * @param    int $num   Number of lines to output
 	 *
 	 * @return    void
 	 */
@@ -360,9 +397,9 @@ class CLI
 	 *
 	 * @return    void
 	 */
-	public static function clear_screen()
+	public static function clearScreen()
 	{
-		static::is_windows()
+		static::isWindows()
 
 			// Windows is a bit crap at this, but their terminal is tiny so shove this in
 			? static::newLine(40)
@@ -386,7 +423,7 @@ class CLI
 	 */
 	public static function color(string $text, string $foreground, string $background = null, string $format = null)
 	{
-		if (static::is_windows() and ! isset($_SERVER['ANSICON']))
+		if (static::isWindows() && ! isset($_SERVER['ANSICON']))
 		{
 			return $text;
 		}
@@ -396,7 +433,7 @@ class CLI
 			throw new \RuntimeException('Invalid CLI foreground color: '.$foreground);
 		}
 
-		if ($background !== null and ! array_key_exists($background, static::$background_colors))
+		if ($background !== null && ! array_key_exists($background, static::$background_colors))
 		{
 			throw new \RuntimeException('Invalid CLI background color: '.$background);
 		}
@@ -431,7 +468,7 @@ class CLI
 	 */
 	public static function getWidth(int $default = 80): int
 	{
-		if (static::is_windows())
+		if (static::isWindows())
 		{
 			return $default;
 		}
@@ -452,7 +489,7 @@ class CLI
 	 */
 	public static function getHeight(int $default = 32): int
 	{
-		if (static::is_windows())
+		if (static::isWindows())
 		{
 			return $default;
 		}
@@ -469,7 +506,7 @@ class CLI
 	 * @param int $thisStep
 	 * @param int $totalSteps
 	 */
-	public static function showProgress(int $thisStep = 1, int $totalSteps = 10)
+	public static function showProgress($thisStep = 1, int $totalSteps = 10)
 	{
 		// The first time through, save
 		// our position so the script knows where to go

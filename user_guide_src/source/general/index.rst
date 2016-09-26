@@ -5,30 +5,25 @@ General Topics
 .. toctree::
 	:titlesonly:
 
-	autoloader
 	configuration
 	urls
 	controllers
-	reserved_names
 	views
-	models
-	Helpers <helpers>
-	libraries
-	creating_libraries
-	drivers
-	creating_drivers
+	view_cells
+	view_renderer
+	view_parser
+	helpers
 	core_classes
-	ancillary_classes
 	hooks
 	common_functions
-	compatibility_functions
 	routing
+	filters
+	logging
 	errors
-	Caching <caching>
-	profiling
+	debugging
+	caching
 	cli
 	managing_apps
 	environments
 	alternative_php
-	security
-	PHP Style Guide <styleguide>
+	testing

@@ -1,6 +1,42 @@
 <?php namespace CodeIgniter\Router;
 
 /**
+ * CodeIgniter
+ *
+ * An open source application development framework for PHP
+ *
+ * This content is released under the MIT License (MIT)
+ *
+ * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ *
+ * @package	CodeIgniter
+ * @author	CodeIgniter Dev Team
+ * @copyright	Copyright (c) 2014 - 2016, British Columbia Institute of Technology (http://bcit.ca/)
+ * @license	http://opensource.org/licenses/MIT	MIT License
+ * @link	http://codeigniter.com
+ * @since	Version 3.0.0
+ * @filesource
+ */
+
+/**
  * Interface RouteCollectionInterface
  *
  * A Route Collection's sole job is to hold a series of routes. The required
@@ -40,12 +76,12 @@ interface RouteCollectionInterface
 	 *
 	 * @return mixed
 	 */
-	public function addPlaceholder($placeholder, string $pattern=null);
+	public function addPlaceholder(string $placeholder, string $pattern=null);
 
 	//--------------------------------------------------------------------
 
 	/**
-	 * Sets the default namespace to use for controllers when no other
+	 * Sets the default namespace to use for Controllers when no other
 	 * namespace has been specified.
 	 *
 	 * @param $value
@@ -97,8 +133,8 @@ interface RouteCollectionInterface
 
 	/**
 	 * If TRUE, the system will attempt to match the URI against
-	 * controllers by matching each segment against folders/files
-	 * in APPPATH/controllers, when a match wasn't found against
+	 * Controllers by matching each segment against folders/files
+	 * in APPPATH/Controllers, when a match wasn't found against
 	 * defined routes.
 	 *
 	 * If FALSE, will stop searching and do NO automatic routing.
@@ -110,6 +146,33 @@ interface RouteCollectionInterface
 	public function setAutoRoute(bool $value): self;
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Sets the class/method that should be called if routing doesn't
+	 * find a match. It can be either a closure or the controller/method
+	 * name exactly like a route is defined: Users::index
+	 *
+	 * This setting is passed to the Router class and handled there.
+	 *
+	 * @param callable|null $callable
+	 *
+	 * @return $this
+	 */
+	public function set404Override($callable = null): self;
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns the 404 Override setting, which can be null, a closure
+	 * or the controller/string.
+	 *
+	 * @return string|\Closure|null
+	 */
+	public function get404Override();
+
+	//--------------------------------------------------------------------
+
+
 
 	/**
 	 * Returns the name of the default controller. With Namespace.
@@ -141,7 +204,7 @@ interface RouteCollectionInterface
 	//--------------------------------------------------------------------
 
 	/**
-	 * Returns the flag that tells whether to autoRoute URI against controllers.
+	 * Returns the flag that tells whether to autoRoute URI against Controllers.
 	 *
 	 * @return bool
 	 */
@@ -180,10 +243,33 @@ interface RouteCollectionInterface
 	 *      // Equals 'path/$param1/$param2'
 	 *      reverseRoute('Controller::method', $param1, $param2);
 	 *
-	 * @param string $route
+	 * @param string $search
 	 * @param        ...$params
+	 * @return string
 	 */
 	public function reverseRoute(string $search, ...$params): string;
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Determines if the route is a redirecting route.
+	 *
+	 * @param string $from
+	 *
+	 * @return bool
+	 */
+	public function isRedirect(string $from): bool;
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Grabs the HTTP status code from a redirecting Route.
+	 *
+	 * @param string $from
+	 *
+	 * @return int
+	 */
+	public function getRedirectCode(string $from): int;
 
 	//--------------------------------------------------------------------
 

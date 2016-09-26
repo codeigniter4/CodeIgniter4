@@ -1578,7 +1578,7 @@ h6 { font-size: 100% }
 
 hr { display: block; height: 1px; border: 0; border-top: 1px solid #e1e4e5; margin: 24px 0; padding: 0 }
 
-code, .rst-content tt { white-space: nowrap; max-width: 100%; background: #ffffff; border: solid 1px #e1e4e5; font-size: 75%; padding: 0 5px; font-family: Consolas, "Andale Mono WT", "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Liberation Mono", "Nimbus Mono L", Monaco, "Courier New", Courier, monospace; color: #e74c3c; overflow-x: auto }
+code, .rst-content tt { white-space: nowrap; max-width: 100%; padding: 0 5px; font-family: Consolas, "Andale Mono WT", "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Liberation Mono", "Nimbus Mono L", Monaco, "Courier New", Courier, monospace; color: #e74c3c; overflow-x: auto }
 
 code.code-large, .rst-content tt.code-large { font-size: 90% }
 
@@ -2066,7 +2066,7 @@ nav.stickynav { position: fixed; top: 0 }
 
 .rst-content dl:not(.docutils) { margin-bottom: 24px }
 
-.rst-content dl:not(.docutils) dt { display: inline-block; margin: 6px 0; font-size: 90%; line-height: normal; background: #dedede; color: #dd4814; border-top: solid 3px #8ba8af; padding: 6px; position: relative }
+.rst-content dl:not(.docutils) dt { display: inline-block; margin: 6px 0; line-height: normal; background: #fdc894; color: #444; border-top: solid 3px #dd4814; padding: 6px; position: relative }
 
 .rst-content dl:not(.docutils) dt:before { color: #8ba8af }
 

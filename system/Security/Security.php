@@ -1,18 +1,48 @@
 <?php namespace CodeIgniter\Security;
 
-use App\Config\AppConfig;
+/**
+ * CodeIgniter
+ *
+ * An open source application development framework for PHP
+ *
+ * This content is released under the MIT License (MIT)
+ *
+ * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ *
+ * @package	CodeIgniter
+ * @author	CodeIgniter Dev Team
+ * @copyright	Copyright (c) 2014 - 2016, British Columbia Institute of Technology (http://bcit.ca/)
+ * @license	http://opensource.org/licenses/MIT	MIT License
+ * @link	http://codeigniter.com
+ * @since	Version 3.0.0
+ * @filesource
+ */
 
+use CodeIgniter\HTTP\RequestInterface;
+
+/**
+ * HTTP security handler.
+ */
 class Security
 {
-	/**
-	 * CSRF Enabled
-	 *
-	 * Whether CSRF Protection is enabled.
-	 *
-	 * @var bool
-	 */
-	protected $CSRFEnabled = true;
-
 	/**
 	 * CSRF Hash
 	 *
@@ -59,15 +89,6 @@ class Security
 	 * @var bool
 	 */
 	protected $CSRFRegenerate = true;
-
-	/**
-	 * CSRF Exclude URIs
-	 *
-	 * An array of URIs to skip when checking CSRF.
-	 *
-	 * @var array
-	 */
-	protected $CSRFExcludeURIs = [];
 
 	/**
 	 * Typically will be a forward slash
@@ -122,17 +143,15 @@ class Security
 	 * Stores our configuration and fires off the init() method to
 	 * setup initial state.
 	 *
-	 * @param AppConfig $config
+	 * @param \Config\App $config
 	 */
-	public function __construct(AppConfig $config)
+	public function __construct($config)
 	{
 		// Store our CSRF-related settings
-		$this->CSRFEnabled     = $config->CSRFProtection;
 		$this->CSRFExpire      = $config->CSRFExpire;
 		$this->CSRFTokenName   = $config->CSRFTokenName;
 		$this->CSRFCookieName  = $config->CSRFCookieName;
 		$this->CSRFRegenerate  = $config->CSRFRegenerate;
-		$this->CSRFExcludeURIs = $config->CSRFExcludeURIs;
 
 		if (isset($config->cookiePrefix))
 		{
@@ -154,35 +173,21 @@ class Security
 	/**
 	 * CSRF Verify
 	 *
+	 * @param RequestInterface $request
 	 * @return $this
+	 * @throws \LogicException
 	 */
-	public function CSRFVerify()
+	public function CSRFVerify(RequestInterface $request)
 	{
 		// If it's not a POST request we will set the CSRF cookie
 		if (strtoupper($_SERVER['REQUEST_METHOD']) !== 'POST')
 		{
-			return $this->CSRFSetCookie();
-		}
-
-		// Check if URI has been whitelisted from CSRF checks
-		if (is_array($this->CSRFExcludeURIs) && count($this->CSRFExcludeURIs))
-		{
-			global $request;
-
-			$uri = $request->uri->getPath();
-
-			foreach ($this->CSRFExcludeURIs as $excluded)
-			{
-				if (preg_match('#^'.$excluded.'$#i'.(UTF8_ENABLED ? 'u' : ''), $uri))
-				{
-					return $this;
-				}
-			}
+			return $this->CSRFSetCookie($request);
 		}
 
 		// Do the tokens exist in both the _POST and _COOKIE arrays?
 		if ( ! isset($_POST[$this->CSRFTokenName], $_COOKIE[$this->CSRFCookieName])
-		     OR $_POST[$this->CSRFTokenName] !== $_COOKIE[$this->CSRFCookieName]
+		     || $_POST[$this->CSRFTokenName] !== $_COOKIE[$this->CSRFCookieName]
 		) // Do the tokens match?
 		{
 			throw new \LogicException('The action you requested is not allowed', 403);
@@ -200,7 +205,7 @@ class Security
 		}
 
 		$this->CSRFSetHash();
-		$this->CSRFSetCookie();
+		$this->CSRFSetCookie($request);
 
 		log_message('info', 'CSRF token verified');
 
@@ -213,14 +218,13 @@ class Security
 	 * CSRF Set Cookie
 	 *
 	 * @codeCoverageIgnore
+	 * @param RequestInterface $request
 	 * @return    $this
 	 */
-	public function CSRFSetCookie()
+	public function CSRFSetCookie(RequestInterface $request)
 	{
 		$expire        = time() + $this->CSRFExpire;
 		$secure_cookie = (bool)$this->cookieSecure;
-
-		global $request;
 
 		if ($secure_cookie && ! $request->isSecure())
 		{

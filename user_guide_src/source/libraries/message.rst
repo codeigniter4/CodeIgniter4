@@ -19,7 +19,7 @@ resource to serve more than one type of content, allowing the clients to request
 data that works best for them.
 
 A classic example of this is a browser than cannot display PNG files can request only GIF or
-JPEG images. When the server receives the request, it looks at the available file types the client
+JPEG images. When the getServer receives the request, it looks at the available file types the client
 is requesting and selects the best match from the image formats that it supports, in this case
 likely choosing a JPEG image to return.
 
@@ -41,7 +41,7 @@ Class Reference
 		:returns: The current message body
 		:rtype: string
 
-		Returns the current message body, if any has been set. If not body exists, returns null.::
+		Returns the current message body, if any has been set. If not body exists, returns null::
 
 			echo $message->body();
 
@@ -59,12 +59,12 @@ Class Reference
 
 		Scans and parses the headers found in the SERVER data and stores it for later access.
 		This is used by the :doc:`IncomingRequest Class </libraries/incomingrequest>` to make
-		 the current request's headers available.
+		the current request's headers available.
 
-		 The headers are any SERVER data that starts with ``HTTP_``, like ``HTTP_HOST``. Each message
-		 is converted from it's standard uppercase and underscore format to a ucwords and dash format.
-		 The preceeding ``HTTP_`` is removed from the string. So ``HTTP_ACCEPT_LANGUAGE`` becomes
-		 ``Accept-Language``.
+                The headers are any SERVER data that starts with ``HTTP_``, like ``HTTP_HOST``. Each message
+		is converted from it's standard uppercase and underscore format to a ucwords and dash format.
+		The preceeding ``HTTP_`` is removed from the string. So ``HTTP_ACCEPT_LANGUAGE`` becomes
+		``Accept-Language``.
 
 	.. php:method:: headers()
 
@@ -81,7 +81,7 @@ Class Reference
 		:rtype: string|array|null
 
 		Allows you to retrieve the current value of a single message header. ``$name`` is the case-insensitive header name.
-		While the header is converted internally as described above, you can access the header with any type of case.::
+		While the header is converted internally as described above, you can access the header with any type of case::
 
 			// These are all the same:
 			$message->header('HOST');
@@ -89,7 +89,7 @@ Class Reference
 			$message->header('host');
 
 		If the header has multiple values, the values will return as an array of values. You can use the ``headerLine()``
-		method to retrieve the values as a string.::
+		method to retrieve the values as a string::
 
 			echo $message->header('Accept-Language');
 
@@ -126,7 +126,7 @@ Class Reference
 
 		Sets the value of a single header. ``$name`` is the case-insensitive name of the header. If the header
 		doesn't already exist in the collection, it will be created. The ``$value`` can be either a string
-		or an array of strings.::
+		or an array of strings::
 
 			$message->setHeader('Host', 'codeigniter.com');
 
@@ -167,7 +167,7 @@ Class Reference
 		:returns: The current message instance
 		:rtype: CodeIgniter\\HTTP\\Message
 
-		Sets the HTTP protocol version this Message uses. Valid values are ``1.0`` or ``1.1``.::
+		Sets the HTTP protocol version this Message uses. Valid values are ``1.0`` or ``1.1``::
 
 			$message->setProtocolVersion('1.1');
 
@@ -195,7 +195,7 @@ Class Reference
 
 		Per the `RFC <http://tools.ietf.org/html/rfc7231#section-5.3>`_ the match has the option of returning a
 		default value, like this method does, or to return an empty string. If you need to have an exact match and
-		would like an empty string returned instead, pass ``true`` as the second parameter.::
+		would like an empty string returned instead, pass ``true`` as the second parameter::
 
 			// Returns empty string if no match.
 			$imageType = $message->negotiateMedia($supported, true);
@@ -228,7 +228,7 @@ Class Reference
 		:rtype: string
 
 		Determines the best match between the application-supported values and the ``Accept-Encoding`` header value.
-		If no match is found, will return the first element of the ``$supported`` array.::
+		If no match is found, will return the first element of the ``$supported`` array::
 
 			$supported = [
 				'gzip',
@@ -243,7 +243,7 @@ Class Reference
 		:rtype: string
 
 		Determines the best match between the application-supported languages and the ``Accept-Language`` header value.
-		If no match is found, will return teh first element of the ``$supported`` array.::
+		If no match is found, will return the first element of the ``$supported`` array::
 
 			$supported = [
 				'en',

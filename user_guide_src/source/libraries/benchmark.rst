@@ -10,27 +10,21 @@ performance and memory statistics to help you decide which version is the best.
 The Timer class is always active, being started from the moment the framework is invoked until right before
 sending the output to the user, enabling a very accurate timing of the entire system execution.
 
-* [Using the Timer](#timer)
-	* [Profiling Your Benchmark Points](#timer_profiling)
-	* [Displaying Execution Time](#timer_execution)
-* [Using the Iterator](#iterator)
-	* [Creating Tasks To Run](#tasks)
-	* [Running the Tasks](#running)
-* [Timer Class Reference](#timer_ref)
-* [Iterator Class Reference](#iterator_ref)
+.. contents:: Page Contents
+	:local:
 
-<a name="timer"></a>
+===============
 Using the Timer
 ===============
 
-Using the Timer, you can measure the time between two moments in the execution of your application. This makes
+With the Timer, you can measure the time between two moments in the execution of your application. This makes
 it simple to measure the performance of different aspects of your application. All measurement is done using
 the ``start()`` and ``stop()`` methods.
 
 The ``start()`` methods takes a single parameter: the name of this timer. You can use any string as the name
 of the timer. It is only used for you to reference later to know which measurement is which::
 
-	$benchmark = DI()->single('bmtimer');
+	$benchmark = \Config\Services::timer();
 	$benchmark->start('render view');
 
 The ``stop()`` method takes the name of the timer that you want to stop as the only parameter, also::
@@ -39,15 +33,23 @@ The ``stop()`` method takes the name of the timer that you want to stop as the o
 
 The name is not case-sensitive, but otherwise must match the name you gave it when you started the timer.
 
-<a name="timer_profiling"></a>
+Alternatively, you can use the :doc:`global function </general/common_functions>` ``timer()`` to start
+and stop timers::
+
+	// Start the timer
+	timer('render view');
+	// Stop a running timer,
+	// if one of this name has been started
+	timer('render view');
+
 Viewing Your Benchmark Points
 =============================
 
 When your application runs, all of the timers that you have set are collected by the Timer class. It does
-not automatically display them, though. You can retrieve all of your timers by calling the ``timers()`` method.
+not automatically display them, though. You can retrieve all of your timers by calling the ``getTimers()`` method.
 This returns an array of benchmark information, including start, end, and duration::
 
-	$timers = $benchmark->timers();
+	$timers = $benchmark->getTimers();
 	
 	// Timers =
 	array(
@@ -61,20 +63,21 @@ This returns an array of benchmark information, including start, end, and durati
 You can change the precision of the calculated duration by passing in the number of decimal places you want shown as
 the only parameter. The default value is 4 numbers behind the decimal point::
 
-	$timers = $benchmark->timers(6);
+	$timers = $benchmark->getTimers(6);
 
-<a name="timer_execution"></a>
+The timers are automatically displayed in the :doc:`Debub Toolbar </general/profiling>`.
+
 Displaying Execution Time
 =========================
 
-While the ``timers()`` method will give you the raw data for all of the timers in your project, you can retrieve
-the duration of a single timer, in seconds, with the `elapsedTime()` method. The first parameter is the name of
+While the ``getTimers()`` method will give you the raw data for all of the timers in your project, you can retrieve
+the duration of a single timer, in seconds, with the `getElapsedTime()` method. The first parameter is the name of
 the timer to display. The second is the number of decimal places to display. This defaults to 4::
 
-	echo $benchmark->elapsedTime('render view');
+	echo timer()->getElapsedTime('render view');
 	// Displays: 0.0234
 
-<a name="iterator"></a>
+==================
 Using the Iterator
 ==================
 
@@ -83,7 +86,6 @@ see the speed differences and different memory usage patterns. You can add any n
 run and the class will run the task hundreds or thousands of times to get a clearer picture of performance.
 The results can then be retrieved and used by your script, or displayed as an HTML table.
 
-<a name="tasks"></a>
 Creating Tasks To Run
 =====================
 
@@ -91,7 +93,7 @@ Tasks are defined within Closures. Any output the task creates will be discarded
 added to the Iterator class through the `add()` method. The first parameter is a name you want to refer to
 this test by. The second parameter is the Closure, itself::
 
-	$iterator = new CodeIgniter\Benchmark\Iterator();
+	$iterator = new \CodeIgniter\Benchmark\Iterator();
 	
 	// Add a new task
 	$iterator->add('single_concat', function() 
@@ -107,7 +109,7 @@ this test by. The second parameter is the Closure, itself::
 		}
 	);
 
-<a name="running"></a>
+
 Running the Tasks
 =================
 
@@ -124,9 +126,3 @@ displayed, you can pass in `false` as the second parameter::
 	// Don't display the results.
 	$iterator->run(1000, false);
 
-
-<a name="timer_ref"></a>
-## Timer Class Reference
-
-<a name="iterator_ref"></a>
-## Iterator Class Reference
