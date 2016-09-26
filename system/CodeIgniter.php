@@ -260,24 +260,39 @@ class CodeIgniter
 	/**
 	 * Determines if a response has been cached for the given URI.
 	 *
-	 * @param \Config\Cache         $config
+	 * @param \Config\Cache $config
 	 *
 	 * @return bool
 	 */
-	public function displayCache($config)
-	{
-		$cacheName = $this->generateCacheName($config);
+	 public function displayCache($config)
+	 {
+		 if ($cachedResponse = cache()->get($this->generateCacheName($config)))
+		 {
+			 $cachedResponse = unserialize($cachedResponse);
+			 if (!is_array($cachedResponse) || !isset($cachedResponse['output']) || !isset($cachedResponse['headers']))
+			 {
+				 throw new \Exception("Error unserializing page cache");
+			 }
 
-		if ($output = cache()->get($cacheName))
-		{
-			$output = $this->displayPerformanceMetrics($output);
+			 $headers = $cachedResponse['headers'];
+			 $output  = $cachedResponse['output'];
 
-			$this->response->setBody($output)
-					       ->send();
+			 // Clear all default headers
+			 foreach($this->response->getHeaders() as $key => $val) {
+				 $this->response->removeHeader($key);
+			 }
 
-			$this->callExit(EXIT_SUCCESS);
-		};
-	}
+			 // Set cached headers
+			 foreach($headers as $name => $value) {
+				 $this->response->setHeader($name, $value);
+			 }
+
+			 $output = $this->displayPerformanceMetrics($output);
+			 $this->response->setBody($output)->send();
+			 $this->callExit(EXIT_SUCCESS);
+		 };
+	 }
+
 
 	//--------------------------------------------------------------------
 
@@ -299,15 +314,21 @@ class CodeIgniter
 	 * Caches the full response from the current request. Used for
 	 * full-page caching for very high performance.
 	 *
-	 * @param \Config\Cache              $config
+	 * @param \Config\Cache $config
 	 */
-	public function cachePage($config)
+	public function cachePage(Cache $config)
 	{
+		$headers = [];
+		foreach($this->response->getHeaders() as $header) {
+			$headers[$header->getName()] = $header->getValueLine();
+		}
+
 		return cache()->save(
 			$this->generateCacheName($config),
-			$this->output,
+			serialize(['headers' => $headers, 'output' => $this->output]),
 			self::$cacheTTL
 		);
+
 	}
 
 	//--------------------------------------------------------------------
