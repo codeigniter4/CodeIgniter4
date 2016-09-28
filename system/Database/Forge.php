@@ -59,16 +59,24 @@ class Forge
 
 	/**
 	 * List of keys.
-	 * @var type 
+	 * 
+	 * @var array 
 	 */
 	protected $keys = [];
 
 	/**
 	 * List of primary keys.
 	 * 
-	 * @var type 
+	 * @var array 
 	 */
 	protected $primaryKeys = [];
+	
+	/**
+	 * List of foreign keys.
+	 * 
+	 * @var array
+	 */
+	protected  $foreignKeys = [];
 
 	/**
 	 * Character set used.
@@ -292,6 +300,102 @@ class Forge
 
 		return $this;
 	}
+	
+	//--------------------------------------------------------------------
+	
+	/**
+	 * Add foreign Key
+	 * 
+	 * @param string $key       Database field to reference.
+	 * @param string $fkey      Foreign key field.
+	 * @param string $ftable    Foreign table to reference.
+	 * @param string $onUpdate  On update event.
+	 * @param string $onDelete  On delete event.
+	 */
+	public function addForeignKey(string $key, string $fkey, string $table, string $ftable,
+	        string $onUpdate = 'CASCADE', string $onDelete = 'CASCADE')
+	{
+	    $this->foreignKeys[] = [
+	            'key' => $key,
+	            'fkey' => $fkey,
+	            'table' => $table,
+	            'ftable' => $ftable,
+	            'onUpdate' => $onUpdate,
+	            'onDelete' => $onDelete
+	    ];
+	    
+	    // If not already an index, add key
+	    if ( ! in_array($key, $this->keys))
+	    {
+	        $this->keys[] = $key;
+	    }
+	    
+	    return $this;
+	}
+	
+	//--------------------------------------------------------------------
+	
+	/**
+	 * Get foreign Keys
+	 * 
+	 */
+	public function getForeingKeys()
+	{
+	    return $this->foreignKeys;
+	}
+
+	//--------------------------------------------------------------------
+	
+	/**
+	 * Creates foreign keys.
+	 * 
+	 * @param string $table
+	 */
+	public function createForeignKeys()
+	{
+	    foreach ($this->foreignKeys as $fk)
+	    {
+    	    $this->db->query($this->compileFKeyCreate($fk));
+	    }
+	}
+	
+	//-------------------------------------------------------------------
+	
+	/**
+	 * @param unknown $table
+	 * @param unknown $fkey
+	 */
+	public function deleteForeignKey($table, $fkey)
+	{
+	    $this->db->query($this->compileFKeyDrop($table, $fkey));
+	}
+	
+	//-------------------------------------------------------------------
+	
+	/**
+	 * @param unknown $fk
+	 * @return string
+	 */
+	public function compileFKeyCreate($fk)
+	{
+	    $prefix = $this->db->DBPrefix ? $this->db->DBPrefix.'.' : '';
+	    
+	    return 'ALTER TABLE '.$prefix.$fk['table'].' ADD CONSTRAINT fk_'.$fk['fkey'].' FOREIGN KEY ('.$fk['key'].') REFERENCES '.$prefix.$fk['ftable'].' ('.$fk['fkey'].') ON UPDATE '.$fk['onUpdate'].' ON DELETE '.$fk['onDelete'];
+	}
+	
+	//--------------------------------------------------------------------
+	
+	/**
+	 * @param unknown $table
+	 * @param unknown $fkey
+	 * @return string
+	 */
+	public function compileFKeyDrop($table, $fkey)
+	{
+	    $prefix = $this->db->DBPrefix ? $this->db->DBPrefix.'.' : '';
+	    
+	    return "ALTER TABLE $prefix$table DROP FOREIGN KEY $fkey";
+	}
 
 	//--------------------------------------------------------------------
 
@@ -390,6 +494,12 @@ class Forge
 				{
 					$this->db->query($sqls[$i]);
 				}
+			}
+			
+			// Create foreign keys
+			if ( ! empty($this->foreignKeys))
+			{
+			    $this->createForeignKeys();
 			}
 		}
 

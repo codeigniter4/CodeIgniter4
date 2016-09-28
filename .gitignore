@@ -109,3 +109,6 @@ nb-configuration.xml
 *.sublime-workspace
 *.sublime-project
 /api/
+/.buildpath
+/.project
+/.gitignore
