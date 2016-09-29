@@ -292,6 +292,37 @@ class Forge
 
 		return $this;
 	}
+	
+	//--------------------------------------------------------------------
+	
+	/**
+	 * Add foreign Key
+	 * 
+	 * @param string $key       Database field to reference.
+	 * @param string $fkey      Foreign key field.
+	 * @param string $ftable    Foreign table to reference.
+	 * @param string $onUpdate  On update event.
+	 * @param string $onDelete  On delete event.
+	 */
+	public function addForeignKey(string $key, string $fkey, string $ftable,
+	        string $onUpdate = 'CASCADE', string $onDelete = 'CASCADE')
+	{
+	    $this->foreignKeys[] = [
+	            'key' => $key,
+	            'fkey' => $fkey,
+	            'ftable' => $ftable,
+	            'onUpdate' => $onUpdate,
+	            'onDelete' => $onDelete
+	    ];
+	    
+	    // If not already an index, add key
+	    if ( ! in_array($key, $this->keys))
+	    {
+	        $this->keys[] = $key;
+	    }
+	    
+	    return $this;
+	}
 
 	//--------------------------------------------------------------------
 
@@ -391,11 +422,35 @@ class Forge
 					$this->db->query($sqls[$i]);
 				}
 			}
+			
+			// Create foreign keys
+			if ( ! empty($this->foreignKeys))
+			{
+			    $this->_createForeignKeys($table);
+			}
 		}
 
 		$this->_reset();
 
 		return $result;
+	}
+
+	//--------------------------------------------------------------------
+	
+	/**
+	 * Creates foreign keys for the current table.
+	 * 
+	 * @param string $table
+	 */
+	protected function _createForeignKeys(string $table)
+	{
+	    foreach ($this->foreignKeys as $fk)
+	    {
+	       $sql = 'ALTER TABLE '.$table.' ADD CONSTRAINT fk_'.$fk['fkey'].' FOREIGN KEY ('.
+	       	        $fk['key'].') REFERENCES '.$this->db->DBPrefix.'.'.$fk['table'].' ('.$fk['fkey'].
+	       	        ') ON UPDATE '.$fk['onUpdate'].' ON DELETE '.$fk['onDelete'];
+	       $this->db->query($sql);
+	    }
 	}
 
 	//--------------------------------------------------------------------
