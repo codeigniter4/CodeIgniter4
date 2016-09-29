@@ -1,4 +1,4 @@
-<?php use CodeIgniter\Image;
+<?php namespace CodeIgniter\Image;
 
 /**
  * CodeIgniter
@@ -124,7 +124,7 @@ class Image
      * @throws \InvalidArgumentException
      * @return resource
      */
-    public function setImage(string $full_image_path = false): resource
+    public function image(string $full_image_path = false, $driver): resource
     {
         if ($full_image_path)
         {
@@ -158,6 +158,6 @@ class Image
             throw new \InvalidArgumentException('No image found in specified location');
         }
         
-        return $this;
+        return $this->load($driver);
     }
 }
