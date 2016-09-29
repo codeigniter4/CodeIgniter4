@@ -69,7 +69,7 @@ class Image
      */
     public function load(string $driver): resource
     {
-        $classname = 'Codeigniter\Image\\'.$driver;
+        $classname = "Codeigniter\\Image\\$driver";
         return new $classname;
     }
     
