@@ -1,6 +1,8 @@
 <?php namespace CodeIgniter\Database;
+
 use CodeIgniter\Database\MockConnection;
-class QueryTest extends \CIUnitTestCase
+
+class ForgeTest extends \CIUnitTestCase
 {
 	protected $db;
 	//--------------------------------------------------------------------
