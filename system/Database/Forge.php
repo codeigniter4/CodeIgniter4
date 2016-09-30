@@ -890,7 +890,7 @@ class Forge
 	 *
 	 * @return    string
 	 */
-	protected function _processColumn(string $field)
+	protected function _processColumn($field)
 	{
 		return $this->db->escapeIdentifiers($field['name'])
 		       .' '.$field['type'].$field['length']
