@@ -76,7 +76,7 @@ class Forge extends \CodeIgniter\Database\Forge
 	 *
 	 * @return    string|string[]
 	 */
-	protected function _alterTable($alter_type, $table, $field)
+	protected function _alterTable(string $alter_type, string $table, $field)
 	{
 		if (in_array($alter_type, ['DROP', 'ADD'], true))
 		{

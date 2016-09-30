@@ -128,7 +128,7 @@ class Forge extends \CodeIgniter\Database\Forge
 	 * @param	mixed	$field		Column definition
 	 * @return	string|string[]
 	 */
-	protected function _alterTable($alter_type, $table, $field)
+	protected function _alterTable(string $alter_type, string $table, $field)
 	{
 		if ($alter_type === 'DROP')
 		{
@@ -170,7 +170,7 @@ class Forge extends \CodeIgniter\Database\Forge
 	 * @param	array	$field
 	 * @return	string
 	 */
-	protected function _processColumn($field)
+	protected function _processColumn(string $field)
 	{
 		$extra_clause = isset($field['after'])
 			? ' AFTER '.$this->db->escapeIdentifiers($field['after']) : '';
@@ -200,7 +200,7 @@ class Forge extends \CodeIgniter\Database\Forge
 	 * @param	string	$table	(ignored)
 	 * @return	string
 	 */
-	protected function _processIndexes($table)
+	protected function _processIndexes(string $table)
 	{
 		$sql = '';
 

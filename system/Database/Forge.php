@@ -345,7 +345,7 @@ class Forge
 	 * @param string $fk
 	 * @return string
 	 */
-	public function compileFKeyCreate(string $fk): string
+	public function compileFKeyCreate($fk): string
 	{
 	    $prefix = $this->db->DBPrefix ? $this->db->DBPrefix.'.' : '';
 	    
