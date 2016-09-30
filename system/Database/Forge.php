@@ -174,7 +174,7 @@ class Forge
 	 *
 	 * @return    bool
 	 */
-	public function createDatabase($db_name)
+	public function createDatabase(string $db_name): bool
 	{
 		if ($this->createDatabaseStr === false)
 		{
@@ -210,7 +210,7 @@ class Forge
 	 *
 	 * @return    bool
 	 */
-	public function dropDatabase($db_name)
+	public function dropDatabase(string $db_name): bool
 	{
 		if ($this->dropDatabaseStr === false)
 		{
@@ -249,7 +249,7 @@ class Forge
 	 *
 	 * @return    CI_DB_forge
 	 */
-	public function addKey($key, $primary = false)
+	public function addKey(string $key, bool $primary = false)
 	{
 		if (is_array($key))
 		{
@@ -331,10 +331,10 @@ class Forge
 	//-------------------------------------------------------------------
 	
 	/**
-	 * @param unknown $table
-	 * @param unknown $fkey
+	 * @param string $table
+	 * @param string $fkey
 	 */
-	public function deleteForeignKey($table, $fkey)
+	public function deleteForeignKey(string $table, string $fkey)
 	{
 	    $this->db->query($this->compileFKeyDrop($table, $fkey));
 	}
@@ -342,10 +342,10 @@ class Forge
 	//-------------------------------------------------------------------
 	
 	/**
-	 * @param unknown $fk
+	 * @param string $fk
 	 * @return string
 	 */
-	public function compileFKeyCreate($fk)
+	public function compileFKeyCreate(string $fk): string
 	{
 	    $prefix = $this->db->DBPrefix ? $this->db->DBPrefix.'.' : '';
 	    
@@ -357,11 +357,11 @@ class Forge
 	//--------------------------------------------------------------------
 	
 	/**
-	 * @param unknown $table
-	 * @param unknown $fkey
+	 * @param string $table
+	 * @param string $fkey
 	 * @return string
 	 */
-	public function compileFKeyDrop($table, $fkey)
+	public function compileFKeyDrop(string $table, string $fkey): string
 	{
 	    $prefix = $this->db->DBPrefix ? $this->db->DBPrefix.'.' : '';
 	    
@@ -419,7 +419,7 @@ class Forge
 	 *
 	 * @return    bool
 	 */
-	public function createTable($table, $if_not_exists = false, array $attributes = [])
+	public function createTable(string $table, bool $if_not_exists = false, array $attributes = [])
 	{
 		if ($table === '')
 		{
@@ -479,7 +479,7 @@ class Forge
 	 *
 	 * @return    mixed
 	 */
-	protected function _createTable($table, $if_not_exists, $attributes)
+	protected function _createTable(string $table, bool $if_not_exists, array $attributes)
 	{
 		if ($if_not_exists === true && $this->createTableIfStr === false)
 		{
@@ -528,7 +528,7 @@ class Forge
 	 *
 	 * @return    string
 	 */
-	protected function _createTableAttributes($attributes)
+	protected function _createTableAttributes(array $attributes): string
 	{
 		$sql = '';
 		foreach (array_keys($attributes) as $key)
@@ -551,7 +551,7 @@ class Forge
 	 *
 	 * @return    bool
 	 */
-	public function dropTable($table_name, $if_exists = false)
+	public function dropTable(string $table_name, bool $if_exists = false): bool
 	{
 		if ($table_name === '')
 		{
@@ -591,7 +591,7 @@ class Forge
 	 *
 	 * @return    string
 	 */
-	protected function _dropTable($table, $if_exists)
+	protected function _dropTable(string $table, bool $if_exists): string
 	{
 		$sql = 'DROP TABLE';
 		if ($if_exists)
@@ -621,7 +621,7 @@ class Forge
 	 *
 	 * @return    bool
 	 */
-	public function renameTable($table_name, $new_table_name)
+	public function renameTable(string $table_name, string $new_table_name): bool
 	{
 		if ($table_name === '' OR $new_table_name === '')
 		{
@@ -662,7 +662,7 @@ class Forge
 	 *
 	 * @return    bool
 	 */
-	public function addColumn($table, $field, $_after = null)
+	public function addColumn(string $table, $field, string $_after = null): bool
 	{
 		// Work-around for literal column definitions
 		is_array($field) OR $field = [$field];
@@ -700,7 +700,7 @@ class Forge
 	 *
 	 * @return    bool
 	 */
-	public function dropColumn($table, $column_name)
+	public function dropColumn(string $table, stirng $column_name): resource
 	{
 		$sql = $this->_alterTable('DROP', $this->db->DBPrefix.$table, $column_name);
 		if ($sql === false)
@@ -724,7 +724,7 @@ class Forge
 	 *
 	 * @return    bool
 	 */
-	public function modifyColumn($table, $field)
+	public function modifyColumn(string $table, string $field): bool
 	{
 		// Work-around for literal column definitions
 		is_array($field) OR $field = [$field];
@@ -767,7 +767,7 @@ class Forge
 	 *
 	 * @return    string|string[]
 	 */
-	protected function _alterTable($alter_type, $table, $field)
+	protected function _alterTable(string $alter_type, string $table, $field)
 	{
 		$sql = 'ALTER TABLE '.$this->db->escapeIdentifiers($table).' ';
 		// DROP has everything it needs now.
@@ -796,7 +796,7 @@ class Forge
 	 *
 	 * @return    array
 	 */
-	protected function _processFields($create_table = false)
+	protected function _processFields(bool $create_table = false)
 	{
 		$fields = [];
 		foreach ($this->fields as $key => $attributes)
@@ -890,7 +890,7 @@ class Forge
 	 *
 	 * @return    string
 	 */
-	protected function _processColumn($field)
+	protected function _processColumn(string $field)
 	{
 		return $this->db->escapeIdentifiers($field['name'])
 		       .' '.$field['type'].$field['length']
@@ -1043,7 +1043,7 @@ class Forge
 	 *
 	 * @return    string
 	 */
-	protected function _processPrimaryKeys($table)
+	protected function _processPrimaryKeys(string $table): string
 	{
 		$sql = '';
 		for ($i = 0, $c = count($this->primaryKeys); $i < $c; $i++)
@@ -1070,7 +1070,7 @@ class Forge
 	 *
 	 * @return    string
 	 */
-	protected function _processIndexes($table)
+	protected function _processIndexes(string $table): string
 	{
 		$sqls = [];
 		for ($i = 0, $c = count($this->keys); $i < $c; $i++)
