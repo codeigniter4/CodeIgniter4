@@ -200,7 +200,7 @@ class Forge extends \CodeIgniter\Database\Forge
 	 * @param	string	$table	(ignored)
 	 * @return	string
 	 */
-	protected function _processIndexes(string $table)
+	protected function _processIndexes($table)
 	{
 		$sql = '';
 
