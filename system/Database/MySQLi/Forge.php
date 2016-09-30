@@ -93,7 +93,7 @@ class Forge extends \CodeIgniter\Database\Forge
 	 * @param	array	$attributes	Associative array of table attributes
 	 * @return	string
 	 */
-	protected function _createTableAttributes($attributes)
+	protected function _createTableAttributes(array $attributes): string
 	{
 		$sql = '';
 
