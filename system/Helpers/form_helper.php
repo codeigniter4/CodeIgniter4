@@ -74,6 +74,7 @@ if ( ! function_exists('form_open'))
         {
             $action = site_url($action);
         }
+        
         $attributes = _attributes_to_string($attributes);
         if (stripos($attributes, 'method=') === false)
         {
@@ -83,16 +84,18 @@ if ( ! function_exists('form_open'))
         {
             $attributes .= ' accept-charset="'.strtolower(config_item('charset')).'"';
         }
+        
         $form = '<form action="'.$action.'"'.$attributes.">\n";
         
         // Add CSRF field if enabled, but leave it out for GET requests and requests to external websites
         $getCsrf = new \Config\Filters();
         $before = $getCsrf->globals->before;
+        
         if ((in_array('csrf', $before) || array_key_exists('csrf', $before)) &&
                 strpos($action, base_url()) !== false && ! stripos($form, 'method="get"'))
         {
             $security = \Config\Services::security();
-            $hidden[$security->getCsrfTokenName()] = $security->getCsrfHash();
+            $hidden[$security->getCSRFTokenName()] = $security->getCSRFHash();
         }
         if (is_array($hidden))
         {
@@ -129,6 +132,7 @@ if ( ! function_exists('form_open_multipart'))
         {
             $attributes['enctype'] = 'multipart/form-data';
         }
+        
         return form_open($action, $attributes, $hidden);
     }
 }
@@ -155,6 +159,7 @@ if ( ! function_exists('form_hidden'))
         {
             $form = "\n";
         }
+        
         if (is_array($name))
         {
             foreach ($name as $key => $val)
@@ -163,6 +168,7 @@ if ( ! function_exists('form_hidden'))
             }
             return $form;
         }
+        
         if ( ! is_array($value))
         {
             $form .= '<input type="hidden" name="'.$name.'" value="'.html_escape($value)."\" />\n";
@@ -175,6 +181,7 @@ if ( ! function_exists('form_hidden'))
                 form_hidden($name.'['.$k.']', $v, true);
             }
         }
+        
         return $form;
     }
 }
@@ -198,6 +205,7 @@ if ( ! function_exists('form_input'))
                 'name' => is_array($data) ? '' : $data,
                 'value' => $value
         ];
+        
         return '<input '._parse_form_attributes($data, $defaults)._attributes_to_string($extra)." />\n";
     }
 }
@@ -220,6 +228,7 @@ if ( ! function_exists('form_password'))
     {
         is_array($data) OR $data = array('name' => $data);
         $data['type'] = 'password';
+        
         return form_input($data, $value, $extra);
     }
 }
@@ -243,6 +252,7 @@ if ( ! function_exists('form_upload'))
         $defaults = ['type' => 'file', 'name' => ''];
         is_array($data) OR $data = ['name' => $data];
         $data['type'] = 'file';
+        
         return '<input '._parse_form_attributes($data, $defaults)._attributes_to_string($extra)." />\n";
     }
 }
@@ -275,6 +285,7 @@ if ( ! function_exists('form_textarea'))
             $val = $data['value'];
             unset($data['value']); // textareas don't use the value attribute
         }
+        
         return '<textarea '._parse_form_attributes($data, $defaults)._attributes_to_string($extra).'>'
                 .htmlspecialchars($val)
                 ."</textarea>\n";
@@ -297,10 +308,12 @@ if ( ! function_exists('form_multiselect'))
     function form_multiselect(string $name = '', array $options = [], array $selected = [], $extra = ''): string
     {
         $extra = _attributes_to_string($extra);
+        
         if (stripos($extra, 'multiple') === false)
         {
             $extra .= ' multiple="multiple"';
         }
+        
         return form_dropdown($name, $options, $selected, $extra);
     }
 }
@@ -338,8 +351,10 @@ if ( ! function_exists('form_dropdown'))
         {
             $defaults = ['name' => $data];
         }
+        
         is_array($selected) OR $selected = [$selected];
         is_array($options) OR $options = [$options];
+        
         // If no selected state was submitted we will attempt to set it automatically
         if (empty($selected))
         {
@@ -355,6 +370,7 @@ if ( ! function_exists('form_dropdown'))
                 $selected = [$_POST[$data]];
             }
         }
+        
         $extra = _attributes_to_string($extra);
         $multiple = (count($selected) > 1 && stripos($extra, 'multiple') === false) ? ' multiple="multiple"' : '';
         $form = '<select '.rtrim(_parse_form_attributes($data, $defaults)).$extra.$multiple.">\n";
@@ -383,6 +399,7 @@ if ( ! function_exists('form_dropdown'))
                                 .(string) $val."</option>\n";
             }
         }
+        
         return $form."</select>\n";
     }
 }
@@ -403,6 +420,7 @@ if ( ! function_exists('form_checkbox'))
     function form_checkbox($data = '', string $value = '', bool $checked = false, $extra = ''): string
     {
         $defaults = ['type' => 'checkbox', 'name' => ( ! is_array($data) ? $data : ''), 'value' => $value];
+        
         if (is_array($data) && array_key_exists('checked', $data))
         {
             $checked = $data['checked'];
@@ -415,6 +433,7 @@ if ( ! function_exists('form_checkbox'))
                 $data['checked'] = 'checked';
             }
         }
+        
         if ($checked == true)
         {
             $defaults['checked'] = 'checked';
@@ -423,6 +442,7 @@ if ( ! function_exists('form_checkbox'))
         {
             unset($defaults['checked']);
         }
+        
         return '<input '._parse_form_attributes($data, $defaults)._attributes_to_string($extra)." />\n";
     }
 }
@@ -444,6 +464,7 @@ if ( ! function_exists('form_radio'))
     {
         is_array($data) OR $data = ['name' => $data];
         $data['type'] = 'radio';
+        
         return form_checkbox($data, $value, $checked, $extra);
     }
 }
@@ -467,6 +488,7 @@ if ( ! function_exists('form_submit'))
                 'name' => is_array($data) ? '' : $data,
                 'value' => $value
         ];
+        
         return '<input '._parse_form_attributes($data, $defaults)._attributes_to_string($extra)." />\n";
     }
 }
@@ -490,6 +512,7 @@ if ( ! function_exists('form_reset'))
                 'name' => is_array($data) ? '' : $data,
                 'value' => $value
         ];
+        
         return '<input '._parse_form_attributes($data, $defaults)._attributes_to_string($extra)." />\n";
     }
 }
@@ -512,11 +535,13 @@ if ( ! function_exists('form_button'))
                 'name' => is_array($data) ? '' : $data,
                 'type' => 'button'
         ];
+        
         if (is_array($data) && isset($data['content']))
         {
             $content = $data['content'];
             unset($data['content']); // content is not an attribute
         }
+        
         return '<button '._parse_form_attributes($data, $defaults)._attributes_to_string($extra).'>'
                 .$content
                 ."</button>\n";
@@ -538,10 +563,12 @@ if ( ! function_exists('form_label'))
     function form_label(string $label_text = '', string $id = '', array $attributes = []): string
     {
         $label = '<label';
+        
         if ($id !== '')
         {
             $label .= ' for="'.$id.'"';
         }
+        
         if (is_array($attributes) && count($attributes) > 0)
         {
             foreach ($attributes as $key => $val)
@@ -549,6 +576,7 @@ if ( ! function_exists('form_label'))
                 $label .= ' '.$key.'="'.$val.'"';
             }
         }
+        
         return $label.'>'.$label_text.'</label>';
     }
 }
@@ -572,13 +600,18 @@ if ( ! function_exists('form_datalist'))
              'list' => $name.'_list',
              'value' => $value
         ];
+        
         $out = form_input($data)."\n";
         $out .= "<datalist id='".$name.'_list'."'>";
+        
         foreach ($options as $option)
         {
             $out .= "<option value='$option'>"."\n";
         }
+        
         $out .= "</datalist>"."\n";
+        
+        return $out;
     }
 }
 
@@ -623,10 +656,12 @@ if ( ! function_exists('form_fieldset'))
     function form_fieldset(string $legend_text = '', array $attributes = []): string
     {
         $fieldset = '<fieldset'._attributes_to_string($attributes).">\n";
+        
         if ($legend_text !== '')
         {
             return $fieldset.'<legend>'.$legend_text."</legend>\n";
         }
+        
         return $fieldset;
     }
 }
@@ -681,6 +716,7 @@ if ( ! function_exists('set_value'))
     function set_value(string $field, string $default = '', bool $html_escape = true): string
     {
         $value = $_POST[$field] ?? $default;
+        
         return ($html_escape) ? html_escape($value) : $value;
     }
 }
@@ -768,11 +804,13 @@ if ( ! function_exists('set_checkbox'))
             }
             return '';
         }
+        
         // Unchecked checkbox and radio inputs are not even submitted by browsers ...
         if ($_POST)
         {
             return ($input === $value) ? ' checked="checked"' : '';
         }
+        
         return ($default === TRUE) ? ' checked="checked"' : '';
     }
 }
@@ -811,11 +849,13 @@ if ( ! function_exists('set_radio'))
             }
             return '';
         }
+        
         // Unchecked checkbox and radio inputs are not even submitted by browsers ...
         if ($_POST)
         {
             return ($input === $value) ? ' checked="checked"' : '';
         }
+        
         return ($default === TRUE) ? ' checked="checked"' : '';
     }
 }
@@ -850,7 +890,9 @@ if ( ! function_exists('_parse_form_attributes'))
                 $default = array_merge($default, $attributes);
             }
         }
+        
         $att = '';
+        
         foreach ($default as $key => $val)
         {
             if ($key === 'value')
@@ -863,6 +905,7 @@ if ( ! function_exists('_parse_form_attributes'))
             }
             $att .= $key.'="'.$val.'" ';
         }
+        
         return $att;
     }
 }
@@ -885,10 +928,12 @@ if ( ! function_exists('_attributes_to_string'))
         {
             return '';
         }
+        
         if (is_object($attributes))
         {
             $attributes = (array) $attributes;
         }
+        
         if (is_array($attributes))
         {
             $atts = '';
@@ -898,10 +943,12 @@ if ( ! function_exists('_attributes_to_string'))
             }
             return $atts;
         }
+        
         if (is_string($attributes))
         {
             return ' '.$attributes;
         }
+        
         return FALSE;
     }
 }
