@@ -170,7 +170,7 @@ class Forge extends \CodeIgniter\Database\Forge
 	 * @param	array	$field
 	 * @return	string
 	 */
-	protected function _processColumn(string $field)
+	protected function _processColumn($field)
 	{
 		$extra_clause = isset($field['after'])
 			? ' AFTER '.$this->db->escapeIdentifiers($field['after']) : '';
