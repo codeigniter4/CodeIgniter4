@@ -3,7 +3,7 @@
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Database\MigrationRunner;
-use CodeIgniter\View\RenderableInterface;
+use CodeIgniter\View\RendererInterface;
 
 /**
  * Services Configuration file.
@@ -277,7 +277,7 @@ class Services
 
 	//--------------------------------------------------------------------
 
-	public static function pager($config = null, RenderableInterface $view = null, $getShared = true)
+	public static function pager($config = null, RendererInterface $view = null, $getShared = true)
 	{
 		if ($getShared)
 		{
@@ -289,7 +289,7 @@ class Services
 			$config = new Pager();
 		}
 
-		if (! $view instanceof RenderableInterface)
+		if (! $view instanceof RendererInterface)
 		{
 			$view = self::renderer();
 		}
@@ -497,22 +497,25 @@ class Services
 
 	//--------------------------------------------------------------------
 
-	public static function validation($config = null, $getShared = true)
-	{
-		if ($getShared)
-		{
-			return self::getSharedInstance('uri', $config);
-		}
+    /**
+     * The Validation class provides tools for validating input data.
+     */
+    public static function validation(Validation $config = null, $getShared = true)
+    {
+        if ($getShared)
+        {
+            return self::getSharedInstance('validation', $config);
+        }
 
-		if (empty($config))
-		{
-			$config = new \Config\Validation();
-		}
+        if (is_null($config))
+        {
+            $config = new Validation();
+        }
 
-		return new \CodeIgniter\HTTP\URI($config);
-	}
+        return new \CodeIgniter\Validation\Validation($config, self::renderer());
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
 	/**
 	 * View cells are intended to let you insert HTML into view
@@ -526,6 +529,21 @@ class Services
 		}
 
 		return new \CodeIgniter\View\Cell(self::cache());
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * The Typography class provides a way to format text in semantically relevant ways.
+	 */
+	public static function typography($getShared = true)
+	{
+		if ($getShared)
+		{
+			return self::getSharedInstance('typography');
+		}
+
+		return new \CodeIgniter\Typography\Typography();
 	}
 
 	//--------------------------------------------------------------------

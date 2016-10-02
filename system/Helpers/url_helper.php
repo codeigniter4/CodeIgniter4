@@ -157,6 +157,39 @@ if ( ! function_exists('current_url'))
 	}
 
 }
+
+//--------------------------------------------------------------------
+
+if (! function_exists('previous_url'))
+{
+    /**
+     * Returns the previous URL the current visitor was on. For security reasons
+     * we first check in a saved session variable, if it exists, and use that.
+     * If that's not available, however, we'll use a sanitized url from $_SERVER['HTTP_REFERER']
+     * which can be set by the user so is untrusted and not set by certain browsers/servers.
+     *
+     * @param bool $returnObject
+     *
+     * @return \CodeIgniter\HTTP\URI|mixed|string
+     */
+    function previous_url(bool $returnObject = false)
+    {
+        // Grab from the session first, if we have it,
+        // since it's more reliable and safer.
+        // Otherwise, grab a sanitized version from $_SERVER.
+        $referer = $_SESSION['_ci_previous_url']
+                   ?? \CodeIgniter\Services::request()->getServer('HTTP_REFERER', FILTER_SANITIZE_URL);
+
+        $referer = empty($referer)
+            ? site_url('/')
+            : $referer;
+
+        return $returnObject
+            ? new \CodeIgniter\HTTP\URI($referer)
+            : $referer;
+    }
+}
+
 //--------------------------------------------------------------------
 
 if ( ! function_exists('uri_string'))

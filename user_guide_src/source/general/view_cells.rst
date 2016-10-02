@@ -65,4 +65,3 @@ as the fourth parameter::
 
     // Cache the view for 5 minutes
     <?= view_cell('\App\Libraries\Blog::recentPosts', 'limit=5', 300, 'newcacheid') ?>
-

@@ -89,7 +89,7 @@ The following functions are available:
 
 .. php:function:: current_url([$returnObject = false])
 
-	:param	boolean	$returnObject: True if you would like an object returned, instead of a string.
+	:param	boolean	$returnObject: True if you would like a URI instance returned, instead of a string.
 	:returns:	The current URL
 	:rtype:	string|URI
 
@@ -97,8 +97,21 @@ The following functions are available:
 	viewed.
 
 	.. note:: Calling this function is the same as doing this::
-		
+
 		base_url(uri_string());
+
+.. php:function:: previous_url([$returnObject = false])
+
+	:param boolean $returnObject: True if you would like a URI instance returned instead of a string.
+	:returns: The URL the user was previously on
+	:rtype: string|URI
+
+	Returns the full URL (including segments) of the page the user was previously on.
+
+	Due to security issues of blindly trusting the HTTP_REFERER system variable, CodeIgniter will
+	store previously visited pages in the session if it's available. This ensures that we always
+	use a known and trusted source. If the session hasn't been loaded, or is otherwise unavailable,
+	then a sanitized version of HTTP_REFERER will be used.
 
 
 .. php:function:: uri_string()
@@ -209,11 +222,11 @@ The following functions are available:
 		set the ones that are different from what you need. If you want the
 		function to use all of its defaults simply pass an empty array in the
 		third parameter::
-		
+
                     echo anchor_popup('news/local/123', 'Click Me!', array());
 
 	.. note:: The **window_name** is not really an attribute, but an argument to
-		the JavaScript `window.open() <http://www.w3schools.com/jsref/met_win_open.asp>`
+		the JavaScript `window.open() <http://www.w3schools.com/jsref/met_win_open.asp>`_
 		method, which accepts either a window name or a window target.
 
 	.. note:: Any other attribute than the listed above will be parsed as an
@@ -331,7 +344,7 @@ The following functions are available:
 	:returns:	Protocol-prefixed URL string
 	:rtype:	string
 
-	This function will add http&#58;// in the event that a protocol prefix
+	This function will add *http://* in the event that a protocol prefix
 	is missing from a URL.
 
 	Pass the URL string to the function like this::

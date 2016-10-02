@@ -88,7 +88,7 @@ if (! function_exists('cache'))
 if ( ! function_exists('view'))
 {
 	/**
-	 * Grabs the current RenderableInterface-compatible class
+	 * Grabs the current RendererInterface-compatible class
 	 * and tells it to render the specified view. Simply provides
 	 * a convenience method that can be used in Controllers,
 	 * libraries, and routed closures.
@@ -228,7 +228,7 @@ if (! function_exists('session'))
 		// Returning a single item?
 		if (is_string($val))
 		{
-			return $_SESSION[$val] ?: null;
+			return $_SESSION[$val] ?? null;
 		}
 
 		return \Config\Services::session();
@@ -458,25 +458,33 @@ if (! function_exists('helper'))
 	 * Loads a helper file into memory. Supports namespaced helpers,
 	 * both in and out of the 'helpers' directory of a namespaced directory.
 	 *
-	 * @param string $filename
+	 * @param string|array $filenames
 	 *
 	 * @return string
 	 */
-	function helper(string $filename)//: string
+	function helper($filenames)//: string
 	{
 		$loader = Services::locator(true);
 
-		if (strpos($filename, '_helper') === false)
-		{
-			$filename .= '_helper';
-		}
+        if (! is_array($filenames))
+        {
+            $filenames = [$filenames];
+        }
 
-		$path = $loader->locateFile($filename, 'Helpers');
+        foreach ($filenames as $filename)
+        {
+            if (strpos($filename, '_helper') === false)
+            {
+                $filename .= '_helper';
+            }
 
-		if (! empty($path))
-		{
-			include $path;
-		}
+            $path = $loader->locateFile($filename, 'Helpers');
+
+            if (! empty($path))
+            {
+                include $path;
+            }
+        }
 	}
 }
 
@@ -639,4 +647,53 @@ if ( ! function_exists('stringify_attributes'))
 	}
 }
 
-// ------------------------------------------------------------------------
+//--------------------------------------------------------------------
+
+if ( ! function_exists('is_really_writable'))
+{
+    /**
+     * Tests for file writability
+     *
+     * is_writable() returns TRUE on Windows servers when you really can't write to
+     * the file, based on the read-only attribute. is_writable() is also unreliable
+     * on Unix servers if safe_mode is on.
+     *
+     * @link	https://bugs.php.net/bug.php?id=54709
+     * @param	string
+     * @return	bool
+     */
+    function is_really_writable($file)
+    {
+        // If we're on a Unix server with safe_mode off we call is_writable
+        if (DIRECTORY_SEPARATOR === '/' || ! ini_get('safe_mode'))
+        {
+            return is_writable($file);
+        }
+
+        /* For Windows servers and safe_mode "on" installations we'll actually
+         * write a file then read it. Bah...
+         */
+        if (is_dir($file))
+        {
+            $file = rtrim($file, '/').'/'.md5(mt_rand());
+            if (($fp = @fopen($file, 'ab')) === FALSE)
+            {
+                return FALSE;
+            }
+
+            fclose($fp);
+            @chmod($file, 0777);
+            @unlink($file);
+            return TRUE;
+        }
+        elseif ( ! is_file($file) OR ($fp = @fopen($file, 'ab')) === FALSE)
+        {
+            return FALSE;
+        }
+
+        fclose($fp);
+        return TRUE;
+    }
+}
+
+//--------------------------------------------------------------------

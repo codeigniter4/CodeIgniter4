@@ -11,6 +11,29 @@ body {
     */
     padding-top: 30pt;
 }
+#debug-icon{
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    max-width: 34px;
+    max-height: 34px;
+    background: #fff;
+    border-bottom: 1px solid #ddd;
+    border-radius: 20%;
+    margin: 5px;
+    z-index: 10000;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    clear: both;;
+}
+
+ #debug-icon a svg{
+     margin: 1px;
+     max-width:32px;
+     max-height: 32px;
+ }
+#debug-bar a:active, #debug-bar a:link,#debug-bar a:visited, {
+    color: #dd4814;
+}
 #debug-bar {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
     font-size: 12pt;

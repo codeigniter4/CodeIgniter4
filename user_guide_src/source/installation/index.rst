@@ -43,12 +43,12 @@ preferably with a full path, e.g. '*/www/MyUser/system*'.
 One additional measure to take in production environments is to disable
 PHP error reporting and any other development-only functionality. In
 CodeIgniter, this can be done by setting the ``ENVIRONMENT`` constant, which
-is more fully described on the :doc:`security page <../general/security>`.
+is more fully described on the :doc:`security page <../libraries/security>`.
 
 That's it!
 
 If you're new to CodeIgniter, please read the :doc:`Getting
-Started <../overview/getting_started>` section of the User Guide
+Started <../intro/index>` section of the User Guide
 to begin learning how to build dynamic PHP applications. Enjoy!
 
 Composer Installation
