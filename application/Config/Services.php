@@ -4,6 +4,7 @@ use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Database\MigrationRunner;
 use CodeIgniter\View\RendererInterface;
+use Mail\MessageInterface;
 
 /**
  * Services Configuration file.
@@ -239,6 +240,26 @@ class Services
 	}
 
 	//--------------------------------------------------------------------
+
+    /**
+     * The Mailer class facilitates creating and sending emails.
+     */
+    public static function mailer(\CodeIgniter\Mail\MessageInterface $message = null, $config = null, $getShared = true)
+    {
+        if ($getShared)
+        {
+            return self::getSharedInstance('mailer');
+        }
+
+        if (empty($config))
+        {
+            $config = new \Config\Mail();
+        }
+
+        return new \CodeIgniter\Log\Logger($config, $message);
+    }
+
+    //--------------------------------------------------------------------
 
 	public static function migrations(BaseConfig $config = null, ConnectionInterface $db = null, bool $getShared = true)
 	{
