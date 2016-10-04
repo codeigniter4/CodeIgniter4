@@ -236,16 +236,16 @@ to, and have the router lookup the current route to it. This allows route defini
 to update your application code. This is typically used within views to create links.
 
 For example, if you have a route to a photo gallery that you want to link to, you can use the ``route_to()`` helper
-function to get the current route that should be used. The first parameter is the Controller and method, written
-just as it would be defined the destination of a route. Any parameters that should be passed to the route are
-passed in next::
+function to get the current route that should be used. The first parameter is the fully qualified Controller and method,
+separated by a double colon (::), much like you would use when writing the initial route itself. Any parameters that
+should be passed to the route are passed in next::
 
 	// The route is defined as:
-	$routes->add('users/(:id)/gallery(:any)', 'Galleries::showUserGallery/$1/$2');
+	$routes->add('users/(:id)/gallery(:any)', 'App\Controllers\Galleries::showUserGallery/$1/$2');
 
 	// Generate the relative URL to link to user ID 15, gallery 12
 	// Generates: /users/15/gallery/12
-	<a href="<?= route_to('Galleries::showUserGallery', 15, 12) ?>">View Gallery</a>
+	<a href="<?= route_to('App\Controllers\Galleries::showUserGallery', 15, 12) ?>">View Gallery</a>
 
 Using Named Routes
 ==================
