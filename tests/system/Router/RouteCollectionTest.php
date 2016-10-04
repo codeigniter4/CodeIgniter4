@@ -542,6 +542,9 @@ class RouteCollectionTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+    /**
+     * @group single
+     */
 	public function testReverseRoutingFindsSimpleMatch()
 	{
 		$routes = new RouteCollection();
@@ -550,7 +553,7 @@ class RouteCollectionTest extends \CIUnitTestCase
 
 		$match = $routes->reverseRoute('myController::goto', 'string', 13);
 
-		$this->assertEquals('path/string/to/13', $match);
+		$this->assertEquals('/path/string/to/13', $match);
 	}
 
 	//--------------------------------------------------------------------
@@ -590,18 +593,18 @@ class RouteCollectionTest extends \CIUnitTestCase
 	}
 
 	//--------------------------------------------------------------------
-	
+
 	public function testNamedRoutes()
 	{
 		$routes = new RouteCollection();
 
 		$routes->add('users', 'Users::index', ['as' => 'namedRoute']);
 
-		$this->assertEquals('users', $routes->reverseRoute('namedRoute'));
+		$this->assertEquals('/users', $routes->reverseRoute('namedRoute'));
 	}
-	
+
 	//--------------------------------------------------------------------
-	
+
 	public function testNamedRoutesFillInParams()
 	{
 		$routes = new RouteCollection();
@@ -610,7 +613,7 @@ class RouteCollectionTest extends \CIUnitTestCase
 
 		$match = $routes->reverseRoute('namedRoute', 'string', 13);
 
-		$this->assertEquals('path/string/to/13', $match);
+		$this->assertEquals('/path/string/to/13', $match);
 	}
 
 	//--------------------------------------------------------------------
