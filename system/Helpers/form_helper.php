@@ -75,7 +75,7 @@ if ( ! function_exists('form_open'))
             $action = site_url($action);
         }
         
-        $attributes = _attributes_to_string($attributes);
+        $attributes = stringify_attributes($attributes);
         if (stripos($attributes, 'method=') === false)
         {
             $attributes .= ' method="post"';
@@ -206,7 +206,7 @@ if ( ! function_exists('form_input'))
                 'value' => $value
         ];
         
-        return '<input '._parse_form_attributes($data, $defaults)._attributes_to_string($extra)." />\n";
+        return '<input '.parse_form_attributes($data, $defaults).stringify_attributes($extra)." />\n";
     }
 }
 
@@ -253,7 +253,7 @@ if ( ! function_exists('form_upload'))
         is_array($data) OR $data = ['name' => $data];
         $data['type'] = 'file';
         
-        return '<input '._parse_form_attributes($data, $defaults)._attributes_to_string($extra)." />\n";
+        return '<input '.parse_form_attributes($data, $defaults).stringify_attributes($extra)." />\n";
     }
 }
 
@@ -286,7 +286,7 @@ if ( ! function_exists('form_textarea'))
             unset($data['value']); // textareas don't use the value attribute
         }
         
-        return '<textarea '._parse_form_attributes($data, $defaults)._attributes_to_string($extra).'>'
+        return '<textarea '.parse_form_attributes($data, $defaults).stringify_attributes($extra).'>'
                 .htmlspecialchars($val)
                 ."</textarea>\n";
     }
@@ -307,7 +307,7 @@ if ( ! function_exists('form_multiselect'))
      */
     function form_multiselect(string $name = '', array $options = [], array $selected = [], $extra = ''): string
     {
-        $extra = _attributes_to_string($extra);
+        $extra = stringify_attributes($extra);
         
         if (stripos($extra, 'multiple') === false)
         {
@@ -371,9 +371,9 @@ if ( ! function_exists('form_dropdown'))
             }
         }
         
-        $extra = _attributes_to_string($extra);
+        $extra = stringify_attributes($extra);
         $multiple = (count($selected) > 1 && stripos($extra, 'multiple') === false) ? ' multiple="multiple"' : '';
-        $form = '<select '.rtrim(_parse_form_attributes($data, $defaults)).$extra.$multiple.">\n";
+        $form = '<select '.rtrim(parse_form_attributes($data, $defaults)).$extra.$multiple.">\n";
         foreach ($options as $key => $val)
         {
             $key = (string) $key;
@@ -443,7 +443,7 @@ if ( ! function_exists('form_checkbox'))
             unset($defaults['checked']);
         }
         
-        return '<input '._parse_form_attributes($data, $defaults)._attributes_to_string($extra)." />\n";
+        return '<input '.parse_form_attributes($data, $defaults).stringify_attributes($extra)." />\n";
     }
 }
 
@@ -489,7 +489,7 @@ if ( ! function_exists('form_submit'))
                 'value' => $value
         ];
         
-        return '<input '._parse_form_attributes($data, $defaults)._attributes_to_string($extra)." />\n";
+        return '<input '.parse_form_attributes($data, $defaults).stringify_attributes($extra)." />\n";
     }
 }
 
@@ -513,7 +513,7 @@ if ( ! function_exists('form_reset'))
                 'value' => $value
         ];
         
-        return '<input '._parse_form_attributes($data, $defaults)._attributes_to_string($extra)." />\n";
+        return '<input '.parse_form_attributes($data, $defaults).stringify_attributes($extra)." />\n";
     }
 }
 
@@ -542,7 +542,7 @@ if ( ! function_exists('form_button'))
             unset($data['content']); // content is not an attribute
         }
         
-        return '<button '._parse_form_attributes($data, $defaults)._attributes_to_string($extra).'>'
+        return '<button '.parse_form_attributes($data, $defaults).stringify_attributes($extra).'>'
                 .$content
                 ."</button>\n";
     }
@@ -617,20 +617,6 @@ if ( ! function_exists('form_datalist'))
 
 // ------------------------------------------------------------------------
 
-if ( ! function_exists('form_keygen'))
-{
-    function form_keygen()
-    {
-        /* The purpose of the <keygen> element is to provide a secure way to authenticate users.
-         The <keygen> element specifies a key-pair generator field in a form.
-         When the form is submitted, two keys are generated, one private and one public.
-         The private key is stored locally, and the public key is sent to the server.
-         The public key could be used to generate a client certificate to authenticate the user in the future. */
-    }
-}
-
-// ------------------------------------------------------------------------
-
 if ( ! function_exists('form_output'))
 {
     function form_output()
@@ -655,7 +641,7 @@ if ( ! function_exists('form_fieldset'))
      */
     function form_fieldset(string $legend_text = '', array $attributes = []): string
     {
-        $fieldset = '<fieldset'._attributes_to_string($attributes).">\n";
+        $fieldset = '<fieldset'.stringify_attributes($attributes).">\n";
         
         if ($legend_text !== '')
         {
@@ -717,7 +703,7 @@ if ( ! function_exists('set_value'))
     {
         $value = $_POST[$field] ?? $default;
         
-        return ($html_escape) ? html_escape($value) : $value;
+        return ($html_escape) ? esc($value) : $value;
     }
 }
 
@@ -862,7 +848,7 @@ if ( ! function_exists('set_radio'))
 
 // ------------------------------------------------------------------------
 
-if ( ! function_exists('_parse_form_attributes'))
+if ( ! function_exists('parse_form_attributes'))
 {
     /**
      * Parse the form attributes
@@ -873,7 +859,7 @@ if ( ! function_exists('_parse_form_attributes'))
      * @param	array	$default	Default values
      * @return	string
      */
-    function _parse_form_attributes($attributes, $default): string
+    function parse_form_attributes($attributes, $default): string
     {
         if (is_array($attributes))
         {
@@ -910,45 +896,4 @@ if ( ! function_exists('_parse_form_attributes'))
     }
 }
 
-// ------------------------------------------------------------------------
 
-if ( ! function_exists('_attributes_to_string'))
-{
-    /**
-     * Attributes To String
-     *
-     * Helper function used by some of the form helpers
-     *
-     * @param	mixed
-     * @return	string
-     */
-    function _attributes_to_string($attributes): string
-    {
-        if (empty($attributes))
-        {
-            return '';
-        }
-        
-        if (is_object($attributes))
-        {
-            $attributes = (array) $attributes;
-        }
-        
-        if (is_array($attributes))
-        {
-            $atts = '';
-            foreach ($attributes as $key => $val)
-            {
-                $atts .= ' '.$key.'="'.$val.'"';
-            }
-            return $atts;
-        }
-        
-        if (is_string($attributes))
-        {
-            return ' '.$attributes;
-        }
-        
-        return FALSE;
-    }
-}
