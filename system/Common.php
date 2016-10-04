@@ -198,6 +198,7 @@ if ( ! function_exists('esc'))
 				$method = 'escape'.ucfirst($context);
 			}
 
+			// @todo Optimize this to only load a single instance during page request.
 			$escaper = new \Zend\Escaper\Escaper($encoding);
 
 			$data   = $escaper->$method($data);
@@ -640,7 +641,9 @@ if ( ! function_exists('stringify_attributes'))
 
 		foreach ($attributes as $key => $val)
 		{
-			$atts .= ($js) ? $key.'='.$val.',' : ' '.$key.'="'.$val.'"';
+			$atts .= ($js)
+                ? $key.'='.esc($val, 'js').','
+                : ' '.$key.'="'.esc($val, 'attr').'"';
 		}
 
 		return rtrim($atts, ',');

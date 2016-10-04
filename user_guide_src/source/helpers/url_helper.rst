@@ -183,10 +183,12 @@ The following functions are available:
 		echo anchor('', 'Click here');
 		// Prints: <a href="http://example.com/index.php">Click here</a>
 
-        As above, you may specify an alternate configuration.
-        You may find the alternate configuration useful if generating links for a
-        different site than yours, which contains different configuration preferences.
-        We use this for unit testing the framework itself.
+	As above, you may specify an alternate configuration.
+	You may find the alternate configuration useful if generating links for a
+	different site than yours, which contains different configuration preferences.
+	We use this for unit testing the framework itself.
+
+	.. note:: Attributes passed into the anchor function are automatically escaped to protected against XSS attacks.
 
 .. php:function:: anchor_popup([$uri = ''[, $title = ''[, $attributes = FALSE[, $altConfig = NULL]]]])
 
@@ -237,6 +239,8 @@ The following functions are available:
         different site than yours, which contains different configuration preferences.
         We use this for unit testing the framework itself.
 
+	.. note:: Attributes passed into the anchor_popup function are automatically escaped to protected against XSS attacks.
+
 .. php:function:: mailto($email[, $title = ''[, $attributes = '']])
 
 	:param	string	$email: E-mail address
@@ -254,6 +258,8 @@ The following functions are available:
 
 		$attributes = array('title' => 'Mail me');
 		echo mailto('me@my-site.com', 'Contact Me', $attributes);
+
+	.. note:: Attributes passed into the mailto function are automatically escaped to protected against XSS attacks.
 
 .. php:function:: safe_mailto($email[, $title = ''[, $attributes = '']])
 

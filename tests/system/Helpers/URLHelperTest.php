@@ -549,7 +549,7 @@ class URLHelperTest extends \CIUnitTestCase
 	{
 		return [
 			'egpage01'	 => ['<a href="http://example.com/index.php/news/local/123" title="News title">My News</a>', 'news/local/123', 'My News', 'title="News title"'],
-			'egpage02'	 => ['<a href="http://example.com/index.php/news/local/123" title="The best news!">My News</a>', 'news/local/123', 'My News', array ('title' => 'The best news!')],
+			'egpage02'	 => ['<a href="http://example.com/index.php/news/local/123" title="The&#x20;best&#x20;news&#x21;">My News</a>', 'news/local/123', 'My News', array ('title' => 'The best news!')],
 			'egpage03'	 => ['<a href="http://example.com/index.php">Click here</a>', '', 'Click here'],
 			'egpage04'	 => ['<a href="http://example.com/index.php">Click here</a>', '/', 'Click here'],
 		];
@@ -626,7 +626,7 @@ class URLHelperTest extends \CIUnitTestCase
 	{
 		return [
 			'page01' => ['<a href="mailto:me@my-site.com">Click Here to Contact Me</a>', 'me@my-site.com', 'Click Here to Contact Me'],
-			'page02' => ['<a href="mailto:me@my-site.com" title="Mail me">Contact Me</a>', 'me@my-site.com', 'Contact Me', array ('title' => 'Mail me')],
+			'page02' => ['<a href="mailto:me@my-site.com" title="Mail&#x20;me">Contact Me</a>', 'me@my-site.com', 'Contact Me', array ('title' => 'Mail me')],
 			'page03' => ['<a href="mailto:me@my-site.com">me@my-site.com</a>', 'me@my-site.com'],
 		];
 	}
