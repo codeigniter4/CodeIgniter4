@@ -228,6 +228,23 @@ interface UploadedFileInterface
 	 */
 	public function isValid(): bool;
 
+    //--------------------------------------------------------------------
+
+    /**
+     * Returns the destination path for the move operation where overwriting is not expected.
+     *
+     * First, it checks whether the delimiter is present in the filename, if it is, then it checks whether the
+     * last element is an integer as there may be cases that the delimiter may be present in the filename.
+     * For the all other cases, it appends an integer starting from zero before the file's extension.
+     *
+     * @param string $destination
+     * @param string $delimiter
+     * @param int    $i
+     *
+     * @return string
+     */
+    public function getDestination(string $destination, string $delimiter = '_', int $i = 0): string;
+
 	//--------------------------------------------------------------------
 
 }
