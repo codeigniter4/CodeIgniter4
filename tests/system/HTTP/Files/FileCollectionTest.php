@@ -278,5 +278,143 @@ class FileCollectionTest extends \CIUnitTestCase
 		$this->assertEquals($expected, $file->getErrorString());
 	}
 
+    //--------------------------------------------------------------------
+
+    /**
+     * @group move-file
+     */
+    public function testMoveWhereOverwriteIsFalseWithMultipleFilesWithSameName()
+    {
+        $finalFilename = 'fileA';
+
+        $_FILES = [
+            'userfile1' => [
+                'name' => $finalFilename . '.txt',
+                'type' => 'text/plain',
+                'size' => 124,
+                'tmp_name' => '/tmp/fileA.txt',
+                'error' => 0
+            ],
+            'userfile2' => [
+                'name' => 'fileA.txt',
+                'type' => 'text/csv',
+                'size' => 248,
+                'tmp_name' => '/tmp/fileB.txt',
+                'error' => 0
+            ],
+        ];
+
+        $collection = new FileCollection();
+
+        $this->assertTrue($collection->hasFile('userfile1'));
+        $this->assertTrue($collection->hasFile('userfile2'));
+
+        $destination = '/tmp/destination/';
+
+        // Create the destination if not exists
+        is_dir($destination) || mkdir($destination, 0777, true);
+
+        foreach ($collection->all() as $file) {
+            $this->assertTrue($file instanceof UploadedFile);
+            $file->move($destination, $file->getName(), false);
+        }
+
+        $this->assertFileExists($destination . $finalFilename . '.txt');
+        $this->assertFileNotExists($destination . $finalFilename . '_1.txt');
+
+        // Delete the recently created files for the destination above
+        foreach(glob($destination . "*") as $f) {
+            unlink($f);
+        }
+        // Delete the recently created destination dir
+        rmdir($destination);
+    }
+
+    //--------------------------------------------------------------------
+
+    /**
+     * @group move-file
+     */
+    public function testMoveWhereOverwriteIsTrueWithMultipleFilesWithSameName()
+    {
+        $finalFilename = 'file_with_delimiters_underscore';
+
+        $_FILES = [
+            'userfile1' => [
+                'name' => $finalFilename . '.txt',
+                'type' => 'text/plain',
+                'size' => 124,
+                'tmp_name' => '/tmp/fileA.txt',
+                'error' => 0
+            ],
+            'userfile2' => [
+                'name' => $finalFilename . '.txt',
+                'type' => 'text/csv',
+                'size' => 248,
+                'tmp_name' => '/tmp/fileB.txt',
+                'error' => 0
+            ],
+            'userfile3' => [
+                'name' => $finalFilename . '.txt',
+                'type' => 'text/csv',
+                'size' => 248,
+                'tmp_name' => '/tmp/fileC.txt',
+                'error' => 0
+            ],
+        ];
+
+        $collection = new FileCollection();
+
+        $this->assertTrue($collection->hasFile('userfile1'));
+        $this->assertTrue($collection->hasFile('userfile2'));
+        $this->assertTrue($collection->hasFile('userfile3'));
+
+        $destination = '/tmp/destination/';
+
+        // Create the destination if not exists
+        is_dir($destination) || mkdir($destination, 0777, true);
+
+        foreach ($collection->all() as $file) {
+            $this->assertTrue($file instanceof UploadedFile);
+            $file->move($destination, $file->getName(), true);
+        }
+
+        $this->assertFileExists($destination . $finalFilename . '.txt');
+        $this->assertFileExists($destination . $finalFilename . '_1.txt');
+        $this->assertFileExists($destination . $finalFilename . '_2.txt');
+
+        // Delete the recently created files for the destination above
+        foreach(glob($destination . "*") as $f) {
+            unlink($f);
+        }
+        // Delete the recently created destination dir
+        rmdir($destination);
+    }
+
 	//--------------------------------------------------------------------
+}
+
+/*
+ * Overwrite the function so that it will only check whether the file exists or not.
+ * Original function also checks if the file was uploaded with a POST request.
+ *
+ * This overwrite is for testing the move operation.
+ */
+function is_uploaded_file($filename)
+{
+    if (! file_exists($filename))
+    {
+        file_put_contents($filename, 'data');
+    }
+    return file_exists($filename);
+}
+
+/*
+ * Overwrite the function so that it just copy without checking the file is an uploaded file.
+ *
+ * This overwrite is for testing the move operation.
+ */
+function move_uploaded_file($filename, $destination)
+{
+    return copy($filename, $destination);
 }
