@@ -30,7 +30,7 @@ class ForgeTest extends \CIUnitTestCase
 	
 	//-------------------------------------------------------------------
 	
-	public function testCompileFkeyCreate()
+	public function testCreateForeignKeys()
 	{
 	    $forge = new Forge($this->db);
 	    
@@ -47,17 +47,17 @@ class ForgeTest extends \CIUnitTestCase
 	     
 	    $sql = 'ALTER TABLE table ADD CONSTRAINT fk_ftable_fkey FOREIGN KEY (key) REFERENCES ftable (fkey) ON UPDATE CASCADE ON DELETE CASCADE';
 	
-	    $this->assertEquals($sql, $forge->compileFKeyCreate($fk));
+	    $this->assertEquals($sql, $forge->createForeignKeys($fk));
 	}
 	
 	//-------------------------------------------------------------------
 	
-	public function testCompileFkeyDrop()
+	public function testDeleteForeignKey()
 	{
 	    $forge = new Forge($this->db);
 	    
 	    $sql = 'ALTER TABLE table DROP FOREIGN KEY fk_fkey';
 	
-	    $this->assertEquals($sql, $forge->compileFKeyDrop('table', 'fk_fkey'));
+	    $this->assertEquals($sql, $forge->deleteForeignKey('table', 'fk_fkey'));
 	}
 }
