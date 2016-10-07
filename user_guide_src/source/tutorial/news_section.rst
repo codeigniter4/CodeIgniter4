@@ -97,6 +97,9 @@ a new ``News`` controller is defined. Create the new controller at
 ::
 
 	<?php
+
+	use App\Models\NewsModel;
+
 	class News extends \CodeIgniter\Controller
 	{
 		public function index()

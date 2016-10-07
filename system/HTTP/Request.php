@@ -392,7 +392,7 @@ class Request extends Message implements RequestInterface
 				$value = '';
 		}
 
-		if (is_array($value) || is_object($value))
+		if (is_array($value) || is_object($value) || is_null($value))
 		{
 			return $value;
 		}

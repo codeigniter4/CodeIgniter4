@@ -905,6 +905,8 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @param string $search
 	 * @param        ...$params
+     *
+     * @return string
 	 */
 	public function reverseRoute(string $search, ...$params): string
 	{
@@ -964,7 +966,7 @@ class RouteCollection implements RouteCollectionInterface
 
 		if (empty($matches[0]))
 		{
-			return $from;
+			return '/'.ltrim($from, '/');
 		}
 
 		// Build our resulting string, inserting the $params in
@@ -983,7 +985,7 @@ class RouteCollection implements RouteCollectionInterface
 			}
 		}
 
-		return $from;
+		return '/'.ltrim($from, '/');
 	}
 
 	//--------------------------------------------------------------------
