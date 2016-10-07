@@ -1,19 +1,18 @@
 <?php namespace CodeIgniter\HTTP;
 
+use Config\App;
+use CodeIgniter\Services;
+
 final class cookieHelperTest extends \CIUnitTestCase
 {
 
     private $name;
     private $value;
     private $expire;
-
     private $skipped;
 
     public function setUp()
-    {
-        //Output buffering? ob_start();
-        //Mock builders? Services::injectMock();
-        
+    {        
         $this->name   = 'greetings';
         $this->value  = 'hello world';
         $this->expire = 9999;
@@ -21,6 +20,20 @@ final class cookieHelperTest extends \CIUnitTestCase
         $this->skipped = 'Need to solve "Cannot modify header information - headers already sent" issue.';
 
         helper('cookie');
+    }
+
+    //--------------------------------------------------------------------
+    
+    public function testSetCookie()
+    {
+        Services::injectMock('response', new MockResponse(new App()));
+        $response = service('response');
+        $response->setCookie($this->name, $this->value, $this->expire);
+        
+        //TODO: Find a way for set_cookie() to use the MockResponse object.
+        //set_cookie($this->name, $this->value, $this->expire);
+
+        $this->assertTrue($response->hasCookie($this->name));
     }
 
     //--------------------------------------------------------------------
