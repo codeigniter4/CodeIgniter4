@@ -177,6 +177,8 @@ class CodeIgniter
 
 		$this->forceSecureAccess();
 
+        $this->checkEnvironment();
+
 		try
 		{
 			$this->tryToRouteIt($routes);
@@ -758,4 +760,49 @@ class CodeIgniter
 	}
 
 	//--------------------------------------------------------------------
+
+    /**
+     * Important charset-related stuff
+     *
+     * Configure mbstring and/or iconv if they are enabled
+     * and set MB_ENABLED and ICONV_ENABLED constants, so
+     * that we don't repeatedly do extension_loaded() or
+     * function_exists() calls.
+     *
+     * Note: UTF-8 class depends on this. It used to be done
+     * in it's constructor, but it's _not_ class-specific.
+     *
+     */
+    protected function checkEnvironment()
+    {
+        $charset = strtoupper($this->config->charset);
+        ini_set('default_charset', $charset);
+
+        if (extension_loaded('mbstring'))
+        {
+            define('MB_ENABLED', true);
+            // This is required for mb_convert_encoding() to strip invalid characters.
+            // That's utilized by CI_Utf8, but it's also done for consistency with iconv.
+            mb_substitute_character('none');
+        }
+        else
+        {
+            define('MB_ENABLED', false);
+        }
+
+        // There's an ICONV_IMPL constant, but the PHP manual says that using
+        // iconv's predefined constants is "strongly discouraged".
+        if (extension_loaded('iconv'))
+        {
+            define('ICONV_ENABLED', true);
+        }
+        else
+        {
+            define('ICONV_ENABLED', false);
+        }
+
+        ini_set('php.internal_encoding', $charset);
+    }
+
+    //--------------------------------------------------------------------
 }
