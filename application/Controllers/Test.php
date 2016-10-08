@@ -1,5 +1,6 @@
 <?php namespace App\Controllers;
 
+use App\Mail\TestMail;
 use CodeIgniter\Controller;
 use CodeIgniter\Hooks\Hooks;
 
@@ -49,9 +50,18 @@ class Test //extends Controller
 
     public function vfs()
     {
+        helper('filesystem');
+
         return view('form');
     }
 
     //--------------------------------------------------------------------
+
+    public function mail()
+    {
+        mailer(new TestMail())
+            ->setTo('lonnieje@gmail.com')
+            ->send();
+    }
 
 }

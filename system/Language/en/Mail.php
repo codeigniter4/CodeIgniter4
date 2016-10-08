@@ -38,4 +38,5 @@
 
 return [
 	'badEmailsType' => 'Invalid recipient type. Must be to, from, cc, or bcc.',
+    'invalidHandler' => 'The handler `%s` is not a valid Mailer',
 ];

@@ -1,4 +1,4 @@
-<?php namespace Mail;
+<?php namespace CodeIgniter\Mail;
 
 interface MessageInterface
 {
@@ -22,7 +22,7 @@ interface MessageInterface
      *
      * @return $this
      */
-    public function setHeader(string $name, $value = null);
+    public function setHeader(string $name, $value);
 
     //--------------------------------------------------------------------
 

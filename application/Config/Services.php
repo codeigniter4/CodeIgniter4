@@ -248,7 +248,7 @@ class Services
     {
         if ($getShared)
         {
-            return self::getSharedInstance('mailer');
+            return self::getSharedInstance('mailer', $message, $config);
         }
 
         if (empty($config))
@@ -256,7 +256,7 @@ class Services
             $config = new \Config\Mail();
         }
 
-        return new \CodeIgniter\Log\Logger($config, $message);
+        return new \CodeIgniter\Mail\Mailer($config, $message);
     }
 
     //--------------------------------------------------------------------

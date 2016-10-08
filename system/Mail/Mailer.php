@@ -1,7 +1,5 @@
 <?php namespace CodeIgniter\Mail;
 
-use Mail\MessageInterface;
-
 /**
  * Class Mailer
  *
@@ -25,7 +23,7 @@ class Mailer
      * The Mail\Message class that represents
      * the email to be sent.
      *
-     * @var \Mail\MessageInterface
+     * @var \CodeIgniter\Mail\MessageInterface
      */
     protected $message;
 
@@ -51,8 +49,8 @@ class Mailer
      * Takes an instance of a Mail\Message class, and the configuration
      * file, and takes care of
      *
-     * @param \Mail\MessageInterface $message
-     * @param                        $config
+     * @param MessageInterface $message
+     * @param                  $config
      */
     public function __construct($config, MessageInterface $message = null)
     {
@@ -72,7 +70,7 @@ class Mailer
     /**
      * Sets the message class to use.
      *
-     * @param \Mail\MessageInterface $message
+     * @param MessageInterface $message
      *
      * @return $this
      */
@@ -85,13 +83,40 @@ class Mailer
 
     //--------------------------------------------------------------------
 
+    /**
+     * Returns the current Mail Message that we're using.
+     *
+     * @return \CodeIgniter\Mail\MessageInterface
+     */
+    public function getMessage()
+    {
+        return $this->message;
+    }
+
     //--------------------------------------------------------------------
     // Senders
     //--------------------------------------------------------------------
 
+    /**
+     * Fires up a new Mailer instance, and ships our message off to it.
+     *
+     * @param bool $keepData
+     */
     public function send(bool $keepData = false)
     {
+        $handler = $this->message->handlerName ?? $this->config->handler;
 
+        // Make sure we have a valid handler
+        if (! array_key_exists($handler, $this->config->availableHandlers))
+        {
+            throw new \InvalidArgumentException(sprintf(lang('mail.invalidHandler'), $handler));
+        }
+
+        // Make it!
+        $handler = new $this->config->availableHandlers[$handler]($this->config);
+
+        $handler->setMessage($this->message)
+                ->send();
     }
 
     //--------------------------------------------------------------------
@@ -197,15 +222,27 @@ class Mailer
      * Sets the subject line for this message.
      *
      * @todo Does this need to be sanitized to meet RFC?
-     * @todo Some form of variable replacement would be nice here for name replacement, etc?
      *
      * @param string $subject
      *
      * @return $this
      */
-    public function setSubject(string $subject)
+    public function setSubject(string $subject, array $pairs = null)
     {
-        $this->message->subject = $subject;
+        if (! empty($pairs))
+        {
+            $replace = [];
+
+            foreach ($pairs as $key => $val)
+            {
+                $replace['{'.$key.'}'] = $val;
+            }
+
+            $subject = strtr($subject, $replace);
+            unset($replace);
+        }
+
+        $this->message->setSubject($subject);
 
         return $this;
     }

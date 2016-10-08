@@ -490,6 +490,16 @@ if (! function_exists('helper'))
 
 //--------------------------------------------------------------------
 
+if (! function_exists('mailer'))
+{
+    function mailer(\CodeIgniter\Mail\MessageInterface $message = null)
+    {
+        return Services::mailer($message);
+    }
+}
+
+//--------------------------------------------------------------------
+
 if (! function_exists('csrf_token'))
 {
 	/**

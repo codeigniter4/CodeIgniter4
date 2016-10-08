@@ -60,6 +60,16 @@ class Header
 	 */
 	protected $value;
 
+    /**
+     * Whether a space should be added after
+     * the header name when created as a string.
+     * Needed because Mail headers do not allow spaces
+     * where HTTP headers do likes spaces.
+     *
+     * @var bool
+     */
+    protected $space = ' ';
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -68,12 +78,13 @@ class Header
 	 * @param string|null        $name
 	 * @param string|array|null  $value
 	 */
-	public function __construct(string $name = null, $value = null)
+	public function __construct(string $name = null, $value = null, $spaceParts = true)
 	{
-	    $this->name = $name;
-		$this->value = $value;
+	    $this->name  = $name;
+		$this->value = str_replace(["\n", "\r"], '', $value);
+        $this->space = $spaceParts ? ' ' : '';
 	}
-	
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -85,7 +96,7 @@ class Header
 	{
 	    return $this->name;
 	}
-	
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -94,11 +105,11 @@ class Header
 	 *
 	 * @return array|null|string
 	 */
-	public function getValue() 
+	public function getValue()
 	{
 	    return $this->value;
 	}
-	
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -230,9 +241,9 @@ class Header
 	 */
 	public function __toString(): string
 	{
-	    return $this->name.': '.$this->getValueLine();
+	    return $this->name.':'.$this->space.$this->getValueLine();
 	}
 
 	//--------------------------------------------------------------------
-	
+
 }
