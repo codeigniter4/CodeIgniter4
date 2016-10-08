@@ -16,10 +16,46 @@ class MockResponse extends Response
         $httponly = false
     )
     {
-        $_COOKIE[$name] = $value;
+        if (is_array($name))
+        {
+            foreach
+            (
+                [
+                    'value', 
+                    'expire', 
+                    'domain', 
+                    'path', 
+                    'prefix', 
+                    'secure', 
+                    'httponly', 
+                    'name'
+                ] as $item
+            )
+            {
+                if (isset($name[$item]))
+                {
+                    $$item = $name[$item];
+                }
+            }
+        }
 
-        //TODO: Find a way to use setcookie() without it throwing header issues.
-        //setcookie($prefix.$name, $value, $expire, $path, $domain, $secure, $httponly);
+
+        $_COOKIE[$prefix . $name] = $value;
+
+        /*
+            TODO: Find a way to use setcookie() 
+            without it throwing header issues.
+            setcookie
+            (
+                $prefix.$name, 
+                $value, 
+                $expire, 
+                $path, 
+                $domain, 
+                $secure, 
+                $httponly
+            );
+        */
     }
 
     //--------------------------------------------------------------------
@@ -27,6 +63,22 @@ class MockResponse extends Response
     public function hasCookie(string $name): bool
     {
         return array_key_exists($name, $_COOKIE);
+    }
+
+    //--------------------------------------------------------------------
+
+    public function deleteCookie
+    (
+        $name, 
+        string $domain = '', 
+        string $path   = '/', 
+        string $prefix = ''
+    )
+    {
+        $COOKIE[$name] = null;
+        unset($COOKIE[$name]);
+        
+        //set_cookie($name, '', '', $domain, $path, $prefix);
     }
 
 }

@@ -9,7 +9,7 @@ final class cookieHelperTest extends \CIUnitTestCase
     private $name;
     private $value;
     private $expire;
-    private $skipped;
+    private $response;
 
     public function setUp()
     {        
@@ -17,8 +17,9 @@ final class cookieHelperTest extends \CIUnitTestCase
         $this->value  = 'hello world';
         $this->expire = 9999;
 
-        $this->skipped = 'Need to solve "Cannot modify header information - headers already sent" issue.';
-
+        Services::injectMock('response', new MockResponse(new App()));
+        $this->response = service('response');
+        
         helper('cookie');
     }
 
@@ -26,83 +27,68 @@ final class cookieHelperTest extends \CIUnitTestCase
     
     public function testSetCookie()
     {
-        Services::injectMock('response', new MockResponse(new App()));
-        $response = service('response');
-        $response->setCookie($this->name, $this->value, $this->expire);
+        $this->response->setCookie($this->name, $this->value, $this->expire);
         
         //TODO: Find a way for set_cookie() to use the MockResponse object.
         //set_cookie($this->name, $this->value, $this->expire);
 
-        $this->assertTrue($response->hasCookie($this->name));
-    }
+        $this->assertTrue($this->response->hasCookie($this->name));
 
-    //--------------------------------------------------------------------
-
-    public function testSetCookieByDiscreteParameters()
-    {
-        $this->markTestSkipped($this->skipped);
-
-        set_cookie($this->name, $this->value, $this->expire);
-
-        $this->assertEquals(get_cookie($this->name), $this->value);
-
-        //Delete cookie to give way for other tests.
-        delete_cookie($this->name);
+        $this->response->deleteCookie($this->name);
     }
 
     //--------------------------------------------------------------------
 
     public function testSetCookieByArrayParameters()
     {
-        $this->markTestSkipped($this->skipped);
-
         $cookieAttr = array
         (
             'name'   => $this->name, 
             'value'  => $this->value, 
             'expire' => $this->expire
         );
-        set_cookie($cookieAttr);
-
+        //set_cookie($cookieAttr);
+        $this->response->setCookie($cookieAttr);
+        
         $this->assertEquals(get_cookie($this->name), $this->value);
 
-        //Delete cookie to give way for other tests.
-        delete_cookie($this->name);
+        $this->response->deleteCookie($this->name);
     }
 
     //--------------------------------------------------------------------
 
     public function testGetCookie()
     {
-        $this->markTestSkipped($this->skipped);
+        $pre  = 'Hello, I try to';
+        $pst  = 'your site';
+        $unsec = "$pre <script>alert('Hack');</script> $pst";
+        $sec   = "$pre [removed]alert&#40;&#39;Hack&#39;&#41;;[removed] $pst";
+        $unsecured = 'unsecured';
+        $secured   = 'secured';
 
-        $unsecuredScript = "Hello, I try to <script>alert('Hack');</script> your site";
-        $securedScript   = "Hello, I try to [removed]alert&#40;'Hack'&#41;;[removed] your site";
-        $unsecured       = 'unsecured';
-        $secured         = 'secured';
+        //set_cookie($unsecured, $unsec, $this->expire);
+        //set_cookie($secured,   $sec,   $this->expire);
+        $this->response->setCookie($unsecured, $unsec, $this->expire);
+        $this->response->setCookie($secured, $sec, $this->expire);
+        
+        $this->assertEquals($unsec, get_cookie($unsecured, false));
+        $this->assertEquals($sec,   get_cookie($secured,   true));
 
-        set_cookie($unsecured, $unsecuredScript, $this->expire);
-        set_cookie($secured,   $securedScript,   $this->expire);
-
-        $this->assertEquals($unsecuredScript, get_cookie($unsecured, false));
-        $this->assertEquals($securedScript,   get_cookie($secured,   true));
-
-        //Delete cookies to give way for other tests.
-        delete_cookie($unsecured);
-        delete_cookie($secured);
+        $this->response->deleteCookie($unsecured);
+        $this->response->deleteCookie($secured);   
     }
 
     //--------------------------------------------------------------------
 
     public function testDeleteCookie()
     {
-        $this->markTestSkipped($this->skipped);
-
-        set_cookie($this->name, $this->value, $this->expire);
+        //set_cookie($this->name, $this->value, $this->expire);
+        $this->response->setCookie($this->name, $this->value, $this->expire);
         
-        delete_cookie($this->name);
+        $this->response->deleteCookie($this->name);
         
-        $this->assertEquals(get_cookie($this->name), '');
+        //$this->assertEquals(get_cookie($this->name), '');
+        $this->assertTrue($this->response->hasCookie($this->name));
     }
 
 }
