@@ -39,4 +39,8 @@
 return [
 	'badEmailsType' => 'Invalid recipient type. Must be to, from, cc, or bcc.',
     'invalidHandler' => 'The handler `%s` is not a valid Mailer',
+    'missingMessage' => 'A Message must be provided first.',
+    'noFrom' => 'Cannot send mail with no "From" header.',
+    'noRecipients' => 'You must include recipients: To, Cc, or Bcc',
+    'cannotBuildMessage' => 'Oops! Cannot build message.',
 ];

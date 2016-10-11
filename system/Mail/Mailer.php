@@ -121,9 +121,16 @@ class Mailer
 
     //--------------------------------------------------------------------
 
+    /**
+     * Sends a message to the current Queue, instead of actually sending
+     * the message. This can allow sending the email asynchronously, thus
+     * dramatically improving app performance when used with multiple recipients.
+     *
+     * @param bool $keepData
+     */
     public function queue(bool $keepData = false)
     {
-
+        // @todo Implment email queueing once CI has queues.
     }
 
     //--------------------------------------------------------------------
@@ -221,9 +228,8 @@ class Mailer
     /**
      * Sets the subject line for this message.
      *
-     * @todo Does this need to be sanitized to meet RFC?
-     *
      * @param string $subject
+     * @param array  $pairs     key/value pairs to replace placeholders in subject.
      *
      * @return $this
      */
@@ -267,23 +273,6 @@ class Mailer
     //--------------------------------------------------------------------
 
     /**
-     * Sets a custom header value to be sent along with the email.
-     *
-     * @param string $name
-     * @param null   $value
-     *
-     * @return $this
-     */
-    public function setHeader(string $name, $value = null)
-    {
-        $this->message->setHeader($name, $value);
-
-        return $this;
-    }
-
-    //--------------------------------------------------------------------
-
-    /**
      * Initializes the email variables to their initial state.
      *
      * @param bool $resetAttachments
@@ -304,5 +293,32 @@ class Mailer
     //--------------------------------------------------------------------
 
 
+    //--------------------------------------------------------------------
+    // Magic Time
+    //--------------------------------------------------------------------
+
+    /**
+     * Provides access to methods with the Message itself, mainly to
+     * access the common setPriority, etc. methods.
+     *
+     * @param string $name
+     * @param array  $params
+     *
+     * @return $this
+     */
+    public function __call(string $name, array $params = [])
+    {
+        if (! $this->message instanceof MessageInterface)
+        {
+            throw new \RuntimeException(lang('mail.missingMessage'));
+        }
+
+        if (method_exists($this->message, $name))
+        {
+            $this->message->{$name}(...$params);
+
+            return $this;
+        }
+    }
 
 }

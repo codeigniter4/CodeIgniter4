@@ -11,6 +11,13 @@ class Mail
     public $handler = 'smtp';
 
     /**
+     * Used as the User-Agent and X-Mailer header values.
+     *
+     * @var string
+     */
+    public $userAgent = 'CodeIgniter';
+
+    /**
      * This array contains a list of all available Mail Handler
      * classes available within for the system to use, along
      * with an alias that each can be recognized by.

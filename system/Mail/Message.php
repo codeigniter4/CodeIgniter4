@@ -57,7 +57,7 @@ abstract class Message implements MessageInterface
      *
      * @var string
      */
-    protected $HTMLContent;
+    public $HTMLContent;
 
     /**
      * The content that will be sent as the 'text'
@@ -65,7 +65,7 @@ abstract class Message implements MessageInterface
      *
      * @var string
      */
-    protected $textContent;
+    public $textContent;
 
     /**
      * Files to be attached.
@@ -74,7 +74,7 @@ abstract class Message implements MessageInterface
      *
      * @var array
      */
-    protected $attachments = [];
+    public $attachments = [];
 
     /**
      * Dynamic data passed into the class from
@@ -82,7 +82,7 @@ abstract class Message implements MessageInterface
      *
      * @var array
      */
-    protected $data = [];
+    public $data = [];
 
     /**
      * Allows for the message itself to specify
@@ -90,7 +90,7 @@ abstract class Message implements MessageInterface
      *
      * @var string
      */
-    protected $handlerName;
+    public $handlerName;
 
     /**
      * CRLF character sequence
@@ -104,21 +104,35 @@ abstract class Message implements MessageInterface
      * @link	http://www.ietf.org/rfc/rfc822.txt
      * @var	string
      */
-    protected $CRLF = "\n";
+    public $CRLF = "\n";
 
     /**
      * Character set (default: utf-8)
      *
      * @var	string
      */
-    protected $charset = 'utf-8';
+    public $charset = 'utf-8';
 
     /**
      * X-Priority header value.
      *
      * @var	int	1-5
      */
-    protected $priority	= 3;    // Default priority (1 - 5)
+    public $priority	= 3;    // Default priority (1 - 5)
+
+    /**
+     * Whether to apply word-wrapping to the message body.
+     *
+     * @var bool
+     */
+    public $wordwrap = true;
+
+    /**
+     * Number of characters to wrap at.
+     *
+     * @var int
+     */
+    public $wrapChars = 76;
 
     /**
      * Newline character sequence.
@@ -128,6 +142,21 @@ abstract class Message implements MessageInterface
      * @var	string	"\r\n" or "\n"
      */
     public $newline = "\n"; // Default newline. "\r\n" or "\n" (Use "\r\n" to comply with RFC 822)
+
+    /**
+     * Mail encoding
+     *
+     * @var string
+     */
+    public $encoding = '8bit';
+
+    /**
+     * Whether to send multipart alternatives.
+     * Yahoo! doesn't seem to like these.
+     *
+     * @var bool
+     */
+    public $sendMultipart = true;
 
     //--------------------------------------------------------------------
 
@@ -177,6 +206,43 @@ abstract class Message implements MessageInterface
         return $this;
     }
 
+    //--------------------------------------------------------------------
+
+    /**
+     * Sets the HTML portion of the message, which will typically be the
+     * message that's sent nowadays. If HTML content exists, but no TextContent
+     * exists, the TextContent will be created by stripping the HTML.
+     *
+     * @param string $body
+     *
+     * @return $this
+     */
+    public function setHTMLBody(string $body)
+    {
+        $this->HTMLContent = rtrim(str_replace("\r", '', $body));
+
+        return $this;
+    }
+
+    //--------------------------------------------------------------------
+
+    /**
+     * Sets the content used as the text or alternate portion of the body.
+     * This is intended to be used with setHTMLContent setting the primary message.
+     *
+     * @param string $body
+     *
+     * @return $this
+     */
+    public function setTextBody(string $body)
+    {
+        $this->textContent = $body;
+
+        return $this;
+    }
+
+    //--------------------------------------------------------------------
+
     /**
      * A generic method to set one or more emails/names to our various
      * address fields. Used by the Mailer class.
@@ -184,6 +250,8 @@ abstract class Message implements MessageInterface
      * @param             $emails
      * @param string|null $name
      * @param string      $type
+     *
+     * @return $this
      */
     public function setEmails($emails, string $name = null, string $type)
     {
@@ -193,6 +261,71 @@ abstract class Message implements MessageInterface
         }
 
         $this->setHeader($type, $this->parseRecipients($emails, $name));
+
+        return $this;
+    }
+
+    //--------------------------------------------------------------------
+
+    /**
+     * Determines whether the message should be wrapped or not. This should
+     * typically be TRUE to ensure broadest compatibility across servers.
+     *
+     * @param bool $wrap
+     *
+     * @return $this
+     */
+    public function setWordWrap(bool $wrap = true)
+    {
+        $this->wordwrap = $wrap;
+
+        return $this;
+    }
+
+    //--------------------------------------------------------------------
+
+    /**
+     * Set Priority
+     *
+     * @param	int
+     * @return	$this
+     */
+    public function setPriority($n = 3)
+    {
+        $this->priority = preg_match('/^[1-5]$/', $n) ? (int) $n : 3;
+
+        return $this;
+    }
+
+    // --------------------------------------------------------------------
+
+    /**
+     * Set Newline Character
+     *
+     * @param	string
+     * @return	$this
+     */
+    public function setNewline($newline = "\n")
+    {
+        $this->newline = in_array($newline, ["\n", "\r\n", "\r"]) ? $newline : "\n";
+
+        return $this;
+    }
+
+    // --------------------------------------------------------------------
+
+    /**
+     * Set CRLF
+     *
+     * @param	string
+     *
+     * @return	$this
+     */
+    public function setCRLF($crlf = "\n")
+    {
+        $this->CRLF = ($crlf !== "\n" && $crlf !== "\r\n" && $crlf !== "\r") ? "\n" : $crlf;
+
+        return $this;
     }
 
     //--------------------------------------------------------------------
@@ -243,7 +376,54 @@ abstract class Message implements MessageInterface
             }
         }
 
-        return $recipients;
+        return $this->prepareRecipients($recipients);
+    }
+
+    //--------------------------------------------------------------------
+
+    /**
+     * Formats the email names and ensures they've been encoded correctly.
+     *
+     * Expects:
+     *  [
+     *      'John Doe' => 'john.doe@example.com',
+     *      'Jane Doe' => 'jane.doe@example.com'
+     *  ]
+     *
+     * Returns:
+     *  [
+     *      'John Doe <john.doe@example.com>',
+     *      'Jane Doe <jane.doe@example.com>'
+     *  ]
+     *
+     * @param array $recipients
+     *
+     * @return array
+     */
+    protected function prepareRecipients(array $recipients): array
+    {
+        $prepared = [];
+
+        foreach ($recipients as $name => $email)
+        {
+            if (! is_numeric($name))
+            {
+                // only use Q encoding if there are characters that would require it
+                if (! preg_match('/[\200-\377]/', $name))
+                {
+                    // add slashes for non-printing characters, slashes, and double quotes, and surround it in double quotes
+                    $name = '"'.addcslashes($name, "\0..\37\177'\"\\").'"';
+                }
+                else
+                {
+                    $name = $this->prepQEncoding($name);
+                }
+            }
+
+            $prepared[] = "{$name} <{$email}>";
+        }
+
+        return $prepared;
     }
 
     //--------------------------------------------------------------------
@@ -280,52 +460,6 @@ abstract class Message implements MessageInterface
     //--------------------------------------------------------------------
 
     /**
-     * Set Priority
-     *
-     * @param	int
-     * @return	$this
-     */
-    public function setPriority($n = 3)
-    {
-        $this->priority = preg_match('/^[1-5]$/', $n) ? (int) $n : 3;
-
-        return $this;
-    }
-
-    // --------------------------------------------------------------------
-
-    /**
-     * Set Newline Character
-     *
-     * @param	string
-     * @return	$this
-     */
-    public function setNewline($newline = "\n")
-    {
-        $this->newline = in_array($newline, array("\n", "\r\n", "\r")) ? $newline : "\n";
-
-        return $this;
-    }
-
-    // --------------------------------------------------------------------
-
-    /**
-     * Set CRLF
-     *
-     * @param	string
-     *
-     * @return	$this
-     */
-    public function setCRLF($crlf = "\n")
-    {
-        $this->CRLF = ($crlf !== "\n" && $crlf !== "\r\n" && $crlf !== "\r") ? "\n" : $crlf;
-
-        return $this;
-    }
-
-    //--------------------------------------------------------------------
-
-    /**
      * Prep Quoted Printable
      *
      * Prepares string for Quoted-Printable Content-Transfer-Encoding
@@ -334,7 +468,7 @@ abstract class Message implements MessageInterface
      * @param	string
      * @return	string
      */
-    protected function prepQuotedPrintable(string $str): string
+    public function prepQuotedPrintable(string $str): string
     {
         // ASCII code numbers for "safe" characters that can always be
         // used literally, without encoding, as described in RFC 2049.
@@ -444,7 +578,7 @@ abstract class Message implements MessageInterface
      */
     protected function prepQEncoding($str)
     {
-        $str = str_replace(array("\r", "\n"), '', $str);
+        $str = str_replace(["\r", "\n"], '', $str);
 
         if ($this->charset === 'utf-8')
         {
@@ -454,13 +588,13 @@ abstract class Message implements MessageInterface
             if (ICONV_ENABLED === true)
             {
                 $output = @iconv_mime_encode('', $str,
-                    array(
+                    [
                         'scheme' => 'Q',
                         'line-length' => 76,
                         'input-charset' => $this->charset,
                         'output-charset' => $this->charset,
                         'line-break-chars' => $this->CRLF
-                    )
+                    ]
                 );
 
                 // There are reports that iconv_mime_encode() might fail and return FALSE
@@ -511,42 +645,4 @@ abstract class Message implements MessageInterface
 
     //--------------------------------------------------------------------
 
-    //--------------------------------------------------------------------
-    // Here there be Magic!
-    //--------------------------------------------------------------------
-
-    /**
-     * Magic method to allow the Mailer class to update class properties.
-     *
-     * @param string $key
-     * @param        $value
-     */
-    public function __set(string $key, $value)
-    {
-        if (isset($this->$key))
-        {
-            $this->$key = $value;
-        }
-    }
-
-    //--------------------------------------------------------------------
-
-    /**
-     * Magic getter for class properties.
-     *
-     * @param string $key
-     *
-     * @return null
-     */
-    public function __get(string $key)
-    {
-        if (isset($this->$key))
-        {
-            return $this->$key;
-        }
-
-        return null;
-    }
-
-    //--------------------------------------------------------------------
 }
