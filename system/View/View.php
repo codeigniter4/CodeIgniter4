@@ -88,25 +88,29 @@ class View implements RendererInterface {
 	 */
 	protected $performanceData = [];
 
+    /**
+     * @var \Config\View
+     */
+    protected $config;
+
 	//--------------------------------------------------------------------
 
 	/**
 	 * Constructor
 	 *
-	 * @param string $viewPath
-	 * @param type $loader
-	 * @param bool $debug
-	 * @param Logger $logger
+     * @param \Config\View  $config
+	 * @param string        $viewPath
+	 * @param type          $loader
+	 * @param bool          $debug
+	 * @param Logger        $logger
 	 */
-	public function __construct(string $viewPath=null, $loader=null, bool $debug = null, Logger $logger = null)
+	public function __construct($config, string $viewPath=null, $loader=null, bool $debug = null, Logger $logger = null)
 	{
+	    $this->config   = $config;
 		$this->viewPath = rtrim($viewPath, '/ ').'/';
-
-		$this->loader = is_null($loader) ? Services::locator() : $loader;
-
-		$this->logger = is_null($logger) ? Services::logger() : $logger;
-
-		$this->debug = is_null($debug) ? CI_DEBUG : $debug;
+		$this->loader   = is_null($loader) ? Services::locator() : $loader;
+		$this->logger   = is_null($logger) ? Services::logger() : $logger;
+		$this->debug    = is_null($debug) ? CI_DEBUG : $debug;
 	}
 
 	//--------------------------------------------------------------------
@@ -125,9 +129,14 @@ class View implements RendererInterface {
 	 *
 	 * @return string
 	 */
-	public function render(string $view, array $options=null, $saveData=false): string
+	public function render(string $view, array $options=null, $saveData=null): string
 	{
 		$start = microtime(true);
+
+        if (is_null($saveData))
+        {
+            $saveData = $this->config->saveData;
+        }
 
 		$view = str_replace('.php', '', $view).'.php';
 

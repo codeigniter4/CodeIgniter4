@@ -304,14 +304,19 @@ class Services
 	 * The default View class within CodeIgniter is intentionally simple, but this
 	 * service could easily be replaced by a template engine if the user needed to.
 	 */
-	public static function renderer($viewPath = APPPATH.'Views/', $getShared = true)
+	public static function renderer($viewPath = APPPATH.'Views/', $config = null, $getShared = true)
 	{
 		if ($getShared)
 		{
-			return self::getSharedInstance('renderer', $viewPath);
+			return self::getSharedInstance('renderer', $viewPath, $config);
 		}
 
-		return new \CodeIgniter\View\View($viewPath, self::locator(true), CI_DEBUG, self::logger(true));
+		if (is_null($config))
+        {
+            $config = new \Config\View();
+        }
+
+		return new \CodeIgniter\View\View($config, $viewPath, self::locator(true), CI_DEBUG, self::logger(true));
 	}
 
 	//--------------------------------------------------------------------
