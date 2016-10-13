@@ -191,6 +191,22 @@ class ViewTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+    public function testRenderCanSaveDataThroughConfigSetting()
+    {
+        $this->config->saveData = true;
+
+        $view = new View($this->config, $this->viewsDir, $this->loader);
+
+        $view->setVar('testString', 'Hello World');
+        $view->render('simple');
+
+        $expected = ['testString' => 'Hello World'];
+
+        $this->assertEquals($expected, $view->getData());
+    }
+
+    //--------------------------------------------------------------------
+
 	public function testCanDeleteData()
 	{
 		$view = new View($this->config, $this->viewsDir, $this->loader);
