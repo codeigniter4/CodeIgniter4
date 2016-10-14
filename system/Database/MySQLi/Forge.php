@@ -93,7 +93,7 @@ class Forge extends \CodeIgniter\Database\Forge
 	 * @param	array	$attributes	Associative array of table attributes
 	 * @return	string
 	 */
-	protected function _createTableAttributes($attributes)
+	protected function _createTableAttributes(array $attributes): string
 	{
 		$sql = '';
 
@@ -128,7 +128,7 @@ class Forge extends \CodeIgniter\Database\Forge
 	 * @param	mixed	$field		Column definition
 	 * @return	string|string[]
 	 */
-	protected function _alterTable($alter_type, $table, $field)
+	protected function _alterTable(string $alter_type, string $table, $field)
 	{
 		if ($alter_type === 'DROP')
 		{
@@ -200,7 +200,7 @@ class Forge extends \CodeIgniter\Database\Forge
 	 * @param	string	$table	(ignored)
 	 * @return	string
 	 */
-	protected function _processIndexes($table)
+	protected function _processIndexes(string $table): string
 	{
 		$sql = '';
 
