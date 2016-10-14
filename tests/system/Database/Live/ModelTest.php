@@ -1,7 +1,9 @@
 <?php namespace CodeIgniter\Database\Live;
 
 use CodeIgniter\Model;
+use Tests\Support\Models\EntityModel;
 use Tests\Support\Models\JobModel;
+use Tests\Support\Models\SimpleEntity;
 use Tests\Support\Models\UserModel;
 use Tests\Support\Models\ValidModel;
 
@@ -474,5 +476,25 @@ class ModelTest extends \CIDatabaseTestCase
     }
 
     //--------------------------------------------------------------------
+
+    /**
+     * @group single
+     */
+    public function testCanCreateAndSaveEntityClasses()
+    {
+        $model = new EntityModel($this->db);
+
+        $entity = $model->where('name', 'Developer')->first();
+
+        $this->assertTrue($entity instanceof SimpleEntity);
+        $this->assertEquals('Developer', $entity->name);
+        $this->assertEquals('Awesome job, but sometimes makes you bored', $entity->description);
+
+        $entity->name = 'Senior Developer';
+
+        $model->save($entity);
+
+        $this->seeInDatabase('job', ['name' => 'Senior Developer']);
+    }
 
 }

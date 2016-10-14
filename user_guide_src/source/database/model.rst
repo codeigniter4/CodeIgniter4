@@ -298,6 +298,63 @@ automatically, based on whether it finds an array key matching the $primaryKey v
 	];
 	$userModel->save($data);
 
+The save method also can make working with custom class result objects much simpler by recognizing a non-simple
+object and grabbing its public and protected values into an array, which is then passed to the appropriate
+insert or update method. This allows you to work with Entity classes in a very clean way. Entity classes are
+simple classes that represent a single instance of an object type, like a user, a blog post, job, etc. This
+class is responsible for maintaining the business logic surrounding the object itself, like formatting
+elements in a certain way, etc. They shouldn't have any idea about how they are saved to the database. At their
+simplest, they might look like this::
+
+	namespace App\Entities;
+
+	class Job
+	{
+		protected $id;
+		protected $name;
+		protected $description;
+
+		public function __get($key)
+		{
+			if (isset($this->$key))
+			{
+				return $this->$key;
+			}
+		}
+
+		public function __set($key, $value)
+		{
+			if (isset($this->$key))
+			{
+				$this->$key = $value;
+			}
+		}
+	}
+
+A very simple model to work with this might look like::
+
+	class JobModel extends \CodeIgniter\Model
+	{
+		protected $table = 'jobs';
+		protected $returnType = '\App\Entities\Job`;
+		protected $allowedFields = [
+			'name', 'description'
+		];
+	}
+
+This model works with data from the ``jobs`` table, and returns all results as an instance of ``App\Entities\Job``.
+When you need to persist that record to the database, you will need to either write custom methods, or use the
+model's ``save()`` method to inspect the class, grab any public and private properties, and save them to the database::
+
+	// Retrieve a Job instance
+	$job = $model->find(15);
+
+	// Make some changes
+	$job->name = "Foobar";
+
+	// Save the changes
+	$model->save($job);
+
 Deleting Data
 -------------
 

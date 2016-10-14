@@ -546,6 +546,14 @@ class Model
 	 */
 	public function save($data)
 	{
+	    // If $data is using a custom class with public or protected
+        // properties representing the table elements, we need to grab
+        // them as an array.
+        if (is_object($data) && ! $data instanceof \stdClass)
+        {
+            $data = $this->classToArray($data);
+        }
+
 		if (is_object($data) && isset($data->{$this->primaryKey}))
 		{
 			return $this->update($data->{$this->primaryKey}, $data);
@@ -559,6 +567,35 @@ class Model
 	}
 
 	//--------------------------------------------------------------------
+
+    /**
+     * Takes a class an returns an array of it's public and protected
+     * properties as an array suitable for use in creates and updates.
+     *
+     * @param $data
+     *
+     * @return array
+     */
+    protected function classToArray($data): array
+    {
+        $mirror = new \ReflectionClass($data);
+        $props  = $mirror->getProperties(\ReflectionProperty::IS_PUBLIC | \ReflectionProperty::IS_PROTECTED);
+
+        $properties = [];
+
+        // Loop over each property,
+        // saving the name/value in a new array we can return.
+        foreach ($props as $prop)
+        {
+            // Must make protected values accessible.
+            $prop->setAccessible(true);
+            $properties[$prop->getName()] = $prop->getValue($data);
+        }
+
+        return $properties;
+    }
+
+    //--------------------------------------------------------------------
 
 	/**
 	 * Inserts data into the current table. If an object is provided,
