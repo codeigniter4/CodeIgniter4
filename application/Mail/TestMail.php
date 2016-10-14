@@ -7,10 +7,10 @@ class TestMail extends Message implements MessageInterface
 {
     public function build()
     {
-        $this->subject = "It's me, Margaret";
+        $this->setSubject("It's me, Margaret");
 
-        $this->HTMLContent = "<h1>Hello World</h1>";
-        $this->textContent = "Hello World";
+        $this->setHTMLBody("<h1>Hello World</h1>");
+        $this->setTextBody("Hello World");
     }
 
 }

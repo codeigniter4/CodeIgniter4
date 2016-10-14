@@ -109,9 +109,9 @@ abstract class BaseHandler implements MailHandlerInterface
      */
     public function setMessage(MessageInterface $message)
     {
+        // Just assign the message here. It's already been "built"
+        // by the main Mailer class.
         $this->message = $message;
-
-        $this->message->build();
 
         return $this;
     }
@@ -139,6 +139,8 @@ abstract class BaseHandler implements MailHandlerInterface
      */
     protected function prepareSend()
     {
+        die(var_dump($this->message->getHeaders()));
+
         if (! $this->hasHeader('From'))
         {
             throw new \BadMethodCallException(lang('mail.noFrom'));

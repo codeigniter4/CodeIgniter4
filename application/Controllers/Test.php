@@ -60,6 +60,7 @@ class Test //extends Controller
     public function mail()
     {
         mailer(new TestMail())
+            ->setHandler('mail')
             ->setTo('lonnieje@gmail.com')
             ->send();
     }

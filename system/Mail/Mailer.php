@@ -60,8 +60,22 @@ class Mailer
 
     //--------------------------------------------------------------------
 
+    /**
+     * Sets the handler that should be used for this message.
+     *
+     * @param string $handler
+     *
+     * @return $this
+     */
     public function setHandler(string $handler)
     {
+        if (! array_key_exists($handler, $this->config->availableHandlers))
+        {
+            throw new \InvalidArgumentException(sprintf(lang('mail.handlerNotFound'), $handler));
+        }
+
+        $this->message->handler = $handler;
+
         return $this;
     }
 
@@ -77,6 +91,12 @@ class Mailer
     public function setMessage(MessageInterface $message)
     {
         $this->message = $message;
+
+        // Set the default values from the config file first.
+        $this->setMessageDefaults();
+
+        // then allow the message to override the values.
+        $this->message->build();
 
         return $this;
     }
@@ -284,6 +304,17 @@ class Mailer
         // @todo Complete me.
 
         return $this;
+    }
+
+    //--------------------------------------------------------------------
+
+    /**
+     * Sets up any default values we have from the config file.
+     */
+    public function setMessageDefaults()
+    {
+        // From
+        $this->setFrom($this->config->defaultFrom['email'], $this->config->defaultFrom['name']);
     }
 
     //--------------------------------------------------------------------

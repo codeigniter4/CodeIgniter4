@@ -8,7 +8,15 @@ class Mail
      *
      * @var string
      */
-    public $handler = 'smtp';
+    public $handler = 'mail';
+
+    /**
+     * The name and email that emails will be sent from if no
+     * other from has been specified.
+     *
+     * @var array
+     */
+    public $defaultFrom = ['name' => 'John Smith', 'address' => 'john.smith@example.com'];
 
     /**
      * Used as the User-Agent and X-Mailer header values.
@@ -26,5 +34,6 @@ class Mail
      */
     public $availableHandlers = [
         'smtp'  => \CodeIgniter\Mail\Handlers\SMTPHandler::class,
+        'mail'  => \CodeIgniter\Mail\Handlers\MailHandler::class
     ];
 }
