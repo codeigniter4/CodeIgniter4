@@ -1,5 +1,6 @@
 <?php namespace App\Controllers;
 
+use CodeIgniter\Autoloader\FileLocator;
 use CodeIgniter\Controller;
 use CodeIgniter\Hooks\Hooks;
 
@@ -53,5 +54,12 @@ class Test //extends Controller
     }
 
     //--------------------------------------------------------------------
+
+    public function locate()
+    {
+        $locator = service('locator');
+
+        $routes = $locator->search('Config/Routes');
+    }
 
 }
