@@ -570,7 +570,7 @@ class Services
 			// Make sure $getShared is false
 			array_push($params, false);
 
-			static::$instances[$key] = self::$key(...$params);
+			static::$instances[$key] = static::$key(...$params);
 		}
 
 		return static::$instances[$key];
