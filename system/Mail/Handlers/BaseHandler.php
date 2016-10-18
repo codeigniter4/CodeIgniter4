@@ -21,8 +21,6 @@ use CodeIgniter\Mail\MessageInterface;
  */
 abstract class BaseHandler implements MailHandlerInterface
 {
-    use HeaderTrait;
-
     /**
      * @var MessageInterface
      */
@@ -34,6 +32,14 @@ abstract class BaseHandler implements MailHandlerInterface
      * @var string
      */
     protected $body;
+
+    /**
+     * Holds the headers that will be sent
+     * to the client as a string.
+     *
+     * @var string
+     */
+    protected $headerString;
 
     /**
      * @var Mail
@@ -125,7 +131,7 @@ abstract class BaseHandler implements MailHandlerInterface
      */
     public function getMessageID(): string
     {
-        $from = str_replace(['>', '<'], '', $this->getHeaderLine('Return-Path'));
+        $from = str_replace(['>', '<'], '', $this->message->getHeaderLine('Return-Path'));
 
         return '<'.uniqid('').strstr($from, '@').'>';
     }
@@ -139,25 +145,39 @@ abstract class BaseHandler implements MailHandlerInterface
      */
     protected function prepareSend()
     {
-        die(var_dump($this->message->getHeaders()));
+        // Set default From if we don't have one already
+        if (! $this->message->hasHeader('From'))
+        {
+            $this->setDefaultFrom();
+        }
 
-        if (! $this->hasHeader('From'))
+        // Still no from? Bad developer. No cookie.
+        if (! $this->message->hasHeader('From'))
         {
             throw new \BadMethodCallException(lang('mail.noFrom'));
         }
 
-        if (! $this->hasHeader('Reply-To'))
+        // Ensure we have some form of Reply-To set
+        if (! $this->message->hasHeader('Reply-To'))
         {
-            $this->setHeader('Reply-To', $this->getHeader('From'));
+            $this->message->setHeader('Reply-To', $this->message->getHeaderLine('From'));
         }
 
-        if (! $this->hasHeader('To') && ! $this->hasHeader('CC') && ! $this->hasHeader('BCC'))
+        // No recipients? Bad developer. Again.
+        if (! $this->message->hasHeader('To') && ! $this->message->hasHeader('CC') && ! $this->message->hasHeader('BCC'))
         {
             throw new \BadMethodCallException(lang('mail.noRecipients'));
         }
 
+        // Ensure the mail-specific X-* headers are built
         $this->buildHeaders();
 
+        // Let the message build itself and customize
+        // anything it needs to. Must be called prior
+        // to buildMessage().
+        $this->message->build();
+
+        // Now build the message and format it for the mail clients.
         if ($this->buildMessage() === false)
         {
             throw new \RuntimeException(lang('mail.cannotBuildMessage'));
@@ -167,25 +187,56 @@ abstract class BaseHandler implements MailHandlerInterface
     //--------------------------------------------------------------------
 
     /**
-     * Builds the final headers.
+     * Attempts to set a default value to the From header based
+     * on values set in the Mail config file, $defaulFrom.
      */
-    protected function buildHeaders()
+    protected function setDefaultFrom()
     {
-        $this->setHeader('X-Sender', $this->getHeaderLine('From'));
-        $this->setHeader('X-Mailer', $this->config->userAgent);
-        $this->setHeader('X-Priority', $this->priorities[$this->message->priority]);
-        $this->setHeader('Message-ID', $this->getMessageID());
-        $this->setHeader('Mime-Version', '1.0');
+        if (! isset($this->config->defaultFrom) || ! is_array($this->config->defaultFrom))
+        {
+            throw new \BadMethodCallException(lang('mail.badDefaultFrom'));
+        }
+
+        if (empty($this->config->defaultFrom['address']))
+        {
+            throw new \BadMethodCallException(lang('mail.badDefaultFrom'));
+        }
+
+        $this->message->setEmails($this->config->defaultFrom['address'], $this->config->defaultFrom['name'], 'from');
     }
 
     //--------------------------------------------------------------------
 
+    /**
+     * Builds the final headers.
+     */
+    protected function buildHeaders()
+    {
+        $this->message->setHeader('X-Sender', $this->message->getHeaderLine('From'));
+        $this->message->setHeader('X-Mailer', $this->config->userAgent);
+        $this->message->setHeader('X-Priority', $this->priorities[$this->message->priority]);
+        $this->message->setHeader('Message-ID', $this->getMessageID());
+        $this->message->setHeader('Mime-Version', '1.0');
+    }
+
+    //--------------------------------------------------------------------
+
+    /**
+     * Creates the final body of the message in the format the clients expect to see it.
+     * Content type is determine automatically based on whether HTMLContent or TextContent
+     * of the message is set.
+     *
+     * @return bool
+     */
     protected function buildMessage(): bool
     {
         if ($this->message->wordwrap === true && ! empty($this->message->textContent))
         {
             $this->message->textContent = $this->wordWrap($this->message->textContent);
         }
+
+        // Take our current headers and fill out to $this->headerString
+        $this->writeHeaders();
 
         // Build the message body basics, depending on the content type.
         switch ($this->getContentType())
@@ -205,6 +256,23 @@ abstract class BaseHandler implements MailHandlerInterface
         }
 
         return true;
+    }
+
+    //--------------------------------------------------------------------
+
+    /**
+     * Writes the headers our to this->headerString so they can
+     * be sent to the client.
+     */
+    protected function writeHeaders()
+    {
+        $this->headerString = '';
+
+        foreach ($this->message->getHeaders() as $header)
+        {
+            $this->headerString .= (string)$header.$this->message->newline;
+        }
+
     }
 
     //--------------------------------------------------------------------

@@ -44,4 +44,5 @@ return [
     'noRecipients' => 'You must include recipients: To, Cc, or Bcc',
     'cannotBuildMessage' => 'Oops! Cannot build message.',
     'handlerNotFound' => '\'%s\' is not a valid Mail Handler',
+    'badDefaultFrom' => 'Invalid defaultFrom setting in Mail config.',
 ];

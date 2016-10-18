@@ -93,6 +93,14 @@ abstract class Message implements MessageInterface
     public $handlerName;
 
     /**
+     * Holds a "clean" version of the subject
+     * before it's been Q Encoded.
+     *
+     * @var string
+     */
+    public $subject;
+
+    /**
      * CRLF character sequence
      *
      * RFC 2045 specifies that for 'quoted-printable' encoding,
@@ -199,6 +207,8 @@ abstract class Message implements MessageInterface
      */
     public function setSubject(string $subject)
     {
+        $this->subject = $subject;
+
         $subject = $this->prepQEncoding($subject);
 
         $this->setHeader('Subject', $subject);
@@ -255,12 +265,12 @@ abstract class Message implements MessageInterface
      */
     public function setEmails($emails, string $name = null, string $type)
     {
-        if (! in_array($type, ['to', 'from', 'cc', 'bcc', 'reply']))
+        if (! in_array(strtolower($type), ['to', 'from', 'cc', 'bcc', 'reply']))
         {
             throw new \InvalidArgumentException(lang('mail.badEmailsType'));
         }
 
-        $this->setHeader($type, $this->parseRecipients($emails, $name));
+        $this->setHeader(ucfirst($type), $this->parseRecipients($emails, $name));
 
         return $this;
     }
@@ -357,7 +367,7 @@ abstract class Message implements MessageInterface
         elseif (is_string($emails))
         {
             $recipients[] = empty($name)
-                ? trim($emails)
+                ? [trim($emails)]
                 : [trim($name) => $this->cleanEmail($emails)];
         }
         // An array of emails
@@ -419,8 +429,24 @@ abstract class Message implements MessageInterface
                     $name = $this->prepQEncoding($name);
                 }
             }
+            else
+            {
+                $name = '';
+            }
 
-            $prepared[] = "{$name} <{$email}>";
+            if (is_array($email) && count($email) === 1)
+            {
+                $email = array_pop($email);
+            }
+
+            if (empty($name))
+            {
+                $prepared[] = $email;
+            }
+            else
+            {
+                $prepared[] = trim("{$name} <{$email}>");
+            }
         }
 
         return $prepared;
@@ -436,7 +462,7 @@ abstract class Message implements MessageInterface
      *
      * @return string
      */
-    protected function cleanEmail(string $email): string
+    public function cleanEmail(string $email): string
     {
         if (! is_array($email))
         {

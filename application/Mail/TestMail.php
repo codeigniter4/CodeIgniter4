@@ -9,7 +9,7 @@ class TestMail extends Message implements MessageInterface
     {
         $this->setSubject("It's me, Margaret");
 
-        $this->setHTMLBody("<h1>Hello World</h1>");
+//        $this->setHTMLBody("<h1>Hello World</h1>");
         $this->setTextBody("Hello World");
     }
 
