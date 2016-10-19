@@ -133,7 +133,7 @@ class Cell
 		// Can we cache it?
 		if (! empty($this->cache) && $ttl !== 0)
 		{
-			$this->cache->set($cacheName, $output, $ttl);
+			$this->cache->save($cacheName, $output, $ttl);
 		}
 		return $output;
 	}
