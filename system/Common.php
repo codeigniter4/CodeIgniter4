@@ -491,6 +491,24 @@ if (! function_exists('helper'))
 
 //--------------------------------------------------------------------
 
+if (! function_exists('app_timezone'))
+{
+	/**
+	 * Returns the timezone the application has been set to display
+	 * dates in. This might be different than the timezone set
+	 * at the server level, as you often want to stores dates in UTC
+	 * and convert them on the fly for the user.
+	 */
+	function app_timezone()
+	{
+		$config = new \Config\App();
+
+		return $config->appTimezone;
+	}
+}
+
+//--------------------------------------------------------------------
+
 if (! function_exists('csrf_token'))
 {
 	/**
