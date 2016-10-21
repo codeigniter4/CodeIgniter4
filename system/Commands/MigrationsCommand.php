@@ -302,7 +302,7 @@ class Migration_{name} extends Migration
 }
 
 EOD;
-        $template = str_replace('{name}', ucfirst($name), $template);
+        $template = str_replace('{name}', $name, $template);
 
         helper('filesystem');
         if (! write_file($path, $template))
