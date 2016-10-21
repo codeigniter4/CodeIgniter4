@@ -558,7 +558,7 @@ class Model
 		{
 			return $this->update($data->{$this->primaryKey}, $data);
 		}
-		elseif (is_array($data) && array_key_exists($this->primaryKey, $data))
+		elseif (is_array($data) && ! empty($data[$this->primaryKey]))
 		{
 			return $this->update($data[$this->primaryKey], $data);
 		}
