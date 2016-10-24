@@ -251,6 +251,10 @@ The following constants are always available anywhere within your application.
 Core Constants
 ==============
 
+.. php:const:: ROOTPATH
+
+	The path to the main application directory. Just above ``public``.
+
 .. php:const:: APPPATH
 
 	The path to the **application** directory.
