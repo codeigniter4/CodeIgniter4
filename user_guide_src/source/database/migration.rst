@@ -124,6 +124,25 @@ match the name of the database group exactly::
     public function down() { . . . }
   }
 
+Namespaces
+==========
+
+The migration library will automatically scan all namespaces you have defined within 
+**application/Config/Autoload.php** and its ``$psr4`` property for matching directory 
+names. It will include all migrations it finds. 
+
+For example, assume that we have the the following namespaces defined in our Autoload
+configuration file::
+
+	$psr4 = [
+		'App' => APPPATH,
+		'MyCompany' => ROOTPATH.'MyCompany'
+	];
+
+This will look for any migrations located at both **APPPATH/Database/Migrations** and
+**ROOTPATH/Database/Migrations**. This makes it simple to include migrations in your
+re-usable, modular code suites.
+
 *************
 Usage Example
 *************
@@ -225,7 +244,7 @@ The following is a table of all the config options for migrations, available in 
 Preference                 Default                Options                    Description
 ========================== ====================== ========================== =============================================================
 **enabled**                FALSE                  TRUE / FALSE               Enable or disable migrations.
-**path**                   APPPATH.'migrations/'  None                       The path to your migrations folder.
+**path**                   'Database/Migrations/' None                       The path to your migrations folder.
 **currentVersion**         0                      None                       The current version your database should use.
 **table**                  migrations             None                       The table name for storing the schema version number.
 **type**                   'timestamp'            'timestamp' / 'sequential' The type of numeric identifier used to name migration files.

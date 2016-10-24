@@ -38,6 +38,7 @@
 
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\ConfigException;
+use Config\Autoload;
 
 /**
  * Class MigrationRunner
@@ -115,7 +116,7 @@ class MigrationRunner
 		$this->type           = $config->type           ?? 'timestamp';
 		$this->table          = $config->table          ?? 'migrations';
 		$this->currentVersion = $config->currentVersion ?? 0;
-		$this->path           = $config->path           ?? APPPATH.'Database/Migrations/';
+		$this->path           = $config->path           ?? 'Database/Migrations/';
 
 		$this->path = rtrim($this->path, '/').'/';
 
@@ -165,15 +166,6 @@ class MigrationRunner
 
 		// Note: We use strings, so that timestamp versions work on 32-bit systems
 		$currentVersion = $this->getVersion($group);
-
-		if ($this->type === 'sequential')
-		{
-			$targetVersion = sprintf('%03d', $targetVersion);
-		}
-		else
-		{
-			$targetVersion = (string)$targetVersion;
-		}
 
 		$migrations = $this->findMigrations();
 
@@ -263,11 +255,11 @@ class MigrationRunner
 			throw new \RuntimeException(lang('Migrations.migNotFound'));
 		}
 
-		$lastMigration = basename(end($migrations));
+		$lastMigration = basename(end($migrations), '.php');
 
 		// Calculate the last migration step from existing migration
 		// filenames and proceed to the standard version migration
-		return $this->version($this->getMigrationNumber($lastMigration));
+		return $this->version($lastMigration);
 	}
 
 	//--------------------------------------------------------------------
@@ -293,25 +285,31 @@ class MigrationRunner
 	{
 		$migrations = [];
 
-		// Load all *_*.php files in the migrations path
-		foreach (glob($this->path.'*_*.php') as $file)
-		{
-			$name = basename($file, '.php');
+        $config = new Autoload();
 
-			// Filter out non-migration files
-			if (preg_match($this->regex, $name))
-			{
-				$number = $this->getMigrationNumber($name);
+        // Loop through all of our namespaced folders
+        // searching for migration directories.
+        foreach ($config->psr4 as $namespace => $dir)
+        {
+            $dir = rtrim($dir, '/').'/'.$this->path;
 
-				// There cannot be duplicate migration numbers
-				if (isset($migrations[$number]))
-				{
-					throw new \RuntimeException(lang('Migrations.migMultiple').$number);
-				}
+            if (! is_dir($dir))
+            {
+                continue;
+            }
 
-				$migrations[$number] = $file;
-			}
-		}
+            // Load all *_*.php files in the migrations path
+            foreach (glob($dir.'*_*.php') as $file)
+            {
+                $name = basename($file, '.php');
+
+                // Filter out non-migration files
+                if (preg_match($this->regex, $name))
+                {
+                    $migrations[$name] = $file;
+                }
+            }
+        }
 
 		ksort($migrations);
 
