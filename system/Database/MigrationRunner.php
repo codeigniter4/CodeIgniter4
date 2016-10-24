@@ -234,11 +234,11 @@ class MigrationRunner
 					throw new \RuntimeException(sprintf(lang('Migrations.migMissingMethod'), $method));
 				}
 
-				call_user_func([$instance, $method]);
+				$instance->{$method}();
 
 				$currentVersion = $number;
-				if ($method === 'up') $this->addHistory($currentVersion, $instance->getDBGroup());
-				elseif ($method === 'down') $this->removeHistory($currentVersion, $instance->getDBGroup());
+				if ($method === 'up') $this->addHistory(basename($file, '.php'), $instance->getDBGroup());
+				elseif ($method === 'down') $this->removeHistory(basename($file, '.php'), $instance->getDBGroup());
 			}
 		}
 
@@ -500,17 +500,17 @@ class MigrationRunner
 
 		$forge->addField([
 			'version' => [
-				'type' => 'BIGINT',
-			    'constraint' => 20,
+				'type' => 'VARCHAR',
+			    'constraint' => 255,
 			    'null' => false
 			],
 			'group' => [
-				'type' => 'varchar',
+				'type' => 'VARCHAR',
 			    'constraint' => 255,
 			    'null' => false
 			],
 			'time' => [
-				'type' => 'timestamp',
+				'type' => 'TIMESTAMP',
 			    'null' => false
 			]
 		]);
