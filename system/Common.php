@@ -547,6 +547,21 @@ if (! function_exists('csrf_hash'))
 
 //--------------------------------------------------------------------
 
+if (! function_exists('csrf_field'))
+{
+    /**
+     * Generates a hidden input field for use within manually generated forms.
+     *
+     * @return string
+     */
+    function csrf_field()
+    {
+        return '<input type="hidden" name="'. csrf_token() .'" value="'. csrf_hash() .'">';
+    }
+}
+
+//--------------------------------------------------------------------
+
 if (! function_exists('force_https'))
 {
 	/**
