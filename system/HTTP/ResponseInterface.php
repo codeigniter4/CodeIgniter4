@@ -55,7 +55,7 @@ interface ResponseInterface
 {
 
 	/**
-	 * Constants for status codes. 
+	 * Constants for status codes.
 	 * From  https://en.wikipedia.org/wiki/List_of_HTTP_status_codes
 	 */
 	// Informational
@@ -141,7 +141,7 @@ interface ResponseInterface
 	 * @return self
 	 * @throws \InvalidArgumentException For invalid status code arguments.
 	 */
-	public function setStatusCode(int $code, string $reason = ''): Response;
+	public function setStatusCode(int $code, string $reason = '');
 
 	//--------------------------------------------------------------------
 
@@ -167,7 +167,7 @@ interface ResponseInterface
 	 *
 	 * @return Response
 	 */
-	public function setDate(\DateTime $date): Response;
+	public function setDate(\DateTime $date);
 
 	//--------------------------------------------------------------------
 
@@ -180,7 +180,7 @@ interface ResponseInterface
 	 *
 	 * @return Response
 	 */
-	public function setContentType(string $mime, string $charset = 'UTF-8'): Response;
+	public function setContentType(string $mime, string $charset = 'UTF-8');
 
 	//--------------------------------------------------------------------
 	//--------------------------------------------------------------------
@@ -193,7 +193,7 @@ interface ResponseInterface
 	 * Sets the appropriate headers to ensure this response
 	 * is not cached by the browsers.
 	 */
-	public function noCache(): Response;
+	public function noCache();
 
 	//--------------------------------------------------------------------
 
@@ -225,7 +225,7 @@ interface ResponseInterface
 	 *
 	 * @return $this
 	 */
-	public function setCache(array $options = []): Response;
+	public function setCache(array $options = []);
 
 	//--------------------------------------------------------------------
 
@@ -237,7 +237,7 @@ interface ResponseInterface
 	 *
 	 * @param $date
 	 */
-	public function setLastModified($date): Response;
+	public function setLastModified($date);
 
 	//--------------------------------------------------------------------
 	//--------------------------------------------------------------------
@@ -249,7 +249,7 @@ interface ResponseInterface
 	 *
 	 * @return Response
 	 */
-	public function send(): Response;
+	public function send();
 
 	//--------------------------------------------------------------------
 }

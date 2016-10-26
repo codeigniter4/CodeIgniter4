@@ -1172,7 +1172,7 @@ class Model
 	 *
 	 * @return $this|null
 	 */
-	public function __call(string $name, array $params)
+	public function __call($name, array $params)
 	{
 		$result = null;
 

@@ -272,7 +272,7 @@ class Response extends Message implements ResponseInterface
 	 * @return self
 	 * @throws \InvalidArgumentException For invalid status code arguments.
 	 */
-	public function setStatusCode(int $code, string $reason = ''): self
+	public function setStatusCode(int $code, string $reason = '')
 	{
 		// Valid range?
 		if ($code < 100 || $code > 599)
@@ -335,7 +335,7 @@ class Response extends Message implements ResponseInterface
 	 *
 	 * @return Response
 	 */
-	public function setDate(\DateTime $date): self
+	public function setDate(\DateTime $date)
 	{
 		$date->setTimezone(new \DateTimeZone('UTC'));
 
@@ -355,7 +355,7 @@ class Response extends Message implements ResponseInterface
 	 *
 	 * @return Response
 	 */
-	public function setContentType(string $mime, string $charset = 'UTF-8'): self
+	public function setContentType(string $mime, string $charset = 'UTF-8')
 	{
 		if (! empty($charset))
 		{
@@ -419,7 +419,7 @@ class Response extends Message implements ResponseInterface
 	 *
 	 * @return $this
 	 */
-	public function setCache(array $options = []): self
+	public function setCache(array $options = [])
 	{
 		if (empty($options))
 		{
@@ -459,7 +459,7 @@ class Response extends Message implements ResponseInterface
 	 *
 	 * @param $date
 	 */
-	public function setLastModified($date): self
+	public function setLastModified($date)
 	{
 		if ($date instanceof \DateTime)
 		{
@@ -486,7 +486,7 @@ class Response extends Message implements ResponseInterface
 	 *
 	 * @return Response
 	 */
-	public function send(): self
+	public function send()
 	{
 		// If we're enforcing a Content Security Policy,
 		// we need to give it a chance to build out it's headers.
@@ -508,7 +508,7 @@ class Response extends Message implements ResponseInterface
 	 *
 	 * @return Response
 	 */
-	public function sendHeaders(): self
+	public function sendHeaders()
 	{
 		// Have the headers already been sent?
 		if (headers_sent())
@@ -551,13 +551,15 @@ class Response extends Message implements ResponseInterface
 
 	//--------------------------------------------------------------------
 
-	/**
-	 * Perform a redirect to a new URL, in two flavors: header or location.
-	 *
-	 * @param string $uri  The URI to redirect to
-	 * @param string $method
-	 * @param int    $code The type of redirection, defaults to 302
-	 */
+    /**
+     * Perform a redirect to a new URL, in two flavors: header or location.
+     *
+     * @param string $uri  The URI to redirect to
+     * @param string $method
+     * @param int    $code The type of redirection, defaults to 302
+     *
+     * @throws \CodeIgniter\HTTP\RedirectException
+     */
 	public function redirect(string $uri, string $method = 'auto', int $code = null)
 	{
 		// IIS environment likely? Use 'refresh' for better compatibility

@@ -98,7 +98,7 @@ class Message
 	 *
 	 * @return Message
 	 */
-	public function setBody(&$data): self
+	public function setBody(&$data)
 	{
 		$this->body = $data;
 
@@ -114,7 +114,7 @@ class Message
 	 *
 	 * @return \CodeIgniter\HTTP\Message
 	 */
-	public function appendBody($data): self
+	public function appendBody($data)
 	{
 	    $this->body .= (string)$data;
 
@@ -271,7 +271,7 @@ class Message
 	 *
 	 * @return Message
 	 */
-	public function setHeader(string $name, $value): self
+	public function setHeader(string $name, $value)
 	{
 		if (! isset($this->headers[$name]))
 		{
@@ -301,7 +301,7 @@ class Message
 	 *
 	 * @return Message
 	 */
-	public function removeHeader(string $name): self
+	public function removeHeader(string $name)
 	{
 		$orig_name = $this->getHeaderName($name);
 
@@ -322,7 +322,7 @@ class Message
 	 *
 	 * @return string
 	 */
-	public function appendHeader(string $name, $value): self
+	public function appendHeader(string $name, $value)
 	{
 		$orig_name = $this->getHeaderName($name);
 
@@ -342,7 +342,7 @@ class Message
 	 *
 	 * @return string
 	 */
-	public function prependHeader(string $name, $value): self
+	public function prependHeader(string $name, $value)
 	{
 		$orig_name = $this->getHeaderName($name);
 
@@ -372,7 +372,7 @@ class Message
 	 *
 	 * @return Message
 	 */
-	public function setProtocolVersion(string $version): self
+	public function setProtocolVersion(string $version)
 	{
 		if (! is_numeric($version))
 		{
