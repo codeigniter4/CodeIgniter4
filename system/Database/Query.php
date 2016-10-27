@@ -404,10 +404,15 @@ class Query implements QueryInterface
 		foreach ($binds as $placeholder => $value)
 		{
 			$escapedValue = $this->db->escape($value);
+
 			if (is_array($escapedValue))
 			{
 				$escapedValue = '('.implode(',', $escapedValue).')';
 			}
+
+			// $ causes issues in preg_replace, but are needed
+            // for password hashes
+            $escapedValue = str_replace('$', '\$', $escapedValue);
 
 			$sql = preg_replace('/:'.$placeholder.'(?!\w)/', $escapedValue, $sql);
 		}
