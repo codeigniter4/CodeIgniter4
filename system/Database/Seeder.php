@@ -129,20 +129,31 @@ class Seeder
 	    {
 			throw new \InvalidArgumentException('No Seeder was specified.');
 	    }
-		
-		$path = $this->seedPath.str_replace('.php', '', $class).'.php';
-		
-		if (! is_file($path))
-		{
-			throw new \InvalidArgumentException('The specified Seeder is not a valid file: '. $path);
-		}
 
-		if (! class_exists($class, false))
-		{
-			require $path;
-		}
+		$path = str_replace('.php', '', $class).'.php';
 
-		$seeder = new $class($this->config);
+        // If we have namespaced class, simply try to load it.
+        if (strpos($class, '\\') !== false)
+        {
+            $seeder = new $class($this->config);
+        }
+        // Otherwise, try to load the class manually.
+        else
+        {
+            $path = $this->seedPath.$path;
+
+            if (! is_file($path))
+            {
+                throw new \InvalidArgumentException('The specified Seeder is not a valid file: '. $path);
+            }
+
+            if (! class_exists($class, false))
+            {
+                require $path;
+            }
+
+            $seeder = new $class($this->config);
+        }
 
 		$seeder->run();
 
