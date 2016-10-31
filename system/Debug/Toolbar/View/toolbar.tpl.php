@@ -187,12 +187,16 @@
 
 			<table id="request_headers_table">
 				<tbody>
+
 				<?php foreach ($headers as $header => $value) : ?>
 					<?php if (empty($value)) continue; ?>
-					<tr>
-						<td><?= esc($value->getName()) ?></td>
-						<td><?= esc($value->getValueLine()) ?></td>
-					</tr>
+					<?php if (! is_array($value)) { $value = [$value]; } ?>
+					<?php foreach ($value as $h) ?>
+						<tr>
+							<td><?= esc($h->getName()) ?></td>
+							<td><?= esc($h->getValueLine()) ?></td>
+						</tr>
+					<?php endforeach ?>
 				<?php endforeach; ?>
 				</tbody>
 			</table>
