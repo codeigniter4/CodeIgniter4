@@ -191,12 +191,12 @@
 				<?php foreach ($headers as $header => $value) : ?>
 					<?php if (empty($value)) continue; ?>
 					<?php if (! is_array($value)) { $value = [$value]; } ?>
-					<?php foreach ($value as $h) ?>
+					<?php foreach ($value as $h) : ?>
 						<tr>
 							<td><?= esc($h->getName()) ?></td>
 							<td><?= esc($h->getValueLine()) ?></td>
 						</tr>
-					<?php endforeach ?>
+					<?php endforeach; ?>
 				<?php endforeach; ?>
 				</tbody>
 			</table>
