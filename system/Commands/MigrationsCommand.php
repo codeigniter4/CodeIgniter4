@@ -245,7 +245,7 @@ class MigrationsCommand extends \CodeIgniter\Controller
 
 		if (empty($seedName))
 		{
-			$seedName = CLI::prompt(lang('Migrations.migSeeder'));
+			$seedName = CLI::prompt(lang('Migrations.migSeeder'), 'DatabaseSeeder');
 		}
 
 		if (empty($seedName))
