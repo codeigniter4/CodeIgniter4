@@ -35,7 +35,7 @@ namespace CodeIgniter\Typography;
  * @license	http://opensource.org/licenses/MIT	MIT License
  * @link	http://codeigniter.com
  * @since	Version 3.0.0
- * @filesource 
+ * @filesource
  */
 
 /**
@@ -137,16 +137,16 @@ class Typography
 		// not contain <pre> tags, and it keeps the PCRE patterns below simpler and faster
 		if (strpos($str, '<pre') !== false)
 		{
-			$str = preg_replace_callback('#<pre.*?>.*?</pre>#si', [$this, '_protect_characters'], $str);
+			$str = preg_replace_callback('#<pre.*?>.*?</pre>#si', [$this, 'protectCharacters'], $str);
 		}
 
 		// Convert quotes within tags to temporary markers.
-		$str = preg_replace_callback('#<.+?>#si', [$this, '_protect_characters'], $str);
+		$str = preg_replace_callback('#<.+?>#si', [$this, 'protectCharacters'], $str);
 
 		// Do the same with braces if necessary
 		if ($this->protectBracedQuotes === false)
 		{
-			$str = preg_replace_callback('#\{.+?\}#si', [$this, '_protect_characters'], $str);
+			$str = preg_replace_callback('#\{.+?\}#si', [$this, 'protectCharacters'], $str);
 		}
 
 		// Convert "ignore" tags to temporary marker.  The parser splits out the string at every tag
