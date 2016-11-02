@@ -546,6 +546,8 @@ class Model
 	 */
 	public function save($data)
 	{
+	    $saveData = $data;
+
 	    // If $data is using a custom class with public or protected
         // properties representing the table elements, we need to grab
         // them as an array.
@@ -556,14 +558,27 @@ class Model
 
 		if (is_object($data) && isset($data->{$this->primaryKey}))
 		{
-			return $this->update($data->{$this->primaryKey}, $data);
+			$response = $this->update($data->{$this->primaryKey}, $data);
 		}
 		elseif (is_array($data) && ! empty($data[$this->primaryKey]))
 		{
-			return $this->update($data[$this->primaryKey], $data);
+			$response = $this->update($data[$this->primaryKey], $data);
 		}
+        else
+        {
+            $response = $this->insert($data);
+        }
 
-		return $this->insert($data);
+        // If it was an Entity class, check it for an onSave method.
+        if (is_object($saveData) && ! $saveData instanceof \stdClass)
+        {
+            if (method_exists($saveData, 'onSave'))
+            {
+                $saveData->onSave();
+            }
+        }
+
+        return $response;
 	}
 
 	//--------------------------------------------------------------------
@@ -607,6 +622,14 @@ class Model
 	 */
 	public function insert($data)
 	{
+        // If $data is using a custom class with public or protected
+        // properties representing the table elements, we need to grab
+        // them as an array.
+        if (is_object($data) && ! $data instanceof \stdClass)
+        {
+            $data = $this->classToArray($data);
+        }
+
 	    // Validate data before saving.
 	    if ($this->skipValidation === false)
         {
@@ -653,6 +676,14 @@ class Model
 	 */
 	public function update($id, $data)
 	{
+        // If $data is using a custom class with public or protected
+        // properties representing the table elements, we need to grab
+        // them as an array.
+        if (is_object($data) && ! $data instanceof \stdClass)
+        {
+            $data = $this->classToArray($data);
+        }
+
 	    // Validate data before saving.
         if ($this->skipValidation === false)
         {
