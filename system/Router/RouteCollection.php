@@ -975,7 +975,7 @@ class RouteCollection implements RouteCollectionInterface
 		{
 			// Ensure that the param we're inserting matches
 			// the expected param type.
-			if (preg_match("/{$pattern}/", $params[$index]))
+			if (preg_match("|{$pattern}|", $params[$index]))
 			{
 				$from = str_replace($pattern, $params[$index], $from);
 			}
