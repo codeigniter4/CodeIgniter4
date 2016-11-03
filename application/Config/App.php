@@ -95,11 +95,24 @@ class App extends BaseConfig
 	| Application Timezone
 	|--------------------------------------------------------------------------
 	|
-	| The default timezone that will be used in your application to display 
+	| The default timezone that will be used in your application to display
 	| dates with the date helper, and can be retrieved through the app_timezone()
 	|
 	*/
 	public $appTimezone = 'America/Chicago';
+
+    /*
+    |--------------------------------------------------------------------------
+    | Default Character Set
+    |--------------------------------------------------------------------------
+    |
+    | This determines which character set is used by default in various methods
+    | that require a character set to be provided.
+    |
+    | See http://php.net/htmlspecialchars for a list of supported charsets.
+    |
+    */
+    public $charset = 'UTF-8';
 
 	/*
 	|--------------------------------------------------------------------------
