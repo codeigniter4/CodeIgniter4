@@ -80,10 +80,9 @@ if ( ! function_exists('number_to_size'))
         else
         {
             $unit = lang('Number.bytes');
-            return number_format($num).' '.$unit;
         }
 
-        return format_number($num, $precision, $locale).' '.$unit;
+        return format_number($num, $precision, $locale, ['after' => ' '.$unit]);
     }
 }
 
@@ -147,7 +146,7 @@ if (! function_exists('number_to_amount'))
             $num = round(($num/1000), $precision);
         }
 
-        return format_number($num, $precision, $locale). $suffix;
+        return format_number($num, $precision, $locale, ['after' => $suffix]);
     }
 }
 
@@ -175,9 +174,23 @@ if (! function_exists('format_number'))
         // Try to format it per the locale
         $output = $formatter->format($num);
 
+        // This might lead a trailing period if $precision == 0
+        $output = trim($output, '. ');
+
         if (intl_is_failure($formatter->getErrorCode()))
         {
             throw new BadFunctionCallException($formatter->getErrorMessage());
+        }
+
+        // Add on any before/after text.
+        if (isset($options['before']) && is_string($options['before']))
+        {
+            $output = $options['before'].$output;
+        }
+
+        if (isset($options['after']) && is_string($options['after']))
+        {
+            $output .= $options['after'];
         }
 
         return $output;

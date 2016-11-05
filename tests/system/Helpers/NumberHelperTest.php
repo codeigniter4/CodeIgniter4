@@ -16,9 +16,6 @@ class numberHelperTest extends \CIUnitTestCase
         $this->assertEquals('123,456', format_number(123456, 0, 'en_US'));
     }
 
-    /**
-     * @group single
-     */
     public function test_format_number_with_precision()
     {
         $this->assertEquals('123,456.8', format_number(123456.789, 1, 'en_US'));
