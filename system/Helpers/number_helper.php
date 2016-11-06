@@ -152,8 +152,32 @@ if (! function_exists('number_to_amount'))
 
 //--------------------------------------------------------------------
 
+if (! function_exists('number_to_currency'))
+{
+    function number_to_currency($num, string $currency = null, string $locale = null)
+    {
+        return format_number($num, 1, $locale, [
+            'type' => NumberFormatter::CURRENCY,
+            'currency' => $currency
+        ]);
+    }
+}
+
+//--------------------------------------------------------------------
+
 if (! function_exists('format_number'))
 {
+    /**
+     * A general purpose, locale-aware, number_format method.
+     * Used by all of the functions of the number_helper.
+     *
+     * @param             $num
+     * @param int         $precision
+     * @param string|null $locale
+     * @param array       $options
+     *
+     * @return string
+     */
     function format_number($num, int $precision = 1, string $locale = null, array $options=[])
     {
         // Locale is either passed in here, negotiated with client, or grabbed from our config file.
@@ -169,10 +193,17 @@ if (! function_exists('format_number'))
         $pattern = '#,##0.'. str_repeat('#', $precision);
 
         $formatter = new NumberFormatter($locale, $type);
-        $formatter->setPattern($pattern);
 
         // Try to format it per the locale
-        $output = $formatter->format($num);
+        if ($type == NumberFormatter::CURRENCY)
+        {
+            $output = $formatter->formatCurrency($num, $options['currency']);
+        }
+        else
+        {
+            $formatter->setPattern($pattern);
+            $output = $formatter->format($num);
+        }
 
         // This might lead a trailing period if $precision == 0
         $output = trim($output, '. ');

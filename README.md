@@ -61,7 +61,10 @@ We are not looking for out-of-scope contributions, only those that would be cons
 Please read the *Contributing to CodeIgniter* section in the user guide
 
 ## Server Requirements
-PHP version 7 or higher is required. 
+PHP version 7 or higher is required, with the following extensions installed: 
+
+- intl
+
 
 ## Running CodeIgniter Tests
 Information on running CodeIgniter test suite can be found in the [README.md](tests/README.md) file in the tests directory.
