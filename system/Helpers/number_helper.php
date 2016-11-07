@@ -107,7 +107,7 @@ if (! function_exists('number_to_amount'))
      *
      * @return bool|string
      */
-    function number_to_amount($num, int $precision, string $locale = null)
+    function number_to_amount($num, int $precision = 0, string $locale = null)
     {
         // Strip any formatting
         $num = 0 + str_replace(',','',$num);
@@ -154,7 +154,7 @@ if (! function_exists('number_to_amount'))
 
 if (! function_exists('number_to_currency'))
 {
-    function number_to_currency($num, string $currency = null, string $locale = null)
+    function number_to_currency($num, string $currency, string $locale = null)
     {
         return format_number($num, 1, $locale, [
             'type' => NumberFormatter::CURRENCY,
