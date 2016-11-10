@@ -63,6 +63,10 @@ This is typically used to peform redirects, like in this example::
         }
     }
 
+If a Response instance is returned, the Response will be sent back to the client and script execution will stop.
+This can be useful for implementing rate limiting for API's. See **application/Filters/Throttle.php** for an
+example.
+
 After Filters
 =============
 

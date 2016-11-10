@@ -74,11 +74,12 @@ class Throttler implements ThrottlerInterface
      * @param string $key      The name to use as the "bucket" name.
      * @param int    $capacity The number of requests the "bucket" can hold
      * @param int    $seconds  The time it takes the "bucket" to completely refill
+     * @param int    $cost     The number of tokens this action uses.
      *
      * @return bool
      * @internal param int $maxRequests
      */
-    public function check(string $key, int $capacity, int $seconds)
+    public function check(string $key, int $capacity, int $seconds, int $cost = 1)
     {
         $tokenName = $this->prefix.$key;
 
@@ -87,26 +88,39 @@ class Throttler implements ThrottlerInterface
         {
             // If it hasn't been created, then we'll set it to the maximum
             // capacity - 1, and save it to the cache.
-            $this->cache->save($tokenName, $capacity-1, $seconds);
+            $this->cache->save($tokenName, $capacity-$cost, $seconds);
+            $this->cache->save($tokenName.'Time', time());
 
             return true;
         }
 
+        // If $tokens > 0, then we need to replenish the bucket
+        // based on how long it's been since the last update.
+        $throttleTime = $this->cache->get($tokenName.'Time');
+        $elapsed      = time() - $throttleTime;
+        $rate         = (int)ceil($elapsed / $capacity);
+
+        // We must have a minimum wait of 1 second for a new token.
+        $this->tokenTime = max(1, $rate);
+
+        // Add tokens based up on number per second that
+        // should be refilled, then checked against capacity
+        // to be sure the bucket didn't overflow.
+        $tokens += ($rate * $seconds);
+        $tokens = $tokens > $capacity
+            ? $capacity
+            : $tokens;
+
         // If $tokens > 0, then we are save to perform the action, but
         // we need to decrement the number of available tokens.
+        $response = false;
+
         if ($tokens > 0)
         {
             $response = true;
 
-            $this->cache->decrement($tokenName);
-        }
-        else
-        {
-            $response = false;
-
-            // Save the time until the next token is available
-            // in case the caller wants to do something with it.
-            $this->tokenTime = (int)round($seconds / $capacity);
+            $this->cache->save($tokenName, $tokens-$cost, $elapsed);
+            $this->cache->save($tokenName.'Time', time());
         }
 
         return $response;

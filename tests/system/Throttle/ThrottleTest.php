@@ -19,6 +19,9 @@ class ThrottleTest extends \CIUnitTestCase
         $this->assertEquals(59, $this->cache->get('throttler_127.0.0.1'));
     }
 
+    /**
+     * @group single
+     */
     public function testDecrementsValues()
     {
         $throttler = new Throttler($this->cache);
@@ -30,9 +33,6 @@ class ThrottleTest extends \CIUnitTestCase
         $this->assertEquals(57, $this->cache->get('throttler_127.0.0.1'));
     }
 
-    /**
-     * @group single
-     */
     public function testReturnsFalseIfBucketEmpty()
     {
         $throttler = new Throttler($this->cache);
@@ -40,7 +40,7 @@ class ThrottleTest extends \CIUnitTestCase
         $throttler->check('127.0.0.1', 1, MINUTE);
 
         $this->assertFalse($throttler->check('127.0.0.1', 1, MINUTE));
-        $this->assertEquals(60, $throttler->getTokenTime());
+        $this->assertEquals(1, $throttler->getTokenTime());
     }
 
 }
