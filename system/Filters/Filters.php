@@ -95,6 +95,14 @@ class Filters
 					continue;
 				}
 
+				// If the response object was sent back,
+                // then send it and quit.
+				if ($result instanceof ResponseInterface)
+                {
+                    $result->send();
+                    exit(EXIT_ERROR);
+                }
+
 				if (empty($result))
 				{
 					continue;

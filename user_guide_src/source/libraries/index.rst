@@ -18,6 +18,7 @@ Library Reference
     response
     security
     sessions
+    throttler
     uploaded_files
     uri
     validation
