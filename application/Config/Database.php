@@ -1,5 +1,6 @@
 <?php namespace Config;
 
+use CodeIgniter\CLI\CLI;
 use phpDocumentor\Reflection\DocBlock\Tag\VarTag;
 
 /**
@@ -107,6 +108,9 @@ class Database extends \CodeIgniter\Database\Config
 				}
 			}
 		}
+
+		CLI::write('ENV='.ENVIRONMENT);
+        CLI::write('GROUP='.$group);
 	}
 
 	//--------------------------------------------------------------------
