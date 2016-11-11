@@ -3,6 +3,9 @@ language: php
 php:
   - 7
 
+global:
+  - CI=true
+
 env:
   - DB_GROUP=mysqli
   - DB_GROUP=postgres
