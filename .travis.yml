@@ -4,7 +4,7 @@ php:
   - 7
 
 global:
-  - CI=true
+  - CI_ENV=testing
 
 env:
   - DB_GROUP=mysqli
