@@ -453,6 +453,22 @@ class Services
 
 	//--------------------------------------------------------------------
 
+    /**
+     * The Throttler class provides a simple method for implementing
+     * rate limiting in your applications.
+     */
+    public static function throttler($getShared = true)
+    {
+        if ($getShared)
+        {
+            return self::getSharedInstance('throttler');
+        }
+
+        return new \CodeIgniter\Throttle\Throttler(self::cache());
+    }
+
+    //--------------------------------------------------------------------
+
 	/**
 	 * The Timer class provides a simple way to Benchmark portions of your
 	 * application.
