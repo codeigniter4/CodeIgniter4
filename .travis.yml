@@ -3,6 +3,9 @@ language: php
 php:
   - 7
 
+global:
+  - CI_ENV=testing
+
 env:
   # Will run tests once through each environment
   - DB=mysqli
