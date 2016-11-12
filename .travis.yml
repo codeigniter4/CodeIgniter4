@@ -4,25 +4,21 @@ php:
   - 7
 
 global:
+  - CI=true
   - CI_ENV=testing
 
 env:
-  # Will run tests once through each environment
   - DB=mysqli
   - DB=postgres
-
-script:
-  # Run our tests to determine integration status
-  - php vendor/bin/phpunit -v
 
 services:
   - mysql
   - postgresql
 
+script:
+  - php vendor/bin/phpunit -v
+
 before_script:
-  # Disable XDebug for performance
-  - phpenv config-rm xdebug.ini
-  # Install our test tools like vfstream
   - composer install --prefer-source
   - sh -c "if [ '$DB' = 'postgres' ]; then psql -c 'create database test;' -U postgres; fi"
   - sh -c "if [ '$DB' = 'mysqli' ]; then mysql -e 'create database IF NOT EXISTS test;'; fi"
