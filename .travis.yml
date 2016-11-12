@@ -19,17 +19,11 @@ services:
   - mysql
   - postgresql
 
-before_install:
-  # Make sure to create databases to use depending on environment
-  - if [ $DB = 'mysqli' ]; then mysql -e "create database IF NOT EXISTS test;" -uroot; fi
-  - if [ $DB = 'postgres' ]; then psql -c 'create database test;' -U postgres; fi
-
 before_script:
   # Disable XDebug for performance
   - phpenv config-rm xdebug.ini
   # Install our test tools like vfstream
   - composer install --prefer-source
+  - sh -c "if [ '$DB' = 'postgres' ]; then psql -c 'create database test;' -U postgres; fi"
+  - sh -c "if [ '$DB' = 'mysqli' ]; then mysql -e 'create database IF NOT EXISTS test;'; fi"
 
-cache:
-  directories:
-    - $HOME/.composer/cache
