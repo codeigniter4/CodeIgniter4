@@ -160,7 +160,7 @@ class QueryTest extends \CIUnitTestCase
 
 		$query->setQuery('SELECT * FROM users WHERE name = ?', ["O'Reilly"]);
 
-		$expected = "SELECT * FROM users WHERE name = 'O\'Reilly'";
+		$expected = "SELECT * FROM users WHERE name = 'O''Reilly'";
 
 		$this->assertEquals($expected, $query->getQuery());
 	}

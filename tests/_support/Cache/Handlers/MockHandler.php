@@ -40,7 +40,7 @@ class MockHandler implements CacheInterface
 	{
 		$key = $this->prefix.$key;
 
-		return isset($this->cache[$key])
+		return array_key_exists($key, $this->cache)
 			? $this->cache[$key]
 			: false;
 	}
