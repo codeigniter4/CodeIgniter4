@@ -7,6 +7,10 @@ global:
   - CI=true
   - CI_ENV=testing
 
+# Recommended by Travis support
+sudo: required
+dist: precise
+
 env:
   - DB=mysqli
   - DB=postgres
