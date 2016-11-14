@@ -101,14 +101,16 @@ EOH;
     public function testVideo()
     {
         $expected = <<<EOH
-<video src="test.mp4" controls></video>
+<video src="test.mp4" controls>
+  Your browser does not support the video tag.
+</video>
 
 EOH;
 
         $video = video
         (
             'test.mp4', 
-            'Not supported', 
+            'Your browser does not support the video tag.', 
             'controls'
         );
 
@@ -118,6 +120,7 @@ EOH;
 <video src="http://www.codeigniter.com/test.mp4" controls>
   <track src="subtitles_no.vtt" kind="subtitles" srclang="no" label="Norwegian No" />
   <track src="subtitles_yes.vtt" kind="subtitles" srclang="yes" label="Norwegian Yes" />
+  Your browser does not support the video tag.
 </video>
 
 EOH;
@@ -125,7 +128,7 @@ EOH;
         $video = video
         (
             'http://www.codeigniter.com/test.mp4', 
-            'Not supported', 
+            'Your browser does not support the video tag.', 
             'controls',
             $this->tracks
         );

@@ -57,7 +57,7 @@ if ( ! function_exists('ul'))
      * multi-dimensional array.
      *
      * @param   array   $list
-     * @param   string  $attributes
+     * @param   string  $attributes  HTML attributes
      * @return  string
      */
     function ul(array $list, string $attributes = ''): string
@@ -76,7 +76,7 @@ if ( ! function_exists('ol'))
      * Generates an HTML ordered list from an single or multi-dimensional array.
      *
      * @param   array   $list
-     * @param   string  $attributes
+     * @param   string  $attributes  HTML attributes
      * @return  string
      */
     function ol(array $list, string $attributes = ''): string
@@ -397,7 +397,7 @@ if ( ! function_exists('link_tag'))
          * an array of sources
          * @param  string $unsupportedMessage    The message to display 
          * if the media tag is not supported by the browser
-         * @param  string $attributes
+         * @param  string $attributes            HTML attributes
          * @param  array  $tracks
          * @param  bool   $indexPage
          * @return string
@@ -445,16 +445,21 @@ if ( ! function_exists('link_tag'))
                     $video .= ' ' . $attributes;
                 }
 
-                $video .= '>';
+                $video .= ">\n";
 
                 if( ! empty($tracks))
-                {
-                    $video .= "\n";
-                    
+                {                    
                     foreach ($tracks as $track) 
                     {
                         $video .= _space_indent() . $track . "\n";
                     }
+                }
+
+                if( ! empty($unsupportedMessage))
+                {
+                    $video .= _space_indent() 
+                        . $unsupportedMessage 
+                        . "\n";
                 }
 
                 $video .= "</video>\n";
@@ -477,7 +482,7 @@ if ( ! function_exists('link_tag'))
          * an array of sources
          * @param  string $unsupportedMessage   The message to display 
          * if the media tag is not supported by the browser.
-         * @param  string $attributes
+         * @param  string $attributes           HTML attributes
          * @return string
          *
          */
@@ -531,6 +536,13 @@ if ( ! function_exists('link_tag'))
                     {
                         $audio .= $track;
                     }
+                }
+
+                if( ! empty($unsupportedMessage))
+                {
+                    $video .= _space_indent() 
+                        . $unsupportedMessage 
+                        . "\n";
                 }
 
                 $audio .= "</audio>\n";
@@ -691,7 +703,7 @@ if ( ! function_exists('link_tag'))
          * 
          * @param  string $data         A resource URL
          * @param  string $type         Content-type of the resource
-         * @param  string $attributes
+         * @param  string $attributes   HTML attributes
          * @param  array  $params       
          * @return string
          */
@@ -749,7 +761,7 @@ if ( ! function_exists('link_tag'))
          * @param  string $name        The name of the parameter
          * @param  string $value       The value of the parameter
          * @param  string $type        The MIME-type
-         * @param  string $attributes
+         * @param  string $attributes  HTML attributes
          * @return string
          */
         function param

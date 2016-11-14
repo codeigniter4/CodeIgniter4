@@ -36,7 +36,8 @@ The following functions are available:
     Lets you create HTML <img /> tags. The first parameter contains the
     image source. Example::
 
-        echo img('images/picture.jpg'); // gives <img src="http://site.com/images/picture.jpg" />
+        echo img('images/picture.jpg'); 
+        // <img src="http://site.com/images/picture.jpg" />
 
     There is an optional second parameter that is a true/false value that
     specifics if the *src* should have the page specified by
@@ -44,7 +45,7 @@ The following functions are available:
     Presumably, this would be if you were using a media controller::
 
         echo img('images/picture.jpg', true); 
-        // gives <img src="http://site.com/index.php/images/picture.jpg" alt="" />
+        // <img src="http://site.com/index.php/images/picture.jpg" alt="" />
 
     Additionally, an associative array can be passed to the ``img()`` function
     for complete control over all attributes and values. If an *alt* attribute
@@ -86,7 +87,7 @@ The following functions are available:
     Example::
 
         echo link_tag('css/mystyles.css');
-        // gives <link href="http://site.com/css/mystyles.css" rel="stylesheet" type="text/css" />
+        // <link href="http://site.com/css/mystyles.css" rel="stylesheet" type="text/css" />
 
     Further examples::
 
@@ -124,7 +125,7 @@ The following functions are available:
     Example::
 
         echo script_tag('js/mystyles.js');
-        // gives <script src="http://site.com/js/mystyles.js" type="text/javascript"></script>
+        // <script src="http://site.com/js/mystyles.js" type="text/javascript"></script>
 
     Further examples::
 
@@ -285,17 +286,12 @@ The following functions are available:
             track('subtitles_yes.vtt', 'subtitles', 'yes', 'Norwegian Yes')
         ];
 
-        echo video
-        (
-            'test.mp4', 
-            'Not supported', 
-            'controls'
-        );
+        echo video('test.mp4', 'Your browser does not support the video tag.', 'controls');
 
         echo video
         (
             'http://www.codeigniter.com/test.mp4', 
-            'Not supported', 
+            'Your browser does not support the video tag.', 
             'controls',
             $tracks
         );
@@ -317,11 +313,14 @@ The following functions are available:
 
     .. code-block:: html
 
-        <video src="test.mp4" controls></video>
+        <video src="test.mp4" controls>
+          Your browser does not support the video tag.
+        </video>
 
         <video src="http://www.codeigniter.com/test.mp4" controls>
           <track src="subtitles_no.vtt" kind="subtitles" srclang="no" label="Norwegian No" />
           <track src="subtitles_yes.vtt" kind="subtitles" srclang="yes" label="Norwegian Yes" />
+          Your browser does not support the video tag.
         </video>
         
         <video class="test" controls>
@@ -358,8 +357,8 @@ The following functions are available:
     Lets you create HTML <source /> tags. The first parameter contains the
     source source. Example::
 
-        echo embed('movie.mov', 'video/quicktime', 'class="test"');
-        // <embed src="movie.mov" type="video/quicktime" class="test"/>
+        echo source('movie.mp4', 'video/mp4', 'class="test"');
+        // <source src="movie.mp4" type="video/mp4" class="test" />
 
 .. php:function:: embed($src = ''[, $type = false[, $attributes = ''[, $indexPage = false]]])
 
@@ -383,18 +382,13 @@ The following functions are available:
     :param  bool    $type:       Content-type of the resource
     :param  array   $attributes: HTML attributes
     :param  array   $params:     Use the param function inside an array. See :php:func:`param()` function
-    :returns:   HTML embed tag
+    :returns:   HTML object tag
     :rtype: string
 
-    Lets you create HTML <embed /> tags. The first parameter contains the
-    embed source. Example::
+    Lets you create HTML <object /> tags. The first parameter contains the
+    object data. Example::
 
-        echo object
-        (
-            'movie.swf', 
-            'application/x-shockwave-flash', 
-            'class="test"'
-        );
+        echo object('movie.swf', 'application/x-shockwave-flash', 'class="test"');
 
         echo object
         (
@@ -407,11 +401,11 @@ The following functions are available:
             ]
         );
 
+    The above code will produce this:
+
     .. code-block:: html
         
         <object data="movie.swf" class="test"></object>
-
-    The above code will produce this:
         
         <object data="movie.swf" class="test">
           <param name="foo" type="ref" value="bar" class="test" />
@@ -439,7 +433,7 @@ The following functions are available:
     :param  string  $name:       The name of the parameter
     :param  strign  $value:      The value of the parameter
     :param  array   $attributes: HTML attributes
-    :returns:   HTML param tag
+    :returns:   HTML track tag
     :rtype: string
 
     Generates a track element to specify timed tracks. The tracks are
