@@ -266,6 +266,189 @@ The following functions are available:
     Identical to :php:func:`ul()`, only it produces the <ol> tag for
     ordered lists instead of <ul>.
 
+.. php:function:: video($src[, $unsupportedMessage = ''[, $attributes = ''[, $tracks = [][, $indexPage = false]]]])
+
+    :param  mixed   $src:                Either a source string or an array of sources. See :php:func:`source()` function
+    :param  string  $unsupportedMessage: The message to display if the media tag is not supported by the browser
+    :param  string  $attributes:         HTML attributes
+    :param  array   $tracks:             Use the track function inside an array. See :php:func:`track()` function
+    :param  bool    $indexPage:
+    :returns:                            HTML-formatted video element
+    :rtype: string
+
+    Permits you to generate HTML video element from simple or
+    source arrays. Example::
+
+        $tracks = 
+        [
+            track('subtitles_no.vtt', 'subtitles', 'no', 'Norwegian No'),
+            track('subtitles_yes.vtt', 'subtitles', 'yes', 'Norwegian Yes')
+        ];
+
+        echo video
+        (
+            'test.mp4', 
+            'Not supported', 
+            'controls'
+        );
+
+        echo video
+        (
+            'http://www.codeigniter.com/test.mp4', 
+            'Not supported', 
+            'controls',
+            $tracks
+        );
+
+        echo video
+        (
+            [
+              source('movie.mp4', 'video/mp4', 'class="test"'),
+              source('movie.ogg', 'video/ogg'),
+              source('movie.mov', 'video/quicktime'),
+              source('movie.ogv', 'video/ogv; codecs=dirac, speex')
+            ],
+            'Your browser does not support the video tag.',
+            'class="test" controls',
+            $tracks
+         );
+
+    The above code will produce this:
+
+    .. code-block:: html
+
+        <video src="test.mp4" controls></video>
+
+        <video src="http://www.codeigniter.com/test.mp4" controls>
+          <track src="subtitles_no.vtt" kind="subtitles" srclang="no" label="Norwegian No" />
+          <track src="subtitles_yes.vtt" kind="subtitles" srclang="yes" label="Norwegian Yes" />
+        </video>
+        
+        <video class="test" controls>
+          <source src="movie.mp4" type="video/mp4" class="test" />
+          <source src="movie.ogg" type="video/ogg" />
+          <source src="movie.mov" type="video/quicktime" />
+          <source src="movie.ogv" type="video/ogv; codecs=dirac, speex" />
+          <track src="subtitles_no.vtt" kind="subtitles" srclang="no" label="Norwegian No" />
+          <track src="subtitles_yes.vtt" kind="subtitles" srclang="yes" label="Norwegian Yes" />
+          Your browser does not support the video tag.
+        </video>
+
+.. php:function:: audio($src[, $unsupportedMessage = ''[, $attributes = ''[, $tracks = [][, $indexPage = false]]]])
+
+    :param  mixed   $src:                Either a source string or an array of sources. See :php:func:`source()` function
+    :param  string  $unsupportedMessage: The message to display if the media tag is not supported by the browser
+    :param  string  $attributes:
+    :param  array   $tracks:             Use the track function inside an array. See :php:func:`track()` function
+    :param  bool    $indexPage:
+    :returns:                            HTML-formatted video element
+    :rtype: string
+
+    Identical to :php:func:`video()`, only it produces the <audio> tag instead of <video>.
+
+
+.. php:function:: source($src = ''[, $type = false[, $attributes = '']])
+
+    :param  string  $src:        The path of the media resource
+    :param  bool    $type:       The MIME-type of the resource with optional codecs parameters
+    :param  array   $attributes: HTML attributes
+    :returns:   HTML source tag
+    :rtype: string
+
+    Lets you create HTML <source /> tags. The first parameter contains the
+    source source. Example::
+
+        echo embed('movie.mov', 'video/quicktime', 'class="test"');
+        // <embed src="movie.mov" type="video/quicktime" class="test"/>
+
+.. php:function:: embed($src = ''[, $type = false[, $attributes = ''[, $indexPage = false]]])
+
+    :param  string  $src:        The path of the resource to embed
+    :param  bool    $type:       MIME-type
+    :param  array   $attributes: HTML attributes
+    :param  bool    $indexPage:
+    :returns:   HTML embed tag
+    :rtype: string
+
+    Lets you create HTML <embed /> tags. The first parameter contains the
+    embed source. Example::
+
+        echo embed('movie.mov', 'video/quicktime', 'class="test"');
+        // <embed src="movie.mov" type="video/quicktime" class="test"/>
+
+
+.. php:function:: object($data = ''[, $type = false[, $attributes = '']])
+
+    :param  string  $data:       A resource URL
+    :param  bool    $type:       Content-type of the resource
+    :param  array   $attributes: HTML attributes
+    :param  array   $params:     Use the param function inside an array. See :php:func:`param()` function
+    :returns:   HTML embed tag
+    :rtype: string
+
+    Lets you create HTML <embed /> tags. The first parameter contains the
+    embed source. Example::
+
+        echo object
+        (
+            'movie.swf', 
+            'application/x-shockwave-flash', 
+            'class="test"'
+        );
+
+        echo object
+        (
+            'movie.swf', 
+            'application/x-shockwave-flash', 
+            'class="test"',
+            [
+                param('foo', 'bar', 'ref', 'class="test"'),
+                param('hello', 'world', 'ref', 'class="test"')
+            ]
+        );
+
+    .. code-block:: html
+        
+        <object data="movie.swf" class="test"></object>
+
+    The above code will produce this:
+        
+        <object data="movie.swf" class="test">
+          <param name="foo" type="ref" value="bar" class="test" />
+          <param name="hello" type="ref" value="world" class="test" />
+        </object>
+
+
+.. php:function:: param($name = ''[, $type = false[, $attributes = '']])
+
+    :param  string  $name:       The name of the parameter
+    :param  strign  $value:      The value of the parameter
+    :param  array   $attributes: HTML attributes
+    :returns:   HTML param tag
+    :rtype: string
+
+    Lets you create HTML <param /> tags. The first parameter contains the
+    param source. Example::
+
+        echo param('movie.mov', 'video/quicktime', 'class="test"');
+        // <param src="movie.mov" type="video/quicktime" class="test"/>
+
+
+.. php:function:: track($name = ''[, $type = false[, $attributes = '']])
+
+    :param  string  $name:       The name of the parameter
+    :param  strign  $value:      The value of the parameter
+    :param  array   $attributes: HTML attributes
+    :returns:   HTML param tag
+    :rtype: string
+
+    Generates a track element to specify timed tracks. The tracks are
+    formatted in WebVTT format. Example::
+
+        echo track('subtitles_no.vtt', 'subtitles', 'no', 'Norwegian No');
+        // <track src="subtitles_no.vtt" kind="subtitles" srclang="no" label="Norwegian No" />
+
+
 .. php:function:: doctype([$type = 'html5'])
 
     :param  string  $type: Doctype name
@@ -277,7 +460,8 @@ The following functions are available:
 
     Example::
 
-        echo doctype(); // <!DOCTYPE html>
+        echo doctype(); 
+        // <!DOCTYPE html>
 
         echo doctype('html4-trans'); 
         // <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
