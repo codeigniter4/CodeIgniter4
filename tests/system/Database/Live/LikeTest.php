@@ -53,6 +53,17 @@ class LikeTest extends \CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testLikeCaseInsensitive()
+	{
+		$job = $this->db->table('job')->like('name', 'VELOPER', 'both', null, true)->get();
+		$job = $job->getRow();
+
+		$this->assertEquals(1, $job->id);
+		$this->assertEquals('Developer', $job->name);
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testOrLike()
 	{
 	    $jobs = $this->db->table('job')->like('name', 'ian')

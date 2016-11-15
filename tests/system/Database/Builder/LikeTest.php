@@ -120,4 +120,22 @@ class LikeTest extends \CIUnitTestCase
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * @group single
+	 */
+	public function testCaseInsensitiveLike()
+	{
+		$builder = new BaseBuilder('job', $this->db);
+
+		$builder->like('name', 'VELOPER', 'both', null, true);
+
+		$expectedSQL   = "SELECT * FROM \"job\" WHERE LOWER(name) LIKE :name ESCAPE '!'";
+		$expectedBinds = ['name' => '%veloper%'];
+
+		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+		$this->assertSame($expectedBinds, $builder->getBinds());
+	}
+
+	//--------------------------------------------------------------------
 }

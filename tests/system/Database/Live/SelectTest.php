@@ -11,6 +11,17 @@ class SelectTest extends \CIDatabaseTestCase
 
 	protected $seed = 'CITestSeeder';
 
+	public function __construct()
+	{
+	    parent::__construct();
+
+		$this->db = \Config\Database::connect($this->DBGroup);
+		$this->db->initialize();
+	}
+
+	//--------------------------------------------------------------------
+
+
 	public function testSelectAllByDefault()
 	{
 	    $row = $this->db->table('job')->get()->getRowArray();

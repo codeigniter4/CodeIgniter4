@@ -22,28 +22,28 @@ Defining a Hook
 
 Most hooks are defined within the **application/Config/Hooks.php** file. You can subscribe an action to a hook with
 the Hooks class' ``on()`` method. The first parameter is the name of the hook to subscribe to. The second parameter is
-a callable that will be run when that event is triggered.::
+a callable that will be run when that event is triggered::
 
 	use CodeIgniter\Hooks\Hooks;
 
-	Hooks::on('pre_controller', ['MyClass', 'MyFunction']);
+	Hooks::on('pre_system', ['MyClass', 'MyFunction']);
 
 In this example, whenever the **pre_controller** hook is executed, an instance of ``MyClass`` is created and the
 ``MyFunction`` method is ran. Note that the second parameter can be *any* form of
 `callable <http://php.net/manual/en/function.is-callable.php>`_ that PHP recognizes::
 
 	// Call a standalone function
-	Hooks::on('pre_controller', 'some_function');
+	Hooks::on('pre_system', 'some_function');
 
 	// Call on an instance method
 	$user = new User();
-	Hooks::on('pre_controller', [$user, 'some_method']);
+	Hooks::on('pre_system', [$user, 'some_method']);
 
 	// Call on a static method
-	Hooks::on('pre_controller', 'SomeClass::someMethod');
+	Hooks::on('pre_system', 'SomeClass::someMethod');
 
 	// Use a Closure
-	Hooks::on('pre_controller', function(...$params)
+	Hooks::on('pre_system', function(...$params)
 	{
 		. . .
 	});
@@ -53,14 +53,14 @@ Setting Priorities
 
 Since multiple methods can be subscribed to a single event, you will need a way to define in what order those methods
 are called. You can do this by passing a priority value as the third parameter of the ``on()`` method. Lower values
-are executed first, with a value of 1 having the highest priority, and there being no limit on the lower values.::
+are executed first, with a value of 1 having the highest priority, and there being no limit on the lower values::
 
-    Hooks::on('pre_controller', 'some_function', 25);
+    Hooks::on('post_controller_constructor', 'some_function', 25);
 
 Any subscribers with the same priority will be executed in the order they were defined.
 
 Three constants are defined for your use, that set some helpful ranges on the values. You are not required to use these
-but you might find they aid readability.::
+but you might find they aid readability::
 
 	define('HOOKS_PRIORITY_LOW', 200);
 	define('HOOKS_PRIORITY_NORMAL', 100);
@@ -78,7 +78,7 @@ need to call the ``trigger()`` method on the **Hooks** class with the name of th
 	\CodeIgniter\Hooks\Hooks::trigger('some_hook');
 
 You can pass any number of arguments to the subscribers by adding them as additional parameters. Subscribers will be
-given the arguments in the same order as defined.::
+given the arguments in the same order as defined::
 
 	\CodeIgniter\Hooks\Hooks::trigger('some_hook', $foo, $bar, $baz);
 
@@ -92,7 +92,7 @@ Hook Points
 The following is a list of available hook points:
 
 * **pre_system** Called very early during system execution. Only the benchmark and hooks class have been loaded at this point. No routing or other processes have happened.
-* **pre_controller** Called immediately prior to any of your controllers being called. All base classes, routing, and security checks have been done.
 * **post_controller_constructor** Called immediately after your controller is instantiated, but prior to any method calls happening.
-* **post_controller** Called immediately after your controller is fully executed.
 * **post_system** Called after the final rendered page is sent to the browser, at the end of system execution after the finalized data is sent to the browser.
+
+Hooks are closely related to :doc:`Filters </general/filters>`, and you should be sure to read up on them.

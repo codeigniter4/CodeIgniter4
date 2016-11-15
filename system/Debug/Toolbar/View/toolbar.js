@@ -12,10 +12,8 @@ var ciDebugBar = {
     {
         this.toolbar = document.getElementById('debug-bar');
 
-        // Pad the body to make room for the toolbar.
-        //document.getElementsByTagName("html")[0].style.paddingTop = this.toolbar.offsetHeight+"px !important";
-
         ciDebugBar.createListeners();
+        ciDebugBar.setToolbarState();
     },
 
     //--------------------------------------------------------------------
@@ -112,8 +110,89 @@ var ciDebugBar = {
         {
             obj.style.display = obj.style.display == 'none' ? 'block' : 'none';
         }
-    }
+    },
 
     //--------------------------------------------------------------------
 
+    /**
+     *   Toggle tool bar from full to icon and icon to full
+     */
+    toggleToolbar : function()
+    {
+        var ciIcon = document.getElementById('debug-icon');
+        var ciBar = document.getElementById('debug-bar');
+        var open = ciBar.style.display != 'none';
+
+        ciIcon.style.display = open == true ? 'inline-block' : 'none';
+        ciBar.style.display  = open == false ? 'inline-block' : 'none';
+
+        // Remember it for other page loads on this site
+        ciDebugBar.createCookie('debug-bar-state', '', -1);
+        ciDebugBar.createCookie('debug-bar-state', open == true ? 'minimized' : 'open' , 365);
+    },
+
+    //--------------------------------------------------------------------
+
+    /**
+     * Sets the initial state of the toolbar (open or minimized) when
+     * the page is first loaded to allow it to remember the state between refreshes.
+     */
+    setToolbarState: function()
+    {
+        var open = ciDebugBar.readCookie('debug-bar-state');
+        var ciIcon = document.getElementById('debug-icon');
+        var ciBar = document.getElementById('debug-bar');
+
+        ciIcon.style.display = open != 'open' ? 'inline-block' : 'none';
+        ciBar.style.display  = open == 'open' ? 'inline-block' : 'none';
+    },
+
+    //--------------------------------------------------------------------
+
+    /**
+     * Helper to create a cookie.
+     *
+     * @param name
+     * @param value
+     * @param days
+     */
+    createCookie : function(name,value,days)
+    {
+        if (days)
+        {
+            var date = new Date();
+
+            date.setTime(date.getTime()+(days*24*60*60*1000));
+
+            var expires = "; expires="+date.toGMTString();
+        }
+        else
+        {
+            var expires = "";
+        }
+
+        document.cookie = name+"="+value+expires+"; path=/";
+    },
+
+    //--------------------------------------------------------------------
+
+    readCookie : function(name)
+    {
+        var nameEQ = name + "=";
+        var ca = document.cookie.split(';');
+
+        for(var i=0;i < ca.length;i++)
+        {
+            var c = ca[i];
+            while (c.charAt(0)==' ')
+            {
+                c = c.substring(1,c.length);
+            }
+            if (c.indexOf(nameEQ) == 0)
+            {
+                return c.substring(nameEQ.length,c.length);
+            }
+        }
+        return null;
+    }
 };

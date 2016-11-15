@@ -2,7 +2,7 @@
 
 /**
  * CodeIgniter
- * 
+ *
  * An open source application development framework for PHP
  *
  * This content is released under the MIT License (MIT)
@@ -198,7 +198,7 @@ class BaseBuilder
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param type $tableName
 	 * @param \CodeIgniter\Database\ConnectionInterface $db
 	 * @param array $options
@@ -213,7 +213,6 @@ class BaseBuilder
 
 		$this->db = $db;
 
-		$this->trackAliases($tableName);
 		$this->from($tableName);
 
 		if (count($options))
@@ -813,12 +812,13 @@ class BaseBuilder
 	 * @param    string $match
 	 * @param    string $side
 	 * @param    bool   $escape
+	 * @param    bool   $insensitiveSearch	IF true, will force a case-insensitive search
 	 *
 	 * @return    BaseBuilder
 	 */
-	public function like($field, $match = '', $side = 'both', $escape = null)
+	public function like($field, $match = '', $side = 'both', $escape = null, $insensitiveSearch = false)
 	{
-		return $this->_like($field, $match, 'AND ', $side, '', $escape);
+		return $this->_like($field, $match, 'AND ', $side, '', $escape, $insensitiveSearch);
 	}
 
 	//--------------------------------------------------------------------
@@ -833,12 +833,13 @@ class BaseBuilder
 	 * @param    string $match
 	 * @param    string $side
 	 * @param    bool   $escape
+	 * @param    bool   $insensitiveSearch	IF true, will force a case-insensitive search
 	 *
 	 * @return    BaseBuilder
 	 */
-	public function notLike($field, $match = '', $side = 'both', $escape = null)
+	public function notLike($field, $match = '', $side = 'both', $escape = null, $insensitiveSearch = false)
 	{
-		return $this->_like($field, $match, 'AND ', $side, 'NOT', $escape);
+		return $this->_like($field, $match, 'AND ', $side, 'NOT', $escape, $insensitiveSearch);
 	}
 
 	//--------------------------------------------------------------------
@@ -853,12 +854,13 @@ class BaseBuilder
 	 * @param    string $match
 	 * @param    string $side
 	 * @param    bool   $escape
+	 * @param    bool   $insensitiveSearch	IF true, will force a case-insensitive search
 	 *
 	 * @return    BaseBuilder
 	 */
-	public function orLike($field, $match = '', $side = 'both', $escape = null)
+	public function orLike($field, $match = '', $side = 'both', $escape = null, $insensitiveSearch = false)
 	{
-		return $this->_like($field, $match, 'OR ', $side, '', $escape);
+		return $this->_like($field, $match, 'OR ', $side, '', $escape, $insensitiveSearch);
 	}
 
 	//--------------------------------------------------------------------
@@ -873,12 +875,13 @@ class BaseBuilder
 	 * @param    string $match
 	 * @param    string $side
 	 * @param    bool   $escape
+	 * @param    bool   $insensitiveSearch	IF true, will force a case-insensitive search
 	 *
 	 * @return    BaseBuilder
 	 */
-	public function orNotLike($field, $match = '', $side = 'both', $escape = null)
+	public function orNotLike($field, $match = '', $side = 'both', $escape = null, $insensitiveSearch = false)
 	{
-		return $this->_like($field, $match, 'OR ', $side, 'NOT', $escape);
+		return $this->_like($field, $match, 'OR ', $side, 'NOT', $escape, $insensitiveSearch);
 	}
 
 	//--------------------------------------------------------------------
@@ -897,10 +900,11 @@ class BaseBuilder
 	 * @param    string $side
 	 * @param    string $not
 	 * @param    bool   $escape
+	 * @param    bool   $insensitiveSearch	IF true, will force a case-insensitive search
 	 *
 	 * @return    BaseBuilder
 	 */
-	protected function _like($field, $match = '', $type = 'AND ', $side = 'both', $not = '', $escape = null)
+	protected function _like($field, $match = '', $type = 'AND ', $side = 'both', $not = '', $escape = null, $insensitiveSearch = false)
 	{
 		if ( ! is_array($field))
 		{
@@ -916,6 +920,11 @@ class BaseBuilder
 		{
 			$prefix = (count($this->QBWhere) === 0)
 				? $this->groupGetType('') : $this->groupGetType($type);
+
+			if ($insensitiveSearch === true)
+			{
+				$v = strtolower($v);
+			}
 
 			if ($side === 'none')
 			{
@@ -934,7 +943,7 @@ class BaseBuilder
 				$bind = $this->setBind($k, "%$v%");
 			}
 
-			$like_statement = "{$prefix} {$k} {$not} LIKE :{$bind}";
+			$like_statement = $this->_like_statement($prefix, $k, $not, $bind, $insensitiveSearch);
 
 			// some platforms require an escape sequence definition for LIKE wildcards
 			if ($escape === true && $this->db->likeEscapeStr !== '')
@@ -946,6 +955,31 @@ class BaseBuilder
 		}
 
 		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Platform independent LIKE statement builder.
+	 *
+	 * @param string|null $prefix
+	 * @param string      $column
+	 * @param string|null $not
+	 * @param string      $bind
+	 * @param bool        $insensitiveSearch
+	 *
+	 * @return string     $like_statement
+	 */
+	public function _like_statement(string $prefix=null, string $column, string $not = null, string $bind, bool $insensitiveSearch=false): string
+	{
+		$like_statement = "{$prefix} {$column} {$not} LIKE :{$bind}";
+
+		if ($insensitiveSearch === true)
+		{
+			$like_statement = "{$prefix} LOWER({$column}) {$not} LIKE :{$bind}";
+		}
+
+		return $like_statement;
 	}
 
 	//--------------------------------------------------------------------
@@ -1737,8 +1771,6 @@ class BaseBuilder
 	 *
 	 * @return bool TRUE on success, FALSE on failure
 	 * @throws DatabaseException
-	 * @internal param true $bool returns the generated SQL, false executes the query.
-	 *
 	 */
 	public function replace($set = null, $returnSQL = false)
 	{
@@ -2243,7 +2275,7 @@ class BaseBuilder
 		{
 			$sql = $this->_limit($sql);
 		}
-		
+
 		if ($reset_data)
 		{
 			$this->resetWrite();

@@ -43,14 +43,14 @@ use Config\Database;
 
 /**
  * Class MigrationsCommand.
- * 
+ *
  * Migrations controller.
  */
 class MigrationsCommand extends \CodeIgniter\Controller
 {
 	/**
 	 * Migration runner.
-	 * 
+	 *
 	 * @var \CodeIgniter\Database\MigrationRunner
 	 */
 	protected $runner;
@@ -62,7 +62,7 @@ class MigrationsCommand extends \CodeIgniter\Controller
 	 */
 	public function __construct()
 	{
-	    $this->runner = Services::migrations();
+		$this->runner = Services::migrations();
 	}
 
 	//--------------------------------------------------------------------
@@ -73,12 +73,13 @@ class MigrationsCommand extends \CodeIgniter\Controller
 	public function index()
 	{
 		CLI::write('Migration Commands',  'white');
-	    CLI::write(CLI::color('latest',   'yellow'). "\t\tMigrates database to latest available migration.");
-	    CLI::write(CLI::color('current',  'yellow'). "\t\tMigrates database to version set as 'current' in configuration.");
-	    CLI::write(CLI::color('version [v]',  'yellow'). "\tMigrates database to version {v}.");
-	    CLI::write(CLI::color('rollback', 'yellow'). "\tRuns all migrations 'down' to version 0.");
-	    CLI::write(CLI::color('refresh',  'yellow'). "\t\tUninstalls and re-runs all migrations to freshen database.");
-	    CLI::write(CLI::color('seed [name]',  'yellow'). "\tRuns the seeder named [name].");
+		CLI::write(CLI::color('latest',   'yellow'). lang('Migrations.migHelpLatest'));
+		CLI::write(CLI::color('current',  'yellow'). lang('Migrations.migHelpCurrent'));
+		CLI::write(CLI::color('version [v]',  'yellow'). lang('Migrations.migHelpVersion'));
+		CLI::write(CLI::color('rollback', 'yellow'). lang('Migrations.migHelpRollback'));
+		CLI::write(CLI::color('refresh',  'yellow'). lang('Migrations.migHelpRefresh'));
+		CLI::write(CLI::color('seed [name]',  'yellow'). lang('Migrations.migHelpSeed'));
+		CLI::write(CLI::color('create [name]',  'yellow'). lang('Migrations.migCreate'));
 	}
 
 	//--------------------------------------------------------------------
@@ -89,7 +90,7 @@ class MigrationsCommand extends \CodeIgniter\Controller
 	 */
 	public function latest()
 	{
-		CLI::write('Migrating to latest version...', 'yellow');
+		CLI::write(lang('Migrations.migToLatest'), 'yellow');
 
 		try {
 			$this->runner->latest();
@@ -101,7 +102,7 @@ class MigrationsCommand extends \CodeIgniter\Controller
 
 		CLI::write('Done');
 	}
-	
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -113,16 +114,16 @@ class MigrationsCommand extends \CodeIgniter\Controller
 	{
 		if (is_null($version))
 		{
-			$version = CLI::prompt('Version');
+			$version = CLI::prompt(lang('Migrations.version'));
 		}
 
 		if (is_null($version))
 		{
-			CLI::error('Invalid version number provided.');
+			CLI::error(lang('Migrations.invalidVersion'));
 			exit();
 		}
 
-		CLI::write("Migrating to version {$version}...", 'yellow');
+		CLI::write(sprintf(lang('Migrations.migToVersionPH'), $version), 'yellow');
 
 		try {
 			$this->runner->version($version);
@@ -143,7 +144,7 @@ class MigrationsCommand extends \CodeIgniter\Controller
 	 */
 	public function current()
 	{
-		CLI::write("Migrating to current version...", 'yellow');
+		CLI::write(lang('Migrations.migToVersion'), 'yellow');
 
 		try {
 			$this->runner->current();
@@ -164,7 +165,7 @@ class MigrationsCommand extends \CodeIgniter\Controller
 	 */
 	public function rollback()
 	{
-		CLI::write("Rolling back all migrations...", 'yellow');
+		CLI::write(lang('Migrations.migRollingBack'), 'yellow');
 
 		try {
 			$this->runner->version(0);
@@ -201,7 +202,7 @@ class MigrationsCommand extends \CodeIgniter\Controller
 
 		if (empty($migrations))
 		{
-			return CLI::error('No migrations were found.');
+			return CLI::error(lang('Migrations.migNoneFound'));
 		}
 
 		$max = 0;
@@ -214,7 +215,7 @@ class MigrationsCommand extends \CodeIgniter\Controller
 			$max = max($max, strlen($file));
 		}
 
-		CLI::write(str_pad('Filename', $max+4).'Migrated On', 'yellow');
+		CLI::write(str_pad(lang('Migrations.filename'), $max+4).lang('Migrations.migOn'), 'yellow');
 
 		foreach ($migrations as $version => $file)
 		{
@@ -244,12 +245,12 @@ class MigrationsCommand extends \CodeIgniter\Controller
 
 		if (empty($seedName))
 		{
-			$seedName = CLI::prompt('Seeder name');
+			$seedName = CLI::prompt(lang('Migrations.migSeeder'), 'DatabaseSeeder');
 		}
 
 		if (empty($seedName))
 		{
-			CLI::error('You must provide a seeder name.');
+			CLI::error(lang('Migrations.migMissingSeeder'));
 			return;
 		}
 
@@ -264,6 +265,54 @@ class MigrationsCommand extends \CodeIgniter\Controller
 	}
 
 	//--------------------------------------------------------------------
+
+    public function create(string $name = null)
+    {
+        if (empty($name))
+        {
+            $name = CLI::prompt(lang('Migrations.migNameMigration'));
+        }
+
+        if (empty($name))
+        {
+            CLI::error(lang('Migrations.migBadCreateName'));
+            return;
+        }
+
+        $path = APPPATH.'Database/Migrations/'.date('YmdHis_').$name.'.php';
+
+        $template =<<<EOD
+<?php
+
+use CodeIgniter\Database\Migration;
+
+class Migration_{name} extends Migration
+{
+    public function up()
+    {
+        //
+    }
+    
+    //--------------------------------------------------------------------
+    
+    public function down()
+    {
+        //
+    }
+}
+
+EOD;
+        $template = str_replace('{name}', $name, $template);
+
+        helper('filesystem');
+        if (! write_file($path, $template))
+        {
+            CLI::error(lang('Migrations.migWriteError'));
+            return;
+        }
+
+        CLI::write('Done.');
+    }
 
 	/**
 	 * Displays a caught exception.

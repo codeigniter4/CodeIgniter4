@@ -37,7 +37,7 @@
  */
 
 use CodeIgniter\Config\BaseConfig;
-use CodeIgniter\Log\LoggerAwareTrait;
+use Psr\Log\LoggerAwareTrait;
 
 /**
  * Base class for session handling
@@ -62,47 +62,47 @@ abstract class BaseHandler implements \SessionHandlerInterface
 
 	/**
 	 * Cookie prefix
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	protected $cookiePrefix = '';
 
 	/**
 	 * Cookie domain
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	protected $cookieDomain = '';
 
 	/**
 	 * Cookie path
-	 * @var type 
+	 * @var type
 	 */
 	protected $cookiePath = '/';
 
 	/**
 	 * Cookie secure?
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	protected $cookieSecure = false;
 
 	/**
 	 * Cookie name to use
-	 * @var type 
+	 * @var type
 	 */
 	protected $cookieName;
 
 	/**
 	 * Match IP addresses for cookies?
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	protected $matchIP = false;
 
 	/**
 	 * Current session ID
-	 * @var type 
+	 * @var type
 	 */
 	protected $sessionID;
 
@@ -115,7 +115,7 @@ abstract class BaseHandler implements \SessionHandlerInterface
 	public function __construct(BaseConfig $config)
 	{
 		$this->cookiePrefix = $config->cookiePrefix;
-		$this->cookieDomain = $config->cookoieDomain;
+		$this->cookieDomain = $config->cookieDomain;
 		$this->cookiePath   = $config->cookiePath;
 		$this->cookieSecure = $config->cookieSecure;
 		$this->cookieName   = $config->sessionCookieName;

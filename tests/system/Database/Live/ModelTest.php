@@ -1,8 +1,11 @@
 <?php namespace CodeIgniter\Database\Live;
 
 use CodeIgniter\Model;
+use Tests\Support\Models\EntityModel;
 use Tests\Support\Models\JobModel;
+use Tests\Support\Models\SimpleEntity;
 use Tests\Support\Models\UserModel;
+use Tests\Support\Models\ValidModel;
 
 /**
  * @group DatabaseLive
@@ -260,7 +263,7 @@ class ModelTest extends \CIDatabaseTestCase
 		$data = new \stdClass();
 		$data->name = 'Magician';
 		$data->description = 'Makes peoples things dissappear.';
-		
+
 		$model->protect(false)->save($data);
 
 		$this->seeInDatabase('job', ['name' => 'Magician']);
@@ -443,5 +446,55 @@ class ModelTest extends \CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
+    public function testValidationBasics()
+    {
+        $model = new ValidModel($this->db);
+
+        $data = [
+            'description' => 'some great marketing stuff'
+        ];
+
+        $this->assertFalse($model->insert($data));
+
+        $errors = $model->errors();
+
+        $this->assertEquals('You forgot to name the baby.', $errors['name']);
+    }
+
+    //--------------------------------------------------------------------
+
+    public function testSkipValidation()
+    {
+        $model = new ValidModel($this->db);
+
+        $data = [
+            'name' => '2',
+            'description' => 'some great marketing stuff'
+        ];
+
+        $this->assertTrue(is_numeric($model->skipValidation(true)->insert($data)));
+    }
+
+    //--------------------------------------------------------------------
+
+    /**
+     * @group single
+     */
+    public function testCanCreateAndSaveEntityClasses()
+    {
+        $model = new EntityModel($this->db);
+
+        $entity = $model->where('name', 'Developer')->first();
+
+        $this->assertTrue($entity instanceof SimpleEntity);
+        $this->assertEquals('Developer', $entity->name);
+        $this->assertEquals('Awesome job, but sometimes makes you bored', $entity->description);
+
+        $entity->name = 'Senior Developer';
+
+        $model->save($entity);
+
+        $this->seeInDatabase('job', ['name' => 'Senior Developer']);
+    }
 
 }

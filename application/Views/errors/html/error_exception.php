@@ -373,7 +373,7 @@
 			<p>
 				Displayed at <?= date('H:i:sa') ?> &mdash;
 				PHP: <?= phpversion() ?>  &mdash;
-				CodeIgniter: <?= CI_VERSION ?>
+				CodeIgniter: <?= \CodeIgniter\CodeIgniter::CI_VERSION ?>
 			</p>
 
 		</div>

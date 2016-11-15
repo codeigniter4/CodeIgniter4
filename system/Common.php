@@ -53,10 +53,42 @@ use CodeIgniter\Services;
 // Services Convenience Functions
 //--------------------------------------------------------------------
 
+if (! function_exists('cache'))
+{
+	/**
+	 * A convenience method that provides access to the Cache
+	 * object. If no parameter is provided, will return the object,
+	 * otherwise, will attempt to return the cached value.
+	 *
+	 * Examples:
+	 *    cache()->save('foo', 'bar');
+	 *    $foo = cache('bar');
+	 *
+	 * @param string|null $key
+	 *
+	 * @return mixed
+	 */
+	function cache(string $key = null)
+	{
+		$cache = \Config\Services::cache();
+
+		// No params - return cache object
+		if (is_null($key))
+		{
+			return $cache;
+		}
+
+		// Still here? Retrieve the value.
+		return $cache->get($key);
+	}
+}
+
+//--------------------------------------------------------------------
+
 if ( ! function_exists('view'))
 {
 	/**
-	 * Grabs the current RenderableInterface-compatible class
+	 * Grabs the current RendererInterface-compatible class
 	 * and tells it to render the specified view. Simply provides
 	 * a convenience method that can be used in Controllers,
 	 * libraries, and routed closures.
@@ -77,7 +109,7 @@ if ( ! function_exists('view'))
 		 */
 		$renderer = Services::renderer();
 
-		$saveData = false;
+		$saveData = null;
 		if (array_key_exists('saveData', $options) && $options['saveData'] === true)
 		{
 			$saveData = (bool)$options['saveData'];
@@ -86,6 +118,27 @@ if ( ! function_exists('view'))
 
 		return $renderer->setData($data, 'raw')
 		                ->render($name, $options, $saveData);
+	}
+}
+
+//--------------------------------------------------------------------
+
+if (! function_exists('view_cell'))
+{
+	/**
+	 * View cells are used within views to insert HTML chunks that are managed
+	 * by other classes.
+	 *
+	 * @param string      $library
+	 * @param null        $params
+	 * @param int         $ttl
+	 * @param string|null $cacheName
+	 *
+	 * @return string
+	 */
+	function view_cell(string $library, $params = null, int $ttl = 0, string $cacheName = null)
+	{
+		return Services::viewcell()->render($library, $params, $ttl, $cacheName);
 	}
 }
 
@@ -145,6 +198,7 @@ if ( ! function_exists('esc'))
 				$method = 'escape'.ucfirst($context);
 			}
 
+			// @todo Optimize this to only load a single instance during page request.
 			$escaper = new \Zend\Escaper\Escaper($encoding);
 
 			$data   = $escaper->$method($data);
@@ -175,7 +229,7 @@ if (! function_exists('session'))
 		// Returning a single item?
 		if (is_string($val))
 		{
-			return $_SESSION[$val] ?: null;
+			return $_SESSION[$val] ?? null;
 		}
 
 		return \Config\Services::session();
@@ -244,7 +298,7 @@ if (! function_exists('shared_service'))
 {
 	/**
 	 * Allow cleaner access to shared services
-	 * 
+	 *
 	 * @param string $name
 	 * @param array|null $params
 	 * @return type
@@ -257,7 +311,24 @@ if (! function_exists('shared_service'))
 
 //--------------------------------------------------------------------
 
+if (! function_exists('lang'))
+{
+	/**
+	 * A convenience method to translate a string and format it
+	 * with the intl extension's MessageFormatter object.
+	 *
+	 * @param string $line
+	 * @param array  $args
+	 *
+	 * @return string
+	 */
+	function lang(string $line, array $args=[])
+	{
+		return Services::language()->getLine($line, $args);
+	}
+}
 
+//--------------------------------------------------------------------
 
 
 
@@ -388,25 +459,51 @@ if (! function_exists('helper'))
 	 * Loads a helper file into memory. Supports namespaced helpers,
 	 * both in and out of the 'helpers' directory of a namespaced directory.
 	 *
-	 * @param string $filename
+	 * @param string|array $filenames
 	 *
 	 * @return string
 	 */
-	function helper(string $filename)//: string
+	function helper($filenames)//: string
 	{
 		$loader = Services::locator(true);
 
-		if (strpos($filename, '_helper') === false)
-		{
-			$filename .= '_helper';
-		}
+        if (! is_array($filenames))
+        {
+            $filenames = [$filenames];
+        }
 
-		$path = $loader->locateFile($filename, 'Helpers');
+        foreach ($filenames as $filename)
+        {
+            if (strpos($filename, '_helper') === false)
+            {
+                $filename .= '_helper';
+            }
 
-		if (! empty($path))
-		{
-			include $path;
-		}
+            $path = $loader->locateFile($filename, 'Helpers');
+
+            if (! empty($path))
+            {
+                include $path;
+            }
+        }
+	}
+}
+
+//--------------------------------------------------------------------
+
+if (! function_exists('app_timezone'))
+{
+	/**
+	 * Returns the timezone the application has been set to display
+	 * dates in. This might be different than the timezone set
+	 * at the server level, as you often want to stores dates in UTC
+	 * and convert them on the fly for the user.
+	 */
+	function app_timezone()
+	{
+		$config = new \Config\App();
+
+		return $config->appTimezone;
 	}
 }
 
@@ -446,6 +543,21 @@ if (! function_exists('csrf_hash'))
 
 		return $security->getCSRFHash();
 	}
+}
+
+//--------------------------------------------------------------------
+
+if (! function_exists('csrf_field'))
+{
+    /**
+     * Generates a hidden input field for use within manually generated forms.
+     *
+     * @return string
+     */
+    function csrf_field()
+    {
+        return '<input type="hidden" name="'. csrf_token() .'" value="'. csrf_hash() .'">';
+    }
 }
 
 //--------------------------------------------------------------------
@@ -532,3 +644,92 @@ if (! function_exists('redirect'))
 
 //--------------------------------------------------------------------
 
+if ( ! function_exists('stringify_attributes'))
+{
+	/**
+	 * Stringify attributes for use in HTML tags.
+	 *
+	 * Helper function used to convert a string, array, or object
+	 * of attributes to a string.
+	 *
+	 * @param	mixed	string, array, object
+	 * @param	bool
+	 * @return	string
+	 */
+	function stringify_attributes($attributes, $js = FALSE) : string
+	{
+		$atts = '';
+
+		if (empty($attributes))
+		{
+			return $atts;
+		}
+
+		if (is_string($attributes))
+		{
+			return ' '.$attributes;
+		}
+
+		$attributes = (array) $attributes;
+
+		foreach ($attributes as $key => $val)
+		{
+			$atts .= ($js)
+                ? $key.'='.esc($val, 'js').','
+                : ' '.$key.'="'.esc($val, 'attr').'"';
+		}
+
+		return rtrim($atts, ',');
+	}
+}
+
+//--------------------------------------------------------------------
+
+if ( ! function_exists('is_really_writable'))
+{
+    /**
+     * Tests for file writability
+     *
+     * is_writable() returns TRUE on Windows servers when you really can't write to
+     * the file, based on the read-only attribute. is_writable() is also unreliable
+     * on Unix servers if safe_mode is on.
+     *
+     * @link	https://bugs.php.net/bug.php?id=54709
+     * @param	string
+     * @return	bool
+     */
+    function is_really_writable($file)
+    {
+        // If we're on a Unix server with safe_mode off we call is_writable
+        if (DIRECTORY_SEPARATOR === '/' || ! ini_get('safe_mode'))
+        {
+            return is_writable($file);
+        }
+
+        /* For Windows servers and safe_mode "on" installations we'll actually
+         * write a file then read it. Bah...
+         */
+        if (is_dir($file))
+        {
+            $file = rtrim($file, '/').'/'.md5(mt_rand());
+            if (($fp = @fopen($file, 'ab')) === FALSE)
+            {
+                return FALSE;
+            }
+
+            fclose($fp);
+            @chmod($file, 0777);
+            @unlink($file);
+            return TRUE;
+        }
+        elseif ( ! is_file($file) OR ($fp = @fopen($file, 'ab')) === FALSE)
+        {
+            return FALSE;
+        }
+
+        fclose($fp);
+        return TRUE;
+    }
+}
+
+//--------------------------------------------------------------------

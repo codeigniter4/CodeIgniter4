@@ -120,6 +120,7 @@ class RouteCollection implements RouteCollectionInterface
 		'num'      => '[0-9]+',
 		'alpha'    => '[a-zA-Z]+',
 		'alphanum' => '[a-zA-Z0-9]+',
+		'hash'     => '[^/]+',
 	];
 
 	/**
@@ -368,6 +369,18 @@ class RouteCollection implements RouteCollectionInterface
 	public function getDefaultMethod(): string
 	{
 		return $this->defaultMethod;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns the default namespace as set in the Routes config file.
+	 *
+	 * @return string
+	 */
+	public function getDefaultNamespace(): string
+	{
+	    return $this->defaultNamespace;
 	}
 
 	//--------------------------------------------------------------------
@@ -892,6 +905,8 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @param string $search
 	 * @param        ...$params
+     *
+     * @return string
 	 */
 	public function reverseRoute(string $search, ...$params): string
 	{
@@ -951,7 +966,7 @@ class RouteCollection implements RouteCollectionInterface
 
 		if (empty($matches[0]))
 		{
-			return $from;
+			return '/'.ltrim($from, '/');
 		}
 
 		// Build our resulting string, inserting the $params in
@@ -960,7 +975,7 @@ class RouteCollection implements RouteCollectionInterface
 		{
 			// Ensure that the param we're inserting matches
 			// the expected param type.
-			if (preg_match("/{$pattern}/", $params[$index]))
+			if (preg_match("|{$pattern}|", $params[$index]))
 			{
 				$from = str_replace($pattern, $params[$index], $from);
 			}
@@ -970,7 +985,7 @@ class RouteCollection implements RouteCollectionInterface
 			}
 		}
 
-		return $from;
+		return '/'.ltrim($from, '/');
 	}
 
 	//--------------------------------------------------------------------

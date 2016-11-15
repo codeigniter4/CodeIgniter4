@@ -65,7 +65,7 @@ following code to your model.
 	{
 		if ($slug === false)
 		{
-			return $this->findAll();
+			$this->findAll();
 		}
 
 		return $this->asArray()
@@ -97,20 +97,23 @@ a new ``News`` controller is defined. Create the new controller at
 ::
 
 	<?php
+
+	use App\Models\NewsModel;
+
 	class News extends \CodeIgniter\Controller
 	{
 		public function index()
 		{
 			$model = new NewsModel();
 
-			$data = ['news'] = $model->getNews();
+			$data['news'] = $model->getNews();
 		}
 
 		public function view($slug = null)
 		{
-		    $model = new NewsModel();
+			$model = new NewsModel();
 
-			$data = ['news'] = $model->getNews($slug);
+			$data['news'] = $model->getNews($slug);
 		}
 	}
 
@@ -135,7 +138,7 @@ the views. Modify the ``index()`` method to look like this::
 
 		$data = [
 			'news'  => $model->getNews(),
-		    'title' => 'News archive',
+			'title' => 'News archive',
 		];
 
 		echo view('Templates/Header', $data);
@@ -195,13 +198,13 @@ add some code to the controller and create a new view. Go back to the
 
 		if (empty($data['news']))
 		{
-			throw new \CodeIgniter\PageNotFoundException('Cannot page the page: '. $slug);
+			throw new \CodeIgniter\PageNotFoundException('Cannot find the page: '. $slug);
 		}
 
-		$data['title'] = $data['news'][0]['title'];
+		$data['title'] = $data['news']['title'];
 
 		echo view('Templates/Header', $data);
-		echo view('News/Index', $data);
+		echo view('News/View', $data);
 		echo view('Templates/Footer');
 	}
 
@@ -214,7 +217,7 @@ The only things left to do is create the corresponding view at
 
 	<?php
 	echo '<h2>'.$news['title'].'</h2>';
-	echo $$news['text'];
+	echo $news['text'];
 
 Routing
 -------
@@ -222,7 +225,7 @@ Routing
 Because of the wildcard routing rule created earlier, you need an extra
 route to view the controller that you just made. Modify your routing file
 (*application/config/routes.php*) so it looks as follows.
-This makes sure the requests reaches the ``News`` controller instead of
+This makes sure the requests reach the ``News`` controller instead of
 going directly to the ``Pages`` controller. The first line routes URI's
 with a slug to the ``view()`` method in the ``News`` controller.
 

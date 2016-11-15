@@ -40,6 +40,7 @@ use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Services;
 use CodeIgniter\Log\Logger;
+use CodeIgniter\Validation\Validation;
 
 /**
  * Class Controller
@@ -86,11 +87,19 @@ class Controller
 	 */
 	protected $forceHTTPS = 0;
 
+    /**
+     * Once validation has been run,
+     * will hold the Validation instance.
+     *
+     * @var Validation
+     */
+    protected $validator;
+
 	//--------------------------------------------------------------------
 
 	/**
 	 * Constructor.
-	 * 
+	 *
 	 * @param RequestInterface $request
 	 * @param ResponseInterface $response
 	 * @param Logger $logger
@@ -112,7 +121,7 @@ class Controller
 
 		$this->loadHelpers();
 	}
-	
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -133,6 +142,19 @@ class Controller
 	//--------------------------------------------------------------------
 
 	/**
+	 * Provides a simple way to tie into the main CodeIgniter class
+	 * and tell it how long to cache the current page for.
+	 *
+	 * @param int $time
+	 */
+	public function cachePage(int $time)
+	{
+		CodeIgniter::cache($time);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Handles "auto-loading" helper files.
 	 */
 	protected function loadHelpers()
@@ -146,6 +168,29 @@ class Controller
 	}
 
 	//--------------------------------------------------------------------
+
+    /**
+     * A shortcut to performing validation on $_POST input. If validation
+     * is not successful, a $errors property will be set on this class.
+     *
+     * @param \CodeIgniter\HTTP\RequestInterface $request
+     * @param                                    $rules
+     * @param array|null                         $messages
+     *
+     * @return bool
+     */
+    public function validate(RequestInterface $request, $rules, array $messages = null): bool
+    {
+        $this->validator = Services::validation();
+
+        $success = $this->validator->withRequest($request)
+                             ->setRules($rules, $messages)
+                             ->run();
+
+        return $success;
+    }
+
+    //--------------------------------------------------------------------
 
 
 }

@@ -29,7 +29,7 @@ class Toolbar
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param BaseConfig $config
 	 */
 	public function __construct(BaseConfig $config)
@@ -50,7 +50,7 @@ class Toolbar
 
 	/**
 	 * Run
-	 * 
+	 *
 	 * @param type $startTime
 	 * @param type $totalTime
 	 * @param type $startMemory

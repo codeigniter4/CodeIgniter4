@@ -160,7 +160,7 @@ class QueryTest extends \CIUnitTestCase
 
 		$query->setQuery('SELECT * FROM users WHERE name = ?', ["O'Reilly"]);
 
-		$expected = "SELECT * FROM users WHERE name = 'O\'Reilly'";
+		$expected = "SELECT * FROM users WHERE name = 'O''Reilly'";
 
 		$this->assertEquals($expected, $query->getQuery());
 	}
@@ -174,6 +174,24 @@ class QueryTest extends \CIUnitTestCase
 		$query->setQuery('SELECT * FROM users WHERE id = :id OR name = :name', ['id' => 13, 'name' => 'Geoffrey']);
 
 		$expected = "SELECT * FROM users WHERE id = 13 OR name = 'Geoffrey'";
+
+		$this->assertEquals($expected, $query->getQuery());
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * @group single
+	 *
+	 * @see https://github.com/bcit-ci/CodeIgniter4/issues/201
+	 */
+	public function testSimilarNamedBinds()
+	{
+		$query = new Query($this->db);
+
+		$query->setQuery('SELECT * FROM users WHERE sitemap = :sitemap OR site = :site', ['sitemap' => 'sitemap', 'site' => 'site']);
+
+		$expected = "SELECT * FROM users WHERE sitemap = 'sitemap' OR site = 'site'";
 
 		$this->assertEquals($expected, $query->getQuery());
 	}

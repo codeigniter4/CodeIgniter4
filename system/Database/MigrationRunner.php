@@ -38,6 +38,7 @@
 
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\ConfigException;
+use Config\Autoload;
 
 /**
  * Class MigrationRunner
@@ -104,7 +105,7 @@ class MigrationRunner
 
 	/**
 	 * Constructor.
-	 * 
+	 *
 	 * @param BaseConfig $config
 	 * @param \CodeIgniter\Database\ConnectionInterface $db
 	 * @throws ConfigException
@@ -115,18 +116,18 @@ class MigrationRunner
 		$this->type           = $config->type           ?? 'timestamp';
 		$this->table          = $config->table          ?? 'migrations';
 		$this->currentVersion = $config->currentVersion ?? 0;
-		$this->path           = $config->path           ?? APPPATH.'Database/Migrations/';
+		$this->path           = $config->path           ?? 'Database/Migrations/';
 
 		$this->path = rtrim($this->path, '/').'/';
 
 		if (empty($this->table))
 		{
-			throw new ConfigException('Migrations table must be set.');
+			throw new ConfigException(lang('Migrations.migMissingTable'));
 		}
 
 		if ( ! in_array($this->type, ['sequential', 'timestamp']))
 		{
-			throw new ConfigException('An invalid migration numbering type was specified: '.$this->type);
+			throw new ConfigException(lang('Migrations.migInvalidType').$this->type);
 		}
 
 		// Migration basename regex
@@ -160,26 +161,17 @@ class MigrationRunner
 	{
 		if (! $this->enabled)
 		{
-			throw new ConfigException('Migrations have been loaded but are disabled or setup incorrectly.');
+			throw new ConfigException(lang('Migrations.migDisabled'));
 		}
 
 		// Note: We use strings, so that timestamp versions work on 32-bit systems
 		$currentVersion = $this->getVersion($group);
 
-		if ($this->type === 'sequential')
-		{
-			$targetVersion = sprintf('%03d', $targetVersion);
-		}
-		else
-		{
-			$targetVersion = (string)$targetVersion;
-		}
-
 		$migrations = $this->findMigrations();
 
 		if ($targetVersion > 0 && ! isset($migrations[$targetVersion]))
 		{
-			throw new \RuntimeException('Migration file not found: '.$targetVersion);
+			throw new \RuntimeException(lang('Migrations.migNotFound').$targetVersion);
 		}
 
 		if ($targetVersion > $currentVersion)
@@ -199,13 +191,15 @@ class MigrationRunner
 			return true;
 		}
 
+		$previous = false;
+
 		// Validate all available migrations, and run the ones within our target range
 		foreach ($migrations as $number => $file)
 		{
 			// Check for sequence gaps
 			if ($this->type === 'sequential' && $previous !== false && abs($number - $previous) > 1)
 			{
-				throw new \RuntimeException('There is a gap in the migration sequence near version number: '.$number);
+				throw new \RuntimeException(lang('Migration.migGap').$number);
 			}
 
 			include_once $file;
@@ -214,7 +208,7 @@ class MigrationRunner
 			// Validate the migration file structure
 			if ( ! class_exists($class, false))
 			{
-				throw new \RuntimeException(sprintf('The migration class "%s" could not be found.', $class));
+				throw new \RuntimeException(sprintf(lang('Migrations.migClassNotFound'), $class));
 			}
 
 			$previous = $number;
@@ -229,14 +223,14 @@ class MigrationRunner
 
 				if ( ! is_callable([$instance, $method]))
 				{
-					throw new \RuntimeException("The migration class is missing an \"{$method}\" method.");
+					throw new \RuntimeException(sprintf(lang('Migrations.migMissingMethod'), $method));
 				}
 
-				call_user_func([$instance, $method]);
+				$instance->{$method}();
 
 				$currentVersion = $number;
-				if ($method === 'up') $this->addHistory($currentVersion, $instance->getDBGroup());
-				elseif ($method === 'down') $this->removeHistory($currentVersion, $instance->getDBGroup());
+				if ($method === 'up') $this->addHistory(basename($file, '.php'), $instance->getDBGroup());
+				elseif ($method === 'down') $this->removeHistory(basename($file, '.php'), $instance->getDBGroup());
 			}
 		}
 
@@ -258,14 +252,14 @@ class MigrationRunner
 		{
 			if ($this->silent) return false;
 
-			throw new \RuntimeException('No migrations were found.');
+			throw new \RuntimeException(lang('Migrations.migNotFound'));
 		}
 
-		$lastMigration = basename(end($migrations));
+		$lastMigration = basename(end($migrations), '.php');
 
 		// Calculate the last migration step from existing migration
 		// filenames and proceed to the standard version migration
-		return $this->version($this->getMigrationNumber($lastMigration));
+		return $this->version($lastMigration);
 	}
 
 	//--------------------------------------------------------------------
@@ -291,25 +285,31 @@ class MigrationRunner
 	{
 		$migrations = [];
 
-		// Load all *_*.php files in the migrations path
-		foreach (glob($this->path.'*_*.php') as $file)
-		{
-			$name = basename($file, '.php');
+        $config = new Autoload();
 
-			// Filter out non-migration files
-			if (preg_match($this->regex, $name))
-			{
-				$number = $this->getMigrationNumber($name);
+        // Loop through all of our namespaced folders
+        // searching for migration directories.
+        foreach ($config->psr4 as $namespace => $dir)
+        {
+            $dir = rtrim($dir, '/').'/'.$this->path;
 
-				// There cannot be duplicate migration numbers
-				if (isset($migrations[$number]))
-				{
-					throw new \RuntimeException('There are multiple migrations with the same version number: '.$number);
-				}
+            if (! is_dir($dir))
+            {
+                continue;
+            }
 
-				$migrations[$number] = $file;
-			}
-		}
+            // Load all *_*.php files in the migrations path
+            foreach (glob($dir.'*_*.php') as $file)
+            {
+                $name = basename($file, '.php');
+
+                // Filter out non-migration files
+                if (preg_match($this->regex, $name))
+                {
+                    $migrations[$name] = $file;
+                }
+            }
+        }
 
 		ksort($migrations);
 
@@ -413,11 +413,19 @@ class MigrationRunner
 	 */
 	protected function getVersion($group = 'default')
 	{
+		if (empty($group))
+		{
+			$config = new \Config\Database();
+			$group = $config->defaultGroup;
+			unset($config);
+		}
+
 		$row = $this->db->table($this->table)
-		                ->select('version')
-					    ->where('group', $group)
-		                ->get()
-		                ->getRow();
+				->select('version')
+				->where('group', $group)
+				->orderBy('version', 'DESC')
+				->get()
+				->getRow();
 
 		return $row ? $row->version : '0';
 	}
@@ -460,6 +468,13 @@ class MigrationRunner
 	 */
 	protected function removeHistory($version, $group = 'default')
 	{
+		if (empty($group))
+		{
+			$config = new \Config\Database();
+			$group = $config->defaultGroup;
+			unset($config);
+		}
+
 		$this->db->table($this->table)
 				 ->where('version', $version)
 				 ->where('group', $group)
@@ -483,17 +498,17 @@ class MigrationRunner
 
 		$forge->addField([
 			'version' => [
-				'type' => 'BIGINT',
-			    'constraint' => 20,
+				'type' => 'VARCHAR',
+			    'constraint' => 255,
 			    'null' => false
 			],
 			'group' => [
-				'type' => 'varchar',
+				'type' => 'VARCHAR',
 			    'constraint' => 255,
 			    'null' => false
 			],
 			'time' => [
-				'type' => 'timestamp',
+				'type' => 'TIMESTAMP',
 			    'null' => false
 			]
 		]);

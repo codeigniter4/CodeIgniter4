@@ -61,7 +61,7 @@ class FileLocator {
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param Autoload $autoload
 	 */
 	public function __construct(Autoload $autoload)
@@ -137,7 +137,7 @@ class FileLocator {
 		// expects this file to be within that folder, like 'Views',
 		// or 'libraries'.
 		// @todo Allow it to check with and without the nested folder.
-		if (! empty($folder))
+		if (! empty($folder) && strpos($filename, $folder) === false)
 		{
 			$filename = $folder.'/'.$filename;
 		}
@@ -154,16 +154,62 @@ class FileLocator {
 
 	//--------------------------------------------------------------------
 
-	/**
-	 * Checks the application folder to see if the file can be found.
-	 * Only for use with filenames that DO NOT include namespacing.
-	 *
-	 * @param string      $file
-	 * @param string|null $folder
-	 * @param string      $ext
-	 *
-	 * @return string
-	 */
+    /**
+     * Searches through all of the defined namespaces looking for a file.
+     * Returns an array of all found locations for the defined file.
+     *
+     * Example:
+     *
+     *  $locator->search('Config/Routes.php');
+     *  // Assuming PSR4 namespaces include foo and bar, might return:
+     *  [
+     *      'application/modules/foo/Config/Routes.php',
+     *      'application/modules/bar/Config/Routes.php',
+     *  ]
+     *
+     * @param string $path
+     * @param string $ext
+     *
+     * @return array
+     */
+    public function search(string $path, string $ext = 'php'): array
+    {
+        $foundPaths = [];
+
+        // Ensure the extension is on the filename
+        $path = strpos($path, '.'.$ext) !== false
+            ? $path
+            : $path.'.'.$ext;
+
+        foreach ($this->namespaces as $name => $folder)
+        {
+            $folder = rtrim($folder, '/').'/';
+
+            if (file_exists($folder.$path))
+            {
+                $foundPaths[] = $folder.$path;
+            }
+        }
+
+        // Remove any duplicates
+        $foundPaths = array_unique($foundPaths);
+
+        return $foundPaths;
+    }
+
+    //--------------------------------------------------------------------
+
+    /**
+     * Checks the application folder to see if the file can be found.
+     * Only for use with filenames that DO NOT include namespacing.
+     *
+     * @param string      $file
+     * @param string|null $folder
+     *
+     * @return string
+     * @internal param string $ext
+     *
+     */
 	protected function legacyLocate(string $file, string $folder=null): string
 	{
 		$paths = [APPPATH, BASEPATH];

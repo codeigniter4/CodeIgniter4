@@ -39,7 +39,7 @@
 
 /**
  * AUTO-LOADER
- * 
+ *
  * This file defines the namespaces and class maps so the Autoloader
  * can find the files as needed.
  */
@@ -47,13 +47,13 @@ class AutoloadConfig
 {
 	/**
 	 * Array of namespaces for autoloading.
-	 * @var type 
+	 * @var type
 	 */
 	public $psr4 = [];
 
 	/**
 	 * Map of class names and locations
-	 * @var type 
+	 * @var type
 	 */
 	public $classmap = [];
 
@@ -114,6 +114,14 @@ class AutoloadConfig
 			'CodeIgniter\CodeIgniter'                       => BASEPATH.'CodeIgniter.php',
 			'CodeIgniter\CLI\CLI'                           => BASEPATH.'CLI/CLI.php',
 			'CodeIgniter\Loader'                            => BASEPATH.'Loader.php',
+			'CodeIgniter\Cache\CacheFactory'                => BASEPATH.'Cache/CacheFactory.php',
+			'CodeIgniter\Cache\CacheInterface'              => BASEPATH.'Cache/CacheInterface.php',
+			'CodeIgniter\Cache\Handlers\DummyHandler'       => BASEPATH.'Cache/Handlers/DummyHandler.php',
+			'CodeIgniter\Cache\Handlers\FileHandler'        => BASEPATH.'Cache/Handlers/FileHandler.php',
+			'CodeIgniter\Cache\Handlers\MemcachedHandler'   => BASEPATH.'Cache/Handlers/MemcachedHandler.php',
+			'CodeIgniter\Cache\Handlers\PredisHandler'      => BASEPATH.'Cache/Handlers/PredisHandler.php',
+			'CodeIgniter\Cache\Handlers\RedisHandler'       => BASEPATH.'Cache/Handlers/RedisHandler.php',
+			'CodeIgniter\Cache\Handlers\WincacheHandler'    => BASEPATH.'Cache/Handlers/WincacheHandler.php',
 			'CodeIgniter\Controller'                        => BASEPATH.'Controller.php',
 			'CodeIgniter\Config\AutoloadConfig'             => BASEPATH.'Config/Autoload.php',
 			'CodeIgniter\Config\BaseConfig'                 => BASEPATH.'Config/BaseConfig.php',
@@ -167,7 +175,7 @@ class AutoloadConfig
 			'CodeIgniter\Session\Handlers\FileHandler'      => BASEPATH.'Session/Handlers/FileHandler.php',
 			'CodeIgniter\Session\Handlers\MemcachedHandler' => BASEPATH.'Session/Handlers/MemcachedHandler.php',
 			'CodeIgniter\Session\Handlers\RedisHandler'     => BASEPATH.'Session/Handlers/RedisHandler.php',
-			'CodeIgniter\View\RenderableInterface'          => BASEPATH.'View/RenderableInterface.php',
+			'CodeIgniter\View\RendererInterface'          => BASEPATH.'View/RendererInterface.php',
 			'CodeIgniter\View\View'                         => BASEPATH.'View/View.php',
 			'Zend\Escaper\Escaper'                          => BASEPATH.'ThirdParty/ZendEscaper/Escaper.php',
 			'CodeIgniter\Log\TestLogger'                    => BASEPATH.'../tests/_support/Log/TestLogger.php',

@@ -1,5 +1,9 @@
 <?php
 
+// Set default timezone on the server
+// Defaults to UTC to make time conversions work well
+date_default_timezone_set('UTC');
+
 // Used by the debug toolbar. Do not remove.
 $startMemory = memory_get_usage();
 $startTime   = microtime(true);
@@ -130,6 +134,9 @@ define('BASEPATH', realpath($system_directory).DIRECTORY_SEPARATOR);
 // Path to the front controller (this file)
 define('FCPATH', __DIR__.DIRECTORY_SEPARATOR);
 
+// Path to code root folder (just up from public)
+define('ROOTPATH', str_replace('public'.DIRECTORY_SEPARATOR, '', FCPATH));
+
 // Path to the writable directory.
 define('WRITEPATH', realpath($writable_directory).DIRECTORY_SEPARATOR);
 
@@ -247,9 +254,9 @@ if ($composer_autoload = $config->composerAutoload)
 {
 	if ($composer_autoload === TRUE)
 	{
-		file_exists(APPPATH.'vendor/autoload.php')
-			? require_once(APPPATH.'vendor/autoload.php')
-			: log_message('error', '$config->\'composerAutoload\' is set to TRUE but '.APPPATH.'vendor/autoload.php was not found.');
+		file_exists(APPPATH.'../vendor/autoload.php')
+			? require_once(APPPATH.'../vendor/autoload.php')
+			: log_message('error', '$config->\'composerAutoload\' is set to TRUE but '.realpath("../").'vendor/autoload.php was not found.');
 	}
 	elseif (file_exists($composer_autoload))
 	{

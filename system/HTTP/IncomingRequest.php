@@ -85,23 +85,51 @@ class IncomingRequest extends Request
 
 	/**
 	 * File collection
-	 * 
+	 *
 	 * @var Files\FileCollection
 	 */
 	protected $files;
 
 	/**
 	 * Negotiator
-	 * 
+	 *
 	 * @var \CodeIgniter\HTTP\Negotiate
 	 */
 	protected $negotiate;
+
+	/**
+	 * The default Locale this request
+	 * should operate under.
+	 *
+	 * @var string
+	 */
+	protected $defaultLocale;
+
+	/**
+	 * The current locale of the application.
+	 * Default value is set in Config\App.php
+	 *
+	 * @var string
+	 */
+	protected $locale;
+
+	/**
+	 * Stores the valid locale codes.
+	 *
+	 * @var array
+	 */
+	protected $validLocales = [];
+
+	/**
+	 * @var \Config\App
+	 */
+	public $config;
 
 	//--------------------------------------------------------------------
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param type $config
 	 * @param type $uri
 	 * @param type $body
@@ -114,7 +142,8 @@ class IncomingRequest extends Request
 			$body = file_get_contents('php://input');
 		}
 
-		$this->body = $body;
+		$this->body   = $body;
+		$this->config = $config;
 
 		parent::__construct($config, $uri);
 
@@ -123,6 +152,90 @@ class IncomingRequest extends Request
 		$this->uri = $uri;
 
 		$this->detectURI($config->uriProtocol, $config->baseURL);
+
+		$this->validLocales = $config->supportedLocales;
+
+		$this->detectLocale($config);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Handles setting up the locale, perhaps auto-detecting through
+	 * content negotiation.
+	 *
+	 * @param $config
+	 */
+	public function detectLocale($config)
+	{
+		$this->locale = $this->defaultLocale = $config->defaultLocale;
+
+		if (! $config->negotiateLocale)
+		{
+			return;
+		}
+
+		$this->setLocale($this->negotiate('language', $config->supportedLocales));
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns the default locale as set in Config\App.php
+	 *
+	 * @return string
+	 */
+	public function getDefaultLocale(): string
+	{
+		return $this->defaultLocale;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Gets the current locale, with a fallback to the default
+	 * locale if none is set.
+	 *
+	 * @return string
+	 */
+	public function getLocale(): string
+	{
+		return $this->locale ?? $this->defaultLocale;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Sets the locale string for this request.
+	 *
+	 * @param string $locale
+	 *
+	 * @return $this
+	 */
+	public function setLocale(string $locale)
+	{
+		// If it's not a valid locale, set it
+		// to the default locale for the site.
+		if (! in_array($locale, $this->validLocales))
+		{
+			$locale = $this->defaultLocale;
+		}
+
+		$this->locale = $locale;
+
+		// If the intl extension is loaded, make sure
+		// that we set the locale for it... if not, though,
+		// don't worry about it.
+		try {
+			if (class_exists('\Locale', false))
+			{
+				\Locale::setDefault($locale);
+			}
+		}
+		catch (\Exception $e)
+		{}
+
+		return $this;
 	}
 
 	//--------------------------------------------------------------------
@@ -177,7 +290,7 @@ class IncomingRequest extends Request
 	}
 
 	//--------------------------------------------------------------------
-	
+
 	/**
 	 * Fetch an item from the $_REQUEST object. This is the simplest way
 	 * to grab data from the request object and can be used in lieu of the
@@ -370,9 +483,14 @@ class IncomingRequest extends Request
 		// set our current domain name, scheme
 		if ( ! empty($baseURL))
 		{
+			// We cannot add the path here, otherwise it's possible
+			// that the routing will not work correctly if we are
+			// within a sub-folder scheme. So it's modified in
+			// the
 			$this->uri->setScheme(parse_url($baseURL, PHP_URL_SCHEME));
 			$this->uri->setHost(parse_url($baseURL, PHP_URL_HOST));
 			$this->uri->setPort(parse_url($baseURL, PHP_URL_PORT));
+			$this->uri->resolveRelativeURI(parse_url($baseURL, PHP_URL_PATH));
 		}
 		else
 		{
@@ -423,7 +541,7 @@ class IncomingRequest extends Request
 					: $this->parseRequestURI();
 				break;
 		}
-		
+
 		return $path;
 	}
 

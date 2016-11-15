@@ -23,11 +23,11 @@ below.
 .. note:: See the 
     `CodeIgniter4-developer-setup <https://github.com/bcit-ci/CodeIgniter4-developer-setup>`_ 
     repository for tips on configuring your IDE or editor to help you conform
-    to the style guide..
+    to the style guide.
 
-*The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD",
+The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD",
 "SHOULD NOT", "RECOMMENDED",  "MAY", and "OPTIONAL" in this document are to
-be interpreted as described in `RFC 2119 <http://www.ietf.org/rfc/rfc2119.txt>`_.*
+be interpreted as described in `RFC 2119 <http://www.ietf.org/rfc/rfc2119.txt>`_.
 
 *Note: When used below, the term "class" refers to all kinds of classes,
 interfaces and traits.*
@@ -69,20 +69,25 @@ Naming
 
 - File names MUST end with a ".php" name extension and MUST NOT have
   multiple name extensions.
-- Files declaring classes MUST have names exactly matching the classes 
-  that they declare (obviously excluding the ".php" name extension).
+- Files declaring classes, interfaces or traits MUST have names exactly matching 
+  the classes that they declare (obviously excluding the ".php" name extension).
 - Files declaring functions SHOULD be named in *snake_case.php*.
 
 *************************************
 Whitespace, indentation and alignment
 *************************************
 
-- Indentation MUST use only tabs.
-- Alignment MUST use only spaces.
+- Best practice: indentation SHOULD use only tabs.
+- Best practice: alignment SHOULD use only spaces.
+- If using tabs for anything, you MUST set the tab spacing to 4.
 
-The following code block would have a single tab at the beginning of
+This will accommodate the widest range of developer environment options,
+while maintaining consistency of code appearance.
+
+Following the "best practice" above, 
+the following code block would have a single tab at the beginning of
 each line containing braces, and two tabs at the beginning of the
-nested statements. No alignment is implied.::
+nested statements. No alignment is implied::
 
     {
         $first = 1;
@@ -90,7 +95,8 @@ nested statements. No alignment is implied.::
         $third = 3;
     }
 
-The following code block would use spaces to have the assignment
+Following the "best practice" above,
+the following code block would use spaces to have the assignment
 operators line up with each other::
 
     {
@@ -101,7 +107,7 @@ operators line up with each other::
 
 
 .. note:: Our indenting and alignment convention differs from PSR-2, which
-    uses spaces for indenting and alignment.
+    **only** uses spaces for both indenting and alignment.
 
 - Unnecessary whitespace characters MUST NOT be present anywhere within a
   script.
@@ -110,6 +116,11 @@ operators line up with each other::
   more spaces used when only one is necessary (excluding alignment), as
   well as any other whitespace usage that is not functionally required or
   explicitly described in this document.
+
+.. note:: With conforming tab settings, alignment spacing should 
+    be preserved in all development environments.
+    A pull request that deals only with tabs or spaces for alignment
+    will not be favorably considered.
 
 ****
 Code
@@ -217,6 +228,31 @@ Logical Operators
     single space, as in **! $result** instead of **!$result**
 -   If there is potential confusion with a logical expression, then use
     parentheses for clarity, as shown above.
+
+Control Structures
+==================
+
+-   Control structures, such as **if/else** statements, **for/foreach** statements, or
+    **while/do** statements, MUST use a brace-surrounded block for their body
+    segments.
+
+    Good control structure examples::
+
+        if ( $foo )
+        {
+            $bar += $baz;
+        }
+        else
+        {
+            $baz = 'bar';
+        }
+
+    Not-acceptable control structures::
+
+        if ( $foo ) $bar = $oneThing + $anotherThing + $yetAnotherThing + $evenMore;
+
+        if ( $foo ) $bar += $baz;
+        else $baz = 'bar';
 
 Other
 =====

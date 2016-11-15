@@ -34,7 +34,7 @@ class InsertTest extends \CIDatabaseTestCase
 	}
 
 	//--------------------------------------------------------------------
-	
+
 	public function testReplaceWithNoMatchingData()
 	{
 		$data = array('id' => 5, 'name' => 'Cab Driver', 'description' => 'Iam yellow');
@@ -64,4 +64,18 @@ class InsertTest extends \CIDatabaseTestCase
 	}
 
 	//--------------------------------------------------------------------
+
+    public function testBug302()
+    {
+        $code = "my code \'CodeIgniter\Autoloader\'";
+
+        $this->db->table('misc')->insert([
+            'key' => 'test',
+            'value' => $code
+        ]);
+
+        $this->seeInDatabase('misc', ['key' => 'test']);
+        $this->seeInDatabase('misc', ['value' => $code]);
+    }
+
 }

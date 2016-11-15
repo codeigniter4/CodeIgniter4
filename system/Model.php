@@ -36,13 +36,14 @@
  * @filesource
  */
 
-use CodeIgniter\Config\BaseConfig;
+use CodeIgniter\Pager\Pager;
+use CodeIgniter\Validation\ValidationInterface;
 use Config\App;
 use Config\Database;
+use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\ConnectionInterface;
-use phpDocumentor\Reflection\DocBlock\Tag\VarTag;
 
 /**
  * Class Model
@@ -63,6 +64,14 @@ use phpDocumentor\Reflection\DocBlock\Tag\VarTag;
  */
 class Model
 {
+	/**
+	 * Pager instance.
+	 * Populated after calling $this->paginate()
+	 *
+	 * @var Pager
+	 */
+	public $pager;
+
 	/**
 	 * Name of database table
 	 *
@@ -182,6 +191,38 @@ class Model
 	 */
 	protected $builder;
 
+    /**
+     * Rules used to validate data in insert, update, and save methods.
+     * The array must match the format of data passed to the Validation
+     * library.
+     *
+     * @var array
+     */
+    protected $validationRules = [];
+
+    /**
+     * Contains any custom error messages to be
+     * used during data validation.
+     *
+     * @var array|null
+     */
+    protected $validationMessages = null;
+
+    /**
+     * Skip the model's validation. Used in conjunction with skipValidation()
+     * to skip data validation for any future calls.
+     *
+     * @var bool
+     */
+    protected $skipValidation = false;
+
+    /**
+     * Our validator instance.
+     *
+     * @var \CodeIgniter\Validation\ValidationInterface
+     */
+    protected $validation;
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -190,7 +231,7 @@ class Model
 	 * @param ConnectionInterface $db
 	 * @param BaseConfig $config        Config/App()
 	 */
-	public function __construct(ConnectionInterface &$db = null, BaseConfig $config = null)
+	public function __construct(ConnectionInterface &$db = null, BaseConfig $config = null, ValidationInterface $validation = null)
 	{
 		if ($db instanceof ConnectionInterface)
 		{
@@ -211,6 +252,12 @@ class Model
 
 		$this->tempReturnType     = $this->returnType;
 		$this->tempUseSoftDeletes = $this->useSoftDeletes;
+
+        if (is_null($validation))
+        {
+            $validation = \Config\Services::validation();
+        }
+        $this->validation = $validation;
 	}
 
 	//--------------------------------------------------------------------
@@ -260,7 +307,7 @@ class Model
 
 	/**
 	 * Extract a subset of data
-	 * 
+	 *
 	 * @param      $key
 	 * @param null $value
 	 *
@@ -340,7 +387,7 @@ class Model
 		{
 			$builder->orderBy($this->primaryKey, 'asc');
 		}
-		
+
 		$row = $builder->limit(1, 0)
 		               ->get();
 
@@ -499,19 +546,71 @@ class Model
 	 */
 	public function save($data)
 	{
+	    $saveData = $data;
+
+	    // If $data is using a custom class with public or protected
+        // properties representing the table elements, we need to grab
+        // them as an array.
+        if (is_object($data) && ! $data instanceof \stdClass)
+        {
+            $data = $this->classToArray($data);
+        }
+
 		if (is_object($data) && isset($data->{$this->primaryKey}))
 		{
-			return $this->update($data->{$this->primaryKey}, $data);
+			$response = $this->update($data->{$this->primaryKey}, $data);
 		}
-		elseif (is_array($data) && array_key_exists($this->primaryKey, $data))
+		elseif (is_array($data) && ! empty($data[$this->primaryKey]))
 		{
-			return $this->update($data[$this->primaryKey], $data);
+			$response = $this->update($data[$this->primaryKey], $data);
 		}
+        else
+        {
+            $response = $this->insert($data);
+        }
 
-		return $this->insert($data);
+        // If it was an Entity class, check it for an onSave method.
+        if (is_object($saveData) && ! $saveData instanceof \stdClass)
+        {
+            if (method_exists($saveData, 'onSave'))
+            {
+                $saveData->onSave();
+            }
+        }
+
+        return $response;
 	}
 
 	//--------------------------------------------------------------------
+
+    /**
+     * Takes a class an returns an array of it's public and protected
+     * properties as an array suitable for use in creates and updates.
+     *
+     * @param $data
+     *
+     * @return array
+     */
+    protected function classToArray($data): array
+    {
+        $mirror = new \ReflectionClass($data);
+        $props  = $mirror->getProperties(\ReflectionProperty::IS_PUBLIC | \ReflectionProperty::IS_PROTECTED);
+
+        $properties = [];
+
+        // Loop over each property,
+        // saving the name/value in a new array we can return.
+        foreach ($props as $prop)
+        {
+            // Must make protected values accessible.
+            $prop->setAccessible(true);
+            $properties[$prop->getName()] = $prop->getValue($data);
+        }
+
+        return $properties;
+    }
+
+    //--------------------------------------------------------------------
 
 	/**
 	 * Inserts data into the current table. If an object is provided,
@@ -523,6 +622,23 @@ class Model
 	 */
 	public function insert($data)
 	{
+        // If $data is using a custom class with public or protected
+        // properties representing the table elements, we need to grab
+        // them as an array.
+        if (is_object($data) && ! $data instanceof \stdClass)
+        {
+            $data = $this->classToArray($data);
+        }
+
+	    // Validate data before saving.
+	    if ($this->skipValidation === false)
+        {
+            if ($this->validate($data) === false)
+            {
+                return false;
+            }
+        }
+
 		// Must be called first so we don't
 		// strip out created_at values.
 		$data = $this->doProtectFields($data);
@@ -560,6 +676,23 @@ class Model
 	 */
 	public function update($id, $data)
 	{
+        // If $data is using a custom class with public or protected
+        // properties representing the table elements, we need to grab
+        // them as an array.
+        if (is_object($data) && ! $data instanceof \stdClass)
+        {
+            $data = $this->classToArray($data);
+        }
+
+	    // Validate data before saving.
+        if ($this->skipValidation === false)
+        {
+            if ($this->validate($data) === false)
+            {
+                return false;
+            }
+        }
+
 		// Must be called first so we don't
 		// strip out updated_at values.
 		$data = $this->doProtectFields($data);
@@ -787,13 +920,23 @@ class Model
 	 * Expects a GET variable (?page=2) that specifies the page of results
 	 * to display.
 	 *
-	 * @param int $perPage
+	 * @param int    $perPage
+	 * @param string $group    Will be used by the pagination library
+	 *                         to identify a unique pagination set.
 	 *
 	 * @return array|null
 	 */
-	public function paginate($perPage = 20)
+	public function paginate(int $perPage = 20, string $group = 'default')
 	{
+		// Get the necessary parts.
 		$page = $_GET['page'] ?? 1;
+
+		$total = $this->countAllResults(false);
+
+		// Store it in the Pager library so it can be
+		// paginated in the views.
+		$pager = \Config\Services::pager();
+		$this->pager = $pager->store($group, $page, $perPage, $total);
 
 		$offset = ($page - 1) * $perPage;
 
@@ -920,7 +1063,7 @@ class Model
 
 	/**
 	 * Specify the table associated with a model
-	 * 
+	 *
 	 * @param string $table
 	 *
 	 * @return $this
@@ -933,6 +1076,95 @@ class Model
 	}
 
 	//--------------------------------------------------------------------
+
+    /**
+     * Grabs the last error(s) that occurred. If data was validated,
+     * it will first check for errors there, otherwise will try to
+     * grab the last error from the Database connection.
+     *
+     * @param bool $forceDB   Always grab the db error, not validation
+     *
+     * @return array|null
+     */
+    public function errors(bool $forceDB = false)
+    {
+        // Do we have validation errors?
+        if ($forceDB === false && $this->skipValidation === false)
+        {
+            $errors = $this->validation->getErrors();
+
+            if (! empty($errors))
+            {
+                return $errors;
+            }
+        }
+
+        // Still here? Grab the database-specific error, if any.
+        $error = $this->db->getError();
+
+        return $error['message'] ?? null;
+    }
+
+    //--------------------------------------------------------------------
+
+    //--------------------------------------------------------------------
+    // Validation
+    //--------------------------------------------------------------------
+
+    /**
+     * Set the value of the skipValidation flag.
+     *
+     * @param bool $skip
+     *
+     * @return $this
+     */
+    public function skipValidation(bool $skip = true)
+    {
+        $this->skipValidation = $skip;
+
+        return $this;
+    }
+
+    //--------------------------------------------------------------------
+
+    /**
+     * Validate the data against the validation rules (or the validation group)
+     * specified in the class property, $validationRules.
+     *
+     * @param array $data
+     *
+     * @return bool
+     */
+    public function validate($data): bool
+    {
+        if ($this->skipValidation === true || empty($this->validationRules))
+        {
+            return true;
+        }
+
+        // Query Builder works with objects as well as arrays,
+        // but validation requires array, so cast away.
+        if (is_object($data))
+        {
+            $data = (array)$data;
+        }
+
+        // ValidationRules can be either a string, which is the group name,
+        // or an array of rules.
+        if (is_string($this->validationRules))
+        {
+            $valid = $this->validation->run($data, $this->validationRules);
+        }
+        else
+        {
+            $this->validation->setRules($this->validationRules, $this->validationMessages);
+            $valid = $this->validation->run($data);
+        }
+
+        return (bool)$valid;
+    }
+
+    //--------------------------------------------------------------------
 
 
 	//--------------------------------------------------------------------
@@ -971,7 +1203,7 @@ class Model
 	 *
 	 * @return $this|null
 	 */
-	public function __call(string $name, array $params)
+	public function __call($name, array $params)
 	{
 		$result = null;
 

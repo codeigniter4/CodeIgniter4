@@ -108,7 +108,7 @@ class BaseConfig
 		{
 			return $value;
 		}
-		elseif (($value = getenv($property)) !== false)
+		elseif (($value = getenv($property)) !== false && $property != 'path')
 		{
 			return $value;
 		}

@@ -34,7 +34,7 @@ as an array of arrays::
 
     $query = $db->query("YOUR QUERY");
 
-	foreach ($query->getResult() as $row)
+	foreach ($query->getResult('array') as $row)
 	{
 		echo $row['title'];
 		echo $row['name'];
@@ -378,7 +378,7 @@ Class Reference
 		:returns:	The requested row or NULL if it doesn't exist
 		:rtype:	mixed
 
-		A wrapper for the ``getRowArray()``, ``getRowObject() and
+		A wrapper for the ``getRowArray()``, ``getRowObject()`` and
 		``getCustomRowObject()`` methods.
 
 		Usage: see `Result Rows`_.

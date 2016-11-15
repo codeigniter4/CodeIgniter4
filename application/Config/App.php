@@ -54,6 +54,68 @@ class App extends BaseConfig
 
 	/*
 	|--------------------------------------------------------------------------
+	| Default Locale
+	|--------------------------------------------------------------------------
+	|
+	| The Locale roughly represents the language and location that your visitor
+	| is viewing the site from. It affects the language strings and other
+	| strings (like currency markers, numbers, etc), that your program
+	| should run under for this request.
+	|
+	*/
+	public $defaultLocale = 'en';
+
+	/*
+	|--------------------------------------------------------------------------
+	| Negotiate Locale
+	|--------------------------------------------------------------------------
+	|
+	| If true, the current Request object will automatically determine the
+	| language to use based on the value of the Accept-Language header.
+	|
+	| If false, no automatic detection will be performed.
+	|
+	*/
+	public $negotiateLocale = false;
+
+	/*
+	|--------------------------------------------------------------------------
+	| Supported Locales
+	|--------------------------------------------------------------------------
+	|
+	| If $negotiateLocale is true, this array lists the locales supported
+	| by the application in descending order of priority. If no match is
+	| found, the first locale will be used.
+	|
+	*/
+	public $supportedLocales = ['en'];
+
+	/*
+	|--------------------------------------------------------------------------
+	| Application Timezone
+	|--------------------------------------------------------------------------
+	|
+	| The default timezone that will be used in your application to display
+	| dates with the date helper, and can be retrieved through the app_timezone()
+	|
+	*/
+	public $appTimezone = 'America/Chicago';
+
+    /*
+    |--------------------------------------------------------------------------
+    | Default Character Set
+    |--------------------------------------------------------------------------
+    |
+    | This determines which character set is used by default in various methods
+    | that require a character set to be provided.
+    |
+    | See http://php.net/htmlspecialchars for a list of supported charsets.
+    |
+    */
+    public $charset = 'UTF-8';
+
+	/*
+	|--------------------------------------------------------------------------
 	| URI PROTOCOL
 	|--------------------------------------------------------------------------
 	|
@@ -178,14 +240,11 @@ class App extends BaseConfig
 	| CSRFCookieName  = The cookie name
 	| CSRFExpire      = The number in seconds the token should expire.
 	| CSRFRegenerate  = Regenerate token on every submission
-	| CSRFExcludeURIs = Array of URIs which ignore CSRF checks
 	*/
-	public $CSRFProtection  = false;
 	public $CSRFTokenName   = 'csrf_test_name';
 	public $CSRFCookieName  = 'csrf_cookie_name';
 	public $CSRFExpire      = 7200;
 	public $CSRFRegenerate  = true;
-	public $CSRFExcludeURIs = [];
 
 	/*
 	|--------------------------------------------------------------------------
@@ -210,10 +269,8 @@ class App extends BaseConfig
 	| The Debug Toolbar provides a way to see information about the performance
 	| and state of your application during that page display. By default it will
 	| NOT be displayed under production environments, and will only display if
-	| CI_DEBIG is true, since if it's not, there's not much to display anyway.
+	| CI_DEBUG is true, since if it's not, there's not much to display anyway.
 	*/
-	public $toolbarEnabled = (ENVIRONMENT != 'production' && CI_DEBUG);
-
 	public $toolbarCollectors = [
 		'CodeIgniter\Debug\Toolbar\Collectors\Timers',
 		'CodeIgniter\Debug\Toolbar\Collectors\Database',
@@ -241,7 +298,7 @@ class App extends BaseConfig
 	|--------------------------------------------------------------------------
 	|
 	| Enabling this setting will tell CodeIgniter to look for a Composer
-	| package auto-loader script in application/vendor/autoload.php.
+	| package auto-loader script in /vendor/autoload.php.
 	|
 	|	$composerAutoload = TRUE;
 	|

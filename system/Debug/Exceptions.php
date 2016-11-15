@@ -62,7 +62,7 @@ class Exceptions
 
 	/**
 	 * Constructor.
-	 * 
+	 *
 	 * @param \Config\App $config
 	 */
 	public function __construct(\Config\App $config)
@@ -143,7 +143,7 @@ class Exceptions
 
 		if (ob_get_level() > $this->ob_level + 1)
 		{
-			ob_end_flush();
+			ob_end_clean();
 		}
 
 		ob_start();
@@ -177,7 +177,7 @@ class Exceptions
 		// Convert it to an exception and pass it along.
 		throw new \ErrorException($message, 0, $severity, $file, $line);
 	}
-	
+
 	//--------------------------------------------------------------------
 
 	/**

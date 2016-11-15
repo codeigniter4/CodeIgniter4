@@ -10,7 +10,7 @@ CodeIgniter's CLI library makes creating interactive command-line scripts simple
 * Showing progress bars during long tasks
 * Wrapping long text lines to fit the window.
 
-.. contents::
+.. contents:: Page Contents
 
 Initializing the Class
 ======================
@@ -119,7 +119,7 @@ exactly as you would the ``write()`` method::
 
 This command will take a string, start printing it on the current line, and wrap it to a set length on new lines.
 This might be useful when displaying a list of options with descriptions that you want to wrap in the current
-window and not go off screen.::
+window and not go off screen::
 
 	CLI::color("task1\t", 'yellow');
 	CLI::wrap("Some long description goes here that might be longer than the current window.");
@@ -172,7 +172,7 @@ The ``newLine()`` method displays a blank line to the user. It does not take any
 
 You can clear the current terminal window with the ``clearScreen()`` method. In most versions of Windows, this will
 simply insert 40 blank lines since Windows doesn't support this feature. Windows 10 bash integration should change
-this.::
+this::
 
 	CLI::clearScreen();
 
