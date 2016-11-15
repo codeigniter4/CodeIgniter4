@@ -422,11 +422,6 @@ class Query implements QueryInterface
                 $escapedValue = preg_quote(trim($escapedValue, $this->db->escapeChar));
             }
 
-			// $ causes issues in preg_replace, but are needed
-            // for password hashes
-            $escapedValue = str_replace('$', '\$', $escapedValue);
-
-
 			$sql = preg_replace('/:'.$placeholder.'(?!\w)/', $escapedValue, $sql);
 		}
 
