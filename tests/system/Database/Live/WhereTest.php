@@ -87,6 +87,9 @@ class WhereTest extends \CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
+    /**
+     * @group single
+     */
 	public function testWhereNotIn()
 	{
 		$jobs = $this->db->table('job')

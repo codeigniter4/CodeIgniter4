@@ -65,4 +65,5 @@ TODO
 	self
 	upgrading
 	troubleshooting
+    local_server
 
