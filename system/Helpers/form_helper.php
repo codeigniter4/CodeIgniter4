@@ -693,11 +693,6 @@ if (! function_exists('set_select'))
 
         if (($input = $_POST[$field]) !== null)
         {
-            if (! is_array($input))
-            {
-                return ' selected="selected"';
-            }
-
             if (is_array($input))
             {
                 $value = (string)$value;
