@@ -1005,6 +1005,13 @@ class RouteCollection implements RouteCollectionInterface
 
 		$from = filter_var($prefix.$from, FILTER_SANITIZE_STRING);
 
+        // While we want to add a route within a group of '/',
+        // it doens't work with matching, so remove them...
+        if ($from != '/')
+        {
+            $from = rtrim($from, '/');
+        }
+
 		if (is_null($options))
 		{
 			$options = $this->currentOptions;
