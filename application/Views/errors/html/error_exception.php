@@ -279,10 +279,14 @@
 						</thead>
 						<tbody>
 						<?php foreach ($headers as $name => $value) : ?>
-							<tr>
-								<td><?= esc($name, 'html') ?></td>
-								<td><?= esc($request->getHeaderLine($name), 'html') ?></td>
-							</tr>
+							<?php if (empty($value)) continue; ?>
+							<?php if (! is_array($value)) { $value = [$value]; } ?>
+							<?php foreach ($value as $h) : ?>
+								<tr>
+									<td><?= esc($h->getName(), 'html') ?></td>
+									<td><?= esc($h->getValueLine(), 'html') ?></td>
+								</tr>
+							<?php endforeach; ?>
 						<?php endforeach; ?>
 						</tbody>
 					</table>
