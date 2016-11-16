@@ -324,7 +324,7 @@
 						<?php foreach ($headers as $name => $value) : ?>
 							<tr>
 								<td><?= esc($name, 'html') ?></td>
-								<td><?= esc($request->getHeaderLine($name), 'html') ?></td>
+								<td><?= esc($response->getHeaderLine($name), 'html') ?></td>
 							</tr>
 						<?php endforeach; ?>
 						</tbody>
