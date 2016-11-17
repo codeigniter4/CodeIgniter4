@@ -20,6 +20,7 @@ if (! function_exists('form_open'))
         // If no action is provided then set to the current url
         if (! $action)
         {
+            helper('url');
             $action = current_url(true);
         } // If an action is not a full URL then turn it into one
         elseif (strpos($action, '://') === false)
@@ -42,8 +43,7 @@ if (! function_exists('form_open'))
         $form = '<form action="'.$action.'"'.$attributes.">\n";
 
         // Add CSRF field if enabled, but leave it out for GET requests and requests to external websites
-        $getCsrf = new \Config\Filters();
-        $before  = $getCsrf->globals->before;
+        $before  = (new \Config\Filters())->globals['before'];
 
         if ((in_array('csrf', $before) || array_key_exists('csrf', $before))
             && strpos($action, base_url()) !== false
@@ -693,11 +693,6 @@ if (! function_exists('set_select'))
 
         if (($input = $_POST[$field]) !== null)
         {
-            if (! is_array($input))
-            {
-                return ' selected="selected"';
-            }
-
             if (is_array($input))
             {
                 $value = (string)$value;
