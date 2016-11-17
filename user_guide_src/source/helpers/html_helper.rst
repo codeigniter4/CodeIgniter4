@@ -416,7 +416,7 @@ The following functions are available:
 .. php:function:: param($name = ''[, $type = false[, $attributes = '']])
 
     :param  string  $name:       The name of the parameter
-    :param  strign  $value:      The value of the parameter
+    :param  string  $value:      The value of the parameter
     :param  array   $attributes: HTML attributes
     :returns:   HTML param tag
     :rtype: string
@@ -431,7 +431,7 @@ The following functions are available:
 .. php:function:: track($name = ''[, $type = false[, $attributes = '']])
 
     :param  string  $name:       The name of the parameter
-    :param  strign  $value:      The value of the parameter
+    :param  string  $value:      The value of the parameter
     :param  array   $attributes: HTML attributes
     :returns:   HTML track tag
     :rtype: string
