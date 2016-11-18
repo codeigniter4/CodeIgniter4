@@ -116,9 +116,6 @@ class MigrationRunner
 		$this->type           = $config->type           ?? 'timestamp';
 		$this->table          = $config->table          ?? 'migrations';
 		$this->currentVersion = $config->currentVersion ?? 0;
-		$this->path           = $config->path           ?? 'Database/Migrations/';
-
-		$this->path = rtrim($this->path, '/').'/';
 
 		if (empty($this->table))
 		{
@@ -285,14 +282,29 @@ class MigrationRunner
 	{
 		$migrations = [];
 
-        $config = new Autoload();
+        // If $path has been set, ONLY do that one since
+        // the user has specified their will. Otherwise,
+        // scan all PSR4 paths. This is required so
+        // when tests are ran, it will only look in it's
+        // location.
+        $paths = [];
+        if (empty($this->path))
+        {
+            $config = new Autoload();
+            foreach ($config->psr4 as $dir)
+            {
+                $paths[] = rtrim($dir, '/').'/Database/Migrations/';
+            }
+        }
+        else
+        {
+            $paths[] = $this->path;
+        }
 
         // Loop through all of our namespaced folders
         // searching for migration directories.
-        foreach ($config->psr4 as $namespace => $dir)
+        foreach ($paths as $dir)
         {
-            $dir = rtrim($dir, '/').'/'.$this->path;
-
             if (! is_dir($dir))
             {
                 continue;
