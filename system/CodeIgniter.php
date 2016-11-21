@@ -223,7 +223,7 @@ class CodeIgniter
 
 			// Save our current URI as the previous URI in the session
             // for safer, more accurate use with `previous_url()` helper function.
-            $this->storePreviousURL($uri);
+            $this->storePreviousURL($this->request->uri ?? $uri);
 
 			unset($uri);
 
