@@ -7,6 +7,7 @@
  * consistent HTTP responses under a variety of common
  * situations when working as an API.
  *
+ * @property $request   CodeIgniter\HTTP\Request
  * @property $response  CodeIgniter\HTTP\Response
  *
  * @package CodeIgniter\API
@@ -100,7 +101,7 @@ trait ResponseTrait
     {
         if (! is_array($messages))
         {
-            $message = [$messages];
+            $messages = [$messages];
         }
 
         $response = [
@@ -279,9 +280,16 @@ trait ResponseTrait
             return $data;
         }
 
-        // @todo Implement a formatting library so we have other options
-        $this->setContentType('json');
-        return json_encode($data);
+        $config = new \Config\API();
+
+        // Determine correct response type through content negotiation
+        $format = $this->request->negotiate('media', $config->supportedResponseFormats);
+
+        $this->setContentType($format);
+
+        $formatter = $config->getFormatter($format);
+
+        return $formatter->format($data);
     }
 
     //--------------------------------------------------------------------
@@ -296,14 +304,14 @@ trait ResponseTrait
     {
         switch ($type)
         {
-            case 'html':
-                $this->response->setContentType('text/html');
+            case 'text/html':
+                $this->response = $this->response->setContentType('text/html');
                 break;
-            case 'json':
-                $this->response->setContentType('application/json');
+            case 'application/json':
+                $this->response = $this->response->setContentType('application/json');
                 break;
-            case 'xml':
-                $this->response->setContentType('text/xml');
+            case 'application/xml':
+                $this->response = $this->response->setContentType('text/xml');
                 break;
         }
     }
