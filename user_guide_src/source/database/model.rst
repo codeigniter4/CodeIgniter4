@@ -336,7 +336,7 @@ A very simple model to work with this might look like::
 	class JobModel extends \CodeIgniter\Model
 	{
 		protected $table = 'jobs';
-		protected $returnType = '\App\Entities\Job`;
+		protected $returnType = '\App\Entities\Job';
 		protected $allowedFields = [
 			'name', 'description'
 		];

@@ -54,7 +54,7 @@ to get all of our posts from our database. To do this, the database
 abstraction layer that is included with CodeIgniter —
 :doc:`Query Builder <../database/query_builder>` — is used. This makes it
 possible to write your 'queries' once and make them work on :doc:`all
-supported database systems <../general/requirements>`. The Model class
+supported database systems <../intro/requirements>`. The Model class
 also allows you to easily work with the Query Builder and provides
 some additional tools to make working with data simpler. Add the
 following code to your model.

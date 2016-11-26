@@ -363,7 +363,7 @@ can modify the generated routes, or further restrict them. The ``$options`` arra
 	$routes->options('from', 'to', $options);
 	$routes->delete('from', 'to', $options);
 	$routes->patch('from', 'to', $options);
-	$routes->match(['get, 'put'], 'from', 'to', $options);
+	$routes->match(['get', 'put'], 'from', 'to', $options);
 	$routes->resources('photos', $options);
 	$routes->map($array, $options);
 	$routes->group('name', $options, function());
@@ -424,7 +424,7 @@ be used when the first parameter is a language string::
 	$routes->get('users/(:num)', 'users/show/$1', ['offset' => 1]);
 
 	// Creates:
-	$routes['users/(:num)'] = 'users/show/$2);
+	$routes['users/(:num)'] = 'users/show/$2';
 
 
 Routes Configuration Options

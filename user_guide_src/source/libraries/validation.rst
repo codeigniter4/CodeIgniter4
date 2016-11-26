@@ -330,7 +330,7 @@ The array is structured as follows::
     [
         'field' => [
             'rule' => 'message',
-            'rule' => 'message
+            'rule' => 'message',
         ],
     ]
 
