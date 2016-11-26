@@ -6,7 +6,7 @@ The Form Helper file contains functions that assist in working with
 forms.
 
 .. contents::
-:local:
+  :local:
 
 .. raw:: html
 
@@ -190,14 +190,14 @@ The following functions are available:
 .. php:function:: form_input([$data = ''[, $value = ''[, $extra = ''[, $type = 'text']]]])
 
 	:param	array	$data: Field attributes data
-    :param	string	$value: Field value
-    :param	mixed	$extra: Extra attributes to be added to the tag either as an array or a literal string
-    :param  string  $type: The type of input field. i.e. 'text', 'email', 'number', etc.
-    :returns:	An HTML text input field tag
-    :rtype:	string
+	:param	string	$value: Field value
+	:param	mixed	$extra: Extra attributes to be added to the tag either as an array or a literal string
+	:param  string  $type: The type of input field. i.e. 'text', 'email', 'number', etc.
+	:returns:	An HTML text input field tag
+	:rtype:	string
 
-    Lets you generate a standard text input field. You can minimally pass
-    the field name and value in the first and second parameter::
+	Lets you generate a standard text input field. You can minimally pass
+	the field name and value in the first and second parameter::
 
 		echo form_input('username', 'johndoe');
 
@@ -234,13 +234,13 @@ The following functions are available:
 
 	To support the expanded range of HTML5 input fields, you can pass an input type in as the fourth parameter::
 
-    echo form_input('email', 'joe@example.com', ['placeholder' => 'Email Address...'], 'email');
+		echo form_input('email', 'joe@example.com', ['placeholder' => 'Email Address...'], 'email');
 
-    /*
-        Would produce:
+		/*
+			 Would produce:
 
-        <input type="email" name="email" value="joe@example.com" placeholder="Email Address..." />
-    */
+			<input type="email" name="email" value="joe@example.com" placeholder="Email Address..." />
+		*/
 
 .. php:function:: form_password([$data = ''[, $value = ''[, $extra = '']]])
 
@@ -279,7 +279,7 @@ The following functions are available:
 	function above except that it generates a "textarea" type.
 
 	.. note:: Instead of the *maxlength* and *size* attributes in the above example,
-you will instead specify *rows* and *cols*.
+		you will instead specify *rows* and *cols*.
 
 .. php:function:: form_dropdown([$name = ''[, $options = array()[, $selected = array()[, $extra = '']]]])
 
@@ -622,7 +622,7 @@ you will instead specify *rows* and *cols*.
 	The above form will show "0" when loaded for the first time.
 
 	.. note:: If you've loaded the :doc:`Form Validation Library <../libraries/form_validation>` and
-have set a validation rule for the field name in use with this helper, then it will
+		have set a validation rule for the field name in use with this helper, then it will
 		forward the call to the :doc:`Form Validation Library <../libraries/form_validation>`'s
 		own ``set_value()`` method. Otherwise, this function looks in ``$_POST`` for the
 		field value.

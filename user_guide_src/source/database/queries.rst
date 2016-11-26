@@ -261,7 +261,7 @@ query::
 
     // Collect the Data
     $name = 'John Doe';
-    $email' = 'j.doe@example.com';
+    $email = 'j.doe@example.com';
     $country = 'US';
 
     // Run the Query

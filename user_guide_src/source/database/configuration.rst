@@ -174,7 +174,7 @@ Explanation of Values:
 **username**		The username used to connect to the database.
 **password**		The password used to connect to the database.
 **database**		The name of the database you want to connect to.
-**DBDiver**		The database type. eg: MySQLi, Postgre, etc. The case must match the driver name
+**DBDriver**		The database type. eg: MySQLi, Postgre, etc. The case must match the driver name
 **DBPrefix**		An optional table prefix which will added to the table name when running
 			:doc:`Query Builder <query_builder>` queries. This permits multiple CodeIgniter
 			installations to share one database.

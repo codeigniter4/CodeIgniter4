@@ -182,7 +182,7 @@ You can pass in array as the value of the ``allow_redirects`` option to specify 
 
 	$client->request('GET', 'http://example.com', ['allow_redirects' => [
 		'max' => 10,
-		'protocols => ['https'] // Force HTTPS domains only.
+		'protocols' => ['https'] // Force HTTPS domains only.
 	]]);
 
 .. :note::  Following redirects does not work when PHP is in safe_mode or open_basedir is enabled.
@@ -308,7 +308,7 @@ The ``json`` option is used to easily upload JSON encoded data as the body of a 
 of ``application/json`` is added, overwriting any Content-Type that might be already set. The data provided to
 this option can be any value that ``json_encode()`` accepts::
 
-	$response = $client->request('PUT, '/put', ['json' => ['foo' => 'bar']]);
+	$response = $client->request('PUT', '/put', ['json' => ['foo' => 'bar']]);
 
 .. :note:: This option does not allow for any customization of the ``json_encode()`` function, or the Content-Type
         header. If you need that ability, you will need to encode the data manually, passing it through the ``setBody()``

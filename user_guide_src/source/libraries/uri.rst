@@ -244,7 +244,7 @@ Finally, you can retrieve an array of all of the segments::
 
 	// $segments =
 	[
-		0 => 'users,
+		0 => 'users',
 		1 => '15',
 		2 => 'profile'
 	]
