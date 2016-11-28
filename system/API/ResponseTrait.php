@@ -46,7 +46,7 @@ trait ResponseTrait
         'too_many_requests'         => 429,
         'server_error'              => 500,
         'unsupported_grant_type'    => 501,
-        'not_implemented'           => 501
+        'not_implemented'           => 501,
     ];
 
     //--------------------------------------------------------------------
@@ -61,7 +61,7 @@ trait ResponseTrait
      *
      * @return mixed
      */
-    public function respond($data=null, int $status=200, string $message='')
+    public function respond($data = null, int $status = 200, string $message = '')
     {
         // If data is null and status code not provided, exit and bail
         if ($data === null && $status === null)
@@ -70,14 +70,11 @@ trait ResponseTrait
 
             // Create the output var here in case of $this->response([]);
             $output = null;
-        }
-
-        // If data is null but status provided, keep the output empty.
+        } // If data is null but status provided, keep the output empty.
         elseif ($data === null && is_numeric($status))
         {
             $output = null;
-        }
-        else
+        } else
         {
             $output = $this->format($data);
         }
@@ -91,13 +88,14 @@ trait ResponseTrait
     /**
      * Used for generic failures that no custom methods exist for.
      *
-     * @param          $messages
-     * @param int|null $status
-     * @param string   $customMessage
+     * @param             $messages
+     * @param int|null    $status HTTP status code
+     * @param string|null $code   Custom, API-specific, error code
+     * @param string      $customMessage
      *
      * @return mixed
      */
-    public function fail($messages, int $status=400, string $customMessage='')
+    public function fail($messages, int $status = 400, string $code = null, string $customMessage = '')
     {
         if (! is_array($messages))
         {
@@ -105,8 +103,9 @@ trait ResponseTrait
         }
 
         $response = [
-            'error' => $status,
-            'messages' => $messages
+            'status'   => $status,
+            'error'    => $code === null ? $status : $code,
+            'messages' => $messages,
         ];
 
         return $this->respond($response, $status, $customMessage);
@@ -126,7 +125,7 @@ trait ResponseTrait
      *
      * @return mixed
      */
-    public function respondCreated($data, string $message='')
+    public function respondCreated($data, string $message = '')
     {
         return $this->respond($data, $this->codes['created'], $message);
     }
@@ -141,7 +140,7 @@ trait ResponseTrait
      *
      * @return mixed
      */
-    public function respondDeleted($data, string $message='')
+    public function respondDeleted($data, string $message = '')
     {
         return $this->respond($data, $this->codes['deleted'], $message);
     }
@@ -158,9 +157,9 @@ trait ResponseTrait
      *
      * @return mixed
      */
-    public function failUnauthorized(string $description, string $message='')
+    public function failUnauthorized(string $description, string $code=null, string $message = '')
     {
-        return $this->fail($description, $this->codes['unauthorized'], $message);
+        return $this->fail($description, $this->codes['unauthorized'], $code, $message);
     }
 
     //--------------------------------------------------------------------
@@ -174,9 +173,9 @@ trait ResponseTrait
      *
      * @return mixed
      */
-    public function failForbidden(string $description, string $message='')
+    public function failForbidden(string $description, string $code=null, string $message = '')
     {
-        return $this->fail($description, $this->codes['forbidden'], $message);
+        return $this->fail($description, $this->codes['forbidden'], $code, $message);
     }
 
     //--------------------------------------------------------------------
@@ -189,9 +188,9 @@ trait ResponseTrait
      *
      * @return mixed
      */
-    public function failNotFound(string $description, string $message='')
+    public function failNotFound(string $description, string $code=null, string $message = '')
     {
-        return $this->fail($description, $this->codes['resource_not_found'], $message);
+        return $this->fail($description, $this->codes['resource_not_found'], $code, $message);
     }
 
     //--------------------------------------------------------------------
@@ -204,9 +203,9 @@ trait ResponseTrait
      *
      * @return mixed
      */
-    public function failValidationError(string $description, string $message='')
+    public function failValidationError(string $description, string $code=null, string $message = '')
     {
-        return $this->fail($description, $this->codes['invalid_data'], $message);
+        return $this->fail($description, $this->codes['invalid_data'], $code, $message);
     }
 
     //--------------------------------------------------------------------
@@ -219,9 +218,9 @@ trait ResponseTrait
      *
      * @return mixed
      */
-    public function failResourceExists(string $description, string $message='')
+    public function failResourceExists(string $description, string $code=null, string $message = '')
     {
-        return $this->fail($description, $this->codes['resource_exists'], $message);
+        return $this->fail($description, $this->codes['resource_exists'], $code, $message);
     }
 
     //--------------------------------------------------------------------
@@ -236,9 +235,9 @@ trait ResponseTrait
      *
      * @return mixed
      */
-    public function failResourceGone(string $description, string $message='')
+    public function failResourceGone(string $description, string $code=null, string $message = '')
     {
-        return $this->fail($description, $this->codes['resource_gone'], $message);
+        return $this->fail($description, $this->codes['resource_gone'], $code, $message);
     }
 
     //--------------------------------------------------------------------
@@ -251,9 +250,9 @@ trait ResponseTrait
      *
      * @return mixed
      */
-    public function failTooManyRequests(string $description, string $message='')
+    public function failTooManyRequests(string $description, string $code=null, string $message = '')
     {
-        return $this->fail($description, $this->codes['too_many_requests'], $message);
+        return $this->fail($description, $this->codes['too_many_requests'], $code, $message);
     }
 
     //--------------------------------------------------------------------
@@ -277,6 +276,7 @@ trait ResponseTrait
         if (is_string($data))
         {
             $this->setContentType('html');
+
             return $data;
         }
 
@@ -300,7 +300,7 @@ trait ResponseTrait
      *
      * @param string $type
      */
-    protected function setContentType(string $type=null)
+    protected function setContentType(string $type = null)
     {
         switch ($type)
         {

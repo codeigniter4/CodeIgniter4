@@ -67,9 +67,16 @@ Handling Response Types
 When you pass your data in any of these methods, they will determine the data type to format the results as based on
 the following criteria:
 
-* If $data is a string, it will be treated as HTML to send back to the client
+* If $data is a string, it will be treated as HTML to send back to the client.
 * If $data is an array, it will try to negotiate the content type with what the client asked for, defaulting to JSON
     if nothing else has been specified within Config\API.php, the ``$supportedResponseFormats`` property.
+
+To def
+
+
+*****************
+Custom Formatters
+*****************
 
 
 
@@ -95,4 +102,162 @@ Class Reference
 
     .. note:: Since it sets the status code and body on the active Response instance, this should always
         be the final method in the script execution.
+
+.. php:method:: fail($messages[, int $status=400[, string $code=null[, string $message='']]])
+
+    :param mixed $messages: A string or array of strings that contain error messages encountered.
+    :param int   $status: The HTTP status code to return. Defaults to 400.
+    :param string $code: A custom, API-specific, error code.
+    :param string $message: A custom "reason" message to return.
+    :returns: A multi-part response in the client's preferred format.
+
+    The is the generic method used to represent a failed response, and is used by all of the other "fail" methods.
+
+    The ``$messages`` element can be either a string or an array of strings.
+
+    The ``$status`` parameter is the HTTP status code that should be returned.
+
+    Since many APIs are better served using custom error codes, a custom error code can be passed in the third
+    parameter. If no value is present, it will be the same as ``$status``.
+
+    If a ``$message`` string is passed, it will be used in place of the standard IANA reason codes for the
+    response status. Not every client will respect the custom codes, though, and will use the IANA standards
+    that match the status code.
+
+    The response is an array with two elements: ``error`` and ``messages``. The ``error`` element contains the status
+    code of the error. The ``messages`` element contains an array of error messages. It would look something like::
+
+    $response = [
+        'status' => 400,
+        'code' => '321a',
+        'messages' => [
+            'Error message 1',
+            'Error message 2'
+        ]
+    ];
+
+.. php:method:: respondCreated($data[, string $message = ''])
+
+    :param mixed  $data: The data to return to the client. Either string or array.
+    :param string $message: A custom "reason" message to return.
+    :returns: The value of the Response object's send() method.
+
+    Sets the appropriate status code to use when a new resource was created, typically 201.
+
+    ::
+
+    $user = $userModel->insert($data);
+    return $this->respondCreated($user);
+
+.. php:method:: respondDeleted($data[, string $message = ''])
+
+    :param mixed  $data: The data to return to the client. Either string or array.
+        :param string $message: A custom "reason" message to return.
+        :returns: The value of the Response object's send() method.
+
+        Sets the appropriate status code to use when a new resource was deleted as the result of
+        this API call, typically 200.
+
+        ::
+
+    $user = $userModel->delete($id);
+    return $this->respondDeleted(['id' => $id]);
+
+.. php:method:: failUnauthorized(string $description[, string $code=null[, string $message = '']])
+
+    :param mixed  $description: The error message to show the user.
+    :param string $code: A custom, API-specific, error code.
+    :param string $message: A custom "reason" message to return.
+    :returns: The value of the Response object's send() method.
+
+    Sets the appropriate status code to use when the user either has not been authorized,
+    or has incorrect authorization. Status code is 401.
+
+    ::
+
+    return $this->failUnauthorized('Invalid Auth token');
+
+.. php:method:: failForbidden(string $description[, string $code=null[, string $message = '']])
+
+    :param mixed  $description: The error message to show the user.
+    :param string $code: A custom, API-specific, error code.
+    :param string $message: A custom "reason" message to return.
+    :returns: The value of the Response object's send() method.
+
+    Unlike ``failUnauthorized``, this method should be used when the requested API endpoint is never allowed.
+    Unauthorized implies the client is encouraged to try again with different credentials. Forbidden means
+    the client should not try again because it won't help. Status code is 403.
+
+    ::
+
+    return $this->failForbidden('Invalid API endpoint.');
+
+.. php:method:: failNotFound(string $description[, string $code=null[, string $message = '']])
+
+    :param mixed  $description: The error message to show the user.
+        :param string $code: A custom, API-specific, error code.
+        :param string $message: A custom "reason" message to return.
+        :returns: The value of the Response object's send() method.
+
+    Sets the appropriate status code to use when the requested resource cannot be found. Status code is 404.
+
+    ::
+
+    return $this->failNotFound('User 13 cannot be found.');
+
+.. php:method:: failValidationError(string $description[, string $code=null[, string $message = '']])
+
+    :param mixed  $description: The error message to show the user.
+    :param string $code: A custom, API-specific, error code.
+    :param string $message: A custom "reason" message to return.
+    :returns: The value of the Response object's send() method.
+
+    Sets the appropriate status code to use when data the client sent did not pass validation rules.
+    Status code is typically 400.
+
+    ::
+
+    return $this->failValidationError($validation->getErrors());
+
+.. php:method:: failResourceExists(string $description[, string $code=null[, string $message = '']])
+
+    :param mixed  $description: The error message to show the user.
+    :param string $code: A custom, API-specific, error code.
+    :param string $message: A custom "reason" message to return.
+    :returns: The value of the Response object's send() method.
+
+    Sets the appropriate status code to use when the resource the client is trying to create already exists.
+    Status code is typically 409.
+
+    ::
+
+    return $this->failResourceExists('A user already exists with that email.');
+
+.. php:method:: failResourceGone(string $description[, string $code=null[, string $message = '']])
+
+    :param mixed  $description: The error message to show the user.
+    :param string $code: A custom, API-specific, error code.
+    :param string $message: A custom "reason" message to return.
+    :returns: The value of the Response object's send() method.
+
+    Sets the appropriate status code to use when the requested resource was previously deleted and
+    is no longer available. Status code is typically 410.
+
+    ::
+
+    return $this->failResourceGone('That user has been previously deleted.');
+
+.. php:method:: failTooManyRequests(string $description[, string $code=null[, string $message = '']])
+
+    :param mixed  $description: The error message to show the user.
+    :param string $code: A custom, API-specific, error code.
+    :param string $message: A custom "reason" message to return.
+    :returns: The value of the Response object's send() method.
+
+    Sets the appropriate status code to use when the client has called an API endpoint too many times.
+    This might be due to some form of throttling or rate limiting. Status code is typically 400.
+
+    ::
+
+    return $this->failTooManyRequests('You must wait 15 seconds before making another request.');
 
