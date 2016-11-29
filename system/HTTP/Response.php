@@ -213,7 +213,7 @@ class Response extends Message implements ResponseInterface
 	 *
 	 * @param App $config
 	 */
-	public function __construct(App $config)
+	public function __construct($config)
 	{
 		// Default to a non-caching page.
 		// Also ensures that a Cache-control header exists.

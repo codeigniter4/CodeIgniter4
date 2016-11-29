@@ -32,7 +32,8 @@ class XMLFormatter implements FormatterInterface
     /**
      * A recursive method to convert an array into a valid XML string.
      *
-     * Written by CodexWorld. NOTE: waiting on confirmation if we can use....
+     * Written by CodexWorld. Received permission by email on Nov 24, 2016 to use this code.
+     *
      * @see http://www.codexworld.com/convert-array-to-xml-in-php/
      *
      * @param array $data

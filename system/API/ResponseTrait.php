@@ -61,7 +61,7 @@ trait ResponseTrait
      *
      * @return mixed
      */
-    public function respond($data = null, int $status = 200, string $message = '')
+    public function respond($data = null, int $status = null, string $message = '')
     {
         // If data is null and status code not provided, exit and bail
         if ($data === null && $status === null)
@@ -76,6 +76,7 @@ trait ResponseTrait
             $output = null;
         } else
         {
+            $status = empty($status) ? 200 : $status;
             $output = $this->format($data);
         }
 
@@ -275,7 +276,7 @@ trait ResponseTrait
         // If the data is a string, there's not much we can do to it...
         if (is_string($data))
         {
-            $this->setContentType('html');
+            $this->setContentType('text/html');
 
             return $data;
         }

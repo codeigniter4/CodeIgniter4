@@ -71,14 +71,31 @@ the following criteria:
 * If $data is an array, it will try to negotiate the content type with what the client asked for, defaulting to JSON
     if nothing else has been specified within Config\API.php, the ``$supportedResponseFormats`` property.
 
-To def
+To define the formatter that is used, edit **Config\API.php**. The ``$supportedResponseFormats`` contains a list of
+mime types that your application can automatically format the response for. By default, the system knows how to
+format both XML and JSON responses::
 
+        public $supportedResponseFormats = [
+            'application/json',
+            'application/xml'
+        ];
 
-*****************
-Custom Formatters
-*****************
+This is the array that is used during :doc:`Content Negotiation </libraries/content_negotiation>` to determine which
+type of response to return. If no matches are found between what the client requested and what you support, the first
+format in this array is what will be returned.
 
+Next, you need to define the class that is used to format the array of data. This must be a fully qualified class
+name, and the class must implement **CodeIgniter\API\FormatterInterface**. Formatters come out of the box that
+support both JSON and XML::
 
+    public $formatters = [
+        'application/json' => \CodeIgniter\API\JSONFormatter::class,
+        'application/xml'  => \CodeIgniter\API\XMLFormatter::class
+    ];
+
+So, if your request asks for JSON formatted data in an **Accept** header, the data array you pass any of the
+``respond*`` or ``fail*`` methods will be formatted by the **CodeIgniter\API\JSONFormatter** class. The resulting
+JSON data will be sent back to the client.
 
 ===============
 Class Reference
