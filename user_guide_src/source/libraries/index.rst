@@ -5,6 +5,7 @@ Library Reference
 .. toctree::
     :titlesonly:
 
+    api_responses
     benchmark
     caching
     cli
