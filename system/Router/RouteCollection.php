@@ -905,6 +905,8 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @param string $search
 	 * @param        ...$params
+     *
+     * @return string
 	 */
 	public function reverseRoute(string $search, ...$params): string
 	{
@@ -964,7 +966,7 @@ class RouteCollection implements RouteCollectionInterface
 
 		if (empty($matches[0]))
 		{
-			return $from;
+			return '/'.ltrim($from, '/');
 		}
 
 		// Build our resulting string, inserting the $params in
@@ -973,7 +975,7 @@ class RouteCollection implements RouteCollectionInterface
 		{
 			// Ensure that the param we're inserting matches
 			// the expected param type.
-			if (preg_match("/{$pattern}/", $params[$index]))
+			if (preg_match("|{$pattern}|", $params[$index]))
 			{
 				$from = str_replace($pattern, $params[$index], $from);
 			}
@@ -983,7 +985,7 @@ class RouteCollection implements RouteCollectionInterface
 			}
 		}
 
-		return $from;
+		return '/'.ltrim($from, '/');
 	}
 
 	//--------------------------------------------------------------------
@@ -1002,6 +1004,13 @@ class RouteCollection implements RouteCollectionInterface
 		$prefix = is_null($this->group) ? '' : $this->group.'/';
 
 		$from = filter_var($prefix.$from, FILTER_SANITIZE_STRING);
+
+        // While we want to add a route within a group of '/',
+        // it doens't work with matching, so remove them...
+        if ($from != '/')
+        {
+            $from = rtrim($from, '/');
+        }
 
 		if (is_null($options))
 		{

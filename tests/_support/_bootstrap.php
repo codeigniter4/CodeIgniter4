@@ -62,6 +62,9 @@ define('BASEPATH', realpath($system_directory).DIRECTORY_SEPARATOR);
 // Path to the front controller (this file)
 define('FCPATH', __DIR__.DIRECTORY_SEPARATOR);
 
+// Path to code root folder (just up from public)
+define('ROOTPATH', str_replace('public'.DIRECTORY_SEPARATOR, '', FCPATH));
+
 // Path to the writable directory.
 define('WRITEPATH', realpath($writable_directory).DIRECTORY_SEPARATOR);
 

@@ -143,7 +143,7 @@ every line after the first line, so that you will have a crisp column edge on th
 	// to determine the width of the left column
 	$maxlen = max(array_map('strlen', $titles));
 
-	for ($i=0; $ <= count($titles); $i++)
+	for ($i=0; $i <= count($titles); $i++)
 	{
 		CLI::write(
 			// Display the title on the left of the row
@@ -151,7 +151,7 @@ every line after the first line, so that you will have a crisp column edge on th
 			// Wrap the descriptions in a right-hand column
 			// with its left side 3 characters wider than
 			// the longest item on the left.
-			CLI::wrap($descriptions[$i], 40, $maxlen+3
+			CLI::wrap($descriptions[$i], 40, $maxlen+3)
 		);
 	}
 

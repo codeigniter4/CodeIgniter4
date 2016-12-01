@@ -221,6 +221,10 @@ class CodeIgniter
 				$this->response = $response;
 			}
 
+			// Save our current URI as the previous URI in the session
+            // for safer, more accurate use with `previous_url()` helper function.
+            $this->storePreviousURL($this->request->uri ?? $uri);
+
 			unset($uri);
 
 			$this->sendResponse();
@@ -256,24 +260,39 @@ class CodeIgniter
 	/**
 	 * Determines if a response has been cached for the given URI.
 	 *
-	 * @param \Config\Cache         $config
+	 * @param \Config\Cache $config
 	 *
 	 * @return bool
 	 */
-	public function displayCache($config)
-	{
-		$cacheName = $this->generateCacheName($config);
+	 public function displayCache($config)
+	 {
+		 if ($cachedResponse = cache()->get($this->generateCacheName($config)))
+		 {
+			 $cachedResponse = unserialize($cachedResponse);
+			 if (!is_array($cachedResponse) || !isset($cachedResponse['output']) || !isset($cachedResponse['headers']))
+			 {
+				 throw new \Exception("Error unserializing page cache");
+			 }
 
-		if ($output = cache()->get($cacheName))
-		{
-			$output = $this->displayPerformanceMetrics($output);
+			 $headers = $cachedResponse['headers'];
+			 $output  = $cachedResponse['output'];
 
-			$this->response->setBody($output)
-					       ->send();
+			 // Clear all default headers
+			 foreach($this->response->getHeaders() as $key => $val) {
+				 $this->response->removeHeader($key);
+			 }
 
-			$this->callExit(EXIT_SUCCESS);
-		};
-	}
+			 // Set cached headers
+			 foreach($headers as $name => $value) {
+				 $this->response->setHeader($name, $value);
+			 }
+
+			 $output = $this->displayPerformanceMetrics($output);
+			 $this->response->setBody($output)->send();
+			 $this->callExit(EXIT_SUCCESS);
+		 };
+	 }
+
 
 	//--------------------------------------------------------------------
 
@@ -295,15 +314,21 @@ class CodeIgniter
 	 * Caches the full response from the current request. Used for
 	 * full-page caching for very high performance.
 	 *
-	 * @param \Config\Cache              $config
+	 * @param \Config\Cache $config
 	 */
-	public function cachePage($config)
+	public function cachePage(Cache $config)
 	{
+		$headers = [];
+		foreach($this->response->getHeaders() as $header) {
+			$headers[$header->getName()] = $header->getValueLine();
+		}
+
 		return cache()->save(
 			$this->generateCacheName($config),
-			$this->output,
+			serialize(['headers' => $headers, 'output' => $this->output]),
 			self::$cacheTTL
 		);
+
 	}
 
 	//--------------------------------------------------------------------
@@ -681,6 +706,31 @@ class CodeIgniter
 	}
 
 	//--------------------------------------------------------------------
+
+    /**
+     * If we have a session object to use, store the current URI
+     * as the previous URI. This is called just prior to sending the
+     * response to the client, and will make it available next request.
+     *
+     * This helps provider safer, more reliable previous_url() detection.
+     *
+     * @param \CodeIgniter\HTTP\URI $uri
+     */
+    public function storePreviousURL($uri)
+    {
+        // This is mainly needed during testing...
+        if (is_string($uri))
+        {
+            $uri = new URI($uri);
+        }
+
+        if (isset($_SESSION))
+        {
+            $_SESSION['_ci_previous_url'] = (string)$uri;
+        }
+    }
+
+    //--------------------------------------------------------------------
 
 	/**
 	 * Sends the output of this request back to the client.

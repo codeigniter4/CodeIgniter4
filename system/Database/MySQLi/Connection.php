@@ -196,7 +196,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 				$message = 'MySQLi was configured for an SSL connection, but got an unencrypted connection instead!';
 				log_message('error', $message);
 
-				if ($this->db->db_debug)
+				if ($this->DBDebug)
 				{
 					throw new DatabaseException($message);
 				}
@@ -238,6 +238,16 @@ class Connection extends BaseConnection implements ConnectionInterface
 	}
 
 	//--------------------------------------------------------------------
+
+    /**
+     * Close the database connection.
+     */
+    protected function _close()
+    {
+        $this->connID->close();
+    }
+
+    //--------------------------------------------------------------------
 
 	/**
 	 * Select a specific database table to use.

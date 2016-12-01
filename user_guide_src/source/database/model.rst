@@ -89,6 +89,10 @@ what table to use and how we can find the required records::
 		protected $allowedFields = ['name', 'email'];
 
 		protected $useTimestamps = false;
+
+		protected $validationRules    = [];
+		protected $validationMessages = [];
+		protected $skipValidation     = false;
 	}
 
 **$table**
@@ -140,6 +144,24 @@ data type.
 This value works with $useTimestamps to ensure that the correct type of date value gets
 inserted into the database. By default, this creates DATETIME values, but valid options
 are: datetime, date, or int (a PHP timestamp).
+
+**$validationRules**
+
+Contains either an array of validation rules as described in :ref:`_validation-array`
+or a string containing the name of a validation group, as described in the same section.
+Described in more detail below.
+
+**$validationMessages**
+
+Contains an array of custom error messages that should be used during validation, as
+described in :ref:`_validation-custom-errors`. Described in more detail below.
+
+**$skipValidation**
+
+Whether validation should be skipped during all ``inserts`` and ``updates``. The default
+value is false, meaning that data will always attempt to be validated. This is
+primarily used by the ``skipValidation()`` method, but may be changed to ``true`` so
+this model will never validate.
 
 Working With Data
 =================
@@ -276,6 +298,63 @@ automatically, based on whether it finds an array key matching the $primaryKey v
 	];
 	$userModel->save($data);
 
+The save method also can make working with custom class result objects much simpler by recognizing a non-simple
+object and grabbing its public and protected values into an array, which is then passed to the appropriate
+insert or update method. This allows you to work with Entity classes in a very clean way. Entity classes are
+simple classes that represent a single instance of an object type, like a user, a blog post, job, etc. This
+class is responsible for maintaining the business logic surrounding the object itself, like formatting
+elements in a certain way, etc. They shouldn't have any idea about how they are saved to the database. At their
+simplest, they might look like this::
+
+	namespace App\Entities;
+
+	class Job
+	{
+		protected $id;
+		protected $name;
+		protected $description;
+
+		public function __get($key)
+		{
+			if (isset($this->$key))
+			{
+				return $this->$key;
+			}
+		}
+
+		public function __set($key, $value)
+		{
+			if (isset($this->$key))
+			{
+				$this->$key = $value;
+			}
+		}
+	}
+
+A very simple model to work with this might look like::
+
+	class JobModel extends \CodeIgniter\Model
+	{
+		protected $table = 'jobs';
+		protected $returnType = '\App\Entities\Job';
+		protected $allowedFields = [
+			'name', 'description'
+		];
+	}
+
+This model works with data from the ``jobs`` table, and returns all results as an instance of ``App\Entities\Job``.
+When you need to persist that record to the database, you will need to either write custom methods, or use the
+model's ``save()`` method to inspect the class, grab any public and private properties, and save them to the database::
+
+	// Retrieve a Job instance
+	$job = $model->find(15);
+
+	// Make some changes
+	$job->name = "Foobar";
+
+	// Save the changes
+	$model->save($job);
+
 Deleting Data
 -------------
 
@@ -311,10 +390,63 @@ Cleans out the database table by permanently removing all rows that have 'delete
 
 	$userModel->purgeDeleted();
 
+Validating Data
+---------------
+
+For many people, validating data in the model is the preferred way to ensure the data is kept to a single
+standard, without duplicating code. The Model class provides a way to automatically have all data validated
+prior to saving to the database with the ``insert()``, ``update()``, or ``save()`` methods.
+
+The first step is to fill out the ``$validationRules`` class property with the fields and rules that should
+be applied. If you have custom error message that you want to use, place them in the ``$validationMessages`` array::
+
+	class UserModel extends Model
+	{
+		protected $validationRules = [
+			'username' => 'required|alpha_numeric_space|min_length[3]',
+			'email'    => 'required|valid_email|is_unique[users.email]',
+			'password' => 'required|min_length[8]',
+			'pass_confirm' => 'required_with[password]|matches[password]'
+		];
+
+		protected $validationMessages = [
+			'email' => [
+				'is_unique' => 'Sorry. That email has already been taken. Please choose another.'
+			]
+		];
+	}
+
+Now, whenever you call the ``insert()``, ``update()``, or ``save()`` methods, the data will be validated. If it fails,
+the model will return boolean **false**. You can use the ``getErrors()`` method to retrieve the validation errors::
+
+	if ($model->save($data) === false)
+	{
+		return view('updateUser', ['errors' => $model->getErrors()];
+	}
+
+This returns an array with the field names and their associated errors that can be used to either show all of the
+errors at the top of the form, or to display them individually::
+
+	<?php if (! empty($errors)) : ?>
+		<div class="alert alert-danger">
+		<?php foreach ($errors as $field => $error) : ?>
+			<p><?= $error ?></p>
+		<?php endforeach ?>
+		</div>
+	<?php endif ?>
+
+If you'd rather organize your rules and error messages within the Validation configuration file, you can do that
+and simply set ``$validationRules`` to the name of the validation rule group you created::
+
+	class UserModel extends Model
+	{
+		protected $validationRules = 'users';
+	}
+
 Protecting Fields
 -----------------
 
-To help protect against Mass Assignment Attacks, the Model class requires that you list all of the field names
+To help protect against Mass Assignment Attacks, the Model class **requires** that you list all of the field names
 that can be changed during inserts and updates in the ``$allowedFields`` class property. Any data provided
 in addition to these will be removed prior to hitting the database. This is great for ensuring that timestamps,
 or primary keys do not get changed.

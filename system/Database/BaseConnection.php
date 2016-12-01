@@ -377,6 +377,29 @@ abstract class BaseConnection implements ConnectionInterface
 
 	//--------------------------------------------------------------------
 
+    /**
+     * Close the database connection.
+     */
+    public function close()
+    {
+        if ($this->connID)
+        {
+            $this->_close();
+            $this->connID = FALSE;
+        }
+    }
+
+    //--------------------------------------------------------------------
+
+    /**
+     * Platform dependent way method for closing the connection.
+     *
+     * @return mixed
+     */
+    abstract protected function _close();
+
+    //--------------------------------------------------------------------
+
 	/**
 	 * Create a persistent database connection.
 	 *
@@ -1160,7 +1183,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 */
 	protected function _escapeString(string $str): string
 	{
-		return str_replace("'", "\\'", remove_invisible_characters($str));
+		return str_replace("'", "''", remove_invisible_characters($str));
 	}
 
 	//--------------------------------------------------------------------

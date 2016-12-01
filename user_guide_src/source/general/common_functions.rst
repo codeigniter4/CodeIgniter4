@@ -137,6 +137,15 @@ Miscellaneous Functions
 
 	Returns the current CSRF hash value.
 
+.. php:function:: csrf_field ()
+
+	:returns: A string with the HTML for hidden input with all required CSRF information.
+	:rtype: string
+
+	Returns a hidden input with the CSRF information already inserted: 
+
+		<input type="hidden" name="{csrf_token}" value="{csrf_hash}">
+
 .. php:function:: force_https ( $duration = 31536000 [, $request = null [, $response = null]] )
 
 	:param  int  $duration: The number of seconds browsers should convert links to this resource to HTTPS.
@@ -250,6 +259,10 @@ The following constants are always available anywhere within your application.
 
 Core Constants
 ==============
+
+.. php:const:: ROOTPATH
+
+	The path to the main application directory. Just above ``public``.
 
 .. php:const:: APPPATH
 

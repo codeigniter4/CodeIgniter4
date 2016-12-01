@@ -79,6 +79,7 @@ class MigrationsCommand extends \CodeIgniter\Controller
 		CLI::write(CLI::color('rollback', 'yellow'). lang('Migrations.migHelpRollback'));
 		CLI::write(CLI::color('refresh',  'yellow'). lang('Migrations.migHelpRefresh'));
 		CLI::write(CLI::color('seed [name]',  'yellow'). lang('Migrations.migHelpSeed'));
+		CLI::write(CLI::color('create [name]',  'yellow'). lang('Migrations.migCreate'));
 	}
 
 	//--------------------------------------------------------------------
@@ -244,7 +245,7 @@ class MigrationsCommand extends \CodeIgniter\Controller
 
 		if (empty($seedName))
 		{
-			$seedName = CLI::prompt(lang('Migrations.migSeeder'));
+			$seedName = CLI::prompt(lang('Migrations.migSeeder'), 'DatabaseSeeder');
 		}
 
 		if (empty($seedName))
@@ -264,6 +265,54 @@ class MigrationsCommand extends \CodeIgniter\Controller
 	}
 
 	//--------------------------------------------------------------------
+
+    public function create(string $name = null)
+    {
+        if (empty($name))
+        {
+            $name = CLI::prompt(lang('Migrations.migNameMigration'));
+        }
+
+        if (empty($name))
+        {
+            CLI::error(lang('Migrations.migBadCreateName'));
+            return;
+        }
+
+        $path = APPPATH.'Database/Migrations/'.date('YmdHis_').$name.'.php';
+
+        $template =<<<EOD
+<?php
+
+use CodeIgniter\Database\Migration;
+
+class Migration_{name} extends Migration
+{
+    public function up()
+    {
+        //
+    }
+    
+    //--------------------------------------------------------------------
+    
+    public function down()
+    {
+        //
+    }
+}
+
+EOD;
+        $template = str_replace('{name}', $name, $template);
+
+        helper('filesystem');
+        if (! write_file($path, $template))
+        {
+            CLI::error(lang('Migrations.migWriteError'));
+            return;
+        }
+
+        CLI::write('Done.');
+    }
 
 	/**
 	 * Displays a caught exception.

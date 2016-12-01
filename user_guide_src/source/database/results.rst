@@ -34,7 +34,7 @@ as an array of arrays::
 
     $query = $db->query("YOUR QUERY");
 
-	foreach ($query->getResult() as $row)
+	foreach ($query->getResult('array') as $row)
 	{
 		echo $row['title'];
 		echo $row['name'];

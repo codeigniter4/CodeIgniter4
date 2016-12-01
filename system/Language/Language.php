@@ -63,15 +63,17 @@ class Language
 	{
 		// Parse out the file name and the actual alias.
 		// Will load the language file and strings.
-		$line = $this->parseLine($line);
+		list($file, $line) = $this->parseLine($line);
 
-		$output = ! empty($this->language[$line]) ? $this->language[$line] : $line;
+		$output = isset($this->language[$file][$line])
+			? $this->language[$file][$line]
+			: $line;
 
 		// Do advanced message formatting here
 		// if the 'intl' extension is available.
 		if ($this->intlSupport && count($args))
 		{
-			$output = \MessageFormatter::formatMessage($this->locale, $line, $args);
+			$output = \MessageFormatter::formatMessage($this->locale, $output, $args);
 		}
 
 		return $output;
@@ -87,7 +89,7 @@ class Language
 	 *
 	 * @return string
 	 */
-	protected function parseLine(string $line): string
+	protected function parseLine(string $line): array
 	{
 		if (strpos($line, '.') === false)
 		{
@@ -102,7 +104,10 @@ class Language
 			$this->load($file, $this->locale);
 		}
 
-		return $this->language[$line];
+		return [
+			$file,
+			$this->language[$line] ?? $line
+		];
 	}
 
 	//--------------------------------------------------------------------
@@ -125,7 +130,10 @@ class Language
 			return [];
 		}
 
-		$lang = [];
+		if (! array_key_exists($file, $this->language))
+		{
+			$this->language[$file] = [];
+		}
 
 		$path = "Language/{$locale}/{$file}.php";
 
@@ -140,7 +148,7 @@ class Language
 		}
 
 		// Merge our string
-		$this->language = array_merge($this->language, $lang);
+		$this->language[$file] = $lang;
 	}
 
 	//--------------------------------------------------------------------
@@ -157,14 +165,16 @@ class Language
 	 */
 	protected function requireFile(string $path): array
 	{
-		foreach ([APPPATH, BASEPATH] as $folder)
+        $files = service('locator')->search($path);
+
+		foreach ($files as $file)
 		{
-			if (! is_file($folder.$path))
+			if (! is_file($file))
 			{
 				continue;
 			}
 
-			return require_once $folder.$path;
+			return require_once $file;
 		}
 
 		return [];

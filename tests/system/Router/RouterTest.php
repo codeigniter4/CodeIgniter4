@@ -180,9 +180,6 @@ class RouterTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	/**
-	 * @group single
-	 */
 	public function testDetectsLocales()
 	{
 	    $router = new Router($this->collection);

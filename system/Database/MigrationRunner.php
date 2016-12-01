@@ -38,6 +38,7 @@
 
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\ConfigException;
+use Config\Autoload;
 
 /**
  * Class MigrationRunner
@@ -115,9 +116,6 @@ class MigrationRunner
 		$this->type           = $config->type           ?? 'timestamp';
 		$this->table          = $config->table          ?? 'migrations';
 		$this->currentVersion = $config->currentVersion ?? 0;
-		$this->path           = $config->path           ?? APPPATH.'Database/Migrations/';
-
-		$this->path = rtrim($this->path, '/').'/';
 
 		if (empty($this->table))
 		{
@@ -165,15 +163,6 @@ class MigrationRunner
 
 		// Note: We use strings, so that timestamp versions work on 32-bit systems
 		$currentVersion = $this->getVersion($group);
-
-		if ($this->type === 'sequential')
-		{
-			$targetVersion = sprintf('%03d', $targetVersion);
-		}
-		else
-		{
-			$targetVersion = (string)$targetVersion;
-		}
 
 		$migrations = $this->findMigrations();
 
@@ -234,11 +223,11 @@ class MigrationRunner
 					throw new \RuntimeException(sprintf(lang('Migrations.migMissingMethod'), $method));
 				}
 
-				call_user_func([$instance, $method]);
+				$instance->{$method}();
 
 				$currentVersion = $number;
-				if ($method === 'up') $this->addHistory($currentVersion, $instance->getDBGroup());
-				elseif ($method === 'down') $this->removeHistory($currentVersion, $instance->getDBGroup());
+				if ($method === 'up') $this->addHistory(basename($file, '.php'), $instance->getDBGroup());
+				elseif ($method === 'down') $this->removeHistory(basename($file, '.php'), $instance->getDBGroup());
 			}
 		}
 
@@ -263,11 +252,11 @@ class MigrationRunner
 			throw new \RuntimeException(lang('Migrations.migNotFound'));
 		}
 
-		$lastMigration = basename(end($migrations));
+		$lastMigration = basename(end($migrations), '.php');
 
 		// Calculate the last migration step from existing migration
 		// filenames and proceed to the standard version migration
-		return $this->version($this->getMigrationNumber($lastMigration));
+		return $this->version($lastMigration);
 	}
 
 	//--------------------------------------------------------------------
@@ -293,25 +282,46 @@ class MigrationRunner
 	{
 		$migrations = [];
 
-		// Load all *_*.php files in the migrations path
-		foreach (glob($this->path.'*_*.php') as $file)
-		{
-			$name = basename($file, '.php');
+        // If $path has been set, ONLY do that one since
+        // the user has specified their will. Otherwise,
+        // scan all PSR4 paths. This is required so
+        // when tests are ran, it will only look in it's
+        // location.
+        $paths = [];
+        if (empty($this->path))
+        {
+            $config = new Autoload();
+            foreach ($config->psr4 as $dir)
+            {
+                $paths[] = rtrim($dir, '/').'/Database/Migrations/';
+            }
+        }
+        else
+        {
+            $paths[] = $this->path;
+        }
 
-			// Filter out non-migration files
-			if (preg_match($this->regex, $name))
-			{
-				$number = $this->getMigrationNumber($name);
+        // Loop through all of our namespaced folders
+        // searching for migration directories.
+        foreach ($paths as $dir)
+        {
+            if (! is_dir($dir))
+            {
+                continue;
+            }
 
-				// There cannot be duplicate migration numbers
-				if (isset($migrations[$number]))
-				{
-					throw new \RuntimeException(lang('Migrations.migMultiple').$number);
-				}
+            // Load all *_*.php files in the migrations path
+            foreach (glob($dir.'*_*.php') as $file)
+            {
+                $name = basename($file, '.php');
 
-				$migrations[$number] = $file;
-			}
-		}
+                // Filter out non-migration files
+                if (preg_match($this->regex, $name))
+                {
+                    $migrations[$name] = $file;
+                }
+            }
+        }
 
 		ksort($migrations);
 
@@ -500,17 +510,17 @@ class MigrationRunner
 
 		$forge->addField([
 			'version' => [
-				'type' => 'BIGINT',
-			    'constraint' => 20,
+				'type' => 'VARCHAR',
+			    'constraint' => 255,
 			    'null' => false
 			],
 			'group' => [
-				'type' => 'varchar',
+				'type' => 'VARCHAR',
 			    'constraint' => 255,
 			    'null' => false
 			],
 			'time' => [
-				'type' => 'timestamp',
+				'type' => 'TIMESTAMP',
 			    'null' => false
 			]
 		]);

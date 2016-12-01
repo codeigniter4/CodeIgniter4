@@ -6,6 +6,7 @@ class ViewTest extends \CIUnitTestCase
 {
 	protected $loader;
 	protected $viewsDir;
+    protected $config;
 
 	//--------------------------------------------------------------------
 
@@ -13,13 +14,14 @@ class ViewTest extends \CIUnitTestCase
 	{
 		$this->loader = new \CodeIgniter\Autoloader\FileLocator(new \Config\Autoload());
 		$this->viewsDir = __DIR__.'/Views';
+        $this->config   = new Config\View();
 	}
 
 	//--------------------------------------------------------------------
 
 	public function testSetVarStoresData()
 	{
-	    $view = new View($this->viewsDir, $this->loader);
+	    $view = new View($this->config, $this->viewsDir, $this->loader);
 
 		$view->setVar('foo', 'bar');
 
@@ -30,7 +32,7 @@ class ViewTest extends \CIUnitTestCase
 
 	public function testSetVarOverwrites()
 	{
-		$view = new View($this->viewsDir, $this->loader);
+		$view = new View($this->config, $this->viewsDir, $this->loader);
 
 		$view->setVar('foo', 'bar');
 		$view->setVar('foo', 'baz');
@@ -42,7 +44,7 @@ class ViewTest extends \CIUnitTestCase
 
 	public function testSetDataStoresValue()
 	{
-		$view = new View($this->viewsDir, $this->loader);
+		$view = new View($this->config, $this->viewsDir, $this->loader);
 
 		$expected = [
 			'foo' => 'bar',
@@ -58,7 +60,7 @@ class ViewTest extends \CIUnitTestCase
 
 	public function testSetDataMergesData()
 	{
-		$view = new View($this->viewsDir, $this->loader);
+		$view = new View($this->config, $this->viewsDir, $this->loader);
 
 		$expected = [
 			'fee' => 'fi',
@@ -79,7 +81,7 @@ class ViewTest extends \CIUnitTestCase
 
 	public function testSetDataOverwritesData()
 	{
-		$view = new View($this->viewsDir, $this->loader);
+		$view = new View($this->config, $this->viewsDir, $this->loader);
 
 		$expected = [
 			'foo' => 'bar',
@@ -99,7 +101,7 @@ class ViewTest extends \CIUnitTestCase
 
 	public function testSetVarWillEscape()
 	{
-		$view = new View($this->viewsDir, $this->loader);
+		$view = new View($this->config, $this->viewsDir, $this->loader);
 
 		$view->setVar('foo', 'bar&', 'html');
 
@@ -110,7 +112,7 @@ class ViewTest extends \CIUnitTestCase
 
 	public function testSetDataWillEscapeAll()
 	{
-		$view = new View($this->viewsDir, $this->loader);
+		$view = new View($this->config, $this->viewsDir, $this->loader);
 
 		$expected = [
 			'foo' => 'bar&amp;',
@@ -129,7 +131,7 @@ class ViewTest extends \CIUnitTestCase
 
 	public function testRenderFindsView()
 	{
-		$view = new View($this->viewsDir, $this->loader);
+		$view = new View($this->config, $this->viewsDir, $this->loader);
 
 		$view->setVar('testString', 'Hello World');
 		$expected = '<h1>Hello World</h1>';
@@ -141,7 +143,7 @@ class ViewTest extends \CIUnitTestCase
 
 	public function testRenderString()
 	{
-		$view = new View($this->viewsDir, $this->loader);
+		$view = new View($this->config, $this->viewsDir, $this->loader);
 
 		$view->setVar('testString', 'Hello World');
 		$expected = '<h1>Hello World</h1>';
@@ -153,7 +155,7 @@ class ViewTest extends \CIUnitTestCase
 
 	public function testRendersThrowsExceptionIfFileNotFound()
 	{
-		$view = new View($this->viewsDir, $this->loader);
+		$view = new View($this->config, $this->viewsDir, $this->loader);
 
 		$this->setExpectedException('InvalidArgumentException');
 		$view->setVar('testString', 'Hello World');
@@ -165,7 +167,7 @@ class ViewTest extends \CIUnitTestCase
 
 	public function testRenderScrapsDataByDefault()
 	{
-		$view = new View($this->viewsDir, $this->loader);
+		$view = new View($this->config, $this->viewsDir, $this->loader);
 
 		$view->setVar('testString', 'Hello World');
 		$view->render('simple');
@@ -177,7 +179,7 @@ class ViewTest extends \CIUnitTestCase
 
 	public function testRenderCanSaveData()
 	{
-		$view = new View($this->viewsDir, $this->loader);
+		$view = new View($this->config, $this->viewsDir, $this->loader);
 
 		$view->setVar('testString', 'Hello World');
 		$view->render('simple', null, true);
@@ -189,9 +191,25 @@ class ViewTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+    public function testRenderCanSaveDataThroughConfigSetting()
+    {
+        $this->config->saveData = true;
+
+        $view = new View($this->config, $this->viewsDir, $this->loader);
+
+        $view->setVar('testString', 'Hello World');
+        $view->render('simple');
+
+        $expected = ['testString' => 'Hello World'];
+
+        $this->assertEquals($expected, $view->getData());
+    }
+
+    //--------------------------------------------------------------------
+
 	public function testCanDeleteData()
 	{
-		$view = new View($this->viewsDir, $this->loader);
+		$view = new View($this->config, $this->viewsDir, $this->loader);
 
 		$view->setVar('testString', 'Hello World');
 		$view->render('simple', null, true);

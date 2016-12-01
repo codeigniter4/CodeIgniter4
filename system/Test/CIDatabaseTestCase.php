@@ -81,20 +81,20 @@ class CIDatabaseTestCase extends CIUnitTestCase
 
 	/**
 	 * Our database connection.
-	 * 
+	 *
 	 * @var BaseConnection
 	 */
 	protected $db;
 
 	/**
 	 * Migration Runner instance.
-	 * 
+	 *
 	 * @var MigrationRunner|mixed
 	 */
 	protected $migrations;
 
 	/**
-	 * Seeder instance 
+	 * Seeder instance
 	 *
 	 * @var \CodeIgniter\Database\Seeder
 	 */
@@ -125,7 +125,7 @@ class CIDatabaseTestCase extends CIUnitTestCase
 			$config->enabled = true;
 
 			$this->migrations = Services::migrations($config, $this->db);
-			$this->migrations->setSilent(true);
+			$this->migrations->setSilent(false);
 		}
 
 		if ($this->seeder === null)
@@ -165,7 +165,7 @@ class CIDatabaseTestCase extends CIUnitTestCase
 			{
 				$this->seeder->setPath(rtrim($this->basePath, '/').'/seeds');
 			}
-			
+
 			$this->seed($this->seed);
 		}
 	}
@@ -225,13 +225,13 @@ class CIDatabaseTestCase extends CIUnitTestCase
 
 	    $this->assertTrue($count == 0, 'Row was found in database');
 	}
-	
+
 	//--------------------------------------------------------------------
 
 	/**
 	 * Asserts that records that match the conditions in $where DO
 	 * exist in the database.
-	 * 
+	 *
 	 * @param string $table
 	 * @param array  $where
 	 *
@@ -271,7 +271,7 @@ class CIDatabaseTestCase extends CIUnitTestCase
 
 		return $query->$column ?? false;
 	}
-	
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -314,7 +314,7 @@ class CIDatabaseTestCase extends CIUnitTestCase
 
 		$this->assertEquals($expected, $count, 'Wrong number of matching rows in database.');
 	}
-	
+
 	//--------------------------------------------------------------------
-	
+
 }

@@ -99,7 +99,7 @@ If you have ``Blog`` directory that has a PSR-4 mapping setup in the :doc:`Autol
 under the namespace ``Example\Blog``, you could retrieve view files as if they were namespaced also. Following this
 example, you could load the **BlogView** file from **/blog/views** by prepending the namespace to the view name::
 
-    echo view('Example\Blog\BlogView');
+    echo view('Example\Blog\Views\BlogView');
 
 Caching Views
 =============
@@ -169,6 +169,9 @@ into the `$option` array in the third parameter.
 	];
 
 	echo view('blogview', $data, ['saveData' => true]);
+
+Additionally, if you would like the default functionality of the view method to be that it does save the data
+between calls, you can set ``$saveData`` to **true** in **application/Config/Views.php**.
 
 Creating Loops
 ==============

@@ -152,12 +152,13 @@ class UploadedFile implements UploadedFileInterface
 	 *
 	 * @param string $targetPath Path to which to move the uploaded file.
 	 * @param string $name       the name to rename the file to.
+     * @param bool   $overwrite  State for indicating whether to overwrite the previously generated file with the same name or not.
 	 *
 	 * @throws \InvalidArgumentException if the $path specified is invalid.
 	 * @throws \RuntimeException on any error during the move operation.
 	 * @throws \RuntimeException on the second or subsequent call to the method.
 	 */
-	public function move(string $targetPath, string $name = null)
+	public function move(string $targetPath, string $name = null, bool $overwrite = false)
 	{
 		if ($this->hasMoved)
 		{
@@ -171,8 +172,9 @@ class UploadedFile implements UploadedFileInterface
 
 		$targetPath = rtrim($targetPath, '/').'/';
 		$name = is_null($name) ? $this->getName() : $name;
+        $destination = $overwrite ? $this->getDestination($targetPath.$name) : $targetPath.$name;
 
-		if (! @move_uploaded_file($this->path, $targetPath.$name))
+		if (! @move_uploaded_file($this->path, $destination))
 		{
 			$error = error_get_last();
 			throw new \RuntimeException(sprintf('Could not move file %s to %s (%s)', basename($this->path), $targetPath, strip_tags($error['message'])));
@@ -418,6 +420,49 @@ class UploadedFile implements UploadedFileInterface
 		return is_uploaded_file($this->path) && $this->error === UPLOAD_ERR_OK;
 	}
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
+
+    /**
+     * Returns the destination path for the move operation where overwriting is not expected.
+     *
+     * First, it checks whether the delimiter is present in the filename, if it is, then it checks whether the
+     * last element is an integer as there may be cases that the delimiter may be present in the filename.
+     * For the all other cases, it appends an integer starting from zero before the file's extension.
+     *
+     * @param string $destination
+     * @param string $delimiter
+     * @param int    $i
+     *
+     * @return string
+     */
+    public function getDestination(string $destination, string $delimiter = '_', int $i = 0): string
+    {
+        while (file_exists($destination))
+        {
+            $info = pathinfo($destination);
+            if (strpos($info['filename'], $delimiter) !== false)
+            {
+                $parts = explode($delimiter, $info['filename']);
+                if (is_numeric(end($parts)))
+                {
+                    $i = end($parts);
+                    array_pop($parts);
+                    array_push($parts, ++$i);
+                    $destination = $info['dirname'] . '/' . implode($delimiter, $parts) . '.' .  $info['extension'];
+                }
+                else
+                {
+                    $destination = $info['dirname'] . '/' . $info['filename'] . $delimiter . ++$i . '.' .  $info['extension'];
+                }
+            }
+            else
+            {
+                $destination = $info['dirname'] . '/' . $info['filename'] . $delimiter . ++$i . '.' .  $info['extension'];
+            }
+        }
+        return $destination;
+    }
+
+    //--------------------------------------------------------------------
 
 }

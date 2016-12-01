@@ -54,6 +54,10 @@ return [
 	'migHelpRollback'  => "\tRuns all migrations 'down' to version 0.",
 	'migHelpRefresh'   => "\t\tUninstalls and re-runs all migrations to freshen database.",
 	'migHelpSeed'      => "\tRuns the seeder named [name].",
+    'migCreate'        => "\tCreates a new migration named [name]",
+    'migNameMigration' => "Name the migration file",
+    'migBadCreateName' => 'You must provide a migration file name.',
+    'migWriteError'    => 'Error trying to create file.',
 
 	'migToLatest'       => 'Migrating to latest version...',
 	'migInvalidVersion' => 'Invalid version number provided.',

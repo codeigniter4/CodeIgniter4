@@ -52,28 +52,28 @@ class Forge
 
 	/**
 	 * List of fields.
-	 * 
+	 *
 	 * @var array
 	 */
 	protected $fields = [];
 
 	/**
 	 * List of keys.
-	 * @var type 
+	 * @var type
 	 */
 	protected $keys = [];
 
 	/**
 	 * List of primary keys.
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	protected $primaryKeys = [];
 
 	/**
 	 * Character set used.
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	protected $charset = '';
 
@@ -156,7 +156,7 @@ class Forge
 
 	/**
 	 * Constructor.
-	 * 
+	 *
 	 * @param \CodeIgniter\Database\ConnectionInterface $db
 	 */
 	public function __construct(ConnectionInterface $db)
@@ -338,15 +338,16 @@ class Forge
 
 	//--------------------------------------------------------------------
 
-	/**
-	 * Create Table
-	 *
-	 * @param    string $table         Table name
-	 * @param    bool   $if_not_exists Whether to add IF NOT EXISTS condition
-	 * @param    array  $attributes    Associative array of table attributes
-	 *
-	 * @return    bool
-	 */
+    /**
+     * Create Table
+     *
+     * @param    string $table         Table name
+     * @param    bool   $if_not_exists Whether to add IF NOT EXISTS condition
+     * @param    array  $attributes    Associative array of table attributes
+     *
+     * @return bool
+     * @throws \CodeIgniter\DatabaseException
+     */
 	public function createTable($table, $if_not_exists = false, array $attributes = [])
 	{
 		if ($table === '')

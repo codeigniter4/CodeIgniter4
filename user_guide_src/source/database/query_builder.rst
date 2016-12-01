@@ -128,7 +128,7 @@ escaping of fields may break them.
 
 ::
 
-	$builder->select('(SELECT SUM(payments.amount) FROM payments WHERE payments.invoice_id=4') AS amount_paid', FALSE);
+	$builder->select('(SELECT SUM(payments.amount) FROM payments WHERE payments.invoice_id=4) AS amount_paid', FALSE);
 	$query = $builder->get();
 
 **$builder->selectMax()**

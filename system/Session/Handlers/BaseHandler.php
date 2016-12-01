@@ -106,6 +106,13 @@ abstract class BaseHandler implements \SessionHandlerInterface
 	 */
 	protected $sessionID;
 
+    /**
+     * The 'save path' for the session
+     * varies between
+     * @var mixed
+     */
+    protected $savePath;
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -120,6 +127,7 @@ abstract class BaseHandler implements \SessionHandlerInterface
 		$this->cookieSecure = $config->cookieSecure;
 		$this->cookieName   = $config->sessionCookieName;
 		$this->matchIP      = $config->sessionMatchIP;
+        $this->savePath     = $config->sessionSavePath;
 	}
 
 	//--------------------------------------------------------------------
@@ -150,11 +158,11 @@ abstract class BaseHandler implements \SessionHandlerInterface
 	 * (databases other than PostgreSQL and MySQL) to act as if they
 	 * do acquire a lock.
 	 *
-	 * @param string $session_id
+	 * @param string $sessionID
 	 *
 	 * @return bool
 	 */
-	protected function lockSession(string $session_id): bool
+	protected function lockSession(string $sessionID): bool
 	{
 		$this->lock = true;
 		return true;

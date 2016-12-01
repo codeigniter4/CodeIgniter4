@@ -130,7 +130,7 @@ Defining a Default Controller
 
 CodeIgniter can be told to load a default controller when a URI is not
 present, as will be the case when only your site root URL is requested.
-To specify a default controller, open your **application/config/routes.php**
+To specify a default controller, open your **application/Config/Routes.php**
 file and set this variable::
 
 	$routes->setDefaultController('Blog');
@@ -303,6 +303,8 @@ modify this by passing the duration (in seconds) as the first parameter::
 		$this->forceHTTPS(31536000);    // one year
 	}
 
+.. note:: A number of :doc:`time-based constants </general/common_functions>` are always available for you to use, including YEAR, MONTH, and more.
+
 helpers
 -------
 
@@ -314,6 +316,47 @@ inside the controller::
 	{
 		protected $helpers = ['url', 'form'];
 	}
+
+Validating $_POST data
+======================
+
+The controller also provides a convenience method to make validating $_POST data a little simpler, ``validate()`` that
+takes the current Request as the first instance, an array of rules to test against as the second parameter, and, optionally,
+an array of custom error messages to display if the items don't pass. The :doc:`Validation Library docs </libraries/validation>`
+has details on the format of the rules and messages arrays, as well as available rules.::
+
+    public function updateUser(int $userID)
+    {
+        if (! $this->validate($this->request, [
+            'email' => "required|is_unique[users.email,id,{$userID}]",
+            'name' => 'required|alpha_numeric_spaces'
+        ]))
+        {
+            return view('users/update', [
+                'errors' => $this->errors
+            ]);
+        }
+
+        // do something here if successful...
+    }
+
+If you find it simpler to keep the rules in the configuration file, you can replace the $rules array with the
+name of the group, as defined in ``Config\Validation.php``::
+
+    public function updateUser(int $userID)
+    {
+        if (! $this->validate($this->request, 'userRules'))
+        {
+            return view('users/update', [
+                'errors' => $this->errors
+            ]);
+        }
+
+        // do something here if successful...
+    }
+
+.. note:: Validation can also be handled automatically in the model. Where you handle validaiton is up to you,
+            and you will find that some situations are simpler in the controller than then model, and vice versa.
 
 That's it!
 ==========

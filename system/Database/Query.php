@@ -170,7 +170,7 @@ class Query implements QueryInterface
 	 *
 	 * @return mixed
 	 */
-	public function getQuery()
+	public function getQuery(): string
 	{
 		if (empty($this->finalQueryString))
 		{
@@ -394,7 +394,7 @@ class Query implements QueryInterface
 	//--------------------------------------------------------------------
 
 	/**
-	 * Match binfings
+	 * Match bindings
 	 * @param string $sql
 	 * @param array $binds
 	 * @return string
@@ -404,10 +404,23 @@ class Query implements QueryInterface
 		foreach ($binds as $placeholder => $value)
 		{
 			$escapedValue = $this->db->escape($value);
-			if (is_array($escapedValue))
-			{
-				$escapedValue = '('.implode(',', $escapedValue).')';
-			}
+
+            // In order to correctly handle backlashes in saved strings
+            // we will need to preg_quote, so remove the wrapping escape characters
+            // otherwise it will get escaped.
+            if (is_array($value))
+            {
+                foreach ($value as &$item)
+                {
+                    $item = preg_quote($item);
+                }
+
+                $escapedValue = '('.implode(',', $escapedValue).')';
+            }
+            else
+            {
+                $escapedValue = preg_quote(trim($escapedValue, $this->db->escapeChar));
+            }
 
 			$sql = preg_replace('/:'.$placeholder.'(?!\w)/', $escapedValue, $sql);
 		}
