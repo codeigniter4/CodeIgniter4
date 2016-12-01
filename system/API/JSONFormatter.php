@@ -21,8 +21,6 @@ class JSONFormatter implements FormatterInterface
     /**
      * Takes the given data and formats it.
      *
-     * @todo Handle converting entity classes from db results, since we handle loading/saving those...
-     *
      * @param $data
      *
      * @return mixed
