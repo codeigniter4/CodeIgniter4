@@ -106,7 +106,7 @@ class View implements RendererInterface {
 	 * @param bool          $debug
 	 * @param Logger        $logger
 	 */
-	public function __construct(string $viewPath = null, $loader = null, bool $debug = null, Logger $logger = null)
+	public function __construct($config, string $viewPath = null, $loader = null, bool $debug = null, Logger $logger = null)
 	{
 	    $this->config   = $config;
 		$this->viewPath = rtrim($viewPath, '/ ').'/';
@@ -131,7 +131,7 @@ class View implements RendererInterface {
 	 *
 	 * @return string
 	 */
-	public function render(string $view, array $options = null, bool $saveData = false): string
+	public function render(string $view, array $options = null, $saveData = false): string
 	{
 		$start = microtime(true);
 
@@ -207,7 +207,7 @@ class View implements RendererInterface {
 	 *
 	 * @return string
 	 */
-	public function renderString(string $view, array $options = null, bool $saveData = false): string
+	public function renderString(string $view, array $options = null, $saveData = false): string
 	{
 		$start = microtime(true);
 		extract($this->data);

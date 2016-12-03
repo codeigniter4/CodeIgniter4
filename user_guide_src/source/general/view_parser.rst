@@ -123,9 +123,8 @@ Several options can be passed to the ``render()`` or ``renderString()`` methods.
 Substitution Variations
 ***********************
 
-There are four types of substitution supported: simple, looping, nested
-and conditional. Any conditional substitutions are performed first, before any of
-the others. The other substitutions are performed in the same sequence that
+There are three types of substitution supported: simple, looping, and nested.
+Substitutions are performed in the same sequence that
 pseudo-variables were added.
 
 The **simple substitution** performed by the parser is a one-to-one
@@ -280,30 +279,6 @@ This example gives different results, depending on cascading::
 
 	echo $parser->setData($data)->renderString($template, ['cascadeData'=>true]);
 	// Result: George lives in Red City on Mars.
-
-Conditional Substitutions
-=========================
-
-A conditional substitution provides a simple if/else capabitlity for including
-a block inside your template. It uses a special syntax for the pseudo-variable:
-prefixing the pseudo-variable name with ``if:``, providing for an option
-``{else)``, and then having a final	``{/if}`` tag.
-
-If the pseudo-variable referenced is``true``, then the first block is kept in
-the template; otherwise the ``else`` block is.
-
-An example::
-
-	$data = [ 'first' => true];
-
-	$template = '{if:first}Yabba dabba{/if} doo';
-
-	echo $parser->setData($data)->renderString($template);
-	// Result: Yabba dabba doo
-
-.. note:: This is a very simple conditional substitution.
-	Future enhancements could provide for a logical expression instead of just
-	a pseudo-variable name, or for more elaborate tags!
 
 
 ***********
@@ -489,4 +464,16 @@ Class Reference
 
 		Supported escape contexts: html, css, js, url, attr or raw.
 		If 'raw', no escaping will happen.
+
+	.. php:method:: setDelimiters($leftDelimiter = '{', $rightDelimiter = '}')
+
+		:param  string  $leftDelimiter: Left delimiter for substitution fields
+		:param  string  $rightDelimiter: right delimiter for substitution fields
+		:returns: The Renderer, for method chaining
+		:rtype: CodeIgniter\\View\\RendererInterface.
+
+		Over-ride the substitution field delimiters::
+
+			$renderer->setDelimiters('[',']');
+
 

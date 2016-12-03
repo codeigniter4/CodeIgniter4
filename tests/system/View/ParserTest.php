@@ -9,13 +9,14 @@ class ParserTest extends \CIUnitTestCase
 	{
 		$this->loader = new \CodeIgniter\Autoloader\FileLocator(new \Config\Autoload());
 		$this->viewsDir = __DIR__.'/Views';
+        $this->config   = new Config\View();
 	}
 
 	// --------------------------------------------------------------------
 
 	public function testSetDelimiters()
 	{
-		$parser = new Parser($this->viewsDir, $this->loader);
+		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
 
 		// Make sure default delimiters are there
 		$this->assertEquals('{', $parser->leftDelimiter);
@@ -40,7 +41,7 @@ class ParserTest extends \CIUnitTestCase
 
 	public function testParseSimple()
 	{
-		$parser = new Parser($this->viewsDir, $this->loader);
+		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
 		$parser->setVar('teststring', 'Hello World');
 
 		$expected = '<h1>Hello World</h1>';
@@ -51,7 +52,7 @@ class ParserTest extends \CIUnitTestCase
 
 	public function testParseString()
 	{
-		$parser = new Parser($this->viewsDir, $this->loader);
+		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
 		$data = array (
 			'title'	 => 'Page Title',
 			'body'	 => 'Lorem ipsum dolor sit amet.'
@@ -69,7 +70,7 @@ class ParserTest extends \CIUnitTestCase
 
 	public function testParseStringMissingData()
 	{
-		$parser = new Parser($this->viewsDir, $this->loader);
+		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
 		$data = array (
 			'title'	 => 'Page Title',
 			'body'	 => 'Lorem ipsum dolor sit amet.'
@@ -87,7 +88,7 @@ class ParserTest extends \CIUnitTestCase
 
 	public function testParseStringUnusedData()
 	{
-		$parser = new Parser($this->viewsDir, $this->loader);
+		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
 		$data = array (
 			'title'	 => 'Page Title',
 			'body'	 => 'Lorem ipsum dolor sit amet.',
@@ -106,7 +107,7 @@ class ParserTest extends \CIUnitTestCase
 
 	public function testParseNoTemplate()
 	{
-		$parser = new Parser($this->viewsDir, $this->loader);
+		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
 		$this->assertEquals('', $parser->renderString(''));
 	}
 
@@ -114,7 +115,7 @@ class ParserTest extends \CIUnitTestCase
 
 	public function testParseNested()
 	{
-		$parser = new Parser($this->viewsDir, $this->loader);
+		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
 		$data = array (
 			'title'	 => 'Super Heroes',
 			'powers' => array (
@@ -132,7 +133,7 @@ class ParserTest extends \CIUnitTestCase
 
 	public function testParseLoop()
 	{
-		$parser = new Parser($this->viewsDir, $this->loader);
+		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
 		$data = array (
 			'title'	 => 'Super Heroes',
 			'powers' => array (
@@ -145,14 +146,14 @@ class ParserTest extends \CIUnitTestCase
 		$template = "{title}\n{powers}{name} {/powers}";
 
 		$parser->setData($data);
-		$this->assertEquals("Super Heroes\nTom Dick Henry", $parser->renderString($template));
+		$this->assertEquals("Super Heroes\nTom Dick Henry ", $parser->renderString($template));
 	}
 
 	// --------------------------------------------------------------------
 
 	public function testMismatchedVarPair()
 	{
-		$parser = new Parser($this->viewsDir, $this->loader);
+		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
 		$data = array (
 			'title'	 => 'Super Heroes',
 			'powers' => array (

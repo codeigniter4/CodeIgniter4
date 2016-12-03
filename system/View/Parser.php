@@ -52,8 +52,7 @@ use CodeIgniter\Log\Logger;
  *
  * @package CodeIgniter\View
  */
-class Parser extends View
-{
+class Parser extends View {
 
 	/**
 	 * Left delimiter character for pseudo vars
@@ -74,14 +73,15 @@ class Parser extends View
 	/**
 	 * Constructor
 	 *
+	 * @param \Config\View  $config
 	 * @param string $viewPath
 	 * @param type $loader
 	 * @param bool $debug
 	 * @param Logger $logger
 	 */
-	public function __construct(string $viewPath = null, $loader = null, bool $debug = null, Logger $logger = null)
+	public function __construct($config, string $viewPath = null, $loader = null, bool $debug = null, Logger $logger = null)
 	{
-		parent::__construct($viewPath, $loader, $debug, $logger);
+		parent::__construct($config, $viewPath, $loader, $debug, $logger);
 	}
 
 	// --------------------------------------------------------------------
@@ -98,11 +98,11 @@ class Parser extends View
 	 *
 	 * @return string
 	 */
-	public function render(string $view, array $options = null, bool $saveData = false): string
+	public function render(string $view, array $options = null, $saveData = false): string
 	{
 		$start = microtime(true);
 
-		$view = str_replace('.php', '', $view).'.php';
+		$view = str_replace('.php', '', $view) . '.php';
 
 		// Was it cached?
 		if (isset($options['cache']))
@@ -116,9 +116,9 @@ class Parser extends View
 			}
 		}
 
-		$file = $this->viewPath.$view;
+		$file = $this->viewPath . $view;
 
-		if ( ! file_exists($file))
+		if (!file_exists($file))
 		{
 			$file = $this->loader->locateFile($view, 'Views');
 		}
@@ -126,14 +126,14 @@ class Parser extends View
 		// locateFile will return an empty string if the file cannot be found.
 		if (empty($file))
 		{
-			throw new \InvalidArgumentException('View file not found: '.$file);
+			throw new \InvalidArgumentException('View file not found: ' . $file);
 		}
 
 		$template = file_get_contents($file);
 		$output = $this->parse($template, $this->data, $options);
 		$this->logPerformance($start, microtime(true), $view);
 
-		if ( ! $saveData)
+		if (!$saveData)
 		{
 			$this->data = [];
 		}
@@ -160,7 +160,7 @@ class Parser extends View
 	 *
 	 * @return	string
 	 */
-	public function renderString(string $template, array $options = null, bool $saveData = false): string
+	public function renderString(string $template, array $options = null, $saveData = false): string
 	{
 		$start = microtime(true);
 
@@ -168,7 +168,7 @@ class Parser extends View
 
 		$this->logPerformance($start, microtime(true), $this->excerpt($template));
 
-		if ( ! $saveData)
+		if (!$saveData)
 		{
 			$this->data = [];
 		}
@@ -195,13 +195,12 @@ class Parser extends View
 			return '';
 		}
 
-		// TODO processing of control structures goes here
 		// build the variable substitution list
-		$replace = array ();
+		$replace = array();
 		foreach ($data as $key => $val)
 		{
 			$replace = array_merge(
-				$replace, is_array($val) ? $this->parsePair($key, $val, $template) : $this->parseSingle($key, (string) $val, $template)
+					$replace, is_array($val) ? $this->parsePair($key, $val, $template) : $this->parseSingle($key, (string) $val, $template)
 			);
 		}
 
@@ -222,7 +221,7 @@ class Parser extends View
 	function strpos_all($haystack, $needle)
 	{
 		$offset = 0;
-		$allpos = array ();
+		$allpos = array();
 		while (($pos = strpos($haystack, $needle, $offset)) !== FALSE)
 		{
 			$offset = $pos + 1;
@@ -243,7 +242,7 @@ class Parser extends View
 	 */
 	protected function parseSingle(string $key, string $val, string $template): array
 	{
-		return array ($this->leftDelimiter.$key.$this->rightDelimiter => (string) $val);
+		return array($this->leftDelimiter . $key . $this->rightDelimiter => (string) $val);
 	}
 
 	// --------------------------------------------------------------------
@@ -258,11 +257,13 @@ class Parser extends View
 	 * @param	string	$template
 	 * @return	array
 	 */
-	protected function parsePair(string $variable, string $data, string $template): array
+	protected function parsePair(string $variable, array $data, string $template): array
 	{
-		$replace = array ();
+		$replace = array();
 		preg_match_all(
-			'#'.preg_quote($this->leftDelimiter.$variable.$this->rightDelimiter).'(.+?)'.preg_quote($this->leftDelimiter.'/'.$variable.$this->rightDelimiter).'#s', $string, $matches, PREG_SET_ORDER
+				'#' . preg_quote($this->leftDelimiter . $variable . $this->rightDelimiter) . '(.+?)' . 
+				preg_quote($this->leftDelimiter . '/' . $variable . $this->rightDelimiter) . '#s', 
+				$template, $matches, PREG_SET_ORDER
 		);
 
 		foreach ($matches as $match)
@@ -270,13 +271,13 @@ class Parser extends View
 			$str = '';
 			foreach ($data as $row)
 			{
-				$temp = array ();
+				$temp = array();
 				foreach ($row as $key => $val)
 				{
 					if (is_array($val))
 					{
 						$pair = $this->parsePair($key, $val, $match[1]);
-						if ( ! empty($pair))
+						if (!empty($pair))
 						{
 							$temp = array_merge($temp, $pair);
 						}
@@ -284,7 +285,7 @@ class Parser extends View
 						continue;
 					}
 
-					$temp[$this->leftDelimiter.$key.$this->rightDelimiter] = $val;
+					$temp[$this->leftDelimiter . $key . $this->rightDelimiter] = $val;
 				}
 
 				$str .= strtr($match[1], $temp);
@@ -294,6 +295,20 @@ class Parser extends View
 		}
 
 		return $replace;
+	}
+
+	/**
+	 * Over-ride the substitution field delimiters.
+	 *
+	 * @param	string $leftDelimiter
+	 * @param	string $rightDelimiter
+	 * @return	RendererInterface
+	 */
+	public function setDelimiters($leftDelimiter = '{', $rightDelimiter = '}'): RendererInterface
+	{
+		$this->leftDelimiter = $leftDelimiter;
+		$this->rightDelimiter = $rightDelimiter;
+		return $this;
 	}
 
 }
