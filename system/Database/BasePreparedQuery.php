@@ -1,5 +1,7 @@
 <?php namespace CodeIgniter\Database;
 
+use CodeIgniter\Hooks\Hooks;
+
 abstract class BasePreparedQuery implements PreparedQueryInterface
 {
 	/**
@@ -115,8 +117,8 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
 
 		$query->setDuration($startTime);
 
-		// Save it to the connection
-		$this->db->addQuery($query);
+		// Let others do something with this query
+        Hooks::trigger('DBQuery', $query);
 
 		// Return a result object
 		$resultClass = str_replace('PreparedQuery', 'Result', get_class($this));

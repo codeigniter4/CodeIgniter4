@@ -37,6 +37,7 @@
  */
 
 use CodeIgniter\DatabaseException;
+use CodeIgniter\Hooks\Hooks;
 
 /**
  * Class BaseConnection
@@ -188,23 +189,15 @@ abstract class BaseConnection implements ConnectionInterface
 	 */
 	public $failover = [];
 
-	/**
-	 * Whether to keep an in-memory history of queries
-	 * for debugging and timeline purposes.
-	 *
-	 * @var bool
-	 */
-	public $saveQueries = false;
-
 	//--------------------------------------------------------------------
 
 	/**
-	 * Array of query objects that have executed
+	 * The last query object that was executed
 	 * on this connection.
 	 *
 	 * @var array
 	 */
-	protected $queries = [];
+	protected $lastQuery;
 
 	/**
 	 * Connection ID
@@ -496,40 +489,6 @@ abstract class BaseConnection implements ConnectionInterface
 	//--------------------------------------------------------------------
 
 	/**
-	 * Specifies whether this connection should keep queries objects or not.
-	 *
-	 * @param bool $save
-	 */
-	public function saveQueries($save = false)
-	{
-		$this->saveQueries = $save;
-
-		return $this;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Stores a new query with the object. This is primarily used by
-	 * the prepared queries.
-	 *
-	 * @param \CodeIgniter\Database\Query $query
-	 *
-	 * @return $this
-	 */
-	public function addQuery(Query $query)
-	{
-	    if ($this->saveQueries)
-		{
-			 $this->queries[] = $query;
-		}
-
-		return $this;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
 	 * Executes the query against the database.
 	 *
 	 * @param $sql
@@ -574,7 +533,9 @@ abstract class BaseConnection implements ConnectionInterface
 
 		$startTime = microtime(true);
 
-
+        // Always save the last query so we can use
+        // the getLastQuery() method.
+        $this->lastQuery = $query;
 
 		// Run the query for real
 		if (! $this->pretend && false === ($this->resultID = $this->simpleQuery($query->getQuery())))
@@ -583,9 +544,10 @@ abstract class BaseConnection implements ConnectionInterface
 
 			// @todo deal with errors
 
-			if ($this->saveQueries && ! $this->pretend)
+			if (! $this->pretend)
 			{
-				$this->queries[] = $query;
+                // Let others do something with this query.
+				Hooks::trigger('DBQuery', $query);
 			}
 
 			return new $resultClass($this->connID, $this->resultID);
@@ -593,9 +555,10 @@ abstract class BaseConnection implements ConnectionInterface
 
 		$query->setDuration($startTime);
 
-		if ($this->saveQueries && ! $this->pretend)
+		if (! $this->pretend)
 		{
-			$this->queries[] = $query;
+            // Let others do somethign with this query
+            Hooks::trigger('DBQuery', $query);
 		}
 
 		// If $pretend is true, then we just want to return
@@ -692,38 +655,13 @@ abstract class BaseConnection implements ConnectionInterface
 	//--------------------------------------------------------------------
 
 	/**
-	 * Returns an array containing all of the
-	 *
-	 * @return array
-	 */
-	public function getQueries(): array
-	{
-		return $this->queries;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Returns the total number of queries that have been performed
-	 * on this connection.
-	 *
-	 * @return mixed
-	 */
-	public function getQueryCount()
-	{
-		return count($this->queries);
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
 	 * Returns the last query's statement object.
 	 *
 	 * @return mixed
 	 */
 	public function getLastQuery()
 	{
-		return end($this->queries);
+		return $this->lastQuery;
 	}
 
 	//--------------------------------------------------------------------
@@ -735,7 +673,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 */
 	public function showLastQuery()
 	{
-	    return (string)end($this->queries);
+	    return (string)$this->lastQuery;
 	}
 
 	//--------------------------------------------------------------------

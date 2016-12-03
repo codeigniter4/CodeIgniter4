@@ -16,11 +16,11 @@ class UpdateTest extends \CIUnitTestCase
 	}
 
 	//--------------------------------------------------------------------
-	
-	public function testUpdate() 
+
+	public function testUpdate()
 	{
 	    $builder = new BaseBuilder('jobs', $this->db);
-		
+
 		$builder->where('id', 1)->update(['name' => 'Programmer'], null, null, true);
 
 		$expectedSQL = "UPDATE \"jobs\" SET \"name\" = :name WHERE \"id\" = :id";
@@ -29,7 +29,7 @@ class UpdateTest extends \CIUnitTestCase
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledUpdate()));
 		$this->assertEquals($expectedBinds, $builder->getBinds());
 	}
-	
+
 	//--------------------------------------------------------------------
 
 	public function testUpdateInternalWhereAndLimit()
@@ -87,11 +87,7 @@ class UpdateTest extends \CIUnitTestCase
 
 		$builder->updateBatch($updateData, 'id');
 
-		$query = $this->db->getQueries();
-
-		$this->assertTrue(is_array($query));
-
-		$query = $query[0];
+		$query = $this->db->getLastQuery();
 
 		$this->assertTrue($query instanceof MockQuery);
 

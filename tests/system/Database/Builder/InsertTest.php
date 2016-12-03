@@ -46,7 +46,7 @@ class InsertTest extends \CIUnitTestCase
 	}
 
 	//--------------------------------------------------------------------
-	
+
 	public function testInsertBatch()
 	{
 		$builder = $this->db->table('jobs');
@@ -61,25 +61,17 @@ class InsertTest extends \CIUnitTestCase
 
 		$builder->insertBatch($insertData, true, true);
 
-		$queries = $this->db->getQueries();
+		$query = $this->db->getLastQuery();
 
-		$q1 = $queries[0];
-		$q2 = $queries[1];
+		$this->assertTrue($query instanceof Query);
 
-		$this->assertTrue($q1 instanceof Query);
-		$this->assertTrue($q2 instanceof Query);
+		$raw = "INSERT INTO \"jobs\" (\"description\", \"id\", \"name\") VALUES (:description0,:id0,:name0)";
 
-		$raw1 = "INSERT INTO \"jobs\" (\"description\", \"id\", \"name\") VALUES (:description,:id,:name)";
-		$raw2 = "INSERT INTO \"jobs\" (\"description\", \"id\", \"name\") VALUES (:description0,:id0,:name0)";
+		$this->assertEquals($raw, str_replace("\n", ' ', $query->getOriginalQuery() ));
 
-		$this->assertEquals($raw1, str_replace("\n", ' ', $q1->getOriginalQuery() ));
-		$this->assertEquals($raw2, str_replace("\n", ' ', $q2->getOriginalQuery() ));
+		$expected   = "INSERT INTO \"jobs\" (\"description\", \"id\", \"name\") VALUES ('Iam yellow',3,'Cab Driver')";
 
-		$expected1   = "INSERT INTO \"jobs\" (\"description\", \"id\", \"name\") VALUES ('Theres something in your teeth',2,'Commedian')";
-		$expected2   = "INSERT INTO \"jobs\" (\"description\", \"id\", \"name\") VALUES ('Iam yellow',3,'Cab Driver')";
-
-		$this->assertEquals($expected1, str_replace("\n", ' ', $q1->getQuery() ));
-		$this->assertEquals($expected2, str_replace("\n", ' ', $q2->getQuery() ));
+		$this->assertEquals($expected, str_replace("\n", ' ', $query->getQuery() ));
 	}
 
 	//--------------------------------------------------------------------

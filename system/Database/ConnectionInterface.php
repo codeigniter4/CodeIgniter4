@@ -143,15 +143,6 @@ interface ConnectionInterface
 	//--------------------------------------------------------------------
 
 	/**
-	 * Specifies whether this connection should keep queries objects or not.
-	 *
-	 * @param bool $doLog
-	 */
-	public function saveQueries($doLog = false);
-
-	//--------------------------------------------------------------------
-
-	/**
 	 * Orchestrates a query against the database. Queries must use
 	 * Database\Statement objects to store the query and build it.
 	 * This method works with the cache.
@@ -189,25 +180,6 @@ interface ConnectionInterface
 	 * @return QueryBuilder
 	 */
 	public function table($tableName);
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Returns an array containing all of the
-	 *
-	 * @return array
-	 */
-	public function getQueries(): array;
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Returns the total number of queries that have been performed
-	 * on this connection.
-	 *
-	 * @return mixed
-	 */
-	public function getQueryCount();
 
 	//--------------------------------------------------------------------
 

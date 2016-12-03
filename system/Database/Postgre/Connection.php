@@ -83,8 +83,18 @@ class Connection extends BaseConnection implements ConnectionInterface
 			$this->buildDSN();
 		}
 
+        // Strip pgsql if exists
+        if (mb_strpos($this->DSN, 'pgsql:') === 0)
+        {
+            $this->DSN = mb_substr($this->DSN, 6);
+        }
+
+        // Convert semicolons to spaces.
+        $this->DSN = str_replace(';', ' ', $this->DSN);
+
 		$this->connID = $persistent === true
-			? pg_pconnect($this->DSN) : pg_connect($this->DSN);
+			? pg_pconnect($this->DSN)
+            : pg_connect($this->DSN);
 
 		if ($this->connID !== false)
 		{
