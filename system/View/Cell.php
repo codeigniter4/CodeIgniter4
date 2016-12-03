@@ -86,7 +86,7 @@ class Cell
 
 		if ($paramCount === 0)
 		{
-			if ($paramArray !== null)
+			if ($paramArray !== [])
 			{
 				throw new \InvalidArgumentException("{$class}::{$method} has no params.");
 			}

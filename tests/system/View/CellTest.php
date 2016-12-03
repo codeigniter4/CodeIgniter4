@@ -24,16 +24,16 @@ class CellTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	public function testPrepareParamsReturnsNullWithInvalidParam()
+	public function testPrepareParamsReturnsEmptyArrayWithInvalidParam()
 	{
-	    $this->assertTrue(is_null($this->cell->prepareParams(1.023)));
+	    $this->assertEquals([], $this->cell->prepareParams(1.023));
 	}
 
 	//--------------------------------------------------------------------
 
 	public function testPrepareParamsReturnsNullWithEmptyString()
 	{
-	    $this->assertNull($this->cell->prepareParams(''));
+	    $this->assertEquals([], $this->cell->prepareParams(''));
 	}
 
 	//--------------------------------------------------------------------
@@ -47,9 +47,9 @@ class CellTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	public function testPrepareParamsReturnsNullWithEmptyArray()
+	public function testPrepareParamsReturnsEmptyArrayWithEmptyArray()
 	{
-	    $this->assertNull($this->cell->prepareParams([]));
+	    $this->assertEquals([], $this->cell->prepareParams([]));
 	}
 
 	//--------------------------------------------------------------------
@@ -127,9 +127,6 @@ class CellTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-    /**
-     * @group single
-     */
     public function testOptionsEmptyArray()
     {
         $params = [];
@@ -138,4 +135,10 @@ class CellTest extends \CIUnitTestCase
         $this->assertEquals(implode(',', $expected), $this->cell->render('\CodeIgniter\View\SampleClass::staticEcho', $params));
     }
 
+    public function testOptionsNoParams()
+    {
+        $expected = [];
+
+        $this->assertEquals(implode(',', $expected), $this->cell->render('\CodeIgniter\View\SampleClass::staticEcho'));
+    }
 }
