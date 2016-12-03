@@ -263,7 +263,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 *
 	 * @var array
 	 */
-	protected $dataCache = [];
+	public $dataCache = [];
 
 	/**
 	 * Microtime when connection was made
