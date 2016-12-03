@@ -38,7 +38,7 @@ class CellTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	public function testPrepareParamsRetunsSelfWhenArray()
+	public function testPrepareParamsReturnsSelfWhenArray()
 	{
 	    $object = ['one' => 'two', 'three' => 'four'];
 
@@ -126,4 +126,16 @@ class CellTest extends \CIUnitTestCase
 	}
 
 	//--------------------------------------------------------------------
+
+    /**
+     * @group single
+     */
+    public function testOptionsEmptyArray()
+    {
+        $params = [];
+        $expected = [];
+
+        $this->assertEquals(implode(',', $expected), $this->cell->render('\CodeIgniter\View\SampleClass::staticEcho', $params));
+    }
+
 }
