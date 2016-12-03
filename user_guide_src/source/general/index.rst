@@ -23,6 +23,7 @@ General Topics
 	debugging
 	caching
 	cli
+    modules
 	managing_apps
 	environments
 	alternative_php
