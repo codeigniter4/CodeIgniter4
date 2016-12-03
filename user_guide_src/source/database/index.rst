@@ -8,7 +8,7 @@ patterns. The database functions offer clear, simple syntax.
 
 .. toctree::
 	:titlesonly:
-	
+
 	Quick Start: Usage Examples <examples>
 	Database Configuration <configuration>
 	Connecting to a Database <connecting>
@@ -23,3 +23,4 @@ patterns. The database functions offer clear, simple syntax.
 	Database Manipulation with Database Forge <forge>
 	Database Migrations <migration>
 	Database Seeding <seeds>
+    Database Hooks <hooks>

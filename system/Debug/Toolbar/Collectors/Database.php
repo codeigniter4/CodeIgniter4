@@ -36,6 +36,7 @@
  * @filesource
  */
 
+use CodeIgniter\Database\Query;
 use CodeIgniter\Services;
 
 /**
@@ -78,6 +79,14 @@ class Database extends BaseCollector
 	 */
 	protected $connections;
 
+    /**
+     * The query instances that have been collected
+     * through the DBQuery Hook.
+     *
+     * @var array
+     */
+    protected static $queries = [];
+
 
 	//--------------------------------------------------------------------
 
@@ -90,6 +99,21 @@ class Database extends BaseCollector
 	}
 
 	//--------------------------------------------------------------------
+
+    /**
+     * The static method used during Hooks to collect
+     * data.
+     *
+     * @param \CodeIgniter\Database\Query $query
+     *
+     * @internal param $ array \CodeIgniter\Database\Query
+     */
+    public static function collect(Query $query)
+    {
+        static::$queries[] = $query;
+    }
+
+    //--------------------------------------------------------------------
 
 	/**
 	 * Returns timeline data formatted for the toolbar.
@@ -109,19 +133,17 @@ class Database extends BaseCollector
 				'start' => $connection->getConnectStart(),
 				'duration' => $connection->getConnectDuration()
 			];
-
-			$queries = $connection->getQueries();
-
-			foreach ($queries as $query)
-			{
-				$data[] = [
-					'name' => 'Query',
-				    'component' => 'Database',
-				    'start' => $query->getStartTime(true),
-				    'duration' => $query->getDuration()
-				];
-			}
 		}
+
+        foreach (static::$queries as $query)
+        {
+            $data[] = [
+                'name' => 'Query',
+                'component' => 'Database',
+                'start' => $query->getStartTime(true),
+                'duration' => $query->getDuration()
+            ];
+        }
 
 		return $data;
 	}
@@ -135,55 +157,40 @@ class Database extends BaseCollector
 	 */
 	public function display(): string
 	{
-		$output = '';
+        // Key words we want bolded
+        $highlight = ['SELECT', 'DISTINCT', 'FROM', 'WHERE', 'AND', 'LEFT&nbsp;JOIN', 'ORDER&nbsp;BY', 'GROUP&nbsp;BY',
+            'LIMIT', 'INSERT', 'INTO', 'VALUES', 'UPDATE', 'OR&nbsp;', 'HAVING', 'OFFSET', 'NOT&nbsp;IN',
+            'IN', 'LIKE', 'NOT&nbsp;LIKE', 'COUNT', 'MAX', 'MIN', 'ON', 'AS', 'AVG', 'SUM', '(', ')'
+        ];
 
-		// Key words we want bolded
-		$highlight = ['SELECT', 'DISTINCT', 'FROM', 'WHERE', 'AND', 'LEFT&nbsp;JOIN', 'ORDER&nbsp;BY', 'GROUP&nbsp;BY',
-		              'LIMIT', 'INSERT', 'INTO', 'VALUES', 'UPDATE', 'OR&nbsp;', 'HAVING', 'OFFSET', 'NOT&nbsp;IN',
-		              'IN', 'LIKE', 'NOT&nbsp;LIKE', 'COUNT', 'MAX', 'MIN', 'ON', 'AS', 'AVG', 'SUM', '(', ')'
-		];
+		$output = '<table>';
 
-		$connectionCount = count($this->connections);
+        $output .= '<thead><tr>';
+        $output .= '<th style="width: 6rem;">Time</th>';
+        $output .= '<th>Query String</th>';
+        $output .= '</tr></thead>';
 
-		foreach ($this->connections as $alias => $connection)
-		{
-			if ($connectionCount > 1)
-			{
-				$output .= '<h3>'.$alias.': <span>'.$connection->getPlatform().' '.$connection->getVersion().
-				           '</span></h3>';
-			}
+        $output .= '<body>';
 
-			$output .= '<table>';
+        foreach (static::$queries as $query)
+        {
+            $output .= '<tr>';
+            $output .='<td class="narrow">'.($query->getDuration(5) * 1000).' ms</td>';
 
-			$output .= '<thead><tr>';
-			$output .= '<th style="width: 6rem;">Time</th>';
-			$output .= '<th>Query String</th>';
-			$output .= '</tr></thead>';
+            $sql = $query->getQuery();
 
-			$output .= '<body>';
+            foreach ($highlight as $term)
+            {
+                $sql = str_replace($term, "<strong>{$term}</strong>", $sql);
+            }
 
-			$queries = $connection->getQueries();
+            $output .= '<td>'.$sql.'</td>';
+            $output .= '</tr>';
+        }
 
-			foreach ($queries as $query)
-			{
-				$output .= '<tr>';
-				$output .='<td class="narrow">'.($query->getDuration(5) * 1000).' ms</td>';
+        $output .= '</body>';
 
-				$sql = $query->getQuery();
-
-				foreach ($highlight as $term)
-				{
-					$sql = str_replace($term, "<strong>{$term}</strong>", $sql);
-				}
-
-				$output .= '<td>'.$sql.'</td>';
-				$output .= '</tr>';
-			}
-
-			$output .= '</body>';
-
-			$output .= '</table>';
-		}
+        $output .= '</table>';
 
 		return $output;
 	}
@@ -197,14 +204,7 @@ class Database extends BaseCollector
 	 */
 	public function getTitleDetails(): string
 	{
-		$queryCount = 0;
-
-		foreach ($this->connections as $connection)
-		{
-			$queryCount += $connection->getQueryCount();
-		}
-
-		return '('.$queryCount.' Queries across '.count($this->connections).' Connection'.
+		return '('.count(static::$queries).' Queries across '.count($this->connections).' Connection'.
 		       (count($this->connections) > 1 ? 's' : '').')';
 	}
 

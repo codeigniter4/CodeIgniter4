@@ -23,7 +23,6 @@ class BaseConnectionTest extends \CIUnitTestCase
 		'compress'     => false,
 		'strictOn'     => true,
 		'failover'     => [],
-		'saveQueries' => true,
 	];
 
 	protected $failoverOptions = [
@@ -45,7 +44,6 @@ class BaseConnectionTest extends \CIUnitTestCase
 		'compress'     => false,
 		'strictOn'     => true,
 		'failover'     => [],
-		'saveQueries' => true,
 	];
 
 	//--------------------------------------------------------------------
