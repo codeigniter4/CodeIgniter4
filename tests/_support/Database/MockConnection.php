@@ -166,7 +166,7 @@ class MockConnection extends BaseConnection
 	 */
 	public function insertID()
 	{
-		return $this->conn_id->insert_id;
+		return $this->connID->insert_id;
 	}
 
 	//--------------------------------------------------------------------
@@ -209,4 +209,40 @@ class MockConnection extends BaseConnection
 
     //--------------------------------------------------------------------
 
+
+    /**
+     * Begin Transaction
+     *
+     * @return	bool
+     */
+    protected function _transBegin(): bool
+    {
+        return true;
+    }
+
+    //--------------------------------------------------------------------
+
+    /**
+     * Commit Transaction
+     *
+     * @return	bool
+     */
+    protected function _transCommit(): bool
+    {
+        return true;
+    }
+
+    //--------------------------------------------------------------------
+
+    /**
+     * Rollback Transaction
+     *
+     * @return	bool
+     */
+    protected function _transRollback(): bool
+    {
+        return true;
+    }
+
+    //--------------------------------------------------------------------
 }

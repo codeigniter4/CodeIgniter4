@@ -450,4 +450,40 @@ class Connection extends BaseConnection implements ConnectionInterface
 	}
 
 	//--------------------------------------------------------------------
+
+    /**
+     * Begin Transaction
+     *
+     * @return	bool
+     */
+    protected function _transBegin(): bool
+    {
+        return (bool)pg_query($this->connID, 'BEGIN');
+    }
+
+    // --------------------------------------------------------------------
+
+    /**
+     * Commit Transaction
+     *
+     * @return	bool
+     */
+    protected function _transCommit(): bool
+    {
+        return (bool)pg_query($this->connID, 'COMMIT');
+    }
+
+    // --------------------------------------------------------------------
+
+    /**
+     * Rollback Transaction
+     *
+     * @return	bool
+     */
+    protected function _transRollback(): bool
+    {
+        return (bool)pg_query($this->connID, 'ROLLBACK');
+    }
+
+    // --------------------------------------------------------------------
 }

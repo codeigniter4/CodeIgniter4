@@ -469,4 +469,53 @@ class Connection extends BaseConnection implements ConnectionInterface
 
 	//--------------------------------------------------------------------
 
+    /**
+     * Begin Transaction
+     *
+     * @return	bool
+     */
+    protected function _transBegin():bool
+    {
+        $this->connID->autocommit(false);
+
+        return $this->connID->begin_transaction();
+    }
+
+    //--------------------------------------------------------------------
+
+    /**
+     * Commit Transaction
+     *
+     * @return	bool
+     */
+    protected function _transCommit(): bool
+    {
+        if ($this->connID->commit())
+        {
+            $this->connID->autocommit(true);
+            return true;
+        }
+
+        return false;
+    }
+
+    //--------------------------------------------------------------------
+
+    /**
+     * Rollback Transaction
+     *
+     * @return	bool
+     */
+    protected function _transRollback(): bool
+    {
+        if ($this->connID->rollback())
+        {
+            $this->connID->autocommit(true);
+            return true;
+        }
+
+        return false;
+    }
+
+    //--------------------------------------------------------------------
 }
