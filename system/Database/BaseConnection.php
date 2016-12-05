@@ -663,6 +663,18 @@ abstract class BaseConnection implements ConnectionInterface
 	//--------------------------------------------------------------------
 
     /**
+     * Disable Transactions
+     *
+     * This permits transactions to be disabled at run-time.
+     */
+    public function transOff()
+    {
+        $this->trans_enabled = FALSE;
+    }
+
+    //--------------------------------------------------------------------
+
+    /**
      * Enable/disable Transaction Strict Mode
      *
      * When strict mode is enabled, if you are running multiple groups of
@@ -676,7 +688,7 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * @return $this
      */
-    public function trans_strict(bool $mode=true)
+    public function transStrict(bool $mode=true)
     {
         $this->trans_strict = $mode;
 
