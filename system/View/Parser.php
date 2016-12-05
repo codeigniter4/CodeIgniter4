@@ -98,9 +98,13 @@ class Parser extends View {
 	 *
 	 * @return string
 	 */
-	public function render(string $view, array $options = null, $saveData = false): string
+	public function render(string $view, array $options = null, $saveData = null): string
 	{
 		$start = microtime(true);
+        if (is_null($saveData))
+        {
+            $saveData = $this->config->saveData;
+        }
 
 		$view = str_replace('.php', '', $view) . '.php';
 
@@ -160,9 +164,13 @@ class Parser extends View {
 	 *
 	 * @return	string
 	 */
-	public function renderString(string $template, array $options = null, $saveData = false): string
+	public function renderString(string $template, array $options = null, $saveData = null): string
 	{
 		$start = microtime(true);
+        if (is_null($saveData))
+        {
+            $saveData = $this->config->saveData;
+        }
 
 		$output = $this->parse($template, $this->data, $options);
 

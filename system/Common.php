@@ -109,7 +109,7 @@ if ( ! function_exists('view'))
          */
         $renderer = Services::renderer();
 
-        $saveData = null;
+        $saveData = false;
         if (array_key_exists('saveData', $options) && $options['saveData'] === true)
         {
             $saveData = (bool)$options['saveData'];
