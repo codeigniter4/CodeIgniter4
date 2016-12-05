@@ -71,9 +71,9 @@ guide, but is being reproduced here so that it's easier to grasp how all of the 
 Routes
 ======
 
-Unlike most of the other file types, routes are not automatically scanned for. This is to boost performance when
-modules are not in use. However, it's a simple thing to scan for any Routes file within modules. Add the following
-code snippet to the end of **/application/Config/Routes.php**::
+Unlike most of the other file types, :doc:`routes </general/routing>` are not automatically scanned for. This is to boost
+performance when modules are not in use. However, it's a simple thing to scan for any Routes file within modules.
+Add the following code snippet to the end of **/application/Config/Routes.php**::
 
     /**
      * Load routes files from all defined namespaces in Config\Autoloader.php
@@ -100,10 +100,66 @@ Controllers cannot be automatically routed by URI detection, but must be specifi
     // Routes.php
     $routes->get('blog', 'Acme\Blog\Controllers\Blog::index');
 
-To reduce the amount of typing needed here, the **group** feature of the routing is helpful::
+To reduce the amount of typing needed here, the **group** routing feature is helpful::
 
     $routes->group('blog', ['namespace' => 'Acme\Blog\Controllers'], function($routes)
     {
         $routes->get('/', 'Blog::index');
     });
 
+Config Files
+============
+
+No special change is needed when working with configuration files. These are still namespaced classes and loaded
+with the ``new`` command::
+
+    $config = new \Acme\Blog\Config\Blog();
+
+Migrations
+==========
+
+Migration files will be automatically discovered within defined namespaces. All migrations found across all
+namespaces will be ran every time.
+
+Seeds
+=====
+
+Seeds files can be used from both the CLI and called from within other seed files as long as the full namespace
+is provided. If calling on the CLI, you will need to provide double backslashes::
+
+    > php public/index.php migrations seed Acme\\Blog\\Database\\Seeds\\TestPostSeeder
+
+Helpers
+=======
+
+Helpers will be located automatically from defined namespaces when using the ``helper()`` method, as long as it
+is within the namespaces **Helpers** directory::
+
+    helper('blog');
+
+Language Files
+==============
+
+Language files are located automatically from defined namespaces when using the ``lang()`` method, as long as the
+file follows the same directory structures as the main application directory.
+
+Libraries
+=========
+
+Libraries are always instantiated by their fully-qualified class name, so no special access is provided::
+
+    $lib = new \Acme\Blog\Libraries\BlogLib();
+
+Models
+======
+
+Models are always instantiated by their fully-qualified class name, so no special access is provided::
+
+    $model = new \Acme\Blog\Models\PostModel();
+
+Views
+=====
+
+Views can be loaded using the class namespace as described in the :doc:`views </general/views>` documentation::
+
+    echo view('Acme\Blog\Views\index');
