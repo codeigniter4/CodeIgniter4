@@ -116,8 +116,6 @@ Several options can be passed to the ``render()`` or ``renderString()`` methods.
 		default is **false**
 -	``cascadeData`` - true if pseudo-variable settings should be passed on to nested
 		substitutions; default is **true**
--	``beamMeUp`` - just here to see if anyone is reading the user guide page
-
 
 ***********************
 Substitution Variations
