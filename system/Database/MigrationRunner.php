@@ -466,7 +466,7 @@ class MigrationRunner
 		         ->insert([
 			         'version' => $version,
 			         'group'   => $group,
-		             'time'    => date('Y-m-d H:i:s')
+		             'time'    => time()
 		         ]);
 	}
 
@@ -520,7 +520,8 @@ class MigrationRunner
 			    'null' => false
 			],
 			'time' => [
-				'type' => 'TIMESTAMP',
+				'type' => 'INT',
+                'constraint' => 11,
 			    'null' => false
 			]
 		]);
