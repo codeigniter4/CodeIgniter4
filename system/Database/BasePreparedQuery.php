@@ -109,7 +109,7 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
 		// Execute the Query.
 		$startTime = microtime(true);
 
-		$this->_execute($data);
+		$result = $this->_execute($data);
 
 		// Update our query object
 		$query = clone $this->query;

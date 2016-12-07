@@ -244,7 +244,7 @@ class CIDatabaseTestCase extends CIUnitTestCase
 		                  ->where($where)
 		                  ->countAllResults();
 
-		$this->assertTrue($count > 0, 'Row not found in database');
+		$this->assertTrue($count > 0, 'Row not found in database: '. $this->db->showLastQuery());
 	}
 
 	//--------------------------------------------------------------------

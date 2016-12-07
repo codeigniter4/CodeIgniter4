@@ -39,6 +39,9 @@ class PreparedQueryTest extends \CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
+    /**
+     * @group single
+     */
 	public function testExecuteRunsQueryAndReturnsResultObject()
 	{
 		$query = $this->db->prepare(function($db){

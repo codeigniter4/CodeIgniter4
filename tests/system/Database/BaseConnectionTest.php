@@ -125,7 +125,7 @@ class BaseConnectionTest extends \CIUnitTestCase
 		$db->initialize();
 
 		$this->assertTrue($db->getConnectStart() > $start);
-		$this->assertTrue($db->getConnectDuration() > 0);
+		$this->assertTrue($db->getConnectDuration() > 0.0);
 	}
 
 	//--------------------------------------------------------------------

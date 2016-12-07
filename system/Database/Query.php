@@ -419,7 +419,9 @@ class Query implements QueryInterface
             }
             else
             {
-                $escapedValue = preg_quote(trim($escapedValue, $this->db->escapeChar));
+                $escapedValue = strpos($escapedValue, '\\') !== false
+                    ? preg_quote(trim($escapedValue, $this->db->escapeChar))
+                    : $escapedValue;
             }
 
 			$sql = preg_replace('/:'.$placeholder.'(?!\w)/', $escapedValue, $sql);
