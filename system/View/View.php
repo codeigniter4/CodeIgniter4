@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\View;
+<?php
+
+namespace CodeIgniter\View;
 
 /**
  * CodeIgniter
@@ -35,7 +37,6 @@
  * @since	Version 3.0.0
  * @filesource
  */
-
 use Config\Services;
 use CodeIgniter\Log\Logger;
 
@@ -61,6 +62,7 @@ class View implements RendererInterface {
 	 * @var
 	 */
 	protected $viewPath;
+
 	/**
 	 * Instance of CodeIgniter\Loader for when
 	 * we need to attempt to find a view
@@ -104,7 +106,7 @@ class View implements RendererInterface {
 	 * @param bool          $debug
 	 * @param Logger        $logger
 	 */
-	public function __construct($config, string $viewPath=null, $loader=null, bool $debug = null, Logger $logger = null)
+	public function __construct($config, string $viewPath = null, $loader = null, bool $debug = null, Logger $logger = null)
 	{
 	    $this->config   = $config;
 		$this->viewPath = rtrim($viewPath, '/ ').'/';
@@ -124,12 +126,12 @@ class View implements RendererInterface {
 	 *  - cache_name	Name to use for cache
 	 *
 	 * @param string $view
-	 * @param array  $options  // Unused in this implementation
+	 * @param array  $options  
 	 * @param bool $saveData
 	 *
 	 * @return string
 	 */
-	public function render(string $view, array $options=null, $saveData=null): string
+	public function render(string $view, array $options = null, $saveData = null): string
 	{
 		$start = microtime(true);
 
@@ -154,7 +156,7 @@ class View implements RendererInterface {
 
 		$file = $this->viewPath.$view;
 
-		if (! file_exists($file))
+		if ( ! file_exists($file))
 		{
 			$file = $this->loader->locateFile($view, 'Views');
 		}
@@ -162,21 +164,19 @@ class View implements RendererInterface {
 		// locateFile will return an empty string if the file cannot be found.
 		if (empty($file))
 		{
-			throw new \InvalidArgumentException('View file not found: '. $view);
+			throw new \InvalidArgumentException('View file not found: '.$file);
 		}
 
 		// Make our view data available to the view.
 		extract($this->data);
 
-		if (! $saveData)
+		if ( ! $saveData)
 		{
 			$this->data = [];
 		}
 
 		ob_start();
-
-		include($file);
-
+		include($file);	// PHP will be processed
 		$output = ob_get_contents();
 		@ob_end_clean();
 
@@ -185,7 +185,7 @@ class View implements RendererInterface {
 		// Should we cache?
 		if (isset($options['cache']))
 		{
-			cache()->save($cacheName, $output, (int)$options['cache']);
+			cache()->save($cacheName, $output, (int) $options['cache']);
 		}
 
 		return $output;
@@ -203,13 +203,19 @@ class View implements RendererInterface {
 	 *                         it might be needed to pass additional info
 	 *                         to other template engines.
 	 * @param bool   $saveData If true, will save data for use with any other calls,
-	 *                         if false, will clean the data after displaying the view.
+	 *                         if false, will clean the data after displaying the view,
+	 *						   if not specified, use the config setting.
 	 *
 	 * @return string
 	 */
-	public function renderString(string $view, array $options = null, bool $saveData = false): string
+	public function renderString(string $view, array $options = null, $saveData = null): string
 	{
 		$start = microtime(true);
+        if (is_null($saveData))
+        {
+            $saveData = $this->config->saveData;
+        }
+
 		extract($this->data);
 
 		if ( ! $saveData)
@@ -255,7 +261,7 @@ class View implements RendererInterface {
 	 */
 	public function setData(array $data=[], string $context=null): RendererInterface
 	{
-		if (! empty($context))
+		if ( ! empty($context))
 		{
 			$data = \esc($data, $context);
 		}
@@ -271,7 +277,7 @@ class View implements RendererInterface {
 	 * Sets a single piece of view data.
 	 *
 	 * @param string $name
-	 * @param null   $value
+	 * @param mixed   $value
 	 * @param string $context The context to escape it for: html, css, js, url
 	 *                        If null, no escaping will happen
 	 *
@@ -279,7 +285,7 @@ class View implements RendererInterface {
 	 */
 	public function setVar(string $name, $value=null, string $context=null): RendererInterface
 	{
-		if (! empty($context))
+		if ( ! empty($context))
 		{
 			$value = \esc($value, $context);
 		}
@@ -312,7 +318,7 @@ class View implements RendererInterface {
 	 */
 	public function getData()
 	{
-	    return $this->data;
+		return $this->data;
 	}
 
 	//--------------------------------------------------------------------
@@ -325,7 +331,7 @@ class View implements RendererInterface {
 	 */
 	public function getPerformanceData(): array
 	{
-	    return $this->performanceData;
+		return $this->performanceData;
 	}
 
 	//--------------------------------------------------------------------
@@ -339,15 +345,14 @@ class View implements RendererInterface {
 	 */
 	protected function logPerformance(float $start, float $end, string $view)
 	{
-		if (! $this->debug) return;
+		if ( ! $this->debug) return;
 
 		$this->performanceData[] = [
-			'start' => $start,
-		    'end'   => $end,
-		    'view'  => $view
+			'start'	 => $start,
+			'end'	 => $end,
+			'view'	 => $view
 		];
 	}
 
 	//--------------------------------------------------------------------
-
 }
