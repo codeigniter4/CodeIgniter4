@@ -54,7 +54,8 @@ interface RendererInterface {
 	 *                         it might be needed to pass additional info
 	 *                         to other template engines.
 	 * @param bool   $saveData If true, will save data for use with any other calls,
-	 *                         if false, will clean the data after displaying the view.
+	 *                         if false, will clean the data after displaying the view,
+	 *						   if not specified, use the config setting.
 	 *
 	 * @return string
 	 */
@@ -71,11 +72,12 @@ interface RendererInterface {
 	 *                         it might be needed to pass additional info
 	 *                         to other template engines.
 	 * @param bool   $saveData If true, will save data for use with any other calls,
-	 *                         if false, will clean the data after displaying the view.
+	 *                         if false, will clean the data after displaying the view,
+	 *						   if not specified, use the config setting.
 	 *
 	 * @return string
 	 */
-	public function renderString(string $view, array $options=null, bool $saveData=false): string;
+	public function renderString(string $view, array $options=null, $saveData=false): string;
 
 	//--------------------------------------------------------------------
 
