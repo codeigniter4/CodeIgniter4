@@ -87,5 +87,20 @@ class Checks extends Controller
         return $this->respond($data);
     }
 
+    public function db()
+    {
+        $db = Database::connect();
+        $db->initialize();
+
+        $query = $db->prepare(function($db){
+            return $db->table('user')->insert([
+                'name' => 'a',
+                'email' => 'b@example.com',
+                'country' => 'x'
+            ]);
+        });
+
+        $query->execute('foo', 'foo@example.com', 'US');
+    }
 
 }
