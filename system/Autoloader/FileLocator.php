@@ -200,6 +200,40 @@ class FileLocator {
     //--------------------------------------------------------------------
 
     /**
+     * Attempts to load a file and instantiate a new class by looking
+     * at its full path and comparing that to our existing psr4 namespaces
+     * in Autoloader config file.
+     *
+     * @param string $path
+     *
+     * @return string|void
+     */
+    public function findQualifiedNameFromPath(string $path)
+    {
+        $path = realpath($path);
+
+        if (! $path)
+        {
+            return;
+        }
+
+        foreach ($this->namespaces as $namespace => $nsPath)
+        {
+            if (mb_strpos($path, $nsPath) === 0)
+            {
+                $className = '\\'.$namespace.'\\'.str_replace('/', '\\', mb_substr($path, mb_strlen($nsPath)+1));
+
+                // Remove the file extension (.php)
+                $className = mb_substr($className, 0, -4);
+
+                return $className;
+            }
+        }
+    }
+
+    //--------------------------------------------------------------------
+
+    /**
      * Checks the application folder to see if the file can be found.
      * Only for use with filenames that DO NOT include namespacing.
      *

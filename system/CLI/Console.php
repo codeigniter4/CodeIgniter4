@@ -42,6 +42,16 @@ class Console
     //--------------------------------------------------------------------
 
     /**
+     * Runs the current command discovered on the CLI.
+     */
+    public function run()
+    {
+        return passthru("php {$this->indexPath} ci {$this->commandString} {$this->optionString}");
+    }
+
+    //--------------------------------------------------------------------
+
+    /**
      * Displays basic information about the Console.
      */
     public function showHeader()

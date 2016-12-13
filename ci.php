@@ -34,3 +34,5 @@ ini_set('display_errors', 1);
 // Show basic information before we do anything else.
 $console->showHeader();
 
+// fire off the command the main framework.
+$console->run();
