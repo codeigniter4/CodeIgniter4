@@ -58,12 +58,12 @@ TODO
 
 
 .. toctree::
-	:hidden:
-	:titlesonly:
+    :hidden:
+    :titlesonly:
 
-	downloads
-	self
-	upgrading
-	troubleshooting
+    downloads
+    self
+    upgrading
+    troubleshooting
     local_server
 
