@@ -2,64 +2,89 @@
 
 use Psr\Log\LoggerInterface;
 
-class BaseCommand
+/**
+ * Class BaseCommand
+ *
+ * @property $group
+ * @property $name
+ * @property $description
+ *
+ * @package CodeIgniter\CLI
+ */
+abstract class BaseCommand
 {
     /**
-     * List of aliases and the method
-     * in this class they point to.
-     * Allows for more flexible naming of
-     * CLI commands.
+     * The group the command is lumped under
+     * when listing commands.
      *
-     * @var array
+     * @var string
      */
-    protected $tasks = [];
+    protected $group;
+
+    /**
+     * The Command's name
+     *
+     * @var string
+     */
+    protected $name;
+
+    /**
+     * the Command's short description
+     *
+     * @var string
+     */
+    protected $description;
 
     /**
      * @var \Psr\Log\LoggerInterface
      */
     protected $logger;
 
+    /**
+     * Instance of the CommandRunner controller
+     * so commands can call other commands.
+     *
+     * @var \CodeIgniter\CLI\CommandRunner
+     */
+    protected $commands;
+
     //--------------------------------------------------------------------
 
-    public function __construct(LoggerInterface $logger)
+    public function __construct(LoggerInterface $logger, CommandRunner $commands)
     {
         $this->logger = $logger;
+        $this->commands = $commands;
     }
 
     //--------------------------------------------------------------------
 
-    /**
-     * Checks to see if this command has the listed task.
-     *
-     * @param string $alias
-     *
-     * @return bool
-     */
-    public function hasTask(string $alias): bool
-    {
-        return array_key_exists(mb_strtolower($alias), $this->tasks);
-    }
+    abstract public function run(array $params);
 
     //--------------------------------------------------------------------
 
     /**
-     * Used by the commandRunner to actually execute the command by
-     * it's alias. $params are passed to the command in the order
-     * presented on the command line.
+     * Can be used by a command to run other commands.
      *
-     * @param string $alias
+     * @param string $command
      * @param array  $params
      */
-    public function runTask(string $alias, array $params)
+    protected function call(string $command, array $params=[])
     {
-        if (! $this->hasTask($alias))
+        // The CommandRunner will grab the first element
+        // for the command name.
+        array_unshift($params, $command);
+
+        return $this->commands->index($params);
+    }
+
+    //--------------------------------------------------------------------
+
+    public function __get(string $key)
+    {
+        if (isset($this->$key))
         {
-            throw new \InvalidArgumentException('Invalid alias: '. $alias);
+            return $this->$key;
         }
-
-        $method = $this->tasks[$alias];
-
-        return $this->$method($params);
     }
 
     //--------------------------------------------------------------------

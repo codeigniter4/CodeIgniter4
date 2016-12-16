@@ -5,6 +5,15 @@ use CodeIgniter\Controller;
 class CommandRunner extends Controller
 {
     /**
+     * Stores the info about found Commands.
+     *
+     * @var array
+     */
+    protected $commands = [];
+
+    //--------------------------------------------------------------------
+
+    /**
      * We map all un-routed CLI methods through this function
      * so we have the chance to look for a Command first.
      *
@@ -28,57 +37,94 @@ class CommandRunner extends Controller
     {
         $command = array_shift($params);
 
-        $class = $this->locateCommand($command);
+        $this->createCommandList($command);
 
-        return $class->runTask($command, $params);
+        return $this->runCommand($command, $params);
     }
 
     //--------------------------------------------------------------------
 
     /**
-     * Attempts to find a class matching our snake_case to UpperCamelCase
-     * version of the command passed to us.
+     * Actually runs the command.
      *
      * @param string $command
-     *
-     * @return null
      */
-    protected function locateCommand(string $command)
+    protected function runCommand(string $command, array $params)
     {
-        if (empty($command)) return;
+        if (! isset($this->commands[$command]))
+        {
+            CLI::error('Command \''.$command.'\' not found');
+            CLI::newLine();
+            return;
+        }
 
-        // Convert the command to UpperCamelCase
-        $command = str_replace(' ', '', ucwords(str_replace('_', ' ', $command)));
+        // The file would have already been loaded during the
+        // createCommandList function...
+        $className = $this->commands[$command]['class'];
+        $class = new $className($this->logger, $this);
 
-        $files = service('locator')->search("Commands/{$command}");
+        return $class->run($params);
+    }
+
+    //--------------------------------------------------------------------
+
+    /**
+     * Scans all Commands directories and prepares a list
+     * of each command with it's group and file.
+     *
+     * @return null|void
+     */
+    protected function createCommandList()
+    {
+        $files = service('locator')->listFiles("Commands/");
 
         // If no matching command files were found, bail
         if (empty($files))
         {
-            return null;
+            return;
         }
 
         // Loop over each file checking to see if a command with that
         // alias exists in the class. If so, return it. Otherwise, try the next.
         foreach ($files as $file)
         {
-            $class = service('locator')->findQualifiedNameFromPath($file);
+            $className = service('locator')->findQualifiedNameFromPath($file);
 
-            if (empty($class))
+            if (empty($className))
             {
                 continue;
             }
 
-            $class = new $class($this->logger);
+            $class = new $className($this->logger, $this);
 
-            if ($class->hasTask($command))
+            // Store it!
+            if ($class->group !== null)
             {
-                return $class;
+                $this->commands[$class->name] = [
+                    'class' => $className,
+                    'file' => $file,
+                    'group' => $class->group,
+                    'description' => $class->description
+                ];
             }
 
             $class = null;
             unset($class);
         }
+
+        asort($this->commands);
+    }
+
+    //--------------------------------------------------------------------
+
+    /**
+     * Allows access to the current commands that have been found.
+     *
+     * @return array
+     */
+    public function getCommands()
+    {
+        return $this->commands;
     }
 
     //--------------------------------------------------------------------

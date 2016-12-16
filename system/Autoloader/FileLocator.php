@@ -234,6 +234,40 @@ class FileLocator {
     //--------------------------------------------------------------------
 
     /**
+     * Scans the defined namespaces, returning a list of all files
+     * that are contained within the subpath specifed by $path.
+     *
+     * @param string $path
+     *
+     * @return array
+     */
+    public function listFiles(string $path): array
+    {
+        if (empty($path)) return [];
+
+        $files = [];
+        helper('filesystem');
+
+        foreach ($this->namespaces as $namespace => $nsPath)
+        {
+            $fullPath = rtrim($nsPath, '/') .'/'. $path;
+
+            if (! is_dir($fullPath)) continue;
+
+            $tempFiles = get_filenames($fullPath, true);
+
+            if (! count($tempFiles))
+            {
+                continue;
+            }
+
+            $files = array_merge($files, $tempFiles);
+        }
+
+        return $files;
+    }
+
+    /**
      * Checks the application folder to see if the file can be found.
      * Only for use with filenames that DO NOT include namespacing.
      *

@@ -13,16 +13,36 @@ use CodeIgniter\CLI\CLI;
  */
 class Help extends BaseCommand
 {
-    protected $tasks = [
-        'help' => 'index'
-    ];
+    protected $group = 'CodeIgniter';
+
+    /**
+     * The Command's name
+     *
+     * @var string
+     */
+    protected $name = 'help';
+
+    /**
+     * the Command's short description
+     *
+     * @var string
+     */
+    protected $description = 'Displays basic usage information.';
+
+    //--------------------------------------------------------------------
 
     /**
      * Displays the help for the ci.php cli script itself.
+     *
+     * @param array $params
      */
-    public function index()
+    public function run(array $params)
     {
         CLI::write('Usage:');
-        CLI::write("\tcommands [arguments]");
+        CLI::write("\tcommand [arguments]");
+
+        $this->call('list');
+
+        CLI::newLine();
     }
 }
