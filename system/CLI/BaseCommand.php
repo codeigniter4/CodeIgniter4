@@ -79,6 +79,29 @@ abstract class BaseCommand
 
     //--------------------------------------------------------------------
 
+    /**
+     * A simple method to display an error with line/file,
+     * in child commands.
+     *
+     * @param \Exception $e
+     */
+    protected function showError(\Exception $e)
+    {
+        CLI::newLine();
+        CLI::error($e->getMessage());
+        CLI::write($e->getFile().' - '.$e->getLine());
+        CLI::newLine();
+    }
+
+    //--------------------------------------------------------------------
+
+    /**
+     * Makes it simple to access our protected properties.
+     *
+     * @param string $key
+     *
+     * @return mixed
+     */
     public function __get(string $key)
     {
         if (isset($this->$key))

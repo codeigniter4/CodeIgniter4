@@ -62,6 +62,8 @@ class ListCommands extends BaseCommand
      */
     protected function describeCommands(array $commands = [])
     {
+        arsort($commands);
+
         $names     = array_keys($commands);
         $descs     = array_column($commands, 'description');
         $groups    = array_column($commands, 'group');
