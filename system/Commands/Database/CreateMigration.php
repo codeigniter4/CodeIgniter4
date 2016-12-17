@@ -27,11 +27,56 @@ class CreateMigration extends BaseCommand
     protected $description = 'Creates a new migration file.';
 
     /**
-     * Displays the help for the ci.php cli script itself.
+     * Creates a new migration file with the current timestamp.
+     * @todo Have this check the settings and see what type of file it should create (timestamp or sequential)
      */
-    public function run(array $params)
+    public function run(array $params=[])
     {
-        CLI::write('Usage:');
-        CLI::write("\tcommand [arguments]");
+        $name = array_shift($params);
+
+        if (empty($name))
+        {
+            $name = CLI::prompt(lang('Migrations.migNameMigration'));
+        }
+
+        if (empty($name))
+        {
+            CLI::error(lang('Migrations.migBadCreateName'));
+            return;
+        }
+
+        $path = APPPATH.'Database/Migrations/'.date('YmdHis_').$name.'.php';
+
+        $template =<<<EOD
+<?php
+
+use CodeIgniter\Database\Migration;
+
+class Migration_{name} extends Migration
+{
+    public function up()
+    {
+        //
+    }
+    
+    //--------------------------------------------------------------------
+    
+    public function down()
+    {
+        //
+    }
+}
+
+EOD;
+        $template = str_replace('{name}', $name, $template);
+
+        helper('filesystem');
+        if (! write_file($path, $template))
+        {
+            CLI::error(lang('Migrations.migWriteError'));
+            return;
+        }
+
+        CLI::write('Created file: '. CLI::color(str_replace(APPPATH, 'APPPATH/', $path), 'green'));
     }
 }
