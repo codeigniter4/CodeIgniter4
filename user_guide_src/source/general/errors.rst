@@ -134,4 +134,4 @@ or when it is temporarily lost::
 
 	throw new \CodeIgniter\DatabaseException();
 
-This provides an HTTP status code of 500, and an exit code of 4.
+This provides an HTTP status code of 500, and an exit code of 8.
