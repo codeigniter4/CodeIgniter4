@@ -331,8 +331,6 @@ class ModelTest extends \CIDatabaseTestCase
 		$data->name = 'Engineer';
 		$data->description = 'A fancier term for Developer.';
 
-		$this->setExpectedException('CodeIgniter\DatabaseException');
-
 		$model->protect(true)->save($data);
 	}
 
