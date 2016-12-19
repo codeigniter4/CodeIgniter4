@@ -134,11 +134,11 @@ class UpdateTest extends \CIDatabaseTestCase
         $this->db->table('misc')
             ->where('key', 'spaces and tabs')
             ->update([
-                'value' => 30.192
+                'value' => '30.192'
             ]);
 
         $this->seeInDatabase('misc', [
-            'value' => 30.192
+            'value' => '30.192'
         ]);
     }
 

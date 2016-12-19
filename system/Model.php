@@ -1022,10 +1022,10 @@ class Model
 	 */
 	protected function doProtectFields($data)
 	{
+        if ($this->protectFields === false) return $data;
+
 		if (empty($this->allowedFields))
 		{
-			if ($this->protectFields === false) return $data;
-
 			throw new DatabaseException('No Allowed fields specified for model: '. get_class($this));
 		}
 

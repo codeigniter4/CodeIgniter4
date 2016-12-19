@@ -253,9 +253,6 @@ class ModelTest extends \CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
-	/**
-	 * @group single
-	 */
 	public function testSaveNewRecordObject()
 	{
 	    $model = new JobModel();
@@ -475,9 +472,6 @@ class ModelTest extends \CIDatabaseTestCase
 
     //--------------------------------------------------------------------
 
-    /**
-     * @group single
-     */
     public function testCanCreateAndSaveEntityClasses()
     {
         $model = new EntityModel($this->db);
