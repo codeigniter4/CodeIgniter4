@@ -125,5 +125,22 @@ class UpdateTest extends \CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
+    /**
+     * @group single
+     * @see https://github.com/bcit-ci/CodeIgniter4/issues/324
+     */
+    public function testUpdatePeriods()
+    {
+        $this->db->table('misc')
+            ->where('key', 'spaces and tabs')
+            ->update([
+                'value' => 30.192
+            ]);
+
+        $this->seeInDatabase('misc', [
+            'value' => 30.192
+        ]);
+    }
+
 
 }
