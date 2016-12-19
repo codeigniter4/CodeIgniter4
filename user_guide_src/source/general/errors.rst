@@ -48,7 +48,7 @@ the error handler to function as normal, you can throw a new exception within th
 	{
 		// do something here...
 
-		throw new \RuntimeException($e->getMessage(), $e->getCode());
+		throw new \RuntimeException($e->getMessage(), $e->getCode(), $e);
 	}
 
 Configuration
