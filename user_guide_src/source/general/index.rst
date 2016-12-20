@@ -23,6 +23,7 @@ General Topics
 	debugging
 	caching
 	cli
+    cli_commands
     modules
 	managing_apps
 	environments

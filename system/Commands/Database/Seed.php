@@ -27,7 +27,7 @@ class Seed extends BaseCommand
      *
      * @var string
      */
-    protected $description = 'Runs all of the migrations in reverse order, until they have all been un-applied.';
+    protected $description = 'Runs the specified seeder to populate known data into the database.';
 
     /**
      * Runs all of the migrations in reverse order, until they have

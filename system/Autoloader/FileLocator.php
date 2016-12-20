@@ -219,9 +219,12 @@ class FileLocator {
 
         foreach ($this->namespaces as $namespace => $nsPath)
         {
+            if (is_numeric($namespace)) continue;
+
             if (mb_strpos($path, $nsPath) === 0)
             {
-                $className = '\\'.$namespace.'\\'.str_replace('/', '\\', mb_substr($path, mb_strlen($nsPath)+1));
+                $className = '\\'.$namespace.'\\'.
+                             ltrim(str_replace('/', '\\', mb_substr($path, mb_strlen($nsPath))), '\\');
 
                 // Remove the file extension (.php)
                 $className = mb_substr($className, 0, -4);
