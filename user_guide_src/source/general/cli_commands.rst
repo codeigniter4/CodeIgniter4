@@ -121,3 +121,30 @@ Our demo command might have a ``run`` method something like::
 BaseCommand
 ***********
 
+The ``BaseCommand`` class that all commands must extend have a couple of helpful utility methods that you should
+be familiar with when creating your own commands. It also has a :doc:`Logger </general/logging>` available at
+**$this->logger**.
+
+.. php:class:: CodeIgniter\CLI\BaseCommand
+
+    .. php:method:: call(string $command[, array $params=[] ])
+        :param string $command: The name of another command to call.
+        :param array $params: Additional cli arguments to make available to that command.
+
+        This method allows you to run other commands during the execution of your current command::
+
+        $this->call('command_one');
+        $this->call('command_two', $params);
+
+    .. php:method:: showError(\Exception $e)
+        :param Exception $e: The exception to use for error reporting.
+
+        A convenience method to maintain a consistent and clear error output to the cli::
+
+        try {
+            . . .
+        }
+        catch (\Exception $e)
+        {
+            $this->showError($e);
+        }
