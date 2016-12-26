@@ -119,7 +119,7 @@ method.
 
 If true, then any delete* method calls will simply set a flag in the database, instead of
 actually deleting the row. This can preserve data when it might be referenced elsewhere, or
-can maintain a "recylce bin" of objects that can be restored, or even simply preserve it as
+can maintain a "recycle bin" of objects that can be restored, or even simply preserve it as
 part of a security trail. If true, the find* methods will only return non-deleted rows, unless
 the withDeleted() method is called prior to calling the find* method.
 
@@ -201,7 +201,7 @@ all rows that match::
 
 **findAll()**
 
-Returns all results.
+Returns all results::
 
 	$users = $userModel->findAll();
 
