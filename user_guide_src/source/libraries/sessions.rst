@@ -458,7 +458,7 @@ Preference                     Default         Options                          
 	everything properly.
 
 In addition to the values above, the cookie and native drivers apply the
-following configuration values shared by the :doc:`Input <input>` and
+following configuration values shared by the :doc:`IncomingRequest <incomingrequest>` and
 :doc:`Security <security>` classes:
 
 ================== =============== ===========================================================================
