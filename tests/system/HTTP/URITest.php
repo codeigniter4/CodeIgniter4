@@ -514,4 +514,15 @@ class URITest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+    /**
+     * @see https://github.com/bcit-ci/CodeIgniter4/issues/331
+     * @group single
+     */
+    public function testNoExtraSlashes()
+    {
+        $this->assertEquals('http://entirely.different.com/subfolder', (string)(new URI('entirely.different.com/subfolder')));
+        $this->assertEquals('http://localhost/subfolder', (string)(new URI('localhost/subfolder')));
+        $this->assertEquals('http://localtest.me/subfolder', (string)(new URI('localtest.me/subfolder')));
+    }
+
 }

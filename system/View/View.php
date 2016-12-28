@@ -126,7 +126,7 @@ class View implements RendererInterface {
 	 *  - cache_name	Name to use for cache
 	 *
 	 * @param string $view
-	 * @param array  $options  
+	 * @param array  $options
 	 * @param bool $saveData
 	 *
 	 * @return string

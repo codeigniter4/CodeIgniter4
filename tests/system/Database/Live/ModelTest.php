@@ -253,9 +253,6 @@ class ModelTest extends \CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
-	/**
-	 * @group single
-	 */
 	public function testSaveNewRecordObject()
 	{
 	    $model = new JobModel();
@@ -330,8 +327,6 @@ class ModelTest extends \CIDatabaseTestCase
 		$data->id = 1;
 		$data->name = 'Engineer';
 		$data->description = 'A fancier term for Developer.';
-
-		$this->setExpectedException('CodeIgniter\DatabaseException');
 
 		$model->protect(true)->save($data);
 	}
@@ -477,9 +472,6 @@ class ModelTest extends \CIDatabaseTestCase
 
     //--------------------------------------------------------------------
 
-    /**
-     * @group single
-     */
     public function testCanCreateAndSaveEntityClasses()
     {
         $model = new EntityModel($this->db);
