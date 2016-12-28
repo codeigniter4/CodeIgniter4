@@ -128,6 +128,7 @@ be familiar with when creating your own commands. It also has a :doc:`Logger </g
 .. php:class:: CodeIgniter\CLI\BaseCommand
 
     .. php:method:: call(string $command[, array $params=[] ])
+    
         :param string $command: The name of another command to call.
         :param array $params: Additional cli arguments to make available to that command.
 
@@ -137,6 +138,7 @@ be familiar with when creating your own commands. It also has a :doc:`Logger </g
         $this->call('command_two', $params);
 
     .. php:method:: showError(\Exception $e)
+    
         :param Exception $e: The exception to use for error reporting.
 
         A convenience method to maintain a consistent and clear error output to the cli::
