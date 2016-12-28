@@ -278,8 +278,8 @@ through ``$_SESSION``::
 	$_SESSION['item']
 
 .. important:: The ``get()`` method WILL return flashdata items when
-  retrieving a single item by key. It will not return flashdata when
-  grabbing all userdata from the session, however.
+	retrieving a single item by key. It will not return flashdata when
+	grabbing all userdata from the session, however.
 
 However, if you want to be sure that you're reading "flashdata" (and not
 any other kind), you can also use the ``getFlashdata()`` method::
@@ -354,8 +354,8 @@ To read a tempdata variable, again you can just access it through the
 	$_SESSION['item']
 
 .. important:: The ``get()`` method WILL return tempdata items when
-  retrieving a single item by key. It will not return tempdata when
-  grabbing all userdata from the session, however.
+	retrieving a single item by key. It will not return tempdata when
+	grabbing all userdata from the session, however.
 
 Or if you want to be sure that you're reading "tempdata" (and not any
 other kind), you can also use the ``getTempdata()`` method::
@@ -366,7 +366,7 @@ And of course, if you want to retrieve all existing tempdata::
 
 	$session->getTempdata();
 
-.. note:: The ``tempdata()`` method returns NULL if the item cannot be
+.. note:: The ``getTempdata()`` method returns NULL if the item cannot be
 	found.
 
 If you need to remove a tempdata value before it expires, you can directly
@@ -377,7 +377,7 @@ unset it from the ``$_SESSION`` array::
 However, this won't remove the marker that makes this specific item to be
 tempdata (it will be invalidated on the next HTTP request), so if you
 intend to reuse that same key in the same request, you'd want to use
-``unset_tempdata()``::
+``removeTempdata()``::
 
 	$session->removeTempdata('item');
 

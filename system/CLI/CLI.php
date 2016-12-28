@@ -74,13 +74,6 @@ class CLI
 	protected static $initialized = false;
 
 	/**
-	 * Used by the progress bar
-	 *
-	 * @var bool
-	 */
-	protected static $inProgress = false;
-
-	/**
 	 * Foreground color list
 	 * @var array
 	 */
@@ -508,18 +501,14 @@ class CLI
 	 */
 	public static function showProgress($thisStep = 1, int $totalSteps = 10)
 	{
-		// The first time through, save
-		// our position so the script knows where to go
-		// back to when writing the bar, and
-		// at the end of the script.
-		if ( ! static::$inProgress)
-		{
-			fwrite(STDOUT, "\0337");
-			static::$inProgress = true;
-		}
+		static $inProgress = false;
 
-		// Restore position
-		fwrite(STDERR, "\0338");
+		// restore cursor position when progress is continuing.
+		if ($inProgress !== false && $inProgress <= $thisStep)
+		{
+			fwrite(STDOUT, "\033[1A");
+		}
+		$inProgress = $thisStep;
 
 		if ($thisStep !== false)
 		{
@@ -533,13 +522,11 @@ class CLI
 			// Write the progress bar
 			fwrite(STDOUT, "[\033[32m".str_repeat('#', $step).str_repeat('.', 10 - $step)."\033[0m]");
 			// Textual representation...
-			fwrite(STDOUT, " {$percent}% Complete".PHP_EOL);
-			// Move up, undo the PHP_EOL
-			fwrite(STDOUT, "\033[1A");
+			fwrite(STDOUT, sprintf(" %3d%% Complete", $percent).PHP_EOL);
 		}
 		else
 		{
-			fwrite(STDERR, "\007");
+			fwrite(STDOUT, "\007");
 		}
 	}
 
