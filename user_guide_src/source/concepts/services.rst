@@ -23,7 +23,7 @@ come in handy.
 
 Instead of creating the instance ourself, we let a central class create an instance of the
 class for us. This class is kept very simple. It only contains a method for each class that we want
-to use as a service. The method typically returns a new instance of that class, passing any dependencies
+to use as a service. The method typically returns a shared instance of that class, passing any dependencies
 it might have into it. Then, we would replace our timer creation code with code that calls this new class::
 
 	$timer = \Config\Services::timer();
@@ -117,7 +117,7 @@ There are occasions where you need to require that only a single instance of a s
 is created. This is easily handled with the ``getSharedInstance()`` method that is called from within the
 factory method. This handles checking if an instance has been created and saved
 within the class, and, if not, creates a new one. All of the factory methods provide a
-``$getShared = false`` value as the last parameter. You should stick to the method also::
+``$getShared = true`` value as the last parameter. You should stick to the method also::
 
     class Services
     {

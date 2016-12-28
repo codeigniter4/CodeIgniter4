@@ -43,8 +43,8 @@ use CodeIgniter\Log\Logger;
 /**
  * Class Parser
  *
- *  ClassFormerlyKnownAsTemplateParser 
- * 
+ *  ClassFormerlyKnownAsTemplateParser
+ *
  * @todo Views\Parser_Test
  * @tofo Common::parse
  * @todo user guide
@@ -93,7 +93,7 @@ class Parser extends View {
 	 * replacing them with any data that has already been set.
 	 *
 	 * @param string $view
-	 * @param array  $options  
+	 * @param array  $options
 	 * @param bool $saveData
 	 *
 	 * @return string
@@ -159,7 +159,7 @@ class Parser extends View {
 	 * replacing them with any data that has already been set.
 	 *
 	 * @param string $template
-	 * @param array  $options  
+	 * @param array  $options
 	 * @param bool $saveData
 	 *
 	 * @return	string
@@ -269,8 +269,8 @@ class Parser extends View {
 	{
 		$replace = array();
 		preg_match_all(
-				'#' . preg_quote($this->leftDelimiter . $variable . $this->rightDelimiter) . '(.+?)' . 
-				preg_quote($this->leftDelimiter . '/' . $variable . $this->rightDelimiter) . '#s', 
+				'#' . preg_quote($this->leftDelimiter . $variable . $this->rightDelimiter) . '(.+?)' .
+				preg_quote($this->leftDelimiter . '/' . $variable . $this->rightDelimiter) . '#s',
 				$template, $matches, PREG_SET_ORDER
 		);
 

@@ -127,9 +127,9 @@ match the name of the database group exactly::
 Namespaces
 ==========
 
-The migration library will automatically scan all namespaces you have defined within 
-**application/Config/Autoload.php** and its ``$psr4`` property for matching directory 
-names. It will include all migrations it finds. 
+The migration library will automatically scan all namespaces you have defined within
+**application/Config/Autoload.php** and its ``$psr4`` property for matching directory
+names. It will include all migrations it finds.
 
 For example, assume that we have the the following namespaces defined in our Autoload
 configuration file::
@@ -175,23 +175,23 @@ to update the schema::
 Commnand-Line Tools
 *******************
 
-CodeIgniter ships with some tools that are available from the command line to help you work with migrations.
-These tools are not required to use migrations but might make things easier for those of you that wish to use them.
-The tools primarily provide access to the same methods that are available within the MigrationRunner class.
-When running these commands, you should be in the same directory as your application's main index.php file.
+CodeIgniter ships with several :doc:`commands </general/cli_commands>` that are available from the command line to help
+you work with migrations. These tools are not required to use migrations but might make things easier for those of you
+that wish to use them. The tools primarily provide access to the same methods that are available within the MigrationRunner
+class.
 
 **latest**
 
 Migrates all database groups to the latest available migrations::
 
-  > php index.php migrations latest
+  > php ci.php migrate
 
 **current**
 
 Migrates all database groups to match the version set in ``$currentVersion``. This will migrate both
 up and down as needed to match the specified version::
 
-  > php index.php migrations current
+  > php ci.php migrate:current
 
 **version**
 
@@ -199,32 +199,32 @@ Migrates all database groups to the specified version. If no version is provided
 for the version. ::
 
   // Asks you for the version...
-  > php index.php migrations version
+  > php ci.php migrate:version
   > Version:
 
   // Sequential
-  > php index.php migrations version 007
+  > php ci.php migrate:version 007
 
   // Timestamp
-  > php index.php migrations version 20161426211300
+  > php ci.php migrate:version 20161426211300
 
 **rollback**
 
 Rolls back all migrations, taking all database groups to a blank slate, effectively migration 0::
 
-  > php index.php migrations rollback
+  > php ci.php migrate:rollback
 
 **refresh**
 
 Refreshes the database state by first rolling back all migrations, and then migrating to the latest version::
 
-  > php index.php migrations refresh
+  > php ci.php migrate:refresh
 
 **status**
 
 Displays a list of all migrations and the date and time they were ran, or '--' if they have not be ran::
 
-  > php index.php migrations status
+  > php ci.php migrate:status
   Filename                              Migrated On
   20150101101500_First_migration.php    2016-04-25 04:44:22
 
@@ -232,7 +232,7 @@ Displays a list of all migrations and the date and time they were ran, or '--' i
 
 Creates a skeleton migration file in **application/Database/Migrations** using the timestamp format::
 
-  > php index.php migrations create [filename]
+  > php ci.php migrate:create [filename]
 
 *********************
 Migration Preferences
