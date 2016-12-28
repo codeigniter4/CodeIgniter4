@@ -38,7 +38,7 @@
 
  /**
  * System URI Routing
- * 
+ *
  * This file contains any routing to system tools, such as command-line
  * tools for migrations, etc.
  *
@@ -50,3 +50,7 @@
 $routes->cli('migrations/(:segment)/(:segment)', '\CodeIgniter\Commands\MigrationsCommand::$1/$2');
 $routes->cli('migrations/(:segment)',            '\CodeIgniter\Commands\MigrationsCommand::$1');
 $routes->cli('migrations',                       '\CodeIgniter\Commands\MigrationsCommand::index');
+
+// CLI Catchall - uses a _remap to
+$routes->cli('ci(:any)', '\CodeIgniter\CLI\CommandRunner::index/$1');
+
