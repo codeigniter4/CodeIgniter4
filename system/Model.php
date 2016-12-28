@@ -117,7 +117,7 @@ class Model
 	 *
 	 * @var array
 	 */
-	protected $allowedFields = [];
+	protected $allowedFields = ['name'];
 
 	/**
 	 * If true, will set created_at, and updated_at
@@ -630,6 +630,14 @@ class Model
             $data = $this->classToArray($data);
         }
 
+        // If it's still a stdClass, go ahead and convert to
+        // an array so doProtectFields and other model methods
+        // don't have to do special checks.
+        if (is_object($data))
+        {
+            $data = (array)$data;
+        }
+
 	    // Validate data before saving.
 	    if ($this->skipValidation === false)
         {
@@ -682,6 +690,14 @@ class Model
         if (is_object($data) && ! $data instanceof \stdClass)
         {
             $data = $this->classToArray($data);
+        }
+
+        // If it's still a stdClass, go ahead and convert to
+        // an array so doProtectFields and other model methods
+        // don't have to do special checks.
+        if (is_object($data))
+        {
+            $data = (array)$data;
         }
 
 	    // Validate data before saving.
@@ -1006,10 +1022,10 @@ class Model
 	 */
 	protected function doProtectFields($data)
 	{
+        if ($this->protectFields === false) return $data;
+
 		if (empty($this->allowedFields))
 		{
-			if ($this->protectFields === false) return $data;
-
 			throw new DatabaseException('No Allowed fields specified for model: '. get_class($this));
 		}
 
