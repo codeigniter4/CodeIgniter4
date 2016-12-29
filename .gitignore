@@ -88,6 +88,9 @@ composer.lock
 # Modules Testing
 _modules/*
 
+# phpenv local config
+.php-version
+
 # Jetbrains editors (PHPStorm, etc)
 .idea/
 *.iml
@@ -102,10 +105,14 @@ nbactions.xml
 nb-configuration.xml
 .nb-gradle/
 
-## Sublime Text
+# Sublime Text
 *.tmlanguage.cache
 *.tmPreferences.cache
 *.stTheme.cache
 *.sublime-workspace
 *.sublime-project
 /api/
+
+# Visual Studio Code
+.vscode/
+
