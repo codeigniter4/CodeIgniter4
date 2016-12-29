@@ -471,7 +471,7 @@ Preference         Default         Description
 
 .. note:: The 'cookieHTTPOnly' setting doesn't have an effect on sessions.
 	Instead the HttpOnly parameter is always enabled, for security
-	reasons. Additionaly, the 'cookiePrefix' setting is completely
+	reasons. Additionally, the 'cookiePrefix' setting is completely
 	ignored.
 
 Session Drivers
@@ -557,19 +557,17 @@ an application - it is just another table in your database.
 
 However, there are some conditions that must be met:
 
-  - Only your **default** database connection (or the one that you access
-    as ``$this->db`` from your controllers) can be used.
   - You can NOT use a persistent connection.
   - You can NOT use a connection with the *cacheOn* setting enabled.
 
 In order to use the 'database' session driver, you must also create this
 table that we already mentioned and then set it as your
-``$config['sessionSavePath']`` value.
+``$sessionSavePath`` value.
 For example, if you would like to use 'ci_sessions' as your table name,
 you would do this::
 
-	$config['sessionDriver'] = 'database';
-	$config['sessionSavePath'] = 'ci_sessions';
+	public $sessionDriver = 'database';
+	public $sessionSavePath = 'ci_sessions';
 
 And then of course, create the database table ...
 
@@ -606,6 +604,10 @@ setting**. The examples below work both on MySQL and PostgreSQL::
 	// To drop a previously created primary key (use when changing the setting)
 	ALTER TABLE ci_sessions DROP PRIMARY KEY;
 
+You can choose the Database group to use by adding a new line to the
+**application\Config\App.php** file with the name of the group to use::
+
+  public $sessionDBGroup = 'groupName';
 
 .. important:: Only MySQL and PostgreSQL databases are officially
 	supported, due to lack of advisory locking mechanisms on other
@@ -614,7 +616,6 @@ setting**. The examples below work both on MySQL and PostgreSQL::
 	support such cases. Use ``session_write_close()`` after you've
 	done processing session data if you're having performance
 	issues.
-        NOT SURE HOW THIS IS DONE IN CI4.
 
 Redis Driver
 ------------
@@ -636,7 +637,7 @@ both familiar with Redis and using it for other purposes.
 
 Just as with the 'files' and 'database' drivers, you must also configure
 the storage location for your sessions via the
-``$config['sessionSavePath']`` setting.
+``$sessionSavePath`` setting.
 The format here is a bit different and complicated at the same time. It is
 best explained by the *phpredis* extension's README file, so we'll simply
 link you to it:
@@ -650,8 +651,8 @@ link you to it:
 For the most common case however, a simple ``host:port`` pair should be
 sufficient::
 
-	$config['sessionDiver'] = 'redis';
-	$config['sessionSavePath'] = 'tcp://localhost:6379';
+	public $sessionDiver = 'redis';
+	public $sessionSavePath = 'tcp://localhost:6379';
 
 Memcached Driver
 ----------------
@@ -663,7 +664,7 @@ Memcached Driver
 The 'MemcachedHandler' driver is very similar to the 'redis' one in all of its
 properties, except perhaps for availability, because PHP's `Memcached
 <http://php.net/memcached>`_ extension is distributed via PECL and some
-Linux distrubutions make it available as an easy to install package.
+Linux distributions make it available as an easy to install package.
 
 Other than that, and without any intentional bias towards Redis, there's
 not much different to be said about Memcached - it is also a popular
@@ -675,11 +676,11 @@ deleted after Y seconds have passed (but not necessarily that it won't
 expire earlier than that time). This happens very rarely, but should be
 considered as it may result in loss of sessions.
 
-The ``$config['sessionSavePath']`` format is fairly straightforward here,
+The ``$sessionSavePath`` format is fairly straightforward here,
 being just a ``host:port`` pair::
 
-	$config['sessionDriver'] = 'memcached';
-	$config['sessionSavePath'] = 'localhost:11211';
+	public $sessionDriver = 'memcached';
+	public $sessionSavePath = 'localhost:11211';
 
 Bonus Tip
 ^^^^^^^^^
@@ -693,4 +694,4 @@ separate the multiple server paths with commas::
 
 	// localhost will be given higher priority (5) here,
 	// compared to 192.0.2.1 with a weight of 1.
-	$config['sessionSavePath'] = 'localhost:11211:5,192.0.2.1:11211:1';
+	public $sessionSavePath = 'localhost:11211:5,192.0.2.1:11211:1';
