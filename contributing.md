@@ -3,10 +3,7 @@
 
 ## Contributions (not)
 
-We are not accepting contributions from the public until a stable enough base has been formed, and our plans fleshed out and things settle down a little bit. 
-At that point, we will welcome your comments and help creating the best framework for our community.
-
-Once the repository is opened to the community, we expect all contributions to conform to our style guide, be commented (inside the PHP source files), 
+We expect all contributions to conform to our style guide, be commented (inside the PHP source files), 
 be documented (in the user guide), and unit tested (in the test folder).
 
 ## Issues
