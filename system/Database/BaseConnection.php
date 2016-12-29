@@ -336,11 +336,12 @@ abstract class BaseConnection implements ConnectionInterface
 	//--------------------------------------------------------------------
 
 
-	/**
-	 * Initializes the database connection/settings.
-	 *
-	 * @return mixed
-	 */
+    /**
+     * Initializes the database connection/settings.
+     *
+     * @return mixed
+     * @throws \CodeIgniter\DatabaseException
+     */
 	public function initialize()
 	{
 		/* If an established connection is available, then there's
