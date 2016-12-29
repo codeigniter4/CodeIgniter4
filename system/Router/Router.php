@@ -392,9 +392,24 @@ class Router implements RouterInterface
 					return true;
 				}
 				// Are we using the default method for back-references?
-				elseif (strpos($val, '$') !== false && strpos($key, '(') !== false)
-				{
-					$val = preg_replace('#^'.$key.'$#', $val, $uri);
+				else
+				{	
+					// Support resource route when function with subdirectory 
+					// ex: $routes->resource('Admin/Admins');
+					if (strpos($val, '$') !== false && strpos($key, '(') !== false && strpos($key, '/') !== false)
+					{
+						$replacekey = str_replace('/(.*)', '', $key);
+						$val = preg_replace('#^'.$key.'$#', $val, $uri);
+						$val = str_replace($replacekey, str_replace("/", "\\",$replacekey), $val);
+					}
+					elseif (strpos($val, '$') !== false && strpos($key, '(') !== false)
+					{
+						$val = preg_replace('#^'.$key.'$#', $val, $uri);
+					}
+					elseif (strpos($key, '/') !== false)
+					{
+						$val = str_replace('/', '\\', $val);
+					}
 				}
 
 				// Is this route supposed to redirect to another?
