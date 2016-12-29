@@ -273,20 +273,23 @@ if (! function_exists('service'))
 {
     /**
      * Allows cleaner access to the Services Config file.
+     * Always returns a SHARED instance of the class, so
+     * calling the function multiple times should always
+     * return the same instance.
      *
      * These are equal:
      *  - $timer = service('timer')
      *  - $timer = \CodeIgniter\Services::timer();
      *
      * @param string $name
-     * @param        ...$params
+     * @param array  ...$params
      *
      * @return mixed
      */
     function service(string $name, ...$params)
     {
-        // Ensure it's not a shared instance
-        array_push($params, false);
+        // Ensure it IS a shared instance
+        array_push($params, true);
 
         return Services::$name(...$params);
     }
@@ -294,17 +297,20 @@ if (! function_exists('service'))
 
 //--------------------------------------------------------------------
 
-if (! function_exists('shared_service'))
+if (! function_exists('single_service'))
 {
     /**
-     * Allow cleaner access to shared services
+     * Allow cleaner access to a Service.
+     * Always returns a new instance of the class.
      *
      * @param string $name
      * @param array|null $params
-     * @return type
      */
-    function shared_service(string $name, ...$params)
+    function single_service(string $name, ...$params)
     {
+        // Ensure it's NOT a shared instance
+        array_push($params, false);
+
         return Services::$name(...$params);
     }
 }
@@ -736,20 +742,20 @@ if ( ! function_exists('is_really_writable'))
 
 if ( ! function_exists('slash_item'))
 {
-    //Unlike CI3, this function is placed here because 
+    //Unlike CI3, this function is placed here because
     //it's not a config, or part of a config.
     /**
      * Fetch a config file item with slash appended (if not empty)
      *
      * @param   string      $item   Config item name
-     * @return  string|null The configuration item or NULL if 
+     * @return  string|null The configuration item or NULL if
      * the item doesn't exist
      */
     function slash_item($item)
     {
         $config     = new \Config\App();
         $configItem = $config->{$item};
-        
+
         if ( ! isset($configItem) || empty(trim($configItem)))
         {
             return $configItem;

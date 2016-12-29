@@ -142,7 +142,7 @@ Miscellaneous Functions
 	:returns: A string with the HTML for hidden input with all required CSRF information.
 	:rtype: string
 
-	Returns a hidden input with the CSRF information already inserted: 
+	Returns a hidden input with the CSRF information already inserted:
 
 		<input type="hidden" name="{csrf_token}" value="{csrf_hash}">
 
@@ -224,13 +224,15 @@ Miscellaneous Functions
 	:rtype: mixed
 
 	Provides easy access to any of the :doc:`Services <../concepts/services>` defined in the system.
+	This will always return a shared instance of the class, so no matter how many times this is called
+	during a single request, only one class instance will be created.
 
 	Example::
 
 		$logger = service('logger');
 		$renderer = service('renderer', APPPATH.'views/');
 
-.. php:function:: shared_service ( $name [, ...$params] )
+.. php:function:: single_service ( $name [, ...$params] )
 
 	:param   string   $name: The name of the service to load
 	:param   mixed    $params: One or more parameters to pass to the service method.
@@ -238,7 +240,7 @@ Miscellaneous Functions
 	:rtype: mixed
 
 	Identical to the **service()** function described above, except that all calls to this
-	function will share the same instance of the service, where **service** returns a new
+	function will return a new instance of the class, where **service** returns the same
 	instance every time.
 
 .. php:function:: stringify_attributes ( $attributes [, $js] )
