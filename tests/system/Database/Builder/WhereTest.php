@@ -109,6 +109,20 @@ class WhereTest extends \CIUnitTestCase
 		$this->assertSame($expectedBinds, $builder->getBinds());
 	}
 
+	public function testOrWhereSameColumn()
+	{
+		$builder = $this->db->table('jobs');
+
+		$builder->where('name', 'Accountant')
+				->orWhere('name', 'foobar');
+
+		$expectedSQL   = 'SELECT * FROM "jobs" WHERE "name" = :name OR "name" = :name0';
+		$expectedBinds = ['name' => 'Accountant', 'name0' => 'foobar'];
+
+		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+		$this->assertSame($expectedBinds, $builder->getBinds());
+	}
+
 	//--------------------------------------------------------------------
 
 	public function testWhereIn()
