@@ -781,6 +781,11 @@ abstract class BaseConnection implements ConnectionInterface
             return true;
         }
 
+		if (empty($this->connID))
+		{
+			$this->initialize();
+		}
+
         // Reset the transaction failure flag.
         // If the $test_mode flag is set to TRUE transactions will be rolled back
         // even if the queries produce a successful result.
