@@ -588,6 +588,21 @@ class Services
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * The Queue class
+	 */
+	public static function queue($getShared = true)
+	{
+		if ($getShared)
+		{
+			return self::getSharedInstance('queue');
+		}
+
+		return \CodeIgniter\Queue\Queue::connect();
+	}
+
+	//--------------------------------------------------------------------
+
 	//--------------------------------------------------------------------
 	// Utility Methods - DO NOT EDIT
 	//--------------------------------------------------------------------

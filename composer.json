@@ -21,7 +21,8 @@
 	},
 	"require-dev": {
 		"phpunit/phpunit": "5.3.*",
-		"mikey179/vfsStream": "1.6.*"
+		"mikey179/vfsStream": "1.6.*",
+		"php-amqplib/php-amqplib": "2.6.*"
 	},
 	"scripts": {
 		"post-update-cmd": [
