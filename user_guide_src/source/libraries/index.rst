@@ -20,6 +20,7 @@ Library Reference
     security
     sessions
     throttler
+    typography
     uploaded_files
     uri
     validation
