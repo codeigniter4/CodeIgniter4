@@ -1,7 +1,7 @@
 # Contributing to CodeIgniter4
 
 
-## Contributions (not)
+## Contributions
 
 We expect all contributions to conform to our style guide, be commented (inside the PHP source files), 
 be documented (in the user guide), and unit tested (in the test folder).
