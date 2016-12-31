@@ -79,8 +79,8 @@ Enabling Transactions
 =====================
 
 Transactions are enabled automatically the moment you use
-$this->db->trans_start(). If you would like to disable transactions you
-can do so using $this->db->trans_off()::
+$this->db->transStart(). If you would like to disable transactions you
+can do so using $this->db->transOff()::
 
 	$this->db->transOff();
 
@@ -97,7 +97,7 @@ Test Mode
 You can optionally put the transaction system into "test mode", which
 will cause your queries to be rolled back -- even if the queries produce
 a valid result. To use test mode simply set the first parameter in the
-$this->db->trans_start() function to TRUE::
+$this->db->transStart() function to TRUE::
 
 	$this->db->transStart(true); // Query will be rolled back
 	$this->db->query('AN SQL QUERY...');
