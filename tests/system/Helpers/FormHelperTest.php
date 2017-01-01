@@ -7,6 +7,15 @@ class FormHelperTest extends \CIUnitTestCase
         helper('form');
     }
     // ------------------------------------------------------------------------
+    public function testFormMultiPart()
+    {
+        helper('url');
+        $expected = <<<EOH
+<form action="http:///index.php/user/login" class="form" enctype="multipart/form-data" method="post" accept-charset="utf-8">\n
+EOH;
+        $this->assertEquals($expected, form_open_multipart('user/login', ['class'=>'form']));
+    }
+    // ------------------------------------------------------------------------
     public function textFormHidden()
     {
         $expected = <<<EOH

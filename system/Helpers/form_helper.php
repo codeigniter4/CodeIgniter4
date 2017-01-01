@@ -28,7 +28,7 @@ if (! function_exists('form_open'))
             $action = site_url($action);
         }
 
-        $attributes = stringify_attributes($attributes);
+        $attributes = str_replace('&#x2F;', '/', stringify_attributes($attributes));
 
         if (stripos($attributes, 'method=') === false)
         {
