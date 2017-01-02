@@ -149,4 +149,51 @@ WHERE "id" IN(2,3)';
 
 	//--------------------------------------------------------------------
 
+	public function testUpdateWithWhereSameColumn()
+	{
+		$builder = new BaseBuilder('jobs', $this->db);
+
+		$builder->update(['name' => 'foobar'], ['name' => 'Programmer'], null, true);
+
+		$expectedSQL = 'UPDATE "jobs" SET "name" = :name WHERE "name" = :name0';
+		$expectedBinds = ['name' => 'foobar', 'name0' => 'Programmer'];
+
+		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledUpdate()));
+		$this->assertEquals($expectedBinds, $builder->getBinds());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testUpdateWithWhereSameColumn2()
+	{
+		// calling order: set() -> where()
+		$builder = new BaseBuilder('jobs', $this->db);
+
+		$builder->set('name', 'foobar')
+			->where('name', 'Programmer')
+			->update(null, null, null, true);
+
+		$expectedSQL = 'UPDATE "jobs" SET "name" = :name WHERE "name" = :name0';
+		$expectedBinds = ['name' => 'foobar', 'name0' => 'Programmer'];
+
+		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledUpdate()));
+		$this->assertEquals($expectedBinds, $builder->getBinds());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testUpdateWithWhereSameColumn3()
+	{
+		// calling order: where() -> set() in update()
+		$builder = new BaseBuilder('jobs', $this->db);
+
+		$builder->where('name', 'Programmer')
+			->update(['name' => 'foobar'], null, null, true);
+
+		$expectedSQL = 'UPDATE "jobs" SET "name" = :name0 WHERE "name" = :name';
+		$expectedBinds = ['name' => 'Programmer', 'name0' => 'foobar'];
+
+		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledUpdate()));
+		$this->assertEquals($expectedBinds, $builder->getBinds());
+	}
 }
