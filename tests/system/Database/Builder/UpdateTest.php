@@ -166,6 +166,7 @@ WHERE "id" IN(2,3)';
 
 	public function testUpdateWithWhereSameColumn2()
 	{
+		// calling order: set() -> where()
 		$builder = new BaseBuilder('jobs', $this->db);
 
 		$builder->set('name', 'foobar')
@@ -183,6 +184,7 @@ WHERE "id" IN(2,3)';
 
 	public function testUpdateWithWhereSameColumn3()
 	{
+		// calling order: where() -> set() in update()
 		$builder = new BaseBuilder('jobs', $this->db);
 
 		$builder->where('name', 'Programmer')

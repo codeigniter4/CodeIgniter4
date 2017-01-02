@@ -109,6 +109,8 @@ class WhereTest extends \CIUnitTestCase
 		$this->assertSame($expectedBinds, $builder->getBinds());
 	}
 
+	//--------------------------------------------------------------------
+
 	public function testOrWhereSameColumn()
 	{
 		$builder = $this->db->table('jobs');
