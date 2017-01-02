@@ -609,6 +609,15 @@ You can choose the Database group to use by adding a new line to the
 
   public $sessionDBGroup = 'groupName';
 
+If you'd rather not do all of this by hand, you can use the ``session:migration`` command
+from the cli to generate a migration file for you::
+
+  > php ci.php session:migration
+  > php ci.php migrate
+
+This command will take the **sessionSavePath** and **sessionMatchIP** settings into account
+when it generates the code.
+
 .. important:: Only MySQL and PostgreSQL databases are officially
 	supported, due to lack of advisory locking mechanisms on other
 	platforms. Using sessions without locks can cause all sorts of
