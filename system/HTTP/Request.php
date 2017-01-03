@@ -320,7 +320,9 @@ class Request extends Message implements RequestInterface
 			$values = [];
 			foreach ($loopThrough as $key => $value)
 			{
-				$values[$key] = filter_var($value, $filter);
+				$values[$key] = is_array($value)
+                    ? $this->fetchGlobal($type, $key, $filter)
+                    : filter_var($value, $filter);
 			}
 
 			return $values;

@@ -103,6 +103,32 @@ class IncomingRequestTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+    /**
+     * @see https://github.com/bcit-ci/CodeIgniter4/issues/353
+     */
+    public function testGetPostReturnsArrayValues()
+    {
+        $_POST = [
+            'ANNOUNCEMENTS' => [
+                1 => [
+                    'DETAIL' => 'asdf'
+                ],
+                2 => [
+                    'DETAIL' => 'sdfg'
+                ]
+            ],
+            'submit' => 'SAVE'
+        ];
+
+        $result = $this->request->getPost();
+
+        $this->assertEquals($_POST, $result);
+        $this->assertTrue(is_array($result['ANNOUNCEMENTS']));
+        $this->assertEquals(2, count($result['ANNOUNCEMENTS']));
+    }
+
+    //--------------------------------------------------------------------
+
 	public function testFetchGlobalFiltersValue()
 	{
 		$_POST = [
