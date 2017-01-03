@@ -77,6 +77,8 @@ class Logs extends BaseCollector
 	 */
 	public function display(): string
 	{
+        $parser = \Config\Services::parser(BASEPATH.'Debug/Toolbar/Views/');
+
 		$logger = Services::logger(true);
 		$logs = $logger->logCache;
 
@@ -85,17 +87,10 @@ class Logs extends BaseCollector
 			return '<p>Nothing was logged. If you were expecting logged items, ensure that LoggerConfig file has the correct threshold set.</p>';
 		}
 
-		$output = "<table><theader><tr><th>Severity</th><th>Message</th></tr></theader><tbody>";
-
-		foreach ($logs as $log)
-		{
-			$output .= "<tr>";
-			$output .= "<td>{$log['level']}</td>";
-			$output .= "<td>".htmlspecialchars($log['msg'], ENT_SUBSTITUTE, 'UTF-8')."</td>";
-			$output .= "</tr>";
-		}
-
-		return $output."</tbody></table>";
+		return $parser->setData([
+                'logs' => $logs
+            ])
+            ->render('_logs.tpl');
 	}
 
 	//--------------------------------------------------------------------
