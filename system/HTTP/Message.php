@@ -287,7 +287,14 @@ class Message
 			$this->headers[$name] = [$this->headers[$name]];
 		}
 
-		$this->headers[$name][] = new Header($name, $value);
+		if (isset($this->headers[$name]))
+        {
+            $this->headers[$name] = new Header($name, $value);
+        }
+		else
+        {
+            $this->headers[$name][] = new Header($name, $value);
+        }
 
 		return $this;
 	}
