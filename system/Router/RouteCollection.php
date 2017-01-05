@@ -1009,7 +1009,7 @@ class RouteCollection implements RouteCollectionInterface
         // it doens't work with matching, so remove them...
         if ($from != '/')
         {
-            $from = rtrim($from, '/');
+            $from = trim($from, '/');
         }
 
 		if (is_null($options))

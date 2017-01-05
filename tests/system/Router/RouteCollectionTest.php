@@ -85,6 +85,23 @@ class RouteCollectionTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+    public function testAddWithLeadingSlash()
+    {
+        $routes = new RouteCollection();
+
+        $routes->add('/home', 'controller');
+
+        $expects = [
+            'home' => '\controller',
+        ];
+
+        $routes = $routes->getRoutes();
+
+        $this->assertEquals($expects, $routes);
+    }
+
+    //--------------------------------------------------------------------
+
 	public function testMatchIgnoresInvalidHTTPMethods()
 	{
 		$_SERVER['REQUEST_METHOD'] = 'GET';
