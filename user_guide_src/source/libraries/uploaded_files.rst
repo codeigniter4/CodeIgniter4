@@ -69,9 +69,7 @@ In this case, the returned array of files would be more like::
 
 If you just need to access a single file, you can use ``getFile()`` to retrieve the file instance directly::
 
-	$file = $this->request->getFile('avatar');
-
-.. note:: This currently only works with simple file names and not with array syntax naming.
+	$file = $this->request->getFile('my-form.details.avatar.0');
 
 =====================
 Working With the File
