@@ -99,7 +99,12 @@ class FileCollection
                 }
                 
                 if (array_key_exists($name, $this->files)) {
-                    return $this->files[$name];
+                    $uploadedFile = $this->files[$name];
+                    if($uploadedFile instanceof \CodeIgniter\HTTP\Files\UploadedFile){
+                        return $uploadedFile;
+                    }
+                    
+                    return null;
                 }
                 
                 return null;
