@@ -86,7 +86,7 @@ Which would return a simple file instance like::
 
 	$file = $this->request->getFile('userfile');
 
-Array Notation
+Array notation
 ^^^^^^^^^^
 
 If you used an array notation for the name, the input would look something like::
