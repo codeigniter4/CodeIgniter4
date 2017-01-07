@@ -59,6 +59,21 @@ class IncomingRequestTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+    /**
+     * @group single
+     */
+    public function testCanGetOldInput()
+    {
+        $_SESSION['_ci_old_input'] = [
+            'get' => ['one' => 'two'],
+            'post' => ['name' => 'foo']
+        ];
+
+        $this->assertEquals('foo', $this->request->getOldInput('name'));
+        $this->assertEquals('two', $this->request->getOldInput('one'));
+    }
+
+
 	public function testCanGrabServerVars()
 	{
 		$_SERVER['TEST'] = 5;

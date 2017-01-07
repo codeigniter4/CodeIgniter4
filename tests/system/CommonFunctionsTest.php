@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 class CommomFunctionsTest extends \CIUnitTestCase
 {
@@ -41,6 +41,5 @@ class CommomFunctionsTest extends \CIUnitTestCase
 	}
 
 	// ------------------------------------------------------------------------
-
 
 }

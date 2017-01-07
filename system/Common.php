@@ -650,6 +650,40 @@ if (! function_exists('redirect'))
 
 //--------------------------------------------------------------------
 
+if (! function_exists('redirect_with_input'))
+{
+    /**
+     * Identical to the redirect() method, except that this will
+     * send the current $_GET and $_POST contents in a _ci_old_input
+     * variable flashed to the session, which can then be retrieved
+     * via the old() method.
+     *
+     * @param string $uri
+     * @param array  ...$params
+     */
+    function redirect_with_input(string $uri, ...$params)
+    {
+        $session = Services::session();
+
+        // Ensure we have the session started up.
+        if (! isset($_SESSION))
+        {
+            $session->start();
+        }
+
+        $input = [
+            'get' => $_GET ?? [],
+            'post' => $_POST ?? []
+        ];
+
+        $session->setFlashdata('_ci_old_input', $input);
+
+        redirect($uri, ...$params);
+    }
+}
+
+//--------------------------------------------------------------------
+
 if ( ! function_exists('stringify_attributes'))
 {
     /**

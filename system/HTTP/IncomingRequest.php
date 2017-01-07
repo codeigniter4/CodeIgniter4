@@ -125,6 +125,12 @@ class IncomingRequest extends Request
 	 */
 	public $config;
 
+    /**
+     * Holds the old data from a redirect.
+     * @var array
+     */
+	protected $oldInput = [];
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -415,17 +421,43 @@ class IncomingRequest extends Request
 
 	//--------------------------------------------------------------------
 
-	/**
-	 * Fetch the user agent string
-	 *
-	 * @param null $filter
-	 */
+    /**
+     * Fetch the user agent string
+     *
+     * @param null $filter
+     *
+     * @return mixed
+     */
 	public function getUserAgent($filter = null)
 	{
 		return $this->fetchGlobal(INPUT_SERVER, 'HTTP_USER_AGENT', $filter);
 	}
 
 	//--------------------------------------------------------------------
+
+    /**
+     * Attempts to get old Input data that has been flashed to the session
+     * with redirect_with_input(). It first checks for the data in the old
+     * POST data, then the old GET data.
+     */
+    public function getOldInput(string $key)
+    {
+        // If the session hasn't been started, or no
+        // data was previously saved, we're done.
+        if (empty($_SESSION['_ci_old_input'])) return;
+
+        // Check for the value in the POST array first.
+        if (isset($_SESSION['_ci_old_input']['post'][$key]))
+        {
+            return $_SESSION['_ci_old_input']['post'][$key];
+        }
+
+        // Next check in the GET array.
+        if (isset($_SESSION['_ci_old_input']['get'][$key]))
+        {
+            return $_SESSION['_ci_old_input']['get'][$key];
+        }
+    }
 
 	/**
 	 * Returns an array of all files that have been uploaded with this

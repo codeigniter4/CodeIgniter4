@@ -191,6 +191,17 @@ Miscellaneous Functions
 
 	If more control is needed, you must use ``$response->redirect()`` explicitly.
 
+.. php:function:: redirect_with_input( $uri[, ...$params] )
+
+	:param string $uri: The URI to redirect the user to.
+	:param mixed  $params: one or more additional parameters that can be used with the :meth:`RouteCollection::reverseRoute` method.
+
+	Identical to the ``redirect()`` method, except this flashes the request's $_GET and $_POST values to the session.
+	On the next page request, the form helper ``set_*`` methods will check for data within the old input first, then,
+	if it's not found, the current GET/POST will be checked.
+
+	.. note:: In order to retrieve the old, the session MUST be started prior to calling the function.
+
 .. php:function:: remove_invisible_characters($str[, $url_encoded = TRUE])
 
 	:param	string	$str: Input string
