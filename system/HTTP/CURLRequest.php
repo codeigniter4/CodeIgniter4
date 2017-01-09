@@ -657,7 +657,7 @@ class CURLRequest extends Request
 		{
 			$curl_options[CURLOPT_POSTFIELDS] = http_build_query($config['form_params']);
 
-			if (empty($this->header('Content-Type')))
+			if (empty($this->getHeader('Content-Type')))
 			{
 				$this->setHeader('Content-Type', 'application/x-www-form-urlencoded');
 			}
