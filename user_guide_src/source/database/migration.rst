@@ -147,12 +147,12 @@ re-usable, modular code suites.
 Usage Example
 *************
 
-In this example some simple code is placed in **application/controllers/Migrate.php**
+In this example some simple code is placed in **application/Controllers/Migrate.php**
 to update the schema::
 
 	<?php
 
-	class Migrate extends CI_Controller
+	class Migrate extends \CodeIgniter\Controller
 	{
 
 		public function index()
@@ -302,4 +302,3 @@ Class Reference
 
 	    $migration->setPath($path)
 	              ->latest();
-

@@ -1350,7 +1350,7 @@ class BaseBuilder
 	 * @param    string    the offset clause
 	 * @param    bool      If true, returns the generate SQL, otherwise executes the query.
 	 *
-	 * @return    CI_DB_result
+	 * @return    ResultInterface
 	 */
 	public function get($limit = null, $offset = null, $returnSQL = false)
 	{
@@ -1470,7 +1470,7 @@ class BaseBuilder
 	 * @param    int    $limit
 	 * @param    int    $offset
 	 *
-	 * @return    CI_DB_result
+	 * @return    ResultInterface
 	 */
 	public function getWhere($where = null, $limit = null, $offset = null)
 	{

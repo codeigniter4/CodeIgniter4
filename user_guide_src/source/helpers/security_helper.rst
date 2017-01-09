@@ -27,7 +27,7 @@ The following functions are available:
 
     	Provides protection against directory traversal.
 
-    	This function is an alias for ``CI_Security::sanitize_filename()``.
+    	This function is an alias for ``\CodeIgniter\Security::sanitize_filename()``.
 	For more info, please see the :doc:`Security Library <../libraries/security>`
 	documentation.
 
