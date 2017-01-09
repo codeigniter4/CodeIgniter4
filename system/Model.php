@@ -287,7 +287,7 @@ class Model
 		{
 			$row = $builder->whereIn($this->primaryKey, $id)
 			               ->get();
-			$row = $row->getResult();
+			$row = $row->getResult($this->tempReturnType);
 		}
 		else
 		{
