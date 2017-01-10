@@ -27,6 +27,7 @@ if (! function_exists('form_open'))
         } // If an action is not a full URL then turn it into one
         elseif (strpos($action, '://') === false)
         {
+            helper('url');
             $action = site_url($action);
         }
 
