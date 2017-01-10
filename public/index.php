@@ -135,7 +135,8 @@ define('BASEPATH', realpath($system_directory).DIRECTORY_SEPARATOR);
 define('FCPATH', __DIR__.DIRECTORY_SEPARATOR);
 
 // Path to code root folder (just up from public)
-define('ROOTPATH', str_replace('public'.DIRECTORY_SEPARATOR, '', FCPATH));
+$pos = strrpos(FCPATH, 'public'.DIRECTORY_SEPARATOR);
+define('ROOTPATH', substr_replace(FCPATH, '', $pos, strlen('public'.DIRECTORY_SEPARATOR)));
 
 // Path to the writable directory.
 define('WRITEPATH', realpath($writable_directory).DIRECTORY_SEPARATOR);

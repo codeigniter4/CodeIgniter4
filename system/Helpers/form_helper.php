@@ -1,5 +1,7 @@
 <?php
 
+use Config\Services;
+
 //--------------------------------------------------------------------
 
 if (! function_exists('form_open'))
@@ -25,6 +27,7 @@ if (! function_exists('form_open'))
         } // If an action is not a full URL then turn it into one
         elseif (strpos($action, '://') === false)
         {
+            helper('url');
             $action = site_url($action);
         }
 
@@ -662,7 +665,15 @@ if (! function_exists('set_value'))
      */
     function set_value(string $field, string $default = '', bool $html_escape = true): string
     {
-        $value = $_POST[$field] ?? $default;
+        $request = Services::request();
+
+        // Try any old input data we may have first
+        $value = $request->getOldInput($field);
+
+        if ($value === null)
+        {
+            $value = $request->getPost($field) ?? $default;
+        }
 
         return ($html_escape) ? esc($value, 'html') : $value;
     }
@@ -686,28 +697,35 @@ if (! function_exists('set_select'))
      */
     function set_select(string $field, string $value = '', bool $default = false): string
     {
-        if (($input = $_POST[$field]) === null)
+        $request = Services::request();
+
+        // Try any old input data we may have first
+        $input = $request->getOldInput($field);
+
+        if ($input === null)
+        {
+            $input = $request->getPost($field);
+        }
+
+        if ($input === null)
         {
             return ($default === true) ? ' selected="selected"' : '';
         }
 
-        if (($input = $_POST[$field]) !== null)
+        if (is_array($input))
         {
-            if (is_array($input))
+            $value = (string)$value;
+
+            // Note: in_array('', array(0)) returns TRUE, do not use it
+            foreach ($input as &$v)
             {
-                $value = (string)$value;
-
-                // Note: in_array('', array(0)) returns TRUE, do not use it
-                foreach ($input as &$v)
+                if ($value === $v)
                 {
-                    if ($value === $v)
-                    {
-                        return ' selected="selected"';
-                    }
+                    return ' selected="selected"';
                 }
-
-                return '';
             }
+
+            return '';
         }
 
         return ($input === $value) ? ' selected="selected"' : '';
@@ -735,7 +753,15 @@ if (! function_exists('set_checkbox'))
         // Form inputs are always strings ...
         $value = (string)$value;
 
-        $input = $_POST[$field];
+        $request = Services::request();
+
+        // Try any old input data we may have first
+        $input = $request->getOldInput($field);
+
+        if ($input === null)
+        {
+            $input = $request->getPost($field);
+        }
 
         if (is_array($input))
         {
@@ -782,7 +808,15 @@ if (! function_exists('set_radio'))
         // Form inputs are always strings ...
         $value = (string)$value;
 
-        $input = $_POST[$field];
+        $request = Services::request();
+
+        // Try any old input data we may have first
+        $input = $request->getOldInput($field);
+
+        if ($input === null)
+        {
+            $input = $request->getPost($field) ?? $default;
+        }
 
         if (is_array($input))
         {

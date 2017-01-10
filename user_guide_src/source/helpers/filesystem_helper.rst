@@ -1,6 +1,6 @@
-################
+#################
 Filesystem Helper
-################
+#################
 
 The Directory Helper file contains functions that assist in working with
 directories.

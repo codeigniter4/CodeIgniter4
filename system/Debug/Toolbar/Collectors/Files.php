@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+ * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,7 @@
  *
  * @package      CodeIgniter
  * @author       CodeIgniter Dev Team
- * @copyright    Copyright (c) 2014 - 2016, British Columbia Institute of Technology (http://bcit.ca/)
+ * @copyright    Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
  * @license      http://opensource.org/licenses/MIT	MIT License
  * @link         http://codeigniter.com
  * @since        Version 4.0.0
@@ -87,35 +87,40 @@ class Files extends BaseCollector
 	 */
 	 public function display(): string
 	 {
-		$output = "<table><tbody>";
+        $parser = \Config\Services::parser(BASEPATH.'Debug/Toolbar/Views/');
 
-		$files = get_included_files();
+        $rawFiles = get_included_files();
+        $coreFiles = [];
+        $userFiles = [];
 
-		$count = 0;
-
-		foreach ($files as $file)
+		foreach ($rawFiles as $file)
 		{
-			++$count;
-
 			$path = $this->cleanPath($file);
 
 			if (strpos($path, 'BASEPATH') !== false)
 			{
-				$output .= "<tr class='muted'>";
+				$coreFiles[] = [
+				    'name' => basename($file),
+                    'path' => $path
+                ];
 			}
 			else
 			{
-				$output .= "<tr>";
+                $userFiles[] = [
+                    'name' => basename($file),
+                    'path' => $path
+                ];
 			}
-
-			$output .= "<td style='width: 20em;'>". htmlspecialchars(str_replace('.php', '', basename($file)), ENT_SUBSTITUTE, 'UTF-8')."</td>";
-			$output .= "<td>".htmlspecialchars($path, ENT_SUBSTITUTE, 'UTF-8')."</td>";
-			$output .= "</tr>";
 		}
 
-		$output .= "</tbody></table>";
+		sort($userFiles);
+		sort($coreFiles);
 
-		return $output;
+		return $parser->setData([
+                'coreFiles' => $coreFiles,
+                'userFiles' => $userFiles,
+            ])
+            ->render('_files.tpl');
 	 }
 
 	//--------------------------------------------------------------------

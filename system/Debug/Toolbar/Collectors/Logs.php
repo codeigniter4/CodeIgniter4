@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+ * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,7 @@
  *
  * @package      CodeIgniter
  * @author       CodeIgniter Dev Team
- * @copyright    Copyright (c) 2014 - 2016, British Columbia Institute of Technology (http://bcit.ca/)
+ * @copyright    Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
  * @license      http://opensource.org/licenses/MIT	MIT License
  * @link         http://codeigniter.com
  * @since        Version 4.0.0
@@ -77,6 +77,8 @@ class Logs extends BaseCollector
 	 */
 	public function display(): string
 	{
+        $parser = \Config\Services::parser(BASEPATH.'Debug/Toolbar/Views/');
+
 		$logger = Services::logger(true);
 		$logs = $logger->logCache;
 
@@ -85,17 +87,10 @@ class Logs extends BaseCollector
 			return '<p>Nothing was logged. If you were expecting logged items, ensure that LoggerConfig file has the correct threshold set.</p>';
 		}
 
-		$output = "<table><theader><tr><th>Severity</th><th>Message</th></tr></theader><tbody>";
-
-		foreach ($logs as $log)
-		{
-			$output .= "<tr>";
-			$output .= "<td>{$log['level']}</td>";
-			$output .= "<td>".htmlspecialchars($log['msg'], ENT_SUBSTITUTE, 'UTF-8')."</td>";
-			$output .= "</tr>";
-		}
-
-		return $output."</tbody></table>";
+		return $parser->setData([
+                'logs' => $logs
+            ])
+            ->render('_logs.tpl');
 	}
 
 	//--------------------------------------------------------------------

@@ -21,7 +21,6 @@
 	},
 	"require-dev": {
 		"phpunit/phpunit": "5.3.*",
-		"phpdocumentor/phpdocumentor": "^2.9",
 		"mikey179/vfsStream": "1.6.*"
 	},
 	"scripts": {

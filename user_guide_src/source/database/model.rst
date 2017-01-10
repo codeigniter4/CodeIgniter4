@@ -119,7 +119,7 @@ method.
 
 If true, then any delete* method calls will simply set a flag in the database, instead of
 actually deleting the row. This can preserve data when it might be referenced elsewhere, or
-can maintain a "recylce bin" of objects that can be restored, or even simply preserve it as
+can maintain a "recycle bin" of objects that can be restored, or even simply preserve it as
 part of a security trail. If true, the find* methods will only return non-deleted rows, unless
 the withDeleted() method is called prior to calling the find* method.
 
@@ -147,14 +147,14 @@ are: datetime, date, or int (a PHP timestamp).
 
 **$validationRules**
 
-Contains either an array of validation rules as described in :ref:`_validation-array`
+Contains either an array of validation rules as described in :ref:`validation-array`
 or a string containing the name of a validation group, as described in the same section.
 Described in more detail below.
 
 **$validationMessages**
 
 Contains an array of custom error messages that should be used during validation, as
-described in :ref:`_validation-custom-errors`. Described in more detail below.
+described in :ref:`validation-custom-errors`. Described in more detail below.
 
 **$skipValidation**
 
@@ -201,7 +201,7 @@ all rows that match::
 
 **findAll()**
 
-Returns all results.
+Returns all results::
 
 	$users = $userModel->findAll();
 
@@ -336,7 +336,7 @@ A very simple model to work with this might look like::
 	class JobModel extends \CodeIgniter\Model
 	{
 		protected $table = 'jobs';
-		protected $returnType = '\App\Entities\Job`;
+		protected $returnType = '\App\Entities\Job';
 		protected $allowedFields = [
 			'name', 'description'
 		];

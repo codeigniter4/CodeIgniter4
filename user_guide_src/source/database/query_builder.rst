@@ -128,7 +128,7 @@ escaping of fields may break them.
 
 ::
 
-	$builder->select('(SELECT SUM(payments.amount) FROM payments WHERE payments.invoice_id=4') AS amount_paid', FALSE);
+	$builder->select('(SELECT SUM(payments.amount) FROM payments WHERE payments.invoice_id=4) AS amount_paid', FALSE);
 	$query = $builder->get();
 
 **$builder->selectMax()**
@@ -523,8 +523,8 @@ The second parameter lets you set a result offset.
 
 **$builder->countAllResults()**
 
-Permits you to determine the number of rows in a particular Active
-Record query. Queries will accept Query Builder restrictors such as
+Permits you to determine the number of rows in a particular Query
+Builder query. Queries will accept Query Builder restrictors such as
 ``where()``, ``orWhere()``, ``like()``, ``orLike()``, etc. Example::
 
 	echo $builder->countAllResults('my_table');  // Produces an integer, like 25
@@ -623,8 +623,7 @@ Here is an example using an object::
 	$builder->insert($object);
 	// Produces: INSERT INTO mytable (title, content, date) VALUES ('My Title', 'My Content', 'My Date')
 
-The first parameter will contain the table name, the second is an
-object.
+The first parameter is an object.
 
 .. note:: All values are escaped automatically producing safer queries.
 
@@ -898,9 +897,9 @@ Generates a delete SQL string and runs the query.
 
 	$builder->delete(array('id' => $id));  // Produces: // DELETE FROM mytable  // WHERE id = $id
 
-The first parameter is the table name, the second is the where clause.
+The first parameter is the where clause.
 You can also use the where() or or_where() functions instead of passing
-the data to the second parameter of the function::
+the data to the first parameter of the function::
 
 	$builder->where('id', $id);
 	$builder->delete();
@@ -1010,8 +1009,8 @@ Class Reference
 
 		:param	int	$limit: The LIMIT clause
 		:param	int	$offset: The OFFSET clause
-		:returns:	CI_DB_result instance (method chaining)
-		:rtype:	CI_DB_result
+		:returns:	\CodeIgniter\Database\ResultInterface instance (method chaining)
+		:rtype:	\CodeIgniter\Database\ResultInterface
 
 		Compiles and runs SELECT statement based on the already
 		called Query Builder methods.
@@ -1021,8 +1020,8 @@ Class Reference
 		:param	string	$where: The WHERE clause
 		:param	int	$limit: The LIMIT clause
 		:param	int	$offset: The OFFSET clause
-		:returns:	CI_DB_result instance (method chaining)
-		:rtype:	CI_DB_result
+		:returns:	\CodeIgniter\Database\ResultInterface instance (method chaining)
+		:rtype:	\CodeIgniter\Database\ResultInterface
 
 		Same as ``get()``, but also allows the WHERE to be added directly.
 

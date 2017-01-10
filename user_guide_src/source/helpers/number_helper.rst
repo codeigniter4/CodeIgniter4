@@ -6,7 +6,7 @@ The Number Helper file contains functions that help you work with
 numeric data in a locale-aware manner.
 
 .. contents::
-:local:
+  :local:
 
 .. raw:: html
 
@@ -27,7 +27,7 @@ The following functions are available:
 
 .. php:function:: number_to_size($num[, $precision = 1[, $locale = null])
 
-	:param	mixed	$num: Number of bytes
+    :param	mixed	$num: Number of bytes
     :param	int	$precision: Floating point precision
     :returns:	Formatted data size string
     :rtype:	string

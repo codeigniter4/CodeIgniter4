@@ -9,7 +9,7 @@ namespace CodeIgniter\HTTP;
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+ * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -31,7 +31,7 @@ namespace CodeIgniter\HTTP;
  *
  * @package      CodeIgniter
  * @author       CodeIgniter Dev Team
- * @copyright    Copyright (c) 2014 - 2016, British Columbia Institute of Technology (http://bcit.ca/)
+ * @copyright    Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
  * @license      http://opensource.org/licenses/MIT	MIT License
  * @link         http://codeigniter.com
  * @since        Version 3.0.0
@@ -421,11 +421,11 @@ class URI
 
 	//--------------------------------------------------------------------
 
-	/**
-	 * Retrieve a URI fragment
-	 *
-	 * @return type
-	 */
+    /**
+     * Retrieve a URI fragment
+     *
+     * @return string
+     */
 	public function getFragment(): string
 	{
 		return is_null($this->fragment) ? '' : $this->fragment;
@@ -495,18 +495,17 @@ class URI
 
 	//--------------------------------------------------------------------
 
-	/**
-	 * Builds a representation of the string from the component parts.
-	 *
-	 * @param $scheme
-	 * @param $authority
-	 * @param $path
-	 * @param $query
-	 * @param $fragment
-	 * @param $ignorePort
-	 *
-	 * @return string
-	 */
+    /**
+     * Builds a representation of the string from the component parts.
+     *
+     * @param $scheme
+     * @param $authority
+     * @param $path
+     * @param $query
+     * @param $fragment
+     *
+     * @return string
+     */
 	public static function createURIString($scheme = null, $authority = null, $path = null, $query = null, $fragment = null)
 	{
 		$uri = '';
@@ -522,11 +521,9 @@ class URI
 
 		if ($path)
 		{
-			if ('/' !== substr($path, 0, 1))
-			{
-				$path = '/'.$path;
-			}
-			$uri .= $path;
+			$uri .= substr($uri, -1, 1) !== '/'
+                ? '/'. ltrim($path, '/')
+                : $path;
 		}
 
 		if ($query)
@@ -544,11 +541,13 @@ class URI
 
 	//--------------------------------------------------------------------
 
-	/**
-	 * Parses the given string an saves the appropriate authority pieces.
-	 *
-	 * @param string $str
-	 */
+    /**
+     * Parses the given string an saves the appropriate authority pieces.
+     *
+     * @param string $str
+     *
+     * @return $this
+     */
 	public function setAuthority(string $str)
 	{
 		$parts = parse_url($str);
@@ -859,13 +858,15 @@ class URI
 
 	//--------------------------------------------------------------------
 
-	/**
-	 * Encodes any dangerous characters, and removes dot segments.
-	 * While dot segments have valid uses according to the spec,
-	 * this URI class does not allow them.
-	 *
-	 * @param $path
-	 */
+    /**
+     * Encodes any dangerous characters, and removes dot segments.
+     * While dot segments have valid uses according to the spec,
+     * this URI class does not allow them.
+     *
+     * @param $path
+     *
+     * @return mixed|string
+     */
 	protected function filterPath(string $path = null)
 	{
 		$orig = $path;
@@ -969,14 +970,16 @@ class URI
 
 	//--------------------------------------------------------------------
 
-	/**
-	 * Combines one URI string with this one based on the rules set out in
-	 * RFC 3986 Section 2
-	 *
-	 * @see http://tools.ietf.org/html/rfc3986#section-5.2
-	 *
-	 * @param string $uri
-	 */
+    /**
+     * Combines one URI string with this one based on the rules set out in
+     * RFC 3986 Section 2
+     *
+     * @see http://tools.ietf.org/html/rfc3986#section-5.2
+     *
+     * @param string $uri
+     *
+     * @return \CodeIgniter\HTTP\URI
+     */
 	public function resolveRelativeURI(string $uri)
 	{
 		/*
@@ -1051,15 +1054,17 @@ class URI
 
 	//--------------------------------------------------------------------
 
-	/**
-	 * Given 2 paths, will merge them according to rules set out in RFC 2986,
-	 * Section 5.2
-	 *
-	 * @see http://tools.ietf.org/html/rfc3986#section-5.2.3
-	 *
-	 * @param URI $base
-	 * @param URI $reference
-	 */
+    /**
+     * Given 2 paths, will merge them according to rules set out in RFC 2986,
+     * Section 5.2
+     *
+     * @see http://tools.ietf.org/html/rfc3986#section-5.2.3
+     *
+     * @param URI $base
+     * @param URI $reference
+     *
+     * @return string
+     */
 	protected function mergePaths(URI $base, URI $reference)
 	{
 		if (! empty($base->getAuthority()) && empty($base->getPath()))
@@ -1082,16 +1087,19 @@ class URI
 
 	//--------------------------------------------------------------------
 
-	/**
-	 * Used when resolving and merging paths to correctly interpret and
-	 * remove single and double dot segments from the path per
-	 * RFC 3986 Section 5.2.4
-	 *
-	 * @see http://tools.ietf.org/html/rfc3986#section-5.2.4
-	 *
-	 * @param string $path
-	 * @param URI    $uri
-	 */
+    /**
+     * Used when resolving and merging paths to correctly interpret and
+     * remove single and double dot segments from the path per
+     * RFC 3986 Section 5.2.4
+     *
+     * @see      http://tools.ietf.org/html/rfc3986#section-5.2.4
+     *
+     * @param string $path
+     *
+     * @return string
+     * @internal param \CodeIgniter\HTTP\URI $uri
+     *
+     */
 	public function removeDotSegments(string $path): string
 	{
 		if (empty($path) || $path == '/')

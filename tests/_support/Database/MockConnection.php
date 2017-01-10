@@ -6,7 +6,7 @@ class MockConnection extends BaseConnection
 
 	public $database;
 
-	public $saveQueries = true;
+    public $lastQuery;
 
 	//--------------------------------------------------------------------
 
@@ -34,6 +34,8 @@ class MockConnection extends BaseConnection
 
 		$startTime = microtime(true);
 
+        $this->lastQuery = $query;
+
 		// Run the query
 		if (false === ($this->resultID = $this->simpleQuery($query->getQuery())))
 		{
@@ -41,20 +43,10 @@ class MockConnection extends BaseConnection
 
 			// @todo deal with errors
 
-			if ($this->saveQueries)
-			{
-				$this->queries[] = $query;
-			}
-
 			return false;
 		}
 
 		$query->setDuration($startTime);
-
-		if ($this->saveQueries)
-		{
-			$this->queries[] = $query;
-		}
 
 		$resultClass = str_replace('Connection', 'Result', get_class($this));
 
@@ -174,7 +166,7 @@ class MockConnection extends BaseConnection
 	 */
 	public function insertID()
 	{
-		return $this->conn_id->insert_id;
+		return $this->connID->insert_id;
 	}
 
 	//--------------------------------------------------------------------
@@ -217,4 +209,40 @@ class MockConnection extends BaseConnection
 
     //--------------------------------------------------------------------
 
+
+    /**
+     * Begin Transaction
+     *
+     * @return	bool
+     */
+    protected function _transBegin(): bool
+    {
+        return true;
+    }
+
+    //--------------------------------------------------------------------
+
+    /**
+     * Commit Transaction
+     *
+     * @return	bool
+     */
+    protected function _transCommit(): bool
+    {
+        return true;
+    }
+
+    //--------------------------------------------------------------------
+
+    /**
+     * Rollback Transaction
+     *
+     * @return	bool
+     */
+    protected function _transRollback(): bool
+    {
+        return true;
+    }
+
+    //--------------------------------------------------------------------
 }

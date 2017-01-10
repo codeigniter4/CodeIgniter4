@@ -5,6 +5,7 @@ Library Reference
 .. toctree::
     :titlesonly:
 
+    api_responses
     benchmark
     caching
     cli
@@ -19,6 +20,7 @@ Library Reference
     security
     sessions
     throttler
+    typography
     uploaded_files
     uri
     validation

@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+ * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,7 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2016, British Columbia Institute of Technology (http://bcit.ca/)
+ * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
  * @license	http://opensource.org/licenses/MIT	MIT License
  * @link	http://codeigniter.com
  * @since	Version 3.0.0
@@ -117,7 +117,7 @@ class Model
 	 *
 	 * @var array
 	 */
-	protected $allowedFields = [];
+	protected $allowedFields = ['name'];
 
 	/**
 	 * If true, will set created_at, and updated_at
@@ -287,7 +287,7 @@ class Model
 		{
 			$row = $builder->whereIn($this->primaryKey, $id)
 			               ->get();
-			$row = $row->getResult();
+			$row = $row->getResult($this->tempReturnType);
 		}
 		else
 		{
@@ -630,6 +630,14 @@ class Model
             $data = $this->classToArray($data);
         }
 
+        // If it's still a stdClass, go ahead and convert to
+        // an array so doProtectFields and other model methods
+        // don't have to do special checks.
+        if (is_object($data))
+        {
+            $data = (array)$data;
+        }
+
 	    // Validate data before saving.
 	    if ($this->skipValidation === false)
         {
@@ -682,6 +690,14 @@ class Model
         if (is_object($data) && ! $data instanceof \stdClass)
         {
             $data = $this->classToArray($data);
+        }
+
+        // If it's still a stdClass, go ahead and convert to
+        // an array so doProtectFields and other model methods
+        // don't have to do special checks.
+        if (is_object($data))
+        {
+            $data = (array)$data;
         }
 
 	    // Validate data before saving.
@@ -1006,10 +1022,10 @@ class Model
 	 */
 	protected function doProtectFields($data)
 	{
+        if ($this->protectFields === false) return $data;
+
 		if (empty($this->allowedFields))
 		{
-			if ($this->protectFields === false) return $data;
-
 			throw new DatabaseException('No Allowed fields specified for model: '. get_class($this));
 		}
 

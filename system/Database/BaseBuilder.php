@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+ * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,7 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2016, British Columbia Institute of Technology (http://bcit.ca/)
+ * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
  * @license	http://opensource.org/licenses/MIT	MIT License
  * @link	http://codeigniter.com
  * @since	Version 3.0.0
@@ -1308,8 +1308,8 @@ class BaseBuilder
 
 		foreach ($key as $k => $v)
 		{
-			$this->binds[$k]                                            = $v;
-			$this->QBSet[$this->db->protectIdentifiers($k, false, $escape)] = ':'.$k;
+			$bind = $this->setBind($k, $v);
+			$this->QBSet[$this->db->protectIdentifiers($k, false, $escape)] = ':'.$bind;
 		}
 
 		return $this;
@@ -1350,7 +1350,7 @@ class BaseBuilder
 	 * @param    string    the offset clause
 	 * @param    bool      If true, returns the generate SQL, otherwise executes the query.
 	 *
-	 * @return    CI_DB_result
+	 * @return    ResultInterface
 	 */
 	public function get($limit = null, $offset = null, $returnSQL = false)
 	{
@@ -1470,7 +1470,7 @@ class BaseBuilder
 	 * @param    int    $limit
 	 * @param    int    $offset
 	 *
-	 * @return    CI_DB_result
+	 * @return    ResultInterface
 	 */
 	public function getWhere($where = null, $limit = null, $offset = null)
 	{

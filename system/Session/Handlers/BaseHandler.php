@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+ * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,7 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2016, British Columbia Institute of Technology (http://bcit.ca/)
+ * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
  * @license	http://opensource.org/licenses/MIT	MIT License
  * @link	http://codeigniter.com
  * @since	Version 3.0.0
@@ -106,6 +106,13 @@ abstract class BaseHandler implements \SessionHandlerInterface
 	 */
 	protected $sessionID;
 
+    /**
+     * The 'save path' for the session
+     * varies between
+     * @var mixed
+     */
+    protected $savePath;
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -120,6 +127,7 @@ abstract class BaseHandler implements \SessionHandlerInterface
 		$this->cookieSecure = $config->cookieSecure;
 		$this->cookieName   = $config->sessionCookieName;
 		$this->matchIP      = $config->sessionMatchIP;
+        $this->savePath     = $config->sessionSavePath;
 	}
 
 	//--------------------------------------------------------------------
@@ -150,11 +158,11 @@ abstract class BaseHandler implements \SessionHandlerInterface
 	 * (databases other than PostgreSQL and MySQL) to act as if they
 	 * do acquire a lock.
 	 *
-	 * @param string $session_id
+	 * @param string $sessionID
 	 *
 	 * @return bool
 	 */
-	protected function lockSession(string $session_id): bool
+	protected function lockSession(string $sessionID): bool
 	{
 		$this->lock = true;
 		return true;
@@ -176,4 +184,23 @@ abstract class BaseHandler implements \SessionHandlerInterface
 
 	//--------------------------------------------------------------------
 
+    /**
+     * Fail
+     *
+     * Drivers other than the 'files' one don't (need to) use the
+     * session.save_path INI setting, but that leads to confusing
+     * error messages emitted by PHP when open() or write() fail,
+     * as the message contains session.save_path ...
+     * To work around the problem, the drivers will call this method
+     * so that the INI is set just in time for the error message to
+     * be properly generated.
+     *
+     * @return	mixed
+     */
+    protected function fail()
+    {
+        ini_set('session.save_path', $this->savePath);
+
+        return false;
+    }
 }

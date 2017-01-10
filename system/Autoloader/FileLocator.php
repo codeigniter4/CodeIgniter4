@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+ * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,7 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2016, British Columbia Institute of Technology (http://bcit.ca/)
+ * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
  * @license	http://opensource.org/licenses/MIT	MIT License
  * @link	http://codeigniter.com
  * @since	Version 3.0.0
@@ -198,6 +198,77 @@ class FileLocator {
     }
 
     //--------------------------------------------------------------------
+
+    /**
+     * Attempts to load a file and instantiate a new class by looking
+     * at its full path and comparing that to our existing psr4 namespaces
+     * in Autoloader config file.
+     *
+     * @param string $path
+     *
+     * @return string|void
+     */
+    public function findQualifiedNameFromPath(string $path)
+    {
+        $path = realpath($path);
+
+        if (! $path)
+        {
+            return;
+        }
+
+        foreach ($this->namespaces as $namespace => $nsPath)
+        {
+            if (is_numeric($namespace)) continue;
+
+            if (mb_strpos($path, $nsPath) === 0)
+            {
+                $className = '\\'.$namespace.'\\'.
+                             ltrim(str_replace('/', '\\', mb_substr($path, mb_strlen($nsPath))), '\\');
+
+                // Remove the file extension (.php)
+                $className = mb_substr($className, 0, -4);
+
+                return $className;
+            }
+        }
+    }
+
+    //--------------------------------------------------------------------
+
+    /**
+     * Scans the defined namespaces, returning a list of all files
+     * that are contained within the subpath specifed by $path.
+     *
+     * @param string $path
+     *
+     * @return array
+     */
+    public function listFiles(string $path): array
+    {
+        if (empty($path)) return [];
+
+        $files = [];
+        helper('filesystem');
+
+        foreach ($this->namespaces as $namespace => $nsPath)
+        {
+            $fullPath = rtrim($nsPath, '/') .'/'. $path;
+
+            if (! is_dir($fullPath)) continue;
+
+            $tempFiles = get_filenames($fullPath, true);
+
+            if (! count($tempFiles))
+            {
+                continue;
+            }
+
+            $files = array_merge($files, $tempFiles);
+        }
+
+        return $files;
+    }
 
     /**
      * Checks the application folder to see if the file can be found.

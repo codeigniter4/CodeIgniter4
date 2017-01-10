@@ -142,7 +142,7 @@ Miscellaneous Functions
 	:returns: A string with the HTML for hidden input with all required CSRF information.
 	:rtype: string
 
-	Returns a hidden input with the CSRF information already inserted: 
+	Returns a hidden input with the CSRF information already inserted:
 
 		<input type="hidden" name="{csrf_token}" value="{csrf_hash}">
 
@@ -191,6 +191,17 @@ Miscellaneous Functions
 
 	If more control is needed, you must use ``$response->redirect()`` explicitly.
 
+.. php:function:: redirect_with_input( $uri[, ...$params] )
+
+	:param string $uri: The URI to redirect the user to.
+	:param mixed  $params: one or more additional parameters that can be used with the :meth:`RouteCollection::reverseRoute` method.
+
+	Identical to the ``redirect()`` method, except this flashes the request's $_GET and $_POST values to the session.
+	On the next page request, the form helper ``set_*`` methods will check for data within the old input first, then,
+	if it's not found, the current GET/POST will be checked.
+
+	.. note:: In order to retrieve the old, the session MUST be started prior to calling the function.
+
 .. php:function:: remove_invisible_characters($str[, $url_encoded = TRUE])
 
 	:param	string	$str: Input string
@@ -224,13 +235,15 @@ Miscellaneous Functions
 	:rtype: mixed
 
 	Provides easy access to any of the :doc:`Services <../concepts/services>` defined in the system.
+	This will always return a shared instance of the class, so no matter how many times this is called
+	during a single request, only one class instance will be created.
 
 	Example::
 
 		$logger = service('logger');
 		$renderer = service('renderer', APPPATH.'views/');
 
-.. php:function:: shared_service ( $name [, ...$params] )
+.. php:function:: single_service ( $name [, ...$params] )
 
 	:param   string   $name: The name of the service to load
 	:param   mixed    $params: One or more parameters to pass to the service method.
@@ -238,7 +251,7 @@ Miscellaneous Functions
 	:rtype: mixed
 
 	Identical to the **service()** function described above, except that all calls to this
-	function will share the same instance of the service, where **service** returns a new
+	function will return a new instance of the class, where **service** returns the same
 	instance every time.
 
 .. php:function:: stringify_attributes ( $attributes [, $js] )

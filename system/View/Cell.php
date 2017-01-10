@@ -86,7 +86,7 @@ class Cell
 
 		if ($paramCount === 0)
 		{
-			if ($paramArray !== null)
+			if ($paramArray !== [])
 			{
 				throw new \InvalidArgumentException("{$class}::{$method} has no params.");
 			}
@@ -95,13 +95,7 @@ class Cell
 		}
 		elseif (
 			($paramCount === 1)
-			&& (
-				(! array_key_exists($refParams[0]->name, $paramArray))
-				|| (
-					array_key_exists($refParams[0]->name, $paramArray)
-					&& count($paramArray) !== 1
-				)
-			)
+			&& ( (! array_key_exists($refParams[0]->name, $paramArray)) || (array_key_exists($refParams[0]->name, $paramArray) && count($paramArray) !== 1) )
 		)
 		{
 			$output = $instance->{$method}($paramArray);
@@ -153,7 +147,7 @@ class Cell
 	{
 		if (empty($params) || (! is_string($params) && ! is_array($params)))
 		{
-			return;
+			return [];
 		}
 
 		if (is_string($params))
@@ -182,7 +176,7 @@ class Cell
 
 		if (is_array($params) && ! count($params))
 		{
-			return;
+			return [];
 		}
 
 		return $params;

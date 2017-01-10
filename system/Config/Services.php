@@ -298,6 +298,26 @@ class Services
 
 	//--------------------------------------------------------------------
 
+    /**
+     * The Parser is a simple template parser.
+     */
+    public static function parser($viewPath = APPPATH.'Views/', $config = null, $getShared = true)
+    {
+        if ($getShared)
+        {
+            return self::getSharedInstance('parser', $viewPath, $config);
+        }
+
+        if (is_null($config))
+        {
+            $config = new \Config\View();
+        }
+
+        return new \CodeIgniter\View\Parser($config, $viewPath, self::locator(true), CI_DEBUG, self::logger(true));
+    }
+
+    //--------------------------------------------------------------------
+
 	/**
 	 * The Renderer class is the class that actually displays a file to the user.
 	 * The default View class within CodeIgniter is intentionally simple, but this

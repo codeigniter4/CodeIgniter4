@@ -392,7 +392,7 @@ The methods provided by the parent classes that are available are:
 		This method is identical to ``getPost()`` and ``getGet()``, only it fetches cookie data::
 
 			$request->getCookie('some_cookie');
-			$request->getCookie('some_cookie, FILTER_SANITIZE_STRING); // with filter
+			$request->getCookie('some_cookie', FILTER_SANITIZE_STRING); // with filter
 
 		To return an array of multiple cookie values, pass all the required keys as an array::
 

@@ -261,7 +261,7 @@ query::
 
     // Collect the Data
     $name = 'John Doe';
-    $email' = 'j.doe@example.com';
+    $email = 'j.doe@example.com';
     $country = 'US';
 
     // Run the Query
@@ -302,24 +302,6 @@ Internally, all queries are processed and stored as instances of
 \CodeIgniter\Database\Query. This class is responsible for binding
 the parameters, otherwise preparing the query, and storing performance
 data about its query.
-
-**getQueries()**
-
-You can retrieve all Query objects from the database connection with the
-getQueries() method. This has no parameters and returns an array of
-all of the queries that have ran::
-
-	$queries = $db->getQueries();
-
-.. note:: If the saveQueries setting in the database configuraiton is set
-	to false, this and the following two methods, will not return any results.
-
-**getQueryCount()**
-
-Returns the total number of queries that have been ran on this connection
-during this request::
-
-	$count = $db->getQueryCount();
 
 **getLastQuery()**
 

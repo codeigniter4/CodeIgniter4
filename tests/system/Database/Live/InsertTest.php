@@ -78,4 +78,17 @@ class InsertTest extends \CIDatabaseTestCase
         $this->seeInDatabase('misc', ['value' => $code]);
     }
 
+    public function testInsertPasswordHash()
+    {
+        $hash = '$2y$10$tNevVVMwW52V2neE3H79a.wp8ZoItrwosk54.Siz5Fbw55X9YIBsW';
+
+        $this->db->table('misc')->insert([
+            'key' => 'password',
+            'value' => $hash
+        ]);
+
+        $this->seeInDatabase('misc', ['value' => $hash]);
+    }
+
+
 }

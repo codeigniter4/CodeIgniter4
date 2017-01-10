@@ -2,7 +2,7 @@
 
 use CodeIgniter\Hooks\Hooks;
 
-/**
+/*
  * --------------------------------------------------------------------
  * Application Hooks
  * --------------------------------------------------------------------
@@ -18,3 +18,16 @@ use CodeIgniter\Hooks\Hooks;
  * Example:
  *      Hooks::on('create', [$myInstance, 'myMethod']);
  */
+
+
+
+/*
+ * --------------------------------------------------------------------
+ * Debug Toolbar Listeners.
+ * --------------------------------------------------------------------
+ * If you delete, they will no longer be collected.
+ */
+if (ENVIRONMENT != 'production')
+{
+    Hooks::on('DBQuery', 'CodeIgniter\Debug\Toolbar\Collectors\Database::collect');
+}

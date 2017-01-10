@@ -21,7 +21,6 @@ $dbconfig = [
 		'compress'     => false,
 		'strictOn'     => false,
 		'failover'     => [],
-		'saveQueries' => true,
 	],
 
     'postgres' => [
@@ -43,7 +42,6 @@ $dbconfig = [
 	    'compress'     => false,
 	    'strictOn'     => false,
 	    'failover'     => [],
-	    'saveQueries' => true,
     ]
 
 ];

@@ -46,7 +46,6 @@ class Database extends \CodeIgniter\Database\Config
 		'compress'     => false,
 		'strictOn'     => false,
 		'failover'     => [],
-		'saveQueries' => true,
 	];
 
 	/**
@@ -74,7 +73,6 @@ class Database extends \CodeIgniter\Database\Config
 		'compress'     => false,
 		'strictOn'     => false,
 		'failover'     => [],
-		'saveQueries' => true,
 	];
 
 	//--------------------------------------------------------------------
