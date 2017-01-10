@@ -85,8 +85,8 @@ class Pager implements PagerInterface
 	/**
 	 * Handles creating and displaying the
 	 *
-	 * @param string|null $group
-	 * @param string      $template The output template alias to render.
+	 * @param string $group
+	 * @param string $template The output template alias to render.
 	 *
 	 * @return string
 	 */
@@ -102,8 +102,8 @@ class Pager implements PagerInterface
 	/**
 	 * Creates simple Next/Previous links, instead of full pagination.
 	 *
-	 * @param string $template
 	 * @param string $group
+	 * @param string $template
 	 *
 	 * @return string
 	 */
