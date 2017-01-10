@@ -85,12 +85,12 @@ class Pager implements PagerInterface
 	/**
 	 * Handles creating and displaying the
 	 *
-	 * @param string|null $group
-	 * @param string      $template The output template alias to render.
+	 * @param string $group
+	 * @param string $template The output template alias to render.
 	 *
 	 * @return string
 	 */
-	public function links(string $group = null, string $template = 'default_full'): string
+	public function links(string $group = 'default', string $template = 'default_full'): string
 	{
 		$this->ensureGroup($group);
 
@@ -102,8 +102,8 @@ class Pager implements PagerInterface
 	/**
 	 * Creates simple Next/Previous links, instead of full pagination.
 	 *
-	 * @param string $template
 	 * @param string $group
+	 * @param string $template
 	 *
 	 * @return string
 	 */
