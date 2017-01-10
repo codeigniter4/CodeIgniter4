@@ -10,19 +10,19 @@ interface PagerInterface
 	 *
 	 * @return string
 	 */
-	public function links(string $template = 'default', string $group = null): string;
+	public function links(string $group = null, string $template = 'default'): string;
 
 	//--------------------------------------------------------------------
 
 	/**
 	 * Creates simple Next/Previous links, instead of full pagination.
 	 *
-	 * @param string $template
 	 * @param string $group
+	 * @param string $template
 	 *
 	 * @return string
 	 */
-	public function simpleLinks(string $template = 'default', string $group = 'default'): string;
+	public function simpleLinks(string $group = 'default', string $template = 'default'): string;
 
 	//--------------------------------------------------------------------
 

@@ -90,7 +90,7 @@ class Pager implements PagerInterface
 	 *
 	 * @return string
 	 */
-	public function links(string $group = 'default', string $template = 'default_full'): string
+	public function links(string $group = null, string $template = 'default_full'): string
 	{
 		$this->ensureGroup($group);
 
