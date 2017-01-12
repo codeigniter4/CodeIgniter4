@@ -102,4 +102,12 @@ class Checks extends Controller
 
         $query->execute('foo', 'foo@example.com', 'US');
     }
+
+    public function mail()
+    {
+        $mail = mail(new \App\Mail\TestMail());
+
+        die(var_dump($mail));
+    }
+
 }

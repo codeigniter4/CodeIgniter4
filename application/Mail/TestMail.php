@@ -1,9 +1,8 @@
-<?php namespace App\Messages;
+<?php namespace App\Mail;
 
-use CodeIgniter\Mail\Message;
-use CodeIgniter\Mail\MessageInterface;
+use CodeIgniter\Mail\BaseMessage;
 
-class TestMail extends Message
+class TestMail extends BaseMessage
 {
     public function build()
     {

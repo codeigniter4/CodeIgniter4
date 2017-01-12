@@ -1,9 +1,8 @@
 <?php namespace Config;
 
-use CodeIgniter\CodeIgniter;
-use CodeIgniter\Config\BaseConfig;
+use CodeIgniter\Config\Mail as MailFactory;
 
-class Mail extends BaseConfig
+class Mail extends MailFactory
 {
     //--------------------------------------------------------------------
     // Handler
@@ -11,16 +10,16 @@ class Mail extends BaseConfig
     // Specifies the Handler used to send mail with if none are
     // otherwise specified. Must be the full class name.
     //
-    public $handler = 'CodeIgniter\Mail\MailHandler';
+    public $group = 'default';
 
     //--------------------------------------------------------------------
-    // Settings
+    // Groups
     //--------------------------------------------------------------------
     // Setup multiple configuration settings, for different servers,
     // or when transactional emails are sent by a third-party service,
     // but you want to send other messages locally.
     //
-    public $settings = [
+    public $groups = [
         'default' => [
             'handler'  => 'simple',
             'protocol' => 'mail',
@@ -52,6 +51,6 @@ class Mail extends BaseConfig
     //
     public $availableHandlers = [
         'simple' => \CodeIgniter\Mail\Handlers\MailHandler::class,
-        'logger' => \CodeIgniter\Mail\Handlers\LogHandler::class,
+        'logger'  => \CodeIgniter\Mail\Handlers\LogHandler::class,
     ];
 }

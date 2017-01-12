@@ -239,6 +239,23 @@ class Services
 
 	//--------------------------------------------------------------------
 
+    public static function mailer(string $handler=null, $config = null, $getShared = true)
+    {
+        if ($getShared)
+        {
+            return self::getSharedInstance('mailer', $handler, $config);
+        }
+
+        if (empty($config))
+        {
+            $config = new \Config\Mail();
+        }
+
+        return $config->factory($handler, $config);
+    }
+
+    //--------------------------------------------------------------------
+
 	public static function migrations(BaseConfig $config = null, ConnectionInterface $db = null, bool $getShared = true)
 	{
 	    if ($getShared)

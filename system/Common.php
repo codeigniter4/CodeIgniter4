@@ -210,6 +210,22 @@ if ( ! function_exists('esc'))
 
 //--------------------------------------------------------------------
 
+if (! function_exists('mail'))
+{
+    /**
+     * A convenience method for sending emails. Takes a
+     * Mail Message class as the only parameter that defines
+     * the message itself. Further revisions can be made
+     * through
+     *
+     * @param \CodeIgniter\Mail\BaseMessage $message
+     */
+    function mail(\CodeIgniter\Mail\BaseMessage $message)
+    {
+
+    }
+}
+
 if (! function_exists('session'))
 {
     /**

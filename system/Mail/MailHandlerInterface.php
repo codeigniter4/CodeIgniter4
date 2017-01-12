@@ -3,6 +3,17 @@
 interface MailHandlerInterface
 {
     /**
+     * Sets the Mail Message class that represents the message details.
+     *
+     * @param \CodeIgniter\Mail\BaseMessage $message
+     *
+     * @return mixed
+     */
+    public function setMessage(BaseMessage $message);
+
+    //--------------------------------------------------------------------
+
+    /**
      * Does the actual delivery of a message.
      *
      * @param bool  $clear_after    If TRUE, will reset the class after sending.
