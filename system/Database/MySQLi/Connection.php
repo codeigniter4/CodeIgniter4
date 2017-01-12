@@ -405,7 +405,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 * @param	string	$table
 	 * @return	array
 	 */
-	public function fieldData(string $table)
+	public function _fieldData(string $table)
 	{
 		if (($query = $this->query('SHOW COLUMNS FROM '.$this->protectIdentifiers($table, TRUE, NULL, FALSE))) === FALSE)
 		{

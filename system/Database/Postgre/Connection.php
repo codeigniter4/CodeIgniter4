@@ -290,7 +290,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 * @param	string	$table
 	 * @return	array
 	 */
-	public function fieldData(string $table)
+	public function _fieldData(string $table)
 	{
 		$sql = 'SELECT "column_name", "data_type", "character_maximum_length", "numeric_precision", "column_default"
 			FROM "information_schema"."columns"
