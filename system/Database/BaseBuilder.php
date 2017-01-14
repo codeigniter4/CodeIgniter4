@@ -1308,8 +1308,15 @@ class BaseBuilder
 
 		foreach ($key as $k => $v)
 		{
-			$bind = $this->setBind($k, $v);
-			$this->QBSet[$this->db->protectIdentifiers($k, false, $escape)] = ':'.$bind;
+			if ($escape)
+			{
+				$bind = $this->setBind($k, $v);
+				$this->QBSet[$this->db->protectIdentifiers($k, false, $escape)] = ':'.$bind;
+			}
+			else
+			{
+				$this->QBSet[$this->db->protectIdentifiers($k, false, $escape)] = $v;
+			}
 		}
 
 		return $this;

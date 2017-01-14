@@ -209,5 +209,21 @@ class UpdateTest extends \CIDatabaseTestCase
         ]);
     }
 
+	//--------------------------------------------------------------------
+
+	// @see https://bcit-ci.github.io/CodeIgniter4/database/query_builder.html#updating-data
+	public function testSetWithoutEscape()
+	{
+		$this->db->table('job')
+		         ->set('description', 'name', false)
+		         ->update();
+
+		$result = $this->db->table('user')->get()->getResultArray();
+
+		$this->seeInDatabase('job', [
+			'name' => 'Developer',
+			'description' => 'Developer',
+		]);
+	}
 
 }

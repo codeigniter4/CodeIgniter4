@@ -196,4 +196,22 @@ WHERE "id" IN(2,3)';
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledUpdate()));
 		$this->assertEquals($expectedBinds, $builder->getBinds());
 	}
+
+	//--------------------------------------------------------------------
+
+	// @see https://bcit-ci.github.io/CodeIgniter4/database/query_builder.html#updating-data
+	public function testSetWithoutEscape()
+	{
+		$builder = new BaseBuilder('mytable', $this->db);
+
+		$builder->set('field', 'field+1', false)
+			->where('id', 2)
+			->update(null, null, null, true);
+
+		$expectedSQL = 'UPDATE "mytable" SET field = field+1 WHERE "id" = :id';
+		$expectedBinds = ['id' => 2];
+
+		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledUpdate()));
+		$this->assertEquals($expectedBinds, $builder->getBinds());
+	}
 }
