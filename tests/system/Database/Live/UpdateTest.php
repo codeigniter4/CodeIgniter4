@@ -166,6 +166,8 @@ class UpdateTest extends \CIDatabaseTestCase
 				$rows[] = $row;
 			}
 		}
+
+		$this->assertEquals(2, count($rows));
 	}
 
 	//--------------------------------------------------------------------
@@ -188,6 +190,8 @@ class UpdateTest extends \CIDatabaseTestCase
 				$rows[] = $row;
 			}
 		}
+
+		$this->assertEquals(2, count($rows));
 	}
 
 	//--------------------------------------------------------------------
