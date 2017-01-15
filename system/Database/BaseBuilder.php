@@ -1287,11 +1287,11 @@ class BaseBuilder
 	/**
 	 * The "set" function.
 	 *
-	 * Allows key/value pairs to be set for inserting or updating
+	 * Allows key/value pairs to be set for insert(), update() or replace().
 	 *
-	 * @param    mixed
-	 * @param    string
-	 * @param    bool
+	 * @param    string|array $key    Field name, or an array of field/value pairs
+	 * @param    string       $value  Field value, if $key is a single field
+	 * @param    bool                 Whether to escape values and identifiers
 	 *
 	 * @return    BaseBuilder
 	 */
@@ -1308,8 +1308,15 @@ class BaseBuilder
 
 		foreach ($key as $k => $v)
 		{
-			$bind = $this->setBind($k, $v);
-			$this->QBSet[$this->db->protectIdentifiers($k, false, $escape)] = ':'.$bind;
+			if ($escape)
+			{
+				$bind = $this->setBind($k, $v);
+				$this->QBSet[$this->db->protectIdentifiers($k, false, $escape)] = ':'.$bind;
+			}
+			else
+			{
+				$this->QBSet[$this->db->protectIdentifiers($k, false, $escape)] = $v;
+			}
 		}
 
 		return $this;
