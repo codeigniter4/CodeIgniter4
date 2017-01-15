@@ -168,7 +168,7 @@ class Builder extends BaseBuilder
 
 		if (empty($exists))
 		{
-			$result = $builder->insert($set, false);
+			$result = $builder->insert($set);
 		}
 		else
 		{
