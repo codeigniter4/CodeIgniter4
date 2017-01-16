@@ -10,21 +10,21 @@
  * so they are available in the config files that are loaded.
  */
 
-// Path to the system folder
-define('BASEPATH', realpath($system_directory).DIRECTORY_SEPARATOR);
-
 // Path to code root folder (just up from public)
 $pos = strrpos(FCPATH, 'public'.DIRECTORY_SEPARATOR);
 define('ROOTPATH', substr_replace(FCPATH, '', $pos, strlen('public'.DIRECTORY_SEPARATOR)));
 
-// Path to the writable directory.
-define('WRITEPATH', realpath($writable_directory).DIRECTORY_SEPARATOR);
-
 // The path to the "application" folder
-define('APPPATH', realpath($application_directory).DIRECTORY_SEPARATOR);
+define('APPPATH', realpath($paths->applicationDirectory).DIRECTORY_SEPARATOR);
+
+// Path to the system folder
+define('BASEPATH', realpath($paths->systemDirectory).DIRECTORY_SEPARATOR);
+
+// Path to the writable directory.
+define('WRITEPATH', realpath($paths->writableDirectory).DIRECTORY_SEPARATOR);
 
 // The path to the "tests" directory
-define('TESTPATH', realpath($tests_directory).DIRECTORY_SEPARATOR);
+define('TESTPATH', realpath($paths->testsDirectory).DIRECTORY_SEPARATOR);
 
 /*
  * ---------------------------------------------------------------

@@ -1,12 +1,8 @@
 <?php
 
-$system_directory      = 'system';
-$application_directory = 'application';
-$writable_directory    = 'writable';
-$tests_directory       = 'tests';
-
-// Set current working directory to ROOT.\
-chdir(__DIR__.'/../../');
+// Get our system paths
+require 'application/Config/Paths.php';
+$paths  = new \Config\Paths();
 
 // Path to the front controller (this file)
 define('FCPATH', getcwd().'/public'.DIRECTORY_SEPARATOR);
@@ -24,21 +20,21 @@ $_SERVER['CI_ENV'] = 'testing';
  * so they are available in the config files that are loaded.
  */
 
-// Path to the system folder
-define('BASEPATH', realpath($system_directory).DIRECTORY_SEPARATOR);
-
 // Path to code root folder (just up from public)
 $pos = strrpos(FCPATH, 'public'.DIRECTORY_SEPARATOR);
 define('ROOTPATH', substr_replace(FCPATH, '', $pos, strlen('public'.DIRECTORY_SEPARATOR)));
 
-// Path to the writable directory.
-define('WRITEPATH', realpath($writable_directory).DIRECTORY_SEPARATOR);
-
 // The path to the "application" folder
-define('APPPATH', realpath($application_directory).DIRECTORY_SEPARATOR);
+define('APPPATH', realpath(FCPATH.$paths->applicationDirectory).DIRECTORY_SEPARATOR);
+
+// Path to the system folder
+define('BASEPATH', realpath(FCPATH.$paths->systemDirectory).DIRECTORY_SEPARATOR);
+
+// Path to the writable directory.
+define('WRITEPATH', realpath(FCPATH.$paths->writableDirectory).DIRECTORY_SEPARATOR);
 
 // The path to the "tests" directory
-define('TESTPATH', realpath($tests_directory).DIRECTORY_SEPARATOR);
+define('TESTPATH', realpath(FCPATH.$paths->testsDirectory).DIRECTORY_SEPARATOR);
 
 define('SUPPORTPATH', realpath(TESTPATH.'_support/').'/');
 
