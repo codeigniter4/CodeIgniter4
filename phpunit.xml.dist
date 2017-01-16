@@ -19,6 +19,7 @@
         <whitelist processUncoveredFilesFromWhitelist="true">
             <directory suffix=".php">./system</directory>
             <exclude>
+                <file>./system/bootstrap.php</file>
                 <file>./system/Commands/Sessions/Views/migration.tpl.php</file>
                 <file>./system/ComposerScripts.php</file>
                 <directory>./system/Debug/Toolbar/Views</directory>
