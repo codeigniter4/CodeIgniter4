@@ -67,9 +67,6 @@ require BASEPATH.'Autoloader/Autoloader.php';
 require APPPATH .'Config/Autoload.php';
 require APPPATH .'Config/Services.php';
 
-// Use Config\Services as CodeIgniter\Services
-class_alias('Config\Services', 'CodeIgniter\Services');
-
 $loader = CodeIgniter\Services::autoloader();
 $loader->initialize(new Config\Autoload());
 $loader->register();    // Register the loader with the SPL autoloader stack.
