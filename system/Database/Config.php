@@ -150,11 +150,11 @@ class Config extends BaseConfig
 		{
 			$db = self::connect($group);
 		}
-		else 
+		else
 		{
 			$db = self::$instances[$group];
 		}
-		
+
 		return self::$factory->loadForge($db);
 	}
 
@@ -162,7 +162,7 @@ class Config extends BaseConfig
 
 	/**
 	 * Returns a new instance of the Database Utilities class.
-	 * 
+	 *
 	 * @param string|null $group
 	 *
 	 * @return mixed

@@ -89,7 +89,7 @@ class AutoloadConfig
 			'CodeIgniter' => realpath(BASEPATH)
 		];
 
-		if (ENVIRONMENT == 'testing')
+		if (isset($_SERVER['CI_ENV']) && $_SERVER['CI_ENV'] === 'testing')
 		{
 			$this->psr4['Tests\Support'] = BASEPATH.'../tests/_support/';
 		}

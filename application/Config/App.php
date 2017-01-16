@@ -294,28 +294,6 @@ class App extends BaseConfig
 
 	/*
 	|--------------------------------------------------------------------------
-	| Composer auto-loading
-	|--------------------------------------------------------------------------
-	|
-	| Enabling this setting will tell CodeIgniter to look for a Composer
-	| package auto-loader script in /vendor/autoload.php.
-	|
-	|	$composerAutoload = TRUE;
-	|
-	| Or if you have your vendor/ directory located somewhere else, you
-	| can opt to set a specific path as well:
-	|
-	|	$composerAutoload = '/path/to/vendor/autoload.php';
-	|
-	| For more information about Composer, please visit http://getcomposer.org/
-	|
-	| Note: This will NOT disable or override the CodeIgniter-specific
-	|	autoloading.
-	*/
-	public $composerAutoload = false;
-
-	/*
-	|--------------------------------------------------------------------------
 	| Encryption Key
 	|--------------------------------------------------------------------------
 	|
