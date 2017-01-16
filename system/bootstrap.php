@@ -1,19 +1,5 @@
 <?php
 
-$system_directory      = 'system';
-$application_directory = 'application';
-$writable_directory    = 'writable';
-$tests_directory       = 'tests';
-
-// Set current working directory to ROOT.\
-chdir(__DIR__.'/../../');
-
-// Path to the front controller (this file)
-define('FCPATH', getcwd().'/public'.DIRECTORY_SEPARATOR);
-
-// Make sure it recognizes that we're testing.
-$_SERVER['CI_ENV'] = 'testing';
-
 /*
  * ---------------------------------------------------------------
  * SETUP OUR PATH CONSTANTS
@@ -40,12 +26,6 @@ define('APPPATH', realpath($application_directory).DIRECTORY_SEPARATOR);
 // The path to the "tests" directory
 define('TESTPATH', realpath($tests_directory).DIRECTORY_SEPARATOR);
 
-define('SUPPORTPATH', realpath(TESTPATH.'_support/').'/');
-
-// Use special Services for testing. These allow
-// insert mocks in place of normal services.
-require SUPPORTPATH.'Services.php';
-
 /*
  * ---------------------------------------------------------------
  * GRAB OUR CONSTANTS & COMMON
@@ -57,8 +37,6 @@ if (file_exists(APPPATH.'Config/'.ENVIRONMENT.'/Constants.php'))
 }
 require APPPATH.'Config/Constants.php';
 
-// Use special global functions for testing.
-require_once SUPPORTPATH.'MockCommon.php';
 require BASEPATH.'Common.php';
 
 /*
@@ -82,11 +60,6 @@ $loader = CodeIgniter\Services::autoloader();
 $loader->initialize(new Config\Autoload());
 $loader->register();    // Register the loader with the SPL autoloader stack.
 
-// Add namespace paths to autoload mocks for testing.
-$loader->addNamespace('CodeIgniter',   SUPPORTPATH);
-$loader->addNamespace('Config',        SUPPORTPATH.'Config');
-$loader->addNamespace('Tests\Support', SUPPORTPATH);
-
 // Now load Composer's if it's available
 if (file_exists(COMPOSER_PATH))
 {
@@ -106,8 +79,4 @@ if (file_exists(COMPOSER_PATH))
 $app = new \CodeIgniter\CodeIgniter(new \Config\App());
 $app->initialize();
 
-//--------------------------------------------------------------------
-// Load our TestCase
-//--------------------------------------------------------------------
-
-require  TESTPATH.'_support/CIUnitTestCase.php';
+return $app;

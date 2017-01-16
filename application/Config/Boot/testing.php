@@ -4,11 +4,10 @@
 |--------------------------------------------------------------------------
 | ERROR DISPLAY
 |--------------------------------------------------------------------------
+| In development, we want to show as many errors as possible to help
+| make sure they don't make it to production. And save us hours of
+| painful debugging.
 */
-
-// In development, we want to show as many errors as possible to help
-// make sure they don't make it to production. And save us hours of
-// painful debugging.
 error_reporting(-1);
 ini_set('display_errors', 1);
 
@@ -21,16 +20,6 @@ ini_set('display_errors', 1);
 | prefer to not see this, set this value to false.
 */
 define('SHOW_DEBUG_BACKTRACE', true);
-
-/*
-|--------------------------------------------------------------------------
-| KINT
-|--------------------------------------------------------------------------
-| If true, will enable the Kint PHP Debugging tool and make it available
-| globally throughout your application to use while making sure things
-| work the way you intend them to.
-*/
-$useKint = true;
 
 /*
 |--------------------------------------------------------------------------
