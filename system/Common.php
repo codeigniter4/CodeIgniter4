@@ -144,6 +144,48 @@ if (! function_exists('view_cell'))
 
 //--------------------------------------------------------------------
 
+if ( ! function_exists('env'))
+{
+    /**
+     * Allows user to retrieve values from the environment
+     * variables that have been set. Especially useful for
+     * retrieving values set from the .env file for
+     * use in config files.
+     *
+     * @param string $key
+     * @param null   $default
+     *
+     * @return array|bool|false|null|string|void
+     */
+    function env(string $key, $default = null)
+    {
+        $value = getenv($key);
+
+        // Not found? Return the default value
+        if ($value === false)
+        {
+            return $default;
+        }
+
+        // Handle any boolean values
+        switch (strtolower($value))
+        {
+            case 'true':
+                return true;
+            case 'false':
+                return false;
+            case 'empty':
+                return '';
+            case 'null':
+                return;
+        }
+
+        return $value;
+    }
+}
+
+//--------------------------------------------------------------------
+
 if ( ! function_exists('esc'))
 {
     /**

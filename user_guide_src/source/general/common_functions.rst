@@ -30,6 +30,21 @@ Service Accessors
      	$foo = cache('foo');
     	$cache = cache();
 
+.. php:function:: env ( $key[, $default=null])
+
+	:param string $key: The name of the environment variable to retrieve
+	:param mixed  $default: The default value to return if no value is found.
+	:returns: The environment variable, the default value, or null.
+	:rtype: mixed
+
+	Used to retrieve values that have previously been set to the environment,
+	or return a default value if it is not found. Will format boolean values
+	to actual booleans instead of string representations.
+
+	Especially useful when used in conjunction with .env files for setting
+	values that are specific to the environment itself, like database
+	settings, API keys, etc.
+
 .. php:function:: esc ( $data, $context='html' [, $encoding])
 
 	:param   string|array   $data: The information to be escaped.
