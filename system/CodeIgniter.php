@@ -94,6 +94,12 @@ class CodeIgniter
      */
     protected static $cacheTTL = 0;
 
+    /**
+     * Request path to use.
+     * @var string
+     */
+    protected $path;
+
     //--------------------------------------------------------------------
 
     public function __construct($config)
@@ -547,7 +553,7 @@ class CodeIgniter
         // $routes is defined in Config/Routes.php
         $this->router = Services::router($routes);
 
-        $path = is_cli() ? $this->request->getPath() : $this->request->uri->getPath();
+        $path = $this->determinePath();
 
         $this->benchmark->stop('bootstrap');
         $this->benchmark->start('routing');
@@ -565,6 +571,43 @@ class CodeIgniter
         }
 
         $this->benchmark->stop('routing');
+    }
+
+    //--------------------------------------------------------------------
+
+    /**
+     * Determines the path to use for us to try to route to, based
+     * on user input (setPath), or the CLI/IncomingRequest path.
+     */
+    protected function determinePath()
+    {
+        if (! empty($this->path))
+        {
+            return $this->path;
+        }
+
+        return is_cli()
+            ? $this->request->getPath()
+            : $this->request->uri->getPath();
+    }
+
+    //--------------------------------------------------------------------
+
+    /**
+     * Allows the request path to be set from outside the class,
+     * instead of relying on CLIRequest or IncomingRequest for the path.
+     *
+     * This is primarily used by the Console.
+     *
+     * @param string $path
+     *
+     * @return $this
+     */
+    public function setPath(string $path)
+    {
+        $this->path = $path;
+
+        return $this;
     }
 
     //--------------------------------------------------------------------

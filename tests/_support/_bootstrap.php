@@ -47,10 +47,6 @@ require SUPPORTPATH.'Services.php';
  * GRAB OUR CONSTANTS & COMMON
  * ---------------------------------------------------------------
  */
-if (file_exists(APPPATH.'Config/'.ENVIRONMENT.'/Constants.php'))
-{
-    require_once APPPATH.'Config/'.ENVIRONMENT.'/Constants.php';
-}
 require APPPATH.'Config/Constants.php';
 
 // Use special global functions for testing.

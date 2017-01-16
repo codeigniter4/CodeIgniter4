@@ -31,10 +31,6 @@ define('TESTPATH', realpath($paths->testsDirectory).DIRECTORY_SEPARATOR);
  * GRAB OUR CONSTANTS & COMMON
  * ---------------------------------------------------------------
  */
-if (file_exists(APPPATH.'Config/'.ENVIRONMENT.'/Constants.php'))
-{
-    require_once APPPATH.'Config/'.ENVIRONMENT.'/Constants.php';
-}
 require APPPATH.'Config/Constants.php';
 
 require BASEPATH.'Common.php';
