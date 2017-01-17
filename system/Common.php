@@ -160,6 +160,10 @@ if ( ! function_exists('env'))
     function env(string $key, $default = null)
     {
         $value = getenv($key);
+        if ($value === false)
+        {
+            $value = $_ENV[$key] ?? $_SERVER[$key] ?? false;
+        }
 
         // Not found? Return the default value
         if ($value === false)
