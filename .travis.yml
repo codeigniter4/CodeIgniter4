@@ -30,3 +30,6 @@ before_install:
 
 before_script:
   - composer install --prefer-source
+
+after_success:
+  - travis_retry php vendor/bin/coveralls
