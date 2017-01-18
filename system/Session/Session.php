@@ -201,9 +201,10 @@ class Session implements SessionInterface
 
         $this->setSaveHandler();
 
-        // Sanitize the cookie, because apparently PHP doesn't do that for userspace handlers
+		// Sanitize the cookie, because apparently PHP doesn't do that for userspace handlers
 		if (isset($_COOKIE[$this->sessionCookieName]) && (
-				! is_string($_COOKIE[$this->sessionCookieName]) || ! preg_match('#\A'.$this->sidRegexp.'\z#', $_COOKIE[$this->sessionCookieName]))
+				! is_string($_COOKIE[$this->sessionCookieName]) || ! preg_match('#\A'.$this->sidRegexp.'\z#', $_COOKIE[$this->sessionCookieName])
+				)
 		)
 		{
 			unset($_COOKIE[$this->sessionCookieName]);
@@ -302,10 +303,10 @@ class Session implements SessionInterface
 		ini_set('session.use_strict_mode', 1);
 		ini_set('session.use_cookies', 1);
 		ini_set('session.use_only_cookies', 1);
-		
+
 		$this->configureSidLength();
 	}
-	
+
 	// ------------------------------------------------------------------------
 
 	/**
@@ -822,7 +823,7 @@ class Session implements SessionInterface
 	 *
 	 * @param     $key	Property identifier or array of them
 	 * @param int $ttl	Time to live, in seconds
-	 * @return bool	false if any of the properties were not set
+	 * @return bool	False if any of the properties were not set
 	 */
 	public function markAsTempdata($key, $ttl = 300)
 	{
@@ -921,8 +922,6 @@ class Session implements SessionInterface
 
 		return $keys;
 	}
-
-	//--------------------------------------------------------------------
 
     /**
      * Sets the driver as the session handler in PHP.
