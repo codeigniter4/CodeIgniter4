@@ -922,10 +922,8 @@ class Session implements SessionInterface
 		return $keys;
 	}
 
-<<<<<<< HEAD
 	//--------------------------------------------------------------------
-}
-=======
+
     /**
      * Sets the driver as the session handler in PHP.
      * Extracted for easier testing.
@@ -963,4 +961,3 @@ class Session implements SessionInterface
 
     //--------------------------------------------------------------------
 }
->>>>>>> upstream/develop
