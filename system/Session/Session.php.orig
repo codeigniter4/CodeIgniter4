@@ -203,7 +203,8 @@ class Session implements SessionInterface
 
         // Sanitize the cookie, because apparently PHP doesn't do that for userspace handlers
 		if (isset($_COOKIE[$this->sessionCookieName]) && (
-				! is_string($_COOKIE[$this->sessionCookieName]) || ! preg_match('#\A'.$this->sidRegexp.'\z#', $_COOKIE[$this->sessionCookieName]))
+				! is_string($_COOKIE[$this->sessionCookieName]) || ! preg_match('#\A'.$this->sidRegexp.'\z#', $_COOKIE[$this->sessionCookieName]) /*! preg_match('/^[0-9a-f]{40}$/', $_COOKIE[$this->sessionCookieName])*/
+				)
 		)
 		{
 			unset($_COOKIE[$this->sessionCookieName]);
@@ -302,6 +303,7 @@ class Session implements SessionInterface
 		ini_set('session.use_strict_mode', 1);
 		ini_set('session.use_cookies', 1);
 		ini_set('session.use_only_cookies', 1);
+		// ini_set('session.hash_bits_per_character', 4);
 		
 		$this->configureSidLength();
 	}
