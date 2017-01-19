@@ -273,4 +273,139 @@ class SessionTest extends \CIUnitTestCase
         $this->assertFalse(in_array('bar', $keys));
     }
 
+    public function testSetTempDataWorks()
+    {
+        $session = $this->getInstance();
+        $session->start();
+
+        $session->setTempdata('foo', 'bar', 300);
+        $this->assertTrue((time() + 300) >= $_SESSION['__ci_vars']['foo']);
+    }
+
+    public function testSetTempDataArrayMultiTTL()
+    {
+        $session = $this->getInstance();
+        $session->start();
+
+        $time = time();
+
+        $session->setTempdata([
+            'foo' => 300,
+            'bar' => 400,
+            'baz' => 100
+        ]);
+
+        $this->assertTrue(($time + 300) <= $_SESSION['__ci_vars']['foo']);
+        $this->assertTrue(($time + 400) <= $_SESSION['__ci_vars']['bar']);
+        $this->assertTrue(($time + 100) <= $_SESSION['__ci_vars']['baz']);
+    }
+
+    public function testSetTempDataArraySingleTTL()
+    {
+        $session = $this->getInstance();
+        $session->start();
+
+        $time = time();
+
+        $session->setTempdata(['foo', 'bar', 'baz'], null, 200);
+
+        $this->assertTrue(($time + 200) <= $_SESSION['__ci_vars']['foo']);
+        $this->assertTrue(($time + 200) <= $_SESSION['__ci_vars']['bar']);
+        $this->assertTrue(($time + 200) <= $_SESSION['__ci_vars']['baz']);
+    }
+
+    public function testGetTestDataReturnsAll()
+    {
+        $session = $this->getInstance();
+        $session->start();
+
+        $data = [
+            'foo' => 'bar',
+            'bar' => 'baz'
+        ];
+
+        $session->setTempdata($data);
+        $session->set('baz', 'ballywhoo');
+
+        $this->assertEquals($data, $session->getTempdata());
+    }
+
+    public function testGetTestDataReturnsSingle()
+    {
+        $session = $this->getInstance();
+        $session->start();
+
+        $data = [
+            'foo' => 'bar',
+            'bar' => 'baz'
+        ];
+
+        $session->setTempdata($data);
+
+        $this->assertEquals('bar', $session->getTempdata('foo'));
+    }
+
+    public function testRemoveTempDataActuallyDeletes()
+    {
+        $session = $this->getInstance();
+        $session->start();
+
+        $data = [
+            'foo' => 'bar',
+            'bar' => 'baz'
+        ];
+
+        $session->setTempdata($data);
+        $session->removeTempdata('foo');
+
+        $this->assertEquals(['bar' => 'baz'], $session->getTempdata());
+    }
+
+    public function testUnMarkTempDataSingle()
+    {
+        $session = $this->getInstance();
+        $session->start();
+
+        $data = [
+            'foo' => 'bar',
+            'bar' => 'baz'
+        ];
+
+        $session->setTempdata($data);
+        $session->unmarkTempdata('foo');
+
+        $this->assertEquals(['bar' => 'baz'], $session->getTempdata());
+    }
+
+    public function testUnMarkTempDataArray()
+    {
+        $session = $this->getInstance();
+        $session->start();
+
+        $data = [
+            'foo' => 'bar',
+            'bar' => 'baz'
+        ];
+
+        $session->setTempdata($data);
+        $session->unmarkTempdata(['foo', 'bar']);
+
+        $this->assertEquals([], $session->getTempdata());
+    }
+
+    public function testGetTempdataKeys()
+    {
+        $session = $this->getInstance();
+        $session->start();
+
+        $data = [
+            'foo' => 'bar',
+            'bar' => 'baz'
+        ];
+
+        $session->setTempdata($data);
+        $session->set('baz', 'ballywhoo');
+
+        $this->assertEquals(['foo', 'bar'], $session->getTempKeys());
+    }
 }

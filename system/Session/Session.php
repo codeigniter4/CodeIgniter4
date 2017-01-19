@@ -468,7 +468,14 @@ class Session implements SessionInterface
 		{
 			foreach ($data as $key => &$value)
 			{
-				$_SESSION[$key] = $value;
+			    if (is_int($key))
+                {
+                    $_SESSION[$value] = null;
+                }
+                else
+                {
+                    $_SESSION[$key] = $value;
+                }
 			}
 
 			return;
@@ -771,7 +778,7 @@ class Session implements SessionInterface
 	public function setTempdata($data, $value = null, $ttl = 300)
 	{
 		$this->set($data, $value);
-		$this->markAsTempdata(is_array($data) ? array_keys($data) : $data, $ttl);
+		$this->markAsTempdata($data, $ttl);
 	}
 
 	//--------------------------------------------------------------------
@@ -848,7 +855,7 @@ class Session implements SessionInterface
 					$v += time();
 				}
 
-				if (! isset($_SESSION[$k]))
+				if (! array_key_exists($k, $_SESSION))
 				{
 					return false;
 				}
