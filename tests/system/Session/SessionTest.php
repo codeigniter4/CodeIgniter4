@@ -314,6 +314,9 @@ class SessionTest extends \CIUnitTestCase
         $this->assertTrue(($time + 200) <= $_SESSION['__ci_vars']['baz']);
     }
 
+    /**
+     * @group single
+     */
     public function testGetTestDataReturnsAll()
     {
         $session = $this->getInstance();

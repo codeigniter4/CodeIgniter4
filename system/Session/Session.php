@@ -850,6 +850,10 @@ class Session implements SessionInterface
 					$k = $v;
 					$v = $ttl;
 				}
+				elseif (is_string($v))
+                {
+                    $v = time() + $ttl;
+                }
 				else
 				{
 					$v += time();
