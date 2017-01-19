@@ -932,6 +932,8 @@ class Session implements SessionInterface
 		return $keys;
 	}
 
+	//--------------------------------------------------------------------
+
     /**
      * Sets the driver as the session handler in PHP.
      * Extracted for easier testing.
@@ -941,6 +943,8 @@ class Session implements SessionInterface
         session_set_save_handler($this->driver, true);
     }
 
+    //--------------------------------------------------------------------
+
     /**
      * Starts the session.
      * Extracted for testing reasons.
@@ -949,6 +953,8 @@ class Session implements SessionInterface
     {
         session_start();
     }
+
+    //--------------------------------------------------------------------
 
     /**
      * Takes care of setting the cookie on the client side.
