@@ -69,7 +69,7 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 	 *
 	 * @var bool
 	 */
-	protected $fileNew;
+	protected $fileNew = true;
 
 	//--------------------------------------------------------------------
 
