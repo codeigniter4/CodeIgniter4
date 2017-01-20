@@ -39,9 +39,9 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 	{
 		$this->name = mt_rand(1, 10000000000000000);
 
-		$this->sql = $this->parameterize($sql);
+		$sql = $this->parameterize($sql);
 
-		if (! $this->statement = pg_prepare($this->db->connID, $this->name, $this->sql))
+		if (! $this->statement = pg_prepare($this->db->connID, $this->name, $sql))
 		{
 			$this->errorCode   = 0;
 			$this->errorString = pg_last_error($this->db->connID);

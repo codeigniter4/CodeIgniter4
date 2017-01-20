@@ -172,7 +172,12 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
 	 */
 	public function getQueryString(): string
 	{
-		return $this->sql;
+	    if (! $this->query instanceof QueryInterface)
+        {
+            throw new \BadMethodCallException('Cannot call getQueryString on a prepared query until after the query has been prepared.');
+        }
+
+		return $this->query->getQuery();
 	}
 
 	//--------------------------------------------------------------------
