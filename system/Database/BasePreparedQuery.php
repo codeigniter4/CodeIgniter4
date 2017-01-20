@@ -12,6 +12,13 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
 	protected $statement;
 
 	/**
+	 * The SQL Query string.
+	 *
+	 * @var string
+	 */
+	protected $sql;
+
+	/**
 	 * The error code, if any.
 	 *
 	 * @var int
