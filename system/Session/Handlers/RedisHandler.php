@@ -227,7 +227,7 @@ class RedisHandler extends BaseHandler implements \SessionHandlerInterface
 		{
 			$this->redis->setTimeout($this->lockKey, 300);
 
-			if ($this->fingerprint !== ($fingerprint = md5($sessionData)) OR $this->keyExists === FALSE)
+			if ($this->fingerprint !== ($fingerprint = md5($sessionData)) || $this->keyExists === FALSE)
 			{
 				if ($this->redis->set($this->keyPrefix.$sessionID, $sessionData, $this->sessionExpiration))
 				{
@@ -347,6 +347,7 @@ class RedisHandler extends BaseHandler implements \SessionHandlerInterface
 		// 30 attempts to obtain a lock, in case another request already has it
 		$lock_key = $this->keyPrefix.$sessionID.':lock';
 		$attempt = 0;
+
 		do
 		{
 			if (($ttl = $this->redis->ttl($lock_key)) > 0)
