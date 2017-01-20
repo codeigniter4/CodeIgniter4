@@ -288,7 +288,7 @@ class CLI
 	 * @param string $foreground
 	 * @param string $background
 	 */
-	public static function write(string $text, string $foreground = null, string $background = null)
+	public static function write(string $text = '', string $foreground = null, string $background = null)
 	{
 		if ($foreground || $background)
 		{
