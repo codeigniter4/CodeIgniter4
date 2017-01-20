@@ -22,6 +22,7 @@
                 <file>./system/bootstrap.php</file>
                 <file>./system/Commands/Sessions/Views/migration.tpl.php</file>
                 <file>./system/ComposerScripts.php</file>
+                <file>./system/Config/Routes.php</file>
                 <directory>./system/Debug/Toolbar/Views</directory>
                 <directory>./system/Pager/Views</directory>
                 <directory>./system/ThirdParty</directory>
