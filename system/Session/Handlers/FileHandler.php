@@ -146,6 +146,7 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 		// which re-reads session data
 		if ($this->fileHandle === null)
 		{
+            $this->fileNew = ! file_exists($this->filePath.$sessionID);
 
 			if (($this->fileHandle = fopen($this->filePath.$sessionID, 'c+b')) === false)
 			{
