@@ -63,9 +63,8 @@ class Request extends Message implements RequestInterface
 	 * Constructor.
 	 *
 	 * @param type $config
-	 * @param type $uri
 	 */
-	public function __construct($config, $uri=null)
+	public function __construct($config)
 	{
 	    $this->proxyIPs = $config->proxyIPs;
 	}
