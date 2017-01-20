@@ -41,6 +41,10 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 
 		$sql = $this->parameterize($sql);
 
+		// Update the query object since the parameters are slightly different
+        // than what was put in.
+        $this->query->setQuery($sql);
+
 		if (! $this->statement = pg_prepare($this->db->connID, $this->name, $sql))
 		{
 			$this->errorCode   = 0;
