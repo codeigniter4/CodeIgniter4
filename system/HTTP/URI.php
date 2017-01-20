@@ -932,11 +932,10 @@ class URI
 		// Scheme
 		if (isset($parts['scheme']))
 		{
-			$this->scheme = rtrim(strtolower($parts['scheme']), ':/');
+			$this->setScheme(rtrim(strtolower($parts['scheme']), ':/'));
 		}
 		else
 		{
-			$this->parts['scheme'] = 'http://';
 			$this->setScheme('http');
 		}
 
