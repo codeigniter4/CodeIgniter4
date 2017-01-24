@@ -1,33 +1,12 @@
 <?php namespace CodeIgniter\Mail;
 
-class InvalidEmailAddress extends \Exception{};
-
-abstract class BaseMessage implements MessageInterface
+interface MessageInterface
 {
-    protected $from    = [];
-    protected $to      = [];
-    protected $replyTo = [];
-    protected $cc      = [];
-    protected $bcc     = [];
-    protected $subject;
-
-    protected $messageHTML;
-    protected $messageText;
-
-    /**
-     * Key/value pairs that are
-     * sent to the views, if used.
-     *
-     * @var array
-     */
-    protected $data = [];
-
-    //--------------------------------------------------------------------
-
     /**
      * Takes an array of options whose keys should match
      * any of the class properties. The property values will be set.
-     * Any unrecognized elements will be stored in the $data array.
+     * Any unrecognized elements will be stored in the $data array
+     * to act as view data.
      *
      * Example:
      *
@@ -38,13 +17,7 @@ abstract class BaseMessage implements MessageInterface
      *
      * @param array|null $options
      */
-    public function __construct(array $options=null)
-    {
-        if (is_array($options))
-        {
-            $this->setOptions($options);
-        }
-    }
+    public function __construct(array $options=null);
 
     //--------------------------------------------------------------------
 
@@ -55,27 +28,7 @@ abstract class BaseMessage implements MessageInterface
      *
      * @param array $options
      */
-    public function setOptions(array $options)
-    {
-        foreach ($options as $key => $value)
-        {
-            if (property_exists($this, $key))
-            {
-                if (is_array($this->$key))
-                {
-                    $this->$key[] = $value;
-                }
-                else
-                {
-                    $this->$key = $value;
-                }
-
-                continue;
-            }
-
-            $this->data[$key] = $value;
-        }
-    }
+    public function setOptions(array $options);
 
     //--------------------------------------------------------------------
 
@@ -85,7 +38,7 @@ abstract class BaseMessage implements MessageInterface
      *
      * @return mixed
      */
-    abstract public function build();
+     public function build();
 
     //--------------------------------------------------------------------
 
@@ -95,10 +48,7 @@ abstract class BaseMessage implements MessageInterface
      *
      * @return array
      */
-    public function getFrom(): array
-    {
-        return $this->from;
-    }
+    public function getFrom(): array;
 
     //--------------------------------------------------------------------
 
@@ -112,16 +62,7 @@ abstract class BaseMessage implements MessageInterface
      *
      * @return self
      */
-    public function setFrom(string $email, string $name=null)
-    {
-        $recipient = is_null($name)
-            ? [$email]
-            : [$name => $email];
-
-        $this->setRecipients($recipient, 'from');
-
-        return $this;
-    }
+    public function setFrom(string $email, string $name=null);
 
     //--------------------------------------------------------------------
 
@@ -133,12 +74,7 @@ abstract class BaseMessage implements MessageInterface
      *
      * @return self
      */
-    public function setFromMany(array $emails)
-    {
-        $this->setRecipients($emails, 'from');
-
-        return $this;
-    }
+    public function setFromMany(array $emails);
 
     //--------------------------------------------------------------------
 
@@ -148,10 +84,7 @@ abstract class BaseMessage implements MessageInterface
      *
      * @return array
      */
-    public function getTo(): array
-    {
-        return $this->to;
-    }
+    public function getTo(): array;
 
     //--------------------------------------------------------------------
 
@@ -163,16 +96,7 @@ abstract class BaseMessage implements MessageInterface
      *
      * @return self
      */
-    public function setTo(string $email, string $name=null)
-    {
-        $recipient = is_null($name)
-            ? [$email]
-            : [$name => $email];
-
-        $this->setRecipients($recipient, 'to');
-
-        return $this;
-    }
+    public function setTo(string $email, string $name=null);
 
     //--------------------------------------------------------------------
 
@@ -184,12 +108,7 @@ abstract class BaseMessage implements MessageInterface
      *
      * @return mixed
      */
-    public function setToMany(array $emails)
-    {
-        $this->setRecipients($emails, 'to');
-
-        return $this;
-    }
+    public function setToMany(array $emails);
 
     //--------------------------------------------------------------------
 
@@ -198,10 +117,7 @@ abstract class BaseMessage implements MessageInterface
      *
      * @return array
      */
-    public function getReplyTo(): array
-    {
-        return $this->replyTo;
-    }
+    public function getReplyTo(): array;
 
     //--------------------------------------------------------------------
 
@@ -213,16 +129,7 @@ abstract class BaseMessage implements MessageInterface
      *
      * @return self
      */
-    public function setReplyTo(string $email, string $name=null)
-    {
-        $recipient = is_null($name)
-            ? [$email]
-            : [$name => $email];
-
-        $this->setRecipients($recipient, 'replyTo');
-
-        return $this;
-    }
+    public function setReplyTo(string $email, string $name=null);
 
     //--------------------------------------------------------------------
 
@@ -234,12 +141,7 @@ abstract class BaseMessage implements MessageInterface
      *
      * @return self
      */
-    public function setReplyToMany(array $emails)
-    {
-        $this->setRecipients($emails, 'replyTo');
-
-        return $this;
-    }
+    public function setReplyToMany(array $emails);
 
     //--------------------------------------------------------------------
 
@@ -249,10 +151,7 @@ abstract class BaseMessage implements MessageInterface
      *
      * @return array
      */
-    public function getCC(): array
-    {
-        return $this->cc;
-    }
+    public function getCC(): array;
 
     //--------------------------------------------------------------------
 
@@ -264,16 +163,7 @@ abstract class BaseMessage implements MessageInterface
      *
      * @return self
      */
-    public function setCC(string $email, string $name=null)
-    {
-        $recipient = is_null($name)
-            ? [$email]
-            : [$name => $email];
-
-        $this->setRecipients($recipient, 'cc');
-
-        return $this;
-    }
+    public function setCC(string $email, string $name=null);
 
     //--------------------------------------------------------------------
 
@@ -289,12 +179,7 @@ abstract class BaseMessage implements MessageInterface
      *
      * @return self
      */
-    public function setCCMany(array $emails)
-    {
-        $this->setRecipients($emails, 'cc');
-
-        return $this;
-    }
+    public function setCCMany(array $emails);
 
     //--------------------------------------------------------------------
 
@@ -308,10 +193,7 @@ abstract class BaseMessage implements MessageInterface
      *
      * @return array
      */
-    public function getBCC(): array
-    {
-        return $this->bcc;
-    }
+    public function getBCC(): array;
 
     //--------------------------------------------------------------------
 
@@ -323,16 +205,7 @@ abstract class BaseMessage implements MessageInterface
      *
      * @return self
      */
-    public function setBCC(string $email, string $name=null)
-    {
-        $recipient = is_null($name)
-            ? [$email]
-            : [$name => $email];
-
-        $this->setRecipients($recipient, 'bcc');
-
-        return $this;
-    }
+    public function setBCC(string $email, string $name=null);
 
     //--------------------------------------------------------------------
 
@@ -344,12 +217,7 @@ abstract class BaseMessage implements MessageInterface
      *
      * @return self
      */
-    public function setBCCMany(array $emails)
-    {
-        $this->setRecipients($emails, 'bcc');
-
-        return $this;
-    }
+    public function setBCCMany(array $emails);
 
     //--------------------------------------------------------------------
 
@@ -358,10 +226,7 @@ abstract class BaseMessage implements MessageInterface
      *
      * @return string
      */
-    public function getSubject(): string
-    {
-        return $this->subject ?? '';
-    }
+    public function getSubject(): string;
 
     //--------------------------------------------------------------------
 
@@ -372,12 +237,7 @@ abstract class BaseMessage implements MessageInterface
      *
      * @return self
      */
-    public function setSubject(string $subject)
-    {
-        $this->subject = $subject;
-
-        return $this;
-    }
+    public function setSubject(string $subject);
 
     //--------------------------------------------------------------------
 
@@ -386,10 +246,7 @@ abstract class BaseMessage implements MessageInterface
      *
      * @return string
      */
-    public function getHTMLMessage(): string
-    {
-        return $this->messageHTML ?? '';
-    }
+    public function getHTMLMessage(): string;
 
     //--------------------------------------------------------------------
 
@@ -400,12 +257,7 @@ abstract class BaseMessage implements MessageInterface
      *
      * @return self
      */
-    public function setHTMLMessage(string $html)
-    {
-        $this->messageHTML = $html;
-
-        return $this;
-    }
+    public function setHTMLMessage(string $html);
 
     //--------------------------------------------------------------------
 
@@ -414,10 +266,7 @@ abstract class BaseMessage implements MessageInterface
      *
      * @return string
      */
-    public function getTextMessage(): string
-    {
-        return $this->messageText ?? '';
-    }
+    public function getTextMessage(): string;
 
     //--------------------------------------------------------------------
 
@@ -428,12 +277,7 @@ abstract class BaseMessage implements MessageInterface
      *
      * @return self
      */
-    public function setTextMessage(string $text)
-    {
-        $this->messageText = strip_tags($text);
-
-        return $this;
-    }
+    public function setTextMessage(string $text);
 
     //--------------------------------------------------------------------
 
@@ -442,10 +286,7 @@ abstract class BaseMessage implements MessageInterface
      *
      * @return array
      */
-    public function getData(): array
-    {
-        return $this->data;
-    }
+    public function getData(): array;
 
     //--------------------------------------------------------------------
 
@@ -458,52 +299,7 @@ abstract class BaseMessage implements MessageInterface
      *
      * @return self
      */
-    public function setData(array $data)
-    {
-        $this->data = array_merge($this->data, $data);
-
-        return $this;
-    }
-
-    //--------------------------------------------------------------------
-
-    /**
-     * Used by all of the setCC, setTo, etc methods that deal with email
-     * addresses to validate and store the actual values. If any email
-     * addresses are found that are not valid emails, will throw an exception
-     * with a list of the ones that are not.
-     *
-     * @param array  $recipients
-     * @param string $type
-     *
-     * @throws \CodeIgniter\Mail\InvalidEmailAddress
-     */
-    protected function setRecipients(array $recipients, string $type)
-    {
-        $invalids = [];
-
-        foreach ($recipients as $name => $email)
-        {
-            if (! filter_var($email, FILTER_VALIDATE_EMAIL))
-            {
-                $invalids[] = $email;
-                continue;
-            }
-
-            if (is_string($name) && ! empty($name))
-            {
-                $this->$type[] = [$name => $email];
-                continue;
-            }
-
-            $this->$type[] = $email;
-        }
-
-        if (count($invalids))
-        {
-            throw new InvalidEmailAddress('The following email addresses are invalid: '. implode(', ', $invalids));
-        }
-    }
+    public function setData(array $data);
 
     //--------------------------------------------------------------------
 }

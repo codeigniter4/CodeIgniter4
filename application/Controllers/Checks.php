@@ -105,7 +105,7 @@ class Checks extends Controller
 
     public function mail()
     {
-        $mail = mail(new \App\Mail\TestMail());
+        $mail = email(new \App\Mail\TestMail());
 
         die(var_dump($mail));
     }

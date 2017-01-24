@@ -144,6 +144,29 @@ if (! function_exists('view_cell'))
 
 //--------------------------------------------------------------------
 
+if (! function_exists('email'))
+{
+    /**
+     * A convenience method for sending emails. Takes a
+     * Mail Message class as the only parameter that defines
+     * the message itself. Further revisions can be made
+     * through
+     *
+     * @param \CodeIgniter\Mail\BaseMessage $message
+     * @param string                        $group
+     */
+    function email(\CodeIgniter\Mail\BaseMessage $message, string $group = null)
+    {
+        $config = new \Config\Mail();
+        $group = $group ?? $config->group;
+
+        // Always return a different instance since
+        $mailer = Services::mailer($group, $config, false);
+    }
+}
+
+//--------------------------------------------------------------------
+
 if ( ! function_exists('esc'))
 {
     /**
@@ -209,22 +232,6 @@ if ( ! function_exists('esc'))
 }
 
 //--------------------------------------------------------------------
-
-if (! function_exists('mail'))
-{
-    /**
-     * A convenience method for sending emails. Takes a
-     * Mail Message class as the only parameter that defines
-     * the message itself. Further revisions can be made
-     * through
-     *
-     * @param \CodeIgniter\Mail\BaseMessage $message
-     */
-    function mail(\CodeIgniter\Mail\BaseMessage $message)
-    {
-
-    }
-}
 
 if (! function_exists('session'))
 {
