@@ -751,7 +751,7 @@ parameter.
 
 	$builder->set('field', 'field+1', FALSE);
 	$builder->where('id', 2);
-	$builder->update(); // gives UPDATE mytable SET field = field+1 WHERE id = 2
+	$builder->update(); // gives UPDATE mytable SET field = field+1 WHERE `id` = 2
 
 	$builder->set('field', 'field+1');
 	$builder->where('id', 2);
@@ -1009,8 +1009,8 @@ Class Reference
 
 		:param	int	$limit: The LIMIT clause
 		:param	int	$offset: The OFFSET clause
-		:returns:	CI_DB_result instance (method chaining)
-		:rtype:	CI_DB_result
+		:returns:	\CodeIgniter\Database\ResultInterface instance (method chaining)
+		:rtype:	\CodeIgniter\Database\ResultInterface
 
 		Compiles and runs SELECT statement based on the already
 		called Query Builder methods.
@@ -1020,8 +1020,8 @@ Class Reference
 		:param	string	$where: The WHERE clause
 		:param	int	$limit: The LIMIT clause
 		:param	int	$offset: The OFFSET clause
-		:returns:	CI_DB_result instance (method chaining)
-		:rtype:	CI_DB_result
+		:returns:	\CodeIgniter\Database\ResultInterface instance (method chaining)
+		:rtype:	\CodeIgniter\Database\ResultInterface
 
 		Same as ``get()``, but also allows the WHERE to be added directly.
 

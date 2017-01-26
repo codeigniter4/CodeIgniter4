@@ -255,7 +255,7 @@ class FileCollectionTest extends \CIUnitTestCase
 		$this->assertTrue($collection->hasFile('userfile.foo'));
 		$this->assertTrue($collection->hasFile('userfile.foo.bar'));
 	}
-
+        
 	//--------------------------------------------------------------------
 
 	public function testErrorString()
@@ -279,6 +279,127 @@ class FileCollectionTest extends \CIUnitTestCase
 	}
 
     //--------------------------------------------------------------------
+        
+        public function testFileReturnsValidSingleFile() {
+            $_FILES = [
+                        'userfile' => [
+                                'name' => 'someFile.txt',
+                                'type' => 'text/plain',
+                                'size' => '124',
+                                'tmp_name' => '/tmp/myTempFile.txt',
+                                'error' => 0
+                        ]
+                ];
+
+                $collection = new FileCollection();
+                $file = $collection->getFile('userfile');
+                $this->assertTrue($file instanceof UploadedFile);
+
+                $this->assertEquals('someFile.txt', $file->getName());
+                $this->assertEquals(124, $file->getSize());
+        }
+        
+    //--------------------------------------------------------------------
+
+        public function testFileNoExistSingleFile() {
+            $_FILES = [
+                        'userfile' => [
+                                'name' => 'someFile.txt',
+                                'type' => 'text/plain',
+                                'size' => '124',
+                                'tmp_name' => '/tmp/myTempFile.txt',
+                                'error' => 0
+                        ]
+                ];
+
+                $collection = new FileCollection();
+                $file = $collection->getFile('fileuser');
+                $this->AssertNull($file);
+        }
+        
+    //--------------------------------------------------------------------
+        
+        public function testFileReturnValidMultipleFiles() {
+            $_FILES = [
+			'userfile' => [
+				'name' => ['fileA.txt', 'fileB.txt'],
+				'type' => ['text/plain', 'text/csv'],
+				'size' => ['124', '248'],
+				'tmp_name' => ['/tmp/fileA.txt', '/tmp/fileB.txt'],
+				'error' => 0
+			]
+		];
+            
+                $collection = new FileCollection();
+		
+                $file_1 = $collection->getFile('userfile.0');
+                $this->assertTrue($file_1 instanceof UploadedFile);
+                $this->assertEquals('fileA.txt', $file_1->getName());
+		$this->assertEquals('/tmp/fileA.txt', $file_1->getTempName());
+		$this->assertEquals('txt', $file_1->getClientExtension());
+		$this->assertEquals('text/plain', $file_1->getClientType());
+		$this->assertEquals(124, $file_1->getSize());
+                
+                $file_2 = $collection->getFile('userfile.1');
+                $this->assertTrue($file_2 instanceof UploadedFile);
+                $this->assertEquals('fileB.txt', $file_2->getName());
+		$this->assertEquals('/tmp/fileB.txt', $file_2->getTempName());
+		$this->assertEquals('txt', $file_2->getClientExtension());
+		$this->assertEquals('text/csv', $file_2->getClientType());
+		$this->assertEquals(248, $file_2->getSize());
+        }
+        
+    //--------------------------------------------------------------------
+        
+    public function testFileWithMultipleFilesNestedName() {
+        $_FILES = [
+			'my-form' => [
+				'name' => [
+					'details' => [
+						'avatars' => ['fileA.txt','fileB.txt']
+					]
+				],
+				'type' => [
+					'details' => [
+						'avatars' => ['text/plain','text/plain']
+					]
+				],
+				'size' => [
+					'details' => [
+						'avatars' => [125,243]
+					]
+				],
+				'tmp_name' => [
+					'details' => [
+						'avatars' => ['/tmp/fileA.txt','/tmp/fileB.txt']
+					]
+				],
+				'error' => [
+					'details' => [
+						'avatars' => [0,0]
+					]
+				],
+			]
+		];
+        
+                $collection = new FileCollection();
+        
+                $file_1 = $collection->getFile('my-form.details.avatars.0');
+                $this->assertTrue($file_1 instanceof UploadedFile);
+                $this->assertEquals('fileA.txt', $file_1->getName());
+		$this->assertEquals('/tmp/fileA.txt', $file_1->getTempName());
+		$this->assertEquals('txt', $file_1->getClientExtension());
+		$this->assertEquals('text/plain', $file_1->getClientType());
+		$this->assertEquals(125, $file_1->getSize());
+                
+                $file_2 = $collection->getFile('my-form.details.avatars.1');
+                $this->assertTrue($file_2 instanceof UploadedFile);
+                $this->assertEquals('fileB.txt', $file_2->getName());
+		$this->assertEquals('/tmp/fileB.txt', $file_2->getTempName());
+		$this->assertEquals('txt', $file_2->getClientExtension());
+		$this->assertEquals('text/plain', $file_2->getClientType());
+		$this->assertEquals(243, $file_2->getSize());
+    }
 
     /**
      * @group move-file

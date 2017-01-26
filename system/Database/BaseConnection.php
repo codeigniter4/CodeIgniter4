@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+ * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,7 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2016, British Columbia Institute of Technology (http://bcit.ca/)
+ * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
  * @license	http://opensource.org/licenses/MIT	MIT License
  * @link	http://codeigniter.com
  * @since	Version 3.0.0
@@ -780,6 +780,11 @@ abstract class BaseConnection implements ConnectionInterface
             $this->_trans_depth++;
             return true;
         }
+
+		if (empty($this->connID))
+		{
+			$this->initialize();
+		}
 
         // Reset the transaction failure flag.
         // If the $test_mode flag is set to TRUE transactions will be rolled back
@@ -1598,8 +1603,9 @@ abstract class BaseConnection implements ConnectionInterface
 	 */
 	public function getFieldData(string $table)
 	{
-		$query = $this->query($this->_fieldData($this->protect_identifiers($table, TRUE, NULL, FALSE)));
-		return ($query) ? $query->field_data() : FALSE;
+		$fields = $this->_fieldData($this->protectIdentifiers($table, true, null, false));
+
+		return $fields ?? false;
 	}
 
 	//--------------------------------------------------------------------

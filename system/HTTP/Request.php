@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+ * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,7 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2016, British Columbia Institute of Technology (http://bcit.ca/)
+ * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
  * @license	http://opensource.org/licenses/MIT	MIT License
  * @link	http://codeigniter.com
  * @since	Version 3.0.0
@@ -63,9 +63,8 @@ class Request extends Message implements RequestInterface
 	 * Constructor.
 	 *
 	 * @param type $config
-	 * @param type $uri
 	 */
-	public function __construct($config, $uri=null)
+	public function __construct($config)
 	{
 	    $this->proxyIPs = $config->proxyIPs;
 	}
@@ -320,7 +319,9 @@ class Request extends Message implements RequestInterface
 			$values = [];
 			foreach ($loopThrough as $key => $value)
 			{
-				$values[$key] = filter_var($value, $filter);
+				$values[$key] = is_array($value)
+                    ? $this->fetchGlobal($type, $key, $filter)
+                    : filter_var($value, $filter);
 			}
 
 			return $values;

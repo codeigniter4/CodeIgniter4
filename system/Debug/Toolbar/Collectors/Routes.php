@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+ * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,7 @@
  *
  * @package      CodeIgniter
  * @author       CodeIgniter Dev Team
- * @copyright    Copyright (c) 2014 - 2016, British Columbia Institute of Technology (http://bcit.ca/)
+ * @copyright    Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
  * @license      http://opensource.org/licenses/MIT	MIT License
  * @link         http://codeigniter.com
  * @since        Version 4.0.0
@@ -77,57 +77,60 @@ class Routes extends BaseCollector
 	*/
 	public function display(): string
 	{
-		$routes = Services::routes(true);
+        $parser = \Config\Services::parser();
+
+		$rawRoutes = Services::routes(true);
 		$router = Services::router(null, true);
 
-		$output = "<h3>Matched Route</h3>";
+		/*
+		 * Matched Route
+		 */
+		$route = $router->getMatchedRoute();
 
-		$output .= "<table><tbody>";
+		// Get our parameters
+        $method = new \ReflectionMethod($router->controllerName(), $router->methodName());
+        $rawParams = $method->getParameters();
 
-		if ($match = $router->getMatchedRoute())
+        $params = [];
+        foreach ($rawParams as $key => $param)
+        {
+            $params[] = [
+                'name'  => $param->getName(),
+                'value' => $router->params()[$key] ?:
+                    "&lt;empty&gt;&nbsp| default: ". var_export($param->getDefaultValue(), true)
+            ];
+        }
+
+		$matchedRoute = [
+		    [
+                'directory'  => $router->directory(),
+                'controller' => $router->controllerName(),
+                'method'     => $router->methodName(),
+                'paramCount' => count($router->params()),
+                'truePCount' => count($params),
+                'params'     => $params ?? []
+            ]
+        ];
+
+        /*
+         * Defined Routes
+         */
+		$rawRoutes = $rawRoutes->getRoutes();
+		$routes    = [];
+
+		foreach ($rawRoutes as $from => $to)
 		{
-			$output .= "<tr><td>{$match[0]}</td>";
-			$output .= "<td>{$match[1]}</td></tr>";
+		    $routes[] = [
+		        'from' => $from,
+                'to'   => $to
+            ];
 		}
 
-
-		$output .= "<tr><td>Directory:</td><td>".htmlspecialchars($router->directory())."</td></tr>";
-		$output .= "<tr><td>Controller:</td><td>".htmlspecialchars($router->controllerName())."</td></tr>";
-		$output .= "<tr><td>Method:</td><td>".htmlspecialchars($router->methodName())."</td></tr>";
-
-        	$method = new \ReflectionMethod($router->controllerName(), $router->methodName());
-        	$params = $method->getParameters();
-
-		$output .= "<tr><td>Params:</td><td>".count($router->params())."/".count($params)."</td></tr>";
-
-		foreach($params as $key => $param)
-		{
-			$output .= '<tr class="route-params-item"><td>'.$param->getName()." :</td><td>";
-			$output .= isset($router->params()[$key])
-							? $router->params()[$key]
-							: "&lt;empty&gt;&nbsp| default: ".var_export($param->getDefaultValue(), true);
-			$output .= '</td></tr>';
-		}
-
-		$output .= "</table></tbody>";
-
-		$output .= "<h3>Defined Routes</h3>";
-
-		$output .= "<table><tbody>";
-
-		$routes = $routes->getRoutes();
-
-		foreach ($routes as $from => $to)
-		{
-			$output .= "<tr>";
-			$output .= "<td>".htmlspecialchars($from)."</td>";
-			$output .= "<td>".htmlspecialchars($to)."</td>";
-			$output .= "</tr>";
-		}
-
-		$output .= "</tbody></table>";
-
-		return $output;
+		return $parser->setData([
+            'matchedRoute' => $matchedRoute,
+            'routes' => $routes
+        ])
+            ->render('CodeIgniter\Debug\Toolbar\Views\_routes.tpl');
 	}
 
 	//--------------------------------------------------------------------

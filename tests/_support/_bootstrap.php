@@ -1,175 +1,102 @@
 <?php
 
-//--------------------------------------------------------------------
-// CodeIgniter Compatibility Setup
-//--------------------------------------------------------------------
-// This section gets the environment setup and ready so that your
-// tests should have all they need at their fingertips.
-//
-$startMemory = memory_get_usage();
-$startTime   = microtime(true);
-
-if (! defined('ENVIRONMENT'))
-{
-	define('ENVIRONMENT', 'testing');
-}
-
-switch (ENVIRONMENT)
-{
-	case 'testing':
-		error_reporting(-1);
-		ini_set('display_errors', 1);
-		break;
-}
-
-define('CI_DEBUG', 1);
-define('SHOW_DEBUG_BACKTRACE', TRUE);
-
-$system_directory = 'system';
-
-$application_directory = 'application';
-
-$writable_directory = 'writable';
-
-$tests_directory = 'tests';
-
-// Ensure the current directory is pointing to the front controller's directory
-//chdir(__DIR__);
-
-// Are the system and application paths correct?
-if ( ! realpath($system_directory) OR ! is_dir($system_directory))
-{
-	header('HTTP/1.1 503 Service Unavailable.', true, 503);
-	echo 'Your system folder path does not appear to be set correctly. Please open the following file and correct this: '.
-		pathinfo(__FILE__, PATHINFO_BASENAME);
-	exit(3); // EXIT_CONFIG
-}
-
-if ( ! realpath($application_directory) OR ! is_dir($application_directory))
-{
-	header('HTTP/1.1 503 Service Unavailable.', true, 503);
-	echo 'Your application folder path does not appear to be set correctly. Please open the following file and correct this: '.
-		pathinfo(__FILE__, PATHINFO_BASENAME);
-	exit(3); // EXIT_CONFIG
-}
-
-// The name of THIS file
-define('SELF', pathinfo(__FILE__, PATHINFO_BASENAME));
-
-// Path to the system folder
-define('BASEPATH', realpath($system_directory).DIRECTORY_SEPARATOR);
+// Get our system paths
+require 'application/Config/Paths.php';
+$paths  = new \Config\Paths();
 
 // Path to the front controller (this file)
-define('FCPATH', __DIR__.DIRECTORY_SEPARATOR);
+define('FCPATH', getcwd().'/public'.DIRECTORY_SEPARATOR);
+
+// Make sure it recognizes that we're testing.
+$_SERVER['CI_ENV'] = 'testing';
+
+/*
+ * ---------------------------------------------------------------
+ * SETUP OUR PATH CONSTANTS
+ * ---------------------------------------------------------------
+ *
+ * The path constants provide convenient access to the folders
+ * throughout the application. We have to setup them up here
+ * so they are available in the config files that are loaded.
+ */
 
 // Path to code root folder (just up from public)
-define('ROOTPATH', str_replace('public'.DIRECTORY_SEPARATOR, '', FCPATH));
-
-// Path to the writable directory.
-define('WRITEPATH', realpath($writable_directory).DIRECTORY_SEPARATOR);
+$pos = strrpos(FCPATH, 'public'.DIRECTORY_SEPARATOR);
+define('ROOTPATH', substr_replace(FCPATH, '', $pos, strlen('public'.DIRECTORY_SEPARATOR)));
 
 // The path to the "application" folder
-define('APPPATH', realpath($application_directory).DIRECTORY_SEPARATOR);
+define('APPPATH', realpath(FCPATH.$paths->applicationDirectory).DIRECTORY_SEPARATOR);
+
+// Path to the system folder
+define('BASEPATH', realpath(FCPATH.$paths->systemDirectory).DIRECTORY_SEPARATOR);
+
+// Path to the writable directory.
+define('WRITEPATH', realpath(FCPATH.$paths->writableDirectory).DIRECTORY_SEPARATOR);
 
 // The path to the "tests" directory
-define('TESTPATH', realpath($tests_directory).DIRECTORY_SEPARATOR);
+define('TESTPATH', realpath(FCPATH.$paths->testsDirectory).DIRECTORY_SEPARATOR);
 
 define('SUPPORTPATH', realpath(TESTPATH.'_support/').'/');
 
-/*
- * ------------------------------------------------------
- *  Load any environment-specific settings from .env file
- * ------------------------------------------------------
- */
-
-// Load environment settings from .env files
-// into $_SERVER and $_ENV
-require BASEPATH.'Config/DotEnv.php';
-$env = new CodeIgniter\Config\DotEnv(APPPATH);
-$env->load();
-unset($env);
-
-/*
- * ------------------------------------------------------
- *  Load the framework constants
- * ------------------------------------------------------
- */
-if (file_exists(APPPATH.'Config/'.ENVIRONMENT.'/Constants.php'))
-{
-	require_once APPPATH.'Config/'.ENVIRONMENT.'/Constants.php';
-}
-
-require_once(APPPATH.'Config/Constants.php');
-
-/*
- * ------------------------------------------------------
- *  Setup the autoloader
- * ------------------------------------------------------
- */
-// The autoloader isn't initialized yet, so load the file manually.
-require BASEPATH.'Autoloader/Autoloader.php';
-require APPPATH.'Config/Autoload.php';
-require APPPATH.'Config/Services.php';
-// Use special Services for testing.
+// Use special Services for testing. These allow
+// insert mocks in place of normal services.
 require SUPPORTPATH.'Services.php';
 
-// The Autoloader class only handles namespaces
-// and "legacy" support.
-$loader = CodeIgniter\Services::autoloader();
-$loader->initialize(new Config\Autoload());
-
-// The register function will prepend
-// the psr4 loader.
-$loader->register();
-
-// Add namespace paths to autoload mocks for testing.
-$loader->addNamespace('CodeIgniter', SUPPORTPATH);
-$loader->addNamespace('Config', SUPPORTPATH.'Config');
-
 /*
- * ------------------------------------------------------
- *  Load the global functions
- * ------------------------------------------------------
+ * ---------------------------------------------------------------
+ * GRAB OUR CONSTANTS & COMMON
+ * ---------------------------------------------------------------
  */
+require APPPATH.'Config/Constants.php';
 
 // Use special global functions for testing.
 require_once SUPPORTPATH.'MockCommon.php';
-require_once BASEPATH.'Common.php';
+require BASEPATH.'Common.php';
 
 /*
- * ------------------------------------------------------
- *  Set custom exception handling
- * ------------------------------------------------------
+ * ---------------------------------------------------------------
+ * LOAD OUR AUTOLOADER
+ * ---------------------------------------------------------------
+ *
+ * The autoloader allows all of the pieces to work together
+ * in the framework. We have to load it here, though, so
+ * that the config files can use the path constants.
  */
-$config = new \Config\App();
 
-Config\Services::exceptions($config, true)
-	->initialize();
+require BASEPATH.'Autoloader/Autoloader.php';
+require APPPATH .'Config/Autoload.php';
+require APPPATH .'Config/Services.php';
 
-//--------------------------------------------------------------------
-// Should we use a Composer autoloader?
-//--------------------------------------------------------------------
+$loader = CodeIgniter\Services::autoloader();
+$loader->initialize(new Config\Autoload());
+$loader->register();    // Register the loader with the SPL autoloader stack.
 
-if ($composer_autoload = $config->composerAutoload)
+// Add namespace paths to autoload mocks for testing.
+$loader->addNamespace('CodeIgniter',   SUPPORTPATH);
+$loader->addNamespace('Config',        SUPPORTPATH.'Config');
+$loader->addNamespace('Tests\Support', SUPPORTPATH);
+
+// Now load Composer's if it's available
+if (file_exists(COMPOSER_PATH))
 {
-	if ($composer_autoload === TRUE)
-	{
-		file_exists(APPPATH.'vendor/autoload.php')
-			? require_once(APPPATH.'vendor/autoload.php')
-			: log_message('error', '$config->\'composerAutoload\' is set to TRUE but '.APPPATH.'vendor/autoload.php was not found.');
-	}
-	elseif (file_exists($composer_autoload))
-	{
-		require_once($composer_autoload);
-	}
-	else
-	{
-		log_message('error', 'Could not find the specified $config->\'composerAutoload\' path: '.$composer_autoload);
-	}
+    require COMPOSER_PATH;
 }
+
+/*
+ * ---------------------------------------------------------------
+ * GRAB OUR CODEIGNITER INSTANCE
+ * ---------------------------------------------------------------
+ *
+ * The CodeIgniter class contains the core functionality to make
+ * the application run, and does all of the dirty work to get
+ * the pieces all working together.
+ */
+
+$app = new \CodeIgniter\CodeIgniter(new \Config\App());
+$app->initialize();
 
 //--------------------------------------------------------------------
 // Load our TestCase
 //--------------------------------------------------------------------
 
-require_once __DIR__ .'/CIUnitTestCase.php';
+require  TESTPATH.'_support/CIUnitTestCase.php';

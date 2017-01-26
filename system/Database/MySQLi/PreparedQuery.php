@@ -22,9 +22,9 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 	{
 		// Mysqli driver doesn't like statements
 		// with terminating semicolons.
-		$this->sql = rtrim($sql, ';');
+		$sql = rtrim($sql, ';');
 
-		if (! $this->statement = $this->db->mysqli->prepare($this->sql))
+		if (! $this->statement = $this->db->mysqli->prepare($sql))
 		{
 			$this->errorCode   = $this->db->mysqli->errno;
 			$this->errorString = $this->db->mysqli->error;

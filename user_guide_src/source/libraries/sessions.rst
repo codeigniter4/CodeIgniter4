@@ -458,7 +458,7 @@ Preference                     Default         Options                          
 	everything properly.
 
 In addition to the values above, the cookie and native drivers apply the
-following configuration values shared by the :doc:`Input <input>` and
+following configuration values shared by the :doc:`IncomingRequest <incomingrequest>` and
 :doc:`Security <security>` classes:
 
 ================== =============== ===========================================================================
@@ -608,6 +608,15 @@ You can choose the Database group to use by adding a new line to the
 **application\Config\App.php** file with the name of the group to use::
 
   public $sessionDBGroup = 'groupName';
+
+If you'd rather not do all of this by hand, you can use the ``session:migration`` command
+from the cli to generate a migration file for you::
+
+  > php ci.php session:migration
+  > php ci.php migrate
+
+This command will take the **sessionSavePath** and **sessionMatchIP** settings into account
+when it generates the code.
 
 .. important:: Only MySQL and PostgreSQL databases are officially
 	supported, due to lack of advisory locking mechanisms on other

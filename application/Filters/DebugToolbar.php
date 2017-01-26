@@ -35,10 +35,10 @@ class DebugToolbar implements FilterInterface
 	{
 		if ( ! is_cli() && CI_DEBUG)
 		{
-			global $codeigniter;
+			global $app;
 
 			$toolbar = Services::toolbar(new App());
-			$stats   = $codeigniter->getPerfomanceStats();
+			$stats   = $app->getPerformanceStats();
 
 			return $response->appendBody(
 				$toolbar->run(

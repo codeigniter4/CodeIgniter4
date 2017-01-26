@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 class CommomFunctionsTest extends \CIUnitTestCase
 {
@@ -7,6 +7,7 @@ class CommomFunctionsTest extends \CIUnitTestCase
 
 	public function setUp()
 	{
+	    unset($_ENV['foo'], $_SERVER['foo']);
 	}
 
 	//--------------------------------------------------------------------
@@ -42,5 +43,22 @@ class CommomFunctionsTest extends \CIUnitTestCase
 
 	// ------------------------------------------------------------------------
 
+    public function testEnvReturnsDefault()
+    {
+        $this->assertEquals('baz', env('foo', 'baz'));
+    }
 
+    public function testEnvGetsFromSERVER()
+    {
+        $_SERVER['foo'] = 'bar';
+
+        $this->assertEquals('bar', env('foo', 'baz'));
+    }
+
+    public function testEnvGetsFromENV()
+    {
+        $_ENV['foo'] = 'bar';
+
+        $this->assertEquals('bar', env('foo', 'baz'));
+    }
 }

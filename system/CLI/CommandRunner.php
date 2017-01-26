@@ -95,7 +95,7 @@ class CommandRunner extends Controller
         {
             $className = service('locator')->findQualifiedNameFromPath($file);
 
-            if (empty($className))
+            if (empty($className) || ! class_exists($className))
             {
                 continue;
             }

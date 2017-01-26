@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+ * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,7 @@
  *
  * @package      CodeIgniter
  * @author       CodeIgniter Dev Team
- * @copyright    Copyright (c) 2014 - 2016, British Columbia Institute of Technology (http://bcit.ca/)
+ * @copyright    Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
  * @license      http://opensource.org/licenses/MIT	MIT License
  * @link         http://codeigniter.com
  * @since        Version 3.0.0
@@ -82,19 +82,39 @@ class FileCollection
 	 */
 	public function getFile(string $name)
 	{
-		$this->populateFiles();
+            $this->populateFiles();
 
-		$name = strtolower($name);
+            $name = strtolower($name);
 
-		if (array_key_exists($name, $this->files))
-		{
-			return $this->files[$name];
-		}
+            if ($this->hasFile($name)) {
+                
+                if (strpos($name, '.') !== false) {
+                    $name = explode('.', $name);
+                    $uploadedFile = $this->getValueDotNotationSyntax($name, $this->files);
+                    if($uploadedFile instanceof \CodeIgniter\HTTP\Files\UploadedFile){
+                        return $uploadedFile;
+                    }
+                    
+                    return null;
+                }
+                
+                if (array_key_exists($name, $this->files)) {
+                    $uploadedFile = $this->files[$name];
+                    if($uploadedFile instanceof \CodeIgniter\HTTP\Files\UploadedFile){
+                        return $uploadedFile;
+                    }
+                    
+                    return null;
+                }
+                
+                return null;
 
-		return null;
-	}
+            }
 
-	//--------------------------------------------------------------------
+            return null;
+    }
+
+    //--------------------------------------------------------------------
 
 	/**
 	 * Checks whether an uploaded file with name $fileID exists in
@@ -250,4 +270,29 @@ class FileCollection
 	}
 
 	//--------------------------------------------------------------------
+        
+        /**
+	 * Navigate through a array looking for a particular index
+	 * @param array $index The index sequence we are navigating down
+	 * @param array $value The portion of the array to process
+	 * @return mixed
+	 */
+        protected function getValueDotNotationSyntax($index, $value) {
+		if(is_array($index) &&
+		   count($index)) {
+			$current_index = array_shift($index);
+		}
+		if(is_array($index) &&
+		   count($index) &&
+		   is_array($value[$current_index]) &&
+		   count($value[$current_index])) {
+			return $this->getValueDotNotationSyntax($index, $value[$current_index]);
+		} else {
+                    if(isset($value[$current_index])){
+                        return $value[$current_index];
+                    }else{
+                        return null;
+                    }
+		}
+	}
 }

@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+ * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,7 @@
  *
  * @package      CodeIgniter
  * @author       CodeIgniter Dev Team
- * @copyright    Copyright (c) 2014 - 2016, British Columbia Institute of Technology (http://bcit.ca/)
+ * @copyright    Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
  * @license      http://opensource.org/licenses/MIT	MIT License
  * @link         http://codeigniter.com
  * @since        Version 4.0.0
@@ -163,20 +163,14 @@ class Database extends BaseCollector
             'IN', 'LIKE', 'NOT&nbsp;LIKE', 'COUNT', 'MAX', 'MIN', 'ON', 'AS', 'AVG', 'SUM', '(', ')'
         ];
 
-		$output = '<table>';
+		$parser = \Config\Services::parser(BASEPATH.'Debug/Toolbar/Views/');
 
-        $output .= '<thead><tr>';
-        $output .= '<th style="width: 6rem;">Time</th>';
-        $output .= '<th>Query String</th>';
-        $output .= '</tr></thead>';
+		$data = [
+		    'queries' => []
+        ];
 
-        $output .= '<body>';
-
-        foreach (static::$queries as $query)
+		foreach (static::$queries as $query)
         {
-            $output .= '<tr>';
-            $output .='<td class="narrow">'.($query->getDuration(5) * 1000).' ms</td>';
-
             $sql = $query->getQuery();
 
             foreach ($highlight as $term)
@@ -184,13 +178,14 @@ class Database extends BaseCollector
                 $sql = str_replace($term, "<strong>{$term}</strong>", $sql);
             }
 
-            $output .= '<td>'.$sql.'</td>';
-            $output .= '</tr>';
+            $data['queries'][] = [
+                'duration' => $query->getDuration(5) * 1000,
+                'sql' => $sql
+            ];
         }
 
-        $output .= '</body>';
-
-        $output .= '</table>';
+		$output = $parser->setData($data)
+                         ->render('_database.tpl');
 
 		return $output;
 	}
