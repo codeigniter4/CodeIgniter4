@@ -59,6 +59,8 @@ writable/uploads/*
 !writable/uploads/index.html
 !writable/uploads/.htaccess
 
+writable/email/*
+
 #-------------------------
 # User Guide Temp Files
 #-------------------------
@@ -84,9 +86,6 @@ composer.lock
 #-------------------------
 # IDE / Development Files
 #-------------------------
-
-# Modules Testing
-_modules/*
 
 # phpenv local config
 .php-version
