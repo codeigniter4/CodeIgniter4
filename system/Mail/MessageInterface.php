@@ -302,4 +302,14 @@ interface MessageInterface
     public function setData(array $data);
 
     //--------------------------------------------------------------------
+
+    /**
+     * Determines if this message has the bare minimum information needed
+     * to send a message, i.e. to, from, subject and some message.
+     *
+     * @return bool
+     */
+    public function isValid(): bool;
+
+    //--------------------------------------------------------------------
 }

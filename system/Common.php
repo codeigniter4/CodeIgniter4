@@ -154,14 +154,21 @@ if (! function_exists('email'))
      *
      * @param \CodeIgniter\Mail\BaseMessage $message
      * @param string                        $group
+     *
+     * @return mixed
      */
     function email(\CodeIgniter\Mail\BaseMessage $message, string $group = null)
     {
         $config = new \Config\Mail();
         $group = $group ?? $config->group;
 
-        // Always return a different instance since
-        $mailer = Services::mailer($group, $config, false);
+        $message->build();
+
+        $handler = Services::mailer($group, $config, false);
+
+        $message = $message->setHandler($handler);
+
+        return $message;
     }
 }
 

@@ -2,17 +2,20 @@
 
 use CodeIgniter\Mail\BaseHandler;
 use CodeIgniter\Mail\MailHandlerInterface;
+use CodeIgniter\Mail\MessageInterface;
 
 class LogHandler extends BaseHandler
 {
-    protected $format;
-    protected $headers = [];
-    protected $subject;
-
-    protected $messageHTML;
-    protected $messageText;
+    protected $logPath;
 
     //--------------------------------------------------------------------
+
+    public function __construct(...$params)
+    {
+        parent::__construct(...$params);
+
+        $this->logPath = $this->config['logPath'] ?? WRITEPATH;
+    }
 
     /**
      * Does the actual delivery of a message. In this case, though, we simply
@@ -20,29 +23,29 @@ class LogHandler extends BaseHandler
      *
      * The filename format is: yyyymmddhhiiss_email.{format}
      *
-     * @param bool  $clear_after    If TRUE, will reset the class after sending.
+     * @param \CodeIgniter\Mail\MessageInterface $message
+     * @param bool                               $clear_after If TRUE, will reset the class after sending.
      *
      * @return mixed
      */
-    public function send(bool $clear_after=true)
+    public function send(MessageInterface $message, bool $clear_after=true)
     {
-        // Ensure we have enough data
-        if (empty($this->to) || empty($this->subject) ||
-            (empty($this->messageHTML) && empty($this->messageText))
-        )
+        // If there is more than one email address listed in $to,
+        // only use the first one.
+        $email = $message->getTo();
+        if (is_array($email))
         {
-            throw new \RuntimeException( lang('mail.invalid_log_data') );
+            $email = array_values(array_shift($email))[0];
         }
 
+        // Clean up the to address so we can use it as the filename
         $symbols = ['#', '%', '&', '{', '}', '\\', '/', '<', '>', '*', '?', ' ', '$', '!', '\'', '"', ':', '@', '+', '`', '='];
-
-        $email = str_replace($symbols, '.', strtolower($this->to) );
+        $email = str_replace($symbols, '.', strtolower($email) );
 
         $filename = date('YmdHis_'). $email;
 
         // Ensure the emails folder exists in the log folder.
-        $path = config_item('log_path');
-        $path = ! empty( $path ) ? $path : APPPATH .'logs/';
+        $path = $this->logPath;
         $path = rtrim($path, '/ ') .'/email/';
 
         if (! is_dir($path))
@@ -52,16 +55,19 @@ class LogHandler extends BaseHandler
 
         helper('filesystem');
 
+        $html = $message->getHTMLMessage();
+        $text = $message->getTextMessage();
+
         // Write our HTML file out
-        if (! empty($this->messageHTML) && ! write_file( $path . $filename . '.html', $this->messageHTML ) )
+        if (! empty($html) && ! write_file( $path . $filename . '.html', $html ) )
         {
-            throw new \RuntimeException( sprintf( lang('mail.error_html_log'), $path, $filename) );
+            throw new \RuntimeException( sprintf( lang('mail.errorWritingFile'), $path, $filename) );
         }
 
         // Write our TEXT file out
-        if (! empty($this->messageText) && ! write_file( $path . $filename . '.txt', $this->messageText ) )
+        if (! empty($text) && ! write_file( $path . $filename . '.txt', $text ) )
         {
-            throw new \RuntimeException( sprintf( lang('mail.error_text_log'), $path, $filename) );
+            throw new \RuntimeException( sprintf( lang('mail.errorWritingFile'), $path, $filename) );
         }
 
         return true;

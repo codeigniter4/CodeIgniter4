@@ -8,8 +8,8 @@ class TestMail extends BaseMessage
     {
         $this->setSubject("It's me, Margaret");
 
-//        $this->setHTMLBody("<h1>Hello World</h1>");
-        $this->setTextBody("Hello World");
+        $this->setHTMLMessage("<h1>Hello World</h1>");
+        $this->setTextMessage("Hello World");
     }
 
 }

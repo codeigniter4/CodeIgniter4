@@ -3,6 +3,13 @@
 abstract class BaseHandler implements MailHandlerInterface
 {
     /**
+     * The message instance.
+     *
+     * @var MessageInterface
+     */
+    protected $message;
+
+    /**
      * Used as the User-Agent and X-Mailer headers' value.
      *
      * @var    string
@@ -156,6 +163,14 @@ abstract class BaseHandler implements MailHandlerInterface
      */
     protected static $funcOverride;
 
+    /**
+     * The original config array passed in.
+     * In case child classes need it.
+     *
+     * @var array
+     */
+    protected $config;
+
     //--------------------------------------------------------------------
 
     public function __construct(array $config=[])
@@ -176,6 +191,7 @@ abstract class BaseHandler implements MailHandlerInterface
         }
 
         $this->charset = strtoupper($this->charset);
+        $this->config  = $config;
     }
 
     /**
@@ -187,7 +203,21 @@ abstract class BaseHandler implements MailHandlerInterface
      */
     public function setMessage(BaseMessage $message)
     {
+        $this->message = $message;
 
+        return $this;
+    }
+
+    //--------------------------------------------------------------------
+
+    /**
+     * Returns the current message instance.
+     *
+     * @return \CodeIgniter\Mail\MessageInterface
+     */
+    public function getMessage()
+    {
+        return $this->message;
     }
 
     //--------------------------------------------------------------------
@@ -195,11 +225,12 @@ abstract class BaseHandler implements MailHandlerInterface
     /**
      * Does the actual delivery of a message.
      *
-     * @param bool $clear_after If TRUE, will reset the class after sending.
+     * @param \CodeIgniter\Mail\MessageInterface $message
+     * @param bool                               $clear_after If TRUE, will reset the class after sending.
      *
      * @return mixed
      */
-    public abstract function send(bool $clear_after = true);
+    public abstract function send(MessageInterface $message, bool $clear_after = true);
 
     //--------------------------------------------------------------------
 
@@ -237,147 +268,6 @@ abstract class BaseHandler implements MailHandlerInterface
 
     //--------------------------------------------------------------------
     // Options
-    //--------------------------------------------------------------------
-
-    /**
-     * Sets the email address to send the email to.
-     *
-     * @param $email
-     *
-     * @return mixed
-     */
-    public function to(string $email)
-    {
-        $this->to = $email;
-
-        return $this;
-    }
-
-    //--------------------------------------------------------------------
-
-    /**
-     * Sets who the email is coming from.
-     *
-     * @param      $email
-     * @param null $name
-     *
-     * @return mixed
-     */
-    public function from(string $email, string $name = null)
-    {
-        if (! empty($name))
-        {
-            $this->from = [$email, $name];
-        } else
-        {
-            $this->from = $email;
-        }
-
-        return $this;
-    }
-
-    //--------------------------------------------------------------------
-
-    /**
-     * Sets a single additional email address to 'cc'.
-     *
-     * @param $email
-     *
-     * @return mixed
-     */
-    public function CC(string $email)
-    {
-        $this->cc = $email;
-
-        return $this;
-    }
-
-    //--------------------------------------------------------------------
-
-    /**
-     * Sets a single email address to 'bcc' to.
-     *
-     * @param $email
-     *
-     * @return mixed
-     */
-    public function BCC(string $email)
-    {
-        $this->bcc = $email;
-
-        return $this;
-    }
-
-    //--------------------------------------------------------------------
-
-    /**
-     * Sets the reply to address.
-     *
-     * @param $email
-     *
-     * @return mixed
-     */
-    public function replyTo(string $email, string $name = null)
-    {
-        if (! empty($name))
-        {
-            $this->reply_to = [$email, $name];
-        } else
-        {
-            $this->reply_to = $email;
-        }
-
-        return $this;
-    }
-
-    //--------------------------------------------------------------------
-
-    /**
-     * Sets the subject line of the email.
-     *
-     * @param $subject
-     *
-     * @return mixed
-     */
-    public function subject(string $subject)
-    {
-        $this->subject = $subject;
-
-        return $this;
-    }
-
-    //--------------------------------------------------------------------
-
-    /**
-     * Sets the HTML portion of the email address. Optional.
-     *
-     * @param $message
-     *
-     * @return mixed
-     */
-    public function messageHTML(string $message)
-    {
-        $this->html_message = $message;
-
-        return $this;
-    }
-
-    //--------------------------------------------------------------------
-
-    /**
-     * Sets the text portion of the email address. Optional.
-     *
-     * @param $message
-     *
-     * @return mixed
-     */
-    public function messageText(string $message)
-    {
-        $this->text_message = $message;
-
-        return $this;
-    }
-
     //--------------------------------------------------------------------
 
     /**

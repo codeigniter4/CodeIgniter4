@@ -21,7 +21,7 @@ class Mail extends MailFactory
     //
     public $groups = [
         'default' => [
-            'handler'  => 'simple',
+            'handler'  => 'logger',
             'protocol' => 'mail',
         ],
 //        'example' => [

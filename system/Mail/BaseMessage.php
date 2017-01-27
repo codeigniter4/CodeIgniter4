@@ -1,5 +1,7 @@
 <?php namespace CodeIgniter\Mail;
 
+use CodeIgniter\Mail\MailHandlerInterface;
+
 class InvalidEmailAddress extends \Exception{};
 
 abstract class BaseMessage implements MessageInterface
@@ -21,6 +23,14 @@ abstract class BaseMessage implements MessageInterface
      * @var array
      */
     protected $data = [];
+
+    /**
+     * The Handler that will be used to
+     * send the message with.
+     *
+     * @var MailHandlerInterface
+     */
+    protected $handler;
 
     //--------------------------------------------------------------------
 
@@ -80,12 +90,56 @@ abstract class BaseMessage implements MessageInterface
     //--------------------------------------------------------------------
 
     /**
+     * Sets the active Handler instance that will be used to send.
+     *
+     * @param \CodeIgniter\Mail\MailHandlerInterface $handler
+     *
+     * @return $this
+     */
+    public function setHandler(MailHandlerInterface $handler)
+    {
+        $this->handler = $handler;
+
+        return $this;
+    }
+
+    //--------------------------------------------------------------------
+
+    /**
      * Called by the mailers prior to sending the message. Gives the message
      * a chance to do any custom setup, like loading views for the content, etc.
      *
      * @return mixed
      */
     abstract public function build();
+
+    //--------------------------------------------------------------------
+
+    /**
+     * Works with the handler to actually send the message.
+     *
+     * @return bool
+     */
+    public function send(): bool
+    {
+        if (! $this->handler instanceof MailHandlerInterface)
+        {
+            throw new \BadMethodCallException(lang('mail.invalidHandler'));
+        }
+
+        // Ensure we have enough data to actually write a message for.
+        if (! $this->isValid())
+        {
+            throw new \RuntimeException(lang('mail.emptyMessage'));
+        }
+
+        if (! $this->handler->send($this))
+        {
+            return false;
+        }
+
+        return true;
+    }
 
     //--------------------------------------------------------------------
 
@@ -463,6 +517,22 @@ abstract class BaseMessage implements MessageInterface
         $this->data = array_merge($this->data, $data);
 
         return $this;
+    }
+
+    //--------------------------------------------------------------------
+
+    /**
+     * Determines if this message has the bare minimum information needed
+     * to send a message, i.e. to, from, subject and some message.
+     *
+     * @return bool
+     */
+    public function isValid(): bool
+    {
+        return empty($this->to)
+            || empty($this->from)
+            || empty($this->subject)
+            || (empty($this->messageHTML) && empty($this->messageText));
     }
 
     //--------------------------------------------------------------------

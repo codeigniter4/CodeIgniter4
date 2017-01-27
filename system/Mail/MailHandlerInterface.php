@@ -3,24 +3,14 @@
 interface MailHandlerInterface
 {
     /**
-     * Sets the Mail Message class that represents the message details.
-     *
-     * @param \CodeIgniter\Mail\BaseMessage $message
-     *
-     * @return mixed
-     */
-    public function setMessage(BaseMessage $message);
-
-    //--------------------------------------------------------------------
-
-    /**
      * Does the actual delivery of a message.
      *
-     * @param bool  $clear_after    If TRUE, will reset the class after sending.
+     * @param \CodeIgniter\Mail\MessageInterface $message
+     * @param bool                               $clear_after If TRUE, will reset the class after sending.
      *
      * @return mixed
      */
-    public function send(bool $clear_after=true);
+    public function send(MessageInterface $message, bool $clear_after=true);
 
     //--------------------------------------------------------------------
 
@@ -49,88 +39,6 @@ interface MailHandlerInterface
 
     //--------------------------------------------------------------------
     // Options
-    //--------------------------------------------------------------------
-
-    /**
-     * Sets the email address to send the email to.
-     *
-     * @param $email
-     * @return mixed
-     */
-    public function to(string $email);
-
-    //--------------------------------------------------------------------
-
-    /**
-     * Sets who the email is coming from.
-     *
-     * @param $email
-     * @param null $name
-     * @return mixed
-     */
-    public function from(string $email, string $name=null);
-
-    //--------------------------------------------------------------------
-
-    /**
-     * Sets a single additional email address to 'cc'.
-     *
-     * @param $email
-     * @return mixed
-     */
-    public function CC(string $email);
-
-    //--------------------------------------------------------------------
-
-    /**
-     * Sets a single email address to 'bcc' to.
-     *
-     * @param $email
-     * @return mixed
-     */
-    public function BCC(string $email);
-
-    //--------------------------------------------------------------------
-
-    /**
-     * Sets the reply to address.
-     *
-     * @param $email
-     * @param $name
-     * @return mixed
-     */
-    public function replyTo(string $email, string $name=null);
-
-    //--------------------------------------------------------------------
-
-    /**
-     * Sets the subject line of the email.
-     *
-     * @param $subject
-     * @return mixed
-     */
-    public function subject(string $subject);
-
-    //--------------------------------------------------------------------
-
-    /**
-     * Sets the HTML portion of the email address. Optional.
-     *
-     * @param $message
-     * @return mixed
-     */
-    public function messageHTML(string $message);
-
-    //--------------------------------------------------------------------
-
-    /**
-     * Sets the text portion of the email address. Optional.
-     *
-     * @param $message
-     * @return mixed
-     */
-    public function messageText(string $message);
-
     //--------------------------------------------------------------------
 
     /**

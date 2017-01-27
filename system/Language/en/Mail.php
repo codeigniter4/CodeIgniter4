@@ -38,4 +38,8 @@
 
 return [
 	'invalidGroup' => '%s is not a valid Mail group.',
+    'invalidHandlerName' => '%s is not a valid Mail Handler.',
+    'invalidHandler' => 'Unable to send message. No valid Handler provided.',
+    'emptyMessage' => 'Mail messages must have a body, from, and to addresses specified.',
+    'errorWritingFile' => 'Unable to write email message to disk: %s',
 ];

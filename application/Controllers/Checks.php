@@ -105,7 +105,10 @@ class Checks extends Controller
 
     public function mail()
     {
-        $mail = email(new \App\Mail\TestMail());
+        $mail = email(new \App\Mail\TestMail())
+                    ->setTo('foo@example.com', 'foo')
+                    ->setSubject('Checking In')
+                    ->send();
 
         die(var_dump($mail));
     }
