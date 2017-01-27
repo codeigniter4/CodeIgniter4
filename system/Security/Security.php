@@ -201,7 +201,6 @@ class Security
 		{
 			// Nothing should last forever
 			unset($_COOKIE[$this->CSRFCookieName]);
-			$this->_csrf_hash = null;
 		}
 
 		$this->CSRFSetHash();
