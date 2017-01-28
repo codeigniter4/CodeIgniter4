@@ -19,7 +19,7 @@ class CodeIgniterTest extends \CIUnitTestCase
 		Services::reset();
 
 		$config = new App();
-		$this->codeigniter = new MockCodeIgniter(memory_get_usage(), microtime(true), $config);
+		$this->codeigniter = new MockCodeIgniter($config);
 	}
 
 	//--------------------------------------------------------------------

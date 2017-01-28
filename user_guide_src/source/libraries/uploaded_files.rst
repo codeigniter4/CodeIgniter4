@@ -15,6 +15,9 @@ array directly.
 Accessing Files
 ===============
 
+All Files
+----------
+
 When you upload files they can be accessed natively in PHP through the ``$_FILES`` superglobal. This array has some
 major shortcomings when working with multiple files uploaded at once, and has potential security flaws many developers
 are not aware of. CodeIgniter helps with both of these situations by standardizing your usage of files behind a
@@ -67,11 +70,56 @@ In this case, the returned array of files would be more like::
 		]
 	]
 
-If you just need to access a single file, you can use ``getFile()`` to retrieve the file instance directly::
+Single File
+----------
 
-	$file = $this->request->getFile('avatar');
+If you just need to access a single file, you can use ``getFile()`` to retrieve the file instance directly. This will return an instance of ``CodeIgniter\HTTP\Files\UploadedFile``:
 
-.. note:: This currently only works with simple file names and not with array syntax naming.
+Simplest usage
+^^^^^^^^^^
+
+With the simplest usage, a single file might be submitted like::
+
+	<input type="file" name="userfile" />
+
+Which would return a simple file instance like::
+
+	$file = $this->request->getFile('userfile');
+
+Array notation
+^^^^^^^^^^
+
+If you used an array notation for the name, the input would look something like::
+
+	<input type="file" name="my-form[details][avatar]" />
+
+For get the file instance::
+
+	$file = $this->request->getFile('my-form.details.avatar');
+
+
+Multiple files
+^^^^^^^^^^
+If there are multiple files with the same name you can use ``getFile()`` ro retrieve every file individually::
+
+	<input type="file" name="images[]" multiple />
+
+In controller::
+
+	$file1 = $this->request->getFile('images.0');
+	$file2 = $this->request->getFile('images.1');
+
+Another example::
+
+	Upload an avatar: <input type="file" name="my-form[details][avatars][]" />
+	Upload an avatar: <input type="file" name="my-form[details][avatars][]" />
+
+In controller::
+
+	$file1 = $this->request->getFile('my-form.details.avatars.0');
+	$file2 = $this->request->getFile('my-form.details.avatars.1');
+
+.. note:: For multiple files it is recommended to use the function ``getFiles()``
 
 =====================
 Working With the File

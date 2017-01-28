@@ -27,6 +27,7 @@ class RouterTest extends \CIUnitTestCase
 			'books/(:num)/(:alpha)/(:num)' => 'Blog::show/$3/$1',
 			'closure/(:num)/(:alpha)'      => function ($num, $str) { return $num.'-'.$str; },
 			'{locale}/pages'			   => 'App\Pages::list_all',
+			'Admin/Admins'		   		   => 'App\Admin\Admins::list_all',
 		];
 
 		$this->collection->map($routes);
@@ -188,6 +189,18 @@ class RouterTest extends \CIUnitTestCase
 
 		$this->assertTrue($router->hasLocale());
 		$this->assertEquals('fr', $router->getLocale());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testRouteResource()
+	{
+		$router = new Router($this->collection);
+
+		$router->handle('Admin/Admins');
+
+		$this->assertEquals('\App\Admin\Admins', $router->controllerName());
+		$this->assertEquals('list_all', $router->methodName());
 	}
 
 	//--------------------------------------------------------------------

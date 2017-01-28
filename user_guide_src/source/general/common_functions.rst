@@ -30,6 +30,21 @@ Service Accessors
      	$foo = cache('foo');
     	$cache = cache();
 
+.. php:function:: env ( $key[, $default=null])
+
+	:param string $key: The name of the environment variable to retrieve
+	:param mixed  $default: The default value to return if no value is found.
+	:returns: The environment variable, the default value, or null.
+	:rtype: mixed
+
+	Used to retrieve values that have previously been set to the environment,
+	or return a default value if it is not found. Will format boolean values
+	to actual booleans instead of string representations.
+
+	Especially useful when used in conjunction with .env files for setting
+	values that are specific to the environment itself, like database
+	settings, API keys, etc.
+
 .. php:function:: esc ( $data, $context='html' [, $encoding])
 
 	:param   string|array   $data: The information to be escaped.
@@ -190,6 +205,17 @@ Miscellaneous Functions
 	``$response->redirect()`` determine the correct method and code.
 
 	If more control is needed, you must use ``$response->redirect()`` explicitly.
+
+.. php:function:: redirect_with_input( $uri[, ...$params] )
+
+	:param string $uri: The URI to redirect the user to.
+	:param mixed  $params: one or more additional parameters that can be used with the :meth:`RouteCollection::reverseRoute` method.
+
+	Identical to the ``redirect()`` method, except this flashes the request's $_GET and $_POST values to the session.
+	On the next page request, the form helper ``set_*`` methods will check for data within the old input first, then,
+	if it's not found, the current GET/POST will be checked.
+
+	.. note:: In order to retrieve the old, the session MUST be started prior to calling the function.
 
 .. php:function:: remove_invisible_characters($str[, $url_encoded = TRUE])
 

@@ -1,42 +1,56 @@
 <?php namespace CodeIgniter\CLI;
 
+/**
+ * CodeIgniter
+ *
+ * An open source application development framework for PHP
+ *
+ * This content is released under the MIT License (MIT)
+ *
+ * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ *
+ * @package	CodeIgniter
+ * @author	CodeIgniter Dev Team
+ * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @license	https://opensource.org/licenses/MIT	MIT License
+ * @link	https://codeigniter.com
+ * @since	Version 3.0.0
+ * @filesource
+ */
+
 use CodeIgniter\CodeIgniter;
 
 class Console
 {
     /**
-     * Path to the CodeIgniter index file.
-     * @var string
+     * Main CodeIgniter instance.
+     * @var CodeIgniter
      */
-    protected $indexPath;
-
-    /**
-     * Path to the system folder.
-     * @var string
-     */
-    protected $systemPath;
-
-    /**
-     * The 'URI' to use to pass onto CodeIgniter
-     * @var string
-     */
-    protected $commandString;
-
-    /**
-     * A string representation of all CLI options.
-     * @var string
-     */
-    protected $optionString;
+    protected $app;
 
     //--------------------------------------------------------------------
 
-    public function __construct()
+    public function __construct(CodeIgniter $app)
     {
-        $this->indexPath  = $this->locateIndex();
-        $this->systemPath = $this->locateSystem();
-
-        $this->commandString = CLI::getURI();
-        $this->optionString  = CLI::getOptionString();
+        $this->app = $app;
     }
 
     //--------------------------------------------------------------------
@@ -46,7 +60,12 @@ class Console
      */
     public function run()
     {
-        return passthru("php {$this->indexPath} ci {$this->commandString} {$this->optionString}");
+        $path = CLI::getURI() ?: 'help';
+
+        // Set the path for the application to route to.
+        $this->app->setPath("ci{$path}");
+
+        return $this->app->run();
     }
 
     //--------------------------------------------------------------------
@@ -58,69 +77,13 @@ class Console
     {
         CLI::newLine(1);
 
-        CLI::write('CodeIgniter CLI Tool', 'green');
-        CLI::write('Version '. $this->getVersion());
-        CLI::write('Server-Time: '. date('Y-m-d H:i:sa'));
+        CLI::write(CLI::color('CodeIgniter CLI Tool', 'green')
+            . ' - Version '. CodeIgniter::CI_VERSION
+            . ' - Server-Time: '. date('Y-m-d H:i:sa'));
 
         CLI::newLine(1);
     }
 
     //--------------------------------------------------------------------
 
-    /**
-     * Returns the current version of CodeIgniter.
-     */
-    public function getVersion()
-    {
-        // The CI Version number is stored in the main CodeIgniter class.
-        require_once $this->systemPath.'CodeIgniter.php';
-
-        return CodeIgniter::CI_VERSION;
-    }
-
-    //--------------------------------------------------------------------
-
-    /**
-     * Find the index path, checking the default location,
-     * and where it would be if "flattened"
-     *
-     * @return string
-     */
-    protected function locateIndex()
-    {
-        $path = realpath(__DIR__.'/../../public/index.php');
-
-        if (empty($path))
-        {
-            $path = __DIR__.'/../../index.php';
-
-            if (! is_file($path))
-            {
-                die('Unable to locate the CodeIgniter index.php file.');
-            }
-        }
-
-        return $path;
-    }
-
-    //--------------------------------------------------------------------
-
-    /**
-     * Attempts to locate the main application directory.
-     *
-     * @return string
-     */
-    protected function locateSystem()
-    {
-        $path = realpath(__DIR__.'/../../system');
-
-        if (empty($path) || ! is_dir($path))
-        {
-            die('Unable to locate the CodeIgniter system directory.');
-        }
-
-        return $path.'/';
-    }
-
-    //--------------------------------------------------------------------
 }

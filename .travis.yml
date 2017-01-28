@@ -2,6 +2,7 @@ language: php
 
 php:
   - 7
+  - 7.1
 
 global:
   - CI=true
@@ -30,3 +31,5 @@ before_install:
 before_script:
   - composer install --prefer-source
 
+after_success:
+  - travis_retry php vendor/bin/coveralls

@@ -147,14 +147,14 @@ are: datetime, date, or int (a PHP timestamp).
 
 **$validationRules**
 
-Contains either an array of validation rules as described in :ref:`_validation-array`
+Contains either an array of validation rules as described in :ref:`validation-array`
 or a string containing the name of a validation group, as described in the same section.
 Described in more detail below.
 
 **$validationMessages**
 
 Contains an array of custom error messages that should be used during validation, as
-described in :ref:`_validation-custom-errors`. Described in more detail below.
+described in :ref:`validation-custom-errors`. Described in more detail below.
 
 **$skipValidation**
 
