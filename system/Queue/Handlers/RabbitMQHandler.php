@@ -9,29 +9,29 @@ use PhpAmqpLib\Exception\AMQPTimeoutException;
  */
 class RabbitMQHandler implements QueueHandlerInterface
 {
-	protected $group_config;
+	protected $groupConfig;
 	protected $config;
 	protected $connection;
 
 	/**
 	 * constructor.
 	 *
-	 * @param  array $group_config
+	 * @param  array $groupConfig
 	 * @param  \Codeigniter\Config\Queue $config
 	 */
-	public function __construct($group_config, \Codeigniter\Config\Queue $config)
+	public function __construct($groupConfig, \Codeigniter\Config\Queue $config)
 	{
-		$this->group_config = $group_config;
+		$this->groupConfig = $groupConfig;
 		$this->config       = clone $config;
 		$this->connection   = new AMQPStreamConnection(
-			$this->group_config['host'],
-			$this->group_config['port'],
-			$this->group_config['user'],
-			$this->group_config['password'],
-			$this->group_config['vhost']
+			$this->groupConfig['host'],
+			$this->groupConfig['port'],
+			$this->groupConfig['user'],
+			$this->groupConfig['password'],
+			$this->groupConfig['vhost']
 		);
 		$this->channel = $this->connection->channel();
-		if ($this->group_config['do_setup'])
+		if ($this->groupConfig['do_setup'])
 		{
 			$this->setup();
 		}
@@ -42,7 +42,7 @@ class RabbitMQHandler implements QueueHandlerInterface
 	 */
 	public function setup()
 	{
-		foreach ($this->config->exchange_map as $exchangeName => $queues)
+		foreach ($this->config->exchangeMap as $exchangeName => $queues)
 		{
 			$this->channel->exchange_declare($exchangeName, 'topic', false, true, false);
 			foreach ($queues as $routingKey => $queueName)
@@ -73,7 +73,6 @@ class RabbitMQHandler implements QueueHandlerInterface
 	 */
 	public function send($data, string $routingKey = '', string $exchangeName = '')
 	{
-		//$this->channel->basic_publish(new AMQPMessage(json_encode($data), ['delivery_mode' => 2]), '', 'hello');
 		$this->channel->basic_publish(
 			new AMQPMessage(json_encode($data), ['delivery_mode' => 2]),
 			$exchangeName != '' ? $exchangeName : $this->config->defaultExchange,
@@ -95,14 +94,14 @@ class RabbitMQHandler implements QueueHandlerInterface
 	}
 
 	/**
-	 * Recieve message from queueing system.
+	 * Receive message from queueing system.
 	 * When there are no message, this method will wait.
 	 *
 	 * @param  callable $callback
 	 * @param  string   $queueName
 	 * @return boolean  whether callback is done or not.
 	 */
-	public function recieve(callable $callback, string $queueName = '') : bool
+	public function receive(callable $callback, string $queueName = '') : bool
 	{
 		return $this->consume($callback, $queueName);
 	}

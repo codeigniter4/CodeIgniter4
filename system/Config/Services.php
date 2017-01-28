@@ -352,6 +352,23 @@ class Services
         return new \CodeIgniter\View\Parser($config, $viewPath, self::locator(true), CI_DEBUG, self::logger(true));
     }
 
+	//--------------------------------------------------------------------
+
+	/**
+	 * The Queue class.
+	 *
+	 * @return CodeIgniter\Queue\Handlers\QueueHandlerInterface
+	 */
+	public static function queue($getShared = true)
+	{
+		if ($getShared)
+		{
+			return self::getSharedInstance('queue');
+		}
+
+		return \CodeIgniter\Queue\Queue::connect();
+	}
+
     //--------------------------------------------------------------------
 
 	/**
@@ -620,21 +637,6 @@ class Services
 		}
 
 		return new \CodeIgniter\Typography\Typography();
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * The Queue class
-	 */
-	public static function queue($getShared = true)
-	{
-		if ($getShared)
-		{
-			return self::getSharedInstance('queue');
-		}
-
-		return \CodeIgniter\Queue\Queue::connect();
 	}
 
 	//--------------------------------------------------------------------

@@ -24,7 +24,7 @@ class Queue
 	 * @param  string|array  $group     The name of the connection group to use,
 	 *                                  or an array of configuration settings.
 	 * @param  bool          $getShared Whether to return a shared instance of the connection.
-	 * @return mixed
+	 * @return CodeIgniter\Queue\Handlers\QueueHandlerInterface
 	 */
 	public static function connect($group = '', bool $getShared = true)
 	{

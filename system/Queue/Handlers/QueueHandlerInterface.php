@@ -8,10 +8,10 @@ interface QueueHandlerInterface
 	/**
 	 * constructor.
 	 *
-	 * @param  array $group_config
+	 * @param  array $groupConfig
 	 * @param  \Codeigniter\Config\Queue $config
 	 */
-	public function __construct($group_config, \Codeigniter\Config\Queue $config);
+	public function __construct($groupConfig, \Codeigniter\Config\Queue $config);
 
 	/**
 	 * send message to queueing system.
@@ -33,12 +33,12 @@ interface QueueHandlerInterface
 	public function fetch(callable $callback, string $queueName = '') : bool;
 
 	/**
-	 * Recieve message from queueing system.
+	 * Receive message from queueing system.
 	 * When there are no message, this method will wait.
 	 *
 	 * @param  callable $callback
 	 * @param  string   $queueName
 	 * @return boolean  whether callback is done or not.
 	 */
-	public function recieve(callable $callback, string $queueName = '') : bool;
+	public function receive(callable $callback, string $queueName = '') : bool;
 }
