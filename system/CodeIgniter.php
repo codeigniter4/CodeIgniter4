@@ -810,11 +810,26 @@ class CodeIgniter
     /**
      * Gathers the script output from the buffer, replaces some execution
      * time tag in the output and displays the debug toolbar, if required.
+     *
+     * @param null $cacheConfig
+     * @param null $returned
      */
     protected function gatherOutput($cacheConfig = null, $returned = null)
     {
         $this->output = ob_get_contents();
         ob_end_clean();
+
+        // If the controller returned a response object,
+        // we need to grab the body from it so it can
+        // be added to anything else that might have been
+        // echoed already.
+        // We also need to save the instance locally
+        // so that any status code changes, etc, take place.
+        if ($returned instanceof Response)
+        {
+            $this->response = $returned;
+            $returned = $returned->getBody();
+        }
 
         if (is_string($returned))
         {
