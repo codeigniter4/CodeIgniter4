@@ -127,6 +127,10 @@ abstract class BaseMessage implements MessageInterface
             throw new \BadMethodCallException(lang('mail.invalidHandler'));
         }
 
+        // run the build step so it can parse any view templates, etc.
+        // and, generally, get the message ready to go.
+        $this->build();
+
         // Ensure we have enough data to actually write a message for.
         if (! $this->isValid())
         {

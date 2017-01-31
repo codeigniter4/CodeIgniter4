@@ -162,8 +162,6 @@ if (! function_exists('email'))
         $config = new \Config\Mail();
         $group = $group ?? $config->group;
 
-        $message->build();
-
         $handler = Services::mailer($group, $config, false);
 
         $message = $message->setHandler($handler);
