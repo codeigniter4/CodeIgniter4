@@ -46,9 +46,11 @@
  * so they are available in the config files that are loaded.
  */
 
+$public = trim($paths->publicDirectory, '/');
+
 // Path to code root folder (just up from public)
-$pos = strrpos(FCPATH, 'public'.DIRECTORY_SEPARATOR);
-define('ROOTPATH', substr_replace(FCPATH, '', $pos, strlen('public'.DIRECTORY_SEPARATOR)));
+$pos = strrpos(FCPATH, $public.DIRECTORY_SEPARATOR);
+define('ROOTPATH', substr_replace(FCPATH, '', $pos, strlen($public.DIRECTORY_SEPARATOR)));
 
 // The path to the "application" folder
 define('APPPATH', realpath($paths->applicationDirectory).DIRECTORY_SEPARATOR);
