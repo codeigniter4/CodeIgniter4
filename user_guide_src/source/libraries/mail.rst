@@ -5,6 +5,7 @@ Email Library
 CodeIgniter's robust Email Class supports the following features:
 
 -  Multiple Protocols: Mail, Sendmail, and SMTP
+-  Support for third-party handlers for local Logging, Amazon SES, Mailtrap, etc.
 -  TLS and SSL Encryption for SMTP
 -  Multiple recipients
 -  CC and BCCs
@@ -15,7 +16,6 @@ CodeIgniter's robust Email Class supports the following features:
 -  BCC Batch Mode, enabling large email lists to be broken into small
    BCC batches.
 -  Email Debugging tools
--  Third-party Handlers for local Logging, Amazon SES, Mailtrap, and more.
 
 .. contents::
     :local:
@@ -64,4 +64,11 @@ from within the build() method.
 Sending a Message
 =================
 
+You send a message using the ``email()`` helper function. It takes a Message class as it's only parameter,
+and returns that message class, already set up with an instantiated handler, and ready to go. You can then
+set any additional parameters you need, like who it's going to, who it's from, add attachments, etc.::
+
+    email(new App\Mail\UserWelcomeMessage())
+        ->setTo($user->email, $user->firstName)
+        ->send();
 
