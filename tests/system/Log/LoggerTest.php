@@ -9,15 +9,16 @@ class LoggerTest extends \CIUnitTestCase
 	public function setUp()
 	{
 	}
-	
+
 	//--------------------------------------------------------------------
-	
+
 	public function testThrowsExceptionWithBadHandlerSettings()
 	{
 		$config = new LoggerConfig();
 		$config->handlers = null;
 
-		$this->setExpectedException('RuntimeException', 'LoggerConfig must provide at least one Handler.');
+		$this->expectException('RuntimeException');
+		$this->expectExceptionMessage('LoggerConfig must provide at least one Handler.');
 
 		$logger = new Logger($config);
 	}
@@ -28,7 +29,8 @@ class LoggerTest extends \CIUnitTestCase
 	{
 		$config = new LoggerConfig();
 
-		$this->setExpectedException('InvalidArgumentException', 'foo is an invalid log level.');
+		$this->expectException('InvalidArgumentException');
+		$this->expectExceptionMessage('foo is an invalid log level.');
 
 		$logger = new Logger($config);
 

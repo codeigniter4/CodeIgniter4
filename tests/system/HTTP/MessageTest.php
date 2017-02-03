@@ -138,7 +138,7 @@ class MessageTest extends \CIUnitTestCase
 
 	public function testSetProtocolThrowsExceptionWithInvalidProtocol()
 	{
-		$this->setExpectedException('InvalidArgumentException');
+		$this->expectException('InvalidArgumentException');
 		$this->message->setProtocolVersion('1.2');
 	}
 

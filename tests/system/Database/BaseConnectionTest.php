@@ -76,7 +76,8 @@ class BaseConnectionTest extends \CIUnitTestCase
 	{
 	    $db = new MockConnection($this->options);
 
-		$this->setExpectedException('CodeIgniter\DatabaseException', 'Unable to connect to the database.');
+		$this->expectException('CodeIgniter\DatabaseException');
+		$this->expectExceptionMessage('Unable to connect to the database.');
 
 		$db->shouldReturn('connect', false)
 			->initialize();
