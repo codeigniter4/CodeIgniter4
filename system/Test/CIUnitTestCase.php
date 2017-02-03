@@ -36,13 +36,17 @@
  * @filesource
  */
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use CodeIgniter\Log\TestLogger;
+
+if (! class_exists(TestCase::class)) {
+    class_alias(\PHPUnit_Framework_TestCase::class, TestCase::class);
+}
 
 /**
  * PHPunit test case.
  */
-class CIUnitTestCase extends PHPUnit_Framework_TestCase
+class CIUnitTestCase extends TestCase
 {
 	use ReflectionHelper;
 
