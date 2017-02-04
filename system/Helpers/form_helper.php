@@ -1,5 +1,43 @@
 <?php
 
+/**
+ * CodeIgniter
+ *
+ * An open source application development framework for PHP
+ *
+ * This content is released under the MIT License (MIT)
+ *
+ * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ *
+ * @package	CodeIgniter
+ * @author	CodeIgniter Dev Team
+ * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @license	https://opensource.org/licenses/MIT	MIT License
+ * @link	https://codeigniter.com
+ * @since	Version 3.0.0
+ * @filesource
+ */
+
+use Config\Services;
+
 //--------------------------------------------------------------------
 
 if (! function_exists('form_open'))
@@ -25,6 +63,7 @@ if (! function_exists('form_open'))
         } // If an action is not a full URL then turn it into one
         elseif (strpos($action, '://') === false)
         {
+            helper('url');
             $action = site_url($action);
         }
 
@@ -662,7 +701,15 @@ if (! function_exists('set_value'))
      */
     function set_value(string $field, string $default = '', bool $html_escape = true): string
     {
-        $value = $_POST[$field] ?? $default;
+        $request = Services::request();
+
+        // Try any old input data we may have first
+        $value = $request->getOldInput($field);
+
+        if ($value === null)
+        {
+            $value = $request->getPost($field) ?? $default;
+        }
 
         return ($html_escape) ? esc($value, 'html') : $value;
     }
@@ -686,28 +733,35 @@ if (! function_exists('set_select'))
      */
     function set_select(string $field, string $value = '', bool $default = false): string
     {
-        if (($input = $_POST[$field]) === null)
+        $request = Services::request();
+
+        // Try any old input data we may have first
+        $input = $request->getOldInput($field);
+
+        if ($input === null)
+        {
+            $input = $request->getPost($field);
+        }
+
+        if ($input === null)
         {
             return ($default === true) ? ' selected="selected"' : '';
         }
 
-        if (($input = $_POST[$field]) !== null)
+        if (is_array($input))
         {
-            if (is_array($input))
+            $value = (string)$value;
+
+            // Note: in_array('', array(0)) returns TRUE, do not use it
+            foreach ($input as &$v)
             {
-                $value = (string)$value;
-
-                // Note: in_array('', array(0)) returns TRUE, do not use it
-                foreach ($input as &$v)
+                if ($value === $v)
                 {
-                    if ($value === $v)
-                    {
-                        return ' selected="selected"';
-                    }
+                    return ' selected="selected"';
                 }
-
-                return '';
             }
+
+            return '';
         }
 
         return ($input === $value) ? ' selected="selected"' : '';
@@ -735,7 +789,15 @@ if (! function_exists('set_checkbox'))
         // Form inputs are always strings ...
         $value = (string)$value;
 
-        $input = $_POST[$field];
+        $request = Services::request();
+
+        // Try any old input data we may have first
+        $input = $request->getOldInput($field);
+
+        if ($input === null)
+        {
+            $input = $request->getPost($field);
+        }
 
         if (is_array($input))
         {
@@ -782,7 +844,15 @@ if (! function_exists('set_radio'))
         // Form inputs are always strings ...
         $value = (string)$value;
 
-        $input = $_POST[$field];
+        $request = Services::request();
+
+        // Try any old input data we may have first
+        $input = $request->getOldInput($field);
+
+        if ($input === null)
+        {
+            $input = $request->getPost($field) ?? $default;
+        }
 
         if (is_array($input))
         {

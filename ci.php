@@ -1,9 +1,7 @@
 #!/usr/bin/env php
 <?php
 
-use CodeIgniter\CLI\CLI;
-
-/**
+/*
  * --------------------------------------------------------------------
  * CodeIgniter command-line tools
  * --------------------------------------------------------------------
@@ -14,18 +12,38 @@ use CodeIgniter\CLI\CLI;
  * this class mainly acts as a passthru to the framework itself.
  */
 
-// Grab the CLI class, though, so we can use it to provide user feedback.
-require __DIR__.'/system/CLI/CLI.php';
+// Location to the Paths config file.
+$pathsPath = 'application/Config/Paths.php';
 
-// Grab our Console
-require __DIR__.'/system/CLI/Console.php';
-$console = new \CodeIgniter\CLI\Console();
+// Path to the front controller (this file)
+define('FCPATH', './public/'.DIRECTORY_SEPARATOR);
+
+/*
+ *---------------------------------------------------------------
+ * BOOTSTRAP THE APPLICATION
+ *---------------------------------------------------------------
+ * This process sets up the path constants, loads and registers
+ * our autoloader, along with Composer's, loads our constants
+ * and fires up an environment-specific bootstrapping.
+ */
 
 // Refuse to run when called from php-cgi
 if (substr(php_sapi_name(), 0, 3) == 'cgi')
 {
     die("The cli tool is not supported when running php-cgi. It needs php-cli to function!\n\n");
 }
+
+// Ensure the current directory is pointing to the front controller's directory
+chdir('public');
+
+// Load our paths config file
+require $pathsPath;
+$paths = new Config\Paths();
+
+$app = require rtrim($paths->systemDirectory,'/ ').'/bootstrap.php';
+
+// Grab our Console
+$console = new \CodeIgniter\CLI\Console($app);
 
 // We want errors to be shown when using it from the CLI.
 error_reporting(-1);

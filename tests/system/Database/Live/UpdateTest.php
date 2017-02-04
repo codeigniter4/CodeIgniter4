@@ -125,6 +125,77 @@ class UpdateTest extends \CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testUpdateWithWhereSameColumn()
+	{
+		$this->db->table('user')
+		         ->update(['country' => 'CA'], ['country' => 'US']);
+
+		$result = $this->db->table('user')->get()->getResultArray();
+
+		$rows = [];
+
+		foreach ($result as $row)
+		{
+			if ($row['country'] == 'CA')
+			{
+				$rows[] = $row;
+			}
+		}
+
+		$this->assertEquals(2, count($rows));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testUpdateWithWhereSameColumn2()
+	{
+		// calling order: set() -> where()
+		$this->db->table('user')
+		         ->set('country', 'CA')
+		         ->where('country', 'US')
+		         ->update();
+
+		$result = $this->db->table('user')->get()->getResultArray();
+
+		$rows = [];
+
+		foreach ($result as $row)
+		{
+			if ($row['country'] == 'CA')
+			{
+				$rows[] = $row;
+			}
+		}
+
+		$this->assertEquals(2, count($rows));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testUpdateWithWhereSameColumn3()
+	{
+		// calling order: where() -> set() in update()
+		$this->db->table('user')
+		         ->where('country', 'US')
+		         ->update(['country' => 'CA']);
+
+		$result = $this->db->table('user')->get()->getResultArray();
+
+		$rows = [];
+
+		foreach ($result as $row)
+		{
+			if ($row['country'] == 'CA')
+			{
+				$rows[] = $row;
+			}
+		}
+
+		$this->assertEquals(2, count($rows));
+	}
+
+	//--------------------------------------------------------------------
+
     /**
      * @group single
      * @see https://github.com/bcit-ci/CodeIgniter4/issues/324
@@ -142,5 +213,21 @@ class UpdateTest extends \CIDatabaseTestCase
         ]);
     }
 
+	//--------------------------------------------------------------------
+
+	// @see https://bcit-ci.github.io/CodeIgniter4/database/query_builder.html#updating-data
+	public function testSetWithoutEscape()
+	{
+		$this->db->table('job')
+		         ->set('description', 'name', false)
+		         ->update();
+
+		$result = $this->db->table('user')->get()->getResultArray();
+
+		$this->seeInDatabase('job', [
+			'name' => 'Developer',
+			'description' => 'Developer',
+		]);
+	}
 
 }
