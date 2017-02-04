@@ -61,4 +61,18 @@ class Paths
      * system directories.
      */
     public $testsDirectory = '../tests';
+
+    /*
+     * ---------------------------------------------------------------
+     * PUBLIC DIRECTORY NAME
+     * ---------------------------------------------------------------
+     *
+     * This variable must contain the name of the directory that
+     * contains the main index.php front-controller. By default,
+     * this is the `public` directory, but some hosts may not
+     * be able to map a primary domain to a sub-directory so you
+     * can change this to `public_html`, for example, to comply
+     * with your host's needs.
+     */
+    public $publicDirectory = 'public';
 }

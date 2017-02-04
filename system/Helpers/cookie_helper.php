@@ -30,8 +30,8 @@
  * @package    CodeIgniter
  * @author     CodeIgniter Dev Team
  * @copyright  Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
- * @license    http://opensource.org/licenses/MIT    MIT License
- * @link       http://codeigniter.com
+ * @license    https://opensource.org/licenses/MIT    MIT License
+ * @link       https://codeigniter.com
  * @since      Version 3.0.0
  * @filesource
  */
@@ -44,7 +44,7 @@
  * @subpackage  Helpers
  * @category    Helpers
  * @author      CodeIgniter Dev Team
- * @link        http://codeigniter.com/user_guide/helpers/cookie_helper.html
+ * @link        https://codeigniter.com/user_guide/helpers/cookie_helper.html
  */
 if (!function_exists('set_cookie'))
 {
