@@ -370,6 +370,7 @@ class URLHelperTest extends \CIUnitTestCase
 
         $_SERVER['HTTP_HOST'] = 'example.com';
         $_SERVER['REQUEST_URI'] = '/';
+		$_SERVER['SCRIPT_NAME'] = __FILE__;
         $_SERVER['HTTP_REFERER'] = $uri1;
 
         // Since we're on a CLI, we must provide our own URI
