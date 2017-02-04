@@ -249,10 +249,10 @@ class Services
 	 */
 	public static function locator($getShared = true)
 	{
-	    if ($getShared)
-	    {
-		    return self::getSharedInstance('locator');
-	    }
+		if ($getShared)
+		{
+			return self::getSharedInstance('locator');
+		}
 
 		return new \CodeIgniter\Autoloader\FileLocator(new \Config\Autoload());
 	}
@@ -277,10 +277,10 @@ class Services
 
 	public static function migrations(BaseConfig $config = null, ConnectionInterface $db = null, bool $getShared = true)
 	{
-	    if ($getShared)
-	    {
-		    return self::getSharedInstance('migrations', $config, $db);
-	    }
+		if ($getShared)
+		{
+			return self::getSharedInstance('migrations', $config, $db);
+		}
 
 		$config = empty($config) ? new \Config\Migrations() : $config;
 
@@ -334,25 +334,25 @@ class Services
 
 	//--------------------------------------------------------------------
 
-    /**
-     * The Parser is a simple template parser.
-     */
-    public static function parser($viewPath = APPPATH.'Views/', $config = null, $getShared = true)
-    {
-        if ($getShared)
-        {
-            return self::getSharedInstance('parser', $viewPath, $config);
-        }
+	/**
+	 * The Parser is a simple template parser.
+	 */
+	public static function parser($viewPath = APPPATH.'Views/', $config = null, $getShared = true)
+	{
+		if ($getShared)
+		{
+			return self::getSharedInstance('parser', $viewPath, $config);
+		}
 
-        if (is_null($config))
-        {
-            $config = new \Config\View();
-        }
+		if (is_null($config))
+		{
+			$config = new \Config\View();
+		}
 
-        return new \CodeIgniter\View\Parser($config, $viewPath, self::locator(true), CI_DEBUG, self::logger(true));
-    }
+		return new \CodeIgniter\View\Parser($config, $viewPath, self::locator(true), CI_DEBUG, self::logger(true));
+	}
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
 	/**
 	 * The Renderer class is the class that actually displays a file to the user.
@@ -367,9 +367,9 @@ class Services
 		}
 
 		if (is_null($config))
-        {
-            $config = new \Config\View();
-        }
+		{
+			$config = new \Config\View();
+		}
 
 		return new \CodeIgniter\View\View($config, $viewPath, self::locator(true), CI_DEBUG, self::logger(true));
 	}
@@ -509,21 +509,21 @@ class Services
 
 	//--------------------------------------------------------------------
 
-    /**
-     * The Throttler class provides a simple method for implementing
-     * rate limiting in your applications.
-     */
-    public static function throttler($getShared = true)
-    {
-        if ($getShared)
-        {
-            return self::getSharedInstance('throttler');
-        }
+	/**
+	 * The Throttler class provides a simple method for implementing
+	 * rate limiting in your applications.
+	 */
+	public static function throttler($getShared = true)
+	{
+		if ($getShared)
+		{
+			return self::getSharedInstance('throttler');
+		}
 
-        return new \CodeIgniter\Throttle\Throttler(self::cache());
-    }
+		return new \CodeIgniter\Throttle\Throttler(self::cache());
+	}
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
 	/**
 	 * The Timer class provides a simple way to Benchmark portions of your
@@ -573,25 +573,25 @@ class Services
 
 	//--------------------------------------------------------------------
 
-    /**
-     * The Validation class provides tools for validating input data.
-     */
-    public static function validation(\Config\Validation $config = null, $getShared = true)
-    {
-        if ($getShared)
-        {
-            return self::getSharedInstance('validation', $config);
-        }
+	/**
+	 * The Validation class provides tools for validating input data.
+	 */
+	public static function validation(\Config\Validation $config = null, $getShared = true)
+	{
+		if ($getShared)
+		{
+			return self::getSharedInstance('validation', $config);
+		}
 
-        if (is_null($config))
-        {
-            $config = new \Config\Validation();
-        }
+		if (is_null($config))
+		{
+			$config = new \Config\Validation();
+		}
 
-        return new \CodeIgniter\Validation\Validation($config, self::renderer());
-    }
+		return new \CodeIgniter\Validation\Validation($config, self::renderer());
+	}
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
 	/**
 	 * View cells are intended to let you insert HTML into view
