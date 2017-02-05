@@ -39,5 +39,7 @@ class ForgeTest extends \CIDatabaseTestCase
 		$keys = $this->db->getIndexData('forge_test_1');
 		$this->assertEquals($keys[0]->fields, ['id']);
 		$this->assertEquals($keys[1]->fields, ['code', 'company']);
+
+		$this->forge->dropTable('forge_test_1', true);
 	}
 }
