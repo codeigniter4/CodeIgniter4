@@ -3,10 +3,6 @@
 use Config\MockAutoload;
 use PHPUnit\Framework\TestCase;
 
-if (! class_exists(TestCase::class)) {
-    class_alias(\PHPUnit_Framework_TestCase::class, TestCase::class);
-}
-
 class FileLocatorTest extends TestCase
 {
 	/**
