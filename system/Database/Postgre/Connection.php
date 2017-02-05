@@ -321,6 +321,41 @@ class Connection extends BaseConnection implements ConnectionInterface
 	//--------------------------------------------------------------------
 
 	/**
+	 * Returns an object with index data
+	 *
+	 * @param	string	$table
+	 * @return	array
+	 */
+	public function _indexData(string $table)
+	{
+		$sql = 'SELECT "indexname", "indexdef"
+			FROM "pg_indexes"
+			WHERE LOWER("tablename") = '.$this->escape(strtolower($table)).'
+			  AND "schemaname" = '.$this->escape('public');
+
+		if (($query = $this->query($sql)) === false)
+		{
+			return false;
+		}
+		$query = $query->getResultObject();
+
+		$retval = [];
+		foreach ($query as $row)
+		{
+			$obj         = new \stdClass();
+			$obj->name   = $row->indexname;
+			$_fields     = explode(',', preg_replace('/^.*\((.+?)\)$/', '$1', trim($row->indexdef)));
+			$obj->fields = array_map(function($v){ return trim($v); }, $_fields);
+
+			$retval[] = $obj;
+		}
+
+		return $retval;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Returns the last error code and message.
 	 *
 	 * Must return an array with keys 'code' and 'message':

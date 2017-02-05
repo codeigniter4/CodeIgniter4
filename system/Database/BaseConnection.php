@@ -1611,6 +1611,21 @@ abstract class BaseConnection implements ConnectionInterface
 	//--------------------------------------------------------------------
 
 	/**
+	 * Returns an object with key data
+	 *
+	 * @param	string	$table	the table name
+	 * @return	array
+	 */
+	public function getIndexData(string $table)
+	{
+		$fields = $this->_indexData($this->protectIdentifiers($table, true, false, false));
+
+		return $fields ?? false;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Allows the engine to be set into a mode where queries are not
 	 * actually executed, but they are still generated, timed, etc.
 	 *
