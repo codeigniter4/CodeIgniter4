@@ -337,6 +337,20 @@ class IncomingRequest extends Request
 	//--------------------------------------------------------------------
 
 	/**
+	 * Fetch an item from PUT data.
+	 *
+	 * @return array
+	 */
+	public function getPut()
+	{
+	    parse_str($this->body, $data);
+
+	    return $data;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Fetch an item from GET data.
 	 *
 	 * @param null $index  Index for item to fetch from $_GET.
