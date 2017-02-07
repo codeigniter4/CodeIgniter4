@@ -59,6 +59,21 @@ class IncomingRequestTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+    /**
+     * @group single
+     */
+    public function testCanGetOldInput()
+    {
+        $_SESSION['_ci_old_input'] = [
+            'get' => ['one' => 'two'],
+            'post' => ['name' => 'foo']
+        ];
+
+        $this->assertEquals('foo', $this->request->getOldInput('name'));
+        $this->assertEquals('two', $this->request->getOldInput('one'));
+    }
+
+
 	public function testCanGrabServerVars()
 	{
 		$_SERVER['TEST'] = 5;
@@ -102,6 +117,32 @@ class IncomingRequestTest extends \CIUnitTestCase
 	}
 
 	//--------------------------------------------------------------------
+
+    /**
+     * @see https://github.com/bcit-ci/CodeIgniter4/issues/353
+     */
+    public function testGetPostReturnsArrayValues()
+    {
+        $_POST = [
+            'ANNOUNCEMENTS' => [
+                1 => [
+                    'DETAIL' => 'asdf'
+                ],
+                2 => [
+                    'DETAIL' => 'sdfg'
+                ]
+            ],
+            'submit' => 'SAVE'
+        ];
+
+        $result = $this->request->getPost();
+
+        $this->assertEquals($_POST, $result);
+        $this->assertTrue(is_array($result['ANNOUNCEMENTS']));
+        $this->assertEquals(2, count($result['ANNOUNCEMENTS']));
+    }
+
+    //--------------------------------------------------------------------
 
 	public function testFetchGlobalFiltersValue()
 	{
@@ -184,6 +225,41 @@ class IncomingRequestTest extends \CIUnitTestCase
 		];
 
 		$this->assertEquals($expected, $this->request->getPost(['foo', 'bar'], FILTER_SANITIZE_ENCODED));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testStoresDefaultLocale()
+	{
+		$config = new App();
+
+		$this->assertEquals($config->defaultLocale, $this->request->getDefaultLocale());
+		$this->assertEquals($config->defaultLocale, $this->request->getLocale());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testSetLocaleSaves()
+	{
+		$this->request->setLocale('en');
+
+		$this->assertEquals('en', $this->request->getLocale());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testNegotiatesLocale()
+	{
+		$_SERVER['HTTP_ACCEPT_LANGUAGE'] = 'es; q=1.0, en; q=0.5';
+
+		$config = new App();
+		$config->negotiateLocale = true;
+		$config->supportedLocales = ['en', 'es'];
+
+		$request = new IncomingRequest($config, new URI());
+
+		$this->assertEquals($config->defaultLocale, $request->getDefaultLocale());
+		$this->assertEquals('es', $request->getLocale());
 	}
 
 	//--------------------------------------------------------------------

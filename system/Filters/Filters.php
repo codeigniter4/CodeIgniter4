@@ -1,5 +1,41 @@
 <?php namespace CodeIgniter\Filters;
 
+/**
+ * CodeIgniter
+ *
+ * An open source application development framework for PHP
+ *
+ * This content is released under the MIT License (MIT)
+ *
+ * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ *
+ * @package	CodeIgniter
+ * @author	CodeIgniter Dev Team
+ * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @license	https://opensource.org/licenses/MIT	MIT License
+ * @link	https://codeigniter.com
+ * @since	Version 3.0.0
+ * @filesource
+ */
+
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
@@ -59,13 +95,20 @@ class Filters
 	 *
 	 * @param string $uri
 	 * @param string $position
+	 *
+	 * @return \CodeIgniter\HTTP\RequestInterface|\CodeIgniter\HTTP\ResponseInterface|mixed
 	 */
 	public function run(string $uri, $position = 'before')
 	{
 	    $this->initialize($uri);
 
-		foreach ($this->filters[$position] as $alias)
+		foreach ($this->filters[$position] as $alias => $rules)
 		{
+			if (is_numeric($alias) && is_string($rules))
+			{
+				$alias = $rules;
+			}
+
 			if (! array_key_exists($alias, $this->config->aliases))
 			{
 				throw new \InvalidArgumentException("'{$alias}' filter must have a matching alias defined.");
@@ -87,6 +130,14 @@ class Filters
 					$this->request = $result;
 					continue;
 				}
+
+				// If the response object was sent back,
+                // then send it and quit.
+				if ($result instanceof ResponseInterface)
+                {
+                    $result->send();
+                    exit(EXIT_ERROR);
+                }
 
 				if (empty($result))
 				{
@@ -205,6 +256,38 @@ class Filters
 		// After
 		if (isset($this->config->globals['after']))
 		{
+			// Take any 'except' routes into consideration
+			foreach ($this->config->globals['after'] as $alias => $rules)
+			{
+				if (! is_array($rules) || ! array_key_exists('except', $rules))
+				{
+					continue;
+				}
+
+				$rules = $rules['except'];
+
+				if (is_string($rules))
+				{
+					$rules = [$rules];
+				}
+
+				foreach ($rules as $path)
+				{
+					// Prep it for regex
+					$path = str_replace('/*', '*', $path);
+					$path = trim(str_replace('*', '.+', $path), '/ ');
+
+					// Path doesn't match the URI? continue on...
+					if (preg_match('/'.$path.'/', $uri, $match) !== 1)
+					{
+						continue;
+					}
+
+					unset($this->config->globals['after'][$alias]);
+					break;
+				}
+			}
+
 			$this->filters['after'] = array_merge($this->filters['after'], $this->config->globals['after']);
 		}
 	}

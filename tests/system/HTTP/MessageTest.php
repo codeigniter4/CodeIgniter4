@@ -74,6 +74,15 @@ class MessageTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+    public function testSetHeaderOverwritesPrevious()
+    {
+        $this->message->setHeader('Pragma', 'cache');
+        $this->message->setHeader('Pragma', 'no-cache');
+
+        $this->assertEquals('no-cache', $this->message->getHeader('Pragma')->getValue());
+    }
+
+
 	public function testHeaderLineIsReadable()
 	{
 		$this->message->setHeader('Accept', ['json', 'html']);
@@ -146,20 +155,4 @@ class MessageTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	public function testCanHaveMultipleHeadersWithSameName()
-	{
-		$this->message->setHeader('Line', 'foo1');
-		$this->message->setHeader('Line', 'foo2');
-
-		$headers = $this->message->getHeader('line');
-
-		$this->assertTrue(is_array($headers));
-		$this->assertEquals(2, count($headers));
-		$this->assertTrue($headers[0] instanceof Header);
-		$this->assertTrue($headers[1] instanceof Header);
-		$this->assertEquals('foo1', $headers[0]->getValueLine());
-		$this->assertEquals('foo2', $headers[1]->getValueLine());
-	}
-
-	//--------------------------------------------------------------------
 }

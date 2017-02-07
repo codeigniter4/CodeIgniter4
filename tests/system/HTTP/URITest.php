@@ -7,14 +7,14 @@ class URITest extends \CIUnitTestCase
 
 	public function setUp()
 	{
-		
+
 	}
 
 	//--------------------------------------------------------------------
 
 	public function tearDown()
 	{
-		
+
 	}
 
 	//--------------------------------------------------------------------
@@ -439,4 +439,109 @@ class URITest extends \CIUnitTestCase
 	}
 
 	//--------------------------------------------------------------------
+
+    /**
+     * @dataProvider defaultResolutions
+     * @group single
+     */
+    public function testResolveRelativeURIHTTPS($rel, $expected)
+    {
+        $base = 'https://a/b/c/d';
+
+        $expected = str_replace('http:', 'https:', $expected);
+
+        $uri = new URI($base);
+
+        $new = $uri->resolveRelativeURI($rel);
+
+        $this->assertEquals($expected, (string) $new);
+    }
+
+    //--------------------------------------------------------------------
+
+	public function testAddQueryVar()
+	{
+	    $base = 'http://example.com/foo';
+
+		$uri = new URI($base);
+
+		$uri->addQuery('bar', 'baz');
+
+		$this->assertEquals('http://example.com/foo?bar=baz', (string)$uri);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testAddQueryVarRespectsExistingQueryVars()
+	{
+		$base = 'http://example.com/foo?bar=baz';
+
+		$uri = new URI($base);
+
+		$uri->addQuery('baz', 'foz');
+
+		$this->assertEquals('http://example.com/foo?bar=baz&baz=foz', (string)$uri);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testStripQueryVars()
+	{
+		$base = 'http://example.com/foo?foo=bar&bar=baz&baz=foz';
+
+		$uri = new URI($base);
+
+		$uri->stripQuery('bar', 'baz');
+
+		$this->assertEquals('http://example.com/foo?foo=bar', (string)$uri);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testKeepQueryVars()
+	{
+		$base = 'http://example.com/foo?foo=bar&bar=baz&baz=foz';
+
+		$uri = new URI($base);
+
+		$uri->keepQuery('bar', 'baz');
+
+		$this->assertEquals('http://example.com/foo?bar=baz&baz=foz', (string)$uri);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testGetQueryExcept()
+	{
+		$base = 'http://example.com/foo?foo=bar&bar=baz&baz=foz';
+
+		$uri = new URI($base);
+
+		$this->assertEquals('foo=bar&baz=foz', $uri->getQuery(['except' => ['bar']]));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testGetQueryOnly()
+	{
+		$base = 'http://example.com/foo?foo=bar&bar=baz&baz=foz';
+
+		$uri = new URI($base);
+
+		$this->assertEquals('bar=baz', $uri->getQuery(['only' => ['bar']]));
+	}
+
+	//--------------------------------------------------------------------
+
+    /**
+     * @see https://github.com/bcit-ci/CodeIgniter4/issues/331
+     * @group single
+     */
+    public function testNoExtraSlashes()
+    {
+        $this->assertEquals('http://entirely.different.com/subfolder', (string)(new URI('entirely.different.com/subfolder')));
+        $this->assertEquals('http://localhost/subfolder', (string)(new URI('localhost/subfolder')));
+        $this->assertEquals('http://localtest.me/subfolder', (string)(new URI('localtest.me/subfolder')));
+    }
+
 }

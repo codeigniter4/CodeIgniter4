@@ -18,7 +18,7 @@ For example, let’s say you want your URLs to have this prototype::
     example.com/product/2/
     example.com/product/3/
     example.com/product/4/
-    
+
 Normally the second segment of the URL is reserved for the method name, but in the example
 above it instead has a product ID. To overcome this, CodeIgniter allows you to remap the URI handler.
 
@@ -46,7 +46,7 @@ Placeholders
 A typical route might look something like this::
 
     $routes->add('product/:num', 'App\Catalog::productLookup');
-   
+
 In a route, the first parameter contains the URI to be matched, while the second parameter
 contains the destination it should be re-routed to. In the above example, if the literal word
 "product" is found in the first segment of the URL, and a number is found in the second segment,
@@ -56,14 +56,17 @@ Placeholders are simply strings that represent a Regular Expression pattern. Dur
 process, these placeholders are replaced with the value of the Regular Expression. They are primarily
 used for readability.
 
-The following placeholders are available for you to use in your routes: 
+The following placeholders are available for you to use in your routes:
 
-* **(:any)** will match all characters from that point to the end of the URI. This may include multiple URI segments. 
+* **(:any)** will match all characters from that point to the end of the URI. This may include multiple URI segments.
 * **(:segment)** will match any character except for a forward slash (/) restricting the result to a single segment.
 * **(:num)** will match any integer.
 * **(:alpha)** will match any string of alphabetic characters
 * **(:alphanum)** will match any string of alphabetic characters or integers, or any combination of the two.
 * **(:hash)** is the same as **:segment**, but can be used to easily see which routes use hashed ids (see the :doc:`Model </database/model>` docs).
+
+.. note:: **{locale}** cannot be used as a placeholder or other part of the route, as it is reserved for use
+    in :doc:`localization </libraries/localization>`.
 
 Examples
 ========
@@ -81,12 +84,12 @@ A URL containing the segments "blog/joe" will be remapped to the “\Blogs” cl
 The ID will be set to “34”::
 
 	$routes->add('product/(:any)', 'Catalog::productLookup');
-	
+
 A URL with “product” as the first segment, and anything in the second will be remapped to the “\Catalog” class
 and the “productLookup” method::
 
 	$routes->add('product/(:num)', 'Catalog::productLookupByID/$1';
-	
+
 A URL with “product” as the first segment, and a number in the second will be remapped to the “\Catalog” class
 and the “productLookupByID” method passing in the match as a variable to the method.
 
@@ -130,7 +133,7 @@ For example, if a user accesses a password protected area of your web applicatio
 redirect them back to the same page after they log in, you may find this example useful::
 
 	$routes->add('login/(.+)', 'Auth::login/$1');
-	
+
 For those of you who don’t know regular expressions and want to learn more about them,
 `regular-expressions.info <http://www.regular-expressions.info/>`_ might be a good starting point.
 
@@ -161,7 +164,7 @@ define an array of routes and then pass it as the first parameter to the `map()`
 	$routes = [];
 	$routes['product/(:num)']      = 'Catalog::productLookupById';
 	$routes['product/(:alphanum)'] = 'Catalog::productLookupByName';
-	
+
 	$collection->map($routes);
 
 
@@ -196,7 +199,7 @@ extensive set of routes that all share the opening string, like when building an
 		$routes->add('users', 'Admin\Users::index');
 		$routes->add('blog',  'Admin\Blog::index');
 	});
-	
+
 This would prefix the 'users' and 'blog" URIs with "admin", handling URLs like ``/admin/users`` and ``/admin/blog``.
 It is possible to nest groups within groups for finer organization if you need it::
 
@@ -233,16 +236,16 @@ to, and have the router lookup the current route to it. This allows route defini
 to update your application code. This is typically used within views to create links.
 
 For example, if you have a route to a photo gallery that you want to link to, you can use the ``route_to()`` helper
-function to get the current route that should be used. The first parameter is the Controller and method, written
-just as it would be defined the destination of a route. Any parameters that should be passed to the route are
-passed in next::
+function to get the current route that should be used. The first parameter is the fully qualified Controller and method,
+separated by a double colon (::), much like you would use when writing the initial route itself. Any parameters that
+should be passed to the route are passed in next::
 
 	// The route is defined as:
-	$routes->add('users/(:id)/gallery(:any)', 'Galleries::showUserGallery/$1/$2');
+	$routes->add('users/(:id)/gallery(:any)', 'App\Controllers\Galleries::showUserGallery/$1/$2');
 
 	// Generate the relative URL to link to user ID 15, gallery 12
 	// Generates: /users/15/gallery/12
-	<a href="<?= route_to('Galleries::showUserGallery', 15, 12) ?>">View Gallery</a>
+	<a href="<?= route_to('App\Controllers\Galleries::showUserGallery', 15, 12) ?>">View Gallery</a>
 
 Using Named Routes
 ==================
@@ -360,7 +363,7 @@ can modify the generated routes, or further restrict them. The ``$options`` arra
 	$routes->options('from', 'to', $options);
 	$routes->delete('from', 'to', $options);
 	$routes->patch('from', 'to', $options);
-	$routes->match(['get, 'put'], 'from', 'to', $options);
+	$routes->match(['get', 'put'], 'from', 'to', $options);
 	$routes->resources('photos', $options);
 	$routes->map($array, $options);
 	$routes->group('name', $options, function());
@@ -421,7 +424,7 @@ be used when the first parameter is a language string::
 	$routes->get('users/(:num)', 'users/show/$1', ['offset' => 1]);
 
 	// Creates:
-	$routes['users/(:num)'] = 'users/show/$2);
+	$routes['users/(:num)'] = 'users/show/$2';
 
 
 Routes Configuration Options

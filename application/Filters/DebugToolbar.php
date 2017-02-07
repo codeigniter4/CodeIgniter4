@@ -33,12 +33,14 @@ class DebugToolbar implements FilterInterface
 	 */
 	public function after(RequestInterface $request, ResponseInterface $response)
 	{
-		if ( ! is_cli() && CI_DEBUG)
+        $format = $response->getHeaderLine('content-type');
+
+        if ( ! is_cli() && CI_DEBUG && strpos($format, 'html') !== false)
 		{
-			global $codeigniter;
+			global $app;
 
 			$toolbar = Services::toolbar(new App());
-			$stats   = $codeigniter->getPerfomanceStats();
+			$stats   = $app->getPerformanceStats();
 
 			return $response->appendBody(
 				$toolbar->run(

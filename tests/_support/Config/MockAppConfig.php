@@ -6,10 +6,10 @@ class MockAppConfig
 
 	public $uriProtocol = 'REQUEST_URI';
 
-	public $cookiePrefix = '';
-	public $cookieDomain = '';
-	public $cookiePath = '/';
-	public $cookieSecure = false;
+	public $cookiePrefix   = '';
+	public $cookieDomain   = '';
+	public $cookiePath     = '/';
+	public $cookieSecure   = false;
 	public $cookieHTTPOnly = false;
 
 	public $proxyIPs = '';
@@ -22,4 +22,8 @@ class MockAppConfig
 	public $CSRFExcludeURIs = ['http://example.com'];
 
 	public $CSPEnabled = false;
+
+	public $defaultLocale    = 'en';
+	public $negotiateLocale  = false;
+	public $supportedLocales = ['en', 'es'];
 }

@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+ * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,9 +29,9 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2016, British Columbia Institute of Technology (http://bcit.ca/)
- * @license	http://opensource.org/licenses/MIT	MIT License
- * @link	http://codeigniter.com
+ * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @license	https://opensource.org/licenses/MIT	MIT License
+ * @link	https://codeigniter.com
  * @since	Version 3.0.0
  * @filesource
  */
@@ -89,7 +89,7 @@ class AutoloadConfig
 			'CodeIgniter' => realpath(BASEPATH)
 		];
 
-		if (ENVIRONMENT == 'testing')
+		if (isset($_SERVER['CI_ENV']) && $_SERVER['CI_ENV'] === 'testing')
 		{
 			$this->psr4['Tests\Support'] = BASEPATH.'../tests/_support/';
 		}
@@ -119,6 +119,7 @@ class AutoloadConfig
 			'CodeIgniter\Cache\Handlers\DummyHandler'       => BASEPATH.'Cache/Handlers/DummyHandler.php',
 			'CodeIgniter\Cache\Handlers\FileHandler'        => BASEPATH.'Cache/Handlers/FileHandler.php',
 			'CodeIgniter\Cache\Handlers\MemcachedHandler'   => BASEPATH.'Cache/Handlers/MemcachedHandler.php',
+			'CodeIgniter\Cache\Handlers\PredisHandler'      => BASEPATH.'Cache/Handlers/PredisHandler.php',
 			'CodeIgniter\Cache\Handlers\RedisHandler'       => BASEPATH.'Cache/Handlers/RedisHandler.php',
 			'CodeIgniter\Cache\Handlers\WincacheHandler'    => BASEPATH.'Cache/Handlers/WincacheHandler.php',
 			'CodeIgniter\Controller'                        => BASEPATH.'Controller.php',
@@ -174,8 +175,10 @@ class AutoloadConfig
 			'CodeIgniter\Session\Handlers\FileHandler'      => BASEPATH.'Session/Handlers/FileHandler.php',
 			'CodeIgniter\Session\Handlers\MemcachedHandler' => BASEPATH.'Session/Handlers/MemcachedHandler.php',
 			'CodeIgniter\Session\Handlers\RedisHandler'     => BASEPATH.'Session/Handlers/RedisHandler.php',
-			'CodeIgniter\View\RenderableInterface'          => BASEPATH.'View/RenderableInterface.php',
+			'CodeIgniter\View\RendererInterface'            => BASEPATH.'View/RendererInterface.php',
 			'CodeIgniter\View\View'                         => BASEPATH.'View/View.php',
+			'CodeIgniter\View\Parser'                       => BASEPATH.'View/Parser.php',
+			'CodeIgniter\View\Cell'                         => BASEPATH.'View/Cell.php',
 			'Zend\Escaper\Escaper'                          => BASEPATH.'ThirdParty/ZendEscaper/Escaper.php',
 			'CodeIgniter\Log\TestLogger'                    => BASEPATH.'../tests/_support/Log/TestLogger.php',
 		    'CIDatabaseTestCase'                            => BASEPATH.'../tests/_support/CIDatabaseTestCase.php'

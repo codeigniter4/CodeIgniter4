@@ -57,6 +57,12 @@ and ``csrf_hash()`` functions
 
 	<input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />
 
+Additionally, you can use the ``csrf_field()`` method to generate this 
+hidden input field for you::
+
+	// Generates: <input type="hidden" name="{csrf_token}" value="{csrf_hash}" />
+	<?= csrf_field() ?>
+
 Tokens may be either regenerated on every submission (default) or
 kept the same throughout the life of the CSRF cookie. The default
 regeneration of tokens provides stricter security, but may result

@@ -60,16 +60,4 @@ class Migrations extends BaseConfig
 	*/
 	public $currentVersion = 0;
 
-	/*
-	|--------------------------------------------------------------------------
-	| Migrations Path
-	|--------------------------------------------------------------------------
-	|
-	| Path to your migrations folder.
-	| Typically, it will be within your application path.
-	| Also, writing permission is required within the migrations path.
-	|
-	*/
-	public $path = APPPATH.'Database/Migrations/';
-
 }

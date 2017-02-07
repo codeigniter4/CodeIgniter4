@@ -6,7 +6,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+ * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,9 +28,9 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2016, British Columbia Institute of Technology (http://bcit.ca/)
- * @license	http://opensource.org/licenses/MIT	MIT License
- * @link	http://codeigniter.com
+ * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @license	https://opensource.org/licenses/MIT	MIT License
+ * @link	https://codeigniter.com
  * @since	Version 3.0.0
  * @filesource
  */
@@ -62,7 +62,7 @@ class Exceptions
 
 	/**
 	 * Constructor.
-	 * 
+	 *
 	 * @param \Config\App $config
 	 */
 	public function __construct(\Config\App $config)
@@ -143,7 +143,7 @@ class Exceptions
 
 		if (ob_get_level() > $this->ob_level + 1)
 		{
-			ob_end_flush();
+			ob_end_clean();
 		}
 
 		ob_start();
@@ -177,7 +177,7 @@ class Exceptions
 		// Convert it to an exception and pass it along.
 		throw new \ErrorException($message, 0, $severity, $file, $line);
 	}
-	
+
 	//--------------------------------------------------------------------
 
 	/**

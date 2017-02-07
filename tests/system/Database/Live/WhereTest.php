@@ -73,6 +73,21 @@ class WhereTest extends \CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testOrWhereSameColumn()
+	{
+		$jobs = $this->db->table('job')
+		                ->where('name', 'Developer')
+		                ->orWhere('name', 'Politician')
+		                ->get()
+		                ->getResult();
+
+		$this->assertEquals(2, count($jobs));
+		$this->assertEquals('Developer', $jobs[0]->name);
+		$this->assertEquals('Politician', $jobs[1]->name);
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testWhereIn()
 	{
 	    $jobs = $this->db->table('job')
@@ -87,6 +102,9 @@ class WhereTest extends \CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
+    /**
+     * @group single
+     */
 	public function testWhereNotIn()
 	{
 		$jobs = $this->db->table('job')

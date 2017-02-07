@@ -12,6 +12,7 @@ class URLHelperTest extends \CIUnitTestCase
 	public function setUp()
 	{
 		helper('url');
+		Services::reset();
 	}
 
 	//--------------------------------------------------------------------
@@ -145,6 +146,49 @@ class URLHelperTest extends \CIUnitTestCase
 		$this->assertEquals('http://example.com/index.php/news/local/123', site_url(['news', 'local', '123'], null, $config));
 	}
 
+	/**
+	 * @see https://github.com/bcit-ci/CodeIgniter4/issues/240
+	 */
+	public function testSiteURLWithSegments()
+	{
+		$_SERVER['HTTP_HOST'] = 'example.com';
+		$_SERVER['REQUEST_URI'] = '/test';
+
+		// Since we're on a CLI, we must provide our own URI
+		$config = new App();
+		$config->baseURL = 'http://example.com/';
+		$request = Services::request($config, false);
+		$request->uri = new URI('http://example.com/test');
+
+		Services::injectMock('request', $request);
+
+		$this->assertEquals('http://example.com/index.php/', site_url());
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * @see https://github.com/bcit-ci/CodeIgniter4/issues/240
+	 */
+	public function testSiteURLWithSegmentsAgain()
+	{
+		$_SERVER['HTTP_HOST'] = 'example.com';
+		$_SERVER['REQUEST_URI'] = '/test/page';
+
+		// Since we're on a CLI, we must provide our own URI
+		$config = new App();
+		$config->baseURL = '';
+		$request = Services::request($config, false);
+		$request->uri = new URI('http://example.com/test/page');
+
+		Services::injectMock('request', $request);
+
+		$this->assertEquals('http://example.com/index.php/', site_url());
+		$this->assertEquals('http://example.com/index.php/profile', site_url('profile'));
+	}
+
+	//--------------------------------------------------------------------
+
 	//--------------------------------------------------------------------
 	// Test base_url
 
@@ -195,6 +239,49 @@ class URLHelperTest extends \CIUnitTestCase
 
 		$this->assertEquals('http://example.com/blog/post/123', base_url('blog/post/123'));
 	}
+
+	/**
+	 * @see https://github.com/bcit-ci/CodeIgniter4/issues/240
+	 */
+	public function testBaseURLWithSegments()
+	{
+		$_SERVER['HTTP_HOST'] = 'example.com';
+		$_SERVER['REQUEST_URI'] = '/test';
+
+		// Since we're on a CLI, we must provide our own URI
+		$config = new App();
+		$config->baseURL = 'http://example.com/';
+		$request = Services::request($config, false);
+		$request->uri = new URI('http://example.com/test');
+
+		Services::injectMock('request', $request);
+
+		$this->assertEquals('http://example.com/', base_url());
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * @see https://github.com/bcit-ci/CodeIgniter4/issues/240
+	 */
+	public function testBaseURLWithSegmentsAgain()
+	{
+		$_SERVER['HTTP_HOST'] = 'example.com';
+		$_SERVER['REQUEST_URI'] = '/test/page';
+
+		// Since we're on a CLI, we must provide our own URI
+		$config = new App();
+		$config->baseURL = '';
+		$request = Services::request($config, false);
+		$request->uri = new URI('http://example.com/test/page');
+
+		Services::injectMock('request', $request);
+
+		$this->assertEquals('http://example.com/', base_url());
+		$this->assertEquals('http://example.com/profile', base_url('profile'));
+	}
+
+	//--------------------------------------------------------------------
 
 	//--------------------------------------------------------------------
 	// Test current_url
@@ -250,7 +337,53 @@ class URLHelperTest extends \CIUnitTestCase
 		$this->assertEquals(base_url(uri_string()), current_url());
 	}
 
+    //--------------------------------------------------------------------
+    // Test previous_url
+
+    public function testPreviousURLUsesSessionFirst()
+    {
+        $uri1 = 'http://example.com/one?two';
+        $uri2 = 'http://example.com/two?foo';
+
+        $_SERVER['HTTP_HOST'] = 'example.com';
+        $_SERVER['REQUEST_URI'] = '/';
+        $_SERVER['HTTP_REFERER'] = $uri1;
+        $_SESSION['_ci_previous_url'] = $uri2;
+
+        // Since we're on a CLI, we must provide our own URI
+        $config = new App();
+        $config->baseURL = 'http://example.com/public';
+        $request = Services::request($config);
+        $request->uri = new URI('http://example.com/public');
+
+        Services::injectMock('request', $request);
+
+        $this->assertEquals($uri2, previous_url());
+    }
+
 	//--------------------------------------------------------------------
+
+    public function testPreviousURLUsesRefererIfNeeded()
+    {
+        $uri1 = 'http://example.com/one?two';
+        $uri2 = 'http://example.com/two?foo';
+
+        $_SERVER['HTTP_HOST'] = 'example.com';
+        $_SERVER['REQUEST_URI'] = '/';
+        $_SERVER['HTTP_REFERER'] = $uri1;
+
+        // Since we're on a CLI, we must provide our own URI
+        $config = new App();
+        $config->baseURL = 'http://example.com/public';
+        $request = Services::request($config);
+        $request->uri = new URI('http://example.com/public');
+
+        Services::injectMock('request', $request);
+
+        $this->assertEquals($uri1, previous_url());
+    }
+
+    //--------------------------------------------------------------------
 	// Test uri_string
 
 	public function testUriString()
@@ -416,7 +549,7 @@ class URLHelperTest extends \CIUnitTestCase
 	{
 		return [
 			'egpage01'	 => ['<a href="http://example.com/index.php/news/local/123" title="News title">My News</a>', 'news/local/123', 'My News', 'title="News title"'],
-			'egpage02'	 => ['<a href="http://example.com/index.php/news/local/123" title="The best news!">My News</a>', 'news/local/123', 'My News', array ('title' => 'The best news!')],
+			'egpage02'	 => ['<a href="http://example.com/index.php/news/local/123" title="The&#x20;best&#x20;news&#x21;">My News</a>', 'news/local/123', 'My News', array ('title' => 'The best news!')],
 			'egpage03'	 => ['<a href="http://example.com/index.php">Click here</a>', '', 'Click here'],
 			'egpage04'	 => ['<a href="http://example.com/index.php">Click here</a>', '/', 'Click here'],
 		];
@@ -493,7 +626,7 @@ class URLHelperTest extends \CIUnitTestCase
 	{
 		return [
 			'page01' => ['<a href="mailto:me@my-site.com">Click Here to Contact Me</a>', 'me@my-site.com', 'Click Here to Contact Me'],
-			'page02' => ['<a href="mailto:me@my-site.com" title="Mail me">Contact Me</a>', 'me@my-site.com', 'Contact Me', array ('title' => 'Mail me')],
+			'page02' => ['<a href="mailto:me@my-site.com" title="Mail&#x20;me">Contact Me</a>', 'me@my-site.com', 'Contact Me', array ('title' => 'Mail me')],
 			'page03' => ['<a href="mailto:me@my-site.com">me@my-site.com</a>', 'me@my-site.com'],
 		];
 	}

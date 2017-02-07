@@ -54,7 +54,7 @@ to get all of our posts from our database. To do this, the database
 abstraction layer that is included with CodeIgniter —
 :doc:`Query Builder <../database/query_builder>` — is used. This makes it
 possible to write your 'queries' once and make them work on :doc:`all
-supported database systems <../general/requirements>`. The Model class
+supported database systems <../intro/requirements>`. The Model class
 also allows you to easily work with the Query Builder and provides
 some additional tools to make working with data simpler. Add the
 following code to your model.
@@ -97,6 +97,9 @@ a new ``News`` controller is defined. Create the new controller at
 ::
 
 	<?php
+
+	use App\Models\NewsModel;
+
 	class News extends \CodeIgniter\Controller
 	{
 		public function index()
@@ -108,7 +111,7 @@ a new ``News`` controller is defined. Create the new controller at
 
 		public function view($slug = null)
 		{
-		    $model = new NewsModel();
+			$model = new NewsModel();
 
 			$data['news'] = $model->getNews($slug);
 		}
@@ -135,7 +138,7 @@ the views. Modify the ``index()`` method to look like this::
 
 		$data = [
 			'news'  => $model->getNews(),
-		    'title' => 'News archive',
+			'title' => 'News archive',
 		];
 
 		echo view('Templates/Header', $data);
@@ -222,7 +225,7 @@ Routing
 Because of the wildcard routing rule created earlier, you need an extra
 route to view the controller that you just made. Modify your routing file
 (*application/config/routes.php*) so it looks as follows.
-This makes sure the requests reaches the ``News`` controller instead of
+This makes sure the requests reach the ``News`` controller instead of
 going directly to the ``Pages`` controller. The first line routes URI's
 with a slug to the ``view()`` method in the ``News`` controller.
 

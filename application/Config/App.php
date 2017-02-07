@@ -54,6 +54,68 @@ class App extends BaseConfig
 
 	/*
 	|--------------------------------------------------------------------------
+	| Default Locale
+	|--------------------------------------------------------------------------
+	|
+	| The Locale roughly represents the language and location that your visitor
+	| is viewing the site from. It affects the language strings and other
+	| strings (like currency markers, numbers, etc), that your program
+	| should run under for this request.
+	|
+	*/
+	public $defaultLocale = 'en';
+
+	/*
+	|--------------------------------------------------------------------------
+	| Negotiate Locale
+	|--------------------------------------------------------------------------
+	|
+	| If true, the current Request object will automatically determine the
+	| language to use based on the value of the Accept-Language header.
+	|
+	| If false, no automatic detection will be performed.
+	|
+	*/
+	public $negotiateLocale = false;
+
+	/*
+	|--------------------------------------------------------------------------
+	| Supported Locales
+	|--------------------------------------------------------------------------
+	|
+	| If $negotiateLocale is true, this array lists the locales supported
+	| by the application in descending order of priority. If no match is
+	| found, the first locale will be used.
+	|
+	*/
+	public $supportedLocales = ['en'];
+
+	/*
+	|--------------------------------------------------------------------------
+	| Application Timezone
+	|--------------------------------------------------------------------------
+	|
+	| The default timezone that will be used in your application to display
+	| dates with the date helper, and can be retrieved through the app_timezone()
+	|
+	*/
+	public $appTimezone = 'America/Chicago';
+
+    /*
+    |--------------------------------------------------------------------------
+    | Default Character Set
+    |--------------------------------------------------------------------------
+    |
+    | This determines which character set is used by default in various methods
+    | that require a character set to be provided.
+    |
+    | See http://php.net/htmlspecialchars for a list of supported charsets.
+    |
+    */
+    public $charset = 'UTF-8';
+
+	/*
+	|--------------------------------------------------------------------------
 	| URI PROTOCOL
 	|--------------------------------------------------------------------------
 	|
@@ -119,13 +181,13 @@ class App extends BaseConfig
 	| except for 'cookie_prefix' and 'cookie_httponly', which are ignored here.
 	|
 	*/
-	public $sessionDriver = 'CodeIgniter\Session\Handlers\FileHandler';
-	public $sessionCookieName = 'ci_session';
-	public $sessionExpiration = 7200;
-	public $sessionSavePath = NULL;
-	public $sessionMatchIP = FALSE;
-	public $sessionTimeToUpdate = 300;
-	public $sessionRegenerateDestroy = FALSE;
+	public $sessionDriver            = 'CodeIgniter\Session\Handlers\FileHandler';
+	public $sessionCookieName        = 'ci_session';
+	public $sessionExpiration        = 7200;
+	public $sessionSavePath          = null;
+	public $sessionMatchIP           = false;
+	public $sessionTimeToUpdate      = 300;
+	public $sessionRegenerateDestroy = false;
 
 	/*
 	|--------------------------------------------------------------------------
@@ -229,28 +291,6 @@ class App extends BaseConfig
 	| Default: APPPATH.'Views/errors'
 	*/
 	public $errorViewPath = APPPATH.'Views/errors';
-
-	/*
-	|--------------------------------------------------------------------------
-	| Composer auto-loading
-	|--------------------------------------------------------------------------
-	|
-	| Enabling this setting will tell CodeIgniter to look for a Composer
-	| package auto-loader script in /vendor/autoload.php.
-	|
-	|	$composerAutoload = TRUE;
-	|
-	| Or if you have your vendor/ directory located somewhere else, you
-	| can opt to set a specific path as well:
-	|
-	|	$composerAutoload = '/path/to/vendor/autoload.php';
-	|
-	| For more information about Composer, please visit http://getcomposer.org/
-	|
-	| Note: This will NOT disable or override the CodeIgniter-specific
-	|	autoloading.
-	*/
-	public $composerAutoload = false;
 
 	/*
 	|--------------------------------------------------------------------------

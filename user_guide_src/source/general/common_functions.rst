@@ -30,6 +30,21 @@ Service Accessors
      	$foo = cache('foo');
     	$cache = cache();
 
+.. php:function:: env ( $key[, $default=null])
+
+	:param string $key: The name of the environment variable to retrieve
+	:param mixed  $default: The default value to return if no value is found.
+	:returns: The environment variable, the default value, or null.
+	:rtype: mixed
+
+	Used to retrieve values that have previously been set to the environment,
+	or return a default value if it is not found. Will format boolean values
+	to actual booleans instead of string representations.
+
+	Especially useful when used in conjunction with .env files for setting
+	values that are specific to the environment itself, like database
+	settings, API keys, etc.
+
 .. php:function:: esc ( $data, $context='html' [, $encoding])
 
 	:param   string|array   $data: The information to be escaped.
@@ -54,6 +69,15 @@ Service Accessors
 
 	For full details, see the :doc:`helpers` page.
 
+.. php:function:: lang(string $line[, array $args]): string
+
+	:param string $line: The line of text to retrieve
+	:param array  $args: An array of data to substitute for placeholders.
+
+	Retrieves a locale-specific file based on an alias string.
+
+	For more information, see the :doc:`Localization </libraries/localization>` page.
+
 .. php:function:: session( [$key] )
 
 	:param string $key: The name of the session item to check for.
@@ -72,7 +96,7 @@ Service Accessors
 	A convenience method that provides quick access to the Timer class. You can pass in the name
 	of a benchmark point as the only parameter. This will start timing from this point, or stop
 	timing if a timer with this name is already running.
-		
+
 	Example::
 
 		// Get an instance
@@ -91,7 +115,7 @@ Service Accessors
 	:returns: The output from the view.
 	:rtype: string
 
-	Grabs the current RenderableInterface-compatible class
+	Grabs the current RendererInterface-compatible class
 	and tells it to render the specified view. Simply provides
 	a convenience method that can be used in Controllers,
 	libraries, and routed closures.
@@ -127,6 +151,15 @@ Miscellaneous Functions
 	:rtype: string
 
 	Returns the current CSRF hash value.
+
+.. php:function:: csrf_field ()
+
+	:returns: A string with the HTML for hidden input with all required CSRF information.
+	:rtype: string
+
+	Returns a hidden input with the CSRF information already inserted:
+
+		<input type="hidden" name="{csrf_token}" value="{csrf_hash}">
 
 .. php:function:: force_https ( $duration = 31536000 [, $request = null [, $response = null]] )
 
@@ -173,6 +206,17 @@ Miscellaneous Functions
 
 	If more control is needed, you must use ``$response->redirect()`` explicitly.
 
+.. php:function:: redirect_with_input( $uri[, ...$params] )
+
+	:param string $uri: The URI to redirect the user to.
+	:param mixed  $params: one or more additional parameters that can be used with the :meth:`RouteCollection::reverseRoute` method.
+
+	Identical to the ``redirect()`` method, except this flashes the request's $_GET and $_POST values to the session.
+	On the next page request, the form helper ``set_*`` methods will check for data within the old input first, then,
+	if it's not found, the current GET/POST will be checked.
+
+	.. note:: In order to retrieve the old, the session MUST be started prior to calling the function.
+
 .. php:function:: remove_invisible_characters($str[, $url_encoded = TRUE])
 
 	:param	string	$str: Input string
@@ -206,13 +250,15 @@ Miscellaneous Functions
 	:rtype: mixed
 
 	Provides easy access to any of the :doc:`Services <../concepts/services>` defined in the system.
+	This will always return a shared instance of the class, so no matter how many times this is called
+	during a single request, only one class instance will be created.
 
 	Example::
 
 		$logger = service('logger');
 		$renderer = service('renderer', APPPATH.'views/');
 
-.. php:function:: shared_service ( $name [, ...$params] )
+.. php:function:: single_service ( $name [, ...$params] )
 
 	:param   string   $name: The name of the service to load
 	:param   mixed    $params: One or more parameters to pass to the service method.
@@ -220,7 +266,7 @@ Miscellaneous Functions
 	:rtype: mixed
 
 	Identical to the **service()** function described above, except that all calls to this
-	function will share the same instance of the service, where **service** returns a new
+	function will return a new instance of the class, where **service** returns the same
 	instance every time.
 
 .. php:function:: stringify_attributes ( $attributes [, $js] )
@@ -241,6 +287,10 @@ The following constants are always available anywhere within your application.
 
 Core Constants
 ==============
+
+.. php:const:: ROOTPATH
+
+	The path to the main application directory. Just above ``public``.
 
 .. php:const:: APPPATH
 

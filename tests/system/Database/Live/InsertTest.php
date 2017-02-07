@@ -64,4 +64,31 @@ class InsertTest extends \CIDatabaseTestCase
 	}
 
 	//--------------------------------------------------------------------
+
+    public function testBug302()
+    {
+        $code = "my code \'CodeIgniter\Autoloader\'";
+
+        $this->db->table('misc')->insert([
+            'key' => 'test',
+            'value' => $code
+        ]);
+
+        $this->seeInDatabase('misc', ['key' => 'test']);
+        $this->seeInDatabase('misc', ['value' => $code]);
+    }
+
+    public function testInsertPasswordHash()
+    {
+        $hash = '$2y$10$tNevVVMwW52V2neE3H79a.wp8ZoItrwosk54.Siz5Fbw55X9YIBsW';
+
+        $this->db->table('misc')->insert([
+            'key' => 'password',
+            'value' => $hash
+        ]);
+
+        $this->seeInDatabase('misc', ['value' => $hash]);
+    }
+
+
 }

@@ -1,5 +1,41 @@
 <?php namespace CodeIgniter\View;
 
+/**
+ * CodeIgniter
+ *
+ * An open source application development framework for PHP
+ *
+ * This content is released under the MIT License (MIT)
+ *
+ * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ *
+ * @package	CodeIgniter
+ * @author	CodeIgniter Dev Team
+ * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @license	https://opensource.org/licenses/MIT	MIT License
+ * @link	https://codeigniter.com
+ * @since	Version 3.0.0
+ * @filesource
+ */
+
 use CodeIgniter\Cache\CacheInterface;
 
 /**
@@ -86,7 +122,7 @@ class Cell
 
 		if ($paramCount === 0)
 		{
-			if ($paramArray !== null)
+			if ($paramArray !== [])
 			{
 				throw new \InvalidArgumentException("{$class}::{$method} has no params.");
 			}
@@ -95,13 +131,7 @@ class Cell
 		}
 		elseif (
 			($paramCount === 1)
-			&& (
-				(! array_key_exists($refParams[0]->name, $paramArray))
-				|| (
-					array_key_exists($refParams[0]->name, $paramArray)
-					&& count($paramArray) !== 1
-				)
-			)
+			&& ( (! array_key_exists($refParams[0]->name, $paramArray)) || (array_key_exists($refParams[0]->name, $paramArray) && count($paramArray) !== 1) )
 		)
 		{
 			$output = $instance->{$method}($paramArray);
@@ -133,7 +163,7 @@ class Cell
 		// Can we cache it?
 		if (! empty($this->cache) && $ttl !== 0)
 		{
-			$this->cache->set($cacheName, $output, $ttl);
+			$this->cache->save($cacheName, $output, $ttl);
 		}
 		return $output;
 	}
@@ -153,7 +183,7 @@ class Cell
 	{
 		if (empty($params) || (! is_string($params) && ! is_array($params)))
 		{
-			return;
+			return [];
 		}
 
 		if (is_string($params))
@@ -182,7 +212,7 @@ class Cell
 
 		if (is_array($params) && ! count($params))
 		{
-			return;
+			return [];
 		}
 
 		return $params;

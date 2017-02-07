@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+ * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,9 +29,9 @@
  *
  * @package    CodeIgniter
  * @author     CodeIgniter Dev Team
- * @copyright  Copyright (c) 2014 - 2016, British Columbia Institute of Technology (http://bcit.ca/)
- * @license    http://opensource.org/licenses/MIT    MIT License
- * @link       http://codeigniter.com
+ * @copyright  Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT    MIT License
+ * @link       https://codeigniter.com
  * @since      Version 3.0.0
  * @filesource
  */
@@ -103,8 +103,24 @@ if ( ! function_exists('base_url'))
 			$path = implode('/', $path);
 		}
 
-		$url = \CodeIgniter\Services::request()->uri;
+		// We should be using the set baseURL the user set
+		// otherwise get rid of the path because we have
+		// no way of knowing the intent...
+		$config = \CodeIgniter\Services::request()->config;
 
+		if (! empty($config->baseURL))
+		{
+			$url = new \CodeIgniter\HTTP\URI($config->baseURL);
+		}
+		else
+		{
+			$url = \CodeIgniter\Services::request()->uri;
+			$url->setPath('/');
+		}
+
+		unset($config);
+
+		// Merge in the path set by the user, if any
 		if ( ! empty($path))
 		{
 			$url = $url->resolveRelativeURI($path);
@@ -132,7 +148,7 @@ if ( ! function_exists('current_url'))
 	 * function is placed
 	 *
 	 * @param boolean $returnObject True to return an object instead of a strong
-	 * 
+	 *
 	 * @return string|URI
 	 */
 	function current_url(bool $returnObject = false)
@@ -141,6 +157,39 @@ if ( ! function_exists('current_url'))
 	}
 
 }
+
+//--------------------------------------------------------------------
+
+if (! function_exists('previous_url'))
+{
+    /**
+     * Returns the previous URL the current visitor was on. For security reasons
+     * we first check in a saved session variable, if it exists, and use that.
+     * If that's not available, however, we'll use a sanitized url from $_SERVER['HTTP_REFERER']
+     * which can be set by the user so is untrusted and not set by certain browsers/servers.
+     *
+     * @param bool $returnObject
+     *
+     * @return \CodeIgniter\HTTP\URI|mixed|string
+     */
+    function previous_url(bool $returnObject = false)
+    {
+        // Grab from the session first, if we have it,
+        // since it's more reliable and safer.
+        // Otherwise, grab a sanitized version from $_SERVER.
+        $referer = $_SESSION['_ci_previous_url']
+                   ?? \CodeIgniter\Services::request()->getServer('HTTP_REFERER', FILTER_SANITIZE_URL);
+
+        $referer = empty($referer)
+            ? site_url('/')
+            : $referer;
+
+        return $returnObject
+            ? new \CodeIgniter\HTTP\URI($referer)
+            : $referer;
+    }
+}
+
 //--------------------------------------------------------------------
 
 if ( ! function_exists('uri_string'))
@@ -503,7 +552,7 @@ if ( ! function_exists('prep_url'))
 	 *
 	 * Formerly used URI, but that does not play nicely with URIs missing
 	 * the scheme.
-	 * 
+	 *
 	 * @param  string    the URL
 	 * @return string
 	 */

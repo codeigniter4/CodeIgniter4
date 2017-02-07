@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+ * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,9 +29,9 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2016, British Columbia Institute of Technology (http://bcit.ca/)
- * @license	http://opensource.org/licenses/MIT	MIT License
- * @link	http://codeigniter.com
+ * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @license	https://opensource.org/licenses/MIT	MIT License
+ * @link	https://codeigniter.com
  * @since	Version 3.0.0
  * @filesource
  */
@@ -122,10 +122,10 @@ class Query implements QueryInterface
 	{
 	    $this->db = $db;
 	}
-	
+
 	//--------------------------------------------------------------------
-	
-	
+
+
 	/**
 	 * Sets the raw query string to use for this statement.
 	 *
@@ -149,12 +149,28 @@ class Query implements QueryInterface
 	//--------------------------------------------------------------------
 
 	/**
+	 * Will store the variables to bind into the query later.
+	 *
+	 * @param array $binds
+	 *
+	 * @return $this
+	 */
+	public function setBinds(array $binds)
+	{
+	    $this->binds = $binds;
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Returns the final, processed query string after binding, etal
 	 * has been performed.
 	 *
 	 * @return mixed
 	 */
-	public function getQuery()
+	public function getQuery(): string
 	{
 		if (empty($this->finalQueryString))
 		{
@@ -230,7 +246,7 @@ class Query implements QueryInterface
 
 	/**
 	 * Stores the error description that happened for this query.
-	 * 
+	 *
 	 * @param int $code
 	 * @param string $error
 	 */
@@ -378,7 +394,7 @@ class Query implements QueryInterface
 	//--------------------------------------------------------------------
 
 	/**
-	 * Match binfings
+	 * Match bindings
 	 * @param string $sql
 	 * @param array $binds
 	 * @return string
@@ -388,11 +404,27 @@ class Query implements QueryInterface
 		foreach ($binds as $placeholder => $value)
 		{
 			$escapedValue = $this->db->escape($value);
-			if (is_array($escapedValue))
-			{
-				$escapedValue = '('.implode(',', $escapedValue).')';
-			}
-			$sql = str_replace(':'.$placeholder, $escapedValue, $sql);
+
+            // In order to correctly handle backlashes in saved strings
+            // we will need to preg_quote, so remove the wrapping escape characters
+            // otherwise it will get escaped.
+            if (is_array($value))
+            {
+                foreach ($value as &$item)
+                {
+                    $item = preg_quote($item);
+                }
+
+                $escapedValue = '('.implode(',', $escapedValue).')';
+            }
+            else
+            {
+                $escapedValue = strpos($escapedValue, '\\') !== false
+                    ? preg_quote(trim($escapedValue, $this->db->escapeChar))
+                    : $escapedValue;
+            }
+
+			$sql = preg_replace('/:'.$placeholder.'(?!\w)/', $escapedValue, $sql);
 		}
 
 		return $sql;
@@ -451,7 +483,7 @@ class Query implements QueryInterface
 
 	/**
 	 * Return text representation of the query
-	 * 
+	 *
 	 * @return type
 	 */
 	public function __toString()

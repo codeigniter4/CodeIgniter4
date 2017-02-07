@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+ * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,9 +29,9 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2016, British Columbia Institute of Technology (http://bcit.ca/)
- * @license	http://opensource.org/licenses/MIT	MIT License
- * @link	http://codeigniter.com
+ * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @license	https://opensource.org/licenses/MIT	MIT License
+ * @link	https://codeigniter.com
  * @since	Version 3.0.0
  * @filesource
  */
@@ -83,8 +83,18 @@ class Connection extends BaseConnection implements ConnectionInterface
 			$this->buildDSN();
 		}
 
+        // Strip pgsql if exists
+        if (mb_strpos($this->DSN, 'pgsql:') === 0)
+        {
+            $this->DSN = mb_substr($this->DSN, 6);
+        }
+
+        // Convert semicolons to spaces.
+        $this->DSN = str_replace(';', ' ', $this->DSN);
+
 		$this->connID = $persistent === true
-			? pg_pconnect($this->DSN) : pg_connect($this->DSN);
+			? pg_pconnect($this->DSN)
+            : pg_connect($this->DSN);
 
 		if ($this->connID !== false)
 		{
@@ -125,6 +135,16 @@ class Connection extends BaseConnection implements ConnectionInterface
 
 	//--------------------------------------------------------------------
 
+    /**
+     * Close the database connection.
+     */
+    protected function _close()
+    {
+        pg_close($this->connID);
+    }
+
+    //--------------------------------------------------------------------
+
 	/**
 	 * Select a specific database table to use.
 	 *
@@ -153,7 +173,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 
 		if ( ! $this->connID or ($pgVersion = pg_version($this->connID)) === false)
 		{
-			return false;
+			$this->initialize();
 		}
 
 		return isset($pgVersion['server'])
@@ -270,7 +290,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 * @param	string	$table
 	 * @return	array
 	 */
-	public function fieldData(string $table)
+	public function _fieldData(string $table)
 	{
 		$sql = 'SELECT "column_name", "data_type", "character_maximum_length", "numeric_precision", "column_default"
 			FROM "information_schema"."columns"
@@ -293,6 +313,41 @@ class Connection extends BaseConnection implements ConnectionInterface
 			$retval[$i]->max_length = $query[$i]->character_maximum_length > 0
 				? $query[$i]->character_maximum_length
 				: $query[$i]->numeric_precision;
+		}
+
+		return $retval;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns an object with index data
+	 *
+	 * @param	string	$table
+	 * @return	array
+	 */
+	public function _indexData(string $table)
+	{
+		$sql = 'SELECT "indexname", "indexdef"
+			FROM "pg_indexes"
+			WHERE LOWER("tablename") = '.$this->escape(strtolower($table)).'
+			  AND "schemaname" = '.$this->escape('public');
+
+		if (($query = $this->query($sql)) === false)
+		{
+			return false;
+		}
+		$query = $query->getResultObject();
+
+		$retval = [];
+		foreach ($query as $row)
+		{
+			$obj         = new \stdClass();
+			$obj->name   = $row->indexname;
+			$_fields     = explode(',', preg_replace('/^.*\((.+?)\)$/', '$1', trim($row->indexdef)));
+			$obj->fields = array_map(function($v){ return trim($v); }, $_fields);
+
+			$retval[] = $obj;
 		}
 
 		return $retval;
@@ -430,4 +485,40 @@ class Connection extends BaseConnection implements ConnectionInterface
 	}
 
 	//--------------------------------------------------------------------
+
+    /**
+     * Begin Transaction
+     *
+     * @return	bool
+     */
+    protected function _transBegin(): bool
+    {
+        return (bool)pg_query($this->connID, 'BEGIN');
+    }
+
+    // --------------------------------------------------------------------
+
+    /**
+     * Commit Transaction
+     *
+     * @return	bool
+     */
+    protected function _transCommit(): bool
+    {
+        return (bool)pg_query($this->connID, 'COMMIT');
+    }
+
+    // --------------------------------------------------------------------
+
+    /**
+     * Rollback Transaction
+     *
+     * @return	bool
+     */
+    protected function _transRollback(): bool
+    {
+        return (bool)pg_query($this->connID, 'ROLLBACK');
+    }
+
+    // --------------------------------------------------------------------
 }

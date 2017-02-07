@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+ * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,9 +29,9 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2016, British Columbia Institute of Technology (http://bcit.ca/)
- * @license	http://opensource.org/licenses/MIT	MIT License
- * @link	http://codeigniter.com
+ * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @license	https://opensource.org/licenses/MIT	MIT License
+ * @link	https://codeigniter.com
  * @since	Version 3.0.0
  * @filesource
  */
@@ -75,7 +75,7 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param BaseConfig $config
 	 * @throws \Exception
 	 */
@@ -166,18 +166,18 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 	 *
 	 * Reads session data and acquires a lock
 	 *
-	 * @param    string $session_id Session ID
+	 * @param    string $sessionID Session ID
 	 *
 	 * @return    string    Serialized session data
 	 */
-	public function read($session_id)
+	public function read($sessionID)
 	{
-		if (isset($this->memcached) && $this->lockSession($session_id))
+		if (isset($this->memcached) && $this->lockSession($sessionID))
 		{
 			// Needed by write() to detect session_regenerate_id() calls
-			$this->sessionID = $session_id;
+			$this->sessionID = $sessionID;
 
-			$session_data      = (string)$this->memcached->get($this->keyPrefix.$session_id);
+			$session_data      = (string)$this->memcached->get($this->keyPrefix.$sessionID);
 			$this->fingerprint = md5($session_data);
 
 			return $session_data;
@@ -193,38 +193,38 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 	 *
 	 * Writes (create / update) session data
 	 *
-	 * @param    string $session_id   Session ID
-	 * @param    string $session_data Serialized session data
+	 * @param    string $sessionID   Session ID
+	 * @param    string $sessionData Serialized session data
 	 *
 	 * @return    bool
 	 */
-	public function write($session_id, $session_data)
+	public function write($sessionID, $sessionData)
 	{
 		if ( ! isset($this->memcached))
 		{
 			return false;
 		}
 		// Was the ID regenerated?
-		elseif ($session_id !== $this->sessionID)
+		elseif ($sessionID !== $this->sessionID)
 		{
-			if ( ! $this->releaseLock() || ! $this->lockSession($session_id))
+			if ( ! $this->releaseLock() || ! $this->lockSession($sessionID))
 			{
 				return false;
 			}
 
 			$this->fingerprint = md5('');
-			$this->sessionID   = $session_id;
+			$this->sessionID   = $sessionID;
 		}
 
 		if (isset($this->lockKey))
 		{
 			$this->memcached->replace($this->lockKey, time(), 300);
 
-			if ($this->fingerprint !== ($fingerprint = md5($session_data)))
+			if ($this->fingerprint !== ($fingerprint = md5($sessionData)))
 			{
-				if ($this->memcached->set($this->keyPrefix.$session_id, $session_data, $this->sessionExpiration))
+				if ($this->memcached->set($this->keyPrefix.$sessionID, $sessionData, $this->sessionExpiration))
 				{
-					$this->_fingerprint = $fingerprint;
+					$this->fingerprint = $fingerprint;
 
 					return true;
 				}
@@ -232,7 +232,7 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 				return false;
 			}
 
-			return $this->memcached->touch($this->keyPrefix.$session_id, $this->sessionExpiration);
+			return $this->memcached->touch($this->keyPrefix.$sessionID, $this->sessionExpiration);
 		}
 
 		return false;
@@ -313,11 +313,11 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 	 *
 	 * Acquires an (emulated) lock.
 	 *
-	 * @param    string $session_id Session ID
+	 * @param    string $sessionID Session ID
 	 *
 	 * @return    bool
 	 */
-	protected function lockSession(string $session_id): bool
+	protected function lockSession(string $sessionID): bool
 	{
 		if (isset($this->lockKey))
 		{
@@ -325,7 +325,7 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 		}
 
 		// 30 attempts to obtain a lock, in case another request already has it
-		$lock_key = $this->keyPrefix.$session_id.':lock';
+		$lock_key = $this->keyPrefix.$sessionID.':lock';
 		$attempt  = 0;
 
 		do
@@ -338,7 +338,7 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 
 			if ( ! $this->memcached->set($lock_key, time(), 300))
 			{
-				$this->logger->error('Session: Error while trying to obtain lock for '.$this->keyPrefix.$session_id);
+				$this->logger->error('Session: Error while trying to obtain lock for '.$this->keyPrefix.$sessionID);
 
 				return false;
 			}
@@ -350,7 +350,7 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 
 		if ($attempt === 30)
 		{
-			$this->logger->error('Session: Unable to obtain lock for '.$this->keyPrefix.$session_id.' after 30 attempts, aborting.');
+			$this->logger->error('Session: Unable to obtain lock for '.$this->keyPrefix.$sessionID.' after 30 attempts, aborting.');
 
 			return false;
 		}

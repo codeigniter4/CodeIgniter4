@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+ * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,9 +29,9 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2016, British Columbia Institute of Technology (http://bcit.ca/)
- * @license	http://opensource.org/licenses/MIT	MIT License
- * @link	http://codeigniter.com
+ * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @license	https://opensource.org/licenses/MIT	MIT License
+ * @link	https://codeigniter.com
  * @since	Version 3.0.0
  * @filesource
  */
@@ -81,20 +81,20 @@ class CIDatabaseTestCase extends CIUnitTestCase
 
 	/**
 	 * Our database connection.
-	 * 
+	 *
 	 * @var BaseConnection
 	 */
 	protected $db;
 
 	/**
 	 * Migration Runner instance.
-	 * 
+	 *
 	 * @var MigrationRunner|mixed
 	 */
 	protected $migrations;
 
 	/**
-	 * Seeder instance 
+	 * Seeder instance
 	 *
 	 * @var \CodeIgniter\Database\Seeder
 	 */
@@ -125,7 +125,7 @@ class CIDatabaseTestCase extends CIUnitTestCase
 			$config->enabled = true;
 
 			$this->migrations = Services::migrations($config, $this->db);
-			$this->migrations->setSilent(true);
+			$this->migrations->setSilent(false);
 		}
 
 		if ($this->seeder === null)
@@ -165,7 +165,7 @@ class CIDatabaseTestCase extends CIUnitTestCase
 			{
 				$this->seeder->setPath(rtrim($this->basePath, '/').'/seeds');
 			}
-			
+
 			$this->seed($this->seed);
 		}
 	}
@@ -225,13 +225,13 @@ class CIDatabaseTestCase extends CIUnitTestCase
 
 	    $this->assertTrue($count == 0, 'Row was found in database');
 	}
-	
+
 	//--------------------------------------------------------------------
 
 	/**
 	 * Asserts that records that match the conditions in $where DO
 	 * exist in the database.
-	 * 
+	 *
 	 * @param string $table
 	 * @param array  $where
 	 *
@@ -244,7 +244,7 @@ class CIDatabaseTestCase extends CIUnitTestCase
 		                  ->where($where)
 		                  ->countAllResults();
 
-		$this->assertTrue($count > 0, 'Row not found in database');
+		$this->assertTrue($count > 0, 'Row not found in database: '. $this->db->showLastQuery());
 	}
 
 	//--------------------------------------------------------------------
@@ -271,7 +271,7 @@ class CIDatabaseTestCase extends CIUnitTestCase
 
 		return $query->$column ?? false;
 	}
-	
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -314,7 +314,7 @@ class CIDatabaseTestCase extends CIUnitTestCase
 
 		$this->assertEquals($expected, $count, 'Wrong number of matching rows in database.');
 	}
-	
+
 	//--------------------------------------------------------------------
-	
+
 }

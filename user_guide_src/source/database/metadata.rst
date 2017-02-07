@@ -94,7 +94,7 @@ performing an action. Returns a boolean TRUE/FALSE. Usage example::
 Retrieve Field Metadata
 =======================
 
-**$db->fieldData()**
+**$db->getFieldData()**
 
 Returns an array of objects containing field information.
 
@@ -128,3 +128,10 @@ database:
 -  max_length - maximum length of the column
 -  primary_key - 1 if the column is a primary key
 -  type - the type of the column
+
+List the Indexes in a Table
+==========================
+
+**$db->getIndexData()**
+
+please write this, someone...

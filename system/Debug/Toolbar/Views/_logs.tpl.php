@@ -1,0 +1,16 @@
+<table>
+    <thead>
+        <tr>
+            <th>Severity</th>
+            <th>Message</th>
+        </tr>
+    </thead>
+    <tbody>
+    {logs}
+        <tr>
+            <td>{level}</td>
+            <td>{msg}</td>
+        </tr>
+    {/logs}
+    </tbody>
+</table>

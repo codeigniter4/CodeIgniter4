@@ -15,14 +15,16 @@ array directly.
 Accessing Files
 ===============
 
+All Files
+----------
+
 When you upload files they can be accessed natively in PHP through the ``$_FILES`` superglobal. This array has some
 major shortcomings when working with multiple files uploaded at once, and has potential security flaws many developers
 are not aware of. CodeIgniter helps with both of these situations by standardizing your usage of files behind a
 common interface.
 
 Files are accessed through the current ``IncomingRequest`` instance. To retrieve all files that were uploaded with this
-request, use ``getFiles()``. This will return an array of files represented by instances of ``CodeIgniter\HTTP\Files\UploadedFile``.
-::
+request, use ``getFiles()``. This will return an array of files represented by instances of ``CodeIgniter\HTTP\Files\UploadedFile``::
 
 	$files = $this->request->getFiles();
 
@@ -68,11 +70,56 @@ In this case, the returned array of files would be more like::
 		]
 	]
 
-If you just need to access a single file, you can use ``getFile()`` to retrieve the file instance directly::
+Single File
+----------
 
-	$file = $this->request->getFile('avatar');
+If you just need to access a single file, you can use ``getFile()`` to retrieve the file instance directly. This will return an instance of ``CodeIgniter\HTTP\Files\UploadedFile``:
 
-.. note:: This currently only works with simple file names and not with array syntax naming.
+Simplest usage
+^^^^^^^^^^
+
+With the simplest usage, a single file might be submitted like::
+
+	<input type="file" name="userfile" />
+
+Which would return a simple file instance like::
+
+	$file = $this->request->getFile('userfile');
+
+Array notation
+^^^^^^^^^^
+
+If you used an array notation for the name, the input would look something like::
+
+	<input type="file" name="my-form[details][avatar]" />
+
+For get the file instance::
+
+	$file = $this->request->getFile('my-form.details.avatar');
+
+
+Multiple files
+^^^^^^^^^^
+If there are multiple files with the same name you can use ``getFile()`` ro retrieve every file individually::
+
+	<input type="file" name="images[]" multiple />
+
+In controller::
+
+	$file1 = $this->request->getFile('images.0');
+	$file2 = $this->request->getFile('images.1');
+
+Another example::
+
+	Upload an avatar: <input type="file" name="my-form[details][avatars][]" />
+	Upload an avatar: <input type="file" name="my-form[details][avatars][]" />
+
+In controller::
+
+	$file1 = $this->request->getFile('my-form.details.avatars.0');
+	$file2 = $this->request->getFile('my-form.details.avatars.1');
+
+.. note:: For multiple files it is recommended to use the function ``getFiles()``
 
 =====================
 Working With the File
@@ -110,21 +157,20 @@ File Names
 
 You can retrieve the original filename provided by the client with the ``getName()`` method. This will typically be the
 filename sent by the client, and should not be trusted. If the file has been moved, this will return the final name of
-the moved file.::
+the moved file::
 
 	$name = $file->getName();
 
 **getTempName()**
 
-To get the name of the temp file that was created during the upload, you can use the ``getTempName()`` method.::
+To get the name of the temp file that was created during the upload, you can use the ``getTempName()`` method::
 
 	$tempfile = $file->getTempName();
 
 **getRandomName()**
 
 You can generate a cryptographically secure random filename, with the current timestamp prepended, with the ``getRandomName()``
-method. This is especially useful to rename files when moving it so that the filename is unguessable.
-::
+method. This is especially useful to rename files when moving it so that the filename is unguessable::
 
 	// Generates something like: 1465965676_385e33f741.jpg
 	$newName = $file->getRandomName();
@@ -137,8 +183,7 @@ Other File Info
 
 Attempts to determine the file extension based on the trusted ``getType()`` method instead of the value listed
 in ``$_FILES``. If the mime type is unknown, will return null. Uses the values in **application/Config/Mimes.php**
-to determine extension.
-::
+to determine extension::
 
 	// Returns 'jpg' (WITHOUT the period)
 	$ext = $file->getExtension();
@@ -146,16 +191,14 @@ to determine extension.
 **getClientExtension()**
 
 Returns the original file extension, based on the file name that was uploaded. This is NOT a trusted source. For a
-trusted version, use ``getExtension()`` instead.
-::
+trusted version, use ``getExtension()`` instead::
 
 	$ext = $file->getClientExtension();
 
 **getType()**
 
 Retrieve the media type (mime type) of the file. Does not use information from the $_FILES array, but uses other methods to more
-accurately determine the type of file, like ``finfo``, or ``mime_content_type``.
-::
+accurately determine the type of file, like ``finfo``, or ``mime_content_type``::
 
 	$type = $file->getType();
 
@@ -164,8 +207,7 @@ accurately determine the type of file, like ``finfo``, or ``mime_content_type``.
 **getClientType()**
 
 Returns the mime type (mime type) of the file as provided by the client. This is NOT a trusted value. For a trusted
-version, use ``getType()`` instead.
-::
+version, use ``getType()`` instead::
 
 	$type = $file->getClientType();
 
@@ -174,8 +216,7 @@ version, use ``getType()`` instead.
 **getSize()**
 
 Returns the size of the uploaded file in bytes. You can pass in either 'kb' or 'mb' as the first parameter to get
-the results in kilobytes or megabytes, respectively.
-::
+the results in kilobytes or megabytes, respectively::
 
 	$bytes     = $file->getSize();      // 256901
 	$kilobytes = $file->getSize('kb');  // 250.880

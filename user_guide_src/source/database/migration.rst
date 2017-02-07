@@ -2,14 +2,14 @@
 Database Migrations
 ###################
 
-Migrations are a convenient way for you to alter your database in a 
-structured and organized manner. You could edit fragments of SQL by hand 
-but you would then be responsible for telling other developers that they 
-need to go and run them. You would also have to keep track of which changes 
+Migrations are a convenient way for you to alter your database in a
+structured and organized manner. You could edit fragments of SQL by hand
+but you would then be responsible for telling other developers that they
+need to go and run them. You would also have to keep track of which changes
 need to be run against the production machines next time you deploy.
 
-The database table **migration** tracks which migrations have already been 
-run so all you have to do is update your application files and 
+The database table **migration** tracks which migrations have already been
+run so all you have to do is update your application files and
 call ``$migration->current()`` to work out which migrations should be run.
 The current version is found in **application/Config/Migrations.php**.
 
@@ -48,8 +48,8 @@ name for the migration. For example:
 ******************
 Create a Migration
 ******************
-	
-This will be the first migration for a new site which has a blog. All 
+
+This will be the first migration for a new site which has a blog. All
 migrations go in the **application/Database/Migrations/** directory and have names such
 as *20121031100537_Add_blog.php*.
 ::
@@ -91,6 +91,9 @@ Then in **application/Config/Migrations.php** set ``$currentVersion = 2012103110
 The database connection and the database Forge class are both available to you through
 ``$this->db`` and ``$this->forge``, respectively.
 
+Alternatively, you can use a command-line call to generate a skeleton migration file. See
+below for more details.
+
 Using $currentVersion
 =====================
 
@@ -121,16 +124,35 @@ match the name of the database group exactly::
     public function down() { . . . }
   }
 
+Namespaces
+==========
+
+The migration library will automatically scan all namespaces you have defined within
+**application/Config/Autoload.php** and its ``$psr4`` property for matching directory
+names. It will include all migrations it finds.
+
+For example, assume that we have the the following namespaces defined in our Autoload
+configuration file::
+
+	$psr4 = [
+		'App' => APPPATH,
+		'MyCompany' => ROOTPATH.'MyCompany'
+	];
+
+This will look for any migrations located at both **APPPATH/Database/Migrations** and
+**ROOTPATH/Database/Migrations**. This makes it simple to include migrations in your
+re-usable, modular code suites.
+
 *************
 Usage Example
 *************
 
-In this example some simple code is placed in **application/controllers/Migrate.php** 
-to update the schema.::
+In this example some simple code is placed in **application/Controllers/Migrate.php**
+to update the schema::
 
 	<?php
-	
-	class Migrate extends CI_Controller
+
+	class Migrate extends \CodeIgniter\Controller
 	{
 
 		public function index()
@@ -153,23 +175,23 @@ to update the schema.::
 Commnand-Line Tools
 *******************
 
-CodeIgniter ships with some tools that are available from the command line to help you work with migrations.
-These tools are not required to use migrations but might make things easier for those of you that wish to use them.
-The tools primarily provide access to the same methods that are available within the MigrationRunner class.
-When running these commands, you should be in the same directory as your application's main index.php file.
+CodeIgniter ships with several :doc:`commands </general/cli_commands>` that are available from the command line to help
+you work with migrations. These tools are not required to use migrations but might make things easier for those of you
+that wish to use them. The tools primarily provide access to the same methods that are available within the MigrationRunner
+class.
 
 **latest**
 
 Migrates all database groups to the latest available migrations::
 
-  > php index.php migrations latest
+  > php ci.php migrate
 
 **current**
 
 Migrates all database groups to match the version set in ``$currentVersion``. This will migrate both
-up and down as needed to match the specified version.::
+up and down as needed to match the specified version::
 
-  > php index.php migrations current
+  > php ci.php migrate:current
 
 **version**
 
@@ -177,35 +199,40 @@ Migrates all database groups to the specified version. If no version is provided
 for the version. ::
 
   // Asks you for the version...
-  > php index.php migrations version
+  > php ci.php migrate:version
   > Version:
 
   // Sequential
-  > php index.php migrations version 007
+  > php ci.php migrate:version 007
 
   // Timestamp
-  > php index.php migrations version 20161426211300
+  > php ci.php migrate:version 20161426211300
 
 **rollback**
 
 Rolls back all migrations, taking all database groups to a blank slate, effectively migration 0::
 
-  > php index.php migrations rollback
+  > php ci.php migrate:rollback
 
 **refresh**
 
-Refreshes the database state by first rolling back all migrations, and then migrating to the latest version.::
+Refreshes the database state by first rolling back all migrations, and then migrating to the latest version::
 
-  > php index.php migrations refresh
+  > php ci.php migrate:refresh
 
 **status**
 
-Displays a list of all migrations and the date and time they were ran, or '--' if they have not be ran.::
+Displays a list of all migrations and the date and time they were ran, or '--' if they have not be ran::
 
-  > php index.php migrations status
+  > php ci.php migrate:status
   Filename                              Migrated On
   20150101101500_First_migration.php    2016-04-25 04:44:22
 
+**create**
+
+Creates a skeleton migration file in **application/Database/Migrations** using the timestamp format::
+
+  > php ci.php migrate:create [filename]
 
 *********************
 Migration Preferences
@@ -217,7 +244,7 @@ The following is a table of all the config options for migrations, available in 
 Preference                 Default                Options                    Description
 ========================== ====================== ========================== =============================================================
 **enabled**                FALSE                  TRUE / FALSE               Enable or disable migrations.
-**path**                   APPPATH.'migrations/'  None                       The path to your migrations folder.
+**path**                   'Database/Migrations/' None                       The path to your migrations folder.
 **currentVersion**         0                      None                       The current version your database should use.
 **table**                  migrations             None                       The table name for storing the schema version number.
 **type**                   'timestamp'            'timestamp' / 'sequential' The type of numeric identifier used to name migration files.
@@ -249,7 +276,7 @@ Class Reference
 		:returns:	Current version string on success, FALSE on failure
 		:rtype:	mixed
 
-		This works much the same way as ``current()`` but instead of looking for 
+		This works much the same way as ``current()`` but instead of looking for
 		the ``$currentVersion`` the Migration class will use the very
 		newest migration found in the filesystem.
 
@@ -259,7 +286,7 @@ Class Reference
 		:returns:	TRUE if no migrations are found, current version string on success, FALSE on failure
 		:rtype:	mixed
 
-		Version can be used to roll back changes or step forwards programmatically to 
+		Version can be used to roll back changes or step forwards programmatically to
 		specific versions. It works just like ``current()`` but ignores ``$currentVersion``.
 		::
 
@@ -271,8 +298,7 @@ Class Reference
 	  :returns:   The current MigrationRunner instance
 	  :rtype:     CodeIgniter\Database\MigrationRunner
 
-	  Sets the path the library should look for migration files.::
+	  Sets the path the library should look for migration files::
 
 	    $migration->setPath($path)
 	              ->latest();
-

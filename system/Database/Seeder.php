@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+ * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,9 +29,9 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2016, British Columbia Institute of Technology (http://bcit.ca/)
- * @license	http://opensource.org/licenses/MIT	MIT License
- * @link	http://codeigniter.com
+ * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @license	https://opensource.org/licenses/MIT	MIT License
+ * @link	https://codeigniter.com
  * @since	Version 3.0.0
  * @filesource
  */
@@ -129,20 +129,31 @@ class Seeder
 	    {
 			throw new \InvalidArgumentException('No Seeder was specified.');
 	    }
-		
-		$path = $this->seedPath.str_replace('.php', '', $class).'.php';
-		
-		if (! is_file($path))
-		{
-			throw new \InvalidArgumentException('The specified Seeder is not a valid file: '. $path);
-		}
 
-		if (! class_exists($class, false))
-		{
-			require $path;
-		}
+		$path = str_replace('.php', '', $class).'.php';
 
-		$seeder = new $class($this->config);
+        // If we have namespaced class, simply try to load it.
+        if (strpos($class, '\\') !== false)
+        {
+            $seeder = new $class($this->config);
+        }
+        // Otherwise, try to load the class manually.
+        else
+        {
+            $path = $this->seedPath.$path;
+
+            if (! is_file($path))
+            {
+                throw new \InvalidArgumentException('The specified Seeder is not a valid file: '. $path);
+            }
+
+            if (! class_exists($class, false))
+            {
+                require $path;
+            }
+
+            $seeder = new $class($this->config);
+        }
 
 		$seeder->run();
 

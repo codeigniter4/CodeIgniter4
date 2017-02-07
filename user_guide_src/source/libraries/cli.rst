@@ -119,7 +119,7 @@ exactly as you would the ``write()`` method::
 
 This command will take a string, start printing it on the current line, and wrap it to a set length on new lines.
 This might be useful when displaying a list of options with descriptions that you want to wrap in the current
-window and not go off screen.::
+window and not go off screen::
 
 	CLI::color("task1\t", 'yellow');
 	CLI::wrap("Some long description goes here that might be longer than the current window.");
@@ -143,7 +143,7 @@ every line after the first line, so that you will have a crisp column edge on th
 	// to determine the width of the left column
 	$maxlen = max(array_map('strlen', $titles));
 
-	for ($i=0; $ <= count($titles); $i++)
+	for ($i=0; $i <= count($titles); $i++)
 	{
 		CLI::write(
 			// Display the title on the left of the row
@@ -151,7 +151,7 @@ every line after the first line, so that you will have a crisp column edge on th
 			// Wrap the descriptions in a right-hand column
 			// with its left side 3 characters wider than
 			// the longest item on the left.
-			CLI::wrap($descriptions[$i], 40, $maxlen+3
+			CLI::wrap($descriptions[$i], 40, $maxlen+3)
 		);
 	}
 
@@ -172,7 +172,7 @@ The ``newLine()`` method displays a blank line to the user. It does not take any
 
 You can clear the current terminal window with the ``clearScreen()`` method. In most versions of Windows, this will
 simply insert 40 blank lines since Windows doesn't support this feature. Windows 10 bash integration should change
-this.::
+this::
 
 	CLI::clearScreen();
 

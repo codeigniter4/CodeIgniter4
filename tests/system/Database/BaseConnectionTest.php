@@ -23,7 +23,6 @@ class BaseConnectionTest extends \CIUnitTestCase
 		'compress'     => false,
 		'strictOn'     => true,
 		'failover'     => [],
-		'saveQueries' => true,
 	];
 
 	protected $failoverOptions = [
@@ -45,15 +44,14 @@ class BaseConnectionTest extends \CIUnitTestCase
 		'compress'     => false,
 		'strictOn'     => true,
 		'failover'     => [],
-		'saveQueries' => true,
 	];
-	
+
 	//--------------------------------------------------------------------
-	
-	public function testSavesConfigOptions() 
+
+	public function testSavesConfigOptions()
 	{
 		$db = new MockConnection($this->options);
-		
+
 		$this->assertSame('localhost', $db->hostname);
 		$this->assertSame('first', $db->username);
 		$this->assertSame('last', $db->password);
@@ -70,23 +68,22 @@ class BaseConnectionTest extends \CIUnitTestCase
 		$this->assertSame(false, $db->compress);
 		$this->assertSame(true, $db->strictOn);
 		$this->assertSame([], $db->failover);
-		$this->assertSame(true, $db->saveQueries);
 	}
-	
+
 	//--------------------------------------------------------------------
-	
-	public function testConnectionThrowExceptionWhenCannotConnect() 
+
+	public function testConnectionThrowExceptionWhenCannotConnect()
 	{
 	    $db = new MockConnection($this->options);
-		
+
 		$this->setExpectedException('CodeIgniter\DatabaseException', 'Unable to connect to the database.');
-		
+
 		$db->shouldReturn('connect', false)
 			->initialize();
 	}
-	
+
 	//--------------------------------------------------------------------
-	
+
 	public function testCanConnectAndStoreConnection()
 	{
 	    $db = new MockConnection($this->options);
@@ -128,7 +125,7 @@ class BaseConnectionTest extends \CIUnitTestCase
 		$db->initialize();
 
 		$this->assertTrue($db->getConnectStart() > $start);
-		$this->assertTrue($db->getConnectDuration() > 0);
+		$this->assertTrue($db->getConnectDuration() > 0.0);
 	}
 
 	//--------------------------------------------------------------------

@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+ * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,9 +29,9 @@
  *
  * @package      CodeIgniter
  * @author       CodeIgniter Dev Team
- * @copyright    Copyright (c) 2014 - 2016, British Columbia Institute of Technology (http://bcit.ca/)
- * @license      http://opensource.org/licenses/MIT	MIT License
- * @link         http://codeigniter.com
+ * @copyright    Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @license      https://opensource.org/licenses/MIT	MIT License
+ * @link         https://codeigniter.com
  * @since        Version 3.0.0
  * @filesource
  */
@@ -97,6 +97,40 @@ class IncomingRequest extends Request
 	 */
 	protected $negotiate;
 
+	/**
+	 * The default Locale this request
+	 * should operate under.
+	 *
+	 * @var string
+	 */
+	protected $defaultLocale;
+
+	/**
+	 * The current locale of the application.
+	 * Default value is set in Config\App.php
+	 *
+	 * @var string
+	 */
+	protected $locale;
+
+	/**
+	 * Stores the valid locale codes.
+	 *
+	 * @var array
+	 */
+	protected $validLocales = [];
+
+	/**
+	 * @var \Config\App
+	 */
+	public $config;
+
+    /**
+     * Holds the old data from a redirect.
+     * @var array
+     */
+	protected $oldInput = [];
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -114,7 +148,8 @@ class IncomingRequest extends Request
 			$body = file_get_contents('php://input');
 		}
 
-		$this->body = $body;
+		$this->body   = $body;
+		$this->config = $config;
 
 		parent::__construct($config, $uri);
 
@@ -123,6 +158,90 @@ class IncomingRequest extends Request
 		$this->uri = $uri;
 
 		$this->detectURI($config->uriProtocol, $config->baseURL);
+
+		$this->validLocales = $config->supportedLocales;
+
+		$this->detectLocale($config);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Handles setting up the locale, perhaps auto-detecting through
+	 * content negotiation.
+	 *
+	 * @param $config
+	 */
+	public function detectLocale($config)
+	{
+		$this->locale = $this->defaultLocale = $config->defaultLocale;
+
+		if (! $config->negotiateLocale)
+		{
+			return;
+		}
+
+		$this->setLocale($this->negotiate('language', $config->supportedLocales));
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns the default locale as set in Config\App.php
+	 *
+	 * @return string
+	 */
+	public function getDefaultLocale(): string
+	{
+		return $this->defaultLocale;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Gets the current locale, with a fallback to the default
+	 * locale if none is set.
+	 *
+	 * @return string
+	 */
+	public function getLocale(): string
+	{
+		return $this->locale ?? $this->defaultLocale;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Sets the locale string for this request.
+	 *
+	 * @param string $locale
+	 *
+	 * @return $this
+	 */
+	public function setLocale(string $locale)
+	{
+		// If it's not a valid locale, set it
+		// to the default locale for the site.
+		if (! in_array($locale, $this->validLocales))
+		{
+			$locale = $this->defaultLocale;
+		}
+
+		$this->locale = $locale;
+
+		// If the intl extension is loaded, make sure
+		// that we set the locale for it... if not, though,
+		// don't worry about it.
+		try {
+			if (class_exists('\Locale', false))
+			{
+				\Locale::setDefault($locale);
+			}
+		}
+		catch (\Exception $e)
+		{}
+
+		return $this;
 	}
 
 	//--------------------------------------------------------------------
@@ -302,17 +421,43 @@ class IncomingRequest extends Request
 
 	//--------------------------------------------------------------------
 
-	/**
-	 * Fetch the user agent string
-	 *
-	 * @param null $filter
-	 */
+    /**
+     * Fetch the user agent string
+     *
+     * @param null $filter
+     *
+     * @return mixed
+     */
 	public function getUserAgent($filter = null)
 	{
 		return $this->fetchGlobal(INPUT_SERVER, 'HTTP_USER_AGENT', $filter);
 	}
 
 	//--------------------------------------------------------------------
+
+    /**
+     * Attempts to get old Input data that has been flashed to the session
+     * with redirect_with_input(). It first checks for the data in the old
+     * POST data, then the old GET data.
+     */
+    public function getOldInput(string $key)
+    {
+        // If the session hasn't been started, or no
+        // data was previously saved, we're done.
+        if (empty($_SESSION['_ci_old_input'])) return;
+
+        // Check for the value in the POST array first.
+        if (isset($_SESSION['_ci_old_input']['post'][$key]))
+        {
+            return $_SESSION['_ci_old_input']['post'][$key];
+        }
+
+        // Next check in the GET array.
+        if (isset($_SESSION['_ci_old_input']['get'][$key]))
+        {
+            return $_SESSION['_ci_old_input']['get'][$key];
+        }
+    }
 
 	/**
 	 * Returns an array of all files that have been uploaded with this
@@ -377,7 +522,7 @@ class IncomingRequest extends Request
 			$this->uri->setScheme(parse_url($baseURL, PHP_URL_SCHEME));
 			$this->uri->setHost(parse_url($baseURL, PHP_URL_HOST));
 			$this->uri->setPort(parse_url($baseURL, PHP_URL_PORT));
-			$this->uri->setPath(parse_url($baseURL, PHP_URL_PATH));
+			$this->uri->resolveRelativeURI(parse_url($baseURL, PHP_URL_PATH));
 		}
 		else
 		{

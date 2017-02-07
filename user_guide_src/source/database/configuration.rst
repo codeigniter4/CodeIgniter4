@@ -29,7 +29,6 @@ prototype::
 		'compress' => FALSE,
 		'strictOn' => FALSE,
 		'failover' => array(),
-		'saveQueries' => true
 	];
 
 The name of the class property is the connection name, and can be used
@@ -174,7 +173,7 @@ Explanation of Values:
 **username**		The username used to connect to the database.
 **password**		The password used to connect to the database.
 **database**		The name of the database you want to connect to.
-**DBDiver**		The database type. eg: MySQLi, Postgre, etc. The case must match the driver name
+**DBDriver**		The database type. eg: MySQLi, Postgre, etc. The case must match the driver name
 **DBPrefix**		An optional table prefix which will added to the table name when running
 			:doc:`Query Builder <query_builder>` queries. This permits multiple CodeIgniter
 			installations to share one database.
@@ -195,7 +194,7 @@ Explanation of Values:
 
 			  - 'sqlsrv' and 'pdo/sqlsrv' drivers accept TRUE/FALSE
 			  - 'MySQLi' and 'pdo/mysql' drivers accept an array with the following options:
-			  
+
 			    - 'ssl_key'    - Path to the private key file
 			    - 'ssl_cert'   - Path to the public key certificate file
 			    - 'ssl_ca'     - Path to the certificate authority file

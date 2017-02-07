@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+ * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,9 +29,9 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2016, British Columbia Institute of Technology (http://bcit.ca/)
- * @license	http://opensource.org/licenses/MIT	MIT License
- * @link	http://codeigniter.com
+ * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @license	https://opensource.org/licenses/MIT	MIT License
+ * @link	https://codeigniter.com
  * @since	Version 3.0.0
  * @filesource
  */
@@ -98,7 +98,7 @@ class Message
 	 *
 	 * @return Message
 	 */
-	public function setBody(&$data): self
+	public function setBody(&$data)
 	{
 		$this->body = $data;
 
@@ -114,7 +114,7 @@ class Message
 	 *
 	 * @return \CodeIgniter\HTTP\Message
 	 */
-	public function appendBody($data): self
+	public function appendBody($data)
 	{
 	    $this->body .= (string)$data;
 
@@ -271,7 +271,7 @@ class Message
 	 *
 	 * @return Message
 	 */
-	public function setHeader(string $name, $value): self
+	public function setHeader(string $name, $value)
 	{
 		if (! isset($this->headers[$name]))
 		{
@@ -287,7 +287,14 @@ class Message
 			$this->headers[$name] = [$this->headers[$name]];
 		}
 
-		$this->headers[$name][] = new Header($name, $value);
+		if (isset($this->headers[$name]))
+        {
+            $this->headers[$name] = new Header($name, $value);
+        }
+		else
+        {
+            $this->headers[$name][] = new Header($name, $value);
+        }
 
 		return $this;
 	}
@@ -301,7 +308,7 @@ class Message
 	 *
 	 * @return Message
 	 */
-	public function removeHeader(string $name): self
+	public function removeHeader(string $name)
 	{
 		$orig_name = $this->getHeaderName($name);
 
@@ -322,7 +329,7 @@ class Message
 	 *
 	 * @return string
 	 */
-	public function appendHeader(string $name, $value): self
+	public function appendHeader(string $name, $value)
 	{
 		$orig_name = $this->getHeaderName($name);
 
@@ -342,7 +349,7 @@ class Message
 	 *
 	 * @return string
 	 */
-	public function prependHeader(string $name, $value): self
+	public function prependHeader(string $name, $value)
 	{
 		$orig_name = $this->getHeaderName($name);
 
@@ -372,7 +379,7 @@ class Message
 	 *
 	 * @return Message
 	 */
-	public function setProtocolVersion(string $version): self
+	public function setProtocolVersion(string $version)
 	{
 		if (! is_numeric($version))
 		{

@@ -149,7 +149,7 @@ as a method instead of a news item's slug.
 ::
 
     $routes->post('news/create', 'News::create');
-    $routes->add('news/(:segment)'], 'News::view/$1');
+    $routes->add('news/(:segment)', 'News::view/$1');
     $routes->get('news', 'News::index');
     $routes->add('(:any)', 'Pages::view/$1');
 

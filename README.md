@@ -1,6 +1,7 @@
 # CodeIgniter 4 Development
 
 [![Build Status](https://travis-ci.org/bcit-ci/CodeIgniter4.svg?branch=develop)](https://travis-ci.org/bcit-ci/CodeIgniter4)
+[![Coverage Status](https://coveralls.io/repos/github/bcit-ci/CodeIgniter4/badge.svg?branch=develop)](https://coveralls.io/github/bcit-ci/CodeIgniter4?branch=develop)
 <br>
 
 ## What is CodeIgniter?
@@ -61,7 +62,10 @@ We are not looking for out-of-scope contributions, only those that would be cons
 Please read the *Contributing to CodeIgniter* section in the user guide
 
 ## Server Requirements
-PHP version 7 or higher is required. 
+PHP version 7 or higher is required, with the following extensions installed: 
+
+- intl
+
 
 ## Running CodeIgniter Tests
-Information on running CodeIgniter test suite can be found in the README.md file in the tests directory.
+Information on running CodeIgniter test suite can be found in the [README.md](tests/README.md) file in the tests directory.

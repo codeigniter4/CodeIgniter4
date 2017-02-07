@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+ * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,9 +29,9 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2016, British Columbia Institute of Technology (http://bcit.ca/)
- * @license	http://opensource.org/licenses/MIT	MIT License
- * @link	http://codeigniter.com
+ * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @license	https://opensource.org/licenses/MIT	MIT License
+ * @link	https://codeigniter.com
  * @since	Version 3.0.0
  * @filesource
  */
@@ -89,7 +89,7 @@ interface UploadedFileInterface
 	 * @throws \RuntimeException on any error during the move operation.
 	 * @throws \RuntimeException on the second or subsequent call to the method.
 	 */
-	public function move(string $targetPath, string $name = null): bool;
+	public function move(string $targetPath, string $name = null);
 
 	//--------------------------------------------------------------------
 
@@ -227,6 +227,23 @@ interface UploadedFileInterface
 	 * @return bool
 	 */
 	public function isValid(): bool;
+
+    //--------------------------------------------------------------------
+
+    /**
+     * Returns the destination path for the move operation where overwriting is not expected.
+     *
+     * First, it checks whether the delimiter is present in the filename, if it is, then it checks whether the
+     * last element is an integer as there may be cases that the delimiter may be present in the filename.
+     * For the all other cases, it appends an integer starting from zero before the file's extension.
+     *
+     * @param string $destination
+     * @param string $delimiter
+     * @param int    $i
+     *
+     * @return string
+     */
+    public function getDestination(string $destination, string $delimiter = '_', int $i = 0): string;
 
 	//--------------------------------------------------------------------
 

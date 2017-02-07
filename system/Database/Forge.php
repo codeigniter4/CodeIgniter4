@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+ * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,9 +29,9 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2016, British Columbia Institute of Technology (http://bcit.ca/)
- * @license	http://opensource.org/licenses/MIT	MIT License
- * @link	http://codeigniter.com
+ * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @license	https://opensource.org/licenses/MIT	MIT License
+ * @link	https://codeigniter.com
  * @since	Version 3.0.0
  * @filesource
  */
@@ -52,28 +52,28 @@ class Forge
 
 	/**
 	 * List of fields.
-	 * 
+	 *
 	 * @var array
 	 */
 	protected $fields = [];
 
 	/**
 	 * List of keys.
-	 * @var type 
+	 * @var type
 	 */
 	protected $keys = [];
 
 	/**
 	 * List of primary keys.
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	protected $primaryKeys = [];
 
 	/**
 	 * Character set used.
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	protected $charset = '';
 
@@ -156,7 +156,7 @@ class Forge
 
 	/**
 	 * Constructor.
-	 * 
+	 *
 	 * @param \CodeIgniter\Database\ConnectionInterface $db
 	 */
 	public function __construct(ConnectionInterface $db)
@@ -271,19 +271,12 @@ class Forge
 	 */
 	public function addKey($key, $primary = false)
 	{
-		if (is_array($key))
-		{
-			foreach ($key as $one)
-			{
-				$this->addKey($one, $primary);
-			}
-
-			return $this;
-		}
-
 		if ($primary === true)
 		{
-			$this->primaryKeys[] = $key;
+			foreach ((array) $key as $one)
+			{
+				$this->primaryKeys[] = $one;
+			}
 		}
 		else
 		{
@@ -338,15 +331,16 @@ class Forge
 
 	//--------------------------------------------------------------------
 
-	/**
-	 * Create Table
-	 *
-	 * @param    string $table         Table name
-	 * @param    bool   $if_not_exists Whether to add IF NOT EXISTS condition
-	 * @param    array  $attributes    Associative array of table attributes
-	 *
-	 * @return    bool
-	 */
+    /**
+     * Create Table
+     *
+     * @param    string $table         Table name
+     * @param    bool   $if_not_exists Whether to add IF NOT EXISTS condition
+     * @param    array  $attributes    Associative array of table attributes
+     *
+     * @return bool
+     * @throws \CodeIgniter\DatabaseException
+     */
 	public function createTable($table, $if_not_exists = false, array $attributes = [])
 	{
 		if ($table === '')
@@ -1067,24 +1061,19 @@ class Forge
 
 		for ($i = 0, $c = count($this->keys); $i < $c; $i++)
 		{
-			if (is_array($this->keys[$i]))
+			$this->keys[$i] = (array) $this->keys[$i];
+
+			for ($i2 = 0, $c2 = count($this->keys[$i]); $i2 < $c2; $i2++)
 			{
-				for ($i2 = 0, $c2 = count($this->keys[$i]); $i2 < $c2; $i2++)
+				if ( ! isset($this->fields[$this->keys[$i][$i2]]))
 				{
-					if ( ! isset($this->fields[$this->keys[$i][$i2]]))
-					{
-						unset($this->keys[$i][$i2]);
-						continue;
-					}
+					unset($this->keys[$i][$i2]);
 				}
 			}
-			elseif ( ! isset($this->fields[$this->keys[$i]]))
+			if (count($this->keys[$i]) <= 0)
 			{
-				unset($this->keys[$i]);
 				continue;
 			}
-
-			is_array($this->keys[$i]) OR $this->keys[$i] = [$this->keys[$i]];
 
 			$sqls[] = 'CREATE INDEX '.$this->db->escapeIdentifiers($table.'_'.implode('_', $this->keys[$i]))
 			          .' ON '.$this->db->escapeIdentifiers($table)

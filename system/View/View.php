@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\View;
+<?php
+
+namespace CodeIgniter\View;
 
 /**
  * CodeIgniter
@@ -7,7 +9,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+ * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,13 +31,12 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2016, British Columbia Institute of Technology (http://bcit.ca/)
- * @license	http://opensource.org/licenses/MIT	MIT License
- * @link	http://codeigniter.com
+ * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @license	https://opensource.org/licenses/MIT	MIT License
+ * @link	https://codeigniter.com
  * @since	Version 3.0.0
  * @filesource
  */
-
 use Config\Services;
 use CodeIgniter\Log\Logger;
 
@@ -46,7 +47,7 @@ use CodeIgniter\Log\Logger;
  *
  * @package CodeIgniter\View
  */
-class View implements RenderableInterface {
+class View implements RendererInterface {
 
 	/**
 	 * Data that is made available to the Views.
@@ -61,6 +62,7 @@ class View implements RenderableInterface {
 	 * @var
 	 */
 	protected $viewPath;
+
 	/**
 	 * Instance of CodeIgniter\Loader for when
 	 * we need to attempt to find a view
@@ -88,25 +90,29 @@ class View implements RenderableInterface {
 	 */
 	protected $performanceData = [];
 
+    /**
+     * @var \Config\View
+     */
+    protected $config;
+
 	//--------------------------------------------------------------------
 
 	/**
 	 * Constructor
 	 *
-	 * @param string $viewPath
-	 * @param type $loader
-	 * @param bool $debug
-	 * @param Logger $logger
+     * @param \Config\View  $config
+	 * @param string        $viewPath
+	 * @param type          $loader
+	 * @param bool          $debug
+	 * @param Logger        $logger
 	 */
-	public function __construct(string $viewPath=null, $loader=null, bool $debug = null, Logger $logger = null)
+	public function __construct($config, string $viewPath = null, $loader = null, bool $debug = null, Logger $logger = null)
 	{
+	    $this->config   = $config;
 		$this->viewPath = rtrim($viewPath, '/ ').'/';
-
-		$this->loader = is_null($loader) ? Services::locator() : $loader;
-
-		$this->logger = is_null($logger) ? Services::logger() : $logger;
-
-		$this->debug = is_null($debug) ? CI_DEBUG : $debug;
+		$this->loader   = is_null($loader) ? Services::locator() : $loader;
+		$this->logger   = is_null($logger) ? Services::logger() : $logger;
+		$this->debug    = is_null($debug) ? CI_DEBUG : $debug;
 	}
 
 	//--------------------------------------------------------------------
@@ -120,21 +126,26 @@ class View implements RenderableInterface {
 	 *  - cache_name	Name to use for cache
 	 *
 	 * @param string $view
-	 * @param array  $options  // Unused in this implementation
+	 * @param array  $options
 	 * @param bool $saveData
 	 *
 	 * @return string
 	 */
-	public function render(string $view, array $options=null, $saveData=false): string
+	public function render(string $view, array $options = null, $saveData = null): string
 	{
 		$start = microtime(true);
+
+        if (is_null($saveData))
+        {
+            $saveData = $this->config->saveData;
+        }
 
 		$view = str_replace('.php', '', $view).'.php';
 
 		// Was it cached?
 		if (isset($options['cache']))
 		{
-			$cacheName = $options['cache_name'] ?: str_replace('.php', '', $view);
+			$cacheName = $options['cache_name'] ?? str_replace('.php', '', $view);
 
 			if ($output = cache($cacheName))
 			{
@@ -145,7 +156,7 @@ class View implements RenderableInterface {
 
 		$file = $this->viewPath.$view;
 
-		if (! file_exists($file))
+		if ( ! file_exists($file))
 		{
 			$file = $this->loader->locateFile($view, 'Views');
 		}
@@ -153,21 +164,19 @@ class View implements RenderableInterface {
 		// locateFile will return an empty string if the file cannot be found.
 		if (empty($file))
 		{
-			throw new \InvalidArgumentException('View file not found: '. $file);
+			throw new \InvalidArgumentException('View file not found: '.$file);
 		}
 
 		// Make our view data available to the view.
 		extract($this->data);
 
-		if (! $saveData)
+		if ( ! $saveData)
 		{
 			$this->data = [];
 		}
 
 		ob_start();
-
-		include($file);
-
+		include($file);	// PHP will be processed
 		$output = ob_get_contents();
 		@ob_end_clean();
 
@@ -176,10 +185,67 @@ class View implements RenderableInterface {
 		// Should we cache?
 		if (isset($options['cache']))
 		{
-			cache()->save($cacheName, $output, (int)$options['cache']);
+			cache()->save($cacheName, $output, (int) $options['cache']);
 		}
 
 		return $output;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Builds the output based upon a string and any
+	 * data that has already been set.
+	 * Cache does not apply, because there is no "key".
+	 *
+	 * @param string $view	The view contents
+	 * @param array  $options  Reserved for 3rd-party uses since
+	 *                         it might be needed to pass additional info
+	 *                         to other template engines.
+	 * @param bool   $saveData If true, will save data for use with any other calls,
+	 *                         if false, will clean the data after displaying the view,
+	 *						   if not specified, use the config setting.
+	 *
+	 * @return string
+	 */
+	public function renderString(string $view, array $options = null, $saveData = null): string
+	{
+		$start = microtime(true);
+        if (is_null($saveData))
+        {
+            $saveData = $this->config->saveData;
+        }
+
+		extract($this->data);
+
+		if ( ! $saveData)
+		{
+			$this->data = [];
+		}
+
+		ob_start();
+		$incoming = "?>".$view;
+		eval($incoming);
+		$output = ob_get_contents();
+		@ob_end_clean();
+
+		$this->logPerformance($start, microtime(true), $this->excerpt($view));
+
+		return $output;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Extract first bit of a long string and add ellipsis
+	 *
+	 * @param string	$string
+	 * @parm	int		$length
+	 * @return string
+	 */
+	public function excerpt(string $string, int $length = 20): string
+	{
+		return (strlen($string) > $length) ? substr($string, 0, $length - 3).'...' : $string;
 	}
 
 	//--------------------------------------------------------------------
@@ -191,11 +257,11 @@ class View implements RenderableInterface {
 	 * @param string $context The context to escape it for: html, css, js, url
 	 *                        If null, no escaping will happen
 	 *
-	 * @return RenderableInterface
+	 * @return RendererInterface
 	 */
-	public function setData(array $data=[], string $context=null): RenderableInterface
+	public function setData(array $data=[], string $context=null): RendererInterface
 	{
-		if (! empty($context))
+		if ( ! empty($context))
 		{
 			$data = \esc($data, $context);
 		}
@@ -211,15 +277,15 @@ class View implements RenderableInterface {
 	 * Sets a single piece of view data.
 	 *
 	 * @param string $name
-	 * @param null   $value
+	 * @param mixed   $value
 	 * @param string $context The context to escape it for: html, css, js, url
 	 *                        If null, no escaping will happen
 	 *
-	 * @return RenderableInterface
+	 * @return RendererInterface
 	 */
-	public function setVar(string $name, $value=null, string $context=null): RenderableInterface
+	public function setVar(string $name, $value=null, string $context=null): RendererInterface
 	{
-		if (! empty($context))
+		if ( ! empty($context))
 		{
 			$value = \esc($value, $context);
 		}
@@ -234,7 +300,7 @@ class View implements RenderableInterface {
 	/**
 	 * Removes all of the view data from the system.
 	 *
-	 * @return RenderableInterface
+	 * @return RendererInterface
 	 */
 	public function resetData()
 	{
@@ -252,7 +318,7 @@ class View implements RenderableInterface {
 	 */
 	public function getData()
 	{
-	    return $this->data;
+		return $this->data;
 	}
 
 	//--------------------------------------------------------------------
@@ -265,7 +331,7 @@ class View implements RenderableInterface {
 	 */
 	public function getPerformanceData(): array
 	{
-	    return $this->performanceData;
+		return $this->performanceData;
 	}
 
 	//--------------------------------------------------------------------
@@ -279,15 +345,14 @@ class View implements RenderableInterface {
 	 */
 	protected function logPerformance(float $start, float $end, string $view)
 	{
-		if (! $this->debug) return;
+		if ( ! $this->debug) return;
 
 		$this->performanceData[] = [
-			'start' => $start,
-		    'end'   => $end,
-		    'view'  => $view
+			'start'	 => $start,
+			'end'	 => $end,
+			'view'	 => $view
 		];
 	}
 
 	//--------------------------------------------------------------------
-
 }

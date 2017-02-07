@@ -37,7 +37,7 @@ are requested to be logged by the application, but the threshold doesn't allow t
 ignored. The simplest method to use is to set this value to the minimum level that you want to have logged. For example,
 if you want to log debug messages, and not information messages, you would set the threshold to ``5``. Any log requests with
 a level of 5 or less (which includes runtime errors, system errors, etc) would be logged and info, notices, and warnings
-would be ignored.::
+would be ignored::
 
 	public $threshold = 5;
 
@@ -141,8 +141,8 @@ You can use any other logger that you might like as long as it extends from eith
 that you can easily drop in use for any PSR3-compatible logger, or create your own.
 
 You must ensure that the third-party logger can be found by the system, by adding it to either
-the ``/application/config/autoload.php`` configuration file, or through another autoloader,
-like Composer. Next, you should modify ``/application/config/services.php`` to point the ``logger``
+the ``/application/Config/Autoload.php`` configuration file, or through another autoloader,
+like Composer. Next, you should modify ``/application/Config/Services.php`` to point the ``logger``
 alias to your new class name.
 
 Now, any call that is done through the ``log_message()`` function will use your library instead.

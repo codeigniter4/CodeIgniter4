@@ -2,21 +2,34 @@ language: php
 
 php:
   - 7
+  - 7.1
+
+global:
+  - CI=true
+  - CI_ENV=testing
+
+# Recommended by Travis support
+sudo: required
+dist: precise
 
 env:
-  - DB_GROUP=mysqli
-  - DB_GROUP=postgres
-
-script:
-  - php vendor/bin/phpunit -v
+  - DB=mysqli
+  - DB=postgres
 
 services:
   - mysql
   - postgresql
 
+script:
+  - php vendor/bin/phpunit -v
+
 before_install:
-  - if [ $DB_GROUP = 'mysqli' ]; then mysql -e "create database IF NOT EXISTS test;" -uroot; fi
-  - if [ $DB_GROUP = 'postgres' ]; then psql -c 'create database test;' -U postgres; fi
+  - mysql -e "create database IF NOT EXISTS test;" -uroot;
+  - mysql -e "SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = 'test';" -uroot
+  - psql -c 'create database test;' -U postgres
 
 before_script:
-  - composer install
+  - composer install --prefer-source
+
+after_success:
+  - travis_retry php vendor/bin/coveralls
