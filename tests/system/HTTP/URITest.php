@@ -440,6 +440,25 @@ class URITest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+    /**
+     * @dataProvider defaultResolutions
+     * @group single
+     */
+    public function testResolveRelativeURIHTTPS($rel, $expected)
+    {
+        $base = 'https://a/b/c/d';
+
+        $expected = str_replace('http:', 'https:', $expected);
+
+        $uri = new URI($base);
+
+        $new = $uri->resolveRelativeURI($rel);
+
+        $this->assertEquals($expected, (string) $new);
+    }
+
+    //--------------------------------------------------------------------
+
 	public function testAddQueryVar()
 	{
 	    $base = 'http://example.com/foo';
