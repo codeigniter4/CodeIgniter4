@@ -292,6 +292,14 @@ class Parser extends View {
 
 						continue;
 					}
+					else if (is_object($val))
+					{
+						$val = 'Class: ' . get_class($val);
+					}
+					else if (is_resource($val))
+					{
+						$val = 'Resource';
+					}
 
 					$temp[$this->leftDelimiter . $key . $this->rightDelimiter] = $val;
 				}
