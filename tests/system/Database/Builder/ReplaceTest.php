@@ -15,10 +15,10 @@ class ReplaceTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	public function testSimpleReplace() 
+	public function testSimpleReplace()
 	{
 	    $builder = $this->db->table('jobs');
-		
+
 		$expected = "REPLACE INTO \"jobs\" (\"title\", \"name\", \"date\") VALUES (:title, :name, :date)";
 
 		$data = array(
@@ -29,14 +29,15 @@ class ReplaceTest extends \CIUnitTestCase
 
 		$this->assertSame($expected, $builder->replace($data, true));
 	}
-	
+
 	//--------------------------------------------------------------------
 
 	public function testReplaceThrowsExceptionWithNoData()
 	{
 	    $builder = $this->db->table('jobs');
 
-		$this->setExpectedException('CodeIgniter\DatabaseException', 'You must use the "set" method to update an entry.');
+		$this->expectException('CodeIgniter\DatabaseException');
+		$this->expectExceptionMessage('You must use the "set" method to update an entry.');
 
 		$builder->replace();
 	}
@@ -44,5 +45,5 @@ class ReplaceTest extends \CIUnitTestCase
 	//--------------------------------------------------------------------
 
 
-	
+
 }

@@ -4,18 +4,18 @@
 
 class DotEnvTest extends \CIUnitTestCase
 {
-	
+
 	protected $fixturesFolder;
-	
+
 	//--------------------------------------------------------------------
-	
+
 	public function setup()
 	{
 		$this->fixturesFolder = __DIR__.'/fixtures';
 	}
-	
+
 	//--------------------------------------------------------------------
-	
+
 	public function testReturnsFalseIfCannotFindFile()
 	{
 		$dotenv = new DotEnv(__DIR__);
@@ -67,7 +67,8 @@ class DotEnvTest extends \CIUnitTestCase
 
 	public function testSpacedValuesWithoutQuotesThrowsException()
 	{
-		$this->setExpectedException('InvalidArgumentException', '.env values containing spaces must be surrounded by quotes.');
+		$this->expectException('InvalidArgumentException');
+		$this->expectExceptionMessage('.env values containing spaces must be surrounded by quotes.');
 
 		$dotenv = new Dotenv($this->fixturesFolder, 'spaced-wrong.env');
 		$dotenv->load();

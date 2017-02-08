@@ -250,7 +250,7 @@ class FiltersTest extends \CIUnitTestCase
 
 		$filters = new Filters((object)$config, $this->request, $this->response);
 
-		$this->setExpectedException('InvalidArgumentException');
+		$this->expectException('InvalidArgumentException');
 		$uri = 'admin/foo/bar';
 
 		$filters->run($uri);
@@ -272,7 +272,7 @@ class FiltersTest extends \CIUnitTestCase
 
 		$filters = new Filters((object)$config, $this->request, $this->response);
 
-		$this->setExpectedException('RuntimeException');
+		$this->expectException('RuntimeException');
 		$uri = 'admin/foo/bar';
 
 		$filters->run($uri);

@@ -72,7 +72,7 @@ class PagerTest extends \CIUnitTestCase
 
 	public function testGetDetailsThrowExceptionIfGroupNotFound()
 	{
-	    $this->setExpectedException('InvalidArgumentException');
+	    $this->expectException('InvalidArgumentException');
 
 		$this->pager->getDetails('foo');
 	}

@@ -6,7 +6,7 @@ class LanguageTest extends \CIUnitTestCase
 	{
 	    $lang = new MockLanguage('en');
 
-		$this->setExpectedException('\InvalidArgumentException');
+		$this->expectException('\InvalidArgumentException');
 
 		$lang->getLine('something');
 	}
