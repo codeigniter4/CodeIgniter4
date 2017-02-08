@@ -337,15 +337,16 @@ class IncomingRequest extends Request
 	//--------------------------------------------------------------------
 
 	/**
-	 * Fetch an item from PUT data.
+	 * A convenience method that grabs the raw input stream and decodes
+	 * the String into an array.
 	 *
-	 * @return array
+	 * @return mixed
 	 */
-	public function getPut()
+	public function getRawString()
 	{
-	    parse_str($this->body, $data);
+	    parse_str($this->body, $output);
 
-	    return $data;
+	    return $output;
 	}
 
 	//--------------------------------------------------------------------
