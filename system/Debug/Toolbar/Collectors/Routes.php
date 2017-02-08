@@ -88,8 +88,8 @@ class Routes extends BaseCollector
 		$route = $router->getMatchedRoute();
 
 		// Get our parameters
-        $method = new \ReflectionMethod($router->controllerName(), $router->methodName());
-        $rawParams = $method->getParameters();
+		$method = is_callable($router->controllerName()) ? new \ReflectionFunction($router->controllerName()) : new \ReflectionMethod($router->controllerName(), $router->methodName());
+		$rawParams = $method->getParameters();
 
         $params = [];
         foreach ($rawParams as $key => $param)
