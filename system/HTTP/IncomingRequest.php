@@ -337,7 +337,7 @@ class IncomingRequest extends Request
 	//--------------------------------------------------------------------
 
 	/**
-	 * A convenience method that grabs the raw input stream and decodes
+	 * A convenience method that grabs the raw input stream(send method in PUT, PATCH, DELETE) and decodes
 	 * the String into an array.
 	 *
 	 * @return mixed
