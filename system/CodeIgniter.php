@@ -250,6 +250,11 @@ class CodeIgniter
 
             $returned = $this->runController($controller);
         }
+		else
+		{
+			$this->benchmark->stop('controller_constructor');
+			$this->benchmark->stop('controller');
+		}
 
         // If $returned is a string, then the controller output something,
         // probably a view, instead of echoing it directly. Send it along
