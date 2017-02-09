@@ -6,6 +6,9 @@ use CodeIgniter\HTTP\URI;
 use Config\App;
 use CodeIgniter\Services;
 
+/**
+ * @backupGlobals enabled
+ */
 class URLHelperTest extends \CIUnitTestCase
 {
 

@@ -7,6 +7,9 @@ use CodeIgniter\HTTP\URI;
 
 //--------------------------------------------------------------------
 
+/**
+ * @backupGlobals enabled
+ */
 class SecurityTest extends \CIUnitTestCase {
 
 	public function setUp()

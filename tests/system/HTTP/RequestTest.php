@@ -2,6 +2,9 @@
 
 use Config\App;
 
+/**
+ * @backupGlobals enabled
+ */
 class RequestTest extends \CIUnitTestCase
 {
 	/**
