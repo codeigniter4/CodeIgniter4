@@ -3,6 +3,9 @@
 use Config\Pager;
 use Config\Services;
 
+/**
+ * @backupGlobals enabled
+ */
 class PagerTest extends \CIUnitTestCase
 {
 	/**

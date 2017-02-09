@@ -1,5 +1,8 @@
 <?php namespace CodeIgniter\Router;
 
+/**
+ * @backupGlobals enabled
+ */
 class RouteCollectionTest extends \CIUnitTestCase
 {
 

@@ -3,6 +3,9 @@
 use CodeIgniter\Router\RouteCollection;
 use Config\App;
 
+/**
+ * @backupGlobals enabled
+ */
 class CodeIgniterTest extends \CIUnitTestCase
 {
 	/**

@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @backupGlobals enabled
+ */
 class CommomFunctionsTest extends \CIUnitTestCase
 {
 

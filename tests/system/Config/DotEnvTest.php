@@ -2,6 +2,9 @@
 
 //require_once 'system/Benchmark/Timer.php';
 
+/**
+ * @backupGlobals enabled
+ */
 class DotEnvTest extends \CIUnitTestCase
 {
 

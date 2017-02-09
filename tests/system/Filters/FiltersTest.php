@@ -6,6 +6,9 @@ use CodeIgniter\Services;
 require __DIR__.'/fixtures/InvalidClass.php';
 require __DIR__.'/fixtures/GoogleMe.php';
 
+/**
+ * @backupGlobals enabled
+ */
 class FiltersTest extends \CIUnitTestCase
 {
 	protected $request;
