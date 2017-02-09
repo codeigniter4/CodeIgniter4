@@ -167,6 +167,8 @@ class CodeIgniter
 		//--------------------------------------------------------------------
 		Hooks::trigger('pre_system');
 
+		$this->setMultiByteFlags();
+
 		$this->getRequestObject();
 		$this->getResponseObject();
 
@@ -731,6 +733,45 @@ class CodeIgniter
     }
 
     //--------------------------------------------------------------------
+
+    /**
+     * Configure mbstring and/or iconv if they are enabled
+     * and set MB_ENABLED and ICONV_ENABLED constants, so
+     * that we don't repeatedly do extension_loaded() or
+     * function_exists() calls.
+     */
+    protected function setMultiByteFlags()
+    {
+        $charset = strtoupper($this->config->charset);
+        ini_set('default_charset', $charset);
+
+        if (extension_loaded('mbstring'))
+        {
+            define('MB_ENABLED', TRUE);
+            mb_internal_encoding($charset);
+            // This is required for mb_convert_encoding() to strip invalid characters.
+            // That's utilized by CI_Utf8, but it's also done for consistency with iconv.
+            mb_substitute_character('none');
+        }
+        else
+        {
+            define('MB_ENABLED', FALSE);
+        }
+
+        // There's an ICONV_IMPL constant, but the PHP manual says that using
+        // iconv's predefined constants is "strongly discouraged".
+        if (extension_loaded('iconv'))
+        {
+            define('ICONV_ENABLED', TRUE);
+            ini_set('default_charset', $charset);
+        }
+        else
+        {
+            define('ICONV_ENABLED', FALSE);
+        }
+
+        ini_set('php.internal_encoding', $charset);
+    }
 
 	/**
 	 * Sends the output of this request back to the client.

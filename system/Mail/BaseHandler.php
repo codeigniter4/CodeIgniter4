@@ -157,13 +157,6 @@ abstract class BaseHandler implements MailHandlerInterface
     protected $attachments = [];
 
     /**
-     * mbstring.func_override flag
-     *
-     * @var bool
-     */
-    protected static $funcOverride;
-
-    /**
      * The original config array passed in.
      * In case child classes need it.
      *
@@ -183,11 +176,6 @@ abstract class BaseHandler implements MailHandlerInterface
             {
                 $this->$key = $value;
             }
-        }
-
-        if (! isset(self::$funcOverride))
-        {
-            self::$funcOverride = (extension_loaded('mbstring') && ini_get('mbstring.func_override'));
         }
 
         $this->charset = strtoupper($this->charset);
@@ -266,25 +254,20 @@ abstract class BaseHandler implements MailHandlerInterface
 
     //--------------------------------------------------------------------
 
+    /**
+     * Returns all headers that have been set.
+     *
+     * @return array
+     */
+    public function getHeaders(): array
+    {
+        return $this->headers;
+    }
+
     //--------------------------------------------------------------------
     // Options
     //--------------------------------------------------------------------
 
-    /**
-     * Sets the format to send the email in. Either 'html' or 'text'.
-     *
-     * @param $format
-     *
-     * @return mixed
-     */
-    public function format(string $format)
-    {
-        $this->format = $format;
-
-        return $this;
-    }
-
-    //--------------------------------------------------------------------
     /**
      * Resets the state to blank, ready for a new email. Useful when
      * sending emails in a loop and you need to make sure that the

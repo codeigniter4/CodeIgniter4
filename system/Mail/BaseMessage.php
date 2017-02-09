@@ -73,12 +73,10 @@ abstract class BaseMessage implements MessageInterface
             {
                 if (is_array($this->$key))
                 {
-                    $this->$key[] = $value;
+                    $value = is_array($value) ? $value : [$value];
                 }
-                else
-                {
-                    $this->$key = $value;
-                }
+
+                $this->$key = $value;
 
                 continue;
             }

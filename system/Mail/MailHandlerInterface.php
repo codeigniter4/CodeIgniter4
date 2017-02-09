@@ -37,20 +37,17 @@ interface MailHandlerInterface
 
     //--------------------------------------------------------------------
 
+    /**
+     * Returns an array of all headers that have been set.
+     *
+     * @return array
+     */
+    public function getHeaders(): array;
+
+    //--------------------------------------------------------------------
+
     //--------------------------------------------------------------------
     // Options
-    //--------------------------------------------------------------------
-
-    /**
-     * Sets the format to send the email in. Either 'html' or 'text'.
-     * The handlers should attempt to determine the correct type based
-     * on whether the status of $messageHTML and $messageText.
-     *
-     * @param $format
-     * @return mixed
-     */
-    public function format(string $format);
-
     //--------------------------------------------------------------------
 
     /**
