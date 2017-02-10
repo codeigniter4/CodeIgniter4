@@ -100,6 +100,10 @@ if (file_exists(COMPOSER_PATH))
     require COMPOSER_PATH;
 }
 
+// Always load the URL helper -
+// it should be used in 90% of apps.
+helper('url');
+
 /*
  * ---------------------------------------------------------------
  * GRAB OUR CODEIGNITER INSTANCE

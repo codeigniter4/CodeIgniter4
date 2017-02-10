@@ -14,9 +14,7 @@ The URL Helper file contains functions that assist in working with URLs.
 Loading this Helper
 ===================
 
-This helper is loaded using the following code::
-
-	helper('url');
+This helper is automatically loaded by the framework on every request.
 
 Available Functions
 ===================
