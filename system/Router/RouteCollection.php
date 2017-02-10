@@ -693,18 +693,20 @@ class RouteCollection implements RouteCollectionInterface
 
 	//--------------------------------------------------------------------
 
-	/**
-	 * Specifies a single route to match for multiple HTTP Verbs.
-	 *
-	 * Example:
-	 *  $route->match( ['get', 'post'], 'users/(:num)', 'users/$1);
-	 *
-	 * @param array $verbs
-	 * @param       $from
-	 * @param       $to
-	 * @param array $options
-	 */
-	public function match(array $verbs = [], string $from, string $to, array $options = null): RouteCollectionInterface
+    /**
+     * Specifies a single route to match for multiple HTTP Verbs.
+     *
+     * Example:
+     *  $route->match( ['get', 'post'], 'users/(:num)', 'users/$1);
+     *
+     * @param array $verbs
+     * @param       $from
+     * @param       $to
+     * @param array $options
+     *
+     * @return \CodeIgniter\Router\RouteCollectionInterface
+     */
+	public function match(array $verbs = [], string $from, $to, array $options = null): RouteCollectionInterface
 	{
 		foreach ($verbs as $verb)
 		{
@@ -718,14 +720,16 @@ class RouteCollection implements RouteCollectionInterface
 
 	//--------------------------------------------------------------------
 
-	/**
-	 * Specifies a route that is only available to GET requests.
-	 *
-	 * @param       $from
-	 * @param       $to
-	 * @param array $options
-	 */
-	public function get(string $from, string $to, array $options = null): RouteCollectionInterface
+    /**
+     * Specifies a route that is only available to GET requests.
+     *
+     * @param       $from
+     * @param       $to
+     * @param array $options
+     *
+     * @return \CodeIgniter\Router\RouteCollectionInterface
+     */
+	public function get(string $from, $to, array $options = null): RouteCollectionInterface
 	{
 		if ($this->HTTPVerb == 'get')
 		{
@@ -737,14 +741,16 @@ class RouteCollection implements RouteCollectionInterface
 
 	//--------------------------------------------------------------------
 
-	/**
-	 * Specifies a route that is only available to POST requests.
-	 *
-	 * @param       $from
-	 * @param       $to
-	 * @param array $options
-	 */
-	public function post(string $from, string $to, array $options = null): RouteCollectionInterface
+    /**
+     * Specifies a route that is only available to POST requests.
+     *
+     * @param       $from
+     * @param       $to
+     * @param array $options
+     *
+     * @return \CodeIgniter\Router\RouteCollectionInterface
+     */
+	public function post(string $from, $to, array $options = null): RouteCollectionInterface
 	{
 		if ($this->HTTPVerb == 'post')
 		{
@@ -756,14 +762,16 @@ class RouteCollection implements RouteCollectionInterface
 
 	//--------------------------------------------------------------------
 
-	/**
-	 * Specifies a route that is only available to PUT requests.
-	 *
-	 * @param       $from
-	 * @param       $to
-	 * @param array $options
-	 */
-	public function put(string $from, string $to, array $options = null): RouteCollectionInterface
+    /**
+     * Specifies a route that is only available to PUT requests.
+     *
+     * @param       $from
+     * @param       $to
+     * @param array $options
+     *
+     * @return \CodeIgniter\Router\RouteCollectionInterface
+     */
+	public function put(string $from, $to, array $options = null): RouteCollectionInterface
 	{
 		if ($this->HTTPVerb == 'put')
 		{
@@ -775,14 +783,16 @@ class RouteCollection implements RouteCollectionInterface
 
 	//--------------------------------------------------------------------
 
-	/**
-	 * Specifies a route that is only available to DELETE requests.
-	 *
-	 * @param       $from
-	 * @param       $to
-	 * @param array $options
-	 */
-	public function delete(string $from, string $to, array $options = null): RouteCollectionInterface
+    /**
+     * Specifies a route that is only available to DELETE requests.
+     *
+     * @param       $from
+     * @param       $to
+     * @param array $options
+     *
+     * @return \CodeIgniter\Router\RouteCollectionInterface
+     */
+	public function delete(string $from, $to, array $options = null): RouteCollectionInterface
 	{
 		if ($this->HTTPVerb == 'delete')
 		{
@@ -794,14 +804,16 @@ class RouteCollection implements RouteCollectionInterface
 
 	//--------------------------------------------------------------------
 
-	/**
-	 * Specifies a route that is only available to HEAD requests.
-	 *
-	 * @param       $from
-	 * @param       $to
-	 * @param array $options
-	 */
-	public function head(string $from, string $to, array $options = null): RouteCollectionInterface
+    /**
+     * Specifies a route that is only available to HEAD requests.
+     *
+     * @param       $from
+     * @param       $to
+     * @param array $options
+     *
+     * @return \CodeIgniter\Router\RouteCollectionInterface
+     */
+	public function head(string $from, $to, array $options = null): RouteCollectionInterface
 	{
 		if ($this->HTTPVerb == 'head')
 		{
@@ -813,14 +825,16 @@ class RouteCollection implements RouteCollectionInterface
 
 	//--------------------------------------------------------------------
 
-	/**
-	 * Specifies a route that is only available to PATCH requests.
-	 *
-	 * @param       $from
-	 * @param       $to
-	 * @param array $options
-	 */
-	public function patch(string $from, string $to, array $options = null): RouteCollectionInterface
+    /**
+     * Specifies a route that is only available to PATCH requests.
+     *
+     * @param       $from
+     * @param       $to
+     * @param array $options
+     *
+     * @return \CodeIgniter\Router\RouteCollectionInterface
+     */
+	public function patch(string $from, $to, array $options = null): RouteCollectionInterface
 	{
 		if ($this->HTTPVerb == 'patch')
 		{
@@ -832,14 +846,16 @@ class RouteCollection implements RouteCollectionInterface
 
 	//--------------------------------------------------------------------
 
-	/**
-	 * Specifies a route that is only available to OPTIONS requests.
-	 *
-	 * @param       $from
-	 * @param       $to
-	 * @param array $options
-	 */
-	public function options(string $from, string $to, array $options = null): RouteCollectionInterface
+    /**
+     * Specifies a route that is only available to OPTIONS requests.
+     *
+     * @param       $from
+     * @param       $to
+     * @param array $options
+     *
+     * @return \CodeIgniter\Router\RouteCollectionInterface
+     */
+	public function options(string $from, $to, array $options = null): RouteCollectionInterface
 	{
 		if ($this->HTTPVerb == 'options')
 		{
@@ -851,14 +867,16 @@ class RouteCollection implements RouteCollectionInterface
 
 	//--------------------------------------------------------------------
 
-	/**
-	 * Specifies a route that is only available to command-line requests.
-	 *
-	 * @param       $from
-	 * @param       $to
-	 * @param array $options
-	 */
-	public function cli(string $from, string $to, array $options = null): RouteCollectionInterface
+    /**
+     * Specifies a route that is only available to command-line requests.
+     *
+     * @param       $from
+     * @param       $to
+     * @param array $options
+     *
+     * @return \CodeIgniter\Router\RouteCollectionInterface
+     */
+	public function cli(string $from, $to, array $options = null): RouteCollectionInterface
 	{
 		if ($this->HTTPVerb == 'cli')
 		{
