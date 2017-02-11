@@ -360,6 +360,9 @@ class ValidationTest extends \CIUnitTestCase
 
     //--------------------------------------------------------------------
 
+    /**
+    * @group DatabaseLive
+    */
     public function testIsUniqueFalse()
     {
         $data = [
@@ -375,6 +378,9 @@ class ValidationTest extends \CIUnitTestCase
 
     //--------------------------------------------------------------------
 
+    /**
+    * @group DatabaseLive
+    */
     public function testIsUniqueTrue()
     {
         $data = [
@@ -390,6 +396,9 @@ class ValidationTest extends \CIUnitTestCase
 
     //--------------------------------------------------------------------
 
+    /**
+    * @group DatabaseLive
+    */
     public function testIsUniqueIgnoresParams()
     {
         $db  = Database::connect();
