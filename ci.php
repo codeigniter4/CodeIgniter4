@@ -30,7 +30,7 @@ define('FCPATH', './public/'.DIRECTORY_SEPARATOR);
 // Refuse to run when called from php-cgi
 if (substr(php_sapi_name(), 0, 3) == 'cgi')
 {
-    die("The cli tool is not supported when running php-cgi. It needs php-cli to function!\n\n");
+	die("The cli tool is not supported when running php-cgi. It needs php-cli to function!\n\n");
 }
 
 // Ensure the current directory is pointing to the front controller's directory

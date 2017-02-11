@@ -66,7 +66,7 @@ class Document
 			die();
 		}
 
-	    $this->source = $source;
+		$this->source = $source;
 
 		return $this;
 	}

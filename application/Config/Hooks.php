@@ -29,5 +29,5 @@ use CodeIgniter\Hooks\Hooks;
  */
 if (ENVIRONMENT != 'production')
 {
-    Hooks::on('DBQuery', 'CodeIgniter\Debug\Toolbar\Collectors\Database::collect');
+	Hooks::on('DBQuery', 'CodeIgniter\Debug\Toolbar\Collectors\Database::collect');
 }
