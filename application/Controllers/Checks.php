@@ -103,4 +103,11 @@ class Checks extends Controller
         $query->execute('foo', 'foo@example.com', 'US');
     }
 
+    public function format()
+    {
+        echo '<pre>';
+        var_dump($this->response->getHeaderLine('content-type'));
+    }
+
+
 }

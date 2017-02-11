@@ -120,7 +120,7 @@ class View implements RendererInterface {
 		$this->loader   = is_null($loader) ? Services::locator() : $loader;
 		$this->logger   = is_null($logger) ? Services::logger() : $logger;
 		$this->debug    = is_null($debug) ? CI_DEBUG : $debug;
-		$this->saveData = $config->saveData ?: null;
+		$this->saveData = $config->saveData ?? null;
 	}
 
 	//--------------------------------------------------------------------
