@@ -54,7 +54,7 @@ class Autoload extends \CodeIgniter\Config\AutoloadConfig
 			APP_NAMESPACE                => APPPATH,			// For custom namespace
 			'App'                        => APPPATH,			// To ensure filters, etc still found
 		];
-        
+
 		/**
 		 * -------------------------------------------------------------------
 		 * Class Map
