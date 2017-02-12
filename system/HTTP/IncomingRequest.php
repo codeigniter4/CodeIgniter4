@@ -342,7 +342,7 @@ class IncomingRequest extends Request
 	 *
 	 * @return mixed
 	 */
-	public function getRawString()
+	public function getRawInput()
 	{
 	    parse_str($this->body, $output);
 
