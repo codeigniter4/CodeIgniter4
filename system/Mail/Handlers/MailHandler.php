@@ -107,12 +107,26 @@ class MailHandler extends BaseHandler
 
         // First, get and format all of our emails (from, to, cc, etc)
         $this->initialize();
-        ddd($this);
+
+        if (! isset($this->headers['From']))
+        {
+            $this->setErrorMessage(lang('mail.noFrom'));
+            return false;
+        }
+
+        if ($this->ReplyToFlag === false)
+        {
+//            $this->setReplyTo($this->headers)
+        }
     }
 
     //--------------------------------------------------------------------
 
-    public function initialize()
+    /**
+     * Reads in our emails and other data from the message and converting
+     * into the format we need it in.
+     */
+    protected function initialize()
     {
         // Set the appropriate headers with formatted versions
         // of all of our recipients and senders.
@@ -130,6 +144,8 @@ class MailHandler extends BaseHandler
                 $this->{'set'.$group}($emails);
             }
         }
+
+        $this->setSubject($this->message->getSubject());
     }
 
     //--------------------------------------------------------------------
@@ -174,6 +190,95 @@ class MailHandler extends BaseHandler
         $emails = $this->formatEmails($emails);
 
         $this->setHeader('From', implode(', ', $emails));
+    }
+
+    //--------------------------------------------------------------------
+
+    /**
+     * Sets and formats the email(s) the message should be replied to.
+     *
+     * @param array $emails
+     */
+    protected function setReplyTo(array $emails)
+    {
+        if ($this->validate)
+        {
+            $this->validateEmail($emails);
+        }
+
+        $emails = $this->cleanNames($emails);
+        $emails = $this->formatEmails($emails);
+
+        $this->setHeader('Reply-To', implode(', ', $emails));
+
+        $this->ReplyToFlag = true;
+    }
+
+    //--------------------------------------------------------------------
+
+    /**
+     * Sets and formats the email(s) the message should be CC'd to.
+     *
+     * @param array $emails
+     */
+    protected function setCC(array $emails)
+    {
+        if ($this->validate)
+        {
+            $this->validateEmail($emails);
+        }
+
+        $emails = $this->cleanNames($emails);
+        $emails = $this->formatEmails($emails);
+
+        $this->setHeader('Cc', implode(', ', $emails));
+
+        if ($this->protocol == 'smtp')
+        {
+            $this->CC = $emails;
+        }
+    }
+
+    //--------------------------------------------------------------------
+
+    /**
+     * Sets and formats the email(s) the message should be BCC'd to.
+     *
+     * @param array $emails
+     */
+    protected function setBCC(array $emails)
+    {
+        if ($this->validate)
+        {
+            $this->validateEmail($emails);
+        }
+
+        $emails = $this->cleanNames($emails);
+        $emails = $this->formatEmails($emails);
+
+        $this->setHeader('Bcc', implode(', ', $emails));
+
+        if ($this->protocol == 'smtp')
+        {
+            $this->BCC = $emails;
+        }
+    }
+
+    //--------------------------------------------------------------------
+
+    /**
+     * Sets the email subject header.
+     *
+     * @param string $subject
+     *
+     * @return $this
+     */
+    protected function setSubject(string $subject)
+    {
+        $subject = $this->prepQEncoding($subject);
+        $this->setHeader('Subject', $subject);
+
+        return $this;
     }
 
     //--------------------------------------------------------------------
@@ -292,21 +397,6 @@ class MailHandler extends BaseHandler
     //--------------------------------------------------------------------
 
     /**
-     * Adds an attachment to the current email that is being built.
-     *
-     * @param string $filename
-     * @param string $disposition like 'inline'. Default is 'attachment'
-     * @param string $newname     If you'd like to rename the file for delivery
-     * @param string $mime        Custom defined mime type.
-     */
-    public function attach(string $filename, string $disposition = null, string $newname = null, string $mime = null)
-    {
-
-    }
-
-    //--------------------------------------------------------------------
-
-    /**
      * Sets a header value for the email. Not every service will provide this.
      *
      * @param string $header
@@ -318,84 +408,6 @@ class MailHandler extends BaseHandler
     public function setHeader(string $header, $value)
     {
         $this->headers[$header] = str_replace(["\n", "\r"], '', $value);
-    }
-
-    //--------------------------------------------------------------------
-
-    /**
-     * Prep Q Encoding
-     *
-     * Performs "Q Encoding" on a string for use in email headers.
-     * It's related but not identical to quoted-printable, so it has its
-     * own method.
-     *
-     * @param    string
-     *
-     * @return    string
-     */
-    protected function prepQEncoding($str)
-    {
-        $str = str_replace(["\r", "\n"], '', $str);
-
-        if ($this->charset === 'UTF-8')
-        {
-            // Note: We used to have mb_encode_mimeheader() as the first choice
-            //       here, but it turned out to be buggy and unreliable. DO NOT
-            //       re-add it! -- Narf
-            if (ICONV_ENABLED === true)
-            {
-                $output = @iconv_mime_encode('', $str,
-                    [
-                        'scheme'           => 'Q',
-                        'line-length'      => 76,
-                        'input-charset'    => $this->charset,
-                        'output-charset'   => $this->charset,
-                        'line-break-chars' => $this->crlf,
-                    ]
-                );
-
-                // There are reports that iconv_mime_encode() might fail and return FALSE
-                if ($output !== false)
-                {
-                    // iconv_mime_encode() will always put a header field name.
-                    // We've passed it an empty one, but it still prepends our
-                    // encoded string with ': ', so we need to strip it.
-                    return self::substr($output, 2);
-                }
-
-                $chars = iconv_strlen($str, 'UTF-8');
-            } elseif (MB_ENABLED === true)
-            {
-                $chars = mb_strlen($str, 'UTF-8');
-            }
-        }
-
-        // We might already have this set for UTF-8
-        isset($chars) OR $chars = self::strlen($str);
-
-        $output = '=?'.$this->charset.'?Q?';
-        for ($i = 0, $length = self::strlen($output); $i < $chars; $i++)
-        {
-            $chr = ($this->charset === 'UTF-8' && ICONV_ENABLED === true)
-                ? '='.implode('=', str_split(strtoupper(bin2hex(iconv_substr($str, $i, 1, $this->charset))), 2))
-                : '='.strtoupper(bin2hex($str[$i]));
-
-            // RFC 2045 sets a limit of 76 characters per line.
-            // We'll append ?= to the end of each line though.
-            if ($length+($l = self::strlen($chr)) > 74)
-            {
-                $output .= '?='.$this->crlf // EOL
-                           .' =?'.$this->charset.'?Q?'.$chr; // New line
-                $length = 6+self::strlen($this->charset)+$l; // Reset the length for the new line
-            } else
-            {
-                $output .= $chr;
-                $length += $l;
-            }
-        }
-
-        // End the header
-        return $output.'?=';
     }
 
     //--------------------------------------------------------------------
@@ -415,32 +427,4 @@ class MailHandler extends BaseHandler
     }
 
     //--------------------------------------------------------------------
-
-    /**
-     * Stores an error message for later debug info, with optional
-     * string replacement.
-     *
-     * @param string $message
-     * @param string $val
-     */
-    protected function setErrorMessage(string $message, string $val = '')
-    {
-        $this->debugMsg[] = str_replace('%s', $val, $message).'<br/>';
-    }
-
-    //--------------------------------------------------------------------
-
-    /**
-     * Byte-safe substr()
-     *
-     * @param    string $str
-     * @param    int    $start
-     * @param    int    $length
-     *
-     * @return    string
-     */
-    protected static function substr($str, $start, $length = null)
-    {
-        return mb_substr($str, $start, $length, '8bit');
-    }
 }

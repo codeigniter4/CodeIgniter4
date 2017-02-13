@@ -15,18 +15,6 @@ interface MailHandlerInterface
     //--------------------------------------------------------------------
 
     /**
-     * Adds an attachment to the current email that is being built.
-     *
-     * @param string    $filename
-     * @param string    $disposition    like 'inline'. Default is 'attachment'
-     * @param string    $newname        If you'd like to rename the file for delivery
-     * @param string    $mime           Custom defined mime type.
-     */
-    public function attach(string $filename, string $disposition=null, string $newname=null, string $mime=null);
-
-    //--------------------------------------------------------------------
-
-    /**
      * Sets a header value for the email. Not every service will provide this.
      *
      * @param $field

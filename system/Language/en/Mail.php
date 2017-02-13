@@ -44,4 +44,5 @@ return [
     'errorWritingFile' => 'Unable to write email message to disk: %s',
     'mustBeArray' => 'The email validation method must be passed an array.',
     'invalidEmail' => 'Invalid email address: %s',
+    'noFrom' => 'Cannot send mail with no "From" header.',
 ];
