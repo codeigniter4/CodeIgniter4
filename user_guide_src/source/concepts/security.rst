@@ -48,7 +48,7 @@ OWASP recommendations
 ---------------------
 
 - Presentation: validate authentication & role; send CSRF token with forms
-- Design: only use inbuilt session management
+- Design: only use built-in session management
 - Controller: validate user, role, CSRF token
 - Model: validate role
 - Tip: consider the use of a request governor
