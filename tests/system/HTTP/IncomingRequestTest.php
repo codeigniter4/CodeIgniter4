@@ -263,4 +263,36 @@ class IncomingRequestTest extends \CIUnitTestCase
 	}
 
 	//--------------------------------------------------------------------
+
+	public function testCanGrabGetRawJSON()
+	{
+		$json = '{"code":1, "message":"ok"}';
+
+		$expected = [
+			'code' => 1,
+			'message' => 'ok'
+		];
+
+		$request = new IncomingRequest(new App(), new URI(), $json);
+		
+		$this->assertEquals($expected, $request->getJSON(true));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testCanGrabGetRawInput()
+	{
+		$rawstring = 'username=admin001&role=administrator&usepass=0';
+
+		$expected = [
+			'username' => 'admin001',
+			'role' => 'administrator',
+			'usepass' => 0
+		];
+		$request = new IncomingRequest(new App(), new URI(), $rawstring);
+
+		$this->assertEquals($expected, $request->getRawInput());
+	}
+
+	//--------------------------------------------------------------------
 }
