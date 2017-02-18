@@ -133,14 +133,24 @@ arrays, pass in ``true`` as the first parameter.
 The second and third parameters match up to the ``depth`` and ``options`` arguments of the
 `json_decode <http://php.net/manual/en/function.json-decode.php>`_ PHP function.
 
-**Getting Raw data (PUT, PATCH, DELETE)**
+**Retrieving Raw data (PUT, PATCH, DELETE)**
 
 Finally, you can grab the contents of php://input as a raw stream with ``getRawInput()``.
 
 	$data = $request->getRawInput();
 
-By default, this will convert param string to an array. 
-
+This will retrieve data and convert it to an array. Like this::
+	<form>
+		<input type="text" name="Username" value="Admin">
+		<input type="text" name="Role" value="Administrator">
+		<input type="hidden" name="_method" value="PUT">
+	</form>
+	var_dump($request->getRawInput());
+	
+	[
+		'Username' => 'Admin',
+		'Role' => 'Administrator',
+	]
 Filtering Input Data
 --------------------
 
