@@ -140,16 +140,11 @@ Finally, you can grab the contents of php://input as a raw stream with ``getRawI
 	$data = $request->getRawInput();
 
 This will retrieve data and convert it to an array. Like this::
-	<form>
-		<input type="text" name="Username" value="Admin">
-		<input type="text" name="Role" value="Administrator">
-		<input type="hidden" name="_method" value="PUT">
-	</form>
 	var_dump($request->getRawInput());
 	
 	[
-		'Username' => 'Admin',
-		'Role' => 'Administrator',
+		'Param1' => 'Value1',
+		'Param2' => 'Value2',
 	]
 Filtering Input Data
 --------------------
