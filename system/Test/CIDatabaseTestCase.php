@@ -178,15 +178,15 @@ class CIDatabaseTestCase extends CIUnitTestCase
 	 */
 	public function tearDown()
 	{
-	    if (! empty($this->insertCache))
-	    {
-		    foreach ($this->insertCache as $row)
-		    {
-			    $this->db->table($row[0])
-				         ->where($row[1])
-				         ->delete();
-		    }
-	    }
+		if (! empty($this->insertCache))
+		{
+			foreach ($this->insertCache as $row)
+			{
+				$this->db->table($row[0])
+						 ->where($row[1])
+						 ->delete();
+			}
+		}
 	}
 
 	//--------------------------------------------------------------------
@@ -199,7 +199,7 @@ class CIDatabaseTestCase extends CIUnitTestCase
 	 */
 	public function seed(string $name)
 	{
-        return $this->seeder->call($name);
+		return $this->seeder->call($name);
 	}
 
 	//--------------------------------------------------------------------
@@ -220,10 +220,10 @@ class CIDatabaseTestCase extends CIUnitTestCase
 	public function dontSeeInDatabase(string $table, array $where)
 	{
 		$count = $this->db->table($table)
-				        ->where($where)
-				        ->countAllResults();
+						->where($where)
+						->countAllResults();
 
-	    $this->assertTrue($count == 0, 'Row was found in database');
+		$this->assertTrue($count == 0, 'Row was found in database');
 	}
 
 	//--------------------------------------------------------------------
@@ -241,8 +241,8 @@ class CIDatabaseTestCase extends CIUnitTestCase
 	public function seeInDatabase(string $table, array $where)
 	{
 		$count = $this->db->table($table)
-		                  ->where($where)
-		                  ->countAllResults();
+						  ->where($where)
+						  ->countAllResults();
 
 		$this->assertTrue($count > 0, 'Row not found in database: '. $this->db->showLastQuery());
 	}
@@ -262,10 +262,10 @@ class CIDatabaseTestCase extends CIUnitTestCase
 	 */
 	public function grabFromDatabase(string $table, string $column, array $where)
 	{
-	    $query = $this->db->table($table)
-		                  ->select($column)
-		                  ->where($where)
-		                  ->get();
+		$query = $this->db->table($table)
+						  ->select($column)
+						  ->where($where)
+						  ->get();
 
 		$query = $query->getRow();
 
@@ -289,8 +289,8 @@ class CIDatabaseTestCase extends CIUnitTestCase
 			$table, $data
 		];
 
-	    $this->db->table($table)
-		         ->insert($data);
+		$this->db->table($table)
+				 ->insert($data);
 	}
 
 	//--------------------------------------------------------------------
@@ -308,9 +308,9 @@ class CIDatabaseTestCase extends CIUnitTestCase
 	 */
 	public function seeNumRecords(int $expected, string $table, array $where)
 	{
-	    $count = $this->db->table($table)
-		                  ->where($where)
-		                  ->countAllResults();
+		$count = $this->db->table($table)
+						  ->where($where)
+						  ->countAllResults();
 
 		$this->assertEquals($expected, $count, 'Wrong number of matching rows in database.');
 	}
