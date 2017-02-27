@@ -201,7 +201,7 @@ class Language
 	 */
 	protected function requireFile(string $path): array
 	{
-        $files = service('locator')->search($path);
+		$files = service('locator')->search($path);
 
 		foreach ($files as $file)
 		{
