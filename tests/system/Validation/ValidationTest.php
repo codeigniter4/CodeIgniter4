@@ -202,7 +202,43 @@ class ValidationTest extends \CIUnitTestCase
 
     //--------------------------------------------------------------------
 
-    //--------------------------------------------------------------------
+	public function testGetRuleGroup()
+	{
+		$this->assertEquals([
+			'foo' => 'required|min_length[5]',
+		], $this->validation->getRuleGroup('groupA'));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testGetRuleGroupException()
+	{
+		$this->expectException('\InvalidArgumentException');
+		$this->validation->getRuleGroup('groupZ');
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testSetRuleGroup()
+	{
+		$this->validation->setRuleGroup('groupA');
+
+		$this->assertEquals([
+			'foo' => 'required|min_length[5]',
+		], $this->validation->getRules());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testSetRuleGroupException()
+	{
+		$this->expectException('\InvalidArgumentException');
+
+		$this->validation->setRuleGroup('groupZ');
+	}
+
+
+	//--------------------------------------------------------------------
     // Rules Tests
     //--------------------------------------------------------------------
 
