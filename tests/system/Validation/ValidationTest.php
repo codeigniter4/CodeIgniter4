@@ -237,7 +237,6 @@ class ValidationTest extends \CIUnitTestCase
 		$this->validation->setRuleGroup('groupZ');
 	}
 
-
 	//--------------------------------------------------------------------
     // Rules Tests
     //--------------------------------------------------------------------
