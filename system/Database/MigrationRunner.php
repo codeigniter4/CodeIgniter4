@@ -243,12 +243,16 @@ class MigrationRunner
      *
      * @return    mixed    Current version string on success, FALSE on failure
      */
-    public function latest($namespace = null)
+    public function latest($namespace = null, $group = null)
     {
 
         // Set Namespace if not null
         if (!is_null($namespace)) {
             $this->setNamespace($namespace);
+        }
+        // Set database group if not null
+        if (!is_null($group)) {
+            $this->setGroup($group);
         }
 
         $migrations = $this->findMigrations();
@@ -273,8 +277,13 @@ class MigrationRunner
      *
      * @return    void
      */
-    public function latestAll()
+    public function latestAll($group = null)
     {
+         // Set database group if not null
+        if (!is_null($group)) {
+            $this->setGroup($group);
+        }
+
         // Get all namespaces form  PSR4 paths.
         $config = new Autoload();
         $namespaces = $config->psr4;
@@ -298,38 +307,21 @@ class MigrationRunner
     //--------------------------------------------------------------------
 
     /**
-     * Sets the schema to the migration version set in config
+     * Sets the (APP_NAMESPACE) schema to $currentVersion in migration config file
+     *      
      *
      * @return    mixed    TRUE if no migrations are found, current version string on success, FALSE on failure
      */
-    public function current($namespace = null)
+    public function current($group = null)
     {
-        // Set Namespace if not null
-        if (!is_null($namespace)) {
-            $this->setNamespace($namespace);
+        // Set database group if not null
+        if (!is_null($group)) {
+            $this->setGroup($group);
         }
 
         return $this->version($this->currentVersion);
     }
 
-    //--------------------------------------------------------------------
-
-    /**
-     * Sets the schema to the migration version set in config
-     *
-     * @return    void
-     */
-    public function currentAll()
-    {
-        // Get all namespaces form  PSR4 paths.
-        $config = new Autoload();
-        $namespaces = $config->psr4;
-
-        foreach ($namespaces as $namespace => $path) {
-            $this->setNamespace($namespace);
-            return $this->version($this->currentVersion);
-        }
-    }
     //--------------------------------------------------------------------
 
     /**
@@ -342,6 +334,7 @@ class MigrationRunner
         $migrations = [];
         // Get namespace location form  PSR4 paths.
         $config = new Autoload();
+
         $location = $config->psr4[$this->namespace];
 
         // Setting migration directories.
@@ -380,22 +373,22 @@ class MigrationRunner
         ksort($migrations);
 
         if ($method === 'down'){
-            $old_migrations=$this->getHistory($this->group);
-            $old_size= count($old_migrations) -1;
+            $history_migrations=$this->getHistory($this->group);
+            $history_size= count($history_migrations) -1;
         }
         // Check for sequence gaps
-        $previous = 0;
+        $loop = 0;
         foreach ($migrations as  $migration) {
-            if ($this->type === 'sequential' && abs($migration->version - $previous) > 1) {
+            if ($this->type === 'sequential' &&  abs($migration->version - $loop) > 1) {
                 throw new \RuntimeException(lang('Migration.migGap') . $migration->version);
             }
-            // Check if  old migration files are all available to do downgrading
+            // Check if all old migration files are all available to do downgrading
             if ($method === 'down') {
-                if ($previous <= $old_size && $old_migrations[$previous]['version'] != $migration->version){
+                if ($loop <= $history_size && $history_migrations[$loop]['version'] != $migration->version){
                     throw new \RuntimeException(lang('Migration.migGap') . $migration->version);
                 }
             }
-            $previous = (int)$migration->version;
+            $loop ++;
         }
         return true;
     }
