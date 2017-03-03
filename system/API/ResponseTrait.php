@@ -36,8 +36,10 @@
  * @filesource
  */
 
+use CodeIgniter\HTTP\Response;
+
 /**
- * Class ResponseTrait
+ * Response trait.
  *
  * Provides common, more readable, methods to provide
  * consistent HTTP responses under a variety of common
@@ -294,6 +296,19 @@ trait ResponseTrait
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Used when there is a server error.
+	 *
+	 * @param string      $description Description
+	 * @param string|null $code        Code.
+	 * @param string      $message     Message.
+	 *
+	 * @return Response Response.
+	 */
+	public function failServerError(string $description, string $code = null, string $message = ''): Response
+	{
+		return $this->fail($description, $this->codes['server_error'], $code, $message);
+	}
 
 	//--------------------------------------------------------------------
 	// Utility Methods
