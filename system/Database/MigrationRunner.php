@@ -578,7 +578,7 @@ class MigrationRunner
                 'time' => time()
             ]);
             if(is_cli()){
-                $this->cliMessages[]="\t- " . lang('Migrations.migAdded') . $version;
+               // $this->cliMessages[]="\t- " . lang('Migrations.migAdded') . $version;
             }
     }
 
@@ -598,7 +598,7 @@ class MigrationRunner
             ->where('namespace', $this->namespace)
             ->delete();
             if(is_cli()){
-                $this->cliMessages[]="\t- " . lang('Migrations.migRemoved') . $version;
+               // $this->cliMessages[]="\t- " . lang('Migrations.migRemoved') . $version;
             }
     }
 
