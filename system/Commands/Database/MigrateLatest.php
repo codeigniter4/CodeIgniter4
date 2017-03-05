@@ -76,10 +76,14 @@ class MigrateLatest extends BaseCommand
         $group =    CLI::getOption('g'); 
         
         try {
-            if (! is_null(CLI::getOption('all'))){
+            if (! is_null(CLI::getOption('all'))){        
                 $runner->latestAll($group);
             }else{                 
                 $runner->latest($namespace,$group);
+            }
+            $messages = $runner->getCliMessages();
+            foreach ($messages as $message) {
+                CLI::write($message); 
             }
             
         }

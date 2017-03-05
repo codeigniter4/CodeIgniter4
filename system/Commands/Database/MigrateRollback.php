@@ -95,6 +95,10 @@ class MigrateRollback extends BaseCommand
                     $runner->version(0,$namespace,$group);
                 }
             }
+             $messages = $runner->getCliMessages();
+            foreach ($messages as $message) {
+                CLI::write($message); 
+            }
         }
         catch (\Exception $e)
         {

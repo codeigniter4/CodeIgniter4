@@ -35,6 +35,7 @@
  * @since    Version 3.0.0
  * @filesource
  */
+ 
 
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\ConfigException;
@@ -109,6 +110,13 @@ class MigrationRunner
      * @var bool
      */
     protected $silent = false;
+
+    /**
+     * used to return messages for CLI.
+     *
+     * @var bool
+     */
+    protected $cliMessages = array();
 
     //--------------------------------------------------------------------
 
@@ -207,10 +215,11 @@ class MigrationRunner
         // Check Migration consistency
         $this->CheckMigrations($migrations,$method, $targetVersion);
 
-        // loop migration for each namespace (module)
          if(is_cli()){
-            CLI::write("-) $this->namespace:"); 
-        }
+                $this->cliMessages[]="-) $this->namespace:";
+            }
+
+        // loop migration for each namespace (module)
         foreach ($migrations as $version => $migration) {
 
             // Only include migrations within the scoop
@@ -520,7 +529,6 @@ class MigrationRunner
     /**
      * Retrieves current schema version
      *
-     * @param $group
      * @return    string    Current migration version
      */
     protected function getVersion()
@@ -534,6 +542,19 @@ class MigrationRunner
             ->getRow();
 
         return $row ? $row->version : '0';
+    }
+
+     //--------------------------------------------------------------------
+
+    /**
+     * Retrieves current schema version
+     *
+     * @return    string    Current migration version
+     */
+    public function getCliMessages()
+    {
+
+        return $this->cliMessages;
     }
 
     //--------------------------------------------------------------------
@@ -557,7 +578,7 @@ class MigrationRunner
                 'time' => time()
             ]);
             if(is_cli()){
-                CLI::write("\t- " . lang('Migrations.migAdded') . $version);
+                $this->cliMessages[]="\t- " . lang('Migrations.migAdded') . $version;
             }
     }
 
@@ -577,7 +598,7 @@ class MigrationRunner
             ->where('namespace', $this->namespace)
             ->delete();
             if(is_cli()){
-                CLI::write("\t- " . lang('Migrations.migRemoved') . $version);
+                $this->cliMessages[]="\t- " . lang('Migrations.migRemoved') . $version;
             }
     }
 

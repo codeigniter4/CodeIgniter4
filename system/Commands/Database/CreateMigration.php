@@ -82,7 +82,7 @@ class CreateMigration extends BaseCommand
             CLI::error(lang('Migrations.migBadCreateName'));
             return;
         }
-        $ns = array_shift($params);
+        $namespace = CLI::getOption('n');
         $homepath = APPPATH;
 
         if (!empty($ns))
