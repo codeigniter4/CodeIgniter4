@@ -39,6 +39,7 @@
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\ConfigException;
 use Config\Autoload;
+use CodeIgniter\CLI\CLI;
 
 /**
  * Class MigrationRunner
@@ -204,9 +205,12 @@ class MigrationRunner
         }
 
         // Check Migration consistency
-        $this->CheckMigrations($migrations,$method);
+        $this->CheckMigrations($migrations,$method, $targetVersion);
 
         // loop migration for each namespace (module)
+         if(is_cli()){
+            CLI::write("-) $this->namespace:"); 
+        }
         foreach ($migrations as $version => $migration) {
 
             // Only include migrations within the scoop
@@ -231,9 +235,10 @@ class MigrationRunner
 
                 $instance->{$method}();
                 if ($method === 'up') $this->addHistory($migration->version);
-                elseif ($method === 'down') $this->removeHistory($migration->version);
+                elseif ($method === 'down') $this->removeHistory($migration->version);            
             }
         }
+        return true;
     }
 
     //--------------------------------------------------------------------
@@ -255,18 +260,12 @@ class MigrationRunner
             $this->setGroup($group);
         }
 
-        $migrations = $this->findMigrations();
-
-        if (empty($migrations)) {
-            if ($this->silent) return false;
-
-            throw new \RuntimeException(lang('Migrations.migNotFound'));
-        }
+        $migrations = $this->findMigrations();       
 
         $lastMigration = end($migrations)->version;
 
         // Calculate the last migration step from existing migration
-        // filenames and proceed to the standard version migration
+        // filenames and proceed to the standard version migration       
         return $this->version($lastMigration);
     }
 
@@ -288,7 +287,7 @@ class MigrationRunner
         $config = new Autoload();
         $namespaces = $config->psr4;
 
-        foreach ($namespaces as $namespace => $path) {
+        foreach ($namespaces as $namespace => $path) {    
 
             $this->setNamespace($namespace);
             $migrations = $this->findMigrations();
@@ -298,11 +297,16 @@ class MigrationRunner
             }
 
             $lastMigration = end($migrations)->version;
+            // No New migrations to add
+            if($lastMigration ==  $this->getVersion()){
+                continue;
+            }
 
             // Calculate the last migration step from existing migration
-            // filenames and proceed to the standard version migration
+            // filenames and proceed to the standard version migration           
             $this->version($lastMigration);
         }
+        return true;
     }
     //--------------------------------------------------------------------
 
@@ -368,8 +372,20 @@ class MigrationRunner
      *
      * @return    bool
      */
-    protected function CheckMigrations($migrations, $method)
+    protected function CheckMigrations($migrations, $method, $targetversion)
     {
+         // Check if no migrations found 
+         if (empty($migrations)) {
+            if ($this->silent) return false;
+            throw new \RuntimeException(lang('Migrations.migEmpty') );
+        }
+
+         // Check if $targetversion file is found
+         if ($targetversion != 0 && !array_key_exists($targetversion,$migrations) ) {
+            if ($this->silent) return false;
+            throw new \RuntimeException(lang('Migrations.migNotFound'). $targetversion);
+        }
+
         ksort($migrations);
 
         if ($method === 'down'){
@@ -380,12 +396,12 @@ class MigrationRunner
         $loop = 0;
         foreach ($migrations as  $migration) {
             if ($this->type === 'sequential' &&  abs($migration->version - $loop) > 1) {
-                throw new \RuntimeException(lang('Migration.migGap') . $migration->version);
+                throw new \RuntimeException(lang('Migration.migGap') . " " . $migration->version);
             }
             // Check if all old migration files are all available to do downgrading
             if ($method === 'down') {
                 if ($loop <= $history_size && $history_migrations[$loop]['version'] != $migration->version){
-                    throw new \RuntimeException(lang('Migration.migGap') . $migration->version);
+                    throw new \RuntimeException(lang('Migration.migGap') . " " . $migration->version);
                 }
             }
             $loop ++;
@@ -440,6 +456,7 @@ class MigrationRunner
     {
         $query = $this->db->table($this->table)
             ->where('group', $group)
+            ->where('Namespace', $this->namespace)
             ->orderBy('version', 'ASC')
             ->get();
 
@@ -539,6 +556,9 @@ class MigrationRunner
                 'namespace' => $this->namespace,
                 'time' => time()
             ]);
+            if(is_cli()){
+                CLI::write("\t- " . lang('Migrations.migAdded') . $version);
+            }
     }
 
     //--------------------------------------------------------------------
@@ -556,6 +576,9 @@ class MigrationRunner
             ->where('group', $this->group)
             ->where('namespace', $this->namespace)
             ->delete();
+            if(is_cli()){
+                CLI::write("\t- " . lang('Migrations.migRemoved') . $version);
+            }
     }
 
     //--------------------------------------------------------------------

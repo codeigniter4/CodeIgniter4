@@ -54,7 +54,7 @@ class MigrateLatest extends BaseCommand
      *
      * @var string
      */
-    protected $name = 'migrate';
+    protected $name = 'migrate:latest';
 
     /**
      * the Command's short description
@@ -72,8 +72,16 @@ class MigrateLatest extends BaseCommand
 
         CLI::write(lang('Migrations.migToLatest'), 'yellow');
 
+        $namespace = CLI::getOption('n');
+        $group =    CLI::getOption('g'); 
+        
         try {
-            $runner->latest();
+            if (! is_null(CLI::getOption('all'))){
+                $runner->latestAll($group);
+            }else{                 
+                $runner->latest($namespace,$group);
+            }
+            
         }
         catch (\Exception $e)
         {
