@@ -70,10 +70,10 @@ class MigrateStatus extends BaseCommand
     public function run(array $params=[])
     {
         $runner = Services::migrations();
-
+        
         if(! is_null(CLI::getOption('g'))){
             $runner->setGroup(CLI::getOption('g'));
-        }        
+        }
         
         // Get all namespaces form  PSR4 paths.
         $config = new Autoload();
@@ -81,7 +81,7 @@ class MigrateStatus extends BaseCommand
         
         // Loop for all $namespaces
         foreach ($namespaces as $namespace => $path) {
-
+            
             $runner->setNamespace($namespace);
             $migrations = $runner->findMigrations();
             $history    = $runner->getHistory();
@@ -91,9 +91,26 @@ class MigrateStatus extends BaseCommand
                 CLI::error("$namespace: " .lang('Migrations.migNoneFound'));
                 continue;
             }
+            
+            ksort($migrations);
 
-            ksort($migrations);                    
-            CLI::write(lang('Migrations.migHistoryFor') . "$namespace: " , 'yellow');
+            CLI::newLine(1);
+
+            CLI::write(lang('Migrations.migHistoryFor') . "$namespace: " , 'green');
+
+            CLI::newLine(1);
+
+            $max = 0;
+            foreach ($migrations as $version => $migration)
+            {
+                $file = substr($migration->name, strpos($migration->name, $version.'_'));
+                $migrations[$version]->name = $file;
+                
+                $max = max($max, strlen($file));
+            }
+            
+            CLI::write(str_pad(lang('Migrations.filename'), $max+6).lang('Migrations.migOn'),'yellow');
+            
             
             foreach ($migrations as $version => $migration)
             {
@@ -102,9 +119,9 @@ class MigrateStatus extends BaseCommand
                 {
                     if ($row['version'] != $version) continue;
                     
-                    $date = $row['time'];
-                }                
-                CLI::write("\t- $version ". lang('Migrations.migOn') . ($date ? $date : '---'));
+                    $date = date ("Y-m-d H:i:s", $row['time']);
+                }
+                CLI::write(str_pad($migration->name, $max+6). ($date ? $date : '---'));
             }
         }
     }
