@@ -212,10 +212,9 @@ class Language
 
 			// On some OS's we were seeing failures
             // on this command returning boolean instead
-            // of array during testing.
-			$output = require_once $file;
-
-			return is_array($output) ? $output : [];
+            // of array during testing, so we've removed
+            // the require_once for now.
+			return require_once $file;
 		}
 
 		return [];
