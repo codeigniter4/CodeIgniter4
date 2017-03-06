@@ -299,11 +299,11 @@ trait ResponseTrait
 	/**
 	 * Used when there is a server error.
 	 *
-	 * @param string      $description Description
-	 * @param string|null $code        Code.
-	 * @param string      $message     Message.
+	 * @param string      $description The error message to show the user.
+	 * @param string|null $code        A custom, API-specific, error code.
+	 * @param string      $message     A custom "reason" message to return.
 	 *
-	 * @return Response Response.
+	 * @return Response The value of the Response's send() method.
 	 */
 	public function failServerError(string $description, string $code = null, string $message = ''): Response
 	{
