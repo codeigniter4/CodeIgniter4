@@ -214,7 +214,7 @@ class Language
             // on this command returning boolean instead
             // of array during testing, so we've removed
             // the require_once for now.
-			return require_once $file;
+			return require $file;
 		}
 
 		return [];
