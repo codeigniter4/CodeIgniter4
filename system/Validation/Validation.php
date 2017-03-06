@@ -354,11 +354,13 @@ class Validation implements ValidationInterface
 	 */
 	public function getRuleGroup(string $group): array
 	{
-		if (!isset($this->config->$group)) {
+		if (! isset($this->config->$group))
+		{
 			throw new \InvalidArgumentException(sprintf(lang('Validation.groupNotFound'), $group));
 		}
 
-		if (!is_array($this->config->$group)) {
+		if (!is_array($this->config->$group))
+		{
 			throw new \InvalidArgumentException(sprintf(lang('Validation.groupNotArray'), $group));
 		}
 
@@ -366,6 +368,7 @@ class Validation implements ValidationInterface
 	}
 
 	//--------------------------------------------------------------------
+
 	/**
 	 * Set rule group.
 	 *
@@ -380,7 +383,8 @@ class Validation implements ValidationInterface
 		$this->rules = $rules;
 
 		$errorName = $group . '_errors';
-		if (isset($this->config->$errorName)) {
+		if (isset($this->config->$errorName))
+		{
 			$this->customErrors = $this->config->$errorName;
 		}
 	}
