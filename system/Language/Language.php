@@ -155,12 +155,15 @@ class Language
 	 */
 	protected function formatMessage($message, array $args = [])
 	{
-		if (! $this->intlSupport || ! count($args)) {
+		if (! $this->intlSupport || ! count($args))
+		{
 			return $message;
 		}
 
-		if (is_array($message)) {
-			foreach ($message as $index => $value) {
+		if (is_array($message))
+		{
+			foreach ($message as $index => $value)
+			{
 				$message[$index] = $this->formatMessage($value, $args);
 			}
 			return $message;

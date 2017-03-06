@@ -67,8 +67,9 @@ class LanguageTest extends \CIUnitTestCase
 
 	public function testGetLineArrayFormatsMessages()
 	{
-		// No intl extension? then we can't test this - go away....
-		if (! class_exists('\MessageFormatter')) {
+		// No intl extension? Then we can't test this - go away...
+		if (! class_exists('\MessageFormatter'))
+		{
 			return;
 		}
 

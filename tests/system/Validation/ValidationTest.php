@@ -1184,7 +1184,7 @@ class ValidationTest extends \CIUnitTestCase
             ['0', false],
             ['12', true],
             ['42a', false],
-            ['-1', false],
+            ['-1', false]
         ];
     }
 
