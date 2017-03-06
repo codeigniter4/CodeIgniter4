@@ -210,7 +210,7 @@ class Language
 				continue;
 			}
 
-			return require_once $file;
+			return require $file;
 		}
 
 		return [];
