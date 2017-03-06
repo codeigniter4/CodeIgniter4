@@ -465,7 +465,7 @@ class MigrationRunner
     {
         $query = $this->db->table($this->table)
             ->where('group', $group)
-            ->where('Namespace', $this->namespace)
+            ->where('namespace', $this->namespace)
             ->orderBy('version', 'ASC')
             ->get();
 
