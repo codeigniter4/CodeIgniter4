@@ -276,4 +276,19 @@ class ResponseTraitTest extends \CIUnitTestCase
         $this->assertEquals(json_encode($expected), $this->response->getBody());
     }
 
+    public function testServerError()
+    {
+    	$controller = $this->makeController();
+    	$controller->failServerError('Nope.', 'FAT-CHANCE', 'A custom reason.');
+
+    	$this::assertEquals('A custom reason.', $this->response->getReason());
+    	$this::assertEquals(500, $this->response->getStatusCode());
+    	$this::assertEquals(json_encode([
+    		'status'   => 500,
+		    'error'    => 'FAT-CHANCE',
+		    'messages' => [
+		    	'Nope.'
+		    ]
+	    ]), $this->response->getBody());
+    }
 }

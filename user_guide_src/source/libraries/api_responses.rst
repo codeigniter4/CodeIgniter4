@@ -278,3 +278,15 @@ Class Reference
 
     return $this->failTooManyRequests('You must wait 15 seconds before making another request.');
 
+.. php:method:: failServerError(string $description[, string $code = null[, string $message = '']])
+
+    :param string $description: The error message to show the user.
+    :param string $code: A custom, API-specific, error code.
+    :param string $message: A custom "reason" message to return.
+    :returns: The value of the Response object's send() method.
+
+    Sets the appropriate status code to use when there is a server error.
+
+    ::
+
+    return $this->failServerError('Server error.');
