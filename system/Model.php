@@ -725,12 +725,12 @@ class Model
 		{
 			if (is_object($data) && isset($data->{$byKey}))
 			{
-				$response = $this->updateBy($byKey, $data);
+				$response = $this->updateBy($byKey, $data->{$byKey}, $data);
 				break;
 			}
 			elseif (is_array($data) && ! empty($data[$byKey]))
 			{
-				$response = $this->updateBy($byKey, $data);
+				$response = $this->updateBy($byKey, $data[$byKey], $data);
 				break;
 			}
 		}
