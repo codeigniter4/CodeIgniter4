@@ -201,7 +201,7 @@ class Language
 	 */
 	protected function requireFile(string $path): array
 	{
-        $files = service('locator')->search($path);
+		$files = service('locator')->search($path);
 
 		foreach ($files as $file)
 		{
@@ -210,6 +210,10 @@ class Language
 				continue;
 			}
 
+			// On some OS's we were seeing failures
+      // on this command returning boolean instead
+      // of array during testing, so we've removed
+      // the require_once for now.
 			return require $file;
 		}
 
