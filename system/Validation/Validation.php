@@ -343,7 +343,54 @@ class Validation implements ValidationInterface
 
 	//--------------------------------------------------------------------
 
-    /**
+	/**
+	 * Get rule group.
+	 *
+	 * @param string $group Group.
+	 *
+	 * @return string[] Rule group.
+	 *
+	 * @throws \InvalidArgumentException If group not found.
+	 */
+	public function getRuleGroup(string $group): array
+	{
+		if (! isset($this->config->$group))
+		{
+			throw new \InvalidArgumentException(sprintf(lang('Validation.groupNotFound'), $group));
+		}
+
+		if (!is_array($this->config->$group))
+		{
+			throw new \InvalidArgumentException(sprintf(lang('Validation.groupNotArray'), $group));
+		}
+
+		return $this->config->$group;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Set rule group.
+	 *
+	 * @param string $group Group.
+	 *
+	 *
+	 * @throws \InvalidArgumentException If group not found.
+	 */
+	public function setRuleGroup(string $group)
+	{
+		$rules = $this->getRuleGroup($group);
+		$this->rules = $rules;
+
+		$errorName = $group . '_errors';
+		if (isset($this->config->$errorName))
+		{
+			$this->customErrors = $this->config->$errorName;
+		}
+	}
+
+
+/**
      * Returns the rendered HTML of the errors as defined in $template.
      *
      * @param string $template
