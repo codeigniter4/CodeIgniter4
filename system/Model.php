@@ -87,6 +87,11 @@ class Model
 	protected $primaryKey = 'id';
 
 	/**
+	 * @var string Alternative key.
+	 */
+	protected $altKey;
+
+	/**
 	 * The Database connection group that
 	 * should be instantiated.
 	 *
@@ -276,6 +281,71 @@ class Model
 	 */
 	public function find($id)
 	{
+		return $this->findBy($this->primaryKey, $id);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Fetches the row of database from the table with an alternative key
+	 * matching the key.
+	 *
+	 * @param mixed $key One alternative key or an array of alternative
+	 *                   keys.
+	 *
+	 * @return mixed The resulting row(s) of data, or null.
+	 */
+	public function findByKey($key)
+	{
+		if ($this->altKey === null)
+		{
+			return null;
+		}
+
+		return $this->findBy($this->altKey, $key);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Fetches the row of database from the table with a primary or
+	 * alternative key matching the ID or key.
+	 *
+	 * @param mixed $idKey One primary or alternative key or an array of
+	 *                     primary or alternative keys.
+	 *
+	 * @return mixed The resulting row(s) of data, or null.
+	 */
+	public function findByIdKey($idKey)
+	{
+		if ($this->altKey === null)
+		{
+			return $this->findBy($this->primaryKey, $idKey);
+		}
+
+		return $this->findBy([
+			$this->primaryKey,
+			$this->altKey
+		], $idKey);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Fetches the row of database from the table with a key matching
+	 * value.
+	 *
+	 * @param mixed $byKeys Find by keys.
+	 * @param mixed $value  One value or an array of values.
+	 *
+	 * @return mixed The resulting row(s) of data, or null.
+	 */
+	protected function findBy($byKeys, $value)
+	{
+		if (! is_array($byKeys)) {
+			$byKeys = [$byKeys];
+		}
+
 		$builder = $this->builder();
 
 		if ($this->tempUseSoftDeletes === true)
@@ -283,17 +353,38 @@ class Model
 			$builder->where('deleted', 0);
 		}
 
-		if (is_array($id))
+		if (is_array($value))
 		{
-			$row = $builder->whereIn($this->primaryKey, $id)
-			               ->get();
+			foreach ($byKeys as $byKey)
+			{
+				if ($byKey = reset($byKeys))
+				{
+					$builder->whereIn($byKey, $value);
+				}
+				else
+				{
+					$builder->orWhereIn($byKey, $value);
+				}
+			}
+
+			$row = $builder->get();
 			$row = $row->getResult($this->tempReturnType);
 		}
 		else
 		{
-			$row = $builder->where($this->primaryKey, $id)
-			               ->get();
+			foreach ($byKeys as $byKey)
+			{
+				if ($byKey = reset($byKeys))
+				{
+					$builder->where($byKey, $value);
+				}
+				else
+				{
+					$builder->orWhere($byKey, $value);
+				}
+			}
 
+			$row = $builder->get();
 			$row = $row->getFirstRow($this->tempReturnType);
 		}
 
@@ -546,39 +637,117 @@ class Model
 	 */
 	public function save($data)
 	{
-	    $saveData = $data;
+	    return $this->saveBy($this->primaryKey, $data);
+	}
 
-	    // If $data is using a custom class with public or protected
-        // properties representing the table elements, we need to grab
-        // them as an array.
-        if (is_object($data) && ! $data instanceof \stdClass)
-        {
-            $data = $this->classToArray($data);
-        }
+	//--------------------------------------------------------------------
 
-		if (is_object($data) && isset($data->{$this->primaryKey}))
+	/**
+	 * A convenience method that will attempt to determine whether the
+	 * data should be inserted or updated. Will work with either
+	 * an array or object. When using with custom class objects,
+	 * you must ensure that the class will provide access to the class
+	 * variables, even if through a magic method.
+	 *
+	 * @param mixed $data Data.
+	 *
+	 * @return bool True if successful, else false.
+	 */
+	public function saveByKey($data)
+	{
+		if ($this->altKey === null)
 		{
-			$response = $this->update($data->{$this->primaryKey}, $data);
+			return false;
 		}
-		elseif (is_array($data) && ! empty($data[$this->primaryKey]))
+
+		return $this->saveBy($this->altKey, $data);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * A convenience method that will attempt to determine whether the
+	 * data should be inserted or updated. Will work with either
+	 * an array or object. When using with custom class objects,
+	 * you must ensure that the class will provide access to the class
+	 * variables, even if through a magic method.
+	 *
+	 * @param mixed $data Data.
+	 *
+	 * @return bool True if successful, else false.
+	 */
+	public function saveByIdKey($data)
+	{
+		if ($this->altKey === null)
 		{
-			$response = $this->update($data[$this->primaryKey], $data);
+			return $this->saveBy($this->primaryKey, $data);
 		}
-        else
-        {
-            $response = $this->insert($data);
-        }
+		else
+		{
+			return $this->saveBy([
+				$this->primaryKey,
+				$this->altKey
+			], $data);
+		}
+	}
 
-        // If it was an Entity class, check it for an onSave method.
-        if (is_object($saveData) && ! $saveData instanceof \stdClass)
-        {
-            if (method_exists($saveData, 'onSave'))
-            {
-                $saveData->onSave();
-            }
-        }
+	//--------------------------------------------------------------------
 
-        return $response;
+	/**
+	 * A convenience method that will attempt to determine whether the
+	 * data should be inserted or updated. Will work with either
+	 * an array or object. When using with custom class objects,
+	 * you must ensure that the class will provide access to the class
+	 * variables, even if through a magic method.
+	 *
+	 * @param mixed $byKeys Save by keys.
+	 * @param mixed $data   Data.
+	 *
+	 * @return bool True if successful, else false.
+	 */
+	protected function saveBy($byKeys, $data)
+	{
+		if (! is_array($byKeys)) {
+			$byKeys = [$byKeys];
+		}
+
+		$saveData = $data;
+
+		// If data is using a custom class with public or protected
+		// properties representing the table elements, we need to grab
+		// them as an array.
+		if (is_object($data) && ! $data instanceof \stdClass)
+		{
+			$data = $this->classToArray($data);
+		}
+
+		foreach ($byKeys as $byKey)
+		{
+			if (is_object($data) && isset($data->{$byKey}))
+			{
+				$response = $this->updateBy($byKey, $data);
+				break;
+			}
+			elseif (is_array($data) && ! empty($data[$byKey]))
+			{
+				$response = $this->updateBy($byKey, $data);
+				break;
+			}
+		}
+
+		if (! isset($response))
+		{
+			$response = $this->insert($data);
+		}
+
+		// If it was an entity class, check it for an on save method.
+		if (is_object($saveData) && ! $saveData instanceof \stdClass
+			&& method_exists($saveData, 'onSave'))
+		{
+			$saveData->onSave();
+		}
+
+		return $response;
 	}
 
 	//--------------------------------------------------------------------
@@ -684,33 +853,98 @@ class Model
 	 */
 	public function update($id, $data)
 	{
-        // If $data is using a custom class with public or protected
-        // properties representing the table elements, we need to grab
-        // them as an array.
-        if (is_object($data) && ! $data instanceof \stdClass)
-        {
-            $data = $this->classToArray($data);
-        }
+        return $this->updateBy($this->primaryKey, $id, $data);
+	}
 
-        // If it's still a stdClass, go ahead and convert to
-        // an array so doProtectFields and other model methods
-        // don't have to do special checks.
-        if (is_object($data))
-        {
-            $data = (array)$data;
-        }
+	//--------------------------------------------------------------------
 
-	    // Validate data before saving.
-        if ($this->skipValidation === false)
-        {
-            if ($this->validate($data) === false)
-            {
-                return false;
-            }
-        }
+	/**
+	 * Updates a single record in the table. If an object is provided, it
+	 * will attempt to convert it into an array.
+	 *
+	 * @param mixed $key  Alternative key.
+	 * @param mixed $data Data.
+	 *
+	 * @return bool True if successful, else false.
+	 */
+	public function updateByKey($key, $data)
+	{
+		if ($this->altKey === null)
+		{
+			return false;
+		}
 
-		// Must be called first so we don't
-		// strip out updated_at values.
+		return $this->updateBy($this->altKey, $key, $data);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Updates a single record in the table. If an object is provided, it
+	 * will attempt to convert it into an array.
+	 *
+	 * @param mixed $idKey ID or alternative key.
+	 * @param mixed $data  Data.
+	 *
+	 * @return bool True if successful, else false.
+	 */
+	public function updateByIdKey($idKey, $data)
+	{
+		if ($this->altKey === null)
+		{
+			return $this->updateBy($this->primaryKey, $idKey, $data);
+		}
+		else
+		{
+			return $this->updateBy([
+				$this->primaryKey,
+				$this->altKey
+			], $idKey, $data);
+		}
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Updates a single record in the table. If an object is provided, it
+	 * will attempt to convert it into an array.
+	 *
+	 * @param mixed $byKeys Update by keys.
+	 * @param mixed $key    Key.
+	 * @param mixed $data   Data.
+	 *
+	 * @return bool True if successful, else false.
+	 */
+	protected function updateBy($byKeys, $key, $data)
+	{
+		if (! is_array($byKeys)) {
+			$byKeys = [$byKeys];
+		}
+
+		// If data is using a custom class with public or protected
+		// properties representing the table elements, we need to grab
+		// them as an array.
+		if (is_object($data) && ! $data instanceof \stdClass)
+		{
+			$data = $this->classToArray($data);
+		}
+
+		// If it's still a stdClass, go ahead and convert to an array so
+		// do protect fields and other model methods don't have to do
+		// special checks.
+		if (is_object($data))
+		{
+			$data = (array)$data;
+		}
+
+		// Validate data before saving.
+		if ($this->skipValidation === false
+			&& $this->validate($data) === false)
+		{
+			return false;
+		}
+
+		// Must be called first so we don't strip out updated at values.
 		$data = $this->doProtectFields($data);
 
 		if ($this->useTimestamps && ! array_key_exists($this->updatedField, $data))
@@ -723,11 +957,24 @@ class Model
 			throw new \InvalidArgumentException('No data to update.');
 		}
 
-		// Must use the set() method to ensure objects get converted to arrays
-		return $this->builder()
-		            ->where($this->primaryKey, $id)
-		            ->set($data)
-		            ->update();
+		$builder = $this->builder();
+
+		foreach ($byKeys as $byKey)
+		{
+			if ($byKey === reset($byKeys))
+			{
+				$builder->where($byKey, $key);
+			}
+			else
+			{
+				$builder->orWhere($byKey, $key);
+			}
+		}
+
+		// Must use the set method to ensure objects get converted to arrays
+		return $builder
+			->set($data)
+			->update();
 	}
 
 	//--------------------------------------------------------------------
@@ -744,16 +991,96 @@ class Model
 	 */
 	public function delete($id, $purge = false)
 	{
-		if ($this->useSoftDeletes && ! $purge)
+		return $this->deleteBy($this->primaryKey, $id, $purge);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Deletes a single record from the table where alternative key
+	 * matches the table's alternative key.
+	 *
+	 * @param mixed $key    Key.
+	 * @param bool  $purge  Purge?
+	 *
+	 * @return bool|mixed False if unsuccessful.
+	 */
+	public function deleteByKey($key, bool $purge = false)
+	{
+		if ($this->altKey === null)
 		{
-			return $this->builder()
-			            ->where($this->primaryKey, $id)
-			            ->update(['deleted' => 1]);
+			return false;
 		}
 
-		return $this->builder()
-		            ->where($this->primaryKey, $id)
-		            ->delete();
+		return $this->deleteBy($this->altKey, $key, $purge);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Deletes a single record from the table where ID or alternative key
+	 * matches the table's primary ID or alternative key.
+	 *
+	 * @param mixed $idKey  ID or alternative key.
+	 * @param bool  $purge  Purge?
+	 *
+	 * @return bool|mixed False if unsuccessful.
+	 */
+	public function deleteByIdKey($idKey, bool $purge = false)
+	{
+		if ($this->altKey === null)
+		{
+			return $this->deleteBy($this->primaryKey, $idKey, $purge);
+		}
+		else
+		{
+			return $this->deleteByIdKey([
+				$this->primaryKey,
+				$this->altKey
+			], $idKey, $purge);
+		}
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Deletes a single record from the table where key matches the
+	 * table's by keys.
+	 *
+	 * @param mixed $byKeys Delete by keys.
+	 * @param mixed $key    Key.
+	 * @param bool  $purge  Purge?
+	 *
+	 * @return bool|mixed False if unsuccessful.
+	 */
+	protected function deleteBy($byKeys, $key, bool $purge = false)
+	{
+		if (! is_array($byKeys)) {
+			$byKeys = [$byKeys];
+		}
+
+		$builder = $this->builder();
+
+		foreach ($byKeys as $byKey)
+		{
+			if ($byKey === reset($byKeys))
+			{
+				$builder->where($byKey, $key);
+			}
+			else
+			{
+				$builder->orWhere($byKey, $key);
+			}
+		}
+
+		if ($this->useSoftDeletes && ! $purge)
+		{
+			return $builder
+				->update(['deleted' => 1]);
+		}
+
+		return $builder
+			->delete();
 	}
 
 	//--------------------------------------------------------------------
