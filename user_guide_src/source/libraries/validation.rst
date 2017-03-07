@@ -303,6 +303,23 @@ be used for any errors when this group is used::
 
 See below for details on the formatting of the array.
 
+Getting & Setting Rule Groups
+=============================
+
+Get Rule Group
+--------------
+
+This method gets a rule group from the validation configuration.
+
+    $validation->getRuleGroup('signup');
+
+Set Rule Group
+--------------
+
+This method sets a rule group from the validation configuration to the validation service.
+
+    $validation->setRuleGroup('signup');
+
 *******************
 Working With Errors
 *******************
