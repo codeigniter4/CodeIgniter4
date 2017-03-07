@@ -163,9 +163,6 @@ class ValidationTest extends \CIUnitTestCase
 
     //--------------------------------------------------------------------
 
-    /**
-     * @group single
-     */
     public function testRulesReturnErrors()
     {
         $this->validation->setRules([
@@ -239,6 +236,21 @@ class ValidationTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
     // Rules Tests
+    //--------------------------------------------------------------------
+
+    public function testRequiredNull()
+    {
+        $data = [
+            'foo' => null,
+        ];
+
+        $this->validation->setRules([
+            'foo' => 'required',
+        ]);
+
+        $this->assertFalse($this->validation->run($data));
+    }
+
     //--------------------------------------------------------------------
 
     public function testRequiredTrueString()
@@ -331,6 +343,22 @@ class ValidationTest extends \CIUnitTestCase
 
     //--------------------------------------------------------------------
 
+    public function testMatchesNull()
+    {
+        $data = [
+            'foo' => null,
+            'bar' => null,
+        ];
+
+        $this->validation->setRules([
+            'foo' => 'matches[bar]',
+        ]);
+
+        $this->assertTrue($this->validation->run($data));
+    }
+
+    //--------------------------------------------------------------------
+
     public function testMatchesTrue()
     {
         $data = [
@@ -356,6 +384,22 @@ class ValidationTest extends \CIUnitTestCase
 
         $this->validation->setRules([
             'foo' => 'matches[bar]',
+        ]);
+
+        $this->assertFalse($this->validation->run($data));
+    }
+
+    //--------------------------------------------------------------------
+
+    public function testDiffersNull()
+    {
+        $data = [
+            'foo' => null,
+            'bar' => null,
+        ];
+
+        $this->validation->setRules([
+            'foo' => 'differs[bar]',
         ]);
 
         $this->assertFalse($this->validation->run($data));
@@ -455,6 +499,21 @@ class ValidationTest extends \CIUnitTestCase
 
     //--------------------------------------------------------------------
 
+    public function testMinLengthNull()
+    {
+        $data = [
+            'foo' => null,
+        ];
+
+        $this->validation->setRules([
+            'foo' => 'min_length[3]',
+        ]);
+
+        $this->assertFalse($this->validation->run($data));
+    }
+
+    //--------------------------------------------------------------------
+
     public function testMinLengthReturnsFalseWithNonNumericVal()
     {
         $data = [
@@ -511,6 +570,21 @@ class ValidationTest extends \CIUnitTestCase
         ]);
 
         $this->assertFalse($this->validation->run($data));
+    }
+
+    //--------------------------------------------------------------------
+
+    public function testMaxLengthNull()
+    {
+        $data = [
+            'foo' => null,
+        ];
+
+        $this->validation->setRules([
+            'foo' => 'max_length[1]',
+        ]);
+
+        $this->assertTrue($this->validation->run($data));
     }
 
     //--------------------------------------------------------------------
@@ -575,6 +649,21 @@ class ValidationTest extends \CIUnitTestCase
 
     //--------------------------------------------------------------------
 
+    public function testExactLengthNull()
+    {
+        $data = [
+            'foo' => null,
+        ];
+
+        $this->validation->setRules([
+            'foo' => 'exact_length[3]',
+        ]);
+
+        $this->assertFalse($this->validation->run($data));
+    }
+
+    //--------------------------------------------------------------------
+
     public function testExactLengthReturnsTrueOnSuccess()
     {
         $data = [
@@ -623,7 +712,7 @@ class ValidationTest extends \CIUnitTestCase
     /**
      * @dataProvider urlProvider
      */
-    public function testValidURL(string $url, bool $expected)
+    public function testValidURL(string $url=null, bool $expected)
     {
         $data = [
             'foo' => $url,
@@ -651,6 +740,7 @@ class ValidationTest extends \CIUnitTestCase
             ['htt://www.codeigniter.com', false],
             ['', false],
             ['code igniter', false],
+            [null, false],
         ];
     }
 
@@ -703,6 +793,7 @@ class ValidationTest extends \CIUnitTestCase
         return [
             ['email@sample.com', true],
             ['valid_email', false],
+            [null, false],
         ];
     }
 
@@ -715,6 +806,7 @@ class ValidationTest extends \CIUnitTestCase
             ['1@sample.com, 2@sample.com', true],
             ['email@sample.com', true],
             ['@sample.com,2@sample.com,validemail@email.ca', false],
+            [null, false]
         ];
     }
 
@@ -753,6 +845,7 @@ class ValidationTest extends \CIUnitTestCase
             ['127.0.0.1', 'ipv6', false],
             ['H001:0db8:85a3:0000:0000:8a2e:0370:7334', null, false],
             ['127.0.0.259', null, false],
+            [null, null, false]
         ];
     }
 
@@ -786,6 +879,7 @@ class ValidationTest extends \CIUnitTestCase
             ['abcdefghijklmnopqrstuvwxyzABCDEFGHLIJKLMNOPQRSTUVWXYZ ', false],
             ['abcdefghijklmnopqrstuvwxyzABCDEFGHLIJKLMNOPQRSTUVWXYZ1', false],
             ['abcdefghijklmnopqrstuvwxyzABCDEFGHLIJKLMNOPQRSTUVWXYZ*', false],
+            [null, false],
         ];
     }
 
@@ -818,6 +912,7 @@ class ValidationTest extends \CIUnitTestCase
             ['abcdefghijklmnopqrstuvwxyzABCDEFGHLIJKLMNOPQRSTUVWXYZ0123456789', true],
             ['abcdefghijklmnopqrstuvwxyzABCDEFGHLIJKLMNOPQRSTUVWXYZ0123456789\ ', false],
             ['abcdefghijklmnopqrstuvwxyzABCDEFGHLIJKLMNOPQRSTUVWXYZ0123456789_', false],
+            [null, false],
         ];
     }
 
@@ -849,6 +944,7 @@ class ValidationTest extends \CIUnitTestCase
         return [
             [' abcdefghijklmnopqrstuvwxyzABCDEFGHLIJKLMNOPQRSTUVWXYZ0123456789', true],
             [' abcdefghijklmnopqrstuvwxyzABCDEFGHLIJKLMNOPQRSTUVWXYZ0123456789-', false],
+            [null, false],
         ];
     }
 
@@ -880,6 +976,7 @@ class ValidationTest extends \CIUnitTestCase
         return [
             ['abcdefghijklmnopqrstuvwxyzABCDEFGHLIJKLMNOPQRSTUVWXYZ0123456789-', true],
             ['abcdefghijklmnopqrstuvwxyzABCDEFGHLIJKLMNOPQRSTUVWXYZ0123456789-\ ', false],
+            [null, false],
         ];
     }
 
@@ -915,6 +1012,7 @@ class ValidationTest extends \CIUnitTestCase
             ['+42', true],
             ['123a', false],
             ['--1', false],
+            [null, false]
         ];
     }
 
@@ -950,6 +1048,7 @@ class ValidationTest extends \CIUnitTestCase
             ['123a', false],
             ['1.9', false],
             ['--1', false],
+            [null, false],
         ];
     }
 
@@ -985,6 +1084,7 @@ class ValidationTest extends \CIUnitTestCase
             ['1.0a', false],
             ['-i', false],
             ['--1', false],
+            [null, false]
         ];
     }
 
@@ -1019,6 +1119,7 @@ class ValidationTest extends \CIUnitTestCase
             ['10', '10', false],
             ['10', 'a', false],
             ['10a', '10', false],
+            [null, null, false]
         ];
     }
 
@@ -1052,6 +1153,9 @@ class ValidationTest extends \CIUnitTestCase
             ['1', '0', true],
             ['-1', '0', false],
             ['10a', '0', false],
+            [null, null, false],
+            [1, null, true],
+            [null, 1, false]
         ];
     }
 
@@ -1085,6 +1189,9 @@ class ValidationTest extends \CIUnitTestCase
             ['-1', '0', true],
             ['4', '4', false],
             ['10a', '5', false],
+            [null, null, false],
+            [1, null, false],
+            [null, 1, false]
         ];
     }
 
@@ -1119,6 +1226,9 @@ class ValidationTest extends \CIUnitTestCase
             ['4', '4', true],
             ['0', '-1', false],
             ['10a', '0', false],
+            [null, null, false],
+            [null, 1, false],
+            [1, null, false]
         ];
     }
 
@@ -1149,11 +1259,14 @@ class ValidationTest extends \CIUnitTestCase
     {
         return [
             ['red', 'red,Blue,123', true],
+            ['Blue', 'red, Blue,123', true],
             ['Blue', 'red,Blue,123', true],
             ['123', 'red,Blue,123', true],
             ['Red', 'red,Blue,123', false],
             [' red', 'red,Blue,123', false],
             ['1234', 'red,Blue,123', false],
+            [null, 'red,Blue,123', false],
+            ['red', null, false],
         ];
     }
 
@@ -1187,6 +1300,7 @@ class ValidationTest extends \CIUnitTestCase
             ['12', true],
             ['42a', false],
             ['-1', false],
+            [null, false]
         ];
     }
 
@@ -1219,7 +1333,8 @@ class ValidationTest extends \CIUnitTestCase
             ['0', false],
             ['12', true],
             ['42a', false],
-            ['-1', false]
+            ['-1', false],
+            [null, false]
         ];
     }
 
@@ -1251,6 +1366,7 @@ class ValidationTest extends \CIUnitTestCase
         return [
             [base64_encode('string'), true],
             ['FA08GG', false],
+            [null, false]
         ];
     }
 
@@ -1283,6 +1399,7 @@ class ValidationTest extends \CIUnitTestCase
             ['America/Chicago', true],
             ['america/chicago', false],
             ['foo/bar', false],
+            [null, false]
         ];
     }
 
@@ -1317,6 +1434,9 @@ class ValidationTest extends \CIUnitTestCase
             ['nope', 'bar', false],
             ['foo', 'bar', true],
             ['nope', 'baz', true],
+            [null, null, true],
+            [null, 'foo', true],
+            ['foo', null, true]
         ];
     }
 
@@ -1350,6 +1470,9 @@ class ValidationTest extends \CIUnitTestCase
         return [
             ['nope', 'bars', false],
             ['foo', 'nope', true],
+            [null, null, false],
+            [null, 'foo', true],
+            ['foo', null, true]
         ];
     }
 
@@ -1391,6 +1514,7 @@ class ValidationTest extends \CIUnitTestCase
     public function creditCardProvider()
     {
         return [
+            'null_test'      => ['amex', null, false],
             'random_test'    => ['amex', $this->generateCardNum('37', 16), false],
             'invalid_type'   => ['shorty', '1111 1111 1111 1111', false],
             'invalid_length' => ['amex', '', false],

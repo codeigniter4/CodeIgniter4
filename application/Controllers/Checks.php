@@ -2,7 +2,9 @@
 
 use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\Controller;
+use CodeIgniter\Model;
 use Config\Database;
+use Tests\Support\Models\JobModel;
 
 class Checks extends Controller
 {
@@ -107,6 +109,20 @@ class Checks extends Controller
 	{
 		echo '<pre>';
 		var_dump($this->response->getHeaderLine('content-type'));
+	}
+
+	public function model()
+	{
+	    $model = new class() extends Model {
+	        protected $table = 'job';
+        };
+
+	    $results = $model->findAll();
+
+	    $developer = $model->findWhere('name', 'Developer');
+
+	    $politician = $model->find(3);
+
 	}
 
 

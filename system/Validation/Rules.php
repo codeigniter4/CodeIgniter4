@@ -47,7 +47,7 @@ class Rules
 	 *
 	 * @return    bool
 	 */
-	public function alpha(string $str): bool
+	public function alpha(string $str=null): bool
 	{
 		return ctype_alpha($str);
 	}
@@ -61,7 +61,7 @@ class Rules
 	 *
 	 * @return    bool
 	 */
-	public function alpha_dash(string $str): bool
+	public function alpha_dash(string $str=null): bool
 	{
 		return (bool)preg_match('/^[a-z0-9_-]+$/i', $str);
 	}
@@ -75,7 +75,7 @@ class Rules
 	 *
 	 * @return    bool
 	 */
-	public function alpha_numeric(string $str): bool
+	public function alpha_numeric(string $str=null): bool
 	{
 		return ctype_alnum((string)$str);
 	}
@@ -89,7 +89,7 @@ class Rules
 	 *
 	 * @return    bool
 	 */
-	public function alpha_numeric_spaces(string $str): bool
+	public function alpha_numeric_spaces(string $str=null): bool
 	{
 		return (bool)preg_match('/^[A-Z0-9 ]+$/i', $str);
 	}
@@ -103,7 +103,7 @@ class Rules
 	 *
 	 * @return    bool
 	 */
-	public function decimal(string $str): bool
+	public function decimal(string $str=null): bool
 	{
 		return (bool)preg_match('/^[\-+]?[0-9]+\.[0-9]+$/', $str);
 	}
@@ -119,9 +119,9 @@ class Rules
 	 *
 	 * @return bool
 	 */
-	public function differs(string $str, string $field, array $data): bool
+	public function differs(string $str=null, string $field, array $data): bool
 	{
-		return isset($data[$field])
+		return array_key_exists($field, $data)
 			? ($str !== $data[$field])
 			: false;
 	}
@@ -137,7 +137,7 @@ class Rules
 	 *
 	 * @return bool
 	 */
-	public function exact_length(string $str, string $val, array $data): bool
+	public function exact_length(string $str=null, string $val, array $data): bool
 	{
 		if (! is_numeric($val))
 		{
@@ -157,7 +157,7 @@ class Rules
 	 *
 	 * @return    bool
 	 */
-	public function greater_than(string $str, string $min, array $data): bool
+	public function greater_than(string $str=null, string $min, array $data): bool
 	{
 		return is_numeric($str) ? ($str > $min) : false;
 	}
@@ -172,7 +172,7 @@ class Rules
 	 *
 	 * @return    bool
 	 */
-	public function greater_than_equal_to(string $str, string $min, array $data): bool
+	public function greater_than_equal_to(string $str=null, string $min, array $data): bool
 	{
 		return is_numeric($str) ? ($str >= $min) : false;
 	}
@@ -186,9 +186,11 @@ class Rules
 	 * @param	string
 	 * @return	bool
 	 */
-	public function in_list(string $value, string $list, array $data): bool
+	public function in_list(string $value=null, string $list, array $data): bool
 	{
-		return in_array($value, explode(',', $list), TRUE);
+	    $list = explode(',', $list);
+	    $list = array_map(function($value) { return trim($value); }, $list);
+		return in_array($value, $list, TRUE);
 	}
 
 	//--------------------------------------------------------------------
@@ -200,7 +202,7 @@ class Rules
 	 *
 	 * @return    bool
 	 */
-	public function integer(string $str): bool
+	public function integer(string $str=null): bool
 	{
 		return (bool)preg_match('/^[\-+]?[0-9]+$/', $str);
 	}
@@ -213,7 +215,7 @@ class Rules
 	 * @param	string
 	 * @return	bool
 	 */
-	public function is_natural(string $str): bool
+	public function is_natural(string $str=null): bool
 	{
 		return ctype_digit((string) $str);
 	}
@@ -226,7 +228,7 @@ class Rules
 	 * @param	string
 	 * @return	bool
 	 */
-	public function is_natural_no_zero(string $str): bool
+	public function is_natural_no_zero(string $str=null): bool
 	{
 		return ($str != 0 && ctype_digit((string) $str));
 	}
@@ -248,7 +250,7 @@ class Rules
 	 *
 	 * @return bool
 	 */
-	public function is_unique(string $str, string $field, array $data): bool
+	public function is_unique(string $str=null, string $field, array $data): bool
 	{
 		// Grab any data for exclusion of a single row.
 		list($field, $ignoreField, $ignoreValue) = array_pad(explode(',', $field), 3, null);
@@ -279,7 +281,7 @@ class Rules
 	 *
 	 * @return    bool
 	 */
-	public function less_than(string $str, string $max): bool
+	public function less_than(string $str=null, string $max): bool
 	{
 		return is_numeric($str) ? ($str < $max) : false;
 	}
@@ -294,7 +296,7 @@ class Rules
 	 *
 	 * @return    bool
 	 */
-	public function less_than_equal_to(string $str, string $max): bool
+	public function less_than_equal_to(string $str=null, string $max): bool
 	{
 		return is_numeric($str) ? ($str <= $max) : false;
 	}
@@ -310,9 +312,9 @@ class Rules
 	 *
 	 * @return bool
 	 */
-	public function matches(string $str, string $field, array $data): bool
+	public function matches(string $str=null, string $field, array $data): bool
 	{
-		return isset($data[$field])
+		return array_key_exists($field, $data)
 			? ($str === $data[$field])
 			: false;
 	}
@@ -328,7 +330,7 @@ class Rules
 	 *
 	 * @return bool
 	 */
-	public function max_length(string $str, string $val, array $data): bool
+	public function max_length(string $str=null, string $val, array $data): bool
 	{
 		if (! is_numeric($val))
 		{
@@ -349,7 +351,7 @@ class Rules
 	 *
 	 * @return bool
 	 */
-	public function min_length(string $str, string $val, array $data): bool
+	public function min_length(string $str=null, string $val, array $data): bool
 	{
 		if (! is_numeric($val))
 		{
@@ -368,7 +370,7 @@ class Rules
 	 *
 	 * @return    bool
 	 */
-	public function numeric(string $str): bool
+	public function numeric(string $str=null): bool
 	{
 		return (bool)preg_match('/^[\-+]?[0-9]*\.?[0-9]+$/', $str);
 
@@ -385,7 +387,7 @@ class Rules
 	 *
 	 * @return bool
 	 */
-	public function regex_match(string $str, string $pattern, array $data): bool
+	public function regex_match(string $str=null, string $pattern, array $data): bool
 	{
 		if (substr($pattern, 0, 1) != '/')
 		{
@@ -404,7 +406,7 @@ class Rules
 	 *
 	 * @return    bool
 	 */
-	public function required($str): bool
+	public function required($str=null): bool
 	{
 		return is_array($str) ? (bool)count($str) : (trim($str) !== '');
 	}
@@ -425,7 +427,7 @@ class Rules
 	 *
 	 * @return bool
 	 */
-	public function required_with($str, string $fields, array $data): bool
+	public function required_with($str=null, string $fields, array $data): bool
 	{
 	    $fields = explode(',', $fields);
 
@@ -467,7 +469,7 @@ class Rules
 	 *
 	 * @return bool
 	 */
-	public function required_without($str, string $fields, array $data): bool
+	public function required_without($str=null, string $fields, array $data): bool
 	{
 		$fields = explode(',', $fields);
 
@@ -506,7 +508,7 @@ class Rules
 	 *
 	 * @return bool
 	 */
-	public function timezone(string $str): bool
+	public function timezone(string $str=null): bool
 	{
 		return in_array($str, timezone_identifiers_list());
 	}
@@ -522,7 +524,7 @@ class Rules
 	 * @param	string
 	 * @return	bool
 	 */
-	public function valid_base64(string $str): bool
+	public function valid_base64(string $str=null): bool
 	{
 		return (base64_encode(base64_decode($str)) === $str);
 	}
@@ -536,7 +538,7 @@ class Rules
 	 *
 	 * @return    bool
 	 */
-	public function valid_email(string $str): bool
+	public function valid_email(string $str=null): bool
 	{
 		if (function_exists('idn_to_ascii') && $atpos = strpos($str, '@'))
 		{
@@ -558,7 +560,7 @@ class Rules
 	 *
 	 * @return    bool
 	 */
-	public function valid_emails(string $str): bool
+	public function valid_emails(string $str=null): bool
 	{
 		if (strpos($str, ',') === false)
 		{
@@ -587,7 +589,7 @@ class Rules
 	 *
 	 * @return bool
 	 */
-	public function valid_ip(string $ip, string $which = null, array $data): bool
+	public function valid_ip(string $ip=null, string $which = null, array $data): bool
 	{
 		switch (strtolower($which))
 		{
@@ -614,7 +616,7 @@ class Rules
 	 *
 	 * @return bool
 	 */
-	public function valid_url(string $str): bool
+	public function valid_url(string $str=null): bool
 	{
 		if (empty($str))
 		{
