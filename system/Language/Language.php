@@ -237,9 +237,9 @@ class Language
 			}
 
 			// On some OS's we were seeing failures
-            // on this command returning boolean instead
-            // of array during testing, so we've removed
-            // the require_once for now.
+      // on this command returning boolean instead
+      // of array during testing, so we've removed
+      // the require_once for now.
 			return require $file;
 		}
 

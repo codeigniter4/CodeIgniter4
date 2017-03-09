@@ -73,8 +73,13 @@ class MigrateCurrent extends BaseCommand
 
         CLI::write(lang('Migrations.migToVersion'), 'yellow');
 
-        try {
-            $runner->current();
+        $group =    CLI::getOption('g');
+        try { 
+            $runner->current($group);
+            $messages = $runner->getCliMessages();
+            foreach ($messages as $message) {
+                CLI::write($message); 
+            }
         }
         catch (\Exception $e)
         {

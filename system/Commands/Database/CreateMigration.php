@@ -38,6 +38,7 @@
 
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
+use Config\Autoload;
 
 /**
  * Creates a new migration file.
@@ -68,6 +69,7 @@ class CreateMigration extends BaseCommand
      */
     public function run(array $params=[])
     {
+    
         $name = array_shift($params);
 
         if (empty($name))
@@ -80,13 +82,31 @@ class CreateMigration extends BaseCommand
             CLI::error(lang('Migrations.migBadCreateName'));
             return;
         }
+        $namespace = CLI::getOption('n');
+        $homepath = APPPATH;
 
-        $path = APPPATH.'Database/Migrations/'.date('YmdHis_').$name.'.php';
+        if (!empty($ns))
+        {
+             // Get all namespaces form  PSR4 paths.
+            $config = new Autoload();
+            $namespaces = $config->psr4;
+
+            foreach ($namespaces as $namespace => $path) {
+
+                if ($namespace == $ns ) {
+                    $homepath =realpath($path);
+                }
+            }
+        }else {
+            $ns= "App";
+        }
+
+        $path = $homepath.'/Database/Migrations/'.date('YmdHis_').$name.'.php';
 
         $template =<<<EOD
 <?php
 
-use CodeIgniter\Database\Migration;
+use $ns\Database\Migration;
 
 class Migration_{name} extends Migration
 {
@@ -113,6 +133,6 @@ EOD;
             return;
         }
 
-        CLI::write('Created file: '. CLI::color(str_replace(APPPATH, 'APPPATH/', $path), 'green'));
+        CLI::write('Created file: '. CLI::color(str_replace($homepath, $ns, $path), 'green'));
     }
 }
