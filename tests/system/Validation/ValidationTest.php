@@ -883,6 +883,42 @@ class ValidationTest extends \CIUnitTestCase
         ];
     }
 
+	//--------------------------------------------------------------------
+
+	/**
+	 * Test alpha with spaces.
+	 *
+	 * @param mixed $value    Value.
+	 * @param bool  $expected Expected.
+	 *
+	 * @dataProvider alphaSpaceProvider
+	 */
+	public function testAlphaSpace($value, $expected)
+	{
+		$data = [
+			'foo' => $value
+		];
+
+		$this->validation->setRules([
+			'foo' => 'alpha_space'
+		]);
+
+		$this->assertEquals($expected, $this->validation->run($data));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function alphaSpaceProvider()
+	{
+		return [
+			[null, true],
+			['abcdefghijklmnopqrstuvwxyzABCDEFGHLIJKLMNOPQRSTUVWXYZ', true],
+			['abcdefghijklmnopqrstuvwxyzABCDEFGHLIJKLMNOPQRSTUVWXYZ ', true],
+			['abcdefghijklmnopqrstuvwxyzABCDEFGHLIJKLMNOPQRSTUVWXYZ1', false],
+			['abcdefghijklmnopqrstuvwxyzABCDEFGHLIJKLMNOPQRSTUVWXYZ*', false],
+		];
+	}
+
     //--------------------------------------------------------------------
 
     /**

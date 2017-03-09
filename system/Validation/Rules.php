@@ -38,6 +38,11 @@
 
 use Config\Database;
 
+/**
+ * Rules.
+ *
+ * @package CodeIgniter\Validation
+ */
 class Rules
 {
 	/**
@@ -50,6 +55,25 @@ class Rules
 	public function alpha(string $str=null): bool
 	{
 		return ctype_alpha($str);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Alpha with spaces.
+	 *
+	 * @param string $value Value.
+	 *
+	 * @return bool True if alpha with spaces, else false.
+	 */
+	public function alpha_space(string $value = null): bool
+	{
+		if ($value === null)
+		{
+			return true;
+		}
+
+		return (bool)preg_match('/^[A-Z ]+$/i', $value);
 	}
 
 	//--------------------------------------------------------------------
