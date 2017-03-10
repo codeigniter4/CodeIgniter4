@@ -272,7 +272,8 @@ Creates a skeleton migration file in **application/Database/Migrations** using t
 
   > php ci.php migrate:create [filename]
 
-You can use (refresh) with the following options:
+You can use (create) with the following options:
+
 - (-n) to choose namespace, otherwise (App) namespace will be used.
 
 *********************
