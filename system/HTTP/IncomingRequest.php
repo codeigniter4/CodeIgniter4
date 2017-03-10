@@ -337,6 +337,21 @@ class IncomingRequest extends Request
 	//--------------------------------------------------------------------
 
 	/**
+	 * A convenience method that grabs the raw input stream(send method in PUT, PATCH, DELETE) and decodes
+	 * the String into an array.
+	 *
+	 * @return mixed
+	 */
+	public function getRawInput()
+	{
+	    parse_str($this->body, $output);
+
+	    return $output;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Fetch an item from GET data.
 	 *
 	 * @param null $index  Index for item to fetch from $_GET.
