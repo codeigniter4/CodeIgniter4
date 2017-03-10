@@ -110,7 +110,11 @@ class Checks extends Controller
                     ->setSubject('Checking In')
                     ->send();
 
-        die(var_dump($mail));
+        if ($mail->hasErrors())
+        {
+            die($mail->getDebugger());
+        }
+        ddd($mail);
     }
 
 }

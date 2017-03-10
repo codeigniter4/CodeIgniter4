@@ -16,6 +16,16 @@ abstract class BaseMessage implements MessageInterface
     protected $messageHTML;
     protected $messageText;
 
+    protected $attachments = [];
+
+    /**
+     * The from address that should be used
+     * if nothing else is set.
+     *
+     * @var array
+     */
+    protected $defaultFrom;
+
     /**
      * Key/value pairs that are
      * sent to the views, if used.
@@ -118,7 +128,7 @@ abstract class BaseMessage implements MessageInterface
      *
      * @return bool
      */
-    public function send(): bool
+    public function send()
     {
         if (! $this->handler instanceof MailHandlerInterface)
         {
@@ -135,12 +145,13 @@ abstract class BaseMessage implements MessageInterface
             throw new \RuntimeException(lang('mail.emptyMessage'));
         }
 
-        if (! $this->handler->send($this))
+        // Ensure we have a 'from' address or use the defaults from the config file.
+        if (empty($this->from))
         {
-            return false;
+            $this->from = $this->defaultFrom;
         }
 
-        return true;
+        return $this->handler->send($this);
     }
 
     //--------------------------------------------------------------------
@@ -192,6 +203,28 @@ abstract class BaseMessage implements MessageInterface
     public function setFromMany(array $emails)
     {
         $this->setRecipients($emails, 'from');
+
+        return $this;
+    }
+
+    //--------------------------------------------------------------------
+
+    /**
+     * Sets the default from value that will be used if nothing else is provided.
+     * This typically comes from Config\Mail.
+     *
+     * @param string      $email
+     * @param string|null $name
+     *
+     * @return $this
+     */
+    public function setDefaultFrom(string $email, string $name=null)
+    {
+        $recipient = is_null($name)
+            ? [$email]
+            : [$name => $email];
+
+        $this->setRecipients($recipient, 'defaultFrom');
 
         return $this;
     }
@@ -494,6 +527,26 @@ abstract class BaseMessage implements MessageInterface
     //--------------------------------------------------------------------
 
     /**
+     * Simple determination about the message type based on which
+     * elements actually have content.
+     *
+     * @return string
+     */
+    public function messageType()
+    {
+        $type = ! empty($this->messageHTML)
+            ? 'html'
+            : 'plain';
+
+        if (count($this->attachments) > 0)
+        {
+            $type .= '-attach';
+        }
+
+        return $type;
+    }
+
+    /**
      * Gets any viewdata that has been set.
      *
      * @return array
@@ -564,7 +617,7 @@ abstract class BaseMessage implements MessageInterface
 
             if (is_string($name) && ! empty($name))
             {
-                $this->$type[] = [$name => $email];
+                $this->$type[$name] = $email;
                 continue;
             }
 

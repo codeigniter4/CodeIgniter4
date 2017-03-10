@@ -5,6 +5,17 @@ use CodeIgniter\Config\Mail as MailFactory;
 class Mail extends MailFactory
 {
     //--------------------------------------------------------------------
+    // From Address
+    //--------------------------------------------------------------------
+    // Specifies the address that emails are sent from whenever no
+    // other 'from' address is specifically set for the message.
+    //
+    public $from = [
+        'name' => 'CodeIgniter',
+        'email' => 'codeigniter@example.com'
+    ];
+
+    //--------------------------------------------------------------------
     // Handler
     //--------------------------------------------------------------------
     // Specifies the Handler used to send mail with if none are

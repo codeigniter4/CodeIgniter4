@@ -164,6 +164,20 @@ abstract class BaseHandler implements MailHandlerInterface
      */
     protected $config;
 
+    /**
+     * Mail Encoding
+     *
+     * @var string
+     */
+    protected $encoding = '8bit';
+
+    /**
+     * Bit depths for vaild mail encodings.
+     *
+     * @var array
+     */
+    protected $bitDepths = ['7bit', '8bit'];
+
     //--------------------------------------------------------------------
 
     public function __construct(array $config=[])
@@ -256,6 +270,17 @@ abstract class BaseHandler implements MailHandlerInterface
     //--------------------------------------------------------------------
 
     /**
+     * Returns whether the message encountered any errors or not.
+     *
+     * @return bool
+     */
+    public function hasErrors(): bool
+    {
+        return ! empty($this->debugMsg);
+    }
+
+
+    /**
      * Get Debug Message
      *
      * @param	array	$include	List of raw data chunks to include in the output
@@ -280,17 +305,18 @@ abstract class BaseHandler implements MailHandlerInterface
 
         if (in_array('headers', $include, TRUE))
         {
-            $raw_data = htmlspecialchars($this->_header_str)."\n";
+            $raw_data = htmlspecialchars(implode("\n", $this->getHeaders()))."\n";
         }
 
         if (in_array('subject', $include, TRUE))
         {
-            $raw_data .= htmlspecialchars($this->subject)."\n";
+            $raw_data .= htmlspecialchars($this->message->getSubject())."\n";
         }
 
         if (in_array('body', $include, TRUE))
         {
-            $raw_data .= htmlspecialchars($this->finalbody);
+            // @todo build a final message string!
+            $raw_data .= htmlspecialchars($this->message->getHTMLMessage());
         }
 
         return $msg.($raw_data === '' ? '' : '<pre>'.$raw_data.'</pre>');
@@ -305,7 +331,7 @@ abstract class BaseHandler implements MailHandlerInterface
      * @param	string
      * @return	string
      */
-    protected function _prep_quoted_printable($str)
+    protected function prepQuotedPrintable($str)
     {
         // ASCII code numbers for "safe" characters that can always be
         // used literally, without encoding, as described in RFC 2049.

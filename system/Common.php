@@ -165,6 +165,7 @@ if (! function_exists('email'))
         $handler = Services::mailer($group, $config, false);
 
         $message = $message->setHandler($handler);
+        $message = $message->setDefaultFrom($config->from['email'], $config->from['name']);
 
         return $message;
     }
