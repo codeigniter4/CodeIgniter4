@@ -159,12 +159,12 @@ trait ResponseTrait
 	/**
 	 * Used after successfully creating a new resource.
 	 *
-	 * @param        $data
-	 * @param string $message
+	 * @param mixed  $data    Data.
+	 * @param string $message Message.
 	 *
 	 * @return mixed
 	 */
-	public function respondCreated($data, string $message = '')
+	public function respondCreated($data = null, string $message = '')
 	{
 		return $this->respond($data, $this->codes['created'], $message);
 	}
@@ -174,12 +174,12 @@ trait ResponseTrait
 	/**
 	 * Used after a resource has been successfully deleted.
 	 *
-	 * @param        $data
-	 * @param string $message
+	 * @param mixed  $data    Data.
+	 * @param string $message Message.
 	 *
 	 * @return mixed
 	 */
-	public function respondDeleted($data, string $message = '')
+	public function respondDeleted($data = null, string $message = '')
 	{
 		return $this->respond($data, $this->codes['deleted'], $message);
 	}
