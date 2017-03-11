@@ -104,9 +104,8 @@ class CreateMigration extends BaseCommand
         $path = $homepath.'/Database/Migrations/'.date('YmdHis_').$name.'.php';
 
         $template =<<<EOD
-<?php
-
-use $ns\Database\Migration;
+<?php namespace $ns\Database\Migrations;
+use CodeIgniter\Database\Migration;
 
 class Migration_{name} extends Migration
 {
