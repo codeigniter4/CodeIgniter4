@@ -1,6 +1,7 @@
 <?php namespace App\Controllers;
 
 use CodeIgniter\API\ResponseTrait;
+use CodeIgniter\Config\Services;
 use CodeIgniter\Controller;
 use CodeIgniter\Model;
 use Config\Database;
@@ -124,6 +125,26 @@ class Checks extends Controller
 	    $politician = $model->find(3);
 
 	}
+
+    public function curl()
+    {
+        $client = Services::curlrequest([
+            'debug' => true,
+            'follow_redirects' => true,
+            'json' => ['foo' => 'bar']
+        ]);
+
+        echo '<pre>';
+        $response = $client->request('PUT', 'http://ci4.dev/checks/catch');
+        echo $response->getBody();
+    }
+
+    // Simply echos back what's given in the body.
+    public function catch()
+    {
+        $body = print_r($this->request->getRawInput(), true);
+        echo $body;
+    }
 
 
 }

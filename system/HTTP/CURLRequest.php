@@ -52,14 +52,14 @@ class CURLRequest extends Request
 {
 	/**
 	 * The response object associated with this request
-	 * 
+	 *
 	 * @var ResponseInterface
 	 */
 	protected $response;
 
 	/**
 	 * The URI associated with this request
-	 * 
+	 *
 	 * @var URI
 	 */
 	protected $baseURI;
@@ -430,7 +430,7 @@ class CURLRequest extends Request
 
 	/**
 	 * Apply method
-	 * 
+	 *
 	 * @param type $method
 	 * @param array $curl_options
 	 * @return int
@@ -472,7 +472,7 @@ class CURLRequest extends Request
 
 	/**
 	 * Apply body
-	 * 
+	 *
 	 * @param array $curl_options
 	 * @return type
 	 */
@@ -526,7 +526,7 @@ class CURLRequest extends Request
 
 	/**
 	 * Set CURL options
-	 * 
+	 *
 	 * @param array $curl_options
 	 * @param array $config
 	 * @return type
@@ -590,7 +590,7 @@ class CURLRequest extends Request
 		}
 
 		// Debug
-		if (isset($config['debug']))
+		if (isset($config['debug']) && $config['debug'] === true)
 		{
 			$curl_options[CURLOPT_VERBOSE] = 1;
 			$curl_options[CURLOPT_STDERR]  = is_bool($config['debug']) ? fopen('php://output', 'w+') : $config['debug'];
@@ -679,7 +679,8 @@ class CURLRequest extends Request
 		if (isset($config['json']))
 		{
 			// Will be set as the body in `applyBody()`
-			$this->setBody(json_encode($config['json']));
+            $json = json_encode($config['json']);
+			$this->setBody($json);
 			$this->setHeader('Content-Type', 'application/json');
 		}
 
