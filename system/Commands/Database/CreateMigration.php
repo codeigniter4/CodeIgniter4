@@ -69,7 +69,7 @@ class CreateMigration extends BaseCommand
      */
     public function run(array $params=[])
     {
-    
+
         $name = array_shift($params);
 
         if (empty($name))
@@ -105,6 +105,7 @@ class CreateMigration extends BaseCommand
 
         $template =<<<EOD
 <?php namespace $ns\Database\Migrations;
+
 use CodeIgniter\Database\Migration;
 
 class Migration_{name} extends Migration
