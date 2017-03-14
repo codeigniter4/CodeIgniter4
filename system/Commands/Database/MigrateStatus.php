@@ -63,6 +63,29 @@ class MigrateStatus extends BaseCommand
     * @var string
     */
     protected $description = 'Displays a list of all migrations and whether they\'ve been run or not.';
+
+    /**
+     * the Command's usage
+     *
+     * @var string
+     */
+    protected $usage = 'migrate:status [Options]';
+
+    /**
+     * the Command's Arguments
+     *
+     * @var array
+     */
+    protected $arguments = array();
+
+    /**
+     * the Command's Options
+     *
+     * @var array
+     */
+    protected $options = array(
+        '-g'   => 'Set database group'
+    );
     
     /**
     * Displays a list of all migrations and whether they've been run or not.

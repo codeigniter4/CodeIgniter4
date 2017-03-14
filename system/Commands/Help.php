@@ -65,6 +65,13 @@ class Help extends BaseCommand
      */
     protected $description = 'Displays basic usage information.';
 
+     /**
+     * the Command's usage
+     *
+     * @var string
+     */
+    protected $usage = 'help command_name';
+
     /**
      * the Command's Arguments
      *
@@ -73,6 +80,14 @@ class Help extends BaseCommand
     protected $arguments = array(
         'command_name' => 'The command name [default: "help"]'
     );
+
+    /**
+     * the Command's Options
+     *
+     * @var array
+     */
+    protected $options = array();
+
 
     //--------------------------------------------------------------------
 

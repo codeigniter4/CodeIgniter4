@@ -111,7 +111,6 @@ abstract class BaseCommand
     {
         $this->logger = $logger;
         $this->commands = $commands;
-		$this->usage = $this->name . " [arguments]" ;
     }
     
     //--------------------------------------------------------------------
@@ -180,11 +179,12 @@ abstract class BaseCommand
     {
 		$spaces= "   ";
         CLI::write(lang('CLI.helpDescription'), 'yellow');
-        CLI::write("$spaces" . $this->description);
+        CLI::write($spaces . $this->description);
         CLI::newLine();
         
         CLI::write(lang('CLI.helpUsage'), 'yellow');
-        CLI::write("$spaces" . $this->usage);
+        $usage = empty($this->usage) ? $this->name . " [arguments]" : $this->usage;
+        CLI::write($spaces . $usage );
         CLI::newLine();
         
 		$pad = max($this->getPad($this->options,6), $this->getPad($this->arguments,6));
@@ -192,15 +192,17 @@ abstract class BaseCommand
 		if (!empty($this->arguments)){
 			CLI::write(lang('CLI.helpArguments'), 'yellow');			
             foreach ($this->arguments as $argument => $description) {
-                CLI::write( "$spaces" . CLI::color(str_pad($argument, $pad),'green') . $description,'yellow');
+                CLI::write( $spaces . CLI::color(str_pad($argument, $pad),'green') . $description,'yellow');               
             }
+             CLI::newLine();
         }
 		
         if (!empty($this->options)){
 			CLI::write(lang('CLI.helpOptions'), 'yellow');			
             foreach ($this->options as $option => $description) {
-                CLI::write( "$spaces" . CLI::color(str_pad($option, $pad),'green') . $description,'yellow');
+                CLI::write( $spaces . CLI::color(str_pad($option, $pad),'green') . $description,'yellow');                
             }
+            CLI::newLine();
         }		
     }  
 

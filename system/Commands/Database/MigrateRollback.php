@@ -66,6 +66,31 @@ class MigrateRollback extends BaseCommand
     protected $description = 'Runs all of the migrations in reverse order, until they have all been un-applied.';
     
     /**
+     * the Command's usage
+     *
+     * @var string
+     */
+    protected $usage = 'migrate:rollback [Options]';
+
+    /**
+     * the Command's Arguments
+     *
+     * @var array
+     */
+    protected $arguments = array();
+
+    /**
+     * the Command's Options
+     *
+     * @var array
+     */
+    protected $options = array(
+        '-n'   => 'Set migration namespace',
+        '-g'   => 'Set database group',
+        '-all' => 'Set latest for all namespace, will ignore (-n) option'
+    );
+
+    /**
     * Runs all of the migrations in reverse order, until they have
     * all been un-applied.
     */
@@ -95,7 +120,7 @@ class MigrateRollback extends BaseCommand
                     $runner->version(0,$namespace,$group);
                 }
             }
-             $messages = $runner->getCliMessages();
+            $messages = $runner->getCliMessages();
             foreach ($messages as $message) {
                 CLI::write($message); 
             }

@@ -37,8 +37,8 @@
  */
 
 return [
-	'helpUsage'              => 'Usage',
-	'helpDescription'        => 'Description',
-	'helpOptions'            => 'Options',
-	'helpArguments'          => 'Arguments',
+	'helpUsage'              => 'Usage:',
+	'helpDescription'        => 'Description:',
+	'helpOptions'            => 'Options:',
+	'helpArguments'          => 'Arguments:',
 ];

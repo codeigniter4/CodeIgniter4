@@ -63,6 +63,31 @@ class CreateMigration extends BaseCommand
      */
     protected $description = 'Creates a new migration file.';
 
+     /**
+     * the Command's usage
+     *
+     * @var string
+     */
+    protected $usage = 'migrate:create [migration_name] [Options]';
+
+    /**
+     * the Command's Arguments
+     *
+     * @var array
+     */
+    protected $arguments = array(
+        'migration_name' => 'The migration file name'
+    );
+
+    /**
+     * the Command's Options
+     *
+     * @var array
+     */
+    protected $options = array(
+        '-n' => 'Set migration namespace'
+    );
+
     /**
      * Creates a new migration file with the current timestamp.
      * @todo Have this check the settings and see what type of file it should create (timestamp or sequential)

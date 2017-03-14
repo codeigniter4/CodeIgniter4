@@ -64,6 +64,32 @@ class MigrateVersion extends BaseCommand
     protected $description = 'Migrates the database up or down to get to the specified version.';
 
     /**
+     * the Command's usage
+     *
+     * @var string
+     */
+    protected $usage = 'migrate:version [version_number] [Options]';
+
+    /**
+     * the Command's Arguments
+     *
+     * @var array
+     */
+    protected $arguments = array(
+        'version_number' => 'The version number to migrate'
+    );
+
+    /**
+     * the Command's Options
+     *
+     * @var array
+     */
+    protected $options = array(
+        '-n'   => 'Set migration namespace',
+        '-g'   => 'Set database group'
+    );
+
+    /**
      * Migrates the database up or down to get to the specified version.
      */
     public function run(array $params=[])
