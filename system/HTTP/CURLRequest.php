@@ -134,7 +134,7 @@ class CURLRequest extends Request
 	 * @param string     $url
 	 * @param array      $options
 	 *
-	 * @return Response
+	 * @return \CodeIgniter\HTTP\ResponseInterface
 	 */
 	public function request($method, string $url, array $options = []): ResponseInterface
 	{
@@ -157,7 +157,7 @@ class CURLRequest extends Request
 	 * @param string $url
 	 * @param array  $options
 	 *
-	 * @return Response
+	 * @return \CodeIgniter\HTTP\ResponseInterface
 	 */
 	public function get(string $url, array $options = []): ResponseInterface
 	{
@@ -172,7 +172,7 @@ class CURLRequest extends Request
 	 * @param string $url
 	 * @param array  $options
 	 *
-	 * @return Response
+	 * @return \CodeIgniter\HTTP\ResponseInterface
 	 */
 	public function delete(string $url, array $options = []): ResponseInterface
 	{
@@ -211,14 +211,14 @@ class CURLRequest extends Request
 
 	//--------------------------------------------------------------------
 
-	/**
-	 * Convenience method for sending a PATCH request.
-	 *
-	 * @param string $url
-	 * @param array  $options
-	 *
-	 * @return Response
-	 */
+    /**
+     * Convenience method for sending a PATCH request.
+     *
+     * @param string $url
+     * @param array  $options
+     *
+     * @return \CodeIgniter\HTTP\ResponseInterface
+     */
 	public function patch(string $url, array $options = []): ResponseInterface
 	{
 		return $this->request('patch', $url, $options);
@@ -232,7 +232,7 @@ class CURLRequest extends Request
 	 * @param string $url
 	 * @param array  $options
 	 *
-	 * @return Response
+	 * @return \CodeIgniter\HTTP\ResponseInterface
 	 */
 	public function post(string $url, array $options = []): ResponseInterface
 	{
@@ -247,7 +247,7 @@ class CURLRequest extends Request
 	 * @param string $url
 	 * @param array  $options
 	 *
-	 * @return Response
+	 * @return \CodeIgniter\HTTP\ResponseInterface
 	 */
 	public function put(string $url, array $options = []): ResponseInterface
 	{
@@ -336,12 +336,14 @@ class CURLRequest extends Request
 
 	//--------------------------------------------------------------------
 
-	/**
-	 * Fires the actual cURL request.
-	 *
-	 * @param string $method
-	 * @param string $url
-	 */
+    /**
+     * Fires the actual cURL request.
+     *
+     * @param string $method
+     * @param string $url
+     *
+     * @return \CodeIgniter\HTTP\ResponseInterface
+     */
 	public function send(string $method, string $url)
 	{
 		// Reset our curl options so we're on a fresh slate.
@@ -399,12 +401,14 @@ class CURLRequest extends Request
 
 	//--------------------------------------------------------------------
 
-	/**
-	 * Takes all headers current part of this request and adds them
-	 * to the cURL request.
-	 *
-	 * @param array $curl_options
-	 */
+    /**
+     * Takes all headers current part of this request and adds them
+     * to the cURL request.
+     *
+     * @param array $curl_options
+     *
+     * @return array
+     */
 	protected function applyRequestHeaders(array $curl_options = []): array
 	{
 		$headers = $this->getHeaders();
@@ -428,13 +432,14 @@ class CURLRequest extends Request
 
 	//--------------------------------------------------------------------
 
-	/**
-	 * Apply method
-	 *
-	 * @param type $method
-	 * @param array $curl_options
-	 * @return int
-	 */
+    /**
+     * Apply method
+     *
+     * @param type  $method
+     * @param array $curl_options
+     *
+     * @return array|int
+     */
 	protected function applyMethod($method, array $curl_options): array
 	{
 		$method = strtoupper($method);
@@ -470,12 +475,13 @@ class CURLRequest extends Request
 
 	//--------------------------------------------------------------------
 
-	/**
-	 * Apply body
-	 *
-	 * @param array $curl_options
-	 * @return type
-	 */
+    /**
+     * Apply body
+     *
+     * @param array $curl_options
+     *
+     * @return array
+     */
 	protected function applyBody(array $curl_options = []): array
 	{
 		if ( ! empty($this->body))
@@ -529,7 +535,7 @@ class CURLRequest extends Request
 	 *
 	 * @param array $curl_options
 	 * @param array $config
-	 * @return type
+	 * @return array
 	 * @throws \InvalidArgumentException
 	 */
 	protected function setCURLOptions(array $curl_options = [], array $config = [])
