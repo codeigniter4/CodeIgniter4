@@ -413,7 +413,7 @@ class CURLRequest extends Request
 	{
 		$headers = $this->getHeaders();
 
-		if (empty($head))
+		if (empty($headers))
 		{
 			return $curl_options;
 		}
@@ -661,12 +661,13 @@ class CURLRequest extends Request
 		// Post Data - application/x-www-form-urlencoded
 		if (! empty($config['form_params']) && is_array($config['form_params']))
 		{
-			$curl_options[CURLOPT_POSTFIELDS] = http_build_query($config['form_params']);
+		    $postFields = http_build_query($config['form_params']);
+			$curl_options[CURLOPT_POSTFIELDS] = $postFields;
 
-			if (empty($this->header('Content-Type')))
-			{
-				$this->setHeader('Content-Type', 'application/x-www-form-urlencoded');
-			}
+            // Ensure content-length is set, since CURL doesn't seem to
+            // calculate it when HTTPHEADER is set.
+            $this->setHeader('Content-Length', (string)strlen($postFields));
+            $this->setHeader('Content-Type', 'application/x-www-form-urlencoded');
 		}
 
 		// Post Data - multipart/form-data
@@ -702,6 +703,13 @@ class CURLRequest extends Request
 				$curl_options[CURLOPT_HTTP_VERSION] = CURL_HTTP_VERSION_1_1;
 			}
 		}
+
+        // Cookie
+        if (isset($config['cookie']))
+        {
+           $curl_options[CURLOPT_COOKIEJAR]  = $config['cookie'];
+           $curl_options[CURLOPT_COOKIEFILE] = $config['cookie'];
+        }
 
 		return $curl_options;
 	}
