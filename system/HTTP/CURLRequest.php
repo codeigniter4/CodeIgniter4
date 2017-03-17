@@ -590,9 +590,9 @@ class CURLRequest extends Request
 		}
 
 		// Debug
-		if (isset($config['debug']) && $config['debug'] === true)
+		if (isset($config['debug']))
 		{
-			$curl_options[CURLOPT_VERBOSE] = 1;
+			$curl_options[CURLOPT_VERBOSE] = $config['debug'] === true ? 1 : 0;
 			$curl_options[CURLOPT_STDERR]  = is_bool($config['debug']) ? fopen('php://output', 'w+') : $config['debug'];
 		}
 
