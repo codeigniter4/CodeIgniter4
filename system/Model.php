@@ -167,6 +167,11 @@ class Model
 	protected $tempUseSoftDeletes;
 
 	/**
+	 * @var string[] Temporary keys.
+	 */
+	protected $tempKeys;
+
+	/**
 	 * Used by asArray and asObject to provide
 	 * temporary overrides of model default.
 	 *
@@ -257,6 +262,7 @@ class Model
 
 		$this->tempReturnType     = $this->returnType;
 		$this->tempUseSoftDeletes = $this->useSoftDeletes;
+		$this->tempKeys           = [$this->primaryKey];
 
         if (is_null($validation))
         {
@@ -275,77 +281,12 @@ class Model
 	 * Fetches the row of database from $this->table with a primary key
 	 * matching $id.
 	 *
-	 * @param mixed|array $id One primary key or an array of primary keys
+	 * @param mixed|array $id One primary key or an array of primary keys.
 	 *
-	 * @return array|object|null    The resulting row of data, or null.
+	 * @return array|object|null The resulting row of data, or null.
 	 */
 	public function find($id)
 	{
-		return $this->findBy($this->primaryKey, $id);
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Fetches the row of database from the table with an alternative key
-	 * matching the key.
-	 *
-	 * @param mixed $key One alternative key or an array of alternative
-	 *                   keys.
-	 *
-	 * @return mixed The resulting row(s) of data, or null.
-	 */
-	public function findByKey($key)
-	{
-		if ($this->altKey === null)
-		{
-			return null;
-		}
-
-		return $this->findBy($this->altKey, $key);
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Fetches the row of database from the table with a primary or
-	 * alternative key matching the ID or key.
-	 *
-	 * @param mixed $idKey One primary or alternative key or an array of
-	 *                     primary or alternative keys.
-	 *
-	 * @return mixed The resulting row(s) of data, or null.
-	 */
-	public function findByIdKey($idKey)
-	{
-		if ($this->altKey === null)
-		{
-			return $this->findBy($this->primaryKey, $idKey);
-		}
-
-		return $this->findBy([
-			$this->primaryKey,
-			$this->altKey
-		], $idKey);
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Fetches the row of database from the table with a key matching
-	 * value.
-	 *
-	 * @param mixed $byKeys Find by keys.
-	 * @param mixed $value  One value or an array of values.
-	 *
-	 * @return mixed The resulting row(s) of data, or null.
-	 */
-	protected function findBy($byKeys, $value)
-	{
-		if (! is_array($byKeys)) {
-			$byKeys = [$byKeys];
-		}
-
 		$builder = $this->builder();
 
 		if ($this->tempUseSoftDeletes === true)
@@ -353,17 +294,17 @@ class Model
 			$builder->where('deleted', 0);
 		}
 
-		if (is_array($value))
+		if (is_array($id))
 		{
-			foreach ($byKeys as $byKey)
+			foreach ($this->tempKeys as $key)
 			{
-				if ($byKey = reset($byKeys))
+				if ($key = reset($this->tempKeys))
 				{
-					$builder->whereIn($byKey, $value);
+					$builder->whereIn($key, $id);
 				}
 				else
 				{
-					$builder->orWhereIn($byKey, $value);
+					$builder->orWhereIn($key, $id);
 				}
 			}
 
@@ -372,15 +313,15 @@ class Model
 		}
 		else
 		{
-			foreach ($byKeys as $byKey)
+			foreach ($this->tempKeys as $key)
 			{
-				if ($byKey = reset($byKeys))
+				if ($key = reset($this->tempKeys))
 				{
-					$builder->where($byKey, $value);
+					$builder->where($key, $id);
 				}
 				else
 				{
-					$builder->orWhere($byKey, $value);
+					$builder->orWhere($key, $id);
 				}
 			}
 
@@ -390,6 +331,7 @@ class Model
 
 		$this->tempReturnType     = $this->returnType;
 		$this->tempUseSoftDeletes = $this->useSoftDeletes;
+		$this->tempKeys           = [$this->primaryKey];
 
 		return $row;
 	}
@@ -420,6 +362,7 @@ class Model
 
 		$this->tempReturnType     = $this->returnType;
 		$this->tempUseSoftDeletes = $this->useSoftDeletes;
+		$this->tempKeys           = [$this->primaryKey];
 
 		return $rows;
 	}
@@ -451,6 +394,7 @@ class Model
 
 		$this->tempReturnType     = $this->returnType;
 		$this->tempUseSoftDeletes = $this->useSoftDeletes;
+		$this->tempKeys           = [$this->primaryKey];
 
 		return $row;
 	}
@@ -626,91 +570,17 @@ class Model
 
 	/**
 	 * A convenience method that will attempt to determine whether the
-	 * data should be inserted or updated. Will work with either
-	 * an array or object. When using with custom class objects,
-	 * you must ensure that the class will provide access to the class
-	 * variables, even if through a magic method.
+	 * data should be inserted or updated. Will work with either an array
+	 * or object. When using with custom class objects, you must ensure
+	 * that the class will provide access to the class variables, even if
+	 * through a magic method.
 	 *
-	 * @param $data
+	 * @param mixed $data Data.
 	 *
 	 * @return bool
 	 */
 	public function save($data)
 	{
-	    return $this->saveBy($this->primaryKey, $data);
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * A convenience method that will attempt to determine whether the
-	 * data should be inserted or updated. Will work with either
-	 * an array or object. When using with custom class objects,
-	 * you must ensure that the class will provide access to the class
-	 * variables, even if through a magic method.
-	 *
-	 * @param mixed $data Data.
-	 *
-	 * @return bool True if successful, else false.
-	 */
-	public function saveByKey($data)
-	{
-		if ($this->altKey === null)
-		{
-			return false;
-		}
-
-		return $this->saveBy($this->altKey, $data);
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * A convenience method that will attempt to determine whether the
-	 * data should be inserted or updated. Will work with either
-	 * an array or object. When using with custom class objects,
-	 * you must ensure that the class will provide access to the class
-	 * variables, even if through a magic method.
-	 *
-	 * @param mixed $data Data.
-	 *
-	 * @return bool True if successful, else false.
-	 */
-	public function saveByIdKey($data)
-	{
-		if ($this->altKey === null)
-		{
-			return $this->saveBy($this->primaryKey, $data);
-		}
-		else
-		{
-			return $this->saveBy([
-				$this->primaryKey,
-				$this->altKey
-			], $data);
-		}
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * A convenience method that will attempt to determine whether the
-	 * data should be inserted or updated. Will work with either
-	 * an array or object. When using with custom class objects,
-	 * you must ensure that the class will provide access to the class
-	 * variables, even if through a magic method.
-	 *
-	 * @param mixed $byKeys Save by keys.
-	 * @param mixed $data   Data.
-	 *
-	 * @return bool True if successful, else false.
-	 */
-	protected function saveBy($byKeys, $data)
-	{
-		if (! is_array($byKeys)) {
-			$byKeys = [$byKeys];
-		}
-
 		$saveData = $data;
 
 		// If data is using a custom class with public or protected
@@ -721,16 +591,16 @@ class Model
 			$data = $this->classToArray($data);
 		}
 
-		foreach ($byKeys as $byKey)
+		foreach ($this->tempKeys as $key)
 		{
-			if (is_object($data) && isset($data->{$byKey}))
+			if (is_object($data) && isset($data->{$key}))
 			{
-				$response = $this->updateBy($byKey, $data->{$byKey}, $data);
+				$response = $this->update($data->{$key}, $data);
 				break;
 			}
-			elseif (is_array($data) && ! empty($data[$byKey]))
+			elseif (is_array($data) && ! empty($data[$key]))
 			{
-				$response = $this->updateBy($byKey, $data[$byKey], $data);
+				$response = $this->update($data[$key], $data);
 				break;
 			}
 		}
@@ -846,81 +716,13 @@ class Model
 	 * Updates a single record in $this->table. If an object is provided,
 	 * it will attempt to convert it into an array.
 	 *
-	 * @param $id
-	 * @param $data
+	 * @param mixed $id   ID.
+	 * @param mixed $data Data.
 	 *
 	 * @return bool
 	 */
 	public function update($id, $data)
 	{
-        return $this->updateBy($this->primaryKey, $id, $data);
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Updates a single record in the table. If an object is provided, it
-	 * will attempt to convert it into an array.
-	 *
-	 * @param mixed $key  Alternative key.
-	 * @param mixed $data Data.
-	 *
-	 * @return bool True if successful, else false.
-	 */
-	public function updateByKey($key, $data)
-	{
-		if ($this->altKey === null)
-		{
-			return false;
-		}
-
-		return $this->updateBy($this->altKey, $key, $data);
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Updates a single record in the table. If an object is provided, it
-	 * will attempt to convert it into an array.
-	 *
-	 * @param mixed $idKey ID or alternative key.
-	 * @param mixed $data  Data.
-	 *
-	 * @return bool True if successful, else false.
-	 */
-	public function updateByIdKey($idKey, $data)
-	{
-		if ($this->altKey === null)
-		{
-			return $this->updateBy($this->primaryKey, $idKey, $data);
-		}
-		else
-		{
-			return $this->updateBy([
-				$this->primaryKey,
-				$this->altKey
-			], $idKey, $data);
-		}
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Updates a single record in the table. If an object is provided, it
-	 * will attempt to convert it into an array.
-	 *
-	 * @param mixed $byKeys Update by keys.
-	 * @param mixed $key    Key.
-	 * @param mixed $data   Data.
-	 *
-	 * @return bool True if successful, else false.
-	 */
-	protected function updateBy($byKeys, $key, $data)
-	{
-		if (! is_array($byKeys)) {
-			$byKeys = [$byKeys];
-		}
-
 		// If data is using a custom class with public or protected
 		// properties representing the table elements, we need to grab
 		// them as an array.
@@ -959,15 +761,15 @@ class Model
 
 		$builder = $this->builder();
 
-		foreach ($byKeys as $byKey)
+		foreach ($this->tempKeys as $key)
 		{
-			if ($byKey === reset($byKeys))
+			if ($key === reset($this->tempKeys))
 			{
-				$builder->where($byKey, $key);
+				$builder->where($key, $id);
 			}
 			else
 			{
-				$builder->orWhere($byKey, $key);
+				$builder->orWhere($key, $id);
 			}
 		}
 
@@ -991,85 +793,17 @@ class Model
 	 */
 	public function delete($id, $purge = false)
 	{
-		return $this->deleteBy($this->primaryKey, $id, $purge);
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Deletes a single record from the table where alternative key
-	 * matches the table's alternative key.
-	 *
-	 * @param mixed $key    Key.
-	 * @param bool  $purge  Purge?
-	 *
-	 * @return bool|mixed False if unsuccessful.
-	 */
-	public function deleteByKey($key, bool $purge = false)
-	{
-		if ($this->altKey === null)
-		{
-			return false;
-		}
-
-		return $this->deleteBy($this->altKey, $key, $purge);
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Deletes a single record from the table where ID or alternative key
-	 * matches the table's primary ID or alternative key.
-	 *
-	 * @param mixed $idKey  ID or alternative key.
-	 * @param bool  $purge  Purge?
-	 *
-	 * @return bool|mixed False if unsuccessful.
-	 */
-	public function deleteByIdKey($idKey, bool $purge = false)
-	{
-		if ($this->altKey === null)
-		{
-			return $this->deleteBy($this->primaryKey, $idKey, $purge);
-		}
-		else
-		{
-			return $this->deleteByIdKey([
-				$this->primaryKey,
-				$this->altKey
-			], $idKey, $purge);
-		}
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Deletes a single record from the table where key matches the
-	 * table's by keys.
-	 *
-	 * @param mixed $byKeys Delete by keys.
-	 * @param mixed $key    Key.
-	 * @param bool  $purge  Purge?
-	 *
-	 * @return bool|mixed False if unsuccessful.
-	 */
-	protected function deleteBy($byKeys, $key, bool $purge = false)
-	{
-		if (! is_array($byKeys)) {
-			$byKeys = [$byKeys];
-		}
-
 		$builder = $this->builder();
 
-		foreach ($byKeys as $byKey)
+		foreach ($this->tempKeys as $key)
 		{
-			if ($byKey === reset($byKeys))
+			if ($key === reset($this->tempKeys))
 			{
-				$builder->where($byKey, $key);
+				$builder->where($key, $id);
 			}
 			else
 			{
-				$builder->orWhere($byKey, $key);
+				$builder->orWhere($key, $id);
 			}
 		}
 
@@ -1173,6 +907,44 @@ class Model
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * With alternative key.
+	 *
+	 * @param string|null $key Key.
+	 *
+	 * @return self Model.
+	 */
+	public function withAltKey(string $key = null): self
+	{
+		if ($key === null) {
+			$key = $this->altKey;
+		}
+
+		$this->tempKeys = [$key];
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Or with alternative key.
+	 *
+	 * @param string|null $key Key.
+	 *
+	 * @return self Model
+	 */
+	public function orWithAltKey(string $key = null): self
+	{
+		if ($key === null) {
+			$key = $this->altKey;
+		}
+
+		$this->tempKeys[] = $key;
+
+		return $this;
+	}
 
 	//--------------------------------------------------------------------
 	// Utility
