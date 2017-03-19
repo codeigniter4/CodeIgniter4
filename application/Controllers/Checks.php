@@ -1,8 +1,11 @@
 <?php namespace App\Controllers;
 
 use CodeIgniter\API\ResponseTrait;
+use CodeIgniter\Config\Services;
 use CodeIgniter\Controller;
+use CodeIgniter\Model;
 use Config\Database;
+use Tests\Support\Models\JobModel;
 
 class Checks extends Controller
 {
@@ -108,6 +111,40 @@ class Checks extends Controller
 		echo '<pre>';
 		var_dump($this->response->getHeaderLine('content-type'));
 	}
+
+	public function model()
+	{
+	    $model = new class() extends Model {
+	        protected $table = 'job';
+        };
+
+	    $results = $model->findAll();
+
+	    $developer = $model->findWhere('name', 'Developer');
+
+	    $politician = $model->find(3);
+
+	}
+
+    public function curl()
+    {
+        $client = Services::curlrequest([
+            'debug' => true,
+            'follow_redirects' => true,
+            'json' => ['foo' => 'bar']
+        ]);
+
+        echo '<pre>';
+        $response = $client->request('PUT', 'http://ci4.dev/checks/catch');
+        echo $response->getBody();
+    }
+
+    // Simply echos back what's given in the body.
+    public function catch()
+    {
+        $body = print_r($this->request->getRawInput(), true);
+        echo $body;
+    }
 
 
 }

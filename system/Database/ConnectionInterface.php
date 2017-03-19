@@ -175,9 +175,9 @@ interface ConnectionInterface
 	/**
 	 * Returns an instance of the query builder for this connection.
 	 *
-	 * @param string|array $tableName
+	 * @param string|array $tableName Table name.
 	 *
-	 * @return QueryBuilder
+	 * @return BaseBuilder Builder.
 	 */
 	public function table($tableName);
 

@@ -36,8 +36,10 @@
  * @filesource
  */
 
+use CodeIgniter\HTTP\Response;
+
 /**
- * Class ResponseTrait
+ * Response trait.
  *
  * Provides common, more readable, methods to provide
  * consistent HTTP responses under a variety of common
@@ -157,12 +159,12 @@ trait ResponseTrait
 	/**
 	 * Used after successfully creating a new resource.
 	 *
-	 * @param        $data
-	 * @param string $message
+	 * @param mixed  $data    Data.
+	 * @param string $message Message.
 	 *
 	 * @return mixed
 	 */
-	public function respondCreated($data, string $message = '')
+	public function respondCreated($data = null, string $message = '')
 	{
 		return $this->respond($data, $this->codes['created'], $message);
 	}
@@ -172,12 +174,12 @@ trait ResponseTrait
 	/**
 	 * Used after a resource has been successfully deleted.
 	 *
-	 * @param        $data
-	 * @param string $message
+	 * @param mixed  $data    Data.
+	 * @param string $message Message.
 	 *
 	 * @return mixed
 	 */
-	public function respondDeleted($data, string $message = '')
+	public function respondDeleted($data = null, string $message = '')
 	{
 		return $this->respond($data, $this->codes['deleted'], $message);
 	}
@@ -294,6 +296,19 @@ trait ResponseTrait
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Used when there is a server error.
+	 *
+	 * @param string      $description The error message to show the user.
+	 * @param string|null $code        A custom, API-specific, error code.
+	 * @param string      $message     A custom "reason" message to return.
+	 *
+	 * @return Response The value of the Response's send() method.
+	 */
+	public function failServerError(string $description, string $code = null, string $message = ''): Response
+	{
+		return $this->fail($description, $this->codes['server_error'], $code, $message);
+	}
 
 	//--------------------------------------------------------------------
 	// Utility Methods

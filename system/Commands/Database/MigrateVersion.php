@@ -85,9 +85,15 @@ class MigrateVersion extends BaseCommand
         }
 
         CLI::write(sprintf(lang('Migrations.migToVersionPH'), $version), 'yellow');
-
+        
+        $namespace = CLI::getOption('n');
+        $group =    CLI::getOption('g'); 
         try {
-            $runner->version($version);
+            $runner->version($version, $namespace, $group);
+            $messages = $runner->getCliMessages();
+            foreach ($messages as $message) {
+                CLI::write($message); 
+            }
         }
         catch (\Exception $e)
         {

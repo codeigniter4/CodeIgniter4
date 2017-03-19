@@ -100,7 +100,7 @@ class CreditCardRules
      *
      * @return bool
      */
-    public function valid_cc_number(string $ccNumber, string $type, array $data): bool
+    public function valid_cc_number(string $ccNumber=null, string $type, array $data): bool
     {
         $type = strtolower($type);
         $info = null;
@@ -181,7 +181,7 @@ class CreditCardRules
      *
      * @return bool
      */
-    protected function isValidLuhn(string $number): bool
+    protected function isValidLuhn(string $number=null): bool
     {
         settype($number, 'string');
 

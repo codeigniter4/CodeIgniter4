@@ -216,16 +216,16 @@ class FileLocator {
 		{
 			return;
 		}
-
+		
 		foreach ($this->namespaces as $namespace => $nsPath)
 		{
+			$nsPath = realpath($nsPath);
 			if (is_numeric($namespace)) continue;
-
-			if (mb_strpos($path, $nsPath) === 0)
+			
+			if (mb_strpos($path,$nsPath) === 0)
 			{
 				$className = '\\'.$namespace.'\\'.
 							 ltrim(str_replace('/', '\\', mb_substr($path, mb_strlen($nsPath))), '\\');
-
 				// Remove the file extension (.php)
 				$className = mb_substr($className, 0, -4);
 
@@ -253,11 +253,12 @@ class FileLocator {
 
 		foreach ($this->namespaces as $namespace => $nsPath)
 		{
-			$fullPath = rtrim($nsPath, '/') .'/'. $path;
+			$fullPath = realpath(rtrim($nsPath, '/') .'/'. $path);
 
 			if (! is_dir($fullPath)) continue;
 
 			$tempFiles = get_filenames($fullPath, true);
+			//CLI::newLine($tempFiles);
 
 			if (! count($tempFiles))
 			{

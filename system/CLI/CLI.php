@@ -672,7 +672,7 @@ class CLI
 	 */
 	public static function getURI()
 	{
-		return implode(' ', static::$segments);
+		return implode('/', static::$segments);
 	}
 
 	//--------------------------------------------------------------------

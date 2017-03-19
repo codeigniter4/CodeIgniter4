@@ -15,7 +15,7 @@
 // Location to the Paths config file.
 $pathsPath = 'application/Config/Paths.php';
 
-// Path to the front controller (this file)
+// Path to the front controller
 define('FCPATH', './public/'.DIRECTORY_SEPARATOR);
 
 /*

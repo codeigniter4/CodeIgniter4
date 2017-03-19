@@ -226,3 +226,22 @@ You should be sure to read up on the MessageFormatter class and the underlying I
 idea on what capabilities it has, like permorming conditional replacement, pluralization, and more. Both of the links provided
 earlier will give you an excellent idea as to the options available.
 
+Nested Arrays
+-------------
+
+Language files also allow nested arrays to make working with lists, etc… easier.
+
+    // Language/en/Fruit.php
+    return [
+        'list' => [
+            'Apples',
+            'Bananas',
+            'Grapes',
+            'Lemons',
+            'Oranges',
+            'Strawberries'
+        ]
+    ];
+
+    // Displays "Apples, Bananas, Graps, Lemons, Oranges, Strawberries"
+    echo implode(', ', lang('Fruit.list'));

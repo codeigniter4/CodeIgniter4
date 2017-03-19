@@ -88,14 +88,14 @@ class Language
 
 	/**
 	 * Parses the language string for a file, loads the file, if necessary,
-	 * getting
+	 * getting the line.
 	 *
-	 * @param string $line
-	 * @param array  $args
+	 * @param string $line Line.
+	 * @param array  $args Arguments.
 	 *
-	 * @return string
+	 * @return string|string[] Returns line.
 	 */
-	public function getLine(string $line, array $args = []): string
+	public function getLine(string $line, array $args = [])
 	{
 		// Parse out the file name and the actual alias.
 		// Will load the language file and strings.
@@ -105,11 +105,8 @@ class Language
 			? $this->language[$file][$line]
 			: $line;
 
-		// Do advanced message formatting here
-		// if the 'intl' extension is available.
-		if ($this->intlSupport && count($args))
-		{
-			$output = \MessageFormatter::formatMessage($this->locale, $output, $args);
+		if (count($args)) {
+			$output = $this->formatMessage($output, $args);
 		}
 
 		return $output;
@@ -144,6 +141,35 @@ class Language
 			$file,
 			$this->language[$line] ?? $line
 		];
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Advanced message formatting.
+	 *
+	 * @param string|array $message Message.
+	 * @param array	       $args    Arguments.
+	 *
+	 * @return string|array Returns formatted message.
+	 */
+	protected function formatMessage($message, array $args = [])
+	{
+		if (! $this->intlSupport || ! count($args))
+		{
+			return $message;
+		}
+
+		if (is_array($message))
+		{
+			foreach ($message as $index => $value)
+			{
+				$message[$index] = $this->formatMessage($value, $args);
+			}
+			return $message;
+		}
+
+		return \MessageFormatter::formatMessage($this->locale, $message, $args);
 	}
 
 	//--------------------------------------------------------------------
@@ -211,9 +237,9 @@ class Language
 			}
 
 			// On some OS's we were seeing failures
-            // on this command returning boolean instead
-            // of array during testing, so we've removed
-            // the require_once for now.
+      // on this command returning boolean instead
+      // of array during testing, so we've removed
+      // the require_once for now.
 			return require $file;
 		}
 
