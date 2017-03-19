@@ -76,7 +76,7 @@ class MigrateStatus extends BaseCommand
      *
      * @var array
      */
-    protected $arguments = array();
+    protected $arguments = [];
 
     /**
      * the Command's Options

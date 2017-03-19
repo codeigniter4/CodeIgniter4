@@ -86,7 +86,7 @@ class Seed extends BaseCommand
      *
      * @var array
      */
-    protected $options = array();
+    protected $options = [];
 
     /**
      * Runs all of the migrations in reverse order, until they have
