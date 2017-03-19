@@ -245,6 +245,13 @@ data to be validated::
     $validation->withRequest($this->request)
                ->run();
 
+****************
+Validate 1 Value
+****************
+
+Validate one value against a rule.
+
+    $validation->check($value, 'required');
 
 **************************************************
 Saving Sets of Validation Rules to the Config File
