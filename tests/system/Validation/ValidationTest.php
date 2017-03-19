@@ -54,7 +54,7 @@ class ValidationTest extends \CIUnitTestCase
 
     //--------------------------------------------------------------------
 
-    public function testRunReturnsTrueWithNOthingToDo()
+    public function testRunReturnsTrueWithNothingToDo()
     {
         $this->validation->setRules([]);
 
@@ -115,6 +115,31 @@ class ValidationTest extends \CIUnitTestCase
     }
 
     //--------------------------------------------------------------------
+
+	public function testCheck()
+	{
+		$this->assertFalse($this->validation->check('notanumber', 'is_numeric'));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testCheckLocalizedError()
+	{
+		$this->assertFalse($this->validation->check('notanumber', 'is_numeric'));
+		$this->assertEquals('is_numeric', $this->validation->getError());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testCheckCustomError()
+	{
+		$this->validation->check('notanumber', 'is_numeric', [
+			'is_numeric' => 'Nope. Not a number.'
+		]);
+		$this->assertEquals('Nope. Not a number.', $this->validation->getError());
+	}
+
+	//--------------------------------------------------------------------
 
     public function testGetErrors()
     {
