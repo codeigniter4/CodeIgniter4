@@ -153,19 +153,24 @@ class Validation implements ValidationInterface
 	//--------------------------------------------------------------------
 
 	/**
-	 * Runs all of $rules against $field, until one fails, or
-	 * all of them have been processed. If one fails, it adds
-	 * the error to $this->errors and moves on to the next,
-	 * so that we can collect all of the first errors.
+	 * Runs all of $rules against $field, until one fails, or all of them
+	 * have been processed. If one fails, it adds the error to
+	 * $this->errors and moves on to the next, so that we can collect all
+	 * of the first errors.
 	 *
-	 * @param            $value
-	 * @param array|null $rules
-	 * @param array      $data // All of the fields to check.
+	 * @param string     $field Field.
+	 * @param mixed      $value Value.
+	 * @param array|null $rules Rules.
+	 * @param array      $data  All of the fields to check.
 	 *
-	 * @return bool
+	 * @return bool Return true if passed, else false.
 	 */
-	protected function processRules(string $field, $value, $rules = null, array $data)
+	protected function processRules(string $field, $value, array $rules = null, array $data): bool
 	{
+		if ($rules === null) {
+			return true;
+		}
+
 		foreach ($rules as $rule)
 		{
 			$callable = is_callable($rule);
