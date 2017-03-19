@@ -424,14 +424,18 @@ class Rules
 	//--------------------------------------------------------------------
 
 	/**
-	 * Required
+	 * Required.
 	 *
-	 * @param    string
+	 * @param mixed $str Value.
 	 *
-	 * @return    bool
+	 * @return bool True if valid, else false.
 	 */
 	public function required($str=null): bool
 	{
+		if (is_object($str)) {
+			return true;
+		}
+
 		return is_array($str) ? (bool)count($str) : (trim($str) !== '');
 	}
 
