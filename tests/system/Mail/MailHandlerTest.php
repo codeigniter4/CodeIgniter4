@@ -180,16 +180,13 @@ class MailHandlerTest extends \CIUnitTestCase
         $this->assertEquals('bar', $headers['Foo']);
     }
 
-    /**
-     * @group single
-     */
     public function testSendFailsWithNoFrom()
     {
-        $handler = new MailHandler();
+        $handler = new MailHandler([]);
 
         $result = $handler->send($this->getMessage());
 
-        $this->assertFalse($result);
+        $this->assertTrue($result->hasErrors());
         $debug = $handler->getDebugger([]);
         $this->assertTrue(strpos($debug, lang('mail.noFrom')) !== false);
     }
