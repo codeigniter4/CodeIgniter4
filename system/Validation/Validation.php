@@ -153,6 +153,27 @@ class Validation implements ValidationInterface
 	//--------------------------------------------------------------------
 
 	/**
+	 * Check; runs the validation process, returning true or false
+	 * determining whether or not validation was successful.
+	 *
+	 * @param mixed    $value  Value to validation.
+	 * @param string   $rule   Rule.
+	 * @param string[] $errors Errors.
+	 *
+	 * @return bool True if valid, else false.
+	 */
+	public function check($value, string $rule, array $errors = []): bool
+	{
+		$this->reset();
+		$this->setRule('check', $rule, $errors);
+		return $this->run([
+			'check' => $value
+		]);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Runs all of $rules against $field, until one fails, or
 	 * all of them have been processed. If one fails, it adds
 	 * the error to $this->errors and moves on to the next,
@@ -275,7 +296,9 @@ class Validation implements ValidationInterface
 	public function setRule(string $field, string $rule, array $errors = [])
 	{
 		$this->rules[$field] = $rule;
-		$this->customErrors  = array_merge($this->customErrors, $errors);
+		$this->customErrors  = array_merge($this->customErrors, [
+			$field => $errors
+		]);
 
 		return $this;
 	}
@@ -517,14 +540,20 @@ class Validation implements ValidationInterface
     //--------------------------------------------------------------------
 
 	/**
-	 * Returns the error(s) for a specified $field (or empty string if not set).
+	 * Returns the error(s) for a specified $field (or empty string if not
+	 * set).
 	 *
-	 * @param string $field
+	 * @param string $field Field.
 	 *
-	 * @return string
+	 * @return string Error(s).
 	 */
-	public function getError(string $field): string
+	public function getError(string $field = null): string
 	{
+		if ($field === null && count($this->rules) === 1) {
+			reset($this->rules);
+			$field = key($this->rules);
+		}
+
 		return array_key_exists($field, $this->errors)
 			? $this->errors[$field]
 			: '';
