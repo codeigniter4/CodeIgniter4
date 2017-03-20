@@ -255,4 +255,34 @@ class PagerTest extends \CIUnitTestCase
 	}
 
 	//--------------------------------------------------------------------
+
+	public function testGetNextURIWithQueryStringUsesCurrentURI()
+	{
+		$_GET['page'] = 3;
+		$_GET['status'] = 1;
+
+		$expected = current_url(true);
+		$expected = (string)$expected->setQueryArray($_GET);
+
+		$this->pager->store('foo', $_GET['page']-1, 12, 70);
+
+		$this->assertEquals((string)$expected, $this->pager->getNextPageURI('foo'));
+	}
+ 
+	//--------------------------------------------------------------------
+
+	public function testGetPreviousURIWithQueryStringUsesCurrentURI()
+	{
+		$_GET['page'] = 1;
+		$_GET['status'] = 1;
+
+		$expected = current_url(true);
+		$expected = (string)$expected->setQueryArray($_GET);
+
+		$this->pager->store('foo', $_GET['page']+1, 12, 70);
+
+		$this->assertEquals((string)$expected, $this->pager->getPreviousPageURI('foo'));
+	}
+
+	//--------------------------------------------------------------------
 }
