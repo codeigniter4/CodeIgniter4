@@ -172,11 +172,36 @@ abstract class BaseHandler implements MailHandlerInterface
     protected $encoding = '8bit';
 
     /**
+     * Base charsets
+     *
+     * Character sets valid for 7-bit encoding,
+     * excluding language suffix.
+     *
+     * @var	string[]
+     */
+    protected $baseCharsets	= array('us-ascii', 'iso-2022-');
+
+    /**
      * Bit depths for vaild mail encodings.
      *
      * @var array
      */
     protected $bitDepths = ['7bit', '8bit'];
+
+    /**
+     * $priority translations
+     *
+     * Actual values to send with the X-Priority header
+     *
+     * @var	string[]
+     */
+    protected $priorities = array(
+        1 => '1 (Highest)',
+        2 => '2 (High)',
+        3 => '3 (Normal)',
+        4 => '4 (Low)',
+        5 => '5 (Lowest)'
+    );
 
     //--------------------------------------------------------------------
 
@@ -449,7 +474,7 @@ abstract class BaseHandler implements MailHandlerInterface
             // Note: We used to have mb_encode_mimeheader() as the first choice
             //       here, but it turned out to be buggy and unreliable. DO NOT
             //       re-add it! -- Narf
-            if (ICONV_ENABLED === true)
+            if (extension_loaded('iconv'))
             {
                 $output = @iconv_mime_encode('', $str,
                     [
@@ -471,7 +496,7 @@ abstract class BaseHandler implements MailHandlerInterface
                 }
 
                 $chars = iconv_strlen($str, 'UTF-8');
-            } elseif (MB_ENABLED === true)
+            } elseif (extension_loaded('mbstring'))
             {
                 $chars = mb_strlen($str, 'UTF-8');
             }

@@ -226,10 +226,15 @@ class MailHandler extends BaseHandler
     /**
      * Sets and formats the email(s) the message should be replied to.
      *
-     * @param array $emails
+     * @param array|string $emails
      */
-    protected function setReplyTo(array $emails)
+    protected function setReplyTo($emails)
     {
+        if (is_string($emails))
+        {
+            $emails = [$emails];
+        }
+
         if ($this->validate)
         {
             $this->validateEmail($emails);
@@ -449,7 +454,7 @@ class MailHandler extends BaseHandler
         $this->setHeader('User-Agent', $this->useragent);
         $this->setHeader('X-Sender', $this->headers['From']);
         $this->setHeader('X-Mailer', $this->useragent);
-        $this->setHeader('X-Priority', $this->message->priorities[$this->priority]);
+        $this->setHeader('X-Priority', $this->priorities[$this->priority]);
         $this->setHeader('Message-ID', $this->getMessageID());
         $this->setHeader('Mime-Version', '1.0');
     }
@@ -463,7 +468,9 @@ class MailHandler extends BaseHandler
      */
     protected function getMessageID()
     {
-        $from = str_replace(array('>', '<'), '', $this->headers['Return-Path']);
+        $from = $this->headers['Return-Path'] ?? $this->headers['From'];
+
+        $from = str_replace(array('>', '<'), '', $from);
         return '<'.uniqid('').strstr($from, '@').'>';
     }
 
