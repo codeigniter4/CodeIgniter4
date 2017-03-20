@@ -30,8 +30,8 @@
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
  * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
- * @license	http://opensource.org/licenses/MIT	MIT License
- * @link	http://codeigniter.com
+ * @license	https://opensource.org/licenses/MIT	MIT License
+ * @link	https://codeigniter.com
  * @since	Version 3.0.0
  * @filesource
  */
@@ -63,9 +63,8 @@ class Request extends Message implements RequestInterface
 	 * Constructor.
 	 *
 	 * @param type $config
-	 * @param type $uri
 	 */
-	public function __construct($config, $uri=null)
+	public function __construct($config)
 	{
 	    $this->proxyIPs = $config->proxyIPs;
 	}

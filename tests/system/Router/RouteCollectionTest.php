@@ -1,5 +1,8 @@
 <?php namespace CodeIgniter\Router;
 
+/**
+ * @backupGlobals enabled
+ */
 class RouteCollectionTest extends \CIUnitTestCase
 {
 
@@ -581,7 +584,7 @@ class RouteCollectionTest extends \CIUnitTestCase
 
 		$routes->add('path/(:any)/to/(:num)', 'myController::goto/$1');
 
-		$this->setExpectedException('InvalidArgumentException');
+		$this->expectException('InvalidArgumentException');
 		$match = $routes->reverseRoute('myController::goto', 'string', 13);
 	}
 
@@ -593,7 +596,7 @@ class RouteCollectionTest extends \CIUnitTestCase
 
 		$routes->add('path/(:any)/to/(:num)', 'myController::goto/$1/$2');
 
-		$this->setExpectedException('InvalidArgumentException');
+		$this->expectException('InvalidArgumentException');
 		$match = $routes->reverseRoute('myBadController::goto', 'string', 13);
 	}
 
@@ -605,7 +608,7 @@ class RouteCollectionTest extends \CIUnitTestCase
 
 		$routes->add('path/(:any)/to/(:num)', 'myController::goto/$1/$2');
 
-		$this->setExpectedException('LogicException');
+		$this->expectException('LogicException');
 		$match = $routes->reverseRoute('myController::goto', 13, 'string');
 	}
 

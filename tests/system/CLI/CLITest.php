@@ -63,6 +63,13 @@ first.
 EOT;
 		$this->assertEquals($expected, CLITestStreamFilter::$buffer);
 	}
+
+	public function testWait()
+	{
+		$time = time();
+		CLI::wait(1, true);
+		$this->assertEquals(1, time() - $time);
+	}
 }
 
 

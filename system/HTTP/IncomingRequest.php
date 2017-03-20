@@ -30,8 +30,8 @@
  * @package      CodeIgniter
  * @author       CodeIgniter Dev Team
  * @copyright    Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
- * @license      http://opensource.org/licenses/MIT	MIT License
- * @link         http://codeigniter.com
+ * @license      https://opensource.org/licenses/MIT	MIT License
+ * @link         https://codeigniter.com
  * @since        Version 3.0.0
  * @filesource
  */
@@ -332,6 +332,21 @@ class IncomingRequest extends Request
 	public function getJSON(bool $assoc = false, int $depth = 512, int $options = 0)
 	{
 	    return json_decode($this->body, $assoc, $depth, $options);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * A convenience method that grabs the raw input stream(send method in PUT, PATCH, DELETE) and decodes
+	 * the String into an array.
+	 *
+	 * @return mixed
+	 */
+	public function getRawInput()
+	{
+	    parse_str($this->body, $output);
+
+	    return $output;
 	}
 
 	//--------------------------------------------------------------------

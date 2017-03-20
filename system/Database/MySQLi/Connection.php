@@ -30,8 +30,8 @@
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
  * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
- * @license	http://opensource.org/licenses/MIT	MIT License
- * @link	http://codeigniter.com
+ * @license	https://opensource.org/licenses/MIT	MIT License
+ * @link	https://codeigniter.com
  * @since	Version 3.0.0
  * @filesource
  */
@@ -405,7 +405,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 * @param	string	$table
 	 * @return	array
 	 */
-	public function fieldData(string $table)
+	public function _fieldData(string $table)
 	{
 		if (($query = $this->query('SHOW COLUMNS FROM '.$this->protectIdentifiers($table, TRUE, NULL, FALSE))) === FALSE)
 		{
@@ -430,6 +430,57 @@ class Connection extends BaseConnection implements ConnectionInterface
 
 		return $retval;
 	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns an object with index data
+	 *
+	 * @param	string	$table
+	 * @return	array
+	 */
+	public function _indexData(string $table)
+	{
+		if (($query = $this->query('SHOW CREATE TABLE '.$this->protectIdentifiers($table, TRUE, NULL, FALSE))) === FALSE)
+		{
+			return FALSE;
+		}
+		$row = $query->getRowArray();
+		if ( ! $row) {
+			return FALSE;
+		}
+
+		$retval = array();
+		foreach (explode("\n", $row['Create Table']) as $line)
+		{
+			$line = trim($line);
+			if (strpos($line, 'PRIMARY KEY') === 0) {
+				$obj              = new \stdClass();
+				$obj->name        = 'PRIMARY KEY';
+				$_fields          = explode(',', preg_replace('/^.*\((.+)\).*$/', '$1', $line));
+				$obj->fields      = array_map(function($v){ return trim($v, '`'); }, $_fields);
+
+				$retval[] = $obj;
+			}
+			elseif (strpos($line, 'UNIQUE KEY') === 0 || strpos($line, 'KEY') === 0)
+			{
+				if (preg_match('/KEY `([^`]+)` \((.+)\)/', $line, $matches)) {
+					$obj              = new \stdClass();
+					$obj->name        = $matches[1];
+					$obj->fields      = array_map(function($v){ return trim($v, '`'); }, explode(',', $matches[2]));
+
+					$retval[] = $obj;
+				}
+				else
+				{
+					throw new \LogicException('parsing key string failed.');
+				}
+			}
+		}
+
+		return $retval;
+	}
+
 
 	//--------------------------------------------------------------------
 

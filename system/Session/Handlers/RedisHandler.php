@@ -30,8 +30,8 @@
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
  * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
- * @license	http://opensource.org/licenses/MIT	MIT License
- * @link	http://codeigniter.com
+ * @license	https://opensource.org/licenses/MIT	MIT License
+ * @link	https://codeigniter.com
  * @since	Version 3.0.0
  * @filesource
  */
@@ -64,6 +64,13 @@ class RedisHandler extends BaseHandler implements \SessionHandlerInterface
 	 * @var    string
 	 */
 	protected $lockKey;
+
+	/**
+	 * Key exists flag
+	 *
+	 * @var bool
+	 */
+	protected $keyExists = FALSE;
 
 	/**
 	 * Number of seconds until the session ends.
@@ -174,9 +181,12 @@ class RedisHandler extends BaseHandler implements \SessionHandlerInterface
 			// Needed by write() to detect session_regenerate_id() calls
 			$this->sessionID = $sessionID;
 
-			$session_data = (string) $this->redis->get($this->keyPrefix.$sessionID);
-			$this->fingerprint = md5($session_data);
+			$session_data = $this->redis->get($this->keyPrefix.$sessionID);
+			is_string($session_data)
+				? $this->keyExists = TRUE
+				: $session_data = '';
 
+			$this->fingerprint = md5($session_data);
 			return $session_data;
 		}
 
@@ -209,19 +219,20 @@ class RedisHandler extends BaseHandler implements \SessionHandlerInterface
 				return FALSE;
 			}
 
-			$this->fingerprint = md5('');
-			$this->sessionID  = $sessionID;
+			$this->keyExists = FALSE;
+			$this->sessionID = $sessionID;
 		}
 
 		if (isset($this->lockKey))
 		{
 			$this->redis->setTimeout($this->lockKey, 300);
 
-			if ($this->fingerprint !== ($fingerprint = md5($sessionData)))
+			if ($this->fingerprint !== ($fingerprint = md5($sessionData)) || $this->keyExists === FALSE)
 			{
 				if ($this->redis->set($this->keyPrefix.$sessionID, $sessionData, $this->sessionExpiration))
 				{
 					$this->fingerprint = $fingerprint;
+					$this->keyExists = TRUE;
 					return TRUE;
 				}
 
@@ -281,11 +292,11 @@ class RedisHandler extends BaseHandler implements \SessionHandlerInterface
 	 * @param	string	$session_id	Session ID
 	 * @return	bool
 	 */
-	public function destroy($session_id)
+	public function destroy($sessionID)
 	{
 		if (isset($this->redis, $this->lockKey))
 		{
-			if (($result = $this->redis->delete($this->keyPrefix.$session_id)) !== 1)
+			if (($result = $this->redis->delete($this->keyPrefix.$sessionID)) !== 1)
 			{
 				$this->logger->debug('Session: Redis::delete() expected to return 1, got '.var_export($result, TRUE).' instead.');
 			}
@@ -325,7 +336,10 @@ class RedisHandler extends BaseHandler implements \SessionHandlerInterface
 	 */
 	protected function lockSession(string $sessionID): bool
 	{
-		if (isset($this->lockKey))
+		// PHP 7 reuses the SessionHandler object on regeneration,
+		// so we need to check here if the lock key is for the
+		// correct session ID.
+		if ($this->lockKey === $this->keyPrefix.$sessionID.':lock')
 		{
 			return $this->redis->setTimeout($this->lockKey, 300);
 		}

@@ -30,8 +30,8 @@
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
  * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
- * @license	http://opensource.org/licenses/MIT	MIT License
- * @link	http://codeigniter.com
+ * @license	https://opensource.org/licenses/MIT	MIT License
+ * @link	https://codeigniter.com
  * @since	Version 3.0.0
  * @filesource
  */
@@ -69,7 +69,7 @@ class CIDatabaseTestCase extends CIUnitTestCase
 	 *
 	 * @var string
 	 */
-	protected $basePath = APPPATH.'../tests/_support/_database';
+	protected $basePath = APPPATH.'../tests/_support/Database';
 
 	/**
 	 * The name of the database group to connect to.
@@ -151,12 +151,12 @@ class CIDatabaseTestCase extends CIUnitTestCase
 		{
 			if (! empty($this->basePath))
 			{
-				$this->migrations->setPath(rtrim($this->basePath, '/').'/migrations');
+				$this->migrations->setNamespace('Tests\Support');
 			}
 
 			$this->db->table('migrations')->truncate();
-			$this->migrations->version(0, 'tests');
-			$this->migrations->latest('tests');
+			$this->migrations->version(0,null, 'tests');
+			$this->migrations->latest(null,'tests');
 		}
 
 		if (! empty($this->seed))

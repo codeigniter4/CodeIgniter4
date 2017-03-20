@@ -9,7 +9,7 @@ class Throttle implements FilterInterface
 {
 	/**
 	 * This is a demo implementation of using the Throttler class
-     * to implement rate limiting for your application.
+	 * to implement rate limiting for your application.
 	 *
 	 * @param \CodeIgniter\HTTP\RequestInterface $request
 	 *
@@ -17,15 +17,15 @@ class Throttle implements FilterInterface
 	 */
 	public function before(RequestInterface $request)
 	{
-        $throttler = Services::throttler();
+		$throttler = Services::throttler();
 
-        // Restrict an IP address to no more
-        // than 1 request per second across the
-        // entire site.
-        if ($throttler->check($request->getIPAddress(), 60, MINUTE) === false)
-        {
-            return Services::response()->setStatusCode(429);
-        }
+		// Restrict an IP address to no more
+		// than 1 request per second across the
+		// entire site.
+		if ($throttler->check($request->getIPAddress(), 60, MINUTE) === false)
+		{
+			return Services::response()->setStatusCode(429);
+		}
 	}
 
 	//--------------------------------------------------------------------

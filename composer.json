@@ -20,8 +20,9 @@
 		"zendframework/zend-escaper": "^2.5"
 	},
 	"require-dev": {
-		"phpunit/phpunit": "5.3.*",
-		"mikey179/vfsStream": "1.6.*"
+		"phpunit/phpunit": "^6.0",
+		"mikey179/vfsStream": "1.6.*",
+		"satooshi/php-coveralls": "^1.0"
 	},
 	"scripts": {
 		"post-update-cmd": [

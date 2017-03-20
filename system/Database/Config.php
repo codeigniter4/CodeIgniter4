@@ -30,8 +30,8 @@
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
  * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
- * @license	http://opensource.org/licenses/MIT	MIT License
- * @link	http://codeigniter.com
+ * @license	https://opensource.org/licenses/MIT	MIT License
+ * @link	https://codeigniter.com
  * @since	Version 3.0.0
  * @filesource
  */
@@ -150,11 +150,11 @@ class Config extends BaseConfig
 		{
 			$db = self::connect($group);
 		}
-		else 
+		else
 		{
 			$db = self::$instances[$group];
 		}
-		
+
 		return self::$factory->loadForge($db);
 	}
 
@@ -162,7 +162,7 @@ class Config extends BaseConfig
 
 	/**
 	 * Returns a new instance of the Database Utilities class.
-	 * 
+	 *
 	 * @param string|null $group
 	 *
 	 * @return mixed

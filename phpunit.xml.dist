@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit bootstrap="tests/_support/_bootstrap.php"
+        backupGlobals="false"
         colors="true"
         convertErrorsToExceptions="true"
         convertNoticesToExceptions="true"
@@ -19,10 +20,19 @@
         <whitelist processUncoveredFilesFromWhitelist="true">
             <directory suffix=".php">./system</directory>
             <exclude>
+                <file>./system/bootstrap.php</file>
+                <file>./system/Commands/Sessions/Views/migration.tpl.php</file>
                 <file>./system/ComposerScripts.php</file>
+                <file>./system/Config/Routes.php</file>
+                <directory>./system/Debug/Toolbar/Views</directory>
+                <directory>./system/Pager/Views</directory>
                 <directory>./system/ThirdParty</directory>
-                <directory>./system/Debug/Toolbar/View</directory>
+                <directory>./system/Validation/Views</directory>
             </exclude>
         </whitelist>
     </filter>
+
+    <logging>
+        <log type="coverage-clover" target="build/logs/clover.xml"/>
+    </logging>
 </phpunit>

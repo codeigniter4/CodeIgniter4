@@ -32,8 +32,8 @@ namespace CodeIgniter\View;
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
  * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
- * @license	http://opensource.org/licenses/MIT	MIT License
- * @link	http://codeigniter.com
+ * @license	https://opensource.org/licenses/MIT	MIT License
+ * @link	https://codeigniter.com
  * @since	Version 3.0.0
  * @filesource
  */
@@ -291,6 +291,14 @@ class Parser extends View {
 						}
 
 						continue;
+					}
+					else if (is_object($val))
+					{
+						$val = 'Class: ' . get_class($val);
+					}
+					else if (is_resource($val))
+					{
+						$val = 'Resource';
 					}
 
 					$temp[$this->leftDelimiter . $key . $this->rightDelimiter] = $val;

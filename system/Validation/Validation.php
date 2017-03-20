@@ -1,5 +1,41 @@
 <?php namespace CodeIgniter\Validation;
 
+/**
+ * CodeIgniter
+ *
+ * An open source application development framework for PHP
+ *
+ * This content is released under the MIT License (MIT)
+ *
+ * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ *
+ * @package	CodeIgniter
+ * @author	CodeIgniter Dev Team
+ * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @license	https://opensource.org/licenses/MIT	MIT License
+ * @link	https://codeigniter.com
+ * @since	Version 3.0.0
+ * @filesource
+ */
+
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\View\RendererInterface;
 
@@ -112,6 +148,27 @@ class Validation implements ValidationInterface
 		return count($this->errors) > 0
 			? false
 			: true;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Check; runs the validation process, returning true or false
+	 * determining whether or not validation was successful.
+	 *
+	 * @param mixed    $value  Value to validation.
+	 * @param string   $rule   Rule.
+	 * @param string[] $errors Errors.
+	 *
+	 * @return bool True if valid, else false.
+	 */
+	public function check($value, string $rule, array $errors = []): bool
+	{
+		$this->reset();
+		$this->setRule('check', $rule, $errors);
+		return $this->run([
+			'check' => $value
+		]);
 	}
 
 	//--------------------------------------------------------------------
@@ -239,7 +296,9 @@ class Validation implements ValidationInterface
 	public function setRule(string $field, string $rule, array $errors = [])
 	{
 		$this->rules[$field] = $rule;
-		$this->customErrors  = array_merge($this->customErrors, $errors);
+		$this->customErrors  = array_merge($this->customErrors, [
+			$field => $errors
+		]);
 
 		return $this;
 	}
@@ -307,7 +366,54 @@ class Validation implements ValidationInterface
 
 	//--------------------------------------------------------------------
 
-    /**
+	/**
+	 * Get rule group.
+	 *
+	 * @param string $group Group.
+	 *
+	 * @return string[] Rule group.
+	 *
+	 * @throws \InvalidArgumentException If group not found.
+	 */
+	public function getRuleGroup(string $group): array
+	{
+		if (! isset($this->config->$group))
+		{
+			throw new \InvalidArgumentException(sprintf(lang('Validation.groupNotFound'), $group));
+		}
+
+		if (!is_array($this->config->$group))
+		{
+			throw new \InvalidArgumentException(sprintf(lang('Validation.groupNotArray'), $group));
+		}
+
+		return $this->config->$group;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Set rule group.
+	 *
+	 * @param string $group Group.
+	 *
+	 *
+	 * @throws \InvalidArgumentException If group not found.
+	 */
+	public function setRuleGroup(string $group)
+	{
+		$rules = $this->getRuleGroup($group);
+		$this->rules = $rules;
+
+		$errorName = $group . '_errors';
+		if (isset($this->config->$errorName))
+		{
+			$this->customErrors = $this->config->$errorName;
+		}
+	}
+
+
+/**
      * Returns the rendered HTML of the errors as defined in $template.
      *
      * @param string $template
@@ -434,14 +540,20 @@ class Validation implements ValidationInterface
     //--------------------------------------------------------------------
 
 	/**
-	 * Returns the error(s) for a specified $field (or empty string if not set).
+	 * Returns the error(s) for a specified $field (or empty string if not
+	 * set).
 	 *
-	 * @param string $field
+	 * @param string $field Field.
 	 *
-	 * @return string
+	 * @return string Error(s).
 	 */
-	public function getError(string $field): string
+	public function getError(string $field = null): string
 	{
+		if ($field === null && count($this->rules) === 1) {
+			reset($this->rules);
+			$field = key($this->rules);
+		}
+
 		return array_key_exists($field, $this->errors)
 			? $this->errors[$field]
 			: '';

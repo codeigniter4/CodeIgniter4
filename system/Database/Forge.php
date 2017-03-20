@@ -30,8 +30,8 @@
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
  * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
- * @license	http://opensource.org/licenses/MIT	MIT License
- * @link	http://codeigniter.com
+ * @license	https://opensource.org/licenses/MIT	MIT License
+ * @link	https://codeigniter.com
  * @since	Version 3.0.0
  * @filesource
  */
@@ -271,19 +271,12 @@ class Forge
 	 */
 	public function addKey($key, $primary = false)
 	{
-		if (is_array($key))
-		{
-			foreach ($key as $one)
-			{
-				$this->addKey($one, $primary);
-			}
-
-			return $this;
-		}
-
 		if ($primary === true)
 		{
-			$this->primaryKeys[] = $key;
+			foreach ((array) $key as $one)
+			{
+				$this->primaryKeys[] = $one;
+			}
 		}
 		else
 		{
@@ -1068,24 +1061,19 @@ class Forge
 
 		for ($i = 0, $c = count($this->keys); $i < $c; $i++)
 		{
-			if (is_array($this->keys[$i]))
+			$this->keys[$i] = (array) $this->keys[$i];
+
+			for ($i2 = 0, $c2 = count($this->keys[$i]); $i2 < $c2; $i2++)
 			{
-				for ($i2 = 0, $c2 = count($this->keys[$i]); $i2 < $c2; $i2++)
+				if ( ! isset($this->fields[$this->keys[$i][$i2]]))
 				{
-					if ( ! isset($this->fields[$this->keys[$i][$i2]]))
-					{
-						unset($this->keys[$i][$i2]);
-						continue;
-					}
+					unset($this->keys[$i][$i2]);
 				}
 			}
-			elseif ( ! isset($this->fields[$this->keys[$i]]))
+			if (count($this->keys[$i]) <= 0)
 			{
-				unset($this->keys[$i]);
 				continue;
 			}
-
-			is_array($this->keys[$i]) OR $this->keys[$i] = [$this->keys[$i]];
 
 			$sqls[] = 'CREATE INDEX '.$this->db->escapeIdentifiers($table.'_'.implode('_', $this->keys[$i]))
 			          .' ON '.$this->db->escapeIdentifiers($table)

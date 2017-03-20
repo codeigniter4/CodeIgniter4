@@ -1,5 +1,41 @@
 <?php namespace CodeIgniter\Config;
 
+/**
+ * CodeIgniter
+ *
+ * An open source application development framework for PHP
+ *
+ * This content is released under the MIT License (MIT)
+ *
+ * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ *
+ * @package	CodeIgniter
+ * @author	CodeIgniter Dev Team
+ * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @license	https://opensource.org/licenses/MIT	MIT License
+ * @link	https://codeigniter.com
+ * @since	Version 3.0.0
+ * @filesource
+ */
+
 use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Database\MigrationRunner;
 use CodeIgniter\View\RendererInterface;
@@ -213,10 +249,10 @@ class Services
 	 */
 	public static function locator($getShared = true)
 	{
-	    if ($getShared)
-	    {
-		    return self::getSharedInstance('locator');
-	    }
+		if ($getShared)
+		{
+			return self::getSharedInstance('locator');
+		}
 
 		return new \CodeIgniter\Autoloader\FileLocator(new \Config\Autoload());
 	}
@@ -258,10 +294,10 @@ class Services
 
 	public static function migrations(BaseConfig $config = null, ConnectionInterface $db = null, bool $getShared = true)
 	{
-	    if ($getShared)
-	    {
-		    return self::getSharedInstance('migrations', $config, $db);
-	    }
+		if ($getShared)
+		{
+			return self::getSharedInstance('migrations', $config, $db);
+		}
 
 		$config = empty($config) ? new \Config\Migrations() : $config;
 
@@ -315,25 +351,25 @@ class Services
 
 	//--------------------------------------------------------------------
 
-    /**
-     * The Parser is a simple template parser.
-     */
-    public static function parser($viewPath = APPPATH.'Views/', $config = null, $getShared = true)
-    {
-        if ($getShared)
-        {
-            return self::getSharedInstance('parser', $viewPath, $config);
-        }
+	/**
+	 * The Parser is a simple template parser.
+	 */
+	public static function parser($viewPath = APPPATH.'Views/', $config = null, $getShared = true)
+	{
+		if ($getShared)
+		{
+			return self::getSharedInstance('parser', $viewPath, $config);
+		}
 
-        if (is_null($config))
-        {
-            $config = new \Config\View();
-        }
+		if (is_null($config))
+		{
+			$config = new \Config\View();
+		}
 
-        return new \CodeIgniter\View\Parser($config, $viewPath, self::locator(true), CI_DEBUG, self::logger(true));
-    }
+		return new \CodeIgniter\View\Parser($config, $viewPath, self::locator(true), CI_DEBUG, self::logger(true));
+	}
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
 	/**
 	 * The Renderer class is the class that actually displays a file to the user.
@@ -348,9 +384,9 @@ class Services
 		}
 
 		if (is_null($config))
-        {
-            $config = new \Config\View();
-        }
+		{
+			$config = new \Config\View();
+		}
 
 		return new \CodeIgniter\View\View($config, $viewPath, self::locator(true), CI_DEBUG, self::logger(true));
 	}
@@ -490,21 +526,21 @@ class Services
 
 	//--------------------------------------------------------------------
 
-    /**
-     * The Throttler class provides a simple method for implementing
-     * rate limiting in your applications.
-     */
-    public static function throttler($getShared = true)
-    {
-        if ($getShared)
-        {
-            return self::getSharedInstance('throttler');
-        }
+	/**
+	 * The Throttler class provides a simple method for implementing
+	 * rate limiting in your applications.
+	 */
+	public static function throttler($getShared = true)
+	{
+		if ($getShared)
+		{
+			return self::getSharedInstance('throttler');
+		}
 
-        return new \CodeIgniter\Throttle\Throttler(self::cache());
-    }
+		return new \CodeIgniter\Throttle\Throttler(self::cache());
+	}
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
 	/**
 	 * The Timer class provides a simple way to Benchmark portions of your
@@ -554,25 +590,25 @@ class Services
 
 	//--------------------------------------------------------------------
 
-    /**
-     * The Validation class provides tools for validating input data.
-     */
-    public static function validation(\Config\Validation $config = null, $getShared = true)
-    {
-        if ($getShared)
-        {
-            return self::getSharedInstance('validation', $config);
-        }
+	/**
+	 * The Validation class provides tools for validating input data.
+	 */
+	public static function validation(\Config\Validation $config = null, $getShared = true)
+	{
+		if ($getShared)
+		{
+			return self::getSharedInstance('validation', $config);
+		}
 
-        if (is_null($config))
-        {
-            $config = new \Config\Validation();
-        }
+		if (is_null($config))
+		{
+			$config = new \Config\Validation();
+		}
 
-        return new \CodeIgniter\Validation\Validation($config, self::renderer());
-    }
+		return new \CodeIgniter\Validation\Validation($config, self::renderer());
+	}
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
 	/**
 	 * View cells are intended to let you insert HTML into view

@@ -30,8 +30,8 @@
  * @package      CodeIgniter
  * @author       CodeIgniter Dev Team
  * @copyright    Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
- * @license      http://opensource.org/licenses/MIT	MIT License
- * @link         http://codeigniter.com
+ * @license      https://opensource.org/licenses/MIT	MIT License
+ * @link         https://codeigniter.com
  * @since        Version 4.0.0
  * @filesource
  */
@@ -88,8 +88,8 @@ class Routes extends BaseCollector
 		$route = $router->getMatchedRoute();
 
 		// Get our parameters
-        $method = new \ReflectionMethod($router->controllerName(), $router->methodName());
-        $rawParams = $method->getParameters();
+		$method = is_callable($router->controllerName()) ? new \ReflectionFunction($router->controllerName()) : new \ReflectionMethod($router->controllerName(), $router->methodName());
+		$rawParams = $method->getParameters();
 
         $params = [];
         foreach ($rawParams as $key => $param)

@@ -13,7 +13,7 @@ class DeleteTest extends \CIDatabaseTestCase
 
 	public function testDeleteThrowExceptionWithNoCriteria()
 	{
-	    $this->setExpectedException('CodeIgniter\DatabaseException');
+	    $this->expectException('CodeIgniter\DatabaseException');
 
 		$this->db->table('job')->delete();
 	}

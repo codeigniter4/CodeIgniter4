@@ -3,6 +3,9 @@
 use Config\Pager;
 use Config\Services;
 
+/**
+ * @backupGlobals enabled
+ */
 class PagerTest extends \CIUnitTestCase
 {
 	/**
@@ -72,7 +75,7 @@ class PagerTest extends \CIUnitTestCase
 
 	public function testGetDetailsThrowExceptionIfGroupNotFound()
 	{
-	    $this->setExpectedException('InvalidArgumentException');
+	    $this->expectException('InvalidArgumentException');
 
 		$this->pager->getDetails('foo');
 	}

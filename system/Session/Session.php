@@ -32,8 +32,8 @@ namespace CodeIgniter\Session;
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
  * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
- * @license	http://opensource.org/licenses/MIT	MIT License
- * @link	http://codeigniter.com
+ * @license	https://opensource.org/licenses/MIT	MIT License
+ * @link	https://codeigniter.com
  * @since	Version 3.0.0
  * @filesource
  */
@@ -49,13 +49,6 @@ class Session implements SessionInterface
 {
 
 	use LoggerAwareTrait;
-
-	/**
-	 * Userdata array.
-	 *
-	 * Just a reference to $_SESSION, for BC purposes.
-	 */
-	protected $userdata;
 
 	/**
 	 * Instance of the driver to use.
@@ -143,6 +136,8 @@ class Session implements SessionInterface
 	 */
 	protected $cookieSecure = false;
 
+	protected $sidRegexp;
+
 	/**
 	 * Logger instance to record error messages and awarnings.
 	 * @var \PSR\Log\LoggerInterface
@@ -159,7 +154,7 @@ class Session implements SessionInterface
 	 * @param \SessionHandlerInterface $driver
 	 * @param \Config\App $config
 	 */
-	public function __construct(\SessionHandlerInterface $driver, \Config\App $config)
+	public function __construct(\SessionHandlerInterface $driver, $config)
 	{
 		$this->driver = $driver;
 
@@ -183,7 +178,7 @@ class Session implements SessionInterface
 	 */
 	public function start()
 	{
-		if (is_cli())
+		if (is_cli() && ENVIRONMENT !== 'testing')
 		{
 			$this->logger->debug('Session: Initialization under CLI aborted.');
 
@@ -204,20 +199,20 @@ class Session implements SessionInterface
 
 		$this->configure();
 
-		session_set_save_handler($this->driver, true);
+        $this->setSaveHandler();
 
 		// Sanitize the cookie, because apparently PHP doesn't do that for userspace handlers
 		if (isset($_COOKIE[$this->sessionCookieName]) && (
-				! is_string($_COOKIE[$this->sessionCookieName]) || ! preg_match('/^[0-9a-f]{40}$/', $_COOKIE[$this->sessionCookieName])
+				! is_string($_COOKIE[$this->sessionCookieName]) || ! preg_match('#\A'.$this->sidRegexp.'\z#', $_COOKIE[$this->sessionCookieName])
 				)
 		)
 		{
 			unset($_COOKIE[$this->sessionCookieName]);
 		}
 
-		session_start();
+        $this->startSession();
 
-		// Is session ID auto-regeneration configured? (ignoring ajax requests)
+        // Is session ID auto-regeneration configured? (ignoring ajax requests)
 		if ((empty($_SERVER['HTTP_X_REQUESTED_WITH']) ||
 				strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) !== 'xmlhttprequest') && ($regenerate_time = $this->sessionTimeToUpdate) > 0
 		)
@@ -235,16 +230,8 @@ class Session implements SessionInterface
 		// unless it is being currently created or regenerated
 		elseif (isset($_COOKIE[$this->sessionCookieName]) && $_COOKIE[$this->sessionCookieName] === session_id())
 		{
-			setcookie(
-					$this->sessionCookieName,
-					session_id(),
-					(empty($this->sessionExpiration) ? 0 : time() + $this->sessionExpiration),
-					$this->cookiePath,
-					$this->cookieDomain,
-					$this->cookieSecure,
-					true
-			);
-		}
+            $this->setCookie();
+        }
 
 		$this->initVars();
 
@@ -316,8 +303,83 @@ class Session implements SessionInterface
 		ini_set('session.use_strict_mode', 1);
 		ini_set('session.use_cookies', 1);
 		ini_set('session.use_only_cookies', 1);
-		ini_set('session.hash_function', 1);
-		ini_set('session.hash_bits_per_character', 4);
+
+		$this->configureSidLength();
+	}
+
+	// ------------------------------------------------------------------------
+
+	/**
+	 * Configure session ID length
+	 *
+	 * To make life easier, we used to force SHA-1 and 4 bits per
+	 * character on everyone. And of course, someone was unhappy.
+	 *
+	 * Then PHP 7.1 broke backwards-compatibility because ext/session
+	 * is such a mess that nobody wants to touch it with a pole stick,
+	 * and the one guy who does, nobody has the energy to argue with.
+	 *
+	 * So we were forced to make changes, and OF COURSE something was
+	 * going to break and now we have this pile of shit. -- Narf
+	 *
+	 * @return	void
+	 */
+	protected function configureSidLength()
+	{
+		if (PHP_VERSION_ID < 70100)
+		{
+			$bits = 160;
+			$hash_function = ini_get('session.hash_function');
+			if (ctype_digit($hash_function))
+			{
+				if ($hash_function !== '1')
+				{
+					ini_set('session.hash_function', 1);
+					$bits = 160;
+				}
+			}
+			elseif ( ! in_array($hash_function, hash_algos(), true))
+			{
+				ini_set('session.hash_function', 1);
+				$bits = 160;
+			}
+			elseif (($bits = strlen(hash($hash_function, 'dummy', false)) * 4) < 160)
+			{
+				ini_set('session.hash_function', 1);
+				$bits = 160;
+			}
+
+			$bits_per_character = (int) ini_get('session.hash_bits_per_character');
+			$sid_length         = (int) ceil($bits / $bits_per_character);
+		}
+		else
+		{
+			$bits_per_character = (int) ini_get('session.sid_bits_per_character');
+			$sid_length         = (int) ini_get('session.sid_length');
+			if (($sid_length * $bits_per_character) < 160)
+			{
+				$bits 			= ($sid_length * $bits_per_character);
+				// Add as many more characters as necessary to reach at least 160 bits
+				$sid_length += (int) ceil((160 % $bits) / $bits_per_character);
+				ini_set('session.sid_length', $sid_length);
+			}
+		}
+
+		// Yes, 4,5,6 are the only known possible values as of 2016-10-27
+		switch ($bits_per_character)
+		{
+			case 4:
+				$this->sidRegexp = '[0-9a-f]';
+				break;
+			case 5:
+				$this->sidRegexp = '[0-9a-v]';
+				break;
+			case 6:
+				$this->sidRegexp = '[0-9a-zA-Z,-]';
+				break;
+		}
+
+		$this->sidRegexp .= '{'.$sid_length.'}';
 	}
 
 	//--------------------------------------------------------------------
@@ -330,31 +392,31 @@ class Session implements SessionInterface
 	 */
 	protected function initVars()
 	{
-		if (! empty($_SESSION['__ci_vars']))
-		{
-			$current_time = time();
+		if (empty($_SESSION['__ci_vars']))
+        {
+            return;
+        }
 
-			foreach ($_SESSION['__ci_vars'] as $key => &$value)
-			{
-				if ($value === 'new')
-				{
-					$_SESSION['__ci_vars'][$key] = 'old';
-				}
-				// Hacky, but 'old' will (implicitly) always be less than time() ;)
-				// DO NOT move this above the 'new' check!
-				elseif ($value < $current_time)
-				{
-					unset($_SESSION[$key], $_SESSION['__ci_vars'][$key]);
-				}
-			}
+        $current_time = time();
 
-			if (empty($_SESSION['__ci_vars']))
-			{
-				unset($_SESSION['__ci_vars']);
-			}
-		}
+        foreach ($_SESSION['__ci_vars'] as $key => &$value)
+        {
+            if ($value === 'new')
+            {
+                $_SESSION['__ci_vars'][$key] = 'old';
+            }
+            // Hacky, but 'old' will (implicitly) always be less than time() ;)
+            // DO NOT move this above the 'new' check!
+            elseif ($value < $current_time)
+            {
+                unset($_SESSION[$key], $_SESSION['__ci_vars'][$key]);
+            }
+        }
 
-		$this->userdata = & $_SESSION;
+        if (empty($_SESSION['__ci_vars']))
+        {
+            unset($_SESSION['__ci_vars']);
+        }
 	}
 
 	//--------------------------------------------------------------------
@@ -406,7 +468,14 @@ class Session implements SessionInterface
 		{
 			foreach ($data as $key => &$value)
 			{
-				$_SESSION[$key] = $value;
+			    if (is_int($key))
+                {
+                    $_SESSION[$value] = null;
+                }
+                else
+                {
+                    $_SESSION[$key] = $value;
+                }
 			}
 
 			return;
@@ -445,7 +514,8 @@ class Session implements SessionInterface
 				['__ci_vars'], $this->getFlashKeys(), $this->getTempKeys()
 		);
 
-		foreach (array_keys($_SESSION) as $key)
+		$keys = array_keys($_SESSION);
+		foreach ($keys as $key)
 		{
 			if (! in_array($key, $_exclude, true))
 			{
@@ -708,7 +778,7 @@ class Session implements SessionInterface
 	public function setTempdata($data, $value = null, $ttl = 300)
 	{
 		$this->set($data, $value);
-		$this->markAsTempdata(is_array($data) ? array_keys($data) : $data, $ttl);
+		$this->markAsTempdata($data, $ttl);
 	}
 
 	//--------------------------------------------------------------------
@@ -780,12 +850,16 @@ class Session implements SessionInterface
 					$k = $v;
 					$v = $ttl;
 				}
+				elseif (is_string($v))
+                {
+                    $v = time() + $ttl;
+                }
 				else
 				{
 					$v += time();
 				}
 
-				if (! isset($_SESSION[$k]))
+				if (! array_key_exists($k, $_SESSION))
 				{
 					return false;
 				}
@@ -863,4 +937,45 @@ class Session implements SessionInterface
 	}
 
 	//--------------------------------------------------------------------
+
+    /**
+     * Sets the driver as the session handler in PHP.
+     * Extracted for easier testing.
+     */
+    protected function setSaveHandler()
+    {
+        session_set_save_handler($this->driver, true);
+    }
+
+    //--------------------------------------------------------------------
+
+    /**
+     * Starts the session.
+     * Extracted for testing reasons.
+     */
+    protected function startSession()
+    {
+        session_start();
+    }
+
+    //--------------------------------------------------------------------
+
+    /**
+     * Takes care of setting the cookie on the client side.
+     * Extracted for testing reasons.
+     */
+    protected function setCookie()
+    {
+        setcookie(
+            $this->sessionCookieName,
+            session_id(),
+            (empty($this->sessionExpiration) ? 0 : time()+$this->sessionExpiration),
+            $this->cookiePath,
+            $this->cookieDomain,
+            $this->cookieSecure,
+            true
+        );
+    }
+
+    //--------------------------------------------------------------------
 }

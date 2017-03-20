@@ -327,8 +327,11 @@ class ModelTest extends \CIDatabaseTestCase
 		$data->id = 1;
 		$data->name = 'Engineer';
 		$data->description = 'A fancier term for Developer.';
+		$data->random_thing = 'Something wicked'; // If not protected, this would kill the script.
 
-		$model->protect(true)->save($data);
+		$result = $model->protect(true)->save($data);
+
+        $this->assertTrue($result);
 	}
 
 	//--------------------------------------------------------------------

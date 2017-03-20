@@ -30,8 +30,8 @@
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
  * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
- * @license	http://opensource.org/licenses/MIT	MIT License
- * @link	http://codeigniter.com
+ * @license	https://opensource.org/licenses/MIT	MIT License
+ * @link	https://codeigniter.com
  * @since	Version 3.0.0
  * @filesource
  */
@@ -89,7 +89,7 @@ class AutoloadConfig
 			'CodeIgniter' => realpath(BASEPATH)
 		];
 
-		if (ENVIRONMENT == 'testing')
+		if (isset($_SERVER['CI_ENV']) && $_SERVER['CI_ENV'] === 'testing')
 		{
 			$this->psr4['Tests\Support'] = BASEPATH.'../tests/_support/';
 		}

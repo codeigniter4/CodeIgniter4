@@ -7,7 +7,6 @@ class EntityModel extends Model
 	protected $table = 'job';
 
 	protected $returnType = '\Tests\Support\Models\SimpleEntity';
-//    protected $returnType = 'object';
 
 	protected $useSoftDeletes = false;
 

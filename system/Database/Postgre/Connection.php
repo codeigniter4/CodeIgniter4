@@ -30,8 +30,8 @@
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
  * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
- * @license	http://opensource.org/licenses/MIT	MIT License
- * @link	http://codeigniter.com
+ * @license	https://opensource.org/licenses/MIT	MIT License
+ * @link	https://codeigniter.com
  * @since	Version 3.0.0
  * @filesource
  */
@@ -290,7 +290,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 * @param	string	$table
 	 * @return	array
 	 */
-	public function fieldData(string $table)
+	public function _fieldData(string $table)
 	{
 		$sql = 'SELECT "column_name", "data_type", "character_maximum_length", "numeric_precision", "column_default"
 			FROM "information_schema"."columns"
@@ -313,6 +313,41 @@ class Connection extends BaseConnection implements ConnectionInterface
 			$retval[$i]->max_length = $query[$i]->character_maximum_length > 0
 				? $query[$i]->character_maximum_length
 				: $query[$i]->numeric_precision;
+		}
+
+		return $retval;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns an object with index data
+	 *
+	 * @param	string	$table
+	 * @return	array
+	 */
+	public function _indexData(string $table)
+	{
+		$sql = 'SELECT "indexname", "indexdef"
+			FROM "pg_indexes"
+			WHERE LOWER("tablename") = '.$this->escape(strtolower($table)).'
+			  AND "schemaname" = '.$this->escape('public');
+
+		if (($query = $this->query($sql)) === false)
+		{
+			return false;
+		}
+		$query = $query->getResultObject();
+
+		$retval = [];
+		foreach ($query as $row)
+		{
+			$obj         = new \stdClass();
+			$obj->name   = $row->indexname;
+			$_fields     = explode(',', preg_replace('/^.*\((.+?)\)$/', '$1', trim($row->indexdef)));
+			$obj->fields = array_map(function($v){ return trim($v); }, $_fields);
+
+			$retval[] = $obj;
 		}
 
 		return $retval;

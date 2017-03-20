@@ -2,6 +2,9 @@
 
 use Config\App;
 
+/**
+ * @backupGlobals enabled
+ */
 class IncomingRequestTest extends \CIUnitTestCase
 {
 	/**
@@ -260,6 +263,38 @@ class IncomingRequestTest extends \CIUnitTestCase
 
 		$this->assertEquals($config->defaultLocale, $request->getDefaultLocale());
 		$this->assertEquals('es', $request->getLocale());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testCanGrabGetRawJSON()
+	{
+		$json = '{"code":1, "message":"ok"}';
+
+		$expected = [
+			'code' => 1,
+			'message' => 'ok'
+		];
+
+		$request = new IncomingRequest(new App(), new URI(), $json);
+		
+		$this->assertEquals($expected, $request->getJSON(true));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testCanGrabGetRawInput()
+	{
+		$rawstring = 'username=admin001&role=administrator&usepass=0';
+
+		$expected = [
+			'username' => 'admin001',
+			'role' => 'administrator',
+			'usepass' => 0
+		];
+		$request = new IncomingRequest(new App(), new URI(), $rawstring);
+
+		$this->assertEquals($expected, $request->getRawInput());
 	}
 
 	//--------------------------------------------------------------------

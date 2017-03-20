@@ -245,6 +245,13 @@ data to be validated::
     $validation->withRequest($this->request)
                ->run();
 
+****************
+Validate 1 Value
+****************
+
+Validate one value against a rule.
+
+    $validation->check($value, 'required');
 
 **************************************************
 Saving Sets of Validation Rules to the Config File
@@ -302,6 +309,23 @@ be used for any errors when this group is used::
     }
 
 See below for details on the formatting of the array.
+
+Getting & Setting Rule Groups
+=============================
+
+Get Rule Group
+--------------
+
+This method gets a rule group from the validation configuration.
+
+    $validation->getRuleGroup('signup');
+
+Set Rule Group
+--------------
+
+This method sets a rule group from the validation configuration to the validation service.
+
+    $validation->setRuleGroup('signup');
 
 *******************
 Working With Errors
@@ -546,6 +570,7 @@ The following is a list of all the native rules that are available to use:
 Rule                    Parameter   Description                                                                                     Example
 ======================= =========== =============================================================================================== ===================================================
 alpha                   No          Fails if field has anything other than alphabetic characters.
+alpha_space             No          Fails if field contains anything other than alphabetic characters or spaces.
 alpha_dash              No          Fails if field contains anything other than alpha-numeric characters, underscores or dashes.
 alpha_numeric           No          Fails if field contains anything other than alpha-numeric characters or numbers.
 alpha_numeric_space     No          Fails if field contains anything other than alpha-numeric characters, numbers or space.

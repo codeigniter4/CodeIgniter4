@@ -10,7 +10,7 @@
 
 $uri = urldecode(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
 
-$path = __DIR__.'public/'.ltrim($uri,'/');
+$path = __DIR__.'/public/'.ltrim($uri,'/');
 
 // If $path is an existing file or folder within the public folder
 // then let the request handle it like normal.
