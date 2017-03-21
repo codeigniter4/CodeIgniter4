@@ -258,8 +258,10 @@ class PagerTest extends \CIUnitTestCase
 
 	public function testGetNextURIWithQueryStringUsesCurrentURI()
 	{
-		$_GET['page'] = 3;
-		$_GET['status'] = 1;
+		$_GET = [
+			'page' => 3,
+			'status' => 1
+		];
 
 		$expected = current_url(true);
 		$expected = (string)$expected->setQueryArray($_GET);
@@ -273,9 +275,10 @@ class PagerTest extends \CIUnitTestCase
 
 	public function testGetPreviousURIWithQueryStringUsesCurrentURI()
 	{
-		$_GET['page'] = 1;
-		$_GET['status'] = 1;
-
+		$_GET = [
+			'page' => 1,
+			'status' => 1
+		];
 		$expected = current_url(true);
 		$expected = (string)$expected->setQueryArray($_GET);
 
