@@ -63,6 +63,32 @@ class MigrateLatest extends BaseCommand
      */
     protected $description = 'Migrates the database to the latest schema.';
 
+     /**
+     * the Command's usage
+     *
+     * @var string
+     */
+    protected $usage = 'migrate:latest [options]';
+
+    /**
+     * the Command's Arguments
+     *
+     * @var array
+     */
+    protected $arguments = [];
+
+    /**
+     * the Command's Options
+     *
+     * @var array
+     */
+    protected $options = array(
+        '-n'   => 'Set migration namespace',
+        '-g'   => 'Set database group',
+        '-all' => 'Set latest for all namespace, will ignore (-n) option'
+    );
+
+
     /**
      * Ensures that all migrations have been run.
      */

@@ -66,6 +66,29 @@ class Seed extends BaseCommand
     protected $description = 'Runs the specified seeder to populate known data into the database.';
 
     /**
+     * the Command's usage
+     *
+     * @var string
+     */
+    protected $usage = 'db:seed [seeder_name]';
+
+    /**
+     * the Command's Arguments
+     *
+     * @var array
+     */
+    protected $arguments = array(
+        'seeder_name' => 'The seeder name to run'
+    );
+
+    /**
+     * the Command's Options
+     *
+     * @var array
+     */
+    protected $options = [];
+
+    /**
      * Runs all of the migrations in reverse order, until they have
      * all been un-applied.
      */

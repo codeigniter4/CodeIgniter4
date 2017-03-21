@@ -66,6 +66,27 @@ class ListCommands extends BaseCommand
     protected $description = 'Lists the available commands.';
 
     /**
+     * the Command's usage
+     *
+     * @var string
+     */
+    protected $usage = 'list';
+
+    /**
+     * the Command's Arguments
+     *
+     * @var array
+     */
+    protected $arguments = array();
+
+    /**
+     * the Command's Options
+     *
+     * @var array
+     */
+    protected $options = array();
+
+    /**
      * The length of the longest command name.
      * Used during display in columns.
      *

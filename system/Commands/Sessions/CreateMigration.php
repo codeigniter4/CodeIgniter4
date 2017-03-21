@@ -59,6 +59,27 @@ class CreateMigration extends BaseCommand
     protected $description = 'Generates the migration file for database sessions.';
 
     /**
+     * the Command's usage
+     *
+     * @var string
+     */
+    protected $usage = 'session:migration';
+
+    /**
+     * the Command's Arguments
+     *
+     * @var array
+     */
+    protected $arguments = array();
+
+    /**
+     * the Command's Options
+     *
+     * @var array
+     */
+    protected $options = array();
+
+    /**
      * Creates a new migration file with the current timestamp.
      */
     public function run(array $params=[])

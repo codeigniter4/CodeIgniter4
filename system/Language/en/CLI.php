@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Commands;
+<?php
 
 /**
  * CodeIgniter
@@ -36,76 +36,9 @@
  * @filesource
  */
 
-use CodeIgniter\CLI\BaseCommand;
-use CodeIgniter\CLI\CLI;
-
-/**
- * CI Help command for the ci.php script.
- *
- * Lists the basic usage information for the ci.php script,
- * and provides a way to list help for other commands.
- *
- * @package CodeIgniter\Commands
- */
-class Help extends BaseCommand
-{
-    protected $group = 'CodeIgniter';
-
-    /**
-     * The Command's name
-     *
-     * @var string
-     */
-    protected $name = 'help';
-
-    /**
-     * the Command's short description
-     *
-     * @var string
-     */
-    protected $description = 'Displays basic usage information.';
-
-     /**
-     * the Command's usage
-     *
-     * @var string
-     */
-    protected $usage = 'help command_name';
-
-    /**
-     * the Command's Arguments
-     *
-     * @var array
-     */
-    protected $arguments = array(
-        'command_name' => 'The command name [default: "help"]'
-    );
-
-    /**
-     * the Command's Options
-     *
-     * @var array
-     */
-    protected $options = array();
-
-
-    //--------------------------------------------------------------------
-
-    /**
-     * Displays the help for the ci.php cli script itself.
-     *
-     * @param array $params
-     */
-    public function run(array $params)
-    {
-        $command = array_shift($params);
-        if(is_null($command)){
-            $command = 'help';
-        }
-
-        $commands = $this->commands->getCommands();
-        $class=new $commands[$command]['class']($this->logger, $this->commands);
-
-        $class->showHelp();
-    }
-}
+return [
+	'helpUsage'              => 'Usage:',
+	'helpDescription'        => 'Description:',
+	'helpOptions'            => 'Options:',
+	'helpArguments'          => 'Arguments:',
+];
