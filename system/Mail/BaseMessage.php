@@ -12,6 +12,7 @@ abstract class BaseMessage implements MessageInterface
     protected $cc      = [];
     protected $bcc     = [];
     protected $subject;
+    protected $returnPath;
 
     protected $messageHTML;
     protected $messageText;
@@ -170,6 +171,20 @@ abstract class BaseMessage implements MessageInterface
     //--------------------------------------------------------------------
 
     /**
+     * Returns the 'ReturnPath' portion, which is automatically set
+     * when setting the "from" value.
+     *
+     * @return string
+     */
+    public function getReturnPath(): string
+    {
+        return ! empty($this->returnPath)
+            ? $this->returnPath
+            : '';
+    }
+
+
+    /**
      * Sets the name and email address of one person this is from.
      * If this method is called multiple times, it adds multiple people
      * to the from value, it does not overwrite the previous one.
@@ -177,15 +192,24 @@ abstract class BaseMessage implements MessageInterface
      * @param string      $email
      * @param string|null $name
      *
-     * @return self
+     * @param string      $returnPath
+     *
+     * @return \CodeIgniter\Mail\BaseMessage
      */
-    public function setFrom(string $email, string $name=null)
+    public function setFrom(string $email, string $name=null, string $returnPath = null)
     {
         $recipient = is_null($name)
             ? [$email]
             : [$name => $email];
 
         $this->setRecipients($recipient, 'from');
+
+        if (empty($returnPath))
+        {
+            $returnPath = $email;
+        }
+
+        $this->returnPath = '<'.$returnPath.'>';
 
         return $this;
     }

@@ -147,6 +147,15 @@ class MailHandler extends BaseHandler
         {
             return $this;
         }
+
+        $result = $this->spoolEmail();
+
+        if ($result && $clear_after)
+        {
+            $this->reset();
+        }
+
+        return $result;
     }
 
     //--------------------------------------------------------------------
@@ -350,6 +359,33 @@ class MailHandler extends BaseHandler
     //--------------------------------------------------------------------
 
     /**
+     * Validate email for shell
+     *
+     * Applies stricter, shell-safe validation to email addresses.
+     * Introduced to prevent RCE via sendmail's -f option.
+     *
+     * @see	https://github.com/bcit-ci/CodeIgniter/issues/4963
+     * @see	https://gist.github.com/Zenexer/40d02da5e07f151adeaeeaa11af9ab36
+     * @license	https://creativecommons.org/publicdomain/zero/1.0/	CC0 1.0, Public Domain
+     *
+     * Credits for the base concept go to Paul Buonopane <paul@namepros.com>
+     *
+     * @param	string	$email
+     * @return	bool
+     */
+    protected function validateEmailForShell(&$email)
+    {
+        if (function_exists('idn_to_ascii') && $atpos = strpos($email, '@'))
+        {
+            $email = mb_substr($email, 0, ++$atpos).idn_to_ascii(mb_substr($email, $atpos));
+        }
+
+        return (filter_var($email, FILTER_VALIDATE_EMAIL) === $email && preg_match('#\A[a-z0-9._+-]+@[a-z0-9.-]{1,253}\z#i', $email));
+    }
+
+    //--------------------------------------------------------------------
+
+    /**
      * Validates an email address.
      *
      * @param string $email
@@ -430,6 +466,31 @@ class MailHandler extends BaseHandler
 
     //--------------------------------------------------------------------
 
+    /**
+     * Clean Extended Email address: Joe Smith <joe@smith.com>
+     *
+     * @param string $email
+     *
+     * @return string
+     */
+    protected function cleanEmail(string $email): string
+    {
+        if ( ! is_array($email))
+        {
+            return preg_match('/\<(.*)\>/', $email, $match) ? $match[1] : $email;
+        }
+
+        $cleanEmail = array();
+
+        foreach ($email as $addy)
+        {
+            $cleanEmail[] = preg_match('/\<(.*)\>/', $addy, $match) ? $match[1] : $addy;
+        }
+
+        return $cleanEmail;
+    }
+
+    //--------------------------------------------------------------------
     /**
      * Sets a header value for the email. Not every service will provide this.
      *
@@ -932,6 +993,381 @@ class MailHandler extends BaseHandler
     //--------------------------------------------------------------------
 
     /**
+     * Spool mail to the mail server.
+     *
+     * @return bool
+     */
+    protected function spoolEmail(): bool
+    {
+        $this->unwrapSpecials();
+
+        $method = 'sendWith'.ucfirst(strtolower($this->protocol));
+
+        if (! $this->$method())
+        {
+            $this->setErrorMessage(lang('email.sendFailure'.$this->protocol == 'mail' ? 'phpmail' : $this->protocol));
+
+            return false;
+        }
+
+        $this->setErrorMessage(lang('email.sent'. $this->protocol));
+
+        return true;
+    }
+
+    //--------------------------------------------------------------------
+
+    /**
+     * Unwrap special elements.
+     */
+    protected function unwrapSpecials()
+    {
+        $this->finalBody = preg_replace_callback('/\{unwrap\}(.*?)\{\/unwrap\}/si', array($this, 'removeNLCallback'), $this->finalBody);
+    }
+
+    //--------------------------------------------------------------------
+
+    /**
+     * Strip line-breaks via callback
+     *
+     * @param array $matches
+     *
+     * @return string
+     */
+    protected function removeNLCallback(array $matches): string
+    {
+        if (strpos($matches[1], "\r") !== FALSE OR strpos($matches[1], "\n") !== FALSE)
+        {
+            $matches[1] = str_replace(array("\r\n", "\r", "\n"), '', $matches[1]);
+        }
+
+        return $matches[1];
+    }
+
+    //--------------------------------------------------------------------
+
+    /**
+     * Send using mail()
+     *
+     * return bool
+     */
+    protected function sendWithMail(): bool
+    {
+        if (is_array($this->recipients))
+        {
+            $this->recipients = implode(', ', $this->recipients);
+        }
+
+        // validateEmailForShell below accepts by reference
+        // so this needs to be assigned to a variable.
+        $from = $this->cleanEmail($this->message->getReturnPath());
+
+        if (! $this->validateEmailForShell($from))
+        {
+            return mail(
+                $this->recipients,
+                $this->message->getSubject(),
+                $this->finalBody,
+                $this->headerString
+            );
+        }
+
+        // most documentation of sendmail using the "-f" flag lacks a space after it, however
+        // we've encountered servers that seem to require it to be in place.
+        return mail(
+            $this->recipients,
+            $this->message->getSubject(),
+            $this->finalBody,
+            $this->headerString,
+            '-f '.$from
+        );
+    }
+
+    //--------------------------------------------------------------------
+
+    public function sendWithSendmail()
+    {
+        // _validate_email_for_shell() below accepts by reference,
+        // so this needs to be assigned to a variable
+        $from = $this->cleanEmail($this->headers['From']);
+        if ($this->validateEmailForShell($from))
+        {
+            $from = '-f '.$from;
+        }
+        else
+        {
+            $from = '';
+        }
+
+        // is popen() enabled?
+        if ( ! function_usable('popen')	OR false === ($fp = @popen($this->mailpath.' -oi '.$from.' -t', 'w')))
+        {
+            // server probably has popen disabled, so nothing we can do to get a verbose error.
+            return false;
+        }
+
+        fputs($fp, $this->headerString);
+        fputs($fp, $this->finalBody);
+
+        $status = pclose($fp);
+
+        if ($status !== 0)
+        {
+            $this->setErrorMessage('lang:email_exit_status', $status);
+            $this->setErrorMessage('lang:email_no_socket');
+            return false;
+        }
+
+        return true;
+    }
+
+    //--------------------------------------------------------------------
+
+    public function sendWithSmtp()
+    {
+        if ($this->config->SMTPHost === '')
+        {
+            $this->setErrorMessage('lang:email_no_hostname');
+            return FALSE;
+        }
+
+        if ( ! $this->SMTPConnect() OR ! $this->SMTPAuthenticate())
+        {
+            return FALSE;
+        }
+
+        if ( ! $this->sendCommand('from', $this->cleanEmail($this->headers['From'])))
+        {
+            $this->SMTPEnd();
+            return FALSE;
+        }
+
+        foreach ($this->recipients as $val)
+        {
+            if ( ! $this->sendCommand('to', $val))
+            {
+                $this->SMTPEnd();
+                return FALSE;
+            }
+        }
+
+        if (count($this->message->getCC()) > 0)
+        {
+            foreach ($this->message->getCC() as $val)
+            {
+                if ($val !== '' && ! $this->sendCommand('to', $val))
+                {
+                    $this->SMTPEnd();
+                    return FALSE;
+                }
+            }
+        }
+
+        if (count($this->message->getBCC()) > 0)
+        {
+            foreach ($this->message->getBCC() as $val)
+            {
+                if ($val !== '' && ! $this->sendCommand('to', $val))
+                {
+                    $this->SMTPEnd();
+                    return FALSE;
+                }
+            }
+        }
+
+        if ( ! $this->sendCommand('data'))
+        {
+            $this->SMTPEnd();
+            return FALSE;
+        }
+
+        // perform dot transformation on any lines that begin with a dot
+        $this->sendData($this->headerString.preg_replace('/^\./m', '..$1', $this->finalBody));
+
+        $this->sendData('.');
+
+        $reply = $this->getSMTPData();
+        $this->setErrorMessage($reply);
+
+        $this->SMTPEnd();
+
+        if (strpos($reply, '250') !== 0)
+        {
+            $this->setErrorMessage('lang:email_smtp_error', $reply);
+            return false;
+        }
+
+        return true;
+    }
+
+    //--------------------------------------------------------------------
+
+    /**
+     * SMTP End
+     *
+     * Shortcut to send RSET or QUIT depending on keepalive
+     */
+    protected function SMTPEnd()
+    {
+        $this->SMTPKeepalive
+            ? $this->sendCommand('reset')
+            : $this->sendCommand('quit');
+    }
+
+    //--------------------------------------------------------------------
+
+    protected function SMTPConnect()
+    {
+        if (is_resource($this->SMTPConnect)
+        {
+            return TRUE;
+        }
+
+        $ssl = ($this->SMTPCrypto === 'ssl') ? 'ssl://' : '';
+
+        $this->SMTPConnect = fsockopen($ssl.$this->SMTPHost,
+            $this->SMTPPort,
+            $errno,
+            $errstr,
+            $this->SMTPTimeout);
+
+        if ( ! is_resource($this->SMTPConnect))
+        {
+            $this->setErrorMessage(lang('email.smtpError'. $errno.' '.$errstr));
+            return FALSE;
+        }
+
+        stream_set_timeout($this->SMTPConnect, $this->SMTPTimeout);
+        $this->setErrorMessage($this->getSMTPData());
+
+        if ($this->SMTPCrypto === 'tls')
+        {
+            $this->sendCommand('hello');
+            $this->sendCommand('starttls');
+
+            $crypto = stream_socket_enable_crypto($this->SMTPConnect, true, STREAM_CRYPTO_METHOD_TLS_CLIENT);
+
+            if ($crypto !== true)
+            {
+                $this->setErrorMessage(lang('email.smtp_error'. $this->_get_smtp_data()));
+                return false;
+            }
+        }
+
+        return $this->sendCommand('hello');
+    }
+
+    //--------------------------------------------------------------------
+
+    /**
+     * Send SMTP Command
+     *
+     * @param string $cmd
+     * @param string $data
+     *
+     * @return bool
+     */
+    protected function sendCommand(string $cmd, string $data): bool
+    {
+        switch ($cmd)
+        {
+            case 'hello' :
+
+                if ($this->SMTPAuth OR $this->getEncoding() === '8bit')
+                {
+                    $this->sendData('EHLO '.$this->getHostname());
+                }
+                else
+                {
+                    $this->sendData('HELO '.$this->getHostname());
+                }
+
+                $resp = 250;
+                break;
+            case 'starttls'	:
+
+                $this->sendData('STARTTLS');
+                $resp = 220;
+                break;
+            case 'from' :
+
+                $this->sendData('MAIL FROM:<'.$data.'>');
+                $resp = 250;
+                break;
+            case 'to' :
+
+                if ($this->dsn)
+                {
+                    $this->sendData('RCPT TO:<'.$data.'> NOTIFY=SUCCESS,DELAY,FAILURE ORCPT=rfc822;'.$data);
+                }
+                else
+                {
+                    $this->sendData('RCPT TO:<'.$data.'>');
+                }
+
+                $resp = 250;
+                break;
+            case 'data'	:
+
+                $this->sendData('DATA');
+                $resp = 354;
+                break;
+            case 'reset':
+
+                $this->sendData('RSET');
+                $resp = 250;
+                break;
+            case 'quit'	:
+
+                $this->sendData('QUIT');
+                $resp = 221;
+                break;
+        }
+
+        $reply = $this->getSMTPData();
+
+        $this->debugMsg[] = '<pre>'.$cmd.': '.$reply.'</pre>';
+
+        if ((int) mb_substr($reply, 0, 3) !== $resp)
+        {
+            $this->setErrorMessage(lang('email.smtpError'. $reply));
+            return false;
+        }
+
+        if ($cmd === 'quit')
+        {
+            fclose($this->SMTPConnect);
+        }
+
+        return true;
+    }
+
+    //--------------------------------------------------------------------
+
+    /**
+     * Get Hostname
+     *
+     * There are only two legal types of hostname - either a fully
+     * qualified domain name (eg: "mail.example.com") or an IP literal
+     * (eg: "[1.2.3.4]").
+     *
+     * @link	https://tools.ietf.org/html/rfc5321#section-2.3.5
+     * @link	http://cbl.abuseat.org/namingproblems.html
+     * @return	string
+     */
+    protected function getHostname()
+    {
+        if (isset($_SERVER['SERVER_NAME']))
+        {
+            return $_SERVER['SERVER_NAME'];
+        }
+
+        return isset($_SERVER['SERVER_ADDR']) ? '['.$_SERVER['SERVER_ADDR'].']' : '[127.0.0.1]';
+    }
+
+    //--------------------------------------------------------------------
+
+    /**
      * Resets the state to blank, ready for a new email. Useful when
      * sending emails in a loop and you need to make sure that the
      * email is reset.
@@ -942,7 +1378,37 @@ class MailHandler extends BaseHandler
      */
     public function reset(bool $clear_attachments = true)
     {
+        $this->finalBody    = '';
+        $this->headerString = '';
+        $this->recipients   = [];
+        $this->headers      = [];
+        $this->debugMsg     = [];
 
+        $this->setHeader('Date', $this->setDate());
+
+        if ($clear_attachments !== false)
+        {
+            $this->attachments = [];
+        }
+
+        return $this;
+    }
+
+    //--------------------------------------------------------------------
+
+    /**
+     * Set RFC 822 Date
+     *
+     * @return string
+     */
+    protected function setDate(): string
+    {
+        $timezone = date('Z');
+        $operator = ($timezone[0] === '-') ? '-' : '+';
+        $timezone = abs($timezone);
+        $timezone = floor($timezone/3600) * 100 + ($timezone % 3600) / 60;
+
+        return sprintf('%s %s%04d', date('D, j M Y H:i:s'), $operator, $timezone);
     }
 
     //--------------------------------------------------------------------
