@@ -480,7 +480,7 @@ class MailHandler extends BaseHandler
             return preg_match('/\<(.*)\>/', $email, $match) ? $match[1] : $email;
         }
 
-        $cleanEmail = array();
+        $cleanEmail = [];
 
         foreach ($email as $addy)
         {
@@ -531,7 +531,7 @@ class MailHandler extends BaseHandler
     {
         $from = $this->headers['Return-Path'] ?? $this->headers['From'];
 
-        $from = str_replace(array('>', '<'), '', $from);
+        $from = str_replace(['>', '<'], '', $from);
         return '<'.uniqid('').strstr($from, '@').'>';
     }
 
@@ -1022,7 +1022,7 @@ class MailHandler extends BaseHandler
      */
     protected function unwrapSpecials()
     {
-        $this->finalBody = preg_replace_callback('/\{unwrap\}(.*?)\{\/unwrap\}/si', array($this, 'removeNLCallback'), $this->finalBody);
+        $this->finalBody = preg_replace_callback('/\{unwrap\}(.*?)\{\/unwrap\}/si', [$this, 'removeNLCallback'], $this->finalBody);
     }
 
     //--------------------------------------------------------------------
@@ -1038,7 +1038,7 @@ class MailHandler extends BaseHandler
     {
         if (strpos($matches[1], "\r") !== FALSE OR strpos($matches[1], "\n") !== FALSE)
         {
-            $matches[1] = str_replace(array("\r\n", "\r", "\n"), '', $matches[1]);
+            $matches[1] = str_replace(["\r\n", "\r", "\n"], '', $matches[1]);
         }
 
         return $matches[1];
@@ -1218,7 +1218,7 @@ class MailHandler extends BaseHandler
 
     protected function SMTPConnect()
     {
-        if (is_resource($this->SMTPConnect)
+        if (is_resource($this->SMTPConnect))
         {
             return TRUE;
         }
