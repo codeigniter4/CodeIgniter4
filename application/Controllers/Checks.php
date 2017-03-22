@@ -153,8 +153,6 @@ class Checks extends Controller
                     ->setSubject('Checking In')
                     ->send();
 
-        ddd($mail);
-
         if ($mail->hasErrors())
         {
             die($mail->getDebugger());

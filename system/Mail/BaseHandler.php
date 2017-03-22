@@ -51,7 +51,7 @@ abstract class BaseHandler implements MailHandlerInterface
      * @link    http://www.ietf.org/rfc/rfc822.txt
      * @var    string    "\r\n" or "\n"
      */
-    public $newline = "\n";            // Default newline. "\r\n" or "\n" (Use "\r\n" to comply with RFC 822)
+    public $newline = "\r\n";            // Default newline. "\r\n" or "\n" (Use "\r\n" to comply with RFC 822)
 
     /**
      * CRLF character sequence
