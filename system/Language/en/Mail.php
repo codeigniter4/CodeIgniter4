@@ -57,4 +57,6 @@ return [
     'smtpAuthPw' => 'Failed to authenticate password. Error: ',
     'smtpDataFailure' => 'Unable to send data: ',
     'exitStatus' => 'Exit status code: ',
+	'attachmentMissing' => 'Unable to locate the following email attachment: %s',
+	'attachmentUnreadable' => 'Unable to open this attachment: %s',
 ];
