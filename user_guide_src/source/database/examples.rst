@@ -87,7 +87,7 @@ Standard Insert
 
 	$sql = "INSERT INTO mytable (title, name) VALUES (".$db->escape($title).", ".$db->escape($name).")";
 	$db->query($sql);
-	echo $this->db->getAffectedRows();
+	echo $db->getAffectedRows();
 
 Query Builder Query
 ===================
@@ -95,7 +95,7 @@ Query Builder Query
 The :doc:`Query Builder Pattern <query_builder>` gives you a simplified
 means of retrieving data::
 
-	$query = $this->db->table('table_name')->get();
+	$query = $db->table('table_name')->get();
 	
 	foreach ($query->getResult() as $row)
 	{
@@ -117,5 +117,5 @@ Query Builder Insert
 		'date' => $date
 	);
 	
-	$this->db->table('mytable')->insert($data);  // Produces: INSERT INTO mytable (title, name, date) VALUES ('{$title}', '{$name}', '{$date}')
+	$db->table('mytable')->insert($data);  // Produces: INSERT INTO mytable (title, name, date) VALUES ('{$title}', '{$name}', '{$date}')
 
