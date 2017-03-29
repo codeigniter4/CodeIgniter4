@@ -13,9 +13,16 @@ class Validation
 	 * @var array
 	 */
 	public $ruleSets = [
-		\CodeIgniter\Validation\Rules::class,
-		\CodeIgniter\Validation\FileRules::class,
-		\CodeIgniter\Validation\CreditCardRules::class,
+		\CodeIgniter\Validation\Rules\Required::class,
+		\CodeIgniter\Validation\Rules\AlphaFormat::class,
+		\CodeIgniter\Validation\Rules\DateTimeFormat::class,
+		\CodeIgniter\Validation\Rules\NumberFormat::class,
+		\CodeIgniter\Validation\Rules\Format::class,
+		\CodeIgniter\Validation\Rules\Comparison::class,
+		\CodeIgniter\Validation\Rules\DatabaseDependency::class,
+		\CodeIgniter\Validation\Rules\Length::class,
+		\CodeIgniter\Validation\Rules\File::class,
+		\CodeIgniter\Validation\Rules\CreditCard::class,
 	];
 
 	/**

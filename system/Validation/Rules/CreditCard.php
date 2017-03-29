@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Validation;
+<?php namespace CodeIgniter\Validation\Rules;
 
 /**
  * CodeIgniter
@@ -45,7 +45,7 @@
  *
  * @package CodeIgniter\Validation
  */
-class CreditCardRules
+class CreditCard
 {
     /**
      * The cards that we support, with the defining details:

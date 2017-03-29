@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Validation;
+<?php namespace CodeIgniter\Validation\Rules;
 
 /**
  * CodeIgniter
@@ -39,7 +39,7 @@
 use CodeIgniter\HTTP\RequestInterface;
 use Config\Services;
 
-class FileRules
+class File
 {
     /**
      * Request instance. So we can get access to the files.
