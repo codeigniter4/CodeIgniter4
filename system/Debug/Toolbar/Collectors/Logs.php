@@ -77,7 +77,7 @@ class Logs extends BaseCollector
 	 */
 	public function display(): string
 	{
-        $parser = \Config\Services::parser(BASEPATH.'Debug/Toolbar/Views/');
+		$parser = \Config\Services::parser(BASEPATH.'Debug/Toolbar/Views/');
 
 		$logger = Services::logger(true);
 		$logs = $logger->logCache;
@@ -88,9 +88,9 @@ class Logs extends BaseCollector
 		}
 
 		return $parser->setData([
-                'logs' => $logs
-            ])
-            ->render('_logs.tpl');
+				'logs' => $logs
+		])
+			->render('_logs.tpl');
 	}
 
 	//--------------------------------------------------------------------

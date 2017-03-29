@@ -121,21 +121,21 @@ class Connection extends BaseConnection implements ConnectionInterface
 			if ($this->strictOn)
 			{
 				$this->mysqli->options(MYSQLI_INIT_COMMAND,
-					'SET SESSION sql_mode = CONCAT(@@sql_mode, ",", "STRICT_ALL_TABLES")');
+						'SET SESSION sql_mode = CONCAT(@@sql_mode, ",", "STRICT_ALL_TABLES")');
 			}
 			else
 			{
 				$this->mysqli->options(MYSQLI_INIT_COMMAND,
-					'SET SESSION sql_mode =
-					REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(
-					@@sql_mode,
-					"STRICT_ALL_TABLES,", ""),
-					",STRICT_ALL_TABLES", ""),
-					"STRICT_ALL_TABLES", ""),
-					"STRICT_TRANS_TABLES,", ""),
-					",STRICT_TRANS_TABLES", ""),
-					"STRICT_TRANS_TABLES", "")'
-				);
+						'SET SESSION sql_mode =
+						REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(
+												@@sql_mode,
+												"STRICT_ALL_TABLES,", ""),
+											",STRICT_ALL_TABLES", ""),
+										"STRICT_ALL_TABLES", ""),
+									"STRICT_TRANS_TABLES,", ""),
+								",STRICT_TRANS_TABLES", ""),
+							"STRICT_TRANS_TABLES", "")'
+						);
 			}
 		}
 
@@ -155,7 +155,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 					if ($this->encrypt['ssl_verify'])
 					{
 						defined('MYSQLI_OPT_SSL_VERIFY_SERVER_CERT') &&
-						$this->mysqli->options(MYSQLI_OPT_SSL_VERIFY_SERVER_CERT, true);
+							$this->mysqli->options(MYSQLI_OPT_SSL_VERIFY_SERVER_CERT, true);
 					}
 					// Apparently (when it exists), setting MYSQLI_OPT_SSL_VERIFY_SERVER_CERT
 					// to FALSE didn't do anything, so PHP 5.6.16 introduced yet another
@@ -171,26 +171,26 @@ class Connection extends BaseConnection implements ConnectionInterface
 
 				$client_flags |= MYSQLI_CLIENT_SSL;
 				$this->mysqli->ssl_set(
-					isset($ssl['key']) ? $ssl['key'] : null,
-					isset($ssl['cert']) ? $ssl['cert'] : null,
-					isset($ssl['ca']) ? $ssl['ca'] : null,
-					isset($ssl['capath']) ? $ssl['capath'] : null,
-					isset($ssl['cipher']) ? $ssl['cipher'] : null
-				);
+						isset($ssl['key']) ? $ssl['key'] : null,
+						isset($ssl['cert']) ? $ssl['cert'] : null,
+						isset($ssl['ca']) ? $ssl['ca'] : null,
+						isset($ssl['capath']) ? $ssl['capath'] : null,
+						isset($ssl['cipher']) ? $ssl['cipher'] : null
+						);
 			}
 		}
 
 		if ($this->mysqli->real_connect($hostname, $this->username, $this->password, $this->database, $port, $socket,
-			$client_flags)
-		)
+					$client_flags)
+		   )
 		{
 			// Prior to version 5.7.3, MySQL silently downgrades to an unencrypted connection if SSL setup fails
 			if (
-				($client_flags & MYSQLI_CLIENT_SSL)
-				&& version_compare($this->mysqli->client_info, '5.7.3', '<=')
-				&& empty($this->mysqli->query("SHOW STATUS LIKE 'ssl_cipher'")
-				                      ->fetch_object()->Value)
-			)
+					($client_flags & MYSQLI_CLIENT_SSL)
+					&& version_compare($this->mysqli->client_info, '5.7.3', '<=')
+					&& empty($this->mysqli->query("SHOW STATUS LIKE 'ssl_cipher'")
+						->fetch_object()->Value)
+			   )
 			{
 				$this->mysqli->close();
 				$message = 'MySQLi was configured for an SSL connection, but got an unencrypted connection instead!';
@@ -239,15 +239,15 @@ class Connection extends BaseConnection implements ConnectionInterface
 
 	//--------------------------------------------------------------------
 
-    /**
-     * Close the database connection.
-     */
-    protected function _close()
-    {
-        $this->connID->close();
-    }
+	/**
+	 * Close the database connection.
+	 */
+	protected function _close()
+	{
+		$this->connID->close();
+	}
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
 	/**
 	 * Select a specific database table to use.
@@ -288,9 +288,9 @@ class Connection extends BaseConnection implements ConnectionInterface
 		}
 
 		if (empty($this->mysqli))
-        {
-            $this->initialize();
-        }
+		{
+			$this->initialize();
+		}
 
 		return $this->dataCache['version'] = $this->mysqli->server_info;
 	}
@@ -420,9 +420,9 @@ class Connection extends BaseConnection implements ConnectionInterface
 			$retval[$i]->name		= $query[$i]->Field;
 
 			sscanf($query[$i]->Type, '%[a-z](%d)',
-				$retval[$i]->type,
-				$retval[$i]->max_length
-			);
+					$retval[$i]->type,
+					$retval[$i]->max_length
+				  );
 
 			$retval[$i]->default		= $query[$i]->Default;
 			$retval[$i]->primary_key	= (int) ($query[$i]->Key === 'PRI');
@@ -498,9 +498,9 @@ class Connection extends BaseConnection implements ConnectionInterface
 		if ( ! empty($this->mysqli->connect_errno))
 		{
 			return array(
-				'code' => $this->mysqli->connect_errno,
-				'message' => $this->_mysqli->connect_error
-			);
+					'code' => $this->mysqli->connect_errno,
+					'message' => $this->_mysqli->connect_error
+					);
 		}
 
 		return array('code' => $this->connID->errno, 'message' => $this->connID->error);
@@ -520,53 +520,53 @@ class Connection extends BaseConnection implements ConnectionInterface
 
 	//--------------------------------------------------------------------
 
-    /**
-     * Begin Transaction
-     *
-     * @return	bool
-     */
-    protected function _transBegin():bool
-    {
-        $this->connID->autocommit(false);
+	/**
+	 * Begin Transaction
+	 *
+	 * @return	bool
+	 */
+	protected function _transBegin():bool
+	{
+		$this->connID->autocommit(false);
 
-        return $this->connID->begin_transaction();
-    }
+		return $this->connID->begin_transaction();
+	}
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
-    /**
-     * Commit Transaction
-     *
-     * @return	bool
-     */
-    protected function _transCommit(): bool
-    {
-        if ($this->connID->commit())
-        {
-            $this->connID->autocommit(true);
-            return true;
-        }
+	/**
+	 * Commit Transaction
+	 *
+	 * @return	bool
+	 */
+	protected function _transCommit(): bool
+	{
+		if ($this->connID->commit())
+		{
+			$this->connID->autocommit(true);
+			return true;
+		}
 
-        return false;
-    }
+		return false;
+	}
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
-    /**
-     * Rollback Transaction
-     *
-     * @return	bool
-     */
-    protected function _transRollback(): bool
-    {
-        if ($this->connID->rollback())
-        {
-            $this->connID->autocommit(true);
-            return true;
-        }
+	/**
+	 * Rollback Transaction
+	 *
+	 * @return	bool
+	 */
+	protected function _transRollback(): bool
+	{
+		if ($this->connID->rollback())
+		{
+			$this->connID->autocommit(true);
+			return true;
+		}
 
-        return false;
-    }
+		return false;
+	}
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 }

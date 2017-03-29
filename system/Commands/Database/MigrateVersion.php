@@ -47,85 +47,85 @@ use Config\Services;
  */
 class MigrateVersion extends BaseCommand
 {
-    protected $group = 'Database';
+	protected $group = 'Database';
 
-    /**
-     * The Command's name
-     *
-     * @var string
-     */
-    protected $name = 'migrate:version';
+	/**
+	 * The Command's name
+	 *
+	 * @var string
+	 */
+	protected $name = 'migrate:version';
 
-    /**
-     * the Command's short description
-     *
-     * @var string
-     */
-    protected $description = 'Migrates the database up or down to get to the specified version.';
+	/**
+	 * the Command's short description
+	 *
+	 * @var string
+	 */
+	protected $description = 'Migrates the database up or down to get to the specified version.';
 
-    /**
-     * the Command's usage
-     *
-     * @var string
-     */
-    protected $usage = 'migrate:version [version_number] [Options]';
+	/**
+	 * the Command's usage
+	 *
+	 * @var string
+	 */
+	protected $usage = 'migrate:version [version_number] [Options]';
 
-    /**
-     * the Command's Arguments
-     *
-     * @var array
-     */
-    protected $arguments = array(
-        'version_number' => 'The version number to migrate'
-    );
+	/**
+	 * the Command's Arguments
+	 *
+	 * @var array
+	 */
+	protected $arguments = array(
+			'version_number' => 'The version number to migrate'
+			);
 
-    /**
-     * the Command's Options
-     *
-     * @var array
-     */
-    protected $options = array(
-        '-n'   => 'Set migration namespace',
-        '-g'   => 'Set database group'
-    );
+	/**
+	 * the Command's Options
+	 *
+	 * @var array
+	 */
+	protected $options = array(
+			'-n'   => 'Set migration namespace',
+			'-g'   => 'Set database group'
+			);
 
-    /**
-     * Migrates the database up or down to get to the specified version.
-     */
-    public function run(array $params=[])
-    {
-        $runner = Services::migrations();
+	/**
+	 * Migrates the database up or down to get to the specified version.
+	 */
+	public function run(array $params=[])
+	{
+		$runner = Services::migrations();
 
-        // Get the version number
-        $version = array_shift($params);
+		// Get the version number
+		$version = array_shift($params);
 
-        if (is_null($version))
-        {
-            $version = CLI::prompt(lang('Migrations.version'));
-        }
+		if (is_null($version))
+		{
+			$version = CLI::prompt(lang('Migrations.version'));
+		}
 
-        if (is_null($version))
-        {
-            CLI::error(lang('Migrations.invalidVersion'));
-            exit();
-        }
+		if (is_null($version))
+		{
+			CLI::error(lang('Migrations.invalidVersion'));
+			exit();
+		}
 
-        CLI::write(sprintf(lang('Migrations.migToVersionPH'), $version), 'yellow');
-        
-        $namespace = CLI::getOption('n');
-        $group =    CLI::getOption('g'); 
-        try {
-            $runner->version($version, $namespace, $group);
-            $messages = $runner->getCliMessages();
-            foreach ($messages as $message) {
-                CLI::write($message); 
-            }
-        }
-        catch (\Exception $e)
-        {
-            $this->showError($e);
-        }
+		CLI::write(sprintf(lang('Migrations.migToVersionPH'), $version), 'yellow');
 
-        CLI::write('Done');
-    }
+		$namespace = CLI::getOption('n');
+		$group =    CLI::getOption('g'); 
+		try {
+			$runner->version($version, $namespace, $group);
+			$messages = $runner->getCliMessages();
+			foreach ($messages as $message) {
+				CLI::write($message); 
+			}
+		}
+		catch (\Exception $e)
+		{
+			$this->showError($e);
+		}
+
+		CLI::write('Done');
+	}
 }

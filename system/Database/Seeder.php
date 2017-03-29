@@ -90,7 +90,7 @@ class Seeder
 	 */
 	public function __construct(BaseConfig $config, BaseConnection $db = null)
 	{
-	    $this->seedPath = $config->filesPath ?? APPPATH.'Database/';
+		$this->seedPath = $config->filesPath ?? APPPATH.'Database/';
 
 		if (empty($this->seedPath))
 		{
@@ -125,35 +125,35 @@ class Seeder
 	 */
 	public function call(string $class)
 	{
-	    if (empty($class))
-	    {
+		if (empty($class))
+		{
 			throw new \InvalidArgumentException('No Seeder was specified.');
-	    }
+		}
 
 		$path = str_replace('.php', '', $class).'.php';
 
-        // If we have namespaced class, simply try to load it.
-        if (strpos($class, '\\') !== false)
-        {
-            $seeder = new $class($this->config);
-        }
-        // Otherwise, try to load the class manually.
-        else
-        {
-            $path = $this->seedPath.$path;
+		// If we have namespaced class, simply try to load it.
+		if (strpos($class, '\\') !== false)
+		{
+			$seeder = new $class($this->config);
+		}
+		// Otherwise, try to load the class manually.
+		else
+		{
+			$path = $this->seedPath.$path;
 
-            if (! is_file($path))
-            {
-                throw new \InvalidArgumentException('The specified Seeder is not a valid file: '. $path);
-            }
+			if (! is_file($path))
+			{
+				throw new \InvalidArgumentException('The specified Seeder is not a valid file: '. $path);
+			}
 
-            if (! class_exists($class, false))
-            {
-                require $path;
-            }
+			if (! class_exists($class, false))
+			{
+				require $path;
+			}
 
-            $seeder = new $class($this->config);
-        }
+			$seeder = new $class($this->config);
+		}
 
 		$seeder->run();
 
@@ -192,7 +192,7 @@ class Seeder
 	 */
 	public function setSilent(bool $silent)
 	{
-	    $this->silent = $silent;
+		$this->silent = $silent;
 
 		return $this;
 	}

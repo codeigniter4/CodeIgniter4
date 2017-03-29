@@ -120,7 +120,7 @@ class Query implements QueryInterface
 	 */
 	public function __construct(&$db)
 	{
-	    $this->db = $db;
+		$this->db = $db;
 	}
 
 	//--------------------------------------------------------------------
@@ -157,7 +157,7 @@ class Query implements QueryInterface
 	 */
 	public function setBinds(array $binds)
 	{
-	    $this->binds = $binds;
+		$this->binds = $binds;
 
 		return $this;
 	}
@@ -304,8 +304,8 @@ class Query implements QueryInterface
 	public function isWriteType(): bool
 	{
 		return (bool)preg_match(
-			'/^\s*"?(SET|INSERT|UPDATE|DELETE|REPLACE|CREATE|DROP|TRUNCATE|LOAD|COPY|ALTER|RENAME|GRANT|REVOKE|LOCK|UNLOCK|REINDEX)\s/i',
-			$this->originalQueryString);
+				'/^\s*"?(SET|INSERT|UPDATE|DELETE|REPLACE|CREATE|DROP|TRUNCATE|LOAD|COPY|ALTER|RENAME|GRANT|REVOKE|LOCK|UNLOCK|REINDEX)\s/i',
+				$this->originalQueryString);
 	}
 
 	//--------------------------------------------------------------------
@@ -336,7 +336,7 @@ class Query implements QueryInterface
 	 */
 	public function getOriginalQuery()
 	{
-	    return $this->originalQueryString;
+		return $this->originalQueryString;
 	}
 
 	//--------------------------------------------------------------------
@@ -351,9 +351,9 @@ class Query implements QueryInterface
 		$hasNamedBinds  = strpos($sql, ':') !== false;
 
 		if (empty($this->binds) || empty($this->bindMarker) ||
-		    (strpos($sql, $this->bindMarker) === false &&
-		     $hasNamedBinds === false)
-		)
+				(strpos($sql, $this->bindMarker) === false &&
+				 $hasNamedBinds === false)
+		   )
 		{
 			return;
 		}
@@ -405,24 +405,24 @@ class Query implements QueryInterface
 		{
 			$escapedValue = $this->db->escape($value);
 
-            // In order to correctly handle backlashes in saved strings
-            // we will need to preg_quote, so remove the wrapping escape characters
-            // otherwise it will get escaped.
-            if (is_array($value))
-            {
-                foreach ($value as &$item)
-                {
-                    $item = preg_quote($item);
-                }
+			// In order to correctly handle backlashes in saved strings
+			// we will need to preg_quote, so remove the wrapping escape characters
+			// otherwise it will get escaped.
+			if (is_array($value))
+			{
+				foreach ($value as &$item)
+				{
+					$item = preg_quote($item);
+				}
 
-                $escapedValue = '('.implode(',', $escapedValue).')';
-            }
-            else
-            {
-                $escapedValue = strpos($escapedValue, '\\') !== false
-                    ? preg_quote(trim($escapedValue, $this->db->escapeChar))
-                    : $escapedValue;
-            }
+				$escapedValue = '('.implode(',', $escapedValue).')';
+			}
+			else
+			{
+				$escapedValue = strpos($escapedValue, '\\') !== false
+					? preg_quote(trim($escapedValue, $this->db->escapeChar))
+					: $escapedValue;
+			}
 
 			$sql = preg_replace('/:'.$placeholder.'(?!\w)/', $escapedValue, $sql);
 		}
@@ -446,10 +446,10 @@ class Query implements QueryInterface
 		if ($c = preg_match_all("/'[^']*'/i", $sql, $matches))
 		{
 			$c = preg_match_all('/'.preg_quote($this->bindMarker, '/').'/i',
-				str_replace($matches[0],
-					str_replace($this->bindMarker, str_repeat(' ', $ml), $matches[0]),
-					$sql, $c),
-				$matches, PREG_OFFSET_CAPTURE);
+					str_replace($matches[0],
+						str_replace($this->bindMarker, str_repeat(' ', $ml), $matches[0]),
+						$sql, $c),
+					$matches, PREG_OFFSET_CAPTURE);
 
 			// Bind values' count must match the count of markers in the query
 			if ($bindCount !== $c)
@@ -459,7 +459,7 @@ class Query implements QueryInterface
 		}
 		// Number of binds must match bindMarkers in the string.
 		else if (($c = preg_match_all('/'.preg_quote($this->bindMarker, '/').'/i', $sql, $matches,
-				PREG_OFFSET_CAPTURE)) !== $bindCount)
+						PREG_OFFSET_CAPTURE)) !== $bindCount)
 		{
 			return $sql;
 		}
@@ -488,7 +488,7 @@ class Query implements QueryInterface
 	 */
 	public function __toString()
 	{
-	    return $this->getQuery();
+		return $this->getQuery();
 	}
 
 	//--------------------------------------------------------------------
