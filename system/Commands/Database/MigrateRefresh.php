@@ -65,6 +65,31 @@ class MigrateRefresh extends BaseCommand
     protected $description = 'Does a rollback followed by a latest to refresh the current state of the database.';
 
     /**
+     * the Command's usage
+     *
+     * @var string
+     */
+    protected $usage = 'migrate:refresh [Options]';
+
+    /**
+     * the Command's Arguments
+     *
+     * @var array
+     */
+    protected $arguments = [];
+
+    /**
+     * the Command's Options
+     *
+     * @var array
+     */
+    protected $options = array(
+        '-n'   => 'Set migration namespace',
+        '-g'   => 'Set database group',
+        '-all' => 'Set latest for all namespace, will ignore (-n) option'
+    );
+
+    /**
      * Does a rollback followed by a latest to refresh the current state
      * of the database.
      */

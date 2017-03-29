@@ -151,7 +151,7 @@ class IncomingRequest extends Request
 		$this->body   = $body;
 		$this->config = $config;
 
-		parent::__construct($config, $uri);
+		parent::__construct($config);
 
 		$this->populateHeaders();
 

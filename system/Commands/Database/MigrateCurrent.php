@@ -63,6 +63,30 @@ class MigrateCurrent extends BaseCommand
      */
     protected $description = 'Migrates us up or down to the version specified as $currentVersion in the migrations config file.';
 
+     /**
+     * the Command's usage
+     *
+     * @var string
+     */
+    protected $usage = 'migrate:current [options]';
+
+    /**
+     * the Command's Arguments
+     *
+     * @var array
+     */
+    protected $arguments = [];
+
+    /**
+     * the Command's Options
+     *
+     * @var array
+     */
+    protected $options = array(
+        '-g' => 'Set database group'
+    );
+
+
     /**
      * Migrates us up or down to the version specified as $currentVersion
      * in the migrations config file.

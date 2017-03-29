@@ -35,12 +35,31 @@ for the information it needs to run correctly::
     > php ci.php migrate:version
     > Version?
 
+******************
+Using Help Command
+******************
+
+You can get help about any CLI command using the help command as follows::
+
+    > php ci.php help db:seed
+
 *********************
 Creating New Commands
 *********************
 
 You can very easily create new commands to use in your own development. Each class must be in its own file,
 and must extend ``CodeIgniter\CLI\BaseCommand``, and implement the ``run()`` method.
+
+The following properties should be used in order to get listed in CLI commands and to add help functionality to your command:
+
+* ($group): a string to describe the group the command is lumped under when listing commands. For example (Database)
+* ($name): a string to describe the command's name. For example (migrate:create)
+* ($description): a string to describe the command. For example (Creates a new migration file.)
+* ($usage): a string to describe the command usage. For example (migrate:create [migration_name] [Options])
+* ($arguments): an array of strings to describe each command argument. For example ('migration_name' => 'The migration file name')
+* ($options): an array of strings to describe each command option. For example ('-n' => 'Set migration namespace')
+
+**Help description will be automatically generated according to the above parameters.**
 
 File Location
 =============
@@ -49,9 +68,8 @@ Commands must be stored within a directory named **Commands**. However, that dir
 that the :doc:`Autoloader </concepts/autoloader>` can locate it. This could be in **/application/Commands**, or
 a directory that you keep commands in to use in all of your project development, like **Acme/Commands**.
 
-.. note:: When the commands are executed, the full CodeIgniter cli environment has been loaded, making
-    it possible to get environment information, path information, and to use any of the tools you would
-    use when making a Controller.
+.. note:: When the commands are executed, the full CodeIgniter cli environment has been loaded, making it
+ possible to get environment information, path information, and to use any of the tools you would use when making a Controller.
 
 An Example Command
 ==================
@@ -128,7 +146,7 @@ be familiar with when creating your own commands. It also has a :doc:`Logger </g
 .. php:class:: CodeIgniter\CLI\BaseCommand
 
     .. php:method:: call(string $command[, array $params=[] ])
-    
+
         :param string $command: The name of another command to call.
         :param array $params: Additional cli arguments to make available to that command.
 
@@ -138,15 +156,37 @@ be familiar with when creating your own commands. It also has a :doc:`Logger </g
         $this->call('command_two', $params);
 
     .. php:method:: showError(\Exception $e)
-    
+
         :param Exception $e: The exception to use for error reporting.
 
         A convenience method to maintain a consistent and clear error output to the cli::
 
-        try {
+            try
+            {
             . . .
-        }
-        catch (\Exception $e)
-        {
+            }
+            catch (\Exception $e)
+            {
             $this->showError($e);
-        }
+            }
+
+    .. php:method:: showHelp()
+
+        A method to show command help: (usage,arguments,description,options)
+
+    .. php:method:: getPad($array, $pad)
+
+        :param Exception $array: The  $key => $value array.
+        :param Exception $pad: The pad spaces.
+
+        A method to calculate padding for $key => $value array output. The padding can be used to output a will formatted table in CLI::
+
+            $pad = $this->getPad($this->options, 6);
+            foreach ($this->options as $option => $description)
+            {
+                    CLI::write($tab . CLI::color(str_pad($option, $pad), 'green') . $description, 'yellow');
+            }
+
+            // Output will be
+            -n                  Set migration namespace
+            -r                  override file

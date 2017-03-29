@@ -73,7 +73,7 @@ class CommandRunner extends Controller
 	{
 		$command = array_shift($params);
 
-		$this->createCommandList($command);
+		$this->createCommandList();
 
 		if (is_null($command))
 		{

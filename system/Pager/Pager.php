@@ -309,7 +309,7 @@ class Pager implements PagerInterface
 
 		$uri = $this->groups[$group]['uri'];
 
-		$uri->setQuery('page='.$page);
+		$uri->addQuery('page', $page);
 
 		return $returnObject === true
 			? $uri
@@ -443,6 +443,11 @@ class Pager implements PagerInterface
 			'perPage'     => $this->config->perPage,
 			'pageCount'   => 1,
 		];
+
+		if($_GET)
+		{
+			$this->groups[$group]['uri'] = $this->groups[$group]['uri']->setQueryArray($_GET);
+		}
 	}
 
 	//--------------------------------------------------------------------
