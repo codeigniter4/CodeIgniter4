@@ -13,6 +13,7 @@ Library Reference
     localization
     curlrequest
     incomingrequest
+    mail
     message
     pagination
     request

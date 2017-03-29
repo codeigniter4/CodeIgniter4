@@ -44,68 +44,6 @@ class Checks extends Controller
 		die(var_dump($result));
 	}
 
-
-	public function forms()
-	{
-		helper('form');
-
-		var_dump(form_open());
-	}
-
-	public function api()
-	{
-		$data = array(
-			"total_users" => 3,
-			"users" => array(
-				array(
-					"id" => 1,
-					"name" => "Nitya",
-					"address" => array(
-						"country" => "India",
-						"city" => "Kolkata",
-						"zip" => 700102,
-					)
-				),
-				array(
-					"id" => 2,
-					"name" => "John",
-					"address" => array(
-						"country" => "USA",
-						"city" => "Newyork",
-						"zip" => "NY1234",
-					)
-				),
-				array(
-					"id" => 3,
-					"name" => "Viktor",
-					"address" => array(
-						"country" => "Australia",
-						"city" => "Sydney",
-						"zip" => 123456,
-					)
-				),
-			)
-		);
-
-		return $this->respond($data);
-	}
-
-	public function db()
-	{
-		$db = Database::connect();
-		$db->initialize();
-
-		$query = $db->prepare(function($db){
-			return $db->table('user')->insert([
-				'name' => 'a',
-				'email' => 'b@example.com',
-				'country' => 'x'
-			]);
-		});
-
-		$query->execute('foo', 'foo@example.com', 'US');
-	}
-
 	public function format()
 	{
 		echo '<pre>';
@@ -146,5 +84,80 @@ class Checks extends Controller
         echo $body;
     }
 
+
+    public function forms()
+    {
+        helper('form');
+
+        var_dump(form_open());
+    }
+
+    public function api()
+    {
+        $data = array(
+            "total_users" => 3,
+            "users" => array(
+                array(
+                    "id" => 1,
+                    "name" => "Nitya",
+                    "address" => array(
+                        "country" => "India",
+                        "city" => "Kolkata",
+                        "zip" => 700102,
+                    )
+                ),
+                array(
+                    "id" => 2,
+                    "name" => "John",
+                    "address" => array(
+                        "country" => "USA",
+                        "city" => "Newyork",
+                        "zip" => "NY1234",
+                    )
+                ),
+                array(
+                    "id" => 3,
+                    "name" => "Viktor",
+                    "address" => array(
+                        "country" => "Australia",
+                        "city" => "Sydney",
+                        "zip" => 123456,
+                    )
+                ),
+            )
+        );
+
+        return $this->respond($data);
+    }
+
+    public function db()
+    {
+        $db = Database::connect();
+        $db->initialize();
+
+        $query = $db->prepare(function($db){
+            return $db->table('user')->insert([
+                'name' => 'a',
+                'email' => 'b@example.com',
+                'country' => 'x'
+            ]);
+        });
+
+        $query->execute('foo', 'foo@example.com', 'US');
+    }
+
+    public function mail()
+    {
+        $mail = email(new \App\Mail\TestMail())
+                    ->setTo('foo@example.com', 'foo')
+                    ->setSubject('Checking In')
+                    ->send();
+
+        if ($mail->hasErrors())
+        {
+            die($mail->getDebugger());
+        }
+        ddd($mail);
+    }
 
 }

@@ -144,6 +144,33 @@ if (! function_exists('view_cell'))
 
 //--------------------------------------------------------------------
 
+if (! function_exists('email'))
+{
+    /**
+     * A convenience method for sending emails. Takes a
+     * Mail Message class as the only parameter that defines
+     * the message itself. Further revisions can be made
+     * through
+     *
+     * @param \CodeIgniter\Mail\BaseMessage $message
+     * @param string                        $group
+     *
+     * @return mixed
+     */
+    function email(\CodeIgniter\Mail\BaseMessage $message, string $group = null)
+    {
+        $config = new \Config\Mail();
+        $group  = $group ?? $config->group;
+
+        $handler = Services::mailer($group, $config, false);
+
+        $message = $message->setHandler($handler);
+        $message = $message->setDefaultFrom($config->from['email'], $config->from['name']);
+
+        return $message;
+    }
+}
+
 if ( ! function_exists('env'))
 {
     /**
@@ -845,3 +872,48 @@ if ( ! function_exists('slash_item'))
     }
 }
 //--------------------------------------------------------------------
+
+if ( ! function_exists('function_usable'))
+{
+    /**
+     * Function usable
+     *
+     * Executes a function_exists() check, and if the Suhosin PHP
+     * extension is loaded - checks whether the function that is
+     * checked might be disabled in there as well.
+     *
+     * This is useful as function_exists() will return FALSE for
+     * functions disabled via the *disable_functions* php.ini
+     * setting, but not for *suhosin.executor.func.blacklist* and
+     * *suhosin.executor.disable_eval*. These settings will just
+     * terminate script execution if a disabled function is executed.
+     *
+     * The above described behavior turned out to be a bug in Suhosin,
+     * but even though a fix was committed for 0.9.34 on 2012-02-12,
+     * that version is yet to be released. This function will therefore
+     * be just temporary, but would probably be kept for a few years.
+     *
+     * @link	http://www.hardened-php.net/suhosin/
+     * @param	string	$functionName	Function to check for
+     * @return	bool	TRUE if the function exists and is safe to call,
+     *			FALSE otherwise.
+     */
+    function function_usable($functionName)
+    {
+        static $suhosinFuncBlacklist;
+
+        if (function_exists($functionName))
+        {
+            if ( ! isset($suhosinFuncBlacklist))
+            {
+                $suhosinFuncBlacklist = extension_loaded('suhosin')
+                    ? explode(',', trim(ini_get('suhosin.executor.func.blacklist')))
+                    : array();
+            }
+
+            return ! in_array($functionName, $suhosinFuncBlacklist, true);
+        }
+
+        return false;
+    }
+}
