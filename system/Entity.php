@@ -75,6 +75,8 @@ class Entity
 	 *
 	 * @param string $key
 	 * @param null   $value
+	 *
+	 * @return $this
 	 */
 	public function __set(string $key, $value = null)
 	{
@@ -84,10 +86,14 @@ class Entity
 		if (method_exists($this, $method))
 		{
 			$this->$method($value);
+
+			return $this;
 		}
 		elseif (property_exists($this, $key))
 		{
 			$this->$key = $value;
+
+			return $this;
 		}
 	}
 
