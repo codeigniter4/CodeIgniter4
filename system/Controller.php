@@ -87,13 +87,13 @@ class Controller
 	 */
 	protected $forceHTTPS = 0;
 
-    /**
-     * Once validation has been run,
-     * will hold the Validation instance.
-     *
-     * @var Validation
-     */
-    protected $validator;
+	/**
+	 * Once validation has been run,
+	 * will hold the Validation instance.
+	 *
+	 * @var Validation
+	 */
+	protected $validator;
 
 	//--------------------------------------------------------------------
 
@@ -106,7 +106,7 @@ class Controller
 	 */
 	public function __construct(RequestInterface $request, ResponseInterface $response, Logger $logger = null)
 	{
-	    $this->request = $request;
+		$this->request = $request;
 
 		$this->response = $response;
 
@@ -136,7 +136,7 @@ class Controller
 	 */
 	public function forceHTTPS(int $duration = 31536000)
 	{
-	    force_https($duration, $this->request, $this->response);
+		force_https($duration, $this->request, $this->response);
 	}
 
 	//--------------------------------------------------------------------
@@ -159,7 +159,7 @@ class Controller
 	 */
 	protected function loadHelpers()
 	{
-	    if (empty($this->helpers)) return;
+		if (empty($this->helpers)) return;
 
 		foreach ($this->helpers as $helper)
 		{
@@ -169,28 +169,28 @@ class Controller
 
 	//--------------------------------------------------------------------
 
-    /**
-     * A shortcut to performing validation on $_POST input. If validation
-     * is not successful, a $errors property will be set on this class.
-     *
-     * @param \CodeIgniter\HTTP\RequestInterface $request
-     * @param                                    $rules
-     * @param array|null                         $messages
-     *
-     * @return bool
-     */
-    public function validate(RequestInterface $request, $rules, array $messages = null): bool
-    {
-        $this->validator = Services::validation();
+	/**
+	 * A shortcut to performing validation on $_POST input. If validation
+	 * is not successful, a $errors property will be set on this class.
+	 *
+	 * @param \CodeIgniter\HTTP\RequestInterface $request
+	 * @param                                    $rules
+	 * @param array|null                         $messages
+	 *
+	 * @return bool
+	 */
+	public function validate(RequestInterface $request, $rules, array $messages = null): bool
+	{
+		$this->validator = Services::validation();
 
-        $success = $this->validator->withRequest($request)
-                             ->setRules($rules, $messages)
-                             ->run();
+		$success = $this->validator->withRequest($request)
+			->setRules($rules, $messages)
+			->run();
 
-        return $success;
-    }
+		return $success;
+	}
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
 
 }

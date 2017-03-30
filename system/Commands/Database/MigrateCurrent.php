@@ -47,69 +47,69 @@ use Config\Services;
  */
 class MigrateCurrent extends BaseCommand
 {
-    protected $group = 'Database';
+	protected $group = 'Database';
 
-    /**
-     * The Command's name
-     *
-     * @var string
-     */
-    protected $name = 'migrate:current';
+	/**
+	 * The Command's name
+	 *
+	 * @var string
+	 */
+	protected $name = 'migrate:current';
 
-    /**
-     * the Command's short description
-     *
-     * @var string
-     */
-    protected $description = 'Migrates us up or down to the version specified as $currentVersion in the migrations config file.';
+	/**
+	 * the Command's short description
+	 *
+	 * @var string
+	 */
+	protected $description = 'Migrates us up or down to the version specified as $currentVersion in the migrations config file.';
 
-     /**
-     * the Command's usage
-     *
-     * @var string
-     */
-    protected $usage = 'migrate:current [options]';
+	/**
+	 * the Command's usage
+	 *
+	 * @var string
+	 */
+	protected $usage = 'migrate:current [options]';
 
-    /**
-     * the Command's Arguments
-     *
-     * @var array
-     */
-    protected $arguments = [];
+	/**
+	 * the Command's Arguments
+	 *
+	 * @var array
+	 */
+	protected $arguments = [];
 
-    /**
-     * the Command's Options
-     *
-     * @var array
-     */
-    protected $options = array(
-        '-g' => 'Set database group'
-    );
+	/**
+	 * the Command's Options
+	 *
+	 * @var array
+	 */
+	protected $options = array(
+			'-g' => 'Set database group'
+			);
 
 
-    /**
-     * Migrates us up or down to the version specified as $currentVersion
-     * in the migrations config file.
-     */
-    public function run(array $params=[])
-    {
-        $runner = Services::migrations();
+	/**
+	 * Migrates us up or down to the version specified as $currentVersion
+	 * in the migrations config file.
+	 */
+	public function run(array $params=[])
+	{
+		$runner = Services::migrations();
 
-        CLI::write(lang('Migrations.migToVersion'), 'yellow');
+		CLI::write(lang('Migrations.migToVersion'), 'yellow');
 
-        $group =    CLI::getOption('g');
-        try { 
-            $runner->current($group);
-            $messages = $runner->getCliMessages();
-            foreach ($messages as $message) {
-                CLI::write($message); 
-            }
-        }
-        catch (\Exception $e)
-        {
-            $this->showError($e);
-        }
+		$group =    CLI::getOption('g');
+		try { 
+			$runner->current($group);
+			$messages = $runner->getCliMessages();
+			foreach ($messages as $message) {
+				CLI::write($message); 
+			}
+		}
+		catch (\Exception $e)
+		{
+			$this->showError($e);
+		}
 
-        CLI::write('Done');
-    }
+		CLI::write('Done');
+	}
 }

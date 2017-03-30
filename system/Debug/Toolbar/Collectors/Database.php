@@ -79,13 +79,13 @@ class Database extends BaseCollector
 	 */
 	protected $connections;
 
-    /**
-     * The query instances that have been collected
-     * through the DBQuery Hook.
-     *
-     * @var array
-     */
-    protected static $queries = [];
+	/**
+	 * The query instances that have been collected
+	 * through the DBQuery Hook.
+	 *
+	 * @var array
+	 */
+	protected static $queries = [];
 
 
 	//--------------------------------------------------------------------
@@ -100,20 +100,20 @@ class Database extends BaseCollector
 
 	//--------------------------------------------------------------------
 
-    /**
-     * The static method used during Hooks to collect
-     * data.
-     *
-     * @param \CodeIgniter\Database\Query $query
-     *
-     * @internal param $ array \CodeIgniter\Database\Query
-     */
-    public static function collect(Query $query)
-    {
-        static::$queries[] = $query;
-    }
+	/**
+	 * The static method used during Hooks to collect
+	 * data.
+	 *
+	 * @param \CodeIgniter\Database\Query $query
+	 *
+	 * @internal param $ array \CodeIgniter\Database\Query
+	 */
+	public static function collect(Query $query)
+	{
+		static::$queries[] = $query;
+	}
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
 	/**
 	 * Returns timeline data formatted for the toolbar.
@@ -135,15 +135,15 @@ class Database extends BaseCollector
 			];
 		}
 
-        foreach (static::$queries as $query)
-        {
-            $data[] = [
-                'name' => 'Query',
-                'component' => 'Database',
-                'start' => $query->getStartTime(true),
-                'duration' => $query->getDuration()
-            ];
-        }
+		foreach (static::$queries as $query)
+		{
+			$data[] = [
+				'name' => 'Query',
+				'component' => 'Database',
+				'start' => $query->getStartTime(true),
+				'duration' => $query->getDuration()
+			];
+		}
 
 		return $data;
 	}
@@ -157,35 +157,35 @@ class Database extends BaseCollector
 	 */
 	public function display(): string
 	{
-        // Key words we want bolded
-        $highlight = ['SELECT', 'DISTINCT', 'FROM', 'WHERE', 'AND', 'LEFT&nbsp;JOIN', 'ORDER&nbsp;BY', 'GROUP&nbsp;BY',
-            'LIMIT', 'INSERT', 'INTO', 'VALUES', 'UPDATE', 'OR&nbsp;', 'HAVING', 'OFFSET', 'NOT&nbsp;IN',
-            'IN', 'LIKE', 'NOT&nbsp;LIKE', 'COUNT', 'MAX', 'MIN', 'ON', 'AS', 'AVG', 'SUM', '(', ')'
-        ];
+		// Key words we want bolded
+		$highlight = ['SELECT', 'DISTINCT', 'FROM', 'WHERE', 'AND', 'LEFT&nbsp;JOIN', 'ORDER&nbsp;BY', 'GROUP&nbsp;BY',
+			'LIMIT', 'INSERT', 'INTO', 'VALUES', 'UPDATE', 'OR&nbsp;', 'HAVING', 'OFFSET', 'NOT&nbsp;IN',
+			'IN', 'LIKE', 'NOT&nbsp;LIKE', 'COUNT', 'MAX', 'MIN', 'ON', 'AS', 'AVG', 'SUM', '(', ')'
+		];
 
 		$parser = \Config\Services::parser(BASEPATH.'Debug/Toolbar/Views/');
 
 		$data = [
-		    'queries' => []
-        ];
+			'queries' => []
+		];
 
 		foreach (static::$queries as $query)
-        {
-            $sql = $query->getQuery();
+		{
+			$sql = $query->getQuery();
 
-            foreach ($highlight as $term)
-            {
-                $sql = str_replace($term, "<strong>{$term}</strong>", $sql);
-            }
+			foreach ($highlight as $term)
+			{
+				$sql = str_replace($term, "<strong>{$term}</strong>", $sql);
+			}
 
-            $data['queries'][] = [
-                'duration' => $query->getDuration(5) * 1000,
-                'sql' => $sql
-            ];
-        }
+			$data['queries'][] = [
+				'duration' => $query->getDuration(5) * 1000,
+				'sql' => $sql
+			];
+		}
 
 		$output = $parser->setData($data)
-                         ->render('_database.tpl');
+			->render('_database.tpl');
 
 		return $output;
 	}
@@ -200,7 +200,7 @@ class Database extends BaseCollector
 	public function getTitleDetails(): string
 	{
 		return '('.count(static::$queries).' Queries across '.count($this->connections).' Connection'.
-		       (count($this->connections) > 1 ? 's' : '').')';
+			(count($this->connections) > 1 ? 's' : '').')';
 	}
 
 	//--------------------------------------------------------------------

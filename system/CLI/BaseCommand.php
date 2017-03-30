@@ -49,186 +49,186 @@ use Psr\Log\LoggerInterface;
  */
 abstract class BaseCommand
 {
-    /**
-     * The group the command is lumped under
-     * when listing commands.
-     *
-     * @var string
-     */
-    protected $group;
+	/**
+	 * The group the command is lumped under
+	 * when listing commands.
+	 *
+	 * @var string
+	 */
+	protected $group;
 
-    /**
-     * The Command's name
-     *
-     * @var string
-     */
-    protected $name;
+	/**
+	 * The Command's name
+	 *
+	 * @var string
+	 */
+	protected $name;
 
-    /**
-     * the Command's usage description
-     *
-     * @var string
-     */
-    protected $usage;
+	/**
+	 * the Command's usage description
+	 *
+	 * @var string
+	 */
+	protected $usage;
 
-    /**
-     * the Command's short description
-     *
-     * @var string
-     */
-    protected $description;
+	/**
+	 * the Command's short description
+	 *
+	 * @var string
+	 */
+	protected $description;
 
-    /**
-     * the Command's options description
-     *
-     * @var string
-     */
-    protected $options = array();
+	/**
+	 * the Command's options description
+	 *
+	 * @var string
+	 */
+	protected $options = array();
 
-    /**
-     * the Command's Arguments description
-     *
-     * @var string
-     */
-    protected $arguments = array();
+	/**
+	 * the Command's Arguments description
+	 *
+	 * @var string
+	 */
+	protected $arguments = array();
 
-    /**
-     * @var \Psr\Log\LoggerInterface
-     */
-    protected $logger;
+	/**
+	 * @var \Psr\Log\LoggerInterface
+	 */
+	protected $logger;
 
-    /**
-     * Instance of the CommandRunner controller
-     * so commands can call other commands.
-     *
-     * @var \CodeIgniter\CLI\CommandRunner
-     */
-    protected $commands;
+	/**
+	 * Instance of the CommandRunner controller
+	 * so commands can call other commands.
+	 *
+	 * @var \CodeIgniter\CLI\CommandRunner
+	 */
+	protected $commands;
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
-    public function __construct(LoggerInterface $logger, CommandRunner $commands)
-    {
-        $this->logger = $logger;
-        $this->commands = $commands;
-    }
+	public function __construct(LoggerInterface $logger, CommandRunner $commands)
+	{
+		$this->logger = $logger;
+		$this->commands = $commands;
+	}
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
-    abstract public function run(array $params);
+	abstract public function run(array $params);
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
-    /**
-     * Can be used by a command to run other commands.
-     *
-     * @param string $command
-     * @param array $params
-     */
-    protected function call(string $command, array $params = [])
-    {
-        // The CommandRunner will grab the first element
-        // for the command name.
-        array_unshift($params, $command);
+	/**
+	 * Can be used by a command to run other commands.
+	 *
+	 * @param string $command
+	 * @param array $params
+	 */
+	protected function call(string $command, array $params = [])
+	{
+		// The CommandRunner will grab the first element
+		// for the command name.
+		array_unshift($params, $command);
 
-        return $this->commands->index($params);
-    }
+		return $this->commands->index($params);
+	}
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
-    /**
-     * A simple method to display an error with line/file,
-     * in child commands.
-     *
-     * @param \Exception $e
-     */
-    protected function showError(\Exception $e)
-    {
-        CLI::newLine();
-        CLI::error($e->getMessage());
-        CLI::write($e->getFile() . ' - ' . $e->getLine());
-        CLI::newLine();
-    }
+	/**
+	 * A simple method to display an error with line/file,
+	 * in child commands.
+	 *
+	 * @param \Exception $e
+	 */
+	protected function showError(\Exception $e)
+	{
+		CLI::newLine();
+		CLI::error($e->getMessage());
+		CLI::write($e->getFile() . ' - ' . $e->getLine());
+		CLI::newLine();
+	}
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
-    /**
-     * Makes it simple to access our protected properties.
-     *
-     * @param string $key
-     *
-     * @return mixed
-     */
-    public function __get(string $key)
-    {
-        if (isset($this->$key)) {
-            return $this->$key;
-        }
-    }
+	/**
+	 * Makes it simple to access our protected properties.
+	 *
+	 * @param string $key
+	 *
+	 * @return mixed
+	 */
+	public function __get(string $key)
+	{
+		if (isset($this->$key)) {
+			return $this->$key;
+		}
+	}
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
-    /**
-     * show Help include (usage,arguments,description,options)
-     *
-     *
-     * @return mixed
-     */
-    public function showHelp()
-    {
-        // 4 spaces insted of tab
-        $tab = "   ";
-        CLI::write(lang('CLI.helpDescription'), 'yellow');
-        CLI::write($tab . $this->description);
-        CLI::newLine();
+	/**
+	 * show Help include (usage,arguments,description,options)
+	 *
+	 *
+	 * @return mixed
+	 */
+	public function showHelp()
+	{
+		// 4 spaces insted of tab
+		$tab = "   ";
+		CLI::write(lang('CLI.helpDescription'), 'yellow');
+		CLI::write($tab . $this->description);
+		CLI::newLine();
 
-        CLI::write(lang('CLI.helpUsage'), 'yellow');
-        $usage = empty($this->usage) ? $this->name . " [arguments]" : $this->usage;
-        CLI::write($tab . $usage);
-        CLI::newLine();
+		CLI::write(lang('CLI.helpUsage'), 'yellow');
+		$usage = empty($this->usage) ? $this->name . " [arguments]" : $this->usage;
+		CLI::write($tab . $usage);
+		CLI::newLine();
 
-        $pad = max($this->getPad($this->options, 6), $this->getPad($this->arguments, 6));
+		$pad = max($this->getPad($this->options, 6), $this->getPad($this->arguments, 6));
 
-        if (!empty($this->arguments))
-        {
-            CLI::write(lang('CLI.helpArguments'), 'yellow');
-            foreach ($this->arguments as $argument => $description)
-            {
-                CLI::write($tab . CLI::color(str_pad($argument, $pad), 'green') . $description, 'yellow');
-            }
-            CLI::newLine();
-        }
+		if (!empty($this->arguments))
+		{
+			CLI::write(lang('CLI.helpArguments'), 'yellow');
+			foreach ($this->arguments as $argument => $description)
+			{
+				CLI::write($tab . CLI::color(str_pad($argument, $pad), 'green') . $description, 'yellow');
+			}
+			CLI::newLine();
+		}
 
-        if (!empty($this->options))
-        {
-            CLI::write(lang('CLI.helpOptions'), 'yellow');
-            foreach ($this->options as $option => $description)
-            {
-                CLI::write($tab . CLI::color(str_pad($option, $pad), 'green') . $description, 'yellow');
-            }
-            CLI::newLine();
-        }
-    }
+		if (!empty($this->options))
+		{
+			CLI::write(lang('CLI.helpOptions'), 'yellow');
+			foreach ($this->options as $option => $description)
+			{
+				CLI::write($tab . CLI::color(str_pad($option, $pad), 'green') . $description, 'yellow');
+			}
+			CLI::newLine();
+		}
+	}
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
-    /**
-     * Get pad for $key => $value array output
-     *
-     * @param array $array
-     * @param int $pad
-     *
-     * @return int
-     */
-    public function getPad($array, string $pad)
-    {
-        $max = 0;
-        foreach ($array as $key => $value) {
-            $max = max($max, strlen($key));
-        }
-        return $max + $pad;
-    }
+	/**
+	 * Get pad for $key => $value array output
+	 *
+	 * @param array $array
+	 * @param int $pad
+	 *
+	 * @return int
+	 */
+	public function getPad($array, string $pad)
+	{
+		$max = 0;
+		foreach ($array as $key => $value) {
+			$max = max($max, strlen($key));
+		}
+		return $max + $pad;
+	}
 
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 }

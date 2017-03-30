@@ -97,7 +97,7 @@ $loader->register();    // Register the loader with the SPL autoloader stack.
 // Now load Composer's if it's available
 if (file_exists(COMPOSER_PATH))
 {
-    require COMPOSER_PATH;
+	require COMPOSER_PATH;
 }
 
 // Always load the URL helper -
