@@ -197,7 +197,63 @@ business logic and create objects that are pleasant to use.
     $user->setPassword('my great password');
 
 
-DataMapping
-===========
+Data Mapping
+============
 
-Coming soon.
+At many points in your career, you will run into situations where the use of an application has changed and the
+original column names in the database no longer make sense. Or you find that your coding style prefers camelCase
+class properties, but your database schema required snake_case names. These situations can be easily handled
+with the Entity class' data mapping features.
+
+As an example, imagine your have the simplified User Entity that is used throughout your application::
+
+    <?php namespace App\Entities;
+
+    use CodeIgniter\Entity;
+
+    class User extends Entity
+    {
+        protected $id;
+        protected $name;        // Represents a username
+        protected $email;
+        protected $password;
+        protected $created_at;
+        protected $updated_on;
+    }
+
+Your boss comes to you and says that no one uses usernames anymore, so you're switching to just use emails for login.
+But they do want to personalize the application a bit, so they want you to change the name field to represent a user's
+full name now, not their username like it does currently. To keep things tidy and ensure things continue making sense
+in the database you whip up a migration to rename the `name` field to `full_name` for clarity.
+
+Ignoring how contrived this example is, we now have two choices on how to fix the User class. We could modify the class
+property from ``$name`` to ``$full_name``, but that would require  changes throughout the application. Instead, we can
+simply map the ``full_name`` column in the database to the ``$name`` property, and be done with the Entity changes::
+
+    <?php namespace App\Entities;
+
+    use CodeIgniter\Entity;
+
+    class User extends Entity
+    {
+        protected $id;
+        protected $name;        // Represents a full name now
+        protected $email;
+        protected $password;
+        protected $created_at;
+        protected $updated_on;
+
+        protected $datamap = [
+            'full_name' => 'name'
+        ];
+    }
+
+By adding our new database name to the ``$datamap`` array, we can tell the class what class property the database column
+should be accessible through. The key of the array is the name of the column in the database, where the value in the array
+is class property to map it to.
+
+In this example, when the model sets the ``full_name`` field on the User class, it actually assigns that value to the
+class' ``$name`` property, so it can be set and retrieved through ``$user->name``. The value will still be accessible
+through the original ``$user->full_name``, also, as this is needed for the model to get the data back out and save it
+to the database. However, ``unset`` and ``isset`` only work on the mapped property, ``$name``, not on the original name,
+``full_name``.

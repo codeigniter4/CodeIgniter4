@@ -3,6 +3,20 @@
 class Entity
 {
 	/**
+	 * Maps names used in sets and gets against unique
+	 * names within the class, allowing independence from
+	 * database column names.
+	 *
+	 * Example:
+	 *  $datamap = [
+	 *      'db_name' => 'class_name'
+	 *  ];
+	 *
+	 * @var array
+	 */
+	protected $datamap = [];
+
+	/**
 	 * Takes an array of key/value pairs and sets them as
 	 * class properties, using any `setCamelCasedProperty()` methods
 	 * that may or may not exist.
@@ -44,6 +58,8 @@ class Entity
 	 */
 	public function __get(string $key)
 	{
+		$key = $this->mapProperty($key);
+
 		// Convert to CamelCase for the method
 		$method = 'get'.str_replace(' ', '', ucwords(str_replace(['-', '_'], ' ', $key)));
 
@@ -80,6 +96,8 @@ class Entity
 	 */
 	public function __set(string $key, $value = null)
 	{
+		$key = $this->mapProperty($key);
+
 		// if a set* method exists for this key, 
 		// use that method to insert this value. 
 		$method = 'set'.str_replace(' ', '', ucwords(str_replace(['-', '_'], ' ', $key)));
@@ -108,6 +126,10 @@ class Entity
 	 */
 	public function __unset(string $key)
 	{
+		// If not actual property exists, get out
+		// before we confuse our data mapping.
+		if (! property_exists($this, $key)) return;
+
 		$this->$key = null;
 
 		// Get the class' original default value for this property
@@ -133,11 +155,34 @@ class Entity
 	 */
 	public function __isset(string $key): bool
 	{
-		$value = $this->$key;
+		// Ensure an actual property exists, otherwise
+		// we confuse the data mapping.
+		$value = property_exists($this, $key)
+			? $this->$key
+			: null;
 
 		return ! is_null($value);
 	}
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Checks the datamap to see if this column name is being mapped,
+	 * and returns the mapped name, if any, or the original name.
+	 *
+	 * @param string $key
+	 *
+	 * @return mixed|string
+	 */
+	protected function mapProperty(string $key)
+	{
+		if (array_key_exists($key, $this->datamap))
+		{
+			return $this->datamap[$key];
+		}
+
+		return $key;
+	}
+
+	//--------------------------------------------------------------------
 }
