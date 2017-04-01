@@ -75,7 +75,7 @@ class Request extends Message implements RequestInterface
 	{
 	    $this->proxyIPs = $config->proxyIPs;
 
-	    $this->method = $this->getServer('REQUEST_METHOD');
+	    $this->method = $this->getServer('REQUEST_METHOD') ?? 'GET';
 	}
 
 	//--------------------------------------------------------------------
