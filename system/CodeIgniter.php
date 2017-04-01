@@ -194,6 +194,8 @@ class CodeIgniter
 		$cacheConfig = new Cache();
 		$this->displayCache($cacheConfig);
 
+		$this->spoofRequestMethod();
+
 		try {
 			$this->handleRequest($routes, $cacheConfig);
 		}
@@ -880,6 +882,27 @@ class CodeIgniter
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Modifies the Request Object to use a different method if a POST
+	 * variable called _method is found.
+	 *
+	 * Does not work on CLI commands.
+	 */
+	public function spoofRequestMethod()
+	{
+	    if (is_cli()) return;
+
+	    // Only works with POSTED forms
+	    if ($this->request->getMethod() !== 'post') return;
+
+	    $method = $this->request->getPost('_method');
+
+	    if (empty($method)) return;
+
+		$this->request = $this->request->setMethod($method);
+	}
+
 
 	/**
 	 * Sends the output of this request back to the client.
