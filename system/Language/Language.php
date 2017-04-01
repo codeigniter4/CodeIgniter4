@@ -124,9 +124,15 @@ class Language
 	 */
 	protected function parseLine(string $line): array
 	{
+		// If there's no possibility of a filename being in the string
+		// simply return the string, and they can parse the replacement
+		// without it being in a file.
 		if (strpos($line, '.') === false)
 		{
-			throw new \InvalidArgumentException('No language file specified in line: '.$line);
+			return [
+				null,
+				$line
+			];
 		}
 
 		$file = substr($line, 0, strpos($line, '.'));

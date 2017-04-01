@@ -374,9 +374,9 @@ if (! function_exists('lang'))
 	 *
 	 * @return string
 	 */
-	function lang(string $line, array $args=[])
+	function lang(string $line, array $args=[], string $locale=null)
 	{
-		return Services::language()->getLine($line, $args);
+		return Services::language($locale)->getLine($line, $args);
 	}
 }
 
