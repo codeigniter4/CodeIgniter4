@@ -173,7 +173,7 @@
 				<?php foreach ($post as $name => $value) : ?>
 					<tr>
 						<td><?= esc($name) ?></td>
-						<td><?= esc($value) ?></td>
+						<td><?= is_array($value) ? esc(print_r($value, true)) : esc($value) ?></td>
 					</tr>
 				<?php endforeach; ?>
 				</tbody>
