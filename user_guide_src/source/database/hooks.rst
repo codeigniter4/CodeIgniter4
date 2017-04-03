@@ -18,7 +18,7 @@ a :doc:`Query </database/query>` instance of the current query. You could use th
 in STDOUT, or logging to a file, or even creating tools to do automatic query analysis to help you spot
 potentially missing indexes, slow queries, etc. An example usage might be::
 
-    // In Config\Hooks.php
+    // In Config\Events.php
     Hooks::on('DBQuery', 'CodeIgniter\Debug\Toolbar\Collectors\Database::collect');
 
     // Collect the queries so something can be done with them later.

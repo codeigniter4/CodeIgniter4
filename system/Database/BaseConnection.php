@@ -37,7 +37,7 @@
  */
 
 use CodeIgniter\DatabaseException;
-use CodeIgniter\Hooks\Events;
+use CodeIgniter\Events\Events;
 
 /**
  * Class BaseConnection

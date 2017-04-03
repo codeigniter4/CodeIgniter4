@@ -36,7 +36,7 @@
  * @filesource
  */
 
-use CodeIgniter\Hooks\Events;
+use CodeIgniter\Events\Events;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Services;
 
@@ -104,7 +104,7 @@ class ChromeLoggerHandler extends BaseHandler implements HandlerInterface
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param array $config
 	 */
 	public function __construct(array $config = [])
@@ -185,7 +185,7 @@ class ChromeLoggerHandler extends BaseHandler implements HandlerInterface
 
 	/**
 	 * Attaches the header and the content to the passed in request object.
-	 * 
+	 *
 	 * @param ResponseInterface response
 	 */
 	public function sendLogs(ResponseInterface &$response=null)

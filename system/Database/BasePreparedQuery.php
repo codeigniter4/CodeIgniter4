@@ -36,7 +36,7 @@
  * @filesource
  */
 
-use CodeIgniter\Hooks\Events;
+use CodeIgniter\Events\Events;
 
 abstract class BasePreparedQuery implements PreparedQueryInterface
 {

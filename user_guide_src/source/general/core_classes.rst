@@ -23,7 +23,7 @@ The following is a list of the core system files that are invoked every time Cod
 * CodeIgniter\\Controller
 * CodeIgniter\\Debug\\Exceptions
 * CodeIgniter\\Debug\\Timer
-* CodeIgniter\\Hooks\\Hooks
+* CodeIgniter\\Events\\Events
 * CodeIgniter\\HTTP\\CLIRequest (if launched from command line only)
 * CodeIgniter\\HTTP\\IncomingRequest (if launched over HTTP)
 * CodeIgniter\\HTTP\\Request
