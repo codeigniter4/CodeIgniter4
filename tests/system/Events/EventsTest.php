@@ -1,6 +1,6 @@
-<?php namespace CodeIgniter\Hooks;
+<?php namespace CodeIgniter\Events;
 
-class HooksTest extends \CIUnitTestCase
+class EventsTest extends \CIUnitTestCase
 {
 	/**
 	 * @var \UnitTester
@@ -9,7 +9,7 @@ class HooksTest extends \CIUnitTestCase
 
 	protected function setUp()
 	{
-		Hooks::removeAllListeners();
+		Events::removeAllListeners();
 	}
 
 	//--------------------------------------------------------------------
@@ -19,10 +19,10 @@ class HooksTest extends \CIUnitTestCase
 		$callback1 = function() {};
 		$callback2 = function() {};
 
-		Hooks::on('foo', $callback1, HOOKS_PRIORITY_HIGH);
-		Hooks::on('foo', $callback2, HOOKS_PRIORITY_NORMAL);
+		Events::on('foo', $callback1, EVENT_PRIORITY_HIGH);
+		Events::on('foo', $callback2, EVENT_PRIORITY_NORMAL);
 
-		$this->assertEquals([$callback2, $callback1], Hooks::listeners('foo'));
+		$this->assertEquals([$callback2, $callback1], Events::listeners('foo'));
 	}
 
 	//--------------------------------------------------------------------
@@ -31,11 +31,11 @@ class HooksTest extends \CIUnitTestCase
 	{
 		$result = null;
 
-		Hooks::on('foo', function($arg) use(&$result) {
+		Events::on('foo', function($arg) use(&$result) {
 			$result = $arg;
 		});
 
-		$this->assertTrue(Hooks::trigger('foo', 'bar') );
+		$this->assertTrue(Events::trigger('foo', 'bar') );
 
 		$this->assertEquals('bar', $result);
 	}
@@ -48,15 +48,15 @@ class HooksTest extends \CIUnitTestCase
 
 		// This should cancel the flow of events, and leave
 		// $result = 1.
-		Hooks::on('foo', function($arg) use (&$result) {
+		Events::on('foo', function($arg) use (&$result) {
 			$result = 1;
 			return false;
 		});
-		Hooks::on('foo', function($arg) use (&$result) {
+		Events::on('foo', function($arg) use (&$result) {
 			$result = 2;
 		});
 
-		$this->assertFalse(Hooks::trigger('foo', 'bar'));
+		$this->assertFalse(Events::trigger('foo', 'bar'));
 		$this->assertEquals(1, $result);
 	}
 
@@ -66,18 +66,18 @@ class HooksTest extends \CIUnitTestCase
 	{
 		$result = 0;
 
-		Hooks::on('foo', function() use (&$result) {
+		Events::on('foo', function() use (&$result) {
 			$result = 1;
 			return false;
-		}, HOOKS_PRIORITY_NORMAL);
+		}, EVENT_PRIORITY_NORMAL);
 		// Since this has a higher priority, it will
 		// run first.
-		Hooks::on('foo', function() use (&$result) {
+		Events::on('foo', function() use (&$result) {
 			$result = 2;
 			return false;
-		}, HOOKS_PRIORITY_HIGH);
+		}, EVENT_PRIORITY_HIGH);
 
-		$this->assertFalse(Hooks::trigger('foo', 'bar'));
+		$this->assertFalse(Events::trigger('foo', 'bar'));
 		$this->assertEquals(2, $result);
 	}
 
@@ -87,23 +87,23 @@ class HooksTest extends \CIUnitTestCase
 	{
 		$result = [];
 
-		Hooks::on('foo', function() use (&$result) {
+		Events::on('foo', function() use (&$result) {
 			$result[] = 'a';
-		}, HOOKS_PRIORITY_NORMAL);
+		}, EVENT_PRIORITY_NORMAL);
 
-		Hooks::on('foo', function() use (&$result) {
+		Events::on('foo', function() use (&$result) {
 			$result[] = 'b';
-		}, HOOKS_PRIORITY_LOW);
+		}, EVENT_PRIORITY_LOW);
 
-		Hooks::on('foo', function() use (&$result) {
+		Events::on('foo', function() use (&$result) {
 			$result[] = 'c';
-		}, HOOKS_PRIORITY_HIGH);
+		}, EVENT_PRIORITY_HIGH);
 
-		Hooks::on('foo', function() use (&$result) {
+		Events::on('foo', function() use (&$result) {
 			$result[] = 'd';
 		}, 75);
 
-		Hooks::trigger('foo');
+		Events::trigger('foo');
 		$this->assertEquals(['c', 'd', 'a', 'b'], $result);
 	}
 
@@ -118,15 +118,15 @@ class HooksTest extends \CIUnitTestCase
 			$result = true;
 		};
 
-		Hooks::on('foo', $callback);
+		Events::on('foo', $callback);
 
-		Hooks::trigger('foo');
+		Events::trigger('foo');
 		$this->assertTrue($result);
 
 		$result = false;
-		$this->assertTrue( Hooks::removeListener('foo', $callback) );
+		$this->assertTrue( Events::removeListener('foo', $callback) );
 
-		Hooks::trigger('foo');
+		Events::trigger('foo');
 		$this->assertFalse($result);
 	}
 
@@ -141,16 +141,16 @@ class HooksTest extends \CIUnitTestCase
 			$result = true;
 		};
 
-		Hooks::on('foo', $callback);
+		Events::on('foo', $callback);
 
-		Hooks::trigger('foo');
+		Events::trigger('foo');
 		$this->assertTrue($result);
 
 		$result = false;
-		$this->assertTrue( Hooks::removeListener('foo', $callback) );
-		$this->assertFalse( Hooks::removeListener('foo', $callback) );
+		$this->assertTrue( Events::removeListener('foo', $callback) );
+		$this->assertFalse( Events::removeListener('foo', $callback) );
 
-		Hooks::trigger('foo');
+		Events::trigger('foo');
 		$this->assertFalse($result);
 	}
 
@@ -165,15 +165,15 @@ class HooksTest extends \CIUnitTestCase
 			$result = true;
 		};
 
-		Hooks::on('foo', $callback);
+		Events::on('foo', $callback);
 
-		Hooks::trigger('foo');
+		Events::trigger('foo');
 		$this->assertTrue($result);
 
 		$result = false;
-		$this->assertFalse( Hooks::removeListener('bar', $callback) );
+		$this->assertFalse( Events::removeListener('bar', $callback) );
 
-		Hooks::trigger('foo');
+		Events::trigger('foo');
 		$this->assertTrue($result);
 	}
 
@@ -188,11 +188,11 @@ class HooksTest extends \CIUnitTestCase
 			$result = true;
 		};
 
-		Hooks::on('foo', $callback);
+		Events::on('foo', $callback);
 
-		Hooks::removeAllListeners('foo');
+		Events::removeAllListeners('foo');
 
-		$listeners = Hooks::listeners('foo');
+		$listeners = Events::listeners('foo');
 
 		$this->assertEquals([], $listeners);
 	}
@@ -209,13 +209,13 @@ class HooksTest extends \CIUnitTestCase
 			$result = true;
 		};
 
-		Hooks::on('foo', $callback);
-		Hooks::on('bar', $callback);
+		Events::on('foo', $callback);
+		Events::on('bar', $callback);
 
-		Hooks::removeAllListeners();
+		Events::removeAllListeners();
 
-		$this->assertEquals([], Hooks::listeners('foo'));
-		$this->assertEquals([], Hooks::listeners('bar'));
+		$this->assertEquals([], Events::listeners('foo'));
+		$this->assertEquals([], Events::listeners('bar'));
 	}
 
 	//--------------------------------------------------------------------

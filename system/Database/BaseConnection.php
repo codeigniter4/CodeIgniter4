@@ -37,7 +37,7 @@
  */
 
 use CodeIgniter\DatabaseException;
-use CodeIgniter\Hooks\Hooks;
+use CodeIgniter\Hooks\Events;
 
 /**
  * Class BaseConnection
@@ -618,7 +618,7 @@ abstract class BaseConnection implements ConnectionInterface
 			if (! $this->pretend)
 			{
 				// Let others do something with this query.
-				Hooks::trigger('DBQuery', $query);
+				Events::trigger('DBQuery', $query);
 			}
 
 			return new $resultClass($this->connID, $this->resultID);
@@ -629,7 +629,7 @@ abstract class BaseConnection implements ConnectionInterface
 		if (! $this->pretend)
 		{
 			// Let others do somethign with this query
-			Hooks::trigger('DBQuery', $query);
+			Events::trigger('DBQuery', $query);
 		}
 
 		// If $pretend is true, then we just want to return

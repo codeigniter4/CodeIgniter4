@@ -36,7 +36,7 @@
  * @filesource
  */
 
-use CodeIgniter\Hooks\Hooks;
+use CodeIgniter\Hooks\Events;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Services;
 
@@ -115,7 +115,7 @@ class ChromeLoggerHandler extends BaseHandler implements HandlerInterface
 
 		$this->json['request_uri'] = (string)$request->uri;
 
-		Hooks::on('post_controller', [$this, 'sendLogs'], HOOKS_PRIORITY_HIGH);
+		Events::on('post_controller', [$this, 'sendLogs'], HOOKS_PRIORITY_HIGH);
 	}
 
 	//--------------------------------------------------------------------

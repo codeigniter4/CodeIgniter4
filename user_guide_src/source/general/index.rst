@@ -14,7 +14,7 @@ General Topics
     view_parser
     helpers
     core_classes
-    hooks
+    events
     common_functions
     routing
     filters

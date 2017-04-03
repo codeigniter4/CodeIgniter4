@@ -1,6 +1,6 @@
 <?php namespace Config;
 
-use CodeIgniter\Hooks\Hooks;
+use CodeIgniter\Events\Events;
 
 /*
  * --------------------------------------------------------------------
@@ -29,5 +29,5 @@ use CodeIgniter\Hooks\Hooks;
  */
 if (ENVIRONMENT != 'production')
 {
-	Hooks::on('DBQuery', 'CodeIgniter\Debug\Toolbar\Collectors\Database::collect');
+	Events::on('DBQuery', 'CodeIgniter\Debug\Toolbar\Collectors\Database::collect');
 }

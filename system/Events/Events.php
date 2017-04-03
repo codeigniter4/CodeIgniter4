@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Hooks;
+<?php namespace CodeIgniter\Events;
 
 /**
  * CodeIgniter
@@ -36,14 +36,14 @@
  * @filesource
  */
 
-define('HOOKS_PRIORITY_LOW', 200);
-define('HOOKS_PRIORITY_NORMAL', 100);
-define('HOOKS_PRIORITY_HIGH', 10);
+define('EVENT_PRIORITY_LOW', 200);
+define('EVENT_PRIORITY_NORMAL', 100);
+define('EVENT_PRIORITY_HIGH', 10);
 
 /**
  * Hooks
  */
-class Hooks
+class Events
 {
 
 	/**
@@ -107,7 +107,7 @@ class Hooks
 	 * @param callable $callback
 	 * @param int      $priority
 	 */
-	public static function on($event_name, callable $callback, $priority = HOOKS_PRIORITY_NORMAL)
+	public static function on($event_name, callable $callback, $priority = EVENT_PRIORITY_NORMAL)
 	{
 		if ( ! isset(self::$listeners[$event_name]))
 		{

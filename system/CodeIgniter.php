@@ -39,7 +39,7 @@
 use Config\Cache;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\Debug\Timer;
-use CodeIgniter\Hooks\Hooks;
+use CodeIgniter\Events\Events;
 use CodeIgniter\Config\DotEnv;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\CLIRequest;
@@ -248,7 +248,7 @@ class CodeIgniter
 			$controller = $this->createController();
 
 			// Is there a "post_controller_constructor" hook?
-			Hooks::trigger('post_controller_constructor');
+			Events::trigger('post_controller_constructor');
 
 			$returned = $this->runController($controller);
 		}
@@ -282,7 +282,7 @@ class CodeIgniter
 		//--------------------------------------------------------------------
 		// Is there a post-system hook?
 		//--------------------------------------------------------------------
-		Hooks::trigger('post_system');
+		Events::trigger('post_system');
 	}
 
 	//--------------------------------------------------------------------

@@ -36,7 +36,7 @@
  * @filesource
  */
 
-use CodeIgniter\Hooks\Hooks;
+use CodeIgniter\Hooks\Events;
 
 abstract class BasePreparedQuery implements PreparedQueryInterface
 {
@@ -154,7 +154,7 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
 		$query->setDuration($startTime);
 
 		// Let others do something with this query
-		Hooks::trigger('DBQuery', $query);
+		Events::trigger('DBQuery', $query);
 
 		// Return a result object
 		$resultClass = str_replace('PreparedQuery', 'Result', get_class($this));
