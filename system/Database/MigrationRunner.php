@@ -244,7 +244,7 @@ class MigrationRunner
 
 				$instance->{$method}();
 				if ($method === 'up') $this->addHistory($migration->version);
-				elseif ($method === 'down') $this->removeHistory($migration->version);            
+				elseif ($method === 'down') $this->removeHistory($migration->version);
 			}
 		}
 		return true;
@@ -269,12 +269,12 @@ class MigrationRunner
 			$this->setGroup($group);
 		}
 
-		$migrations = $this->findMigrations();       
+		$migrations = $this->findMigrations();
 
 		$lastMigration = end($migrations)->version;
 
 		// Calculate the last migration step from existing migration
-		// filenames and proceed to the standard version migration       
+		// filenames and proceed to the standard version migration
 		return $this->version($lastMigration);
 	}
 
@@ -296,7 +296,7 @@ class MigrationRunner
 		$config = new Autoload();
 		$namespaces = $config->psr4;
 
-		foreach ($namespaces as $namespace => $path) {    
+		foreach ($namespaces as $namespace => $path) {
 
 			$this->setNamespace($namespace);
 			$migrations = $this->findMigrations();
@@ -312,7 +312,7 @@ class MigrationRunner
 			}
 
 			// Calculate the last migration step from existing migration
-			// filenames and proceed to the standard version migration           
+			// filenames and proceed to the standard version migration
 			$this->version($lastMigration);
 		}
 		return true;
@@ -321,7 +321,7 @@ class MigrationRunner
 
 	/**
 	 * Sets the (APP_NAMESPACE) schema to $currentVersion in migration config file
-	 *      
+	 *
 	 *
 	 * @return    mixed    TRUE if no migrations are found, current version string on success, FALSE on failure
 	 */
@@ -383,7 +383,7 @@ class MigrationRunner
 	 */
 	protected function CheckMigrations($migrations, $method, $targetversion)
 	{
-		// Check if no migrations found 
+		// Check if no migrations found
 		if (empty($migrations)) {
 			if ($this->silent) return false;
 			throw new \RuntimeException(lang('Migrations.migEmpty') );
@@ -538,10 +538,9 @@ class MigrationRunner
 			->where('group', $this->group)
 			->where('namespace', $this->namespace)
 			->orderBy('version', 'DESC')
-			->get()
-			->getRow();
+			->get();
 
-		return $row ? $row->version : '0';
+		return $row ? $row->getRow()->version : '0';
 	}
 
 	//--------------------------------------------------------------------
