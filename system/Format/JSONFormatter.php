@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\API;
+<?php namespace CodeIgniter\Format;
 
 /**
  * CodeIgniter
@@ -36,8 +36,24 @@
  * @filesource
  */
 
-class XMLFormatter implements FormatterInterface
+class JSONFormatter implements FormatterInterface
 {
+	/**
+	 * The error strings to use if encoding hits an error.
+	 *
+	 * @var array
+	 */
+	protected $errors = [
+		JSON_ERROR_NONE           => 'No error has occurred',
+		JSON_ERROR_DEPTH          => 'The maximum stack depth has been exceeded',
+		JSON_ERROR_STATE_MISMATCH => 'Invalid or malformed JSON',
+		JSON_ERROR_CTRL_CHAR      => 'Control character error, possibly incorrectly encoded',
+		JSON_ERROR_SYNTAX         => 'Syntax error',
+		JSON_ERROR_UTF8           => 'Malformed UTF-8 characters, possibly incorrectly encoded',
+	];
+
+	//--------------------------------------------------------------------
+
 	/**
 	 * Takes the given data and formats it.
 	 *
@@ -47,54 +63,20 @@ class XMLFormatter implements FormatterInterface
 	 */
 	public function format(array $data)
 	{
-		$result = null;
+		$options = ENVIRONMENT == 'production'
+			? JSON_NUMERIC_CHECK
+			: JSON_NUMERIC_CHECK | JSON_PRETTY_PRINT;
 
-		// SimpleXML is installed but default
-		// but best to check, and then provide a fallback.
-		if (! extension_loaded('simplexml'))
+		$result = json_encode($data, 512, $options);
+
+		// If result is NULL, then an error happened.
+		// Let them know.
+		if ($result === null)
 		{
-			throw new \RuntimeException('The SimpleXML extension is required to format XML.');
+			throw new \RuntimeException($this->errors[json_last_error()]);
 		}
 
-		$output = new \SimpleXMLElement("<?xml version=\"1.0\"?><response></response>");
-
-		$this->arrayToXML($data, $output);
-
-		return $output->asXML();
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * A recursive method to convert an array into a valid XML string.
-	 *
-	 * Written by CodexWorld. Received permission by email on Nov 24, 2016 to use this code.
-	 *
-	 * @see http://www.codexworld.com/convert-array-to-xml-in-php/
-	 *
-	 * @param array $data
-	 * @param       $output
-	 */
-	protected function arrayToXML(array $data, &$output)
-	{
-		foreach ($data as $key => $value)
-		{
-			if (is_array($value))
-			{
-				if (! is_numeric($key))
-				{
-					$subnode = $output->addChild("$key");
-					$this->arrayToXML($value, $subnode);
-				} else
-				{
-					$subnode = $output->addChild("item{$key}");
-					$this->arrayToXML($value, $subnode);
-				}
-			} else
-			{
-				$output->addChild("$key", htmlspecialchars("$value"));
-			}
-		}
+		return utf8_encode($result);
 	}
 
 	//--------------------------------------------------------------------

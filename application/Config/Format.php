@@ -2,7 +2,7 @@
 
 use CodeIgniter\Config\BaseConfig;
 
-class API extends BaseConfig
+class Format extends BaseConfig
 {
 	/*
 	|--------------------------------------------------------------------------
@@ -34,8 +34,8 @@ class API extends BaseConfig
 	|
 	*/
 	public $formatters = [
-		'application/json' => \CodeIgniter\API\JSONFormatter::class,
-		'application/xml'  => \CodeIgniter\API\XMLFormatter::class
+		'application/json' => \CodeIgniter\Format\JSONFormatter::class,
+		'application/xml'  => \CodeIgniter\Format\XMLFormatter::class
 	];
 
 	//--------------------------------------------------------------------

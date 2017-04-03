@@ -36,6 +36,7 @@
  * @filesource
  */
 
+use Config\Format;
 use CodeIgniter\HTTP\Response;
 
 /**
@@ -332,7 +333,7 @@ trait ResponseTrait
 			return $data;
 		}
 
-		$config = new \Config\API();
+		$config = new Format();
 
 		// Determine correct response type through content negotiation
 		$format = $this->request->negotiate('media', $config->supportedResponseFormats);
