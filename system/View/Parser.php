@@ -213,6 +213,9 @@ class Parser extends View {
 		$template = $this->parseComments($template);
 		$template = $this->extractNoparse($template);
 
+		// Replace any conditional code here so we don't have to parse as much
+		$template = $this->parseConditionals($template);
+
 		// build the variable substitution list
 		$replace = array();
 		foreach ($data as $key => $val)
@@ -393,6 +396,60 @@ class Parser extends View {
 		}
 
 		return $template;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Parses any conditionals in the code, removing blocks that don't
+	 * pass so we don't try to parse it later.
+	 *
+	 * Valid conditionals:
+	 *  - if
+	 *  - elseif
+	 *  - else
+	 *
+	 * @param string $template
+	 *
+	 * @return string
+	 */
+	protected function parseConditionals(string $template): string
+	{
+		$pattern = '/\{\s*(if|elseif)\s*((?:\()?(.*?)(?:\))?)\s*\}/ms';
+
+		/**
+		 * For each match:
+		 * [0] = raw match `{if var}`
+		 * [1] = conditional `if`
+		 * [2] = condition `do === true`
+		 * [3] = same as [2]
+		 */
+		preg_match_all($pattern, $template, $matches, PREG_SET_ORDER);
+
+		foreach ($matches as $match)
+		{
+			// Build the string to replace the `if` statement with.
+			$condition = $match[2];
+
+			$statement = '<?php if ($'.$condition.'): ?>';
+			$template = str_replace($match[0], $statement, $template);
+		}
+
+		$template = preg_replace('/\{\s*else\s*\}/ms', '<?php else: ?>', $template);
+		$template = preg_replace('/\{\s*endif\s*\}/ms', '<?php endif; ?>', $template);
+
+		// Parse the PHP itself, or insert an error so they can debug
+		ob_start();
+		extract($this->data);
+		$result = eval('?>'.$template.'<?php ');
+
+		if ($result === false)
+		{
+			$output = 'You have a syntax error in your Parser tags: ';
+			throw new \RuntimeException($output.str_replace(array('?>', '<?php '), '', $template));
+		}
+
+		return ob_get_clean();
 	}
 
 	//--------------------------------------------------------------------

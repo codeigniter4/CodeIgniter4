@@ -7,9 +7,9 @@ class ParserTest extends \CIUnitTestCase
 
 	public function setUp()
 	{
-		$this->loader = new \CodeIgniter\Autoloader\FileLocator(new \Config\Autoload());
+		$this->loader   = new \CodeIgniter\Autoloader\FileLocator(new \Config\Autoload());
 		$this->viewsDir = __DIR__.'/Views';
-        $this->config   = new Config\View();
+		$this->config   = new Config\View();
 	}
 
 	// --------------------------------------------------------------------
@@ -53,10 +53,10 @@ class ParserTest extends \CIUnitTestCase
 	public function testParseString()
 	{
 		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
-		$data = array (
-			'title'	 => 'Page Title',
-			'body'	 => 'Lorem ipsum dolor sit amet.'
-		);
+		$data   = [
+			'title' => 'Page Title',
+			'body'  => 'Lorem ipsum dolor sit amet.',
+		];
 
 		$template = "{title}\n{body}";
 
@@ -71,10 +71,10 @@ class ParserTest extends \CIUnitTestCase
 	public function testParseStringMissingData()
 	{
 		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
-		$data = array (
-			'title'	 => 'Page Title',
-			'body'	 => 'Lorem ipsum dolor sit amet.'
-		);
+		$data   = [
+			'title' => 'Page Title',
+			'body'  => 'Lorem ipsum dolor sit amet.',
+		];
 
 		$template = "{title}\n{body}\n{name}";
 
@@ -89,11 +89,11 @@ class ParserTest extends \CIUnitTestCase
 	public function testParseStringUnusedData()
 	{
 		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
-		$data = array (
-			'title'	 => 'Page Title',
-			'body'	 => 'Lorem ipsum dolor sit amet.',
-			'name'	 => 'Someone'
-		);
+		$data   = [
+			'title' => 'Page Title',
+			'body'  => 'Lorem ipsum dolor sit amet.',
+			'name'  => 'Someone',
+		];
 
 		$template = "{title}\n{body}";
 
@@ -116,12 +116,12 @@ class ParserTest extends \CIUnitTestCase
 	public function testParseNested()
 	{
 		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
-		$data = array (
-			'title'	 => 'Super Heroes',
-			'powers' => array (
-				array ('invisibility' => 'yes', 'flying' => 'no')
-			)
-		);
+		$data   = [
+			'title'  => 'Super Heroes',
+			'powers' => [
+				['invisibility' => 'yes', 'flying' => 'no'],
+			],
+		];
 
 		$template = "{title}\n{powers}{invisibility}\n{flying}{/powers}\nsecond:{powers} {invisibility} {flying}{/powers}";
 
@@ -134,14 +134,14 @@ class ParserTest extends \CIUnitTestCase
 	public function testParseLoop()
 	{
 		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
-		$data = array (
-			'title'	 => 'Super Heroes',
-			'powers' => array (
-				array ('name' => 'Tom'),
-				array ('name' => 'Dick'),
-				array ('name' => 'Henry')
-			)
-		);
+		$data   = [
+			'title'  => 'Super Heroes',
+			'powers' => [
+				['name' => 'Tom'],
+				['name' => 'Dick'],
+				['name' => 'Henry'],
+			],
+		];
 
 		$template = "{title}\n{powers}{name} {/powers}";
 
@@ -154,35 +154,40 @@ class ParserTest extends \CIUnitTestCase
 	public function testMismatchedVarPair()
 	{
 		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
-		$data = array (
-			'title'	 => 'Super Heroes',
-			'powers' => array (
-				array ('invisibility' => 'yes', 'flying' => 'no')
-			)
-		);
+		$data   = [
+			'title'  => 'Super Heroes',
+			'powers' => [
+				['invisibility' => 'yes', 'flying' => 'no'],
+			],
+		];
 
 		$template = "{title}\n{powers}{invisibility}\n{flying}";
-		$result = "Super Heroes\n{powers}{invisibility}\n{flying}";
+		$result   = "Super Heroes\n{powers}{invisibility}\n{flying}";
 
 		$parser->setData($data);
 		$this->assertEquals($result, $parser->renderString($template));
 	}
 
-		// Test anchor
+	// Test anchor
 
 	public function escValueTypes()
 	{
 		return [
-			'scalar'		 => [42],
-			'string'		 => ['George'],
-			'scalarlist'	 => [ [1, 2, 17, -4]],
-			'stringlist'	 => [ ['George', 'Paul', 'John', 'Ringo']],
-			'associative'	 => [ ['name' => 'George', 'role' => 'guitar']],
-			'compound'		 => [ ['name' => 'George', 'address' => ['line1' => '123 Some St', 'planet' => 'Naboo']]],
-			'pseudo'		 => [ ['name'	 => 'George', 'emails' => [
+			'scalar'      => [42],
+			'string'      => ['George'],
+			'scalarlist'  => [[1, 2, 17, -4]],
+			'stringlist'  => [['George', 'Paul', 'John', 'Ringo']],
+			'associative' => [['name' => 'George', 'role' => 'guitar']],
+			'compound'    => [['name' => 'George', 'address' => ['line1' => '123 Some St', 'planet' => 'Naboo']]],
+			'pseudo'      => [
+				[
+					'name'   => 'George',
+					'emails' => [
 						['email' => 'me@here.com', 'type' => 'home'],
-						['email' => 'me@there.com', 'type' => 'work']
-					]]],
+						['email' => 'me@there.com', 'type' => 'work'],
+					],
+				],
+			],
 		];
 	}
 
@@ -191,7 +196,10 @@ class ParserTest extends \CIUnitTestCase
 	 */
 	public function testEscHandling($value, $expected = null)
 	{
-		if ($expected == null) $expected = $value;
+		if ($expected == null)
+		{
+			$expected = $value;
+		}
 		$this->assertEquals($expected, \esc($value, 'html'));
 	}
 
@@ -200,15 +208,32 @@ class ParserTest extends \CIUnitTestCase
 	public function testIgnoresComments()
 	{
 		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
-		$data = array (
-			'title'	 => 'Super Heroes',
-			'powers' => array (
-				array ('invisibility' => 'yes', 'flying' => 'no')
-			)
-		);
+		$data   = [
+			'title'  => 'Super Heroes',
+			'powers' => [
+				['invisibility' => 'yes', 'flying' => 'no'],
+			],
+		];
 
 		$template = "{# Comments #}{title}\n{powers}{invisibility}\n{flying}";
-		$result = "Super Heroes\n{powers}{invisibility}\n{flying}";
+		$result   = "Super Heroes\n{powers}{invisibility}\n{flying}";
+
+		$parser->setData($data);
+		$this->assertEquals($result, $parser->renderString($template));
+	}
+
+	public function testNoParse()
+	{
+		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
+		$data   = [
+			'title'  => 'Super Heroes',
+			'powers' => [
+				['invisibility' => 'yes', 'flying' => 'no'],
+			],
+		];
+
+		$template = "{noparse}{title}\n{powers}{invisibility}\n{flying}{/noparse}";
+		$result   = "{title}\n{powers}{invisibility}\n{flying}";
 
 		$parser->setData($data);
 		$this->assertEquals($result, $parser->renderString($template));
@@ -217,21 +242,18 @@ class ParserTest extends \CIUnitTestCase
 	/**
 	 * @group single
 	 */
-	public function testNoParse()
+	public function testIfConditionalTrue()
 	{
 		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
-		$data = array (
-			'title'	 => 'Super Heroes',
-			'powers' => array (
-				array ('invisibility' => 'yes', 'flying' => 'no')
-			)
-		);
+		$data   = [
+			'doit' => true,
+			'dontdoit' => false
+		];
 
-		$template = "{noparse}{title}\n{powers}{invisibility}\n{flying}{/noparse}";
-		$result = "{title}\n{powers}{invisibility}\n{flying}";
-
+		$template = "{if doit}Howdy{endif}{ if dontdoit === false}Welcome{ endif }";
 		$parser->setData($data);
-		$this->assertEquals($result, $parser->renderString($template));
+
+		$this->assertEquals('HowdyWelcome', $parser->renderString($template));
 	}
 
 }
