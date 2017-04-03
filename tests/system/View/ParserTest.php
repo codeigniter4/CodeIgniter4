@@ -197,9 +197,6 @@ class ParserTest extends \CIUnitTestCase
 
 	// ------------------------------------------------------------------------
 
-	/**
-	 * @group single
-	 */
 	public function testIgnoresComments()
 	{
 		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
@@ -212,6 +209,26 @@ class ParserTest extends \CIUnitTestCase
 
 		$template = "{# Comments #}{title}\n{powers}{invisibility}\n{flying}";
 		$result = "Super Heroes\n{powers}{invisibility}\n{flying}";
+
+		$parser->setData($data);
+		$this->assertEquals($result, $parser->renderString($template));
+	}
+
+	/**
+	 * @group single
+	 */
+	public function testNoParse()
+	{
+		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
+		$data = array (
+			'title'	 => 'Super Heroes',
+			'powers' => array (
+				array ('invisibility' => 'yes', 'flying' => 'no')
+			)
+		);
+
+		$template = "{noparse}{title}\n{powers}{invisibility}\n{flying}{/noparse}";
+		$result = "{title}\n{powers}{invisibility}\n{flying}";
 
 		$parser->setData($data);
 		$this->assertEquals($result, $parser->renderString($template));

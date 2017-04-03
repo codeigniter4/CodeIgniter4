@@ -265,6 +265,17 @@ comments in a ``{# ... #}`` symbols.
 		</div>
 	{/blog_entry}
 
+Preventing Parsing
+==================
+
+You can specify portions of the page to not be parsed with the ``{noparse}{/noparse}`` tag pair.
+
+::
+
+	{noparse}
+		<h1>Untouched Code</h1>
+	{/noparse}
+
 Cascading Data
 ==============
 

@@ -68,6 +68,13 @@ class Parser extends View {
 	 */
 	public $rightDelimiter = '}';
 
+	/**
+	 * Stores extracted noparse blocks.
+	 *
+	 * @var array
+	 */
+	protected $noparseBlocks = [];
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -204,19 +211,24 @@ class Parser extends View {
 		}
 
 		$template = $this->parseComments($template);
+		$template = $this->extractNoparse($template);
 
 		// build the variable substitution list
 		$replace = array();
 		foreach ($data as $key => $val)
 		{
 			$replace = array_merge(
-					$replace, is_array($val) ? $this->parsePair($key, $val, $template) : $this->parseSingle($key, (string) $val, $template)
+				$replace, is_array($val)
+					? $this->parsePair($key, $val, $template)
+					: $this->parseSingle($key, (string) $val, $template)
 			);
 		}
 
 		unset($data);
 		// do the substitutions
 		$template = strtr($template, $replace);
+
+		$template = $this->insertNoparse($template);
 
 		return $template;
 	}
@@ -329,6 +341,58 @@ class Parser extends View {
 	protected function parseComments(string $template): string
 	{
 		return preg_replace('/\{#.*?#\}/s', '', $template);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Extracts noparse blocks, inserting a hash in its place so that
+	 * those blocks of the page are not touched by parsing.
+	 *
+	 * @param string $template
+	 *
+	 * @return string
+	 */
+	protected function extractNoparse(string $template): string
+	{
+		$pattern = '/\{\s*noparse\s*\}(.*?)\{\s*\/noparse\s*\}/ms';
+
+		/**
+		 * $matches[][0] is the raw match
+		 * $matches[][1] is the contents
+		 */
+		if (preg_match_all($pattern, $template, $matches, PREG_SET_ORDER))
+		{
+			foreach ($matches as $match)
+			{
+				// Create a hash of the contents to insert in its place.
+				$hash = md5($match[1]);
+				$this->noparseBlocks[$hash] = $match[1];
+				$template = str_replace($match[0], "noparse_{$hash}", $template);
+			}
+		}
+
+		return $template;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Re-inserts the noparsed contents back into the template.
+	 *
+	 * @param string $template
+	 *
+	 * @return string
+	 */
+	public function insertNoparse(string $template): string
+	{
+		foreach ($this->noparseBlocks as $hash => $replace)
+		{
+			$template = str_replace("noparse_{$hash}", $replace, $template);
+			unset($this->noparseBlocks[$hash]);
+		}
+
+		return $template;
 	}
 
 	//--------------------------------------------------------------------
