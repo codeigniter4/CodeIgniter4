@@ -62,11 +62,11 @@ class Events
 	protected static $haveReadFromFile = false;
 
 	/**
-	 * The path to the file containing the hooks to load in.
+	 * The path to the file containing the events to load in.
 	 *
 	 * @var string
 	 */
-	protected static $hooksFile;
+	protected static $eventsFile;
 
 	//--------------------------------------------------------------------
 
@@ -78,7 +78,7 @@ class Events
 	public static function initialize(string $file=null)
 	{
 		// Don't overwrite anything....
-		if (! empty(self::$hooksFile))
+		if (! empty(self::$eventsFile))
 		{
 			return;
 		}
@@ -86,10 +86,10 @@ class Events
 		// Default value
 	    if (empty($file))
 		{
-			$file = APPPATH.'Config/Hooks.php';
+			$file = APPPATH.'Config/Events.php';
 		}
 
-		self::$hooksFile = $file;
+		self::$eventsFile = $file;
 	}
 
 	//--------------------------------------------------------------------
@@ -145,9 +145,9 @@ class Events
 		{
 			self::initialize();
 
-			if (is_file(self::$hooksFile))
+			if (is_file(self::$eventsFile))
 			{
-				include self::$hooksFile;
+				include self::$eventsFile;
 			}
 			self::$haveReadFromFile = true;
 		}
@@ -265,7 +265,7 @@ class Events
 	 */
 	public function setFile(string $path)
 	{
-		self::$hooksFile = $path;
+		self::$eventsFile = $path;
 	}
 
 	//--------------------------------------------------------------------
