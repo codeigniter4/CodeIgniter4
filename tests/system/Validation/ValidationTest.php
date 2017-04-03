@@ -10,23 +10,23 @@ class ValidationTest extends \CIUnitTestCase
 	 */
 	protected $validation;
 
-    protected $config = [
-        'ruleSets'      => [
-            \CodeIgniter\Validation\Rules::class,
-            \CodeIgniter\Validation\FormatRules::class,
-            \CodeIgniter\Validation\FileRules::class,
-            \CodeIgniter\Validation\CreditCardRules::class,
-            \CodeIgniter\Validation\TestRules::class,
-        ],
-        'groupA'        => [
-            'foo' => 'required|min_length[5]',
-        ],
-        'groupA_errors' => [
-            'foo' => [
-                'min_length' => 'Shame, shame. Too short.',
-            ],
-        ],
-    ];
+	protected $config = [
+		'ruleSets'      => [
+			\CodeIgniter\Validation\Rules::class,
+			\CodeIgniter\Validation\FormatRules::class,
+			\CodeIgniter\Validation\FileRules::class,
+			\CodeIgniter\Validation\CreditCardRules::class,
+			\CodeIgniter\Validation\TestRules::class,
+		],
+		'groupA'        => [
+			'foo' => 'required|min_length[5]',
+		],
+		'groupA_errors' => [
+			'foo' => [
+				'min_length' => 'Shame, shame. Too short.',
+			],
+		],
+	];
 
 	//--------------------------------------------------------------------
 
