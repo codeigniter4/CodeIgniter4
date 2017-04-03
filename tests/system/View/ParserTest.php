@@ -239,9 +239,6 @@ class ParserTest extends \CIUnitTestCase
 		$this->assertEquals($result, $parser->renderString($template));
 	}
 
-	/**
-	 * @group single
-	 */
 	public function testIfConditionalTrue()
 	{
 		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
@@ -255,5 +252,14 @@ class ParserTest extends \CIUnitTestCase
 
 		$this->assertEquals('HowdyWelcome', $parser->renderString($template));
 	}
+
+	public function testWontParsePHP()
+	{
+		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
+
+		$template = "<?php echo 'Foo' ?> - <?= 'Bar' ?>";
+		$this->assertEquals('&lt;?php echo \'Foo\' ?&gt; - &lt;?= \'Bar\' ?&gt;', $parser->renderString($template));
+	}
+
 
 }

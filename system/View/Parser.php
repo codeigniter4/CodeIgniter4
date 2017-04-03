@@ -210,6 +210,10 @@ class Parser extends View {
 			return '';
 		}
 
+		// Remove any possible PHP tags since we don't support it
+		// and parseConditionals needs it clean anyway...
+		$template = str_replace(['<?', '?>'], ['&lt;?', '?&gt;'], $template);
+
 		$template = $this->parseComments($template);
 		$template = $this->extractNoparse($template);
 
@@ -242,6 +246,8 @@ class Parser extends View {
 	{
 		return array_keys($arr) !== range(0, count($arr) - 1);
 	}
+
+	//--------------------------------------------------------------------
 
 	function strpos_all($haystack, $needle)
 	{
@@ -446,7 +452,7 @@ class Parser extends View {
 		if ($result === false)
 		{
 			$output = 'You have a syntax error in your Parser tags: ';
-			throw new \RuntimeException($output.str_replace(array('?>', '<?php '), '', $template));
+			throw new \RuntimeException($output.str_replace(['?>', '<?php '], '', $template));
 		}
 
 		return ob_get_clean();
