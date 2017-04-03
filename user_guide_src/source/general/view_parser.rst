@@ -2,9 +2,9 @@
 View Parser
 ###########
 
-The View Parser can perform simple text substitution for 
-pseudo-variables contained within your view files. 
-It can parse simple variables or variable tag pairs. 
+The View Parser can perform simple text substitution for
+pseudo-variables contained within your view files.
+It can parse simple variables or variable tag pairs.
 
 Pseudo-variable names or control constructs are enclosed in braces, like this::
 
@@ -28,7 +28,7 @@ representations that allow you to eliminate PHP from your templates
 (view files).
 
 .. note:: CodeIgniter does **not** require you to use this class since
-	using pure PHP in your view pages (for instance using the 
+	using pure PHP in your view pages (for instance using the
 	:doc:`View renderer </general/view_renderer>` )
 	lets them run a little faster.
 	However, some developers prefer to use some form of template engine if
@@ -40,7 +40,7 @@ Using the View Parser Class
 ***************************
 
 If you have the ``Parser`` as your default renderer, then the parsing will occur
-transparently. If you want to work with it more directly, you can access the 
+transparently. If you want to work with it more directly, you can access the
 Parser service directly::
 
 	$parser = \Config\Services::renderer();
@@ -50,9 +50,9 @@ can instantiate it directly::
 
 	$parser = new \CodeIgniter\View\Parser();
 
-Then you can use any of the three standard rendering methods that it provides: 
-**render(viewpath, options, save)**, **setVar(name, value, context)** and 
-**setData(data, context)**. You will also be able to specify delimiters directly, 
+Then you can use any of the three standard rendering methods that it provides:
+**render(viewpath, options, save)**, **setVar(name, value, context)** and
+**setData(data, context)**. You will also be able to specify delimiters directly,
 through the **setDelimiters(left,right)** method.
 
 Using the ``Parser``, your view templates are processed only by the Parser
@@ -67,7 +67,7 @@ What It Does
 The ``Parser`` class processes "PHP/HTML scripts" stored in the application's view path.
 These scripts have a ``.php`` extension, but should not contain any PHP.
 
-Each view parameter (which we refer to as a pseudo-variable) triggers a substitution, 
+Each view parameter (which we refer to as a pseudo-variable) triggers a substitution,
 based on the type of value you provided for it. Pseudo-variables are not
 extracted into PHP variables; instead their value is accessed through the pseudo-variable
 syntax, where its name is referenced inside braces.
@@ -100,7 +100,7 @@ array of data to be replaced in the template. In the above example, the
 template would contain two variables: {blog_title} and {blog_heading}
 The first parameter to ``render()`` contains the name of the :doc:`view
 file <../general/views>` (in this example the file would be called
-blog_template.php), 
+blog_template.php),
 
 
 Parser Configuration Options
@@ -237,7 +237,7 @@ array. The key/value pairs defined inside it will be exposed inside
 the variable pair loop for that variable.
 
 A ``blog_template`` that might work for the above::
-	
+
 	<h1>{blog_title} - {blog_heading}</h1>
 	{blog_entry}
 		<div>
@@ -249,17 +249,33 @@ A ``blog_template`` that might work for the above::
 If you would like the other pseudo-variables accessible inside the "blog_entry"
 scope, then make sure that the "cascadeData" option is set to true.
 
+Comments
+========
+
+You can place comments in your templates that will be ignored and removed during parsing by wrapping the
+comments in a ``{# ... #}`` symbols.
+
+::
+
+	{# This comment is removed during parsing. #}
+	{blog_entry}
+		<div>
+			<h2>{title}</h2>
+			<p>{body}{/p}
+		</div>
+	{/blog_entry}
+
 Cascading Data
 ==============
 
 With both a nested and a loop substitution, you have the option of cascading
-data pairs into the inner substitution. 
+data pairs into the inner substitution.
 
 The following example is not impacted by cascading::
 
 	$template = '{name} lives in {location}{city} on {planet}{/location}.';
 
-	$data = ['name' => 'George', 
+	$data = ['name' => 'George',
 		'location' => [ 'city' => 'Red City', 'planet' => 'Mars' ] ];
 
 	echo $parser->setData($data)->renderString($template);
@@ -269,7 +285,7 @@ This example gives different results, depending on cascading::
 
 	$template = '{location}{name} lives in {city} on {planet}{/location}.';
 
-	$data = ['name' => 'George', 
+	$data = ['name' => 'George',
 		'location' => [ 'city' => 'Red City', 'planet' => 'Mars' ] ];
 
 	echo $parser->setData($data)->renderString($template, ['cascadeData'=>false]);
@@ -361,7 +377,7 @@ Result::
 		<li><a href="/second">Second Link</a></li>
 	</ul>
 
-An example with the iteration controlled in the controller, 
+An example with the iteration controlled in the controller,
 using a view fragment::
 
 	$temp = '';
@@ -398,7 +414,7 @@ Class Reference
 
 	.. php:method:: render($view[, $options[, $saveData=false]]])
 
-		:param  string  $view: File name of the view source 
+		:param  string  $view: File name of the view source
 		:param  array   $options: Array of options, as key/value pairs
 		:param  boolean $saveData: If true, will save data for use with any other calls, if false, will clean the data after rendering the view.
 		:returns: The rendered text for the chosen view
@@ -418,7 +434,7 @@ Class Reference
 	        -   ``rightDelimiter`` - the right delimiter to use in pseudo-variable syntax
 
 		Any conditional substitutions are performed first, then remaining
-		substitutions are performed for each data pair.	
+		substitutions are performed for each data pair.
 
 	.. php:method:: renderString($template[, $options[, $saveData=false]]])
 
@@ -437,7 +453,7 @@ Class Reference
 	.. php:method:: setData([$data[, $context=null]])
 
 		:param  array   $data: Array of view data strings, as key/value pairs
-		:param  string  $context: The context to use for data escaping. 
+		:param  string  $context: The context to use for data escaping.
 		:returns: The Renderer, for method chaining
 		:rtype: CodeIgniter\\View\\RendererInterface.
 
@@ -452,7 +468,7 @@ Class Reference
 
 		:param  string  $name: Name of the view data variable
 		:param  mixed   $value: The value of this view data
-		:param  string  $context: The context to use for data escaping. 
+		:param  string  $context: The context to use for data escaping.
 		:returns: The Renderer, for method chaining
 		:rtype: CodeIgniter\\View\\RendererInterface.
 

@@ -68,7 +68,7 @@ class Parser extends View {
 	 */
 	public $rightDelimiter = '}';
 
-	// --------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
 	/**
 	 * Constructor
@@ -84,7 +84,7 @@ class Parser extends View {
 		parent::__construct($config, $viewPath, $loader, $debug, $logger);
 	}
 
-	// --------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
 	/**
 	 * Parse a template
@@ -150,7 +150,7 @@ class Parser extends View {
 		return $output;
 	}
 
-	// --------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
 	/**
 	 * Parse a String
@@ -183,7 +183,7 @@ class Parser extends View {
 		return $output;
 	}
 
-	// --------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
 	/**
 	 * Parse a template
@@ -203,6 +203,8 @@ class Parser extends View {
 			return '';
 		}
 
+		$template = $this->parseComments($template);
+
 		// build the variable substitution list
 		$replace = array();
 		foreach ($data as $key => $val)
@@ -219,7 +221,7 @@ class Parser extends View {
 		return $template;
 	}
 
-	// --------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
 	protected function is_assoc($arr)
 	{
@@ -238,7 +240,7 @@ class Parser extends View {
 		return $allpos;
 	}
 
-// --------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
 	/**
 	 * Parse a single key/value
@@ -253,7 +255,7 @@ class Parser extends View {
 		return array($this->leftDelimiter . $key . $this->rightDelimiter => (string) $val);
 	}
 
-	// --------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
 	/**
 	 * Parse a tag pair
@@ -313,6 +315,24 @@ class Parser extends View {
 		return $replace;
 	}
 
+	//--------------------------------------------------------------------
+
+	/**
+	 * Removes any comments from the file. Comments are wrapped in {# #} symbols:
+	 *
+	 *      {# This is a comment #}
+	 *
+	 * @param string $template
+	 *
+	 * @return string
+	 */
+	protected function parseComments(string $template): string
+	{
+		return preg_replace('/\{#.*?#\}/s', '', $template);
+	}
+
+	//--------------------------------------------------------------------
+
 	/**
 	 * Over-ride the substitution field delimiters.
 	 *
@@ -327,4 +347,5 @@ class Parser extends View {
 		return $this;
 	}
 
+	//--------------------------------------------------------------------
 }
