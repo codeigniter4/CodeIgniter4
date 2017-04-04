@@ -253,6 +253,46 @@ class ParserTest extends \CIUnitTestCase
 		$this->assertEquals('HowdyWelcome', $parser->renderString($template));
 	}
 
+	public function testElseConditionalFalse()
+	{
+		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
+		$data   = [
+			'doit' => true,
+		];
+
+		$template = "{if doit}Howdy{else}Welcome{ endif }";
+		$parser->setData($data);
+
+		$this->assertEquals('Howdy', $parser->renderString($template));
+	}
+
+	public function testElseConditionalTrue()
+	{
+		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
+		$data   = [
+			'doit' => false,
+		];
+
+		$template = "{if doit}Howdy{else}Welcome{ endif }";
+		$parser->setData($data);
+
+		$this->assertEquals('Welcome', $parser->renderString($template));
+	}
+
+	public function testElseifConditionalTrue()
+	{
+		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
+		$data   = [
+			'doit' => false,
+			'dontdoit' => true
+		];
+
+		$template = "{if doit}Howdy{elseif dontdoit}Welcome{ endif }";
+		$parser->setData($data);
+
+		$this->assertEquals('Welcome', $parser->renderString($template));
+	}
+
 	public function testWontParsePHP()
 	{
 		$parser = new Parser($this->config, $this->viewsDir, $this->loader);

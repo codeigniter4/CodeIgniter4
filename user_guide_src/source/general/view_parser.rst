@@ -276,6 +276,40 @@ You can specify portions of the page to not be parsed with the ``{noparse}{/nopa
 		<h1>Untouched Code</h1>
 	{/noparse}
 
+Conditional Logic
+=================
+
+The Parser class supports some basic conditionals to handle ``if``, ``else``, and ``elseif`` syntax. All ``if``
+blocks must be closed with an ``endif`` tag::
+
+	{if role=='admin'}
+		<h1>Welcome, Admin!</h1>
+	{endif}
+
+This simple block is converted to the following during parsing::
+
+	<?php if ($role=='admin') ?>
+		<h1>Welcome, Admin!</h1>
+	<?php endif ?>
+
+All variables used within if statement must have been previously set with the same name. Other than that, it is
+treated exactly like a standard PHP conditional, and all standard PHP rules would apply here. You can use any
+of the comparison operators you would normally, like ``==``, ``===``, ``!==``, ``<``, ``>``, etc.
+
+::
+
+	{if role=='admin'}
+		<h1>Welcome, Admin</h1>
+	{elseif role=='moderator'}
+		<h1>Welcome, Moderator</h1>
+	{else}
+		<h1>Welcome, User</h1>
+	{endif}
+
+
+.. note:: In the background, conditionals are parsed using an **eval()**, so you must ensure that you take
+	care with the user data that is used within conditionals, or you could open your application up to security risks.
+
 Cascading Data
 ==============
 

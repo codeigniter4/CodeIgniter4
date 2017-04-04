@@ -437,7 +437,9 @@ class Parser extends View {
 			// Build the string to replace the `if` statement with.
 			$condition = $match[2];
 
-			$statement = '<?php if ($'.$condition.'): ?>';
+			$statement = $match[1] == 'elseif'
+				? '<?php elseif ($'.$condition.'): ?>'
+				: '<?php if ($'.$condition.'): ?>';
 			$template = str_replace($match[0], $statement, $template);
 		}
 
