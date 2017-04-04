@@ -276,6 +276,8 @@ class Parser extends View {
 	 */
 	protected function parseSingle(string $key, string $val, string $template): array
 	{
+		$val = esc($val, 'html');
+
 		$pattern = '#'.$this->leftDelimiter.'\s*'.preg_quote($key).'\s*'.$this->rightDelimiter.'#ms';
 
 		return [$pattern => (string) $val];
@@ -344,7 +346,7 @@ class Parser extends View {
 						$val = 'Resource';
 					}
 
-					$temp['#'.$this->leftDelimiter.'\s*'.preg_quote($key).'\s*'. $this->rightDelimiter.'#s'] = $val;
+					$temp['#'.$this->leftDelimiter.'\s*'.preg_quote($key).'\s*'. $this->rightDelimiter.'#s'] = esc($val, 'html');
 				}
 
 				// Now replace our placeholders with the new content.
