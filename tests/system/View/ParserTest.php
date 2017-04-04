@@ -123,7 +123,7 @@ class ParserTest extends \CIUnitTestCase
 			],
 		];
 
-		$template = "{title}\n{powers}{invisibility}\n{flying}{/powers}\nsecond:{powers} {invisibility} {flying}{/powers}";
+		$template = "{ title }\n{ powers }{invisibility}\n{flying}{/powers}\nsecond:{powers} {invisibility} {flying}{ /powers}";
 
 		$parser->setData($data);
 		$this->assertEquals("Super Heroes\nyes\nno\nsecond: yes no", $parser->renderString($template));
@@ -301,5 +301,22 @@ class ParserTest extends \CIUnitTestCase
 		$this->assertEquals('&lt;?php echo \'Foo\' ?&gt; - &lt;?= \'Bar\' ?&gt;', $parser->renderString($template));
 	}
 
+	public function testParseHandlesSpaces()
+	{
+		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
+		$data   = [
+			'title' => 'Page Title',
+			'body'  => 'Lorem ipsum dolor sit amet.',
+		];
+
+		$template = "{ title}\n{ body }";
+
+		$result = implode("\n", $data);
+
+		$parser->setData($data);
+		$this->assertEquals($result, $parser->renderString($template));
+	}
+
+	// --------------------------------------------------------------------
 
 }

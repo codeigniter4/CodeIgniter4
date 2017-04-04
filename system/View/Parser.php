@@ -233,7 +233,10 @@ class Parser extends View {
 
 		unset($data);
 		// do the substitutions
-		$template = strtr($template, $replace);
+		foreach ($replace as $pattern => $content)
+		{
+			$template = preg_replace($pattern, $content, $template);
+		}
 
 		$template = $this->insertNoparse($template);
 
@@ -273,7 +276,9 @@ class Parser extends View {
 	 */
 	protected function parseSingle(string $key, string $val, string $template): array
 	{
-		return array($this->leftDelimiter . $key . $this->rightDelimiter => (string) $val);
+		$pattern = '#'.$this->leftDelimiter.'\s*'.preg_quote($key).'\s*'.$this->rightDelimiter.'#ms';
+
+		return [$pattern => (string) $val];
 	}
 
 	//--------------------------------------------------------------------
@@ -290,21 +295,36 @@ class Parser extends View {
 	 */
 	protected function parsePair(string $variable, array $data, string $template): array
 	{
-		$replace = array();
+		// Holds the replacement patterns and contents
+		// that will be used within a preg_replace in parse()
+		$replace = [];
+
+		// Find all matches of space-flexible versions of {tag}{/tag} so we
+		// have something to loop over.
 		preg_match_all(
-				'#' . preg_quote($this->leftDelimiter . $variable . $this->rightDelimiter) . '(.+?)' .
-				preg_quote($this->leftDelimiter . '/' . $variable . $this->rightDelimiter) . '#s',
+				'#'.$this->leftDelimiter.'\s*'.preg_quote($variable).'\s*'.$this->rightDelimiter.'(.+?)' .
+				$this->leftDelimiter.'\s*'.'/'.preg_quote($variable).'\s*'.$this->rightDelimiter.'#s',
 				$template, $matches, PREG_SET_ORDER
 		);
 
+		/*
+		 * Each match looks like:
+		 *
+		 * $match[0] {tag}...{/tag}
+		 * $match[1] Contents inside the tag
+		 */
 		foreach ($matches as $match)
 		{
-			$str = '';
+			// Loop over each piece of $data, replacing
+			// it's contents so that we know what to replace in parse()
+			$str = '';  // holds the new contents for this tag pair.
 			foreach ($data as $row)
 			{
-				$temp = array();
+				$temp = [];
+				$out  = $match[1];
 				foreach ($row as $key => $val)
 				{
+					// For nested data, send us back through this method...
 					if (is_array($val))
 					{
 						$pair = $this->parsePair($key, $val, $match[1]);
@@ -324,13 +344,19 @@ class Parser extends View {
 						$val = 'Resource';
 					}
 
-					$temp[$this->leftDelimiter . $key . $this->rightDelimiter] = $val;
+					$temp['#'.$this->leftDelimiter.'\s*'.preg_quote($key).'\s*'. $this->rightDelimiter.'#s'] = $val;
 				}
 
-				$str .= strtr($match[1], $temp);
+				// Now replace our placeholders with the new content.
+				foreach ($temp as $pattern => $content)
+				{
+					$out = preg_replace($pattern, $content, $out);
+				}
+
+				$str .= $out;
 			}
 
-			$replace[$match[0]] = $str;
+			$replace['#'.$match[0].'#s'] = $str;
 		}
 
 		return $replace;
@@ -366,7 +392,7 @@ class Parser extends View {
 	{
 		$pattern = '/\{\s*noparse\s*\}(.*?)\{\s*\/noparse\s*\}/ms';
 
-		/**
+		/*
 		 * $matches[][0] is the raw match
 		 * $matches[][1] is the contents
 		 */
