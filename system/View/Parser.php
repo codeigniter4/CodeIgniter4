@@ -221,13 +221,13 @@ class Parser extends View {
 		$template = $this->parseConditionals($template);
 
 		// build the variable substitution list
-		$replace = array();
+		$replace = [];
 		foreach ($data as $key => $val)
 		{
 			$replace = array_merge(
 				$replace, is_array($val)
 					? $this->parsePair($key, $val, $template)
-					: $this->parseSingle($key, (string) $val, $template)
+					: $this->parseSingle($key, (string)$val, $template)
 			);
 		}
 
@@ -235,7 +235,9 @@ class Parser extends View {
 		// do the substitutions
 		foreach ($replace as $pattern => $content)
 		{
-			$template = preg_replace($pattern, $content, $template);
+			$template = preg_replace_callback($pattern, function($matches) use($content) {
+				return $this->prepareReplacement($matches, $content);
+			}, $template);
 		}
 
 		$template = $this->insertNoparse($template);
@@ -278,7 +280,7 @@ class Parser extends View {
 	{
 		$val = esc($val, 'html');
 
-		$pattern = '#'.$this->leftDelimiter.'\s*'.preg_quote($key).'\s*'.$this->rightDelimiter.'#ms';
+		$pattern = '#'.$this->leftDelimiter.'\s*'.preg_quote($key).'\s*\|*\s*([|a-zA-Z\(\):\-\s]+)*\s*'.$this->rightDelimiter.'#ms';
 
 		return [$pattern => (string) $val];
 	}
@@ -345,8 +347,12 @@ class Parser extends View {
 					{
 						$val = 'Resource';
 					}
+					else
+					{
+						$val = esc($val, 'html');
+					}
 
-					$temp['#'.$this->leftDelimiter.'\s*'.preg_quote($key).'\s*'. $this->rightDelimiter.'#s'] = esc($val, 'html');
+					$temp['#'.$this->leftDelimiter.'\s*'.preg_quote($key).'\s*'. $this->rightDelimiter.'#s'] = $val;
 				}
 
 				// Now replace our placeholders with the new content.
@@ -505,4 +511,40 @@ class Parser extends View {
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Callback used during parse() to apply any filters to the value.
+	 *
+	 * @param array  $matches
+	 * @param string $replace
+	 *
+	 * @return mixed|string
+	 */
+	protected function prepareReplacement(array $matches, string $replace)
+	{
+		// No filters? Get outta here..
+		if (count($matches) === 1) return $replace;
+
+		$orig = array_shift($matches);
+
+		// Determine the requested filters
+		foreach ($matches as $filter)
+		{
+			// Grab any parameter we might need to send
+			if (! preg_match('/\([a-zA-Z0-9\-:_ ]+\)/', $filter, $param)) continue;
+
+			// Remove the () and spaces to we have just tha parameter left
+			$param = trim($param[0], '() ');
+
+			// Get our filter name
+			$filter = strtolower(substr($filter, 0, strpos($filter, '(')));
+
+			if (! array_key_exists($filter, $this->config->filters)) continue;
+
+			// Filter it....
+			$replace = call_user_func($this->config->filters[$filter], $replace, $param);
+		}
+
+		return $replace;
+	}
 }

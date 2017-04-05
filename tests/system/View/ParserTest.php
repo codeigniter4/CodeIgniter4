@@ -205,6 +205,40 @@ class ParserTest extends \CIUnitTestCase
 
 	// ------------------------------------------------------------------------
 
+	public function testFilterWithNoArgument()
+	{
+		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
+
+		$data = [
+			'that_thing' => '<script>alert("ci4")</script>'
+		];
+
+		$template = '{ that_thing|esc) }';
+
+		$parser->setData($data);
+		$this->assertEquals('&lt;script&gt;alert(&quot;ci4&quot;)&lt;/script&gt;', $parser->renderString($template));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testFilterWithArgument()
+	{
+		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
+
+		$date = time();
+
+		$data = [
+			'my_date' => $date
+		];
+
+		$template = '{ my_date| date(Y-m-d ) }';
+
+		$parser->setData($data);
+		$this->assertEquals(date('Y-m-d', $date), $parser->renderString($template));
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testParserEscapesDataDefaultsToHTML()
 	{
 		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
@@ -220,6 +254,21 @@ class ParserTest extends \CIUnitTestCase
 		$parser->setData($data);
 		$this->assertEquals('&lt;script&gt;Heroes&lt;/script&gt; &lt;a href=&#039;test&#039;&gt;Link&lt;/a&gt;', $parser->renderString($template));
 	}
+
+	//--------------------------------------------------------------------
+
+//	public function testParserEscapesChooseContext()
+//	{
+//		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
+//
+//		$data = [
+//			'title' => "<script>alert('ci4')</script>",
+//		];
+//
+//		$template = "{ title|esc(attr) }";
+//		$parser->setData($data);
+//		$this->assertEquals('&lt;script&gt;alert&#x28;&quot;ci4&quot;&#x29;&lt;&#x2F;script&gt;', $parser->renderString($template));
+//	}
 
 	//--------------------------------------------------------------------
 
