@@ -220,7 +220,9 @@ class Filters {
 	 */
 	public static function nl2br(string $value): string
 	{
-		return str_replace("\n", '<br/>', $value);
+		$typography = \Config\Services::typography();
+
+		return $typography->nl2brExceptPre($value);
 	}
 
 	//--------------------------------------------------------------------
