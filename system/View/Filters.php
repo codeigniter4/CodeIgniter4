@@ -40,27 +40,34 @@ class Filters {
 	 */
 	public static function date($value, string $format): string
 	{
-		$date = new \DateTime(strtotime($value));
-		return $date->format($format);
+		if (is_string($value) && ! is_numeric($value))
+		{
+			$value = strtotime($value);
+		}
+
+		return date($format, $value);
 	}
 
 	//--------------------------------------------------------------------
 
 	/**
 	 * Given a string or DateTime object, will return the date modified
-	 * by the given value.
+	 * by the given value. Returns the value as a unix timestamp
 	 *
 	 * Example:
 	 *      my_date|date_modify(+1 day)
 	 *
 	 * @param        $value
-	 * @param string $format
+	 * @param string $adjustment
 	 *
 	 * @return string
+	 * @internal param string $format
+	 *
 	 */
-	public static function date_modify($value, string $format): string
+	public static function date_modify($value, string $adjustment): string
 	{
-
+		$value = self::date($value, 'Y-m-d H:i:s');
+		return strtotime($adjustment, strtotime($value));
 	}
 
 	//--------------------------------------------------------------------
@@ -68,7 +75,8 @@ class Filters {
 	/**
 	 * Returns the given default value if $value is empty or undefined.
 	 *
-	 * @param $value
+	 * @param        $value
+	 * @param string $default
 	 *
 	 * @return string
 	 */
@@ -104,11 +112,11 @@ class Filters {
 	 *
 	 * @return string
 	 */
-	public static function excerpt(string $value, int $radius = 100): string
+	public static function excerpt(string $value, string $phrase, int $radius = 100): string
 	{
 		helper('text');
 
-		return excerpt($value, null, $radius);
+		return excerpt($value, $phrase, $radius);
 	}
 
 	//--------------------------------------------------------------------
@@ -142,21 +150,6 @@ class Filters {
 		helper('text');
 
 		return highlight_code($value);
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Performs an implode on an array, joining with $glue.
-	 *
-	 * @param array  $value
-	 * @param string $glue
-	 *
-	 * @return string
-	 */
-	public static function join(array $value, string $glue=''): string
-	{
-		return implode($glue, $value);
 	}
 
 	//--------------------------------------------------------------------
@@ -231,14 +224,15 @@ class Filters {
 	 * Wraps PHP number_format function for use within the parser.
 	 *
 	 * @param string $value
+	 * @param int    $places
 	 * @param string $decimal
 	 * @param string $separator
 	 *
 	 * @return string
 	 */
-	public static function number_format(string $value, string $decimal = '.', string $separator = ','): string
+	public static function number_format(string $value, int $places): string
 	{
-		return number_format($value, $decimal, $separator);
+		return number_format($value, $places);
 	}
 
 	//--------------------------------------------------------------------
@@ -273,8 +267,15 @@ class Filters {
 	 *
 	 * @return string
 	 */
-	public static function round($value, int $precision=2, $type='common')
+	public static function round($value, $precision=2, $type='common')
 	{
+
+		if (! is_numeric($precision))
+		{
+			$type = $precision;
+			$precision = 2;
+		}
+
 		switch ($type)
 		{
 			case 'common':

@@ -278,9 +278,7 @@ class Parser extends View {
 	 */
 	protected function parseSingle(string $key, string $val, string $template): array
 	{
-		$val = esc($val, 'html');
-
-		$pattern = '#'.$this->leftDelimiter.'\s*'.preg_quote($key).'\s*\|*\s*([|a-zA-Z\(\):\-\s]+)*\s*'.$this->rightDelimiter.'#ms';
+		$pattern = '#'.$this->leftDelimiter.'\s*'.preg_quote($key).'\s*\|*\s*([|a-zA-Z0-9<>=\(\),:_\-\s\+]+)*\s*'.$this->rightDelimiter.'#ms';
 
 		return [$pattern => (string) $val];
 	}
@@ -347,12 +345,8 @@ class Parser extends View {
 					{
 						$val = 'Resource';
 					}
-					else
-					{
-						$val = esc($val, 'html');
-					}
 
-					$temp['#'.$this->leftDelimiter.'\s*'.preg_quote($key).'\s*'. $this->rightDelimiter.'#s'] = $val;
+					$temp['#'.$this->leftDelimiter.'\s*'.preg_quote($key).'\s*\|*\s*([|a-zA-Z0-9<>=\(\),:_\-\s\+]+)*\s*'. $this->rightDelimiter.'#s'] = $val;
 				}
 
 				// Now replace our placeholders with the new content.
@@ -527,22 +521,46 @@ class Parser extends View {
 
 		$orig = array_shift($matches);
 
+		// Our regex earlier will leave all chained values on a single line
+		// so we need to break them apart so we can apply them all.
+		$filters = explode('|', $matches[0]);
+
 		// Determine the requested filters
-		foreach ($matches as $filter)
+		foreach ($filters as $filter)
 		{
 			// Grab any parameter we might need to send
-			if (! preg_match('/\([a-zA-Z0-9\-:_ ]+\)/', $filter, $param)) continue;
+			preg_match('/\([a-zA-Z0-9\-:_ +,<>=]+\)/', $filter, $param);
 
-			// Remove the () and spaces to we have just tha parameter left
-			$param = trim($param[0], '() ');
+			// Remove the () and spaces to we have just the parameter left
+			$param = ! empty($param)
+				? trim($param[0], '() ')
+				: null;
+
+			// Params can be separated by commas to allow multiple parameters for the filter
+			if (! empty($param))
+			{
+				$param = explode(',', $param);
+
+				// Clean it up
+				foreach ($param as &$p)
+				{
+					$p = trim($p, ' "');
+				}
+			}
+			else
+			{
+				$param = [];
+			}
 
 			// Get our filter name
-			$filter = strtolower(substr($filter, 0, strpos($filter, '(')));
+			$filter = $param !== []
+				? trim(strtolower(substr($filter, 0, strpos($filter, '('))))
+				: trim($filter);
 
 			if (! array_key_exists($filter, $this->config->filters)) continue;
 
 			// Filter it....
-			$replace = call_user_func($this->config->filters[$filter], $replace, $param);
+			$replace = call_user_func($this->config->filters[$filter], $replace, ...$param);
 		}
 
 		return $replace;

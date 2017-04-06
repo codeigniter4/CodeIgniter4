@@ -16,6 +16,7 @@ class View {
 		'limit_chars'       => '\CodeIgniter\View\Filters::limit_chars',
 		'lower'             => '\CodeIgniter\View\Filters::lower',
 		'nl2br'             => '\CodeIgniter\View\Filters::nl2br',
+		'number_format'     => '\CodeIgniter\View\Filters::number_format',
 		'prose'             => '\CodeIgniter\View\Filters::prose',
 		'round'             => '\CodeIgniter\View\Filters::round',
 		'strip_tags'        => '\CodeIgniter\View\Filters::strip_tags',
