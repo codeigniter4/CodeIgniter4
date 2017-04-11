@@ -227,14 +227,12 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 * Keep or establish the connection if no queries have been sent for
 	 * a length of time exceeding the server's idle timeout.
 	 *
-	 * @return mixed
+	 * @return void
 	 */
 	public function reconnect()
 	{
-		if ($this->connID !== false && $this->connID->ping() === false)
-		{
-			$this->connID = false;
-		}
+		$this->close();
+		$this->initialize();
 	}
 
 	//--------------------------------------------------------------------
