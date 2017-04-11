@@ -12,13 +12,6 @@
  * this class mainly acts as a passthru to the framework itself.
  */
 
-// Location to the Paths config file.
-$pathsPath = 'application/Config/Paths.php';
-$public = trim($paths->publicDirectory, '/');
-
-// Path to the front controller
-define('FCPATH', realpath($public).DIRECTORY_SEPARATOR);
-
 /*
  *---------------------------------------------------------------
  * BOOTSTRAP THE APPLICATION
@@ -33,6 +26,14 @@ if (substr(php_sapi_name(), 0, 3) == 'cgi')
 {
 	die("The cli tool is not supported when running php-cgi. It needs php-cli to function!\n\n");
 }
+
+// Location to the Paths config file.
+$pathsPath = 'application/Config/Paths.php';
+
+$public = trim($paths->publicDirectory, '/');
+
+// Path to the front controller
+define('FCPATH', realpath($public).DIRECTORY_SEPARATOR);
 
 // Ensure the current directory is pointing to the front controller's directory
 chdir('public');
