@@ -540,7 +540,9 @@ class MigrationRunner
 			->orderBy('version', 'DESC')
 			->get();
 
-		return $row ? $row->getRow()->version : '0';
+		return $row && ! is_null($row->getRow())
+            ? $row->getRow()->version
+            : '0';
 	}
 
 	//--------------------------------------------------------------------

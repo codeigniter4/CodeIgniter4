@@ -16,6 +16,7 @@ class PagerTest extends \CIUnitTestCase
 
 	public function __construct()
 	{
+	    parent::__construct();
 		helper('url');
 	}
 
@@ -31,9 +32,6 @@ class PagerTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	/**
-	 * @group single
-	 */
 	public function testSetPathRemembersPath()
 	{
 	    $this->pager->setPath('foo/bar');
