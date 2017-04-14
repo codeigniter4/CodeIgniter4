@@ -233,17 +233,25 @@ class Parser extends View {
         // the content as we go.
 		foreach ($data as $key => $val)
 		{
-		    $replace = is_array($val)
-                ? $this->parsePair($key, $val, $template)
-                : $this->parseSingle($key, (string)$val, $template);
+		    $escape = true;
 
-		    $pattern = key($replace);
-		    $content = array_shift($replace);
+		    if (is_array($val))
+            {
+                $escape = false;
+                $replace = $this->parsePair($key, $val, $template);
+            }
+            else
+            {
+                $replace = $this->parseSingle($key, (string)$val, $template);
+            }
 
-		    // Replace the content in the template
-            $template = preg_replace_callback($pattern, function($matches) use($content) {
-                return $this->prepareReplacement($matches, $content);
-            }, $template);
+            foreach ($replace as $pattern => $content)
+            {
+                // Replace the content in the template
+                $template = preg_replace_callback($pattern, function ($matches) use ($content, $escape) {
+                    return $this->prepareReplacement($matches, $content, $escape);
+                }, $template);
+            }
 		}
 
 		$template = $this->insertNoparse($template);
@@ -358,7 +366,9 @@ class Parser extends View {
 				// Now replace our placeholders with the new content.
 				foreach ($temp as $pattern => $content)
 				{
-					$out = preg_replace($pattern, $content, $out);
+                    $out = preg_replace_callback($pattern, function($matches) use($content) {
+                        return $this->prepareReplacement($matches, $content);
+                    }, $out);
 				}
 
 				$str .= $out;
@@ -520,16 +530,20 @@ class Parser extends View {
 	 *
 	 * @return mixed|string
 	 */
-	protected function prepareReplacement(array $matches, string $replace)
+	protected function prepareReplacement(array $matches, string $replace, bool $escape=true)
 	{
-	    // No filters? Then we outta here.
-	    if (count($matches) === 1) return $replace;
-
 		$orig = array_shift($matches);
 
 		// Our regex earlier will leave all chained values on a single line
 		// so we need to break them apart so we can apply them all.
-		$filters = explode('|', $matches[0]);
+		$filters = isset($matches[0])
+            ? explode('|', $matches[0])
+            : [];
+
+		if ($escape && (! isset($matches[0]) || $this->shouldAddEscaping($orig)))
+        {
+            $filters[] = 'esc(html)';
+        }
 
 		$replace = $this->applyFilters($replace, $filters);
 
@@ -540,36 +554,32 @@ class Parser extends View {
 
     /**
      * Checks the placeholder the view provided to see if we need to provide any autoescaping.
-     * Keeps a list of all that do so it can be checked prior to replacement.
      *
      * @param string $key
+     *
+     * @return bool
      */
-//    public function checkEscaping(string $key)
-//    {
-//        $escape = false;
-//
-//        // No pipes, then we know we need to escape
-//        if (strpos($key, '|') === false) {
-//            $escape = true;
-//        }
-//        // If there's a `noescape` then we're definitely false.
-//        elseif (strpos($key, 'noescape') !== false)
-//        {
-//            $escape = false;
-//        }
-//        // If no `esc` filter is found, then we'll need to add one.
-//        elseif (! preg_match('/^|\s+esc/', $key))
-//        {
-//            $escape = true;
-//        }
-//        // No need to store an explicit instruction otherwise.
-//        else
-//        {
-//            return;
-//        }
-//
-//        $this->autoescapes[$key] = $escape;
-//    }
+    public function shouldAddEscaping(string $key)
+    {
+        $escape = false;
+
+        // No pipes, then we know we need to escape
+        if (strpos($key, '|') === false) {
+            $escape = true;
+        }
+        // If there's a `noescape` then we're definitely false.
+        elseif (strpos($key, 'noescape') !== false)
+        {
+            $escape = false;
+        }
+        // If no `esc` filter is found, then we'll need to add one.
+        elseif (! preg_match('/^|\s+esc/', $key))
+        {
+            $escape = true;
+        }
+
+        return $escape;
+    }
 
     //--------------------------------------------------------------------
 

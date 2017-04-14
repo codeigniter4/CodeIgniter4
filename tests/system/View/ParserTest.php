@@ -113,20 +113,35 @@ class ParserTest extends \CIUnitTestCase
 
 	// --------------------------------------------------------------------
 
-	public function testParseNested()
+    public function testParseArraySingle()
+    {
+        $parser = new Parser($this->config, $this->viewsDir, $this->loader);
+        $data   = [
+            'title'  => 'Super Heroes',
+            'powers' => [
+                ['invisibility' => 'yes', 'flying' => 'no'],
+            ],
+        ];
+
+        $template = "{ title }\n{ powers }{invisibility}\n{flying}{/powers}";
+
+        $parser->setData($data);
+        $this->assertEquals("Super Heroes\nyes\nno", $parser->renderString($template));
+    }
+
+	public function testParseArrayMulti()
 	{
 		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
 		$data   = [
-			'title'  => 'Super Heroes',
 			'powers' => [
 				['invisibility' => 'yes', 'flying' => 'no'],
 			],
 		];
 
-		$template = "{ title }\n{ powers }{invisibility}\n{flying}{/powers}\nsecond:{powers} {invisibility} {flying}{ /powers}";
+		$template = "{ powers }{invisibility}\n{flying}{/powers}\nsecond:{powers} {invisibility} {flying}{ /powers}";
 
 		$parser->setData($data);
-		$this->assertEquals("Super Heroes\nyes\nno\nsecond: yes no", $parser->renderString($template));
+		$this->assertEquals("yes\nno\nsecond: yes no", $parser->renderString($template));
 	}
 
 	// --------------------------------------------------------------------
