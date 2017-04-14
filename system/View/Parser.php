@@ -75,6 +75,15 @@ class Parser extends View {
 	 */
 	protected $noparseBlocks = [];
 
+    /**
+     * Stores the details about any variables
+     * that are extracted during parsing along
+     * with escaping information.
+     *
+     * @var array
+     */
+	protected $extractions = [];
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -220,24 +229,21 @@ class Parser extends View {
 		// Replace any conditional code here so we don't have to parse as much
 		$template = $this->parseConditionals($template);
 
-		// build the variable substitution list
-		$replace = [];
+		// loop over the data variables, replacing
+        // the content as we go.
 		foreach ($data as $key => $val)
 		{
-			$replace = array_merge(
-				$replace, is_array($val)
-					? $this->parsePair($key, $val, $template)
-					: $this->parseSingle($key, (string)$val, $template)
-			);
-		}
+		    $replace = is_array($val)
+                ? $this->parsePair($key, $val, $template)
+                : $this->parseSingle($key, (string)$val, $template);
 
-		unset($data);
-		// do the substitutions
-		foreach ($replace as $pattern => $content)
-		{
-			$template = preg_replace_callback($pattern, function($matches) use($content) {
-				return $this->prepareReplacement($matches, $content);
-			}, $template);
+		    $pattern = key($replace);
+		    $content = array_shift($replace);
+
+		    // Replace the content in the template
+            $template = preg_replace_callback($pattern, function($matches) use($content) {
+                return $this->prepareReplacement($matches, $content);
+            }, $template);
 		}
 
 		$template = $this->insertNoparse($template);
@@ -269,7 +275,7 @@ class Parser extends View {
 	//--------------------------------------------------------------------
 
 	/**
-	 * Parse a single key/value
+	 * Parse a single key/value, extracting it
 	 *
 	 * @param	string $key
 	 * @param	string $val
@@ -516,8 +522,8 @@ class Parser extends View {
 	 */
 	protected function prepareReplacement(array $matches, string $replace)
 	{
-		// No filters? Get outta here..
-		if (count($matches) === 1) return $replace;
+	    // No filters? Then we outta here.
+	    if (count($matches) === 1) return $replace;
 
 		$orig = array_shift($matches);
 
@@ -525,44 +531,97 @@ class Parser extends View {
 		// so we need to break them apart so we can apply them all.
 		$filters = explode('|', $matches[0]);
 
-		// Determine the requested filters
-		foreach ($filters as $filter)
-		{
-			// Grab any parameter we might need to send
-			preg_match('/\([a-zA-Z0-9\-:_ +,<>=]+\)/', $filter, $param);
-
-			// Remove the () and spaces to we have just the parameter left
-			$param = ! empty($param)
-				? trim($param[0], '() ')
-				: null;
-
-			// Params can be separated by commas to allow multiple parameters for the filter
-			if (! empty($param))
-			{
-				$param = explode(',', $param);
-
-				// Clean it up
-				foreach ($param as &$p)
-				{
-					$p = trim($p, ' "');
-				}
-			}
-			else
-			{
-				$param = [];
-			}
-
-			// Get our filter name
-			$filter = $param !== []
-				? trim(strtolower(substr($filter, 0, strpos($filter, '('))))
-				: trim($filter);
-
-			if (! array_key_exists($filter, $this->config->filters)) continue;
-
-			// Filter it....
-			$replace = call_user_func($this->config->filters[$filter], $replace, ...$param);
-		}
+		$replace = $this->applyFilters($replace, $filters);
 
 		return $replace;
 	}
+
+    //--------------------------------------------------------------------
+
+    /**
+     * Checks the placeholder the view provided to see if we need to provide any autoescaping.
+     * Keeps a list of all that do so it can be checked prior to replacement.
+     *
+     * @param string $key
+     */
+//    public function checkEscaping(string $key)
+//    {
+//        $escape = false;
+//
+//        // No pipes, then we know we need to escape
+//        if (strpos($key, '|') === false) {
+//            $escape = true;
+//        }
+//        // If there's a `noescape` then we're definitely false.
+//        elseif (strpos($key, 'noescape') !== false)
+//        {
+//            $escape = false;
+//        }
+//        // If no `esc` filter is found, then we'll need to add one.
+//        elseif (! preg_match('/^|\s+esc/', $key))
+//        {
+//            $escape = true;
+//        }
+//        // No need to store an explicit instruction otherwise.
+//        else
+//        {
+//            return;
+//        }
+//
+//        $this->autoescapes[$key] = $escape;
+//    }
+
+    //--------------------------------------------------------------------
+
+    /**
+     * Given a set of filters, will apply each of the filters in turn
+     * to $replace, and return the modified string.
+     *
+     * @param string $replace
+     * @param array  $filters
+     *
+     * @return string
+     */
+    protected function applyFilters(string $replace, array $filters): string
+    {
+        // Determine the requested filters
+        foreach ($filters as $filter)
+        {
+            // Grab any parameter we might need to send
+            preg_match('/\([a-zA-Z0-9\-:_ +,<>=]+\)/', $filter, $param);
+
+            // Remove the () and spaces to we have just the parameter left
+            $param = ! empty($param)
+                ? trim($param[0], '() ')
+                : null;
+
+            // Params can be separated by commas to allow multiple parameters for the filter
+            if (! empty($param))
+            {
+                $param = explode(',', $param);
+
+                // Clean it up
+                foreach ($param as &$p)
+                {
+                    $p = trim($p, ' "');
+                }
+            }
+            else
+            {
+                $param = [];
+            }
+
+            // Get our filter name
+            $filter = $param !== []
+                ? trim(strtolower(substr($filter, 0, strpos($filter, '('))))
+                : trim($filter);
+
+            if (! array_key_exists($filter, $this->config->filters)) continue;
+
+            // Filter it....
+            $replace = call_user_func($this->config->filters[$filter], $replace, ...$param);
+        }
+
+        return $replace;
+    }
 }

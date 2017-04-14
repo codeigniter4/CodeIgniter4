@@ -213,7 +213,7 @@ class ParserTest extends \CIUnitTestCase
 			'that_thing' => '<script>alert("ci4")</script>'
 		];
 
-		$template = '{ that_thing|esc) }';
+		$template = '{ that_thing|esc }';
 
 		$parser->setData($data);
 		$this->assertEquals('&lt;script&gt;alert(&quot;ci4&quot;)&lt;/script&gt;', $parser->renderString($template));
