@@ -242,13 +242,20 @@ class Parser extends View {
             }
             else
             {
-                $replace = $this->parseSingle($key, (string)$val, $template);
+                $replace = $this->parseSingle($key, (string)$val);
             }
 
             foreach ($replace as $pattern => $content)
             {
                 // Replace the content in the template
                 $template = preg_replace_callback($pattern, function ($matches) use ($content, $escape) {
+
+                    // Check for {! !} syntax to not-escape this one.
+                    if (substr($matches[0], 0, 2) == '{!' && substr($matches[0], -2) == '!}')
+                    {
+                        $escape = false;
+                    }
+
                     return $this->prepareReplacement($matches, $content, $escape);
                 }, $template);
             }
@@ -287,12 +294,11 @@ class Parser extends View {
 	 *
 	 * @param	string $key
 	 * @param	string $val
-	 * @param	string $template
 	 * @return	array
 	 */
-	protected function parseSingle(string $key, string $val, string $template): array
+	protected function parseSingle(string $key, string $val): array
 	{
-		$pattern = '#'.$this->leftDelimiter.'\s*'.preg_quote($key).'\s*\|*\s*([|a-zA-Z0-9<>=\(\),:_\-\s\+]+)*\s*'.$this->rightDelimiter.'#ms';
+		$pattern = '#'.$this->leftDelimiter.'!?\s*'.preg_quote($key).'\s*\|*\s*([|a-zA-Z0-9<>=\(\),:_\-\s\+]+)*\s*!?'.$this->rightDelimiter.'#ms';
 
 		return [$pattern => (string) $val];
 	}
@@ -360,7 +366,7 @@ class Parser extends View {
 						$val = 'Resource';
 					}
 
-					$temp['#'.$this->leftDelimiter.'\s*'.preg_quote($key).'\s*\|*\s*([|a-zA-Z0-9<>=\(\),:_\-\s\+]+)*\s*'. $this->rightDelimiter.'#s'] = $val;
+					$temp['#'.$this->leftDelimiter.'!?\s*'.preg_quote($key).'\s*\|*\s*([|a-zA-Z0-9<>=\(\),:_\-\s\+]+)*\s*!?'. $this->rightDelimiter.'#s'] = $val;
 				}
 
 				// Now replace our placeholders with the new content.

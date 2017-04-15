@@ -272,6 +272,21 @@ class ParserTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+    public function testParserNoEscape()
+    {
+        $parser = new Parser($this->config, $this->viewsDir, $this->loader);
+
+        $data = [
+            'title' => '<script>Heroes</script>',
+        ];
+
+        $template = "{! title!}";
+        $parser->setData($data);
+        $this->assertEquals('<script>Heroes</script>', $parser->renderString($template));
+    }
+
+    //--------------------------------------------------------------------
+
 //	public function testParserEscapesChooseContext()
 //	{
 //		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
