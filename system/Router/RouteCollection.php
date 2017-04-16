@@ -924,9 +924,9 @@ class RouteCollection implements RouteCollectionInterface
 	 * @param string $search
 	 * @param        ...$params
      *
-     * @return string
+     * @return string|false
 	 */
-	public function reverseRoute(string $search, ...$params): string
+	public function reverseRoute(string $search, ...$params)
 	{
 		// Named routes get higher priority.
 		if (array_key_exists($search, $this->routes))
@@ -964,7 +964,7 @@ class RouteCollection implements RouteCollectionInterface
 		}
 
 		// If we're still here, then we did not find a match.
-		throw new \InvalidArgumentException('Unable to locate a valid route.');
+		return false;
 	}
 
 	//--------------------------------------------------------------------

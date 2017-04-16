@@ -245,9 +245,9 @@ interface RouteCollectionInterface
 	 *
 	 * @param string $search
 	 * @param        ...$params
-	 * @return string
+	 * @return string|false
 	 */
-	public function reverseRoute(string $search, ...$params): string;
+	public function reverseRoute(string $search, ...$params);
 
 	//--------------------------------------------------------------------
 
