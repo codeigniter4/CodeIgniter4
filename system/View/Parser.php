@@ -247,17 +247,7 @@ class Parser extends View {
 
             foreach ($replace as $pattern => $content)
             {
-                // Replace the content in the template
-                $template = preg_replace_callback($pattern, function ($matches) use ($content, $escape) {
-
-                    // Check for {! !} syntax to not-escape this one.
-                    if (substr($matches[0], 0, 2) == '{!' && substr($matches[0], -2) == '!}')
-                    {
-                        $escape = false;
-                    }
-
-                    return $this->prepareReplacement($matches, $content, $escape);
-                }, $template);
+                $template = $this->replaceSingle($pattern, $content, $template, $escape);
             }
 		}
 
@@ -372,9 +362,7 @@ class Parser extends View {
 				// Now replace our placeholders with the new content.
 				foreach ($temp as $pattern => $content)
 				{
-                    $out = preg_replace_callback($pattern, function($matches) use($content) {
-                        return $this->prepareReplacement($matches, $content);
-                    }, $out);
+				    $out = $this->replaceSingle($pattern, $content, $out, true);
 				}
 
 				$str .= $out;
@@ -527,6 +515,36 @@ class Parser extends View {
 	}
 
 	//--------------------------------------------------------------------
+
+    /**
+     * Handles replacing a pseudo-variable with teh actual content. Will double-check
+     * for escaping brackets.
+     *
+     * @param      $pattern
+     * @param      $content
+     * @param      $template
+     * @param bool $escape
+     *
+     * @return string
+     */
+    protected function replaceSingle($pattern, $content, $template, bool $escape=false): string
+    {
+        // Replace the content in the template
+        $template = preg_replace_callback($pattern, function ($matches) use ($content, $escape) {
+
+            // Check for {! !} syntax to not-escape this one.
+            if (substr($matches[0], 0, 2) == '{!' && substr($matches[0], -2) == '!}')
+            {
+                $escape = false;
+            }
+
+            return $this->prepareReplacement($matches, $content, $escape);
+        }, $template);
+
+        return $template;
+    }
+
+    //--------------------------------------------------------------------
 
 	/**
 	 * Callback used during parse() to apply any filters to the value.
