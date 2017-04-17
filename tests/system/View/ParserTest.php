@@ -430,4 +430,74 @@ class ParserTest extends \CIUnitTestCase
 
 	// --------------------------------------------------------------------
 
+    public function testParseRuns()
+    {
+        $parser = new Parser($this->config, $this->viewsDir, $this->loader);
+        $data   = [
+            'title' => 'Page Title',
+            'body'  => 'Lorem ipsum dolor sit amet.',
+        ];
+
+        $template = "{ title}\n{ body }";
+
+        $result = implode("\n", $data);
+
+        $parser->setData($data);
+        $this->assertEquals($result, $parser->renderString($template));
+    }
+
+    //--------------------------------------------------------------------
+
+    /**
+     * @group parserplugins
+     */
+    public function testCanAddAndRemovePlugins()
+    {
+        $parser = new Parser($this->config, $this->viewsDir, $this->loader);
+        $parser->addPlugin('first', function($str){ return $str; });
+
+        $setParsers = $this->getPrivateProperty($parser, 'plugins');
+
+        $this->assertTrue(array_key_exists('first', $setParsers));
+
+        $parser->removePlugin('first');
+
+        $setParsers = $this->getPrivateProperty($parser, 'plugins');
+
+        $this->assertFalse(array_key_exists('first', $setParsers));
+    }
+
+    //--------------------------------------------------------------------
+
+    /**
+     * @group parserplugins
+     */
+    public function testParserPluginNoMatches()
+    {
+        $parser = new Parser($this->config, $this->viewsDir, $this->loader);
+
+        $template = "hit:it";
+
+        $this->assertEquals("hit:it", $parser->renderString($template));
+    }
+
+    //--------------------------------------------------------------------
+
+    /**
+     * @group parserplugins
+     */
+    public function testParserPluginSingleNoParams()
+    {
+        $parser = new Parser($this->config, $this->viewsDir, $this->loader);
+        $parser->addPlugin('hit:it', function(){
+            return "Hip to the Hop";
+        });
+
+        $template = "{+ hit:it +}";
+
+        $this->assertEquals("Hip to the Hop", $parser->renderString($template));
+    }
+
+    //--------------------------------------------------------------------
+
 }

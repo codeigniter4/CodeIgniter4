@@ -76,13 +76,10 @@ class Parser extends View {
 	protected $noparseBlocks = [];
 
     /**
-     * Stores the details about any variables
-     * that are extracted during parsing along
-     * with escaping information.
-     *
+     * Stores any plugins registered at run-time.
      * @var array
      */
-	protected $extractions = [];
+	protected $plugins = [];
 
 	//--------------------------------------------------------------------
 
@@ -97,6 +94,9 @@ class Parser extends View {
 	 */
 	public function __construct($config, string $viewPath = null, $loader = null, bool $debug = null, Logger $logger = null)
 	{
+	    // Ensure user plugins override core plugins.
+        $this->plugins = $config->plugins ?? [];
+
 		parent::__construct($config, $viewPath, $loader, $debug, $logger);
 	}
 
@@ -228,6 +228,10 @@ class Parser extends View {
 
 		// Replace any conditional code here so we don't have to parse as much
 		$template = $this->parseConditionals($template);
+
+		// Handle any plugins before normal data, so that
+        // it can potentially modify any template between its tags.
+        $template = $this->parsePlugins($template);
 
 		// loop over the data variables, replacing
         // the content as we go.
@@ -658,4 +662,86 @@ class Parser extends View {
 
         return $replace;
     }
+    
+    //--------------------------------------------------------------------
+    // Plugins
+    //--------------------------------------------------------------------
+
+    /**
+     * Scans the template for any parser plugins, and attempts to execute them.
+     * Plugins are notated based on {+ +} opening and closing braces.
+     *
+     * When encountered,
+     *
+     * @param string $template
+     *
+     * @return string
+     */
+    protected function parsePlugins(string $template)
+    {
+        /**
+         * $matches[0] = entire string
+         * $matches[1] = opening tag, with all parameters
+         * $matches[2] = closing tag (if any)
+         */
+        preg_match('/\{\+([a-zA-Z0-9-_\\\+:=\s]*)\+}.*(\{\+\s*\/[a-zA-Z0-9-_\\\+:=\s]*\+\})?/m', $template, $matches);
+
+        if (empty($matches)) return $template;
+
+        $params = explode(' ', trim($matches[1]));
+        $tag    = trim(array_shift($params));
+
+        if (! array_key_exists($tag, $this->plugins))
+        {
+            // @todo log missing plugin or throw exception?
+            return $template;
+        }
+
+        // Single tag?
+        if (empty($matches[2]))
+        {
+            $template = str_replace($matches[0], $this->plugins[$tag](), $template);
+        }
+        // Tag pair
+        else
+        {
+
+        }
+
+        return $template;
+    }
+
+    /**
+     * Makes a new plugin available during the parsing of the template.
+     *
+     * @param string   $alias
+     * @param callable $callback
+     *
+     * @return $this
+     */
+    public function addPlugin(string $alias, callable $callback)
+    {
+        $this->plugins[$alias] = $callback;
+
+        return $this;
+    }
+
+    //--------------------------------------------------------------------
+
+    /**
+     * Removes a plugin from the available plugins.
+     *
+     * @param string $alias
+     *
+     * @return $this
+     */
+    public function removePlugin(string $alias)
+    {
+        unset($this->plugins[$alias]);
+
+        return $this;
+    }
+
+    //--------------------------------------------------------------------
+
 }

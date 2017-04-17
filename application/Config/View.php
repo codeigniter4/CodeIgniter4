@@ -24,4 +24,11 @@ class View extends \CodeIgniter\Config\View
 	 *  { created_on|date(Y-m-d)|esc(attr) }
 	 */
 	public $filters = [];
+
+    /**
+     * Parser Plugins provide a way to extend the functionality provided
+     * by the core Parser by creating aliases that will be replaced with
+     * any callable. Can be single or tag pair.
+     */
+	public $plugins = [];
 }

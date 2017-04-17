@@ -24,9 +24,14 @@ class View {
 		'upper'             => '\CodeIgniter\View\Filters::upper',
 	];
 
+	protected $corePlugins = [
+
+    ];
+
 	public function __construct()
 	{
 	    $this->filters = array_merge($this->filters, $this->coreFilters);
+	    $this->plugins = array_merge($this->plugins, $this->corePlugins);
 	}
 
 }
