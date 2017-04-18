@@ -2,7 +2,7 @@
 
 use CodeIgniter\View\Parser;
 
-class ParserFilterTest extends \CIUnitTestCase
+class ParserPluginTest extends \CIUnitTestCase
 {
 	protected $parser;
 
