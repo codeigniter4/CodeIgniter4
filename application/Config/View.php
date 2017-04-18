@@ -1,6 +1,6 @@
 <?php namespace Config;
 
-class View
+class View extends \CodeIgniter\Config\View
 {
 	/**
 	 * When false, the view method will clear the data between each
@@ -11,4 +11,24 @@ class View
 	 * set $saveData to true.
 	 */
 	public $saveData = false;
+
+	/**
+	 * Parser Filters map a filter name with any PHP callable. When the
+	 * Parser prepares a variable for display, it will chain it
+	 * through the filters in the order defined, inserting any parameters.
+	 * To prevent potential abuse, all filters MUST be defined here
+	 * in order for them to be available for use within the Parser.
+	 *
+	 * Examples:
+	 *  { title|esc(js) }
+	 *  { created_on|date(Y-m-d)|esc(attr) }
+	 */
+	public $filters = [];
+
+    /**
+     * Parser Plugins provide a way to extend the functionality provided
+     * by the core Parser by creating aliases that will be replaced with
+     * any callable. Can be single or tag pair.
+     */
+	public $plugins = [];
 }

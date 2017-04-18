@@ -859,7 +859,7 @@ if (! function_exists('excerpt'))
 
 		$ellPre = $phrase ? $ellipsis : '';
 
-		return $ellPre.$prev.$phrase.$post.$ellipsis;
+		return str_replace('  ', ' ', $ellPre.$prev.$phrase.$post.$ellipsis);
 	}
 
 	//--------------------------------------------------------------------
