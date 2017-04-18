@@ -486,18 +486,45 @@ class ParserTest extends \CIUnitTestCase
     /**
      * @group parserplugins
      */
-    public function testParserPluginSingleNoParams()
+    public function testParserPluginNoParams()
     {
         $parser = new Parser($this->config, $this->viewsDir, $this->loader);
-        $parser->addPlugin('hit:it', function(){
-            return "Hip to the Hop";
+        $parser->addPlugin('hit:it', function($str){
+            return str_replace('here', "Hip to the Hop", $str);
         });
 
-        $template = "{+ hit:it +}";
+        $template = "{+ hit:it +} stuff here {+ /hit:it +}";
 
-        $this->assertEquals("Hip to the Hop", $parser->renderString($template));
+        $this->assertEquals(" stuff Hip to the Hop ", $parser->renderString($template));
     }
 
     //--------------------------------------------------------------------
+
+	/**
+	 * @group parserplugins
+	 */
+	public function testParserPluginParams()
+	{
+		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
+		$parser->addPlugin('growth', function($str, array $params){
+			$step = $params['step'] ?? 1;
+			$count = $params['count'] ?? 2;
+
+			$out = '';
+
+			for ($i=1; $i <= $count; $i++)
+			{
+				$out .= " ".$i * $step;
+			}
+
+			return $out;
+		});
+
+		$template = "{+ growth step=2 count=4 +}  {+ /growth +}";
+
+		$this->assertEquals(" 2 4 6 8", $parser->renderString($template));
+	}
+
+	//--------------------------------------------------------------------
 
 }

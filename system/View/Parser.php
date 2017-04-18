@@ -360,7 +360,7 @@ class Parser extends View {
 						$val = 'Resource';
 					}
 
-					$temp['#'.$this->leftDelimiter.'!?\s*'.preg_quote($key).'\s*\|*\s*([|a-zA-Z0-9<>=\(\),:_\-\s\+]+)*\s*!?'. $this->rightDelimiter.'#s'] = $val;
+					$temp['#'.$this->leftDelimiter.'!?\s*'.preg_quote($key).'\s*\|*\s*([|\w<>=\(\),:_\-\s\+]+)*\s*!?'. $this->rightDelimiter.'#s'] = $val;
 				}
 
 				// Now replace our placeholders with the new content.
@@ -679,34 +679,43 @@ class Parser extends View {
      */
     protected function parsePlugins(string $template)
     {
-        /**
-         * $matches[0] = entire string
-         * $matches[1] = opening tag, with all parameters
-         * $matches[2] = closing tag (if any)
-         */
-        preg_match('/\{\+([a-zA-Z0-9-_\\\+:=\s]*)\+}.*(\{\+\s*\/[a-zA-Z0-9-_\\\+:=\s]*\+\})?/m', $template, $matches);
+    	foreach($this->plugins as $plugin => $callable)
+	    {
+		    /**
+		     * Match tag pairs
+		     *
+		     * Each match is an array:
+		     *   $matches[0] = entire matched string
+		     *   $matches[1] = all parameters string in opening tag
+		     *   $matches[2] = content between the tags to send to the plugin.
+		     */
+		    preg_match_all('#{\+\s*'.$plugin.'([\w\d=-_:\+\s()]*)?\s*\+}(.+?){\+\s*/'.$plugin.'\s*\+}#ims',
+			    $template,
+			    $matches,
+			    PREG_SET_ORDER);
 
-        if (empty($matches)) return $template;
+		    if (empty($matches))
+		    {
+			    continue;
+		    }
 
-        $params = explode(' ', trim($matches[1]));
-        $tag    = trim(array_shift($params));
+		    foreach ($matches as $match)
+		    {
+		    	$params = [];
+			    $parts = explode(' ', trim($match[1]));
 
-        if (! array_key_exists($tag, $this->plugins))
-        {
-            // @todo log missing plugin or throw exception?
-            return $template;
-        }
+			    foreach ($parts as $part)
+			    {
+			    	if (empty($part)) continue;
 
-        // Single tag?
-        if (empty($matches[2]))
-        {
-            $template = str_replace($matches[0], $this->plugins[$tag](), $template);
-        }
-        // Tag pair
-        else
-        {
+			    	list($a, $b) = explode('=',$part);
+			    	$params[$a] = $b;
+			    }
+			    unset($parts);
 
-        }
+			    $template = str_replace($match[0], $callable($match[2], $params), $template);
+		    }
+	    }
 
         return $template;
     }
