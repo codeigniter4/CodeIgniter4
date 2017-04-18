@@ -688,8 +688,8 @@ class Parser extends View {
 			    : $callable;
 
 	    	$pattern = $isPair
-			    ? '#{\+\s*'.$plugin.'([\w\d=-_:\+\s()]*)?\s*\+}(.+?){\+\s*/'.$plugin.'\s*\+}#ims'
-			    : '#{\+\s*'.$plugin.'([\w\d=-_:\+\s()]*)?\s*\+}#ims';
+			    ? '#{\+\s*'.$plugin.'([\w\d=-_:\+\s()\"@.]*)?\s*\+}(.+?){\+\s*/'.$plugin.'\s*\+}#ims'
+			    : '#{\+\s*'.$plugin.'([\w\d=-_:\+\s()\"@.]*)?\s*\+}#ims';
 
 		    /**
 		     * Match tag pairs

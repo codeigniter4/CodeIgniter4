@@ -25,7 +25,10 @@ class View {
 	];
 
 	protected $corePlugins = [
-
+		'current_url'       => '\CodeIgniter\View\Plugins::currentURL',
+		'previous_url'      => '\CodeIgniter\View\Plugins::previousURL',
+		'mailto'            => '\CodeIgniter\View\Plugins::mailto',
+		'safe_mailto'       => '\CodeIgniter\View\Plugins::safeMailto',
     ];
 
 	public function __construct()
