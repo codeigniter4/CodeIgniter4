@@ -79,13 +79,6 @@ class Config extends BaseConfig
 			$group = 'custom';
 		}
 
-		if ($getShared && isset(self::$instances[$group]))
-		{
-			return self::$instances[$group];
-		}
-
-		self::ensureFactory();
-
 		$config = $config ?? new \Config\Database();
 
 		if (empty($group))
@@ -97,6 +90,14 @@ class Config extends BaseConfig
 		{
 			throw new \InvalidArgumentException($group.' is not a valid database connection group.');
 		}
+
+		if ($getShared && isset(self::$instances[$group]))
+		{
+			return self::$instances[$group];
+		}
+
+		self::ensureFactory();
+
 
 		if (isset($config->$group))
 		{
