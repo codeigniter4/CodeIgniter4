@@ -681,6 +681,16 @@ class Parser extends View {
     {
     	foreach($this->plugins as $plugin => $callable)
 	    {
+	    	// Paired tags are enclosed in an array in the config array.
+	    	$isPair = is_array($callable);
+	    	$callable = $isPair
+			    ? array_shift($callable)
+			    : $callable;
+
+	    	$pattern = $isPair
+			    ? '#{\+\s*'.$plugin.'([\w\d=-_:\+\s()]*)?\s*\+}(.+?){\+\s*/'.$plugin.'\s*\+}#ims'
+			    : '#{\+\s*'.$plugin.'([\w\d=-_:\+\s()]*)?\s*\+}#ims';
+
 		    /**
 		     * Match tag pairs
 		     *
@@ -689,10 +699,7 @@ class Parser extends View {
 		     *   $matches[1] = all parameters string in opening tag
 		     *   $matches[2] = content between the tags to send to the plugin.
 		     */
-		    preg_match_all('#{\+\s*'.$plugin.'([\w\d=-_:\+\s()]*)?\s*\+}(.+?){\+\s*/'.$plugin.'\s*\+}#ims',
-			    $template,
-			    $matches,
-			    PREG_SET_ORDER);
+		    preg_match_all($pattern,$template, $matches,PREG_SET_ORDER);
 
 		    if (empty($matches))
 		    {
@@ -713,24 +720,30 @@ class Parser extends View {
 			    }
 			    unset($parts);
 
-			    $template = str_replace($match[0], $callable($match[2], $params), $template);
+			    $template = $isPair
+			        ? str_replace($match[0], $callable($match[2], $params), $template)
+			        : str_replace($match[0], $callable($params), $template);
 		    }
 	    }
 
         return $template;
     }
 
-    /**
-     * Makes a new plugin available during the parsing of the template.
-     *
-     * @param string   $alias
-     * @param callable $callback
-     *
-     * @return $this
-     */
-    public function addPlugin(string $alias, callable $callback)
+	/**
+	 * Makes a new plugin available during the parsing of the template.
+	 *
+	 * @param string   $alias
+	 * @param callable $callback
+	 *
+	 * @param bool     $isPair
+	 *
+	 * @return $this
+	 */
+    public function addPlugin(string $alias, callable $callback, bool $isPair=false)
     {
-        $this->plugins[$alias] = $callback;
+        $this->plugins[$alias] = $isPair
+	        ? [$callback]
+            : $callback;
 
         return $this;
     }

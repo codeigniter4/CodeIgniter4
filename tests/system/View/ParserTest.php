@@ -491,7 +491,7 @@ class ParserTest extends \CIUnitTestCase
         $parser = new Parser($this->config, $this->viewsDir, $this->loader);
         $parser->addPlugin('hit:it', function($str){
             return str_replace('here', "Hip to the Hop", $str);
-        });
+        }, true);
 
         $template = "{+ hit:it +} stuff here {+ /hit:it +}";
 
@@ -518,11 +518,45 @@ class ParserTest extends \CIUnitTestCase
 			}
 
 			return $out;
-		});
+		}, true);
 
 		$template = "{+ growth step=2 count=4 +}  {+ /growth +}";
 
 		$this->assertEquals(" 2 4 6 8", $parser->renderString($template));
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * @group parserplugins
+	 */
+	public function testParserSingleTag()
+	{
+		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
+		$parser->addPlugin('hit:it', function(){
+			return "Hip to the Hop";
+		}, false);
+
+		$template = "{+ hit:it +}";
+
+		$this->assertEquals("Hip to the Hop", $parser->renderString($template));
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * @group parserplugins
+	 */
+	public function testParserSingleTagWithParams()
+	{
+		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
+		$parser->addPlugin('hit:it', function(array $params=[]){
+			return "{$params['first']} to the {$params['last']}";
+		}, false);
+
+		$template = "{+ hit:it first=foo last=bar +}";
+
+		$this->assertEquals("foo to the bar", $parser->renderString($template));
 	}
 
 	//--------------------------------------------------------------------
