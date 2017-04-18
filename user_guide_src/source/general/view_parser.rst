@@ -428,6 +428,61 @@ callable::
 		'capitalize'        => '\CodeIgniter\View\Filters::capitalize',
 	];
 
+Parser Plugins
+==============
+
+Plugins allow you to extend the parser, adding custom features for each project. They can be any PHP callable, making
+them very simple to implement. Within templates, plugins are specified by ``{+ +}`` tags::
+
+	{+ foo +} inner content {+ /foo +}
+
+This example shows a plugin named **foo**. It can manipulate any of the content between its opening and closing tags.
+In this example, it could work with the text " inner content ". Plugins are processed before any pseudo-variable
+replacements happen.
+
+While plugins will often consist of tag pairs, like shown above, they can also be a single tag, with no closing tag::
+
+	{+ foo +}
+
+Opening tags can also contain parameters that can customize how the plugin works. The parameters are represented as
+key/value pairs::
+
+	{+ foo bar=2 baz="x y" }
+
+Registering a Plugin
+--------------------
+
+At its simplest, all you need to do to register a new plugin and make it ready for use is to add it to the
+**application/Config/View.php**, under the **$plugins** array. The key is the name of the plugin that is
+used within the template file. The value is any valid PHP callable, including static class methods, and closures::
+
+	public $plugins = [
+		'foo'	=> '\Some\Class::methodName',
+		'bar'	=> function($str, array $params=[]) {
+			return $str;
+		},
+	];
+
+If the callable is on its own, it is treated as a single tag, not a open/close one. It will be replaced by
+the return value from the plugin::
+
+	public $plugins = [
+		'foo'	=> '\Some\Class::methodName'
+	];
+
+	// Tag is replaced by the return value of Some\Class::methodName static function.
+	{+ foo +}
+
+If the callable is wrapped in an array, it is treated as an open/close tag pair that can operate on any of
+the content between its tags::
+
+	public $plugins = [
+		'foo' => ['\Some\Class::methodName']
+	];
+
+	{+ foo +} inner content {+ /foo +}
+
+
 
 ***********
 Usage Notes
