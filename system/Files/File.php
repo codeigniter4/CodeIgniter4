@@ -138,7 +138,7 @@ class File extends SplFileInfo
 			? $this->getDestination($targetPath.$name)
 			: $targetPath.$name;
 
-		if (! @rename($this->path, $destination))
+		if (! @rename($this->getPath(), $destination))
 		{
 			$error = error_get_last();
 			throw new \RuntimeException(sprintf('Could not move file %s to %s (%s)', $this->getBasename(),$targetPath, strip_tags($error['message'])));
