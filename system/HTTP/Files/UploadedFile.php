@@ -1,5 +1,8 @@
 <?php namespace CodeIgniter\HTTP\Files;
 
+use CodeIgniter\Files\File;
+use CodeIgniter\Files\FileException;
+
 /**
  * CodeIgniter
  *
@@ -45,7 +48,7 @@
  *
  * @package CodeIgniter\HTTP
  */
-class UploadedFile implements UploadedFileInterface
+class UploadedFile extends File implements UploadedFileInterface
 {
 	/**
 	 * The path to the temporary file.
@@ -74,21 +77,6 @@ class UploadedFile implements UploadedFileInterface
 	 * @var string
 	 */
 	protected $originalMimeType;
-
-	/**
-	 * The type of file based on
-	 * our inspections.
-	 *
-	 * @var string
-	 */
-	protected $mimeType;
-
-	/**
-	 * The files size in bytes
-	 *
-	 * @var int
-	 */
-	protected $size;
 
 	/**
 	 * The error constant of the upload
@@ -124,6 +112,8 @@ class UploadedFile implements UploadedFileInterface
 		$this->originalMimeType = $mimeType;
 		$this->size             = $size;
 		$this->error            = $error;
+
+		parent::__construct($path, false);
 	}
 
 	//--------------------------------------------------------------------
@@ -152,7 +142,10 @@ class UploadedFile implements UploadedFileInterface
 	 *
 	 * @param string $targetPath Path to which to move the uploaded file.
 	 * @param string $name       the name to rename the file to.
-     * @param bool   $overwrite  State for indicating whether to overwrite the previously generated file with the same name or not.
+	 * @param bool   $overwrite  State for indicating whether to overwrite the previously generated file with the same
+	 *                           name or not.
+	 *
+	 * @return bool
 	 *
 	 * @throws \InvalidArgumentException if the $path specified is invalid.
 	 * @throws \RuntimeException on any error during the move operation.
@@ -162,12 +155,12 @@ class UploadedFile implements UploadedFileInterface
 	{
 		if ($this->hasMoved)
 		{
-			throw new \RuntimeException('The file has already been moved.');
+			throw new FileException('The file has already been moved.');
 		}
 
 		if (! $this->isValid())
 		{
-			throw new \RuntimeException('The original file is not a valid file.');
+			throw new FileException('The original file is not a valid file.');
 		}
 
 		$targetPath = rtrim($targetPath, '/').'/';
@@ -202,43 +195,6 @@ class UploadedFile implements UploadedFileInterface
 	public function hasMoved(): bool
 	{
 		return $this->hasMoved;
-	}
-
-	//--------------------------------------------------------------------
-
-
-	/**
-	 * Retrieve the file size.
-	 *
-	 * Implementations SHOULD return the value stored in the "size" key of
-	 * the file in the $_FILES array if available, as PHP calculates this based
-	 * on the actual size transmitted.
-	 *
-	 * @param string $unit The unit to return:
-	 *      - b   Bytes
-	 *      - kb  Kilobytes
-	 *      - mb  Megabytes
-	 *
-	 * @return int|null The file size in bytes or null if unknown.
-	 */
-	public function getSize(string $unit='b'): int
-	{
-		if (is_null($this->size))
-		{
-			$this->size = filesize($this->path);
-		}
-
-		switch (strtolower($unit))
-		{
-			case 'kb':
-				return number_format($this->size / 1024, 3);
-				break;
-			case 'mb':
-				return number_format(($this->size / 1024) / 1024, 3);
-				break;
-		}
-
-		return $this->size;
 	}
 
 	//--------------------------------------------------------------------
@@ -296,6 +252,20 @@ class UploadedFile implements UploadedFileInterface
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Returns the mime type as provided by the client.
+	 * This is NOT a trusted value.
+	 * For a trusted version, use getMimeType() instead.
+	 *
+	 * @return string|null The media type sent by the client or null if none
+	 *                     was provided.
+	 */
+	public function getClientMimeType(): string
+	{
+		return $this->originalMimeType;
+	}
+
+	//--------------------------------------------------------------------
 
 	/**
 	 * Retrieve the filename. This will typically be the filename sent
@@ -325,32 +295,6 @@ class UploadedFile implements UploadedFileInterface
 	//--------------------------------------------------------------------
 
 	/**
-	 * Generates a random names based on a simple hash and the time, with
-	 * the correct file extension attached.
-	 *
-	 * @return string
-	 */
-	public function getRandomName(): string
-	{
-		return time().'_'.bin2hex(random_bytes(10)).'.'.$this->getExtension();
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Attempts to determine the file extension based on the trusted
-	 * getType() method. If the mime type is unknown, will return null.
-	 *
-	 * @return string
-	 */
-	public function getExtension(): string
-	{
-		return \Config\Mimes::guessExtensionFromType($this->getType());
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
 	 * Returns the original file extension, based on the file name that
 	 * was uploaded. This is NOT a trusted source.
 	 * For a trusted version, use guessExtension() instead.
@@ -365,51 +309,6 @@ class UploadedFile implements UploadedFileInterface
 	//--------------------------------------------------------------------
 
 	/**
-	 * Retrieve the media type of the file. SHOULD not use information from
-	 * the $_FILES array, but should use other methods to more accurately
-	 * determine the type of file, like finfo, or mime_content_type().
-	 *
-	 * @return string|null The media type we determined it to be.
-	 */
-	public function getType(): string
-	{
-		if (! is_null($this->mimeType))
-		{
-			return $this->mimeType;
-		}
-
-		if (function_exists('finfo_file'))
-		{
-			$finfo          = finfo_open(FILEINFO_MIME_TYPE);
-			$this->mimeType = finfo_file($finfo, $this->path);
-			finfo_close($finfo);
-		}
-		else
-		{
-			$this->mimeType = mime_content_type($this->path);
-		}
-
-		return $this->mimeType;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Returns the mime type as provided by the client.
-	 * This is NOT a trusted value.
-	 * For a trusted version, use getMimeType() instead.
-	 *
-	 * @return string|null The media type sent by the client or null if none
-	 *                     was provided.
-	 */
-	public function getClientType(): string
-	{
-		return $this->originalMimeType;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
 	 * Returns whether the file was uploaded successfully, based on whether
 	 * it was uploaded via HTTP and has no errors.
 	 *
@@ -419,49 +318,6 @@ class UploadedFile implements UploadedFileInterface
 	{
 		return is_uploaded_file($this->path) && $this->error === UPLOAD_ERR_OK;
 	}
-
-    //--------------------------------------------------------------------
-
-    /**
-     * Returns the destination path for the move operation where overwriting is not expected.
-     *
-     * First, it checks whether the delimiter is present in the filename, if it is, then it checks whether the
-     * last element is an integer as there may be cases that the delimiter may be present in the filename.
-     * For the all other cases, it appends an integer starting from zero before the file's extension.
-     *
-     * @param string $destination
-     * @param string $delimiter
-     * @param int    $i
-     *
-     * @return string
-     */
-    public function getDestination(string $destination, string $delimiter = '_', int $i = 0): string
-    {
-        while (file_exists($destination))
-        {
-            $info = pathinfo($destination);
-            if (strpos($info['filename'], $delimiter) !== false)
-            {
-                $parts = explode($delimiter, $info['filename']);
-                if (is_numeric(end($parts)))
-                {
-                    $i = end($parts);
-                    array_pop($parts);
-                    array_push($parts, ++$i);
-                    $destination = $info['dirname'] . '/' . implode($delimiter, $parts) . '.' .  $info['extension'];
-                }
-                else
-                {
-                    $destination = $info['dirname'] . '/' . $info['filename'] . $delimiter . ++$i . '.' .  $info['extension'];
-                }
-            }
-            else
-            {
-                $destination = $info['dirname'] . '/' . $info['filename'] . $delimiter . ++$i . '.' .  $info['extension'];
-            }
-        }
-        return $destination;
-    }
 
     //--------------------------------------------------------------------
 

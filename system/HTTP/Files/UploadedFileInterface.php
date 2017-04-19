@@ -105,24 +105,6 @@ interface UploadedFileInterface
 	//--------------------------------------------------------------------
 
 	/**
-	 * Retrieve the file size.
-	 *
-	 * Implementations SHOULD return the value stored in the "size" key of
-	 * the file in the $_FILES array if available, as PHP calculates this based
-	 * on the actual size transmitted.
-	 *
-	 * @param string $unit The unit to return:
-	 *      - b   Bytes
-	 *      - kb  Kilobytes
-	 *      - mb  Megabytes
-	 *
-	 * @return int|null The file size in bytes or null if unknown.
-	 */
-	public function getSize(string $unit='b'): int;
-
-	//--------------------------------------------------------------------
-
-	/**
 	 * Retrieve the error associated with the uploaded file.
 	 *
 	 * The return value MUST be one of PHP's UPLOAD_ERR_XXX constants.
@@ -167,26 +149,6 @@ interface UploadedFileInterface
 	//--------------------------------------------------------------------
 
 	/**
-	 * Generates a random names based on a simple hash and the time, with
-	 * the correct file extension attached.
-	 *
-	 * @return string
-	 */
-	public function getRandomName(): string;
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Attempts to determine the file extension based on the trusted
-	 * getMimeType() method. If the mime type is unknown, will return null.
-	 *
-	 * @return string
-	 */
-	public function getExtension(): string;
-
-	//--------------------------------------------------------------------
-
-	/**
 	 * Returns the original file extension, based on the file name that
 	 * was uploaded. This is NOT a trusted source.
 	 * For a trusted version, use guessExtension() instead.
@@ -198,25 +160,13 @@ interface UploadedFileInterface
 	//--------------------------------------------------------------------
 
 	/**
-	 * Retrieve the media type of the file. SHOULD not use information from
-	 * the $_FILES array, but should use other methods to more accurately
-	 * determine the type of file, like finfo, or mime_content_type().
-	 *
-	 * @return string|null The media type sent by the client or null if none
-	 *     was provided.
-	 */
-	public function getType(): string;
-
-	//--------------------------------------------------------------------
-
-	/**
 	 * Returns the mime type as provided by the client.
 	 * This is NOT a trusted value.
 	 * For a trusted version, use getMimeType() instead.
 	 *
 	 * @return string|null
 	 */
-	public function getClientType(): string;
+	public function getClientMimeType(): string;
 
 	//--------------------------------------------------------------------
 
