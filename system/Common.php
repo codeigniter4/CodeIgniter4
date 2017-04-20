@@ -26,12 +26,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package CodeIgniter
- * @author  CodeIgniter Dev Team
+ * @package     CodeIgniter
+ * @author      CodeIgniter Dev Team
  * @copyright   Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
- * @license https://opensource.org/licenses/MIT  MIT License
- * @link    https://codeigniter.com
- * @since   Version 3.0.0
+ * @license     https://opensource.org/licenses/MIT  MIT License
+ * @link        https://codeigniter.com
+ * @since       Version 3.0.0
  * @filesource
  */
 
@@ -85,7 +85,7 @@ if (! function_exists('cache'))
 
 //--------------------------------------------------------------------
 
-if ( ! function_exists('view'))
+if (! function_exists('view'))
 {
 	/**
 	 * Grabs the current RendererInterface-compatible class
@@ -117,7 +117,7 @@ if ( ! function_exists('view'))
 		}
 
 		return $renderer->setData($data, 'raw')
-			->render($name, $options, $saveData);
+		                ->render($name, $options, $saveData);
 	}
 }
 
@@ -138,13 +138,14 @@ if (! function_exists('view_cell'))
 	 */
 	function view_cell(string $library, $params = null, int $ttl = 0, string $cacheName = null)
 	{
-		return Services::viewcell()->render($library, $params, $ttl, $cacheName);
+		return Services::viewcell()
+		               ->render($library, $params, $ttl, $cacheName);
 	}
 }
 
 //--------------------------------------------------------------------
 
-if ( ! function_exists('env'))
+if (! function_exists('env'))
 {
 	/**
 	 * Allows user to retrieve values from the environment
@@ -190,7 +191,7 @@ if ( ! function_exists('env'))
 
 //--------------------------------------------------------------------
 
-if ( ! function_exists('esc'))
+if (! function_exists('esc'))
 {
 	/**
 	 * Performs simple auto-escaping of data for security reasons.
@@ -208,7 +209,7 @@ if ( ! function_exists('esc'))
 	 *
 	 * @return $data
 	 */
-	function esc($data, $context = 'html', $encoding=null)
+	function esc($data, $context = 'html', $encoding = null)
 	{
 		if (is_array($data))
 		{
@@ -230,7 +231,7 @@ if ( ! function_exists('esc'))
 				return $data;
 			}
 
-			if ( ! in_array($context, ['html', 'js', 'css', 'url', 'attr']))
+			if (! in_array($context, ['html', 'js', 'css', 'url', 'attr']))
 			{
 				throw new \InvalidArgumentException('Invalid escape context provided.');
 			}
@@ -247,7 +248,7 @@ if ( ! function_exists('esc'))
 			// @todo Optimize this to only load a single instance during page request.
 			$escaper = new \Zend\Escaper\Escaper($encoding);
 
-			$data   = $escaper->$method($data);
+			$data = $escaper->$method($data);
 		}
 
 		return $data;
@@ -349,7 +350,7 @@ if (! function_exists('single_service'))
 	 * Allow cleaner access to a Service.
 	 * Always returns a new instance of the class.
 	 *
-	 * @param string $name
+	 * @param string     $name
 	 * @param array|null $params
 	 */
 	function single_service(string $name, ...$params)
@@ -374,17 +375,17 @@ if (! function_exists('lang'))
 	 *
 	 * @return string
 	 */
-	function lang(string $line, array $args=[], string $locale=null)
+	function lang(string $line, array $args = [], string $locale = null)
 	{
-		return Services::language($locale)->getLine($line, $args);
+		return Services::language($locale)
+		               ->getLine($line, $args);
 	}
 }
 
 //--------------------------------------------------------------------
 
 
-
-if ( ! function_exists('log_message'))
+if (! function_exists('log_message'))
 {
 	/**
 	 * A convenience/compatibility method for logging events through
@@ -400,9 +401,9 @@ if ( ! function_exists('log_message'))
 	 *  - info
 	 *  - debug
 	 *
-	 * @param string $level
-	 * @param string $message
-	 * @param array|null  $context
+	 * @param string     $level
+	 * @param string     $message
+	 * @param array|null $context
 	 *
 	 * @return mixed
 	 */
@@ -414,17 +415,18 @@ if ( ! function_exists('log_message'))
 		if (ENVIRONMENT == 'testing')
 		{
 			$logger = new \CodeIgniter\Log\TestLogger(new \Config\Logger());
+
 			return $logger->log($level, $message, $context);
 		}
 
 		return Services::logger(true)
-			->log($level, $message, $context);
+		               ->log($level, $message, $context);
 	}
 }
 
 //--------------------------------------------------------------------
 
-if ( ! function_exists('is_cli'))
+if (! function_exists('is_cli'))
 {
 
 	/**
@@ -442,7 +444,7 @@ if ( ! function_exists('is_cli'))
 
 //--------------------------------------------------------------------
 
-if ( ! function_exists('route_to'))
+if (! function_exists('route_to'))
 {
 	/**
 	 * Given a controller/method string and any params,
@@ -467,7 +469,7 @@ if ( ! function_exists('route_to'))
 
 //--------------------------------------------------------------------
 
-if ( ! function_exists('remove_invisible_characters'))
+if (! function_exists('remove_invisible_characters'))
 {
 	/**
 	 * Remove Invisible Characters
@@ -477,11 +479,12 @@ if ( ! function_exists('remove_invisible_characters'))
 	 *
 	 * @param   string
 	 * @param   bool
+	 *
 	 * @return  string
 	 */
-	function remove_invisible_characters($str, $url_encoded = TRUE)
+	function remove_invisible_characters($str, $url_encoded = true)
 	{
-		$non_displayables = array();
+		$non_displayables = [];
 
 		// every control character except newline (dec 10),
 		// carriage return (dec 13) and horizontal tab (dec 09)
@@ -496,8 +499,7 @@ if ( ! function_exists('remove_invisible_characters'))
 		do
 		{
 			$str = preg_replace($non_displayables, '', $str, -1, $count);
-		}
-		while ($count);
+		} while ($count);
 
 		return $str;
 	}
@@ -608,7 +610,7 @@ if (! function_exists('csrf_field'))
 	 */
 	function csrf_field()
 	{
-		return '<input type="hidden" name="'. csrf_token() .'" value="'. csrf_hash() .'">';
+		return '<input type="hidden" name="'.csrf_token().'" value="'.csrf_hash().'">';
 	}
 }
 
@@ -624,15 +626,21 @@ if (! function_exists('force_https'))
 	 *
 	 * @see https://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security
 	 *
-	 * @param int $duration How long should the SSL header be set for? (in seconds)
-	 *                      Defaults to 1 year.
-	 * @param RequestInterface $request
+	 * @param int               $duration How long should the SSL header be set for? (in seconds)
+	 *                                    Defaults to 1 year.
+	 * @param RequestInterface  $request
 	 * @param ResponseInterface $response
 	 */
 	function force_https(int $duration = 31536000, RequestInterface $request = null, ResponseInterface $response = null)
 	{
-		if (is_null($request)) $request = Services::request(null, true);
-		if (is_null($response)) $response = Services::response(null, true);
+		if (is_null($request))
+		{
+			$request = Services::request(null, true);
+		}
+		if (is_null($response))
+		{
+			$response = Services::response(null, true);
+		}
 
 		if ($request->isSecure())
 		{
@@ -643,19 +651,20 @@ if (! function_exists('force_https'))
 		// the session ID for safety sake.
 		if (class_exists('Session', false))
 		{
-			Services::session(null, true)->regenerate();
+			Services::session(null, true)
+			        ->regenerate();
 		}
 
 		$uri = $request->uri;
 		$uri->setScheme('https');
 
 		$uri = \CodeIgniter\HTTP\URI::createURIString(
-				$uri->getScheme(),
-				$uri->getAuthority(true),
-				$uri->getPath(), // Absolute URIs should use a "/" for an empty path
-				$uri->getQuery(),
-				$uri->getFragment()
-				);
+			$uri->getScheme(),
+			$uri->getAuthority(true),
+			$uri->getPath(), // Absolute URIs should use a "/" for an empty path
+			$uri->getQuery(),
+			$uri->getFragment()
+		);
 
 		// Set an HSTS header
 		$response->setHeader('Strict-Transport-Security', 'max-age='.$duration);
@@ -677,8 +686,8 @@ if (! function_exists('redirect'))
 	 *
 	 * If more control is needed, you must use $response->redirect explicitly.
 	 *
-	 * @param string   $uri
-	 * @param $params
+	 * @param string $uri
+	 * @param        $params
 	 */
 	function redirect(string $uri, ...$params)
 	{
@@ -690,7 +699,7 @@ if (! function_exists('redirect'))
 			$uri = $route;
 		}
 
-		$response->redirect($uri);
+		return $response->redirect($uri);
 	}
 }
 
@@ -718,19 +727,19 @@ if (! function_exists('redirect_with_input'))
 		}
 
 		$input = [
-			'get' => $_GET ?? [],
-			'post' => $_POST ?? []
+			'get'  => $_GET ?? [],
+			'post' => $_POST ?? [],
 		];
 
-			$session->setFlashdata('_ci_old_input', $input);
+		$session->setFlashdata('_ci_old_input', $input);
 
-			redirect($uri, ...$params);
+		redirect($uri, ...$params);
 	}
 }
 
 //--------------------------------------------------------------------
 
-if ( ! function_exists('stringify_attributes'))
+if (! function_exists('stringify_attributes'))
 {
 	/**
 	 * Stringify attributes for use in HTML tags.
@@ -740,9 +749,10 @@ if ( ! function_exists('stringify_attributes'))
 	 *
 	 * @param   mixed   string, array, object
 	 * @param   bool
+	 *
 	 * @return  string
 	 */
-	function stringify_attributes($attributes, $js = FALSE) : string
+	function stringify_attributes($attributes, $js = false): string
 	{
 		$atts = '';
 
@@ -756,7 +766,7 @@ if ( ! function_exists('stringify_attributes'))
 			return ' '.$attributes;
 		}
 
-		$attributes = (array) $attributes;
+		$attributes = (array)$attributes;
 
 		foreach ($attributes as $key => $val)
 		{
@@ -771,7 +781,7 @@ if ( ! function_exists('stringify_attributes'))
 
 //--------------------------------------------------------------------
 
-if ( ! function_exists('is_really_writable'))
+if (! function_exists('is_really_writable'))
 {
 	/**
 	 * Tests for file writability
@@ -781,7 +791,9 @@ if ( ! function_exists('is_really_writable'))
 	 * on Unix servers if safe_mode is on.
 	 *
 	 * @link    https://bugs.php.net/bug.php?id=54709
+	 *
 	 * @param   string
+	 *
 	 * @return  bool
 	 */
 	function is_really_writable($file)
@@ -798,36 +810,39 @@ if ( ! function_exists('is_really_writable'))
 		if (is_dir($file))
 		{
 			$file = rtrim($file, '/').'/'.md5(mt_rand());
-			if (($fp = @fopen($file, 'ab')) === FALSE)
+			if (($fp = @fopen($file, 'ab')) === false)
 			{
-				return FALSE;
+				return false;
 			}
 
 			fclose($fp);
 			@chmod($file, 0777);
 			@unlink($file);
-			return TRUE;
+
+			return true;
 		}
-		elseif ( ! is_file($file) OR ($fp = @fopen($file, 'ab')) === FALSE)
+		elseif (! is_file($file) OR ($fp = @fopen($file, 'ab')) === false)
 		{
-			return FALSE;
+			return false;
 		}
 
 		fclose($fp);
-		return TRUE;
+
+		return true;
 	}
 }
 
 //--------------------------------------------------------------------
 
-if ( ! function_exists('slash_item'))
+if (! function_exists('slash_item'))
 {
 	//Unlike CI3, this function is placed here because
 	//it's not a config, or part of a config.
 	/**
 	 * Fetch a config file item with slash appended (if not empty)
 	 *
-	 * @param   string      $item   Config item name
+	 * @param   string $item Config item name
+	 *
 	 * @return  string|null The configuration item or NULL if
 	 * the item doesn't exist
 	 */
@@ -836,12 +851,12 @@ if ( ! function_exists('slash_item'))
 		$config     = new \Config\App();
 		$configItem = $config->{$item};
 
-		if ( ! isset($configItem) || empty(trim($configItem)))
+		if (! isset($configItem) || empty(trim($configItem)))
 		{
 			return $configItem;
 		}
 
-		return rtrim($configItem, '/') . '/';
+		return rtrim($configItem, '/').'/';
 	}
 }
 //--------------------------------------------------------------------
