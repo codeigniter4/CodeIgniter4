@@ -29,15 +29,15 @@ class FilesystemHelperTest extends \CIUnitTestCase
         ];
 
         $expected = [
-            'foo/' => [
+            'foo' . DIRECTORY_SEPARATOR => [
                 'bar',
                 'baz'
             ],
-            'boo/' => [
+            'boo' . DIRECTORY_SEPARATOR => [
                 'far',
                 'faz'
             ],
-            'AnEmptyFolder/' => [],
+            'AnEmptyFolder' . DIRECTORY_SEPARATOR => [],
             'simpleFile'
         ];
 
@@ -69,15 +69,15 @@ class FilesystemHelperTest extends \CIUnitTestCase
         ];
 
         $expected = [
-            'foo/' => [
+            'foo' . DIRECTORY_SEPARATOR => [
                 'bar',
                 'baz'
             ],
-            'boo/' => [
+            'boo' . DIRECTORY_SEPARATOR => [
                 'far',
                 'faz'
             ],
-            'AnEmptyFolder/' => [],
+            'AnEmptyFolder' . DIRECTORY_SEPARATOR => [],
             'simpleFile',
             '.hidden'
         ];
@@ -109,9 +109,9 @@ class FilesystemHelperTest extends \CIUnitTestCase
         ];
 
         $expected = [
-            'foo/',
-            'boo/',
-            'AnEmptyFolder/',
+            'foo' . DIRECTORY_SEPARATOR,
+            'boo' . DIRECTORY_SEPARATOR,
+            'AnEmptyFolder' . DIRECTORY_SEPARATOR,
             'simpleFile',
             '.hidden'
         ];
@@ -285,10 +285,10 @@ class FilesystemHelperTest extends \CIUnitTestCase
         // Not sure the directory names should actually show up
         // here but this matches v3.x results.
         $expected = [
-            '/foo',
-            '/boo',
-            '/AnEmptyFolder',
-            '/simpleFile'
+            DIRECTORY_SEPARATOR . 'foo',
+            DIRECTORY_SEPARATOR . 'boo',
+            DIRECTORY_SEPARATOR . 'AnEmptyFolder',
+            DIRECTORY_SEPARATOR . 'simpleFile'
         ];
 
         $vfs = vfsStream::setup('root', null, $structure);
