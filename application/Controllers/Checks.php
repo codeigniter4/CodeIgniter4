@@ -146,5 +146,10 @@ class Checks extends Controller
         echo $body;
     }
 
+	public function redirect()
+	{
+		redirect('/checks/model');
+    }
+
 
 }
