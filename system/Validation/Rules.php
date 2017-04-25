@@ -284,8 +284,8 @@ class Rules
 	 * 	required_with[password]
 	 *
 	 * @param        $str
-	 * @param string $fields
-	 * @param array  $data
+	 * @param string $fields    List of fields that we should check if present
+	 * @param array  $data      Complete list of fields from the form
 	 *
 	 * @return bool
 	 */
@@ -305,11 +305,22 @@ class Rules
 
 		// Still here? Then we fail this test if
 		// any of the fields are present in $data
-		$requiredFields = array_intersect($fields, $data);
+		// as $fields is the lis
+		$requiredFields = [];
 
-		$requiredFields = array_filter($requiredFields, function($item)
+		foreach ($fields as $field)
 		{
-			return ! empty($item);
+			if (array_key_exists($field, $data))
+			{
+				$requiredFields[] = $field;
+			}
+		}
+
+		// Remove any keys with empty values since, that means they
+		// weren't truly there, as far as this is concerned.
+		$requiredFields = array_filter($requiredFields, function($item) use($data)
+		{
+			return ! empty($data[$item]);
 		});
 
 		return ! (bool)count($requiredFields);

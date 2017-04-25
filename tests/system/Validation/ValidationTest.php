@@ -1479,6 +1479,7 @@ class ValidationTest extends \CIUnitTestCase
 			'foo' => 'bar',
 			'bar' => 'something',
 			'baz' => null,
+			'ar'  => []             // Was running into issues with array values
 		];
 
 		$this->validation->setRules([
@@ -1497,7 +1498,7 @@ class ValidationTest extends \CIUnitTestCase
 			['foo', 'bar', true],
 			['nope', 'baz', true],
 			[null, null, true],
-			[null, 'foo', true],
+			[null, 'foo', false],
 			['foo', null, true]
 		];
 	}
