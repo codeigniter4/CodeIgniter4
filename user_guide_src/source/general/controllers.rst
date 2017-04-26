@@ -323,7 +323,7 @@ Validating $_POST data
 The controller also provides a convenience method to make validating $_POST data a little simpler, ``validate()`` that
 takes the current Request as the first instance, an array of rules to test against as the second parameter, and, optionally,
 an array of custom error messages to display if the items don't pass. The :doc:`Validation Library docs </libraries/validation>`
-has details on the format of the rules and messages arrays, as well as available rules.::
+has details on the format of the rules and messages arrays, as well as available rules.:
 
     public function updateUser(int $userID)
     {
