@@ -8,7 +8,7 @@ modify the Request, while after filters can act on and even modify the Response,
 and power. Some common examples of tasks that might be performed with filters are:
 
 * Performing CSRF protection on the incoming requests
-* Restricting areas of your site based upon their Role.
+* Restricting areas of your site based upon their Role
 * Perform rate limiting on certain endpoints
 * Display a "Down for Maintenance" page
 * Perform automatic content negotiation
