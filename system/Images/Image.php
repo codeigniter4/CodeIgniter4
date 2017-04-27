@@ -2,234 +2,119 @@
 
 use CodeIgniter\Files\File;
 
-class Image extends File {
-
+class Image extends File
+{
 	/**
-	 * @var \CodeIgniter\Images\ImageHandlerInterface
-	 */
-	protected $handler;
-
-	/**
-	 * Stores any errors that were encountered.
+	 * The original image width in pixels.
 	 *
-	 * @var array
+	 * @var
 	 */
-	protected $errors = [];
-
-	//--------------------------------------------------------------------
+	public $origWidth;
+	/**
+	 * The original image height in pixels.
+	 *
+	 * @var
+	 */
+	public $origHeight;
+	/**
+	 * The image type constant.
+	 * @see http://php.net/manual/en/image.constants.php
+	 *
+	 * @var int
+	 */
+	public $imageType;
 
 	/**
-	 * Sets the Image processign handler that should be used.
+	 * attributes string with size info:
+	 * 'height="100" width="200"'
 	 *
-	 * @param \CodeIgniter\Images\ImageHandlerInterface $handler
-	 *
-	 * @return $this
+	 * @var string
 	 */
-	public function setHandler(ImageHandlerInterface $handler)
-	{
-		$this->handler = $handler;
-
-		return $this;
-	}
-
-	//--------------------------------------------------------------------
-
-	public function save(): bool
-	{
-
-	}
-
-	//--------------------------------------------------------------------
-
-	public function copy(string $target, int $perms=0644)
-	{
-
-	}
-
-	//--------------------------------------------------------------------
+	public $sizeStr;
 
 	/**
-	 * Returns a boolean flag whether any errors were encountered.
+	 * The image's mime type, i.e. image/jpeg
+	 *
+	 * @var string
+	 */
+	public $mime;
+
+	/**
+	 * Makes a copy of itself to the new location. If no filename is provided
+	 * it will use the existing filename.
+	 *
+	 * @param string      $targetPath   The directory to store the file in
+	 * @param string|null $targetName   The new name of the copied file.
+	 * @param int         $perms        File permissions to be applied after copy.
 	 *
 	 * @return bool
 	 */
-	public function hasErrors(): bool
+	public function copy(string $targetPath, string $targetName = null, int $perms = 0644)
 	{
-		return ! empty($this->errors);
-	}
+		$targetPath = rtrim($targetPath, '/ ').'/';
 
-	//--------------------------------------------------------------------
+		$targetName = is_null($targetName)
+			? $this->getFilename()
+			: $targetName;
 
-	/**
-	 * Returns all error messages that were encountered during processing.
-	 *
-	 * @return array
-	 */
-	public function getErrors(): array
-	{
-		return $this->errors ?? [];
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Resize the image
-	 *
-	 * @param int  $width
-	 * @param int  $height
-	 * @param bool $maintainRatio If true, will get the closest match possible while keeping aspect ratio true.
-	 *
-	 * @return $this
-	 */
-	public function resize(int $width, int $height, bool $maintainRatio = false)
-	{
-		try {
-			$this->handler->resize($width, $height, $maintainRatio);
-		}
-		catch (ImageException $e)
+		if (empty($targetName))
 		{
-			$this->errors[] = $e->getMessage();
+			throw new ImageException('Invalid file name.');
 		}
 
-		return $this;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Crops the image to the desired height and width. If one of the height/width values
-	 * is not provided, that value will be set the appropriate value based on offsets and
-	 * image dimensions.
-	 *
-	 * @param int|null $width
-	 * @param int|null $height
-	 * @param int|null $x       X-axis coord to start cropping from the left of image
-	 * @param int|null $y       Y-axis coord to start cropping from the top of image
-	 *
-	 * @return $this
-	 */
-	public function crop(int $width = null, int $height = null, int $x = null, int $y = null)
-	{
-		try {
-			$this->handler->crop($width, $height, $x, $y);
-		}
-		catch (ImageException $e)
+		if (! is_dir($targetPath))
 		{
-			$this->errors[] = $e->getMessage();
+			mkdir($targetName, 0755, true);
 		}
 
-		return $this;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Rotates the image on the current canvas.
-	 *
-	 * @param float $angle
-	 *
-	 * @return mixed
-	 */
-	public function rotate(float $angle)
-	{
-		try {
-			$this->handler->rotate($angle);
-		}
-		catch (ImageException $e)
+		if (! copy($this->getPathname(),"{$targetPath}{$targetName}"))
 		{
-			$this->errors[] = $e->getMessage();
+			throw new ImageException('Unable to copy image to new destination.');
 		}
 
-		return $this;
+		chmod("{$targetPath}/{$targetName}", $perms);
+
+		return true;
 	}
 
 	//--------------------------------------------------------------------
 
 	/**
-	 * @return $this
-	 */
-	public function watermark()
-	{
-
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Reads the EXIF information from the image and modifies the orientation
-	 * so that displays correctly in the browser.
+	 * Get image properties
 	 *
-	 * @return $this
+	 * A helper function that gets info about the file
+	 *
+	 * @param    string
+	 * @param    bool
+	 *
+	 * @return    mixed
 	 */
-	public function reorient(): bool
+	public function getProperties($return = false)
 	{
-		try {
-			$this->handler->reorient();
-		}
-		catch (ImageException $e)
+		$path = $this->getPathname();
+
+		$vals  = getimagesize($path);
+		$types = [1 => 'gif', 2 => 'jpeg', 3 => 'png'];
+		$mime  = (isset($types[$vals[2]])) ? 'image/'.$types[$vals[2]] : 'image/jpg';
+
+		if ($return === true)
 		{
-			$this->errors[] = $e->getMessage();
+			return [
+				'width'      => $vals[0],
+				'height'     => $vals[1],
+				'image_type' => $vals[2],
+				'size_str'   => $vals[3],
+				'mime_type'  => $mime,
+			];
 		}
 
-		return $this;
-	}
+		$this->origWidth  = $vals[0];
+		$this->origHeight = $vals[1];
+		$this->imageType  = $vals[2];
+		$this->sizeStr    = $vals[3];
+		$this->mime       = $mime;
 
-	//--------------------------------------------------------------------
-
-	/**
-	 * Retrieve the EXIF information from the image, if possible. Returns
-	 * an array of the information, or null if nothing can be found.
-	 *
-	 * @param string|null $key  If specified, will only return this piece of EXIF data.
-	 *
-	 * @return mixed
-	 */
-	public function getEXIF(string $key = null)
-	{
-		try {
-			$this->handler->getEXIF($key);
-		}
-		catch (ImageException $e)
-		{
-			$this->errors[] = $e->getMessage();
-		}
-
-		return $this;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Combine cropping and resizing into a single command.
-	 *
-	 * Supported positions:
-	 *  - top-left
-	 *  - top
-	 *  - top-right
-	 *  - left
-	 *  - center
-	 *  - right
-	 *  - bottom-left
-	 *  - bottom
-	 *  - bottom-right
-	 *
-	 * @param int    $width
-	 * @param int    $height
-	 * @param string $position
-	 *
-	 * @return $this
-	 */
-	public function fit(int $width, int $height, string $position)
-	{
-		try {
-			$this->handler->fit($width, $height, $position);
-		}
-		catch (ImageException $e)
-		{
-			$this->errors[] = $e->getMessage();
-		}
-
-		return $this;
+		return true;
 	}
 
 	//--------------------------------------------------------------------

@@ -93,30 +93,4 @@ interface ImageHandlerInterface
 
 	//--------------------------------------------------------------------
 
-	/**
-	 * Allows any option to be easily set. We don't mind doing it
-	 * this way here, since the Handler is not something the user
-	 * will be directly interfacing with.
-	 *
-	 * @param string $key
-	 * @param null   $value
-	 *
-	 * @return mixed
-	 */
-	public function setOption(string $key, $value = null);
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Allows multiple options to be set at once through an array of
-	 * key value pairs, where the keys must be Handler properties.
-	 *
-	 * @param array $options
-	 *
-	 * @return mixed
-	 */
-	public function setOptions(array $options);
-
-	//--------------------------------------------------------------------
-
 }

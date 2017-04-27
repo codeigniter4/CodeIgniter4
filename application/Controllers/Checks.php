@@ -151,5 +151,14 @@ class Checks extends Controller
 		redirect('/checks/model');
     }
 
+	public function image()
+	{
+		$images = Services::image('gd')
+			->withFile("/Users/kilishan/Documents/BobHeader.jpg")
+			->crop(200, 75, 20, 0, false)
+			->save('/Users/kilishan/temp.jpg', 100);
+
+		ddd($images);
+	}
 
 }
