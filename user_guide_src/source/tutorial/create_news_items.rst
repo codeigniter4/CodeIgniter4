@@ -50,7 +50,7 @@ errors related to form validation.
 Go back to your news controller. You're going to do two things here,
 check whether the form was submitted and whether the submitted data
 passed the validation rules. You'll use the :doc:`form
-validation <../libraries/form_validation>` library to do this.
+validation <../libraries/validation>` library to do this.
 
 ::
 
@@ -91,7 +91,7 @@ the rule. In this case the title and text fields are required.
 
 CodeIgniter has a powerful form validation library as demonstrated
 above. You can read :doc:`more about this library
-here <../libraries/form_validation>`.
+here <../libraries/validation>`.
 
 Continuing down, you can see a condition that checks whether the form
 validation ran successfully. If it did not, the form is displayed, if it

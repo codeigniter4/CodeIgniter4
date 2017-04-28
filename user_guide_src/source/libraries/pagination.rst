@@ -115,11 +115,11 @@ When the links are rendered out to the page, they use a view file to describe th
 that is used by editing **application/Config/Pager.php**::
 
     public $templates = [
-		'default_full'   => 'CodeIgniter\Pager\Views\default_full',
-		'default_simple' => 'CodeIgniter\Pager\Views\default_simple'
-	];
+        'default_full'   => 'CodeIgniter\Pager\Views\default_full',
+        'default_simple' => 'CodeIgniter\Pager\Views\default_simple'
+    ];
 
-This setting stores the alias and :doc:`namespaced view paths </general/views#namespaced-views>` for the view that
+This setting stores the alias and :doc:`namespaced view paths </general/views>` for the view that
 should be used. The *default_full* and *default_simple* views are used for the ``links()`` and ``simpleLinks()``
 methods, respectively. To change the way those are displayed application-wide, you could assign a new view here.
 
@@ -141,10 +141,10 @@ file. A common situation would be needing different styles for the frontend and 
 ::
 
     public $templates = [
-		'default_full'   => 'CodeIgniter\Pager\Views\default_full',
-		'default_simple' => 'CodeIgniter\Pager\Views\default_simple',
-		'front_full'     => 'App\Views\Pagers\foundation_full',
-	];
+        'default_full'   => 'CodeIgniter\Pager\Views\default_full',
+        'default_simple' => 'CodeIgniter\Pager\Views\default_simple',
+        'front_full'     => 'App\Views\Pagers\foundation_full',
+    ];
 
 Once configured, you can specify it as a the last parameter in the ``links()``, ``simpleLinks()``, and ``makeLinks()``
 methods::
@@ -164,39 +164,39 @@ usefullness. It is easiest to demonstrate creating a new view by showing you the
 
     <nav aria-label="Page navigation">
         <ul class="pagination">
-            <?php if ($pager->hasPrevious()) : ?>
+        <?php if ($pager->hasPrevious()) : ?>
             <li>
-				<a href="<?= $pager->getFirst() ?>" aria-label="First">
-					<span aria-hidden="true">First</span>
-				</a>
-			</li>
+                <a href="<?= $pager->getFirst() ?>" aria-label="First">
+                    <span aria-hidden="true">First</span>
+                </a>
+            </li>
             <li>
                 <a href="<?= $pager->getPrevious() ?>" aria-label="Previous">
                     <span aria-hidden="true">&laquo;</span>
                 </a>
             </li>
-            <?php endif ?>
+        <?php endif ?>
 
-            <?php foreach ($pager->links() as $link) : ?>
-                <li <?= $link['active'] ? 'class="active"' : '' ?>>
-                    <a href="<?= $link['uri'] ?>">
-                        <?= $link['title'] ?>
-                    </a>
-                </li>
-            <?php endforeach ?>
+        <?php foreach ($pager->links() as $link) : ?>
+            <li <?= $link['active'] ? 'class="active"' : '' ?>>
+                <a href="<?= $link['uri'] ?>">
+                    <?= $link['title'] ?>
+                </a>
+            </li>
+        <?php endforeach ?>
 
-            <?php if ($pager->hasNext()) : ?>
-                <li>
-                    <a href="<?= $pager->getNext() ?>" aria-label="Previous">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li>
-                <li>
-					<a href="<?= $pager->getLast() ?>" aria-label="Last">
-						<span aria-hidden="true">Last</span>
-					</a>
-				</li>
-            <?php endif ?>
+        <?php if ($pager->hasNext()) : ?>
+            <li>
+                <a href="<?= $pager->getNext() ?>" aria-label="Previous">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+            <li>
+                <a href="<?= $pager->getLast() ?>" aria-label="Last">
+                    <span aria-hidden="true">Last</span>
+                </a>
+            </li>
+        <?php endif ?>
         </ul>
     </nav>
 

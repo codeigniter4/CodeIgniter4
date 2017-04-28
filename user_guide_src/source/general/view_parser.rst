@@ -96,8 +96,7 @@ View parameters are passed to ``setData()`` as an associative
 array of data to be replaced in the template. In the above example, the
 template would contain two variables: {blog_title} and {blog_heading}
 The first parameter to ``render()`` contains the name of the :doc:`view
-    file <../general/views>` (in this example the file would be called
-    blog_template.php),
+file <../general/views>` (in this example the file would be called blog_template.php),
 
 
 Parser Configuration Options
@@ -387,11 +386,11 @@ Provided Filters
 
 The following filters are available when using the parser:
 
-==================== ========================== =================================================================== ==========================
+==================== ========================== =================================================================== =================================
 Filter               Arguments                  Description                                                         Example
-==================== ========================== =================================================================== ==========================
-abs					                            Displays the absolute value of a number.                             { v|abs }
-capitalize		                                Displays the string in sentence case: all lowercase with first       { v|capitalize}
+==================== ========================== =================================================================== =================================
+abs                                             Displays the absolute value of a number.                             { v|abs }
+capitalize                                      Displays the string in sentence case: all lowercase with first       { v|capitalize}
                                                 letter capitalized.
 date                 format (Y-m-d)             A PHP **date**-compatible formatting string.                         { v|date(Y-m-d) }
 date_modify          value to add/subtract      A **strtotime** compatible string to modify the date, like           { v|date_modify(+1 day) }
@@ -400,7 +399,8 @@ default              default value              Displays the default value if th
 esc                  html, attr, css, js        Specifies the context to escape the data.                            { v|esc(attr) }
 excerpt              phrase, radius             Returns the text within a radius of words from a given phrase.       { v|excerpt(green giant, 20) }
                                                 Same as **excerpt** helper function.
-highlight            phrase                     Highlights a given phrase within the text using '<mark></mark>' tags { v|highlight(view parser) }
+highlight            phrase                     Highlights a given phrase within the text using '<mark></mark>'
+												tags.                                                                { v|highlight(view parser) }
 highlight_code                                  Highlights code samples with HTML/CSS.                               { v|highlight_code }
 limit_chars          limit                      Limits the number of chracters to $limit.                            { v|limit_chars(100) }
 limit_words          limit                      Limits the number of words to $limit.                                { v|limit_words(20) }
@@ -414,7 +414,8 @@ round                places, type               Rounds a number to the specified
 strip_tags           allowed chars              Wraps PHP **strip_tags**. Can accept a string of allowed tags.       { v|strip_tags(<br>) }
 title                                           Displays a "title case" version of the string, with all lowercase,   { v|title }
                                                 and each word capitalized.
-upper                                           Displays the string in all lowercase.                                { v|lower }
+upper                                           Displays the string in all lowercase.                                { v|upper }
+==================== ========================== =================================================================== =================================
 
 Custom Filters
 --------------
@@ -481,7 +482,6 @@ the content between its tags::
 	];
 
 	{+ foo +} inner content {+ /foo +}
-
 
 
 ***********
@@ -595,6 +595,7 @@ Result::
 		<li><a href="/second">Second Link</a></li>
 	</ul>
 
+
 ***************
 Class Reference
 ***************
@@ -604,10 +605,10 @@ Class Reference
 	.. php:method:: render($view[, $options[, $saveData=false]]])
 
 		:param  string  $view: File name of the view source
-    		:param  array   $options: Array of options, as key/value pairs
-    		:param  boolean $saveData: If true, will save data for use with any other calls, if false, will clean the data after rendering the view.
-    		:returns: The rendered text for the chosen view
-    		:rtype: string
+		:param  array   $options: Array of options, as key/value pairs
+		:param  boolean $saveData: If true, will save data for use with any other calls, if false, will clean the data after rendering the view.
+		:returns: The rendered text for the chosen view
+		:rtype: string
 
     		Builds the output based upon a file name and any data that has already been set::
 
@@ -678,5 +679,3 @@ Class Reference
     		Over-ride the substitution field delimiters::
 
 			$renderer->setDelimiters('[',']');
-
-

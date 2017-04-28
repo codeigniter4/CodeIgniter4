@@ -23,30 +23,30 @@ New packages:
     - CLI \\ CLI
     - Commands \\ MigrationsCommand
     - Config \\ AutoloadConfig, BaseConfig, DotEnv, Routes
-    - Database 
+    - Database
 
         -   \\ BaseBuilder, BaseConnection, BaseResult, BaseUtils, Config,
-            ConnectionInterface, Database, Forge, Migration, MigrationRunner, Query, 
+            ConnectionInterface, Database, Forge, Migration, MigrationRunner, Query,
             QueryInterface, ResultInterface, Seeder
         -   \\ MySQLi \\ Builder, Connection, Forge, Result
         -   \\ Postgre \\ Builder, Connection, Forge, Result, Utils
 
 
-    - Debug 
+    - Debug
 
         - \\ CustomExceptions, Exceptions, Iterator, Timer, Toolbar
         - Kint \\ Kint **third party**
 
     - HTTP
 
-        -   \\ CLIRequest, CURLRequest, ContentSecurityPolicy, Header, 
+        -   \\ CLIRequest, CURLRequest, ContentSecurityPolicy, Header,
             IncomingRequest, Message, Negotiate, Request, RequestInterface,
             Response, ResponseInterface, URI
         -   \\ Files \\ FileCollection, UploadedFile, UploadedFileInterface
 
     - Helpers ... uri
-    - Hooks \\ Hooks
-    - Log 
+    - Events \\ Events
+    - Log
 
         -   Logger, LoggerAwareTrait
         -   \\ Handlers \\  BaseHandler, ChromeLoggerHandler, FileHandler, HandlerInterface
@@ -64,7 +64,6 @@ New packages:
 
         -   Zend \\ Escaper, Exception \\ ... **third party**
         -   RendererInterface, View
-        
+
 
 User Guide adapted or rewritten.
-

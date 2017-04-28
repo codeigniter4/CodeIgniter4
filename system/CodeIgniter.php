@@ -247,7 +247,7 @@ class CodeIgniter
 		{
 			$controller = $this->createController();
 
-			// Is there a "post_controller_constructor" hook?
+			// Is there a "post_controller_constructor" event?
 			Events::trigger('post_controller_constructor');
 
 			$returned = $this->runController($controller);
@@ -280,7 +280,7 @@ class CodeIgniter
 		$this->sendResponse();
 
 		//--------------------------------------------------------------------
-		// Is there a post-system hook?
+		// Is there a post-system event?
 		//--------------------------------------------------------------------
 		Events::trigger('post_system');
 	}

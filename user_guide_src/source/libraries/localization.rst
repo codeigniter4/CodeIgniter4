@@ -232,6 +232,7 @@ Specifying Locale
 
 To specify a different locale to be used when replacing parameters, you can pass the locale in as the
 third parameter to the ``lang()`` method.
+::
 
     // Displays "The time is now 23:21:28 GMT-5"
     echo lang('Test.longTime', [time()], 'ru_RU');
@@ -245,8 +246,10 @@ Nested Arrays
 -------------
 
 Language files also allow nested arrays to make working with lists, etc... easier.
+::
 
     // Language/en/Fruit.php
+
     return [
         'list' => [
             'Apples',
