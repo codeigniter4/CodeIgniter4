@@ -2,7 +2,7 @@
 Controller Filters
 ##################
 
-Controller Filters allow you to perform actions either before or after the controllers execute. Unlike :doc:`hooks </general/hooks>`,
+Controller Filters allow you to perform actions either before or after the controllers execute. Unlike :doc:`events </general/events>`,
 you can very simply choose which URI's in your application have the filters applied to them. Incoming filters may
 modify the Request, while after filters can act on and even modify the Response, allowing for a lot of flexibility
 and power. Some common examples of tasks that might be performed with filters are:
