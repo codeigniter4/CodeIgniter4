@@ -81,7 +81,7 @@ class Database extends BaseCollector
 
 	/**
 	 * The query instances that have been collected
-	 * through the DBQuery Hook.
+	 * through the DBQuery Event.
 	 *
 	 * @var array
 	 */
@@ -101,7 +101,7 @@ class Database extends BaseCollector
 	//--------------------------------------------------------------------
 
 	/**
-	 * The static method used during Hooks to collect
+	 * The static method used during Events to collect
 	 * data.
 	 *
 	 * @param \CodeIgniter\Database\Query $query
