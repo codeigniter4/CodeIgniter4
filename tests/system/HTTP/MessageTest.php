@@ -133,6 +133,15 @@ class MessageTest extends \CIUnitTestCase
 
 		$this->assertEquals('1.1', $this->message->getProtocolVersion());
 	}
+        
+        //--------------------------------------------------------------------
+
+	public function testSetProtocolWorksWithNonNumericVersion()
+	{
+		$this->message->setProtocolVersion('HTTP/1.1');
+
+		$this->assertEquals('1.1', $this->message->getProtocolVersion());
+	}
 
 	//--------------------------------------------------------------------
 
