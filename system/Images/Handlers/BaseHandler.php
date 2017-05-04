@@ -1,19 +1,13 @@
 <?php namespace CodeIgniter\Images\Handlers;
 
 use CodeIgniter\Images\Image;
+use CodeIgniter\Images\ImageException;
 use CodeIgniter\Images\ImageHandlerInterface;
 
 require_once BASEPATH.'Images/Exceptions.php';
 
 abstract class BaseHandler implements ImageHandlerInterface
 {
-	/**
-	 * Stores any errors that were encountered.
-	 *
-	 * @var array
-	 */
-	protected $errors = [];
-
 	/**
 	 * @var null
 	 */
@@ -32,6 +26,13 @@ abstract class BaseHandler implements ImageHandlerInterface
 	protected $xAxis           = 0;
 	protected $yAxis           = 0;
 	protected $masterDim       = 'auto';
+
+	/**
+	 * Temporary image used by the different engines.
+	 *
+	 * @var Resource
+	 */
+	protected $resource;
 
 	//--------------------------------------------------------------------
 
@@ -74,25 +75,15 @@ abstract class BaseHandler implements ImageHandlerInterface
 	//--------------------------------------------------------------------
 
 	/**
-	 * Returns a boolean flag whether any errors were encountered.
+	 * Returns the temporary image used during the image processing.
+	 * Good for extending the system or doing things this library
+	 * is not intended to do.
 	 *
-	 * @return bool
+	 * @return Resource
 	 */
-	public function hasErrors(): bool
+	public function getResource()
 	{
-		return ! empty($this->errors);
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Returns all error messages that were encountered during processing.
-	 *
-	 * @return array
-	 */
-	public function getErrors(): array
-	{
-		return $this->errors ?? [];
+		return $this->resource;
 	}
 
 	//--------------------------------------------------------------------
@@ -104,14 +95,14 @@ abstract class BaseHandler implements ImageHandlerInterface
 	 * @param int  $height
 	 * @param bool $maintainRation If true, will get the closest match possible while keeping aspect ratio true.
 	 *
-	 * @return bool|\CodeIgniter\Images\Handlers\GDHandler
+	 * @return \CodeIgniter\Images\Handlers\BaseHandler
 	 */
 	public function resize(int $width, int $height, bool $maintainRatio = false, string $masterDim = 'auto')
 	{
 		// If the target width/height match the source, then we have nothing to do here.
 		if ($this->image->origWidth === $width && $this->image->origHeight === $height)
 		{
-			return true;
+			return $this;
 		}
 
 		$this->width  = $width;
@@ -144,10 +135,10 @@ abstract class BaseHandler implements ImageHandlerInterface
 	 */
 	public function crop(int $width = null, int $height = null, int $x = null, int $y = null, bool $maintainRatio = false, string $masterDim = 'auto')
 	{
-		$this->width = $width;
+		$this->width  = $width;
 		$this->height = $height;
-		$this->xAxis = $x;
-		$this->yAxis = $y;
+		$this->xAxis  = $x;
+		$this->yAxis  = $y;
 
 		if ($maintainRatio)
 		{
@@ -167,7 +158,77 @@ abstract class BaseHandler implements ImageHandlerInterface
 	 *
 	 * @return mixed
 	 */
-	public abstract function rotate(float $angle);
+	public function rotate(float $angle)
+	{
+		// Allowed rotation values
+		$degs = [90, 180, 270];
+
+		if ($angle === '' || ! in_array($angle, $degs))
+		{
+			throw new ImageException(lang('images.rotationAngleRequired'));
+		}
+
+		// Reassign the width and height
+		if ($angle === 90 OR $angle === 270)
+		{
+			$this->width  = $this->image->origHeight;
+			$this->height = $this->image->origWidth;
+		}
+		else
+		{
+			$this->width  = $this->image->origWidth;
+			$this->height = $this->image->origHeight;
+		}
+
+		// Call the Handler-specific version.
+		$this->_rotate($angle);
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Handler-specific method to handle rotating an image in 90 degree increments.
+	 *
+	 * @param int $angle
+	 *
+	 * @return mixed
+	 */
+	protected abstract function _rotate(int $angle);
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Flips an image either horizontally or vertically.
+	 *
+	 * @param string $dir Either 'vertical' or 'horizontal'
+	 *
+	 * @return $this
+	 */
+	public function flip(string $dir)
+	{
+		$dir = strtolower($dir);
+
+		if ($dir !== 'vertical' && $dir !== 'horizontal')
+		{
+			throw new ImageException(lang('images.invalidDirection'));
+		}
+
+		return $this->_flip($dir);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Handler-specific method to handle flipping an image along its
+	 * horizontal or vertical axis.
+	 *
+	 * @param string $direction
+	 *
+	 * @return mixed
+	 */
+	protected abstract function _flip(string $direction);
 
 	//--------------------------------------------------------------------
 
@@ -180,11 +241,45 @@ abstract class BaseHandler implements ImageHandlerInterface
 
 	/**
 	 * Reads the EXIF information from the image and modifies the orientation
-	 * so that displays correctly in the browser.
+	 * so that displays correctly in the browser. This is especially an issue
+	 * with images taken by smartphones who always store the image up-right,
+	 * but set the orientation flag to display it correctly.
 	 *
-	 * @return bool
+	 * @param bool $silent  If true, will ignore exceptions when PHP doesn't support EXIF.
+	 *
+	 * @return $this
 	 */
-	public abstract function reorient(): bool;
+	public function reorient(bool $silent = false)
+	{
+		$orientation = $this->getEXIF('Orientation', $silent);
+
+		switch ($orientation)
+		{
+			case 2:
+				return $this->flip('horizontal');
+				break;
+			case 3:
+				return $this->rotate(180);
+				break;
+			case 4:
+				return $this->rotate(180)->flip('horizontal');
+				break;
+			case 5:
+				return $this->rotate(270)->flip('horizontal');
+				break;
+			case 6:
+				return $this->rotate(270);
+				break;
+			case 7:
+				return $this->rotate(90)->flip('horizontal');
+				break;
+			case 8:
+				return $this->rotate(90);
+				break;
+			default:
+				return $this;
+		}
+	}
 
 	//--------------------------------------------------------------------
 
@@ -194,9 +289,30 @@ abstract class BaseHandler implements ImageHandlerInterface
 	 *
 	 * @param string|null $key If specified, will only return this piece of EXIF data.
 	 *
+	 * @param bool        $silent   If true, will not throw our own exceptions.
+	 *
 	 * @return mixed
 	 */
-	public abstract function getEXIF(string $key = null);
+	public function getEXIF(string $key = null, bool $silent = false)
+	{
+		if (! function_exists('exif_read_data'))
+		{
+			if ($silent) return null;
+
+			throw new ImageException(lang('images.exifNotSupported'));
+		}
+
+		$exif = exif_read_data($this->image->getPathname());
+
+		if (! is_null($key) && is_array($exif))
+		{
+			$exif = array_key_exists($key, $exif)
+				? $exif[$key]
+				: false;
+		}
+
+		return $exif;
+	}
 
 	//--------------------------------------------------------------------
 
@@ -220,7 +336,126 @@ abstract class BaseHandler implements ImageHandlerInterface
 	 *
 	 * @return bool
 	 */
-	public abstract function fit(int $width, int $height, string $position): bool;
+	public function fit(int $width, int $height=null, string $position = 'center')
+	{
+		$origWidth  = $this->image->origWidth;
+		$origHeight = $this->image->origHeight;
+
+		list($cropWidth, $cropHeight) = $this->calcAspectRatio($width, $height, $origWidth, $origHeight);
+
+		if (is_null($height))
+		{
+			$height = ceil(($width / $cropWidth) * $cropHeight);
+		}
+
+		list($x, $y) = $this->calcCropCoords($width, $height, $origWidth, $origHeight, $position);
+//		var_dump($cropWidth.' + '.$cropHeight);
+//		dd($x.' + '. $y);
+		return $this->crop($cropWidth, $cropHeight, $x, $y)
+		            ->resize($width, $height);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 *
+	 *
+	 * @param      $width
+	 * @param null $height
+	 * @param      $origWidth
+	 * @param      $origHeight
+	 *
+	 * @return array
+	 */
+	protected function calcAspectRatio($width, $height = null, $origWidth, $origHeight): array
+	{
+		// If $height is null, then we have it easy.
+		// Calc based on full image size and be done.
+		if (is_null($height))
+		{
+			$height = ($width / $origWidth) * $origHeight;
+
+			return [$width, (int)$height];
+		}
+
+		$xRatio = $width / $origWidth;
+		$yRatio = $height / $origHeight;
+
+		if ($xRatio > $yRatio)
+		{
+			return [
+				(int)($origWidth * $yRatio),
+				(int)$height
+			];
+		}
+
+		return [
+			(int)$width,
+			(int)($origHeight * $xRatio)
+		];
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Based on the position, will determine the correct x/y coords to
+	 * crop the desired portion from the image.
+	 *
+	 * @param $width
+	 * @param $height
+	 * @param $origWidth
+	 * @param $origHeight
+	 * @param $position
+	 *
+	 * @return array
+	 */
+	protected function calcCropCoords($width, $height, $origWidth, $origHeight, $position): array
+	{
+		$position = strtolower($position);
+		$x = $y = 0;
+
+		switch ($position)
+		{
+			case 'top-left':
+				$x = 0;
+				$y = 0;
+				break;
+			case 'top':
+				$x = floor(($origWidth - $width) / 2);
+				$y = 0;
+				break;
+			case 'top-right':
+				$x = $origWidth - $width;
+				$y = 0;
+				break;
+			case 'left':
+				$x = 0;
+				$y = floor(($origHeight - $height) / 2);
+				break;
+			case 'center':
+				$x = floor(($origWidth - $width) / 2);
+				$y = floor(($origHeight - $height) / 2);
+				break;
+			case 'right':
+				$x = ($origWidth - $width);
+				$y = floor(($origHeight - $height) / 2);
+				break;
+			case 'bottom-left':
+				$x = 0;
+				$y = $origHeight - $height;
+				break;
+			case 'bottom':
+				$x = floor(($origWidth - $width) / 2);
+				$y = $origHeight - $height;
+				break;
+			case 'bottom-right':
+				$x = ($origWidth - $width);
+				$y = $origHeight - $height;
+				break;
+		}
+
+		return [$x, $y];
+	}
 
 	//--------------------------------------------------------------------
 
@@ -307,7 +542,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 		{
 			if ($this->width > 0 && $this->height > 0)
 			{
-				$this->masterDim = ((($this->image->origHeight / $this->image->origWidth)-($this->height / $this->width)) < 0)
+				$this->masterDim = ((($this->image->origHeight/$this->image->origWidth)-($this->height/$this->width)) < 0)
 					? 'width' : 'height';
 			}
 			else

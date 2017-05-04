@@ -51,9 +51,9 @@ interface ImageHandlerInterface
 	 * Reads the EXIF information from the image and modifies the orientation
 	 * so that displays correctly in the browser.
 	 *
-	 * @return bool
+	 * @return $this
 	 */
-	public function reorient(): bool;
+	public function reorient();
 
 	//--------------------------------------------------------------------
 
@@ -89,7 +89,7 @@ interface ImageHandlerInterface
 	 *
 	 * @return bool
 	 */
-	public function fit(int $width, int $height, string $position): bool;
+	public function fit(int $width, int $height, string $position);
 
 	//--------------------------------------------------------------------
 

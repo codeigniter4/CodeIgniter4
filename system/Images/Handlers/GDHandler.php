@@ -21,21 +21,104 @@ class GDHandler extends BaseHandler
 		{
 			throw new ImageException('GD Extension is not loaded.');
 		}
-
 	}
 
 	//--------------------------------------------------------------------
 
 	/**
-	 * Rotates the image on the current canvas.
+	 * Handles the rotation of an image resource.
+	 * Doesn't save the image, but replaces the current resource.
 	 *
-	 * @param float $angle
+	 * @param int $angle
 	 *
-	 * @return mixed
+	 * @return bool
 	 */
-	public function rotate(float $angle)
+	protected function _rotate(int $angle)
 	{
+		// Create the image handle
+		if (! ($srcImg = $this->createImage()))
+		{
+			return false;
+		}
 
+		// Set the background color
+		// This won't work with transparent PNG files so we are
+		// going to have to figure out how to determine the color
+		// of the alpha channel in a future release.
+
+		$white = imagecolorallocate($srcImg, 255, 255, 255);
+
+		// Rotate it!
+		$destImg = imagerotate($this->resource, $angle, $white);
+
+		// Kill the file handles
+		imagedestroy($srcImg);
+
+		$this->resource = $destImg;
+
+		return true;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Flips an image along it's vertical or horizontal axis.
+	 *
+	 * @param string $direction
+	 *
+	 * @return $this
+	 */
+	public function _flip(string $direction)
+	{
+		$srcImg = $this->createImage();
+
+		$width  = $this->image->origWidth;
+		$height = $this->image->origHeight;
+
+		if ($direction === 'horizontal')
+		{
+			for ($i = 0; $i < $height; $i++)
+			{
+				$left  = 0;
+				$right = $width-1;
+
+				while ($left < $right)
+				{
+					$cl = imagecolorat($srcImg, $left, $i);
+					$cr = imagecolorat($srcImg, $right, $i);
+
+					imagesetpixel($srcImg, $left, $i, $cr);
+					imagesetpixel($srcImg, $right, $i, $cl);
+
+					$left++;
+					$right--;
+				}
+			}
+		}
+		else
+		{
+			for ($i = 0; $i < $width; $i++)
+			{
+				$top    = 0;
+				$bottom = $height-1;
+
+				while ($top < $bottom)
+				{
+					$ct = imagecolorat($srcImg, $i, $top);
+					$cb = imagecolorat($srcImg, $i, $bottom);
+
+					imagesetpixel($srcImg, $i, $top, $cb);
+					imagesetpixel($srcImg, $i, $bottom, $ct);
+
+					$top++;
+					$bottom--;
+				}
+			}
+		}
+
+		$this->resource = $srcImg;
+
+		return $this;
 	}
 
 	//--------------------------------------------------------------------
@@ -79,33 +162,6 @@ class GDHandler extends BaseHandler
 	//--------------------------------------------------------------------
 
 	/**
-	 * Combine cropping and resizing into a single command.
-	 *
-	 * Supported positions:
-	 *  - top-left
-	 *  - top
-	 *  - top-right
-	 *  - left
-	 *  - center
-	 *  - right
-	 *  - bottom-left
-	 *  - bottom
-	 *  - bottom-right
-	 *
-	 * @param int    $width
-	 * @param int    $height
-	 * @param string $position
-	 *
-	 * @return bool
-	 */
-	public function fit(int $width, int $height, string $position): bool
-	{
-
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
 	 * Get GD version
 	 *
 	 * @return    mixed
@@ -139,15 +195,18 @@ class GDHandler extends BaseHandler
 		if ($action == 'crop')
 		{
 			// Reassign the source width/height if cropping
-			$origWidth = $this->width;
+			$origWidth  = $this->width;
 			$origHeight = $this->height;
+
+			// Modify the "original" width/height to the new
+			// values so that methods that come after have the
+			// correct size to work with.
+			$this->image->origHeight = $this->height;
+			$this->image->origWidth  = $this->width;
 		}
 
 		// Create the image handle
-		if (! ($src = $this->createImage()))
-		{
-			return false;
-		}
+		$src = $this->createImage();
 
 		if (function_exists('imagecreatetruecolor'))
 		{
@@ -170,8 +229,8 @@ class GDHandler extends BaseHandler
 
 		$copy($dest, $src, 0, 0, $this->xAxis, $this->yAxis, $this->width, $this->height, $origWidth, $origHeight);
 
-		$this->resource = $dest;
 		imagedestroy($src);
+		$this->resource = $dest;
 
 		return $this;
 	}
@@ -192,7 +251,7 @@ class GDHandler extends BaseHandler
 	 *
 	 * @return bool
 	 */
-	public function save(string $target = null, int $quality=90)
+	public function save(string $target = null, int $quality = 90)
 	{
 		$target = empty($target)
 			? $this->image->getPathname()
@@ -203,55 +262,38 @@ class GDHandler extends BaseHandler
 			case IMAGETYPE_GIF:
 				if (! function_exists('imagegif'))
 				{
-					$this->errors[] = lang('images.unsupportedImagecreate');
-					$this->errors[] = lang('images.gifNotSupported');
-
-					return false;
+					throw new ImageException(lang('images.unsupportedImagecreate').' '.lang('images.gifNotSupported'));
 				}
 
 				if (! @imagegif($this->resource, $target))
 				{
-					$this->errors[] = lang('images.saveFailed');
-
-					return false;
+					throw new ImageException(lang('images.saveFailed'));
 				}
 				break;
 			case IMAGETYPE_JPEG:
 				if (! function_exists('imagejpeg'))
 				{
-					$this->errors[] = lang('images.unsupportedImagecreate');
-					$this->errors[] = lang('images.jpgNotSupported');
-
-					return false;
+					throw new ImageException(lang('images.unsupportedImagecreate').' '.lang('images.jpgNotSupported'));
 				}
 
 				if (! @imagejpeg($this->resource, $target, $quality))
 				{
-					$this->errors[] = lang('images.saveFailed');
-
-					return false;
+					throw new ImageException(lang('images.saveFailed'));
 				}
 				break;
 			case IMAGETYPE_PNG:
 				if (! function_exists('imagepng'))
 				{
-					$this->errors[] = lang('images.unsupportedImagecreate');
-					$this->errors[] = lang('images.pngNotSupported');
-
-					return false;
+					throw new ImageException(lang('images.unsupportedImagecreate').' '.lang('images.pngNotSupported'));
 				}
 
 				if (! @imagepng($this->resource, $target))
 				{
-					$this->errors[] = lang('images.saveFailed');
-
-					return false;
+					throw new ImageException(lang('images.saveFailed'));
 				}
 				break;
 			default:
-				$this->errors[] = lang('images.unsupportedImagecreate');
-
-				return false;
+				throw new ImageException(lang('images.unsupportedImagecreate'));
 				break;
 		}
 
@@ -279,7 +321,7 @@ class GDHandler extends BaseHandler
 	{
 		if ($this->resource !== null)
 		{
-			return clone($this->resource);
+			return $this->resource;
 		}
 
 		if ($path === '')
@@ -297,34 +339,26 @@ class GDHandler extends BaseHandler
 			case IMAGETYPE_GIF:
 				if (! function_exists('imagecreatefromgif'))
 				{
-					$this->errors[] = lang('images.gifNotSupported');
-
-					return false;
+					throw new ImageException(lang('images.gifNotSupported'));
 				}
 
 				return imagecreatefromgif($path);
 			case IMAGETYPE_JPEG:
 				if (! function_exists('imagecreatefromjpeg'))
 				{
-					$this->errors[] = lang('images.jpgNotSupported');
-
-					return false;
+					throw new ImageException(lang('images.jpgNotSupported'));
 				}
 
 				return imagecreatefromjpeg($path);
 			case IMAGETYPE_PNG:
 				if (! function_exists('imagecreatefrompng'))
 				{
-					$this->errors[] = lang('images.pngNotSupported');
-
-					return false;
+					throw new ImageException(lang('images.pngNotSupported'));
 				}
 
 				return imagecreatefrompng($path);
 			default:
-				$this->errors[] = lang('images.unsupportedImagecreate');
-
-				return false;
+				throw new ImageException(lang('images.unsupportedImagecreate'));
 		}
 	}
 

@@ -153,10 +153,18 @@ class Checks extends Controller
 
 	public function image()
 	{
+//		$images = Services::image('gd')
+//			->withFile("/Users/kilishan/Documents/BobHeader.jpg")
+//			->resize(500, 100, true)
+//			->crop(200, 75, 20, 0, false)
+//			->rotate(90)
+//			->save('/Users/kilishan/temp.jpg', 100);
+
 		$images = Services::image('gd')
 			->withFile("/Users/kilishan/Documents/BobHeader.jpg")
-			->crop(200, 75, 20, 0, false)
+			->fit(500, 100, 'center')
 			->save('/Users/kilishan/temp.jpg', 100);
+
 
 		ddd($images);
 	}
