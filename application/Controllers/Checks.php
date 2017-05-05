@@ -162,7 +162,7 @@ class Checks extends Controller
 
 		$images = Services::image('gd')
 			->withFile("/Users/kilishan/Documents/BobHeader.jpg")
-			->fit(500, 100, 'center')
+			->fit(500, 100, 'bottom-left')
 			->save('/Users/kilishan/temp.jpg', 100);
 
 

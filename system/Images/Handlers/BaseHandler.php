@@ -146,7 +146,12 @@ abstract class BaseHandler implements ImageHandlerInterface
 			$this->reproportion();
 		}
 
-		return $this->process('crop');
+		$result = $this->process('crop');
+
+		$this->xAxis = null;
+		$this->yAxis = null;
+
+		return $result;
 	}
 
 	//--------------------------------------------------------------------
@@ -349,8 +354,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 		}
 
 		list($x, $y) = $this->calcCropCoords($width, $height, $origWidth, $origHeight, $position);
-//		var_dump($cropWidth.' + '.$cropHeight);
-//		dd($x.' + '. $y);
+
 		return $this->crop($cropWidth, $cropHeight, $x, $y)
 		            ->resize($width, $height);
 	}
@@ -385,12 +389,12 @@ abstract class BaseHandler implements ImageHandlerInterface
 		{
 			return [
 				(int)($origWidth * $yRatio),
-				(int)$height
+				(int)($origHeight * $yRatio)
 			];
 		}
 
 		return [
-			(int)$width,
+			(int)($origWidth * $xRatio),
 			(int)($origHeight * $xRatio)
 		];
 	}
