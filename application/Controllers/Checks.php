@@ -163,6 +163,9 @@ class Checks extends Controller
 		$images = Services::image('gd')
 			->withFile("/Users/kilishan/Documents/BobHeader.jpg")
 			->fit(500, 100, 'bottom-left')
+			->text('Bob is Back!', [
+				'fontSize' => 30,
+			])
 			->save('/Users/kilishan/temp.jpg', 100);
 
 

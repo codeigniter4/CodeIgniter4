@@ -28,6 +28,26 @@ abstract class BaseHandler implements ImageHandlerInterface
 	protected $masterDim       = 'auto';
 
 	/**
+	 * Default options for text watermarking.
+	 *
+	 * @var array
+	 */
+	protected $textDefaults = [
+		'fontPath'     => null,
+		'fontSize'     => 16,
+		'color'        => 'ffffff',
+		'opacity'      => 1.0,
+		'vAlign'       => 'bottom',
+		'hAlign'       => 'center',
+		'vOffset'      => 0,
+		'hOffset'      => 0,
+		'padding'      => 0,
+		'withShadow'   => false,
+		'shadowColor'  => '993300',
+		'shadowOffset' => 3,
+	];
+
+	/**
 	 * Temporary image used by the different engines.
 	 *
 	 * @var Resource
@@ -238,9 +258,115 @@ abstract class BaseHandler implements ImageHandlerInterface
 	//--------------------------------------------------------------------
 
 	/**
-	 * @return mixed
+	 * Overlays a string of text over the image.
+	 *
+	 * @return $this
 	 */
-	public abstract function watermark();
+	public function text(string $text, array $options = [])
+	{
+		$options                = array_merge($this->textDefaults, $options);
+		$options['color']       = trim($options['color'], '# ');
+		$options['shadowColor'] = trim($options['shadowColor'], '# ');
+
+		if (! empty($options['fontPath']) && ! file_exists($options['fontPath']))
+		{
+			throw new ImageException(lang('images.missingFont'));
+		}
+
+		// Reverse the vertical offset
+		// When the image is positioned at the bottom
+		// we don't want the vertical offset to push it
+		// further down. We want the reverse, so we'll
+		// invert the offset. Note: The horizontal
+		// offset flips itself automatically
+
+		if ($options['vAlign'] === 'bottom')
+		{
+			$options['vOffset'] = $options['vOffset'] * -1;
+		}
+
+		if ($options['hAlign'] === 'right')
+		{
+			$options['hOffset'] = $options['hOffset'] * -1;
+		}
+
+		// Set font width and height
+		// These are calculated differently depending on
+		// whether we are using the true type font or not
+		if (! empty($options['fontPath']))
+		{
+			if (function_exists('imagettfbbox'))
+			{
+				$temp = imagettfbbox($options['fontSize'], 0, $options['fontPath'], $text);
+				$temp = $temp[2] - $temp[0];
+
+				$fontwidth = $temp / strlen($text);
+			}
+			else
+			{
+				$fontwidth = $options['fontSize'] - ($options['fontSize'] / 4);
+			}
+
+			$fontheight = $options['fontSize'];
+			$options['vOffset'] += $options['fontSize'];
+		}
+		else
+		{
+			$fontwidth  = imagefontwidth($options['fontSize']);
+			$fontheight = imagefontheight($options['fontSize']);
+		}
+
+		$options['fontheight'] = $fontheight;
+		$options['fontwidth'] = $fontwidth;
+
+		// Set base X and Y axis values
+		$xAxis = $options['hOffset'] + $options['padding'];
+		$yAxis = $options['vOffset'] + $options['padding'];
+
+		// Set vertical alignment
+		if ($options['vAlign'] === 'middle')
+		{
+			$yAxis += ($this->image->origHeight / 2) + ($fontheight / 2);
+		}
+		elseif ($options['vAlign'] === 'bottom')
+		{
+			$yAxis += $this->image->origHeight - $fontheight - $options['shadowOffset'] - ($fontheight / 2);
+		}
+
+		// Set horizontal alignment
+		if ($options['hAlign'] === 'right')
+		{
+			$xAxis += $this->image->origWidth - ($fontwidth * strlen($text)) - $options['shadowOffset'];
+		}
+		elseif ($options['hAlign'] === 'center')
+		{
+			$xAxis += floor(($this->image->origWidth - ($fontwidth * strlen($text))) / 2);
+		}
+
+		if ($options['withShadow'])
+		{
+			// Offset from text
+			$options['xShadow'] = $xAxis + $options['shadowOffset'];
+			$options['yShadow'] = $yAxis + $options['shadowOffset'];
+
+			$this->textOverlay($text, $options, true);
+		}
+
+		$this->textOverlay($text, $options, false);
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Handler-specific method for overlaying text on an image.
+	 *
+	 * @param string $text
+	 * @param array  $options
+	 * @param bool   $isShadow  Whether we are drawing the dropshadow or actual text
+	 */
+	protected abstract function textOverlay(string $text, array $options = [], bool $isShadow=false);
 
 	//--------------------------------------------------------------------
 
@@ -250,7 +376,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 	 * with images taken by smartphones who always store the image up-right,
 	 * but set the orientation flag to display it correctly.
 	 *
-	 * @param bool $silent  If true, will ignore exceptions when PHP doesn't support EXIF.
+	 * @param bool $silent If true, will ignore exceptions when PHP doesn't support EXIF.
 	 *
 	 * @return $this
 	 */
@@ -267,16 +393,19 @@ abstract class BaseHandler implements ImageHandlerInterface
 				return $this->rotate(180);
 				break;
 			case 4:
-				return $this->rotate(180)->flip('horizontal');
+				return $this->rotate(180)
+				            ->flip('horizontal');
 				break;
 			case 5:
-				return $this->rotate(270)->flip('horizontal');
+				return $this->rotate(270)
+				            ->flip('horizontal');
 				break;
 			case 6:
 				return $this->rotate(270);
 				break;
 			case 7:
-				return $this->rotate(90)->flip('horizontal');
+				return $this->rotate(90)
+				            ->flip('horizontal');
 				break;
 			case 8:
 				return $this->rotate(90);
@@ -292,9 +421,9 @@ abstract class BaseHandler implements ImageHandlerInterface
 	 * Retrieve the EXIF information from the image, if possible. Returns
 	 * an array of the information, or null if nothing can be found.
 	 *
-	 * @param string|null $key If specified, will only return this piece of EXIF data.
+	 * @param string|null $key    If specified, will only return this piece of EXIF data.
 	 *
-	 * @param bool        $silent   If true, will not throw our own exceptions.
+	 * @param bool        $silent If true, will not throw our own exceptions.
 	 *
 	 * @return mixed
 	 */
@@ -302,7 +431,10 @@ abstract class BaseHandler implements ImageHandlerInterface
 	{
 		if (! function_exists('exif_read_data'))
 		{
-			if ($silent) return null;
+			if ($silent)
+			{
+				return null;
+			}
 
 			throw new ImageException(lang('images.exifNotSupported'));
 		}
@@ -341,7 +473,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 	 *
 	 * @return bool
 	 */
-	public function fit(int $width, int $height=null, string $position = 'center')
+	public function fit(int $width, int $height = null, string $position = 'center')
 	{
 		$origWidth  = $this->image->origWidth;
 		$origHeight = $this->image->origHeight;
@@ -350,7 +482,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 
 		if (is_null($height))
 		{
-			$height = ceil(($width / $cropWidth) * $cropHeight);
+			$height = ceil(($width/$cropWidth)*$cropHeight);
 		}
 
 		list($x, $y) = $this->calcCropCoords($width, $height, $origWidth, $origHeight, $position);
@@ -377,25 +509,25 @@ abstract class BaseHandler implements ImageHandlerInterface
 		// Calc based on full image size and be done.
 		if (is_null($height))
 		{
-			$height = ($width / $origWidth) * $origHeight;
+			$height = ($width/$origWidth)*$origHeight;
 
 			return [$width, (int)$height];
 		}
 
-		$xRatio = $width / $origWidth;
-		$yRatio = $height / $origHeight;
+		$xRatio = $width/$origWidth;
+		$yRatio = $height/$origHeight;
 
 		if ($xRatio > $yRatio)
 		{
 			return [
-				(int)($origWidth * $yRatio),
-				(int)($origHeight * $yRatio)
+				(int)($origWidth*$yRatio),
+				(int)($origHeight*$yRatio),
 			];
 		}
 
 		return [
-			(int)($origWidth * $xRatio),
-			(int)($origHeight * $xRatio)
+			(int)($origWidth*$xRatio),
+			(int)($origHeight*$xRatio),
 		];
 	}
 
@@ -416,7 +548,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 	protected function calcCropCoords($width, $height, $origWidth, $origHeight, $position): array
 	{
 		$position = strtolower($position);
-		$x = $y = 0;
+		$x        = $y = 0;
 
 		switch ($position)
 		{
@@ -425,36 +557,36 @@ abstract class BaseHandler implements ImageHandlerInterface
 				$y = 0;
 				break;
 			case 'top':
-				$x = floor(($origWidth - $width) / 2);
+				$x = floor(($origWidth-$width)/2);
 				$y = 0;
 				break;
 			case 'top-right':
-				$x = $origWidth - $width;
+				$x = $origWidth-$width;
 				$y = 0;
 				break;
 			case 'left':
 				$x = 0;
-				$y = floor(($origHeight - $height) / 2);
+				$y = floor(($origHeight-$height)/2);
 				break;
 			case 'center':
-				$x = floor(($origWidth - $width) / 2);
-				$y = floor(($origHeight - $height) / 2);
+				$x = floor(($origWidth-$width)/2);
+				$y = floor(($origHeight-$height)/2);
 				break;
 			case 'right':
-				$x = ($origWidth - $width);
-				$y = floor(($origHeight - $height) / 2);
+				$x = ($origWidth-$width);
+				$y = floor(($origHeight-$height)/2);
 				break;
 			case 'bottom-left':
 				$x = 0;
-				$y = $origHeight - $height;
+				$y = $origHeight-$height;
 				break;
 			case 'bottom':
-				$x = floor(($origWidth - $width) / 2);
-				$y = $origHeight - $height;
+				$x = floor(($origWidth-$width)/2);
+				$y = $origHeight-$height;
 				break;
 			case 'bottom-right':
-				$x = ($origWidth - $width);
-				$y = $origHeight - $height;
+				$x = ($origWidth-$width);
+				$y = $origHeight-$height;
 				break;
 		}
 
