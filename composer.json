@@ -1,6 +1,6 @@
 {
 	"description": "The CodeIgniter framework v4",
-	"name": "codeigniter/framework",
+	"name": "codeigniter4/framework",
 	"type": "project",
 	"homepage": "https://codeigniter.com",
 	"license": "MIT",
@@ -20,7 +20,7 @@
 		"zendframework/zend-escaper": "^2.5"
 	},
 	"require-dev": {
-		"phpunit/phpunit": "5.3.*",
+		"phpunit/phpunit": "^6.0",
 		"mikey179/vfsStream": "1.6.*",
 		"php-amqplib/php-amqplib": "2.6.*",
 		"satooshi/php-coveralls": "^1.0"

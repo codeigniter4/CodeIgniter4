@@ -7,6 +7,12 @@ use CodeIgniter\Database\Query;
  */
 class PretendTest extends \CIDatabaseTestCase
 {
+	public function tearDown()
+	{
+		// We share `$this->db` in testing, so we need to restore the state.
+		$this->db->pretend(false);
+	}
+
 	public function testPretendReturnsQueryObject()
 	{
 		$result = $this->db->pretend(false)
@@ -17,7 +23,7 @@ class PretendTest extends \CIDatabaseTestCase
 
 		$result = $this->db->pretend(true)
 					->table('user')
-				 	->get();
+					->get();
 
 		$this->assertTrue($result instanceof Query);
 	}

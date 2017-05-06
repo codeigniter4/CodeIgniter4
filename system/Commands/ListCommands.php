@@ -49,127 +49,148 @@ use CodeIgniter\CLI\CLI;
  */
 class ListCommands extends BaseCommand
 {
-    protected $group = 'CodeIgniter';
+	protected $group = 'CodeIgniter';
 
-    /**
-     * The Command's name
-     *
-     * @var string
-     */
-    protected $name = 'list';
+	/**
+	 * The Command's name
+	 *
+	 * @var string
+	 */
+	protected $name = 'list';
 
-    /**
-     * the Command's short description
-     *
-     * @var string
-     */
-    protected $description = 'Lists the available commands.';
+	/**
+	 * the Command's short description
+	 *
+	 * @var string
+	 */
+	protected $description = 'Lists the available commands.';
 
-    /**
-     * The length of the longest command name.
-     * Used during display in columns.
-     *
-     * @var int
-     */
-    protected $maxFirstLength = 0;
+	/**
+	 * the Command's usage
+	 *
+	 * @var string
+	 */
+	protected $usage = 'list';
 
-    //--------------------------------------------------------------------
+	/**
+	 * the Command's Arguments
+	 *
+	 * @var array
+	 */
+	protected $arguments = array();
 
-    /**
-     * Displays the help for the ci.php cli script itself.
-     *
-     * @param array $params
-     */
-    public function run(array $params)
-    {
-        $commands = $this->commands->getCommands();
+	/**
+	 * the Command's Options
+	 *
+	 * @var array
+	 */
+	protected $options = array();
 
-        $this->describeCommands($commands);
+	/**
+	 * The length of the longest command name.
+	 * Used during display in columns.
+	 *
+	 * @var int
+	 */
+	protected $maxFirstLength = 0;
 
-        CLI::newLine();
-    }
+	//--------------------------------------------------------------------
 
-    //--------------------------------------------------------------------
+	/**
+	 * Displays the help for the ci.php cli script itself.
+	 *
+	 * @param array $params
+	 */
+	public function run(array $params)
+	{
+		$commands = $this->commands->getCommands();
 
-    /**
-     * Displays the commands on the CLI.
-     *
-     * @param array $commands
-     */
-    protected function describeCommands(array $commands = [])
-    {
-        arsort($commands);
+		$this->describeCommands($commands);
 
-        $names     = array_keys($commands);
-        $descs     = array_column($commands, 'description');
-        $groups    = array_column($commands, 'group');
-        $lastGroup = '';
+		CLI::newLine();
+	}
 
-        // Pad each item to the same length
-        $names = $this->padArray($names, 2, 2);
+	//--------------------------------------------------------------------
 
-        for ($i = 0; $i < count($names); $i++)
-        {
-            $lastGroup = $this->describeGroup($groups[$i], $lastGroup);
+	/**
+	 * Displays the commands on the CLI.
+	 *
+	 * @param array $commands
+	 */
+	protected function describeCommands(array $commands = [])
+	{
+		arsort($commands);
 
-            $out = CLI::color($names[$i], 'yellow');
+		$names     = array_keys($commands);
+		$descs     = array_column($commands, 'description');
+		$groups    = array_column($commands, 'group');
+		$lastGroup = '';
 
-            if (isset($descs[$i]))
-            {
-                $out .= CLI::wrap($descs[$i], 125, strlen($names[$i]));
-            }
+		// Pad each item to the same length
+		$names = $this->padArray($names, 2, 2);
 
-            CLI::write($out);
-        }
-    }
+		for ($i = 0; $i < count($names); $i++)
+		{
+			$lastGroup = $this->describeGroup($groups[$i], $lastGroup);
 
-    //--------------------------------------------------------------------
+			$out = CLI::color($names[$i], 'yellow');
 
-    /**
-     * Outputs the description, if necessary.
-     *
-     * @param string $new
-     * @param string $old
-     *
-     * @return string
-     */
-    protected function describeGroup(string $new, string $old)
-    {
-        if ($new == $old)
-        {
-            return $old;
-        }
+			if (isset($descs[$i]))
+			{
+				$out .= CLI::wrap($descs[$i], 125, strlen($names[$i]));
+			}
 
-        CLI::newLine();
-        CLI::write($new);
+			CLI::write($out);
+		}
+	}
 
-        return $new;
-    }
+	//--------------------------------------------------------------------
 
-    //--------------------------------------------------------------------
+	/**
+	 * Outputs the description, if necessary.
+	 *
+	 * @param string $new
+	 * @param string $old
+	 *
+	 * @return string
+	 */
+	protected function describeGroup(string $new, string $old)
+	{
+		if ($new == $old)
+		{
+			return $old;
+		}
 
-    /**
-     * Returns a new array where all of the string elements have
-     * been padding with trailing spaces to be the same length.
-     *
-     * @param array $array
-     * @param int   $extra // How many extra spaces to add at the end
-     *
-     * @return array
-     */
-    protected function padArray($array, $extra = 2, $indent=0)
-    {
-        $max = max(array_map('strlen', $array))+$extra+$indent;
+		CLI::newLine();
+		CLI::write($new);
 
-        foreach ($array as &$item)
-        {
-            $item = str_repeat(' ', $indent).$item;
-            $item = str_pad($item, $max);
-        }
+		return $new;
+	}
 
-        return $array;
-    }
+	//--------------------------------------------------------------------
 
-    //--------------------------------------------------------------------
+	/**
+	 * Returns a new array where all of the string elements have
+	 * been padding with trailing spaces to be the same length.
+	 *
+	 * @param array $array
+	 * @param int   $extra // How many extra spaces to add at the end
+	 *
+	 * @return array
+	 */
+	protected function padArray($array, $extra = 2, $indent=0)
+	{
+		$max = max(array_map('strlen', $array))+$extra+$indent;
+
+		foreach ($array as &$item)
+		{
+			$item = str_repeat(' ', $indent).$item;
+			$item = str_pad($item, $max);
+		}
+
+		return $array;
+	}
+
+	//--------------------------------------------------------------------
 
 }

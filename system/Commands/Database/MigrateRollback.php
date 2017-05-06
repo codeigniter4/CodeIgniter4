@@ -39,6 +39,7 @@
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 use Config\Services;
+use Config\Autoload;
 
 /**
  * Runs all of the migrations in reverse order, until they have
@@ -48,40 +49,87 @@ use Config\Services;
  */
 class MigrateRollback extends BaseCommand
 {
-    protected $group = 'Database';
+	protected $group = 'Database';
 
-    /**
-     * The Command's name
-     *
-     * @var string
-     */
-    protected $name = 'migrate:rollback';
+	/**
+	 * The Command's name
+	 *
+	 * @var string
+	 */
+	protected $name = 'migrate:rollback';
 
-    /**
-     * the Command's short description
-     *
-     * @var string
-     */
-    protected $description = 'Runs all of the migrations in reverse order, until they have all been un-applied.';
+	/**
+	 * the Command's short description
+	 *
+	 * @var string
+	 */
+	protected $description = 'Runs all of the migrations in reverse order, until they have all been un-applied.';
 
-    /**
-     * Runs all of the migrations in reverse order, until they have
-     * all been un-applied.
-     */
-    public function run(array $params=[])
-    {
-        $runner = Services::migrations();
+	/**
+	 * the Command's usage
+	 *
+	 * @var string
+	 */
+	protected $usage = 'migrate:rollback [Options]';
 
-        CLI::write(lang('Migrations.migRollingBack'), 'yellow');
+	/**
+	 * the Command's Arguments
+	 *
+	 * @var array
+	 */
+	protected $arguments = [];
 
-        try {
-            $runner->version(0);
-        }
-        catch (\Exception $e)
-        {
-            $this->showError($e);
-        }
+	/**
+	 * the Command's Options
+	 *
+	 * @var array
+	 */
+	protected $options = array(
+			'-n'   => 'Set migration namespace',
+			'-g'   => 'Set database group',
+			'-all' => 'Set latest for all namespace, will ignore (-n) option'
+			);
 
-        CLI::write('Done');
-    }
+	/**
+	 * Runs all of the migrations in reverse order, until they have
+	 * all been un-applied.
+	 */
+	public function run(array $params=[])
+	{
+		$runner = Services::migrations();
+
+		CLI::write(lang('Migrations.migRollingBack'), 'yellow');
+		$group = CLI::getOption('g');
+		if(!is_null($group)){
+			$runner->setGroup($group);
+		}
+		try {
+			if (is_null(CLI::getOption('all'))){   
+				$namespace =CLI::getOption('n');         
+				$runner->version(0,$namespace);
+			}else{
+				// Get all namespaces form  PSR4 paths.
+				$config = new Autoload();
+				$namespaces = $config->psr4;
+				foreach ($namespaces as $namespace => $path) {
+					$runner->setNamespace($namespace);
+					$migrations = $runner->findMigrations();                    
+					if (empty($migrations)) {
+						continue;
+					}    
+					$runner->version(0,$namespace,$group);
+				}
+			}
+			$messages = $runner->getCliMessages();
+			foreach ($messages as $message) {
+				CLI::write($message); 
+			}
+		}
+		catch (\Exception $e)
+		{
+			$this->showError($e);
+		}
+
+		CLI::write('Done');
+	}
 }

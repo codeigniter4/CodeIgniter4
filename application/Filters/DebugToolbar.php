@@ -33,7 +33,9 @@ class DebugToolbar implements FilterInterface
 	 */
 	public function after(RequestInterface $request, ResponseInterface $response)
 	{
-		if ( ! is_cli() && CI_DEBUG)
+		$format = $response->getHeaderLine('content-type');
+
+		if ( ! is_cli() && CI_DEBUG && strpos($format, 'html') !== false)
 		{
 			global $app;
 

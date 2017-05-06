@@ -112,10 +112,10 @@ class CLI
 		'light_gray' => '47',
 	];
 
-    /**
-     * List of array segments.
-     * @var array
-     */
+	/**
+	 * List of array segments.
+	 * @var array
+	 */
 	protected static $segments = [];
 
 	protected static $options = [];
@@ -127,9 +127,9 @@ class CLI
 	 */
 	public static function init()
 	{
-	    // Readline is an extension for PHP that makes interactivity with PHP
-        // much more bash-like.
-        // http://www.php.net/manual/en/readline.installation.php
+		// Readline is an extension for PHP that makes interactivity with PHP
+		// much more bash-like.
+		// http://www.php.net/manual/en/readline.installation.php
 		static::$readline_support = extension_loaded('readline');
 
 		static::parseCommandLine();
@@ -607,170 +607,170 @@ class CLI
 
 	//--------------------------------------------------------------------
 
-    //--------------------------------------------------------------------
-    // Command-Line 'URI' support
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
+	// Command-Line 'URI' support
+	//--------------------------------------------------------------------
 
-    /**
-     * Parses the command line it was called from and collects all
-     * options and valid segments.
-     *
-     * I tried to use getopt but had it fail occassionally to find any
-     * options but argc has always had our back. We don't have all of the power
-     * of getopt but this does us just fine.
-     */
-    protected static function parseCommandLine()
-    {
-        $optionsFound = false;
+	/**
+	 * Parses the command line it was called from and collects all
+	 * options and valid segments.
+	 *
+	 * I tried to use getopt but had it fail occassionally to find any
+	 * options but argc has always had our back. We don't have all of the power
+	 * of getopt but this does us just fine.
+	 */
+	protected static function parseCommandLine()
+	{
+		$optionsFound = false;
 
-        for ($i=1; $i < $_SERVER['argc']; $i++)
-        {
-            // If there's no '-' at the beginning of the argument
-            // then add it to our segments.
-            if (! $optionsFound && mb_strpos($_SERVER['argv'][$i], '-') === false)
-            {
-                static::$segments[] = $_SERVER['argv'][$i];
-                continue;
-            }
+		for ($i=1; $i < $_SERVER['argc']; $i++)
+		{
+			// If there's no '-' at the beginning of the argument
+			// then add it to our segments.
+			if (! $optionsFound && mb_strpos($_SERVER['argv'][$i], '-') === false)
+			{
+				static::$segments[] = $_SERVER['argv'][$i];
+				continue;
+			}
 
-            // We set $optionsFound here so that we know to
-            // skip the next argument since it's likely the
-            // value belonging to this option.
-            $optionsFound = true;
+			// We set $optionsFound here so that we know to
+			// skip the next argument since it's likely the
+			// value belonging to this option.
+			$optionsFound = true;
 
-            if (mb_substr($_SERVER['argv'][$i], 0, 1) != '-')
-            {
-                continue;
-            }
+			if (mb_substr($_SERVER['argv'][$i], 0, 1) != '-')
+			{
+				continue;
+			}
 
-            $arg = str_replace('-', '', $_SERVER['argv'][$i]);
-            $value = null;
+			$arg = str_replace('-', '', $_SERVER['argv'][$i]);
+			$value = null;
 
-            // if the next item doesn't have a dash it's a value.
-            if (isset($_SERVER['argv'][$i+1]) && mb_substr($_SERVER['argv'][$i+1], 0, 1) != '-')
-            {
-                $value = $_SERVER['argv'][$i+1];
-                $i++;
-            }
+			// if the next item doesn't have a dash it's a value.
+			if (isset($_SERVER['argv'][$i+1]) && mb_substr($_SERVER['argv'][$i+1], 0, 1) != '-')
+			{
+				$value = $_SERVER['argv'][$i+1];
+				$i++;
+			}
 
-            static::$options[$arg] = $value;
+			static::$options[$arg] = $value;
 
-            // Reset $optionsFound so it can collect segments
-            // past any options.
-            $optionsFound = false;
-        }
-    }
+			// Reset $optionsFound so it can collect segments
+			// past any options.
+			$optionsFound = false;
+		}
+	}
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
-    /**
-     * Returns the command line string portions of the arguments, minus
-     * any options, as a string. This is used to pass along to the main
-     * CodeIgniter application.
-     *
-     * @return string
-     */
-    public static function getURI()
-    {
-        return implode(' ', static::$segments);
-    }
+	/**
+	 * Returns the command line string portions of the arguments, minus
+	 * any options, as a string. This is used to pass along to the main
+	 * CodeIgniter application.
+	 *
+	 * @return string
+	 */
+	public static function getURI()
+	{
+		return implode('/', static::$segments);
+	}
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
-    /**
-     * Returns an individual segment.
-     *
-     * This ignores any options that might have been dispersed between
-     * valid segments in the command:
-     *
-     *  // segment(3) is 'three', not '-f' or 'anOption'
-     *  > ci.php one two -f anOption three
-     *
-     * @param int $index
-     *
-     * @return mixed|null
-     */
-    public static function getSegment(int $index)
-    {
-        if (! isset(static::$segments[$index-1]))
-        {
-            return null;
-        }
+	/**
+	 * Returns an individual segment.
+	 *
+	 * This ignores any options that might have been dispersed between
+	 * valid segments in the command:
+	 *
+	 *  // segment(3) is 'three', not '-f' or 'anOption'
+	 *  > ci.php one two -f anOption three
+	 *
+	 * @param int $index
+	 *
+	 * @return mixed|null
+	 */
+	public static function getSegment(int $index)
+	{
+		if (! isset(static::$segments[$index-1]))
+		{
+			return null;
+		}
 
-        return static::$segments[$index-1];
-    }
+		return static::$segments[$index-1];
+	}
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
-    /**
-     * Gets a single command-line option. Returns TRUE if the option
-     * exists, but doesn't have a value, and is simply acting as a flag.
-     *
-     * @param string $name
-     *
-     * @return bool|mixed|null
-     */
-    public static function getOption(string $name)
-    {
-        if (! array_key_exists($name, static::$options))
-        {
-            return null;
-        }
+	/**
+	 * Gets a single command-line option. Returns TRUE if the option
+	 * exists, but doesn't have a value, and is simply acting as a flag.
+	 *
+	 * @param string $name
+	 *
+	 * @return bool|mixed|null
+	 */
+	public static function getOption(string $name)
+	{
+		if (! array_key_exists($name, static::$options))
+		{
+			return null;
+		}
 
-        // If the option didn't have a value, simply return TRUE
-        // so they know it was set, otherwise return the actual value.
-        $val = static::$options[$name] === null
-            ? true
-            : static::$options[$name];
+		// If the option didn't have a value, simply return TRUE
+		// so they know it was set, otherwise return the actual value.
+		$val = static::$options[$name] === null
+			? true
+			: static::$options[$name];
 
-        return $val;
-    }
+		return $val;
+	}
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
-    /**
-     * Returns the raw array of options found.
-     *
-     * @return array
-     */
-    public static function getOptions()
-    {
-        return static::$options;
-    }
+	/**
+	 * Returns the raw array of options found.
+	 *
+	 * @return array
+	 */
+	public static function getOptions()
+	{
+		return static::$options;
+	}
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
-    /**
-     * Returns the options a string, suitable for passing along on
-     * the CLI to other commands.
-     *
-     * @return string
-     */
-    public static function getOptionString(): string
-    {
-        if (! count(static::$options))
-        {
-            return '';
-        }
+	/**
+	 * Returns the options a string, suitable for passing along on
+	 * the CLI to other commands.
+	 *
+	 * @return string
+	 */
+	public static function getOptionString(): string
+	{
+		if (! count(static::$options))
+		{
+			return '';
+		}
 
-        $out = '';
+		$out = '';
 
-        foreach (static::$options as $name => $value)
-        {
-            // If there's a space, we need to group
-            // so it will pass correctly.
-            if (mb_strpos($value, ' ') !== false)
-            {
-                $value = '"'.$value.'"';
-            }
+		foreach (static::$options as $name => $value)
+		{
+			// If there's a space, we need to group
+			// so it will pass correctly.
+			if (mb_strpos($value, ' ') !== false)
+			{
+				$value = '"'.$value.'"';
+			}
 
-            $out .= "-{$name} $value ";
-        }
+			$out .= "-{$name} $value ";
+		}
 
-        return $out;
-    }
+		return $out;
+	}
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
 }
 

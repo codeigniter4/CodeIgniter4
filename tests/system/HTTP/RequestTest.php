@@ -2,6 +2,9 @@
 
 use Config\App;
 
+/**
+ * @backupGlobals enabled
+ */
 class RequestTest extends \CIUnitTestCase
 {
 	/**
@@ -45,10 +48,7 @@ class RequestTest extends \CIUnitTestCase
 
 	public function testMethodReturnsRightStuff()
 	{
-		$this->assertEquals('', $this->request->getMethod());
-
-		$_SERVER['REQUEST_METHOD'] = 'GET';
-
+		// Defaults method to GET now.
 		$this->assertEquals('get', $this->request->getMethod());
 		$this->assertEquals('GET', $this->request->getMethod(true));
 	}

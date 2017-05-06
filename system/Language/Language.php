@@ -88,14 +88,14 @@ class Language
 
 	/**
 	 * Parses the language string for a file, loads the file, if necessary,
-	 * getting
+	 * getting the line.
 	 *
-	 * @param string $line
-	 * @param array  $args
+	 * @param string $line Line.
+	 * @param array  $args Arguments.
 	 *
-	 * @return string
+	 * @return string|string[] Returns line.
 	 */
-	public function getLine(string $line, array $args = []): string
+	public function getLine(string $line, array $args = [])
 	{
 		// Parse out the file name and the actual alias.
 		// Will load the language file and strings.
@@ -105,11 +105,8 @@ class Language
 			? $this->language[$file][$line]
 			: $line;
 
-		// Do advanced message formatting here
-		// if the 'intl' extension is available.
-		if ($this->intlSupport && count($args))
-		{
-			$output = \MessageFormatter::formatMessage($this->locale, $output, $args);
+		if (count($args)) {
+			$output = $this->formatMessage($output, $args);
 		}
 
 		return $output;
@@ -127,9 +124,15 @@ class Language
 	 */
 	protected function parseLine(string $line): array
 	{
+		// If there's no possibility of a filename being in the string
+		// simply return the string, and they can parse the replacement
+		// without it being in a file.
 		if (strpos($line, '.') === false)
 		{
-			throw new \InvalidArgumentException('No language file specified in line: '.$line);
+			return [
+				null,
+				$line
+			];
 		}
 
 		$file = substr($line, 0, strpos($line, '.'));
@@ -144,6 +147,35 @@ class Language
 			$file,
 			$this->language[$line] ?? $line
 		];
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Advanced message formatting.
+	 *
+	 * @param string|array $message Message.
+	 * @param array	       $args    Arguments.
+	 *
+	 * @return string|array Returns formatted message.
+	 */
+	protected function formatMessage($message, array $args = [])
+	{
+		if (! $this->intlSupport || ! count($args))
+		{
+			return $message;
+		}
+
+		if (is_array($message))
+		{
+			foreach ($message as $index => $value)
+			{
+				$message[$index] = $this->formatMessage($value, $args);
+			}
+			return $message;
+		}
+
+		return \MessageFormatter::formatMessage($this->locale, $message, $args);
 	}
 
 	//--------------------------------------------------------------------
@@ -201,7 +233,7 @@ class Language
 	 */
 	protected function requireFile(string $path): array
 	{
-        $files = service('locator')->search($path);
+		$files = service('locator')->search($path);
 
 		foreach ($files as $file)
 		{
@@ -210,7 +242,11 @@ class Language
 				continue;
 			}
 
-			return require_once $file;
+			// On some OS's we were seeing failures
+      // on this command returning boolean instead
+      // of array during testing, so we've removed
+      // the require_once for now.
+			return require $file;
 		}
 
 		return [];

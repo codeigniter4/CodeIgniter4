@@ -42,49 +42,70 @@ use Config\App;
 
 class CreateMigration extends BaseCommand
 {
-    protected $group = 'CodeIgniter';
+	protected $group = 'CodeIgniter';
 
-    /**
-     * The Command's name
-     *
-     * @var string
-     */
-    protected $name = 'session:migration';
+	/**
+	 * The Command's name
+	 *
+	 * @var string
+	 */
+	protected $name = 'session:migration';
 
-    /**
-     * the Command's short description
-     *
-     * @var string
-     */
-    protected $description = 'Generates the migration file for database sessions.';
+	/**
+	 * the Command's short description
+	 *
+	 * @var string
+	 */
+	protected $description = 'Generates the migration file for database sessions.';
 
-    /**
-     * Creates a new migration file with the current timestamp.
-     */
-    public function run(array $params=[])
-    {
-        $name = 'create_sessions_table';
+	/**
+	 * the Command's usage
+	 *
+	 * @var string
+	 */
+	protected $usage = 'session:migration';
 
-        $path = APPPATH.'Database/Migrations/'.date('YmdHis_').$name.'.php';
+	/**
+	 * the Command's Arguments
+	 *
+	 * @var array
+	 */
+	protected $arguments = array();
 
-        $config = new App();
+	/**
+	 * the Command's Options
+	 *
+	 * @var array
+	 */
+	protected $options = array();
 
-        $data = [
-            'matchIP'   => $config->sessionMatchIP  ?? false,
-            'tableName' => $config->sessionSavePath ?? 'ci_sessions',
-        ];
+	/**
+	 * Creates a new migration file with the current timestamp.
+	 */
+	public function run(array $params=[])
+	{
+		$name = 'create_sessions_table';
 
-        $template = view('\CodeIgniter\Commands\Sessions\Views\migration.tpl', $data);
-        $template = str_replace('@php', '<?php', $template);
+		$path = APPPATH.'Database/Migrations/'.date('YmdHis_').$name.'.php';
 
-        // Write the file out.
-        helper('filesystem');
-        if (! write_file($path, $template))
-        {
-            CLI::error(lang('Migrations.migWriteError'));
-            return;
-        }
+		$config = new App();
 
-        CLI::write('Created file: '. CLI::color(str_replace(APPPATH, 'APPPATH/', $path), 'green'));
-    }
+		$data = [
+			'matchIP'   => $config->sessionMatchIP  ?? false,
+			'tableName' => $config->sessionSavePath ?? 'ci_sessions',
+		];
+
+		$template = view('\CodeIgniter\Commands\Sessions\Views\migration.tpl', $data);
+		$template = str_replace('@php', '<?php', $template);
+
+		// Write the file out.
+		helper('filesystem');
+		if (! write_file($path, $template))
+		{
+			CLI::error(lang('Migrations.migWriteError'));
+			return;
+		}
+
+		CLI::write('Created file: '. CLI::color(str_replace(APPPATH, 'APPPATH/', $path), 'green'));
+	}
 }

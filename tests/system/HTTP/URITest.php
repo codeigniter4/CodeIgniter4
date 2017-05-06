@@ -194,7 +194,8 @@ class URITest extends \CIUnitTestCase
 		$url = 'http://example.com/path';
 		$uri = new URI($url);
 
-		$this->setExpectedException('InvalidArgumentException', 'Invalid port given.');
+		$this->expectException('InvalidArgumentException');
+		$this->expectExceptionMessage('Invalid port given.');
 		$uri->setPort(70000);
 	}
 
@@ -205,7 +206,8 @@ class URITest extends \CIUnitTestCase
 		$url = 'http://example.com/path';
 		$uri = new URI($url);
 
-		$this->setExpectedException('InvalidArgumentException', 'Invalid port given.');
+		$this->expectException('InvalidArgumentException');
+		$this->expectExceptionMessage('Invalid port given.');
 		$uri->setPort(-1);
 	}
 
@@ -216,7 +218,8 @@ class URITest extends \CIUnitTestCase
 		$url = 'http://example.com/path';
 		$uri = new URI($url);
 
-		$this->setExpectedException('InvalidArgumentException', 'Invalid port given.');
+		$this->expectException('InvalidArgumentException');
+		$this->expectExceptionMessage('Invalid port given.');
 		$uri->setPort(0);
 	}
 
@@ -311,7 +314,7 @@ class URITest extends \CIUnitTestCase
 
 		$expected = 'http://example.com/path?key=value';
 
-		$this->setExpectedException('InvalidArgumentException');
+		$this->expectException('InvalidArgumentException');
 		$uri->setQuery('?key=value#fragment');
 	}
 
@@ -439,6 +442,25 @@ class URITest extends \CIUnitTestCase
 	}
 
 	//--------------------------------------------------------------------
+
+    /**
+     * @dataProvider defaultResolutions
+     * @group single
+     */
+    public function testResolveRelativeURIHTTPS($rel, $expected)
+    {
+        $base = 'https://a/b/c/d';
+
+        $expected = str_replace('http:', 'https:', $expected);
+
+        $uri = new URI($base);
+
+        $new = $uri->resolveRelativeURI($rel);
+
+        $this->assertEquals($expected, (string) $new);
+    }
+
+    //--------------------------------------------------------------------
 
 	public function testAddQueryVar()
 	{

@@ -995,56 +995,46 @@ class URI
 
 		$transformed = clone $relative;
 
-		// 5.2.2 Transform References
-		if (! empty($relative->getScheme()))
-		{
-			$transformed->setScheme($relative->getScheme())
-						->setAuthority($relative->getAuthority())
-						->setPath($relative->getPath())
-						->setQuery($relative->getQuery());
-		}
-		else
-		{
-			if (! empty($relative->getAuthority()))
-			{
-				$transformed->setAuthority($relative->getAuthority())
-							->setPath($relative->getPath())
-							->setQuery($relative->getQuery());
-			}
-			else
-			{
-				if ($relative->getPath() == '')
-				{
-					$transformed->setPath($this->getPath());
+		// 5.2.2 Transform References in a non-strict method (no scheme)
+        if (! empty($relative->getAuthority()))
+        {
+            $transformed->setAuthority($relative->getAuthority())
+                        ->setPath($relative->getPath())
+                        ->setQuery($relative->getQuery());
+        }
+        else
+        {
+            if ($relative->getPath() == '')
+            {
+                $transformed->setPath($this->getPath());
 
-					if (! is_null($relative->getQuery()))
-					{
-						$transformed->setQuery($relative->getQuery());
-					}
-					else
-					{
-						$transformed->setQuery($this->getQuery());
-					}
-				}
-				else
-				{
-					if (substr($relative->getPath(), 0, 1) == '/')
-					{
-						$transformed->setPath($relative->getPath());
-					}
-					else
-					{
-						$transformed->setPath($this->mergePaths($this, $relative));
-					}
+                if (! is_null($relative->getQuery()))
+                {
+                    $transformed->setQuery($relative->getQuery());
+                }
+                else
+                {
+                    $transformed->setQuery($this->getQuery());
+                }
+            }
+            else
+            {
+                if (substr($relative->getPath(), 0, 1) == '/')
+                {
+                    $transformed->setPath($relative->getPath());
+                }
+                else
+                {
+                    $transformed->setPath($this->mergePaths($this, $relative));
+                }
 
-					$transformed->setQuery($relative->getQuery());
-				}
+                $transformed->setQuery($relative->getQuery());
+            }
 
-				$transformed->setAuthority($this->getAuthority());
-			}
+            $transformed->setAuthority($this->getAuthority());
+        }
 
-			$transformed->setScheme($this->getScheme());
-		}
+        $transformed->setScheme($this->getScheme());
 
 		$transformed->setFragment($relative->getFragment());
 

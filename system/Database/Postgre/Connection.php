@@ -83,25 +83,25 @@ class Connection extends BaseConnection implements ConnectionInterface
 			$this->buildDSN();
 		}
 
-        // Strip pgsql if exists
-        if (mb_strpos($this->DSN, 'pgsql:') === 0)
-        {
-            $this->DSN = mb_substr($this->DSN, 6);
-        }
+		// Strip pgsql if exists
+		if (mb_strpos($this->DSN, 'pgsql:') === 0)
+		{
+			$this->DSN = mb_substr($this->DSN, 6);
+		}
 
-        // Convert semicolons to spaces.
-        $this->DSN = str_replace(';', ' ', $this->DSN);
+		// Convert semicolons to spaces.
+		$this->DSN = str_replace(';', ' ', $this->DSN);
 
 		$this->connID = $persistent === true
 			? pg_pconnect($this->DSN)
-            : pg_connect($this->DSN);
+			: pg_connect($this->DSN);
 
 		if ($this->connID !== false)
 		{
 			if ($persistent === true
-				&& pg_connection_status($this->connID) === PGSQL_CONNECTION_BAD
-				&& pg_ping($this->connID) === false
-			)
+					&& pg_connection_status($this->connID) === PGSQL_CONNECTION_BAD
+					&& pg_ping($this->connID) === false
+			   )
 			{
 				return false;
 			}
@@ -135,15 +135,15 @@ class Connection extends BaseConnection implements ConnectionInterface
 
 	//--------------------------------------------------------------------
 
-    /**
-     * Close the database connection.
-     */
-    protected function _close()
-    {
-        pg_close($this->connID);
-    }
+	/**
+	 * Close the database connection.
+	 */
+	protected function _close()
+	{
+		pg_close($this->connID);
+	}
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
 	/**
 	 * Select a specific database table to use.
@@ -321,6 +321,41 @@ class Connection extends BaseConnection implements ConnectionInterface
 	//--------------------------------------------------------------------
 
 	/**
+	 * Returns an object with index data
+	 *
+	 * @param	string	$table
+	 * @return	array
+	 */
+	public function _indexData(string $table)
+	{
+		$sql = 'SELECT "indexname", "indexdef"
+			FROM "pg_indexes"
+			WHERE LOWER("tablename") = '.$this->escape(strtolower($table)).'
+			AND "schemaname" = '.$this->escape('public');
+
+		if (($query = $this->query($sql)) === false)
+		{
+			return false;
+		}
+		$query = $query->getResultObject();
+
+		$retval = [];
+		foreach ($query as $row)
+		{
+			$obj         = new \stdClass();
+			$obj->name   = $row->indexname;
+			$_fields     = explode(',', preg_replace('/^.*\((.+?)\)$/', '$1', trim($row->indexdef)));
+			$obj->fields = array_map(function($v){ return trim($v); }, $_fields);
+
+			$retval[] = $obj;
+		}
+
+		return $retval;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Returns the last error code and message.
 	 *
 	 * Must return an array with keys 'code' and 'message':
@@ -451,39 +486,39 @@ class Connection extends BaseConnection implements ConnectionInterface
 
 	//--------------------------------------------------------------------
 
-    /**
-     * Begin Transaction
-     *
-     * @return	bool
-     */
-    protected function _transBegin(): bool
-    {
-        return (bool)pg_query($this->connID, 'BEGIN');
-    }
+	/**
+	 * Begin Transaction
+	 *
+	 * @return	bool
+	 */
+	protected function _transBegin(): bool
+	{
+		return (bool)pg_query($this->connID, 'BEGIN');
+	}
 
-    // --------------------------------------------------------------------
+	// --------------------------------------------------------------------
 
-    /**
-     * Commit Transaction
-     *
-     * @return	bool
-     */
-    protected function _transCommit(): bool
-    {
-        return (bool)pg_query($this->connID, 'COMMIT');
-    }
+	/**
+	 * Commit Transaction
+	 *
+	 * @return	bool
+	 */
+	protected function _transCommit(): bool
+	{
+		return (bool)pg_query($this->connID, 'COMMIT');
+	}
 
-    // --------------------------------------------------------------------
+	// --------------------------------------------------------------------
 
-    /**
-     * Rollback Transaction
-     *
-     * @return	bool
-     */
-    protected function _transRollback(): bool
-    {
-        return (bool)pg_query($this->connID, 'ROLLBACK');
-    }
+	/**
+	 * Rollback Transaction
+	 *
+	 * @return	bool
+	 */
+	protected function _transRollback(): bool
+	{
+		return (bool)pg_query($this->connID, 'ROLLBACK');
+	}
 
-    // --------------------------------------------------------------------
+	// --------------------------------------------------------------------
 }

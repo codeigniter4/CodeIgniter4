@@ -17,7 +17,7 @@ Returns an array containing the names of all the tables in the database
 you are currently connected to. Example::
 
 	$tables = $db->listTables();
-	
+
 	foreach ($tables as $table)
 	{
 		echo $table;
@@ -56,7 +56,7 @@ two ways:
 object::
 
 	$fields = $db->getFieldNames('table_name');
-	
+
 	foreach ($fields as $field)
 	{
 		echo $field;
@@ -66,7 +66,7 @@ object::
 calling the function from your query result object::
 
 	$query = $db->query('SELECT * FROM some_table');
-	
+
 	foreach ($query->getFieldNames() as $field)
 	{
 		echo $field;
@@ -94,7 +94,7 @@ performing an action. Returns a boolean TRUE/FALSE. Usage example::
 Retrieve Field Metadata
 =======================
 
-**$db->fieldData()**
+**$db->getFieldData()**
 
 Returns an array of objects containing field information.
 
@@ -106,7 +106,7 @@ the column type, max length, etc.
 Usage example::
 
 	$fields = $db->getFieldData('table_name');
-	
+
 	foreach ($fields as $field)
 	{
 		echo $field->name;
@@ -128,3 +128,10 @@ database:
 -  max_length - maximum length of the column
 -  primary_key - 1 if the column is a primary key
 -  type - the type of the column
+
+List the Indexes in a Table
+===========================
+
+**$db->getIndexData()**
+
+please write this, someone...

@@ -12,12 +12,6 @@
  * this class mainly acts as a passthru to the framework itself.
  */
 
-// Location to the Paths config file.
-$pathsPath = 'application/Config/Paths.php';
-
-// Path to the front controller (this file)
-define('FCPATH', './public/'.DIRECTORY_SEPARATOR);
-
 /*
  *---------------------------------------------------------------
  * BOOTSTRAP THE APPLICATION
@@ -30,15 +24,23 @@ define('FCPATH', './public/'.DIRECTORY_SEPARATOR);
 // Refuse to run when called from php-cgi
 if (substr(php_sapi_name(), 0, 3) == 'cgi')
 {
-    die("The cli tool is not supported when running php-cgi. It needs php-cli to function!\n\n");
+	die("The cli tool is not supported when running php-cgi. It needs php-cli to function!\n\n");
 }
 
-// Ensure the current directory is pointing to the front controller's directory
-chdir('public');
+// Location to the Paths config file.
+$pathsPath = 'application/Config/Paths.php';
 
 // Load our paths config file
 require $pathsPath;
 $paths = new Config\Paths();
+
+$public = trim($paths->publicDirectory, '/');
+
+// Path to the front controller
+define('FCPATH', realpath($public).DIRECTORY_SEPARATOR);
+
+// Ensure the current directory is pointing to the front controller's directory
+chdir('public');
 
 $app = require rtrim($paths->systemDirectory,'/ ').'/bootstrap.php';
 

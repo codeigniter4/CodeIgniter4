@@ -30,8 +30,8 @@ class DatabaseHandler implements QueueHandlerInterface
 			'updated_at'  => [ 'type' => 'DATETIME' ],
 		]);
 		$forge->addKey('id', true);
-		$forge->addKey('weight', 'id', 'queue_name', 'status', 'exec_after');
-		$forge->createTable('ci_queue');
+//		$forge->addKey(['weight', 'id', 'queue_name', 'status', 'exec_after']);
+		$forge->createTable('ci_queue', true);
 	}
 
 	/**
@@ -51,7 +51,7 @@ class DatabaseHandler implements QueueHandlerInterface
 	public function __construct($groupConfig, \Codeigniter\Config\Queue $config)
 	{
 		$this->groupConfig = $groupConfig;
-		$this->config      = clone $config;
+		$this->config      = $config;
 		$this->db          = \Config\Database::connect($this->groupConfig['dbGroup'], $this->groupConfig['sharedConnection']);
 	}
 
@@ -69,7 +69,7 @@ class DatabaseHandler implements QueueHandlerInterface
 		}
 		if ( ! isset($this->config->exchangeMap[$exchangeName]))
 		{
-			throw new InvalidArgumentException($exchangeName.' is not a valid exchange name');
+			throw new \InvalidArgumentException($exchangeName.' is not a valid exchange name.');
 		}
 
 		$this->db->transStart();
@@ -103,14 +103,20 @@ class DatabaseHandler implements QueueHandlerInterface
 	 */
 	public function fetch(callable $callback, string $queueName = '') : bool
 	{
-		$row = $this->db->table($this->groupConfig['table'])
+		$query = $this->db->table($this->groupConfig['table'])
 			->where('queue_name', $queueName != '' ? $queueName : $this->config->defaultQueue)
 			->where('status', self::STATUS_WAITING)
 			->where('exec_after <', date('Y-m-d H:i:s'))
 			->orderBy('weight')
 			->orderBy('id')
 			->limit(1)
-			->get()->getRow();
+			->get();
+		if ( ! $query) {
+			throw new \RuntimeException('something occers on running a query: meybe '
+									   . $this->groupConfig['table'] . ' table is not found.');
+		}
+
+		$row = $query->getRow();
 		if ($row)
 		{
 			$this->db->table($this->groupConfig['table'])

@@ -38,75 +38,13 @@
 
 use Config\Database;
 
+/**
+ * Rules.
+ *
+ * @package CodeIgniter\Validation
+ */
 class Rules
 {
-	/**
-	 * Alpha
-	 *
-	 * @param    string
-	 *
-	 * @return    bool
-	 */
-	public function alpha(string $str): bool
-	{
-		return ctype_alpha($str);
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Alpha-numeric with underscores and dashes
-	 *
-	 * @param    string
-	 *
-	 * @return    bool
-	 */
-	public function alpha_dash(string $str): bool
-	{
-		return (bool)preg_match('/^[a-z0-9_-]+$/i', $str);
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Alpha-numeric
-	 *
-	 * @param    string
-	 *
-	 * @return    bool
-	 */
-	public function alpha_numeric(string $str): bool
-	{
-		return ctype_alnum((string)$str);
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Alpha-numeric w/ spaces
-	 *
-	 * @param    string
-	 *
-	 * @return    bool
-	 */
-	public function alpha_numeric_spaces(string $str): bool
-	{
-		return (bool)preg_match('/^[A-Z0-9 ]+$/i', $str);
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Decimal number
-	 *
-	 * @param    string
-	 *
-	 * @return    bool
-	 */
-	public function decimal(string $str): bool
-	{
-		return (bool)preg_match('/^[\-+]?[0-9]+\.[0-9]+$/', $str);
-	}
 
 	//--------------------------------------------------------------------
 
@@ -119,9 +57,9 @@ class Rules
 	 *
 	 * @return bool
 	 */
-	public function differs(string $str, string $field, array $data): bool
+	public function differs(string $str=null, string $field, array $data): bool
 	{
-		return isset($data[$field])
+		return array_key_exists($field, $data)
 			? ($str !== $data[$field])
 			: false;
 	}
@@ -137,7 +75,7 @@ class Rules
 	 *
 	 * @return bool
 	 */
-	public function exact_length(string $str, string $val, array $data): bool
+	public function exact_length(string $str=null, string $val, array $data): bool
 	{
 		if (! is_numeric($val))
 		{
@@ -157,7 +95,7 @@ class Rules
 	 *
 	 * @return    bool
 	 */
-	public function greater_than(string $str, string $min, array $data): bool
+	public function greater_than(string $str=null, string $min, array $data): bool
 	{
 		return is_numeric($str) ? ($str > $min) : false;
 	}
@@ -172,7 +110,7 @@ class Rules
 	 *
 	 * @return    bool
 	 */
-	public function greater_than_equal_to(string $str, string $min, array $data): bool
+	public function greater_than_equal_to(string $str=null, string $min, array $data): bool
 	{
 		return is_numeric($str) ? ($str >= $min) : false;
 	}
@@ -186,49 +124,11 @@ class Rules
 	 * @param	string
 	 * @return	bool
 	 */
-	public function in_list(string $value, string $list, array $data): bool
+	public function in_list(string $value=null, string $list, array $data): bool
 	{
-		return in_array($value, explode(',', $list), TRUE);
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Integer
-	 *
-	 * @param    string
-	 *
-	 * @return    bool
-	 */
-	public function integer(string $str): bool
-	{
-		return (bool)preg_match('/^[\-+]?[0-9]+$/', $str);
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Is a Natural number  (0,1,2,3, etc.)
-	 *
-	 * @param	string
-	 * @return	bool
-	 */
-	public function is_natural(string $str): bool
-	{
-		return ctype_digit((string) $str);
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Is a Natural number, but not a zero  (1,2,3, etc.)
-	 *
-	 * @param	string
-	 * @return	bool
-	 */
-	public function is_natural_no_zero(string $str): bool
-	{
-		return ($str != 0 && ctype_digit((string) $str));
+	    $list = explode(',', $list);
+	    $list = array_map(function($value) { return trim($value); }, $list);
+		return in_array($value, $list, TRUE);
 	}
 
 	//--------------------------------------------------------------------
@@ -248,7 +148,7 @@ class Rules
 	 *
 	 * @return bool
 	 */
-	public function is_unique(string $str, string $field, array $data): bool
+	public function is_unique(string $str=null, string $field, array $data): bool
 	{
 		// Grab any data for exclusion of a single row.
 		list($field, $ignoreField, $ignoreValue) = array_pad(explode(',', $field), 3, null);
@@ -279,7 +179,7 @@ class Rules
 	 *
 	 * @return    bool
 	 */
-	public function less_than(string $str, string $max): bool
+	public function less_than(string $str=null, string $max): bool
 	{
 		return is_numeric($str) ? ($str < $max) : false;
 	}
@@ -294,7 +194,7 @@ class Rules
 	 *
 	 * @return    bool
 	 */
-	public function less_than_equal_to(string $str, string $max): bool
+	public function less_than_equal_to(string $str=null, string $max): bool
 	{
 		return is_numeric($str) ? ($str <= $max) : false;
 	}
@@ -310,9 +210,9 @@ class Rules
 	 *
 	 * @return bool
 	 */
-	public function matches(string $str, string $field, array $data): bool
+	public function matches(string $str=null, string $field, array $data): bool
 	{
-		return isset($data[$field])
+		return array_key_exists($field, $data)
 			? ($str === $data[$field])
 			: false;
 	}
@@ -328,7 +228,7 @@ class Rules
 	 *
 	 * @return bool
 	 */
-	public function max_length(string $str, string $val, array $data): bool
+	public function max_length(string $str=null, string $val, array $data): bool
 	{
 		if (! is_numeric($val))
 		{
@@ -349,7 +249,7 @@ class Rules
 	 *
 	 * @return bool
 	 */
-	public function min_length(string $str, string $val, array $data): bool
+	public function min_length(string $str=null, string $val, array $data): bool
 	{
 		if (! is_numeric($val))
 		{
@@ -362,49 +262,13 @@ class Rules
 	//--------------------------------------------------------------------
 
 	/**
-	 * Numeric
-	 *
-	 * @param    string
-	 *
-	 * @return    bool
-	 */
-	public function numeric(string $str): bool
-	{
-		return (bool)preg_match('/^[\-+]?[0-9]*\.?[0-9]+$/', $str);
-
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Compares value against a regular expression pattern.
-	 *
-	 * @param string $str
-	 * @param string $pattern
-	 * @param array  $data Other field/value pairs
-	 *
-	 * @return bool
-	 */
-	public function regex_match(string $str, string $pattern, array $data): bool
-	{
-		if (substr($pattern, 0, 1) != '/')
-		{
-			$pattern = "/{$pattern}/";
-		}
-
-		return (bool)preg_match($pattern, $str);
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
 	 * Required
 	 *
 	 * @param    string
 	 *
 	 * @return    bool
 	 */
-	public function required($str): bool
+	public function required($str=null): bool
 	{
 		return is_array($str) ? (bool)count($str) : (trim($str) !== '');
 	}
@@ -420,12 +284,12 @@ class Rules
 	 * 	required_with[password]
 	 *
 	 * @param        $str
-	 * @param string $fields
-	 * @param array  $data
+	 * @param string $fields    List of fields that we should check if present
+	 * @param array  $data      Complete list of fields from the form
 	 *
 	 * @return bool
 	 */
-	public function required_with($str, string $fields, array $data): bool
+	public function required_with($str=null, string $fields, array $data): bool
 	{
 	    $fields = explode(',', $fields);
 
@@ -441,11 +305,22 @@ class Rules
 
 		// Still here? Then we fail this test if
 		// any of the fields are present in $data
-		$requiredFields = array_intersect($fields, $data);
+		// as $fields is the lis
+		$requiredFields = [];
 
-		$requiredFields = array_filter($requiredFields, function($item)
+		foreach ($fields as $field)
 		{
-			return ! empty($item);
+			if (array_key_exists($field, $data))
+			{
+				$requiredFields[] = $field;
+			}
+		}
+
+		// Remove any keys with empty values since, that means they
+		// weren't truly there, as far as this is concerned.
+		$requiredFields = array_filter($requiredFields, function($item) use($data)
+		{
+			return ! empty($data[$item]);
 		});
 
 		return ! (bool)count($requiredFields);
@@ -467,7 +342,7 @@ class Rules
 	 *
 	 * @return bool
 	 */
-	public function required_without($str, string $fields, array $data): bool
+	public function required_without($str=null, string $fields, array $data): bool
 	{
 		$fields = explode(',', $fields);
 
@@ -492,151 +367,6 @@ class Rules
 		}
 
 		return true;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Validates that the string is a valid timezone as per the
-	 * timezone_identifiers_list function.
-	 *
-	 * @see http://php.net/manual/en/datetimezone.listidentifiers.php
-	 *
-	 * @param string $str
-	 *
-	 * @return bool
-	 */
-	public function timezone(string $str): bool
-	{
-		return in_array($str, timezone_identifiers_list());
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Valid Base64
-	 *
-	 * Tests a string for characters outside of the Base64 alphabet
-	 * as defined by RFC 2045 http://www.faqs.org/rfcs/rfc2045
-	 *
-	 * @param	string
-	 * @return	bool
-	 */
-	public function valid_base64(string $str): bool
-	{
-		return (base64_encode(base64_decode($str)) === $str);
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Checks for a correctly formatted email address
-	 *
-	 * @param    string
-	 *
-	 * @return    bool
-	 */
-	public function valid_email(string $str): bool
-	{
-		if (function_exists('idn_to_ascii') && $atpos = strpos($str, '@'))
-		{
-			$str = substr($str, 0, ++$atpos).idn_to_ascii(substr($str, $atpos));
-		}
-
-		return (bool)filter_var($str, FILTER_VALIDATE_EMAIL);
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Validate a comma-separated list of email addresses.
-	 *
-	 * Example:
-	 * 	valid_emails[one@example.com,two@example.com]
-	 *
-	 * @param    string
-	 *
-	 * @return    bool
-	 */
-	public function valid_emails(string $str): bool
-	{
-		if (strpos($str, ',') === false)
-		{
-			return $this->valid_email(trim($str));
-		}
-
-		foreach (explode(',', $str) as $email)
-		{
-			if (trim($email) !== '' && $this->valid_email(trim($email)) === false)
-			{
-				return false;
-			}
-		}
-
-		return true;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Validate an IP address
-	 *
-	 * @param        $ip     IP Address
-	 * @param string $which  IP protocol: 'ipv4' or 'ipv6'
-	 * @param array  $data
-	 *
-	 * @return bool
-	 */
-	public function valid_ip(string $ip, string $which = null, array $data): bool
-	{
-		switch (strtolower($which))
-		{
-			case 'ipv4':
-				$which = FILTER_FLAG_IPV4;
-				break;
-			case 'ipv6':
-				$which = FILTER_FLAG_IPV6;
-				break;
-			default:
-				$which = null;
-				break;
-		}
-
-		return (bool)filter_var($ip, FILTER_VALIDATE_IP, $which);
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Checks a URL to ensure it's formed correctly.
-	 *
-	 * @param string $str
-	 *
-	 * @return bool
-	 */
-	public function valid_url(string $str): bool
-	{
-		if (empty($str))
-		{
-			return false;
-		}
-		elseif (preg_match('/^(?:([^:]*)\:)?\/\/(.+)$/', $str, $matches))
-		{
-			if (empty($matches[2]))
-			{
-				return false;
-			}
-			elseif (! in_array($matches[1], ['http', 'https'], true))
-			{
-				return false;
-			}
-
-			$str = $matches[2];
-		}
-
-		$str = 'http://'.$str;
-
-		return (filter_var($str, FILTER_VALIDATE_URL) !== false);
 	}
 
 	//--------------------------------------------------------------------

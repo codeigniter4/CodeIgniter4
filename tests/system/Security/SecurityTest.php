@@ -7,6 +7,9 @@ use CodeIgniter\HTTP\URI;
 
 //--------------------------------------------------------------------
 
+/**
+ * @backupGlobals enabled
+ */
 class SecurityTest extends \CIUnitTestCase {
 
 	public function setUp()
@@ -65,7 +68,7 @@ class SecurityTest extends \CIUnitTestCase {
 			'csrf_cookie_name' => '8b9218a55906f9dcc1dc263dce7f005b'
 		];
 
-		$this->setExpectedException('LogicException');
+		$this->expectException('LogicException');
 		$security->CSRFVerify($request);
 	}
 

@@ -157,7 +157,7 @@ class ViewTest extends \CIUnitTestCase
 	{
 		$view = new View($this->config, $this->viewsDir, $this->loader);
 
-		$this->setExpectedException('InvalidArgumentException');
+		$this->expectException('InvalidArgumentException');
 		$view->setVar('testString', 'Hello World');
 
 		$view->render('missing');

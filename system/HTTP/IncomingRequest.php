@@ -151,7 +151,7 @@ class IncomingRequest extends Request
 		$this->body   = $body;
 		$this->config = $config;
 
-		parent::__construct($config, $uri);
+		parent::__construct($config);
 
 		$this->populateHeaders();
 
@@ -332,6 +332,21 @@ class IncomingRequest extends Request
 	public function getJSON(bool $assoc = false, int $depth = 512, int $options = 0)
 	{
 	    return json_decode($this->body, $assoc, $depth, $options);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * A convenience method that grabs the raw input stream(send method in PUT, PATCH, DELETE) and decodes
+	 * the String into an array.
+	 *
+	 * @return mixed
+	 */
+	public function getRawInput()
+	{
+	    parse_str($this->body, $output);
+
+	    return $output;
 	}
 
 	//--------------------------------------------------------------------

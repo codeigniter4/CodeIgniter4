@@ -118,7 +118,7 @@ maintaining the ability to control the order you look for it:
 
 **Getting JSON data**
 
-Finally, you can grab the contents of php://input as a JSON stream with ``getJSON()``.
+You can grab the contents of php://input as a JSON stream with ``getJSON()``.
 
 .. note::  This has no way of checking if the incoming data is valid JSON or not, you should only use this
     method if you know that you're expecting JSON.
@@ -132,6 +132,21 @@ arrays, pass in ``true`` as the first parameter.
 
 The second and third parameters match up to the ``depth`` and ``options`` arguments of the
 `json_decode <http://php.net/manual/en/function.json-decode.php>`_ PHP function.
+
+**Retrieving Raw data (PUT, PATCH, DELETE)**
+
+Finally, you can grab the contents of php://input as a raw stream with ``getRawInput()``.
+
+	$data = $request->getRawInput();
+
+This will retrieve data and convert it to an array. Like this::
+
+	var_dump($request->getRawInput());
+
+	[
+		'Param1' => 'Value1',
+		'Param2' => 'Value2'
+	]
 
 Filtering Input Data
 --------------------
@@ -429,5 +444,3 @@ The methods provided by the parent classes that are available are:
 		This method returns the User Agent string from the SERVER data::
 
 			$request->getUserAgent();
-
-

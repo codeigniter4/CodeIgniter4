@@ -46,9 +46,11 @@
  * so they are available in the config files that are loaded.
  */
 
+$public = trim($paths->publicDirectory, '/');
+
 // Path to code root folder (just up from public)
-$pos = strrpos(FCPATH, 'public'.DIRECTORY_SEPARATOR);
-define('ROOTPATH', substr_replace(FCPATH, '', $pos, strlen('public'.DIRECTORY_SEPARATOR)));
+$pos = strrpos(FCPATH, $public.DIRECTORY_SEPARATOR);
+define('ROOTPATH', substr_replace(FCPATH, '', $pos, strlen($public.DIRECTORY_SEPARATOR)));
 
 // The path to the "application" folder
 define('APPPATH', realpath($paths->applicationDirectory).DIRECTORY_SEPARATOR);
@@ -95,8 +97,12 @@ $loader->register();    // Register the loader with the SPL autoloader stack.
 // Now load Composer's if it's available
 if (file_exists(COMPOSER_PATH))
 {
-    require COMPOSER_PATH;
+	require COMPOSER_PATH;
 }
+
+// Always load the URL helper -
+// it should be used in 90% of apps.
+helper('url');
 
 /*
  * ---------------------------------------------------------------

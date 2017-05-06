@@ -2,9 +2,9 @@
 View Parser
 ###########
 
-The View Parser can perform simple text substitution for 
-pseudo-variables contained within your view files. 
-It can parse simple variables or variable tag pairs. 
+The View Parser can perform simple text substitution for
+pseudo-variables contained within your view files.
+It can parse simple variables or variable tag pairs.
 
 Pseudo-variable names or control constructs are enclosed in braces, like this::
 
@@ -28,7 +28,7 @@ representations that allow you to eliminate PHP from your templates
 (view files).
 
 .. note:: CodeIgniter does **not** require you to use this class since
-	using pure PHP in your view pages (for instance using the 
+	using pure PHP in your view pages (for instance using the
 	:doc:`View renderer </general/view_renderer>` )
 	lets them run a little faster.
 	However, some developers prefer to use some form of template engine if
@@ -39,20 +39,18 @@ representations that allow you to eliminate PHP from your templates
 Using the View Parser Class
 ***************************
 
-If you have the ``Parser`` as your default renderer, then the parsing will occur
-transparently. If you want to work with it more directly, you can access the 
-Parser service directly::
+The simplest method to load the parser class is through its service::
 
-	$parser = \Config\Services::renderer();
+	$parser = \Config\Services::parser();
 
 Alternately, if you are not using the ``Parser`` class as your default renderer, you
 can instantiate it directly::
 
 	$parser = new \CodeIgniter\View\Parser();
 
-Then you can use any of the three standard rendering methods that it provides: 
-**render(viewpath, options, save)**, **setVar(name, value, context)** and 
-**setData(data, context)**. You will also be able to specify delimiters directly, 
+Then you can use any of the three standard rendering methods that it provides:
+**render(viewpath, options, save)**, **setVar(name, value, context)** and
+**setData(data, context)**. You will also be able to specify delimiters directly,
 through the **setDelimiters(left,right)** method.
 
 Using the ``Parser``, your view templates are processed only by the Parser
@@ -65,13 +63,12 @@ What It Does
 ============
 
 The ``Parser`` class processes "PHP/HTML scripts" stored in the application's view path.
-These scripts have a ``.php`` extension, but should not contain any PHP.
+These scripts have a ``.php`` extension, but can not contain any PHP.
 
-Each view parameter (which we refer to as a pseudo-variable) triggers a substitution, 
+Each view parameter (which we refer to as a pseudo-variable) triggers a substitution,
 based on the type of value you provided for it. Pseudo-variables are not
 extracted into PHP variables; instead their value is accessed through the pseudo-variable
 syntax, where its name is referenced inside braces.
-This means that your view parameter names need not be legal PHP variable names.
 
 The Parser class uses an associative array internally, to accumulate pseudo-variable
 settings until you call its ``render()``. This means that your pseudo-variable names
@@ -87,10 +84,10 @@ Parser templates
 You can use the ``render()`` method to parse (or render) simple templates,
 like this::
 
-	$data = array(
-		'blog_title' => 'My Blog Title',
+	$data = [
+		'blog_title'   => 'My Blog Title',
 		'blog_heading' => 'My Blog Heading'
-	);
+	];
 
 	echo $parser->setData($data)
 		->render('blog_template');
@@ -99,8 +96,7 @@ View parameters are passed to ``setData()`` as an associative
 array of data to be replaced in the template. In the above example, the
 template would contain two variables: {blog_title} and {blog_heading}
 The first parameter to ``render()`` contains the name of the :doc:`view
-file <../general/views>` (in this example the file would be called
-blog_template.php), 
+file <../general/views>` (in this example the file would be called blog_template.php),
 
 
 Parser Configuration Options
@@ -117,20 +113,26 @@ Several options can be passed to the ``render()`` or ``renderString()`` methods.
 -	``cascadeData`` - true if pseudo-variable settings should be passed on to nested
 		substitutions; default is **true**
 
+::
+
+	echo $parser->render('blog_template', [
+		'cache'      => HOUR,
+		'cache_name' => 'something_unique',
+	]);
+
 ***********************
 Substitution Variations
 ***********************
 
 There are three types of substitution supported: simple, looping, and nested.
-Substitutions are performed in the same sequence that
-pseudo-variables were added.
+Substitutions are performed in the same sequence that pseudo-variables were added.
 
 The **simple substitution** performed by the parser is a one-to-one
 replacement of pseudo-variables where the corresponding data parameter
 has either a scalar or string value, as in this example::
 
 	$template = '<head><title>{blog_title}</title></head>';
-	$data = ['blog_title' => 'My ramblings'];
+	$data     = ['blog_title' => 'My ramblings'];
 
 	echo $parser->setData($data)->renderString($template);
 
@@ -237,7 +239,7 @@ array. The key/value pairs defined inside it will be exposed inside
 the variable pair loop for that variable.
 
 A ``blog_template`` that might work for the above::
-	
+
 	<h1>{blog_title} - {blog_heading}</h1>
 	{blog_entry}
 		<div>
@@ -249,17 +251,33 @@ A ``blog_template`` that might work for the above::
 If you would like the other pseudo-variables accessible inside the "blog_entry"
 scope, then make sure that the "cascadeData" option is set to true.
 
+Comments
+========
+
+You can place comments in your templates that will be ignored and removed during parsing by wrapping the
+comments in a ``{#  #}`` symbols.
+
+::
+
+	{# This comment is removed during parsing. #}
+	{blog_entry}
+		<div>
+			<h2>{title}</h2>
+			<p>{body}{/p}
+		</div>
+	{/blog_entry}
+
 Cascading Data
 ==============
 
 With both a nested and a loop substitution, you have the option of cascading
-data pairs into the inner substitution. 
+data pairs into the inner substitution.
 
 The following example is not impacted by cascading::
 
 	$template = '{name} lives in {location}{city} on {planet}{/location}.';
 
-	$data = ['name' => 'George', 
+	$data = ['name' => 'George',
 		'location' => [ 'city' => 'Red City', 'planet' => 'Mars' ] ];
 
 	echo $parser->setData($data)->renderString($template);
@@ -269,7 +287,7 @@ This example gives different results, depending on cascading::
 
 	$template = '{location}{name} lives in {city} on {planet}{/location}.';
 
-	$data = ['name' => 'George', 
+	$data = ['name' => 'George',
 		'location' => [ 'city' => 'Red City', 'planet' => 'Mars' ] ];
 
 	echo $parser->setData($data)->renderString($template, ['cascadeData'=>false]);
@@ -277,6 +295,193 @@ This example gives different results, depending on cascading::
 
 	echo $parser->setData($data)->renderString($template, ['cascadeData'=>true]);
 	// Result: George lives in Red City on Mars.
+
+
+Preventing Parsing
+==================
+
+You can specify portions of the page to not be parsed with the ``{noparse}{/noparse}`` tag pair. Anything in this
+section will stay exactly as it is, with no variable substition, looping, etc, happening to the markup between the brackets.
+
+::
+
+	{noparse}
+		<h1>Untouched Code</h1>
+	{/noparse}
+
+Conditional Logic
+=================
+
+The Parser class supports some basic conditionals to handle ``if``, ``else``, and ``elseif`` syntax. All ``if``
+blocks must be closed with an ``endif`` tag::
+
+	{if role=='admin'}
+		<h1>Welcome, Admin!</h1>
+	{endif}
+
+This simple block is converted to the following during parsing::
+
+	<?php if ($role=='admin'): ?>
+		<h1>Welcome, Admin!</h1>
+	<?php endif ?>
+
+All variables used within if statements must have been previously set with the same name. Other than that, it is
+treated exactly like a standard PHP conditional, and all standard PHP rules would apply here. You can use any
+of the comparison operators you would normally, like ``==``, ``===``, ``!==``, ``<``, ``>``, etc.
+
+::
+
+	{if role=='admin'}
+		<h1>Welcome, Admin</h1>
+	{elseif role=='moderator'}
+		<h1>Welcome, Moderator</h1>
+	{else}
+		<h1>Welcome, User</h1>
+	{endif}
+
+
+.. note:: In the background, conditionals are parsed using an **eval()**, so you must ensure that you take
+	care with the user data that is used within conditionals, or you could open your application up to security risks.
+
+Escaping Data
+=============
+
+By default, all variable substitution is escaped to help prevent XSS attacks on your pages. CodeIgniter's ``esc`` method
+supports several different contexts, like general **html**, when it's in an HTML **attr*, in **css**, etc. If nothing
+else is specified, the data will be assumed to be in an HTML context. You can specify the context used by using the **esc**
+filter::
+
+	{ user_styles | esc(css) }
+	<a href="{ user_link | esc(attr) }">{ title }</a>
+
+There will be times when you absolutely need something to used and NOT escaped. You can do this by adding exclamation
+marks to the opening and closing braces::
+
+	{! unescaped_var !}
+
+Filters
+=======
+
+Any single variable substitution can have one or more filters applied to it to modify the way it is presented. These
+are not intended to drastically change the output, but provide ways to reuse the same variable data but with different
+presentations. The **esc** filter discussed above is one example. Dates are another common use case, where you might
+need to format the same data differently in several sections on the same page.
+
+Filters are commands that come after the pseudo-variable name, and are separated by the pipe symbol, ``|``::
+
+	// -55 is displayed as 55
+	{ value|abs  }
+
+If the parameter takes any arguments, they must be separated by commas and enclosed in parentheses::
+
+	{ created_at|date(Y-m-d) }
+
+Multiple filters can be applied to the value by piping multiple ones together. They are processed in order, from
+left to right::
+
+	{ created_at|date_modify(+5 days)|date(Y-m-d) }
+
+Provided Filters
+----------------
+
+The following filters are available when using the parser:
+
+==================== ========================== =================================================================== =================================
+Filter               Arguments                  Description                                                         Example
+==================== ========================== =================================================================== =================================
+abs                                             Displays the absolute value of a number.                             { v|abs }
+capitalize                                      Displays the string in sentence case: all lowercase with first       { v|capitalize}
+                                                letter capitalized.
+date                 format (Y-m-d)             A PHP **date**-compatible formatting string.                         { v|date(Y-m-d) }
+date_modify          value to add/subtract      A **strtotime** compatible string to modify the date, like           { v|date_modify(+1 day) }
+                                                ``+5 day`` or ``-1 week``.
+default              default value              Displays the default value if the variable is empty or undefined.    { v|default(just in case) }
+esc                  html, attr, css, js        Specifies the context to escape the data.                            { v|esc(attr) }
+excerpt              phrase, radius             Returns the text within a radius of words from a given phrase.       { v|excerpt(green giant, 20) }
+                                                Same as **excerpt** helper function.
+highlight            phrase                     Highlights a given phrase within the text using '<mark></mark>'
+												tags.                                                                { v|highlight(view parser) }
+highlight_code                                  Highlights code samples with HTML/CSS.                               { v|highlight_code }
+limit_chars          limit                      Limits the number of chracters to $limit.                            { v|limit_chars(100) }
+limit_words          limit                      Limits the number of words to $limit.                                { v|limit_words(20) }
+lower                                           Converts a string to lowercase.                                      { v|lower }
+nl2br                                           Replaces all newline characters (\n) to an HTML <br/> tag.           { v|nl2br }
+number_format        places                     Wraps PHP **number_format** function for use within the parser.      { v|number_format(3) }
+prose                                           Takes a body of text and uses the **auto_typography()** method to    { v|prose }
+                                                turn it into prettier, easier-to-read, prose.
+round                places, type               Rounds a number to the specified places. Types of **ceil** and       { v|round(3) } { v|round(ceil) }
+                                                **floor** can be passed to use those functions instead.
+strip_tags           allowed chars              Wraps PHP **strip_tags**. Can accept a string of allowed tags.       { v|strip_tags(<br>) }
+title                                           Displays a "title case" version of the string, with all lowercase,   { v|title }
+                                                and each word capitalized.
+upper                                           Displays the string in all lowercase.                                { v|upper }
+==================== ========================== =================================================================== =================================
+
+Custom Filters
+--------------
+
+You can easily create your own filters by editing **application/Config/View.php** and adding new entries to the
+``$filters`` array. Each key is the name the filter is called by in the view, and its value is any valid PHP
+callable::
+
+	public $filters = [
+		'abs'               => '\CodeIgniter\View\Filters::abs',
+		'capitalize'        => '\CodeIgniter\View\Filters::capitalize',
+	];
+
+Parser Plugins
+==============
+
+Plugins allow you to extend the parser, adding custom features for each project. They can be any PHP callable, making
+them very simple to implement. Within templates, plugins are specified by ``{+ +}`` tags::
+
+	{+ foo +} inner content {+ /foo +}
+
+This example shows a plugin named **foo**. It can manipulate any of the content between its opening and closing tags.
+In this example, it could work with the text " inner content ". Plugins are processed before any pseudo-variable
+replacements happen.
+
+While plugins will often consist of tag pairs, like shown above, they can also be a single tag, with no closing tag::
+
+	{+ foo +}
+
+Opening tags can also contain parameters that can customize how the plugin works. The parameters are represented as
+key/value pairs::
+
+	{+ foo bar=2 baz="x y" }
+
+Registering a Plugin
+--------------------
+
+At its simplest, all you need to do to register a new plugin and make it ready for use is to add it to the
+**application/Config/View.php**, under the **$plugins** array. The key is the name of the plugin that is
+used within the template file. The value is any valid PHP callable, including static class methods, and closures::
+
+	public $plugins = [
+		'foo'	=> '\Some\Class::methodName',
+		'bar'	=> function($str, array $params=[]) {
+			return $str;
+		},
+	];
+
+If the callable is on its own, it is treated as a single tag, not a open/close one. It will be replaced by
+the return value from the plugin::
+
+	public $plugins = [
+		'foo'	=> '\Some\Class::methodName'
+	];
+
+	// Tag is replaced by the return value of Some\Class::methodName static function.
+	{+ foo +}
+
+If the callable is wrapped in an array, it is treated as an open/close tag pair that can operate on any of
+the content between its tags::
+
+	public $plugins = [
+		'foo' => ['\Some\Class::methodName']
+	];
+
+	{+ foo +} inner content {+ /foo +}
 
 
 ***********
@@ -361,7 +566,7 @@ Result::
 		<li><a href="/second">Second Link</a></li>
 	</ul>
 
-An example with the iteration controlled in the controller, 
+An example with the iteration controlled in the controller,
 using a view fragment::
 
 	$temp = '';
@@ -390,6 +595,7 @@ Result::
 		<li><a href="/second">Second Link</a></li>
 	</ul>
 
+
 ***************
 Class Reference
 ***************
@@ -398,17 +604,17 @@ Class Reference
 
 	.. php:method:: render($view[, $options[, $saveData=false]]])
 
-		:param  string  $view: File name of the view source 
+		:param  string  $view: File name of the view source
 		:param  array   $options: Array of options, as key/value pairs
 		:param  boolean $saveData: If true, will save data for use with any other calls, if false, will clean the data after rendering the view.
 		:returns: The rendered text for the chosen view
 		:rtype: string
 
-		Builds the output based upon a file name and any data that has already been set::
+    		Builds the output based upon a file name and any data that has already been set::
 
 			echo $parser->render('myview');
 
-		Options supported:
+        Options supported:
 
 	        -   ``cache`` - the time in seconds, to save a view's results
 	        -   ``cache_name`` - the ID used to save/retrieve a cached view result; defaults to the viewpath
@@ -418,60 +624,58 @@ Class Reference
 	        -   ``rightDelimiter`` - the right delimiter to use in pseudo-variable syntax
 
 		Any conditional substitutions are performed first, then remaining
-		substitutions are performed for each data pair.	
+		substitutions are performed for each data pair.
 
 	.. php:method:: renderString($template[, $options[, $saveData=false]]])
 
 		:param  string  $template: View source provided as a string
-		:param  array   $options: Array of options, as key/value pairs
-		:param  boolean $saveData: If true, will save data for use with any other calls, if false, will clean the data after rendering the view.
-		:returns: The rendered text for the chosen view
-		:rtype: string
+    		:param  array   $options: Array of options, as key/value pairs
+    		:param  boolean $saveData: If true, will save data for use with any other calls, if false, will clean the data after rendering the view.
+    		:returns: The rendered text for the chosen view
+    		:rtype: string
 
-		Builds the output based upon a provided template source and any data that has already been set::
+    		Builds the output based upon a provided template source and any data that has already been set::
 
 			echo $parser->render('myview');
 
-		Options supported, and behavior, as above.
+        Options supported, and behavior, as above.
 
 	.. php:method:: setData([$data[, $context=null]])
 
 		:param  array   $data: Array of view data strings, as key/value pairs
-		:param  string  $context: The context to use for data escaping. 
-		:returns: The Renderer, for method chaining
-		:rtype: CodeIgniter\\View\\RendererInterface.
+    		:param  string  $context: The context to use for data escaping.
+    		:returns: The Renderer, for method chaining
+    		:rtype: CodeIgniter\\View\\RendererInterface.
 
-		Sets several pieces of view data at once::
+    		Sets several pieces of view data at once::
 
 			$renderer->setData(['name'=>'George', 'position'=>'Boss']);
 
-		Supported escape contexts: html, css, js, url, or attr or raw.
+        Supported escape contexts: html, css, js, url, or attr or raw.
 		If 'raw', no escaping will happen.
 
 	.. php:method:: setVar($name[, $value=null[, $context=null]])
 
 		:param  string  $name: Name of the view data variable
-		:param  mixed   $value: The value of this view data
-		:param  string  $context: The context to use for data escaping. 
-		:returns: The Renderer, for method chaining
-		:rtype: CodeIgniter\\View\\RendererInterface.
+    		:param  mixed   $value: The value of this view data
+    		:param  string  $context: The context to use for data escaping.
+    		:returns: The Renderer, for method chaining
+    		:rtype: CodeIgniter\\View\\RendererInterface.
 
-		Sets a single piece of view data::
+    		Sets a single piece of view data::
 
 			$renderer->setVar('name','Joe','html');
 
-		Supported escape contexts: html, css, js, url, attr or raw.
+        Supported escape contexts: html, css, js, url, attr or raw.
 		If 'raw', no escaping will happen.
 
 	.. php:method:: setDelimiters($leftDelimiter = '{', $rightDelimiter = '}')
 
 		:param  string  $leftDelimiter: Left delimiter for substitution fields
-		:param  string  $rightDelimiter: right delimiter for substitution fields
-		:returns: The Renderer, for method chaining
-		:rtype: CodeIgniter\\View\\RendererInterface.
+    		:param  string  $rightDelimiter: right delimiter for substitution fields
+    		:returns: The Renderer, for method chaining
+    		:rtype: CodeIgniter\\View\\RendererInterface.
 
-		Over-ride the substitution field delimiters::
+    		Over-ride the substitution field delimiters::
 
 			$renderer->setDelimiters('[',']');
-
-

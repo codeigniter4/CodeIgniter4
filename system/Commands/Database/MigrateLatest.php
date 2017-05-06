@@ -47,39 +47,77 @@ use Config\Services;
  */
 class MigrateLatest extends BaseCommand
 {
-    protected $group = 'Database';
+	protected $group = 'Database';
 
-    /**
-     * The Command's name
-     *
-     * @var string
-     */
-    protected $name = 'migrate';
+	/**
+	 * The Command's name
+	 *
+	 * @var string
+	 */
+	protected $name = 'migrate:latest';
 
-    /**
-     * the Command's short description
-     *
-     * @var string
-     */
-    protected $description = 'Migrates the database to the latest schema.';
+	/**
+	 * the Command's short description
+	 *
+	 * @var string
+	 */
+	protected $description = 'Migrates the database to the latest schema.';
 
-    /**
-     * Ensures that all migrations have been run.
-     */
-    public function run(array $params=[])
-    {
-        $runner = Services::migrations();
+	/**
+	 * the Command's usage
+	 *
+	 * @var string
+	 */
+	protected $usage = 'migrate:latest [options]';
 
-        CLI::write(lang('Migrations.migToLatest'), 'yellow');
+	/**
+	 * the Command's Arguments
+	 *
+	 * @var array
+	 */
+	protected $arguments = [];
 
-        try {
-            $runner->latest();
-        }
-        catch (\Exception $e)
-        {
-            $this->showError($e);
-        }
+	/**
+	 * the Command's Options
+	 *
+	 * @var array
+	 */
+	protected $options = array(
+			'-n'   => 'Set migration namespace',
+			'-g'   => 'Set database group',
+			'-all' => 'Set latest for all namespace, will ignore (-n) option'
+			);
 
-        CLI::write('Done');
-    }
+
+	/**
+	 * Ensures that all migrations have been run.
+	 */
+	public function run(array $params=[])
+	{
+		$runner = Services::migrations();
+
+		CLI::write(lang('Migrations.migToLatest'), 'yellow');
+
+		$namespace = CLI::getOption('n');
+		$group =    CLI::getOption('g'); 
+
+		try {
+			if (! is_null(CLI::getOption('all'))){        
+				$runner->latestAll($group);
+			}else{                 
+				$runner->latest($namespace,$group);
+			}
+			$messages = $runner->getCliMessages();
+			foreach ($messages as $message) {
+				CLI::write($message); 
+			}
+
+		}
+		catch (\Exception $e)
+		{
+			$this->showError($e);
+		}
+
+		CLI::write('Done');
+	}
 }

@@ -57,6 +57,13 @@ class Request extends Message implements RequestInterface
 	 */
 	protected $proxyIPs;
 
+	/**
+	 * Request method.
+	 *
+	 * @var string
+	 */
+	protected $method;
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -67,6 +74,8 @@ class Request extends Message implements RequestInterface
 	public function __construct($config)
 	{
 	    $this->proxyIPs = $config->proxyIPs;
+
+	    $this->method = $this->getServer('REQUEST_METHOD') ?? 'GET';
 	}
 
 	//--------------------------------------------------------------------
@@ -245,8 +254,24 @@ class Request extends Message implements RequestInterface
 	public function getMethod($upper = false): string
 	{
 		return ($upper)
-			? strtoupper($this->getServer('REQUEST_METHOD'))
-			: strtolower($this->getServer('REQUEST_METHOD'));
+			? strtoupper($this->method)
+			: strtolower($this->method);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Sets the request method. Used when spoofing the request.
+	 *
+	 * @param string $method
+	 *
+	 * @return $this
+	 */
+	public function setMethod(string $method)
+	{
+	    $this->method = $method;
+
+	    return $this;
 	}
 
 	//--------------------------------------------------------------------

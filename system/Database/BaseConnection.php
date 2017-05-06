@@ -37,7 +37,7 @@
  */
 
 use CodeIgniter\DatabaseException;
-use CodeIgniter\Hooks\Hooks;
+use CodeIgniter\Events\Events;
 
 /**
  * Class BaseConnection
@@ -279,44 +279,44 @@ abstract class BaseConnection implements ConnectionInterface
 	 */
 	protected $pretend = false;
 
-    /**
-     * Transaction enabled flag
-     *
-     * @var	bool
-     */
-    public $trans_enabled = true;
+	/**
+	 * Transaction enabled flag
+	 *
+	 * @var	bool
+	 */
+	public $trans_enabled = true;
 
-    /**
-     * Strict transaction mode flag
-     *
-     * @var	bool
-     */
-    public $trans_strict = true;
+	/**
+	 * Strict transaction mode flag
+	 *
+	 * @var	bool
+	 */
+	public $trans_strict = true;
 
-    /**
-     * Transaction depth level
-     *
-     * @var	int
-     */
-    protected $_trans_depth = 0;
+	/**
+	 * Transaction depth level
+	 *
+	 * @var	int
+	 */
+	protected $_trans_depth = 0;
 
-    /**
-     * Transaction status flag
-     *
-     * Used with transactions to determine if a rollback should occur.
-     *
-     * @var	bool
-     */
-    protected $_trans_status = true;
+	/**
+	 * Transaction status flag
+	 *
+	 * Used with transactions to determine if a rollback should occur.
+	 *
+	 * @var	bool
+	 */
+	protected $_trans_status = true;
 
-    /**
-     * Transaction failure flag
-     *
-     * Used with transactions to determine if a transaction has failed.
-     *
-     * @var	bool
-     */
-    protected $_trans_failure	= false;
+	/**
+	 * Transaction failure flag
+	 *
+	 * Used with transactions to determine if a transaction has failed.
+	 *
+	 * @var	bool
+	 */
+	protected $_trans_failure	= false;
 
 	//--------------------------------------------------------------------
 
@@ -327,21 +327,21 @@ abstract class BaseConnection implements ConnectionInterface
 	 */
 	public function __construct(array $params)
 	{
-	    foreach ($params as $key => $value)
-	    {
-		    $this->$key = $value;
-	    }
+		foreach ($params as $key => $value)
+		{
+			$this->$key = $value;
+		}
 	}
 
 	//--------------------------------------------------------------------
 
 
-    /**
-     * Initializes the database connection/settings.
-     *
-     * @return mixed
-     * @throws \CodeIgniter\DatabaseException
-     */
+	/**
+	 * Initializes the database connection/settings.
+	 *
+	 * @return mixed
+	 * @throws \CodeIgniter\DatabaseException
+	 */
 	public function initialize()
 	{
 		/* If an established connection is available, then there's
@@ -410,28 +410,28 @@ abstract class BaseConnection implements ConnectionInterface
 
 	//--------------------------------------------------------------------
 
-    /**
-     * Close the database connection.
-     */
-    public function close()
-    {
-        if ($this->connID)
-        {
-            $this->_close();
-            $this->connID = FALSE;
-        }
-    }
+	/**
+	 * Close the database connection.
+	 */
+	public function close()
+	{
+		if ($this->connID)
+		{
+			$this->_close();
+			$this->connID = FALSE;
+		}
+	}
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
-    /**
-     * Platform dependent way method for closing the connection.
-     *
-     * @return mixed
-     */
-    abstract protected function _close();
+	/**
+	 * Platform dependent way method for closing the connection.
+	 *
+	 * @return mixed
+	 */
+	abstract protected function _close();
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
 	/**
 	 * Create a persistent database connection.
@@ -573,9 +573,9 @@ abstract class BaseConnection implements ConnectionInterface
 
 		$startTime = microtime(true);
 
-        // Always save the last query so we can use
-        // the getLastQuery() method.
-        $this->lastQuery = $query;
+		// Always save the last query so we can use
+		// the getLastQuery() method.
+		$this->lastQuery = $query;
 
 		// Run the query for real
 		if (! $this->pretend && false === ($this->resultID = $this->simpleQuery($query->getQuery())))
@@ -583,42 +583,42 @@ abstract class BaseConnection implements ConnectionInterface
 			$query->setDuration($startTime, $startTime);
 
 			// This will trigger a rollback if transactions are being used
-            if ($this->_trans_depth !== 0)
-            {
-                $this->_trans_status = false;
-            }
+			if ($this->_trans_depth !== 0)
+			{
+				$this->_trans_status = false;
+			}
 
 			// @todo deal with errors
 
-            if ($this->DBDebug)
-            {
-                // We call this function in order to roll-back queries
-                // if transactions are enabled. If we don't call this here
-                // the error message will trigger an exit, causing the
-                // transactions to remain in limbo.
-                while ($this->_trans_depth !== 0)
-                {
-                    $transDepth = $this->_trans_depth;
-                    $this->transComplete();
+			if ($this->DBDebug)
+			{
+				// We call this function in order to roll-back queries
+				// if transactions are enabled. If we don't call this here
+				// the error message will trigger an exit, causing the
+				// transactions to remain in limbo.
+				while ($this->_trans_depth !== 0)
+				{
+					$transDepth = $this->_trans_depth;
+					$this->transComplete();
 
-                    if ($transDepth === $this->_trans_depth)
-                    {
-                        // @todo log
-                        // log_message('error', 'Database: Failure during an automated transaction commit/rollback!');
-                        break;
-                    }
-                }
+					if ($transDepth === $this->_trans_depth)
+					{
+						// @todo log
+						// log_message('error', 'Database: Failure during an automated transaction commit/rollback!');
+						break;
+					}
+				}
 
-                // display the errors....
-                // @todo display the error...
+				// display the errors....
+				// @todo display the error...
 
-                return false;
-            }
+				return false;
+			}
 
 			if (! $this->pretend)
 			{
-                // Let others do something with this query.
-				Hooks::trigger('DBQuery', $query);
+				// Let others do something with this query.
+				Events::trigger('DBQuery', $query);
 			}
 
 			return new $resultClass($this->connID, $this->resultID);
@@ -628,8 +628,8 @@ abstract class BaseConnection implements ConnectionInterface
 
 		if (! $this->pretend)
 		{
-            // Let others do somethign with this query
-            Hooks::trigger('DBQuery', $query);
+			// Let others do somethign with this query
+			Events::trigger('DBQuery', $query);
 		}
 
 		// If $pretend is true, then we just want to return
@@ -663,217 +663,217 @@ abstract class BaseConnection implements ConnectionInterface
 
 	//--------------------------------------------------------------------
 
-    /**
-     * Disable Transactions
-     *
-     * This permits transactions to be disabled at run-time.
-     */
-    public function transOff()
-    {
-        $this->trans_enabled = FALSE;
-    }
+	/**
+	 * Disable Transactions
+	 *
+	 * This permits transactions to be disabled at run-time.
+	 */
+	public function transOff()
+	{
+		$this->trans_enabled = FALSE;
+	}
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
-    /**
-     * Enable/disable Transaction Strict Mode
-     *
-     * When strict mode is enabled, if you are running multiple groups of
-     * transactions, if one group fails all subsequent groups will be
-     * rolled back.
-     *
-     * If strict mode is disabled, each group is treated autonomously,
-     * meaning a failure of one group will not affect any others
-     *
-     * @param    bool $mode = true
-     *
-     * @return $this
-     */
-    public function transStrict(bool $mode=true)
-    {
-        $this->trans_strict = $mode;
+	/**
+	 * Enable/disable Transaction Strict Mode
+	 *
+	 * When strict mode is enabled, if you are running multiple groups of
+	 * transactions, if one group fails all subsequent groups will be
+	 * rolled back.
+	 *
+	 * If strict mode is disabled, each group is treated autonomously,
+	 * meaning a failure of one group will not affect any others
+	 *
+	 * @param    bool $mode = true
+	 *
+	 * @return $this
+	 */
+	public function transStrict(bool $mode=true)
+	{
+		$this->trans_strict = $mode;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
-    /**
-     * Start Transaction
-     *
-     * @param	bool	$test_mode = FALSE
-     * @return	bool
-     */
-    public function transStart($test_mode = false)
-    {
-        if ( ! $this->trans_enabled)
-        {
-            return false;
-        }
+	/**
+	 * Start Transaction
+	 *
+	 * @param	bool	$test_mode = FALSE
+	 * @return	bool
+	 */
+	public function transStart($test_mode = false)
+	{
+		if ( ! $this->trans_enabled)
+		{
+			return false;
+		}
 
-        return $this->transBegin($test_mode);
-    }
+		return $this->transBegin($test_mode);
+	}
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
-    /**
-     * Complete Transaction
-     *
-     * @return	bool
-     */
-    public function transComplete()
-    {
-        if ( ! $this->trans_enabled)
-        {
-            return false;
-        }
+	/**
+	 * Complete Transaction
+	 *
+	 * @return	bool
+	 */
+	public function transComplete()
+	{
+		if ( ! $this->trans_enabled)
+		{
+			return false;
+		}
 
-        // The query() function will set this flag to FALSE in the event that a query failed
-        if ($this->_trans_status === false OR $this->_trans_failure === true)
-        {
-            $this->transRollback();
+		// The query() function will set this flag to FALSE in the event that a query failed
+		if ($this->_trans_status === false OR $this->_trans_failure === true)
+		{
+			$this->transRollback();
 
-            // If we are NOT running in strict mode, we will reset
-            // the _trans_status flag so that subsequent groups of
-            // transactions will be permitted.
-            if ($this->trans_strict === false)
-            {
-                $this->_trans_status = true;
-            }
+			// If we are NOT running in strict mode, we will reset
+			// the _trans_status flag so that subsequent groups of
+			// transactions will be permitted.
+			if ($this->trans_strict === false)
+			{
+				$this->_trans_status = true;
+			}
 
-//            log_message('debug', 'DB Transaction Failure');
-            return FALSE;
-        }
+			//            log_message('debug', 'DB Transaction Failure');
+			return FALSE;
+		}
 
-        return $this->transCommit();
-    }
+		return $this->transCommit();
+	}
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
-    /**
-     * Lets you retrieve the transaction flag to determine if it has failed
-     *
-     * @return	bool
-     */
-    public function transStatus(): bool
-    {
-        return $this->_trans_status;
-    }
+	/**
+	 * Lets you retrieve the transaction flag to determine if it has failed
+	 *
+	 * @return	bool
+	 */
+	public function transStatus(): bool
+	{
+		return $this->_trans_status;
+	}
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
-    /**
-     * Begin Transaction
-     *
-     * @param	bool	$test_mode
-     * @return	bool
-     */
-    public function transBegin(bool $test_mode = false): bool
-    {
-        if ( ! $this->trans_enabled)
-        {
-            return false;
-        }
-        // When transactions are nested we only begin/commit/rollback the outermost ones
-        elseif ($this->_trans_depth > 0)
-        {
-            $this->_trans_depth++;
-            return true;
-        }
+	/**
+	 * Begin Transaction
+	 *
+	 * @param	bool	$test_mode
+	 * @return	bool
+	 */
+	public function transBegin(bool $test_mode = false): bool
+	{
+		if ( ! $this->trans_enabled)
+		{
+			return false;
+		}
+		// When transactions are nested we only begin/commit/rollback the outermost ones
+		elseif ($this->_trans_depth > 0)
+		{
+			$this->_trans_depth++;
+			return true;
+		}
 
 		if (empty($this->connID))
 		{
 			$this->initialize();
 		}
 
-        // Reset the transaction failure flag.
-        // If the $test_mode flag is set to TRUE transactions will be rolled back
-        // even if the queries produce a successful result.
-        $this->_trans_failure = ($test_mode === true);
+		// Reset the transaction failure flag.
+		// If the $test_mode flag is set to TRUE transactions will be rolled back
+		// even if the queries produce a successful result.
+		$this->_trans_failure = ($test_mode === true);
 
-        if ($this->_transBegin())
-        {
-            $this->_trans_depth++;
-            return true;
-        }
+		if ($this->_transBegin())
+		{
+			$this->_trans_depth++;
+			return true;
+		}
 
-        return false;
-    }
+		return false;
+	}
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
-    /**
-     * Commit Transaction
-     *
-     * @return	bool
-     */
-    public function transCommit(): bool
-    {
-        if ( ! $this->trans_enabled || $this->_trans_depth === 0)
-        {
-            return false;
-        }
-        // When transactions are nested we only begin/commit/rollback the outermost ones
-        elseif ($this->_trans_depth > 1 || $this->_transCommit())
-        {
-            $this->_trans_depth--;
-            return true;
-        }
+	/**
+	 * Commit Transaction
+	 *
+	 * @return	bool
+	 */
+	public function transCommit(): bool
+	{
+		if ( ! $this->trans_enabled || $this->_trans_depth === 0)
+		{
+			return false;
+		}
+		// When transactions are nested we only begin/commit/rollback the outermost ones
+		elseif ($this->_trans_depth > 1 || $this->_transCommit())
+		{
+			$this->_trans_depth--;
+			return true;
+		}
 
-        return false;
-    }
+		return false;
+	}
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
-    /**
-     * Rollback Transaction
-     *
-     * @return	bool
-     */
-    public function transRollback(): bool
-    {
-        if ( ! $this->trans_enabled OR $this->_trans_depth === 0)
-        {
-            return false;
-        }
-        // When transactions are nested we only begin/commit/rollback the outermost ones
-        elseif ($this->_trans_depth > 1 OR $this->_transRollback())
-        {
-            $this->_trans_depth--;
-            return true;
-        }
+	/**
+	 * Rollback Transaction
+	 *
+	 * @return	bool
+	 */
+	public function transRollback(): bool
+	{
+		if ( ! $this->trans_enabled OR $this->_trans_depth === 0)
+		{
+			return false;
+		}
+		// When transactions are nested we only begin/commit/rollback the outermost ones
+		elseif ($this->_trans_depth > 1 OR $this->_transRollback())
+		{
+			$this->_trans_depth--;
+			return true;
+		}
 
-        return false;
-    }
+		return false;
+	}
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
-    /**
-     * Begin Transaction
-     *
-     * @return	bool
-     */
-    abstract protected function _transBegin(): bool;
+	/**
+	 * Begin Transaction
+	 *
+	 * @return	bool
+	 */
+	abstract protected function _transBegin(): bool;
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
-    /**
-     * Commit Transaction
-     *
-     * @return	bool
-     */
-    abstract protected function _transCommit(): bool;
+	/**
+	 * Commit Transaction
+	 *
+	 * @return	bool
+	 */
+	abstract protected function _transCommit(): bool;
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
-    /**
-     * Rollback Transaction
-     *
-     * @return	bool
-     */
-    abstract protected function _transRollback(): bool;
+	/**
+	 * Rollback Transaction
+	 *
+	 * @return	bool
+	 */
+	abstract protected function _transRollback(): bool;
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
 	/**
 	 * Returns an instance of the query builder for this connection.
@@ -920,7 +920,7 @@ abstract class BaseConnection implements ConnectionInterface
 	{
 		$this->pretend(true);
 
-	    $sql = $func($this);
+		$sql = $func($this);
 
 		$this->pretend(false);
 
@@ -956,7 +956,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 */
 	public function showLastQuery()
 	{
-	    return (string)$this->lastQuery;
+		return (string)$this->lastQuery;
 	}
 
 	//--------------------------------------------------------------------
@@ -973,7 +973,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 */
 	public function getConnectStart()
 	{
-	    return $this->connectTime;
+		return $this->connectTime;
 	}
 
 	//--------------------------------------------------------------------
@@ -990,7 +990,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 */
 	public function getConnectDuration($decimals = 6)
 	{
-	    return number_format($this->connectDuration, $decimals);
+		return number_format($this->connectDuration, $decimals);
 	}
 
 	//--------------------------------------------------------------------
@@ -1035,7 +1035,7 @@ abstract class BaseConnection implements ConnectionInterface
 			foreach ($item as $k => $v)
 			{
 				$escaped_array[$this->protectIdentifiers($k)] = $this->protectIdentifiers($v, $prefixSingle,
-					$protectIdentifiers, $fieldExists);
+						$protectIdentifiers, $fieldExists);
 			}
 
 			return $escaped_array;
@@ -1217,8 +1217,8 @@ abstract class BaseConnection implements ConnectionInterface
 		}
 		// Avoid breaking functions and literal values inside queries
 		elseif (ctype_digit($item) OR $item[0] === "'" OR ($this->escapeChar !== '"' && $item[0] === '"') OR
-		        strpos($item, '(') !== false
-		)
+				strpos($item, '(') !== false
+			   )
 		{
 			return $item;
 		}
@@ -1248,26 +1248,26 @@ abstract class BaseConnection implements ConnectionInterface
 			if (strpos($item, '.'.$id) !== false)
 			{
 				return preg_replace('/'.$preg_ec[0].'?([^'.$preg_ec[1].'\.]+)'.$preg_ec[1].'?\./i',
-					$preg_ec[2].'$1'.$preg_ec[3].'.', $item);
+						$preg_ec[2].'$1'.$preg_ec[3].'.', $item);
 			}
 		}
 
 		return preg_replace('/'.$preg_ec[0].'?([^'.$preg_ec[1].'\.]+)'.$preg_ec[1].'?(\.)?/i',
-			$preg_ec[2].'$1'.$preg_ec[3].'$2', $item);
+				$preg_ec[2].'$1'.$preg_ec[3].'$2', $item);
 	}
 
 	//--------------------------------------------------------------------
 
-    /**
-     * DB Prefix
-     *
-     * Prepends a database prefix if one exists in configuration
-     *
-     * @param string $table the table
-     *
-     * @return string
-     * @throws \CodeIgniter\DatabaseException
-     */
+	/**
+	 * DB Prefix
+	 *
+	 * Prepends a database prefix if one exists in configuration
+	 *
+	 * @param string $table the table
+	 *
+	 * @return string
+	 * @throws \CodeIgniter\DatabaseException
+	 */
 	public function prefixTable($table = '')
 	{
 		if ($table === '')
@@ -1366,10 +1366,10 @@ abstract class BaseConnection implements ConnectionInterface
 		if ($like === true)
 		{
 			return str_replace(
-				[$this->likeEscapeChar, '%', '_'],
-				[$this->likeEscapeChar.$this->likeEscapeChar, $this->likeEscapeChar.'%', $this->likeEscapeChar.'_'],
-				$str
-			);
+					[$this->likeEscapeChar, '%', '_'],
+					[$this->likeEscapeChar.$this->likeEscapeChar, $this->likeEscapeChar.'%', $this->likeEscapeChar.'_'],
+					$str
+					);
 		}
 
 		return $str;
@@ -1611,6 +1611,21 @@ abstract class BaseConnection implements ConnectionInterface
 	//--------------------------------------------------------------------
 
 	/**
+	 * Returns an object with key data
+	 *
+	 * @param	string	$table	the table name
+	 * @return	array
+	 */
+	public function getIndexData(string $table)
+	{
+		$fields = $this->_indexData($this->protectIdentifiers($table, true, false, false));
+
+		return $fields ?? false;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Allows the engine to be set into a mode where queries are not
 	 * actually executed, but they are still generated, timed, etc.
 	 *
@@ -1622,7 +1637,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 */
 	public function pretend(bool $pretend = true)
 	{
-	    $this->pretend = $pretend;
+		$this->pretend = $pretend;
 
 		return $this;
 	}

@@ -69,7 +69,7 @@ class CIDatabaseTestCase extends CIUnitTestCase
 	 *
 	 * @var string
 	 */
-	protected $basePath = APPPATH.'../tests/_support/_database';
+	protected $basePath = TESTPATH.'_support/Database';
 
 	/**
 	 * The name of the database group to connect to.
@@ -151,12 +151,12 @@ class CIDatabaseTestCase extends CIUnitTestCase
 		{
 			if (! empty($this->basePath))
 			{
-				$this->migrations->setPath(rtrim($this->basePath, '/').'/migrations');
+				$this->migrations->setNamespace('Tests\Support');
 			}
 
 			$this->db->table('migrations')->truncate();
-			$this->migrations->version(0, 'tests');
-			$this->migrations->latest('tests');
+			$this->migrations->version(0,null, 'tests');
+			$this->migrations->latest(null,'tests');
 		}
 
 		if (! empty($this->seed))

@@ -193,11 +193,11 @@ outer array's key is the name of the section on the Vars tab::
 
 	$data = [
 		'section 1' => [
-		    'foo' => 'bar,
+		    'foo' => 'bar',
 		    'bar' => 'baz'
 		],
 		'section 2' => [
-		    'foo' => 'bar,
+		    'foo' => 'bar',
 		    'bar' => 'baz'
 		]
 	 ];

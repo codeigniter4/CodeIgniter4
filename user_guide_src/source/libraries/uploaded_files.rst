@@ -3,7 +3,7 @@ Working with Uploaded Files
 ***************************
 
 CodeIgniter makes working with files uploaded through a form much simpler and more secure than using PHP's ``$_FILES``
-array directly.
+array directly. This extends the :doc:`File class </libraries/files>` and thus gains all of the features of that class.
 
 .. note:: This is not the same as the File Uploading class in previous versions of CodeIgniter. This provides a raw
 	interface to the uploaded files with a few small features. An uploader class will be present in the final release.
@@ -71,12 +71,12 @@ In this case, the returned array of files would be more like::
 	]
 
 Single File
-----------
+-----------
 
 If you just need to access a single file, you can use ``getFile()`` to retrieve the file instance directly. This will return an instance of ``CodeIgniter\HTTP\Files\UploadedFile``:
 
 Simplest usage
-^^^^^^^^^^
+^^^^^^^^^^^^^^
 
 With the simplest usage, a single file might be submitted like::
 
@@ -87,7 +87,7 @@ Which would return a simple file instance like::
 	$file = $this->request->getFile('userfile');
 
 Array notation
-^^^^^^^^^^
+^^^^^^^^^^^^^^
 
 If you used an array notation for the name, the input would look something like::
 
@@ -99,7 +99,8 @@ For get the file instance::
 
 
 Multiple files
-^^^^^^^^^^
+^^^^^^^^^^^^^^
+
 If there are multiple files with the same name you can use ``getFile()`` ro retrieve every file individually::
 
 	<input type="file" name="images[]" multiple />
@@ -125,7 +126,7 @@ In controller::
 Working With the File
 =====================
 
-Once you've gotten the UploadedFile instance, you can retrieve information about the file in safe ways, as well as
+Once you've retrieved the UploadedFile instance, you can retrieve information about the file in safe ways, as well as
 move the file to a new location.
 
 Verify A File
@@ -167,26 +168,9 @@ To get the name of the temp file that was created during the upload, you can use
 
 	$tempfile = $file->getTempName();
 
-**getRandomName()**
-
-You can generate a cryptographically secure random filename, with the current timestamp prepended, with the ``getRandomName()``
-method. This is especially useful to rename files when moving it so that the filename is unguessable::
-
-	// Generates something like: 1465965676_385e33f741.jpg
-	$newName = $file->getRandomName();
-
 
 Other File Info
 ---------------
-
-**getExtension()**
-
-Attempts to determine the file extension based on the trusted ``getType()`` method instead of the value listed
-in ``$_FILES``. If the mime type is unknown, will return null. Uses the values in **application/Config/Mimes.php**
-to determine extension::
-
-	// Returns 'jpg' (WITHOUT the period)
-	$ext = $file->getExtension();
 
 **getClientExtension()**
 
@@ -194,15 +178,6 @@ Returns the original file extension, based on the file name that was uploaded. T
 trusted version, use ``getExtension()`` instead::
 
 	$ext = $file->getClientExtension();
-
-**getType()**
-
-Retrieve the media type (mime type) of the file. Does not use information from the $_FILES array, but uses other methods to more
-accurately determine the type of file, like ``finfo``, or ``mime_content_type``::
-
-	$type = $file->getType();
-
-	echo $type; // image/png
 
 **getClientType()**
 
@@ -212,15 +187,6 @@ version, use ``getType()`` instead::
 	$type = $file->getClientType();
 
 	echo $type; // image/png
-
-**getSize()**
-
-Returns the size of the uploaded file in bytes. You can pass in either 'kb' or 'mb' as the first parameter to get
-the results in kilobytes or megabytes, respectively::
-
-	$bytes     = $file->getSize();      // 256901
-	$kilobytes = $file->getSize('kb');  // 250.880
-	$megabytes = $file->getSize('mb');  // 0.245
 
 Moving Files
 ------------

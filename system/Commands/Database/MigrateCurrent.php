@@ -47,40 +47,69 @@ use Config\Services;
  */
 class MigrateCurrent extends BaseCommand
 {
-    protected $group = 'Database';
+	protected $group = 'Database';
 
-    /**
-     * The Command's name
-     *
-     * @var string
-     */
-    protected $name = 'migrate:current';
+	/**
+	 * The Command's name
+	 *
+	 * @var string
+	 */
+	protected $name = 'migrate:current';
 
-    /**
-     * the Command's short description
-     *
-     * @var string
-     */
-    protected $description = 'Migrates us up or down to the version specified as $currentVersion in the migrations config file.';
+	/**
+	 * the Command's short description
+	 *
+	 * @var string
+	 */
+	protected $description = 'Migrates us up or down to the version specified as $currentVersion in the migrations config file.';
 
-    /**
-     * Migrates us up or down to the version specified as $currentVersion
-     * in the migrations config file.
-     */
-    public function run(array $params=[])
-    {
-        $runner = Services::migrations();
+	/**
+	 * the Command's usage
+	 *
+	 * @var string
+	 */
+	protected $usage = 'migrate:current [options]';
 
-        CLI::write(lang('Migrations.migToVersion'), 'yellow');
+	/**
+	 * the Command's Arguments
+	 *
+	 * @var array
+	 */
+	protected $arguments = [];
 
-        try {
-            $runner->current();
-        }
-        catch (\Exception $e)
-        {
-            $this->showError($e);
-        }
+	/**
+	 * the Command's Options
+	 *
+	 * @var array
+	 */
+	protected $options = array(
+			'-g' => 'Set database group'
+			);
 
-        CLI::write('Done');
-    }
+
+	/**
+	 * Migrates us up or down to the version specified as $currentVersion
+	 * in the migrations config file.
+	 */
+	public function run(array $params=[])
+	{
+		$runner = Services::migrations();
+
+		CLI::write(lang('Migrations.migToVersion'), 'yellow');
+
+		$group =    CLI::getOption('g');
+		try { 
+			$runner->current($group);
+			$messages = $runner->getCliMessages();
+			foreach ($messages as $message) {
+				CLI::write($message); 
+			}
+		}
+		catch (\Exception $e)
+		{
+			$this->showError($e);
+		}
+
+		CLI::write('Done');
+	}
 }

@@ -54,6 +54,20 @@ interface ValidationInterface
 	//--------------------------------------------------------------------
 
 	/**
+	 * Check; runs the validation process, returning true or false
+	 * determining whether or not validation was successful.
+	 *
+	 * @param mixed    $value  Value to validation.
+	 * @param string   $rule   Rule.
+	 * @param string[] $errors Errors.
+	 *
+	 * @return bool True if valid, else false.
+	 */
+	public function check($value, string $rule, array $errors = []): bool;
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Takes a Request object and grabs the data to use from its
 	 * POST array values.
 	 *

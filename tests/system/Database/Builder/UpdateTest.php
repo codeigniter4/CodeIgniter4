@@ -66,7 +66,7 @@ class UpdateTest extends \CIUnitTestCase
 	{
 		$builder = new BaseBuilder('jobs', $this->db);
 
-		$this->setExpectedException('CodeIgniter\DatabaseException', 'You must use the "set" method to update an entry.');
+		$this->expectException('CodeIgniter\DatabaseException', 'You must use the "set" method to update an entry.');
 
 		$builder->update(null, null, null, true);
 	}
@@ -120,7 +120,8 @@ WHERE "id" IN(2,3)';
 	{
 		$builder = new BaseBuilder('jobs', $this->db);
 
-		$this->setExpectedException('CodeIgniter\DatabaseException', 'You must use the "set" method to update an entry.');
+		$this->expectException('CodeIgniter\DatabaseException');
+		$this->expectExceptionMessage('You must use the "set" method to update an entry.');
 
 		$builder->updateBatch(null, 'id');
 	}
@@ -131,7 +132,8 @@ WHERE "id" IN(2,3)';
 	{
 		$builder = new BaseBuilder('jobs', $this->db);
 
-		$this->setExpectedException('CodeIgniter\DatabaseException', 'You must specify an index to match on for batch updates.');
+		$this->expectException('CodeIgniter\DatabaseException');
+		$this->expectExceptionMessage('You must specify an index to match on for batch updates.');
 
 		$builder->updateBatch([]);
 	}
@@ -142,7 +144,8 @@ WHERE "id" IN(2,3)';
 	{
 		$builder = new BaseBuilder('jobs', $this->db);
 
-		$this->setExpectedException('CodeIgniter\DatabaseException', 'updateBatch() called with no data');
+		$this->expectException('CodeIgniter\DatabaseException');
+		$this->expectExceptionMessage('updateBatch() called with no data');
 
 		$builder->updateBatch([], 'id');
 	}

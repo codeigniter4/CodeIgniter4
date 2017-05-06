@@ -173,7 +173,7 @@ class Forge
 	 */
 	public function getConnection()
 	{
-	    return $this->db;
+		return $this->db;
 	}
 
 	//--------------------------------------------------------------------
@@ -198,8 +198,8 @@ class Forge
 			return false;
 		}
 		elseif ( ! $this->db->query(sprintf($this->createDatabaseStr, $db_name, $this->db->charset,
-			$this->db->DBCollat))
-		)
+						$this->db->DBCollat))
+			   )
 		{
 			if ($this->db->DBDebug)
 			{
@@ -271,19 +271,12 @@ class Forge
 	 */
 	public function addKey($key, $primary = false)
 	{
-		if (is_array($key))
-		{
-			foreach ($key as $one)
-			{
-				$this->addKey($one, $primary);
-			}
-
-			return $this;
-		}
-
 		if ($primary === true)
 		{
-			$this->primaryKeys[] = $key;
+			foreach ((array) $key as $one)
+			{
+				$this->primaryKeys[] = $one;
+			}
 		}
 		else
 		{
@@ -309,11 +302,11 @@ class Forge
 			if ($field === 'id')
 			{
 				$this->addField([
-					'id' => [
+						'id' => [
 						'type'           => 'INT',
 						'constraint'     => 9,
 						'auto_increment' => true,
-					],
+						],
 				]);
 				$this->addKey('id', true);
 			}
@@ -338,16 +331,16 @@ class Forge
 
 	//--------------------------------------------------------------------
 
-    /**
-     * Create Table
-     *
-     * @param    string $table         Table name
-     * @param    bool   $if_not_exists Whether to add IF NOT EXISTS condition
-     * @param    array  $attributes    Associative array of table attributes
-     *
-     * @return bool
-     * @throws \CodeIgniter\DatabaseException
-     */
+	/**
+	 * Create Table
+	 *
+	 * @param    string $table         Table name
+	 * @param    bool   $if_not_exists Whether to add IF NOT EXISTS condition
+	 * @param    array  $attributes    Associative array of table attributes
+	 *
+	 * @return bool
+	 * @throws \CodeIgniter\DatabaseException
+	 */
 	public function createTable($table, $if_not_exists = false, array $attributes = [])
 	{
 		if ($table === '')
@@ -437,7 +430,7 @@ class Forge
 		}
 
 		$columns = implode(',', $columns)
-		           .$this->_processPrimaryKeys($table);
+			.$this->_processPrimaryKeys($table);
 
 		// Are indexes created from within the CREATE TABLE statement? (e.g. in MySQL)
 		if ($this->createTableKeys === true)
@@ -447,11 +440,11 @@ class Forge
 
 		// createTableStr will usually have the following format: "%s %s (%s\n)"
 		$sql = sprintf($this->createTableStr.'%s',
-			$sql,
-			$this->db->escapeIdentifiers($table),
-			$columns,
-			$this->_createTableAttributes($attributes)
-		);
+				$sql,
+				$this->db->escapeIdentifiers($table),
+				$columns,
+				$this->_createTableAttributes($attributes)
+				);
 
 		return $sql;
 	}
@@ -513,7 +506,7 @@ class Forge
 		if ($query && ! empty($this->db->dataCache['table_names']))
 		{
 			$key = array_search(strtolower($this->db->DBPrefix.$table_name),
-				array_map('strtolower', $this->db->dataCache['table_names']), true);
+					array_map('strtolower', $this->db->dataCache['table_names']), true);
 			if ($key !== false)
 			{
 				unset($this->db->dataCache['table_names'][$key]);
@@ -584,14 +577,14 @@ class Forge
 		}
 
 		$result = $this->db->query(sprintf($this->renameTableStr,
-				$this->db->escapeIdentifiers($this->db->DBPrefix.$table_name),
-				$this->db->escapeIdentifiers($this->db->DBPrefix.$new_table_name))
-		);
+					$this->db->escapeIdentifiers($this->db->DBPrefix.$table_name),
+					$this->db->escapeIdentifiers($this->db->DBPrefix.$new_table_name))
+				);
 
 		if ($result && ! empty($this->db->dataCache['table_names']))
 		{
 			$key = array_search(strtolower($this->db->DBPrefix.$table_name),
-				array_map('strtolower', $this->db->dataCache['table_names']), true);
+					array_map('strtolower', $this->db->dataCache['table_names']), true);
 			if ($key !== false)
 			{
 				$this->db->dataCache['table_names'][$key] = $this->db->DBPrefix.$new_table_name;
@@ -748,7 +741,7 @@ class Forge
 		for ($i = 0, $c = count($field); $i < $c; $i++)
 		{
 			$sqls[] = $sql
-			          .($field[$i]['_literal'] !== false ? $field[$i]['_literal'] : $this->_processColumn($field[$i]));
+				.($field[$i]['_literal'] !== false ? $field[$i]['_literal'] : $this->_processColumn($field[$i]));
 		}
 
 		return $sqls;
@@ -874,12 +867,12 @@ class Forge
 	protected function _processColumn($field)
 	{
 		return $this->db->escapeIdentifiers($field['name'])
-		       .' '.$field['type'].$field['length']
-		       .$field['unsigned']
-		       .$field['default']
-		       .$field['null']
-		       .$field['auto_increment']
-		       .$field['unique'];
+			.' '.$field['type'].$field['length']
+			.$field['unsigned']
+			.$field['default']
+			.$field['null']
+			.$field['auto_increment']
+			.$field['unique'];
 	}
 
 	//--------------------------------------------------------------------
@@ -1016,8 +1009,8 @@ class Forge
 	protected function _attributeAutoIncrement(&$attributes, &$field)
 	{
 		if ( ! empty($attributes['AUTO_INCREMENT']) && $attributes['AUTO_INCREMENT'] === true &&
-		     stripos($field['type'], 'int') !== false
-		)
+				stripos($field['type'], 'int') !== false
+		   )
 		{
 			$field['auto_increment'] = ' AUTO_INCREMENT';
 		}
@@ -1047,67 +1040,62 @@ class Forge
 		if (count($this->primaryKeys) > 0)
 		{
 			$sql .= ",\n\tCONSTRAINT ".$this->db->escapeIdentifiers('pk_'.$table)
-			        .' PRIMARY KEY('.implode(', ', $this->db->escapeIdentifiers($this->primaryKeys)).')';
-		}
+				.' PRIMARY KEY('.implode(', ', $this->db->escapeIdentifiers($this->primaryKeys)).')';
+						}
 
-		return $sql;
-	}
+						return $sql;
+						}
 
-	//--------------------------------------------------------------------
+						//--------------------------------------------------------------------
 
-	/**
-	 * Process indexes
-	 *
-	 * @param    string $table
-	 *
-	 * @return    string
-	 */
-	protected function _processIndexes($table)
-	{
-		$sqls = [];
+						/**
+						 * Process indexes
+						 *
+						 * @param    string $table
+						 *
+						 * @return    string
+						 */
+						protected function _processIndexes($table)
+						{
+						$sqls = [];
 
-		for ($i = 0, $c = count($this->keys); $i < $c; $i++)
-		{
-			if (is_array($this->keys[$i]))
+						for ($i = 0, $c = count($this->keys); $i < $c; $i++)
+						{
+							$this->keys[$i] = (array) $this->keys[$i];
+
+							for ($i2 = 0, $c2 = count($this->keys[$i]); $i2 < $c2; $i2++)
+							{
+								if ( ! isset($this->fields[$this->keys[$i][$i2]]))
+								{
+									unset($this->keys[$i][$i2]);
+								}
+							}
+							if (count($this->keys[$i]) <= 0)
+							{
+								continue;
+							}
+
+							$sqls[] = 'CREATE INDEX '.$this->db->escapeIdentifiers($table.'_'.implode('_', $this->keys[$i]))
+								.' ON '.$this->db->escapeIdentifiers($table)
+								.' ('.implode(', ', $this->db->escapeIdentifiers($this->keys[$i])).');';
+						}
+
+						return $sqls;
+						}
+
+			//--------------------------------------------------------------------
+			//--------------------------------------------------------------------
+
+			/**
+			 * Reset
+			 *
+			 * Resets table creation vars
+			 *
+			 * @return    void
+			 */
+			protected function _reset()
 			{
-				for ($i2 = 0, $c2 = count($this->keys[$i]); $i2 < $c2; $i2++)
-				{
-					if ( ! isset($this->fields[$this->keys[$i][$i2]]))
-					{
-						unset($this->keys[$i][$i2]);
-						continue;
-					}
-				}
+				$this->fields = $this->keys = $this->primaryKeys = [];
 			}
-			elseif ( ! isset($this->fields[$this->keys[$i]]))
-			{
-				unset($this->keys[$i]);
-				continue;
-			}
-
-			is_array($this->keys[$i]) OR $this->keys[$i] = [$this->keys[$i]];
-
-			$sqls[] = 'CREATE INDEX '.$this->db->escapeIdentifiers($table.'_'.implode('_', $this->keys[$i]))
-			          .' ON '.$this->db->escapeIdentifiers($table)
-			          .' ('.implode(', ', $this->db->escapeIdentifiers($this->keys[$i])).');';
-		}
-
-		return $sqls;
-	}
-
-	//--------------------------------------------------------------------
-	//--------------------------------------------------------------------
-
-	/**
-	 * Reset
-	 *
-	 * Resets table creation vars
-	 *
-	 * @return    void
-	 */
-	protected function _reset()
-	{
-		$this->fields = $this->keys = $this->primaryKeys = [];
-	}
 
 }

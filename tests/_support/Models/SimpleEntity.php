@@ -14,6 +14,8 @@ class SimpleEntity
     protected $name;
     protected $description;
 
+	protected $datamap = [];
+
     public function __get($key)
     {
         if (isset($this->$key))

@@ -39,6 +39,7 @@
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 use Config\Services;
+use Config\Autoload;
 
 /**
  * Displays a list of all migrations and whether they've been run or not.
@@ -47,60 +48,104 @@ use Config\Services;
  */
 class MigrateStatus extends BaseCommand
 {
-    protected $group = 'Database';
+	protected $group = 'Database';
 
-    /**
-     * The Command's name
-     *
-     * @var string
-     */
-    protected $name = 'migrate:status';
+	/**
+	 * The Command's name
+	 *
+	 * @var string
+	 */
+	protected $name = 'migrate:status';
 
-    /**
-     * the Command's short description
-     *
-     * @var string
-     */
-    protected $description = 'Displays a list of all migrations and whether they\'ve been run or not.';
+	/**
+	 * the Command's short description
+	 *
+	 * @var string
+	 */
+	protected $description = 'Displays a list of all migrations and whether they\'ve been run or not.';
 
-    /**
-     * Displays a list of all migrations and whether they've been run or not.
-     */
-    public function run(array $params=[])
-    {
-        $runner = Services::migrations();
+	/**
+	 * the Command's usage
+	 *
+	 * @var string
+	 */
+	protected $usage = 'migrate:status [Options]';
 
-        $migrations = $runner->findMigrations();
-        $history    = $runner->getHistory();
+	/**
+	 * the Command's Arguments
+	 *
+	 * @var array
+	 */
+	protected $arguments = [];
 
-        if (empty($migrations))
-        {
-            return CLI::error(lang('Migrations.migNoneFound'));
-        }
+	/**
+	 * the Command's Options
+	 *
+	 * @var array
+	 */
+	protected $options = array(
+			'-g'   => 'Set database group'
+			);
 
-        $max = 0;
+	/**
+	 * Displays a list of all migrations and whether they've been run or not.
+	 */
+	public function run(array $params=[])
+	{
+		$runner = Services::migrations();
 
-        foreach ($migrations as $version => $file)
-        {
-            $file = substr($file, strpos($file, $version.'_'));
-            $migrations[$version] = $file;
+		if(! is_null(CLI::getOption('g'))){
+			$runner->setGroup(CLI::getOption('g'));
+		}
 
-            $max = max($max, strlen($file));
-        }
+		// Get all namespaces form  PSR4 paths.
+		$config = new Autoload();
+		$namespaces = $config->psr4;
 
-        CLI::write(str_pad(lang('Migrations.filename'), $max+4).lang('Migrations.migOn'), 'yellow');
+		// Loop for all $namespaces
+		foreach ($namespaces as $namespace => $path) {
 
-        foreach ($migrations as $version => $file)
-        {
-            $date = '';
-            foreach ($history as $row)
-            {
-                if ($row['version'] != $version) continue;
+			$runner->setNamespace($namespace);
+			$migrations = $runner->findMigrations();
+			$history    = $runner->getHistory();
 
-                $date = $row['time'];
-            }
+			if (empty($migrations))
+			{
+				CLI::error("$namespace: " .lang('Migrations.migNoneFound'));
+				continue;
+			}
 
-            CLI::write(str_pad($file, $max+4). ($date ? $date : '---'));
-        }
-    }
+			ksort($migrations);
+
+			CLI::newLine(1);
+
+			CLI::write(lang('Migrations.migHistoryFor') . "$namespace: " , 'green');
+
+			CLI::newLine(1);
+
+			$max = 0;
+			foreach ($migrations as $version => $migration)
+			{
+				$file = substr($migration->name, strpos($migration->name, $version.'_'));
+				$migrations[$version]->name = $file;
+
+				$max = max($max, strlen($file));
+			}
+
+			CLI::write(str_pad(lang('Migrations.filename'), $max+6).lang('Migrations.migOn'),'yellow');
+
+
+			foreach ($migrations as $version => $migration)
+			{
+				$date = '';
+				foreach ($history as $row)
+				{
+					if ($row['version'] != $version) continue;
+
+					$date = date ("Y-m-d H:i:s", $row['time']);
+				}
+				CLI::write(str_pad($migration->name, $max+6). ($date ? $date : '---'));
+			}
+		}
+	}
 }

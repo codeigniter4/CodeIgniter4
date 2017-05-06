@@ -21,6 +21,7 @@ Library Reference
     sessions
     throttler
     typography
+    files
     uploaded_files
     uri
     validation

@@ -170,6 +170,7 @@ You can also use named keys to make it easier to keep things straight, if you'd 
     // Displays "I have 3 apples."
     echo lang("Tests.namedApples", ['number_apples' => 3]);
 
+
 Obviously, you can do more than just number replacement. According to the
 `official ICU docs <http://icu-project.org/apiref/icu4c/classMessageFormat.html#details>`_ for the underlying
 library, the following types of data can be replaced:
@@ -226,3 +227,39 @@ You should be sure to read up on the MessageFormatter class and the underlying I
 idea on what capabilities it has, like permorming conditional replacement, pluralization, and more. Both of the links provided
 earlier will give you an excellent idea as to the options available.
 
+Specifying Locale
+-----------------
+
+To specify a different locale to be used when replacing parameters, you can pass the locale in as the
+third parameter to the ``lang()`` method.
+::
+
+    // Displays "The time is now 23:21:28 GMT-5"
+    echo lang('Test.longTime', [time()], 'ru_RU');
+
+    // Displays "£7.41"
+    echo lang('{price, number, currency}', ['price' => 7.41], 'en_GB');
+    // Displays "$7.41"
+    echo lang('{price, number, currency}', ['price' => 7.41], 'en_US');
+
+Nested Arrays
+-------------
+
+Language files also allow nested arrays to make working with lists, etc... easier.
+::
+
+    // Language/en/Fruit.php
+
+    return [
+        'list' => [
+            'Apples',
+            'Bananas',
+            'Grapes',
+            'Lemons',
+            'Oranges',
+            'Strawberries'
+        ]
+    ];
+
+    // Displays "Apples, Bananas, Grapes, Lemons, Oranges, Strawberries"
+    echo implode(', ', lang('Fruit.list'));

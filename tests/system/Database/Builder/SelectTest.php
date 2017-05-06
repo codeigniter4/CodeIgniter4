@@ -200,7 +200,8 @@ class SelectTest extends \CIUnitTestCase
 	{
 		$builder = new BaseBuilder('invoices', $this->db);
 
-		$this->setExpectedException('CodeIgniter\DatabaseException', 'The query you submitted is not valid.');
+		$this->expectException('CodeIgniter\DatabaseException');
+		$this->expectExceptionMessage('The query you submitted is not valid.');
 
 		$builder->selectSum('');
 	}

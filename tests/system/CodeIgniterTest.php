@@ -3,6 +3,9 @@
 use CodeIgniter\Router\RouteCollection;
 use Config\App;
 
+/**
+ * @backupGlobals enabled
+ */
 class CodeIgniterTest extends \CIUnitTestCase
 {
 	/**
@@ -162,4 +165,53 @@ class CodeIgniterTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+    public function testControllersCanReturnString()
+    {
+        $_SERVER['argv'] = [
+            'index.php',
+            'pages/about',
+        ];
+        $_SERVER['argc'] = 2;
+
+        // Inject mock router.
+        $routes = Services::routes();
+        $routes->add('pages/(:segment)', function($segment)
+        {
+            return 'You want to see "'.esc($segment).'" page.';
+        });
+        $router = Services::router($routes);
+        Services::injectMock('router', $router);
+
+        ob_start();
+        $this->codeigniter->run();
+        $output = ob_get_clean();
+
+        $this->assertContains('You want to see "about" page.', $output);
+    }
+
+    public function testControllersCanReturnResponseObject()
+    {
+        $_SERVER['argv'] = [
+            'index.php',
+            'pages/about',
+        ];
+        $_SERVER['argc'] = 2;
+
+        // Inject mock router.
+        $routes = Services::routes();
+        $routes->add('pages/(:segment)', function($segment)
+        {
+            $response = Services::response();
+            $string = "You want to see 'about' page.";
+            return $response->setBody($string);
+        });
+        $router = Services::router($routes);
+        Services::injectMock('router', $router);
+
+        ob_start();
+        $this->codeigniter->run();
+        $output = ob_get_clean();
+
+        $this->assertContains("You want to see 'about' page.", $output);
+    }
 }

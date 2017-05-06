@@ -95,6 +95,13 @@ class View implements RendererInterface {
      */
     protected $config;
 
+    /**
+     * Whether data should be saved between renders.
+     *
+     * @var bool
+     */
+    protected $saveData;
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -113,6 +120,7 @@ class View implements RendererInterface {
 		$this->loader   = is_null($loader) ? Services::locator() : $loader;
 		$this->logger   = is_null($logger) ? Services::logger() : $logger;
 		$this->debug    = is_null($debug) ? CI_DEBUG : $debug;
+		$this->saveData = $config->saveData ?? null;
 	}
 
 	//--------------------------------------------------------------------
@@ -135,9 +143,12 @@ class View implements RendererInterface {
 	{
 		$start = microtime(true);
 
-        if (is_null($saveData))
+        // Store the results here so even if
+        // multiple views are called in a view, it won't
+        // clean it unless we mean it to.
+        if ($saveData !== null)
         {
-            $saveData = $this->config->saveData;
+            $this->saveData = $saveData;
         }
 
 		$view = str_replace('.php', '', $view).'.php';
@@ -170,7 +181,7 @@ class View implements RendererInterface {
 		// Make our view data available to the view.
 		extract($this->data);
 
-		if ( ! $saveData)
+		if ( ! $this->saveData)
 		{
 			$this->data = [];
 		}

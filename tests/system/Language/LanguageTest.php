@@ -2,13 +2,11 @@
 
 class LanguageTest extends \CIUnitTestCase
 {
-	public function testThrowsWithNoFileInMessage()
+	public function testReturnsStringWithNoFileInMessage()
 	{
 	    $lang = new MockLanguage('en');
 
-		$this->setExpectedException('\InvalidArgumentException');
-
-		$lang->getLine('something');
+		$this->assertEquals('something', $lang->getLine('something'));
 	}
 
 	//--------------------------------------------------------------------
@@ -23,6 +21,25 @@ class LanguageTest extends \CIUnitTestCase
 		]);
 
 		$this->assertEquals('We saved some more', $lang->getLine('books.booksSaved'));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testGetLineArrayReturnsLineArray()
+	{
+		$lang = new MockLanguage('en');
+
+		$lang->setData([
+			'booksList' => [
+				'The Boogeyman',
+				'We Saved'
+			]
+		]);
+
+		$this->assertEquals([
+			'The Boogeyman',
+			'We Saved'
+		], $lang->getLine('books.booksList'));
 	}
 
 	//--------------------------------------------------------------------
@@ -42,6 +59,27 @@ class LanguageTest extends \CIUnitTestCase
 		]);
 
 		$this->assertEquals('45 books have been saved.', $lang->getLine('books.bookCount', [91/2]));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testGetLineArrayFormatsMessages()
+	{
+		// No intl extension? Then we can't test this - go away...
+		if (! class_exists('\MessageFormatter'))
+		{
+			return;
+		}
+
+		$lang = new MockLanguage('en');
+
+		$lang->setData([
+			'bookList' => [
+				'{0, number, integer} related books.'
+			]
+		]);
+
+		$this->assertEquals(['45 related books.'], $lang->getLine('books.bookList', [91/2]));
 	}
 
 	//--------------------------------------------------------------------

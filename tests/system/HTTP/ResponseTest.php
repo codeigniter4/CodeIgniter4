@@ -21,7 +21,7 @@ class ResponseTest extends \CIUnitTestCase
 	{
 		$response = new Response(new App());
 
-		$this->setExpectedException('InvalidArgumentException');
+		$this->expectException('InvalidArgumentException');
 		$response->setStatusCode(54322);
 	}
 
@@ -54,7 +54,8 @@ class ResponseTest extends \CIUnitTestCase
 	{
 		$response = new Response(new App());
 
-		$this->setExpectedException('InvalidArgumentException', 'Unknown HTTP status code provided with no message');
+		$this->expectException('InvalidArgumentException');
+		$this->expectExceptionMessage('Unknown HTTP status code provided with no message');
 		$response->setStatusCode(115);
 	}
 
@@ -64,7 +65,8 @@ class ResponseTest extends \CIUnitTestCase
 	{
 		$response = new Response(new App());
 
-		$this->setExpectedException('InvalidArgumentException', '95 is not a valid HTTP return status code');
+		$this->expectException('InvalidArgumentException');
+		$this->expectExceptionMessage('95 is not a valid HTTP return status code');
 		$response->setStatusCode(95);
 	}
 
@@ -74,7 +76,8 @@ class ResponseTest extends \CIUnitTestCase
 	{
 		$response = new Response(new App());
 
-		$this->setExpectedException('InvalidArgumentException', '695 is not a valid HTTP return status code');
+		$this->expectException('InvalidArgumentException');
+		$this->expectExceptionMessage('695 is not a valid HTTP return status code');
 		$response->setStatusCode(695);
 	}
 
@@ -84,7 +87,8 @@ class ResponseTest extends \CIUnitTestCase
 	{
 		$response = new Response(new App());
 
-		$this->setExpectedException('BadMethodCallException', 'HTTP Response is missing a status code');
+		$this->expectException('BadMethodCallException');
+		$this->expectExceptionMessage('HTTP Response is missing a status code');
 		$response->getStatusCode();
 	}
 

@@ -36,7 +36,7 @@
  * @filesource
  */
 
-use CodeIgniter\Hooks\Hooks;
+use CodeIgniter\Events\Events;
 
 abstract class BasePreparedQuery implements PreparedQueryInterface
 {
@@ -154,7 +154,7 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
 		$query->setDuration($startTime);
 
 		// Let others do something with this query
-        Hooks::trigger('DBQuery', $query);
+		Events::trigger('DBQuery', $query);
 
 		// Return a result object
 		$resultClass = str_replace('PreparedQuery', 'Result', get_class($this));
@@ -196,7 +196,7 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
 			return;
 		}
 
-	    $this->statement->close();
+		$this->statement->close();
 	}
 
 	//--------------------------------------------------------------------
@@ -208,10 +208,10 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
 	 */
 	public function getQueryString(): string
 	{
-	    if (! $this->query instanceof QueryInterface)
-        {
-            throw new \BadMethodCallException('Cannot call getQueryString on a prepared query until after the query has been prepared.');
-        }
+		if (! $this->query instanceof QueryInterface)
+		{
+			throw new \BadMethodCallException('Cannot call getQueryString on a prepared query until after the query has been prepared.');
+		}
 
 		return $this->query->getQuery();
 	}
@@ -225,7 +225,7 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
 	 */
 	public function hasError()
 	{
-	    return ! empty($this->errorString);
+		return ! empty($this->errorString);
 	}
 
 	//--------------------------------------------------------------------

@@ -2,6 +2,9 @@
 
 use CodeIgniter\Database\BasePreparedQuery;
 
+/**
+ * @group DatabaseLive
+ */
 class PreparedQueryTest extends \CIDatabaseTestCase
 {
 	protected $refresh = true;
