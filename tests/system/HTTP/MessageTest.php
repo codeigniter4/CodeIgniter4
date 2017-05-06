@@ -172,4 +172,15 @@ class MessageTest extends \CIUnitTestCase
             
             $this->assertEquals('json, html, xml', $this->message->getHeaderLine('Accept'));
         }
+        
+        public function testPopulateHeaders()
+	{
+                $_SERVER = ['CONTENT_TYPE'=>'text/html; charset=utf-8','HTTP_ACCEPT_LANGUAGE'=>'en-us,en;q=0.50'];
+                
+		$this->message->populateHeaders();
+
+                $this->assertEquals('text/html; charset=utf-8', $this->message->getHeader('content-type')->getValue());
+                
+                $this->assertEquals('en-us,en;q=0.50', $this->message->getHeader('accept-language')->getValue());
+	}
 }
