@@ -369,23 +369,6 @@ class Services
 		return \CodeIgniter\Queue\Queue::connect();
 	}
 
-	//--------------------------------------------------------------------
-
-	/**
-	 * The Queue class.
-	 *
-	 * @return CodeIgniter\Queue\Handlers\QueueHandlerInterface
-	 */
-	public static function queue($getShared = true)
-	{
-		if ($getShared)
-		{
-			return self::getSharedInstance('queue');
-		}
-
-		return \CodeIgniter\Queue\Queue::connect();
-	}
-
     //--------------------------------------------------------------------
 
 	/**
