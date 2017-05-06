@@ -164,4 +164,14 @@ class MessageTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+        public function testAppendBody()
+	{
+
+		$this->message->setBody('moo');
+                
+                $this->message->appendBody("\n");
+
+		$this->assertEquals('moo' . "\n", $this->message->getBody());
+	}
+        
 }
