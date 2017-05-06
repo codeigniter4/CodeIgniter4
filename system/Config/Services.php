@@ -369,7 +369,7 @@ class Services
 		return \CodeIgniter\Queue\Queue::connect();
 	}
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
 	/**
 	 * The Renderer class is the class that actually displays a file to the user.
