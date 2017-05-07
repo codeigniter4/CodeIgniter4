@@ -18,6 +18,7 @@ class FileLocatorTest extends TestCase
 		$config->psr4 = [
 			'App\Libraries'   => '/application/somewhere',
 			'App'             => '/application',
+                        'Sys'=>BASEPATH,
 			'Blog'            => '/modules/blog'
 		];
 
@@ -119,4 +120,97 @@ class FileLocatorTest extends TestCase
 	}
 
 	//--------------------------------------------------------------------
+        
+        public function testSearchSimple()
+	{
+                $expected = APPPATH.'/Views/form.php';
+				
+		$foundFiles = $this->loader->search('Views/form.php');
+                
+		$this->assertEquals($expected,$foundFiles[0]);
+	}
+	
+        //--------------------------------------------------------------------
+        
+        public function testSearchWithFileExtension()
+	{
+                $expected = APPPATH.'/Views/form.php';
+				
+		$foundFiles = $this->loader->search('Views/form','php');
+                
+		$this->assertEquals($expected,$foundFiles[0]);
+	}
+	
+        //--------------------------------------------------------------------
+	
+        public function testSearchWithMultipleFilesFound()
+	{	
+		$foundFiles = $this->loader->search('index','html');
+                
+                $expected = APPPATH.'/index.html';
+		$this->assertTrue(in_array($expected,$foundFiles));
+                
+                $expected = BASEPATH.'/index.html';
+		$this->assertTrue(in_array($expected,$foundFiles));
+	}
+
+        //--------------------------------------------------------------------
+        
+        public function testSearchForFileNotExist()
+	{
+		$foundFiles = $this->loader->search('Views/form.html');
+                
+		$this->assertFalse(isset($foundFiles[0]));
+        }
+
+        //--------------------------------------------------------------------
+        
+	public function testListFilesSimple()
+        {
+                $files = $this->loader->listFiles('Config/');
+                
+                $expected = APPPATH.'Config\App.php';
+                $this->assertTrue(in_array($expected,$files));
+        }
+        
+        //--------------------------------------------------------------------
+		
+	public function testListFilesWithFileAsInput()
+        {
+                $files = $this->loader->listFiles('Config/App.php');
+
+                $this->assertTrue(empty($files));
+        }
+	
+        //--------------------------------------------------------------------
+	
+	public function testListFilesFromMultipleDir()
+        {
+                $files = $this->loader->listFiles('Filters/');
+                
+                $expected = APPPATH.'Filters\DebugToolbar.php';
+                $this->assertTrue(in_array($expected,$files));
+				
+                $expected = BASEPATH.'Filters\Filters.php';
+                $this->assertTrue(in_array($expected,$files));
+        }
+        
+        //--------------------------------------------------------------------
+		
+	public function testListFilesWithPathNotExist()
+        {
+                $files = $this->loader->listFiles('Fake/');
+
+                $this->assertTrue(empty($files));
+        }
+        
+        //--------------------------------------------------------------------
+		
+	public function testListFilesWithoutPath()
+        {
+                $files = $this->loader->listFiles('');
+
+                $this->assertTrue(empty($files));
+        }
+
 }
