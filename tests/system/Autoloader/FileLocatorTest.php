@@ -123,7 +123,7 @@ class FileLocatorTest extends TestCase
         
         public function testSearchSimple()
 	{
-                $expected = APPPATH.'/Views/form.php';
+                $expected = rtrim(APPPATH,'/').'/Views/form.php';
 				
 		$foundFiles = $this->loader->search('Views/form.php');
                 
@@ -134,7 +134,7 @@ class FileLocatorTest extends TestCase
         
         public function testSearchWithFileExtension()
 	{
-                $expected = APPPATH.'/Views/form.php';
+                $expected = rtrim(APPPATH,'/').'/Views/form.php';
 				
 		$foundFiles = $this->loader->search('Views/form','php');
                 
@@ -147,10 +147,10 @@ class FileLocatorTest extends TestCase
 	{	
 		$foundFiles = $this->loader->search('index','html');
                 
-                $expected = APPPATH.'/index.html';
+                $expected = rtrim(APPPATH,'/').'/index.html';
 		$this->assertTrue(in_array($expected,$foundFiles));
                 
-                $expected = BASEPATH.'/index.html';
+                $expected = rtrim(BASEPATH,'/').'/index.html';
 		$this->assertTrue(in_array($expected,$foundFiles));
 	}
 
@@ -169,8 +169,9 @@ class FileLocatorTest extends TestCase
         {
                 $files = $this->loader->listFiles('Config/');
                 
-                $expected = APPPATH.'Config\App.php';
-                $this->assertTrue(in_array($expected,$files));
+                $expectedWin = APPPATH.'Config\App.php';
+                $expectedLin = APPPATH.'Config/App.php';
+                $this->assertTrue(in_array($expectedWin,$files)||in_array($expectedLin,$files));
         }
         
         //--------------------------------------------------------------------
@@ -188,11 +189,13 @@ class FileLocatorTest extends TestCase
         {
                 $files = $this->loader->listFiles('Filters/');
                 
-                $expected = APPPATH.'Filters\DebugToolbar.php';
-                $this->assertTrue(in_array($expected,$files));
+                $expectedWin = APPPATH.'Filters\DebugToolbar.php';
+                $expectedLin = APPPATH.'Filters/DebugToolbar.php';
+                $this->assertTrue(in_array($expectedWin,$files)||in_array($expectedLin,$files));
 				
-                $expected = BASEPATH.'Filters\Filters.php';
-                $this->assertTrue(in_array($expected,$files));
+                $expectedWin = BASEPATH.'Filters\Filters.php';
+                $expectedLin = BASEPATH.'Filters/Filters.php';
+                $this->assertTrue(in_array($expectedWin,$files)||in_array($expectedLin,$files));
         }
         
         //--------------------------------------------------------------------
