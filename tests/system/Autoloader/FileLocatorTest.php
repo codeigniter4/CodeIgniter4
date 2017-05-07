@@ -18,7 +18,7 @@ class FileLocatorTest extends TestCase
 		$config->psr4 = [
 			'App\Libraries'   => '/application/somewhere',
 			'App'             => '/application',
-                        'Sys'=>BASEPATH,
+                        'Sys'             => BASEPATH,
 			'Blog'            => '/modules/blog'
 		];
 
