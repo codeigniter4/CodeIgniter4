@@ -65,7 +65,7 @@ following code to your model.
 	{
 		if ($slug === false)
 		{
-			$this->findAll();
+			return $this->findAll();
 		}
 
 		return $this->asArray()
