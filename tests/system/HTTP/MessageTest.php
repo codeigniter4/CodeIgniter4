@@ -169,9 +169,9 @@ class MessageTest extends \CIUnitTestCase
 
 		$this->message->setBody('moo');
                 
-                $this->message->appendBody("\n");
+                $this->message->appendBody('\n');
 
-		$this->assertEquals('moo' . "\n", $this->message->getBody());
+		$this->assertEquals('moo' . '\n', $this->message->getBody());
 	}
         
 }
