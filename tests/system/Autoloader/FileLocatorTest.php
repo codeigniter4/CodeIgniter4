@@ -123,9 +123,9 @@ class FileLocatorTest extends TestCase
         
         public function testSearchSimple()
 	{
-                $expected = rtrim(APPPATH,'/').'/Views/form.php';
+                $expected = rtrim(APPPATH,'/').'/Config/App.php';
 				
-		$foundFiles = $this->loader->search('Views/form.php');
+		$foundFiles = $this->loader->search('Config/App.php');
                 
 		$this->assertEquals($expected,$foundFiles[0]);
 	}
@@ -134,9 +134,9 @@ class FileLocatorTest extends TestCase
         
         public function testSearchWithFileExtension()
 	{
-                $expected = rtrim(APPPATH,'/').'/Views/form.php';
+                $expected = rtrim(APPPATH,'/').'/Config/App.php';
 				
-		$foundFiles = $this->loader->search('Views/form','php');
+		$foundFiles = $this->loader->search('Config/App','php');
                 
 		$this->assertEquals($expected,$foundFiles[0]);
 	}
@@ -158,7 +158,7 @@ class FileLocatorTest extends TestCase
         
         public function testSearchForFileNotExist()
 	{
-		$foundFiles = $this->loader->search('Views/form.html');
+		$foundFiles = $this->loader->search('Views/Fake.html');
                 
 		$this->assertFalse(isset($foundFiles[0]));
         }
