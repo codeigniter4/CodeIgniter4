@@ -121,99 +121,127 @@ class FileLocatorTest extends TestCase
 
 	//--------------------------------------------------------------------
         
-        public function testSearchSimple()
+	public function testSearchSimple()
 	{
-                $expected = rtrim(APPPATH,'/').'/Config/App.php';
+		$expected = rtrim(APPPATH,'/').'/Config/App.php';
 				
 		$foundFiles = $this->loader->search('Config/App.php');
-                
+
 		$this->assertEquals($expected,$foundFiles[0]);
 	}
 	
         //--------------------------------------------------------------------
         
-        public function testSearchWithFileExtension()
+	public function testSearchWithFileExtension()
 	{
-                $expected = rtrim(APPPATH,'/').'/Config/App.php';
-				
+		$expected = rtrim(APPPATH,'/').'/Config/App.php';
+
 		$foundFiles = $this->loader->search('Config/App','php');
-                
+
 		$this->assertEquals($expected,$foundFiles[0]);
 	}
 	
         //--------------------------------------------------------------------
 	
-        public function testSearchWithMultipleFilesFound()
+	public function testSearchWithMultipleFilesFound()
 	{	
 		$foundFiles = $this->loader->search('index','html');
-                
-                $expected = rtrim(APPPATH,'/').'/index.html';
+
+		$expected = rtrim(APPPATH,'/').'/index.html';
 		$this->assertTrue(in_array($expected,$foundFiles));
-                
-                $expected = rtrim(BASEPATH,'/').'/index.html';
+
+		$expected = rtrim(BASEPATH,'/').'/index.html';
 		$this->assertTrue(in_array($expected,$foundFiles));
 	}
 
-        //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
         
-        public function testSearchForFileNotExist()
+	public function testSearchForFileNotExist()
 	{
 		$foundFiles = $this->loader->search('Views/Fake.html');
-                
-		$this->assertFalse(isset($foundFiles[0]));
-        }
 
-        //--------------------------------------------------------------------
+		$this->assertFalse(isset($foundFiles[0]));
+	}
+
+	//--------------------------------------------------------------------
         
 	public function testListFilesSimple()
         {
-                $files = $this->loader->listFiles('Config/');
-                
-                $expectedWin = APPPATH.'Config\App.php';
-                $expectedLin = APPPATH.'Config/App.php';
-                $this->assertTrue(in_array($expectedWin,$files)||in_array($expectedLin,$files));
-        }
+		$files = $this->loader->listFiles('Config/');
+
+		$expectedWin = APPPATH.'Config\App.php';
+		$expectedLin = APPPATH.'Config/App.php';
+		$this->assertTrue(in_array($expectedWin,$files)||in_array($expectedLin,$files));
+	}
         
         //--------------------------------------------------------------------
 		
 	public function testListFilesWithFileAsInput()
-        {
-                $files = $this->loader->listFiles('Config/App.php');
+	{
+		$files = $this->loader->listFiles('Config/App.php');
 
-                $this->assertTrue(empty($files));
+		$this->assertTrue(empty($files));
         }
 	
         //--------------------------------------------------------------------
 	
 	public function testListFilesFromMultipleDir()
-        {
+	{
                 $files = $this->loader->listFiles('Filters/');
                 
-                $expectedWin = APPPATH.'Filters\DebugToolbar.php';
-                $expectedLin = APPPATH.'Filters/DebugToolbar.php';
-                $this->assertTrue(in_array($expectedWin,$files)||in_array($expectedLin,$files));
-				
-                $expectedWin = BASEPATH.'Filters\Filters.php';
-                $expectedLin = BASEPATH.'Filters/Filters.php';
-                $this->assertTrue(in_array($expectedWin,$files)||in_array($expectedLin,$files));
-        }
+		$expectedWin = APPPATH.'Filters\DebugToolbar.php';
+		$expectedLin = APPPATH.'Filters/DebugToolbar.php';
+		$this->assertTrue(in_array($expectedWin,$files)||in_array($expectedLin,$files));
+
+		$expectedWin = BASEPATH.'Filters\Filters.php';
+		$expectedLin = BASEPATH.'Filters/Filters.php';
+		$this->assertTrue(in_array($expectedWin,$files)||in_array($expectedLin,$files));
+	}
         
         //--------------------------------------------------------------------
 		
 	public function testListFilesWithPathNotExist()
-        {
-                $files = $this->loader->listFiles('Fake/');
+	{
+		$files = $this->loader->listFiles('Fake/');
 
                 $this->assertTrue(empty($files));
-        }
+	}
         
         //--------------------------------------------------------------------
 		
 	public function testListFilesWithoutPath()
-        {
-                $files = $this->loader->listFiles('');
+	{
+		$files = $this->loader->listFiles('');
 
-                $this->assertTrue(empty($files));
-        }
+		$this->assertTrue(empty($files));
+	}
 
+	public function testFindQNameFromPathSimple()
+	{
+		$ClassName = $this->loader->findQualifiedNameFromPath('system/HTTP/Header.php');
+		$expected = '\Sys\HTTP\Header';
+
+		$this->assertEquals($expected,$ClassName);
+	}
+
+	public function testFindQNameFromPathWithNumericNamespace()
+	{
+		$ClassName = $this->loader->findQualifiedNameFromPath('application/Config/App.php');
+		
+		$this->assertEquals(null,$ClassName);
+	}
+
+	public function testFindQNameFromPathWithFileNotExist()
+	{
+		$ClassName = $this->loader->findQualifiedNameFromPath('modules/blog/Views/index.php');
+		
+		$this->assertEquals(null,$ClassName);
+	}
+
+	public function testFindQNameFromPathWithoutCorrespondingNamespace()
+	{
+		$ClassName = $this->loader->findQualifiedNameFromPath('tests/system/CodeIgniterTest.php');
+		
+		$this->assertEquals(null,$ClassName);
+	}
 }
