@@ -162,9 +162,14 @@ class Checks extends Controller
 
 		$images = Services::image('gd')
 			->withFile("/Users/kilishan/Documents/BobHeader.jpg")
-			->fit(500, 100, 'bottom-left')
+//			->fit(500, 100, 'bottom-left')
 			->text('Bob is Back!', [
-				'fontSize' => 30,
+				'fontPath'  => '/Users/kilishan/Downloads/Calibri.ttf',
+				'fontSize' => 40,
+				'padding' => 0,
+//				'opacity'   => 0.2,
+				'vAlign'    => 'top',
+				'hAlign'    => 'right'
 			])
 			->save('/Users/kilishan/temp.jpg', 100);
 

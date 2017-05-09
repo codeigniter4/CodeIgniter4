@@ -373,27 +373,33 @@ class GDHandler extends BaseHandler
 	 */
 	protected function textOverlay(string $text, array $options = [], bool $isShadow=false)
 	{
+		$src = $this->createImage();
+
 		/* Set RGB values for shadow
 		 *
 		 * Get the rest of the string and split it into 2-length
 		 * hex values:
 		 */
+		$opacity = (int)($options['opacity'] / 127);
 		$color = $isShadow ? $options['color'] : $options['color'];
 		$color = str_split(substr($color, 0, 6), 2);
-		$color = imagecolorclosest($this->resource, hexdec($color[0]), hexdec($color[1]), hexdec($color[2]));
+		$color = imagecolorclosestalpha($src, hexdec($color[0]), hexdec($color[1]), hexdec($color[2]), $opacity);
 
-		$xAxis = $isShadow ? $options['xShadow'] : $options['hOffset'];
-		$yAxis = $isShadow ? $options['yShadow'] : $options['vOffset'];
+		$xAxis = $isShadow ? $options['xShadow'] : $options['xAxis'];
+		$yAxis = $isShadow ? $options['yShadow'] : $options['yAxis'];
 
 		// Add the shadow to the source image
 		if (! empty($options['fontPath']))
 		{
-			imagettftext($this->resource, $options['fontSize'], 0, $xAxis, $yAxis, $color, $options['fontPath'], $text);
+			// We have to add fontheight because imagettftext locates the bottom left corner, not top-left corner.
+			imagettftext($src, $options['fontSize'], 0, $xAxis, $yAxis + $options['fontheight'], $color, $options['fontPath'], $text);
 		}
 		else
 		{
-			imagestring($this->resource, $options['fontSize'], $xAxis, $yAxis, $text, $color);
+			imagestring($src, $options['fontSize'], $xAxis, $yAxis, $text, $color);
 		}
+
+		$this->resource = $src;
 	}
 
 	//--------------------------------------------------------------------

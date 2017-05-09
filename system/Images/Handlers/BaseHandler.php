@@ -308,7 +308,6 @@ abstract class BaseHandler implements ImageHandlerInterface
 			}
 
 			$fontheight = $options['fontSize'];
-			$options['vOffset'] += $options['fontSize'];
 		}
 		else
 		{
@@ -326,22 +325,26 @@ abstract class BaseHandler implements ImageHandlerInterface
 		// Set vertical alignment
 		if ($options['vAlign'] === 'middle')
 		{
-			$yAxis += ($this->image->origHeight / 2) + ($fontheight / 2);
+			// Don't apply padding when you're in the middle of the image.
+			$yAxis += ($this->image->origHeight / 2) + ($fontheight / 2) - $options['padding'];
 		}
 		elseif ($options['vAlign'] === 'bottom')
 		{
-			$yAxis += $this->image->origHeight - $fontheight - $options['shadowOffset'] - ($fontheight / 2);
+			$yAxis = ($this->image->origHeight - $fontheight - $options['shadowOffset'] - ($fontheight / 2)) - $yAxis;
 		}
 
 		// Set horizontal alignment
 		if ($options['hAlign'] === 'right')
 		{
-			$xAxis += $this->image->origWidth - ($fontwidth * strlen($text)) - $options['shadowOffset'];
+			$xAxis += ($this->image->origWidth - ($fontwidth * strlen($text)) - $options['shadowOffset']) - (2 * $options['padding']);
 		}
 		elseif ($options['hAlign'] === 'center')
 		{
 			$xAxis += floor(($this->image->origWidth - ($fontwidth * strlen($text))) / 2);
 		}
+
+		$options['xAxis'] = $xAxis;
+		$options['yAxis'] = $yAxis;
 
 		if ($options['withShadow'])
 		{
