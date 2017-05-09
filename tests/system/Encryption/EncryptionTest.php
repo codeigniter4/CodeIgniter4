@@ -1,10 +1,13 @@
-<?php
+<?php namespace CodeIgniter\Encryption;
 
-class Encryption_test extends CI_TestCase {
+use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Encryption\MockEncryption;
 
-	public function set_up()
+class EncryptionTest extends CIUnitTestCase {
+
+	public function setUp()
 	{
-		$this->encryption = new Mock_Libraries_Encryption();
+		$this->encryption = new MockEncryption();
 	}
 
 	// --------------------------------------------------------------------
@@ -12,7 +15,7 @@ class Encryption_test extends CI_TestCase {
 	/**
 	 * __construct test
 	 *
-	 * Covers behavior with $config['encryption_key'] set or not
+	 * Covers behavior with config encryptionKey set or not
 	 */
 	public function test___construct()
 	{
@@ -21,11 +24,11 @@ class Encryption_test extends CI_TestCase {
 
 		// Try with an empty value
 		$this->ci_set_config('encryption_key');
-		$this->encrypt = new Mock_Libraries_Encryption();
+		$this->encrypt = new MockEncryption();
 		$this->assertNull($this->encrypt->get_key());
 
 		$this->ci_set_config('encryption_key', str_repeat("\x0", 16));
-		$this->encrypt = new Mock_Libraries_Encryption();
+		$this->encrypt = new MockEncryption();
 		$this->assertEquals(str_repeat("\x0", 16), $this->encrypt->get_key());
 	}
 

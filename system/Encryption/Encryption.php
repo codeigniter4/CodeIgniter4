@@ -144,8 +144,12 @@ class Encryption {
 	 * @param	array	$params	Configuration parameters
 	 * @return	void
 	 */
-	public function __construct(array $params = array())
+	public function __construct($config = null)
 	{
+		if (empty($config))
+			$config = new \Config\Encryption();
+		$this->config = $config;
+		
 		$this->_drivers = array(
 			'mcrypt' => defined('MCRYPT_DEV_URANDOM'),
 			'openssl' => extension_loaded('openssl')
@@ -159,7 +163,7 @@ class Encryption {
 		isset(self::$func_overload) OR self::$func_overload = (extension_loaded('mbstring') && ini_get('mbstring.func_overload'));
 		$this->initialize($params);
 
-		if (!isset($this->_key) && self::strlen($key = config_item('encryption_key')) > 0)
+		if (!isset($this->_key) && self::strlen($key = $this->config->encryptionKey) > 0)
 		{
 			$this->_key = $key;
 		}
