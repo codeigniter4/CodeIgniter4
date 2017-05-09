@@ -43,7 +43,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 		'hOffset'      => 0,
 		'padding'      => 0,
 		'withShadow'   => false,
-		'shadowColor'  => '993300',
+		'shadowColor'  => '000000',
 		'shadowOffset' => 3,
 	];
 

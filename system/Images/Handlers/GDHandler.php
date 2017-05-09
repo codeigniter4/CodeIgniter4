@@ -380,8 +380,12 @@ class GDHandler extends BaseHandler
 		 * Get the rest of the string and split it into 2-length
 		 * hex values:
 		 */
-		$opacity = (int)($options['opacity'] / 127);
-		$color = $isShadow ? $options['color'] : $options['color'];
+		$opacity = ($options['opacity'] * 127);
+
+		// Allow opacity to be applied to the text
+		imagealphablending($src, true);
+
+		$color = $isShadow ? $options['shadowColor'] : $options['color'];
 		$color = str_split(substr($color, 0, 6), 2);
 		$color = imagecolorclosestalpha($src, hexdec($color[0]), hexdec($color[1]), hexdec($color[2]), $opacity);
 
