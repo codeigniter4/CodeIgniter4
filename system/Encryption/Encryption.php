@@ -42,8 +42,8 @@ namespace CodeIgniter\Encryption;
  * Encryption exception
  *
  */
-class EncryptionException extends \Exception
-{
+class EncryptionException extends \Exception {
+	
 }
 
 /**
@@ -152,16 +152,16 @@ class Encryption {
 	 * @param	array	$params	Configuration parameters
 	 * @return	void
 	 * 
-     * @throws \CodeIgniter\Encryption\EncryptionException
+	 * @throws \CodeIgniter\Encryption\EncryptionException
 	 */
 	public function __construct($config = null)
 	{
 		if (empty($config))
 			$config = new \Config\Encryption();
 		$this->config = $config;
-		
+
 		$params = (array) $this->config;
-		
+
 		$this->_drivers = array(
 			'mcrypt' => defined('MCRYPT_DEV_URANDOM'),
 			'openssl' => extension_loaded('openssl')
@@ -191,7 +191,7 @@ class Encryption {
 	 * @param	array	$params	Configuration parameters
 	 * @return	CI_Encryption
 	 * 
-     * @throws \CodeIgniter\Encryption\EncryptionException
+	 * @throws \CodeIgniter\Encryption\EncryptionException
 	 */
 	public function initialize(array $params)
 	{
@@ -233,7 +233,7 @@ class Encryption {
 	 * @param	array	$params	Configuration parameters
 	 * @return	void
 	 * 
-     * @throws \CodeIgniter\Encryption\EncryptionException
+	 * @throws \CodeIgniter\Encryption\EncryptionException
 	 */
 	protected function _mcrypt_initialize($params)
 	{

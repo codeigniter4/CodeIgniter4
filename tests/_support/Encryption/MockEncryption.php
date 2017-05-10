@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Encryption;
+<?php
+
+namespace CodeIgniter\Encryption;
 
 class MockEncryption extends Encryption {
 
@@ -33,7 +35,7 @@ class MockEncryption extends Encryption {
 	 */
 	public function __driver_get_handle($driver, $cipher, $mode)
 	{
-		return $this->{'_'.$driver.'_get_handle'}($cipher, $mode);
+		return $this->{'_' . $driver . '_get_handle'}($cipher, $mode);
 	}
 
 }
