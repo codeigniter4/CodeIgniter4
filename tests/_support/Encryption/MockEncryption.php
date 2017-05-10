@@ -2,16 +2,17 @@
 
 namespace CodeIgniter\Encryption;
 
-class MockEncryption extends Encryption {
+class MockEncryption extends Encryption
+{
 
 	/**
 	 * __get_params()
 	 *
 	 * Allows public calls to the otherwise protected _get_params().
 	 */
-	public function __get_params($params)
+	public function __getParams($params)
 	{
-		return $this->_get_params($params);
+		return $this->getParams($params);
 	}
 
 	// --------------------------------------------------------------------
@@ -21,7 +22,7 @@ class MockEncryption extends Encryption {
 	 *
 	 * Allows checking for key changes.
 	 */
-	public function get_key()
+	public function getKey()
 	{
 		return $this->_key;
 	}
@@ -31,11 +32,11 @@ class MockEncryption extends Encryption {
 	/**
 	 * __driver_get_handle()
 	 *
-	 * Allows checking for _mcrypt_get_handle(), _openssl_get_handle()
+	 * Allows checking for _openssl_get_handle()
 	 */
-	public function __driver_get_handle($driver, $cipher, $mode)
+	public function handlerGetHandle($driver, $cipher, $mode)
 	{
-		return $this->{'_' . $driver . '_get_handle'}($cipher, $mode);
+		return $this->{$driver . 'GetHandle'}($cipher, $mode);
 	}
 
 }

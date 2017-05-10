@@ -58,7 +58,8 @@ use CodeIgniter\View\RendererInterface;
  * @see http://blog.ircmaxell.com/2015/11/simple-easy-risk-and-change.html
  * @see http://www.infoq.com/presentations/Simple-Made-Easy
  */
-class Services {
+class Services
+{
 
 	/**
 	 * Cache for instance of any services that
@@ -97,7 +98,7 @@ class Services {
 			return self::getSharedInstance('cache', $config);
 		}
 
-		if (!is_object($config))
+		if ( ! is_object($config))
 		{
 			$config = new \Config\Cache();
 		}
@@ -118,7 +119,7 @@ class Services {
 			return self::getSharedInstance('clirequest', $config);
 		}
 
-		if (!is_object($config))
+		if ( ! is_object($config))
 		{
 			$config = new \Config\App();
 		}
@@ -141,12 +142,12 @@ class Services {
 			return self::getSharedInstance('curlrequest', $options, $response, $config);
 		}
 
-		if (!is_object($config))
+		if ( ! is_object($config))
 		{
 			$config = new \Config\App();
 		}
 
-		if (!is_object($response))
+		if ( ! is_object($response))
 		{
 			$response = new \CodeIgniter\HTTP\Response($config);
 		}
@@ -168,7 +169,7 @@ class Services {
 			return self::getSharedInstance('encrypter', $config);
 		}
 
-		if (!is_object($config))
+		if ( ! is_object($config))
 		{
 			$config = new \Config\Encryption();
 		}
@@ -252,7 +253,7 @@ class Services {
 			return self::getSharedInstance('language', $locale);
 		}
 
-		$locale = !empty($locale) ? $locale : self::request()->getLocale();
+		$locale = ! empty($locale) ? $locale : self::request()->getLocale();
 
 		return new \CodeIgniter\Language\Language($locale);
 	}
@@ -340,7 +341,7 @@ class Services {
 			$config = new \Config\Pager();
 		}
 
-		if (!$view instanceof RendererInterface)
+		if ( ! $view instanceof RendererInterface)
 		{
 			$view = self::renderer();
 		}
@@ -402,7 +403,7 @@ class Services {
 			return self::getSharedInstance('request', $config);
 		}
 
-		if (!is_object($config))
+		if ( ! is_object($config))
 		{
 			$config = new \Config\App();
 		}
@@ -424,7 +425,7 @@ class Services {
 			return self::getSharedInstance('response', $config);
 		}
 
-		if (!is_object($config))
+		if ( ! is_object($config))
 		{
 			$config = new \Config\App();
 		}
@@ -482,7 +483,7 @@ class Services {
 			return self::getSharedInstance('security', $config);
 		}
 
-		if (!is_object($config))
+		if ( ! is_object($config))
 		{
 			$config = new \Config\App();
 		}
@@ -505,7 +506,7 @@ class Services {
 			return self::getSharedInstance('session', $config);
 		}
 
-		if (!is_object($config))
+		if ( ! is_object($config))
 		{
 			$config = new \Config\App();
 		}
@@ -563,7 +564,7 @@ class Services {
 			return self::getSharedInstance('toolbar', $config);
 		}
 
-		if (!is_object($config))
+		if ( ! is_object($config))
 		{
 			$config = new \Config\App();
 		}
@@ -651,7 +652,7 @@ class Services {
 	 */
 	protected static function getSharedInstance(string $key, ...$params)
 	{
-		if (!isset(static::$instances[$key]))
+		if ( ! isset(static::$instances[$key]))
 		{
 			// Make sure $getShared is false
 			array_push($params, false);
