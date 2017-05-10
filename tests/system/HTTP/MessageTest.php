@@ -175,13 +175,37 @@ class MessageTest extends \CIUnitTestCase {
 	public function testPopulateHeaders()
 	{
 		$original = $_SERVER;
+                // success path
 		$_SERVER = ['CONTENT_TYPE' => 'text/html; charset=utf-8', 'HTTP_ACCEPT_LANGUAGE' => 'en-us,en;q=0.50'];
 
 		$this->message->populateHeaders();
-		$_SERVER = $original; // restore so code coverage doesn't break
+                $this->assertEquals('text/html; charset=utf-8', $this->message->getHeader('content-type')->getValue());
+                $this->assertEquals('en-us,en;q=0.50', $this->message->getHeader('accept-language')->getValue());
+                $this->message->removeHeader('content-type');
+                $this->message->removeHeader('accept-language');
+                
+                // fail path, if the CONTENT_TYPE doesn't exist 
+                $_SERVER = ['HTTP_ACCEPT_LANGUAGE' => 'en-us,en;q=0.50'];
+                $original_env = getenv("CONTENT_TYPE");
+                putenv("CONTENT_TYPE");
+                $this->message->populateHeaders();
+                $this->assertNull($this->message->getHeader('content-type'));
+                putenv("CONTENT_TYPE=$original_env");
+                $this->message->removeHeader('accept-language');
 
-		$this->assertEquals('text/html; charset=utf-8', $this->message->getHeader('content-type')->getValue());
-		$this->assertEquals('en-us,en;q=0.50', $this->message->getHeader('accept-language')->getValue());
+                // fail path, if arguement does't have the HTTP_*
+                $_SERVER = ['USER_AGENT' => 'Mozilla/5.0 (iPad; U; CPU OS 3_2_1 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko) Mobile/7B405', 'REQUEST_METHOD' => 'POST'];
+                $this->message->populateHeaders();
+                $this->assertNull($this->message->getHeader('user-agent'));
+                $this->assertNull($this->message->getHeader('request-method'));
+
+                // success path, if array key is not exists, assign empty string to it's value
+                $_SERVER = ['CONTENT_TYPE' => 'text/html; charset=utf-8', 'HTTP_ACCEPT_CHARSET' => NULL];
+                $this->message->populateHeaders();
+                $this->assertEquals('', $this->message->getHeader('accept-charset')->getValue());
+                $this->message->removeHeader('accept-charset');
+
+                $_SERVER = $original; // restore so code coverage doesn't break
 	}
 
 }
