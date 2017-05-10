@@ -220,7 +220,7 @@ class FileLocator {
 		foreach ($this->namespaces as $namespace => $nsPath)
 		{
 			$nsPath = realpath($nsPath);
-			if (is_numeric($namespace)) continue;
+			if (is_numeric($namespace)||empty($nsPath)) continue;
 			
 			if (mb_strpos($path,$nsPath) === 0)
 			{
