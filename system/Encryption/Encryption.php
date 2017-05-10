@@ -39,6 +39,14 @@ namespace CodeIgniter\Encryption;
  */
 
 /**
+ * Encryption exception
+ *
+ */
+class EncryptionException extends \Exception
+{
+}
+
+/**
  * CodeIgniter Encryption Class
  *
  * Provides two-way keyed encryption via PHP's MCrypt and/or OpenSSL extensions.
@@ -143,12 +151,16 @@ class Encryption {
 	 *
 	 * @param	array	$params	Configuration parameters
 	 * @return	void
+	 * 
+     * @throws \CodeIgniter\Encryption\EncryptionException
 	 */
 	public function __construct($config = null)
 	{
 		if (empty($config))
 			$config = new \Config\Encryption();
 		$this->config = $config;
+		
+		$params = (array) $this->config;
 		
 		$this->_drivers = array(
 			'mcrypt' => defined('MCRYPT_DEV_URANDOM'),
@@ -157,13 +169,13 @@ class Encryption {
 
 		if (!$this->_drivers['mcrypt'] && !$this->_drivers['openssl'])
 		{
-			throw new \Exception('Encryption: Unable to find an available encryption driver.');
+			throw new EncryptionException('Unable to find an available encryption driver.');
 		}
 
 		isset(self::$func_overload) OR self::$func_overload = (extension_loaded('mbstring') && ini_get('mbstring.func_overload'));
 		$this->initialize($params);
 
-		if (!isset($this->_key) && self::strlen($key = $this->config->encryptionKey) > 0)
+		if (!isset($this->_key) && self::strlen($key = $this->config->key) > 0)
 		{
 			$this->_key = $key;
 		}
@@ -178,6 +190,8 @@ class Encryption {
 	 *
 	 * @param	array	$params	Configuration parameters
 	 * @return	CI_Encryption
+	 * 
+     * @throws \CodeIgniter\Encryption\EncryptionException
 	 */
 	public function initialize(array $params)
 	{
@@ -190,11 +204,11 @@ class Encryption {
 					$this->_driver = $params['driver'];
 				} else
 				{
-					throw new \Exception("Encryption: Driver '" . $params['driver'] . "' is not available.");
+					throw new EncryptionException("Driver '" . $params['driver'] . "' is not available.");
 				}
 			} else
 			{
-				throw new \Exception("Encryption: Unknown driver '" . $params['driver'] . "' cannot be configured.");
+				throw new EncryptionException("Unknown driver '" . $params['driver'] . "' cannot be configured.");
 			}
 		}
 
@@ -218,6 +232,8 @@ class Encryption {
 	 *
 	 * @param	array	$params	Configuration parameters
 	 * @return	void
+	 * 
+     * @throws \CodeIgniter\Encryption\EncryptionException
 	 */
 	protected function _mcrypt_initialize($params)
 	{
@@ -228,7 +244,7 @@ class Encryption {
 
 			if (!in_array($params['cipher'], mcrypt_list_algorithms(), TRUE))
 			{
-				throw new \Exception('Encryption: MCrypt cipher ' . strtoupper($params['cipher']) . ' is not available.');
+				throw new EncryptionException('MCrypt cipher ' . strtoupper($params['cipher']) . ' is not available.');
 			} else
 			{
 				$this->_cipher = $params['cipher'];
@@ -240,7 +256,7 @@ class Encryption {
 			$params['mode'] = strtolower($params['mode']);
 			if (!isset($this->_modes['mcrypt'][$params['mode']]))
 			{
-				throw new \Exception('Encryption: MCrypt mode ' . strtoupper($params['cipher']) . ' is not available.');
+				throw new EncryptionException('MCrypt mode ' . strtoupper($params['cipher']) . ' is not available.');
 			} else
 			{
 				$this->_mode = $this->_modes['mcrypt'][$params['mode']];
@@ -261,7 +277,7 @@ class Encryption {
 				log_message('info', 'Encryption: MCrypt cipher ' . strtoupper($this->_cipher) . ' initialized in ' . strtoupper($this->_mode) . ' mode.');
 			} else
 			{
-				throw new \Exception('Encryption: Unable to initialize MCrypt with cipher ' . strtoupper($this->_cipher) . ' in ' . strtoupper($this->_mode) . ' mode.');
+				throw new EncryptionException('Unable to initialize MCrypt with cipher ' . strtoupper($this->_cipher) . ' in ' . strtoupper($this->_mode) . ' mode.');
 			}
 		}
 	}
@@ -320,7 +336,7 @@ class Encryption {
 	 * @param	int	$length	Output length
 	 * @return	string
 	 */
-	public function create_key($length)
+	public function createKey($length)
 	{
 		if (function_exists('random_bytes'))
 		{
@@ -394,7 +410,7 @@ class Encryption {
 
 		// The greater-than-1 comparison is mostly a work-around for a bug,
 		// where 1 is returned for ARCFour instead of 0.
-		$iv = (($iv_size = mcrypt_enc_get_iv_size($params['handle'])) > 1) ? $this->create_key($iv_size) : NULL;
+		$iv = (($iv_size = mcrypt_enc_get_iv_size($params['handle'])) > 1) ? $this->createKey($iv_size) : NULL;
 
 		if (mcrypt_generic_init($params['handle'], $params['key'], $iv) < 0)
 		{
@@ -453,7 +469,7 @@ class Encryption {
 			return FALSE;
 		}
 
-		$iv = ($iv_size = openssl_cipher_iv_length($params['handle'])) ? $this->create_key($iv_size) : NULL;
+		$iv = ($iv_size = openssl_cipher_iv_length($params['handle'])) ? $this->createKey($iv_size) : NULL;
 
 		$data = openssl_encrypt(
 				$data, $params['handle'], $params['key'], OPENSSL_RAW_DATA, $iv

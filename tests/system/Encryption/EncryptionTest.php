@@ -23,12 +23,12 @@ class EncryptionTest extends CIUnitTestCase {
 		$this->assertNull($this->encryption->get_key());
 
 		// Try with an empty value
-		$this->ci_set_config('encryption_key');
-		$this->encrypt = new MockEncryption();
+		$config = new \Config\Encryption();
+		$this->encrypt = new MockEncryption($config);
 		$this->assertNull($this->encrypt->get_key());
 
-		$this->ci_set_config('encryption_key', str_repeat("\x0", 16));
-		$this->encrypt = new MockEncryption();
+		$config->key = str_repeat("\x0", 16);
+		$this->encrypt = new MockEncryption($config);
 		$this->assertEquals(str_repeat("\x0", 16), $this->encrypt->get_key());
 	}
 

@@ -162,6 +162,26 @@ class Services
 	//--------------------------------------------------------------------
 
 	/**
+	 * The Encryption class provides two-way encryption.
+	 */
+	public static function encrypter(\Config\Encryption $config = null)
+	{
+		if ($getShared === true)
+		{
+			return self::getSharedInstance('encrypter', $config);
+		}
+
+		if (! is_object($config))
+		{
+			$config = new \Config\Encryption();
+		}
+
+		return new \CodeIgniter\Encryption\Encryption($config);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * The Exceptions class holds the methods that handle:
 	 *
 	 *  - set_exception_handler

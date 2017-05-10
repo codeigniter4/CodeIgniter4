@@ -31,37 +31,28 @@ for proper cryptography.
 Using the Encryption Library
 ****************************
 
-Initializing the Class
-======================
+Like all services in CodeIgniter, it can be loaded via ``Config\Services``::
 
-Like most other classes in CodeIgniter, the Encryption library is
-initialized in your controller using the ``$this->load->library()``
-method::
-
-	$this->load->library('encryption');
-
-Once loaded, the Encryption library object will be available using::
-
-	$this->encryption
+    $encrypter = \Config\Services::encrypter();
 
 Default behavior
 ================
 
 By default, the Encryption Library will use the AES-128 cipher in CBC
-mode, using your configured *encryption_key* and SHA512 HMAC authentication.
+mode, using your configured *encryption key* and SHA512 HMAC authentication.
 
 .. note:: AES-128 is chosen both because it is proven to be strong and
 	because of its wide availability across different cryptographic
 	software and programming languages' APIs.
 
-However, the *encryption_key* is not used as is.
+However, the *encryption key* is not used as is.
 
 If you are somewhat familiar with cryptography, you should already know
 that a HMAC also requires a secret key and using the same key for both
 encryption and authentication is a bad practice.
 
 Because of that, two separate keys are derived from your already configured
-*encryption_key*: one for encryption and one for authentication. This is
+*encryption key*: one for encryption and one for authentication. This is
 done via a technique called `HMAC-based Key Derivation Function
 <http://en.wikipedia.org/wiki/HKDF>`_ (HKDF).
 
@@ -96,32 +87,32 @@ different ciphers.
 
 The key should be as random as possible and it **must not** be a regular
 text string, nor the output of a hashing function, etc. In order to create
-a proper key, you must use the Encryption library's ``create_key()`` method
+a proper key, you must use the Encryption library's ``createKey()`` method
 ::
 
 	// $key will be assigned a 16-byte (128-bit) random key
-	$key = $this->encryption->create_key(16);
+	$key = $encrypter->createKey(16);
 
-The key can be either stored in your *application/config/config.php*, or
+The key can be either stored in your *application/Config/Encryption.php*, or
 you can design your own storage mechanism and pass the key dynamically
 when encrypting/decrypting.
 
-To save your key to your *application/config/config.php*, open the file
+To save your key to your *application/Config/Encryption.php*, open the file
 and set::
 
-	$config['encryption_key'] = 'YOUR KEY';
+	$key = 'YOUR KEY';
 
-You'll notice that the ``create_key()`` method outputs binary data, which
+You'll notice that the ``createKey()`` method outputs binary data, which
 is hard to deal with (i.e. a copy-paste may damage it), so you may use
 ``bin2hex()``, ``hex2bin()`` or Base64-encoding to work with the key in
 a more friendly manner. For example::
 
 	// Get a hex-encoded representation of the key:
-	$key = bin2hex($this->encryption->create_key(16));
+	$encoded = bin2hex($encrypter->createKey(16));
 
 	// Put the same value in your config with hex2bin(),
 	// so that it is still passed as binary to the library:
-	$config['encryption_key'] = hex2bin(<your hex-encoded key>);
+	$key = hex2bin(<your hex-encoded key>);
 
 .. _ciphers-and-modes:
 
@@ -279,13 +270,13 @@ Cookies, for example, can only hold 4K of information.
 Configuring the library
 =======================
 
-For usability, performance, but also historical reasons tied to our old
-:doc:`Encrypt Class <encrypt>`, the Encryption library is designed to
+For usability, performance, but also historical reasons tied to earlier
+encryption in CodeIgniter, the Encryption library is designed to
 use repeatedly the same driver, encryption cipher, mode and key.
 
 As noted in the "Default behavior" section above, this means using an
 auto-detected driver (OpenSSL has a higher priority), the AES-128 ciper
-in CBC mode, and your ``$config['encryption_key']`` value.
+in CBC mode, and your ``$key`` value.
 
 If you wish to change that however, you need to use the ``initialize()``
 method. It accepts an associative array of parameters, all of which are
@@ -303,7 +294,7 @@ key      Encryption key
 For example, if you were to change the encryption algorithm and
 mode to AES-256 in CTR mode, this is what you should do::
 
-	$this->encryption->initialize(
+	$encrypter->initialize(
 		array(
 			'cipher' => 'aes-256',
 			'mode' => 'ctr',
@@ -311,7 +302,7 @@ mode to AES-256 in CTR mode, this is what you should do::
 		)
 	);
 
-Note that we only mentioned that you want to change the ciper and mode,
+Note that we only mentioned that you want to change the cipher and mode,
 but we also included a key in the example. As previously noted, it is
 important that you choose a key with a proper size for the used algorithm.
 
@@ -319,10 +310,10 @@ There's also the ability to change the driver, if for some reason you
 have both, but want to use MCrypt instead of OpenSSL::
 
 	// Switch to the MCrypt driver
-	$this->encryption->initialize(array('driver' => 'mcrypt'));
+	$encrypter->initialize(array('driver' => 'mcrypt'));
 
 	// Switch back to the OpenSSL driver
-	$this->encryption->initialize(array('driver' => 'openssl'));
+	$encrypter->initialize(array('driver' => 'openssl'));
 
 Encrypting and decrypting data
 ==============================
@@ -332,10 +323,10 @@ settings is simple. As simple as just passing the string to the
 ``encrypt()`` and/or ``decrypt()`` methods::
 
 	$plain_text = 'This is a plain-text message!';
-	$ciphertext = $this->encryption->encrypt($plain_text);
+	$ciphertext = $encrypter->encrypt($plain_text);
 
 	// Outputs: This is a plain-text message!
-	echo $this->encryption->decrypt($ciphertext);
+	echo $encrypter->decrypt($ciphertext);
 
 And that's it! The Encryption library will do everything necessary
 for the whole process to be cryptographically secure out-of-the-box.
@@ -352,7 +343,7 @@ How it works
 If you must know how the process works, here's what happens under
 the hood:
 
-- ``$this->encryption->encrypt($plain_text)``
+- ``$encrypter->encrypt($plain_text)``
 
   #. Derive an encryption key and a HMAC key from your configured
      *encryption_key* via HKDF, using the SHA-512 digest algorithm.
@@ -372,7 +363,7 @@ the hood:
      HMAC key to ensure data integrity and prepend it to the Base64
      string.
 
-- ``$this->encryption->decrypt($ciphertext)``
+- ``$encrypter->decrypt($ciphertext)``
 
   #. Derive an encryption key and a HMAC key from your configured
      *encryption_key* via HKDF, using the SHA-512 digest algorithm.
@@ -414,7 +405,7 @@ Here's an example::
 	// Assume that we have $ciphertext, $key and $hmac_key
 	// from on outside source
 
-	$message = $this->encryption->decrypt(
+	$message = $encrypter->decrypt(
 		$ciphertext,
 		array(
 			'cipher' => 'blowfish',
@@ -491,20 +482,20 @@ appear and become widely available.
 Class Reference
 ***************
 
-.. php:class:: CI_Encryption
+.. php:class:: CodeIgniter\\Encryption\\Encryption
 
 	.. php:method:: initialize($params)
 
 		:param	array	$params: Configuration parameters
-		:returns:	CI_Encryption instance (method chaining)
-		:rtype:	CI_Encryption
+		:returns:	CodeIgniter\\Encryption\\Encryption instance (method chaining)
+		:rtype:	CodeIgniter\\Encryption\\Encryption
 
 		Initializes (configures) the library to use a different
 		driver, cipher, mode or key.
 
 		Example::
 
-			$this->encryption->initialize(
+			$encrypter->initialize(
 				array('mode' => 'ctr')
 			);
 
@@ -521,7 +512,7 @@ Class Reference
 
 		Example::
 
-			$ciphertext = $this->encryption->encrypt('My secret message');
+			$ciphertext = $encrypter->encrypt('My secret message');
 
 		Please refer to the :ref:`custom-parameters` section for information
 		on the optional parameters.
@@ -537,12 +528,12 @@ Class Reference
 
 		Example::
 
-			echo $this->encryption->decrypt($ciphertext);
+			echo $encrypter->decrypt($ciphertext);
 
 		Please refer to the :ref:`custom-parameters` secrion for information
 		on the optional parameters.
 
-	.. php:method:: create_key($length)
+	.. php:method:: createKey($length)
 
 		:param	int	$length: Output length
 		:returns:	A pseudo-random cryptographic key with the specified length, or FALSE on failure
@@ -574,7 +565,7 @@ Class Reference
 
 		Example::
 
-			$hmac_key = $this->encryption->hkdf(
+			$hmac_key = $encrypter->hkdf(
 				$key,
 				'sha512',
 				NULL,
