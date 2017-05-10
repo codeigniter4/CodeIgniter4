@@ -72,6 +72,9 @@ consider pinging the server by using the reconnect() method before
 sending further queries, which can gracefully keep the connection alive
 or re-establish it.
 
+.. important:: If you are using MySQLi database driver, the reconnect() method
+	does not ping the server but it closes the connection then connects again.
+
 ::
 
 	$db->reconnect();
