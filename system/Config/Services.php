@@ -161,8 +161,10 @@ class Services
 
 	/**
 	 * The Encryption class provides two-way encryption.
+	 * 
+	 * @return \CodeIgniter\Encryption\EncrypterInterfrace Encryption handler
 	 */
-	public static function encrypter(\Config\Encryption $config = null)
+	public static function encrypter(\Config\Encryption $config = null, array $params = [], $getShared = true)
 	{
 		if ($getShared === true)
 		{
@@ -174,7 +176,13 @@ class Services
 			$config = new \Config\Encryption();
 		}
 
-		return new \CodeIgniter\Encryption\Encryption($config);
+		$encryption = new \CodeIgniter\Encryption\Encryption($config);
+
+		$logger = self::logger(true);
+		$encryption->setLogger($logger);
+
+		$encrypter = $encryption->initialize($params);
+		return $encrypter;
 	}
 
 	//--------------------------------------------------------------------

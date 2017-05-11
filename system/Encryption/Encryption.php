@@ -37,6 +37,7 @@ namespace CodeIgniter\Encryption;
  * @since	Version 3.0.0
  * @filesource
  */
+use Psr\Log\LoggerAwareTrait;
 
 /**
  * Encryption exception
@@ -54,6 +55,8 @@ class EncryptionException extends \Exception
  */
 class Encryption
 {
+
+	use LoggerAwareTrait;
 
 	/**
 	 * Encryption cipher
@@ -138,6 +141,12 @@ class Encryption
 		'sha384' => 48,
 		'sha512' => 64
 	];
+
+	/**
+	 * Logger instance to record error messages and warnings.
+	 * @var \PSR\Log\LoggerInterface
+	 */
+	protected $logger;
 
 	// --------------------------------------------------------------------
 
@@ -344,8 +353,7 @@ class Encryption
 			return random_bytes((int) $length);
 		} catch (Exception $e)
 		{
-			log_message('error', $e->getMessage());
-			return false;
+			throw new EncryptionException('Key creation error: ' . $e->getMessage());
 		}
 
 		$is_secure = null;
@@ -513,7 +521,7 @@ class Encryption
 
 			// Time-attack-safe comparison
 			$diff = 0;
-			for ($i = 0; $i < $digest_size; $i ++ )
+			for ($i = 0; $i < $digest_size; $i ++)
 			{
 				$diff |= ord($hmac_input[$i]) ^ ord($hmac_check[$i]);
 			}
@@ -839,7 +847,7 @@ class Encryption
 
 		$prk = hash_hmac($digest, $key, $salt, true);
 		$key = '';
-		for ($key_block = '', $block_index = 1; self::strlen($key) < $length; $block_index ++ )
+		for ($key_block = '', $block_index = 1; self::strlen($key) < $length; $block_index ++)
 		{
 			$key_block = hash_hmac($digest, $key_block . $info . chr($block_index), $prk, true);
 			$key .= $key_block;

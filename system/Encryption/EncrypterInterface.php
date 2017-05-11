@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Encryption\Handlers;
+<?php
+
+namespace CodeIgniter\Encryption;
 
 /**
  * CodeIgniter
@@ -36,28 +38,14 @@
  * @filesource
  */
 
-use CodeIgniter\Config\BaseConfig;
-use Psr\Log\LoggerAwareTrait;
-
 /**
- * Base class for session handling
+ * CodeIgniter Encryption Handler
+ *
+ * Provides two-way keyed encryption
  */
-abstract class BaseHandler implements \CodeIgniter\Encryption\EncrypterInterface
+interface EncrypterInterface
 {
-	use LoggerAwareTrait;
 
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Constructor
-	 * @param BaseConfig $config
-	 */
-	public function __construct($config)
-	{
-	}
-
-	
 	/**
 	 * Initialize
 	 *
@@ -107,4 +95,3 @@ abstract class BaseHandler implements \CodeIgniter\Encryption\EncrypterInterface
 	 */
 	public function hkdf($key, $digest = 'sha512', $salt = null, $length = null, $info = '');
 }
-
