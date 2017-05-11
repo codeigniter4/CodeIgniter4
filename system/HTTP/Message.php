@@ -98,7 +98,7 @@ class Message
 	 *
 	 * @return Message
 	 */
-	public function setBody(&$data)
+	public function setBody($data)
 	{
 		$this->body = $data;
 
