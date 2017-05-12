@@ -163,6 +163,17 @@ class MessageTest extends \CIUnitTestCase {
 
 	//--------------------------------------------------------------------
 
+        public function testAppendBody()
+	{
+                $this->message->setBody('moo');
+
+                $this->message->appendBody('\n');
+
+                $this->assertEquals('moo' . '\n', $this->message->getBody());
+	}
+        
+	//--------------------------------------------------------------------
+        
 	public function testHeaderLine()
 	{
 		$this->message->setHeader('Accept', ['json', 'html']);
@@ -171,6 +182,7 @@ class MessageTest extends \CIUnitTestCase {
 
 		$this->assertEquals('json, html, xml', $this->message->getHeaderLine('Accept'));
 	}
+
 
         public function testPopulateHeadersWithoutContentType() 
         {
