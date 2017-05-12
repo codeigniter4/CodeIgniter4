@@ -124,44 +124,6 @@ class GDHandler extends BaseHandler
 	//--------------------------------------------------------------------
 
 	/**
-	 * @return mixed
-	 */
-	public function watermark()
-	{
-
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Reads the EXIF information from the image and modifies the orientation
-	 * so that displays correctly in the browser.
-	 *
-	 * @return bool
-	 */
-	public function reorient(): bool
-	{
-
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Retrieve the EXIF information from the image, if possible. Returns
-	 * an array of the information, or null if nothing can be found.
-	 *
-	 * @param string|null $key If specified, will only return this piece of EXIF data.
-	 *
-	 * @return mixed
-	 */
-	public function getEXIF(string $key = null)
-	{
-
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
 	 * Get GD version
 	 *
 	 * @return    mixed

@@ -4,12 +4,10 @@ use CodeIgniter\Images\Image;
 use CodeIgniter\Images\ImageException;
 use CodeIgniter\Images\ImageHandlerInterface;
 
-require_once BASEPATH.'Images/Exceptions.php';
-
 abstract class BaseHandler implements ImageHandlerInterface
 {
 	/**
-	 * @var null
+	 * @var \Config\Images
 	 */
 	protected $config;
 

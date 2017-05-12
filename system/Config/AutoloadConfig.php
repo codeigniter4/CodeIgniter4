@@ -140,7 +140,7 @@ class AutoloadConfig
 //			'CodeIgniter\Database\ResultInterface'   => BASEPATH.'Database/ResultInterface.php',
 //			'CodeIgniter\Database\Migration'         => BASEPATH.'Database/Migration.php',
 //			'CodeIgniter\Database\MigrationRunner'   => BASEPATH.'Database/MigrationRunner.php',
-//			'CodeIgniter\Debug\Exceptions'           => BASEPATH.'Debug/Exceptions.php',
+//			'CodeIgniter\Debug\Exceptions'           => BASEPATH.'Debug/ImageException.php',
 //			'CodeIgniter\Debug\Timer'                => BASEPATH.'Debug/Timer.php',
 //			'CodeIgniter\Debug\Iterator'             => BASEPATH.'Debug/Iterator.php',
 //			'CodeIgniter\Events\Events'               => BASEPATH.'Events/Events.php',

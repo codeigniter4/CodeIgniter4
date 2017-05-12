@@ -41,13 +41,6 @@ interface ImageHandlerInterface
 	//--------------------------------------------------------------------
 
 	/**
-	 * @return mixed
-	 */
-	public function watermark();
-
-	//--------------------------------------------------------------------
-
-	/**
 	 * Reads the EXIF information from the image and modifies the orientation
 	 * so that displays correctly in the browser.
 	 *

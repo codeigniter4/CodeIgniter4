@@ -153,26 +153,27 @@ class Checks extends Controller
 
 	public function image()
 	{
-//		$images = Services::image('gd')
+		$images = Services::image('imagick')
+			->getVersion();
 //			->withFile("/Users/kilishan/Documents/BobHeader.jpg")
 //			->resize(500, 100, true)
 //			->crop(200, 75, 20, 0, false)
 //			->rotate(90)
-//			->save('/Users/kilishan/temp.jpg', 100);
+//			->save('/Users/kilishan/temp.jpg');
 
-		$images = Services::image('gd')
-			->withFile("/Users/kilishan/Documents/BobHeader.jpg")
-			->fit(500, 100, 'bottom-left')
-			->text('Bob is Back!', [
-				'fontPath'  => '/Users/kilishan/Downloads/Calibri.ttf',
-				'fontSize' => 40,
-				'padding' => 0,
-				'opacity'   => 0.5,
-				'vAlign'    => 'top',
-				'hAlign'    => 'right',
-				'withShadow' => true,
-			])
-			->save('/Users/kilishan/temp.jpg', 100);
+//		$images = Services::image('imagick')
+//			->withFile("/Users/kilishan/Documents/BobHeader.jpg")
+//			->fit(500, 100, 'bottom-left')
+//			->text('Bob is Back!', [
+//				'fontPath'  => '/Users/kilishan/Downloads/Calibri.ttf',
+//				'fontSize' => 40,
+//				'padding' => 0,
+//				'opacity'   => 0.5,
+//				'vAlign'    => 'top',
+//				'hAlign'    => 'right',
+//				'withShadow' => true,
+//			])
+//			->save('/Users/kilishan/temp.jpg', 100);
 
 
 		ddd($images);

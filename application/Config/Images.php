@@ -17,7 +17,7 @@ class Images extends BaseConfig
 	 *
 	 * @var string
 	 */
-	public $libraryPath;
+	public $libraryPath = '/usr/local/bin/convert';
 
 	/**
 	 * The available handler classes.
@@ -28,6 +28,5 @@ class Images extends BaseConfig
 		'gd'        => \CodeIgniter\Images\Handlers\GDHandler::class,
 		'imagick'   => \CodeIgniter\Images\Handlers\ImageMagickHandler::class,
 		'gm'        => \CodeIgniter\Images\Handlers\GraphicsMagickHandler::class,
-		'pbm'       => \CodeIgniter\Images\Handlers\NetPBMHandler::class,
 	];
 }
