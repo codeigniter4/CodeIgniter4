@@ -39,5 +39,171 @@ namespace CodeIgniter\Encryption\Handlers;
  */
 class OpenSSLHandler extends BaseHandler
 {
-	
+
+	/**
+	 * List of available modes
+	 *
+	 * @var	array
+	 */
+	protected $modes = [
+		'cbc' => 'cbc',
+		'ecb' => 'ecb',
+		'ofb' => 'ofb',
+		'cfb' => 'cfb',
+		'cfb8' => 'cfb8',
+		'ctr' => 'ctr',
+		'stream' => '',
+		'xts' => 'xts'
+	];
+
+	// --------------------------------------------------------------------
+
+	/**
+	 * Initialize OpenSSL
+	 *
+	 * @param	array	$params	Configuration parameters
+	 * @return	void
+	 */
+	protected function initializeIt($params)
+	{
+		if ( ! empty($params['cipher']))
+		{
+			$params['cipher'] = strtolower($params['cipher']);
+			$this->cipherAlias($params['cipher']);
+			$this->cipher = $params['cipher'];
+		}
+
+		if ( ! empty($params['mode']))
+		{
+			$params['mode'] = strtolower($params['mode']);
+			if ( ! isset($this->modes[$params['mode']]))
+			{
+				log_message('error', 'Encryption: OpenSSL mode ' . strtoupper($params['mode']) . ' is not available.');
+			}
+			else
+			{
+				$this->mode = $this->modes[$params['mode']];
+			}
+		}
+
+		if (isset($this->cipher, $this->mode))
+		{
+			// This is mostly for the stream mode, which doesn't get suffixed in OpenSSL
+			$handle = empty($this->mode) ? $this->cipher : $this->cipher . '-' . $this->mode;
+
+			if ( ! in_array($handle, openssl_get_cipher_methods(), true))
+			{
+				$this->handle = null;
+				log_message('error', 'Encryption: Unable to initialize OpenSSL with method ' . strtoupper($handle) . '.');
+			}
+			else
+			{
+				$this->handle = $handle;
+				log_message('info', 'Encryption: OpenSSL initialized with method ' . strtoupper($handle) . '.');
+			}
+		}
+	}
+
+	/**
+	 * Encrypt
+	 *
+	 * @param	string	$data	Input data
+	 * @param	array	$params	Input parameters
+	 * @return	string
+	 */
+	public function encryptIt($data, array $params = null)
+	{
+		if (empty($params['handle']))
+		{
+			return false;
+		}
+
+		$iv = ($iv_size = opensslcipher_iv_length($params['handle'])) ? $this->createKey($iv_size) : null;
+
+		$data = openssl_encrypt(
+				$data, $params['handle'], $params['key'], OPENSSL_RAW_DATA, $iv
+		);
+
+		if ($data === false)
+		{
+			return false;
+		}
+
+		return $iv . $data;
+	}
+
+	// --------------------------------------------------------------------
+
+	/**
+	 * Decrypt
+	 *
+	 * @param	string	$data	Encrypted data
+	 * @param	array	$params	Input parameters
+	 * @return	string
+	 */
+	public function decryptIt($data, array $params = null)
+	{
+
+		if ($iv_size = opensslcipher_iv_length($params['handle']))
+		{
+			$iv = self::substr($data, 0, $iv_size);
+			$data = self::substr($data, $iv_size);
+		}
+		else
+		{
+			$iv = null;
+		}
+
+		return empty($params['handle']) ? false : openssl_decrypt(
+						$data, $params['handle'], $params['key'], OPENSSL_RAW_DATA, $iv
+		);
+	}
+
+	// --------------------------------------------------------------------
+
+	/**
+	 * Get OpenSSL handle
+	 *
+	 * @param	string	$cipher	Cipher name
+	 * @param	string	$mode	Encryption mode
+	 * @return	string
+	 */
+	protected function getHandle($cipher, $mode)
+	{
+		// OpenSSL methods aren't suffixed with '-stream' for this mode
+		return ($mode === 'stream') ? $cipher : $cipher . '-' . $mode;
+	}
+
+	// --------------------------------------------------------------------
+
+	/**
+	 * Cipher alias
+	 *
+	 * Tries to translate cipher names as appropriate for this handler
+	 *
+	 * @param	string	$cipher	Cipher name
+	 * @return	void
+	 */
+	protected function cipherAlias(&$cipher)
+	{
+		static $dictionary;
+
+		if (empty($dictionary))
+		{
+			$dictionary = [
+				'rijndael-128' => 'aes-128',
+				'tripledes' => 'des-ede3',
+				'blowfish' => 'bf',
+				'cast-128' => 'cast5',
+				'arcfour' => 'rc4-40',
+				'rc4' => 'rc4-40'
+			];
+		}
+
+		if (isset($dictionary[$cipher]))
+		{
+			$cipher = $dictionary[$cipher];
+		}
+	}
+
 }

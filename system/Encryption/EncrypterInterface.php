@@ -47,7 +47,8 @@ interface EncrypterInterface
 {
 
 	/**
-	 * Initialize
+	 * Initialize or re-initialize an encryption handler,
+	 * possibly with different parameters
 	 *
 	 * @param	array	$params	Configuration parameters
 	 * @return	CI_Encryption
@@ -65,7 +66,7 @@ interface EncrypterInterface
 	public function createKey($length);
 
 	/**
-	 * Encrypt
+	 * Encrypt - convert plaintext into ciphertext
 	 *
 	 * @param	string	$data	Input data
 	 * @param	array	$params	Input parameters
@@ -74,7 +75,7 @@ interface EncrypterInterface
 	public function encrypt($data, array $params = null);
 
 	/**
-	 * Decrypt
+	 * Decrypt - convert ciphertext into plaintext
 	 *
 	 * @param	string	$data	Encrypted data
 	 * @param	array	$params	Input parameters
@@ -83,7 +84,7 @@ interface EncrypterInterface
 	public function decrypt($data, array $params = null);
 
 	/**
-	 * HKDF
+	 * Create an HKDF random key
 	 *
 	 * @link	https://tools.ietf.org/rfc/rfc5869.txt
 	 * @param	$key	Input key
