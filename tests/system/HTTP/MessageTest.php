@@ -224,7 +224,7 @@ class MessageTest extends \CIUnitTestCase {
                 $_SERVER = $original; // restore so code coverage doesn't break
         } 
 
-        public function testPopulateHeadersKeyNotExisit() 
+        public function testPopulateHeadersKeyNotExists() 
         {
                 // success path, if array key is not exists, assign empty string to it's value
         
