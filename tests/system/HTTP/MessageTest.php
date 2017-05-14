@@ -174,19 +174,24 @@ class MessageTest extends \CIUnitTestCase {
         
 	//--------------------------------------------------------------------
         
-	public function testHeaderLine()
+	public function  testGetHeaderLineReplacingHeader()
 	{
-                // Testcoverage for first 
-                $this->message->setHeader('Accept', 'json');
-                $this->assertEquals('json', $this->message->getHeaderLine('Accept'));
-
-                // Test coverage for 3rd if
-                $this->message->setHeader('Accept', 'xml');
-                $this->assertEquals('xml', $this->message->getHeaderLine('Accept'));
-
-                $this->message->setHeader('Accept', ['json', 'html', 'xml']);
-                $this->assertEquals('json, html, xml', $this->message->getHeaderLine('Accept'));
+       		$this->message->setHeader('Accept', 'json');
+        	$this->assertEquals('json', $this->message->getHeaderLine('Accept'));
 	}
+        
+        public function testGetHeaderLineDuplicateSettings()
+        {
+        	$this->message->setHeader('Accept', 'json');
+        	$this->message->setHeader('Accept', 'xml');
+       		$this->assertEquals('xml', $this->message->getHeaderLine('Accept'));
+        }
+                
+        public function testGetHeaderLineArrayValues()
+        {
+        	$this->message->setHeader('Accept', ['json', 'html', 'xml']);
+      		$this->assertEquals('json, html, xml', $this->message->getHeaderLine('Accept'));
+        }
 
 	public function testPopulateHeaders()
 	{
