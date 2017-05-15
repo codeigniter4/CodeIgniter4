@@ -113,6 +113,17 @@ class AutoloaderTest extends \CIUnitTestCase
 		$expected = '/my/app/Class.php';
 		$this->assertSame($expected, $actual);
 	}
+        
+        //--------------------------------------------------------------------
+        
+        public function testRemoveNamespace()
+        {
+                $this->loader->addNamespace('My\App', '/my/app');
+                $this->assertSame('/my/app/Class.php',$this->loader->loadClass('My\App\Class'));
+                
+                $this->loader->removeNamespace('My\App');
+                $this->assertFalse((bool)$this->loader->loadClass('My\App\Class'));
+        }
 
 	//--------------------------------------------------------------------
 
