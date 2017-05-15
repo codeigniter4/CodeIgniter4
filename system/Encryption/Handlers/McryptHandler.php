@@ -107,7 +107,7 @@ class McryptHandler extends BaseHandler
 
 			if ($this->handle = mcrypt_module_open($this->cipher, '', $this->mode, ''))
 			{
-				log_message('info', 'Encryption: MCrypt cipher ' . strtoupper($this->cipher) . ' initialized in ' . strtoupper($this->mode) . ' mode.');
+				$this->logger->info('Encryption: MCrypt cipher ' . strtoupper($this->cipher) . ' initialized in ' . strtoupper($this->mode) . ' mode.');
 			}
 			else
 			{

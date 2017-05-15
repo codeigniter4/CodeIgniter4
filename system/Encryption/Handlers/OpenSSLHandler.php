@@ -78,7 +78,7 @@ class OpenSSLHandler extends BaseHandler
 			$params['mode'] = strtolower($params['mode']);
 			if ( ! isset($this->modes[$params['mode']]))
 			{
-				log_message('error', 'Encryption: OpenSSL mode ' . strtoupper($params['mode']) . ' is not available.');
+				$this->logger->error('Encryption: OpenSSL mode ' . strtoupper($params['mode']) . ' is not available.');
 			}
 			else
 			{
@@ -94,12 +94,12 @@ class OpenSSLHandler extends BaseHandler
 			if ( ! in_array($handle, openssl_get_cipher_methods(), true))
 			{
 				$this->handle = null;
-				log_message('error', 'Encryption: Unable to initialize OpenSSL with method ' . strtoupper($handle) . '.');
+				$this->logger->error('Encryption: Unable to initialize OpenSSL with method ' . strtoupper($handle) . '.');
 			}
 			else
 			{
 				$this->handle = $handle;
-				log_message('info', 'Encryption: OpenSSL initialized with method ' . strtoupper($handle) . '.');
+				$this->logger->info('Encryption: OpenSSL initialized with method ' . strtoupper($handle) . '.');
 			}
 		}
 	}

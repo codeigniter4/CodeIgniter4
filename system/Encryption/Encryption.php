@@ -60,7 +60,14 @@ class Encryption
 
 
 	/**
-	 * PHP extension to be used
+	 * The encrypter we create
+	 *
+	 * @var	string
+	 */
+	protected $encrypter;
+
+	/**
+	 * The PHP extension we plan to use
 	 *
 	 * @var	string
 	 */
@@ -72,6 +79,16 @@ class Encryption
 	 * @var	array
 	 */
 	protected $handlers = [];
+	
+	/**
+	 * Map of handlers to handler classes
+	 * 
+	 * @var array
+	 */
+	protected $drivers = [
+		'mcrypt' => 'Mcrypt',
+		'openssl' => 'OpenSSL'
+	];
 
 	/**
 	 * Logger instance to record error messages and warnings.
@@ -89,13 +106,16 @@ class Encryption
 	 * 
 	 * @throws \CodeIgniter\Encryption\EncryptionException
 	 */
-	public function __construct($config = null)
+	public function __construct(\Config\Encryption $config = null, array $params = [], $getShared = true)
 	{
+		$this->logger = \Config\Services::logger(true);
+		
 		if (empty($config))
 			$config = new \Config\Encryption();
 		$this->config = $config;
 
-		$params = (array) $this->config;
+		if ($params == null) $params = (array) $this->config;
+		else $params = array_merge($params,(array)$config);
 
 		$this->handlers = [
 			'mcrypt' => defined('MCRYPT_DEV_URANDOM'),
@@ -107,15 +127,19 @@ class Encryption
 			throw new EncryptionException('Unable to find an available encryption handler.');
 		}
 
+		$this->handler = $params['driver'] ?? 'openSSL';
+		$this->driver = $this->drivers[$this->handler];
+		$theone = 'Handlers\\'.$this->handler.'Handler';
+		$this->encrypter = new $theone();
 		
-		$this->initialize($params);
+		$this->encrypter->initialize($params);
 
 		if ( ! isset($this->key) && self::strlen($key = $this->config->key) > 0)
 		{
 			$this->key = $key;
 		}
 
-		log_message('info', 'Encryption class Initialized');
+		$this->logger->info('Encryption class Initialized');
 	}
 
 	// --------------------------------------------------------------------

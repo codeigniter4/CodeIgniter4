@@ -111,6 +111,8 @@ abstract class BaseHandler implements \CodeIgniter\Encryption\EncrypterInterface
 	 */
 	public function __construct($config)
 	{
+		$this->logger = \Config\Services::logger(true);
+
 		if (empty($config))
 			$config = new \Config\Encryption();
 		$this->config = $config;
@@ -134,7 +136,7 @@ abstract class BaseHandler implements \CodeIgniter\Encryption\EncrypterInterface
 			$this->key = $key;
 		}
 
-		log_message('info', 'Encryption handler Initialized');
+		$this->logger->info('Encryption handler Initialized');
 	}
 
 	/**
@@ -170,7 +172,7 @@ abstract class BaseHandler implements \CodeIgniter\Encryption\EncrypterInterface
 		{
 			$this->handler = ($this->handlers['openssl'] === true) ? 'openssl' : 'mcrypt';
 
-			log_message('debug', "Encryption: Auto-configured handler '" . $this->handler . "'.");
+			$this->logger->debug("Encryption: Auto-configured handler '" . $this->handler . "'.");
 		}
 
 		empty($params['cipher']) && $params['cipher'] = $this->cipher;
