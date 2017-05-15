@@ -1,6 +1,7 @@
 <?php namespace CodeIgniter\Images;
 
 use CodeIgniter\Files\File;
+use CodeIgniter\Images\Exceptions\ImageException;
 
 class Image extends File
 {

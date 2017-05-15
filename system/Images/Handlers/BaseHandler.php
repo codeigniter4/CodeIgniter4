@@ -1,8 +1,8 @@
 <?php namespace CodeIgniter\Images\Handlers;
 
 use CodeIgniter\Images\Image;
-use CodeIgniter\Images\ImageException;
 use CodeIgniter\Images\ImageHandlerInterface;
+use CodeIgniter\Images\Exceptions\ImageException;
 
 abstract class BaseHandler implements ImageHandlerInterface
 {
@@ -132,7 +132,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 			$this->reproportion();
 		}
 
-		return $this->process('resize');
+		return $this->_resize($maintainRatio);
 	}
 
 	//--------------------------------------------------------------------
@@ -164,7 +164,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 			$this->reproportion();
 		}
 
-		$result = $this->process('crop');
+		$result = $this->_crop();
 
 		$this->xAxis = null;
 		$this->yAxis = null;
@@ -663,9 +663,9 @@ abstract class BaseHandler implements ImageHandlerInterface
 	 */
 	protected function reproportion()
 	{
-		if (($this->width === 0 && $this->height === 0) OR $this->image->origWidth === 0 OR $this->image->origHeight === 0
-		    OR (! ctype_digit((string)$this->width) && ! ctype_digit((string)$this->height))
-		    OR ! ctype_digit((string)$this->image->origWidth) OR ! ctype_digit((string)$this->image->origHeight)
+		if (($this->width === 0 && $this->height === 0) || $this->image->origWidth === 0 || $this->image->origHeight === 0
+		    || (! ctype_digit((string)$this->width) && ! ctype_digit((string)$this->height))
+		    || ! ctype_digit((string)$this->image->origWidth) || ! ctype_digit((string)$this->image->origHeight)
 		)
 		{
 			return;
@@ -687,7 +687,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 				$this->masterDim = ($this->height === 0) ? 'width' : 'height';
 			}
 		}
-		elseif (($this->masterDim === 'width' && $this->width === 0) OR ($this->masterDim === 'height' && $this->height === 0)
+		elseif (($this->masterDim === 'width' && $this->width === 0) || ($this->masterDim === 'height' && $this->height === 0)
 		)
 		{
 			return;

@@ -1,6 +1,6 @@
 <?php namespace CodeIgniter\Images\Handlers;
 
-use CodeIgniter\Images\ImageException;
+use CodeIgniter\Images\Exceptions\ImageException;
 
 class GDHandler extends BaseHandler
 {
@@ -138,6 +138,30 @@ class GDHandler extends BaseHandler
 		}
 
 		return false;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Resizes the image.
+	 *
+	 * @return bool|\CodeIgniter\Images\Handlers\GDHandler
+	 */
+	public function _resize()
+	{
+		return $this->process('resize');
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Crops the image.
+	 *
+	 * @return bool|\CodeIgniter\Images\Handlers\GDHandler
+	 */
+	public function _crops()
+	{
+		return $this->process('crop');
 	}
 
 	//--------------------------------------------------------------------
