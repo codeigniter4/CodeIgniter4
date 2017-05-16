@@ -154,7 +154,8 @@ class ImageMagickHandler extends BaseHandler
 		{
 			@exec($cmd, $output, $retval);
 		}
-
+		var_dump($cmd);
+dd($output);
 		// Did it work?
 		if ($retval > 0)
 		{
@@ -242,11 +243,102 @@ class ImageMagickHandler extends BaseHandler
 	 *
 	 * @param string $text
 	 * @param array  $options
-	 * @param bool   $isShadow  Whether we are drawing the dropshadow or actual text
 	 */
-	protected function textOverlay(string $text, array $options = [], bool $isShadow=false)
+	protected function _text(string $text, array $options = [])
 	{
+		$cmd = '';
 
+		// Reverse the vertical offset
+		// When the image is positioned at the bottom
+		// we don't want the vertical offset to push it
+		// further down. We want the reverse, so we'll
+		// invert the offset. Note: The horizontal
+		// offset flips itself automatically
+		if ($options['vAlign'] === 'bottom')
+		{
+			$options['vOffset'] = $options['vOffset'] * -1;
+		}
+
+		if ($options['hAlign'] === 'right')
+		{
+			$options['hOffset'] = $options['hOffset'] * -1;
+		}
+
+		// Font
+		if (! empty($options['fontPath']))
+		{
+			$cmd .= " -font '{$options['fontPath']}'";
+		}
+
+		if (isset($options['hAlign']) && isseT($options['vAlign']))
+		{
+			switch ($options['hAlign'])
+			{
+				case 'left':
+					$xAxis = $options['hOffset'] + $options['padding'];
+					$yAxis = $options['vOffset'] + $options['padding'];
+					$gravity = $options['vAlign'] == 'top'
+						? 'NorthWest'
+						: 'West';
+					if ($options['vAlign'] == 'bottom') {
+						$gravity = 'SouthWest';
+						$yAxis = $options['vOffset'] - $options['padding'];
+					}
+					break;
+				case 'center':
+					$xAxis = $options['hOffset'] + $options['padding'];
+					$yAxis = $options['vOffset'] + $options['padding'];
+					$gravity = $options['vAlign'] == 'top'
+						? 'North'
+						: 'Center';
+					if ($options['vAlign'] == 'bottom')
+					{
+						$yAxis = $options['vOffset'] - $options['padding'];
+						$gravity = 'South';
+					}
+					break;
+				case 'right':
+					$xAxis = $options['hOffset'] - $options['padding'];
+					$yAxis = $options['vOffset'] + $options['padding'];
+					$gravity = $options['vAlign'] == 'top'
+						? 'NorthEast'
+						: 'East';
+					if ($options['vAlign'] == 'bottom') {
+						$gravity = 'SouthEast';
+						$yAxis = $options['vOffset'] - $options['padding'];
+					}
+					break;
+			}
+
+			$xAxis = $xAxis >= 0 ? '+'.$xAxis : $xAxis;
+			$yAxis = $yAxis >= 0 ? '+'.$yAxis : $yAxis;
+
+			$cmd .= " -gravity {$gravity} -geometry {$xAxis}{$yAxis}";
+		}
+
+		// Color
+		if (isset($options['color']))
+		{
+			list($r, $g, $b) = sscanf("#{$options['color']}", "#%02x%02x%02x");
+
+			$cmd .= " -fill 'rgba({$r},{$g},{$b},{$options['opacity']})'";
+		}
+
+		// Font Size - use points....
+		if (isset($options['fontSize']))
+		{
+			$cmd .= " -pointsize {$options['fontSize']}";
+		}
+
+		// Text
+		$cmd .= " -annotate 0 '{$text}'";
+
+		$source = ! empty($this->resource) ? $this->resource : $this->image->getPathname();
+		$destination = $this->getResourcePath();
+
+		$cmd = " '{$source}' {$cmd} '{$destination}'";
+
+		$this->process($cmd);
 	}
 
 	//--------------------------------------------------------------------

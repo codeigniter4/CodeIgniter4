@@ -350,6 +350,95 @@ class GDHandler extends BaseHandler
 
 	//--------------------------------------------------------------------
 
+	protected function _text(string $text, array $options = [])
+	{
+		// Reverse the vertical offset
+		// When the image is positioned at the bottom
+		// we don't want the vertical offset to push it
+		// further down. We want the reverse, so we'll
+		// invert the offset. Note: The horizontal
+		// offset flips itself automatically
+
+		if ($options['vAlign'] === 'bottom')
+		{
+			$options['vOffset'] = $options['vOffset'] * -1;
+		}
+
+		if ($options['hAlign'] === 'right')
+		{
+			$options['hOffset'] = $options['hOffset'] * -1;
+		}
+
+		// Set font width and height
+		// These are calculated differently depending on
+		// whether we are using the true type font or not
+		if (! empty($options['fontPath']))
+		{
+			if (function_exists('imagettfbbox'))
+			{
+				$temp = imagettfbbox($options['fontSize'], 0, $options['fontPath'], $text);
+				$temp = $temp[2] - $temp[0];
+
+				$fontwidth = $temp / strlen($text);
+			}
+			else
+			{
+				$fontwidth = $options['fontSize'] - ($options['fontSize'] / 4);
+			}
+
+			$fontheight = $options['fontSize'];
+		}
+		else
+		{
+			$fontwidth  = imagefontwidth($options['fontSize']);
+			$fontheight = imagefontheight($options['fontSize']);
+		}
+
+		$options['fontheight'] = $fontheight;
+		$options['fontwidth'] = $fontwidth;
+
+		// Set base X and Y axis values
+		$xAxis = $options['hOffset'] + $options['padding'];
+		$yAxis = $options['vOffset'] + $options['padding'];
+
+		// Set vertical alignment
+		if ($options['vAlign'] === 'middle')
+		{
+			// Don't apply padding when you're in the middle of the image.
+			$yAxis += ($this->image->origHeight / 2) + ($fontheight / 2) - $options['padding'];
+		}
+		elseif ($options['vAlign'] === 'bottom')
+		{
+			$yAxis = ($this->image->origHeight - $fontheight - $options['shadowOffset'] - ($fontheight / 2)) - $yAxis;
+		}
+
+		// Set horizontal alignment
+		if ($options['hAlign'] === 'right')
+		{
+			$xAxis += ($this->image->origWidth - ($fontwidth * strlen($text)) - $options['shadowOffset']) - (2 * $options['padding']);
+		}
+		elseif ($options['hAlign'] === 'center')
+		{
+			$xAxis += floor(($this->image->origWidth - ($fontwidth * strlen($text))) / 2);
+		}
+
+		$options['xAxis'] = $xAxis;
+		$options['yAxis'] = $yAxis;
+
+		if ($options['withShadow'])
+		{
+			// Offset from text
+			$options['xShadow'] = $xAxis + $options['shadowOffset'];
+			$options['yShadow'] = $yAxis + $options['shadowOffset'];
+
+			$this->textOverlay($text, $options, true);
+		}
+
+		$this->textOverlay($text, $options, false);
+	}
+
+	//--------------------------------------------------------------------
+
 	/**
 	 * Handler-specific method for overlaying text on an image.
 	 *
