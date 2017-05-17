@@ -49,15 +49,16 @@ class EncryptionException extends \Exception
 }
 
 /**
- * CodeIgniter Encryption Class
+ * CodeIgniter Encryption Manager
  *
  * Provides two-way keyed encryption via PHP's MCrypt and/or OpenSSL extensions.
+ * This class determines the driver, cipher, and mode to use, and then
+ * initializes the appropriate encryption handler.
  */
 class Encryption
 {
 
 	use LoggerAwareTrait;
-
 
 	/**
 	 * The encrypter we create
@@ -65,6 +66,11 @@ class Encryption
 	 * @var	string
 	 */
 	protected $encrypter;
+
+	/**
+	 * Our configuration
+	 */
+	protected $config;
 
 	/**
 	 * The PHP extension we plan to use
@@ -79,15 +85,15 @@ class Encryption
 	 * @var	array
 	 */
 	protected $handlers = [];
-	
+
 	/**
-	 * Map of handlers to handler classes
+	 * Map of drivers to handler classes, in preference order
 	 * 
 	 * @var array
 	 */
 	protected $drivers = [
+		'openssl' => 'OpenSSL',
 		'mcrypt' => 'Mcrypt',
-		'openssl' => 'OpenSSL'
 	];
 
 	/**
@@ -106,40 +112,65 @@ class Encryption
 	 * 
 	 * @throws \CodeIgniter\Encryption\EncryptionException
 	 */
-	public function __construct(\Config\Encryption $config = null, array $params = [], $getShared = true)
+	public function __construct(array $params = [])
 	{
 		$this->logger = \Config\Services::logger(true);
-		
-		if (empty($config))
-			$config = new \Config\Encryption();
-		$this->config = $config;
+		$this->config = new \Config\Encryption();
 
-		if ($params == null) $params = (array) $this->config;
-		else $params = array_merge($params,(array)$config);
 
+		if ($params == null)
+		// use config if no parameters given
+			$params = (array) $this->config;
+		else
+		// override config with passed parameters
+			$params = array_merge((array) $config, $params);
+
+		// determine what is installed
 		$this->handlers = [
+			'openssl' => extension_loaded('openssl'),
 			'mcrypt' => defined('MCRYPT_DEV_URANDOM'),
-			'openssl' => extension_loaded('openssl')
 		];
 
 		if ( ! $this->handlers['mcrypt'] && ! $this->handlers['openssl'])
-		{
 			throw new EncryptionException('Unable to find an available encryption handler.');
-		}
 
-		$this->handler = $params['driver'] ?? 'openSSL';
-		$this->driver = $this->drivers[$this->handler];
-		$theone = 'Handlers\\'.$this->handler.'Handler';
-		$this->encrypter = new $theone();
-		
+		// how should this be handled?
+		$this->driver = $params['driver'] ?? 'OpenSSL';
+		$this->handler = $this->drivers[$this->handler];
+		$handlerName = 'Handlers\\' . $this->handler . 'Handler';
+		$this->encrypter = new $handlerName();
+
 		$this->encrypter->initialize($params);
 
+		// use config key if initialization didn't create one
 		if ( ! isset($this->key) && self::strlen($key = $this->config->key) > 0)
-		{
 			$this->key = $key;
-		}
 
 		$this->logger->info('Encryption class Initialized');
+	}
+
+// --------------------------------------------------------------------
+
+	/**
+	 * Create a random key
+	 *
+	 * @param	int	$length	Output length
+	 * @return	string
+	 */
+	public static function createKey($length)
+	{
+		try
+		{
+			return random_bytes((int) $length);
+		} catch (Exception $e)
+		{
+			throw new EncryptionException('Key creation error: ' . $e->getMessage());
+		}
+
+		//FIXME Is this even reachable?
+		$is_secure = null;
+		$key = openssl_random_pseudo_bytes($length, $is_secure);
+		return ($is_secure === true) ? $key : false;
 	}
 
 	// --------------------------------------------------------------------

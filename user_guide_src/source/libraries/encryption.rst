@@ -20,6 +20,9 @@ If neither of the above dependencies is met, we simply cannot offer
 you a good enough implementation to meet the high standards required
 for proper cryptography.
 
+.. important:: Mcrypt is being deprecated, as of PHP7.2, and we don't recommend it.
+
+
 .. contents::
   :local:
 
@@ -38,17 +41,17 @@ Like all services in CodeIgniter, it can be loaded via ``Config\Services``::
 Default behavior
 ================
 
-By default, the Encryption Library will use the AES-128 cipher in CBC
-mode, using your configured *encryption key* and SHA512 HMAC authentication.
+By default, the Encryption Library will use the OpenSSL handler, with
+the AES-128 cipher in CBC mode, 
+using your configured *encryption key* and SHA512 HMAC authentication.
 
-.. note:: AES-128 is chosen both because it is proven to be strong and
-	because of its wide availability across different cryptographic
-	software and programming languages' APIs.
+AES-128 is chosen both because it is proven to be strong and
+because of its wide availability across different cryptographic
+software and programming languages' APIs.
 
 However, the *encryption key* is not used as is.
-
-If you are somewhat familiar with cryptography, you should already know
-that a HMAC also requires a secret key and using the same key for both
+Keyed-hash message authentication (HMAC) requires a secret key,
+ and using the same key for both
 encryption and authentication is a bad practice.
 
 Because of that, two separate keys are derived from your already configured
@@ -87,11 +90,11 @@ different ciphers.
 
 The key should be as random as possible and it **must not** be a regular
 text string, nor the output of a hashing function, etc. In order to create
-a proper key, you must use the Encryption library's ``createKey()`` method
+a proper key, you can use the Encryption library's ``createKey()`` method
 ::
 
 	// $key will be assigned a 16-byte (128-bit) random key
-	$key = $encrypter->createKey(16);
+	$key = Encryption::createKey(16);
 
 The key can be either stored in your *application/Config/Encryption.php*, or
 you can design your own storage mechanism and pass the key dynamically
@@ -124,11 +127,9 @@ Supported encryption ciphers and modes
 Portable ciphers
 ----------------
 
-Because MCrypt and OpenSSL (also called drivers throughout this document)
-each support different sets of encryption algorithms and often implement
-them in different ways, our Encryption library is designed to use them in
-a portable fashion, or in other words - it enables you to use them
-interchangeably, at least for the ciphers supported by both drivers.
+Different encryption drivers support different sets of encryption algorithms and often implement
+them in different ways. Our Encryption library is designed to use them in
+a portable fashion - interchangeably, for the ciphers supported by both drivers.
 
 It is also implemented in a way that aims to match the standard
 implementations in other programming languages and libraries.
@@ -143,11 +144,11 @@ Cipher name              CodeIgniter name   Key lengths (bits / bytes)   Support
 AES-128 / Rijndael-128   aes-128            128 / 16                     CBC, CTR, CFB, CFB8, OFB, ECB
 AES-192                  aes-192            192 / 24                     CBC, CTR, CFB, CFB8, OFB, ECB
 AES-256                  aes-256            256 / 32                     CBC, CTR, CFB, CFB8, OFB, ECB
-DES                      des                56 / 7                       CBC, CFB, CFB8, OFB, ECB
-TripleDES                tripledes          56 / 7, 112 / 14, 168 / 21   CBC, CFB, CFB8, OFB
 Blowfish                 blowfish           128-448 / 16-56              CBC, CFB, OFB, ECB
 CAST5 / CAST-128         cast5              88-128 / 11-16               CBC, CFB, OFB, ECB
+DES                      des                56 / 7                       CBC, CFB, CFB8, OFB, ECB
 RC4 / ARCFour            rc4                40-2048 / 5-256              Stream
+TripleDES                tripledes          56 / 7, 112 / 14, 168 / 21   CBC, CFB, CFB8, OFB
 ======================== ================== ============================ ===============================
 
 .. important:: Because of how MCrypt works, if you fail to provide a key
@@ -159,12 +160,12 @@ RC4 / ARCFour            rc4                40-2048 / 5-256              Stream
 	shown ranges is valid, although in bit terms that only happens
 	in 8-bit increments.
 
-.. note:: Even though CAST5 supports key lengths lower than 128 bits
+        Even though CAST5 supports key lengths lower than 128 bits
 	(16 bytes), in fact they will just be zero-padded to the
 	maximum length, as specified in `RFC 2144
 	<http://tools.ietf.org/rfc/rfc2144.txt>`_.
 
-.. note:: Blowfish supports key lengths as small as 32 bits (4 bytes), but
+        Blowfish supports key lengths as small as 32 bits (4 bytes), but
 	our tests have shown that only lengths of 128 bits (16 bytes) or
 	higher are properly supported by both MCrypt and OpenSSL. It is
 	also a bad practice to use such low-length keys anyway.
@@ -172,10 +173,10 @@ RC4 / ARCFour            rc4                40-2048 / 5-256              Stream
 Driver-specific ciphers
 -----------------------
 
-As noted above, MCrypt and OpenSSL support different sets of encryption
+As noted above, the encryption drivers support different sets of encryption
 ciphers. For portability reasons and because we haven't tested them
-properly, we do not advise you to use the ones that are driver-specific,
-but regardless, here's a list of most of them:
+properly, we do not advise you to use the ones that are driver-specific.
+For reference, here's a list of most of them:
 
 
 ============== ========= ============================== =========================================
@@ -184,40 +185,40 @@ Cipher name    Driver    Key lengths (bits / bytes)     Supported modes
 AES-128        OpenSSL   128 / 16                       CBC, CTR, CFB, CFB8, OFB, ECB, XTS
 AES-192        OpenSSL   192 / 24                       CBC, CTR, CFB, CFB8, OFB, ECB, XTS
 AES-256        OpenSSL   256 / 32                       CBC, CTR, CFB, CFB8, OFB, ECB, XTS
-Rijndael-128   MCrypt    128 / 16, 192 / 24, 256 / 32   CBC, CTR, CFB, CFB8, OFB, OFB8, ECB
-Rijndael-192   MCrypt    128 / 16, 192 / 24, 256 / 32   CBC, CTR, CFB, CFB8, OFB, OFB8, ECB
-Rijndael-256   MCrypt    128 / 16, 192 / 24, 256 / 32   CBC, CTR, CFB, CFB8, OFB, OFB8, ECB
-GOST           MCrypt    256 / 32                       CBC, CTR, CFB, CFB8, OFB, OFB8, ECB
-Twofish        MCrypt    128 / 16, 192 / 24, 256 / 32   CBC, CTR, CFB, CFB8, OFB, OFB8, ECB
-CAST-128       MCrypt    40-128 / 5-16                  CBC, CTR, CFB, CFB8, OFB, OFB8, ECB
-CAST-256       MCrypt    128 / 16, 192 / 24, 256 / 32   CBC, CTR, CFB, CFB8, OFB, OFB8, ECB
-Loki97         MCrypt    128 / 16, 192 / 24, 256 / 32   CBC, CTR, CFB, CFB8, OFB, OFB8, ECB
-SaferPlus      MCrypt    128 / 16, 192 / 24, 256 / 32   CBC, CTR, CFB, CFB8, OFB, OFB8, ECB
-Serpent        MCrypt    128 / 16, 192 / 24, 256 / 32   CBC, CTR, CFB, CFB8, OFB, OFB8, ECB
-XTEA           MCrypt    128 / 16                       CBC, CTR, CFB, CFB8, OFB, OFB8, ECB
-RC2            MCrypt    8-1024 / 1-128                 CBC, CTR, CFB, CFB8, OFB, OFB8, ECB
-RC2            OpenSSL   8-1024 / 1-128                 CBC, CFB, OFB, ECB
 Camellia-128   OpenSSL   128 / 16                       CBC, CFB, CFB8, OFB, ECB
 Camellia-192   OpenSSL   192 / 24                       CBC, CFB, CFB8, OFB, ECB
 Camellia-256   OpenSSL   256 / 32                       CBC, CFB, CFB8, OFB, ECB
+RC2            OpenSSL   8-1024 / 1-128                 CBC, CFB, OFB, ECB
 Seed           OpenSSL   128 / 16                       CBC, CFB, OFB, ECB
+CAST-128       MCrypt    40-128 / 5-16                  CBC, CTR, CFB, CFB8, OFB, OFB8, ECB
+CAST-256       MCrypt    128 / 16, 192 / 24, 256 / 32   CBC, CTR, CFB, CFB8, OFB, OFB8, ECB
+GOST           MCrypt    256 / 32                       CBC, CTR, CFB, CFB8, OFB, OFB8, ECB
+Loki97         MCrypt    128 / 16, 192 / 24, 256 / 32   CBC, CTR, CFB, CFB8, OFB, OFB8, ECB
+RC2            MCrypt    8-1024 / 1-128                 CBC, CTR, CFB, CFB8, OFB, OFB8, ECB
+Rijndael-128   MCrypt    128 / 16, 192 / 24, 256 / 32   CBC, CTR, CFB, CFB8, OFB, OFB8, ECB
+Rijndael-192   MCrypt    128 / 16, 192 / 24, 256 / 32   CBC, CTR, CFB, CFB8, OFB, OFB8, ECB
+Rijndael-256   MCrypt    128 / 16, 192 / 24, 256 / 32   CBC, CTR, CFB, CFB8, OFB, OFB8, ECB
+SaferPlus      MCrypt    128 / 16, 192 / 24, 256 / 32   CBC, CTR, CFB, CFB8, OFB, OFB8, ECB
+Serpent        MCrypt    128 / 16, 192 / 24, 256 / 32   CBC, CTR, CFB, CFB8, OFB, OFB8, ECB
+Twofish        MCrypt    128 / 16, 192 / 24, 256 / 32   CBC, CTR, CFB, CFB8, OFB, OFB8, ECB
+XTEA           MCrypt    128 / 16                       CBC, CTR, CFB, CFB8, OFB, OFB8, ECB
 ============== ========= ============================== =========================================
 
 .. note:: If you wish to use one of those ciphers, you'd have to pass
 	its name in lower-case to the Encryption library.
 
-.. note:: You've probably noticed that all AES cipers (and Rijndael-128)
+        You've probably noticed that all AES cipers (and Rijndael-128)
 	are also listed in the portable ciphers list. This is because
 	drivers support different modes for these ciphers. Also, it is
 	important to note that AES-128 and Rijndael-128 are actually
 	the same cipher, but **only** when used with a 128-bit key.
 
-.. note:: CAST-128 / CAST-5 is also listed in both the portable and
+        CAST-128 / CAST-5 is also listed in both the portable and
 	driver-specific ciphers list. This is because OpenSSL's
 	implementation doesn't appear to be working correctly with
 	key sizes of 80 bits and lower.
 
-.. note:: RC2 is listed as supported by both MCrypt and OpenSSL.
+        RC2 is listed as supported by both MCrypt and OpenSSL.
 	However, both drivers implement them differently and they
 	are not portable. It is probably worth noting that we only
 	found one obscure source confirming that it is MCrypt that
@@ -240,15 +241,15 @@ general purposes.
 =========== ================== ================= ===================================================================================================================================================
 Mode name   CodeIgniter name   Driver support    Additional info
 =========== ================== ================= ===================================================================================================================================================
-CBC         cbc                MCrypt, OpenSSL   A safe default choice
-CTR         ctr                MCrypt, OpenSSL   Considered as theoretically better than CBC, but not as widely available
-CFB         cfb                MCrypt, OpenSSL   N/A
-CFB8        cfb8               MCrypt, OpenSSL   Same as CFB, but operates in 8-bit mode (not recommended).
-OFB         ofb                MCrypt, OpenSSL   N/A
+CBC         cbc                OpenSSL, MCrypt   A safe default choice
+CFB         cfb                OpenSSL, MCrypt   N/A
+CFB8        cfb8               OpenSSL, MCrypt   Same as CFB, but operates in 8-bit mode (not recommended).
+CTR         ctr                OpenSSL, MCrypt   Considered as theoretically better than CBC, but not as widely available
+ECB         ecb                OpenSSL, MCrypt   Ignores IV (not recommended).
+OFB         ofb                OpenSSL, MCrypt   N/A
 OFB8        ofb8               MCrypt            Same as OFB, but operates in 8-bit mode (not recommended).
-ECB         ecb                MCrypt, OpenSSL   Ignores IV (not recommended).
 XTS         xts                OpenSSL           Usually used for encrypting random access data such as RAM or hard-disk storage.
-Stream      stream             MCrypt, OpenSSL   This is not actually a mode, it just says that a stream cipher is being used. Required because of the general cipher+mode initialization process.
+Stream      stream             OpenSSL, MCrypt   This is not actually a mode, it just says that a stream cipher is being used. Required because of the general cipher+mode initialization process.
 =========== ================== ================= ===================================================================================================================================================
 
 Message Length
@@ -278,6 +279,8 @@ As noted in the "Default behavior" section above, this means using an
 auto-detected driver (OpenSSL has a higher priority), the AES-128 ciper
 in CBC mode, and your ``$key`` value.
 
+You can pass an array of parameters to the Services...
+
 If you wish to change that however, you need to use the ``initialize()``
 method. It accepts an associative array of parameters, all of which are
 optional:
@@ -285,7 +288,7 @@ optional:
 ======== ===============================================
 Option   Possible values
 ======== ===============================================
-driver   'mcrypt', 'openssl'
+driver   'openssl', 'mcrypt'
 cipher   Cipher name (see :ref:`ciphers-and-modes`)
 mode     Encryption mode (see :ref:`encryption-modes`)
 key      Encryption key 

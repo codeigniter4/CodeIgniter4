@@ -177,10 +177,6 @@ class Services
 		}
 
 		$encryption = new \CodeIgniter\Encryption\Encryption($config);
-
-		$logger = self::logger(true);
-		$encryption->setLogger($logger);
-
 		$encrypter = $encryption->initialize($params);
 		return $encrypter;
 	}

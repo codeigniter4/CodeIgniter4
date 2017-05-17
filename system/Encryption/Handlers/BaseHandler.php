@@ -181,29 +181,6 @@ abstract class BaseHandler implements \CodeIgniter\Encryption\EncrypterInterface
 		return $this;
 	}
 
-// --------------------------------------------------------------------
-
-	/**
-	 * Create a random key
-	 *
-	 * @param	int	$length	Output length
-	 * @return	string
-	 */
-	public function createKey($length)
-	{
-		try
-		{
-			return random_bytes((int) $length);
-		} catch (Exception $e)
-		{
-			throw new EncryptionException('Key creation error: ' . $e->getMessage());
-		}
-
-		$is_secure = null;
-		$key = openssl_random_pseudo_bytes($length, $is_secure);
-		return ($is_secure === true) ? $key : false;
-	}
-
 	/**
 	 * Encrypt
 	 *
