@@ -151,15 +151,13 @@ class Checks extends Controller
     	$ftp = Services::ftp();
 
     	$ftp->initialize([
-    		'hostname' => 'ftp.example.com',
-    		'username' => 'example.com',
+    		'hostname' => 'test.rebex.net',
+    		'username' => 'demo',
     		'password' => 'password',
-    		'passive' => true,
-    		'debug' => true
     	]);
 
         $ftp->connect();
-        $list = $ftp->list_files('/public_html/');
+        $list = $ftp->list_files();
 
         print_r($list);
 

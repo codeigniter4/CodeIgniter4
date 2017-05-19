@@ -148,7 +148,7 @@ class FTP
 	 * @param	array	 $config	Connection values
 	 * @return	bool
 	 */
-	public function connect(array $config = [])
+	public function connect(array $config = []): bool
 	{
 		if (count($config) > 0)
 		{
@@ -207,7 +207,7 @@ class FTP
 	 *
 	 * @return	bool
 	 */
-	protected function _login()
+	protected function _login(): bool
 	{
 		$ftpLogin = false;
 
@@ -229,7 +229,7 @@ class FTP
 	 *
 	 * @return	bool
 	 */
-	protected function _is_conn()
+	protected function _is_conn(): bool
 	{
 		if ( ! is_resource($this->connId))
 		{
@@ -259,7 +259,7 @@ class FTP
 	 * @param	bool	$suppress_debug
 	 * @return	bool
 	 */
-	public function changedir(string $path, bool $suppress_debug = false)
+	public function changedir(string $path, bool $suppress_debug = false): bool
 	{
 		if ( ! $this->_is_conn())
 		{
@@ -300,7 +300,7 @@ class FTP
 	 * @param	int	$permissions
 	 * @return	bool
 	 */
-	public function mkdir(string $path, bool $permissions = null)
+	public function mkdir(string $path, bool $permissions = null): bool
 	{
 		if ($path === '' OR ! $this->_is_conn())
 		{
@@ -349,7 +349,7 @@ class FTP
 	 * @param	int	$permissions
 	 * @return	bool
 	 */
-	public function upload(string $locpath, string $rempath, string $mode = 'auto', int $permissions = null)
+	public function upload(string $locpath, string $rempath, string $mode = 'auto', int $permissions = null): bool
 	{
 		if ( ! $this->_is_conn())
 		{
@@ -413,7 +413,7 @@ class FTP
 	 * @param	string	$mode
 	 * @return	bool
 	 */
-	public function download(string $rempath, string $locpath, string $mode = 'auto')
+	public function download(string $rempath, string $locpath, string $mode = 'auto'): bool
 	{
 		if ( ! $this->_is_conn())
 		{
@@ -463,7 +463,7 @@ class FTP
 	 * @param	bool	$move
 	 * @return	bool
 	 */
-	public function rename(string $old_file, string $new_file, bool $move = false)
+	public function rename(string $old_file, string $new_file, bool $move = false): bool
 	{
 		if ( ! $this->_is_conn())
 		{
@@ -504,7 +504,7 @@ class FTP
 	 * @param	string	$new_file
 	 * @return	bool
 	 */
-	public function move(string $old_file, string $new_file)
+	public function move(string $old_file, string $new_file): bool
 	{
 		return $this->rename($old_file, $new_file, true);
 	}
@@ -517,7 +517,7 @@ class FTP
 	 * @param	string	$filepath
 	 * @return	bool
 	 */
-	public function delete_file(string $filepath)
+	public function delete_file(string $filepath): bool
 	{
 		if ( ! $this->_is_conn())
 		{
@@ -556,7 +556,7 @@ class FTP
 	 * @param	string	$filepath
 	 * @return	bool
 	 */
-	public function delete_dir(string $filepath)
+	public function delete_dir(string $filepath): bool
 	{
 		if ( ! $this->_is_conn())
 		{
@@ -618,7 +618,7 @@ class FTP
 	 * @param	int	$perm	Permissions
 	 * @return	bool
 	 */
-	public function chmod(string $path, int $perm)
+	public function chmod(string $path, int $perm): bool
 	{
 		if ( ! $this->_is_conn())
 		{
@@ -656,7 +656,7 @@ class FTP
 	 * @param	string	$path
 	 * @return	array
 	 */
-	public function list_files(string $path = '.')
+	public function list_files(string $path = '.'): array
 	{
 		return $this->_is_conn()
 			? ftp_nlist($this->connId, $path)
@@ -677,7 +677,7 @@ class FTP
 	 * @param	string	$rempath	Path to destination - include the base folder with trailing slash
 	 * @return	bool
 	 */
-	public function mirror(string $locpath, string $rempath)
+	public function mirror(string $locpath, string $rempath): bool
 	{
 		if ( ! $this->_is_conn())
 		{
@@ -734,7 +734,7 @@ class FTP
 	 * @param	string	$filename
 	 * @return	string
 	 */
-	protected function _getext(string $filename)
+	protected function _getext(string $filename): string
 	{
 		return (($dot = strrpos($filename, '.')) === false)
 			? 'txt'
@@ -763,7 +763,7 @@ class FTP
 	 *
 	 * @return	bool
 	 */
-	public function close()
+	public function close(): bool
 	{
 		$fpCloseStatus = false;
 
