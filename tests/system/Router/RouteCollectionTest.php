@@ -653,5 +653,22 @@ class RouteCollectionTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * @see https://github.com/bcit-ci/CodeIgniter4/issues/497
+	 */
+	public function testWithSubdomain()
+	{
+		$routes = new RouteCollection();
+
+		$_SERVER['HTTP_HOST'] = 'adm.example.com';
+
+		$routes->add('/objects/(:alphanum)', 'Admin::objectsList/$1', ['subdomain' => 'adm']);
+
+		$expects = [
+			'objects/([a-zA-Z0-9]+)' => '\Admin::objectsList/$1'
+		];
+
+		$this->assertEquals($expects, $routes->getRoutes());
+	}
 
 }

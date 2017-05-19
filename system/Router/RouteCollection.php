@@ -117,9 +117,9 @@ class RouteCollection implements RouteCollectionInterface
 	protected $placeholders = [
 		'any'      => '.*',
 		'segment'  => '[^/]+',
+		'alphanum' => '[a-zA-Z0-9]+',
 		'num'      => '[0-9]+',
 		'alpha'    => '[a-zA-Z]+',
-		'alphanum' => '[a-zA-Z0-9]+',
 		'hash'     => '[^/]+',
 	];
 
@@ -1163,7 +1163,16 @@ class RouteCollection implements RouteCollectionInterface
 	 */
 	private function determineCurrentSubdomain()
 	{
-		$parsedUrl = parse_url($_SERVER['HTTP_HOST']);
+		// We have to ensure that a scheme exists
+		// on the URL else parse_url will mis-interpret
+		// 'host' as the 'path'.
+		$url = $_SERVER['HTTP_HOST'];
+		if (strpos($url, 'http') !== 0)
+		{
+			$url = 'http://'.$url;
+		}
+
+		$parsedUrl = parse_url($url);
 
 		$host = explode('.', $parsedUrl['host']);
 

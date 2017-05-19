@@ -174,15 +174,31 @@ class MessageTest extends \CIUnitTestCase
 	}
 
 	//--------------------------------------------------------------------
+        
+	public function  testSetHeaderReplacingHeader()
 
-	public function testHeaderLine()
 	{
-		$this->message->setHeader('Accept', ['json', 'html']);
-
-		$this->message->appendHeader('Accept', 'xml');
-
-		$this->assertEquals('json, html, xml', $this->message->getHeaderLine('Accept'));
+       		$this->message->setHeader('Accept', 'json');
+        	
+                $this->assertEquals('json', $this->message->getHeaderLine('Accept'));
 	}
+
+        
+        public function testSetHeaderDuplicateSettings()
+        {
+        	$this->message->setHeader('Accept', 'json');
+        	$this->message->setHeader('Accept', 'xml');
+       		
+                $this->assertEquals('xml', $this->message->getHeaderLine('Accept'));
+        }
+                
+        public function testSetHeaderArrayValues()
+        {
+        	$this->message->setHeader('Accept', ['json', 'html', 'xml']);
+      		
+                $this->assertEquals('json, html, xml', $this->message->getHeaderLine('Accept'));
+        }
+
 	
 	//--------------------------------------------------------------------
 
@@ -209,6 +225,7 @@ class MessageTest extends \CIUnitTestCase
 		// fail path, if arguement does't have the HTTP_*
 		$original = $_SERVER;
 		$_SERVER = ['USER_AGENT' => 'Mozilla/5.0 (iPad; U; CPU OS 3_2_1 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko) Mobile/7B405', 'REQUEST_METHOD' => 'POST'];
+
 
 		$this->message->populateHeaders();
 		
