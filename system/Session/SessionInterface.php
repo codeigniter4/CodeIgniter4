@@ -1,6 +1,4 @@
-<?php
-
-namespace CodeIgniter\Session;
+<?php namespace CodeIgniter\Session;
 
 /**
  * CodeIgniter

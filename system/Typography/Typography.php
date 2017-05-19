@@ -1,6 +1,4 @@
-<?php
-
-namespace CodeIgniter\Typography;
+<?php namespace CodeIgniter\Typography;
 
 /**
  * CodeIgniter

@@ -1,6 +1,4 @@
-<?php
-
-namespace CodeIgniter\View;
+<?php namespace CodeIgniter\View;
 
 /**
  * CodeIgniter
@@ -37,6 +35,7 @@ namespace CodeIgniter\View;
  * @since	Version 3.0.0
  * @filesource
  */
+
 use Config\Services;
 use CodeIgniter\Log\Logger;
 
@@ -47,7 +46,8 @@ use CodeIgniter\Log\Logger;
  *
  * @package CodeIgniter\View
  */
-class View implements RendererInterface {
+class View implements RendererInterface 
+{
 
 	/**
 	 * Data that is made available to the Views.
