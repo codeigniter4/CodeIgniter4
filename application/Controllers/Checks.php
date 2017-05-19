@@ -146,5 +146,21 @@ class Checks extends Controller
         echo $body;
     }
 
+    public function ftp()
+    {
+    	$ftp = Services::ftp();
+
+    	$ftp->initialize([
+    		'hostname' => 'ftp.example.com',
+    		'username' => 'example.com',
+    		'password' => 'example',
+    		'passive' => true,
+    		'debug' => true,
+            'timeout' => 90
+    	]);
+
+        $ftp->connect();
+    }
+
 
 }

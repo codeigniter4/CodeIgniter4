@@ -48,35 +48,35 @@ class FTP
 	 *
 	 * @var	string
 	 */
-	public $hostname	= '';
+	public $hostname = '';
 
 	/**
 	 * FTP Username
 	 *
 	 * @var	string
 	 */
-	public $username	= '';
+	public $username = '';
 
 	/**
 	 * FTP Password
 	 *
 	 * @var	string
 	 */
-	public $password	= '';
+	public $password = '';
 
 	/**
 	 * FTP Server port
 	 *
 	 * @var	int
 	 */
-	public $port		= 21;
+	public $port = 21;
 
 	/**
 	 * Passive mode flag
 	 *
 	 * @var	bool
 	 */
-	public $passive		= true;
+	public $passive	= true;
 
 	/**
 	 * Debug flag
@@ -85,14 +85,14 @@ class FTP
 	 *
 	 * @var	bool
 	 */
-	public $debug		= false;
+	public $debug = false;
 
 	/**
 	 * Connection timeout
 	 *
 	 * @var	int
 	 */
-	public $timeout		= 90;
+	public $timeout	= 90;
 
 	// --------------------------------------------------------------------
 
