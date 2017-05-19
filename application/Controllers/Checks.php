@@ -153,13 +153,17 @@ class Checks extends Controller
     	$ftp->initialize([
     		'hostname' => 'ftp.example.com',
     		'username' => 'example.com',
-    		'password' => 'example',
+    		'password' => 'password',
     		'passive' => true,
-    		'debug' => true,
-            'timeout' => 90
+    		'debug' => true
     	]);
 
         $ftp->connect();
+        $list = $ftp->list_files('/public_html/');
+
+        print_r($list);
+
+        $ftp->close();
     }
 
 
