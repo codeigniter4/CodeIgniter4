@@ -349,7 +349,7 @@ class FTP
 	 * @param	int	$permissions
 	 * @return	bool
 	 */
-	public function upload(string $locpath, string $rempath, string $mode = 'auto', int $permissions = null): bool
+	public function upload(string $locpath, string $rempath, string $mode = 'auto', int $permissions = 0): bool
 	{
 		if ( ! $this->_is_conn())
 		{
