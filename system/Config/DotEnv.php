@@ -39,7 +39,6 @@
 /**
  * Environment-specific configuration
  */
-
 class DotEnv
 {
 	/**

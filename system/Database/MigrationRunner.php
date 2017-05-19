@@ -36,7 +36,6 @@
  * @filesource
  */
 
-
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\ConfigException;
 use Config\Autoload;

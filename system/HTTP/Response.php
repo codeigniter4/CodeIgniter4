@@ -44,9 +44,7 @@ use Config\Mimes;
  * Redirect exception
  *
  */
-class RedirectException extends \Exception
-{
-}
+class RedirectException extends \Exception {}
 
 /**
  * Representation of an outgoing, getServer-side response.
