@@ -36,7 +36,7 @@ The following functions are available:
     Lets you create HTML <img /> tags. The first parameter contains the
     image source. Example::
 
-        echo img('images/picture.jpg'); 
+        echo img('images/picture.jpg');
         // <img src="http://site.com/images/picture.jpg" />
 
     There is an optional second parameter that is a true/false value that
@@ -44,7 +44,7 @@ The following functions are available:
     ``$config['indexPage']`` added to the address it creates.
     Presumably, this would be if you were using a media controller::
 
-        echo img('images/picture.jpg', true); 
+        echo img('images/picture.jpg', true);
         // <img src="http://site.com/index.php/images/picture.jpg" alt="" />
 
     Additionally, an associative array can be passed to the ``img()`` function
@@ -129,13 +129,15 @@ The following functions are available:
 
     Further examples::
 
+        // to be done
+
     Additionally, an associative array can be passed to the ``script_tag()`` function
     for complete control over all attributes and values::
 
         $script = array('src'  => 'js/printer.js');
 
         echo script_tag($script);
-        // <script src="http://site.com/js/printer.js" type="text/javascript"></script>       
+        // <script src="http://site.com/js/printer.js" type="text/javascript"></script>
 
 .. php:function:: ul($list[, $attributes = ''])
 
@@ -280,7 +282,7 @@ The following functions are available:
     Permits you to generate HTML video element from simple or
     source arrays. Example::
 
-        $tracks = 
+        $tracks =
         [
             track('subtitles_no.vtt', 'subtitles', 'no', 'Norwegian No'),
             track('subtitles_yes.vtt', 'subtitles', 'yes', 'Norwegian Yes')
@@ -290,8 +292,8 @@ The following functions are available:
 
         echo video
         (
-            'http://www.codeigniter.com/test.mp4', 
-            'Your browser does not support the video tag.', 
+            'http://www.codeigniter.com/test.mp4',
+            'Your browser does not support the video tag.',
             'controls',
             $tracks
         );
@@ -322,7 +324,7 @@ The following functions are available:
           <track src="subtitles_yes.vtt" kind="subtitles" srclang="yes" label="Norwegian Yes" />
           Your browser does not support the video tag.
         </video>
-        
+
         <video class="test" controls>
           <source src="movie.mp4" type="video/mp4" class="test" />
           <source src="movie.ogg" type="video/ogg" />
@@ -392,8 +394,8 @@ The following functions are available:
 
         echo object
         (
-            'movie.swf', 
-            'application/x-shockwave-flash', 
+            'movie.swf',
+            'application/x-shockwave-flash',
             'class="test"',
             [
                 param('foo', 'bar', 'ref', 'class="test"'),
@@ -404,9 +406,9 @@ The following functions are available:
     The above code will produce this:
 
     .. code-block:: html
-        
+
         <object data="movie.swf" class="test"></object>
-        
+
         <object data="movie.swf" class="test">
           <param name="foo" type="ref" value="bar" class="test" />
           <param name="hello" type="ref" value="world" class="test" />
@@ -454,10 +456,10 @@ The following functions are available:
 
     Example::
 
-        echo doctype(); 
+        echo doctype();
         // <!DOCTYPE html>
 
-        echo doctype('html4-trans'); 
+        echo doctype('html4-trans');
         // <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 
     The following is a list of doctype choices. These are configurable, and

@@ -16,6 +16,10 @@ while still keeping as many of the things intact that has made people love the f
 
 More information about the plans for version 4 can be found in [the announcement](http://forum.codeigniter.com/thread-62615.html) on the forums.
 
+### Documentation
+
+The current documentation can be found [here](https://bcit-ci.github.io/CodeIgniter4/). As with the rest of the framwork, it is currently a work in progress, and will see changes over time to structure, explanations, etc.
+
 ## Important Change with index.php
 
 index.php is no longer in the root of the project! It has been moved inside the *public* folder,

@@ -24,4 +24,4 @@ patterns. The database functions offer clear, simple syntax.
     Database Manipulation with Database Forge <forge>
     Database Migrations <migration>
     Database Seeding <seeds>
-    Database Hooks <hooks>
+    Database Events <events>

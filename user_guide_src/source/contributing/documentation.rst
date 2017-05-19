@@ -27,7 +27,7 @@ It is created automatically by inserting the following:
 
   <div class="custom-index container"></div>
 
-The <div> that is inserted as raw HTML is a hook for the documentation's
+The <div> that is inserted as raw HTML is a event for the documentation's
 JavaScript to dynamically add links to any function and method definitions
 contained in the current page.
 
