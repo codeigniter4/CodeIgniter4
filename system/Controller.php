@@ -179,7 +179,7 @@ class Controller
 	 *
 	 * @return bool
 	 */
-	public function validate(RequestInterface $request, $rules, array $messages = null): bool
+	public function validate(RequestInterface $request, $rules, array $messages = []): bool
 	{
 		$this->validator = Services::validation();
 
