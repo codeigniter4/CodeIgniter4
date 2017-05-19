@@ -117,9 +117,9 @@ class RouteCollection implements RouteCollectionInterface
 	protected $placeholders = [
 		'any'      => '.*',
 		'segment'  => '[^/]+',
+		'alphanum' => '[a-zA-Z0-9]+',
 		'num'      => '[0-9]+',
 		'alpha'    => '[a-zA-Z]+',
-		'alphanum' => '[a-zA-Z0-9]+',
 		'hash'     => '[^/]+',
 	];
 
