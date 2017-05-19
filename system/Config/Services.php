@@ -209,6 +209,21 @@ class Services
 	//--------------------------------------------------------------------
 
 	/**
+	 * The FTP client class
+	 */
+	public static function ftp($getShared = true)
+	{
+		if ($getShared)
+		{
+			return self::getSharedInstance('ftp');
+		}
+
+		return new \CodeIgniter\FTP\Ftp();
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * The Iterator class provides a simple way of looping over a function
 	 * and timing the results and memory usage. Used when debugging and
 	 * optimizing applications.
