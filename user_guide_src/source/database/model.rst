@@ -34,6 +34,7 @@ CodeIgniter does provide a model class that provides a few nice features, includ
 - automatic database connection
 - basic CRUD methods
 - in-model validation
+- automatic pagination
 - and more
 
 This class provides a solid base from which to build your own models, allowing you to
@@ -316,7 +317,7 @@ simplest, they might look like this::
 
 		public function __get($key)
 		{
-			if (isset($this->$key))
+			if (property_exists($this, $key))
 			{
 				return $this->$key;
 			}
@@ -324,7 +325,7 @@ simplest, they might look like this::
 
 		public function __set($key, $value)
 		{
-			if (isset($this->$key))
+			if (property_exists($this, $key))
 			{
 				$this->$key = $value;
 			}
@@ -354,6 +355,9 @@ model's ``save()`` method to inspect the class, grab any public and private prop
 
 	// Save the changes
 	$model->save($job);
+
+.. note:: If you find yourself working with Entities a lot, CodeIgniter provides a built-in :doc:`Entity class </database/entities>`
+	that provides several handy features that make developing Entities simpler.
 
 Deleting Data
 -------------
