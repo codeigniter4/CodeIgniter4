@@ -37,11 +37,11 @@
  */
 
 /**
- * Class Ftp
+ * Class FTP
  *
  * @package CodeIgniter
  */
-class Ftp
+class FTP
 {
 	/**
 	 * FTP Server hostname
@@ -111,7 +111,7 @@ class Ftp
 	 * @param	array	$config
 	 * @return	void
 	 */
-	public function __construct($config = [])
+	public function __construct(array $config = [])
 	{
 		empty($config) OR $this->initialize($config);
 	}
@@ -124,7 +124,7 @@ class Ftp
 	 * @param	array	$config
 	 * @return	void
 	 */
-	public function initialize($config = [])
+	public function initialize(array $config = [])
 	{
 		if ($config)
 		{
@@ -148,7 +148,7 @@ class Ftp
 	 * @param	array	 $config	Connection values
 	 * @return	bool
 	 */
-	public function connect($config = [])
+	public function connect(array $config = [])
 	{
 		if (count($config) > 0)
 		{
@@ -165,7 +165,7 @@ class Ftp
 			throw new \Exception($e->getMessage());
 		}
 
-		if (false === $this->connId)
+		if ($this->connId === false)
 		{
 			if ($this->debug === true)
 			{
@@ -175,7 +175,7 @@ class Ftp
 			return false;
 		}
 
-		if ( ! $this->_login())
+		if (!$this->_login())
 		{
 			if ($this->debug === true)
 			{
@@ -259,7 +259,7 @@ class Ftp
 	 * @param	bool	$suppress_debug
 	 * @return	bool
 	 */
-	public function changedir($path, $suppress_debug = false)
+	public function changedir(string $path, bool $suppress_debug = false)
 	{
 		if ( ! $this->_is_conn())
 		{
@@ -300,7 +300,7 @@ class Ftp
 	 * @param	int	$permissions
 	 * @return	bool
 	 */
-	public function mkdir($path, $permissions = null)
+	public function mkdir(string $path, bool $permissions = null)
 	{
 		if ($path === '' OR ! $this->_is_conn())
 		{
@@ -349,7 +349,7 @@ class Ftp
 	 * @param	int	$permissions
 	 * @return	bool
 	 */
-	public function upload($locpath, $rempath, $mode = 'auto', $permissions = null)
+	public function upload(string $locpath, string $rempath, string $mode = 'auto', int $permissions = null)
 	{
 		if ( ! $this->_is_conn())
 		{
@@ -413,7 +413,7 @@ class Ftp
 	 * @param	string	$mode
 	 * @return	bool
 	 */
-	public function download($rempath, $locpath, $mode = 'auto')
+	public function download(string $rempath, string $locpath, string $mode = 'auto')
 	{
 		if ( ! $this->_is_conn())
 		{
@@ -463,7 +463,7 @@ class Ftp
 	 * @param	bool	$move
 	 * @return	bool
 	 */
-	public function rename($old_file, $new_file, $move = false)
+	public function rename(string $old_file, string $new_file, bool $move = false)
 	{
 		if ( ! $this->_is_conn())
 		{
@@ -504,7 +504,7 @@ class Ftp
 	 * @param	string	$new_file
 	 * @return	bool
 	 */
-	public function move($old_file, $new_file)
+	public function move(string $old_file, string $new_file)
 	{
 		return $this->rename($old_file, $new_file, true);
 	}
@@ -517,7 +517,7 @@ class Ftp
 	 * @param	string	$filepath
 	 * @return	bool
 	 */
-	public function delete_file($filepath)
+	public function delete_file(string $filepath)
 	{
 		if ( ! $this->_is_conn())
 		{
@@ -525,7 +525,7 @@ class Ftp
 		}
 
 		$result = false;
-		
+
 		try {
 			$result	= ftp_delete($this->connId, $filepath);
 		}
@@ -556,7 +556,7 @@ class Ftp
 	 * @param	string	$filepath
 	 * @return	bool
 	 */
-	public function delete_dir($filepath)
+	public function delete_dir(string $filepath)
 	{
 		if ( ! $this->_is_conn())
 		{
@@ -618,7 +618,7 @@ class Ftp
 	 * @param	int	$perm	Permissions
 	 * @return	bool
 	 */
-	public function chmod($path, $perm)
+	public function chmod(string $path, int $perm)
 	{
 		if ( ! $this->_is_conn())
 		{
@@ -656,7 +656,7 @@ class Ftp
 	 * @param	string	$path
 	 * @return	array
 	 */
-	public function list_files($path = '.')
+	public function list_files(string $path = '.')
 	{
 		return $this->_is_conn()
 			? ftp_nlist($this->connId, $path)
@@ -677,7 +677,7 @@ class Ftp
 	 * @param	string	$rempath	Path to destination - include the base folder with trailing slash
 	 * @return	bool
 	 */
-	public function mirror($locpath, $rempath)
+	public function mirror(string $locpath, string $rempath)
 	{
 		if ( ! $this->_is_conn())
 		{
@@ -734,7 +734,7 @@ class Ftp
 	 * @param	string	$filename
 	 * @return	string
 	 */
-	protected function _getext($filename)
+	protected function _getext(string $filename)
 	{
 		return (($dot = strrpos($filename, '.')) === false)
 			? 'txt'
@@ -749,7 +749,7 @@ class Ftp
 	 * @param	string	$ext	Filename extension
 	 * @return	string
 	 */
-	protected function _settype($ext)
+	protected function _settype(string $ext): string
 	{
 		return in_array($ext, ['txt', 'text', 'php', 'phps', 'php4', 'js', 'css', 'htm', 'html', 'phtml', 'shtml', 'log', 'xml'], true)
 			? 'ascii'
@@ -791,7 +791,7 @@ class Ftp
 	 * @param	string	$line
 	 * @return	void
 	 */
-	protected function _error($line)
+	protected function _error(string $line)
 	{
 		throw new \Exception(lang('Ftp.' . $line));
 	}
