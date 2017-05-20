@@ -20,4 +20,6 @@ class SimpleConfig extends \CodeIgniter\Config\BaseConfig
 	public $simple = [
 		'name' => null
 	];
+	
+	public $shortprefix;
 }

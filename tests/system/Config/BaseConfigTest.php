@@ -96,4 +96,16 @@ class BaseConfigTest extends CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testShortPrefixedValues()
+	{
+		$dotenv = new DotEnv($this->fixturesFolder, '.env');
+		$dotenv->load();
+		
+		$config = new \SimpleConfig();
+		
+		$this->assertEquals('wht', $config->shortprefix);
+	}
+	
+	//--------------------------------------------------------------------
+
 }
