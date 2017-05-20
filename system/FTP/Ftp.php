@@ -37,14 +37,14 @@
  */
 
 /**
- * Class FTP
+ * FTP Class
  *
- * @package CodeIgniter
+ * @package		CodeIgniter
  */
 class FTP
 {
 	/**
-	 * FTP Server hostname
+	 * FTP Server Hostname
 	 *
 	 * @var	string
 	 */
@@ -65,21 +65,21 @@ class FTP
 	public $password = '';
 
 	/**
-	 * FTP Server port
+	 * FTP Server Port
 	 *
 	 * @var	int
 	 */
 	public $port = 21;
 
 	/**
-	 * Passive mode flag
+	 * Passive Mode Flag
 	 *
 	 * @var	bool
 	 */
 	public $passive	= true;
 
 	/**
-	 * Debug flag
+	 * Debug Flag
 	 *
 	 * Specifies whether to display error messages.
 	 *
