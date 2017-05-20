@@ -49,4 +49,4 @@ return [
 	'ftpUnableToRename'        => 'Unable to rename the file.',
 	'ftpUnableToDelete'        => 'Unable to delete the file.',
 	'ftpUnableToDelete'        => 'Unable to move the file. Please make sure the destination directory exists.',
-]
+];
