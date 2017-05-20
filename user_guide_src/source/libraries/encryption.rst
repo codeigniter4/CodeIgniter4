@@ -51,7 +51,7 @@ software and programming languages' APIs.
 
 However, the *encryption key* is not used as is.
 Keyed-hash message authentication (HMAC) requires a secret key,
- and using the same key for both
+and using the same key for both
 encryption and authentication is a bad practice.
 
 Because of that, two separate keys are derived from your already configured
@@ -59,7 +59,7 @@ Because of that, two separate keys are derived from your already configured
 done via a technique called `HMAC-based Key Derivation Function
 <http://en.wikipedia.org/wiki/HKDF>`_ (HKDF).
 
-Setting your encryption_key
+Setting your encryption key
 ===========================
 
 An *encryption key* is a piece of information that controls the
@@ -83,8 +83,8 @@ your server is not totally under your control it's impossible to ensure
 key security so you may want to think carefully before using it for
 anything that requires high security, like storing credit card numbers.
 
-Your encryption key **must** be as long as the encyption algorithm in use
-allows. For AES-128, that's 128 bits or 16 bytes (charcters) long.
+Your encryption key **must** be as long as the encryption algorithm in use
+allows. For AES-128, that's 128 bits or 16 bytes (characters) long.
 You will find a table below that shows the supported key lengths of
 different ciphers.
 
@@ -271,62 +271,89 @@ Cookies, for example, can only hold 4K of information.
 Configuring the library
 =======================
 
-For usability, performance, but also historical reasons tied to earlier
-encryption in CodeIgniter, the Encryption library is designed to
+The Encryption library is designed to
 use repeatedly the same driver, encryption cipher, mode and key.
 
 As noted in the "Default behavior" section above, this means using an
 auto-detected driver (OpenSSL has a higher priority), the AES-128 ciper
 in CBC mode, and your ``$key`` value.
 
-You can pass an array of parameters to the Services...
-
-If you wish to change that however, you need to use the ``initialize()``
-method. It accepts an associative array of parameters, all of which are
-optional:
+Encryption configuration settings are normally set in 
+application/config/Encryption.php.
 
 ======== ===============================================
 Option   Possible values
 ======== ===============================================
-driver   'openssl', 'mcrypt'
+driver   Preferred handler: 'openssl', 'mcrypt'
 cipher   Cipher name (see :ref:`ciphers-and-modes`)
 mode     Encryption mode (see :ref:`encryption-modes`)
 key      Encryption key 
 ======== ===============================================
 
+You can over-ride any of those settings by passing your own ``Config`` object,
+or an associative array of parameters, to the Services::
+
+    $encrypter = \Config\Services::encrypter($params);
+
+These will replace any same-named settings in ``Config/Encryption``.
+
+Using the Encryption manager directly
+=====================================
+
+Instead of, or in addition to, using the `Services` described
+at the beginning of this page, you can use the encryption manager
+directly, to create an `Encrypter`` or to change the settings
+of the current one.
+
+    $encryption = new \Encryption\Encryption();
+    $encrypter = $encryption->initialize($params);
+
 For example, if you were to change the encryption algorithm and
 mode to AES-256 in CTR mode, this is what you should do::
 
-	$encrypter->initialize(
-		array(
-			'cipher' => 'aes-256',
-			'mode' => 'ctr',
-			'key' => '<a 32-character random string>'
-		)
-	);
+    $encryption = new \Encryption\Encryption();
+    $encrypter = $encryption->initialize([
+            'cipher' => 'aes-256',
+            'mode' => 'ctr',
+            'key' => '<a 32-character random string>'		
+	]);
 
 Note that we only mentioned that you want to change the cipher and mode,
 but we also included a key in the example. As previously noted, it is
 important that you choose a key with a proper size for the used algorithm.
 
-There's also the ability to change the driver, if for some reason you
-have both, but want to use MCrypt instead of OpenSSL::
+If you want to change the driver, for instance switching between
+MCrypt and OpenSSL, you could go through the Services::
 
 	// Switch to the MCrypt driver
-	$encrypter->initialize(array('driver' => 'mcrypt'));
+	$encrypter= \Config\Services::encrypter(['driver' => 'mcrypt']);;
+        // encrypt data using MCrypt
 
 	// Switch back to the OpenSSL driver
-	$encrypter->initialize(array('driver' => 'openssl'));
+	$encrypter= \Config\Services::encrypter(['driver' => 'openssl']);;
+        // now encrypt data using OpenSSL
+
+Alternately, you could use the encryption manager directly:
+
+    $encryption = new \Encryption\Encryption();
+
+    // Switch to the MCrypt driver
+    $encrypter= $encryption->initialize(['driver' => 'mcrypt']);;
+    // encrypt data using MCrypt
+
+    // Switch back to the OpenSSL driver
+    $encrypter= $encrypter= $encryption->initialize(['driver' => 'openssl']);;
+    // now encrypt data using OpenSSL
 
 Encrypting and decrypting data
 ==============================
 
 Encrypting and decrypting data with the already configured library
-settings is simple. As simple as just passing the string to the
+settings is simple - pass the appropriate string to the
 ``encrypt()`` and/or ``decrypt()`` methods::
 
 	$plain_text = 'This is a plain-text message!';
-	$ciphertext = $encrypter->encrypt($plain_text);
+	$ciphertext = $encrypter->encrypt($plaintext);
 
 	// Outputs: This is a plain-text message!
 	echo $encrypter->decrypt($ciphertext);
@@ -343,10 +370,9 @@ You don't need to worry about it.
 How it works
 ------------
 
-If you must know how the process works, here's what happens under
-the hood:
+Here's what happens under the hood:
 
-- ``$encrypter->encrypt($plain_text)``
+- ``$encrypter->encrypt($plaintext)``
 
   #. Derive an encryption key and a HMAC key from your configured
      *encryption_key* via HKDF, using the SHA-512 digest algorithm.
@@ -389,12 +415,9 @@ the hood:
 Using custom parameters
 -----------------------
 
-Let's say you have to interact with another system that is out
-of your control and uses another method to encrypt data. A
-method that will most certainly not match the above-described
-sequence and probably not use all of the steps either.
-
-The Encryption library allows you to change how its encryption
+If you have to interact with another system that is out
+of your control and uses another method to encrypt data,
+you can change how the encryption
 and decryption processes work, so that you can easily tailor a
 custom solution for such situations.
 
@@ -407,7 +430,6 @@ Here's an example::
 
 	// Assume that we have $ciphertext, $key and $hmac_key
 	// from on outside source
-
 	$message = $encrypter->decrypt(
 		$ciphertext,
 		array(
@@ -427,11 +449,10 @@ HMAC.
 	example. When using custom parameters, encryption and HMAC keys
 	are not derived like the default behavior of the library is.
 
-Below is a list of the available options.
-
-However, unless you really need to and you know what you are doing,
+Below is a list of the available options for ``encrypt()`` and ``decrypt``.
+Unless you really need to do this, and you know what you are doing,
 we advise you to not change the encryption process as this could
-impact security, so please do so with caution.
+impact security.
 
 ============= =============== ============================= ======================================================
 Option        Default value   Mandatory / Optional          Description
@@ -442,9 +463,9 @@ key           N/A             Yes                           Encryption key.
 hmac          TRUE            No                            Whether to use a HMAC.
                                                             Boolean. If set to FALSE, then *hmac_digest* and
                                                             *hmac_key* will be ignored.
-hmac_digest   sha512          No                            HMAC message digest algorithm (see :ref:`digests`).
-hmac_key      N/A             Yes, unless *hmac* is FALSE   HMAC key.
-raw_data      FALSE           No                            Whether the cipher-text should be raw.
+hmacDigest    sha512          No                            HMAC message digest algorithm (see :ref:`digests`).
+hmacKey       N/A             Yes, unless *hmac* is FALSE   HMAC key.
+rawdata       FALSE           No                            Whether the ciphertext should be raw.
                                                             Boolean. If set to TRUE, then Base64 encoding and
                                                             decoding will not be performed and HMAC will not
                                                             be a hexadecimal string.
@@ -452,7 +473,7 @@ raw_data      FALSE           No                            Whether the cipher-t
 
 .. important:: ``encrypt()`` and ``decrypt()`` will return FALSE if
 	a mandatory parameter is not provided or if a provided
-	value is incorrect. This includes *hmac_key*, unless *hmac*
+	value is incorrect. This includes *hmacKey*, unless *hmac*
 	is set to FALSE.
 
 .. _digests:
@@ -487,22 +508,32 @@ Class Reference
 
 .. php:class:: CodeIgniter\\Encryption\\Encryption
 
+	.. php:staticmethod:: createKey($length)
+
+		:param	int	$length: Output length
+		:returns:	A pseudo-random cryptographic key with the specified length, or FALSE on failure
+		:rtype:	string
+
+		Creates a cryptographic key by fetching random data from
+		the operating system's sources (i.e. /dev/urandom).
+
+
 	.. php:method:: initialize($params)
 
 		:param	array	$params: Configuration parameters
-		:returns:	CodeIgniter\\Encryption\\Encryption instance (method chaining)
-		:rtype:	CodeIgniter\\Encryption\\Encryption
+		:returns:	CodeIgniter\\Encryption\\EncrypterInterface instance (for method chaining)
+		:rtype:	CodeIgniter\\Encryption\\EncrypterInterface
 
 		Initializes (configures) the library to use a different
 		driver, cipher, mode or key.
 
 		Example::
 
-			$encrypter->initialize(
-				array('mode' => 'ctr')
-			);
+			$encrypter = $encryption->initialize(['mode' => 'ctr']);
 
 		Please refer to the :ref:`configuration` section for detailed info.
+
+.. php:interface:: CodeIgniter\\Encryption\\EncrypterInterface
 
 	.. php:method:: encrypt($data[, $params = NULL])
 
@@ -536,15 +567,6 @@ Class Reference
 		Please refer to the :ref:`custom-parameters` secrion for information
 		on the optional parameters.
 
-	.. php:method:: createKey($length)
-
-		:param	int	$length: Output length
-		:returns:	A pseudo-random cryptographic key with the specified length, or FALSE on failure
-		:rtype:	string
-
-		Creates a cryptographic key by fetching random data from
-		the operating system's sources (i.e. /dev/urandom).
-
 	.. php:method:: hkdf($key[, $digest = 'sha512'[, $salt = NULL[, $length = NULL[, $info = '']]]])
 
 		:param	string	$key: Input key material
@@ -568,7 +590,7 @@ Class Reference
 
 		Example::
 
-			$hmac_key = $encrypter->hkdf(
+			$hmacKey = $encrypter->hkdf(
 				$key,
 				'sha512',
 				NULL,
@@ -576,4 +598,4 @@ Class Reference
 				'authentication'
 			);
 
-			// $hmac_key is a pseudo-random key with a length of 64 bytes
+			// $hmacKey is a pseudo-random key with a length of 64 bytes

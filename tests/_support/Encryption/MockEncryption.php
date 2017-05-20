@@ -1,6 +1,4 @@
-<?php
-
-namespace CodeIgniter\Encryption;
+<?php namespace CodeIgniter\Encryption;
 
 class MockEncryption extends Encryption
 {

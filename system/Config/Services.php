@@ -1,6 +1,4 @@
-<?php
-
-namespace CodeIgniter\Config;
+<?php namespace CodeIgniter\Config;
 
 /**
  * CodeIgniter
@@ -164,7 +162,7 @@ class Services
 	 * 
 	 * @return \CodeIgniter\Encryption\EncrypterInterfrace Encryption handler
 	 */
-	public static function encrypter(\Config\Encryption $config = null, array $params = [], $getShared = true)
+	public static function encrypter(\Config\Encryption $config = null, array $params = [], $getShared = false)
 	{
 		if ($getShared === true)
 		{

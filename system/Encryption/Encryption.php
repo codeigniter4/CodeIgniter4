@@ -1,6 +1,4 @@
-<?php
-
-namespace CodeIgniter\Encryption;
+<?php namespace CodeIgniter\Encryption;
 
 /**
  * CodeIgniter
@@ -107,12 +105,12 @@ class Encryption
 	/**
 	 * Class constructor
 	 *
-	 * @param	array	$params	Configuration parameters
+	 * @param	mixed	$params	Configuration parameters
 	 * @return	void
 	 * 
 	 * @throws \CodeIgniter\Encryption\EncryptionException
 	 */
-	public function __construct(array $params = [])
+	public function __construct($params = [])
 	{
 		$this->logger = \Config\Services::logger(true);
 		$this->config = new \Config\Encryption();
@@ -121,9 +119,14 @@ class Encryption
 		if ($params == null)
 		// use config if no parameters given
 			$params = (array) $this->config;
-		else
-		// override config with passed parameters
-			$params = array_merge((array) $config, $params);
+		elseif (is_object($params))
+		{
+			// treat the paramater as a Config object
+			$params = (array) $params;
+		}
+
+		// override base config with passed parameters
+		$params = array_merge((array) $this->config, $params);
 
 		// determine what is installed
 		$this->handlers = [
@@ -134,19 +137,60 @@ class Encryption
 		if ( ! $this->handlers['mcrypt'] && ! $this->handlers['openssl'])
 			throw new EncryptionException('Unable to find an available encryption handler.');
 
-		// how should this be handled?
-		$this->driver = $params['driver'] ?? 'OpenSSL';
-		$this->handler = $this->drivers[$this->handler];
-		$handlerName = 'Handlers\\' . $this->handler . 'Handler';
-		$this->encrypter = new $handlerName();
+		$this->logger->info('Encryption class Initialized');
+	}
 
-		$this->encrypter->initialize($params);
+	/**
+	 * Initialize
+	 *
+	 * @param	array	$params	Configuration parameters
+	 * @return	\CodeIgniter\Encryption\EncrypterInterface
+	 * 
+	 * @throws \CodeIgniter\Encryption\EncryptionException
+	 */
+	public function initialize(array $params)
+	{
+		// how should this be handled?
+		$this->driver = $params['driver'] ?? 'openssl';
+		$this->handler = $this->drivers[$this->driver];
 
 		// use config key if initialization didn't create one
 		if ( ! isset($this->key) && self::strlen($key = $this->config->key) > 0)
 			$this->key = $key;
+		
+		if ( ! empty($params['handler']))
+		{
+			if (isset($this->handlers[$params['handler']]))
+			{
+				if ($this->handlers[$params['handler']])
+				{
+					$this->handler = $params['handler'];
+				}
+				else
+				{
+					throw new EncryptionException("Driver '" . $params['handler'] . "' is not available.");
+				}
+			}
+			else
+			{
+				throw new EncryptionException("Unknown handler '" . $params['handler'] . "' cannot be configured.");
+			}
+		}
 
-		$this->logger->info('Encryption class Initialized');
+		if (empty($this->handler))
+		{
+			$this->handler = ($this->handlers['openssl'] === true) ? 'openssl' : 'mcrypt';
+
+			$this->logger->debug("Encryption: Auto-configured handler '" . $this->handler . "'.");
+		}
+
+		empty($params['cipher']) && $params['cipher'] = $this->cipher;
+		empty($params['key']) OR $this->key = $params['key'];
+
+		$handlerName = 'CodeIgniter\\Encryption\\Handlers\\' . $this->handler . 'Handler';
+		$this->encrypter = new $handlerName();
+		$this->encrypter->initialize($params);
+		return $this->encrypter;
 	}
 
 // --------------------------------------------------------------------
@@ -176,7 +220,7 @@ class Encryption
 	// --------------------------------------------------------------------
 
 	/**
-	 * __get() magic
+	 * __get() magic, providing readonly access to some of our properties
 	 *
 	 * @param	string	$key	Property name
 	 * @return	mixed
@@ -207,21 +251,6 @@ class Encryption
 	protected static function strlen($str)
 	{
 		return mb_strlen($str, '8bit');
-	}
-
-	// --------------------------------------------------------------------
-
-	/**
-	 * Byte-safe substr()
-	 *
-	 * @param	string	$str
-	 * @param	int	$start
-	 * @param	int	$length
-	 * @return	string
-	 */
-	protected static function substr($str, $start, $length = null)
-	{
-		return mb_substr($str, $start, $length, '8bit');
 	}
 
 }

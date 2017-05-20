@@ -1,6 +1,4 @@
-<?php
-
-namespace CodeIgniter\Encryption\Handlers;
+<?php namespace CodeIgniter\Encryption\Handlers;
 
 /**
  * CodeIgniter
@@ -66,7 +64,7 @@ class McryptHandler extends BaseHandler
 	 * 
 	 * @throws \CodeIgniter\Encryption\EncryptionException
 	 */
-	protected function initializeIt($params)
+	protected function initialize($params)
 	{
 		if ( ! empty($params['cipher']))
 		{

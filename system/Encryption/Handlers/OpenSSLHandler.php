@@ -1,6 +1,4 @@
-<?php
-
-namespace CodeIgniter\Encryption\Handlers;
+<?php namespace CodeIgniter\Encryption\Handlers;
 
 /**
  * CodeIgniter
@@ -64,7 +62,7 @@ class OpenSSLHandler extends BaseHandler
 	 * @param	array	$params	Configuration parameters
 	 * @return	void
 	 */
-	protected function initializeIt($params)
+	protected function initialize($params)
 	{
 		if ( ! empty($params['cipher']))
 		{

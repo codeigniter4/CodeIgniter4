@@ -1,6 +1,4 @@
-<?php
-
-namespace CodeIgniter\Encryption;
+<?php namespace CodeIgniter\Encryption;
 
 /**
  * CodeIgniter
@@ -56,14 +54,6 @@ interface EncrypterInterface
 	 * @throws \CodeIgniter\Encryption\EncryptionException
 	 */
 	public function initialize(array $params);
-
-	/**
-	 * Create a random key
-	 *
-	 * @param	int	$length	Output length
-	 * @return	string
-	 */
-	public function createKey($length);
 
 	/**
 	 * Encrypt - convert plaintext into ciphertext

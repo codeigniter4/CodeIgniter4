@@ -1,6 +1,4 @@
-<?php
-
-namespace CodeIgniter\Encryption\Handlers;
+<?php namespace CodeIgniter\Encryption\Handlers;
 
 /**
  * CodeIgniter
@@ -109,7 +107,7 @@ abstract class BaseHandler implements \CodeIgniter\Encryption\EncrypterInterface
 	 * Constructor
 	 * @param BaseConfig $config
 	 */
-	public function __construct($config)
+	public function __construct($config = null)
 	{
 		$this->logger = \Config\Services::logger(true);
 
@@ -120,8 +118,8 @@ abstract class BaseHandler implements \CodeIgniter\Encryption\EncrypterInterface
 		$params = (array) $this->config;
 
 		$this->handlers = [
+			'openssl' => extension_loaded('openssl'),
 			'mcrypt' => defined('MCRYPT_DEV_URANDOM'),
-			'openssl' => extension_loaded('openssl')
 		];
 
 		if ( ! $this->handlers['mcrypt'] && ! $this->handlers['openssl'])
@@ -137,48 +135,6 @@ abstract class BaseHandler implements \CodeIgniter\Encryption\EncrypterInterface
 		}
 
 		$this->logger->info('Encryption handler Initialized');
-	}
-
-	/**
-	 * Initialize
-	 *
-	 * @param	array	$params	Configuration parameters
-	 * @return	CI_Encryption
-	 * 
-	 * @throws \CodeIgniter\Encryption\EncryptionException
-	 */
-	public function initialize(array $params)
-	{
-		if ( ! empty($params['handler']))
-		{
-			if (isset($this->handlers[$params['handler']]))
-			{
-				if ($this->handlers[$params['handler']])
-				{
-					$this->handler = $params['handler'];
-				}
-				else
-				{
-					throw new EncryptionException("Driver '" . $params['handler'] . "' is not available.");
-				}
-			}
-			else
-			{
-				throw new EncryptionException("Unknown handler '" . $params['handler'] . "' cannot be configured.");
-			}
-		}
-
-		if (empty($this->handler))
-		{
-			$this->handler = ($this->handlers['openssl'] === true) ? 'openssl' : 'mcrypt';
-
-			$this->logger->debug("Encryption: Auto-configured handler '" . $this->handler . "'.");
-		}
-
-		empty($params['cipher']) && $params['cipher'] = $this->cipher;
-		empty($params['key']) OR $this->key = $params['key'];
-		$this->initializeIt($params);
-		return $this;
 	}
 
 	/**
@@ -412,4 +368,52 @@ abstract class BaseHandler implements \CodeIgniter\Encryption\EncrypterInterface
 	 * @return	void
 	 */
 	abstract protected function cipherAlias(&$cipher);
+
+	/**
+	 * Byte-safe strlen()
+	 *
+	 * @param	string	$str
+	 * @return	int
+	 */
+	protected static function strlen($str)
+	{
+		return mb_strlen($str, '8bit');
+	}
+
+	// --------------------------------------------------------------------
+
+	/**
+	 * Byte-safe substr()
+	 *
+	 * @param	string	$str
+	 * @param	int	$start
+	 * @param	int	$length
+	 * @return	string
+	 */
+	protected static function substr($str, $start, $length = null)
+	{
+		return mb_substr($str, $start, $length, '8bit');
+	}
+
+	/**
+	 * __get() magic, providing readonly access to some of our properties
+	 *
+	 * @param	string	$key	Property name
+	 * @return	mixed
+	 */
+	public function __get($key)
+	{
+		// Because aliases
+		if ($key === 'mode')
+		{
+			return array_search($this->mode, $this->modes[$this->handler], true);
+		}
+		elseif (in_array($key, ['cipher', 'mode', 'key', 'handler', 'handlers', 'digests'], true))
+		{
+			return $this->{$key};
+		}
+
+		return null;
+	}
+
 }

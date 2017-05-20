@@ -1,6 +1,4 @@
-<?php
-
-namespace CodeIgniter\Encryption;
+<?php namespace CodeIgniter\Encryption;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Encryption\MockEncryption;
@@ -85,30 +83,32 @@ class EncryptionTest extends CIUnitTestCase
 			]
 		];
 
+		$this->encrypter = \Config\Services::encrypter();
+
 		foreach ($vectors as $test)
 		{
 			$this->assertEquals(
-					$test['okm'], $this->encryption->hkdf(
+					$test['okm'], $this->encrypter->hkdf(
 							$test['ikm'], $test['digest'], $test['salt'], $test['length'], $test['info']
 					)
 			);
 		}
 
 		// Test default length, it must match the digest size
-		$hkdf_result = $this->encryption->hkdf('foobar', 'sha512');
+		$hkdf_result = $this->encrypter->hkdf('foobar', 'sha512');
 		$this->assertEquals(
 				64, defined('MB_OVERLOAD_STRING') ? mb_strlen($hkdf_result, '8bit') : strlen($hkdf_result)
 		);
 
 		// Test maximum length (RFC5869 says that it must be up to 255 times the digest size)
-		$hkdf_result = $this->encryption->hkdf('foobar', 'sha384', null, 48 * 255);
+		$hkdf_result = $this->encrypter->hkdf('foobar', 'sha384', null, 48 * 255);
 		$this->assertEquals(
 				12240, defined('MB_OVERLOAD_STRING') ? mb_strlen($hkdf_result, '8bit') : strlen($hkdf_result)
 		);
-		$this->assertFalse($this->encryption->hkdf('foobar', 'sha224', null, 28 * 255 + 1));
+		$this->assertFalse($this->encrypter->hkdf('foobar', 'sha224', null, 28 * 255 + 1));
 
 		// CI-specific test for an invalid digest
-		$this->assertFalse($this->encryption->hkdf('fobar', 'sha1'));
+		$this->assertFalse($this->encrypter->hkdf('fobar', 'sha1'));
 	}
 
 	// --------------------------------------------------------------------
@@ -385,7 +385,7 @@ class EncryptionTest extends CIUnitTestCase
 	public function testMagicGet()
 	{
 		$this->assertNull($this->encryption->foo);
-		$this->assertEquals(['mcrypt', 'openssl'], array_keys($this->encryption->handlers));
+		$this->assertEquals(['openssl', 'mcrypt'], array_keys($this->encryption->handlers));
 
 		// 'stream' mode is translated into an empty string for OpenSSL
 		$this->encryption->initialize(['cipher' => 'rc4', 'mode' => 'stream']);
