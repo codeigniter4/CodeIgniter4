@@ -37,16 +37,16 @@
  */
 
 return [
-	'ftpNoConnection'		=> 'Unable to locate a valid connection ID. Please make sure you are connected before performing any file routines.',
-	'ftpUnableToConnect'	=> 'Unable to connect to your FTP server using the supplied hostname.',
-	'ftpUnableToLogin'		=> 'Unable to login to your FTP server. Please check your username and password.',
-	'ftpUnableToMkdir'		=> 'Unable to create the directory you have specified.',
-	'ftpUnableToChangedir'	=> 'Unable to change directories.',
-	'ftpUnableToChmod'		=> 'Unable to set file permissions. Please check your path.',
-	'ftpUnableToUpload'		=> 'Unable to upload the specified file. Please check your path.',
-	'ftpUnableToDownload'	=> 'Unable to download the specified file. Please check your path.',
-	'ftpNoSourceFile'		=> 'Unable to locate the source file. Please check your path.',
-	'ftpUnableToRename'		=> 'Unable to rename the file.',
-	'ftpUnableToDelete'		=> 'Unable to delete the file.',
-	'ftpUnableToMove'		=> 'Unable to move the file. Please make sure the destination directory exists.',
-];
+	'ftpNoConnection'          => 'Unable to locate a valid connection ID. Please make sure you are connected before performing any file routines.',
+	'ftpUnableToConnect'       => 'Unable to connect to your FTP Server using the supplied hostname.',
+	'ftpUnableToLogin'         => 'Unable to login to your FTP server. Please check your username and password.',
+	'ftpUnableToMkdir'         => 'Unable to create the directory you have specified.',
+	'ftpUnableToChangedir'     => 'Unable to change directories.',
+	'ftpUnableToChmod'         => 'Unable to set file permissions. Please check your path.',
+	'ftpUnableToUpload'        => 'Unable to upload the specified file. Please check your path.',
+	'ftpUnableToDownload'      => 'Unable to download the specified file. Please check your path.',
+	'ftpNoSourceFile'          => 'Unable to locate the source file. Please check your path.',
+	'ftpUnableToRename'        => 'Unable to rename the file.',
+	'ftpUnableToDelete'        => 'Unable to delete the file.',
+	'ftpUnableToDelete'        => 'Unable to move the file. Please make sure the destination directory exists.',
+]
