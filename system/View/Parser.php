@@ -1,6 +1,4 @@
-<?php
-
-namespace CodeIgniter\View;
+<?php namespace CodeIgniter\View;
 
 /**
  * CodeIgniter
@@ -37,6 +35,7 @@ namespace CodeIgniter\View;
  * @since	Version 3.0.0
  * @filesource
  */
+
 use Config\Services;
 use CodeIgniter\Log\Logger;
 
@@ -662,7 +661,7 @@ class Parser extends View {
 
         return $replace;
     }
-    
+
     //--------------------------------------------------------------------
     // Plugins
     //--------------------------------------------------------------------
