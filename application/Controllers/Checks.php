@@ -146,23 +146,5 @@ class Checks extends Controller
         echo $body;
     }
 
-    public function ftp()
-    {
-    	$ftp = Services::ftp();
-
-    	$ftp->initialize([
-    		'hostname' => 'test.rebex.net',
-    		'username' => 'demo',
-    		'password' => 'password',
-    	]);
-
-        $ftp->connect();
-        $list = $ftp->list_files();
-
-        print_r($list);
-
-        $ftp->close();
-    }
-
 
 }
