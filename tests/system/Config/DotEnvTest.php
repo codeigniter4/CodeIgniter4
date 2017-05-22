@@ -15,6 +15,9 @@ class DotEnvTest extends \CIUnitTestCase
 	public function setup()
 	{
 		$this->fixturesFolder = __DIR__.'/fixtures';
+                $file = "unreadable.env";
+		$path = rtrim($this->fixturesFolder, DIRECTORY_SEPARATOR).DIRECTORY_SEPARATOR.$file;
+                chmod($path, 0644);
 	}
 
 	//--------------------------------------------------------------------
@@ -39,6 +42,18 @@ class DotEnvTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testLoadsNoneStringFiles()
+	{
+		$dotenv = new DotEnv($this->fixturesFolder, 2);
+		$dotenv->load();
+		$this->assertEquals('bar', getenv('FOO'));
+		$this->assertEquals('baz', getenv('BAR'));
+		$this->assertEquals('with spaces', getenv('SPACED'));
+		$this->assertEquals('', getenv('NULL'));
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testCommentedLoadsVars()
 	{
 		$dotenv = new DotEnv($this->fixturesFolder, 'commented.env');
@@ -50,6 +65,19 @@ class DotEnvTest extends \CIUnitTestCase
 		$this->assertEquals('a value with a # character', getenv('CQUOTES'));
 		$this->assertEquals('a value with a # character & a quote " character inside quotes', getenv('CQUOTESWITHQUOTE'));
 		$this->assertEquals('', getenv('CNULL'));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testLoadsUnreadableFile()
+	{
+		$file = "unreadable.env";
+		$path = rtrim($this->fixturesFolder, DIRECTORY_SEPARATOR).DIRECTORY_SEPARATOR.$file;
+                chmod($path, 0000);
+		$this->expectException('InvalidArgumentException');
+		$this->expectExceptionMessage("The .env file is not readable: {$path}");
+		$dotenv = new DotEnv($this->fixturesFolder, $file);
+		$dotenv->load();
 	}
 
 	//--------------------------------------------------------------------
@@ -88,6 +116,17 @@ class DotEnvTest extends \CIUnitTestCase
 		$this->assertEquals('baz', $_SERVER['BAR']);
 		$this->assertEquals('with spaces', $_SERVER['SPACED']);
 		$this->assertEquals('', $_SERVER['NULL']);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testLoadsGetServerVar()
+	{
+		$_SERVER['SER_VAR'] = 'TT';
+		$dotenv = new Dotenv($this->fixturesFolder, 'nested.env');
+		$dotenv->load();
+
+		$this->assertEquals('TT', $_ENV['NVAR7']);
 	}
 
 	//--------------------------------------------------------------------
