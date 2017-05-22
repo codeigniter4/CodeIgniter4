@@ -1,6 +1,4 @@
-<?php
-
-namespace CodeIgniter\View;
+<?php namespace CodeIgniter\View;
 
 /**
  * CodeIgniter

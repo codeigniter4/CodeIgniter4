@@ -1,6 +1,4 @@
-<?php
-
-namespace CodeIgniter;
+<?php namespace CodeIgniter;
 
 /**
  * CodeIgniter
@@ -37,6 +35,7 @@ namespace CodeIgniter;
  * @since	Version 3.0.0
  * @filesource
  */
+
 /**
  * Custom Exceptions
  *

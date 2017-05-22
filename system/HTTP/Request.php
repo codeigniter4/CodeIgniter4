@@ -40,7 +40,6 @@
  * Representation of an iHTTP request.
  *
  */
-
 class Request extends Message implements RequestInterface
 {
 	/**
