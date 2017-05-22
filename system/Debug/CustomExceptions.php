@@ -1,6 +1,4 @@
-<?php
-
-namespace CodeIgniter;
+<?php namespace CodeIgniter;
 
 /**
  * CodeIgniter
@@ -44,9 +42,9 @@ namespace CodeIgniter;
  * experience across the application. The default error codes are already set,
  * and will be used to provide both HTTP status codes and CLI exit codes.
  *
- * The Error Exceptions below are primarily to provide a way to have 
+ * The Error Exceptions below are primarily to provide a way to have
  * information logged automatically by the application's log system.
- * 
+ *
  * @package CodeIgniter
  */
 
@@ -55,7 +53,7 @@ namespace CodeIgniter;
  */
 class EmergencyError extends \Error
 {
-	
+
 }
 
 /**
@@ -63,7 +61,7 @@ class EmergencyError extends \Error
  */
 class AlertError extends \Error
 {
-	
+
 }
 
 /**
@@ -71,7 +69,7 @@ class AlertError extends \Error
  */
 class CriticalError extends \Error
 {
-	
+
 }
 
 /**
@@ -79,7 +77,7 @@ class CriticalError extends \Error
  */
 class Error extends \Error
 {
-	
+
 }
 
 /**
@@ -90,7 +88,7 @@ class PageNotFoundException extends \OutOfBoundsException
 
 	/**
 	 * Error code
-	 * @var int 
+	 * @var int
 	 */
 	protected $code = 404;
 
@@ -104,7 +102,7 @@ class ConfigException extends CriticalError
 
 	/**
 	 * Error code
-	 * @var int 
+	 * @var int
 	 */
 	protected $code = 3;
 
@@ -118,7 +116,7 @@ class UnknownFileException extends CriticalError
 
 	/**
 	 * Error code
-	 * @var int 
+	 * @var int
 	 */
 	protected $code = 4;
 
@@ -132,7 +130,7 @@ class UnknownClassException extends CriticalError
 
 	/**
 	 * Error code
-	 * @var int 
+	 * @var int
 	 */
 	protected $code = 5;
 
@@ -146,7 +144,7 @@ class UnknownMethodException extends CriticalError
 
 	/**
 	 * Error code
-	 * @var int 
+	 * @var int
 	 */
 	protected $code = 6;
 
@@ -160,7 +158,7 @@ class UserInputException extends \OutOfBoundsException
 
 	/**
 	 * Error code
-	 * @var int 
+	 * @var int
 	 */
 	protected $code = 7;
 
@@ -174,7 +172,7 @@ class DatabaseException extends Error
 
 	/**
 	 * Error code
-	 * @var int 
+	 * @var int
 	 */
 	protected $code = 8;
 

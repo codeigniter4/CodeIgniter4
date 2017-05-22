@@ -39,7 +39,6 @@
 /**
  * Expected behavior of an HTTP request
  */
-
 interface RequestInterface
 {
 	/**

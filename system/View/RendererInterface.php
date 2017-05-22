@@ -43,7 +43,8 @@
  *
  * @package CodeIgniter\View
  */
-interface RendererInterface {
+interface RendererInterface
+{
 
 	/**
 	 * Builds the output based upon a file name and any

@@ -48,7 +48,8 @@ use Config\Autoload;
  *
  * @package CodeIgniter
  */
-class FileLocator {
+class FileLocator
+{
 
 	/**
 	 * Stores our namespaces
@@ -216,12 +217,12 @@ class FileLocator {
 		{
 			return;
 		}
-		
+
 		foreach ($this->namespaces as $namespace => $nsPath)
 		{
 			$nsPath = realpath($nsPath);
 			if (is_numeric($namespace)||empty($nsPath)) continue;
-			
+
 			if (mb_strpos($path,$nsPath) === 0)
 			{
 				$className = '\\'.$namespace.'\\'.
