@@ -264,7 +264,16 @@ Example::
 *********************
 Result Helper Methods
 *********************
-	
+
+**getNumRows()**
+
+The number of rows returned by the query.  Make sure to call
+the method using your query result object::
+
+	$query = $db->query('SELECT * FROM my_table');
+
+	echo $query->getNumRows();
+
 **getFieldCount()**
 
 The number of FIELDS (columns) returned by the query. Make sure to call
@@ -475,7 +484,16 @@ Class Reference
 
 		Returns the last row from the result set.
 
-	.. php:method:: getFieldCount()
+	.. php:method:: getNumRows()
+
+		:returns:	Number of rows in the result set
+		:rtype:	int
+
+		Returns the number of rows in the result set.
+
+		Usage: see `Result Helper Methods`_.
+    
+    .. php:method:: getFieldCount()
 
 		:returns:	Number of fields in the result set
 		:rtype:	int

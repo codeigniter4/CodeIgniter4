@@ -97,6 +97,19 @@ class Result extends BaseResult implements ResultInterface
 
 		return $retval;
 	}
+	
+	//--------------------------------------------------------------------
+    	/**
+	 * Number of rows in the result set
+	 *
+	 * @return	int
+	 */
+	public function getNumRows()
+	{
+		return is_int($this->numRows)
+			? $this->numRows
+			: $this->numRows = $this->resultID->num_rows;
+	}
 
 	//--------------------------------------------------------------------
 
