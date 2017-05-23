@@ -211,6 +211,14 @@ class URLHelperTest extends \CIUnitTestCase
 		$this->assertEquals('http://example.com/foo', base_url('foo'));
 	}
 
+	public function testBaseURLAttachesPathArray()
+	{
+		$_SERVER['HTTP_HOST'] = 'example.com';
+		$_SERVER['REQUEST_URI'] = '/';
+
+		$this->assertEquals('http://example.com/foo/bar', base_url(['foo', 'bar']));
+	}
+
 	public function testBaseURLAttachesScheme()
 	{
 		$_SERVER['HTTP_HOST'] = 'example.com';
