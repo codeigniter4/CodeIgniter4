@@ -114,8 +114,10 @@ class ChromeLoggerHandler extends BaseHandler implements HandlerInterface
 		$request = Services::request(null, true);
 
 		$this->json['request_uri'] = (string)$request->uri;
-
-		Events::on('post_controller', [$this, 'sendLogs'], HOOKS_PRIORITY_HIGH);
+                
+                Events::on('post_controller', [$this, 'sendLogs'], EVENT_PRIORITY_HIGH);
+                
+		//Events::on('post_controller', [$this, 'sendLogs'], HOOKS_PRIORITY_HIGH);
 	}
 
 	//--------------------------------------------------------------------
