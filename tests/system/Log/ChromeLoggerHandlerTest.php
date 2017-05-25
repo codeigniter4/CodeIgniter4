@@ -21,8 +21,4 @@ class ChromeLoggerHandlerTest extends \CIUnitTestCase
 		$logger = new ChromeLoggerHandler($config->handlers['CodeIgniter\Log\Handlers\TestHandler']);
                 $this->assertFalse($logger->canHandle('foo'));
 	}
-        
-        //--------------------------------------------------------------------
-        
-
 }
