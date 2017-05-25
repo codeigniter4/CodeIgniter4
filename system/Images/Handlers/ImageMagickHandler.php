@@ -146,7 +146,10 @@ class ImageMagickHandler extends BaseHandler
 			$this->config->libraryPath = rtrim($this->config->libraryPath, '/').'/convert';
 		}
 
-		$cmd = $this->config->libraryPath.' -quality '.$quality.' '.$action;
+		$cmd = $this->config->libraryPath;
+		$cmd .= $action == '-version'
+			? ' '.$action
+			: ' -quality '.$quality.' '.$action;
 
 		$retval = 1;
 		// exec() might be disabled
@@ -154,8 +157,7 @@ class ImageMagickHandler extends BaseHandler
 		{
 			@exec($cmd, $output, $retval);
 		}
-		var_dump($cmd);
-dd($output);
+
 		// Did it work?
 		if ($retval > 0)
 		{
