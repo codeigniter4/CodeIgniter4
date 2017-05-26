@@ -13,7 +13,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 
 	/**
 	 * The image/file instance
-	 *
+	 *d
 	 * @var \CodeIgniter\Images\Image
 	 */
 	protected $image;
@@ -258,6 +258,18 @@ abstract class BaseHandler implements ImageHandlerInterface
 	/**
 	 * Overlays a string of text over the image.
 	 *
+	 * Valid options:
+	 *
+	 *  - color         Text Color (hex number)
+	 *  - shadowColor   Color of the shadow (hex number)
+	 *  - hAlign        Horizontal alignment: left, center, right
+	 *  - vAlign        Vertical alignment: top, middle, bottom
+	 *  - hOffset
+	 *  - vOffset
+	 *  - fontPath
+	 *  - fontSize
+	 *  - shadowOffset
+	 *
 	 * @return $this
 	 */
 	public function text(string $text, array $options = [])
@@ -265,11 +277,6 @@ abstract class BaseHandler implements ImageHandlerInterface
 		$options                = array_merge($this->textDefaults, $options);
 		$options['color']       = trim($options['color'], '# ');
 		$options['shadowColor'] = trim($options['shadowColor'], '# ');
-
-//		if (! empty($options['fontPath']) && ! file_exists($options['fontPath']))
-//		{
-//			throw new ImageException(lang('images.missingFont'));
-//		}
 
 		$this->_text($text, $options);
 

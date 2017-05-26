@@ -153,6 +153,13 @@ class Checks extends Controller
 
 	public function image()
 	{
+		$info = Services::image('imagick')
+			->withFile("/Users/kilishan/Documents/BobHeader.jpg")
+			->getFile()
+			->getProperties(true);
+
+		dd($info);
+
 		$images = Services::image('imagick')
 			->getVersion();
 //			->withFile("/Users/kilishan/Documents/BobHeader.jpg")
