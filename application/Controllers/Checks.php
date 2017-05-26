@@ -158,7 +158,7 @@ class Checks extends Controller
 			->getFile()
 			->getProperties(true);
 
-		dd($info);
+		dd(ENVIRONMENT);
 
 		$images = Services::image('imagick')
 			->getVersion();
