@@ -264,13 +264,20 @@ class Rules
 	/**
 	 * Required
 	 *
-	 * @param    string
+	 * @param    mixed  $str    Value
 	 *
-	 * @return    bool
+	 * @return    bool          True if valid, false if not
 	 */
 	public function required($str=null): bool
 	{
-		return is_array($str) ? (bool)count($str) : (trim($str) !== '');
+		if (is_object($str))
+		{
+			return true;
+		}
+
+		return is_array($str)
+			? (bool)count($str)
+			: (trim($str) !== '');
 	}
 
 	//--------------------------------------------------------------------

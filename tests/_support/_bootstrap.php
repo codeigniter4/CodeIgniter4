@@ -8,7 +8,7 @@ $paths  = new \Config\Paths();
 define('FCPATH', getcwd().'/public'.DIRECTORY_SEPARATOR);
 
 // Make sure it recognizes that we're testing.
-$_SERVER['CI_ENV'] = 'testing';
+$_SERVER['CI_ENVIRONMENT'] = 'testing';
 
 /*
  * ---------------------------------------------------------------

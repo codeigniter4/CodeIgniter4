@@ -339,6 +339,21 @@ class ValidationTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testRequiredObject()
+	{
+		$data = [
+			'foo' => new \stdClass(),
+		];
+
+		$this->validation->setRules([
+			'foo' => 'required',
+		]);
+
+		$this->assertTrue($this->validation->run($data));
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testRegexMatch()
 	{
 		$data = [
