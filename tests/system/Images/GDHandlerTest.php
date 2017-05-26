@@ -11,9 +11,4 @@ class GDHandlerTest extends \CIUnitTestCase
 		$this->assertTrue(is_array($image->getProperties(true)));
 	}
 
-	public function ()
-	{
-		
-	}
-
 }
