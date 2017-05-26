@@ -12,6 +12,7 @@ Library Reference
     content_negotiation
     localization
     curlrequest
+    images
     incomingrequest
     message
     pagination
