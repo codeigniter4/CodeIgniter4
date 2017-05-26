@@ -44,6 +44,30 @@ class AutoloaderTest extends \CIUnitTestCase
 	// PSR4 Namespacing
 	//--------------------------------------------------------------------
 
+	public function testServiceAutoLoaderFromShareInstances() {
+
+		$auto_loader = \CodeIgniter\Config\Services::autoloader();
+		// $auto_loader->register();
+		$actual   = $auto_loader->loadClass('App\Controllers\Checks');
+		$expected = APPPATH.'/Controllers/Checks.php';
+		$this->assertSame($expected, $actual);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testServiceAutoLoader() {
+
+		$getShared = false;
+		$auto_loader = \CodeIgniter\Config\Services::autoloader($getShared);
+		$auto_loader->initialize(new Autoload());
+		$auto_loader->register();
+		$actual   = $auto_loader->loadClass('App\Controllers\Checks');
+		$expected = APPPATH.'/Controllers/Checks.php';
+		$this->assertSame($expected, $actual);
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testExistingFile()
 	{
 		$actual   = $this->loader->loadClass('App\Controllers\Classname');
