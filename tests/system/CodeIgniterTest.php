@@ -219,7 +219,7 @@ class CodeIgniterTest extends \CIUnitTestCase
 
 	    public function testResposeConfigEmpty() 
     {
-    	$_SERVER['argv'] = [
+		$_SERVER['argv'] = [
 			'index.php',
 			'/',
 		];
@@ -234,7 +234,7 @@ class CodeIgniterTest extends \CIUnitTestCase
 
 	    public function testRoutesIsEmpty() 
     {
-    	$_SERVER['argv'] = [
+		$_SERVER['argv'] = [
 			'index.php',
 			'/',
 		];
