@@ -214,4 +214,19 @@ class CodeIgniterTest extends \CIUnitTestCase
 
         $this->assertContains("You want to see 'about' page.", $output);
     }
+
+	//--------------------------------------------------------------------
+
+	    public function testResposeConfigEmpty() 
+    {
+    	$_SERVER['argv'] = [
+			'index.php',
+			'/',
+		];
+		$_SERVER['argc'] = 2;
+
+		$response = Config\Services::response(null, false);
+
+		$this->assertInstanceOf('\CodeIgniter\HTTP\Response', $response);
+    }
 }
