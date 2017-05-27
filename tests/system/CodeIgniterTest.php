@@ -217,37 +217,37 @@ class CodeIgniterTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	    public function testResposeConfigEmpty() 
+    public function testResposeConfigEmpty() 
     {
-		$_SERVER['argv'] = [
-			'index.php',
-			'/',
-		];
-		$_SERVER['argc'] = 2;
+        $_SERVER['argv'] = [
+            'index.php',
+            '/',
+        ];
+        $_SERVER['argc'] = 2;
 
-		$response = Config\Services::response(null, false);
+        $response = Config\Services::response(null, false);
 
-		$this->assertInstanceOf('\CodeIgniter\HTTP\Response', $response);
+        $this->assertInstanceOf('\CodeIgniter\HTTP\Response', $response);
     }
 
-		//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	    public function testRoutesIsEmpty() 
+    public function testRoutesIsEmpty() 
     {
-		$_SERVER['argv'] = [
-			'index.php',
-			'/',
-		];
-		$_SERVER['argc'] = 2;
+        $_SERVER['argv'] = [
+            'index.php',
+            '/',
+        ];
+        $_SERVER['argc'] = 2;
 
-		// Inject mock router.
-		$router = Services::router(null, false);
-		Services::injectMock('router', $router);
+        // Inject mock router.
+        $router = Services::router(null, false);
+        Services::injectMock('router', $router);
 
-		ob_start();
-		$this->codeigniter->run();
-		$output = ob_get_clean();
+        ob_start();
+        $this->codeigniter->run();
+        $output = ob_get_clean();
 
-		$this->assertContains('<h1>Welcome to CodeIgniter</h1>', $output);
+        $this->assertContains('<h1>Welcome to CodeIgniter</h1>', $output);
     }
 }
