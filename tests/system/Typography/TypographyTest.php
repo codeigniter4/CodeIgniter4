@@ -106,4 +106,30 @@ class TypographyTest extends \CIUnitTestCase
             $this->assertEquals($expect, $this->typography->autoTypography($str));
         }
     }
+
+    public function testAutoTypographySpecialCharacters()
+    {
+        $strs = [
+            '\'Text in single quotes\''      => '<p>&#8216;Text in single quotes&#8217;</p>',
+            '"Text in double quotes"'        => '<p>&#8220;Text in double quotes&#8221;</p>',
+            'Double dash -- becomes em-dash' => '<p>Double dash&#8212;becomes em-dash</p>'
+        ];
+        foreach ($strs as $str => $expect)
+        {
+            $this->assertEquals($expect, $this->typography->autoTypography($str));
+        }
+    }
+
+    public function testNewlinesToHTMLLineBreaksExceptWithinPRE()
+    {
+        $strs = [
+            "Line One\nLine Two"            => "Line One<br />\nLine Two",
+            "<pre>Line One\nLine Two</pre>" => "<pre>Line One\nLine Two</pre>",
+            "<div>Line One\nLine Two</div>" => "<div>Line One<br />\nLine Two</div>"
+        ];
+        foreach ($strs as $str => $expect)
+        {
+            $this->assertEquals($expect, $this->typography->nl2brExceptPre($str));
+        }
+    }
 }
