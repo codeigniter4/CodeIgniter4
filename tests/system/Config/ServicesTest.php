@@ -10,17 +10,17 @@ class ServicesTest extends \CIUnitTestCase
 		$config = new App();
 	}
 
-	public function testCurlRequestGetMethod()
-	{
-		$client = Services::curlrequest([
-            'debug' => true,
-            'follow_redirects' => true
-        ]);
-
-        $response = $client->request('GET', 'https://jsonplaceholder.typicode.com/posts/1');
-
-        $this->assertContains('sunt aut facere repellat provident occaecati excepturi optio reprehenderit', $response->getBody());
-	}
+//	public function testCurlRequestGetMethod()
+//	{
+//		$client = Services::curlrequest([
+//            'debug' => true,
+//            'follow_redirects' => true
+//        ]);
+//
+//        $response = $client->request('GET', 'https://jsonplaceholder.typicode.com/posts/1');
+//
+//        $this->assertContains('sunt aut facere repellat provident occaecati excepturi optio reprehenderit', $response->getBody());
+//	}
 
 	public function testNewExceptions()
 	{
