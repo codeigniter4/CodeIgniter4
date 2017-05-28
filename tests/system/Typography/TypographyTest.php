@@ -95,11 +95,11 @@ class TypographyTest extends \CIUnitTestCase
     public function testAutoTypographyHTMLTags()
     {
         $strs = [
-            '<b>Hello World !!</b>, How are you?'      => '<p><b>Hello World !!</b>, How are you?</p>',
-            '<p>Hello World !!, How are you?</p>'      => '<p>Hello World !!, How are you?</p>',
-            '<pre>Code goes here.</pre>' => '<pre>Code goes here.</pre>',
+            '<b>Hello World !!</b>, How are you?'               => '<p><b>Hello World !!</b>, How are you?</p>',
+            '<p>Hello World !!, How are you?</p>'               => '<p>Hello World !!, How are you?</p>',
+            '<pre>Code goes here.</pre>'                        => '<pre>Code goes here.</pre>',
             "<pre>Line One\nLine Two\n\nLine Three\n\n\n</pre>" => "<pre>Line One\nLine Two\n\nLine Three\n\n</pre>",
-            "Line One</pre>" => "Line One</pre>"
+            "Line One</pre>"                                    => "Line One</pre>"
         ];
         foreach ($strs as $str => $expect)
         {
