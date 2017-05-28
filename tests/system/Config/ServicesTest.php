@@ -10,6 +10,18 @@ class ServicesTest extends \CIUnitTestCase
 		$config = new App();
 	}
 
+	public function testCurlRequestGetMethod()
+	{
+		$client = Services::curlrequest([
+            'debug' => true,
+            'follow_redirects' => true
+        ]);
+
+        $response = $client->request('GET', 'https://jsonplaceholder.typicode.com/posts/1');
+
+        $this->assertContains('sunt aut facere repellat provident occaecati excepturi optio reprehenderit', $response->getBody());
+	}
+
 	public function testNewExceptions()
 	{
 		$actual = Services::exceptions($this->config);
@@ -22,11 +34,11 @@ class ServicesTest extends \CIUnitTestCase
 		$this->assertInstanceOf(\CodeIgniter\Debug\Iterator::class, $actual);
 	}
 
-	public function testNewNegotiatorWithNullConfig()
-	{
-		$actual = Services::negotiator(null);
-		$this->assertInstanceOf(\CodeIgniter\HTTP\Negotiate::class, $actual);
-	}
+//	public function testNewNegotiatorWithNullConfig()
+//	{
+//		$actual = Services::negotiator(null);
+//		$this->assertInstanceOf(\CodeIgniter\HTTP\Negotiate::class, $actual);
+//	}
 
 	public function testNewClirequestWithNullConfig()
 	{
