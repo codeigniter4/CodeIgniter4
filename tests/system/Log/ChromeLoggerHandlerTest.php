@@ -19,7 +19,6 @@ class ChromeLoggerHandlerTest extends \CIUnitTestCase
 	{
 		$config = new LoggerConfig();
                 $config->handlers['CodeIgniter\Log\Handlers\TestHandler']['handles'] =  ['critical'];
-		//$config->threshold = "foo";
                 
 		$logger = new ChromeLoggerHandler($config->handlers['CodeIgniter\Log\Handlers\TestHandler']);
                 $this->assertFalse($logger->canHandle('foo'));
@@ -33,7 +32,7 @@ class ChromeLoggerHandlerTest extends \CIUnitTestCase
                 $config->handlers['CodeIgniter\Log\Handlers\TestHandler']['handles'] =  ['critical'];
                 
 		$logger = new ChromeLoggerHandler($config->handlers['CodeIgniter\Log\Handlers\TestHandler']);
-                $this->assertTrue($logger->handle("emergency", "This a log test") );
+                $this->assertTrue($logger->handle("warning", "This a log test") );
         }
         
         //--------------------------------------------------------------------
@@ -61,7 +60,6 @@ class ChromeLoggerHandlerTest extends \CIUnitTestCase
                 
 		$logger = new ChromeLoggerHandler($config->handlers['CodeIgniter\Log\Handlers\TestHandler']);
                 $result = $logger->setDateFormat('F j, Y');
-                //$this->assertClassHasAttribute('dateFormat', $result);
                 
                 $this->assertObjectHasAttribute('dateFormat', $result);
                 $this->assertObjectHasAttribute('dateFormat', $logger);
