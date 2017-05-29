@@ -162,20 +162,16 @@ class Services
 	 * 
 	 * @return \CodeIgniter\Encryption\EncrypterInterfrace Encryption handler
 	 */
-	public static function encrypter(\Config\Encryption $config = null, array $params = [], $getShared = false)
+	public static function encrypter($config = null, $getShared = false)
 	{
 		if ($getShared === true)
-		{
 			return self::getSharedInstance('encrypter', $config);
-		}
 
-		if ( ! is_object($config))
-		{
-			$config = new \Config\Encryption();
-		}
+		if ($config != null && is_object($config))
+			$config = (array) $config;
 
 		$encryption = new \CodeIgniter\Encryption\Encryption($config);
-		$encrypter = $encryption->initialize($params);
+		$encrypter = $encryption->initialize($config);
 		return $encrypter;
 	}
 

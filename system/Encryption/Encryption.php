@@ -91,7 +91,6 @@ class Encryption
 	 */
 	protected $drivers = [
 		'openssl' => 'OpenSSL',
-		'mcrypt' => 'Mcrypt',
 	];
 
 	/**
@@ -99,6 +98,27 @@ class Encryption
 	 * @var \PSR\Log\LoggerInterface
 	 */
 	protected $logger;
+
+	/**
+	 * Encryption cipher
+	 *
+	 * @var	string
+	 */
+	protected $cipher = 'aes-128';
+
+	/**
+	 * Cipher mode
+	 *
+	 * @var	string
+	 */
+	protected $mode = 'cbc';
+
+	/**
+	 * Encryption key
+	 *
+	 * @var	string
+	 */
+	protected $key;
 
 	// --------------------------------------------------------------------
 
@@ -131,10 +151,9 @@ class Encryption
 		// determine what is installed
 		$this->handlers = [
 			'openssl' => extension_loaded('openssl'),
-			'mcrypt' => defined('MCRYPT_DEV_URANDOM'),
 		];
 
-		if ( ! $this->handlers['mcrypt'] && ! $this->handlers['openssl'])
+		if ( ! $this->handlers['openssl'])
 			throw new EncryptionException('Unable to find an available encryption handler.');
 
 		$this->logger->info('Encryption class Initialized');
@@ -148,7 +167,7 @@ class Encryption
 	 * 
 	 * @throws \CodeIgniter\Encryption\EncryptionException
 	 */
-	public function initialize(array $params)
+	public function initialize(array $params = null)
 	{
 		// how should this be handled?
 		$this->driver = $params['driver'] ?? 'openssl';
@@ -157,7 +176,7 @@ class Encryption
 		// use config key if initialization didn't create one
 		if ( ! isset($this->key) && self::strlen($key = $this->config->key) > 0)
 			$this->key = $key;
-		
+
 		if ( ! empty($params['handler']))
 		{
 			if (isset($this->handlers[$params['handler']]))
@@ -177,19 +196,11 @@ class Encryption
 			}
 		}
 
-		if (empty($this->handler))
-		{
-			$this->handler = ($this->handlers['openssl'] === true) ? 'openssl' : 'mcrypt';
-
-			$this->logger->debug("Encryption: Auto-configured handler '" . $this->handler . "'.");
-		}
-
 		empty($params['cipher']) && $params['cipher'] = $this->cipher;
 		empty($params['key']) OR $this->key = $params['key'];
 
 		$handlerName = 'CodeIgniter\\Encryption\\Handlers\\' . $this->handler . 'Handler';
-		$this->encrypter = new $handlerName();
-		$this->encrypter->initialize($params);
+		$this->encrypter = new $handlerName($params);
 		return $this->encrypter;
 	}
 
@@ -220,7 +231,7 @@ class Encryption
 	// --------------------------------------------------------------------
 
 	/**
-	 * __get() magic, providing readonly access to some of our properties
+	 * __get() magic, providing readonly access to some of our protected properties
 	 *
 	 * @param	string	$key	Property name
 	 * @return	mixed
@@ -232,7 +243,7 @@ class Encryption
 		{
 			return array_search($this->mode, $this->modes[$this->handler], true);
 		}
-		elseif (in_array($key, ['cipher', 'handler', 'handlers', 'digests'], true))
+		elseif (in_array($key, ['cipher', 'key', 'handler', 'handlers', 'digests'], true))
 		{
 			return $this->{$key};
 		}

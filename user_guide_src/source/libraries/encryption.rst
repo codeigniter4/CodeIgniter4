@@ -1,5 +1,5 @@
 ##################
-Encryption Library
+Encryption Service
 ##################
 
 .. important:: DO NOT use this or any other *encryption* library for
@@ -7,21 +7,24 @@ Encryption Library
 	should do that via PHP's own `Password Hashing extension
 	<http://php.net/password>`_.
 
-The Encryption Library provides two-way data encryption. To do so in
-a cryptographically secure way, it utilizes PHP extensions that are
-unfortunately not always available on all systems.
-You must meet one of the following dependencies in order to use this
-library:
+The Encryption Service provides two-way data encryption. 
+The encryption manager will instantiate and/or initialize an
+encryption handler to suit your parameters, explained below.
+
+The handlers adapt our simple ``EncrypterInterface`` to use an
+appropriate PHP cryptographic extension or third party library.
+Such extensions may need to be explicitly enabled in your instance of PHP.
+
+The following extensions are currentlty supported:
 
 - `OpenSSL <http://php.net/openssl>`_
-- `MCrypt <http://php.net/mcrypt>`_ (and `MCRYPT_DEV_URANDOM` availability)
 
-If neither of the above dependencies is met, we simply cannot offer
-you a good enough implementation to meet the high standards required
-for proper cryptography.
+We plan to add a couple more: 
+`GnuPG <https://gnupg.org/>`_ and 
+`libsodium <https://libsodium.org/>`_.
 
-.. important:: Mcrypt is being deprecated, as of PHP7.2, and we don't recommend it.
-
+.. note:: Support for the ``MCrypt`` extension has been dropped, as that has
+    been deprecated as of PHP 7.2.
 
 .. contents::
   :local:
@@ -43,24 +46,26 @@ Default behavior
 
 By default, the Encryption Library will use the OpenSSL handler, with
 the AES-128 cipher in CBC mode, 
-using your configured *encryption key* and SHA512 HMAC authentication.
+using your configured *key* and SHA512 HMAC authentication.
 
 AES-128 is chosen both because it is proven to be strong and
 because of its wide availability across different cryptographic
 software and programming languages' APIs.
 
-However, the *encryption key* is not used as is.
-Keyed-hash message authentication (HMAC) requires a secret key,
-and using the same key for both
-encryption and authentication is a bad practice.
-
-Because of that, two separate keys are derived from your already configured
-*encryption key*: one for encryption and one for authentication. This is
+The *key* you provide is used for
+"keyed-hash message authentication" (HMAC), which derives
+two separate keys from your configured one: 
+one for encryption and one for authentication. This is
 done via a technique called `HMAC-based Key Derivation Function
 <http://en.wikipedia.org/wiki/HKDF>`_ (HKDF).
 
 Setting your encryption key
 ===========================
+
+
+`symmetric encryption <https://en.wikipedia.org/wiki/Symmetric-key_algorithm>`_
+`asymmetric encryption <https://en.wikipedia.org/wiki/Public-key_cryptography>`_
+
 
 An *encryption key* is a piece of information that controls the
 cryptographic process and permits a plain-text string to be encrypted,
@@ -128,15 +133,15 @@ Portable ciphers
 ----------------
 
 Different encryption drivers support different sets of encryption algorithms and often implement
-them in different ways. Our Encryption library is designed to use them in
-a portable fashion - interchangeably, for the ciphers supported by both drivers.
+them in different ways. Our Encryption service is designed to use them in
+a portable fashion - interchangeably, for the ciphers supported by all drivers.
 
 It is also implemented in a way that aims to match the standard
 implementations in other programming languages and libraries.
 
 Here's a list of the so called "portable" ciphers, where
 "CodeIgniter name" is the string value that you'd have to pass to the
-Encryption library to use that cipher:
+Encryption manager to use that cipher:
 
 ======================== ================== ============================ ===============================
 Cipher name              CodeIgniter name   Key lengths (bits / bytes)   Supported modes
@@ -150,10 +155,6 @@ DES                      des                56 / 7                       CBC, CF
 RC4 / ARCFour            rc4                40-2048 / 5-256              Stream
 TripleDES                tripledes          56 / 7, 112 / 14, 168 / 21   CBC, CFB, CFB8, OFB
 ======================== ================== ============================ ===============================
-
-.. important:: Because of how MCrypt works, if you fail to provide a key
-	with the appropriate length, you might end up using a different
-	algorithm than the one configured, so be really careful with that!
 
 .. note:: In case it isn't clear from the above table, Blowfish, CAST5
 	and RC4 support variable length keys. That is, any number in the
@@ -190,18 +191,6 @@ Camellia-192   OpenSSL   192 / 24                       CBC, CFB, CFB8, OFB, ECB
 Camellia-256   OpenSSL   256 / 32                       CBC, CFB, CFB8, OFB, ECB
 RC2            OpenSSL   8-1024 / 1-128                 CBC, CFB, OFB, ECB
 Seed           OpenSSL   128 / 16                       CBC, CFB, OFB, ECB
-CAST-128       MCrypt    40-128 / 5-16                  CBC, CTR, CFB, CFB8, OFB, OFB8, ECB
-CAST-256       MCrypt    128 / 16, 192 / 24, 256 / 32   CBC, CTR, CFB, CFB8, OFB, OFB8, ECB
-GOST           MCrypt    256 / 32                       CBC, CTR, CFB, CFB8, OFB, OFB8, ECB
-Loki97         MCrypt    128 / 16, 192 / 24, 256 / 32   CBC, CTR, CFB, CFB8, OFB, OFB8, ECB
-RC2            MCrypt    8-1024 / 1-128                 CBC, CTR, CFB, CFB8, OFB, OFB8, ECB
-Rijndael-128   MCrypt    128 / 16, 192 / 24, 256 / 32   CBC, CTR, CFB, CFB8, OFB, OFB8, ECB
-Rijndael-192   MCrypt    128 / 16, 192 / 24, 256 / 32   CBC, CTR, CFB, CFB8, OFB, OFB8, ECB
-Rijndael-256   MCrypt    128 / 16, 192 / 24, 256 / 32   CBC, CTR, CFB, CFB8, OFB, OFB8, ECB
-SaferPlus      MCrypt    128 / 16, 192 / 24, 256 / 32   CBC, CTR, CFB, CFB8, OFB, OFB8, ECB
-Serpent        MCrypt    128 / 16, 192 / 24, 256 / 32   CBC, CTR, CFB, CFB8, OFB, OFB8, ECB
-Twofish        MCrypt    128 / 16, 192 / 24, 256 / 32   CBC, CTR, CFB, CFB8, OFB, OFB8, ECB
-XTEA           MCrypt    128 / 16                       CBC, CTR, CFB, CFB8, OFB, OFB8, ECB
 ============== ========= ============================== =========================================
 
 .. note:: If you wish to use one of those ciphers, you'd have to pass
@@ -218,11 +207,8 @@ XTEA           MCrypt    128 / 16                       CBC, CTR, CFB, CFB8, OFB
 	implementation doesn't appear to be working correctly with
 	key sizes of 80 bits and lower.
 
-        RC2 is listed as supported by both MCrypt and OpenSSL.
-	However, both drivers implement them differently and they
-	are not portable. It is probably worth noting that we only
-	found one obscure source confirming that it is MCrypt that
-	is not properly implementing it.
+        RC2 is supported by multiple drivers, but the implementation may differ,
+        so it is not portable. 
 
 .. _encryption-modes:
 
@@ -241,15 +227,14 @@ general purposes.
 =========== ================== ================= ===================================================================================================================================================
 Mode name   CodeIgniter name   Driver support    Additional info
 =========== ================== ================= ===================================================================================================================================================
-CBC         cbc                OpenSSL, MCrypt   A safe default choice
-CFB         cfb                OpenSSL, MCrypt   N/A
-CFB8        cfb8               OpenSSL, MCrypt   Same as CFB, but operates in 8-bit mode (not recommended).
-CTR         ctr                OpenSSL, MCrypt   Considered as theoretically better than CBC, but not as widely available
-ECB         ecb                OpenSSL, MCrypt   Ignores IV (not recommended).
-OFB         ofb                OpenSSL, MCrypt   N/A
-OFB8        ofb8               MCrypt            Same as OFB, but operates in 8-bit mode (not recommended).
+CBC         cbc                OpenSSL           A safe default choice
+CFB         cfb                OpenSSL           N/A
+CFB8        cfb8               OpenSSL           Same as CFB, but operates in 8-bit mode (not recommended).
+CTR         ctr                OpenSSL           Considered as theoretically better than CBC, but not as widely available
+ECB         ecb                OpenSSL           Ignores IV (not recommended).
+OFB         ofb                OpenSSL           N/A
 XTS         xts                OpenSSL           Usually used for encrypting random access data such as RAM or hard-disk storage.
-Stream      stream             OpenSSL, MCrypt   This is not actually a mode, it just says that a stream cipher is being used. Required because of the general cipher+mode initialization process.
+Stream      stream             OpenSSL           This is not actually a mode, it just says that a stream cipher is being used. Required because of the general cipher+mode initialization process.
 =========== ================== ================= ===================================================================================================================================================
 
 Message Length
@@ -284,7 +269,7 @@ application/config/Encryption.php.
 ======== ===============================================
 Option   Possible values
 ======== ===============================================
-driver   Preferred handler: 'openssl', 'mcrypt'
+driver   Preferred handler: 'openssl'
 cipher   Cipher name (see :ref:`ciphers-and-modes`)
 mode     Encryption mode (see :ref:`encryption-modes`)
 key      Encryption key 
@@ -295,14 +280,14 @@ or an associative array of parameters, to the Services::
 
     $encrypter = \Config\Services::encrypter($params);
 
-These will replace any same-named settings in ``Config/Encryption``.
+These will replace any same-named settings in ``Config\Encryption``.
 
 Using the Encryption manager directly
 =====================================
 
 Instead of, or in addition to, using the `Services` described
 at the beginning of this page, you can use the encryption manager
-directly, to create an `Encrypter`` or to change the settings
+directly, to create an ``Encrypter`` or to change the settings
 of the current one.
 
     $encryption = new \Encryption\Encryption();
@@ -323,7 +308,7 @@ but we also included a key in the example. As previously noted, it is
 important that you choose a key with a proper size for the used algorithm.
 
 If you want to change the driver, for instance switching between
-MCrypt and OpenSSL, you could go through the Services::
+MCrypt and OpenSSL (if MCrypt were supported), you could go through the Services::
 
 	// Switch to the MCrypt driver
 	$encrypter= \Config\Services::encrypter(['driver' => 'mcrypt']);;

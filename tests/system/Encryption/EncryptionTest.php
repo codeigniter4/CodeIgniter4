@@ -8,7 +8,7 @@ class EncryptionTest extends CIUnitTestCase
 
 	public function setUp()
 	{
-		$this->encryption = new MockEncryption();
+		$this->encryption = new \CodeIgniter\Encryption\Encryption();
 	}
 
 	// --------------------------------------------------------------------
@@ -21,16 +21,16 @@ class EncryptionTest extends CIUnitTestCase
 	public function testConstructor()
 	{
 		// Assume no configuration from set_up()
-		$this->assertNull($this->encryption->getKey());
+		$this->assertNull($this->encryption->key);
 
 		// Try with an empty value
 		$config = new \Config\Encryption();
-		$this->encrypt = new MockEncryption($config);
-		$this->assertNull($this->encrypt->getKey());
+		$this->encrypt = new \CodeIgniter\Encryption\Encryption($config);
+		$this->assertNull($this->encrypt->key);
 
 		$config->key = str_repeat("\x0", 16);
-		$this->encrypt = new MockEncryption($config);
-		$this->assertEquals(str_repeat("\x0", 16), $this->encrypt->getKey());
+		$this->encrypt = new \CodeIgniter\Encryption\Encryption($config);
+		$this->assertEquals(str_repeat("\x0", 16), $this->encrypt->key);
 	}
 
 	// --------------------------------------------------------------------
@@ -133,9 +133,11 @@ class EncryptionTest extends CIUnitTestCase
 			['cipher' => 'aes-128', 'mode' => 'foo', 'key' => $key, 'hmac_digest' => 'sha256', 'hmac_key' => $key]
 		];
 
+		$this->encrypter = \Config\Services::encrypter($params);
+
 		for ($i = 0, $c = count($params); $i < $c; $i ++ )
 		{
-			$this->assertFalse($this->encryption->__getParams($params[$i]));
+			$this->assertFalse($this->encrypter->getParams($params[$i]));
 		}
 
 		// Valid parameters
@@ -146,7 +148,7 @@ class EncryptionTest extends CIUnitTestCase
 			'hmac_key' => str_repeat("\x0", 16)
 		];
 
-		$this->assertTrue(is_array($this->encryption->__getParams($params)));
+		$this->assertTrue(is_array($this->encrypter->getParams($params)));
 
 		$params['base64'] = TRUE;
 		$params['hmac_digest'] = 'sha512';
@@ -161,7 +163,7 @@ class EncryptionTest extends CIUnitTestCase
 			'hmac_digest' => 'sha256'
 		];
 
-		$output = $this->encryption->__getParams($params);
+		$output = $this->encrypter->getParams($params);
 		unset($output['handle'], $output['cipher'], $params['raw_data'], $params['cipher']);
 		$params['base64'] = FALSE;
 		$this->assertEquals($params, $output);
@@ -170,7 +172,7 @@ class EncryptionTest extends CIUnitTestCase
 		unset($params['hmac_key'], $params['hmac_digest']);
 		$params['hmac'] = $params['raw_data'] = FALSE;
 		$params['cipher'] = 'aes-128';
-		$output = $this->encryption->__getParams($params);
+		$output = $this->encrypter->getParams($params);
 		unset($output['handle'], $output['cipher'], $params['hmac'], $params['raw_data'], $params['cipher']);
 		$params['base64'] = TRUE;
 		$params['hmac_digest'] = $params['hmac_key'] = null;
@@ -195,16 +197,16 @@ class EncryptionTest extends CIUnitTestCase
 		$key = "\xd0\xc9\x08\xc4\xde\x52\x12\x6e\xf8\xcc\xdb\x03\xea\xa0\x3a\x5c";
 
 		// Default state (AES-128/Rijndael-128 in CBC mode)
-		$this->encryption->initialize(array('key' => $key));
+		$encrypter = $this->encryption->initialize(array('key' => $key));
 
 		// Was the key properly set?
-		$this->assertEquals($key, $this->encryption->getKey());
+		$this->assertEquals($key, $encrypter->key);
 
-		$this->assertEquals($message, $this->encryption->decrypt($this->encryption->encrypt($message)));
+		$this->assertEquals($message, $encrypter->decrypt($encrypter->encrypt($message)));
 
 		// Try DES in ECB mode, just for the sake of changing stuff
-		$this->encryption->initialize(array('cipher' => 'des', 'mode' => 'ecb', 'key' => substr($key, 0, 8)));
-		$this->assertEquals($message, $this->encryption->decrypt($this->encryption->encrypt($message)));
+		$encrypter = $this->encryption->initialize(array('cipher' => 'des', 'mode' => 'ecb', 'key' => substr($key, 0, 8)));
+		$this->assertEquals($message, $encrypter->decrypt($encrypter->encrypt($message)));
 	}
 
 	// --------------------------------------------------------------------
@@ -218,9 +220,11 @@ class EncryptionTest extends CIUnitTestCase
 	{
 		$message = 'Another plain-text message.';
 
+		$encrypter = $this->encryption->initialize();
+
 		// A random invalid parameter
-		$this->assertFalse($this->encryption->encrypt($message, array('foo')));
-		$this->assertFalse($this->encryption->decrypt($message, array('foo')));
+		$this->assertFalse($encrypter->encrypt($message, array('foo')));
+		$this->assertFalse($encrypter->decrypt($message, array('foo')));
 
 		// No HMAC, binary output
 		$params = [
@@ -231,65 +235,18 @@ class EncryptionTest extends CIUnitTestCase
 			'hmac' => FALSE
 		];
 
-		$ciphertext = $this->encryption->encrypt($message, $params);
+		$ciphertext = $encrypter->encrypt($message, $params);
 
-		$this->assertEquals($message, $this->encryption->decrypt($ciphertext, $params));
+		$this->assertEquals($message, $encrypter->decrypt($ciphertext, $params));
 	}
 
 	// --------------------------------------------------------------------
 
 	/**
-	 * _mcrypt_get_handle() test
-	 */
-	public function testMcryptGetHandle()
-	{
-		if ($this->encryption->handlers['mcrypt'] === FALSE)
-		{
-			return $this->markTestSkipped('Cannot test MCrypt because it is not available.');
-		}
-		elseif (version_compare(PHP_VERSION, '7.1.0-alpha', '>='))
-		{
-			return $this->markTestSkipped('ext/mcrypt is deprecated since PHP 7.1 and will generate notices here.');
-		}
-
-		$this->assertTrue(is_resource($this->encryption->handlerGetHandle('mcrypt', 'rijndael-128', 'cbc')));
-	}
-
-	// --------------------------------------------------------------------
-
-	/**
-	 * _openssl_get_handle() test
-	 */
-	public function testOpensslMcryptGetHandle()
-	{
-		if ($this->encryption->handlers['openssl'] === FALSE)
-		{
-			return $this->markTestSkipped('Cannot test OpenSSL because it is not available.');
-		}
-
-		$this->assertEquals('aes-128-cbc', $this->encryption->handlerGetHandle('openssl', 'aes-128', 'cbc'));
-		$this->assertEquals('rc4-40', $this->encryption->handlerGetHandle('openssl', 'rc4-40', 'stream'));
-	}
-
-	// --------------------------------------------------------------------
-
-	/**
-	 * OpenSSL/MCrypt portability test
-	 *
-	 * Amongst the obvious stuff, _cipher_alias() is also tested here.
+	 * Make sure all our supported drivers handle all the portable cipher/mode combinations
 	 */
 	public function testPortability()
 	{
-		if ( ! $this->encryption->handlers['mcrypt'] OR ! $this->encryption->handlers['openssl'])
-		{
-			$this->markTestSkipped('Both MCrypt and OpenSSL support are required for portability tests.');
-			return;
-		}
-		elseif (version_compare(PHP_VERSION, '7.1.0-alpha', '>='))
-		{
-			return $this->markTestSkipped('ext/mcrypt is deprecated since PHP 7.1 and will generate notices here.');
-		}
-
 		$message = 'This is a message encrypted via MCrypt and decrypted via OpenSSL, or vice-versa.';
 
 		// Format is: <Cipher name>, <Cipher mode>, <Key size>
@@ -353,43 +310,28 @@ class EncryptionTest extends CIUnitTestCase
 			['rc4', 'stream', 128],
 			['rc4', 'stream', 256]
 		];
-		$handler_index = ['mcrypt', 'openssl'];
+		$handler_index = ['openssl'];
 
 		foreach ($portable as &$test)
 		{
 			// Add some randomness to the selected handler
-			$handler = mt_rand(0, 1);
+			$handler = mt_rand(0, sizeof($handler_index) - 1);
 			$params = [
-				'handler' => $handler_index[$handler],
+				'driver' => $handler_index[$handler],
 				'cipher' => $test[0],
 				'mode' => $test[1],
 				'key' => openssl_random_pseudo_bytes($test[2])
 			];
 
-			$this->encryption->initialize($params);
-			$ciphertext = $this->encryption->encrypt($message);
+			$encrypter = $this->encryption->initialize($params);
+			$ciphertext = $encrypter->encrypt($message);
 
-			$handler = (int) ! $handler;
-			$params['handler'] = $handler_index[$handler];
+			$handler = mt_rand(0, sizeof($handler_index) - 1);
+			$params['driver'] = $handler_index[$handler];
 
-			$this->encryption->initialize($params);
-			$this->assertEquals($message, $this->encryption->decrypt($ciphertext));
+			$encrypter = $this->encryption->initialize($params);
+			$this->assertEquals($message, $encrypter->decrypt($ciphertext));
 		}
-	}
-
-	// --------------------------------------------------------------------
-
-	/**
-	 * __get() test
-	 */
-	public function testMagicGet()
-	{
-		$this->assertNull($this->encryption->foo);
-		$this->assertEquals(['openssl', 'mcrypt'], array_keys($this->encryption->handlers));
-
-		// 'stream' mode is translated into an empty string for OpenSSL
-		$this->encryption->initialize(['cipher' => 'rc4', 'mode' => 'stream']);
-		$this->assertEquals('stream', $this->encryption->mode);
 	}
 
 }

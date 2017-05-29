@@ -62,8 +62,10 @@ class OpenSSLHandler extends BaseHandler
 	 * @param	array	$params	Configuration parameters
 	 * @return	void
 	 */
-	protected function initialize($params)
+	public function __construct($params = null)
 	{
+		parent::__construct();
+		
 		if ( ! empty($params['cipher']))
 		{
 			$params['cipher'] = strtolower($params['cipher']);
@@ -109,17 +111,17 @@ class OpenSSLHandler extends BaseHandler
 	 * @param	array	$params	Input parameters
 	 * @return	string
 	 */
-	public function encryptIt($data, array $params = null)
+	public function encrypt($data, array $params = null)
 	{
-		if (empty($params['handle']))
+		if (empty($params['cipher']))
 		{
 			return false;
 		}
 
-		$iv = ($iv_size = opensslcipher_iv_length($params['handle'])) ? $this->createKey($iv_size) : null;
+		$iv = ($iv_size = opensslcipher_iv_length($params['cipher'])) ? $this->createKey($iv_size) : null;
 
 		$data = openssl_encrypt(
-				$data, $params['handle'], $params['key'], OPENSSL_RAW_DATA, $iv
+				$data, $params['cipher'], $params['key'], OPENSSL_RAW_DATA, $iv
 		);
 
 		if ($data === false)
@@ -139,10 +141,10 @@ class OpenSSLHandler extends BaseHandler
 	 * @param	array	$params	Input parameters
 	 * @return	string
 	 */
-	public function decryptIt($data, array $params = null)
+	public function decrypt($data, array $params = null)
 	{
 
-		if ($iv_size = opensslcipher_iv_length($params['handle']))
+		if ($iv_size = openssl_cipher_iv_length($params['cipher']))
 		{
 			$iv = self::substr($data, 0, $iv_size);
 			$data = self::substr($data, $iv_size);
@@ -152,24 +154,9 @@ class OpenSSLHandler extends BaseHandler
 			$iv = null;
 		}
 
-		return empty($params['handle']) ? false : openssl_decrypt(
-						$data, $params['handle'], $params['key'], OPENSSL_RAW_DATA, $iv
+		return empty($params['cipher']) ? false : openssl_decrypt(
+						$data, $params['cipher'], $params['key'], OPENSSL_RAW_DATA, $iv
 		);
-	}
-
-	// --------------------------------------------------------------------
-
-	/**
-	 * Get OpenSSL handle
-	 *
-	 * @param	string	$cipher	Cipher name
-	 * @param	string	$mode	Encryption mode
-	 * @return	string
-	 */
-	protected function getHandle($cipher, $mode)
-	{
-		// OpenSSL methods aren't suffixed with '-stream' for this mode
-		return ($mode === 'stream') ? $cipher : $cipher . '-' . $mode;
 	}
 
 	// --------------------------------------------------------------------

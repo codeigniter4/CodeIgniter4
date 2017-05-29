@@ -45,17 +45,6 @@ interface EncrypterInterface
 {
 
 	/**
-	 * Initialize or re-initialize an encryption handler,
-	 * possibly with different parameters
-	 *
-	 * @param	array	$params	Configuration parameters
-	 * @return	CI_Encryption
-	 * 
-	 * @throws \CodeIgniter\Encryption\EncryptionException
-	 */
-	public function initialize(array $params);
-
-	/**
 	 * Encrypt - convert plaintext into ciphertext
 	 *
 	 * @param	string	$data	Input data

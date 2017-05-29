@@ -117,121 +117,21 @@ abstract class BaseHandler implements \CodeIgniter\Encryption\EncrypterInterface
 
 		$params = (array) $this->config;
 
-		$this->handlers = [
-			'openssl' => extension_loaded('openssl'),
-			'mcrypt' => defined('MCRYPT_DEV_URANDOM'),
-		];
-
-		if ( ! $this->handlers['mcrypt'] && ! $this->handlers['openssl'])
-		{
-			throw new EncryptionException('Unable to find an available encryption handler.');
-		}
-
-		$this->initialize($params);
-
 		if ( ! isset($this->key) && self::strlen($key = $this->config->key) > 0)
-		{
 			$this->key = $key;
-		}
 
 		$this->logger->info('Encryption handler Initialized');
-	}
-
-	/**
-	 * Encrypt
-	 *
-	 * @param	string	$data	Input data
-	 * @param	array	$params	Input parameters
-	 * @return	string
-	 */
-	public function encrypt($data, array $params = null)
-	{
-		if (($params = $this->getParams($params)) === false)
-		{
-			return false;
-		}
-
-		isset($params['key']) OR $params['key'] = $this->hkdf($this->key, 'sha512', null, self::strlen($this->key), 'encryption');
-
-		if (($data = $this->encryptIt($data, $params)) === false)
-		{
-			return false;
-		}
-
-		$params['base64'] && $data = base64_encode($data);
-
-		if (isset($params['hmac_digest']))
-		{
-			isset($params['hmackey']) OR $params['hmackey'] = $this->hkdf($this->key, 'sha512', null, null, 'authentication');
-			return hash_hmac($params['hmac_digest'], $data, $params['hmackey'],  ! $params['base64']) . $data;
-		}
-
-		return $data;
-	}
-
-	/**
-	 * Decrypt
-	 *
-	 * @param	string	$data	Encrypted data
-	 * @param	array	$params	Input parameters
-	 * @return	string
-	 */
-	public function decrypt($data, array $params = null)
-	{
-		if (($params = $this->getParams($params)) === false)
-		{
-			return false;
-		}
-
-		if (isset($params['hmac_digest']))
-		{
-			// This might look illogical, but it is done during encryption as well ...
-			// The 'base64' value is effectively an inverted "raw data" parameter
-			$digest_size = ($params['base64']) ? $this->digests[$params['hmac_digest']] * 2 : $this->digests[$params['hmac_digest']];
-
-			if (self::strlen($data) <= $digest_size)
-			{
-				return false;
-			}
-
-			$hmac_input = self::substr($data, 0, $digest_size);
-			$data = self::substr($data, $digest_size);
-
-			isset($params['hmackey']) OR $params['hmackey'] = $this->hkdf($this->key, 'sha512', null, null, 'authentication');
-			$hmac_check = hash_hmac($params['hmac_digest'], $data, $params['hmackey'],  ! $params['base64']);
-
-			// Time-attack-safe comparison
-			$diff = 0;
-			for ($i = 0; $i < $digest_size; $i ++ )
-			{
-				$diff |= ord($hmac_input[$i]) ^ ord($hmac_check[$i]);
-			}
-
-			if ($diff !== 0)
-			{
-				return false;
-			}
-		}
-
-		if ($params['base64'])
-		{
-			$data = base64_decode($data);
-		}
-
-		isset($params['key']) OR $params['key'] = $this->hkdf($this->key, 'sha512', null, self::strlen($this->key), 'encryption');
-
-		return $this->decryptIt($data, $params);
 	}
 
 // --------------------------------------------------------------------
 
 	/**
-	 * Get params
+	 * Get params. Is there harm to exposing this?
 	 *
 	 * @param	array	$params	Input parameters
 	 * @return	array
 	 */
-	protected function getParams($params)
+	public function getParams($params)
 	{
 		if (empty($params))
 		{
@@ -302,18 +202,6 @@ abstract class BaseHandler implements \CodeIgniter\Encryption\EncrypterInterface
 
 		return $params;
 	}
-
-// --------------------------------------------------------------------
-
-	/**
-	 * Get handler's handle
-	 *
-	 * @param	string	$cipher	Cipher name
-	 * @param	string	$mode	Encryption mode
-	 * @return	string
-	 */
-	abstract protected function getHandle($cipher, $mode);
-
 
 // --------------------------------------------------------------------
 
