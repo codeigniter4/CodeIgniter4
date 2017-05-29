@@ -49,6 +49,73 @@ EOH;
 
 		$expected = ltrim($expected);
 		$this->assertEquals($expected, ul($list, 'class="test"'));
+
+		$expected = <<<EOH
+<ul>
+  <li>foo</li>
+  <li>bar</li>
+  <li>2
+    <ul>
+      <li>foo</li>
+      <li>bar</li>
+    </ul>
+  </li>
+</ul>
+
+EOH;
+
+		$expected = ltrim($expected);
+		$list     = array('foo', 'bar', array('foo', 'bar'));
+
+		$this->assertEquals(ltrim($expected), ul($list));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testOL()
+	{
+		$expected = <<<EOH
+<ol>
+  <li>foo</li>
+  <li>bar</li>
+</ol>
+
+EOH;
+
+		$expected = ltrim($expected);
+		$list     = array('foo', 'bar');
+
+		$this->assertEquals(ltrim($expected), ol($list));
+
+		$expected = <<<EOH
+<ol class="test">
+  <li>foo</li>
+  <li>bar</li>
+</ol>
+
+EOH;
+
+		$expected = ltrim($expected);
+		$this->assertEquals($expected, ol($list, 'class="test"'));
+
+		$expected = <<<EOH
+<ol>
+  <li>foo</li>
+  <li>bar</li>
+  <li>2
+    <ol>
+      <li>foo</li>
+      <li>bar</li>
+    </ol>
+  </li>
+</ol>
+
+EOH;
+
+		$expected = ltrim($expected);
+		$list     = array('foo', 'bar', array('foo', 'bar'));
+
+		$this->assertEquals(ltrim($expected), ol($list));
 	}
 
 	// ------------------------------------------------------------------------
