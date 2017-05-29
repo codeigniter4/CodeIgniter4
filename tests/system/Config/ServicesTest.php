@@ -2,29 +2,39 @@
 
 class ServicesTest extends \CIUnitTestCase
 {
+
 	protected $config;
+	protected $original;
 
 	public function setUp()
 	{
-		Services::reset();
-		$config = new App();
+		$this->original = $_SERVER;
+		$_SERVER['HTTP_ACCEPT_LANGUAGE'] = 'es; q=1.0, en; q=0.5';
+		$this->config = new App();
+		$this->config->negotiateLocale = true;
+		$this->config->supportedLocales = ['en', 'es'];
 	}
 
-//	public function testCurlRequestGetMethod()
-//	{
-//		$client = Services::curlrequest([
-//            'debug' => true,
-//            'follow_redirects' => true
-//        ]);
-//
-//        $response = $client->request('GET', 'https://jsonplaceholder.typicode.com/posts/1');
-//
-//        $this->assertContains('sunt aut facere repellat provident occaecati excepturi optio reprehenderit', $response->getBody());
-//	}
+	public function tearDown()
+	{
+		$_SERVER = $this->original;
+	}
+
+	public function testNewCurlRequest()
+	{
+		$actual = Services::curlrequest();
+		$this->assertInstanceOf(\CodeIgniter\HTTP\CURLRequest::class, $actual);
+	}
 
 	public function testNewExceptions()
 	{
 		$actual = Services::exceptions($this->config);
+		$this->assertInstanceOf(\CodeIgniter\Debug\Exceptions::class, $actual);
+	}
+
+	public function testNewExceptionsWithNullConfig()
+	{
+		$actual = Services::exceptions(null, false);
 		$this->assertInstanceOf(\CodeIgniter\Debug\Exceptions::class, $actual);
 	}
 
@@ -34,11 +44,11 @@ class ServicesTest extends \CIUnitTestCase
 		$this->assertInstanceOf(\CodeIgniter\Debug\Iterator::class, $actual);
 	}
 
-//	public function testNewNegotiatorWithNullConfig()
-//	{
-//		$actual = Services::negotiator(null);
-//		$this->assertInstanceOf(\CodeIgniter\HTTP\Negotiate::class, $actual);
-//	}
+	public function testNewNegotiatorWithNullConfig()
+	{
+		$actual = Services::negotiator(null);
+		$this->assertInstanceOf(\CodeIgniter\HTTP\Negotiate::class, $actual);
+	}
 
 	public function testNewClirequestWithNullConfig()
 	{
@@ -52,9 +62,15 @@ class ServicesTest extends \CIUnitTestCase
 		$this->assertInstanceOf(\CodeIgniter\Pager\Pager::class, $actual);
 	}
 
+	public function testNewThrottlerFromShared()
+	{
+		$actual = Services::throttler();
+		$this->assertInstanceOf(\CodeIgniter\Throttle\Throttler::class, $actual);
+	}
+
 	public function testNewThrottler()
 	{
-		$actual = Services::throttler(null);
+		$actual = Services::throttler(false);
 		$this->assertInstanceOf(\CodeIgniter\Throttle\Throttler::class, $actual);
 	}
 
@@ -76,10 +92,34 @@ class ServicesTest extends \CIUnitTestCase
 		$this->assertInstanceOf(\CodeIgniter\Validation\Validation::class, $actual);
 	}
 
+	public function testNewViewcellFromShared()
+	{
+		$actual = Services::viewcell();
+		$this->assertInstanceOf(\CodeIgniter\View\Cell::class, $actual);
+	}
+
 	public function testNewViewcell()
 	{
-		$actual = Services::viewcell(null);
+		$actual = Services::viewcell(false);
 		$this->assertInstanceOf(\CodeIgniter\View\Cell::class, $actual);
+	}
+
+	public function testNewSession()
+	{
+		$actual = Services::session($this->config);
+		$this->assertInstanceOf(\CodeIgniter\Session\Session::class, $actual);
+	}
+
+	public function testNewSessionWithNullConfig()
+	{
+		$actual = Services::session(null, false);
+		$this->assertInstanceOf(\CodeIgniter\Session\Session::class, $actual);
+	}
+
+	public function testCallStatic()
+	{
+		$actual = \CodeIgniter\Config\Services::SESSION(null, false);
+		$this->assertInstanceOf(\CodeIgniter\Session\Session::class, $actual);
 	}
 
 }
