@@ -23,8 +23,8 @@ final class HTMLHelperTest extends \CIUnitTestCase
 	}
 
 	//--------------------------------------------------------------------
-	
-	public function testUL()
+
+	public function testBasicUL()
 	{
 		$expected = <<<EOH
 <ul>
@@ -38,7 +38,10 @@ EOH;
 		$list     = array('foo', 'bar');
 
 		$this->assertEquals(ltrim($expected), ul($list));
+	}
 
+	public function testULWithClass()
+	{
 		$expected = <<<EOH
 <ul class="test">
   <li>foo</li>
@@ -48,8 +51,13 @@ EOH;
 EOH;
 
 		$expected = ltrim($expected);
-		$this->assertEquals($expected, ul($list, 'class="test"'));
+		$list     = array('foo', 'bar');
 
+		$this->assertEquals($expected, ul($list, 'class="test"'));
+	}
+
+	public function testMultiLevelUL()
+	{
 		$expected = <<<EOH
 <ul>
   <li>foo</li>
@@ -72,7 +80,7 @@ EOH;
 
 	//--------------------------------------------------------------------
 
-	public function testOL()
+	public function testBasicOL()
 	{
 		$expected = <<<EOH
 <ol>
@@ -86,7 +94,10 @@ EOH;
 		$list     = array('foo', 'bar');
 
 		$this->assertEquals(ltrim($expected), ol($list));
+	}
 
+	public function testOLWithClass()
+	{
 		$expected = <<<EOH
 <ol class="test">
   <li>foo</li>
@@ -96,8 +107,13 @@ EOH;
 EOH;
 
 		$expected = ltrim($expected);
-		$this->assertEquals($expected, ol($list, 'class="test"'));
+		$list     = array('foo', 'bar');
 
+		$this->assertEquals($expected, ol($list, 'class="test"'));
+	}
+
+	public function testMultiLevelOL()
+	{
 		$expected = <<<EOH
 <ol>
   <li>foo</li>
