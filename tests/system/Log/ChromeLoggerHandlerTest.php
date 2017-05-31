@@ -37,8 +37,8 @@ class ChromeLoggerHandlerTest extends \CIUnitTestCase
         
         //--------------------------------------------------------------------
         
-        public function testSendLogs(){
-                	
+        public function testSendLogs()
+        {       
                 $config = new LoggerConfig();
                 $config->handlers['CodeIgniter\Log\Handlers\TestHandler']['handles'] =  ['critical'];
                 
@@ -48,13 +48,12 @@ class ChromeLoggerHandlerTest extends \CIUnitTestCase
                 $response = Services::response(null, true);
                 
                 $this->assertTrue($response->hasHeader('X-ChromeLogger-Data'));
-            
         }
         
         //--------------------------------------------------------------------
         
-        public function testSetDateFormat(){
-            
+        public function testSetDateFormat()
+        {            
                 $config = new LoggerConfig();
                 $config->handlers['CodeIgniter\Log\Handlers\TestHandler']['handles'] =  ['critical'];
                 
@@ -63,7 +62,5 @@ class ChromeLoggerHandlerTest extends \CIUnitTestCase
                 
                 $this->assertObjectHasAttribute('dateFormat', $result);
                 $this->assertObjectHasAttribute('dateFormat', $logger);
-                
-                
         }
 }

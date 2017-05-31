@@ -20,10 +20,5 @@ class FileHandlerTest extends \CIUnitTestCase
                 $logger = new FileHandler($config->handlers['CodeIgniter\Log\Handlers\TestHandler']);
                 $logger->setDateFormat("Y-m-d H:i:s:u");
                 $this->assertTrue($logger->handle("warning", "This is a test log") );
-                
-                
         }
-
-        
-
 }
