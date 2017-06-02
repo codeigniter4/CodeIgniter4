@@ -7,9 +7,10 @@ class FormHelperTest extends \CIUnitTestCase
         helper('form');
     }
     // ------------------------------------------------------------------------
-    public function textFormHidden()
+    public function testFormHidden()
     {
         $expected = <<<EOH
+
 <input type="hidden" name="username" value="johndoe" />\n
 EOH;
         $this->assertEquals($expected, form_hidden('username', 'johndoe'));
