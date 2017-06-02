@@ -69,6 +69,20 @@ EOH;
         $this->assertEquals($expected, form_open('foo/bar', $attributes, $hidden));
     }
     // ------------------------------------------------------------------------
+    public function testFormOpenMultipart()
+    {
+        $expected = <<<EOH
+<form action="http://example.com/index.php/foo/bar" name="form" id="form" method="POST" enctype="multipart&#x2F;form-data" accept-charset="utf-8">
+
+EOH;
+        $attributes = [
+            'name'   => 'form',
+            'id'     => 'form',
+            'method' => 'POST'
+        ];
+        $this->assertEquals($expected, form_open_multipart('foo/bar', $attributes));
+    }
+    // ------------------------------------------------------------------------
     public function testFormHidden()
     {
         $expected = <<<EOH
