@@ -5,6 +5,68 @@ class FormHelperTest extends \CIUnitTestCase
     public function setUp()
     {
         helper('form');
+
+        $_SERVER['HTTP_HOST'] = 'example.com';
+		$_SERVER['REQUEST_URI'] = '/';
+    }
+    // ------------------------------------------------------------------------
+    public function testFormOpenBasic()
+    {
+        $expected = <<<EOH
+<form action="http://example.com/index.php/foo/bar" name="form" id="form" method="POST" accept-charset="utf-8">
+
+EOH;
+        $attributes = [
+            'name'   => 'form',
+            'id'     => 'form',
+            'method' => 'POST'
+        ];
+        $this->assertEquals($expected, form_open('foo/bar', $attributes));
+    }
+    // ------------------------------------------------------------------------
+    public function testFormOpenWithoutAction()
+    {
+        $expected = <<<EOH
+<form action="http://example.com/" name="form" id="form" method="POST" accept-charset="utf-8">
+
+EOH;
+        $attributes = [
+            'name'   => 'form',
+            'id'     => 'form',
+            'method' => 'POST'
+        ];
+        $this->assertEquals($expected, form_open('', $attributes));
+    }
+    // ------------------------------------------------------------------------
+    public function testFormOpenWithoutMethod()
+    {
+        $expected = <<<EOH
+<form action="http://example.com/index.php/foo/bar" name="form" id="form" method="post" accept-charset="utf-8">
+
+EOH;
+        $attributes = [
+            'name'   => 'form',
+            'id'     => 'form'
+        ];
+        $this->assertEquals($expected, form_open('foo/bar', $attributes));
+    }
+    // ------------------------------------------------------------------------
+    public function testFormOpenWithHidden()
+    {
+        $expected = <<<EOH
+<form action="http://example.com/index.php/foo/bar" name="form" id="form" method="POST" accept-charset="utf-8">
+<input type="hidden" name="foo" value="bar" style="display: none;" />
+
+EOH;
+        $attributes = [
+            'name'   => 'form',
+            'id'     => 'form',
+            'method' => 'POST'
+        ];
+        $hidden = [
+            'foo' => 'bar'
+        ];
+        $this->assertEquals($expected, form_open('foo/bar', $attributes, $hidden));
     }
     // ------------------------------------------------------------------------
     public function testFormHidden()
