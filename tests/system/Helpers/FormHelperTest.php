@@ -133,6 +133,32 @@ EOH;
         $this->assertEquals($expected, form_hidden('username', 'johndoe'));
     }
     // ------------------------------------------------------------------------
+    public function testFormHiddenArrayInput()
+    {
+        $data = [
+            'foo' => 'bar'
+        ];
+        $expected = <<<EOH
+
+<input type="hidden" name="foo" value="bar" />
+
+EOH;
+        $this->assertEquals($expected, form_hidden($data, null));
+    }
+    // ------------------------------------------------------------------------
+    public function testFormHiddenArrayValues()
+    {
+        $data = [
+            'foo' => 'bar'
+        ];
+        $expected = <<<EOH
+
+<input type="hidden" name="name[foo]" value="bar" />
+
+EOH;
+        $this->assertEquals($expected, form_hidden('name', $data));
+    }
+    // ------------------------------------------------------------------------
     public function testFormInput()
     {
         $expected = <<<EOH
