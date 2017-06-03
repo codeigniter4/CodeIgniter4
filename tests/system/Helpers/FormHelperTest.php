@@ -1,17 +1,26 @@
 <?php namespace CodeIgniter\Helpers;
 
+use CodeIgniter\HTTP\URI;
+use Config\App;
+use CodeIgniter\Services;
+
 class FormHelperTest extends \CIUnitTestCase
 {
     public function setUp()
     {
         helper('form');
-
-        $_SERVER['HTTP_HOST'] = 'example.com';
-		$_SERVER['REQUEST_URI'] = '/';
     }
     // ------------------------------------------------------------------------
     public function testFormOpenBasic()
     {
+        $config = new App();
+        $config->baseURL = '';
+        $config->indexPage = 'index.php';
+        $request = Services::request($config);
+        $request->uri = new URI('http://example.com/');
+
+        Services::injectMock('request', $request);
+
         $expected = <<<EOH
 <form action="http://example.com/index.php/foo/bar" name="form" id="form" method="POST" accept-charset="utf-8">
 
@@ -26,6 +35,14 @@ EOH;
     // ------------------------------------------------------------------------
     public function testFormOpenWithoutAction()
     {
+        $config = new App();
+        $config->baseURL = '';
+        $config->indexPage = 'index.php';
+        $request = Services::request($config);
+        $request->uri = new URI('http://example.com/');
+
+        Services::injectMock('request', $request);
+
         $expected = <<<EOH
 <form action="http://example.com/" name="form" id="form" method="POST" accept-charset="utf-8">
 
@@ -40,6 +57,14 @@ EOH;
     // ------------------------------------------------------------------------
     public function testFormOpenWithoutMethod()
     {
+        $config = new App();
+        $config->baseURL = '';
+        $config->indexPage = 'index.php';
+        $request = Services::request($config);
+        $request->uri = new URI('http://example.com/');
+
+        Services::injectMock('request', $request);
+
         $expected = <<<EOH
 <form action="http://example.com/index.php/foo/bar" name="form" id="form" method="post" accept-charset="utf-8">
 
@@ -53,6 +78,14 @@ EOH;
     // ------------------------------------------------------------------------
     public function testFormOpenWithHidden()
     {
+        $config = new App();
+        $config->baseURL = '';
+        $config->indexPage = 'index.php';
+        $request = Services::request($config);
+        $request->uri = new URI('http://example.com/');
+
+        Services::injectMock('request', $request);
+
         $expected = <<<EOH
 <form action="http://example.com/index.php/foo/bar" name="form" id="form" method="POST" accept-charset="utf-8">
 <input type="hidden" name="foo" value="bar" style="display: none;" />
@@ -71,6 +104,14 @@ EOH;
     // ------------------------------------------------------------------------
     public function testFormOpenMultipart()
     {
+        $config = new App();
+        $config->baseURL = '';
+        $config->indexPage = 'index.php';
+        $request = Services::request($config);
+        $request->uri = new URI('http://example.com/');
+
+        Services::injectMock('request', $request);
+
         $expected = <<<EOH
 <form action="http://example.com/index.php/foo/bar" name="form" id="form" method="POST" enctype="multipart&#x2F;form-data" accept-charset="utf-8">
 
