@@ -199,6 +199,19 @@ EOH;
         $this->assertEquals($expected, form_textarea('notes', 'Notes'));
     }
     // ------------------------------------------------------------------------
+    public function testFormTextareaWithValueAttribute()
+    {
+        $data = [
+            'name' => 'foo',
+            'value' => 'bar'
+        ];
+        $expected = <<<EOH
+<textarea name="foo" cols="40" rows="10" >bar</textarea>
+
+EOH;
+        $this->assertEquals($expected, form_textarea($data));
+    }
+    // ------------------------------------------------------------------------
     public function test_form_dropdown()
     {
         $expected = <<<EOH
@@ -251,6 +264,54 @@ EOH;
         $this->assertEquals($expected, form_dropdown('cars', $options, array('volvo', 'audi')));
     }
     // ------------------------------------------------------------------------
+    public function testFormDropdownWithSelectedAttribute()
+    {
+        $expected = <<<EOH
+<select name="foo">
+<option value="bar" selected="selected">Bar</option>
+</select>
+
+EOH;
+        $data = [
+            'name'     => 'foo',
+            'selected' => 'bar'
+        ];
+        $options = [
+            'bar' => 'Bar'
+        ];
+        $this->assertEquals($expected, form_dropdown($data, $options));
+    }
+    // ------------------------------------------------------------------------
+    public function testFormDropdownWithOptionsAttribute()
+    {
+        $expected = <<<EOH
+<select name="foo">
+<option value="bar">Bar</option>
+</select>
+
+EOH;
+        $data = [
+            'name'     => 'foo',
+            'options' => [
+                'bar' => 'Bar'
+            ]
+        ];
+        $this->assertEquals($expected, form_dropdown($data));
+    }
+    // ------------------------------------------------------------------------
+    public function testFormDropdownWithEmptyArrayOptionValue()
+    {
+        $expected = <<<EOH
+<select name="foo">
+</select>
+
+EOH;
+        $options = [
+            'bar' => []
+        ];
+        $this->assertEquals($expected, form_dropdown('foo', $options));
+    }
+    // ------------------------------------------------------------------------
     public function test_form_multiselect()
     {
         $expected = <<<EOH
@@ -279,6 +340,28 @@ EOH;
         $this->assertEquals($expected, form_fieldset('Address Information'));
     }
     // ------------------------------------------------------------------------
+    public function testFormFieldsetWithNoLegent()
+    {
+        $expected = <<<EOH
+<fieldset>
+
+EOH;
+        $this->assertEquals($expected, form_fieldset());
+    }
+    // ------------------------------------------------------------------------
+    public function testFormFieldsetWithAttributes()
+    {
+        $attributes = [
+            'name' => 'bar'
+        ];
+        $expected = <<<EOH
+<fieldset name="bar">
+<legend>Foo</legend>
+
+EOH;
+        $this->assertEquals($expected, form_fieldset('Foo', $attributes));
+    }
+    // ------------------------------------------------------------------------
     public function test_form_fieldset_close()
     {
         $expected = <<<EOH
@@ -293,6 +376,34 @@ EOH;
 <input type="checkbox" name="newsletter" value="accept" checked="checked"  />\n
 EOH;
         $this->assertEquals($expected, form_checkbox('newsletter', 'accept', TRUE));
+    }
+    // ------------------------------------------------------------------------
+    public function testFormCheckboxArrayData()
+    {
+        $data = [
+            'name'  => 'foo',
+            'value' => 'bar',
+            'checked' => true
+        ];
+        $expected = <<<EOH
+<input type="checkbox" name="foo" value="bar" checked="checked"  />
+
+EOH;
+        $this->assertEquals($expected, form_checkbox($data));
+    }
+    // ------------------------------------------------------------------------
+    public function testFormCheckboxArrayDataWithCheckedFalse()
+    {
+        $data = [
+            'name'  => 'foo',
+            'value' => 'bar',
+            'checked' => false
+        ];
+        $expected = <<<EOH
+<input type="checkbox" name="foo" value="bar"  />
+
+EOH;
+        $this->assertEquals($expected, form_checkbox($data));
     }
     // ------------------------------------------------------------------------
     public function test_form_radio()
@@ -319,6 +430,17 @@ EOH;
         $this->assertEquals($expected, form_label('What is your Name', 'username'));
     }
     // ------------------------------------------------------------------------
+    public function testFormLabelWithAttributes()
+    {
+        $attributes = [
+            'id' => 'label1'
+        ];
+        $expected = <<<EOH
+<label for="foo" id="label1">bar</label>
+EOH;
+        $this->assertEquals($expected, form_label('bar', 'foo', $attributes));
+    }
+    // ------------------------------------------------------------------------
     public function test_form_reset()
     {
         $expected = <<<EOH
@@ -335,11 +457,41 @@ EOH;
         $this->assertEquals($expected, form_button('name', 'content'));
     }
     // ------------------------------------------------------------------------
+    public function testFormButtonWithDataArray()
+    {
+        $data = [
+            'name'    => 'foo',
+            'content' => 'bar'
+        ];
+        $expected = <<<EOH
+<button name="foo" type="button" >bar</button>
+
+EOH;
+        $this->assertEquals($expected, form_button($data));
+    }
+    // ------------------------------------------------------------------------
     public function test_form_close()
     {
         $expected = <<<EOH
 </form></div></div>
 EOH;
         $this->assertEquals($expected, form_close('</div></div>'));
+    }
+    // ------------------------------------------------------------------------
+    public function testFormDatalist()
+    {
+        $options = [
+            'foo1',
+            'bar1'
+        ];
+        $expected = <<<EOH
+<input type="text" name="foo" value="bar" list="foo_list"  />
+
+<datalist id='foo_list'><option value='foo1'>
+<option value='bar1'>
+</datalist>
+
+EOH;
+        $this->assertEquals($expected, form_datalist('foo', 'bar', $options));
     }
 }
