@@ -527,6 +527,12 @@ class IncomingRequest extends Request
 	{
 		$this->uri->setPath($this->detectPath($protocol));
 
+		// It's possible the user forgot a trailing slash on their
+		// baseURL, so let's help them out.
+		$baseURL = ! empty($baseURL)
+			? rtrim($baseURL, '/ ').'/'
+			: $baseURL;
+
 		// Based on our baseURL provided by the developer (if set)
 		// set our current domain name, scheme
 		if ( ! empty($baseURL))

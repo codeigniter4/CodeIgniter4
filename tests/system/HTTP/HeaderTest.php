@@ -122,6 +122,4 @@ class HeaderTest extends \CIUnitTestCase
 
 		$this->assertEquals($expected, (string)$header);
 	}
-
-	//--------------------------------------------------------------------
 }

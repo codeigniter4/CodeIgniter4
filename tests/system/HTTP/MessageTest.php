@@ -198,8 +198,7 @@ class MessageTest extends \CIUnitTestCase
       		
                 $this->assertEquals('json, html, xml', $this->message->getHeaderLine('Accept'));
         }
-
-	
+        
 	//--------------------------------------------------------------------
 
 	public function testPopulateHeadersWithoutContentType()
