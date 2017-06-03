@@ -48,6 +48,14 @@
 class BaseConfig
 {
 	/**
+	 * An optional array of classes that will act as Registrars
+	 * for rapidly setting config class properties.
+	 *
+	 * @var array
+	 */
+	protected $registrars;
+
+	/**
 	 * Will attempt to get environment variables with names
 	 * that match the properties of the child class.
 	 */
@@ -87,6 +95,8 @@ class BaseConfig
 				}
 			}
 		}
+
+		$this->registerProperties();
 	}
 
 	//--------------------------------------------------------------------
@@ -114,6 +124,45 @@ class BaseConfig
 		}
 
 		return null;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Provides external libraries a simple way to register one or more
+	 * options into a config file.
+	 */
+	protected function registerProperties()
+	{
+		if (empty($this->registrars)) return;
+
+		$shortName = (new \ReflectionClass($this))->getShortName();
+
+		// Check the registrar class for a method named after this class' shortName
+		foreach ($this->registrars as $callable)
+		{
+			if (! method_exists($callable, $shortName)) continue;
+
+			$properties = $callable::$shortName();
+
+			if (! is_array($properties))
+			{
+				throw new \RuntimeException('Registrars must return an array of properties and their values.');
+			}
+
+			foreach ($properties as $property => $value)
+			{
+				if (! property_exists($this, $property)) continue;
+
+				if (is_array($this->$property) && is_array($value))
+				{
+					$this->$property = array_merge($this->$property, $value);
+				}
+				else {
+					$this->$property = $value;
+				}
+			}
+		}
 	}
 
 	//--------------------------------------------------------------------
