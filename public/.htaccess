@@ -3,7 +3,7 @@
 # ----------------------------------------------------------------------
 
 # Sets the environment that CodeIgniter runs under.
- SetEnv CI_ENV development
+ SetEnv CI_ENVIRONMENT development
 
 # ----------------------------------------------------------------------
 # UTF-8 encoding
