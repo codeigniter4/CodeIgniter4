@@ -1,5 +1,9 @@
 <?php namespace CodeIgniter\Helpers;
 
+use CodeIgniter\HTTP\URI;
+use Config\App;
+use CodeIgniter\Services;
+
 class FormHelperTest extends \CIUnitTestCase
 {
     public function setUp()
@@ -7,12 +11,152 @@ class FormHelperTest extends \CIUnitTestCase
         helper('form');
     }
     // ------------------------------------------------------------------------
-    public function textFormHidden()
+    public function testFormOpenBasic()
+    {
+        $config = new App();
+        $config->baseURL = '';
+        $config->indexPage = 'index.php';
+        $request = Services::request($config);
+        $request->uri = new URI('http://example.com/');
+
+        Services::injectMock('request', $request);
+
+        $expected = <<<EOH
+<form action="http://example.com/index.php/foo/bar" name="form" id="form" method="POST" accept-charset="utf-8">
+
+EOH;
+        $attributes = [
+            'name'   => 'form',
+            'id'     => 'form',
+            'method' => 'POST'
+        ];
+        $this->assertEquals($expected, form_open('foo/bar', $attributes));
+    }
+    // ------------------------------------------------------------------------
+    public function testFormOpenWithoutAction()
+    {
+        $config = new App();
+        $config->baseURL = '';
+        $config->indexPage = 'index.php';
+        $request = Services::request($config);
+        $request->uri = new URI('http://example.com/');
+
+        Services::injectMock('request', $request);
+
+        $expected = <<<EOH
+<form action="http://example.com/" name="form" id="form" method="POST" accept-charset="utf-8">
+
+EOH;
+        $attributes = [
+            'name'   => 'form',
+            'id'     => 'form',
+            'method' => 'POST'
+        ];
+        $this->assertEquals($expected, form_open('', $attributes));
+    }
+    // ------------------------------------------------------------------------
+    public function testFormOpenWithoutMethod()
+    {
+        $config = new App();
+        $config->baseURL = '';
+        $config->indexPage = 'index.php';
+        $request = Services::request($config);
+        $request->uri = new URI('http://example.com/');
+
+        Services::injectMock('request', $request);
+
+        $expected = <<<EOH
+<form action="http://example.com/index.php/foo/bar" name="form" id="form" method="post" accept-charset="utf-8">
+
+EOH;
+        $attributes = [
+            'name'   => 'form',
+            'id'     => 'form'
+        ];
+        $this->assertEquals($expected, form_open('foo/bar', $attributes));
+    }
+    // ------------------------------------------------------------------------
+    public function testFormOpenWithHidden()
+    {
+        $config = new App();
+        $config->baseURL = '';
+        $config->indexPage = 'index.php';
+        $request = Services::request($config);
+        $request->uri = new URI('http://example.com/');
+
+        Services::injectMock('request', $request);
+
+        $expected = <<<EOH
+<form action="http://example.com/index.php/foo/bar" name="form" id="form" method="POST" accept-charset="utf-8">
+<input type="hidden" name="foo" value="bar" style="display: none;" />
+
+EOH;
+        $attributes = [
+            'name'   => 'form',
+            'id'     => 'form',
+            'method' => 'POST'
+        ];
+        $hidden = [
+            'foo' => 'bar'
+        ];
+        $this->assertEquals($expected, form_open('foo/bar', $attributes, $hidden));
+    }
+    // ------------------------------------------------------------------------
+    public function testFormOpenMultipart()
+    {
+        $config = new App();
+        $config->baseURL = '';
+        $config->indexPage = 'index.php';
+        $request = Services::request($config);
+        $request->uri = new URI('http://example.com/');
+
+        Services::injectMock('request', $request);
+
+        $expected = <<<EOH
+<form action="http://example.com/index.php/foo/bar" name="form" id="form" method="POST" enctype="multipart&#x2F;form-data" accept-charset="utf-8">
+
+EOH;
+        $attributes = [
+            'name'   => 'form',
+            'id'     => 'form',
+            'method' => 'POST'
+        ];
+        $this->assertEquals($expected, form_open_multipart('foo/bar', $attributes));
+    }
+    // ------------------------------------------------------------------------
+    public function testFormHidden()
     {
         $expected = <<<EOH
+
 <input type="hidden" name="username" value="johndoe" />\n
 EOH;
         $this->assertEquals($expected, form_hidden('username', 'johndoe'));
+    }
+    // ------------------------------------------------------------------------
+    public function testFormHiddenArrayInput()
+    {
+        $data = [
+            'foo' => 'bar'
+        ];
+        $expected = <<<EOH
+
+<input type="hidden" name="foo" value="bar" />
+
+EOH;
+        $this->assertEquals($expected, form_hidden($data, null));
+    }
+    // ------------------------------------------------------------------------
+    public function testFormHiddenArrayValues()
+    {
+        $data = [
+            'foo' => 'bar'
+        ];
+        $expected = <<<EOH
+
+<input type="hidden" name="name[foo]" value="bar" />
+
+EOH;
+        $this->assertEquals($expected, form_hidden('name', $data));
     }
     // ------------------------------------------------------------------------
     public function testFormInput()
@@ -53,6 +197,19 @@ EOH;
 <textarea name="notes" cols="40" rows="10" >Notes</textarea>\n
 EOH;
         $this->assertEquals($expected, form_textarea('notes', 'Notes'));
+    }
+    // ------------------------------------------------------------------------
+    public function testFormTextareaWithValueAttribute()
+    {
+        $data = [
+            'name' => 'foo',
+            'value' => 'bar'
+        ];
+        $expected = <<<EOH
+<textarea name="foo" cols="40" rows="10" >bar</textarea>
+
+EOH;
+        $this->assertEquals($expected, form_textarea($data));
     }
     // ------------------------------------------------------------------------
     public function test_form_dropdown()
@@ -107,6 +264,54 @@ EOH;
         $this->assertEquals($expected, form_dropdown('cars', $options, array('volvo', 'audi')));
     }
     // ------------------------------------------------------------------------
+    public function testFormDropdownWithSelectedAttribute()
+    {
+        $expected = <<<EOH
+<select name="foo">
+<option value="bar" selected="selected">Bar</option>
+</select>
+
+EOH;
+        $data = [
+            'name'     => 'foo',
+            'selected' => 'bar'
+        ];
+        $options = [
+            'bar' => 'Bar'
+        ];
+        $this->assertEquals($expected, form_dropdown($data, $options));
+    }
+    // ------------------------------------------------------------------------
+    public function testFormDropdownWithOptionsAttribute()
+    {
+        $expected = <<<EOH
+<select name="foo">
+<option value="bar">Bar</option>
+</select>
+
+EOH;
+        $data = [
+            'name'     => 'foo',
+            'options' => [
+                'bar' => 'Bar'
+            ]
+        ];
+        $this->assertEquals($expected, form_dropdown($data));
+    }
+    // ------------------------------------------------------------------------
+    public function testFormDropdownWithEmptyArrayOptionValue()
+    {
+        $expected = <<<EOH
+<select name="foo">
+</select>
+
+EOH;
+        $options = [
+            'bar' => []
+        ];
+        $this->assertEquals($expected, form_dropdown('foo', $options));
+    }
+    // ------------------------------------------------------------------------
     public function test_form_multiselect()
     {
         $expected = <<<EOH
@@ -135,6 +340,28 @@ EOH;
         $this->assertEquals($expected, form_fieldset('Address Information'));
     }
     // ------------------------------------------------------------------------
+    public function testFormFieldsetWithNoLegent()
+    {
+        $expected = <<<EOH
+<fieldset>
+
+EOH;
+        $this->assertEquals($expected, form_fieldset());
+    }
+    // ------------------------------------------------------------------------
+    public function testFormFieldsetWithAttributes()
+    {
+        $attributes = [
+            'name' => 'bar'
+        ];
+        $expected = <<<EOH
+<fieldset name="bar">
+<legend>Foo</legend>
+
+EOH;
+        $this->assertEquals($expected, form_fieldset('Foo', $attributes));
+    }
+    // ------------------------------------------------------------------------
     public function test_form_fieldset_close()
     {
         $expected = <<<EOH
@@ -149,6 +376,34 @@ EOH;
 <input type="checkbox" name="newsletter" value="accept" checked="checked"  />\n
 EOH;
         $this->assertEquals($expected, form_checkbox('newsletter', 'accept', TRUE));
+    }
+    // ------------------------------------------------------------------------
+    public function testFormCheckboxArrayData()
+    {
+        $data = [
+            'name'  => 'foo',
+            'value' => 'bar',
+            'checked' => true
+        ];
+        $expected = <<<EOH
+<input type="checkbox" name="foo" value="bar" checked="checked"  />
+
+EOH;
+        $this->assertEquals($expected, form_checkbox($data));
+    }
+    // ------------------------------------------------------------------------
+    public function testFormCheckboxArrayDataWithCheckedFalse()
+    {
+        $data = [
+            'name'  => 'foo',
+            'value' => 'bar',
+            'checked' => false
+        ];
+        $expected = <<<EOH
+<input type="checkbox" name="foo" value="bar"  />
+
+EOH;
+        $this->assertEquals($expected, form_checkbox($data));
     }
     // ------------------------------------------------------------------------
     public function test_form_radio()
@@ -175,6 +430,17 @@ EOH;
         $this->assertEquals($expected, form_label('What is your Name', 'username'));
     }
     // ------------------------------------------------------------------------
+    public function testFormLabelWithAttributes()
+    {
+        $attributes = [
+            'id' => 'label1'
+        ];
+        $expected = <<<EOH
+<label for="foo" id="label1">bar</label>
+EOH;
+        $this->assertEquals($expected, form_label('bar', 'foo', $attributes));
+    }
+    // ------------------------------------------------------------------------
     public function test_form_reset()
     {
         $expected = <<<EOH
@@ -191,11 +457,41 @@ EOH;
         $this->assertEquals($expected, form_button('name', 'content'));
     }
     // ------------------------------------------------------------------------
+    public function testFormButtonWithDataArray()
+    {
+        $data = [
+            'name'    => 'foo',
+            'content' => 'bar'
+        ];
+        $expected = <<<EOH
+<button name="foo" type="button" >bar</button>
+
+EOH;
+        $this->assertEquals($expected, form_button($data));
+    }
+    // ------------------------------------------------------------------------
     public function test_form_close()
     {
         $expected = <<<EOH
 </form></div></div>
 EOH;
         $this->assertEquals($expected, form_close('</div></div>'));
+    }
+    // ------------------------------------------------------------------------
+    public function testFormDatalist()
+    {
+        $options = [
+            'foo1',
+            'bar1'
+        ];
+        $expected = <<<EOH
+<input type="text" name="foo" value="bar" list="foo_list"  />
+
+<datalist id='foo_list'><option value='foo1'>
+<option value='bar1'>
+</datalist>
+
+EOH;
+        $this->assertEquals($expected, form_datalist('foo', 'bar', $options));
     }
 }
