@@ -14,6 +14,7 @@ Library Reference
     curlrequest
     images
     incomingrequest
+    imagemanipulation
     message
     pagination
     request
