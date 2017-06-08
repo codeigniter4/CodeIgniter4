@@ -1335,7 +1335,7 @@ class BaseBuilder
 	 */
 	public function getCompiledSelect($reset = true)
 	{
-		$select = $this->compileSelect();
+		$select = [$this->compileSelect(), $this->binds];
 
 		if ($reset === true)
 		{
