@@ -44,7 +44,8 @@ Two functions have been provided for getting a service. These functions are alwa
 
 The first is ``service()`` which returns a new instance of the requested service. The only
 required parameter is the service name. This is the same as the method name within the Services
-file::
+file..Always returns a SHARED instance of the class, so calling the function multiple times should
+always return the same instance.::
 
 	$logger = service('logger');
 
@@ -52,10 +53,10 @@ If the creation method requires additional parameters, they can be passed after 
 
 	$renderer = service('renderer', APPPATH.'views/');
 
-The second function, ``shared_service()`` works just like ``service()`` but returns a shared
-instance of the desired service::
+The second function, ``single_service()`` works just like ``service()`` but returns a new instance of
+the class:
 
-    $logger = shared_service('logger');
+    $logger = single_service('logger');
 
 
 
@@ -131,5 +132,3 @@ within the class, and, if not, creates a new one. All of the factory methods pro
             return self::getSharedInstance('routes');
         }
     }
-
-
