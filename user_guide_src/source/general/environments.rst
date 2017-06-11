@@ -21,7 +21,7 @@ the value provided in ``$_SERVER['CI_ENVIRONMENT']``, otherwise defaulting to
 
 The simplest method to set the variable is in your :doc:`.env file </general/configuration>`::
 
-    CI_ENVIRONMENT = develop
+    CI_ENVIRONMENT = development
 
 Apache
 ------
