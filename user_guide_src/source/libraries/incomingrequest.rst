@@ -278,7 +278,7 @@ Class Reference
 
 The methods provided by the parent classes that are available are:
 
-* :meth:`CodeIgniter\\HTTP\\Request::ipAddress`
+* :meth:`CodeIgniter\\HTTP\\Request::getIPAddress`
 * :meth:`CodeIgniter\\HTTP\\Request::validIP`
 * :meth:`CodeIgniter\\HTTP\\Request::method`
 * :meth:`CodeIgniter\\HTTP\\Request::getServer`

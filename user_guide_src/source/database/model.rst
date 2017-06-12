@@ -421,11 +421,11 @@ be applied. If you have custom error message that you want to use, place them in
 	}
 
 Now, whenever you call the ``insert()``, ``update()``, or ``save()`` methods, the data will be validated. If it fails,
-the model will return boolean **false**. You can use the ``getErrors()`` method to retrieve the validation errors::
+the model will return boolean **false**. You can use the ``errors()`` method to retrieve the validation errors::
 
 	if ($model->save($data) === false)
 	{
-		return view('updateUser', ['errors' => $model->getErrors()];
+		return view('updateUser', ['errors' => $model->errors()];
 	}
 
 This returns an array with the field names and their associated errors that can be used to either show all of the
