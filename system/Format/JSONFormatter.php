@@ -39,22 +39,6 @@
 class JSONFormatter implements FormatterInterface
 {
 	/**
-	 * The error strings to use if encoding hits an error.
-	 *
-	 * @var array
-	 */
-	protected $errors = [
-		JSON_ERROR_NONE           => 'No error has occurred',
-		JSON_ERROR_DEPTH          => 'The maximum stack depth has been exceeded',
-		JSON_ERROR_STATE_MISMATCH => 'Invalid or malformed JSON',
-		JSON_ERROR_CTRL_CHAR      => 'Control character error, possibly incorrectly encoded',
-		JSON_ERROR_SYNTAX         => 'Syntax error',
-		JSON_ERROR_UTF8           => 'Malformed UTF-8 characters, possibly incorrectly encoded',
-	];
-
-	//--------------------------------------------------------------------
-
-	/**
 	 * Takes the given data and formats it.
 	 *
 	 * @param $data
@@ -63,20 +47,20 @@ class JSONFormatter implements FormatterInterface
 	 */
 	public function format(array $data)
 	{
-		$options = ENVIRONMENT == 'production'
-			? JSON_NUMERIC_CHECK
-			: JSON_NUMERIC_CHECK | JSON_PRETTY_PRINT;
+		$options = JSON_NUMERIC_CHECK | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRESERVE_ZERO_FRACTION;
 
-		$result = json_encode($data, 512, $options);
+		$options = ENVIRONMENT === 'production'
+			? $options
+			: $options | JSON_PRETTY_PRINT;
 
-		// If result is NULL, then an error happened.
-		// Let them know.
-		if ($result === null)
+		$result = json_encode($data, $options, 512);
+
+		if (json_last_error() !== JSON_ERROR_NONE)
 		{
-			throw new \RuntimeException($this->errors[json_last_error()]);
+			throw new \RuntimeException( sprintf("Failed to parse json string, error: '%s'", json_last_error_msg()) );
 		}
 
-		return utf8_encode($result);
+		return $result;
 	}
 
 	//--------------------------------------------------------------------

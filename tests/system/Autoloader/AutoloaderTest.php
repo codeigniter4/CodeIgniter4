@@ -49,7 +49,7 @@ class AutoloaderTest extends \CIUnitTestCase
 		$auto_loader = \CodeIgniter\Config\Services::autoloader();
 		// $auto_loader->register();
 		$actual   = $auto_loader->loadClass('App\Controllers\Checks');
-		$expected = APPPATH.'/Controllers/Checks.php';
+		$expected = APPPATH.'Controllers/Checks.php';
 		$this->assertSame($expected, $actual);
 	}
 
@@ -62,7 +62,7 @@ class AutoloaderTest extends \CIUnitTestCase
 		$auto_loader->initialize(new Autoload());
 		$auto_loader->register();
 		$actual   = $auto_loader->loadClass('App\Controllers\Checks');
-		$expected = APPPATH.'/Controllers/Checks.php';
+		$expected = APPPATH.'Controllers/Checks.php';
 		$this->assertSame($expected, $actual);
 	}
 

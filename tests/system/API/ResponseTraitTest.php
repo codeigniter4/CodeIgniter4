@@ -2,6 +2,7 @@
 
 use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\Controller;
+use CodeIgniter\Format\JSONFormatter;
 use CodeIgniter\HTTP\MockIncomingRequest;
 use CodeIgniter\HTTP\MockResponse;
 use CodeIgniter\HTTP\URI;
@@ -11,8 +12,20 @@ class ResponseTraitTest extends \CIUnitTestCase
     protected $request;
     protected $response;
 
+	/**
+	 * @var JSONFormatter
+	 */
+    protected $formatter;
 
-    protected function makeController(array $userConfig = [], string $uri = 'http://example.com', array $userHeaders = [])
+	public function setUp()
+	{
+		parent::setUp();
+
+		$this->formatter = new JSONFormatter();
+    }
+
+
+	protected function makeController(array $userConfig = [], string $uri = 'http://example.com', array $userHeaders = [])
     {
         $config = [
             'baseURL'          => 'http://example.com',
@@ -125,7 +138,7 @@ class ResponseTraitTest extends \CIUnitTestCase
         ];
 
         $this->assertTrue(strpos($this->response->getHeaderLine('Content-Type'), 'application/json') === 0);
-        $this->assertEquals(json_encode($expected), $this->response->getBody());
+        $this->assertEquals($this->formatter->format($expected), $this->response->getBody());
         $this->assertEquals(500, $this->response->getStatusCode());
         $this->assertEquals('A Custom Reason', $this->response->getReason());
     }
@@ -137,7 +150,7 @@ class ResponseTraitTest extends \CIUnitTestCase
 
         $this->assertEquals('A Custom Reason', $this->response->getReason());
         $this->assertEquals(201, $this->response->getStatusCode());
-        $this->assertEquals(json_encode(['id' => 3]), $this->response->getBody());
+        $this->assertEquals($this->formatter->format(['id' => 3]), $this->response->getBody());
     }
 
     public function testDeleted()
@@ -147,7 +160,7 @@ class ResponseTraitTest extends \CIUnitTestCase
 
         $this->assertEquals('A Custom Reason', $this->response->getReason());
         $this->assertEquals(200, $this->response->getStatusCode());
-        $this->assertEquals(json_encode(['id' => 3]), $this->response->getBody());
+        $this->assertEquals($this->formatter->format(['id' => 3]), $this->response->getBody());
     }
 
     public function testUnauthorized()
@@ -165,7 +178,7 @@ class ResponseTraitTest extends \CIUnitTestCase
 
         $this->assertEquals('A Custom Reason', $this->response->getReason());
         $this->assertEquals(401, $this->response->getStatusCode());
-        $this->assertEquals(json_encode($expected), $this->response->getBody());
+        $this->assertEquals($this->formatter->format($expected), $this->response->getBody());
     }
 
     public function testForbidden()
@@ -183,7 +196,7 @@ class ResponseTraitTest extends \CIUnitTestCase
 
         $this->assertEquals('A Custom Reason', $this->response->getReason());
         $this->assertEquals(403, $this->response->getStatusCode());
-        $this->assertEquals(json_encode($expected), $this->response->getBody());
+        $this->assertEquals($this->formatter->format($expected), $this->response->getBody());
     }
 
     public function testNotFound()
@@ -201,7 +214,7 @@ class ResponseTraitTest extends \CIUnitTestCase
 
         $this->assertEquals('A Custom Reason', $this->response->getReason());
         $this->assertEquals(404, $this->response->getStatusCode());
-        $this->assertEquals(json_encode($expected), $this->response->getBody());
+        $this->assertEquals($this->formatter->format($expected), $this->response->getBody());
     }
 
     public function testValidationError()
@@ -219,7 +232,7 @@ class ResponseTraitTest extends \CIUnitTestCase
 
         $this->assertEquals('A Custom Reason', $this->response->getReason());
         $this->assertEquals(400, $this->response->getStatusCode());
-        $this->assertEquals(json_encode($expected), $this->response->getBody());
+        $this->assertEquals($this->formatter->format($expected), $this->response->getBody());
     }
 
     public function testResourceExists()
@@ -237,7 +250,7 @@ class ResponseTraitTest extends \CIUnitTestCase
 
         $this->assertEquals('A Custom Reason', $this->response->getReason());
         $this->assertEquals(409, $this->response->getStatusCode());
-        $this->assertEquals(json_encode($expected), $this->response->getBody());
+        $this->assertEquals($this->formatter->format($expected), $this->response->getBody());
     }
 
     public function testResourceGone()
@@ -255,7 +268,7 @@ class ResponseTraitTest extends \CIUnitTestCase
 
         $this->assertEquals('A Custom Reason', $this->response->getReason());
         $this->assertEquals(410, $this->response->getStatusCode());
-        $this->assertEquals(json_encode($expected), $this->response->getBody());
+        $this->assertEquals($this->formatter->format($expected), $this->response->getBody());
     }
 
     public function testTooManyRequests()
@@ -273,7 +286,7 @@ class ResponseTraitTest extends \CIUnitTestCase
 
         $this->assertEquals('A Custom Reason', $this->response->getReason());
         $this->assertEquals(429, $this->response->getStatusCode());
-        $this->assertEquals(json_encode($expected), $this->response->getBody());
+        $this->assertEquals($this->formatter->format($expected), $this->response->getBody());
     }
 
     public function testServerError()
@@ -283,7 +296,7 @@ class ResponseTraitTest extends \CIUnitTestCase
 
     	$this::assertEquals('A custom reason.', $this->response->getReason());
     	$this::assertEquals(500, $this->response->getStatusCode());
-    	$this::assertEquals(json_encode([
+    	$this::assertEquals($this->formatter->format([
     		'status'   => 500,
 		    'error'    => 'FAT-CHANCE',
 		    'messages' => [
