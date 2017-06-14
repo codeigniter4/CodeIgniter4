@@ -410,7 +410,10 @@ class Exceptions
 			}
 		}
 
-		$out .= str_repeat('</span>', (int)$spans);
+		if ($spans > 0)
+		{
+			$out .= str_repeat('</span>', $spans);
+		}
 
 		return '<pre><code>'.$out.'</code></pre>';
 	}
