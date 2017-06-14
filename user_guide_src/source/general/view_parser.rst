@@ -450,6 +450,10 @@ key/value pairs::
 
 	{+ foo bar=2 baz="x y" }
 
+Parameters can also be single values::
+
+	{+ include somefile.php +}
+
 Registering a Plugin
 --------------------
 

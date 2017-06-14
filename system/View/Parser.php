@@ -709,13 +709,20 @@ class Parser extends View {
 		    {
 		    	$params = [];
 			    $parts = explode(' ', trim($match[1]));
-
+if ($plugin == 'hello') dd($parts);
 			    foreach ($parts as $part)
 			    {
 			    	if (empty($part)) continue;
 
-			    	list($a, $b) = explode('=',$part);
-			    	$params[$a] = $b;
+			    	if (strpos($part, '=') !== false)
+				    {
+					    list($a, $b) = explode('=',$part);
+					    $params[$a] = $b;
+				    }
+				    else
+				    {
+				    	$params[] = $part;
+				    }
 			    }
 			    unset($parts);
 

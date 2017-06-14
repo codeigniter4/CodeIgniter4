@@ -561,4 +561,20 @@ class ParserTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * @group parserplugins
+	 */
+	public function testParserSingleTagWithSingleParams()
+	{
+		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
+		$parser->addPlugin('hit:it', function(array $params=[]){
+			return "{$params[0]} to the {$params[1]}";
+		}, false);
+
+		$template = "{+ hit:it foo bar +}";
+
+		$this->assertEquals("foo to the bar", $parser->renderString($template));
+	}
+
+	//--------------------------------------------------------------------
 }
