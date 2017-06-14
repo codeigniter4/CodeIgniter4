@@ -47,7 +47,7 @@ class JSONFormatter implements FormatterInterface
 	 */
 	public function format(array $data)
 	{
-		$options = JSON_NUMERIC_CHECK | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRESERVE_ZERO_FRACTION;
+		$options = JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES;
 
 		$options = ENVIRONMENT === 'production'
 			? $options

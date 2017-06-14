@@ -49,20 +49,4 @@ class JSONFormatterTest extends \CIUnitTestCase
 		$this->assertEquals($expected, $this->jsonFormatter->format($data));
 	}
 
-	public function testDoesNumericFormatting()
-	{
-		$data = [
-			'foo' => '32',
-			'bar' => 42,
-			'baz' => "3.14"
-		];
-
-		$expected = '{
-    "foo": 32,
-    "bar": 42,
-    "baz": 3.14
-}';
-
-		$this->assertEquals($expected, $this->jsonFormatter->format($data));
-	}
 }
