@@ -82,4 +82,11 @@ class Plugins
 	}
 
 	//--------------------------------------------------------------------
+
+	public static function lang(array $params=[])
+	{
+		$line = array_shift($params);
+
+		return lang($line, $params);
+	}
 }
