@@ -577,4 +577,28 @@ class ParserTest extends \CIUnitTestCase
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * @group parserplugins
+	 */
+	public function testParserSingleTagWithQuotedParams()
+	{
+		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
+		$parser->addPlugin('count', function(array $params=[]){
+			$out = '';
+
+			foreach ($params as $index => $param)
+			{
+				$out .= "{$index}. {$param} ";
+			}
+
+			return $out;
+		}, false);
+
+		$template = '{+ count "foo bar" baz "foo bar" +}';
+
+		$this->assertEquals('0. foo bar 1. baz 2. foo bar ', $parser->renderString($template));
+	}
+
+	//--------------------------------------------------------------------
 }

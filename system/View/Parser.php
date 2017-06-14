@@ -708,8 +708,11 @@ class Parser extends View {
 		    foreach ($matches as $match)
 		    {
 		    	$params = [];
-			    $parts = explode(' ', trim($match[1]));
-if ($plugin == 'hello') dd($parts);
+
+		    	// Split on "words", but keep quoted groups together, accounting for escaped quotes.
+			    // Note: requires double quotes, not single quotes.
+			    $parts = str_getcsv($match[1], ' ');
+
 			    foreach ($parts as $part)
 			    {
 			    	if (empty($part)) continue;
