@@ -86,12 +86,15 @@
 									<div class="args" id="<?= $args_id ?>">
 										<table cellspacing="0">
 
-										<?php foreach ($row['args'] as $key => $value) : ?>
-											<?php
-												$mirror = isset($row['class']) ? new \ReflectionMethod($row['class'], $row['function']) :
-													new \ReflectionFunction($row['function']);
-												$params = $mirror->getParameters();
-											?>
+										<?php
+										$params = null;
+										// Reflection by name is not available for closure function
+										if( substr( $row['function'], -1 ) !== '}' )
+										{
+											$mirror = isset( $row['class'] ) ? new \ReflectionMethod( $row['class'], $row['function'] ) : new \ReflectionFunction( $row['function'] );
+											$params = $mirror->getParameters();
+										}
+										foreach ($row['args'] as $key => $value) : ?>
 											<tr>
 												<td><code><?= htmlspecialchars(isset($params[$key]) ? '$'.$params[$key]->name : "#$key", ENT_SUBSTITUTE, 'UTF-8') ?></code></td>
 												<td><pre><?= print_r($value, true) ?></pre></td>
