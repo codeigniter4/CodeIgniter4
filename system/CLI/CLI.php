@@ -583,7 +583,7 @@ class CLI
 
 		if ($pad_left > 0)
 		{
-			$lines = explode("\n", $lines);
+			$lines = explode(PHP_EOL, $lines);
 
 			$first = true;
 
@@ -599,7 +599,7 @@ class CLI
 				}
 			});
 
-			$lines = implode("\n", $lines);
+			$lines = implode(PHP_EOL, $lines);
 		}
 
 		return $lines;
