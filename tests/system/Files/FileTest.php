@@ -32,7 +32,7 @@ class FileTest extends \CIUnitTestCase {
 	 */
 	public function testThrowsExceptionIfNotAFile()
 	{
-		$file = new File(BASEPATH.'Commoner.php');
+		$file = new File(BASEPATH.'Commoner.php',true);
 	}
 
 }
