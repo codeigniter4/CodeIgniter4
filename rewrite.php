@@ -24,6 +24,6 @@ if ($uri !== '/' && (is_file($path) || is_dir($path)))
 
 // If we're serving the site locally, then we need
 // to let the application know that we're in development mode
-$_SERVER['CI_ENV'] = 'development';
+$_SERVER['CI_ENVIRONMENT'] = 'development';
 
 require_once __DIR__.'/public/index.php';

@@ -6,7 +6,7 @@ php:
 
 global:
   - CI=true
-  - CI_ENV=testing
+  - CI_ENVIRONMENT=testing
 
 # Recommended by Travis support
 sudo: required
