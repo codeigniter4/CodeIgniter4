@@ -58,7 +58,7 @@ class File extends SplFileInfo
 	 * @param string $path
 	 * @param bool   $checkFile
 	 */
-	public function __construct(string $path, bool $checkFile = true)
+	public function __construct(string $path, bool $checkFile = false)
 	{
 		if ($checkFile && ! is_file($path))
 		{

@@ -374,7 +374,7 @@ The methods provided by the parent class that are available are:
 				'secure' => TRUE
 			);
 
-			$request->setCookie($cookie);
+			$response->setCookie($cookie);
 
 		**Notes**
 
@@ -403,4 +403,4 @@ The methods provided by the parent class that are available are:
 		If you prefer, you can set the cookie by passing data using individual
 		parameters::
 
-			$request->setCookie($name, $value, $expire, $domain, $path, $prefix, $secure);
+			$response->setCookie($name, $value, $expire, $domain, $path, $prefix, $secure);
