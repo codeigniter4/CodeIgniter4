@@ -239,6 +239,11 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 */
 	protected function _escapeString(string $str): string
 	{
+		if (is_null($this->connID))
+		{
+			$this->initialize();
+		}
+
 		return pg_escape_string($this->connID, $str);
 	}
 
