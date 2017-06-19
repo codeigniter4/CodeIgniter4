@@ -3,6 +3,7 @@
 use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Controller;
+use CodeIgniter\I18n\Time;
 use CodeIgniter\Model;
 use Config\Database;
 use Tests\Support\Models\JobModel;
@@ -185,5 +186,21 @@ class Checks extends Controller
 
 		ddd($images);
 	}
+
+	public function time()
+	{
+		$time = new Time();
+
+		echo($time);
+		echo '<br/>';
+		echo Time::now();
+		echo '<br/>';
+		echo Time::parse('First Monday of December');
+		echo '<br/>';
+
+		$time = new Time('Next Monday');
+		die($time);
+	}
+
 
 }
