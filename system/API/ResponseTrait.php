@@ -364,7 +364,7 @@ trait ResponseTrait
 				$this->response = $this->response->setContentType('application/json');
 				break;
 			case 'application/xml':
-				$this->response = $this->response->setContentType('text/xml');
+				$this->response = $this->response->setContentType('application/xml');
 				break;
 		}
 	}
