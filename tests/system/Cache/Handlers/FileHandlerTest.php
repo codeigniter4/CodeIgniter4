@@ -169,4 +169,52 @@ class FileHandlerTest extends \CIUnitTestCase
 		chmod($this->config->path, 0444);
 		$this->assertFalse($this->fileHandler->isSupported());
 	}
+
+	//--------------------------------------------------------------------
+
+	public function testFileHandler()
+	{
+		$fileHandler = new BaseTestFileHandler();
+
+		$actual = $fileHandler->getFileInfoTest();
+
+		$this->assertArrayHasKey('server_path', $actual);
+		$this->assertArrayHasKey('size', $actual);
+		$this->assertArrayHasKey('date', $actual);
+		$this->assertArrayHasKey('readable', $actual);
+		$this->assertArrayHasKey('writable', $actual);
+		$this->assertArrayHasKey('executable', $actual);
+		$this->assertArrayHasKey('fileperms', $actual);
+
+		$this->tearDown();
+		$this->assertFalse($fileHandler->getFileInfoTest());
+	}
+}
+
+final class BaseTestFileHandler extends FileHandler
+{
+	private static $directory = 'FileHandler';
+	private $config;
+
+	public function __construct()
+	{
+		$this->config = new \Config\Cache();
+		$this->config->path .= self::$directory;
+
+		parent::__construct($this->config);
+	}
+
+	public function getFileInfoTest()
+	{
+		return $this->getFileInfo($this->config->path, [
+			'name',
+			'server_path',
+			'size',
+			'date',
+			'readable',
+			'writable',
+			'executable',
+			'fileperms'
+		]);
+	}
 }
