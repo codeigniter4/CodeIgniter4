@@ -471,16 +471,11 @@ class FileHandler implements CacheInterface
 	 *
 	 * @return    array
 	 */
-	protected function getFileInfo($file, $returned_values = ['name', 'server_path', 'size', 'date'])
+	protected function getFileInfo(string $file, array $returned_values = ['name', 'server_path', 'size', 'date'])
 	{
 		if (! file_exists($file))
 		{
 			return false;
-		}
-
-		if (is_string($returned_values))
-		{
-			$returned_values = explode(',', $returned_values);
 		}
 
 		foreach ($returned_values as $key)
