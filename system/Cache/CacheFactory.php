@@ -86,7 +86,7 @@ class CacheFactory
 				// Log stuff here, don't throw exception. No need to raise a fuss.
 
 				// Fall back to the dummy adapter.
-				$adapter = new $config->validHandler['dummy']();
+				$adapter = new $config->validHandlers['dummy']();
 			}
 		}
 
