@@ -256,7 +256,7 @@ class FileHandler implements CacheInterface
 			return FALSE;
 		}
 
-		$data = unserialize(file_get_contents($this->path.$key));
+		$data = @unserialize(file_get_contents($this->path.$key));
 
 		if (is_array($data))
 		{
@@ -302,7 +302,7 @@ class FileHandler implements CacheInterface
 	{
 		if (! is_file($this->path.$key))
 		{
-			return null;
+			return false;
 		}
 
 		$data = unserialize(file_get_contents($this->path.$key));
@@ -311,7 +311,7 @@ class FileHandler implements CacheInterface
 		{
 			unlink($this->path.$key);
 
-			return null;
+			return false;
 		}
 
 		return $data;
@@ -334,7 +334,7 @@ class FileHandler implements CacheInterface
 	 */
 	protected function writeFile($path, $data, $mode = 'wb')
 	{
-		if (! $fp = @fopen($path, $mode))
+		if(($fp = @fopen($path, $mode)) === false)
 		{
 			return false;
 		}
@@ -471,16 +471,11 @@ class FileHandler implements CacheInterface
 	 *
 	 * @return    array
 	 */
-	protected function getFileInfo($file, $returned_values = ['name', 'server_path', 'size', 'date'])
+	protected function getFileInfo(string $file, array $returned_values = ['name', 'server_path', 'size', 'date'])
 	{
 		if (! file_exists($file))
 		{
 			return false;
-		}
-
-		if (is_string($returned_values))
-		{
-			$returned_values = explode(',', $returned_values);
 		}
 
 		foreach ($returned_values as $key)
