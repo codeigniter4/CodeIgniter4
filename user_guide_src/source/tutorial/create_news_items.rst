@@ -57,26 +57,23 @@ validation <../libraries/validation>` library to do this.
     public function create()
     {
         helper('form');
-        $validator = new \CodeIgniter\Form\Validator();
         $model = new NewsModel();
 
-        $data['title'] = 'Create a news item';
-
-        $validator->setRules('title', 'Title', 'required');
-        $validator->setRules('text', 'Text', 'required');
-
-        if ($validator->run() === FALSE)
+        if (! $this->validate($this->request, [
+            'title' => 'required|min[3]|max[255]',
+            'text'  => 'required'
+        ]))
         {
-            view('Templates/Header', $data);
-            view('News/Create');
-            view('Templates/Footer');
+            echo view('Templates/Header', ['title' => 'Create a news item']);
+            echo view('News/Create');
+            echo view('Templates/Footer');
 
         }
         else
         {
             $model->save([
                 'title' => $this->request->getVar('title'),
-                'slug'  => urlTitle($this->request->getVar('title')),
+                'slug'  => url_title($this->request->getVar('title')),
                 'text'  => $this->request->getVar('text'),
             ]);
             echo view('News/Success');
@@ -84,12 +81,11 @@ validation <../libraries/validation>` library to do this.
     }
 
 The code above adds a lot of functionality. The first few lines load the
-form helper and the form validation library. After that, rules for the
-form validation are set. The ``setRules()`` method takes three arguments;
-the name of the input field, the name to be used in error messages, and
-the rule. In this case the title and text fields are required.
+form helper and the NewsModel. After that, the Controller-provided helper
+function is used to validate the $_POST fields. In this case the title and
+text fields are required.
 
-CodeIgniter has a powerful form validation library as demonstrated
+CodeIgniter has a powerful validation library as demonstrated
 above. You can read :doc:`more about this library
 here <../libraries/validation>`.
 
