@@ -89,6 +89,12 @@ class MigrationRunner
 	 */
 	protected $group;
 
+	/**
+	 * The migration name.
+	 *
+	 * @var string
+	 */
+	protected $name;
 
 	/**
 	 * The pattern used to locate migration file versions.
@@ -239,13 +245,15 @@ class MigrationRunner
 
 			// Only include migrations within the scoop
 			if (($method === 'up' && $version > $currentVersion && $version <= $targetVersion) OR
-			    ($method === 'down' && $version <= $currentVersion && $version > $targetVersion)
+				($method === 'down' && $version <= $currentVersion && $version > $targetVersion)
 			)
 			{
 
 				include_once $migration->path;
 				// Get namespaced class name
 				$class = $this->namespace.'\Database\Migrations\Migration_'.($migration->name);
+
+				$this->setName($migration->name);
 
 				// Validate the migration file structure
 				if (! class_exists($class, false))
@@ -507,6 +515,18 @@ class MigrationRunner
 	//--------------------------------------------------------------------
 
 	/**
+	 * Set migration Name.
+	 *
+	 * @param string $name
+	 */
+	public function setName(string $name)
+	{
+		$this->name = $name;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Grabs the full migration history from the database.
 	 *
 	 * @param $group
@@ -629,6 +649,7 @@ class MigrationRunner
 		$this->db->table($this->table)
 		         ->insert([
 			         'version'   => $version,
+			         'name'      => $this->name,
 			         'group'     => $this->group,
 			         'namespace' => $this->namespace,
 			         'time'      => time(),
@@ -677,6 +698,11 @@ class MigrationRunner
 
 		$forge->addField([
 			'version'   => [
+				'type'       => 'VARCHAR',
+				'constraint' => 255,
+				'null'       => false,
+			],
+			'name'      => [
 				'type'       => 'VARCHAR',
 				'constraint' => 255,
 				'null'       => false,
