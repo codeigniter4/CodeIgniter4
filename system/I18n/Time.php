@@ -40,17 +40,33 @@ class Time extends DateTime
 	 */
 	protected static $relativePattern = '/this|next|last|tomorrow|yesterday|midnight|today|[+-]|first|last|ago/i';
 
+	/**
+	 * @var \CodeIgniter\I18n\Time
+	 */
+	protected static $testNow;
+
 	//--------------------------------------------------------------------
 	// Constructors
 	//--------------------------------------------------------------------
 
 	public function __construct(string $time=null, $timezone=null, string $locale=null)
 	{
-		$timezone = ! empty($timezone) ? $timezone : date_default_timezone_get();
-		$this->timezone = $timezone instanceof DateTimeZone ? $timezone : new DateTimeZone($timezone);
-
 		// If no locale was provided, grab it from Locale (set by IncomingRequest for web requests)
 		$this->locale = ! empty($locale) ? $locale : Locale::getDefault();
+
+		// If a test instance has been provided, use it instead.
+		if (is_null($time) && static::$testNow instanceof Time)
+		{
+			if (empty($timezone))
+			{
+				$timezone = static::$testNow->getTimezone();
+			}
+
+			$time = static::$testNow->toDateTimeString();
+		}
+
+		$timezone = ! empty($timezone) ? $timezone : date_default_timezone_get();
+		$this->timezone = $timezone instanceof DateTimeZone ? $timezone : new DateTimeZone($timezone);
 
 		if (! empty($time))
 		{
@@ -216,6 +232,60 @@ class Time extends DateTime
 	//--------------------------------------------------------------------
 
 	/**
+	 * Provides a replacement for DateTime's own createFromFormat function, that provides
+	 * more flexible timeZone handling
+	 *
+	 * @param string      $format
+	 * @param string      $datetime
+	 * @param null        $timeZone
+	 * @param string|null $locale
+	 *
+	 * @return \CodeIgniter\I18n\Time
+	 */
+	public static function createFromFormat($format, $datetime, $timeZone=null)
+	{
+		$date = parent::createFromFormat($format, $datetime);
+
+		return new Time($date->format('Y-m-d H:i:s'), $timeZone);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns a new instance with the datetime set based on the provided UNIX timestamp.
+	 *
+	 * @param int         $timestamp
+	 * @param null        $timeZone
+	 * @param string|null $locale
+	 *
+	 * @return \CodeIgniter\I18n\Time
+	 */
+	public static function createFromTimestamp(int $timestamp, $timeZone = null, string $locale = null)
+	{
+		return new Time(date('Y-m-d H:i:s', $timestamp), $timeZone, $locale);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Takes an instance of DateTime and returns an instance of Time with it's same values.
+	 *
+	 * @param \DateTime   $dateTime
+	 * @param string|null $locale
+	 *
+	 * @return \CodeIgniter\I18n\Time
+	 */
+	public static function instance(\DateTime $dateTime, string $locale = null)
+	{
+		$date = $dateTime->format('Y-m-d H:i:s');
+		$timezone = $dateTime->getTimezone();
+
+		return new Time($date, $timezone, $locale);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Converts the current instance to a mutable DateTime object.
 	 *
 	 * @return \DateTime
@@ -226,6 +296,53 @@ class Time extends DateTime
 		$dateTime->setTimestamp($this->getTimestamp());
 
 		return $dateTime;
+	}
+
+	//--------------------------------------------------------------------
+
+	//--------------------------------------------------------------------
+	// For Testing
+	//--------------------------------------------------------------------
+
+	/**
+	 * Creates an instance of Time that will be returned during testing
+	 * when calling 'Time::now' instead of the current time.
+	 *
+	 * @param \CodeIgniter\I18n\Time|string $datetime
+	 * @param null                          $timezone
+	 * @param string|null                   $locale
+	 */
+	public static function setTestNow($datetime=null, $timezone=null, string $locale=null)
+	{
+		// Reset the test instance
+		if (is_null($datetime)) {
+			static::$testNow = null;
+			return;
+		}
+
+		// Convert to a Time instance
+		if (is_string($datetime))
+		{
+			$datetime = new Time($datetime, $timezone, $locale);
+		}
+		else if ($datetime instanceof \DateTime && ! $datetime instanceof Time)
+		{
+			$datetime = new Time($datetime->format('Y-m-d H:i:s'), $timezone);
+		}
+
+		static::$testNow = $datetime;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns whether we have a testNow instance saved.
+	 *
+	 * @return bool
+	 */
+	public static function hasTestNow(): bool
+	{
+		return ! is_null(static::$testNow);
 	}
 
 	//--------------------------------------------------------------------
