@@ -50,38 +50,39 @@ class Migration_create_<?= $tableName ?>_table extends Migration
 			'id'         => [
 				'type'       => 'VARCHAR',
 				'constraint' => 128,
-				'null'       => FALSE
+				'null'       => false
 			],
 			'ip_address' => [
 				'type'       => 'VARCHAR',
 				'constraint' => 45,
-				'null'       => FALSE
+				'null'       => false
 			],
 			'timestamp'  => [
 				'type'       => 'INT',
 				'constraint' => 10,
-				'unsigned'   => TRUE,
-				'null'       => FALSE,
+				'unsigned'   => true,
+				'null'       => false,
 				'default'    => 0
 			],
 			'data'       => [
-				'type' => 'BLOB',
-				'null' => FALSE
+				'type'    => 'TEXT',
+				'null'    => false,
+				'default' => ''
 			],
 		]);
-	<?php if ($matchIP === TRUE) : ?>
-	$this->forge->addKey(['id', 'ip_address'], TRUE);
+	<?php if ($matchIP === true) : ?>
+	$this->forge->addKey(['id', 'ip_address'], true);
 	<?php else: ?>
-	$this->forge->addKey('id', TRUE);
+	$this->forge->addKey('id', true);
 	<?php endif ?>
 	$this->forge->addKey('timestamp');
-		$this->forge->createTable('<?= $tableName ?>', TRUE);
+		$this->forge->createTable('<?= $tableName ?>', true);
 	}
 
 	//--------------------------------------------------------------------
 
 	public function down()
 	{
-		$this->forge->dropTable('<?= $tableName ?>', TRUE);
+		$this->forge->dropTable('<?= $tableName ?>', true);
 	}
 }
