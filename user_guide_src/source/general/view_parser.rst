@@ -467,6 +467,7 @@ previous_url                                    Alias for the previous_url helpe
 mailto               email, title, attributes   Alias for the mailto helper function.                               {+ mailto email=foo@example.com title="Stranger Things" +}
 safe_mailto          email, title, attributes   Alias for the safe_mailto helper function.                          {+ safe_mailto email=foo@example.com title="Stranger Things" +}
 lang                 language string            Alias for the lang helper function.                                 {+ lang number.terabyteAbbr +}
+==================== ========================== =================================================================== =================================
 
 
 Registering a Plugin
