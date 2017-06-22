@@ -347,6 +347,149 @@ class Time extends DateTime
 
 	//--------------------------------------------------------------------
 
+	//--------------------------------------------------------------------
+	// Getters
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns the localized Year
+	 *
+	 * @return string
+	 */
+	public function getYear()
+	{
+		return $this->toLocalizedString('Y');
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns the localized Month
+	 *
+	 * @return string
+	 */
+	public function getMonth()
+	{
+		return $this->toLocalizedString('M');
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Return the localized day of the month.
+	 *
+	 * @return string
+	 */
+	public function getDay()
+	{
+		return $this->toLocalizedString('d');
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Return the localized hour (in 24-hour format).
+	 *
+	 * @return string
+	 */
+	public function getHour()
+	{
+		return $this->toLocalizedString('H');
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Return the localized minutes in the hour.
+	 *
+	 * @return string
+	 */
+	public function getMinute()
+	{
+		return $this->toLocalizedString('m');
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Return the localized seconds
+	 *
+	 * @return string
+	 */
+	public function getSecond()
+	{
+		return $this->toLocalizedString('s');
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Return the index of the day of the week
+	 *
+	 * @return string
+	 */
+	public function getDayOfWeek()
+	{
+		return $this->toLocalizedString('c');
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Return the index of the day of the year
+	 *
+	 * @return string
+	 */
+	public function getDayOfYear()
+	{
+		return $this->toLocalizedString('D');
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Return the index of the week in the month
+	 *
+	 * @return string
+	 */
+	public function getWeekOfMonth()
+	{
+		return $this->toLocalizedString('W');
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Return the index of the week in the year
+	 *
+	 * @return string
+	 */
+	public function getWeekOfYear()
+	{
+		return $this->toLocalizedString('w');
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Return the number of days in the "current" month
+	 *
+	 * @return string
+	 */
+	public function getDaysInMonth()
+	{
+		$cal = \IntlCalendar::fromDateTime($this);
+		$cal->setLenient(true);
+
+		dd($cal->for);
+	}
+
+	//--------------------------------------------------------------------
+
+	//--------------------------------------------------------------------
+	// Utilities
+	//--------------------------------------------------------------------
+
 	/**
 	 * Check a time string to see if it includes a relative date (like 'next Tuesday').
 	 *
@@ -378,6 +521,23 @@ class Time extends DateTime
 	//--------------------------------------------------------------------
 
 	/**
+	 * Returns the localized value of this instance in $format.
+	 *
+	 * @param string|null $format
+	 *
+	 * @return string
+	 */
+	public function toLocalizedString(string $format = null)
+	{
+		$format = is_null($format)
+			? $this->toStringFormat
+			: $format;
+
+		return IntlDateFormatter::formatObject($this->toDateTime(), $format, $this->locale);
+	}
+
+
+	/**
 	 * Outputs a short format version of the datetime.
 	 *
 	 * @return string
@@ -386,4 +546,26 @@ class Time extends DateTime
 	{
 		return IntlDateFormatter::formatObject($this->toDateTime(), $this->toStringFormat, $this->locale);
 	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Allow for property-type access to any getX method...
+	 *
+	 * @param $name
+	 *
+	 * @return mixed
+	 */
+	public function __get($name)
+	{
+		$method = 'get'.ucfirst($name);
+
+		if (method_exists($this, $method))
+		{
+			return $this->$method();
+		}
+	}
+
+	//--------------------------------------------------------------------
+
 }
