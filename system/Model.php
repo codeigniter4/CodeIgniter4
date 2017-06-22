@@ -201,37 +201,37 @@ class Model
 	 */
 	protected $builder;
 
-    /**
-     * Rules used to validate data in insert, update, and save methods.
-     * The array must match the format of data passed to the Validation
-     * library.
-     *
-     * @var array
-     */
-    protected $validationRules = [];
+	/**
+	 * Rules used to validate data in insert, update, and save methods.
+	 * The array must match the format of data passed to the Validation
+	 * library.
+	 *
+	 * @var array
+	 */
+	protected $validationRules = [];
 
-    /**
-     * Contains any custom error messages to be
-     * used during data validation.
-     *
-     * @var array|null
-     */
-    protected $validationMessages = null;
+	/**
+	 * Contains any custom error messages to be
+	 * used during data validation.
+	 *
+	 * @var array|null
+	 */
+	protected $validationMessages = null;
 
-    /**
-     * Skip the model's validation. Used in conjunction with skipValidation()
-     * to skip data validation for any future calls.
-     *
-     * @var bool
-     */
-    protected $skipValidation = false;
+	/**
+	 * Skip the model's validation. Used in conjunction with skipValidation()
+	 * to skip data validation for any future calls.
+	 *
+	 * @var bool
+	 */
+	protected $skipValidation = false;
 
-    /**
-     * Our validator instance.
-     *
-     * @var \CodeIgniter\Validation\ValidationInterface
-     */
-    protected $validation;
+	/**
+	 * Our validator instance.
+	 *
+	 * @var \CodeIgniter\Validation\ValidationInterface
+	 */
+	protected $validation;
 
 	//--------------------------------------------------------------------
 
@@ -264,11 +264,11 @@ class Model
 		$this->tempUseSoftDeletes = $this->useSoftDeletes;
 		$this->tempKeys           = [$this->primaryKey];
 
-        if (is_null($validation))
-        {
-            $validation = \Config\Services::validation();
-        }
-        $this->validation = $validation;
+		if (is_null($validation))
+		{
+			$validation = \Config\Services::validation();
+		}
+		$this->validation = $validation;
 	}
 
 	//--------------------------------------------------------------------
@@ -622,34 +622,34 @@ class Model
 
 	//--------------------------------------------------------------------
 
-    /**
-     * Takes a class an returns an array of it's public and protected
-     * properties as an array suitable for use in creates and updates.
-     *
-     * @param $data
-     *
-     * @return array
-     */
-    protected function classToArray($data): array
-    {
-        $mirror = new \ReflectionClass($data);
-        $props  = $mirror->getProperties(\ReflectionProperty::IS_PUBLIC | \ReflectionProperty::IS_PROTECTED);
+	/**
+	 * Takes a class an returns an array of it's public and protected
+	 * properties as an array suitable for use in creates and updates.
+	 *
+	 * @param $data
+	 *
+	 * @return array
+	 */
+	protected function classToArray($data): array
+	{
+		$mirror = new \ReflectionClass($data);
+		$props  = $mirror->getProperties(\ReflectionProperty::IS_PUBLIC | \ReflectionProperty::IS_PROTECTED);
 
-        $properties = [];
+		$properties = [];
 
-        // Loop over each property,
-        // saving the name/value in a new array we can return.
-        foreach ($props as $prop)
-        {
-            // Must make protected values accessible.
-            $prop->setAccessible(true);
-            $properties[$prop->getName()] = $prop->getValue($data);
-        }
+		// Loop over each property,
+		// saving the name/value in a new array we can return.
+		foreach ($props as $prop)
+		{
+			// Must make protected values accessible.
+			$prop->setAccessible(true);
+			$properties[$prop->getName()] = $prop->getValue($data);
+		}
 
-        return $properties;
-    }
+		return $properties;
+	}
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
 	/**
 	 * Inserts data into the current table. If an object is provided,
@@ -661,30 +661,30 @@ class Model
 	 */
 	public function insert($data)
 	{
-        // If $data is using a custom class with public or protected
-        // properties representing the table elements, we need to grab
-        // them as an array.
-        if (is_object($data) && ! $data instanceof \stdClass)
-        {
-            $data = $this->classToArray($data);
-        }
+		// If $data is using a custom class with public or protected
+		// properties representing the table elements, we need to grab
+		// them as an array.
+		if (is_object($data) && ! $data instanceof \stdClass)
+		{
+			$data = $this->classToArray($data);
+		}
 
-        // If it's still a stdClass, go ahead and convert to
-        // an array so doProtectFields and other model methods
-        // don't have to do special checks.
-        if (is_object($data))
-        {
-            $data = (array)$data;
-        }
+		// If it's still a stdClass, go ahead and convert to
+		// an array so doProtectFields and other model methods
+		// don't have to do special checks.
+		if (is_object($data))
+		{
+			$data = (array)$data;
+		}
 
-	    // Validate data before saving.
-	    if ($this->skipValidation === false)
-        {
-            if ($this->validate($data) === false)
-            {
-                return false;
-            }
-        }
+		// Validate data before saving.
+		if ($this->skipValidation === false)
+		{
+			if ($this->validate($data) === false)
+			{
+				return false;
+			}
+		}
 
 		// Must be called first so we don't
 		// strip out created_at values.
@@ -1121,7 +1121,7 @@ class Model
 	 */
 	protected function doProtectFields($data)
 	{
-        if ($this->protectFields === false) return $data;
+		if ($this->protectFields === false) return $data;
 
 		if (empty($this->allowedFields))
 		{
@@ -1192,94 +1192,94 @@ class Model
 
 	//--------------------------------------------------------------------
 
-    /**
-     * Grabs the last error(s) that occurred. If data was validated,
-     * it will first check for errors there, otherwise will try to
-     * grab the last error from the Database connection.
-     *
-     * @param bool $forceDB   Always grab the db error, not validation
-     *
-     * @return array|null
-     */
-    public function errors(bool $forceDB = false)
-    {
-        // Do we have validation errors?
-        if ($forceDB === false && $this->skipValidation === false)
-        {
-            $errors = $this->validation->getErrors();
+	/**
+	 * Grabs the last error(s) that occurred. If data was validated,
+	 * it will first check for errors there, otherwise will try to
+	 * grab the last error from the Database connection.
+	 *
+	 * @param bool $forceDB   Always grab the db error, not validation
+	 *
+	 * @return array|null
+	 */
+	public function errors(bool $forceDB = false)
+	{
+		// Do we have validation errors?
+		if ($forceDB === false && $this->skipValidation === false)
+		{
+			$errors = $this->validation->getErrors();
 
-            if (! empty($errors))
-            {
-                return $errors;
-            }
-        }
+			if (! empty($errors))
+			{
+				return $errors;
+			}
+		}
 
-        // Still here? Grab the database-specific error, if any.
-        $error = $this->db->getError();
+		// Still here? Grab the database-specific error, if any.
+		$error = $this->db->getError();
 
-        return $error['message'] ?? null;
-    }
+		return $error['message'] ?? null;
+	}
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
-    //--------------------------------------------------------------------
-    // Validation
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
+	// Validation
+	//--------------------------------------------------------------------
 
-    /**
-     * Set the value of the skipValidation flag.
-     *
-     * @param bool $skip
-     *
-     * @return $this
-     */
-    public function skipValidation(bool $skip = true)
-    {
-        $this->skipValidation = $skip;
+	/**
+	 * Set the value of the skipValidation flag.
+	 *
+	 * @param bool $skip
+	 *
+	 * @return $this
+	 */
+	public function skipValidation(bool $skip = true)
+	{
+		$this->skipValidation = $skip;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
-    /**
-     * Validate the data against the validation rules (or the validation group)
-     * specified in the class property, $validationRules.
-     *
-     * @param array $data
-     *
-     * @return bool
-     */
-    public function validate($data): bool
-    {
-        if ($this->skipValidation === true || empty($this->validationRules))
-        {
-            return true;
-        }
+	/**
+	 * Validate the data against the validation rules (or the validation group)
+	 * specified in the class property, $validationRules.
+	 *
+	 * @param array $data
+	 *
+	 * @return bool
+	 */
+	public function validate($data): bool
+	{
+		if ($this->skipValidation === true || empty($this->validationRules))
+		{
+			return true;
+		}
 
-        // Query Builder works with objects as well as arrays,
-        // but validation requires array, so cast away.
-        if (is_object($data))
-        {
-            $data = (array)$data;
-        }
+		// Query Builder works with objects as well as arrays,
+		// but validation requires array, so cast away.
+		if (is_object($data))
+		{
+			$data = (array)$data;
+		}
 
-        // ValidationRules can be either a string, which is the group name,
-        // or an array of rules.
-        if (is_string($this->validationRules))
-        {
-            $valid = $this->validation->run($data, $this->validationRules);
-        }
-        else
-        {
-            $this->validation->setRules($this->validationRules, $this->validationMessages);
-            $valid = $this->validation->run($data);
-        }
+		// ValidationRules can be either a string, which is the group name,
+		// or an array of rules.
+		if (is_string($this->validationRules))
+		{
+			$valid = $this->validation->run($data, $this->validationRules);
+		}
+		else
+		{
+			$this->validation->setRules($this->validationRules, $this->validationMessages);
+			$valid = $this->validation->run($data);
+		}
 
-        return (bool)$valid;
-    }
+		return (bool)$valid;
+	}
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
 
 	//--------------------------------------------------------------------
