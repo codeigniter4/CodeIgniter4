@@ -601,11 +601,10 @@ class Forge
 	 *
 	 * @param    string $table  Table name
 	 * @param    array  $field  Column definition
-	 * @param    string $_after Column for AFTER clause (deprecated)
 	 *
 	 * @return    bool
 	 */
-	public function addColumn($table, $field, $_after = null)
+	public function addColumn($table, $field)
 	{
 		// Work-around for literal column definitions
 		is_array($field) OR $field = [$field];
