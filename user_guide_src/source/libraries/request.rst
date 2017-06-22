@@ -17,7 +17,7 @@ Class Reference
 
 .. php:class:: CodeIgniter\\HTTP\\IncomingRequest
 
-	.. php:method:: ipAddress()
+	.. php:method:: getIPAddress()
 
 		:returns: The user's IP Address, if it can be detected, or null. If the IP address
 					is not a valid IP addresss, then will return 0.0.0.0
@@ -26,7 +26,7 @@ Class Reference
 		Returns the IP address for the current user. If the IP address is not valid, the method
 		will return '0.0.0.0'::
 
-			echo $request->ipAddress();
+			echo $request->getIPAddress();
 
 		.. important:: This method takes into account the ``App->proxy_ips`` setting and will
 			return the reported HTTP_X_FORWARDED_FOR, HTTP_CLIENT_IP, HTTP_X_CLIENT_IP, or
@@ -42,7 +42,7 @@ Class Reference
 		Takes an IP address as input and returns true or false (boolean) depending
 		on whether it is valid or not.
 
-		.. note:: The $request->ipAddress() method above automatically validates the IP address.
+		.. note:: The $request->getIPAddress() method above automatically validates the IP address.
 
                 ::
 
@@ -90,4 +90,3 @@ Class Reference
 		::
 
 			$require->getServer(array('SERVER_PROTOCOL', 'REQUEST_URI'));
-

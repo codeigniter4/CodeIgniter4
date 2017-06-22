@@ -69,7 +69,7 @@ class CIDatabaseTestCase extends CIUnitTestCase
 	 *
 	 * @var string
 	 */
-	protected $basePath = APPPATH.'../tests/_support/Database';
+	protected $basePath = TESTPATH.'_support/Database';
 
 	/**
 	 * The name of the database group to connect to.

@@ -64,4 +64,54 @@ class CommomFunctionsTest extends \CIUnitTestCase
 
         $this->assertEquals('bar', env('foo', 'baz'));
     }
+
+	public function testRedirectReturnsNamedRouteFirst()
+	{
+		$_SERVER['REQUEST_METHOD'] = 'GET';
+
+		$response = $this->createMock(\CodeIgniter\HTTP\Response::class);
+		$routes   = new \CodeIgniter\Router\RouteCollection();
+		\CodeIgniter\Services::injectMock('response', $response);
+		\CodeIgniter\Services::injectMock('routes', $routes);
+
+		$routes->add('home/base', 'Controller::index', ['as' => 'base']);
+
+		$response->method('redirect')
+			->will($this->returnArgument(0));
+
+		$this->assertEquals('/home/base', redirect('base'));
+    }
+
+	public function testRedirectReverseRouting()
+	{
+		$_SERVER['REQUEST_METHOD'] = 'GET';
+
+		$response = $this->createMock(\CodeIgniter\HTTP\Response::class);
+		$routes   = new \CodeIgniter\Router\RouteCollection();
+		\CodeIgniter\Services::injectMock('response', $response);
+		\CodeIgniter\Services::injectMock('routes', $routes);
+
+		$routes->add('home/base', 'Controller::index', ['as' => 'base']);
+
+		$response->method('redirect')
+		         ->will($this->returnArgument(0));
+
+		$this->assertEquals('/home/base', redirect('Controller::index'));
+	}
+
+	public function testRedirectNormalRouting()
+	{
+		$_SERVER['REQUEST_METHOD'] = 'GET';
+
+		$response = $this->createMock(\CodeIgniter\HTTP\Response::class);
+		$routes   = new \CodeIgniter\Router\RouteCollection();
+		\CodeIgniter\Services::injectMock('response', $response);
+		\CodeIgniter\Services::injectMock('routes', $routes);
+
+		$response->method('redirect')
+		         ->will($this->returnArgument(0));
+
+		$this->assertEquals('/home/base', redirect('/home/base'));
+		$this->assertEquals('home/base', redirect('home/base'));
+	}
 }

@@ -47,92 +47,117 @@ use Config\Autoload;
  */
 class CreateMigration extends BaseCommand
 {
-    protected $group = 'Database';
+	protected $group = 'Database';
 
-    /**
-     * The Command's name
-     *
-     * @var string
-     */
-    protected $name = 'migrate:create';
+	/**
+	 * The Command's name
+	 *
+	 * @var string
+	 */
+	protected $name = 'migrate:create';
 
-    /**
-     * the Command's short description
-     *
-     * @var string
-     */
-    protected $description = 'Creates a new migration file.';
+	/**
+	 * the Command's short description
+	 *
+	 * @var string
+	 */
+	protected $description = 'Creates a new migration file.';
 
-    /**
-     * Creates a new migration file with the current timestamp.
-     * @todo Have this check the settings and see what type of file it should create (timestamp or sequential)
-     */
-    public function run(array $params=[])
-    {
+	/**
+	 * the Command's usage
+	 *
+	 * @var string
+	 */
+	protected $usage = 'migrate:create [migration_name] [Options]';
 
-        $name = array_shift($params);
+	/**
+	 * the Command's Arguments
+	 *
+	 * @var array
+	 */
+	protected $arguments = array(
+			'migration_name' => 'The migration file name'
+			);
 
-        if (empty($name))
-        {
-            $name = CLI::prompt(lang('Migrations.migNameMigration'));
-        }
+	/**
+	 * the Command's Options
+	 *
+	 * @var array
+	 */
+	protected $options = array(
+			'-n' => 'Set migration namespace'
+			);
 
-        if (empty($name))
-        {
-            CLI::error(lang('Migrations.migBadCreateName'));
-            return;
-        }
-        $namespace = CLI::getOption('n');
-        $homepath = APPPATH;
+	/**
+	 * Creates a new migration file with the current timestamp.
+	 * @todo Have this check the settings and see what type of file it should create (timestamp or sequential)
+	 */
+	public function run(array $params=[])
+	{
 
-        if (!empty($ns))
-        {
-             // Get all namespaces form  PSR4 paths.
-            $config = new Autoload();
-            $namespaces = $config->psr4;
+		$name = array_shift($params);
 
-            foreach ($namespaces as $namespace => $path) {
+		if (empty($name))
+		{
+			$name = CLI::prompt(lang('Migrations.migNameMigration'));
+		}
 
-                if ($namespace == $ns ) {
-                    $homepath =realpath($path);
-                }
-            }
-        }else {
-            $ns= "App";
-        }
+		if (empty($name))
+		{
+			CLI::error(lang('Migrations.migBadCreateName'));
+			return;
+		}
+		$namespace = CLI::getOption('n');
+		$homepath = APPPATH;
 
-        $path = $homepath.'/Database/Migrations/'.date('YmdHis_').$name.'.php';
+		if (!empty($ns))
+		{
+			// Get all namespaces form  PSR4 paths.
+			$config = new Autoload();
+			$namespaces = $config->psr4;
 
-        $template =<<<EOD
+			foreach ($namespaces as $namespace => $path) {
+
+				if ($namespace == $ns ) {
+					$homepath =realpath($path);
+				}
+			}
+		}else {
+			$ns= "App";
+		}
+
+		$path = $homepath.'/Database/Migrations/'.date('YmdHis_').$name.'.php';
+
+		$template =<<<EOD
 <?php namespace $ns\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
 class Migration_{name} extends Migration
 {
-    public function up()
-    {
-        //
-    }
-    
-    //--------------------------------------------------------------------
-    
-    public function down()
-    {
-        //
-    }
+	public function up()
+	{
+		//
+	}
+
+	//--------------------------------------------------------------------
+
+	public function down()
+	{
+		//
+	}
 }
 
 EOD;
-        $template = str_replace('{name}', $name, $template);
+		$template = str_replace('{name}', $name, $template);
 
-        helper('filesystem');
-        if (! write_file($path, $template))
-        {
-            CLI::error(lang('Migrations.migWriteError'));
-            return;
-        }
+		helper('filesystem');
+		if (! write_file($path, $template))
+		{
+			CLI::error(lang('Migrations.migWriteError'));
+			return;
+		}
 
-        CLI::write('Created file: '. CLI::color(str_replace($homepath, $ns, $path), 'green'));
-    }
+		CLI::write('Created file: '. CLI::color(str_replace($homepath, $ns, $path), 'green'));
+	}
 }

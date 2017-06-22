@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\API;
+<?php namespace CodeIgniter\Format;
 
 /**
  * CodeIgniter
@@ -36,7 +36,7 @@
  * @filesource
  */
 
-interface FormatterInterface
+class JSONFormatter implements FormatterInterface
 {
 	/**
 	 * Takes the given data and formats it.
@@ -45,5 +45,23 @@ interface FormatterInterface
 	 *
 	 * @return mixed
 	 */
-	public function format(array $data);
+	public function format(array $data)
+	{
+		$options = JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES;
+
+		$options = ENVIRONMENT === 'production'
+			? $options
+			: $options | JSON_PRETTY_PRINT;
+
+		$result = json_encode($data, $options, 512);
+
+		if (json_last_error() !== JSON_ERROR_NONE)
+		{
+			throw new \RuntimeException( sprintf("Failed to parse json string, error: '%s'", json_last_error_msg()) );
+		}
+
+		return $result;
+	}
+
+	//--------------------------------------------------------------------
 }

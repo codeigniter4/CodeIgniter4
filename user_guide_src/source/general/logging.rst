@@ -13,7 +13,7 @@ The second parameter is the message itself::
 
 There are eight different log levels, matching to the `RFC 5424 <http://tools.ietf.org/html/rfc5424>`_ levels, and they are as follows:
 
-* debug - Detailed debug information
+* debug - Detailed debug information.
 * info - Interesting events in your application, like a user logging in, logging SQL queries, etc. 
 * notice - Normal, but significant events in your application.
 * warning - Exceptional occurrences that are not errors, like the user of deprecated APIs, poor use of an API, or other undesirable things that are not necessarily wrong.

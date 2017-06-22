@@ -117,9 +117,9 @@ class RouteCollection implements RouteCollectionInterface
 	protected $placeholders = [
 		'any'      => '.*',
 		'segment'  => '[^/]+',
+		'alphanum' => '[a-zA-Z0-9]+',
 		'num'      => '[0-9]+',
 		'alpha'    => '[a-zA-Z]+',
-		'alphanum' => '[a-zA-Z0-9]+',
 		'hash'     => '[^/]+',
 	];
 
@@ -924,9 +924,9 @@ class RouteCollection implements RouteCollectionInterface
 	 * @param string $search
 	 * @param        ...$params
      *
-     * @return string
+     * @return string|false
 	 */
-	public function reverseRoute(string $search, ...$params): string
+	public function reverseRoute(string $search, ...$params)
 	{
 		// Named routes get higher priority.
 		if (array_key_exists($search, $this->routes))
@@ -964,7 +964,7 @@ class RouteCollection implements RouteCollectionInterface
 		}
 
 		// If we're still here, then we did not find a match.
-		throw new \InvalidArgumentException('Unable to locate a valid route.');
+		return false;
 	}
 
 	//--------------------------------------------------------------------
@@ -1163,7 +1163,16 @@ class RouteCollection implements RouteCollectionInterface
 	 */
 	private function determineCurrentSubdomain()
 	{
-		$parsedUrl = parse_url($_SERVER['HTTP_HOST']);
+		// We have to ensure that a scheme exists
+		// on the URL else parse_url will mis-interpret
+		// 'host' as the 'path'.
+		$url = $_SERVER['HTTP_HOST'];
+		if (strpos($url, 'http') !== 0)
+		{
+			$url = 'http://'.$url;
+		}
+
+		$parsedUrl = parse_url($url);
 
 		$host = explode('.', $parsedUrl['host']);
 

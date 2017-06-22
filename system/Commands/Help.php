@@ -49,36 +49,63 @@ use CodeIgniter\CLI\CLI;
  */
 class Help extends BaseCommand
 {
-    protected $group = 'CodeIgniter';
+	protected $group = 'CodeIgniter';
 
-    /**
-     * The Command's name
-     *
-     * @var string
-     */
-    protected $name = 'help';
+	/**
+	 * The Command's name
+	 *
+	 * @var string
+	 */
+	protected $name = 'help';
 
-    /**
-     * the Command's short description
-     *
-     * @var string
-     */
-    protected $description = 'Displays basic usage information.';
+	/**
+	 * the Command's short description
+	 *
+	 * @var string
+	 */
+	protected $description = 'Displays basic usage information.';
 
-    //--------------------------------------------------------------------
+	/**
+	 * the Command's usage
+	 *
+	 * @var string
+	 */
+	protected $usage = 'help command_name';
 
-    /**
-     * Displays the help for the ci.php cli script itself.
-     *
-     * @param array $params
-     */
-    public function run(array $params)
-    {
-        CLI::write('Usage:');
-        CLI::write("\tcommand [arguments]");
+	/**
+	 * the Command's Arguments
+	 *
+	 * @var array
+	 */
+	protected $arguments = array(
+			'command_name' => 'The command name [default: "help"]'
+			);
 
-        $this->call('list');
+	/**
+	 * the Command's Options
+	 *
+	 * @var array
+	 */
+	protected $options = array();
 
-        CLI::newLine();
-    }
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Displays the help for the ci.php cli script itself.
+	 *
+	 * @param array $params
+	 */
+	public function run(array $params)
+	{
+		$command = array_shift($params);
+		if(is_null($command)){
+			$command = 'help';
+		}
+
+		$commands = $this->commands->getCommands();
+		$class=new $commands[$command]['class']($this->logger, $this->commands);
+
+		$class->showHelp();
+	}
 }

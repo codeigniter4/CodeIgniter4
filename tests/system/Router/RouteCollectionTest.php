@@ -578,26 +578,24 @@ class RouteCollectionTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	public function testReverseRoutingThrowsExceptionWithBadParamCount()
+	public function testReverseRoutingReturnsFalseWithBadParamCount()
 	{
 		$routes = new RouteCollection();
 
 		$routes->add('path/(:any)/to/(:num)', 'myController::goto/$1');
 
-		$this->expectException('InvalidArgumentException');
-		$match = $routes->reverseRoute('myController::goto', 'string', 13);
+		$this->assertFalse($routes->reverseRoute('myController::goto', 'string', 13));
 	}
 
 	//--------------------------------------------------------------------
 
-	public function testReverseRoutingThrowsExceptionWithNoMatch()
+	public function testReverseRoutingReturnsFalseWithNoMatch()
 	{
 		$routes = new RouteCollection();
 
 		$routes->add('path/(:any)/to/(:num)', 'myController::goto/$1/$2');
 
-		$this->expectException('InvalidArgumentException');
-		$match = $routes->reverseRoute('myBadController::goto', 'string', 13);
+		$this->assertFalse($routes->reverseRoute('myBadController::goto', 'string', 13));
 	}
 
 	//--------------------------------------------------------------------
@@ -655,5 +653,22 @@ class RouteCollectionTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * @see https://github.com/bcit-ci/CodeIgniter4/issues/497
+	 */
+	public function testWithSubdomain()
+	{
+		$routes = new RouteCollection();
+
+		$_SERVER['HTTP_HOST'] = 'adm.example.com';
+
+		$routes->add('/objects/(:alphanum)', 'Admin::objectsList/$1', ['subdomain' => 'adm']);
+
+		$expects = [
+			'objects/([a-zA-Z0-9]+)' => '\Admin::objectsList/$1'
+		];
+
+		$this->assertEquals($expects, $routes->getRoutes());
+	}
 
 }

@@ -78,8 +78,8 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 		$sql = $this->parameterize($sql);
 
 		// Update the query object since the parameters are slightly different
-        // than what was put in.
-        $this->query->setQuery($sql);
+		// than what was put in.
+		$this->query->setQuery($sql);
 
 		if (! $this->statement = pg_prepare($this->db->connID, $this->name, $sql))
 		{
@@ -140,11 +140,11 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 		$count = 0;
 
 		$sql = preg_replace_callback('/\?/', function($matches) use (&$count){
-			$count++;
-			return "\${$count}";
-		}, $sql);
+				$count++;
+				return "\${$count}";
+				}, $sql);
 
-	    return $sql;
+		return $sql;
 	}
 
 	//--------------------------------------------------------------------

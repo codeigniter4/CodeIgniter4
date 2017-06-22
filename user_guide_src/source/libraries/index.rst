@@ -12,6 +12,7 @@ Library Reference
     content_negotiation
     localization
     curlrequest
+    images
     incomingrequest
     message
     pagination
@@ -21,6 +22,7 @@ Library Reference
     sessions
     throttler
     typography
+    files
     uploaded_files
     uri
     validation

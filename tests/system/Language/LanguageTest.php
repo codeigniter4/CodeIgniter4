@@ -2,13 +2,11 @@
 
 class LanguageTest extends \CIUnitTestCase
 {
-	public function testThrowsWithNoFileInMessage()
+	public function testReturnsStringWithNoFileInMessage()
 	{
 	    $lang = new MockLanguage('en');
 
-		$this->expectException('\InvalidArgumentException');
-
-		$lang->getLine('something');
+		$this->assertEquals('something', $lang->getLine('something'));
 	}
 
 	//--------------------------------------------------------------------

@@ -33,4 +33,4 @@ require_once __DIR__.'/system/CLI/CLI.php';
  * base path to the public folder, and to use the rewrite file
  * to ensure our environment is set and it simulates basic mod_rewrite.
  */
-passthru($php.' -S localhost:'.$port.' -t public/ rewrite.php');
+passthru("{$php} -S {$host}:{$port} -t public/ rewrite.php");

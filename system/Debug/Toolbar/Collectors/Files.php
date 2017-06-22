@@ -85,13 +85,13 @@ class Files extends BaseCollector
 	 *
 	 * @return string
 	 */
-	 public function display(): string
-	 {
-        $parser = \Config\Services::parser(BASEPATH.'Debug/Toolbar/Views/');
+	public function display(): string
+	{
+		$parser = \Config\Services::parser(BASEPATH.'Debug/Toolbar/Views/');
 
-        $rawFiles = get_included_files();
-        $coreFiles = [];
-        $userFiles = [];
+		$rawFiles = get_included_files();
+		$coreFiles = [];
+		$userFiles = [];
 
 		foreach ($rawFiles as $file)
 		{
@@ -100,16 +100,16 @@ class Files extends BaseCollector
 			if (strpos($path, 'BASEPATH') !== false)
 			{
 				$coreFiles[] = [
-				    'name' => basename($file),
-                    'path' => $path
-                ];
+					'name' => basename($file),
+					'path' => $path
+				];
 			}
 			else
 			{
-                $userFiles[] = [
-                    'name' => basename($file),
-                    'path' => $path
-                ];
+				$userFiles[] = [
+					'name' => basename($file),
+					'path' => $path
+				];
 			}
 		}
 
@@ -117,11 +117,11 @@ class Files extends BaseCollector
 		sort($coreFiles);
 
 		return $parser->setData([
-                'coreFiles' => $coreFiles,
-                'userFiles' => $userFiles,
-            ])
-            ->render('_files.tpl');
-	 }
+				'coreFiles' => $coreFiles,
+				'userFiles' => $userFiles,
+		])
+			->render('_files.tpl');
+	}
 
 	//--------------------------------------------------------------------
 }

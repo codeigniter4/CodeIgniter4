@@ -35,6 +35,7 @@
  * @since        Version 3.0.0
  * @filesource
  */
+
 use CodeIgniter\HTTP\Files\FileCollection;
 use CodeIgniter\HTTP\Files\UploadedFile;
 use CodeIgniter\Services;
@@ -151,7 +152,7 @@ class IncomingRequest extends Request
 		$this->body   = $body;
 		$this->config = $config;
 
-		parent::__construct($config, $uri);
+		parent::__construct($config);
 
 		$this->populateHeaders();
 
@@ -525,6 +526,12 @@ class IncomingRequest extends Request
 	protected function detectURI($protocol, $baseURL)
 	{
 		$this->uri->setPath($this->detectPath($protocol));
+
+		// It's possible the user forgot a trailing slash on their
+		// baseURL, so let's help them out.
+		$baseURL = ! empty($baseURL)
+			? rtrim($baseURL, '/ ').'/'
+			: $baseURL;
 
 		// Based on our baseURL provided by the developer (if set)
 		// set our current domain name, scheme

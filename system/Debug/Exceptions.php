@@ -1,4 +1,5 @@
 <?php namespace CodeIgniter\Debug;
+
 /**
  * CodeIgniter
  *
@@ -409,7 +410,10 @@ class Exceptions
 			}
 		}
 
-		$out .= str_repeat('</span>', $spans);
+		if ($spans > 0)
+		{
+			$out .= str_repeat('</span>', $spans);
+		}
 
 		return '<pre><code>'.$out.'</code></pre>';
 	}

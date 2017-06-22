@@ -16,6 +16,7 @@ class PagerTest extends \CIUnitTestCase
 
 	public function __construct()
 	{
+	    parent::__construct();
 		helper('url');
 	}
 
@@ -31,9 +32,6 @@ class PagerTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	/**
-	 * @group single
-	 */
 	public function testSetPathRemembersPath()
 	{
 	    $this->pager->setPath('foo/bar');
@@ -252,6 +250,39 @@ class PagerTest extends \CIUnitTestCase
 		$this->pager->store('foo', 1, 12, 70);
 
 		$this->assertNull($this->pager->getPreviousPageURI('foo'));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testGetNextURIWithQueryStringUsesCurrentURI()
+	{
+		$_GET = [
+			'page' => 3,
+			'status' => 1
+		];
+
+		$expected = current_url(true);
+		$expected = (string)$expected->setQueryArray($_GET);
+
+		$this->pager->store('foo', $_GET['page']-1, 12, 70);
+
+		$this->assertEquals((string)$expected, $this->pager->getNextPageURI('foo'));
+	}
+ 
+	//--------------------------------------------------------------------
+
+	public function testGetPreviousURIWithQueryStringUsesCurrentURI()
+	{
+		$_GET = [
+			'page' => 1,
+			'status' => 1
+		];
+		$expected = current_url(true);
+		$expected = (string)$expected->setQueryArray($_GET);
+
+		$this->pager->store('foo', $_GET['page']+1, 12, 70);
+
+		$this->assertEquals((string)$expected, $this->pager->getPreviousPageURI('foo'));
 	}
 
 	//--------------------------------------------------------------------

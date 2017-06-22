@@ -57,8 +57,8 @@ the server used for the production site, you can modify your values based on the
 you will have settings that might change depending on the server it's running on.This can include
 database settings, API credentials, and other settings that will vary between deploys.
 
-You can store values in a **.env** file in the **/application** directory. It is simply a collection of name/value pairs separated by an equal
-sign, much like a .ini file::
+You can store values in a **.env** file in the root directory, alongside the system and application directories.
+It is simply a collection of name/value pairs separated by an equal sign, much like a .ini file::
 
 	S3_BUCKET="dotenv"
 	SECRET_KEY="super_secret_key"
@@ -66,7 +66,7 @@ sign, much like a .ini file::
 If the variable exists in the environment already, it will NOT be overwritten. 
 
 .. important:: Make sure the **.env** file is added to **.gitignore** (or your version control system's equivalent)
-	so it is not checked-in the code. Failure to do so could result in sensitive credentials being stored in the
+	so it is not checked in the code. Failure to do so could result in sensitive credentials being stored in the
 	repository for anyone to find.
 
 You are encouraged to create a template file, like **env.example**, that has all of the variables your project

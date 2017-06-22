@@ -28,6 +28,7 @@ class RouterTest extends \CIUnitTestCase
 			'closure/(:num)/(:alpha)'      => function ($num, $str) { return $num.'-'.$str; },
 			'{locale}/pages'			   => 'App\Pages::list_all',
 			'Admin/Admins'		   		   => 'App\Admin\Admins::list_all',
+            '/some/slash'                  => 'App\Slash::index',
 		];
 
 		$this->collection->map($routes);
@@ -204,5 +205,17 @@ class RouterTest extends \CIUnitTestCase
 	}
 
 	//--------------------------------------------------------------------
+
+    public function testRouteWithLeadingSlash()
+    {
+        $router = new Router($this->collection);
+
+        $router->handle('some/slash');
+
+        $this->assertEquals('\App\Slash', $router->controllerName());
+        $this->assertEquals('index', $router->methodName());
+    }
+
+    //--------------------------------------------------------------------
 
 }

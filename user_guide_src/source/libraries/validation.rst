@@ -129,7 +129,7 @@ this code and save it to your **application/Controllers/** folder::
 		{
 		    helper(['form', 'url']);
 
-            if (! $this->validate($this->request, []))
+            if (! $this->validate([]))
 			{
 				echo view('Signup', [
 				    'validation' => $this->validation
@@ -153,7 +153,7 @@ If you submit the form you should simply see the form reload. That's
 because you haven't set up any validation rules yet.
 
 **Since you haven't told the Validation class to validate anything
-yet, it returns false (boolean false) by default. The ``run()`` method
+yet, it returns false (boolean false) by default. The ``validate()`` method
 only returns true if it has successfully applied your rules without any
 of them failing.**
 
@@ -245,6 +245,13 @@ data to be validated::
     $validation->withRequest($this->request)
                ->run();
 
+****************
+Validate 1 Value
+****************
+
+Validate one value against a rule.
+
+    $validation->check($value, 'required');
 
 **************************************************
 Saving Sets of Validation Rules to the Config File
@@ -617,7 +624,7 @@ file upload related rules::
     <input type="file" name="avatar">
 
     // In the controller
-    $this->validate($request, [
+    $this->validate([
         'avatar' => 'uploaded[avatar]|max_size[avatar,1024]'
     ]);
 

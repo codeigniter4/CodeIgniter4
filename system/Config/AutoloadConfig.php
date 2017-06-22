@@ -36,7 +36,6 @@
  * @filesource
  */
 
-
 /**
  * AUTO-LOADER
  *
@@ -89,7 +88,7 @@ class AutoloadConfig
 			'CodeIgniter' => realpath(BASEPATH)
 		];
 
-		if (isset($_SERVER['CI_ENV']) && $_SERVER['CI_ENV'] === 'testing')
+		if (isset($_SERVER['CI_ENVIRONMENT']) && $_SERVER['CI_ENVIRONMENT'] === 'testing')
 		{
 			$this->psr4['Tests\Support'] = BASEPATH.'../tests/_support/';
 		}
@@ -140,10 +139,9 @@ class AutoloadConfig
 			'CodeIgniter\Database\ResultInterface'          => BASEPATH.'Database/ResultInterface.php',
 			'CodeIgniter\Database\Migration'                => BASEPATH.'Database/Migration.php',
 			'CodeIgniter\Database\MigrationRunner'          => BASEPATH.'Database/MigrationRunner.php',
-			'CodeIgniter\Debug\Exceptions'                  => BASEPATH.'Debug/Exceptions.php',
 			'CodeIgniter\Debug\Timer'                       => BASEPATH.'Debug/Timer.php',
 			'CodeIgniter\Debug\Iterator'                    => BASEPATH.'Debug/Iterator.php',
-			'CodeIgniter\Hooks\Hooks'                       => BASEPATH.'Hooks/Hooks.php',
+			'CodeIgniter\Events\Events'                     => BASEPATH.'Events/Events.php',
 			'CodeIgniter\HTTP\CLIRequest'                   => BASEPATH.'HTTP/CLIRequest.php',
 			'CodeIgniter\HTTP\ContentSecurityPolicy'        => BASEPATH.'HTTP/ContentSecurityPolicy.php',
 			'CodeIgniter\HTTP\CURLRequest'                  => BASEPATH.'HTTP/CURLRequest.php',
@@ -181,7 +179,7 @@ class AutoloadConfig
 			'CodeIgniter\View\Cell'                         => BASEPATH.'View/Cell.php',
 			'Zend\Escaper\Escaper'                          => BASEPATH.'ThirdParty/ZendEscaper/Escaper.php',
 			'CodeIgniter\Log\TestLogger'                    => BASEPATH.'../tests/_support/Log/TestLogger.php',
-		    'CIDatabaseTestCase'                            => BASEPATH.'../tests/_support/CIDatabaseTestCase.php'
+			'CIDatabaseTestCase'                            => BASEPATH.'../tests/_support/CIDatabaseTestCase.php'
 		];
 	}
 

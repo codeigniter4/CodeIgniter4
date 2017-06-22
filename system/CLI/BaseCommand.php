@@ -27,12 +27,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package    CodeIgniter
+ * @author    CodeIgniter Dev Team
+ * @copyright    Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link    https://codeigniter.com
+ * @since    Version 3.0.0
  * @filesource
  */
 
@@ -43,7 +43,7 @@ use Psr\Log\LoggerInterface;
  *
  * @property $group
  * @property $name
- * @property $description
+ * @property description
  *
  * @package CodeIgniter\CLI
  */
@@ -65,11 +65,32 @@ abstract class BaseCommand
 	protected $name;
 
 	/**
+	 * the Command's usage description
+	 *
+	 * @var string
+	 */
+	protected $usage;
+
+	/**
 	 * the Command's short description
 	 *
 	 * @var string
 	 */
 	protected $description;
+
+	/**
+	 * the Command's options description
+	 *
+	 * @var string
+	 */
+	protected $options = array();
+
+	/**
+	 * the Command's Arguments description
+	 *
+	 * @var string
+	 */
+	protected $arguments = array();
 
 	/**
 	 * @var \Psr\Log\LoggerInterface
@@ -102,9 +123,9 @@ abstract class BaseCommand
 	 * Can be used by a command to run other commands.
 	 *
 	 * @param string $command
-	 * @param array  $params
+	 * @param array $params
 	 */
-	protected function call(string $command, array $params=[])
+	protected function call(string $command, array $params = [])
 	{
 		// The CommandRunner will grab the first element
 		// for the command name.
@@ -125,7 +146,7 @@ abstract class BaseCommand
 	{
 		CLI::newLine();
 		CLI::error($e->getMessage());
-		CLI::write($e->getFile().' - '.$e->getLine());
+		CLI::write($e->getFile() . ' - ' . $e->getLine());
 		CLI::newLine();
 	}
 
@@ -140,11 +161,74 @@ abstract class BaseCommand
 	 */
 	public function __get(string $key)
 	{
-		if (isset($this->$key))
-		{
+		if (isset($this->$key)) {
 			return $this->$key;
 		}
 	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * show Help include (usage,arguments,description,options)
+	 *
+	 *
+	 * @return mixed
+	 */
+	public function showHelp()
+	{
+		// 4 spaces insted of tab
+		$tab = "   ";
+		CLI::write(lang('CLI.helpDescription'), 'yellow');
+		CLI::write($tab . $this->description);
+		CLI::newLine();
+
+		CLI::write(lang('CLI.helpUsage'), 'yellow');
+		$usage = empty($this->usage) ? $this->name . " [arguments]" : $this->usage;
+		CLI::write($tab . $usage);
+		CLI::newLine();
+
+		$pad = max($this->getPad($this->options, 6), $this->getPad($this->arguments, 6));
+
+		if (!empty($this->arguments))
+		{
+			CLI::write(lang('CLI.helpArguments'), 'yellow');
+			foreach ($this->arguments as $argument => $description)
+			{
+				CLI::write($tab . CLI::color(str_pad($argument, $pad), 'green') . $description, 'yellow');
+			}
+			CLI::newLine();
+		}
+
+		if (!empty($this->options))
+		{
+			CLI::write(lang('CLI.helpOptions'), 'yellow');
+			foreach ($this->options as $option => $description)
+			{
+				CLI::write($tab . CLI::color(str_pad($option, $pad), 'green') . $description, 'yellow');
+			}
+			CLI::newLine();
+		}
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Get pad for $key => $value array output
+	 *
+	 * @param array $array
+	 * @param int $pad
+	 *
+	 * @return int
+	 */
+	public function getPad($array, string $pad)
+	{
+		$max = 0;
+		foreach ($array as $key => $value) {
+			$max = max($max, strlen($key));
+		}
+		return $max + $pad;
+	}
+
 
 	//--------------------------------------------------------------------
 }

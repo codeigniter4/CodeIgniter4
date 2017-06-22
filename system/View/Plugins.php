@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\API;
+<?php namespace CodeIgniter\View;
 
 /**
  * CodeIgniter
@@ -36,66 +36,57 @@
  * @filesource
  */
 
-class XMLFormatter implements FormatterInterface
+class Plugins
 {
-	/**
-	 * Takes the given data and formats it.
-	 *
-	 * @param $data
-	 *
-	 * @return mixed
-	 */
-	public function format(array $data)
+
+	public static function currentURL(array $params=[])
 	{
-		$result = null;
+		if (! function_exists('current_url')) helper('url');
 
-		// SimpleXML is installed but default
-		// but best to check, and then provide a fallback.
-		if (! extension_loaded('simplexml'))
-		{
-			throw new \RuntimeException('The SimpleXML extension is required to format XML.');
-		}
-
-		$output = new \SimpleXMLElement("<?xml version=\"1.0\"?><response></response>");
-
-		$this->arrayToXML($data, $output);
-
-		return $output->asXML();
+		return current_url();
 	}
 
 	//--------------------------------------------------------------------
 
-	/**
-	 * A recursive method to convert an array into a valid XML string.
-	 *
-	 * Written by CodexWorld. Received permission by email on Nov 24, 2016 to use this code.
-	 *
-	 * @see http://www.codexworld.com/convert-array-to-xml-in-php/
-	 *
-	 * @param array $data
-	 * @param       $output
-	 */
-	protected function arrayToXML(array $data, &$output)
+	public static function previousURL(array $params=[])
 	{
-		foreach ($data as $key => $value)
-		{
-			if (is_array($value))
-			{
-				if (! is_numeric($key))
-				{
-					$subnode = $output->addChild("$key");
-					$this->arrayToXML($value, $subnode);
-				} else
-				{
-					$subnode = $output->addChild("item{$key}");
-					$this->arrayToXML($value, $subnode);
-				}
-			} else
-			{
-				$output->addChild("$key", htmlspecialchars("$value"));
-			}
-		}
+		if (! function_exists('previous_url')) helper('url');
+
+		return previous_url();
 	}
 
 	//--------------------------------------------------------------------
+
+	public static function mailto(array $params=[])
+	{
+		if (! function_exists('mailto')) helper('url');
+
+		$email = $params['email'] ?? '';
+		$title = $params['title'] ?? '';
+		$attrs = $params['attributes'] ?? '';
+
+		return mailto($email, $title, $attrs);
+	}
+
+	//--------------------------------------------------------------------
+
+	public static function safeMailto(array $params=[])
+	{
+		if (! function_exists('safe_mailto')) helper('url');
+
+		$email = $params['email'] ?? '';
+		$title = $params['title'] ?? '';
+		$attrs = $params['attributes'] ?? '';
+
+		return safe_mailto($email, $title, $attrs);
+	}
+
+	//--------------------------------------------------------------------
+
+	public static function lang(array $params=[])
+	{
+		$line = array_shift($params);
+
+		return lang($line, $params);
+	}
 }

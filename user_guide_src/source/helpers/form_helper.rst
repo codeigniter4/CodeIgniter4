@@ -621,9 +621,9 @@ The following functions are available:
 
 	The above form will show "0" when loaded for the first time.
 
-	.. note:: If you've loaded the :doc:`Form Validation Library <../libraries/form_validation>` and
+	.. note:: If you've loaded the :doc:`Form Validation Library <../libraries/validation>` and
 		have set a validation rule for the field name in use with this helper, then it will
-		forward the call to the :doc:`Form Validation Library <../libraries/form_validation>`'s
+		forward the call to the :doc:`Form Validation Library <../libraries/validation>`'s
 		own ``set_value()`` method. Otherwise, this function looks in ``$_POST`` for the
 		field value.
 
@@ -700,7 +700,7 @@ The following functions are available:
     	:rtype:	string
 
     	Returns a validation error message from the :doc:`Form Validation Library
-    	<../libraries/form_validation>`, associated with the specified field name.
+    	<../libraries/validation>`, associated with the specified field name.
     	You can optionally specify opening and closing tag(s) to put around the error
     	message.
 
@@ -721,7 +721,7 @@ The following functions are available:
 
     	Similarly to the :php:func:`form_error()` function, returns all validation
 	error messages produced by the :doc:`Form Validation Library
-    	<../libraries/form_validation>`, with optional opening and closing tags
+    	<../libraries/validation>`, with optional opening and closing tags
     	around each of the messages.
 
     	Example::

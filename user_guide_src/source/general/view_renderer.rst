@@ -2,9 +2,9 @@
 View Renderer
 #############
 
-The ``view()`` function is a convenience function that grabs an instance of the 
-``renderer`` service, sets the data, and renders the view. While this is often 
-exactly what you want, you may find times where you want to work with it more directly. 
+The ``view()`` function is a convenience function that grabs an instance of the
+``renderer`` service, sets the data, and renders the view. While this is often
+exactly what you want, you may find times where you want to work with it more directly.
 In that case you can access the View service directly::
 
 	$view = \Config\Services::renderer();
@@ -15,17 +15,17 @@ can instantiate it directly::
 	$view = new \CodeIgniter\View\View();
 
 
-.. important:: You should create services only within controllers. If you need 
-	access to the View class from a library, you should set that as a dependency 
+.. important:: You should create services only within controllers. If you need
+	access to the View class from a library, you should set that as a dependency
 	in your library's constructor.
 
-Then you can use any of the three standard methods that it provides: 
+Then you can use any of the three standard methods that it provides:
 **render(viewpath, options, save)**, **setVar(name, value, context)** and **setData(data, context)**.
 
 What It Does
 ============
 
-The ``View`` class processes conventional HTML/PHP scripts stored in the application's view path, 
+The ``View`` class processes conventional HTML/PHP scripts stored in the application's view path,
 after extracting view parameters into PHP variables, accessible inside the scripts.
 This means that your view parameter names need to be legal PHP variable names.
 
@@ -36,13 +36,13 @@ need to be unique, or a later variable setting will over-ride an earlier one.
 This also impacts escaping parameter values for different contexts inside your
 script. You will have to give each escaped value a unique parameter name.
 
-No special meaning is attached to parameters whose value is an array. It is up 
+No special meaning is attached to parameters whose value is an array. It is up
 to you to process the array appropriately in your PHP code.
 
 Method Chaining
 ===============
 
-The `setVar()` and `setData()` methods are chainable, allowing you to combine a 
+The `setVar()` and `setData()` methods are chainable, allowing you to combine a
 number of different calls together in a chain::
 
 	$view->setVar('one', $one)
@@ -97,7 +97,6 @@ Several options can be passed to the ``render()`` or ``renderString()`` methods:
 		ignored for renderString()
 -   ``saveData`` - true if the view data parameters should be retained for subsequent calls
 
-
 ***************
 Class Reference
 ***************
@@ -106,7 +105,7 @@ Class Reference
 
 	.. php:method:: render($view[, $options[, $saveData=false]]])
 
-		:param  string  $view: File name of the view source 
+		:param  string  $view: File name of the view source
 		:param  array   $options: Array of options, as key/value pairs
 		:param  boolean $saveData: If true, will save data for use with any other calls, if false, will clean the data after rendering the view.
 		:returns: The rendered text for the chosen view
@@ -136,7 +135,7 @@ Class Reference
 	.. php:method:: setData([$data[, $context=null]])
 
 		:param  array   $data: Array of view data strings, as key/value pairs
-		:param  string  $context: The context to use for data escaping. 
+		:param  string  $context: The context to use for data escaping.
 		:returns: The Renderer, for method chaining
 		:rtype: CodeIgniter\\View\\RendererInterface.
 
@@ -154,7 +153,7 @@ Class Reference
 
 		:param  string  $name: Name of the view data variable
 		:param  mixed   $value: The value of this view data
-		:param  string  $context: The context to use for data escaping. 
+		:param  string  $context: The context to use for data escaping.
 		:returns: The Renderer, for method chaining
 		:rtype: CodeIgniter\\View\\RendererInterface.
 

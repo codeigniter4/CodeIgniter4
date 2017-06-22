@@ -83,25 +83,25 @@ class Connection extends BaseConnection implements ConnectionInterface
 			$this->buildDSN();
 		}
 
-        // Strip pgsql if exists
-        if (mb_strpos($this->DSN, 'pgsql:') === 0)
-        {
-            $this->DSN = mb_substr($this->DSN, 6);
-        }
+		// Strip pgsql if exists
+		if (mb_strpos($this->DSN, 'pgsql:') === 0)
+		{
+			$this->DSN = mb_substr($this->DSN, 6);
+		}
 
-        // Convert semicolons to spaces.
-        $this->DSN = str_replace(';', ' ', $this->DSN);
+		// Convert semicolons to spaces.
+		$this->DSN = str_replace(';', ' ', $this->DSN);
 
 		$this->connID = $persistent === true
 			? pg_pconnect($this->DSN)
-            : pg_connect($this->DSN);
+			: pg_connect($this->DSN);
 
 		if ($this->connID !== false)
 		{
 			if ($persistent === true
-				&& pg_connection_status($this->connID) === PGSQL_CONNECTION_BAD
-				&& pg_ping($this->connID) === false
-			)
+					&& pg_connection_status($this->connID) === PGSQL_CONNECTION_BAD
+					&& pg_ping($this->connID) === false
+			   )
 			{
 				return false;
 			}
@@ -135,15 +135,15 @@ class Connection extends BaseConnection implements ConnectionInterface
 
 	//--------------------------------------------------------------------
 
-    /**
-     * Close the database connection.
-     */
-    protected function _close()
-    {
-        pg_close($this->connID);
-    }
+	/**
+	 * Close the database connection.
+	 */
+	protected function _close()
+	{
+		pg_close($this->connID);
+	}
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
 	/**
 	 * Select a specific database table to use.
@@ -239,6 +239,11 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 */
 	protected function _escapeString(string $str): string
 	{
+		if (is_null($this->connID))
+		{
+			$this->initialize();
+		}
+
 		return pg_escape_string($this->connID, $str);
 	}
 
@@ -331,7 +336,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 		$sql = 'SELECT "indexname", "indexdef"
 			FROM "pg_indexes"
 			WHERE LOWER("tablename") = '.$this->escape(strtolower($table)).'
-			  AND "schemaname" = '.$this->escape('public');
+			AND "schemaname" = '.$this->escape('public');
 
 		if (($query = $this->query($sql)) === false)
 		{
@@ -486,39 +491,39 @@ class Connection extends BaseConnection implements ConnectionInterface
 
 	//--------------------------------------------------------------------
 
-    /**
-     * Begin Transaction
-     *
-     * @return	bool
-     */
-    protected function _transBegin(): bool
-    {
-        return (bool)pg_query($this->connID, 'BEGIN');
-    }
+	/**
+	 * Begin Transaction
+	 *
+	 * @return	bool
+	 */
+	protected function _transBegin(): bool
+	{
+		return (bool)pg_query($this->connID, 'BEGIN');
+	}
 
-    // --------------------------------------------------------------------
+	// --------------------------------------------------------------------
 
-    /**
-     * Commit Transaction
-     *
-     * @return	bool
-     */
-    protected function _transCommit(): bool
-    {
-        return (bool)pg_query($this->connID, 'COMMIT');
-    }
+	/**
+	 * Commit Transaction
+	 *
+	 * @return	bool
+	 */
+	protected function _transCommit(): bool
+	{
+		return (bool)pg_query($this->connID, 'COMMIT');
+	}
 
-    // --------------------------------------------------------------------
+	// --------------------------------------------------------------------
 
-    /**
-     * Rollback Transaction
-     *
-     * @return	bool
-     */
-    protected function _transRollback(): bool
-    {
-        return (bool)pg_query($this->connID, 'ROLLBACK');
-    }
+	/**
+	 * Rollback Transaction
+	 *
+	 * @return	bool
+	 */
+	protected function _transRollback(): bool
+	{
+		return (bool)pg_query($this->connID, 'ROLLBACK');
+	}
 
-    // --------------------------------------------------------------------
+	// --------------------------------------------------------------------
 }

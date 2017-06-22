@@ -140,12 +140,14 @@ Finally, you can grab the contents of php://input as a raw stream with ``getRawI
 	$data = $request->getRawInput();
 
 This will retrieve data and convert it to an array. Like this::
+
 	var_dump($request->getRawInput());
-	
+
 	[
 		'Param1' => 'Value1',
-		'Param2' => 'Value2',
+		'Param2' => 'Value2'
 	]
+
 Filtering Input Data
 --------------------
 
@@ -276,7 +278,7 @@ Class Reference
 
 The methods provided by the parent classes that are available are:
 
-* :meth:`CodeIgniter\\HTTP\\Request::ipAddress`
+* :meth:`CodeIgniter\\HTTP\\Request::getIPAddress`
 * :meth:`CodeIgniter\\HTTP\\Request::validIP`
 * :meth:`CodeIgniter\\HTTP\\Request::method`
 * :meth:`CodeIgniter\\HTTP\\Request::getServer`
@@ -442,5 +444,3 @@ The methods provided by the parent classes that are available are:
 		This method returns the User Agent string from the SERVER data::
 
 			$request->getUserAgent();
-
-

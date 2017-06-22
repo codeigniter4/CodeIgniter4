@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Hooks;
+<?php namespace CodeIgniter\Events;
 
 /**
  * CodeIgniter
@@ -36,14 +36,14 @@
  * @filesource
  */
 
-define('HOOKS_PRIORITY_LOW', 200);
-define('HOOKS_PRIORITY_NORMAL', 100);
-define('HOOKS_PRIORITY_HIGH', 10);
+define('EVENT_PRIORITY_LOW', 200);
+define('EVENT_PRIORITY_NORMAL', 100);
+define('EVENT_PRIORITY_HIGH', 10);
 
 /**
- * Hooks
+ * Events
  */
-class Hooks
+class Events
 {
 
 	/**
@@ -62,23 +62,23 @@ class Hooks
 	protected static $haveReadFromFile = false;
 
 	/**
-	 * The path to the file containing the hooks to load in.
+	 * The path to the file containing the events to load in.
 	 *
 	 * @var string
 	 */
-	protected static $hooksFile;
+	protected static $eventsFile;
 
 	//--------------------------------------------------------------------
 
 	/**
-	 * Ensures that we have a hooks file ready.
+	 * Ensures that we have a events file ready.
 	 *
 	 * @param string|null $file
 	 */
 	public static function initialize(string $file=null)
 	{
 		// Don't overwrite anything....
-		if (! empty(self::$hooksFile))
+		if (! empty(self::$eventsFile))
 		{
 			return;
 		}
@@ -86,10 +86,10 @@ class Hooks
 		// Default value
 	    if (empty($file))
 		{
-			$file = APPPATH.'Config/Hooks.php';
+			$file = APPPATH.'Config/Events.php';
 		}
 
-		self::$hooksFile = $file;
+		self::$eventsFile = $file;
 	}
 
 	//--------------------------------------------------------------------
@@ -98,16 +98,16 @@ class Hooks
 	 * Registers an action to happen on an event. The action can be any sort
 	 * of callable:
 	 *
-	 *  Hooks::on('create', 'myFunction');               // procedural function
-	 *  Hooks::on('create', ['myClass', 'myMethod']);    // Class::method
-	 *  Hooks::on('create', [$myInstance, 'myMethod']);  // Method on an existing instance
-	 *  Hooks::on('create', function() {});              // Closure
+	 *  Events::on('create', 'myFunction');               // procedural function
+	 *  Events::on('create', ['myClass', 'myMethod']);    // Class::method
+	 *  Events::on('create', [$myInstance, 'myMethod']);  // Method on an existing instance
+	 *  Events::on('create', function() {});              // Closure
 	 *
 	 * @param          $event_name
 	 * @param callable $callback
 	 * @param int      $priority
 	 */
-	public static function on($event_name, callable $callback, $priority = HOOKS_PRIORITY_NORMAL)
+	public static function on($event_name, callable $callback, $priority = EVENT_PRIORITY_NORMAL)
 	{
 		if ( ! isset(self::$listeners[$event_name]))
 		{
@@ -145,9 +145,9 @@ class Hooks
 		{
 			self::initialize();
 
-			if (is_file(self::$hooksFile))
+			if (is_file(self::$eventsFile))
 			{
-				include self::$hooksFile;
+				include self::$eventsFile;
 			}
 			self::$haveReadFromFile = true;
 		}
@@ -265,7 +265,7 @@ class Hooks
 	 */
 	public function setFile(string $path)
 	{
-		self::$hooksFile = $path;
+		self::$eventsFile = $path;
 	}
 
 	//--------------------------------------------------------------------

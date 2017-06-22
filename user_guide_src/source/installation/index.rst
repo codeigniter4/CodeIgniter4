@@ -20,12 +20,6 @@ CodeIgniter is installed in four steps:
    **application/Config/Database.php** file with a text editor and set your
    database settings.
 
-If you wish to increase security by hiding the location of your
-CodeIgniter files you can rename the system and application directories to
-something more private. If you do rename them, you must open your main
-*index.php* file and set the ``$system_directory`` and ``$application_directory``
-variables at the top of the file with the new name you've chosen.
-
 For the best security, both the system and any application directories
 come placed above the web root so that they are not directly accessible
 via a browser. By default, **.htaccess** files are included in each directory
@@ -43,7 +37,10 @@ preferably with a full path, e.g. '*/www/MyUser/system*'.
 One additional measure to take in production environments is to disable
 PHP error reporting and any other development-only functionality. In
 CodeIgniter, this can be done by setting the ``ENVIRONMENT`` constant, which
-is more fully described on the :doc:`security page <../libraries/security>`.
+is more fully described on the :doc:`environments page </general/environments>`.
+By default, the application will run using the "production" environment. To
+take advantage of the debugging tools provided, you should set the environment
+to "develop".
 
 That's it!
 

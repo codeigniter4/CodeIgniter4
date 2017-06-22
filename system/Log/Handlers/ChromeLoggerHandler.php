@@ -36,7 +36,7 @@
  * @filesource
  */
 
-use CodeIgniter\Hooks\Hooks;
+use CodeIgniter\Events\Events;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Services;
 
@@ -104,7 +104,7 @@ class ChromeLoggerHandler extends BaseHandler implements HandlerInterface
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param array $config
 	 */
 	public function __construct(array $config = [])
@@ -114,8 +114,8 @@ class ChromeLoggerHandler extends BaseHandler implements HandlerInterface
 		$request = Services::request(null, true);
 
 		$this->json['request_uri'] = (string)$request->uri;
-
-		Hooks::on('post_controller', [$this, 'sendLogs'], HOOKS_PRIORITY_HIGH);
+                
+                Events::on('post_controller', [$this, 'sendLogs'], EVENT_PRIORITY_HIGH);
 	}
 
 	//--------------------------------------------------------------------
@@ -185,7 +185,7 @@ class ChromeLoggerHandler extends BaseHandler implements HandlerInterface
 
 	/**
 	 * Attaches the header and the content to the passed in request object.
-	 * 
+	 *
 	 * @param ResponseInterface response
 	 */
 	public function sendLogs(ResponseInterface &$response=null)
@@ -199,8 +199,4 @@ class ChromeLoggerHandler extends BaseHandler implements HandlerInterface
 
 	    $response->setHeader($this->header, $data);
 	}
-
-	//--------------------------------------------------------------------
-
-
 }

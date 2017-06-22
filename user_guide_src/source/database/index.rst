@@ -20,7 +20,8 @@ patterns. The database functions offer clear, simple syntax.
     Getting MetaData <metadata>
     Custom Function Calls <call_function>
     Using CodeIgniter's Model <model>
+    Using Entity Classes <entities>
     Database Manipulation with Database Forge <forge>
     Database Migrations <migration>
     Database Seeding <seeds>
-    Database Hooks <hooks>
+    Database Events <events>
