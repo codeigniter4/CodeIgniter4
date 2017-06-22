@@ -9,6 +9,7 @@ class TimeTest extends \CIUnitTestCase
 		parent::setUp();
 
 		helper('date');
+		\Locale::setDefault('America/Chicago');
 	}
 
 	public function testNewTimeNow()
@@ -221,5 +222,84 @@ class TimeTest extends \CIUnitTestCase
 
 		Time::setTestNow();
 		$this->assertEquals(date('Y-m-d H:i:s', time()), Time::now()->toDateTimeString());
+	}
+	
+	//--------------------------------------------------------------------
+
+	public function testGetYear()
+	{
+		$time = Time::parse('January 1, 2016');
+
+		$this->assertEquals(2016, $time->year);
+	}
+
+	public function testGetMonth()
+	{
+		$time = Time::parse('August 1, 2016');
+
+		$this->assertEquals(8, $time->month);
+	}
+
+	public function testGetDay()
+	{
+		$time = Time::parse('August 12, 2016');
+
+		$this->assertEquals(12, $time->day);
+	}
+
+	public function testGetHour()
+	{
+		$time = Time::parse('August 12, 2016 4:15pm');
+
+		$this->assertEquals(16, $time->hour);
+	}
+
+	public function testGetMinute()
+	{
+		$time = Time::parse('August 12, 2016 4:15pm');
+
+		$this->assertEquals(15, $time->minute);
+	}
+
+	public function testGetSecond()
+	{
+		$time = Time::parse('August 12, 2016 4:15:23pm');
+
+		$this->assertEquals(23, $time->second);
+	}
+
+	public function testGetDayOfWeek()
+	{
+		$time = Time::parse('August 12, 2016 4:15:23pm');
+
+		$this->assertEquals(6, $time->dayOfWeek);
+	}
+
+	public function testGetDayOfYear()
+	{
+		$time = Time::parse('August 12, 2016 4:15:23pm');
+
+		$this->assertEquals(225, $time->dayOfYear);
+	}
+
+	public function testGetWeekOfMonth()
+	{
+		$time = Time::parse('August 12, 2016 4:15:23pm');
+
+		$this->assertEquals(2, $time->weekOfMonth);
+	}
+
+	public function testGetWeekOfYear()
+	{
+		$time = Time::parse('August 12, 2016 4:15:23pm');
+
+		$this->assertEquals(33, $time->weekOfYear);
+	}
+
+	public function testGetDaysInMonth()
+	{
+		$time = Time::parse('August 12, 2016 4:15:23pm');
+
+		$this->assertEquals(33, $time->daysInMonth);
 	}
 }
