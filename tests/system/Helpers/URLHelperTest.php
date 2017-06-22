@@ -839,7 +839,7 @@ class URLHelperTest extends \CIUnitTestCase
 
 		foreach ($words as $in => $out)
 		{
-			$this->assertEquals($out, url_title($in, 'dash', TRUE));
+			$this->assertEquals($out, url_title($in, '-', TRUE));
 		}
 	}
 
@@ -852,7 +852,7 @@ class URLHelperTest extends \CIUnitTestCase
 
 		foreach ($words as $in => $out)
 		{
-			$this->assertEquals($out, url_title($in, 'underscore'));
+			$this->assertEquals($out, url_title($in, '_'));
 		}
 	}
 
