@@ -65,9 +65,9 @@ class Migration_create_<?= $tableName ?>_table extends Migration
 				'default'    => 0
 			],
 			'data'       => [
-				'type'    => 'TEXT',
-				'null'    => false,
-				'default' => ''
+				'type'       => 'TEXT',
+				'null'       => false,
+				'default'    => ''
 			],
 		]);
 	<?php if ($matchIP === true) : ?>
