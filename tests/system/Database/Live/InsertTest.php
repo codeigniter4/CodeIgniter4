@@ -23,8 +23,8 @@ class InsertTest extends \CIDatabaseTestCase
 	public function testInsertBatch()
 	{
 		$job_data = array(
-			array('name' => 'Comedian', 'description' => 'Theres something in your teeth'),
-			array('name' => 'Cab Driver', 'description' => 'Iam yellow'),
+			array('name' => 'Comedian', 'key' => 'comedian', 'description' => 'Theres something in your teeth'),
+			array('name' => 'Cab Driver', 'key' => 'cab-driver', 'description' => 'Iam yellow'),
 		);
 
 		$this->db->table('job')->insertBatch($job_data);
