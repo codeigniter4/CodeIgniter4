@@ -562,9 +562,6 @@ class RouteCollectionTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-    /**
-     * @group single
-     */
 	public function testReverseRoutingFindsSimpleMatch()
 	{
 		$routes = new RouteCollection();
@@ -670,5 +667,23 @@ class RouteCollectionTest extends \CIUnitTestCase
 
 		$this->assertEquals($expects, $routes->getRoutes());
 	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * @see https://github.com/bcit-ci/CodeIgniter4/issues/568
+	 */
+	public function testReverseRoutingWithClosure()
+	{
+		$routes = new RouteCollection();
+
+		$routes->add('login', function() {});
+
+		$match = $routes->reverseRoute('login');
+
+		$this->assertEquals('/login', $match);
+	}
+
+	//--------------------------------------------------------------------
 
 }
