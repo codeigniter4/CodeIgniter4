@@ -293,7 +293,7 @@ class Time extends DateTime
 	public function toDateTime()
 	{
 		$dateTime = new \DateTime(null, $this->getTimezone());
-		$dateTime->setTimestamp($this->getTimestamp());
+		$dateTime->setTimestamp(parent::getTimestamp());
 
 		return $dateTime;
 	}
@@ -472,19 +472,57 @@ class Time extends DateTime
 	//--------------------------------------------------------------------
 
 	/**
-	 * Return the number of days in the "current" month
-	 *
-	 * @return string
+	 * Returns the age in years from the "current" date and 'now'
 	 */
-	public function getDaysInMonth()
+	public function getAge()
 	{
-		$cal = \IntlCalendar::fromDateTime($this);
-		$cal->setLenient(true);
+		$now = Time::now()->getTimestamp();
+		$time = $this->getTimestamp();
+		var_dump($now);
 
-		dd($cal->for);
+		if (! $now >= $time) return 0;
+
+		return date('Y', $now) - date('Y', $time);
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Returns the number of the current quarter for the year.
+	 *
+	 * @return string
+	 */
+	public function getQuarter()
+	{
+		return $this->toLocalizedString('Q');
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Are we in daylight savings time currently?
+	 */
+	public function getDst()
+	{
+		$start = strtotime('-1 year', $this->getTimestamp());
+		$end = strtotime('+2 year', $start);
+
+		$transitions = $this->timezone->getTransitions($start, $end);
+
+		foreach ($transitions as $transition)
+		{
+			if ($transition['time'] > $this->format('U'))
+			{
+				return (bool)$transition['isdst'];
+			}
+		}
+
+		return false;
+	}
+
+	//--------------------------------------------------------------------
+
+
 
 	//--------------------------------------------------------------------
 	// Utilities

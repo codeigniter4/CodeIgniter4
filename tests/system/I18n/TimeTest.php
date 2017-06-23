@@ -296,10 +296,31 @@ class TimeTest extends \CIUnitTestCase
 		$this->assertEquals(33, $time->weekOfYear);
 	}
 
-	public function testGetDaysInMonth()
+	public function testGetTimestamp()
 	{
 		$time = Time::parse('August 12, 2016 4:15:23pm');
+		$expected = strtotime('August 12, 2016 4:15:23pm');
 
-		$this->assertEquals(33, $time->daysInMonth);
+		$this->assertEquals($expected, $time->timestamp);
+	}
+
+	public function testGetAge()
+	{
+		$time = Time::parse('5 years ago');
+
+		$this->assertEquals(5, $time->age);
+	}
+
+	public function testGetQuarter()
+	{
+		$time = Time::parse('April 15, 2015');
+
+		$this->assertEquals(2, $time->quarter);
+	}
+
+	public function testGetDST()
+	{
+		$this->assertFalse(Time::createFromDate(2012, 1, 1)->dst);
+		$this->assertTrue(Time::createFromDate(2012, 9, 1)->dst);
 	}
 }
