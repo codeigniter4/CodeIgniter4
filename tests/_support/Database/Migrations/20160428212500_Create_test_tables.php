@@ -39,6 +39,11 @@ class Migration_Create_test_tables extends \CodeIgniter\Database\Migration
 				'constraint'     => 3,
 				'auto_increment' => true,
 			],
+			'key'         => [
+				'type'       => 'VARCHAR',
+				'constraint' => 40,
+				'unique'     => true
+			],
 			'name'        => [
 				'type'       => 'VARCHAR',
 				'constraint' => 40,

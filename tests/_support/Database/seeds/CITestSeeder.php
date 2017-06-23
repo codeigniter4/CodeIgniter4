@@ -13,10 +13,10 @@ class CITestSeeder extends \CodeIgniter\Database\Seeder
 				array('name' => 'Chris Martin', 'email' => 'chris@world.com', 'country' => 'UK')
 			),
 			'job' => array(
-				array('name' => 'Developer', 'description' => 'Awesome job, but sometimes makes you bored'),
-				array('name' => 'Politician', 'description' => 'This is not really a job'),
-				array('name' => 'Accountant', 'description' => 'Boring job, but you will get free snack at lunch'),
-				array('name' => 'Musician', 'description' => 'Only Coldplay can actually called Musician')
+				array('name' => 'Developer', 'key' => 'developer', 'description' => 'Awesome job, but sometimes makes you bored'),
+				array('name' => 'Politician', 'key' => 'politician', 'description' => 'This is not really a job'),
+				array('name' => 'Accountant', 'key' => 'accountant', 'description' => 'Boring job, but you will get free snack at lunch'),
+				array('name' => 'Musician', 'key' => 'musician', 'description' => 'Only Coldplay can actually called Musician')
 			),
 			'misc' => array(
 				array('key' => '\\xxxfoo456', 'value' => 'Entry with \\xxx'),
