@@ -492,4 +492,111 @@ class ModelTest extends \CIDatabaseTestCase
         $this->seeInDatabase('job', ['name' => 'Senior Developer']);
     }
 
+	//--------------------------------------------------------------------
+
+	public function testFindWithAltKeyReturnsRow()
+	{
+		$model = new JobModel($this->db);
+
+		$job = $model->withAltKey()->find('musician');
+
+		$this->assertEquals('Musician', $job->name);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testFindWithAltKeyReturnsMultipleRows()
+	{
+		$model = new JobModel($this->db);
+
+		$job = $model->withAltKey()->find(['developer', 'musician']);
+
+		$this->assertEquals('Developer', $job[0]->name);
+		$this->assertEquals('Musician',  $job[1]->name);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testSaveUpdateRecordWithAltKey()
+	{
+		$model = new JobModel();
+
+		$data = new \stdClass();
+		$data->key = 'developer';
+		$data->name = 'Engineer';
+		$data->description = 'A fancier term for Developer.';
+
+		$result = $model->protect(false)->withAltKey()->save($data);
+
+		$this->seeInDatabase('job', ['name' => 'Engineer']);
+		$this->assertTrue($result);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testDeleteWithAltKeyBasics()
+	{
+		$model = new JobModel();
+
+		$this->seeInDatabase('job', ['name' =>'Developer']);
+
+		$model->withAltKey()->delete('developer');
+
+		$this->dontSeeInDatabase('job', ['name' => 'Developer']);
+	}
+
+
+
+	//--------------------------------------------------------------------
+
+	public function testFindOrWithAltKeyReturnsRow()
+	{
+		$model = new JobModel($this->db);
+
+		$job = $model->orWithAltKey()->find('musician');
+
+		$this->assertEquals('Musician', $job->name);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testFindOrWithAltKeyReturnsMultipleRows()
+	{
+		$model = new JobModel($this->db);
+
+		$job = $model->orWithAltKey()->find(['developer', 'musician']);
+
+		$this->assertEquals('Developer', $job[0]->name);
+		$this->assertEquals('Musician',  $job[1]->name);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testSaveUpdateRecordOrWithAltKey()
+	{
+		$model = new JobModel();
+
+		$data = new \stdClass();
+		$data->key = 'developer';
+		$data->name = 'Engineer';
+		$data->description = 'A fancier term for Developer.';
+
+		$result = $model->protect(false)->orWithAltKey()->save($data);
+
+		$this->seeInDatabase('job', ['name' => 'Engineer']);
+		$this->assertTrue($result);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testDeleteWithOrAltKeyBasics()
+	{
+		$model = new JobModel();
+
+		$this->seeInDatabase('job', ['name' =>'Developer']);
+
+		$model->orWithAltKey()->delete('developer');
+
+		$this->dontSeeInDatabase('job', ['name' => 'Developer']);
+	}
 }
