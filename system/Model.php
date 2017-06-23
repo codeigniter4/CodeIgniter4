@@ -298,7 +298,7 @@ class Model
 		{
 			foreach ($this->tempKeys as $key)
 			{
-				if ($key = reset($this->tempKeys))
+				if ($key === reset($this->tempKeys))
 				{
 					$builder->whereIn($key, $id);
 				}
@@ -315,7 +315,7 @@ class Model
 		{
 			foreach ($this->tempKeys as $key)
 			{
-				if ($key = reset($this->tempKeys))
+				if ($key === reset($this->tempKeys))
 				{
 					$builder->where($key, $id);
 				}
@@ -918,6 +918,10 @@ class Model
 	public function withAltKey(string $key = null): self
 	{
 		if ($key === null) {
+			if ($this->altKey === null) {
+				return $this;
+			}
+
 			$key = $this->altKey;
 		}
 
@@ -933,11 +937,15 @@ class Model
 	 *
 	 * @param string|null $key Key.
 	 *
-	 * @return self Model
+	 * @return self Model.
 	 */
 	public function orWithAltKey(string $key = null): self
 	{
 		if ($key === null) {
+			if ($this->altKey === null) {
+				return $this;
+			}
+
 			$key = $this->altKey;
 		}
 
