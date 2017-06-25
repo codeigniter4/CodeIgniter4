@@ -313,11 +313,10 @@ Class Reference
 
 .. php:class:: \CodeIgniter\Database\Forge
 
-	.. php:method:: addColumn($table[, $field = array()[, $_after = NULL]])
+	.. php:method:: addColumn($table[, $field = array()])
 
 		:param	string	$table: Table name to add the column to
 		:param	array	$field: Column definition(s)
-		:param	string	$_after: Column for AFTER clause (deprecated)
 		:returns:	TRUE on success, FALSE on failure
 		:rtype:	bool
 

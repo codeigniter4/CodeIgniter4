@@ -84,7 +84,6 @@ class TextHelperTest extends \CIUnitTestCase
 	public function test_random_string()
 	{
 		$this->assertEquals(16, strlen(random_string('alnum', 16)));
-		$this->assertEquals(32, strlen(random_string('unique', 16)));
 		$this->assertInternalType('string', random_string('numeric', 16));
 	}
 	// --------------------------------------------------------------------
