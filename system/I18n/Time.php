@@ -299,8 +299,6 @@ class Time extends DateTime
 	}
 
 	//--------------------------------------------------------------------
-
-	//--------------------------------------------------------------------
 	// For Testing
 	//--------------------------------------------------------------------
 
@@ -522,7 +520,162 @@ class Time extends DateTime
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Returns boolean whether the passed timezone is the same as
+	 * the local timezone.
+	 */
+	public function getLocal()
+	{
+		$local = date_default_timezone_get();
 
+		return $local === $this->timezone->getName();
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns boolean whether object is in UTC.
+	 */
+	public function getUtc()
+	{
+		return $this->getOffset() === 0;
+	}
+
+	/**
+	 * Reeturns the name of the current timezone.
+	 *
+	 * @return string
+	 */
+	public function getTimezoneName()
+	{
+		return $this->timezone->getName();
+	}
+
+	//--------------------------------------------------------------------
+	// Setters
+	//--------------------------------------------------------------------
+
+	/**
+	 * Sets the current year for this instance.
+	 *
+	 * @param $value
+	 *
+	 * @return \CodeIgniter\I18n\Time
+	 */
+	public function setYear($value)
+	{
+		return $this->setValue('year', $value);
+	}
+
+	/**
+	 * Sets the month of the year.
+	 *
+	 * @todo check max months in current calendar (localized)
+	 *
+	 * @param $value
+	 *
+	 * @return \CodeIgniter\I18n\Time
+	 */
+	public function setMonth($value)
+	{
+		if ($value < 0 || $value > 12)
+		{
+			throw new \InvalidArgumentException(lang('time.invalidMonth'));
+		}
+
+		if (is_string($value) && ! is_numeric($value))
+		{
+			$value = date('m', strtotime("{$value} 1 2017"));
+		}
+
+		return $this->setValue('month', $value);
+	}
+
+	/**
+	 * Sets the day of the month.
+	 *
+	 * @todo check max days in month (localized)
+	 *
+	 * @param $value
+	 *
+	 * @return \CodeIgniter\I18n\Time
+	 */
+	public function setDay($value)
+	{
+		if ($value < 0 || $value > 31)
+		{
+			throw new \InvalidArgumentException(lang('time.invalidDay'));
+		}
+
+		return $this->setValue('day', $value);
+	}
+
+	/**
+	 * Sets the hour of the day (24 hour cycle)
+	 *
+	 * @param $value
+	 *
+	 * @return \CodeIgniter\I18n\Time
+	 */
+	public function setHour($value)
+	{
+		if ($value < 0 || $value > 23)
+		{
+			throw new \InvalidArgumentException(lang('time.invalidHours'));
+		}
+
+		return $this->setValue('hour', $value);
+	}
+
+	/**
+	 * Sets the minute of the hour
+	 *
+	 * @param $value
+	 *
+	 * @return \CodeIgniter\I18n\Time
+	 */
+	public function setMinute($value)
+	{
+		if ($value < 0 || $value > 59)
+		{
+			throw new \InvalidArgumentException(lang('time.invalidMinutes'));
+		}
+
+		return $this->setValue('minute', $value);
+	}
+
+	/**
+	 * Sets the second of the minute.
+	 *
+	 * @param $value
+	 *
+	 * @return \CodeIgniter\I18n\Time
+	 */
+	public function setSecond($value)
+	{
+		if ($value < 0 || $value > 59)
+		{
+			throw new \InvalidArgumentException(lang('time.invalidSeconds'));
+		}
+
+		return $this->setValue('second', $value);
+	}
+
+	/**
+	 * Helper method to do the heavy lifting of the 'setX' methods.
+	 *
+	 * @param string $name
+	 * @param        $value
+	 *
+	 * @return \CodeIgniter\I18n\Time
+	 */
+	protected function setValue(string $name, $value)
+	{
+		list($year, $month, $day, $hour, $minute, $second) = explode('-', $this->format('Y-n-j-G-i-s'));
+		$$name = $value;
+
+		return Time::create($year, $month, $day, $hour, $minute, $second, $this->getTimezoneName(), $this->locale);
+	}
 
 	//--------------------------------------------------------------------
 	// Utilities
@@ -605,5 +758,15 @@ class Time extends DateTime
 	}
 
 	//--------------------------------------------------------------------
+
+	public function __set($name, $value)
+	{
+		$method = 'set'.ucfirst($name);
+
+		if (method_exists($this, $method))
+		{
+			return $this->$method($value);
+		}
+	}
 
 }
