@@ -323,4 +323,199 @@ class TimeTest extends \CIUnitTestCase
 		$this->assertFalse(Time::createFromDate(2012, 1, 1)->dst);
 		$this->assertTrue(Time::createFromDate(2012, 9, 1)->dst);
 	}
+
+	public function testGetLocal()
+	{
+		$this->assertTrue(Time::now()->local);
+		$this->assertFalse(Time::now('Europe/London')->local);
+	}
+
+	public function testGetUtc()
+	{
+		$this->assertFalse(Time::now('America/Chicago')->utc);
+		$this->assertTrue(Time::now('UTC')->utc);
+	}
+
+	public function testGetTimezone()
+	{
+		$instance = Time::now()->getTimezone();
+
+		$this->assertTrue($instance instanceof \DateTimeZone);
+	}
+
+	public function testGetTimezonename()
+	{
+		$this->assertEquals('America/Chicago', Time::now('America/Chicago')->getTimezoneName());
+		$this->assertEquals('Europe/London', Time::now('Europe/London')->getTimezoneName());
+	}
+
+	public function testSetYear()
+	{
+		$time = Time::parse('May 10, 2017');
+		$time2 = $time->setYear(2015);
+
+		$this->assertTrue($time2 instanceof Time);
+		$this->assertNotSame($time, $time2);
+		$this->assertEquals('2015-05-10 00:00:00', $time2->toDateTimeString());
+	}
+
+	public function testSetMonthNumber()
+	{
+		$time = Time::parse('May 10, 2017');
+		$time2 = $time->setMonth(4);
+
+		$this->assertTrue($time2 instanceof Time);
+		$this->assertNotSame($time, $time2);
+		$this->assertEquals('2017-04-10 00:00:00', $time2->toDateTimeString());
+	}
+
+	public function testSetMonthLongName()
+	{
+		$time = Time::parse('May 10, 2017');
+		$time2 = $time->setMonth('April');
+
+		$this->assertTrue($time2 instanceof Time);
+		$this->assertNotSame($time, $time2);
+		$this->assertEquals('2017-04-10 00:00:00', $time2->toDateTimeString());
+	}
+
+	public function testSetMonthShortName()
+	{
+		$time = Time::parse('May 10, 2017');
+		$time2 = $time->setMonth('Feb');
+
+		$this->assertTrue($time2 instanceof Time);
+		$this->assertNotSame($time, $time2);
+		$this->assertEquals('2017-02-10 00:00:00', $time2->toDateTimeString());
+	}
+
+	public function testSetDay()
+	{
+		$time = Time::parse('May 10, 2017');
+		$time2 = $time->setDay(15);
+
+		$this->assertTrue($time2 instanceof Time);
+		$this->assertNotSame($time, $time2);
+		$this->assertEquals('2017-05-15 00:00:00', $time2->toDateTimeString());
+	}
+
+	public function testSetHour()
+	{
+		$time = Time::parse('May 10, 2017');
+		$time2 = $time->setHour(15);
+
+		$this->assertTrue($time2 instanceof Time);
+		$this->assertNotSame($time, $time2);
+		$this->assertEquals('2017-05-10 15:00:00', $time2->toDateTimeString());
+	}
+
+	public function testSetMinute()
+	{
+		$time = Time::parse('May 10, 2017');
+		$time2 = $time->setMinute(30);
+
+		$this->assertTrue($time2 instanceof Time);
+		$this->assertNotSame($time, $time2);
+		$this->assertEquals('2017-05-10 00:30:00', $time2->toDateTimeString());
+	}
+
+	public function testSetSecond()
+	{
+		$time = Time::parse('May 10, 2017');
+		$time2 = $time->setSecond(20);
+
+		$this->assertTrue($time2 instanceof Time);
+		$this->assertNotSame($time, $time2);
+		$this->assertEquals('2017-05-10 00:00:20', $time2->toDateTimeString());
+	}
+
+	/**
+	 * @expectedException \InvalidArgumentException
+	 */
+	public function testSetMonthTooSmall()
+	{
+		$time = Time::parse('May 10, 2017');
+		$time->setMonth(-5);
+	}
+
+	/**
+	 * @expectedException \InvalidArgumentException
+	 */
+	public function testSetMonthTooBig()
+	{
+		$time = Time::parse('May 10, 2017');
+		$time->setMonth(30);
+	}
+
+	/**
+	 * @expectedException \InvalidArgumentException
+	 */
+	public function testSetDayTooSmall()
+	{
+		$time = Time::parse('May 10, 2017');
+		$time->setDay(-5);
+	}
+
+	/**
+	 * @expectedException \InvalidArgumentException
+	 */
+	public function testSetDayTooBig()
+	{
+		$time = Time::parse('May 10, 2017');
+		$time->setDay(80);
+	}
+
+	/**
+	 * @expectedException \InvalidArgumentException
+	 */
+	public function testSetHourTooSmall()
+	{
+		$time = Time::parse('May 10, 2017');
+		$time->setHour(-5);
+	}
+
+	/**
+	 * @expectedException \InvalidArgumentException
+	 */
+	public function testSetHourTooBig()
+	{
+		$time = Time::parse('May 10, 2017');
+		$time->setHour(80);
+	}
+
+	/**
+	 * @expectedException \InvalidArgumentException
+	 */
+	public function testSetMinuteTooSmall()
+	{
+		$time = Time::parse('May 10, 2017');
+		$time->setMinute(-5);
+	}
+
+	/**
+	 * @expectedException \InvalidArgumentException
+	 */
+	public function testSetMinuteTooBig()
+	{
+		$time = Time::parse('May 10, 2017');
+		$time->setMinute(80);
+	}
+
+	/**
+	 * @expectedException \InvalidArgumentException
+	 */
+	public function testSetSecondTooSmall()
+	{
+		$time = Time::parse('May 10, 2017');
+		$time->setSecond(-5);
+	}
+
+	/**
+	 * @expectedException \InvalidArgumentException
+	 */
+	public function testSetSecondTooBig()
+	{
+		$time = Time::parse('May 10, 2017');
+		$time->setSecond(80);
+	}
 }
