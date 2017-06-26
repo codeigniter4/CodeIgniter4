@@ -31,7 +31,7 @@ class Time extends DateTime
 	 * Format to use when displaying datetime through __toString
 	 * @var int
 	 */
-	protected $toStringFormat = IntlDateFormatter::SHORT;
+	protected $toStringFormat = 'yyyy-MM-dd HH:mm:ss';
 
 	/**
 	 * Used to check time string to determine if it is relative time or not....
@@ -476,7 +476,6 @@ class Time extends DateTime
 	{
 		$now = Time::now()->getTimestamp();
 		$time = $this->getTimestamp();
-		var_dump($now);
 
 		if (! $now >= $time) return 0;
 
@@ -677,6 +676,104 @@ class Time extends DateTime
 		return Time::create($year, $month, $day, $hour, $minute, $second, $this->getTimezoneName(), $this->locale);
 	}
 
+	/**
+	 * Returns a new instance with the revised timezone.
+	 *
+	 * @param \DateTimeZone $timezone
+	 *
+	 * @return \CodeIgniter\I18n\Time
+	 */
+	public function setTimezone($timezone)
+	{
+		return Time::parse($this->toDateTimeString(), $timezone, $this->locale);
+	}
+
+	/**
+	 * Returns a new instance with the date set to the new timestamp.
+	 *
+	 * @param int $timestamp
+	 *
+	 * @return \CodeIgniter\I18n\Time
+	 */
+	public function setTimestamp($timestamp)
+	{
+		$time = date('Y-m-d H:i:s', $timestamp);
+
+		return Time::parse($time, $this->timezone, $this->locale);
+	}
+
+
+	//--------------------------------------------------------------------
+	// Formatters
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns the localized value of the date in the format 'Y-m-d H:i:s'
+	 */
+	public function toDateTimeString()
+	{
+		return $this->toLocalizedString('yyyy-MM-dd HH:mm:ss');
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns a localized version of the date in Y-m-d format.
+	 *
+	 * @return string
+	 */
+	public function toDateString()
+	{
+		return $this->toLocalizedString('yyyy-MM-dd');
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns a localized version of the date in nicer date format:
+	 *
+	 *  i.e. April 1, 2017
+	 *
+	 * @return string
+	 */
+	public function toFormattedDateString()
+	{
+		return $this->toLocalizedString('LLL d, yyyy');
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns a localized version of the time in nicer date format:
+	 *
+	 *  i.e. 13:20:33
+	 *
+	 * @return string
+	 */
+	public function toTimeString()
+	{
+		return $this->toLocalizedString('HH:mm:ss');
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns the localized value of this instance in $format.
+	 *
+	 * @param string|null $format
+	 *
+	 * @return string
+	 */
+	public function toLocalizedString(string $format = null)
+	{
+		$format = is_null($format)
+			? $this->toStringFormat
+			: $format;
+
+		return IntlDateFormatter::formatObject($this->toDateTime(), $format, $this->locale);
+	}
+
+
 	//--------------------------------------------------------------------
 	// Utilities
 	//--------------------------------------------------------------------
@@ -700,33 +797,6 @@ class Time extends DateTime
 	}
 
 	//--------------------------------------------------------------------
-
-	/**
-	 * Returns the value of this instance in the format 'Y-m-d H:i:s'
-	 */
-	public function toDateTimeString()
-	{
-		return $this->format('Y-m-d H:i:s');
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Returns the localized value of this instance in $format.
-	 *
-	 * @param string|null $format
-	 *
-	 * @return string
-	 */
-	public function toLocalizedString(string $format = null)
-	{
-		$format = is_null($format)
-			? $this->toStringFormat
-			: $format;
-
-		return IntlDateFormatter::formatObject($this->toDateTime(), $format, $this->locale);
-	}
-
 
 	/**
 	 * Outputs a short format version of the datetime.
