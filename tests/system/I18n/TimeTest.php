@@ -21,7 +21,8 @@ class TimeTest extends \CIUnitTestCase
 			IntlDateFormatter::SHORT,
 			IntlDateFormatter::SHORT,
 			'America/Chicago',  // Default for CodeIgniter
-			IntlDateFormatter::GREGORIAN
+			IntlDateFormatter::GREGORIAN,
+			'yyyy-MM-dd HH:mm:ss'
 		);
 
 		$this->assertEquals($formatter->format(strtotime('now')), (string)$time);
@@ -36,7 +37,8 @@ class TimeTest extends \CIUnitTestCase
 			IntlDateFormatter::SHORT,
 			IntlDateFormatter::SHORT,
 			'Europe/London',  // Default for CodeIgniter
-			IntlDateFormatter::GREGORIAN
+			IntlDateFormatter::GREGORIAN,
+			'yyyy-MM-dd HH:mm:ss'
 		);
 
 		$this->assertEquals($formatter->format(strtotime('now')), (string)$time);
@@ -51,7 +53,8 @@ class TimeTest extends \CIUnitTestCase
 			IntlDateFormatter::SHORT,
 			IntlDateFormatter::SHORT,
 			'Europe/London',  // Default for CodeIgniter
-			IntlDateFormatter::GREGORIAN
+			IntlDateFormatter::GREGORIAN,
+			'yyyy-MM-dd HH:mm:ss'
 		);
 
 		$this->assertEquals($formatter->format(strtotime('now')), (string)$time);
@@ -65,8 +68,9 @@ class TimeTest extends \CIUnitTestCase
 			'fr_FR',
 			IntlDateFormatter::SHORT,
 			IntlDateFormatter::SHORT,
-			'Europe/London',  // Default for CodeIgniter
-			IntlDateFormatter::GREGORIAN
+			'Europe/London',
+			IntlDateFormatter::GREGORIAN,
+			'yyyy-MM-dd HH:mm:ss'
 		);
 
 		$this->assertEquals($formatter->format(strtotime('now')), (string)$time);
@@ -92,7 +96,7 @@ class TimeTest extends \CIUnitTestCase
 
 	public function testParse()
 	{
-		$time = Time::parse('next Tuesday');
+		$time = Time::parse('next Tuesday', 'America/Chicago');
 		$time1 = new \DateTime();
 		$time1->modify('next Tuesday');
 
@@ -101,9 +105,9 @@ class TimeTest extends \CIUnitTestCase
 
 	public function testToDateTimeString()
 	{
-		$time = Time::parse('2017-01-12 00:00');
+		$time = Time::parse('2017-01-12 00:00', 'America/Chicago');
 
-		$this->assertEquals('1/12/17, 12:00 AM', (string)$time);
+		$this->assertEquals('2017-01-12 00:00:00', (string)$time);
 		$this->assertEquals('2017-01-12 00:00:00', $time->toDateTimeString());
 	}
 
@@ -146,7 +150,7 @@ class TimeTest extends \CIUnitTestCase
 
 	public function testCreateFromDate()
 	{
-		$time = Time::createFromDate(2017, 03, 05);
+		$time = Time::createFromDate(2017, 03, 05, 'America/Chicago');
 
 		$this->assertEquals(date('Y-m-d 00:00:00', strtotime('2017-03-05 00:00:00')), $time->toDateTimeString());
 	}
@@ -160,14 +164,14 @@ class TimeTest extends \CIUnitTestCase
 
 	public function testCreateFromTime()
 	{
-		$time = Time::createFromTime(10, 03, 05);
+		$time = Time::createFromTime(10, 03, 05, 'America/Chicago');
 
 		$this->assertEquals(date('Y-m-d 10:03:05'), $time->toDateTimeString());
 	}
 
 	public function testCreateFromTimeEvening()
 	{
-		$time = Time::createFromTime(20, 03, 05);
+		$time = Time::createFromTime(20, 03, 05, 'America/Chicago');
 
 		$this->assertEquals(date('Y-m-d 20:03:05'), $time->toDateTimeString());
 	}
@@ -181,7 +185,7 @@ class TimeTest extends \CIUnitTestCase
 
 	public function testCreateFromFormat()
 	{
-		$time = Time::createFromFormat('F j, Y', 'January 15, 2017');
+		$time = Time::createFromFormat('F j, Y', 'January 15, 2017', 'America/Chicago');
 
 		$this->assertEquals(date('2017-01-15 H:i:s'), $time->toDateTimeString());
 	}
@@ -517,5 +521,45 @@ class TimeTest extends \CIUnitTestCase
 	{
 		$time = Time::parse('May 10, 2017');
 		$time->setSecond(80);
+	}
+
+	public function testSetTimezone()
+	{
+		$time = Time::parse('May 10, 2017', 'America/Chicago');
+		$time2 = $time->setTimezone('Europe/London');
+
+		$this->assertTrue($time2 instanceof Time);
+		$this->assertNotSame($time, $time2);
+		$this->assertEquals('America/Chicago', $time->getTimezoneName());
+		$this->assertEquals('Europe/London', $time2->getTimezoneName());
+	}
+
+	public function testSetTimestamp()
+	{
+		$time = Time::parse('May 10, 2017', 'America/Chicago');
+		$stamp = strtotime('April 1, 2017');
+		$time2 = $time->setTimestamp($stamp);
+
+		$this->assertTrue($time2 instanceof Time);
+		$this->assertNotSame($time, $time2);
+		$this->assertEquals('2017-04-01 00:00:00', $time2->toDateTimeString());
+	}
+
+	public function testToDateString()
+	{
+		$time = Time::parse('May 10, 2017', 'America/Chicago');
+		$this->assertEquals('2017-05-10', $time->toDateString());
+	}
+
+	public function testToFormattedDateString()
+	{
+		$time = Time::parse('January 10, 2017', 'America/Chicago');
+		$this->assertEquals('Jan 10, 2017', $time->toFormattedDateString());
+	}
+
+	public function testToTimeString()
+	{
+		$time = Time::parse('January 10, 2017 13:20:33', 'America/Chicago');
+		$this->assertEquals('13:20:33', $time->toTimeString());
 	}
 }
