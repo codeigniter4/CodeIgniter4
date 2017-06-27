@@ -27,12 +27,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package      CodeIgniter
+ * @author       CodeIgniter Dev Team
+ * @copyright    Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @license      https://opensource.org/licenses/MIT	MIT License
+ * @link         https://codeigniter.com
+ * @since        Version 3.0.0
  * @filesource
  */
 
@@ -82,38 +82,42 @@ class MigrateLatest extends BaseCommand
 	 *
 	 * @var array
 	 */
-	protected $options = array(
-			'-n'   => 'Set migration namespace',
-			'-g'   => 'Set database group',
-			'-all' => 'Set latest for all namespace, will ignore (-n) option'
-			);
+	protected $options = [
+		'-n'   => 'Set migration namespace',
+		'-g'   => 'Set database group',
+		'-all' => 'Set latest for all namespace, will ignore (-n) option',
+	];
 
 
 	/**
 	 * Ensures that all migrations have been run.
 	 */
-	public function run(array $params=[])
+	public function run(array $params = [])
 	{
 		$runner = Services::migrations();
 
 		CLI::write(lang('Migrations.migToLatest'), 'yellow');
 
 		$namespace = CLI::getOption('n');
-		$group =    CLI::getOption('g'); 
+		$group     = CLI::getOption('g');
 
-		try {
-			if (! is_null(CLI::getOption('all'))){        
+		try
+		{
+			if (! is_null(CLI::getOption('all')))
+			{
 				$runner->latestAll($group);
-			}else{                 
-				$runner->latest($namespace,$group);
+			}
+			else
+			{
+				$runner->latest($namespace, $group);
 			}
 			$messages = $runner->getCliMessages();
-			foreach ($messages as $message) {
-				CLI::write($message); 
+			foreach ($messages as $message)
+			{
+				CLI::write($message);
 			}
 
-		}
-		catch (\Exception $e)
+		} catch (\Exception $e)
 		{
 			$this->showError($e);
 		}

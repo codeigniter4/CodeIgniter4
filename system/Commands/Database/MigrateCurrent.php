@@ -27,12 +27,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package      CodeIgniter
+ * @author       CodeIgniter Dev Team
+ * @copyright    Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @license      https://opensource.org/licenses/MIT	MIT License
+ * @link         https://codeigniter.com
+ * @since        Version 3.0.0
  * @filesource
  */
 
@@ -82,30 +82,31 @@ class MigrateCurrent extends BaseCommand
 	 *
 	 * @var array
 	 */
-	protected $options = array(
-			'-g' => 'Set database group'
-			);
+	protected $options = [
+		'-g' => 'Set database group',
+	];
 
 
 	/**
 	 * Migrates us up or down to the version specified as $currentVersion
 	 * in the migrations config file.
 	 */
-	public function run(array $params=[])
+	public function run(array $params = [])
 	{
 		$runner = Services::migrations();
 
 		CLI::write(lang('Migrations.migToVersion'), 'yellow');
 
-		$group =    CLI::getOption('g');
-		try { 
+		$group = CLI::getOption('g');
+		try
+		{
 			$runner->current($group);
 			$messages = $runner->getCliMessages();
-			foreach ($messages as $message) {
-				CLI::write($message); 
+			foreach ($messages as $message)
+			{
+				CLI::write($message);
 			}
-		}
-		catch (\Exception $e)
+		} catch (\Exception $e)
 		{
 			$this->showError($e);
 		}
