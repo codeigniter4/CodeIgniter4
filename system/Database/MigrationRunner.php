@@ -234,18 +234,13 @@ class MigrationRunner
 		// Check Migration consistency
 		$this->CheckMigrations($migrations, $method, $targetVersion);
 
-		if (is_cli())
-		{
-			$this->cliMessages[] = "-) $this->namespace:";
-		}
-
 		// loop migration for each namespace (module)
 		foreach ($migrations as $version => $migration)
 		{
 
 			// Only include migrations within the scoop
 			if (($method === 'up' && $version > $currentVersion && $version <= $targetVersion) OR
-				($method === 'down' && $version <= $currentVersion && $version > $targetVersion)
+			    ($method === 'down' && $version <= $currentVersion && $version > $targetVersion)
 			)
 			{
 
@@ -656,7 +651,7 @@ class MigrationRunner
 		         ]);
 		if (is_cli())
 		{
-			$this->cliMessages[] = "\t- ".lang('Migrations.migAdded').$version;
+			$this->cliMessages[] = "\t".CLI::color(lang('Migrations.migAdded'), 'yellow')."($this->namespace) ".$version.'_'.$this->name;
 		}
 	}
 
@@ -677,7 +672,7 @@ class MigrationRunner
 		         ->delete();
 		if (is_cli())
 		{
-			$this->cliMessages[] = "\t- ".lang('Migrations.migRemoved').$version;
+			$this->cliMessages[] = "\t".CLI::color(lang('Migrations.migRemoved'), 'yellow')."($this->namespace) ".$version.'_'.$this->name;
 		}
 	}
 

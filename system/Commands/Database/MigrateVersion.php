@@ -27,12 +27,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package      CodeIgniter
+ * @author       CodeIgniter Dev Team
+ * @copyright    Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @license      https://opensource.org/licenses/MIT	MIT License
+ * @link         https://codeigniter.com
+ * @since        Version 3.0.0
  * @filesource
  */
 
@@ -75,24 +75,24 @@ class MigrateVersion extends BaseCommand
 	 *
 	 * @var array
 	 */
-	protected $arguments = array(
-			'version_number' => 'The version number to migrate'
-			);
+	protected $arguments = [
+		'version_number' => 'The version number to migrate',
+	];
 
 	/**
 	 * the Command's Options
 	 *
 	 * @var array
 	 */
-	protected $options = array(
-			'-n'   => 'Set migration namespace',
-			'-g'   => 'Set database group'
-			);
+	protected $options = [
+		'-n' => 'Set migration namespace',
+		'-g' => 'Set database group',
+	];
 
 	/**
 	 * Migrates the database up or down to get to the specified version.
 	 */
-	public function run(array $params=[])
+	public function run(array $params = [])
 	{
 		$runner = Services::migrations();
 
@@ -113,15 +113,11 @@ class MigrateVersion extends BaseCommand
 		CLI::write(sprintf(lang('Migrations.migToVersionPH'), $version), 'yellow');
 
 		$namespace = CLI::getOption('n');
-		$group =    CLI::getOption('g'); 
-		try {
+		$group     = CLI::getOption('g');
+		try
+		{
 			$runner->version($version, $namespace, $group);
-			$messages = $runner->getCliMessages();
-			foreach ($messages as $message) {
-				CLI::write($message); 
-			}
-		}
-		catch (\Exception $e)
+		} catch (\Exception $e)
 		{
 			$this->showError($e);
 		}
