@@ -553,8 +553,8 @@ class TimeTest extends \CIUnitTestCase
 
 	public function testToFormattedDateString()
 	{
-		$time = Time::parse('January 10, 2017', 'America/Chicago');
-		$this->assertEquals('Jan 10, 2017', $time->toFormattedDateString());
+		$time = Time::parse('February 10, 2017', 'America/Chicago');
+		$this->assertEquals('Feb 10, 2017', $time->toFormattedDateString());
 	}
 
 	public function testToTimeString()

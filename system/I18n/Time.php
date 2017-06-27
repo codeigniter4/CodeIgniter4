@@ -738,18 +738,7 @@ class Time extends DateTime
 	 */
 	public function toFormattedDateString()
 	{
-		// Show a "short format" version of the month (i.e. Jan)
-		// this is the the version that ubuntu seems to like
-		$month = 'LLLLL';
-
-		// Mac seems to return another version though...
-		if (preg_match('/darwin/i', php_uname('s')))
-		{
-			$month = 'LLL';
-		}
-
-
-		return $this->toLocalizedString($month . ' d, yyyy');
+		return $this->toLocalizedString('MMM d, yyyy');
 	}
 
 	//--------------------------------------------------------------------
