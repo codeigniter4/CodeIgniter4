@@ -653,7 +653,9 @@ class Model
 
 		if ($this->useTimestamps && ! array_key_exists($this->createdField, $data))
 		{
-			$data[$this->createdField] = $this->setDate();
+			$date = $this->setDate();
+			$data[$this->createdField] = $date;
+			$data[$this->updatedField] = $date;
 		}
 
 		if (empty($data))
