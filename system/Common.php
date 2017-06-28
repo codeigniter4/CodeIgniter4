@@ -538,7 +538,7 @@ if (! function_exists('helper'))
 
 			if (! empty($path))
 			{
-				include $path;
+				include_once $path;
 			}
 		}
 	}
