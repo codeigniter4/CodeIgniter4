@@ -457,7 +457,7 @@ class Services
 			return self::getSharedInstance('routes');
 		}
 
-		return new \CodeIgniter\Router\RouteCollection();
+		return new \CodeIgniter\Router\RouteCollection(self::locator());
 	}
 
 	//--------------------------------------------------------------------
