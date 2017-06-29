@@ -518,3 +518,13 @@ a valid class/method pair, just like you would show in any route, or a Closure::
     $routes->set404Override(function(){
         echo view('my_errors/not_found.html');
     });
+
+Discovering Module Routes
+-------------------------
+
+If you are using :doc:`modular code </general/modules>`, then this setting will specify whether or not additional
+Routes files should be scanned for within each of the PSR4 namespaces defined in **/application/Config/Autoload.php**.
+
+::
+
+    $routes->discoverLocal(false);
