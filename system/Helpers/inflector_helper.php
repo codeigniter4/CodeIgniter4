@@ -189,7 +189,7 @@ if ( ! function_exists('camelize'))
 	 */
 	function camelize(string $string): string
 	{
-		return ucwords(preg_replace('/[\s_]+/', ' ', $string));
+		return lcfirst(str_replace(' ', '', ucwords(preg_replace('/[\s_]+/', ' ', $string))));
 	}
 
 }
