@@ -178,7 +178,7 @@ you need it.
 You can simply assign data to the ``$_SESSION`` array, as with any other
 variable. Or as a property of ``$session``.
 
-userdata is deprecated.
+userdata method is deprecated.
  That however passing an array containing your new sessiondata to the
 ``set()`` method::
 
