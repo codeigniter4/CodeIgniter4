@@ -80,6 +80,19 @@ class RedisHandler implements CacheInterface
 		}
 	}
 
+	/**
+	 * Class destructor
+	 *
+	 * Closes the connection to Memcache(d) if present.
+	 */
+	public function __destruct()
+	{
+		if ($this->redis)
+		{
+			$this->redis->close();
+		}
+	}
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -155,17 +168,13 @@ class RedisHandler implements CacheInterface
 	/**
 	 * Saves an item to the cache store.
 	 *
-	 * The $raw parameter is only utilized by Mamcache in order to
-	 * allow usage of increment() and decrement().
-	 *
 	 * @param string $key    Cache item name
 	 * @param        $value  the data to save
 	 * @param null   $ttl    Time To Live, in seconds (default 60)
-	 * @param bool   $raw    Whether to store the raw value.
 	 *
 	 * @return mixed
 	 */
-	public function save(string $key, $value, int $ttl = 60, bool $raw = false)
+	public function save(string $key, $value, int $ttl = 60)
 	{
 		$key = $this->prefix.$key;
 
@@ -311,21 +320,6 @@ class RedisHandler implements CacheInterface
 	public function isSupported(): bool
 	{
 		return extension_loaded('redis');
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Class destructor
-	 *
-	 * Closes the connection to Memcache(d) if present.
-	 */
-	public function __destruct()
-	{
-		if ($this->redis)
-		{
-			$this->redis->close();
-		}
 	}
 
 	//--------------------------------------------------------------------
