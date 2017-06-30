@@ -178,9 +178,8 @@ you need it.
 You can simply assign data to the ``$_SESSION`` array, as with any other
 variable. Or as a property of ``$session``.
 
-Alternatively, the old method of assigning it as "userdata" is also
-available. That however passing an array containing your new data to the
-``set_userdata()`` method::
+As opposed to the old doc, userdata is depreciated
+``set()`` method::
 
 	$session->set($array);
 
@@ -193,7 +192,7 @@ an example::
 		'logged_in' => TRUE
 	);
 
-	$session->set_userdata($newdata);
+	$session->set($newdata);
 
 If you want to add userdata one value at a time, ``set()`` also
 supports this syntax::
