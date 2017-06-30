@@ -97,8 +97,8 @@ final class InflectorHelperTest extends \CIUnitTestCase
 	{
 		$strings = 
 		[
-			'hello from codeIgniter 4' => 'Hello From CodeIgniter 4',
-			'hello_world'              => 'Hello World'
+			'hello from codeIgniter 4' => 'helloFromCodeIgniter4',
+			'hello_world'              => 'helloWorld'
 		];
 
 		foreach ($strings as $lowerCasedString => $camelizedString)
