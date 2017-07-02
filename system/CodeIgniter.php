@@ -35,7 +35,7 @@
  * @since	Version 3.0.0
  * @filesource
  */
-
+use Config\Services;
 use Config\Cache;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\Debug\Timer;
@@ -155,7 +155,7 @@ class CodeIgniter
 		date_default_timezone_set($this->config->appTimezone ?? 'UTC');
 
 		// Setup Exception Handling
-		Config\Services::exceptions($this->config, true)
+		Services::exceptions($this->config, true)
 			->initialize();
 
 		$this->loadEnvironment();
@@ -201,7 +201,7 @@ class CodeIgniter
 		}
 		catch (Router\RedirectException $e)
 		{
-			$logger = Config\Services::logger();
+			$logger = Services::logger();
 			$logger->info('REDIRECTED ROUTE at '.$e->getMessage());
 
 			// If the route is a 'redirect' route, it throws
@@ -233,7 +233,7 @@ class CodeIgniter
 		$this->tryToRouteIt($routes);
 
 		// Run "before" filters
-		$filters = Config\Services::filters();
+		$filters = Services::filters();
 		$uri = $this->request instanceof CLIRequest
 			? $this->request->getPath()
 			: $this->request->uri->getPath();
@@ -360,7 +360,7 @@ class CodeIgniter
 	{
 		$this->startTime = microtime(true);
 
-		$this->benchmark = Config\Services::timer();
+		$this->benchmark = Services::timer();
 		$this->benchmark->start('total_execution', $this->startTime);
 		$this->benchmark->start('bootstrap');
 	}
@@ -376,11 +376,11 @@ class CodeIgniter
 	{
 		if (is_cli())
 		{
-			$this->request = Config\Services::clirequest($this->config);
+			$this->request = Services::clirequest($this->config);
 		}
 		else
 		{
-			$this->request = Config\Services::request($this->config);
+			$this->request = Services::request($this->config);
 			$this->request->setProtocolVersion($_SERVER['SERVER_PROTOCOL']);
 		}
 	}
@@ -393,7 +393,7 @@ class CodeIgniter
 	 */
 	protected function getResponseObject()
 	{
-		$this->response = Config\Services::response($this->config);
+		$this->response = Services::response($this->config);
 
 		if ( ! is_cli())
 		{
@@ -593,7 +593,7 @@ class CodeIgniter
 		}
 
 		// $routes is defined in Config/Routes.php
-		$this->router = Config\Services::router($routes);
+		$this->router = Services::router($routes);
 
 		$path = $this->determinePath();
 
