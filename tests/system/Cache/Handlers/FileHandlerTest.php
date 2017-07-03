@@ -159,11 +159,11 @@ class FileHandlerTest extends \CIUnitTestCase
 		$actual = $this->fileHandler->getMetaData(self::$key1);
 		$this->assertLessThanOrEqual(60, $actual['expire'] - $time);
 		$this->assertLessThanOrEqual(0, $actual['mtime'] - $time);
+		$this->assertSame('value', $actual['data']);
 	}
 
 	public function testIsSupported()
 	{
-		$this->fileHandler->save(self::$key1, 'value');
 		$this->assertTrue($this->fileHandler->isSupported());
 
 		chmod($this->config->path, 0444);

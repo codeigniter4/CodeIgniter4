@@ -99,17 +99,13 @@ class FileHandler implements CacheInterface
 	/**
 	 * Saves an item to the cache store.
 	 *
-	 * The $raw parameter is only utilized by Mamcache in order to
-	 * allow usage of increment() and decrement().
-	 *
 	 * @param string $key    Cache item name
 	 * @param        $value  the data to save
 	 * @param null   $ttl    Time To Live, in seconds (default 60)
-	 * @param bool   $raw    Whether to store the raw value.
 	 *
 	 * @return mixed
 	 */
-	public function save(string $key, $value, int $ttl = 60, bool $raw = false)
+	public function save(string $key, $value, int $ttl = 60)
 	{
 		$key = $this->prefix.$key;
 
@@ -267,10 +263,11 @@ class FileHandler implements CacheInterface
 				return FALSE;
 			}
 
-			return array(
+			return [
 				'expire' => $mtime + $data['ttl'],
-				'mtime'	 => $mtime
-			);
+				'mtime'  => $mtime,
+				'data'   => $data['data'],
+			];
 		}
 
 		return FALSE;
