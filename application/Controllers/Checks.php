@@ -3,6 +3,7 @@
 use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Controller;
+use CodeIgniter\I18n\Time;
 use CodeIgniter\Model;
 use Config\Database;
 use Tests\Support\Models\JobModel;
@@ -145,6 +146,61 @@ class Checks extends Controller
         $body = print_r($this->request->getRawInput(), true);
         echo $body;
     }
+
+	public function redirect()
+	{
+		redirect('/checks/model');
+    }
+
+	public function image()
+	{
+		$info = Services::image('imagick')
+			->withFile("/Users/kilishan/Documents/BobHeader.jpg")
+			->getFile()
+			->getProperties(true);
+
+		dd(ENVIRONMENT);
+
+		$images = Services::image('imagick')
+			->getVersion();
+//			->withFile("/Users/kilishan/Documents/BobHeader.jpg")
+//			->resize(500, 100, true)
+//			->crop(200, 75, 20, 0, false)
+//			->rotate(90)
+//			->save('/Users/kilishan/temp.jpg');
+
+//		$images = Services::image('imagick')
+//			->withFile("/Users/kilishan/Documents/BobHeader.jpg")
+//			->fit(500, 100, 'bottom-left')
+//			->text('Bob is Back!', [
+//				'fontPath'  => '/Users/kilishan/Downloads/Calibri.ttf',
+//				'fontSize' => 40,
+//				'padding' => 0,
+//				'opacity'   => 0.5,
+//				'vAlign'    => 'top',
+//				'hAlign'    => 'right',
+//				'withShadow' => true,
+//			])
+//			->save('/Users/kilishan/temp.jpg', 100);
+
+
+		ddd($images);
+	}
+
+	public function time()
+	{
+		$time = new Time();
+
+		echo($time);
+		echo '<br/>';
+		echo Time::now();
+		echo '<br/>';
+		echo Time::parse('First Monday of December');
+		echo '<br/>';
+
+		$time = new Time('Next Monday');
+		die($time);
+	}
 
 
 }

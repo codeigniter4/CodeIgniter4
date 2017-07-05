@@ -177,6 +177,7 @@ class OpenSSLHandler extends BaseHandler
 		{
 			$dictionary = [
 				'rijndael-128' => 'aes-128',
+				'rijndael-256' => 'aes-256',
 				'tripledes' => 'des-ede3',
 				'blowfish' => 'bf',
 				'cast-128' => 'cast5',

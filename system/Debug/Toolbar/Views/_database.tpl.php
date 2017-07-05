@@ -9,7 +9,7 @@
     {queries}
         <tr>
             <td class="narrow">{duration}</td>
-            <td>{sql}</td>
+            <td>{! sql !}</td>
         </tr>
     {/queries}
     </tbody>

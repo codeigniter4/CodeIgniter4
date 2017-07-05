@@ -7,7 +7,7 @@ Encryption Service
 	should do that via PHP's own `Password Hashing extension
 	<http://php.net/password>`_.
 
-The Encryption Service provides two-way data encryption. 
+The Encryption Service provides two-way symmetric (secret key) data encryption. 
 The encryption manager will instantiate and/or initialize an
 encryption handler to suit your parameters, explained below.
 
@@ -15,13 +15,10 @@ The handlers adapt our simple ``EncrypterInterface`` to use an
 appropriate PHP cryptographic extension or third party library.
 Such extensions may need to be explicitly enabled in your instance of PHP.
 
-The following extensions are currentlty supported:
+The following extensions are currently supported:
 
 - `OpenSSL <http://php.net/openssl>`_
-
-We plan to add a couple more: 
-`GnuPG <https://gnupg.org/>`_ and 
-`libsodium <https://libsodium.org/>`_.
+- `Sodium <https://libsodium.org/>`_.
 
 .. note:: Support for the ``MCrypt`` extension has been dropped, as that has
     been deprecated as of PHP 7.2.
@@ -45,7 +42,7 @@ Default behavior
 ================
 
 By default, the Encryption Library will use the OpenSSL handler, with
-the AES-128 cipher in CBC mode, 
+the AES-256 cipher in CBC mode, 
 using your configured *key* and SHA512 HMAC authentication.
 
 AES-128 is chosen both because it is proven to be strong and
@@ -62,11 +59,6 @@ done via a technique called `HMAC-based Key Derivation Function
 Setting your encryption key
 ===========================
 
-
-`symmetric encryption <https://en.wikipedia.org/wiki/Symmetric-key_algorithm>`_
-`asymmetric encryption <https://en.wikipedia.org/wiki/Public-key_cryptography>`_
-
-
 An *encryption key* is a piece of information that controls the
 cryptographic process and permits a plain-text string to be encrypted,
 and afterwards - decrypted. It is the secret "ingredient" in the whole
@@ -76,7 +68,7 @@ After one key is used to encrypt data, that same key provides the **only**
 means to decrypt it, so not only must you chose one carefully, but you
 must not lose it or you will also lose access to the data.
 
-It must be noted that to ensure maximum security, such key *should* not
+It must be noted that to ensure maximum security, such a key *should* not
 only be as strong as possible, but also often changed. Such behavior
 however is rarely practical or possible to implement, and that is why
 CodeIgniter gives you the ability to configure a single key that is to be
@@ -89,7 +81,7 @@ key security so you may want to think carefully before using it for
 anything that requires high security, like storing credit card numbers.
 
 Your encryption key **must** be as long as the encryption algorithm in use
-allows. For AES-128, that's 128 bits or 16 bytes (characters) long.
+allows. For AES-256, that's 256 bits or 32 bytes (characters) long.
 You will find a table below that shows the supported key lengths of
 different ciphers.
 
@@ -98,8 +90,8 @@ text string, nor the output of a hashing function, etc. In order to create
 a proper key, you can use the Encryption library's ``createKey()`` method
 ::
 
-	// $key will be assigned a 16-byte (128-bit) random key
-	$key = Encryption::createKey(16);
+	// $key will be assigned a 32-byte (256-bit) random key
+	$key = Encryption::createKey(32);
 
 The key can be either stored in your *application/Config/Encryption.php*, or
 you can design your own storage mechanism and pass the key dynamically
@@ -116,7 +108,7 @@ is hard to deal with (i.e. a copy-paste may damage it), so you may use
 a more friendly manner. For example::
 
 	// Get a hex-encoded representation of the key:
-	$encoded = bin2hex($encrypter->createKey(16));
+	$encoded = bin2hex($encrypter->createKey(32));
 
 	// Put the same value in your config with hex2bin(),
 	// so that it is still passed as binary to the library:
@@ -166,17 +158,13 @@ TripleDES                tripledes          56 / 7, 112 / 14, 168 / 21   CBC, CF
 	maximum length, as specified in `RFC 2144
 	<http://tools.ietf.org/rfc/rfc2144.txt>`_.
 
-        Blowfish supports key lengths as small as 32 bits (4 bytes), but
-	our tests have shown that only lengths of 128 bits (16 bytes) or
-	higher are properly supported by both MCrypt and OpenSSL. It is
-	also a bad practice to use such low-length keys anyway.
 
-Driver-specific ciphers
------------------------
+OpenSSL Notes
+-------------
 
 As noted above, the encryption drivers support different sets of encryption
-ciphers. For portability reasons and because we haven't tested them
-properly, we do not advise you to use the ones that are driver-specific.
+ciphers. We do recommend that use driver-specific settings.
+
 For reference, here's a list of most of them:
 
 
@@ -308,26 +296,26 @@ but we also included a key in the example. As previously noted, it is
 important that you choose a key with a proper size for the used algorithm.
 
 If you want to change the driver, for instance switching between
-MCrypt and OpenSSL (if MCrypt were supported), you could go through the Services::
+Sodium and OpenSSL, you could go through the Services::
 
-	// Switch to the MCrypt driver
-	$encrypter= \Config\Services::encrypter(['driver' => 'mcrypt']);;
-        // encrypt data using MCrypt
+	// Switch to the Sodium driver
+	$encrypter= \Config\Services::encrypter(['driver' => 'Sodium']);;
+        // encrypt data using Sodium
 
 	// Switch back to the OpenSSL driver
-	$encrypter= \Config\Services::encrypter(['driver' => 'openssl']);;
+	$encrypter= \Config\Services::encrypter(['driver' => 'OpenSSL']);;
         // now encrypt data using OpenSSL
 
 Alternately, you could use the encryption manager directly:
 
     $encryption = new \Encryption\Encryption();
 
-    // Switch to the MCrypt driver
-    $encrypter= $encryption->initialize(['driver' => 'mcrypt']);;
-    // encrypt data using MCrypt
+    // Switch to the Sodium driver
+    $encrypter= $encryption->initialize(['driver' => 'Sodium']);;
+    // encrypt data using Sodium
 
     // Switch back to the OpenSSL driver
-    $encrypter= $encrypter= $encryption->initialize(['driver' => 'openssl']);;
+    $encrypter= $encryption->initialize(['driver' => 'OpenSSL']);;
     // now encrypt data using OpenSSL
 
 Encrypting and decrypting data

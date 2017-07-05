@@ -16,6 +16,10 @@ class BaseConfigTest extends CIUnitTestCase
 		{
 			require $this->fixturesFolder.'/SimpleConfig.php';
 		}
+		if (! class_exists('RegistrarConfig', false))
+		{
+			require $this->fixturesFolder.'/RegistrarConfig.php';
+		}
 	}
 
 	//--------------------------------------------------------------------
@@ -95,5 +99,12 @@ class BaseConfigTest extends CIUnitTestCase
 	}
 
 	//--------------------------------------------------------------------
+
+	public function testRegistrars()
+	{
+		$config = new \RegistrarConfig();
+
+		$this->assertEquals(['baz', 'first', 'second'], $config->bar);
+	}
 
 }

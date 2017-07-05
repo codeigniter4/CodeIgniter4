@@ -225,6 +225,33 @@ class Services
 	//--------------------------------------------------------------------
 
 	/**
+	 * Acts as a factory for ImageHandler classes and returns an instance
+	 * of the handler. Used like Services::image()->withFile($path)->rotate(90)->save();
+	 */
+	public static function image(string $handler=null, $config = null, $getShared = true)
+	{
+		if ($getShared)
+		{
+			return self::getSharedInstance('image', $handler, $config);
+		}
+
+		if (empty($config))
+		{
+			$config = new \Config\Images();
+		}
+
+		$handler = is_null($handler)
+			? $config->defaultHandler
+			: $handler;
+
+		$class = $config->handlers[$handler];
+
+		return new $class($config);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * The Iterator class provides a simple way of looping over a function
 	 * and timing the results and memory usage. Used when debugging and
 	 * optimizing applications.
@@ -444,7 +471,7 @@ class Services
 			return self::getSharedInstance('routes');
 		}
 
-		return new \CodeIgniter\Router\RouteCollection();
+		return new \CodeIgniter\Router\RouteCollection(self::locator());
 	}
 
 	//--------------------------------------------------------------------

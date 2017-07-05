@@ -1,5 +1,6 @@
 <?php namespace CodeIgniter;
 
+use CodeIgniter\Autoloader\MockFileLocator;
 use CodeIgniter\Router\RouteCollection;
 use Config\App;
 
@@ -60,11 +61,11 @@ class CodeIgniterTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-    /**
-     * Well, crikey. Since we've changed the error template
-     * to use STDOUT and STDERR, there's no great way to test
-     * this any more. Need to think on this a bit....
-     */
+	/**
+	 * Well, crikey. Since we've changed the error template
+	 * to use STDOUT and STDERR, there's no great way to test
+	 * this any more. Need to think on this a bit....
+	 */
 //	public function testRunDefaultRouteNoAutoRoute()
 //	{
 //		$_SERVER['argv'] = [
@@ -85,7 +86,6 @@ class CodeIgniterTest extends \CIUnitTestCase
 //
 //		$this->assertTrue(strpos($output, "Can't find a route for") !== false);
 //	}
-
 	//--------------------------------------------------------------------
 
 	public function testRunClosureRoute()
@@ -98,9 +98,8 @@ class CodeIgniterTest extends \CIUnitTestCase
 
 		// Inject mock router.
 		$routes = Services::routes();
-		$routes->add('pages/(:segment)', function($segment)
-		{
-			echo 'You want to see "'.esc($segment).'" page.';
+		$routes->add('pages/(:segment)', function($segment) {
+			echo 'You want to see "' . esc($segment) . '" page.';
 		});
 		$router = Services::router($routes);
 		Services::injectMock('router', $router);
@@ -147,10 +146,9 @@ class CodeIgniterTest extends \CIUnitTestCase
 		$_SERVER['argc'] = 2;
 
 		// Inject mock router.
-		$routes = new RouteCollection();
+		$routes = new RouteCollection(new MockFileLocator(new \Config\Autoload()));
 		$routes->setAutoRoute(false);
-		$routes->set404Override(function()
-		{
+		$routes->set404Override(function() {
 			echo '404 Override by Closure.';
 		});
 		$router = Services::router($routes);
@@ -165,53 +163,88 @@ class CodeIgniterTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-    public function testControllersCanReturnString()
-    {
-        $_SERVER['argv'] = [
-            'index.php',
-            'pages/about',
-        ];
-        $_SERVER['argc'] = 2;
+	public function testControllersCanReturnString()
+	{
+		$_SERVER['argv'] = [
+			'index.php',
+			'pages/about',
+		];
+		$_SERVER['argc'] = 2;
 
-        // Inject mock router.
-        $routes = Services::routes();
-        $routes->add('pages/(:segment)', function($segment)
-        {
-            return 'You want to see "'.esc($segment).'" page.';
-        });
-        $router = Services::router($routes);
-        Services::injectMock('router', $router);
+		// Inject mock router.
+		$routes = Services::routes();
+		$routes->add('pages/(:segment)', function($segment) {
+			return 'You want to see "' . esc($segment) . '" page.';
+		});
+		$router = Services::router($routes);
+		Services::injectMock('router', $router);
 
-        ob_start();
-        $this->codeigniter->run();
-        $output = ob_get_clean();
+		ob_start();
+		$this->codeigniter->run();
+		$output = ob_get_clean();
 
-        $this->assertContains('You want to see "about" page.', $output);
-    }
+		$this->assertContains('You want to see "about" page.', $output);
+	}
 
-    public function testControllersCanReturnResponseObject()
-    {
-        $_SERVER['argv'] = [
-            'index.php',
-            'pages/about',
-        ];
-        $_SERVER['argc'] = 2;
+	public function testControllersCanReturnResponseObject()
+	{
+		$_SERVER['argv'] = [
+			'index.php',
+			'pages/about',
+		];
+		$_SERVER['argc'] = 2;
 
-        // Inject mock router.
-        $routes = Services::routes();
-        $routes->add('pages/(:segment)', function($segment)
-        {
-            $response = Services::response();
-            $string = "You want to see 'about' page.";
-            return $response->setBody($string);
-        });
-        $router = Services::router($routes);
-        Services::injectMock('router', $router);
+		// Inject mock router.
+		$routes = Services::routes();
+		$routes->add('pages/(:segment)', function($segment) {
+			$response = Services::response();
+			$string = "You want to see 'about' page.";
+			return $response->setBody($string);
+		});
+		$router = Services::router($routes);
+		Services::injectMock('router', $router);
 
-        ob_start();
-        $this->codeigniter->run();
-        $output = ob_get_clean();
+		ob_start();
+		$this->codeigniter->run();
+		$output = ob_get_clean();
 
-        $this->assertContains("You want to see 'about' page.", $output);
-    }
+		$this->assertContains("You want to see 'about' page.", $output);
+	}
+
+	//--------------------------------------------------------------------
+
+    public function testResposeConfigEmpty()
+	{
+		$_SERVER['argv'] = [
+			'index.php',
+			'/',
+		];
+		$_SERVER['argc'] = 2;
+
+		$response = Config\Services::response(null, false);
+
+		$this->assertInstanceOf('\CodeIgniter\HTTP\Response', $response);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testRoutesIsEmpty()
+	{
+		$_SERVER['argv'] = [
+			'index.php',
+			'/',
+		];
+		$_SERVER['argc'] = 2;
+
+		// Inject mock router.
+		$router = Services::router(null, false);
+		Services::injectMock('router', $router);
+
+		ob_start();
+		$this->codeigniter->run();
+		$output = ob_get_clean();
+
+		$this->assertContains('<h1>Welcome to CodeIgniter</h1>', $output);
+	}
+
 }

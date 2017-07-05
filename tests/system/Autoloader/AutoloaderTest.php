@@ -44,6 +44,30 @@ class AutoloaderTest extends \CIUnitTestCase
 	// PSR4 Namespacing
 	//--------------------------------------------------------------------
 
+	public function testServiceAutoLoaderFromShareInstances() {
+
+		$auto_loader = \CodeIgniter\Config\Services::autoloader();
+		// $auto_loader->register();
+		$actual   = $auto_loader->loadClass('App\Controllers\Checks');
+		$expected = APPPATH.'Controllers/Checks.php';
+		$this->assertSame($expected, $actual);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testServiceAutoLoader() {
+
+		$getShared = false;
+		$auto_loader = \CodeIgniter\Config\Services::autoloader($getShared);
+		$auto_loader->initialize(new Autoload());
+		$auto_loader->register();
+		$actual   = $auto_loader->loadClass('App\Controllers\Checks');
+		$expected = APPPATH.'Controllers/Checks.php';
+		$this->assertSame($expected, $actual);
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testExistingFile()
 	{
 		$actual   = $this->loader->loadClass('App\Controllers\Classname');
@@ -84,6 +108,20 @@ class AutoloaderTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * @expectedException        \InvalidArgumentException
+	 * @expectedExceptionMessage Config array must contain either the 'psr4' key or the 'classmap' key.
+	 */
+	public function testInitializeException()
+	{
+		$config = new Autoload();
+		$config->classmap = [];
+		$config->psr4 = [];
+
+		$this->loader = new MockAutoloader();
+		$this->loader->initialize($config);
+	}
+
 	public function testAddNamespaceWorks()
 	{
 		$this->assertFalse($this->loader->loadClass('My\App\Class'));
@@ -113,7 +151,14 @@ class AutoloaderTest extends \CIUnitTestCase
 		$expected = '/my/app/Class.php';
 		$this->assertSame($expected, $actual);
 	}
-        
+
+	public function testAddNamespaceStingToArray()
+	{
+		$this->loader->addNamespace('App\Controllers', '/application/Controllers');
+
+		$this->assertSame('/application/Controllers/Classname.php', $this->loader->loadClass('App\Controllers\Classname'));
+	}
+
         //--------------------------------------------------------------------
         
         public function testRemoveNamespace()

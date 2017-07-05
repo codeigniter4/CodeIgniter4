@@ -91,6 +91,7 @@ class Encryption
 	 */
 	protected $drivers = [
 		'openssl' => 'OpenSSL',
+		'libsodium' => 'Sodium'
 	];
 
 	/**
@@ -151,6 +152,7 @@ class Encryption
 		// determine what is installed
 		$this->handlers = [
 			'openssl' => extension_loaded('openssl'),
+			'sodium' => extension_loaded('libsodium')
 		];
 
 		if ( ! $this->handlers['openssl'])

@@ -28,9 +28,9 @@ class EncryptionTest extends CIUnitTestCase
 		$this->encrypt = new \CodeIgniter\Encryption\Encryption($config);
 		$this->assertNull($this->encrypt->key);
 
-		$config->key = str_repeat("\x0", 16);
+		$config->key = str_repeat("\x0", 32);
 		$this->encrypt = new \CodeIgniter\Encryption\Encryption($config);
-		$this->assertEquals(str_repeat("\x0", 16), $this->encrypt->key);
+		$this->assertEquals(str_repeat("\x0", 32), $this->encrypt->key);
 	}
 
 	// --------------------------------------------------------------------
@@ -118,19 +118,19 @@ class EncryptionTest extends CIUnitTestCase
 	 */
 	public function testGetParams()
 	{
-		$key = str_repeat("\x0", 16);
+		$key = str_repeat("\x0", 32);
 
 		// Invalid custom parameters
 		$params = [
 			// No cipher, mode or key
-			['cipher' => 'aes-128', 'mode' => 'cbc'],
-			['cipher' => 'aes-128', 'key' => $key],
+			['cipher' => 'aes-256', 'mode' => 'cbc'],
+			['cipher' => 'aes-256', 'key' => $key],
 			['mode' => 'cbc', 'key' => $key],
 			// No HMAC key or not a valid digest
-			['cipher' => 'aes-128', 'mode' => 'cbc', 'key' => $key],
-			['cipher' => 'aes-128', 'mode' => 'cbc', 'key' => $key, 'hmac_digest' => 'sha1', 'hmac_key' => $key],
+			['cipher' => 'aes-256', 'mode' => 'cbc', 'key' => $key],
+			['cipher' => 'aes-256', 'mode' => 'cbc', 'key' => $key, 'hmac_digest' => 'sha1', 'hmac_key' => $key],
 			// Invalid mode
-			['cipher' => 'aes-128', 'mode' => 'foo', 'key' => $key, 'hmac_digest' => 'sha256', 'hmac_key' => $key]
+			['cipher' => 'aes-256', 'mode' => 'foo', 'key' => $key, 'hmac_digest' => 'sha256', 'hmac_key' => $key]
 		];
 
 		$this->encrypter = \Config\Services::encrypter($params);
@@ -142,10 +142,10 @@ class EncryptionTest extends CIUnitTestCase
 
 		// Valid parameters
 		$params = [
-			'cipher' => 'aes-128',
+			'cipher' => 'aes-256',
 			'mode' => 'cbc',
-			'key' => str_repeat("\x0", 16),
-			'hmac_key' => str_repeat("\x0", 16)
+			'key' => str_repeat("\x0", 32),
+			'hmac_key' => str_repeat("\x0", 32)
 		];
 
 		$this->assertTrue(is_array($this->encrypter->getParams($params)));
@@ -155,11 +155,11 @@ class EncryptionTest extends CIUnitTestCase
 
 		// Including all parameters
 		$params = [
-			'cipher' => 'aes-128',
+			'cipher' => 'aes-256',
 			'mode' => 'cbc',
-			'key' => str_repeat("\x0", 16),
+			'key' => str_repeat("\x0", 32),
 			'raw_data' => TRUE,
-			'hmac_key' => str_repeat("\x0", 16),
+			'hmac_key' => str_repeat("\x0", 32),
 			'hmac_digest' => 'sha256'
 		];
 
@@ -171,7 +171,7 @@ class EncryptionTest extends CIUnitTestCase
 		// HMAC disabled
 		unset($params['hmac_key'], $params['hmac_digest']);
 		$params['hmac'] = $params['raw_data'] = FALSE;
-		$params['cipher'] = 'aes-128';
+		$params['cipher'] = 'aes-256';
 		$output = $this->encrypter->getParams($params);
 		unset($output['handle'], $output['cipher'], $params['hmac'], $params['raw_data'], $params['cipher']);
 		$params['base64'] = TRUE;
@@ -195,8 +195,9 @@ class EncryptionTest extends CIUnitTestCase
 	{
 		$message = 'This is a plain-text message.';
 		$key = "\xd0\xc9\x08\xc4\xde\x52\x12\x6e\xf8\xcc\xdb\x03\xea\xa0\x3a\x5c";
-
-		// Default state (AES-128/Rijndael-128 in CBC mode)
+		$key = $key.$key;
+		
+		// Default state (AES-256/Rijndael-256 in CBC mode)
 		$encrypter = $this->encryption->initialize(array('key' => $key));
 
 		// Was the key properly set?
@@ -310,7 +311,7 @@ class EncryptionTest extends CIUnitTestCase
 			['rc4', 'stream', 128],
 			['rc4', 'stream', 256]
 		];
-		$handler_index = ['openssl'];
+		$handler_index = ['openssl', 'libsodium'];
 
 		foreach ($portable as &$test)
 		{

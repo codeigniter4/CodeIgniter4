@@ -1,8 +1,5 @@
 <?php namespace CodeIgniter\HTTP\Files;
 
-use CodeIgniter\Files\File;
-use CodeIgniter\Files\FileException;
-
 /**
  * CodeIgniter
  *
@@ -38,6 +35,9 @@ use CodeIgniter\Files\FileException;
  * @since	Version 3.0.0
  * @filesource
  */
+
+use CodeIgniter\Files\File;
+use CodeIgniter\Files\FileException;
 
 /**
  * Value object representing a single file uploaded through an

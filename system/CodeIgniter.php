@@ -158,9 +158,9 @@ class CodeIgniter
 		Config\Services::exceptions($this->config, true)
 			->initialize();
 
+		$this->loadEnvironment();
 		$this->detectEnvironment();
 		$this->bootstrapEnvironment();
-		$this->loadEnvironment();
 
 		if (CI_DEBUG)
 		{
@@ -307,7 +307,7 @@ class CodeIgniter
 		}
 		else
 		{
-			define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'production');
+			define('ENVIRONMENT', $_SERVER['CI_ENVIRONMENT'] ?? 'production');
 		}
 	}
 

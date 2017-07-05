@@ -26,6 +26,9 @@ class ParserPluginTest extends \CIUnitTestCase
 		helper('url');
 		$template = "{+ previous_url +}";
 
+		// Ensure a previous URL exists to work with.
+		$_SESSION['_ci_previous_url'] = 'http://example.com/foo';
+
 		$this->assertEquals(previous_url(), $this->parser->renderString($template));
 	}
 
@@ -44,4 +47,12 @@ class ParserPluginTest extends \CIUnitTestCase
 
 		$this->assertEquals(safe_mailto('foo@example.com', 'Silly'), $this->parser->renderString($template));
 	}
+
+	public function testLang()
+	{
+		$template = '{+ lang Number.terabyteAbbr +}';
+
+		$this->assertEquals('TB', $this->parser->renderString($template));
+	}
+
 }

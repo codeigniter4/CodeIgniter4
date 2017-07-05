@@ -42,8 +42,8 @@ $RECYCLE.BIN/
 # These should never be under version control,
 # as it poses a security risk.
 .env
-application/.env
 .vagrant
+application/.env
 Vagrantfile
 
 #-------------------------
@@ -113,6 +113,7 @@ nb-configuration.xml
 *.stTheme.cache
 *.sublime-workspace
 *.sublime-project
+.phpintel
 /api/
 
 # Visual Studio Code

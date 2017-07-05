@@ -232,6 +232,11 @@ class Filters
 				}
 
 				$rules = $rules['except'];
+				
+				if (is_string($rules))
+				{
+					$rules = [$rules];
+				}
 
 				foreach ($rules as $path)
 				{

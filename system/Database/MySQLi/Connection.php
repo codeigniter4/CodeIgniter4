@@ -357,6 +357,11 @@ class Connection extends BaseConnection implements ConnectionInterface
 			return $str;
 		}
 
+		if (is_null($this->connID))
+		{
+			$this->initialize();
+		}
+
 		return $this->connID->real_escape_string($str);
 	}
 

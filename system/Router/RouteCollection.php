@@ -35,6 +35,7 @@
  * @since	Version 3.0.0
  * @filesource
  */
+use CodeIgniter\Autoloader\FileLocator;
 
 /**
  * Class RouteCollection
@@ -166,15 +167,34 @@ class RouteCollection implements RouteCollectionInterface
 	 */
 	protected $currentOptions = null;
 
+	/**
+	 * Determines whether locally specified, PSR4
+	 * compatible code is automatically scanned
+	 * for addition routes in a {namespace}/Config/Routes.php file.
+	 *
+	 * @var bool
+	 */
+	protected $discoverLocal = false;
+
+	/**
+	 * A little performance booster.
+	 * @var bool
+	 */
+	protected $didDiscover = false;
+
+	protected $fileLocator;
+
 	//--------------------------------------------------------------------
 
 	/**
 	 * Constructor
 	 */
-	public function __construct()
+	public function __construct(FileLocator $locator)
 	{
 		// Get HTTP verb
 		$this->HTTPVerb = isset($_SERVER['REQUEST_METHOD']) ? strtolower($_SERVER['REQUEST_METHOD']) : 'cli';
+
+		$this->fileLocator = $locator;
 	}
 
 	//--------------------------------------------------------------------
@@ -333,6 +353,62 @@ class RouteCollection implements RouteCollectionInterface
 	//--------------------------------------------------------------------
 
 	/**
+	 * If true, will attempt to auto-discover new route files
+	 * based on any PSR4 namespaces that have been set
+	 * in Config/Autoload.php.
+	 *
+	 * @param bool $discover
+	 *
+	 * @return $this
+	 */
+	public function discoverLocal(bool $discover)
+	{
+		$this->discoverLocal = $discover;
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Will attempt to discover any additional routes, either through
+	 * the local PSR4 namespaces, or through selected Composer packages.
+	 * (Composer coming soon...)
+	 */
+	protected function discoverRoutes()
+	{
+		if ($this->didDiscover) return;
+
+		// We need this var in local scope
+		// so route files can access it.
+		$routes = $this;
+
+		/*
+		 * Discover Local Files
+		 */
+		if ($this->discoverLocal === true)
+		{
+			$files = $this->fileLocator->search('Config/Routes.php');
+
+			foreach ($files as $file)
+			{
+				// Don't include our main file again...
+				if ($file == APPPATH.'Config/Routes.php') continue;
+
+				include $file;
+			}
+		}
+
+		/*
+		 * Discover Composer files (coming soon)
+		 */
+
+		$this->didDiscover = true;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Sets the default constraint to be used in the system. Typically
 	 * for use with the 'resources' method.
 	 *
@@ -418,6 +494,11 @@ class RouteCollection implements RouteCollectionInterface
 	 */
 	public function getRoutes(): array
 	{
+		// Since this is the entry point for the Router,
+		// take a moment to do any route discovery
+		// we might need to do.
+		$this->discoverRoutes();
+
 		$routes = [];
 
 		foreach ($this->routes as $r)

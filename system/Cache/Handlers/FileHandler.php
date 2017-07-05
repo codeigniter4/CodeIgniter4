@@ -99,17 +99,13 @@ class FileHandler implements CacheInterface
 	/**
 	 * Saves an item to the cache store.
 	 *
-	 * The $raw parameter is only utilized by Mamcache in order to
-	 * allow usage of increment() and decrement().
-	 *
 	 * @param string $key    Cache item name
 	 * @param        $value  the data to save
 	 * @param null   $ttl    Time To Live, in seconds (default 60)
-	 * @param bool   $raw    Whether to store the raw value.
 	 *
 	 * @return mixed
 	 */
-	public function save(string $key, $value, int $ttl = 60, bool $raw = false)
+	public function save(string $key, $value, int $ttl = 60)
 	{
 		$key = $this->prefix.$key;
 
@@ -256,7 +252,7 @@ class FileHandler implements CacheInterface
 			return FALSE;
 		}
 
-		$data = unserialize(file_get_contents($this->path.$key));
+		$data = @unserialize(file_get_contents($this->path.$key));
 
 		if (is_array($data))
 		{
@@ -267,10 +263,11 @@ class FileHandler implements CacheInterface
 				return FALSE;
 			}
 
-			return array(
+			return [
 				'expire' => $mtime + $data['ttl'],
-				'mtime'	 => $mtime
-			);
+				'mtime'  => $mtime,
+				'data'   => $data['data'],
+			];
 		}
 
 		return FALSE;
@@ -302,7 +299,7 @@ class FileHandler implements CacheInterface
 	{
 		if (! is_file($this->path.$key))
 		{
-			return null;
+			return false;
 		}
 
 		$data = unserialize(file_get_contents($this->path.$key));
@@ -311,7 +308,7 @@ class FileHandler implements CacheInterface
 		{
 			unlink($this->path.$key);
 
-			return null;
+			return false;
 		}
 
 		return $data;
@@ -334,7 +331,7 @@ class FileHandler implements CacheInterface
 	 */
 	protected function writeFile($path, $data, $mode = 'wb')
 	{
-		if (! $fp = @fopen($path, $mode))
+		if(($fp = @fopen($path, $mode)) === false)
 		{
 			return false;
 		}
@@ -471,16 +468,11 @@ class FileHandler implements CacheInterface
 	 *
 	 * @return    array
 	 */
-	protected function getFileInfo($file, $returned_values = ['name', 'server_path', 'size', 'date'])
+	protected function getFileInfo(string $file, array $returned_values = ['name', 'server_path', 'size', 'date'])
 	{
 		if (! file_exists($file))
 		{
 			return false;
-		}
-
-		if (is_string($returned_values))
-		{
-			$returned_values = explode(',', $returned_values);
 		}
 
 		foreach ($returned_values as $key)

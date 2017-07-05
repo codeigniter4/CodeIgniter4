@@ -51,7 +51,7 @@ abstract class BaseHandler implements \CodeIgniter\Encryption\EncrypterInterface
 	 *
 	 * @var	string
 	 */
-	protected $cipher = 'aes-128';
+	protected $cipher = 'aes-256';
 
 	/**
 	 * Cipher mode

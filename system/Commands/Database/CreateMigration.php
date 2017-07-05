@@ -129,24 +129,24 @@ class CreateMigration extends BaseCommand
 		$path = $homepath.'/Database/Migrations/'.date('YmdHis_').$name.'.php';
 
 		$template =<<<EOD
-			<?php namespace $ns\Database\Migrations;
+<?php namespace $ns\Database\Migrations;
 
-		use CodeIgniter\Database\Migration;
+use CodeIgniter\Database\Migration;
 
-		class Migration_{name} extends Migration
-		{
-			public function up()
-			{
-				//
-			}
+class Migration_{name} extends Migration
+{
+	public function up()
+	{
+		//
+	}
 
-			//--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
-			public function down()
-			{
-				//
-			}
-		}
+	public function down()
+	{
+		//
+	}
+}
 
 EOD;
 		$template = str_replace('{name}', $name, $template);

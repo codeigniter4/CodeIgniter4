@@ -39,7 +39,6 @@
 /**
  * Environment-specific configuration
  */
-
 class DotEnv
 {
 	/**
@@ -59,7 +58,7 @@ class DotEnv
 	 */
 	public function __construct(string $path, $file = '.env')
 	{
-		if ( ! is_string($file))
+		if (! is_string($file))
 		{
 			$file = '.env';
 		}
@@ -78,13 +77,13 @@ class DotEnv
 	{
 		// We don't want to enforce the presence of a .env file,
 		// they should be optional.
-		if ( ! is_file($this->path))
+		if (! is_file($this->path))
 		{
 			return false;
 		}
 
 		// Ensure file is readable
-		if ( ! is_readable($this->path))
+		if (! is_readable($this->path))
 		{
 			throw new \InvalidArgumentException("The .env file is not readable: {$this->path}");
 		}
@@ -122,9 +121,9 @@ class DotEnv
 	{
 		list($name, $value) = $this->normaliseVariable($name, $value);
 
-		putenv("$name=$value");
-		$_ENV[$name] = $value;
-		$_SERVER[$name] = $value;
+		if (! getenv($name, true)) putenv("$name=$value");
+		if (empty($_ENV[$name])) $_ENV[$name] = $value;
+		if (empty($_SERVER[$name])) $_SERVER[$name] = $value;
 	}
 
 	//--------------------------------------------------------------------
@@ -135,6 +134,7 @@ class DotEnv
 	 *
 	 * @param string $name
 	 * @param string $value
+	 *
 	 * @return array
 	 */
 	public function normaliseVariable(string $name, string $value = ''): array
@@ -174,7 +174,7 @@ class DotEnv
 	 */
 	protected function sanitizeValue(string $value): string
 	{
-		if ( ! $value)
+		if (! $value)
 		{
 			return $value;
 		}
@@ -185,7 +185,7 @@ class DotEnv
 			// value starts with a quote
 			$quote        = $value[0];
 			$regexPattern = sprintf(
-					'/^
+				'/^
 					%1$s          # match a quote at the start of the value
 					(             # capturing sub-pattern used
 								  (?:          # we do not need to capture this
@@ -197,8 +197,8 @@ class DotEnv
 					%1$s          # and the closing quote
 					.*$           # and discard any string after the closing quote
 					/mx',
-					$quote
-					);
+				$quote
+			);
 			$value        = preg_replace($regexPattern, '$1', $value);
 			$value        = str_replace("\\$quote", $quote, $value);
 			$value        = str_replace('\\\\', '\\', $value);
@@ -241,22 +241,22 @@ class DotEnv
 			$loader = $this;
 
 			$value = preg_replace_callback(
-					'/\${([a-zA-Z0-9_]+)}/',
-					function ($matchedPatterns) use ($loader)
-					{
+				'/\${([a-zA-Z0-9_]+)}/',
+				function ($matchedPatterns) use ($loader)
+				{
 					$nestedVariable = $loader->getVariable($matchedPatterns[1]);
 
 					if (is_null($nestedVariable))
 					{
-					return $matchedPatterns[0];
+						return $matchedPatterns[0];
 					}
 					else
 					{
-					return $nestedVariable;
+						return $nestedVariable;
 					}
-					},
-					$value
-					);
+				},
+				$value
+			);
 		}
 
 		return $value;

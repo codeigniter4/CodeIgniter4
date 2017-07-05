@@ -115,4 +115,13 @@ class TimerTest extends \CIUnitTestCase
     }
 
     //--------------------------------------------------------------------
+
+	public function testReturnsNullGettingElapsedTimeOfNonTimer()
+	{
+		$timer = new Timer();
+
+		$this->assertNull($timer->getElapsedTime('test1'));
+	}
+
+    //--------------------------------------------------------------------
 }

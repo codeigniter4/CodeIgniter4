@@ -40,9 +40,9 @@ class Encryption extends BaseConfig
 	  | Encryption Cipher
 	  |--------------------------------------------------------------------------
 	  |
-	  | Name of the encryption cipher to use, eg 'aes-128' or 'blowfish'
+	  | Name of the encryption cipher to use, eg 'aes-256' or 'blowfish'
 	 */
-	public $cipher = 'aes-128';
+	public $cipher = 'aes-256';
 
 	/*
 	  |--------------------------------------------------------------------------

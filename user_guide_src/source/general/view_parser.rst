@@ -450,6 +450,26 @@ key/value pairs::
 
 	{+ foo bar=2 baz="x y" }
 
+Parameters can also be single values::
+
+	{+ include somefile.php +}
+
+Provided Plugins
+----------------
+
+The following plugins are available when using the parser:
+
+==================== ========================== =================================================================== =================================
+Plugin               Arguments                  Description                                                         Example
+==================== ========================== =================================================================== =================================
+current_url                                     Alias for the current_url helper function.                          {+ current_url +}
+previous_url                                    Alias for the previous_url helper function.                         {+ previous_url +}
+mailto               email, title, attributes   Alias for the mailto helper function.                               {+ mailto email=foo@example.com title="Stranger Things" +}
+safe_mailto          email, title, attributes   Alias for the safe_mailto helper function.                          {+ safe_mailto email=foo@example.com title="Stranger Things" +}
+lang                 language string            Alias for the lang helper function.                                 {+ lang number.terabyteAbbr +}
+==================== ========================== =================================================================== =================================
+
+
 Registering a Plugin
 --------------------
 

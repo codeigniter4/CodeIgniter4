@@ -1,6 +1,4 @@
-<?php
-
-namespace CodeIgniter\View;
+<?php namespace CodeIgniter\View;
 
 /**
  * CodeIgniter
@@ -37,6 +35,7 @@ namespace CodeIgniter\View;
  * @since	Version 3.0.0
  * @filesource
  */
+
 use Config\Services;
 use CodeIgniter\Log\Logger;
 
@@ -662,7 +661,7 @@ class Parser extends View {
 
         return $replace;
     }
-    
+
     //--------------------------------------------------------------------
     // Plugins
     //--------------------------------------------------------------------
@@ -709,14 +708,24 @@ class Parser extends View {
 		    foreach ($matches as $match)
 		    {
 		    	$params = [];
-			    $parts = explode(' ', trim($match[1]));
+
+		    	// Split on "words", but keep quoted groups together, accounting for escaped quotes.
+			    // Note: requires double quotes, not single quotes.
+			    $parts = str_getcsv($match[1], ' ');
 
 			    foreach ($parts as $part)
 			    {
 			    	if (empty($part)) continue;
 
-			    	list($a, $b) = explode('=',$part);
-			    	$params[$a] = $b;
+			    	if (strpos($part, '=') !== false)
+				    {
+					    list($a, $b) = explode('=',$part);
+					    $params[$a] = $b;
+				    }
+				    else
+				    {
+				    	$params[] = $part;
+				    }
 			    }
 			    unset($parts);
 

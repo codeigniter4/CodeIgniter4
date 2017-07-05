@@ -321,13 +321,14 @@ Validating $_POST data
 ======================
 
 The controller also provides a convenience method to make validating $_POST data a little simpler, ``validate()`` that
-takes the current Request as the first instance, an array of rules to test against as the second parameter, and, optionally,
-an array of custom error messages to display if the items don't pass. The :doc:`Validation Library docs </libraries/validation>`
+takes an array of rules to test against as the first parameter, and, optionally,
+an array of custom error messages to display if the items don't pass. Internally, this uses the controller's
+**$this->request** instance to get the POST data through. The :doc:`Validation Library docs </libraries/validation>`
 has details on the format of the rules and messages arrays, as well as available rules.::
 
     public function updateUser(int $userID)
     {
-        if (! $this->validate($this->request, [
+        if (! $this->validate([
             'email' => "required|is_unique[users.email,id,{$userID}]",
             'name' => 'required|alpha_numeric_spaces'
         ]))
@@ -345,7 +346,7 @@ name of the group, as defined in ``Config\Validation.php``::
 
     public function updateUser(int $userID)
     {
-        if (! $this->validate($this->request, 'userRules'))
+        if (! $this->validate('userRules'))
         {
             return view('users/update', [
                 'errors' => $this->errors
@@ -355,7 +356,7 @@ name of the group, as defined in ``Config\Validation.php``::
         // do something here if successful...
     }
 
-.. note:: Validation can also be handled automatically in the model. Where you handle validaiton is up to you,
+.. note:: Validation can also be handled automatically in the model. Where you handle validation is up to you,
             and you will find that some situations are simpler in the controller than then model, and vice versa.
 
 That's it!

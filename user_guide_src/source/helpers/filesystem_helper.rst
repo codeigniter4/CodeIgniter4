@@ -84,31 +84,6 @@ The following functions are available:
 
 	If no results are found, this will return an empty array.
 
-.. php:function:: read_file($file)
-
-	:param	string	$file: File path
-	:returns:	File contents or FALSE on failure
-	:rtype:	string
-
-	Returns the data contained in the file specified in the path.
-
-	Example::
-
-		$string = read_file('./path/to/file.php');
-
-	The path can be a relative or full server path. Returns FALSE (boolean) on failure.
-
-	.. note:: The path is relative to your main site index.php file, NOT your
-		controller or view files. CodeIgniter uses a front controller so paths
-		are always relative to the main site index.
-
-	.. note:: This function is DEPRECATED. Use the native ``file_get_contents()``
-		instead.
-
-	.. important:: If your server is running an **open_basedir** restriction this
-		function might not work if you are trying to access a file above the
-		calling script.
-
 .. php:function:: write_file($path, $data[, $mode = 'wb'])
 
 	:param	string	$path: File path

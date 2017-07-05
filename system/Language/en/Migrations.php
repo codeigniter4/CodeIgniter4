@@ -70,8 +70,8 @@ return [
 	'migSeeder'         => 'Seeder name',
 	'migMissingSeeder'  => 'You must provide a seeder name.',
 	'migHistoryFor'     => 'Migration history For ',
-	'migRemoved'        => 'Downgrade: ',
-	'migAdded'          => 'Upgrade: ',
+	'migRemoved'        => 'Rolling back: ',
+	'migAdded'          => 'Running: ',
 
 	'version'  => 'Version',
 	'filename' => 'Filename',

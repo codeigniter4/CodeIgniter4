@@ -589,22 +589,12 @@ if ( ! function_exists('url_title'))
 	 *
 	 * @todo   Remove old 'dash' and 'underscore' usage in 3.1+.
 	 * @param  string $str       Input string
-	 * @param  string $separator Word separator (usually '-' or '_') (usually '-' or '_')
-	 *             (usually '-' or '_')
+	 * @param  string $separator Word separator (usually '-' or '_') 
 	 * @param  bool   $lowercase Whether to transform the output string to lowercase
 	 * @return string
 	 */
 	function url_title($str, $separator = '-', $lowercase = false): string
 	{
-		if ($separator === 'dash')
-		{
-			$separator = '-';
-		}
-		elseif ($separator === 'underscore')
-		{
-			$separator = '_';
-		}
-
 		$q_separator = preg_quote($separator, '#');
 
 		$trans = array (

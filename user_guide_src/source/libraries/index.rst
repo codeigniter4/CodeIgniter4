@@ -11,6 +11,7 @@ Library Reference
     cli
     content_negotiation
     curlrequest
+    images
     encryption
     files
     incomingrequest

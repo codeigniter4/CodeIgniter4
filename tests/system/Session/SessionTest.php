@@ -175,6 +175,17 @@ class SessionTest extends \CIUnitTestCase
         $this->assertFalse(isset($_SESSION['bar']));
     }
 
+    public function testSetMagicMethod()
+    {
+        $session = $this->getInstance();
+        $session->start();
+
+        $session->foo = 'bar';
+
+        $this->assertTrue(isset($_SESSION['foo']));
+        $this->assertEquals('bar', $_SESSION['foo']);
+    }
+
     public function testCanFlashData()
     {
         $session = $this->getInstance();

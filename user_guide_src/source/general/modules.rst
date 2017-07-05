@@ -71,23 +71,16 @@ guide, but is being reproduced here so that it's easier to grasp how all of the 
 Routes
 ======
 
-Unlike most of the other file types, :doc:`routes </general/routing>` are not automatically scanned for. This is to boost
+By default, :doc:`routes </general/routing>` are not automatically scanned for within modules. This is to boost
 performance when modules are not in use. However, it's a simple thing to scan for any Routes file within modules.
-Add the following code snippet to the end of **/application/Config/Routes.php**::
+Simply change the ``discoverLocal`` setting to true in **/application/Config/Routes.php**::
 
-    /**
-     * Load routes files from all defined namespaces in Config\Autoloader.php
-     */
-    $files = service('locator')->search('Config/Routes.php');
+    $routes->discoverLocal(true);
 
-    foreach ($files as $file)
-    {
-        include_once $file;
-    }
-
-This will scan all namespaced directories, looking for **{namespace}/Config/Routes.php** files and loading them if
-they exist. This way, each module can contain its own Routes file that is kept with it whenever you add it to new projects.
-For our blog example, it would look for **/acme/Blog/Config/Routes.php**.
+This will scan all PSR4 namespaced directories specified in **/application/Config/Autoload.php**. It will look for
+**{namespace}/Config/Routes.php** files and load them if they exist. This way, each module can contain its own
+Routes file that is kept with it whenever you add it to new projects. For our blog example, it would look for
+**/acme/Blog/Config/Routes.php**.
 
 .. note:: Since the files are being included into the current scope, the ``$routes`` instance is already defined for you.
     It will cause errors if you attempt to redefine that class.

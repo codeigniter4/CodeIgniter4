@@ -77,22 +77,30 @@ class CreateMigration extends BaseCommand
 	 *
 	 * @var array
 	 */
-	protected $options = array();
+	protected $options = array(
+		'-n'   => 'Set migration namespace',
+		'-g'   => 'Set database group',
+		'-t'   => 'Set table name',
+	);
 
 	/**
 	 * Creates a new migration file with the current timestamp.
+	 *
+	 * @param array $params
 	 */
 	public function run(array $params=[])
 	{
-		$name = 'create_sessions_table';
-
-		$path = APPPATH.'Database/Migrations/'.date('YmdHis_').$name.'.php';
-
 		$config = new App();
 
+		$tableName = CLI::getOption('t') ?? $config->sessionSavePath ?? 'ci_sessions';
+
+		$path = APPPATH.'Database/Migrations/'.date('YmdHis_').'create_'.$tableName.'_table'.'.php';
+
 		$data = [
+			'namespace' => CLI::getOption('n') ?? APP_NAMESPACE ?? 'App',
+			'DBGroup'   => CLI::getOption('g'),
+			'tableName' => $tableName,
 			'matchIP'   => $config->sessionMatchIP  ?? false,
-			'tableName' => $config->sessionSavePath ?? 'ci_sessions',
 		];
 
 		$template = view('\CodeIgniter\Commands\Sessions\Views\migration.tpl', $data);

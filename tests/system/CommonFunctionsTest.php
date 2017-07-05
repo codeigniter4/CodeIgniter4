@@ -70,7 +70,7 @@ class CommomFunctionsTest extends \CIUnitTestCase
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 
 		$response = $this->createMock(\CodeIgniter\HTTP\Response::class);
-		$routes   = new \CodeIgniter\Router\RouteCollection();
+		$routes   = new \CodeIgniter\Router\RouteCollection(new \CodeIgniter\Autoloader\MockFileLocator(new \Config\Autoload()));
 		\CodeIgniter\Services::injectMock('response', $response);
 		\CodeIgniter\Services::injectMock('routes', $routes);
 
@@ -87,7 +87,7 @@ class CommomFunctionsTest extends \CIUnitTestCase
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 
 		$response = $this->createMock(\CodeIgniter\HTTP\Response::class);
-		$routes   = new \CodeIgniter\Router\RouteCollection();
+		$routes   = new \CodeIgniter\Router\RouteCollection(new \CodeIgniter\Autoloader\MockFileLocator(new \Config\Autoload()));
 		\CodeIgniter\Services::injectMock('response', $response);
 		\CodeIgniter\Services::injectMock('routes', $routes);
 
@@ -104,7 +104,7 @@ class CommomFunctionsTest extends \CIUnitTestCase
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 
 		$response = $this->createMock(\CodeIgniter\HTTP\Response::class);
-		$routes   = new \CodeIgniter\Router\RouteCollection();
+		$routes   = new \CodeIgniter\Router\RouteCollection(new \CodeIgniter\Autoloader\MockFileLocator(new \Config\Autoload()));
 		\CodeIgniter\Services::injectMock('response', $response);
 		\CodeIgniter\Services::injectMock('routes', $routes);
 

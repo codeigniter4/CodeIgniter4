@@ -1,6 +1,6 @@
 <?php namespace CodeIgniter\Config;
 
-class View {
+class View extends BaseConfig {
 
 	protected $coreFilters = [
 		'abs'               => '\CodeIgniter\View\Filters::abs',
@@ -29,12 +29,15 @@ class View {
 		'previous_url'      => '\CodeIgniter\View\Plugins::previousURL',
 		'mailto'            => '\CodeIgniter\View\Plugins::mailto',
 		'safe_mailto'       => '\CodeIgniter\View\Plugins::safeMailto',
+		'lang'              => '\CodeIgniter\View\Plugins::lang',
     ];
 
 	public function __construct()
 	{
 	    $this->filters = array_merge($this->filters, $this->coreFilters);
 	    $this->plugins = array_merge($this->plugins, $this->corePlugins);
+
+	    parent::__construct();
 	}
 
 }
