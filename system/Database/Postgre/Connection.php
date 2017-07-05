@@ -403,7 +403,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 			{
 				$sql = "SELECT pg_get_serial_sequence('{$table}', '{$column}') AS seq";
 				$query = $this->query($sql);
-				$query = $query->row();
+				$query = $query->getRow();
 				$seq = $query->seq;
 			}
 			else
