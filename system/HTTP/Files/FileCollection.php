@@ -170,12 +170,12 @@ class FileCollection
 			return;
 		}
 
+		$this->files = [];
+
 		if (empty($_FILES))
 		{
 			return;
 		}
-
-		$this->files = [];
 
 		$files = $this->fixFilesArray($_FILES);
 

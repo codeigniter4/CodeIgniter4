@@ -9,11 +9,11 @@ class FileCollectionTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	public function testAllReturnsNullWithNoFiles()
+	public function testAllReturnsArrayWithNoFiles()
 	{
 	    $files = new FileCollection();
 
-		$this->assertNull($files->all());
+		$this->assertEquals([], $files->all());
 	}
 
 	//--------------------------------------------------------------------
