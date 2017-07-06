@@ -27,12 +27,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package      CodeIgniter
+ * @author       CodeIgniter Dev Team
+ * @copyright    Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @license      https://opensource.org/licenses/MIT	MIT License
+ * @link         https://codeigniter.com
+ * @since        Version 3.0.0
  * @filesource
  */
 
@@ -223,13 +223,30 @@ class Model
 	 */
 	protected $validation;
 
+	/**
+	 * Callbacks. Each array should contain the method
+	 * names (within the model) that should be called
+	 * when those events are triggered. With the exception
+	 * of 'afterFind', all methods are passed the same
+	 * items that are given to the update/insert method.
+	 * 'afterFind' will also include the results that were found.
+	 *
+	 * @var array
+	 */
+	protected $beforeInsert = [];
+	protected $afterInsert  = [];
+	protected $beforeUpdate = [];
+	protected $afterUpdate  = [];
+	protected $afterFind    = [];
+	protected $afterDelete  = [];
+
 	//--------------------------------------------------------------------
 
 	/**
 	 * Model constructor.
 	 *
 	 * @param ConnectionInterface $db
-	 * @param BaseConfig $config        Config/App()
+	 * @param BaseConfig          $config Config/App()
 	 */
 	public function __construct(ConnectionInterface &$db = null, BaseConfig $config = null, ValidationInterface $validation = null)
 	{
@@ -286,16 +303,18 @@ class Model
 		if (is_array($id))
 		{
 			$row = $builder->whereIn($this->primaryKey, $id)
-				->get();
+			               ->get();
 			$row = $row->getResult($this->tempReturnType);
 		}
 		else
 		{
 			$row = $builder->where($this->primaryKey, $id)
-				->get();
+			               ->get();
 
 			$row = $row->getFirstRow($this->tempReturnType);
 		}
+
+		$row = $this->trigger('beforeUpdate', ['id' => $id, 'data' => $row]);
 
 		$this->tempReturnType     = $this->returnType;
 		$this->tempUseSoftDeletes = $this->useSoftDeletes;
@@ -323,9 +342,11 @@ class Model
 		}
 
 		$rows = $builder->where($key, $value)
-			->get();
+		                ->get();
 
 		$rows = $rows->getResult($this->tempReturnType);
+
+		$rows = $this->trigger('afterFind', ['data' => $rows]);
 
 		$this->tempReturnType     = $this->returnType;
 		$this->tempUseSoftDeletes = $this->useSoftDeletes;
@@ -354,9 +375,11 @@ class Model
 		}
 
 		$row = $builder->limit($limit, $offset)
-			->get();
+		               ->get();
 
 		$row = $row->getResult($this->tempReturnType);
+
+		$row = $this->trigger('afterFind', ['data' => $row, 'limit' => $limit, 'offset' => $offset]);
 
 		$this->tempReturnType     = $this->returnType;
 		$this->tempUseSoftDeletes = $this->useSoftDeletes;
@@ -389,9 +412,11 @@ class Model
 		}
 
 		$row = $builder->limit(1, 0)
-			->get();
+		               ->get();
 
 		$row = $row->getFirstRow($this->tempReturnType);
+
+		$row = $this->trigger('afterFind', ['data' => $row]);
 
 		$this->tempReturnType = $this->returnType;
 
@@ -449,22 +474,22 @@ class Model
 		{
 			return false;
 		}
-		if ($id > pow(2,31))
+		if ($id > pow(2, 31))
 		{
 			return false;
 		}
 
-		$segment1 = $this->getHash($id,16);
-		$segment2 = $this->getHash($segment1,8);
-		$dec      = (int)base_convert($segment2,16,10);
-		$dec      = ($dec>$id)?$dec-$id:$dec+$id;
-		$segment2 = base_convert($dec,10,16);
-		$segment2 = str_pad($segment2,8,'0',STR_PAD_LEFT);
-		$segment3 = $this->getHash($segment1.$segment2,8);
+		$segment1 = $this->getHash($id, 16);
+		$segment2 = $this->getHash($segment1, 8);
+		$dec      = (int)base_convert($segment2, 16, 10);
+		$dec      = ($dec > $id) ? $dec-$id : $dec+$id;
+		$segment2 = base_convert($dec, 10, 16);
+		$segment2 = str_pad($segment2, 8, '0', STR_PAD_LEFT);
+		$segment3 = $this->getHash($segment1.$segment2, 8);
 		$hex      = $segment1.$segment2.$segment3;
-		$bin      = pack('H*',$hex);
+		$bin      = pack('H*', $hex);
 		$oid      = base64_encode($bin);
-		$oid      = str_replace(array('+','/','='),array('$',':',''),$oid);
+		$oid      = str_replace(['+', '/', '='], ['$', ':', ''], $oid);
 
 		return $oid;
 	}
@@ -486,31 +511,34 @@ class Model
 		if (substr($hash, 0, 2) == '=_')
 		{
 			$hash = substr($hash, 2);
+
 			return base64_decode($hash);
 		}
 
-		if (! preg_match('/^[A-Z0-9\:\$]{21,23}$/i',$hash)) {
-			return 0;
-		}
-		$hash     = str_replace(array('$',':'),array('+','/'),$hash);
-		$bin      = base64_decode($hash);
-		$hex      = unpack('H*',$bin); $hex = $hex[1];
-		if (! preg_match('/^[0-9a-f]{32}$/',$hex))
+		if (! preg_match('/^[A-Z0-9\:\$]{21,23}$/i', $hash))
 		{
 			return 0;
 		}
-		$segment1 = substr($hex,0,16);
-		$segment2 = substr($hex,16,8);
-		$segment3 = substr($hex,24,8);
-		$exp2     = $this->getHash($segment1,8);
-		$exp3     = $this->getHash($segment1.$segment2,8);
+		$hash = str_replace(['$', ':'], ['+', '/'], $hash);
+		$bin  = base64_decode($hash);
+		$hex  = unpack('H*', $bin);
+		$hex  = $hex[1];
+		if (! preg_match('/^[0-9a-f]{32}$/', $hex))
+		{
+			return 0;
+		}
+		$segment1 = substr($hex, 0, 16);
+		$segment2 = substr($hex, 16, 8);
+		$segment3 = substr($hex, 24, 8);
+		$exp2     = $this->getHash($segment1, 8);
+		$exp3     = $this->getHash($segment1.$segment2, 8);
 		if ($segment3 != $exp3)
 		{
 			return 0;
 		}
-		$v1       = (int)base_convert($segment2,16,10);
-		$v2       = (int)base_convert($exp2,16,10);
-		$id       = abs($v1-$v2);
+		$v1 = (int)base_convert($segment2, 16, 10);
+		$v2 = (int)base_convert($exp2, 16, 10);
+		$id = abs($v1-$v2);
 
 		return $id;
 	}
@@ -528,7 +556,7 @@ class Model
 	 */
 	protected function getHash($str, $len)
 	{
-		return substr(sha1($str.$this->salt),0,$len);
+		return substr(sha1($str.$this->salt), 0, $len);
 	}
 
 	//--------------------------------------------------------------------
@@ -616,11 +644,12 @@ class Model
 	 * Inserts data into the current table. If an object is provided,
 	 * it will attempt to convert it to an array.
 	 *
-	 * @param $data
+	 * @param      $data
+	 * @param bool $returnID Whether insert ID should be returned or not.
 	 *
 	 * @return bool
 	 */
-	public function insert($data)
+	public function insert($data, bool $returnID = true)
 	{
 		// If $data is using a custom class with public or protected
 		// properties representing the table elements, we need to grab
@@ -647,16 +676,23 @@ class Model
 			}
 		}
 
+		// Save the original data so it can be passed to
+		// any Model Event callbacks and not stripped
+		// by doProtectFields
+		$originalData = $data;
+
 		// Must be called first so we don't
 		// strip out created_at values.
 		$data = $this->doProtectFields($data);
 
 		if ($this->useTimestamps && ! array_key_exists($this->createdField, $data))
 		{
-			$date = $this->setDate();
+			$date                      = $this->setDate();
 			$data[$this->createdField] = $date;
 			$data[$this->updatedField] = $date;
 		}
+
+		$data = $this->trigger('beforeInsert', ['data' => $data]);
 
 		if (empty($data))
 		{
@@ -664,13 +700,22 @@ class Model
 		}
 
 		// Must use the set() method to ensure objects get converted to arrays
-		$return = $this->builder()
-			->set($data)
-			->insert();
+		$result = $this->builder()
+		               ->set($data)
+		               ->insert();
 
-		if (! $return) return $return;
+		$this->trigger('afterInsert', ['data' => $originalData, 'result' => $result]);
 
-		return $this->db->insertID();
+		// If insertion failed, get our of here
+		if (! $result)
+		{
+			return $result;
+		}
+
+		// otherwise return the insertID, if requested.
+		return $returnID
+			? $this->db->insertID()
+			: $result;
 	}
 
 	//--------------------------------------------------------------------
@@ -711,6 +756,11 @@ class Model
 			}
 		}
 
+		// Save the original data so it can be passed to
+		// any Model Event callbacks and not stripped
+		// by doProtectFields
+		$originalData = $data;
+
 		// Must be called first so we don't
 		// strip out updated_at values.
 		$data = $this->doProtectFields($data);
@@ -720,16 +770,22 @@ class Model
 			$data[$this->updatedField] = $this->setDate();
 		}
 
+		$data = $this->trigger('beforeUpdate', ['id' => $id, 'data' => $data]);
+
 		if (empty($data))
 		{
 			throw new \InvalidArgumentException('No data to update.');
 		}
 
 		// Must use the set() method to ensure objects get converted to arrays
-		return $this->builder()
-			->where($this->primaryKey, $id)
-			->set($data)
-			->update();
+		$result = $this->builder()
+		               ->where($this->primaryKey, $id)
+		               ->set($data)
+		               ->update();
+
+		$this->trigger('afterUpdate', ['id' => $id, 'data' => $originalData, 'result' => $result]);
+
+		return $result;
 	}
 
 	//--------------------------------------------------------------------
@@ -748,14 +804,20 @@ class Model
 	{
 		if ($this->useSoftDeletes && ! $purge)
 		{
-			return $this->builder()
-				->where($this->primaryKey, $id)
-				->update(['deleted' => 1]);
+			$result = $this->builder()
+			               ->where($this->primaryKey, $id)
+			               ->update(['deleted' => 1]);
+		}
+		else
+		{
+			$result = $this->builder()
+			               ->where($this->primaryKey, $id)
+			               ->delete();
 		}
 
-		return $this->builder()
-			->where($this->primaryKey, $id)
-			->delete();
+		$this->trigger('afterDelete', ['id' => $id, 'purge' => $purge, 'result' => $result, 'data' => null]);
+
+		return $result;
 	}
 
 	//--------------------------------------------------------------------
@@ -781,14 +843,20 @@ class Model
 
 		if ($this->useSoftDeletes && ! $purge)
 		{
-			return $this->builder()
-				->where($key, $value)
-				->update(['deleted' => 1]);
+			$result = $this->builder()
+			               ->where($key, $value)
+			               ->update(['deleted' => 1]);
+		}
+		else
+		{
+			$result = $this->builder()
+			               ->where($key, $value)
+			               ->delete();
 		}
 
-		return $this->builder()
-			->where($key, $value)
-			->delete();
+		$this->trigger('afterDelete', ['key' => $key, 'value' => $value, 'purge' => $purge, 'result' => $result, 'data' => null]);
+
+		return $result;
 	}
 
 	//--------------------------------------------------------------------
@@ -802,14 +870,14 @@ class Model
 	 */
 	public function purgeDeleted()
 	{
-		if ( ! $this->useSoftDeletes)
+		if (! $this->useSoftDeletes)
 		{
 			return true;
 		}
 
 		return $this->builder()
-			->where('deleted', 1)
-			->delete();
+		            ->where('deleted', 1)
+		            ->delete();
 	}
 
 	//--------------------------------------------------------------------
@@ -842,7 +910,7 @@ class Model
 		$this->tempUseSoftDeletes = false;
 
 		$this->builder()
-			->where('deleted', 1);
+		     ->where('deleted', 1);
 
 		return $this;
 	}
@@ -897,7 +965,7 @@ class Model
 	public function chunk($size = 100, \Closure $userFunc)
 	{
 		$total = $this->builder()
-			->countAllResults(false);
+		              ->countAllResults(false);
 
 		$offset = 0;
 
@@ -953,10 +1021,10 @@ class Model
 
 		// Store it in the Pager library so it can be
 		// paginated in the views.
-		$pager = \Config\Services::pager();
+		$pager       = \Config\Services::pager();
 		$this->pager = $pager->store($group, $page, $perPage, $total);
 
-		$offset = ($page - 1) * $perPage;
+		$offset = ($page-1)*$perPage;
 
 		return $this->findAll($perPage, $offset);
 	}
@@ -998,7 +1066,7 @@ class Model
 		$table = empty($table) ? $this->table : $table;
 
 		// Ensure we have a good db connection
-		if ( ! $this->db instanceof BaseConnection)
+		if (! $this->db instanceof BaseConnection)
 		{
 			$this->db = Database::connect($this->DBGroup);
 		}
@@ -1024,16 +1092,19 @@ class Model
 	 */
 	protected function doProtectFields($data)
 	{
-		if ($this->protectFields === false) return $data;
+		if ($this->protectFields === false)
+		{
+			return $data;
+		}
 
 		if (empty($this->allowedFields))
 		{
-			throw new DatabaseException('No Allowed fields specified for model: '. get_class($this));
+			throw new DatabaseException('No Allowed fields specified for model: '.get_class($this));
 		}
 
 		foreach ($data as $key => $val)
 		{
-			if ( ! in_array($key, $this->allowedFields))
+			if (! in_array($key, $this->allowedFields))
 			{
 				unset($data[$key]);
 			}
@@ -1100,7 +1171,7 @@ class Model
 	 * it will first check for errors there, otherwise will try to
 	 * grab the last error from the Database connection.
 	 *
-	 * @param bool $forceDB   Always grab the db error, not validation
+	 * @param bool $forceDB Always grab the db error, not validation
 	 *
 	 * @return array|null
 	 */
@@ -1184,6 +1255,37 @@ class Model
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * A simple event trigger for Model Events that allows additional
+	 * data manipulation within the model. Specifically intended for
+	 * usage by child models this can be used to format data,
+	 * save/load related classes, etc.
+	 *
+	 * It is the responsibility of the callback methods to return
+	 * the data itself.
+	 *
+	 * Each $data array MUST have a 'data' key with the relevant
+	 * data for callback methods (like an array of key/value pairs to insert
+	 * or update, an array of results, etc)
+	 *
+	 * @param string $event
+	 * @param array  $data
+	 *
+	 * @return mixed
+	 */
+	protected function trigger(string $event, array $data)
+	{
+		// Ensure it's a valid event
+		if (! isset($this->{$event}) || empty($this->{$event}))
+		{
+			return $data['data'];
+		}
+
+		return $this->{$event}($data);
+	}
+
+	//--------------------------------------------------------------------
+
 
 	//--------------------------------------------------------------------
 	// Magic
@@ -1241,7 +1343,7 @@ class Model
 		{
 			return $result;
 		}
-		if ( ! $result instanceof BaseBuilder)
+		if (! $result instanceof BaseBuilder)
 		{
 			return $result;
 		}
