@@ -553,7 +553,7 @@ class Model
 		// them as an array.
 		if (is_object($data) && ! $data instanceof \stdClass)
 		{
-			$data = $this->classToArray($data);
+			$data = static::classToArray($data);
 		}
 
 		if (is_object($data) && isset($data->{$this->primaryKey}))
@@ -591,7 +591,7 @@ class Model
 	 *
 	 * @return array
 	 */
-	protected function classToArray($data): array
+	public static function classToArray($data): array
 	{
 		$mirror = new \ReflectionClass($data);
 		$props  = $mirror->getProperties(\ReflectionProperty::IS_PUBLIC | \ReflectionProperty::IS_PROTECTED);
@@ -627,7 +627,7 @@ class Model
 		// them as an array.
 		if (is_object($data) && ! $data instanceof \stdClass)
 		{
-			$data = $this->classToArray($data);
+			$data = static::classToArray($data);
 		}
 
 		// If it's still a stdClass, go ahead and convert to
@@ -691,7 +691,7 @@ class Model
 		// them as an array.
 		if (is_object($data) && ! $data instanceof \stdClass)
 		{
-			$data = $this->classToArray($data);
+			$data = static::classToArray($data);
 		}
 
 		// If it's still a stdClass, go ahead and convert to
