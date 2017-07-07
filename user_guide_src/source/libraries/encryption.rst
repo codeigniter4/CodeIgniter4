@@ -225,6 +225,11 @@ XTS         xts                OpenSSL           Usually used for encrypting ran
 Stream      stream             OpenSSL           This is not actually a mode, it just says that a stream cipher is being used. Required because of the general cipher+mode initialization process.
 =========== ================== ================= ===================================================================================================================================================
 
+Sodium Notes
+------------
+
+
+
 Message Length
 ==============
 

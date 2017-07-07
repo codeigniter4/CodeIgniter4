@@ -35,6 +35,9 @@
  * @since	Version 3.0.0
  * @filesource
  */
+
+use \Sodium;
+
 class SodiumHandler extends BaseHandler
 {
 
@@ -97,9 +100,9 @@ class SodiumHandler extends BaseHandler
 		}
 
 		$key = $params['key'];
-		$nonce = \Sodium\randombytes_buf(\Sodium\CRYPTO_SECRETBOX_NONCEBYTES);
+		$nonce = randombytes_buf(CRYPTO_SECRETBOX_NONCEBYTES);
 
-		$ciphertext = \Sodium\crypto_secretbox($data, $nonce, $key);
+		$ciphertext = crypto_secretbox($data, $nonce, $key);
 
 		if ($ciphertext === false)
 		{
@@ -122,10 +125,10 @@ class SodiumHandler extends BaseHandler
 	{
 
 		$key = $params['key'];
-		$nonce = self::substr($data, 0, \Sodium\CRYPTO_SECRETBOX_NONCEBYTES);
-		$data = self::substr($data, \Sodium\CRYPTO_SECRETBOX_NONCEBYTES);
+		$nonce = self::substr($data, 0, CRYPTO_SECRETBOX_NONCEBYTES);
+		$data = self::substr($data, CRYPTO_SECRETBOX_NONCEBYTES);
 
-		$plaintext = \Sodium\crypto_secretbox_open($data, $nonce, $key);
+		$plaintext = crypto_secretbox_open($data, $nonce, $key);
 		if ($plaintext === false)
 		{
 			throw new EncryptionException("Bad ciphertext");
