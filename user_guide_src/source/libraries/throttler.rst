@@ -27,7 +27,7 @@ the third being the amount of time it takes for the bucket to refill::
     $throttler->check($name, 60, MINUTE);
 
 Here we're using one of the :doc:`global constants </general/common_functions>` for the time, to make it a little
-more readable. This says that the bucket allows 60 actions every minute, or 1 action every 60 seconds.
+more readable. This says that the bucket allows 60 actions every minute, or 1 action every second.
 
 Let's say that a third-party script was trying to hit a URL repeatedly. At first, it would be able to use all 60
 of those tokens in less than a second. However, after that the Throttler would only allow one action per second,
@@ -102,7 +102,7 @@ Class Reference
     :param int $seconds: The number of seconds it takes for a bucket to completely fill
     :param int $cost: The number of tokens that are spent for this action
     :returns: TRUE if action can be performed, FALSE if not
-    :rtype: integer
+    :rtype: bool
 
     Checks to see if there are any tokens left within the bucket, or if too many have
     been used within the allotted time limit. During each check the available tokens
@@ -116,3 +116,5 @@ Class Reference
     After ``check()`` has been ran and returned FALSE, this method can be used
     to determine the time until a new token should be available and the action can be
     tried again.
+
+    In this case, the minimum enforced wait time is one second.
