@@ -36,7 +36,7 @@
  * @filesource
  */
 use Config\App;
-use Config\ContentSecurityPolicy;
+use CodeIgniter\HTTP\ContentSecurityPolicy;
 use Config\Mimes;
 
 /**
@@ -219,7 +219,7 @@ class Response extends Message implements ResponseInterface
 		// Are we enforcing a Content Security Policy?
 		if ($config->CSPEnabled === true)
 		{
-			$this->CSP = new ContentSecurityPolicy();
+			$this->CSP        = new ContentSecurityPolicy(new \Config\ContentSecurityPolicy());
 			$this->CSPEnabled = true;
 		}
 
