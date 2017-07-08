@@ -204,10 +204,26 @@ class Checks extends Controller
 
 	public function csp()
 	{
-		$this->response->CSP->reportOnly(true);
-		$this->response->CSP->setDefaultSrc('self');
+//		$this->response->CSP->reportOnly(true);
+		$this->response->CSP->setDefaultSrc(base_url());
+		$this->response->CSP->addStyleSrc('unsafe-inline');
+		$this->response->CSP->addStyleSrc('https://maxcdn.bootstrapcdn.com');
 
-		echo 'here';
+		echo <<<EOF
+<!doctype html>
+<html>
+<head>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+<body>
+<style {csp-style-nonce}>
+	body { background: #efefef; }
+</style>
+
+</body>
+</html>
+EOF;
+
 	}
 
 	public function upload()
