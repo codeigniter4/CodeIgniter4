@@ -74,7 +74,7 @@ class RedisHandler implements CacheInterface
 	{
 		$this->prefix = $config['prefix'] ?? '';
 
-		if (!empty($config))
+		if (! empty($config))
 		{
 			$this->config = array_merge($this->config, $config);
 		}
