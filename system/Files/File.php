@@ -131,12 +131,12 @@ class File extends SplFileInfo
 		if (function_exists('finfo_file'))
 		{
 			$finfo      = finfo_open(FILEINFO_MIME_TYPE);
-			$mimeType   = finfo_file($finfo, $this->getRealPath());
+			$mimeType   = finfo_file($finfo, $this->getPath());
 			finfo_close($finfo);
 		}
 		else
 		{
-			$mimeType = mime_content_type($this->getRealPath());
+			$mimeType = mime_content_type($this->getPath());
 		}
 
 		return $mimeType;

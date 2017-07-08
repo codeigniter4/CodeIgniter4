@@ -734,15 +734,6 @@ if (! function_exists('redirect_with_input'))
 
 		$session->setFlashdata('_ci_old_input', $input);
 
-		// If the validator has any errors, transmit those back
-		// so they can be displayed when the validation is
-		// handled within a method different than displaying the form.
-		$validator = Services::validation();
-		if (count($validator->getErrors()) > 0)
-		{
-			$session->setFlashdata('_ci_validation_errors', serialize($validator->getErrors()));
-		}
-
 		redirect($uri, ...$params);
 	}
 }

@@ -574,23 +574,6 @@ class Validation implements ValidationInterface
 	 */
 	public function getErrors(): array
 	{
-		// If we already have errors, we'll use those.
-		// If we don't, check the session to see if any were
-		// passed along from a redirect_with_input request.
-		if (empty($this->errors))
-		{
-			// Start up the session if it's not already
-			if(! isset($_SESSION))
-			{
-				session()->start();
-			}
-
-			if ($errors = session('_ci_validation_errors'))
-			{
-				$this->errors = unserialize($errors);
-			}
-		}
-
 		return $this->errors ?? [];
 	}
 

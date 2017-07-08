@@ -53,20 +53,6 @@ class Entity
 	protected $datamap = [];
 
 	/**
-	 * Allows filling in Entity parameters during construction.
-	 *
-	 * @param array|null $data
-	 */
-	public function __construct(array $data = null)
-	{
-		if (is_array($data))
-		{
-			$this->fill($data);
-		}
-	}
-
-
-	/**
 	 * Takes an array of key/value pairs and sets them as
 	 * class properties, using any `setCamelCasedProperty()` methods
 	 * that may or may not exist.

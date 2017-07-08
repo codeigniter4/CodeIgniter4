@@ -277,7 +277,7 @@ class UploadedFile extends File implements UploadedFileInterface
 	 */
 	public function getName(): string
 	{
-		return $this->originalName;
+		return $this->name;
 	}
 
 	//--------------------------------------------------------------------
@@ -289,23 +289,10 @@ class UploadedFile extends File implements UploadedFileInterface
 	 */
 	public function getTempName(): string
 	{
-		return $this->name;
+		return $this->path;
 	}
 
 	//--------------------------------------------------------------------
-
-	/**
-	 * Overrides SPLFileInfo's to work with uploaded files, since
-	 * the temp file that's been uploaded doesn't have an extension.
-	 *
-	 * Is simply an alias for guessExtension for a safer method
-	 * than simply relying on the provided extension.
-	 */
-	public function getExtension()
-	{
-		return $this->guessExtension();
-	}
-
 
 	/**
 	 * Returns the original file extension, based on the file name that
@@ -316,7 +303,7 @@ class UploadedFile extends File implements UploadedFileInterface
 	 */
 	public function getClientExtension(): string
 	{
-		return pathinfo($this->originalName, PATHINFO_EXTENSION);
+		return pathinfo($this->path, PATHINFO_EXTENSION);
 	}
 
 	//--------------------------------------------------------------------

@@ -481,14 +481,15 @@ class IncomingRequest extends Request
 	 *
 	 * @return array
 	 */
-	public function getFiles(): FileCollection
+	public function getFiles(): array
 	{
 		if (is_null($this->files))
 		{
+			// @todo modify to use Services, at the very least.
 			$this->files = new FileCollection();
 		}
 
-		return $this->files;
+		return $this->files->all();
 	}
 
 	//--------------------------------------------------------------------
@@ -505,6 +506,7 @@ class IncomingRequest extends Request
 	{
 		if (is_null($this->files))
 		{
+			// @todo modify to use Services, at the very least.
 			$this->files = new FileCollection();
 		}
 

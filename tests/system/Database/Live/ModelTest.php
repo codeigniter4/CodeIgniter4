@@ -492,26 +492,4 @@ class ModelTest extends \CIDatabaseTestCase
         $this->seeInDatabase('job', ['name' => 'Senior Developer']);
     }
 
-	/**
-	 * @see https://github.com/bcit-ci/CodeIgniter4/issues/580
-	 */
-	public function testPasswordsStoreCorrectly()
-    {
-		$model = new UserModel();
-
-		$pass = password_hash('secret123', PASSWORD_BCRYPT);
-
-		$data = [
-			'name'  => 	$pass,
-			'email' => 'foo@example.com',
-			'country' => 'US',
-			'deleted' => 0
-		];
-
-		$model->insert($data);
-
-		$this->seeInDatabase('user', $data);
-    }
-
 }
-

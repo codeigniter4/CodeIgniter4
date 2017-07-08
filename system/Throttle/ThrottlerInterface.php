@@ -35,36 +35,29 @@
  * @since	Version 3.0.0
  * @filesource
  */
+
 interface ThrottlerInterface
 {
 
-	/**
-	 * Restricts the number of requests made by a single key within
-	 * a set number of seconds.
-	 *
-	 * Example:
-	 *
-	 *  if (! $throttler->checkIPAddress($request->ipAddress(), 60, MINUTE))
-	 * {
-	 *      die('You submitted over 60 requests within a minute.');
-	 * }
-	 *
-	 * @param string $key      The name to use as the "bucket" name.
-	 * @param int    $capacity The number of requests the "bucket" can hold
-	 * @param int    $seconds  The time it takes the "bucket" to completely refill
-	 * @param int    $cost     The number of tokens this action uses.
-	 *
-	 * @return bool
-	 */
-	public function check(string $key, int $capacity, int $seconds, int $cost);
+    /**
+     * Restricts the number of requests made by a single key within
+     * a set number of seconds.
+     *
+     * Example:
+     *
+     *  if (! $throttler->checkIPAddress($request->ipAddress(), 60, MINUTE))
+     * {
+     *      die('You submitted over 60 requests within a minute.');
+     * }
+     *
+     * @param string $ip
+     * @param int    $maxRequests
+     * @param int    $seconds
+     *
+     * @return bool
+     */
+    public function check(string $key, int $maxRequests, int $seconds);
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	/**
-	 * Returns the number of seconds until the next available token will
-	 * be released for usage.
-	 *
-	 * @return int
-	 */
-	public function getTokenTime();
 }

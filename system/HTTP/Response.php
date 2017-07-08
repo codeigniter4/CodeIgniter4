@@ -35,8 +35,9 @@
  * @since        Version 3.0.0
  * @filesource
  */
+
 use Config\App;
-use CodeIgniter\HTTP\ContentSecurityPolicy;
+use Config\ContentSecurityPolicy;
 use Config\Mimes;
 
 /**
@@ -45,7 +46,6 @@ use Config\Mimes;
  */
 class RedirectException extends \Exception
 {
-	
 }
 
 /**
@@ -63,7 +63,6 @@ class RedirectException extends \Exception
  */
 class Response extends Message implements ResponseInterface
 {
-
 	/**
 	 * HTTP status codes
 	 *
@@ -73,7 +72,8 @@ class Response extends Message implements ResponseInterface
 		// 1xx: Informational
 		100 => 'Continue',
 		101 => 'Switching Protocols',
-		102 => 'Processing', // http://www.iana.org/go/rfc2518
+		102 => 'Processing',    // http://www.iana.org/go/rfc2518
+
 		// 2xx: Success
 		200 => 'OK',
 		201 => 'Created',
@@ -82,19 +82,21 @@ class Response extends Message implements ResponseInterface
 		204 => 'No Content',
 		205 => 'Reset Content',
 		206 => 'Partial Content',
-		207 => 'Multi-Status', // http://www.iana.org/go/rfc4918
-		208 => 'Already Reported', // http://www.iana.org/go/rfc5842
-		226 => 'IM Used', // 1.1; http://www.ietf.org/rfc/rfc3229.txt
+		207 => 'Multi-Status',                  // http://www.iana.org/go/rfc4918
+		208 => 'Already Reported',              // http://www.iana.org/go/rfc5842
+		226 => 'IM Used',                       // 1.1; http://www.ietf.org/rfc/rfc3229.txt
+
 		// 3xx: Redirection
 		300 => 'Multiple Choices',
 		301 => 'Moved Permanently',
-		302 => 'Found', // Formerly 'Moved Temporarily'
-		303 => 'See Other', // 1.1
+		302 => 'Found',              // Formerly 'Moved Temporarily'
+		303 => 'See Other',          // 1.1
 		304 => 'Not Modified',
-		305 => 'Use Proxy', // 1.1
-		306 => 'Switch Proxy', // No longer used
+		305 => 'Use Proxy',          // 1.1
+		306 => 'Switch Proxy',       // No longer used
 		307 => 'Temporary Redirect', // 1.1
 		308 => 'Permanent Redirect', // 1.1; Experimental; http://www.ietf.org/rfc/rfc7238.txt
+
 		// 4xx: Client error
 		400 => 'Bad Request',
 		401 => 'Unauthorized',
@@ -114,17 +116,18 @@ class Response extends Message implements ResponseInterface
 		415 => 'Unsupported Media Type',
 		416 => 'Requested Range Not Satisfiable',
 		417 => 'Expectation Failed',
-		418 => "I'm a teapot", // April's Fools joke; http://www.ietf.org/rfc/rfc2324.txt
+		418 => "I'm a teapot",                    // April's Fools joke; http://www.ietf.org/rfc/rfc2324.txt
 		// 419 (Authentication Timeout) is a non-standard status code with unknown origin
-		421 => 'Misdirected Request', // http://www.iana.org/go/rfc7540 Section 9.1.2
-		422 => 'Unprocessable Entity', // http://www.iana.org/go/rfc4918
-		423 => 'Locked', // http://www.iana.org/go/rfc4918
-		424 => 'Failed Dependency', // http://www.iana.org/go/rfc4918
+		421 => 'Misdirected Request',             // http://www.iana.org/go/rfc7540 Section 9.1.2
+		422 => 'Unprocessable Entity',            // http://www.iana.org/go/rfc4918
+		423 => 'Locked',                          // http://www.iana.org/go/rfc4918
+		424 => 'Failed Dependency',               // http://www.iana.org/go/rfc4918
 		426 => 'Upgrade Required',
-		428 => 'Precondition Required', // 1.1; http://www.ietf.org/rfc/rfc6585.txt
-		429 => 'Too Many Requests', // 1.1; http://www.ietf.org/rfc/rfc6585.txt
+		428 => 'Precondition Required',           // 1.1; http://www.ietf.org/rfc/rfc6585.txt
+		429 => 'Too Many Requests',               // 1.1; http://www.ietf.org/rfc/rfc6585.txt
 		431 => 'Request Header Fields Too Large', // 1.1; http://www.ietf.org/rfc/rfc6585.txt
-		451 => 'Unavailable For Legal Reasons', // http://tools.ietf.org/html/rfc7725
+		451 => 'Unavailable For Legal Reasons',    // http://tools.ietf.org/html/rfc7725
+
 		// 5xx: Server error
 		500 => 'Internal Server Error',
 		501 => 'Not Implemented',
@@ -132,10 +135,10 @@ class Response extends Message implements ResponseInterface
 		503 => 'Service Unavailable',
 		504 => 'Gateway Timeout',
 		505 => 'HTTP Version Not Supported',
-		506 => 'Variant Also Negotiates', // 1.1; http://www.ietf.org/rfc/rfc2295.txt
-		507 => 'Insufficient Storage', // http://www.iana.org/go/rfc4918
-		508 => 'Loop Detected', // http://www.iana.org/go/rfc5842
-		510 => 'Not Extended', // http://www.ietf.org/rfc/rfc2774.txt
+		506 => 'Variant Also Negotiates',        // 1.1; http://www.ietf.org/rfc/rfc2295.txt
+		507 => 'Insufficient Storage',           // http://www.iana.org/go/rfc4918
+		508 => 'Loop Detected',                  // http://www.iana.org/go/rfc5842
+		510 => 'Not Extended',                   // http://www.ietf.org/rfc/rfc2774.txt
 		511 => 'Network Authentication Required' // http://www.ietf.org/rfc/rfc6585.txt
 	];
 
@@ -219,18 +222,18 @@ class Response extends Message implements ResponseInterface
 		// Are we enforcing a Content Security Policy?
 		if ($config->CSPEnabled === true)
 		{
-			$this->CSP        = new ContentSecurityPolicy(new \Config\ContentSecurityPolicy());
+			$this->CSP        = new ContentSecurityPolicy();
 			$this->CSPEnabled = true;
 		}
 
-		$this->cookiePrefix = $config->cookiePrefix;
-		$this->cookieDomain = $config->cookieDomain;
-		$this->cookiePath = $config->cookiePath;
-		$this->cookieSecure = $config->cookieSecure;
+		$this->cookiePrefix   = $config->cookiePrefix;
+		$this->cookieDomain   = $config->cookieDomain;
+		$this->cookiePath     = $config->cookiePath;
+		$this->cookieSecure   = $config->cookieSecure;
 		$this->cookieHTTPOnly = $config->cookieHTTPOnly;
 
 		// Default to an HTML Content-Type. Devs can override if needed.
-		$this->setContentType('text/html');
+        $this->setContentType('text/html');
 	}
 
 	//--------------------------------------------------------------------
@@ -277,18 +280,18 @@ class Response extends Message implements ResponseInterface
 		// Valid range?
 		if ($code < 100 || $code > 599)
 		{
-			throw new \InvalidArgumentException($code . ' is not a valid HTTP return status code');
+			throw new \InvalidArgumentException($code.' is not a valid HTTP return status code');
 		}
 
 		// Unknown and no message?
-		if ( ! array_key_exists($code, static::$statusCodes) && empty($reason))
+		if (! array_key_exists($code, static::$statusCodes) && empty($reason))
 		{
 			throw new \InvalidArgumentException('Unknown HTTP status code provided with no message');
 		}
 
 		$this->statusCode = $code;
 
-		if ( ! empty($reason))
+		if (! empty($reason))
 		{
 			$this->reason = $reason;
 		}
@@ -314,13 +317,16 @@ class Response extends Message implements ResponseInterface
 	{
 		if (empty($this->reason))
 		{
-			return ! empty($this->statusCode) ? static::$statusCodes[$this->statusCode] : '';
+			return ! empty($this->statusCode)
+				? static::$statusCodes[$this->statusCode]
+				: '';
 		}
 
 		return $this->reason;
 	}
 
 	//--------------------------------------------------------------------
+
 	//--------------------------------------------------------------------
 	// Convenience Methods
 	//--------------------------------------------------------------------
@@ -336,7 +342,7 @@ class Response extends Message implements ResponseInterface
 	{
 		$date->setTimezone(new \DateTimeZone('UTC'));
 
-		$this->setHeader('Date', $date->format('D, d M Y H:i:s') . ' GMT');
+		$this->setHeader('Date', $date->format('D, d M Y H:i:s').' GMT');
 
 		return $this;
 	}
@@ -354,19 +360,19 @@ class Response extends Message implements ResponseInterface
 	 */
 	public function setContentType(string $mime, string $charset = 'UTF-8')
 	{
-		// add charset attribute if not already there and provided as parm
-		if ((strpos($mime, 'charset=') < 1) && ! empty($charset))
+		if (! empty($charset))
 		{
-			$mime .= '; charset=' . $charset;
+			$mime .= '; charset='.$charset;
 		}
 
-		$this->removeHeader('Content-Type'); // replace existing content type
 		$this->setHeader('Content-Type', $mime);
 
 		return $this;
 	}
 
 	//--------------------------------------------------------------------
+
+
 	//--------------------------------------------------------------------
 	// Cache Control Methods
 	//
@@ -461,7 +467,7 @@ class Response extends Message implements ResponseInterface
 		if ($date instanceof \DateTime)
 		{
 			$date->setTimezone(new \DateTimeZone('UTC'));
-			$this->setHeader('Last-Modified', $date->format('D, d M Y H:i:s') . ' GMT');
+			$this->setHeader('Last-Modified', $date->format('D, d M Y H:i:s').' GMT');
 		}
 		elseif (is_string($date))
 		{
@@ -472,6 +478,8 @@ class Response extends Message implements ResponseInterface
 	}
 
 	//--------------------------------------------------------------------
+
+
 	//--------------------------------------------------------------------
 	// Output Methods
 	//--------------------------------------------------------------------
@@ -524,7 +532,7 @@ class Response extends Message implements ResponseInterface
 		// Send all of our headers
 		foreach ($this->getHeaders() as $name => $values)
 		{
-			header($name . ': ' . $this->getHeaderLine($name), false, $this->statusCode);
+			header($name.': '.$this->getHeaderLine($name), false, $this->statusCode);
 		}
 
 		return $this;
@@ -546,15 +554,15 @@ class Response extends Message implements ResponseInterface
 
 	//--------------------------------------------------------------------
 
-	/**
-	 * Perform a redirect to a new URL, in two flavors: header or location.
-	 *
-	 * @param string $uri  The URI to redirect to
-	 * @param string $method
-	 * @param int    $code The type of redirection, defaults to 302
-	 *
-	 * @throws \CodeIgniter\HTTP\RedirectException
-	 */
+    /**
+     * Perform a redirect to a new URL, in two flavors: header or location.
+     *
+     * @param string $uri  The URI to redirect to
+     * @param string $method
+     * @param int    $code The type of redirection, defaults to 302
+     *
+     * @throws \CodeIgniter\HTTP\RedirectException
+     */
 	public function redirect(string $uri, string $method = 'auto', int $code = null)
 	{
 		// IIS environment likely? Use 'refresh' for better compatibility
@@ -566,8 +574,9 @@ class Response extends Message implements ResponseInterface
 		{
 			if (isset($_SERVER['SERVER_PROTOCOL'], $_SERVER['REQUEST_METHOD']) && $_SERVER['SERVER_PROTOCOL'] === 'HTTP/1.1')
 			{
-				$code = ($_SERVER['REQUEST_METHOD'] !== 'GET') ? 303	// reference: http://en.wikipedia.org/wiki/Post/Redirect/Get
-						: 307;
+				$code = ($_SERVER['REQUEST_METHOD'] !== 'GET')
+					? 303    // reference: http://en.wikipedia.org/wiki/Post/Redirect/Get
+					: 307;
 			}
 			else
 			{
@@ -578,7 +587,7 @@ class Response extends Message implements ResponseInterface
 		switch ($method)
 		{
 			case 'refresh':
-				$this->setHeader('Refresh', '0;url=' . $uri);
+				$this->setHeader('Refresh', '0;url='.$uri);
 				break;
 			default:
 				$this->setHeader('Location', $uri);
@@ -590,7 +599,7 @@ class Response extends Message implements ResponseInterface
 		$this->sendHeaders();
 
 		// CodeIgniter will catch this exception and exit.
-		throw new RedirectException('Redirect to ' . $uri, $code);
+		throw new RedirectException('Redirect to '.$uri, $code);
 	}
 
 	//--------------------------------------------------------------------
@@ -611,9 +620,15 @@ class Response extends Message implements ResponseInterface
 	 * @param bool|false $httponly  Whether only make the cookie accessible via HTTP (no javascript)
 	 */
 	public function setCookie(
-	$name, $value = '', $expire = '', $domain = '', $path = '/', $prefix = '', $secure = false, $httponly = false
-	)
-	{
+		$name,
+		$value = '',
+		$expire = '',
+		$domain = '',
+		$path = '/',
+		$prefix = '',
+		$secure = false,
+		$httponly = false
+	) {
 		if (is_array($name))
 		{
 			// always leave 'name' in last place, as the loop will break otherwise, due to $$item
@@ -651,16 +666,16 @@ class Response extends Message implements ResponseInterface
 			$httponly = $this->cookieHTTPOnly;
 		}
 
-		if ( ! is_numeric($expire))
+		if (! is_numeric($expire))
 		{
-			$expire = time() - 86500;
+			$expire = time()-86500;
 		}
 		else
 		{
-			$expire = ($expire > 0) ? time() + $expire : 0;
+			$expire = ($expire > 0) ? time()+$expire : 0;
 		}
 
-		setcookie($prefix . $name, $value, $expire, $path, $domain, $secure, $httponly);
+		setcookie($prefix.$name, $value, $expire, $path, $domain, $secure, $httponly);
 	}
 
 	//--------------------------------------------------------------------
@@ -683,7 +698,7 @@ class Response extends Message implements ResponseInterface
 		}
 		elseif ($data === null)
 		{
-			if ( ! @is_file($filename) || ($filesize = @filesize($filename)) === false)
+			if (! @is_file($filename) || ($filesize = @filesize($filename)) === false)
 			{
 				return;
 			}
@@ -700,7 +715,7 @@ class Response extends Message implements ResponseInterface
 		// Set the default MIME type to send
 		$mime = 'application/octet-stream';
 
-		$x = explode('.', $filename);
+		$x         = explode('.', $filename);
 		$extension = end($x);
 
 		if ($setMime === true)
@@ -724,8 +739,8 @@ class Response extends Message implements ResponseInterface
 		 */
 		if (count($x) !== 1 && isset($_SERVER['HTTP_USER_AGENT']) && preg_match('/Android\s(1|2\.[01])/', $_SERVER['HTTP_USER_AGENT']))
 		{
-			$x[count($x) - 1] = strtoupper($extension);
-			$filename = implode('.', $x);
+			$x[count($x)-1] = strtoupper($extension);
+			$filename       = implode('.', $x);
 		}
 
 		if ($data === null && ($fp = @fopen($filepath, 'rb')) === false)
@@ -740,11 +755,11 @@ class Response extends Message implements ResponseInterface
 		}
 
 		// Generate the server headers
-		header('Content-Type: ' . $mime);
-		header('Content-Disposition: attachment; filename="' . $filename . '"');
+		header('Content-Type: '.$mime);
+		header('Content-Disposition: attachment; filename="'.$filename.'"');
 		header('Expires: 0');
 		header('Content-Transfer-Encoding: binary');
-		header('Content-Length: ' . $filesize);
+		header('Content-Length: '.$filesize);
 		header('Cache-Control: private, no-transform, no-store, must-revalidate');
 
 		// If we have raw data - just dump it
@@ -754,7 +769,7 @@ class Response extends Message implements ResponseInterface
 		}
 
 		// Flush 1MB chunks of data
-		while ( ! feof($fp) && ($data = fread($fp, 1048576)) !== false)
+		while (! feof($fp) && ($data = fread($fp, 1048576)) !== false)
 		{
 			echo $data;
 		}
@@ -764,4 +779,5 @@ class Response extends Message implements ResponseInterface
 	}
 
 	//--------------------------------------------------------------------
+
 }
