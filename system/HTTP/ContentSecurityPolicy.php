@@ -164,6 +164,22 @@ class ContentSecurityPolicy
 	 */
 	protected $nonces = [];
 
+	/**
+	 * An array of header info since we have
+	 * to build ourself before passing to Response.
+	 *
+	 * @var array
+	 */
+	protected $tempHeaders = [];
+
+	/**
+	 * An array of header info to build
+	 * that should only be reported.
+	 *
+	 * @var array
+	 */
+	protected $reportOnlyHeaders = [];
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -173,7 +189,7 @@ class ContentSecurityPolicy
 	 *
 	 * @param ContentSecurityPolicy $config
 	 */
-	public function __construct(Config\ContentSecurityPolicy $config)
+	public function __construct(\Config\ContentSecurityPolicy $config)
 	{
 		foreach ($config as $setting => $value)
 		{
@@ -575,6 +591,12 @@ class ContentSecurityPolicy
 	 */
 	protected function addOption($options, string $target, bool $reportOnly = false)
 	{
+		// Ensure we have an array to work with...
+		if (is_string($this->{$target}))
+		{
+			$this->{$target} = [$this->{$target}];
+		}
+
 		if (is_array($options))
 		{
 			$newOptions = [];
@@ -588,7 +610,7 @@ class ContentSecurityPolicy
 		}
 		else
 		{
-			$this->{$target}[] = [$options => $reportOnly];
+			$this->{$target}[$options] = $reportOnly;
 		}
 	}
 
@@ -619,7 +641,7 @@ class ContentSecurityPolicy
 
 				$this->styleSrc[] = 'nonce-'. $nonce;
 
-				return 'nonce='.$nonce;
+				return "nonce={$nonce}";
 			},
 			$body
 		);
@@ -633,7 +655,7 @@ class ContentSecurityPolicy
 
 					$this->scriptSrc[] = 'nonce-'. $nonce;
 
-					return 'nonce='.$nonce;
+					return "nonce={$nonce}";
 				},
 				$body
 		);
@@ -679,10 +701,35 @@ class ContentSecurityPolicy
 			// base_uri
 			if ( ! empty($this->{$property}))
 			{
-				$this->addToHeader($name, $this->{$property}, $response);
+				$this->addToHeader($name, $this->{$property});
 			}
 		}
 
+		// Compile our own header strings here since if we just
+		// append it to the response, it will be joined with
+		// commas, not semi-colons as we need.
+		if (count($this->tempHeaders))
+		{
+			$header = '';
+			foreach ($this->tempHeaders as $name => $value)
+			{
+				$header .= " {$name} {$value};";
+			}
+			$response->appendHeader('Content-Security-Policy', $header);
+		}
+
+		if (count($this->reportOnlyHeaders))
+		{
+			$header = '';
+			foreach ($this->reportOnlyHeaders as $name => $value)
+			{
+				$header .= " {$name} {$value};";
+			}
+			$response->appendHeader('Content-Security-Policy-Report-Only', $header);
+		}
+
+		$this->tempHeaders = [];
+		$this->reportOnlyHeaders = [];
 	}
 
 	//--------------------------------------------------------------------
@@ -696,13 +743,13 @@ class ContentSecurityPolicy
 	 * @param array|string|null $values
 	 * @param ResponseInterface $response
 	 */
-	protected function addToHeader(string $name, $values = null, ResponseInterface &$response)
+	protected function addToHeader(string $name, $values = null)
 	{
 		if ( empty($values))
 		{
 			// It's possible that directives like 'sandbox' will not
 			// have any values passed in, so add them to the main policy.
-			$response->appendHeader('Content-Security-Policy', $name);
+			$this->tempHeaders[$name] = null;
 			return;
 		}
 
@@ -745,12 +792,12 @@ class ContentSecurityPolicy
 
 		if (count($sources))
 		{
-			$response->appendHeader('Content-Security-Policy', $name.' '.implode(' ', $sources));
+			$this->tempHeaders[$name] = implode(' ', $sources);
 		}
 
 		if (count($reportSources))
 		{
-			$response->appendHeader('Content-Security-Policy-Report-Only', $name.' '.implode(' ', $reportSources));
+			$this->reportOnlyHeaders[$name] = implode(' ', $reportSources);
 		}
 	}
 
