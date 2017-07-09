@@ -73,7 +73,7 @@ Hard way The best way to contribute is to "clone" your fork of CodeIgniter to yo
 1. Set up Git (Windows, Mac & Linux)
 2. Go to the CodeIgniter repo
 3. Fork it
-4. Clone your CodeIgniter repo: git@github.com:<your-name>/CodeIgniter.git
+4. Clone your CodeIgniter repo: git@github.com:\<your-name>/CodeIgniter.git
 5. Checkout the "develop" branch At this point you are ready to start making changes. 
 6. Fix existing bugs on the Issue tracker after taking a look to see nobody else is working on them.
 7. Commit the files
