@@ -105,7 +105,7 @@ class Encryption
 	 *
 	 * @var	string
 	 */
-	protected $cipher = 'aes-128';
+	protected $cipher = 'aes-256';
 
 	/**
 	 * Cipher mode
@@ -158,6 +158,7 @@ class Encryption
 		if ( ! $this->handlers['openssl'])
 			throw new EncryptionException('Unable to find an available encryption handler.');
 
+		$this->initialize($params);		
 		$this->logger->info('Encryption class Initialized');
 	}
 

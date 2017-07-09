@@ -16,7 +16,7 @@ class EncryptionTest extends CIUnitTestCase
 	/**
 	 * __construct test
 	 *
-	 * Covers behavior with config encryptionKey set or not
+	 * Covers behavior with config encryption key set or not
 	 */
 	public function testConstructor()
 	{
@@ -185,8 +185,7 @@ class EncryptionTest extends CIUnitTestCase
 	 * initialize(), encrypt(), decrypt() test
 	 *
 	 * Testing the three methods separately is not realistic as they are
-	 * designed to work together. A more thorough test for initialize()
-	 * though is the OpenSSL/MCrypt compatibility test.
+	 * designed to work together. 
 	 *
 	 * @depends	test_hkdf
 	 * @depends	test__get_params
@@ -243,96 +242,96 @@ class EncryptionTest extends CIUnitTestCase
 
 	// --------------------------------------------------------------------
 
-	/**
-	 * Make sure all our supported drivers handle all the portable cipher/mode combinations
-	 */
-	public function testPortability()
-	{
-		$message = 'This is a message encrypted via MCrypt and decrypted via OpenSSL, or vice-versa.';
-
-		// Format is: <Cipher name>, <Cipher mode>, <Key size>
-		$portable = [
-			['aes-128', 'cbc', 16],
-			['aes-128', 'cfb', 16],
-			['aes-128', 'cfb8', 16],
-			['aes-128', 'ofb', 16],
-			['aes-128', 'ecb', 16],
-			['aes-128', 'ctr', 16],
-			['aes-192', 'cbc', 24],
-			['aes-192', 'cfb', 24],
-			['aes-192', 'cfb8', 24],
-			['aes-192', 'ofb', 24],
-			['aes-192', 'ecb', 24],
-			['aes-192', 'ctr', 24],
-			['aes-256', 'cbc', 32],
-			['aes-256', 'cfb', 32],
-			['aes-256', 'cfb8', 32],
-			['aes-256', 'ofb', 32],
-			['aes-256', 'ecb', 32],
-			['aes-256', 'ctr', 32],
-			['des', 'cbc', 7],
-			['des', 'cfb', 7],
-			['des', 'cfb8', 7],
-			['des', 'ofb', 7],
-			['des', 'ecb', 7],
-			['tripledes', 'cbc', 7],
-			['tripledes', 'cfb', 7],
-			['tripledes', 'cfb8', 7],
-			['tripledes', 'ofb', 7],
-			['tripledes', 'cbc', 14],
-			['tripledes', 'cfb', 14],
-			['tripledes', 'cfb8', 14],
-			['tripledes', 'ofb', 14],
-			['tripledes', 'cbc', 21],
-			['tripledes', 'cfb', 21],
-			['tripledes', 'cfb8', 21],
-			['tripledes', 'ofb', 21],
-			['blowfish', 'cbc', 16],
-			['blowfish', 'cfb', 16],
-			['blowfish', 'ofb', 16],
-			['blowfish', 'ecb', 16],
-			['blowfish', 'cbc', 56],
-			['blowfish', 'cfb', 56],
-			['blowfish', 'ofb', 56],
-			['blowfish', 'ecb', 56],
-			['cast5', 'cbc', 11],
-			['cast5', 'cfb', 11],
-			['cast5', 'ofb', 11],
-			['cast5', 'ecb', 11],
-			['cast5', 'cbc', 16],
-			['cast5', 'cfb', 16],
-			['cast5', 'ofb', 16],
-			['cast5', 'ecb', 16],
-			['rc4', 'stream', 5],
-			['rc4', 'stream', 8],
-			['rc4', 'stream', 16],
-			['rc4', 'stream', 32],
-			['rc4', 'stream', 64],
-			['rc4', 'stream', 128],
-			['rc4', 'stream', 256]
-		];
-		$handler_index = ['openssl', 'libsodium'];
-
-		foreach ($portable as &$test)
-		{
-			// Add some randomness to the selected handler
-			$handler = mt_rand(0, sizeof($handler_index) - 1);
-			$params = [
-				'driver' => $handler_index[$handler],
-				'cipher' => $test[0],
-				'mode' => $test[1],
-				'key' => openssl_random_pseudo_bytes($test[2])
-			];
-
-			$encrypter = $this->encryption->initialize($params);
-			$ciphertext = $encrypter->encrypt($message);
-
-			$handler = mt_rand(0, sizeof($handler_index) - 1);
-			$params['driver'] = $handler_index[$handler];
-
-			$encrypter = $this->encryption->initialize($params);
-			$this->assertEquals($message, $encrypter->decrypt($ciphertext));
-		}
-	}
+//	/**
+//	 * Make sure all our supported drivers handle all the portable cipher/mode combinations
+//	 */
+//	public function testPortability()
+//	{
+//		$message = 'This is a message encrypted via MCrypt and decrypted via OpenSSL, or vice-versa.';
+//
+//		// Format is: <Cipher name>, <Cipher mode>, <Key size>
+//		$portable = [
+//			['aes-128', 'cbc', 16],
+//			['aes-128', 'cfb', 16],
+//			['aes-128', 'cfb8', 16],
+//			['aes-128', 'ofb', 16],
+//			['aes-128', 'ecb', 16],
+//			['aes-128', 'ctr', 16],
+//			['aes-192', 'cbc', 24],
+//			['aes-192', 'cfb', 24],
+//			['aes-192', 'cfb8', 24],
+//			['aes-192', 'ofb', 24],
+//			['aes-192', 'ecb', 24],
+//			['aes-192', 'ctr', 24],
+//			['aes-256', 'cbc', 32],
+//			['aes-256', 'cfb', 32],
+//			['aes-256', 'cfb8', 32],
+//			['aes-256', 'ofb', 32],
+//			['aes-256', 'ecb', 32],
+//			['aes-256', 'ctr', 32],
+//			['des', 'cbc', 7],
+//			['des', 'cfb', 7],
+//			['des', 'cfb8', 7],
+//			['des', 'ofb', 7],
+//			['des', 'ecb', 7],
+//			['tripledes', 'cbc', 7],
+//			['tripledes', 'cfb', 7],
+//			['tripledes', 'cfb8', 7],
+//			['tripledes', 'ofb', 7],
+//			['tripledes', 'cbc', 14],
+//			['tripledes', 'cfb', 14],
+//			['tripledes', 'cfb8', 14],
+//			['tripledes', 'ofb', 14],
+//			['tripledes', 'cbc', 21],
+//			['tripledes', 'cfb', 21],
+//			['tripledes', 'cfb8', 21],
+//			['tripledes', 'ofb', 21],
+//			['blowfish', 'cbc', 16],
+//			['blowfish', 'cfb', 16],
+//			['blowfish', 'ofb', 16],
+//			['blowfish', 'ecb', 16],
+//			['blowfish', 'cbc', 56],
+//			['blowfish', 'cfb', 56],
+//			['blowfish', 'ofb', 56],
+//			['blowfish', 'ecb', 56],
+//			['cast5', 'cbc', 11],
+//			['cast5', 'cfb', 11],
+//			['cast5', 'ofb', 11],
+//			['cast5', 'ecb', 11],
+//			['cast5', 'cbc', 16],
+//			['cast5', 'cfb', 16],
+//			['cast5', 'ofb', 16],
+//			['cast5', 'ecb', 16],
+//			['rc4', 'stream', 5],
+//			['rc4', 'stream', 8],
+//			['rc4', 'stream', 16],
+//			['rc4', 'stream', 32],
+//			['rc4', 'stream', 64],
+//			['rc4', 'stream', 128],
+//			['rc4', 'stream', 256]
+//		];
+//		$handler_index = ['openssl', 'libsodium'];
+//
+//		foreach ($portable as &$test)
+//		{
+//			// Add some randomness to the selected handler
+//			$handler = mt_rand(0, sizeof($handler_index) - 1);
+//			$params = [
+//				'driver' => $handler_index[$handler],
+//				'cipher' => $test[0],
+//				'mode' => $test[1],
+//				'key' => openssl_random_pseudo_bytes($test[2])
+//			];
+//
+//			$encrypter = $this->encryption->initialize($params);
+//			$ciphertext = $encrypter->encrypt($message);
+//
+//			$handler = mt_rand(0, sizeof($handler_index) - 1);
+//			$params['driver'] = $handler_index[$handler];
+//
+//			$encrypter = $this->encryption->initialize($params);
+//			$this->assertEquals($message, $encrypter->decrypt($ciphertext));
+//		}
+//	}
 
 }

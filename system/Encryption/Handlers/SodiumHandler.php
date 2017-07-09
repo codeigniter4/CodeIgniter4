@@ -35,21 +35,10 @@
  * @since	Version 3.0.0
  * @filesource
  */
-
 use \Sodium;
 
 class SodiumHandler extends BaseHandler
 {
-
-	/**
-	 * List of available modes
-	 *
-	 * @var	array
-	 */
-	protected $modes = [
-		'gcm' => 'gcm'
-	];
-
 	// --------------------------------------------------------------------
 
 	/**
@@ -64,24 +53,16 @@ class SodiumHandler extends BaseHandler
 	{
 		parent::__construct();
 
-		if ( ! empty($params['cipher']))
-		{
-			$params['cipher'] = strtolower($params['cipher']);
-			$this->cipherAlias($params['cipher']);
-			$this->cipher = $params['cipher'];
-		}
+		$this->cipher = 'N/A';
+		$this->mode = 'N/A';
 
-		if ( ! empty($params['mode']))
+		if (sodium_init())
 		{
-			$params['mode'] = strtolower($params['mode']);
-			if ( ! isset($this->modes[$params['mode']]))
-			{
-				$this->logger->error('Encryption: Sodium mode ' . strtoupper($params['mode']) . ' is not available.');
-			}
-			else
-			{
-				$this->mode = $this->modes[$params['mode']];
-			}
+			$this->logger->info('Encryption: Sodium initialized.');
+		}
+		else
+		{
+			$this->logger->error('Encryption: Unable to initialize Sodium.');
 		}
 	}
 
@@ -94,12 +75,9 @@ class SodiumHandler extends BaseHandler
 	 */
 	public function encrypt($data, array $params = null)
 	{
-		if (empty($params['cipher']))
-		{
-			return false;
-		}
+		// allow key to be over-ridden
+		$key = empty($params['key']) ? $this->key : $params['key'];
 
-		$key = $params['key'];
 		$nonce = randombytes_buf(CRYPTO_SECRETBOX_NONCEBYTES);
 
 		$ciphertext = crypto_secretbox($data, $nonce, $key);
@@ -117,22 +95,27 @@ class SodiumHandler extends BaseHandler
 	/**
 	 * Decrypt
 	 *
-	 * @param	string	$data	Encrypted data
+	 * @param	string	$data	Encrypted data, with nonce pre-fixed
 	 * @param	array	$params	Input parameters
 	 * @return	string
 	 */
 	public function decrypt($data, array $params = null)
 	{
+		// allow key to be over-ridden
+		$key = empty($params['key']) ? $this->key : $params['key'];
 
-		$key = $params['key'];
+		// split the data into nonce & ciphertext
 		$nonce = self::substr($data, 0, CRYPTO_SECRETBOX_NONCEBYTES);
 		$data = self::substr($data, CRYPTO_SECRETBOX_NONCEBYTES);
 
 		$plaintext = crypto_secretbox_open($data, $nonce, $key);
+
 		if ($plaintext === false)
 		{
 			throw new EncryptionException("Bad ciphertext");
 		}
+
+		return $plaintext;
 	}
 
 	// --------------------------------------------------------------------
@@ -147,7 +130,7 @@ class SodiumHandler extends BaseHandler
 	 */
 	protected function cipherAlias(&$cipher)
 	{
-		$cipher = 'AES-256';
+		$cipher = 'N/A';
 	}
 
 }

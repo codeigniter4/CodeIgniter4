@@ -45,7 +45,7 @@ By default, the Encryption Library will use the OpenSSL handler, with
 the AES-256 cipher in CBC mode, 
 using your configured *key* and SHA512 HMAC authentication.
 
-AES-128 is chosen both because it is proven to be strong and
+AES-256 is chosen both because it is proven to be strong and
 because of its wide availability across different cryptographic
 software and programming languages' APIs.
 
@@ -116,87 +116,37 @@ a more friendly manner. For example::
 
 .. _ciphers-and-modes:
 
-Supported encryption ciphers and modes
-======================================
+Encryption ciphers and modes
+============================
 
 .. note:: The terms 'cipher' and 'encryption algorithm' are interchangeable.
 
-Portable ciphers
-----------------
-
 Different encryption drivers support different sets of encryption algorithms and often implement
-them in different ways. Our Encryption service is designed to use them in
-a portable fashion - interchangeably, for the ciphers supported by all drivers.
+them in different ways. Some algorithms expect specific key lengths, while others support
+variable length keys. Each algorithm usually supports several different encryption modes.
 
-It is also implemented in a way that aims to match the standard
-implementations in other programming languages and libraries.
+Here's a list of common ciphers:
 
-Here's a list of the so called "portable" ciphers, where
-"CodeIgniter name" is the string value that you'd have to pass to the
-Encryption manager to use that cipher:
-
-======================== ================== ============================ ===============================
-Cipher name              CodeIgniter name   Key lengths (bits / bytes)   Supported modes
-======================== ================== ============================ ===============================
-AES-128 / Rijndael-128   aes-128            128 / 16                     CBC, CTR, CFB, CFB8, OFB, ECB
-AES-192                  aes-192            192 / 24                     CBC, CTR, CFB, CFB8, OFB, ECB
-AES-256                  aes-256            256 / 32                     CBC, CTR, CFB, CFB8, OFB, ECB
-Blowfish                 blowfish           128-448 / 16-56              CBC, CFB, OFB, ECB
-CAST5 / CAST-128         cast5              88-128 / 11-16               CBC, CFB, OFB, ECB
-DES                      des                56 / 7                       CBC, CFB, CFB8, OFB, ECB
-RC4 / ARCFour            rc4                40-2048 / 5-256              Stream
-TripleDES                tripledes          56 / 7, 112 / 14, 168 / 21   CBC, CFB, CFB8, OFB
+======================== ============================ ===============================
+Cipher name              Key lengths (bits / bytes)   Supported modes
+======================== ============================ ===============================
+AES-128 / Rijndael-128   128 / 16                     CBC, CTR, CFB, CFB8, OFB, ECB
+AES-192                  192 / 24                     CBC, CTR, CFB, CFB8, OFB, ECB
+AES-256                  256 / 32                     CBC, CTR, CFB, CFB8, OFB, ECB
+Blowfish                 128-448 / 16-56              CBC, CFB, OFB, ECB
+CAST5 / CAST-128         88-128 / 11-16               CBC, CFB, OFB, ECB
+DES                      56 / 7                       CBC, CFB, CFB8, OFB, ECB
+RC4 / ARCFour            40-2048 / 5-256              Stream
+TripleDES                56 / 7, 112 / 14, 168 / 21   CBC, CFB, CFB8, OFB
 ======================== ================== ============================ ===============================
 
-.. note:: In case it isn't clear from the above table, Blowfish, CAST5
-	and RC4 support variable length keys. That is, any number in the
-	shown ranges is valid, although in bit terms that only happens
-	in 8-bit increments.
+.. note:: Blowfish, CAST5 and RC4 support variable length keys, 
+        although in bit terms that only happens in 8-bit increments.
 
         Even though CAST5 supports key lengths lower than 128 bits
 	(16 bytes), in fact they will just be zero-padded to the
 	maximum length, as specified in `RFC 2144
 	<http://tools.ietf.org/rfc/rfc2144.txt>`_.
-
-
-OpenSSL Notes
--------------
-
-As noted above, the encryption drivers support different sets of encryption
-ciphers. We do recommend that use driver-specific settings.
-
-For reference, here's a list of most of them:
-
-
-============== ========= ============================== =========================================
-Cipher name    Driver    Key lengths (bits / bytes)     Supported modes
-============== ========= ============================== =========================================
-AES-128        OpenSSL   128 / 16                       CBC, CTR, CFB, CFB8, OFB, ECB, XTS
-AES-192        OpenSSL   192 / 24                       CBC, CTR, CFB, CFB8, OFB, ECB, XTS
-AES-256        OpenSSL   256 / 32                       CBC, CTR, CFB, CFB8, OFB, ECB, XTS
-Camellia-128   OpenSSL   128 / 16                       CBC, CFB, CFB8, OFB, ECB
-Camellia-192   OpenSSL   192 / 24                       CBC, CFB, CFB8, OFB, ECB
-Camellia-256   OpenSSL   256 / 32                       CBC, CFB, CFB8, OFB, ECB
-RC2            OpenSSL   8-1024 / 1-128                 CBC, CFB, OFB, ECB
-Seed           OpenSSL   128 / 16                       CBC, CFB, OFB, ECB
-============== ========= ============================== =========================================
-
-.. note:: If you wish to use one of those ciphers, you'd have to pass
-	its name in lower-case to the Encryption library.
-
-        You've probably noticed that all AES cipers (and Rijndael-128)
-	are also listed in the portable ciphers list. This is because
-	drivers support different modes for these ciphers. Also, it is
-	important to note that AES-128 and Rijndael-128 are actually
-	the same cipher, but **only** when used with a 128-bit key.
-
-        CAST-128 / CAST-5 is also listed in both the portable and
-	driver-specific ciphers list. This is because OpenSSL's
-	implementation doesn't appear to be working correctly with
-	key sizes of 80 bits and lower.
-
-        RC2 is supported by multiple drivers, but the implementation may differ,
-        so it is not portable. 
 
 .. _encryption-modes:
 
@@ -204,39 +154,70 @@ Encryption modes
 ----------------
 
 Different modes of encryption have different characteristics and serve
-for different purposes. Some are stronger than others, some are faster
+different purposes. Some are stronger than others, some are faster
 and some offer extra features.
-We are not going in depth into that here, we'll leave that to the
-cryptography experts. The table below is to provide brief informational
-reference to our more experienced users. If you are a beginner, just
-stick to the CBC mode - it is widely accepted as strong and secure for
-general purposes.
+If you are unsure which to use, stick to the CBC mode - it is widely accepted 
+as strong and secure for general purposes.
 
-=========== ================== ================= ===================================================================================================================================================
-Mode name   CodeIgniter name   Driver support    Additional info
-=========== ================== ================= ===================================================================================================================================================
-CBC         cbc                OpenSSL           A safe default choice
-CFB         cfb                OpenSSL           N/A
-CFB8        cfb8               OpenSSL           Same as CFB, but operates in 8-bit mode (not recommended).
-CTR         ctr                OpenSSL           Considered as theoretically better than CBC, but not as widely available
-ECB         ecb                OpenSSL           Ignores IV (not recommended).
-OFB         ofb                OpenSSL           N/A
-XTS         xts                OpenSSL           Usually used for encrypting random access data such as RAM or hard-disk storage.
-Stream      stream             OpenSSL           This is not actually a mode, it just says that a stream cipher is being used. Required because of the general cipher+mode initialization process.
-=========== ================== ================= ===================================================================================================================================================
+=========== ===================================================================================================================================================
+Mode name   Additional info
+=========== ===================================================================================================================================================
+CBC         A safe default choice
+CFB         N/A
+CFB8        Same as CFB, but operates in 8-bit mode (not recommended).
+CTR         Considered as theoretically better than CBC, but not as widely available
+ECB         Ignores IV (not recommended).
+OFB         N/A
+XTS         Usually used for encrypting random access data such as RAM or hard-disk storage.
+Stream      This is not actually a mode, it just says that a stream cipher is being used. Required because of the general cipher+mode initialization process.
+=========== ===================================================================================================================================================
+
+OpenSSL Notes
+-------------
+
+As noted above, the encryption drivers support different sets of encryption
+ciphers. We do recommend that you use driver-specific settings.
+
+The following are supported by OpenSSL:
+
+============== ============================== =========================================
+Cipher name    Key lengths (bits / bytes)     Supported modes
+============== ============================== =========================================
+AES-128        128 / 16                       CBC, CTR, CFB, CFB8, OFB, ECB, XTS
+AES-192        192 / 24                       CBC, CTR, CFB, CFB8, OFB, ECB, XTS
+AES-256        256 / 32                       CBC, CTR, CFB, CFB8, OFB, ECB, XTS
+Blowfish       128-448 / 16-56                CBC, CFB, OFB, ECB
+Camellia-128   128 / 16                       CBC, CFB, CFB8, OFB, ECB
+Camellia-192   192 / 24                       CBC, CFB, CFB8, OFB, ECB
+Camellia-256   256 / 32                       CBC, CFB, CFB8, OFB, ECB
+CAST5          88-128 / 11-16                 CBC, CFB, OFB, ECB
+DES            56 / 7                         CBC, CFB, CFB8, OFB, ECB
+RC2            8-1024 / 1-128                 CBC, CFB, OFB, ECB
+RC4            40-2048 / 5-256                Stream
+TripleDES      56 / 7, 112 / 14, 168 / 21     CBC, CFB, CFB8, OFB
+Seed           128 / 16                       CBC, CFB, OFB, ECB
+============== ============================== =========================================
+
 
 Sodium Notes
 ------------
 
+Sodium is a modern, easy-to-use software library for encryption, decryption, signatures, password hashing and more.
 
+Sodium automatically uses AES-256 if it detects hardware acceleration/
+Otherwise, it will use the ChaCha20 cipher.
+
+You will need *libsodium* installed, as well as the PECL *Libsodium extenstion*, 
+in order to use this handler.
 
 Message Length
 ==============
 
-It's probably important for you to know that an encrypted string is usually
+An encrypted string is usually
 longer than the original, plain-text string (depending on the cipher).
 
-This is influenced by the cipher algorithm itself, the IV prepended to the
+This is influenced by the cipher algorithm itself, the initialization vector (IV) 
+prepended to the
 cipher-text and the HMAC authentication message that is also prepended.
 Furthermore, the encrypted message is also Base64-encoded so that it is safe
 for storage and transmission, regardless of a possible character set in use.
@@ -253,7 +234,7 @@ The Encryption library is designed to
 use repeatedly the same driver, encryption cipher, mode and key.
 
 As noted in the "Default behavior" section above, this means using an
-auto-detected driver (OpenSSL has a higher priority), the AES-128 ciper
+auto-detected driver (OpenSSL has a higher priority), the AES-256 ciper
 in CBC mode, and your ``$key`` value.
 
 Encryption configuration settings are normally set in 
@@ -262,7 +243,7 @@ application/config/Encryption.php.
 ======== ===============================================
 Option   Possible values
 ======== ===============================================
-driver   Preferred handler: 'openssl'
+driver   Preferred handler: 'OpenSSL'
 cipher   Cipher name (see :ref:`ciphers-and-modes`)
 mode     Encryption mode (see :ref:`encryption-modes`)
 key      Encryption key 
@@ -345,48 +326,6 @@ You don't need to worry about it.
 	configuration, you should always check the return value
 	of ``decrypt()`` in production code.
 
-How it works
-------------
-
-Here's what happens under the hood:
-
-- ``$encrypter->encrypt($plaintext)``
-
-  #. Derive an encryption key and a HMAC key from your configured
-     *encryption_key* via HKDF, using the SHA-512 digest algorithm.
-
-  #. Generate a random initialization vector (IV).
-
-  #. Encrypt the data via AES-128 in CBC mode (or another previously
-     configured cipher and mode), using the above-mentioned derived
-     encryption key and IV.
-
-  #. Prepend said IV to the resulting cipher-text.
-
-  #. Base64-encode the resulting string, so that it can be safely
-     stored or transferred without worrying about character sets.
-
-  #. Create a SHA-512 HMAC authentication message using the derived
-     HMAC key to ensure data integrity and prepend it to the Base64
-     string.
-
-- ``$encrypter->decrypt($ciphertext)``
-
-  #. Derive an encryption key and a HMAC key from your configured
-     *encryption_key* via HKDF, using the SHA-512 digest algorithm.
-     Because your configured *encryption_key* is the same, this
-     will produce the same result as in the ``encrypt()`` method
-     above - otherwise you won't be able to decrypt it.
-
-  #. Check if the string is long enough, separate the HMAC out of
-     it and validate if it is correct (this is done in a way that
-     prevents timing attacks against it). Return FALSE if either of
-     the checks fails.
-
-  #. Base64-decode the string.
-
-  #. Separate the IV out of the cipher-text and decrypt the said
-     cipher-text using that IV and the derived encryption key.
 
 .. _custom-parameters:
 
