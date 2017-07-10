@@ -314,7 +314,7 @@ class Model
 			$row = $row->getFirstRow($this->tempReturnType);
 		}
 
-		$row = $this->trigger('beforeUpdate', ['id' => $id, 'data' => $row]);
+		$row = $this->trigger('afterFind', ['id' => $id, 'data' => $row]);
 
 		$this->tempReturnType     = $this->returnType;
 		$this->tempUseSoftDeletes = $this->useSoftDeletes;
@@ -1281,7 +1281,17 @@ class Model
 			return $data['data'];
 		}
 
-		return $this->{$event}($data);
+		foreach ($this->{$even} as $callback)
+		{
+			if (! method_exists($this, $callback))
+			{
+				throw new \BadMethodCallException(lang('Database.invalidEvent', [$callback]));
+			}
+
+			$data = $this->{$callback}($data);
+		}
+
+		return $data;
 	}
 
 	//--------------------------------------------------------------------
