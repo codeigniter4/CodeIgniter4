@@ -351,7 +351,7 @@ class Model
 		$this->tempReturnType     = $this->returnType;
 		$this->tempUseSoftDeletes = $this->useSoftDeletes;
 
-		return $rows;
+		return $rows['data'];
 	}
 
 	//--------------------------------------------------------------------
@@ -701,7 +701,7 @@ class Model
 
 		// Must use the set() method to ensure objects get converted to arrays
 		$result = $this->builder()
-		               ->set($data)
+		               ->set($data['data'])
 		               ->insert();
 
 		$this->trigger('afterInsert', ['data' => $originalData, 'result' => $result]);
@@ -780,7 +780,7 @@ class Model
 		// Must use the set() method to ensure objects get converted to arrays
 		$result = $this->builder()
 		               ->where($this->primaryKey, $id)
-		               ->set($data)
+		               ->set($data['data'])
 		               ->update();
 
 		$this->trigger('afterUpdate', ['id' => $id, 'data' => $originalData, 'result' => $result]);
@@ -1278,7 +1278,7 @@ class Model
 		// Ensure it's a valid event
 		if (! isset($this->{$event}) || empty($this->{$event}))
 		{
-			return $data['data'];
+			return $data;
 		}
 
 		foreach ($this->{$even} as $callback)
