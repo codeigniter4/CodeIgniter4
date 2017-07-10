@@ -1346,14 +1346,14 @@ class Model
 			$result = call_user_func_array([$this->builder(), $name], $params);
 		}
 
-		// Don't return the builder object, since
-		// that will interrupt the usability flow
+		// Don't return the builder object unless specifically requested
+		//, since that will interrupt the usability flow
 		// and break intermingling of model and builder methods.
-		if (empty($result))
+		if ($name !== 'builder' && empty($result))
 		{
 			return $result;
 		}
-		if (! $result instanceof BaseBuilder)
+		if ($name !== 'builder' && ! $result instanceof BaseBuilder)
 		{
 			return $result;
 		}
