@@ -164,6 +164,16 @@ value is false, meaning that data will always attempt to be validated. This is
 primarily used by the ``skipValidation()`` method, but may be changed to ``true`` so
 this model will never validate.
 
+**$beforeInsert**
+**$afterInsert**
+**$beforeUpdate**
+**$afterUpdate**
+**afterFind**
+**afterDelete**
+
+These arrays allow you to specify callback methods that will be ran on the data at the
+time specified in the property name.
+
 Working With Data
 =================
 
@@ -565,3 +575,75 @@ If you ever need to decode the hash, you may do so with the **decodeID()** metho
 
 .. note:: While the name is "hashed id", this is not actually a hashed variable, but that term has become
 		common in many circles to represent the encoding of an ID into a short, unique, identifier.
+
+Model Events
+============
+
+There are several points within the model's execution that you can specify multiple callback methods to run.
+These methods can be used to normalize data, hash passwords, save related entities, and much more. The following
+points in the model's execution can be affected, each through a class property: **$beforeInsert**, **$afterInsert**,
+**$beforeUpdate**, **afterUpdate**, **afterFind**, and **afterDelete**.
+
+Defining Callbacks
+------------------
+
+You specify the callbacks by first creating a new class method in your model to use. This class will always
+receive a $data array as its only parameter. The exact contents of the $data array will vary between events, but
+will always contain a key named **data** that contains the primary data passed to original method. In the case
+of the insert* or update* methods, that will be the key/value pairs that are being inserted into the database. The
+main array will also contain the other values passed to the method, and be detailed later. The callback method
+must return the original $data array so other callbacks have the full information.
+
+::
+
+	protected function hashPassword(array $data)
+	{
+		if (! isset($data['data']['password']) return $data;
+
+		$data['data']['password_hash'] = password_hash($data['data']['password'], PASSWORD_DEFAULT);
+		unse($data['data']['password'];
+
+		return $data;
+	}
+
+Specifying Callbacks To Run
+---------------------------
+
+You specify when to run the callbacks by adding the method name to the appropriate class property (beforeInsert, afterUpdate,
+etc). Multiple callbacks can be added to a single event and they will be processed one after the other. You can
+use the same callback in multiple events::
+
+	protected $beforeInsert = ['hashPassword'];
+	protected $beforeUpdate = ['hashPassword'];
+
+Event Parameters
+----------------
+
+Since the exact data passed to each callback varies a bit, here are the details on what is in the $data parameter
+passed to each event:
+
+================ =========================================================================================================
+Event            $data contents
+================ =========================================================================================================
+beforeInsert	  **data** = the key/value pairs that are being inserted. If an object or Entity class is passed to the insert
+				  method, it is first converted to an array.
+afterInsert		  **data** = the original key/value pairs being inserted. **result** = the results of the insert() method
+				  used through the Query Builder.
+beforeUpdate	  **id** = the primary key of the row being updated. **data** = the key/value pairs that are being
+				  inserted. If an object or Entity class is passed to the insert method, it is first converted to an array.
+afterUpdate		  **id** = the primary key of the row being updated. **data** = the original key/value pairs being updated.
+				  **result** = the results of the update() method used through the Query Builder.
+afterFind		  Varies by find* method. See the following:
+- find()		  **id** = the primary key of the row being searched for. **data** = The resulting row of data, or null if
+				  no result found.
+- findWhere()	  **data** = the resulting rows of data, or null if no result found.
+- findAll()		  **data** = the resulting rows of data, or null if no result found. **limit** = the number of rows to find.
+				  **offset** = the number of rows to skip during the search.
+- first()		  **data** = the resulting row found during the search, or null if none found.
+afterDelete		  Varies by delete* method. See the following:
+- delete()		  **id** = primary key of row being deleted. **purge** boolean whether soft-delete rows should be
+				  hard deleted. **result** = the result of the delete() call on the Query Builder. **data** = unused.
+- deleteWhere()	  **key**/**value** = the key/value pair used to search for rows to delete. **purge** boolean whether
+				  soft-delete rows should be hard deleted. **result** = the result of the delete() call on the Query
+				  Builder. **data** = unused.
+================ =========================================================================================================
