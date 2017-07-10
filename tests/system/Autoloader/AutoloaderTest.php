@@ -1,6 +1,7 @@
 <?php namespace CodeIgniter\Autoloader;
 
 use Config\Autoload;
+use org\bovigo\vfs\vfsStream;
 
 //--------------------------------------------------------------------
 
@@ -16,12 +17,12 @@ class AutoloaderTest extends \CIUnitTestCase
 		$config = new Autoload();
 
 		$config->classmap = [
-			'FirstClass'        => '/app/dir/First.php',
-			'Name\Spaced\Class' => '/app/namespace/Class.php',
+			'FirstClass'		 => '/app/dir/First.php',
+			'Name\Spaced\Class'	 => '/app/namespace/Class.php',
 		];
 		$config->psr4 = [
-			'App\Controllers' => '/application/Controllers',
-			'App\Libraries'   => '/application/somewhere',
+			'App\Controllers'	 => '/application/Controllers',
+			'App\Libraries'		 => '/application/somewhere',
 		];
 
 		$this->loader = new MockAutoloader();
@@ -32,37 +33,40 @@ class AutoloaderTest extends \CIUnitTestCase
 			'/application/somewhere/Classname.php',
 			'/app/dir/First.php',
 			'/app/namespace/Class.php',
-		    '/my/app/Class.php',
-		    APPPATH.'Libraries/someLibrary.php',
-		    APPPATH.'Models/someModel.php',
+			'/my/app/Class.php',
+			APPPATH . 'Libraries/someLibrary.php',
+			APPPATH . 'Models/someModel.php',
 		]);
 	}
 
 	//--------------------------------------------------------------------
-
 	//--------------------------------------------------------------------
 	// PSR4 Namespacing
 	//--------------------------------------------------------------------
 
-	public function testServiceAutoLoaderFromShareInstances() {
+	public function testServiceAutoLoaderFromShareInstances()
+	{
 
 		$auto_loader = \CodeIgniter\Config\Services::autoloader();
 		// $auto_loader->register();
-		$actual   = $auto_loader->loadClass('App\Controllers\Checks');
-		$expected = APPPATH.'Controllers/Checks.php';
+		// look for Home controller, as that should be in base repo
+		$actual = $auto_loader->loadClass('App\Controllers\Home');
+		$expected = APPPATH . 'Controllers/Home.php';
 		$this->assertSame($expected, $actual);
 	}
 
 	//--------------------------------------------------------------------
 
-	public function testServiceAutoLoader() {
+	public function testServiceAutoLoader()
+	{
 
 		$getShared = false;
 		$auto_loader = \CodeIgniter\Config\Services::autoloader($getShared);
 		$auto_loader->initialize(new Autoload());
 		$auto_loader->register();
-		$actual   = $auto_loader->loadClass('App\Controllers\Checks');
-		$expected = APPPATH.'Controllers/Checks.php';
+		// look for Home controller, as that should be in base repo
+		$actual = $auto_loader->loadClass('App\Controllers\Home');
+		$expected = APPPATH . 'Controllers/Home.php';
 		$this->assertSame($expected, $actual);
 	}
 
@@ -70,11 +74,11 @@ class AutoloaderTest extends \CIUnitTestCase
 
 	public function testExistingFile()
 	{
-		$actual   = $this->loader->loadClass('App\Controllers\Classname');
+		$actual = $this->loader->loadClass('App\Controllers\Classname');
 		$expected = '/application/Controllers/Classname.php';
 		$this->assertSame($expected, $actual);
 
-		$actual   = $this->loader->loadClass('App\Libraries\Classname');
+		$actual = $this->loader->loadClass('App\Libraries\Classname');
 		$expected = '/application/somewhere/Classname.php';
 		$this->assertSame($expected, $actual);
 	}
@@ -83,7 +87,7 @@ class AutoloaderTest extends \CIUnitTestCase
 
 	public function testMatchesWithPreceedingSlash()
 	{
-		$actual   = $this->loader->loadClass('\App\Controllers\Classname');
+		$actual = $this->loader->loadClass('\App\Controllers\Classname');
 		$expected = '/application/Controllers/Classname.php';
 		$this->assertSame($expected, $actual);
 	}
@@ -92,7 +96,7 @@ class AutoloaderTest extends \CIUnitTestCase
 
 	public function testMatchesWithFileExtension()
 	{
-		$actual   = $this->loader->loadClass('\App\Controllers\Classname.php');
+		$actual = $this->loader->loadClass('\App\Controllers\Classname.php');
 		$expected = '/application/Controllers/Classname.php';
 		$this->assertSame($expected, $actual);
 	}
@@ -105,7 +109,6 @@ class AutoloaderTest extends \CIUnitTestCase
 	}
 
 	//--------------------------------------------------------------------
-
 	//--------------------------------------------------------------------
 
 	/**
@@ -159,24 +162,32 @@ class AutoloaderTest extends \CIUnitTestCase
 		$this->assertSame('/application/Controllers/Classname.php', $this->loader->loadClass('App\Controllers\Classname'));
 	}
 
-        //--------------------------------------------------------------------
-        
-        public function testRemoveNamespace()
-        {
-                $this->loader->addNamespace('My\App', '/my/app');
-                $this->assertSame('/my/app/Class.php',$this->loader->loadClass('My\App\Class'));
-                
-                $this->loader->removeNamespace('My\App');
-                $this->assertFalse((bool)$this->loader->loadClass('My\App\Class'));
-        }
+	//--------------------------------------------------------------------
+
+	public function testRemoveNamespace()
+	{
+		$this->loader->addNamespace('My\App', '/my/app');
+		$this->assertSame('/my/app/Class.php', $this->loader->loadClass('My\App\Class'));
+
+		$this->loader->removeNamespace('My\App');
+		$this->assertFalse((bool) $this->loader->loadClass('My\App\Class'));
+	}
 
 	//--------------------------------------------------------------------
 
 	public function testLoadLegacy()
 	{
-	    $this->assertFalse((bool)$this->loader->loadClass('someLibraries'));
-	    $this->assertTrue((bool)$this->loader->loadClass('someLibrary'));
-	    $this->assertTrue((bool)$this->loader->loadClass('someModel'));
+		// should not be able to find a folder
+		$this->assertFalse((bool) $this->loader->loadClass('someLibraries'));
+		// should be able to find these because we said so in the MockAutoloader
+		$this->assertTrue((bool) $this->loader->loadClass('someLibrary'));
+		$this->assertTrue((bool) $this->loader->loadClass('someModel'));
+		// should not be able to find these - don't exist
+		$this->assertFalse((bool) $this->loader->loadClass('anotherLibrary'));
+		$this->assertFalse((bool) $this->loader->loadClass('\nester\anotherLibrary'));
+		$this->assertFalse((bool) $this->loader->loadClass('\Shouldnt\Find\This'));
+		// should not be able to find these legacy classes - namespaced
+		$this->assertFalse((bool) $this->loader->loadClass('anotherLibrary'));
 	}
 
 	//--------------------------------------------------------------------
@@ -190,7 +201,7 @@ class AutoloaderTest extends \CIUnitTestCase
 	}
 
 	//--------------------------------------------------------------------
-	
+
 	public function testSanitizationAllowsWindowsFilepaths()
 	{
 		$test = 'C:\path\to\some/file.php';
