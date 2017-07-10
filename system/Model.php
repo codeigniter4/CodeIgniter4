@@ -319,7 +319,7 @@ class Model
 		$this->tempReturnType     = $this->returnType;
 		$this->tempUseSoftDeletes = $this->useSoftDeletes;
 
-		return $row;
+		return $row['data'];
 	}
 
 	//--------------------------------------------------------------------
@@ -384,7 +384,7 @@ class Model
 		$this->tempReturnType     = $this->returnType;
 		$this->tempUseSoftDeletes = $this->useSoftDeletes;
 
-		return $row;
+		return $row['data'];
 	}
 
 	//--------------------------------------------------------------------
@@ -420,7 +420,7 @@ class Model
 
 		$this->tempReturnType = $this->returnType;
 
-		return $row;
+		return $row['data'];
 	}
 
 	//--------------------------------------------------------------------
