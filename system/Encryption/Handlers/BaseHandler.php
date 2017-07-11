@@ -68,14 +68,21 @@ abstract class BaseHandler implements \CodeIgniter\Encryption\EncrypterInterface
 	protected $handle;
 
 	/**
-	 * Encryption key
+	 * Cipher handler
+	 *
+	 * @var	mixed
+	 */
+	protected $handler;
+
+	/**
+	 * Encryption key (starting point, anyway)
 	 *
 	 * @var	string
 	 */
 	protected $key;
 
 	/**
-	 * List of available modes
+	 * List of available modes. Override by driver
 	 *
 	 * @var	array
 	 */
@@ -126,30 +133,29 @@ abstract class BaseHandler implements \CodeIgniter\Encryption\EncrypterInterface
 // --------------------------------------------------------------------
 
 	/**
-	 * Get params. Is there harm to exposing this?
+	 * Get params, for testing
 	 *
 	 * @param	array	$params	Input parameters
-	 * @return	array
+	 * @return	mixed	associative array of parameters if ok, else false
 	 */
 	public function getParams($params)
 	{
+		// if no parameters were provided, but we have viable settings already,
+		// tell them what we have
 		if (empty($params))
 		{
-			return isset($this->cipher, $this->mode, $this->key, $this->handle) ? [
-				'handle' => $this->handle,
-				'cipher' => $this->cipher,
-				'mode' => $this->mode,
-				'key' => null,
-				'base64' => true,
-				'hmac_digest' => 'sha512',
-				'hmackey' => null
+			return isset($this->cipher, $this->mode, $this->key) ? [
+				'handle'		 => $this->handle,
+				'cipher'		 => $this->cipher,
+				'mode'			 => $this->mode,
+				'key'			 => null,
+				'base64'		 => true,
+				'hmac_digest'	 => 'sha512',
+				'hmackey'		 => null
 					] : false;
 		}
-		elseif ( ! isset($params['cipher'], $params['mode'], $params['key']))
-		{
-			return false;
-		}
 
+		// if a cipher mode was given, make sure it is valid
 		if (isset($params['mode']))
 		{
 			$params['mode'] = strtolower($params['mode']);
@@ -163,16 +169,19 @@ abstract class BaseHandler implements \CodeIgniter\Encryption\EncrypterInterface
 			}
 		}
 
+		// if the HMAC parameter is false, zap the HMAC digest & key
 		if (isset($params['hmac']) && $params['hmac'] === false)
 		{
 			$params['hmac_digest'] = $params['hmackey'] = null;
 		}
 		else
 		{
+			// make sure we have an HMAC key. WHY?
 			if ( ! isset($params['hmackey']))
 			{
 				return false;
 			}
+			// make sure that the digest is supported
 			elseif (isset($params['hmac_digest']))
 			{
 				$params['hmac_digest'] = strtolower($params['hmac_digest']);
@@ -183,20 +192,23 @@ abstract class BaseHandler implements \CodeIgniter\Encryption\EncrypterInterface
 			}
 			else
 			{
+				// or else set the default digest
 				$params['hmac_digest'] = 'sha512';
 			}
 		}
 
+		// build the complete set of parameters we ended up with
 		$params = [
-			'handle' => null,
-			'cipher' => $params['cipher'],
-			'mode' => $params['mode'],
-			'key' => $params['key'],
-			'base64' => isset($params['raw_data']) ?  ! $params['raw_data'] : false,
-			'hmac_digest' => $params['hmac_digest'],
-			'hmackey' => $params['hmackey']
+			'handle'		 => null,
+			'cipher'		 => $params['cipher'],
+			'mode'			 => $params['mode'],
+			'key'			 => $params['key'],
+			'base64'		 => isset($params['raw_data']) ?  ! $params['raw_data'] : false,
+			'hmac_digest'	 => $params['hmac_digest'],
+			'hmackey'		 => $params['hmackey']
 		];
 
+		// and adjust the handle appropriately
 		$this->cipherAlias($params['cipher']);
 		$params['handle'] = ($params['cipher'] !== $this->cipher OR $params['mode'] !== $this->mode) ? $this->getHandle($params['cipher'], $params['mode']) : $this->handle;
 
@@ -236,7 +248,7 @@ abstract class BaseHandler implements \CodeIgniter\Encryption\EncrypterInterface
 
 		$prk = hash_hmac($digest, $key, $salt, true);
 		$key = '';
-		for ($key_block = '', $block_index = 1; self::strlen($key) < $length; $block_index ++ )
+		for ($key_block = '', $block_index = 1; self::strlen($key) < $length; $block_index ++)
 		{
 			$key_block = hash_hmac($digest, $key_block . $info . chr($block_index), $prk, true);
 			$key .= $key_block;
@@ -292,11 +304,12 @@ abstract class BaseHandler implements \CodeIgniter\Encryption\EncrypterInterface
 	public function __get($key)
 	{
 		// Because aliases
-		if ($key === 'mode')
+		if (($key === 'mode') && isset($this->modes[$this->handler]))
 		{
 			return array_search($this->mode, $this->modes[$this->handler], true);
 		}
-		elseif (in_array($key, ['cipher', 'mode', 'key', 'handler', 'handlers', 'digests'], true))
+		
+		if (in_array($key, ['cipher', 'mode', 'key', 'handler', 'handlers', 'digests'], true))
 		{
 			return $this->{$key};
 		}

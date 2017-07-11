@@ -37,6 +37,14 @@
  */
 use \Sodium;
 
+/**
+ * Handler for Sodium cryptography extension.
+ * 
+ * Conditions:
+ * - libsodium should be installed on your system
+ * - the PECL extension should be installed (https://pecl.php.net/package/libsodium) for PHP < 7.2
+ * - Paragonie's sodium_compat should handle the situation (https://packagist.org/packages/paragonie/sodium_compat)
+ */
 class SodiumHandler extends BaseHandler
 {
 	// --------------------------------------------------------------------
@@ -56,7 +64,7 @@ class SodiumHandler extends BaseHandler
 		$this->cipher = 'N/A';
 		$this->mode = 'N/A';
 
-		if (sodium_init())
+		if (function_exists('sodium_init') && sodium_init())
 		{
 			$this->logger->info('Encryption: Sodium initialized.');
 		}

@@ -90,8 +90,8 @@ class Encryption
 	 * @var array
 	 */
 	protected $drivers = [
-		'openssl' => 'OpenSSL',
-		'libsodium' => 'Sodium'
+		'openssl'	 => 'OpenSSL',
+		'libsodium'	 => 'Sodium'
 	];
 
 	/**
@@ -151,14 +151,14 @@ class Encryption
 
 		// determine what is installed
 		$this->handlers = [
-			'openssl' => extension_loaded('openssl'),
-			'sodium' => extension_loaded('libsodium')
+			'OpenSSL'	 => extension_loaded('openssl'),
+			'Sodium'	 => extension_loaded('libsodium')
 		];
 
-		if ( ! $this->handlers['openssl'])
+		if ( ! $this->handlers['OpenSSL'])
 			throw new EncryptionException('Unable to find an available encryption handler.');
 
-		$this->initialize($params);		
+		$this->initialize($params);
 		$this->logger->info('Encryption class Initialized');
 	}
 
@@ -173,8 +173,11 @@ class Encryption
 	public function initialize(array $params = null)
 	{
 		// how should this be handled?
-		$this->driver = $params['driver'] ?? 'openssl';
-		$this->handler = $this->drivers[$this->driver];
+		$this->driver = $params['driver'] ?? 'OpenSSL';
+		// translate if needed
+		if (isset($this->drivers[$this->driver]))
+			$this->driver = $this->drivers[$this->driver];
+		$this->handler = $this->driver;
 
 		// use config key if initialization didn't create one
 		if ( ! isset($this->key) && self::strlen($key = $this->config->key) > 0)

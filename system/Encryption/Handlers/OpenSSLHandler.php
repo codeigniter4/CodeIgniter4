@@ -57,7 +57,7 @@ class OpenSSLHandler extends BaseHandler
 	// --------------------------------------------------------------------
 
 	/**
-	 * Initialize OpenSSL
+	 * Initialize OpenSSL, remembering parameters
 	 *
 	 * @param	array	$params	Configuration parameters
 	 * @return	void
@@ -84,6 +84,11 @@ class OpenSSLHandler extends BaseHandler
 			{
 				$this->mode = $this->modes[$params['mode']];
 			}
+		}
+
+		if ( ! empty($params['key']))
+		{
+			$this->key = $params['key'];
 		}
 
 		if (isset($this->cipher, $this->mode))
