@@ -71,7 +71,7 @@ the following criteria:
 * If $data is an array, it will try to negotiate the content type with what the client asked for, defaulting to JSON
     if nothing else has been specified within Config\API.php, the ``$supportedResponseFormats`` property.
 
-To define the formatter that is used, edit **Config\API.php**. The ``$supportedResponseFormats`` contains a list of
+To define the formatter that is used, edit **Config/Format.php**. The ``$supportedResponseFormats`` contains a list of
 mime types that your application can automatically format the response for. By default, the system knows how to
 format both XML and JSON responses::
 

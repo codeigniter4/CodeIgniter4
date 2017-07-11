@@ -13,7 +13,7 @@ class Migration_Create_test_tables extends \CodeIgniter\Database\Migration
 			],
 			'name'    => [
 				'type'       => 'VARCHAR',
-				'constraint' => 40,
+				'constraint' => 80,
 			],
 			'email'   => [
 				'type'       => 'VARCHAR',

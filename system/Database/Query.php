@@ -412,19 +412,21 @@ class Query implements QueryInterface
 			{
 				foreach ($value as &$item)
 				{
-					$item = preg_quote($item);
+					$item = preg_quote($item, '|');
 				}
 
 				$escapedValue = '('.implode(',', $escapedValue).')';
 			}
 			else
 			{
-				$escapedValue = strpos($escapedValue, '\\') !== false
-					? preg_quote(trim($escapedValue, $this->db->escapeChar))
-					: $escapedValue;
+				$escapedValue = preg_quote(trim($escapedValue, $this->db->escapeChar), '|');
 			}
 
-			$sql = preg_replace('/:'.$placeholder.'(?!\w)/', $escapedValue, $sql);
+			// preg_quoting can cause issues with some characters in the final query,
+			// but NOT preg_quoting causes other characters to be intepreted, like $.
+			$escapedValue = str_replace('\\.', '.', $escapedValue);
+
+			$sql = preg_replace('|:'.$placeholder.'(?!\w)|', $escapedValue, $sql);
 		}
 
 		return $sql;
