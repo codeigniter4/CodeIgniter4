@@ -1099,12 +1099,23 @@ class Forge
 	protected function _processForeignKeys($table) {
             $sql = '';
 
+            $allowActions = array('CASCADE','SET NULL','NO ACTION');
+            
+            $index = 1;
             if (count($this->foreignKeys) > 0){
                 foreach ($this->foreignKeys as $field => $fkey) {
-                    $sql .= ",\n\tCONSTRAINT " . $this->db->escapeIdentifiers($table.'_ibfk_'.($field+1))
+                    $sql .= ",\n\tCONSTRAINT " . $this->db->escapeIdentifiers($table.'_ibfk_'.($index))
                         . ' FOREIGN KEY(' . $this->db->escapeIdentifiers($field) . ') REFERENCES '.$this->db->escapeIdentifiers($fkey['table']).' ('.$this->db->escapeIdentifiers($fkey['field']).')';
                     
-                    //TODO_ Add here "ON DELETE CASCADE ON UPDATE CASCADE"
+                    if($fkey['onDelete'] !== false && in_array($fkey['onDelete'], $allowActions)){
+                        $sql .= " ON DELETE ".$fkey['onDelete'];
+                    }
+                    
+                    if($fkey['onUpdate'] !== false && in_array($fkey['onUpdate'], $allowActions)){
+                        $sql .= " ON UPDATE ".$fkey['onDelete'];
+                    }
+                    
+                    $index++;
                 }
             }
 

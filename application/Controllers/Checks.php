@@ -23,11 +23,11 @@ class Checks extends Controller
 
 
 
-            /*$forge->dropTable('users');
+            $forge->dropTable('users');
             $forge->addField([
                 'id' => [
                     'type' => 'INTEGER',
-                    'constraint' => 3,
+                    'constraint' => 11,
                     'auto_increment' => true,
                 ],
                 'name' => [
@@ -36,8 +36,7 @@ class Checks extends Controller
                 ]
             ]);
             $forge->addKey('id', true);
-            //$forge->addKey(['code', 'company']);
-            $forge->createTable('users', true);*/
+            $forge->createTable('users', true);
 
             $forge->dropTable('invoices');
             $forge->addField([
@@ -49,21 +48,24 @@ class Checks extends Controller
                 'users_id' => [
                     'type' => 'INTEGER',
                     'constraint' => 11
+                ],
+                'other_id' => [
+                    'type' => 'INTEGER',
+                    'constraint' => 11
                 ]
             ]);
             $forge->addKey('id', true);
 
-            $forge->addForeignKey('users_id','users','id');
+            $forge->addForeignKey('users_id','users','id','CASCADE','CASCADE');
+            $forge->addForeignKey('other_id','users','id');
 
             $res = $forge->createTable('invoices', true);
 
             if(!$res){
-                        var_dump($forge->getConnection()->mysqli);
-
+                var_dump($forge->getConnection()->mysqli);
             }else{
                 echo '<br><br>OK';
             }
-
         }
 
 
