@@ -345,15 +345,12 @@ class Forge
 	 *
 	 * @return    CI_DB_forge
 	 */
-	public function addForeignKey($fieldName= '',$tableName = '', $tableField = '', $onUpdate = false, $onDelete = false, $name = 'auto')
+	public function addForeignKey($fieldName= '',$tableName = '', $tableField = '', $onUpdate = false, $onDelete = false)
 	{
-            
-            //Check field exist
             
             if(!isset($this->fields[$fieldName])){
                 throw new \RuntimeException('Field "'.$fieldName.'" not exist');
-            }
-		
+            }	
                 
             $this->foreignKeys[$fieldName] = [
                 'table' => $tableName,
@@ -364,6 +361,34 @@ class Forge
                 
             
             return $this;
+	}
+
+	//--------------------------------------------------------------------
+        
+        /**
+	 * Foreign Key Drop
+	 *
+	 * @param    string $table       Table name
+	 * @param    string $foreign_name Foreign name
+	 *
+	 * @return    bool
+	 */
+	public function dropForeignKey($table, $foreign_name)
+	{
+		
+                $sql = 'ALTER TABLE '.$this->db->escapeIdentifiers($this->db->DBPrefix.$table).' DROP FOREIGN KEY '.$this->db->escapeIdentifiers($foreign_name);
+                
+		if ($sql === false)
+		{
+			if ($this->db->DBDebug)
+			{
+				throw new DatabaseException('This feature is not available for the database you are using.');
+			}
+
+			return false;
+		}
+
+		return $this->db->query($sql);
 	}
 
 	//--------------------------------------------------------------------
@@ -1101,10 +1126,11 @@ class Forge
 
             $allowActions = array('CASCADE','SET NULL','NO ACTION');
             
-            $index = 1;
             if (count($this->foreignKeys) > 0){
                 foreach ($this->foreignKeys as $field => $fkey) {
-                    $sql .= ",\n\tCONSTRAINT " . $this->db->escapeIdentifiers($table.'_ibfk_'.($index))
+                    $name_index = $table.'_'.$field.'_foreign';
+                    
+                    $sql .= ",\n\tCONSTRAINT " . $this->db->escapeIdentifiers($name_index)
                         . ' FOREIGN KEY(' . $this->db->escapeIdentifiers($field) . ') REFERENCES '.$this->db->escapeIdentifiers($fkey['table']).' ('.$this->db->escapeIdentifiers($fkey['field']).')';
                     
                     if($fkey['onDelete'] !== false && in_array($fkey['onDelete'], $allowActions)){
@@ -1115,7 +1141,6 @@ class Forge
                         $sql .= " ON UPDATE ".$fkey['onDelete'];
                     }
                     
-                    $index++;
                 }
             }
 

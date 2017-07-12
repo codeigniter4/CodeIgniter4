@@ -66,6 +66,10 @@ class Checks extends Controller
             }else{
                 echo '<br><br>OK';
             }
+            
+            $res = $forge->dropForeignKey('invoices','invoices_users_id_foreign');
+            
+            var_dump($res);
         }
 
 
