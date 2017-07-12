@@ -69,6 +69,13 @@ class Forge
 	 * @var type
 	 */
 	protected $primaryKeys = [];
+        
+        /**
+	 * List of foreign keys.
+	 *
+	 * @var type
+	 */
+	protected $foreignKeys = [];
 
 	/**
 	 * Character set used.
@@ -330,6 +337,36 @@ class Forge
 	}
 
 	//--------------------------------------------------------------------
+        
+        /**
+	 * Add Foreign Key
+	 *
+	 * @param    array $field
+	 *
+	 * @return    CI_DB_forge
+	 */
+	public function addForeignKey($fieldName= '',$tableName = '', $tableField = '', $onUpdate = false, $onDelete = false, $name = 'auto')
+	{
+            
+            //Check field exist
+            
+            if(!isset($this->fields[$fieldName])){
+                throw new \RuntimeException('Field "'.$fieldName.'" not exist');
+            }
+		
+                
+            $this->foreignKeys[$fieldName] = [
+                'table' => $tableName,
+                'field' => $tableField,
+                'onDelete' => $onDelete,
+                'onUpdate' => $onUpdate
+            ];
+                
+            
+            return $this;
+	}
+
+	//--------------------------------------------------------------------
 
 	/**
 	 * Create Table
@@ -429,8 +466,12 @@ class Forge
 				: "\n\t".$this->_processColumn($columns[$i]);
 		}
 
-		$columns = implode(',', $columns)
-			.$this->_processPrimaryKeys($table);
+                
+		$columns = implode(',', $columns);
+                
+                $columns .= $this->_processPrimaryKeys($table);
+                
+                $columns .= $this->_processForeignKeys($table);
 
 		// Are indexes created from within the CREATE TABLE statement? (e.g. in MySQL)
 		if ($this->createTableKeys === true)
@@ -1046,6 +1087,31 @@ class Forge
 						}
 
 						//--------------------------------------------------------------------
+                                                
+
+        /**
+	 * Process primary keys
+	 *
+	 * @param    string $table Table name
+	 *
+	 * @return    string
+	 */
+	protected function _processForeignKeys($table) {
+            $sql = '';
+
+            if (count($this->foreignKeys) > 0){
+                foreach ($this->foreignKeys as $field => $fkey) {
+                    $sql .= ",\n\tCONSTRAINT " . $this->db->escapeIdentifiers($table.'_ibfk_'.($field+1))
+                        . ' FOREIGN KEY(' . $this->db->escapeIdentifiers($field) . ') REFERENCES '.$this->db->escapeIdentifiers($fkey['table']).' ('.$this->db->escapeIdentifiers($fkey['field']).')';
+                    
+                    //TODO_ Add here "ON DELETE CASCADE ON UPDATE CASCADE"
+                }
+            }
+
+            return $sql;
+        }
+
+						//--------------------------------------------------------------------
 
 						/**
 						 * Process indexes
@@ -1094,7 +1160,7 @@ class Forge
 			 */
 			protected function _reset()
 			{
-				$this->fields = $this->keys = $this->primaryKeys = [];
+				$this->fields = $this->keys = $this->primaryKeys = $this->foreignKeys = [];
 			}
 
 }

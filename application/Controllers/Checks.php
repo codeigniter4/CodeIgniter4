@@ -16,6 +16,55 @@ class Checks extends Controller
 	{
 		session()->start();
 	}
+        
+        public function forge() {
+
+            $forge = \Config\Database::forge();
+
+
+
+            /*$forge->dropTable('users');
+            $forge->addField([
+                'id' => [
+                    'type' => 'INTEGER',
+                    'constraint' => 3,
+                    'auto_increment' => true,
+                ],
+                'name' => [
+                    'type' => 'VARCHAR',
+                    'constraint' => 50,
+                ]
+            ]);
+            $forge->addKey('id', true);
+            //$forge->addKey(['code', 'company']);
+            $forge->createTable('users', true);*/
+
+            $forge->dropTable('invoices');
+            $forge->addField([
+                'id' => [
+                    'type' => 'INTEGER',
+                    'constraint' => 11,
+                    'auto_increment' => true,
+                ],
+                'users_id' => [
+                    'type' => 'INTEGER',
+                    'constraint' => 11
+                ]
+            ]);
+            $forge->addKey('id', true);
+
+            $forge->addForeignKey('users_id','users','id');
+
+            $res = $forge->createTable('invoices', true);
+
+            if(!$res){
+                        var_dump($forge->getConnection()->mysqli);
+
+            }else{
+                echo '<br><br>OK';
+            }
+
+        }
 
 
 	public function escape()
