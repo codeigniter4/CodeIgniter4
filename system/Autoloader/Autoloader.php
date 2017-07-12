@@ -143,17 +143,15 @@ class Autoloader
 		// Now prepend another loader for the files in our class map.
 		$config = is_array($this->classmap) ? $this->classmap : [];
 
-		spl_autoload_register(function ($class) use ($config)
-		{
+		spl_autoload_register(function ($class) use ($config) {
 			if ( ! array_key_exists($class, $config))
 			{
 				return false;
 			}
 
 			include_once $config[$class];
-		},
-			true,   // Throw exception
-			true    // Prepend
+		}, true, // Throw exception
+						   true	// Prepend
 		);
 	}
 
@@ -257,11 +255,13 @@ class Autoloader
 			{
 				$directory = rtrim($directory, '/');
 
-				if (strpos($class, $namespace) === 0) {
+				if (strpos($class, $namespace) === 0)
+				{
 					$filePath = $directory . str_replace('\\', '/', substr($class, strlen($namespace))) . '.php';
 					$filename = $this->requireFile($filePath);
 
-					if ($filename) {
+					if ($filename)
+					{
 						return $filename;
 					}
 				}
@@ -287,22 +287,22 @@ class Autoloader
 	{
 		// If there is a namespace on this class, then
 		// we cannot load it from traditional locations.
-		if (strpos('\\', $class) !== false)
+		if (strpos($class, '\\') !== false)
 		{
 			return false;
 		}
 
 		$paths = [
-			APPPATH.'Controllers/',
-			APPPATH.'Libraries/',
-			APPPATH.'Models/',
+			APPPATH . 'Controllers/',
+			APPPATH . 'Libraries/',
+			APPPATH . 'Models/',
 		];
 
-		$class = str_replace('\\', '/', $class).'.php';
+		$class = str_replace('\\', '/', $class) . '.php';
 
 		foreach ($paths as $path)
 		{
-			if ($file = $this->requireFile($path.$class))
+			if ($file = $this->requireFile($path . $class))
 			{
 				return $file;
 			}
@@ -368,5 +368,4 @@ class Autoloader
 	}
 
 	//--------------------------------------------------------------------
-
 }
