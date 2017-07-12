@@ -2,6 +2,7 @@
 
 use CodeIgniter\Model;
 use Tests\Support\Models\EntityModel;
+use Tests\Support\Models\EventModel;
 use Tests\Support\Models\JobModel;
 use Tests\Support\Models\SimpleEntity;
 use Tests\Support\Models\UserModel;
@@ -513,5 +514,57 @@ class ModelTest extends \CIDatabaseTestCase
 		$this->seeInDatabase('user', $data);
     }
 
+	public function testInsertEvent()
+	{
+		$model = new EventModel();
+
+		$data = [
+			'name'  => 	'Foo',
+			'email' => 'foo@example.com',
+			'country' => 'US',
+			'deleted' => 0
+		];
+
+		$model->insert($data);
+
+		$this->assertTrue($model->hasToken('beforeInsert'));
+		$this->assertTrue($model->hasToken('afterInsert'));
+    }
+
+	public function testUpdateEvent()
+	{
+		$model = new EventModel();
+
+		$data = [
+			'name'  => 	'Foo',
+			'email' => 'foo@example.com',
+			'country' => 'US',
+			'deleted' => 0
+		];
+
+		$id = $model->insert($data);
+		$model->update($id, $data);
+
+		$this->assertTrue($model->hasToken('beforeUpdate'));
+		$this->assertTrue($model->hasToken('afterUpdate'));
+	}
+
+	public function testFindEvent()
+	{
+		$model = new EventModel();
+
+		$model->find(1);
+
+		$this->assertTrue($model->hasToken('afterFind'));
+	}
+
+	public function testDeleteEvent()
+	{
+		$model = new EventModel();
+
+		$model->delete(1);
+
+		$this->assertTrue($model->hasToken('afterDelete'));
+	}
 }
 

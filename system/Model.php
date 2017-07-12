@@ -1281,7 +1281,7 @@ class Model
 			return $data;
 		}
 
-		foreach ($this->{$even} as $callback)
+		foreach ($this->{$event} as $callback)
 		{
 			if (! method_exists($this, $callback))
 			{
