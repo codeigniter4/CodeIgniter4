@@ -287,7 +287,7 @@ class Autoloader
 	{
 		// If there is a namespace on this class, then
 		// we cannot load it from traditional locations.
-		if (strpos('\\', $class) !== false)
+		if (strpos($class, '\\') !== false)
 		{
 			return false;
 		}

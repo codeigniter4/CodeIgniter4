@@ -1,7 +1,6 @@
 <?php namespace CodeIgniter\Autoloader;
 
 use Config\Autoload;
-use org\bovigo\vfs\vfsStream;
 
 //--------------------------------------------------------------------
 
@@ -36,6 +35,7 @@ class AutoloaderTest extends \CIUnitTestCase
 			'/my/app/Class.php',
 			APPPATH . 'Libraries/someLibrary.php',
 			APPPATH . 'Models/someModel.php',
+			APPPATH . 'Models/Some/CoolModel.php',
 		]);
 	}
 
@@ -105,7 +105,7 @@ class AutoloaderTest extends \CIUnitTestCase
 
 	public function testMissingFile()
 	{
-		$this->assertFalse($this->loader->loadClass('App\Missing\Classname'));
+		$this->assertFalse($this->loader->loadClass('\App\Missing\Classname'));
 	}
 
 	//--------------------------------------------------------------------
@@ -187,7 +187,7 @@ class AutoloaderTest extends \CIUnitTestCase
 		$this->assertFalse((bool) $this->loader->loadClass('\nester\anotherLibrary'));
 		$this->assertFalse((bool) $this->loader->loadClass('\Shouldnt\Find\This'));
 		// should not be able to find these legacy classes - namespaced
-		$this->assertFalse((bool) $this->loader->loadClass('anotherLibrary'));
+		$this->assertFalse($this->loader->loadClass('\Some\CoolModel'));
 	}
 
 	//--------------------------------------------------------------------
