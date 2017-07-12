@@ -151,7 +151,7 @@ abstract class BaseHandler implements \CodeIgniter\Encryption\EncrypterInterface
 				'key'			 => null,
 				'base64'		 => true,
 				'hmac_digest'	 => 'sha512',
-				'hmackey'		 => null
+				'hmac_key'		 => null
 					] : false;
 		}
 
@@ -172,12 +172,12 @@ abstract class BaseHandler implements \CodeIgniter\Encryption\EncrypterInterface
 		// if the HMAC parameter is false, zap the HMAC digest & key
 		if (isset($params['hmac']) && $params['hmac'] === false)
 		{
-			$params['hmac_digest'] = $params['hmackey'] = null;
+			$params['hmac_digest'] = $params['hmac_key'] = null;
 		}
 		else
 		{
 			// make sure we have an HMAC key. WHY?
-			if ( ! isset($params['hmackey']))
+			if ( ! isset($params['hmac_key']))
 			{
 				return false;
 			}
@@ -205,7 +205,7 @@ abstract class BaseHandler implements \CodeIgniter\Encryption\EncrypterInterface
 			'key'			 => $params['key'],
 			'base64'		 => isset($params['raw_data']) ?  ! $params['raw_data'] : false,
 			'hmac_digest'	 => $params['hmac_digest'],
-			'hmackey'		 => $params['hmackey']
+			'hmac_key'		 => $params['hmac_key']
 		];
 
 		// and adjust the handle appropriately

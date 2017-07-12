@@ -18,7 +18,6 @@ Such extensions may need to be explicitly enabled in your instance of PHP.
 The following extensions are currently supported:
 
 - `OpenSSL <http://php.net/openssl>`_
-- `Sodium <https://libsodium.org/>`_.
 
 .. note:: Support for the ``MCrypt`` extension has been dropped, as that has
     been deprecated as of PHP 7.2.
@@ -198,17 +197,6 @@ TripleDES      56 / 7, 112 / 14, 168 / 21     CBC, CFB, CFB8, OFB
 Seed           128 / 16                       CBC, CFB, OFB, ECB
 ============== ============================== =========================================
 
-
-Sodium Notes
-------------
-
-Sodium is a modern, easy-to-use software library for encryption, decryption, signatures, password hashing and more.
-
-Sodium automatically uses AES-256 if it detects hardware acceleration/
-Otherwise, it will use the ChaCha20 cipher.
-
-You will need *libsodium* installed, as well as the PECL *Libsodium extenstion*, 
-in order to use this handler.
 
 Message Length
 ==============

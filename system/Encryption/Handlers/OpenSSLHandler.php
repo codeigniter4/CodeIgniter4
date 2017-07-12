@@ -123,7 +123,7 @@ class OpenSSLHandler extends BaseHandler
 			return false;
 		}
 
-		$iv = ($iv_size = opensslcipher_iv_length($params['cipher'])) ? $this->createKey($iv_size) : null;
+		$iv = ($iv_size = openssl_cipher_iv_length($params['cipher'])) ? $this->createKey($iv_size) : null;
 
 		$data = openssl_encrypt(
 				$data, $params['cipher'], $params['key'], OPENSSL_RAW_DATA, $iv
