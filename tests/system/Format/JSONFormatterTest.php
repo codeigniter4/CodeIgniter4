@@ -49,4 +49,15 @@ class JSONFormatterTest extends \CIUnitTestCase
 		$this->assertEquals($expected, $this->jsonFormatter->format($data));
 	}
 
+	
+    /**
+     * @expectedException RuntimeException
+     */
+	public function testJSONError()
+	{
+        $data = ["\xB1\x31"];
+		$expected = "Boom";
+		$this->assertEquals($expected, $this->jsonFormatter->format($data));
+	}
+
 }
