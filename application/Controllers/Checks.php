@@ -19,20 +19,11 @@ class Checks extends Controller
         
         public function forge()
         {
-
-            
-            /*$db = \Config\Database::connect('pgsql');
-            
-            var_dump($db);
-            
-            die();*/
-            
             echo '<h1>MySQL</h1>';
-            $forge = \Config\Database::forge();
-            var_dump($forge->getConnection()->DBDriver);
+            $forge_mysql = \Config\Database::forge();
 
-            $forge->dropTable('users');
-            $forge->addField([
+            $forge_mysql->dropTable('users');
+            $forge_mysql->addField([
                 'id' => [
                     'type' => 'INTEGER',
                     'constraint' => 11,
@@ -43,11 +34,11 @@ class Checks extends Controller
                     'constraint' => 50,
                 ]
             ]);
-            $forge->addKey('id', true);
-            $forge->createTable('users', true);
+            $forge_mysql->addKey('id', true);
+            $forge_mysql->createTable('users', true);
 
-            $forge->dropTable('invoices',true);
-            $forge->addField([
+            $forge_mysql->dropTable('invoices',true);
+            $forge_mysql->addField([
                 'id' => [
                     'type' => 'INTEGER',
                     'constraint' => 11,
@@ -62,33 +53,29 @@ class Checks extends Controller
                     'constraint' => 11
                 ]
             ]);
-            $forge->addKey('id', true);
+            $forge_mysql->addKey('id', true);
 
-            $forge->addForeignKey('users_id','users','id','CASCADE','CASCADE');
-            $forge->addForeignKey('other_id','users','id','CASCADE','CASCADE');
+            $forge_mysql->addForeignKey('users_id','users','id','CASCADE','CASCADE');
+            $forge_mysql->addForeignKey('other_id','users','id','CASCADE','CASCADE');
 
-            $res = $forge->createTable('invoices', true);
+            $res = $forge_mysql->createTable('invoices', true);
 
             if(!$res){
-                var_dump($forge->getConnection()->mysqli);
+                var_dump($forge_mysql->getConnection()->mysqli);
             }else{
                 echo '<br><br>OK';
             }
             
-            //$res = $forge->dropForeignKey('invoices','invoices_users_id_foreign');
+            $res = $forge_mysql->dropForeignKey('invoices','invoices_users_id_foreign');
             
-            //var_dump($res);
-            
+            var_dump($res);
             
             echo '<h1>PostgreSQL</h1>';
             
-            $forge = \Config\Database::forge('pgsql');
-            var_dump($forge->getConnection()->DBDriver);
+            $forge_pgsql = \Config\Database::forge('pgsql');
 
-
-
-            $forge->dropTable('users',true, true);
-            $forge->addField([
+            $forge_pgsql->dropTable('users',true, true);
+            $forge_pgsql->addField([
                 'id' => [
                     'type' => 'INTEGER',
                     'constraint' => 11,
@@ -99,11 +86,11 @@ class Checks extends Controller
                     'constraint' => 50,
                 ]
             ]);
-            $forge->addKey('id', true);
-            $forge->createTable('users', true);
+            $forge_pgsql->addKey('id', true);
+            $forge_pgsql->createTable('users', true);
 
-            $forge->dropTable('invoices',true);
-            $forge->addField([
+            $forge_pgsql->dropTable('invoices',true);
+            $forge_pgsql->addField([
                 'id' => [
                     'type' => 'INTEGER',
                     'constraint' => 11,
@@ -122,24 +109,24 @@ class Checks extends Controller
                     'constraint' => 11
                 ]
             ]);
-            $forge->addKey('id', true);
+            $forge_pgsql->addKey('id', true);
 
-            $res = $forge->addForeignKey('users_id','users','id','CASCADE','CASCADE');
+            $res = $forge_pgsql->addForeignKey('users_id','users','id','CASCADE','CASCADE');
             var_dump($res);
             
-            //$forge->addForeignKey('other_id','users','id');
+            $forge_pgsql->addForeignKey('other_id','users','id');
 
-            $res = $forge->createTable('invoices', true);
+            $res = $forge_pgsql->createTable('invoices', true);
 
             if(!$res){
-                var_dump($forge->getConnection()->mysqli);
+                var_dump($forge_pgsql->getConnection()->mysqli);
             }else{
                 echo '<br><br>OK';
             }
             
-            //$res = $forge->dropForeignKey('invoices','invoices_users_id_foreign');
+            $res = $forge_pgsql->dropForeignKey('invoices','invoices_users_id_foreign');
             
-            //var_dump($res);
+            var_dump($res);
         }
 
 

@@ -41,6 +41,14 @@
  */
 class Forge extends \CodeIgniter\Database\Forge
 {
+    
+	/**
+	 * DROP CONSTRAINT statement
+	 *
+	 * @var    string
+	 */
+	protected $dropConstraintStr = 'ALTER TABLE %s DROP CONSTRAINT %s';
+
 	/**
 	 * UNSIGNED support
 	 *

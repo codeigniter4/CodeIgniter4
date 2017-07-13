@@ -49,6 +49,13 @@ class Forge extends \CodeIgniter\Database\Forge
 	protected $createDatabaseStr = 'CREATE DATABASE %s CHARACTER SET %s COLLATE %s';
 
 	/**
+	 * DROP CONSTRAINT statement
+	 *
+	 * @var    string
+	 */
+	protected $dropConstraintStr = 'ALTER TABLE %s DROP FOREIGN KEY %s';
+
+	/**
 	 * CREATE TABLE keys flag
 	 *
 	 * Whether table keys are created from within the
