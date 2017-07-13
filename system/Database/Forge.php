@@ -343,12 +343,13 @@ class Forge
 	 *
 	 * @param    array $field
 	 *
-	 * @return    CI_DB_forge
+	 * @return    \CodeIgniter\Database\Forge
 	 */
 	public function addForeignKey($fieldName= '',$tableName = '', $tableField = '', $onUpdate = false, $onDelete = false)
 	{
             
-            if(!isset($this->fields[$fieldName])){
+            if( ! isset($this->fields[$fieldName]))
+            {
                 throw new \RuntimeException('Field "'.$fieldName.'" not exist');
             }	
                 
@@ -1124,7 +1125,7 @@ class Forge
 	protected function _processForeignKeys($table) {
             $sql = '';
 
-            $allowActions = array('CASCADE','SET NULL','NO ACTION');
+            $allowActions = array('CASCADE','SET NULL','NO ACTION','RESTRICT','SET DEFAULT');
             
             if (count($this->foreignKeys) > 0){
                 foreach ($this->foreignKeys as $field => $fkey) {
