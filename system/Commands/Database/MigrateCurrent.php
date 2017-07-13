@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
+ * Copyright (c) 2014-2017, British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,13 +29,12 @@
  *
  * @package      CodeIgniter
  * @author       CodeIgniter Dev Team
- * @copyright    Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @copyright    2014-2017, British Columbia Institute of Technology (http://bcit.ca/)
  * @license      https://opensource.org/licenses/MIT	MIT License
  * @link         https://codeigniter.com
  * @since        Version 3.0.0
  * @filesource
  */
-
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 use Config\Services;
@@ -47,6 +46,7 @@ use Config\Services;
  */
 class MigrateCurrent extends BaseCommand
 {
+
 	protected $group = 'Database';
 
 	/**
@@ -86,7 +86,6 @@ class MigrateCurrent extends BaseCommand
 		'-g' => 'Set database group',
 	];
 
-
 	/**
 	 * Migrates us up or down to the version specified as $currentVersion
 	 * in the migrations config file.
@@ -113,4 +112,5 @@ class MigrateCurrent extends BaseCommand
 
 		CLI::write('Done');
 	}
+
 }

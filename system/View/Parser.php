@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
+ * Copyright (c) 2014-2017, British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,13 +29,12 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @copyright	2014-2017, British Columbia Institute of Technology (http://bcit.ca/)
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 3.0.0
  * @filesource
  */
-
 use Config\Services;
 use CodeIgniter\Log\Logger;
 
@@ -51,7 +50,8 @@ use CodeIgniter\Log\Logger;
  *
  * @package CodeIgniter\View
  */
-class Parser extends View {
+class Parser extends View
+{
 
 	/**
 	 * Left delimiter character for pseudo vars
@@ -74,10 +74,10 @@ class Parser extends View {
 	 */
 	protected $noparseBlocks = [];
 
-    /**
-     * Stores any plugins registered at run-time.
-     * @var array
-     */
+	/**
+	 * Stores any plugins registered at run-time.
+	 * @var array
+	 */
 	protected $plugins = [];
 
 	//--------------------------------------------------------------------
@@ -93,8 +93,8 @@ class Parser extends View {
 	 */
 	public function __construct($config, string $viewPath = null, $loader = null, bool $debug = null, Logger $logger = null)
 	{
-	    // Ensure user plugins override core plugins.
-        $this->plugins = $config->plugins ?? [];
+		// Ensure user plugins override core plugins.
+		$this->plugins = $config->plugins ?? [];
 
 		parent::__construct($config, $viewPath, $loader, $debug, $logger);
 	}
@@ -116,10 +116,10 @@ class Parser extends View {
 	public function render(string $view, array $options = null, $saveData = null): string
 	{
 		$start = microtime(true);
-        if (is_null($saveData))
-        {
-            $saveData = $this->config->saveData;
-        }
+		if (is_null($saveData))
+		{
+			$saveData = $this->config->saveData;
+		}
 
 		$view = str_replace('.php', '', $view) . '.php';
 
@@ -137,7 +137,7 @@ class Parser extends View {
 
 		$file = $this->viewPath . $view;
 
-		if (!file_exists($file))
+		if ( ! file_exists($file))
 		{
 			$file = $this->loader->locateFile($view, 'Views');
 		}
@@ -152,7 +152,7 @@ class Parser extends View {
 		$output = $this->parse($template, $this->data, $options);
 		$this->logPerformance($start, microtime(true), $view);
 
-		if (!$saveData)
+		if ( ! $saveData)
 		{
 			$this->data = [];
 		}
@@ -182,16 +182,16 @@ class Parser extends View {
 	public function renderString(string $template, array $options = null, $saveData = null): string
 	{
 		$start = microtime(true);
-        if (is_null($saveData))
-        {
-            $saveData = $this->config->saveData;
-        }
+		if (is_null($saveData))
+		{
+			$saveData = $this->config->saveData;
+		}
 
 		$output = $this->parse($template, $this->data, $options);
 
 		$this->logPerformance($start, microtime(true), $this->excerpt($template));
 
-		if (!$saveData)
+		if ( ! $saveData)
 		{
 			$this->data = [];
 		}
@@ -229,29 +229,29 @@ class Parser extends View {
 		$template = $this->parseConditionals($template);
 
 		// Handle any plugins before normal data, so that
-        // it can potentially modify any template between its tags.
-        $template = $this->parsePlugins($template);
+		// it can potentially modify any template between its tags.
+		$template = $this->parsePlugins($template);
 
 		// loop over the data variables, replacing
-        // the content as we go.
+		// the content as we go.
 		foreach ($data as $key => $val)
 		{
-		    $escape = true;
+			$escape = true;
 
-		    if (is_array($val))
-            {
-                $escape = false;
-                $replace = $this->parsePair($key, $val, $template);
-            }
-            else
-            {
-                $replace = $this->parseSingle($key, (string)$val);
-            }
+			if (is_array($val))
+			{
+				$escape = false;
+				$replace = $this->parsePair($key, $val, $template);
+			}
+			else
+			{
+				$replace = $this->parseSingle($key, (string) $val);
+			}
 
-            foreach ($replace as $pattern => $content)
-            {
-                $template = $this->replaceSingle($pattern, $content, $template, $escape);
-            }
+			foreach ($replace as $pattern => $content)
+			{
+				$template = $this->replaceSingle($pattern, $content, $template, $escape);
+			}
 		}
 
 		$template = $this->insertNoparse($template);
@@ -291,7 +291,7 @@ class Parser extends View {
 	 */
 	protected function parseSingle(string $key, string $val): array
 	{
-		$pattern = '#'.$this->leftDelimiter.'!?\s*'.preg_quote($key).'\s*\|*\s*([|a-zA-Z0-9<>=\(\),:_\-\s\+]+)*\s*!?'.$this->rightDelimiter.'#ms';
+		$pattern = '#' . $this->leftDelimiter . '!?\s*' . preg_quote($key) . '\s*\|*\s*([|a-zA-Z0-9<>=\(\),:_\-\s\+]+)*\s*!?' . $this->rightDelimiter . '#ms';
 
 		return [$pattern => (string) $val];
 	}
@@ -317,9 +317,8 @@ class Parser extends View {
 		// Find all matches of space-flexible versions of {tag}{/tag} so we
 		// have something to loop over.
 		preg_match_all(
-				'#'.$this->leftDelimiter.'\s*'.preg_quote($variable).'\s*'.$this->rightDelimiter.'(.+?)' .
-				$this->leftDelimiter.'\s*'.'/'.preg_quote($variable).'\s*'.$this->rightDelimiter.'#s',
-				$template, $matches, PREG_SET_ORDER
+				'#' . $this->leftDelimiter . '\s*' . preg_quote($variable) . '\s*' . $this->rightDelimiter . '(.+?)' .
+				$this->leftDelimiter . '\s*' . '/' . preg_quote($variable) . '\s*' . $this->rightDelimiter . '#s', $template, $matches, PREG_SET_ORDER
 		);
 
 		/*
@@ -336,14 +335,14 @@ class Parser extends View {
 			foreach ($data as $row)
 			{
 				$temp = [];
-				$out  = $match[1];
+				$out = $match[1];
 				foreach ($row as $key => $val)
 				{
 					// For nested data, send us back through this method...
 					if (is_array($val))
 					{
 						$pair = $this->parsePair($key, $val, $match[1]);
-						if (!empty($pair))
+						if ( ! empty($pair))
 						{
 							$temp = array_merge($temp, $pair);
 						}
@@ -359,19 +358,19 @@ class Parser extends View {
 						$val = 'Resource';
 					}
 
-					$temp['#'.$this->leftDelimiter.'!?\s*'.preg_quote($key).'\s*\|*\s*([|\w<>=\(\),:_\-\s\+]+)*\s*!?'. $this->rightDelimiter.'#s'] = $val;
+					$temp['#' . $this->leftDelimiter . '!?\s*' . preg_quote($key) . '\s*\|*\s*([|\w<>=\(\),:_\-\s\+]+)*\s*!?' . $this->rightDelimiter . '#s'] = $val;
 				}
 
 				// Now replace our placeholders with the new content.
 				foreach ($temp as $pattern => $content)
 				{
-				    $out = $this->replaceSingle($pattern, $content, $out, true);
+					$out = $this->replaceSingle($pattern, $content, $out, true);
 				}
 
 				$str .= $out;
 			}
 
-			$replace['#'.$match[0].'#s'] = $str;
+			$replace['#' . $match[0] . '#s'] = $str;
 		}
 
 		return $replace;
@@ -478,9 +477,7 @@ class Parser extends View {
 			// Build the string to replace the `if` statement with.
 			$condition = $match[2];
 
-			$statement = $match[1] == 'elseif'
-				? '<?php elseif ($'.$condition.'): ?>'
-				: '<?php if ($'.$condition.'): ?>';
+			$statement = $match[1] == 'elseif' ? '<?php elseif ($' . $condition . '): ?>' : '<?php if ($' . $condition . '): ?>';
 			$template = str_replace($match[0], $statement, $template);
 		}
 
@@ -490,12 +487,12 @@ class Parser extends View {
 		// Parse the PHP itself, or insert an error so they can debug
 		ob_start();
 		extract($this->data);
-		$result = eval('?>'.$template.'<?php ');
+		$result = eval('?>' . $template . '<?php ');
 
 		if ($result === false)
 		{
 			$output = 'You have a syntax error in your Parser tags: ';
-			throw new \RuntimeException($output.str_replace(['?>', '<?php '], '', $template));
+			throw new \RuntimeException($output . str_replace(['?>', '<?php '], '', $template));
 		}
 
 		return ob_get_clean();
@@ -519,35 +516,35 @@ class Parser extends View {
 
 	//--------------------------------------------------------------------
 
-    /**
-     * Handles replacing a pseudo-variable with teh actual content. Will double-check
-     * for escaping brackets.
-     *
-     * @param      $pattern
-     * @param      $content
-     * @param      $template
-     * @param bool $escape
-     *
-     * @return string
-     */
-    protected function replaceSingle($pattern, $content, $template, bool $escape=false): string
-    {
-        // Replace the content in the template
-        $template = preg_replace_callback($pattern, function ($matches) use ($content, $escape) {
+	/**
+	 * Handles replacing a pseudo-variable with teh actual content. Will double-check
+	 * for escaping brackets.
+	 *
+	 * @param      $pattern
+	 * @param      $content
+	 * @param      $template
+	 * @param bool $escape
+	 *
+	 * @return string
+	 */
+	protected function replaceSingle($pattern, $content, $template, bool $escape = false): string
+	{
+		// Replace the content in the template
+		$template = preg_replace_callback($pattern, function ($matches) use ($content, $escape) {
 
-            // Check for {! !} syntax to not-escape this one.
-            if (substr($matches[0], 0, 2) == '{!' && substr($matches[0], -2) == '!}')
-            {
-                $escape = false;
-            }
+			// Check for {! !} syntax to not-escape this one.
+			if (substr($matches[0], 0, 2) == '{!' && substr($matches[0], -2) == '!}')
+			{
+				$escape = false;
+			}
 
-            return $this->prepareReplacement($matches, $content, $escape);
-        }, $template);
+			return $this->prepareReplacement($matches, $content, $escape);
+		}, $template);
 
-        return $template;
-    }
+		return $template;
+	}
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
 	/**
 	 * Callback used during parse() to apply any filters to the value.
@@ -557,186 +554,177 @@ class Parser extends View {
 	 *
 	 * @return mixed|string
 	 */
-	protected function prepareReplacement(array $matches, string $replace, bool $escape=true)
+	protected function prepareReplacement(array $matches, string $replace, bool $escape = true)
 	{
 		$orig = array_shift($matches);
 
 		// Our regex earlier will leave all chained values on a single line
 		// so we need to break them apart so we can apply them all.
-		$filters = isset($matches[0])
-            ? explode('|', $matches[0])
-            : [];
+		$filters = isset($matches[0]) ? explode('|', $matches[0]) : [];
 
-		if ($escape && (! isset($matches[0]) || $this->shouldAddEscaping($orig)))
-        {
-            $filters[] = 'esc(html)';
-        }
+		if ($escape && ( ! isset($matches[0]) || $this->shouldAddEscaping($orig)))
+		{
+			$filters[] = 'esc(html)';
+		}
 
 		$replace = $this->applyFilters($replace, $filters);
 
 		return $replace;
 	}
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
-    /**
-     * Checks the placeholder the view provided to see if we need to provide any autoescaping.
-     *
-     * @param string $key
-     *
-     * @return bool
-     */
-    public function shouldAddEscaping(string $key)
-    {
-        $escape = false;
+	/**
+	 * Checks the placeholder the view provided to see if we need to provide any autoescaping.
+	 *
+	 * @param string $key
+	 *
+	 * @return bool
+	 */
+	public function shouldAddEscaping(string $key)
+	{
+		$escape = false;
 
-        // No pipes, then we know we need to escape
-        if (strpos($key, '|') === false) {
-            $escape = true;
-        }
-        // If there's a `noescape` then we're definitely false.
-        elseif (strpos($key, 'noescape') !== false)
-        {
-            $escape = false;
-        }
-        // If no `esc` filter is found, then we'll need to add one.
-        elseif (! preg_match('/^|\s+esc/', $key))
-        {
-            $escape = true;
-        }
+		// No pipes, then we know we need to escape
+		if (strpos($key, '|') === false)
+		{
+			$escape = true;
+		}
+		// If there's a `noescape` then we're definitely false.
+		elseif (strpos($key, 'noescape') !== false)
+		{
+			$escape = false;
+		}
+		// If no `esc` filter is found, then we'll need to add one.
+		elseif ( ! preg_match('/^|\s+esc/', $key))
+		{
+			$escape = true;
+		}
 
-        return $escape;
-    }
+		return $escape;
+	}
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
-    /**
-     * Given a set of filters, will apply each of the filters in turn
-     * to $replace, and return the modified string.
-     *
-     * @param string $replace
-     * @param array  $filters
-     *
-     * @return string
-     */
-    protected function applyFilters(string $replace, array $filters): string
-    {
-        // Determine the requested filters
-        foreach ($filters as $filter)
-        {
-            // Grab any parameter we might need to send
-            preg_match('/\([a-zA-Z0-9\-:_ +,<>=]+\)/', $filter, $param);
+	/**
+	 * Given a set of filters, will apply each of the filters in turn
+	 * to $replace, and return the modified string.
+	 *
+	 * @param string $replace
+	 * @param array  $filters
+	 *
+	 * @return string
+	 */
+	protected function applyFilters(string $replace, array $filters): string
+	{
+		// Determine the requested filters
+		foreach ($filters as $filter)
+		{
+			// Grab any parameter we might need to send
+			preg_match('/\([a-zA-Z0-9\-:_ +,<>=]+\)/', $filter, $param);
 
-            // Remove the () and spaces to we have just the parameter left
-            $param = ! empty($param)
-                ? trim($param[0], '() ')
-                : null;
+			// Remove the () and spaces to we have just the parameter left
+			$param = ! empty($param) ? trim($param[0], '() ') : null;
 
-            // Params can be separated by commas to allow multiple parameters for the filter
-            if (! empty($param))
-            {
-                $param = explode(',', $param);
+			// Params can be separated by commas to allow multiple parameters for the filter
+			if ( ! empty($param))
+			{
+				$param = explode(',', $param);
 
-                // Clean it up
-                foreach ($param as &$p)
-                {
-                    $p = trim($p, ' "');
-                }
-            }
-            else
-            {
-                $param = [];
-            }
+				// Clean it up
+				foreach ($param as &$p)
+				{
+					$p = trim($p, ' "');
+				}
+			}
+			else
+			{
+				$param = [];
+			}
 
-            // Get our filter name
-            $filter = $param !== []
-                ? trim(strtolower(substr($filter, 0, strpos($filter, '('))))
-                : trim($filter);
+			// Get our filter name
+			$filter = $param !== [] ? trim(strtolower(substr($filter, 0, strpos($filter, '(')))) : trim($filter);
 
-            if (! array_key_exists($filter, $this->config->filters)) continue;
+			if ( ! array_key_exists($filter, $this->config->filters))
+				continue;
 
-            // Filter it....
-            $replace = call_user_func($this->config->filters[$filter], $replace, ...$param);
-        }
+			// Filter it....
+			$replace = call_user_func($this->config->filters[$filter], $replace, ...$param);
+		}
 
-        return $replace;
-    }
+		return $replace;
+	}
 
-    //--------------------------------------------------------------------
-    // Plugins
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
+	// Plugins
+	//--------------------------------------------------------------------
 
-    /**
-     * Scans the template for any parser plugins, and attempts to execute them.
-     * Plugins are notated based on {+ +} opening and closing braces.
-     *
-     * When encountered,
-     *
-     * @param string $template
-     *
-     * @return string
-     */
-    protected function parsePlugins(string $template)
-    {
-    	foreach($this->plugins as $plugin => $callable)
-	    {
-	    	// Paired tags are enclosed in an array in the config array.
-	    	$isPair = is_array($callable);
-	    	$callable = $isPair
-			    ? array_shift($callable)
-			    : $callable;
+	/**
+	 * Scans the template for any parser plugins, and attempts to execute them.
+	 * Plugins are notated based on {+ +} opening and closing braces.
+	 *
+	 * When encountered,
+	 *
+	 * @param string $template
+	 *
+	 * @return string
+	 */
+	protected function parsePlugins(string $template)
+	{
+		foreach ($this->plugins as $plugin => $callable)
+		{
+			// Paired tags are enclosed in an array in the config array.
+			$isPair = is_array($callable);
+			$callable = $isPair ? array_shift($callable) : $callable;
 
-	    	$pattern = $isPair
-			    ? '#{\+\s*'.$plugin.'([\w\d=-_:\+\s()\"@.]*)?\s*\+}(.+?){\+\s*/'.$plugin.'\s*\+}#ims'
-			    : '#{\+\s*'.$plugin.'([\w\d=-_:\+\s()\"@.]*)?\s*\+}#ims';
+			$pattern = $isPair ? '#{\+\s*' . $plugin . '([\w\d=-_:\+\s()\"@.]*)?\s*\+}(.+?){\+\s*/' . $plugin . '\s*\+}#ims' : '#{\+\s*' . $plugin . '([\w\d=-_:\+\s()\"@.]*)?\s*\+}#ims';
 
-		    /**
-		     * Match tag pairs
-		     *
-		     * Each match is an array:
-		     *   $matches[0] = entire matched string
-		     *   $matches[1] = all parameters string in opening tag
-		     *   $matches[2] = content between the tags to send to the plugin.
-		     */
-		    preg_match_all($pattern,$template, $matches,PREG_SET_ORDER);
+			/**
+			 * Match tag pairs
+			 *
+			 * Each match is an array:
+			 *   $matches[0] = entire matched string
+			 *   $matches[1] = all parameters string in opening tag
+			 *   $matches[2] = content between the tags to send to the plugin.
+			 */
+			preg_match_all($pattern, $template, $matches, PREG_SET_ORDER);
 
-		    if (empty($matches))
-		    {
-			    continue;
-		    }
+			if (empty($matches))
+			{
+				continue;
+			}
 
-		    foreach ($matches as $match)
-		    {
-		    	$params = [];
+			foreach ($matches as $match)
+			{
+				$params = [];
 
-		    	// Split on "words", but keep quoted groups together, accounting for escaped quotes.
-			    // Note: requires double quotes, not single quotes.
-			    $parts = str_getcsv($match[1], ' ');
+				// Split on "words", but keep quoted groups together, accounting for escaped quotes.
+				// Note: requires double quotes, not single quotes.
+				$parts = str_getcsv($match[1], ' ');
 
-			    foreach ($parts as $part)
-			    {
-			    	if (empty($part)) continue;
+				foreach ($parts as $part)
+				{
+					if (empty($part))
+						continue;
 
-			    	if (strpos($part, '=') !== false)
-				    {
-					    list($a, $b) = explode('=',$part);
-					    $params[$a] = $b;
-				    }
-				    else
-				    {
-				    	$params[] = $part;
-				    }
-			    }
-			    unset($parts);
+					if (strpos($part, '=') !== false)
+					{
+						list($a, $b) = explode('=', $part);
+						$params[$a] = $b;
+					}
+					else
+					{
+						$params[] = $part;
+					}
+				}
+				unset($parts);
 
-			    $template = $isPair
-			        ? str_replace($match[0], $callable($match[2], $params), $template)
-			        : str_replace($match[0], $callable($params), $template);
-		    }
-	    }
+				$template = $isPair ? str_replace($match[0], $callable($match[2], $params), $template) : str_replace($match[0], $callable($params), $template);
+			}
+		}
 
-        return $template;
-    }
+		return $template;
+	}
 
 	/**
 	 * Makes a new plugin available during the parsing of the template.
@@ -748,31 +736,28 @@ class Parser extends View {
 	 *
 	 * @return $this
 	 */
-    public function addPlugin(string $alias, callable $callback, bool $isPair=false)
-    {
-        $this->plugins[$alias] = $isPair
-	        ? [$callback]
-            : $callback;
+	public function addPlugin(string $alias, callable $callback, bool $isPair = false)
+	{
+		$this->plugins[$alias] = $isPair ? [$callback] : $callback;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
-    /**
-     * Removes a plugin from the available plugins.
-     *
-     * @param string $alias
-     *
-     * @return $this
-     */
-    public function removePlugin(string $alias)
-    {
-        unset($this->plugins[$alias]);
+	/**
+	 * Removes a plugin from the available plugins.
+	 *
+	 * @param string $alias
+	 *
+	 * @return $this
+	 */
+	public function removePlugin(string $alias)
+	{
+		unset($this->plugins[$alias]);
 
-        return $this;
-    }
+		return $this;
+	}
 
-    //--------------------------------------------------------------------
-
+	//--------------------------------------------------------------------
 }

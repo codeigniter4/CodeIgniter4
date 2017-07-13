@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
+ * Copyright (c) 2014-2017, British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,14 +29,13 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @copyright	2014-2017, British Columbia Institute of Technology (http://bcit.ca/)
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 3.0.0
  * @filesource
  */
-
-require __DIR__.'/CustomExceptions.php';
+require __DIR__ . '/CustomExceptions.php';
 
 /**
  * Exceptions manager
@@ -70,7 +69,7 @@ class Exceptions
 	{
 		$this->ob_level = ob_get_level();
 
-		$this->viewPath = rtrim($config->errorViewPath, '/ ').'/';
+		$this->viewPath = rtrim($config->errorViewPath, '/ ') . '/';
 	}
 
 	//--------------------------------------------------------------------
@@ -105,16 +104,16 @@ class Exceptions
 	{
 		// Get Exception Info - these are available
 		// directly in the template that's displayed.
-		$type    = get_class($exception);
-		$codes   = $this->determineCodes($exception);
-		$code    = $codes[0];
-		$exit    = $codes[1];
-		$code    = $exception->getCode();
+		$type = get_class($exception);
+		$codes = $this->determineCodes($exception);
+		$code = $codes[0];
+		$exit = $codes[1];
+		$code = $exception->getCode();
 		$message = $exception->getMessage();
-		$file    = $exception->getFile();
-		$line    = $exception->getLine();
-		$trace   = $exception->getTrace();
-		$title   = get_class($exception);
+		$file = $exception->getFile();
+		$line = $exception->getLine();
+		$trace = $exception->getTrace();
+		$title = get_class($exception);
 
 		if (empty($message))
 		{
@@ -122,12 +121,11 @@ class Exceptions
 		}
 
 		// Log it
-
 		// Fire an Event
 		$templates_path = $this->viewPath;
 		if (empty($templates_path))
 		{
-			$templates_path = APPPATH.'Views/errors/';
+			$templates_path = APPPATH . 'Views/errors/';
 		}
 
 		if (is_cli())
@@ -148,7 +146,7 @@ class Exceptions
 		}
 
 		ob_start();
-		include($templates_path.$view);
+		include($templates_path . $view);
 		$buffer = ob_get_contents();
 		ob_end_clean();
 		echo $buffer;
@@ -192,7 +190,7 @@ class Exceptions
 		// If we've got an error that hasn't been displayed, then convert
 		// it to an Exception and use the Exception handler to display it
 		// to the user.
-		if (! is_null($error))
+		if ( ! is_null($error))
 		{
 			// Fatal Error?
 			if (in_array($error['type'], [E_ERROR, E_CORE_ERROR, E_COMPILE_ERROR, E_PARSE]))
@@ -217,7 +215,7 @@ class Exceptions
 	{
 		// Production environments should have a custom exception file.
 		$view = 'production.php';
-		$template_path = rtrim($template_path, '/ ').'/';
+		$template_path = rtrim($template_path, '/ ') . '/';
 
 		if (str_ireplace(['off', 'none', 'no', 'false', 'null'], '', ini_get('display_errors')))
 		{
@@ -231,9 +229,9 @@ class Exceptions
 		}
 
 		// Allow for custom views based upon the status code
-		else if (is_file($template_path.'error_'.$exception->getCode().'.php'))
+		else if (is_file($template_path . 'error_' . $exception->getCode() . '.php'))
 		{
-			return 'error_'.$exception->getCode().'.php';
+			return 'error_' . $exception->getCode() . '.php';
 		}
 
 		return $view;
@@ -268,12 +266,11 @@ class Exceptions
 
 		return [
 			$statusCode ?? 500,
-		    $exitStatus
+			$exitStatus
 		];
 	}
 
 	//--------------------------------------------------------------------
-
 	//--------------------------------------------------------------------
 	// Display Methods
 	//--------------------------------------------------------------------
@@ -291,15 +288,15 @@ class Exceptions
 	{
 		if (strpos($file, APPPATH) === 0)
 		{
-			$file = 'APPPATH/'.substr($file, strlen(APPPATH));
+			$file = 'APPPATH/' . substr($file, strlen(APPPATH));
 		}
 		elseif (strpos($file, BASEPATH) === 0)
 		{
-			$file = 'BASEPATH/'.substr($file, strlen(BASEPATH));
+			$file = 'BASEPATH/' . substr($file, strlen(BASEPATH));
 		}
 		elseif (strpos($file, FCPATH) === 0)
 		{
-			$file = 'FCPATH/'.substr($file, strlen(FCPATH));
+			$file = 'FCPATH/' . substr($file, strlen(FCPATH));
 		}
 
 		return $file;
@@ -319,18 +316,17 @@ class Exceptions
 	{
 		if ($bytes < 1024)
 		{
-			return $bytes.'B';
+			return $bytes . 'B';
 		}
 		else if ($bytes < 1048576)
 		{
-			return round($bytes/1024, 2).'KB';
+			return round($bytes / 1024, 2) . 'KB';
 		}
 
-		return round($bytes/1048576, 2).'MB';
+		return round($bytes / 1048576, 2) . 'MB';
 	}
 
 	//--------------------------------------------------------------------
-
 
 	/**
 	 * Creates a syntax-highlighted version of a PHP file.
@@ -343,7 +339,7 @@ class Exceptions
 	 */
 	public static function highlightFile($file, $lineNumber, $lines = 15)
 	{
-		if (empty ($file) || ! is_readable($file))
+		if (empty($file) || ! is_readable($file))
 		{
 			return false;
 		}
@@ -361,8 +357,7 @@ class Exceptions
 		try
 		{
 			$source = file_get_contents($file);
-		}
-		catch (\Throwable $e)
+		} catch (\Throwable $e)
 		{
 			return false;
 		}
@@ -374,14 +369,14 @@ class Exceptions
 		$source = explode("\n", str_replace("\r\n", "\n", $source));
 
 		// Get just the part to show
-		$start = $lineNumber - (int)round($lines / 2);
+		$start = $lineNumber - (int) round($lines / 2);
 		$start = $start < 0 ? 0 : $start;
 
 		// Get just the lines we need to display, while keeping line numbers...
 		$source = array_splice($source, $start, $lines, true);
 
 		// Used to format the line number in the source
-		$format = '% '.strlen($start + $lines).'d';
+		$format = '% ' . strlen($start + $lines) . 'd';
 
 		$out = '';
 		// Because the highlighting may have an uneven number
@@ -395,18 +390,15 @@ class Exceptions
 			$spans += substr_count($row, '<span') - substr_count($row, '</span');
 			$row = str_replace(["\r", "\n"], ['', ''], $row);
 
-			if (($n+$start+1) == $lineNumber)
+			if (($n + $start + 1) == $lineNumber)
 			{
 				preg_match_all('#<[^>]+>#', $row, $tags);
-				$out .= sprintf("<span class='line highlight'><span class='number'>{$format}</span> %s\n</span>%s",
-						$n + $start + 1,
-						strip_tags($row),
-						implode('', $tags[0])
+				$out .= sprintf("<span class='line highlight'><span class='number'>{$format}</span> %s\n</span>%s", $n + $start + 1, strip_tags($row), implode('', $tags[0])
 				);
 			}
 			else
 			{
-				$out .= sprintf('<span class="line"><span class="number">'.$format.'</span> %s', $n + $start +1, $row) ."\n";
+				$out .= sprintf('<span class="line"><span class="number">' . $format . '</span> %s', $n + $start + 1, $row) . "\n";
 			}
 		}
 
@@ -415,9 +407,8 @@ class Exceptions
 			$out .= str_repeat('</span>', $spans);
 		}
 
-		return '<pre><code>'.$out.'</code></pre>';
+		return '<pre><code>' . $out . '</code></pre>';
 	}
 
 	//--------------------------------------------------------------------
-
 }

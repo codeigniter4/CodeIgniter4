@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
+ * Copyright (c) 2014-2017, British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,17 +29,17 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @copyright	2014-2017, British Columbia Institute of Technology (http://bcit.ca/)
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 3.0.0
  * @filesource
  */
-
 use CodeIgniter\Cache\CacheInterface;
 
 class FileHandler implements CacheInterface
 {
+
 	/**
 	 * Prefixed to all cache names.
 	 *
@@ -59,11 +59,9 @@ class FileHandler implements CacheInterface
 	public function __construct($config)
 	{
 		$this->prefix = $config->prefix ?: '';
-		$this->path   = ! empty($config->path)
-			? $config->path
-			: WRITEPATH.'cache';
+		$this->path = ! empty($config->path) ? $config->path : WRITEPATH . 'cache';
 
-		$this->path = rtrim($this->path, '/').'/';
+		$this->path = rtrim($this->path, '/') . '/';
 	}
 
 	//--------------------------------------------------------------------
@@ -87,7 +85,7 @@ class FileHandler implements CacheInterface
 	 */
 	public function get(string $key)
 	{
-		$key = $this->prefix.$key;
+		$key = $this->prefix . $key;
 
 		$data = $this->getItem($key);
 
@@ -107,17 +105,17 @@ class FileHandler implements CacheInterface
 	 */
 	public function save(string $key, $value, int $ttl = 60)
 	{
-		$key = $this->prefix.$key;
+		$key = $this->prefix . $key;
 
 		$contents = [
-			'time' => time(),
-			'ttl'  => $ttl,
-			'data' => $value,
+			'time'	 => time(),
+			'ttl'	 => $ttl,
+			'data'	 => $value,
 		];
 
-		if ($this->writeFile($this->path.$key, serialize($contents)))
+		if ($this->writeFile($this->path . $key, serialize($contents)))
 		{
-			chmod($this->path.$key, 0640);
+			chmod($this->path . $key, 0640);
 
 			return true;
 		}
@@ -136,11 +134,9 @@ class FileHandler implements CacheInterface
 	 */
 	public function delete(string $key)
 	{
-		$key = $this->prefix.$key;
+		$key = $this->prefix . $key;
 
-		return file_exists($this->path.$key)
-			? unlink($this->path.$key)
-			: false;
+		return file_exists($this->path . $key) ? unlink($this->path . $key) : false;
 	}
 
 	//--------------------------------------------------------------------
@@ -155,7 +151,7 @@ class FileHandler implements CacheInterface
 	 */
 	public function increment(string $key, int $offset = 1)
 	{
-		$key = $this->prefix.$key;
+		$key = $this->prefix . $key;
 
 		$data = $this->getItem($key);
 
@@ -163,16 +159,14 @@ class FileHandler implements CacheInterface
 		{
 			$data = ['data' => 0, 'ttl' => 60];
 		}
-		elseif (! is_int($data['data']))
+		elseif ( ! is_int($data['data']))
 		{
 			return false;
 		}
 
-		$new_value = $data['data']+$offset;
+		$new_value = $data['data'] + $offset;
 
-		return $this->save($key, $new_value, $data['ttl'])
-			? $new_value
-			: false;
+		return $this->save($key, $new_value, $data['ttl']) ? $new_value : false;
 	}
 
 	//--------------------------------------------------------------------
@@ -187,7 +181,7 @@ class FileHandler implements CacheInterface
 	 */
 	public function decrement(string $key, int $offset = 1)
 	{
-		$key = $this->prefix.$key;
+		$key = $this->prefix . $key;
 
 		$data = $this->getItem($key);
 
@@ -195,16 +189,14 @@ class FileHandler implements CacheInterface
 		{
 			$data = ['data' => 0, 'ttl' => 60];
 		}
-		elseif (! is_int($data['data']))
+		elseif ( ! is_int($data['data']))
 		{
 			return false;
 		}
 
-		$new_value = $data['data']-$offset;
+		$new_value = $data['data'] - $offset;
 
-		return $this->save($key, $new_value, $data['ttl'])
-			? $new_value
-			: false;
+		return $this->save($key, $new_value, $data['ttl']) ? $new_value : false;
 	}
 
 	//--------------------------------------------------------------------
@@ -245,18 +237,18 @@ class FileHandler implements CacheInterface
 	 */
 	public function getMetaData(string $key)
 	{
-		$key = $this->prefix.$key;
+		$key = $this->prefix . $key;
 
-		if ( ! file_exists($this->path.$key))
+		if ( ! file_exists($this->path . $key))
 		{
 			return FALSE;
 		}
 
-		$data = @unserialize(file_get_contents($this->path.$key));
+		$data = @unserialize(file_get_contents($this->path . $key));
 
 		if (is_array($data))
 		{
-			$mtime = filemtime($this->path.$key);
+			$mtime = filemtime($this->path . $key);
 
 			if ( ! isset($data['ttl']))
 			{
@@ -265,8 +257,8 @@ class FileHandler implements CacheInterface
 
 			return [
 				'expire' => $mtime + $data['ttl'],
-				'mtime'  => $mtime,
-				'data'   => $data['data'],
+				'mtime'	 => $mtime,
+				'data'	 => $data['data'],
 			];
 		}
 
@@ -297,16 +289,16 @@ class FileHandler implements CacheInterface
 	 */
 	protected function getItem(string $key)
 	{
-		if (! is_file($this->path.$key))
+		if ( ! is_file($this->path . $key))
 		{
 			return false;
 		}
 
-		$data = unserialize(file_get_contents($this->path.$key));
+		$data = unserialize(file_get_contents($this->path . $key));
 
-		if ($data['ttl'] > 0 && time() > $data['time']+$data['ttl'])
+		if ($data['ttl'] > 0 && time() > $data['time'] + $data['ttl'])
 		{
-			unlink($this->path.$key);
+			unlink($this->path . $key);
 
 			return false;
 		}
@@ -315,7 +307,6 @@ class FileHandler implements CacheInterface
 	}
 
 	//--------------------------------------------------------------------
-
 	//--------------------------------------------------------------------
 	// SUPPORT METHODS FOR FILES
 	//--------------------------------------------------------------------
@@ -331,7 +322,7 @@ class FileHandler implements CacheInterface
 	 */
 	protected function writeFile($path, $data, $mode = 'wb')
 	{
-		if(($fp = @fopen($path, $mode)) === false)
+		if (($fp = @fopen($path, $mode)) === false)
 		{
 			return false;
 		}
@@ -374,7 +365,7 @@ class FileHandler implements CacheInterface
 		// Trim the trailing slash
 		$path = rtrim($path, '/\\');
 
-		if (! $current_dir = @opendir($path))
+		if ( ! $current_dir = @opendir($path))
 		{
 			return false;
 		}
@@ -383,22 +374,20 @@ class FileHandler implements CacheInterface
 		{
 			if ($filename !== '.' && $filename !== '..')
 			{
-				if (is_dir($path.DIRECTORY_SEPARATOR.$filename) && $filename[0] !== '.')
+				if (is_dir($path . DIRECTORY_SEPARATOR . $filename) && $filename[0] !== '.')
 				{
-					$this->deleteFiles($path.DIRECTORY_SEPARATOR.$filename, $del_dir, $htdocs, $_level+1);
+					$this->deleteFiles($path . DIRECTORY_SEPARATOR . $filename, $del_dir, $htdocs, $_level + 1);
 				}
 				elseif ($htdocs !== true || ! preg_match('/^(\.htaccess|index\.(html|htm|php)|web\.config)$/i', $filename))
 				{
-					@unlink($path.DIRECTORY_SEPARATOR.$filename);
+					@unlink($path . DIRECTORY_SEPARATOR . $filename);
 				}
 			}
 		}
 
 		closedir($current_dir);
 
-		return ($del_dir === true && $_level > 0)
-			? @rmdir($path)
-			: true;
+		return ($del_dir === true && $_level > 0) ? @rmdir($path) : true;
 	}
 
 	//--------------------------------------------------------------------
@@ -427,20 +416,20 @@ class FileHandler implements CacheInterface
 			// reset the array and make sure $source_dir has a trailing slash on the initial call
 			if ($_recursion === false)
 			{
-				$_filedata  = [];
-				$source_dir = rtrim(realpath($source_dir), DIRECTORY_SEPARATOR).DIRECTORY_SEPARATOR;
+				$_filedata = [];
+				$source_dir = rtrim(realpath($source_dir), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
 			}
 
 			// Used to be foreach (scandir($source_dir, 1) as $file), but scandir() is simply not as fast
 			while (false !== ($file = readdir($fp)))
 			{
-				if (is_dir($source_dir.$file) && $file[0] !== '.' && $top_level_only === false)
+				if (is_dir($source_dir . $file) && $file[0] !== '.' && $top_level_only === false)
 				{
-					$this->getDirFileInfo($source_dir.$file.DIRECTORY_SEPARATOR, $top_level_only, true);
+					$this->getDirFileInfo($source_dir . $file . DIRECTORY_SEPARATOR, $top_level_only, true);
 				}
 				elseif ($file[0] !== '.')
 				{
-					$_filedata[$file]                  = $this->getFileInfo($source_dir.$file);
+					$_filedata[$file] = $this->getFileInfo($source_dir . $file);
 					$_filedata[$file]['relative_path'] = $relative_path;
 				}
 			}
@@ -470,7 +459,7 @@ class FileHandler implements CacheInterface
 	 */
 	protected function getFileInfo(string $file, array $returned_values = ['name', 'server_path', 'size', 'date'])
 	{
-		if (! file_exists($file))
+		if ( ! file_exists($file))
 		{
 			return false;
 		}

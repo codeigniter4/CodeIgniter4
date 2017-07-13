@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
+ * Copyright (c) 2014-2017, British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,17 +29,17 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @copyright	2014-2017, British Columbia Institute of Technology (http://bcit.ca/)
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 3.0.0
  * @filesource
  */
-
 use CodeIgniter\Cache\CacheInterface;
 
 class MemcachedHandler implements CacheInterface
 {
+
 	/**
 	 * Prefixed to all cache names.
 	 *
@@ -60,10 +60,10 @@ class MemcachedHandler implements CacheInterface
 	 * @var array
 	 */
 	protected $config = [
-		'host'   => '127.0.0.1',
-		'port'   => 11211,
+		'host'	 => '127.0.0.1',
+		'port'	 => 11211,
 		'weight' => 1,
-		'raw'    => false,
+		'raw'	 => false,
 	];
 
 	//--------------------------------------------------------------------
@@ -72,7 +72,7 @@ class MemcachedHandler implements CacheInterface
 	{
 		$this->prefix = $config['prefix'] ?? '';
 
-		if (!empty($config))
+		if ( ! empty($config))
 		{
 			$this->config = array_merge($this->config, $config);
 		}
@@ -122,25 +122,19 @@ class MemcachedHandler implements CacheInterface
 		if ($this->memcached instanceof \Memcached)
 		{
 			$this->memcached->addServer(
-				$this->config['host'],
-				$this->config['port'],
-				$this->config['weight']
+					$this->config['host'], $this->config['port'], $this->config['weight']
 			);
 		}
 		elseif ($this->memcached instanceof \Memcache)
 		{
 			// Third parameter is persistance and defaults to TRUE.
 			$this->memcached->addServer(
-				$this->config['host'],
-				$this->config['port'],
-				true,
-				$this->config['weight']
+					$this->config['host'], $this->config['port'], true, $this->config['weight']
 			);
 		}
 	}
 
 	//--------------------------------------------------------------------
-
 
 	/**
 	 * Attempts to fetch an item from the cache store.
@@ -151,7 +145,7 @@ class MemcachedHandler implements CacheInterface
 	 */
 	public function get(string $key)
 	{
-		$key = $this->prefix.$key;
+		$key = $this->prefix . $key;
 
 		$data = $this->memcached->get($key);
 
@@ -171,9 +165,9 @@ class MemcachedHandler implements CacheInterface
 	 */
 	public function save(string $key, $value, int $ttl = 60)
 	{
-		$key = $this->prefix.$key;
+		$key = $this->prefix . $key;
 
-		if (!$this->config['raw'])
+		if ( ! $this->config['raw'])
 		{
 			$value = [$value, time(), $ttl];
 		}
@@ -201,7 +195,7 @@ class MemcachedHandler implements CacheInterface
 	 */
 	public function delete(string $key)
 	{
-		$key = $this->prefix.$key;
+		$key = $this->prefix . $key;
 
 		return $this->memcached->delete($key);
 	}
@@ -218,12 +212,12 @@ class MemcachedHandler implements CacheInterface
 	 */
 	public function increment(string $key, int $offset = 1)
 	{
-		if (!$this->config['raw'])
+		if ( ! $this->config['raw'])
 		{
 			return false;
 		}
 
-		$key = $this->prefix.$key;
+		$key = $this->prefix . $key;
 
 		return $this->memcached->increment($key, $offset, $offset, 60);
 	}
@@ -240,12 +234,12 @@ class MemcachedHandler implements CacheInterface
 	 */
 	public function decrement(string $key, int $offset = 1)
 	{
-		if (!$this->config['raw'])
+		if ( ! $this->config['raw'])
 		{
 			return false;
 		}
 
-		$key = $this->prefix.$key;
+		$key = $this->prefix . $key;
 
 		//FIXME: third parameter isn't other handler actions.
 		return $this->memcached->decrement($key, $offset, $offset, 60);
@@ -289,7 +283,7 @@ class MemcachedHandler implements CacheInterface
 	 */
 	public function getMetaData(string $key)
 	{
-		$key = $this->prefix.$key;
+		$key = $this->prefix . $key;
 
 		$stored = $this->memcached->get($key);
 
@@ -301,9 +295,9 @@ class MemcachedHandler implements CacheInterface
 		list($data, $time, $ttl) = $stored;
 
 		return [
-			'expire'	=> $time + $ttl,
-			'mtime'		=> $time,
-			'data'		=> $data
+			'expire' => $time + $ttl,
+			'mtime'	 => $time,
+			'data'	 => $data
 		];
 	}
 
@@ -318,4 +312,5 @@ class MemcachedHandler implements CacheInterface
 	{
 		return (extension_loaded('memcached') OR extension_loaded('memcache'));
 	}
+
 }
