@@ -556,11 +556,11 @@ class TimeTest extends \CIUnitTestCase
 	 * shows a numeric version of the month instead of the textual version.
 	 * Not sure what the fix is just yet....
 	 */
-	public function testToFormattedDateString()
-	{
+//	public function testToFormattedDateString()
+//	{
 //		$time = Time::parse('February 10, 2017', 'America/Chicago');
 //		$this->assertEquals('Feb 10, 2017', $time->toFormattedDateString());
-	}
+//	}
 
 	public function testToTimeString()
 	{
