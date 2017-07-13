@@ -126,6 +126,7 @@ class Checks extends Controller
 
             $res = $forge->addForeignKey('users_id','users','id','CASCADE','CASCADE');
             var_dump($res);
+            
             //$forge->addForeignKey('other_id','users','id');
 
             $res = $forge->createTable('invoices', true);
