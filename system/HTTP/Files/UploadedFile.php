@@ -277,6 +277,18 @@ class UploadedFile extends File implements UploadedFileInterface
 	 */
 	public function getName(): string
 	{
+		return $this->name;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns the name of the file as provided by the client during upload.
+	 *
+	 * @return string
+	 */
+	public function getClientName(): string
+	{
 		return $this->originalName;
 	}
 
@@ -289,7 +301,7 @@ class UploadedFile extends File implements UploadedFileInterface
 	 */
 	public function getTempName(): string
 	{
-		return $this->name;
+		return $this->path;
 	}
 
 	//--------------------------------------------------------------------
