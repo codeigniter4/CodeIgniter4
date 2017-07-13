@@ -547,10 +547,11 @@ class Forge
 	 *
 	 * @param    string $table_name Table name
 	 * @param    bool   $if_exists  Whether to add an IF EXISTS condition
+	 * @param    bool   $cascade    Whether to add an CASCADE condition
 	 *
 	 * @return    bool
 	 */
-	public function dropTable($table_name, $if_exists = false)
+	public function dropTable($table_name, $if_exists = false, $cascade = false)
 	{
 		if ($table_name === '')
 		{
@@ -562,7 +563,7 @@ class Forge
 			return false;
 		}
 
-		if (($query = $this->_dropTable($this->db->DBPrefix.$table_name, $if_exists)) === true)
+		if (($query = $this->_dropTable($this->db->DBPrefix.$table_name, $if_exists, $cascade)) === true)
 		{
 			return true;
 		}
@@ -595,7 +596,7 @@ class Forge
 	 *
 	 * @return    string
 	 */
-	protected function _dropTable($table, $if_exists)
+	protected function _dropTable($table, $if_exists, $cascade)
 	{
 		$sql = 'DROP TABLE';
 
@@ -613,8 +614,15 @@ class Forge
 				$sql = sprintf($this->dropTableIfStr, $this->db->escapeIdentifiers($table));
 			}
 		}
-
-		return $sql.' '.$this->db->escapeIdentifiers($table);
+                
+                $sql = $sql.' '.$this->db->escapeIdentifiers($table);
+                
+                if($cascade === true)
+                {
+                    $sql .= ' CASCADE';
+                }
+               
+		return $sql;
 	}
 
 	//--------------------------------------------------------------------
