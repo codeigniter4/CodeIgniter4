@@ -37,23 +37,6 @@
  */
 class OpenSSLHandler extends BaseHandler
 {
-
-	/**
-	 * List of available modes
-	 *
-	 * @var	array
-	 */
-	protected $modes = [
-		'cbc'	 => 'cbc',
-		'ecb'	 => 'ecb',
-		'ofb'	 => 'ofb',
-		'cfb'	 => 'cfb',
-		'cfb8'	 => 'cfb8',
-		'ctr'	 => 'ctr',
-		'stream' => '',
-		'xts'	 => 'xts'
-	];
-
 	// --------------------------------------------------------------------
 
 	/**
@@ -69,21 +52,7 @@ class OpenSSLHandler extends BaseHandler
 		if ( ! empty($params['cipher']))
 		{
 			$params['cipher'] = strtolower($params['cipher']);
-			$this->cipherAlias($params['cipher']);
 			$this->cipher = $params['cipher'];
-		}
-
-		if ( ! empty($params['mode']))
-		{
-			$params['mode'] = strtolower($params['mode']);
-			if ( ! isset($this->modes[$params['mode']]))
-			{
-				$this->logger->error('Encryption: OpenSSL mode ' . strtoupper($params['mode']) . ' is not available.');
-			}
-			else
-			{
-				$this->mode = $this->modes[$params['mode']];
-			}
 		}
 
 		if ( ! empty($params['key']))
@@ -91,42 +60,34 @@ class OpenSSLHandler extends BaseHandler
 			$this->key = $params['key'];
 		}
 
-		if (isset($this->cipher, $this->mode))
+		if (isset($this->cipher))
 		{
-			// This is mostly for the stream mode, which doesn't get suffixed in OpenSSL
-			$handle = empty($this->mode) ? $this->cipher : $this->cipher . '-' . $this->mode;
-
-			if ( ! in_array($handle, openssl_get_cipher_methods(), true))
+			if ( ! in_array($this->cipher, openssl_get_cipher_methods(), true))
 			{
-				$this->handle = null;
-				$this->logger->error('Encryption: Unable to initialize OpenSSL with method ' . strtoupper($handle) . '.');
+				$this->logger->error('Encryption: Unable to initialize OpenSSL with cipher ' . $this->cipher . '.');
+				$this->cipher = null;
 			}
 			else
 			{
-				$this->handle = $handle;
-				$this->logger->info('Encryption: OpenSSL initialized with method ' . strtoupper($handle) . '.');
+				$this->logger->info('Encryption: OpenSSL initialized with cipher ' . $this->cipher . '.');
 			}
 		}
+
+		$this->secret = hash_hkdf($this->cipher, $this->key);
 	}
 
 	/**
 	 * Encrypt
 	 *
 	 * @param	string	$data	Input data
-	 * @param	array	$params	Input parameters
 	 * @return	string
 	 */
-	public function encrypt($data, array $params = null)
+	public function encrypt($data)
 	{
-		if (empty($params['cipher']))
-		{
-			return false;
-		}
-
-		$iv = ($iv_size = openssl_cipher_iv_length($params['cipher'])) ? $this->createKey($iv_size) : null;
+		$iv = ($iv_size = openssl_cipher_iv_length($this->cipher)) ? $this->createKey($iv_size) : null;
 
 		$data = openssl_encrypt(
-				$data, $params['cipher'], $params['key'], OPENSSL_RAW_DATA, $iv
+				$data, $this->cipher, $this->secret, OPENSSL_RAW_DATA, $iv
 		);
 
 		if ($data === false)
@@ -143,13 +104,12 @@ class OpenSSLHandler extends BaseHandler
 	 * Decrypt
 	 *
 	 * @param	string	$data	Encrypted data
-	 * @param	array	$params	Input parameters
 	 * @return	string
 	 */
-	public function decrypt($data, array $params = null)
+	public function decrypt($data)
 	{
 
-		if ($iv_size = openssl_cipher_iv_length($params['cipher']))
+		if ($iv_size = openssl_cipher_iv_length($this->cipher))
 		{
 			$iv = self::substr($data, 0, $iv_size);
 			$data = self::substr($data, $iv_size);
@@ -159,42 +119,7 @@ class OpenSSLHandler extends BaseHandler
 			$iv = null;
 		}
 
-		return empty($params['cipher']) ? false : openssl_decrypt(
-						$data, $params['cipher'], $params['key'], OPENSSL_RAW_DATA, $iv
-		);
-	}
-
-	// --------------------------------------------------------------------
-
-	/**
-	 * Cipher alias
-	 *
-	 * Tries to translate cipher names as appropriate for this handler
-	 *
-	 * @param	string	$cipher	Cipher name
-	 * @return	void
-	 */
-	protected function cipherAlias(&$cipher)
-	{
-		static $dictionary;
-
-		if (empty($dictionary))
-		{
-			$dictionary = [
-				'rijndael-128'	 => 'aes-128',
-				'rijndael-256'	 => 'aes-256',
-				'tripledes'		 => 'des-ede3',
-				'blowfish'		 => 'bf',
-				'cast-128'		 => 'cast5',
-				'arcfour'		 => 'rc4-40',
-				'rc4'			 => 'rc4-40'
-			];
-		}
-
-		if (isset($dictionary[$cipher]))
-		{
-			$cipher = $dictionary[$cipher];
-		}
+		return openssl_decrypt($data, $this->cipher, $this->secret, OPENSSL_RAW_DATA, $iv);
 	}
 
 }

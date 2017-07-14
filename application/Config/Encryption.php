@@ -15,7 +15,7 @@ class Encryption extends BaseConfig
 {
 	/*
 	  |--------------------------------------------------------------------------
-	  | Encryption Key
+	  | Encryption Key Starter
 	  |--------------------------------------------------------------------------
 	  |
 	  | If you use the Encryption class you must set an encryption key.
@@ -33,7 +33,7 @@ class Encryption extends BaseConfig
 	  | One of the supported drivers, eg 'openssl' or 'mcrypt'.
 	  | The default driver, if you don't specify one, is 'openssl'.
 	 */
-	public $driver = 'openssl';
+	public $driver = 'OpenSSL';
 
 	/*
 	  |--------------------------------------------------------------------------
@@ -42,15 +42,33 @@ class Encryption extends BaseConfig
 	  |
 	  | Name of the encryption cipher to use, eg 'aes-256' or 'blowfish'
 	 */
-	public $cipher = 'aes-256';
+	public $cipher = 'AES-256-CBC';
 
 	/*
 	  |--------------------------------------------------------------------------
-	  | Encryption mode
+	  | Authentication
 	  |--------------------------------------------------------------------------
 	  |
-	  | The encryption mode to use, eg 'cbc' or 'stream'
+	  | Use HMAC message authentication (true/false)
 	 */
-	public $mode = 'cbc';
+	public $hmac = true;
+
+	/*
+	  |--------------------------------------------------------------------------
+	  | HMAC digest
+	  |--------------------------------------------------------------------------
+	  |
+	  | HMAC digest algorithm to use
+	 */
+	public $digest = 'SHA512';
+
+	/*
+	  |--------------------------------------------------------------------------
+	  | Base64 encoding?
+	  |--------------------------------------------------------------------------
+	  |
+	  | If true, base64 encode results, and expect base64-encoded ciphertext.
+	 */
+	public $base64 = true;
 
 }

@@ -66,32 +66,9 @@ class Encryption
 	protected $encrypter;
 
 	/**
-	 * Our configuration
+	 * Our remembered configuration
 	 */
-	protected $config;
-
-	/**
-	 * The PHP extension we plan to use
-	 *
-	 * @var	string
-	 */
-	protected $handler;
-
-	/**
-	 * List of usable handlers (PHP extensions)
-	 *
-	 * @var	array
-	 */
-	protected $handlers = [];
-
-	/**
-	 * Map of drivers to handler classes, in preference order
-	 * 
-	 * @var array
-	 */
-	protected $drivers = [
-		'openssl' => 'OpenSSL',
-	];
+	protected $config = [];
 
 	/**
 	 * Logger instance to record error messages and warnings.
@@ -100,25 +77,40 @@ class Encryption
 	protected $logger;
 
 	/**
-	 * Encryption cipher
-	 *
-	 * @var	string
+	 * Our default configuration
 	 */
-	protected $cipher = 'aes-256';
+	protected $default = [
+		'driver' => 'OpenSSL', // The PHP extension we plan to use
+		'key'	 => '', // no starting key material
+		'cipher' => 'AES-256-CBC', // Encryption cipher
+		'hmac'	 => true, // Use HMAC message authentication (true/false)
+		'digest' => 'SHA512', // HMAC digest algorithm to use
+		'base64' => true, // Base64 encoding?
+	];
+	protected $driver, $key, $cipher, $hmac, $digest, $base64;
 
 	/**
-	 * Cipher mode
-	 *
-	 * @var	string
+	 * Map of drivers to handler classes, in preference order
+	 * 
+	 * @var array
 	 */
-	protected $mode = 'cbc';
+	protected $drivers = [
+		'OpenSSL',
+	];
 
 	/**
-	 * Encryption key
+	 * List of supported HMAC algorithms
 	 *
-	 * @var	string
+	 * name => digest size pairs
+	 *
+	 * @var	array
 	 */
-	protected $key;
+	protected $digests = [
+		'SHA224' => 28,
+		'SHA256' => 32,
+		'SHA384' => 48,
+		'SHA512' => 64
+	];
 
 	// --------------------------------------------------------------------
 
@@ -133,35 +125,27 @@ class Encryption
 	public function __construct($params = [])
 	{
 		$this->logger = \Config\Services::logger(true);
-		$this->config = new \Config\Encryption();
+		$this->config = array_merge($this->default, (array) new \Config\Encryption());
 
+		$params = $this->properParams($params);
 
-		if ($params == null)
-		// use config if no parameters given
-			$params = (array) $this->config;
-		elseif (is_object($params))
-		{
-			// treat the paramater as a Config object
-			$params = (array) $params;
-		}
-
-		// override base config with passed parameters
-		$params = array_merge((array) $this->config, $params);
+		// Check for an unknown driver
+		if (isset($this->drivers[$params['driver']]))
+			throw new EncryptionException("Unknown handler '" . $params['driver'] . "' cannot be configured.");
 
 		// determine what is installed
 		$this->handlers = [
 			'OpenSSL' => extension_loaded('openssl'),
 		];
 
-		if ( ! $this->handlers['OpenSSL'])
+		if ( ! in_array(true, $this->handlers))
 			throw new EncryptionException('Unable to find an available encryption handler.');
 
-		$this->initialize($params);
 		$this->logger->info('Encryption class Initialized');
 	}
 
 	/**
-	 * Initialize
+	 * Initialize or re-initialize an encrypter
 	 *
 	 * @param	array	$params	Configuration parameters
 	 * @return	\CodeIgniter\Encryption\EncrypterInterface
@@ -170,42 +154,62 @@ class Encryption
 	 */
 	public function initialize(array $params = null)
 	{
-		// how should this be handled?
-		$this->driver = $params['driver'] ?? 'OpenSSL';
-		// translate if needed
-		if (isset($this->drivers[$this->driver]))
-			$this->driver = $this->drivers[$this->driver];
-		$this->handler = $this->driver;
+		$params = $this->properParams($params);
 
-		// use config key if initialization didn't create one
-		if ( ! isset($this->key) && self::strlen($key = $this->config->key) > 0)
-			$this->key = $key;
+		// Insist on a driver
+		if ( ! isset($params['driver']))
+			throw new EncryptionException("No driver requested; Miss Daisy will be so upset!");
 
-		if ( ! empty($params['handler']))
-		{
-			if (isset($this->handlers[$params['handler']]))
-			{
-				if ($this->handlers[$params['handler']])
-				{
-					$this->handler = $params['handler'];
-				}
-				else
-				{
-					throw new EncryptionException("Driver '" . $params['handler'] . "' is not available.");
-				}
-			}
-			else
-			{
-				throw new EncryptionException("Unknown handler '" . $params['handler'] . "' cannot be configured.");
-			}
-		}
+		// Check for an unknown driver
+		if ( ! in_array($params['driver'], $this->drivers))
+			throw new EncryptionException("Unknown handler '" . $params['driver'] . "' cannot be configured.");
 
-		empty($params['cipher']) && $params['cipher'] = $this->cipher;
-		empty($params['key']) OR $this->key = $params['key'];
+		// Check for an unavailable driver
+		if ( ! $this->handlers[$params['driver']])
+			throw new EncryptionException("Driver '" . $params['driver'] . "' is not available.");
 
-		$handlerName = 'CodeIgniter\\Encryption\\Handlers\\' . $this->handler . 'Handler';
+		// Check for a bad digest
+		if ( ! isset($this->digests[$params['digest']]))
+			throw new EncryptionException("Unknown digest '" . $params['digest'] . "' specified.");
+
+		$handlerName = 'CodeIgniter\\Encryption\\Handlers\\' . $this->driver . 'Handler';
 		$this->encrypter = new $handlerName($params);
 		return $this->encrypter;
+	}
+
+	/**
+	 * Determine proper parameters
+	 * 
+	 */
+	protected function properParams($params = null)
+	{
+		// use existing config if no parameters given
+		if (empty($params))
+			$params = $this->config;
+
+		// treat the paramater as a Config object?
+		if (is_object($params))
+			$params = (array) $params;
+
+		// Capitalize cipher & digest
+		if (isset($params['cipher']))
+			$params['cipher'] = strtoupper($params['cipher']);
+		if (isset($params['digest']))
+			$params['digest'] = strtoupper($params['digest']);
+
+		// override base config with passed parameters
+		$params = array_merge($this->config, $params);
+		// make sure we only have expected parameters
+		$params = array_intersect_key($params, $this->default);
+
+		// and remember what we are up to
+		$this->config = $params;
+
+		// make the parameters conveniently accessible
+		foreach ($params as $pkey => $value)
+			$this->$pkey = $value;
+
+		return $params;
 	}
 
 // --------------------------------------------------------------------
@@ -216,20 +220,9 @@ class Encryption
 	 * @param	int	$length	Output length
 	 * @return	string
 	 */
-	public static function createKey($length)
+	public static function createKey($length = 32)
 	{
-		try
-		{
-			return random_bytes((int) $length);
-		} catch (Exception $e)
-		{
-			throw new EncryptionException('Key creation error: ' . $e->getMessage());
-		}
-
-		//FIXME Is this even reachable?
-		$is_secure = null;
-		$key = openssl_random_pseudo_bytes($length, $is_secure);
-		return ($is_secure === true) ? $key : false;
+		return openssl_random_pseudo_bytes($length);
 	}
 
 	// --------------------------------------------------------------------
@@ -242,12 +235,7 @@ class Encryption
 	 */
 	public function __get($key)
 	{
-		// Because aliases
-		if ($key === 'mode')
-		{
-			return array_search($this->mode, $this->modes[$this->handler], true);
-		}
-		elseif (in_array($key, ['cipher', 'key', 'handler', 'handlers', 'digests'], true))
+		if (in_array($key, ['config', 'cipher', 'key', 'driver', 'drivers', 'digest', 'digests', 'default', 'hmac', 'base64'], true))
 		{
 			return $this->{$key};
 		}
