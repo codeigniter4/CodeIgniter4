@@ -839,7 +839,7 @@ class Time extends DateTime
 	{
 		$time = clone($this);
 
-		return $time->add(DateInterval::createFromDateString("-{$seconds} seconds"));
+		return $time->sub(DateInterval::createFromDateString("{$seconds} seconds"));
 	}
 
 	/**
@@ -853,7 +853,7 @@ class Time extends DateTime
 	{
 		$time = clone($this);
 
-		return $time->add(DateInterval::createFromDateString("-{$minutes} minutes"));
+		return $time->sub(DateInterval::createFromDateString("{$minutes} minutes"));
 	}
 
 	/**
@@ -867,7 +867,7 @@ class Time extends DateTime
 	{
 		$time = clone($this);
 
-		return $time->add(DateInterval::createFromDateString("-{$hours} hours"));
+		return $time->sub(DateInterval::createFromDateString("{$hours} hours"));
 	}
 
 	/**
@@ -881,7 +881,7 @@ class Time extends DateTime
 	{
 		$time = clone($this);
 
-		return $time->add(DateInterval::createFromDateString("-{$days} days"));
+		return $time->sub(DateInterval::createFromDateString("{$days} days"));
 	}
 
 	/**
@@ -895,7 +895,7 @@ class Time extends DateTime
 	{
 		$time = clone($this);
 
-		return $time->add(DateInterval::createFromDateString("-{$months} months"));
+		return $time->sub(DateInterval::createFromDateString("{$months} months"));
 	}
 
 	/**
@@ -909,7 +909,7 @@ class Time extends DateTime
 	{
 		$time = clone($this);
 
-		return $time->add(DateInterval::createFromDateString("-{$years} years"));
+		return $time->sub(DateInterval::createFromDateString("{$years} years"));
 	}
 
 	//--------------------------------------------------------------------
