@@ -479,6 +479,19 @@ class Connection extends BaseConnection implements ConnectionInterface
 	}
 
 	//--------------------------------------------------------------------
+        
+	/**
+	 * Returns an object with Foreign key data
+	 *
+	 * @param	string	$table
+	 * @return	array
+	 */
+	public function _foreignKeyData(string $table)
+	{
+		return [];
+	}
+
+	//--------------------------------------------------------------------
 
 	/**
 	 * Returns the last error code and message.

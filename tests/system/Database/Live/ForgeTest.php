@@ -154,36 +154,12 @@ class ForgeTest extends \CIDatabaseTestCase
 
                 $this->forge->createTable('forge_test_invoices_1', true);
 
-                //Insert User example
-                $insertData = [
-                    'id' => 1,
-                    'name' => 'John Doe'
-                ];
-                $this->db->table('forge_test_users_1')->insert($insertData);
-
-                //Insert invoices example
-                $insertData = [
-                    'id' => 1,
-                    'users_id' => 1,
-                    'name' => 'Invoice 1'
-                ];
-                $invoice1 = $this->db->table('forge_test_invoices_1')->insert($insertData);
-
-                $insertData = [
-                    'id' => 2,
-                    'users_id' => 2,
-                    'name' => 'Invoice 2'
-                ];
+                $foreignKeyData = $this->db->getForeignKeyData('forge_test_invoices_1');
+                $this->assertEquals($foreignKeyData[0]->constraint_name, $this->db->DBPrefix.'forge_test_invoices_1_users_id_foreign');
+                $this->assertEquals($foreignKeyData[0]->table_name, $this->db->DBPrefix.'forge_test_invoices_1');
+                $this->assertEquals($foreignKeyData[0]->column_name, 'users_id');
+                $this->assertEquals($foreignKeyData[0]->foreign_column_name, 'id');
                 
-                try {
-                    $invoice2 = $this->db->table('forge_test_invoices_1')->insert($insertData);
-                } catch (\ErrorException $e) {
-                    $invoice2 = false;
-                }
-                
-                $this->assertInstanceOf('CodeIgniter\Database\BaseResult', $invoice1);
-                $this->assertFalse($invoice2);
-
                 $this->forge->dropTable('forge_test_invoices_1', true);       
                 $this->forge->dropTable('forge_test_users_1', true);
                 

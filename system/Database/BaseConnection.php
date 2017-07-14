@@ -1608,6 +1608,21 @@ abstract class BaseConnection implements ConnectionInterface
 	}
 
 	//--------------------------------------------------------------------
+        
+	/**
+	 * Returns an object with foreign key data
+	 *
+	 * @param	string	$table	the table name
+	 * @return	array
+	 */
+	public function getForeignKeyData(string $table)
+	{
+		$fields = $this->_foreignKeyData($this->protectIdentifiers($table, true, false, false));
+
+		return $fields ?? false;
+	}
+
+	//--------------------------------------------------------------------
 
 	/**
 	 * Allows the engine to be set into a mode where queries are not

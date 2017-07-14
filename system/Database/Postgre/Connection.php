@@ -337,7 +337,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 			return false;
 		}
 		$query = $query->getResultObject();
-
+                
 		$retval = [];
 		foreach ($query as $row)
 		{
@@ -349,13 +349,56 @@ class Connection extends BaseConnection implements ConnectionInterface
 			}, $_fields);
 
 			$retval[] = $obj;
+	}
+
+		return $retval;
+	}
+
+	//--------------------------------------------------------------------
+        
+/**
+	 * Returns an object with Foreign key data
+	 *
+	 * @param	string	$table
+	 * @return	array
+	 */
+	public function _foreignKeyData(string $table)
+	{
+		$sql = 'SELECT
+                            tc.constraint_name, tc.table_name, kcu.column_name, 
+                            ccu.table_name AS foreign_table_name,
+                            ccu.column_name AS foreign_column_name
+                        FROM information_schema.table_constraints AS tc 
+                        JOIN information_schema.key_column_usage AS kcu
+                            ON tc.constraint_name = kcu.constraint_name
+                        JOIN information_schema.constraint_column_usage AS ccu
+                            ON ccu.constraint_name = tc.constraint_name
+                        WHERE constraint_type = '.$this->escape('FOREIGN KEY').' AND tc.table_name = '.$this->escape($table);
+                
+		if (($query = $this->query($sql)) === false)
+		{
+			return false;
+		}
+		$query = $query->getResultObject();
+                
+		$retval = [];
+		foreach ($query as $row)
+		{
+			$obj = new \stdClass();
+			$obj->constraint_name = $row->constraint_name;
+                        $obj->table_name = $row->table_name;
+                        $obj->column_name = $row->column_name;
+                        $obj->foreign_table_name = $row->foreign_table_name;
+                        $obj->foreign_column_name = $row->foreign_column_name;
+
+			$retval[] = $obj;
 		}
 
 		return $retval;
 	}
 
 	//--------------------------------------------------------------------
-
+        
 	/**
 	 * Returns the last error code and message.
 	 *
