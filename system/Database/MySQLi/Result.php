@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
+ * Copyright (c) 2014-2017 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,13 +29,12 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 3.0.0
  * @filesource
  */
-
 use CodeIgniter\Database\BaseResult;
 use CodeIgniter\Database\ResultInterface;
 
@@ -44,6 +43,7 @@ use CodeIgniter\Database\ResultInterface;
  */
 class Result extends BaseResult implements ResultInterface
 {
+
 	/**
 	 * Gets the number of fields in the result set.
 	 *
@@ -82,17 +82,17 @@ class Result extends BaseResult implements ResultInterface
 	 */
 	public function getFieldData(): array
 	{
-		$retval    = [];
+		$retval = [];
 		$fieldData = $this->resultID->fetch_fields();
 
-		for ($i = 0, $c = count($fieldData); $i < $c; $i++)
+		for ($i = 0, $c = count($fieldData); $i < $c; $i ++ )
 		{
-			$retval[$i]              = new \stdClass();
-			$retval[$i]->name        = $fieldData[$i]->name;
-			$retval[$i]->type        = $fieldData[$i]->type;
-			$retval[$i]->max_length  = $fieldData[$i]->max_length;
-			$retval[$i]->primary_key = (int)($fieldData[$i]->flags & 2);
-			$retval[$i]->default     = $fieldData[$i]->def;
+			$retval[$i] = new \stdClass();
+			$retval[$i]->name = $fieldData[$i]->name;
+			$retval[$i]->type = $fieldData[$i]->type;
+			$retval[$i]->max_length = $fieldData[$i]->max_length;
+			$retval[$i]->primary_key = (int) ($fieldData[$i]->flags & 2);
+			$retval[$i]->default = $fieldData[$i]->def;
 		}
 
 		return $retval;

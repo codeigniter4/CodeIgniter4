@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
+ * Copyright (c) 2014-2017 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,7 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 3.0.0
@@ -56,11 +56,11 @@ interface RendererInterface
 	 *                         to other template engines.
 	 * @param bool   $saveData If true, will save data for use with any other calls,
 	 *                         if false, will clean the data after displaying the view,
-	 *						   if not specified, use the config setting.
+	 * 						   if not specified, use the config setting.
 	 *
 	 * @return string
 	 */
-	public function render(string $view, array $options=null, $saveData=false): string;
+	public function render(string $view, array $options = null, $saveData = false): string;
 
 	//--------------------------------------------------------------------
 
@@ -74,11 +74,11 @@ interface RendererInterface
 	 *                         to other template engines.
 	 * @param bool   $saveData If true, will save data for use with any other calls,
 	 *                         if false, will clean the data after displaying the view,
-	 *						   if not specified, use the config setting.
+	 * 						   if not specified, use the config setting.
 	 *
 	 * @return string
 	 */
-	public function renderString(string $view, array $options=null, $saveData=false): string;
+	public function renderString(string $view, array $options = null, $saveData = false): string;
 
 	//--------------------------------------------------------------------
 
@@ -91,7 +91,7 @@ interface RendererInterface
 	 *
 	 * @return RendererInterface
 	 */
-	public function setData(array $data=[], string $context=null);
+	public function setData(array $data = [], string $context = null);
 
 	//--------------------------------------------------------------------
 
@@ -105,7 +105,7 @@ interface RendererInterface
 	 *
 	 * @return RendererInterface
 	 */
-	public function setVar(string $name, $value=null, string $context=null);
+	public function setVar(string $name, $value = null, string $context = null);
 
 	//--------------------------------------------------------------------
 
@@ -117,5 +117,4 @@ interface RendererInterface
 	public function resetData();
 
 	//--------------------------------------------------------------------
-
 }

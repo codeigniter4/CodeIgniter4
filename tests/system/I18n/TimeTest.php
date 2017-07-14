@@ -185,9 +185,13 @@ class TimeTest extends \CIUnitTestCase
 
 	public function testCreateFromFormat()
 	{
+		$now = new \DateTime('now');
+
+		Time::setTestNow($now);
 		$time = Time::createFromFormat('F j, Y', 'January 15, 2017', 'America/Chicago');
 
-		$this->assertEquals(date('2017-01-15 H:i:s'), $time->toDateTimeString());
+		$this->assertEquals(date('2017-01-15 H:i:s', $now->getTimestamp()), $time->toDateTimeString());
+		Time::setTestNow();
 	}
 
 	public function testCreateFromFormatWithTimezoneString()
@@ -556,11 +560,11 @@ class TimeTest extends \CIUnitTestCase
 	 * shows a numeric version of the month instead of the textual version.
 	 * Not sure what the fix is just yet....
 	 */
-	public function testToFormattedDateString()
-	{
+//	public function testToFormattedDateString()
+//	{
 //		$time = Time::parse('February 10, 2017', 'America/Chicago');
 //		$this->assertEquals('Feb 10, 2017', $time->toFormattedDateString());
-	}
+//	}
 
 	public function testToTimeString()
 	{

@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
+ * Copyright (c) 2014-2017 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,7 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 3.0.0
@@ -108,7 +108,7 @@ abstract class BaseResult implements ResultInterface
 	 */
 	public function __construct(&$connID, &$resultID)
 	{
-		$this->connID   = $connID;
+		$this->connID = $connID;
 		$this->resultID = $resultID;
 	}
 
@@ -170,7 +170,7 @@ abstract class BaseResult implements ResultInterface
 
 		if ($_data !== null)
 		{
-			for ($i = 0; $i < $c; $i++)
+			for ($i = 0; $i < $c; $i ++ )
 			{
 				$this->customResultObject[$className][$i] = new $className();
 
@@ -220,9 +220,9 @@ abstract class BaseResult implements ResultInterface
 
 		if (($c = count($this->resultObject)) > 0)
 		{
-			for ($i = 0; $i < $c; $i++)
+			for ($i = 0; $i < $c; $i ++ )
 			{
-				$this->resultArray[$i] = (array)$this->resultObject[$i];
+				$this->resultArray[$i] = (array) $this->resultObject[$i];
 			}
 
 			return $this->resultArray;
@@ -263,9 +263,9 @@ abstract class BaseResult implements ResultInterface
 
 		if (($c = count($this->resultArray)) > 0)
 		{
-			for ($i = 0; $i < $c; $i++)
+			for ($i = 0; $i < $c; $i ++ )
 			{
-				$this->resultObject[$i] = (object)$this->resultArray[$i];
+				$this->resultObject[$i] = (object) $this->resultArray[$i];
 			}
 
 			return $this->resultObject;
@@ -489,9 +489,7 @@ abstract class BaseResult implements ResultInterface
 			return null;
 		}
 
-		return isset($result[$this->currentRow + 1])
-			? $result[++$this->currentRow]
-			: null;
+		return isset($result[$this->currentRow + 1]) ? $result[++ $this->currentRow] : null;
 	}
 
 	//--------------------------------------------------------------------
@@ -513,7 +511,7 @@ abstract class BaseResult implements ResultInterface
 
 		if (isset($result[$this->currentRow - 1]))
 		{
-			--$this->currentRow;
+			-- $this->currentRow;
 		}
 
 		return $result[$this->currentRow];
@@ -616,5 +614,4 @@ abstract class BaseResult implements ResultInterface
 	abstract protected function fetchObject($className = 'stdClass');
 
 	//--------------------------------------------------------------------
-
 }

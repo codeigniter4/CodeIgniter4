@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
+ * Copyright (c) 2014-2017 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,7 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 3.0.0
@@ -45,6 +45,7 @@
  */
 class Header
 {
+
 	/**
 	 * The name of the header.
 	 *
@@ -70,10 +71,10 @@ class Header
 	 */
 	public function __construct(string $name = null, $value = null)
 	{
-	    $this->name = $name;
+		$this->name = $name;
 		$this->value = $value;
 	}
-	
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -83,9 +84,9 @@ class Header
 	 */
 	public function getName()
 	{
-	    return $this->name;
+		return $this->name;
 	}
-	
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -94,11 +95,11 @@ class Header
 	 *
 	 * @return array|null|string
 	 */
-	public function getValue() 
+	public function getValue()
 	{
-	    return $this->value;
+		return $this->value;
 	}
-	
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -110,7 +111,7 @@ class Header
 	 */
 	public function setName(string $name)
 	{
-	    $this->name = $name;
+		$this->name = $name;
 
 		return $this;
 	}
@@ -126,7 +127,7 @@ class Header
 	 */
 	public function setValue($value = null)
 	{
-	    $this->value = $value;
+		$this->value = $value;
 
 		return $this;
 	}
@@ -143,10 +144,10 @@ class Header
 	 */
 	public function appendValue($value = null)
 	{
-	    if (! is_array($this->value))
-	    {
-		    $this->value = [$this->value];
-	    }
+		if ( ! is_array($this->value))
+		{
+			$this->value = [$this->value];
+		}
 
 		$this->value[] = $value;
 
@@ -165,7 +166,7 @@ class Header
 	 */
 	public function prependValue($value = null)
 	{
-		if (! is_array($this->value))
+		if ( ! is_array($this->value))
 		{
 			$this->value = [$this->value];
 		}
@@ -176,7 +177,6 @@ class Header
 	}
 
 	//--------------------------------------------------------------------
-
 
 	/**
 	 * Retrieves a comma-separated string of the values for a single header.
@@ -193,7 +193,7 @@ class Header
 		{
 			return $this->value;
 		}
-		else if (! is_array($this->value))
+		else if ( ! is_array($this->value))
 		{
 			return '';
 		}
@@ -204,12 +204,12 @@ class Header
 		{
 			if (is_string($key) && ! is_array($value))
 			{
-				$options[] = $key.'='.$value;
+				$options[] = $key . '=' . $value;
 			}
 			else if (is_array($value))
 			{
 				$key = key($value);
-				$options[] = $key.'='.$value[$key];
+				$options[] = $key . '=' . $value[$key];
 			}
 			else if (is_numeric($key))
 			{
@@ -230,9 +230,8 @@ class Header
 	 */
 	public function __toString(): string
 	{
-	    return $this->name.': '.$this->getValueLine();
+		return $this->name . ': ' . $this->getValueLine();
 	}
 
 	//--------------------------------------------------------------------
-	
 }

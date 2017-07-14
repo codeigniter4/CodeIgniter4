@@ -1,11 +1,47 @@
 <?php namespace CodeIgniter\Images\Handlers;
 
+/**
+ * CodeIgniter
+ *
+ * An open source application development framework for PHP
+ *
+ * This content is released under the MIT License (MIT)
+ *
+ * Copyright (c) 2014-2017 British Columbia Institute of Technology
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ *
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT    MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
+ * @filesource
+ */
 use CodeIgniter\Images\Image;
 use CodeIgniter\Images\ImageHandlerInterface;
 use CodeIgniter\Images\Exceptions\ImageException;
 
 abstract class BaseHandler implements ImageHandlerInterface
 {
+
 	/**
 	 * @var \Config\Images
 	 */
@@ -13,17 +49,16 @@ abstract class BaseHandler implements ImageHandlerInterface
 
 	/**
 	 * The image/file instance
-	 *d
+	 * d
 	 * @var \CodeIgniter\Images\Image
 	 */
 	protected $image;
-
 	protected $width;
 	protected $height;
 	protected $filePermissions = 0644;
-	protected $xAxis           = 0;
-	protected $yAxis           = 0;
-	protected $masterDim       = 'auto';
+	protected $xAxis = 0;
+	protected $yAxis = 0;
+	protected $masterDim = 'auto';
 
 	/**
 	 * Default options for text watermarking.
@@ -31,18 +66,18 @@ abstract class BaseHandler implements ImageHandlerInterface
 	 * @var array
 	 */
 	protected $textDefaults = [
-		'fontPath'     => null,
-		'fontSize'     => 16,
-		'color'        => 'ffffff',
-		'opacity'      => 1.0,
-		'vAlign'       => 'bottom',
-		'hAlign'       => 'center',
-		'vOffset'      => 0,
-		'hOffset'      => 0,
-		'padding'      => 0,
-		'withShadow'   => false,
-		'shadowColor'  => '000000',
-		'shadowOffset' => 3,
+		'fontPath'		 => null,
+		'fontSize'		 => 16,
+		'color'			 => 'ffffff',
+		'opacity'		 => 1.0,
+		'vAlign'		 => 'bottom',
+		'hAlign'		 => 'center',
+		'vOffset'		 => 0,
+		'hOffset'		 => 0,
+		'padding'		 => 0,
+		'withShadow'	 => false,
+		'shadowColor'	 => '000000',
+		'shadowOffset'	 => 3,
 	];
 
 	/**
@@ -123,7 +158,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 			return $this;
 		}
 
-		$this->width  = $width;
+		$this->width = $width;
 		$this->height = $height;
 
 		if ($maintainRatio)
@@ -153,10 +188,10 @@ abstract class BaseHandler implements ImageHandlerInterface
 	 */
 	public function crop(int $width = null, int $height = null, int $x = null, int $y = null, bool $maintainRatio = false, string $masterDim = 'auto')
 	{
-		$this->width  = $width;
+		$this->width = $width;
 		$this->height = $height;
-		$this->xAxis  = $x;
-		$this->yAxis  = $y;
+		$this->xAxis = $x;
+		$this->yAxis = $y;
 
 		if ($maintainRatio)
 		{
@@ -194,12 +229,12 @@ abstract class BaseHandler implements ImageHandlerInterface
 		// Reassign the width and height
 		if ($angle === 90 OR $angle === 270)
 		{
-			$this->width  = $this->image->origHeight;
+			$this->width = $this->image->origHeight;
 			$this->height = $this->image->origWidth;
 		}
 		else
 		{
-			$this->width  = $this->image->origWidth;
+			$this->width = $this->image->origWidth;
 			$this->height = $this->image->origHeight;
 		}
 
@@ -274,8 +309,8 @@ abstract class BaseHandler implements ImageHandlerInterface
 	 */
 	public function text(string $text, array $options = [])
 	{
-		$options                = array_merge($this->textDefaults, $options);
-		$options['color']       = trim($options['color'], '# ');
+		$options = array_merge($this->textDefaults, $options);
+		$options['color'] = trim($options['color'], '# ');
 		$options['shadowColor'] = trim($options['shadowColor'], '# ');
 
 		$this->_text($text, $options);
@@ -320,18 +355,18 @@ abstract class BaseHandler implements ImageHandlerInterface
 				break;
 			case 4:
 				return $this->rotate(180)
-				            ->flip('horizontal');
+								->flip('horizontal');
 				break;
 			case 5:
 				return $this->rotate(270)
-				            ->flip('horizontal');
+								->flip('horizontal');
 				break;
 			case 6:
 				return $this->rotate(270);
 				break;
 			case 7:
 				return $this->rotate(90)
-				            ->flip('horizontal');
+								->flip('horizontal');
 				break;
 			case 8:
 				return $this->rotate(90);
@@ -355,7 +390,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 	 */
 	public function getEXIF(string $key = null, bool $silent = false)
 	{
-		if (! function_exists('exif_read_data'))
+		if ( ! function_exists('exif_read_data'))
 		{
 			if ($silent)
 			{
@@ -367,11 +402,9 @@ abstract class BaseHandler implements ImageHandlerInterface
 
 		$exif = exif_read_data($this->image->getPathname());
 
-		if (! is_null($key) && is_array($exif))
+		if ( ! is_null($key) && is_array($exif))
 		{
-			$exif = array_key_exists($key, $exif)
-				? $exif[$key]
-				: false;
+			$exif = array_key_exists($key, $exif) ? $exif[$key] : false;
 		}
 
 		return $exif;
@@ -401,20 +434,20 @@ abstract class BaseHandler implements ImageHandlerInterface
 	 */
 	public function fit(int $width, int $height = null, string $position = 'center')
 	{
-		$origWidth  = $this->image->origWidth;
+		$origWidth = $this->image->origWidth;
 		$origHeight = $this->image->origHeight;
 
 		list($cropWidth, $cropHeight) = $this->calcAspectRatio($width, $height, $origWidth, $origHeight);
 
 		if (is_null($height))
 		{
-			$height = ceil(($width/$cropWidth)*$cropHeight);
+			$height = ceil(($width / $cropWidth) * $cropHeight);
 		}
 
 		list($x, $y) = $this->calcCropCoords($width, $height, $origWidth, $origHeight, $position);
 
 		return $this->crop($cropWidth, $cropHeight, $x, $y)
-		            ->resize($width, $height);
+						->resize($width, $height);
 	}
 
 	//--------------------------------------------------------------------
@@ -435,25 +468,25 @@ abstract class BaseHandler implements ImageHandlerInterface
 		// Calc based on full image size and be done.
 		if (is_null($height))
 		{
-			$height = ($width/$origWidth)*$origHeight;
+			$height = ($width / $origWidth) * $origHeight;
 
-			return [$width, (int)$height];
+			return [$width, (int) $height];
 		}
 
-		$xRatio = $width/$origWidth;
-		$yRatio = $height/$origHeight;
+		$xRatio = $width / $origWidth;
+		$yRatio = $height / $origHeight;
 
 		if ($xRatio > $yRatio)
 		{
 			return [
-				(int)($origWidth*$yRatio),
-				(int)($origHeight*$yRatio),
+				(int) ($origWidth * $yRatio),
+				(int) ($origHeight * $yRatio),
 			];
 		}
 
 		return [
-			(int)($origWidth*$xRatio),
-			(int)($origHeight*$xRatio),
+			(int) ($origWidth * $xRatio),
+			(int) ($origHeight * $xRatio),
 		];
 	}
 
@@ -474,7 +507,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 	protected function calcCropCoords($width, $height, $origWidth, $origHeight, $position): array
 	{
 		$position = strtolower($position);
-		$x        = $y = 0;
+		$x = $y = 0;
 
 		switch ($position)
 		{
@@ -483,36 +516,36 @@ abstract class BaseHandler implements ImageHandlerInterface
 				$y = 0;
 				break;
 			case 'top':
-				$x = floor(($origWidth-$width)/2);
+				$x = floor(($origWidth - $width) / 2);
 				$y = 0;
 				break;
 			case 'top-right':
-				$x = $origWidth-$width;
+				$x = $origWidth - $width;
 				$y = 0;
 				break;
 			case 'left':
 				$x = 0;
-				$y = floor(($origHeight-$height)/2);
+				$y = floor(($origHeight - $height) / 2);
 				break;
 			case 'center':
-				$x = floor(($origWidth-$width)/2);
-				$y = floor(($origHeight-$height)/2);
+				$x = floor(($origWidth - $width) / 2);
+				$y = floor(($origHeight - $height) / 2);
 				break;
 			case 'right':
-				$x = ($origWidth-$width);
-				$y = floor(($origHeight-$height)/2);
+				$x = ($origWidth - $width);
+				$y = floor(($origHeight - $height) / 2);
 				break;
 			case 'bottom-left':
 				$x = 0;
-				$y = $origHeight-$height;
+				$y = $origHeight - $height;
 				break;
 			case 'bottom':
-				$x = floor(($origWidth-$width)/2);
-				$y = $origHeight-$height;
+				$x = floor(($origWidth - $width) / 2);
+				$y = $origHeight - $height;
 				break;
 			case 'bottom-right':
-				$x = ($origWidth-$width);
-				$y = $origHeight-$height;
+				$x = ($origWidth - $width);
+				$y = $origHeight - $height;
 				break;
 		}
 
@@ -588,24 +621,21 @@ abstract class BaseHandler implements ImageHandlerInterface
 	 */
 	protected function reproportion()
 	{
-		if (($this->width === 0 && $this->height === 0) || $this->image->origWidth === 0 || $this->image->origHeight === 0
-		    || (! ctype_digit((string)$this->width) && ! ctype_digit((string)$this->height))
-		    || ! ctype_digit((string)$this->image->origWidth) || ! ctype_digit((string)$this->image->origHeight)
+		if (($this->width === 0 && $this->height === 0) || $this->image->origWidth === 0 || $this->image->origHeight === 0 || ( ! ctype_digit((string) $this->width) && ! ctype_digit((string) $this->height)) || ! ctype_digit((string) $this->image->origWidth) || ! ctype_digit((string) $this->image->origHeight)
 		)
 		{
 			return;
 		}
 
 		// Sanitize
-		$this->width  = (int)$this->width;
-		$this->height = (int)$this->height;
+		$this->width = (int) $this->width;
+		$this->height = (int) $this->height;
 
 		if ($this->masterDim !== 'width' && $this->masterDim !== 'height')
 		{
 			if ($this->width > 0 && $this->height > 0)
 			{
-				$this->masterDim = ((($this->image->origHeight/$this->image->origWidth)-($this->height/$this->width)) < 0)
-					? 'width' : 'height';
+				$this->masterDim = ((($this->image->origHeight / $this->image->origWidth) - ($this->height / $this->width)) < 0) ? 'width' : 'height';
 			}
 			else
 			{
@@ -620,14 +650,13 @@ abstract class BaseHandler implements ImageHandlerInterface
 
 		if ($this->masterDim === 'width')
 		{
-			$this->height = (int)ceil($this->width*$this->image->origHeight/$this->image->origWidth);
+			$this->height = (int) ceil($this->width * $this->image->origHeight / $this->image->origWidth);
 		}
 		else
 		{
-			$this->width = (int)ceil($this->image->origWidth*$this->height/$this->image->origHeight);
+			$this->width = (int) ceil($this->image->origWidth * $this->height / $this->image->origHeight);
 		}
 	}
 
 	//--------------------------------------------------------------------
-
 }

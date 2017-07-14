@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
+ * Copyright (c) 2014-2017 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,13 +29,12 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 3.0.0
  * @filesource
  */
-
 use CodeIgniter\Config\BaseConfig;
 
 /**
@@ -43,6 +42,7 @@ use CodeIgniter\Config\BaseConfig;
  */
 class FileHandler extends BaseHandler implements \SessionHandlerInterface
 {
+
 	/**
 	 * Where to save the session files to.
 	 *
@@ -94,37 +94,37 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 
 	//--------------------------------------------------------------------
 
-    /**
-     * Open
-     *
-     * Sanitizes the save_path directory.
-     *
-     * @param    string $savePath Path to session files' directory
-     * @param    string $name     Session cookie name
-     *
-     * @return bool
-     * @throws \Exception
-     */
+	/**
+	 * Open
+	 *
+	 * Sanitizes the save_path directory.
+	 *
+	 * @param    string $savePath Path to session files' directory
+	 * @param    string $name     Session cookie name
+	 *
+	 * @return bool
+	 * @throws \Exception
+	 */
 	public function open($savePath, $name): bool
 	{
 		if ( ! is_dir($savePath))
 		{
 			if ( ! mkdir($savePath, 0700, true))
 			{
-				throw new \Exception("Session: Configured save path '".$this->savePath.
-				                     "' is not a directory, doesn't exist or cannot be created.");
+				throw new \Exception("Session: Configured save path '" . $this->savePath .
+				"' is not a directory, doesn't exist or cannot be created.");
 			}
 		}
 		elseif ( ! is_writable($savePath))
 		{
-			throw new \Exception("Session: Configured save path '".$this->savePath.
-			                    "' is not writable by the PHP process.");
+			throw new \Exception("Session: Configured save path '" . $this->savePath .
+			"' is not writable by the PHP process.");
 		}
 
 		$this->savePath = $savePath;
-		$this->filePath = $this->savePath.'/'
-		                  .$name // we'll use the session cookie name as a prefix to avoid collisions
-		                  .($this->matchIP ? md5($_SERVER['REMOTE_ADDR']) : '');
+		$this->filePath = $this->savePath . '/'
+				. $name // we'll use the session cookie name as a prefix to avoid collisions
+				. ($this->matchIP ? md5($_SERVER['REMOTE_ADDR']) : '');
 
 		return true;
 	}
@@ -146,18 +146,18 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 		// which re-reads session data
 		if ($this->fileHandle === null)
 		{
-            $this->fileNew = ! file_exists($this->filePath.$sessionID);
+			$this->fileNew = ! file_exists($this->filePath . $sessionID);
 
-			if (($this->fileHandle = fopen($this->filePath.$sessionID, 'c+b')) === false)
+			if (($this->fileHandle = fopen($this->filePath . $sessionID, 'c+b')) === false)
 			{
-				$this->logger->error("Session: Unable to open file '".$this->filePath.$sessionID."'.");
+				$this->logger->error("Session: Unable to open file '" . $this->filePath . $sessionID . "'.");
 
 				return false;
 			}
 
 			if (flock($this->fileHandle, LOCK_EX) === false)
 			{
-				$this->logger->error("Session: Unable to obtain lock for file '".$this->filePath.$sessionID."'.");
+				$this->logger->error("Session: Unable to obtain lock for file '" . $this->filePath . $sessionID . "'.");
 				fclose($this->fileHandle);
 				$this->fileHandle = null;
 
@@ -169,7 +169,7 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 
 			if ($this->fileNew)
 			{
-				chmod($this->filePath.$sessionID, 0600);
+				chmod($this->filePath . $sessionID, 0600);
 				$this->fingerprint = md5('');
 
 				return '';
@@ -181,7 +181,7 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 		}
 
 		$session_data = '';
-		for ($read = 0, $length = filesize($this->filePath.$sessionID); $read < $length; $read += strlen($buffer))
+		for ($read = 0, $length = filesize($this->filePath . $sessionID); $read < $length; $read += strlen($buffer))
 		{
 			if (($buffer = fread($this->fileHandle, $length - $read)) === false)
 			{
@@ -212,7 +212,7 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 	{
 		// If the two IDs don't match, we have a session_regenerate_id() call
 		// and we need to close the old handle and open a new one
-		if ($sessionID !== $this->sessionID && (! $this->close() || $this->read($sessionID) === false))
+		if ($sessionID !== $this->sessionID && ( ! $this->close() || $this->read($sessionID) === false))
 		{
 			return false;
 		}
@@ -223,9 +223,7 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 		}
 		elseif ($this->fingerprint === md5($sessionData))
 		{
-			return ($this->fileNew)
-				? true
-				: touch($this->filePath.$sessionID);
+			return ($this->fileNew) ? true : touch($this->filePath . $sessionID);
 		}
 
 		if ( ! $this->fileNew)
@@ -297,17 +295,13 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 	{
 		if ($this->close())
 		{
-			return file_exists($this->filePath.$session_id)
-				? (unlink($this->filePath.$session_id) && $this->destroyCookie())
-				: true;
+			return file_exists($this->filePath . $session_id) ? (unlink($this->filePath . $session_id) && $this->destroyCookie()) : true;
 		}
 		elseif ($this->filePath !== null)
 		{
 			clearstatcache();
 
-			return file_exists($this->filePath.$session_id)
-				? (unlink($this->filePath.$session_id) && $this->destroyCookie())
-				: true;
+			return file_exists($this->filePath . $session_id) ? (unlink($this->filePath . $session_id) && $this->destroyCookie()) : true;
 		}
 
 		return false;
@@ -328,7 +322,7 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 	{
 		if ( ! is_dir($this->savePath) || ($directory = opendir($this->savePath)) === false)
 		{
-			$this->logger->debug("Session: Garbage collector couldn't list files under directory '".$this->savePath."'.");
+			$this->logger->debug("Session: Garbage collector couldn't list files under directory '" . $this->savePath . "'.");
 
 			return false;
 		}
@@ -336,24 +330,19 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 		$ts = time() - $maxlifetime;
 
 		$pattern = sprintf(
-			'/^%s[0-9a-f]{%d}$/',
-			preg_quote($this->cookieName, '/'),
-			($this->matchIP === true ? 72 : 40)
+				'/^%s[0-9a-f]{%d}$/', preg_quote($this->cookieName, '/'), ($this->matchIP === true ? 72 : 40)
 		);
 
 		while (($file = readdir($directory)) !== false)
 		{
 			// If the filename doesn't match this pattern, it's either not a session file or is not ours
-			if ( ! preg_match($pattern, $file)
-			     || ! is_file($this->savePath.'/'.$file)
-			     || ($mtime = filemtime($this->savePath.'/'.$file)) === false
-			     || $mtime > $ts
+			if ( ! preg_match($pattern, $file) || ! is_file($this->savePath . '/' . $file) || ($mtime = filemtime($this->savePath . '/' . $file)) === false || $mtime > $ts
 			)
 			{
 				continue;
 			}
 
-			unlink($this->savePath.'/'.$file);
+			unlink($this->savePath . '/' . $file);
 		}
 
 		closedir($directory);
@@ -362,5 +351,4 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 	}
 
 	//--------------------------------------------------------------------
-
 }

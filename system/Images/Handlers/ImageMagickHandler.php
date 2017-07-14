@@ -1,5 +1,40 @@
 <?php namespace CodeIgniter\Images\Handlers;
 
+/**
+ * CodeIgniter
+ *
+ * An open source application development framework for PHP
+ *
+ * This content is released under the MIT License (MIT)
+ *
+ * Copyright (c) 2014-2017 British Columbia Institute of Technology
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ *
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT    MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
+ * @filesource
+ */
 use CodeIgniter\Images\Exceptions\ImageException;
 
 /**
@@ -13,6 +48,7 @@ use CodeIgniter\Images\Exceptions\ImageException;
  */
 class ImageMagickHandler extends BaseHandler
 {
+
 	public $version;
 
 	/**
@@ -32,9 +68,7 @@ class ImageMagickHandler extends BaseHandler
 		$source = ! empty($this->resource) ? $this->resource : $this->image->getPathname();
 		$destination = $this->getResourcePath();
 
-		$action = $maintainRatio === true
-			? ' -resize '.$this->width.'x'.$this->height.' "'.$source.'" "'.$destination.'"'
-			: ' -resize '.$this->width.'x'.$this->height.'\! "'.$source.'" "'.$destination.'"';
+		$action = $maintainRatio === true ? ' -resize ' . $this->width . 'x' . $this->height . ' "' . $source . '" "' . $destination . '"' : ' -resize ' . $this->width . 'x' . $this->height . '\! "' . $source . '" "' . $destination . '"';
 
 		$this->process($action);
 
@@ -53,7 +87,7 @@ class ImageMagickHandler extends BaseHandler
 		$source = ! empty($this->resource) ? $this->resource : $this->image->getPathname();
 		$destination = $this->getResourcePath();
 
-		$action = ' -crop '.$this->width.'x'.$this->height.'+'.$this->xAxis.'+'.$this->yAxis.' "'.$source.'" "'.$destination .'"';
+		$action = ' -crop ' . $this->width . 'x' . $this->height . '+' . $this->xAxis . '+' . $this->yAxis . ' "' . $source . '" "' . $destination . '"';
 
 		$this->process($action);
 
@@ -72,12 +106,12 @@ class ImageMagickHandler extends BaseHandler
 	 */
 	protected function _rotate(int $angle)
 	{
-		$angle = '-rotate '.$angle;
+		$angle = '-rotate ' . $angle;
 
 		$source = ! empty($this->resource) ? $this->resource : $this->image->getPathname();
 		$destination = $this->getResourcePath();
 
-		$action = ' '.$angle.' "'.$source.'" "'.$destination.'"';
+		$action = ' ' . $angle . ' "' . $source . '" "' . $destination . '"';
 
 		$this->process($action);
 
@@ -100,7 +134,7 @@ class ImageMagickHandler extends BaseHandler
 		$source = ! empty($this->resource) ? $this->resource : $this->image->getPathname();
 		$destination = $this->getResourcePath();
 
-		$action = ' '.$angle.' "'.$source.'" "'.$destination.'"';
+		$action = ' ' . $angle . ' "' . $source . '" "' . $destination . '"';
 
 		$this->process($action);
 
@@ -143,13 +177,11 @@ class ImageMagickHandler extends BaseHandler
 
 		if ( ! preg_match('/convert$/i', $this->config->libraryPath))
 		{
-			$this->config->libraryPath = rtrim($this->config->libraryPath, '/').'/convert';
+			$this->config->libraryPath = rtrim($this->config->libraryPath, '/') . '/convert';
 		}
 
 		$cmd = $this->config->libraryPath;
-		$cmd .= $action == '-version'
-			? ' '.$action
-			: ' -quality '.$quality.' '.$action;
+		$cmd .= $action == '-version' ? ' ' . $action : ' -quality ' . $quality . ' ' . $action;
 
 		$retval = 1;
 		// exec() might be disabled
@@ -185,9 +217,7 @@ class ImageMagickHandler extends BaseHandler
 	 */
 	public function save(string $target = null, int $quality = 90)
 	{
-		$target = empty($target)
-			? $this->image
-			: $target;
+		$target = empty($target) ? $this->image : $target;
 
 		// If no new resource has been created, then we're
 		// simply copy the existing one.
@@ -201,7 +231,7 @@ class ImageMagickHandler extends BaseHandler
 
 		// Copy the file through ImageMagick so that it has
 		// a chance to convert file format.
-		$action = '"'.$this->resource.'" "'.$target.'"';
+		$action = '"' . $this->resource . '" "' . $target . '"';
 
 		$result = $this->process($action, $quality);
 
@@ -228,12 +258,12 @@ class ImageMagickHandler extends BaseHandler
 	 */
 	protected function getResourcePath()
 	{
-		if (! is_null($this->resource))
+		if ( ! is_null($this->resource))
 		{
 			return $this->resource;
 		}
 
-		$this->resource = WRITEPATH.'cache/'.time().'_'.bin2hex(random_bytes(10)).'.png';
+		$this->resource = WRITEPATH . 'cache/' . time() . '_' . bin2hex(random_bytes(10)) . '.png';
 
 		return $this->resource;
 	}
@@ -267,7 +297,7 @@ class ImageMagickHandler extends BaseHandler
 		}
 
 		// Font
-		if (! empty($options['fontPath']))
+		if ( ! empty($options['fontPath']))
 		{
 			$cmd .= " -font '{$options['fontPath']}'";
 		}
@@ -279,10 +309,9 @@ class ImageMagickHandler extends BaseHandler
 				case 'left':
 					$xAxis = $options['hOffset'] + $options['padding'];
 					$yAxis = $options['vOffset'] + $options['padding'];
-					$gravity = $options['vAlign'] == 'top'
-						? 'NorthWest'
-						: 'West';
-					if ($options['vAlign'] == 'bottom') {
+					$gravity = $options['vAlign'] == 'top' ? 'NorthWest' : 'West';
+					if ($options['vAlign'] == 'bottom')
+					{
 						$gravity = 'SouthWest';
 						$yAxis = $options['vOffset'] - $options['padding'];
 					}
@@ -290,9 +319,7 @@ class ImageMagickHandler extends BaseHandler
 				case 'center':
 					$xAxis = $options['hOffset'] + $options['padding'];
 					$yAxis = $options['vOffset'] + $options['padding'];
-					$gravity = $options['vAlign'] == 'top'
-						? 'North'
-						: 'Center';
+					$gravity = $options['vAlign'] == 'top' ? 'North' : 'Center';
 					if ($options['vAlign'] == 'bottom')
 					{
 						$yAxis = $options['vOffset'] - $options['padding'];
@@ -302,18 +329,17 @@ class ImageMagickHandler extends BaseHandler
 				case 'right':
 					$xAxis = $options['hOffset'] - $options['padding'];
 					$yAxis = $options['vOffset'] + $options['padding'];
-					$gravity = $options['vAlign'] == 'top'
-						? 'NorthEast'
-						: 'East';
-					if ($options['vAlign'] == 'bottom') {
+					$gravity = $options['vAlign'] == 'top' ? 'NorthEast' : 'East';
+					if ($options['vAlign'] == 'bottom')
+					{
 						$gravity = 'SouthEast';
 						$yAxis = $options['vOffset'] - $options['padding'];
 					}
 					break;
 			}
 
-			$xAxis = $xAxis >= 0 ? '+'.$xAxis : $xAxis;
-			$yAxis = $yAxis >= 0 ? '+'.$yAxis : $yAxis;
+			$xAxis = $xAxis >= 0 ? '+' . $xAxis : $xAxis;
+			$yAxis = $yAxis >= 0 ? '+' . $yAxis : $yAxis;
 
 			$cmd .= " -gravity {$gravity} -geometry {$xAxis}{$yAxis}";
 		}

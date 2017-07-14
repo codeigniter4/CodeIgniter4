@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
+ * Copyright (c) 2014-2017 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,37 +29,39 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 3.0.0
  * @filesource
  */
-
 class Plugins
 {
 
-	public static function currentURL(array $params=[])
+	public static function currentURL(array $params = [])
 	{
-		if (! function_exists('current_url')) helper('url');
+		if ( ! function_exists('current_url'))
+			helper('url');
 
 		return current_url();
 	}
 
 	//--------------------------------------------------------------------
 
-	public static function previousURL(array $params=[])
+	public static function previousURL(array $params = [])
 	{
-		if (! function_exists('previous_url')) helper('url');
+		if ( ! function_exists('previous_url'))
+			helper('url');
 
 		return previous_url();
 	}
 
 	//--------------------------------------------------------------------
 
-	public static function mailto(array $params=[])
+	public static function mailto(array $params = [])
 	{
-		if (! function_exists('mailto')) helper('url');
+		if ( ! function_exists('mailto'))
+			helper('url');
 
 		$email = $params['email'] ?? '';
 		$title = $params['title'] ?? '';
@@ -70,9 +72,10 @@ class Plugins
 
 	//--------------------------------------------------------------------
 
-	public static function safeMailto(array $params=[])
+	public static function safeMailto(array $params = [])
 	{
-		if (! function_exists('safe_mailto')) helper('url');
+		if ( ! function_exists('safe_mailto'))
+			helper('url');
 
 		$email = $params['email'] ?? '';
 		$title = $params['title'] ?? '';
@@ -83,10 +86,11 @@ class Plugins
 
 	//--------------------------------------------------------------------
 
-	public static function lang(array $params=[])
+	public static function lang(array $params = [])
 	{
 		$line = array_shift($params);
 
 		return lang($line, $params);
 	}
+
 }
