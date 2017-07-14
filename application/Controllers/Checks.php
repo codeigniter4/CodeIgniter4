@@ -70,27 +70,13 @@ class Checks extends Controller
                 var_dump($forge_mysql->getConnection()->mysqli);
             }else{
                 echo '<br><br>OK';
-                $data_insert = array(
-                    'id' => 1,
-                    'users_id' => 1,
-                    'other_id' => 1,
-                );
-                $insert = $forge_mysql->getConnection()->table('invoices')->insert($data_insert);
-                var_dump($insert);
                 
-                $data_insert = array(
-                    'id' => 2,
-                    'users_id' => 2,
-                    'other_id' => 2,
-                );
-                $insert = $forge_mysql->getConnection()->table('invoices')->insert($data_insert);
-                var_dump($insert);
+                var_dump($forge_mysql->getConnection()->getForeignKeyData('invoices'));
             }
             
-            //$res = $forge_mysql->dropForeignKey('invoices','invoices_users_id_foreign');
+            $res = $forge_mysql->dropForeignKey('invoices','invoices_users_id_foreign');
             
-            //var_dump($res);
-            
+            var_dump($res);
             
             echo '<h1>PostgreSQL</h1>';
             
@@ -144,6 +130,7 @@ class Checks extends Controller
                 var_dump($forge_pgsql->getConnection()->mysqli);
             }else{
                 echo '<br><br>OK';
+                var_dump($forge_pgsql->getConnection()->getForeignKeyData('invoices'));
             }
             
             $res = $forge_pgsql->dropForeignKey('invoices','invoices_users_id_foreign');

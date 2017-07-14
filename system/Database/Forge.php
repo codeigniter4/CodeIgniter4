@@ -375,7 +375,7 @@ class Forge
 	public function dropForeignKey($table, $foreign_name)
 	{
 		
-		$sql = sprintf($this->dropConstraintStr,$this->db->escapeIdentifiers($this->db->DBPrefix.$table),$this->db->escapeIdentifiers($foreign_name));
+		$sql = sprintf($this->dropConstraintStr,$this->db->escapeIdentifiers($this->db->DBPrefix.$table),$this->db->escapeIdentifiers($this->db->DBPrefix.$foreign_name));
             
 		if ($sql === false)
 		{

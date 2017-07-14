@@ -488,7 +488,37 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 */
 	public function _foreignKeyData(string $table)
 	{
-		return [];
+		$sql = '
+                    SELECT
+                        tc.CONSTRAINT_NAME,
+                        tc.TABLE_NAME,
+                        rc.REFERENCED_TABLE_NAME
+                    FROM information_schema.TABLE_CONSTRAINTS AS tc
+                    INNER JOIN information_schema.REFERENTIAL_CONSTRAINTS AS rc
+                        ON tc.CONSTRAINT_NAME = rc.CONSTRAINT_NAME
+                    WHERE
+                        tc.CONSTRAINT_TYPE = '.$this->escape('FOREIGN KEY').' AND 
+                        tc.TABLE_SCHEMA = '.$this->escape($this->database).' AND
+                        tc.TABLE_NAME = '.$this->escape($table);
+                
+		if (($query = $this->query($sql)) === false)
+		{
+			return false;
+		}
+		$query = $query->getResultObject();
+                
+		$retval = [];
+		foreach ($query as $row)
+		{
+			$obj = new \stdClass();
+			$obj->constraint_name = $row->CONSTRAINT_NAME;
+                        $obj->table_name = $row->TABLE_NAME;
+                        $obj->foreign_table_name = $row->REFERENCED_TABLE_NAME;
+
+			$retval[] = $obj;
+		}
+
+		return $retval;
 	}
 
 	//--------------------------------------------------------------------

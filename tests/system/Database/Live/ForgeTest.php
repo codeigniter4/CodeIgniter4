@@ -43,129 +43,109 @@ class ForgeTest extends \CIDatabaseTestCase
 		$this->forge->dropTable('forge_test_1', true);
 	}
         
-	public function testForeignKeyMySQL()
+	public function testForeignKey()
         {
-
+            
+            $attributes = [];
+            
             if ($this->db->DBDriver == 'MySQLi')
             {
-                $this->forge->addField([
-                    'id' => [
-                        'type' => 'INTEGER',
-                        'constraint' => 11,
-                    ],
-                    'name' => [
-                        'type' => 'VARCHAR',
-                        'constraint' => 255,
-                    ]
-                ]);
-                $this->forge->addKey('id', true);
                 $attributes = array('ENGINE' => 'InnoDB');
-                $this->forge->createTable('forge_test_users_1', true, $attributes);
-
-                $this->forge->addField([
-                    'id' => [
-                        'type' => 'INTEGER',
-                        'constraint' => 11,
-                    ],
-                    'users_id' => [
-                        'type' => 'INTEGER',
-                        'constraint' => 11,
-                    ],
-                    'name' => [
-                        'type' => 'VARCHAR',
-                        'constraint' => 255,
-                    ]
-                ]);
-                $this->forge->addKey('id', true);
-                $this->forge->addForeignKey('users_id', 'forge_test_users_1', 'id', 'CASCADE', 'CASCADE');
-
-                $attributes = array('ENGINE' => 'InnoDB');
-                $this->forge->createTable('forge_test_invoices_1', true, $attributes);
-
-                //Insert User example
-                $insertData = [
-                    'id' => 1,
-                    'name' => 'John Doe'
-                ];
-                $this->db->table('forge_test_users_1')->insert($insertData);
-
-                //Insert invoices example
-                $insertData = [
-                    'id' => 1,
-                    'users_id' => 1,
-                    'name' => 'Invoice 1'
-                ];
-                $invoice1 = $this->db->table('forge_test_invoices_1')->insert($insertData);
-
-                $insertData = [
-                    'id' => 2,
-                    'users_id' => 2,
-                    'name' => 'Invoice 2'
-                ];
-                $invoice2 = $this->db->table('forge_test_invoices_1')->insert($insertData);
-
-                $this->assertInstanceOf('CodeIgniter\Database\BaseResult', $invoice1);
-
-                $this->assertFalse($invoice2);
-
-                $this->forge->dropTable('forge_test_invoices_1', true);       
-                $this->forge->dropTable('forge_test_users_1', true);
-                
-            }else{
-                $this->assertTrue(true);
             }
+            
+            $this->forge->addField([
+                'id' => [
+                    'type' => 'INTEGER',
+                    'constraint' => 11,
+                ],
+                'name' => [
+                    'type' => 'VARCHAR',
+                    'constraint' => 255,
+                ]
+            ]);
+            $this->forge->addKey('id', true);
+            $this->forge->createTable('forge_test_users', true, $attributes);
+
+            $this->forge->addField([
+                'id' => [
+                    'type' => 'INTEGER',
+                    'constraint' => 11,
+                ],
+                'users_id' => [
+                    'type' => 'INTEGER',
+                    'constraint' => 11,
+                ],
+                'name' => [
+                    'type' => 'VARCHAR',
+                    'constraint' => 255,
+                ]
+            ]);
+            $this->forge->addKey('id', true);
+            $this->forge->addForeignKey('users_id', 'forge_test_users', 'id', 'CASCADE', 'CASCADE');
+
+            $this->forge->createTable('forge_test_invoices', true, $attributes);
+            
+            $foreignKeyData = $this->db->getForeignKeyData('forge_test_invoices');
+            
+            $this->assertEquals($foreignKeyData[0]->constraint_name, $this->db->DBPrefix.'forge_test_invoices_users_id_foreign');
+            $this->assertEquals($foreignKeyData[0]->table_name, $this->db->DBPrefix.'forge_test_invoices');
+            $this->assertEquals($foreignKeyData[0]->foreign_table_name, $this->db->DBPrefix.'forge_test_users');
+            
+            $this->forge->dropTable('forge_test_invoices', true);       
+            $this->forge->dropTable('forge_test_users', true);
+            
         }
-    
-        public function testForeignKeyPostgre()
+        
+        public function testDropForeignKey()
         {
-
-            if ($this->db->DBDriver == 'Postgre')
+            
+            $attributes = [];
+            
+            if ($this->db->DBDriver == 'MySQLi')
             {
-                
-                $this->forge->addField([
-                    'id' => [
-                        'type' => 'INTEGER',
-                        'constraint' => 11,
-                    ],
-                    'name' => [
-                        'type' => 'VARCHAR',
-                        'constraint' => 255,
-                    ]
-                ]);
-                $this->forge->addKey('id', true);
-                $this->forge->createTable('forge_test_users_1', true);
-                
-                $this->forge->addField([
-                    'id' => [
-                        'type' => 'INTEGER',
-                        'constraint' => 11,
-                    ],
-                    'users_id' => [
-                        'type' => 'INTEGER',
-                        'constraint' => 11,
-                    ],
-                    'name' => [
-                        'type' => 'VARCHAR',
-                        'constraint' => 255,
-                    ]
-                ]);
-                $this->forge->addKey('id', true);
-                $this->forge->addForeignKey('users_id', 'forge_test_users_1', 'id', 'CASCADE', 'CASCADE');
-
-                $this->forge->createTable('forge_test_invoices_1', true);
-
-                $foreignKeyData = $this->db->getForeignKeyData('forge_test_invoices_1');
-                $this->assertEquals($foreignKeyData[0]->constraint_name, $this->db->DBPrefix.'forge_test_invoices_1_users_id_foreign');
-                $this->assertEquals($foreignKeyData[0]->table_name, $this->db->DBPrefix.'forge_test_invoices_1');
-                $this->assertEquals($foreignKeyData[0]->column_name, 'users_id');
-                $this->assertEquals($foreignKeyData[0]->foreign_column_name, 'id');
-                
-                $this->forge->dropTable('forge_test_invoices_1', true);       
-                $this->forge->dropTable('forge_test_users_1', true);
-                
-            }else{
-                $this->assertTrue(true);
+                $attributes = array('ENGINE' => 'InnoDB');
             }
-    }
+            
+            $this->forge->addField([
+                'id' => [
+                    'type' => 'INTEGER',
+                    'constraint' => 11,
+                ],
+                'name' => [
+                    'type' => 'VARCHAR',
+                    'constraint' => 255,
+                ]
+            ]);
+            $this->forge->addKey('id', true);
+            $this->forge->createTable('forge_test_users', true, $attributes);
 
+            $this->forge->addField([
+                'id' => [
+                    'type' => 'INTEGER',
+                    'constraint' => 11,
+                ],
+                'users_id' => [
+                    'type' => 'INTEGER',
+                    'constraint' => 11,
+                ],
+                'name' => [
+                    'type' => 'VARCHAR',
+                    'constraint' => 255,
+                ]
+            ]);
+            $this->forge->addKey('id', true);
+            $this->forge->addForeignKey('users_id', 'forge_test_users', 'id', 'CASCADE', 'CASCADE');
+
+            $this->forge->createTable('forge_test_invoices', true, $attributes);
+            
+            $this->forge->dropForeignKey('forge_test_invoices', 'forge_test_invoices_users_id_foreign');
+            
+            $foreignKeyData = $this->db->getForeignKeyData('forge_test_invoices');
+            
+            $this->assertEmpty($foreignKeyData);
+            
+            $this->forge->dropTable('forge_test_invoices', true);       
+            $this->forge->dropTable('forge_test_users', true);
+            
+        }
 }

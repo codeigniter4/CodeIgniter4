@@ -387,9 +387,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 			$obj = new \stdClass();
 			$obj->constraint_name = $row->constraint_name;
                         $obj->table_name = $row->table_name;
-                        $obj->column_name = $row->column_name;
                         $obj->foreign_table_name = $row->foreign_table_name;
-                        $obj->foreign_column_name = $row->foreign_column_name;
 
 			$retval[] = $obj;
 		}
