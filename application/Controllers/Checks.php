@@ -26,8 +26,7 @@ class Checks extends Controller
             $forge_mysql->addField([
                 'id' => [
                     'type' => 'INTEGER',
-                    'constraint' => 11,
-                    'auto_increment' => true,
+                    'constraint' => 11
                 ],
                 'name' => [
                     'type' => 'VARCHAR',
@@ -36,13 +35,18 @@ class Checks extends Controller
             ]);
             $forge_mysql->addKey('id', true);
             $forge_mysql->createTable('users', true);
+            
+            $data_insert = array(
+                'id' => 1,
+                'name' => 'User 1',
+            );
+            $forge_mysql->getConnection()->table('users')->insert($data_insert);
 
             $forge_mysql->dropTable('invoices',true);
             $forge_mysql->addField([
                 'id' => [
                     'type' => 'INTEGER',
                     'constraint' => 11,
-                    'auto_increment' => true,
                 ],
                 'users_id' => [
                     'type' => 'INTEGER',
@@ -64,12 +68,28 @@ class Checks extends Controller
                 var_dump($forge_mysql->getConnection()->mysqli);
             }else{
                 echo '<br><br>OK';
+                $data_insert = array(
+                    'id' => 1,
+                    'users_id' => 1,
+                    'other_id' => 1,
+                );
+                $insert = $forge_mysql->getConnection()->table('invoices')->insert($data_insert);
+                var_dump($insert);
+                
+                $data_insert = array(
+                    'id' => 2,
+                    'users_id' => 2,
+                    'other_id' => 2,
+                );
+                $insert = $forge_mysql->getConnection()->table('invoices')->insert($data_insert);
+                var_dump($insert);
             }
             
-            $res = $forge_mysql->dropForeignKey('invoices','invoices_users_id_foreign');
+            //$res = $forge_mysql->dropForeignKey('invoices','invoices_users_id_foreign');
             
-            var_dump($res);
+            //var_dump($res);
             
+            die('solo 1');
             echo '<h1>PostgreSQL</h1>';
             
             $forge_pgsql = \Config\Database::forge('pgsql');
