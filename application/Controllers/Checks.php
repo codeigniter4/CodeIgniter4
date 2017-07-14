@@ -241,6 +241,7 @@ EOF;
 
 			echo "Name: {$file->getName()}<br/>";
 			echo "Temp Name: {$file->getTempName()}<br/>";
+			echo "Original Name: {$file->getClientName()}<br/>";
 			echo "Random Name: {$file->getRandomName()}<br/>";
 			echo "Extension: {$file->getExtension()}<br/>";
 			echo "Client Extension: {$file->getClientExtension()}<br/>";

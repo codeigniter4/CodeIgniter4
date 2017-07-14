@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
+ * Copyright (c) 2014-2017 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,7 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 3.0.0
@@ -49,6 +49,7 @@
  */
 class ComposerScripts
 {
+
 	/**
 	 * After composer install/update, this is called to move
 	 * the bare-minimum required files for our dependencies
@@ -63,26 +64,26 @@ class ComposerScripts
 		{
 			$base = 'system/ThirdParty/ZendEscaper';
 
-			foreach ([$base, $base.'/Exception'] as $path)
+			foreach ([$base, $base . '/Exception'] as $path)
 			{
-				if (! is_dir($path))
+				if ( ! is_dir($path))
 				{
 					mkdir($path, 0755);
 				}
 			}
 
 			$files = [
-				self::getClassFilePath('\\Zend\\Escaper\\Exception\\ExceptionInterface')       => $base.'/Exception/ExceptionInterface.php',
-				self::getClassFilePath('\\Zend\\Escaper\\Exception\\InvalidArgumentException') => $base.'/Exception/InvalidArgumentException.php',
-				self::getClassFilePath('\\Zend\\Escaper\\Exception\\RuntimeException')         => $base.'/Exception/RuntimeException.php',
-				self::getClassFilePath('\\Zend\\Escaper\\Escaper')                             => $base.'/Escaper.php'
+				self::getClassFilePath('\\Zend\\Escaper\\Exception\\ExceptionInterface')		 => $base . '/Exception/ExceptionInterface.php',
+				self::getClassFilePath('\\Zend\\Escaper\\Exception\\InvalidArgumentException')	 => $base . '/Exception/InvalidArgumentException.php',
+				self::getClassFilePath('\\Zend\\Escaper\\Exception\\RuntimeException')			 => $base . '/Exception/RuntimeException.php',
+				self::getClassFilePath('\\Zend\\Escaper\\Escaper')								 => $base . '/Escaper.php'
 			];
 
 			foreach ($files as $source => $dest)
 			{
-				if (! self::moveFile($source, $dest))
+				if ( ! self::moveFile($source, $dest))
 				{
-					die('Error moving: '. $source);
+					die('Error moving: ' . $source);
 				}
 			}
 		}
@@ -106,7 +107,7 @@ class ComposerScripts
 			die('Cannot move file. Source path invalid.');
 		}
 
-		if (! is_file($source))
+		if ( ! is_file($source))
 		{
 			return false;
 		}
@@ -115,19 +116,18 @@ class ComposerScripts
 	}
 
 	//--------------------------------------------------------------------
-	
+
 	/**
 	 * Determine file path of a class.
 	 * 
 	 * @param string $class
 	 * @return type
 	 */
-	protected static function getClassFilePath( string $class )
+	protected static function getClassFilePath(string $class)
 	{
 		$reflector = new \ReflectionClass($class);
 		return $reflector->getFileName();
 	}
-	
-	//--------------------------------------------------------------------
 
+	//--------------------------------------------------------------------
 }

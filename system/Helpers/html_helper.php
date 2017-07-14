@@ -1,5 +1,4 @@
 <?php
-
 /**
  * CodeIgniter
  *
@@ -7,7 +6,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
+ * Copyright (c) 2014-2017 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,13 +28,12 @@
  *
  * @package    CodeIgniter
  * @author     CodeIgniter Dev Team
- * @copyright  Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @copyright  2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT    MIT License
  * @link       https://codeigniter.com
  * @since      Version 3.0.0
  * @filesource
  */
-
 // --------------------------------------------------------------------
 
 /**
@@ -47,9 +45,9 @@
  * @author      CodeIgniter Dev Team
  * @link        https://codeigniter.com/user_guide/helpers/html_helper.html
  */
-
 if ( ! function_exists('ul'))
 {
+
 	/**
 	 * Unordered List
 	 *
@@ -64,12 +62,14 @@ if ( ! function_exists('ul'))
 	{
 		return _list('ul', $list, $attributes);
 	}
+
 }
 
 // ------------------------------------------------------------------------
 
 if ( ! function_exists('ol'))
 {
+
 	/**
 	 * Ordered List
 	 *
@@ -83,12 +83,14 @@ if ( ! function_exists('ol'))
 	{
 		return _list('ol', $list, $attributes);
 	}
+
 }
 
 // ------------------------------------------------------------------------
 
 if ( ! function_exists('_list'))
 {
+
 	/**
 	 * Generates the list
 	 *
@@ -102,10 +104,7 @@ if ( ! function_exists('_list'))
 	 */
 	function _list
 	(
-		string  $type       = 'ul', 
-		array   $list       = [], 
-		string  $attributes = '', 
-		int     $depth      = 0
+	string $type = 'ul', array $list = [], string $attributes = '', int $depth = 0
 	): string
 	{
 		// If an array wasn't submitted there's nothing to do...
@@ -116,8 +115,8 @@ if ( ! function_exists('_list'))
 
 		// Set the indentation based on the depth
 		$out = str_repeat(' ', $depth)
-			// Write the opening list tag
-			. '<' . $type . stringify_attributes($attributes) . ">\n";
+				// Write the opening list tag
+				. '<' . $type . stringify_attributes($attributes) . ">\n";
 
 
 		// Cycle through the list elements.  If an array is
@@ -136,10 +135,10 @@ if ( ! function_exists('_list'))
 			}
 			else
 			{
-				$out .= $_last_list_item 
-					. "\n"
-					. _list($type, $val, '', $depth + 4)
-					. str_repeat(' ', $depth + 2);
+				$out .= $_last_list_item
+						. "\n"
+						. _list($type, $val, '', $depth + 4)
+						. str_repeat(' ', $depth + 2);
 			}
 
 			$out .= "</li>\n";
@@ -148,12 +147,14 @@ if ( ! function_exists('_list'))
 		// Set the indentation for the closing tag and apply it
 		return $out . str_repeat(' ', $depth) . '</' . $type . ">\n";
 	}
+
 }
 
 // ------------------------------------------------------------------------
 
 if ( ! function_exists('img'))
 {
+
 	/**
 	 * Image
 	 *
@@ -166,12 +167,10 @@ if ( ! function_exists('img'))
 	 */
 	function img
 	(
-		$src                = '', 
-		bool    $indexPage  = false, 
-		string  $attributes = ''
+	$src = '', bool $indexPage = false, string $attributes = ''
 	): string
 	{
-		if ( ! is_array($src) )
+		if ( ! is_array($src))
 		{
 			$src = ['src' => $src];
 		}
@@ -207,12 +206,14 @@ if ( ! function_exists('img'))
 
 		return $img . stringify_attributes($attributes) . ' />';
 	}
+
 }
 
 // ------------------------------------------------------------------------
 
 if ( ! function_exists('doctype'))
 {
+
 	/**
 	 * Doctype
 	 *
@@ -227,23 +228,25 @@ if ( ! function_exists('doctype'))
 	 */
 	function doctype($type = 'html5'): string
 	{
-		$doctypes           = null;
-		$env                = ENVIRONMENT;
-		$doctypes           = Config\DocTypes::$list;
+		$doctypes = null;
+		$env = ENVIRONMENT;
+		$doctypes = Config\DocTypes::$list;
 		$customDocTypesPath = APPPATH . "Config/{$env}/DocTypes.php";
 		if (file_exists($customDocTypesPath))
 		{
 			$customDocTypesNs = "Config\{$env}\DocTypes";
-			$doctypes         = $customDocTypesNs::$list;
+			$doctypes = $customDocTypesNs::$list;
 		}
 		return isset($doctypes[$type]) ? $doctypes[$type] : false;
 	}
+
 }
 
 // ------------------------------------------------------------------------
 
 if ( ! function_exists('script_tag'))
 {
+
 	/**
 	 * Script
 	 *
@@ -255,8 +258,7 @@ if ( ! function_exists('script_tag'))
 	 */
 	function script_tag
 	(
-		$src            = '', 
-		bool $indexPage = false
+	$src = '', bool $indexPage = false
 	): string
 	{
 		$script = '<script ';
@@ -300,12 +302,14 @@ if ( ! function_exists('script_tag'))
 
 		return $script . 'type="text/javascript"' . "></script>";
 	}
+
 }
 
 // ------------------------------------------------------------------------
 
 if ( ! function_exists('link_tag'))
 {
+
 	/**
 	 * Link
 	 *
@@ -321,12 +325,7 @@ if ( ! function_exists('link_tag'))
 	 */
 	function link_tag
 	(
-		$href             = '', 
-		string $rel       = 'stylesheet', 
-		string $type      = 'text/css', 
-		string $title     = '', 
-		string $media     = '', 
-		bool   $indexPage = false
+	$href = '', string $rel = 'stylesheet', string $type = 'text/css', string $title = '', string $media = '', bool $indexPage = false
 	): string
 	{
 		$link = '<link ';
@@ -387,6 +386,7 @@ if ( ! function_exists('link_tag'))
 
 	if ( ! function_exists('video'))
 	{
+
 		/**
 		 * Video
 		 *
@@ -405,29 +405,21 @@ if ( ! function_exists('link_tag'))
 		 */
 		function video
 		(
-			$src, 
-			string $unsupportedMessage = '',
-			string $attributes         = '',
-			array  $tracks             = [], 
-			bool   $indexPage          = false
+		$src, string $unsupportedMessage = '', string $attributes = '', array $tracks = [], bool $indexPage = false
 		): string
 		{
-			if(is_array($src))
+			if (is_array($src))
 			{
 				return _media
-				(
-					'video', 
-					$src, 
-					$unsupportedMessage, 
-					$attributes,
-					$tracks
+						(
+						'video', $src, $unsupportedMessage, $attributes, $tracks
 				);
 			}
 			else
 			{
 				$video = '<video';
-				
-				if(_has_protocol($src))
+
+				if (_has_protocol($src))
 				{
 					$video .= ' src="' . $src . '"';
 				}
@@ -447,19 +439,19 @@ if ( ! function_exists('link_tag'))
 
 				$video .= ">\n";
 
-				if( ! empty($tracks))
-				{                    
-					foreach ($tracks as $track) 
+				if ( ! empty($tracks))
+				{
+					foreach ($tracks as $track)
 					{
 						$video .= _space_indent() . $track . "\n";
 					}
 				}
 
-				if( ! empty($unsupportedMessage))
+				if ( ! empty($unsupportedMessage))
 				{
-					$video .= _space_indent() 
-						. $unsupportedMessage 
-						. "\n";
+					$video .= _space_indent()
+							. $unsupportedMessage
+							. "\n";
 				}
 
 				$video .= "</video>\n";
@@ -467,12 +459,14 @@ if ( ! function_exists('link_tag'))
 				return $video;
 			}
 		}
+
 	}
 
 	// ------------------------------------------------------------------------
 
 	if ( ! function_exists('audio'))
 	{
+
 		/**
 		 * Audio
 		 *
@@ -488,29 +482,21 @@ if ( ! function_exists('link_tag'))
 		 */
 		function audio
 		(
-			$src, 
-			string $unsupportedMessage = '',
-			string $attributes         = '',
-			array  $tracks             = [], 
-			bool   $indexPage          = false
+		$src, string $unsupportedMessage = '', string $attributes = '', array $tracks = [], bool $indexPage = false
 		): string
 		{
-			if(is_array($src))
+			if (is_array($src))
 			{
 				return _media
-				(
-					'audio', 
-					$src, 
-					$unsupportedMessage, 
-					$attributes,
-					$tracks
+						(
+						'audio', $src, $unsupportedMessage, $attributes, $tracks
 				);
 			}
 			else
 			{
 				$audio = '<audio';
-				
-				if(_has_protocol($src))
+
+				if (_has_protocol($src))
 				{
 					$audio .= ' src="' . $src . '"';
 				}
@@ -530,19 +516,19 @@ if ( ! function_exists('link_tag'))
 
 				$audio .= '>';
 
-				if( ! empty($tracks))
+				if ( ! empty($tracks))
 				{
-					foreach ($tracks as $track) 
+					foreach ($tracks as $track)
 					{
 						$audio .= $track;
 					}
 				}
 
-				if( ! empty($unsupportedMessage))
+				if ( ! empty($unsupportedMessage))
 				{
-					$video .= _space_indent() 
-						. $unsupportedMessage 
-						. "\n";
+					$video .= _space_indent()
+							. $unsupportedMessage
+							. "\n";
 				}
 
 				$audio .= "</audio>\n";
@@ -550,24 +536,22 @@ if ( ! function_exists('link_tag'))
 				return $audio;
 			}
 		}
+
 	}
 
 	// ------------------------------------------------------------------------
 
 	if ( ! function_exists('_media'))
 	{
+
 		function _media
 		(
-			string $name,
-			array  $types, 
-			string $unsupportedMessage = '',
-			string $attributes         = '',
-			array  $tracks             = []
+		string $name, array $types, string $unsupportedMessage = '', string $attributes = '', array $tracks = []
 		): string
 		{
 			$media = '<' . $name;
-			
-			if(empty($attributes))
+
+			if (empty($attributes))
 			{
 				$media .= '>';
 			}
@@ -578,24 +562,24 @@ if ( ! function_exists('link_tag'))
 
 			$media .= "\n";
 
-			foreach($types as $option)
+			foreach ($types as $option)
 			{
-				$media .= _space_indent() .$option . "\n";
+				$media .= _space_indent() . $option . "\n";
 			}
 
-			if(empty($tracks))
+			if (empty($tracks))
 			{
 				$media .= "/>";
 			}
 			else
-			{              
-				foreach ($tracks as $track) 
+			{
+				foreach ($tracks as $track)
 				{
 					$media .= _space_indent() . $track . "\n";
 				}
 			}
 
-			if(! empty($unsupportedMessage))
+			if ( ! empty($unsupportedMessage))
 			{
 				$media .= _space_indent() . $unsupportedMessage . "\n";
 			}
@@ -604,12 +588,14 @@ if ( ! function_exists('link_tag'))
 
 			return $media;
 		}
+
 	}
 
 	// ------------------------------------------------------------------------
 
 	if ( ! function_exists('source'))
 	{
+
 		/**
 		 * Source
 		 *
@@ -625,13 +611,10 @@ if ( ! function_exists('link_tag'))
 		 */
 		function source
 		(
-			string $src, 
-			string $type, 
-			string $attributes = '', 
-			bool   $indexPage  = false
+		string $src, string $type, string $attributes = '', bool $indexPage = false
 		): string
 		{
-			if(_has_protocol($src))
+			if (_has_protocol($src))
 			{
 				//Do nothing.
 			}
@@ -644,10 +627,10 @@ if ( ! function_exists('link_tag'))
 				$src = slash_item('baseURL') . $src;
 			}
 
-			$source = '<source src="' . $src 
-				. '" type="' . $type . '"';
+			$source = '<source src="' . $src
+					. '" type="' . $type . '"';
 
-			if( ! empty($attributes))
+			if ( ! empty($attributes))
 			{
 				$source .= ' ' . $attributes;
 			}
@@ -656,12 +639,14 @@ if ( ! function_exists('link_tag'))
 
 			return $source;
 		}
+
 	}
 
 	// ------------------------------------------------------------------------
 
 	if ( ! function_exists('track'))
 	{
+
 		/**
 		 * Track
 		 *
@@ -676,24 +661,23 @@ if ( ! function_exists('link_tag'))
 		 */
 		function track
 		(
-			string $src, 
-			string $kind, 
-			string $srcLanguage, 
-			string $label
+		string $src, string $kind, string $srcLanguage, string $label
 		): string
 		{
 			return '<track src="' . $src
-				. '" kind="'      . $kind
-				. '" srclang="'   . $srcLanguage 
-				. '" label="'     . $label
-				. '" />';
+					. '" kind="' . $kind
+					. '" srclang="' . $srcLanguage
+					. '" label="' . $label
+					. '" />';
 		}
+
 	}
 
 	// ------------------------------------------------------------------------
 
 	if ( ! function_exists('object'))
 	{
+
 		/**
 		 * Object
 		 *
@@ -709,14 +693,10 @@ if ( ! function_exists('link_tag'))
 		 */
 		function object
 		(
-			string $data, 
-			string $type, 
-			string $attributes = '',
-			array  $params     = [], 
-			bool   $indexPage  = false
+		string $data, string $type, string $attributes = '', array $params = [], bool $indexPage = false
 		): string
 		{
-			if(_has_protocol($data))
+			if (_has_protocol($data))
 			{
 				//Do nothing.
 			}
@@ -729,10 +709,10 @@ if ( ! function_exists('link_tag'))
 				$data = slash_item('baseURL') . $data;
 			}
 
-			$object = '<object data="' . $data . '" ' 
+			$object = '<object data="' . $data . '" '
 					. $attributes . '>';
 
-			if( ! empty($params))
+			if ( ! empty($params))
 			{
 				$object .= "\n";
 			}
@@ -746,12 +726,14 @@ if ( ! function_exists('link_tag'))
 
 			return $object;
 		}
+
 	}
 
 	// ------------------------------------------------------------------------
 
 	if ( ! function_exists('param'))
 	{
+
 		/**
 		 * Param
 		 *
@@ -766,23 +748,22 @@ if ( ! function_exists('link_tag'))
 		 */
 		function param
 		(
-			string $name, 
-			string $value, 
-			string $type       = 'ref',
-			string $attributes = ''
+		string $name, string $value, string $type = 'ref', string $attributes = ''
 		): string
 		{
-			return '<param name="' . $name 
-				. '" type="' . $type
-				. '" value="' . $value 
-				. '" ' . $attributes . ' />';
+			return '<param name="' . $name
+					. '" type="' . $type
+					. '" value="' . $value
+					. '" ' . $attributes . ' />';
 		}
+
 	}
 
 	// ------------------------------------------------------------------------
 
 	if ( ! function_exists('embed'))
 	{
+
 		/**
 		 * Embed
 		 *
@@ -796,13 +777,10 @@ if ( ! function_exists('link_tag'))
 		 */
 		function embed
 		(
-			string $src, 
-			string $type, 
-			string $attributes = '',
-			bool   $indexPage  = false
+		string $src, string $type, string $attributes = '', bool $indexPage = false
 		): string
 		{
-			if(_has_protocol($src))
+			if (_has_protocol($src))
 			{
 				//Do nothing.
 			}
@@ -815,30 +793,35 @@ if ( ! function_exists('link_tag'))
 				$src = slash_item('baseURL') . $src;
 			}
 
-			return '<embed src="' . $src 
-				. '" type="' . $type . '" ' 
-				. $attributes . " />\n";
+			return '<embed src="' . $src
+					. '" type="' . $type . '" '
+					. $attributes . " />\n";
 		}
+
 	}
 
 	// ------------------------------------------------------------------------
 
 	if ( ! function_exists('_has_protocol'))
 	{
+
 		function _has_protocol($url)
 		{
 			return preg_match('#^([a-z]+:)?//#i', $url);
 		}
+
 	}
 
 	// ------------------------------------------------------------------------
 
 	if ( ! function_exists('_space_indent'))
 	{
+
 		function _space_indent($depth = 2)
 		{
 			return str_repeat(' ', $depth);
 		}
+
 	}
 }
 

@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
+ * Copyright (c) 2014-2017 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,7 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 3.0.0
@@ -47,6 +47,7 @@
  */
 class PagerRenderer
 {
+
 	protected $first;
 	protected $last;
 	protected $current;
@@ -58,11 +59,11 @@ class PagerRenderer
 
 	public function __construct(array $details)
 	{
-		$this->first     = 1;
-		$this->last      = $details['pageCount'];
-		$this->current   = $details['currentPage'];
-		$this->total     = $details['total'];
-		$this->uri       = $details['uri'];
+		$this->first = 1;
+		$this->last = $details['pageCount'];
+		$this->current = $details['currentPage'];
+		$this->total = $details['total'];
+		$this->uri = $details['uri'];
 		$this->pageCount = $details['pageCount'];
 	}
 
@@ -111,9 +112,9 @@ class PagerRenderer
 	{
 		$uri = clone $this->uri;
 
-		$uri->addQuery('page', $this->first-1);
+		$uri->addQuery('page', $this->first - 1);
 
-		return (string)$uri;
+		return (string) $uri;
 	}
 
 	//--------------------------------------------------------------------
@@ -143,9 +144,9 @@ class PagerRenderer
 	{
 		$uri = clone $this->uri;
 
-		$uri->addQuery('page', $this->last+1);
+		$uri->addQuery('page', $this->last + 1);
 
-		return (string)$uri;
+		return (string) $uri;
 	}
 
 	//--------------------------------------------------------------------
@@ -161,7 +162,7 @@ class PagerRenderer
 
 		$uri->addQuery('page', 1);
 
-		return (string)$uri;
+		return (string) $uri;
 	}
 
 	//--------------------------------------------------------------------
@@ -177,7 +178,7 @@ class PagerRenderer
 
 		$uri->addQuery('page', $this->pageCount);
 
-		return (string)$uri;
+		return (string) $uri;
 	}
 
 	//--------------------------------------------------------------------
@@ -196,11 +197,11 @@ class PagerRenderer
 
 		$uri = clone $this->uri;
 
-		for ($i=$this->first; $i <= $this->last; $i++)
+		for ($i = $this->first; $i <= $this->last; $i ++ )
 		{
 			$links[] = [
-				'uri' => (string)$uri->addQuery('page', $i),
-				'title' => (int)$i,
+				'uri'	 => (string) $uri->addQuery('page', $i),
+				'title'	 => (int) $i,
 				'active' => ($i == $this->current)
 			];
 		}
@@ -224,14 +225,9 @@ class PagerRenderer
 			return;
 		}
 
-		$this->first = $this->current-$count > 0
-			? (int)($this->current-$count)
-			: 1;
-		$this->last  = $this->current+$count <= $this->pageCount
-			? (int)($this->current+$count)
-			: (int)$this->pageCount;
+		$this->first = $this->current - $count > 0 ? (int) ($this->current - $count) : 1;
+		$this->last = $this->current + $count <= $this->pageCount ? (int) ($this->current + $count) : (int) $this->pageCount;
 	}
 
 	//--------------------------------------------------------------------
-
 }

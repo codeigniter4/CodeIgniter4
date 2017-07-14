@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
+ * Copyright (c) 2014-2017 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,18 +29,18 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 3.0.0
  * @filesource
  */
-
 use CodeIgniter\Database\PreparedQueryInterface;
 use \CodeIgniter\Database\BasePreparedQuery;
 
 class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 {
+
 	/**
 	 * Prepares the query against the database, and saves the connection
 	 * info necessary to execute the query later.
@@ -60,9 +60,9 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 		// with terminating semicolons.
 		$sql = rtrim($sql, ';');
 
-		if (! $this->statement = $this->db->mysqli->prepare($sql))
+		if ( ! $this->statement = $this->db->mysqli->prepare($sql))
 		{
-			$this->errorCode   = $this->db->mysqli->errno;
+			$this->errorCode = $this->db->mysqli->errno;
 			$this->errorString = $this->db->mysqli->error;
 		}
 
@@ -123,9 +123,8 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 	 */
 	public function _getResult()
 	{
-	    return $this->statement->get_result();
+		return $this->statement->get_result();
 	}
 
 	//--------------------------------------------------------------------
-
 }

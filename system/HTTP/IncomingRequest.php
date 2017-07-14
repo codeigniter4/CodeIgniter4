@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
+ * Copyright (c) 2014-2017 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,13 +29,12 @@
  *
  * @package      CodeIgniter
  * @author       CodeIgniter Dev Team
- * @copyright    Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @copyright    2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
  * @license      https://opensource.org/licenses/MIT	MIT License
  * @link         https://codeigniter.com
  * @since        Version 3.0.0
  * @filesource
  */
-
 use CodeIgniter\HTTP\Files\FileCollection;
 use CodeIgniter\HTTP\Files\UploadedFile;
 use CodeIgniter\Services;
@@ -67,6 +66,7 @@ use CodeIgniter\Services;
  */
 class IncomingRequest extends Request
 {
+
 	/**
 	 * Enable CSRF flag
 	 *
@@ -126,10 +126,10 @@ class IncomingRequest extends Request
 	 */
 	public $config;
 
-    /**
-     * Holds the old data from a redirect.
-     * @var array
-     */
+	/**
+	 * Holds the old data from a redirect.
+	 * @var array
+	 */
 	protected $oldInput = [];
 
 	//--------------------------------------------------------------------
@@ -149,7 +149,7 @@ class IncomingRequest extends Request
 			$body = file_get_contents('php://input');
 		}
 
-		$this->body   = $body;
+		$this->body = $body;
 		$this->config = $config;
 
 		parent::__construct($config);
@@ -177,7 +177,7 @@ class IncomingRequest extends Request
 	{
 		$this->locale = $this->defaultLocale = $config->defaultLocale;
 
-		if (! $config->negotiateLocale)
+		if ( ! $config->negotiateLocale)
 		{
 			return;
 		}
@@ -223,7 +223,7 @@ class IncomingRequest extends Request
 	{
 		// If it's not a valid locale, set it
 		// to the default locale for the site.
-		if (! in_array($locale, $this->validLocales))
+		if ( ! in_array($locale, $this->validLocales))
 		{
 			$locale = $this->defaultLocale;
 		}
@@ -233,14 +233,16 @@ class IncomingRequest extends Request
 		// If the intl extension is loaded, make sure
 		// that we set the locale for it... if not, though,
 		// don't worry about it.
-		try {
+		try
+		{
 			if (class_exists('\Locale', false))
 			{
 				\Locale::setDefault($locale);
 			}
+		} catch (\Exception $e)
+		{
+			
 		}
-		catch (\Exception $e)
-		{}
 
 		return $this;
 	}
@@ -267,7 +269,7 @@ class IncomingRequest extends Request
 	public function isAJAX(): bool
 	{
 		return ( ! empty($_SERVER['HTTP_X_REQUESTED_WITH']) &&
-		         strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest');
+				strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest');
 	}
 
 	//--------------------------------------------------------------------
@@ -332,7 +334,7 @@ class IncomingRequest extends Request
 	 */
 	public function getJSON(bool $assoc = false, int $depth = 512, int $options = 0)
 	{
-	    return json_decode($this->body, $assoc, $depth, $options);
+		return json_decode($this->body, $assoc, $depth, $options);
 	}
 
 	//--------------------------------------------------------------------
@@ -345,9 +347,9 @@ class IncomingRequest extends Request
 	 */
 	public function getRawInput()
 	{
-	    parse_str($this->body, $output);
+		parse_str($this->body, $output);
 
-	    return $output;
+		return $output;
 	}
 
 	//--------------------------------------------------------------------
@@ -395,9 +397,7 @@ class IncomingRequest extends Request
 		// Use $_POST directly here, since filter_has_var only
 		// checks the initial POST data, not anything that might
 		// have been added since.
-		return isset($_POST[$index])
-			? $this->getPost($index, $filter)
-			: $this->getGet($index, $filter);
+		return isset($_POST[$index]) ? $this->getPost($index, $filter) : $this->getGet($index, $filter);
 	}
 
 	//--------------------------------------------------------------------
@@ -415,9 +415,7 @@ class IncomingRequest extends Request
 		// Use $_GET directly here, since filter_has_var only
 		// checks the initial GET data, not anything that might
 		// have been added since.
-		return isset($_GET[$index])
-			? $this->getGet($index, $filter)
-			: $this->getPost($index, $filter);
+		return isset($_GET[$index]) ? $this->getGet($index, $filter) : $this->getPost($index, $filter);
 	}
 
 	//--------------------------------------------------------------------
@@ -437,13 +435,13 @@ class IncomingRequest extends Request
 
 	//--------------------------------------------------------------------
 
-    /**
-     * Fetch the user agent string
-     *
-     * @param null $filter
-     *
-     * @return mixed
-     */
+	/**
+	 * Fetch the user agent string
+	 *
+	 * @param null $filter
+	 *
+	 * @return mixed
+	 */
 	public function getUserAgent($filter = null)
 	{
 		return $this->fetchGlobal(INPUT_SERVER, 'HTTP_USER_AGENT', $filter);
@@ -451,29 +449,30 @@ class IncomingRequest extends Request
 
 	//--------------------------------------------------------------------
 
-    /**
-     * Attempts to get old Input data that has been flashed to the session
-     * with redirect_with_input(). It first checks for the data in the old
-     * POST data, then the old GET data.
-     */
-    public function getOldInput(string $key)
-    {
-        // If the session hasn't been started, or no
-        // data was previously saved, we're done.
-        if (empty($_SESSION['_ci_old_input'])) return;
+	/**
+	 * Attempts to get old Input data that has been flashed to the session
+	 * with redirect_with_input(). It first checks for the data in the old
+	 * POST data, then the old GET data.
+	 */
+	public function getOldInput(string $key)
+	{
+		// If the session hasn't been started, or no
+		// data was previously saved, we're done.
+		if (empty($_SESSION['_ci_old_input']))
+			return;
 
-        // Check for the value in the POST array first.
-        if (isset($_SESSION['_ci_old_input']['post'][$key]))
-        {
-            return $_SESSION['_ci_old_input']['post'][$key];
-        }
+		// Check for the value in the POST array first.
+		if (isset($_SESSION['_ci_old_input']['post'][$key]))
+		{
+			return $_SESSION['_ci_old_input']['post'][$key];
+		}
 
-        // Next check in the GET array.
-        if (isset($_SESSION['_ci_old_input']['get'][$key]))
-        {
-            return $_SESSION['_ci_old_input']['get'][$key];
-        }
-    }
+		// Next check in the GET array.
+		if (isset($_SESSION['_ci_old_input']['get'][$key]))
+		{
+			return $_SESSION['_ci_old_input']['get'][$key];
+		}
+	}
 
 	/**
 	 * Returns an array of all files that have been uploaded with this
@@ -527,9 +526,7 @@ class IncomingRequest extends Request
 
 		// It's possible the user forgot a trailing slash on their
 		// baseURL, so let's help them out.
-		$baseURL = ! empty($baseURL)
-			? rtrim($baseURL, '/ ').'/'
-			: $baseURL;
+		$baseURL = ! empty($baseURL) ? rtrim($baseURL, '/ ') . '/' : $baseURL;
 
 		// Based on our baseURL provided by the developer (if set)
 		// set our current domain name, scheme
@@ -550,9 +547,7 @@ class IncomingRequest extends Request
 
 			// While both SERVER_NAME and HTTP_HOST are open to security issues,
 			// if we have to choose, we will go with the server-controlled version first.
-			! empty($_SERVER['SERVER_NAME'])
-				? (isset($_SERVER['SERVER_NAME']) ? $this->uri->setHost($_SERVER['SERVER_NAME']) : null)
-				: (isset($_SERVER['HTTP_HOST']) ? $this->uri->setHost($_SERVER['HTTP_HOST']) : null);
+			! empty($_SERVER['SERVER_NAME']) ? (isset($_SERVER['SERVER_NAME']) ? $this->uri->setHost($_SERVER['SERVER_NAME']) : null) : (isset($_SERVER['HTTP_HOST']) ? $this->uri->setHost($_SERVER['HTTP_HOST']) : null);
 
 			if ( ! empty($_SERVER['SERVER_PORT']))
 			{
@@ -588,9 +583,7 @@ class IncomingRequest extends Request
 				break;
 			case 'PATH_INFO':
 			default:
-				$path = isset($_SERVER[$protocol])
-					? $_SERVER[$protocol]
-					: $this->parseRequestURI();
+				$path = isset($_SERVER[$protocol]) ? $_SERVER[$protocol] : $this->parseRequestURI();
 				break;
 		}
 
@@ -632,7 +625,7 @@ class IncomingRequest extends Request
 				break;
 		}
 
-		throw new \InvalidArgumentException($type.' is not a valid negotiation type.');
+		throw new \InvalidArgumentException($type . ' is not a valid negotiation type.');
 	}
 
 	//--------------------------------------------------------------------
@@ -652,19 +645,19 @@ class IncomingRequest extends Request
 
 		// parse_url() returns false if no host is present, but the path or query string
 		// contains a colon followed by a number
-		$parts = parse_url('http://dummy'.$_SERVER['REQUEST_URI']);
+		$parts = parse_url('http://dummy' . $_SERVER['REQUEST_URI']);
 		$query = isset($parts['query']) ? $parts['query'] : '';
-		$uri   = isset($parts['path']) ? $parts['path'] : '';
+		$uri = isset($parts['path']) ? $parts['path'] : '';
 
 		if (isset($_SERVER['SCRIPT_NAME'][0]))
 		{
 			if (strpos($uri, $_SERVER['SCRIPT_NAME']) === 0)
 			{
-				$uri = (string)substr($uri, strlen($_SERVER['SCRIPT_NAME']));
+				$uri = (string) substr($uri, strlen($_SERVER['SCRIPT_NAME']));
 			}
 			elseif (strpos($uri, dirname($_SERVER['SCRIPT_NAME'])) === 0)
 			{
-				$uri = (string)substr($uri, strlen(dirname($_SERVER['SCRIPT_NAME'])));
+				$uri = (string) substr($uri, strlen(dirname($_SERVER['SCRIPT_NAME'])));
 			}
 		}
 
@@ -672,8 +665,8 @@ class IncomingRequest extends Request
 		// URI is found, and also fixes the QUERY_STRING getServer var and $_GET array.
 		if (trim($uri, '/') === '' && strncmp($query, '/', 1) === 0)
 		{
-			$query                   = explode('?', $query, 2);
-			$uri                     = $query[0];
+			$query = explode('?', $query, 2);
+			$uri = $query[0];
 			$_SERVER['QUERY_STRING'] = isset($query[1]) ? $query[1] : '';
 		}
 		else
@@ -710,9 +703,9 @@ class IncomingRequest extends Request
 		}
 		elseif (strncmp($uri, '/', 1) === 0)
 		{
-			$uri                     = explode('?', $uri, 2);
+			$uri = explode('?', $uri, 2);
 			$_SERVER['QUERY_STRING'] = isset($uri[1]) ? $uri[1] : '';
-			$uri                     = $uri[0];
+			$uri = $uri[0];
 		}
 
 		parse_str($_SERVER['QUERY_STRING'], $_GET);
@@ -734,7 +727,7 @@ class IncomingRequest extends Request
 	protected function removeRelativeDirectory($uri)
 	{
 		$uris = [];
-		$tok  = strtok($uri, '/');
+		$tok = strtok($uri, '/');
 		while ($tok !== false)
 		{
 			if (( ! empty($tok) || $tok === '0') && $tok !== '..')

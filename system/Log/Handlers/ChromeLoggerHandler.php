@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
+ * Copyright (c) 2014-2017 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,13 +29,12 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 3.0.0
  * @filesource
  */
-
 use CodeIgniter\Events\Events;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Services;
@@ -52,6 +51,7 @@ use CodeIgniter\Services;
  */
 class ChromeLoggerHandler extends BaseHandler implements HandlerInterface
 {
+
 	/**
 	 * Version of this library - for ChromeLogger use.
 	 *
@@ -72,9 +72,9 @@ class ChromeLoggerHandler extends BaseHandler implements HandlerInterface
 	 * @var array
 	 */
 	protected $json = [
-		'version' => self::VERSION,
-		'columns' => ['log', 'backtrace', 'type'],
-		'rows'    => [],
+		'version'	 => self::VERSION,
+		'columns'	 => ['log', 'backtrace', 'type'],
+		'rows'		 => [],
 	];
 
 	/**
@@ -90,14 +90,14 @@ class ChromeLoggerHandler extends BaseHandler implements HandlerInterface
 	 * @var array
 	 */
 	protected $levels = [
-		'emergency' => 'error',
-		'alert'     => 'error',
-		'critical'  => 'error',
-		'error'     => 'error',
-		'warning'   => 'warn',
-		'notice'    => 'warn',
-		'info'      => 'info',
-		'debug'     => 'info',
+		'emergency'	 => 'error',
+		'alert'		 => 'error',
+		'critical'	 => 'error',
+		'error'		 => 'error',
+		'warning'	 => 'warn',
+		'notice'	 => 'warn',
+		'info'		 => 'info',
+		'debug'		 => 'info',
 	];
 
 	//--------------------------------------------------------------------
@@ -113,9 +113,9 @@ class ChromeLoggerHandler extends BaseHandler implements HandlerInterface
 
 		$request = Services::request(null, true);
 
-		$this->json['request_uri'] = (string)$request->uri;
-                
-                Events::on('post_controller', [$this, 'sendLogs'], EVENT_PRIORITY_HIGH);
+		$this->json['request_uri'] = (string) $request->uri;
+
+		Events::on('post_controller', [$this, 'sendLogs'], EVENT_PRIORITY_HIGH);
 	}
 
 	//--------------------------------------------------------------------
@@ -143,7 +143,7 @@ class ChromeLoggerHandler extends BaseHandler implements HandlerInterface
 		$backtraceMessage = 'unknown';
 		if (isset($backtrace['file']) && isset($backtrace['line']))
 		{
-			$backtraceMessage = $backtrace['file'].':'.$backtrace['line'];
+			$backtraceMessage = $backtrace['file'] . ':' . $backtrace['line'];
 		}
 
 		// Default to 'log' type.
@@ -168,13 +168,13 @@ class ChromeLoggerHandler extends BaseHandler implements HandlerInterface
 	 */
 	protected function format($object)
 	{
-		if (! is_object($object))
+		if ( ! is_object($object))
 		{
 			return $object;
 		}
 
 		// @todo Modify formatting of objects once we can view them in browser.
-		$objectArray = (array)$object;
+		$objectArray = (array) $object;
 
 		$objectArray['___class_name'] = get_class($object);
 
@@ -188,7 +188,7 @@ class ChromeLoggerHandler extends BaseHandler implements HandlerInterface
 	 *
 	 * @param ResponseInterface response
 	 */
-	public function sendLogs(ResponseInterface &$response=null)
+	public function sendLogs(ResponseInterface &$response = null)
 	{
 		if (is_null($response))
 		{
@@ -197,6 +197,7 @@ class ChromeLoggerHandler extends BaseHandler implements HandlerInterface
 
 		$data = base64_encode(utf8_encode(json_encode($this->json)));
 
-	    $response->setHeader($this->header, $data);
+		$response->setHeader($this->header, $data);
 	}
+
 }

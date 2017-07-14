@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
+ * Copyright (c) 2014-2017 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,13 +29,12 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 3.0.0
  * @filesource
  */
-
 use CodeIgniter\DatabaseException;
 
 /**
@@ -43,6 +42,7 @@ use CodeIgniter\DatabaseException;
  */
 abstract class BaseUtils
 {
+
 	/**
 	 * Database object
 	 *
@@ -57,21 +57,21 @@ abstract class BaseUtils
 	 *
 	 * @var	string
 	 */
-	protected $listDatabases		= FALSE;
+	protected $listDatabases = FALSE;
 
 	/**
 	 * OPTIMIZE TABLE statement
 	 *
 	 * @var	string
 	 */
-	protected $optimizeTable	= FALSE;
+	protected $optimizeTable = FALSE;
 
 	/**
 	 * REPAIR TABLE statement
 	 *
 	 * @var	string
 	 */
-	protected $repairTable	= FALSE;
+	protected $repairTable = FALSE;
 
 	//--------------------------------------------------------------------
 
@@ -82,7 +82,7 @@ abstract class BaseUtils
 	 */
 	public function __construct(ConnectionInterface &$db)
 	{
-		$this->db =& $db;
+		$this->db = & $db;
 	}
 
 	//--------------------------------------------------------------------
@@ -116,7 +116,7 @@ abstract class BaseUtils
 			return $this->db->dataCache['db_names'];
 		}
 
-		for ($i = 0, $query = $query->getResultArray(), $c = count($query); $i < $c; $i++)
+		for ($i = 0, $query = $query->getResultArray(), $c = count($query); $i < $c; $i ++ )
 		{
 			$this->db->dataCache['db_names'][] = current($query[$i]);
 		}
@@ -196,7 +196,7 @@ abstract class BaseUtils
 			// Build the result array...
 			$res = $res->getResultArray();
 			$res = current($res);
-			$key = str_replace($this->db->database.'.', '', current($res));
+			$key = str_replace($this->db->database . '.', '', current($res));
 			$keys = array_keys($res);
 			unset($res[$keys[0]]);
 
@@ -252,10 +252,10 @@ abstract class BaseUtils
 		// First generate the headings from the table column names
 		foreach ($query->getFieldNames() as $name)
 		{
-			$out .= $enclosure.str_replace($enclosure, $enclosure.$enclosure, $name).$enclosure.$delim;
+			$out .= $enclosure . str_replace($enclosure, $enclosure . $enclosure, $name) . $enclosure . $delim;
 		}
 
-		$out = substr($out, 0, -strlen($delim)).$newline;
+		$out = substr($out, 0, -strlen($delim)) . $newline;
 
 		// Next blast through the result array and build out the rows
 		while ($row = $query->getUnbufferedRow('array'))
@@ -263,9 +263,9 @@ abstract class BaseUtils
 			$line = array();
 			foreach ($row as $item)
 			{
-				$line[] = $enclosure.str_replace($enclosure, $enclosure.$enclosure, $item).$enclosure;
+				$line[] = $enclosure . str_replace($enclosure, $enclosure . $enclosure, $item) . $enclosure;
 			}
-			$out .= implode($delim, $line).$newline;
+			$out .= implode($delim, $line) . $newline;
 		}
 
 		return $out;
@@ -296,20 +296,19 @@ abstract class BaseUtils
 
 		// Load the xml helper
 //		get_instance()->load->helper('xml');
-
 		// Generate the result
-		$xml = '<'.$root.'>'.$newline;
+		$xml = '<' . $root . '>' . $newline;
 		while ($row = $query->getUnbufferedRow())
 		{
-			$xml .= $tab.'<'.$element.'>'.$newline;
+			$xml .= $tab . '<' . $element . '>' . $newline;
 			foreach ($row as $key => $val)
 			{
-				$xml .= $tab.$tab.'<'.$key.'>'.xml_convert($val).'</'.$key.'>'.$newline;
+				$xml .= $tab . $tab . '<' . $key . '>' . xml_convert($val) . '</' . $key . '>' . $newline;
 			}
-			$xml .= $tab.'</'.$element.'>'.$newline;
+			$xml .= $tab . '</' . $element . '>' . $newline;
 		}
 
-		return $xml.'</'.$root.'>'.$newline;
+		return $xml . '</' . $root . '>' . $newline;
 	}
 
 	//--------------------------------------------------------------------
@@ -332,14 +331,14 @@ abstract class BaseUtils
 
 		// Set up our default preferences
 		$prefs = array(
-			'tables'		=> array(),
-			'ignore'		=> array(),
-			'filename'		=> '',
-			'format'		=> 'gzip', // gzip, zip, txt
-			'add_drop'		=> TRUE,
-			'add_insert'		=> TRUE,
-			'newline'		=> "\n",
-			'foreign_key_checks'	=> TRUE
+			'tables'			 => array(),
+			'ignore'			 => array(),
+			'filename'			 => '',
+			'format'			 => 'gzip', // gzip, zip, txt
+			'add_drop'			 => TRUE,
+			'add_insert'		 => TRUE,
+			'newline'			 => "\n",
+			'foreign_key_checks' => TRUE
 		);
 
 		// Did the user submit any preferences? If so set them....
@@ -370,7 +369,7 @@ abstract class BaseUtils
 		// Is the encoder supported? If not, we'll either issue an
 		// error or use plain text depending on the debug settings
 		if (($prefs['format'] === 'gzip' && ! function_exists('gzencode'))
-		    OR ($prefs['format'] === 'zip' && ! function_exists('gzcompress')))
+				OR ( $prefs['format'] === 'zip' && ! function_exists('gzcompress')))
 		{
 			if ($this->db->DBDebug)
 			{
@@ -387,7 +386,7 @@ abstract class BaseUtils
 			if ($prefs['filename'] === '')
 			{
 				$prefs['filename'] = (count($prefs['tables']) === 1 ? $prefs['tables'] : $this->db->database)
-				                     .date('Y-m-d_H-i', time()).'.sql';
+						. date('Y-m-d_H-i', time()) . '.sql';
 			}
 			else
 			{
@@ -434,5 +433,4 @@ abstract class BaseUtils
 	abstract public function _backup(array $prefs = null);
 
 	//--------------------------------------------------------------------
-
 }

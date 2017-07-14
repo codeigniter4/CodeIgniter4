@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
+ * Copyright (c) 2014-2017 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,13 +29,12 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 3.0.0
  * @filesource
  */
-
 use Psr\Log\LoggerInterface;
 
 /**
@@ -69,14 +68,14 @@ class Logger implements LoggerInterface
 	 * @var array
 	 */
 	protected $logLevels = [
-		'emergency' => 1,
-		'alert'     => 2,
-		'critical'  => 3,
-		'error'     => 4,
-		'debug'     => 5,
-		'warning'   => 6,
-		'notice'    => 7,
-		'info'      => 8,
+		'emergency'	 => 1,
+		'alert'		 => 2,
+		'critical'	 => 3,
+		'error'		 => 4,
+		'debug'		 => 5,
+		'warning'	 => 6,
+		'notice'	 => 7,
+		'info'		 => 8,
 	];
 
 	/**
@@ -151,7 +150,7 @@ class Logger implements LoggerInterface
 	 */
 	public function __construct($config, bool $debug = CI_DEBUG)
 	{
-		$this->loggableLevels = is_array($config->threshold) ? $config->threshold : range(1, (int)$config->threshold);
+		$this->loggableLevels = is_array($config->threshold) ? $config->threshold : range(1, (int) $config->threshold);
 
 		// Now convert loggable levels to strings.
 		// We only use numbers to make the threshold setting convenient for users.
@@ -160,7 +159,7 @@ class Logger implements LoggerInterface
 			$temp = [];
 			foreach ($this->loggableLevels as $level)
 			{
-				$temp[] = array_search((int)$level, $this->logLevels);
+				$temp[] = array_search((int) $level, $this->logLevels);
 			}
 
 			$this->loggableLevels = $temp;
@@ -169,7 +168,7 @@ class Logger implements LoggerInterface
 
 		$this->dateFormat = $config->dateFormat ?? $this->dateFormat;
 
-		if (! is_array($config->handlers) || empty($config->handlers))
+		if ( ! is_array($config->handlers) || empty($config->handlers))
 		{
 			throw new \RuntimeException('LoggerConfig must provide at least one Handler.');
 		}
@@ -178,7 +177,7 @@ class Logger implements LoggerInterface
 		// Instances will be created on demand.
 		$this->handlerConfig = $config->handlers;
 
-		$this->cacheLogs = (bool)$debug;
+		$this->cacheLogs = (bool) $debug;
 		if ($this->cacheLogs)
 		{
 			$this->logCache = [];
@@ -331,13 +330,13 @@ class Logger implements LoggerInterface
 	{
 		if (is_numeric($level))
 		{
-			$level = array_search((int)$level, $this->logLevels);
+			$level = array_search((int) $level, $this->logLevels);
 		}
 
 		// Is the level a valid level?
-		if (! array_key_exists($level, $this->logLevels))
+		if ( ! array_key_exists($level, $this->logLevels))
 		{
-			throw new \InvalidArgumentException($level.' is an invalid log level.');
+			throw new \InvalidArgumentException($level . ' is an invalid log level.');
 		}
 
 		// Does the app want to log this right now?
@@ -349,7 +348,7 @@ class Logger implements LoggerInterface
 		// Parse our placeholders
 		$message = $this->interpolate($message, $context);
 
-		if (! is_string($message))
+		if ( ! is_string($message))
 		{
 			$message = print_r($message, true);
 		}
@@ -357,8 +356,8 @@ class Logger implements LoggerInterface
 		if ($this->cacheLogs)
 		{
 			$this->logCache[] = [
-				'level' => $level,
-			    'msg'   => $message
+				'level'	 => $level,
+				'msg'	 => $message
 			];
 		}
 
@@ -369,14 +368,14 @@ class Logger implements LoggerInterface
 			 */
 			$handler = new $className($config);
 
-			if (! $handler->canHandle($level))
+			if ( ! $handler->canHandle($level))
 			{
 				continue;
 			}
 
 			// If the handler returns false, then we
 			// don't execute any other handlers.
-			if (! $handler->setDateFormat($this->dateFormat)->handle($level, $message))
+			if ( ! $handler->setDateFormat($this->dateFormat)->handle($level, $message))
 			{
 				break;
 			}
@@ -406,7 +405,8 @@ class Logger implements LoggerInterface
 	 */
 	protected function interpolate($message, array $context = [])
 	{
-		if (! is_string($message)) return $message;
+		if ( ! is_string($message))
+			return $message;
 
 		// build a replacement array with braces around the context keys
 		$replace = [];
@@ -417,17 +417,17 @@ class Logger implements LoggerInterface
 			// or error, both of which implement the 'Throwable' interface.
 			if ($key == 'exception' && $val instanceof \Throwable)
 			{
-				$val = $val->getMessage().' '.$this->cleanFileNames($val->getFile()).':'. $val->getLine();
+				$val = $val->getMessage() . ' ' . $this->cleanFileNames($val->getFile()) . ':' . $val->getLine();
 			}
 
 			// todo - sanitize input before writing to file?
-			$replace['{'.$key.'}'] = $val;
+			$replace['{' . $key . '}'] = $val;
 		}
 
 		// Add special placeholders
-		$replace['{post_vars}'] = '$_POST: '.print_r($_POST, true);
-		$replace['{get_vars}']  = '$_GET: '.print_r($_GET, true);
-		$replace['{env}']       = ENVIRONMENT;
+		$replace['{post_vars}'] = '$_POST: ' . print_r($_POST, true);
+		$replace['{get_vars}'] = '$_GET: ' . print_r($_GET, true);
+		$replace['{env}'] = ENVIRONMENT;
 
 		// Allow us to log the file/line that we are logging from
 		if (strpos($message, '{file}') !== false)
@@ -455,7 +455,7 @@ class Logger implements LoggerInterface
 
 		if (isset($_SESSION))
 		{
-			$replace['{session_vars}'] = '$_SESSION: '.print_r($_SESSION, true);
+			$replace['{session_vars}'] = '$_SESSION: ' . print_r($_SESSION, true);
 		}
 
 		// interpolate replacement values into the message and return
@@ -492,12 +492,11 @@ class Logger implements LoggerInterface
 
 		return [
 			$file,
-		    $line
+			$line
 		];
 	}
 
 	//--------------------------------------------------------------------
-
 
 	/**
 	 * Cleans the paths of filenames by replacing APPPATH, BASEPATH, FCPATH
@@ -517,10 +516,8 @@ class Logger implements LoggerInterface
 		$file = str_replace(BASEPATH, 'BASEPATH/', $file);
 		$file = str_replace(FCPATH, 'FCPATH/', $file);
 
-	    return $file;
+		return $file;
 	}
 
 	//--------------------------------------------------------------------
-
-
 }

@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
+ * Copyright (c) 2014-2017 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,13 +29,12 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 3.0.0
  * @filesource
  */
-
 use CodeIgniter\Config\BaseConfig;
 use Psr\Log\LoggerAwareTrait;
 
@@ -44,6 +43,7 @@ use Psr\Log\LoggerAwareTrait;
  */
 abstract class BaseHandler implements \SessionHandlerInterface
 {
+
 	use LoggerAwareTrait;
 
 	/**
@@ -106,12 +106,12 @@ abstract class BaseHandler implements \SessionHandlerInterface
 	 */
 	protected $sessionID;
 
-    /**
-     * The 'save path' for the session
-     * varies between
-     * @var mixed
-     */
-    protected $savePath;
+	/**
+	 * The 'save path' for the session
+	 * varies between
+	 * @var mixed
+	 */
+	protected $savePath;
 
 	//--------------------------------------------------------------------
 
@@ -123,11 +123,11 @@ abstract class BaseHandler implements \SessionHandlerInterface
 	{
 		$this->cookiePrefix = $config->cookiePrefix;
 		$this->cookieDomain = $config->cookieDomain;
-		$this->cookiePath   = $config->cookiePath;
+		$this->cookiePath = $config->cookiePath;
 		$this->cookieSecure = $config->cookieSecure;
-		$this->cookieName   = $config->sessionCookieName;
-		$this->matchIP      = $config->sessionMatchIP;
-        $this->savePath     = $config->sessionSavePath;
+		$this->cookieName = $config->sessionCookieName;
+		$this->matchIP = $config->sessionMatchIP;
+		$this->savePath = $config->sessionSavePath;
 	}
 
 	//--------------------------------------------------------------------
@@ -140,15 +140,9 @@ abstract class BaseHandler implements \SessionHandlerInterface
 	 */
 	protected function destroyCookie(): bool
 	{
-	    return setcookie(
-		    $this->cookieName,
-		    null,
-		    1,
-		    $this->cookiePath,
-		    $this->cookieDomain,
-		    $this->cookieSecure,
-		    true
-	    );
+		return setcookie(
+				$this->cookieName, null, 1, $this->cookiePath, $this->cookieDomain, $this->cookieSecure, true
+		);
 	}
 
 	//--------------------------------------------------------------------
@@ -184,23 +178,24 @@ abstract class BaseHandler implements \SessionHandlerInterface
 
 	//--------------------------------------------------------------------
 
-    /**
-     * Fail
-     *
-     * Drivers other than the 'files' one don't (need to) use the
-     * session.save_path INI setting, but that leads to confusing
-     * error messages emitted by PHP when open() or write() fail,
-     * as the message contains session.save_path ...
-     * To work around the problem, the drivers will call this method
-     * so that the INI is set just in time for the error message to
-     * be properly generated.
-     *
-     * @return	mixed
-     */
-    protected function fail()
-    {
-        ini_set('session.save_path', $this->savePath);
+	/**
+	 * Fail
+	 *
+	 * Drivers other than the 'files' one don't (need to) use the
+	 * session.save_path INI setting, but that leads to confusing
+	 * error messages emitted by PHP when open() or write() fail,
+	 * as the message contains session.save_path ...
+	 * To work around the problem, the drivers will call this method
+	 * so that the INI is set just in time for the error message to
+	 * be properly generated.
+	 *
+	 * @return	mixed
+	 */
+	protected function fail()
+	{
+		ini_set('session.save_path', $this->savePath);
 
-        return false;
-    }
+		return false;
+	}
+
 }

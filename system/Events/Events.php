@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
+ * Copyright (c) 2014-2017 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,13 +29,12 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 3.0.0
  * @filesource
  */
-
 define('EVENT_PRIORITY_LOW', 200);
 define('EVENT_PRIORITY_NORMAL', 100);
 define('EVENT_PRIORITY_HIGH', 10);
@@ -75,18 +74,18 @@ class Events
 	 *
 	 * @param string|null $file
 	 */
-	public static function initialize(string $file=null)
+	public static function initialize(string $file = null)
 	{
 		// Don't overwrite anything....
-		if (! empty(self::$eventsFile))
+		if ( ! empty(self::$eventsFile))
 		{
 			return;
 		}
 
 		// Default value
-	    if (empty($file))
+		if (empty($file))
 		{
-			$file = APPPATH.'Config/Events.php';
+			$file = APPPATH . 'Config/Events.php';
 		}
 
 		self::$eventsFile = $file;
@@ -112,14 +111,14 @@ class Events
 		if ( ! isset(self::$listeners[$event_name]))
 		{
 			self::$listeners[$event_name] = [
-				true,   // If there's only 1 item, it's sorted.
+				true, // If there's only 1 item, it's sorted.
 				[$priority],
 				[$callback],
 			];
 		}
 		else
 		{
-			self::$listeners[$event_name][0]   = false; // Not sorted
+			self::$listeners[$event_name][0] = false; // Not sorted
 			self::$listeners[$event_name][1][] = $priority;
 			self::$listeners[$event_name][2][] = $callback;
 		}
@@ -269,5 +268,4 @@ class Events
 	}
 
 	//--------------------------------------------------------------------
-
 }

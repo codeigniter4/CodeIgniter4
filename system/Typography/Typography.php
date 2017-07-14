@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
+ * Copyright (c) 2014-2017 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,7 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 3.0.0
@@ -55,7 +55,7 @@ class Typography
 	 *
 	 * @var string
 	 */
-	public $skipElements	= 'p|pre|ol|ul|dl|object|table|h\d';
+	public $skipElements = 'p|pre|ol|ul|dl|object|table|h\d';
 
 	/**
 	 * Tags we want the parser to completely ignore when splitting the string.
@@ -89,11 +89,11 @@ class Typography
 	 * Auto Typography
 	 *
 	 * This function converts text, making it typographically correct:
-	 *	- Converts double spaces into paragraphs.
-	 *	- Converts single line breaks into <br /> tags
-	 *	- Converts single and double quotes into correctly facing curly quote entities.
-	 *	- Converts three dots into ellipsis.
-	 *	- Converts double dashes into em-dashes.
+	 * 	- Converts double spaces into paragraphs.
+	 * 	- Converts single line breaks into <br /> tags
+	 * 	- Converts single and double quotes into correctly facing curly quote entities.
+	 * 	- Converts three dots into ellipsis.
+	 * 	- Converts double dashes into em-dashes.
 	 *  - Converts two spaces into entities
 	 *
 	 * @param	string
@@ -124,10 +124,10 @@ class Typography
 		$html_comments = [];
 		if (strpos($str, '<!--') !== false && preg_match_all('#(<!\-\-.*?\-\->)#s', $str, $matches))
 		{
-			for ($i = 0, $total = count($matches[0]); $i < $total; $i++)
+			for ($i = 0, $total = count($matches[0]); $i < $total; $i ++ )
 			{
 				$html_comments[] = $matches[0][$i];
-				$str = str_replace($matches[0][$i], '{@HC'.$i.'}', $str);
+				$str = str_replace($matches[0][$i], '{@HC' . $i . '}', $str);
 			}
 		}
 
@@ -150,31 +150,31 @@ class Typography
 		// Convert "ignore" tags to temporary marker.  The parser splits out the string at every tag
 		// it encounters.  Certain inline tags, like image tags, links, span tags, etc. will be
 		// adversely affected if they are split out so we'll convert the opening bracket < temporarily to: {@TAG}
-		$str = preg_replace('#<(/*)('.$this->inlineElements.')([ >])#i', '{@TAG}\\1\\2\\3', $str);
+		$str = preg_replace('#<(/*)(' . $this->inlineElements . ')([ >])#i', '{@TAG}\\1\\2\\3', $str);
 
 		/* Split the string at every tag. This expression creates an array with this prototype:
 		 *
-		 *	[array]
-		 *	{
-		 *		[0] = <opening tag>
-		 *		[1] = Content...
-		 *		[2] = <closing tag>
-		 *		Etc...
-		 *	}
+		 * 	[array]
+		 * 	{
+		 * 		[0] = <opening tag>
+		 * 		[1] = Content...
+		 * 		[2] = <closing tag>
+		 * 		Etc...
+		 * 	}
 		 */
-		$chunks = preg_split('/(<(?:[^<>]+(?:"[^"]*"|\'[^\']*\')?)+>)/', $str, -1, PREG_SPLIT_DELIM_CAPTURE|PREG_SPLIT_NO_EMPTY);
+		$chunks = preg_split('/(<(?:[^<>]+(?:"[^"]*"|\'[^\']*\')?)+>)/', $str, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
 
 		// Build our finalized string.  We cycle through the array, skipping tags, and processing the contained text
 		$str = '';
 		$process = true;
 
-		for ($i = 0, $c = count($chunks) - 1; $i <= $c; $i++)
+		for ($i = 0, $c = count($chunks) - 1; $i <= $c; $i ++ )
 		{
 			// Are we dealing with a tag? If so, we'll skip the processing for this cycle.
 			// Well also set the "process" flag which allows us to skip <pre> tags and a few other things.
-			if (preg_match('#<(/*)('.$this->blockElements.').*?>#', $chunks[$i], $match))
+			if (preg_match('#<(/*)(' . $this->blockElements . ').*?>#', $chunks[$i], $match))
 			{
-				if (preg_match('#'.$this->skipElements.'#', $match[2]))
+				if (preg_match('#' . $this->skipElements . '#', $match[2]))
 				{
 					$process = ($match[1] === '/');
 				}
@@ -205,55 +205,49 @@ class Typography
 		}
 
 		// No opening block level tag? Add it if needed.
-		if ( ! preg_match('/^\s*<(?:'.$this->blockElements.')/i', $str))
+		if ( ! preg_match('/^\s*<(?:' . $this->blockElements . ')/i', $str))
 		{
-			$str = preg_replace('/^(.*?)<('.$this->blockElements.')/i', '<p>$1</p><$2', $str);
+			$str = preg_replace('/^(.*?)<(' . $this->blockElements . ')/i', '<p>$1</p><$2', $str);
 		}
 
 		// Convert quotes, elipsis, em-dashes, non-breaking spaces, and ampersands
 		$str = $this->formatCharacters($str);
 
 		// restore HTML comments
-		for ($i = 0, $total = count($html_comments); $i < $total; $i++)
+		for ($i = 0, $total = count($html_comments); $i < $total; $i ++ )
 		{
 			// remove surrounding paragraph tags, but only if there's an opening paragraph tag
 			// otherwise HTML comments at the ends of paragraphs will have the closing tag removed
 			// if '<p>{@HC1}' then replace <p>{@HC1}</p> with the comment, else replace only {@HC1} with the comment
-			$str = preg_replace('#(?(?=<p>\{@HC'.$i.'\})<p>\{@HC'.$i.'\}(\s*</p>)|\{@HC'.$i.'\})#s', $html_comments[$i], $str);
+			$str = preg_replace('#(?(?=<p>\{@HC' . $i . '\})<p>\{@HC' . $i . '\}(\s*</p>)|\{@HC' . $i . '\})#s', $html_comments[$i], $str);
 		}
 
 		// Final clean up
 		$table = [
 			// If the user submitted their own paragraph tags within the text
 			// we will retain them instead of using our tags.
-			'/(<p[^>*?]>)<p>/'	=> '$1', // <?php BBEdit syntax coloring bug fix
-
+			'/(<p[^>*?]>)<p>/' => '$1', // <?php BBEdit syntax coloring bug fix
 			// Reduce multiple instances of opening/closing paragraph tags to a single one
-			'#(</p>)+#'			=> '</p>',
-			'/(<p>\W*<p>)+/'	=> '<p>',
-
+			'#(</p>)+#'		 => '</p>',
+			'/(<p>\W*<p>)+/' => '<p>',
 			// Clean up stray paragraph tags that appear before block level elements
-			'#<p></p><('.$this->blockElements.')#'	=> '<$1',
-
+			'#<p></p><(' . $this->blockElements . ')#' => '<$1',
 			// Clean up stray non-breaking spaces preceeding block elements
-			'#(&nbsp;\s*)+<('.$this->blockElements.')#'	=> '  <$2',
-
+			'#(&nbsp;\s*)+<(' . $this->blockElements . ')#' => '  <$2',
 			// Replace the temporary markers we added earlier
-			'/\{@TAG\}/'		=> '<',
-			'/\{@DQ\}/'			=> '"',
-			'/\{@SQ\}/'			=> "'",
-			'/\{@DD\}/'			=> '--',
-			'/\{@NBS\}/'		=> '  ',
-
+			'/\{@TAG\}/' => '<',
+			'/\{@DQ\}/'	 => '"',
+			'/\{@SQ\}/'	 => "'",
+			'/\{@DD\}/'	 => '--',
+			'/\{@NBS\}/' => '  ',
 			// An unintended consequence of the _format_newlines function is that
 			// some of the newlines get truncated, resulting in <p> tags
 			// starting immediately after <block> tags on the same line.
 			// This forces a newline after such occurrences, which looks much nicer.
-			"/><p>\n/"			=> ">\n<p>",
-
+			"/><p>\n/" => ">\n<p>",
 			// Similarly, there might be cases where a closing </block> will follow
 			// a closing </p> tag, so we'll correct it by adding a newline in between
-			'#</p></#'			=> "</p>\n</"
+			'#</p></#' => "</p>\n</"
 		];
 
 		// Do we need to reduce empty lines?
@@ -269,7 +263,6 @@ class Typography
 		}
 
 		return preg_replace(array_keys($table), $table, $str);
-
 	}
 
 	// --------------------------------------------------------------------
@@ -298,40 +291,34 @@ class Typography
 				// Note that in all cases, whitespace is the primary determining factor
 				// on which direction to curl, with non-word characters like punctuation
 				// being a secondary factor only after whitespace is addressed.
-				'/\'"(\s|$)/'					=> '&#8217;&#8221;$1',
-				'/(^|\s|<p>)\'"/'				=> '$1&#8216;&#8220;',
-				'/\'"(\W)/'						=> '&#8217;&#8221;$1',
-				'/(\W)\'"/'						=> '$1&#8216;&#8220;',
-				'/"\'(\s|$)/'					=> '&#8221;&#8217;$1',
-				'/(^|\s|<p>)"\'/'				=> '$1&#8220;&#8216;',
-				'/"\'(\W)/'						=> '&#8221;&#8217;$1',
-				'/(\W)"\'/'						=> '$1&#8220;&#8216;',
-
+				'/\'"(\s|$)/'		 => '&#8217;&#8221;$1',
+				'/(^|\s|<p>)\'"/'	 => '$1&#8216;&#8220;',
+				'/\'"(\W)/'			 => '&#8217;&#8221;$1',
+				'/(\W)\'"/'			 => '$1&#8216;&#8220;',
+				'/"\'(\s|$)/'		 => '&#8221;&#8217;$1',
+				'/(^|\s|<p>)"\'/'	 => '$1&#8220;&#8216;',
+				'/"\'(\W)/'			 => '&#8221;&#8217;$1',
+				'/(\W)"\'/'			 => '$1&#8220;&#8216;',
 				// single quote smart quotes
-				'/\'(\s|$)/'					=> '&#8217;$1',
-				'/(^|\s|<p>)\'/'				=> '$1&#8216;',
-				'/\'(\W)/'						=> '&#8217;$1',
-				'/(\W)\'/'						=> '$1&#8216;',
-
+				'/\'(\s|$)/'	 => '&#8217;$1',
+				'/(^|\s|<p>)\'/' => '$1&#8216;',
+				'/\'(\W)/'		 => '&#8217;$1',
+				'/(\W)\'/'		 => '$1&#8216;',
 				// double quote smart quotes
-				'/"(\s|$)/'						=> '&#8221;$1',
-				'/(^|\s|<p>)"/'					=> '$1&#8220;',
-				'/"(\W)/'						=> '&#8221;$1',
-				'/(\W)"/'						=> '$1&#8220;',
-
+				'/"(\s|$)/'		 => '&#8221;$1',
+				'/(^|\s|<p>)"/'	 => '$1&#8220;',
+				'/"(\W)/'		 => '&#8221;$1',
+				'/(\W)"/'		 => '$1&#8220;',
 				// apostrophes
-				"/(\w)'(\w)/"					=> '$1&#8217;$2',
-
+				"/(\w)'(\w)/" => '$1&#8217;$2',
 				// Em dash and ellipses dots
-				'/\s?\-\-\s?/'					=> '&#8212;',
-				'/(\w)\.{3}/'					=> '$1&#8230;',
-
+				'/\s?\-\-\s?/'	 => '&#8212;',
+				'/(\w)\.{3}/'	 => '$1&#8230;',
 				// double space after sentences
-				'/(\W)  /'						=> '$1&nbsp; ',
-
+				'/(\W)  /' => '$1&nbsp; ',
 				// ampersands, if not a character entity
-				'/&(?!#?[a-zA-Z0-9]{2,};)/'		=> '&amp;'
-			 ];
+				'/&(?!#?[a-zA-Z0-9]{2,};)/' => '&amp;'
+			];
 		}
 
 		return preg_replace(array_keys($table), $table, $str);
@@ -349,8 +336,7 @@ class Typography
 	 */
 	protected function formatNewLines(string $str): string
 	{
-		if ($str === '' OR (strpos($str, "\n") === false && ! in_array($this->lastBlockElement,
-		        $this->innerBlockRequired)))
+		if ($str === '' OR ( strpos($str, "\n") === false && ! in_array($this->lastBlockElement, $this->innerBlockRequired)))
 		{
 			return $str;
 		}
@@ -367,7 +353,7 @@ class Typography
 			// We trim off the right-side new line so that the closing </p> tag
 			// will be positioned immediately following the string, matching
 			// the behavior of the opening <p> tag
-			$str =  '<p>'.rtrim($str).'</p>';
+			$str = '<p>' . rtrim($str) . '</p>';
 		}
 
 		// Remove empty paragraphs if they are on the first line, as this
@@ -390,7 +376,7 @@ class Typography
 	 */
 	protected function protectCharacters(array $match): string
 	{
-		return str_replace(["'",'"','--','  '], ['{@SQ}', '{@DQ}', '{@DD}', '{@NBS}'], $match[0]);
+		return str_replace(["'", '"', '--', '  '], ['{@SQ}', '{@DQ}', '{@DD}', '{@NBS}'], $match[0]);
 	}
 
 	// --------------------------------------------------------------------
@@ -404,7 +390,7 @@ class Typography
 	public function nl2brExceptPre(string $str): string
 	{
 		$newstr = '';
-		for ($ex = explode('pre>', $str), $ct = count($ex), $i = 0; $i < $ct; $i++)
+		for ($ex = explode('pre>', $str), $ct = count($ex), $i = 0; $i < $ct; $i ++ )
 		{
 			$newstr .= (($i % 2) === 0) ? nl2br($ex[$i]) : $ex[$i];
 			if ($ct - 1 !== $i)

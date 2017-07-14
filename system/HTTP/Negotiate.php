@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
+ * Copyright (c) 2014-2017 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,7 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 3.0.0
@@ -48,6 +48,7 @@
  */
 class Negotiate
 {
+
 	/**
 	 * Request
 	 * 
@@ -64,10 +65,10 @@ class Negotiate
 	 */
 	public function __construct(\CodeIgniter\HTTP\RequestInterface $request = null)
 	{
-	    if (! is_null($request))
-	    {
-		    $this->request = $request;
-	    }
+		if ( ! is_null($request))
+		{
+			$this->request = $request;
+		}
 	}
 
 	//--------------------------------------------------------------------
@@ -81,14 +82,12 @@ class Negotiate
 	 */
 	public function setRequest(\CodeIgniter\HTTP\RequestInterface $request)
 	{
-	    $this->request = $request;
+		$this->request = $request;
 
 		return $this;
 	}
 
 	//--------------------------------------------------------------------
-
-
 
 	/**
 	 * Determines the best content-type to use based on the $supported
@@ -104,7 +103,7 @@ class Negotiate
 	 *
 	 * @return string
 	 */
-	public function media(array $supported, bool $strictMatch=false): string
+	public function media(array $supported, bool $strictMatch = false): string
 	{
 		return $this->getBestMatch($supported, $this->request->getHeaderLine('accept'), true, $strictMatch);
 	}
@@ -151,7 +150,7 @@ class Negotiate
 	 *
 	 * @return string
 	 */
-	public function encoding(array $supported=[]): string
+	public function encoding(array $supported = []): string
 	{
 		array_push($supported, 'identity');
 
@@ -178,7 +177,6 @@ class Negotiate
 	}
 
 	//--------------------------------------------------------------------
-
 	//--------------------------------------------------------------------
 	// Utility Methods
 	//--------------------------------------------------------------------
@@ -197,7 +195,7 @@ class Negotiate
 	 *
 	 * @return string Best match
 	 */
-	protected function getBestMatch(array $supported, string $header=null, bool $enforceTypes=false, bool $strictMatch=false): string
+	protected function getBestMatch(array $supported, string $header = null, bool $enforceTypes = false, bool $strictMatch = false): string
 	{
 		if (empty($supported))
 		{
@@ -276,9 +274,7 @@ class Negotiate
 			{
 				$param = array();
 				preg_match(
-					'/^(?P<name>.+?)=(?P<quoted>"|\')?(?P<value>.*?)(?:\k<quoted>)?$/',
-					$pair,
-					$param
+						'/^(?P<name>.+?)=(?P<quoted>"|\')?(?P<value>.*?)(?:\k<quoted>)?$/', $pair, $param
 				);
 				$parameters[trim($param['name'])] = trim($param['value']);
 			}
@@ -292,15 +288,14 @@ class Negotiate
 			}
 
 			$results[] = [
-				'value' => trim($value),
-				'q' => (float)$quality,
+				'value'	 => trim($value),
+				'q'		 => (float) $quality,
 				'params' => $parameters
 			];
 		}
 
 		// Sort to get the highest results first
-		usort($results, function ($a, $b)
-		{
+		usort($results, function ($a, $b) {
 			if ($a['q'] == $b['q'])
 			{
 				$a_ast = substr_count($a['value'], '*');
@@ -348,7 +343,7 @@ class Negotiate
 	 * @param bool $enforceTypes
 	 * @return boolean
 	 */
-	protected function match(array $acceptable, string $supported, bool $enforceTypes=false)
+	protected function match(array $acceptable, string $supported, bool $enforceTypes = false)
 	{
 		$supported = $this->parseHeader($supported);
 		if (is_array($supported) && count($supported) == 1)
@@ -392,8 +387,8 @@ class Negotiate
 
 		foreach ($supported['params'] as $label => $value)
 		{
-			if (! isset($acceptable['params'][$label]) ||
-			    $acceptable['params'][$label] != $value)
+			if ( ! isset($acceptable['params'][$label]) ||
+					$acceptable['params'][$label] != $value)
 			{
 				return false;
 			}
@@ -435,5 +430,4 @@ class Negotiate
 	}
 
 	//--------------------------------------------------------------------
-
 }

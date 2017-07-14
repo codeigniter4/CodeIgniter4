@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
+ * Copyright (c) 2014-2017 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,17 +29,17 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 3.0.0
  * @filesource
  */
-
 use Config\Services;
 
 class Language
 {
+
 	/**
 	 * Stores the retrieved language lines
 	 * from files for faster retrieval on
@@ -101,11 +101,10 @@ class Language
 		// Will load the language file and strings.
 		list($file, $line) = $this->parseLine($line);
 
-		$output = isset($this->language[$file][$line])
-			? $this->language[$file][$line]
-			: $line;
+		$output = isset($this->language[$file][$line]) ? $this->language[$file][$line] : $line;
 
-		if (count($args)) {
+		if (count($args))
+		{
 			$output = $this->formatMessage($output, $args);
 		}
 
@@ -136,9 +135,9 @@ class Language
 		}
 
 		$file = substr($line, 0, strpos($line, '.'));
-		$line = substr($line, strlen($file)+1);
+		$line = substr($line, strlen($file) + 1);
 
-		if (! array_key_exists($line, $this->language))
+		if ( ! array_key_exists($line, $this->language))
 		{
 			$this->load($file, $this->locale);
 		}
@@ -161,7 +160,7 @@ class Language
 	 */
 	protected function formatMessage($message, array $args = [])
 	{
-		if (! $this->intlSupport || ! count($args))
+		if ( ! $this->intlSupport || ! count($args))
 		{
 			return $message;
 		}
@@ -198,7 +197,7 @@ class Language
 			return [];
 		}
 
-		if (! array_key_exists($file, $this->language))
+		if ( ! array_key_exists($file, $this->language))
 		{
 			$this->language[$file] = [];
 		}
@@ -237,15 +236,15 @@ class Language
 
 		foreach ($files as $file)
 		{
-			if (! is_file($file))
+			if ( ! is_file($file))
 			{
 				continue;
 			}
 
 			// On some OS's we were seeing failures
-      // on this command returning boolean instead
-      // of array during testing, so we've removed
-      // the require_once for now.
+			// on this command returning boolean instead
+			// of array during testing, so we've removed
+			// the require_once for now.
 			return require $file;
 		}
 
@@ -253,5 +252,4 @@ class Language
 	}
 
 	//--------------------------------------------------------------------
-
 }

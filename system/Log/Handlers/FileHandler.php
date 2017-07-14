@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
+ * Copyright (c) 2014-2017 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,13 +29,12 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 3.0.0
  * @filesource
  */
-
 use CodeIgniter\Log\Handlers\BaseHandler;
 use CodeIgniter\Log\Handlers\HandlerInterface;
 
@@ -44,6 +43,7 @@ use CodeIgniter\Log\Handlers\HandlerInterface;
  */
 class FileHandler extends BaseHandler implements HandlerInterface
 {
+
 	/**
 	 * Folder to hold logs
 	 * 
@@ -73,7 +73,7 @@ class FileHandler extends BaseHandler implements HandlerInterface
 	{
 		parent::__construct($config);
 
-		$this->path = $config['path'] ?? WRITEPATH.'logs/';
+		$this->path = $config['path'] ?? WRITEPATH . 'logs/';
 
 		$this->fileExtension = $config['fileExtension'] ?? 'php';
 		$this->fileExtension = ltrim($this->fileExtension, '.');
@@ -96,7 +96,7 @@ class FileHandler extends BaseHandler implements HandlerInterface
 	 */
 	public function handle($level, $message): bool
 	{
-		$filepath = $this->path.'log-'.date('Y-m-d').'.'.$this->fileExtension;
+		$filepath = $this->path . 'log-' . date('Y-m-d') . '.' . $this->fileExtension;
 
 		$msg = '';
 
@@ -119,17 +119,17 @@ class FileHandler extends BaseHandler implements HandlerInterface
 		// Instantiating DateTime with microseconds appended to initial date is needed for proper support of this format
 		if (strpos($this->dateFormat, 'u') !== false)
 		{
-			$microtime_full  = microtime(true);
+			$microtime_full = microtime(true);
 			$microtime_short = sprintf("%06d", ($microtime_full - floor($microtime_full)) * 1000000);
-			$date            = new \DateTime(date('Y-m-d H:i:s.'.$microtime_short, $microtime_full));
-			$date            = $date->format($this->dateFormat);
+			$date = new \DateTime(date('Y-m-d H:i:s.' . $microtime_short, $microtime_full));
+			$date = $date->format($this->dateFormat);
 		}
 		else
 		{
 			$date = date($this->dateFormat);
 		}
 
-		$msg .= strtoupper($level).' - '.$date.' --> '.$message."\n";
+		$msg .= strtoupper($level) . ' - ' . $date . ' --> ' . $message . "\n";
 
 		flock($fp, LOCK_EX);
 
@@ -151,8 +151,6 @@ class FileHandler extends BaseHandler implements HandlerInterface
 
 		return is_int($result);
 	}
-	
+
 	//--------------------------------------------------------------------
-	
-	
 }
