@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014-2017 British Columbia Institute of Technology
+ * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,7 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
+ * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 3.0.0
@@ -46,7 +46,6 @@
  */
 interface QueryInterface
 {
-
 	/**
 	 * Sets the raw query string to use for this statement.
 	 *
@@ -152,4 +151,5 @@ interface QueryInterface
 	public function swapPrefix(string $orig, string $swap);
 
 	//--------------------------------------------------------------------
+
 }

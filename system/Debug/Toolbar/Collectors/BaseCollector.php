@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014-2017 British Columbia Institute of Technology
+ * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,7 @@
  *
  * @package      CodeIgniter
  * @author       CodeIgniter Dev Team
- * @copyright    2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
+ * @copyright    Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
  * @license      https://opensource.org/licenses/MIT	MIT License
  * @link         https://codeigniter.com
  * @since        Version 4.0.0
@@ -41,7 +41,6 @@
  */
 class BaseCollector
 {
-
 	/**
 	 * Whether this collector has data that can
 	 * be displayed in the Timeline.
@@ -82,14 +81,14 @@ class BaseCollector
 	 * @param bool $safe
 	 * @return string
 	 */
-	public function getTitle($safe = false): string
+	public function getTitle($safe=false): string
 	{
 		if ($safe)
 		{
 			return str_replace(' ', '-', strtolower($this->title));
 		}
 
-		return $this->title;
+	    return $this->title;
 	}
 
 	//--------------------------------------------------------------------
@@ -101,10 +100,12 @@ class BaseCollector
 	 */
 	public function getTitleDetails(): string
 	{
-		return '';
+	    return '';
 	}
 
 	//--------------------------------------------------------------------
+
+
 
 	/**
 	 * Does this collector need it's own tab?
@@ -113,7 +114,7 @@ class BaseCollector
 	 */
 	public function hasTabContent(): bool
 	{
-		return (bool) $this->hasTabContent;
+		return (bool)$this->hasTabContent;
 	}
 
 	//--------------------------------------------------------------------
@@ -125,10 +126,11 @@ class BaseCollector
 	 */
 	public function hasTimelineData(): bool
 	{
-		return (bool) $this->hasTimeline;
+	    return (bool)$this->hasTimeline;
 	}
 
 	//--------------------------------------------------------------------
+
 
 	/**
 	 * Grabs the data for the timeline, properly formatted,
@@ -138,7 +140,7 @@ class BaseCollector
 	 */
 	public function timelineData(): array
 	{
-		if ( ! $this->hasTimeline)
+		if (! $this->hasTimeline)
 		{
 			return [];
 		}
@@ -156,7 +158,7 @@ class BaseCollector
 	 */
 	public function hasVarData()
 	{
-		return (bool) $this->hasVarData;
+	    return (bool)$this->hasVarData;
 	}
 
 	//--------------------------------------------------------------------
@@ -181,10 +183,11 @@ class BaseCollector
 	 */
 	public function getVarData()
 	{
-		return null;
+	    return null;
 	}
 
 	//--------------------------------------------------------------------
+
 
 	/**
 	 * Child classes should implement this to return the timeline data
@@ -201,10 +204,10 @@ class BaseCollector
 	 *
 	 * @return mixed
 	 */
-	protected function formatTimelineData(): array
-	{
-		return [];
-	}
+	 protected function formatTimelineData(): array
+	 {
+		 return [];
+	 }
 
 	//--------------------------------------------------------------------
 
@@ -234,15 +237,15 @@ class BaseCollector
 	{
 		if (strpos($file, APPPATH) === 0)
 		{
-			$file = 'APPPATH/' . substr($file, strlen(APPPATH));
+			$file = 'APPPATH/'.substr($file, strlen(APPPATH));
 		}
 		elseif (strpos($file, BASEPATH) === 0)
 		{
-			$file = 'BASEPATH/' . substr($file, strlen(BASEPATH));
+			$file = 'BASEPATH/'.substr($file, strlen(BASEPATH));
 		}
 		elseif (strpos($file, FCPATH) === 0)
 		{
-			$file = 'FCPATH/' . substr($file, strlen(FCPATH));
+			$file = 'FCPATH/'.substr($file, strlen(FCPATH));
 		}
 
 		return $file;

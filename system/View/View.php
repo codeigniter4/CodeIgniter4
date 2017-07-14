@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014-2017 British Columbia Institute of Technology
+ * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,12 +29,13 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
+ * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 3.0.0
  * @filesource
  */
+
 use Config\Services;
 use CodeIgniter\Log\Logger;
 
@@ -87,24 +88,24 @@ class View implements RendererInterface
 	 */
 	protected $performanceData = [];
 
-	/**
-	 * @var \Config\View
-	 */
-	protected $config;
+    /**
+     * @var \Config\View
+     */
+    protected $config;
 
-	/**
-	 * Whether data should be saved between renders.
-	 *
-	 * @var bool
-	 */
-	protected $saveData;
+    /**
+     * Whether data should be saved between renders.
+     *
+     * @var bool
+     */
+    protected $saveData;
 
 	//--------------------------------------------------------------------
 
 	/**
 	 * Constructor
 	 *
-	 * @param \Config\View  $config
+     * @param \Config\View  $config
 	 * @param string        $viewPath
 	 * @param type          $loader
 	 * @param bool          $debug
@@ -112,11 +113,11 @@ class View implements RendererInterface
 	 */
 	public function __construct($config, string $viewPath = null, $loader = null, bool $debug = null, Logger $logger = null)
 	{
-		$this->config = $config;
-		$this->viewPath = rtrim($viewPath, '/ ') . '/';
-		$this->loader = is_null($loader) ? Services::locator() : $loader;
-		$this->logger = is_null($logger) ? Services::logger() : $logger;
-		$this->debug = is_null($debug) ? CI_DEBUG : $debug;
+	    $this->config   = $config;
+		$this->viewPath = rtrim($viewPath, '/ ').'/';
+		$this->loader   = is_null($loader) ? Services::locator() : $loader;
+		$this->logger   = is_null($logger) ? Services::logger() : $logger;
+		$this->debug    = is_null($debug) ? CI_DEBUG : $debug;
 		$this->saveData = $config->saveData ?? null;
 	}
 
@@ -140,15 +141,15 @@ class View implements RendererInterface
 	{
 		$start = microtime(true);
 
-		// Store the results here so even if
-		// multiple views are called in a view, it won't
-		// clean it unless we mean it to.
-		if ($saveData !== null)
-		{
-			$this->saveData = $saveData;
-		}
+        // Store the results here so even if
+        // multiple views are called in a view, it won't
+        // clean it unless we mean it to.
+        if ($saveData !== null)
+        {
+            $this->saveData = $saveData;
+        }
 
-		$view = str_replace('.php', '', $view) . '.php';
+		$view = str_replace('.php', '', $view).'.php';
 
 		// Was it cached?
 		if (isset($options['cache']))
@@ -162,7 +163,7 @@ class View implements RendererInterface
 			}
 		}
 
-		$file = $this->viewPath . $view;
+		$file = $this->viewPath.$view;
 
 		if ( ! file_exists($file))
 		{
@@ -172,7 +173,7 @@ class View implements RendererInterface
 		// locateFile will return an empty string if the file cannot be found.
 		if (empty($file))
 		{
-			throw new \InvalidArgumentException('View file not found: ' . $view);
+			throw new \InvalidArgumentException('View file not found: '.$view);
 		}
 
 		// Make our view data available to the view.
@@ -184,7 +185,7 @@ class View implements RendererInterface
 		}
 
 		ob_start();
-		include($file); // PHP will be processed
+		include($file);	// PHP will be processed
 		$output = ob_get_contents();
 		@ob_end_clean();
 
@@ -212,17 +213,17 @@ class View implements RendererInterface
 	 *                         to other template engines.
 	 * @param bool   $saveData If true, will save data for use with any other calls,
 	 *                         if false, will clean the data after displaying the view,
-	 * 						   if not specified, use the config setting.
+	 *						   if not specified, use the config setting.
 	 *
 	 * @return string
 	 */
 	public function renderString(string $view, array $options = null, $saveData = null): string
 	{
 		$start = microtime(true);
-		if (is_null($saveData))
-		{
-			$saveData = $this->config->saveData;
-		}
+        if (is_null($saveData))
+        {
+            $saveData = $this->config->saveData;
+        }
 
 		extract($this->data);
 
@@ -232,7 +233,7 @@ class View implements RendererInterface
 		}
 
 		ob_start();
-		$incoming = "?>" . $view;
+		$incoming = "?>".$view;
 		eval($incoming);
 		$output = ob_get_contents();
 		@ob_end_clean();
@@ -253,7 +254,7 @@ class View implements RendererInterface
 	 */
 	public function excerpt(string $string, int $length = 20): string
 	{
-		return (strlen($string) > $length) ? substr($string, 0, $length - 3) . '...' : $string;
+		return (strlen($string) > $length) ? substr($string, 0, $length - 3).'...' : $string;
 	}
 
 	//--------------------------------------------------------------------
@@ -267,7 +268,7 @@ class View implements RendererInterface
 	 *
 	 * @return RendererInterface
 	 */
-	public function setData(array $data = [], string $context = null): RendererInterface
+	public function setData(array $data=[], string $context=null): RendererInterface
 	{
 		if ( ! empty($context))
 		{
@@ -291,7 +292,7 @@ class View implements RendererInterface
 	 *
 	 * @return RendererInterface
 	 */
-	public function setVar(string $name, $value = null, string $context = null): RendererInterface
+	public function setVar(string $name, $value=null, string $context=null): RendererInterface
 	{
 		if ( ! empty($context))
 		{
@@ -353,8 +354,7 @@ class View implements RendererInterface
 	 */
 	protected function logPerformance(float $start, float $end, string $view)
 	{
-		if ( ! $this->debug)
-			return;
+		if ( ! $this->debug) return;
 
 		$this->performanceData[] = [
 			'start'	 => $start,

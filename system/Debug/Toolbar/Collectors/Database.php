@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014-2017 British Columbia Institute of Technology
+ * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,12 +29,13 @@
  *
  * @package      CodeIgniter
  * @author       CodeIgniter Dev Team
- * @copyright    2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
+ * @copyright    Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
  * @license      https://opensource.org/licenses/MIT	MIT License
  * @link         https://codeigniter.com
  * @since        Version 4.0.0
  * @filesource
  */
+
 use CodeIgniter\Database\Query;
 use CodeIgniter\Services;
 
@@ -43,7 +44,6 @@ use CodeIgniter\Services;
  */
 class Database extends BaseCollector
 {
-
 	/**
 	 * Whether this collector has timeline data.
 	 *
@@ -87,6 +87,7 @@ class Database extends BaseCollector
 	 */
 	protected static $queries = [];
 
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -127,20 +128,20 @@ class Database extends BaseCollector
 		{
 			// Connection Time
 			$data[] = [
-				'name'		 => 'Connecting to Database: "' . $alias . '"',
-				'component'	 => 'Database',
-				'start'		 => $connection->getConnectStart(),
-				'duration'	 => $connection->getConnectDuration()
+				'name' => 'Connecting to Database: "'.$alias.'"',
+				'component' => 'Database',
+				'start' => $connection->getConnectStart(),
+				'duration' => $connection->getConnectDuration()
 			];
 		}
 
 		foreach (static::$queries as $query)
 		{
 			$data[] = [
-				'name'		 => 'Query',
-				'component'	 => 'Database',
-				'start'		 => $query->getStartTime(true),
-				'duration'	 => $query->getDuration()
+				'name' => 'Query',
+				'component' => 'Database',
+				'start' => $query->getStartTime(true),
+				'duration' => $query->getDuration()
 			];
 		}
 
@@ -162,7 +163,7 @@ class Database extends BaseCollector
 			'IN', 'LIKE', 'NOT&nbsp;LIKE', 'COUNT', 'MAX', 'MIN', 'ON', 'AS', 'AVG', 'SUM', '(', ')'
 		];
 
-		$parser = \Config\Services::parser(BASEPATH . 'Debug/Toolbar/Views/');
+		$parser = \Config\Services::parser(BASEPATH.'Debug/Toolbar/Views/');
 
 		$data = [
 			'queries' => []
@@ -178,13 +179,13 @@ class Database extends BaseCollector
 			}
 
 			$data['queries'][] = [
-				'duration'	 => $query->getDuration(5) * 1000,
-				'sql'		 => $sql
+				'duration' => $query->getDuration(5) * 1000,
+				'sql' => $sql
 			];
 		}
 
 		$output = $parser->setData($data)
-				->render('_database.tpl');
+			->render('_database.tpl');
 
 		return $output;
 	}
@@ -198,9 +199,10 @@ class Database extends BaseCollector
 	 */
 	public function getTitleDetails(): string
 	{
-		return '(' . count(static::$queries) . ' Queries across ' . count($this->connections) . ' Connection' .
-				(count($this->connections) > 1 ? 's' : '') . ')';
+		return '('.count(static::$queries).' Queries across '.count($this->connections).' Connection'.
+			(count($this->connections) > 1 ? 's' : '').')';
 	}
 
 	//--------------------------------------------------------------------
+
 }

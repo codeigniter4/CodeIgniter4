@@ -2,7 +2,6 @@
 
 class MockFileLocator extends FileLocator
 {
-
 	protected $files = [];
 
 	//--------------------------------------------------------------------

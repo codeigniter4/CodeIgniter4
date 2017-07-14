@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014-2017 British Columbia Institute of Technology
+ * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,12 +29,13 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
+ * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 3.0.0
  * @filesource
  */
+
 use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Database\MigrationRunner;
 use CodeIgniter\View\RendererInterface;
@@ -58,7 +59,6 @@ use CodeIgniter\View\RendererInterface;
  */
 class Services
 {
-
 	/**
 	 * Cache for instance of any services that
 	 * have been requested as a "shared" instance.
@@ -96,7 +96,7 @@ class Services
 			return self::getSharedInstance('cache', $config);
 		}
 
-		if ( ! is_object($config))
+		if (! is_object($config))
 		{
 			$config = new \Config\Cache();
 		}
@@ -110,20 +110,21 @@ class Services
 	 * The CLI Request class provides for ways to interact with
 	 * a command line request.
 	 */
-	public static function clirequest(\Config\App $config = null, $getShared = true)
+	public static function clirequest(\Config\App $config=null, $getShared = true)
 	{
 		if ($getShared)
 		{
 			return self::getSharedInstance('clirequest', $config);
 		}
 
-		if ( ! is_object($config))
+		if (! is_object($config))
 		{
 			$config = new \Config\App();
 		}
 
 		return new \CodeIgniter\HTTP\CLIRequest(
-				$config, new \CodeIgniter\HTTP\URI()
+			$config,
+			new \CodeIgniter\HTTP\URI()
 		);
 	}
 
@@ -140,7 +141,7 @@ class Services
 			return self::getSharedInstance('curlrequest', $options, $response, $config);
 		}
 
-		if ( ! is_object($config))
+		if (! is_object($config))
 		{
 			$config = new \Config\App();
 		}
@@ -151,28 +152,11 @@ class Services
 		}
 
 		return new \CodeIgniter\HTTP\CURLRequest(
-				$config, new \CodeIgniter\HTTP\URI(), $response, $options
+				$config,
+				new \CodeIgniter\HTTP\URI(),
+				$response,
+				$options
 		);
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * The Encryption class provides two-way encryption.
-	 * 
-	 * @return \CodeIgniter\Encryption\EncrypterInterfrace Encryption handler
-	 */
-	public static function encrypter($config = null, $getShared = false)
-	{
-		if ($getShared === true)
-			return self::getSharedInstance('encrypter', $config);
-
-		if ($config != null && is_object($config))
-			$config = (array) $config;
-
-		$encryption = new \CodeIgniter\Encryption\Encryption($config);
-		$encrypter = $encryption->initialize($config);
-		return $encrypter;
 	}
 
 	//--------------------------------------------------------------------
@@ -228,7 +212,7 @@ class Services
 	 * Acts as a factory for ImageHandler classes and returns an instance
 	 * of the handler. Used like Services::image()->withFile($path)->rotate(90)->save();
 	 */
-	public static function image(string $handler = null, $config = null, $getShared = true)
+	public static function image(string $handler=null, $config = null, $getShared = true)
 	{
 		if ($getShared)
 		{
@@ -240,7 +224,9 @@ class Services
 			$config = new \Config\Images();
 		}
 
-		$handler = is_null($handler) ? $config->defaultHandler : $handler;
+		$handler = is_null($handler)
+			? $config->defaultHandler
+			: $handler;
 
 		$class = $config->handlers[$handler];
 
@@ -330,12 +316,13 @@ class Services
 
 	//--------------------------------------------------------------------
 
+
 	/**
 	 * The Negotiate class provides the content negotiation features for
 	 * working the request to determine correct language, encoding, charset,
 	 * and more.
 	 */
-	public static function negotiator(\CodeIgniter\HTTP\RequestInterface $request = null, $getShared = true)
+	public static function negotiator(\CodeIgniter\HTTP\RequestInterface $request=null, $getShared = true)
 	{
 		if ($getShared)
 		{
@@ -364,7 +351,7 @@ class Services
 			$config = new \Config\Pager();
 		}
 
-		if ( ! $view instanceof RendererInterface)
+		if (! $view instanceof RendererInterface)
 		{
 			$view = self::renderer();
 		}
@@ -377,7 +364,7 @@ class Services
 	/**
 	 * The Parser is a simple template parser.
 	 */
-	public static function parser($viewPath = APPPATH . 'Views/', $config = null, $getShared = true)
+	public static function parser($viewPath = APPPATH.'Views/', $config = null, $getShared = true)
 	{
 		if ($getShared)
 		{
@@ -399,7 +386,7 @@ class Services
 	 * The default View class within CodeIgniter is intentionally simple, but this
 	 * service could easily be replaced by a template engine if the user needed to.
 	 */
-	public static function renderer($viewPath = APPPATH . 'Views/', $config = null, $getShared = true)
+	public static function renderer($viewPath = APPPATH.'Views/', $config = null, $getShared = true)
 	{
 		if ($getShared)
 		{
@@ -426,13 +413,14 @@ class Services
 			return self::getSharedInstance('request', $config);
 		}
 
-		if ( ! is_object($config))
+		if (! is_object($config))
 		{
 			$config = new \Config\App();
 		}
 
 		return new \CodeIgniter\HTTP\IncomingRequest(
-				$config, new \CodeIgniter\HTTP\URI()
+			$config,
+			new \CodeIgniter\HTTP\URI()
 		);
 	}
 
@@ -448,7 +436,7 @@ class Services
 			return self::getSharedInstance('response', $config);
 		}
 
-		if ( ! is_object($config))
+		if (! is_object($config))
 		{
 			$config = new \Config\App();
 		}
@@ -506,7 +494,7 @@ class Services
 			return self::getSharedInstance('security', $config);
 		}
 
-		if ( ! is_object($config))
+		if (! is_object($config))
 		{
 			$config = new \Config\App();
 		}
@@ -529,7 +517,7 @@ class Services
 			return self::getSharedInstance('session', $config);
 		}
 
-		if ( ! is_object($config))
+		if (! is_object($config))
 		{
 			$config = new \Config\App();
 		}
@@ -587,7 +575,7 @@ class Services
 			return self::getSharedInstance('toolbar', $config);
 		}
 
-		if ( ! is_object($config))
+		if (! is_object($config))
 		{
 			$config = new \Config\App();
 		}
@@ -662,6 +650,7 @@ class Services
 	}
 
 	//--------------------------------------------------------------------
+
 	//--------------------------------------------------------------------
 	// Utility Methods - DO NOT EDIT
 	//--------------------------------------------------------------------
@@ -675,7 +664,7 @@ class Services
 	 */
 	protected static function getSharedInstance(string $key, ...$params)
 	{
-		if ( ! isset(static::$instances[$key]))
+		if (! isset(static::$instances[$key]))
 		{
 			// Make sure $getShared is false
 			array_push($params, false);
@@ -706,4 +695,6 @@ class Services
 	}
 
 	//--------------------------------------------------------------------
+
+
 }

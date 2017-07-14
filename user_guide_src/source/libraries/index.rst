@@ -10,12 +10,10 @@ Library Reference
     caching
     cli
     content_negotiation
+    localization
     curlrequest
     images
-    encryption
-    files
     incomingrequest
-    localization
     message
     pagination
     request
@@ -24,6 +22,7 @@ Library Reference
     sessions
     throttler
     typography
+    files
     uploaded_files
     uri
     validation

@@ -69,6 +69,13 @@ class Forge
 	 * @var type
 	 */
 	protected $primaryKeys = [];
+        
+        /**
+	 * List of foreign keys.
+	 *
+	 * @var type
+	 */
+	protected $foreignKeys = [];
 
 	/**
 	 * Character set used.
@@ -328,6 +335,62 @@ class Forge
 	}
 
 	//--------------------------------------------------------------------
+        
+        /**
+	 * Add Foreign Key
+	 *
+	 * @param    array $field
+	 *
+	 * @return    \CodeIgniter\Database\Forge
+	 */
+	public function addForeignKey($fieldName= '',$tableName = '', $tableField = '', $onUpdate = false, $onDelete = false)
+	{
+            
+            if( ! isset($this->fields[$fieldName]))
+            {
+                throw new \RuntimeException('Field "'.$fieldName.'" not exist');
+            }	
+                
+            $this->foreignKeys[$fieldName] = [
+                'table' => $tableName,
+                'field' => $tableField,
+                'onDelete' => $onDelete,
+                'onUpdate' => $onUpdate
+            ];
+                
+            
+            return $this;
+	}
+
+	//--------------------------------------------------------------------
+        
+        /**
+	 * Foreign Key Drop
+	 *
+	 * @param    string $table       Table name
+	 * @param    string $foreign_name Foreign name
+	 *
+	 * @return    bool
+	 */
+	public function dropForeignKey($table, $foreign_name)
+	{
+		
+		$sql = sprintf($this->dropConstraintStr,$this->db->escapeIdentifiers($this->db->DBPrefix.$table),$this->db->escapeIdentifiers($foreign_name));
+            
+		if ($sql === false)
+		{
+			if ($this->db->DBDebug)
+			{
+				throw new DatabaseException('This feature is not available for the database you are using.');
+			}
+
+			return false;
+		}
+
+		return $this->db->query($sql);
+	}
+
+	//--------------------------------------------------------------------
 
 	/**
 	 * Create Table
@@ -423,8 +486,12 @@ class Forge
 			$columns[$i] = ($columns[$i]['_literal'] !== false) ? "\n\t" . $columns[$i]['_literal'] : "\n\t" . $this->_processColumn($columns[$i]);
 		}
 
-		$columns = implode(',', $columns)
-				. $this->_processPrimaryKeys($table);
+                
+		$columns = implode(',', $columns);
+                
+                $columns .= $this->_processPrimaryKeys($table);
+                
+                $columns .= $this->_processForeignKeys($table);
 
 		// Are indexes created from within the CREATE TABLE statement? (e.g. in MySQL)
 		if ($this->createTableKeys === true)
@@ -470,10 +537,11 @@ class Forge
 	 *
 	 * @param    string $table_name Table name
 	 * @param    bool   $if_exists  Whether to add an IF EXISTS condition
+	 * @param    bool   $cascade    Whether to add an CASCADE condition
 	 *
 	 * @return    bool
 	 */
-	public function dropTable($table_name, $if_exists = false)
+	public function dropTable($table_name, $if_exists = false, $cascade = false)
 	{
 		if ($table_name === '')
 		{
@@ -485,7 +553,7 @@ class Forge
 			return false;
 		}
 
-		if (($query = $this->_dropTable($this->db->DBPrefix . $table_name, $if_exists)) === true)
+		if (($query = $this->_dropTable($this->db->DBPrefix.$table_name, $if_exists, $cascade)) === true)
 		{
 			return true;
 		}
@@ -517,7 +585,7 @@ class Forge
 	 *
 	 * @return    string
 	 */
-	protected function _dropTable($table, $if_exists)
+	protected function _dropTable($table, $if_exists, $cascade)
 	{
 		$sql = 'DROP TABLE';
 
@@ -535,8 +603,15 @@ class Forge
 				$sql = sprintf($this->dropTableIfStr, $this->db->escapeIdentifiers($table));
 			}
 		}
-
-		return $sql . ' ' . $this->db->escapeIdentifiers($table);
+                
+                $sql = $sql.' '.$this->db->escapeIdentifiers($table);
+                
+                if($cascade === true)
+                {
+                    $sql .= ' CASCADE';
+                }
+               
+		return $sql;
 	}
 
 	//--------------------------------------------------------------------

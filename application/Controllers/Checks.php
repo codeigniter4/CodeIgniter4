@@ -16,6 +16,118 @@ class Checks extends Controller
 	{
 		session()->start();
 	}
+        
+        public function forge()
+        {
+            echo '<h1>MySQL</h1>';
+            $forge_mysql = \Config\Database::forge();
+
+            $forge_mysql->dropTable('users');
+            $forge_mysql->addField([
+                'id' => [
+                    'type' => 'INTEGER',
+                    'constraint' => 11,
+                    'auto_increment' => true,
+                ],
+                'name' => [
+                    'type' => 'VARCHAR',
+                    'constraint' => 50,
+                ]
+            ]);
+            $forge_mysql->addKey('id', true);
+            $forge_mysql->createTable('users', true);
+
+            $forge_mysql->dropTable('invoices',true);
+            $forge_mysql->addField([
+                'id' => [
+                    'type' => 'INTEGER',
+                    'constraint' => 11,
+                    'auto_increment' => true,
+                ],
+                'users_id' => [
+                    'type' => 'INTEGER',
+                    'constraint' => 11
+                ],
+                'other_id' => [
+                    'type' => 'INTEGER',
+                    'constraint' => 11
+                ]
+            ]);
+            $forge_mysql->addKey('id', true);
+
+            $forge_mysql->addForeignKey('users_id','users','id','CASCADE','CASCADE');
+            $forge_mysql->addForeignKey('other_id','users','id','CASCADE','CASCADE');
+
+            $res = $forge_mysql->createTable('invoices', true);
+
+            if(!$res){
+                var_dump($forge_mysql->getConnection()->mysqli);
+            }else{
+                echo '<br><br>OK';
+            }
+            
+            $res = $forge_mysql->dropForeignKey('invoices','invoices_users_id_foreign');
+            
+            var_dump($res);
+            
+            echo '<h1>PostgreSQL</h1>';
+            
+            $forge_pgsql = \Config\Database::forge('pgsql');
+
+            $forge_pgsql->dropTable('users',true, true);
+            $forge_pgsql->addField([
+                'id' => [
+                    'type' => 'INTEGER',
+                    'constraint' => 11,
+                    'auto_increment' => true,
+                ],
+                'name' => [
+                    'type' => 'VARCHAR',
+                    'constraint' => 50,
+                ]
+            ]);
+            $forge_pgsql->addKey('id', true);
+            $forge_pgsql->createTable('users', true);
+
+            $forge_pgsql->dropTable('invoices',true);
+            $forge_pgsql->addField([
+                'id' => [
+                    'type' => 'INTEGER',
+                    'constraint' => 11,
+                    'auto_increment' => true,
+                ],
+                'users_id' => [
+                    'type' => 'INTEGER',
+                    'constraint' => 11
+                ],
+                'other_id' => [
+                    'type' => 'INTEGER',
+                    'constraint' => 11
+                ],
+                'another_id' => [
+                    'type' => 'INTEGER',
+                    'constraint' => 11
+                ]
+            ]);
+            $forge_pgsql->addKey('id', true);
+
+            $res = $forge_pgsql->addForeignKey('users_id','users','id','CASCADE','CASCADE');
+            var_dump($res);
+            
+            $forge_pgsql->addForeignKey('other_id','users','id');
+
+            $res = $forge_pgsql->createTable('invoices', true);
+
+            if(!$res){
+                var_dump($forge_pgsql->getConnection()->mysqli);
+            }else{
+                echo '<br><br>OK';
+            }
+            
+            $res = $forge_pgsql->dropForeignKey('invoices','invoices_users_id_foreign');
+            
+            var_dump($res);
+        }
 
 
 	public function escape()
@@ -241,7 +353,6 @@ EOF;
 
 			echo "Name: {$file->getName()}<br/>";
 			echo "Temp Name: {$file->getTempName()}<br/>";
-			echo "Original Name: {$file->getClientName()}<br/>";
 			echo "Random Name: {$file->getRandomName()}<br/>";
 			echo "Extension: {$file->getExtension()}<br/>";
 			echo "Client Extension: {$file->getClientExtension()}<br/>";

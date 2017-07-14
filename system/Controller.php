@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014-2017 British Columbia Institute of Technology
+ * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,12 +29,13 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
+ * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 3.0.0
  * @filesource
  */
+
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Services;
@@ -48,7 +49,6 @@ use CodeIgniter\Validation\Validation;
  */
 class Controller
 {
-
 	/**
 	 * An array of helpers to be automatically loaded
 	 * upon class instantiation.
@@ -112,7 +112,7 @@ class Controller
 
 		$this->logger = is_null($logger) ? Services::logger(true) : $logger;
 
-		$this->logger->info('Controller "' . get_class($this) . '" loaded.');
+		$this->logger->info('Controller "'.get_class($this).'" loaded.');
 
 		if ($this->forceHTTPS > 0)
 		{
@@ -159,8 +159,7 @@ class Controller
 	 */
 	protected function loadHelpers()
 	{
-		if (empty($this->helpers))
-			return;
+		if (empty($this->helpers)) return;
 
 		foreach ($this->helpers as $helper)
 		{
@@ -184,11 +183,13 @@ class Controller
 		$this->validator = Services::validation();
 
 		$success = $this->validator->withRequest($this->request)
-				->setRules($rules, $messages)
-				->run();
+			->setRules($rules, $messages)
+			->run();
 
 		return $success;
 	}
 
 	//--------------------------------------------------------------------
+
+
 }

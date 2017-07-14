@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014-2017 British Columbia Institute of Technology
+ * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,18 +29,18 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
+ * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 3.0.0
  * @filesource
  */
+
 use CodeIgniter\Cache\CacheInterface;
 use CodeIgniter\CriticalError;
 
 class RedisHandler implements CacheInterface
 {
-
 	/**
 	 * Prefixed to all cache names.
 	 *
@@ -55,10 +55,10 @@ class RedisHandler implements CacheInterface
 	 * @var    array
 	 */
 	protected $config = [
-		'host'		 => '127.0.0.1',
-		'password'	 => null,
-		'port'		 => 6379,
-		'timeout'	 => 0,
+		'host'     => '127.0.0.1',
+		'password' => null,
+		'port'     => 6379,
+		'timeout'  => 0,
 	];
 
 	/**
@@ -106,7 +106,8 @@ class RedisHandler implements CacheInterface
 
 		try
 		{
-			if ( ! $this->redis->connect($config['host'], ($config['host'][0] === '/' ? 0 : $config['port']), $config['timeout'])
+			if (! $this->redis->connect($config['host'], ($config['host'][0] === '/' ? 0
+				: $config['port']), $config['timeout'])
 			)
 			{
 //				log_message('error', 'Cache: Redis connection failed. Check your configuration.');
@@ -116,9 +117,10 @@ class RedisHandler implements CacheInterface
 			{
 //				log_message('error', 'Cache: Redis authentication failed.');
 			}
-		} catch (RedisException $e)
+		}
+		catch (RedisException $e)
 		{
-			throw new CriticalError('Cache: Redis connection refused (' . $e->getMessage() . ')');
+			throw new CriticalError('Cache: Redis connection refused ('.$e->getMessage().')');
 		}
 	}
 
@@ -133,11 +135,11 @@ class RedisHandler implements CacheInterface
 	 */
 	public function get(string $key)
 	{
-		$key = $this->prefix . $key;
+		$key = $this->prefix.$key;
 
 		$data = $this->redis->hMGet($key, ['__ci_type', '__ci_value']);
 
-		if ( ! isset($data['__ci_type'], $data['__ci_value']) OR $data['__ci_value'] === false)
+		if (! isset($data['__ci_type'], $data['__ci_value']) OR $data['__ci_value'] === false)
 		{
 			return false;
 		}
@@ -152,7 +154,9 @@ class RedisHandler implements CacheInterface
 			case 'double': // Yes, 'double' is returned and NOT 'float'
 			case 'string':
 			case 'NULL':
-				return settype($data['__ci_value'], $data['__ci_type']) ? $data['__ci_value'] : false;
+				return settype($data['__ci_value'], $data['__ci_type'])
+					? $data['__ci_value']
+					: false;
 			case 'resource':
 			default:
 				return false;
@@ -172,7 +176,7 @@ class RedisHandler implements CacheInterface
 	 */
 	public function save(string $key, $value, int $ttl = 60)
 	{
-		$key = $this->prefix . $key;
+		$key = $this->prefix.$key;
 
 		switch ($data_type = gettype($value))
 		{
@@ -191,13 +195,13 @@ class RedisHandler implements CacheInterface
 				return false;
 		}
 
-		if ( ! $this->redis->hMSet($key, ['__ci_type' => $data_type, '__ci_value' => $value]))
+		if (! $this->redis->hMSet($key, ['__ci_type' => $data_type, '__ci_value' => $value]))
 		{
 			return false;
 		}
 		elseif ($ttl)
 		{
-			$this->redis->expireAt($key, time() + $ttl);
+			$this->redis->expireAt($key, time()+$ttl);
 		}
 
 		return true;
@@ -214,7 +218,7 @@ class RedisHandler implements CacheInterface
 	 */
 	public function delete(string $key)
 	{
-		$key = $this->prefix . $key;
+		$key = $this->prefix.$key;
 
 		return ($this->redis->delete($key) === 1);
 	}
@@ -231,7 +235,7 @@ class RedisHandler implements CacheInterface
 	 */
 	public function increment(string $key, int $offset = 1)
 	{
-		$key = $this->prefix . $key;
+		$key = $this->prefix.$key;
 
 		return $this->redis->hIncrBy($key, 'data', $offset);
 	}
@@ -248,7 +252,7 @@ class RedisHandler implements CacheInterface
 	 */
 	public function decrement(string $key, int $offset = 1)
 	{
-		$key = $this->prefix . $key;
+		$key = $this->prefix.$key;
 
 		return $this->redis->hIncrBy($key, 'data', -$offset);
 	}
@@ -291,7 +295,7 @@ class RedisHandler implements CacheInterface
 	 */
 	public function getMetaData(string $key)
 	{
-		$key = $this->prefix . $key;
+		$key = $this->prefix.$key;
 
 		$value = $this->get($key);
 
@@ -299,7 +303,7 @@ class RedisHandler implements CacheInterface
 		{
 			return array(
 				'expire' => time() + $this->redis->ttl($key),
-				'data'	 => $value
+				'data' => $value
 			);
 		}
 
@@ -319,4 +323,5 @@ class RedisHandler implements CacheInterface
 	}
 
 	//--------------------------------------------------------------------
+
 }

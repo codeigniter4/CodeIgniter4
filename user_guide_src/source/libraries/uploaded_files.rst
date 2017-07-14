@@ -162,15 +162,9 @@ the moved file::
 
 	$name = $file->getName();
 
-**getClientName()**
-
-Always returns the original name of the uploaded file as sent by the client, even if the file has been moved::
-
-  $originalName = $file->getClientName();
-
 **getTempName()**
 
-To get the full path of the temp file that was created during the upload, you can use the ``getTempName()`` method::
+To get the name of the temp file that was created during the upload, you can use the ``getTempName()`` method::
 
 	$tempfile = $file->getTempName();
 

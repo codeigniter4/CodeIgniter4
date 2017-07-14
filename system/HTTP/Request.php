@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014-2017 British Columbia Institute of Technology
+ * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,7 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
+ * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 3.0.0
@@ -42,7 +42,6 @@
  */
 class Request extends Message implements RequestInterface
 {
-
 	/**
 	 * IP address of the current user.
 	 *
@@ -73,9 +72,9 @@ class Request extends Message implements RequestInterface
 	 */
 	public function __construct($config)
 	{
-		$this->proxyIPs = $config->proxyIPs;
+	    $this->proxyIPs = $config->proxyIPs;
 
-		$this->method = $this->getServer('REQUEST_METHOD') ?? 'GET';
+	    $this->method = $this->getServer('REQUEST_METHOD') ?? 'GET';
 	}
 
 	//--------------------------------------------------------------------
@@ -87,7 +86,7 @@ class Request extends Message implements RequestInterface
 	 */
 	public function getIPAddress(): string
 	{
-		if ( ! empty($this->ipAddress))
+		if (! empty($this->ipAddress))
 		{
 			return $this->ipAddress;
 		}
@@ -124,7 +123,7 @@ class Request extends Message implements RequestInterface
 
 			if ($spoof)
 			{
-				for ($i = 0, $c = count($this->proxyIPs); $i < $c; $i ++ )
+				for ($i = 0, $c = count($this->proxyIPs); $i < $c; $i++)
 				{
 					// Check if we have an IP address or a subnet
 					if (strpos($proxy_ips[$i], '/') === FALSE)
@@ -155,11 +154,14 @@ class Request extends Message implements RequestInterface
 						if ($separator === ':')
 						{
 							// Make sure we're have the "full" IPv6 format
-							$ip = explode(':', str_replace('::', str_repeat(':', 9 - substr_count($this->ipAddress, ':')), $this->ipAddress
-									)
+							$ip = explode(':',
+								str_replace('::',
+									str_repeat(':', 9 - substr_count($this->ipAddress, ':')),
+									$this->ipAddress
+								)
 							);
 
-							for ($j = 0; $j < 8; $j ++ )
+							for ($j = 0; $j < 8; $j++)
 							{
 								$ip[$j] = intval($ip[$j], 16);
 							}
@@ -182,7 +184,7 @@ class Request extends Message implements RequestInterface
 					if ($separator === ':')
 					{
 						$netaddr = explode(':', str_replace('::', str_repeat(':', 9 - substr_count($netaddr, ':')), $netaddr));
-						for ($i = 0; $i < 8; $i ++ )
+						for ($i = 0; $i < 8; $i++)
 						{
 							$netaddr[$i] = intval($netaddr[$i], 16);
 						}
@@ -240,6 +242,7 @@ class Request extends Message implements RequestInterface
 
 	//--------------------------------------------------------------------
 
+
 	/**
 	 * Get the request method.
 	 *
@@ -249,7 +252,9 @@ class Request extends Message implements RequestInterface
 	 */
 	public function getMethod($upper = false): string
 	{
-		return ($upper) ? strtoupper($this->method) : strtolower($this->method);
+		return ($upper)
+			? strtoupper($this->method)
+			: strtolower($this->method);
 	}
 
 	//--------------------------------------------------------------------
@@ -263,9 +268,9 @@ class Request extends Message implements RequestInterface
 	 */
 	public function setMethod(string $method)
 	{
-		$this->method = $method;
+	    $this->method = $method;
 
-		return $this;
+	    return $this;
 	}
 
 	//--------------------------------------------------------------------
@@ -328,22 +333,19 @@ class Request extends Message implements RequestInterface
 			$loopThrough = [];
 			switch ($type)
 			{
-				case INPUT_GET : $loopThrough = $_GET;
-					break;
-				case INPUT_POST : $loopThrough = $_POST;
-					break;
-				case INPUT_COOKIE : $loopThrough = $_COOKIE;
-					break;
-				case INPUT_SERVER : $loopThrough = $_SERVER;
-					break;
-				case INPUT_ENV : $loopThrough = $_ENV;
-					break;
+				case INPUT_GET    : $loopThrough = $_GET;    break;
+				case INPUT_POST   : $loopThrough = $_POST;   break;
+				case INPUT_COOKIE : $loopThrough = $_COOKIE; break;
+				case INPUT_SERVER : $loopThrough = $_SERVER; break;
+				case INPUT_ENV    : $loopThrough = $_ENV;    break;
 			}
 
 			$values = [];
 			foreach ($loopThrough as $key => $value)
 			{
-				$values[$key] = is_array($value) ? $this->fetchGlobal($type, $key, $filter) : filter_var($value, $filter);
+				$values[$key] = is_array($value)
+                    ? $this->fetchGlobal($type, $key, $filter)
+                    : filter_var($value, $filter);
 			}
 
 			return $values;
@@ -384,6 +386,7 @@ class Request extends Message implements RequestInterface
 //				}
 //			}
 //		}
+
 		// Due to issues with FastCGI and testing,
 		// we need to do these all manually instead
 		// of the simpler filter_input();

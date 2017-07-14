@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014-2017 British Columbia Institute of Technology
+ * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,7 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
+ * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 3.0.0
@@ -52,7 +52,6 @@ use CodeIgniter\Router\RouteCollectionInterface;
  */
 class CodeIgniter
 {
-
 	/**
 	 * The current version of CodeIgniter Framework
 	 */
@@ -157,7 +156,7 @@ class CodeIgniter
 
 		// Setup Exception Handling
 		Services::exceptions($this->config, true)
-				->initialize();
+			->initialize();
 
 		$this->loadEnvironment();
 		$this->detectEnvironment();
@@ -165,7 +164,7 @@ class CodeIgniter
 
 		if (CI_DEBUG)
 		{
-			require_once BASEPATH . 'ThirdParty/Kint/Kint.class.php';
+			require_once BASEPATH.'ThirdParty/Kint/Kint.class.php';
 		}
 	}
 
@@ -199,13 +198,13 @@ class CodeIgniter
 		$cacheConfig = new Cache();
 		$this->displayCache($cacheConfig);
 
-		try
-		{
+		try {
 			$this->handleRequest($routes, $cacheConfig);
-		} catch (Router\RedirectException $e)
+		}
+		catch (Router\RedirectException $e)
 		{
 			$logger = Services::logger();
-			$logger->info('REDIRECTED ROUTE at ' . $e->getMessage());
+			$logger->info('REDIRECTED ROUTE at '.$e->getMessage());
 
 			// If the route is a 'redirect' route, it throws
 			// the exception with the $to as the message
@@ -216,7 +215,8 @@ class CodeIgniter
 		catch (HTTP\RedirectException $e)
 		{
 			$this->callExit(EXIT_SUCCESS);
-		} catch (PageNotFoundException $e)
+		}
+		catch (PageNotFoundException $e)
 		{
 			$this->display404errors($e);
 		}
@@ -236,7 +236,9 @@ class CodeIgniter
 
 		// Run "before" filters
 		$filters = Services::filters();
-		$uri = $this->request instanceof CLIRequest ? $this->request->getPath() : $this->request->uri->getPath();
+		$uri = $this->request instanceof CLIRequest
+			? $this->request->getPath()
+			: $this->request->uri->getPath();
 
 		$filters->run($uri, 'before');
 
@@ -321,9 +323,9 @@ class CodeIgniter
 	 */
 	protected function bootstrapEnvironment()
 	{
-		if (file_exists(APPPATH . 'Config/Boot/' . ENVIRONMENT . '.php'))
+		if (file_exists(APPPATH.'Config/Boot/'.ENVIRONMENT.'.php'))
 		{
-			require_once APPPATH . 'Config/Boot/' . ENVIRONMENT . '.php';
+			require_once APPPATH.'Config/Boot/'.ENVIRONMENT.'.php';
 		}
 		else
 		{
@@ -342,7 +344,7 @@ class CodeIgniter
 	{
 		// Load environment settings from .env files
 		// into $_SERVER and $_ENV
-		require BASEPATH . 'Config/DotEnv.php';
+		require BASEPATH.'Config/DotEnv.php';
 
 		$env = new DotEnv(ROOTPATH);
 		$env->load();
@@ -440,23 +442,21 @@ class CodeIgniter
 		if ($cachedResponse = cache()->get($this->generateCacheName($config)))
 		{
 			$cachedResponse = unserialize($cachedResponse);
-			if ( ! is_array($cachedResponse) || ! isset($cachedResponse['output']) || ! isset($cachedResponse['headers']))
+			if (!is_array($cachedResponse) || !isset($cachedResponse['output']) || !isset($cachedResponse['headers']))
 			{
 				throw new \Exception("Error unserializing page cache");
 			}
 
 			$headers = $cachedResponse['headers'];
-			$output = $cachedResponse['output'];
+			$output  = $cachedResponse['output'];
 
 			// Clear all default headers
-			foreach ($this->response->getHeaders() as $key => $val)
-			{
+			foreach($this->response->getHeaders() as $key => $val) {
 				$this->response->removeHeader($key);
 			}
 
 			// Set cached headers
-			foreach ($headers as $name => $value)
-			{
+			foreach($headers as $name => $value) {
 				$this->response->setHeader($name, $value);
 			}
 
@@ -465,6 +465,7 @@ class CodeIgniter
 			$this->callExit(EXIT_SUCCESS);
 		};
 	}
+
 
 	//--------------------------------------------------------------------
 
@@ -477,7 +478,7 @@ class CodeIgniter
 	 */
 	public static function cache(int $time)
 	{
-		self::$cacheTTL = (int) $time;
+		self::$cacheTTL = (int)$time;
 	}
 
 	//--------------------------------------------------------------------
@@ -491,14 +492,16 @@ class CodeIgniter
 	public function cachePage(Cache $config)
 	{
 		$headers = [];
-		foreach ($this->response->getHeaders() as $header)
-		{
+		foreach($this->response->getHeaders() as $header) {
 			$headers[$header->getName()] = $header->getValueLine();
 		}
 
 		return cache()->save(
-						$this->generateCacheName($config), serialize(['headers' => $headers, 'output' => $this->output]), self::$cacheTTL
-		);
+				$this->generateCacheName($config),
+				serialize(['headers' => $headers, 'output' => $this->output]),
+				self::$cacheTTL
+				);
+
 	}
 
 	//--------------------------------------------------------------------
@@ -511,9 +514,9 @@ class CodeIgniter
 	public function getPerformanceStats()
 	{
 		return [
-			'startTime'		 => $this->startTime,
-			'totalTime'		 => $this->totalTime,
-			'startMemory'	 => $this->startMemory
+			'startTime'	=> $this->startTime,
+			'totalTime' => $this->totalTime,
+			'startMemory' => $this->startMemory
 		];
 	}
 
@@ -538,14 +541,19 @@ class CodeIgniter
 		if ($config->cacheQueryString)
 		{
 			$name = URI::createURIString(
-							$uri->getScheme(), $uri->getAuthority(), $uri->getPath(), $uri->getQuery()
-			);
+					$uri->getScheme(),
+					$uri->getAuthority(),
+					$uri->getPath(),
+					$uri->getQuery()
+					);
 		}
 		else
 		{
 			$name = URI::createURIString(
-							$uri->getScheme(), $uri->getAuthority(), $uri->getPath()
-			);
+					$uri->getScheme(),
+					$uri->getAuthority(),
+					$uri->getPath()
+					);
 		}
 
 		return md5($name);
@@ -583,7 +591,7 @@ class CodeIgniter
 	{
 		if (empty($routes) || ! $routes instanceof RouteCollectionInterface)
 		{
-			require APPPATH . 'Config/Routes.php';
+			require APPPATH.'Config/Routes.php';
 		}
 
 		// $routes is defined in Config/Routes.php
@@ -597,7 +605,7 @@ class CodeIgniter
 		ob_start();
 
 		$this->controller = $this->router->handle($path);
-		$this->method = $this->router->methodName();
+		$this->method     = $this->router->methodName();
 
 		// If a {locale} segment was matched in the final route,
 		// then we need to set the correct locale on our Request.
@@ -617,12 +625,14 @@ class CodeIgniter
 	 */
 	protected function determinePath()
 	{
-		if ( ! empty($this->path))
+		if (! empty($this->path))
 		{
 			return $this->path;
 		}
 
-		return is_cli() ? $this->request->getPath() : $this->request->uri->getPath();
+		return is_cli()
+			? $this->request->getPath()
+			: $this->request->uri->getPath();
 	}
 
 	//--------------------------------------------------------------------
@@ -678,7 +688,7 @@ class CodeIgniter
 				}
 				else if ( ! method_exists($this->controller, '_remap') &&
 						! is_callable([$this->controller, $this->method], false)
-				)
+						)
 				{
 					throw new PageNotFoundException('Controller method is not found.');
 				}
@@ -750,7 +760,7 @@ class CodeIgniter
 				$this->benchmark->start('controller_constructor');
 
 				$this->controller = $override[0];
-				$this->method = $override[1];
+				$this->method     = $override[1];
 
 				unset($override);
 
@@ -767,18 +777,15 @@ class CodeIgniter
 		// Display 404 Errors
 		$this->response->setStatusCode(404);
 
-		if (ENVIRONMENT !== 'testing')
-		{
-			if (ob_get_level() > 0)
-			{
+		if (ENVIRONMENT !== 'testing') {
+			if (ob_get_level() > 0) {
 				ob_end_flush();
 			}
 		}
 		else
 		{
 			// When testing, one is for phpunit, another is for test case.
-			if (ob_get_level() > 2)
-			{
+			if (ob_get_level() > 2) {
 				ob_end_flush();
 			}
 		}
@@ -793,11 +800,11 @@ class CodeIgniter
 		// Show the 404 error page
 		if (is_cli())
 		{
-			require APPPATH . 'Views/errors/cli/error_404.php';
+			require APPPATH.'Views/errors/cli/error_404.php';
 		}
 		else
 		{
-			require APPPATH . 'Views/errors/html/error_404.php';
+			require APPPATH.'Views/errors/html/error_404.php';
 		}
 
 		$buffer = ob_get_contents();
@@ -805,7 +812,7 @@ class CodeIgniter
 
 		$this->response->setBody($buffer);
 		$this->response->send();
-		$this->callExit(EXIT_UNKNOWN_FILE);	// Unknown file
+		$this->callExit(EXIT_UNKNOWN_FILE);    // Unknown file
 	}
 
 	//--------------------------------------------------------------------
@@ -872,7 +879,7 @@ class CodeIgniter
 
 		if (isset($_SESSION))
 		{
-			$_SESSION['_ci_previous_url'] = (string) $uri;
+			$_SESSION['_ci_previous_url'] = (string)$uri;
 		}
 	}
 
@@ -886,20 +893,18 @@ class CodeIgniter
 	 */
 	public function spoofRequestMethod()
 	{
-		if (is_cli())
-			return;
+	    if (is_cli()) return;
 
-		// Only works with POSTED forms
-		if ($this->request->getMethod() !== 'post')
-			return;
+	    // Only works with POSTED forms
+	    if ($this->request->getMethod() !== 'post') return;
 
-		$method = $this->request->getPost('_method');
+	    $method = $this->request->getPost('_method');
 
-		if (empty($method))
-			return;
+	    if (empty($method)) return;
 
 		$this->request = $this->request->setMethod($method);
 	}
+
 
 	/**
 	 * Sends the output of this request back to the client.

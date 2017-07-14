@@ -17,8 +17,7 @@
 	},
 	"require": {
 		"php": ">=7.0",
-		"zendframework/zend-escaper": "^2.5",
-		"paragonie/sodium_compat": "^1.1"
+		"zendframework/zend-escaper": "^2.5"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "^6.0",

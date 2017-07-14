@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014-2017 British Columbia Institute of Technology
+ * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,18 +29,18 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
+ * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 3.0.0
  * @filesource
  */
+
 use CodeIgniter\Cache\CacheInterface;
 use CodeIgniter\CriticalError;
 
 class PredisHandler implements CacheInterface
 {
-
 	/**
 	 * Prefixed to all cache names.
 	 *
@@ -55,11 +55,11 @@ class PredisHandler implements CacheInterface
 	 * @var    array
 	 */
 	protected $config = [
-		'scheme'	 => 'tcp',
-		'host'		 => '127.0.0.1',
-		'password'	 => null,
-		'port'		 => 6379,
-		'timeout'	 => 0,
+		'scheme'   => 'tcp',
+		'host'     => '127.0.0.1',
+		'password' => null,
+		'port'     => 6379,
+		'timeout'  => 0,
 	];
 
 	/**
@@ -95,14 +95,15 @@ class PredisHandler implements CacheInterface
 
 			// Check if the connection is valid by trying to get the time.
 			$this->redis->time();
-		} catch (Exception $e)
+		}
+		catch (Exception $e)
 		{
 			// thrown if can't connect to redis server.
-			throw new CriticalError('Cache: Predis connection refused (' . $e->getMessage() . ')');
+			throw new CriticalError('Cache: Predis connection refused ('.$e->getMessage().')');
 		}
 	}
 
-	//--------------------------------------------------------------------
+   //--------------------------------------------------------------------
 
 	/**
 	 * Attempts to fetch an item from the cache store.
@@ -114,10 +115,11 @@ class PredisHandler implements CacheInterface
 	public function get(string $key)
 	{
 		$data = array_combine(
-				['__ci_type', '__ci_value'], $this->redis->hmget($key, ['__ci_type', '__ci_value'])
+			['__ci_type', '__ci_value'],
+			$this->redis->hmget($key, ['__ci_type', '__ci_value'])
 		);
 
-		if ( ! isset($data['__ci_type'], $data['__ci_value']) OR $data['__ci_value'] === false)
+		if (! isset($data['__ci_type'], $data['__ci_value']) OR $data['__ci_value'] === false)
 		{
 			return false;
 		}
@@ -132,7 +134,9 @@ class PredisHandler implements CacheInterface
 			case 'double': // Yes, 'double' is returned and NOT 'float'
 			case 'string':
 			case 'NULL':
-				return settype($data['__ci_value'], $data['__ci_type']) ? $data['__ci_value'] : false;
+				return settype($data['__ci_value'], $data['__ci_type'])
+					? $data['__ci_value']
+					: false;
 			case 'resource':
 			default:
 				return false;
@@ -169,12 +173,12 @@ class PredisHandler implements CacheInterface
 				return false;
 		}
 
-		if ( ! $this->redis->hmset($key, ['__ci_type' => $data_type, '__ci_value' => $value]))
+		if (! $this->redis->hmset($key, ['__ci_type' => $data_type, '__ci_value' => $value]))
 		{
 			return false;
 		}
 
-		$this->redis->expireat($key, time() + $ttl);
+		$this->redis->expireat($key, time()+$ttl);
 
 		return true;
 	}
@@ -267,7 +271,7 @@ class PredisHandler implements CacheInterface
 		{
 			return [
 				'expire' => time() + $this->redis->ttl($key),
-				'data'	 => $data['__ci_value']
+				'data' => $data['__ci_value']
 			];
 		}
 
@@ -285,5 +289,4 @@ class PredisHandler implements CacheInterface
 	{
 		return class_exists('\Predis\Client');
 	}
-
 }
