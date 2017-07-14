@@ -34,7 +34,8 @@ class Checks extends Controller
                 ]
             ]);
             $forge_mysql->addKey('id', true);
-            $forge_mysql->createTable('users', true);
+            $attributes = array('ENGINE' => 'InnoDB');
+            $forge_mysql->createTable('users', true, $attributes);
             
             $data_insert = array(
                 'id' => 1,
@@ -62,7 +63,8 @@ class Checks extends Controller
             $forge_mysql->addForeignKey('users_id','users','id','CASCADE','CASCADE');
             $forge_mysql->addForeignKey('other_id','users','id','CASCADE','CASCADE');
 
-            $res = $forge_mysql->createTable('invoices', true);
+            $attributes = array('ENGINE' => 'InnoDB');
+            $res = $forge_mysql->createTable('invoices', true,$attributes);
 
             if(!$res){
                 var_dump($forge_mysql->getConnection()->mysqli);
@@ -89,7 +91,7 @@ class Checks extends Controller
             
             //var_dump($res);
             
-            die('solo 1');
+            
             echo '<h1>PostgreSQL</h1>';
             
             $forge_pgsql = \Config\Database::forge('pgsql');
