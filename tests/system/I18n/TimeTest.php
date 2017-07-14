@@ -571,4 +571,112 @@ class TimeTest extends \CIUnitTestCase
 		$time = Time::parse('January 10, 2017 13:20:33', 'America/Chicago');
 		$this->assertEquals('13:20:33', $time->toTimeString());
 	}
+
+	//--------------------------------------------------------------------
+	// Add/Subtract
+	//--------------------------------------------------------------------
+
+	public function testCanAddSeconds()
+	{
+		$time = Time::parse('January 10, 2017 13:20:33', 'America/Chicago');
+		$newTime = $time->addSeconds(10);
+		$this->assertEquals('2017-01-10 13:20:33', $time->toDateTimeString());
+		$this->assertEquals('2017-01-10 13:20:43', $newTime->toDateTimeString());
+	}
+
+	public function testCanAddMinutes()
+	{
+		$time = Time::parse('January 10, 2017 13:20:33', 'America/Chicago');
+		$newTime = $time->addMinutes(10);
+		$this->assertEquals('2017-01-10 13:20:33', $time->toDateTimeString());
+		$this->assertEquals('2017-01-10 13:30:33', $newTime->toDateTimeString());
+	}
+
+	public function testCanAddHours()
+	{
+		$time = Time::parse('January 10, 2017 13:20:33', 'America/Chicago');
+		$newTime = $time->addHours(3);
+		$this->assertEquals('2017-01-10 13:20:33', $time->toDateTimeString());
+		$this->assertEquals('2017-01-10 16:20:33', $newTime->toDateTimeString());
+	}
+
+	public function testCanAddDays()
+	{
+		$time = Time::parse('January 10, 2017 13:20:33', 'America/Chicago');
+		$newTime = $time->addDays(3);
+		$this->assertEquals('2017-01-10 13:20:33', $time->toDateTimeString());
+		$this->assertEquals('2017-01-13 13:20:33', $newTime->toDateTimeString());
+	}
+
+	public function testCanAddMonths()
+	{
+		$time = Time::parse('January 10, 2017 13:20:33', 'America/Chicago');
+		$newTime = $time->addMonths(3);
+		$this->assertEquals('2017-01-10 13:20:33', $time->toDateTimeString());
+		$this->assertEquals('2017-04-10 13:20:33', $newTime->toDateTimeString());
+	}
+
+	public function testCanAddMonthsOverYearBoundary()
+	{
+		$time = Time::parse('January 10, 2017 13:20:33', 'America/Chicago');
+		$newTime = $time->addMonths(13);
+		$this->assertEquals('2017-01-10 13:20:33', $time->toDateTimeString());
+		$this->assertEquals('2018-02-10 13:20:33', $newTime->toDateTimeString());
+	}
+
+	public function testCanAddYears()
+	{
+		$time = Time::parse('January 10, 2017 13:20:33', 'America/Chicago');
+		$newTime = $time->addYears(3);
+		$this->assertEquals('2017-01-10 13:20:33', $time->toDateTimeString());
+		$this->assertEquals('2020-01-10 13:20:33', $newTime->toDateTimeString());
+	}
+
+	public function testCanSubtractSeconds()
+	{
+		$time = Time::parse('January 10, 2017 13:20:33', 'America/Chicago');
+		$newTime = $time->subSeconds(10);
+		$this->assertEquals('2017-01-10 13:20:33', $time->toDateTimeString());
+		$this->assertEquals('2017-01-10 13:20:23', $newTime->toDateTimeString());
+	}
+
+	public function testCanSubtractMinutes()
+	{
+		$time = Time::parse('January 10, 2017 13:20:33', 'America/Chicago');
+		$newTime = $time->subMinutes(10);
+		$this->assertEquals('2017-01-10 13:20:33', $time->toDateTimeString());
+		$this->assertEquals('2017-01-10 13:10:33', $newTime->toDateTimeString());
+	}
+
+	public function testCanSubtractHours()
+	{
+		$time = Time::parse('January 10, 2017 13:20:33', 'America/Chicago');
+		$newTime = $time->subHours(3);
+		$this->assertEquals('2017-01-10 13:20:33', $time->toDateTimeString());
+		$this->assertEquals('2017-01-10 10:20:33', $newTime->toDateTimeString());
+	}
+
+	public function testCanSubtractDays()
+	{
+		$time = Time::parse('January 10, 2017 13:20:33', 'America/Chicago');
+		$newTime = $time->subDays(3);
+		$this->assertEquals('2017-01-10 13:20:33', $time->toDateTimeString());
+		$this->assertEquals('2017-01-07 13:20:33', $newTime->toDateTimeString());
+	}
+
+	public function testCanSubtractMonths()
+	{
+		$time = Time::parse('January 10, 2017 13:20:33', 'America/Chicago');
+		$newTime = $time->subMonths(3);
+		$this->assertEquals('2017-01-10 13:20:33', $time->toDateTimeString());
+		$this->assertEquals('2016-10-10 13:20:33', $newTime->toDateTimeString());
+	}
+
+	public function testCanSubtractYears()
+	{
+		$time = Time::parse('January 10, 2017 13:20:33', 'America/Chicago');
+		$newTime = $time->subYears(3);
+		$this->assertEquals('2017-01-10 13:20:33', $time->toDateTimeString());
+		$this->assertEquals('2014-01-10 13:20:33', $newTime->toDateTimeString());
+	}
 }
