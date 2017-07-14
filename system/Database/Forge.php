@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
+ * Copyright (c) 2014-2017 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,13 +29,12 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 3.0.0
  * @filesource
  */
-
 use CodeIgniter\DatabaseException;
 
 /**
@@ -43,6 +42,7 @@ use CodeIgniter\DatabaseException;
  */
 class Forge
 {
+
 	/**
 	 * The active database connection.
 	 *
@@ -168,7 +168,7 @@ class Forge
 	 */
 	public function __construct(ConnectionInterface $db)
 	{
-		$this->db =& $db;
+		$this->db = & $db;
 	}
 
 	//--------------------------------------------------------------------
@@ -184,7 +184,6 @@ class Forge
 	}
 
 	//--------------------------------------------------------------------
-
 
 	/**
 	 * Create database
@@ -204,9 +203,8 @@ class Forge
 
 			return false;
 		}
-		elseif ( ! $this->db->query(sprintf($this->createDatabaseStr, $db_name, $this->db->charset,
-						$this->db->DBCollat))
-			   )
+		elseif ( ! $this->db->query(sprintf($this->createDatabaseStr, $db_name, $this->db->charset, $this->db->DBCollat))
+		)
 		{
 			if ($this->db->DBDebug)
 			{
@@ -309,11 +307,11 @@ class Forge
 			if ($field === 'id')
 			{
 				$this->addField([
-						'id' => [
-						'type'           => 'INT',
-						'constraint'     => 9,
+					'id' => [
+						'type'			 => 'INT',
+						'constraint'	 => 9,
 						'auto_increment' => true,
-						],
+					],
 				]);
 				$this->addKey('id', true);
 			}
@@ -412,7 +410,7 @@ class Forge
 		}
 		else
 		{
-			$table = $this->db->DBPrefix.$table;
+			$table = $this->db->DBPrefix . $table;
 		}
 
 		if (count($this->fields) === 0)
@@ -443,7 +441,7 @@ class Forge
 			// Most databases don't support creating indexes from within the CREATE TABLE statement
 			if ( ! empty($this->keys))
 			{
-				for ($i = 0, $sqls = $this->_processIndexes($table), $c = count($sqls); $i < $c; $i++)
+				for ($i = 0, $sqls = $this->_processIndexes($table), $c = count($sqls); $i < $c; $i ++ )
 				{
 					$this->db->query($sqls[$i]);
 				}
@@ -480,16 +478,12 @@ class Forge
 			}
 		}
 
-		$sql = ($if_not_exists)
-			? sprintf($this->createTableIfStr, $this->db->escapeIdentifiers($table))
-			: 'CREATE TABLE';
+		$sql = ($if_not_exists) ? sprintf($this->createTableIfStr, $this->db->escapeIdentifiers($table)) : 'CREATE TABLE';
 
 		$columns = $this->_processFields(true);
-		for ($i = 0, $c = count($columns); $i < $c; $i++)
+		for ($i = 0, $c = count($columns); $i < $c; $i ++ )
 		{
-			$columns[$i] = ($columns[$i]['_literal'] !== false)
-				? "\n\t".$columns[$i]['_literal']
-				: "\n\t".$this->_processColumn($columns[$i]);
+			$columns[$i] = ($columns[$i]['_literal'] !== false) ? "\n\t" . $columns[$i]['_literal'] : "\n\t" . $this->_processColumn($columns[$i]);
 		}
 
                 
@@ -506,12 +500,8 @@ class Forge
 		}
 
 		// createTableStr will usually have the following format: "%s %s (%s\n)"
-		$sql = sprintf($this->createTableStr.'%s',
-				$sql,
-				$this->db->escapeIdentifiers($table),
-				$columns,
-				$this->_createTableAttributes($attributes)
-				);
+		$sql = sprintf($this->createTableStr . '%s', $sql, $this->db->escapeIdentifiers($table), $columns, $this->_createTableAttributes($attributes)
+		);
 
 		return $sql;
 	}
@@ -533,7 +523,7 @@ class Forge
 		{
 			if (is_string($key))
 			{
-				$sql .= ' '.strtoupper($key).' '.$attributes[$key];
+				$sql .= ' ' . strtoupper($key) . ' ' . $attributes[$key];
 			}
 		}
 
@@ -573,8 +563,7 @@ class Forge
 		// Update table list cache
 		if ($query && ! empty($this->db->dataCache['table_names']))
 		{
-			$key = array_search(strtolower($this->db->DBPrefix.$table_name),
-					array_map('strtolower', $this->db->dataCache['table_names']), true);
+			$key = array_search(strtolower($this->db->DBPrefix . $table_name), array_map('strtolower', $this->db->dataCache['table_names']), true);
 			if ($key !== false)
 			{
 				unset($this->db->dataCache['table_names'][$key]);
@@ -651,18 +640,15 @@ class Forge
 			return false;
 		}
 
-		$result = $this->db->query(sprintf($this->renameTableStr,
-					$this->db->escapeIdentifiers($this->db->DBPrefix.$table_name),
-					$this->db->escapeIdentifiers($this->db->DBPrefix.$new_table_name))
-				);
+		$result = $this->db->query(sprintf($this->renameTableStr, $this->db->escapeIdentifiers($this->db->DBPrefix . $table_name), $this->db->escapeIdentifiers($this->db->DBPrefix . $new_table_name))
+		);
 
 		if ($result && ! empty($this->db->dataCache['table_names']))
 		{
-			$key = array_search(strtolower($this->db->DBPrefix.$table_name),
-					array_map('strtolower', $this->db->dataCache['table_names']), true);
+			$key = array_search(strtolower($this->db->DBPrefix . $table_name), array_map('strtolower', $this->db->dataCache['table_names']), true);
 			if ($key !== false)
 			{
-				$this->db->dataCache['table_names'][$key] = $this->db->DBPrefix.$new_table_name;
+				$this->db->dataCache['table_names'][$key] = $this->db->DBPrefix . $new_table_name;
 			}
 		}
 
@@ -689,7 +675,7 @@ class Forge
 			$this->addField([$k => $field[$k]]);
 		}
 
-		$sqls = $this->_alterTable('ADD', $this->db->DBPrefix.$table, $this->_processFields());
+		$sqls = $this->_alterTable('ADD', $this->db->DBPrefix . $table, $this->_processFields());
 		$this->_reset();
 		if ($sqls === false)
 		{
@@ -701,7 +687,7 @@ class Forge
 			return false;
 		}
 
-		for ($i = 0, $c = count($sqls); $i < $c; $i++)
+		for ($i = 0, $c = count($sqls); $i < $c; $i ++ )
 		{
 			if ($this->db->query($sqls[$i]) === false)
 			{
@@ -724,7 +710,7 @@ class Forge
 	 */
 	public function dropColumn($table, $column_name)
 	{
-		$sql = $this->_alterTable('DROP', $this->db->DBPrefix.$table, $column_name);
+		$sql = $this->_alterTable('DROP', $this->db->DBPrefix . $table, $column_name);
 		if ($sql === false)
 		{
 			if ($this->db->DBDebug)
@@ -763,7 +749,7 @@ class Forge
 			throw new \RuntimeException('Field information is required');
 		}
 
-		$sqls = $this->_alterTable('CHANGE', $this->db->DBPrefix.$table, $this->_processFields());
+		$sqls = $this->_alterTable('CHANGE', $this->db->DBPrefix . $table, $this->_processFields());
 		$this->_reset();
 		if ($sqls === false)
 		{
@@ -775,7 +761,7 @@ class Forge
 			return false;
 		}
 
-		for ($i = 0, $c = count($sqls); $i < $c; $i++)
+		for ($i = 0, $c = count($sqls); $i < $c; $i ++ )
 		{
 			if ($this->db->query($sqls[$i]) === false)
 			{
@@ -799,23 +785,21 @@ class Forge
 	 */
 	protected function _alterTable($alter_type, $table, $field)
 	{
-		$sql = 'ALTER TABLE '.$this->db->escapeIdentifiers($table).' ';
+		$sql = 'ALTER TABLE ' . $this->db->escapeIdentifiers($table) . ' ';
 
 		// DROP has everything it needs now.
 		if ($alter_type === 'DROP')
 		{
-			return $sql.'DROP COLUMN '.$this->db->escapeIdentifiers($field);
+			return $sql . 'DROP COLUMN ' . $this->db->escapeIdentifiers($field);
 		}
 
-		$sql .= ($alter_type === 'ADD')
-			? 'ADD '
-			: $alter_type.' COLUMN ';
+		$sql .= ($alter_type === 'ADD') ? 'ADD ' : $alter_type . ' COLUMN ';
 
 		$sqls = [];
-		for ($i = 0, $c = count($field); $i < $c; $i++)
+		for ($i = 0, $c = count($field); $i < $c; $i ++ )
 		{
 			$sqls[] = $sql
-				.($field[$i]['_literal'] !== false ? $field[$i]['_literal'] : $this->_processColumn($field[$i]));
+					. ($field[$i]['_literal'] !== false ? $field[$i]['_literal'] : $this->_processColumn($field[$i]));
 		}
 
 		return $sqls;
@@ -852,16 +836,16 @@ class Forge
 			isset($attributes['TYPE']) && $this->_attributeType($attributes);
 
 			$field = [
-				'name'           => $key,
-				'new_name'       => isset($attributes['NAME']) ? $attributes['NAME'] : null,
-				'type'           => isset($attributes['TYPE']) ? $attributes['TYPE'] : null,
-				'length'         => '',
-				'unsigned'       => '',
-				'null'           => '',
-				'unique'         => '',
-				'default'        => '',
+				'name'			 => $key,
+				'new_name'		 => isset($attributes['NAME']) ? $attributes['NAME'] : null,
+				'type'			 => isset($attributes['TYPE']) ? $attributes['TYPE'] : null,
+				'length'		 => '',
+				'unsigned'		 => '',
+				'null'			 => '',
+				'unique'		 => '',
+				'default'		 => '',
 				'auto_increment' => '',
-				'_literal'       => false,
+				'_literal'		 => false,
 			];
 
 			isset($attributes['TYPE']) && $this->_attributeUnsigned($attributes, $field);
@@ -874,7 +858,7 @@ class Forge
 				}
 				elseif (isset($attributes['FIRST']))
 				{
-					$field['first'] = (bool)$attributes['FIRST'];
+					$field['first'] = (bool) $attributes['FIRST'];
 				}
 			}
 
@@ -884,7 +868,7 @@ class Forge
 			{
 				if ($attributes['NULL'] === true)
 				{
-					$field['null'] = empty($this->null) ? '' : ' '.$this->null;
+					$field['null'] = empty($this->null) ? '' : ' ' . $this->null;
 				}
 				else
 				{
@@ -911,14 +895,10 @@ class Forge
 					case 'ENUM':
 					case 'SET':
 						$attributes['CONSTRAINT'] = $this->db->escape($attributes['CONSTRAINT']);
-						$field['length']          = is_array($attributes['CONSTRAINT'])
-							? "('".implode("','", $attributes['CONSTRAINT'])."')"
-							: '('.$attributes['CONSTRAINT'].')';
+						$field['length'] = is_array($attributes['CONSTRAINT']) ? "('" . implode("','", $attributes['CONSTRAINT']) . "')" : '(' . $attributes['CONSTRAINT'] . ')';
 						break;
 					default:
-						$field['length'] = is_array($attributes['CONSTRAINT'])
-							? '('.implode(',', $attributes['CONSTRAINT']).')'
-							: '('.$attributes['CONSTRAINT'].')';
+						$field['length'] = is_array($attributes['CONSTRAINT']) ? '(' . implode(',', $attributes['CONSTRAINT']) . ')' : '(' . $attributes['CONSTRAINT'] . ')';
 						break;
 				}
 			}
@@ -941,12 +921,12 @@ class Forge
 	protected function _processColumn($field)
 	{
 		return $this->db->escapeIdentifiers($field['name'])
-			.' '.$field['type'].$field['length']
-			.$field['unsigned']
-			.$field['default']
-			.$field['null']
-			.$field['auto_increment']
-			.$field['unique'];
+				. ' ' . $field['type'] . $field['length']
+				. $field['unsigned']
+				. $field['default']
+				. $field['null']
+				. $field['auto_increment']
+				. $field['unique'];
 	}
 
 	//--------------------------------------------------------------------
@@ -1039,15 +1019,15 @@ class Forge
 		{
 			if ($attributes['DEFAULT'] === null)
 			{
-				$field['default'] = empty($this->null) ? '' : $this->default.$this->null;
+				$field['default'] = empty($this->null) ? '' : $this->default . $this->null;
 
 				// Override the NULL attribute if that's our default
 				$attributes['NULL'] = true;
-				$field['null']      = empty($this->null) ? '' : ' '.$this->null;
+				$field['null'] = empty($this->null) ? '' : ' ' . $this->null;
 			}
 			else
 			{
-				$field['default'] = $this->default.$this->db->escape($attributes['DEFAULT']);
+				$field['default'] = $this->default . $this->db->escape($attributes['DEFAULT']);
 			}
 		}
 	}
@@ -1084,7 +1064,7 @@ class Forge
 	{
 		if ( ! empty($attributes['AUTO_INCREMENT']) && $attributes['AUTO_INCREMENT'] === true &&
 				stripos($field['type'], 'int') !== false
-		   )
+		)
 		{
 			$field['auto_increment'] = ' AUTO_INCREMENT';
 		}
@@ -1103,7 +1083,7 @@ class Forge
 	{
 		$sql = '';
 
-		for ($i = 0, $c = count($this->primaryKeys); $i < $c; $i++)
+		for ($i = 0, $c = count($this->primaryKeys); $i < $c; $i ++ )
 		{
 			if ( ! isset($this->fields[$this->primaryKeys[$i]]))
 			{
@@ -1113,99 +1093,63 @@ class Forge
 
 		if (count($this->primaryKeys) > 0)
 		{
-			$sql .= ",\n\tCONSTRAINT ".$this->db->escapeIdentifiers('pk_'.$table)
-				.' PRIMARY KEY('.implode(', ', $this->db->escapeIdentifiers($this->primaryKeys)).')';
-						}
+			$sql .= ",\n\tCONSTRAINT " . $this->db->escapeIdentifiers('pk_' . $table)
+					. ' PRIMARY KEY(' . implode(', ', $this->db->escapeIdentifiers($this->primaryKeys)) . ')';
+		}
 
-						return $sql;
-						}
+		return $sql;
+	}
 
-						//--------------------------------------------------------------------
-                                                
+	//--------------------------------------------------------------------
 
-        /**
-	 * Process primary keys
+	/**
+	 * Process indexes
 	 *
-	 * @param    string $table Table name
+	 * @param    string $table
 	 *
 	 * @return    string
 	 */
-	protected function _processForeignKeys($table) {
-            $sql = '';
+	protected function _processIndexes($table)
+	{
+		$sqls = [];
 
-            $allowActions = array('CASCADE','SET NULL','NO ACTION','RESTRICT','SET DEFAULT');
-            
-            if (count($this->foreignKeys) > 0){
-                foreach ($this->foreignKeys as $field => $fkey) {
-                    $name_index = $table.'_'.$field.'_foreign';
-                    
-                    $sql .= ",\n\tCONSTRAINT " . $this->db->escapeIdentifiers($name_index)
-                        . ' FOREIGN KEY(' . $this->db->escapeIdentifiers($field) . ') REFERENCES '.$this->db->escapeIdentifiers($fkey['table']).' ('.$this->db->escapeIdentifiers($fkey['field']).')';
-                    
-                    if($fkey['onDelete'] !== false && in_array($fkey['onDelete'], $allowActions)){
-                        $sql .= " ON DELETE ".$fkey['onDelete'];
-                    }
-                    
-                    if($fkey['onUpdate'] !== false && in_array($fkey['onUpdate'], $allowActions)){
-                        $sql .= " ON UPDATE ".$fkey['onDelete'];
-                    }
-                    
-                }
-            }
+		for ($i = 0, $c = count($this->keys); $i < $c; $i ++ )
+		{
+			$this->keys[$i] = (array) $this->keys[$i];
 
-            return $sql;
-        }
-
-						//--------------------------------------------------------------------
-
-						/**
-						 * Process indexes
-						 *
-						 * @param    string $table
-						 *
-						 * @return    string
-						 */
-						protected function _processIndexes($table)
-						{
-						$sqls = [];
-
-						for ($i = 0, $c = count($this->keys); $i < $c; $i++)
-						{
-							$this->keys[$i] = (array) $this->keys[$i];
-
-							for ($i2 = 0, $c2 = count($this->keys[$i]); $i2 < $c2; $i2++)
-							{
-								if ( ! isset($this->fields[$this->keys[$i][$i2]]))
-								{
-									unset($this->keys[$i][$i2]);
-								}
-							}
-							if (count($this->keys[$i]) <= 0)
-							{
-								continue;
-							}
-
-							$sqls[] = 'CREATE INDEX '.$this->db->escapeIdentifiers($table.'_'.implode('_', $this->keys[$i]))
-								.' ON '.$this->db->escapeIdentifiers($table)
-								.' ('.implode(', ', $this->db->escapeIdentifiers($this->keys[$i])).');';
-						}
-
-						return $sqls;
-						}
-
-			//--------------------------------------------------------------------
-			//--------------------------------------------------------------------
-
-			/**
-			 * Reset
-			 *
-			 * Resets table creation vars
-			 *
-			 * @return    void
-			 */
-			protected function _reset()
+			for ($i2 = 0, $c2 = count($this->keys[$i]); $i2 < $c2; $i2 ++ )
 			{
-				$this->fields = $this->keys = $this->primaryKeys = $this->foreignKeys = [];
+				if ( ! isset($this->fields[$this->keys[$i][$i2]]))
+				{
+					unset($this->keys[$i][$i2]);
+				}
 			}
+			if (count($this->keys[$i]) <= 0)
+			{
+				continue;
+			}
+
+			$sqls[] = 'CREATE INDEX ' . $this->db->escapeIdentifiers($table . '_' . implode('_', $this->keys[$i]))
+					. ' ON ' . $this->db->escapeIdentifiers($table)
+					. ' (' . implode(', ', $this->db->escapeIdentifiers($this->keys[$i])) . ');';
+		}
+
+		return $sqls;
+	}
+
+	//--------------------------------------------------------------------
+	//--------------------------------------------------------------------
+
+	/**
+	 * Reset
+	 *
+	 * Resets table creation vars
+	 *
+	 * @return    void
+	 */
+	protected function _reset()
+	{
+		$this->fields = $this->keys = $this->primaryKeys = [];
+	}
 
 }
