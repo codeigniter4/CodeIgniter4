@@ -1152,7 +1152,7 @@ class Forge
                     $name_index = $table.'_'.$field.'_foreign';
                     
                     $sql .= ",\n\tCONSTRAINT " . $this->db->escapeIdentifiers($name_index)
-                        . ' FOREIGN KEY(' . $this->db->escapeIdentifiers($field) . ') REFERENCES '.$this->db->escapeIdentifiers($fkey['table']).' ('.$this->db->escapeIdentifiers($fkey['field']).')';
+                        . ' FOREIGN KEY(' . $this->db->escapeIdentifiers($field) . ') REFERENCES '.$this->db->escapeIdentifiers($this->db->DBPrefix.$fkey['table']).' ('.$this->db->escapeIdentifiers($fkey['field']).')';
                     
                     if($fkey['onDelete'] !== false && in_array($fkey['onDelete'], $allowActions)){
                         $sql .= " ON DELETE ".$fkey['onDelete'];
