@@ -37,6 +37,7 @@
  */
 use Locale;
 use DateTime;
+use DateInterval;
 use DateTimeZone;
 use IntlDateFormatter;
 
@@ -737,6 +738,178 @@ class Time extends DateTime
 		$time = date('Y-m-d H:i:s', $timestamp);
 
 		return Time::parse($time, $this->timezone, $this->locale);
+	}
+
+	//--------------------------------------------------------------------
+	// Add/Subtract
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns a new Time instance with $seconds added to the time.
+	 *
+	 * @param int $seconds
+	 *
+	 * @return static
+	 */
+	public function addSeconds(int $seconds)
+	{
+		$time = clone($this);
+
+		return $time->add(DateInterval::createFromDateString("{$seconds} seconds"));
+	}
+
+	/**
+	 * Returns a new Time instance with $minutes added to the time.
+	 *
+	 * @param int $minutes
+	 *
+	 * @return static
+	 */
+	public function addMinutes(int $minutes)
+	{
+		$time = clone($this);
+
+		return $time->add(DateInterval::createFromDateString("{$minutes} minutes"));
+	}
+
+	/**
+	 * Returns a new Time instance with $hours added to the time.
+	 *
+	 * @param int $hours
+	 *
+	 * @return static
+	 */
+	public function addHours(int $hours)
+	{
+		$time = clone($this);
+
+		return $time->add(DateInterval::createFromDateString("{$hours} hours"));
+	}
+
+	/**
+	 * Returns a new Time instance with $days added to the time.
+	 *
+	 * @param int $days
+	 *
+	 * @return static
+	 */
+	public function addDays(int $days)
+	{
+		$time = clone($this);
+
+		return $time->add(DateInterval::createFromDateString("{$days} days"));
+	}
+
+	/**
+	 * Returns a new Time instance with $months added to the time.
+	 *
+	 * @param int $months
+	 *
+	 * @return static
+	 */
+	public function addMonths(int $months)
+	{
+		$time = clone($this);
+
+		return $time->add(DateInterval::createFromDateString("{$months} months"));
+	}
+
+	/**
+	 * Returns a new Time instance with $years added to the time.
+	 *
+	 * @param int $years
+	 *
+	 * @return static
+	 */
+	public function addYears(int $years)
+	{
+		$time = clone($this);
+
+		return $time->add(DateInterval::createFromDateString("{$years} years"));
+	}
+
+	/**
+	 * Returns a new Time instance with $seconds subtracted from the time.
+	 *
+	 * @param int $seconds
+	 *
+	 * @return static
+	 */
+	public function subSeconds(int $seconds)
+	{
+		$time = clone($this);
+
+		return $time->sub(DateInterval::createFromDateString("{$seconds} seconds"));
+	}
+
+	/**
+	 * Returns a new Time instance with $minutes subtracted from the time.
+	 *
+	 * @param int $minutes
+	 *
+	 * @return static
+	 */
+	public function subMinutes(int $minutes)
+	{
+		$time = clone($this);
+
+		return $time->sub(DateInterval::createFromDateString("{$minutes} minutes"));
+	}
+
+	/**
+	 * Returns a new Time instance with $hours subtracted from the time.
+	 *
+	 * @param int $hours
+	 *
+	 * @return static
+	 */
+	public function subHours(int $hours)
+	{
+		$time = clone($this);
+
+		return $time->sub(DateInterval::createFromDateString("{$hours} hours"));
+	}
+
+	/**
+	 * Returns a new Time instance with $days subtracted from the time.
+	 *
+	 * @param int $days
+	 *
+	 * @return static
+	 */
+	public function subDays(int $days)
+	{
+		$time = clone($this);
+
+		return $time->sub(DateInterval::createFromDateString("{$days} days"));
+	}
+
+	/**
+	 * Returns a new Time instance with $months subtracted from the time.
+	 *
+	 * @param int $months
+	 *
+	 * @return static
+	 */
+	public function subMonths(int $months)
+	{
+		$time = clone($this);
+
+		return $time->sub(DateInterval::createFromDateString("{$months} months"));
+	}
+
+	/**
+	 * Returns a new Time instance with $hours subtracted from the time.
+	 *
+	 * @param int $years
+	 *
+	 * @return static
+	 */
+	public function subYears(int $years)
+	{
+		$time = clone($this);
+
+		return $time->sub(DateInterval::createFromDateString("{$years} years"));
 	}
 
 	//--------------------------------------------------------------------
