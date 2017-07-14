@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
+ * Copyright (c) 2014-2017 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,7 @@
  *
  * @package      CodeIgniter
  * @author       CodeIgniter Dev Team
- * @copyright    Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @copyright    2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
  * @license      https://opensource.org/licenses/MIT	MIT License
  * @link         https://codeigniter.com
  * @since        Version 3.0.0
@@ -47,6 +47,7 @@
  */
 class BaseConfig
 {
+
 	/**
 	 * An optional array of classes that will act as Registrars
 	 * for rapidly setting config class properties.
@@ -61,8 +62,8 @@ class BaseConfig
 	 */
 	public function __construct()
 	{
-		$properties  = array_keys(get_object_vars($this));
-		$prefix      = get_class($this);
+		$properties = array_keys(get_object_vars($this));
+		$prefix = get_class($this);
 		$shortPrefix = strtolower(substr($prefix, strrpos($prefix, '\\') + 1));
 
 		foreach ($properties as $property)
@@ -73,10 +74,13 @@ class BaseConfig
 				{
 					if ($value = $this->getEnvValue("{$property}.{$key}", $prefix, $shortPrefix))
 					{
-						if (is_null($value)) continue;
+						if (is_null($value))
+							continue;
 
-						if ($value === 'false')    $value = false;
-						elseif ($value === 'true') $value = true;
+						if ($value === 'false')
+							$value = false;
+						elseif ($value === 'true')
+							$value = true;
 
 						$this->$property[$key] = $value;
 					}
@@ -84,12 +88,15 @@ class BaseConfig
 			}
 			else
 			{
-				if (($value = $this->getEnvValue($property, $prefix, $shortPrefix)) !== false )
+				if (($value = $this->getEnvValue($property, $prefix, $shortPrefix)) !== false)
 				{
-					if (is_null($value)) continue;
+					if (is_null($value))
+						continue;
 
-					if ($value === 'false')    $value = false;
-					elseif ($value === 'true') $value = true;
+					if ($value === 'false')
+						$value = false;
+					elseif ($value === 'true')
+						$value = true;
 
 					$this->$property = $value;
 				}
@@ -134,31 +141,35 @@ class BaseConfig
 	 */
 	protected function registerProperties()
 	{
-		if (empty($this->registrars)) return;
+		if (empty($this->registrars))
+			return;
 
 		$shortName = (new \ReflectionClass($this))->getShortName();
 
 		// Check the registrar class for a method named after this class' shortName
 		foreach ($this->registrars as $callable)
 		{
-			if (! method_exists($callable, $shortName)) continue;
+			if ( ! method_exists($callable, $shortName))
+				continue;
 
 			$properties = $callable::$shortName();
 
-			if (! is_array($properties))
+			if ( ! is_array($properties))
 			{
 				throw new \RuntimeException('Registrars must return an array of properties and their values.');
 			}
 
 			foreach ($properties as $property => $value)
 			{
-				if (! property_exists($this, $property)) continue;
+				if ( ! property_exists($this, $property))
+					continue;
 
 				if (is_array($this->$property) && is_array($value))
 				{
 					$this->$property = array_merge($this->$property, $value);
 				}
-				else {
+				else
+				{
 					$this->$property = $value;
 				}
 			}
@@ -166,5 +177,4 @@ class BaseConfig
 	}
 
 	//--------------------------------------------------------------------
-
 }

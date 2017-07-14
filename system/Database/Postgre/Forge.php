@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
+ * Copyright (c) 2014-2017 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,7 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 3.0.0
@@ -41,21 +41,22 @@
  */
 class Forge extends \CodeIgniter\Database\Forge
 {
+
 	/**
 	 * UNSIGNED support
 	 *
 	 * @var    array
 	 */
 	protected $_unsigned = [
-		'INT2'		=> 'INTEGER',
-		'SMALLINT'	=> 'INTEGER',
-		'INT'		=> 'BIGINT',
-		'INT4'		=> 'BIGINT',
-		'INTEGER'	=> 'BIGINT',
-		'INT8'		=> 'NUMERIC',
-		'BIGINT'	=> 'NUMERIC',
-		'REAL'		=> 'DOUBLE PRECISION',
-		'FLOAT'		=> 'DOUBLE PRECISION'
+		'INT2'		 => 'INTEGER',
+		'SMALLINT'	 => 'INTEGER',
+		'INT'		 => 'BIGINT',
+		'INT4'		 => 'BIGINT',
+		'INTEGER'	 => 'BIGINT',
+		'INT8'		 => 'NUMERIC',
+		'BIGINT'	 => 'NUMERIC',
+		'REAL'		 => 'DOUBLE PRECISION',
+		'FLOAT'		 => 'DOUBLE PRECISION'
 	];
 
 	/**
@@ -83,9 +84,9 @@ class Forge extends \CodeIgniter\Database\Forge
 			return parent::_alterTable($alter_type, $table, $field);
 		}
 
-		$sql = 'ALTER TABLE '.$this->db->escapeIdentifiers($table);
+		$sql = 'ALTER TABLE ' . $this->db->escapeIdentifiers($table);
 		$sqls = [];
-		for ($i = 0, $c = count($field); $i < $c; $i++)
+		for ($i = 0, $c = count($field); $i < $c; $i ++ )
 		{
 			if ($field[$i]['_literal'] !== false)
 			{
@@ -94,33 +95,33 @@ class Forge extends \CodeIgniter\Database\Forge
 
 			if (version_compare($this->db->getVersion(), '8', '>=') && isset($field[$i]['type']))
 			{
-				$sqls[] = $sql.' ALTER COLUMN '.$this->db->escapeIdentifiers($field[$i]['name'])
-					." TYPE {$field[$i]['type']}{$field[$i]['length']}";
+				$sqls[] = $sql . ' ALTER COLUMN ' . $this->db->escapeIdentifiers($field[$i]['name'])
+						. " TYPE {$field[$i]['type']}{$field[$i]['length']}";
 			}
 
 			if ( ! empty($field[$i]['default']))
 			{
-				$sqls[] = $sql.' ALTER COLUMN '.$this->db->escapeIdentifiers($field[$i]['name'])
-					." SET DEFAULT {$field[$i]['default']}";
+				$sqls[] = $sql . ' ALTER COLUMN ' . $this->db->escapeIdentifiers($field[$i]['name'])
+						. " SET DEFAULT {$field[$i]['default']}";
 			}
 
 			if (isset($field[$i]['null']))
 			{
-				$sqls[] = $sql.' ALTER COLUMN '.$this->db->escapeIdentifiers($field[$i]['name'])
-					.($field[$i]['null'] === true ? ' DROP' : ' SET'). ' NOT NULL';
+				$sqls[] = $sql . ' ALTER COLUMN ' . $this->db->escapeIdentifiers($field[$i]['name'])
+						. ($field[$i]['null'] === true ? ' DROP' : ' SET') . ' NOT NULL';
 			}
 
 			if ( ! empty($field[$i]['new_name']))
 			{
-				$sqls[] = $sql.' RENAME COLUMN '.$this->db->escapeIdentifiers($field[$i]['name'])
-					.' TO '.$this->db->escapeIdentifiers($field[$i]['new_name']);
+				$sqls[] = $sql . ' RENAME COLUMN ' . $this->db->escapeIdentifiers($field[$i]['name'])
+						. ' TO ' . $this->db->escapeIdentifiers($field[$i]['new_name']);
 			}
 
 			if ( ! empty($field[$i]['comment']))
 			{
-				$sqls[] = 'COMMENT ON COLUMN'.$this->db->escapeIdentifiers($table)
-					.'.'.$this->db->escapeIdentifiers($field[$i]['name'])
-					." IS {$field[$i]['comment']}";
+				$sqls[] = 'COMMENT ON COLUMN' . $this->db->escapeIdentifiers($table)
+						. '.' . $this->db->escapeIdentifiers($field[$i]['name'])
+						. " IS {$field[$i]['comment']}";
 			}
 		}
 
@@ -157,7 +158,7 @@ class Forge extends \CodeIgniter\Database\Forge
 				$attributes['UNSIGNED'] = false;
 				return;
 			case 'DATETIME':
-					$attributes['TYPE'] = 'TIMESTAMP';
+				$attributes['TYPE'] = 'TIMESTAMP';
 			default:
 				return;
 		}

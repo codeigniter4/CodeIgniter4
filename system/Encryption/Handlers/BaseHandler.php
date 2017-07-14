@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
+ * Copyright (c) 2014-2017 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,7 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 3.0.0
@@ -248,7 +248,7 @@ abstract class BaseHandler implements \CodeIgniter\Encryption\EncrypterInterface
 
 		$prk = hash_hmac($digest, $key, $salt, true);
 		$key = '';
-		for ($key_block = '', $block_index = 1; self::strlen($key) < $length; $block_index ++)
+		for ($key_block = '', $block_index = 1; self::strlen($key) < $length; $block_index ++ )
 		{
 			$key_block = hash_hmac($digest, $key_block . $info . chr($block_index), $prk, true);
 			$key .= $key_block;
@@ -308,7 +308,7 @@ abstract class BaseHandler implements \CodeIgniter\Encryption\EncrypterInterface
 		{
 			return array_search($this->mode, $this->modes[$this->handler], true);
 		}
-		
+
 		if (in_array($key, ['cipher', 'mode', 'key', 'handler', 'handlers', 'digests'], true))
 		{
 			return $this->{$key};

@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
+ * Copyright (c) 2014-2017 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,15 +29,15 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 3.0.0
  * @filesource
  */
-
 class Message
 {
+
 	/**
 	 * List of all HTTP request headers.
 	 *
@@ -74,7 +74,6 @@ class Message
 	protected $body;
 
 	//--------------------------------------------------------------------
-
 	//--------------------------------------------------------------------
 	// Body
 	//--------------------------------------------------------------------
@@ -116,14 +115,12 @@ class Message
 	 */
 	public function appendBody($data)
 	{
-	    $this->body .= (string)$data;
+		$this->body .= (string) $data;
 
 		return $this;
 	}
 
 	//--------------------------------------------------------------------
-
-
 	//--------------------------------------------------------------------
 	// Headers
 	//--------------------------------------------------------------------
@@ -134,7 +131,7 @@ class Message
 	public function populateHeaders()
 	{
 		$contentType = isset($_SERVER['CONTENT_TYPE']) ? $_SERVER['CONTENT_TYPE'] : getenv('CONTENT_TYPE');
-		if (! empty($contentType))
+		if ( ! empty($contentType))
 		{
 			$this->setHeader('Content-Type', $contentType);
 		}
@@ -164,7 +161,6 @@ class Message
 	}
 
 	//--------------------------------------------------------------------
-
 
 	/**
 	 * Returns an array containing all headers.
@@ -225,7 +221,6 @@ class Message
 
 	//--------------------------------------------------------------------
 
-
 	/**
 	 * Retrieves a comma-separated string of the values for a single header.
 	 *
@@ -245,7 +240,7 @@ class Message
 	{
 		$orig_name = $this->getHeaderName($name);
 
-		if (! array_key_exists($orig_name, $this->headers))
+		if ( ! array_key_exists($orig_name, $this->headers))
 		{
 			return '';
 		}
@@ -262,7 +257,6 @@ class Message
 
 	//--------------------------------------------------------------------
 
-
 	/**
 	 * Sets a header and it's value.
 	 *
@@ -273,7 +267,7 @@ class Message
 	 */
 	public function setHeader(string $name, $value)
 	{
-		if (! isset($this->headers[$name]))
+		if ( ! isset($this->headers[$name]))
 		{
 			$this->headers[$name] = new Header($name, $value);
 
@@ -282,19 +276,19 @@ class Message
 			return $this;
 		}
 
-		if (! is_array($this->headers[$name]))
+		if ( ! is_array($this->headers[$name]))
 		{
 			$this->headers[$name] = [$this->headers[$name]];
 		}
 
 		if (isset($this->headers[$name]))
-        {
-            $this->headers[$name] = new Header($name, $value);
-        }
+		{
+			$this->headers[$name] = new Header($name, $value);
+		}
 		else
-        {
-            $this->headers[$name][] = new Header($name, $value);
-        }
+		{
+			$this->headers[$name][] = new Header($name, $value);
+		}
 
 		return $this;
 	}
@@ -381,15 +375,15 @@ class Message
 	 */
 	public function setProtocolVersion(string $version)
 	{
-		if (! is_numeric($version))
+		if ( ! is_numeric($version))
 		{
 			$version = substr($version, strpos($version, '/') + 1);
 		}
 
-	    if (! in_array($version, $this->validProtocolVersions))
-	    {
-		    throw new \InvalidArgumentException('Invalid HTTP Protocol Version. Must be one of: '. implode(', ', $this->validProtocolVersions));
-	    }
+		if ( ! in_array($version, $this->validProtocolVersions))
+		{
+			throw new \InvalidArgumentException('Invalid HTTP Protocol Version. Must be one of: ' . implode(', ', $this->validProtocolVersions));
+		}
 
 		$this->protocolVersion = $version;
 
@@ -414,5 +408,4 @@ class Message
 	}
 
 	//--------------------------------------------------------------------
-
 }

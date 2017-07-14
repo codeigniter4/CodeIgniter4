@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
+ * Copyright (c) 2014-2017 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,13 +29,12 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 3.0.0
  * @filesource
  */
-
 use CodeIgniter\ConfigException;
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\MigrationRunner;
@@ -46,6 +45,7 @@ use Config\Services;
  */
 class CIDatabaseTestCase extends CIUnitTestCase
 {
+
 	/**
 	 * Should the db be refreshed before
 	 * each test?
@@ -69,7 +69,7 @@ class CIDatabaseTestCase extends CIUnitTestCase
 	 *
 	 * @var string
 	 */
-	protected $basePath = TESTPATH.'_support/Database';
+	protected $basePath = TESTPATH . '_support/Database';
 
 	/**
 	 * The name of the database group to connect to.
@@ -149,21 +149,21 @@ class CIDatabaseTestCase extends CIUnitTestCase
 
 		if ($this->refresh === true)
 		{
-			if (! empty($this->basePath))
+			if ( ! empty($this->basePath))
 			{
 				$this->migrations->setNamespace('Tests\Support');
 			}
 
 			$this->db->table('migrations')->truncate();
-			$this->migrations->version(0,null, 'tests');
-			$this->migrations->latest(null,'tests');
+			$this->migrations->version(0, null, 'tests');
+			$this->migrations->latest(null, 'tests');
 		}
 
-		if (! empty($this->seed))
+		if ( ! empty($this->seed))
 		{
-			if (! empty($this->basePath))
+			if ( ! empty($this->basePath))
 			{
-				$this->seeder->setPath(rtrim($this->basePath, '/').'/seeds');
+				$this->seeder->setPath(rtrim($this->basePath, '/') . '/seeds');
 			}
 
 			$this->seed($this->seed);
@@ -178,19 +178,18 @@ class CIDatabaseTestCase extends CIUnitTestCase
 	 */
 	public function tearDown()
 	{
-	    if (! empty($this->insertCache))
-	    {
-		    foreach ($this->insertCache as $row)
-		    {
-			    $this->db->table($row[0])
-				         ->where($row[1])
-				         ->delete();
-		    }
-	    }
+		if ( ! empty($this->insertCache))
+		{
+			foreach ($this->insertCache as $row)
+			{
+				$this->db->table($row[0])
+						->where($row[1])
+						->delete();
+			}
+		}
 	}
 
 	//--------------------------------------------------------------------
-
 
 	/**
 	 * Seeds that database with a specific seeder.
@@ -199,11 +198,10 @@ class CIDatabaseTestCase extends CIUnitTestCase
 	 */
 	public function seed(string $name)
 	{
-        return $this->seeder->call($name);
+		return $this->seeder->call($name);
 	}
 
 	//--------------------------------------------------------------------
-
 	//--------------------------------------------------------------------
 	// Database Test Helpers
 	//--------------------------------------------------------------------
@@ -220,10 +218,10 @@ class CIDatabaseTestCase extends CIUnitTestCase
 	public function dontSeeInDatabase(string $table, array $where)
 	{
 		$count = $this->db->table($table)
-				        ->where($where)
-				        ->countAllResults();
+				->where($where)
+				->countAllResults();
 
-	    $this->assertTrue($count == 0, 'Row was found in database');
+		$this->assertTrue($count == 0, 'Row was found in database');
 	}
 
 	//--------------------------------------------------------------------
@@ -241,10 +239,10 @@ class CIDatabaseTestCase extends CIUnitTestCase
 	public function seeInDatabase(string $table, array $where)
 	{
 		$count = $this->db->table($table)
-		                  ->where($where)
-		                  ->countAllResults();
+				->where($where)
+				->countAllResults();
 
-		$this->assertTrue($count > 0, 'Row not found in database: '. $this->db->showLastQuery());
+		$this->assertTrue($count > 0, 'Row not found in database: ' . $this->db->showLastQuery());
 	}
 
 	//--------------------------------------------------------------------
@@ -262,10 +260,10 @@ class CIDatabaseTestCase extends CIUnitTestCase
 	 */
 	public function grabFromDatabase(string $table, string $column, array $where)
 	{
-	    $query = $this->db->table($table)
-		                  ->select($column)
-		                  ->where($where)
-		                  ->get();
+		$query = $this->db->table($table)
+				->select($column)
+				->where($where)
+				->get();
 
 		$query = $query->getRow();
 
@@ -289,8 +287,8 @@ class CIDatabaseTestCase extends CIUnitTestCase
 			$table, $data
 		];
 
-	    $this->db->table($table)
-		         ->insert($data);
+		$this->db->table($table)
+				->insert($data);
 	}
 
 	//--------------------------------------------------------------------
@@ -308,13 +306,12 @@ class CIDatabaseTestCase extends CIUnitTestCase
 	 */
 	public function seeNumRecords(int $expected, string $table, array $where)
 	{
-	    $count = $this->db->table($table)
-		                  ->where($where)
-		                  ->countAllResults();
+		$count = $this->db->table($table)
+				->where($where)
+				->countAllResults();
 
 		$this->assertEquals($expected, $count, 'Wrong number of matching rows in database.');
 	}
 
 	//--------------------------------------------------------------------
-
 }

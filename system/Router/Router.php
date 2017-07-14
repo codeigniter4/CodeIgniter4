@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
+ * Copyright (c) 2014-2017 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,25 +29,28 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 3.0.0
  * @filesource
  */
-
 use CodeIgniter\PageNotFoundException;
 
 /**
  * Routing exception
  */
-class RedirectException extends \Exception {}
+class RedirectException extends \Exception
+{
+	
+}
 
 /**
  * Request router.
  */
 class Router implements RouterInterface
 {
+
 	/**
 	 * A RouteCollection instance.
 	 *
@@ -124,7 +127,7 @@ class Router implements RouterInterface
 		$this->collection = $routes;
 
 		$this->controller = $this->collection->getDefaultController();
-		$this->method     = $this->collection->getDefaultMethod();
+		$this->method = $this->collection->getDefaultMethod();
 	}
 
 	//--------------------------------------------------------------------
@@ -145,9 +148,7 @@ class Router implements RouterInterface
 		// everything runs off of it's default settings.
 		if (empty($uri))
 		{
-			return strpos($this->controller, '\\') === false
-				? $this->collection->getDefaultNamespace().$this->controller
-				: $this->controller;
+			return strpos($this->controller, '\\') === false ? $this->collection->getDefaultNamespace() . $this->controller : $this->controller;
 		}
 
 		if ($this->checkRoutes($uri))
@@ -208,7 +209,7 @@ class Router implements RouterInterface
 			$routeArray = explode('::', $route);
 
 			return [
-				$routeArray[0],             // Controller
+				$routeArray[0], // Controller
 				$routeArray[1] ?? 'index'   // Method
 			];
 		}
@@ -222,7 +223,6 @@ class Router implements RouterInterface
 	}
 
 	//--------------------------------------------------------------------
-
 
 	/**
 	 * Returns the binds that have been matched and collected
@@ -248,7 +248,7 @@ class Router implements RouterInterface
 	 */
 	public function directory(): string
 	{
-	    return ! empty($this->directory) ? $this->directory : '';
+		return ! empty($this->directory) ? $this->directory : '';
 	}
 
 	//--------------------------------------------------------------------
@@ -261,12 +261,10 @@ class Router implements RouterInterface
 	 */
 	public function getMatchedRoute()
 	{
-	    return $this->matchedRoute;
+		return $this->matchedRoute;
 	}
 
 	//--------------------------------------------------------------------
-
-
 
 	/**
 	 * Sets the value that should be used to match the index.php file. Defaults
@@ -297,7 +295,7 @@ class Router implements RouterInterface
 	 */
 	public function setTranslateURIDashes($val = false): self
 	{
-		$this->translateURIDashes = (bool)$val;
+		$this->translateURIDashes = (bool) $val;
 
 		return $this;
 	}
@@ -312,7 +310,7 @@ class Router implements RouterInterface
 	 */
 	public function hasLocale()
 	{
-	    return (bool)$this->detectedLocale;
+		return (bool) $this->detectedLocale;
 	}
 
 	//--------------------------------------------------------------------
@@ -324,7 +322,7 @@ class Router implements RouterInterface
 	 */
 	public function getLocale()
 	{
-	    return $this->detectedLocale;
+		return $this->detectedLocale;
 	}
 
 	//--------------------------------------------------------------------
@@ -363,7 +361,7 @@ class Router implements RouterInterface
 			}
 
 			// Does the RegEx match?
-			if (preg_match('#^'.$key.'$#', $uri, $matches))
+			if (preg_match('#^' . $key . '$#', $uri, $matches))
 			{
 				// Store our locale so CodeIgniter object can
 				// assign it to the Request.
@@ -393,18 +391,18 @@ class Router implements RouterInterface
 				}
 				// Are we using the default method for back-references?
 				else
-				{	
+				{
 					// Support resource route when function with subdirectory 
 					// ex: $routes->resource('Admin/Admins');
 					if (strpos($val, '$') !== false && strpos($key, '(') !== false && strpos($key, '/') !== false)
 					{
 						$replacekey = str_replace('/(.*)', '', $key);
-						$val = preg_replace('#^'.$key.'$#', $val, $uri);
-						$val = str_replace($replacekey, str_replace("/", "\\",$replacekey), $val);
+						$val = preg_replace('#^' . $key . '$#', $val, $uri);
+						$val = str_replace($replacekey, str_replace("/", "\\", $replacekey), $val);
 					}
 					elseif (strpos($val, '$') !== false && strpos($key, '(') !== false)
 					{
-						$val = preg_replace('#^'.$key.'$#', $val, $uri);
+						$val = preg_replace('#^' . $key . '$#', $val, $uri);
 					}
 					elseif (strpos($key, '/') !== false)
 					{
@@ -458,18 +456,18 @@ class Router implements RouterInterface
 		// Use the method name if it exists.
 		// If it doesn't, no biggie - the default method name
 		// has already been set.
-		if (! empty($segments))
+		if ( ! empty($segments))
 		{
 			$this->method = array_shift($segments);
 		}
 
-		if (! empty($segments))
+		if ( ! empty($segments))
 		{
 			$this->params = $segments;
 		}
 
 		// Load the file so that it's available for CodeIgniter.
-		$file = APPPATH.'Controllers/'.$this->directory.$this->controller.'.php';
+		$file = APPPATH . 'Controllers/' . $this->directory . $this->controller . '.php';
 		if (file_exists($file))
 		{
 			include_once $file;
@@ -479,7 +477,7 @@ class Router implements RouterInterface
 		// We have to check for a length over 1, since by default it will be '\'
 		if (strpos($this->controller, '\\') === false && strlen($this->collection->getDefaultNamespace()) > 1)
 		{
-			$this->controller = str_replace('/', '\\', $this->collection->getDefaultNamespace().$this->directory.$this->controller);
+			$this->controller = str_replace('/', '\\', $this->collection->getDefaultNamespace() . $this->directory . $this->controller);
 		}
 	}
 
@@ -494,21 +492,17 @@ class Router implements RouterInterface
 	 */
 	protected function validateRequest(array $segments)
 	{
-		$c                  = count($segments);
+		$c = count($segments);
 		$directory_override = isset($this->directory);
 
 		// Loop through our segments and return as soon as a controller
 		// is found or when such a directory doesn't exist
-		while ($c-- > 0)
+		while ($c -- > 0)
 		{
-			$test = $this->directory.ucfirst($this->translateURIDashes === true
-					? str_replace('-', '_', $segments[0])
-					: $segments[0]
-				);
+			$test = $this->directory . ucfirst($this->translateURIDashes === true ? str_replace('-', '_', $segments[0]) : $segments[0]
+			);
 
-			if ( ! file_exists(APPPATH.'Controllers/'.$test.'.php')
-			     && $directory_override === false
-			     && is_dir(APPPATH.'Controllers/'.$this->directory.ucfirst($segments[0]))
+			if ( ! file_exists(APPPATH . 'Controllers/' . $test . '.php') && $directory_override === false && is_dir(APPPATH . 'Controllers/' . $this->directory . ucfirst($segments[0]))
 			)
 			{
 				$this->setDirectory(array_shift($segments), true);
@@ -536,11 +530,11 @@ class Router implements RouterInterface
 
 		if ($append !== TRUE || empty($this->directory))
 		{
-			$this->directory = str_replace('.', '', trim($dir, '/')).'/';
+			$this->directory = str_replace('.', '', trim($dir, '/')) . '/';
 		}
 		else
 		{
-			$this->directory .= str_replace('.', '', trim($dir, '/')).'/';
+			$this->directory .= str_replace('.', '', trim($dir, '/')) . '/';
 		}
 	}
 
@@ -607,7 +601,7 @@ class Router implements RouterInterface
 			$this->method = 'index';
 		}
 
-		if (! file_exists(APPPATH.'Controllers/'.$this->directory.ucfirst($class).'.php'))
+		if ( ! file_exists(APPPATH . 'Controllers/' . $this->directory . ucfirst($class) . '.php'))
 		{
 			return;
 		}

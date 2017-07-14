@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
+ * Copyright (c) 2014-2017 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,15 +29,15 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 3.0.0
  * @filesource
  */
-
 class Entity
 {
+
 	/**
 	 * Maps names used in sets and gets against unique
 	 * names within the class, allowing independence from
@@ -65,7 +65,6 @@ class Entity
 		}
 	}
 
-
 	/**
 	 * Takes an array of key/value pairs and sets them as
 	 * class properties, using any `setCamelCasedProperty()` methods
@@ -77,7 +76,7 @@ class Entity
 	{
 		foreach ($data as $key => $value)
 		{
-			$method = 'set'.str_replace(' ', '', ucwords(str_replace(['-', '_'], ' ', $key)));
+			$method = 'set' . str_replace(' ', '', ucwords(str_replace(['-', '_'], ' ', $key)));
 
 			if (method_exists($this, $method))
 			{
@@ -111,7 +110,7 @@ class Entity
 		$key = $this->mapProperty($key);
 
 		// Convert to CamelCase for the method
-		$method = 'get'.str_replace(' ', '', ucwords(str_replace(['-', '_'], ' ', $key)));
+		$method = 'get' . str_replace(' ', '', ucwords(str_replace(['-', '_'], ' ', $key)));
 
 		// if a set* method exists for this key, 
 		// use that method to insert this value. 
@@ -122,10 +121,10 @@ class Entity
 
 		// Otherwise return the protected property
 		// if it exists.
-	    if (property_exists($this, $key))
-	    {
-	    	return $this->$key;
-	    }
+		if (property_exists($this, $key))
+		{
+			return $this->$key;
+		}
 	}
 
 	//--------------------------------------------------------------------
@@ -150,7 +149,7 @@ class Entity
 
 		// if a set* method exists for this key, 
 		// use that method to insert this value. 
-		$method = 'set'.str_replace(' ', '', ucwords(str_replace(['-', '_'], ' ', $key)));
+		$method = 'set' . str_replace(' ', '', ucwords(str_replace(['-', '_'], ' ', $key)));
 		if (method_exists($this, $method))
 		{
 			$this->$method($value);
@@ -178,7 +177,8 @@ class Entity
 	{
 		// If not actual property exists, get out
 		// before we confuse our data mapping.
-		if (! property_exists($this, $key)) return;
+		if ( ! property_exists($this, $key))
+			return;
 
 		$this->$key = null;
 
@@ -207,9 +207,7 @@ class Entity
 	{
 		// Ensure an actual property exists, otherwise
 		// we confuse the data mapping.
-		$value = property_exists($this, $key)
-			? $this->$key
-			: null;
+		$value = property_exists($this, $key) ? $this->$key : null;
 
 		return ! is_null($value);
 	}

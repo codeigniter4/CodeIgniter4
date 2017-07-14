@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
+ * Copyright (c) 2014-2017 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,13 +29,12 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 3.0.0
  * @filesource
  */
-
 use CodeIgniter\HTTP\RequestInterface;
 
 /**
@@ -43,6 +42,7 @@ use CodeIgniter\HTTP\RequestInterface;
  */
 class Security
 {
+
 	/**
 	 * CSRF Hash
 	 *
@@ -121,18 +121,18 @@ class Security
 		"'", '"', '&', '$', '#',
 		'{', '}', '[', ']', '=',
 		';', '?', '%20', '%22',
-		'%3c',      // <
-		'%253c',    // <
-		'%3e',      // >
-		'%0e',      // >
-		'%28',      // (
-		'%29',      // )
-		'%2528',    // (
-		'%26',      // &
-		'%24',      // $
-		'%3f',      // ?
-		'%3b',      // ;
-		'%3d'       // =
+		'%3c', // <
+		'%253c', // <
+		'%3e', // >
+		'%0e', // >
+		'%28', // (
+		'%29', // )
+		'%2528', // (
+		'%26', // &
+		'%24', // $
+		'%3f', // ?
+		'%3b', // ;
+		'%3d'	   // =
 	);
 
 	//--------------------------------------------------------------------
@@ -148,18 +148,18 @@ class Security
 	public function __construct($config)
 	{
 		// Store our CSRF-related settings
-		$this->CSRFExpire      = $config->CSRFExpire;
-		$this->CSRFTokenName   = $config->CSRFTokenName;
-		$this->CSRFCookieName  = $config->CSRFCookieName;
-		$this->CSRFRegenerate  = $config->CSRFRegenerate;
+		$this->CSRFExpire = $config->CSRFExpire;
+		$this->CSRFTokenName = $config->CSRFTokenName;
+		$this->CSRFCookieName = $config->CSRFCookieName;
+		$this->CSRFRegenerate = $config->CSRFRegenerate;
 
 		if (isset($config->cookiePrefix))
 		{
-			$this->CSRFCookieName = $config->cookiePrefix.$this->CSRFCookieName;
+			$this->CSRFCookieName = $config->cookiePrefix . $this->CSRFCookieName;
 		}
 
 		// Store cookie-related settings
-		$this->cookiePath   = $config->cookiePath;
+		$this->cookiePath = $config->cookiePath;
 		$this->cookieDomain = $config->cookieDomain;
 		$this->cookieSecure = $config->cookieSecure;
 
@@ -186,8 +186,7 @@ class Security
 		}
 
 		// Do the tokens exist in both the _POST and _COOKIE arrays?
-		if ( ! isset($_POST[$this->CSRFTokenName], $_COOKIE[$this->CSRFCookieName])
-		     || $_POST[$this->CSRFTokenName] !== $_COOKIE[$this->CSRFCookieName]
+		if ( ! isset($_POST[$this->CSRFTokenName], $_COOKIE[$this->CSRFCookieName]) || $_POST[$this->CSRFTokenName] !== $_COOKIE[$this->CSRFCookieName]
 		) // Do the tokens match?
 		{
 			throw new \LogicException('The action you requested is not allowed', 403);
@@ -222,8 +221,8 @@ class Security
 	 */
 	public function CSRFSetCookie(RequestInterface $request)
 	{
-		$expire        = time() + $this->CSRFExpire;
-		$secure_cookie = (bool)$this->cookieSecure;
+		$expire = time() + $this->CSRFExpire;
+		$secure_cookie = (bool) $this->cookieSecure;
 
 		if ($secure_cookie && ! $request->isSecure())
 		{
@@ -231,13 +230,7 @@ class Security
 		}
 
 		setcookie(
-			$this->CSRFCookieName,
-			$this->CSRFHash,
-			$expire,
-			$this->cookiePath,
-			$this->cookieDomain,
-			$secure_cookie,
-			true                // Enforce HTTP only cookie for security
+				$this->CSRFCookieName, $this->CSRFHash, $expire, $this->cookiePath, $this->cookieDomain, $secure_cookie, true				// Enforce HTTP only cookie for security
 		);
 
 		log_message('info', 'CSRF cookie sent');
@@ -284,14 +277,13 @@ class Security
 			// We don't necessarily want to regenerate it with
 			// each page load since a page could contain embedded
 			// sub-pages causing this feature to fail
-			if (isset($_COOKIE[$this->CSRFCookieName]) && is_string($_COOKIE[$this->CSRFCookieName])
-			    && preg_match('#^[0-9a-f]{32}$#iS', $_COOKIE[$this->CSRFCookieName]) === 1
+			if (isset($_COOKIE[$this->CSRFCookieName]) && is_string($_COOKIE[$this->CSRFCookieName]) && preg_match('#^[0-9a-f]{32}$#iS', $_COOKIE[$this->CSRFCookieName]) === 1
 			)
 			{
 				return $this->CSRFHash = $_COOKIE[$this->CSRFCookieName];
 			}
 
-			$rand           = random_bytes(16);
+			$rand = random_bytes(16);
 			$this->CSRFHash = bin2hex($rand);
 		}
 
@@ -332,12 +324,10 @@ class Security
 		{
 			$old = $str;
 			$str = str_replace($bad, '', $str);
-		}
-		while ($old !== $str);
+		} while ($old !== $str);
 
 		return stripslashes($str);
 	}
 
 	//--------------------------------------------------------------------
-
 }
