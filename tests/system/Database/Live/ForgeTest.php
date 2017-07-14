@@ -46,6 +46,9 @@ class ForgeTest extends \CIDatabaseTestCase
 	public function testForeignKey()
 	{
             
+                $this->forge->dropTable('forge_test_users_1', true);
+		$this->forge->dropTable('forge_test_invoices_1', true);
+                
 		$this->forge->addField([
 			'id'          => [
 				'type'           => 'INTEGER',
@@ -102,11 +105,11 @@ class ForgeTest extends \CIDatabaseTestCase
                 ];
                 $invoice2 = $this->db->table('forge_test_invoices_1')->insert($insertData);
                 
-                //var_dump($invoice1);
-                //var_dump($invoice2);
-		//$keys = $this->db->getIndexData('forge_test_1');
-		//$this->assertEquals($keys[0]->fields, ['id']);
-		//$this->assertEquals($keys[1]->fields, ['code', 'company']);
+                
+                $this->assertInstanceOf('CodeIgniter\Database\BaseResult', $invoice1);
+                
+                $this->assertFalse($invoice2);
+		
 
                 //$this->forge->dropTable('forge_test_users_1', true);
 		//$this->forge->dropTable('forge_test_invoices_1', true);
