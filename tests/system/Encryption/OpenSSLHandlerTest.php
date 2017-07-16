@@ -81,12 +81,32 @@ class OpenSSLHandlerTest extends CIUnitTestCase
 	/**
 	 * test with & without HMAC
 	 */
-	public function testAuthentication()
+	public function testWithAuthentication()
 	{
 		$params = [
 			'driver' => 'OpenSSL',
-			'hmac' => 'hmac',
-			'key'	 => '\xd0\xc9\x08\xc4\xde\x52\x12\x6e\xf8\xcc\xdb\x03\xea\xa0\x3a\x5c'			
+			'digest' => 'SHA512',
+			'key'	 => '\xd0\xc9\x08\xc4\xde\x52\x12\x6e\xf8\xcc\xdb\x03\xea\xa0\x3a\x5c'
+		];
+
+		$encrypter = $this->encryption->initialize($params);
+
+		// simple encrypt/decrypt, default parameters
+		$message = 'This is a plain-text message.';
+		$this->assertEquals($message, $encrypter->decrypt($encrypter->encrypt($message)));
+		$message = 'This is a different plain-text message.';
+		$this->assertEquals($message, $encrypter->decrypt($encrypter->encrypt($message)));
+	}
+
+	/**
+	 * test with & without HMAC
+	 */
+	public function testWithoutAuthentication()
+	{
+		$params = [
+			'driver' => 'OpenSSL',
+			'digest' => '',
+			'key'	 => '\xd0\xc9\x08\xc4\xde\x52\x12\x6e\xf8\xcc\xdb\x03\xea\xa0\x3a\x5c'
 		];
 
 		$encrypter = $this->encryption->initialize($params);
@@ -104,9 +124,9 @@ class OpenSSLHandlerTest extends CIUnitTestCase
 	public function testWithoutEncoding()
 	{
 		$params = [
-			'driver' => 'OpenSSL',
-			'base64' => 'none',
-			'key'	 => '\xd0\xc9\x08\xc4\xde\x52\x12\x6e\xf8\xcc\xdb\x03\xea\xa0\x3a\x5c'
+			'driver'	 => 'OpenSSL',
+			'encoding'	 => '',
+			'key'		 => '\xd0\xc9\x08\xc4\xde\x52\x12\x6e\xf8\xcc\xdb\x03\xea\xa0\x3a\x5c'
 		];
 
 		$encrypter = $this->encryption->initialize($params);
@@ -124,9 +144,9 @@ class OpenSSLHandlerTest extends CIUnitTestCase
 	public function testWithEncoding()
 	{
 		$params = [
-			'driver' => 'OpenSSL',
-			'base64' => 'base64',
-			'key'	 => '\xd0\xc9\x08\xc4\xde\x52\x12\x6e\xf8\xcc\xdb\x03\xea\xa0\x3a\x5c'
+			'driver'	 => 'OpenSSL',
+			'encoding'	 => 'base64',
+			'key'		 => '\xd0\xc9\x08\xc4\xde\x52\x12\x6e\xf8\xcc\xdb\x03\xea\xa0\x3a\x5c'
 		];
 
 		$encrypter = $this->encryption->initialize($params);
@@ -138,5 +158,24 @@ class OpenSSLHandlerTest extends CIUnitTestCase
 		$this->assertEquals($message, $encrypter->decrypt($encrypter->encrypt($message)));
 	}
 
+	/**
+	 * test with & without encoding
+	 */
+	public function testWithHexEncoding()
+	{
+		$params = [
+			'driver'	 => 'OpenSSL',
+			'encoding'	 => 'hex',
+			'key'		 => '\xd0\xc9\x08\xc4\xde\x52\x12\x6e\xf8\xcc\xdb\x03\xea\xa0\x3a\x5c'
+		];
+
+		$encrypter = $this->encryption->initialize($params);
+
+		// simple encrypt/decrypt, default parameters
+		$message = 'This is a plain-text message.';
+		$this->assertEquals($message, $encrypter->decrypt($encrypter->encrypt($message)));
+		$message = 'This is a different plain-text message.';
+		$this->assertEquals($message, $encrypter->decrypt($encrypter->encrypt($message)));
+	}
 
 }

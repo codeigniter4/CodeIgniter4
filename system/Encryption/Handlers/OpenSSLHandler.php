@@ -56,12 +56,6 @@ class OpenSSLHandler extends BaseHandler
 
 		if (empty($this->key))
 			throw new \CodeIgniter\Encryption\EncryptionException("OpenSSL handler configuration missing key.");
-		if (empty($this->hmac))
-			throw new \CodeIgniter\Encryption\EncryptionException("OpenSSL handler configuration missing HMAC control.");
-		if (empty($this->digest))
-			throw new \CodeIgniter\Encryption\EncryptionException("OpenSSL handler configuration missing HMAC digest.");
-		if (empty($this->base64))
-			throw new \CodeIgniter\Encryption\EncryptionException("OpenSSL handler configuration missing base64 control.");
 
 		$this->logger->info('OpenSSL handler initialized with cipher ' . $this->cipher . '.');
 	}
@@ -75,9 +69,9 @@ class OpenSSLHandler extends BaseHandler
 	public function encrypt($data)
 	{
 		// basic encryption	
-		$iv = ($iv_size = openssl_cipher_iv_length($this->cipher)) ? openssl_random_pseudo_bytes($iv_size) : null;
+		$iv = ($iv_size = \openssl_cipher_iv_length($this->cipher)) ? \openssl_random_pseudo_bytes($iv_size) : null;
 
-		$data = openssl_encrypt($data, $this->cipher, $this->secret, OPENSSL_RAW_DATA, $iv);
+		$data = \openssl_encrypt($data, $this->cipher, $this->secret, OPENSSL_RAW_DATA, $iv);
 
 		if ($data === false)
 			return false;
@@ -85,14 +79,17 @@ class OpenSSLHandler extends BaseHandler
 		$result = $iv . $data;
 
 		// HMAC?
-		if ($this->hmac == 'hmac')
+		if ( ! empty($this->digest))
 		{
-			$hmacKey = hash_hmac($this->digest, $result, $this->secret,true);
+			$hmacKey = \hash_hmac($this->digest, $result, $this->secret, true);
 			$result = $hmacKey . $result;
 		}
 
-		if ($this->base64 == 'base64')
-			$result = base64_encode($result);
+		if ( ! empty($this->encoding))
+			if ($this->encoding == 'base64')
+				$result = \base64_encode($result);
+			elseif ($this->encoding == 'hex')
+				$result = \bin2hex($result);
 
 		return $result;
 	}
@@ -107,21 +104,24 @@ class OpenSSLHandler extends BaseHandler
 	 */
 	public function decrypt($data)
 	{
-		if ($this->base64 == 'base64')
-			$data = base64_decode($data);
+		if ( ! empty($this->encoding))
+			if ($this->encoding == 'base64')
+				$data = \base64_decode($data);
+			elseif ($this->encoding == 'hex')
+				$data = \hex2bin($data);
 
 		// HMAC?
-		if ($this->hmac == 'hmac')
+		if ( ! empty($this->digest))
 		{
-			$hmacLength = self::substr($this->digest,3) / 8;
-			$hmacKey = self::substr($data,0,$hmacLength);
-			$data = self::substr($data,$hmacLength);
-			$hmacCalc = hash_hmac($this->digest, $data, $this->secret,true);
+			$hmacLength = self::substr($this->digest, 3) / 8;
+			$hmacKey = self::substr($data, 0, $hmacLength);
+			$data = self::substr($data, $hmacLength);
+			$hmacCalc = \hash_hmac($this->digest, $data, $this->secret, true);
 			if ($hmacKey != $hmacCalc)
 				throw new \CodeIgniter\Encryption\EncryptionException("Message authentication failed.");
 		}
-		
-		if ($iv_size = openssl_cipher_iv_length($this->cipher))
+
+		if ($iv_size = \openssl_cipher_iv_length($this->cipher))
 		{
 			$iv = self::substr($data, 0, $iv_size);
 			$data = self::substr($data, $iv_size);
@@ -131,7 +131,7 @@ class OpenSSLHandler extends BaseHandler
 			$iv = null;
 		}
 
-		return openssl_decrypt($data, $this->cipher, $this->secret, OPENSSL_RAW_DATA, $iv);
+		return \openssl_decrypt($data, $this->cipher, $this->secret, OPENSSL_RAW_DATA, $iv);
 	}
 
 }

@@ -80,14 +80,13 @@ class Encryption
 	 * Our default configuration
 	 */
 	protected $default = [
-		'driver' => 'OpenSSL', // The PHP extension we plan to use
-		'key'	 => '', // no starting key material
-		'cipher' => 'AES-256-CBC', // Encryption cipher
-		'hmac'	 => 'HMAC', // Use HMAC message authentication (true/false)
-		'digest' => 'SHA512', // HMAC digest algorithm to use
-		'base64' => 'base64', // Base64 encoding?
+		'driver'	 => 'OpenSSL', // The PHP extension we plan to use
+		'key'		 => '', // no starting key material
+		'cipher'	 => 'AES-256-CBC', // Encryption cipher
+		'digest'	 => 'SHA512', // HMAC digest algorithm to use
+		'encoding'	 => 'base64', // Base64 encoding
 	];
-	protected $driver, $key, $cipher, $hmac, $digest, $base64;
+	protected $driver, $key, $cipher, $digest, $base64;
 
 	/**
 	 * Map of drivers to handler classes, in preference order
@@ -111,6 +110,11 @@ class Encryption
 		'SHA384' => 48,
 		'SHA512' => 64
 	];
+
+	/**
+	 * List of acceptable encodings
+	 */
+	protected $encodings = ['base64', 'hex'];
 
 	// --------------------------------------------------------------------
 
@@ -169,11 +173,17 @@ class Encryption
 			throw new EncryptionException("Driver '" . $params['driver'] . "' is not available.");
 
 		// Check for a bad digest
-		if ( ! isset($this->digests[$params['digest']]))
-			throw new EncryptionException("Unknown digest '" . $params['digest'] . "' specified.");
+		if ( ! empty($params['digest']))
+			if ( ! isset($this->digests[$params['digest']]))
+				throw new EncryptionException("Unknown digest '" . $params['digest'] . "' specified.");
+
+		// Check for valid encoding
+		if (!empty($param['encoding']))
+			if (! in_array($params['encoding'],$this->encodings))
+				throw new EncryptionException("Unknown encoding '" . $params['encoding'] . "' specified.");
 
 		// Derive a secret key for the encrypter
-		$params['secret'] = bin2hex(hash_hkdf($this->digest, $params['key']));
+		$params['secret'] = bin2hex(\hash_hkdf($this->digest, $params['key']));
 
 		$handlerName = 'CodeIgniter\\Encryption\\Handlers\\' . $this->driver . 'Handler';
 		$this->encrypter = new $handlerName($params);
@@ -225,7 +235,7 @@ class Encryption
 	 */
 	public static function createKey($length = 32)
 	{
-		return openssl_random_pseudo_bytes($length);
+		return \openssl_random_pseudo_bytes($length);
 	}
 
 	// --------------------------------------------------------------------
@@ -238,7 +248,7 @@ class Encryption
 	 */
 	public function __get($key)
 	{
-		if (in_array($key, ['config', 'cipher', 'key', 'driver', 'drivers', 'digest', 'digests', 'default', 'hmac', 'base64'], true))
+		if (in_array($key, ['config', 'cipher', 'key', 'driver', 'drivers', 'digest', 'digests', 'default', 'encoding'], true))
 		{
 			return $this->{$key};
 		}

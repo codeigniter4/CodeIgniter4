@@ -171,9 +171,7 @@ OpenSSL Notes
 -------------
 
 As noted above, the encryption drivers support different sets of encryption
-ciphers. We do recommend that you use driver-specific settings.
-
-The following are supported by OpenSSL:
+ciphers. The following examples are supported by OpenSSL:
 
 ============== ============================== =========================================
 Cipher name    Key lengths (bits / bytes)     Supported modes
@@ -228,12 +226,11 @@ Not all settings are supported by all of the drivers
 ======== ===============================================
 Option   Possible values (default in parentheses)
 ======== ===============================================
-driver   Preferred handler (**OpenSSL**)
+driver   Preferred handler (OpenSSL)
 cipher   Cipher name (AES-256-CBC); see :ref:`ciphers-and-modes`)
 key      Encryption key starter
-hmac     Use message authentication (**HMAC**, none)
 digest   Which HMAC digest algorithm to use (SHA512)
-base64   Base64-encode/decode results? (**base64**, raw)
+encoding The encoding to apply to encrypted results (base64)
 ======== ===============================================
 
 You can over-ride any of those settings by passing your own ``Config`` object,
@@ -242,6 +239,23 @@ or an associative array of parameters, or even just the driver name, to the Serv
     $encrypter = \Config\Services::encrypter($params);
 
 These will replace any same-named settings in ``Config\Encryption``.
+
+.. _digests:
+
+Supported HMAC authentication algorithms
+----------------------------------------
+
+For HMAC message authentication, the Encryption library supports
+usage of the SHA-2 family of algorithms:
+
+=========== ==================== ============================
+Algorithm   Raw length (bytes)   Hex-encoded length (bytes)
+=========== ==================== ============================
+sha512      64                   128
+sha384      48                   96
+sha256      32                   64
+sha224      28                   56
+=========== ==================== ============================
 
 Using the Encryption manager directly
 =====================================
@@ -324,24 +338,6 @@ You don't need to worry about it.
 .. _custom-parameters:
 
 
-.. _digests:
-
-Supported HMAC authentication algorithms
-----------------------------------------
-
-For HMAC message authentication, the Encryption library supports
-usage of the SHA-2 family of algorithms:
-
-=========== ==================== ============================
-Algorithm   Raw length (bytes)   Hex-encoded length (bytes)
-=========== ==================== ============================
-sha512      64                   128
-sha384      48                   96
-sha256      32                   64
-sha224      28                   56
-=========== ==================== ============================
-
-
 ***************
 Class Reference
 ***************
@@ -363,6 +359,7 @@ Class Reference
 		:param	array	$params: Configuration parameters
 		:returns:	CodeIgniter\\Encryption\\EncrypterInterface instance (for method chaining)
 		:rtype:	CodeIgniter\\Encryption\\EncrypterInterface
+		:throws:	CodeIgniter\\Encryption\\EncryptionException
 
 		Initializes (configures) the library to use different settings.
 
@@ -391,6 +388,7 @@ Class Reference
 		:param	string	$data: Data to decrypt
 		:returns:	Decrypted data or FALSE on failure
 		:rtype:	string
+		:throws:	CodeIgniter\\Encryption\\EncryptionException
 
 		Decrypts the input data and returns it in plain-text.
 

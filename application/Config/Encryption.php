@@ -30,8 +30,8 @@ class Encryption extends BaseConfig
 	  | Encryption driver to use
 	  |--------------------------------------------------------------------------
 	  |
-	  | One of the supported drivers, eg 'openssl' or 'mcrypt'.
-	  | The default driver, if you don't specify one, is 'openssl'.
+	  | One of the supported drivers, eg 'OpenSSL' or 'Sodium'.
+	  | The default driver, if you don't specify one, is 'OpenSSL'.
 	 */
 	public $driver = 'OpenSSL';
 
@@ -40,35 +40,30 @@ class Encryption extends BaseConfig
 	  | Encryption Cipher
 	  |--------------------------------------------------------------------------
 	  |
-	  | Name of the encryption cipher to use, eg 'aes-256' or 'blowfish'
+	  | Name of the encryption cipher to use, eg 'aes-256' or 'blowfish'.
+	  | The cipher must be supported by your designated driver.
 	 */
 	public $cipher = 'AES-256-CBC';
 
 	/*
 	  |--------------------------------------------------------------------------
-	  | Authentication
+	  | Authentication digest
 	  |--------------------------------------------------------------------------
 	  |
-	  | Use HMAC message authentication (true/false)
-	 */
-	public $hmac = 'HMAC';
-
-	/*
-	  |--------------------------------------------------------------------------
-	  | HMAC digest
-	  |--------------------------------------------------------------------------
-	  |
-	  | HMAC digest algorithm to use
+	  | HMAC digest algorithm to use, empty for none.
+	  | Values: SHA512, SHA384, SHA256, or SHA224.
 	 */
 	public $digest = 'SHA512';
 
 	/*
 	  |--------------------------------------------------------------------------
-	  | Base64 encoding?
+	  | Result encoding
 	  |--------------------------------------------------------------------------
 	  |
-	  | If true, base64 encode results, and expect base64-encoded ciphertext.
+	  | Which, if any, encoding to apply to encrypted results and to assume
+	  | provided ciphertext.
+	  | Values; empty (for no encoding), base64 or hex.
 	 */
-	public $base64 = 'base64';
+	public $encoding = 'base64';
 
 }

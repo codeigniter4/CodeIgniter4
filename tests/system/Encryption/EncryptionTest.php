@@ -84,12 +84,11 @@ class EncryptionTest extends CIUnitTestCase
 		// make sure we can over-ride any parameter
 		// change the driver once we have more than 1
 		$expected = [
-			'driver' => 'OpenSSL', // The PHP extension we plan to use
-			'key'	 => 'Top banana', // no starting key material
-			'cipher' => 'AES-128-CBC', // Encryption cipher
-			'hmac'	 => false, // Use HMAC message authentication (true/false)
-			'digest' => 'SHA128', // HMAC digest algorithm to use
-			'base64' => false, // Base64 encoding?
+			'driver'	 => 'OpenSSL', // The PHP extension we plan to use
+			'key'		 => 'Top banana', // no starting key material
+			'cipher'	 => 'AES-128-CBC', // Encryption cipher
+			'digest'	 => '', // HMAC digest algorithm to use
+			'encoding'	 => '', // Base64 encoding?
 		];
 		$this->encrypt = new \CodeIgniter\Encryption\Encryption($expected);
 		foreach ($expected as $key => $value)
@@ -115,12 +114,11 @@ class EncryptionTest extends CIUnitTestCase
 		// make sure we can over-ride any parameter
 		// change the driver once we have more than 1
 		$expected = [
-			'driver' => 'OpenSSL', // The PHP extension we plan to use
-			'key'	 => 'Top banana', // no starting key material
-			'cipher' => 'AES-256-CBC', // Encryption cipher
-			'hmac'	 => 'HMAC', // Use HMAC message authentication (true/false)
-			'digest' => 'SHA512', // HMAC digest algorithm to use
-			'base64' => 'base64', // Base64 encoding?
+			'driver'	 => 'OpenSSL', // The PHP extension we plan to use
+			'key'		 => 'Top banana', // no starting key material
+			'cipher'	 => 'AES-256-CBC', // Encryption cipher
+			'digest'	 => 'SHA512', // HMAC digest algorithm to use
+			'encoding'	 => 'base64', // Base64 encoding?
 		];
 		$this->encrypt = $this->encryption->initialize($expected);
 		foreach ($expected as $key => $value)
