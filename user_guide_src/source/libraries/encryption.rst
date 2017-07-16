@@ -228,12 +228,12 @@ Not all settings are supported by all of the drivers
 ======== ===============================================
 Option   Possible values (default in parentheses)
 ======== ===============================================
-driver   Preferred handler (OpenSSL)
+driver   Preferred handler (**OpenSSL**)
 cipher   Cipher name (AES-256-CBC); see :ref:`ciphers-and-modes`)
 key      Encryption key starter
-hmac     Use message authentication (true)
+hmac     Use message authentication (**HMAC**, none)
 digest   Which HMAC digest algorithm to use (SHA512)
-base64   Base64-encode/decode results? (true)
+base64   Base64-encode/decode results? (**base64**, raw)
 ======== ===============================================
 
 You can over-ride any of those settings by passing your own ``Config`` object,

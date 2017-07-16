@@ -47,25 +47,11 @@ abstract class BaseHandler implements \CodeIgniter\Encryption\EncrypterInterface
 	use LoggerAwareTrait;
 
 	/**
-	 * Encryption cipher
+	 * Configuraiton passed from encryption manager
 	 *
 	 * @var	string
 	 */
-	protected $cipher = 'aes-256-cbc';
-
-	/**
-	 * Cipher handler
-	 *
-	 * @var	mixed
-	 */
-	protected $handler;
-
-	/**
-	 * Encryption key (starting point, anyway)
-	 *
-	 * @var	string
-	 */
-	protected $key;
+	protected $config;
 
 	/**
 	 * Derived secret key
@@ -75,26 +61,11 @@ abstract class BaseHandler implements \CodeIgniter\Encryption\EncrypterInterface
 	protected $secret;
 
 	/**
-	 * Derived HMAC digest
+	 * Derived HMAC digest key
 	 *
 	 * @var	string
 	 */
-	protected $digest;
-
-	
-	/**
-	 * List of supported HMAC algorithms
-	 *
-	 * name => digest size pairs
-	 *
-	 * @var	array
-	 */
-	protected $digests = [
-		'sha224' => 28,
-		'sha256' => 32,
-		'sha384' => 48,
-		'sha512' => 64
-	];
+	protected $hmacKey;
 
 	/**
 	 * Logger instance to record error messages and warnings.
@@ -106,86 +77,20 @@ abstract class BaseHandler implements \CodeIgniter\Encryption\EncrypterInterface
 
 	/**
 	 * Constructor
-	 * @param BaseConfig $config
+	 * @param array $config
 	 */
-	public function __construct($config = null)
+	public function __construct($config = [])
 	{
 		$this->logger = \Config\Services::logger(true);
 
 		if (empty($config))
-			$config = new \Config\Encryption();
+			throw new EncryptionException("Encryption handler needs configuration parameters.");
 		$this->config = $config;
 
-		$params = (array) $this->config;
-
-		if ( ! isset($this->key) && self::strlen($key = $this->config->key) > 0)
-			$this->key = $key;
-
-		$this->logger->info('Encryption handler Initialized');
-	}
-
-// --------------------------------------------------------------------
-
-	/**
-	 * Get params, for testing
-	 *
-	 * @param	array	$params	Input parameters
-	 * @return	mixed	associative array of parameters if ok, else false
-	 */
-	public function getParams($params)
-	{
-		//FIXME
-		// if no parameters were provided, but we have viable settings already,
-		// tell them what we have
-		if (empty($params))
-		{
-			return isset($this->cipher, $this->key) ? [
-				'driver'		 => $this->driver,
-				'cipher'		 => $this->cipher,
-				'key'			 => null,
-				'digest'	 => 'sha512',
-				'hmac'		 => true
-					] : false;
-		}
-
-		// if the HMAC parameter is false, zap the HMAC digest & key
-		if (isset($params['hmac']) && $params['hmac'] === false)
-		{
-			$params['hmacDigest'] = $params['hmacKey'] = null;
-		}
-		else
-		{
-			// make sure we have an HMAC key. WHY?
-			if ( ! isset($params['hmacKey']))
-			{
-				return false;
-			}
-			// make sure that the digest is supported
-			elseif (isset($params['hmacDigest']))
-			{
-				$params['hmacDigest'] = strtolower($params['hmacDigest']);
-				if ( ! isset($this->digests[$params['hmacDigest']]))
-				{
-					return false;
-				}
-			}
-			else
-			{
-				// or else set the default digest
-				$params['hmacDigest'] = 'sha512';
-			}
-		}
-
-		// build the complete set of parameters we ended up with
-		$params = [
-			'driver'		 => null,
-			'cipher'		 => $params['cipher'],
-			'key'			 => $params['key'],
-			'hmacDigest'	 => $params['hmacDigest'],
-			'hmacKey'		 => $params['hmacKey']
-		];
-
-		return $params;
+		// make the parameters conveniently accessible
+		foreach ($this->config as $pkey => $value)
+			$this->$pkey = $value;
+		
 	}
 
 // --------------------------------------------------------------------
@@ -225,13 +130,7 @@ abstract class BaseHandler implements \CodeIgniter\Encryption\EncrypterInterface
 	public function __get($key)
 	{
 		//FIXME
-		// Because aliases
-		if (($key === 'mode') && isset($this->modes[$this->handler]))
-		{
-			return array_search($this->mode, $this->modes[$this->handler], true);
-		}
-
-		if (in_array($key, ['cipher', 'key', 'handler', 'handlers', 'digests'], true))
+		if (in_array($key, ['cipher', 'key', 'hmac', 'digest', 'base64'], true))
 		{
 			return $this->{$key};
 		}

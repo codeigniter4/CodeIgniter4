@@ -45,70 +45,82 @@ class OpenSSLHandler extends BaseHandler
 	 * @param	array	$params	Configuration parameters
 	 * @return	void
 	 */
-	public function __construct($params = null)
+	public function __construct($params = [])
 	{
-		parent::__construct();
+		parent::__construct($params);
 
-		if ( ! empty($params['cipher']))
-		{
-			$params['cipher'] = strtolower($params['cipher']);
-			$this->cipher = $params['cipher'];
-		}
+		if (empty($this->cipher))
+			throw new \CodeIgniter\Encryption\EncryptionException("OpenSSL handler configuration missing cipher.");
+		if ( ! in_array($this->cipher, openssl_get_cipher_methods(), true))
+			throw new \CodeIgniter\Encryption\EncryptionException("OpenSSL handler does not support the " . $this->cipher . " cipher.");
 
-		if ( ! empty($params['key']))
-		{
-			$this->key = $params['key'];
-		}
+		if (empty($this->key))
+			throw new \CodeIgniter\Encryption\EncryptionException("OpenSSL handler configuration missing key.");
+		if (empty($this->hmac))
+			throw new \CodeIgniter\Encryption\EncryptionException("OpenSSL handler configuration missing HMAC control.");
+		if (empty($this->digest))
+			throw new \CodeIgniter\Encryption\EncryptionException("OpenSSL handler configuration missing HMAC digest.");
+		if (empty($this->base64))
+			throw new \CodeIgniter\Encryption\EncryptionException("OpenSSL handler configuration missing base64 control.");
 
-		if (isset($this->cipher))
-		{
-			if ( ! in_array($this->cipher, openssl_get_cipher_methods(), true))
-			{
-				$this->logger->error('Encryption: Unable to initialize OpenSSL with cipher ' . $this->cipher . '.');
-				$this->cipher = null;
-			}
-			else
-			{
-				$this->logger->info('Encryption: OpenSSL initialized with cipher ' . $this->cipher . '.');
-			}
-		}
-
-		$this->secret = hash_hkdf($this->cipher, $this->key);
+		$this->logger->info('OpenSSL handler initialized with cipher ' . $this->cipher . '.');
 	}
 
 	/**
-	 * Encrypt
+	 * Encrypt plaintext, with optional HMAC and base64 encoding
 	 *
 	 * @param	string	$data	Input data
 	 * @return	string
 	 */
 	public function encrypt($data)
 	{
-		$iv = ($iv_size = openssl_cipher_iv_length($this->cipher)) ? $this->createKey($iv_size) : null;
+		// basic encryption	
+		$iv = ($iv_size = openssl_cipher_iv_length($this->cipher)) ? openssl_random_pseudo_bytes($iv_size) : null;
 
-		$data = openssl_encrypt(
-				$data, $this->cipher, $this->secret, OPENSSL_RAW_DATA, $iv
-		);
+		$data = openssl_encrypt($data, $this->cipher, $this->secret, OPENSSL_RAW_DATA, $iv);
 
 		if ($data === false)
-		{
 			return false;
+
+		$result = $iv . $data;
+
+		// HMAC?
+		if ($this->hmac == 'hmac')
+		{
+			$hmacKey = hash_hmac($this->digest, $result, $this->secret,true);
+			$result = $hmacKey . $result;
 		}
 
-		return $iv . $data;
+		if ($this->base64 == 'base64')
+			$result = base64_encode($result);
+
+		return $result;
 	}
 
 	// --------------------------------------------------------------------
 
 	/**
-	 * Decrypt
+	 * Decrypt ciphertext, with optional HMAC and base64 encoding
 	 *
 	 * @param	string	$data	Encrypted data
 	 * @return	string
 	 */
 	public function decrypt($data)
 	{
+		if ($this->base64 == 'base64')
+			$data = base64_decode($data);
 
+		// HMAC?
+		if ($this->hmac == 'hmac')
+		{
+			$hmacLength = self::substr($this->digest,3) / 8;
+			$hmacKey = self::substr($data,0,$hmacLength);
+			$data = self::substr($data,$hmacLength);
+			$hmacCalc = hash_hmac($this->digest, $data, $this->secret,true);
+			if ($hmacKey != $hmacCalc)
+				throw new \CodeIgniter\Encryption\EncryptionException("Message authentication failed.");
+		}
+		
 		if ($iv_size = openssl_cipher_iv_length($this->cipher))
 		{
 			$iv = self::substr($data, 0, $iv_size);

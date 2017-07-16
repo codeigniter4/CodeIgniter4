@@ -83,9 +83,9 @@ class Encryption
 		'driver' => 'OpenSSL', // The PHP extension we plan to use
 		'key'	 => '', // no starting key material
 		'cipher' => 'AES-256-CBC', // Encryption cipher
-		'hmac'	 => true, // Use HMAC message authentication (true/false)
+		'hmac'	 => 'HMAC', // Use HMAC message authentication (true/false)
 		'digest' => 'SHA512', // HMAC digest algorithm to use
-		'base64' => true, // Base64 encoding?
+		'base64' => 'base64', // Base64 encoding?
 	];
 	protected $driver, $key, $cipher, $hmac, $digest, $base64;
 
@@ -152,7 +152,7 @@ class Encryption
 	 * 
 	 * @throws \CodeIgniter\Encryption\EncryptionException
 	 */
-	public function initialize(array $params = null)
+	public function initialize(array $params = [])
 	{
 		$params = $this->properParams($params);
 
@@ -171,6 +171,9 @@ class Encryption
 		// Check for a bad digest
 		if ( ! isset($this->digests[$params['digest']]))
 			throw new EncryptionException("Unknown digest '" . $params['digest'] . "' specified.");
+
+		// Derive a secret key for the encrypter
+		$params['secret'] = bin2hex(hash_hkdf($this->digest, $params['key']));
 
 		$handlerName = 'CodeIgniter\\Encryption\\Handlers\\' . $this->driver . 'Handler';
 		$this->encrypter = new $handlerName($params);

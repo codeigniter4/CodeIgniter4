@@ -51,7 +51,7 @@ class Encryption extends BaseConfig
 	  |
 	  | Use HMAC message authentication (true/false)
 	 */
-	public $hmac = true;
+	public $hmac = 'HMAC';
 
 	/*
 	  |--------------------------------------------------------------------------
@@ -69,6 +69,6 @@ class Encryption extends BaseConfig
 	  |
 	  | If true, base64 encode results, and expect base64-encoded ciphertext.
 	 */
-	public $base64 = true;
+	public $base64 = 'base64';
 
 }
