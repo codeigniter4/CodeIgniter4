@@ -178,12 +178,13 @@ class Encryption
 				throw new EncryptionException("Unknown digest '" . $params['digest'] . "' specified.");
 
 		// Check for valid encoding
-		if (!empty($param['encoding']))
-			if (! in_array($params['encoding'],$this->encodings))
+		if ( ! empty($param['encoding']))
+			if ( ! in_array($params['encoding'], $this->encodings))
 				throw new EncryptionException("Unknown encoding '" . $params['encoding'] . "' specified.");
 
 		// Derive a secret key for the encrypter
-		$params['secret'] = bin2hex(\hash_hkdf($this->digest, $params['key']));
+		$hmacKey = strcmp(phpversion(), '7.1.2') >= 0 ? \hash_hkdf($this->digest, $params['key']) : $this->hkdf($params['key'], $this->digest);
+		$params['secret'] = bin2hex($hmacKey);
 
 		$handlerName = 'CodeIgniter\\Encryption\\Handlers\\' . $this->driver . 'Handler';
 		$this->encrypter = new $handlerName($params);
@@ -267,6 +268,50 @@ class Encryption
 	protected static function strlen($str)
 	{
 		return mb_strlen($str, '8bit');
+	}
+
+	// --------------------------------------------------------------------
+
+	/**
+	 * HKDF legacy implementation, from CodeIgniter3.
+	 * 
+	 * Fallback if PHP version < 7.1.2
+	 *
+	 * @link	https://tools.ietf.org/rfc/rfc5869.txt
+	 * @param	$key	Input key
+	 * @param	$digest	A SHA-2 hashing algorithm
+	 * @param	$salt	Optional salt
+	 * @param	$length	Output length (defaults to the selected digest size)
+	 * @param	$info	Optional context/application-specific info
+	 * @return	string	A pseudo-random key
+	 */
+	public function hkdf($key, $digest = 'sha512', $salt = null, $length = null, $info = '')
+	{
+		if ( ! isset($this->digests[$digest]))
+		{
+			return false;
+		}
+
+		if (empty($length) OR ! is_int($length))
+		{
+			$length = $this->digests[$digest];
+		}
+		elseif ($length > (255 * $this->digests[$digest]))
+		{
+			return false;
+		}
+
+		self::strlen($salt) OR $salt = str_repeat("\0", $this->digests[$digest]);
+
+		$prk = hash_hmac($digest, $key, $salt, true);
+		$key = '';
+		for ($key_block = '', $block_index = 1; self::strlen($key) < $length; $block_index ++ )
+		{
+			$key_block = hash_hmac($digest, $key_block . $info . chr($block_index), $prk, true);
+			$key .= $key_block;
+		}
+
+		return self::substr($key, 0, $length);
 	}
 
 }
