@@ -1117,10 +1117,7 @@ class RouteCollection implements RouteCollectionInterface
 			$from = trim($from, '/');
 		}
 
-		if (is_null($options))
-		{
-			$options = $this->currentOptions;
-		}
+		$options = array_merge((array)$this->currentOptions, (array)$options);
 
 		// Hostname limiting?
 		if (isset($options['hostname']) && ! empty($options['hostname']))
