@@ -178,8 +178,8 @@ class OpenSSLHandlerTest extends CIUnitTestCase
 	 * Testing the three methods separately is not realistic as they are
 	 * designed to work together. 
 	 *
-	 * @depends	test_hkdf
-	 * @depends	test__get_params
+	 * @depends	testHkdf
+	 * @depends	testGetParams
 	 */
 	public function testInitializeEncryptDecrypt()
 	{
