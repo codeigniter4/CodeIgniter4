@@ -305,13 +305,28 @@ class Encryption
 
 		$prk = hash_hmac($digest, $key, $salt, true);
 		$key = '';
-		for ($key_block = '', $block_index = 1; self::strlen($key) < $length; $block_index ++ )
+		for ($key_block = '', $block_index = 1; self::strlen($key) < $length; $block_index ++)
 		{
 			$key_block = hash_hmac($digest, $key_block . $info . chr($block_index), $prk, true);
 			$key .= $key_block;
 		}
 
 		return self::substr($key, 0, $length);
+	}
+
+	// --------------------------------------------------------------------
+
+	/**
+	 * Byte-safe substr()
+	 *
+	 * @param	string	$str
+	 * @param	int	$start
+	 * @param	int	$length
+	 * @return	string
+	 */
+	protected static function substr($str, $start, $length = null)
+	{
+		return mb_substr($str, $start, $length, '8bit');
 	}
 
 }
