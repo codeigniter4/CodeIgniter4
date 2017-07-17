@@ -1,7 +1,43 @@
 <?php namespace CodeIgniter\I18n;
 
+/**
+ * CodeIgniter
+ *
+ * An open source application development framework for PHP
+ *
+ * This content is released under the MIT License (MIT)
+ *
+ * Copyright (c) 2014-2017 British Columbia Institute of Technology
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ *
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT    MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
+ * @filesource
+ */
 use Locale;
 use DateTime;
+use DateInterval;
 use DateTimeZone;
 use IntlDateFormatter;
 
@@ -17,6 +53,7 @@ use IntlDateFormatter;
  */
 class Time extends DateTime
 {
+
 	/**
 	 * @var string
 	 */
@@ -49,7 +86,7 @@ class Time extends DateTime
 	// Constructors
 	//--------------------------------------------------------------------
 
-	public function __construct(string $time=null, $timezone=null, string $locale=null)
+	public function __construct(string $time = null, $timezone = null, string $locale = null)
 	{
 		// If no locale was provided, grab it from Locale (set by IncomingRequest for web requests)
 		$this->locale = ! empty($locale) ? $locale : Locale::getDefault();
@@ -68,7 +105,7 @@ class Time extends DateTime
 		$timezone = ! empty($timezone) ? $timezone : date_default_timezone_get();
 		$this->timezone = $timezone instanceof DateTimeZone ? $timezone : new DateTimeZone($timezone);
 
-		if (! empty($time))
+		if ( ! empty($time))
 		{
 			// If the time string was a relative string (i.e. 'next Tuesday')
 			// then we need to adjust the time going in so that we have a current
@@ -95,7 +132,7 @@ class Time extends DateTime
 	 *
 	 * @return \CodeIgniter\I18n\Time
 	 */
-	public static function now($timezone=null, string $locale=null)
+	public static function now($timezone = null, string $locale = null)
 	{
 		return new Time(null, $timezone, $locale);
 	}
@@ -114,7 +151,7 @@ class Time extends DateTime
 	 *
 	 * @return \CodeIgniter\I18n\Time
 	 */
-	public static function parse(string $datetime, $timezone=null, string $locale=null)
+	public static function parse(string $datetime, $timezone = null, string $locale = null)
 	{
 		return new Time($datetime, $timezone, $locale);
 	}
@@ -129,7 +166,7 @@ class Time extends DateTime
 	 *
 	 * @return \CodeIgniter\I18n\Time
 	 */
-	public static function today($timezone=null, string $locale=null)
+	public static function today($timezone = null, string $locale = null)
 	{
 		return new Time(date('Y-m-d 00:00:00'), $timezone, $locale);
 	}
@@ -144,7 +181,7 @@ class Time extends DateTime
 	 *
 	 * @return \CodeIgniter\I18n\Time
 	 */
-	public static function yesterday($timezone=null, string $locale=null)
+	public static function yesterday($timezone = null, string $locale = null)
 	{
 		return new Time(date('Y-m-d 00:00:00', strtotime('-1 day')), $timezone, $locale);
 	}
@@ -159,7 +196,7 @@ class Time extends DateTime
 	 *
 	 * @return \CodeIgniter\I18n\Time
 	 */
-	public static function tomorrow($timezone=null, string $locale=null)
+	public static function tomorrow($timezone = null, string $locale = null)
 	{
 		return new Time(date('Y-m-d 00:00:00', strtotime('+1 day')), $timezone, $locale);
 	}
@@ -178,7 +215,7 @@ class Time extends DateTime
 	 *
 	 * @return \CodeIgniter\I18n\Time
 	 */
-	public static function createFromDate(int $year=null, int $month=null, int $day=null, $timezone=null, string $locale=null)
+	public static function createFromDate(int $year = null, int $month = null, int $day = null, $timezone = null, string $locale = null)
 	{
 		return static::create($year, $month, $day, null, null, null, $timezone, $locale);
 	}
@@ -196,7 +233,7 @@ class Time extends DateTime
 	 *
 	 * @return \CodeIgniter\I18n\Time
 	 */
-	public static function createFromTime(int $hour=null, int $minutes=null, int $seconds=null, $timezone=null, string $locale=null)
+	public static function createFromTime(int $hour = null, int $minutes = null, int $seconds = null, $timezone = null, string $locale = null)
 	{
 		return static::create(null, null, null, $hour, $minutes, $seconds, $timezone, $locale);
 	}
@@ -217,12 +254,12 @@ class Time extends DateTime
 	 *
 	 * @return \CodeIgniter\I18n\Time
 	 */
-	public static function create(int $year=null, int $month=null, int $day=null, int $hour=null, int $minutes=null, int $seconds=null, $timezone=null, string $locale=null)
+	public static function create(int $year = null, int $month = null, int $day = null, int $hour = null, int $minutes = null, int $seconds = null, $timezone = null, string $locale = null)
 	{
-		$year  = is_null($year)  ? date('Y') : $year;
+		$year = is_null($year) ? date('Y') : $year;
 		$month = is_null($month) ? date('m') : $month;
-		$day   = is_null($day)   ? date('d') : $day;
-		$hour    = empty($hour)    ? 0 : $hour;
+		$day = is_null($day) ? date('d') : $day;
+		$hour = empty($hour) ? 0 : $hour;
 		$minutes = empty($minutes) ? 0 : $minutes;
 		$seconds = empty($seconds) ? 0 : $seconds;
 
@@ -242,7 +279,7 @@ class Time extends DateTime
 	 *
 	 * @return \CodeIgniter\I18n\Time
 	 */
-	public static function createFromFormat($format, $datetime, $timeZone=null)
+	public static function createFromFormat($format, $datetime, $timeZone = null)
 	{
 		$date = parent::createFromFormat($format, $datetime);
 
@@ -310,10 +347,11 @@ class Time extends DateTime
 	 * @param null                          $timezone
 	 * @param string|null                   $locale
 	 */
-	public static function setTestNow($datetime=null, $timezone=null, string $locale=null)
+	public static function setTestNow($datetime = null, $timezone = null, string $locale = null)
 	{
 		// Reset the test instance
-		if (is_null($datetime)) {
+		if (is_null($datetime))
+		{
 			static::$testNow = null;
 			return;
 		}
@@ -344,7 +382,6 @@ class Time extends DateTime
 	}
 
 	//--------------------------------------------------------------------
-
 	//--------------------------------------------------------------------
 	// Getters
 	//--------------------------------------------------------------------
@@ -477,7 +514,8 @@ class Time extends DateTime
 		$now = Time::now()->getTimestamp();
 		$time = $this->getTimestamp();
 
-		if (! $now >= $time) return 0;
+		if ( ! $now >= $time)
+			return 0;
 
 		return date('Y', $now) - date('Y', $time);
 	}
@@ -510,7 +548,7 @@ class Time extends DateTime
 		{
 			if ($transition['time'] > $this->format('U'))
 			{
-				return (bool)$transition['isdst'];
+				return (bool) $transition['isdst'];
 			}
 		}
 
@@ -702,6 +740,177 @@ class Time extends DateTime
 		return Time::parse($time, $this->timezone, $this->locale);
 	}
 
+	//--------------------------------------------------------------------
+	// Add/Subtract
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns a new Time instance with $seconds added to the time.
+	 *
+	 * @param int $seconds
+	 *
+	 * @return static
+	 */
+	public function addSeconds(int $seconds)
+	{
+		$time = clone($this);
+
+		return $time->add(DateInterval::createFromDateString("{$seconds} seconds"));
+	}
+
+	/**
+	 * Returns a new Time instance with $minutes added to the time.
+	 *
+	 * @param int $minutes
+	 *
+	 * @return static
+	 */
+	public function addMinutes(int $minutes)
+	{
+		$time = clone($this);
+
+		return $time->add(DateInterval::createFromDateString("{$minutes} minutes"));
+	}
+
+	/**
+	 * Returns a new Time instance with $hours added to the time.
+	 *
+	 * @param int $hours
+	 *
+	 * @return static
+	 */
+	public function addHours(int $hours)
+	{
+		$time = clone($this);
+
+		return $time->add(DateInterval::createFromDateString("{$hours} hours"));
+	}
+
+	/**
+	 * Returns a new Time instance with $days added to the time.
+	 *
+	 * @param int $days
+	 *
+	 * @return static
+	 */
+	public function addDays(int $days)
+	{
+		$time = clone($this);
+
+		return $time->add(DateInterval::createFromDateString("{$days} days"));
+	}
+
+	/**
+	 * Returns a new Time instance with $months added to the time.
+	 *
+	 * @param int $months
+	 *
+	 * @return static
+	 */
+	public function addMonths(int $months)
+	{
+		$time = clone($this);
+
+		return $time->add(DateInterval::createFromDateString("{$months} months"));
+	}
+
+	/**
+	 * Returns a new Time instance with $years added to the time.
+	 *
+	 * @param int $years
+	 *
+	 * @return static
+	 */
+	public function addYears(int $years)
+	{
+		$time = clone($this);
+
+		return $time->add(DateInterval::createFromDateString("{$years} years"));
+	}
+
+	/**
+	 * Returns a new Time instance with $seconds subtracted from the time.
+	 *
+	 * @param int $seconds
+	 *
+	 * @return static
+	 */
+	public function subSeconds(int $seconds)
+	{
+		$time = clone($this);
+
+		return $time->sub(DateInterval::createFromDateString("{$seconds} seconds"));
+	}
+
+	/**
+	 * Returns a new Time instance with $minutes subtracted from the time.
+	 *
+	 * @param int $minutes
+	 *
+	 * @return static
+	 */
+	public function subMinutes(int $minutes)
+	{
+		$time = clone($this);
+
+		return $time->sub(DateInterval::createFromDateString("{$minutes} minutes"));
+	}
+
+	/**
+	 * Returns a new Time instance with $hours subtracted from the time.
+	 *
+	 * @param int $hours
+	 *
+	 * @return static
+	 */
+	public function subHours(int $hours)
+	{
+		$time = clone($this);
+
+		return $time->sub(DateInterval::createFromDateString("{$hours} hours"));
+	}
+
+	/**
+	 * Returns a new Time instance with $days subtracted from the time.
+	 *
+	 * @param int $days
+	 *
+	 * @return static
+	 */
+	public function subDays(int $days)
+	{
+		$time = clone($this);
+
+		return $time->sub(DateInterval::createFromDateString("{$days} days"));
+	}
+
+	/**
+	 * Returns a new Time instance with $months subtracted from the time.
+	 *
+	 * @param int $months
+	 *
+	 * @return static
+	 */
+	public function subMonths(int $months)
+	{
+		$time = clone($this);
+
+		return $time->sub(DateInterval::createFromDateString("{$months} months"));
+	}
+
+	/**
+	 * Returns a new Time instance with $hours subtracted from the time.
+	 *
+	 * @param int $years
+	 *
+	 * @return static
+	 */
+	public function subYears(int $years)
+	{
+		$time = clone($this);
+
+		return $time->sub(DateInterval::createFromDateString("{$years} years"));
+	}
 
 	//--------------------------------------------------------------------
 	// Formatters
@@ -766,13 +975,10 @@ class Time extends DateTime
 	 */
 	public function toLocalizedString(string $format = null)
 	{
-		$format = is_null($format)
-			? $this->toStringFormat
-			: $format;
+		$format = is_null($format) ? $this->toStringFormat : $format;
 
 		return IntlDateFormatter::formatObject($this->toDateTime(), $format, $this->locale);
 	}
-
 
 	//--------------------------------------------------------------------
 	// Utilities
@@ -819,7 +1025,7 @@ class Time extends DateTime
 	 */
 	public function __get($name)
 	{
-		$method = 'get'.ucfirst($name);
+		$method = 'get' . ucfirst($name);
 
 		if (method_exists($this, $method))
 		{
@@ -831,7 +1037,7 @@ class Time extends DateTime
 
 	public function __set($name, $value)
 	{
-		$method = 'set'.ucfirst($name);
+		$method = 'set' . ucfirst($name);
 
 		if (method_exists($this, $method))
 		{

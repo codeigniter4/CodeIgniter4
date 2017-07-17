@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
+ * Copyright (c) 2014-2017 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,7 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 3.0.0
@@ -52,6 +52,7 @@
  */
 class CLI
 {
+
 	/**
 	 * Is the readline library on the system?
 	 *
@@ -78,23 +79,23 @@ class CLI
 	 * @var array
 	 */
 	protected static $foreground_colors = [
-		'black'        => '0;30',
-		'dark_gray'    => '1;30',
-		'blue'         => '0;34',
-		'dark_blue'    => '1;34',
-		'light_blue'   => '1;34',
-		'green'        => '0;32',
-		'light_green'  => '1;32',
-		'cyan'         => '0;36',
-		'light_cyan'   => '1;36',
-		'red'          => '0;31',
-		'light_red'    => '1;31',
-		'purple'       => '0;35',
-		'light_purple' => '1;35',
-		'light_yellow' => '0;33',
-		'yellow'       => '1;33',
-		'light_gray'   => '0;37',
-		'white'        => '1;37',
+		'black'			 => '0;30',
+		'dark_gray'		 => '1;30',
+		'blue'			 => '0;34',
+		'dark_blue'		 => '1;34',
+		'light_blue'	 => '1;34',
+		'green'			 => '0;32',
+		'light_green'	 => '1;32',
+		'cyan'			 => '0;36',
+		'light_cyan'	 => '1;36',
+		'red'			 => '0;31',
+		'light_red'		 => '1;31',
+		'purple'		 => '0;35',
+		'light_purple'	 => '1;35',
+		'light_yellow'	 => '0;33',
+		'yellow'		 => '1;33',
+		'light_gray'	 => '0;37',
+		'white'			 => '1;37',
 	];
 
 	/**
@@ -102,13 +103,13 @@ class CLI
 	 * @var array
 	 */
 	protected static $background_colors = [
-		'black'      => '40',
-		'red'        => '41',
-		'green'      => '42',
-		'yellow'     => '43',
-		'blue'       => '44',
-		'magenta'    => '45',
-		'cyan'       => '46',
+		'black'		 => '40',
+		'red'		 => '41',
+		'green'		 => '42',
+		'yellow'	 => '43',
+		'blue'		 => '44',
+		'magenta'	 => '45',
+		'cyan'		 => '46',
 		'light_gray' => '47',
 	];
 
@@ -117,7 +118,6 @@ class CLI
 	 * @var array
 	 */
 	protected static $segments = [];
-
 	protected static $options = [];
 
 	//--------------------------------------------------------------------
@@ -187,7 +187,7 @@ class CLI
 		$args = func_get_args();
 
 		$options = [];
-		$output  = '';
+		$output = '';
 		$default = null;
 
 		// How many we got
@@ -197,7 +197,7 @@ class CLI
 		$required = end($args) === true;
 
 		// Reduce the argument count if required was passed, we don't care about that anymore
-		$required === true && --$arg_count;
+		$required === true && -- $arg_count;
 
 		// This method can take a few crazy combinations of arguments, so lets work it out
 		switch ($arg_count)
@@ -244,19 +244,18 @@ class CLI
 
 			if ($default !== null)
 			{
-				$extra_output = ' [ Default: "'.$default.'" ]';
+				$extra_output = ' [ Default: "' . $default . '" ]';
 			}
-
 			elseif ($options !== [])
 			{
-				$extra_output = ' [ '.implode(', ', $options).' ]';
+				$extra_output = ' [ ' . implode(', ', $options) . ' ]';
 			}
 
-			fwrite(STDOUT, $output.$extra_output.': ');
+			fwrite(STDOUT, $output . $extra_output . ': ');
 		}
 
 		// Read the input from keyboard.
-		$input = trim(static::input()) ? : $default;
+		$input = trim(static::input()) ?: $default;
 
 		// No input provided and we require one (default will stop this being called)
 		if (empty($input) && $required === true)
@@ -295,7 +294,7 @@ class CLI
 			$text = static::color($text, $foreground, $background);
 		}
 
-		fwrite(STDOUT, $text.PHP_EOL);
+		fwrite(STDOUT, $text . PHP_EOL);
 	}
 
 	//--------------------------------------------------------------------
@@ -314,7 +313,7 @@ class CLI
 			$text = static::color($text, $foreground, $background);
 		}
 
-		fwrite(STDERR, $text.PHP_EOL);
+		fwrite(STDERR, $text . PHP_EOL);
 	}
 
 	//--------------------------------------------------------------------
@@ -346,13 +345,12 @@ class CLI
 
 			while ($time > 0)
 			{
-				fwrite(STDOUT, $time.'... ');
+				fwrite(STDOUT, $time . '... ');
 				sleep(1);
-				$time--;
+				$time --;
 			}
 			static::write();
 		}
-
 		else
 		{
 			if ($seconds > 0)
@@ -366,7 +364,6 @@ class CLI
 			}
 		}
 	}
-
 
 	//--------------------------------------------------------------------
 
@@ -390,7 +387,7 @@ class CLI
 	public static function newLine(int $num = 1)
 	{
 		// Do it once or more, write with empty string gives us a new line
-		for ($i = 0; $i < $num; $i++)
+		for ($i = 0; $i < $num; $i ++ )
 		{
 			static::write('');
 		}
@@ -407,11 +404,11 @@ class CLI
 	{
 		static::isWindows()
 
-			// Windows is a bit crap at this, but their terminal is tiny so shove this in
-			? static::newLine(40)
+				// Windows is a bit crap at this, but their terminal is tiny so shove this in
+						? static::newLine(40)
 
-			// Anything with a flair of Unix will handle these magic characters
-			: fwrite(STDOUT, chr(27)."[H".chr(27)."[2J");
+				// Anything with a flair of Unix will handle these magic characters
+						: fwrite(STDOUT, chr(27) . "[H" . chr(27) . "[2J");
 	}
 
 	//--------------------------------------------------------------------
@@ -436,19 +433,19 @@ class CLI
 
 		if ( ! array_key_exists($foreground, static::$foreground_colors))
 		{
-			throw new \RuntimeException('Invalid CLI foreground color: '.$foreground);
+			throw new \RuntimeException('Invalid CLI foreground color: ' . $foreground);
 		}
 
 		if ($background !== null && ! array_key_exists($background, static::$background_colors))
 		{
-			throw new \RuntimeException('Invalid CLI background color: '.$background);
+			throw new \RuntimeException('Invalid CLI background color: ' . $background);
 		}
 
-		$string = "\033[".static::$foreground_colors[$foreground]."m";
+		$string = "\033[" . static::$foreground_colors[$foreground] . "m";
 
 		if ($background !== null)
 		{
-			$string .= "\033[".static::$background_colors[$background]."m";
+			$string .= "\033[" . static::$background_colors[$background] . "m";
 		}
 
 		if ($format === 'underline')
@@ -456,7 +453,7 @@ class CLI
 			$string .= "\033[4m";
 		}
 
-		$string .= $text."\033[0m";
+		$string .= $text . "\033[0m";
 
 		return $string;
 	}
@@ -479,7 +476,7 @@ class CLI
 			return $default;
 		}
 
-		return (int)shell_exec('tput cols');
+		return (int) shell_exec('tput cols');
 	}
 
 	//--------------------------------------------------------------------
@@ -500,7 +497,7 @@ class CLI
 			return $default;
 		}
 
-		return (int)shell_exec('tput lines');
+		return (int) shell_exec('tput lines');
 	}
 
 	//--------------------------------------------------------------------
@@ -526,16 +523,16 @@ class CLI
 		if ($thisStep !== false)
 		{
 			// Don't allow div by zero or negative numbers....
-			$thisStep   = abs($thisStep);
+			$thisStep = abs($thisStep);
 			$totalSteps = $totalSteps < 1 ? 1 : $totalSteps;
 
 			$percent = intval(($thisStep / $totalSteps) * 100);
-			$step    = (int)round($percent / 10);
+			$step = (int) round($percent / 10);
 
 			// Write the progress bar
-			fwrite(STDOUT, "[\033[32m".str_repeat('#', $step).str_repeat('.', 10 - $step)."\033[0m]");
+			fwrite(STDOUT, "[\033[32m" . str_repeat('#', $step) . str_repeat('.', 10 - $step) . "\033[0m]");
 			// Textual representation...
-			fwrite(STDOUT, sprintf(" %3d%% Complete", $percent).PHP_EOL);
+			fwrite(STDOUT, sprintf(" %3d%% Complete", $percent) . PHP_EOL);
 		}
 		else
 		{
@@ -587,11 +584,10 @@ class CLI
 
 			$first = true;
 
-			array_walk($lines, function (&$line, $index) use ($max, $pad_left, &$first)
-			{
+			array_walk($lines, function (&$line, $index) use ($max, $pad_left, &$first) {
 				if ( ! $first)
 				{
-					$line = str_repeat(" ", $pad_left).$line;
+					$line = str_repeat(" ", $pad_left) . $line;
 				}
 				else
 				{
@@ -606,7 +602,6 @@ class CLI
 	}
 
 	//--------------------------------------------------------------------
-
 	//--------------------------------------------------------------------
 	// Command-Line 'URI' support
 	//--------------------------------------------------------------------
@@ -623,11 +618,11 @@ class CLI
 	{
 		$optionsFound = false;
 
-		for ($i=1; $i < $_SERVER['argc']; $i++)
+		for ($i = 1; $i < $_SERVER['argc']; $i ++ )
 		{
 			// If there's no '-' at the beginning of the argument
 			// then add it to our segments.
-			if (! $optionsFound && mb_strpos($_SERVER['argv'][$i], '-') === false)
+			if ( ! $optionsFound && mb_strpos($_SERVER['argv'][$i], '-') === false)
 			{
 				static::$segments[] = $_SERVER['argv'][$i];
 				continue;
@@ -647,10 +642,10 @@ class CLI
 			$value = null;
 
 			// if the next item doesn't have a dash it's a value.
-			if (isset($_SERVER['argv'][$i+1]) && mb_substr($_SERVER['argv'][$i+1], 0, 1) != '-')
+			if (isset($_SERVER['argv'][$i + 1]) && mb_substr($_SERVER['argv'][$i + 1], 0, 1) != '-')
 			{
-				$value = $_SERVER['argv'][$i+1];
-				$i++;
+				$value = $_SERVER['argv'][$i + 1];
+				$i ++;
 			}
 
 			static::$options[$arg] = $value;
@@ -692,12 +687,12 @@ class CLI
 	 */
 	public static function getSegment(int $index)
 	{
-		if (! isset(static::$segments[$index-1]))
+		if ( ! isset(static::$segments[$index - 1]))
 		{
 			return null;
 		}
 
-		return static::$segments[$index-1];
+		return static::$segments[$index - 1];
 	}
 
 	//--------------------------------------------------------------------
@@ -712,16 +707,14 @@ class CLI
 	 */
 	public static function getOption(string $name)
 	{
-		if (! array_key_exists($name, static::$options))
+		if ( ! array_key_exists($name, static::$options))
 		{
 			return null;
 		}
 
 		// If the option didn't have a value, simply return TRUE
 		// so they know it was set, otherwise return the actual value.
-		$val = static::$options[$name] === null
-			? true
-			: static::$options[$name];
+		$val = static::$options[$name] === null ? true : static::$options[$name];
 
 		return $val;
 	}
@@ -748,7 +741,7 @@ class CLI
 	 */
 	public static function getOptionString(): string
 	{
-		if (! count(static::$options))
+		if ( ! count(static::$options))
 		{
 			return '';
 		}
@@ -761,7 +754,7 @@ class CLI
 			// so it will pass correctly.
 			if (mb_strpos($value, ' ') !== false)
 			{
-				$value = '"'.$value.'"';
+				$value = '"' . $value . '"';
 			}
 
 			$out .= "-{$name} $value ";
@@ -771,7 +764,6 @@ class CLI
 	}
 
 	//--------------------------------------------------------------------
-
 }
 
 // Ensure the class is initialized.

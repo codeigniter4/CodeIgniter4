@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
+ * Copyright (c) 2014-2017 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,13 +29,12 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 3.0.0
  * @filesource
  */
-
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 use Config\Services;
@@ -48,6 +47,7 @@ use Config\Services;
  */
 class MigrateRefresh extends BaseCommand
 {
+
 	protected $group = 'Database';
 
 	/**
@@ -84,18 +84,19 @@ class MigrateRefresh extends BaseCommand
 	 * @var array
 	 */
 	protected $options = array(
-			'-n'   => 'Set migration namespace',
-			'-g'   => 'Set database group',
-			'-all' => 'Set latest for all namespace, will ignore (-n) option'
-			);
+		'-n'	 => 'Set migration namespace',
+		'-g'	 => 'Set database group',
+		'-all'	 => 'Set latest for all namespace, will ignore (-n) option'
+	);
 
 	/**
 	 * Does a rollback followed by a latest to refresh the current state
 	 * of the database.
 	 */
-	public function run(array $params=[])
+	public function run(array $params = [])
 	{
 		$this->call('migrate:rollback');
 		$this->call('migrate:latest');
 	}
+
 }

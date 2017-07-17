@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
+ * Copyright (c) 2014-2017 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,17 +29,17 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 3.0.0
  * @filesource
  */
-
 use CodeIgniter\Cache\CacheInterface;
 
 class WincacheHandler implements CacheInterface
 {
+
 	/**
 	 * Prefixed to all cache names.
 	 *
@@ -75,10 +75,10 @@ class WincacheHandler implements CacheInterface
 	 */
 	public function get(string $key)
 	{
-		$key = $this->prefix.$key;
+		$key = $this->prefix . $key;
 
 		$success = false;
-		$data    = wincache_ucache_get($key, $success);
+		$data = wincache_ucache_get($key, $success);
 
 		// Success returned by reference from wincache_ucache_get()
 		return ($success) ? $data : false;
@@ -97,7 +97,7 @@ class WincacheHandler implements CacheInterface
 	 */
 	public function save(string $key, $value, int $ttl = 60)
 	{
-		$key = $this->prefix.$key;
+		$key = $this->prefix . $key;
 
 		return wincache_ucache_set($key, $value, $ttl);
 	}
@@ -113,7 +113,7 @@ class WincacheHandler implements CacheInterface
 	 */
 	public function delete(string $key)
 	{
-		$key = $this->prefix.$key;
+		$key = $this->prefix . $key;
 
 		return wincache_ucache_delete($key);
 	}
@@ -130,10 +130,10 @@ class WincacheHandler implements CacheInterface
 	 */
 	public function increment(string $key, int $offset = 1)
 	{
-		$key = $this->prefix.$key;
+		$key = $this->prefix . $key;
 
 		$success = false;
-		$value   = wincache_ucache_inc($key, $offset, $success);
+		$value = wincache_ucache_inc($key, $offset, $success);
 
 		return ($success === true) ? $value : false;
 	}
@@ -150,10 +150,10 @@ class WincacheHandler implements CacheInterface
 	 */
 	public function decrement(string $key, int $offset = 1)
 	{
-		$key = $this->prefix.$key;
+		$key = $this->prefix . $key;
 
 		$success = false;
-		$value   = wincache_ucache_dec($key, $offset, $success);
+		$value = wincache_ucache_dec($key, $offset, $success);
 
 		return ($success === true) ? $value : false;
 	}
@@ -196,19 +196,19 @@ class WincacheHandler implements CacheInterface
 	 */
 	public function getMetaData(string $key)
 	{
-		$key = $this->prefix.$key;
+		$key = $this->prefix . $key;
 
 		if ($stored = wincache_ucache_info(false, $key))
 		{
-			$age      = $stored['ucache_entries'][1]['age_seconds'];
-			$ttl      = $stored['ucache_entries'][1]['ttl_seconds'];
+			$age = $stored['ucache_entries'][1]['age_seconds'];
+			$ttl = $stored['ucache_entries'][1]['ttl_seconds'];
 			$hitcount = $stored['ucache_entries'][1]['hitcount'];
 
 			return [
-				'expire'   => $ttl-$age,
-				'hitcount' => $hitcount,
-				'age'      => $age,
-				'ttl'      => $ttl,
+				'expire'	 => $ttl - $age,
+				'hitcount'	 => $hitcount,
+				'age'		 => $age,
+				'ttl'		 => $ttl,
 			];
 		}
 
@@ -228,5 +228,4 @@ class WincacheHandler implements CacheInterface
 	}
 
 	//--------------------------------------------------------------------
-
 }

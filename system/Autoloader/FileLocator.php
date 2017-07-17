@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
+ * Copyright (c) 2014-2017 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,13 +29,12 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 3.0.0
  * @filesource
  */
-
 use Config\Autoload;
 
 /**
@@ -87,17 +86,15 @@ class FileLocator
 	 *
 	 * @return string       The path to the file if found, or an empty string.
 	 */
-	public function locateFile(string $file, string $folder=null, string $ext = 'php'): string
+	public function locateFile(string $file, string $folder = null, string $ext = 'php'): string
 	{
 		// Ensure the extension is on the filename
-		$file = strpos($file, '.'.$ext) !== false
-				? $file
-				: $file.'.'.$ext;
+		$file = strpos($file, '.' . $ext) !== false ? $file : $file . '.' . $ext;
 
 		// Clean the folder name from the filename
-		if (! empty($folder))
+		if ( ! empty($folder))
 		{
-			$file = str_replace($folder.'/', '', $file);
+			$file = str_replace($folder . '/', '', $file);
 		}
 
 		// No namespaceing? Try the application folder.
@@ -112,24 +109,23 @@ class FileLocator
 		$segments = explode('\\', $file);
 
 		// The first segment will be empty if a slash started the filename.
-		if (empty($segments[0])) unset($segments[0]);
+		if (empty($segments[0]))
+			unset($segments[0]);
 
-		$path     = '';
-		$prefix   = '';
+		$path = '';
+		$prefix = '';
 		$filename = '';
 
-		while (! empty($segments))
+		while ( ! empty($segments))
 		{
-			$prefix .= empty($prefix)
-					? ucfirst(array_shift($segments))
-					: '\\'. ucfirst(array_shift($segments));
+			$prefix .= empty($prefix) ? ucfirst(array_shift($segments)) : '\\' . ucfirst(array_shift($segments));
 
-			if (! array_key_exists($prefix, $this->namespaces))
+			if ( ! array_key_exists($prefix, $this->namespaces))
 			{
 				continue;
 			}
 
-			$path = $this->namespaces[$prefix].'/';
+			$path = $this->namespaces[$prefix] . '/';
 			$filename = implode('/', $segments);
 			break;
 		}
@@ -138,14 +134,14 @@ class FileLocator
 		// expects this file to be within that folder, like 'Views',
 		// or 'libraries'.
 		// @todo Allow it to check with and without the nested folder.
-		if (! empty($folder) && strpos($filename, $folder) === false)
+		if ( ! empty($folder) && strpos($filename, $folder) === false)
 		{
-			$filename = $folder.'/'.$filename;
+			$filename = $folder . '/' . $filename;
 		}
 
 		$path .= $filename;
 
-		if (! $this->requireFile($path))
+		if ( ! $this->requireFile($path))
 		{
 			$path = '';
 		}
@@ -178,17 +174,15 @@ class FileLocator
 		$foundPaths = [];
 
 		// Ensure the extension is on the filename
-		$path = strpos($path, '.'.$ext) !== false
-			? $path
-			: $path.'.'.$ext;
+		$path = strpos($path, '.' . $ext) !== false ? $path : $path . '.' . $ext;
 
 		foreach ($this->namespaces as $name => $folder)
 		{
-			$folder = rtrim($folder, '/').'/';
+			$folder = rtrim($folder, '/') . '/';
 
-			if (file_exists($folder.$path))
+			if (file_exists($folder . $path))
 			{
-				$foundPaths[] = $folder.$path;
+				$foundPaths[] = $folder . $path;
 			}
 		}
 
@@ -213,7 +207,7 @@ class FileLocator
 	{
 		$path = realpath($path);
 
-		if (! $path)
+		if ( ! $path)
 		{
 			return;
 		}
@@ -221,12 +215,13 @@ class FileLocator
 		foreach ($this->namespaces as $namespace => $nsPath)
 		{
 			$nsPath = realpath($nsPath);
-			if (is_numeric($namespace)||empty($nsPath)) continue;
+			if (is_numeric($namespace) || empty($nsPath))
+				continue;
 
-			if (mb_strpos($path,$nsPath) === 0)
+			if (mb_strpos($path, $nsPath) === 0)
 			{
-				$className = '\\'.$namespace.'\\'.
-							 ltrim(str_replace('/', '\\', mb_substr($path, mb_strlen($nsPath))), '\\');
+				$className = '\\' . $namespace . '\\' .
+						ltrim(str_replace('/', '\\', mb_substr($path, mb_strlen($nsPath))), '\\');
 				// Remove the file extension (.php)
 				$className = mb_substr($className, 0, -4);
 
@@ -247,26 +242,24 @@ class FileLocator
 	 */
 	public function listFiles(string $path): array
 	{
-		if (empty($path)) return [];
+		if (empty($path))
+			return [];
 
 		$files = [];
 		helper('filesystem');
 
 		foreach ($this->namespaces as $namespace => $nsPath)
 		{
-			$fullPath = realpath(rtrim($nsPath, '/') .'/'. $path);
+			$fullPath = realpath(rtrim($nsPath, '/') . '/' . $path);
 
-			if (! is_dir($fullPath)) continue;
+			if ( ! is_dir($fullPath))
+				continue;
 
 			$tempFiles = get_filenames($fullPath, true);
 			//CLI::newLine($tempFiles);
 
-			if (! count($tempFiles))
-			{
-				continue;
-			}
-
-			$files = array_merge($files, $tempFiles);
+			if (count($tempFiles))
+				$files = array_merge($files, $tempFiles);
 		}
 
 		return $files;
@@ -283,15 +276,13 @@ class FileLocator
 	 * @internal param string $ext
 	 *
 	 */
-	protected function legacyLocate(string $file, string $folder=null): string
+	protected function legacyLocate(string $file, string $folder = null): string
 	{
 		$paths = [APPPATH, BASEPATH];
 
 		foreach ($paths as $path)
 		{
-			$path .= empty($folder)
-				? $file
-				: $folder.'/'.$file;
+			$path .= empty($folder) ? $file : $folder . '/' . $file;
 
 			if ($this->requireFile($path) === true)
 			{
@@ -319,5 +310,4 @@ class FileLocator
 	}
 
 	//--------------------------------------------------------------------
-
 }

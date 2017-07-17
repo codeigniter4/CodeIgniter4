@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
+ * Copyright (c) 2014-2017 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,15 +27,14 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package    CodeIgniter
- * @author    CodeIgniter Dev Team
- * @copyright    Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
- * @license    https://opensource.org/licenses/MIT	MIT License
- * @link    https://codeigniter.com
- * @since    Version 3.0.0
+ * @package		CodeIgniter
+ * @author		CodeIgniter Dev Team
+ * @copyright   2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license		https://opensource.org/licenses/MIT	MIT License
+ * @link		https://codeigniter.com
+ * @since		Version 3.0.0
  * @filesource
  */
-
 use Psr\Log\LoggerInterface;
 
 /**
@@ -49,6 +48,7 @@ use Psr\Log\LoggerInterface;
  */
 abstract class BaseCommand
 {
+
 	/**
 	 * The group the command is lumped under
 	 * when listing commands.
@@ -161,7 +161,8 @@ abstract class BaseCommand
 	 */
 	public function __get(string $key)
 	{
-		if (isset($this->$key)) {
+		if (isset($this->$key))
+		{
 			return $this->$key;
 		}
 	}
@@ -189,7 +190,7 @@ abstract class BaseCommand
 
 		$pad = max($this->getPad($this->options, 6), $this->getPad($this->arguments, 6));
 
-		if (!empty($this->arguments))
+		if ( ! empty($this->arguments))
 		{
 			CLI::write(lang('CLI.helpArguments'), 'yellow');
 			foreach ($this->arguments as $argument => $description)
@@ -199,7 +200,7 @@ abstract class BaseCommand
 			CLI::newLine();
 		}
 
-		if (!empty($this->options))
+		if ( ! empty($this->options))
 		{
 			CLI::write(lang('CLI.helpOptions'), 'yellow');
 			foreach ($this->options as $option => $description)
@@ -223,12 +224,12 @@ abstract class BaseCommand
 	public function getPad($array, string $pad)
 	{
 		$max = 0;
-		foreach ($array as $key => $value) {
+		foreach ($array as $key => $value)
+		{
 			$max = max($max, strlen($key));
 		}
 		return $max + $pad;
 	}
-
 
 	//--------------------------------------------------------------------
 }

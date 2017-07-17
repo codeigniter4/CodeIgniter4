@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
+ * Copyright (c) 2014-2017 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,7 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 3.0.0
@@ -71,8 +71,8 @@ class Timer
 	public function start(string $name, float $time = null)
 	{
 		$this->timers[strtolower($name)] = [
-			'start' => ! empty($time) ? $time : microtime(true),
-			'end'   => null,
+			'start'	 => ! empty($time) ? $time : microtime(true),
+			'end'	 => null,
 		];
 
 		return $this;
@@ -116,7 +116,7 @@ class Timer
 	 */
 	public function getElapsedTime(string $name, int $decimals = 4)
 	{
-	    $name = strtolower($name);
+		$name = strtolower($name);
 
 		if (empty($this->timers[$name]))
 		{
@@ -130,7 +130,7 @@ class Timer
 			$timer['end'] = microtime(true);
 		}
 
-		return (float)number_format($timer['end'] - $timer['start'], $decimals);
+		return (float) number_format($timer['end'] - $timer['start'], $decimals);
 	}
 
 	//--------------------------------------------------------------------
@@ -153,7 +153,7 @@ class Timer
 				$timer['end'] = microtime(true);
 			}
 
-			$timer['duration'] = (float)number_format($timer['end'] - $timer['start'], $decimals);
+			$timer['duration'] = (float) number_format($timer['end'] - $timer['start'], $decimals);
 		}
 
 		return $timers;
@@ -170,10 +170,8 @@ class Timer
 	 */
 	public function has(string $name)
 	{
-	    return array_key_exists(strtolower($name), $this->timers);
+		return array_key_exists(strtolower($name), $this->timers);
 	}
 
 	//--------------------------------------------------------------------
-
-
 }
