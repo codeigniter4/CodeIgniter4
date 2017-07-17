@@ -275,11 +275,12 @@ class Request extends Message implements RequestInterface
 	 *
 	 * @param null $index   Index for item to be fetched from $_SERVER
 	 * @param null $filter  A filter name to be applied
+	 * @param null $flags	Flag names
 	 * @return mixed
 	 */
-	public function getServer($index = null, $filter = null)
+	public function getServer($index = null, $filter = null, $flags = null)
 	{
-		return $this->fetchGlobal(INPUT_SERVER, $index, $filter);
+		return $this->fetchGlobal(INPUT_SERVER, $index, $filter, $flags);
 	}
 
 	//--------------------------------------------------------------------
@@ -289,11 +290,12 @@ class Request extends Message implements RequestInterface
 	 *
 	 * @param null $index   Index for item to be fetched from $_ENV
 	 * @param null $filter  A filter name to be applied
+	 * @param null $flags	Flag names
 	 * @return mixed
 	 */
-	public function getEnv($index = null, $filter = null)
+	public function getEnv($index = null, $filter = null, $flags = null)
 	{
-		return $this->fetchGlobal(INPUT_ENV, $index, $filter);
+		return $this->fetchGlobal(INPUT_ENV, $index, $filter, $flags);
 	}
 
 	//--------------------------------------------------------------------
@@ -311,10 +313,11 @@ class Request extends Message implements RequestInterface
 	 * @param      $type
 	 * @param null $index
 	 * @param null $filter
+	 * @param null $flags
 	 *
 	 * @return mixed
 	 */
-	protected function fetchGlobal($type, $index = null, $filter = null)
+	protected function fetchGlobal($type, $index = null, $filter = null, $flags = null )
 	{
 		// Null filters cause null values to return.
 		if (is_null($filter))
@@ -343,7 +346,7 @@ class Request extends Message implements RequestInterface
 			$values = [];
 			foreach ($loopThrough as $key => $value)
 			{
-				$values[$key] = is_array($value) ? $this->fetchGlobal($type, $key, $filter) : filter_var($value, $filter);
+				$values[$key] = is_array($value) ? $this->fetchGlobal($type, $key, $filter, $flags) : filter_var($value, $filter, $flags);
 			}
 
 			return $values;
@@ -356,7 +359,7 @@ class Request extends Message implements RequestInterface
 
 			foreach ($index as $key)
 			{
-				$output[$key] = $this->fetchGlobal($type, $key, $filter);
+				$output[$key] = $this->fetchGlobal($type, $key, $filter, $flags);
 			}
 
 			return $output;
@@ -419,7 +422,7 @@ class Request extends Message implements RequestInterface
 			return $value;
 		}
 
-		return filter_var($value, $filter);
+		return filter_var($value, $filter, $flags);
 	}
 
 	//--------------------------------------------------------------------
