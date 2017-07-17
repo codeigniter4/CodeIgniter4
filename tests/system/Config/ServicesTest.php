@@ -44,15 +44,50 @@ class ServicesTest extends \CIUnitTestCase
 		$this->assertInstanceOf(\CodeIgniter\Debug\Iterator::class, $actual);
 	}
 
-//	public function testNewNegotiatorWithNullConfig()
-//	{
-//		$actual = Services::negotiator(null);
-//		$this->assertInstanceOf(\CodeIgniter\HTTP\Negotiate::class, $actual);
-//	}
+	public function testNewEncrypter()
+	{
+		$actual = Services::encrypter();
+		$this->assertInstanceOf(\CodeIgniter\Encryption\EncrypterInterface::class, $actual);
+	}
 
-	public function testNewClirequestWithNullConfig()
+	public function testNewSharedEncrypter()
+	{
+		$actual = Services::encrypter(null, true); // not that this makes sense
+		$this->assertInstanceOf(\CodeIgniter\Encryption\EncrypterInterface::class, $actual);
+	}
+
+	public function testNewImage()
+	{
+		$actual = Services::image();
+		$this->assertInstanceOf(\CodeIgniter\Images\ImageHandlerInterface::class, $actual);
+	}
+
+	public function testNewMigrationRunner()
+	{
+		//FIXME - docs aren't clear about setting this up to just make sure that the service
+		// returns a MigrationRunner
+		$config = new \Config\Migrations();
+		$db = new \CodeIgniter\Database\MockConnection([]);
+		$this->expectException('InvalidArgumentException');
+		$actual = Services::migrations($config, $db);
+		$this->assertInstanceOf(\CodeIgniter\Database\MigrationRunner::class, $actual);
+	}
+
+	public function testNewNegotiatorWithNullConfig()
+	{
+		$actual = Services::negotiator(null);
+		$this->assertInstanceOf(\CodeIgniter\HTTP\Negotiate::class, $actual);
+	}
+
+	public function testNewClirequest()
 	{
 		$actual = Services::clirequest(null);
+		$this->assertInstanceOf(\CodeIgniter\HTTP\CLIRequest::class, $actual);
+	}
+
+	public function testNewUnsharedClirequest()
+	{
+		$actual = Services::clirequest(null, false);
 		$this->assertInstanceOf(\CodeIgniter\HTTP\CLIRequest::class, $actual);
 	}
 
