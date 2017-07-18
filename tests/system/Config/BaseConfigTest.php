@@ -36,6 +36,24 @@ class BaseConfigTest extends CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testEnvironmentOverrides()
+	{
+		$dotenv = new DotEnv($this->fixturesFolder, '.env', 'z');
+		$dotenv->load();
+
+		$config = new \SimpleConfig();
+
+		$this->assertEquals('pow', $config->alpha);
+		$this->assertEquals('kazaam', $config->bravo);
+		$this->assertEquals('', $config->charlie);
+		$this->assertEquals('hubbahubba', $config->delta);
+		$this->assertEquals(false, $config->echo);
+		$this->assertEquals(true, $config->foxtrot);
+		$this->assertEquals(18, $config->golf);
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testPrefixedValues()
 	{
 		$dotenv = new DotEnv($this->fixturesFolder, '.env');
@@ -68,6 +86,8 @@ class BaseConfigTest extends CIUnitTestCase
 		$config = new \SimpleConfig();
 
 		$this->assertEquals('simpleton', $config->simple['name']);
+		$this->assertEquals('foo', $config->first);
+		$this->assertEquals('bar', $config->second);
 	}
 
 	//--------------------------------------------------------------------

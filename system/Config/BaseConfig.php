@@ -59,12 +59,14 @@ class BaseConfig
 	/**
 	 * Will attempt to get environment variables with names
 	 * that match the properties of the child class.
+	 * 
+	 * The "shortPrefix" is the lowercase-only config class name.
 	 */
 	public function __construct()
 	{
 		$properties = array_keys(get_object_vars($this));
 		$prefix = get_class($this);
-		$shortPrefix = strtolower(substr($prefix, strrpos($prefix, '\\') + 1));
+		$shortPrefix = strtolower(substr($prefix, strrpos($prefix, '\\') ));
 
 		foreach ($properties as $property)
 		{
