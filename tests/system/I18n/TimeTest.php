@@ -679,4 +679,102 @@ class TimeTest extends \CIUnitTestCase
 		$this->assertEquals('2017-01-10 13:20:33', $time->toDateTimeString());
 		$this->assertEquals('2014-01-10 13:20:33', $newTime->toDateTimeString());
 	}
+
+	//--------------------------------------------------------------------
+	// Comparison
+	//--------------------------------------------------------------------
+
+	public function testEqualWithDifferent()
+	{
+		$time1 = Time::parse('January 10, 2017 21:50:00', 'America/Chicago');
+		$time2 = Time::parse('January 11, 2017 03:50:00', 'Europe/London');
+
+		$this->assertTrue($time1->equals($time2));
+	}
+
+	public function testEqualWithSame()
+	{
+		$time1 = Time::parse('January 10, 2017 21:50:00', 'America/Chicago');
+		$time2 = Time::parse('January 10, 2017 21:50:00', 'America/Chicago');
+
+		$this->assertTrue($time1->equals($time2));
+	}
+
+	public function testEqualWithDateTime()
+	{
+		$time1 = Time::parse('January 10, 2017 21:50:00', 'America/Chicago');
+		$time2 = new \DateTime('January 11, 2017 03:50:00', new \DateTimeZone('Europe/London'));
+
+		$this->assertTrue($time1->equals($time2));
+	}
+
+	public function testEqualWithSameDateTime()
+	{
+		$time1 = Time::parse('January 10, 2017 21:50:00', 'America/Chicago');
+		$time2 = new \DateTime('January 10, 2017 21:50:00', new \DateTimeZone('America/Chicago'));
+
+		$this->assertTrue($time1->equals($time2));
+	}
+
+	public function testEqualWithString()
+	{
+		$time1 = Time::parse('January 10, 2017 21:50:00', 'America/Chicago');
+
+		$this->assertTrue($time1->equals('January 11, 2017 03:50:00', 'Europe/London'));
+	}
+
+	public function testEqualWithStringAndNotimezone()
+	{
+		$time1 = Time::parse('January 10, 2017 21:50:00', 'America/Chicago');
+
+		$this->assertTrue($time1->equals('January 10, 2017 21:50:00'));
+	}
+
+	public function testSameSuccess()
+	{
+		$time1 = Time::parse('January 10, 2017 21:50:00', 'America/Chicago');
+		$time2 = Time::parse('January 10, 2017 21:50:00', 'America/Chicago');
+
+		$this->assertTrue($time1->sameAs($time2));
+	}
+
+	public function testSameFailure()
+	{
+		$time1 = Time::parse('January 10, 2017 21:50:00', 'America/Chicago');
+		$time2 = Time::parse('January 11, 2017 03:50:00', 'Europe/London');
+
+		$this->assertFalse($time1->sameAs($time2));
+	}
+
+	public function testSameSuccessAsString()
+	{
+		$time1 = Time::parse('January 10, 2017 21:50:00', 'America/Chicago');
+
+		$this->assertTrue($time1->sameAs('January 10, 2017 21:50:00', 'America/Chicago'));
+	}
+
+	public function testSameFailAsString()
+	{
+		$time1 = Time::parse('January 10, 2017 21:50:00', 'America/Chicago');
+
+		$this->assertFalse($time1->sameAs('January 11, 2017 03:50:00', 'Europe/London'));
+	}
+
+	public function testBefore()
+	{
+		$time1 = Time::parse('January 10, 2017 21:50:00', 'America/Chicago');
+		$time2 = Time::parse('January 11, 2017 03:50:00', 'America/Chicago');
+
+		$this->assertTrue($time1->before($time2));
+		$this->assertFalse($time2->before($time1));
+	}
+
+	public function testAfter()
+	{
+		$time1 = Time::parse('January 10, 2017 21:50:00', 'America/Chicago');
+		$time2 = Time::parse('January 11, 2017 03:50:00', 'America/Chicago');
+
+		$this->assertFalse($time1->after($time2));
+		$this->assertTrue($time2->after($time1));
+	}
 }
