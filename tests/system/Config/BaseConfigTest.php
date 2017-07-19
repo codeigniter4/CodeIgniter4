@@ -28,7 +28,6 @@ class BaseConfigTest extends CIUnitTestCase
 	{
 		$dotenv = new DotEnv($this->fixturesFolder, '.env');
 		$dotenv->load();
-
 		$config = new \SimpleConfig();
 
 		$this->assertEquals('bar', $config->FOO);
@@ -50,6 +49,7 @@ class BaseConfigTest extends CIUnitTestCase
 		$this->assertEquals(false, $config->echo);
 		$this->assertEquals(true, $config->foxtrot);
 		$this->assertEquals(18, $config->golf);
+		$this->assertNull($config->notthere);
 	}
 
 	//--------------------------------------------------------------------

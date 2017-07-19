@@ -153,7 +153,11 @@ class ServicesTest extends \CIUnitTestCase
 
 	public function testCallStatic()
 	{
-		$actual = \CodeIgniter\Config\Services::SESSION(null, false);
+		// __callStatic should kick in for this but fail
+		$actual = \CodeIgniter\Config\Services::SeSsIoNs(null, false);
+		$this->assertNull($actual);
+		// __callStatic should kick in for this
+		$actual = \CodeIgniter\Config\Services::SeSsIoN(null, false);
 		$this->assertInstanceOf(\CodeIgniter\Session\Session::class, $actual);
 	}
 
