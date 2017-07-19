@@ -234,7 +234,7 @@ class Validation implements ValidationInterface
 			// Set the error message if we didn't survive.
 			if ($passed === false)
 			{
-				$this->errors[$field] = is_null($error) ? $this->getErrorMessage($rule, $field) : $error;
+				$this->errors[$field] = is_null($error) ? $this->getErrorMessage($rule, $field, $param) : $error;
 
 				return false;
 			}

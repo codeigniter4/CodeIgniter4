@@ -161,6 +161,8 @@ class ValidationTest extends \CIUnitTestCase
 
 	public function testGetErrorsWhenNone()
 	{
+		$_SESSION = [];
+
 		$data = [
 			'foo' => 123,
 		];
