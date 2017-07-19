@@ -1077,6 +1077,75 @@ class Time extends DateTime
 	//--------------------------------------------------------------------
 
 	//--------------------------------------------------------------------
+	// Differences
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns a text string that is easily readable that describes
+	 * how long ago, or how long from now, a date is, like:
+	 *
+	 *  - 3 weeks ago
+	 *  - 4 days from now
+	 *  - 6 hours ago
+	 */
+	public function humanize()
+	{
+		$now  = \IntlCalendar::fromDateTime(Time::now($this->timezone)->toDateTimeString());
+		$time = $this->getCalendar()->getTime();
+
+		$years = $now->fieldDifference($time, \IntlCalendar::FIELD_YEAR);
+		$months = $now->fieldDifference($time, \IntlCalendar::FIELD_MONTH);
+		$days = $now->fieldDifference($time, \IntlCalendar::FIELD_DAY_OF_YEAR);
+		$hours = $now->fieldDifference($time, \IntlCalendar::FIELD_HOUR_OF_DAY);
+		$minutes = $now->fieldDifference($time, \IntlCalendar::FIELD_MINUTE);
+
+		$phrase = null;
+		$before = false;
+
+
+		if ($years !== 0)
+		{
+			$phrase = lang('Time.years', [abs($years)]);
+			$before = $years < 0;
+		}
+		else if ($months !== 0)
+		{
+			$phrase = lang('Time.months', [abs($months)]);
+			$before = $months < 0;
+		}
+		else if ($days !== 0 && (abs($days) >= 7))
+		{
+			$weeks = ceil($days / 7);
+			$phrase = lang('Time.weeks', [abs($weeks)]);
+			$before = $days < 0;
+		}
+		else if ($days !== 0)
+		{
+			$phrase = lang('Time.days', [abs($days)]);
+			$before = $days < 0;
+		}
+		else if ($hours !== 0)
+		{
+			$phrase = lang('Time.hours', [abs($hours)]);
+			$before = $hours < 0;
+		}
+		else if ($minutes !== 0)
+		{
+			$phrase = lang('Time.minutes', [abs($minutes)]);
+			$before = $minutes < 0;
+		}
+		else
+		{
+			return lang('Time.now');
+		}
+
+		return $before
+			? $phrase .' '. lang('ago')
+			: lang('Time.inFuture') .' '. $phrase;
+	}
+
+
+	//--------------------------------------------------------------------
 	// Utilities
 	//--------------------------------------------------------------------
 
@@ -1115,7 +1184,7 @@ class Time extends DateTime
 	 */
 	public function getCalendar()
 	{
-		return \IntlCalendar::fromDateTime($this->toDateTime());
+		return \IntlCalendar::fromDateTime($this->toDateTimeString());
 	}
 
 	//--------------------------------------------------------------------
