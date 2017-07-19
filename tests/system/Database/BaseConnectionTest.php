@@ -131,5 +131,19 @@ class BaseConnectionTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Ensures we don't have escaped - values...
+	 *
+	 * @see https://github.com/bcit-ci/CodeIgniter4/issues/606
+	 */
+	public function testEscapeProtectsNegativeNumbers()
+	{
+		$db = new MockConnection($this->options);
+
+		$db->initialize();
+
+		$this->assertEquals("'-100'", $db->escape(-100));
+	}
+
 
 }
