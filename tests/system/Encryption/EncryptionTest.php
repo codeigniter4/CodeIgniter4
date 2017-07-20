@@ -21,73 +21,108 @@ class EncryptionTest extends CIUnitTestCase
 	public function testConstructor()
 	{
 		// Assume no configuration from set_up()
-		$this->assertNull($this->encryption->key);
+		$this->assertEmpty($this->encryption->key);
 
 		// Try with an empty value
 		$config = new \Config\Encryption();
 		$this->encrypt = new \CodeIgniter\Encryption\Encryption($config);
-		$this->assertNull($this->encrypt->key);
+		$this->assertEmpty($this->encrypt->key);
 
-		$config->key = str_repeat("\x0", 32);
+		// try a different key
+		$ikm = str_repeat("\x0", 32);
+		$ikm = "Secret stuff";
+		$config->key = $ikm;
 		$this->encrypt = new \CodeIgniter\Encryption\Encryption($config);
-		$this->assertEquals(str_repeat("\x0", 32), $this->encrypt->key);
+		$this->assertEquals($ikm, $this->encrypt->key);
+	}
+
+	/**
+	 * Covers behavior with invalid parameters
+	 * 
+	 * @expectedException \CodeIgniter\Encryption\EncryptionException
+	 */
+	public function testBadDriver()
+	{
+		// ask for a bad driver
+		$config = new \Config\Encryption();
+		$config->driver = 'Bogus';
+		$this->encrypt = new \CodeIgniter\Encryption\Encryption($config);
+		$this->encrypt->initialize();
+		$this->assertNotNull($this->encrypt);
+	}
+
+	/**
+	 * Covers behavior with invalid parameters
+	 * 
+	 * @expectedException \CodeIgniter\Encryption\EncryptionException
+	 */
+	public function testBadDigest()
+	{
+		// ask for a bad digest
+		$config = new \Config\Encryption();
+		$config->digest = 'Bogus';
+		$this->encrypt = new \CodeIgniter\Encryption\Encryption($config);
+		$this->encrypt->initialize();
+		$this->assertNotNull($this->encrypt);
 	}
 
 	// --------------------------------------------------------------------
 
 	/**
-	 * Ensure that the Services will give us an encrypter
+	 * Config parameters test
 	 */
-	public function testService()
+	public function testParameters()
 	{
-		// Try with an empty value
-		$config = new \Config\Encryption();
-		$this->encrypt = \Config\Services::encrypter($config);
-		$this->assertNull($this->encrypt->key);
+		// make sure we don't actually need parameters
+		$this->assertTrue(is_array($this->encryption->config));
 
-		$config->key = str_repeat("\x0", 32);
-		$this->encrypt = \Config\Services::encrypter($config);
-		$this->assertEquals(str_repeat("\x0", 32), $this->encrypt->key);
+		// check that defaults are there
+		$defaults = $this->encryption->default;
+		foreach ($defaults as $key => $value)
+			$this->assertEquals($value, $this->encryption->$key);
+
+		// make sure we can over-ride any parameter
+		// change the driver once we have more than 1
+		$expected = [
+			'driver'	 => 'OpenSSL', // The PHP extension we plan to use
+			'key'		 => 'Top banana', // no starting key material
+			'cipher'	 => 'AES-128-CBC', // Encryption cipher
+			'digest'	 => '', // HMAC digest algorithm to use
+			'encoding'	 => '', // Base64 encoding?
+		];
+		$this->encrypt = new \CodeIgniter\Encryption\Encryption($expected);
+		foreach ($expected as $key => $value)
+			$this->assertEquals($value, $this->encrypt->$key);
 	}
 
-//	// --------------------------------------------------------------------
-//	//FIXME We need more than one handler in order to include this test
-//	/**
-//	 * AES-256 appears to be the only common cipher. 
-//	 * Let's make sure it works across all our handlers.
-//	 */
-//	public function testPortability()
-//	{
-//		$message = 'This is a message encrypted with driver and decrypted using another.';
-//
-//		// Format is: <Cipher name>, <Cipher mode>, <Key size>
-//		$portable = [
-//			['aes-256', 'cbc', 32],
-//		];
-//		$handlers = $this->encryption->handlers;
-//
-//		foreach ($portable as &$test)
-//			foreach ($handlers as $encrypting)
-//				foreach ($handlers as $decrypting)
-//				{
-//					if ($encrypting == $decrypting)
-//						continue;
-//
-//					$params = [
-//						'driver' => $encrypting,
-//						'cipher' => $test[0],
-//						'mode'	 => $test[1],
-//						'key'	 => openssl_random_pseudo_bytes($test[2])
-//					];
-//
-//					$encrypter = $this->encryption->initialize($params);
-//					$ciphertext = $encrypter->encrypt($message);
-//
-//					$params['driver'] = $decrypting;
-//
-//					$decrypter = $this->encryption->initialize($params);
-//					$this->assertEquals($message, $decrypter->decrypt($ciphertext), 'From ' . $encrypting . ' to ' . $decrypting);
-//				}
-//	}
+	// --------------------------------------------------------------------
+
+	public function testKeyCreation()
+	{
+		$this->assertNotEmpty($this->encryption->createKey());
+		$this->assertEquals(32, strlen($this->encryption->createKey()));
+		$this->assertEquals(16, strlen($this->encryption->createKey(16)));
+	}
+
+	// --------------------------------------------------------------------
+
+	/**
+	 * Initialization test
+	 */
+	public function testInitialization()
+	{
+		// make sure we can over-ride any parameter
+		// change the driver once we have more than 1
+		$expected = [
+			'driver'	 => 'OpenSSL', // The PHP extension we plan to use
+			'key'		 => 'Top banana', // no starting key material
+			'cipher'	 => 'AES-256-CBC', // Encryption cipher
+			'digest'	 => 'SHA512', // HMAC digest algorithm to use
+			'encoding'	 => 'base64', // Base64 encoding?
+		];
+		$this->encrypt = $this->encryption->initialize($expected);
+		foreach ($expected as $key => $value)
+			$this->assertEquals($value, $this->encrypt->$key);
+	}
 
 }

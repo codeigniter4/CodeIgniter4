@@ -981,7 +981,143 @@ class Time extends DateTime
 	}
 
 	//--------------------------------------------------------------------
+
+	//--------------------------------------------------------------------
+	// Comparison
+	//--------------------------------------------------------------------
+
+	/**
+	 * Determines if the datetime passed in is equal to the current instance.
+	 * Equal in this case means that they represent the same moment in time,
+	 * and are not required to be in the same timezone, as both times are
+	 * converted to UTC and compared that way.
+	 *
+	 * @param Time|DateTime|string $testTime
+	 * @param string|null          $timezone
+	 *
+	 * @return bool
+	 */
+	public function equals($testTime, string $timezone = null): bool
+	{
+		$testTime = $this->getUTCObject($testTime, $timezone);
+
+		$ourTime = $this->toDateTime()
+		                ->setTimezone(new DateTimeZone('UTC'))
+		                ->format('Y-m-d H:i:s');
+
+		return $testTime->format('Y-m-d H:i:s') === $ourTime;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Ensures that the times are identical, taking timezone into account.
+	 *
+	 * @param Time|DateTime|string  $testTime
+	 * @param string|null           $timezone
+	 *
+	 * @return bool
+	 */
+	public function sameAs($testTime, string $timezone = null): bool
+	{
+		if ($testTime instanceof DateTime)
+		{
+			$testTime = $testTime->format('Y-m-d H:i:s');
+		}
+		else if (is_string($testTime))
+		{
+			$timezone = $timezone ?: $this->timezone;
+			$timezone = $timezone instanceof DateTimeZone ? $timezone : new DateTimeZone($timezone);
+			$testTime = new DateTime($testTime, $timezone);
+			$testTime = $testTime->format('Y-m-d H:i:s');
+		}
+
+		$ourTime = $this->toDateTimeString();
+
+		return $testTime === $ourTime;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 *
+	 *
+	 * @param             $testTime
+	 * @param string|null $timezone
+	 *
+	 * @return bool
+	 */
+	public function before($testTime, string $timezone = null): bool
+	{
+		$testTime = $this->getUTCObject($testTime, $timezone)->getTimestamp();
+		$ourTime = $this->getTimestamp();
+
+		return $ourTime < $testTime;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Determines if the current instance's time is after $testTime,
+	 * after comparing in UTC.
+	 *
+	 * @param             $testTime
+	 * @param string|null $timezone
+	 *
+	 * @return bool
+	 */
+	public function after($testTime, string $timezone = null): bool
+	{
+		$testTime = $this->getUTCObject($testTime, $timezone)->getTimestamp();
+		$ourTime = $this->getTimestamp();
+
+		return $ourTime > $testTime;
+	}
+
+	//--------------------------------------------------------------------
+
+	//--------------------------------------------------------------------
 	// Utilities
+	//--------------------------------------------------------------------
+
+	public function getUTCObject($time, string $timezone=null)
+	{
+		if ($time instanceof Time)
+		{
+			$time = $time->toDateTime()
+			             ->setTimezone(new DateTimeZone('UTC'));
+		}
+		else if ($time instanceof \DateTime)
+		{
+			$time = $time->setTimezone(new DateTimeZone('UTC'));
+		}
+		else if (is_string($time))
+		{
+			$timezone = $timezone ?: $this->timezone;
+			$timezone = $timezone instanceof DateTimeZone ? $timezone : new DateTimeZone($timezone);
+			$time     = new DateTime($time, $timezone);
+			$time     = $time->setTimezone(new DateTimeZone('UTC'));
+		}
+
+		return $time;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns the IntlCalendar object used for this object,
+	 * taking into account the locale, date, etc.
+	 *
+	 * Primarily used internally to provide the difference and comparison functions,
+	 * but available for public consumption if they need it.
+	 *
+	 * @return \IntlCalendar
+	 */
+	public function getCalendar()
+	{
+		return \IntlCalendar::fromDateTime($this->toDateTime());
+	}
+
 	//--------------------------------------------------------------------
 
 	/**
