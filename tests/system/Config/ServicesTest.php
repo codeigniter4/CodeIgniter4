@@ -46,13 +46,17 @@ class ServicesTest extends \CIUnitTestCase
 
 	public function testNewEncrypter()
 	{
-		$actual = Services::encrypter();
+		$config = new \Config\Encryption();
+		$config->key = 'This is for testing';
+		$actual = Services::encrypter($config);
 		$this->assertInstanceOf(\CodeIgniter\Encryption\EncrypterInterface::class, $actual);
 	}
 
 	public function testNewSharedEncrypter()
 	{
-		$actual = Services::encrypter(null, true); // not that this makes sense
+		$config = new \Config\Encryption();
+		$config->key = 'This is for testing';
+		$actual = Services::encrypter($config, true); // not that this makes sense
 		$this->assertInstanceOf(\CodeIgniter\Encryption\EncrypterInterface::class, $actual);
 	}
 
