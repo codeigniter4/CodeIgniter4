@@ -35,12 +35,14 @@
  * @since	Version 3.0.0
  * @filesource
  */
-class OpenSSLHandler extends BaseHandler
+class SodiumHandler extends BaseHandler
 {
 	// --------------------------------------------------------------------
 
 	/**
-	 * Initialize OpenSSL, remembering parameters
+	 * Initialize Sodium.
+	 * 
+	 * Cipher is ignored, and only GCM mode is available.
 	 *
 	 * @param	array	$params	Configuration parameters
 	 * @return	void
@@ -49,15 +51,20 @@ class OpenSSLHandler extends BaseHandler
 	{
 		parent::__construct($params);
 
-		if (empty($this->cipher))
-			throw new \CodeIgniter\Encryption\EncryptionException("OpenSSL handler configuration missing cipher.");
-		if ( ! in_array($this->cipher, openssl_get_cipher_methods(), true))
-			throw new \CodeIgniter\Encryption\EncryptionException("OpenSSL handler does not support the " . $this->cipher . " cipher.");
-
 		if (empty($this->key))
-			throw new \CodeIgniter\Encryption\EncryptionException("OpenSSL handler configuration missing key.");
+			throw new \CodeIgniter\Encryption\EncryptionException("Sodium handler configuration missing key.");
 
-		$this->logger->info('OpenSSL handler initialized with cipher ' . $this->cipher . '.');
+		$this->cipher = 'N/A';
+		$this->mode = 'N/A';
+
+		if (function_exists('sodium_init') && sodium_init())
+		{
+			$this->logger->info('Encryption: Sodium initialized.');
+		}
+		else
+		{
+			$this->logger->error('Encryption: Unable to initialize Sodium.');
+		}
 	}
 
 	/**
@@ -68,22 +75,19 @@ class OpenSSLHandler extends BaseHandler
 	 */
 	public function encrypt($data)
 	{
-		// basic encryption	
-		$iv = ($iv_size = \openssl_cipher_iv_length($this->cipher)) ? \openssl_random_pseudo_bytes($iv_size) : null;
+		// allow key to be over-ridden
+		$key = empty($params['key']) ? $this->key : $params['key'];
 
-		$data = \openssl_encrypt($data, $this->cipher, $this->secret, OPENSSL_RAW_DATA, $iv);
+		$nonce = \Sodium\randombytes_buf(\Sodium\CRYPTO_SECRETBOX_NONCEBYTES);
 
-		if ($data === false)
-			return false;
+		$ciphertext = \Sodium\crypto_secretbox($data, $nonce, $key);
 
-		$result = $iv . $data;
-
-		// HMAC?
-		if ( ! empty($this->digest))
+		if ($ciphertext === false)
 		{
-			$hmacKey = \hash_hmac($this->digest, $result, $this->secret, true);
-			$result = $hmacKey . $result;
+			return false;
 		}
+
+		$result = $nonce . $ciphertext;
 
 		if ( ! empty($this->encoding))
 			if ($this->encoding == 'base64')
@@ -110,28 +114,21 @@ class OpenSSLHandler extends BaseHandler
 			elseif ($this->encoding == 'hex')
 				$data = \hex2bin($data);
 
-		// HMAC?
-		if ( ! empty($this->digest))
+		// allow key to be over-ridden
+		$key = empty($params['key']) ? $this->key : $params['key'];
+
+		// split the data into nonce & ciphertext
+		$nonce = self::substr($data, 0, \Sodium\CRYPTO_SECRETBOX_NONCEBYTES);
+		$data = self::substr($data, \Sodium\CRYPTO_SECRETBOX_NONCEBYTES);
+
+		$plaintext = \Sodium\crypto_secretbox_open($data, $nonce, $key);
+
+		if ($plaintext === false)
 		{
-			$hmacLength = self::substr($this->digest, 3) / 8;
-			$hmacKey = self::substr($data, 0, $hmacLength);
-			$data = self::substr($data, $hmacLength);
-			$hmacCalc = \hash_hmac($this->digest, $data, $this->secret, true);
-			if (! hash_equals($hmacKey,$hmacCalc))
-				throw new \CodeIgniter\Encryption\EncryptionException("Message authentication failed.");
+			throw new EncryptionException("Bad ciphertext");
 		}
 
-		if ($iv_size = \openssl_cipher_iv_length($this->cipher))
-		{
-			$iv = self::substr($data, 0, $iv_size);
-			$data = self::substr($data, $iv_size);
-		}
-		else
-		{
-			$iv = null;
-		}
-
-		return \openssl_decrypt($data, $this->cipher, $this->secret, OPENSSL_RAW_DATA, $iv);
+		return $plaintext;
 	}
 
 }

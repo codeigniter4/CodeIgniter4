@@ -95,6 +95,7 @@ class Encryption
 	 */
 	protected $drivers = [
 		'OpenSSL',
+		'Sodium'
 	];
 
 	/**
@@ -140,6 +141,7 @@ class Encryption
 		// determine what is installed
 		$this->handlers = [
 			'OpenSSL' => extension_loaded('openssl'),
+			'Sodium' => extension_loaded('libsodium'),
 		];
 
 		if ( ! in_array(true, $this->handlers))
@@ -236,7 +238,7 @@ class Encryption
 	 */
 	public static function createKey($length = 32)
 	{
-		return \openssl_random_pseudo_bytes($length);
+		return random_bytes($length);
 	}
 
 	// --------------------------------------------------------------------
