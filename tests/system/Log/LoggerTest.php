@@ -354,26 +354,5 @@ class LoggerTest extends \CIUnitTestCase
 		$this->assertEquals($expected, $logs[0]);
 	}
 	
-	//--------------------------------------------------------------------
 
-	public function testLogLevelLookup()
-	{
-		$config = new LoggerConfig();
-		$logger = new Logger($config);
-
-		$expected = 'DEBUG - '.date('Y-m-d').' --> Test message';
-
-		$logger->debug('Test message');
-		$logs = TestHandler::getLogs();
-		$this->assertEquals(1, count($logs));
-		$this->assertEquals($expected, $logs[0]);
-
-		$logger->log(1, 'Joe dee doo',[]);
-		$logs = TestHandler::getLogs();
-		$this->assertEquals(2, count($logs));
-		$this->assertEquals($expected, $logs[1]);
-		
-	}
-	
-	
 }
