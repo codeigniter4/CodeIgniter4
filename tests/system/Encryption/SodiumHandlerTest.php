@@ -9,7 +9,9 @@ class SodiumHandlerTest extends CIUnitTestCase
 	public function setUp()
 	{
 		$this->encryption = new \CodeIgniter\Encryption\Encryption();
-		$this->encrypter = $this->encryption->initialize(['driver' => 'Sodium','key'=>'Something other than an empty string']);
+		$this->encrypter = $this->encryption->initialize(['driver' => 'Sodium', 'key' => 'Something other than an empty string']);
+		if ( ! extension_loaded('libsodium'))
+			$this->markTestSkipped('libsodium extension not available.');
 	}
 
 	// --------------------------------------------------------------------
@@ -17,10 +19,11 @@ class SodiumHandlerTest extends CIUnitTestCase
 	/**
 	 * Sanity test
 	 */
-	public function testSanity() {
-		$this->assertEquals('Something other than an empty string',$this->encrypter->key);
+	public function testSanity()
+	{
+		$this->assertEquals('Something other than an empty string', $this->encrypter->key);
 	}
-	
+
 	// --------------------------------------------------------------------
 
 	/**
