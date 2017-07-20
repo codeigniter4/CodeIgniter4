@@ -66,17 +66,17 @@ class ServicesTest extends \CIUnitTestCase
 		$this->assertInstanceOf(\CodeIgniter\Images\ImageHandlerInterface::class, $actual);
 	}
 
-	public function testNewMigrationRunner()
-	{
-		//FIXME - docs aren't clear about setting this up to just make sure that the service
-		// returns a MigrationRunner
-		$config = new \Config\Migrations();
-		$db = new \CodeIgniter\Database\MockConnection([]);
-		$this->expectException('InvalidArgumentException');
-		$actual = Services::migrations($config, $db);
-		$this->assertInstanceOf(\CodeIgniter\Database\MigrationRunner::class, $actual);
-	}
-
+//	public function testNewMigrationRunner()
+//	{
+//		//FIXME - docs aren't clear about setting this up to just make sure that the service
+//		// returns a MigrationRunner
+//		$config = new \Config\Migrations();
+//		$db = new \CodeIgniter\Database\MockConnection([]);
+//		$this->expectException('InvalidArgumentException');
+//		$actual = Services::migrations($config, $db);
+//		$this->assertInstanceOf(\CodeIgniter\Database\MigrationRunner::class, $actual);
+//	}
+//
 	public function testNewNegotiatorWithNullConfig()
 	{
 		$actual = Services::negotiator(null);
