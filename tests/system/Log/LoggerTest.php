@@ -370,7 +370,6 @@ class LoggerTest extends \CIUnitTestCase
 
 		$logger->log(1, 'Joe dee doo',[]);
 		$logs = TestHandler::getLogs();
-		print_r($logs);die();
 		$this->assertEquals(2, count($logs));
 		$this->assertEquals($expected, $logs[1]);
 		
