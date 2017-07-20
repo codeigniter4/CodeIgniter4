@@ -25,5 +25,11 @@ class SimpleConfig extends \CodeIgniter\Config\BaseConfig
 	public $echo = '';
 	public $foxtrot = 'false';
 	public $golf = 18;
+	public $crew = [
+		'captain'	 => 'Kirk',
+		'science'	 => 'Spock',
+		'doctor'	 => 'Bones',
+		'comms'		 => 'Uhuru'
+	];
 
 }
