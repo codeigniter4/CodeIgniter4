@@ -36,15 +36,15 @@ before_install:
   - make
   - sudo make install
   - sudo /sbin/ldconfig
-  - cd ..
-  - pecl install libsodium
-  - echo "extension = libsodium.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
-  - rm -fr libsodium
   - phpize
   - ./configure --with-libsodium
   - make clean
   - make
   - env NO_INTERACTION=1 make test
+  - cd ..
+  - pecl install libsodium
+  - echo "extension = libsodium.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+  - rm -fr libsodium
   
 before_script:
   - echo 'extension = memcached.so' >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
