@@ -32,8 +32,8 @@ before_install:
   - git clone git://github.com/jedisct1/libsodium.git
   - cd libsodium
   - git checkout 1.0.10
-  - ./configure
-  - make && make check
+  - ./autogen.sh
+  - ./configure && make check
   - sudo make install
   - cd ..
   - sudo pecl install libsodium
