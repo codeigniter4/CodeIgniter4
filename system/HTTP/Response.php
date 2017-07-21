@@ -45,7 +45,7 @@ use Config\Mimes;
  */
 class RedirectException extends \Exception
 {
-	
+
 }
 
 /**
@@ -337,6 +337,23 @@ class Response extends Message implements ResponseInterface
 		$date->setTimezone(new \DateTimeZone('UTC'));
 
 		$this->setHeader('Date', $date->format('D, d M Y H:i:s') . ' GMT');
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Set the Link Header
+	 *
+	 * @param \CodeIgniter\Pager\Pager $pager
+	 *
+	 * @return Response
+	 */
+	public function setLink(Pager $pager)
+	{
+		// http://tools.ietf.org/html/rfc5988
+		$this->setHeader('Link', $pager->links('default', 'default_header'));
 
 		return $this;
 	}
