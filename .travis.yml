@@ -23,17 +23,27 @@ services:
   - redis-server
 
 script:
+ - phpize
+ - ./configure --with-libsodium
+ - make clean
+ - make
+ - env NO_INTERACTION=1 make test
   - php vendor/bin/phpunit -v
 
 before_install:
   - mysql -e "CREATE DATABASE IF NOT EXISTS test;" -uroot;
   - mysql -e "SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = 'test';" -uroot
   - psql -c 'CREATE DATABASE test;' -U postgres
-  - sudo add-apt-repository ppa:chris-lea/libsodium
-  - sudo apt-get update && sudo apt-get install libsodium-dev
-  - pecl install libsodium
-  - echo "extension = libsodium.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
-
+  - git clone git://github.com/jedisct1/libsodium.git
+  - cd libsodium
+  - ./autogen.sh
+  - ./configure --disable-dependency-tracking
+  - make
+  - sudo make install
+  - sudo /sbin/ldconfig
+  - cd ..
+  - rm -fr libsodium
+  
 before_script:
   - echo 'extension = memcached.so' >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - echo 'extension = redis.so' >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
