@@ -36,14 +36,11 @@ before_install:
   - make
   - sudo make install
   - sudo /sbin/ldconfig
+  - cd ..
   - phpize
   - ./configure --with-libsodium
   - make clean
-  - make
-  - env NO_INTERACTION=1 make test
-  - cd ..
-  - pecl install libsodium
-  - echo "extension = libsodium.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+  - make install
   - rm -fr libsodium
   
 before_script:
