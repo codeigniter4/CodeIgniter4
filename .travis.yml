@@ -23,11 +23,6 @@ services:
   - redis-server
 
 script:
- - phpize
- - ./configure --with-libsodium
- - make clean
- - make
- - env NO_INTERACTION=1 make test
   - php vendor/bin/phpunit -v
 
 before_install:
@@ -42,7 +37,14 @@ before_install:
   - sudo make install
   - sudo /sbin/ldconfig
   - cd ..
+  - pecl install libsodium
+  - echo "extension = libsodium.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - rm -fr libsodium
+  - phpize
+  - ./configure --with-libsodium
+  - make clean
+  - make
+  - env NO_INTERACTION=1 make test
   
 before_script:
   - echo 'extension = memcached.so' >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
