@@ -29,7 +29,8 @@ before_install:
   - mysql -e "CREATE DATABASE IF NOT EXISTS test;" -uroot;
   - mysql -e "SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = 'test';" -uroot
   - psql -c 'CREATE DATABASE test;' -U postgres
-  - sudo apt-get install libsodium-dev
+  - sudo add-apt-repository ppa:chris-lea/libsodium
+  - sudo apt-get update && sudo apt-get install libsodium-dev
   - pecl install libsodium
   - echo "extension = libsodium.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
 
