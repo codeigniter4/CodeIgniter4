@@ -31,17 +31,13 @@ before_install:
   - psql -c 'CREATE DATABASE test;' -U postgres
   - git clone git://github.com/jedisct1/libsodium.git
   - cd libsodium
-  - ./autogen.sh
-  - ./configure --disable-dependency-tracking
-  - make
+  - git checkout 1.0.10
+  - ./configure
+  - make && make check
   - sudo make install
-  - sudo /sbin/ldconfig
   - cd ..
-  - phpize
-  - ./configure --with-libsodium
-  - make clean
-  - make install
-  - rm -fr libsodium
+  - sudo pecl install libsodium
+  - echo "extension = libsodium.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   
 before_script:
   - echo 'extension = memcached.so' >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
