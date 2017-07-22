@@ -69,7 +69,7 @@ class Controller
 	/**
 	 * Instance of the main response object.
 	 *
-	 * @var ResponseInterface
+	 * @var ResponseInterface|\CodeIgniter\HTTP\Response
 	 */
 	protected $response;
 
