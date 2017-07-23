@@ -45,8 +45,8 @@ use CodeIgniter\HTTP\Response;
  * consistent HTTP responses under a variety of common
  * situations when working as an API.
  *
- * @property \CodeIgniter\HTTP\Request  $request
- * @property \CodeIgniter\HTTP\Response $response
+ * @property \CodeIgniter\HTTP\IncomingRequest $request
+ * @property \CodeIgniter\HTTP\Response        $response
  *
  * @package CodeIgniter\API
  */
