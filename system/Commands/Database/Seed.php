@@ -91,6 +91,8 @@ class Seed extends BaseCommand
 	/**
 	 * Runs all of the migrations in reverse order, until they have
 	 * all been un-applied.
+	 *
+	 * @param array $params
 	 */
 	public function run(array $params = [])
 	{

@@ -53,8 +53,8 @@ class CommandRunner extends Controller
 	 * We map all un-routed CLI methods through this function
 	 * so we have the chance to look for a Command first.
 	 *
-	 * @param       $method
-	 * @param array ...$params
+	 * @param string $method
+	 * @param array  ...$params
 	 */
 	public function _remap($method, ...$params)
 	{
@@ -69,6 +69,10 @@ class CommandRunner extends Controller
 
 	//--------------------------------------------------------------------
 
+
+	/**
+	 * @param array $params
+	 */
 	public function index(array $params)
 	{
 		$command = array_shift($params);

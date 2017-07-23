@@ -247,6 +247,7 @@ class Model
 	 *
 	 * @param ConnectionInterface $db
 	 * @param BaseConfig          $config Config/App()
+	 * @param ValidationInterface $validation
 	 */
 	public function __construct(ConnectionInterface &$db = null, BaseConfig $config = null, ValidationInterface $validation = null)
 	{
@@ -1049,7 +1050,7 @@ class Model
 	 *
 	 * @param string $table
 	 *
-	 * @return BaseBuilder|Database\QueryBuilder
+	 * @return BaseBuilder|Database\Builder\
 	 */
 	protected function builder(string $table = null)
 	{

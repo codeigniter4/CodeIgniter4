@@ -118,6 +118,9 @@ class CLI
 	 * @var array
 	 */
 	protected static $segments = [];
+	/**
+	 * @var array
+	 */
 	protected static $options = [];
 
 	//--------------------------------------------------------------------
@@ -180,7 +183,7 @@ class CLI
 	 * // Will only accept the options in the array
 	 * $ready = CLI::prompt('Are you ready?', array('y','n'));
 	 *
-	 * @return    string    the user input
+	 * @return    string    The user input
 	 */
 	public static function prompt(): string
 	{
@@ -283,7 +286,7 @@ class CLI
 	/**
 	 * Outputs a string to the cli.
 	 *
-	 * @param string $text          the text to output
+	 * @param string $text          The text to output
 	 * @param string $foreground
 	 * @param string $background
 	 */
@@ -302,9 +305,9 @@ class CLI
 	/**
 	 * Outputs an error to the CLI using STDERR instead of STDOUT
 	 *
-	 * @param    string|array $text the text to output, or array of errors
-	 * @param string $foreground
-	 * @param string $background
+	 * @param    string|array $text The text to output, or array of errors
+	 * @param string          $foreground
+	 * @param string          $background
 	 */
 	public static function error(string $text, string $foreground = 'light_red', string $background = null)
 	{
@@ -321,7 +324,7 @@ class CLI
 	/**
 	 * Beeps a certain number of times.
 	 *
-	 * @param    int $num the number of times to beep
+	 * @param    int $num The number of times to beep
 	 */
 	public static function beep(int $num = 1)
 	{
@@ -334,8 +337,8 @@ class CLI
 	 * Waits a certain number of seconds, optionally showing a wait message and
 	 * waiting for a key press.
 	 *
-	 * @param    int  $seconds   number of seconds
-	 * @param    bool $countdown show a countdown or not
+	 * @param    int  $seconds   Number of seconds
+	 * @param    bool $countdown Show a countdown or not
 	 */
 	public static function wait(int $seconds, bool $countdown = false)
 	{
@@ -417,12 +420,12 @@ class CLI
 	 * Returns the given text with the correct color codes for a foreground and
 	 * optionally a background color.
 	 *
-	 * @param    string $text       the text to color
-	 * @param    string $foreground the foreground color
-	 * @param    string $background the background color
-	 * @param    string $format     other formatting to apply. Currently only 'underline' is understood
+	 * @param    string $text       The text to color
+	 * @param    string $foreground The foreground color
+	 * @param    string $background The background color
+	 * @param    string $format     Other formatting to apply. Currently only 'underline' is understood
 	 *
-	 * @return    string    the color coded string
+	 * @return    string    The color coded string
 	 */
 	public static function color(string $text, string $foreground, string $background = null, string $format = null)
 	{

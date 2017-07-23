@@ -86,12 +86,13 @@ class Rules
 	/**
 	 * Greater than
 	 *
-	 * @param    string
-	 * @param    int
+	 * @param    string $str
+	 * @param    int    $min
+	 * @param    array  $data
 	 *
 	 * @return    bool
 	 */
-	public function greater_than(string $str = null, string $min, array $data): bool
+	public function greater_than(string $str = null, int $min, array $data): bool
 	{
 		return is_numeric($str) ? ($str > $min) : false;
 	}
@@ -101,12 +102,13 @@ class Rules
 	/**
 	 * Equal to or Greater than
 	 *
-	 * @param    string
-	 * @param    int
+	 * @param    string $str
+	 * @param    int    $min
+	 * @param    array  $data
 	 *
 	 * @return    bool
 	 */
-	public function greater_than_equal_to(string $str = null, string $min, array $data): bool
+	public function greater_than_equal_to(string $str = null, int $min, array $data): bool
 	{
 		return is_numeric($str) ? ($str >= $min) : false;
 	}
@@ -116,8 +118,9 @@ class Rules
 	/**
 	 * Value should be within an array of values
 	 *
-	 * @param	string
-	 * @param	string
+	 * @param	string $value
+	 * @param	string $list
+	 * @param	array $data
 	 * @return	bool
 	 */
 	public function in_list(string $value = null, string $list, array $data): bool
@@ -172,12 +175,12 @@ class Rules
 	/**
 	 * Less than
 	 *
-	 * @param    string
-	 * @param    int
+	 * @param    string $str
+	 * @param    int    $max
 	 *
 	 * @return    bool
 	 */
-	public function less_than(string $str = null, string $max): bool
+	public function less_than(string $str = null, int $max): bool
 	{
 		return is_numeric($str) ? ($str < $max) : false;
 	}
@@ -187,12 +190,12 @@ class Rules
 	/**
 	 * Equal to or Less than
 	 *
-	 * @param    string
-	 * @param    int
+	 * @param    string $str
+	 * @param    int    $max
 	 *
 	 * @return    bool
 	 */
-	public function less_than_equal_to(string $str = null, string $max): bool
+	public function less_than_equal_to(string $str = null, int $max): bool
 	{
 		return is_numeric($str) ? ($str <= $max) : false;
 	}

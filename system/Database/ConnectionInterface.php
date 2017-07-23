@@ -56,7 +56,7 @@ interface ConnectionInterface
 	/**
 	 * Connect to the database.
 	 *
-	 * @param $persistent
+	 * @param bool $persistent
 	 * @return mixed
 	 */
 	public function connect($persistent = false);
@@ -199,7 +199,7 @@ interface ConnectionInterface
 	 * Escapes data based on type.
 	 * Sets boolean and null types.
 	 *
-	 * @param $str
+	 * @param string $str
 	 *
 	 * @return mixed
 	 */

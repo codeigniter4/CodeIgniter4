@@ -89,6 +89,8 @@ class MigrateCurrent extends BaseCommand
 	/**
 	 * Migrates us up or down to the version specified as $currentVersion
 	 * in the migrations config file.
+	 *
+	 * @param array $params
 	 */
 	public function run(array $params = [])
 	{

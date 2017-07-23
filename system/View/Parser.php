@@ -87,7 +87,7 @@ class Parser extends View
 	 *
 	 * @param \Config\View  $config
 	 * @param string $viewPath
-	 * @param type $loader
+	 * @param mixed $loader
 	 * @param bool $debug
 	 * @param Logger $logger
 	 */
