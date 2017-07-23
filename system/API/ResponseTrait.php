@@ -45,8 +45,8 @@ use CodeIgniter\HTTP\Response;
  * consistent HTTP responses under a variety of common
  * situations when working as an API.
  *
- * @property $request   CodeIgniter\HTTP\Request
- * @property $response  CodeIgniter\HTTP\Response
+ * @property \CodeIgniter\HTTP\IncomingRequest $request
+ * @property \CodeIgniter\HTTP\Response        $response
  *
  * @package CodeIgniter\API
  */
@@ -129,10 +129,10 @@ trait ResponseTrait
 	/**
 	 * Used for generic failures that no custom methods exist for.
 	 *
-	 * @param             $messages
-	 * @param int|null    $status HTTP status code
-	 * @param string|null $code   Custom, API-specific, error code
-	 * @param string      $customMessage
+	 * @param string|array $messages
+	 * @param int|null     $status HTTP status code
+	 * @param string|null  $code   Custom, API-specific, error code
+	 * @param string       $customMessage
 	 *
 	 * @return mixed
 	 */

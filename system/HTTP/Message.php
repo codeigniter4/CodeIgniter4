@@ -56,7 +56,7 @@ class Message
 
 	/**
 	 * Protocol version
-	 * @var type
+	 * @var string
 	 */
 	protected $protocolVersion;
 
@@ -69,7 +69,7 @@ class Message
 	/**
 	 * Message body
 	 *
-	 * @var type
+	 * @var string
 	 */
 	protected $body;
 
@@ -186,8 +186,7 @@ class Message
 	 * Returns a single header object. If multiple headers with the same
 	 * name exist, then will return an array of header objects.
 	 *
-	 * @param      $name
-	 * @param null $filter
+	 * @param string     $name
 	 *
 	 * @return array|\CodeIgniter\HTTP\Header
 	 */
@@ -261,7 +260,7 @@ class Message
 	 * Sets a header and it's value.
 	 *
 	 * @param string $name
-	 * @param        $value
+	 * @param string $value
 	 *
 	 * @return Message
 	 */
@@ -319,7 +318,7 @@ class Message
 	 * multiple values (i.e. are an array or implement ArrayAccess)
 	 *
 	 * @param string $name
-	 * @param        $value
+	 * @param string $value
 	 *
 	 * @return string
 	 */
@@ -339,7 +338,7 @@ class Message
 	 * multiple values (i.e. are an array or implement ArrayAccess)
 	 *
 	 * @param string $name
-	 * @param        $value
+	 * @param string $value
 	 *
 	 * @return string
 	 */
@@ -396,7 +395,7 @@ class Message
 	 * Takes a header name in any case, and returns the
 	 * normal-case version of the header.
 	 *
-	 * @param $name
+	 * @param string $name
 	 *
 	 * @return string
 	 */

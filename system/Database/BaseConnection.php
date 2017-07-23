@@ -502,7 +502,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 */
 	public function getError()
 	{
-		
+
 	}
 
 	//--------------------------------------------------------------------
@@ -549,8 +549,8 @@ abstract class BaseConnection implements ConnectionInterface
 	 *
 	 * @param string $sql
 	 * @param array  ...$binds
-	 * @param $queryClass
-	 * @return mixed
+	 * @param string $queryClass
+	 * @return BaseResult|Query|false
 	 */
 	public function query(string $sql, $binds = null, $queryClass = 'CodeIgniter\\Database\\Query')
 	{
