@@ -53,7 +53,7 @@ class Request extends Message implements RequestInterface
 	/**
 	 * Proxy IPs
 	 *
-	 * @var type
+	 * @var string|array
 	 */
 	protected $proxyIPs;
 
@@ -69,7 +69,7 @@ class Request extends Message implements RequestInterface
 	/**
 	 * Constructor.
 	 *
-	 * @param type $config
+	 * @param object $config
 	 */
 	public function __construct($config)
 	{
@@ -215,7 +215,7 @@ class Request extends Message implements RequestInterface
 	/**
 	 * Validate an IP address
 	 *
-	 * @param        $ip     IP Address
+	 * @param string $ip     IP Address
 	 * @param string $which  IP protocol: 'ipv4' or 'ipv6'
 	 *
 	 * @return bool
@@ -243,7 +243,7 @@ class Request extends Message implements RequestInterface
 	/**
 	 * Get the request method.
 	 *
-	 * @param bool|false $upper Whether to return in upper or lower case.
+	 * @param bool $upper Whether to return in upper or lower case.
 	 *
 	 * @return string
 	 */
@@ -259,7 +259,7 @@ class Request extends Message implements RequestInterface
 	 *
 	 * @param string $method
 	 *
-	 * @return $this
+	 * @return Request
 	 */
 	public function setMethod(string $method)
 	{
@@ -308,9 +308,9 @@ class Request extends Message implements RequestInterface
 	 *
 	 * http://php.net/manual/en/filter.filters.sanitize.php
 	 *
-	 * @param      $type
-	 * @param null $index
-	 * @param null $filter
+	 * @param int  $type Input filter constant
+	 * @param string|array $index
+	 * @param int $filter Filter constant
 	 *
 	 * @return mixed
 	 */
