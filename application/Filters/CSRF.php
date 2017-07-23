@@ -3,7 +3,6 @@
 use CodeIgniter\Filters\FilterInterface;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
-use Config\App;
 use Config\Services;
 
 class CSRF implements FilterInterface

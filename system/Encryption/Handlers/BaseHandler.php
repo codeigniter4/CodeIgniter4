@@ -35,7 +35,6 @@
  * @since	Version 3.0.0
  * @filesource
  */
-use CodeIgniter\Config\BaseConfig;
 use Psr\Log\LoggerAwareTrait;
 
 /**

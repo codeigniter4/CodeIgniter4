@@ -37,7 +37,6 @@
  */
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
-use CodeIgniter\Services;
 use CodeIgniter\Log\Logger;
 use CodeIgniter\Validation\Validation;
 
