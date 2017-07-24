@@ -110,10 +110,12 @@ class BaseConfig
 
 	/**
 	 * Retrieve an environment-specific configuration setting
+	 *
 	 * @param string $property
 	 * @param string $prefix
 	 * @param string $shortPrefix
-	 * @return type
+	 *
+	 * @return mixed
 	 */
 	protected function getEnvValue(string $property, string $prefix, string $shortPrefix)
 	{

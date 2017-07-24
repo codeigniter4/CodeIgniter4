@@ -97,9 +97,9 @@ class FileHandler implements CacheInterface
 	/**
 	 * Saves an item to the cache store.
 	 *
-	 * @param string $key    Cache item name
-	 * @param        $value  the data to save
-	 * @param null   $ttl    Time To Live, in seconds (default 60)
+	 * @param string $key   Cache item name
+	 * @param mixed  $value The data to save
+	 * @param int    $ttl   Time To Live, in seconds (default 60)
 	 *
 	 * @return mixed
 	 */
@@ -400,11 +400,11 @@ class FileHandler implements CacheInterface
 	 *
 	 * Any sub-folders contained within the specified path are read as well.
 	 *
-	 * @param    string    path to source
-	 * @param    bool      Look only at the top level directory specified?
-	 * @param    bool      internal variable to determine recursion status - do not use in calls
+	 * @param    string $source_dir     Path to source
+	 * @param    bool   $top_level_only Look only at the top level directory specified?
+	 * @param    bool   $_recursion     Internal variable to determine recursion status - do not use in calls
 	 *
-	 * @return    array
+	 * @return    array|false
 	 */
 	protected function getDirFileInfo($source_dir, $top_level_only = true, $_recursion = false)
 	{
@@ -452,10 +452,10 @@ class FileHandler implements CacheInterface
 	 * Options are: name, server_path, size, date, readable, writable, executable, fileperms
 	 * Returns FALSE if the file cannot be found.
 	 *
-	 * @param    string    path to file
-	 * @param    mixed     array or comma separated string of information returned
+	 * @param    string $file            Path to file
+	 * @param    mixed  $returned_values Array or comma separated string of information returned
 	 *
-	 * @return    array
+	 * @return    array|false
 	 */
 	protected function getFileInfo(string $file, array $returned_values = ['name', 'server_path', 'size', 'date'])
 	{

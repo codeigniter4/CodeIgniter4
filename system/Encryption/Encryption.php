@@ -43,7 +43,7 @@ use Psr\Log\LoggerAwareTrait;
  */
 class EncryptionException extends \Exception
 {
-	
+
 }
 
 /**
@@ -92,7 +92,7 @@ class Encryption
 
 	/**
 	 * Map of drivers to handler classes, in preference order
-	 * 
+	 *
 	 * @var array
 	 */
 	protected $drivers = [
@@ -107,7 +107,7 @@ class Encryption
 	 *
 	 * @param	mixed	$params	Configuration parameters
 	 * @return	void
-	 * 
+	 *
 	 * @throws \CodeIgniter\Encryption\EncryptionException
 	 */
 	public function __construct($params = null)
@@ -138,7 +138,7 @@ class Encryption
 	 *
 	 * @param	array	$params	Configuration parameters
 	 * @return	\CodeIgniter\Encryption\EncrypterInterface
-	 * 
+	 *
 	 * @throws \CodeIgniter\Encryption\EncryptionException
 	 */
 	public function initialize(array $params = [])
@@ -171,7 +171,10 @@ class Encryption
 
 	/**
 	 * Determine proper parameters
-	 * 
+	 *
+	 * @param array|object $params
+	 *
+	 * @return array|null
 	 */
 	protected function properParams($params = null)
 	{
@@ -246,16 +249,18 @@ class Encryption
 
 	/**
 	 * HKDF legacy implementation, from CodeIgniter3.
-	 * 
+	 *
 	 * Fallback if PHP version < 7.1.2
 	 *
-	 * @link	https://tools.ietf.org/rfc/rfc5869.txt
-	 * @param	$key	Input key
-	 * @param	$digest	A SHA-2 hashing algorithm
-	 * @param	$salt	Optional salt
-	 * @param	$length	Output length (defaults to the selected digest size)
-	 * @param	$info	Optional context/application-specific info
-	 * @return	string	A pseudo-random key
+	 * @link    https://tools.ietf.org/rfc/rfc5869.txt
+	 *
+	 * @param    string $key    Input key
+	 * @param    string $digest A SHA-2 hashing algorithm
+	 * @param    string $salt   Optional salt
+	 * @param    int    $length Output length (defaults to the selected digest size)
+	 * @param    string $info   Optional context/application-specific info
+	 *
+	 * @return    string    A pseudo-random key
 	 */
 	public static function hkdf($key, $digest = 'sha512', $salt = null, $length = 64, $info = '')
 	{

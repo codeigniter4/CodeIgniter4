@@ -177,7 +177,7 @@ class CreditCardRules
 	/**
 	 * Checks the given number to see if the number passing a Luhn check.
 	 *
-	 * @param string $num
+	 * @param string $number
 	 *
 	 * @return bool
 	 */

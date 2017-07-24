@@ -53,8 +53,9 @@ class OpenSSLHandler extends BaseHandler
 	/**
 	 * Initialize OpenSSL, remembering parameters
 	 *
-	 * @param	array	$params	Configuration parameters
-	 * @return	void
+	 * @param  array $params Configuration parameters
+	 *
+	 * @throws \CodeIgniter\Encryption\EncryptionException
 	 */
 	public function __construct($params = [])
 	{
@@ -69,6 +70,7 @@ class OpenSSLHandler extends BaseHandler
 	 * @param	string	$data	Input data
 	 * @param	array	$params	Over-ridden parameters, specifically the key
 	 * @return	string
+	 * @throws \CodeIgniter\Encryption\EncryptionException
 	 */
 	public function encrypt($data, $params = null)
 	{
@@ -108,6 +110,7 @@ class OpenSSLHandler extends BaseHandler
 	 * @param	string	$data	Encrypted data
 	 * @param	array	$params	Over-ridden parameters, specifically the key
 	 * @return	string
+	 * @throws \CodeIgniter\Encryption\EncryptionException
 	 */
 	public function decrypt($data, $params = null)
 	{

@@ -65,7 +65,9 @@ class SodiumHandler extends BaseHandler
 	 * Encrypt plaintext, with optional HMAC and base64 encoding
 	 *
 	 * @param	string	$data	Input data
+	 * @param	array	$params	Over-ridden parameters, specifically the key
 	 * @return	string
+	 * @throws \CodeIgniter\Encryption\EncryptionException
 	 */
 	public function encrypt($data, $params = null)
 	{
@@ -101,7 +103,9 @@ class SodiumHandler extends BaseHandler
 	 * Decrypt ciphertext, with optional HMAC and base64 encoding
 	 *
 	 * @param	string	$data	Encrypted data
+	 * @param	array	$params	Over-ridden parameters, specifically the key
 	 * @return	string
+	 * @throws \CodeIgniter\Encryption\EncryptionException
 	 */
 	public function decrypt($data, $params = null)
 	{

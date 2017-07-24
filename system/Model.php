@@ -247,6 +247,7 @@ class Model
 	 *
 	 * @param ConnectionInterface $db
 	 * @param BaseConfig          $config Config/App()
+	 * @param ValidationInterface $validation
 	 */
 	public function __construct(ConnectionInterface &$db = null, BaseConfig $config = null, ValidationInterface $validation = null)
 	{
@@ -1011,7 +1012,7 @@ class Model
 	public function paginate(int $perPage = 20, string $group = 'default')
 	{
 		// Get the necessary parts.
-		$page = $_GET['page'] ?? 1;
+		$page = isset($_GET['page']) && $_GET['page'] > 1 ? $_GET['page'] : 1;
 
 		$total = $this->countAllResults(false);
 
@@ -1049,7 +1050,7 @@ class Model
 	 *
 	 * @param string $table
 	 *
-	 * @return BaseBuilder|Database\QueryBuilder
+	 * @return BaseBuilder|Database\Builder\
 	 */
 	protected function builder(string $table = null)
 	{

@@ -87,12 +87,13 @@ class Toolbar
 	/**
 	 * Run
 	 *
-	 * @param type $startTime
-	 * @param type $totalTime
-	 * @param type $startMemory
-	 * @param type $request
-	 * @param type $response
-	 * @return type
+	 * @param float                               $startTime
+	 * @param float                               $totalTime
+	 * @param float                               $startMemory
+	 * @param \CodeIgniter\HTTP\RequestInterface  $request
+	 * @param \CodeIgniter\HTTP\ResponseInterface $response
+	 *
+	 * @return string
 	 */
 	public function run($startTime, $totalTime, $startMemory, $request, $response): string
 	{
@@ -212,8 +213,8 @@ class Toolbar
 	/**
 	 * Rounds a number to the nearest incremental value.
 	 *
-	 * @param     $number
-	 * @param int $increments
+	 * @param float $number
+	 * @param int   $increments
 	 *
 	 * @return float
 	 */

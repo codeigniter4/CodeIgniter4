@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Commands\Database;
+<?php
 
 /**
  * CodeIgniter
@@ -35,84 +35,13 @@
  * @since        Version 3.0.0
  * @filesource
  */
-use CodeIgniter\CLI\BaseCommand;
-use CodeIgniter\CLI\CLI;
-use Config\Services;
 
-/**
- * Migrates the DB to version set in config file, $currentVersion.
- *
- * @package CodeIgniter\Commands
- */
-class MigrateCurrent extends BaseCommand
-{
-
-	protected $group = 'Database';
-
-	/**
-	 * The Command's name
-	 *
-	 * @var string
-	 */
-	protected $name = 'migrate:current';
-
-	/**
-	 * the Command's short description
-	 *
-	 * @var string
-	 */
-	protected $description = 'Migrates us up or down to the version specified as $currentVersion in the migrations config file.';
-
-	/**
-	 * the Command's usage
-	 *
-	 * @var string
-	 */
-	protected $usage = 'migrate:current [options]';
-
-	/**
-	 * the Command's Arguments
-	 *
-	 * @var array
-	 */
-	protected $arguments = [];
-
-	/**
-	 * the Command's Options
-	 *
-	 * @var array
-	 */
-	protected $options = [
-		'-g' => 'Set database group',
-	];
-
-	/**
-	 * Migrates us up or down to the version specified as $currentVersion
-	 * in the migrations config file.
-	 *
-	 * @param array $params
-	 */
-	public function run(array $params = [])
-	{
-		$runner = Services::migrations();
-
-		CLI::write(lang('Migrations.migToVersion'), 'yellow');
-
-		$group = CLI::getOption('g');
-		try
-		{
-			$runner->current($group);
-			$messages = $runner->getCliMessages();
-			foreach ($messages as $message)
-			{
-				CLI::write($message);
-			}
-		} catch (\Exception $e)
-		{
-			$this->showError($e);
-		}
-
-		CLI::write('Done');
-	}
-
-}
+return [
+	'pageNavigation' => 'Page navigation',
+	'first'          => 'First',
+	'previous'       => 'Previous',
+	'next'           => 'Next',
+	'last'           => 'Last',
+	'older'          => 'Older',
+	'newer'          => 'Newer',
+];

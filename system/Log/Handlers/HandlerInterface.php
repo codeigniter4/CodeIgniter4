@@ -57,7 +57,7 @@ interface HandlerInterface
 	 * Checks whether the Handler will handle logging items of this
 	 * log Level.
 	 *
-	 * @param int $level
+	 * @param string $level
 	 *
 	 * @return bool
 	 */

@@ -141,7 +141,7 @@ interface RouteCollectionInterface
 	 *
 	 * @param bool $value
 	 *
-	 * @return RouteCollection
+	 * @return RouteCollectionInterface
 	 */
 	public function setAutoRoute(bool $value): self;
 
@@ -156,7 +156,7 @@ interface RouteCollectionInterface
 	 *
 	 * @param callable|null $callable
 	 *
-	 * @return $this
+	 * @return RouteCollectionInterface
 	 */
 	public function set404Override($callable = null): self;
 
@@ -192,8 +192,6 @@ interface RouteCollectionInterface
 
 	/**
 	 * Returns the current value of the translateURIDashses setting.
-	 *
-	 * @param bool|false $val
 	 *
 	 * @return mixed
 	 */
@@ -242,7 +240,8 @@ interface RouteCollectionInterface
 	 *      reverseRoute('Controller::method', $param1, $param2);
 	 *
 	 * @param string $search
-	 * @param        ...$params
+	 * @param array  ...$params
+	 *
 	 * @return string|false
 	 */
 	public function reverseRoute(string $search, ...$params);

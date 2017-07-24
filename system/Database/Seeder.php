@@ -121,7 +121,7 @@ class Seeder
 	 *
 	 * @param string $class
 	 *
-	 * @throws RuntimeException
+	 * @throws \InvalidArgumentException
 	 */
 	public function call(string $class)
 	{
@@ -170,9 +170,9 @@ class Seeder
 	/**
 	 * Sets the location of the directory that seed files can be located in.
 	 *
-	 * @param sting $path
+	 * @param string $path
 	 *
-	 * @return $this
+	 * @return Seeder
 	 */
 	public function setPath(string $path)
 	{
@@ -188,7 +188,7 @@ class Seeder
 	 *
 	 * @param bool $silent
 	 *
-	 * @return $this
+	 * @return Seeder
 	 */
 	public function setSilent(bool $silent)
 	{
@@ -209,7 +209,7 @@ class Seeder
 	 */
 	public function run()
 	{
-		
+
 	}
 
 	//--------------------------------------------------------------------

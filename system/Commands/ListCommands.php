@@ -175,6 +175,7 @@ class ListCommands extends BaseCommand
 	 *
 	 * @param array $array
 	 * @param int   $extra // How many extra spaces to add at the end
+	 * @param int   $indent
 	 *
 	 * @return array
 	 */

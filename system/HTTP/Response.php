@@ -36,7 +36,6 @@
  * @filesource
  */
 use Config\App;
-use CodeIgniter\HTTP\ContentSecurityPolicy;
 use Config\Mimes;
 
 /**
@@ -45,7 +44,7 @@ use Config\Mimes;
  */
 class RedirectException extends \Exception
 {
-	
+
 }
 
 /**
@@ -67,7 +66,7 @@ class Response extends Message implements ResponseInterface
 	/**
 	 * HTTP status codes
 	 *
-	 * @var type
+	 * @var array
 	 */
 	protected static $statusCodes = [
 		// 1xx: Informational
@@ -376,6 +375,8 @@ class Response extends Message implements ResponseInterface
 	/**
 	 * Sets the appropriate headers to ensure this response
 	 * is not cached by the browsers.
+	 *
+	 * @return Response
 	 */
 	public function noCache(): self
 	{
@@ -414,7 +415,7 @@ class Response extends Message implements ResponseInterface
 	 *
 	 * @param array $options
 	 *
-	 * @return $this
+	 * @return Response
 	 */
 	public function setCache(array $options = [])
 	{
@@ -454,7 +455,9 @@ class Response extends Message implements ResponseInterface
 	 * $date can be either a string representation of the date or,
 	 * preferably, an instance of DateTime.
 	 *
-	 * @param $date
+	 * @param \DateTime|string $date
+	 *
+	 * @return Response
 	 */
 	public function setLastModified($date)
 	{
@@ -535,7 +538,7 @@ class Response extends Message implements ResponseInterface
 	/**
 	 * Sends the Body of the message to the browser.
 	 *
-	 * @return $this
+	 * @return Response
 	 */
 	public function sendBody()
 	{
@@ -601,14 +604,14 @@ class Response extends Message implements ResponseInterface
 	 * Accepts an arbitrary number of binds (up to 7) or an associateive
 	 * array in the first parameter containing all the values.
 	 *
-	 * @param            $name      Cookie name or array containing binds
-	 * @param string     $value     Cookie value
-	 * @param string     $expire    Cookie expiration time in seconds
-	 * @param string     $domain    Cookie domain (e.g.: '.yourdomain.com')
-	 * @param string     $path      Cookie path (default: '/')
-	 * @param string     $prefix    Cookie name prefix
-	 * @param bool|false $secure    Whether to only transfer cookies via SSL
-	 * @param bool|false $httponly  Whether only make the cookie accessible via HTTP (no javascript)
+	 * @param string|array $name     Cookie name or array containing binds
+	 * @param string       $value    Cookie value
+	 * @param string       $expire   Cookie expiration time in seconds
+	 * @param string       $domain   Cookie domain (e.g.: '.yourdomain.com')
+	 * @param string       $path     Cookie path (default: '/')
+	 * @param string       $prefix   Cookie name prefix
+	 * @param bool|false   $secure   Whether to only transfer cookies via SSL
+	 * @param bool|false   $httponly Whether only make the cookie accessible via HTTP (no javascript)
 	 */
 	public function setCookie(
 	$name, $value = '', $expire = '', $domain = '', $path = '/', $prefix = '', $secure = false, $httponly = false
@@ -671,9 +674,9 @@ class Response extends Message implements ResponseInterface
 	 * Generates the headers that force a download to happen. And
 	 * sends the file to the browser.
 	 *
-	 * @param string      $filename The path to the file to send
-	 * @param string      $data     The data to be downloaded
-	 * @param        bool $setMime  Whether to try and send the actual MIME type
+	 * @param string $filename The path to the file to send
+	 * @param string $data     The data to be downloaded
+	 * @param bool   $setMime  Whether to try and send the actual MIME type
 	 */
 	public function download(string $filename = '', $data = '', bool $setMime = false)
 	{
