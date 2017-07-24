@@ -35,8 +35,6 @@
  * @since	Version 3.0.0
  * @filesource
  */
-use CodeIgniter\Log\Handlers\BaseHandler;
-use CodeIgniter\Log\Handlers\HandlerInterface;
 
 /**
  * Log error messages to file system

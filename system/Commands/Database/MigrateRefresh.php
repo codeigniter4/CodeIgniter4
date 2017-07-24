@@ -36,8 +36,6 @@
  * @filesource
  */
 use CodeIgniter\CLI\BaseCommand;
-use CodeIgniter\CLI\CLI;
-use Config\Services;
 
 /**
  * Does a rollback followed by a latest to refresh the current state

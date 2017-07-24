@@ -36,7 +36,6 @@
  * @filesource
  */
 use Config\App;
-use CodeIgniter\HTTP\ContentSecurityPolicy;
 use Config\Mimes;
 
 /**

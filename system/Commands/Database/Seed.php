@@ -38,7 +38,6 @@
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\Database\Seeder;
-use Config\Services;
 
 /**
  * Runs the specified Seeder file to populate the database

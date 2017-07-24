@@ -38,7 +38,6 @@
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
-use Zend\Escaper\Exception\RuntimeException;
 
 class Filters
 {

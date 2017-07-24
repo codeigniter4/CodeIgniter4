@@ -37,7 +37,6 @@
  */
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\ConnectionInterface;
-use CodeIgniter\DatabaseException;
 
 /**
  * Connection for Postgre
