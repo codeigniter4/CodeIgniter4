@@ -74,9 +74,8 @@ The settings for the Redis server that you wish to use when using the ``Redis`` 
 Class Reference
 ===============
 
-.. php:method:: isSupported($handler)
+.. php:method:: isSupported()
 
-	:param	string	$handler: the name of the caching handler
 	:returns:	TRUE if supported, FALSE if not
 	:rtype:	bool
 
@@ -88,7 +87,7 @@ Class Reference
 
 	This method will attempt to fetch an item from the cache store. If the
 	item does not exist, the method will return FALSE.
-    		
+
 	Example::
 
 		$foo = $cache->get('my_cached_item');
@@ -120,7 +119,7 @@ Class Reference
 
 	This method will delete a specific item from the cache store. If item
 	deletion fails, the method will return FALSE.
-	
+
 	Example::
 
 		$cache->delete('cache_item_id');
@@ -133,7 +132,7 @@ Class Reference
    	:rtype:	mixed
 
 	Performs atomic incrementation of a raw stored value.
-    
+
 	Example::
 
 		// 'iterator' has a value of 2
@@ -150,7 +149,7 @@ Class Reference
 	:rtype:	mixed
 
 	Performs atomic decrementation of a raw stored value.
-    		
+
 	Example::
 
 		// 'iterator' has a value of 6
@@ -166,7 +165,7 @@ Class Reference
 
 	This method will 'clean' the entire cache. If the deletion of the
 	cache files fails, the method will return FALSE.
-	
+
 	Example::
 
 			$cache->clean();
@@ -177,7 +176,7 @@ Class Reference
 	:rtype:	mixed
 
 	This method will return information on the entire cache.
-	
+
 	Example::
 
 		var_dump($cache->cache_info());
@@ -193,7 +192,7 @@ Class Reference
 
 	This method will return detailed information on a specific item in the
 	cache.
-	
+
 	Example::
 
 		var_dump($cache->getMetadata('my_cached_item'));
