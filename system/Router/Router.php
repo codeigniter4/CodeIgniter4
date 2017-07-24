@@ -42,7 +42,7 @@ use CodeIgniter\PageNotFoundException;
  */
 class RedirectException extends \Exception
 {
-	
+
 }
 
 /**
@@ -54,7 +54,7 @@ class Router implements RouterInterface
 	/**
 	 * A RouteCollection instance.
 	 *
-	 * @var RouteCollectionInterface
+	 * @var RouteCollection
 	 */
 	protected $collection;
 
@@ -138,7 +138,7 @@ class Router implements RouterInterface
 	 *
 	 * This is the main entry point when using the Router.
 	 *
-	 * @param null $uri
+	 * @param string $uri
 	 *
 	 * @return mixed
 	 */
@@ -392,7 +392,7 @@ class Router implements RouterInterface
 				// Are we using the default method for back-references?
 				else
 				{
-					// Support resource route when function with subdirectory 
+					// Support resource route when function with subdirectory
 					// ex: $routes->resource('Admin/Admins');
 					if (strpos($val, '$') !== false && strpos($key, '(') !== false && strpos($key, '/') !== false)
 					{

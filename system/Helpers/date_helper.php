@@ -43,8 +43,9 @@ if ( ! function_exists('now'))
 	 * Returns time() based on the timezone parameter or on the
 	 * app_timezone() setting
 	 *
-	 * @param	string
-	 * @return	int
+	 * @param    string $timezone
+	 *
+	 * @return    int
 	 */
 	function now(string $timezone = null)
 	{

@@ -144,6 +144,7 @@ public static function esc($value, string $context = 'html'): string
  * Returns an excerpt of the given string.
  *
  * @param string $value
+ * @param string $phrase
  * @param int    $radius
  *
  * @return string
@@ -261,8 +262,6 @@ public static function nl2br(string $value): string
  *
  * @param string $value
  * @param int    $places
- * @param string $decimal
- * @param string $separator
  *
  * @return string
  */

@@ -90,7 +90,10 @@ class CreateMigration extends BaseCommand
 
 	/**
 	 * Creates a new migration file with the current timestamp.
+	 *
 	 * @todo Have this check the settings and see what type of file it should create (timestamp or sequential)
+	 *
+	 * @param array $params
 	 */
 	public function run(array $params = [])
 	{

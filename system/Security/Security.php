@@ -216,8 +216,10 @@ class Security
 	 * CSRF Set Cookie
 	 *
 	 * @codeCoverageIgnore
-	 * @param RequestInterface $request
-	 * @return    $this
+	 *
+	 * @param RequestInterface|\CodeIgniter\HTTP\IncomingRequest $request
+	 *
+	 * @return    Security|false
 	 */
 	public function CSRFSetCookie(RequestInterface $request)
 	{

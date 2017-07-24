@@ -102,8 +102,6 @@ class Result extends BaseResult implements ResultInterface
 
 	/**
 	 * Frees the current result.
-	 *
-	 * @return mixed
 	 */
 	public function freeResult()
 	{

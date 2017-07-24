@@ -37,7 +37,6 @@
  */
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
-use CodeIgniter\Services;
 use CodeIgniter\Log\Logger;
 use CodeIgniter\Validation\Validation;
 
@@ -62,14 +61,14 @@ class Controller
 	/**
 	 * Instance of the main Request object.
 	 *
-	 * @var RequestInterface
+	 * @var RequestInterface|\CodeIgniter\HTTP\Request|\CodeIgniter\HTTP\IncomingRequest
 	 */
 	protected $request;
 
 	/**
 	 * Instance of the main response object.
 	 *
-	 * @var ResponseInterface
+	 * @var ResponseInterface|\CodeIgniter\HTTP\Response
 	 */
 	protected $response;
 

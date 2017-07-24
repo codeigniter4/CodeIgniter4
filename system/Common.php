@@ -37,7 +37,6 @@
  */
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
-use CodeIgniter\HTTP\RedirectException;
 use CodeIgniter\Services;
 
 /**

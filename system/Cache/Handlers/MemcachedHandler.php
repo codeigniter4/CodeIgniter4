@@ -50,7 +50,7 @@ class MemcachedHandler implements CacheInterface
 	/**
 	 * The memcached object
 	 *
-	 * @var string
+	 * @var \Memcached|\Memcache
 	 */
 	protected $memcached;
 
@@ -157,9 +157,9 @@ class MemcachedHandler implements CacheInterface
 	/**
 	 * Saves an item to the cache store.
 	 *
-	 * @param string $key    Cache item name
-	 * @param        $value  the data to save
-	 * @param null   $ttl    Time To Live, in seconds (default 60)
+	 * @param string $key   Cache item name
+	 * @param mixed  $value The data to save
+	 * @param int    $ttl   Time To Live, in seconds (default 60)
 	 *
 	 * @return mixed
 	 */

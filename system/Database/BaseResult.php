@@ -102,9 +102,9 @@ abstract class BaseResult implements ResultInterface
 
 	/**
 	 * Constructor
-	 * 
-	 * @param type $connID
-	 * @param type $resultID
+	 *
+	 * @param object|resource $connID
+	 * @param object|resource $resultID
 	 */
 	public function __construct(&$connID, &$resultID)
 	{

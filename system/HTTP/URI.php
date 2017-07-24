@@ -167,6 +167,8 @@ class URI
 	 * Sets and overwrites any current URI information.
 	 *
 	 * @param string|null $uri
+	 *
+	 * @return URI
 	 */
 	public function setURI(string $uri = null)
 	{
@@ -297,6 +299,10 @@ class URI
 	/**
 	 * Temporarily sets the URI to show a password in userInfo. Will
 	 * reset itself after the first call to authority().
+	 *
+	 * @param bool $val
+	 *
+	 * @return URI
 	 */
 	public function showPassword(bool $val = true)
 	{

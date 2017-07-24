@@ -67,6 +67,8 @@ class Timer
 	 *
 	 * @param string $name  The name of this timer.
 	 * @param float  $time  Allows user to provide time.
+	 *
+	 * @return Timer
 	 */
 	public function start(string $name, float $time = null)
 	{

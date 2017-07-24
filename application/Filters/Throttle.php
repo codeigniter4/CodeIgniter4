@@ -11,7 +11,7 @@ class Throttle implements FilterInterface
 	 * This is a demo implementation of using the Throttler class
 	 * to implement rate limiting for your application.
 	 *
-	 * @param \CodeIgniter\HTTP\RequestInterface $request
+	 * @param RequestInterface|\CodeIgniter\HTTP\IncomingRequest $request
 	 *
 	 * @return mixed
 	 */
@@ -33,8 +33,8 @@ class Throttle implements FilterInterface
 	/**
 	 * We don't have anything to do here.
 	 *
-	 * @param \CodeIgniter\HTTP\RequestInterface  $request
-	 * @param \CodeIgniter\HTTP\ResponseInterface $response
+	 * @param RequestInterface|\CodeIgniter\HTTP\IncomingRequest $request
+	 * @param ResponseInterface|\CodeIgniter\HTTP\Response $response
 	 *
 	 * @return mixed
 	 */

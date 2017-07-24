@@ -229,7 +229,8 @@ class UploadedFile extends File implements UploadedFileInterface
 	 * Get error string
 	 *
 	 * @staticvar array $errors
-	 * @return type
+	 *
+	 * @return string
 	 */
 	public function getErrorString()
 	{

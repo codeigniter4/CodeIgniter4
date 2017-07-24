@@ -79,7 +79,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 *
 	 * Has to be preserved without being assigned to $conn_id.
 	 *
-	 * @var    MySQLi
+	 * @var \MySQLi
 	 */
 	public $mysqli;
 
@@ -287,7 +287,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	/**
 	 * Executes the query against the database.
 	 *
-	 * @param $sql
+	 * @param string $sql
 	 *
 	 * @return mixed
 	 */
