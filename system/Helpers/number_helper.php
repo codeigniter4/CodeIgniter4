@@ -41,9 +41,11 @@ if ( ! function_exists('number_to_size'))
 	/**
 	 * Formats a numbers as bytes, based on size, and adds the appropriate suffix
 	 *
-	 * @param	mixed	will be cast as int
-	 * @param	int
-	 * @return	string
+	 * @param    mixed  $num Will be cast as int
+	 * @param    int    $precision
+	 * @param    string $locale
+	 *
+	 * @return    string
 	 */
 	function number_to_size($num, int $precision = 1, string $locale = null)
 	{
@@ -102,7 +104,7 @@ if ( ! function_exists('number_to_amount'))
 	 *
 	 * @see https://simple.wikipedia.org/wiki/Names_for_large_numbers
 	 *
-	 * @param             $num
+	 * @param string      $num
 	 * @param int         $precision
 	 * @param string|null $locale
 	 *
@@ -156,7 +158,13 @@ if ( ! function_exists('number_to_amount'))
 
 if ( ! function_exists('number_to_currency'))
 {
-
+	/**
+	 * @param float  $num
+	 * @param string $currency
+	 * @param string $locale
+	 *
+	 * @return string
+	 */
 	function number_to_currency($num, string $currency, string $locale = null)
 	{
 		return format_number($num, 1, $locale, [
@@ -176,7 +184,7 @@ if ( ! function_exists('format_number'))
 	 * A general purpose, locale-aware, number_format method.
 	 * Used by all of the functions of the number_helper.
 	 *
-	 * @param             $num
+	 * @param float       $num
 	 * @param int         $precision
 	 * @param string|null $locale
 	 * @param array       $options

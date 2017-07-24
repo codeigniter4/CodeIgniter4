@@ -225,7 +225,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 *
 	 * Identifiers that must NOT be escaped.
 	 *
-	 * @var    string[]
+	 * @var    array
 	 */
 	protected $reservedIdentifiers = ['*'];
 
@@ -1439,8 +1439,9 @@ abstract class BaseConnection implements ConnectionInterface
 	/**
 	 * Returns an array of table names
 	 *
-	 * @param	string	$constrain_by_prefix = FALSE
-	 * @return	array
+	 * @param	bool	$constrain_by_prefix = FALSE
+	 * @return	bool|array
+	 * @throws \CodeIgniter\DatabaseException
 	 */
 	public function listTables($constrain_by_prefix = FALSE)
 	{

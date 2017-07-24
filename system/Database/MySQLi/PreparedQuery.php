@@ -77,7 +77,7 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 	 *
 	 * @param array $data
 	 *
-	 * @return ResultInterface
+	 * @return \CodeIgniter\Database\ResultInterface
 	 */
 	public function _execute($data)
 	{

@@ -118,7 +118,7 @@ class Language
 	 *
 	 * @param string $line
 	 *
-	 * @return string
+	 * @return array
 	 */
 	protected function parseLine(string $line): array
 	{

@@ -47,13 +47,13 @@ class AutoloadConfig
 
 	/**
 	 * Array of namespaces for autoloading.
-	 * @var type
+	 * @var array
 	 */
 	public $psr4 = [];
 
 	/**
 	 * Map of class names and locations
-	 * @var type
+	 * @var array
 	 */
 	public $classmap = [];
 

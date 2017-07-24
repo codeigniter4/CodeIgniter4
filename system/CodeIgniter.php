@@ -90,7 +90,7 @@ class CodeIgniter
 
 	/**
 	 * Current request.
-	 * @var \CodeIgniter\HTTP\Request
+	 * @var \CodeIgniter\HTTP\Request|\CodeIgniter\HTTP\IncomingRequest|CLIRequest
 	 */
 	protected $request;
 
@@ -179,7 +179,7 @@ class CodeIgniter
 	 * tries to route the response, loads the controller and generally
 	 * makes all of the pieces work together.
 	 *
-	 * @param \CodeIgniter\RouteCollectionInterface $routes
+	 * @param \CodeIgniter\Router\RouteCollectionInterface $routes
 	 */
 	public function run(RouteCollectionInterface $routes = null)
 	{
@@ -432,6 +432,8 @@ class CodeIgniter
 	 * Determines if a response has been cached for the given URI.
 	 *
 	 * @param \Config\Cache $config
+	 *
+	 * @throws \Exception
 	 *
 	 * @return bool
 	 */

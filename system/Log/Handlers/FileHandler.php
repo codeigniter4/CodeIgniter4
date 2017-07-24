@@ -44,20 +44,20 @@ class FileHandler extends BaseHandler implements HandlerInterface
 
 	/**
 	 * Folder to hold logs
-	 * 
-	 * @var type 
+	 *
+	 * @var string
 	 */
 	protected $path;
 
 	/**
 	 * Extension to use for log files
-	 * @var type 
+	 * @var string
 	 */
 	protected $fileExtension;
 
 	/**
 	 * Permissions for new log files
-	 * @var type 
+	 * @var int
 	 */
 	protected $filePermissions;
 

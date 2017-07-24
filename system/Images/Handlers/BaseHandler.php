@@ -146,9 +146,10 @@ abstract class BaseHandler implements ImageHandlerInterface
 	 *
 	 * @param int  $width
 	 * @param int  $height
-	 * @param bool $maintainRation If true, will get the closest match possible while keeping aspect ratio true.
+	 * @param bool $maintainRatio If true, will get the closest match possible while keeping aspect ratio true.
+	 * @param string $masterDim
 	 *
-	 * @return \CodeIgniter\Images\Handlers\BaseHandler
+	 * @return BaseHandler
 	 */
 	public function resize(int $width, int $height, bool $maintainRatio = false, string $masterDim = 'auto')
 	{
@@ -305,7 +306,10 @@ abstract class BaseHandler implements ImageHandlerInterface
 	 *  - fontSize
 	 *  - shadowOffset
 	 *
-	 * @return $this
+	 * @param string $text
+	 * @param array  $options
+	 *
+	 * @return BaseHandler
 	 */
 	public function text(string $text, array $options = [])
 	{
@@ -325,7 +329,6 @@ abstract class BaseHandler implements ImageHandlerInterface
 	 *
 	 * @param string $text
 	 * @param array  $options
-	 * @param bool   $isShadow  Whether we are drawing the dropshadow or actual text
 	 */
 	protected abstract function _text(string $text, array $options = []);
 

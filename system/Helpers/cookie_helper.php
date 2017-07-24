@@ -54,19 +54,19 @@ if ( ! function_exists('set_cookie'))
 	 * Accepts seven parameters, or you can submit an associative
 	 * array in the first parameter containing all the values.
 	 *
-	 * @param   mixed   $name
-	 * @param   string  $value    The value of the cookie
-	 * @param   string  $expire   The number of seconds until expiration
-	 * @param   string  $domain   For site-wide cookie. 
-	 *                            Usually: .yourdomain.com
-	 * @param   string  $path     The cookie path
-	 * @param   string  $prefix   The cookie prefix
-	 * @param   bool    $secure   true makes the cookie secure
-	 * @param   bool    $httpOnly true makes the cookie accessible via 
-	 *                            http(s) only (no javascript)
+	 * @param   string|array $name     Cookie name or array containing binds
+	 * @param   string       $value    The value of the cookie
+	 * @param   string       $expire   The number of seconds until expiration
+	 * @param   string       $domain   For site-wide cookie.
+	 *                                 Usually: .yourdomain.com
+	 * @param   string       $path     The cookie path
+	 * @param   string       $prefix   The cookie prefix
+	 * @param   bool         $secure   True makes the cookie secure
+	 * @param   bool         $httpOnly True makes the cookie accessible via
+	 *                                 http(s) only (no javascript)
+	 *
 	 * @see     (\Config\Services::response())->setCookie()
 	 * @see     \CodeIgniter\HTTP\Response::setCookie()
-	 * @return  void
 	 */
 	function set_cookie($name, string $value = '', string $expire = '', string $domain = '', string $path = '/', string $prefix = '', bool $secure = false, bool $httpOnly = false)
 	{
@@ -89,8 +89,9 @@ if ( ! function_exists('get_cookie'))
 	/**
 	 * Fetch an item from the COOKIE array
 	 *
-	 * @param   mixed  $index
+	 * @param   string $index
 	 * @param   bool   $xssClean
+	 *
 	 * @see     (\Config\Services::request())->getCookie()
 	 * @see     \CodeIgniter\HTTP\IncomingRequest::getCookie()
 	 * @return  mixed

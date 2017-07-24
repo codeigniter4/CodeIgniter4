@@ -93,7 +93,7 @@ class ComposerScripts
 
 	/**
 	 * Move a file.
-	 * 
+	 *
 	 * @param string $source
 	 * @param string $destination
 	 * @return boolean
@@ -119,9 +119,9 @@ class ComposerScripts
 
 	/**
 	 * Determine file path of a class.
-	 * 
+	 *
 	 * @param string $class
-	 * @return type
+	 * @return string
 	 */
 	protected static function getClassFilePath(string $class)
 	{

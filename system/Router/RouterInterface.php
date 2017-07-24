@@ -55,7 +55,7 @@ interface RouterInterface
 	 * Scans the URI and attempts to match the current URI to the
 	 * one of the defined routes in the RouteCollection.
 	 *
-	 * @param null $uri
+	 * @param string $uri
 	 *
 	 * @return mixed
 	 */

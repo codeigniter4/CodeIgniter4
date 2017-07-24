@@ -121,8 +121,7 @@ class Image extends File
 	 *
 	 * A helper function that gets info about the file
 	 *
-	 * @param    string
-	 * @param    bool
+	 * @param    bool $return
 	 *
 	 * @return    mixed
 	 */

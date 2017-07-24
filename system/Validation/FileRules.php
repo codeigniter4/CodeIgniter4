@@ -65,7 +65,9 @@ class FileRules
 	/**
 	 * Verifies that $name is the name of a valid uploaded file.
 	 *
+	 * @param string $blank
 	 * @param string $name
+	 * @param array  $data
 	 *
 	 * @return bool
 	 */

@@ -43,7 +43,7 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
 	/**
 	 * The prepared statement itself.
 	 *
-	 * @var
+	 * @var \mysqli_stmt
 	 */
 	protected $statement;
 
@@ -72,7 +72,7 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
 	/**
 	 * A reference to the db connection to use.
 	 *
-	 * @var \CodeIgniter\Database\ConnectionInterface
+	 * @var \CodeIgniter\Database\ConnectionInterface|MySQLi\Connection
 	 */
 	protected $db;
 
@@ -233,7 +233,7 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
 	/**
 	 * Returns the error code created while executing this statement.
 	 *
-	 * @return string
+	 * @return int
 	 */
 	public function getErrorCode(): int
 	{
