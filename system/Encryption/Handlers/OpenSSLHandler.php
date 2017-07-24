@@ -37,6 +37,17 @@
  */
 class OpenSSLHandler extends BaseHandler
 {
+
+	/**
+	 * HMAC digest to use
+	 */
+	protected $digest = 'SHA512';
+
+	/**
+	 * Cipher to use
+	 */
+	protected $cipher = 'AES-256-CTR';
+
 	// --------------------------------------------------------------------
 
 	/**
@@ -49,14 +60,6 @@ class OpenSSLHandler extends BaseHandler
 	{
 		parent::__construct($params);
 
-		if (empty($this->cipher))
-			throw new \CodeIgniter\Encryption\EncryptionException("OpenSSL handler configuration missing cipher.");
-		if ( ! in_array($this->cipher, openssl_get_cipher_methods(), true))
-			throw new \CodeIgniter\Encryption\EncryptionException("OpenSSL handler does not support the " . $this->cipher . " cipher.");
-
-		if (empty($this->key))
-			throw new \CodeIgniter\Encryption\EncryptionException("OpenSSL handler configuration missing key.");
-
 		$this->logger->info('OpenSSL handler initialized with cipher ' . $this->cipher . '.');
 	}
 
@@ -64,10 +67,23 @@ class OpenSSLHandler extends BaseHandler
 	 * Encrypt plaintext, with optional HMAC and base64 encoding
 	 *
 	 * @param	string	$data	Input data
+	 * @param	array	$params	Over-ridden parameters, specifically the key
 	 * @return	string
 	 */
-	public function encrypt($data)
+	public function encrypt($data, $params = null)
 	{
+		// Allow key over-ride
+		if ( ! empty($params))
+			if (isset($params['key']))
+				$this->key = $params['key'];
+			else
+				$this->key = $params;
+		if (empty($this->key))
+			throw new EncryptionException("Encrypter needs a starter key.");
+
+		// derive a secret key			
+		$secret = strcmp(phpversion(), '7.1.2') >= 0 ? \hash_hkdf($this->digest, $this->key) : Encryption::hkdf($this->key, $this->digest);
+
 		// basic encryption	
 		$iv = ($iv_size = \openssl_cipher_iv_length($this->cipher)) ? \openssl_random_pseudo_bytes($iv_size) : null;
 
@@ -78,18 +94,8 @@ class OpenSSLHandler extends BaseHandler
 
 		$result = $iv . $data;
 
-		// HMAC?
-		if ( ! empty($this->digest))
-		{
-			$hmacKey = \hash_hmac($this->digest, $result, $this->secret, true);
-			$result = $hmacKey . $result;
-		}
-
-		if ( ! empty($this->encoding))
-			if ($this->encoding == 'base64')
-				$result = \base64_encode($result);
-			elseif ($this->encoding == 'hex')
-				$result = \bin2hex($result);
+		$hmacKey = \hash_hmac($this->digest, $result, $this->secret, true);
+		$result = $hmacKey . $result;
 
 		return $result;
 	}
@@ -100,26 +106,30 @@ class OpenSSLHandler extends BaseHandler
 	 * Decrypt ciphertext, with optional HMAC and base64 encoding
 	 *
 	 * @param	string	$data	Encrypted data
+	 * @param	array	$params	Over-ridden parameters, specifically the key
 	 * @return	string
 	 */
-	public function decrypt($data)
+	public function decrypt($data, $params = null)
 	{
-		if ( ! empty($this->encoding))
-			if ($this->encoding == 'base64')
-				$data = \base64_decode($data);
-			elseif ($this->encoding == 'hex')
-				$data = \hex2bin($data);
+		// Allow key over-ride
+		if ( ! empty($params))
+			if (isset($params['key']))
+				$this->key = $params['key'];
+			else
+				$this->key = $params;
+		if (empty($this->key))
+			throw new EncryptionException("Decrypter needs a starter key.");
 
-		// HMAC?
-		if ( ! empty($this->digest))
-		{
-			$hmacLength = self::substr($this->digest, 3) / 8;
-			$hmacKey = self::substr($data, 0, $hmacLength);
-			$data = self::substr($data, $hmacLength);
-			$hmacCalc = \hash_hmac($this->digest, $data, $this->secret, true);
-			if (! hash_equals($hmacKey,$hmacCalc))
-				throw new \CodeIgniter\Encryption\EncryptionException("Message authentication failed.");
-		}
+		// derive a secret key			
+		$secret = strcmp(phpversion(), '7.1.2') >= 0 ? \hash_hkdf($this->digest, $this->key) : Encryption::hkdf($this->key, $this->digest);
+
+
+		$hmacLength = self::substr($this->digest, 3) / 8;
+		$hmacKey = self::substr($data, 0, $hmacLength);
+		$data = self::substr($data, $hmacLength);
+		$hmacCalc = \hash_hmac($this->digest, $data, $this->secret, true);
+		if ( ! hash_equals($hmacKey, $hmacCalc))
+			throw new \CodeIgniter\Encryption\EncryptionException("Message authentication failed.");
 
 		if ($iv_size = \openssl_cipher_iv_length($this->cipher))
 		{

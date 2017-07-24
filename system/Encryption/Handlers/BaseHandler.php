@@ -54,20 +54,6 @@ abstract class BaseHandler implements \CodeIgniter\Encryption\EncrypterInterface
 	protected $config;
 
 	/**
-	 * Derived secret key
-	 *
-	 * @var	string
-	 */
-	protected $secret;
-
-	/**
-	 * Derived HMAC digest key
-	 *
-	 * @var	string
-	 */
-	protected $hmacKey;
-
-	/**
 	 * Logger instance to record error messages and warnings.
 	 * @var \PSR\Log\LoggerInterface
 	 */
@@ -130,7 +116,7 @@ abstract class BaseHandler implements \CodeIgniter\Encryption\EncrypterInterface
 	public function __get($key)
 	{
 		//FIXME
-		if (in_array($key, ['cipher', 'key', 'hmac', 'digest', 'base64'], true))
+		if (in_array($key, ['cipher', 'key'], true))
 		{
 			return $this->{$key};
 		}

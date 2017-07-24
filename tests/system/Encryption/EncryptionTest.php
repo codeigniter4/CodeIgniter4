@@ -51,21 +51,6 @@ class EncryptionTest extends CIUnitTestCase
 		$this->assertNotNull($this->encrypt);
 	}
 
-	/**
-	 * Covers behavior with invalid parameters
-	 * 
-	 * @expectedException \CodeIgniter\Encryption\EncryptionException
-	 */
-	public function testBadDigest()
-	{
-		// ask for a bad digest
-		$config = new \Config\Encryption();
-		$config->digest = 'Bogus';
-		$this->encrypt = new \CodeIgniter\Encryption\Encryption($config);
-		$this->encrypt->initialize();
-		$this->assertNotNull($this->encrypt);
-	}
-
 	// --------------------------------------------------------------------
 
 	/**
@@ -86,9 +71,6 @@ class EncryptionTest extends CIUnitTestCase
 		$expected = [
 			'driver'	 => 'OpenSSL', // The PHP extension we plan to use
 			'key'		 => 'Top banana', // no starting key material
-			'cipher'	 => 'AES-128-CBC', // Encryption cipher
-			'digest'	 => '', // HMAC digest algorithm to use
-			'encoding'	 => '', // Base64 encoding?
 		];
 		$this->encrypt = new \CodeIgniter\Encryption\Encryption($expected);
 		foreach ($expected as $key => $value)
@@ -116,9 +98,6 @@ class EncryptionTest extends CIUnitTestCase
 		$expected = [
 			'driver'	 => 'OpenSSL', // The PHP extension we plan to use
 			'key'		 => 'Top banana', // no starting key material
-			'cipher'	 => 'AES-256-CBC', // Encryption cipher
-			'digest'	 => 'SHA512', // HMAC digest algorithm to use
-			'encoding'	 => 'base64', // Base64 encoding?
 		];
 		$this->encrypt = $this->encryption->initialize($expected);
 		foreach ($expected as $key => $value)

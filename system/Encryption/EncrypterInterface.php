@@ -48,16 +48,17 @@ interface EncrypterInterface
 	 * Encrypt - convert plaintext into ciphertext
 	 *
 	 * @param	string	$data	Input data
+	 * @param	array	$params	Over-ridden parameters, specifically the key
 	 * @return	string
 	 */
-	public function encrypt($data);
+	public function encrypt($data, $params = null);
 
 	/**
 	 * Decrypt - convert ciphertext into plaintext
 	 *
 	 * @param	string	$data	Encrypted data
+	 * @param	array	$params	Over-ridden parameters, specifically the key
 	 * @return	string
 	 */
-	public function decrypt($data);
-
+	public function decrypt($data, $params = null);
 }

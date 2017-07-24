@@ -51,12 +51,6 @@ class SodiumHandler extends BaseHandler
 	{
 		parent::__construct($params);
 
-		if (empty($this->key))
-			throw new \CodeIgniter\Encryption\EncryptionException("Sodium handler configuration missing key.");
-
-		$this->cipher = 'N/A';
-		$this->mode = 'N/A';
-
 		if (function_exists('sodium_init') && sodium_init())
 		{
 			$this->logger->info('Encryption: Sodium initialized.');
@@ -73,14 +67,23 @@ class SodiumHandler extends BaseHandler
 	 * @param	string	$data	Input data
 	 * @return	string
 	 */
-	public function encrypt($data)
+	public function encrypt($data, $params = null)
 	{
-		// allow key to be over-ridden
-		$key = empty($params['key']) ? $this->key : $params['key'];
+		// Allow key over-ride
+		if ( ! empty($params))
+			if (isset($params['key']))
+				$this->key = $params['key'];
+			else
+				$this->key = $params;
+		if (empty($this->key))
+			throw new \CodeIgniter\Encryption\EncryptionException("Sodium handler configuration missing key.");
+
+		// derive a secret key			
+		$secret = strcmp(phpversion(), '7.1.2') >= 0 ? \hash_hkdf($this->digest, $this->key) : Encryption::hkdf($this->key, $this->digest);
 
 		$nonce = \Sodium\randombytes_buf(\Sodium\CRYPTO_SECRETBOX_NONCEBYTES);
 
-		$ciphertext = \Sodium\crypto_secretbox($data, $nonce, $key);
+		$ciphertext = \Sodium\crypto_secretbox($data, $nonce, $secret);
 
 		if ($ciphertext === false)
 		{
@@ -88,12 +91,6 @@ class SodiumHandler extends BaseHandler
 		}
 
 		$result = $nonce . $ciphertext;
-
-		if ( ! empty($this->encoding))
-			if ($this->encoding == 'base64')
-				$result = \base64_encode($result);
-			elseif ($this->encoding == 'hex')
-				$result = \bin2hex($result);
 
 		return $result;
 	}
@@ -106,22 +103,26 @@ class SodiumHandler extends BaseHandler
 	 * @param	string	$data	Encrypted data
 	 * @return	string
 	 */
-	public function decrypt($data)
+	public function decrypt($data, $params = null)
 	{
-		if ( ! empty($this->encoding))
-			if ($this->encoding == 'base64')
-				$data = \base64_decode($data);
-			elseif ($this->encoding == 'hex')
-				$data = \hex2bin($data);
+		// Allow key over-ride
+		if ( ! empty($params))
+			if (isset($params['key']))
+				$this->key = $params['key'];
+			else
+				$this->key = $params;
+		if (empty($this->key))
+			throw new \CodeIgniter\Encryption\EncryptionException("Sodium handler configuration missing key.");
 
-		// allow key to be over-ridden
-		$key = empty($params['key']) ? $this->key : $params['key'];
+		// derive a secret key			
+		$secret = strcmp(phpversion(), '7.1.2') >= 0 ? \hash_hkdf($this->digest, $this->key) : Encryption::hkdf($this->key, $this->digest);
+
 
 		// split the data into nonce & ciphertext
 		$nonce = self::substr($data, 0, \Sodium\CRYPTO_SECRETBOX_NONCEBYTES);
 		$data = self::substr($data, \Sodium\CRYPTO_SECRETBOX_NONCEBYTES);
 
-		$plaintext = \Sodium\crypto_secretbox_open($data, $nonce, $key);
+		$plaintext = \Sodium\crypto_secretbox_open($data, $nonce, $secret);
 
 		if ($plaintext === false)
 		{
