@@ -43,7 +43,7 @@ class OpenSSLHandlerTest extends CIUnitTestCase
 			'key'	 => '\xd0\xc9\x08\xc4\xde\x52\x12\x6e\xf8\xcc\xdb\x03\xea\xa0\x3a\x5c'
 		];
 
-		// Default state (AES-256/Rijndael-256 in CBC mode)
+		// Default state (AES-256/Rijndael-256 in CTR mode)
 		$encrypter = $this->encryption->initialize($params);
 
 		// Was the key properly set?
