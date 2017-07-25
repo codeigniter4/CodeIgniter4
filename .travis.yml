@@ -3,6 +3,12 @@ language: php
 php:
   - 7
   - 7.1
+  - nightly
+
+matrix:
+  fast_finish: true
+  allow_failures:
+    - php: nightly
 
 global:
   - CI=true
