@@ -97,7 +97,7 @@ class Autoloader
 	 * Reads in the configuration array (described above) and stores
 	 * the valid parts that we'll need.
 	 *
-	 * @param $config
+	 * @param \Config\Autoload $config
 	 */
 	public function initialize(\Config\Autoload $config)
 	{
