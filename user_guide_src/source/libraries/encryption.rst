@@ -29,8 +29,7 @@ above extensions directly, or look into some of the more comprehensive
 packages, like:
 
 - `Halite <https://github.com/paragonie/halite>`_, an O-O package built on libsodium, or
-- `Sodium_compat <https://github.com/paragonie/sodium_compat>`_, a pure PHP implementation
-that adds libsodium support to earlier versions of PHP (5.2.4+)
+- `Sodium_compat <https://github.com/paragonie/sodium_compat>`_, a pure PHP implementation that adds libsodium support to earlier versions of PHP (5.2.4+)
 
 .. contents::
   :local:
@@ -61,11 +60,6 @@ And that's it! The Encryption library will do everything necessary
 for the whole process to be cryptographically secure out-of-the-box.
 You don't need to worry about it.
 
-.. important:: Both methods will return FALSE in case of an error.
-	While for ``encrypt()`` this can only mean incorrect
-	configuration, you should always check the return value
-	of ``decrypt()`` in production code.
-
 .. _configuration:
 
 Configuring the library
@@ -83,7 +77,7 @@ driver   Preferred handler (OpenSSL)
 key      Encryption key starter
 ======== ===============================================
 
-You can over-ride any of those settings by passing your own ``Config`` object,
+You can over-ride any of these settings by passing your own ``Config`` object,
 or an associative array of parameters, or even just the driver name, to the Services::
 
     $encrypter = \Config\Services::encrypter($params);
@@ -204,7 +198,7 @@ Using the Encryption manager directly
 Instead of, or in addition to, using the `Services` described
 at the beginning of this page, you can use the encryption manager
 directly, to create an ``Encrypter`` or to change the settings
-of the current one.
+of the current one::
 
     $encryption = new \Encryption\Encryption();
     $encrypter = $encryption->initialize($params);
@@ -220,7 +214,7 @@ Sodium and OpenSSL, you could go through the Services::
 	$encrypter= \Config\Services::encrypter(['driver' => 'OpenSSL']);;
         // now encrypt data using OpenSSL
 
-Alternately, you could use the encryption manager directly:
+Alternately, you could use the encryption manager directly::
 
     $encryption = new \Encryption\Encryption();
 
@@ -234,7 +228,7 @@ Alternately, you could use the encryption manager directly:
 
 
 Note that it would be easier to save these separately, if both encrypters
-were to be needed as part of handling the same request.
+were to be needed as part of handling the same request::
 
     $encryption = new \Encryption\Encryption();
     $encrypter1 = $encryption->initialize(['driver' => 'Sodium']);;
