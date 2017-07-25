@@ -160,7 +160,7 @@ class Encryption
 		// Derive a secret key for the encrypter
 		if (isset($params['key']))
 		{
-			$hmacKey = strcmp(phpversion(), '7.1.2') >= 0 ? \hash_hkdf($this->digest, $params['key']) : $this->hkdf($params['key'], $this->digest);
+			$hmacKey = strcmp(phpversion(), '7.1.2') >= 0 ? \hash_hkdf($this->digest, $params['key']) : self::hkdf($params['key'], $this->digest);
 			$params['secret'] = bin2hex($hmacKey);
 		}
 
