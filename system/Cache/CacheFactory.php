@@ -53,7 +53,7 @@ class CacheFactory
 	 * @param string $handler
 	 * @param string $backup
 	 *
-	 * @return mixed
+	 * @return \CodeIgniter\Cache\CacheInterface
 	 */
 	public static function getHandler($config, string $handler = null, string $backup = null)
 	{

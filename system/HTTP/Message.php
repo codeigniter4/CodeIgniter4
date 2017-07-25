@@ -95,7 +95,7 @@ class Message
 	 *
 	 * @param $data
 	 *
-	 * @return Message
+	 * @return Message|Response
 	 */
 	public function setBody($data)
 	{
@@ -111,7 +111,7 @@ class Message
 	 *
 	 * @param $data
 	 *
-	 * @return \CodeIgniter\HTTP\Message
+	 * @return Message|Response
 	 */
 	public function appendBody($data)
 	{
@@ -262,7 +262,7 @@ class Message
 	 * @param string $name
 	 * @param string $value
 	 *
-	 * @return Message
+	 * @return Message|Response
 	 */
 	public function setHeader(string $name, $value)
 	{

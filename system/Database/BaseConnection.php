@@ -561,6 +561,9 @@ abstract class BaseConnection implements ConnectionInterface
 
 		$resultClass = str_replace('Connection', 'Result', get_class($this));
 
+		/**
+		 * @var Query $query
+		 */
 		$query = new $queryClass($this);
 
 		$query->setQuery($sql, $binds);
@@ -911,7 +914,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 * @param \Closure $func
 	 * @param array    $options  Passed to the prepare() method
 	 *
-	 * @return PreparedQueryInterface|null
+	 * @return BasePreparedQuery|null
 	 */
 	public function prepare(\Closure $func, array $options = [])
 	{
@@ -927,6 +930,9 @@ abstract class BaseConnection implements ConnectionInterface
 		}
 
 		$class = str_ireplace('Connection', 'PreparedQuery', get_class($this));
+		/**
+		 * @var BasePreparedQuery $class
+		 */
 		$class = new $class($this);
 
 		return $class->prepare($sql, $options);
@@ -1015,7 +1021,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 * @param    mixed
 	 * @param    bool
 	 *
-	 * @return    string
+	 * @return    string|array
 	 */
 	public function protectIdentifiers($item, $prefixSingle = false, $protectIdentifiers = null, $fieldExists = true)
 	{
@@ -1273,7 +1279,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 *
 	 * Set's the DB Prefix to something new without needing to reconnect
 	 *
-	 * @param    string    the prefix
+	 * @param    string $prefix The prefix
 	 *
 	 * @return    string
 	 */
@@ -1514,7 +1520,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 *
 	 * @param    string $table Table name
 	 *
-	 * @return array
+	 * @return array|false
 	 * @throws DatabaseException
 	 */
 	public function getFieldNames($table)
@@ -1588,7 +1594,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 * Returns an object with field data
 	 *
 	 * @param	string	$table	the table name
-	 * @return	array
+	 * @return	array|false
 	 */
 	public function getFieldData(string $table)
 	{

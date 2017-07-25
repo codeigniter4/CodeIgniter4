@@ -72,6 +72,8 @@ class CommandRunner extends Controller
 
 	/**
 	 * @param array $params
+	 *
+	 * @return mixed
 	 */
 	public function index(array $params)
 	{
@@ -93,6 +95,9 @@ class CommandRunner extends Controller
 	 * Actually runs the command.
 	 *
 	 * @param string $command
+	 * @param array  $params
+	 *
+	 * @return mixed
 	 */
 	protected function runCommand(string $command, array $params)
 	{

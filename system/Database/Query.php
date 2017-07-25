@@ -108,7 +108,7 @@ class Query implements QueryInterface
 	 * Pointer to database connection.
 	 * Mainly for escaping features.
 	 *
-	 * @var ConnectionInterface
+	 * @var BaseConnection
 	 */
 	public $db;
 
