@@ -131,6 +131,8 @@ abstract class BaseCommand
 	 *
 	 * @param string $command
 	 * @param array $params
+	 *
+	 * @return mixed
 	 */
 	protected function call(string $command, array $params = [])
 	{
@@ -178,9 +180,6 @@ abstract class BaseCommand
 
 	/**
 	 * show Help include (usage,arguments,description,options)
-	 *
-	 *
-	 * @return mixed
 	 */
 	public function showHelp()
 	{
