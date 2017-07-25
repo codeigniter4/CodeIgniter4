@@ -264,21 +264,7 @@ class Encryption
 	 */
 	public static function hkdf($key, $digest = 'sha512', $salt = null, $length = 64, $info = '')
 	{
-		if ( ! isset($this->digests[$digest]))
-		{
-			return false;
-		}
-
-		if (empty($length) OR ! is_int($length))
-		{
-			$length = $this->digests[$digest];
-		}
-		elseif ($length > (255 * $this->digests[$digest]))
-		{
-			return false;
-		}
-
-		self::strlen($salt) OR $salt = str_repeat("\0", $this->digests[$digest]);
+		self::strlen($salt) OR $salt = str_repeat("\0", $length);
 
 		$prk = hash_hmac($digest, $key, $salt, true);
 		$key = '';
