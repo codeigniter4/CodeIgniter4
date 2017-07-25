@@ -126,7 +126,9 @@ class OpenSSLHandler extends BaseHandler
 			throw new EncryptionException("Decrypter needs a starter key.");
 
 		// derive a secret key			
-		$secret = strcmp(phpversion(), '7.1.2') >= 0 ? \hash_hkdf($this->digest, $this->key) : Encryption::hkdf($this->key, $this->digest);
+		$secret = strcmp(phpversion(), '7.1.2') >= 0 ?
+				\hash_hkdf($this->digest, $this->key) :
+				\CodeIgniter\Encryption\Encryption::hkdf($this->key, $this->digest);
 
 
 		$hmacLength = self::substr($this->digest, 3) / 8;
