@@ -43,7 +43,7 @@ use Psr\Log\LoggerAwareTrait;
  */
 class EncryptionException extends \Exception
 {
-
+	
 }
 
 /**
@@ -114,6 +114,9 @@ class Encryption
 	{
 		$this->logger = \Config\Services::logger(true);
 		$this->config = array_merge($this->default, (array) new \Config\Encryption());
+
+		if (is_string($params))
+			$params = ['driver' => $params];
 
 		$params = $this->properParams($params);
 
@@ -268,7 +271,7 @@ class Encryption
 
 		$prk = hash_hmac($digest, $key, $salt, true);
 		$key = '';
-		for ($key_block = '', $block_index = 1; self::strlen($key) < $length; $block_index ++ )
+		for ($key_block = '', $block_index = 1; self::strlen($key) < $length; $block_index ++)
 		{
 			$key_block = hash_hmac($digest, $key_block . $info . chr($block_index), $prk, true);
 			$key .= $key_block;

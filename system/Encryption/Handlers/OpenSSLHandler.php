@@ -86,7 +86,7 @@ class OpenSSLHandler extends BaseHandler
 		// derive a secret key			
 		$secret = strcmp(phpversion(), '7.1.2') >= 0 ?
 				\hash_hkdf($this->digest, $this->key) :
-				CodeIgniter\Encryption\Encryption::hkdf($this->key, $this->digest);
+				\CodeIgniter\Encryption\Encryption::hkdf($this->key, $this->digest);
 
 		// basic encryption	
 		$iv = ($iv_size = \openssl_cipher_iv_length($this->cipher)) ? \openssl_random_pseudo_bytes($iv_size) : null;
