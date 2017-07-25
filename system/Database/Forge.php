@@ -46,7 +46,7 @@ class Forge
 	/**
 	 * The active database connection.
 	 *
-	 * @var ConnectionInterface
+	 * @var BaseConnection
 	 */
 	protected $db;
 
@@ -1039,7 +1039,7 @@ class Forge
 	 *
 	 * @param    string $table
 	 *
-	 * @return    string
+	 * @return    array
 	 */
 	protected function _processIndexes($table)
 	{

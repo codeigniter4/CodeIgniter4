@@ -164,7 +164,7 @@ class BaseBuilder
 	/**
 	 * A reference to the database connection.
 	 *
-	 * @var ConnectionInterface
+	 * @var BaseConnection
 	 */
 	protected $db;
 
