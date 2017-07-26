@@ -45,6 +45,7 @@ use CodeIgniter\DatabaseException;
  * certain methods to make them work.
  *
  * @package CodeIgniter\Database
+ * @mixin \CodeIgniter\Model
  */
 class BaseBuilder
 {
@@ -1276,9 +1277,9 @@ class BaseBuilder
 	 *
 	 * Allows key/value pairs to be set for insert(), update() or replace().
 	 *
-	 * @param    string|array $key    Field name, or an array of field/value pairs
-	 * @param    string       $value  Field value, if $key is a single field
-	 * @param    bool         $escape Whether to escape values and identifiers
+	 * @param    string|array|object $key    Field name, or an array of field/value pairs
+	 * @param    string              $value  Field value, if $key is a single field
+	 * @param    bool                $escape Whether to escape values and identifiers
 	 *
 	 * @return    BaseBuilder
 	 */
@@ -2708,8 +2709,6 @@ class BaseBuilder
 	 * Resets the query builder values.  Called by the get() function
 	 *
 	 * @param    array $qb_reset_items An array of fields to reset
-	 *
-	 * @return    void
 	 */
 	protected function resetRun($qb_reset_items)
 	{
@@ -2723,8 +2722,6 @@ class BaseBuilder
 
 	/**
 	 * Resets the query builder values.  Called by the get() function
-	 *
-	 * @return    void
 	 */
 	protected function resetSelect()
 	{
@@ -2749,8 +2746,6 @@ class BaseBuilder
 	 * Resets the query builder "write" values.
 	 *
 	 * Called by the insert() update() insertBatch() updateBatch() and delete() functions
-	 *
-	 * @return    void
 	 */
 	protected function resetWrite()
 	{
@@ -2769,7 +2764,7 @@ class BaseBuilder
 	/**
 	 * Tests whether the string has an SQL operator
 	 *
-	 * @param    string
+	 * @param    string $str
 	 *
 	 * @return    bool
 	 */
@@ -2783,7 +2778,7 @@ class BaseBuilder
 	/**
 	 * Returns the SQL string operator
 	 *
-	 * @param    string
+	 * @param    string $str
 	 *
 	 * @return    string
 	 */
