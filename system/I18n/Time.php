@@ -1085,7 +1085,7 @@ class Time extends DateTime
 	 * how long ago, or how long from now, a date is, like:
 	 *
 	 *  - 3 weeks ago
-	 *  - 4 days from now
+	 *  - in 4 days
 	 *  - 6 hours ago
 	 */
 	public function humanize()
@@ -1100,8 +1100,6 @@ class Time extends DateTime
 		$minutes = $now->fieldDifference($time, \IntlCalendar::FIELD_MINUTE);
 
 		$phrase = null;
-		$before = false;
-
 
 		if ($years !== 0)
 		{
@@ -1142,6 +1140,20 @@ class Time extends DateTime
 		return $before
 			? $phrase .' '. lang('ago')
 			: lang('Time.inFuture') .' '. $phrase;
+	}
+
+	/**
+	 * @param             $testTime
+	 * @param string|null $timezone
+	 *
+	 * @return \CodeIgniter\I18n\TimeDifference
+	 */
+	public function difference($testTime, string $timezone = null)
+	{
+		$testTime = $this->getUTCObject($testTime, $timezone);
+		$ourTime = $this->getUTCObject($this);
+
+		return new TimeDifference($ourTime, $testTime);
 	}
 
 

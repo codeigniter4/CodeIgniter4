@@ -921,4 +921,6 @@ class TimeTest extends \CIUnitTestCase
 
 		$this->assertEquals('in 2 weeks', $time->humanize());
 	}
+
+
 }
