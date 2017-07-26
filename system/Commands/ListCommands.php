@@ -49,6 +49,12 @@ use CodeIgniter\CLI\CLI;
 class ListCommands extends BaseCommand
 {
 
+	/**
+	 * The group the command is lumped under
+	 * when listing commands.
+	 *
+	 * @var string
+	 */
 	protected $group = 'CodeIgniter';
 
 	/**

@@ -193,6 +193,7 @@ trait ResponseTrait
 	 * with the proper information.
 	 *
 	 * @param string $description
+	 * @param string $code
 	 * @param string $message
 	 *
 	 * @return mixed
@@ -209,6 +210,7 @@ trait ResponseTrait
 	 * of trying again will help.
 	 *
 	 * @param string $description
+	 * @param string $code
 	 * @param string $message
 	 *
 	 * @return mixed
@@ -224,6 +226,7 @@ trait ResponseTrait
 	 * Used when a specified resource cannot be found.
 	 *
 	 * @param string $description
+	 * @param string $code
 	 * @param string $message
 	 *
 	 * @return mixed
@@ -239,6 +242,7 @@ trait ResponseTrait
 	 * Used when the data provided by the client cannot be validated.
 	 *
 	 * @param string $description
+	 * @param string $code
 	 * @param string $message
 	 *
 	 * @return mixed
@@ -254,6 +258,7 @@ trait ResponseTrait
 	 * Use when trying to create a new resource and it already exists.
 	 *
 	 * @param string $description
+	 * @param string $code
 	 * @param string $message
 	 *
 	 * @return mixed
@@ -271,6 +276,7 @@ trait ResponseTrait
 	 * where Not Found means we simply cannot find any information about it.
 	 *
 	 * @param string $description
+	 * @param string $code
 	 * @param string $message
 	 *
 	 * @return mixed
@@ -286,6 +292,7 @@ trait ResponseTrait
 	 * Used when the user has made too many requests for the resource recently.
 	 *
 	 * @param string $description
+	 * @param string $code
 	 * @param string $message
 	 *
 	 * @return mixed

@@ -46,6 +46,12 @@ use CodeIgniter\CLI\BaseCommand;
 class MigrateRefresh extends BaseCommand
 {
 
+	/**
+	 * The group the command is lumped under
+	 * when listing commands.
+	 *
+	 * @var string
+	 */
 	protected $group = 'Database';
 
 	/**
