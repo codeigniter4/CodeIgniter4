@@ -1047,7 +1047,7 @@ class Time extends DateTime
 	 *
 	 * @return bool
 	 */
-	public function before($testTime, string $timezone = null): bool
+	public function isBefore($testTime, string $timezone = null): bool
 	{
 		$testTime = $this->getUTCObject($testTime, $timezone)->getTimestamp();
 		$ourTime = $this->getTimestamp();
@@ -1066,7 +1066,7 @@ class Time extends DateTime
 	 *
 	 * @return bool
 	 */
-	public function after($testTime, string $timezone = null): bool
+	public function isAfter($testTime, string $timezone = null): bool
 	{
 		$testTime = $this->getUTCObject($testTime, $timezone)->getTimestamp();
 		$ourTime = $this->getTimestamp();

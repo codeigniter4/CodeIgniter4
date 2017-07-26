@@ -765,8 +765,8 @@ class TimeTest extends \CIUnitTestCase
 		$time1 = Time::parse('January 10, 2017 21:50:00', 'America/Chicago');
 		$time2 = Time::parse('January 11, 2017 03:50:00', 'America/Chicago');
 
-		$this->assertTrue($time1->before($time2));
-		$this->assertFalse($time2->before($time1));
+		$this->assertTrue($time1->isBefore($time2));
+		$this->assertFalse($time2->isBefore($time1));
 	}
 
 	public function testAfter()
@@ -774,8 +774,8 @@ class TimeTest extends \CIUnitTestCase
 		$time1 = Time::parse('January 10, 2017 21:50:00', 'America/Chicago');
 		$time2 = Time::parse('January 11, 2017 03:50:00', 'America/Chicago');
 
-		$this->assertFalse($time1->after($time2));
-		$this->assertTrue($time2->after($time1));
+		$this->assertFalse($time1->isAfter($time2));
+		$this->assertTrue($time2->isAfter($time1));
 	}
 
 	public function testHumanizeYearsSingle()
