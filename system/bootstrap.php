@@ -48,20 +48,31 @@
 
 $public = trim($paths->publicDirectory, '/');
 
-// Path to code root folder (just up from public)
 $pos = strrpos(FCPATH, $public.DIRECTORY_SEPARATOR);
+
+/**
+ * The path to the main application directory. Just above public.
+ */
 define('ROOTPATH', substr_replace(FCPATH, '', $pos, strlen($public.DIRECTORY_SEPARATOR)));
 
-// The path to the "application" folder
+/**
+ * The path to the application directory.
+ */
 define('APPPATH', realpath($paths->applicationDirectory).DIRECTORY_SEPARATOR);
 
-// Path to the system folder
+/**
+ * The path to the system directory.
+ */
 define('BASEPATH', realpath($paths->systemDirectory).DIRECTORY_SEPARATOR);
 
-// Path to the writable directory.
+/**
+ * The path to the writable directory.
+ */
 define('WRITEPATH', realpath($paths->writableDirectory).DIRECTORY_SEPARATOR);
 
-// The path to the "tests" directory
+/**
+ * The path to the tests directory
+ */
 define('TESTPATH', realpath($paths->testsDirectory).DIRECTORY_SEPARATOR);
 
 /*
