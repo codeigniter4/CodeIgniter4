@@ -165,6 +165,8 @@ class ChromeLoggerHandler extends BaseHandler implements HandlerInterface
 	 * Converts the object to display nicely in the Chrome Logger UI.
 	 *
 	 * @param $object
+	 *
+	 * @return array
 	 */
 	protected function format($object)
 	{
@@ -186,7 +188,7 @@ class ChromeLoggerHandler extends BaseHandler implements HandlerInterface
 	/**
 	 * Attaches the header and the content to the passed in request object.
 	 *
-	 * @param ResponseInterface response
+	 * @param ResponseInterface $response
 	 */
 	public function sendLogs(ResponseInterface &$response = null)
 	{

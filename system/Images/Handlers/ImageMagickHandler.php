@@ -62,6 +62,10 @@ class ImageMagickHandler extends BaseHandler
 
 	/**
 	 * Handles the actual resizing of the image.
+	 *
+	 * @param bool $maintainRatio
+	 *
+	 * @return ImageMagickHandler
 	 */
 	public function _resize(bool $maintainRatio = false)
 	{
@@ -164,8 +168,9 @@ class ImageMagickHandler extends BaseHandler
 	 * Handles all of the grunt work of resizing, etc.
 	 *
 	 * @param string $action
+	 * @param int    $quality
 	 *
-	 * @return $this|bool
+	 * @return ImageMagickHandler|bool
 	 */
 	protected function process(string $action, int $quality = 100)
 	{

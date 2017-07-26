@@ -221,7 +221,7 @@ interface ResponseInterface
 	 *
 	 * @param array $options
 	 *
-	 * @return $this
+	 * @return Response
 	 */
 	public function setCache(array $options = []);
 
@@ -233,7 +233,7 @@ interface ResponseInterface
 	 * $date can be either a string representation of the date or,
 	 * preferably, an instance of DateTime.
 	 *
-	 * @param $date
+	 * @param string|\DateTime $date
 	 */
 	public function setLastModified($date);
 

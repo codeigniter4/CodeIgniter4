@@ -90,7 +90,8 @@ abstract class BaseUtils
 	/**
 	 * List databases
 	 *
-	 * @return	array
+	 * @return	array|bool
+	 * @throws \CodeIgniter\DatabaseException
 	 */
 	public function listDatabases()
 	{
@@ -143,7 +144,8 @@ abstract class BaseUtils
 	 * Optimize Table
 	 *
 	 * @param	string	$table_name
-	 * @return	mixed
+	 * @return bool|mixed
+	 * @throws \CodeIgniter\DatabaseException
 	 */
 	public function optimizeTable($table_name)
 	{
@@ -171,7 +173,8 @@ abstract class BaseUtils
 	/**
 	 * Optimize Database
 	 *
-	 * @return	mixed
+	 * @return mixed
+	 * @throws \CodeIgniter\DatabaseException
 	 */
 	public function optimizeDatabase()
 	{
@@ -213,6 +216,7 @@ abstract class BaseUtils
 	 *
 	 * @param	string	$table_name
 	 * @return	mixed
+	 * @throws \CodeIgniter\DatabaseException
 	 */
 	public function repairTable($table_name)
 	{
@@ -240,11 +244,12 @@ abstract class BaseUtils
 	/**
 	 * Generate CSV from a query result object
 	 *
-	 * @param	object	$query		Query result object
-	 * @param	string	$delim		Delimiter (default: ,)
-	 * @param	string	$newline	Newline character (default: \n)
-	 * @param	string	$enclosure	Enclosure (default: ")
-	 * @return	string
+	 * @param    ResultInterface $query     Query result object
+	 * @param    string          $delim     Delimiter (default: ,)
+	 * @param    string          $newline   Newline character (default: \n)
+	 * @param    string          $enclosure Enclosure (default: ")
+	 *
+	 * @return    string
 	 */
 	public function getCSVFromResult(ResultInterface $query, $delim = ',', $newline = "\n", $enclosure = '"')
 	{
@@ -276,9 +281,10 @@ abstract class BaseUtils
 	/**
 	 * Generate XML data from a query result object
 	 *
-	 * @param	object	$query	Query result object
-	 * @param	array	$params	Any preferences
-	 * @return	string
+	 * @param    ResultInterface $query  Query result object
+	 * @param    array           $params Any preferences
+	 *
+	 * @return    string
 	 */
 	public function getXMLFromResult(ResultInterface $query, $params = array())
 	{
@@ -317,7 +323,8 @@ abstract class BaseUtils
 	 * Database Backup
 	 *
 	 * @param	array	$params
-	 * @return	string
+	 * @return	mixed
+	 * @throws \CodeIgniter\DatabaseException
 	 */
 	public function backup($params = array())
 	{

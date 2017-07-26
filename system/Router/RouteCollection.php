@@ -106,7 +106,7 @@ class RouteCollection implements RouteCollectionInterface
 	 * A callable that will be shown
 	 * when the route cannot be matched.
 	 *
-	 * @var string|closure
+	 * @var string|\Closure
 	 */
 	protected $override404;
 
@@ -188,6 +188,8 @@ class RouteCollection implements RouteCollectionInterface
 
 	/**
 	 * Constructor
+	 *
+	 * @param FileLocator $locator
 	 */
 	public function __construct(FileLocator $locator)
 	{
@@ -308,7 +310,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @param bool $value
 	 *
-	 * @return RouteCollection
+	 * @return RouteCollectionInterface
 	 */
 	public function setAutoRoute(bool $value): RouteCollectionInterface
 	{
@@ -328,7 +330,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @param callable|null $callable
 	 *
-	 * @return $this
+	 * @return RouteCollectionInterface
 	 */
 	public function set404Override($callable = null): RouteCollectionInterface
 	{
@@ -414,7 +416,9 @@ class RouteCollection implements RouteCollectionInterface
 	 * Sets the default constraint to be used in the system. Typically
 	 * for use with the 'resources' method.
 	 *
-	 * @param $placeholder
+	 * @param string $placeholder
+	 *
+	 * @return RouteCollectionInterface
 	 */
 	public function setDefaultConstraint(string $placeholder): RouteCollectionInterface
 	{
@@ -466,8 +470,6 @@ class RouteCollection implements RouteCollectionInterface
 
 	/**
 	 * Returns the current value of the translateURIDashses setting.
-	 *
-	 * @param bool|false $val
 	 *
 	 * @return mixed
 	 */
@@ -559,7 +561,7 @@ class RouteCollection implements RouteCollectionInterface
 	 * @param array|string $to
 	 * @param $options
 	 *
-	 * @return self RouteCollectionInterface
+	 * @return RouteCollectionInterface
 	 */
 	public function add(string $from, $to, array $options = null): RouteCollectionInterface
 	{
@@ -578,6 +580,8 @@ class RouteCollection implements RouteCollectionInterface
 	 * @param string $from     The pattern to match against
 	 * @param string $to       Either a route name or a URI to redirect to
 	 * @param int    $status   The HTTP status code that should be returned with this redirect
+	 *
+	 * @return RouteCollection
 	 */
 	public function addRedirect(string $from, string $to, int $status = 302)
 	{
@@ -978,10 +982,10 @@ class RouteCollection implements RouteCollectionInterface
 	/**
 	 * Limits the routes to a specified ENVIRONMENT or they won't run.
 	 *
-	 * @param $env
-	 * @param callable $callback
+	 * @param string   $env
+	 * @param \Closure $callback
 	 *
-	 * @return $this
+	 * @return RouteCollectionInterface
 	 */
 	public function environment(string $env, \Closure $callback): RouteCollectionInterface
 	{
@@ -1009,7 +1013,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *      reverseRoute('Controller::method', $param1, $param2);
 	 *
 	 * @param string $search
-	 * @param        ...$params
+	 * @param array  ...$params
 	 *
 	 * @return string|false
 	 */
@@ -1059,7 +1063,7 @@ class RouteCollection implements RouteCollectionInterface
 	/**
 	 * Given a
 	 *
-	 * @param array      $from
+	 * @param string     $from
 	 * @param array|null $params
 	 *
 	 * @return string
@@ -1100,9 +1104,9 @@ class RouteCollection implements RouteCollectionInterface
 	 * the request method(s) that this route will work for. They can be separated
 	 * by a pipe character "|" if there is more than one.
 	 *
-	 * @param  string $from
-	 * @param  array  $to
-	 * @param array   $options
+	 * @param  string       $from
+	 * @param  array|string $to
+	 * @param array         $options
 	 */
 	protected function create(string $from, $to, array $options = null)
 	{

@@ -46,7 +46,12 @@ use Config\Services;
  */
 class MigrateLatest extends BaseCommand
 {
-
+	/**
+	 * The group the command is lumped under
+	 * when listing commands.
+	 *
+	 * @var string
+	 */
 	protected $group = 'Database';
 
 	/**
@@ -90,6 +95,8 @@ class MigrateLatest extends BaseCommand
 
 	/**
 	 * Ensures that all migrations have been run.
+	 *
+	 * @param array $params
 	 */
 	public function run(array $params = [])
 	{

@@ -15,7 +15,7 @@ class Encryption extends BaseConfig
 {
 	/*
 	  |--------------------------------------------------------------------------
-	  | Encryption Key
+	  | Encryption Key Starter
 	  |--------------------------------------------------------------------------
 	  |
 	  | If you use the Encryption class you must set an encryption key.
@@ -30,27 +30,40 @@ class Encryption extends BaseConfig
 	  | Encryption driver to use
 	  |--------------------------------------------------------------------------
 	  |
-	  | One of the supported drivers, eg 'openssl' or 'mcrypt'.
-	  | The default driver, if you don't specify one, is 'openssl'.
+	  | One of the supported drivers, eg 'OpenSSL' or 'Sodium'.
+	  | The default driver, if you don't specify one, is 'OpenSSL'.
 	 */
-	public $driver = 'openssl';
+	public $driver = 'OpenSSL';
 
 	/*
 	  |--------------------------------------------------------------------------
 	  | Encryption Cipher
 	  |--------------------------------------------------------------------------
 	  |
-	  | Name of the encryption cipher to use, eg 'aes-256' or 'blowfish'
+	  | Name of the encryption cipher to use, eg 'aes-256' or 'blowfish'.
+	  | The cipher must be supported by your designated driver.
 	 */
-	public $cipher = 'aes-256';
+	public $cipher = 'AES-256-CBC';
 
 	/*
 	  |--------------------------------------------------------------------------
-	  | Encryption mode
+	  | Authentication digest
 	  |--------------------------------------------------------------------------
 	  |
-	  | The encryption mode to use, eg 'cbc' or 'stream'
+	  | HMAC digest algorithm to use, empty for none.
+	  | Values: SHA512, SHA384, SHA256, or SHA224.
 	 */
-	public $mode = 'cbc';
+	public $digest = 'SHA512';
+
+	/*
+	  |--------------------------------------------------------------------------
+	  | Result encoding
+	  |--------------------------------------------------------------------------
+	  |
+	  | Which, if any, encoding to apply to encrypted results and to assume
+	  | provided ciphertext.
+	  | Values; empty (for no encoding), base64 or hex.
+	 */
+	public $encoding = 'base64';
 
 }

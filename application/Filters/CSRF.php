@@ -3,7 +3,6 @@
 use CodeIgniter\Filters\FilterInterface;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
-use Config\App;
 use Config\Services;
 
 class CSRF implements FilterInterface
@@ -18,7 +17,7 @@ class CSRF implements FilterInterface
 	 * sent back to the client, allowing for error pages,
 	 * redirects, etc.
 	 *
-	 * @param \CodeIgniter\HTTP\RequestInterface $request
+	 * @param RequestInterface|\CodeIgniter\HTTP\IncomingRequest $request
 	 *
 	 * @return mixed
 	 */
@@ -39,8 +38,8 @@ class CSRF implements FilterInterface
 	/**
 	 * We don't have anything to do here.
 	 *
-	 * @param \CodeIgniter\HTTP\RequestInterface  $request
-	 * @param \CodeIgniter\HTTP\ResponseInterface $response
+	 * @param RequestInterface|\CodeIgniter\HTTP\IncomingRequest $request
+	 * @param ResponseInterface|\CodeIgniter\HTTP\Response $response
 	 *
 	 * @return mixed
 	 */

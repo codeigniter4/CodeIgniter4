@@ -36,7 +36,6 @@
  * @filesource
  */
 use CodeIgniter\Database\Query;
-use CodeIgniter\Services;
 
 /**
  * Collector for the Database tab of the Debug Toolbar.

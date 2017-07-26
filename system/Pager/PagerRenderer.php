@@ -76,7 +76,7 @@ class PagerRenderer
 	 *
 	 * @param int $count
 	 *
-	 * @return $this
+	 * @return PagerRenderer
 	 */
 	public function setSurroundCount(int $count)
 	{

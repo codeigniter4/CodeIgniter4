@@ -108,7 +108,7 @@ class Query implements QueryInterface
 	 * Pointer to database connection.
 	 * Mainly for escaping features.
 	 *
-	 * @var ConnectionInterface
+	 * @var BaseConnection
 	 */
 	public $db;
 
@@ -189,8 +189,8 @@ class Query implements QueryInterface
 	 * for it's start and end values. If no end value is present, will
 	 * use the current time to determine total duration.
 	 *
-	 * @param int      $start
-	 * @param int|null $end
+	 * @param float $start
+	 * @param float $end
 	 *
 	 * @return mixed
 	 */
@@ -247,8 +247,10 @@ class Query implements QueryInterface
 	/**
 	 * Stores the error description that happened for this query.
 	 *
-	 * @param int $code
+	 * @param int    $code
 	 * @param string $error
+	 *
+	 * @return Query
 	 */
 	public function setError(int $code, string $error)
 	{
@@ -275,7 +277,7 @@ class Query implements QueryInterface
 	/**
 	 * Returns the error code created while executing this statement.
 	 *
-	 * @return string
+	 * @return int
 	 */
 	public function getErrorCode(): int
 	{
@@ -479,7 +481,7 @@ class Query implements QueryInterface
 	/**
 	 * Return text representation of the query
 	 *
-	 * @return type
+	 * @return mixed|string
 	 */
 	public function __toString()
 	{

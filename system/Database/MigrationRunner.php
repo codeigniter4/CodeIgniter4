@@ -178,8 +178,9 @@ class MigrationRunner
 	 * Calls each migration step required to get to the schema version of
 	 * choice
 	 *
-	 * @param    string $targetVersion Target schema version
-	 * @param           $group
+	 * @param    string   $targetVersion Target schema version
+	 * @param    string   $namespace
+	 * @param      string $group
 	 *
 	 * @return mixed TRUE if no migrations are found, current version string on success, FALSE on failure
 	 * @throws ConfigException
@@ -277,6 +278,9 @@ class MigrationRunner
 	/**
 	 * Sets the schema to the latest migration
 	 *
+	 * @param string $namespace
+	 * @param string $group
+	 *
 	 * @return    mixed    Current version string on success, FALSE on failure
 	 */
 	public function latest($namespace = null, $group = null)
@@ -307,7 +311,9 @@ class MigrationRunner
 	/**
 	 * Sets the schema to the latest migration for all namespaces
 	 *
-	 * @return    void
+	 * @param string $group
+	 *
+	 * @return bool
 	 */
 	public function latestAll($group = null)
 	{
@@ -352,6 +358,7 @@ class MigrationRunner
 	/**
 	 * Sets the (APP_NAMESPACE) schema to $currentVersion in migration config file
 	 *
+	 * @param string $group
 	 *
 	 * @return    mixed    TRUE if no migrations are found, current version string on success, FALSE on failure
 	 */
@@ -412,6 +419,10 @@ class MigrationRunner
 	 *  checks if the list of available migration scripts list are consistent
 	 *  if sequential check if no gaps and check if all consistent with migrations table if downgrading
 	 *  if timestamp check if consistent with migrations table if downgrading
+	 *
+	 * @param array  $migrations
+	 * @param string $method
+	 * @param int    $targetversion
 	 *
 	 * @return    bool
 	 */
@@ -474,7 +485,7 @@ class MigrationRunner
 	 *
 	 * @param string $namespace
 	 *
-	 * @return $this
+	 * @return MigrationRunner
 	 */
 	public function setNamespace(string $namespace)
 	{
@@ -491,7 +502,7 @@ class MigrationRunner
 	 *
 	 * @param string $group
 	 *
-	 * @return $this
+	 * @return MigrationRunner
 	 */
 	public function setGroup(string $group)
 	{
@@ -517,9 +528,9 @@ class MigrationRunner
 	/**
 	 * Grabs the full migration history from the database.
 	 *
-	 * @param $group
+	 * @param string $group
 	 *
-	 * @return mixed
+	 * @return array
 	 */
 	public function getHistory($group = 'default')
 	{
@@ -545,7 +556,7 @@ class MigrationRunner
 	 *
 	 * @param bool $silent
 	 *
-	 * @return $this
+	 * @return MigrationRunner
 	 */
 	public function setSilent(bool $silent)
 	{
@@ -623,7 +634,6 @@ class MigrationRunner
 	 * Stores the current schema version.
 	 *
 	 * @param string $version
-	 * @param string $group The database group
 	 *
 	 * @internal param string $migration Migration reached
 	 *
@@ -650,7 +660,6 @@ class MigrationRunner
 	 * Removes a single history
 	 *
 	 * @param string $version
-	 * @param string $group The database group
 	 */
 	protected function removeHistory($version)
 	{

@@ -6,7 +6,6 @@ use CodeIgniter\Controller;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Model;
 use Config\Database;
-use Tests\Support\Models\JobModel;
 
 class Checks extends Controller
 {

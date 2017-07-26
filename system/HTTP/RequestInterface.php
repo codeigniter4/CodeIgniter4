@@ -54,7 +54,7 @@ interface RequestInterface
 	/**
 	 * Validate an IP address
 	 *
-	 * @param        $ip     IP Address
+	 * @param string $ip     IP Address
 	 * @param string $which  IP protocol: 'ipv4' or 'ipv6'
 	 *
 	 * @return bool
@@ -66,7 +66,7 @@ interface RequestInterface
 	/**
 	 * Get the request method.
 	 *
-	 * @param bool|false $upper Whether to return in upper or lower case.
+	 * @param bool $upper Whether to return in upper or lower case.
 	 *
 	 * @return string
 	 */
@@ -77,7 +77,7 @@ interface RequestInterface
 	/**
 	 * Fetch an item from the $_SERVER array.
 	 *
-	 * @param null $index   Index for item to be fetched from $_SERVER
+	 * @param string $index   Index for item to be fetched from $_SERVER
 	 * @param null $filter  A filter name to be applied
 	 * @return mixed
 	 */

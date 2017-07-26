@@ -42,7 +42,7 @@ use Psr\Log\LoggerInterface;
  *
  * @property $group
  * @property $name
- * @property description
+ * @property $description
  *
  * @package CodeIgniter\CLI
  */
@@ -81,14 +81,14 @@ abstract class BaseCommand
 	/**
 	 * the Command's options description
 	 *
-	 * @var string
+	 * @var array
 	 */
 	protected $options = array();
 
 	/**
 	 * the Command's Arguments description
 	 *
-	 * @var string
+	 * @var array
 	 */
 	protected $arguments = array();
 
@@ -107,6 +107,13 @@ abstract class BaseCommand
 
 	//--------------------------------------------------------------------
 
+
+	/**
+	 * BaseCommand constructor.
+	 *
+	 * @param \Psr\Log\LoggerInterface       $logger
+	 * @param \CodeIgniter\CLI\CommandRunner $commands
+	 */
 	public function __construct(LoggerInterface $logger, CommandRunner $commands)
 	{
 		$this->logger = $logger;
@@ -124,6 +131,8 @@ abstract class BaseCommand
 	 *
 	 * @param string $command
 	 * @param array $params
+	 *
+	 * @return mixed
 	 */
 	protected function call(string $command, array $params = [])
 	{
@@ -171,9 +180,6 @@ abstract class BaseCommand
 
 	/**
 	 * show Help include (usage,arguments,description,options)
-	 *
-	 *
-	 * @return mixed
 	 */
 	public function showHelp()
 	{
@@ -217,11 +223,11 @@ abstract class BaseCommand
 	 * Get pad for $key => $value array output
 	 *
 	 * @param array $array
-	 * @param int $pad
+	 * @param int   $pad
 	 *
 	 * @return int
 	 */
-	public function getPad($array, string $pad)
+	public function getPad($array, int $pad)
 	{
 		$max = 0;
 		foreach ($array as $key => $value)

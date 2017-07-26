@@ -137,9 +137,9 @@ class IncomingRequest extends Request
 	/**
 	 * Constructor
 	 *
-	 * @param type $config
-	 * @param type $uri
-	 * @param type $body
+	 * @param object $config
+	 * @param URI $uri
+	 * @param string $body
 	 */
 	public function __construct($config, $uri = null, $body = 'php://input')
 	{
@@ -217,7 +217,7 @@ class IncomingRequest extends Request
 	 *
 	 * @param string $locale
 	 *
-	 * @return $this
+	 * @return IncomingRequest
 	 */
 	public function setLocale(string $locale)
 	{
@@ -241,7 +241,7 @@ class IncomingRequest extends Request
 			}
 		} catch (\Exception $e)
 		{
-			
+
 		}
 
 		return $this;
@@ -453,6 +453,10 @@ class IncomingRequest extends Request
 	 * Attempts to get old Input data that has been flashed to the session
 	 * with redirect_with_input(). It first checks for the data in the old
 	 * POST data, then the old GET data.
+	 *
+	 * @param string $key
+	 *
+	 * @return mixed
 	 */
 	public function getOldInput(string $key)
 	{
@@ -478,7 +482,7 @@ class IncomingRequest extends Request
 	 * Returns an array of all files that have been uploaded with this
 	 * request. Each file is represented by an UploadedFile instance.
 	 *
-	 * @return array
+	 * @return Files\FileCollection
 	 */
 	public function getFiles(): FileCollection
 	{
@@ -517,8 +521,8 @@ class IncomingRequest extends Request
 	 * either provided by the user in the baseURL Config setting, or
 	 * determined from the environment as needed.
 	 *
-	 * @param $protocol
-	 * @param $baseURL
+	 * @param string $protocol
+	 * @param string $baseURL
 	 */
 	protected function detectURI($protocol, $baseURL)
 	{
@@ -562,9 +566,9 @@ class IncomingRequest extends Request
 	 * Based on the URIProtocol Config setting, will attempt to
 	 * detect the path portion of the current URI.
 	 *
-	 * @param $protocol
+	 * @param string $protocol
 	 *
-	 * @return string|string
+	 * @return string
 	 */
 	public function detectPath($protocol)
 	{
@@ -600,7 +604,7 @@ class IncomingRequest extends Request
 	 * @param array  $supported
 	 * @param bool   $strictMatch
 	 *
-	 * @return mixed
+	 * @return string
 	 */
 	public function negotiate(string $type, array $supported, bool $strictMatch = false)
 	{

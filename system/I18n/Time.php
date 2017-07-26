@@ -272,10 +272,10 @@ class Time extends DateTime
 	 * Provides a replacement for DateTime's own createFromFormat function, that provides
 	 * more flexible timeZone handling
 	 *
-	 * @param string      $format
-	 * @param string      $datetime
-	 * @param null        $timeZone
-	 * @param string|null $locale
+	 * @param string       $format
+	 * @param string       $datetime
+	 * @param DateTimeZone $timeZone
+	 * @param string|null  $locale
 	 *
 	 * @return \CodeIgniter\I18n\Time
 	 */
@@ -291,9 +291,9 @@ class Time extends DateTime
 	/**
 	 * Returns a new instance with the datetime set based on the provided UNIX timestamp.
 	 *
-	 * @param int         $timestamp
-	 * @param null        $timeZone
-	 * @param string|null $locale
+	 * @param int          $timestamp
+	 * @param DateTimeZone $timeZone
+	 * @param string|null  $locale
 	 *
 	 * @return \CodeIgniter\I18n\Time
 	 */

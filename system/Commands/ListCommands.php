@@ -49,6 +49,12 @@ use CodeIgniter\CLI\CLI;
 class ListCommands extends BaseCommand
 {
 
+	/**
+	 * The group the command is lumped under
+	 * when listing commands.
+	 *
+	 * @var string
+	 */
 	protected $group = 'CodeIgniter';
 
 	/**
@@ -175,6 +181,7 @@ class ListCommands extends BaseCommand
 	 *
 	 * @param array $array
 	 * @param int   $extra // How many extra spaces to add at the end
+	 * @param int   $indent
 	 *
 	 * @return array
 	 */

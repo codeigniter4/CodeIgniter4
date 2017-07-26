@@ -91,7 +91,7 @@ class Throttler implements ThrottlerInterface
 	 */
 	public function getTokenTime()
 	{
-		return (int) $this->tokenTime;
+		return $this->tokenTime;
 	}
 
 	//--------------------------------------------------------------------
