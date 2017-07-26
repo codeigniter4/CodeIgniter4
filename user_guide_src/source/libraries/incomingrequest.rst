@@ -76,7 +76,7 @@ By default, the method is returned as a lower-case string (i.e. 'get', 'post', e
 uppercase version by passing in ``true`` as the only parameter::
 
 	// Returns 'GET'
-	$method = $request->method(true);
+	$method = $request->getMethod(true);
 
 You can also check if the request was made through and HTTPS connection with the ``isSecure()`` method::
 
@@ -280,8 +280,7 @@ The methods provided by the parent classes that are available are:
 
 * :meth:`CodeIgniter\\HTTP\\Request::ipAddress`
 * :meth:`CodeIgniter\\HTTP\\Request::validIP`
-* :meth:`CodeIgniter\\HTTP\\Request::method`
-* :meth:`CodeIgniter\\HTTP\\Request::getServer`
+* :meth:`CodeIgniter\\HTTP\\Request::getMethod`
 * :meth:`CodeIgniter\\HTTP\\Request::getServer`
 * :meth:`CodeIgniter\\HTTP\\Message::body`
 * :meth:`CodeIgniter\\HTTP\\Message::setBody`
