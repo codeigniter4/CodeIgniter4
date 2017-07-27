@@ -34,6 +34,7 @@
 	left: 0;
 	right: 0;
 	height: 32px;
+	z-index: 10000;
 }
 
 #debug-bar h1,
