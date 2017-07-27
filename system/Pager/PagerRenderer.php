@@ -106,10 +106,15 @@ class PagerRenderer
 	 *
 	 * You MUST call hasPrevious() first, or this value may be invalid.
 	 *
-	 * @return string
+	 * @return string|null
 	 */
-	public function getPrevious(): string
+	public function getPrevious()
 	{
+		if ( ! $this->hasPrevious())
+		{
+			return null;
+		}
+
 		$uri = clone $this->uri;
 
 		$uri->addQuery('page', $this->first - 1);
@@ -138,10 +143,15 @@ class PagerRenderer
 	 *
 	 * You MUST call hasNext() first, or this value may be invalid.
 	 *
-	 * @return string
+	 * @return string|null
 	 */
-	public function getNext(): string
+	public function getNext()
 	{
+		if ( ! $this->hasNext())
+		{
+			return null;
+		}
+
 		$uri = clone $this->uri;
 
 		$uri->addQuery('page', $this->last + 1);
