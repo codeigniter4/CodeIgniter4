@@ -829,9 +829,9 @@ class TimeTest extends \CIUnitTestCase
 	public function testHumanizeDaysSingle()
 	{
 		Time::setTestNow('March 10, 2017', 'America/Chicago');
-		$time = Time::parse('March 9, 2017', 'America/Chicago');
+		$time = Time::parse('March 8, 2017', 'America/Chicago');
 
-		$this->assertEquals('1 day ago', $time->humanize());
+		$this->assertEquals('2 days ago', $time->humanize());
 	}
 
 	public function testHumanizeDaysPlural()
@@ -845,33 +845,33 @@ class TimeTest extends \CIUnitTestCase
 	public function testHumanizeDaysForward()
 	{
 		Time::setTestNow('March 10, 2017', 'America/Chicago');
+		$time = Time::parse('March 12, 2017', 'America/Chicago');
+
+		$this->assertEquals('in 2 days', $time->humanize());
+	}
+
+	public function testHumanizeDaysTomorrow()
+	{
+		Time::setTestNow('March 10, 2017', 'America/Chicago');
 		$time = Time::parse('March 11, 2017', 'America/Chicago');
 
-		$this->assertEquals('in 1 day', $time->humanize());
+		$this->assertEquals('Tomorrow', $time->humanize());
 	}
 
-	public function testHumanizeHoursSingle()
+	public function testHumanizeDaysYesterday()
 	{
-		Time::setTestNow('March 10, 2017 12:00', 'America/Chicago');
-		$time = Time::parse('March 10, 2017 11:00', 'America/Chicago');
+		Time::setTestNow('March 10, 2017', 'America/Chicago');
+		$time = Time::parse('March 9, 2017', 'America/Chicago');
 
-		$this->assertEquals('1 hour ago', $time->humanize());
+		$this->assertEquals('Yesterday', $time->humanize());
 	}
 
-	public function testHumanizeHoursPlural()
+	public function testHumanizeHoursAsTime()
 	{
 		Time::setTestNow('March 10, 2017 12:00', 'America/Chicago');
-		$time = Time::parse('March 10, 2017 10:00', 'America/Chicago');
+		$time = Time::parse('March 10, 2017 14:00', 'America/Chicago');
 
-		$this->assertEquals('2 hours ago', $time->humanize());
-	}
-
-	public function testHumanizeHoursForward()
-	{
-		Time::setTestNow('March 10, 2017 12:00', 'America/Chicago');
-		$time = Time::parse('March 10, 2017 13:00', 'America/Chicago');
-
-		$this->assertEquals('in 1 hour', $time->humanize());
+		$this->assertEquals('2:00 pm', $time->humanize());
 	}
 
 	public function testHumanizeMinutesSingle()

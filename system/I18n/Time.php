@@ -1119,13 +1119,22 @@ class Time extends DateTime
 		}
 		else if ($days !== 0)
 		{
-			$phrase = lang('Time.days', [abs($days)]);
 			$before = $days < 0;
+
+			// Yesterday/Tommorrow special cases
+			if (abs($days) === 1)
+			{
+				return $before
+					? lang('Time.yesterday')
+					: lang('Time.tomorrow');
+			}
+
+			$phrase = lang('Time.days', [abs($days)]);
 		}
 		else if ($hours !== 0)
 		{
-			$phrase = lang('Time.hours', [abs($hours)]);
-			$before = $hours < 0;
+			// Display the actual time instead of a regular phrase.
+			return $this->format('g:i a');
 		}
 		else if ($minutes !== 0)
 		{
@@ -1138,8 +1147,8 @@ class Time extends DateTime
 		}
 
 		return $before
-			? $phrase .' '. lang('ago')
-			: lang('Time.inFuture') .' '. $phrase;
+			? lang('Time.ago', [$phrase])
+			: lang('Time.inFuture', [$phrase]);
 	}
 
 	/**
