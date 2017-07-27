@@ -2,8 +2,8 @@
 	position: fixed;
 	bottom: 0;
 	left: 0;
-	width: 30px;
-	height: 30px;
+	width: 36px;
+	height: 36px;
 	background: #fff;
 	border: 1px solid #ddd;
 	border-radius: .5em;
@@ -12,11 +12,10 @@
 	box-shadow: 0 -3px 10px rgba(0, 0, 0, 0.1);
 	clear: both;
 	text-align: center;
-	padding: 2px;
 }
 
 #debug-icon a svg {
-	margin: 1px;
+	margin: 4px;
 	max-width: 26px;
 	max-height: 26px;
 }
@@ -42,6 +41,7 @@
 #debug-bar h3 {
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	color: #666;
+	line-height: 1.5;
 }
 
 #debug-bar p {
@@ -145,7 +145,6 @@
 #debug-bar .ci-label a {
 	display: block;
 	width: 100%;
-	height: 100%;
 	color: inherit;
 	text-decoration: none;
 }
