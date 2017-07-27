@@ -13,7 +13,9 @@ return [
 	'hours' => '{0, plural, =1{# hour} other{# hours}}',
 	'minutes' => '{0, plural, =1{# minute} other{# minutes}}',
 	'seconds' => '{0, plural, =1{# second} other{# seconds}}',
-	'ago' => 'ago',
-	'inFuture' => 'in',
-	'now' => 'just now',
+	'ago' => '{0} ago',
+	'inFuture' => 'in {0}',
+	'yesterday' => 'Yesterday',
+	'tomorrow' => 'Tomorrow',
+	'now' => 'Just now',
 ];

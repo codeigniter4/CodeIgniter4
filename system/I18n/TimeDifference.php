@@ -240,8 +240,8 @@ class TimeDifference
 		}
 
 		return $before
-			? $phrase .' '. lang('ago')
-			: lang('Time.inFuture') .' '. $phrase;
+			? lang('Time.ago', [$phrase])
+			: lang('Time.inFuture', [$phrase]);
 	}
 
 
