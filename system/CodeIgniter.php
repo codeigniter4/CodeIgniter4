@@ -165,7 +165,7 @@ class CodeIgniter
 
 		if (CI_DEBUG)
 		{
-			require_once BASEPATH . 'ThirdParty/Kint/Kint.class.php';
+			require_once BASEPATH . 'ThirdParty/Kint/kint.php';
 		}
 	}
 
