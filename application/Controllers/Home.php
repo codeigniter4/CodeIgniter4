@@ -6,7 +6,6 @@ class Home extends Controller
 {
 	public function index()
 	{
-		dd($this);
 		return view('welcome_message');
 	}
 
