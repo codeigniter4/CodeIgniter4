@@ -94,7 +94,7 @@ if ( ! function_exists('singular'))
 					'/(c)hildren$/'														 => '\1\2hild',
 					'/(n)ews$/'															 => '\1\2ews',
 					'/(quiz)zes$/'														 => '\1',
-					'/([^us])s$/'														 => '\1'				
+					'/([^us])s$/'														 => '\1'
 		];
 
 		foreach ($singularRules as $rule => $replacement)
@@ -133,8 +133,8 @@ if ( ! function_exists('plural'))
 			return $result;
 		}
 
-		$pluralRules = [		
-					'/(quiz)$/'                	 => '\1zes'  ,    // quizzes	
+		$pluralRules = [
+					'/(quiz)$/'                	 => '\1zes'  ,    // quizzes
 					'/^(ox)$/'					 => '\1\2en', // ox
 					'/([m|l])ouse$/'			 => '\1ice', // mouse, louse
 					'/(matr|vert|ind)ix|ex$/'	 => '\1ices', // matrix, vertex, index
