@@ -1,6 +1,8 @@
 <?php namespace CodeIgniter\Database\Live;
 
+use CodeIgniter\I18n\Time;
 use CodeIgniter\Model;
+use CodeIgniter\Test\ReflectionHelper;
 use Tests\Support\Models\EntityModel;
 use Tests\Support\Models\EventModel;
 use Tests\Support\Models\JobModel;
@@ -13,6 +15,8 @@ use Tests\Support\Models\ValidModel;
  */
 class ModelTest extends \CIDatabaseTestCase
 {
+	use ReflectionHelper;
+
 	protected $refresh = true;
 
 	protected $seed = 'CITestSeeder';
@@ -487,10 +491,14 @@ class ModelTest extends \CIDatabaseTestCase
         $this->assertEquals('Awesome job, but sometimes makes you bored', $entity->description);
 
         $entity->name = 'Senior Developer';
+        $entity->created_at = '2017-07-15';
+
+        $date = $this->getPrivateProperty($entity, 'created_at');
+        $this->assertTrue($date instanceof Time);
 
         $model->save($entity);
 
-        $this->seeInDatabase('job', ['name' => 'Senior Developer']);
+        $this->seeInDatabase('job', ['name' => 'Senior Developer', 'created_at' => '2017-07-15 00:00:00']);
     }
 
 	/**

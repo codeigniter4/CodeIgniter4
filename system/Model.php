@@ -35,6 +35,7 @@
  * @since        Version 3.0.0
  * @filesource
  */
+use CodeIgniter\I18n\Time;
 use CodeIgniter\Pager\Pager;
 use CodeIgniter\Validation\ValidationInterface;
 use Config\App;
@@ -582,7 +583,7 @@ class Model
 		// them as an array.
 		if (is_object($data) && ! $data instanceof \stdClass)
 		{
-			$data = static::classToArray($data);
+			$data = static::classToArray($data, $this->dateFormat);
 		}
 
 		if (is_object($data) && isset($data->{$this->primaryKey}))
@@ -620,7 +621,7 @@ class Model
 	 *
 	 * @return array
 	 */
-	public static function classToArray($data): array
+	public static function classToArray($data, string $dateFormat = 'datetime'): array
 	{
 		$mirror = new \ReflectionClass($data);
 		$props = $mirror->getProperties(\ReflectionProperty::IS_PUBLIC | \ReflectionProperty::IS_PROTECTED);
@@ -633,7 +634,29 @@ class Model
 		{
 			// Must make protected values accessible.
 			$prop->setAccessible(true);
-			$properties[$prop->getName()] = $prop->getValue($data);
+			$propName = $prop->getName();
+			$properties[$propName] = $prop->getValue($data);
+
+			// Convert any Time instances to appropriate $dateFormat
+			if ($properties[$propName] instanceof Time)
+			{
+				$converted = (string)$properties[$propName];
+
+				switch($dateFormat)
+				{
+					case 'datetime':
+						$converted = $properties[$propName]->format('Y-m-d H:i:s');
+						break;
+					case 'date':
+						$converted = $properties[$propName]->format('Y-m-d');
+						break;
+					case 'int':
+						$converted = $properties[$propName]->getTimestamp();
+						break;
+				}
+
+				$properties[$prop->getName()] = $converted;
+			}
 		}
 
 		return $properties;
@@ -657,7 +680,7 @@ class Model
 		// them as an array.
 		if (is_object($data) && ! $data instanceof \stdClass)
 		{
-			$data = static::classToArray($data);
+			$data = static::classToArray($data, $this->dateFormat);
 		}
 
 		// If it's still a stdClass, go ahead and convert to
@@ -735,7 +758,7 @@ class Model
 		// them as an array.
 		if (is_object($data) && ! $data instanceof \stdClass)
 		{
-			$data = static::classToArray($data);
+			$data = static::classToArray($data, $this->dateFormat);
 		}
 
 		// If it's still a stdClass, go ahead and convert to
