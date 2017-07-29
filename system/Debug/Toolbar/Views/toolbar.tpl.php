@@ -38,6 +38,7 @@
 			<?php endif; ?>
 		<?php endforeach; ?>
 		<span class="ci-label"><a href="javascript: void(0)" data-tab="ci-vars">Vars</a></span>
+		<span id="toolbar-position"><a href="javascript: void(0)">&#8597;</a></span>
 	</div>
 
 	<!-- Timeline -->

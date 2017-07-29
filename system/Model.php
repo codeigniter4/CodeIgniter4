@@ -60,6 +60,7 @@ use CodeIgniter\Database\ConnectionInterface;
  *      - ensure validation is run against objects when saving items
  *
  * @package CodeIgniter
+ * @mixin BaseBuilder
  */
 class Model
 {
@@ -327,8 +328,8 @@ class Model
 	/**
 	 * Extract a subset of data
 	 *
-	 * @param      $key
-	 * @param null $value
+	 * @param string|array $key
+	 * @param string|null  $value
 	 *
 	 * @return array|null The rows of data.
 	 */
@@ -456,9 +457,9 @@ class Model
 	 * @see http://hashids.org/php/
 	 * @see http://raymorgan.net/web-development/how-to-obfuscate-integer-ids/
 	 *
-	 * @param $id
+	 * @param int|string $id
 	 *
-	 * @return mixed
+	 * @return string|false
 	 */
 	public function encodeID($id)
 	{
@@ -501,7 +502,7 @@ class Model
 	 *
 	 * @see http://raymorgan.net/web-development/how-to-obfuscate-integer-ids/
 	 *
-	 * @param $hash
+	 * @param string $hash
 	 *
 	 * @return mixed
 	 */
@@ -549,8 +550,8 @@ class Model
 	 * Used for our hashed IDs. Requires $salt to be defined
 	 * within the Config\App file.
 	 *
-	 * @param $str
-	 * @param $len
+	 * @param string $str
+	 * @param int    $len
 	 *
 	 * @return string
 	 */
@@ -568,7 +569,7 @@ class Model
 	 * you must ensure that the class will provide access to the class
 	 * variables, even if through a magic method.
 	 *
-	 * @param $data
+	 * @param array|object $data
 	 *
 	 * @return bool
 	 */
@@ -615,7 +616,7 @@ class Model
 	 * Takes a class an returns an array of it's public and protected
 	 * properties as an array suitable for use in creates and updates.
 	 *
-	 * @param $data
+	 * @param string|object $data
 	 *
 	 * @return array
 	 */
@@ -644,10 +645,10 @@ class Model
 	 * Inserts data into the current table. If an object is provided,
 	 * it will attempt to convert it to an array.
 	 *
-	 * @param      $data
-	 * @param bool $returnID Whether insert ID should be returned or not.
+	 * @param array|object $data
+	 * @param bool         $returnID Whether insert ID should be returned or not.
 	 *
-	 * @return bool
+	 * @return int|string|bool
 	 */
 	public function insert($data, bool $returnID = true)
 	{
@@ -722,8 +723,8 @@ class Model
 	 * Updates a single record in $this->table. If an object is provided,
 	 * it will attempt to convert it into an array.
 	 *
-	 * @param $id
-	 * @param $data
+	 * @param int|string   $id
+	 * @param array|object $data
 	 *
 	 * @return bool
 	 */
@@ -824,9 +825,9 @@ class Model
 	 * Deletes multiple records from $this->table where the specified
 	 * key/value matches.
 	 *
-	 * @param      $key
-	 * @param null $value
-	 * @param bool $purge Allows overriding the soft deletes setting.
+	 * @param string|array $key
+	 * @param string|null  $value
+	 * @param bool         $purge Allows overriding the soft deletes setting.
 	 *
 	 * @return mixed
 	 * @throws DatabaseException
@@ -886,7 +887,7 @@ class Model
 	 *
 	 * @param bool $val
 	 *
-	 * @return $this
+	 * @return Model
 	 */
 	public function withDeleted($val = true)
 	{
@@ -901,7 +902,7 @@ class Model
 	 * Works with the find* methods to return only the rows that
 	 * have been deleted.
 	 *
-	 * @return $this
+	 * @return Model
 	 */
 	public function onlyDeleted()
 	{
@@ -920,6 +921,8 @@ class Model
 
 	/**
 	 * Sets the return type of the results to be as an associative array.
+	 *
+	 * @return Model
 	 */
 	public function asArray()
 	{
@@ -938,7 +941,7 @@ class Model
 	 *
 	 * @param string $class
 	 *
-	 * @return $this
+	 * @return Model
 	 */
 	public function asObject(string $class = 'object')
 	{
@@ -1034,7 +1037,7 @@ class Model
 	 *
 	 * @param bool $protect
 	 *
-	 * @return $this
+	 * @return Model
 	 */
 	public function protect(bool $protect = true)
 	{
@@ -1050,7 +1053,7 @@ class Model
 	 *
 	 * @param string $table
 	 *
-	 * @return BaseBuilder|Database\Builder\
+	 * @return BaseBuilder
 	 */
 	protected function builder(string $table = null)
 	{
@@ -1081,9 +1084,9 @@ class Model
 	 * Used by insert() and update() to protect against mass assignment
 	 * vulnerabilities.
 	 *
-	 * @param $data
+	 * @param array $data
 	 *
-	 * @return mixed
+	 * @return array
 	 * @throws DatabaseException
 	 */
 	protected function doProtectFields($data)
@@ -1151,7 +1154,7 @@ class Model
 	 *
 	 * @param string $table
 	 *
-	 * @return $this
+	 * @return Model
 	 */
 	public function setTable(string $table)
 	{
@@ -1200,7 +1203,7 @@ class Model
 	 *
 	 * @param bool $skip
 	 *
-	 * @return $this
+	 * @return Model
 	 */
 	public function skipValidation(bool $skip = true)
 	{
@@ -1324,7 +1327,7 @@ class Model
 	 * @param string $name
 	 * @param array  $params
 	 *
-	 * @return $this|null
+	 * @return Model|null
 	 */
 	public function __call($name, array $params)
 	{
