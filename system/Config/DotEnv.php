@@ -73,6 +73,8 @@ class DotEnv
 	 * The main entry point, will load the .env file and process it
 	 * so that we end up with all settings in the PHP environment vars
 	 * (i.e. getenv(), $_ENV, and $_SERVER)
+	 *
+	 * @return bool
 	 */
 	public function load()
 	{

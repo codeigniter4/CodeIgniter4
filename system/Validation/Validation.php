@@ -99,7 +99,7 @@ class Validation implements ValidationInterface
 	 * Validation constructor.
 	 *
 	 * @param \Config\Validation $config
-	 * @param RenderableInterface $view
+	 * @param RendererInterface $view
 	 */
 	public function __construct($config, RendererInterface $view)
 	{
@@ -176,7 +176,8 @@ class Validation implements ValidationInterface
 	 * the error to $this->errors and moves on to the next,
 	 * so that we can collect all of the first errors.
 	 *
-	 * @param            $value
+	 * @param string     $field
+	 * @param string     $value
 	 * @param array|null $rules
 	 * @param array      $data // All of the fields to check.
 	 *
@@ -234,7 +235,7 @@ class Validation implements ValidationInterface
 			// Set the error message if we didn't survive.
 			if ($passed === false)
 			{
-				$this->errors[$field] = is_null($error) ? $this->getErrorMessage($rule, $field) : $error;
+				$this->errors[$field] = is_null($error) ? $this->getErrorMessage($rule, $field, $param) : $error;
 
 				return false;
 			}
@@ -250,9 +251,9 @@ class Validation implements ValidationInterface
 	 * Takes a Request object and grabs the data to use from its
 	 * POST array values.
 	 *
-	 * @param \CodeIgniter\HTTP\RequestInterface $request
+	 * @param \CodeIgniter\HTTP\RequestInterface|\CodeIgniter\HTTP\IncomingRequest $request
 	 *
-	 * @return \CodeIgniter\Validation\Validation
+	 * @return \CodeIgniter\Validation\ValidationInterface
 	 */
 	public function withRequest(RequestInterface $request): ValidationInterface
 	{
@@ -314,7 +315,7 @@ class Validation implements ValidationInterface
 	 * @param array $rules
 	 * @param array $errors // An array of custom error messages
 	 *
-	 * @return \CodeIgniter\Validation\Validation
+	 * @return \CodeIgniter\Validation\ValidationInterface
 	 */
 	public function setRules(array $rules, array $errors = []): ValidationInterface
 	{
@@ -587,7 +588,7 @@ class Validation implements ValidationInterface
 	 * @param string $field
 	 * @param string $error
 	 *
-	 * @return \CodeIgniter\Validation\Validation
+	 * @return \CodeIgniter\Validation\ValidationInterface
 	 */
 	public function setError(string $field, string $error): ValidationInterface
 	{

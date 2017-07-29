@@ -293,8 +293,8 @@ class FormatRules
 	/**
 	 * Validate an IP address
 	 *
-	 * @param        $ip     IP Address
-	 * @param string $which  IP protocol: 'ipv4' or 'ipv6'
+	 * @param string $ip    IP Address
+	 * @param string $which IP protocol: 'ipv4' or 'ipv6'
 	 * @param array  $data
 	 *
 	 * @return bool

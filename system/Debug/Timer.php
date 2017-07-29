@@ -67,6 +67,8 @@ class Timer
 	 *
 	 * @param string $name  The name of this timer.
 	 * @param float  $time  Allows user to provide time.
+	 *
+	 * @return Timer
 	 */
 	public function start(string $name, float $time = null)
 	{
@@ -87,6 +89,8 @@ class Timer
 	 * it will be automatically stopped at that point.
 	 *
 	 * @param string $name   The name of this timer.
+	 *
+	 * @return Timer
 	 */
 	public function stop(string $name)
 	{
@@ -107,8 +111,8 @@ class Timer
 	/**
 	 * Returns the duration of a recorded timer.
 	 *
-	 * @param     $name         The name of the timer.
-	 * @param int $decimals     Number of decimal places.
+	 * @param string $name     The name of the timer.
+	 * @param int    $decimals Number of decimal places.
 	 *
 	 * @return null|float       Returns null if timer exists by that name.
 	 *                          Returns a float representing the number of

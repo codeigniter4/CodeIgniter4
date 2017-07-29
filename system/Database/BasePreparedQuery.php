@@ -43,7 +43,7 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
 	/**
 	 * The prepared statement itself.
 	 *
-	 * @var
+	 * @var resource|\mysqli_stmt
 	 */
 	protected $statement;
 
@@ -72,7 +72,7 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
 	/**
 	 * A reference to the db connection to use.
 	 *
-	 * @var \CodeIgniter\Database\ConnectionInterface
+	 * @var BaseConnection|MySQLi\Connection
 	 */
 	protected $db;
 
@@ -93,7 +93,8 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
 	 * override this method.
 	 *
 	 * @param string $sql
-	 * @param array  $options  Passed to the connection's prepare statement.
+	 * @param array  $options Passed to the connection's prepare statement.
+	 * @param string $queryClass
 	 *
 	 * @return mixed
 	 */
@@ -104,6 +105,9 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
 		// need to replace our named placeholders (:name)
 		$sql = preg_replace('/:[^\s,)]+/', '?', $sql);
 
+		/**
+		 * @var \CodeIgniter\Database\Query $query
+		 */
 		$query = new $queryClass($this->db);
 
 		$query->setQuery($sql);
@@ -233,7 +237,7 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
 	/**
 	 * Returns the error code created while executing this statement.
 	 *
-	 * @return string
+	 * @return int
 	 */
 	public function getErrorCode(): int
 	{

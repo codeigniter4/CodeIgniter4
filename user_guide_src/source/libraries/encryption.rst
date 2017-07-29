@@ -41,12 +41,8 @@ Default behavior
 ================
 
 By default, the Encryption Library will use the OpenSSL handler, with
-the AES-256 cipher in CBC mode, 
+the AES-256-CBC cipher, 
 using your configured *key* and SHA512 HMAC authentication.
-
-AES-256 is chosen both because it is proven to be strong and
-because of its wide availability across different cryptographic
-software and programming languages' APIs.
 
 The *key* you provide is used for
 "keyed-hash message authentication" (HMAC), which derives
@@ -115,10 +111,12 @@ a more friendly manner. For example::
 
 .. _ciphers-and-modes:
 
-Encryption ciphers and modes
-============================
+Encryption ciphers
+==================
 
-.. note:: The terms 'cipher' and 'encryption algorithm' are interchangeable.
+A *cipher* is a combination of an algorithm, key length, and encryption mode.
+For instance, "AES-256-CBC" refers to the AES algorithm using a 256 bit key and
+cipher block chaining (CBC) mode.
 
 Different encryption drivers support different sets of encryption algorithms and often implement
 them in different ways. Some algorithms expect specific key lengths, while others support
@@ -127,7 +125,7 @@ variable length keys. Each algorithm usually supports several different encrypti
 Here's a list of common ciphers:
 
 ======================== ============================ ===============================
-Cipher name              Key lengths (bits / bytes)   Supported modes
+Algorithm name           Key lengths (bits / bytes)   Supported modes
 ======================== ============================ ===============================
 AES-128 / Rijndael-128   128 / 16                     CBC, CTR, CFB, CFB8, OFB, ECB
 AES-192                  192 / 24                     CBC, CTR, CFB, CFB8, OFB, ECB
@@ -137,7 +135,7 @@ CAST5 / CAST-128         88-128 / 11-16               CBC, CFB, OFB, ECB
 DES                      56 / 7                       CBC, CFB, CFB8, OFB, ECB
 RC4 / ARCFour            40-2048 / 5-256              Stream
 TripleDES                56 / 7, 112 / 14, 168 / 21   CBC, CFB, CFB8, OFB
-======================== ================== ============================ ===============================
+======================== ============================ ===============================
 
 .. note:: Blowfish, CAST5 and RC4 support variable length keys, 
         although in bit terms that only happens in 8-bit increments.
@@ -158,26 +156,22 @@ and some offer extra features.
 If you are unsure which to use, stick to the CBC mode - it is widely accepted 
 as strong and secure for general purposes.
 
-=========== ===================================================================================================================================================
+=========== =====================================================================
 Mode name   Additional info
-=========== ===================================================================================================================================================
-CBC         A safe default choice
-CFB         N/A
-CFB8        Same as CFB, but operates in 8-bit mode (not recommended).
-CTR         Considered as theoretically better than CBC, but not as widely available
-ECB         Ignores IV (not recommended).
-OFB         N/A
-XTS         Usually used for encrypting random access data such as RAM or hard-disk storage.
-Stream      This is not actually a mode, it just says that a stream cipher is being used. Required because of the general cipher+mode initialization process.
-=========== ===================================================================================================================================================
+=========== =====================================================================
+CBC         Cipher block chaining - a safe default choice
+CFB         Cipher feedback
+CTR         Counter mode
+ECB         Electronic codebook - ignores IV (not recommended).
+OFB         Output feedback
+Stream      Not actually a mode, it just says that a stream cipher is being used.
+=========== =====================================================================
 
 OpenSSL Notes
 -------------
 
 As noted above, the encryption drivers support different sets of encryption
-ciphers. We do recommend that you use driver-specific settings.
-
-The following are supported by OpenSSL:
+ciphers. The following examples are supported by OpenSSL:
 
 ============== ============================== =========================================
 Cipher name    Key lengths (bits / bytes)     Supported modes
@@ -219,30 +213,49 @@ Configuring the library
 =======================
 
 The Encryption library is designed to
-use repeatedly the same driver, encryption cipher, mode and key.
+use repeatedly the same driver, encryption cipher and key.
 
 As noted in the "Default behavior" section above, this means using an
-auto-detected driver (OpenSSL has a higher priority), the AES-256 ciper
+auto-detected driver (OpenSSL has a higher priority), the AES-256 algorithm
 in CBC mode, and your ``$key`` value.
 
 Encryption configuration settings are normally set in 
 application/config/Encryption.php.
+Not all settings are supported by all of the drivers
 
 ======== ===============================================
-Option   Possible values
+Option   Possible values (default in parentheses)
 ======== ===============================================
-driver   Preferred handler: 'OpenSSL'
-cipher   Cipher name (see :ref:`ciphers-and-modes`)
-mode     Encryption mode (see :ref:`encryption-modes`)
-key      Encryption key 
+driver   Preferred handler (OpenSSL)
+cipher   Cipher name (AES-256-CBC); see :ref:`ciphers-and-modes`)
+key      Encryption key starter
+digest   Which HMAC digest algorithm to use (SHA512)
+encoding The encoding to apply to encrypted results (base64)
 ======== ===============================================
 
 You can over-ride any of those settings by passing your own ``Config`` object,
-or an associative array of parameters, to the Services::
+or an associative array of parameters, or even just the driver name, to the Services::
 
     $encrypter = \Config\Services::encrypter($params);
 
 These will replace any same-named settings in ``Config\Encryption``.
+
+.. _digests:
+
+Supported HMAC authentication algorithms
+----------------------------------------
+
+For HMAC message authentication, the Encryption library supports
+usage of the SHA-2 family of algorithms:
+
+=========== ==================== ============================
+Algorithm   Raw length (bytes)   Hex-encoded length (bytes)
+=========== ==================== ============================
+sha512      64                   128
+sha384      48                   96
+sha256      32                   64
+sha224      28                   56
+=========== ==================== ============================
 
 Using the Encryption manager directly
 =====================================
@@ -260,12 +273,11 @@ mode to AES-256 in CTR mode, this is what you should do::
 
     $encryption = new \Encryption\Encryption();
     $encrypter = $encryption->initialize([
-            'cipher' => 'aes-256',
-            'mode' => 'ctr',
+            'cipher' => 'aes-256-ctr',
             'key' => '<a 32-character random string>'		
 	]);
 
-Note that we only mentioned that you want to change the cipher and mode,
+Note that we only mentioned that you want to change the cipher,
 but we also included a key in the example. As previously noted, it is
 important that you choose a key with a proper size for the used algorithm.
 
@@ -292,6 +304,14 @@ Alternately, you could use the encryption manager directly:
     $encrypter= $encryption->initialize(['driver' => 'OpenSSL']);;
     // now encrypt data using OpenSSL
 
+
+Note that it would be easier to save these separately, if both encrypters
+were to be needed as part of handling the same request.
+
+    $encryption = new \Encryption\Encryption();
+    $encrypter1 = $encryption->initialize(['driver' => 'Sodium']);;
+    $encrypter2 = $encryption->initialize(['driver' => 'OpenSSL']);;
+
 Encrypting and decrypting data
 ==============================
 
@@ -317,95 +337,6 @@ You don't need to worry about it.
 
 .. _custom-parameters:
 
-Using custom parameters
------------------------
-
-If you have to interact with another system that is out
-of your control and uses another method to encrypt data,
-you can change how the encryption
-and decryption processes work, so that you can easily tailor a
-custom solution for such situations.
-
-.. note:: It is possible to use the library in this way, without
-	setting an *encryption_key* in your configuration file.
-
-All you have to do is to pass an associative array with a few
-parameters to either the ``encrypt()`` or ``decrypt()`` method.
-Here's an example::
-
-	// Assume that we have $ciphertext, $key and $hmac_key
-	// from on outside source
-	$message = $encrypter->decrypt(
-		$ciphertext,
-		array(
-			'cipher' => 'blowfish',
-			'mode' => 'cbc',
-			'key' => $key,
-			'hmac_digest' => 'sha256',
-			'hmac_key' => $hmac_key
-		)
-	);
-
-In the above example, we are decrypting a message that was encrypted
-using the Blowfish cipher in CBC mode and authenticated via a SHA-256
-HMAC.
-
-.. important:: Note that both 'key' and 'hmac_key' are used in this
-	example. When using custom parameters, encryption and HMAC keys
-	are not derived like the default behavior of the library is.
-
-Below is a list of the available options for ``encrypt()`` and ``decrypt``.
-Unless you really need to do this, and you know what you are doing,
-we advise you to not change the encryption process as this could
-impact security.
-
-============= =============== ============================= ======================================================
-Option        Default value   Mandatory / Optional          Description
-============= =============== ============================= ======================================================
-cipher        N/A             Yes                           Encryption algorithm (see :ref:`ciphers-and-modes`).
-mode          N/A             Yes                           Encryption mode (see :ref:`encryption-modes`).
-key           N/A             Yes                           Encryption key.
-hmac          TRUE            No                            Whether to use a HMAC.
-                                                            Boolean. If set to FALSE, then *hmac_digest* and
-                                                            *hmac_key* will be ignored.
-hmacDigest    sha512          No                            HMAC message digest algorithm (see :ref:`digests`).
-hmacKey       N/A             Yes, unless *hmac* is FALSE   HMAC key.
-rawdata       FALSE           No                            Whether the ciphertext should be raw.
-                                                            Boolean. If set to TRUE, then Base64 encoding and
-                                                            decoding will not be performed and HMAC will not
-                                                            be a hexadecimal string.
-============= =============== ============================= ======================================================
-
-.. important:: ``encrypt()`` and ``decrypt()`` will return FALSE if
-	a mandatory parameter is not provided or if a provided
-	value is incorrect. This includes *hmacKey*, unless *hmac*
-	is set to FALSE.
-
-.. _digests:
-
-Supported HMAC authentication algorithms
-----------------------------------------
-
-For HMAC message authentication, the Encryption library supports
-usage of the SHA-2 family of algorithms:
-
-=========== ==================== ============================
-Algorithm   Raw length (bytes)   Hex-encoded length (bytes)
-=========== ==================== ============================
-sha512      64                   128
-sha384      48                   96
-sha256      32                   64
-sha224      28                   56
-=========== ==================== ============================
-
-The reason for not including other popular algorithms, such as
-MD5 or SHA1 is that they are no longer considered secure enough
-and as such, we don't want to encourage their usage.
-If you absolutely need to use them, it is easy to do so via PHP's
-native `hash_hmac() <http://php.net/manual/en/function.hash-hmac.php>`_ function.
-
-Stronger algorithms of course will be added in the future as they
-appear and become widely available.
 
 ***************
 Class Reference
@@ -428,22 +359,21 @@ Class Reference
 		:param	array	$params: Configuration parameters
 		:returns:	CodeIgniter\\Encryption\\EncrypterInterface instance (for method chaining)
 		:rtype:	CodeIgniter\\Encryption\\EncrypterInterface
+		:throws:	CodeIgniter\\Encryption\\EncryptionException
 
-		Initializes (configures) the library to use a different
-		driver, cipher, mode or key.
+		Initializes (configures) the library to use different settings.
 
 		Example::
 
-			$encrypter = $encryption->initialize(['mode' => 'ctr']);
+			$encrypter = $encryption->initialize(['cipher' => '3des']);
 
 		Please refer to the :ref:`configuration` section for detailed info.
 
 .. php:interface:: CodeIgniter\\Encryption\\EncrypterInterface
 
-	.. php:method:: encrypt($data[, $params = NULL])
+	.. php:method:: encrypt($data)
 
 		:param	string	$data: Data to encrypt
-		:param	array	$params: Optional parameters
 		:returns:	Encrypted data or FALSE on failure
 		:rtype:	string
 
@@ -453,54 +383,15 @@ Class Reference
 
 			$ciphertext = $encrypter->encrypt('My secret message');
 
-		Please refer to the :ref:`custom-parameters` section for information
-		on the optional parameters.
-
-	.. php:method:: decrypt($data[, $params = NULL])
+	.. php:method:: decrypt($data)
 
 		:param	string	$data: Data to decrypt
-		:param	array	$params: Optional parameters
 		:returns:	Decrypted data or FALSE on failure
 		:rtype:	string
+		:throws:	CodeIgniter\\Encryption\\EncryptionException
 
 		Decrypts the input data and returns it in plain-text.
 
 		Example::
 
 			echo $encrypter->decrypt($ciphertext);
-
-		Please refer to the :ref:`custom-parameters` secrion for information
-		on the optional parameters.
-
-	.. php:method:: hkdf($key[, $digest = 'sha512'[, $salt = NULL[, $length = NULL[, $info = '']]]])
-
-		:param	string	$key: Input key material
-		:param	string	$digest: A SHA-2 family digest algorithm
-		:param	string	$salt: Optional salt
-		:param	int	$length: Optional output length
-		:param	string	$info: Optional context/application-specific info
-		:returns:	A pseudo-random key or FALSE on failure
-		:rtype:	string
-
-		Derives a key from another, presumably weaker key.
-
-		This method is used internally to derive an encryption and HMAC key
-		from your configured *encryption_key*.
-
-		It is publicly available due to its otherwise general purpose. It is
-		described in `RFC 5869 <https://tools.ietf.org/rfc/rfc5869.txt>`_.
-
-		However, as opposed to the description in RFC 5869, this implementation
-		doesn't support SHA1.
-
-		Example::
-
-			$hmacKey = $encrypter->hkdf(
-				$key,
-				'sha512',
-				NULL,
-				NULL,
-				'authentication'
-			);
-
-			// $hmacKey is a pseudo-random key with a length of 64 bytes

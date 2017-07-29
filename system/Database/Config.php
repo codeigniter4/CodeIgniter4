@@ -69,7 +69,7 @@ class Config extends BaseConfig
 	 *                                 or an array of configuration settings.
 	 * @param bool          $getShared Whether to return a shared instance of the connection.
 	 *
-	 * @return mixed
+	 * @return BaseConnection
 	 */
 	public static function connect($group = null, $getShared = true)
 	{
@@ -130,6 +130,8 @@ class Config extends BaseConfig
 	 * database group, and loads the group if it hasn't been loaded yet.
 	 *
 	 * @param string|null $group
+	 *
+	 * @return Forge
 	 */
 	public static function forge(string $group = null)
 	{
@@ -166,7 +168,7 @@ class Config extends BaseConfig
 	 *
 	 * @param string|null $group
 	 *
-	 * @return mixed
+	 * @return BaseUtils
 	 */
 	public static function utils(string $group = null)
 	{

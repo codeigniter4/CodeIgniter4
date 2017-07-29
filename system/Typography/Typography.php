@@ -96,8 +96,9 @@ class Typography
 	 * 	- Converts double dashes into em-dashes.
 	 *  - Converts two spaces into entities
 	 *
-	 * @param	string
-	 * @param	bool	whether to reduce more then two consecutive newlines to two
+	 * @param    string $str
+	 * @param    bool   $reduce_linebreaks whether to reduce more then two consecutive newlines to two
+	 *
 	 * @return	string
 	 */
 	public function autoTypography(string $str, bool $reduce_linebreaks = false): string

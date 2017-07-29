@@ -37,7 +37,6 @@
  */
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\ConnectionInterface;
-use CodeIgniter\DatabaseException;
 
 /**
  * Connection for Postgre
@@ -180,9 +179,9 @@ class Connection extends BaseConnection implements ConnectionInterface
 	/**
 	 * Executes the query against the database.
 	 *
-	 * @param $sql
+	 * @param string $sql
 	 *
-	 * @return mixed
+	 * @return resource
 	 */
 	public function execute($sql)
 	{

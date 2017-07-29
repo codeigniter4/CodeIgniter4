@@ -38,7 +38,6 @@
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
-use Zend\Escaper\Exception\RuntimeException;
 
 class Filters
 {
@@ -175,6 +174,10 @@ class Filters
 	 * We go ahead an process the entire tree because we'll need to
 	 * run through both a before and after and don't want to double
 	 * process the rows.
+	 *
+	 * @param string $uri
+	 *
+	 * @return Filters
 	 */
 	public function initialize(string $uri = null)
 	{

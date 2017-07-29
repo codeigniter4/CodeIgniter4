@@ -73,7 +73,7 @@ interface ValidationInterface
 	 *
 	 * @param \CodeIgniter\HTTP\RequestInterface $request
 	 *
-	 * @return \CodeIgniter\Validation\Validation
+	 * @return \CodeIgniter\Validation\ValidationInterface
 	 */
 	public function withRequest(RequestInterface $request): ValidationInterface;
 
@@ -138,7 +138,7 @@ interface ValidationInterface
 	 * @param string $alias
 	 * @param string $error
 	 *
-	 * @return \CodeIgniter\Validation\Validation
+	 * @return \CodeIgniter\Validation\ValidationInterface
 	 */
 	public function setError(string $alias, string $error): ValidationInterface;
 

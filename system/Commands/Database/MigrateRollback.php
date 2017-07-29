@@ -49,6 +49,12 @@ use Config\Autoload;
 class MigrateRollback extends BaseCommand
 {
 
+	/**
+	 * The group the command is lumped under
+	 * when listing commands.
+	 *
+	 * @var string
+	 */
 	protected $group = 'Database';
 
 	/**
@@ -93,6 +99,8 @@ class MigrateRollback extends BaseCommand
 	/**
 	 * Runs all of the migrations in reverse order, until they have
 	 * all been un-applied.
+	 *
+	 * @param array $params
 	 */
 	public function run(array $params = [])
 	{

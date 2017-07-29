@@ -38,7 +38,6 @@
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\Database\Seeder;
-use Config\Services;
 
 /**
  * Runs the specified Seeder file to populate the database
@@ -49,6 +48,12 @@ use Config\Services;
 class Seed extends BaseCommand
 {
 
+	/**
+	 * The group the command is lumped under
+	 * when listing commands.
+	 *
+	 * @var string
+	 */
 	protected $group = 'Database';
 
 	/**
@@ -91,6 +96,8 @@ class Seed extends BaseCommand
 	/**
 	 * Runs all of the migrations in reverse order, until they have
 	 * all been un-applied.
+	 *
+	 * @param array $params
 	 */
 	public function run(array $params = [])
 	{

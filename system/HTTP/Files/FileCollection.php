@@ -193,7 +193,7 @@ class FileCollection
 	 *
 	 * @param array $array
 	 *
-	 * @return array
+	 * @return array|UploadedFile
 	 */
 	protected function createFileObject(array $array)
 	{

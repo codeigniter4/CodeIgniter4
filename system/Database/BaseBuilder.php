@@ -45,6 +45,7 @@ use CodeIgniter\DatabaseException;
  * certain methods to make them work.
  *
  * @package CodeIgniter\Database
+ * @mixin \CodeIgniter\Model
  */
 class BaseBuilder
 {
@@ -164,7 +165,7 @@ class BaseBuilder
 	/**
 	 * A reference to the database connection.
 	 *
-	 * @var ConnectionInterface
+	 * @var BaseConnection
 	 */
 	protected $db;
 
@@ -199,7 +200,7 @@ class BaseBuilder
 	/**
 	 * Constructor
 	 *
-	 * @param type $tableName
+	 * @param string|array $tableName
 	 * @param \CodeIgniter\Database\ConnectionInterface $db
 	 * @param array $options
 	 * @throws DatabaseException
@@ -244,8 +245,8 @@ class BaseBuilder
 	 *
 	 * Generates the SELECT portion of the query
 	 *
-	 * @param    string|array
-	 * @param    mixed
+	 * @param    string|array $select
+	 * @param    mixed        $escape
 	 *
 	 * @return    BaseBuilder
 	 */
@@ -280,8 +281,8 @@ class BaseBuilder
 	 *
 	 * Generates a SELECT MAX(field) portion of a query
 	 *
-	 * @param    string    the field
-	 * @param    string    an alias
+	 * @param    string $select The field
+	 * @param    string $alias  An alias
 	 *
 	 * @return    BaseBuilder
 	 */
@@ -297,8 +298,8 @@ class BaseBuilder
 	 *
 	 * Generates a SELECT MIN(field) portion of a query
 	 *
-	 * @param    string    the field
-	 * @param    string    an alias
+	 * @param    string $select The field
+	 * @param    string $alias  An alias
 	 *
 	 * @return    BaseBuilder
 	 */
@@ -314,8 +315,8 @@ class BaseBuilder
 	 *
 	 * Generates a SELECT AVG(field) portion of a query
 	 *
-	 * @param    string    the field
-	 * @param    string    an alias
+	 * @param    string $select The field
+	 * @param    string $alias  An alias
 	 *
 	 * @return    BaseBuilder
 	 */
@@ -331,8 +332,8 @@ class BaseBuilder
 	 *
 	 * Generates a SELECT SUM(field) portion of a query
 	 *
-	 * @param    string    the field
-	 * @param    string    an alias
+	 * @param    string $select The field
+	 * @param    string $alias  An alias
 	 *
 	 * @return    BaseBuilder
 	 */
@@ -356,6 +357,7 @@ class BaseBuilder
 	 * @param    string $type
 	 *
 	 * @return    BaseBuilder
+	 * @throws \CodeIgniter\DatabaseException
 	 */
 	protected function maxMinAvgSum($select = '', $alias = '', $type = 'MAX')
 	{
@@ -477,10 +479,10 @@ class BaseBuilder
 	 *
 	 * Generates the JOIN portion of the query
 	 *
-	 * @param    string
-	 * @param    string    the join condition
-	 * @param    string    the type of join
-	 * @param    string    whether not to try to escape identifiers
+	 * @param    string $table
+	 * @param    string $cond   The join condition
+	 * @param    string $type   The type of join
+	 * @param    string $escape Whether not to try to escape identifiers
 	 *
 	 * @return    BaseBuilder
 	 */
@@ -566,9 +568,9 @@ class BaseBuilder
 	 * Generates the WHERE portion of the query.
 	 * Separates multiple calls with 'AND'.
 	 *
-	 * @param    mixed
-	 * @param    mixed
-	 * @param    bool
+	 * @param    mixed $key
+	 * @param    mixed $value
+	 * @param    bool  $escape
 	 *
 	 * @return    BaseBuilder
 	 */
@@ -585,9 +587,9 @@ class BaseBuilder
 	 * Generates the WHERE portion of the query.
 	 * Separates multiple calls with 'OR'.
 	 *
-	 * @param    mixed
-	 * @param    mixed
-	 * @param    bool
+	 * @param    mixed $key
+	 * @param    mixed $value
+	 * @param    bool  $escape
 	 *
 	 * @return    BaseBuilder
 	 */
@@ -1275,9 +1277,9 @@ class BaseBuilder
 	 *
 	 * Allows key/value pairs to be set for insert(), update() or replace().
 	 *
-	 * @param    string|array $key    Field name, or an array of field/value pairs
-	 * @param    string       $value  Field value, if $key is a single field
-	 * @param    bool                 Whether to escape values and identifiers
+	 * @param    string|array|object $key    Field name, or an array of field/value pairs
+	 * @param    string              $value  Field value, if $key is a single field
+	 * @param    bool                $escape Whether to escape values and identifiers
 	 *
 	 * @return    BaseBuilder
 	 */
@@ -1315,7 +1317,7 @@ class BaseBuilder
 	 *
 	 * Compiles a SELECT query string and returns the sql.
 	 *
-	 * @param    bool      TRUE: resets QB values; FALSE: leave QB values alone
+	 * @param    bool $reset TRUE: resets QB values; FALSE: leave QB values alone
 	 *
 	 * @return    string
 	 */
@@ -1339,9 +1341,9 @@ class BaseBuilder
 	 * Compiles the select statement based on the other functions called
 	 * and runs the query
 	 *
-	 * @param    string    the limit clause
-	 * @param    string    the offset clause
-	 * @param    bool      If true, returns the generate SQL, otherwise executes the query.
+	 * @param    string $limit     The limit clause
+	 * @param    string $offset    The offset clause
+	 * @param    bool   $returnSQL If true, returns the generate SQL, otherwise executes the query.
 	 *
 	 * @return    ResultInterface
 	 */
@@ -1402,8 +1404,8 @@ class BaseBuilder
 	 * Generates a platform-specific query string that counts all records
 	 * returned by an Query Builder query.
 	 *
-	 * @param    string
-	 * @param    bool    the reset clause
+	 * @param    bool $reset
+	 * @param    bool $test The reset clause
 	 *
 	 * @return    int
 	 */
@@ -1574,9 +1576,9 @@ class BaseBuilder
 	/**
 	 * The "setInsertBatch" function.  Allows key/value pairs to be set for batch inserts
 	 *
-	 * @param    mixed
-	 * @param    string
-	 * @param    bool
+	 * @param    mixed  $key
+	 * @param    string $value
+	 * @param    bool   $escape
 	 *
 	 * @return    BaseBuilder
 	 */
@@ -1633,7 +1635,7 @@ class BaseBuilder
 	 *
 	 * Compiles an insert query and returns the sql
 	 *
-	 * @param    bool      TRUE: reset QB values; FALSE: leave QB values alone
+	 * @param    bool $reset TRUE: reset QB values; FALSE: leave QB values alone
 	 *
 	 * @return    string
 	 */
@@ -1665,9 +1667,9 @@ class BaseBuilder
 	 *
 	 * Compiles an insert string and runs the query
 	 *
-	 * @param         array     an associative array of insert values
-	 * @param    bool $escape   Whether to escape values and identifiers
-	 * @param    bool $test     Used when running tests
+	 * @param    array $set    An associative array of insert values
+	 * @param    bool  $escape Whether to escape values and identifiers
+	 * @param    bool  $test   Used when running tests
 	 *
 	 * @return    bool    TRUE on success, FALSE on failure
 	 */
@@ -1706,9 +1708,8 @@ class BaseBuilder
 	 * validate that the there data is actually being set and that table
 	 * has been chosen to be inserted into.
 	 *
-	 * @param    string    the table to insert data into
-	 *
 	 * @return    string
+	 * @throws DatabaseException
 	 */
 	protected function validateInsert()
 	{
@@ -1732,9 +1733,9 @@ class BaseBuilder
 	 *
 	 * Generates a platform-specific insert string from the supplied data
 	 *
-	 * @param    string    the table name
-	 * @param    array     the insert keys
-	 * @param    array     the insert values
+	 * @param    string $table         The table name
+	 * @param    array  $keys          The insert keys
+	 * @param    array  $unescapedKeys The insert values
 	 *
 	 * @return    string
 	 */
@@ -1750,8 +1751,8 @@ class BaseBuilder
 	 *
 	 * Compiles an replace into string and runs the query
 	 *
-	 * @param      array     an associative array of insert values
-	 * @param bool $returnSQL
+	 * @param      array $set An associative array of insert values
+	 * @param bool       $returnSQL
 	 *
 	 * @return bool TRUE on success, FALSE on failure
 	 * @throws DatabaseException
@@ -1788,9 +1789,9 @@ class BaseBuilder
 	 *
 	 * Generates a platform-specific replace string from the supplied data
 	 *
-	 * @param    string    the table name
-	 * @param    array     the insert keys
-	 * @param    array     the insert values
+	 * @param    string $table  The table name
+	 * @param    array  $keys   The insert keys
+	 * @param    array  $values The insert values
 	 *
 	 * @return    string
 	 */
@@ -1823,7 +1824,7 @@ class BaseBuilder
 	 *
 	 * Compiles an update query and returns the sql
 	 *
-	 * @param    bool      TRUE: reset QB values; FALSE: leave QB values alone
+	 * @param    bool $reset TRUE: reset QB values; FALSE: leave QB values alone
 	 *
 	 * @return    string
 	 */
@@ -1900,8 +1901,8 @@ class BaseBuilder
 	 *
 	 * Generates a platform-specific update string from the supplied data
 	 *
-	 * @param    string    the table name
-	 * @param    array     the update data
+	 * @param    string $table  the Table name
+	 * @param    array  $values the Update data
 	 *
 	 * @return    string
 	 */
@@ -1929,6 +1930,7 @@ class BaseBuilder
 	 *
 	 *
 	 * @return    bool
+	 * @throws \CodeIgniter\DatabaseException
 	 */
 	protected function validateUpdate()
 	{
@@ -1952,12 +1954,13 @@ class BaseBuilder
 	 *
 	 * Compiles an update string and runs the query
 	 *
-	 * @param    array     an associative array of update values
-	 * @param    string    the where key
-	 * @param    int       The size of the batch to run
-	 * @param    bool      true means SQL is returned, false will execute the query
+	 * @param    array  $set        An associative array of update values
+	 * @param    string $index      The where key
+	 * @param    int    $batch_size The size of the batch to run
+	 * @param    bool   $returnSQL  True means SQL is returned, false will execute the query
 	 *
-	 * @return    int    number of rows affected or FALSE on failure
+	 * @return    mixed    Number of rows affected or FALSE on failure
+	 * @throws \CodeIgniter\DatabaseException
 	 */
 	public function updateBatch($set = null, $index = null, $batch_size = 100, $returnSQL = false)
 	{
@@ -2071,11 +2074,12 @@ class BaseBuilder
 	/**
 	 * The "setUpdateBatch" function.  Allows key/value pairs to be set for batch updating
 	 *
-	 * @param    array
-	 * @param    string
-	 * @param    bool
+	 * @param    array  $key
+	 * @param    string $index
+	 * @param    bool   $escape
 	 *
 	 * @return    BaseBuilder
+	 * @throws \CodeIgniter\DatabaseException
 	 */
 	public function setUpdateBatch($key, $index = '', $escape = null)
 	{
@@ -2150,7 +2154,7 @@ class BaseBuilder
 	 * If the database does not support the truncate() command
 	 * This function maps to "DELETE FROM table"
 	 *
-	 * @param    bool    Whether we're in test mode or not.
+	 * @param    bool $test Whether we're in test mode or not.
 	 *
 	 * @return    bool    TRUE on success, FALSE on failure
 	 */
@@ -2180,7 +2184,7 @@ class BaseBuilder
 	 * If the database does not support the truncate() command,
 	 * then this method maps to 'DELETE FROM table'
 	 *
-	 * @param    string    the table name
+	 * @param    string $table The table name
 	 *
 	 * @return    string
 	 */
@@ -2196,8 +2200,7 @@ class BaseBuilder
 	 *
 	 * Compiles a delete query string and returns the sql
 	 *
-	 * @param    string    the table to delete from
-	 * @param    bool      TRUE: reset QB values; FALSE: leave QB values alone
+	 * @param    bool $reset TRUE: reset QB values; FALSE: leave QB values alone
 	 *
 	 * @return    string
 	 */
@@ -2219,12 +2222,13 @@ class BaseBuilder
 	 *
 	 * Compiles a delete string and runs the query
 	 *
-	 * @param    mixed $where    the where clause
-	 * @param    mixed $limit    the limit clause
+	 * @param    mixed $where The where clause
+	 * @param    mixed $limit The limit clause
 	 * @param    bool  $reset_data
 	 * @param    bool  $returnSQL
 	 *
 	 * @return    mixed
+	 * @throws \CodeIgniter\DatabaseException
 	 */
 	public function delete($where = '', $limit = null, $reset_data = true, $returnSQL = false)
 	{
@@ -2310,7 +2314,7 @@ class BaseBuilder
 	 *
 	 * Generates a platform-specific delete string from the supplied data
 	 *
-	 * @param    string    the table name
+	 * @param    string $table The table name
 	 *
 	 * @return    string
 	 */
@@ -2327,7 +2331,7 @@ class BaseBuilder
 	 *
 	 * Used to track SQL statements written with aliased tables.
 	 *
-	 * @param    string    The table to inspect
+	 * @param    string $table The table to inspect
 	 *
 	 * @return    string
 	 */
@@ -2588,7 +2592,7 @@ class BaseBuilder
 	 *
 	 * Takes an object as input and converts the class variables to array key/vals
 	 *
-	 * @param    object
+	 * @param    object $object
 	 *
 	 * @return    array
 	 */
@@ -2619,7 +2623,7 @@ class BaseBuilder
 	 *
 	 * Takes an object as input and converts the class variables to array key/vals
 	 *
-	 * @param    object
+	 * @param    object $object
 	 *
 	 * @return    array
 	 */
@@ -2704,9 +2708,7 @@ class BaseBuilder
 	/**
 	 * Resets the query builder values.  Called by the get() function
 	 *
-	 * @param    array    An array of fields to reset
-	 *
-	 * @return    void
+	 * @param    array $qb_reset_items An array of fields to reset
 	 */
 	protected function resetRun($qb_reset_items)
 	{
@@ -2720,8 +2722,6 @@ class BaseBuilder
 
 	/**
 	 * Resets the query builder values.  Called by the get() function
-	 *
-	 * @return    void
 	 */
 	protected function resetSelect()
 	{
@@ -2746,8 +2746,6 @@ class BaseBuilder
 	 * Resets the query builder "write" values.
 	 *
 	 * Called by the insert() update() insertBatch() updateBatch() and delete() functions
-	 *
-	 * @return    void
 	 */
 	protected function resetWrite()
 	{
@@ -2766,7 +2764,7 @@ class BaseBuilder
 	/**
 	 * Tests whether the string has an SQL operator
 	 *
-	 * @param    string
+	 * @param    string $str
 	 *
 	 * @return    bool
 	 */
@@ -2780,7 +2778,7 @@ class BaseBuilder
 	/**
 	 * Returns the SQL string operator
 	 *
-	 * @param    string
+	 * @param    string $str
 	 *
 	 * @return    string
 	 */

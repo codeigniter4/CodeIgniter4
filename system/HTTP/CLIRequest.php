@@ -71,13 +71,13 @@ class CLIRequest extends Request
 	//--------------------------------------------------------------------
 
 	/**
-	 * Constructor 
-	 * 
+	 * Constructor
+	 *
 	 * @param App $config
 	 */
 	public function __construct(App $config)
 	{
-		parent::__construct($config, null);
+		parent::__construct($config);
 
 		// Don't terminate the script when the cli's tty goes away
 		ignore_user_abort(true);
@@ -99,7 +99,7 @@ class CLIRequest extends Request
 	 *
 	 *      // Routes to /users/21/profile (index is removed for routing sake)
 	 *      // with the option foo = bar.
-	 * 
+	 *
 	 * @return string
 	 */
 	public function getPath(): string

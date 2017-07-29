@@ -48,30 +48,16 @@ interface EncrypterInterface
 	 * Encrypt - convert plaintext into ciphertext
 	 *
 	 * @param	string	$data	Input data
-	 * @param	array	$params	Input parameters
 	 * @return	string
 	 */
-	public function encrypt($data, array $params = null);
+	public function encrypt($data);
 
 	/**
 	 * Decrypt - convert ciphertext into plaintext
 	 *
 	 * @param	string	$data	Encrypted data
-	 * @param	array	$params	Input parameters
 	 * @return	string
 	 */
-	public function decrypt($data, array $params = null);
+	public function decrypt($data);
 
-	/**
-	 * Create an HKDF random key
-	 *
-	 * @link	https://tools.ietf.org/rfc/rfc5869.txt
-	 * @param	$key	Input key
-	 * @param	$digest	A SHA-2 hashing algorithm
-	 * @param	$salt	Optional salt
-	 * @param	$length	Output length (defaults to the selected digest size)
-	 * @param	$info	Optional context/application-specific info
-	 * @return	string	A pseudo-random key
-	 */
-	public function hkdf($key, $digest = 'sha512', $salt = null, $length = null, $info = '');
 }

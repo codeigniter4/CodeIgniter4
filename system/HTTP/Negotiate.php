@@ -51,8 +51,8 @@ class Negotiate
 
 	/**
 	 * Request
-	 * 
-	 * @var \CodeIgniter\HTTP\RequestInterface
+	 *
+	 * @var \CodeIgniter\HTTP\RequestInterface|\CodeIgniter\HTTP\IncomingRequest
 	 */
 	protected $request;
 
@@ -60,7 +60,7 @@ class Negotiate
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param \CodeIgniter\HTTP\RequestInterface $request
 	 */
 	public function __construct(\CodeIgniter\HTTP\RequestInterface $request = null)
@@ -337,7 +337,7 @@ class Negotiate
 
 	/**
 	 * Match-maker
-	 * 
+	 *
 	 * @param array $acceptable
 	 * @param string $supported
 	 * @param bool $enforceTypes

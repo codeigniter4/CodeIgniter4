@@ -41,7 +41,7 @@ interface FormatterInterface
 	/**
 	 * Takes the given data and formats it.
 	 *
-	 * @param $data
+	 * @param array $data
 	 *
 	 * @return mixed
 	 */
