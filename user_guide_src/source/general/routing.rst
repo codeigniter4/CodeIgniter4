@@ -301,11 +301,13 @@ name::
 	$routes->resource('photos');
 
 	// Equivalent to the following:
-	$routes->get('photos',               'Photos::listAll');
-	$routes->get('photos/(:segment)',    'Photos::show/$1');
-	$routes->post('photos',              'Photos::create');
-	$routes->put('photos/(:segment)',    'Photos::update/$1');
-	$routes->delete('photos/(:segment)', 'Photos::delete/$1');
+	$routes->get('photos',                    'Photos::index');
+	$routes->get('photos/new',                'Photos::new');
+	$routes->get('photos/(:segment)/edit',    'Photos::edit/$1');
+	$routes->get('photos/(:segment)',         'Photos::show/$1');
+	$routes->post('photos',                   'Photos::create');
+	$routes->put('photos/(:segment)',         'Photos::update/$1');
+	$routes->delete('photos/(:segment)',      'Photos::delete/$1');
 
 The second parameter accepts an array of options that can be used to modify the routes that are generated. While these
 routes are geared toward API-usage, where more methods are allowed, you can pass in the 'websafe' option to have it
@@ -326,7 +328,7 @@ the controller that should be used::
 	$routes->resources('photos', ['controller' =>'App\Gallery']);
 
 	// Would create routes like:
-	$routes->get('photos', 'App\Gallery::listAll');
+	$routes->get('photos', 'App\Gallery::index');
 
 Change the Placeholder Used
 ---------------------------
@@ -345,9 +347,9 @@ Limit the Routes Made
 You can restrict the routes generated with the ``only`` option. This should be an array of method names that should
 be created. Only routes that match one of these methods will be created. The rest will be ignored::
 
-    $routes->resources('photos', ['only' => ['listAll', 'show']]);
+	$routes->resources('photos', ['only' => ['index', 'show']]);
 
-Valid methods are: listAll, show, create, update, and delete.
+Valid methods are: index, show, create, update, new, edit and delete.
 
 Global Options
 ==============
