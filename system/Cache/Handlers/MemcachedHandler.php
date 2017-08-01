@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
+ * Copyright (c) 2014-2017 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,17 +29,17 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 3.0.0
  * @filesource
  */
-
 use CodeIgniter\Cache\CacheInterface;
 
 class MemcachedHandler implements CacheInterface
 {
+
 	/**
 	 * Prefixed to all cache names.
 	 *
@@ -50,7 +50,7 @@ class MemcachedHandler implements CacheInterface
 	/**
 	 * The memcached object
 	 *
-	 * @var string
+	 * @var \Memcached|\Memcache
 	 */
 	protected $memcached;
 
@@ -60,22 +60,38 @@ class MemcachedHandler implements CacheInterface
 	 * @var array
 	 */
 	protected $config = [
-		'default' => [
-			'host'   => '127.0.0.1',
-			'port'   => 11211,
-			'weight' => 1,
-		],
+		'host'	 => '127.0.0.1',
+		'port'	 => 11211,
+		'weight' => 1,
+		'raw'	 => false,
 	];
 
 	//--------------------------------------------------------------------
 
-	public function __construct($config)
+	public function __construct(array $config)
 	{
-		$this->prefix = $config->prefix ?: '';
+		$this->prefix = $config['prefix'] ?? '';
 
-		if (isset($config->memcached))
+		if ( ! empty($config))
 		{
-			$this->config = $config->memcached;
+			$this->config = array_merge($this->config, $config);
+		}
+	}
+
+	/**
+	 * Class destructor
+	 *
+	 * Closes the connection to Memcache(d) if present.
+	 */
+	public function __destruct()
+	{
+		if ($this->memcached instanceof \Memcached)
+		{
+			$this->memcached->quit();
+		}
+		elseif ($this->memcached instanceof \Memcache)
+		{
+			$this->memcached->close();
 		}
 	}
 
@@ -86,64 +102,39 @@ class MemcachedHandler implements CacheInterface
 	 */
 	public function initialize()
 	{
-		$defaults = $this->config['default'];
-
-		if (class_exists('Memcached'))
+		if (class_exists('\Memcached'))
 		{
-			$this->memcached = new Memcached();
+			$this->memcached = new \Memcached();
+			if ($this->config['raw'])
+			{
+				$this->memcached->setOption(\Memcached::OPT_BINARY_PROTOCOL, true);
+			}
 		}
-		elseif (class_exists('Memcache'))
+		elseif (class_exists('\Memcache'))
 		{
-			$this->memcached = new Memcache();
+			$this->memcached = new \Memcache();
 		}
 		else
 		{
-//			log_message('error', 'Cache: Failed to create Memcache(d) object; extension not loaded?');
-
-			return;
+			throw new CriticalError('Cache: Not support Memcache(d) extension.');
 		}
 
-		foreach ($this->config as $cacheName => $cacheServer)
+		if ($this->memcached instanceof \Memcached)
 		{
-			if (! isset($cacheServer['hostname']))
-			{
-//				log_message('debug', 'Cache: Memcache(d) configuration "'.$cacheName.'" doesn\'t include a hostname; ignoring.');
-				continue;
-			}
-			elseif ($cacheServer['hostname'][0] === '/')
-			{
-				$cacheServer['port'] = 0;
-			}
-			elseif (empty($cacheServer['port']))
-			{
-				$cacheServer['port'] = $defaults['port'];
-			}
-
-			isset($cacheServer['weight']) OR $cacheServer['weight'] = $defaults['weight'];
-
-			if ($this->memcached instanceof Memcache)
-			{
-				// Third parameter is persistance and defaults to TRUE.
-				$this->memcached->addServer(
-					$cacheServer['hostname'],
-					$cacheServer['port'],
-					true,
-					$cacheServer['weight']
-				);
-			}
-			elseif ($this->memcached instanceof Memcached)
-			{
-				$this->memcached->addServer(
-					$cacheServer['hostname'],
-					$cacheServer['port'],
-					$cacheServer['weight']
-				);
-			}
+			$this->memcached->addServer(
+					$this->config['host'], $this->config['port'], $this->config['weight']
+			);
+		}
+		elseif ($this->memcached instanceof \Memcache)
+		{
+			// Third parameter is persistance and defaults to TRUE.
+			$this->memcached->addServer(
+					$this->config['host'], $this->config['port'], true, $this->config['weight']
+			);
 		}
 	}
 
 	//--------------------------------------------------------------------
-
 
 	/**
 	 * Attempts to fetch an item from the cache store.
@@ -154,7 +145,7 @@ class MemcachedHandler implements CacheInterface
 	 */
 	public function get(string $key)
 	{
-		$key = $this->prefix.$key;
+		$key = $this->prefix . $key;
 
 		$data = $this->memcached->get($key);
 
@@ -166,30 +157,26 @@ class MemcachedHandler implements CacheInterface
 	/**
 	 * Saves an item to the cache store.
 	 *
-	 * The $raw parameter is only utilized by Mamcache in order to
-	 * allow usage of increment() and decrement().
-	 *
-	 * @param string $key    Cache item name
-	 * @param        $value  the data to save
-	 * @param null   $ttl    Time To Live, in seconds (default 60)
-	 * @param bool   $raw    Whether to store the raw value.
+	 * @param string $key   Cache item name
+	 * @param mixed  $value The data to save
+	 * @param int    $ttl   Time To Live, in seconds (default 60)
 	 *
 	 * @return mixed
 	 */
-	public function save(string $key, $value, int $ttl = 60, bool $raw = false)
+	public function save(string $key, $value, int $ttl = 60)
 	{
-		$key = $this->prefix.$key;
+		$key = $this->prefix . $key;
 
-		if ($raw !== true)
+		if ( ! $this->config['raw'])
 		{
 			$value = [$value, time(), $ttl];
 		}
 
-		if ($this->memcached instanceof Memcached)
+		if ($this->memcached instanceof \Memcached)
 		{
 			return $this->memcached->set($key, $value, $ttl);
 		}
-		elseif ($this->memcached instanceof Memcache)
+		elseif ($this->memcached instanceof \Memcache)
 		{
 			return $this->memcached->set($key, $value, 0, $ttl);
 		}
@@ -208,7 +195,7 @@ class MemcachedHandler implements CacheInterface
 	 */
 	public function delete(string $key)
 	{
-		$key = $this->prefix.$key;
+		$key = $this->prefix . $key;
 
 		return $this->memcached->delete($key);
 	}
@@ -225,9 +212,14 @@ class MemcachedHandler implements CacheInterface
 	 */
 	public function increment(string $key, int $offset = 1)
 	{
-		$key = $this->prefix.$key;
+		if ( ! $this->config['raw'])
+		{
+			return false;
+		}
 
-		return $this->memcached->increment($key, $offset);
+		$key = $this->prefix . $key;
+
+		return $this->memcached->increment($key, $offset, $offset, 60);
 	}
 
 	//--------------------------------------------------------------------
@@ -242,9 +234,15 @@ class MemcachedHandler implements CacheInterface
 	 */
 	public function decrement(string $key, int $offset = 1)
 	{
-		$key = $this->prefix.$key;
+		if ( ! $this->config['raw'])
+		{
+			return false;
+		}
 
-		return $this->memcached->decrement($key, $offset);
+		$key = $this->prefix . $key;
+
+		//FIXME: third parameter isn't other handler actions.
+		return $this->memcached->decrement($key, $offset, $offset, 60);
 	}
 
 	//--------------------------------------------------------------------
@@ -285,7 +283,7 @@ class MemcachedHandler implements CacheInterface
 	 */
 	public function getMetaData(string $key)
 	{
-		$key = $this->prefix.$key;
+		$key = $this->prefix . $key;
 
 		$stored = $this->memcached->get($key);
 
@@ -296,11 +294,11 @@ class MemcachedHandler implements CacheInterface
 
 		list($data, $time, $ttl) = $stored;
 
-		return array(
-			'expire'	=> $time + $ttl,
-			'mtime'		=> $time,
-			'data'		=> $data
-		);
+		return [
+			'expire' => $time + $ttl,
+			'mtime'	 => $time,
+			'data'	 => $data
+		];
 	}
 
 	//--------------------------------------------------------------------
@@ -314,26 +312,5 @@ class MemcachedHandler implements CacheInterface
 	{
 		return (extension_loaded('memcached') OR extension_loaded('memcache'));
 	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Class destructor
-	 *
-	 * Closes the connection to Memcache(d) if present.
-	 */
-	public function __destruct()
-	{
-		if ($this->memcached instanceof Memcache)
-		{
-			$this->memcached->close();
-		}
-		elseif ($this->memcached instanceof Memcached)
-		{
-			$this->memcached->quit();
-		}
-	}
-
-	//--------------------------------------------------------------------
 
 }

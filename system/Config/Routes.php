@@ -1,5 +1,4 @@
 <?php
-
 /**
  * CodeIgniter
  *
@@ -7,7 +6,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
+ * Copyright (c) 2014-2017 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,14 +28,13 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 3.0.0
  * @filesource
  */
-
- /**
+/**
  * System URI Routing
  *
  * This file contains any routing to system tools, such as command-line
@@ -45,11 +43,10 @@
  * It is called by Config\Routes, and has the $routes RouteCollection
  * already loaded up and ready for us to use.
  */
-
 // Migrations
 $routes->cli('migrations/(:segment)/(:segment)', '\CodeIgniter\Commands\MigrationsCommand::$1/$2');
-$routes->cli('migrations/(:segment)',            '\CodeIgniter\Commands\MigrationsCommand::$1');
-$routes->cli('migrations',                       '\CodeIgniter\Commands\MigrationsCommand::index');
+$routes->cli('migrations/(:segment)', '\CodeIgniter\Commands\MigrationsCommand::$1');
+$routes->cli('migrations', '\CodeIgniter\Commands\MigrationsCommand::index');
 
 // CLI Catchall - uses a _remap to
 $routes->cli('ci(:any)', '\CodeIgniter\CLI\CommandRunner::index/$1');

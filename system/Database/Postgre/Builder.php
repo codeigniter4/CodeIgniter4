@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
+ * Copyright (c) 2014-2017 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,13 +29,12 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 3.0.0
  * @filesource
  */
-
 use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\DatabaseException;
 
@@ -44,6 +43,7 @@ use CodeIgniter\DatabaseException;
  */
 class Builder extends BaseBuilder
 {
+
 	/**
 	 * ORDER BY random keyword
 	 *
@@ -133,7 +133,7 @@ class Builder extends BaseBuilder
 	 * we simply do a DELETE and an INSERT on the first key/value
 	 * combo, assuming that it's either the primary key or a unique key.
 	 *
-	 * @param      array     an associative array of insert values
+	 * @param      array  $set   An associative array of insert values
 	 * @param bool $returnSQL
 	 *
 	 * @return bool TRUE on success, FALSE on failure
@@ -203,7 +203,7 @@ class Builder extends BaseBuilder
 	 */
 	public function delete($where = '', $limit = null, $reset_data = true, $returnSQL = false)
 	{
-		if (! empty($limit) || ! empty($this->QBLimit))
+		if ( ! empty($limit) || ! empty($this->QBLimit))
 		{
 			throw new DatabaseException('PostgreSQL does not allow LIMITs on DELETE queries.');
 		}
@@ -224,7 +224,7 @@ class Builder extends BaseBuilder
 	 */
 	protected function _limit($sql)
 	{
-		return $sql.' LIMIT '.$this->QBLimit.($this->QBOffset ? " OFFSET {$this->QBOffset}" : '');
+		return $sql . ' LIMIT ' . $this->QBLimit . ($this->QBOffset ? " OFFSET {$this->QBOffset}" : '');
 	}
 
 	//--------------------------------------------------------------------
@@ -234,8 +234,8 @@ class Builder extends BaseBuilder
 	 *
 	 * Generates a platform-specific update string from the supplied data
 	 *
-	 * @param $table
-	 * @param $values
+	 * @param string $table
+	 * @param array  $values
 	 *
 	 * @return string
 	 * @throws DatabaseException
@@ -245,7 +245,7 @@ class Builder extends BaseBuilder
 	 */
 	protected function _update($table, $values)
 	{
-		if (! empty($this->QBLimit))
+		if ( ! empty($this->QBLimit))
 		{
 			throw new DatabaseException('Postgres does not support LIMITs with UPDATE queries.');
 		}
@@ -287,13 +287,13 @@ class Builder extends BaseBuilder
 		foreach ($final as $k => $v)
 		{
 			$cases .= "{$k} = (CASE {$index}\n"
-				.implode("\n", $v)
-				."\nELSE {$k} END), ";
+					. implode("\n", $v)
+					. "\nELSE {$k} END), ";
 		}
 
-		$this->where("{$index} IN(".implode(',', $ids).')', null, false);
+		$this->where("{$index} IN(" . implode(',', $ids) . ')', null, false);
 
-		return "UPDATE {$table} SET ".substr($cases, 0, -2).$this->compileWhereHaving('QBWhere');
+		return "UPDATE {$table} SET " . substr($cases, 0, -2) . $this->compileWhereHaving('QBWhere');
 	}
 
 	//--------------------------------------------------------------------
@@ -303,7 +303,7 @@ class Builder extends BaseBuilder
 	 *
 	 * Generates a platform-specific delete string from the supplied data
 	 *
-	 * @param    string    the table name
+	 * @param    string $table The table name
 	 *
 	 * @return    string
 	 */
@@ -323,13 +323,13 @@ class Builder extends BaseBuilder
 	 * If the database does not support the truncate() command,
 	 * then this method maps to 'DELETE FROM table'
 	 *
-	 * @param    string    the table name
+	 * @param    string $table The table name
 	 *
 	 * @return    string
 	 */
 	protected function _truncate($table)
 	{
-		return 'TRUNCATE '.$table.' RESTART IDENTITY';
+		return 'TRUNCATE ' . $table . ' RESTART IDENTITY';
 	}
 
 	//--------------------------------------------------------------------
@@ -350,7 +350,7 @@ class Builder extends BaseBuilder
 	 *
 	 * @return string     $like_statement
 	 */
-	public function _like_statement(string $prefix=null, string $column, string $not = null, string $bind, bool $insensitiveSearch=false): string
+	public function _like_statement(string $prefix = null, string $column, string $not = null, string $bind, bool $insensitiveSearch = false): string
 	{
 		$op = $insensitiveSearch === true ? 'ILIKE' : 'LIKE';
 
@@ -358,5 +358,4 @@ class Builder extends BaseBuilder
 	}
 
 	//--------------------------------------------------------------------
-
 }

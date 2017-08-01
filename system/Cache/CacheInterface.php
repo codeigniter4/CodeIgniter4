@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
+ * Copyright (c) 2014-2017 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,15 +29,15 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 3.0.0
  * @filesource
  */
-
 interface CacheInterface
 {
+
 	/**
 	 * Takes care of any handler-specific setup that must be done.
 	 */
@@ -59,17 +59,13 @@ interface CacheInterface
 	/**
 	 * Saves an item to the cache store.
 	 *
-	 * The $raw parameter is only utilized by Mamcache in order to
-	 * allow usage of increment() and decrement().
-	 *
-	 * @param string $key    Cache item name
-	 * @param        $value  the data to save
-	 * @param null   $ttl    Time To Live, in seconds (default 60)
-	 * @param bool   $raw    Whether to store the raw value.
+	 * @param string $key   Cache item name
+	 * @param mixed  $value The data to save
+	 * @param int    $ttl   Time To Live, in seconds (default 60)
 	 *
 	 * @return mixed
 	 */
-	public function save(string $key, $value, int $ttl = 60, bool $raw = false);
+	public function save(string $key, $value, int $ttl = 60);
 
 	//--------------------------------------------------------------------
 

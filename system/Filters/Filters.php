@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
+ * Copyright (c) 2014-2017 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,20 +29,19 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 3.0.0
  * @filesource
  */
-
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
-use Zend\Escaper\Exception\RuntimeException;
 
 class Filters
 {
+
 	/**
 	 * The processed filters that will
 	 * be used to check against.
@@ -50,7 +49,7 @@ class Filters
 	 */
 	protected $filters = [
 		'before' => [],
-		'after'  => []
+		'after'	 => []
 	];
 
 	/**
@@ -82,9 +81,9 @@ class Filters
 
 	public function __construct($config, RequestInterface $request, ResponseInterface $response)
 	{
-		$this->config   = $config;
-		$this->request  =& $request;
-		$this->response =& $response;
+		$this->config = $config;
+		$this->request = & $request;
+		$this->response = & $response;
 	}
 
 	//--------------------------------------------------------------------
@@ -100,7 +99,7 @@ class Filters
 	 */
 	public function run(string $uri, $position = 'before')
 	{
-	    $this->initialize($uri);
+		$this->initialize($uri);
 
 		foreach ($this->filters[$position] as $alias => $rules)
 		{
@@ -109,16 +108,16 @@ class Filters
 				$alias = $rules;
 			}
 
-			if (! array_key_exists($alias, $this->config->aliases))
+			if ( ! array_key_exists($alias, $this->config->aliases))
 			{
 				throw new \InvalidArgumentException("'{$alias}' filter must have a matching alias defined.");
 			}
 
 			$class = new $this->config->aliases[$alias]();
 
-			if (! $class instanceof FilterInterface)
+			if ( ! $class instanceof FilterInterface)
 			{
-				throw new \RuntimeException(get_class($class). ' must implement CodeIgniter\Filters\FilterInterface.');
+				throw new \RuntimeException(get_class($class) . ' must implement CodeIgniter\Filters\FilterInterface.');
 			}
 
 			if ($position == 'before')
@@ -132,12 +131,12 @@ class Filters
 				}
 
 				// If the response object was sent back,
-                // then send it and quit.
+				// then send it and quit.
 				if ($result instanceof ResponseInterface)
-                {
-                    $result->send();
-                    exit(EXIT_ERROR);
-                }
+				{
+					$result->send();
+					exit(EXIT_ERROR);
+				}
 
 				if (empty($result))
 				{
@@ -146,7 +145,6 @@ class Filters
 
 				return $result;
 			}
-
 			elseif ($position == 'after')
 			{
 				$result = $class->after($this->request, $this->response);
@@ -159,9 +157,7 @@ class Filters
 			}
 		}
 
-		return $position == 'before'
-				? $this->request
-				: $this->response;
+		return $position == 'before' ? $this->request : $this->response;
 	}
 
 	//--------------------------------------------------------------------
@@ -178,6 +174,10 @@ class Filters
 	 * We go ahead an process the entire tree because we'll need to
 	 * run through both a before and after and don't want to double
 	 * process the rows.
+	 *
+	 * @param string $uri
+	 *
+	 * @return Filters
 	 */
 	public function initialize(string $uri = null)
 	{
@@ -186,9 +186,9 @@ class Filters
 			return;
 		}
 
-	    $this->processGlobals($uri);
-	    $this->processMethods();
-	    $this->processFilters($uri);
+		$this->processGlobals($uri);
+		$this->processMethods();
+		$this->processFilters($uri);
 
 		$this->initialized = true;
 
@@ -204,18 +204,17 @@ class Filters
 	 */
 	public function getFilters()
 	{
-	    return $this->filters;
+		return $this->filters;
 	}
 
 	//--------------------------------------------------------------------
-
 	//--------------------------------------------------------------------
 	// Processors
 	//--------------------------------------------------------------------
 
 	protected function processGlobals(string $uri = null)
 	{
-		if (! isset($this->config->globals) || ! is_array($this->config->globals))
+		if ( ! isset($this->config->globals) || ! is_array($this->config->globals))
 		{
 			return;
 		}
@@ -226,13 +225,13 @@ class Filters
 			// Take any 'except' routes into consideration
 			foreach ($this->config->globals['before'] as $alias => $rules)
 			{
-				if (! is_array($rules) || ! array_key_exists('except', $rules))
+				if ( ! is_array($rules) || ! array_key_exists('except', $rules))
 				{
 					continue;
 				}
 
 				$rules = $rules['except'];
-				
+
 				if (is_string($rules))
 				{
 					$rules = [$rules];
@@ -245,7 +244,7 @@ class Filters
 					$path = trim(str_replace('*', '.+', $path), '/ ');
 
 					// Path doesn't match the URI? continue on...
-					if (preg_match('/'.$path.'/', $uri, $match) !== 1)
+					if (preg_match('/' . $path . '/', $uri, $match) !== 1)
 					{
 						continue;
 					}
@@ -264,7 +263,7 @@ class Filters
 			// Take any 'except' routes into consideration
 			foreach ($this->config->globals['after'] as $alias => $rules)
 			{
-				if (! is_array($rules) || ! array_key_exists('except', $rules))
+				if ( ! is_array($rules) || ! array_key_exists('except', $rules))
 				{
 					continue;
 				}
@@ -283,7 +282,7 @@ class Filters
 					$path = trim(str_replace('*', '.+', $path), '/ ');
 
 					// Path doesn't match the URI? continue on...
-					if (preg_match('/'.$path.'/', $uri, $match) !== 1)
+					if (preg_match('/' . $path . '/', $uri, $match) !== 1)
 					{
 						continue;
 					}
@@ -301,15 +300,13 @@ class Filters
 
 	protected function processMethods()
 	{
-		if (! isset($this->config->methods) || ! is_array($this->config->methods))
+		if ( ! isset($this->config->methods) || ! is_array($this->config->methods))
 		{
 			return;
 		}
 
 		// Request method won't be set for CLI-based requests
-		$method = isset($_SERVER['REQUEST_METHOD'])
-			? strtolower($_SERVER['REQUEST_METHOD'])
-			: 'cli';
+		$method = isset($_SERVER['REQUEST_METHOD']) ? strtolower($_SERVER['REQUEST_METHOD']) : 'cli';
 
 		if (array_key_exists($method, $this->config->methods))
 		{
@@ -322,7 +319,7 @@ class Filters
 
 	protected function processFilters(string $uri = null)
 	{
-		if (! isset($this->config->filters) || ! count($this->config->filters))
+		if ( ! isset($this->config->filters) || ! count($this->config->filters))
 		{
 			return;
 		}
@@ -342,7 +339,7 @@ class Filters
 					$path = str_replace('/*', '*', $path);
 					$path = trim(str_replace('*', '.+', $path), '/ ');
 
-					if (preg_match('/'.$path.'/', $uri) !== 1)
+					if (preg_match('/' . $path . '/', $uri) !== 1)
 					{
 						continue;
 					}
@@ -363,7 +360,7 @@ class Filters
 					$path = str_replace('/*', '*', $path);
 					$path = trim(str_replace('*', '.+', $path), '/ ');
 
-					if (preg_match('/'.$path.'/', $uri) !== 1)
+					if (preg_match('/' . $path . '/', $uri) !== 1)
 					{
 						continue;
 					}
@@ -377,5 +374,4 @@ class Filters
 	}
 
 	//--------------------------------------------------------------------
-
 }

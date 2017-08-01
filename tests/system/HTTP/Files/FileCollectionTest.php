@@ -9,11 +9,11 @@ class FileCollectionTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	public function testAllReturnsNullWithNoFiles()
+	public function testAllReturnsArrayWithNoFiles()
 	{
 	    $files = new FileCollection();
 
-		$this->assertNull($files->all());
+		$this->assertEquals([], $files->all());
 	}
 
 	//--------------------------------------------------------------------
@@ -330,24 +330,24 @@ class FileCollectionTest extends \CIUnitTestCase
 			]
 		];
             
-                $collection = new FileCollection();
-		
-                $file_1 = $collection->getFile('userfile.0');
-                $this->assertTrue($file_1 instanceof UploadedFile);
-                $this->assertEquals('fileA.txt', $file_1->getName());
+		$collection = new FileCollection();
+
+		$file_1 = $collection->getFile('userfile.0');
+		$this->assertTrue($file_1 instanceof UploadedFile);
+		$this->assertEquals('fileA.txt', $file_1->getName());
 		$this->assertEquals('/tmp/fileA.txt', $file_1->getTempName());
 		$this->assertEquals('txt', $file_1->getClientExtension());
 		$this->assertEquals('text/plain', $file_1->getClientMimeType());
 		$this->assertEquals(124, $file_1->getSize());
                 
-                $file_2 = $collection->getFile('userfile.1');
-                $this->assertTrue($file_2 instanceof UploadedFile);
-                $this->assertEquals('fileB.txt', $file_2->getName());
+		$file_2 = $collection->getFile('userfile.1');
+		$this->assertTrue($file_2 instanceof UploadedFile);
+		$this->assertEquals('fileB.txt', $file_2->getName());
 		$this->assertEquals('/tmp/fileB.txt', $file_2->getTempName());
 		$this->assertEquals('txt', $file_2->getClientExtension());
 		$this->assertEquals('text/csv', $file_2->getClientMimeType());
 		$this->assertEquals(248, $file_2->getSize());
-        }
+    }
         
     //--------------------------------------------------------------------
         
@@ -382,19 +382,19 @@ class FileCollectionTest extends \CIUnitTestCase
 			]
 		];
         
-                $collection = new FileCollection();
-        
-                $file_1 = $collection->getFile('my-form.details.avatars.0');
-                $this->assertTrue($file_1 instanceof UploadedFile);
-                $this->assertEquals('fileA.txt', $file_1->getName());
+        $collection = new FileCollection();
+
+        $file_1 = $collection->getFile('my-form.details.avatars.0');
+        $this->assertTrue($file_1 instanceof UploadedFile);
+        $this->assertEquals('fileA.txt', $file_1->getName());
 		$this->assertEquals('/tmp/fileA.txt', $file_1->getTempName());
 		$this->assertEquals('txt', $file_1->getClientExtension());
 		$this->assertEquals('text/plain', $file_1->getClientMimeType());
 		$this->assertEquals(125, $file_1->getSize());
-                
-                $file_2 = $collection->getFile('my-form.details.avatars.1');
-                $this->assertTrue($file_2 instanceof UploadedFile);
-                $this->assertEquals('fileB.txt', $file_2->getName());
+
+        $file_2 = $collection->getFile('my-form.details.avatars.1');
+        $this->assertTrue($file_2 instanceof UploadedFile);
+        $this->assertEquals('fileB.txt', $file_2->getName());
 		$this->assertEquals('/tmp/fileB.txt', $file_2->getTempName());
 		$this->assertEquals('txt', $file_2->getClientExtension());
 		$this->assertEquals('text/plain', $file_2->getClientMimeType());

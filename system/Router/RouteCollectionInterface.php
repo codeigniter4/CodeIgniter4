@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
+ * Copyright (c) 2014-2017 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,7 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 3.0.0
@@ -76,7 +76,7 @@ interface RouteCollectionInterface
 	 *
 	 * @return mixed
 	 */
-	public function addPlaceholder(string $placeholder, string $pattern=null);
+	public function addPlaceholder(string $placeholder, string $pattern = null);
 
 	//--------------------------------------------------------------------
 
@@ -141,7 +141,7 @@ interface RouteCollectionInterface
 	 *
 	 * @param bool $value
 	 *
-	 * @return RouteCollection
+	 * @return RouteCollectionInterface
 	 */
 	public function setAutoRoute(bool $value): self;
 
@@ -156,7 +156,7 @@ interface RouteCollectionInterface
 	 *
 	 * @param callable|null $callable
 	 *
-	 * @return $this
+	 * @return RouteCollectionInterface
 	 */
 	public function set404Override($callable = null): self;
 
@@ -171,8 +171,6 @@ interface RouteCollectionInterface
 	public function get404Override();
 
 	//--------------------------------------------------------------------
-
-
 
 	/**
 	 * Returns the name of the default controller. With Namespace.
@@ -194,8 +192,6 @@ interface RouteCollectionInterface
 
 	/**
 	 * Returns the current value of the translateURIDashses setting.
-	 *
-	 * @param bool|false $val
 	 *
 	 * @return mixed
 	 */
@@ -244,7 +240,8 @@ interface RouteCollectionInterface
 	 *      reverseRoute('Controller::method', $param1, $param2);
 	 *
 	 * @param string $search
-	 * @param        ...$params
+	 * @param array  ...$params
+	 *
 	 * @return string|false
 	 */
 	public function reverseRoute(string $search, ...$params);
@@ -272,5 +269,4 @@ interface RouteCollectionInterface
 	public function getRedirectCode(string $from): int;
 
 	//--------------------------------------------------------------------
-
 }

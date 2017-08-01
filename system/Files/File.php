@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
+ * Copyright (c) 2014-2017 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,19 +29,19 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 3.0.0
  * @filesource
  */
-
 use SPLFileInfo;
 
-require_once __DIR__.'/Exceptions.php';
+require_once __DIR__ . '/Exceptions.php';
 
 class File extends SplFileInfo
 {
+
 	/**
 	 * The files size in bytes
 	 *
@@ -58,7 +58,7 @@ class File extends SplFileInfo
 	 * @param string $path
 	 * @param bool   $checkFile
 	 */
-	public function __construct(string $path, bool $checkFile = true)
+	public function __construct(string $path, bool $checkFile = false)
 	{
 		if ($checkFile && ! is_file($path))
 		{
@@ -84,7 +84,7 @@ class File extends SplFileInfo
 	 *
 	 * @return int|null The file size in bytes or null if unknown.
 	 */
-	public function getSize(string $unit='b')
+	public function getSize(string $unit = 'b')
 	{
 		if (is_null($this->size))
 		{
@@ -130,13 +130,13 @@ class File extends SplFileInfo
 	{
 		if (function_exists('finfo_file'))
 		{
-			$finfo      = finfo_open(FILEINFO_MIME_TYPE);
-			$mimeType   = finfo_file($finfo, $this->getPath());
+			$finfo = finfo_open(FILEINFO_MIME_TYPE);
+			$mimeType = finfo_file($finfo, $this->getRealPath());
 			finfo_close($finfo);
 		}
 		else
 		{
-			$mimeType = mime_content_type($this->getPath());
+			$mimeType = mime_content_type($this->getRealPath());
 		}
 
 		return $mimeType;
@@ -152,7 +152,7 @@ class File extends SplFileInfo
 	 */
 	public function getRandomName(): string
 	{
-		return time().'_'.bin2hex(random_bytes(10)).'.'.$this->getExtension();
+		return time() . '_' . bin2hex(random_bytes(10)) . '.' . $this->getExtension();
 	}
 
 	//--------------------------------------------------------------------
@@ -168,16 +168,14 @@ class File extends SplFileInfo
 	 */
 	public function move(string $targetPath, string $name = null, bool $overwrite = false)
 	{
-		$targetPath = rtrim($targetPath, '/').'/';
+		$targetPath = rtrim($targetPath, '/') . '/';
 		$name = $name ?? $this->getBaseName();
-		$destination = $overwrite
-			? $this->getDestination($targetPath.$name)
-			: $targetPath.$name;
+		$destination = $overwrite ? $this->getDestination($targetPath . $name) : $targetPath . $name;
 
-		if (! @rename($this->getPath(), $destination))
+		if ( ! @rename($this->getPath(), $destination))
 		{
 			$error = error_get_last();
-			throw new \RuntimeException(sprintf('Could not move file %s to %s (%s)', $this->getBasename(),$targetPath, strip_tags($error['message'])));
+			throw new \RuntimeException(sprintf('Could not move file %s to %s (%s)', $this->getBasename(), $targetPath, strip_tags($error['message'])));
 		}
 
 		@chmod($targetPath, 0777 & ~umask());
@@ -212,22 +210,21 @@ class File extends SplFileInfo
 				{
 					$i = end($parts);
 					array_pop($parts);
-					array_push($parts, ++$i);
-					$destination = $info['dirname'] . '/' . implode($delimiter, $parts) . '.' .  $info['extension'];
+					array_push($parts, ++ $i);
+					$destination = $info['dirname'] . '/' . implode($delimiter, $parts) . '.' . $info['extension'];
 				}
 				else
 				{
-					$destination = $info['dirname'] . '/' . $info['filename'] . $delimiter . ++$i . '.' .  $info['extension'];
+					$destination = $info['dirname'] . '/' . $info['filename'] . $delimiter . ++ $i . '.' . $info['extension'];
 				}
 			}
 			else
 			{
-				$destination = $info['dirname'] . '/' . $info['filename'] . $delimiter . ++$i . '.' .  $info['extension'];
+				$destination = $info['dirname'] . '/' . $info['filename'] . $delimiter . ++ $i . '.' . $info['extension'];
 			}
 		}
 		return $destination;
 	}
 
 	//--------------------------------------------------------------------
-
 }

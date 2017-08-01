@@ -1,7 +1,10 @@
 <?php namespace CodeIgniter\Database\Live;
 
+use CodeIgniter\I18n\Time;
 use CodeIgniter\Model;
+use CodeIgniter\Test\ReflectionHelper;
 use Tests\Support\Models\EntityModel;
+use Tests\Support\Models\EventModel;
 use Tests\Support\Models\JobModel;
 use Tests\Support\Models\SimpleEntity;
 use Tests\Support\Models\UserModel;
@@ -12,6 +15,8 @@ use Tests\Support\Models\ValidModel;
  */
 class ModelTest extends \CIDatabaseTestCase
 {
+	use ReflectionHelper;
+
 	protected $refresh = true;
 
 	protected $seed = 'CITestSeeder';
@@ -486,10 +491,88 @@ class ModelTest extends \CIDatabaseTestCase
         $this->assertEquals('Awesome job, but sometimes makes you bored', $entity->description);
 
         $entity->name = 'Senior Developer';
+        $entity->created_at = '2017-07-15';
+
+        $date = $this->getPrivateProperty($entity, 'created_at');
+        $this->assertTrue($date instanceof Time);
 
         $model->save($entity);
 
-        $this->seeInDatabase('job', ['name' => 'Senior Developer']);
+        $this->seeInDatabase('job', ['name' => 'Senior Developer', 'created_at' => '2017-07-15 00:00:00']);
     }
 
+	/**
+	 * @see https://github.com/bcit-ci/CodeIgniter4/issues/580
+	 */
+	public function testPasswordsStoreCorrectly()
+    {
+		$model = new UserModel();
+
+		$pass = password_hash('secret123', PASSWORD_BCRYPT);
+
+		$data = [
+			'name'  => 	$pass,
+			'email' => 'foo@example.com',
+			'country' => 'US',
+			'deleted' => 0
+		];
+
+		$model->insert($data);
+
+		$this->seeInDatabase('user', $data);
+    }
+
+	public function testInsertEvent()
+	{
+		$model = new EventModel();
+
+		$data = [
+			'name'  => 	'Foo',
+			'email' => 'foo@example.com',
+			'country' => 'US',
+			'deleted' => 0
+		];
+
+		$model->insert($data);
+
+		$this->assertTrue($model->hasToken('beforeInsert'));
+		$this->assertTrue($model->hasToken('afterInsert'));
+    }
+
+	public function testUpdateEvent()
+	{
+		$model = new EventModel();
+
+		$data = [
+			'name'  => 	'Foo',
+			'email' => 'foo@example.com',
+			'country' => 'US',
+			'deleted' => 0
+		];
+
+		$id = $model->insert($data);
+		$model->update($id, $data);
+
+		$this->assertTrue($model->hasToken('beforeUpdate'));
+		$this->assertTrue($model->hasToken('afterUpdate'));
+	}
+
+	public function testFindEvent()
+	{
+		$model = new EventModel();
+
+		$model->find(1);
+
+		$this->assertTrue($model->hasToken('afterFind'));
+	}
+
+	public function testDeleteEvent()
+	{
+		$model = new EventModel();
+
+		$model->delete(1);
+
+		$this->assertTrue($model->hasToken('afterDelete'));
+	}
 }
+

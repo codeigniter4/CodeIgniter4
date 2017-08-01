@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
+ * Copyright (c) 2014-2017 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,15 +27,14 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package      CodeIgniter
+ * @author       CodeIgniter Dev Team
+ * @copyright    2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license      https://opensource.org/licenses/MIT	MIT License
+ * @link         https://codeigniter.com
+ * @since        Version 3.0.0
  * @filesource
  */
-
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 use Config\Services;
@@ -47,6 +46,13 @@ use Config\Services;
  */
 class MigrateCurrent extends BaseCommand
 {
+
+	/**
+	 * The group the command is lumped under
+	 * when listing commands.
+	 *
+	 * @var string
+	 */
 	protected $group = 'Database';
 
 	/**
@@ -82,34 +88,37 @@ class MigrateCurrent extends BaseCommand
 	 *
 	 * @var array
 	 */
-	protected $options = array(
-			'-g' => 'Set database group'
-			);
-
+	protected $options = [
+		'-g' => 'Set database group',
+	];
 
 	/**
 	 * Migrates us up or down to the version specified as $currentVersion
 	 * in the migrations config file.
+	 *
+	 * @param array $params
 	 */
-	public function run(array $params=[])
+	public function run(array $params = [])
 	{
 		$runner = Services::migrations();
 
 		CLI::write(lang('Migrations.migToVersion'), 'yellow');
 
-		$group =    CLI::getOption('g');
-		try { 
+		$group = CLI::getOption('g');
+		try
+		{
 			$runner->current($group);
 			$messages = $runner->getCliMessages();
-			foreach ($messages as $message) {
-				CLI::write($message); 
+			foreach ($messages as $message)
+			{
+				CLI::write($message);
 			}
-		}
-		catch (\Exception $e)
+		} catch (\Exception $e)
 		{
 			$this->showError($e);
 		}
 
 		CLI::write('Done');
 	}
+
 }

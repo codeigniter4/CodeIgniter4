@@ -50,7 +50,7 @@ class ParserPluginTest extends \CIUnitTestCase
 
 	public function testLang()
 	{
-		$template = '{+ lang number.terabyteAbbr +}';
+		$template = '{+ lang Number.terabyteAbbr +}';
 
 		$this->assertEquals('TB', $this->parser->renderString($template));
 	}

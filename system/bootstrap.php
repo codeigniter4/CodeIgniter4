@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
+ * Copyright (c) 2014-2017 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,7 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 3.0.0
@@ -48,20 +48,31 @@
 
 $public = trim($paths->publicDirectory, '/');
 
-// Path to code root folder (just up from public)
 $pos = strrpos(FCPATH, $public.DIRECTORY_SEPARATOR);
+
+/**
+ * The path to the main application directory. Just above public.
+ */
 define('ROOTPATH', substr_replace(FCPATH, '', $pos, strlen($public.DIRECTORY_SEPARATOR)));
 
-// The path to the "application" folder
+/**
+ * The path to the application directory.
+ */
 define('APPPATH', realpath($paths->applicationDirectory).DIRECTORY_SEPARATOR);
 
-// Path to the system folder
+/**
+ * The path to the system directory.
+ */
 define('BASEPATH', realpath($paths->systemDirectory).DIRECTORY_SEPARATOR);
 
-// Path to the writable directory.
+/**
+ * The path to the writable directory.
+ */
 define('WRITEPATH', realpath($paths->writableDirectory).DIRECTORY_SEPARATOR);
 
-// The path to the "tests" directory
+/**
+ * The path to the tests directory
+ */
 define('TESTPATH', realpath($paths->testsDirectory).DIRECTORY_SEPARATOR);
 
 /*

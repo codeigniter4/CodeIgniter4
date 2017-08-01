@@ -3,10 +3,16 @@ language: php
 php:
   - 7
   - 7.1
+  - nightly
+
+matrix:
+  fast_finish: true
+  allow_failures:
+    - php: nightly
 
 global:
   - CI=true
-  - CI_ENV=testing
+  - CI_ENVIRONMENT=testing
 
 # Recommended by Travis support
 sudo: required
@@ -17,19 +23,23 @@ env:
   - DB=postgres
 
 services:
+  - memcached
   - mysql
   - postgresql
+  - redis-server
 
 script:
   - php vendor/bin/phpunit -v
 
 before_install:
-  - mysql -e "create database IF NOT EXISTS test;" -uroot;
+  - mysql -e "CREATE DATABASE IF NOT EXISTS test;" -uroot;
   - mysql -e "SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = 'test';" -uroot
-  - psql -c 'create database test;' -U postgres
+  - psql -c 'CREATE DATABASE test;' -U postgres
 
 before_script:
+  - echo 'extension = memcached.so' >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+  - echo 'extension = redis.so' >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - composer install --prefer-source
 
 after_success:
-  - travis_retry php vendor/bin/coveralls
+  - travis_retry php tests/bin/coveralls.phar

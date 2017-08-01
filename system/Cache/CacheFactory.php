@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
+ * Copyright (c) 2014-2017 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,7 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 3.0.0
@@ -45,6 +45,7 @@
  */
 class CacheFactory
 {
+
 	/**
 	 * Attempts to create the desired cache handler, based upon the
 	 *
@@ -52,24 +53,24 @@ class CacheFactory
 	 * @param string $handler
 	 * @param string $backup
 	 *
-	 * @return mixed
+	 * @return \CodeIgniter\Cache\CacheInterface
 	 */
 	public static function getHandler($config, string $handler = null, string $backup = null)
 	{
-	    if (! isset($config->validHandlers) || ! is_array($config->validHandlers))
+		if ( ! isset($config->validHandlers) || ! is_array($config->validHandlers))
 		{
 			throw new \InvalidArgumentException(lang('Cache.cacheInvalidHandlers'));
 		}
 
-		if (! isset($config->handler) || ! isset($config->backupHandler))
+		if ( ! isset($config->handler) || ! isset($config->backupHandler))
 		{
 			throw new \InvalidArgumentException(lang('Cache.cacheNoBackup'));
 		}
 
 		$handler = ! empty($handler) ? $handler : $config->handler;
-		$backup  = ! empty($backup)  ? $backup  : $config->backupHandler;
+		$backup = ! empty($backup) ? $backup : $config->backupHandler;
 
-		if (! array_key_exists($handler, $config->validHandlers) || ! array_key_exists($backup, $config->validHandlers))
+		if ( ! array_key_exists($handler, $config->validHandlers) || ! array_key_exists($backup, $config->validHandlers))
 		{
 			throw new \InvalidArgumentException(lang('Cache.cacheHandlerNotFound'));
 		}
@@ -77,16 +78,15 @@ class CacheFactory
 		// Get an instance of our handler.
 		$adapter = new $config->validHandlers[$handler]($config);
 
-		if (! $adapter->isSupported())
+		if ( ! $adapter->isSupported())
 		{
 			$adapter = new $config->validHandlers[$backup]($config);
 
-			if (! $adapter->isSupported())
+			if ( ! $adapter->isSupported())
 			{
 				// Log stuff here, don't throw exception. No need to raise a fuss.
-
 				// Fall back to the dummy adapter.
-				$adapter = new $config->validHandler['dummy']();
+				$adapter = new $config->validHandlers['dummy']();
 			}
 		}
 
@@ -96,5 +96,4 @@ class CacheFactory
 	}
 
 	//--------------------------------------------------------------------
-
 }

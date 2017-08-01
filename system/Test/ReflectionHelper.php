@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
+ * Copyright (c) 2014-2017 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,13 +29,12 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 3.0.0
  * @filesource
  */
-
 use ReflectionMethod;
 use ReflectionObject;
 use ReflectionClass;
@@ -45,9 +44,10 @@ use ReflectionClass;
  */
 trait ReflectionHelper
 {
+
 	/**
 	 * Find a private method invoker.
-	 * 
+	 *
 	 * @param object|string $obj    object or class name
 	 * @param string        $method method name
 	 * @return \Closure
@@ -66,10 +66,11 @@ trait ReflectionHelper
 
 	/**
 	 * Find an accessible property.
-	 * 
-	 * @param type $obj
-	 * @param type $property
-	 * @return type
+	 *
+	 * @param object $obj
+	 * @param string $property
+	 *
+	 * @return \ReflectionProperty
 	 */
 	private static function getAccessibleRefProperty($obj, $property)
 	{
@@ -90,7 +91,7 @@ trait ReflectionHelper
 
 	/**
 	 * Set a private property.
-	 * 
+	 *
 	 * @param object|string $obj      object or class name
 	 * @param string        $property property name
 	 * @param mixed         $value    value
@@ -103,7 +104,7 @@ trait ReflectionHelper
 
 	/**
 	 * Retrieve a private property.
-	 * 
+	 *
 	 * @param object|string $obj      object or class name
 	 * @param string        $property property name
 	 * @return mixed value
@@ -113,4 +114,5 @@ trait ReflectionHelper
 		$ref_property = self::getAccessibleRefProperty($obj, $property);
 		return $ref_property->getValue($obj);
 	}
+
 }

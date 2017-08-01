@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
+ * Copyright (c) 2014-2017 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,7 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 3.0.0
@@ -97,7 +97,7 @@ class Autoloader
 	 * Reads in the configuration array (described above) and stores
 	 * the valid parts that we'll need.
 	 *
-	 * @param $config
+	 * @param \Config\Autoload $config
 	 */
 	public function initialize(\Config\Autoload $config)
 	{
@@ -143,17 +143,15 @@ class Autoloader
 		// Now prepend another loader for the files in our class map.
 		$config = is_array($this->classmap) ? $this->classmap : [];
 
-		spl_autoload_register(function ($class) use ($config)
-		{
+		spl_autoload_register(function ($class) use ($config) {
 			if ( ! array_key_exists($class, $config))
 			{
 				return false;
 			}
 
 			include_once $config[$class];
-		},
-			true,   // Throw exception
-			true    // Prepend
+		}, true, // Throw exception
+						   true // Prepend
 		);
 	}
 
@@ -162,10 +160,10 @@ class Autoloader
 	/**
 	 * Registers a namespace with the autoloader.
 	 *
-	 * @param $namespace
-	 * @param $path
+	 * @param string $namespace
+	 * @param string $path
 	 *
-	 * @return $this
+	 * @return Autoloader
 	 */
 	public function addNamespace($namespace, $path)
 	{
@@ -192,9 +190,9 @@ class Autoloader
 	/**
 	 * Removes a single namespace from the psr4 settings.
 	 *
-	 * @param $namespace
+	 * @param string $namespace
 	 *
-	 * @return $this
+	 * @return Autoloader
 	 */
 	public function removeNamespace($namespace)
 	{
@@ -257,11 +255,13 @@ class Autoloader
 			{
 				$directory = rtrim($directory, '/');
 
-				if (strpos($class, $namespace) === 0) {
+				if (strpos($class, $namespace) === 0)
+				{
 					$filePath = $directory . str_replace('\\', '/', substr($class, strlen($namespace))) . '.php';
 					$filename = $this->requireFile($filePath);
 
-					if ($filename) {
+					if ($filename)
+					{
 						return $filename;
 					}
 				}
@@ -279,7 +279,7 @@ class Autoloader
 	 * version of CodeIgniter, namely 'application/libraries', and
 	 * 'application/Models'.
 	 *
-	 * @param $class    The class name. This typically should NOT have a namespace.
+	 * @param string $class The class name. This typically should NOT have a namespace.
 	 *
 	 * @return mixed    The mapped file name on success, or boolean false on failure
 	 */
@@ -287,22 +287,22 @@ class Autoloader
 	{
 		// If there is a namespace on this class, then
 		// we cannot load it from traditional locations.
-		if (strpos('\\', $class) !== false)
+		if (strpos($class, '\\') !== false)
 		{
 			return false;
 		}
 
 		$paths = [
-			APPPATH.'Controllers/',
-			APPPATH.'Libraries/',
-			APPPATH.'Models/',
+			APPPATH . 'Controllers/',
+			APPPATH . 'Libraries/',
+			APPPATH . 'Models/',
 		];
 
-		$class = str_replace('\\', '/', $class).'.php';
+		$class = str_replace('\\', '/', $class) . '.php';
 
 		foreach ($paths as $path)
 		{
-			if ($file = $this->requireFile($path.$class))
+			if ($file = $this->requireFile($path . $class))
 			{
 				return $file;
 			}
@@ -319,7 +319,7 @@ class Autoloader
 	 *
 	 * @codeCoverageIgnore
 	 *
-	 * @param $file
+	 * @param string $file
 	 *
 	 * @return bool
 	 */
@@ -368,5 +368,4 @@ class Autoloader
 	}
 
 	//--------------------------------------------------------------------
-
 }

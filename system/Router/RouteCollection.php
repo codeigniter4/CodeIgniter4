@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
+ * Copyright (c) 2014-2017 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,12 +29,13 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 3.0.0
  * @filesource
  */
+use CodeIgniter\Autoloader\FileLocator;
 
 /**
  * Class RouteCollection
@@ -45,6 +46,7 @@
  */
 class RouteCollection implements RouteCollectionInterface
 {
+
 	/**
 	 * The namespace to be added to any Controllers.
 	 * Defaults to the global namespaces (\)
@@ -104,7 +106,7 @@ class RouteCollection implements RouteCollectionInterface
 	 * A callable that will be shown
 	 * when the route cannot be matched.
 	 *
-	 * @var string|closure
+	 * @var string|\Closure
 	 */
 	protected $override404;
 
@@ -115,12 +117,12 @@ class RouteCollection implements RouteCollectionInterface
 	 * @var array
 	 */
 	protected $placeholders = [
-		'any'      => '.*',
-		'segment'  => '[^/]+',
-		'alphanum' => '[a-zA-Z0-9]+',
-		'num'      => '[0-9]+',
-		'alpha'    => '[a-zA-Z]+',
-		'hash'     => '[^/]+',
+		'any'		 => '.*',
+		'segment'	 => '[^/]+',
+		'alphanum'	 => '[a-zA-Z0-9]+',
+		'num'		 => '[0-9]+',
+		'alpha'		 => '[a-zA-Z]+',
+		'hash'		 => '[^/]+',
 	];
 
 	/**
@@ -166,15 +168,35 @@ class RouteCollection implements RouteCollectionInterface
 	 */
 	protected $currentOptions = null;
 
+	/**
+	 * Determines whether locally specified, PSR4
+	 * compatible code is automatically scanned
+	 * for addition routes in a {namespace}/Config/Routes.php file.
+	 *
+	 * @var bool
+	 */
+	protected $discoverLocal = false;
+
+	/**
+	 * A little performance booster.
+	 * @var bool
+	 */
+	protected $didDiscover = false;
+	protected $fileLocator;
+
 	//--------------------------------------------------------------------
 
 	/**
 	 * Constructor
+	 *
+	 * @param FileLocator $locator
 	 */
-	public function __construct()
+	public function __construct(FileLocator $locator)
 	{
 		// Get HTTP verb
 		$this->HTTPVerb = isset($_SERVER['REQUEST_METHOD']) ? strtolower($_SERVER['REQUEST_METHOD']) : 'cli';
+
+		$this->fileLocator = $locator;
 	}
 
 	//--------------------------------------------------------------------
@@ -288,7 +310,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @param bool $value
 	 *
-	 * @return RouteCollection
+	 * @return RouteCollectionInterface
 	 */
 	public function setAutoRoute(bool $value): RouteCollectionInterface
 	{
@@ -308,11 +330,11 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @param callable|null $callable
 	 *
-	 * @return $this
+	 * @return RouteCollectionInterface
 	 */
 	public function set404Override($callable = null): RouteCollectionInterface
 	{
-	    $this->override404 = $callable;
+		$this->override404 = $callable;
 
 		return $this;
 	}
@@ -333,14 +355,75 @@ class RouteCollection implements RouteCollectionInterface
 	//--------------------------------------------------------------------
 
 	/**
+	 * If true, will attempt to auto-discover new route files
+	 * based on any PSR4 namespaces that have been set
+	 * in Config/Autoload.php.
+	 *
+	 * @param bool $discover
+	 *
+	 * @return $this
+	 */
+	public function discoverLocal(bool $discover)
+	{
+		$this->discoverLocal = $discover;
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Will attempt to discover any additional routes, either through
+	 * the local PSR4 namespaces, or through selected Composer packages.
+	 * (Composer coming soon...)
+	 */
+	protected function discoverRoutes()
+	{
+		if ($this->didDiscover)
+			return;
+
+		// We need this var in local scope
+		// so route files can access it.
+		$routes = $this;
+
+		/*
+		 * Discover Local Files
+		 */
+		if ($this->discoverLocal === true)
+		{
+			$files = $this->fileLocator->search('Config/Routes.php');
+
+			foreach ($files as $file)
+			{
+				// Don't include our main file again...
+				if ($file == APPPATH . 'Config/Routes.php')
+					continue;
+
+				include $file;
+			}
+		}
+
+		/*
+		 * Discover Composer files (coming soon)
+		 */
+
+		$this->didDiscover = true;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Sets the default constraint to be used in the system. Typically
 	 * for use with the 'resources' method.
 	 *
-	 * @param $placeholder
+	 * @param string $placeholder
+	 *
+	 * @return RouteCollectionInterface
 	 */
 	public function setDefaultConstraint(string $placeholder): RouteCollectionInterface
 	{
-		if (array_key_exists($placeholder, $this->placeholders)) {
+		if (array_key_exists($placeholder, $this->placeholders))
+		{
 			$this->defaultPlaceholder = $placeholder;
 		}
 
@@ -380,15 +463,13 @@ class RouteCollection implements RouteCollectionInterface
 	 */
 	public function getDefaultNamespace(): string
 	{
-	    return $this->defaultNamespace;
+		return $this->defaultNamespace;
 	}
 
 	//--------------------------------------------------------------------
 
 	/**
 	 * Returns the current value of the translateURIDashses setting.
-	 *
-	 * @param bool|false $val
 	 *
 	 * @return mixed
 	 */
@@ -418,6 +499,11 @@ class RouteCollection implements RouteCollectionInterface
 	 */
 	public function getRoutes(): array
 	{
+		// Since this is the entry point for the Router,
+		// take a moment to do any route discovery
+		// we might need to do.
+		$this->discoverRoutes();
+
 		$routes = [];
 
 		foreach ($this->routes as $r)
@@ -455,16 +541,15 @@ class RouteCollection implements RouteCollectionInterface
 	 */
 	public function map(array $routes = [], array $options = null): RouteCollectionInterface
 	{
-	    foreach ($routes as $from => $to)
-	    {
-		    $this->add($from, $to, $options);
-	    }
+		foreach ($routes as $from => $to)
+		{
+			$this->add($from, $to, $options);
+		}
 
 		return $this;
 	}
 
 	//--------------------------------------------------------------------
-
 
 	/**
 	 * Adds a single route to the collection.
@@ -476,7 +561,7 @@ class RouteCollection implements RouteCollectionInterface
 	 * @param array|string $to
 	 * @param $options
 	 *
-	 * @return self RouteCollectionInterface
+	 * @return RouteCollectionInterface
 	 */
 	public function add(string $from, $to, array $options = null): RouteCollectionInterface
 	{
@@ -495,6 +580,8 @@ class RouteCollection implements RouteCollectionInterface
 	 * @param string $from     The pattern to match against
 	 * @param string $to       Either a route name or a URI to redirect to
 	 * @param int    $status   The HTTP status code that should be returned with this redirect
+	 *
+	 * @return RouteCollection
 	 */
 	public function addRedirect(string $from, string $to, int $status = 302)
 	{
@@ -504,7 +591,7 @@ class RouteCollection implements RouteCollectionInterface
 			$to = $this->routes[$to]['route'];
 		}
 
-	    $this->create($from, $to, ['redirect' => $status]);
+		$this->create($from, $to, ['redirect' => $status]);
 
 		return $this;
 	}
@@ -556,9 +643,6 @@ class RouteCollection implements RouteCollectionInterface
 	}
 
 	//--------------------------------------------------------------------
-
-
-
 	//--------------------------------------------------------------------
 	// Grouping Routes
 	//--------------------------------------------------------------------
@@ -580,12 +664,12 @@ class RouteCollection implements RouteCollectionInterface
 	 */
 	public function group($name, ...$params)
 	{
-		$oldGroup   = $this->group;
+		$oldGroup = $this->group;
 		$oldOptions = $this->currentOptions;
 
 		// To register a route, we'll set a flag so that our router
 		// so it will see the group name.
-		$this->group = ltrim($oldGroup.'/'.$name, '/');
+		$this->group = ltrim($oldGroup . '/' . $name, '/');
 
 		$callback = array_pop($params);
 
@@ -604,7 +688,6 @@ class RouteCollection implements RouteCollectionInterface
 	}
 
 	//--------------------------------------------------------------------
-
 	//--------------------------------------------------------------------
 	// HTTP Verb-based routing
 	//--------------------------------------------------------------------
@@ -615,6 +698,7 @@ class RouteCollection implements RouteCollectionInterface
 	// The options array is typically used to pass in an 'as' or var, but may
 	// be expanded in the future. See the docblock for 'add' method above for
 	// current list of globally available options.
+
 	//
 
 	/**
@@ -655,7 +739,8 @@ class RouteCollection implements RouteCollectionInterface
 
 		// If a new controller is specified, then we replace the
 		// $name value with the name of the new controller.
-		if (isset($options['controller'])) {
+		if (isset($options['controller']))
+		{
 			$new_name = ucfirst(filter_var($options['controller'], FILTER_SANITIZE_STRING));
 		}
 
@@ -664,28 +749,34 @@ class RouteCollection implements RouteCollectionInterface
 		$id = isset($this->placeholders[$this->defaultPlaceholder]) ? $this->placeholders[$this->defaultPlaceholder] :
 				'(:segment)';
 
-		if (isset($options['placeholder'])) {
+		if (isset($options['placeholder']))
+		{
 			$id = $options['placeholder'];
 		}
 
 		// Make sure we capture back-references
-		$id = '('.trim($id, '()').')';
+		$id = '(' . trim($id, '()') . ')';
 
-		$methods = isset($options['only'])
-			? is_string($options['only']) ? explode(',', $options['only']) : $options['only']
-			: ['listAll', 'show', 'create', 'update', 'delete'];
+		$methods = isset($options['only']) ? is_string($options['only']) ? explode(',', $options['only']) : $options['only'] : ['listAll', 'show', 'create', 'update', 'delete'];
 
-		if (in_array('listAll', $methods)) $this->get($name, $new_name . '::listAll', $options);
-		if (in_array('show', $methods))    $this->get($name . '/' . $id, $new_name . '::show/$1', $options);
-		if (in_array('create', $methods))  $this->post($name, $new_name . '::create', $options);
-		if (in_array('update', $methods))  $this->put($name . '/' . $id, $new_name . '::update/$1', $options);
-		if (in_array('delete', $methods))  $this->delete($name . '/' . $id, $new_name . '::delete/$1', $options);
+		if (in_array('listAll', $methods))
+			$this->get($name, $new_name . '::listAll', $options);
+		if (in_array('show', $methods))
+			$this->get($name . '/' . $id, $new_name . '::show/$1', $options);
+		if (in_array('create', $methods))
+			$this->post($name, $new_name . '::create', $options);
+		if (in_array('update', $methods))
+			$this->put($name . '/' . $id, $new_name . '::update/$1', $options);
+		if (in_array('delete', $methods))
+			$this->delete($name . '/' . $id, $new_name . '::delete/$1', $options);
 
 		// Web Safe?
 		if (isset($options['websafe']))
 		{
-			if (in_array('update', $methods))  $this->post($name . '/' . $id, $new_name . '::update/$1', $options);
-			if (in_array('delete', $methods))  $this->post($name . '/' . $id .'/delete', $new_name . '::delete/$1', $options);
+			if (in_array('update', $methods))
+				$this->post($name . '/' . $id, $new_name . '::update/$1', $options);
+			if (in_array('delete', $methods))
+				$this->post($name . '/' . $id . '/delete', $new_name . '::delete/$1', $options);
 		}
 
 		return $this;
@@ -693,19 +784,19 @@ class RouteCollection implements RouteCollectionInterface
 
 	//--------------------------------------------------------------------
 
-    /**
-     * Specifies a single route to match for multiple HTTP Verbs.
-     *
-     * Example:
-     *  $route->match( ['get', 'post'], 'users/(:num)', 'users/$1);
-     *
-     * @param array $verbs
-     * @param       $from
-     * @param       $to
-     * @param array $options
-     *
-     * @return \CodeIgniter\Router\RouteCollectionInterface
-     */
+	/**
+	 * Specifies a single route to match for multiple HTTP Verbs.
+	 *
+	 * Example:
+	 *  $route->match( ['get', 'post'], 'users/(:num)', 'users/$1);
+	 *
+	 * @param array $verbs
+	 * @param       $from
+	 * @param       $to
+	 * @param array $options
+	 *
+	 * @return \CodeIgniter\Router\RouteCollectionInterface
+	 */
 	public function match(array $verbs = [], string $from, $to, array $options = null): RouteCollectionInterface
 	{
 		foreach ($verbs as $verb)
@@ -720,15 +811,15 @@ class RouteCollection implements RouteCollectionInterface
 
 	//--------------------------------------------------------------------
 
-    /**
-     * Specifies a route that is only available to GET requests.
-     *
-     * @param       $from
-     * @param       $to
-     * @param array $options
-     *
-     * @return \CodeIgniter\Router\RouteCollectionInterface
-     */
+	/**
+	 * Specifies a route that is only available to GET requests.
+	 *
+	 * @param       $from
+	 * @param       $to
+	 * @param array $options
+	 *
+	 * @return \CodeIgniter\Router\RouteCollectionInterface
+	 */
 	public function get(string $from, $to, array $options = null): RouteCollectionInterface
 	{
 		if ($this->HTTPVerb == 'get')
@@ -741,15 +832,15 @@ class RouteCollection implements RouteCollectionInterface
 
 	//--------------------------------------------------------------------
 
-    /**
-     * Specifies a route that is only available to POST requests.
-     *
-     * @param       $from
-     * @param       $to
-     * @param array $options
-     *
-     * @return \CodeIgniter\Router\RouteCollectionInterface
-     */
+	/**
+	 * Specifies a route that is only available to POST requests.
+	 *
+	 * @param       $from
+	 * @param       $to
+	 * @param array $options
+	 *
+	 * @return \CodeIgniter\Router\RouteCollectionInterface
+	 */
 	public function post(string $from, $to, array $options = null): RouteCollectionInterface
 	{
 		if ($this->HTTPVerb == 'post')
@@ -762,15 +853,15 @@ class RouteCollection implements RouteCollectionInterface
 
 	//--------------------------------------------------------------------
 
-    /**
-     * Specifies a route that is only available to PUT requests.
-     *
-     * @param       $from
-     * @param       $to
-     * @param array $options
-     *
-     * @return \CodeIgniter\Router\RouteCollectionInterface
-     */
+	/**
+	 * Specifies a route that is only available to PUT requests.
+	 *
+	 * @param       $from
+	 * @param       $to
+	 * @param array $options
+	 *
+	 * @return \CodeIgniter\Router\RouteCollectionInterface
+	 */
 	public function put(string $from, $to, array $options = null): RouteCollectionInterface
 	{
 		if ($this->HTTPVerb == 'put')
@@ -783,15 +874,15 @@ class RouteCollection implements RouteCollectionInterface
 
 	//--------------------------------------------------------------------
 
-    /**
-     * Specifies a route that is only available to DELETE requests.
-     *
-     * @param       $from
-     * @param       $to
-     * @param array $options
-     *
-     * @return \CodeIgniter\Router\RouteCollectionInterface
-     */
+	/**
+	 * Specifies a route that is only available to DELETE requests.
+	 *
+	 * @param       $from
+	 * @param       $to
+	 * @param array $options
+	 *
+	 * @return \CodeIgniter\Router\RouteCollectionInterface
+	 */
 	public function delete(string $from, $to, array $options = null): RouteCollectionInterface
 	{
 		if ($this->HTTPVerb == 'delete')
@@ -804,15 +895,15 @@ class RouteCollection implements RouteCollectionInterface
 
 	//--------------------------------------------------------------------
 
-    /**
-     * Specifies a route that is only available to HEAD requests.
-     *
-     * @param       $from
-     * @param       $to
-     * @param array $options
-     *
-     * @return \CodeIgniter\Router\RouteCollectionInterface
-     */
+	/**
+	 * Specifies a route that is only available to HEAD requests.
+	 *
+	 * @param       $from
+	 * @param       $to
+	 * @param array $options
+	 *
+	 * @return \CodeIgniter\Router\RouteCollectionInterface
+	 */
 	public function head(string $from, $to, array $options = null): RouteCollectionInterface
 	{
 		if ($this->HTTPVerb == 'head')
@@ -825,15 +916,15 @@ class RouteCollection implements RouteCollectionInterface
 
 	//--------------------------------------------------------------------
 
-    /**
-     * Specifies a route that is only available to PATCH requests.
-     *
-     * @param       $from
-     * @param       $to
-     * @param array $options
-     *
-     * @return \CodeIgniter\Router\RouteCollectionInterface
-     */
+	/**
+	 * Specifies a route that is only available to PATCH requests.
+	 *
+	 * @param       $from
+	 * @param       $to
+	 * @param array $options
+	 *
+	 * @return \CodeIgniter\Router\RouteCollectionInterface
+	 */
 	public function patch(string $from, $to, array $options = null): RouteCollectionInterface
 	{
 		if ($this->HTTPVerb == 'patch')
@@ -846,15 +937,15 @@ class RouteCollection implements RouteCollectionInterface
 
 	//--------------------------------------------------------------------
 
-    /**
-     * Specifies a route that is only available to OPTIONS requests.
-     *
-     * @param       $from
-     * @param       $to
-     * @param array $options
-     *
-     * @return \CodeIgniter\Router\RouteCollectionInterface
-     */
+	/**
+	 * Specifies a route that is only available to OPTIONS requests.
+	 *
+	 * @param       $from
+	 * @param       $to
+	 * @param array $options
+	 *
+	 * @return \CodeIgniter\Router\RouteCollectionInterface
+	 */
 	public function options(string $from, $to, array $options = null): RouteCollectionInterface
 	{
 		if ($this->HTTPVerb == 'options')
@@ -867,15 +958,15 @@ class RouteCollection implements RouteCollectionInterface
 
 	//--------------------------------------------------------------------
 
-    /**
-     * Specifies a route that is only available to command-line requests.
-     *
-     * @param       $from
-     * @param       $to
-     * @param array $options
-     *
-     * @return \CodeIgniter\Router\RouteCollectionInterface
-     */
+	/**
+	 * Specifies a route that is only available to command-line requests.
+	 *
+	 * @param       $from
+	 * @param       $to
+	 * @param array $options
+	 *
+	 * @return \CodeIgniter\Router\RouteCollectionInterface
+	 */
 	public function cli(string $from, $to, array $options = null): RouteCollectionInterface
 	{
 		if ($this->HTTPVerb == 'cli')
@@ -891,10 +982,10 @@ class RouteCollection implements RouteCollectionInterface
 	/**
 	 * Limits the routes to a specified ENVIRONMENT or they won't run.
 	 *
-	 * @param $env
-	 * @param callable $callback
+	 * @param string   $env
+	 * @param \Closure $callback
 	 *
-	 * @return $this
+	 * @return RouteCollectionInterface
 	 */
 	public function environment(string $env, \Closure $callback): RouteCollectionInterface
 	{
@@ -922,9 +1013,9 @@ class RouteCollection implements RouteCollectionInterface
 	 *      reverseRoute('Controller::method', $param1, $param2);
 	 *
 	 * @param string $search
-	 * @param        ...$params
-     *
-     * @return string|false
+	 * @param array  ...$params
+	 *
+	 * @return string|false
 	 */
 	public function reverseRoute(string $search, ...$params)
 	{
@@ -939,11 +1030,11 @@ class RouteCollection implements RouteCollectionInterface
 		foreach ($this->routes as $route)
 		{
 			$from = key($route['route']);
-			$to   = $route['route'][$from];
+			$to = $route['route'][$from];
 
 			// Lose any namespace slash at beginning of strings
 			// to ensure more consistent match.
-			$to     = ltrim($to, '\\');
+			$to = ltrim($to, '\\');
 			$search = ltrim($search, '\\');
 
 			// If there's any chance of a match, then it will
@@ -972,7 +1063,7 @@ class RouteCollection implements RouteCollectionInterface
 	/**
 	 * Given a
 	 *
-	 * @param array      $from
+	 * @param string     $from
 	 * @param array|null $params
 	 *
 	 * @return string
@@ -984,7 +1075,7 @@ class RouteCollection implements RouteCollectionInterface
 
 		if (empty($matches[0]))
 		{
-			return '/'.ltrim($from, '/');
+			return '/' . ltrim($from, '/');
 		}
 
 		// Build our resulting string, inserting the $params in
@@ -1003,7 +1094,7 @@ class RouteCollection implements RouteCollectionInterface
 			}
 		}
 
-		return '/'.ltrim($from, '/');
+		return '/' . ltrim($from, '/');
 	}
 
 	//--------------------------------------------------------------------
@@ -1013,27 +1104,24 @@ class RouteCollection implements RouteCollectionInterface
 	 * the request method(s) that this route will work for. They can be separated
 	 * by a pipe character "|" if there is more than one.
 	 *
-	 * @param  string $from
-	 * @param  array  $to
-	 * @param array   $options
+	 * @param  string       $from
+	 * @param  array|string $to
+	 * @param array         $options
 	 */
 	protected function create(string $from, $to, array $options = null)
 	{
-		$prefix = is_null($this->group) ? '' : $this->group.'/';
+		$prefix = is_null($this->group) ? '' : $this->group . '/';
 
-		$from = filter_var($prefix.$from, FILTER_SANITIZE_STRING);
+		$from = filter_var($prefix . $from, FILTER_SANITIZE_STRING);
 
-        // While we want to add a route within a group of '/',
-        // it doens't work with matching, so remove them...
-        if ($from != '/')
-        {
-            $from = trim($from, '/');
-        }
-
-		if (is_null($options))
+		// While we want to add a route within a group of '/',
+		// it doens't work with matching, so remove them...
+		if ($from != '/')
 		{
-			$options = $this->currentOptions;
+			$from = trim($from, '/');
 		}
+
+		$options = array_merge((array)$this->currentOptions, (array)$options);
 
 		// Hostname limiting?
 		if (isset($options['hostname']) && ! empty($options['hostname']))
@@ -1064,16 +1152,12 @@ class RouteCollection implements RouteCollectionInterface
 			// Get a constant string to work with.
 			$to = preg_replace('/(\$\d+)/', '$X', $to);
 
-			for ($i = (int)$options['offset'] + 1; $i < (int)$options['offset'] + 7; $i++)
+			for ($i = (int) $options['offset'] + 1; $i < (int) $options['offset'] + 7; $i ++ )
 			{
 				$to = preg_replace_callback(
-					'/\$X/',
-					function ($m) use ($i)
-					{
-						return '$'.$i;
-					},
-					$to,
-					1
+						'/\$X/', function ($m) use ($i) {
+					return '$' . $i;
+				}, $to, 1
 				);
 			}
 		}
@@ -1082,21 +1166,21 @@ class RouteCollection implements RouteCollectionInterface
 		// so that the Router doesn't need to know about any of this.
 		foreach ($this->placeholders as $tag => $pattern)
 		{
-			$from = str_ireplace(':'.$tag, $pattern, $from);
+			$from = str_ireplace(':' . $tag, $pattern, $from);
 		}
 
 		// If no namespace found, add the default namespace
 		if (is_string($to) && strpos($to, '\\') === false)
 		{
 			$namespace = $options['namespace'] ?? $this->defaultNamespace;
-			$to = trim($namespace, '\\') .'\\'.$to;
+			$to = trim($namespace, '\\') . '\\' . $to;
 		}
 
 		// Always ensure that we escape our namespace so we're not pointing to
 		// \CodeIgniter\Routes\Controller::method.
 		if (is_string($to))
 		{
-			$to = '\\'.ltrim($to, '\\');
+			$to = '\\' . ltrim($to, '\\');
 		}
 
 		$name = $options['as'] ?? $from;
@@ -1136,7 +1220,7 @@ class RouteCollection implements RouteCollectionInterface
 
 		// Routes can be limited to any sub-domain. In that case, though,
 		// it does require a sub-domain to be present.
-		if (! empty($this->currentSubdomain) && in_array('*', $subdomains))
+		if ( ! empty($this->currentSubdomain) && in_array('*', $subdomains))
 		{
 			return true;
 		}
@@ -1169,20 +1253,22 @@ class RouteCollection implements RouteCollectionInterface
 		$url = $_SERVER['HTTP_HOST'];
 		if (strpos($url, 'http') !== 0)
 		{
-			$url = 'http://'.$url;
+			$url = 'http://' . $url;
 		}
 
 		$parsedUrl = parse_url($url);
 
 		$host = explode('.', $parsedUrl['host']);
 
-		if ($host[0] == 'www') unset($host[0]);
+		if ($host[0] == 'www')
+			unset($host[0]);
 
 		// Get rid of any domains, which will be the last
 		unset($host[count($host)]);
 
 		// Account for .co.uk, .co.nz, etc. domains
-		if (end($host) == 'co') $host = array_slice($host, 0, -1);
+		if (end($host) == 'co')
+			$host = array_slice($host, 0, -1);
 
 		// If we only have 1 part left, then we don't have a sub-domain.
 		if (count($host) == 1)
@@ -1193,6 +1279,6 @@ class RouteCollection implements RouteCollectionInterface
 
 		return array_shift($host);
 	}
-	//--------------------------------------------------------------------
 
+	//--------------------------------------------------------------------
 }

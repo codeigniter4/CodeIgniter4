@@ -1,5 +1,7 @@
 <?php namespace CodeIgniter;
 
+use CodeIgniter\I18n\Time;
+
 /**
  * CodeIgniter
  *
@@ -7,7 +9,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
+ * Copyright (c) 2014-2017 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,15 +31,15 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 3.0.0
  * @filesource
  */
-
 class Entity
 {
+
 	/**
 	 * Maps names used in sets and gets against unique
 	 * names within the class, allowing independence from
@@ -52,6 +54,23 @@ class Entity
 	 */
 	protected $datamap = [];
 
+	protected $_options = [
+		'dates' => ['created_at', 'updated_at', 'deleted_at'],
+	];
+
+	/**
+	 * Allows filling in Entity parameters during construction.
+	 *
+	 * @param array|null $data
+	 */
+	public function __construct(array $data = null)
+	{
+		if (is_array($data))
+		{
+			$this->fill($data);
+		}
+	}
+
 	/**
 	 * Takes an array of key/value pairs and sets them as
 	 * class properties, using any `setCamelCasedProperty()` methods
@@ -63,7 +82,7 @@ class Entity
 	{
 		foreach ($data as $key => $value)
 		{
-			$method = 'set'.str_replace(' ', '', ucwords(str_replace(['-', '_'], ' ', $key)));
+			$method = 'set' . str_replace(' ', '', ucwords(str_replace(['-', '_'], ' ', $key)));
 
 			if (method_exists($this, $method))
 			{
@@ -97,21 +116,29 @@ class Entity
 		$key = $this->mapProperty($key);
 
 		// Convert to CamelCase for the method
-		$method = 'get'.str_replace(' ', '', ucwords(str_replace(['-', '_'], ' ', $key)));
+		$method = 'get' . str_replace(' ', '', ucwords(str_replace(['-', '_'], ' ', $key)));
 
 		// if a set* method exists for this key, 
 		// use that method to insert this value. 
 		if (method_exists($this, $method))
 		{
-			return $this->$method();
+			$result = $this->$method();
 		}
 
 		// Otherwise return the protected property
 		// if it exists.
-	    if (property_exists($this, $key))
-	    {
-	    	return $this->$key;
-	    }
+		else if (property_exists($this, $key))
+		{
+			$result = $this->$key;
+		}
+
+		// Do we need to mutate this into a date?
+		if (in_array($key, $this->_options['dates']))
+		{
+			$result = $this->mutateDate($result);
+		}
+
+		return $result;
 	}
 
 	//--------------------------------------------------------------------
@@ -134,9 +161,15 @@ class Entity
 	{
 		$key = $this->mapProperty($key);
 
+		// Check if the field should be mutated into a date
+		if (in_array($key, $this->_options['dates']))
+		{
+			$value = $this->mutateDate($value);
+		}
+
 		// if a set* method exists for this key, 
 		// use that method to insert this value. 
-		$method = 'set'.str_replace(' ', '', ucwords(str_replace(['-', '_'], ' ', $key)));
+		$method = 'set' . str_replace(' ', '', ucwords(str_replace(['-', '_'], ' ', $key)));
 		if (method_exists($this, $method))
 		{
 			$this->$method($value);
@@ -164,7 +197,8 @@ class Entity
 	{
 		// If not actual property exists, get out
 		// before we confuse our data mapping.
-		if (! property_exists($this, $key)) return;
+		if ( ! property_exists($this, $key))
+			return;
 
 		$this->$key = null;
 
@@ -193,9 +227,7 @@ class Entity
 	{
 		// Ensure an actual property exists, otherwise
 		// we confuse the data mapping.
-		$value = property_exists($this, $key)
-			? $this->$key
-			: null;
+		$value = property_exists($this, $key) ? $this->$key : null;
 
 		return ! is_null($value);
 	}
@@ -221,4 +253,40 @@ class Entity
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Converts the given string|timestamp|DateTime|Time instance
+	 * into a \CodeIgniter\I18n\Time object.
+	 *
+	 * @param $value
+	 *
+	 * @return \CodeIgniter\I18n\Time
+	 */
+	private function mutateDate($value)
+	{
+		if ($value instanceof Time)
+		{
+			return $value;
+		}
+
+		if ($value instanceof \DateTime)
+		{
+			return Time::instance($value);
+		}
+
+		if (is_numeric($value))
+		{
+			return Time::createFromTimestamp($value);
+		}
+
+		if (is_string($value))
+		{
+			return Time::parse($value);
+		}
+
+		return $value;
+	}
+
+	//--------------------------------------------------------------------
+
 }

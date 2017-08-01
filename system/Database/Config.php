@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
+ * Copyright (c) 2014-2017 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,13 +29,12 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 3.0.0
  * @filesource
  */
-
 use CodeIgniter\Config\BaseConfig;
 use Config\Database;
 
@@ -44,6 +43,7 @@ use Config\Database;
  */
 class Config extends BaseConfig
 {
+
 	/**
 	 * Cache for instance of any connections that
 	 * have been requested as a "shared" instance.
@@ -69,7 +69,7 @@ class Config extends BaseConfig
 	 *                                 or an array of configuration settings.
 	 * @param bool          $getShared Whether to return a shared instance of the connection.
 	 *
-	 * @return mixed
+	 * @return BaseConnection
 	 */
 	public static function connect($group = null, $getShared = true)
 	{
@@ -88,7 +88,7 @@ class Config extends BaseConfig
 
 		if (is_string($group) && ! isset($config->$group) && $group != 'custom')
 		{
-			throw new \InvalidArgumentException($group.' is not a valid database connection group.');
+			throw new \InvalidArgumentException($group . ' is not a valid database connection group.');
 		}
 
 		if ($getShared && isset(self::$instances[$group]))
@@ -106,7 +106,7 @@ class Config extends BaseConfig
 
 		$connection = self::$factory->load($config, $group);
 
-		self::$instances[$group] =& $connection;
+		self::$instances[$group] = & $connection;
 
 		return $connection;
 	}
@@ -120,7 +120,7 @@ class Config extends BaseConfig
 	 */
 	public static function getConnections()
 	{
-	    return self::$instances;
+		return self::$instances;
 	}
 
 	//--------------------------------------------------------------------
@@ -130,6 +130,8 @@ class Config extends BaseConfig
 	 * database group, and loads the group if it hasn't been loaded yet.
 	 *
 	 * @param string|null $group
+	 *
+	 * @return Forge
 	 */
 	public static function forge(string $group = null)
 	{
@@ -142,12 +144,12 @@ class Config extends BaseConfig
 			$group = ENVIRONMENT == 'testing' ? 'tests' : $config->defaultGroup;
 		}
 
-		if (! isset($config->$group))
+		if ( ! isset($config->$group))
 		{
-			throw new \InvalidArgumentException($group.' is not a valid database connection group.');
+			throw new \InvalidArgumentException($group . ' is not a valid database connection group.');
 		}
 
-		if (! isset(self::$instances[$group]))
+		if ( ! isset(self::$instances[$group]))
 		{
 			$db = self::connect($group);
 		}
@@ -166,11 +168,11 @@ class Config extends BaseConfig
 	 *
 	 * @param string|null $group
 	 *
-	 * @return mixed
+	 * @return BaseUtils
 	 */
 	public static function utils(string $group = null)
 	{
-	    $config = new \Config\Database();
+		$config = new \Config\Database();
 
 		self::ensureFactory();
 
@@ -179,12 +181,12 @@ class Config extends BaseConfig
 			$group = $config->defaultGroup;
 		}
 
-		if (! isset($config->group))
+		if ( ! isset($config->group))
 		{
-			throw new \InvalidArgumentException($group.' is not a valid database connection group.');
+			throw new \InvalidArgumentException($group . ' is not a valid database connection group.');
 		}
 
-		if (! isset(self::$instances[$group]))
+		if ( ! isset(self::$instances[$group]))
 		{
 			$db = self::connect($group);
 		}
@@ -214,8 +216,6 @@ class Config extends BaseConfig
 
 	//--------------------------------------------------------------------
 
-
-
 	/**
 	 * Ensures the database Connection Manager/Factory is loaded and ready to use.
 	 */
@@ -230,5 +230,4 @@ class Config extends BaseConfig
 	}
 
 	//--------------------------------------------------------------------
-
 }

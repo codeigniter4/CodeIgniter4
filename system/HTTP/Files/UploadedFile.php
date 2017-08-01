@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
+ * Copyright (c) 2014-2017 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,13 +29,12 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 3.0.0
  * @filesource
  */
-
 use CodeIgniter\Files\File;
 use CodeIgniter\Files\FileException;
 
@@ -50,6 +49,7 @@ use CodeIgniter\Files\FileException;
  */
 class UploadedFile extends File implements UploadedFileInterface
 {
+
 	/**
 	 * The path to the temporary file.
 	 *
@@ -106,12 +106,12 @@ class UploadedFile extends File implements UploadedFileInterface
 	 */
 	public function __construct(string $path, string $originalName, string $mimeType = null, int $size = null, int $error = null)
 	{
-		$this->path             = $path;
-		$this->name             = $originalName;
-		$this->originalName     = $originalName;
+		$this->path = $path;
+		$this->name = $originalName;
+		$this->originalName = $originalName;
 		$this->originalMimeType = $mimeType;
-		$this->size             = $size;
-		$this->error            = $error;
+		$this->size = $size;
+		$this->error = $error;
 
 		parent::__construct($path, false);
 	}
@@ -158,16 +158,16 @@ class UploadedFile extends File implements UploadedFileInterface
 			throw new FileException('The file has already been moved.');
 		}
 
-		if (! $this->isValid())
+		if ( ! $this->isValid())
 		{
 			throw new FileException('The original file is not a valid file.');
 		}
 
-		$targetPath = rtrim($targetPath, '/').'/';
+		$targetPath = rtrim($targetPath, '/') . '/';
 		$name = is_null($name) ? $this->getName() : $name;
-        $destination = $overwrite ? $this->getDestination($targetPath.$name) : $targetPath.$name;
+		$destination = $overwrite ? $this->getDestination($targetPath . $name) : $targetPath . $name;
 
-		if (! @move_uploaded_file($this->path, $destination))
+		if ( ! @move_uploaded_file($this->path, $destination))
 		{
 			$error = error_get_last();
 			throw new \RuntimeException(sprintf('Could not move file %s to %s (%s)', basename($this->path), $targetPath, strip_tags($error['message'])));
@@ -229,25 +229,24 @@ class UploadedFile extends File implements UploadedFileInterface
 	 * Get error string
 	 *
 	 * @staticvar array $errors
-	 * @return type
+	 *
+	 * @return string
 	 */
 	public function getErrorString()
 	{
 		static $errors = [
-			UPLOAD_ERR_INI_SIZE   => 'The file "%s" exceeds your upload_max_filesize ini directive.',
-			UPLOAD_ERR_FORM_SIZE  => 'The file "%s" exceeds the upload limit defined in your form.',
-			UPLOAD_ERR_PARTIAL    => 'The file "%s" was only partially uploaded.',
-			UPLOAD_ERR_NO_FILE    => 'No file was uploaded.',
-			UPLOAD_ERR_CANT_WRITE => 'The file "%s" could not be written on disk.',
-			UPLOAD_ERR_NO_TMP_DIR => 'File could not be uploaded: missing temporary directory.',
-			UPLOAD_ERR_EXTENSION  => 'File upload was stopped by a PHP extension.',
+			UPLOAD_ERR_INI_SIZE		 => 'The file "%s" exceeds your upload_max_filesize ini directive.',
+			UPLOAD_ERR_FORM_SIZE	 => 'The file "%s" exceeds the upload limit defined in your form.',
+			UPLOAD_ERR_PARTIAL		 => 'The file "%s" was only partially uploaded.',
+			UPLOAD_ERR_NO_FILE		 => 'No file was uploaded.',
+			UPLOAD_ERR_CANT_WRITE	 => 'The file "%s" could not be written on disk.',
+			UPLOAD_ERR_NO_TMP_DIR	 => 'File could not be uploaded: missing temporary directory.',
+			UPLOAD_ERR_EXTENSION	 => 'File upload was stopped by a PHP extension.',
 		];
 
-	    $error = is_null($this->error) ? UPLOAD_ERR_OK : $this->error;
+		$error = is_null($this->error) ? UPLOAD_ERR_OK : $this->error;
 
-		return isset($errors[$error])
-			? sprintf($errors[$error], $this->getName())
-			: sprintf('The file "%s" was not uploaded due to an unknown error.', $this->getName());
+		return isset($errors[$error]) ? sprintf($errors[$error], $this->getName()) : sprintf('The file "%s" was not uploaded due to an unknown error.', $this->getName());
 	}
 
 	//--------------------------------------------------------------------
@@ -283,6 +282,18 @@ class UploadedFile extends File implements UploadedFileInterface
 	//--------------------------------------------------------------------
 
 	/**
+	 * Returns the name of the file as provided by the client during upload.
+	 *
+	 * @return string
+	 */
+	public function getClientName(): string
+	{
+		return $this->originalName;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Gets the temporary filename where the file was uploaded to.
 	 *
 	 * @return string
@@ -295,6 +306,18 @@ class UploadedFile extends File implements UploadedFileInterface
 	//--------------------------------------------------------------------
 
 	/**
+	 * Overrides SPLFileInfo's to work with uploaded files, since
+	 * the temp file that's been uploaded doesn't have an extension.
+	 *
+	 * Is simply an alias for guessExtension for a safer method
+	 * than simply relying on the provided extension.
+	 */
+	public function getExtension()
+	{
+		return $this->guessExtension();
+	}
+
+	/**
 	 * Returns the original file extension, based on the file name that
 	 * was uploaded. This is NOT a trusted source.
 	 * For a trusted version, use guessExtension() instead.
@@ -303,7 +326,7 @@ class UploadedFile extends File implements UploadedFileInterface
 	 */
 	public function getClientExtension(): string
 	{
-		return pathinfo($this->path, PATHINFO_EXTENSION);
+		return pathinfo($this->originalName, PATHINFO_EXTENSION);
 	}
 
 	//--------------------------------------------------------------------
@@ -319,6 +342,5 @@ class UploadedFile extends File implements UploadedFileInterface
 		return is_uploaded_file($this->path) && $this->error === UPLOAD_ERR_OK;
 	}
 
-    //--------------------------------------------------------------------
-
+	//--------------------------------------------------------------------
 }

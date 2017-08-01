@@ -4,7 +4,8 @@
 ## Contributions
 
 We expect all contributions to conform to our style guide, be commented (inside the PHP source files), 
-be documented (in the user guide), and unit tested (in the test folder).
+be documented (in the user guide), and unit tested (in the test folder). 
+There is a [Contributing to CodeIgniter](https://bcit-ci.github.io/CodeIgniter4/contributing/index.html) section in the user guide which describes the contribution process; this page is an overview.
 
 ## Issues
 
@@ -14,7 +15,7 @@ Issues are a quick way to point out a bug. If you find a bug or documentation er
 2. The issue has already been fixed (check the develop branch, or look for closed Issues)
 3. Is it something really obvious that you can fix yourself?
 
-Reporting issues is helpful but an even better approach is to send a Pull Request, which is done by "Forking" the main repository and committing to your own copy. This will require you to use the version control system called Git.
+Reporting issues is helpful but an even [better approach](https://bcit-ci.github.io/CodeIgniter4/contributing/workflow.html) is to send a Pull Request, which is done by "Forking" the main repository and committing to your own copy. This will require you to use the version control system called Git.
 
 ## Guidelines
 
@@ -25,7 +26,7 @@ for us to maintain quality of the code-base.
 
 ### PHP Style
 
-All code must meet the Style Guide, which will be an early part of the User Guide. 
+All code must meet the [Style Guide](https://bcit-ci.github.io/CodeIgniter4/contributing/styleguide.html).
 This makes certain that all code is the same format as the existing code and means it will be as readable as possible.
 
 ### Documentation
@@ -45,39 +46,20 @@ One thing at a time: A pull request should only contain one change. That does no
 
 ### Signing
 
-You must sign your work, certifying that you either wrote the work or otherwise have the right to pass it on to an open source project. git makes this trivial as you merely have to use `--signoff` on your commits to your CodeIgniter fork.
-
-`git commit --signoff`
-
-or simply
-
-`git commit -s`
-
-This will sign your commits with the information setup in your git config, e.g.
-
-`Signed-off-by: John Q Public <john.public@example.com>`
-
-If you are using [Tower](http://www.git-tower.com/) there is a "Sign-Off" checkbox in the commit window. You could even alias git commit to use the `-s` flag so you don’t have to think about it.
-
-By signing your work in this manner, you certify to a "Developer's Certificate of Origin". The current version of this certificate is in the `DCO.txt` file in the root of this repository.
-
+You must [GPG-sign](https://bcit-ci.github.io/CodeIgniter4/contributing/signing.html) your work, certifying that you either wrote the work or otherwise have the right to pass it on to an open source project. This is *not* just a "signed-off-by" commit, but instead a digitally signed one.
 
 ## How-to Guide
 
-There are two ways to make changes, the easy way and the hard way. Either way you will need to [create a GitHub account](https://github.com/signup/free).
-
-Easy way GitHub allows in-line editing of files for making simple typo changes and quick-fixes. This is not the best way as you are unable to test the code works. If you do this you could be introducing syntax errors, etc, but for a Git-phobic user this is good for a quick-fix.
-
-Hard way The best way to contribute is to "clone" your fork of CodeIgniter to your development area. That sounds like some jargon, but "forking" on GitHub means "making a copy of that repo to your account" and "cloning" means "copying that code to your environment so you can work on it".
+The best way to contribute is to fork the CodeIgniter4 repository, and "clone" that to your development area. That sounds like some jargon, but "forking" on GitHub means "making a copy of that repo to your account" and "cloning" means "copying that code to your environment so you can work on it".
 
 1. Set up Git (Windows, Mac & Linux)
-2. Go to the CodeIgniter repo
-3. Fork it
-4. Clone your CodeIgniter repo: git@github.com:<your-name>/CodeIgniter.git
-5. Checkout the "develop" branch At this point you are ready to start making changes. 
+2. Go to the CodeIgniter4 repo
+3. Fork it (to your Github account)
+4. Clone your CodeIgniter repo: git@github.com:\<your-name>/CodeIgniter4.git
+5. Create a new branch in your project for each set of changes you want to make.
 6. Fix existing bugs on the Issue tracker after taking a look to see nobody else is working on them.
-7. Commit the files
-8. Push your develop branch to your fork
+7. Commit the changed files in your contribution branch
+8. Push your contribution branch to your fork
 9. Send a pull request [http://help.github.com/send-pull-requests/](http://help.github.com/send-pull-requests/)
 
 The codebase maintainers will now be alerted about the change and at least one of the team will respond. If your change fails to meet the guidelines it will be bounced, or feedback will be provided to help you improve it.

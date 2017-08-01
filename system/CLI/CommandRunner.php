@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
+ * Copyright (c) 2014-2017 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,17 +29,17 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 3.0.0
  * @filesource
  */
-
 use CodeIgniter\Controller;
 
 class CommandRunner extends Controller
 {
+
 	/**
 	 * Stores the info about found Commands.
 	 *
@@ -53,8 +53,8 @@ class CommandRunner extends Controller
 	 * We map all un-routed CLI methods through this function
 	 * so we have the chance to look for a Command first.
 	 *
-	 * @param       $method
-	 * @param array ...$params
+	 * @param string $method
+	 * @param array  ...$params
 	 */
 	public function _remap($method, ...$params)
 	{
@@ -69,6 +69,12 @@ class CommandRunner extends Controller
 
 	//--------------------------------------------------------------------
 
+
+	/**
+	 * @param array $params
+	 *
+	 * @return mixed
+	 */
 	public function index(array $params)
 	{
 		$command = array_shift($params);
@@ -89,12 +95,15 @@ class CommandRunner extends Controller
 	 * Actually runs the command.
 	 *
 	 * @param string $command
+	 * @param array  $params
+	 *
+	 * @return mixed
 	 */
 	protected function runCommand(string $command, array $params)
 	{
-		if (! isset($this->commands[$command]))
+		if ( ! isset($this->commands[$command]))
 		{
-			CLI::error('Command \''.$command.'\' not found');
+			CLI::error('Command \'' . $command . '\' not found');
 			CLI::newLine();
 			return;
 		}
@@ -142,10 +151,10 @@ class CommandRunner extends Controller
 			if ($class->group !== null)
 			{
 				$this->commands[$class->name] = [
-					'class' => $className,
-					'file' => $file,
-					'group' => $class->group,
-					'description' => $class->description
+					'class'			 => $className,
+					'file'			 => $file,
+					'group'			 => $class->group,
+					'description'	 => $class->description
 				];
 			}
 

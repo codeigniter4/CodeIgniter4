@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
+ * Copyright (c) 2014-2017 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,15 +27,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package      CodeIgniter
+ * @author       CodeIgniter Dev Team
+ * @copyright    2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license      https://opensource.org/licenses/MIT	MIT License
+ * @link         https://codeigniter.com
+ * @since        Version 3.0.0
  * @filesource
  */
-
+use CodeIgniter\I18n\Time;
 use CodeIgniter\Pager\Pager;
 use CodeIgniter\Validation\ValidationInterface;
 use Config\App;
@@ -61,9 +61,11 @@ use CodeIgniter\Database\ConnectionInterface;
  *      - ensure validation is run against objects when saving items
  *
  * @package CodeIgniter
+ * @mixin BaseBuilder
  */
 class Model
 {
+
 	/**
 	 * Pager instance.
 	 * Populated after calling $this->paginate()
@@ -223,19 +225,37 @@ class Model
 	 */
 	protected $validation;
 
+	/**
+	 * Callbacks. Each array should contain the method
+	 * names (within the model) that should be called
+	 * when those events are triggered. With the exception
+	 * of 'afterFind', all methods are passed the same
+	 * items that are given to the update/insert method.
+	 * 'afterFind' will also include the results that were found.
+	 *
+	 * @var array
+	 */
+	protected $beforeInsert = [];
+	protected $afterInsert = [];
+	protected $beforeUpdate = [];
+	protected $afterUpdate = [];
+	protected $afterFind = [];
+	protected $afterDelete = [];
+
 	//--------------------------------------------------------------------
 
 	/**
 	 * Model constructor.
 	 *
 	 * @param ConnectionInterface $db
-	 * @param BaseConfig $config        Config/App()
+	 * @param BaseConfig          $config Config/App()
+	 * @param ValidationInterface $validation
 	 */
 	public function __construct(ConnectionInterface &$db = null, BaseConfig $config = null, ValidationInterface $validation = null)
 	{
 		if ($db instanceof ConnectionInterface)
 		{
-			$this->db =& $db;
+			$this->db = & $db;
 		}
 		else
 		{
@@ -250,7 +270,7 @@ class Model
 		$this->salt = $config->salt ?: '';
 		unset($config);
 
-		$this->tempReturnType     = $this->returnType;
+		$this->tempReturnType = $this->returnType;
 		$this->tempUseSoftDeletes = $this->useSoftDeletes;
 
 		if (is_null($validation))
@@ -261,7 +281,6 @@ class Model
 	}
 
 	//--------------------------------------------------------------------
-
 	//--------------------------------------------------------------------
 	// CRUD & FINDERS
 	//--------------------------------------------------------------------
@@ -286,21 +305,23 @@ class Model
 		if (is_array($id))
 		{
 			$row = $builder->whereIn($this->primaryKey, $id)
-				->get();
+					->get();
 			$row = $row->getResult($this->tempReturnType);
 		}
 		else
 		{
 			$row = $builder->where($this->primaryKey, $id)
-				->get();
+					->get();
 
 			$row = $row->getFirstRow($this->tempReturnType);
 		}
 
-		$this->tempReturnType     = $this->returnType;
+		$row = $this->trigger('afterFind', ['id' => $id, 'data' => $row]);
+
+		$this->tempReturnType = $this->returnType;
 		$this->tempUseSoftDeletes = $this->useSoftDeletes;
 
-		return $row;
+		return $row['data'];
 	}
 
 	//--------------------------------------------------------------------
@@ -308,8 +329,8 @@ class Model
 	/**
 	 * Extract a subset of data
 	 *
-	 * @param      $key
-	 * @param null $value
+	 * @param string|array $key
+	 * @param string|null  $value
 	 *
 	 * @return array|null The rows of data.
 	 */
@@ -323,14 +344,16 @@ class Model
 		}
 
 		$rows = $builder->where($key, $value)
-			->get();
+				->get();
 
 		$rows = $rows->getResult($this->tempReturnType);
 
-		$this->tempReturnType     = $this->returnType;
+		$rows = $this->trigger('afterFind', ['data' => $rows]);
+
+		$this->tempReturnType = $this->returnType;
 		$this->tempUseSoftDeletes = $this->useSoftDeletes;
 
-		return $rows;
+		return $rows['data'];
 	}
 
 	//--------------------------------------------------------------------
@@ -354,14 +377,16 @@ class Model
 		}
 
 		$row = $builder->limit($limit, $offset)
-			->get();
+				->get();
 
 		$row = $row->getResult($this->tempReturnType);
 
-		$this->tempReturnType     = $this->returnType;
+		$row = $this->trigger('afterFind', ['data' => $row, 'limit' => $limit, 'offset' => $offset]);
+
+		$this->tempReturnType = $this->returnType;
 		$this->tempUseSoftDeletes = $this->useSoftDeletes;
 
-		return $row;
+		return $row['data'];
 	}
 
 	//--------------------------------------------------------------------
@@ -389,13 +414,15 @@ class Model
 		}
 
 		$row = $builder->limit(1, 0)
-			->get();
+				->get();
 
 		$row = $row->getFirstRow($this->tempReturnType);
 
+		$row = $this->trigger('afterFind', ['data' => $row]);
+
 		$this->tempReturnType = $this->returnType;
 
-		return $row;
+		return $row['data'];
 	}
 
 	//--------------------------------------------------------------------
@@ -431,40 +458,40 @@ class Model
 	 * @see http://hashids.org/php/
 	 * @see http://raymorgan.net/web-development/how-to-obfuscate-integer-ids/
 	 *
-	 * @param $id
+	 * @param int|string $id
 	 *
-	 * @return mixed
+	 * @return string|false
 	 */
 	public function encodeID($id)
 	{
 		// Strings don't currently have a secure
 		// method, so simple base64 encoding will work for now.
-		if (! is_numeric($id))
+		if ( ! is_numeric($id))
 		{
-			return '=_'.base64_encode($id);
+			return '=_' . base64_encode($id);
 		}
 
-		$id = (int)$id;
+		$id = (int) $id;
 		if ($id < 1)
 		{
 			return false;
 		}
-		if ($id > pow(2,31))
+		if ($id > pow(2, 31))
 		{
 			return false;
 		}
 
-		$segment1 = $this->getHash($id,16);
-		$segment2 = $this->getHash($segment1,8);
-		$dec      = (int)base_convert($segment2,16,10);
-		$dec      = ($dec>$id)?$dec-$id:$dec+$id;
-		$segment2 = base_convert($dec,10,16);
-		$segment2 = str_pad($segment2,8,'0',STR_PAD_LEFT);
-		$segment3 = $this->getHash($segment1.$segment2,8);
-		$hex      = $segment1.$segment2.$segment3;
-		$bin      = pack('H*',$hex);
-		$oid      = base64_encode($bin);
-		$oid      = str_replace(array('+','/','='),array('$',':',''),$oid);
+		$segment1 = $this->getHash($id, 16);
+		$segment2 = $this->getHash($segment1, 8);
+		$dec = (int) base_convert($segment2, 16, 10);
+		$dec = ($dec > $id) ? $dec - $id : $dec + $id;
+		$segment2 = base_convert($dec, 10, 16);
+		$segment2 = str_pad($segment2, 8, '0', STR_PAD_LEFT);
+		$segment3 = $this->getHash($segment1 . $segment2, 8);
+		$hex = $segment1 . $segment2 . $segment3;
+		$bin = pack('H*', $hex);
+		$oid = base64_encode($bin);
+		$oid = str_replace(['+', '/', '='], ['$', ':', ''], $oid);
 
 		return $oid;
 	}
@@ -476,7 +503,7 @@ class Model
 	 *
 	 * @see http://raymorgan.net/web-development/how-to-obfuscate-integer-ids/
 	 *
-	 * @param $hash
+	 * @param string $hash
 	 *
 	 * @return mixed
 	 */
@@ -486,31 +513,34 @@ class Model
 		if (substr($hash, 0, 2) == '=_')
 		{
 			$hash = substr($hash, 2);
+
 			return base64_decode($hash);
 		}
 
-		if (! preg_match('/^[A-Z0-9\:\$]{21,23}$/i',$hash)) {
-			return 0;
-		}
-		$hash     = str_replace(array('$',':'),array('+','/'),$hash);
-		$bin      = base64_decode($hash);
-		$hex      = unpack('H*',$bin); $hex = $hex[1];
-		if (! preg_match('/^[0-9a-f]{32}$/',$hex))
+		if ( ! preg_match('/^[A-Z0-9\:\$]{21,23}$/i', $hash))
 		{
 			return 0;
 		}
-		$segment1 = substr($hex,0,16);
-		$segment2 = substr($hex,16,8);
-		$segment3 = substr($hex,24,8);
-		$exp2     = $this->getHash($segment1,8);
-		$exp3     = $this->getHash($segment1.$segment2,8);
+		$hash = str_replace(['$', ':'], ['+', '/'], $hash);
+		$bin = base64_decode($hash);
+		$hex = unpack('H*', $bin);
+		$hex = $hex[1];
+		if ( ! preg_match('/^[0-9a-f]{32}$/', $hex))
+		{
+			return 0;
+		}
+		$segment1 = substr($hex, 0, 16);
+		$segment2 = substr($hex, 16, 8);
+		$segment3 = substr($hex, 24, 8);
+		$exp2 = $this->getHash($segment1, 8);
+		$exp3 = $this->getHash($segment1 . $segment2, 8);
 		if ($segment3 != $exp3)
 		{
 			return 0;
 		}
-		$v1       = (int)base_convert($segment2,16,10);
-		$v2       = (int)base_convert($exp2,16,10);
-		$id       = abs($v1-$v2);
+		$v1 = (int) base_convert($segment2, 16, 10);
+		$v2 = (int) base_convert($exp2, 16, 10);
+		$id = abs($v1 - $v2);
 
 		return $id;
 	}
@@ -521,14 +551,14 @@ class Model
 	 * Used for our hashed IDs. Requires $salt to be defined
 	 * within the Config\App file.
 	 *
-	 * @param $str
-	 * @param $len
+	 * @param string $str
+	 * @param int    $len
 	 *
 	 * @return string
 	 */
 	protected function getHash($str, $len)
 	{
-		return substr(sha1($str.$this->salt),0,$len);
+		return substr(sha1($str . $this->salt), 0, $len);
 	}
 
 	//--------------------------------------------------------------------
@@ -540,7 +570,7 @@ class Model
 	 * you must ensure that the class will provide access to the class
 	 * variables, even if through a magic method.
 	 *
-	 * @param $data
+	 * @param array|object $data
 	 *
 	 * @return bool
 	 */
@@ -553,7 +583,7 @@ class Model
 		// them as an array.
 		if (is_object($data) && ! $data instanceof \stdClass)
 		{
-			$data = $this->classToArray($data);
+			$data = static::classToArray($data, $this->dateFormat);
 		}
 
 		if (is_object($data) && isset($data->{$this->primaryKey}))
@@ -587,14 +617,14 @@ class Model
 	 * Takes a class an returns an array of it's public and protected
 	 * properties as an array suitable for use in creates and updates.
 	 *
-	 * @param $data
+	 * @param string|object $data
 	 *
 	 * @return array
 	 */
-	protected function classToArray($data): array
+	public static function classToArray($data, string $dateFormat = 'datetime'): array
 	{
 		$mirror = new \ReflectionClass($data);
-		$props  = $mirror->getProperties(\ReflectionProperty::IS_PUBLIC | \ReflectionProperty::IS_PROTECTED);
+		$props = $mirror->getProperties(\ReflectionProperty::IS_PUBLIC | \ReflectionProperty::IS_PROTECTED);
 
 		$properties = [];
 
@@ -604,7 +634,29 @@ class Model
 		{
 			// Must make protected values accessible.
 			$prop->setAccessible(true);
-			$properties[$prop->getName()] = $prop->getValue($data);
+			$propName = $prop->getName();
+			$properties[$propName] = $prop->getValue($data);
+
+			// Convert any Time instances to appropriate $dateFormat
+			if ($properties[$propName] instanceof Time)
+			{
+				$converted = (string)$properties[$propName];
+
+				switch($dateFormat)
+				{
+					case 'datetime':
+						$converted = $properties[$propName]->format('Y-m-d H:i:s');
+						break;
+					case 'date':
+						$converted = $properties[$propName]->format('Y-m-d');
+						break;
+					case 'int':
+						$converted = $properties[$propName]->getTimestamp();
+						break;
+				}
+
+				$properties[$prop->getName()] = $converted;
+			}
 		}
 
 		return $properties;
@@ -616,18 +668,19 @@ class Model
 	 * Inserts data into the current table. If an object is provided,
 	 * it will attempt to convert it to an array.
 	 *
-	 * @param $data
+	 * @param array|object $data
+	 * @param bool         $returnID Whether insert ID should be returned or not.
 	 *
-	 * @return bool
+	 * @return int|string|bool
 	 */
-	public function insert($data)
+	public function insert($data, bool $returnID = true)
 	{
 		// If $data is using a custom class with public or protected
 		// properties representing the table elements, we need to grab
 		// them as an array.
 		if (is_object($data) && ! $data instanceof \stdClass)
 		{
-			$data = $this->classToArray($data);
+			$data = static::classToArray($data, $this->dateFormat);
 		}
 
 		// If it's still a stdClass, go ahead and convert to
@@ -635,7 +688,7 @@ class Model
 		// don't have to do special checks.
 		if (is_object($data))
 		{
-			$data = (array)$data;
+			$data = (array) $data;
 		}
 
 		// Validate data before saving.
@@ -647,14 +700,23 @@ class Model
 			}
 		}
 
+		// Save the original data so it can be passed to
+		// any Model Event callbacks and not stripped
+		// by doProtectFields
+		$originalData = $data;
+
 		// Must be called first so we don't
 		// strip out created_at values.
 		$data = $this->doProtectFields($data);
 
 		if ($this->useTimestamps && ! array_key_exists($this->createdField, $data))
 		{
-			$data[$this->createdField] = $this->setDate();
+			$date = $this->setDate();
+			$data[$this->createdField] = $date;
+			$data[$this->updatedField] = $date;
 		}
+
+		$data = $this->trigger('beforeInsert', ['data' => $data]);
 
 		if (empty($data))
 		{
@@ -662,13 +724,20 @@ class Model
 		}
 
 		// Must use the set() method to ensure objects get converted to arrays
-		$return = $this->builder()
-			->set($data)
-			->insert();
+		$result = $this->builder()
+				->set($data['data'])
+				->insert();
 
-		if (! $return) return $return;
+		$this->trigger('afterInsert', ['data' => $originalData, 'result' => $result]);
 
-		return $this->db->insertID();
+		// If insertion failed, get our of here
+		if ( ! $result)
+		{
+			return $result;
+		}
+
+		// otherwise return the insertID, if requested.
+		return $returnID ? $this->db->insertID() : $result;
 	}
 
 	//--------------------------------------------------------------------
@@ -677,8 +746,8 @@ class Model
 	 * Updates a single record in $this->table. If an object is provided,
 	 * it will attempt to convert it into an array.
 	 *
-	 * @param $id
-	 * @param $data
+	 * @param int|string   $id
+	 * @param array|object $data
 	 *
 	 * @return bool
 	 */
@@ -689,7 +758,7 @@ class Model
 		// them as an array.
 		if (is_object($data) && ! $data instanceof \stdClass)
 		{
-			$data = $this->classToArray($data);
+			$data = static::classToArray($data, $this->dateFormat);
 		}
 
 		// If it's still a stdClass, go ahead and convert to
@@ -697,7 +766,7 @@ class Model
 		// don't have to do special checks.
 		if (is_object($data))
 		{
-			$data = (array)$data;
+			$data = (array) $data;
 		}
 
 		// Validate data before saving.
@@ -709,6 +778,11 @@ class Model
 			}
 		}
 
+		// Save the original data so it can be passed to
+		// any Model Event callbacks and not stripped
+		// by doProtectFields
+		$originalData = $data;
+
 		// Must be called first so we don't
 		// strip out updated_at values.
 		$data = $this->doProtectFields($data);
@@ -718,16 +792,22 @@ class Model
 			$data[$this->updatedField] = $this->setDate();
 		}
 
+		$data = $this->trigger('beforeUpdate', ['id' => $id, 'data' => $data]);
+
 		if (empty($data))
 		{
 			throw new \InvalidArgumentException('No data to update.');
 		}
 
 		// Must use the set() method to ensure objects get converted to arrays
-		return $this->builder()
-			->where($this->primaryKey, $id)
-			->set($data)
-			->update();
+		$result = $this->builder()
+				->where($this->primaryKey, $id)
+				->set($data['data'])
+				->update();
+
+		$this->trigger('afterUpdate', ['id' => $id, 'data' => $originalData, 'result' => $result]);
+
+		return $result;
 	}
 
 	//--------------------------------------------------------------------
@@ -746,14 +826,20 @@ class Model
 	{
 		if ($this->useSoftDeletes && ! $purge)
 		{
-			return $this->builder()
-				->where($this->primaryKey, $id)
-				->update(['deleted' => 1]);
+			$result = $this->builder()
+					->where($this->primaryKey, $id)
+					->update(['deleted' => 1]);
+		}
+		else
+		{
+			$result = $this->builder()
+					->where($this->primaryKey, $id)
+					->delete();
 		}
 
-		return $this->builder()
-			->where($this->primaryKey, $id)
-			->delete();
+		$this->trigger('afterDelete', ['id' => $id, 'purge' => $purge, 'result' => $result, 'data' => null]);
+
+		return $result;
 	}
 
 	//--------------------------------------------------------------------
@@ -762,9 +848,9 @@ class Model
 	 * Deletes multiple records from $this->table where the specified
 	 * key/value matches.
 	 *
-	 * @param      $key
-	 * @param null $value
-	 * @param bool $purge Allows overriding the soft deletes setting.
+	 * @param string|array $key
+	 * @param string|null  $value
+	 * @param bool         $purge Allows overriding the soft deletes setting.
 	 *
 	 * @return mixed
 	 * @throws DatabaseException
@@ -779,14 +865,20 @@ class Model
 
 		if ($this->useSoftDeletes && ! $purge)
 		{
-			return $this->builder()
-				->where($key, $value)
-				->update(['deleted' => 1]);
+			$result = $this->builder()
+					->where($key, $value)
+					->update(['deleted' => 1]);
+		}
+		else
+		{
+			$result = $this->builder()
+					->where($key, $value)
+					->delete();
 		}
 
-		return $this->builder()
-			->where($key, $value)
-			->delete();
+		$this->trigger('afterDelete', ['key' => $key, 'value' => $value, 'purge' => $purge, 'result' => $result, 'data' => null]);
+
+		return $result;
 	}
 
 	//--------------------------------------------------------------------
@@ -806,8 +898,8 @@ class Model
 		}
 
 		return $this->builder()
-			->where('deleted', 1)
-			->delete();
+						->where('deleted', 1)
+						->delete();
 	}
 
 	//--------------------------------------------------------------------
@@ -818,7 +910,7 @@ class Model
 	 *
 	 * @param bool $val
 	 *
-	 * @return $this
+	 * @return Model
 	 */
 	public function withDeleted($val = true)
 	{
@@ -833,26 +925,27 @@ class Model
 	 * Works with the find* methods to return only the rows that
 	 * have been deleted.
 	 *
-	 * @return $this
+	 * @return Model
 	 */
 	public function onlyDeleted()
 	{
 		$this->tempUseSoftDeletes = false;
 
 		$this->builder()
-			->where('deleted', 1);
+				->where('deleted', 1);
 
 		return $this;
 	}
 
 	//--------------------------------------------------------------------
-
 	//--------------------------------------------------------------------
 	// Utility
 	//--------------------------------------------------------------------
 
 	/**
 	 * Sets the return type of the results to be as an associative array.
+	 *
+	 * @return Model
 	 */
 	public function asArray()
 	{
@@ -871,7 +964,7 @@ class Model
 	 *
 	 * @param string $class
 	 *
-	 * @return $this
+	 * @return Model
 	 */
 	public function asObject(string $class = 'object')
 	{
@@ -895,7 +988,7 @@ class Model
 	public function chunk($size = 100, \Closure $userFunc)
 	{
 		$total = $this->builder()
-			->countAllResults(false);
+				->countAllResults(false);
 
 		$offset = 0;
 
@@ -945,7 +1038,7 @@ class Model
 	public function paginate(int $perPage = 20, string $group = 'default')
 	{
 		// Get the necessary parts.
-		$page = $_GET['page'] ?? 1;
+		$page = isset($_GET['page']) && $_GET['page'] > 1 ? $_GET['page'] : 1;
 
 		$total = $this->countAllResults(false);
 
@@ -967,7 +1060,7 @@ class Model
 	 *
 	 * @param bool $protect
 	 *
-	 * @return $this
+	 * @return Model
 	 */
 	public function protect(bool $protect = true)
 	{
@@ -978,13 +1071,12 @@ class Model
 
 	//--------------------------------------------------------------------
 
-
 	/**
 	 * Provides a shared instance of the Query Builder.
 	 *
 	 * @param string $table
 	 *
-	 * @return BaseBuilder|Database\QueryBuilder
+	 * @return BaseBuilder
 	 */
 	protected function builder(string $table = null)
 	{
@@ -1015,18 +1107,21 @@ class Model
 	 * Used by insert() and update() to protect against mass assignment
 	 * vulnerabilities.
 	 *
-	 * @param $data
+	 * @param array $data
 	 *
-	 * @return mixed
+	 * @return array
 	 * @throws DatabaseException
 	 */
 	protected function doProtectFields($data)
 	{
-		if ($this->protectFields === false) return $data;
+		if ($this->protectFields === false)
+		{
+			return $data;
+		}
 
 		if (empty($this->allowedFields))
 		{
-			throw new DatabaseException('No Allowed fields specified for model: '. get_class($this));
+			throw new DatabaseException('No Allowed fields specified for model: ' . get_class($this));
 		}
 
 		foreach ($data as $key => $val)
@@ -1059,7 +1154,7 @@ class Model
 	 */
 	protected function setDate($userData = null)
 	{
-		$currentDate = is_numeric($userData) ? (int)$userData : time();
+		$currentDate = is_numeric($userData) ? (int) $userData : time();
 
 		switch ($this->dateFormat)
 		{
@@ -1082,7 +1177,7 @@ class Model
 	 *
 	 * @param string $table
 	 *
-	 * @return $this
+	 * @return Model
 	 */
 	public function setTable(string $table)
 	{
@@ -1098,7 +1193,7 @@ class Model
 	 * it will first check for errors there, otherwise will try to
 	 * grab the last error from the Database connection.
 	 *
-	 * @param bool $forceDB   Always grab the db error, not validation
+	 * @param bool $forceDB Always grab the db error, not validation
 	 *
 	 * @return array|null
 	 */
@@ -1109,7 +1204,7 @@ class Model
 		{
 			$errors = $this->validation->getErrors();
 
-			if (! empty($errors))
+			if ( ! empty($errors))
 			{
 				return $errors;
 			}
@@ -1122,7 +1217,6 @@ class Model
 	}
 
 	//--------------------------------------------------------------------
-
 	//--------------------------------------------------------------------
 	// Validation
 	//--------------------------------------------------------------------
@@ -1132,7 +1226,7 @@ class Model
 	 *
 	 * @param bool $skip
 	 *
-	 * @return $this
+	 * @return Model
 	 */
 	public function skipValidation(bool $skip = true)
 	{
@@ -1162,7 +1256,7 @@ class Model
 		// but validation requires array, so cast away.
 		if (is_object($data))
 		{
-			$data = (array)$data;
+			$data = (array) $data;
 		}
 
 		// ValidationRules can be either a string, which is the group name,
@@ -1177,12 +1271,51 @@ class Model
 			$valid = $this->validation->run($data);
 		}
 
-		return (bool)$valid;
+		return (bool) $valid;
 	}
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * A simple event trigger for Model Events that allows additional
+	 * data manipulation within the model. Specifically intended for
+	 * usage by child models this can be used to format data,
+	 * save/load related classes, etc.
+	 *
+	 * It is the responsibility of the callback methods to return
+	 * the data itself.
+	 *
+	 * Each $data array MUST have a 'data' key with the relevant
+	 * data for callback methods (like an array of key/value pairs to insert
+	 * or update, an array of results, etc)
+	 *
+	 * @param string $event
+	 * @param array  $data
+	 *
+	 * @return mixed
+	 */
+	protected function trigger(string $event, array $data)
+	{
+		// Ensure it's a valid event
+		if ( ! isset($this->{$event}) || empty($this->{$event}))
+		{
+			return $data;
+		}
 
+		foreach ($this->{$event} as $callback)
+		{
+			if ( ! method_exists($this, $callback))
+			{
+				throw new \BadMethodCallException(lang('Database.invalidEvent', [$callback]));
+			}
+
+			$data = $this->{$callback}($data);
+		}
+
+		return $data;
+	}
+
+	//--------------------------------------------------------------------
 	//--------------------------------------------------------------------
 	// Magic
 	//--------------------------------------------------------------------
@@ -1217,7 +1350,7 @@ class Model
 	 * @param string $name
 	 * @param array  $params
 	 *
-	 * @return $this|null
+	 * @return Model|null
 	 */
 	public function __call($name, array $params)
 	{
@@ -1232,14 +1365,14 @@ class Model
 			$result = call_user_func_array([$this->builder(), $name], $params);
 		}
 
-		// Don't return the builder object, since
-		// that will interrupt the usability flow
+		// Don't return the builder object unless specifically requested
+		//, since that will interrupt the usability flow
 		// and break intermingling of model and builder methods.
-		if (empty($result))
+		if ($name !== 'builder' && empty($result))
 		{
 			return $result;
 		}
-		if ( ! $result instanceof BaseBuilder)
+		if ($name !== 'builder' && ! $result instanceof BaseBuilder)
 		{
 			return $result;
 		}
@@ -1248,5 +1381,4 @@ class Model
 	}
 
 	//--------------------------------------------------------------------
-
 }

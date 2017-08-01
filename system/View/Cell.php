@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
+ * Copyright (c) 2014-2017 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,13 +29,12 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 3.0.0
  * @filesource
  */
-
 use CodeIgniter\Cache\CacheInterface;
 
 /**
@@ -53,20 +52,21 @@ use CodeIgniter\Cache\CacheInterface;
  * Parameters are matched up with the callback method's arguments of the same name:
  *
  * 		class Class {
- *			function method($limit, $sort)
+ * 			function method($limit, $sort)
  * 		}
  *
  * Alternatively, the params will be passed into the callback method as a simple array
  * if matching params are not found.
  *
  * 		class Class {
- *			function method(array $params=null)
+ * 			function method(array $params=null)
  * 		}
  *
  * @package CodeIgniter\View
  */
 class Cell
 {
+
 	/**
 	 * Instance of the current Cache Instance
 	 *
@@ -76,6 +76,12 @@ class Cell
 
 	//--------------------------------------------------------------------
 
+
+	/**
+	 * Cell constructor.
+	 *
+	 * @param \CodeIgniter\Cache\CacheInterface $cache
+	 */
 	public function __construct(CacheInterface $cache)
 	{
 		$this->cache = $cache;
@@ -96,11 +102,9 @@ class Cell
 		list($class, $method) = $this->determineClass($library);
 
 		// Is it cached?
-		$cacheName = ! empty($cacheName)
-			? $cacheName
-			: $class.$method.md5(serialize($params));
+		$cacheName = ! empty($cacheName) ? $cacheName : $class . $method . md5(serialize($params));
 
-		if (! empty($this->cache) && $output = $this->cache->get($cacheName))
+		if ( ! empty($this->cache) && $output = $this->cache->get($cacheName))
 		{
 			return $output;
 		}
@@ -108,7 +112,7 @@ class Cell
 		// Not cached - so grab it...
 		$instance = new $class();
 
-		if (! method_exists($instance, $method))
+		if ( ! method_exists($instance, $method))
 		{
 			throw new \InvalidArgumentException("{$class}::{$method} is not a valid method.");
 		}
@@ -116,9 +120,9 @@ class Cell
 		// Try to match up the parameter list we were provided
 		// with the parameter name in the callback method.
 		$paramArray = $this->prepareParams($params);
-		$refMethod  = new \ReflectionMethod($instance, $method);
+		$refMethod = new \ReflectionMethod($instance, $method);
 		$paramCount = $refMethod->getNumberOfParameters();
-		$refParams  = $refMethod->getParameters();
+		$refParams = $refMethod->getParameters();
 
 		if ($paramCount === 0)
 		{
@@ -130,8 +134,7 @@ class Cell
 			$output = $instance->{$method}();
 		}
 		elseif (
-			($paramCount === 1)
-			&& ( (! array_key_exists($refParams[0]->name, $paramArray)) || (array_key_exists($refParams[0]->name, $paramArray) && count($paramArray) !== 1) )
+				($paramCount === 1) && ( ( ! array_key_exists($refParams[0]->name, $paramArray)) || (array_key_exists($refParams[0]->name, $paramArray) && count($paramArray) !== 1) )
 		)
 		{
 			$output = $instance->{$method}($paramArray);
@@ -141,7 +144,7 @@ class Cell
 			$fireArgs = [];
 			$method_params = [];
 
-			foreach($refParams as $arg)
+			foreach ($refParams as $arg)
 			{
 				$method_params[$arg->name] = true;
 				if (array_key_exists($arg->name, $paramArray))
@@ -152,7 +155,7 @@ class Cell
 
 			foreach ($paramArray as $key => $val)
 			{
-				if (! isset($method_params[$key]))
+				if ( ! isset($method_params[$key]))
 				{
 					throw new \InvalidArgumentException("{$key} is not a valid param name.");
 				}
@@ -161,7 +164,7 @@ class Cell
 			$output = call_user_func_array([$instance, $method], $fireArgs);
 		}
 		// Can we cache it?
-		if (! empty($this->cache) && $ttl !== 0)
+		if ( ! empty($this->cache) && $ttl !== 0)
 		{
 			$this->cache->save($cacheName, $output, $ttl);
 		}
@@ -181,7 +184,7 @@ class Cell
 	 */
 	public function prepareParams($params)
 	{
-		if (empty($params) || (! is_string($params) && ! is_array($params)))
+		if (empty($params) || ( ! is_string($params) && ! is_array($params)))
 		{
 			return [];
 		}
@@ -189,7 +192,7 @@ class Cell
 		if (is_string($params))
 		{
 			$new_params = [];
-			$separator  = ' ';
+			$separator = ' ';
 
 			if (strpos($params, ',') !== false)
 			{
@@ -241,9 +244,9 @@ class Cell
 			throw new \InvalidArgumentException('No view cell class provided.');
 		}
 
-		if (! class_exists($class, true))
+		if ( ! class_exists($class, true))
 		{
-			throw new \InvalidArgumentException('Unable to locate view cell class: '.$class.'.');
+			throw new \InvalidArgumentException('Unable to locate view cell class: ' . $class . '.');
 		}
 
 		if (empty($method))

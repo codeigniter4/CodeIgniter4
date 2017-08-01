@@ -54,7 +54,7 @@ class MessageTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	public function testCaseInsensitveGetHeader()
+	public function testCaseInsensitiveGetHeader()
 	{
 		$this->message->setHeader('Host', 'daisyduke.com');
 

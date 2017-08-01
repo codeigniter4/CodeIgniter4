@@ -178,9 +178,9 @@ you need it.
 You can simply assign data to the ``$_SESSION`` array, as with any other
 variable. Or as a property of ``$session``.
 
-Alternatively, the old method of assigning it as "userdata" is also
-available. That however passing an array containing your new data to the
-``set_userdata()`` method::
+userdata method is deprecated.
+ That however passing an array containing your new sessiondata to the
+``set()`` method::
 
 	$session->set($array);
 
@@ -193,9 +193,9 @@ an example::
 		'logged_in' => TRUE
 	);
 
-	$session->set_userdata($newdata);
+	$session->set($newdata);
 
-If you want to add userdata one value at a time, ``set()`` also
+If you want to add sessiondata one value at a time, ``set()`` also
 supports this syntax::
 
 	$session->set('some_name', 'some_value');
@@ -574,7 +574,7 @@ And then of course, create the database table ...
 For MySQL::
 
 	CREATE TABLE IF NOT EXISTS `ci_sessions` (
-		`id` varchar(40) NOT NULL,
+		`id` varchar(128) NOT NULL,
 		`ip_address` varchar(45) NOT NULL,
 		`timestamp` int(10) unsigned DEFAULT 0 NOT NULL,
 		`data` blob NOT NULL,
@@ -584,7 +584,7 @@ For MySQL::
 For PostgreSQL::
 
 	CREATE TABLE "ci_sessions" (
-		"id" varchar(40) NOT NULL,
+		"id" varchar(128) NOT NULL,
 		"ip_address" varchar(45) NOT NULL,
 		"timestamp" bigint DEFAULT 0 NOT NULL,
 		"data" text DEFAULT '' NOT NULL

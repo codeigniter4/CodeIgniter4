@@ -1,5 +1,4 @@
 <?php
-
 /**
  * CodeIgniter
  *
@@ -7,7 +6,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
+ * Copyright (c) 2014-2017 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +28,7 @@
  *
  * @package    CodeIgniter
  * @author     CodeIgniter Dev Team
- * @copyright  Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @copyright  2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT    MIT License
  * @link       https://codeigniter.com
  * @since      Version 3.0.0
@@ -63,11 +62,11 @@ if ( ! function_exists('site_url'))
 		// Add index page, if so configured
 		if ( ! empty($config->indexPage))
 		{
-			$path = rtrim($base, '/').'/'.rtrim($config->indexPage, '/').'/'.$path;
+			$path = rtrim($base, '/') . '/' . rtrim($config->indexPage, '/') . '/' . $path;
 		}
 		else
 		{
-			$path = rtrim($base, '/').'/'.$path;
+			$path = rtrim($base, '/') . '/' . $path;
 		}
 
 		$url = new \CodeIgniter\HTTP\URI($path);
@@ -108,7 +107,7 @@ if ( ! function_exists('base_url'))
 		// no way of knowing the intent...
 		$config = \CodeIgniter\Services::request()->config;
 
-		if (! empty($config->baseURL))
+		if ( ! empty($config->baseURL))
 		{
 			$url = new \CodeIgniter\HTTP\URI($config->baseURL);
 		}
@@ -149,7 +148,7 @@ if ( ! function_exists('current_url'))
 	 *
 	 * @param boolean $returnObject True to return an object instead of a strong
 	 *
-	 * @return string|URI
+	 * @return string|\CodeIgniter\HTTP\URI
 	 */
 	function current_url(bool $returnObject = false)
 	{
@@ -160,34 +159,31 @@ if ( ! function_exists('current_url'))
 
 //--------------------------------------------------------------------
 
-if (! function_exists('previous_url'))
+if ( ! function_exists('previous_url'))
 {
-    /**
-     * Returns the previous URL the current visitor was on. For security reasons
-     * we first check in a saved session variable, if it exists, and use that.
-     * If that's not available, however, we'll use a sanitized url from $_SERVER['HTTP_REFERER']
-     * which can be set by the user so is untrusted and not set by certain browsers/servers.
-     *
-     * @param bool $returnObject
-     *
-     * @return \CodeIgniter\HTTP\URI|mixed|string
-     */
-    function previous_url(bool $returnObject = false)
-    {
-        // Grab from the session first, if we have it,
-        // since it's more reliable and safer.
-        // Otherwise, grab a sanitized version from $_SERVER.
-        $referer = $_SESSION['_ci_previous_url']
-                   ?? \CodeIgniter\Services::request()->getServer('HTTP_REFERER', FILTER_SANITIZE_URL);
 
-        $referer = empty($referer)
-            ? site_url('/')
-            : $referer;
+	/**
+	 * Returns the previous URL the current visitor was on. For security reasons
+	 * we first check in a saved session variable, if it exists, and use that.
+	 * If that's not available, however, we'll use a sanitized url from $_SERVER['HTTP_REFERER']
+	 * which can be set by the user so is untrusted and not set by certain browsers/servers.
+	 *
+	 * @param bool $returnObject
+	 *
+	 * @return \CodeIgniter\HTTP\URI|mixed|string
+	 */
+	function previous_url(bool $returnObject = false)
+	{
+		// Grab from the session first, if we have it,
+		// since it's more reliable and safer.
+		// Otherwise, grab a sanitized version from $_SERVER.
+		$referer = $_SESSION['_ci_previous_url'] ?? \CodeIgniter\Services::request()->getServer('HTTP_REFERER', FILTER_SANITIZE_URL);
 
-        return $returnObject
-            ? new \CodeIgniter\HTTP\URI($referer)
-            : $referer;
-    }
+		$referer = empty($referer) ? site_url('/') : $referer;
+
+		return $returnObject ? new \CodeIgniter\HTTP\URI($referer) : $referer;
+	}
+
 }
 
 //--------------------------------------------------------------------
@@ -242,10 +238,11 @@ if ( ! function_exists('anchor'))
 	 *
 	 * Creates an anchor based on the local URL.
 	 *
-	 * @param  string    the URL
-	 * @param  string    the link title
-	 * @param  mixed    any attributes
-	 * @param  \Config\App|null         $altConfig Alternate configuration to use
+	 * @param  string           $uri        The URL
+	 * @param  string           $title      The link title
+	 * @param  mixed            $attributes Any attributes
+	 * @param  \Config\App|null $altConfig  Alternate configuration to use
+	 *
 	 * @return string
 	 */
 	function anchor($uri = '', $title = '', $attributes = '', \Config\App $altConfig = null): string
@@ -269,7 +266,7 @@ if ( ! function_exists('anchor'))
 			$attributes = stringify_attributes($attributes);
 		}
 
-		return '<a href="'.$site_url.'"'.$attributes.'>'.$title.'</a>';
+		return '<a href="' . $site_url . '"' . $attributes . '>' . $title . '</a>';
 	}
 
 }
@@ -285,10 +282,11 @@ if ( ! function_exists('anchor_popup'))
 	 * Creates an anchor based on the local URL. The link
 	 * opens a new window based on the attributes specified.
 	 *
-	 * @param  string    the URL
-	 * @param  string    the link title
-	 * @param  mixed    any attributes
-	 * @param  \Config\App|null         $altConfig Alternate configuration to use
+	 * @param  string           $uri        the URL
+	 * @param  string           $title      the link title
+	 * @param  mixed            $attributes any attributes
+	 * @param  \Config\App|null $altConfig  Alternate configuration to use
+	 *
 	 * @return string
 	 */
 	function anchor_popup($uri = '', $title = '', $attributes = false, \Config\App $altConfig = null): string
@@ -307,12 +305,12 @@ if ( ! function_exists('anchor_popup'))
 
 		if ($attributes === false)
 		{
-			return '<a href="'.$site_url.'" onclick="window.open(\''.$site_url."', '_blank'); return false;\">".$title.'</a>';
+			return '<a href="' . $site_url . '" onclick="window.open(\'' . $site_url . "', '_blank'); return false;\">" . $title . '</a>';
 		}
 
 		if ( ! is_array($attributes))
 		{
-			$attributes = array ($attributes);
+			$attributes = array($attributes);
 
 			// Ref: http://www.w3schools.com/jsref/met_win_open.asp
 			$window_name = '_blank';
@@ -327,8 +325,7 @@ if ( ! function_exists('anchor_popup'))
 			$window_name = '_blank';
 		}
 
-		foreach (array ('width' => '800', 'height' => '600', 'scrollbars' => 'yes', 'menubar' => 'no', 'status' => 'yes', 'resizable' => 'yes', 'screenx' => '0', 'screeny' => '0') as
-				$key => $val)
+		foreach (array('width' => '800', 'height' => '600', 'scrollbars' => 'yes', 'menubar' => 'no', 'status' => 'yes', 'resizable' => 'yes', 'screenx' => '0', 'screeny' => '0') as $key => $val)
 		{
 			$atts[$key] = isset($attributes[$key]) ? $attributes[$key] : $val;
 			unset($attributes[$key]);
@@ -336,9 +333,9 @@ if ( ! function_exists('anchor_popup'))
 
 		$attributes = stringify_attributes($attributes);
 
-		return '<a href="'.$site_url
-			.'" onclick="window.open(\''.$site_url."', '".$window_name."', '".stringify_attributes($atts, true)."'); return false;\""
-			.$attributes.'>'.$title.'</a>';
+		return '<a href="' . $site_url
+				. '" onclick="window.open(\'' . $site_url . "', '" . $window_name . "', '" . stringify_attributes($atts, true) . "'); return false;\""
+				. $attributes . '>' . $title . '</a>';
 	}
 
 }
@@ -351,9 +348,10 @@ if ( ! function_exists('mailto'))
 	/**
 	 * Mailto Link
 	 *
-	 * @param  string    the email address
-	 * @param  string    the link title
-	 * @param  mixed    any attributes
+	 * @param  string $email      the email address
+	 * @param  string $title      the link title
+	 * @param  mixed  $attributes any attributes
+	 *
 	 * @return string
 	 */
 	function mailto($email, $title = '', $attributes = ''): string
@@ -365,7 +363,7 @@ if ( ! function_exists('mailto'))
 			$title = $email;
 		}
 
-		return '<a href="mailto:'.$email.'"'.stringify_attributes($attributes).'>'.$title.'</a>';
+		return '<a href="mailto:' . $email . '"' . stringify_attributes($attributes) . '>' . $title . '</a>';
 	}
 
 }
@@ -380,9 +378,10 @@ if ( ! function_exists('safe_mailto'))
 	 *
 	 * Create a spam-protected mailto link written in Javascript
 	 *
-	 * @param  string    the email address
-	 * @param  string    the link title
-	 * @param  mixed    any attributes
+	 * @param  string $email      the email address
+	 * @param  string $title      the link title
+	 * @param  mixed  $attributes any attributes
+	 *
 	 * @return string
 	 */
 	function safe_mailto($email, $title = '', $attributes = ''): string
@@ -396,9 +395,9 @@ if ( ! function_exists('safe_mailto'))
 
 		$x = str_split('<a href="mailto:', 1);
 
-		for ($i = 0, $l = strlen($email); $i < $l; $i ++ )
+		for ($i = 0, $l = strlen($email); $i < $l; $i ++)
 		{
-			$x[] = '|'.ord($email[$i]);
+			$x[] = '|' . ord($email[$i]);
 		}
 
 		$x[] = '"';
@@ -409,17 +408,17 @@ if ( ! function_exists('safe_mailto'))
 			{
 				foreach ($attributes as $key => $val)
 				{
-					$x[] = ' '.$key.'="';
-					for ($i = 0, $l = strlen($val); $i < $l; $i ++ )
+					$x[] = ' ' . $key . '="';
+					for ($i = 0, $l = strlen($val); $i < $l; $i ++)
 					{
-						$x[] = '|'.ord($val[$i]);
+						$x[] = '|' . ord($val[$i]);
 					}
 					$x[] = '"';
 				}
 			}
 			else
 			{
-				for ($i = 0, $l = strlen($attributes); $i < $l; $i ++ )
+				for ($i = 0, $l = strlen($attributes); $i < $l; $i ++)
 				{
 					$x[] = $attributes[$i];
 				}
@@ -428,14 +427,14 @@ if ( ! function_exists('safe_mailto'))
 
 		$x[] = '>';
 
-		$temp = array ();
-		for ($i = 0, $l = strlen($title); $i < $l; $i ++ )
+		$temp = array();
+		for ($i = 0, $l = strlen($title); $i < $l; $i ++)
 		{
 			$ordinal = ord($title[$i]);
 
 			if ($ordinal < 128)
 			{
-				$x[] = '|'.$ordinal;
+				$x[] = '|' . $ordinal;
 			}
 			else
 			{
@@ -448,9 +447,9 @@ if ( ! function_exists('safe_mailto'))
 				if (count($temp) === $count)
 				{
 					$number = ($count === 3) ? (($temp[0] % 16) * 4096) + (($temp[1] % 64) * 64) + ($temp[2] % 64) : (($temp[0] % 32) * 64) + ($temp[1] % 64);
-					$x[] = '|'.$number;
+					$x[] = '|' . $number;
 					$count = 1;
-					$temp = array ();
+					$temp = array();
 				}
 			}
 		}
@@ -464,20 +463,20 @@ if ( ! function_exists('safe_mailto'))
 
 		// improve obfuscation by eliminating newlines & whitespace
 		$output = "<script type=\"text/javascript\">"
-			."//<![CDATA["
-			."var l=new Array();";
+				. "//<![CDATA["
+				. "var l=new Array();";
 
-		for ($i = 0, $c = count($x); $i < $c; $i ++ )
+		for ($i = 0, $c = count($x); $i < $c; $i ++)
 		{
-			$output .= "l[".$i."] = '".$x[$i]."';";
+			$output .= "l[" . $i . "] = '" . $x[$i] . "';";
 		}
 
 		$output .= "for (var i = l.length-1; i >= 0; i=i-1) {"
-			."if (l[i].substring(0, 1) === '|') document.write(\"&#\"+unescape(l[i].substring(1))+\";\");"
-			."else document.write(unescape(l[i]));"
-			."}"
-			."//]]>"
-			.'</script>';
+				. "if (l[i].substring(0, 1) === '|') document.write(\"&#\"+unescape(l[i].substring(1))+\";\");"
+				. "else document.write(unescape(l[i]));"
+				. "}"
+				. "//]]>"
+				. '</script>';
 
 		return $output;
 	}
@@ -497,9 +496,10 @@ if ( ! function_exists('auto_link'))
 	 * URLs or emails that end in a period. We'll strip these
 	 * off and add them after the link.
 	 *
-	 * @param  string    the string
-	 * @param  string    the type: email, url, or both
-	 * @param  bool    whether to create pop-up links
+	 * @param  string $str   the string
+	 * @param  string $type  the type: email, url, or both
+	 * @param  bool   $popup whether to create pop-up links
+	 *
 	 * @return string
 	 */
 	function auto_link($str, $type = 'both', $popup = false): string
@@ -520,7 +520,7 @@ if ( ! function_exists('auto_link'))
 				//
                 // With PREG_OFFSET_CAPTURE, both of the above is an array,
 				// where the actual value is held in [0] and its offset at the [1] index.
-				$a = '<a href="'.(strpos($match[1][0], '/') ? '' : 'http://').$match[0][0].'"'.$target.'>'.$match[0][0].'</a>';
+				$a = '<a href="' . (strpos($match[1][0], '/') ? '' : 'http://') . $match[0][0] . '"' . $target . '>' . $match[0][0] . '</a>';
 				$str = substr_replace($str, $a, $match[0][1], strlen($match[0][0]));
 			}
 		}
@@ -567,7 +567,7 @@ if ( ! function_exists('prep_url'))
 
 		if ( ! $url OR ! isset($url['scheme']))
 		{
-			return 'http://'.$str;
+			return 'http://' . $str;
 		}
 
 		return $str;
@@ -589,36 +589,26 @@ if ( ! function_exists('url_title'))
 	 *
 	 * @todo   Remove old 'dash' and 'underscore' usage in 3.1+.
 	 * @param  string $str       Input string
-	 * @param  string $separator Word separator (usually '-' or '_') (usually '-' or '_')
-	 *             (usually '-' or '_')
+	 * @param  string $separator Word separator (usually '-' or '_')
 	 * @param  bool   $lowercase Whether to transform the output string to lowercase
 	 * @return string
 	 */
 	function url_title($str, $separator = '-', $lowercase = false): string
 	{
-		if ($separator === 'dash')
-		{
-			$separator = '-';
-		}
-		elseif ($separator === 'underscore')
-		{
-			$separator = '_';
-		}
-
 		$q_separator = preg_quote($separator, '#');
 
-		$trans = array (
-			'&.+?;' => '',
-			'[^\w\d _-]' => '',
-			'\s+' => $separator,
-			'('.$q_separator.')+' => $separator
+		$trans = array(
+			'&.+?;'					 => '',
+			'[^\w\d _-]'			 => '',
+			'\s+'					 => $separator,
+			'(' . $q_separator . ')+'	 => $separator
 		);
 
 		$str = strip_tags($str);
 		foreach ($trans as $key => $val)
 		{
 			//			$str = preg_replace('#'.$key.'#i'.( UTF8_ENABLED ? 'u' : ''), $val, $str);
-			$str = preg_replace('#'.$key.'#iu', $val, $str);
+			$str = preg_replace('#' . $key . '#iu', $val, $str);
 		}
 
 		if ($lowercase === true)

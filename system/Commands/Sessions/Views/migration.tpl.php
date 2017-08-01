@@ -1,4 +1,4 @@
-@php
+@php namespace <?= $namespace ?>\Database\Migrations;
 
 /**
  * CodeIgniter
@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
+ * Copyright (c) 2014-2017 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,7 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 3.0.0
@@ -38,23 +38,44 @@
 
 use CodeIgniter\Database\Migration;
 
-class Migration_create_sessions_table extends Migration
+class Migration_create_<?= $tableName ?>_table extends Migration
 {
+<?php if (isset($DBGroup)) : ?>
+	protected $DBGroup = '<?= $DBGroup ?>';
+<?php endif ?>
+
 	public function up()
 	{
 		$this->forge->addField([
-				'id'         => ['type' => 'INT', 'constraint' => 9, 'unsigned' => true, 'auto_increment' => true],
-				'ip_address' => ['type' => 'VARCHAR', 'constraint' => 45, 'null' => false],
-				'timestamp'  => ['type' => 'INT', 'constraint' => 10, 'unsigned' => true, 'null' => false, 'default' => 0],
-				'data'       => ['type' => 'text', 'null' => false, 'default' => ''],
+			'id'         => [
+				'type'       => 'VARCHAR',
+				'constraint' => 128,
+				'null'       => false
+			],
+			'ip_address' => [
+				'type'       => 'VARCHAR',
+				'constraint' => 45,
+				'null'       => false
+			],
+			'timestamp'  => [
+				'type'       => 'INT',
+				'constraint' => 10,
+				'unsigned'   => true,
+				'null'       => false,
+				'default'    => 0
+			],
+			'data'       => [
+				'type'       => 'TEXT',
+				'null'       => false,
+				'default'    => ''
+			],
 		]);
-
-		<?php if ($matchIP === true) : ?>
-			$this->forge->addKey(['id', 'ip_address'], true);
-		<?php else: ?>
-			$this->forge->addKey('id', true);
-		<?php endif ?>
-			$this->forge->addKey('timestamp');
+	<?php if ($matchIP === true) : ?>
+	$this->forge->addKey(['id', 'ip_address'], true);
+	<?php else: ?>
+	$this->forge->addKey('id', true);
+	<?php endif ?>
+	$this->forge->addKey('timestamp');
 		$this->forge->createTable('<?= $tableName ?>', true);
 	}
 

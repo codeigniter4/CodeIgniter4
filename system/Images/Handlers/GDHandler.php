@@ -1,9 +1,45 @@
 <?php namespace CodeIgniter\Images\Handlers;
 
+/**
+ * CodeIgniter
+ *
+ * An open source application development framework for PHP
+ *
+ * This content is released under the MIT License (MIT)
+ *
+ * Copyright (c) 2014-2017 British Columbia Institute of Technology
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ *
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT    MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
+ * @filesource
+ */
 use CodeIgniter\Images\Exceptions\ImageException;
 
 class GDHandler extends BaseHandler
 {
+
 	public $version;
 
 	/**
@@ -17,7 +53,7 @@ class GDHandler extends BaseHandler
 	{
 		parent::__construct($config);
 
-		if (! extension_loaded('gd'))
+		if ( ! extension_loaded('gd'))
 		{
 			throw new ImageException('GD Extension is not loaded.');
 		}
@@ -36,7 +72,7 @@ class GDHandler extends BaseHandler
 	protected function _rotate(int $angle)
 	{
 		// Create the image handle
-		if (! ($srcImg = $this->createImage()))
+		if ( ! ($srcImg = $this->createImage()))
 		{
 			return false;
 		}
@@ -72,15 +108,15 @@ class GDHandler extends BaseHandler
 	{
 		$srcImg = $this->createImage();
 
-		$width  = $this->image->origWidth;
+		$width = $this->image->origWidth;
 		$height = $this->image->origHeight;
 
 		if ($direction === 'horizontal')
 		{
-			for ($i = 0; $i < $height; $i++)
+			for ($i = 0; $i < $height; $i ++ )
 			{
-				$left  = 0;
-				$right = $width-1;
+				$left = 0;
+				$right = $width - 1;
 
 				while ($left < $right)
 				{
@@ -90,17 +126,17 @@ class GDHandler extends BaseHandler
 					imagesetpixel($srcImg, $left, $i, $cr);
 					imagesetpixel($srcImg, $right, $i, $cl);
 
-					$left++;
-					$right--;
+					$left ++;
+					$right --;
 				}
 			}
 		}
 		else
 		{
-			for ($i = 0; $i < $width; $i++)
+			for ($i = 0; $i < $width; $i ++ )
 			{
-				$top    = 0;
-				$bottom = $height-1;
+				$top = 0;
+				$bottom = $height - 1;
 
 				while ($top < $bottom)
 				{
@@ -110,8 +146,8 @@ class GDHandler extends BaseHandler
 					imagesetpixel($srcImg, $i, $top, $cb);
 					imagesetpixel($srcImg, $i, $bottom, $ct);
 
-					$top++;
-					$bottom--;
+					$top ++;
+					$bottom --;
 				}
 			}
 		}
@@ -175,20 +211,20 @@ class GDHandler extends BaseHandler
 	 */
 	protected function process(string $action)
 	{
-		$origWidth  = $this->image->origWidth;
+		$origWidth = $this->image->origWidth;
 		$origHeight = $this->image->origHeight;
 
 		if ($action == 'crop')
 		{
 			// Reassign the source width/height if cropping
-			$origWidth  = $this->width;
+			$origWidth = $this->width;
 			$origHeight = $this->height;
 
 			// Modify the "original" width/height to the new
 			// values so that methods that come after have the
 			// correct size to work with.
 			$this->image->origHeight = $this->height;
-			$this->image->origWidth  = $this->width;
+			$this->image->origWidth = $this->width;
 		}
 
 		// Create the image handle
@@ -197,12 +233,12 @@ class GDHandler extends BaseHandler
 		if (function_exists('imagecreatetruecolor'))
 		{
 			$create = 'imagecreatetruecolor';
-			$copy   = 'imagecopyresampled';
+			$copy = 'imagecopyresampled';
 		}
 		else
 		{
 			$create = 'imagecreate';
-			$copy   = 'imagecopyresized';
+			$copy = 'imagecopyresized';
 		}
 
 		$dest = $create($this->width, $this->height);
@@ -239,41 +275,39 @@ class GDHandler extends BaseHandler
 	 */
 	public function save(string $target = null, int $quality = 90)
 	{
-		$target = empty($target)
-			? $this->image->getPathname()
-			: $target;
+		$target = empty($target) ? $this->image->getPathname() : $target;
 
 		switch ($this->image->imageType)
 		{
 			case IMAGETYPE_GIF:
-				if (! function_exists('imagegif'))
+				if ( ! function_exists('imagegif'))
 				{
-					throw new ImageException(lang('images.unsupportedImagecreate').' '.lang('images.gifNotSupported'));
+					throw new ImageException(lang('images.unsupportedImagecreate') . ' ' . lang('images.gifNotSupported'));
 				}
 
-				if (! @imagegif($this->resource, $target))
+				if ( ! @imagegif($this->resource, $target))
 				{
 					throw new ImageException(lang('images.saveFailed'));
 				}
 				break;
 			case IMAGETYPE_JPEG:
-				if (! function_exists('imagejpeg'))
+				if ( ! function_exists('imagejpeg'))
 				{
-					throw new ImageException(lang('images.unsupportedImagecreate').' '.lang('images.jpgNotSupported'));
+					throw new ImageException(lang('images.unsupportedImagecreate') . ' ' . lang('images.jpgNotSupported'));
 				}
 
-				if (! @imagejpeg($this->resource, $target, $quality))
+				if ( ! @imagejpeg($this->resource, $target, $quality))
 				{
 					throw new ImageException(lang('images.saveFailed'));
 				}
 				break;
 			case IMAGETYPE_PNG:
-				if (! function_exists('imagepng'))
+				if ( ! function_exists('imagepng'))
 				{
-					throw new ImageException(lang('images.unsupportedImagecreate').' '.lang('images.pngNotSupported'));
+					throw new ImageException(lang('images.unsupportedImagecreate') . ' ' . lang('images.pngNotSupported'));
 				}
 
-				if (! @imagepng($this->resource, $target))
+				if ( ! @imagepng($this->resource, $target))
 				{
 					throw new ImageException(lang('images.saveFailed'));
 				}
@@ -323,21 +357,21 @@ class GDHandler extends BaseHandler
 		switch ($imageType)
 		{
 			case IMAGETYPE_GIF:
-				if (! function_exists('imagecreatefromgif'))
+				if ( ! function_exists('imagecreatefromgif'))
 				{
 					throw new ImageException(lang('images.gifNotSupported'));
 				}
 
 				return imagecreatefromgif($path);
 			case IMAGETYPE_JPEG:
-				if (! function_exists('imagecreatefromjpeg'))
+				if ( ! function_exists('imagecreatefromjpeg'))
 				{
 					throw new ImageException(lang('images.jpgNotSupported'));
 				}
 
 				return imagecreatefromjpeg($path);
 			case IMAGETYPE_PNG:
-				if (! function_exists('imagecreatefrompng'))
+				if ( ! function_exists('imagecreatefrompng'))
 				{
 					throw new ImageException(lang('images.pngNotSupported'));
 				}
@@ -372,7 +406,7 @@ class GDHandler extends BaseHandler
 		// Set font width and height
 		// These are calculated differently depending on
 		// whether we are using the true type font or not
-		if (! empty($options['fontPath']))
+		if ( ! empty($options['fontPath']))
 		{
 			if (function_exists('imagettfbbox'))
 			{
@@ -390,7 +424,7 @@ class GDHandler extends BaseHandler
 		}
 		else
 		{
-			$fontwidth  = imagefontwidth($options['fontSize']);
+			$fontwidth = imagefontwidth($options['fontSize']);
 			$fontheight = imagefontheight($options['fontSize']);
 		}
 
@@ -446,7 +480,7 @@ class GDHandler extends BaseHandler
 	 * @param array  $options
 	 * @param bool   $isShadow  Whether we are drawing the dropshadow or actual text
 	 */
-	protected function textOverlay(string $text, array $options = [], bool $isShadow=false)
+	protected function textOverlay(string $text, array $options = [], bool $isShadow = false)
 	{
 		$src = $this->createImage();
 
@@ -468,7 +502,7 @@ class GDHandler extends BaseHandler
 		$yAxis = $isShadow ? $options['yShadow'] : $options['yAxis'];
 
 		// Add the shadow to the source image
-		if (! empty($options['fontPath']))
+		if ( ! empty($options['fontPath']))
 		{
 			// We have to add fontheight because imagettftext locates the bottom left corner, not top-left corner.
 			imagettftext($src, $options['fontSize'], 0, $xAxis, $yAxis + $options['fontheight'], $color, $options['fontPath'], $text);

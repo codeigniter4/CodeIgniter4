@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
+ * Copyright (c) 2014-2017 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,13 +29,12 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 3.0.0
  * @filesource
  */
-
 use CodeIgniter\Cache\CacheInterface;
 
 /**
@@ -54,113 +53,112 @@ use CodeIgniter\Cache\CacheInterface;
  */
 class Throttler implements ThrottlerInterface
 {
-    /**
-     * @var \CodeIgniter\Cache\CacheInterface
-     */
-    protected $cache;
 
-    /**
-     * The number of seconds until the next token is available.
-     *
-     * @var int
-     */
-    protected $tokenTime = 0;
+	/**
+	 * @var \CodeIgniter\Cache\CacheInterface
+	 */
+	protected $cache;
 
-    /**
-     * The prefix applied to all keys to
-     * minimize potential conflicts.
-     *
-     * @var string
-     */
-    protected $prefix = 'throttler_';
+	/**
+	 * The number of seconds until the next token is available.
+	 *
+	 * @var int
+	 */
+	protected $tokenTime = 0;
 
-    //--------------------------------------------------------------------
+	/**
+	 * The prefix applied to all keys to
+	 * minimize potential conflicts.
+	 *
+	 * @var string
+	 */
+	protected $prefix = 'throttler_';
 
-    public function __construct(CacheInterface $cache)
-    {
-        $this->cache = $cache;
-    }
+	//--------------------------------------------------------------------
 
-    //--------------------------------------------------------------------
+	public function __construct(CacheInterface $cache)
+	{
+		$this->cache = $cache;
+	}
 
-    /**
-     * Returns the number of seconds until the next available token will
-     * be released for usage.
-     *
-     * @return int
-     */
-    public function getTokenTime()
-    {
-        return (int)$this->tokenTime;
-    }
+	//--------------------------------------------------------------------
 
-    //--------------------------------------------------------------------
+	/**
+	 * Returns the number of seconds until the next available token will
+	 * be released for usage.
+	 *
+	 * @return int
+	 */
+	public function getTokenTime()
+	{
+		return $this->tokenTime;
+	}
 
-    /**
-     * Restricts the number of requests made by a single IP address within
-     * a set number of seconds.
-     *
-     * Example:
-     *
-     *  if (! $throttler->check($request->ipAddress(), 60, MINUTE))
-     * {
-     *      die('You submitted over 60 requests within a minute.');
-     * }
-     *
-     * @param string $key      The name to use as the "bucket" name.
-     * @param int    $capacity The number of requests the "bucket" can hold
-     * @param int    $seconds  The time it takes the "bucket" to completely refill
-     * @param int    $cost     The number of tokens this action uses.
-     *
-     * @return bool
-     * @internal param int $maxRequests
-     */
-    public function check(string $key, int $capacity, int $seconds, int $cost = 1)
-    {
-        $tokenName = $this->prefix.$key;
+	//--------------------------------------------------------------------
 
-        // Check to see if the bucket has even been created yet.
-        if (($tokens = $this->cache->get($tokenName)) === false)
-        {
-            // If it hasn't been created, then we'll set it to the maximum
-            // capacity - 1, and save it to the cache.
-            $this->cache->save($tokenName, $capacity-$cost, $seconds);
-            $this->cache->save($tokenName.'Time', time());
+	/**
+	 * Restricts the number of requests made by a single IP address within
+	 * a set number of seconds.
+	 *
+	 * Example:
+	 *
+	 *  if (! $throttler->check($request->ipAddress(), 60, MINUTE))
+	 * {
+	 *      die('You submitted over 60 requests within a minute.');
+	 * }
+	 *
+	 * @param string $key      The name to use as the "bucket" name.
+	 * @param int    $capacity The number of requests the "bucket" can hold
+	 * @param int    $seconds  The time it takes the "bucket" to completely refill
+	 * @param int    $cost     The number of tokens this action uses.
+	 *
+	 * @return bool
+	 * @internal param int $maxRequests
+	 */
+	public function check(string $key, int $capacity, int $seconds, int $cost = 1)
+	{
+		$tokenName = $this->prefix . $key;
 
-            return true;
-        }
+		// Check to see if the bucket has even been created yet.
+		if (($tokens = $this->cache->get($tokenName)) === false)
+		{
+			// If it hasn't been created, then we'll set it to the maximum
+			// capacity - 1, and save it to the cache.
+			$this->cache->save($tokenName, $capacity - $cost, $seconds);
+			$this->cache->save($tokenName . 'Time', time());
 
-        // If $tokens > 0, then we need to replenish the bucket
-        // based on how long it's been since the last update.
-        $throttleTime = $this->cache->get($tokenName.'Time');
-        $elapsed      = time() - $throttleTime;
-        $rate         = (int)ceil($elapsed / $capacity);
+			return true;
+		}
 
-        // We must have a minimum wait of 1 second for a new token.
-        $this->tokenTime = max(1, $rate);
+		// If $tokens > 0, then we need to replenish the bucket
+		// based on how long it's been since the last update.
+		$throttleTime = $this->cache->get($tokenName . 'Time');
+		$elapsed = time() - $throttleTime;
+		$rate = (int) ceil($elapsed / $capacity);
 
-        // Add tokens based up on number per second that
-        // should be refilled, then checked against capacity
-        // to be sure the bucket didn't overflow.
-        $tokens += ($rate * $seconds);
-        $tokens = $tokens > $capacity
-            ? $capacity
-            : $tokens;
+		// We must have a minimum wait of 1 second for a new token
+		$this->tokenTime = max(1, $rate);
 
-        // If $tokens > 0, then we are save to perform the action, but
-        // we need to decrement the number of available tokens.
-        $response = false;
+		// Add tokens based up on number per second that
+		// should be refilled, then checked against capacity
+		// to be sure the bucket didn't overflow.
+		$tokens += ($rate * $seconds);
+		$tokens = $tokens > $capacity ? $capacity : $tokens;
 
-        if ($tokens > 0)
-        {
-            $response = true;
+		// If $tokens > 0, then we are save to perform the action, but
+		// we need to decrement the number of available tokens.
+		$response = false;
 
-            $this->cache->save($tokenName, $tokens-$cost, $elapsed);
-            $this->cache->save($tokenName.'Time', time());
-        }
+		if ($tokens > 0)
+		{
+			$response = true;
 
-        return $response;
-    }
+			$this->cache->save($tokenName, $tokens - $cost, $elapsed);
+			$this->cache->save($tokenName . 'Time', time());
+		}
 
-    //--------------------------------------------------------------------
+		return $response;
+	}
+
+	//--------------------------------------------------------------------
 }

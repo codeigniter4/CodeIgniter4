@@ -25,19 +25,19 @@ Escaping field values
 You may need to use HTML and characters such as quotes within your form
 elements. In order to do that safely, you'll need to use
 :doc:`common function <../general/common_functions>`
-:func:`html_escape()`.
+:func:`esc()`.
 
 Consider the following example::
 
 	$string = 'Here is a string containing "quoted" text.';
 
-	<input type="text" name="myfield" value="<?php echo $string; ?>" />
+	<input type="text" name="myfield" value="<?= $string; ?>" />
 
 Since the above string contains a set of quotes, it will cause the form
-to break. The :php:func:`html_escape()` function converts HTML special
+to break. The :php:func:`esc()` function converts HTML special
 characters so that it can be used safely::
 
-	<input type="text" name="myfield" value="<?php echo html_escape($string); ?>" />
+	<input type="text" name="myfield" value="<?= esc($string); ?>" />
 
 .. note:: If you use any of the form helper functions listed on this page,
 	the form values will be automatically escaped, so there is no need
