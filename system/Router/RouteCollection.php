@@ -630,7 +630,9 @@ class RouteCollection implements RouteCollectionInterface
 	 *      // Generates the following routes:
 	 *      HTTP Verb | Path        | Action        | Used for...
 	 *      ----------+-------------+---------------+-----------------
-	 *      GET         /photos             listAll         display a list of photos
+	 *      GET         /photos             index           display a list of photos
+	 *      GET         /photos/new         new             new a specific photo
+	 *      GET         /photos/{id}/edit   edit            edit a specific photo
 	 *      GET         /photos/{id}        show            display a specific photo
 	 *      POST        /photos             create          create a new photo
 	 *      PUT         /photos/{id}        update          update an existing photo
@@ -673,13 +675,15 @@ class RouteCollection implements RouteCollectionInterface
 
 		$methods = isset($options['only'])
 			? is_string($options['only']) ? explode(',', $options['only']) : $options['only']
-			: ['listAll', 'show', 'create', 'update', 'delete'];
+			: ['index', 'show', 'create', 'update', 'delete', 'new', 'edit'];
 
-		if (in_array('listAll', $methods)) $this->get($name, $new_name . '::listAll', $options);
-		if (in_array('show', $methods))    $this->get($name . '/' . $id, $new_name . '::show/$1', $options);
+		if (in_array('index', $methods)) $this->get($name, $new_name . '::index', $options);
+		if (in_array('edit', $methods))  $this->get($name . '/' . $id. '/edit', $new_name . '::edit/$1', $options);
+		if (in_array('show', $methods))    $this->get($name. '/' . $id, $new_name . '::show/$1', $options);
 		if (in_array('create', $methods))  $this->post($name, $new_name . '::create', $options);
 		if (in_array('update', $methods))  $this->put($name . '/' . $id, $new_name . '::update/$1', $options);
 		if (in_array('delete', $methods))  $this->delete($name . '/' . $id, $new_name . '::delete/$1', $options);
+		if (in_array('new', $methods)) $this->get($name. '/new', $new_name . '::new', $options);
 
 		// Web Safe?
 		if (isset($options['websafe']))
