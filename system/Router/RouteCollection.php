@@ -763,12 +763,12 @@ class RouteCollection implements RouteCollectionInterface
 
 		if (in_array('index', $methods))
 			$this->get($name, $new_name . '::index', $options);
+		if (in_array('new', $methods))
+			$this->get($name. '/new', $new_name . '::new', $options);
 		if (in_array('edit', $methods))
 			$this->get($name . '/' . $id. '/edit', $new_name . '::edit/$1', $options);
 		if (in_array('show', $methods))
 			$this->get($name . '/' . $id, $new_name . '::show/$1', $options);
-		if (in_array('new', $methods))
-			$this->get($name. '/new', $new_name . '::new', $options);
 		if (in_array('create', $methods))
 			$this->post($name, $new_name . '::create', $options);
 		if (in_array('update', $methods))
