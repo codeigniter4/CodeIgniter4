@@ -719,7 +719,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *      GET         /photos/{id}/edit   edit            edit a specific photo
 	 *      GET         /photos/{id}        show            display a specific photo
 	 *      POST        /photos             create          create a new photo
-	 *      PUT         /photos/{id}        update          update an existing photo
+	 *      PUT/PATCH   /photos/{id}        update          update an existing photo
 	 *      DELETE      /photos/{id}        delete          delete an existing photo
 	 *
 	 *  If 'websafe' option is present, the following paths are also available:
@@ -773,6 +773,7 @@ class RouteCollection implements RouteCollectionInterface
 			$this->post($name, $new_name . '::create', $options);
 		if (in_array('update', $methods))
 			$this->put($name . '/' . $id, $new_name . '::update/$1', $options);
+			$this->patch($name . '/' . $id, $new_name . '::update/$1', $options);
 		if (in_array('delete', $methods))
 			$this->delete($name . '/' . $id, $new_name . '::delete/$1', $options);
 

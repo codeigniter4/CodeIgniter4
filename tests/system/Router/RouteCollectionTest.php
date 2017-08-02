@@ -362,6 +362,16 @@ class RouteCollectionTest extends \CIUnitTestCase
 
 		$this->assertEquals($expected, $routes->getRoutes());
 
+		$_SERVER['REQUEST_METHOD'] = 'PATCH';
+		$routes = $this->getCollector();
+		$routes->resource('photos');
+
+		$expected = [
+				'photos/(.*)' => '\Photos::update/$1'
+		];
+
+		$this->assertEquals($expected, $routes->getRoutes());
+
 		$_SERVER['REQUEST_METHOD'] = 'DELETE';
 		$routes = $this->getCollector();
 		$routes->resource('photos');
