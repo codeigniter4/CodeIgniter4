@@ -653,6 +653,21 @@ class RouteCollectionTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * @see https://github.com/bcit-ci/CodeIgniter4/issues/642
+	 */
+	public function testReverseRoutesWithPostRoutes()
+	{
+		$routes = $this->getCollector();
+
+		$routes->post('user/insert', function() {}, ['as' => 'namedRoute']);
+		$match = $routes->reverseRoute('namedRoute');
+
+		$this->assertEquals('/user/insert', $match);
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testAddRedirect()
 	{
 		$routes = $this->getCollector();
@@ -720,5 +735,4 @@ class RouteCollectionTest extends \CIUnitTestCase
 		$this->assertTrue(array_key_exists('testing', $match));
 		$this->assertEquals($match['testing'], '\TestController::index');
 	}
-
 }
