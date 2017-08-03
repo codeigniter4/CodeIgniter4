@@ -117,7 +117,7 @@ class PagerRenderer
 
 		$uri = clone $this->uri;
 
-		$uri->addQuery('page', $this->first - 1);
+		$uri->addQuery('page', $this->current - 1);
 
 		return (string) $uri;
 	}
@@ -154,7 +154,7 @@ class PagerRenderer
 
 		$uri = clone $this->uri;
 
-		$uri->addQuery('page', $this->last + 1);
+		$uri->addQuery('page', $this->current + 1);
 
 		return (string) $uri;
 	}
