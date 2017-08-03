@@ -1440,7 +1440,9 @@ class BaseBuilder
 			$this->QBOrderBy = $orderby;
 		}
 
-		$row = $result->getRow();
+		$row = is_bool($result)
+			? null
+			: $result->getRow();
 
 		if (empty($row))
 		{
