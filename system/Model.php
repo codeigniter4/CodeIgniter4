@@ -206,9 +206,9 @@ class Model
 	 * Contains any custom error messages to be
 	 * used during data validation.
 	 *
-	 * @var array|null
+	 * @var array
 	 */
-	protected $validationMessages = null;
+	protected $validationMessages = [];
 
 	/**
 	 * Skip the model's validation. Used in conjunction with skipValidation()
@@ -826,9 +826,16 @@ class Model
 	{
 		if ($this->useSoftDeletes && ! $purge)
 		{
+            $set['deleted'] = 1;
+
+            if ($this->useTimestamps)
+            {
+                $set[$this->updatedField] = $this->setDate();
+            }
+            
 			$result = $this->builder()
 					->where($this->primaryKey, $id)
-					->update(['deleted' => 1]);
+					->update($set);
 		}
 		else
 		{
@@ -865,9 +872,16 @@ class Model
 
 		if ($this->useSoftDeletes && ! $purge)
 		{
+            $set['deleted'] = 1;
+
+            if ($this->useTimestamps)
+            {
+                $set[$this->updatedField] = $this->setDate();
+            }
+
 			$result = $this->builder()
 					->where($key, $value)
-					->update(['deleted' => 1]);
+					->update($set);
 		}
 		else
 		{
