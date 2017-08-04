@@ -113,7 +113,7 @@ if ( ! function_exists('base_url'))
 		}
 		else
 		{
-			$url = \CodeIgniter\Services::request()->uri;
+			$url = \CodeIgniter\Services::request($config, false)->uri;
 			$url->setPath('/');
 		}
 
