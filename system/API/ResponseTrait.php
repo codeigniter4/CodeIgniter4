@@ -358,10 +358,8 @@ trait ResponseTrait
 			$this->formatter = $config->getFormatter($format);
 		}
 
-		if (is_object($data))
-		{
-			$data = get_object_vars($data);
-		}
+		// Recursively convert objects into associative arrays
+		$data = json_decode(json_encode($data), true);
 
 		return $this->formatter->format($data);
 	}
