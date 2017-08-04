@@ -205,9 +205,9 @@ class Model
 	 * Contains any custom error messages to be
 	 * used during data validation.
 	 *
-	 * @var array|null
+	 * @var array
 	 */
-	protected $validationMessages = null;
+	protected $validationMessages = [];
 
 	/**
 	 * Skip the model's validation. Used in conjunction with skipValidation()
