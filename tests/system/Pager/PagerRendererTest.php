@@ -47,7 +47,7 @@ class PagerRendererTest extends \CIUnitTestCase
 		$pager->setSurroundCount(2);
 
 		$this->assertTrue($pager->hasPrevious());
-		$this->assertEquals('http://example.com/foo?foo=bar&page=2', $pager->getPrevious());
+		$this->assertEquals('http://example.com/foo?foo=bar&page=4', $pager->getPrevious());
 	}
 
 	//--------------------------------------------------------------------
@@ -81,7 +81,7 @@ class PagerRendererTest extends \CIUnitTestCase
 		$details = [
 			'uri' => $uri,
 			'pageCount' => 5,
-			'currentPage' => 4,
+			'currentPage' => 5,
 			'total'	=> 100
 		];
 
@@ -109,7 +109,7 @@ class PagerRendererTest extends \CIUnitTestCase
 		$pager->setSurroundCount(2);
 
 		$this->assertTrue($pager->hasNext());
-		$this->assertEquals('http://example.com/foo?foo=bar&page=7', $pager->getNext());
+		$this->assertEquals('http://example.com/foo?foo=bar&page=5', $pager->getNext());
 	}
 
 	//--------------------------------------------------------------------
