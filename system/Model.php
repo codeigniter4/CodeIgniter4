@@ -803,9 +803,16 @@ class Model
 	{
 		if ($this->useSoftDeletes && ! $purge)
 		{
+            $set['deleted'] = 1;
+
+            if ($this->useTimestamps)
+            {
+                $set[$this->updatedField] = $this->setDate();
+            }
+            
 			$result = $this->builder()
 					->where($this->primaryKey, $id)
-					->update(['deleted' => 1]);
+					->update($set);
 		}
 		else
 		{
@@ -842,9 +849,16 @@ class Model
 
 		if ($this->useSoftDeletes && ! $purge)
 		{
+            $set['deleted'] = 1;
+
+            if ($this->useTimestamps)
+            {
+                $set[$this->updatedField] = $this->setDate();
+            }
+
 			$result = $this->builder()
 					->where($key, $value)
-					->update(['deleted' => 1]);
+					->update($set);
 		}
 		else
 		{
