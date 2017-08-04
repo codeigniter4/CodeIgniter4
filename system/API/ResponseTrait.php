@@ -345,7 +345,7 @@ trait ResponseTrait
 		}
 
 		// if we don't have a formatter, make one
-		if ($this->formatter == null)
+		if ( ! isset($this->formatter))
 		{
 			$config = new Format();
 
@@ -356,6 +356,11 @@ trait ResponseTrait
 
 			// if no formatter, use the default
 			$this->formatter = $config->getFormatter($format);
+		}
+
+		if (is_object($data))
+		{
+			$data = get_object_vars($data);
 		}
 
 		return $this->formatter->format($data);
