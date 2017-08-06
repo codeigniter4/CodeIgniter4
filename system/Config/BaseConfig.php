@@ -59,12 +59,14 @@ class BaseConfig
 	/**
 	 * Will attempt to get environment variables with names
 	 * that match the properties of the child class.
+	 * 
+	 * The "shortPrefix" is the lowercase-only config class name.
 	 */
 	public function __construct()
 	{
 		$properties = array_keys(get_object_vars($this));
 		$prefix = get_class($this);
-		$shortPrefix = strtolower(substr($prefix, strrpos($prefix, '\\') + 1));
+		$shortPrefix = strtolower(substr($prefix, strrpos($prefix, '\\') ));
 
 		foreach ($properties as $property)
 		{
@@ -151,6 +153,7 @@ class BaseConfig
 		// Check the registrar class for a method named after this class' shortName
 		foreach ($this->registrars as $callable)
 		{
+			// ignore non-applicable registrars
 			if ( ! method_exists($callable, $shortName))
 				continue;
 
@@ -163,9 +166,6 @@ class BaseConfig
 
 			foreach ($properties as $property => $value)
 			{
-				if ( ! property_exists($this, $property))
-					continue;
-
 				if (is_array($this->$property) && is_array($value))
 				{
 					$this->$property = array_merge($this->$property, $value);
