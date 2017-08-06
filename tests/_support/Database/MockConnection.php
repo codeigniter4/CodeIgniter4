@@ -19,7 +19,7 @@ class MockConnection extends BaseConnection
 
 	//--------------------------------------------------------------------
 
-	public function query(string $sql, $binds = null)
+	public function query(string $sql, $binds = null, $queryClass = 'CodeIgniter\\Database\\Query')
 	{
 		$queryClass = str_replace('Connection', 'Query', get_class($this));
 

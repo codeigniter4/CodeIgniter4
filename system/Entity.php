@@ -1,5 +1,7 @@
 <?php namespace CodeIgniter;
 
+use CodeIgniter\I18n\Time;
+
 /**
  * CodeIgniter
  *
@@ -51,6 +53,10 @@ class Entity
 	 * @var array
 	 */
 	protected $datamap = [];
+
+	protected $_options = [
+		'dates' => ['created_at', 'updated_at', 'deleted_at'],
+	];
 
 	/**
 	 * Allows filling in Entity parameters during construction.
@@ -116,15 +122,23 @@ class Entity
 		// use that method to insert this value. 
 		if (method_exists($this, $method))
 		{
-			return $this->$method();
+			$result = $this->$method();
 		}
 
 		// Otherwise return the protected property
 		// if it exists.
-		if (property_exists($this, $key))
+		else if (property_exists($this, $key))
 		{
-			return $this->$key;
+			$result = $this->$key;
 		}
+
+		// Do we need to mutate this into a date?
+		if (in_array($key, $this->_options['dates']))
+		{
+			$result = $this->mutateDate($result);
+		}
+
+		return $result;
 	}
 
 	//--------------------------------------------------------------------
@@ -146,6 +160,12 @@ class Entity
 	public function __set(string $key, $value = null)
 	{
 		$key = $this->mapProperty($key);
+
+		// Check if the field should be mutated into a date
+		if (in_array($key, $this->_options['dates']))
+		{
+			$value = $this->mutateDate($value);
+		}
 
 		// if a set* method exists for this key, 
 		// use that method to insert this value. 
@@ -233,4 +253,40 @@ class Entity
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Converts the given string|timestamp|DateTime|Time instance
+	 * into a \CodeIgniter\I18n\Time object.
+	 *
+	 * @param $value
+	 *
+	 * @return \CodeIgniter\I18n\Time
+	 */
+	private function mutateDate($value)
+	{
+		if ($value instanceof Time)
+		{
+			return $value;
+		}
+
+		if ($value instanceof \DateTime)
+		{
+			return Time::instance($value);
+		}
+
+		if (is_numeric($value))
+		{
+			return Time::createFromTimestamp($value);
+		}
+
+		if (is_string($value))
+		{
+			return Time::parse($value);
+		}
+
+		return $value;
+	}
+
+	//--------------------------------------------------------------------
+
 }

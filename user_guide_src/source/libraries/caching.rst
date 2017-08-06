@@ -74,28 +74,27 @@ The settings for the Redis server that you wish to use when using the ``Redis`` 
 Class Reference
 ===============
 
-.. php:method:: isSupported($handler)
+.. php:method:: isSupported()
 
-	:param	string	$handler: the name of the caching handler
 	:returns:	TRUE if supported, FALSE if not
 	:rtype:	bool
 
-.. php:method:: get($id)
+.. php:method:: get($key)
 
-	:param	string	$id: Cache item name
+	:param	string	$key: Cache item name
 	:returns:	Item value or FALSE if not found
 	:rtype:	mixed
 
 	This method will attempt to fetch an item from the cache store. If the
 	item does not exist, the method will return FALSE.
-    		
+
 	Example::
 
 		$foo = $cache->get('my_cached_item');
 
-.. php:method:: save($id, $data[, $ttl = 60[, $raw = FALSE]])
+.. php:method:: save($key, $data[, $ttl = 60[, $raw = FALSE]])
 
-	:param	string	$id: Cache item name
+	:param	string	$key: Cache item name
 	:param	mixed	$data: the data to save
 	:param	int	$ttl: Time To Live, in seconds (default 60)
 	:param	bool	$raw: Whether to store the raw value
@@ -112,28 +111,28 @@ Class Reference
 .. note:: The ``$raw`` parameter is only utilized by Memcache,
 		  in order to allow usage of ``increment()`` and ``decrement()``.
 
-.. php:method:: delete($id)
+.. php:method:: delete($key)
 
-	:param	string	$id: name of cached item
+	:param	string	$key: name of cached item
 	:returns:	TRUE on success, FALSE on failure
 	:rtype:	bool
 
 	This method will delete a specific item from the cache store. If item
 	deletion fails, the method will return FALSE.
-	
+
 	Example::
 
 		$cache->delete('cache_item_id');
 
-.. php:method:: increment($id[, $offset = 1])
+.. php:method:: increment($key[, $offset = 1])
 
-	:param	string	$id: Cache ID
+	:param	string	$key: Cache ID
 	:param	int	$offset: Step/value to add
 	:returns:	New value on success, FALSE on failure
    	:rtype:	mixed
 
 	Performs atomic incrementation of a raw stored value.
-    
+
 	Example::
 
 		// 'iterator' has a value of 2
@@ -142,15 +141,15 @@ Class Reference
 
 		$cache->increment('iterator', 3); // 'iterator' is now 6
 
-.. php:method:: decrement($id[, $offset = 1])
+.. php:method:: decrement($key[, $offset = 1])
 
-	:param	string	$id: Cache ID
+	:param	string	$key: Cache ID
 	:param	int	$offset: Step/value to reduce by
 	:returns:	New value on success, FALSE on failure
 	:rtype:	mixed
 
 	Performs atomic decrementation of a raw stored value.
-    		
+
 	Example::
 
 		// 'iterator' has a value of 6
@@ -166,7 +165,7 @@ Class Reference
 
 	This method will 'clean' the entire cache. If the deletion of the
 	cache files fails, the method will return FALSE.
-	
+
 	Example::
 
 			$cache->clean();
@@ -177,7 +176,7 @@ Class Reference
 	:rtype:	mixed
 
 	This method will return information on the entire cache.
-	
+
 	Example::
 
 		var_dump($cache->cache_info());
@@ -185,15 +184,15 @@ Class Reference
 .. note:: The information returned and the structure of the data is dependent
 		  on which adapter is being used.
 
-.. php:method:: getMetadata($id)
+.. php:method:: getMetadata($key)
 
-	:param	string	$id: Cache item name
+	:param	string	$key: Cache item name
 	:returns:	Metadata for the cached item
 	:rtype:	mixed
 
 	This method will return detailed information on a specific item in the
 	cache.
-	
+
 	Example::
 
 		var_dump($cache->getMetadata('my_cached_item'));

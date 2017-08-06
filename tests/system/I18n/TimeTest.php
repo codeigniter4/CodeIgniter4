@@ -765,8 +765,8 @@ class TimeTest extends \CIUnitTestCase
 		$time1 = Time::parse('January 10, 2017 21:50:00', 'America/Chicago');
 		$time2 = Time::parse('January 11, 2017 03:50:00', 'America/Chicago');
 
-		$this->assertTrue($time1->before($time2));
-		$this->assertFalse($time2->before($time1));
+		$this->assertTrue($time1->isBefore($time2));
+		$this->assertFalse($time2->isBefore($time1));
 	}
 
 	public function testAfter()
@@ -774,7 +774,153 @@ class TimeTest extends \CIUnitTestCase
 		$time1 = Time::parse('January 10, 2017 21:50:00', 'America/Chicago');
 		$time2 = Time::parse('January 11, 2017 03:50:00', 'America/Chicago');
 
-		$this->assertFalse($time1->after($time2));
-		$this->assertTrue($time2->after($time1));
+		$this->assertFalse($time1->isAfter($time2));
+		$this->assertTrue($time2->isAfter($time1));
 	}
+
+	public function testHumanizeYearsSingle()
+	{
+		Time::setTestNow('March 10, 2017', 'America/Chicago');
+		$time = Time::parse('March 9, 2016 12:00:00', 'America/Chicago');
+
+		$this->assertEquals('1 year ago', $time->humanize());
+	}
+
+	public function testHumanizeYearsPlural()
+	{
+		Time::setTestNow('March 10, 2017', 'America/Chicago');
+		$time = Time::parse('March 9, 2014 12:00:00', 'America/Chicago');
+
+		$this->assertEquals('3 years ago', $time->humanize());
+	}
+
+	public function testHumanizeYearsForward()
+	{
+		Time::setTestNow('January 1, 2017', 'America/Chicago');
+		$time = Time::parse('January 1, 2018 12:00:00', 'America/Chicago');
+
+		$this->assertEquals('in 1 year', $time->humanize());
+	}
+
+	public function testHumanizeMonthsSingle()
+	{
+		Time::setTestNow('March 10, 2017', 'America/Chicago');
+		$time = Time::parse('February 9, 2017', 'America/Chicago');
+
+		$this->assertEquals('1 month ago', $time->humanize());
+	}
+
+	public function testHumanizeMonthsPlural()
+	{
+		Time::setTestNow('March 1, 2017', 'America/Chicago');
+		$time = Time::parse('January 1, 2017', 'America/Chicago');
+
+		$this->assertEquals('2 months ago', $time->humanize());
+	}
+
+	public function testHumanizeMonthsForward()
+	{
+		Time::setTestNow('March 1, 2017', 'America/Chicago');
+		$time = Time::parse('April 1, 2017', 'America/Chicago');
+
+		$this->assertEquals('in 1 month', $time->humanize());
+	}
+
+	public function testHumanizeDaysSingle()
+	{
+		Time::setTestNow('March 10, 2017', 'America/Chicago');
+		$time = Time::parse('March 8, 2017', 'America/Chicago');
+
+		$this->assertEquals('2 days ago', $time->humanize());
+	}
+
+	public function testHumanizeDaysPlural()
+	{
+		Time::setTestNow('March 10, 2017', 'America/Chicago');
+		$time = Time::parse('March 8, 2017', 'America/Chicago');
+
+		$this->assertEquals('2 days ago', $time->humanize());
+	}
+
+	public function testHumanizeDaysForward()
+	{
+		Time::setTestNow('March 10, 2017', 'America/Chicago');
+		$time = Time::parse('March 12, 2017', 'America/Chicago');
+
+		$this->assertEquals('in 2 days', $time->humanize());
+	}
+
+	public function testHumanizeDaysTomorrow()
+	{
+		Time::setTestNow('March 10, 2017', 'America/Chicago');
+		$time = Time::parse('March 11, 2017', 'America/Chicago');
+
+		$this->assertEquals('Tomorrow', $time->humanize());
+	}
+
+	public function testHumanizeDaysYesterday()
+	{
+		Time::setTestNow('March 10, 2017', 'America/Chicago');
+		$time = Time::parse('March 9, 2017', 'America/Chicago');
+
+		$this->assertEquals('Yesterday', $time->humanize());
+	}
+
+	public function testHumanizeHoursAsTime()
+	{
+		Time::setTestNow('March 10, 2017 12:00', 'America/Chicago');
+		$time = Time::parse('March 10, 2017 14:00', 'America/Chicago');
+
+		$this->assertEquals('2:00 pm', $time->humanize());
+	}
+
+	public function testHumanizeMinutesSingle()
+	{
+		Time::setTestNow('March 10, 2017 12:30', 'America/Chicago');
+		$time = Time::parse('March 10, 2017 12:29', 'America/Chicago');
+
+		$this->assertEquals('1 minute ago', $time->humanize());
+	}
+
+	public function testHumanizeMinutesPlural()
+	{
+		Time::setTestNow('March 10, 2017 12:30', 'America/Chicago');
+		$time = Time::parse('March 10, 2017 12:28', 'America/Chicago');
+
+		$this->assertEquals('2 minutes ago', $time->humanize());
+	}
+
+	public function testHumanizeMinutesForward()
+	{
+		Time::setTestNow('March 10, 2017 12:30', 'America/Chicago');
+		$time = Time::parse('March 10, 2017 12:31', 'America/Chicago');
+
+		$this->assertEquals('in 1 minute', $time->humanize());
+	}
+
+	public function testHumanizeWeeksSingle()
+	{
+		Time::setTestNow('March 10, 2017', 'America/Chicago');
+		$time = Time::parse('March 2, 2017', 'America/Chicago');
+
+		$this->assertEquals('1 week ago', $time->humanize());
+	}
+
+	public function testHumanizeWeeksPlural()
+	{
+		Time::setTestNow('March 30, 2017', 'America/Chicago');
+		$time = Time::parse('March 15, 2017', 'America/Chicago');
+
+		$this->assertEquals('2 weeks ago', $time->humanize());
+	}
+
+	public function testHumanizeWeeksForward()
+	{
+		Time::setTestNow('March 10, 2017', 'America/Chicago');
+		$time = Time::parse('March 18, 2017', 'America/Chicago');
+
+		$this->assertEquals('in 2 weeks', $time->humanize());
+	}
+
+
 }

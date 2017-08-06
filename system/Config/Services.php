@@ -96,7 +96,7 @@ class Services
 	 * @param \Config\Cache $config
 	 * @param bool          $getShared
 	 *
-	 * @return mixed
+	 * @return \CodeIgniter\Cache\CacheInterface
 	 */
 	public static function cache(\Config\Cache $config = null, $getShared = true)
 	{
@@ -191,6 +191,7 @@ class Services
 		if ($getShared === true)
 			return self::getSharedInstance('encrypter', $config);
 
+		$config = $config ?? new \Config\Encryption();
 		if ($config != null && is_object($config))
 			$config = (array) $config;
 
@@ -266,7 +267,7 @@ class Services
 	 * @param mixed  $config
 	 * @param bool   $getShared
 	 *
-	 * @return mixed
+	 * @return \CodeIgniter\Images\Handlers\BaseHandler
 	 */
 	public static function image(string $handler = null, $config = null, $getShared = true)
 	{

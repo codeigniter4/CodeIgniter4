@@ -1,9 +1,13 @@
 <?php namespace CodeIgniter;
 
 use CodeIgniter\Entity;
+use CodeIgniter\I18n\Time;
+use CodeIgniter\Test\ReflectionHelper;
 
 class EntityTest extends \CIUnitTestCase
 {
+	use ReflectionHelper;
+
 	public function testSimpleSetAndGet()
 	{
 	    $entity = $this->getEntity();
@@ -121,7 +125,104 @@ class EntityTest extends \CIUnitTestCase
 		$this->assertNull($entity->bar);
 	}
 
+	public function testDateMutationFromString()
+	{
+		$entity = $this->getEntity();
+		$this->setPrivateProperty($entity, 'created_at', '2017-07-15 13:23:34');
 
+		$time = $entity->created_at;
+
+		$this->assertTrue($time instanceof Time);
+		$this->assertEquals('2017-07-15 13:23:34', $time->format('Y-m-d H:i:s'));
+	}
+
+	public function testDateMutationFromTimestamp()
+	{
+		$stamp = time();
+
+		$entity = $this->getEntity();
+		$this->setPrivateProperty($entity, 'created_at', $stamp);
+
+		$time = $entity->created_at;
+
+		$this->assertTrue($time instanceof Time);
+		$this->assertEquals(date('Y-m-d H:i:s', $stamp), $time->format('Y-m-d H:i:s'));
+	}
+
+	public function testDateMutationFromDatetime()
+	{
+		$dt = new \DateTime('now');
+		$entity = $this->getEntity();
+		$this->setPrivateProperty($entity, 'created_at', $dt);
+
+		$time = $entity->created_at;
+
+		$this->assertTrue($time instanceof Time);
+		$this->assertEquals($dt->format('Y-m-d H:i:s'), $time->format('Y-m-d H:i:s'));
+	}
+
+	public function testDateMutationFromTime()
+	{
+		$dt = Time::now();
+		$entity = $this->getEntity();
+		$this->setPrivateProperty($entity, 'created_at', $dt);
+
+		$time = $entity->created_at;
+
+		$this->assertTrue($time instanceof Time);
+		$this->assertEquals($dt->format('Y-m-d H:i:s'), $time->format('Y-m-d H:i:s'));
+	}
+
+	public function testDateMutationStringToTime()
+	{
+		$entity = $this->getEntity();
+
+		$entity->created_at = '2017-07-15 13:23:34';
+
+		$time = $this->getPrivateProperty($entity, 'created_at');
+
+		$this->assertTrue($time instanceof Time);
+		$this->assertEquals('2017-07-15 13:23:34', $time->format('Y-m-d H:i:s'));
+	}
+
+	public function testDateMutationTimestampToTime()
+	{
+		$stamp = time();
+		$entity = $this->getEntity();
+
+		$entity->created_at = $stamp;
+
+		$time = $this->getPrivateProperty($entity, 'created_at');
+
+		$this->assertTrue($time instanceof Time);
+		$this->assertEquals(date('Y-m-d H:i:s'), $time->format('Y-m-d H:i:s'));
+	}
+
+	public function testDateMutationDatetimeToTime()
+	{
+		$dt = new \DateTime('now');
+		$entity = $this->getEntity();
+
+		$entity->created_at = $dt;
+
+		$time = $this->getPrivateProperty($entity, 'created_at');
+
+		$this->assertTrue($time instanceof Time);
+		$this->assertEquals($dt->format('Y-m-d H:i:s'), $time->format('Y-m-d H:i:s'));
+	}
+
+	public function testDateMutationTimeToTime()
+	{
+		$dt = Time::now();
+		$entity = $this->getEntity();
+
+		$entity->created_at = $dt;
+
+		$time = $this->getPrivateProperty($entity, 'created_at');
+
+		$this->assertTrue($time instanceof Time);
+		$this->assertEquals($dt->format('Y-m-d H:i:s'), $time->format('Y-m-d H:i:s'));
+	}
 
 	protected function getEntity()
 	{
@@ -130,6 +231,7 @@ class EntityTest extends \CIUnitTestCase
 			protected $foo;
 			protected $bar;
 			protected $default = 'sumfin';
+			protected $created_at;
 
 			public function setBar($value)
 			{

@@ -5,15 +5,18 @@
 var ciDebugBar = {
 
     toolbar : null,
+    icon : null,
 
     //--------------------------------------------------------------------
 
     init : function()
     {
         this.toolbar = document.getElementById('debug-bar');
+	    this.icon = document.getElementById('debug-icon');
 
         ciDebugBar.createListeners();
         ciDebugBar.setToolbarState();
+        ciDebugBar.setToolbarPosition();
     },
 
     //--------------------------------------------------------------------
@@ -119,12 +122,10 @@ var ciDebugBar = {
      */
     toggleToolbar : function()
     {
-        var ciIcon = document.getElementById('debug-icon');
-        var ciBar = document.getElementById('debug-bar');
-        var open = ciBar.style.display != 'none';
+        var open = ciDebugBar.toolbar.style.display != 'none';
 
-        ciIcon.style.display = open == true ? 'inline-block' : 'none';
-        ciBar.style.display  = open == false ? 'inline-block' : 'none';
+	    ciDebugBar.icon.style.display = open == true ? 'inline-block' : 'none';
+	    ciDebugBar.toolbar.style.display  = open == false ? 'inline-block' : 'none';
 
         // Remember it for other page loads on this site
         ciDebugBar.createCookie('debug-bar-state', '', -1);
@@ -140,11 +141,41 @@ var ciDebugBar = {
     setToolbarState: function()
     {
         var open = ciDebugBar.readCookie('debug-bar-state');
-        var ciIcon = document.getElementById('debug-icon');
-        var ciBar = document.getElementById('debug-bar');
 
-        ciIcon.style.display = open != 'open' ? 'inline-block' : 'none';
-        ciBar.style.display  = open == 'open' ? 'inline-block' : 'none';
+	    ciDebugBar.icon.style.display = open != 'open' ? 'inline-block' : 'none';
+	    ciDebugBar.toolbar.style.display  = open == 'open' ? 'inline-block' : 'none';
+    },
+
+    //--------------------------------------------------------------------
+
+	setToolbarPosition: function ()
+    {
+	    var btnPosition = document.getElementById('toolbar-position');
+
+	    if (ciDebugBar.readCookie('debug-bar-position') === 'top')
+	    {
+		    ciDebugBar.addClass(ciDebugBar.icon, 'fixed-top');
+		    ciDebugBar.addClass(ciDebugBar.toolbar, 'fixed-top');
+	    }
+
+	    btnPosition.addEventListener('click', function () {
+		    var position = ciDebugBar.readCookie('debug-bar-position');
+
+		    ciDebugBar.createCookie('debug-bar-position', '', -1);
+
+		    if (!position || position === 'bottom')
+		    {
+			    ciDebugBar.createCookie('debug-bar-position', 'top', 365);
+			    ciDebugBar.addClass(ciDebugBar.icon, 'fixed-top');
+			    ciDebugBar.addClass(ciDebugBar.toolbar, 'fixed-top');
+		    }
+		    else
+		    {
+			    ciDebugBar.createCookie('debug-bar-position', 'bottom', 365);
+			    ciDebugBar.removeClass(ciDebugBar.icon, 'fixed-top');
+			    ciDebugBar.removeClass(ciDebugBar.toolbar, 'fixed-top');
+		    }
+	    }, true);
     },
 
     //--------------------------------------------------------------------

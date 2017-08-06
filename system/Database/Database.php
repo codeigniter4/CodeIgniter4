@@ -91,7 +91,7 @@ class Database
 	/**
 	 * Creates a new Forge instance for the current database type.
 	 *
-	 * @param ConnectionInterface $db
+	 * @param ConnectionInterface|BaseConnection $db
 	 *
 	 * @return mixed
 	 */
@@ -115,7 +115,7 @@ class Database
 	/**
 	 * Loads the Database Utilities class.
 	 *
-	 * @param ConnectionInterface $db
+	 * @param ConnectionInterface|BaseConnection $db
 	 *
 	 * @return mixed
 	 */

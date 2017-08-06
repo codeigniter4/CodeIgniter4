@@ -46,7 +46,7 @@ class Forge
 	/**
 	 * The active database connection.
 	 *
-	 * @var ConnectionInterface
+	 * @var BaseConnection
 	 */
 	protected $db;
 
@@ -486,6 +486,12 @@ class Forge
 			}
 
 			return false;
+		}
+
+		// If the prefix is already starting the table name, remove it...
+		if (strpos($table_name, $this->db->DBPrefix) === 0)
+		{
+			$table_name = substr($table_name, strlen($this->db->DBPrefix));
 		}
 
 		if (($query = $this->_dropTable($this->db->DBPrefix . $table_name, $if_exists)) === true)
@@ -1039,7 +1045,7 @@ class Forge
 	 *
 	 * @param    string $table
 	 *
-	 * @return    string
+	 * @return    array
 	 */
 	protected function _processIndexes($table)
 	{
