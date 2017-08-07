@@ -174,7 +174,7 @@ class Security
 	 * CSRF Verify
 	 *
 	 * @param RequestInterface $request
-	 * @return $this
+	 * @return $this|false
 	 * @throws \LogicException
 	 */
 	public function CSRFVerify(RequestInterface $request)
