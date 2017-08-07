@@ -860,7 +860,7 @@ if ( ! function_exists('is_really_writable'))
 		 */
 		if (is_dir($file))
 		{
-			$file = rtrim($file, '/') . '/' . md5(mt_rand());
+			$file = rtrim($file, '/') . '/' . bin2hex(random_bytes(16));
 			if (($fp = @fopen($file, 'ab')) === false)
 			{
 				return false;
