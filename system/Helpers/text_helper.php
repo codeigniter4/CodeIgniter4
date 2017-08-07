@@ -742,7 +742,7 @@ if ( ! function_exists('random_string'))
 
 				return substr(str_shuffle(str_repeat($pool, ceil($len / strlen($pool)))), 0, $len);
 			case 'md5':
-				return md5(uniqid(mt_rand()));
+				return md5(uniqid(mt_rand(), true));
 			case 'sha1':
 				return sha1(uniqid(mt_rand(), true));
 		}
