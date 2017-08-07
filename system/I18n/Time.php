@@ -1170,6 +1170,14 @@ class Time extends DateTime
 	// Utilities
 	//--------------------------------------------------------------------
 
+	/**
+	 * Returns a Time instance with the timezone converted to UTC.
+	 *
+	 * @param             $time
+	 * @param string|null $timezone
+	 *
+	 * @return \DateTime|static
+	 */
 	public function getUTCObject($time, string $timezone=null)
 	{
 		if ($time instanceof Time)
