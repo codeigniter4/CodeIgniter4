@@ -43,7 +43,7 @@ The following functions are available:
 	-  **nozero**: Numeric string with no zeros.
 	-  **md5**: An encrypted random number based on ``md5()`` (fixed length of 32).
 	-  **sha1**: An encrypted random number based on ``sha1()`` (fixed length of 40).
-       -  **crypto**: A random number based on ``random_bytes()``.
+        -  **crypto**: A random number based on ``random_bytes()``.
 
 	Usage example::
 
