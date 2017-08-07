@@ -131,6 +131,7 @@ class CreateMigration extends BaseCommand
 				if ($namespace == $ns)
 				{
 					$homepath = realpath($path);
+					break;
 				}
 			}
 		}
