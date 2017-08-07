@@ -1220,16 +1220,16 @@ class BaseBuilder
 	 *
 	 * @return    BaseBuilder
 	 */
-	public function limit($value, $offset = 0)
+	public function limit(int $value = null, int $offset = 0)
 	{
 		if ( ! is_null($value))
 		{
-			$this->QBLimit = (int) $value;
+			$this->QBLimit = $value;
 		}
 
 		if ( ! empty($offset))
 		{
-			$this->QBOffset = (int) $offset;
+			$this->QBOffset = $offset;
 		}
 
 		return $this;
@@ -1341,15 +1341,15 @@ class BaseBuilder
 	 * Compiles the select statement based on the other functions called
 	 * and runs the query
 	 *
-	 * @param    string $limit     The limit clause
-	 * @param    string $offset    The offset clause
+	 * @param    int $limit     The limit clause
+	 * @param    int $offset    The offset clause
 	 * @param    bool   $returnSQL If true, returns the generate SQL, otherwise executes the query.
 	 *
 	 * @return    ResultInterface
 	 */
-	public function get($limit = null, $offset = null, $returnSQL = false)
+	public function get(int $limit = null, int $offset = 0, $returnSQL = false)
 	{
-		if ( ! empty($limit))
+		if ( ! is_null($limit))
 		{
 			$this->limit($limit, $offset);
 		}
@@ -1861,7 +1861,7 @@ class BaseBuilder
 	 *
 	 * @return    bool    TRUE on success, FALSE on failure
 	 */
-	public function update($set = null, $where = null, $limit = null, $test = false)
+	public function update($set = null, $where = null, int $limit = null, $test = false)
 	{
 		if ($set !== null)
 		{
