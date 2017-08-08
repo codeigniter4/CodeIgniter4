@@ -276,7 +276,6 @@ class App extends BaseConfig
 		'CodeIgniter\Debug\Toolbar\Collectors\Database',
 		'CodeIgniter\Debug\Toolbar\Collectors\Logs',
 		'CodeIgniter\Debug\Toolbar\Collectors\Views',
-//		'CodeIgniter\Debug\Toolbar\Collectors\Cache',
 		'CodeIgniter\Debug\Toolbar\Collectors\Files',
 		'CodeIgniter\Debug\Toolbar\Collectors\Routes',
 	];
