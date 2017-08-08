@@ -949,7 +949,7 @@ if ( ! function_exists('function_usable'))
 		{
 			if ( ! isset($_suhosin_func_blacklist))
 			{
-				$_suhosin_func_blacklist = extension_loaded('suhosin') ? explode(',', trim(ini_get('suhosin.executor.func.blacklist'))) : array();
+				$_suhosin_func_blacklist = extension_loaded('suhosin') ? explode(',', trim(ini_get('suhosin.executor.func.blacklist'))) : [];
 			}
 
 			return ! in_array($function_name, $_suhosin_func_blacklist, TRUE);

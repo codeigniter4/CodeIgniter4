@@ -270,7 +270,7 @@ class Parser extends View
 	function strpos_all($haystack, $needle)
 	{
 		$offset = 0;
-		$allpos = array();
+		$allpos = [];
 		while (($pos = strpos($haystack, $needle, $offset)) !== FALSE)
 		{
 			$offset = $pos + 1;

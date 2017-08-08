@@ -83,16 +83,16 @@ class Help extends BaseCommand
 	 *
 	 * @var array
 	 */
-	protected $arguments = array(
+	protected $arguments = [
 		'command_name' => 'The command name [default: "help"]'
-	);
+	];
 
 	/**
 	 * the Command's Options
 	 *
 	 * @var array
 	 */
-	protected $options = array();
+	protected $options = [];
 
 	//--------------------------------------------------------------------
 

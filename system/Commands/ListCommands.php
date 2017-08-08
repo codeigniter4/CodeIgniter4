@@ -83,14 +83,14 @@ class ListCommands extends BaseCommand
 	 *
 	 * @var array
 	 */
-	protected $arguments = array();
+	protected $arguments = [];
 
 	/**
 	 * the Command's Options
 	 *
 	 * @var array
 	 */
-	protected $options = array();
+	protected $options = [];
 
 	/**
 	 * The length of the longest command name.

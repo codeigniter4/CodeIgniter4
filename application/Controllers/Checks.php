@@ -54,38 +54,38 @@ class Checks extends Controller
 
 	public function api()
 	{
-		$data = array(
+		$data = [
 			"total_users" => 3,
-			"users" => array(
-				array(
+			"users" => [
+				[
 					"id" => 1,
 					"name" => "Nitya",
-					"address" => array(
+					"address" => [
 						"country" => "India",
 						"city" => "Kolkata",
 						"zip" => 700102,
-					)
-				),
-				array(
+					]
+				],
+				[
 					"id" => 2,
 					"name" => "John",
-					"address" => array(
+					"address" => [
 						"country" => "USA",
 						"city" => "Newyork",
 						"zip" => "NY1234",
-					)
-				),
-				array(
+					]
+				],
+				[
 					"id" => 3,
 					"name" => "Viktor",
-					"address" => array(
+					"address" => [
 						"country" => "Australia",
 						"city" => "Sydney",
 						"zip" => 123456,
-					)
-				),
-			)
-		);
+					]
+				],
+			]
+		];
 
 		return $this->respond($data);
 	}
