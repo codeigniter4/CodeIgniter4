@@ -12,7 +12,7 @@ CodeIgniter is installed via manual download and unzip the package.
 Composer Installation
 =====================
 
-CodeIgniter is installed via `composer <https://getcomposer.org>`_ create-project command.
+While not required, CodeIgniter can be installed via `composer <https://getcomposer.org>`_ create-project command.
 
 ::
 
