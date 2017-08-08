@@ -709,7 +709,7 @@ if ( ! function_exists('random_string'))
 	 *
 	 * Useful for generating passwords or hashes.
 	 *
-	 * @param    string $type Type of random string.  basic, alpha, alnum, numeric, nozero, unique, md5, encrypt and sha1
+	 * @param    string $type Type of random string.  basic, alpha, alnum, numeric, nozero, unique, md5, sha1, and crypto
 	 * @param    int    $len  Number of characters
 	 *
 	 * @return    string
@@ -745,6 +745,8 @@ if ( ! function_exists('random_string'))
 				return md5(uniqid(mt_rand(), true));
 			case 'sha1':
 				return sha1(uniqid(mt_rand(), true));
+			case 'crypto':
+				return bin2hex(random_bytes($len/2));
 		}
 	}
 
