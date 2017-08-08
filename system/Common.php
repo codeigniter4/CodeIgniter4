@@ -777,7 +777,7 @@ if ( ! function_exists('redirect_with_input'))
 		// so they can be displayed when the validation is
 		// handled within a method different than displaying the form.
 		$validator = Services::validation();
-		if (count($validator->getErrors()) > 0)
+		if (! empty($validator->getErrors()))
 		{
 			$session->setFlashdata('_ci_validation_errors', serialize($validator->getErrors()));
 		}
@@ -860,7 +860,7 @@ if ( ! function_exists('is_really_writable'))
 		 */
 		if (is_dir($file))
 		{
-			$file = rtrim($file, '/') . '/' . md5(mt_rand());
+			$file = rtrim($file, '/') . '/' . bin2hex(random_bytes(16));
 			if (($fp = @fopen($file, 'ab')) === false)
 			{
 				return false;
@@ -949,7 +949,7 @@ if ( ! function_exists('function_usable'))
 		{
 			if ( ! isset($_suhosin_func_blacklist))
 			{
-				$_suhosin_func_blacklist = extension_loaded('suhosin') ? explode(',', trim(ini_get('suhosin.executor.func.blacklist'))) : array();
+				$_suhosin_func_blacklist = extension_loaded('suhosin') ? explode(',', trim(ini_get('suhosin.executor.func.blacklist'))) : [];
 			}
 
 			return ! in_array($function_name, $_suhosin_func_blacklist, TRUE);

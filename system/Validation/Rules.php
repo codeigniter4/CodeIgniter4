@@ -274,7 +274,7 @@ class Rules
 			return true;
 		}
 
-		return is_array($str) ? (bool) count($str) : (trim($str) !== '');
+		return is_array($str) ?  ! empty($str) : (trim($str) !== '');
 	}
 
 	//--------------------------------------------------------------------
@@ -326,7 +326,7 @@ class Rules
 			return ! empty($data[$item]);
 		});
 
-		return ! (bool) count($requiredFields);
+		return empty($requiredFields);
 	}
 
 	//--------------------------------------------------------------------

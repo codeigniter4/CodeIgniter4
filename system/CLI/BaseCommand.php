@@ -83,14 +83,14 @@ abstract class BaseCommand
 	 *
 	 * @var array
 	 */
-	protected $options = array();
+	protected $options = [];
 
 	/**
 	 * the Command's Arguments description
 	 *
 	 * @var array
 	 */
-	protected $arguments = array();
+	protected $arguments = [];
 
 	/**
 	 * @var \Psr\Log\LoggerInterface

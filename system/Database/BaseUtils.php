@@ -109,7 +109,7 @@ abstract class BaseUtils
 			return false;
 		}
 
-		$this->db->dataCache['db_names'] = array();
+		$this->db->dataCache['db_names'] = [];
 
 		$query = $this->db->query($this->listDatabases);
 		if ($query === FALSE)
@@ -187,7 +187,7 @@ abstract class BaseUtils
 			return false;
 		}
 
-		$result = array();
+		$result = [];
 		foreach ($this->db->listTables() as $table_name)
 		{
 			$res = $this->db->query(sprintf($this->optimizeTable, $this->db->escapeIdentifiers($table_name)));
@@ -265,7 +265,7 @@ abstract class BaseUtils
 		// Next blast through the result array and build out the rows
 		while ($row = $query->getUnbufferedRow('array'))
 		{
-			$line = array();
+			$line = [];
 			foreach ($row as $item)
 			{
 				$line[] = $enclosure . str_replace($enclosure, $enclosure . $enclosure, $item) . $enclosure;
@@ -286,10 +286,10 @@ abstract class BaseUtils
 	 *
 	 * @return    string
 	 */
-	public function getXMLFromResult(ResultInterface $query, $params = array())
+	public function getXMLFromResult(ResultInterface $query, $params = [])
 	{
 		// Set our default values
-		foreach (array('root' => 'root', 'element' => 'element', 'newline' => "\n", 'tab' => "\t") as $key => $val)
+		foreach (['root' => 'root', 'element' => 'element', 'newline' => "\n", 'tab' => "\t"] as $key => $val)
 		{
 			if ( ! isset($params[$key]))
 			{
@@ -326,30 +326,30 @@ abstract class BaseUtils
 	 * @return	mixed
 	 * @throws \CodeIgniter\DatabaseException
 	 */
-	public function backup($params = array())
+	public function backup($params = [])
 	{
 		// If the parameters have not been submitted as an
 		// array then we know that it is simply the table
 		// name, which is a valid short cut.
 		if (is_string($params))
 		{
-			$params = array('tables' => $params);
+			$params = ['tables' => $params];
 		}
 
 		// Set up our default preferences
-		$prefs = array(
-			'tables'			 => array(),
-			'ignore'			 => array(),
+		$prefs = [
+			'tables'			 => [],
+			'ignore'			 => [],
 			'filename'			 => '',
 			'format'			 => 'gzip', // gzip, zip, txt
 			'add_drop'			 => TRUE,
 			'add_insert'		 => TRUE,
 			'newline'			 => "\n",
 			'foreign_key_checks' => TRUE
-		);
+		];
 
 		// Did the user submit any preferences? If so set them....
-		if (count($params) > 0)
+		if (! empty($params))
 		{
 			foreach ($prefs as $key => $val)
 			{
@@ -362,13 +362,13 @@ abstract class BaseUtils
 
 		// Are we backing up a complete database or individual tables?
 		// If no table names were submitted we'll fetch the entire table list
-		if (count($prefs['tables']) === 0)
+		if (empty($prefs['tables']))
 		{
 			$prefs['tables'] = $this->db->listTables();
 		}
 
 		// Validate the format
-		if ( ! in_array($prefs['format'], array('gzip', 'zip', 'txt'), TRUE))
+		if ( ! in_array($prefs['format'], ['gzip', 'zip', 'txt'], TRUE))
 		{
 			$prefs['format'] = 'txt';
 		}

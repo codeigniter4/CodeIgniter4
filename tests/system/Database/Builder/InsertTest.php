@@ -52,10 +52,10 @@ class InsertTest extends \CIUnitTestCase
 	{
 		$builder = $this->db->table('jobs');
 
-		$insertData = array(
+		$insertData = [
 			['id' => 2, 'name' => 'Commedian', 'description' => 'Theres something in your teeth'],
 			['id' => 3, 'name' => 'Cab Driver', 'description' => 'Iam yellow'],
-		);
+		];
 
 		$this->db->shouldReturn('execute', 1)
 				 ->shouldReturn('affectedRows', 1);

@@ -213,7 +213,7 @@ class Cell
 			unset($new_params);
 		}
 
-		if (is_array($params) && ! count($params))
+		if (is_array($params) && empty($params))
 		{
 			return [];
 		}

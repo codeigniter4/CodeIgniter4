@@ -35,7 +35,7 @@ final class HTMLHelperTest extends \CIUnitTestCase
 EOH;
 
 		$expected = ltrim($expected);
-		$list     = array('foo', 'bar');
+		$list     = ['foo', 'bar'];
 
 		$this->assertEquals(ltrim($expected), ul($list));
 	}
@@ -51,7 +51,7 @@ EOH;
 EOH;
 
 		$expected = ltrim($expected);
-		$list     = array('foo', 'bar');
+		$list     = ['foo', 'bar'];
 
 		$this->assertEquals($expected, ul($list, 'class="test"'));
 	}
@@ -73,7 +73,7 @@ EOH;
 EOH;
 
 		$expected = ltrim($expected);
-		$list     = array('foo', 'bar', array('foo', 'bar'));
+		$list     = ['foo', 'bar', ['foo', 'bar']];
 
 		$this->assertEquals(ltrim($expected), ul($list));
 	}
@@ -91,7 +91,7 @@ EOH;
 EOH;
 
 		$expected = ltrim($expected);
-		$list     = array('foo', 'bar');
+		$list     = ['foo', 'bar'];
 
 		$this->assertEquals(ltrim($expected), ol($list));
 	}
@@ -107,7 +107,7 @@ EOH;
 EOH;
 
 		$expected = ltrim($expected);
-		$list     = array('foo', 'bar');
+		$list     = ['foo', 'bar'];
 
 		$this->assertEquals($expected, ol($list, 'class="test"'));
 	}
@@ -129,7 +129,7 @@ EOH;
 EOH;
 
 		$expected = ltrim($expected);
-		$list     = array('foo', 'bar', array('foo', 'bar'));
+		$list     = ['foo', 'bar', ['foo', 'bar']];
 
 		$this->assertEquals(ltrim($expected), ol($list));
 	}

@@ -66,10 +66,10 @@ if ( ! function_exists('strip_image_tags'))
 	function strip_image_tags(string $str)
 	{
 		return preg_replace(
-				array(
+				[
 			'#<img[\s/]+.*?src\s*=\s*(["\'])([^\\1]+?)\\1.*?\>#i',
 			'#<img[\s/]+.*?src\s*=\s*?(([^\s"\'=<>`]+)).*?\>#i'
-				), '\\2', $str
+				], '\\2', $str
 		);
 	}
 
@@ -88,7 +88,7 @@ if ( ! function_exists('encode_php_tags'))
 	 */
 	function encode_php_tags(string $str): string
 	{
-		return str_replace(array('<?', '?>'), array('&lt;?', '?&gt;'), $str);
+		return str_replace(['<?', '?>'], ['&lt;?', '?&gt;'], $str);
 	}
 
 }

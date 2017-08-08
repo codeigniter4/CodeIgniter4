@@ -268,11 +268,11 @@ class Negotiate
 
 			unset($pairs[0]);
 
-			$parameters = array();
+			$parameters = [];
 
 			foreach ($pairs as $pair)
 			{
-				$param = array();
+				$param = [];
 				preg_match(
 						'/^(?P<name>.+?)=(?P<quoted>"|\')?(?P<value>.*?)(?:\k<quoted>)?$/', $pair, $param
 				);
