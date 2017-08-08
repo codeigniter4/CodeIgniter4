@@ -587,7 +587,7 @@ class CLI
 
 			$first = true;
 
-			array_walk($lines, function (&$line, $index) use ($max, $pad_left, &$first) {
+			array_walk($lines, function (&$line, $index) use ($pad_left, &$first) {
 				if ( ! $first)
 				{
 					$line = str_repeat(" ", $pad_left) . $line;
