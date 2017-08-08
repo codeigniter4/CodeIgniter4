@@ -349,7 +349,7 @@ abstract class BaseUtils
 		];
 
 		// Did the user submit any preferences? If so set them....
-		if (count($params) > 0)
+		if (! empty($params))
 		{
 			foreach ($prefs as $key => $val)
 			{
@@ -362,7 +362,7 @@ abstract class BaseUtils
 
 		// Are we backing up a complete database or individual tables?
 		// If no table names were submitted we'll fetch the entire table list
-		if (count($prefs['tables']) === 0)
+		if (empty($prefs['tables']))
 		{
 			$prefs['tables'] = $this->db->listTables();
 		}

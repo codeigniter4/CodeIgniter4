@@ -744,7 +744,7 @@ class CLI
 	 */
 	public static function getOptionString(): string
 	{
-		if ( ! count(static::$options))
+		if (empty(static::$options))
 		{
 			return '';
 		}

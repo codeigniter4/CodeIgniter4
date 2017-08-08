@@ -777,7 +777,7 @@ if ( ! function_exists('redirect_with_input'))
 		// so they can be displayed when the validation is
 		// handled within a method different than displaying the form.
 		$validator = Services::validation();
-		if (count($validator->getErrors()) > 0)
+		if (! empty($validator->getErrors()))
 		{
 			$session->setFlashdata('_ci_validation_errors', serialize($validator->getErrors()));
 		}

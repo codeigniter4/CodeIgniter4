@@ -144,7 +144,7 @@ class Validation implements ValidationInterface
 			$this->processRules($rField, $data[$rField] ?? null, $rules, $data);
 		}
 
-		return count($this->errors) > 0 ? false : true;
+		return ! empty($this->errors) ? false : true;
 	}
 
 	//--------------------------------------------------------------------
