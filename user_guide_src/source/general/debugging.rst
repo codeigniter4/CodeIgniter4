@@ -80,7 +80,6 @@ the App configuration file::
 		'CodeIgniter\Debug\Toolbar\Collectors\Database',
 		'CodeIgniter\Debug\Toolbar\Collectors\Logs',
 		'CodeIgniter\Debug\Toolbar\Collectors\Views',
- 		'CodeIgniter\Debug\Toolbar\Collectors\Cache',
 		'CodeIgniter\Debug\Toolbar\Collectors\Files',
 		'CodeIgniter\Debug\Toolbar\Collectors\Routes',
 	];
@@ -95,7 +94,6 @@ The Collectors that ship with CodeIgniter are:
 * **Database** Displays a list of queries that all database connections have performed, and their execution time.
 * **Logs** Any information that was logged will be displayed here. In long-running systems, or systems with many items being logged, this can cause memory issues and should be disabled.
 * **Views** Displays render time for views on the timeline, and shows any data passed to the views on a separate tab.
-* **Cache** Will display information about cache hits and misses, and execution times.
 * **Files** displays a list of all files that have been loaded during this request.
 * **Routes** displays information about the current route and all routes defined in the system.
 
