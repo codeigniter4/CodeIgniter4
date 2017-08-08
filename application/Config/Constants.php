@@ -31,13 +31,18 @@ define('COMPOSER_PATH', ROOTPATH.'vendor/autoload.php');
 | Provide simple ways to work with the myriad of PHP functions that
 | require information to be in seconds.
 */
-defined('SECOND')   || define('SECOND',      1);
-defined('MINUTE')   || define('MINUTE',     60);
-defined('HOUR')     || define('HOUR',     3600);
-defined('DAY')      || define('DAY',     86400);
-defined('WEEK')     || define('WEEK',   604800);
-defined('MONTH')    || define('MONTH', 2592000);
-defined('YEAR')     || define('YEAR', 31536000);
+defined('SECOND')   || define('SECOND',                 1);
+defined('MINUTE')   || define('MINUTE',                60);
+defined('HOUR')     || define('HOUR',                3600);
+defined('DAY')      || define('DAY',                86400);
+defined('WEEK')     || define('WEEK',              604800);
+defined('MONTH')    || define('MONTH',            2592000);
+defined('YEAR')     || define('YEAR',            31536000);
+defined('LUSTRUM')  || define('LUSTRUM',        157680000); // 5    years
+defined('DECADE')   || define('DECADE',         315360000); // 10   years
+defined('INDICTION') || define('INDICTION',     473040000); // 15   years
+defined('CENTURY')  || define('CENTURY',       3153600000); // 100  years
+defined('MILLENNIUM') || define('MILLENNIUM', 31536000000); // 1000 years
 
 /*
 |--------------------------------------------------------------------------
