@@ -158,7 +158,7 @@ class Forge extends \CodeIgniter\Database\Forge
 			}
 		}
 
-		return array($sql . implode(',', $field));
+		return [$sql . implode(',', $field)];
 	}
 
 	//--------------------------------------------------------------------
@@ -221,13 +221,13 @@ class Forge extends \CodeIgniter\Database\Forge
 				continue;
 			}
 
-			is_array($this->keys[$i]) OR $this->keys[$i] = array($this->keys[$i]);
+			is_array($this->keys[$i]) OR $this->keys[$i] = [$this->keys[$i]];
 
 			$sql .= ",\n\tKEY " . $this->db->escapeIdentifiers(implode('_', $this->keys[$i]))
 					. ' (' . implode(', ', $this->db->escapeIdentifiers($this->keys[$i])) . ')';
 		}
 
-		$this->keys = array();
+		$this->keys = [];
 
 		return $sql;
 	}

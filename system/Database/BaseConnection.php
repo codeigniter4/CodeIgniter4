@@ -1466,7 +1466,7 @@ abstract class BaseConnection implements ConnectionInterface
 			return false;
 		}
 
-		$this->dataCache['table_names'] = array();
+		$this->dataCache['table_names'] = [];
 		$query = $this->query($sql);
 
 		foreach ($query->getResultArray() as $row)
@@ -1546,7 +1546,7 @@ abstract class BaseConnection implements ConnectionInterface
 		}
 
 		$query = $this->query($sql);
-		$this->dataCache['field_names'][$table] = array();
+		$this->dataCache['field_names'][$table] = [];
 
 		foreach ($query->getResultArray() as $row)
 		{

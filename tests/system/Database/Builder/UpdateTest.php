@@ -77,10 +77,10 @@ class UpdateTest extends \CIUnitTestCase
 	{
 		$builder = new BaseBuilder('jobs', $this->db);
 
-		$updateData = array(
+		$updateData = [
 			['id' => 2, 'name' => 'Comedian', 'description' => 'Theres something in your teeth'],
 			['id' => 3, 'name' => 'Cab Driver', 'description' => 'Iam yellow'],
-		);
+		];
 
 		$this->db->shouldReturn('execute', 1)
 		         ->shouldReturn('affectedRows', 1);

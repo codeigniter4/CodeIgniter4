@@ -21,11 +21,11 @@ class ReplaceTest extends \CIUnitTestCase
 
 		$expected = "REPLACE INTO \"jobs\" (\"title\", \"name\", \"date\") VALUES (:title, :name, :date)";
 
-		$data = array(
+		$data = [
 			'title' => 'My title',
 			'name'  => 'My Name',
 			'date'  => 'My date'
-		);
+		];
 
 		$this->assertSame($expected, $builder->replace($data, true));
 	}
