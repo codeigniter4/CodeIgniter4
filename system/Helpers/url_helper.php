@@ -438,7 +438,7 @@ if ( ! function_exists('safe_mailto'))
 			}
 			else
 			{
-				if (count($temp) === 0)
+				if (empty($temp))
 				{
 					$count = ($ordinal < 224) ? 2 : 3;
 				}

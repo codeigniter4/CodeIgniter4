@@ -507,7 +507,7 @@ class ContentSecurityPolicy
 	 */
 	public function setSandbox(bool $value = true, array $flags = null)
 	{
-		if (empty($this->sandbox) && ! count($flags))
+		if (empty($this->sandbox) && empty($flags))
 		{
 			$this->sandbox = $value;
 		}
@@ -704,7 +704,7 @@ class ContentSecurityPolicy
 		// Compile our own header strings here since if we just
 		// append it to the response, it will be joined with
 		// commas, not semi-colons as we need.
-		if (count($this->tempHeaders))
+		if (! empty($this->tempHeaders))
 		{
 			$header = '';
 			foreach ($this->tempHeaders as $name => $value)
@@ -714,7 +714,7 @@ class ContentSecurityPolicy
 			$response->appendHeader('Content-Security-Policy', $header);
 		}
 
-		if (count($this->reportOnlyHeaders))
+		if (! empty($this->reportOnlyHeaders))
 		{
 			$header = '';
 			foreach ($this->reportOnlyHeaders as $name => $value)
@@ -782,12 +782,12 @@ class ContentSecurityPolicy
 			}
 		}
 
-		if (count($sources))
+		if (! empty($sources))
 		{
 			$this->tempHeaders[$name] = implode(' ', $sources);
 		}
 
-		if (count($reportSources))
+		if (! empty($reportSources))
 		{
 			$this->reportOnlyHeaders[$name] = implode(' ', $reportSources);
 		}

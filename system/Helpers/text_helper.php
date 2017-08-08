@@ -165,7 +165,7 @@ if ( ! function_exists('ascii_to_entities'))
 			}
 			else
 			{
-				if (count($temp) === 0)
+				if (empty($temp))
 				{
 					$count = ($ordinal < 224) ? 2 : 3;
 				}
@@ -510,7 +510,7 @@ if ( ! function_exists('word_wrap'))
 		}
 
 		// Put our markers back
-		if (count($unwrap) > 0)
+		if (! empty($unwrap))
 		{
 			foreach ($unwrap as $key => $val)
 			{

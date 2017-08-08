@@ -116,7 +116,7 @@
 		</a>
 
 		<?php if (isset($_SESSION)) : ?>
-			<?php if (count($_SESSION)) : ?>
+			<?php if (! empty($_SESSION)) : ?>
 				<table id="session_table">
 					<tbody>
 					<?php foreach ($_SESSION as $key => $value) : ?>

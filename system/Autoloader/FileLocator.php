@@ -258,7 +258,7 @@ class FileLocator
 			$tempFiles = get_filenames($fullPath, true);
 			//CLI::newLine($tempFiles);
 
-			if (count($tempFiles))
+			if (! empty($tempFiles))
 				$files = array_merge($files, $tempFiles);
 		}
 
