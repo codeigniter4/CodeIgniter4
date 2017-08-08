@@ -134,8 +134,8 @@ class ListCommands extends BaseCommand
 
 		// Pad each item to the same length
 		$names = $this->padArray($names, 2, 2);
-
-		for ($i = 0; $i < $countNames = count($names); $i ++ )
+		$countNames = count($names);
+		for ($i = 0; $i < $countNames; $i ++ )
 		{
 			$lastGroup = $this->describeGroup($groups[$i], $lastGroup);
 
