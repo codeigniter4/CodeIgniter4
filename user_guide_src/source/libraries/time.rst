@@ -143,6 +143,79 @@ not aware of locales::
 
     $datetime = Time::toDateTime();
 
+====================
+Displaying the Value
+====================
+
+Since the Time class extends DateTime, you get all of the output methods that provides, including the format() method.
+However, the DateTime methods do not provide a localize result. The Time class does provide a number of helper methods
+to display localized versions of the value, though.
+
+toLocalizedString()
+-------------------
+
+This is the localized version of DateTime's format() method. Instead of using the values you might be familiar with, though,
+you must use values acceptable to the `IntlDateFormatter <http://php.net/manual/en/class.intldateformatter.php>`_ class.
+A full listing of values can be found `here <http://www.icu-project.org/apiref/icu4c/classSimpleDateFormat.html#details>`_.
+
+::
+    $time = Time::parse('March 9, 2016 12:00:00', 'America/Chicago');
+    echo $time->toLocalizedString('MMM d, yyyy');   // March 9, 2016
+
+
+toDateTimeString()
+------------------
+
+This is the first of three helper methods to work with the IntlDateFormatter without having to remember their values.
+This will return a string formatted as you would commonly use for datetime columns in a database (Y-m-d H:i:s)::
+
+    $time = Time::parse('March 9, 2016 12:00:00', 'America/Chicago');
+    echo $time->toDateTimeString();     // 2016-03-09 12:00:00
+
+toDateString()
+--------------
+
+Displays just the date portion of the Time::
+
+    $time = Time::parse('March 9, 2016 12:00:00', 'America/Chicago');
+    echo $time->toDateTimeString();     // 2016-03-09
+
+toTimeString()
+--------------
+
+Displays just the time portion of the value::
+
+    $time = Time::parse('March 9, 2016 12:00:00', 'America/Chicago');
+    echo $time->toTimeString();     // 12:00:00
+
+
+humanize()
+----------
+
+This methods returns a string that displays the difference between the current date/time and the instance in a
+human readable format that is geared towards being easily understood. It can create strings like '3 hours ago',
+'in 1 month', etc.
+
+    // Assume current time is: March 10, 2017 (America/Chicago)
+    $time = Time::parse('March 9, 2016 12:00:00', 'America/Chicago');
+
+    echo $time->humanize();     // 1 year ago
+
+The exact time displayed is determined in the following manner:
+
+=============================== =================================
+Time difference                  Result
+=============================== =================================
+$time > 1 year && < 2 years      in 1 year / 1 year ago
+$time > 1 month && < 1 year      in 6 months / 6 months ago
+$time > 7 days && < 1 month      in 3 weeks / 3 weeks ago
+$time > today && < 7 days        in 4 days / 4 days ago
+$time == tomorrow / yesterday    Tomorrow / Yesterday
+$time > 59 minutes && < 1 day    1:37pm
+$time > now && < 1 hour          in 35 minutes / 35 minutes ago
+$time == now                     Now
+
+The exact language used is controlled through the language file, Time.php.
 
 ==============================
 Working with Individual Values
@@ -258,6 +331,8 @@ thrown.
 
 .. note:: All setters will return a new Time instance, leaving the original instance untouched.
 
+.. note:: All setters will throw an InvalidArgumentException if the value is out of range.
+
 ::
 
     $time = $time->setYear(2017);
@@ -289,6 +364,96 @@ Returns a new instance with the date set to the new timestamp::
     $time2 = $time->setTimestamp(strtotime('April 1, 2017'));
 
     echo $time->toDateTimeString();     // 2017-05-10 00:00:00
-    echo $time->toDateTimeString();     // 2017-04-01 00:00:00
+    echo $time2->toDateTimeString();     // 2017-04-01 00:00:00
+
+
+Modifying the Value
+===================
+
+The following methods allow you to modify the date by adding or subtracting values to the current Time. This will not
+modify the existing Time instance, but will return a new instance.
+
+::
+
+    $time = $time->addSeconds(23);
+    $time = $time->addMinutes(15);
+    $time = $time->addHours(12);
+    $time = $time->addDays(21);
+    $time = $time->addMonths(14);
+    $time = $time->addYears(5);
+
+    $time = $time->subSeconds(23);
+    $time = $time->subMinutes(15);
+    $time = $time->subHours(12);
+    $time = $time->subDays(21);
+    $time = $time->subMonths(14);
+    $time = $time->subYears(5);
+
+
+Comparing Two Times
+===================
+
+The following methods allow you to compare one Time instance with another. All comparisons are first converted to UTC
+before comparisons are done, to ensure that different timezones respond correctly.
+
+equals()
+--------
+
+Determines if the datetime passed in is equal to the current instance. Equal in this case means that they represent the
+same moment in time, and are not required to be in the same timezone, as both times are converted to UTC and compared
+that way::
+
+    $time1 = Time::parse('January 10, 2017 21:50:00', 'America/Chicago');
+    $time2 = Time::parse('January 11, 2017 03:50:00', 'Europe/London');
+
+    $time1->equals($time2);    // true
+
+The value being tested against can be a Time instance, a DateTime instance, or a string with the full date time in
+a manner that a new DateTime instance can understand. When passing a string as the first parameter, you can pass
+a timezone string in as the second parameter. If no timezone is given, the system default will be used::
+
+    $time1->equals('January 11, 2017 03:50:00', 'Europe/London');  // true
+
+sameAs()
+------
+
+This is identical to the **equals** method, except that it only returns true when the date, time, AND timezone are
+all identical::
+
+    $time1 = Time::parse('January 10, 2017 21:50:00', 'America/Chicago');
+    $time2 = Time::parse('January 11, 2017 03:50:00', 'Europe/London');
+
+    $time1->sameAs($time2);    // false
+    $time2->sameAs('January 10, 2017 21:50:00', 'America/Chicago');    // true
+
+isBefore()
+----------
+
+Checks if the passed in time is before the the current instance. The comparison is done against the UTC versions of
+both times::
+
+    $time1 = Time::parse('January 10, 2017 21:50:00', 'America/Chicago');
+    $time2 = Time::parse('January 11, 2017 03:50:00', 'America/Chicago');
+
+    $time1->isBefore($time2);  // true
+    $time2->isBefore($time1);  // false
+
+The value being tested against can be a Time instance, a DateTime instance, or a string with the full date time in
+a manner that a new DateTime instance can understand. When passing a string as the first parameter, you can pass
+a timezone string in as the second parameter. If no timezone is given, the system default will be used::
+
+    $time1->isBefore('March 15, 2013', 'America/Chicago');  // false
+
+isAfter()
+---------
+
+Works exactly the same as **isBefore()** except checks if the time is after the time passed in::
+
+    $time1 = Time::parse('January 10, 2017 21:50:00', 'America/Chicago');
+    $time2 = Time::parse('January 11, 2017 03:50:00', 'America/Chicago');
+
+    $time1->isAfter($time2);  // false
+    $time2->isAfter($time1);  // true
+
 
 
