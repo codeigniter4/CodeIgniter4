@@ -343,3 +343,23 @@ Time Constants
 .. php:const:: YEAR
 
 	Equals 31536000.
+
+.. php:const:: LUSTRUM
+
+	Equals 157680000.
+
+.. php:const:: DECADE
+
+	Equals 315360000.
+
+.. php:const:: INDICTION
+
+	Equals 473040000.
+
+.. php:const:: CENTURY
+
+	Equals 3153600000.
+
+.. php:const:: MILLENNIUM
+
+	Equals 31536000000.
