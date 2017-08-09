@@ -249,7 +249,7 @@ class CLI
 			{
 				$extra_output = ' [ Default: "' . $default . '" ]';
 			}
-			elseif ($options !== [])
+			elseif (! empty($options))
 			{
 				$extra_output = ' [ ' . implode(', ', $options) . ' ]';
 			}
