@@ -343,3 +343,7 @@ Time Constants
 .. php:const:: YEAR
 
 	Equals 31536000.
+
+.. php:const:: DECADE
+
+	Equals 315360000.
