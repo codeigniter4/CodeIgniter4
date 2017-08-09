@@ -194,7 +194,7 @@ humanize()
 
 This methods returns a string that displays the difference between the current date/time and the instance in a
 human readable format that is geared towards being easily understood. It can create strings like '3 hours ago',
-'in 1 month', etc.
+'in 1 month', etc::
 
     // Assume current time is: March 10, 2017 (America/Chicago)
     $time = Time::parse('March 9, 2016 12:00:00', 'America/Chicago');
@@ -457,3 +457,70 @@ Works exactly the same as **isBefore()** except checks if the time is after the 
 
 
 
+Viewing Differences
+===================
+
+To compare two Times directly, you would use the **difference()** method, which returns a **CodeIgniter\I18n\TimeDifference**
+instance. The first parameter is either a Time instance, a DateTime instance, or a string with the date/time. If
+a string is passed in the first parameter, the second parameter can be a timezone string::
+
+
+    $time = Time::parse('March 10, 2017', 'America/Chicago');
+
+    $diff = $time->difference(Time::now());
+    $diff = $time->difference(new DateTime('July 4, 1975', 'America/Chicago');
+    $diff = $time->difference('July 4, 1975 13:32:05', 'America/Chicago');
+
+Once you have the TimeDifference instance, you have several methods you can use to find information about the difference
+between the two times. The value returned will be negative if it was in the past, or positive if in the future from
+the original time::
+
+    $current = Time::parse('March 10, 2017', 'America/Chicago');
+    $test    = Time::parse('March 10, 2010', 'America/Chicago');
+
+    $diff = $current->difference($test);
+
+    echo $diff->getYears();     // -7
+    echo $diff->getMonths();    // -84
+    echo $diff->getWeeks();     // -365
+    echo $diff->getDays();      // -2557
+    echo $diff->getHours();     // -61368
+    echo $diff->getMinutes();   // -3682080
+    echo $diff->getSeconds();   // -220924800
+
+You can use either **getX()** methods, or access the calculate values as if they were properties::
+
+    echo $diff->years;     // -7
+    echo $diff->months;    // -84
+    echo $diff->weeks;     // -365
+    echo $diff->days;      // -2557
+    echo $diff->hours;     // -61368
+    echo $diff->minutes;   // -3682080
+    echo $diff->seconds;   // -220924800
+
+humanize()
+----------
+
+Much like Time's humanize() method, this returns a string that displays the difference between the times in a
+human readable format that is geared towards being easily understood. It can create strings like '3 hours ago',
+'in 1 month', etc. The biggest differences are in how very recent dates are handled::
+
+    // Assume current time is: March 10, 2017 (America/Chicago)
+    $time = Time::parse('March 9, 2016 12:00:00', 'America/Chicago');
+
+    echo $time->humanize();     // 1 year ago
+
+The exact time displayed is determined in the following manner:
+
+=============================== =================================
+Time difference                  Result
+=============================== =================================
+$time > 1 year && < 2 years      in 1 year / 1 year ago
+$time > 1 month && < 1 year      in 6 months / 6 months ago
+$time > 7 days && < 1 month      in 3 weeks / 3 weeks ago
+$time > today && < 7 days        in 4 days / 4 days ago
+$time > 1 hour && < 1 day        in 8 hours / 8 hours ago
+$time > 1 minute && < 1 hour     in 35 minutes / 35 minutes ago
+$time < 1 minute                 Now
+
+The exact language used is controlled through the language file, Time.php.
