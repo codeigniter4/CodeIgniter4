@@ -1893,6 +1893,8 @@ class BaseBuilder
 			{
 				return true;
 			}
+
+			return false;
 		}
 
 		return true;
