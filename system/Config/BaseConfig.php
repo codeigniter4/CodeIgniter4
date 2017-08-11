@@ -121,6 +121,8 @@ class BaseConfig
 	 */
 	protected function getEnvValue(string $property, string $prefix, string $shortPrefix)
 	{
+		$shortPrefix = ltrim($shortPrefix, '\\');
+
 		if (($value = getenv("{$shortPrefix}.{$property}")) !== false)
 		{
 			return $value;
