@@ -431,11 +431,17 @@ class Pager implements PagerInterface
 			return;
 		}
 
+		if (isset($_GET['page_'.$group])) {
+			$currentPage = is_numeric($_GET['page_'.$group]) ? $_GET['page_'.$group] : 1;
+		} else {
+			$currentPage = isset($_GET['page']) && is_numeric($_GET['page']) ? $_GET['page'] : 1;
+		}
+
 		$this->groups[$group] = [
 			'uri'			 => clone Services::request()->uri,
 			'hasMore'		 => false,
 			'total'			 => null,
-			'currentPage'	 => $_GET['page_' . $group] ?? $_GET['page'] ?? 1,
+			'currentPage'	 => $currentPage,
 			'perPage'		 => $this->config->perPage,
 			'pageCount'		 => 1,
 		];

@@ -1052,7 +1052,7 @@ class Model
 	public function paginate(int $perPage = 20, string $group = 'default')
 	{
 		// Get the necessary parts.
-		$page = isset($_GET['page']) && $_GET['page'] > 1 ? $_GET['page'] : 1;
+		$page = isset($_GET['page']) && is_numeric($_GET['page']) ? $_GET['page'] : 1;
 
 		$total = $this->countAllResults(false);
 
