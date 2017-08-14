@@ -163,6 +163,8 @@ class CIDatabaseTestCase extends CIUnitTestCase
 
 				foreach ($tables as $table)
 				{
+					if ($table = $this->db->DBPrefix.'migrations') continue;
+
 					$forge->dropTable($table, true);
 				}
 			}
