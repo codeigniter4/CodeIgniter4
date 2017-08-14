@@ -599,15 +599,6 @@ class Model
 			$response = $this->insert($data);
 		}
 
-		// If it was an Entity class, check it for an onSave method.
-		if (is_object($saveData) && ! $saveData instanceof \stdClass)
-		{
-			if (method_exists($saveData, 'onSave'))
-			{
-				$saveData->onSave();
-			}
-		}
-
 		return $response;
 	}
 
