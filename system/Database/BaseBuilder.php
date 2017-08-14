@@ -1440,7 +1440,7 @@ class BaseBuilder
 			$this->QBOrderBy = $orderby;
 		}
 
-		$row = is_bool($result)
+		$row = (! $result instanceof ResultInterface)
 			? null
 			: $result->getRow();
 
