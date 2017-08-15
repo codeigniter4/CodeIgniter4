@@ -27,7 +27,7 @@ class InsertTest extends \CIUnitTestCase
 		];
 		$builder->insert($insertData, true, true);
 
-		$expectedSQL   = "INSERT INTO \"jobs\" (\"id\", \"name\") VALUES (:id, :name)";
+		$expectedSQL   = "INSERT INTO \"jobs\" (\"id\", \"name\") VALUES (:id:, :name:)";
 		$expectedBinds = $insertData;
 
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledInsert()));
@@ -66,7 +66,7 @@ class InsertTest extends \CIUnitTestCase
 
 		$this->assertTrue($query instanceof Query);
 
-		$raw = "INSERT INTO \"jobs\" (\"description\", \"id\", \"name\") VALUES (:description0,:id0,:name0)";
+		$raw = "INSERT INTO \"jobs\" (\"description\", \"id\", \"name\") VALUES (:description0:,:id0:,:name0:)";
 
 		$this->assertEquals($raw, str_replace("\n", ' ', $query->getOriginalQuery() ));
 

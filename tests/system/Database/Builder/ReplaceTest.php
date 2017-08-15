@@ -19,7 +19,7 @@ class ReplaceTest extends \CIUnitTestCase
 	{
 	    $builder = $this->db->table('jobs');
 
-		$expected = "REPLACE INTO \"jobs\" (\"title\", \"name\", \"date\") VALUES (:title, :name, :date)";
+		$expected = "REPLACE INTO \"jobs\" (\"title\", \"name\", \"date\") VALUES (:title:, :name:, :date:)";
 
 		$data = [
 			'title' => 'My title',

@@ -402,6 +402,8 @@ class Query implements QueryInterface
 	 */
 	protected function matchNamedBinds(string $sql, array $binds)
 	{
+		$replacers = [];
+
 		foreach ($binds as $placeholder => $value)
 		{
 			$escapedValue = $this->db->escape($value);
@@ -411,24 +413,15 @@ class Query implements QueryInterface
 			// otherwise it will get escaped.
 			if (is_array($value))
 			{
-				foreach ($value as &$item)
-				{
-					$item = preg_quote($item, '|');
-				}
-
 				$escapedValue = '(' . implode(',', $escapedValue) . ')';
 			}
-			else
-			{
-				$escapedValue = preg_quote(trim($escapedValue, $this->db->escapeChar), '|');
-			}
 
-			// preg_quoting can cause issues with some characters in the final query,
-			// but NOT preg_quoting causes other characters to be intepreted, like $.
-			$escapedValue = str_replace('\\.', '.', $escapedValue);
+			$replacers[":{$placeholder}:"] = $escapedValue;
 
-			$sql = preg_replace('|:' . $placeholder . '(?!\w)|', $escapedValue, $sql);
+//			$sql = preg_replace('|:' . $placeholder . '(?!\w)|', $escapedValue, $sql);
 		}
+
+		$sql = strtr($sql, $replacers);
 
 		return $sql;
 	}

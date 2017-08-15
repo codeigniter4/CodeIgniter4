@@ -656,7 +656,7 @@ class BaseBuilder
 				$k = substr($k, 0, $match[0][1]) . ($match[1][0] === '=' ? ' IS NULL' : ' IS NOT NULL');
 			}
 
-			$v = ! is_null($v) ? ' :' . $bind : $v;
+			$v = ! is_null($v) ? " :$bind:" : $v;
 
 			$this->{$qb_key}[] = ['condition' => $prefix . $k . $v, 'escape' => $escape];
 		}
@@ -787,7 +787,7 @@ class BaseBuilder
 		$prefix = empty($this->QBWhere) ? $this->groupGetType('') : $this->groupGetType($type);
 
 		$where_in = [
-			'condition'	 => $prefix . $key . $not . ' IN :' . $ok,
+			'condition'	 => $prefix . $key . $not . " IN :{$ok}:",
 			'escape'	 => false,
 		];
 
@@ -967,11 +967,11 @@ class BaseBuilder
 	 */
 	public function _like_statement(string $prefix = null, string $column, string $not = null, string $bind, bool $insensitiveSearch = false): string
 	{
-		$like_statement = "{$prefix} {$column} {$not} LIKE :{$bind}";
+		$like_statement = "{$prefix} {$column} {$not} LIKE :{$bind}:";
 
 		if ($insensitiveSearch === true)
 		{
-			$like_statement = "{$prefix} LOWER({$column}) {$not} LIKE :{$bind}";
+			$like_statement = "{$prefix} LOWER({$column}) {$not} LIKE :{$bind}:";
 		}
 
 		return $like_statement;
@@ -1299,7 +1299,7 @@ class BaseBuilder
 			if ($escape)
 			{
 				$bind = $this->setBind($k, $v);
-				$this->QBSet[$this->db->protectIdentifiers($k, false, $escape)] = ':' . $bind;
+				$this->QBSet[$this->db->protectIdentifiers($k, false, $escape)] = ":$bind:";
 			}
 			else
 			{
@@ -1614,7 +1614,7 @@ class BaseBuilder
 			$clean = [];
 			foreach ($row as $k => $value)
 			{
-				$clean[] = ':' . $this->setBind($k, $value);
+				$clean[] = ':' . $this->setBind($k, $value) .':';
 			}
 
 			$row = $clean;
@@ -2111,7 +2111,7 @@ class BaseBuilder
 
 				$bind = $this->setBind($k2, $v2);
 
-				$clean[$this->db->protectIdentifiers($k2, false, $escape)] = ':' . $bind;
+				$clean[$this->db->protectIdentifiers($k2, false, $escape)] = ":$bind:";
 			}
 
 			if ($index_set === false)

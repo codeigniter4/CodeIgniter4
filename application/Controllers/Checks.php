@@ -106,6 +106,18 @@ class Checks extends Controller
 		$query->execute('foo', 'foo@example.com', 'US');
 	}
 
+	public function db2()
+	{
+		$db = Database::connect();
+		$db->initialize();
+
+		$db->table('user')->insert([
+				'name' => 'a',
+				'email' => 'b@example.com',
+				'country' => 'x'
+			]);
+	}
+
 	public function format()
 	{
 		echo '<pre>';
