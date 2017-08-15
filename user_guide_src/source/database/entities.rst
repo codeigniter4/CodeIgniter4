@@ -148,7 +148,7 @@ Here's an updated User entity to provide some examples of how this could be used
         protected $email;
         protected $password;
         protected $created_at;
-        protected $updated_on;
+        protected $updated_at;
 
         public function setPassword(string $pass)
         {
@@ -157,14 +157,14 @@ Here's an updated User entity to provide some examples of how this could be used
             return $this;
         }
 
-        public function setCreatedOn(string $dateString)
+        public function setCreatedAt(string $dateString)
         {
             $this->created_at = new \DateTime($datetime, new \DateTimeZone('UTC'));
 
             return
         }
 
-        public function getCreatedOn(string $format = 'Y-m-d H:i:s')
+        public function getCreatedAt(string $format = 'Y-m-d H:i:s')
         {
             $timezone = isset($this->timezone)
             ? $this->timezone
@@ -221,7 +221,7 @@ As an example, imagine your have the simplified User Entity that is used through
         protected $email;
         protected $password;
         protected $created_at;
-        protected $updated_on;
+        protected $updated_at;
     }
 
 Your boss comes to you and says that no one uses usernames anymore, so you're switching to just use emails for login.
@@ -244,10 +244,12 @@ simply map the ``full_name`` column in the database to the ``$name`` property, a
         protected $email;
         protected $password;
         protected $created_at;
-        protected $updated_on;
+        protected $updated_at;
 
-        protected $datamap = [
-            'full_name' => 'name'
+        protected $_options = [
+            'datamap' => [
+                'full_name' => 'name'
+            ]
         ];
     }
 
@@ -260,3 +262,42 @@ class' ``$name`` property, so it can be set and retrieved through ``$user->name`
 through the original ``$user->full_name``, also, as this is needed for the model to get the data back out and save it
 to the database. However, ``unset`` and ``isset`` only work on the mapped property, ``$name``, not on the original name,
 ``full_name``.
+
+Date Mutators
+-------------
+
+By default, the Entity class will convert fields named `created_at`, `updated_at`, or `deleted_at` into
+:doc:`Time </libraries/time>`_ instances whenever they are set or retrieved. The Time class provides a large number
+of helpful methods in a immutable, localized way.
+
+You can define which properties are automatically converted by adding the name to the **options['dates']** array::
+
+    <?php namespace App\Entities;
+
+    use CodeIgniter\Entity;
+
+    class User extends Entity
+    {
+        protected $id;
+        protected $name;        // Represents a full name now
+        protected $email;
+        protected $password;
+        protected $created_at;
+        protected $updated_at;
+
+        protected $_options = [
+            'dates' => ['created_at', 'updated_at', 'deleted_at'],
+        ];
+    }
+
+Now, when any of those properties are set, they will be converted to a Time instance, using the application's
+current timezone, as set in **application/Config/App.php**::
+
+    $user = new App\Entities\User();
+
+    // Converted to Time instance
+    $user->created_at = 'April 15, 2017 10:30:00';
+
+    // Can now use any Time methods:
+    echo $user->created_at->humanize();
+    echo $user->created_at->setTimezone('Europe/London')->toDateString();

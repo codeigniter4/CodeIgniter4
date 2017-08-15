@@ -256,9 +256,11 @@ class EntityTest extends \CIUnitTestCase
 			protected $simple;
 
 			// 'bar' is db column, 'foo' is internal representation
-			protected $datamap = [
-				'bar' => 'foo',
-				'orig' => 'simple'
+			protected $_options = [
+				'datamap' => [
+					'bar' => 'foo',
+					'orig' => 'simple'
+				]
 			];
 
 			protected function setSimple(string $val)

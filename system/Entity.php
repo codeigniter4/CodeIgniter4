@@ -39,22 +39,22 @@ use CodeIgniter\I18n\Time;
  */
 class Entity
 {
-
-	/**
-	 * Maps names used in sets and gets against unique
-	 * names within the class, allowing independence from
-	 * database column names.
-	 *
-	 * Example:
-	 *  $datamap = [
-	 *      'db_name' => 'class_name'
-	 *  ];
-	 *
-	 * @var array
-	 */
-	protected $datamap = [];
-
 	protected $_options = [
+		/*
+		 * Maps names used in sets and gets against unique
+		 * names within the class, allowing independence from
+		 * database column names.
+		 *
+		 * Example:
+		 *  $datamap = [
+		 *      'db_name' => 'class_name'
+		 *  ];
+		 */
+		'datamap' => [],
+
+		/*
+		 * Define properties that are automatically converted to Time instances.
+		 */
 		'dates' => ['created_at', 'updated_at', 'deleted_at'],
 	];
 
@@ -244,9 +244,9 @@ class Entity
 	 */
 	protected function mapProperty(string $key)
 	{
-		if (array_key_exists($key, $this->datamap))
+		if (array_key_exists($key, $this->_options['datamap']))
 		{
-			return $this->datamap[$key];
+			return $this->_options['datamap'][$key];
 		}
 
 		return $key;
