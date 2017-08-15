@@ -185,7 +185,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 */
 	public function execute($sql)
 	{
-		return pg_query($this->connID, $sql);
+		return pg_query($this->connID, stripslashes($sql));
 	}
 
 	//--------------------------------------------------------------------
