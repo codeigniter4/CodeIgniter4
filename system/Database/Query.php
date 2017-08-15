@@ -425,7 +425,7 @@ class Query implements QueryInterface
 
 			// preg_quoting can cause issues with some characters in the final query,
 			// but NOT preg_quoting causes other characters to be intepreted, like $.
-			$escapedValue = str_replace('\\.', '.', $escapedValue);
+			$escapedValue = stripslashes($escapedValue);
 
 			$sql = preg_replace('|:' . $placeholder . '(?!\w)|', $escapedValue, $sql);
 		}
