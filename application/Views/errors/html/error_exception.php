@@ -21,7 +21,7 @@
 		<div class="container">
 			<h1><?= htmlspecialchars($title, ENT_SUBSTITUTE, 'UTF-8'), ($exception->getCode() ? ' #'.$exception->getCode() : '') ?></h1>
 			<p>
-				<?= htmlspecialchars($exception->getMessage(), ENT_SUBSTITUTE) ?>
+				<?= $exception->getMessage() ?>
 				<a href="https://www.google.com/search?q=<?= urlencode($title.' '.preg_replace('#\'.*\'|".*"#Us', '', $exception->getMessage())) ?>"
 				   rel="noreferrer" target="_blank">search &rarr;</a>
 			</p>
