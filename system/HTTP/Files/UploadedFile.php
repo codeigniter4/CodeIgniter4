@@ -153,6 +153,8 @@ class UploadedFile extends File implements UploadedFileInterface
 	 */
 	public function move(string $targetPath, string $name = null, bool $overwrite = false)
 	{
+		$targetPath = $this->setPath($targetPath); //set the target path
+
 		if ($this->hasMoved)
 		{
 			throw new FileException('The file has already been moved.');
@@ -182,6 +184,26 @@ class UploadedFile extends File implements UploadedFileInterface
 
 		return true;
 	}
+
+	/**
+	 * create file target path if
+	 * the set path does not exist
+	 * @return string The path set or created.
+	 */
+   	protected function setPath($path)
+   	{
+     		if (!is_dir($path))
+     		{
+         		mkdir($path, 0777, true);
+         		//create the index.html file
+         		if (!file_exists($path.'index.html'))
+         		{
+            			$file = fopen($path.'index.html', 'x+');
+            			fclose($file);
+         		}
+     		}
+     		return $path;
+ 	}
 
 	//--------------------------------------------------------------------
 
