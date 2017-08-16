@@ -491,8 +491,9 @@ class IncomingRequest extends Request
 			$this->files = new FileCollection();
 		}
 
-		return $this->files->all();
+		return $this->files->all(); // return all files
 	}
+
 
 	//--------------------------------------------------------------------
 
