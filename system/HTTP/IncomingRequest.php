@@ -484,14 +484,14 @@ class IncomingRequest extends Request
 	 *
 	 * @return Files\FileCollection
 	 */
-	public function getFiles(): FileCollection
+	public function getFiles()
 	{
 		if (is_null($this->files))
 		{
 			$this->files = new FileCollection();
 		}
 
-		return $this->files;
+		return $this->files->all();
 	}
 
 	//--------------------------------------------------------------------
