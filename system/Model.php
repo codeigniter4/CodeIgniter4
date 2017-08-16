@@ -119,7 +119,7 @@ class Model
 	 *
 	 * @var array
 	 */
-	protected $allowedFields = ['name'];
+	protected $allowedFields = [];
 
 	/**
 	 * If true, will set created_at, and updated_at
