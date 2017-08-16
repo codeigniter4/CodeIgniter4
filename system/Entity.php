@@ -56,6 +56,12 @@ class Entity
 		 * Define properties that are automatically converted to Time instances.
 		 */
 		'dates' => ['created_at', 'updated_at', 'deleted_at'],
+
+		/*
+		 * Array of field names and the type of value to cast them as
+		 * when they are accessed.
+		 */
+		'casts' => []
 	];
 
 	/**
@@ -136,6 +142,11 @@ class Entity
 		if (in_array($key, $this->_options['dates']))
 		{
 			$result = $this->mutateDate($result);
+		}
+		// Or cast it as something?
+		else if (array_key_exists($key, $this->_options['casts']))
+		{
+			$result = $this->castAs($result, $this->_options['casts'][$key]);
 		}
 
 		return $result;
@@ -289,4 +300,50 @@ class Entity
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Provides the ability to cast an item as a specific data type.
+	 *
+	 * @param        $value
+	 * @param string $type
+	 *
+	 * @return mixed
+	 */
+	private function castAs($value, string $type)
+	{
+		switch($type)
+		{
+			case 'integer':
+				$value = (int)$value;
+				break;
+			case 'float':
+				$value = (float)$value;
+				break;
+			case 'double':
+				$value = (double)$value;
+				break;
+			case 'string':
+				$value = (string)$value;
+				break;
+			case 'boolean':
+				$value = (bool)$value;
+				break;
+			case 'object':
+				$value = (object)$value;
+				break;
+			case 'array':
+				if (is_string($value) && substr($value, 0, 2) === 'a:')
+				{
+					$value = unserialize($value);
+				}
+				break;
+			case 'datetime':
+				return new \DateTime($value);
+				break;
+			case 'timestamp':
+				return strtotime($value);
+				break;
+		}
+
+		return $value;
+	}
 }
