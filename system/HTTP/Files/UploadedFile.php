@@ -190,19 +190,19 @@ class UploadedFile extends File implements UploadedFileInterface
 	 * the set path does not exist
 	 * @return string The path set or created.
 	 */
-   protected function setPath($path)
-   {
-     	if (!is_dir($path))
-     	{
-         mkdir($path, 0777, true);
-         //create the index.html file
-         if (!file_exists($path.'index.html'))
-         {
-            $file = fopen($path.'index.html', 'x+');
-            fclose($file);
-         }
-     	}
-     	return $path;
+   	protected function setPath($path)
+   	{
+     		if (!is_dir($path))
+     		{
+			 mkdir($path, 0777, true);
+			 //create the index.html file
+			 if (!file_exists($path.'index.html'))
+			 {
+			    $file = fopen($path.'index.html', 'x+');
+			    fclose($file);
+			 }
+		}
+		return $path;
  	}
 
 	//--------------------------------------------------------------------
