@@ -31,6 +31,7 @@ class RouterTest extends \CIUnitTestCase
 			'{locale}/pages'			   => 'App\Pages::list_all',
 			'Admin/Admins'		   		   => 'App\Admin\Admins::list_all',
             '/some/slash'                  => 'App\Slash::index',
+			'objects/(:segment)/sort/(:segment)/([A-Z]{3,7})'   => 'AdminList::objectsSortCreate/$1/$2/$3'
 		];
 
 		$this->collection->map($routes);
@@ -124,6 +125,21 @@ class RouterTest extends \CIUnitTestCase
 
 		$this->assertEquals('show', $router->methodName());
 		$this->assertEquals([456, 123], $router->params());
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * @see https://github.com/bcit-ci/CodeIgniter4/issues/672
+	 */
+	public function testURIMapsParamsWithMany()
+	{
+		$router = new Router($this->collection);
+
+		$router->handle('objects/123/sort/abc/FOO');
+
+		$this->assertEquals('objectsSortCreate', $router->methodName());
+		$this->assertEquals([123, 'abc', 'FOO'], $router->params());
 	}
 
 	//--------------------------------------------------------------------
