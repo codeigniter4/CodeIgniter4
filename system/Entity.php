@@ -178,6 +178,14 @@ class Entity
 			$value = $this->mutateDate($value);
 		}
 
+		// Array casting requires that we serialize the value
+		// when setting it so that it can easily be stored
+		// back to the database.
+		if (array_key_exists($key, $this->_options['casts']) && $this->_options['casts'][$key] === 'array')
+		{
+			$value = serialize($value);
+		}
+
 		// if a set* method exists for this key, 
 		// use that method to insert this value. 
 		$method = 'set' . str_replace(' ', '', ucwords(str_replace(['-', '_'], ' ', $key)));
@@ -331,9 +339,13 @@ class Entity
 				$value = (object)$value;
 				break;
 			case 'array':
-				if (is_string($value) && substr($value, 0, 2) === 'a:')
+				if (is_string($value) && (substr($value, 0, 2) === 'a:' || substr($value, 0, 2) === 's:'))
 				{
 					$value = unserialize($value);
+				}
+				else
+				{
+					$value = (object)$value;
 				}
 				break;
 			case 'datetime':

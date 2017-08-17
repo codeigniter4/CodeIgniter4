@@ -319,7 +319,11 @@ class EntityTest extends \CIUnitTestCase
 	{
 		$entity = $this->getCastEntity();
 
-		$entity->seventh = serialize(['foo' => 'bar']);
+		$entity->seventh = ['foo' => 'bar'];
+
+		// Should be a serialized string now...
+		$check = $this->getPrivateProperty($entity, 'seventh');
+		$this->assertEquals(serialize(['foo' => 'bar']), $check);
 
 		$this->assertEquals(['foo' => 'bar'], $entity->seventh);
 	}

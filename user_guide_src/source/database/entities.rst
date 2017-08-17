@@ -263,6 +263,10 @@ through the original ``$user->full_name``, also, as this is needed for the model
 to the database. However, ``unset`` and ``isset`` only work on the mapped property, ``$name``, not on the original name,
 ``full_name``.
 
+
+Mutators
+========
+
 Date Mutators
 -------------
 
@@ -301,3 +305,60 @@ current timezone, as set in **application/Config/App.php**::
     // Can now use any Time methods:
     echo $user->created_at->humanize();
     echo $user->created_at->setTimezone('Europe/London')->toDateString();
+
+Property Casting
+----------------
+
+You can specify that properties in your Entity should be converted to common data types with the **casts** entry in
+the **$_options** property. The **casts** option should be an array where the key is the name of the class property,
+and the value is the data type it should be cast to. Casting only affects when values are read. No conversions happen
+that affect the permanent value in either the entity or the database. Properties can be cast to any of the following
+data types: **integer**, **float**, **double**, **string**, **boolean**, **object**, **array**, **datetime**, and
+**timestamp**.
+
+For example, if you had a User entity with an **is_banned** property, you can cast it as a boolean::
+
+    <?php namespace App\Entities;
+
+    use CodeIgniter\Entity;
+
+    class User extends Entity
+    {
+        protected $is_banned;
+
+        protected _$options = [
+            'casts' => [
+                'is_banned' => 'boolean'
+            ]
+        ];
+    }
+
+Array Casting
+-------------
+
+Array casting is especially useful with fields that store serialized arrays or json in them. When cast as an array,
+they will automatically be unserialized when you read the property's value. Unlike the rest of the data types that
+you can cast properties into, the **array** cast type will serialize the value whenever the property is set::
+
+    <?php namespace App\Entities;
+
+    use CodeIgniter\Entity;
+
+    class User extends Entity
+    {
+        protected $options;
+
+        protected _$options = [
+            'casts' => [
+                'options' => 'array'
+            ]
+        ];
+    }
+
+    $user = $userModel->find(15);
+    $options = $user->options;
+
+    $options['foo'] = 'bar';
+
+    $user->options = $options;
+    $userModel->save($user);
