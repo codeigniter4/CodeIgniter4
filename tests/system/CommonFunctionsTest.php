@@ -17,7 +17,7 @@ class CommomFunctionsTest extends \CIUnitTestCase
 
 	public function testStringifyAttributes()
 	{
-		$this->assertEquals(' class="foo" id="bar"', stringify_attributes(array('class' => 'foo', 'id' => 'bar')));
+		$this->assertEquals(' class="foo" id="bar"', stringify_attributes(['class' => 'foo', 'id' => 'bar']));
 
 		$atts = new stdClass;
 		$atts->class = 'foo';
@@ -29,14 +29,14 @@ class CommomFunctionsTest extends \CIUnitTestCase
 
 		$this->assertEquals(' class="foo" id="bar"', stringify_attributes('class="foo" id="bar"'));
 
-		$this->assertEquals('', stringify_attributes(array()));
+		$this->assertEquals('', stringify_attributes([]));
 	}
 
 	// ------------------------------------------------------------------------
 
 	public function testStringifyJsAttributes()
 	{
-		$this->assertEquals('width=800,height=600', stringify_attributes(array('width' => '800', 'height' => '600'), TRUE));
+		$this->assertEquals('width=800,height=600', stringify_attributes(['width' => '800', 'height' => '600'], TRUE));
 
 		$atts = new stdClass;
 		$atts->width = 800;

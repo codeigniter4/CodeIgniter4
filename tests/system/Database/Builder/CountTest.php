@@ -33,7 +33,7 @@ class CountTest extends \CIUnitTestCase
 
 		$answer = $builder->where('id >', 3)->countAllResults(null, true);
 
-		$expectedSQL   = "SELECT COUNT(*) AS \"numrows\" FROM \"jobs\" WHERE \"id\" > :id";
+		$expectedSQL   = "SELECT COUNT(*) AS \"numrows\" FROM \"jobs\" WHERE \"id\" > :id:";
 
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $answer));
 	}

@@ -116,7 +116,7 @@ class Security
 	 *
 	 * @var	array
 	 */
-	public $filenameBadChars = array(
+	public $filenameBadChars = [
 		'../', '<!--', '-->', '<', '>',
 		"'", '"', '&', '$', '#',
 		'{', '}', '[', ']', '=',
@@ -133,7 +133,7 @@ class Security
 		'%3f', // ?
 		'%3b', // ;
 		'%3d'	   // =
-	);
+	];
 
 	//--------------------------------------------------------------------
 
@@ -174,7 +174,7 @@ class Security
 	 * CSRF Verify
 	 *
 	 * @param RequestInterface $request
-	 * @return $this
+	 * @return $this|false
 	 * @throws \LogicException
 	 */
 	public function CSRFVerify(RequestInterface $request)

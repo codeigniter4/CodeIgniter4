@@ -354,7 +354,7 @@ class TimeTest extends \CIUnitTestCase
 	public function testGetTimezonename()
 	{
 		$this->assertEquals('America/Chicago', Time::now('America/Chicago')->getTimezoneName());
-		$this->assertEquals('Europe/London', Time::now('Europe/London')->getTimezoneName());
+		$this->assertEquals('Europe/London', Time::now('Europe/London')->timezoneName);
 	}
 
 	public function testSetYear()

@@ -496,7 +496,7 @@ class ModelTest extends \CIDatabaseTestCase
         $date = $this->getPrivateProperty($entity, 'created_at');
         $this->assertTrue($date instanceof Time);
 
-        $model->save($entity);
+        $this->assertTrue($model->save($entity));
 
         $this->seeInDatabase('job', ['name' => 'Senior Developer', 'created_at' => '2017-07-15 00:00:00']);
     }

@@ -249,7 +249,7 @@ class CLI
 			{
 				$extra_output = ' [ Default: "' . $default . '" ]';
 			}
-			elseif ($options !== [])
+			elseif (! empty($options))
 			{
 				$extra_output = ' [ ' . implode(', ', $options) . ' ]';
 			}
@@ -587,7 +587,7 @@ class CLI
 
 			$first = true;
 
-			array_walk($lines, function (&$line, $index) use ($max, $pad_left, &$first) {
+			array_walk($lines, function (&$line, $index) use ($pad_left, &$first) {
 				if ( ! $first)
 				{
 					$line = str_repeat(" ", $pad_left) . $line;
@@ -744,7 +744,7 @@ class CLI
 	 */
 	public static function getOptionString(): string
 	{
-		if ( ! count(static::$options))
+		if (empty(static::$options))
 		{
 			return '';
 		}

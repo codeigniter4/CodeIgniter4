@@ -119,7 +119,7 @@ class Model
 	 *
 	 * @var array
 	 */
-	protected $allowedFields = ['name'];
+	protected $allowedFields = [];
 
 	/**
 	 * If true, will set created_at, and updated_at
@@ -206,9 +206,9 @@ class Model
 	 * Contains any custom error messages to be
 	 * used during data validation.
 	 *
-	 * @var array|null
+	 * @var array
 	 */
-	protected $validationMessages = null;
+	protected $validationMessages = [];
 
 	/**
 	 * Skip the model's validation. Used in conjunction with skipValidation()
@@ -599,15 +599,6 @@ class Model
 			$response = $this->insert($data);
 		}
 
-		// If it was an Entity class, check it for an onSave method.
-		if (is_object($saveData) && ! $saveData instanceof \stdClass)
-		{
-			if (method_exists($saveData, 'onSave'))
-			{
-				$saveData->onSave();
-			}
-		}
-
 		return $response;
 	}
 
@@ -826,9 +817,16 @@ class Model
 	{
 		if ($this->useSoftDeletes && ! $purge)
 		{
+            $set['deleted'] = 1;
+
+            if ($this->useTimestamps)
+            {
+                $set[$this->updatedField] = $this->setDate();
+            }
+            
 			$result = $this->builder()
 					->where($this->primaryKey, $id)
-					->update(['deleted' => 1]);
+					->update($set);
 		}
 		else
 		{
@@ -865,9 +863,16 @@ class Model
 
 		if ($this->useSoftDeletes && ! $purge)
 		{
+            $set['deleted'] = 1;
+
+            if ($this->useTimestamps)
+            {
+                $set[$this->updatedField] = $this->setDate();
+            }
+
 			$result = $this->builder()
 					->where($key, $value)
-					->update(['deleted' => 1]);
+					->update($set);
 		}
 		else
 		{

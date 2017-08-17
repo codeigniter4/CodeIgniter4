@@ -69,7 +69,7 @@ if ( ! function_exists('directory_map'))
 	{
 		if ($fp = @opendir($source_dir))
 		{
-			$filedata = array();
+			$filedata = [];
 			$new_depth = $directory_depth - 1;
 			$source_dir = rtrim($source_dir, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
 
@@ -215,14 +215,14 @@ if ( ! function_exists('get_filenames'))
 	 */
 	function get_filenames(string $source_dir, bool $include_path = false, bool $recursion = false): array
 	{
-		static $filedata = array();
+		static $filedata = [];
 
 		if ($fp = @opendir($source_dir))
 		{
 			// reset the array and make sure $source_dir has a trailing slash on the initial call
 			if ($recursion === false)
 			{
-				$filedata = array();
+				$filedata = [];
 				$source_dir = rtrim(realpath($source_dir), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
 			}
 
@@ -268,7 +268,7 @@ if ( ! function_exists('get_dir_file_info'))
 	 */
 	function get_dir_file_info(string $source_dir, bool $top_level_only = true, bool $recursion = false): array
 	{
-		static $filedata = array();
+		static $filedata = [];
 		$relative_path = $source_dir;
 
 		if ($fp = @opendir($source_dir))
@@ -276,7 +276,7 @@ if ( ! function_exists('get_dir_file_info'))
 			// reset the array and make sure $source_dir has a trailing slash on the initial call
 			if ($recursion === false)
 			{
-				$filedata = array();
+				$filedata = [];
 				$source_dir = rtrim(realpath($source_dir), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
 			}
 

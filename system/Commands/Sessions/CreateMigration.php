@@ -76,18 +76,18 @@ class CreateMigration extends BaseCommand
 	 *
 	 * @var array
 	 */
-	protected $arguments = array();
+	protected $arguments = [];
 
 	/**
 	 * the Command's Options
 	 *
 	 * @var array
 	 */
-	protected $options = array(
+	protected $options = [
 		'-n' => 'Set migration namespace',
 		'-g' => 'Set database group',
 		'-t' => 'Set table name',
-	);
+	];
 
 	/**
 	 * Creates a new migration file with the current timestamp.

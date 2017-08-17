@@ -37,7 +37,7 @@ class RouteCollectionTest extends \CIUnitTestCase
 
 		return new RouteCollection($loader);
 	}
-	
+
 	public function testBasicAdd()
 	{
 		$routes = $this->getCollector();
@@ -334,7 +334,9 @@ class RouteCollectionTest extends \CIUnitTestCase
 		$routes->resource('photos');
 
 		$expected = [
-			'photos' => '\Photos::listAll',
+			'photos' => '\Photos::index',
+			'photos/new' => '\Photos::new',
+			'photos/(.*)/edit' => '\Photos::edit/$1',
 			'photos/(.*)' => '\Photos::show/$1'
 		];
 
@@ -351,6 +353,16 @@ class RouteCollectionTest extends \CIUnitTestCase
 		$this->assertEquals($expected, $routes->getRoutes());
 
 		$_SERVER['REQUEST_METHOD'] = 'PUT';
+		$routes = $this->getCollector();
+		$routes->resource('photos');
+
+		$expected = [
+				'photos/(.*)' => '\Photos::update/$1'
+		];
+
+		$this->assertEquals($expected, $routes->getRoutes());
+
+		$_SERVER['REQUEST_METHOD'] = 'PATCH';
 		$routes = $this->getCollector();
 		$routes->resource('photos');
 
@@ -381,7 +393,9 @@ class RouteCollectionTest extends \CIUnitTestCase
 		$routes->resource('photos', ['controller' => '<script>gallery']);
 
 		$expected = [
-				'photos' => '\Gallery::listAll',
+				'photos' => '\Gallery::index',
+				'photos/new' => '\Gallery::new',
+				'photos/(.*)/edit' => '\Gallery::edit/$1',
 				'photos/(.*)' => '\Gallery::show/$1'
 		];
 
@@ -398,7 +412,9 @@ class RouteCollectionTest extends \CIUnitTestCase
 		$routes->resource('photos', ['placeholder' => ':num']);
 
 		$expected = [
-				'photos' => '\Photos::listAll',
+				'photos' => '\Photos::index',
+				'photos/new' => '\Photos::new',
+				'photos/([0-9]+)/edit' => '\Photos::edit/$1',
 				'photos/([0-9]+)' => '\Photos::show/$1'
 		];
 
@@ -412,10 +428,10 @@ class RouteCollectionTest extends \CIUnitTestCase
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 		$routes = $this->getCollector();
 
-		$routes->resource('photos', ['only' => 'listAll']);
+		$routes->resource('photos', ['only' => 'index']);
 
 		$expected = [
-			'photos' => '\Photos::listAll'
+			'photos' => '\Photos::index'
 		];
 
 		$this->assertEquals($expected, $routes->getRoutes());

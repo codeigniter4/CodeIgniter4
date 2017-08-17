@@ -216,7 +216,7 @@ class BaseBuilder
 
 		$this->from($tableName);
 
-		if (count($options))
+		if (! empty($options))
 		{
 			foreach ($options as $key => $value)
 			{
@@ -628,7 +628,7 @@ class BaseBuilder
 
 		foreach ($key as $k => $v)
 		{
-			$prefix = (count($this->$qb_key) === 0) ? $this->groupGetType('') : $this->groupGetType($type);
+			$prefix = empty($this->$qb_key) ? $this->groupGetType('') : $this->groupGetType($type);
 
 			if ($v !== null)
 			{
@@ -656,7 +656,7 @@ class BaseBuilder
 				$k = substr($k, 0, $match[0][1]) . ($match[1][0] === '=' ? ' IS NULL' : ' IS NOT NULL');
 			}
 
-			$v = ! is_null($v) ? ' :' . $bind : $v;
+			$v = ! is_null($v) ? " :$bind:" : $v;
 
 			$this->{$qb_key}[] = ['condition' => $prefix . $k . $v, 'escape' => $escape];
 		}
@@ -784,10 +784,10 @@ class BaseBuilder
 		$where_in = array_values($values);
 		$this->binds[$ok] = $where_in;
 
-		$prefix = (count($this->QBWhere) === 0) ? $this->groupGetType('') : $this->groupGetType($type);
+		$prefix = empty($this->QBWhere) ? $this->groupGetType('') : $this->groupGetType($type);
 
 		$where_in = [
-			'condition'	 => $prefix . $key . $not . ' IN :' . $ok,
+			'condition'	 => $prefix . $key . $not . " IN :{$ok}:",
 			'escape'	 => false,
 		];
 
@@ -914,7 +914,7 @@ class BaseBuilder
 
 		foreach ($field as $k => $v)
 		{
-			$prefix = (count($this->QBWhere) === 0) ? $this->groupGetType('') : $this->groupGetType($type);
+			$prefix = empty($this->QBWhere) ? $this->groupGetType('') : $this->groupGetType($type);
 
 			if ($insensitiveSearch === true)
 			{
@@ -967,11 +967,11 @@ class BaseBuilder
 	 */
 	public function _like_statement(string $prefix = null, string $column, string $not = null, string $bind, bool $insensitiveSearch = false): string
 	{
-		$like_statement = "{$prefix} {$column} {$not} LIKE :{$bind}";
+		$like_statement = "{$prefix} {$column} {$not} LIKE :{$bind}:";
 
 		if ($insensitiveSearch === true)
 		{
-			$like_statement = "{$prefix} LOWER({$column}) {$not} LIKE :{$bind}";
+			$like_statement = "{$prefix} LOWER({$column}) {$not} LIKE :{$bind}:";
 		}
 
 		return $like_statement;
@@ -992,7 +992,7 @@ class BaseBuilder
 		$type = $this->groupGetType($type);
 
 		$this->QBWhereGroupStarted = true;
-		$prefix = count($this->QBWhere) === 0 ? '' : $type;
+		$prefix = empty($this->QBWhere) ? '' : $type;
 		$where = [
 			'condition'	 => $prefix . $not . str_repeat(' ', ++ $this->QBWhereGroupCount) . ' (',
 			'escape'	 => false,
@@ -1220,16 +1220,16 @@ class BaseBuilder
 	 *
 	 * @return    BaseBuilder
 	 */
-	public function limit($value, $offset = 0)
+	public function limit(int $value = null, int $offset = 0)
 	{
 		if ( ! is_null($value))
 		{
-			$this->QBLimit = (int) $value;
+			$this->QBLimit = $value;
 		}
 
 		if ( ! empty($offset))
 		{
-			$this->QBOffset = (int) $offset;
+			$this->QBOffset = $offset;
 		}
 
 		return $this;
@@ -1299,7 +1299,7 @@ class BaseBuilder
 			if ($escape)
 			{
 				$bind = $this->setBind($k, $v);
-				$this->QBSet[$this->db->protectIdentifiers($k, false, $escape)] = ':' . $bind;
+				$this->QBSet[$this->db->protectIdentifiers($k, false, $escape)] = ":$bind:";
 			}
 			else
 			{
@@ -1341,15 +1341,15 @@ class BaseBuilder
 	 * Compiles the select statement based on the other functions called
 	 * and runs the query
 	 *
-	 * @param    string $limit     The limit clause
-	 * @param    string $offset    The offset clause
+	 * @param    int $limit     The limit clause
+	 * @param    int $offset    The offset clause
 	 * @param    bool   $returnSQL If true, returns the generate SQL, otherwise executes the query.
 	 *
 	 * @return    ResultInterface
 	 */
-	public function get($limit = null, $offset = null, $returnSQL = false)
+	public function get(int $limit = null, int $offset = 0, $returnSQL = false)
 	{
-		if ( ! empty($limit))
+		if ( ! is_null($limit))
 		{
 			$this->limit($limit, $offset);
 		}
@@ -1385,7 +1385,7 @@ class BaseBuilder
 		}
 
 		$query = $this->db->query($sql);
-		if (count($query->getResult()) === 0)
+		if (empty($query->getResult()))
 		{
 			return 0;
 		}
@@ -1440,7 +1440,9 @@ class BaseBuilder
 			$this->QBOrderBy = $orderby;
 		}
 
-		$row = $result->getRow();
+		$row = (! $result instanceof ResultInterface)
+			? null
+			: $result->getRow();
 
 		if (empty($row))
 		{
@@ -1612,7 +1614,7 @@ class BaseBuilder
 			$clean = [];
 			foreach ($row as $k => $value)
 			{
-				$clean[] = ':' . $this->setBind($k, $value);
+				$clean[] = ':' . $this->setBind($k, $value) .':';
 			}
 
 			$row = $clean;
@@ -1713,7 +1715,7 @@ class BaseBuilder
 	 */
 	protected function validateInsert()
 	{
-		if (count($this->QBSet) === 0)
+		if (empty($this->QBSet))
 		{
 			if (CI_DEBUG)
 			{
@@ -1764,7 +1766,7 @@ class BaseBuilder
 			$this->set($set);
 		}
 
-		if (count($this->QBSet) === 0)
+		if (empty($this->QBSet))
 		{
 			if (CI_DEBUG)
 			{
@@ -1859,7 +1861,7 @@ class BaseBuilder
 	 *
 	 * @return    bool    TRUE on success, FALSE on failure
 	 */
-	public function update($set = null, $where = null, $limit = null, $test = false)
+	public function update($set = null, $where = null, int $limit = null, $test = false)
 	{
 		if ($set !== null)
 		{
@@ -1891,7 +1893,11 @@ class BaseBuilder
 			{
 				return true;
 			}
+
+			return false;
 		}
+
+		return true;
 	}
 
 	//--------------------------------------------------------------------
@@ -1934,7 +1940,7 @@ class BaseBuilder
 	 */
 	protected function validateUpdate()
 	{
-		if (count($this->QBSet) === 0)
+		if (empty($this->QBSet))
 		{
 			if (CI_DEBUG)
 			{
@@ -2105,7 +2111,7 @@ class BaseBuilder
 
 				$bind = $this->setBind($k2, $v2);
 
-				$clean[$this->db->protectIdentifiers($k2, false, $escape)] = ':' . $bind;
+				$clean[$this->db->protectIdentifiers($k2, false, $escape)] = ":$bind:";
 			}
 
 			if ($index_set === false)
@@ -2239,7 +2245,7 @@ class BaseBuilder
 			$this->where($where);
 		}
 
-		if (count($this->QBWhere) === 0)
+		if (empty($this->QBWhere))
 		{
 			if (CI_DEBUG)
 			{
@@ -2394,7 +2400,7 @@ class BaseBuilder
 		{
 			$sql = ( ! $this->QBDistinct) ? 'SELECT ' : 'SELECT DISTINCT ';
 
-			if (count($this->QBSelect) === 0)
+			if (empty($this->QBSelect))
 			{
 				$sql .= '*';
 			}
@@ -2414,13 +2420,13 @@ class BaseBuilder
 		}
 
 		// Write the "FROM" portion of the query
-		if (count($this->QBFrom) > 0)
+		if (! empty($this->QBFrom))
 		{
 			$sql .= "\nFROM " . $this->_fromTables();
 		}
 
 		// Write the "JOIN" portion of the query
-		if (count($this->QBJoin) > 0)
+		if (! empty($this->QBJoin))
 		{
 			$sql .= "\n" . implode("\n", $this->QBJoin);
 		}
@@ -2455,7 +2461,7 @@ class BaseBuilder
 	 */
 	protected function compileWhereHaving($qb_key)
 	{
-		if (count($this->$qb_key) > 0)
+		if (! empty($this->$qb_key))
 		{
 			for ($i = 0, $c = count($this->$qb_key); $i < $c; $i ++ )
 			{
@@ -2528,7 +2534,7 @@ class BaseBuilder
 	 */
 	protected function compileGroupBy()
 	{
-		if (count($this->QBGroupBy) > 0)
+		if (! empty($this->QBGroupBy))
 		{
 			for ($i = 0, $c = count($this->QBGroupBy); $i < $c; $i ++ )
 			{
@@ -2563,7 +2569,7 @@ class BaseBuilder
 	 */
 	protected function compileOrderBy()
 	{
-		if (is_array($this->QBOrderBy) && count($this->QBOrderBy) > 0)
+		if (is_array($this->QBOrderBy) && ! empty($this->QBOrderBy))
 		{
 			for ($i = 0, $c = count($this->QBOrderBy); $i < $c; $i ++ )
 			{

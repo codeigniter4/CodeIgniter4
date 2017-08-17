@@ -83,14 +83,14 @@ class ListCommands extends BaseCommand
 	 *
 	 * @var array
 	 */
-	protected $arguments = array();
+	protected $arguments = [];
 
 	/**
 	 * the Command's Options
 	 *
 	 * @var array
 	 */
-	protected $options = array();
+	protected $options = [];
 
 	/**
 	 * The length of the longest command name.
@@ -134,8 +134,8 @@ class ListCommands extends BaseCommand
 
 		// Pad each item to the same length
 		$names = $this->padArray($names, 2, 2);
-
-		for ($i = 0; $i < count($names); $i ++ )
+		$countNames = count($names);
+		for ($i = 0; $i < $countNames; $i ++ )
 		{
 			$lastGroup = $this->describeGroup($groups[$i], $lastGroup);
 

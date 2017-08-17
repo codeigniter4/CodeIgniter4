@@ -39,23 +39,29 @@ use CodeIgniter\I18n\Time;
  */
 class Entity
 {
-
-	/**
-	 * Maps names used in sets and gets against unique
-	 * names within the class, allowing independence from
-	 * database column names.
-	 *
-	 * Example:
-	 *  $datamap = [
-	 *      'db_name' => 'class_name'
-	 *  ];
-	 *
-	 * @var array
-	 */
-	protected $datamap = [];
-
 	protected $_options = [
+		/*
+		 * Maps names used in sets and gets against unique
+		 * names within the class, allowing independence from
+		 * database column names.
+		 *
+		 * Example:
+		 *  $datamap = [
+		 *      'db_name' => 'class_name'
+		 *  ];
+		 */
+		'datamap' => [],
+
+		/*
+		 * Define properties that are automatically converted to Time instances.
+		 */
 		'dates' => ['created_at', 'updated_at', 'deleted_at'],
+
+		/*
+		 * Array of field names and the type of value to cast them as
+		 * when they are accessed.
+		 */
+		'casts' => []
 	];
 
 	/**
@@ -137,6 +143,11 @@ class Entity
 		{
 			$result = $this->mutateDate($result);
 		}
+		// Or cast it as something?
+		else if (array_key_exists($key, $this->_options['casts']))
+		{
+			$result = $this->castAs($result, $this->_options['casts'][$key]);
+		}
 
 		return $result;
 	}
@@ -165,6 +176,14 @@ class Entity
 		if (in_array($key, $this->_options['dates']))
 		{
 			$value = $this->mutateDate($value);
+		}
+
+		// Array casting requires that we serialize the value
+		// when setting it so that it can easily be stored
+		// back to the database.
+		if (array_key_exists($key, $this->_options['casts']) && $this->_options['casts'][$key] === 'array')
+		{
+			$value = serialize($value);
 		}
 
 		// if a set* method exists for this key, 
@@ -244,9 +263,9 @@ class Entity
 	 */
 	protected function mapProperty(string $key)
 	{
-		if (array_key_exists($key, $this->datamap))
+		if (array_key_exists($key, $this->_options['datamap']))
 		{
-			return $this->datamap[$key];
+			return $this->_options['datamap'][$key];
 		}
 
 		return $key;
@@ -289,4 +308,54 @@ class Entity
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Provides the ability to cast an item as a specific data type.
+	 *
+	 * @param        $value
+	 * @param string $type
+	 *
+	 * @return mixed
+	 */
+	private function castAs($value, string $type)
+	{
+		switch($type)
+		{
+			case 'integer':
+				$value = (int)$value;
+				break;
+			case 'float':
+				$value = (float)$value;
+				break;
+			case 'double':
+				$value = (double)$value;
+				break;
+			case 'string':
+				$value = (string)$value;
+				break;
+			case 'boolean':
+				$value = (bool)$value;
+				break;
+			case 'object':
+				$value = (object)$value;
+				break;
+			case 'array':
+				if (is_string($value) && (substr($value, 0, 2) === 'a:' || substr($value, 0, 2) === 's:'))
+				{
+					$value = unserialize($value);
+				}
+				else
+				{
+					$value = (object)$value;
+				}
+				break;
+			case 'datetime':
+				return new \DateTime($value);
+				break;
+			case 'timestamp':
+				return strtotime($value);
+				break;
+		}
+
+		return $value;
+	}
 }

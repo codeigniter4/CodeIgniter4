@@ -405,7 +405,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 		}
 		$query = $query->getResultObject();
 
-		$retval = array();
+		$retval = [];
 		for ($i = 0, $c = count($query); $i < $c; $i ++ )
 		{
 			$retval[$i] = new \stdClass();
@@ -441,7 +441,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 			return FALSE;
 		}
 
-		$retval = array();
+		$retval = [];
 		foreach (explode("\n", $row['Create Table']) as $line)
 		{
 			$line = trim($line);
@@ -493,13 +493,13 @@ class Connection extends BaseConnection implements ConnectionInterface
 	{
 		if ( ! empty($this->mysqli->connect_errno))
 		{
-			return array(
+			return [
 				'code'		 => $this->mysqli->connect_errno,
 				'message'	 => $this->_mysqli->connect_error
-			);
+			];
 		}
 
-		return array('code' => $this->connID->errno, 'message' => $this->connID->error);
+		return ['code' => $this->connID->errno, 'message' => $this->connID->error];
 	}
 
 	//--------------------------------------------------------------------

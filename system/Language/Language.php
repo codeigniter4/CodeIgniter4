@@ -102,7 +102,7 @@ class Language
 
 		$output = isset($this->language[$file][$line]) ? $this->language[$file][$line] : $line;
 
-		if (count($args))
+		if (! empty($args))
 		{
 			$output = $this->formatMessage($output, $args);
 		}
