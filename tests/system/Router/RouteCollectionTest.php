@@ -669,6 +669,28 @@ class RouteCollectionTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * @see https://github.com/bcit-ci/CodeIgniter4/issues/642
+	 */
+	public function testNamedRoutesWithSameURIDifferentMethods()
+	{
+		$routes = $this->getCollector();
+		
+		$routes->get('user/insert', 'myController::goto/$1/$2', ['as' => 'namedRoute1']);
+		$routes->post('user/insert', function() {}, ['as' => 'namedRoute2']);
+		$routes->put('user/insert', function() {}, ['as' => 'namedRoute3']);
+
+		$match1 = $routes->reverseRoute('namedRoute1');
+		$match2 = $routes->reverseRoute('namedRoute2');
+		$match3 = $routes->reverseRoute('namedRoute3');
+
+		$this->assertEquals('/user/insert', $match1);
+		$this->assertEquals('/user/insert', $match2);
+		$this->assertEquals('/user/insert', $match3);
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testAddRedirect()
 	{
 		$routes = $this->getCollector();
@@ -736,5 +758,4 @@ class RouteCollectionTest extends \CIUnitTestCase
 		$this->assertTrue(array_key_exists('testing', $match));
 		$this->assertEquals($match['testing'], '\TestController::index');
 	}
-
 }

@@ -1,4 +1,6 @@
 <?php
+// Make sure it recognizes that we're testing.
+$_SERVER['CI_ENVIRONMENT'] = 'testing';
 
 // Get our system paths
 require 'application/Config/Paths.php';
@@ -6,9 +8,6 @@ $paths  = new \Config\Paths();
 
 // Path to the front controller (this file)
 define('FCPATH', getcwd().'/public'.DIRECTORY_SEPARATOR);
-
-// Make sure it recognizes that we're testing.
-$_SERVER['CI_ENVIRONMENT'] = 'testing';
 
 /*
  * ---------------------------------------------------------------
