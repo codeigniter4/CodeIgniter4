@@ -73,10 +73,11 @@ Class Reference
 			echo $request->method(FALSE); // Outputs: post
 			echo $request->method(); // Outputs: post
 
-	.. php:method:: getServer($index[, $filter = NULL])
+	.. php:method:: getServer([$index = null[, $filter = null[, $flags = null]]])
 
 		:param	mixed	$index: Value name
 		:param  int     $filter: The type of filter to apply. A list of filters can be found `here <http://php.net/manual/en/filter.filters.php>`_.
+		:param  int     $flags: Flags to apply. A list of flags can be found `here <http://php.net/manual/en/filter.filters.flags.php>`_.
 		:returns:	$_SERVER item value if found, NULL if not
 		:rtype:	mixed
 
