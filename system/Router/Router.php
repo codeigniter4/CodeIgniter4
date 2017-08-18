@@ -466,13 +466,6 @@ class Router implements RouterInterface
 			$this->params = $segments;
 		}
 
-		// Load the file so that it's available for CodeIgniter.
-		$file = APPPATH . 'Controllers/' . $this->directory . $this->controller . '.php';
-		if (file_exists($file))
-		{
-			include_once $file;
-		}
-
 		// Ensure the controller stores the fully-qualified class name
 		// We have to check for a length over 1, since by default it will be '\'
 		if (strpos($this->controller, '\\') === false && strlen($this->collection->getDefaultNamespace()) > 1)
@@ -493,23 +486,22 @@ class Router implements RouterInterface
 	protected function validateRequest(array $segments)
 	{
 		$c = count($segments);
+		$find_segments = array_map('ucfirst', $segments);
 		$directory_override = isset($this->directory);
 
 		// Loop through our segments and return as soon as a controller
 		// is found or when such a directory doesn't exist
 		while ($c -- > 0)
 		{
-			$test = $this->directory . ucfirst($this->translateURIDashes === true ? str_replace('-', '_', $segments[0]) : $segments[0]
-			);
-
-			if ( ! file_exists(APPPATH . 'Controllers/' . $test . '.php') && $directory_override === false && is_dir(APPPATH . 'Controllers/' . $this->directory . ucfirst($segments[0]))
-			)
+			$find_segment = $find_segments[$c];
+			$directory_namespace = implode('\\', array_slice($find_segments, 0, $c)).'\\';
+			$test = $directory_namespace . ($this->translateURIDashes === true ? str_replace('-', '_', $find_segment) : $find_segment);
+			if ( class_exists('App\Controllers\\' . $test) && $directory_override === false )
 			{
-				$this->setDirectory(array_shift($segments), true);
-				continue;
+				$this->setDirectory(str_replace('\\', '/', $directory_namespace), true);
+				return array_splice($find_segments, $c);
 			}
 
-			return $segments;
 		}
 
 		// This means that all segments were actually directories
@@ -601,7 +593,7 @@ class Router implements RouterInterface
 			$this->method = 'index';
 		}
 
-		if ( ! file_exists(APPPATH . 'Controllers/' . $this->directory . ucfirst($class) . '.php'))
+		if ( ! class_exists(str_replace('/', '\\', $this->collection->getDefaultNamespace() . ucwords($this->directory, '/') . ucfirst($class))))
 		{
 			return;
 		}
