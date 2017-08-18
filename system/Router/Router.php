@@ -593,7 +593,7 @@ class Router implements RouterInterface
 			$this->method = 'index';
 		}
 
-		if ( ! file_exists(APPPATH . 'Controllers/' . $this->directory . ucfirst($class) . '.php'))
+		if ( ! class_exists(str_replace('/', '\\', $this->collection->getDefaultNamespace() . ucwords($this->directory, '/') . ucfirst($class))))
 		{
 			return;
 		}
