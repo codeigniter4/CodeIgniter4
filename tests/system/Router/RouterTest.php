@@ -186,6 +186,7 @@ class RouterTest extends \CIUnitTestCase
 
 	public function testAutoRouteFindsControllerWithSubfolder()
 	{
+		$this->markTestSkipped('Skip this because it became the responsibility of the `AutoLoader` class');
 		$router = new Router($this->collection);
 
 		mkdir(APPPATH.'Controllers/Subfolder');
