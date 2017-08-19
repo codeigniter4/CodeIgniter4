@@ -651,7 +651,30 @@ if ( ! function_exists('csrf_field'))
 	}
 
 }
+//-------------------------------------------------------------------
 
+if (!function_exists('setPath'))
+{
+	/**
+	 * create file target path if
+	 * the set path does not exist
+	 * @return string The path set or created.
+	 */
+	function setPath($path)
+   	{
+  		if (!is_dir($path))
+  		{
+   			mkdir($path, 0777, true);
+   			//create the index.html file
+   			if (!file_exists($path.'index.html'))
+   			{
+				$file = fopen($path.'index.html', 'x+');
+				fclose($file);
+   			}
+  		}
+  		return $path;
+ 	}
+}
 //--------------------------------------------------------------------
 
 if ( ! function_exists('force_https'))
