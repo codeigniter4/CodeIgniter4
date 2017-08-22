@@ -195,7 +195,7 @@ class GDHandler extends BaseHandler
 	 *
 	 * @return bool|\CodeIgniter\Images\Handlers\GDHandler
 	 */
-	public function _crops()
+	public function _crop()
 	{
 		return $this->process('crop');
 	}
