@@ -195,12 +195,16 @@ class Entity
 
 			return $this;
 		}
-		elseif (property_exists($this, $key))
-		{
-			$this->$key = $value;
 
-			return $this;
-		}
+		// Otherwise, just the value.
+		// This allows for creation of new class
+		// properties that are undefined, though
+		// they cannot be saved. Useful for
+		// grabbing values through joins,
+		// assigning relationships, etc.
+		$this->$key = $value;
+
+		return $this;
 	}
 
 	//--------------------------------------------------------------------
