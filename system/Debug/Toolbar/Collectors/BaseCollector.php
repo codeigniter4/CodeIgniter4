@@ -248,4 +248,14 @@ class BaseCollector
 		return $file;
 	}
 
+	/**
+	 * Gets the "badge" value for the button.
+	 *
+	 * @param string $value
+	 */
+	public function getBadgeValue()
+	{
+		return null;
+	}
+
 }

@@ -34,7 +34,14 @@
 		<span class="ci-label"><a href="javascript: void(0)" data-tab="ci-timeline">Timeline</a></span>
 		<?php foreach ($this->collectors as $c) : ?>
 			<?php if ($c->hasTabContent()) : ?>
-				<span class="ci-label"><a href="javascript: void(0)" data-tab="ci-<?= esc($c->getTitle(true)) ?>"><?= esc($c->getTitle()) ?></a></span>
+				<span class="ci-label">
+                    <a href="javascript: void(0)" data-tab="ci-<?= esc($c->getTitle(true)) ?>" >
+                        <?= esc($c->getTitle()) ?>
+	                    <?php if (! is_null($c->getBadgeValue())) : ?>
+                            <span class="badge"><?= $c->getBadgeValue() ?></span>
+                        <?php endif ?>
+                    </a>
+                </span>
 			<?php endif; ?>
 		<?php endforeach; ?>
 		<span class="ci-label"><a href="javascript: void(0)" data-tab="ci-vars">Vars</a></span>

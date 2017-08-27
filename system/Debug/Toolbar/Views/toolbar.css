@@ -26,14 +26,14 @@
 
 #debug-bar {
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-	font-size: 14px;
+	font-size: 16px;
 	line-height: 1.5;
 	background: #fff;
 	position: fixed;
 	bottom: 0;
 	left: 0;
 	right: 0;
-	height: 32px;
+	height: 36px;
 	z-index: 10000;
 }
 
@@ -74,7 +74,7 @@
 	border: solid #ddd;
 	border-width: 1px 0;
 	box-shadow: 0 -3px 10px rgba(0, 0, 0, 0.1);
-	padding: 3px 0 3px 20px;
+	padding: 5px 12px 5px 20px;	/* give room for OS X scrollbar */
 	text-align: right;
 	z-index: 10000;
 }
@@ -120,10 +120,25 @@
 
 #debug-bar span {
 	display: inline-block;
-	font-size: 12px;
+	font-size: 14px;
 	padding: .3em 1em .3em;
 	line-height: 1.0;
 	vertical-align: baseline;
+}
+
+#debug-bar span .badge {
+	display: inline-block;
+	padding: 3px 6px;
+	font-size: 75%;
+	font-weight: 500;
+	line-height: 1;
+	color: #fff;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: baseline;
+	border-radius: 10rem;
+	background-color: #5bc0de;
+	margin-left: 0.5em;
 }
 
 #debug-bar table strong {
@@ -162,7 +177,7 @@
 	border: solid #ddd;
 	border-width: 1px 0;
 	position: fixed;
-	bottom: 31px;
+	bottom: 35px;
 	left: 0;
 	right: 0;
 	z-index: 9999;
@@ -173,7 +188,7 @@
 }
 
 #debug-bar.fixed-top .tab {
-	top: 31px;
+	top: 36px;
 	bottom: auto;
 	box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
 }

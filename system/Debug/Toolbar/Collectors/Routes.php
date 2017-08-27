@@ -134,4 +134,17 @@ class Routes extends BaseCollector
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Returns a count of all the routes in the system.
+	 *
+	 * @return int
+	 */
+	public function getBadgeValue()
+	{
+		$rawRoutes = Services::routes(true);
+
+		return count($rawRoutes->getRoutes());
+	}
+
 }
