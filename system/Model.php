@@ -558,7 +558,7 @@ class Model
 	 */
 	protected function getHash($str, $len)
 	{
-		return substr(sha1($str . $this->salt), 0, $len);
+		return substr(hash('sha256', $str . $this->salt), 0, $len);
 	}
 
 	//--------------------------------------------------------------------
