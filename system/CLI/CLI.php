@@ -682,7 +682,7 @@ class CLI
 	 * valid segments in the command:
 	 *
 	 *  // segment(3) is 'three', not '-f' or 'anOption'
-	 *  > ci.php one two -f anOption three
+	 *  > php spark one two -f anOption three
 	 *
 	 * @param int $index
 	 *

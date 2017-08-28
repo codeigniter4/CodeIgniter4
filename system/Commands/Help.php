@@ -39,9 +39,9 @@ use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 
 /**
- * CI Help command for the ci.php script.
+ * CI Help command for the spark script.
  *
- * Lists the basic usage information for the ci.php script,
+ * Lists the basic usage information for the spark script,
  * and provides a way to list help for other commands.
  *
  * @package CodeIgniter\Commands
@@ -97,7 +97,7 @@ class Help extends BaseCommand
 	//--------------------------------------------------------------------
 
 	/**
-	 * Displays the help for the ci.php cli script itself.
+	 * Displays the help for the spark cli script itself.
 	 *
 	 * @param array $params
 	 */
