@@ -285,7 +285,7 @@ class Entity
 	 *
 	 * @return \CodeIgniter\I18n\Time
 	 */
-	private function mutateDate($value)
+	protected function mutateDate($value)
 	{
 		if ($value instanceof Time)
 		{
@@ -320,7 +320,7 @@ class Entity
 	 *
 	 * @return mixed
 	 */
-	private function castAs($value, string $type)
+	protected function castAs($value, string $type)
 	{
 		switch($type)
 		{

@@ -322,24 +322,26 @@ class Request extends Message implements RequestInterface
 			$filter = FILTER_DEFAULT;
 		}
 
+		$loopThrough = [];
+		switch ($type)
+		{
+			case INPUT_GET : $loopThrough = $_GET;
+				break;
+			case INPUT_POST : $loopThrough = $_POST;
+				break;
+			case INPUT_COOKIE : $loopThrough = $_COOKIE;
+				break;
+			case INPUT_SERVER : $loopThrough = $_SERVER;
+				break;
+			case INPUT_ENV : $loopThrough = $_ENV;
+				break;
+			case INPUT_REQUEST : $loopThrough = $_REQUEST;
+				break;
+		}
+
 		// If $index is null, it means that the whole input type array is requested
 		if (is_null($index))
 		{
-			$loopThrough = [];
-			switch ($type)
-			{
-				case INPUT_GET : $loopThrough = $_GET;
-					break;
-				case INPUT_POST : $loopThrough = $_POST;
-					break;
-				case INPUT_COOKIE : $loopThrough = $_COOKIE;
-					break;
-				case INPUT_SERVER : $loopThrough = $_SERVER;
-					break;
-				case INPUT_ENV : $loopThrough = $_ENV;
-					break;
-			}
-
 			$values = [];
 			foreach ($loopThrough as $key => $value)
 			{
@@ -361,57 +363,37 @@ class Request extends Message implements RequestInterface
 
 			return $output;
 		}
-//
-//		// Does the index contain array notation?
-//		if (($count = preg_match_all('/(?:^[^\[]+)|\[[^]]*\]/', $index, $matches)) > 1) // Does the index contain array notation
-//		{
-//			$value = $array;
-//			for ($i = 0; $i < $count; $i++)
-//			{
-//				$key = trim($matches[0][$i], '[]');
-//				if ($key === '') // Empty notation will return the value as array
-//				{
-//					break;
-//				}
-//
-//				if (isset($value[$key]))
-//				{
-//					$value = $value[$key];
-//				}
-//				else
-//				{
-//					return NULL;
-//				}
-//			}
-//		}
+
+		// Does the index contain array notation?
+		if (($count = preg_match_all('/(?:^[^\[]+)|\[[^]]*\]/', $index, $matches)) > 1)
+		{
+			$value = $loopThrough;
+			for ($i = 0; $i < $count; $i++)
+			{
+				$key = trim($matches[0][$i], '[]');
+
+				if ($key === '') // Empty notation will return the value as array
+				{
+					break;
+				}
+
+				if (isset($value[$key]))
+				{
+					$value = $value[$key];
+				}
+				else
+				{
+					return null;
+				}
+			}
+		}
+
 		// Due to issues with FastCGI and testing,
 		// we need to do these all manually instead
 		// of the simpler filter_input();
-		switch ($type)
+		if (empty($value))
 		{
-			case INPUT_GET:
-				$value = $_GET[$index] ?? null;
-				break;
-			case INPUT_POST:
-				$value = $_POST[$index] ?? null;
-				break;
-			case INPUT_SERVER:
-				$value = $_SERVER[$index] ?? null;
-				break;
-			case INPUT_ENV:
-				$value = $_ENV[$index] ?? null;
-				break;
-			case INPUT_COOKIE:
-				$value = $_COOKIE[$index] ?? null;
-				break;
-			case INPUT_REQUEST:
-				$value = $_REQUEST[$index] ?? null;
-				break;
-			case INPUT_SESSION:
-				$value = $_SESSION[$index] ?? null;
-				break;
-			default:
-				$value = '';
+			$value = $loopThrough[$index] ?? null;
 		}
 
 		if (is_array($value) || is_object($value) || is_null($value))
