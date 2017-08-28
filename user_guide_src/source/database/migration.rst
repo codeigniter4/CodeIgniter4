@@ -60,22 +60,22 @@ as *20121031100537_Add_blog.php*.
 
 		public function up()
 		{
-			$this->forge->addField(array(
-				'blog_id' => array(
+			$this->forge->addField([
+				'blog_id' => [
 					'type' => 'INT',
 					'constraint' => 5,
 					'unsigned' => TRUE,
 					'auto_increment' => TRUE
-				),
-				'blog_title' => array(
+				],
+				'blog_title' => [
 					'type' => 'VARCHAR',
 					'constraint' => '100',
-				),
-				'blog_description' => array(
+				],
+				'blog_description' => [
 					'type' => 'TEXT',
 					'null' => TRUE,
-				),
-			));
+				],
+			]);
 			$this->forge->addKey('blog_id', TRUE);
 			$this->forge->createTable('blog');
 		}
