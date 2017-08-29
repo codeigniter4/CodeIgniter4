@@ -85,7 +85,7 @@ accepts one parameter, which is the name of the page to be loaded. The
 static page templates will be located in the *application/Views/Pages/*
 directory.
 
-In that directory, create two files named *Home.php* and *AHJomebout.php*.
+In that directory, create two files named *Home.php* and *About.php*.
 Within those files, type some text − anything you'd like − and save them.
 If you like to be particularly un-original, try "Hello World!".
 
@@ -104,9 +104,9 @@ page actually exists:
 
 		$data['title'] = ucfirst($page); // Capitalize the first letter
 
-		echo view('templates/header', $data);
-		echo view('pages/'.$page, $data);
-		echo view('templates/footer', $data);
+		echo view('Templates/Header', $data);
+		echo view('Pages/'.$page, $data);
+		echo view('Templates/Footer', $data);
 	}
 
 Now, when the page does exist, it is loaded, including the header and

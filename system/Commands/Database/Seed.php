@@ -82,9 +82,9 @@ class Seed extends BaseCommand
 	 *
 	 * @var array
 	 */
-	protected $arguments = array(
+	protected $arguments = [
 		'seeder_name' => 'The seeder name to run'
-	);
+	];
 
 	/**
 	 * the Command's Options

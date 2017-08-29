@@ -345,7 +345,7 @@ trait ResponseTrait
 		}
 
 		// if we don't have a formatter, make one
-		if ($this->formatter == null)
+		if ( ! isset($this->formatter))
 		{
 			$config = new Format();
 
@@ -357,6 +357,9 @@ trait ResponseTrait
 			// if no formatter, use the default
 			$this->formatter = $config->getFormatter($format);
 		}
+
+		// Recursively convert objects into associative arrays
+		$data = json_decode(json_encode($data), true);
 
 		return $this->formatter->format($data);
 	}

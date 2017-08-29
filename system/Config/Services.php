@@ -191,6 +191,7 @@ class Services
 		if ($getShared === true)
 			return self::getSharedInstance('encrypter', $config);
 
+		$config = $config ?? new \Config\Encryption();
 		if ($config != null && is_object($config))
 			$config = (array) $config;
 

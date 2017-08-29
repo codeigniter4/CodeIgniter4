@@ -177,7 +177,7 @@ class Database extends BaseCollector
 			}
 
 			$data['queries'][] = [
-				'duration'	 => $query->getDuration(5) * 1000,
+				'duration'	 => ($query->getDuration(5) * 1000) .' ms',
 				'sql'		 => $sql
 			];
 		}
@@ -186,6 +186,18 @@ class Database extends BaseCollector
 				->render('_database.tpl');
 
 		return $output;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Gets the "badge" value for the button.
+	 *
+	 * @param string $value
+	 */
+	public function getBadgeValue()
+	{
+		return count(static::$queries);
 	}
 
 	//--------------------------------------------------------------------

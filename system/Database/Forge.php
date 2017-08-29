@@ -488,6 +488,12 @@ class Forge
 			return false;
 		}
 
+		// If the prefix is already starting the table name, remove it...
+		if (strpos($table_name, $this->db->DBPrefix) === 0)
+		{
+			$table_name = substr($table_name, strlen($this->db->DBPrefix));
+		}
+
 		if (($query = $this->_dropTable($this->db->DBPrefix . $table_name, $if_exists)) === true)
 		{
 			return true;

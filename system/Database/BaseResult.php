@@ -205,7 +205,7 @@ abstract class BaseResult implements ResultInterface
 	 */
 	public function getResultArray(): array
 	{
-		if (count($this->resultArray) > 0)
+		if (! empty($this->resultArray))
 		{
 			return $this->resultArray;
 		}
@@ -248,7 +248,7 @@ abstract class BaseResult implements ResultInterface
 	 */
 	public function getResultObject(): array
 	{
-		if (count($this->resultObject) > 0)
+		if (! empty($this->resultObject))
 		{
 			return $this->resultObject;
 		}
@@ -339,7 +339,7 @@ abstract class BaseResult implements ResultInterface
 	{
 		isset($this->customResultObject[$className]) OR $this->customResultObject($className);
 
-		if (count($this->customResultObject[$className]) === 0)
+		if (empty($this->customResultObject[$className]))
 		{
 			return null;
 		}
@@ -366,7 +366,7 @@ abstract class BaseResult implements ResultInterface
 	public function getRowArray($n = 0)
 	{
 		$result = $this->getResultArray();
-		if (count($result) === 0)
+		if (empty($result))
 		{
 			return null;
 		}
@@ -393,7 +393,7 @@ abstract class BaseResult implements ResultInterface
 	public function getRowObject($n = 0)
 	{
 		$result = $this->getResultObject();
-		if (count($result) === 0)
+		if (empty($result))
 		{
 			return null;
 		}
@@ -453,7 +453,7 @@ abstract class BaseResult implements ResultInterface
 	{
 		$result = $this->getResult($type);
 
-		return (count($result) === 0) ? null : $result[0];
+		return (empty($result)) ? null : $result[0];
 	}
 
 	//--------------------------------------------------------------------
@@ -469,7 +469,7 @@ abstract class BaseResult implements ResultInterface
 	{
 		$result = $this->getResult($type);
 
-		return (count($result) === 0) ? null : $result[count($result) - 1];
+		return (empty($result)) ? null : $result[count($result) - 1];
 	}
 
 	//--------------------------------------------------------------------
@@ -484,7 +484,7 @@ abstract class BaseResult implements ResultInterface
 	public function getNextRow($type = 'object')
 	{
 		$result = $this->getResult($type);
-		if (count($result) === 0)
+		if (empty($result))
 		{
 			return null;
 		}
@@ -504,7 +504,7 @@ abstract class BaseResult implements ResultInterface
 	public function getPreviousRow($type = 'object')
 	{
 		$result = $this->getResult($type);
-		if (count($result) === 0)
+		if (empty($result))
 		{
 			return null;
 		}

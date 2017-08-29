@@ -962,7 +962,7 @@ if ( ! function_exists('parse_form_attributes'))
 					unset($attributes[$key]);
 				}
 			}
-			if (count($attributes) > 0)
+			if (! empty($attributes))
 			{
 				$default = array_merge($default, $attributes);
 			}
@@ -988,4 +988,3 @@ if ( ! function_exists('parse_form_attributes'))
 
 	//--------------------------------------------------------------------
 }
-

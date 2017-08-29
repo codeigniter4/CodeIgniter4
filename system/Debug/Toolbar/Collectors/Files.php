@@ -125,4 +125,17 @@ class Files extends BaseCollector
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Displays the number of included files as a badge in the tab button.
+	 *
+	 * @return int
+	 */
+	public function getBadgeValue()
+	{
+		return count(get_included_files());
+	}
+
+	//--------------------------------------------------------------------
+
 }

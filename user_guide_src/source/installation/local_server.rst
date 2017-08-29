@@ -4,11 +4,11 @@ Local Development Server
 
 PHP provides a built-in web server that is can be used locally when developing an application without
 the need to setup a dedicated web server like MAMP, XAMPP, etc. If you have PHP installed on your
-development machine, you can use the ``serve.php`` script to launch PHP's built-in server and have
+development machine, you can use the ``serve`` script to launch PHP's built-in server and have
 it all setup to work with your CodeIgniter application. To launch the server type the following
 from the command line in the main directory::
 
-    > php serve.php
+    > php serve
 
 This will launch the server and you can now view your application in your browser at http://localhost:8080.
 
@@ -24,9 +24,9 @@ all *nix-type systems (include OS X) will typically keep the file at **/etc/host
 
 Once that is done you can use the ``--host`` CLI option to specify a different host to run the application at::
 
-    > php serve.php --host=example.dev
+    > php serve --host=example.dev
 
 By default, the server runs on port 8080 but you might have more than one site running, or already have
 another application using that port. You can use the ``--port`` CLI option to specify a different one::
 
-    > php serve.php --port=8081
+    > php serve --port=8081

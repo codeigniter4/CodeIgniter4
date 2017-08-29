@@ -354,7 +354,7 @@ class Builder extends BaseBuilder
 	{
 		$op = $insensitiveSearch === true ? 'ILIKE' : 'LIKE';
 
-		return "{$prefix} {$column} {$not} {$op} :{$bind}";
+		return "{$prefix} {$column} {$not} {$op} :{$bind}:";
 	}
 
 	//--------------------------------------------------------------------

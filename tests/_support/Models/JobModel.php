@@ -11,4 +11,6 @@ class JobModel extends Model
 	protected $useSoftDeletes = false;
 
 	protected $dateFormat = 'integer';
+
+	protected $allowedFields = ['name', 'description'];
 }

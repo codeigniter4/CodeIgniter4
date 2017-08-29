@@ -106,6 +106,10 @@ abstract class BaseHandler implements ImageHandlerInterface
 	 */
 	public function withFile(string $path)
 	{
+		// Clear out the old resource so that
+		// it doesn't try to use a previous image
+		$this->resource = null;
+
 		$this->image = new Image($path, true);
 
 		$this->image->getProperties();

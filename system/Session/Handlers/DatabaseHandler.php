@@ -249,7 +249,7 @@ class DatabaseHandler extends BaseHandler implements \SessionHandlerInterface
 			return true;
 		}
 
-		$builder = $this->db->table($this->table);
+		$builder = $this->db->table($this->table)->where('id', $sessionID);
 
 		if ($this->matchIP)
 		{

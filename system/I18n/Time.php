@@ -1040,14 +1040,15 @@ class Time extends DateTime
 	//--------------------------------------------------------------------
 
 	/**
-	 *
+	 * Determines if the current instance's time is before $testTime,
+	 * after converting to UTC.
 	 *
 	 * @param             $testTime
 	 * @param string|null $timezone
 	 *
 	 * @return bool
 	 */
-	public function before($testTime, string $timezone = null): bool
+	public function isBefore($testTime, string $timezone = null): bool
 	{
 		$testTime = $this->getUTCObject($testTime, $timezone)->getTimestamp();
 		$ourTime = $this->getTimestamp();
@@ -1059,14 +1060,14 @@ class Time extends DateTime
 
 	/**
 	 * Determines if the current instance's time is after $testTime,
-	 * after comparing in UTC.
+	 * after converting in UTC.
 	 *
 	 * @param             $testTime
 	 * @param string|null $timezone
 	 *
 	 * @return bool
 	 */
-	public function after($testTime, string $timezone = null): bool
+	public function isAfter($testTime, string $timezone = null): bool
 	{
 		$testTime = $this->getUTCObject($testTime, $timezone)->getTimestamp();
 		$ourTime = $this->getTimestamp();
@@ -1077,9 +1078,107 @@ class Time extends DateTime
 	//--------------------------------------------------------------------
 
 	//--------------------------------------------------------------------
+	// Differences
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns a text string that is easily readable that describes
+	 * how long ago, or how long from now, a date is, like:
+	 *
+	 *  - 3 weeks ago
+	 *  - in 4 days
+	 *  - 6 hours ago
+	 */
+	public function humanize()
+	{
+		$now  = \IntlCalendar::fromDateTime(Time::now($this->timezone)->toDateTimeString());
+		$time = $this->getCalendar()->getTime();
+
+		$years = $now->fieldDifference($time, \IntlCalendar::FIELD_YEAR);
+		$months = $now->fieldDifference($time, \IntlCalendar::FIELD_MONTH);
+		$days = $now->fieldDifference($time, \IntlCalendar::FIELD_DAY_OF_YEAR);
+		$hours = $now->fieldDifference($time, \IntlCalendar::FIELD_HOUR_OF_DAY);
+		$minutes = $now->fieldDifference($time, \IntlCalendar::FIELD_MINUTE);
+
+		$phrase = null;
+
+		if ($years !== 0)
+		{
+			$phrase = lang('Time.years', [abs($years)]);
+			$before = $years < 0;
+		}
+		else if ($months !== 0)
+		{
+			$phrase = lang('Time.months', [abs($months)]);
+			$before = $months < 0;
+		}
+		else if ($days !== 0 && (abs($days) >= 7))
+		{
+			$weeks = ceil($days / 7);
+			$phrase = lang('Time.weeks', [abs($weeks)]);
+			$before = $days < 0;
+		}
+		else if ($days !== 0)
+		{
+			$before = $days < 0;
+
+			// Yesterday/Tommorrow special cases
+			if (abs($days) === 1)
+			{
+				return $before
+					? lang('Time.yesterday')
+					: lang('Time.tomorrow');
+			}
+
+			$phrase = lang('Time.days', [abs($days)]);
+		}
+		else if ($hours !== 0)
+		{
+			// Display the actual time instead of a regular phrase.
+			return $this->format('g:i a');
+		}
+		else if ($minutes !== 0)
+		{
+			$phrase = lang('Time.minutes', [abs($minutes)]);
+			$before = $minutes < 0;
+		}
+		else
+		{
+			return lang('Time.now');
+		}
+
+		return $before
+			? lang('Time.ago', [$phrase])
+			: lang('Time.inFuture', [$phrase]);
+	}
+
+	/**
+	 * @param             $testTime
+	 * @param string|null $timezone
+	 *
+	 * @return \CodeIgniter\I18n\TimeDifference
+	 */
+	public function difference($testTime, string $timezone = null)
+	{
+		$testTime = $this->getUTCObject($testTime, $timezone);
+		$ourTime = $this->getUTCObject($this);
+
+		return new TimeDifference($ourTime, $testTime);
+	}
+
+
+	//--------------------------------------------------------------------
 	// Utilities
 	//--------------------------------------------------------------------
 
+	/**
+	 * Returns a Time instance with the timezone converted to UTC.
+	 *
+	 * @param             $time
+	 * @param string|null $timezone
+	 *
+	 * @return \DateTime|static
+	 */
 	public function getUTCObject($time, string $timezone=null)
 	{
 		if ($time instanceof Time)
@@ -1115,7 +1214,7 @@ class Time extends DateTime
 	 */
 	public function getCalendar()
 	{
-		return \IntlCalendar::fromDateTime($this->toDateTime());
+		return \IntlCalendar::fromDateTime($this->toDateTimeString());
 	}
 
 	//--------------------------------------------------------------------

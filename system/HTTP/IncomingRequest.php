@@ -310,9 +310,9 @@ class IncomingRequest extends Request
 	 *
 	 * @return mixed
 	 */
-	public function getVar($index = null, $filter = null)
+	public function getVar($index = null, $filter = null, $flags = null)
 	{
-		return $this->fetchGlobal(INPUT_REQUEST, $index, $filter);
+		return $this->fetchGlobal(INPUT_REQUEST, $index, $filter, $flags);
 	}
 
 	//--------------------------------------------------------------------
@@ -362,9 +362,9 @@ class IncomingRequest extends Request
 	 *
 	 * @return mixed
 	 */
-	public function getGet($index = null, $filter = null)
+	public function getGet($index = null, $filter = null, $flags = null)
 	{
-		return $this->fetchGlobal(INPUT_GET, $index, $filter);
+		return $this->fetchGlobal(INPUT_GET, $index, $filter, $flags);
 	}
 
 	//--------------------------------------------------------------------
@@ -377,9 +377,9 @@ class IncomingRequest extends Request
 	 *
 	 * @return mixed
 	 */
-	public function getPost($index = null, $filter = null)
+	public function getPost($index = null, $filter = null, $flags = null)
 	{
-		return $this->fetchGlobal(INPUT_POST, $index, $filter);
+		return $this->fetchGlobal(INPUT_POST, $index, $filter, $flags);
 	}
 
 	//--------------------------------------------------------------------
@@ -392,12 +392,12 @@ class IncomingRequest extends Request
 	 *
 	 * @return mixed
 	 */
-	public function getPostGet($index = null, $filter = null)
+	public function getPostGet($index = null, $filter = null, $flags = null)
 	{
 		// Use $_POST directly here, since filter_has_var only
 		// checks the initial POST data, not anything that might
 		// have been added since.
-		return isset($_POST[$index]) ? $this->getPost($index, $filter) : $this->getGet($index, $filter);
+		return isset($_POST[$index]) ? $this->getPost($index, $filter, $flags) : $this->getGet($index, $filter, $flags);
 	}
 
 	//--------------------------------------------------------------------
@@ -410,12 +410,12 @@ class IncomingRequest extends Request
 	 *
 	 * @return mixed
 	 */
-	public function getGetPost($index = null, $filter = null)
+	public function getGetPost($index = null, $filter = null, $flags = null)
 	{
 		// Use $_GET directly here, since filter_has_var only
 		// checks the initial GET data, not anything that might
 		// have been added since.
-		return isset($_GET[$index]) ? $this->getGet($index, $filter) : $this->getPost($index, $filter);
+		return isset($_GET[$index]) ? $this->getGet($index, $filter, $flags) : $this->getPost($index, $filter, $flags);
 	}
 
 	//--------------------------------------------------------------------
@@ -428,9 +428,9 @@ class IncomingRequest extends Request
 	 *
 	 * @return mixed
 	 */
-	public function getCookie($index = null, $filter = null)
+	public function getCookie($index = null, $filter = null, $flags = null)
 	{
-		return $this->fetchGlobal(INPUT_COOKIE, $index, $filter);
+		return $this->fetchGlobal(INPUT_COOKIE, $index, $filter, $flags);
 	}
 
 	//--------------------------------------------------------------------
@@ -484,15 +484,16 @@ class IncomingRequest extends Request
 	 *
 	 * @return Files\FileCollection
 	 */
-	public function getFiles(): FileCollection
+	public function getFiles()
 	{
 		if (is_null($this->files))
 		{
 			$this->files = new FileCollection();
 		}
 
-		return $this->files;
+		return $this->files->all(); // return all files
 	}
+
 
 	//--------------------------------------------------------------------
 

@@ -66,7 +66,7 @@ We are not looking for out-of-scope contributions, only those that would be cons
 Please read the *Contributing to CodeIgniter* section in the user guide
 
 ## Server Requirements
-PHP version 7 or higher is required, with the following extensions installed: 
+PHP version 7.0.15 or higher is required, with the following extensions installed: 
 
 - intl
 

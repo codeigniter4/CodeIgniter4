@@ -339,7 +339,7 @@ class Router implements RouterInterface
 	 */
 	protected function checkRoutes(string $uri): bool
 	{
-		$routes = $this->collection->getRoutes();
+		$routes = $this->collection->getRoutes($this->collection->getHTTPVerb());
 
 		// Don't waste any time
 		if (empty($routes))

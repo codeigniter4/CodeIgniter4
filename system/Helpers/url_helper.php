@@ -113,7 +113,7 @@ if ( ! function_exists('base_url'))
 		}
 		else
 		{
-			$url = \CodeIgniter\Services::request()->uri;
+			$url = \CodeIgniter\Services::request($config, false)->uri;
 			$url->setPath('/');
 		}
 
@@ -310,7 +310,7 @@ if ( ! function_exists('anchor_popup'))
 
 		if ( ! is_array($attributes))
 		{
-			$attributes = array($attributes);
+			$attributes = [$attributes];
 
 			// Ref: http://www.w3schools.com/jsref/met_win_open.asp
 			$window_name = '_blank';
@@ -325,7 +325,7 @@ if ( ! function_exists('anchor_popup'))
 			$window_name = '_blank';
 		}
 
-		foreach (array('width' => '800', 'height' => '600', 'scrollbars' => 'yes', 'menubar' => 'no', 'status' => 'yes', 'resizable' => 'yes', 'screenx' => '0', 'screeny' => '0') as $key => $val)
+		foreach (['width' => '800', 'height' => '600', 'scrollbars' => 'yes', 'menubar' => 'no', 'status' => 'yes', 'resizable' => 'yes', 'screenx' => '0', 'screeny' => '0'] as $key => $val)
 		{
 			$atts[$key] = isset($attributes[$key]) ? $attributes[$key] : $val;
 			unset($attributes[$key]);
@@ -427,7 +427,7 @@ if ( ! function_exists('safe_mailto'))
 
 		$x[] = '>';
 
-		$temp = array();
+		$temp = [];
 		for ($i = 0, $l = strlen($title); $i < $l; $i ++)
 		{
 			$ordinal = ord($title[$i]);
@@ -438,7 +438,7 @@ if ( ! function_exists('safe_mailto'))
 			}
 			else
 			{
-				if (count($temp) === 0)
+				if (empty($temp))
 				{
 					$count = ($ordinal < 224) ? 2 : 3;
 				}
@@ -449,7 +449,7 @@ if ( ! function_exists('safe_mailto'))
 					$number = ($count === 3) ? (($temp[0] % 16) * 4096) + (($temp[1] % 64) * 64) + ($temp[2] % 64) : (($temp[0] % 32) * 64) + ($temp[1] % 64);
 					$x[] = '|' . $number;
 					$count = 1;
-					$temp = array();
+					$temp = [];
 				}
 			}
 		}
@@ -597,12 +597,12 @@ if ( ! function_exists('url_title'))
 	{
 		$q_separator = preg_quote($separator, '#');
 
-		$trans = array(
+		$trans = [
 			'&.+?;'					 => '',
 			'[^\w\d _-]'			 => '',
 			'\s+'					 => $separator,
 			'(' . $q_separator . ')+'	 => $separator
-		);
+		];
 
 		$str = strip_tags($str);
 		foreach ($trans as $key => $val)

@@ -171,7 +171,7 @@ class QueryTest extends \CIUnitTestCase
 	{
 		$query = new Query($this->db);
 
-		$query->setQuery('SELECT * FROM users WHERE id = :id OR name = :name', ['id' => 13, 'name' => 'Geoffrey']);
+		$query->setQuery('SELECT * FROM users WHERE id = :id: OR name = :name:', ['id' => 13, 'name' => 'Geoffrey']);
 
 		$expected = "SELECT * FROM users WHERE id = 13 OR name = 'Geoffrey'";
 
@@ -189,7 +189,7 @@ class QueryTest extends \CIUnitTestCase
 	{
 		$query = new Query($this->db);
 
-		$query->setQuery('SELECT * FROM users WHERE sitemap = :sitemap OR site = :site', ['sitemap' => 'sitemap', 'site' => 'site']);
+		$query->setQuery('SELECT * FROM users WHERE sitemap = :sitemap: OR site = :site:', ['sitemap' => 'sitemap', 'site' => 'site']);
 
 		$expected = "SELECT * FROM users WHERE sitemap = 'sitemap' OR site = 'site'";
 

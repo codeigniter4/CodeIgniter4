@@ -560,7 +560,7 @@ class URLHelperTest extends \CIUnitTestCase
 	{
 		return [
 			'egpage01'	 => ['<a href="http://example.com/index.php/news/local/123" title="News title">My News</a>', 'news/local/123', 'My News', 'title="News title"'],
-			'egpage02'	 => ['<a href="http://example.com/index.php/news/local/123" title="The&#x20;best&#x20;news&#x21;">My News</a>', 'news/local/123', 'My News', array ('title' => 'The best news!')],
+			'egpage02'	 => ['<a href="http://example.com/index.php/news/local/123" title="The&#x20;best&#x20;news&#x21;">My News</a>', 'news/local/123', 'My News', ['title' => 'The best news!']],
 			'egpage03'	 => ['<a href="http://example.com/index.php">Click here</a>', '', 'Click here'],
 			'egpage04'	 => ['<a href="http://example.com/index.php">Click here</a>', '/', 'Click here'],
 		];
@@ -594,7 +594,7 @@ class URLHelperTest extends \CIUnitTestCase
 			'normal02'	 => ['<a href="http://example.com/index.php" onclick="window.open(\'http://example.com/index.php\', \'_blank\'); return false;">Bananas</a>', '/', 'Bananas'],
 			'normal07'	 => ['<a href="http://example.com/index.php" onclick="window.open(\'http://example.com/index.php\', \'_blank\'); return false;">http://example.com/index.php</a>', '/'],
 			'normal08'	 => ['<a href="http://example.com/index.php/news/local/123" onclick="window.open(\'http://example.com/index.php/news/local/123\', \'_blank\', \'width=800,height=600,scrollbars=yes,menubar=no,status=yes,resizable=yes,screenx=0,screeny=0\'); return false;">Click Me!</a>',
-				'news/local/123', 'Click Me!', array (
+				'news/local/123', 'Click Me!', [
 					'width'			 => 800,
 					'height'		 => 600,
 					'scrollbars'	 => 'yes',
@@ -603,12 +603,12 @@ class URLHelperTest extends \CIUnitTestCase
 					'screenx'		 => 0,
 					'screeny'		 => 0,
 					'window_name'	 => '_blank'
-				)],
+				]],
 			'normal09'	 => [
 				'<a href="http://example.com/index.php/news/local/123" onclick="window.open(\'http://example.com/index.php/news/local/123\', \'_blank\', \'width=800,height=600,scrollbars=yes,menubar=no,status=yes,resizable=yes,screenx=0,screeny=0\'); return false;">Click Me!</a>',
 				'news/local/123',
 				'Click Me!',
-				array ()],
+				[]],
 		];
 	}
 
@@ -637,7 +637,7 @@ class URLHelperTest extends \CIUnitTestCase
 	{
 		return [
 			'page01' => ['<a href="mailto:me@my-site.com">Click Here to Contact Me</a>', 'me@my-site.com', 'Click Here to Contact Me'],
-			'page02' => ['<a href="mailto:me@my-site.com" title="Mail&#x20;me">Contact Me</a>', 'me@my-site.com', 'Contact Me', array ('title' => 'Mail me')],
+			'page02' => ['<a href="mailto:me@my-site.com" title="Mail&#x20;me">Contact Me</a>', 'me@my-site.com', 'Contact Me', ['title' => 'Mail me']],
 			'page03' => ['<a href="mailto:me@my-site.com">me@my-site.com</a>', 'me@my-site.com'],
 		];
 	}
@@ -670,7 +670,7 @@ class URLHelperTest extends \CIUnitTestCase
 			'page01' => ["<script type=\"text/javascript\">//<![CDATA[var l=new Array();l[0] = '>';l[1] = 'a';l[2] = '/';l[3] = '<';l[4] = '|101';l[5] = '|77';l[6] = '|32';l[7] = '|116';l[8] = '|99';l[9] = '|97';l[10] = '|116';l[11] = '|110';l[12] = '|111';l[13] = '|67';l[14] = '|32';l[15] = '|111';l[16] = '|116';l[17] = '|32';l[18] = '|101';l[19] = '|114';l[20] = '|101';l[21] = '|72';l[22] = '|32';l[23] = '|107';l[24] = '|99';l[25] = '|105';l[26] = '|108';l[27] = '|67';l[28] = '>';l[29] = '\"';l[30] = '|109';l[31] = '|111';l[32] = '|99';l[33] = '|46';l[34] = '|101';l[35] = '|116';l[36] = '|105';l[37] = '|115';l[38] = '|45';l[39] = '|121';l[40] = '|109';l[41] = '|64';l[42] = '|101';l[43] = '|109';l[44] = ':';l[45] = 'o';l[46] = 't';l[47] = 'l';l[48] = 'i';l[49] = 'a';l[50] = 'm';l[51] = '\"';l[52] = '=';l[53] = 'f';l[54] = 'e';l[55] = 'r';l[56] = 'h';l[57] = ' ';l[58] = 'a';l[59] = '<';for (var i = l.length-1; i >= 0; i=i-1) {if (l[i].substring(0, 1) === '|') document.write(\"&#\"+unescape(l[i].substring(1))+\";\");else document.write(unescape(l[i]));}//]]></script>",
 				'me@my-site.com', 'Click Here to Contact Me'],
 			'page02' => ["<script type=\"text/javascript\">//<![CDATA[var l=new Array();l[0] = '>';l[1] = 'a';l[2] = '/';l[3] = '<';l[4] = '|101';l[5] = '|77';l[6] = '|32';l[7] = '|116';l[8] = '|99';l[9] = '|97';l[10] = '|116';l[11] = '|110';l[12] = '|111';l[13] = '|67';l[14] = '>';l[15] = '\"';l[16] = '|101';l[17] = '|109';l[18] = '|32';l[19] = '|108';l[20] = '|105';l[21] = '|97';l[22] = '|77';l[23] = ' title=\"';l[24] = '\"';l[25] = '|109';l[26] = '|111';l[27] = '|99';l[28] = '|46';l[29] = '|101';l[30] = '|116';l[31] = '|105';l[32] = '|115';l[33] = '|45';l[34] = '|121';l[35] = '|109';l[36] = '|64';l[37] = '|101';l[38] = '|109';l[39] = ':';l[40] = 'o';l[41] = 't';l[42] = 'l';l[43] = 'i';l[44] = 'a';l[45] = 'm';l[46] = '\"';l[47] = '=';l[48] = 'f';l[49] = 'e';l[50] = 'r';l[51] = 'h';l[52] = ' ';l[53] = 'a';l[54] = '<';for (var i = l.length-1; i >= 0; i=i-1) {if (l[i].substring(0, 1) === '|') document.write(\"&#\"+unescape(l[i].substring(1))+\";\");else document.write(unescape(l[i]));}//]]></script>",
-				'me@my-site.com', 'Contact Me', array ('title' => 'Mail me')],
+				'me@my-site.com', 'Contact Me', ['title' => 'Mail me']],
 			'page03' => ["<script type=\"text/javascript\">//<![CDATA[var l=new Array();l[0] = '>';l[1] = 'a';l[2] = '/';l[3] = '<';l[4] = '|109';l[5] = '|111';l[6] = '|99';l[7] = '|46';l[8] = '|101';l[9] = '|116';l[10] = '|105';l[11] = '|115';l[12] = '|45';l[13] = '|121';l[14] = '|109';l[15] = '|64';l[16] = '|101';l[17] = '|109';l[18] = '>';l[19] = '\"';l[20] = '|109';l[21] = '|111';l[22] = '|99';l[23] = '|46';l[24] = '|101';l[25] = '|116';l[26] = '|105';l[27] = '|115';l[28] = '|45';l[29] = '|121';l[30] = '|109';l[31] = '|64';l[32] = '|101';l[33] = '|109';l[34] = ':';l[35] = 'o';l[36] = 't';l[37] = 'l';l[38] = 'i';l[39] = 'a';l[40] = 'm';l[41] = '\"';l[42] = '=';l[43] = 'f';l[44] = 'e';l[45] = 'r';l[46] = 'h';l[47] = ' ';l[48] = 'a';l[49] = '<';for (var i = l.length-1; i >= 0; i=i-1) {if (l[i].substring(0, 1) === '|') document.write(\"&#\"+unescape(l[i].substring(1))+\";\");else document.write(unescape(l[i]));}//]]></script>",
 				'me@my-site.com'],
 		];
@@ -832,10 +832,10 @@ class URLHelperTest extends \CIUnitTestCase
 
 	public function testUrlTitle()
 	{
-		$words = array (
+		$words = [
 			'foo bar /'		 => 'foo-bar',
 			'\  testing 12'	 => 'testing-12'
-		);
+		];
 
 		foreach ($words as $in => $out)
 		{
@@ -845,10 +845,10 @@ class URLHelperTest extends \CIUnitTestCase
 
 	public function testUrlTitleExtraDashes()
 	{
-		$words = array (
+		$words = [
 			'_foo bar_'					 => 'foo_bar',
 			'_What\'s wrong with CSS?_'	 => 'Whats_wrong_with_CSS'
-		);
+		];
 
 		foreach ($words as $in => $out)
 		{

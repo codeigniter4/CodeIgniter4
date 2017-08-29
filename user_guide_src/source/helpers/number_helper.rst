@@ -101,3 +101,15 @@ The following functions are available:
         echo number_to_currency(1234.56, 'EUR');  // Returns £1,234.56
         echo number_to_currency(1234.56, 'GBP');  // Returns £1,234.56
         echo number_to_currency(1234.56, 'YEN');  // Returns YEN1,234.56
+
+.. php:function:: number_to_roman($num)
+
+    :param string $num: The number want to convert
+    :returns: The roman number converted from given parameter
+    :rtype: string
+
+    Converts a number into roman::
+
+        echo number_to_roman(23);  // Returns XXIII
+        echo number_to_roman(324);  // Returns CCCXXIV
+        echo number_to_roman(2534);  // Returns MMDXXXIV

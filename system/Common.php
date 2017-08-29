@@ -65,7 +65,7 @@ if ( ! function_exists('cache'))
 	 *
 	 * @param string|null $key
 	 *
-	 * @return mixed
+	 * @return \CodeIgniter\Cache\CacheInterface|mixed
 	 */
 	function cache(string $key = null)
 	{
@@ -161,7 +161,7 @@ if ( ! function_exists('env'))
 	 * @param string $key
 	 * @param null   $default
 	 *
-	 * @return array|bool|false|null|string|void
+	 * @return mixed
 	 */
 	function env(string $key, $default = null)
 	{
@@ -214,7 +214,7 @@ if ( ! function_exists('esc'))
 	 * @param string       $context
 	 * @param string       $encoding
 	 *
-	 * @return $data
+	 * @return string|array
 	 */
 	function esc($data, $context = 'html', $encoding = null)
 	{
@@ -276,9 +276,9 @@ if ( ! function_exists('session'))
 	 *    session()->set('foo', 'bar');
 	 *    $foo = session('bar');
 	 *
-	 * @param null $val
+	 * @param string $val
 	 *
-	 * @return \CodeIgniter\Session\Session|null|void
+	 * @return \CodeIgniter\Session\Session|mixed|null
 	 */
 	function session($val = null)
 	{
@@ -305,7 +305,7 @@ if ( ! function_exists('timer'))
 	 *
 	 * @param string|null $name
 	 *
-	 * @return $this|\CodeIgniter\Debug\Timer|mixed
+	 * @return \CodeIgniter\Debug\Timer|mixed
 	 */
 	function timer(string $name = null)
 	{
@@ -367,6 +367,8 @@ if ( ! function_exists('single_service'))
 	 *
 	 * @param string     $name
 	 * @param array|null $params
+	 *
+	 * @return mixed
 	 */
 	function single_service(string $name, ...$params)
 	{
@@ -389,6 +391,7 @@ if ( ! function_exists('lang'))
 	 *
 	 * @param string $line
 	 * @param array  $args
+	 * @param string $locale
 	 *
 	 * @return string
 	 */
@@ -477,9 +480,9 @@ if ( ! function_exists('route_to'))
 	 * have a route defined in the routes Config file.
 	 *
 	 * @param string $method
-	 * @param        ...$params
+	 * @param array       ...$params
 	 *
-	 * @return \CodeIgniter\Router\string
+	 * @return false|string
 	 */
 	function route_to(string $method, ...$params): string
 	{
@@ -501,8 +504,8 @@ if ( ! function_exists('remove_invisible_characters'))
 	 * This prevents sandwiching null characters
 	 * between ascii characters, like Java\0script.
 	 *
-	 * @param   string
-	 * @param   bool
+	 * @param   string $str
+	 * @param   bool   $url_encoded
 	 *
 	 * @return  string
 	 */
@@ -540,10 +543,8 @@ if ( ! function_exists('helper'))
 	 * both in and out of the 'helpers' directory of a namespaced directory.
 	 *
 	 * @param string|array $filenames
-	 *
-	 * @return string
 	 */
-	function helper($filenames)//: string
+	function helper($filenames)
 	{
 		$loader = Services::locator(true);
 
@@ -580,6 +581,8 @@ if ( ! function_exists('app_timezone'))
 	 * dates in. This might be different than the timezone set
 	 * at the server level, as you often want to stores dates in UTC
 	 * and convert them on the fly for the user.
+	 *
+	 * @return string
 	 */
 	function app_timezone()
 	{
@@ -722,7 +725,7 @@ if ( ! function_exists('redirect'))
 	 * If more control is needed, you must use $response->redirect explicitly.
 	 *
 	 * @param string $uri
-	 * @param        $params
+	 * @param array  $params
 	 */
 	function redirect(string $uri, ...$params)
 	{
@@ -774,7 +777,7 @@ if ( ! function_exists('redirect_with_input'))
 		// so they can be displayed when the validation is
 		// handled within a method different than displaying the form.
 		$validator = Services::validation();
-		if (count($validator->getErrors()) > 0)
+		if (! empty($validator->getErrors()))
 		{
 			$session->setFlashdata('_ci_validation_errors', serialize($validator->getErrors()));
 		}
@@ -795,8 +798,8 @@ if ( ! function_exists('stringify_attributes'))
 	 * Helper function used to convert a string, array, or object
 	 * of attributes to a string.
 	 *
-	 * @param   mixed   string, array, object
-	 * @param   bool
+	 * @param   mixed $attributes string, array, object
+	 * @param   bool  $js
 	 *
 	 * @return  string
 	 */
@@ -840,7 +843,7 @@ if ( ! function_exists('is_really_writable'))
 	 *
 	 * @link    https://bugs.php.net/bug.php?id=54709
 	 *
-	 * @param   string
+	 * @param   string $file
 	 *
 	 * @return  bool
 	 */
@@ -857,7 +860,7 @@ if ( ! function_exists('is_really_writable'))
 		 */
 		if (is_dir($file))
 		{
-			$file = rtrim($file, '/') . '/' . md5(mt_rand());
+			$file = rtrim($file, '/') . '/' . bin2hex(random_bytes(16));
 			if (($fp = @fopen($file, 'ab')) === false)
 			{
 				return false;
@@ -946,7 +949,7 @@ if ( ! function_exists('function_usable'))
 		{
 			if ( ! isset($_suhosin_func_blacklist))
 			{
-				$_suhosin_func_blacklist = extension_loaded('suhosin') ? explode(',', trim(ini_get('suhosin.executor.func.blacklist'))) : array();
+				$_suhosin_func_blacklist = extension_loaded('suhosin') ? explode(',', trim(ini_get('suhosin.executor.func.blacklist'))) : [];
 			}
 
 			return ! in_array($function_name, $_suhosin_func_blacklist, TRUE);
@@ -958,3 +961,17 @@ if ( ! function_exists('function_usable'))
 }
 
 //--------------------------------------------------------------------
+
+if (! function_exists('dd'))
+{
+	/**
+	 * Prints a Kint debug report and exits.
+	 *
+	 * @param array ...$vars
+	 */
+	function dd(...$vars)
+	{
+		Kint::dump(...$vars);
+		exit;
+	}
+}

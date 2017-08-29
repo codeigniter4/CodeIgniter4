@@ -34,10 +34,18 @@
 		<span class="ci-label"><a href="javascript: void(0)" data-tab="ci-timeline">Timeline</a></span>
 		<?php foreach ($this->collectors as $c) : ?>
 			<?php if ($c->hasTabContent()) : ?>
-				<span class="ci-label"><a href="javascript: void(0)" data-tab="ci-<?= esc($c->getTitle(true)) ?>"><?= esc($c->getTitle()) ?></a></span>
+				<span class="ci-label">
+                    <a href="javascript: void(0)" data-tab="ci-<?= esc($c->getTitle(true)) ?>" >
+                        <?= esc($c->getTitle()) ?>
+	                    <?php if (! is_null($c->getBadgeValue())) : ?>
+                            <span class="badge"><?= $c->getBadgeValue() ?></span>
+                        <?php endif ?>
+                    </a>
+                </span>
 			<?php endif; ?>
 		<?php endforeach; ?>
 		<span class="ci-label"><a href="javascript: void(0)" data-tab="ci-vars">Vars</a></span>
+		<span id="toolbar-position"><a href="javascript: void(0)">&#8597;</a></span>
 	</div>
 
 	<!-- Timeline -->
@@ -115,7 +123,7 @@
 		</a>
 
 		<?php if (isset($_SESSION)) : ?>
-			<?php if (count($_SESSION)) : ?>
+			<?php if (! empty($_SESSION)) : ?>
 				<table id="session_table">
 					<tbody>
 					<?php foreach ($_SESSION as $key => $value) : ?>
