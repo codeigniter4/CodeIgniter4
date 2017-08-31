@@ -466,7 +466,7 @@ class URI
 			throw new \InvalidArgumentException('Request URI segment is our of range.');
 		}
 
-		return $this->segments[$number];
+		return $this->segments[$number] ?? '';
 	}
 
 	//--------------------------------------------------------------------
