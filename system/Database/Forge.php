@@ -538,7 +538,7 @@ class Forge
 	 *
 	 * @return    bool
 	 */
-	public function dropTable($table_name, $if_exists = false, $cascade = false)
+	public function dropTable($table_name, $if_exists = false)
 	{
 		if ($table_name === '')
 		{
@@ -550,7 +550,7 @@ class Forge
 			return false;
 		}
 
-		if (($query = $this->_dropTable($this->db->DBPrefix . $table_name, $if_exists, $cascade)) === true)
+		if (($query = $this->_dropTable($this->db->DBPrefix . $table_name, $if_exists)) === true)
 		{
 			return true;
 		}
@@ -582,7 +582,7 @@ class Forge
 	 *
 	 * @return    string
 	 */
-	protected function _dropTable($table, $if_exists, $cascade)
+	protected function _dropTable($table, $if_exists)
 	{
 		$sql = 'DROP TABLE';
 
@@ -603,11 +603,6 @@ class Forge
 
                 $sql = $sql . ' ' . $this->db->escapeIdentifiers($table);
                 
-                if($cascade === true)
-                {
-                    $sql .= ' CASCADE';
-                }
-               
 		return $sql;
 	}
 
