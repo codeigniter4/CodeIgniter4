@@ -180,6 +180,26 @@ below is for MySQL.
 	// gives KEY `blog_name_blog_label` (`blog_name`, `blog_label`)
 
 
+Adding Foreign Keys
+===========
+
+
+::
+
+
+        $forge->addForeignKey('users_id','users','id');
+        // gives CONSTRAINT `TABLENAME_users_foreign` FOREIGN KEY(`users_id`) REFERENCES `users`(`id`)
+
+
+You can specify the desired action for the "on delete" and "on update" properties of the constraint:
+
+::
+
+        $forge->addForeignKey('users_id','users','id','CASCADE','CASCADE');
+        // gives CONSTRAINT `TABLENAME_users_foreign` FOREIGN KEY(`users_id`) REFERENCES `users`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
+
+
+
 Creating a table
 ================
 
@@ -223,6 +243,16 @@ Execute a DROP TABLE statement and optionally add an IF EXISTS clause.
 
 	// Produces: DROP TABLE IF EXISTS table_name
 	$forge->dropTable('table_name',TRUE);
+
+Dropping a Foreign Key
+================
+
+Execute a DROP FOREIGN KEY.
+
+::
+
+	// Produces: ALTER TABLE 'tablename' DROP FOREIGN KEY 'users_foreign'
+	$forge->dropForeignKey('tablename','users_foreign');
 
 
 Renaming a table
