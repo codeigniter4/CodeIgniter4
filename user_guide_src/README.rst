@@ -59,5 +59,5 @@ simply delete the *build* folder's contents and rebuild.
 Style Guideline
 ***************
 
-Please refer to source/documentation/index.rst for general guidelines for
+Please refer to source/contributing/documentation.rst for general guidelines for
 using Sphinx to document CodeIgniter.
