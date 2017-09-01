@@ -280,7 +280,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 		return 'SELECT "column_name"
 			FROM "information_schema"."columns"
 			WHERE LOWER("table_name") = '
-				. $this->escape(strtolower($table));
+				. $this->escape($this->DBPrefix.strtolower($table));
 	}
 
 	//--------------------------------------------------------------------

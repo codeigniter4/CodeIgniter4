@@ -191,4 +191,29 @@ class Forge extends \CodeIgniter\Database\Forge
 	}
 
 	//--------------------------------------------------------------------
+        
+	/**
+	 * Drop Table
+	 *
+	 * Generates a platform-specific DROP TABLE string
+	 *
+	 * @param    string $table     Table name
+	 * @param    bool   $if_exists Whether to add an IF EXISTS condition
+	 *
+	 * @return    string
+	 */
+	protected function _dropTable($table, $if_exists, $cascade)
+	{
+                $sql = parent::_dropTable($table, $if_exists, $cascade);
+                
+                if($cascade === true)
+                {
+                    $sql .= ' CASCADE';
+                }
+                
+		return $sql;
+	}
+
+	//--------------------------------------------------------------------
+
 }

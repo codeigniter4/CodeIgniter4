@@ -14,6 +14,104 @@ class ForgeTest extends \CIDatabaseTestCase
 		parent::setUp();
 		$this->forge = \Config\Database::forge($this->DBGroup);
 	}
+        
+        public function testCreateTable()
+        {
+            $this->forge->addField([
+                        'name'        => [
+                                'type'       => 'VARCHAR',
+                                'constraint' => 255,
+                        ]
+            ]);
+            
+            $this->forge->createTable('forge_test_table', true);
+            
+            $exist = $this->db->tableExists('forge_test_table');
+            
+            $this->assertTrue($exist);
+            
+            $this->forge->dropTable('forge_test_table', true);
+            
+        }
+        
+        public function testAddFields()
+        {
+            
+            $this->forge->dropTable('forge_test_fields', true);
+            
+            $this->forge->addField([
+                        'id'          => [
+                                'type'           => 'INTEGER',
+                                'constraint'     => 11,
+                                'unsigned'      => false,
+                                'auto_increment' => true
+                        ],
+                        'username'        => [
+                                'type'       => 'VARCHAR',
+                                'constraint' => 255,
+                                'unique'    => false
+                        ],
+                        'name'        => [
+                                'type'       => 'VARCHAR',
+                                'constraint' => 255,
+                        ],
+                        'active'        => [
+                                'type'       => 'INTEGER',
+                                'constraint' => 11,
+                                'default'   => 0
+                        ],
+                ]);
+            
+            $this->forge->addKey('id', true);
+            $create = $this->forge->createTable('forge_test_fields', true);
+            
+            //Check Field names
+            $fieldsNames = $this->db->getFieldNames('forge_test_fields');
+            $this->assertEquals($fieldsNames, ['id', 'username', 'name', 'active']);
+            
+
+            $fieldsData = $this->db->getFieldData('forge_test_fields');
+            
+            $this->assertEquals($fieldsData[0]->name, 'id');
+            $this->assertEquals($fieldsData[1]->name, 'username');
+
+            $this->assertEquals($fieldsData[3]->default, 0);
+            
+            if($this->db->DBDriver === 'MySQLi')
+            {
+                //Check types
+                $this->assertEquals($fieldsData[0]->type, 'int');
+                $this->assertEquals($fieldsData[1]->type, 'varchar');
+                
+                $this->assertEquals($fieldsData[0]->max_length, 11);
+                
+                $this->assertEquals($fieldsData[0]->default, NULL);
+                $this->assertEquals($fieldsData[1]->default, NULL);  
+                
+                $this->assertEquals($fieldsData[0]->primary_key, 1);
+                
+                $this->assertEquals($fieldsData[1]->max_length, 255);
+                
+            } elseif ($this->db->DBDriver === 'Postgre')
+            {
+                //Check types
+                $this->assertEquals($fieldsData[0]->type, 'integer');
+                $this->assertEquals($fieldsData[1]->type, 'character varying');
+                
+                $this->assertEquals($fieldsData[0]->max_length, 32);
+                
+                //$this->assertEquals($fieldsData[0]->default, NULL);
+                $this->assertEquals($fieldsData[1]->default, NULL);  
+                
+                $this->assertEquals($fieldsData[1]->max_length, 255);
+            }else
+            {
+                $this->assertTrue(false, "DB Driver not supported");
+            }
+            
+            $this->forge->dropTable('forge_test_fields', true);
+            
+        }
 
 	public function testCompositeKey()
 	{
