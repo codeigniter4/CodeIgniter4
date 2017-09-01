@@ -86,8 +86,9 @@ class Rules
 	/**
 	 * Greater than
 	 *
-	 * @param    string
-	 * @param    int
+	 * @param    string $str
+	 * @param    string    $min
+	 * @param    array  $data
 	 *
 	 * @return    bool
 	 */
@@ -101,8 +102,9 @@ class Rules
 	/**
 	 * Equal to or Greater than
 	 *
-	 * @param    string
-	 * @param    int
+	 * @param    string $str
+	 * @param    string $min
+	 * @param    array  $data
 	 *
 	 * @return    bool
 	 */
@@ -116,8 +118,9 @@ class Rules
 	/**
 	 * Value should be within an array of values
 	 *
-	 * @param	string
-	 * @param	string
+	 * @param	string $value
+	 * @param	string $list
+	 * @param	array $data
 	 * @return	bool
 	 */
 	public function in_list(string $value = null, string $list, array $data): bool
@@ -172,8 +175,8 @@ class Rules
 	/**
 	 * Less than
 	 *
-	 * @param    string
-	 * @param    int
+	 * @param    string $str
+	 * @param    string $max
 	 *
 	 * @return    bool
 	 */
@@ -187,8 +190,8 @@ class Rules
 	/**
 	 * Equal to or Less than
 	 *
-	 * @param    string
-	 * @param    int
+	 * @param    string $str
+	 * @param    string $max
 	 *
 	 * @return    bool
 	 */
@@ -271,7 +274,7 @@ class Rules
 			return true;
 		}
 
-		return is_array($str) ? (bool) count($str) : (trim($str) !== '');
+		return is_array($str) ?  ! empty($str) : (trim($str) !== '');
 	}
 
 	//--------------------------------------------------------------------
@@ -323,7 +326,7 @@ class Rules
 			return ! empty($data[$item]);
 		});
 
-		return ! (bool) count($requiredFields);
+		return empty($requiredFields);
 	}
 
 	//--------------------------------------------------------------------

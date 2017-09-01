@@ -72,8 +72,8 @@ class XMLFormatter implements FormatterInterface
 	 *
 	 * @see http://www.codexworld.com/convert-array-to-xml-in-php/
 	 *
-	 * @param array $data
-	 * @param       $output
+	 * @param array             $data
+	 * @param \SimpleXMLElement $output
 	 */
 	protected function arrayToXML(array $data, &$output)
 	{

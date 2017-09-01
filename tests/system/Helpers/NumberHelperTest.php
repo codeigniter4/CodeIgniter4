@@ -11,6 +11,13 @@ class numberHelperTest extends \CIUnitTestCase
 
     //--------------------------------------------------------------------
 
+    public function test_roman_number()
+    {
+        $this->assertEquals('XCVI', number_to_roman(96));
+        $this->assertEquals('MMDCCCXCV', number_to_roman(2895));
+        $this->assertEquals('CCCXXIX', number_to_roman(329));
+    }
+
     public function test_format_number()
     {
         $this->assertEquals('123,456', format_number(123456, 0, 'en_US'));

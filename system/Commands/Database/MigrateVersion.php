@@ -47,6 +47,12 @@ use Config\Services;
 class MigrateVersion extends BaseCommand
 {
 
+	/**
+	 * The group the command is lumped under
+	 * when listing commands.
+	 *
+	 * @var string
+	 */
 	protected $group = 'Database';
 
 	/**
@@ -91,6 +97,8 @@ class MigrateVersion extends BaseCommand
 
 	/**
 	 * Migrates the database up or down to get to the specified version.
+	 *
+	 * @param array $params
 	 */
 	public function run(array $params = [])
 	{

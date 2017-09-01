@@ -43,7 +43,7 @@ interface ImageHandlerInterface
 	 *
 	 * @param int  $width
 	 * @param int  $height
-	 * @param bool $maintainRation  If true, will get the closest match possible while keeping aspect ratio true.
+	 * @param bool $maintainRatio  If true, will get the closest match possible while keeping aspect ratio true.
 	 */
 	public function resize(int $width, int $height, bool $maintainRatio = false);
 
@@ -80,7 +80,7 @@ interface ImageHandlerInterface
 	 * Reads the EXIF information from the image and modifies the orientation
 	 * so that displays correctly in the browser.
 	 *
-	 * @return $this
+	 * @return ImageHandlerInterface
 	 */
 	public function reorient();
 

@@ -6,7 +6,6 @@ use CodeIgniter\Controller;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Model;
 use Config\Database;
-use Tests\Support\Models\JobModel;
 
 class Checks extends Controller
 {
@@ -189,38 +188,38 @@ class Checks extends Controller
 
 	public function api()
 	{
-		$data = array(
+		$data = [
 			"total_users" => 3,
-			"users" => array(
-				array(
+			"users" => [
+				[
 					"id" => 1,
 					"name" => "Nitya",
-					"address" => array(
+					"address" => [
 						"country" => "India",
 						"city" => "Kolkata",
 						"zip" => 700102,
-					)
-				),
-				array(
+					]
+				],
+				[
 					"id" => 2,
 					"name" => "John",
-					"address" => array(
+					"address" => [
 						"country" => "USA",
 						"city" => "Newyork",
 						"zip" => "NY1234",
-					)
-				),
-				array(
+					]
+				],
+				[
 					"id" => 3,
 					"name" => "Viktor",
-					"address" => array(
+					"address" => [
 						"country" => "Australia",
 						"city" => "Sydney",
 						"zip" => 123456,
-					)
-				),
-			)
-		);
+					]
+				],
+			]
+		];
 
 		return $this->respond($data);
 	}
@@ -239,6 +238,18 @@ class Checks extends Controller
 		});
 
 		$query->execute('foo', 'foo@example.com', 'US');
+	}
+
+	public function db2()
+	{
+		$db = Database::connect();
+		$db->initialize();
+
+		$db->table('user')->insert([
+				'name' => 'a',
+				'email' => 'b@example.com',
+				'country' => 'x'
+			]);
 	}
 
 	public function format()

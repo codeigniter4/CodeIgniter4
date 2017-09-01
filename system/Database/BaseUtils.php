@@ -90,7 +90,8 @@ abstract class BaseUtils
 	/**
 	 * List databases
 	 *
-	 * @return	array
+	 * @return	array|bool
+	 * @throws \CodeIgniter\DatabaseException
 	 */
 	public function listDatabases()
 	{
@@ -108,7 +109,7 @@ abstract class BaseUtils
 			return false;
 		}
 
-		$this->db->dataCache['db_names'] = array();
+		$this->db->dataCache['db_names'] = [];
 
 		$query = $this->db->query($this->listDatabases);
 		if ($query === FALSE)
@@ -143,7 +144,8 @@ abstract class BaseUtils
 	 * Optimize Table
 	 *
 	 * @param	string	$table_name
-	 * @return	mixed
+	 * @return bool|mixed
+	 * @throws \CodeIgniter\DatabaseException
 	 */
 	public function optimizeTable($table_name)
 	{
@@ -171,7 +173,8 @@ abstract class BaseUtils
 	/**
 	 * Optimize Database
 	 *
-	 * @return	mixed
+	 * @return mixed
+	 * @throws \CodeIgniter\DatabaseException
 	 */
 	public function optimizeDatabase()
 	{
@@ -184,7 +187,7 @@ abstract class BaseUtils
 			return false;
 		}
 
-		$result = array();
+		$result = [];
 		foreach ($this->db->listTables() as $table_name)
 		{
 			$res = $this->db->query(sprintf($this->optimizeTable, $this->db->escapeIdentifiers($table_name)));
@@ -213,6 +216,7 @@ abstract class BaseUtils
 	 *
 	 * @param	string	$table_name
 	 * @return	mixed
+	 * @throws \CodeIgniter\DatabaseException
 	 */
 	public function repairTable($table_name)
 	{
@@ -240,11 +244,12 @@ abstract class BaseUtils
 	/**
 	 * Generate CSV from a query result object
 	 *
-	 * @param	object	$query		Query result object
-	 * @param	string	$delim		Delimiter (default: ,)
-	 * @param	string	$newline	Newline character (default: \n)
-	 * @param	string	$enclosure	Enclosure (default: ")
-	 * @return	string
+	 * @param    ResultInterface $query     Query result object
+	 * @param    string          $delim     Delimiter (default: ,)
+	 * @param    string          $newline   Newline character (default: \n)
+	 * @param    string          $enclosure Enclosure (default: ")
+	 *
+	 * @return    string
 	 */
 	public function getCSVFromResult(ResultInterface $query, $delim = ',', $newline = "\n", $enclosure = '"')
 	{
@@ -260,7 +265,7 @@ abstract class BaseUtils
 		// Next blast through the result array and build out the rows
 		while ($row = $query->getUnbufferedRow('array'))
 		{
-			$line = array();
+			$line = [];
 			foreach ($row as $item)
 			{
 				$line[] = $enclosure . str_replace($enclosure, $enclosure . $enclosure, $item) . $enclosure;
@@ -276,14 +281,15 @@ abstract class BaseUtils
 	/**
 	 * Generate XML data from a query result object
 	 *
-	 * @param	object	$query	Query result object
-	 * @param	array	$params	Any preferences
-	 * @return	string
+	 * @param    ResultInterface $query  Query result object
+	 * @param    array           $params Any preferences
+	 *
+	 * @return    string
 	 */
-	public function getXMLFromResult(ResultInterface $query, $params = array())
+	public function getXMLFromResult(ResultInterface $query, $params = [])
 	{
 		// Set our default values
-		foreach (array('root' => 'root', 'element' => 'element', 'newline' => "\n", 'tab' => "\t") as $key => $val)
+		foreach (['root' => 'root', 'element' => 'element', 'newline' => "\n", 'tab' => "\t"] as $key => $val)
 		{
 			if ( ! isset($params[$key]))
 			{
@@ -317,32 +323,33 @@ abstract class BaseUtils
 	 * Database Backup
 	 *
 	 * @param	array	$params
-	 * @return	string
+	 * @return	mixed
+	 * @throws \CodeIgniter\DatabaseException
 	 */
-	public function backup($params = array())
+	public function backup($params = [])
 	{
 		// If the parameters have not been submitted as an
 		// array then we know that it is simply the table
 		// name, which is a valid short cut.
 		if (is_string($params))
 		{
-			$params = array('tables' => $params);
+			$params = ['tables' => $params];
 		}
 
 		// Set up our default preferences
-		$prefs = array(
-			'tables'			 => array(),
-			'ignore'			 => array(),
+		$prefs = [
+			'tables'			 => [],
+			'ignore'			 => [],
 			'filename'			 => '',
 			'format'			 => 'gzip', // gzip, zip, txt
 			'add_drop'			 => TRUE,
 			'add_insert'		 => TRUE,
 			'newline'			 => "\n",
 			'foreign_key_checks' => TRUE
-		);
+		];
 
 		// Did the user submit any preferences? If so set them....
-		if (count($params) > 0)
+		if (! empty($params))
 		{
 			foreach ($prefs as $key => $val)
 			{
@@ -355,13 +362,13 @@ abstract class BaseUtils
 
 		// Are we backing up a complete database or individual tables?
 		// If no table names were submitted we'll fetch the entire table list
-		if (count($prefs['tables']) === 0)
+		if (empty($prefs['tables']))
 		{
 			$prefs['tables'] = $this->db->listTables();
 		}
 
 		// Validate the format
-		if ( ! in_array($prefs['format'], array('gzip', 'zip', 'txt'), TRUE))
+		if ( ! in_array($prefs['format'], ['gzip', 'zip', 'txt'], TRUE))
 		{
 			$prefs['format'] = 'txt';
 		}

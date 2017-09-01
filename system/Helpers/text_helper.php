@@ -54,9 +54,9 @@ if ( ! function_exists('word_limiter'))
 	 *
 	 * Limits a string to X number of words.
 	 *
-	 * @param    string
-	 * @param    int
-	 * @param    string    the end character. Usually an ellipsis
+	 * @param    string $str
+	 * @param    int    $limit
+	 * @param    string $end_char the end character. Usually an ellipsis
 	 *
 	 * @return    string
 	 */
@@ -90,9 +90,9 @@ if ( ! function_exists('character_limiter'))
 	 * Limits the string based on the character count.  Preserves complete words
 	 * so the character count may not be exactly as specified.
 	 *
-	 * @param    string
-	 * @param    int
-	 * @param    string    the end character. Usually an ellipsis
+	 * @param    string $str
+	 * @param    int    $n
+	 * @param    string $end_char the end character. Usually an ellipsis
 	 *
 	 * @return    string
 	 */
@@ -165,7 +165,7 @@ if ( ! function_exists('ascii_to_entities'))
 			}
 			else
 			{
-				if (count($temp) === 0)
+				if (empty($temp))
 				{
 					$count = ($ordinal < 224) ? 2 : 3;
 				}
@@ -202,8 +202,8 @@ if ( ! function_exists('entities_to_ascii'))
 	 *
 	 * Converts character entities back to ASCII
 	 *
-	 * @param    string
-	 * @param    bool
+	 * @param    string $str
+	 * @param    bool   $all
 	 *
 	 * @return    string
 	 */
@@ -257,9 +257,9 @@ if ( ! function_exists('word_censor'))
 	 * matched words will be converted to #### or to the replacement
 	 * word you've submitted.
 	 *
-	 * @param    string    the text string
-	 * @param    string    the array of censored words
-	 * @param    string    the optional replacement value
+	 * @param    string $str         the text string
+	 * @param    string $censored    the array of censored words
+	 * @param    string $replacement the optional replacement value
 	 *
 	 * @return    string
 	 */
@@ -317,7 +317,7 @@ if ( ! function_exists('highlight_code'))
 	 *
 	 * Colorizes code strings
 	 *
-	 * @param    string    the text string
+	 * @param    string $str the text string
 	 *
 	 * @return    string
 	 */
@@ -510,7 +510,7 @@ if ( ! function_exists('word_wrap'))
 		}
 
 		// Put our markers back
-		if (count($unwrap) > 0)
+		if (! empty($unwrap))
 		{
 			foreach ($unwrap as $key => $val)
 			{
@@ -533,12 +533,12 @@ if ( ! function_exists('ellipsize'))
 	 *
 	 * This function will strip tags from a string, split it at its max_length and ellipsize
 	 *
-	 * @param    string    string to ellipsize
-	 * @param    int       max length of string
-	 * @param    mixed     int (1|0) or float, .5, .2, etc for position to split
-	 * @param    string    ellipsis ; Default '...'
+	 * @param    string $str        String to ellipsize
+	 * @param    int    $max_length Max length of string
+	 * @param    mixed  $position   int (1|0) or float, .5, .2, etc for position to split
+	 * @param    string $ellipsis   ellipsis ; Default '...'
 	 *
-	 * @return    string    ellipsized string
+	 * @return    string    Ellipsized string
 	 */
 	function ellipsize(string $str, int $max_length, $position = 1, string $ellipsis = '&hellip;'): string
 	{
@@ -684,9 +684,9 @@ if ( ! function_exists('reduce_multiples'))
 	 *
 	 * Fred, Bill, Joe, Jimmy
 	 *
-	 * @param    string
-	 * @param    string    the character you wish to reduce
-	 * @param    bool      TRUE/FALSE - whether to trim the character from the beginning/end
+	 * @param    string $str
+	 * @param    string $character the character you wish to reduce
+	 * @param    bool   $trim      TRUE/FALSE - whether to trim the character from the beginning/end
 	 *
 	 * @return    string
 	 */
@@ -709,8 +709,8 @@ if ( ! function_exists('random_string'))
 	 *
 	 * Useful for generating passwords or hashes.
 	 *
-	 * @param    string    type of random string.  basic, alpha, alnum, numeric, nozero, unique, md5, encrypt and sha1
-	 * @param    int       number of characters
+	 * @param    string $type Type of random string.  basic, alpha, alnum, numeric, nozero, unique, md5, sha1, and crypto
+	 * @param    int    $len  Number of characters
 	 *
 	 * @return    string
 	 */
@@ -742,9 +742,11 @@ if ( ! function_exists('random_string'))
 
 				return substr(str_shuffle(str_repeat($pool, ceil($len / strlen($pool)))), 0, $len);
 			case 'md5':
-				return md5(uniqid(mt_rand()));
+				return md5(uniqid(mt_rand(), true));
 			case 'sha1':
 				return sha1(uniqid(mt_rand(), true));
+			case 'crypto':
+				return bin2hex(random_bytes($len/2));
 		}
 	}
 
@@ -758,9 +760,9 @@ if ( ! function_exists('increment_string'))
 	/**
 	 * Add's _1 to a string or increment the ending number to allow _2, _3, etc
 	 *
-	 * @param    string     required
-	 * @param    string     What should the duplicate number be appended with
-	 * @param    int        Which number should be used for the first dupe increment
+	 * @param    string $str       Required
+	 * @param    string $separator What should the duplicate number be appended with
+	 * @param    int    $first     Which number should be used for the first dupe increment
 	 *
 	 * @return    string
 	 */

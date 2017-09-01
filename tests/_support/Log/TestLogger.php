@@ -52,9 +52,10 @@ class TestLogger extends Logger
 	/**
 	 * Used by CIUnitTestCase class to provide ->assertLogged() methods.
 	 *
-	 * @param string      $level
-	 * @param             $message
-	 * @param string|null $file
+	 * @param string  $level
+	 * @param  string $message
+	 *
+	 * @return bool
 	 */
 	public static function didLog(string $level, $message)
 	{

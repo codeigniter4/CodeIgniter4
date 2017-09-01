@@ -69,7 +69,7 @@ if ( ! function_exists('directory_map'))
 	{
 		if ($fp = @opendir($source_dir))
 		{
-			$filedata = array();
+			$filedata = [];
 			$new_depth = $directory_depth - 1;
 			$source_dir = rtrim($source_dir, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
 
@@ -207,21 +207,22 @@ if ( ! function_exists('get_filenames'))
 	 * Reads the specified directory and builds an array containing the filenames.
 	 * Any sub-folders contained within the specified path are read as well.
 	 *
-	 * @param	string	path to source
-	 * @param	bool	whether to include the path as part of the filename
-	 * @param	bool	internal variable to determine recursion status - do not use in calls
-	 * @return	array
+	 * @param    string $source_dir   Path to source
+	 * @param    bool   $include_path Whether to include the path as part of the filename
+	 * @param    bool   $recursion    Internal variable to determine recursion status - do not use in calls
+	 *
+	 * @return    array
 	 */
 	function get_filenames(string $source_dir, bool $include_path = false, bool $recursion = false): array
 	{
-		static $filedata = array();
+		static $filedata = [];
 
 		if ($fp = @opendir($source_dir))
 		{
 			// reset the array and make sure $source_dir has a trailing slash on the initial call
 			if ($recursion === false)
 			{
-				$filedata = array();
+				$filedata = [];
 				$source_dir = rtrim(realpath($source_dir), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
 			}
 
@@ -259,14 +260,15 @@ if ( ! function_exists('get_dir_file_info'))
 	 *
 	 * Any sub-folders contained within the specified path are read as well.
 	 *
-	 * @param	string	path to source
-	 * @param	bool	Look only at the top level directory specified?
-	 * @param	bool	internal variable to determine recursion status - do not use in calls
-	 * @return	array
+	 * @param    string $source_dir     Path to source
+	 * @param    bool   $top_level_only Look only at the top level directory specified?
+	 * @param    bool   $recursion      Internal variable to determine recursion status - do not use in calls
+	 *
+	 * @return    array
 	 */
 	function get_dir_file_info(string $source_dir, bool $top_level_only = true, bool $recursion = false): array
 	{
-		static $filedata = array();
+		static $filedata = [];
 		$relative_path = $source_dir;
 
 		if ($fp = @opendir($source_dir))
@@ -274,7 +276,7 @@ if ( ! function_exists('get_dir_file_info'))
 			// reset the array and make sure $source_dir has a trailing slash on the initial call
 			if ($recursion === false)
 			{
-				$filedata = array();
+				$filedata = [];
 				$source_dir = rtrim(realpath($source_dir), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
 			}
 
@@ -314,9 +316,10 @@ if ( ! function_exists('get_file_info'))
 	 * Options are: name, server_path, size, date, readable, writable, executable, fileperms
 	 * Returns false if the file cannot be found.
 	 *
-	 * @param	string	path to file
-	 * @param	mixed	array or comma separated string of information returned
-	 * @return	array
+	 * @param    string $file            Path to file
+	 * @param    mixed  $returned_values Array or comma separated string of information returned
+	 *
+	 * @return    array
 	 */
 	function get_file_info(string $file, $returned_values = ['name', 'server_path', 'size', 'date']): array
 	{
@@ -464,9 +467,10 @@ if ( ! function_exists('set_realpath'))
 	/**
 	 * Set Realpath
 	 *
-	 * @param	string
-	 * @param	bool	checks to see if the path exists
-	 * @return	string
+	 * @param    string $path
+	 * @param    bool   $checkExistance Checks to see if the path exists
+	 *
+	 * @return    string
 	 */
 	function set_realpath(string $path, bool $checkExistance = false): string
 	{

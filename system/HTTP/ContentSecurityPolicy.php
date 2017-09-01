@@ -53,115 +53,115 @@ class ContentSecurityPolicy
 
 	/**
 	 * Used for security enforcement
-	 * @var type 
+	 * @var array
 	 */
 	protected $baseURI = [];
 
 	/**
 	 * Used for security enforcement
-	 * @var type 
+	 * @var array
 	 */
 	protected $childSrc = [];
 
 	/**
 	 * Used for security enforcement
-	 * @var type 
+	 * @var array
 	 */
 	protected $connectSrc = [];
 
 	/**
 	 * Used for security enforcement
-	 * @var type 
+	 * @var array
 	 */
 	protected $defaultSrc = [];
 
 	/**
 	 * Used for security enforcement
-	 * @var type 
+	 * @var array
 	 */
 	protected $fontSrc = [];
 
 	/**
 	 * Used for security enforcement
-	 * @var type 
+	 * @var array
 	 */
 	protected $formAction = [];
 
 	/**
 	 * Used for security enforcement
-	 * @var type 
+	 * @var type
 	 */
 	protected $frameAncestors = null;
 
 	/**
 	 * Used for security enforcement
-	 * @var type 
+	 * @var array
 	 */
 	protected $imageSrc = [];
 
 	/**
 	 * Used for security enforcement
-	 * @var type 
+	 * @var array
 	 */
 	protected $mediaSrc = [];
 
 	/**
 	 * Used for security enforcement
-	 * @var type 
+	 * @var array
 	 */
 	protected $objectSrc = [];
 
 	/**
 	 * Used for security enforcement
-	 * @var type 
+	 * @var type
 	 */
 	protected $pluginTypes = null;
 
 	/**
 	 * Used for security enforcement
-	 * @var type 
+	 * @var string
 	 */
 	protected $reportURI = null;
 
 	/**
 	 * Used for security enforcement
-	 * @var type 
+	 * @var bool
 	 */
 	protected $sandbox = false;
 
 	/**
 	 * Used for security enforcement
-	 * @var type 
+	 * @var array
 	 */
 	protected $scriptSrc = [];
 
 	/**
 	 * Used for security enforcement
-	 * @var type 
+	 * @var array
 	 */
 	protected $styleSrc = [];
 
 	/**
 	 * Used for security enforcement
-	 * @var type 
+	 * @var bool
 	 */
 	protected $upgradeInsecureRequests = false;
 
 	/**
 	 * Used for security enforcement
-	 * @var type 
+	 * @var bool
 	 */
 	protected $reportOnly = false;
 
 	/**
 	 * Used for security enforcement
-	 * @var type 
+	 * @var array
 	 */
 	protected $validSources = ['self', 'none', 'unsafe-inline', 'unsafe-eval'];
 
 	/**
 	 * Used for security enforcement
-	 * @var type 
+	 * @var array
 	 */
 	protected $nonces = [];
 
@@ -188,7 +188,7 @@ class ContentSecurityPolicy
 	 *
 	 * Stores our default values from the Config file.
 	 *
-	 * @param ContentSecurityPolicy $config
+	 * @param \Config\ContentSecurityPolicy $config
 	 */
 	public function __construct(\Config\ContentSecurityPolicy $config)
 	{
@@ -507,7 +507,7 @@ class ContentSecurityPolicy
 	 */
 	public function setSandbox(bool $value = true, array $flags = null)
 	{
-		if (empty($this->sandbox) && ! count($flags))
+		if (empty($this->sandbox) && empty($flags))
 		{
 			$this->sandbox = $value;
 		}
@@ -620,7 +620,7 @@ class ContentSecurityPolicy
 	 * placeholders with actual nonces, that we'll then add to our
 	 * headers.
 	 *
-	 * @param ResponseInterface $response
+	 * @param ResponseInterface|\CodeIgniter\HTTP\Response $response
 	 */
 	protected function generateNonces(ResponseInterface &$response)
 	{
@@ -666,7 +666,7 @@ class ContentSecurityPolicy
 	 * Content-Security-Policy and Content-Security-Policy-Report-Only headers
 	 * with their values to the response object.
 	 *
-	 * @param ResponseInterface $response
+	 * @param ResponseInterface|\CodeIgniter\HTTP\Response $response
 	 */
 	protected function buildHeaders(ResponseInterface &$response)
 	{
@@ -704,7 +704,7 @@ class ContentSecurityPolicy
 		// Compile our own header strings here since if we just
 		// append it to the response, it will be joined with
 		// commas, not semi-colons as we need.
-		if (count($this->tempHeaders))
+		if (! empty($this->tempHeaders))
 		{
 			$header = '';
 			foreach ($this->tempHeaders as $name => $value)
@@ -714,7 +714,7 @@ class ContentSecurityPolicy
 			$response->appendHeader('Content-Security-Policy', $header);
 		}
 
-		if (count($this->reportOnlyHeaders))
+		if (! empty($this->reportOnlyHeaders))
 		{
 			$header = '';
 			foreach ($this->reportOnlyHeaders as $name => $value)
@@ -782,12 +782,12 @@ class ContentSecurityPolicy
 			}
 		}
 
-		if (count($sources))
+		if (! empty($sources))
 		{
 			$this->tempHeaders[$name] = implode(' ', $sources);
 		}
 
-		if (count($reportSources))
+		if (! empty($reportSources))
 		{
 			$this->reportOnlyHeaders[$name] = implode(' ', $reportSources);
 		}

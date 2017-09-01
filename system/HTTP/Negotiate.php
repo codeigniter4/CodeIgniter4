@@ -51,8 +51,8 @@ class Negotiate
 
 	/**
 	 * Request
-	 * 
-	 * @var \CodeIgniter\HTTP\RequestInterface
+	 *
+	 * @var \CodeIgniter\HTTP\RequestInterface|\CodeIgniter\HTTP\IncomingRequest
 	 */
 	protected $request;
 
@@ -60,7 +60,7 @@ class Negotiate
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param \CodeIgniter\HTTP\RequestInterface $request
 	 */
 	public function __construct(\CodeIgniter\HTTP\RequestInterface $request = null)
@@ -268,11 +268,11 @@ class Negotiate
 
 			unset($pairs[0]);
 
-			$parameters = array();
+			$parameters = [];
 
 			foreach ($pairs as $pair)
 			{
-				$param = array();
+				$param = [];
 				preg_match(
 						'/^(?P<name>.+?)=(?P<quoted>"|\')?(?P<value>.*?)(?:\k<quoted>)?$/', $pair, $param
 				);
@@ -337,7 +337,7 @@ class Negotiate
 
 	/**
 	 * Match-maker
-	 * 
+	 *
 	 * @param array $acceptable
 	 * @param string $supported
 	 * @param bool $enforceTypes

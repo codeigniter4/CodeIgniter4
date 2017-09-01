@@ -53,7 +53,7 @@ class Request extends Message implements RequestInterface
 	/**
 	 * Proxy IPs
 	 *
-	 * @var type
+	 * @var string|array
 	 */
 	protected $proxyIPs;
 
@@ -69,7 +69,7 @@ class Request extends Message implements RequestInterface
 	/**
 	 * Constructor.
 	 *
-	 * @param type $config
+	 * @param object $config
 	 */
 	public function __construct($config)
 	{
@@ -102,7 +102,7 @@ class Request extends Message implements RequestInterface
 
 		if ($proxy_ips)
 		{
-			foreach (array('HTTP_X_FORWARDED_FOR', 'HTTP_CLIENT_IP', 'HTTP_X_CLIENT_IP', 'HTTP_X_CLUSTER_CLIENT_IP') as $header)
+			foreach (['HTTP_X_FORWARDED_FOR', 'HTTP_CLIENT_IP', 'HTTP_X_CLIENT_IP', 'HTTP_X_CLUSTER_CLIENT_IP'] as $header)
 			{
 				if (($spoof = $this->getServer($header)) !== NULL)
 				{
@@ -215,7 +215,7 @@ class Request extends Message implements RequestInterface
 	/**
 	 * Validate an IP address
 	 *
-	 * @param        $ip     IP Address
+	 * @param string $ip     IP Address
 	 * @param string $which  IP protocol: 'ipv4' or 'ipv6'
 	 *
 	 * @return bool
@@ -243,7 +243,7 @@ class Request extends Message implements RequestInterface
 	/**
 	 * Get the request method.
 	 *
-	 * @param bool|false $upper Whether to return in upper or lower case.
+	 * @param bool $upper Whether to return in upper or lower case.
 	 *
 	 * @return string
 	 */
@@ -259,7 +259,7 @@ class Request extends Message implements RequestInterface
 	 *
 	 * @param string $method
 	 *
-	 * @return $this
+	 * @return Request
 	 */
 	public function setMethod(string $method)
 	{
@@ -277,9 +277,9 @@ class Request extends Message implements RequestInterface
 	 * @param null $filter  A filter name to be applied
 	 * @return mixed
 	 */
-	public function getServer($index = null, $filter = null)
+	public function getServer($index = null, $filter = null, $flags = null)
 	{
-		return $this->fetchGlobal(INPUT_SERVER, $index, $filter);
+		return $this->fetchGlobal(INPUT_SERVER, $index, $filter, $flags);
 	}
 
 	//--------------------------------------------------------------------
@@ -291,9 +291,9 @@ class Request extends Message implements RequestInterface
 	 * @param null $filter  A filter name to be applied
 	 * @return mixed
 	 */
-	public function getEnv($index = null, $filter = null)
+	public function getEnv($index = null, $filter = null, $flags = null)
 	{
-		return $this->fetchGlobal(INPUT_ENV, $index, $filter);
+		return $this->fetchGlobal(INPUT_ENV, $index, $filter, $flags);
 	}
 
 	//--------------------------------------------------------------------
@@ -308,13 +308,13 @@ class Request extends Message implements RequestInterface
 	 *
 	 * http://php.net/manual/en/filter.filters.sanitize.php
 	 *
-	 * @param      $type
-	 * @param null $index
-	 * @param null $filter
+	 * @param int  $type Input filter constant
+	 * @param string|array $index
+	 * @param int $filter Filter constant
 	 *
 	 * @return mixed
 	 */
-	protected function fetchGlobal($type, $index = null, $filter = null)
+	protected function fetchGlobal($type, $index = null, $filter = null, $flags = null )
 	{
 		// Null filters cause null values to return.
 		if (is_null($filter))
@@ -322,28 +322,30 @@ class Request extends Message implements RequestInterface
 			$filter = FILTER_DEFAULT;
 		}
 
+		$loopThrough = [];
+		switch ($type)
+		{
+			case INPUT_GET : $loopThrough = $_GET;
+				break;
+			case INPUT_POST : $loopThrough = $_POST;
+				break;
+			case INPUT_COOKIE : $loopThrough = $_COOKIE;
+				break;
+			case INPUT_SERVER : $loopThrough = $_SERVER;
+				break;
+			case INPUT_ENV : $loopThrough = $_ENV;
+				break;
+			case INPUT_REQUEST : $loopThrough = $_REQUEST;
+				break;
+		}
+
 		// If $index is null, it means that the whole input type array is requested
 		if (is_null($index))
 		{
-			$loopThrough = [];
-			switch ($type)
-			{
-				case INPUT_GET : $loopThrough = $_GET;
-					break;
-				case INPUT_POST : $loopThrough = $_POST;
-					break;
-				case INPUT_COOKIE : $loopThrough = $_COOKIE;
-					break;
-				case INPUT_SERVER : $loopThrough = $_SERVER;
-					break;
-				case INPUT_ENV : $loopThrough = $_ENV;
-					break;
-			}
-
 			$values = [];
 			foreach ($loopThrough as $key => $value)
 			{
-				$values[$key] = is_array($value) ? $this->fetchGlobal($type, $key, $filter) : filter_var($value, $filter);
+				$values[$key] = is_array($value) ? $this->fetchGlobal($type, $key, $filter, $flags) : filter_var($value, $filter, $flags);
 			}
 
 			return $values;
@@ -356,62 +358,42 @@ class Request extends Message implements RequestInterface
 
 			foreach ($index as $key)
 			{
-				$output[$key] = $this->fetchGlobal($type, $key, $filter);
+				$output[$key] = $this->fetchGlobal($type, $key, $filter, $flags);
 			}
 
 			return $output;
 		}
-//
-//		// Does the index contain array notation?
-//		if (($count = preg_match_all('/(?:^[^\[]+)|\[[^]]*\]/', $index, $matches)) > 1) // Does the index contain array notation
-//		{
-//			$value = $array;
-//			for ($i = 0; $i < $count; $i++)
-//			{
-//				$key = trim($matches[0][$i], '[]');
-//				if ($key === '') // Empty notation will return the value as array
-//				{
-//					break;
-//				}
-//
-//				if (isset($value[$key]))
-//				{
-//					$value = $value[$key];
-//				}
-//				else
-//				{
-//					return NULL;
-//				}
-//			}
-//		}
+
+		// Does the index contain array notation?
+		if (($count = preg_match_all('/(?:^[^\[]+)|\[[^]]*\]/', $index, $matches)) > 1)
+		{
+			$value = $loopThrough;
+			for ($i = 0; $i < $count; $i++)
+			{
+				$key = trim($matches[0][$i], '[]');
+
+				if ($key === '') // Empty notation will return the value as array
+				{
+					break;
+				}
+
+				if (isset($value[$key]))
+				{
+					$value = $value[$key];
+				}
+				else
+				{
+					return null;
+				}
+			}
+		}
+
 		// Due to issues with FastCGI and testing,
 		// we need to do these all manually instead
 		// of the simpler filter_input();
-		switch ($type)
+		if (empty($value))
 		{
-			case INPUT_GET:
-				$value = $_GET[$index] ?? null;
-				break;
-			case INPUT_POST:
-				$value = $_POST[$index] ?? null;
-				break;
-			case INPUT_SERVER:
-				$value = $_SERVER[$index] ?? null;
-				break;
-			case INPUT_ENV:
-				$value = $_ENV[$index] ?? null;
-				break;
-			case INPUT_COOKIE:
-				$value = $_COOKIE[$index] ?? null;
-				break;
-			case INPUT_REQUEST:
-				$value = $_REQUEST[$index] ?? null;
-				break;
-			case INPUT_SESSION:
-				$value = $_SESSION[$index] ?? null;
-				break;
-			default:
-				$value = '';
+			$value = $loopThrough[$index] ?? null;
 		}
 
 		if (is_array($value) || is_object($value) || is_null($value))
@@ -419,7 +401,7 @@ class Request extends Message implements RequestInterface
 			return $value;
 		}
 
-		return filter_var($value, $filter);
+		return filter_var($value, $filter, $flags);
 	}
 
 	//--------------------------------------------------------------------

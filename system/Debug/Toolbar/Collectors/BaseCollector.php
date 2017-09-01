@@ -134,7 +134,7 @@ class BaseCollector
 	 * Grabs the data for the timeline, properly formatted,
 	 * or returns an empty array.
 	 *
-	 * @return bool
+	 * @return array
 	 */
 	public function timelineData(): array
 	{
@@ -199,7 +199,7 @@ class BaseCollector
 	 *      'duration'  => 15       // milliseconds
 	 *  ]
 	 *
-	 * @return mixed
+	 * @return array
 	 */
 	protected function formatTimelineData(): array
 	{
@@ -246,6 +246,16 @@ class BaseCollector
 		}
 
 		return $file;
+	}
+
+	/**
+	 * Gets the "badge" value for the button.
+	 *
+	 * @param string $value
+	 */
+	public function getBadgeValue()
+	{
+		return null;
 	}
 
 }

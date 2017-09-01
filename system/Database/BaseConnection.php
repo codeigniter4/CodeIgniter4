@@ -225,7 +225,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 *
 	 * Identifiers that must NOT be escaped.
 	 *
-	 * @var    string[]
+	 * @var    array
 	 */
 	protected $reservedIdentifiers = ['*'];
 
@@ -502,7 +502,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 */
 	public function getError()
 	{
-		
+
 	}
 
 	//--------------------------------------------------------------------
@@ -549,8 +549,8 @@ abstract class BaseConnection implements ConnectionInterface
 	 *
 	 * @param string $sql
 	 * @param array  ...$binds
-	 * @param $queryClass
-	 * @return mixed
+	 * @param string $queryClass
+	 * @return BaseResult|Query|false
 	 */
 	public function query(string $sql, $binds = null, $queryClass = 'CodeIgniter\\Database\\Query')
 	{
@@ -561,6 +561,9 @@ abstract class BaseConnection implements ConnectionInterface
 
 		$resultClass = str_replace('Connection', 'Result', get_class($this));
 
+		/**
+		 * @var Query $query
+		 */
 		$query = new $queryClass($this);
 
 		$query->setQuery($sql, $binds);
@@ -911,7 +914,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 * @param \Closure $func
 	 * @param array    $options  Passed to the prepare() method
 	 *
-	 * @return PreparedQueryInterface|null
+	 * @return BasePreparedQuery|null
 	 */
 	public function prepare(\Closure $func, array $options = [])
 	{
@@ -927,6 +930,9 @@ abstract class BaseConnection implements ConnectionInterface
 		}
 
 		$class = str_ireplace('Connection', 'PreparedQuery', get_class($this));
+		/**
+		 * @var BasePreparedQuery $class
+		 */
 		$class = new $class($this);
 
 		return $class->prepare($sql, $options);
@@ -1015,7 +1021,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 * @param    mixed
 	 * @param    bool
 	 *
-	 * @return    string
+	 * @return    string|array
 	 */
 	public function protectIdentifiers($item, $prefixSingle = false, $protectIdentifiers = null, $fieldExists = true)
 	{
@@ -1273,7 +1279,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 *
 	 * Set's the DB Prefix to something new without needing to reconnect
 	 *
-	 * @param    string    the prefix
+	 * @param    string $prefix The prefix
 	 *
 	 * @return    string
 	 */
@@ -1318,6 +1324,10 @@ abstract class BaseConnection implements ConnectionInterface
 		else if (is_bool($str))
 		{
 			return ($str === false) ? 0 : 1;
+		}
+		else if (is_numeric($str) && $str < 0)
+		{
+			return "'{$str}'";
 		}
 		else if ($str === null)
 		{
@@ -1390,7 +1400,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 */
 	protected function _escapeString(string $str): string
 	{
-		return str_replace("'", "''", remove_invisible_characters($str));
+		return str_replace("'", "''", remove_invisible_characters($str, false));
 	}
 
 	//--------------------------------------------------------------------
@@ -1435,8 +1445,9 @@ abstract class BaseConnection implements ConnectionInterface
 	/**
 	 * Returns an array of table names
 	 *
-	 * @param	string	$constrain_by_prefix = FALSE
-	 * @return	array
+	 * @param	bool	$constrain_by_prefix = FALSE
+	 * @return	bool|array
+	 * @throws \CodeIgniter\DatabaseException
 	 */
 	public function listTables($constrain_by_prefix = FALSE)
 	{
@@ -1455,7 +1466,7 @@ abstract class BaseConnection implements ConnectionInterface
 			return false;
 		}
 
-		$this->dataCache['table_names'] = array();
+		$this->dataCache['table_names'] = [];
 		$query = $this->query($sql);
 
 		foreach ($query->getResultArray() as $row)
@@ -1509,7 +1520,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 *
 	 * @param    string $table Table name
 	 *
-	 * @return array
+	 * @return array|false
 	 * @throws DatabaseException
 	 */
 	public function getFieldNames($table)
@@ -1535,7 +1546,7 @@ abstract class BaseConnection implements ConnectionInterface
 		}
 
 		$query = $this->query($sql);
-		$this->dataCache['field_names'][$table] = array();
+		$this->dataCache['field_names'][$table] = [];
 
 		foreach ($query->getResultArray() as $row)
 		{
@@ -1583,7 +1594,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 * Returns an object with field data
 	 *
 	 * @param	string	$table	the table name
-	 * @return	array
+	 * @return	array|false
 	 */
 	public function getFieldData(string $table)
 	{

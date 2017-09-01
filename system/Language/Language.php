@@ -35,7 +35,6 @@
  * @since	Version 3.0.0
  * @filesource
  */
-use Config\Services;
 
 class Language
 {
@@ -103,7 +102,7 @@ class Language
 
 		$output = isset($this->language[$file][$line]) ? $this->language[$file][$line] : $line;
 
-		if (count($args))
+		if (! empty($args))
 		{
 			$output = $this->formatMessage($output, $args);
 		}
@@ -119,7 +118,7 @@ class Language
 	 *
 	 * @param string $line
 	 *
-	 * @return string
+	 * @return array
 	 */
 	protected function parseLine(string $line): array
 	{

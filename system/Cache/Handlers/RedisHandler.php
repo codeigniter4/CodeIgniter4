@@ -70,13 +70,13 @@ class RedisHandler implements CacheInterface
 
 	//--------------------------------------------------------------------
 
-	public function __construct($config)
+	public function __construct(array $config)
 	{
-		$this->prefix = $config->prefix ?: '';
+		$this->prefix = $config['prefix'] ?? '';
 
-		if (isset($config->redis))
+		if ( ! empty($config))
 		{
-			$this->config = array_merge($this->config, $config->redis);
+			$this->config = array_merge($this->config, $config);
 		}
 	}
 
@@ -164,9 +164,9 @@ class RedisHandler implements CacheInterface
 	/**
 	 * Saves an item to the cache store.
 	 *
-	 * @param string $key    Cache item name
-	 * @param        $value  the data to save
-	 * @param null   $ttl    Time To Live, in seconds (default 60)
+	 * @param string $key   Cache item name
+	 * @param mixed  $value The data to save
+	 * @param int    $ttl   Time To Live, in seconds (default 60)
 	 *
 	 * @return mixed
 	 */
@@ -297,10 +297,12 @@ class RedisHandler implements CacheInterface
 
 		if ($value !== FALSE)
 		{
-			return array(
-				'expire' => time() + $this->redis->ttl($key),
-				'data'	 => $value
-			);
+			$time = time();
+			return [
+				'expire' => $time + $this->redis->ttl($key),
+				'mtime' => $time,
+				'data' => $value
+			];
 		}
 
 		return FALSE;

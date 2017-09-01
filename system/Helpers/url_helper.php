@@ -113,7 +113,7 @@ if ( ! function_exists('base_url'))
 		}
 		else
 		{
-			$url = \CodeIgniter\Services::request()->uri;
+			$url = \CodeIgniter\Services::request($config, false)->uri;
 			$url->setPath('/');
 		}
 
@@ -148,7 +148,7 @@ if ( ! function_exists('current_url'))
 	 *
 	 * @param boolean $returnObject True to return an object instead of a strong
 	 *
-	 * @return string|URI
+	 * @return string|\CodeIgniter\HTTP\URI
 	 */
 	function current_url(bool $returnObject = false)
 	{
@@ -238,10 +238,11 @@ if ( ! function_exists('anchor'))
 	 *
 	 * Creates an anchor based on the local URL.
 	 *
-	 * @param  string    the URL
-	 * @param  string    the link title
-	 * @param  mixed    any attributes
-	 * @param  \Config\App|null         $altConfig Alternate configuration to use
+	 * @param  string           $uri        The URL
+	 * @param  string           $title      The link title
+	 * @param  mixed            $attributes Any attributes
+	 * @param  \Config\App|null $altConfig  Alternate configuration to use
+	 *
 	 * @return string
 	 */
 	function anchor($uri = '', $title = '', $attributes = '', \Config\App $altConfig = null): string
@@ -281,10 +282,11 @@ if ( ! function_exists('anchor_popup'))
 	 * Creates an anchor based on the local URL. The link
 	 * opens a new window based on the attributes specified.
 	 *
-	 * @param  string    the URL
-	 * @param  string    the link title
-	 * @param  mixed    any attributes
-	 * @param  \Config\App|null         $altConfig Alternate configuration to use
+	 * @param  string           $uri        the URL
+	 * @param  string           $title      the link title
+	 * @param  mixed            $attributes any attributes
+	 * @param  \Config\App|null $altConfig  Alternate configuration to use
+	 *
 	 * @return string
 	 */
 	function anchor_popup($uri = '', $title = '', $attributes = false, \Config\App $altConfig = null): string
@@ -308,7 +310,7 @@ if ( ! function_exists('anchor_popup'))
 
 		if ( ! is_array($attributes))
 		{
-			$attributes = array($attributes);
+			$attributes = [$attributes];
 
 			// Ref: http://www.w3schools.com/jsref/met_win_open.asp
 			$window_name = '_blank';
@@ -323,7 +325,7 @@ if ( ! function_exists('anchor_popup'))
 			$window_name = '_blank';
 		}
 
-		foreach (array('width' => '800', 'height' => '600', 'scrollbars' => 'yes', 'menubar' => 'no', 'status' => 'yes', 'resizable' => 'yes', 'screenx' => '0', 'screeny' => '0') as $key => $val)
+		foreach (['width' => '800', 'height' => '600', 'scrollbars' => 'yes', 'menubar' => 'no', 'status' => 'yes', 'resizable' => 'yes', 'screenx' => '0', 'screeny' => '0'] as $key => $val)
 		{
 			$atts[$key] = isset($attributes[$key]) ? $attributes[$key] : $val;
 			unset($attributes[$key]);
@@ -346,9 +348,10 @@ if ( ! function_exists('mailto'))
 	/**
 	 * Mailto Link
 	 *
-	 * @param  string    the email address
-	 * @param  string    the link title
-	 * @param  mixed    any attributes
+	 * @param  string $email      the email address
+	 * @param  string $title      the link title
+	 * @param  mixed  $attributes any attributes
+	 *
 	 * @return string
 	 */
 	function mailto($email, $title = '', $attributes = ''): string
@@ -375,9 +378,10 @@ if ( ! function_exists('safe_mailto'))
 	 *
 	 * Create a spam-protected mailto link written in Javascript
 	 *
-	 * @param  string    the email address
-	 * @param  string    the link title
-	 * @param  mixed    any attributes
+	 * @param  string $email      the email address
+	 * @param  string $title      the link title
+	 * @param  mixed  $attributes any attributes
+	 *
 	 * @return string
 	 */
 	function safe_mailto($email, $title = '', $attributes = ''): string
@@ -423,7 +427,7 @@ if ( ! function_exists('safe_mailto'))
 
 		$x[] = '>';
 
-		$temp = array();
+		$temp = [];
 		for ($i = 0, $l = strlen($title); $i < $l; $i ++)
 		{
 			$ordinal = ord($title[$i]);
@@ -434,7 +438,7 @@ if ( ! function_exists('safe_mailto'))
 			}
 			else
 			{
-				if (count($temp) === 0)
+				if (empty($temp))
 				{
 					$count = ($ordinal < 224) ? 2 : 3;
 				}
@@ -445,7 +449,7 @@ if ( ! function_exists('safe_mailto'))
 					$number = ($count === 3) ? (($temp[0] % 16) * 4096) + (($temp[1] % 64) * 64) + ($temp[2] % 64) : (($temp[0] % 32) * 64) + ($temp[1] % 64);
 					$x[] = '|' . $number;
 					$count = 1;
-					$temp = array();
+					$temp = [];
 				}
 			}
 		}
@@ -492,9 +496,10 @@ if ( ! function_exists('auto_link'))
 	 * URLs or emails that end in a period. We'll strip these
 	 * off and add them after the link.
 	 *
-	 * @param  string    the string
-	 * @param  string    the type: email, url, or both
-	 * @param  bool    whether to create pop-up links
+	 * @param  string $str   the string
+	 * @param  string $type  the type: email, url, or both
+	 * @param  bool   $popup whether to create pop-up links
+	 *
 	 * @return string
 	 */
 	function auto_link($str, $type = 'both', $popup = false): string
@@ -584,7 +589,7 @@ if ( ! function_exists('url_title'))
 	 *
 	 * @todo   Remove old 'dash' and 'underscore' usage in 3.1+.
 	 * @param  string $str       Input string
-	 * @param  string $separator Word separator (usually '-' or '_') 
+	 * @param  string $separator Word separator (usually '-' or '_')
 	 * @param  bool   $lowercase Whether to transform the output string to lowercase
 	 * @return string
 	 */
@@ -592,12 +597,12 @@ if ( ! function_exists('url_title'))
 	{
 		$q_separator = preg_quote($separator, '#');
 
-		$trans = array(
+		$trans = [
 			'&.+?;'					 => '',
 			'[^\w\d _-]'			 => '',
 			'\s+'					 => $separator,
 			'(' . $q_separator . ')+'	 => $separator
-		);
+		];
 
 		$str = strip_tags($str);
 		foreach ($trans as $key => $val)

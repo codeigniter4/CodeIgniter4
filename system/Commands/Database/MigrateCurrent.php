@@ -47,6 +47,12 @@ use Config\Services;
 class MigrateCurrent extends BaseCommand
 {
 
+	/**
+	 * The group the command is lumped under
+	 * when listing commands.
+	 *
+	 * @var string
+	 */
 	protected $group = 'Database';
 
 	/**
@@ -89,6 +95,8 @@ class MigrateCurrent extends BaseCommand
 	/**
 	 * Migrates us up or down to the version specified as $currentVersion
 	 * in the migrations config file.
+	 *
+	 * @param array $params
 	 */
 	public function run(array $params = [])
 	{

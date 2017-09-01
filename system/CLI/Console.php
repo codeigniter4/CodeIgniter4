@@ -48,6 +48,12 @@ class Console
 
 	//--------------------------------------------------------------------
 
+
+	/**
+	 * Console constructor.
+	 *
+	 * @param \CodeIgniter\CodeIgniter $app
+	 */
 	public function __construct(CodeIgniter $app)
 	{
 		$this->app = $app;

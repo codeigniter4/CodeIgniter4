@@ -41,9 +41,11 @@ if ( ! function_exists('number_to_size'))
 	/**
 	 * Formats a numbers as bytes, based on size, and adds the appropriate suffix
 	 *
-	 * @param	mixed	will be cast as int
-	 * @param	int
-	 * @return	string
+	 * @param    mixed  $num Will be cast as int
+	 * @param    int    $precision
+	 * @param    string $locale
+	 *
+	 * @return    string
 	 */
 	function number_to_size($num, int $precision = 1, string $locale = null)
 	{
@@ -102,7 +104,7 @@ if ( ! function_exists('number_to_amount'))
 	 *
 	 * @see https://simple.wikipedia.org/wiki/Names_for_large_numbers
 	 *
-	 * @param             $num
+	 * @param string      $num
 	 * @param int         $precision
 	 * @param string|null $locale
 	 *
@@ -156,7 +158,13 @@ if ( ! function_exists('number_to_amount'))
 
 if ( ! function_exists('number_to_currency'))
 {
-
+	/**
+	 * @param float  $num
+	 * @param string $currency
+	 * @param string $locale
+	 *
+	 * @return string
+	 */
 	function number_to_currency($num, string $currency, string $locale = null)
 	{
 		return format_number($num, 1, $locale, [
@@ -176,7 +184,7 @@ if ( ! function_exists('format_number'))
 	 * A general purpose, locale-aware, number_format method.
 	 * Used by all of the functions of the number_helper.
 	 *
-	 * @param             $num
+	 * @param float       $num
 	 * @param int         $precision
 	 * @param string|null $locale
 	 * @param array       $options
@@ -234,3 +242,84 @@ if ( ! function_exists('format_number'))
 }
 
 //--------------------------------------------------------------------
+
+if ( ! function_exists('number_to_roman'))
+{
+	/**
+	* Convert a number to a roman numeral.
+	* 
+	* @param int $num it will convert to int
+	*
+	* @return string
+	*/
+	function number_to_roman($num)
+	{
+		$num = (int) $num;
+		if ($num < 1 OR $num > 3999)
+		{
+				return;
+		}
+
+		$_number_to_roman = function($num, $th) use ( &$_number_to_roman ) {
+			$return = '';
+			$key1 = NULL;
+			$key2 = NULL;
+			switch ($th)
+			{
+				case 1:
+					$key1  = 'I'; 
+					$key2  = 'V'; 
+					$key_f = 'X'; 
+					break;
+				case 2:
+					$key1  = 'X'; 
+					$key2  = 'L'; 
+					$key_f = 'C'; 
+					break;
+				case 3:
+					$key1  = 'C'; 
+					$key2  = 'D'; 
+					$key_f = 'M'; 
+					break;
+				case 4:
+					$key1  = 'M'; 
+					break;
+			}
+			$n = $num % 10;
+			switch ($n)
+			{
+				case 1:
+				case 2:
+				case 3:
+					$return = str_repeat($key1, $n);
+					break;
+				case 4:
+					$return = $key1 . $key2;
+					break;
+				case 5:
+					$return = $key2;
+					break;
+				case 6:
+				case 7:
+				case 8:
+					$return = $key2 . str_repeat($key1, $n - 5);
+					break;
+				case 9:
+					$return = $key1 . $key_f;
+					break;
+			}
+			switch ($num)
+			{
+				case 10:
+					$return = $key_f;
+					break;
+			}
+			if ($num > 10)
+			{
+				$return = $_number_to_roman($num / 10, ++ $th) . $return;
+			}
+			return $return;
+		};
+		return $_number_to_roman($num, 1);
+	}
+}

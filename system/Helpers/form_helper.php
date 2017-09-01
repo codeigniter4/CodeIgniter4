@@ -47,9 +47,9 @@ if ( ! function_exists('form_open'))
 	 *
 	 * Creates the opening portion of the form.
 	 *
-	 * @param    string    the URI segments of the form destination
-	 * @param    array     a key/value pair of attributes
-	 * @param    array     a key/value pair hidden data
+	 * @param    string $action     the URI segments of the form destination
+	 * @param    array  $attributes a key/value pair of attributes
+	 * @param    array  $hidden     a key/value pair hidden data
 	 *
 	 * @return    string
 	 */
@@ -113,9 +113,9 @@ if ( ! function_exists('form_open_multipart'))
 	 *
 	 * Creates the opening portion of the form, but with "multipart/form-data".
 	 *
-	 * @param    string    the URI segments of the form destination
-	 * @param    array     a key/value pair of attributes
-	 * @param    array     a key/value pair hidden data
+	 * @param    string $action     The URI segments of the form destination
+	 * @param    array  $attributes A key/value pair of attributes
+	 * @param    array  $hidden     A key/value pair hidden data
 	 *
 	 * @return    string
 	 */
@@ -228,9 +228,9 @@ if ( ! function_exists('form_password'))
 	 *
 	 * Identical to the input function but adds the "password" type
 	 *
-	 * @param    mixed
-	 * @param    string
-	 * @param    mixed
+	 * @param    mixed  $data
+	 * @param    string $value
+	 * @param    mixed  $extra
 	 *
 	 * @return    string
 	 */
@@ -435,10 +435,10 @@ if ( ! function_exists('form_checkbox'))
 	/**
 	 * Checkbox Field
 	 *
-	 * @param    mixed
-	 * @param    string
-	 * @param    bool
-	 * @param    mixed
+	 * @param    mixed  $data
+	 * @param    string $value
+	 * @param    bool   $checked
+	 * @param    mixed  $extra
 	 *
 	 * @return    string
 	 */
@@ -481,10 +481,10 @@ if ( ! function_exists('form_radio'))
 	/**
 	 * Radio Button
 	 *
-	 * @param    mixed
-	 * @param    string
-	 * @param    bool
-	 * @param    mixed
+	 * @param    mixed  $data
+	 * @param    string $value
+	 * @param    bool   $checked
+	 * @param    mixed  $extra
 	 *
 	 * @return    string
 	 */
@@ -506,9 +506,9 @@ if ( ! function_exists('form_submit'))
 	/**
 	 * Submit Button
 	 *
-	 * @param    mixed
-	 * @param    string
-	 * @param    mixed
+	 * @param    mixed  $data
+	 * @param    string $value
+	 * @param    mixed  $extra
 	 *
 	 * @return    string
 	 */
@@ -533,9 +533,9 @@ if ( ! function_exists('form_reset'))
 	/**
 	 * Reset Button
 	 *
-	 * @param    mixed
-	 * @param    string
-	 * @param    mixed
+	 * @param    mixed  $data
+	 * @param    string $value
+	 * @param    mixed  $extra
 	 *
 	 * @return    string
 	 */
@@ -560,9 +560,9 @@ if ( ! function_exists('form_button'))
 	/**
 	 * Form Button
 	 *
-	 * @param    mixed
-	 * @param    string
-	 * @param    mixed
+	 * @param    mixed  $data
+	 * @param    string $content
+	 * @param    mixed  $extra
 	 *
 	 * @return    string
 	 */
@@ -594,9 +594,9 @@ if ( ! function_exists('form_label'))
 	/**
 	 * Form Label Tag
 	 *
-	 * @param    string    The text to appear onscreen
-	 * @param    string    The id the label applies to
-	 * @param    array     Additional attributes
+	 * @param    string $label_text The text to appear onscreen
+	 * @param    string $id         The id the label applies to
+	 * @param    array  $attributes Additional attributes
 	 *
 	 * @return    string
 	 */
@@ -633,6 +633,12 @@ if ( ! function_exists('form_datalist'))
 	 * The <datalist> element specifies a list of pre-defined options for an <input> element.
 	 * Users will see a drop-down list of pre-defined options as they input data.
 	 * The list attribute of the <input> element, must refer to the id attribute of the <datalist> element.
+	 *
+	 * @param string $name
+	 * @param string $value
+	 * @param array  $options
+	 *
+	 * @return string
 	 */
 	function form_datalist($name, $value, $options)
 	{
@@ -669,8 +675,8 @@ if ( ! function_exists('form_fieldset'))
 	 * Used to produce <fieldset><legend>text</legend>.  To close fieldset
 	 * use form_fieldset_close()
 	 *
-	 * @param    string    The legend text
-	 * @param    array     Additional attributes
+	 * @param    string $legend_text The legend text
+	 * @param    array  $attributes  Additional attributes
 	 *
 	 * @return    string
 	 */
@@ -696,7 +702,7 @@ if ( ! function_exists('form_fieldset_close'))
 	/**
 	 * Fieldset Close Tag
 	 *
-	 * @param    string
+	 * @param    string $extra
 	 *
 	 * @return    string
 	 */
@@ -715,7 +721,7 @@ if ( ! function_exists('form_close'))
 	/**
 	 * Form Close Tag
 	 *
-	 * @param    string
+	 * @param    string $extra
 	 *
 	 * @return    string
 	 */
@@ -771,9 +777,9 @@ if ( ! function_exists('set_select'))
 	 * Let's you set the selected value of a <select> menu via data in the POST array.
 	 * If Form Validation is active it retrieves the info from the validation class
 	 *
-	 * @param    string
-	 * @param    string
-	 * @param    bool
+	 * @param    string $field
+	 * @param    string $value
+	 * @param    bool   $default
 	 *
 	 * @return    string
 	 */
@@ -826,9 +832,9 @@ if ( ! function_exists('set_checkbox'))
 	 * Let's you set the selected value of a checkbox via the value in the POST array.
 	 * If Form Validation is active it retrieves the info from the validation class
 	 *
-	 * @param    string
-	 * @param    string
-	 * @param    bool
+	 * @param    string $field
+	 * @param    string $value
+	 * @param    bool   $default
 	 *
 	 * @return    string
 	 */
@@ -956,7 +962,7 @@ if ( ! function_exists('parse_form_attributes'))
 					unset($attributes[$key]);
 				}
 			}
-			if (count($attributes) > 0)
+			if (! empty($attributes))
 			{
 				$default = array_merge($default, $attributes);
 			}
@@ -982,4 +988,3 @@ if ( ! function_exists('parse_form_attributes'))
 
 	//--------------------------------------------------------------------
 }
-

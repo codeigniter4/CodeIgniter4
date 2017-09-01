@@ -98,7 +98,7 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 	 *
 	 * @param array $data
 	 *
-	 * @return ResultInterface
+	 * @return bool
 	 */
 	public function _execute($data)
 	{

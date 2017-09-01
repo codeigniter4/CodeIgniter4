@@ -52,7 +52,7 @@ second parameter::
 
 Finally, you can restrict the acceptable answers by passing in an array of allowed answers as the second parameter::
 
-	$overwrite = CLI::prompt('File exists. Overwrite?', array('y','n'));
+	$overwrite = CLI::prompt('File exists. Overwrite?', ['y','n']);
 
 Providing Feedback
 ==================

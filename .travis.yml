@@ -3,6 +3,14 @@ language: php
 php:
   - 7
   - 7.1
+  - 7.2
+  - nightly
+
+matrix:
+  fast_finish: true
+  allow_failures:
+    - php: 7.2
+    - php: nightly
 
 global:
   - CI=true
@@ -20,6 +28,7 @@ services:
   - memcached
   - mysql
   - postgresql
+  - redis-server
 
 script:
   - php vendor/bin/phpunit -v
@@ -31,6 +40,7 @@ before_install:
 
 before_script:
   - echo 'extension = memcached.so' >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+  - echo 'extension = redis.so' >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - composer install --prefer-source
 
 after_success:

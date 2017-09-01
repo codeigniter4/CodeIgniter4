@@ -46,7 +46,7 @@ class Forge
 	/**
 	 * The active database connection.
 	 *
-	 * @var ConnectionInterface
+	 * @var BaseConnection
 	 */
 	protected $db;
 
@@ -59,14 +59,14 @@ class Forge
 
 	/**
 	 * List of keys.
-	 * @var type
+	 * @var array
 	 */
 	protected $keys = [];
 
 	/**
 	 * List of primary keys.
 	 *
-	 * @var type
+	 * @var array
 	 */
 	protected $primaryKeys = [];
         
@@ -80,7 +80,7 @@ class Forge
 	/**
 	 * Character set used.
 	 *
-	 * @var type
+	 * @var string
 	 */
 	protected $charset = '';
 
@@ -191,6 +191,7 @@ class Forge
 	 * @param    string $db_name
 	 *
 	 * @return    bool
+	 * @throws \CodeIgniter\DatabaseException
 	 */
 	public function createDatabase($db_name)
 	{
@@ -230,6 +231,7 @@ class Forge
 	 * @param    string $db_name
 	 *
 	 * @return    bool
+	 * @throws \CodeIgniter\DatabaseException
 	 */
 	public function dropDatabase($db_name)
 	{
@@ -272,7 +274,7 @@ class Forge
 	 * @param    string $key
 	 * @param    bool   $primary
 	 *
-	 * @return    CI_DB_forge
+	 * @return    Forge
 	 */
 	public function addKey($key, $primary = false)
 	{
@@ -298,7 +300,7 @@ class Forge
 	 *
 	 * @param    array $field
 	 *
-	 * @return    CI_DB_forge
+	 * @return    Forge
 	 */
 	public function addField($field)
 	{
@@ -537,7 +539,8 @@ class Forge
 	 * @param    bool   $if_exists  Whether to add an IF EXISTS condition
 	 * @param    bool   $cascade  Whether to add an CASCADE condition
 	 *
-	 * @return    bool
+	 * @return mixed
+	 * @throws \CodeIgniter\DatabaseException
 	 */
 	public function dropTable($table_name, $if_exists = false, $cascade = false)
 	{
@@ -550,7 +553,14 @@ class Forge
 
 			return false;
 		}
+
                 
+		// If the prefix is already starting the table name, remove it...
+		if (strpos($table_name, $this->db->DBPrefix) === 0)
+		{
+			$table_name = substr($table_name, strlen($this->db->DBPrefix));
+		}
+
 		if (($query = $this->_dropTable($this->db->DBPrefix . $table_name, $if_exists, $cascade)) === true)
 		{
 			return true;
@@ -616,7 +626,8 @@ class Forge
 	 * @param    string $table_name     Old table name
 	 * @param    string $new_table_name New table name
 	 *
-	 * @return    bool
+	 * @return    mixed
+	 * @throws \CodeIgniter\DatabaseException
 	 */
 	public function renameTable($table_name, $new_table_name)
 	{
@@ -658,6 +669,7 @@ class Forge
 	 * @param    array  $field  Column definition
 	 *
 	 * @return    bool
+	 *  @throws \CodeIgniter\DatabaseException
 	 */
 	public function addColumn($table, $field)
 	{
@@ -701,6 +713,7 @@ class Forge
 	 * @param    string $column_name Column name
 	 *
 	 * @return    bool
+	 * @throws \CodeIgniter\DatabaseException
 	 */
 	public function dropColumn($table, $column_name)
 	{
@@ -727,6 +740,7 @@ class Forge
 	 * @param    string $field Column definition
 	 *
 	 * @return    bool
+	 * @throws \CodeIgniter\DatabaseException
 	 */
 	public function modifyColumn($table, $field)
 	{
@@ -1101,7 +1115,7 @@ class Forge
 	 *
 	 * @param    string $table
 	 *
-	 * @return    string
+	 * @return    array
 	 */
 	protected function _processIndexes($table)
 	{

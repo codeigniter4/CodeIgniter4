@@ -22,7 +22,7 @@ class DeleteTest extends \CIUnitTestCase
 
 		$answer = $builder->delete(['id' => 1], null, true, true);
 
-		$expectedSQL   = "DELETE FROM \"jobs\" WHERE \"id\" = :id";
+		$expectedSQL   = "DELETE FROM \"jobs\" WHERE \"id\" = :id:";
 		$expectedBinds = ['id' => 1];
 
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $answer));

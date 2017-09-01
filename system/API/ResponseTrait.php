@@ -45,8 +45,8 @@ use CodeIgniter\HTTP\Response;
  * consistent HTTP responses under a variety of common
  * situations when working as an API.
  *
- * @property $request   CodeIgniter\HTTP\Request
- * @property $response  CodeIgniter\HTTP\Response
+ * @property \CodeIgniter\HTTP\IncomingRequest $request
+ * @property \CodeIgniter\HTTP\Response        $response
  *
  * @package CodeIgniter\API
  */
@@ -129,10 +129,10 @@ trait ResponseTrait
 	/**
 	 * Used for generic failures that no custom methods exist for.
 	 *
-	 * @param             $messages
-	 * @param int|null    $status HTTP status code
-	 * @param string|null $code   Custom, API-specific, error code
-	 * @param string      $customMessage
+	 * @param string|array $messages
+	 * @param int|null     $status HTTP status code
+	 * @param string|null  $code   Custom, API-specific, error code
+	 * @param string       $customMessage
 	 *
 	 * @return mixed
 	 */
@@ -193,6 +193,7 @@ trait ResponseTrait
 	 * with the proper information.
 	 *
 	 * @param string $description
+	 * @param string $code
 	 * @param string $message
 	 *
 	 * @return mixed
@@ -209,6 +210,7 @@ trait ResponseTrait
 	 * of trying again will help.
 	 *
 	 * @param string $description
+	 * @param string $code
 	 * @param string $message
 	 *
 	 * @return mixed
@@ -224,6 +226,7 @@ trait ResponseTrait
 	 * Used when a specified resource cannot be found.
 	 *
 	 * @param string $description
+	 * @param string $code
 	 * @param string $message
 	 *
 	 * @return mixed
@@ -239,6 +242,7 @@ trait ResponseTrait
 	 * Used when the data provided by the client cannot be validated.
 	 *
 	 * @param string $description
+	 * @param string $code
 	 * @param string $message
 	 *
 	 * @return mixed
@@ -254,6 +258,7 @@ trait ResponseTrait
 	 * Use when trying to create a new resource and it already exists.
 	 *
 	 * @param string $description
+	 * @param string $code
 	 * @param string $message
 	 *
 	 * @return mixed
@@ -271,6 +276,7 @@ trait ResponseTrait
 	 * where Not Found means we simply cannot find any information about it.
 	 *
 	 * @param string $description
+	 * @param string $code
 	 * @param string $message
 	 *
 	 * @return mixed
@@ -286,6 +292,7 @@ trait ResponseTrait
 	 * Used when the user has made too many requests for the resource recently.
 	 *
 	 * @param string $description
+	 * @param string $code
 	 * @param string $message
 	 *
 	 * @return mixed
@@ -338,7 +345,7 @@ trait ResponseTrait
 		}
 
 		// if we don't have a formatter, make one
-		if ($this->formatter == null)
+		if ( ! isset($this->formatter))
 		{
 			$config = new Format();
 
@@ -350,6 +357,9 @@ trait ResponseTrait
 			// if no formatter, use the default
 			$this->formatter = $config->getFormatter($format);
 		}
+
+		// Recursively convert objects into associative arrays
+		$data = json_decode(json_encode($data), true);
 
 		return $this->formatter->format($data);
 	}

@@ -38,6 +38,11 @@
 class Plugins
 {
 
+	/**
+	 * @param array $params
+	 *
+	 * @return string|\CodeIgniter\HTTP\URI
+	 */
 	public static function currentURL(array $params = [])
 	{
 		if ( ! function_exists('current_url'))
@@ -48,6 +53,12 @@ class Plugins
 
 	//--------------------------------------------------------------------
 
+
+	/**
+	 * @param array $params
+	 *
+	 * @return \CodeIgniter\HTTP\URI|mixed|string
+	 */
 	public static function previousURL(array $params = [])
 	{
 		if ( ! function_exists('previous_url'))
@@ -58,6 +69,12 @@ class Plugins
 
 	//--------------------------------------------------------------------
 
+
+	/**
+	 * @param array $params
+	 *
+	 * @return string
+	 */
 	public static function mailto(array $params = [])
 	{
 		if ( ! function_exists('mailto'))
@@ -72,6 +89,12 @@ class Plugins
 
 	//--------------------------------------------------------------------
 
+
+	/**
+	 * @param array $params
+	 *
+	 * @return string
+	 */
 	public static function safeMailto(array $params = [])
 	{
 		if ( ! function_exists('safe_mailto'))
@@ -86,6 +109,12 @@ class Plugins
 
 	//--------------------------------------------------------------------
 
+
+	/**
+	 * @param array $params
+	 *
+	 * @return string
+	 */
 	public static function lang(array $params = [])
 	{
 		$line = array_shift($params);

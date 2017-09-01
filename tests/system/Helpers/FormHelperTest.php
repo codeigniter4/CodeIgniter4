@@ -164,14 +164,14 @@ EOH;
         $expected = <<<EOH
 <input type="text" name="username" value="johndoe" id="username" maxlength="100" size="50" style="width:50%"  />\n
 EOH;
-        $data = array(
+        $data = [
             'name'        => 'username',
             'id'          => 'username',
             'value'       => 'johndoe',
             'maxlength'   => '100',
             'size'        => '50',
             'style'       => 'width:50%',
-        );
+        ];
         $this->assertEquals($expected, form_input($data));
     }
     // ------------------------------------------------------------------------
@@ -222,12 +222,12 @@ EOH;
 <option value="xlarge">Extra Large Shirt</option>
 </select>\n
 EOH;
-        $options = array(
+        $options = [
             'small'		=> 'Small Shirt',
             'med'		=> 'Medium Shirt',
             'large'		=> 'Large Shirt',
             'xlarge'	=> 'Extra Large Shirt',
-        );
+        ];
         $this->assertEquals($expected, form_dropdown('shirts', $options, 'large'));
         $expected = <<<EOH
 <select name="shirts" multiple="multiple">
@@ -237,18 +237,18 @@ EOH;
 <option value="xlarge">Extra Large Shirt</option>
 </select>\n
 EOH;
-        $shirts_on_sale = array('small', 'large');
+        $shirts_on_sale = ['small', 'large'];
         $this->assertEquals($expected, form_dropdown('shirts', $options, $shirts_on_sale));
-        $options = array(
-            'Swedish Cars' => array(
+        $options = [
+            'Swedish Cars' => [
                 'volvo'	=> 'Volvo',
                 'saab'	=> 'Saab'
-            ),
-            'German Cars' => array(
+            ],
+            'German Cars' => [
                 'mercedes'	=> 'Mercedes',
                 'audi'		=> 'Audi'
-            )
-        );
+            ]
+        ];
         $expected = <<<EOH
 <select name="cars" multiple="multiple">
 <optgroup label="Swedish Cars">
@@ -261,7 +261,7 @@ EOH;
 </optgroup>
 </select>\n
 EOH;
-        $this->assertEquals($expected, form_dropdown('cars', $options, array('volvo', 'audi')));
+        $this->assertEquals($expected, form_dropdown('cars', $options, ['volvo', 'audi']));
     }
     // ------------------------------------------------------------------------
     public function testFormDropdownWithSelectedAttribute()
@@ -322,13 +322,13 @@ EOH;
 <option value="xlarge">Extra Large Shirt</option>
 </select>\n
 EOH;
-        $options = array(
+        $options = [
             'small'		=> 'Small Shirt',
             'med'		=> 'Medium Shirt',
             'large'		=> 'Large Shirt',
             'xlarge'	=> 'Extra Large Shirt',
-        );
-        $this->assertEquals($expected, form_multiselect('shirts[]', $options, array('med', 'large')));
+        ];
+        $this->assertEquals($expected, form_multiselect('shirts[]', $options, ['med', 'large']));
     }
     // ------------------------------------------------------------------------
     public function test_form_fieldset()

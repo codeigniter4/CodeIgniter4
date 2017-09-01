@@ -612,8 +612,8 @@ You can choose the Database group to use by adding a new line to the
 If you'd rather not do all of this by hand, you can use the ``session:migration`` command
 from the cli to generate a migration file for you::
 
-  > php ci.php session:migration
-  > php ci.php migrate
+  > php spark session:migration
+  > php spark migrate
 
 This command will take the **sessionSavePath** and **sessionMatchIP** settings into account
 when it generates the code.

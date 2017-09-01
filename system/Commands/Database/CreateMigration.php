@@ -47,6 +47,12 @@ use Config\Autoload;
 class CreateMigration extends BaseCommand
 {
 
+	/**
+	 * The group the command is lumped under
+	 * when listing commands.
+	 *
+	 * @var string
+	 */
 	protected $group = 'Database';
 
 	/**
@@ -75,22 +81,25 @@ class CreateMigration extends BaseCommand
 	 *
 	 * @var array
 	 */
-	protected $arguments = array(
+	protected $arguments = [
 		'migration_name' => 'The migration file name'
-	);
+	];
 
 	/**
 	 * the Command's Options
 	 *
 	 * @var array
 	 */
-	protected $options = array(
+	protected $options = [
 		'-n' => 'Set migration namespace'
-	);
+	];
 
 	/**
 	 * Creates a new migration file with the current timestamp.
+	 *
 	 * @todo Have this check the settings and see what type of file it should create (timestamp or sequential)
+	 *
+	 * @param array $params
 	 */
 	public function run(array $params = [])
 	{
@@ -122,6 +131,7 @@ class CreateMigration extends BaseCommand
 				if ($namespace == $ns)
 				{
 					$homepath = realpath($path);
+					break;
 				}
 			}
 		}

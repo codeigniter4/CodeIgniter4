@@ -106,7 +106,7 @@ class View implements RendererInterface
 	 *
 	 * @param \Config\View  $config
 	 * @param string        $viewPath
-	 * @param type          $loader
+	 * @param mixed          $loader
 	 * @param bool          $debug
 	 * @param Logger        $logger
 	 */
@@ -248,7 +248,7 @@ class View implements RendererInterface
 	 * Extract first bit of a long string and add ellipsis
 	 *
 	 * @param string	$string
-	 * @parm	int		$length
+	 * @param	int		$length
 	 * @return string
 	 */
 	public function excerpt(string $string, int $length = 20): string

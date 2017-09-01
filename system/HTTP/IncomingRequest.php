@@ -137,9 +137,9 @@ class IncomingRequest extends Request
 	/**
 	 * Constructor
 	 *
-	 * @param type $config
-	 * @param type $uri
-	 * @param type $body
+	 * @param object $config
+	 * @param URI $uri
+	 * @param string $body
 	 */
 	public function __construct($config, $uri = null, $body = 'php://input')
 	{
@@ -217,7 +217,7 @@ class IncomingRequest extends Request
 	 *
 	 * @param string $locale
 	 *
-	 * @return $this
+	 * @return IncomingRequest
 	 */
 	public function setLocale(string $locale)
 	{
@@ -241,7 +241,7 @@ class IncomingRequest extends Request
 			}
 		} catch (\Exception $e)
 		{
-			
+
 		}
 
 		return $this;
@@ -310,9 +310,9 @@ class IncomingRequest extends Request
 	 *
 	 * @return mixed
 	 */
-	public function getVar($index = null, $filter = null)
+	public function getVar($index = null, $filter = null, $flags = null)
 	{
-		return $this->fetchGlobal(INPUT_REQUEST, $index, $filter);
+		return $this->fetchGlobal(INPUT_REQUEST, $index, $filter, $flags);
 	}
 
 	//--------------------------------------------------------------------
@@ -362,9 +362,9 @@ class IncomingRequest extends Request
 	 *
 	 * @return mixed
 	 */
-	public function getGet($index = null, $filter = null)
+	public function getGet($index = null, $filter = null, $flags = null)
 	{
-		return $this->fetchGlobal(INPUT_GET, $index, $filter);
+		return $this->fetchGlobal(INPUT_GET, $index, $filter, $flags);
 	}
 
 	//--------------------------------------------------------------------
@@ -377,9 +377,9 @@ class IncomingRequest extends Request
 	 *
 	 * @return mixed
 	 */
-	public function getPost($index = null, $filter = null)
+	public function getPost($index = null, $filter = null, $flags = null)
 	{
-		return $this->fetchGlobal(INPUT_POST, $index, $filter);
+		return $this->fetchGlobal(INPUT_POST, $index, $filter, $flags);
 	}
 
 	//--------------------------------------------------------------------
@@ -392,12 +392,12 @@ class IncomingRequest extends Request
 	 *
 	 * @return mixed
 	 */
-	public function getPostGet($index = null, $filter = null)
+	public function getPostGet($index = null, $filter = null, $flags = null)
 	{
 		// Use $_POST directly here, since filter_has_var only
 		// checks the initial POST data, not anything that might
 		// have been added since.
-		return isset($_POST[$index]) ? $this->getPost($index, $filter) : $this->getGet($index, $filter);
+		return isset($_POST[$index]) ? $this->getPost($index, $filter, $flags) : $this->getGet($index, $filter, $flags);
 	}
 
 	//--------------------------------------------------------------------
@@ -410,12 +410,12 @@ class IncomingRequest extends Request
 	 *
 	 * @return mixed
 	 */
-	public function getGetPost($index = null, $filter = null)
+	public function getGetPost($index = null, $filter = null, $flags = null)
 	{
 		// Use $_GET directly here, since filter_has_var only
 		// checks the initial GET data, not anything that might
 		// have been added since.
-		return isset($_GET[$index]) ? $this->getGet($index, $filter) : $this->getPost($index, $filter);
+		return isset($_GET[$index]) ? $this->getGet($index, $filter, $flags) : $this->getPost($index, $filter, $flags);
 	}
 
 	//--------------------------------------------------------------------
@@ -428,9 +428,9 @@ class IncomingRequest extends Request
 	 *
 	 * @return mixed
 	 */
-	public function getCookie($index = null, $filter = null)
+	public function getCookie($index = null, $filter = null, $flags = null)
 	{
-		return $this->fetchGlobal(INPUT_COOKIE, $index, $filter);
+		return $this->fetchGlobal(INPUT_COOKIE, $index, $filter, $flags);
 	}
 
 	//--------------------------------------------------------------------
@@ -453,6 +453,10 @@ class IncomingRequest extends Request
 	 * Attempts to get old Input data that has been flashed to the session
 	 * with redirect_with_input(). It first checks for the data in the old
 	 * POST data, then the old GET data.
+	 *
+	 * @param string $key
+	 *
+	 * @return mixed
 	 */
 	public function getOldInput(string $key)
 	{
@@ -478,17 +482,18 @@ class IncomingRequest extends Request
 	 * Returns an array of all files that have been uploaded with this
 	 * request. Each file is represented by an UploadedFile instance.
 	 *
-	 * @return array
+	 * @return Files\FileCollection
 	 */
-	public function getFiles(): FileCollection
+	public function getFiles()
 	{
 		if (is_null($this->files))
 		{
 			$this->files = new FileCollection();
 		}
 
-		return $this->files;
+		return $this->files->all(); // return all files
 	}
+
 
 	//--------------------------------------------------------------------
 
@@ -517,8 +522,8 @@ class IncomingRequest extends Request
 	 * either provided by the user in the baseURL Config setting, or
 	 * determined from the environment as needed.
 	 *
-	 * @param $protocol
-	 * @param $baseURL
+	 * @param string $protocol
+	 * @param string $baseURL
 	 */
 	protected function detectURI($protocol, $baseURL)
 	{
@@ -562,9 +567,9 @@ class IncomingRequest extends Request
 	 * Based on the URIProtocol Config setting, will attempt to
 	 * detect the path portion of the current URI.
 	 *
-	 * @param $protocol
+	 * @param string $protocol
 	 *
-	 * @return string|string
+	 * @return string
 	 */
 	public function detectPath($protocol)
 	{
@@ -600,7 +605,7 @@ class IncomingRequest extends Request
 	 * @param array  $supported
 	 * @param bool   $strictMatch
 	 *
-	 * @return mixed
+	 * @return string
 	 */
 	public function negotiate(string $type, array $supported, bool $strictMatch = false)
 	{

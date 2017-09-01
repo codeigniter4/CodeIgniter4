@@ -37,7 +37,7 @@ class RouteCollectionTest extends \CIUnitTestCase
 
 		return new RouteCollection($loader);
 	}
-	
+
 	public function testBasicAdd()
 	{
 		$routes = $this->getCollector();
@@ -334,7 +334,9 @@ class RouteCollectionTest extends \CIUnitTestCase
 		$routes->resource('photos');
 
 		$expected = [
-			'photos' => '\Photos::listAll',
+			'photos' => '\Photos::index',
+			'photos/new' => '\Photos::new',
+			'photos/(.*)/edit' => '\Photos::edit/$1',
 			'photos/(.*)' => '\Photos::show/$1'
 		];
 
@@ -351,6 +353,16 @@ class RouteCollectionTest extends \CIUnitTestCase
 		$this->assertEquals($expected, $routes->getRoutes());
 
 		$_SERVER['REQUEST_METHOD'] = 'PUT';
+		$routes = $this->getCollector();
+		$routes->resource('photos');
+
+		$expected = [
+				'photos/(.*)' => '\Photos::update/$1'
+		];
+
+		$this->assertEquals($expected, $routes->getRoutes());
+
+		$_SERVER['REQUEST_METHOD'] = 'PATCH';
 		$routes = $this->getCollector();
 		$routes->resource('photos');
 
@@ -381,7 +393,9 @@ class RouteCollectionTest extends \CIUnitTestCase
 		$routes->resource('photos', ['controller' => '<script>gallery']);
 
 		$expected = [
-				'photos' => '\Gallery::listAll',
+				'photos' => '\Gallery::index',
+				'photos/new' => '\Gallery::new',
+				'photos/(.*)/edit' => '\Gallery::edit/$1',
 				'photos/(.*)' => '\Gallery::show/$1'
 		];
 
@@ -398,7 +412,9 @@ class RouteCollectionTest extends \CIUnitTestCase
 		$routes->resource('photos', ['placeholder' => ':num']);
 
 		$expected = [
-				'photos' => '\Photos::listAll',
+				'photos' => '\Photos::index',
+				'photos/new' => '\Photos::new',
+				'photos/([0-9]+)/edit' => '\Photos::edit/$1',
 				'photos/([0-9]+)' => '\Photos::show/$1'
 		];
 
@@ -412,10 +428,10 @@ class RouteCollectionTest extends \CIUnitTestCase
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 		$routes = $this->getCollector();
 
-		$routes->resource('photos', ['only' => 'listAll']);
+		$routes->resource('photos', ['only' => 'index']);
 
 		$expected = [
-			'photos' => '\Photos::listAll'
+			'photos' => '\Photos::index'
 		];
 
 		$this->assertEquals($expected, $routes->getRoutes());
@@ -653,6 +669,28 @@ class RouteCollectionTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * @see https://github.com/bcit-ci/CodeIgniter4/issues/642
+	 */
+	public function testNamedRoutesWithSameURIDifferentMethods()
+	{
+		$routes = $this->getCollector();
+		
+		$routes->get('user/insert', 'myController::goto/$1/$2', ['as' => 'namedRoute1']);
+		$routes->post('user/insert', function() {}, ['as' => 'namedRoute2']);
+		$routes->put('user/insert', function() {}, ['as' => 'namedRoute3']);
+
+		$match1 = $routes->reverseRoute('namedRoute1');
+		$match2 = $routes->reverseRoute('namedRoute2');
+		$match3 = $routes->reverseRoute('namedRoute3');
+
+		$this->assertEquals('/user/insert', $match1);
+		$this->assertEquals('/user/insert', $match2);
+		$this->assertEquals('/user/insert', $match3);
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testAddRedirect()
 	{
 		$routes = $this->getCollector();
@@ -720,5 +758,4 @@ class RouteCollectionTest extends \CIUnitTestCase
 		$this->assertTrue(array_key_exists('testing', $match));
 		$this->assertEquals($match['testing'], '\TestController::index');
 	}
-
 }

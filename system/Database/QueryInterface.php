@@ -74,8 +74,8 @@ interface QueryInterface
 	 * for it's start and end values. If no end value is present, will
 	 * use the current time to determine total duration.
 	 *
-	 * @param int      $start
-	 * @param int|null $end
+	 * @param float $start
+	 * @param float $end
 	 *
 	 * @return mixed
 	 */
@@ -97,7 +97,7 @@ interface QueryInterface
 
 	/**
 	 * Stores the error description that happened for this query.
-	 * 
+	 *
 	 * @param int $code
 	 * @param string $error
 	 */
@@ -117,7 +117,7 @@ interface QueryInterface
 	/**
 	 * Returns the error code created while executing this statement.
 	 *
-	 * @return string
+	 * @return int
 	 */
 	public function getErrorCode(): int;
 

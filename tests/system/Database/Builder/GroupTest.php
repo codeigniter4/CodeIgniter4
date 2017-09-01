@@ -54,7 +54,7 @@ class GroupTest extends \CIUnitTestCase
 				->having('id >', 3)
 		        ->orHaving('SUM(id) > 2');
 
-		$expectedSQL   = "SELECT \"name\" FROM \"user\" GROUP BY \"name\" HAVING \"id\" > :id OR SUM(id) > 2";
+		$expectedSQL   = "SELECT \"name\" FROM \"user\" GROUP BY \"name\" HAVING \"id\" > :id: OR SUM(id) > 2";
 
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
@@ -71,7 +71,7 @@ class GroupTest extends \CIUnitTestCase
 				->groupEnd()
 				->where('name', 'Darth');
 
-		$expectedSQL   = "SELECT * FROM \"user\" WHERE   ( \"id\" > :id AND \"name\" != :name  ) AND \"name\" = :name0";
+		$expectedSQL   = "SELECT * FROM \"user\" WHERE   ( \"id\" > :id: AND \"name\" != :name:  ) AND \"name\" = :name0:";
 
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
@@ -88,7 +88,7 @@ class GroupTest extends \CIUnitTestCase
 		            ->where('name !=', 'Luke')
 		        ->groupEnd();
 
-		$expectedSQL   = "SELECT * FROM \"user\" WHERE \"name\" = :name OR   ( \"id\" > :id AND \"name\" != :name0  )";
+		$expectedSQL   = "SELECT * FROM \"user\" WHERE \"name\" = :name: OR   ( \"id\" > :id: AND \"name\" != :name0:  )";
 
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
@@ -105,7 +105,7 @@ class GroupTest extends \CIUnitTestCase
 		        ->where('name !=', 'Luke')
 		        ->groupEnd();
 
-		$expectedSQL   = "SELECT * FROM \"user\" WHERE \"name\" = :name AND NOT   ( \"id\" > :id AND \"name\" != :name0  )";
+		$expectedSQL   = "SELECT * FROM \"user\" WHERE \"name\" = :name: AND NOT   ( \"id\" > :id: AND \"name\" != :name0:  )";
 
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
@@ -122,7 +122,7 @@ class GroupTest extends \CIUnitTestCase
 		        ->where('name !=', 'Luke')
 		        ->groupEnd();
 
-		$expectedSQL   = "SELECT * FROM \"user\" WHERE \"name\" = :name OR NOT   ( \"id\" > :id AND \"name\" != :name0  )";
+		$expectedSQL   = "SELECT * FROM \"user\" WHERE \"name\" = :name: OR NOT   ( \"id\" > :id: AND \"name\" != :name0:  )";
 
 		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}

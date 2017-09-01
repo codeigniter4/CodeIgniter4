@@ -83,7 +83,7 @@ class Forge extends \CodeIgniter\Database\Forge
 	 * @param    string $table      Table name
 	 * @param    mixed  $field      Column definition
 	 *
-	 * @return    string|string[]
+	 * @return    string|array
 	 */
 	protected function _alterTable($alter_type, $table, $field)
 	{

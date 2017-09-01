@@ -272,10 +272,10 @@ class Time extends DateTime
 	 * Provides a replacement for DateTime's own createFromFormat function, that provides
 	 * more flexible timeZone handling
 	 *
-	 * @param string      $format
-	 * @param string      $datetime
-	 * @param null        $timeZone
-	 * @param string|null $locale
+	 * @param string       $format
+	 * @param string       $datetime
+	 * @param DateTimeZone $timeZone
+	 * @param string|null  $locale
 	 *
 	 * @return \CodeIgniter\I18n\Time
 	 */
@@ -291,9 +291,9 @@ class Time extends DateTime
 	/**
 	 * Returns a new instance with the datetime set based on the provided UNIX timestamp.
 	 *
-	 * @param int         $timestamp
-	 * @param null        $timeZone
-	 * @param string|null $locale
+	 * @param int          $timestamp
+	 * @param DateTimeZone $timeZone
+	 * @param string|null  $locale
 	 *
 	 * @return \CodeIgniter\I18n\Time
 	 */
@@ -981,7 +981,242 @@ class Time extends DateTime
 	}
 
 	//--------------------------------------------------------------------
+
+	//--------------------------------------------------------------------
+	// Comparison
+	//--------------------------------------------------------------------
+
+	/**
+	 * Determines if the datetime passed in is equal to the current instance.
+	 * Equal in this case means that they represent the same moment in time,
+	 * and are not required to be in the same timezone, as both times are
+	 * converted to UTC and compared that way.
+	 *
+	 * @param Time|DateTime|string $testTime
+	 * @param string|null          $timezone
+	 *
+	 * @return bool
+	 */
+	public function equals($testTime, string $timezone = null): bool
+	{
+		$testTime = $this->getUTCObject($testTime, $timezone);
+
+		$ourTime = $this->toDateTime()
+		                ->setTimezone(new DateTimeZone('UTC'))
+		                ->format('Y-m-d H:i:s');
+
+		return $testTime->format('Y-m-d H:i:s') === $ourTime;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Ensures that the times are identical, taking timezone into account.
+	 *
+	 * @param Time|DateTime|string  $testTime
+	 * @param string|null           $timezone
+	 *
+	 * @return bool
+	 */
+	public function sameAs($testTime, string $timezone = null): bool
+	{
+		if ($testTime instanceof DateTime)
+		{
+			$testTime = $testTime->format('Y-m-d H:i:s');
+		}
+		else if (is_string($testTime))
+		{
+			$timezone = $timezone ?: $this->timezone;
+			$timezone = $timezone instanceof DateTimeZone ? $timezone : new DateTimeZone($timezone);
+			$testTime = new DateTime($testTime, $timezone);
+			$testTime = $testTime->format('Y-m-d H:i:s');
+		}
+
+		$ourTime = $this->toDateTimeString();
+
+		return $testTime === $ourTime;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Determines if the current instance's time is before $testTime,
+	 * after converting to UTC.
+	 *
+	 * @param             $testTime
+	 * @param string|null $timezone
+	 *
+	 * @return bool
+	 */
+	public function isBefore($testTime, string $timezone = null): bool
+	{
+		$testTime = $this->getUTCObject($testTime, $timezone)->getTimestamp();
+		$ourTime = $this->getTimestamp();
+
+		return $ourTime < $testTime;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Determines if the current instance's time is after $testTime,
+	 * after converting in UTC.
+	 *
+	 * @param             $testTime
+	 * @param string|null $timezone
+	 *
+	 * @return bool
+	 */
+	public function isAfter($testTime, string $timezone = null): bool
+	{
+		$testTime = $this->getUTCObject($testTime, $timezone)->getTimestamp();
+		$ourTime = $this->getTimestamp();
+
+		return $ourTime > $testTime;
+	}
+
+	//--------------------------------------------------------------------
+
+	//--------------------------------------------------------------------
+	// Differences
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns a text string that is easily readable that describes
+	 * how long ago, or how long from now, a date is, like:
+	 *
+	 *  - 3 weeks ago
+	 *  - in 4 days
+	 *  - 6 hours ago
+	 */
+	public function humanize()
+	{
+		$now  = \IntlCalendar::fromDateTime(Time::now($this->timezone)->toDateTimeString());
+		$time = $this->getCalendar()->getTime();
+
+		$years = $now->fieldDifference($time, \IntlCalendar::FIELD_YEAR);
+		$months = $now->fieldDifference($time, \IntlCalendar::FIELD_MONTH);
+		$days = $now->fieldDifference($time, \IntlCalendar::FIELD_DAY_OF_YEAR);
+		$hours = $now->fieldDifference($time, \IntlCalendar::FIELD_HOUR_OF_DAY);
+		$minutes = $now->fieldDifference($time, \IntlCalendar::FIELD_MINUTE);
+
+		$phrase = null;
+
+		if ($years !== 0)
+		{
+			$phrase = lang('Time.years', [abs($years)]);
+			$before = $years < 0;
+		}
+		else if ($months !== 0)
+		{
+			$phrase = lang('Time.months', [abs($months)]);
+			$before = $months < 0;
+		}
+		else if ($days !== 0 && (abs($days) >= 7))
+		{
+			$weeks = ceil($days / 7);
+			$phrase = lang('Time.weeks', [abs($weeks)]);
+			$before = $days < 0;
+		}
+		else if ($days !== 0)
+		{
+			$before = $days < 0;
+
+			// Yesterday/Tommorrow special cases
+			if (abs($days) === 1)
+			{
+				return $before
+					? lang('Time.yesterday')
+					: lang('Time.tomorrow');
+			}
+
+			$phrase = lang('Time.days', [abs($days)]);
+		}
+		else if ($hours !== 0)
+		{
+			// Display the actual time instead of a regular phrase.
+			return $this->format('g:i a');
+		}
+		else if ($minutes !== 0)
+		{
+			$phrase = lang('Time.minutes', [abs($minutes)]);
+			$before = $minutes < 0;
+		}
+		else
+		{
+			return lang('Time.now');
+		}
+
+		return $before
+			? lang('Time.ago', [$phrase])
+			: lang('Time.inFuture', [$phrase]);
+	}
+
+	/**
+	 * @param             $testTime
+	 * @param string|null $timezone
+	 *
+	 * @return \CodeIgniter\I18n\TimeDifference
+	 */
+	public function difference($testTime, string $timezone = null)
+	{
+		$testTime = $this->getUTCObject($testTime, $timezone);
+		$ourTime = $this->getUTCObject($this);
+
+		return new TimeDifference($ourTime, $testTime);
+	}
+
+
+	//--------------------------------------------------------------------
 	// Utilities
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns a Time instance with the timezone converted to UTC.
+	 *
+	 * @param             $time
+	 * @param string|null $timezone
+	 *
+	 * @return \DateTime|static
+	 */
+	public function getUTCObject($time, string $timezone=null)
+	{
+		if ($time instanceof Time)
+		{
+			$time = $time->toDateTime()
+			             ->setTimezone(new DateTimeZone('UTC'));
+		}
+		else if ($time instanceof \DateTime)
+		{
+			$time = $time->setTimezone(new DateTimeZone('UTC'));
+		}
+		else if (is_string($time))
+		{
+			$timezone = $timezone ?: $this->timezone;
+			$timezone = $timezone instanceof DateTimeZone ? $timezone : new DateTimeZone($timezone);
+			$time     = new DateTime($time, $timezone);
+			$time     = $time->setTimezone(new DateTimeZone('UTC'));
+		}
+
+		return $time;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns the IntlCalendar object used for this object,
+	 * taking into account the locale, date, etc.
+	 *
+	 * Primarily used internally to provide the difference and comparison functions,
+	 * but available for public consumption if they need it.
+	 *
+	 * @return \IntlCalendar
+	 */
+	public function getCalendar()
+	{
+		return \IntlCalendar::fromDateTime($this->toDateTimeString());
+	}
+
 	//--------------------------------------------------------------------
 
 	/**

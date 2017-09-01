@@ -154,7 +154,21 @@ class CIDatabaseTestCase extends CIUnitTestCase
 				$this->migrations->setNamespace('Tests\Support');
 			}
 
-			$this->db->table('migrations')->truncate();
+			// Delete all of the tables to ensure we're at a clean start.
+			$tables = $this->db->listTables();
+
+			if (is_array($tables))
+			{
+				$forge = \Config\Database::forge('tests');
+
+				foreach ($tables as $table)
+				{
+					if ($table = $this->db->DBPrefix.'migrations') continue;
+
+					$forge->dropTable($table, true);
+				}
+			}
+
 			$this->migrations->version(0, null, 'tests');
 			$this->migrations->latest(null, 'tests');
 		}

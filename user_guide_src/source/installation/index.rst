@@ -7,9 +7,21 @@ CodeIgniter4 can be installed manually, or using Composer.
 Manual Installation
 ===================
 
-CodeIgniter is installed in four steps:
+CodeIgniter is installed via manual download and unzip the package.
 
-#. Unzip the package.
+Composer Installation
+=====================
+
+While not required, CodeIgniter can be installed via `composer <https://getcomposer.org>`_ create-project command.
+
+::
+
+    composer create-project codeigniter4/framework
+
+
+Running
+=======
+
 #. Upload the CodeIgniter folders and files to your server. The
    **index.php** file will be in the **public** folder inside
    your project root.
@@ -48,11 +60,6 @@ If you're new to CodeIgniter, please read the :doc:`Getting
 Started <../intro/index>` section of the User Guide
 to begin learning how to build dynamic PHP applications. Enjoy!
 
-Composer Installation
-=====================
-
-TODO
-
 
 .. toctree::
     :hidden:
@@ -63,4 +70,3 @@ TODO
     upgrading
     troubleshooting
     local_server
-

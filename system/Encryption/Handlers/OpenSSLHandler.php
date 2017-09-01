@@ -37,119 +37,94 @@
  */
 class OpenSSLHandler extends BaseHandler
 {
-
-	/**
-	 * List of available modes
-	 *
-	 * @var	array
-	 */
-	protected $modes = [
-		'cbc'	 => 'cbc',
-		'ecb'	 => 'ecb',
-		'ofb'	 => 'ofb',
-		'cfb'	 => 'cfb',
-		'cfb8'	 => 'cfb8',
-		'ctr'	 => 'ctr',
-		'stream' => '',
-		'xts'	 => 'xts'
-	];
-
 	// --------------------------------------------------------------------
 
 	/**
 	 * Initialize OpenSSL, remembering parameters
 	 *
-	 * @param	array	$params	Configuration parameters
-	 * @return	void
+	 * @param  array $params Configuration parameters
+	 *
+	 * @throws \CodeIgniter\Encryption\EncryptionException
 	 */
-	public function __construct($params = null)
+	public function __construct($params = [])
 	{
-		parent::__construct();
+		parent::__construct($params);
 
-		if ( ! empty($params['cipher']))
-		{
-			$params['cipher'] = strtolower($params['cipher']);
-			$this->cipherAlias($params['cipher']);
-			$this->cipher = $params['cipher'];
-		}
+		if (empty($this->cipher))
+			throw new \CodeIgniter\Encryption\EncryptionException("OpenSSL handler configuration missing cipher.");
+		if ( ! in_array($this->cipher, openssl_get_cipher_methods(), true))
+			throw new \CodeIgniter\Encryption\EncryptionException("OpenSSL handler does not support the " . $this->cipher . " cipher.");
 
-		if ( ! empty($params['mode']))
-		{
-			$params['mode'] = strtolower($params['mode']);
-			if ( ! isset($this->modes[$params['mode']]))
-			{
-				$this->logger->error('Encryption: OpenSSL mode ' . strtoupper($params['mode']) . ' is not available.');
-			}
-			else
-			{
-				$this->mode = $this->modes[$params['mode']];
-			}
-		}
+		if (empty($this->key))
+			throw new \CodeIgniter\Encryption\EncryptionException("OpenSSL handler configuration missing key.");
 
-		if ( ! empty($params['key']))
-		{
-			$this->key = $params['key'];
-		}
-
-		if (isset($this->cipher, $this->mode))
-		{
-			// This is mostly for the stream mode, which doesn't get suffixed in OpenSSL
-			$handle = empty($this->mode) ? $this->cipher : $this->cipher . '-' . $this->mode;
-
-			if ( ! in_array($handle, openssl_get_cipher_methods(), true))
-			{
-				$this->handle = null;
-				$this->logger->error('Encryption: Unable to initialize OpenSSL with method ' . strtoupper($handle) . '.');
-			}
-			else
-			{
-				$this->handle = $handle;
-				$this->logger->info('Encryption: OpenSSL initialized with method ' . strtoupper($handle) . '.');
-			}
-		}
+		$this->logger->info('OpenSSL handler initialized with cipher ' . $this->cipher . '.');
 	}
 
 	/**
-	 * Encrypt
+	 * Encrypt plaintext, with optional HMAC and base64 encoding
 	 *
 	 * @param	string	$data	Input data
-	 * @param	array	$params	Input parameters
 	 * @return	string
 	 */
-	public function encrypt($data, array $params = null)
+	public function encrypt($data)
 	{
-		if (empty($params['cipher']))
-		{
-			return false;
-		}
+		// basic encryption
+		$iv = ($iv_size = \openssl_cipher_iv_length($this->cipher)) ? \openssl_random_pseudo_bytes($iv_size) : null;
 
-		$iv = ($iv_size = openssl_cipher_iv_length($params['cipher'])) ? $this->createKey($iv_size) : null;
-
-		$data = openssl_encrypt(
-				$data, $params['cipher'], $params['key'], OPENSSL_RAW_DATA, $iv
-		);
+		$data = \openssl_encrypt($data, $this->cipher, $this->secret, OPENSSL_RAW_DATA, $iv);
 
 		if ($data === false)
-		{
 			return false;
+
+		$result = $iv . $data;
+
+		// HMAC?
+		if ( ! empty($this->digest))
+		{
+			$hmacKey = \hash_hmac($this->digest, $result, $this->secret, true);
+			$result = $hmacKey . $result;
 		}
 
-		return $iv . $data;
+		if ( ! empty($this->encoding))
+			if ($this->encoding == 'base64')
+				$result = \base64_encode($result);
+			elseif ($this->encoding == 'hex')
+				$result = \bin2hex($result);
+
+		return $result;
 	}
 
 	// --------------------------------------------------------------------
 
 	/**
-	 * Decrypt
+	 * Decrypt ciphertext, with optional HMAC and base64 encoding
 	 *
-	 * @param	string	$data	Encrypted data
-	 * @param	array	$params	Input parameters
-	 * @return	string
+	 * @param    string $data Encrypted data
+	 *
+	 * @return    string
+	 * @throws \CodeIgniter\Encryption\EncryptionException
 	 */
-	public function decrypt($data, array $params = null)
+	public function decrypt($data)
 	{
+		if ( ! empty($this->encoding))
+			if ($this->encoding == 'base64')
+				$data = \base64_decode($data);
+			elseif ($this->encoding == 'hex')
+				$data = \hex2bin($data);
 
-		if ($iv_size = openssl_cipher_iv_length($params['cipher']))
+		// HMAC?
+		if ( ! empty($this->digest))
+		{
+			$hmacLength = self::substr($this->digest, 3) / 8;
+			$hmacKey = self::substr($data, 0, $hmacLength);
+			$data = self::substr($data, $hmacLength);
+			$hmacCalc = \hash_hmac($this->digest, $data, $this->secret, true);
+			if ($hmacKey != $hmacCalc)
+				throw new \CodeIgniter\Encryption\EncryptionException("Message authentication failed.");
+		}
+
+		if ($iv_size = \openssl_cipher_iv_length($this->cipher))
 		{
 			$iv = self::substr($data, 0, $iv_size);
 			$data = self::substr($data, $iv_size);
@@ -159,42 +134,7 @@ class OpenSSLHandler extends BaseHandler
 			$iv = null;
 		}
 
-		return empty($params['cipher']) ? false : openssl_decrypt(
-						$data, $params['cipher'], $params['key'], OPENSSL_RAW_DATA, $iv
-		);
-	}
-
-	// --------------------------------------------------------------------
-
-	/**
-	 * Cipher alias
-	 *
-	 * Tries to translate cipher names as appropriate for this handler
-	 *
-	 * @param	string	$cipher	Cipher name
-	 * @return	void
-	 */
-	protected function cipherAlias(&$cipher)
-	{
-		static $dictionary;
-
-		if (empty($dictionary))
-		{
-			$dictionary = [
-				'rijndael-128'	 => 'aes-128',
-				'rijndael-256'	 => 'aes-256',
-				'tripledes'		 => 'des-ede3',
-				'blowfish'		 => 'bf',
-				'cast-128'		 => 'cast5',
-				'arcfour'		 => 'rc4-40',
-				'rc4'			 => 'rc4-40'
-			];
-		}
-
-		if (isset($dictionary[$cipher]))
-		{
-			$cipher = $dictionary[$cipher];
-		}
+		return \openssl_decrypt($data, $this->cipher, $this->secret, OPENSSL_RAW_DATA, $iv);
 	}
 
 }

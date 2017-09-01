@@ -133,7 +133,7 @@ class Builder extends BaseBuilder
 	 * we simply do a DELETE and an INSERT on the first key/value
 	 * combo, assuming that it's either the primary key or a unique key.
 	 *
-	 * @param      array     an associative array of insert values
+	 * @param      array  $set   An associative array of insert values
 	 * @param bool $returnSQL
 	 *
 	 * @return bool TRUE on success, FALSE on failure
@@ -234,8 +234,8 @@ class Builder extends BaseBuilder
 	 *
 	 * Generates a platform-specific update string from the supplied data
 	 *
-	 * @param $table
-	 * @param $values
+	 * @param string $table
+	 * @param array  $values
 	 *
 	 * @return string
 	 * @throws DatabaseException
@@ -303,7 +303,7 @@ class Builder extends BaseBuilder
 	 *
 	 * Generates a platform-specific delete string from the supplied data
 	 *
-	 * @param    string    the table name
+	 * @param    string $table The table name
 	 *
 	 * @return    string
 	 */
@@ -323,7 +323,7 @@ class Builder extends BaseBuilder
 	 * If the database does not support the truncate() command,
 	 * then this method maps to 'DELETE FROM table'
 	 *
-	 * @param    string    the table name
+	 * @param    string $table The table name
 	 *
 	 * @return    string
 	 */
@@ -354,7 +354,7 @@ class Builder extends BaseBuilder
 	{
 		$op = $insensitiveSearch === true ? 'ILIKE' : 'LIKE';
 
-		return "{$prefix} {$column} {$not} {$op} :{$bind}";
+		return "{$prefix} {$column} {$not} {$op} :{$bind}:";
 	}
 
 	//--------------------------------------------------------------------

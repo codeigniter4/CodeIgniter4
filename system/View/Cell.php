@@ -76,6 +76,12 @@ class Cell
 
 	//--------------------------------------------------------------------
 
+
+	/**
+	 * Cell constructor.
+	 *
+	 * @param \CodeIgniter\Cache\CacheInterface $cache
+	 */
 	public function __construct(CacheInterface $cache)
 	{
 		$this->cache = $cache;
@@ -120,7 +126,7 @@ class Cell
 
 		if ($paramCount === 0)
 		{
-			if ($paramArray !== [])
+			if (! empty($paramArray))
 			{
 				throw new \InvalidArgumentException("{$class}::{$method} has no params.");
 			}
@@ -207,7 +213,7 @@ class Cell
 			unset($new_params);
 		}
 
-		if (is_array($params) && ! count($params))
+		if (is_array($params) && empty($params))
 		{
 			return [];
 		}

@@ -36,8 +36,6 @@
  * @filesource
  */
 use CodeIgniter\CLI\BaseCommand;
-use CodeIgniter\CLI\CLI;
-use Config\Services;
 
 /**
  * Does a rollback followed by a latest to refresh the current state
@@ -48,6 +46,12 @@ use Config\Services;
 class MigrateRefresh extends BaseCommand
 {
 
+	/**
+	 * The group the command is lumped under
+	 * when listing commands.
+	 *
+	 * @var string
+	 */
 	protected $group = 'Database';
 
 	/**
@@ -83,15 +87,17 @@ class MigrateRefresh extends BaseCommand
 	 *
 	 * @var array
 	 */
-	protected $options = array(
+	protected $options = [
 		'-n'	 => 'Set migration namespace',
 		'-g'	 => 'Set database group',
 		'-all'	 => 'Set latest for all namespace, will ignore (-n) option'
-	);
+	];
 
 	/**
 	 * Does a rollback followed by a latest to refresh the current state
 	 * of the database.
+	 *
+	 * @param array $params
 	 */
 	public function run(array $params = [])
 	{

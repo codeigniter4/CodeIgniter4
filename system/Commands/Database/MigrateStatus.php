@@ -48,6 +48,12 @@ use Config\Autoload;
 class MigrateStatus extends BaseCommand
 {
 
+	/**
+	 * The group the command is lumped under
+	 * when listing commands.
+	 *
+	 * @var string
+	 */
 	protected $group = 'Database';
 
 	/**
@@ -89,6 +95,8 @@ class MigrateStatus extends BaseCommand
 
 	/**
 	 * Displays a list of all migrations and whether they've been run or not.
+	 *
+	 * @param array $params
 	 */
 	public function run(array $params = [])
 	{

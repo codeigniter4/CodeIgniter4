@@ -121,7 +121,66 @@ class IncomingRequestTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-    /**
+	public function testFetchGlobalWithArrayTop()
+	{
+		$_POST = [
+			'clients' => [
+				'address' => [
+					'zipcode' => 90210
+				]
+			]
+		];
+
+		$this->assertEquals(['address' => ['zipcode' => 90210]], $this->request->getPost('clients'));
+	}
+
+	public function testFetchGlobalWithArrayChildNumeric()
+	{
+		$_POST = [
+			'clients' => [
+				[
+					'address' => [
+						'zipcode' => 90210
+					],
+				],
+				[
+					'address' => [
+						'zipcode' => 60610
+					],
+				],
+			]
+		];
+
+		$this->assertEquals(['zipcode' => 60610], $this->request->getPost('clients[1][address]'));
+	}
+
+	public function testFetchGlobalWithArrayChildElement()
+	{
+		$_POST = [
+			'clients' => [
+				'address' => [
+					'zipcode' => 90210
+				],
+			]
+		];
+
+		$this->assertEquals(['zipcode' => 90210], $this->request->getPost('clients[address]'));
+	}
+
+	public function testFetchGlobalWithArrayLastElement()
+	{
+		$_POST = [
+			'clients' => [
+				'address' => [
+					'zipcode' => 90210
+				]
+			]
+		];
+
+		$this->assertEquals(90210, $this->request->getPost('clients[address][zipcode]'));
+	}
+
+	/**
      * @see https://github.com/bcit-ci/CodeIgniter4/issues/353
      */
     public function testGetPostReturnsArrayValues()
@@ -161,6 +220,20 @@ class IncomingRequestTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testFetchGlobalFilterWithFlagValue()
+	{
+		$_POST = [
+			'foo' => '`bar<script>',
+			'bar' => 'baz',
+			'xxx' => 'yyy',
+			'yyy' => 'zzz'
+		];
+
+		$this->assertEquals('bar%3Cscript%3E', $this->request->getPost('foo', FILTER_SANITIZE_ENCODED, FILTER_FLAG_STRIP_BACKTICK));
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testFetchGlobalReturnsAllWhenEmpty()
 	{
 		$post = [
@@ -192,6 +265,26 @@ class IncomingRequestTest extends \CIUnitTestCase
 		];
 
 		$this->assertEquals($expected, $this->request->getPost(null, FILTER_SANITIZE_ENCODED));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testFetchGlobalFilterWithFlagAllValues()
+	{
+		$_POST = [
+			'foo' => '`bar<script>',
+			'bar' => '`baz<script>',
+			'xxx' => '`yyy<script>',
+			'yyy' => '`zzz<script>'
+		];
+		$expected = [
+			'foo' => 'bar%3Cscript%3E',
+			'bar' => 'baz%3Cscript%3E',
+			'xxx' => 'yyy%3Cscript%3E',
+			'yyy' => 'zzz%3Cscript%3E'
+		];
+
+		$this->assertEquals($expected, $this->request->getPost(null, FILTER_SANITIZE_ENCODED, FILTER_FLAG_STRIP_BACKTICK));
 	}
 
 	//--------------------------------------------------------------------
@@ -228,6 +321,24 @@ class IncomingRequestTest extends \CIUnitTestCase
 		];
 
 		$this->assertEquals($expected, $this->request->getPost(['foo', 'bar'], FILTER_SANITIZE_ENCODED));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testFetchGlobalFilterWithFlagSelectedValues()
+	{
+		$_POST = [
+			'foo' => '`bar<script>',
+			'bar' => '`baz<script>',
+			'xxx' => '`yyy<script>',
+			'yyy' => '`zzz<script>'
+		];
+		$expected = [
+			'foo' => 'bar%3Cscript%3E',
+			'bar' => 'baz%3Cscript%3E',
+		];
+
+		$this->assertEquals($expected, $this->request->getPost(['foo', 'bar'], FILTER_SANITIZE_ENCODED, FILTER_FLAG_STRIP_BACKTICK));
 	}
 
 	//--------------------------------------------------------------------

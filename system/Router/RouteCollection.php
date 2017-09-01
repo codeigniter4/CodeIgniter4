@@ -106,7 +106,7 @@ class RouteCollection implements RouteCollectionInterface
 	 * A callable that will be shown
 	 * when the route cannot be matched.
 	 *
-	 * @var string|closure
+	 * @var string|\Closure
 	 */
 	protected $override404;
 
@@ -130,7 +130,18 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @var array
 	 */
-	protected $routes = [];
+	protected $routes = [
+		'*'       => [],
+		'options' => [],
+		'get'     => [],
+		'head'    => [],
+		'post'    => [],
+		'put'     => [],
+		'delete'  => [],
+		'trace'   => [],
+		'connect' => [],
+		'cli'     => [],
+	];
 
 	/**
 	 * The current method that the script is being called by.
@@ -188,6 +199,8 @@ class RouteCollection implements RouteCollectionInterface
 
 	/**
 	 * Constructor
+	 *
+	 * @param FileLocator $locator
 	 */
 	public function __construct(FileLocator $locator)
 	{
@@ -308,7 +321,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @param bool $value
 	 *
-	 * @return RouteCollection
+	 * @return RouteCollectionInterface
 	 */
 	public function setAutoRoute(bool $value): RouteCollectionInterface
 	{
@@ -328,7 +341,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @param callable|null $callable
 	 *
-	 * @return $this
+	 * @return RouteCollectionInterface
 	 */
 	public function set404Override($callable = null): RouteCollectionInterface
 	{
@@ -414,7 +427,9 @@ class RouteCollection implements RouteCollectionInterface
 	 * Sets the default constraint to be used in the system. Typically
 	 * for use with the 'resources' method.
 	 *
-	 * @param $placeholder
+	 * @param string $placeholder
+	 *
+	 * @return RouteCollectionInterface
 	 */
 	public function setDefaultConstraint(string $placeholder): RouteCollectionInterface
 	{
@@ -467,8 +482,6 @@ class RouteCollection implements RouteCollectionInterface
 	/**
 	 * Returns the current value of the translateURIDashses setting.
 	 *
-	 * @param bool|false $val
-	 *
 	 * @return mixed
 	 */
 	public function shouldTranslateURIDashes(): bool
@@ -495,8 +508,13 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @return array
 	 */
-	public function getRoutes(): array
+	public function getRoutes($verb = null): array
 	{
+		if (empty($verb))
+		{
+			$verb = $this->getHTTPVerb();	
+		}
+
 		// Since this is the entry point for the Router,
 		// take a moment to do any route discovery
 		// we might need to do.
@@ -504,10 +522,15 @@ class RouteCollection implements RouteCollectionInterface
 
 		$routes = [];
 
-		foreach ($this->routes as $r)
+		if (isset($this->routes[$verb]))
 		{
-			$key = key($r['route']);
-			$routes[$key] = $r['route'][$key];
+			$collection = array_merge($this->routes['*'], $this->routes[$verb]);
+
+			foreach ($collection as $r)
+			{
+				$key = key($r['route']);
+				$routes[$key] = $r['route'][$key];
+			}
 		}
 
 		return $routes;
@@ -559,11 +582,11 @@ class RouteCollection implements RouteCollectionInterface
 	 * @param array|string $to
 	 * @param $options
 	 *
-	 * @return self RouteCollectionInterface
+	 * @return RouteCollectionInterface
 	 */
 	public function add(string $from, $to, array $options = null): RouteCollectionInterface
 	{
-		$this->create($from, $to, $options);
+		$this->create('*', $from, $to, $options);
 
 		return $this;
 	}
@@ -578,16 +601,18 @@ class RouteCollection implements RouteCollectionInterface
 	 * @param string $from     The pattern to match against
 	 * @param string $to       Either a route name or a URI to redirect to
 	 * @param int    $status   The HTTP status code that should be returned with this redirect
+	 *
+	 * @return RouteCollection
 	 */
 	public function addRedirect(string $from, string $to, int $status = 302)
 	{
 		// Use the named route's pattern if this is a named route.
-		if (array_key_exists($to, $this->routes))
+		if (array_key_exists($to, $this->routes['*']))
 		{
-			$to = $this->routes[$to]['route'];
+			$to = $this->routes['*'][$to]['route'];
 		}
 
-		$this->create($from, $to, ['redirect' => $status]);
+		$this->create('*', $from, $to, ['redirect' => $status]);
 
 		return $this;
 	}
@@ -603,7 +628,7 @@ class RouteCollection implements RouteCollectionInterface
 	 */
 	public function isRedirect(string $from): bool
 	{
-		foreach ($this->routes as $name => $route)
+		foreach ($this->routes['*'] as $name => $route)
 		{
 			// Named route?
 			if ($name == $from || key($route['route']) == $from)
@@ -626,7 +651,7 @@ class RouteCollection implements RouteCollectionInterface
 	 */
 	public function getRedirectCode(string $from): int
 	{
-		foreach ($this->routes as $name => $route)
+		foreach ($this->routes['*'] as $name => $route)
 		{
 			// Named route?
 			if ($name == $from || key($route['route']) == $from)
@@ -710,10 +735,12 @@ class RouteCollection implements RouteCollectionInterface
 	 *      // Generates the following routes:
 	 *      HTTP Verb | Path        | Action        | Used for...
 	 *      ----------+-------------+---------------+-----------------
-	 *      GET         /photos             listAll         display a list of photos
+	 *      GET         /photos             index           display a list of photos
+	 *      GET         /photos/new         new             new a specific photo
+	 *      GET         /photos/{id}/edit   edit            edit a specific photo
 	 *      GET         /photos/{id}        show            display a specific photo
 	 *      POST        /photos             create          create a new photo
-	 *      PUT         /photos/{id}        update          update an existing photo
+	 *      PUT/PATCH   /photos/{id}        update          update an existing photo
 	 *      DELETE      /photos/{id}        delete          delete an existing photo
 	 *
 	 *  If 'websafe' option is present, the following paths are also available:
@@ -753,16 +780,21 @@ class RouteCollection implements RouteCollectionInterface
 		// Make sure we capture back-references
 		$id = '(' . trim($id, '()') . ')';
 
-		$methods = isset($options['only']) ? is_string($options['only']) ? explode(',', $options['only']) : $options['only'] : ['listAll', 'show', 'create', 'update', 'delete'];
+		$methods = isset($options['only']) ? is_string($options['only']) ? explode(',', $options['only']) : $options['only'] : ['index', 'show', 'create', 'update', 'delete', 'new', 'edit'];
 
-		if (in_array('listAll', $methods))
-			$this->get($name, $new_name . '::listAll', $options);
+		if (in_array('index', $methods))
+			$this->get($name, $new_name . '::index', $options);
+		if (in_array('new', $methods))
+			$this->get($name. '/new', $new_name . '::new', $options);
+		if (in_array('edit', $methods))
+			$this->get($name . '/' . $id. '/edit', $new_name . '::edit/$1', $options);
 		if (in_array('show', $methods))
 			$this->get($name . '/' . $id, $new_name . '::show/$1', $options);
 		if (in_array('create', $methods))
 			$this->post($name, $new_name . '::create', $options);
 		if (in_array('update', $methods))
 			$this->put($name . '/' . $id, $new_name . '::update/$1', $options);
+			$this->patch($name . '/' . $id, $new_name . '::update/$1', $options);
 		if (in_array('delete', $methods))
 			$this->delete($name . '/' . $id, $new_name . '::delete/$1', $options);
 
@@ -818,10 +850,7 @@ class RouteCollection implements RouteCollectionInterface
 	 */
 	public function get(string $from, $to, array $options = null): RouteCollectionInterface
 	{
-		if ($this->HTTPVerb == 'get')
-		{
-			$this->create($from, $to, $options);
-		}
+		$this->create('get', $from, $to, $options);
 
 		return $this;
 	}
@@ -839,10 +868,7 @@ class RouteCollection implements RouteCollectionInterface
 	 */
 	public function post(string $from, $to, array $options = null): RouteCollectionInterface
 	{
-		if ($this->HTTPVerb == 'post')
-		{
-			$this->create($from, $to, $options);
-		}
+		$this->create('post', $from, $to, $options);
 
 		return $this;
 	}
@@ -860,10 +886,7 @@ class RouteCollection implements RouteCollectionInterface
 	 */
 	public function put(string $from, $to, array $options = null): RouteCollectionInterface
 	{
-		if ($this->HTTPVerb == 'put')
-		{
-			$this->create($from, $to, $options);
-		}
+		$this->create('put', $from, $to, $options);
 
 		return $this;
 	}
@@ -881,10 +904,7 @@ class RouteCollection implements RouteCollectionInterface
 	 */
 	public function delete(string $from, $to, array $options = null): RouteCollectionInterface
 	{
-		if ($this->HTTPVerb == 'delete')
-		{
-			$this->create($from, $to, $options);
-		}
+		$this->create('delete', $from, $to, $options);
 
 		return $this;
 	}
@@ -902,10 +922,7 @@ class RouteCollection implements RouteCollectionInterface
 	 */
 	public function head(string $from, $to, array $options = null): RouteCollectionInterface
 	{
-		if ($this->HTTPVerb == 'head')
-		{
-			$this->create($from, $to, $options);
-		}
+		$this->create('head', $from, $to, $options);
 
 		return $this;
 	}
@@ -923,10 +940,7 @@ class RouteCollection implements RouteCollectionInterface
 	 */
 	public function patch(string $from, $to, array $options = null): RouteCollectionInterface
 	{
-		if ($this->HTTPVerb == 'patch')
-		{
-			$this->create($from, $to, $options);
-		}
+		$this->create('patch', $from, $to, $options);
 
 		return $this;
 	}
@@ -944,10 +958,7 @@ class RouteCollection implements RouteCollectionInterface
 	 */
 	public function options(string $from, $to, array $options = null): RouteCollectionInterface
 	{
-		if ($this->HTTPVerb == 'options')
-		{
-			$this->create($from, $to, $options);
-		}
+		$this->create('options', $from, $to, $options);
 
 		return $this;
 	}
@@ -965,10 +976,7 @@ class RouteCollection implements RouteCollectionInterface
 	 */
 	public function cli(string $from, $to, array $options = null): RouteCollectionInterface
 	{
-		if ($this->HTTPVerb == 'cli')
-		{
-			$this->create($from, $to, $options);
-		}
+		$this->create('cli', $from, $to, $options);
 
 		return $this;
 	}
@@ -978,10 +986,10 @@ class RouteCollection implements RouteCollectionInterface
 	/**
 	 * Limits the routes to a specified ENVIRONMENT or they won't run.
 	 *
-	 * @param $env
-	 * @param callable $callback
+	 * @param string   $env
+	 * @param \Closure $callback
 	 *
-	 * @return $this
+	 * @return RouteCollectionInterface
 	 */
 	public function environment(string $env, \Closure $callback): RouteCollectionInterface
 	{
@@ -1009,45 +1017,51 @@ class RouteCollection implements RouteCollectionInterface
 	 *      reverseRoute('Controller::method', $param1, $param2);
 	 *
 	 * @param string $search
-	 * @param        ...$params
+	 * @param array  ...$params
 	 *
 	 * @return string|false
 	 */
 	public function reverseRoute(string $search, ...$params)
 	{
 		// Named routes get higher priority.
-		if (array_key_exists($search, $this->routes))
+		foreach ($this->routes as $verb => $collection)
 		{
-			return $this->fillRouteParams(key($this->routes[$search]['route']), $params);
+			if (array_key_exists($search, $collection))
+			{
+				return $this->fillRouteParams(key($collection[$search]['route']), $params);
+			}
 		}
 
 		// If it's not a named route, then loop over
 		// all routes to find a match.
-		foreach ($this->routes as $route)
+		foreach ($this->routes as $verb => $collection)
 		{
-			$from = key($route['route']);
-			$to = $route['route'][$from];
-
-			// Lose any namespace slash at beginning of strings
-			// to ensure more consistent match.
-			$to = ltrim($to, '\\');
-			$search = ltrim($search, '\\');
-
-			// If there's any chance of a match, then it will
-			// be with $search at the beginning of the $to string.
-			if (strpos($to, $search) !== 0)
+			foreach ($collection as $route)
 			{
-				continue;
-			}
+				$from = key($route['route']);
+				$to = $route['route'][$from];
 
-			// Ensure that the number of $params given here
-			// matches the number of back-references in the route
-			if (substr_count($to, '$') != count($params))
-			{
-				continue;
-			}
+				// Lose any namespace slash at beginning of strings
+				// to ensure more consistent match.
+				$to = ltrim($to, '\\');
+				$search = ltrim($search, '\\');
 
-			return $this->fillRouteParams($from, $params);
+				// If there's any chance of a match, then it will
+				// be with $search at the beginning of the $to string.
+				if (strpos($to, $search) !== 0)
+				{
+					continue;
+				}
+
+				// Ensure that the number of $params given here
+				// matches the number of back-references in the route
+				if (substr_count($to, '$') != count($params))
+				{
+					continue;
+				}
+
+				return $this->fillRouteParams($from, $params);
+			}
 		}
 
 		// If we're still here, then we did not find a match.
@@ -1059,7 +1073,7 @@ class RouteCollection implements RouteCollectionInterface
 	/**
 	 * Given a
 	 *
-	 * @param array      $from
+	 * @param string     $from
 	 * @param array|null $params
 	 *
 	 * @return string
@@ -1100,11 +1114,11 @@ class RouteCollection implements RouteCollectionInterface
 	 * the request method(s) that this route will work for. They can be separated
 	 * by a pipe character "|" if there is more than one.
 	 *
-	 * @param  string $from
-	 * @param  array  $to
-	 * @param array   $options
+	 * @param  string       $from
+	 * @param  array|string $to
+	 * @param array         $options
 	 */
-	protected function create(string $from, $to, array $options = null)
+	protected function create(string $verb, string $from, $to, array $options = null)
 	{
 		$prefix = is_null($this->group) ? '' : $this->group . '/';
 
@@ -1117,10 +1131,7 @@ class RouteCollection implements RouteCollectionInterface
 			$from = trim($from, '/');
 		}
 
-		if (is_null($options))
-		{
-			$options = $this->currentOptions;
-		}
+		$options = array_merge((array)$this->currentOptions, (array)$options);
 
 		// Hostname limiting?
 		if (isset($options['hostname']) && ! empty($options['hostname']))
@@ -1184,14 +1195,14 @@ class RouteCollection implements RouteCollectionInterface
 
 		$name = $options['as'] ?? $from;
 
-		$this->routes[$name] = [
+		$this->routes[$verb][$name] = [
 			'route' => [$from => $to]
 		];
 
 		// Is this a redirect?
 		if (isset($options['redirect']) && is_numeric($options['redirect']))
 		{
-			$this->routes[$name]['redirect'] = $options['redirect'];
+			$this->routes['*'][$name]['redirect'] = $options['redirect'];
 		}
 	}
 

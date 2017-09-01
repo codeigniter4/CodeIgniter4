@@ -97,7 +97,7 @@ class Autoloader
 	 * Reads in the configuration array (described above) and stores
 	 * the valid parts that we'll need.
 	 *
-	 * @param $config
+	 * @param \Config\Autoload $config
 	 */
 	public function initialize(\Config\Autoload $config)
 	{
@@ -160,10 +160,10 @@ class Autoloader
 	/**
 	 * Registers a namespace with the autoloader.
 	 *
-	 * @param $namespace
-	 * @param $path
+	 * @param string $namespace
+	 * @param string $path
 	 *
-	 * @return $this
+	 * @return Autoloader
 	 */
 	public function addNamespace($namespace, $path)
 	{
@@ -190,9 +190,9 @@ class Autoloader
 	/**
 	 * Removes a single namespace from the psr4 settings.
 	 *
-	 * @param $namespace
+	 * @param string $namespace
 	 *
-	 * @return $this
+	 * @return Autoloader
 	 */
 	public function removeNamespace($namespace)
 	{
@@ -279,7 +279,7 @@ class Autoloader
 	 * version of CodeIgniter, namely 'application/libraries', and
 	 * 'application/Models'.
 	 *
-	 * @param $class    The class name. This typically should NOT have a namespace.
+	 * @param string $class The class name. This typically should NOT have a namespace.
 	 *
 	 * @return mixed    The mapped file name on success, or boolean false on failure
 	 */
@@ -319,7 +319,7 @@ class Autoloader
 	 *
 	 * @codeCoverageIgnore
 	 *
-	 * @param $file
+	 * @param string $file
 	 *
 	 * @return bool
 	 */

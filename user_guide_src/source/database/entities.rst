@@ -148,7 +148,7 @@ Here's an updated User entity to provide some examples of how this could be used
         protected $email;
         protected $password;
         protected $created_at;
-        protected $updated_on;
+        protected $updated_at;
 
         public function setPassword(string $pass)
         {
@@ -157,14 +157,14 @@ Here's an updated User entity to provide some examples of how this could be used
             return $this;
         }
 
-        public function setCreatedOn(string $dateString)
+        public function setCreatedAt(string $dateString)
         {
             $this->created_at = new \DateTime($datetime, new \DateTimeZone('UTC'));
 
             return
         }
 
-        public function getCreatedOn(string $format = 'Y-m-d H:i:s')
+        public function getCreatedAt(string $format = 'Y-m-d H:i:s')
         {
             $timezone = isset($this->timezone)
             ? $this->timezone
@@ -221,7 +221,7 @@ As an example, imagine your have the simplified User Entity that is used through
         protected $email;
         protected $password;
         protected $created_at;
-        protected $updated_on;
+        protected $updated_at;
     }
 
 Your boss comes to you and says that no one uses usernames anymore, so you're switching to just use emails for login.
@@ -244,10 +244,12 @@ simply map the ``full_name`` column in the database to the ``$name`` property, a
         protected $email;
         protected $password;
         protected $created_at;
-        protected $updated_on;
+        protected $updated_at;
 
-        protected $datamap = [
-            'full_name' => 'name'
+        protected $_options = [
+            'datamap' => [
+                'full_name' => 'name'
+            ]
         ];
     }
 
@@ -260,3 +262,103 @@ class' ``$name`` property, so it can be set and retrieved through ``$user->name`
 through the original ``$user->full_name``, also, as this is needed for the model to get the data back out and save it
 to the database. However, ``unset`` and ``isset`` only work on the mapped property, ``$name``, not on the original name,
 ``full_name``.
+
+
+Mutators
+========
+
+Date Mutators
+-------------
+
+By default, the Entity class will convert fields named `created_at`, `updated_at`, or `deleted_at` into
+:doc:`Time </libraries/time>`_ instances whenever they are set or retrieved. The Time class provides a large number
+of helpful methods in a immutable, localized way.
+
+You can define which properties are automatically converted by adding the name to the **options['dates']** array::
+
+    <?php namespace App\Entities;
+
+    use CodeIgniter\Entity;
+
+    class User extends Entity
+    {
+        protected $id;
+        protected $name;        // Represents a full name now
+        protected $email;
+        protected $password;
+        protected $created_at;
+        protected $updated_at;
+
+        protected $_options = [
+            'dates' => ['created_at', 'updated_at', 'deleted_at'],
+        ];
+    }
+
+Now, when any of those properties are set, they will be converted to a Time instance, using the application's
+current timezone, as set in **application/Config/App.php**::
+
+    $user = new App\Entities\User();
+
+    // Converted to Time instance
+    $user->created_at = 'April 15, 2017 10:30:00';
+
+    // Can now use any Time methods:
+    echo $user->created_at->humanize();
+    echo $user->created_at->setTimezone('Europe/London')->toDateString();
+
+Property Casting
+----------------
+
+You can specify that properties in your Entity should be converted to common data types with the **casts** entry in
+the **$_options** property. The **casts** option should be an array where the key is the name of the class property,
+and the value is the data type it should be cast to. Casting only affects when values are read. No conversions happen
+that affect the permanent value in either the entity or the database. Properties can be cast to any of the following
+data types: **integer**, **float**, **double**, **string**, **boolean**, **object**, **array**, **datetime**, and
+**timestamp**.
+
+For example, if you had a User entity with an **is_banned** property, you can cast it as a boolean::
+
+    <?php namespace App\Entities;
+
+    use CodeIgniter\Entity;
+
+    class User extends Entity
+    {
+        protected $is_banned;
+
+        protected _$options = [
+            'casts' => [
+                'is_banned' => 'boolean'
+            ]
+        ];
+    }
+
+Array Casting
+-------------
+
+Array casting is especially useful with fields that store serialized arrays or json in them. When cast as an array,
+they will automatically be unserialized when you read the property's value. Unlike the rest of the data types that
+you can cast properties into, the **array** cast type will serialize the value whenever the property is set::
+
+    <?php namespace App\Entities;
+
+    use CodeIgniter\Entity;
+
+    class User extends Entity
+    {
+        protected $options;
+
+        protected _$options = [
+            'casts' => [
+                'options' => 'array'
+            ]
+        ];
+    }
+
+    $user = $userModel->find(15);
+    $options = $user->options;
+
+    $options['foo'] = 'bar';
+
+    $user->options = $options;
+    $userModel->save($user);

@@ -35,7 +35,6 @@
  * @since	Version 3.0.0
  * @filesource
  */
-use Config\Services;
 use CodeIgniter\Log\Logger;
 
 /**
@@ -87,7 +86,7 @@ class Parser extends View
 	 *
 	 * @param \Config\View  $config
 	 * @param string $viewPath
-	 * @param type $loader
+	 * @param mixed $loader
 	 * @param bool $debug
 	 * @param Logger $logger
 	 */
@@ -271,7 +270,7 @@ class Parser extends View
 	function strpos_all($haystack, $needle)
 	{
 		$offset = 0;
-		$allpos = array();
+		$allpos = [];
 		while (($pos = strpos($haystack, $needle, $offset)) !== FALSE)
 		{
 			$offset = $pos + 1;
@@ -643,7 +642,7 @@ class Parser extends View
 			}
 
 			// Get our filter name
-			$filter = $param !== [] ? trim(strtolower(substr($filter, 0, strpos($filter, '(')))) : trim($filter);
+			$filter = ! empty($param) ? trim(strtolower(substr($filter, 0, strpos($filter, '(')))) : trim($filter);
 
 			if ( ! array_key_exists($filter, $this->config->filters))
 				continue;
