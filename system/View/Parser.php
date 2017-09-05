@@ -219,13 +219,13 @@ class Parser extends View
 
 		// Remove any possible PHP tags since we don't support it
 		// and parseConditionals needs it clean anyway...
-		$template = str_replace(['<?', '?>'], ['&lt;?', '?&gt;'], $template);
+		$template = str_replace(['<?', '?>', '<?='], ['&lt;?', '?&gt;', '&lt;?='], $template);
 
 		$template = $this->parseComments($template);
 		$template = $this->extractNoparse($template);
 
 		// Replace any conditional code here so we don't have to parse as much
-		$template = $this->parseConditionals($template);
+		//$template = $this->parseConditionals($template);
 
 		// Handle any plugins before normal data, so that
 		// it can potentially modify any template between its tags.
@@ -255,6 +255,8 @@ class Parser extends View
 
 		$template = $this->insertNoparse($template);
 
+                $template = str_replace(['&lt;?', '?&gt;', '&lt;?='], ['<?', '?>', '<?='], $template);
+                
 		return $template;
 	}
 
