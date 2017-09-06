@@ -42,9 +42,9 @@ class ControllerTest extends \CIUnitTestCase
 		Services::reset();
 
 		$this->config = new App();
-		$this->request = new \CodeIgniter\HTTP\IncomingRequest($config, new \CodeIgniter\HTTP\URI('https://somwhere.com'));
-		$this->response = new \CodeIgniter\HTTP\Response($config);
-		$this->codeigniter = new MockCodeIgniter($config);
+		$this->request = new \CodeIgniter\HTTP\IncomingRequest($this->config, new \CodeIgniter\HTTP\URI('https://somwhere.com'));
+		$this->response = new \CodeIgniter\HTTP\Response($this->config);
+		$this->codeigniter = new MockCodeIgniter($this->config);
 	}
 
 	//--------------------------------------------------------------------

@@ -220,4 +220,22 @@ class EventsTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testSimulate()
+	{
+		$result = 0;
+
+		$callback = function() use (&$result)
+		{
+			$result += 2;
+		};
+
+		Events::on('foo', $callback);
+
+		Events::simulate(true);
+		Events::trigger('foo');
+
+		$this->assertEquals(0, $result);
+	}
+
+
 }

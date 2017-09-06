@@ -516,7 +516,7 @@ class Parser extends View
 	//--------------------------------------------------------------------
 
 	/**
-	 * Handles replacing a pseudo-variable with teh actual content. Will double-check
+	 * Handles replacing a pseudo-variable with the actual content. Will double-check
 	 * for escaping brackets.
 	 *
 	 * @param      $pattern
@@ -528,6 +528,9 @@ class Parser extends View
 	 */
 	protected function replaceSingle($pattern, $content, $template, bool $escape = false): string
 	{
+		// Any dollar signs in the pattern will be mis-interpreted, so slash them
+		$pattern = addcslashes($pattern, '$');
+
 		// Replace the content in the template
 		$template = preg_replace_callback($pattern, function ($matches) use ($content, $escape) {
 

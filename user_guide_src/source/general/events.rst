@@ -86,6 +86,21 @@ given the arguments in the same order as defined::
 		...
 	});
 
+Simulating Events
+=================
+
+During testing, you might not want the events to actually fire, as sending out hundreds of emails a day is both slow
+and counter-productive. You can tell the Events class to only simulate running the events with the ``simulate()`` method.
+When **true**, all events will be skipped over during the trigger method. Everything else will work as normal, though.
+
+::
+
+    Events::simulate(true);
+
+You can stop simulation by passing false::
+
+    Events::simulate(false);
+
 Event Points
 ============
 
