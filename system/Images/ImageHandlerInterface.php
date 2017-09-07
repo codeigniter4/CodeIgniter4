@@ -77,6 +77,18 @@ interface ImageHandlerInterface
 	//--------------------------------------------------------------------
 
 	/**
+	 * Flattens transparencies, default white background
+	 *
+	 * @param int $red
+	 * @param int $green
+	 * @param int $blue
+	 *
+	 * @return mixed
+	 */
+	public function flatten(int $red = 255, int $green = 255, int $blue = 255);
+	//--------------------------------------------------------------------
+
+	/**
 	 * Reads the EXIF information from the image and modifies the orientation
 	 * so that displays correctly in the browser.
 	 *
