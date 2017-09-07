@@ -125,9 +125,9 @@ class GDHandler extends BaseHandler
 		}
 		$dest = $create($this->width, $this->height);
 
-		$white = imagecolorallocate($dest, $red, $green, $blue);
+		$matte = imagecolorallocate($dest, $red, $green, $blue);
 
-		imagefilledrectangle($dest, 0, 0, $this->width, $this->height, $white);
+		imagefilledrectangle($dest, 0, 0, $this->width, $this->height, $matte);
 		imagecopy($dest, $src, 0, 0, 0, 0, $this->width, $this->height);
 
 		// Kill the file handles
