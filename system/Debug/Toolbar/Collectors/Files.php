@@ -88,7 +88,7 @@ class Files extends BaseCollector
 	 */
 	public function display(): string
 	{
-		$parser = \Config\Services::parser(BASEPATH . 'Debug/Toolbar/Views/');
+		$parser = \Config\Services::parser(BASEPATH . 'Debug/Toolbar/Views/', null, false);
 
 		$rawFiles = get_included_files();
 		$coreFiles = [];
