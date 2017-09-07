@@ -181,9 +181,7 @@ class Events
 				static::$performanceLog[] = [
 					'start' => $start,
 					'end' => microtime(true),
-					'event' => strtolower($eventName),
-					'listener' => $listener,
-					'arguments' => $arguments
+					'event' => strtolower($eventName)
 				];
 			}
 
