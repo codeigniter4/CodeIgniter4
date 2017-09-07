@@ -1,0 +1,317 @@
+<!DOCTYPE html><html lang="en"><head> 
+        <meta charset="utf-8" /> 
+        <title>Web Application | todo</title> 
+        <meta name="description" content="app, web app, responsive, admin dashboard, admin, flat, flat ui, ui kit, off screen nav" /> 
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" /> 
+        <link rel="stylesheet" href="css/app.v2.css" type="text/css" /> 
+        <link rel="stylesheet" href="css/font.css" type="text/css"  /> 
+        <!--[if lt IE 9]> 
+        <script src="js/ie/respond.min.js" ></script> 
+        <script src="js/ie/html5.js" ></script> 
+        <script src="js/ie/fix.js" ></script> 
+        <![endif]--></head><body> 
+        <section class="hbox stretch"> 
+            <!-- .aside --> 
+            <aside class="bg-dark aside-sm hidden-print" id="nav"> 
+                <section class="vbox"> 
+                    <header class="dker nav-bar"> 
+                        <a class="btn btn-link visible-xs" data-toggle="class:nav-off-screen" data-target="#nav"> 
+                            <i class="fa fa-bars"></i> 
+                        </a> 
+                        <a href="#" class="nav-brand" data-toggle="fullscreen">todo</a> 
+                        <a class="btn btn-link visible-xs" data-toggle="class:show" data-target=".nav-user"> 
+                            <i class="fa fa-comment-o"></i> 
+                        </a> 
+                    </header> 
+                    <section> 
+                        <div class="lter nav-user hidden-xs pos-rlt"> 
+                            <div class="nav-avatar pos-rlt"> 
+                                <a href="#" class="thumb-sm avatar animated rollIn" data-toggle="dropdown"> 
+                                    <img src="images/avatar.jpg" alt="" class=""> 
+                                    <span class="caret caret-white"></span> 
+                                </a> 
+                                <ul class="dropdown-menu m-t-sm animated fadeInLeft"> 
+                                    <span class="arrow top"></span> 
+                                    <li> 
+                                        <a href="#">Settings</a> 
+                                    </li> 
+                                    <li> 
+                                        <a href="profile.html">Profile</a> 
+                                    </li> 
+                                    <li> 
+                                        <a href="#"> 
+                                            <span class="badge bg-danger pull-right">3</span> Notifications </a> 
+                                    </li> 
+                                    <li class="divider"></li> 
+                                    <li> 
+                                        <a href="docs.html">Help</a> 
+                                    </li> 
+                                    <li> 
+                                        <a href="signin.html">Logout</a> 
+                                    </li> 
+                                </ul> 
+                                <div class="visible-xs m-t m-b"> 
+                                    <a href="#" class="h3">John.Smith</a> 
+                                    <p><i class="fa fa-map-marker"></i> London, UK</p> 
+                                </div> 
+                            </div> 
+                            <div class="nav-msg"> 
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"> 
+                                    <b class="badge badge-white count-n">2</b> 
+                                </a> 
+                                <section class="dropdown-menu m-l-sm pull-left animated fadeInRight"> 
+                                    <div class="arrow left"></div> 
+                                    <section class="panel bg-white"> 
+                                        <header class="panel-heading"> 
+                                            <strong>You have <span class="count-n">2</span> notifications</strong> 
+                                        </header> 
+                                        <div class="list-group"> 
+                                            <a href="#" class="media list-group-item"> 
+                                                <span class="pull-left thumb-sm"> 
+                                                    <img src="images/avatar.jpg" alt="John said" class="img-circle"> 
+                                                </span> 
+                                                <span class="media-body block m-b-none"> Use awesome animate.css<br> 
+                                                    <small class="text-muted">28 Aug 13</small> 
+                                                </span> 
+                                            </a> 
+                                            <a href="#" class="media list-group-item"> 
+                                                <span class="media-body block m-b-none"> 1.0 initial released<br> 
+                                                    <small class="text-muted">27 Aug 13</small> 
+                                                </span> 
+                                            </a> 
+                                        </div> 
+                                        <footer class="panel-footer text-sm"> 
+                                            <a href="#" class="pull-right"><i class="fa fa-cog"></i></a> 
+                                            <a href="#">See all the notifications</a> 
+                                        </footer> 
+                                    </section> 
+                                </section> 
+                            </div> 
+                        </div> 
+                        <nav class="nav-primary hidden-xs"> 
+                            <ul class="nav"> 
+                                <li> 
+                                    <a href="index.html"> 
+                                        <i class="fa fa-eye"></i> 
+                                        <span>Discover</span> 
+                                    </a> 
+                                </li> 
+                                <li class="dropdown-submenu"> 
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"> 
+                                        <i class="fa fa-flask"></i> 
+                                        <span>UI kit</span> 
+                                    </a> 
+                                    <ul class="dropdown-menu"> 
+                                        <li> 
+                                            <a href="buttons.html">Buttons</a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="icons.html"> 
+                                                <b class="badge pull-right">302</b>Icons </a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="grid.html">Grid</a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="widgets.html"> 
+                                                <b class="badge bg-primary pull-right">8</b>Widgets </a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="components.html"> 
+                                                <b class="badge pull-right">18</b>Components </a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="list.html">List groups</a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="table.html">Table</a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="form.html">Form</a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="chart.html">Chart</a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="calendar.html">Fullcalendar</a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="portlet.html">Portlet</a> 
+                                        </li> 
+                                    </ul> 
+                                </li> 
+                                <li class="dropdown-submenu active"> 
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"> 
+                                        <i class="fa fa-file-text"></i> 
+                                        <span>Pages</span> 
+                                    </a> 
+                                    <ul class="dropdown-menu"> 
+                                        <li> 
+                                            <a href="dashboard.html">Dashboard</a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="dashboard-1.html">Dashboard one</a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="dashboard-2.html">Dashboard layout</a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="analysis.html">Analysis</a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="master.html">Master</a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="maps.html">Maps</a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="gallery.html">Gallery</a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="profile.html">Profile</a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="blog.html">Blog</a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="invoice.html">Invoice</a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="signin.html">Signin page</a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="signup.html">Signup page</a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="404.html">404 page</a> 
+                                        </li> 
+                                    </ul> 
+                                </li> 
+                                <li> 
+                                    <a href="mail.html"> 
+                                        <b class="badge bg-primary pull-right">3</b> 
+                                        <i class="fa fa-envelope-o"></i> 
+                                        <span>Mail</span> 
+                                    </a> 
+                                </li> 
+                                <li> 
+                                    <a href="tasks.html"> 
+                                        <i class="fa fa-tasks"></i> 
+                                        <span>Tasks</span> 
+                                    </a> 
+                                </li> 
+                                <li> 
+                                    <a href="notes.html"> 
+                                        <i class="fa fa-pencil"></i> 
+                                        <span>Notes</span> 
+                                    </a> 
+                                </li> 
+                                <li> 
+                                    <a href="timeline.html"> 
+                                        <i class="fa fa-clock-o"></i> 
+                                        <span>Timeline</span> 
+                                    </a> 
+                                </li> 
+                            </ul> 
+                        </nav> 
+                    </section> 
+                    <footer class="footer bg-gradient hidden-xs"> 
+                        <a href="modal.lockme.html" data-toggle="ajaxModal" class="btn btn-sm btn-link m-r-n-xs pull-right"> 
+                            <i class="fa fa-power-off"></i> 
+                        </a> 
+                        <a href="#nav" data-toggle="class:nav-vertical" class="btn btn-sm btn-link m-l-n-sm"> 
+                            <i class="fa fa-bars"></i> 
+                        </a> 
+                    </footer> 
+                </section> 
+            </aside> 
+            <!-- /.aside --> 
+            <!-- .vbox --> 
+            <section id="content"> 
+                <section class="vbox bg-white"> 
+                    <header class="header b-b hidden-print"> 
+                        <button href="#" class="btn btn-sm btn-info pull-right" onClick="window.print();">Print</button> 
+                        <p>Invoice</p> 
+                    </header> 
+                    <section class="scrollable wrapper"> 
+                        <i class="fa fa-apple fa fa-3x"></i> 
+                        <div class="row"> 
+                            <div class="col-xs-6"> 
+                                <h4>Apple Inc.</h4> 
+                                <p><a href="http://www.apple.com">www.apple.com</a></p> 
+                                <p>1 Infinite Loop <br> 95014 Cuperino, CA<br> United States </p> 
+                                <p> Telephone: 800-692-7753<br> Fax: 800-692-7753 </p> 
+                            </div> 
+                            <div class="col-xs-6 text-right"> 
+                                <p class="h4">#9048392</p> 
+                                <h5>29th Mar 2013</h5> 
+                            </div> 
+                        </div> 
+                        <div class="well m-t"> 
+                            <div class="row"> 
+                                <div class="col-xs-6"> 
+                                    <strong>TO:</strong> 
+                                    <h4>John Smith</h4> 
+                                    <p> 2nd Floor<br> St John Street, Aberdeenshire 2541<br> United Kingdom<br> Phone: 031-432-678<br> Email: youemail@gmail.com<br> 
+                                    </p> 
+                                </div> 
+                                <div class="col-xs-6"> 
+                                    <strong>SHIP TO:</strong> 
+                                    <h4>John Smith</h4> 
+                                    <p> 2nd Floor<br> St John Street, Aberdeenshire 2541<br> United Kingdom<br> Phone: 031-432-678<br> Email: youemail@gmail.com<br> 
+                                    </p> 
+                                </div> 
+                            </div> 
+                        </div> 
+                        <p class="m-t m-b">Order date: <strong>26th Mar 2013</strong><br> Order status: <span class="label bg-success">Shipped</span><br> Order ID: <strong>#9399034</strong> 
+                        </p> 
+                        <div class="line"></div> 
+                        <table class="table"> 
+                            <thead> 
+                                <tr> 
+                                    <th width="60">QTY</th> 
+                                    <th>DESCRIPTION</th> 
+                                    <th width="140">UNIT PRICE</th> 
+                                    <th width="90">TOTAL</th> 
+                                </tr> 
+                            </thead> 
+                            <tbody> 
+                                <tr> 
+                                    <td>1</td> 
+                                    <td>iPhone 5 32GB White & Silver (GSM) Unlocked</td> 
+                                    <td>$749.00</td> 
+                                    <td>$749.00</td> 
+                                </tr> 
+                                <tr> 
+                                    <td>2</td> 
+                                    <td>iPad mini with Wi-Fi 32GB - White & Silver</td> 
+                                    <td>$429.00</td> 
+                                    <td>$858.00</td> 
+                                </tr> 
+                                <tr> 
+                                    <td colspan="3" class="text-right"><strong>Subtotal</strong></td> 
+                                    <td>$1607.00</td> 
+                                </tr> 
+                                <tr> 
+                                    <td colspan="3" class="text-right no-border"><strong>Shipping</strong></td> 
+                                    <td>$0.00</td> 
+                                </tr> 
+                                <tr> 
+                                    <td colspan="3" class="text-right no-border"><strong>VAT Included in Total</strong></td> 
+                                    <td>$0.00</td> 
+                                </tr> 
+                                <tr> 
+                                    <td colspan="3" class="text-right no-border"><strong>Total</strong></td> 
+                                    <td><strong>$1607.00</strong></td> 
+                                </tr> 
+                            </tbody> 
+                        </table> 
+                    </section> 
+                </section> 
+                <a href="#" class="hide nav-off-screen-block" data-toggle="class:nav-off-screen" data-target="#nav"></a> 
+            </section> 
+            <!-- /.vbox --> 
+        </section><script src="js/app.v2.js"></script> 
+        <!-- Bootstrap --> 
+        <!-- App --> 
+        <script src="js/fuelux/fuelux.js"></script></body></html>

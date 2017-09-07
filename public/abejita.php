@@ -22,14 +22,39 @@
         <tbody><?php foreach ($Users as $Users) : ?>
                 <tr>
 			<td width="80px"></td>
-                                {fields}
-                            <td> $ {field}</td>
-                                {/fields}
+                                
+                            <td>  Users->id </td>
+                            <td>  Users->id </td>
+                                
+                            <td>  Users->name </td>
+                            <td>  Users->name </td>
+                                
+                            <td>  Users->email </td>
+                            <td>  Users->email </td>
+                                
+                            <td>  Users->password </td>
+                            <td>  Users->password </td>
+                                
+                            <td>  Users->telephone </td>
+                            <td>  Users->telephone </td>
+                                
+                            <td>  Users->address </td>
+                            <td>  Users->address </td>
+                                
+                            <td>  Users->ip </td>
+                            <td>  Users->ip </td>
+                                
+                            <td>  Users->admin </td>
+                            <td>  Users->admin </td>
+                                
+                            <td>  Users->date </td>
+                            <td>  Users->date </td>
+                                
 
                         
                         
                         {blog_entries}
-                            <td><?= ${title}->{body} ?></td>
+                            <td><= ${title}->{body} ></td>
 			{/blog_entries}
                         <td style="text-align:center" width="200px">
 				<?php 

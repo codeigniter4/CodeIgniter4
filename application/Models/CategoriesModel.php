@@ -11,8 +11,6 @@ class CategoriesModel extends CodeIgniter\Model {
     protected $validationRules = [];
     protected $validationMessages = [];
     protected $skipValidation = false;
-
-    public $order = 'DESC';
     
     // get total rows
     function total_rows() {

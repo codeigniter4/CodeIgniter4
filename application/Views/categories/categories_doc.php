@@ -1,8 +1,6 @@
 <!doctype html>
 <html>
     <head>
-        <title>harviacode.com - codeigniter crud generator</title>
-        <link rel="stylesheet" href="<?php echo base_url('assets/bootstrap/css/bootstrap.min.css') ?>"/>
         <style>
             .word-table {
                 border:1px solid black !important; 
@@ -28,9 +26,9 @@
             {
                 ?>
                 <tr>
-		      <td><?php echo ++$start ?></td>
-		      <td><?php echo $categories->name ?></td>
-		      <td><?php echo $categories->date ?></td>	
+		      <td><?= ++$start ?></td>
+		      <td><?= $categories->name ?></td>
+		      <td><?= $categories->date ?></td>	
                 </tr>
                 <?php
             }

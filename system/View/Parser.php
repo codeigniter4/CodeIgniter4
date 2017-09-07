@@ -225,7 +225,7 @@ class Parser extends View
 		$template = $this->extractNoparse($template);
 
 		// Replace any conditional code here so we don't have to parse as much
-		//$template = $this->parseConditionals($template);
+		$template = $this->parseConditionals($template);
 
 		// Handle any plugins before normal data, so that
 		// it can potentially modify any template between its tags.

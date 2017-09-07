@@ -1,0 +1,469 @@
+<!DOCTYPE html><html lang="en"><head>
+        <meta charset="utf-8" />
+        <title>Web Application | todo</title>
+        <meta name="description" content="app, web app, responsive, admin dashboard, admin, flat, flat ui, ui kit, off screen nav" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+        <link rel="stylesheet" href="css/app.v2.css" type="text/css" />
+        <link rel="stylesheet" href="css/font.css" type="text/css"  />
+        <link rel="stylesheet" href="js/datepicker/datepicker.css" type="text/css" />
+        <link rel="stylesheet" href="js/slider/slider.css" type="text/css" />
+        <!--[if lt IE 9]>
+        <script src="js/ie/respond.min.js" ></script>
+        <script src="js/ie/html5.js" ></script>
+        <script src="js/ie/fix.js" ></script>
+        <![endif]--></head><body>
+        <section class="hbox stretch">
+            <!-- .aside -->
+            <aside class="bg-light aside b-r animated fadeInLeftBig" id="nav">
+                <section class="vbox">
+                    <header class="bg-dark nav-bar">
+                        <a class="btn btn-link visible-xs" data-toggle="class:show" data-target=".nav-primary">
+                            <i class="fa fa-bars"></i>
+                        </a>
+                        <a href="index.html" class="nav-brand">todo</a>
+                    </header>
+                    <footer class="footer b-r bg-gradient hidden-xs text-center">
+                        <p class="text-sm">&copy; 2013</p>
+                    </footer>
+                    <section class="scrollable">
+                        <nav class="nav-primary hidden-xs nav-docs">
+                            <ul class="nav">
+                                <li class="dropdown-header b-b"><em>CSS</em></li>
+                                <li><a href="#overview">Overview</a></li>
+                                <li><a href="#icons">Icons</a></li>
+                                <li><a href="#animate">Animate</a></li>
+                                <li><a href="#colors">Colors</a></li>
+                                <li><a href="#layout">Layout</a></li>
+                                <li><a href="#offscreen">Off screen</a></li>
+                                <li class="dropdown-header b-b"><em>Components</em></li>
+                                <li><a href="#toggle-class">Toggle class</a></li>
+                                <li><a href="#shift">Shift</a></li>
+                                <li><a href="#button-state">Button state</a></li>
+                                <li><a href="#combodate">Combodate</a></li>
+                                <li><a href="#file-input">File input</a></li>
+                                <li><a href="#sparkline">Sparkline</a></li>
+                                <li><a href="#easy-pie-chart">Easy pie chart</a></li>
+                                <li><a href="#datepicker">Datepicker</a></li>
+                                <li><a href="#slider">Slider</a></li>
+                                <li><a href="#dropdown-select">Dropdown select</a></li>
+                                <li><a href="#fuelux">Fuelux</a></li>
+                                <li><a href="#fullcalendar">Fullcalendar</a></li>
+                                <li><a href="#datatables">Datatables</a></li>
+                                <li><a href="#sortable">Sortable</a></li>
+                                <li><a href="#morris">Morris</a></li>
+                                <li><a href="#parsley">Parsley</a></li>
+                                <li><a href="#select2">Select2</a></li>
+                                <li class="dropdown-header b-b"><em>Applications</em></li>
+                                <li><a href="#notes">Notes</a></li>
+                                <li><a href="#tasks">Tasks</a></li>
+                            </ul>
+                        </nav>
+                    </section>
+                </section>
+            </aside>
+            <!-- /.aside -->
+            <section id="content">
+                <section class="vbox">
+                    <header class="header b-b">
+                        <p class="h4 animated bounceInDown">Documents</p>
+                    </header>
+                    <section class="scrollable bg-light lter" data-spy="scroll" data-target=".nav-primary">
+                        <section id="docs">
+                            <div class="clearfix padder">
+                                <h4 id="overview">Overview</h4>
+                                <p>todo is a fully responsive web app / admin dashboard template.</p>
+                                <h4>Features:</h4>
+                                <ul>
+                                    <li>Built with Bootstrap 3.0</li>
+                                    <li>Flat ui with clean style</li>
+                                    <li>Many components</li>
+                                    <li>Mobile widgets</li>
+                                    <li>Fully responsive</li>
+                                    <li>Web app layouts</li>
+                                    <li>Html5 Markup & CSS3</li>
+                                    <li>2 runable applications</li>
+                                </ul>
+                                <h3 class="text-success">CSS <small>Extensible classes</small></h3>
+                                <div class="line"></div>
+                                <p id="bootstrap">For the bootstrap css and components, please check the <strong><a href="http://getbootstrap.com">Bootstrap 3.0</a></strong></p>
+                                <h4 id="icons" class="m-t-lg">Icons</h4>
+                                <p>Use FontAwesome font icons, over 361 icons with version 3.2 and more will be added in the future, check <strong><a href="http://fortawesome.github.io/Font-Awesome/">FontAwesome</a></strong> for more details to see how to use and examples</p>
+                                <h4 id="animate" class="m-t-lg">Animate.css</h4>
+                                <p><a href="http://daneden.me/animate/"><strong>animate.css</strong></a> is a bunch of cool, fun, and cross-browser animations for you to use in your projects. Great for emphasis, home pages, sliders, and general just-add-water-awesomeness. do not use animate css to an element which contains the dropdown-menu, it will cut the edge.</p>
+                                <p><strong>animate.css on landing page</strong>: you can add animate css on the dom element when it appear in the viewpoint. <code>&lt;div data-ride="animated" data-animation="fadeInUp" data-delay="250">&lt;/div></code></p>
+                                <h4 id="colors" class="m-t-lg">Colors <small>use less file to build your colors</small></h4>
+                                <p>8 default color palettes, build colorful widgets. you can open the less/app.variables.less to config your own colors(<code>@brand-primary: #594f8d;
+                                        @brand-success: #92cf5c;
+                                        @brand-warning: #fcc44d;
+                                        @brand-danger: #fb6b5b;
+                                        @brand-info: #5dcff3;</code><code>@brand-black: #2c3039;
+                                        @brand-dark: #4c5566;
+                                        @brand-light: #ebeef5;</code>), also you can use the mixin wariant. use <code>.color-variant</code> and <code>.font-variant</code> to build the color scheme, check more details in the less/app.colors.less.</p>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <p>.bg-light</p>
+                                        <div class="bg-light">
+                                            <h5 class="dker m-n wrapper">.dker</h5>
+                                            <h5 class="dk m-n wrapper">.dk</h5>
+                                            <h5 class=" m-n wrapper">.bg-light</h5>
+                                            <h5 class="lt m-n wrapper">.lt</h5>
+                                            <h5 class="lter m-n wrapper">.lter</h5>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <p>.bg-dark</p>
+                                        <div class="bg-dark">
+                                            <h5 class="dker m-n wrapper">.dker</h5>
+                                            <h5 class="dk m-n wrapper">.dk</h5>
+                                            <h5 class=" m-n wrapper">.bg-dark</h5>
+                                            <h5 class="lt m-n wrapper">.lt</h5>
+                                            <h5 class="lter m-n wrapper">.lter</h5>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <p>.bg-black</p>
+                                        <div class="bg-black">
+                                            <h5 class="dker m-n wrapper">.dker</h5>
+                                            <h5 class="dk m-n wrapper">.dk</h5>
+                                            <h5 class=" m-n wrapper">.bg-black</h5>
+                                            <h5 class="lt m-n wrapper">.lt</h5>
+                                            <h5 class="lter m-n wrapper">.lter</h5>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <p>.bg-primary</p>
+                                        <div class="bg-primary">
+                                            <h5 class="dker m-n wrapper">.dker</h5>
+                                            <h5 class="dk m-n wrapper">.dk</h5>
+                                            <h5 class=" m-n wrapper">.bg-primary</h5>
+                                            <h5 class="lt m-n wrapper">.lt</h5>
+                                            <h5 class="lter m-n wrapper">.lter</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row m-t-sm">
+                                    <div class="col-sm-3">
+                                        <p>.bg-success</p>
+                                        <div class="bg-success">
+                                            <h5 class="dker m-n wrapper">.dker</h5>
+                                            <h5 class="dk m-n wrapper">.dk</h5>
+                                            <h5 class=" m-n wrapper">.bg-success</h5>
+                                            <h5 class="lt m-n wrapper">.lt</h5>
+                                            <h5 class="lter m-n wrapper">.lter</h5>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <p>.bg-info</p>
+                                        <div class="bg-info">
+                                            <h5 class="dker m-n wrapper">.dker</h5>
+                                            <h5 class="dk m-n wrapper">.dk</h5>
+                                            <h5 class=" m-n wrapper">.bg-info</h5>
+                                            <h5 class="lt m-n wrapper">.lt</h5>
+                                            <h5 class="lter m-n wrapper">.lter</h5>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <p>.bg-warning</p>
+                                        <div class="bg-warning">
+                                            <h5 class="dker m-n wrapper">.dker</h5>
+                                            <h5 class="dk m-n wrapper">.dk</h5>
+                                            <h5 class=" m-n wrapper">.bg-warning</h5>
+                                            <h5 class="lt m-n wrapper">.lt</h5>
+                                            <h5 class="lter m-n wrapper">.lter</h5>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <p>.bg-danger</p>
+                                        <div class="bg-danger">
+                                            <h5 class="dker m-n wrapper">.dker</h5>
+                                            <h5 class="dk m-n wrapper">.dk</h5>
+                                            <h5 class=" m-n wrapper">.bg-danger</h5>
+                                            <h5 class="lt m-n wrapper">.lt</h5>
+                                            <h5 class="lter m-n wrapper">.lter</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <h4 id="layout" class="m-t-lg">Layout</h4>
+                                <p>use .vbox(vertical box) and .hbox(horizontal box) to build the web application layout. you can build the complicated layout as you want.</p>
+                                <h5><strong>hbox</strong></h5>
+                                <p>hbox is a horizontal wrapper that you can put columns in it. you can put <code>&lt;aside></code> and <code>&lt;section></code> in it. </p>
+                                <pre><code class="html"><section class="hbox"><aside class="aside-lg"></aside><section></section></section></code></pre>
+<p>you can use <code>.aside, .aside-sm, .aside-md, .aside-lg</code> to set the width of an aside wrapper. also you can use the Bootstrap grid system, like <code>.col-6, .col-7</code>...</p>
+<p>.stretch box has the 100% height. <code>&lt;section class="hbox stretch">&lt;/section></code></p>
+<h5><strong>vbox</strong></h5>
+<p>vbox is a vertical wrapper that you can put the row in it. </p>
+<pre><code class="html"><section class="vbox"><header class="header"></header><section class="w-f"></section><footer class="footer"></footer></section></code></pre>
+<p>.w-f means this vbox have a footer</p>
+<p>.flex vbox let you put a flex height of the header/footer.</p>
+<pre><code class="html">&lt;section class="vbox flex"><header></header><section><section><section></section></section></section><footer></footer>&lt;/section></code></pre>
+                                <h5><strong>Example</strong></h5>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <p>.hbox</p>
+                                        <div style="height:250px">
+                                            <section class="hbox stretch bg-light">
+                                                <aside class="lt">aside</aside>
+                                                <section>section</section>
+                                                <aside class="dk">aside</aside>
+                                            </section>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <p>.vbox</p>
+                                        <div style="height:250px">
+                                            <section class="vbox bg-light">
+                                                <header class="header lt"><span class="pull-in">header</span></header>
+                                                <footer class="footer dk"><span class="pull-in">footer</span></footer>
+                                                <section>section</section>
+                                            </section>
+                                        </div>
+                                    </div>
+                                </div>
+                                <h5><strong>box layout</strong></h5>
+                                <p>you can use the .layout-box on the html tag to build the layout box <code>&lt;html class="layout-box">&lt;/html></code></p>
+                                <h4 id="offscreen" class="m-t-lg">Off screen nav</h4>
+                                <p>Support three nav styles on mobile, "Pull down", "push left", "push right"</p>
+                                <h5><strong>Pull down</strong></h5>
+                                <p>use <code>data-toggle="class:show" data-target=".nav-primary"</code> to trigger the nav pull down in the header</p>
+                                <pre><code class="html"><a class="btn btn-link visible-xs" data-toggle="class:show" data-target=".nav-primary">
+<i class="fa fa-bars"></i>
+</a></code></pre>
+                                <h5><strong>off screen push left</strong></h5>
+                                <p>use <code>data-toggle="class:nav-off-screen" data-target="#nav"</code> to trigger the off screen nav</p>
+                                <pre><code class="html"><a class="btn btn-link visible-xs" data-toggle="class:nav-off-screen" data-target="#nav">
+<i class="fa fa-bars"></i>
+</a></code></pre>
+                                <p>use <code>data-toggle="class:nav-off-screen" data-target="#nav"</code> to toggle back in the body</p>
+                                <pre><code class="html"><a href="#" class="hide nav-off-screen-block" data-toggle="class:nav-off-screen" data-target="#nav"></a></code></pre>
+                                <h5><strong>off screen push right</strong></h5>
+                                <p>use <code>data-toggle="class:nav-off-screen push-right" data-target="body"</code></p>
+                                <pre><code class="html"><a class="btn btn-link visible-xs" data-toggle="class:nav-off-screen push-right" data-target="body">
+<i class="fa fa-bars"></i>
+</a></code></pre>
+                                <h3 class="text-info">Components <small>Lightweight components to best practice on mobile</small></h3>
+                                <div class="line"></div>
+                                <h4 id="toggle-class">Toggle class</h4>
+                                <p>It's easy to change a dom class by click on another dom element.</p>
+                                <h5><strong>Usage</strong></h5>
+                                <p> Add <code>data-toggle="class:className"</code> and <code>data-target="#target"</code> to a link or button to toggle a class. </p>
+                                <h5><strong>Example</strong></h5>
+                                <button class="btn btn-white m-b" data-toggle="class:bg-success" data-target=".nav-bar"> Toggle the brand background </button>
+                                <pre><code class="html"><button class="btn btn-white" data-toggle="class:bg-success" data-target=".nav-bar"> Toggle the brand background </button></code></pre>
+                                <h4 id="shift" class="m-t-lg">Shift</h4>
+                                <p>Shift js let you change the dom which have different position from mobile to desktop, it avoid to use duplicate elements.</p>
+                                <div id="shift-target"><strong>Usage</strong></div>
+                                <p> Add <code>data-toggle="shift:insertBefore"</code> and <code>data-target="#target"</code> to the dom that you want to shift. </p>
+                                <div class="panel shift" data-toggle="shift:insertBefore" data-target="#shift-target"><div class="panel-body">Put me before "Usage" on mobile</div></div>
+                                <pre><code class="html"><div class="shift" data-toggle="shift:insertBefore" data-target="#shift-target"> Put me before "Usage" on mobile </div></code></pre>
+                                <p>it also support <code>data-toggle="shift:appendTo"</code>, <code>data-toggle="shift:prependTo"</code>, <code>data-toggle="shift:insertAfter"</code></p>
+                                <h4 id="button-state" class="m-t-lg">Button state</h4>
+                                <p>Change the button state when click on it. add <code>.text</code>
+                                    <code>.text-active</code></p>
+                                <h5><strong>Example</strong></h5>
+                                <button class="btn btn-white m-b" data-toggle="button">
+                                    <span class="text">More</span>
+                                    <span class="text-active">Less</span>
+                                </button>
+                                <pre><code class="html"><button class="btn btn-white" data-toggle="button">
+<span class="text">More</span>
+<span class="text-active">Less</span>
+</button></code></pre>
+                                <h5><strong>With icons</strong></h5>
+                                <button class="btn btn-white m-b" data-toggle="button">
+                                    <span class="text">
+                                        <i class="fa fa-thumbs-up text-success"></i> 25 </span>
+                                    <span class="text-active">
+                                        <i class="fa fa-thumbs-down text-danger"></i> 10 </span>
+                                </button>
+                                <pre><code class="html"><button class="btn btn-white" data-toggle="button">
+<span class="text">
+<i class="fa fa-thumbs-up text-success"></i> 25 </span>
+<span class="text-active">
+<i class="fa fa-thumbs-down text-danger"></i> 10 </span>
+</button></code></pre>
+                                <h4 id="combodate" class="m-t-lg">Combodate</h4>
+                                <p>Use combodate for date picker, it's light and mobile friendly. check on <a href="http://github.com/vitalets/combodate"><strong>Combodate</strong></a> for more details.</p>
+                                <h5><strong>Useage</strong></h5>
+                                <p>Add <code>.combodate</code> class to the input and use <code>data-format="DD-MM-YYYY HH:mm"</code>
+                                    <code>data-template="D MMM YYYY - HH : mm"</code> to format the display</p>
+                                <h5><strong>Example</strong></h5>
+                                <input type="text" class="combodate" data-format="DD-MM-YYYY HH:mm" data-template="D MMM YYYY - HH : mm" name="datetime" value="21-12-2012 20:30">
+                                <pre class="m-t"><code class="html">&lt;input type="text" class="combodate" data-format="DD-MM-YYYY HH:mm" data-template="D MMM YYYY - HH : mm" name="datetime" value="21-12-2012 20:30"&gt;</code></pre>
+                                <h4 id="file-input" class="m-t-lg">File input</h4>
+                                <p>Check the file input plugin on <a href="http://github.com/grevory/bootstrap-file-input"><strong>File input</strong></a> for more details.</p>
+                                <input type="file" title="Browse" class="btn btn-sm btn-info file-input">
+                                <h4 id="sparkline" class="m-t-lg">Sparkline</h4>
+                                <p>Check more details on <a href="http://omnipotent.net/jquery.sparkline/"><strong>Sparkline</strong></a>.</p>
+                                <h5><strong>Useage</strong></h5>
+                                <p>add <code>.sparkline</code> to trigger the sparkline.</p>
+                                <h5><strong>Basic bar</strong></h5>
+                                <div class="sparkline m-b" data-type="bar" data-bar-width="5">
+                                    <!--10,20,30,20,30,40,30,20,30,40,32,32,10,20 -->
+                                </div>
+                                <pre><code class="html"><div class="sparkline" data-type="bar" data-bar-width="5">
+<!--10,20,30,20,30,40,30,20,30,40,32,32,10,20-->
+</div></code></pre>
+                                <h5><strong>Basic line</strong></h5>
+                                <div class="sparkline m-b" data-type="line" data-bar-width="5" data-line-width="2" data-width="100" data-line-color="#bfea5f" data-fill-color="#e4f3c3" data-highlight-line-color="#e1e5e9" data-spot-radius="5">
+                                    <!--10,20,30,20,30,40,30,20,30,40,32,32,10,20-->
+                                </div>
+                                <pre><code class="html"><div class="sparkline" data-type="line" data-bar-width="5" data-line-width="2" data-width="100" data-line-color="#bfea5f" data-fill-color="#e4f3c3" data-highlight-line-color="#e1e5e9" data-spot-radius="5">
+<!--10,20,30,20,30,40,30,20,30,40,32,32,10,20-->
+</div></code></pre>
+                                <h5><strong>Composite with x-axis</strong></h5>
+                                <div class="m-b">
+                                    <div class="sparkline" data-type="line" data-resize="true" data-height="185" data-width="100%" data-line-width="1" data-line-color="#afcf6f" data-spot-color="#afcf6f" data-fill-color="rgba(240,240,240,0.5)" data-highlight-line-color="#e1e5e9" data-spot-radius="4" data-data="[120,250,200,325,400,380,250,320,345,250,250,250,200,325,300,365,250,210,200,180,150,160,250,250,250,200,300,310,330,250,320,205]" data-composite-config='{"lineColor":"#dddddd","fillColor":"#ffffff","spotColor":"#dddddd","spotRadius":"4"}' data-composite-data="[325,220,250,200,350,380,250,320,345,250,250,250,200,325,300,365,250,210,200,180,150,160,250,250,250,200,300,310,330,250,320,205]"></div>
+                                    <ul class="list-inline text-muted axis"><li>12:00<br>am</li><li>2:00</li><li>4:00</li><li>6:00</li><li>8:00</li><li>10:00</li><li>12:00<br>pm</li><li>2:00</li><li>4:00</li><li>6:00</li><li>8:00</li><li>10:00</li></ul>
+                                </div>
+                                <pre><code class="html">&lt;div class="sparkline" data-type="line" data-resize="true" data-height="185" data-width="100%" data-line-width="1" data-line-color="#afcf6f" data-spot-color="#afcf6f" data-fill-color="rgba(240,240,240,0.5)" data-highlight-line-color="#e1e5e9" data-spot-radius="4" data-data="[120,250,200,325,400,380,250,320,345,250,250,250,200,325,300,365,250,210,200,180,150,160,250,250,250,200,300,310,330,250,320,205]" data-composite-config='{"lineColor":"#dddddd","fillColor":"#ffffff","spotColor":"#dddddd","spotRadius":"4"}' data-composite-data="[325,220,250,200,350,380,250,320,345,250,250,250,200,325,300,365,250,210,200,180,150,160,250,250,250,200,300,310,330,250,320,205]"> &lt;/div> &lt;ul class="list-inline text-muted axis"> &lt;li>12:00<br>am&lt;/li&gt; &lt;li>2:00&lt;/li&gt; &lt;/ul>
+</code></pre>
+                                <h4 id="easy-pie-chart" class="m-t-lg">Easy Pie Chart</h4>
+                                <p>Check more details on <a href="http://github.com/rendro/easy-pie-chart/"><strong>Easy Pie Chart</strong></a>. use excanvas.js for IE8 rendering. if your app do not need support IE8, you can remove it.</p>
+                                <h5><strong>Usage</strong></h5>
+                                <p>add <code>.easypiechart</code> class and use data attribute to config <code>data-percent="75"</code>, <code>data-size="120"</code>, <code>data-bar-color="75"</code>, <code>data-line-width="5"</code>, <code>data-track-color="#eee"</code></p>
+                                <h5><strong>Example</strong></h5>
+                                <div class="easypiechart" data-percent="75" data-line-width="5" data-size="120" data-bar-color="#576879" data-track-color="#eee" >
+                                    <span class="h2">75</span>% <div class="easypie-text text-muted">new visits</div>
+                                </div>
+                                <pre><code class="html"><div class="easypiechart" data-size="120" data-percent="75" data-line-width="5" data-track-color="#eee" data-bar-color="#576879">
+<span class="h2">75</span>% <div class="easypie-text text-muted"> new visits </div>
+</div></code></pre>
+                                <h4 id="datepicker" class="m-t-lg">Datepicker</h4>
+                                <p>Check more details on <a href="http://www.eyecon.ro/bootstrap-datepicker"><strong>Bootstrap Datepicker</strong></a>. </p>
+                                <h5><strong>Usage</strong></h5>
+                                <p>add <code>.datepicker</code> class on input.</p>
+                                <input class="input-sm datepicker form-control input-s" size="16" type="text" value="12-02-2013" data-date-format="dd-mm-yyyy" >
+                                <pre class="m-t"><code class="html"><input class="input-sm datepicker" size="16" type="text" value="12-02-2013" data-date-format="dd-mm-yyyy" >
+</code></pre>
+                                <h4 id="slider" class="m-t-lg">Slider</h4>
+                                <p>Check more details on <a href="http://www.eyecon.ro/bootstrap-slider"><strong>Slider</strong></a>. </p>
+                                <h5><strong>Usage</strong></h5>
+                                <p>add <code>.slider</code> class on input.</p>
+                                <input class="slider" type="text" value="" data-slider-min="-20" data-slider-max="20" data-slider-step="1" data-slider-value="-14" data-slider-selection="after">
+                                <pre class="m-t"><code class="html">&lt;input class="slider" type="text" value="" data-slider-min="-20" data-slider-max="20" data-slider-step="1" data-slider-value="-14" data-slider-selection="after">
+</code></pre>
+                                <h4 id="dropdown-select" class="m-t-lg">Dropdown select</h4>
+                                <p>Support radio and checkbox dropdown select</p>
+                                <h5><strong>Usage</strong></h5>
+                                <p>add <code>.dropdown-menu</code> class on dropdown-menu.</p>
+                                <div class="btn-group">
+                                    <button data-toggle="dropdown" class="btn btn-sm btn-white dropdown-toggle">
+                                        <span class="dropdown-label">Option1</span>
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-select">
+                                        <li class="active"><a href="#"><input type="radio" name="d-s-r" checked="">Option1</a></li>
+                                        <li><a href="#"><input type="radio" name="d-s-r">Option2</a></li>
+                                        <li><a href="#"><input type="radio" name="d-s-r">Option3</a></li>
+                                        <li class="disabled"><a href="#"><input type="radio" name="d-s-r" disabled="">I'm disabled</a></li>
+                                    </ul>
+                                </div>
+                                <pre class="m-t"><code class="html"><div class="btn-group">
+<button data-toggle="dropdown" class="btn btn-sm btn-white dropdown-toggle">
+<span class="dropdown-label">Option1</span>
+<span class="caret"></span>
+</button>
+<ul class="dropdown-menu dropdown-select">
+<li class="active"><a href="#"><input type="radio" name="d-s-r" checked="">Option1</a></li>
+<li><a href="#"><input type="radio" name="d-s-r">Option2</a></li>
+<li><a href="#"><input type="radio" name="d-s-r">Option3</a></li>
+<li class="disabled"><a href="#"><input type="radio" name="d-s-r" disabled="">I'm disabled</a></li>
+</ul>
+</div>
+</code></pre>
+                                <div class="btn-group">
+                                    <button data-toggle="dropdown" class="btn btn-sm btn-white dropdown-toggle">
+                                        <span class="dropdown-label" data-placeholder="Please select">Please select</span>
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-select">
+                                        <li><a href="#"><input type="checkbox" name="d-s-c-1">Option1</a></li>
+                                        <li><a href="#"><input type="checkbox" name="d-s-c-2">Option2</a></li>
+                                        <li><a href="#"><input type="checkbox" name="d-s-c-3">Option3</a></li>
+                                        <li><a href="#"><input type="checkbox" name="d-s-c-4">Option4</a></li>
+                                        <li><a href="#"><input type="checkbox" name="d-s-c-5">Option5</a></li>
+                                    </ul>
+                                </div>
+                                <pre class="m-t"><code class="html"><div class="btn-group">
+<button data-toggle="dropdown" class="btn btn-sm btn-white dropdown-toggle">
+<span class="dropdown-label" data-placeholder="Please select">Please select</span>
+<span class="caret"></span>
+</button>
+<ul class="dropdown-menu dropdown-select">
+<li><a href="#"><input type="checkbox" name="d-s-c-1">Option1</a></li>
+<li><a href="#"><input type="checkbox" name="d-s-c-2">Option2</a></li>
+<li><a href="#"><input type="checkbox" name="d-s-c-3">Option3</a></li>
+<li><a href="#"><input type="checkbox" name="d-s-c-4">Option4</a></li>
+<li><a href="#"><input type="checkbox" name="d-s-c-5">Option5</a></li>
+</ul>
+</div>
+</code></pre>
+                                <h4 id="fuelux" class="m-t-lg">Fuelux</h4>
+                                <p>Check more details on <a href="https://github.com/ExactTarget/fuelux"><strong>Fuelux</strong></a>. </p>
+                                <p>enhanced the pillbox.</p>
+                                <h4 id="fullcalendar" class="m-t-lg">Fullcalendar</h4>
+                                <p>Check more details on <a href="http://arshaw.com/fullcalendar/"><strong>Fullcalendar</strong></a>. </p>
+                                <p>Use pillbox to create an event and drag on to the calendar. it also use jquery touch-punch to support on touchable screen.</p>
+                                <h4 id="datatables" class="m-t-lg">Datatables</h4>
+                                <p>Check more details on <a href="http://datatables.net/"><strong>Datatables</strong></a>. </p>
+                                <h4 id="sortable" class="m-t-lg">Sortable</h4>
+                                <p>Check more details on <a href="http://farhadi.ir/projects/html5sortable"><strong>Sortable</strong></a>. </p>
+                                <h4 id="morris" class="m-t-lg">Morris</h4>
+                                <p>Check more details on <a href="http://www.oesmith.co.uk/morris.js/"><strong>Morris</strong></a>. </p>
+                                <h4 id="parsley" class="m-t-lg">Parsley</h4>
+                                <p>Check more details on <a href="http://parsleyjs.org/"><strong>Parsley</strong></a>. </p>
+                                <h4 id="select2" class="m-t-lg">Select2</h4>
+                                <p>Check more details on <a href="http://ivaynberg.github.io/select2/"><strong>Select2</strong></a>. </p>
+                                <h3 class="text-primary">Applications <small>built with Backbone</small></h3>
+                                <div class="line"></div>
+                                <h4 id="notes" class="m-t-lg">Notes</h4>
+                                <p>Notes is web application with CRUD(create, read, update, delete) and Search function. it built with Backbone and underscore, also used moment.js for time display. it use backbone localStorage for data model. but also you can replace with the RESTful api.</p>
+                                <h4 id="tasks" class="m-t-lg">Tasks</h4>
+                                <p>Tasks app let you create your own task and give the comments. </p>
+                                <h4 id="tasks" class="m-t-lg">Chrome app</h4>
+                                <p>For more how to build chrome app, please check <a href="http://developer.chrome.com/apps/first_app.html" class="text-info"><strong>here</strong></a>
+                                </p>
+                                <h4 class="m-t-lg">Cross browser compatibility</h4>
+                                <p>Use response.js to support IE8 media queries and html5.js to support html5 markups.</p>
+                                <pre><code class="html"><!--[if lt IE 9]>
+<script src="js/ie/respond.min.js" ></script>
+<script src="js/ie/html5.js" ></script>
+<script src="js/ie/excanvas.js" ></script>
+<![endif]--></code></pre>
+                                <h4>Credits:</h4>
+                                <ul>
+                                    <li><a href="http://fortawesome.github.io/Font-Awesome/">FontAwesome</a></li>
+                                    <li><a href="http://github.com/vitalets/combodate">Combodate</a></li>
+                                    <li><a href="http://github.com/grevory/bootstrap-file-input">File input</a></li>
+                                    <li><a href="http://omnipotent.net/jquery.sparkline/">Sparkline</a></li>
+                                    <li><a href="http://github.com/rendro/easy-pie-chart/">Easy Pie Chart</a></li>
+                                    <li><a href="http://www.oesmith.co.uk/morris.js/">Morris</a></li>
+                                    <li><a href="http://www.eyecon.ro/bootstrap-datepicker">Datepicker</a></li>
+                                    <li><a href="http://www.eyecon.ro/bootstrap-slider">Slider</a></li>
+                                    <li><a href="http://arshaw.com/fullcalendar/">Fullcalendar</a></li>
+                                    <li><a href="https://github.com/furf/jquery-ui-touch-punch">jQuery UI Touch Punch</a></li>
+                                    <li><a href="https://github.com/ExactTarget/fuelux">Fuelux</a></li>
+                                    <li><a href="http://datatables.net/">DataTables</a></li>
+                                    <li><a href="http://parsleyjs.org/">Parsley.js</a></li>
+                                    <li><a href="http://ivaynberg.github.io/select2/">Select2</a></li>
+                                    <li><a href="http://mths.be/placeholder">Placeholder</a></li>
+                                </ul>
+                            </div>
+                        </section>
+                    </section>
+                </section>
+            </section>
+        </section><script src="js/app.v2.js"></script>
+        <!-- Bootstrap -->
+        <!-- app -->
+        <!-- Sparkline Chart -->
+        <!-- Easy Pie Chart -->
+        <!-- file input -->
+        <script src="js/file-input/bootstrap.file-input.js"></script>
+        <!-- datepicker -->
+        <script src="js/datepicker/bootstrap-datepicker.js"></script>
+        <!-- slider -->
+        <script src="js/slider/bootstrap-slider.js"></script>
+        <!-- combodate -->
+        <script src="js/libs/moment.min.js"></script>
+        <script src="js/combodate/combodate.js"></script></body></html>

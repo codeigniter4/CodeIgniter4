@@ -23,13 +23,14 @@
                 <tr>
 			<td width="80px"></td>
                                 {fields}
-                            <td> $ {field}</td>
+                            <td>  {model}->{field} </td>
+                            <td>  {model}->{field} </td>
                                 {/fields}
 
                         
                         
                         {blog_entries}
-                            <td><?= ${title}->{body} ?></td>
+                            <td><= ${title}->{body} ></td>
 			{/blog_entries}
                         <td style="text-align:center" width="200px">
 				<?php 

@@ -1,0 +1,577 @@
+<!DOCTYPE html><html lang="en"><head> 
+        <meta charset="utf-8" /> 
+        <title>Web Application | todo</title> 
+        <meta name="description" content="app, web app, responsive, admin dashboard, admin, flat, flat ui, ui kit, off screen nav" /> 
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" /> 
+        <link rel="stylesheet" href="css/app.v2.css" type="text/css" /> 
+        <link rel="stylesheet" href="css/font.css" type="text/css"  /> 
+        <!--[if lt IE 9]> 
+        <script src="js/ie/respond.min.js" ></script> 
+        <script src="js/ie/html5.js" ></script> 
+        <script src="js/ie/fix.js" ></script> 
+        <![endif]--></head><body> 
+        <section class="hbox stretch"> 
+            <!-- .aside --> 
+            <aside class="bg-dark aside-md" id="nav"> 
+                <section class="vbox"> 
+                    <header class="dker nav-bar"> 
+                        <a class="btn btn-link visible-xs" data-toggle="class:nav-off-screen" data-target="#nav"> 
+                            <i class="fa fa-bars"></i> 
+                        </a> 
+                        <a href="#" class="nav-brand" data-toggle="fullscreen">todo</a> 
+                        <a class="btn btn-link visible-xs" data-toggle="class:show" data-target=".nav-user"> 
+                            <i class="fa fa-comment-o"></i> 
+                        </a> 
+                    </header> 
+                    <section> 
+                        <div class="lter nav-user hidden-xs pos-rlt"> 
+                            <div class="nav-avatar pos-rlt"> 
+                                <a href="#" class="thumb-sm avatar animated rollIn" data-toggle="dropdown"> 
+                                    <img src="images/avatar.jpg" alt="" class=""> 
+                                    <span class="caret caret-white"></span> 
+                                </a> 
+                                <ul class="dropdown-menu m-t-sm animated fadeInLeft"> 
+                                    <span class="arrow top"></span> 
+                                    <li> 
+                                        <a href="#">Settings</a> 
+                                    </li> 
+                                    <li> 
+                                        <a href="profile.html">Profile</a> 
+                                    </li> 
+                                    <li> 
+                                        <a href="#"> 
+                                            <span class="badge bg-danger pull-right">3</span> Notifications </a> 
+                                    </li> 
+                                    <li class="divider"></li> 
+                                    <li> 
+                                        <a href="docs.html">Help</a> 
+                                    </li> 
+                                    <li> 
+                                        <a href="signin.html">Logout</a> 
+                                    </li> 
+                                </ul> 
+                                <div class="visible-xs m-t m-b"> 
+                                    <a href="#" class="h3">John.Smith</a> 
+                                    <p><i class="fa fa-map-marker"></i> London, UK</p> 
+                                </div> 
+                            </div> 
+                            <div class="nav-msg"> 
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"> 
+                                    <b class="badge badge-white count-n">2</b> 
+                                </a> 
+                                <section class="dropdown-menu m-l-sm pull-left animated fadeInRight"> 
+                                    <div class="arrow left"></div> 
+                                    <section class="panel bg-white"> 
+                                        <header class="panel-heading"> 
+                                            <strong>You have <span class="count-n">2</span> notifications</strong> 
+                                        </header> 
+                                        <div class="list-group"> 
+                                            <a href="#" class="media list-group-item"> 
+                                                <span class="pull-left thumb-sm"> 
+                                                    <img src="images/avatar.jpg" alt="John said" class="img-circle"> 
+                                                </span> 
+                                                <span class="media-body block m-b-none"> Use awesome animate.css<br> 
+                                                    <small class="text-muted">28 Aug 13</small> 
+                                                </span> 
+                                            </a> 
+                                            <a href="#" class="media list-group-item"> 
+                                                <span class="media-body block m-b-none"> 1.0 initial released<br> 
+                                                    <small class="text-muted">27 Aug 13</small> 
+                                                </span> 
+                                            </a> 
+                                        </div> 
+                                        <footer class="panel-footer text-sm"> 
+                                            <a href="#" class="pull-right"><i class="fa fa-cog"></i></a> 
+                                            <a href="#">See all the notifications</a> 
+                                        </footer> 
+                                    </section> 
+                                </section> 
+                            </div> 
+                        </div> 
+                        <nav class="nav-primary hidden-xs"> 
+                            <ul class="nav"> 
+                                <li> 
+                                    <a href="index.html"> 
+                                        <i class="fa fa-eye"></i> 
+                                        <span>Discover</span> 
+                                    </a> 
+                                </li> 
+                                <li class="dropdown-submenu"> 
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"> 
+                                        <i class="fa fa-flask"></i> 
+                                        <span>UI kit</span> 
+                                    </a> 
+                                    <ul class="dropdown-menu"> 
+                                        <li> 
+                                            <a href="buttons.html">Buttons</a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="icons.html"> 
+                                                <b class="badge pull-right">302</b>Icons </a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="grid.html">Grid</a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="widgets.html"> 
+                                                <b class="badge bg-primary pull-right">8</b>Widgets </a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="components.html"> 
+                                                <b class="badge pull-right">18</b>Components </a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="list.html">List groups</a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="table.html">Table</a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="form.html">Form</a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="chart.html">Chart</a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="calendar.html">Fullcalendar</a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="portlet.html">Portlet</a> 
+                                        </li> 
+                                    </ul> 
+                                </li> 
+                                <li class="dropdown-submenu active"> 
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"> 
+                                        <i class="fa fa-file-text"></i> 
+                                        <span>Pages</span> 
+                                    </a> 
+                                    <ul class="dropdown-menu"> 
+                                        <li> 
+                                            <a href="dashboard.html">Dashboard</a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="dashboard-1.html">Dashboard one</a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="dashboard-2.html">Dashboard layout</a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="analysis.html">Analysis</a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="master.html">Master</a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="maps.html">Maps</a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="gallery.html">Gallery</a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="profile.html">Profile</a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="blog.html">Blog</a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="invoice.html">Invoice</a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="signin.html">Signin page</a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="signup.html">Signup page</a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="404.html">404 page</a> 
+                                        </li> 
+                                    </ul> 
+                                </li> 
+                                <li> 
+                                    <a href="mail.html"> 
+                                        <b class="badge bg-primary pull-right">3</b> 
+                                        <i class="fa fa-envelope-o"></i> 
+                                        <span>Mail</span> 
+                                    </a> 
+                                </li> 
+                                <li> 
+                                    <a href="tasks.html"> 
+                                        <i class="fa fa-tasks"></i> 
+                                        <span>Tasks</span> 
+                                    </a> 
+                                </li> 
+                                <li> 
+                                    <a href="notes.html"> 
+                                        <i class="fa fa-pencil"></i> 
+                                        <span>Notes</span> 
+                                    </a> 
+                                </li> 
+                                <li> 
+                                    <a href="timeline.html"> 
+                                        <i class="fa fa-clock-o"></i> 
+                                        <span>Timeline</span> 
+                                    </a> 
+                                </li> 
+                            </ul> 
+                        </nav> 
+                    </section> 
+                    <footer class="footer bg-gradient hidden-xs"> 
+                        <a href="modal.lockme.html" data-toggle="ajaxModal" class="btn btn-sm btn-link m-r-n-xs pull-right"> 
+                            <i class="fa fa-power-off"></i> 
+                        </a> 
+                        <a href="#nav" data-toggle="class:nav-vertical" class="btn btn-sm btn-link m-l-n-sm"> 
+                            <i class="fa fa-bars"></i> 
+                        </a> 
+                    </footer> 
+                </section> 
+            </aside> 
+            <!-- /.aside --> 
+            <!-- .vbox --> 
+            <section id="content"> 
+                <section class="hbox stretch"> 
+                    <aside class="aside bg-white b-r" id="subNav"> 
+                        <div class="wrapper b-b font-bold">Submenu Header</div> 
+                        <ul class="nav"> 
+                            <li class="b-b"><a href="#">Phasellus at ultricies</a></li> 
+                            <li class="b-b"><a href="#">Malesuada augue</a></li> 
+                            <li class="b-b"><a href="#">Donec eleifend</a></li> 
+                            <li class="b-b"><a href="#">Dapibus porta</a></li> 
+                            <li class="b-b"><a href="#">Dacus eu neque</a></li> 
+                        </ul> 
+                    </aside> 
+                    <aside> 
+                        <section class="vbox"> 
+                            <header class="header bg-white b-b clearfix"> 
+                                <div class="row m-t-sm"> 
+                                    <div class="col-sm-6 m-b-xs"> 
+                                        <a href="#subNav" data-toggle="class:hide" class="btn btn-sm btn-info active"><i class="fa fa-caret-right text fa fa-large"></i><i class="fa fa-caret-left text-active fa fa-large"></i></a> 
+                                        <a href="#" class="btn btn-sm btn-success"><i class="fa fa-plus"></i> Create</a> 
+                                    </div> 
+                                    <div class="col-sm-6 m-b-xs"> 
+                                        <div class="input-group"> 
+                                            <input type="text" class="input-sm form-control" placeholder="Search"> 
+                                            <span class="input-group-btn"> 
+                                                <button class="btn btn-sm btn-white" type="button">Go!</button> 
+                                            </span> 
+                                        </div> 
+                                    </div> 
+                                </div> 
+                            </header> 
+                            <section class="scrollable wrapper w-f"> 
+                                <section class="panel"> 
+                                    <div class="table-responsive"> 
+                                        <table class="table table-striped m-b-none"> 
+                                            <thead> 
+                                                <tr> 
+                                                    <th width="20"><input type="checkbox"></th> 
+                                                    <th width="20"></th> 
+                                                    <th class="th-sortable" data-toggle="class">Project <span class="th-sort"> 
+                                                            <i class="fa fa-sort-down text"></i> 
+                                                            <i class="fa fa-sort-up text-active"></i> 
+                                                            <i class="fa fa-sort"></i> 
+                                                        </span> 
+                                                    </th> 
+                                                    <th>Task</th> 
+                                                    <th>Date</th> 
+                                                    <th width="30"></th> 
+                                                </tr> 
+                                            </thead> 
+                                            <tbody> 
+                                                <tr> 
+                                                    <td><input type="checkbox" name="post[]" value="2"></td> 
+                                                    <td><a href="#modal" data-toggle="modal"><i class="fa fa-search-plus"></i></a></td> 
+                                                    <td>Idrawfast</td> 
+                                                    <td>4c</td> 
+                                                    <td>Jul 25, 2013</td> 
+                                                    <td> 
+                                                        <a href="#" class="active" data-toggle="class"><i class="fa fa-check text-success text-active"></i><i class="fa fa-times text-danger text"></i></a> 
+                                                    </td> 
+                                                </tr> 
+                                                <tr> 
+                                                    <td><input type="checkbox" name="post[]" value="3"></td> 
+                                                    <td><a href="#modal" data-toggle="modal"><i class="fa fa-search-plus"></i></a></td> 
+                                                    <td>Formasa</td> 
+                                                    <td>8c</td> 
+                                                    <td>Jul 22, 2013</td> 
+                                                    <td> 
+                                                        <a href="#" data-toggle="class"><i class="fa fa-check text-success text-active"></i><i class="fa fa-times text-danger text"></i></a> 
+                                                    </td> 
+                                                </tr> 
+                                                <tr> 
+                                                    <td><input type="checkbox" name="post[]" value="4"></td> 
+                                                    <td><a href="#modal" data-toggle="modal"><i class="fa fa-search-plus"></i></a></td> 
+                                                    <td>Avatar system</td> 
+                                                    <td>15c</td> 
+                                                    <td>Jul 15, 2013</td> 
+                                                    <td> 
+                                                        <a href="#" class="active" data-toggle="class"><i class="fa fa-check text-success text-active"></i><i class="fa fa-times text-danger text"></i></a> 
+                                                    </td> 
+                                                </tr> 
+                                                <tr> 
+                                                    <td><input type="checkbox" name="post[]" value="4"></td> 
+                                                    <td><a href="#modal" data-toggle="modal"><i class="fa fa-search-plus"></i></a></td> 
+                                                    <td>Throwdown</td> 
+                                                    <td>4c</td> 
+                                                    <td>Jul 11, 2013</td> 
+                                                    <td> 
+                                                        <a href="#" class="active" data-toggle="class"><i class="fa fa-check text-success text-active"></i><i class="fa fa-times text-danger text"></i></a> 
+                                                    </td> 
+                                                </tr> 
+                                                <tr> 
+                                                    <td><input type="checkbox" name="post[]" value="5"></td> 
+                                                    <td><a href="#modal" data-toggle="modal"><i class="fa fa-search-plus"></i></a></td> 
+                                                    <td>Idrawfast</td> 
+                                                    <td>4c</td> 
+                                                    <td>Jul 7, 2013</td> 
+                                                    <td> 
+                                                        <a href="#" class="active" data-toggle="class"><i class="fa fa-check text-success text-active"></i><i class="fa fa-times text-danger text"></i></a> 
+                                                    </td> 
+                                                </tr> 
+                                                <tr> 
+                                                    <td><input type="checkbox" name="post[]" value="6"></td> 
+                                                    <td><a href="#modal" data-toggle="modal"><i class="fa fa-search-plus"></i></a></td> 
+                                                    <td>Formasa</td> 
+                                                    <td>8c</td> 
+                                                    <td>Jul 3, 2013</td> 
+                                                    <td> 
+                                                        <a href="#" class="active" data-toggle="class"><i class="fa fa-check text-success text-active"></i><i class="fa fa-times text-danger text"></i></a> 
+                                                    </td> 
+                                                </tr> 
+                                                <tr> 
+                                                    <td><input type="checkbox" name="post[]" value="7"></td> 
+                                                    <td><a href="#modal" data-toggle="modal"><i class="fa fa-search-plus"></i></a></td> 
+                                                    <td>Avatar system </b></td> 
+                                                    <td>15c</td> 
+                                                    <td>Jul 2, 2013</td> 
+                                                    <td> 
+                                                        <a href="#" class="active" data-toggle="class"><i class="fa fa-check text-success text-active"></i><i class="fa fa-times text-danger text"></i></a> 
+                                                    </td> 
+                                                </tr> 
+                                                <tr> 
+                                                    <td><input type="checkbox" name="post[]" value="8"></td> 
+                                                    <td><a href="#modal" data-toggle="modal"><i class="fa fa-search-plus"></i></a></td> 
+                                                    <td>Videodown</td> 
+                                                    <td>4c</td> 
+                                                    <td>Jul 1, 2013</td> 
+                                                    <td> 
+                                                        <a href="#" class="active" data-toggle="class"><i class="fa fa-check text-success text-active"></i><i class="fa fa-times text-danger text"></i></a> 
+                                                    </td> 
+                                                </tr> 
+                                                <tr> 
+                                                    <td><input type="checkbox" name="post[]" value="4"></td> 
+                                                    <td><a href="#modal" data-toggle="modal"><i class="fa fa-search-plus"></i></a></td> 
+                                                    <td>Throwdown</td> 
+                                                    <td>4c</td> 
+                                                    <td>Jul 11, 2013</td> 
+                                                    <td> 
+                                                        <a href="#" class="active" data-toggle="class"><i class="fa fa-check text-success text-active"></i><i class="fa fa-times text-danger text"></i></a> 
+                                                    </td> 
+                                                </tr> 
+                                                <tr> 
+                                                    <td><input type="checkbox" name="post[]" value="5"></td> 
+                                                    <td><a href="#modal" data-toggle="modal"><i class="fa fa-search-plus"></i></a></td> 
+                                                    <td>Idrawfast</td> 
+                                                    <td>4c</td> 
+                                                    <td>Jul 7, 2013</td> 
+                                                    <td> 
+                                                        <a href="#" class="active" data-toggle="class"><i class="fa fa-check text-success text-active"></i><i class="fa fa-times text-danger text"></i></a> 
+                                                    </td> 
+                                                </tr> 
+                                                <tr> 
+                                                    <td><input type="checkbox" name="post[]" value="6"></td> 
+                                                    <td><a href="#modal" data-toggle="modal"><i class="fa fa-search-plus"></i></a></td> 
+                                                    <td>Formasa</td> 
+                                                    <td>8c</td> 
+                                                    <td>Jul 3, 2013</td> 
+                                                    <td> 
+                                                        <a href="#" class="active" data-toggle="class"><i class="fa fa-check text-success text-active"></i><i class="fa fa-times text-danger text"></i></a> 
+                                                    </td> 
+                                                </tr> 
+                                                <tr> 
+                                                    <td><input type="checkbox" name="post[]" value="7"></td> 
+                                                    <td><a href="#modal" data-toggle="modal"><i class="fa fa-search-plus"></i></a></td> 
+                                                    <td>Avatar system </b></td> 
+                                                    <td>15c</td> 
+                                                    <td>Jul 2, 2013</td> 
+                                                    <td> 
+                                                        <a href="#" class="active" data-toggle="class"><i class="fa fa-check text-success text-active"></i><i class="fa fa-times text-danger text"></i></a> 
+                                                    </td> 
+                                                </tr> 
+                                                <tr> 
+                                                    <td><input type="checkbox" name="post[]" value="8"></td> 
+                                                    <td><a href="#modal" data-toggle="modal"><i class="fa fa-search-plus"></i></a></td> 
+                                                    <td>Videodown</td> 
+                                                    <td>4c</td> 
+                                                    <td>Jul 1, 2013</td> 
+                                                    <td> 
+                                                        <a href="#" class="active" data-toggle="class"><i class="fa fa-check text-success text-active"></i><i class="fa fa-times text-danger text"></i></a> 
+                                                    </td> 
+                                                </tr> 
+                                                <tr> 
+                                                    <td><input type="checkbox" name="post[]" value="4"></td> 
+                                                    <td><a href="#modal" data-toggle="modal"><i class="fa fa-search-plus"></i></a></td> 
+                                                    <td>Throwdown</td> 
+                                                    <td>4c</td> 
+                                                    <td>Jul 11, 2013</td> 
+                                                    <td> 
+                                                        <a href="#" class="active" data-toggle="class"><i class="fa fa-check text-success text-active"></i><i class="fa fa-times text-danger text"></i></a> 
+                                                    </td> 
+                                                </tr> 
+                                                <tr> 
+                                                    <td><input type="checkbox" name="post[]" value="5"></td> 
+                                                    <td><a href="#modal" data-toggle="modal"><i class="fa fa-search-plus"></i></a></td> 
+                                                    <td>Idrawfast</td> 
+                                                    <td>4c</td> 
+                                                    <td>Jul 7, 2013</td> 
+                                                    <td> 
+                                                        <a href="#" class="active" data-toggle="class"><i class="fa fa-check text-success text-active"></i><i class="fa fa-times text-danger text"></i></a> 
+                                                    </td> 
+                                                </tr> 
+                                                <tr> 
+                                                    <td><input type="checkbox" name="post[]" value="6"></td> 
+                                                    <td><a href="#modal" data-toggle="modal"><i class="fa fa-search-plus"></i></a></td> 
+                                                    <td>Formasa</td> 
+                                                    <td>8c</td> 
+                                                    <td>Jul 3, 2013</td> 
+                                                    <td> 
+                                                        <a href="#" class="active" data-toggle="class"><i class="fa fa-check text-success text-active"></i><i class="fa fa-times text-danger text"></i></a> 
+                                                    </td> 
+                                                </tr> 
+                                                <tr> 
+                                                    <td><input type="checkbox" name="post[]" value="7"></td> 
+                                                    <td><a href="#modal" data-toggle="modal"><i class="fa fa-search-plus"></i></a></td> 
+                                                    <td>Avatar system </b></td> 
+                                                    <td>15c</td> 
+                                                    <td>Jul 2, 2013</td> 
+                                                    <td> 
+                                                        <a href="#" class="active" data-toggle="class"><i class="fa fa-check text-success text-active"></i><i class="fa fa-times text-danger text"></i></a> 
+                                                    </td> 
+                                                </tr> 
+                                                <tr> 
+                                                    <td><input type="checkbox" name="post[]" value="8"></td> 
+                                                    <td><a href="#modal" data-toggle="modal"><i class="fa fa-search-plus"></i></a></td> 
+                                                    <td>Videodown</td> 
+                                                    <td>4c</td> 
+                                                    <td>Jul 1, 2013</td> 
+                                                    <td> 
+                                                        <a href="#" class="active" data-toggle="class"><i class="fa fa-check text-success text-active"></i><i class="fa fa-times text-danger text"></i></a> 
+                                                    </td> 
+                                                </tr> 
+                                            </tbody> 
+                                        </table> 
+                                    </div> 
+                                </section> 
+                            </section> 
+                            <footer class="footer bg-white b-t"> 
+                                <div class="row m-t-sm text-center-xs"> 
+                                    <div class="col-sm-4"> 
+                                        <select class="input-sm form-control input-s-sm inline"> 
+                                            <option value="0">Bulk action</option> 
+                                            <option value="1">Delete selected</option> 
+                                            <option value="2">Bulk edit</option> 
+                                            <option value="3">Export</option> 
+                                        </select> 
+                                        <button class="btn btn-sm btn-white">Apply</button> 
+                                    </div> 
+                                    <div class="col-sm-4 text-center"> 
+                                        <small class="text-muted inline m-t-sm m-b-sm">showing 20-30 of 50 items</small> 
+                                    </div> 
+                                    <div class="col-sm-4 text-right text-center-xs"> 
+                                        <ul class="pagination pagination-sm m-t-none m-b-none"> 
+                                            <li><a href="#"><i class="fa fa-chevron-left"></i></a></li> 
+                                            <li><a href="#">1</a></li> 
+                                            <li><a href="#">2</a></li> 
+                                            <li><a href="#">3</a></li> 
+                                            <li><a href="#">4</a></li> 
+                                            <li><a href="#">5</a></li> 
+                                            <li><a href="#"><i class="fa fa-chevron-right"></i></a></li> 
+                                        </ul> 
+                                    </div> 
+                                </div> 
+                            </footer> 
+                        </section> 
+                    </aside> 
+                </section> 
+                <a href="#" class="hide nav-off-screen-block" data-toggle="class:nav-off-screen" data-target="#nav"></a> 
+            </section> 
+            <!-- /.vbox --> 
+        </section> 
+        <div class="modal fade" id="modal"> 
+            <div class="modal-dialog"> 
+                <div class="modal-content"> 
+                    <div class="modal-header"> 
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> 
+                        <h4 class="modal-title">Idrawfast 02/2013</h4> 
+                    </div> 
+                    <div class="modal-body"> 
+                        <p>This is a table in a modal, click the trash icon to remove the item</p> 
+                        <section class="panel m-l-n-lg m-r-n-lg m-b-none"> 
+                            <header class="panel-heading"> 
+                                <span class="label bg-danger pull-right">4 left</span> Tasks </header> 
+                            <table class="table table-striped m-b-none text-sm"> 
+                                <thead> 
+                                    <tr> 
+                                        <th>Progress</th> 
+                                        <th>Item</th> 
+                                        <th width="20"></th> 
+                                    </tr> 
+                                </thead> 
+                                <tbody> 
+                                    <tr id="item-1"> 
+                                        <td> 
+                                            <div class="progress progress-sm progress-striped active m-t-xs m-b-none"> 
+                                                <div class="progress-bar progress-bar-success" data-toggle="tooltip" data-original-title="80%" style="width: 80%"></div> 
+                                            </div> 
+                                        </td> 
+                                        <td>App prototype design</td> 
+                                        <td class="text-right"> 
+                                            <a href="#item-1" data-dismiss="alert"><i class="fa fa-trash-o"></i></a> 
+                                        </td> 
+                                    </tr> 
+                                    <tr id="item-2"> 
+                                        <td> 
+                                            <div class="progress progress-xs m-t-xs m-b-none"> 
+                                                <div class="progress-bar progress-bar-info" data-toggle="tooltip" data-original-title="40%" style="width: 40%"></div> 
+                                            </div> 
+                                        </td> 
+                                        <td>Design documents</td> 
+                                        <td class="text-right"> 
+                                            <a href="#item-2" data-dismiss="alert"><i class="fa fa-trash-o"></i></a> 
+                                        </td> 
+                                    </tr> 
+                                    <tr id="item-3"> 
+                                        <td> 
+                                            <div class="progress progress-xs m-t-xs m-b-none"> 
+                                                <div class="progress-bar progress-bar-warning" data-toggle="tooltip" data-original-title="20%" style="width: 20%"></div> 
+                                            </div> 
+                                        </td> 
+                                        <td>UI toolkit</td> 
+                                        <td class="text-right"> 
+                                            <a href="#item-3" data-dismiss="alert"><i class="fa fa-trash-o"></i></a> 
+                                        </td> 
+                                    </tr> 
+                                    <tr id="item-4"> 
+                                        <td> 
+                                            <div class="progress progress-xs m-t-xs m-b-none"> 
+                                                <div class="progress-bar progress-bar-danger" data-toggle="tooltip" data-original-title="15%" style="width: 15%"></div> 
+                                            </div> 
+                                        </td> 
+                                        <td>Testing</td> 
+                                        <td class="text-right"> 
+                                            <a href="#item-4" data-dismiss="alert"><i class="fa fa-trash-o"></i></a> 
+                                        </td> 
+                                    </tr> 
+                                </tbody> 
+                            </table> 
+                        </section> 
+                    </div> 
+                    <div class="modal-footer"> 
+                        <button type="button" class="btn btn-white" data-dismiss="modal">Close</button> 
+                        <button type="button" class="btn btn-info" data-loading-text="Updating...">Save changes</button> 
+                    </div> 
+                </div><!-- /.modal-content --> 
+            </div><!-- /.modal-dialog --> 
+        </div><script src="js/app.v2.js"></script> 
+        <!-- Bootstrap --> 
+        <!-- App --> 
+    </body></html>

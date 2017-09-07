@@ -2,11 +2,11 @@
 
 namespace App\Controllers;
 
-use CodeIgniter\Controller;
+use App\Controllers;
 
-class Categories extends Controller {
+class Categories extends AdminController {
 
-    protected $helpers = ['url', 'form', 'filesystem'];
+    protected $helpers = ['url', 'form', 'filesystem', 'html'];
     protected $session;
     protected $validation;
     protected $parser;
@@ -38,11 +38,11 @@ class Categories extends Controller {
         $model = new \CategoriesModel();
 
         $data = [
-            'categories' => $model->asObject()->paginate(10),
+            'categories' => $model->paginate(10),
+            'total_rows' => $model->total_rows(),
             'pager' => $model->pager
         ];
-        echo $model->total_rows();
-        return view('categories/categories_list', $data);
+        return $this->template_output(view('categories/categories_list', $data));
     }
 
     public function parsear() {
@@ -61,7 +61,8 @@ class Categories extends Controller {
             'fields' => $fields_array,
         ];
         print_r($fields);
-            if (!write_file('./abejita.php', $this->parser->setData($data)->render('users_list'))) {
+        if (!write_file('./abejita.php', $this->parser->setData($data)->render('users_list'))) {
+            
         }
     }
 
@@ -77,7 +78,7 @@ class Categories extends Controller {
                 'name' => set_value('name', $category['name']),
                 'date' => set_value('date', $category['date']),
             );
-            return view('categories/categories_form', $data);
+            return $this->template_output(view('categories/categories_form', $data));
         } else {
             $this->session->setFlashdata('message', 'Record Not Found');
             redirect(site_url('categories'));
@@ -92,7 +93,7 @@ class Categories extends Controller {
             'name' => set_value('name'),
             'date' => set_value('date'),
         );
-        return view('categories/categories_form', $data);
+        return $this->template_output(view('categories/categories_form', $data));
     }
 
     public function create_action() {
@@ -135,7 +136,7 @@ class Categories extends Controller {
         $model = new \CategoriesModel();
         $category = $model->find($id);
         if ($category) {
-            return view('categories/categories_read', $category);
+            return $this->template_output(view('categories/categories_read', $category));            
         } else {
             $this->session->setFlashdata('message', 'Record Not Found');
             redirect(site_url('categories'));

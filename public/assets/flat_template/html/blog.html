@@ -1,0 +1,463 @@
+<!DOCTYPE html><html lang="en"><head> 
+        <meta charset="utf-8" /> 
+        <title>Web Application | todo</title> 
+        <meta name="description" content="app, web app, responsive, admin dashboard, admin, flat, flat ui, ui kit, off screen nav" /> 
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" /> 
+        <link rel="stylesheet" href="css/app.v2.css" type="text/css" /> 
+        <link rel="stylesheet" href="css/font.css" type="text/css" /> 
+        <!--[if lt IE 9]> 
+        <script src="js/ie/respond.min.js" ></script> 
+        <script src="js/ie/html5.js" ></script> 
+        <script src="js/ie/fix.js" ></script> 
+        <![endif]--></head><body> 
+        <section class="hbox stretch"> 
+            <!-- .aside --> 
+            <aside class="bg-dark aside-sm" id="nav"> 
+                <section class="vbox"> 
+                    <header class="dker nav-bar"> 
+                        <a class="btn btn-link visible-xs" data-toggle="class:nav-off-screen" data-target="#nav"> 
+                            <i class="fa fa-bars"></i> 
+                        </a> 
+                        <a href="#" class="nav-brand" data-toggle="fullscreen">todo</a> 
+                        <a class="btn btn-link visible-xs" data-toggle="class:show" data-target=".nav-user"> 
+                            <i class="fa fa-comment-o"></i> 
+                        </a> 
+                    </header> 
+                    <section> 
+                        <div class="lter nav-user hidden-xs pos-rlt"> 
+                            <div class="nav-avatar pos-rlt"> 
+                                <a href="#" class="thumb-sm avatar animated rollIn" data-toggle="dropdown"> 
+                                    <img src="images/avatar.jpg" alt="" class=""> 
+                                    <span class="caret caret-white"></span> 
+                                </a> 
+                                <ul class="dropdown-menu m-t-sm animated fadeInLeft"> 
+                                    <span class="arrow top"></span> 
+                                    <li> 
+                                        <a href="#">Settings</a> 
+                                    </li> 
+                                    <li> 
+                                        <a href="profile.html">Profile</a> 
+                                    </li> 
+                                    <li> 
+                                        <a href="#"> 
+                                            <span class="badge bg-danger pull-right">3</span> Notifications </a> 
+                                    </li> 
+                                    <li class="divider"></li> 
+                                    <li> 
+                                        <a href="docs.html">Help</a> 
+                                    </li> 
+                                    <li> 
+                                        <a href="signin.html">Logout</a> 
+                                    </li> 
+                                </ul> 
+                                <div class="visible-xs m-t m-b"> 
+                                    <a href="#" class="h3">John.Smith</a> 
+                                    <p><i class="fa fa-map-marker"></i> London, UK</p> 
+                                </div> 
+                            </div> 
+                            <div class="nav-msg"> 
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"> 
+                                    <b class="badge badge-white count-n">2</b> 
+                                </a> 
+                                <section class="dropdown-menu m-l-sm pull-left animated fadeInRight"> 
+                                    <div class="arrow left"></div> 
+                                    <section class="panel bg-white"> 
+                                        <header class="panel-heading"> 
+                                            <strong>You have <span class="count-n">2</span> notifications</strong> 
+                                        </header> 
+                                        <div class="list-group"> 
+                                            <a href="#" class="media list-group-item"> 
+                                                <span class="pull-left thumb-sm"> 
+                                                    <img src="images/avatar.jpg" alt="John said" class="img-circle"> 
+                                                </span> 
+                                                <span class="media-body block m-b-none"> Use awesome animate.css<br> 
+                                                    <small class="text-muted">28 Aug 13</small> 
+                                                </span> 
+                                            </a> 
+                                            <a href="#" class="media list-group-item"> 
+                                                <span class="media-body block m-b-none"> 1.0 initial released<br> 
+                                                    <small class="text-muted">27 Aug 13</small> 
+                                                </span> 
+                                            </a> 
+                                        </div> 
+                                        <footer class="panel-footer text-sm"> 
+                                            <a href="#" class="pull-right"><i class="fa fa-cog"></i></a> 
+                                            <a href="#">See all the notifications</a> 
+                                        </footer> 
+                                    </section> 
+                                </section> 
+                            </div> 
+                        </div> 
+                        <nav class="nav-primary hidden-xs"> 
+                            <ul class="nav"> 
+                                <li> 
+                                    <a href="index.html"> 
+                                        <i class="fa fa-eye"></i> 
+                                        <span>Discover</span> 
+                                    </a> 
+                                </li> 
+                                <li class="dropdown-submenu"> 
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"> 
+                                        <i class="fa fa-flask"></i> 
+                                        <span>UI kit</span> 
+                                    </a> 
+                                    <ul class="dropdown-menu"> 
+                                        <li> 
+                                            <a href="buttons.html">Buttons</a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="icons.html"> 
+                                                <b class="badge pull-right">302</b>Icons </a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="grid.html">Grid</a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="widgets.html"> 
+                                                <b class="badge bg-primary pull-right">8</b>Widgets </a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="components.html"> 
+                                                <b class="badge pull-right">18</b>Components </a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="list.html">List groups</a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="table.html">Table</a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="form.html">Form</a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="chart.html">Chart</a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="calendar.html">Fullcalendar</a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="portlet.html">Portlet</a> 
+                                        </li> 
+                                    </ul> 
+                                </li> 
+                                <li class="dropdown-submenu active"> 
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"> 
+                                        <i class="fa fa-file-text"></i> 
+                                        <span>Pages</span> 
+                                    </a> 
+                                    <ul class="dropdown-menu"> 
+                                        <li> 
+                                            <a href="dashboard.html">Dashboard</a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="dashboard-1.html">Dashboard one</a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="dashboard-2.html">Dashboard layout</a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="analysis.html">Analysis</a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="master.html">Master</a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="maps.html">Maps</a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="gallery.html">Gallery</a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="profile.html">Profile</a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="blog.html">Blog</a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="invoice.html">Invoice</a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="signin.html">Signin page</a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="signup.html">Signup page</a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="404.html">404 page</a> 
+                                        </li> 
+                                    </ul> 
+                                </li> 
+                                <li> 
+                                    <a href="mail.html"> 
+                                        <b class="badge bg-primary pull-right">3</b> 
+                                        <i class="fa fa-envelope-o"></i> 
+                                        <span>Mail</span> 
+                                    </a> 
+                                </li> 
+                                <li> 
+                                    <a href="tasks.html"> 
+                                        <i class="fa fa-tasks"></i> 
+                                        <span>Tasks</span> 
+                                    </a> 
+                                </li> 
+                                <li> 
+                                    <a href="notes.html"> 
+                                        <i class="fa fa-pencil"></i> 
+                                        <span>Notes</span> 
+                                    </a> 
+                                </li> 
+                                <li> 
+                                    <a href="timeline.html"> 
+                                        <i class="fa fa-clock-o"></i> 
+                                        <span>Timeline</span> 
+                                    </a> 
+                                </li> 
+                            </ul> 
+                        </nav> 
+                    </section> 
+                    <footer class="footer bg-gradient hidden-xs"> 
+                        <a href="modal.lockme.html" data-toggle="ajaxModal" class="btn btn-sm btn-link m-r-n-xs pull-right"> 
+                            <i class="fa fa-power-off"></i> 
+                        </a> 
+                        <a href="#nav" data-toggle="class:nav-vertical" class="btn btn-sm btn-link m-l-n-sm"> 
+                            <i class="fa fa-bars"></i> 
+                        </a> 
+                    </footer> 
+                </section> 
+            </aside> 
+            <!-- /.aside --> 
+            <!-- .vbox --> 
+            <section id="content"> 
+                <section class="vbox"> 
+                    <header class="header b-b bg-white"> 
+                        <div class="input-group input-s pull-right m-t-sm"> 
+                            <span class="input-group-addon input-sm"><i class="fa fa-search"></i></span> 
+                            <input type="text" class="form-control input-sm" id="search-note" placeholder="search"> 
+                        </div> 
+                        <p>Just another blog</p> 
+                    </header> 
+                    <section class="scrollable wrapper"> 
+                        <div class="row"> 
+                            <div class="col-sm-9"> 
+                                <div class="blog-post"> 
+                                    <div class="post-item"> 
+                                        <div class="post-media"> 
+                                            <a href="#"><img src="images/ipad.png" class="img-full"></a> 
+                                        </div> 
+                                        <div class="caption wrapper-lg"> 
+                                            <h2 class="post-title"><a href="#">7 things you need to know about the flat design</a></h2> 
+                                            <div class="post-sum"> 
+                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id neque quam. Aliquam sollicitudin venenatis ipsum ac feugiat. Vestibulum ullamcorper sodales nisi nec condimentum. Mauris convallis mauris at pellentesque volutpat. <br><br> Phasellus at ultricies neque, quis malesuada augue. Donec eleifend condimentum nisl eu consectetur. Integer eleifend, nisl venenatis consequat iaculis, lectus arcu malesuada sem, dapibus porta quam lacus eu neque.</p> 
+                                            </div> 
+                                            <div class="line line-lg"></div> 
+                                            <div class="text-muted"> 
+                                                <i class="fa fa-user icon-muted"></i> by <a href="#" class="m-r-sm">Admin</a> 
+                                                <i class="fa fa-clock-o icon-muted"></i> Feb 20, 2013 <a href="#" class="m-l-sm"><i class="fa fa-comment-o icon-muted"></i> 2 comments</a> 
+                                            </div> 
+                                        </div> 
+                                    </div> 
+                                    <div class="post-item"> 
+                                        <div class="caption wrapper-lg"> 
+                                            <h2 class="post-title"><a href="#">Bootstrap 3: What you need to know</a></h2> 
+                                            <div class="post-sum"> 
+                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id neque quam. Aliquam sollicitudin venenatis ipsum ac feugiat. Vestibulum ullamcorper sodales nisi nec condimentum. Mauris convallis mauris at pellentesque volutpat. </p> 
+                                                <h3>Html5 and CSS3</h3> 
+                                                <p> Phasellus at ultricies neque, quis malesuada augue. Donec eleifend condimentum nisl eu consectetur. Integer eleifend, nisl venenatis consequat iaculis, lectus arcu malesuada sem, dapibus porta quam lacus eu neque.</p> 
+                                            </div> 
+                                            <div class="line line-lg"></div> 
+                                            <div class="text-muted"> 
+                                                <i class="fa fa-user icon-muted"></i> by <a href="#" class="m-r-sm">Admin</a> 
+                                                <i class="fa fa-clock-o icon-muted"></i> Feb 15, 2013 <a href="#" class="m-l-sm"><i class="fa fa-comment-o icon-muted"></i> 4 comments</a> 
+                                            </div> 
+                                        </div> 
+                                    </div> 
+                                </div> 
+                                <h4 class="m-t-lg m-b">3 Comments</h4> 
+                                <section class="comment-list block"> 
+                                    <article id="comment-id-1" class="comment-item"> 
+                                        <a class="pull-left thumb-sm"> 
+                                            <img src="images/avatar.jpg" class="img-rounded"> 
+                                        </a> 
+                                        <section class="comment-body m-b"> 
+                                            <header> 
+                                                <a href="#"><strong>John smith</strong></a> 
+                                                <label class="label bg-info m-l-xs">Editor</label> 
+                                                <span class="text-muted text-xs block m-t-xs"> 24 minutes ago </span> 
+                                            </header> 
+                                            <div class="m-t-sm">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id neque quam. Aliquam sollicitudin venenatis ipsum ac feugiat. Vestibulum.</div> 
+                                        </section> 
+                                    </article> 
+                                    <!-- .comment-reply --> 
+                                    <article id="comment-id-2" class="comment-item comment-reply"> 
+                                        <a class="pull-left thumb-sm"> 
+                                            <img src="images/avatar.jpg" class="img-rounded"> 
+                                        </a> 
+                                        <section class="comment-body m-b"> 
+                                            <header> 
+                                                <a href="#"><strong>John smith</strong></a> 
+                                                <label class="label bg-dark m-l-xs">Admin</label> 
+                                                <span class="text-muted text-xs block m-t-xs"> 26 minutes ago </span> 
+                                            </header> 
+                                            <div class="m-t-sm">Lorem ipsum dolor sit amet, consecteter adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet.</div> 
+                                        </section> 
+                                    </article> 
+                                    <!-- / .comment-reply --> 
+                                    <article id="comment-id-2" class="comment-item"> 
+                                        <a class="pull-left thumb-sm"> 
+                                            <img src="images/avatar.jpg" class="img-rounded"> 
+                                        </a> 
+                                        <section class="comment-body m-b"> 
+                                            <header> 
+                                                <a href="#"><strong>John smith</strong></a> 
+                                                <label class="label bg-dark m-l-xs">Admin</label> 
+                                                <span class="text-muted text-xs block m-t-xs"> 26 minutes ago </span> 
+                                            </header> 
+                                            <blockquote class="m-t"> 
+                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p> 
+                                                <small>Someone famous in <cite title="Source Title">Source Title</cite></small> 
+                                            </blockquote> 
+                                            <div class="m-t-sm">Lorem ipsum dolor sit amet, consecteter adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet.</div> 
+                                        </section> 
+                                    </article> 
+                                </section> 
+                                <h4 class="m-t-lg m-b">Leave a comment</h4> 
+                                <form> 
+                                    <div class="form-group pull-in clearfix"> 
+                                        <div class="col-sm-6"> 
+                                            <label>Your name</label> 
+                                            <input type="text" class="form-control" placeholder="Name"> 
+                                        </div> 
+                                        <div class="col-sm-6"> 
+                                            <label >Email</label> 
+                                            <input type="email" class="form-control" placeholder="Enter email"> 
+                                        </div> 
+                                    </div> 
+                                    <div class="form-group"> 
+                                        <label>Comment</label> 
+                                        <textarea class="form-control" rows="5" placeholder="Type your comment"></textarea> 
+                                    </div> 
+                                    <div class="form-group"> 
+                                        <button type="submit" class="btn btn-success">Submit comment</button> 
+                                    </div> 
+                                </form> 
+                            </div> 
+                            <div class="col-sm-3"> 
+                                <h5 class="font-semibold">About me</h5> 
+                                <div class="line line-dashed"></div> 
+                                <div class="m-b-lg"> 
+                                    <span class="pull-left thumb-sm avatar m-r-sm m-t-xs"> 
+                                        <img src="images/avatar.jpg" class="img-circle"> 
+                                    </span> 
+                                    <p class="clear text-sm"> I am a UI/UX designer for Flatfull where i focus on Web applications, Mobile apps... </p> 
+                                </div> 
+                                <h5 class="font-semibold">Subscribe</h5> 
+                                <div class="line line-dashed"></div> 
+                                <div class="m-t-sm m-b-lg"> 
+                                    <a href="#" title="RSS" class="btn btn-rounded btn-warning btn-icon"><i class="fa fa-rss"></i></a> 
+                                    <a href="#" title="Twitter" class="btn btn-rounded btn-twitter btn-icon"><i class="fa fa-twitter"></i></a> 
+                                    <a href="#" title="Facebook" class="btn btn-rounded btn-facebook btn-icon"><i class="fa fa-facebook"></i></a> 
+                                    <a href="#" title="Google+" class="btn btn-rounded btn-gplus btn-icon"><i class="fa fa-google-plus"></i></a> 
+                                    <a href="#" title="LinkedIn" class="btn btn-rounded btn-info btn-icon"><i class="fa fa-linkedin"></i></a> 
+                                </div> 
+                                <h5 class="font-semibold">Recent Tweets</h5> 
+                                <div class="line line-dashed"></div> 
+                                <div class="clear m-b"> 
+                                    <a href="#" class="text-info"> 
+                                        <span class="thumb-sm"> 
+                                            <img src="images/avatar.jpg" class="img-circle"> 
+                                        </span> @Mike Mcalidek <i class="fa fa-twitter"></i> 
+                                    </a> 
+                                </div> 
+                                <ul class="list-unstyled m-b-lg"> 
+                                    <li> 
+                                        <p>Wellcome <a href="#" class="text-info">@Drew Wllon</a> and play this web application template, have fun1 </p> 
+                                        <small class="block text-muted"><i class="fa fa-clock-o"></i> 2 minuts ago</small> 
+                                        <div class="line"></div> 
+                                    </li> 
+                                    <li> 
+                                        <p>Morbi nec <a href="#" class="text-info">@Jonathan George</a> nunc condimentum ipsum dolor sit amet, consectetur</p> 
+                                        <small class="block text-muted"><i class="fa fa-clock-o"></i> 1 hour ago</small> 
+                                        <div class="line"></div> 
+                                    </li> 
+                                    <li> 
+                                        <p><a href="#" class="text-info">@Josh Long</a> Vestibulum ullamcorper sodales nisi nec adipiscing elit. Morbi id neque quam. Aliquam sollicitudin venenatis</p> 
+                                        <small class="block text-muted"><i class="fa fa-clock-o"></i> 2 hours ago</small> 
+                                        <div class="line"></div> 
+                                    </li> 
+                                </ul> 
+                                <h5 class="font-semibold">Categories</h5> 
+                                <div class="line line-dashed"></div> 
+                                <ul class="list-unstyled"> 
+                                    <li> 
+                                        <a href="#" class="dk"> 
+                                            <span class="badge pull-right">15</span> Photograph </a> 
+                                    </li> 
+                                    <li class="line"></li> 
+                                    <li> 
+                                        <a href="#"> 
+                                            <span class="badge pull-right">30</span> Life style </a> 
+                                    </li> 
+                                    <li class="line"></li> 
+                                    <li> 
+                                        <a href="#"> 
+                                            <span class="badge pull-right">9</span> Food </a> 
+                                    </li> 
+                                    <li class="line"></li> 
+                                    <li> 
+                                        <a href="#"> 
+                                            <span class="badge pull-right">4</span> Travel world </a> 
+                                    </li> 
+                                    <li class="line"></li> 
+                                </ul> 
+                                <div class="tags m-b-lg"> 
+                                    <a href="#" class="label bg-success">Bootstrap</a> 
+                                    <a href="#" class="label bg-success">Application</a> 
+                                    <a href="#" class="label bg-success">Apple</a> 
+                                    <a href="#" class="label bg-success">Less</a> 
+                                    <a href="#" class="label bg-success">Theme</a> 
+                                    <a href="#" class="label bg-success">Wordpress</a> 
+                                </div> 
+                                <h5 class="font-semibold">Recent Posts</h5> 
+                                <div class="line line-dashed"></div> 
+                                <div> 
+                                    <article class="media"> 
+                                        <a class="pull-left thumb m-t-xs"> 
+                                            <img src="images/thumb_1.jpg"> 
+                                        </a> 
+                                        <div class="media-body"> 
+                                            <a href="#" class="font-semibold">Bootstrap 3: What you need to know</a> 
+                                            <div class="text-xs block m-t-xs"><a href="#">Travel</a> 2 minutes ago</div> 
+                                        </div> 
+                                    </article> 
+                                    <div class="line"></div> 
+                                    <article class="media m-t-none"> 
+                                        <a class="pull-left thumb m-t-xs"> 
+                                            <img src="images/ipad.png"> 
+                                        </a> 
+                                        <div class="media-body"> 
+                                            <a href="#" class="font-semibold">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</a> 
+                                            <div class="text-xs block m-t-xs"><a href="#">Design</a> 2 hours ago</div> 
+                                        </div> 
+                                    </article> 
+                                    <div class="line"></div> 
+                                    <article class="media m-t-none"> 
+                                        <a class="pull-left thumb m-t-xs"> 
+                                            <img src="images/thumb_2.jpg"> 
+                                        </a> 
+                                        <div class="media-body"> 
+                                            <a href="#" class="font-semibold">Sed diam nonummy nibh euismod tincidunt ut laoreet</a> 
+                                            <div class="text-xs block m-t-xs"><a href="#">MFC</a> 1 week ago</div> 
+                                        </div> 
+                                    </article> 
+                                </div> 
+                            </div> 
+                        </div> 
+                    </section> 
+                </section> 
+                <a href="#" class="hide nav-off-screen-block" data-toggle="class:nav-off-screen" data-target="#nav"></a> 
+            </section> 
+            <!-- /.vbox --> 
+        </section><script src="js/app.v2.js"></script> 
+        <!-- Bootstrap --> 
+        <!-- App --> 
+    </body></html>
