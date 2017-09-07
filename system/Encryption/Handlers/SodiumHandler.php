@@ -35,33 +35,30 @@
  * @since	Version 3.0.0
  * @filesource
  */
-class OpenSSLHandler extends BaseHandler
+class SodiumHandler extends BaseHandler
 {
-
-	/**
-	 * HMAC digest to use
-	 */
-	protected $digest = 'SHA512';
-
-	/**
-	 * Cipher to use
-	 */
-	protected $cipher = 'AES-256-CTR';
-
 	// --------------------------------------------------------------------
 
 	/**
-	 * Initialize OpenSSL, remembering parameters
+	 * Initialize Sodium.
+	 * 
+	 * Cipher is ignored, and only GCM mode is available.
 	 *
-	 * @param  array $params Configuration parameters
-	 *
-	 * @throws \CodeIgniter\Encryption\EncryptionException
+	 * @param	array	$params	Configuration parameters
+	 * @return	void
 	 */
 	public function __construct($params = [])
 	{
 		parent::__construct($params);
 
-		$this->logger->info('OpenSSL handler initialized with cipher ' . $this->cipher . '.');
+		if (function_exists('sodium_init') && sodium_init())
+		{
+			$this->logger->info('Encryption: Sodium initialized.');
+		}
+		else
+		{
+			$this->logger->error('Encryption: Unable to initialize Sodium.');
+		}
 	}
 
 	/**
@@ -81,25 +78,23 @@ class OpenSSLHandler extends BaseHandler
 			else
 				$this->key = $params;
 		if (empty($this->key))
-			throw new EncryptionException("Encrypter needs a starter key.");
+			throw new \CodeIgniter\Encryption\EncryptionException("Sodium handler configuration missing key.");
 
 		// derive a secret key			
 		$secret = strcmp(phpversion(), '7.1.2') >= 0 ?
 				\hash_hkdf($this->digest, $this->key) :
 				\CodeIgniter\Encryption\Encryption::hkdf($this->key, $this->digest);
 
-		// basic encryption	
-		$iv = ($iv_size = \openssl_cipher_iv_length($this->cipher)) ? \openssl_random_pseudo_bytes($iv_size) : null;
+		$nonce = \Sodium\randombytes_buf(\Sodium\CRYPTO_SECRETBOX_NONCEBYTES);
 
-		$data = \openssl_encrypt($data, $this->cipher, $this->secret, OPENSSL_RAW_DATA, $iv);
+		$ciphertext = \Sodium\crypto_secretbox($data, $nonce, $secret);
 
-		if ($data === false)
+		if ($ciphertext === false)
+		{
 			return false;
+		}
 
-		$result = $iv . $data;
-
-		$hmacKey = \hash_hmac($this->digest, $result, $this->secret, true);
-		$result = $hmacKey . $result;
+		$result = $nonce . $ciphertext;
 
 		return $result;
 	}
@@ -123,32 +118,25 @@ class OpenSSLHandler extends BaseHandler
 			else
 				$this->key = $params;
 		if (empty($this->key))
-			throw new EncryptionException("Decrypter needs a starter key.");
+			throw new \CodeIgniter\Encryption\EncryptionException("Sodium handler configuration missing key.");
 
 		// derive a secret key			
 		$secret = strcmp(phpversion(), '7.1.2') >= 0 ?
 				\hash_hkdf($this->digest, $this->key) :
 				\CodeIgniter\Encryption\Encryption::hkdf($this->key, $this->digest);
 
+		// split the data into nonce & ciphertext
+		$nonce = self::substr($data, 0, \Sodium\CRYPTO_SECRETBOX_NONCEBYTES);
+		$data = self::substr($data, \Sodium\CRYPTO_SECRETBOX_NONCEBYTES);
 
-		$hmacLength = self::substr($this->digest, 3) / 8;
-		$hmacKey = self::substr($data, 0, $hmacLength);
-		$data = self::substr($data, $hmacLength);
-		$hmacCalc = \hash_hmac($this->digest, $data, $this->secret, true);
-		if ( ! hash_equals($hmacKey, $hmacCalc))
-			throw new \CodeIgniter\Encryption\EncryptionException("Message authentication failed.");
+		$plaintext = \Sodium\crypto_secretbox_open($data, $nonce, $secret);
 
-		if ($iv_size = \openssl_cipher_iv_length($this->cipher))
+		if ($plaintext === false)
 		{
-			$iv = self::substr($data, 0, $iv_size);
-			$data = self::substr($data, $iv_size);
-		}
-		else
-		{
-			$iv = null;
+			throw new EncryptionException("Bad ciphertext");
 		}
 
-		return \openssl_decrypt($data, $this->cipher, $this->secret, OPENSSL_RAW_DATA, $iv);
+		return $plaintext;
 	}
 
 }

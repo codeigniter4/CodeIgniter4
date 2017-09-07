@@ -353,4 +353,6 @@ class LoggerTest extends \CIUnitTestCase
 		$this->assertEquals(1, count($logs));
 		$this->assertEquals($expected, $logs[0]);
 	}
+	
+
 }

@@ -3,12 +3,15 @@
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Encryption\MockEncryption;
 
-class OpenSSLHandlerTest extends CIUnitTestCase
+class SodiumHandlerTest extends CIUnitTestCase
 {
 
 	public function setUp()
 	{
+		if ( ! extension_loaded('libsodium'))
+			$this->markTestSkipped('libsodium extension not available.');
 		$this->encryption = new \CodeIgniter\Encryption\Encryption();
+		$this->encrypter = $this->encryption->initialize(['driver' => 'Sodium', 'key' => 'Something other than an empty string']);
 	}
 
 	// --------------------------------------------------------------------
@@ -18,13 +21,6 @@ class OpenSSLHandlerTest extends CIUnitTestCase
 	 */
 	public function testSanity()
 	{
-		$params = [
-			'driver' => 'OpenSSL',
-			'key'	 => 'Something other than an empty string'
-		];
-		$this->encrypter = $this->encryption->initialize($params);
-
-		$this->assertEquals('AES-256-CTR', $this->encrypter->cipher);
 		$this->assertEquals('Something other than an empty string', $this->encrypter->key);
 	}
 
@@ -39,11 +35,11 @@ class OpenSSLHandlerTest extends CIUnitTestCase
 	public function testSimple()
 	{
 		$params = [
-			'driver' => 'OpenSSL',
+			'driver' => 'Sodium',
 			'key'	 => '\xd0\xc9\x08\xc4\xde\x52\x12\x6e\xf8\xcc\xdb\x03\xea\xa0\x3a\x5c'
 		];
 
-		// Default state (AES-256/Rijndael-256 in CTR mode)
+		// Default state 
 		$encrypter = $this->encryption->initialize($params);
 
 		// Was the key properly set?

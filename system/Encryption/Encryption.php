@@ -43,7 +43,7 @@ use Psr\Log\LoggerAwareTrait;
  */
 class EncryptionException extends \Exception
 {
-
+	
 }
 
 /**
@@ -68,7 +68,7 @@ class Encryption
 	/**
 	 * Our remembered configuration
 	 */
-	protected $config = [];
+	protected $config = null;
 
 	/**
 	 * Logger instance to record error messages and warnings.
@@ -80,13 +80,15 @@ class Encryption
 	 * Our default configuration
 	 */
 	protected $default = [
-		'driver'	 => 'OpenSSL', // The PHP extension we plan to use
-		'key'		 => '', // no starting key material
-		'cipher'	 => 'AES-256-CBC', // Encryption cipher
-		'digest'	 => 'SHA512', // HMAC digest algorithm to use
-		'encoding'	 => 'base64', // Base64 encoding
+		'driver' => 'OpenSSL', // The PHP extension we plan to use
+		'key'	 => '', // no starting key material
 	];
-	protected $driver, $key, $cipher, $digest, $base64;
+	protected $driver, $key;
+
+	/**
+	 * HMAC digest to use
+	 */
+	protected $digest = 'SHA512';
 
 	/**
 	 * Map of drivers to handler classes, in preference order
@@ -95,26 +97,8 @@ class Encryption
 	 */
 	protected $drivers = [
 		'OpenSSL',
+		'Sodium'
 	];
-
-	/**
-	 * List of supported HMAC algorithms
-	 *
-	 * name => digest size pairs
-	 *
-	 * @var	array
-	 */
-	protected $digests = [
-		'SHA224' => 28,
-		'SHA256' => 32,
-		'SHA384' => 48,
-		'SHA512' => 64
-	];
-
-	/**
-	 * List of acceptable encodings
-	 */
-	protected $encodings = ['base64', 'hex'];
 
 	// --------------------------------------------------------------------
 
@@ -126,10 +110,13 @@ class Encryption
 	 *
 	 * @throws \CodeIgniter\Encryption\EncryptionException
 	 */
-	public function __construct($params = [])
+	public function __construct($params = null)
 	{
 		$this->logger = \Config\Services::logger(true);
 		$this->config = array_merge($this->default, (array) new \Config\Encryption());
+
+		if (is_string($params))
+			$params = ['driver' => $params];
 
 		$params = $this->properParams($params);
 
@@ -139,7 +126,8 @@ class Encryption
 
 		// determine what is installed
 		$this->handlers = [
-			'OpenSSL' => extension_loaded('openssl'),
+			'OpenSSL'	 => extension_loaded('openssl'),
+			'Sodium'	 => extension_loaded('libsodium'),
 		];
 
 		if ( ! in_array(true, $this->handlers))
@@ -172,19 +160,12 @@ class Encryption
 		if ( ! $this->handlers[$params['driver']])
 			throw new EncryptionException("Driver '" . $params['driver'] . "' is not available.");
 
-		// Check for a bad digest
-		if ( ! empty($params['digest']))
-			if ( ! isset($this->digests[$params['digest']]))
-				throw new EncryptionException("Unknown digest '" . $params['digest'] . "' specified.");
-
-		// Check for valid encoding
-		if ( ! empty($param['encoding']))
-			if ( ! in_array($params['encoding'], $this->encodings))
-				throw new EncryptionException("Unknown encoding '" . $params['encoding'] . "' specified.");
-
 		// Derive a secret key for the encrypter
-		$hmacKey = strcmp(phpversion(), '7.1.2') >= 0 ? \hash_hkdf($this->digest, $params['key']) : $this->hkdf($params['key'], $this->digest);
-		$params['secret'] = bin2hex($hmacKey);
+		if (isset($params['key']))
+		{
+			$hmacKey = strcmp(phpversion(), '7.1.2') >= 0 ? \hash_hkdf($this->digest, $params['key']) : self::hkdf($params['key'], $this->digest);
+			$params['secret'] = bin2hex($hmacKey);
+		}
 
 		$handlerName = 'CodeIgniter\\Encryption\\Handlers\\' . $this->driver . 'Handler';
 		$this->encrypter = new $handlerName($params);
@@ -207,12 +188,6 @@ class Encryption
 		// treat the paramater as a Config object?
 		if (is_object($params))
 			$params = (array) $params;
-
-		// Capitalize cipher & digest
-		if (isset($params['cipher']))
-			$params['cipher'] = strtoupper($params['cipher']);
-		if (isset($params['digest']))
-			$params['digest'] = strtoupper($params['digest']);
 
 		// override base config with passed parameters
 		$params = array_merge($this->config, $params);
@@ -239,7 +214,7 @@ class Encryption
 	 */
 	public static function createKey($length = 32)
 	{
-		return \openssl_random_pseudo_bytes($length);
+		return random_bytes($length);
 	}
 
 	// --------------------------------------------------------------------
@@ -252,7 +227,7 @@ class Encryption
 	 */
 	public function __get($key)
 	{
-		if (in_array($key, ['config', 'cipher', 'key', 'driver', 'drivers', 'digest', 'digests', 'default', 'encoding'], true))
+		if (in_array($key, ['config', 'key', 'driver', 'drivers', 'default'], true))
 		{
 			return $this->{$key};
 		}
@@ -290,23 +265,9 @@ class Encryption
 	 *
 	 * @return    string    A pseudo-random key
 	 */
-	public function hkdf($key, $digest = 'sha512', $salt = null, $length = null, $info = '')
+	public static function hkdf($key, $digest = 'sha512', $salt = null, $length = 64, $info = '')
 	{
-		if ( ! isset($this->digests[$digest]))
-		{
-			return false;
-		}
-
-		if (empty($length) OR ! is_int($length))
-		{
-			$length = $this->digests[$digest];
-		}
-		elseif ($length > (255 * $this->digests[$digest]))
-		{
-			return false;
-		}
-
-		self::strlen($salt) OR $salt = str_repeat("\0", $this->digests[$digest]);
+		self::strlen($salt) OR $salt = str_repeat("\0", $length);
 
 		$prk = hash_hmac($digest, $key, $salt, true);
 		$key = '';
