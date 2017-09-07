@@ -161,7 +161,7 @@ class Database extends BaseCollector
 			'IN', 'LIKE', 'NOT&nbsp;LIKE', 'COUNT', 'MAX', 'MIN', 'ON', 'AS', 'AVG', 'SUM', '(', ')'
 		];
 
-		$parser = \Config\Services::parser(BASEPATH . 'Debug/Toolbar/Views/');
+		$parser = \Config\Services::parser(BASEPATH . 'Debug/Toolbar/Views/', null,false);
 
 		$data = [
 			'queries' => []

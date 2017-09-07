@@ -77,7 +77,7 @@ class Logs extends BaseCollector
 	 */
 	public function display(): string
 	{
-		$parser = \Config\Services::parser(BASEPATH . 'Debug/Toolbar/Views/');
+		$parser = \Config\Services::parser(BASEPATH . 'Debug/Toolbar/Views/', null, false);
 
 		$logger = Services::logger(true);
 		$logs = $logger->logCache;

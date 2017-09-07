@@ -45,7 +45,7 @@ Placeholders
 
 A typical route might look something like this::
 
-    $routes->add('product/:num', 'App\Catalog::productLookup');
+    $routes->add('product/(:num)', 'App\Catalog::productLookup');
 
 In a route, the first parameter contains the URI to be matched, while the second parameter
 contains the destination it should be re-routed to. In the above example, if the literal word
