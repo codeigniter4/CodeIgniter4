@@ -78,9 +78,9 @@ class Categories extends Controllers\AdminController {
                 'button' => 'Edit',
                 'controllerPath' => $this->controllerPath,
                 'action' => base_url($this->controllerPath . '/update_action'),
-                'id' => set_value('id', $category['id']),
-                'name' => set_value('name', $category['name']),
-                'date' => set_value('date', $category['date']),
+                'id' => $category['id'],
+                'name' => $category['name'],
+                'date' => $category['date'],
             ];
             return $this->template_output(view('categories/categories_form', $data));
         } else {
@@ -94,9 +94,9 @@ class Categories extends Controllers\AdminController {
             'button' => 'Create',
             'controllerPath' => $this->controllerPath,
             'action' => base_url($this->controllerPath . '/create_action'),
-            'id' => set_value('id'),
-            'name' => set_value('name'),
-            'date' => set_value('date'),
+            'id' => '',
+            'name' => '',
+            'date' => '',
         ];
 
         return $this->template_output(view('categories/categories_form', $data));
@@ -106,8 +106,7 @@ class Categories extends Controllers\AdminController {
         $model = new \CategoriesModel();
 
         if ($this->validation->withRequest($this->request)->run() === FALSE) {
-            $errors = $this->validation->getErrors();
-            $this->session->setFlashdata('errors', $errors);
+            $this->session->setFlashdata('errors', $this->validation->getErrors());
             return $this->create();
         } else {
             $data = [
@@ -124,7 +123,7 @@ class Categories extends Controllers\AdminController {
     public function update_action() {
         $id = $this->request->getPost('id');
         if ($this->validation->withRequest($this->request)->run() === FALSE) {
-            $errors = $this->validation->getErrors();
+            $this->session->setFlashdata('errors', $this->validation->getErrors());
             return $this->edit($id);
         } else {
             $model = new \CategoriesModel();
@@ -144,9 +143,9 @@ class Categories extends Controllers\AdminController {
         $category = $model->find($id);
         if ($category) {
             $data = ['controllerPath' => $this->controllerPath,
-                'id' => set_value('id', $category['id']),
-                'name' => set_value('name', $category['name']),
-                'date' => set_value('date', $category['date']),
+                'id' => $category['id'],
+                'name' => $category['name'],
+                'date' => $category['date'],
             ];
             return $this->template_output(view('categories/categories_read', $data));
         } else {
