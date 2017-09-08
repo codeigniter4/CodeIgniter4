@@ -299,5 +299,9 @@ EOF;
 ;
 	}
 
+	public function parser()
+	{
+		$this->parser = Services::parser();
+	}
 
 }

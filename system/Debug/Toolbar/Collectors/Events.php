@@ -35,11 +35,13 @@
  * @since        Version 4.0.0
  * @filesource
  */
+use CodeIgniter\Services;
+use CodeIgniter\View\RendererInterface;
 
 /**
- * Files collector
+ * Views collector
  */
-class Files extends BaseCollector
+class Events extends BaseCollector
 {
 
 	/**
@@ -59,83 +61,111 @@ class Files extends BaseCollector
 	protected $hasTabContent = true;
 
 	/**
+	 * Whether this collector has data that
+	 * should be shown in the Vars tab.
+	 *
+	 * @var bool
+	 */
+	protected $hasVarData = false;
+
+	/**
 	 * The 'title' of this Collector.
 	 * Used to name things in the toolbar HTML.
 	 *
 	 * @var string
 	 */
-	protected $title = 'Files';
+	protected $title = 'Events';
+
+	/**
+	 * Instance of the Renderer service
+	 * @var RendererInterface
+	 */
+	protected $viewer;
 
 	//--------------------------------------------------------------------
 
 	/**
-	 * Returns any information that should be shown next to the title.
-	 *
-	 * @return string
+	 * Constructor.
 	 */
-	public function getTitleDetails(): string
+	public function __construct()
 	{
-		return '( ' . (int) count(get_included_files()) . ' )';
+		$this->viewer = Services::renderer(null, true);
 	}
 
 	//--------------------------------------------------------------------
 
 	/**
-	 * Builds and returns the HTML needed to fill a tab to display
-	 * within the Debug Bar
+	 * Child classes should implement this to return the timeline data
+	 * formatted for correct usage.
 	 *
-	 * @return string
+	 * @return mixed
+	 */
+	protected function formatTimelineData(): array
+	{
+		$data = [];
+
+		$rows = $this->viewer->getPerformanceData();
+
+		foreach ($rows as $name => $info)
+		{
+			$data[] = [
+				'name'		 => 'View: ' . $info['view'],
+				'component'	 => 'Views',
+				'start'		 => $info['start'],
+				'duration'	 => $info['end'] - $info['start']
+			];
+		}
+
+		return $data;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns the HTML to fill the Events tab in the toolbar.
+	 *
+	 * @return string The data formatted for the toolbar.
 	 */
 	public function display(): string
 	{
-		$parser = \Config\Services::parser(BASEPATH . 'Debug/Toolbar/Views/', null, false);
+		$parser = \Config\Services::parser(BASEPATH . 'Debug/Toolbar/Views/', null,false);
 
-		$rawFiles = get_included_files();
-		$coreFiles = [];
-		$userFiles = [];
+		$data = [
+			'events' => []
+		];
 
-		foreach ($rawFiles as $file)
+		foreach (\CodeIgniter\Events\Events::getPerformanceLogs() as $row)
 		{
-			$path = $this->cleanPath($file);
+			$key = $row['event'];
 
-			if (strpos($path, 'BASEPATH') !== false)
+			if (! array_key_exists($key, $data['events']))
 			{
-				$coreFiles[] = [
-					'name'	 => basename($file),
-					'path'	 => $path
+				$data['events'][$key] = [
+					'event' => $key,
+					'duration' => number_format(($row['end']-$row['start']) * 1000, 2),
+					'count' => 1,
 				];
+
+				continue;
 			}
-			else
-			{
-				$userFiles[] = [
-					'name'	 => basename($file),
-					'path'	 => $path
-				];
-			}
+
+			$data['events'][$key]['duration'] += number_format(($row['end']-$row['start']) * 1000, 2);
+			$data['events'][$key]['count']++;
 		}
 
-		sort($userFiles);
-		sort($coreFiles);
+		$output = $parser->setData($data)
+		                 ->render('_events.tpl');
 
-		return $parser->setData([
-							'coreFiles'	 => $coreFiles,
-							'userFiles'	 => $userFiles,
-						])
-						->render('_files.tpl');
+		return $output;
 	}
 
 	//--------------------------------------------------------------------
 
 	/**
-	 * Displays the number of included files as a badge in the tab button.
-	 *
-	 * @return int
+	 * Gets the "badge" value for the button.
 	 */
 	public function getBadgeValue()
 	{
-		return count(get_included_files());
+		return count(\CodeIgniter\Events\Events::getPerformanceLogs());
 	}
-
-	//--------------------------------------------------------------------
-
 }
