@@ -246,14 +246,14 @@
 
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <?php if (session('message')) { ?>
+                                    <?php if (session('message')) : ?>
                                         <div class="alert alert-success">
                                             <button type="button" class="close" data-dismiss="alert">
                                                 <i class="fa fa-times"></i>
                                             </button>
                                             <i class="fa fa-check-sign"></i> <?= session('message'); ?>
                                         </div>
-                                    <?php } ?>
+                                    <?php endif; ?>
 
                                     <?php
                                     if (session('errors')) :
@@ -264,9 +264,9 @@
                                                     <i class="fa fa-times"></i>
                                                 </button>   
                                                 <i class="fa fa-ban-circle"></i> 
-                                                <?= $error; ?>
+                                            <?= $error; ?>
                                             </div>
-                                            <?php
+                                        <?php
                                         endforeach;
                                     endif;
                                     ?>

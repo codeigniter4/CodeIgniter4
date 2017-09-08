@@ -107,7 +107,7 @@ class Categories extends Controllers\AdminController {
 
         if ($this->validation->withRequest($this->request)->run() === FALSE) {
             $this->session->setFlashdata('errors', $this->validation->getErrors());
-            return $this->create();
+            redirect_with_input('create');
         } else {
             $data = [
                 'name' => $this->request->getPost('name'),
@@ -124,7 +124,7 @@ class Categories extends Controllers\AdminController {
         $id = $this->request->getPost('id');
         if ($this->validation->withRequest($this->request)->run() === FALSE) {
             $this->session->setFlashdata('errors', $this->validation->getErrors());
-            return $this->edit($id);
+            redirect_with_input('edit/' .$id);
         } else {
             $model = new \CategoriesModel();
             $category = $model->find($id);
