@@ -19,6 +19,11 @@ class AdminController extends Controller {
     }
 
     function template_output($content) {
+        helper('url');
+        $uri = current_url(true);
+        $segments = $uri->getSegments();
+        $data['segments'] = $segments;
+                
         // Load the base template with output content available as $content
         $data['content'] = &$content;
         return view('base_dash', $data);

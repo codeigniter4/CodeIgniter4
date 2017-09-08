@@ -1,9 +1,4 @@
 <!DOCTYPE html>
-<?php
-helper('url');
-$uri = current_url(true);
-$segments = $uri->getSegments();
-?>
 <html lang="en">
     <head>
         <meta charset="utf-8"/>
@@ -102,7 +97,7 @@ $segments = $uri->getSegments();
 
         </script>
     </head>
-    
+
     <body>
         <section class="vbox">
             <header class="header bg-black navbar navbar-inverse pull-in">
@@ -251,26 +246,33 @@ $segments = $uri->getSegments();
 
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <?php if (session('success')) { ?>
+                                    <?php if (session('message')) { ?>
                                         <div class="alert alert-success">
                                             <button type="button" class="close" data-dismiss="alert">
                                                 <i class="fa fa-times"></i>
                                             </button>
-                                            <i class="fa fa-check-sign"></i> <?php echo $this->session->flashdata('success'); ?>
+                                            <i class="fa fa-check-sign"></i> <?= session('message'); ?>
                                         </div>
                                     <?php } ?>
 
-                                    <?php if (session('error')) { ?>
-                                        <div class="alert alert-danger">
-                                            <button type="button" class="close" data-dismiss="alert">
-                                                <i class="fa fa-times"></i>
-                                            </button>
-                                            <i class="fa fa-ban-circle"></i> <?php echo $this->session->flashdata('error'); ?>
-                                        </div>
-                                    <?php } ?>
+                                    <?php
+                                    if (session('errors')) :
+                                        foreach (session('errors') as $error) :
+                                            ?>
+                                            <div class="alert alert-danger">
+                                                <button type="button" class="close" data-dismiss="alert">
+                                                    <i class="fa fa-times"></i>
+                                                </button>   
+                                                <i class="fa fa-ban-circle"></i> 
+                                                <?= $error; ?>
+                                            </div>
+                                            <?php
+                                        endforeach;
+                                    endif;
+                                    ?>
                                 </div>
                             </div>
-                            <?php echo $content; ?>
+<?php echo $content; ?>
                             <div class="push"></div>
                         </div>
                         <footer class="footer bg-dark" style=""><p>This is a footer</p></footer>

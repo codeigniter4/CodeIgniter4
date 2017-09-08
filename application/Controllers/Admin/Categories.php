@@ -1,19 +1,21 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Controllers\Admin;
 
 use App\Controllers;
 
-class Categories extends AdminController {
+class Categories extends Controllers\AdminController {
 
     protected $helpers = ['url', 'form', 'filesystem', 'html'];
     protected $session;
     protected $validation;
     protected $parser;
+    protected $controllerPath = 'admin/categories';
 
     public function __construct(...$params) {
         parent::__construct(...$params);
         $this->session = \Config\Services::session();
+        $this->session->start();
         $this->validation = \Config\Services::validation();
 
         $this->validation->setRules([
@@ -38,9 +40,10 @@ class Categories extends AdminController {
         $model = new \CategoriesModel();
 
         $data = [
+            'controllerPath' => $this->controllerPath,
             'categories' => $model->paginate(10),
             'total_rows' => $model->total_rows(),
-            'pager' => $model->pager
+            'pager' => $model->pager,
         ];
         return $this->template_output(view('categories/categories_list', $data));
     }
@@ -51,9 +54,9 @@ class Categories extends AdminController {
         $table_name = 'users';
         $fields = $db->getFieldNames($table_name);
 
-        $fields_array = array();
+        $fields_array = [];
         foreach ($fields as $field) {
-            $fields_array[] = array('field' => $field);
+            $fields_array[] = ['field' => $field];
         }
 
         $data = [
@@ -71,28 +74,31 @@ class Categories extends AdminController {
         $category = $model->find($id);
 
         if ($category) {
-            $data = array(
+            $data = [
                 'button' => 'Edit',
-                'action' => site_url('categories/update_action'),
+                'controllerPath' => $this->controllerPath,
+                'action' => base_url($this->controllerPath . '/update_action'),
                 'id' => set_value('id', $category['id']),
                 'name' => set_value('name', $category['name']),
                 'date' => set_value('date', $category['date']),
-            );
+            ];
             return $this->template_output(view('categories/categories_form', $data));
         } else {
             $this->session->setFlashdata('message', 'Record Not Found');
-            redirect(site_url('categories'));
+            redirect(base_url($this->controllerPath));
         }
     }
 
     public function create() {
-        $data = array(
+        $data = [
             'button' => 'Create',
-            'action' => site_url('categories/create_action'),
+            'controllerPath' => $this->controllerPath,
+            'action' => base_url($this->controllerPath . '/create_action'),
             'id' => set_value('id'),
             'name' => set_value('name'),
             'date' => set_value('date'),
-        );
+        ];
+
         return $this->template_output(view('categories/categories_form', $data));
     }
 
@@ -101,24 +107,25 @@ class Categories extends AdminController {
 
         if ($this->validation->withRequest($this->request)->run() === FALSE) {
             $errors = $this->validation->getErrors();
-            print_r($errors);
-            $this->create();
+            $this->session->setFlashdata('errors', $errors);
+            return $this->create();
         } else {
-            $data = array(
+            $data = [
                 'name' => $this->request->getPost('name'),
                 'date' => $this->request->getPost('date'),
-            );
+            ];
 
             $model->insert($data);
             $this->session->setFlashdata('message', 'Create Record Success');
-            redirect(site_url('categories'));
+            redirect(base_url($this->controllerPath));
         }
     }
 
     public function update_action() {
         $id = $this->request->getPost('id');
         if ($this->validation->withRequest($this->request)->run() === FALSE) {
-            $this->edit($id);
+            $errors = $this->validation->getErrors();
+            return $this->edit($id);
         } else {
             $model = new \CategoriesModel();
             $category = $model->find($id);
@@ -127,7 +134,7 @@ class Categories extends AdminController {
                 $category['date'] = $this->request->getPost('date');
                 $model->update($id, $category);
                 $this->session->setFlashdata('message', 'Update Record Success');
-                redirect(site_url('categories'));
+                redirect(base_url($this->controllerPath));
             }
         }
     }
@@ -136,10 +143,15 @@ class Categories extends AdminController {
         $model = new \CategoriesModel();
         $category = $model->find($id);
         if ($category) {
-            return $this->template_output(view('categories/categories_read', $category));            
+            $data = ['controllerPath' => $this->controllerPath,
+                'id' => set_value('id', $category['id']),
+                'name' => set_value('name', $category['name']),
+                'date' => set_value('date', $category['date']),
+            ];
+            return $this->template_output(view('categories/categories_read', $data));
         } else {
             $this->session->setFlashdata('message', 'Record Not Found');
-            redirect(site_url('categories'));
+            redirect(base_url($this->controllerPath));
         }
     }
 
@@ -150,10 +162,10 @@ class Categories extends AdminController {
         if ($category) {
             $model->delete($id);
             $this->session->setFlashdata('message', 'Delete Record Success');
-            redirect(site_url('categories'));
+            redirect(base_url($this->controllerPath));
         } else {
             $this->session->setFlashdata('message', 'Record Not Found');
-            redirect(site_url('categories'));
+            redirect(base_url($this->controllerPath));
         }
     }
 
