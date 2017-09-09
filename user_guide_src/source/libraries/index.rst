@@ -12,7 +12,6 @@ Library Reference
     content_negotiation
     curlrequest
     images
-    encryption
     files
     incomingrequest
     localization
