@@ -60,11 +60,12 @@ class View extends BaseConfig
 		'upper'			 => '\CodeIgniter\View\Filters::upper',
 	];
 	protected $corePlugins = [
-		'current_url'	 => '\CodeIgniter\View\Plugins::currentURL',
-		'previous_url'	 => '\CodeIgniter\View\Plugins::previousURL',
+		'current_url'	         => '\CodeIgniter\View\Plugins::currentURL',
+		'previous_url'	         => '\CodeIgniter\View\Plugins::previousURL',
 		'mailto'		 => '\CodeIgniter\View\Plugins::mailto',
-		'safe_mailto'	 => '\CodeIgniter\View\Plugins::safeMailto',
+		'safe_mailto'	 	 => '\CodeIgniter\View\Plugins::safeMailto',
 		'lang'			 => '\CodeIgniter\View\Plugins::lang',
+		'validation_errors'	 => '\CodeIgniter\View\Plugins::validationErrors',
 	];
 
 	public function __construct()
