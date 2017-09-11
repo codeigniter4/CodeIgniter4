@@ -459,15 +459,16 @@ Provided Plugins
 
 The following plugins are available when using the parser:
 
-==================== ========================== =================================================================== =================================
-Plugin               Arguments                  Description                                                         Example
-==================== ========================== =================================================================== =================================
-current_url                                     Alias for the current_url helper function.                          {+ current_url +}
-previous_url                                    Alias for the previous_url helper function.                         {+ previous_url +}
-mailto               email, title, attributes   Alias for the mailto helper function.                               {+ mailto email=foo@example.com title="Stranger Things" +}
-safe_mailto          email, title, attributes   Alias for the safe_mailto helper function.                          {+ safe_mailto email=foo@example.com title="Stranger Things" +}
-lang                 language string            Alias for the lang helper function.                                 {+ lang number.terabyteAbbr +}
-==================== ========================== =================================================================== =================================
+==================== ========================== ================================================================================== ================================================================
+Plugin               Arguments                  Description                                                           			   Example
+==================== ========================== ================================================================================== ================================================================
+current_url                                     Alias for the current_url helper function.                            			   {+ current_url +}
+previous_url                                    Alias for the previous_url helper function.                           			   {+ previous_url +}
+mailto               email, title, attributes   Alias for the mailto helper function.                                 			   {+ mailto email=foo@example.com title="Stranger Things" +}
+safe_mailto          email, title, attributes   Alias for the safe_mailto helper function.                            			   {+ safe_mailto email=foo@example.com title="Stranger Things" +}
+lang                 language string            Alias for the lang helper function.                                    			   {+ lang number.terabyteAbbr +}
+validation_errors    fieldname(optional)        Returns either error string for the field (if specified) or all validation errors. {+ validation_errors +} , {+ validation_errors field="email" +} 
+==================== ========================== ================================================================================== ================================================================
 
 
 Registering a Plugin

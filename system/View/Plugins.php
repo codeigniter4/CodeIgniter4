@@ -135,10 +135,9 @@ class Plugins
 		{
 			return $validator->listErrors();
 		}
-		else
-		{
-			return $validator->showError($params['field']);
-		}
+		
+		return $validator->showError($params['field']);
+		
 
 		
 	}
