@@ -95,6 +95,7 @@ There are six available processing methods:
 
 -  $image->crop()
 -  $image->fit()
+-  $image->flatten()
 -  $image->flip()
 -  $image->resize()
 -  $image->rotate()
@@ -177,6 +178,34 @@ This provides a much simpler way to crop that will always maintain the aspect ra
     Services::image('imagick')
         ->withFile('/path/to/image/mypic.jpg')
         ->fit(100, 150, 'left')
+        ->save('path/to/new/image.jpg');
+
+Flattening Images
+-----------------
+
+The ``flatten()`` method aims to add a background color behind transparent images (PNG) and convert RGBA pixels to RGB pixels
+
+
+- Specify a background color when converting from transparent images to jpgs.
+
+::
+
+    flatten(int $red = 255, int $green = 255, int $blue = 255)
+
+- **$red** is the red value of the background.
+- **$green** is the green value of the background.
+- **$blue** is the blue value of the background.
+
+::
+
+    Services::image('imagick')
+        ->withFile('/path/to/image/mypic.png')
+        ->flatten()
+        ->save('path/to/new/image.jpg');
+
+    Services::image('imagick')
+        ->withFile('/path/to/image/mypic.png')
+        ->flatten(25,25,112)
         ->save('path/to/new/image.jpg');
 
 Flipping Images
