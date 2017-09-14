@@ -64,7 +64,6 @@ class ParserPluginTest extends \CIUnitTestCase
 		
 		$template = '{+ validation_errors field=email +}';
 
-
 		$this->assertEquals($this->validator->showError('email'), $this->parser->renderString($template));
 	}
 
@@ -74,7 +73,6 @@ class ParserPluginTest extends \CIUnitTestCase
 		$this->validator->setError("email","Invalid email address");
 		$this->validator->setError("username","User name must be unique");
 		$template = '{+ validation_errors +}';
-
 
 		$this->assertEquals($this->validator->listErrors(), $this->parser->renderString($template));
 	}
