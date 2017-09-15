@@ -1,0 +1,102 @@
+#!/usr/bin/env php
+<?php
+
+include "CLI.php";
+
+use Application\Controllers\Generators\CLI as CLI;
+
+$status = 0;
+$extra = '';
+
+/**
+ * Relative location to the application's
+ * index.php from this file.
+ */
+$fcpath = 'index.php';
+$apppath = '../../application/';
+
+/**
+ * Refuse to run oil when called from php-cgi !
+ */
+if (substr(php_sapi_name(), 0, 3) == 'cgi')
+{
+    die("This is not supported when running php-cgi. Sprint needs php-cli to function!\n\n");
+}
+
+/**
+ * Set error reporting and display errors settings.  You will want to change these when in production.
+ */
+error_reporting(-1);
+ini_set('display_errors', 1);
+
+
+
+//--------------------------------------------------------------------
+// Do the Things
+//--------------------------------------------------------------------
+
+// Default to a simple passthru of the basic command, less arguments.
+$command = CLI::cli_string();
+
+// Check all arguments that we're interested in here
+$options = CLI::getOptions();
+
+//--------------------------------------------------------------------
+// Help Command
+//--------------------------------------------------------------------
+// If -h or --help or -help are present, then we'll return the command's
+// Long description, if available.
+//
+if ( array_key_exists('h', $options) || array_key_exists('help', $options)) {
+    $command = CLI::segment(1) . ' longDescribeMethod ' . CLI::segment(2);
+}
+
+//--------------------------------------------------------------------
+// Show Version
+//--------------------------------------------------------------------
+// If -v or --version is present, then we'll return Sprint's current
+// version.
+//
+if ( array_key_exists('v', $options) || array_key_exists('version', $options) )
+{
+    define('BASEPATH', true);
+
+    require $apppath .'config/constants.php';
+
+    $output = '';
+
+    if (defined('SPRINT_VERSION'))
+    {
+        $output .= 'Running Sprint v'. CLI::color(SPRINT_VERSION, 'yellow');
+    }
+
+    if (defined('BONFIRE_VERSION'))
+    {
+        $output .= ' and Bonfire v'. CLI::color(BONFIRE_VERSION, 'yellow');
+    }
+
+    CLI::write($output);
+
+    exit(0);
+}
+
+//--------------------------------------------------------------------
+// Standard Method call to CodeIgniter
+//--------------------------------------------------------------------
+//
+
+
+if (! $command)
+{
+	CLI::new_line();
+	CLI::write('You must pass a valid command to sprint.', 'yellow');
+	CLI::new_line();
+}
+else {
+	$options = CLI::optionString();
+
+        echo "$fcpath || $command || $options";
+	passthru( "php {$fcpath} {$command} {$options}", $status );
+}
+
+exit($status);
