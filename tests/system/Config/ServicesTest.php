@@ -44,22 +44,6 @@ class ServicesTest extends \CIUnitTestCase
 		$this->assertInstanceOf(\CodeIgniter\Debug\Iterator::class, $actual);
 	}
 
-	public function testNewEncrypter()
-	{
-		$config = new \Config\Encryption();
-		$config->key = 'This is for testing';
-		$actual = Services::encrypter($config);
-		$this->assertInstanceOf(\CodeIgniter\Encryption\EncrypterInterface::class, $actual);
-	}
-
-	public function testNewSharedEncrypter()
-	{
-		$config = new \Config\Encryption();
-		$config->key = 'This is for testing';
-		$actual = Services::encrypter($config, true); // not that this makes sense
-		$this->assertInstanceOf(\CodeIgniter\Encryption\EncrypterInterface::class, $actual);
-	}
-
 	public function testNewImage()
 	{
 		$actual = Services::image();

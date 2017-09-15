@@ -346,7 +346,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 			return $str;
 		}
 
-		if (is_null($this->connID))
+		if (! $this->connID)
 		{
 			$this->initialize();
 		}

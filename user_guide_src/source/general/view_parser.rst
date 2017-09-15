@@ -414,7 +414,7 @@ round                places, type               Rounds a number to the specified
 strip_tags           allowed chars              Wraps PHP **strip_tags**. Can accept a string of allowed tags.       { v|strip_tags(<br>) }
 title                                           Displays a "title case" version of the string, with all lowercase,   { v|title }
                                                 and each word capitalized.
-upper                                           Displays the string in all lowercase.                                { v|upper }
+upper                                           Displays the string in all uppercase.                                { v|upper }
 ==================== ========================== =================================================================== =================================
 
 Custom Filters
