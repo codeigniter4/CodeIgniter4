@@ -1,7 +1,7 @@
 <h2><?= $plural_name ?></h2>
 
 
-<?= $uikit->buttonLink("New {$single_name}", "{$lower_name}/create", 'primary') ?>
+<?= "New {$single_name}". "{$lower_name}/create". 'primary' ?>
 
 <hr/>
 
@@ -35,6 +35,6 @@
 
 @php else : ?>
 
-    <?= $uikit->notice('Unable to find any records.', 'warning'); ?>
+    <?= 'Unable to find any records.'. 'warning' ?>
 
 @php endif; ?>

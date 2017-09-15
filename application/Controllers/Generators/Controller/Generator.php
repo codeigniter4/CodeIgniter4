@@ -7,12 +7,7 @@ use App\Controllers;
 class Generator extends Controllers\Generators\BaseGenerator {
 
     protected $options = [
-        'cache_type' => 'null',
-        'backup_cache' => 'null',
-        'ajax_notices' => 'true',
-        'lang_file' => 'null',
-        'model' => NULL,
-        'themed' => FALSE,
+        'model' => 'Categories',
         'base_class' => 'BaseController',
         'base_path' => 'Myth\Controllers\\'
     ];
@@ -23,6 +18,11 @@ class Generator extends Controllers\Generators\BaseGenerator {
         parent::__construct(...$params);
 
         $this->db = \Config\Database::connect();
+        // Format per CI
+        if (!empty($this->options['model']) && substr($this->options['model'], - 5) !== 'Model') {
+            $this->options['model'] .= 'Model';
+        }
+
     }
 
     public function index($name) {
@@ -35,24 +35,13 @@ class Generator extends Controllers\Generators\BaseGenerator {
 
         $data = array_merge($data, $this->options);
 
-        if ($data['themed'] == 'y' || $data['themed'] === true) {
-            $data['base_class'] = 'ThemedController';
-        }
-
         $destination = $this->determineOutputPath('controllers') . $name . '.php';
 
         if (!$this->copyTemplate('controller', $destination, $data, $this->overwrite))
             return TRUE;
-        // Model?
-        $this->options['model'] = empty($options['model']) ? 'algo' : $options['model'];
 
-        // Format per CI
-        if (!empty($this->options['model']) && substr($this->options['model'], - 5) !== 'Model') {
-            $this->options['model'] .= 'Model';
-        }
-        $this->options['model'] = !empty($this->options['model']) ? ucfirst($this->options['model']) : NULL;
-
-        print_r($this->getFieldsFromModel('categories'));
+//        d($this->getFieldsFromModel($this->options['model']));
+        $this->prepareFields();
     }
 
     //--------------------------------------------------------------------
@@ -61,7 +50,7 @@ class Generator extends Controllers\Generators\BaseGenerator {
     /**
      * Generates the standard views for our CRUD methods.
      */
-    protected function createViews($name) {
+    public function createViews($name) {
         helper('inflector');
         $data = [
             'name' => $name,
@@ -71,7 +60,7 @@ class Generator extends Controllers\Generators\BaseGenerator {
             'fields' => $this->prepareFields()
         ];
 
-        $subfolder = empty($this->module) ? '/' . strtolower($name) : '/' . $data['lower_name'];
+        $subfolder = '/' . $data['lower_name'];
 
         // Index
         $destination = $this->determineOutputPath('views' . $subfolder) . 'index.php';
@@ -110,24 +99,22 @@ class Generator extends Controllers\Generators\BaseGenerator {
             }
         }
 
-        $fields = explode(' ', $fields);
-
+        d($fields);
         $new_fields = [];
 
         foreach ($fields as $field) {
-            $pop = [NULL, NULL, NULL];
-            list( $field, $type, $size ) = array_merge(explode(':', $field), $pop);
-            $type = strtolower($type);
+            
+            $type = strtolower($field->type);
 
             // Ignore list
-            if (in_array($field, ['created_on', 'modified_on'])) {
+            if (in_array($field->name, ['created_on', 'modified_on'])) {
                 continue;
             }
 
             // Strings
-            if (in_array($type, ['char', 'varchar', 'string'])) {
+            if (in_array($type, ['char', 'character', 'character varying', 'varchar', 'string'])) {
                 $new_fields[] = [
-                    'name' => $field,
+                    'name' => $field->name,
                     'type' => 'text'
                 ];
             }
@@ -135,15 +122,15 @@ class Generator extends Controllers\Generators\BaseGenerator {
             // Textarea
             else if ($type == 'text') {
                 $new_fields[] = [
-                    'name' => $field,
+                    'name' => $field->name,
                     'type' => 'textarea'
                 ];
             }
 
             // Number
-            else if (in_array($type, ['tinyint', 'int', 'bigint', 'mediumint', 'float', 'double', 'number'])) {
+            else if (in_array($type, ['tinyint', 'int', 'integer', 'bigint', 'mediumint', 'float', 'double', 'number'])) {
                 $new_fields[] = [
-                    'name' => $field,
+                    'name' => $field->name,
                     'type' => 'number'
                 ];
             }
@@ -151,43 +138,29 @@ class Generator extends Controllers\Generators\BaseGenerator {
             // Date
             else if (in_array($type, ['date', 'datetime', 'time'])) {
                 $new_fields[] = [
-                    'name' => $field,
+                    'name' => $field->name,
                     'type' => $type
                 ];
             }
         }
-
+      
+        d($new_fields);
         return $new_fields;
     }
 
     //--------------------------------------------------------------------
 
     private function getFieldsFromModel($modelName) {
-        $fullModelName = '\\' . ucfirst($modelName) . 'Model';
+        $fullModelName = '\\' . $modelName;
         $model = new $fullModelName();
 
-        echo $model->getTable();
         if (!$this->db->tableExists($model->getTable())) {
             return '';
         }
 
         $fields = $this->db->getFieldData($model->getTable());
 
-        $return = '';
-
-        // Prepare the fields in a string format like
-        // it would have been passed on the CLI
-        foreach ($fields as $field) {
-            $temp = $field->name . ':' . $field->type;
-
-            if (!empty($field->max_length)) {
-                $temp .= ':' . $field->max_length;
-            }
-
-            $return .= ' ' . $temp;
-        }
-echo $return;
-        return $return;
+        return $fields;
     }
 
     //--------------------------------------------------------------------

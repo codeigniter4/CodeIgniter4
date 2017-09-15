@@ -21,6 +21,7 @@ class BaseGenerator extends Controller {
     protected $quiet = false;
     protected $overwrite = false;
     protected $helpers = ['filesystem'];
+
     //--------------------------------------------------------------------
 
     public function __construct(...$params) {
@@ -286,6 +287,13 @@ class BaseGenerator extends Controller {
         $output = str_replace('@php', '<?php', $output);
         $output = str_replace('@=', '<?=', $output);
 
+        $output = view('generators/views/' . $view, $data);
+
+        $this->parser = \Config\Services::parser();
+
+        $output = $this->parser->setData($data)->renderString($output);
+
+        echo $output;
         return $output;
     }
 
