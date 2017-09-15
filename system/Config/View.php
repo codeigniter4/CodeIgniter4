@@ -50,14 +50,14 @@ class View extends BaseConfig
 		'highlight_code' => '\CodeIgniter\View\Filters::highlight_code',
 		'limit_words'	 => '\CodeIgniter\View\Filters::limit_words',
 		'limit_chars'	 => '\CodeIgniter\View\Filters::limit_chars',
-		'lower'			 => '\CodeIgniter\View\Filters::lower',
+		'lower'			 => '\strtolower',
 		'nl2br'			 => '\CodeIgniter\View\Filters::nl2br',
-		'number_format'	 => '\CodeIgniter\View\Filters::number_format',
+		'number_format'	 => '\number_format',
 		'prose'			 => '\CodeIgniter\View\Filters::prose',
 		'round'			 => '\CodeIgniter\View\Filters::round',
-		'strip_tags'	 => '\CodeIgniter\View\Filters::strip_tags',
+		'strip_tags'	 => '\strip_tags',
 		'title'			 => '\CodeIgniter\View\Filters::title',
-		'upper'			 => '\CodeIgniter\View\Filters::upper',
+		'upper'			 => '\strtoupper',
 	];
 	protected $corePlugins = [
 		'current_url'	         => '\CodeIgniter\View\Plugins::currentURL',
