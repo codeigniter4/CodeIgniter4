@@ -37,21 +37,6 @@
  */
 class Filters
 {
-
-	/**
-	 * Returns the absolute value of $value.
-	 *
-	 * @param $value
-	 *
-	 * @return string
-	 */
-	public static function abs($value): string
-	{
-		return abs($value);
-	}
-
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns $value as all lowercase with the first letter capitalized.
 	 *
