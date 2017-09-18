@@ -37,21 +37,6 @@
  */
 class Filters
 {
-
-	/**
-	 * Returns the absolute value of $value.
-	 *
-	 * @param $value
-	 *
-	 * @return string
-	 */
-	public static function abs($value): string
-	{
-		return abs($value);
-	}
-
-	//--------------------------------------------------------------------
-
 	/**
 	 * Returns $value as all lowercase with the first letter capitalized.
 	 *
@@ -227,20 +212,6 @@ public static function limit_words($value, int $limit = 100): string
 //--------------------------------------------------------------------
 
 /**
- * Converts a string to lowercase.
- *
- * @param string  $value
- *
- * @return string
- */
-public static function lower(string $value): string
-{
-	return strtolower($value);
-}
-
-//--------------------------------------------------------------------
-
-/**
  * Returns a string with all instances of newline character (\n)
  * converted to an HTML <br/> tag.
  *
@@ -255,20 +226,6 @@ public static function nl2br(string $value): string
 	return $typography->nl2brExceptPre($value);
 }
 
-//--------------------------------------------------------------------
-
-/**
- * Wraps PHP number_format function for use within the parser.
- *
- * @param string $value
- * @param int    $places
- *
- * @return string
- */
-public static function number_format(string $value, int $places): string
-{
-	return number_format($value, $places);
-}
 
 //--------------------------------------------------------------------
 
@@ -328,20 +285,6 @@ public static function round($value, $precision = 2, $type = 'common')
 	return $value;
 }
 
-//--------------------------------------------------------------------
-
-/**
- * Wraps PHP's striptags function for use in the Parser.
- *
- * @param string $value
- * @param string $allowed
- *
- * @return string
- */
-public static function strip_tags(string $value, string $allowed = ''): string
-{
-	return strip_tags($value, $allowed);
-}
 
 //--------------------------------------------------------------------
 
@@ -359,17 +302,5 @@ public static function title(string $value): string
 
 //--------------------------------------------------------------------
 
-/**
- * Converts text to all uppercase.
- *
- * @param string $value
- *
- * @return string
- */
-public static function upper(string $value): string
-{
-	return strtoupper($value);
-}
 
-//--------------------------------------------------------------------
 }

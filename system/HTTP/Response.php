@@ -151,7 +151,7 @@ class Response extends Message implements ResponseInterface
 	 *
 	 * @var int
 	 */
-	protected $statusCode;
+	protected $statusCode = 200;
 
 	/**
 	 * Whether Content Security Policy is being enforced.
