@@ -943,6 +943,12 @@ class Session implements SessionInterface
 	 */
 	protected function startSession()
 	{
+		if (ENVIRONMENT === 'testing')
+		{
+			$_SESSION = [];
+			return;
+		}
+
 		session_start();
 	}
 

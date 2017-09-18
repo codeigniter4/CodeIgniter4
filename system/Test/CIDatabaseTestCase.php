@@ -308,8 +308,8 @@ class CIDatabaseTestCase extends CIUnitTestCase
 			$table, $data
 		];
 
-		$this->db->table($table)
-				->insert($data);
+		return $this->db->table($table)
+					->insert($data);
 	}
 
 	//--------------------------------------------------------------------
