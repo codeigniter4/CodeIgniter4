@@ -421,12 +421,24 @@ Custom Filters
 --------------
 
 You can easily create your own filters by editing **application/Config/View.php** and adding new entries to the
-``$filters`` array. Each key is the name the filter is called by in the view, and its value is any valid PHP
+``$filters`` array. Each key is the name of the filter is called by in the view, and its value is any valid PHP
 callable::
 
 	public $filters = [
 		'abs'               => '\CodeIgniter\View\Filters::abs',
 		'capitalize'        => '\CodeIgniter\View\Filters::capitalize',
+	];
+
+PHP Native functions as Filters
+-------------------------------
+
+You can easily use native php function as filters by editing **application/Config/View.php** and adding new entries to the
+``$filters`` array.Each key is the name of the native PHP function is called by in the view, and its value is any valid native PHP
+function prefixed with \::
+
+	public $filters = [
+		'str_repeat'               => '\str_repeat',
+		
 	];
 
 Parser Plugins
