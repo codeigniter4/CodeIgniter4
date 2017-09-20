@@ -14,9 +14,9 @@ class Categories extends Controllers\AdminController {
 
     public function __construct(...$params) {
         parent::__construct(...$params);
+        $this->validation = \Config\Services::validation();
         $this->session = \Config\Services::session();
         $this->session->start();
-        $this->validation = \Config\Services::validation();
 
         $this->validation->setRules([
             //|is_unique[users.email]
@@ -36,37 +36,18 @@ class Categories extends Controllers\AdminController {
         );
     }
 
-    public function index() {
+    public function index() {        
+        $q = urldecode($this->request->getGet('q'));
         $model = new \CategoriesModel();
 
         $data = [
             'controllerPath' => $this->controllerPath,
-            'categories' => $model->paginate(10),
-            'total_rows' => $model->total_rows(),
-            'pager' => $model->pager,
+            'categories'     => $model->like('name', $q)->paginate(10),
+            'total_rows'     => $model->like('name', $q)->countAllResults(),
+            'pager'          => $model->pager,
+            'q'              => $q,
         ];
         return $this->template_output(view('categories/categories_list', $data));
-    }
-
-    public function parsear() {
-        $db = \Config\Database::connect();
-        $this->parser = \Config\Services::parser();
-        $table_name = 'users';
-        $fields = $db->getFieldNames($table_name);
-
-        $fields_array = [];
-        foreach ($fields as $field) {
-            $fields_array[] = ['field' => $field];
-        }
-
-        $data = [
-            'model' => ucfirst($table_name),
-            'fields' => $fields_array,
-        ];
-        print_r($fields);
-        if (!write_file('./abejita.php', $this->parser->setData($data)->render('users_list'))) {
-            
-        }
     }
 
     public function edit($id) {

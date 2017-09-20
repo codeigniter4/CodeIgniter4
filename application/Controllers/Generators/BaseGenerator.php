@@ -282,12 +282,12 @@ class BaseGenerator extends Controller {
 
         $name = str_replace('Generator', '', get_class($this));
 
+        $output = view('generators/views/' . $view, []);
+        
         // To allow for including any PHP code in the templates,
         // replace any '@php' and '@=' tags with their correct PHP syntax.
         $output = str_replace('@php', '<?php', $output);
         $output = str_replace('@=', '<?=', $output);
-
-        $output = view('generators/views/' . $view, $data);
 
         $this->parser = \Config\Services::parser();
 

@@ -16,9 +16,11 @@
             <div class="col-md-3 text-right">
                 <form action="<?= base_url($controllerPath); ?>" class="form-inline" method="get">
                     <div class="input-group">
-                        <input type="text" class="form-control" name="q" value="<?php //echo $q;    ?>">
+                        <input type="text" class="form-control" name="q" value="<?= $q; ?>">
                         <span class="input-group-btn">
-                            <a href="<?= base_url($controllerPath); ?>" class="btn btn-default">Reset</a>
+                            <?php if ($q <> '') : ?>
+                                <a href="<?= base_url($controllerPath); ?>" class="btn btn-default">Reset</a>
+                            <?php endif; ?>
                             <button class="btn btn-primary" type="submit">Search</button>
                         </span>
                     </div>
