@@ -43,10 +43,11 @@ class Categories extends Controllers\AdminController {
         $data = [
             'controllerPath' => $this->controllerPath,
             'categories'     => $model->like('name', $q)->paginate(10),
-            'total_rows'     => $model->like('name', $q)->countAllResults(),
             'pager'          => $model->pager,
+            'total_rows'     => $model->pager->getDetails()['total'],
             'q'              => $q,
         ];
+        
         return $this->template_output(view('categories/categories_list', $data));
     }
 

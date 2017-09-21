@@ -12,10 +12,4 @@ class CategoriesModel extends CodeIgniter\Model {
     protected $validationMessages = [];
     protected $skipValidation = false;
     
-    // get total rows
-    function total_rows() {
-        $builder = $this->db->table($this->table);
-        return $builder->countAll();
-    }
-
 }

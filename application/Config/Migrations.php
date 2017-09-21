@@ -58,6 +58,6 @@ class Migrations extends BaseConfig
 	| be upgraded / downgraded to.
 	|
 	*/
-	public $currentVersion = 044;
+	public $currentVersion = 000;
 
 }
