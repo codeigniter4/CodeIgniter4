@@ -1598,7 +1598,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 */
 	public function getFieldData(string $table)
 	{
-		$fields = $this->_fieldData($this->protectIdentifiers($table, true, null, false));
+		$fields = $this->_fieldData($table);
 
 		return $fields ?? false;
 	}

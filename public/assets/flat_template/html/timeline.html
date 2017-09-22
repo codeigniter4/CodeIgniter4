@@ -1,0 +1,385 @@
+<!DOCTYPE html><html lang="en"><head> 
+        <meta charset="utf-8" /> 
+        <title>Web Application | todo</title> 
+        <meta name="description" content="app, web app, responsive, admin dashboard, admin, flat, flat ui, ui kit, off screen nav" /> 
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" /> 
+        <link rel="stylesheet" href="css/app.v2.css" type="text/css" /> 
+        <link rel="stylesheet" href="css/font.css" type="text/css"  /> 
+        <link rel="stylesheet" href="js/datepicker/datepicker.css" type="text/css"  /> 
+        <!--[if lt IE 9]> 
+        <script src="js/ie/respond.min.js" ></script> 
+        <script src="js/ie/html5.js" ></script> 
+        <script src="js/ie/fix.js" ></script> 
+        <![endif]--></head><body> 
+        <section class="hbox stretch"> 
+            <!-- .aside --> 
+            <aside class="bg-success dk aside-sm nav-vertical no-borders" id="nav"> 
+                <section class="vbox"> 
+                    <header class="nav-bar"> 
+                        <a class="btn btn-link visible-xs" data-toggle="class:nav-off-screen" data-target="#nav"> 
+                            <i class="fa fa-bars"></i> 
+                        </a> 
+                        <a href="#" class="nav-brand" data-toggle="fullscreen">todo</a> 
+                        <a class="btn btn-link visible-xs" data-toggle="class:show" data-target=".nav-user"> 
+                            <i class="fa fa-comment-o"></i> 
+                        </a> 
+                    </header> 
+                    <section> 
+                        <div class="nav-user hidden-xs pos-rlt"> 
+                            <div class="nav-avatar pos-rlt"> 
+                                <a href="#" class="thumb-sm avatar animated rollIn" data-toggle="dropdown"> 
+                                    <img src="images/avatar.jpg" alt="" class=""> 
+                                    <span class="caret caret-white"></span> 
+                                </a> 
+                                <ul class="dropdown-menu m-t-sm animated fadeInLeft"> 
+                                    <span class="arrow top"></span> 
+                                    <li> 
+                                        <a href="#">Settings</a> 
+                                    </li> 
+                                    <li> 
+                                        <a href="profile.html">Profile</a> 
+                                    </li> 
+                                    <li> 
+                                        <a href="#"> 
+                                            <span class="badge bg-danger pull-right">3</span> Notifications </a> 
+                                    </li> 
+                                    <li class="divider"></li> 
+                                    <li> 
+                                        <a href="docs.html">Help</a> 
+                                    </li> 
+                                    <li> 
+                                        <a href="signin.html">Logout</a> 
+                                    </li> 
+                                </ul> 
+                                <div class="visible-xs m-t m-b"> 
+                                    <a href="#" class="h3">John.Smith</a> 
+                                    <p><i class="fa fa-map-marker"></i> London, UK</p> 
+                                </div> 
+                            </div> 
+                            <div class="nav-msg"> 
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"> 
+                                    <b class="badge badge-white count-n">2</b> 
+                                </a> 
+                                <section class="dropdown-menu m-l-sm pull-left animated fadeInRight"> 
+                                    <div class="arrow left"></div> 
+                                    <section class="panel bg-white"> 
+                                        <header class="panel-heading"> 
+                                            <strong>You have <span class="count-n">2</span> notifications</strong> 
+                                        </header> 
+                                        <div class="list-group"> 
+                                            <a href="#" class="media list-group-item"> 
+                                                <span class="pull-left thumb-sm"> 
+                                                    <img src="images/avatar.jpg" alt="John said" class="img-circle"> 
+                                                </span> 
+                                                <span class="media-body block m-b-none"> Use awesome animate.css<br> 
+                                                    <small class="text-muted">28 Aug 13</small> 
+                                                </span> 
+                                            </a> 
+                                            <a href="#" class="media list-group-item"> 
+                                                <span class="media-body block m-b-none"> 1.0 initial released<br> 
+                                                    <small class="text-muted">27 Aug 13</small> 
+                                                </span> 
+                                            </a> 
+                                        </div> 
+                                        <footer class="panel-footer text-sm"> 
+                                            <a href="#" class="pull-right"><i class="fa fa-cog"></i></a> 
+                                            <a href="#">See all the notifications</a> 
+                                        </footer> 
+                                    </section> 
+                                </section> 
+                            </div> 
+                        </div> 
+                        <nav class="nav-primary hidden-xs"> 
+                            <ul class="nav"> 
+                                <li> 
+                                    <a href="index.html"> 
+                                        <i class="fa fa-eye"></i> 
+                                        <span>Discover</span> 
+                                    </a> 
+                                </li> 
+                                <li class="dropdown-submenu"> 
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"> 
+                                        <i class="fa fa-flask"></i> 
+                                        <span>UI kit</span> 
+                                    </a> 
+                                    <ul class="dropdown-menu"> 
+                                        <li> 
+                                            <a href="buttons.html">Buttons</a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="icons.html"> 
+                                                <b class="badge pull-right">302</b>Icons </a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="grid.html">Grid</a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="widgets.html"> 
+                                                <b class="badge bg-primary pull-right">8</b>Widgets </a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="components.html"> 
+                                                <b class="badge pull-right">18</b>Components </a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="list.html">List groups</a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="table.html">Table</a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="form.html">Form</a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="chart.html">Chart</a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="calendar.html">Fullcalendar</a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="portlet.html">Portlet</a> 
+                                        </li> 
+                                    </ul> 
+                                </li> 
+                                <li class="dropdown-submenu"> 
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"> 
+                                        <i class="fa fa-file-text"></i> 
+                                        <span>Pages</span> 
+                                    </a> 
+                                    <ul class="dropdown-menu"> 
+                                        <li> 
+                                            <a href="dashboard.html">Dashboard</a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="dashboard-1.html">Dashboard one</a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="dashboard-2.html">Dashboard layout</a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="analysis.html">Analysis</a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="master.html">Master</a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="maps.html">Maps</a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="gallery.html">Gallery</a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="profile.html">Profile</a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="blog.html">Blog</a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="invoice.html">Invoice</a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="signin.html">Signin page</a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="signup.html">Signup page</a> 
+                                        </li> 
+                                        <li> 
+                                            <a href="404.html">404 page</a> 
+                                        </li> 
+                                    </ul> 
+                                </li> 
+                                <li> 
+                                    <a href="mail.html"> 
+                                        <b class="badge bg-primary pull-right">3</b> 
+                                        <i class="fa fa-envelope-o"></i> 
+                                        <span>Mail</span> 
+                                    </a> 
+                                </li> 
+                                <li> 
+                                    <a href="tasks.html"> 
+                                        <i class="fa fa-tasks"></i> 
+                                        <span>Tasks</span> 
+                                    </a> 
+                                </li> 
+                                <li> 
+                                    <a href="notes.html"> 
+                                        <i class="fa fa-pencil"></i> 
+                                        <span>Notes</span> 
+                                    </a> 
+                                </li> 
+                                <li class="active"> 
+                                    <a href="timeline.html"> 
+                                        <i class="fa fa-clock-o"></i> 
+                                        <span>Timeline</span> 
+                                    </a> 
+                                </li> 
+                            </ul> 
+                        </nav> 
+                    </section> 
+                    <footer class="footer bg-gradient hidden-xs"> 
+                        <a href="modal.lockme.html" data-toggle="ajaxModal" class="btn btn-sm btn-link m-r-n-xs pull-right"> 
+                            <i class="fa fa-power-off"></i> 
+                        </a> 
+                        <a href="#nav" data-toggle="class:nav-vertical" class="btn btn-sm btn-link m-l-n-sm"> 
+                            <i class="fa fa-bars"></i> 
+                        </a> 
+                    </footer> 
+                </section> 
+            </aside> 
+            <!-- /.aside --> 
+            <!-- .vbox --> 
+            <section id="content"> 
+                <section class="vbox"> 
+                    <section class="bg-light lter"> 
+                        <section class="hbox stretch"> 
+                            <!-- .aside --> 
+                            <aside> 
+                                <section class="vbox"> 
+                                    <section class="scrollable wrapper"> 
+                                        <div class="timeline"> 
+                                            <article class="timeline-item active"> 
+                                                <div class="timeline-caption"> 
+                                                    <div class="panel bg-success lter no-borders"> 
+                                                        <div class="panel-body"> 
+                                                            <span class="timeline-icon"><i class="fa fa-bell-o time-icon bg-success"></i></span> 
+                                                            <span class="timeline-date">7:30 am</span> 
+                                                            <h5> 
+                                                                <span>Wake up</span> Me </h5> 
+                                                            <div class="m-t-sm timeline-action"> 
+                                                                <span class="h3 pull-left m-r-sm">4:51</span> 
+                                                                <button class="btn btn-sm btn-white"><i class="fa fa-pause"></i> Pause</button> 
+                                                                <button class="btn btn-sm btn-white"><i class="fa fa-check"></i> Confirm</button> 
+                                                            </div> 
+                                                        </div> 
+                                                    </div> 
+                                                </div> 
+                                            </article> 
+                                            <article class="timeline-item"> 
+                                                <div class="timeline-caption"> 
+                                                    <div class="panel"> 
+                                                        <div class="panel-body"> 
+                                                            <span class="arrow left"></span> 
+                                                            <span class="timeline-icon"><i class="fa fa-phone time-icon bg-primary"></i></span> 
+                                                            <span class="timeline-date">12:25 am</span> 
+                                                            <h5> 
+                                                                <span>Call to</span> Jason Cokde (021-254-3523) </h5> 
+                                                        </div> 
+                                                    </div> 
+                                                </div> 
+                                            </article> 
+                                            <article class="timeline-item alt"> 
+                                                <div class="timeline-caption"> 
+                                                    <div class="panel"> 
+                                                        <div class="panel-body"> 
+                                                            <span class="arrow right"></span> 
+                                                            <span class="timeline-icon"><i class="fa fa-male time-icon bg-success"></i></span> 
+                                                            <span class="timeline-date">10:00 am</span> 
+                                                            <h5> 
+                                                                <span>Appointment</span> Carmark Sook (.inc company) </h5> 
+                                                            <p>Morbi nec nunc condimentum, egestas dui nec, </p> 
+                                                        </div> 
+                                                    </div> 
+                                                </div> 
+                                            </article> 
+                                            <article class="timeline-item"> 
+                                                <div class="timeline-caption"> 
+                                                    <div class="panel"> 
+                                                        <div class="panel-body"> 
+                                                            <span class="arrow left"></span> 
+                                                            <span class="timeline-icon"><i class="fa fa-plane time-icon bg-dark"></i></span> 
+                                                            <span class="timeline-date">8:00 am</span> 
+                                                            <h5> 
+                                                                <span>Fly to</span> Newyork City </h5> 
+                                                            <p>82°, Very hot with some sun</p> 
+                                                        </div> 
+                                                    </div> 
+                                                </div> 
+                                            </article> 
+                                            <article class="timeline-item alt"> 
+                                                <div class="timeline-caption"> 
+                                                    <div class="panel"> 
+                                                        <div class="panel-body"> 
+                                                            <span class="arrow right"></span> 
+                                                            <span class="timeline-icon"><i class="fa fa-file-text time-icon bg-info"></i></span> 
+                                                            <span class="timeline-date">9:30 am</span> 
+                                                            <h5> 
+                                                                <span>Meeting</span> Office A - 2 floor </h5> 
+                                                            <p>Iaculis lorem justo porttitor orci. Vivamus vestibulum tortor augue. Donec elementum mollis velit.</p> 
+                                                        </div> 
+                                                    </div> 
+                                                </div> 
+                                            </article> 
+                                            <article class="timeline-item"> 
+                                                <div class="timeline-caption"> 
+                                                    <div class="panel"> 
+                                                        <div class="panel-body"> 
+                                                            <span class="arrow left"></span> 
+                                                            <span class="timeline-icon"><i class="fa fa-code time-icon bg-dark"></i></span> 
+                                                            <span class="timeline-date">9:00 am</span> 
+                                                            <h5> 
+                                                                <span>Work on</span> Web application project </h5> 
+                                                            <p>Iaculis lorem justo porttitor orci. Donec elementum mollis velit.</p> 
+                                                        </div> 
+                                                    </div> 
+                                                </div> 
+                                            </article> 
+                                            <div class="timeline-footer"><a href="#"><i class="fa fa-plus time-icon inline-block bg-dark"></i></a></div> 
+                                        </div> 
+                                    </section> 
+                                </section> 
+                            </aside> 
+                            <!-- /.aside --> 
+                            <!-- .aside --> 
+                            <aside class="aside-lg bg-light"> 
+                                <div class="wrapper"> 
+                                    <h4 class="m-t-none">Timeline(36)</h4> 
+                                    <form> 
+                                        <div class="form-group"> 
+                                            <label>Name</label> 
+                                            <input type="text" placeholder="Event name" class="input-sm form-control"> 
+                                        </div> 
+                                        <div class="form-group"> 
+                                            <label>Date</label> 
+                                            <input type="text" placeholder="Event name" class="datepicker input-sm form-control"> 
+                                        </div> 
+                                        <div class="form-group"> 
+                                            <label>Time</label> 
+                                            <input type="text" placeholder="eg. 3:00 pm" class="input-sm form-control"> 
+                                        </div> 
+                                        <div class="form-group"> 
+                                            <label>Type</label> 
+                                            <div> 
+                                                <div class="btn-group"> 
+                                                    <button data-toggle="dropdown" class="btn btn-sm btn-white dropdown-toggle"> 
+                                                        <span class="dropdown-label">Choose a type</span> 
+                                                        <span class="caret"></span> 
+                                                    </button> 
+                                                    <ul class="dropdown-menu dropdown-select"> 
+                                                        <li><a href="#"><input type="radio" name="d-s-r">Travel</a></li> 
+                                                        <li class=""><a href="#"><input type="radio" name="d-s-r">Phone</a></li> 
+                                                        <li class=""><a href="#"><input type="radio" name="d-s-r">Meeting</a></li> 
+                                                        <li class=""><a href="#"><input type="radio" name="d-s-r">Appointment</a></li> 
+                                                    </ul> 
+                                                </div> 
+                                            </div> 
+                                        </div> 
+                                        <div class="m-t-lg"><button class="btn btn-sm btn-default">Add an event</button></div> 
+                                    </form> 
+                                </div> 
+                            </aside> 
+                            <!-- /.aside --> 
+                        </section> 
+                    </section> 
+                    <footer class="footer bg-light dker bg-gradient"> 
+                        <p>Timeline</p> 
+                    </footer> 
+                </section> 
+            </section> 
+            <!-- /.vbox --> 
+        </section><script src="js/app.v2.js"></script> 
+        <!-- Bootstrap --> 
+        <!-- App --> 
+        <!-- fuelux --> 
+        <script src="js/fuelux/fuelux.js"></script> 
+        <!-- datepicker --> 
+        <script src="js/datepicker/bootstrap-datepicker.js"></script></body></html>

@@ -30,23 +30,23 @@ class Database extends \CodeIgniter\Database\Config
 	public $default = [
 		'DSN'          => '',
 		'hostname'     => 'localhost',
-		'username'     => '',
-		'password'     => '',
-		'database'     => '',
-		'DBDriver'     => 'MySQLi',
+		'username'     => 'adminis',
+		'password'     => 'peperina',
+		'database'     => 'ecommerce',
+		'DBDriver'     => 'Postgre',
 		'DBPrefix'     => '',
 		'pConnect'     => false,
 		'DBDebug'     => (ENVIRONMENT !== 'production'),
 		'cacheOn'     => false,
 		'cacheDir'     => '',
 		'charset'      => 'utf8',
-		'DBCollat'     => 'utf8_general_ci',
+		'DBCollat'     => '',
 		'swapPre'      => '',
 		'encrypt'      => false,
 		'compress'     => false,
 		'strictOn'     => false,
 		'failover'     => [],
-		'port'         => 3306
+		'port'         => 5432
 	];
 
 	/**
