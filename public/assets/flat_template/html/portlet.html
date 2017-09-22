@@ -1,0 +1,418 @@
+<!DOCTYPE html><html lang="en"><head>
+        <meta charset="utf-8" />
+        <title>Web Application | todo</title>
+        <meta name="description" content="app, web app, responsive, admin dashboard, admin, flat, flat ui, ui kit, off screen nav" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+        <link rel="stylesheet" href="css/app.v2.css" type="text/css" />
+        <link rel="stylesheet" href="css/font.css" type="text/css"  />
+        <link rel="stylesheet" href="js/nestable/nestable.css" type="text/css"  />
+        <!--[if lt IE 9]>
+        <script src="js/ie/respond.min.js" ></script>
+        <script src="js/ie/html5.js" ></script>
+        <script src="js/ie/fix.js" ></script>
+        <![endif]--></head><body>
+        <section class="hbox stretch">
+            <!-- .aside -->
+            <aside class="bg-dark aside-sm" id="nav">
+                <section class="vbox">
+                    <header class="dker nav-bar">
+                        <a class="btn btn-link visible-xs" data-toggle="class:nav-off-screen" data-target="#nav">
+                            <i class="fa fa-bars"></i>
+                        </a>
+                        <a href="#" class="nav-brand" data-toggle="fullscreen">todo</a>
+                        <a class="btn btn-link visible-xs" data-toggle="class:show" data-target=".nav-user">
+                            <i class="fa fa-comment-o"></i>
+                        </a>
+                    </header>
+                    <section>
+                        <div class="lter nav-user hidden-xs pos-rlt">
+                            <div class="nav-avatar pos-rlt">
+                                <a href="#" class="thumb-sm avatar animated rollIn" data-toggle="dropdown">
+                                    <img src="images/avatar.jpg" alt="" class="">
+                                    <span class="caret caret-white"></span>
+                                </a>
+                                <ul class="dropdown-menu m-t-sm animated fadeInLeft">
+                                    <span class="arrow top"></span>
+                                    <li>
+                                        <a href="#">Settings</a>
+                                    </li>
+                                    <li>
+                                        <a href="profile.html">Profile</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <span class="badge bg-danger pull-right">3</span> Notifications </a>
+                                    </li>
+                                    <li class="divider"></li>
+                                    <li>
+                                        <a href="docs.html">Help</a>
+                                    </li>
+                                    <li>
+                                        <a href="signin.html">Logout</a>
+                                    </li>
+                                </ul>
+                                <div class="visible-xs m-t m-b">
+                                    <a href="#" class="h3">John.Smith</a>
+                                    <p><i class="fa fa-map-marker"></i> London, UK</p>
+                                </div>
+                            </div>
+                            <div class="nav-msg">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    <b class="badge badge-white count-n">2</b>
+                                </a>
+                                <section class="dropdown-menu m-l-sm pull-left animated fadeInRight">
+                                    <div class="arrow left"></div>
+                                    <section class="panel bg-white">
+                                        <header class="panel-heading">
+                                            <strong>You have <span class="count-n">2</span> notifications</strong>
+                                        </header>
+                                        <div class="list-group">
+                                            <a href="#" class="media list-group-item">
+                                                <span class="pull-left thumb-sm">
+                                                    <img src="images/avatar.jpg" alt="John said" class="img-circle">
+                                                </span>
+                                                <span class="media-body block m-b-none"> Use awesome animate.css<br>
+                                                    <small class="text-muted">28 Aug 13</small>
+                                                </span>
+                                            </a>
+                                            <a href="#" class="media list-group-item">
+                                                <span class="media-body block m-b-none"> 1.0 initial released<br>
+                                                    <small class="text-muted">27 Aug 13</small>
+                                                </span>
+                                            </a>
+                                        </div>
+                                        <footer class="panel-footer text-sm">
+                                            <a href="#" class="pull-right"><i class="fa fa-cog"></i></a>
+                                            <a href="#">See all the notifications</a>
+                                        </footer>
+                                    </section>
+                                </section>
+                            </div>
+                        </div>
+                        <nav class="nav-primary hidden-xs">
+                            <ul class="nav">
+                                <li>
+                                    <a href="index.html">
+                                        <i class="fa fa-eye"></i>
+                                        <span>Discover</span>
+                                    </a>
+                                </li>
+                                <li class="dropdown-submenu active">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                        <i class="fa fa-flask"></i>
+                                        <span>UI kit</span>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a href="buttons.html">Buttons</a>
+                                        </li>
+                                        <li>
+                                            <a href="icons.html">
+                                                <b class="badge pull-right">302</b>Icons </a>
+                                        </li>
+                                        <li>
+                                            <a href="grid.html">Grid</a>
+                                        </li>
+                                        <li>
+                                            <a href="widgets.html">
+                                                <b class="badge bg-primary pull-right">8</b>Widgets </a>
+                                        </li>
+                                        <li>
+                                            <a href="components.html">
+                                                <b class="badge pull-right">18</b>Components </a>
+                                        </li>
+                                        <li>
+                                            <a href="list.html">List groups</a>
+                                        </li>
+                                        <li>
+                                            <a href="table.html">Table</a>
+                                        </li>
+                                        <li>
+                                            <a href="form.html">Form</a>
+                                        </li>
+                                        <li>
+                                            <a href="chart.html">Chart</a>
+                                        </li>
+                                        <li>
+                                            <a href="calendar.html">Fullcalendar</a>
+                                        </li>
+                                        <li>
+                                            <a href="portlet.html">Portlet</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown-submenu">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                        <i class="fa fa-file-text"></i>
+                                        <span>Pages</span>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a href="dashboard.html">Dashboard</a>
+                                        </li>
+                                        <li>
+                                            <a href="dashboard-1.html">Dashboard one</a>
+                                        </li>
+                                        <li>
+                                            <a href="dashboard-2.html">Dashboard layout</a>
+                                        </li>
+                                        <li>
+                                            <a href="analysis.html">Analysis</a>
+                                        </li>
+                                        <li>
+                                            <a href="master.html">Master</a>
+                                        </li>
+                                        <li>
+                                            <a href="maps.html">Maps</a>
+                                        </li>
+                                        <li>
+                                            <a href="gallery.html">Gallery</a>
+                                        </li>
+                                        <li>
+                                            <a href="profile.html">Profile</a>
+                                        </li>
+                                        <li>
+                                            <a href="blog.html">Blog</a>
+                                        </li>
+                                        <li>
+                                            <a href="invoice.html">Invoice</a>
+                                        </li>
+                                        <li>
+                                            <a href="signin.html">Signin page</a>
+                                        </li>
+                                        <li>
+                                            <a href="signup.html">Signup page</a>
+                                        </li>
+                                        <li>
+                                            <a href="404.html">404 page</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="mail.html">
+                                        <b class="badge bg-primary pull-right">3</b>
+                                        <i class="fa fa-envelope-o"></i>
+                                        <span>Mail</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="tasks.html">
+                                        <i class="fa fa-tasks"></i>
+                                        <span>Tasks</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="notes.html">
+                                        <i class="fa fa-pencil"></i>
+                                        <span>Notes</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="timeline.html">
+                                        <i class="fa fa-clock-o"></i>
+                                        <span>Timeline</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </section>
+                    <footer class="footer bg-gradient hidden-xs">
+                        <a href="modal.lockme.html" data-toggle="ajaxModal" class="btn btn-sm btn-link m-r-n-xs pull-right">
+                            <i class="fa fa-power-off"></i>
+                        </a>
+                        <a href="#nav" data-toggle="class:nav-vertical" class="btn btn-sm btn-link m-l-n-sm">
+                            <i class="fa fa-bars"></i>
+                        </a>
+                    </footer>
+                </section>
+            </aside>
+            <!-- /.aside -->
+            <!-- .vbox -->
+            <section id="content">
+                <section class="vbox">
+                    <header class="header bg-light bg-gradient b-b">
+                        <p><strong>Portlet</strong> (support on touch screen)</p>
+                    </header>
+                    <section class="scrollable wrapper">
+                        <div class="row">
+                            <div class="col-sm-6 portlet">
+                                <section class="panel portlet-item">
+                                    <header class="panel-heading"> Quick link </header>
+                                    <div class="list-group bg-white">
+                                        <a href="#" class="list-group-item">
+                                            <i class="fa fa-envelope"></i> Inbox </a>
+                                        <a href="#" class="list-group-item">
+                                            <i class="fa fa-eye"></i> Profile visits </a>
+                                        <a href="#" class="list-group-item">
+                                            <i class="fa fa-phone"></i> Call </a>
+                                        <a href="#" class="list-group-item">
+                                            <i class="fa fa-comments-o"></i> Messages </a>
+                                        <a href="#" class="list-group-item">
+                                            <i class="fa fa-bookmark"></i> Bookmarks </a>
+                                        <a href="#" class="list-group-item">
+                                            <i class="fa fa-bell"></i> Notifications </a>
+                                    </div>
+                                </section>
+                                <section class="panel portlet-item">
+                                    <header class="panel-heading">
+                                        <ul class="nav nav-pills pull-right">
+                                            <li>
+                                                <a href="#" class="panel-toggle text-muted"><i class="fa fa-caret-down text-active"></i><i class="fa fa-caret-up text"></i></a>
+                                            </li>
+                                        </ul> News <span class="badge bg-info">32</span>
+                                    </header>
+                                    <section class="panel-body">
+                                        <article class="media">
+                                            <div class="pull-left">
+                                                <span class="fa fa-stack fa-2x">
+                                                    <i class="fa fa-circle text-info fa-stack-2x"></i>
+                                                    <i class="fa fa-bold text-white fa-stack-1x"></i>
+                                                </span>
+                                            </div>
+                                            <div class="media-body">
+                                                <a href="#" class="h4">Bootstrap 3: What you need to know</a>
+                                                <small class="block m-t-xs">Sleek, intuitive, and powerful mobile-first front-end framework for faster and easier web development.</small>
+                                                <em class="text-xs">Posted on <span class="text-danger">Feb 23, 2013</span></em>
+                                            </div>
+                                        </article>
+                                        <div class="line pull-in"></div>
+                                        <article class="media">
+                                            <div class="pull-left">
+                                                <span class="fa fa-stack fa-2x">
+                                                    <i class="fa fa-circle text-primary fa-stack-2x"></i>
+                                                    <i class="fa fa-file text-white fa-stack-1x"></i>
+                                                </span>
+                                            </div>
+                                            <div class="media-body">
+                                                <a href="#" class="h4">Bootstrap documents</a>
+                                                <small class="block m-t-xs">There are a few easy ways to quickly get started with Bootstrap, each one appealing to a different skill level and use case. Read through to see what suits your particular needs.</small>
+                                                <em class="text-xs">Posted on <span class="text-danger">Feb 12, 2013</span></em>
+                                            </div>
+                                        </article>
+                                        <div class="line pull-in"></div>
+                                        <article class="media">
+                                            <div class="pull-left">
+                                                <span class="fa fa-stack fa-2x">
+                                                    <i class="fa fa-circle text-default fa-stack-2x"></i>
+                                                    <i class="fa fa-star text-white fa-stack-1x"></i>
+                                                </span>
+                                            </div>
+                                            <div class="media-body">
+                                                <a href="#" class="h4 text-success">Mobile first html/css framework</a>
+                                                <small class="block m-t-xs">Bootstrap, Ratchet</small>
+                                                <em class="text-xs">Posted on <span class="text-danger">Feb 05, 2013</span></em>
+                                            </div>
+                                        </article>
+                                    </section>
+                                </section>
+                            </div>
+                            <div class="col-sm-6 portlet">
+                                <section class="panel portlet-item">
+                                    <header class="panel-heading"> Connection </header>
+                                    <ul class="list-group alt">
+                                        <li class="list-group-item">
+                                            <div class="media">
+                                                <span class="pull-left thumb-sm"><img src="images/avatar.jpg" alt="John said" class="img-circle"></span>
+                                                <div class="pull-right text-success m-t-sm">
+                                                    <i class="fa fa-circle"></i>
+                                                </div>
+                                                <div class="media-body">
+                                                    <div><a href="#">Chris Fox</a></div>
+                                                    <small class="text-muted">about 2 minutes ago</small>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="media">
+                                                <span class="pull-left thumb-sm"><img src="images/avatar.jpg" alt="John said" class="img-circle"></span>
+                                                <div class="pull-right text-muted m-t-sm">
+                                                    <i class="fa fa-circle"></i>
+                                                </div>
+                                                <div class="media-body">
+                                                    <div><a href="#">Amanda Conlan</a></div>
+                                                    <small class="text-muted">about 2 hours ago</small>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="media">
+                                                <span class="pull-left thumb-sm"><img src="images/avatar.jpg" alt="John said" class="img-circle"></span>
+                                                <div class="pull-right text-warning m-t-sm">
+                                                    <i class="fa fa-circle"></i>
+                                                </div>
+                                                <div class="media-body">
+                                                    <div><a href="#">Dan Doorack</a></div>
+                                                    <small class="text-muted">3 days ago</small>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="media">
+                                                <span class="pull-left thumb-sm"><img src="images/avatar.jpg" alt="John said" class="img-circle"></span>
+                                                <div class="pull-right text-danger m-t-sm">
+                                                    <i class="fa fa-circle"></i>
+                                                </div>
+                                                <div class="media-body">
+                                                    <div><a href="#">Lauren Taylor</a></div>
+                                                    <small class="text-muted">about 2 minutes ago</small>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </section>
+                                <section class="panel portlet-item">
+                                    <header class="panel-heading">
+                                        <span class="label bg-dark">15</span> Inbox </header>
+                                    <section class="panel-body">
+                                        <article class="media">
+                                            <span class="pull-left thumb-sm"><img src="images/avatar.jpg" class="img-circle"></span>
+                                            <div class="media-body">
+                                                <div class="pull-right media-xs text-center text-muted">
+                                                    <strong class="h4">12:18</strong><br>
+                                                    <small class="label bg-light">pm</small>
+                                                </div>
+                                                <a href="#" class="h4">Bootstrap 3 released</a>
+                                                <small class="block"><a href="#" class="">John Smith</a>
+                                                    <span class="label label-success">Circle</span></small>
+                                                <small class="block m-t-sm">Sleek, intuitive, and powerful mobile-first front-end framework for faster and easier web development.</small>
+                                            </div>
+                                        </article>
+                                        <div class="line pull-in"></div>
+                                        <article class="media">
+                                            <span class="pull-left thumb-sm text-center"><i class="fa fa-user fa fa-2x text-muted"></i></span>
+                                            <div class="media-body">
+                                                <div class="pull-right media-xs text-center text-muted">
+                                                    <strong class="h4">17</strong><br>
+                                                    <small class="label bg-light">feb</small>
+                                                </div>
+                                                <a href="#" class="h4">Bootstrap documents</a>
+                                                <small class="block"><a href="#" class="">John Smith</a>
+                                                    <span class="label label-info">Friends</span></small>
+                                                <small class="block m-t-sm">There are a few easy ways to quickly get started with Bootstrap, each one appealing to a different skill level and use case. Read through to see what suits your particular needs.</small>
+                                            </div>
+                                        </article>
+                                        <div class="line pull-in"></div>
+                                        <article class="media">
+                                            <div class="media-body">
+                                                <div class="pull-right media-xs text-center text-muted">
+                                                    <strong class="h4">09</strong><br>
+                                                    <small class="label bg-light">jan</small>
+                                                </div>
+                                                <a href="#" class="h4 text-success">Mobile first html/css framework</a>
+                                                <small class="block m-t-sm">Bootstrap, Ratchet</small>
+                                            </div>
+                                        </article>
+                                    </section>
+                                </section>
+                            </div>
+                        </div>
+                    </section>
+                </section>
+            </section>
+            <!-- /.vbox -->
+        </section><script src="js/app.v2.js"></script>
+        <!-- Bootstrap -->
+        <!-- App -->
+        <!-- Sortable -->
+        <script src="js/jquery-ui-1.10.3.custom.min.js" ></script>
+        <script src="js/jquery.ui.touch-punch.min.js" ></script></body></html>

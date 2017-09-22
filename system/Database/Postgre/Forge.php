@@ -128,6 +128,26 @@ class Forge extends \CodeIgniter\Database\Forge
 		return $sqls;
 	}
 
+        	//--------------------------------------------------------------------
+
+	/**
+	 * Process column
+	 *
+	 * @param	array	$field
+	 * @return	string
+	 */
+	protected function _processColumn($field)
+	{
+		return $this->db->escapeIdentifiers($field['name'])
+				. ' ' . $field['type'] . $field['length']
+			//	. $field['unsigned']
+				. $field['default']
+				. $field['null']
+				. $field['auto_increment']
+				. $field['unique'];
+	}
+
+        
 	//--------------------------------------------------------------------
 
 	/**
