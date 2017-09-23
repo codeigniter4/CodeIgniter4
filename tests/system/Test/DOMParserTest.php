@@ -19,8 +19,10 @@ class DOMParserTest extends CIUnitTestCase
 		$dom = new DOMParser();
 
 		$html = '<div><h1>Hello</h1></div>';
+		$expected = '<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">' ."\n"
+			.'<html><body><div><h1>Hello</h1></div></body></html>';
 
-		$this->assertEquals($html."\n", $dom->withString($html)->getBody());
+		$this->assertEquals($expected."\n", $dom->withString($html)->getBody());
 	}
 
 	public function testParseSelectorWithID()

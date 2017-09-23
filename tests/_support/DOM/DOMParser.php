@@ -42,8 +42,7 @@ class DOMParser
 		//turning off some errors
 		libxml_use_internal_errors(true);
 
-		// it loads the content without adding enclosing html/body tags and also the doctype declaration
-		if (! $this->dom->loadHTML($content, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD))
+		if (! $this->dom->loadHTML($content))
 		{
 			throw new \BadMethodCallException('Invalid HTML');
 		}
