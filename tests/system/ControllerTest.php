@@ -82,7 +82,7 @@ class ControllerTest extends \CIUnitTestCase
 		// make sure we can instantiate one
 		$this->controller = new Controller($this->request, $this->response);
 		// and that we can attempt validation, with no rules
-		$this->assertTrue($this->controller->validate([]));
+		$this->assertFalse($this->controller->validate([]));
 	}
 
 	//--------------------------------------------------------------------
