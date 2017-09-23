@@ -129,6 +129,13 @@ class Validation implements ValidationInterface
 
 		$this->loadRuleGroup($group);
 
+		// If no rules exist, we return false to ensure
+		// the developer didn't forget to set the rules.
+		if (empty($this->rules))
+		{
+			return false;
+		}
+
 		// Run through each rule. If we have any field set for
 		// this rule, then we need to run them through!
 		foreach ($this->rules as $rField => $ruleString)

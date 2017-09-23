@@ -55,11 +55,11 @@ class ValidationTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	public function testRunReturnsTrueWithNothingToDo()
+	public function testRunReturnsFalseWithNothingToDo()
 	{
 		$this->validation->setRules([]);
 
-		$this->assertTrue($this->validation->run([]));
+		$this->assertFalse($this->validation->run([]));
 	}
 
 	//--------------------------------------------------------------------
