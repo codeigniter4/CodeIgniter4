@@ -489,7 +489,7 @@ class Forge
 		}
 
 		// If the prefix is already starting the table name, remove it...
-		if (strpos($table_name, $this->db->DBPrefix) === 0)
+		if (! empty($this->db->DBPrefix) && strpos($table_name, $this->db->DBPrefix) === 0)
 		{
 			$table_name = substr($table_name, strlen($this->db->DBPrefix));
 		}
