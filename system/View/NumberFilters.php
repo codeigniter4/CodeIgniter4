@@ -45,7 +45,7 @@ class NumberFilters
 	 *
 	 * @return string
 	 */
-	public static function localizednumber($number, $style = 'decimal', $type = 'default', $locale = null):string
+	public static function localizedNumber($number, $style = 'decimal', $type = 'default', $locale = null):string
 	{
 		self::raiseExceptionIfIntlExtensionNotAvailable();
 		static $typeValues = [
@@ -72,10 +72,9 @@ class NumberFilters
 	 *
 	 * @return string
 	 */
-	public static function localizedcurrency($number, $currency = null, $locale = null)
+	public static function localizedCurrency($number, $currency = null, $locale = null)
 	{
-		 //todo: fetch default locale if not provided
-		$locale = $locale ?? 'en-US';
+		$locale = $locale ?? \CodeIgniter\Config\Services::request()->getLocale();
 
 			$formatter = self::getNumberFormatter($locale, 'currency');
 		return $formatter->formatCurrency($number, $currency);
@@ -92,8 +91,9 @@ class NumberFilters
 	private static function getNumberFormatter($locale, $style):\NumberFormatter
 	{
 		static $formatter, $currentStyle;
-		//todo: fetch default locale if not provided
-		$locale = $locale ?? 'en-US';
+
+		$locale = $locale ?? \CodeIgniter\Config\Services::request()->getLocale();
+log_message('info',\CodeIgniter\Config\Services::request()->getLocale());
 		if ($formatter && $formatter->getLocale() === $locale && $currentStyle === $style)
 		{
 			// Return same instance of NumberFormatter if parameters are the same
