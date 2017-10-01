@@ -91,8 +91,7 @@
         VERSION:     '{{ release|e }}',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '{{ '' if no_search_suffix else file_suffix }}',
-        HAS_SOURCE:  {{ has_source|lower }},
-        SOURCELINK_SUFFIX: '{{ sourcelink_suffix }}'
+        HAS_SOURCE:  {{ has_source|lower }}
       };
     </script>
     {%- for scriptfile in script_files %}
@@ -125,9 +124,6 @@
     {%- endif %}
     {%- if favicon %}
     <link rel="shortcut icon" href="{{ pathto('_static/' + favicon, 1) }}"/>
-    {%- endif %}
-    {%- if theme_canonical_url %}
-    <link rel="canonical" href="{{ theme_canonical_url }}{{ pagename }}.html"/>
     {%- endif %}
     {%- endif %}
 {%- block linktags %}

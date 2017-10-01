@@ -8,28 +8,28 @@
     </span>
     <div class="rst-other-versions">
       <dl>
-        <dt>{{ _('Versions') }}</dt>
+        <dt>Versions</dt>
         {% for slug, url in versions %}
           <dd><a href="{{ url }}">{{ slug }}</a></dd>
         {% endfor %}
       </dl>
       <dl>
-        <dt>{{ _('Downloads') }}</dt>
+        <dt>Downloads</dt>
         {% for type, url in downloads %}
           <dd><a href="{{ url }}">{{ type }}</a></dd>
         {% endfor %}
       </dl>
       <dl>
-        <dt>{{ _('On Read the Docs') }}</dt>
+        <dt>On Read the Docs</dt>
           <dd>
-            <a href="//{{ PRODUCTION_DOMAIN }}/projects/{{ slug }}/?fromdocs={{ slug }}">{{ _('Project Home') }}</a>
+            <a href="//{{ PRODUCTION_DOMAIN }}/projects/{{ slug }}/?fromdocs={{ slug }}">Project Home</a>
           </dd>
           <dd>
-            <a href="//{{ PRODUCTION_DOMAIN }}/builds/{{ slug }}/?fromdocs={{ slug }}">{{ _('Builds') }}</a>
+            <a href="//{{ PRODUCTION_DOMAIN }}/builds/{{ slug }}/?fromdocs={{ slug }}">Builds</a>
           </dd>
       </dl>
       <hr/>
-      {% trans %}Free document hosting provided by <a href="http://www.readthedocs.org">Read the Docs</a>.{% endtrans %}
+      Free document hosting provided by <a href="http://www.readthedocs.org">Read the Docs</a>.
 
     </div>
   </div>
