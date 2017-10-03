@@ -34,8 +34,8 @@ you just need to take advantage of any new functionality and you're good to go. 
 error-resistant.
 
 .. note:: It is recommended to only create services within controllers. Other files, like models
-	and libraries should have the dependencies either passed into the constructor or through a
-	setter method.
+and libraries should have the dependencies either passed into the constructor or through a
+setter method.
 
 Convenience Functions
 ---------------------
@@ -56,7 +56,7 @@ If the creation method requires additional parameters, they can be passed after 
 The second function, ``single_service()`` works just like ``service()`` but returns a new instance of
 the class:
 
-    $logger = single_service('logger');
+	$logger = single_service('logger');
 
 
 
@@ -76,7 +76,7 @@ create a new class that implements the ``RouterCollectionInterface``::
 
 	class MyRouter implements \CodeIgniter\Router\RouteCollectionInterface
 	{
-	    // Implement required methods here.
+		// Implement required methods here.
 	}
 
 Finally, modify **/application/Config/Services.php** to create a new instance of ``MyRouter``
@@ -84,7 +84,7 @@ instead of ``CodeIgniter\Router\RouterCollection``::
 
 	public static function routes()
 	{
-	    return new \App\Router\MyRouter();
+		return new \App\Router\MyRouter();
 	}
 
 Allowing Parameters
@@ -100,7 +100,7 @@ as a constructor parameter. The service method looks like this::
 
 	public static function renderer($viewPath=APPPATH.'views/')
 	{
-	    return new \CodeIgniter\View\View($viewPath);
+		return new \CodeIgniter\View\View($viewPath);
 	}
 
 This sets the default path in the constructor method, but allows for easily changing

@@ -100,9 +100,9 @@ the following code block would use spaces to have the assignment
 operators line up with each other::
 
     {
-        $first    = 1;
-        $second   = 2;
-        $third    = 3;
+        $first  = 1;
+        $second = 2;
+        $third  = 3;
     }
 
 

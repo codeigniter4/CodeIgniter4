@@ -27,7 +27,7 @@ The Query Builder is loaded through the ``table()`` method on the
 database connection. This sets the ``FROM`` portion of the query for you
 and returns a new instance of the Query Builder class::
 
-    $db = \Config\Database::connect();
+    $db      = \Config\Database::connect();
     $builder = $db->table('users');
 
 The Query Builder is only loaded into memory when you specifically request
@@ -45,7 +45,7 @@ Runs the selection query and returns the result. Can be used by itself
 to retrieve all records from a table::
 
     $builder = $db->table('mytable');
-	$query = $builder->get();  // Produces: SELECT * FROM mytable
+    $query   = $builder->get();  // Produces: SELECT * FROM mytable
 
 The first and second parameters enable you to set a limit and offset
 clause::
@@ -197,12 +197,12 @@ Permits you to write the FROM portion of your query::
 Permits you to write the JOIN portion of your query::
 
     $builder->db->table('blog');
-	$builder->select('*');
-	$builder->join('comments', 'comments.id = blogs.id');
-	$query = $builder->get();
+    $builder->select('*');
+    $builder->join('comments', 'comments.id = blogs.id');
+    $query = $builder->get();
 
-	// Produces:
-	// SELECT * FROM blogs JOIN comments ON comments.id = blogs.id
+    // Produces:
+    // SELECT * FROM blogs JOIN comments ON comments.id = blogs.id
 
 Multiple function calls can be made if you need several joins in one
 query.
@@ -600,8 +600,8 @@ function. Here is an example using an array::
 
 	$data = array(
 		'title' => 'My title',
-		'name' => 'My Name',
-		'date' => 'My date'
+		'name'  => 'My Name',
+		'date'  => 'My date'
 	);
 
 	$builder->insert($data);
@@ -613,9 +613,9 @@ Here is an example using an object::
 
 	/*
 	class Myclass {
-		public $title = 'My Title';
+		public $title   = 'My Title';
 		public $content = 'My Content';
-		public $date = 'My Date';
+		public $date    = 'My Date';
 	}
 	*/
 
@@ -673,13 +673,13 @@ function. Here is an example using an array::
 	$data = array(
 		array(
 			'title' => 'My title',
-			'name' => 'My Name',
-			'date' => 'My date'
+			'name'  => 'My Name',
+			'date'  => 'My date'
 		),
 		array(
 			'title' => 'Another title',
-			'name' => 'Another Name',
-			'date' => 'Another date'
+			'name'  => 'Another Name',
+			'date'  => 'Another date'
 		)
 	);
 
@@ -760,8 +760,8 @@ parameter.
 You can also pass an associative array to this function::
 
 	$array = array(
-		'name' => $name,
-		'title' => $title,
+		'name'   => $name,
+		'title'  => $title,
 		'status' => $status
 	);
 
@@ -772,9 +772,9 @@ Or an object::
 
 	/*
 	class Myclass {
-		public $title = 'My Title';
+		public $title   = 'My Title';
 		public $content = 'My Content';
-		public $date = 'My Date';
+		public $date    = 'My Date';
 	}
 	*/
 
@@ -790,8 +790,8 @@ is an example using an array::
 
 	$data = array(
 		'title' => $title,
-		'name' => $name,
-		'date' => $date
+		'name'  => $name,
+		'date'  => $date
 	);
 
 	$builder->where('id', $id);
@@ -806,9 +806,9 @@ Or you can supply an object::
 
 	/*
 	class Myclass {
-		public $title = 'My Title';
+		public $title   = 'My Title';
 		public $content = 'My Content';
-		public $date = 'My Date';
+		public $date    = 'My Date';
 	}
 	*/
 
@@ -845,13 +845,13 @@ Here is an example using an array::
 	$data = array(
 	   array(
 	      'title' => 'My title' ,
-	      'name' => 'My Name 2' ,
-	      'date' => 'My date 2'
+	      'name'  => 'My Name 2' ,
+	      'date'  => 'My date 2'
 	   ),
 	   array(
 	      'title' => 'Another title' ,
-	      'name' => 'Another Name 2' ,
-	      'date' => 'Another date 2'
+	      'name'  => 'Another Name 2' ,
+	      'date'  => 'Another date 2'
 	   )
 	);
 
@@ -947,9 +947,9 @@ Method chaining allows you to simplify your syntax by connecting
 multiple functions. Consider this example::
 
 	$query = $builder->select('title')
-			->where('id', $id)
-			->limit(10, 20)
-			->get();
+			 ->where('id', $id)
+			 ->limit(10, 20)
+			 ->get();
 
 .. _ar-caching:
 
@@ -967,20 +967,20 @@ This is useful in situations where you are using Query Builder to generate SQL
 (ex. ``$builder->getCompiledSelect()``) but then choose to, for instance,
 run the query::
 
-	// Note that the second parameter of the get_compiled_select method is FALSE
-	$sql = $builder->select(array('field1','field2'))
-					->where('field3',5)
-					->getCompiledSelect(false);
+    // Note that the second parameter of the get_compiled_select method is FALSE
+    $sql = $builder->select(array('field1','field2'))
+                   ->where('field3',5)
+                   ->getCompiledSelect(false);
 
-	// ...
-	// Do something crazy with the SQL code... like add it to a cron script for
-	// later execution or something...
-	// ...
+    // ...
+    // Do something crazy with the SQL code... like add it to a cron script for
+    // later execution or something...
+    // ...
 
-	$data = $builder->get()->getResultArray();
+    $data = $builder->get()->getResultArray();
 
-	// Would execute and return an array of results of the following query:
-	// SELECT field1, field1 from mytable where field3 = 5;
+    // Would execute and return an array of results of the following query:
+    // SELECT field1, field1 from mytable where field3 = 5;
 
 ***************
 Class Reference

@@ -391,7 +391,7 @@ Deletes multiple records from the model's table based on the criteria pass into 
 
 	// Complex where
 	$userModel->deleteWhere([
-		'status' => 'inactive',
+		'status'      => 'inactive',
 		'warn_lvl >=' => 50
 	]);
 
@@ -416,15 +416,15 @@ be applied. If you have custom error message that you want to use, place them in
 
 	class UserModel extends Model
 	{
-		protected $validationRules = [
-			'username' => 'required|alpha_numeric_space|min_length[3]',
-			'email'    => 'required|valid_email|is_unique[users.email]',
-			'password' => 'required|min_length[8]',
+		protected $validationRules    = [
+			'username'     => 'required|alpha_numeric_space|min_length[3]',
+			'email'        => 'required|valid_email|is_unique[users.email]',
+			'password'     => 'required|min_length[8]',
 			'pass_confirm' => 'required_with[password]|matches[password]'
 		];
 
 		protected $validationMessages = [
-			'email' => [
+			'email'        => [
 				'is_unique' => 'Sorry. That email has already been taken. Please choose another.'
 			]
 		];
@@ -472,8 +472,8 @@ Occasionally, you will find times where you need to be able to change these elem
 testing, migrations, or seeds. In these cases, you can turn the protection on or off::
 
 	$model->protect(false)
-		  ->insert($data)
-		  ->protect(true);
+	      ->insert($data)
+	      ->protect(true);
 
 Working With Query Builder
 --------------------------
@@ -489,8 +489,8 @@ You can also use Query Builder methods and the Model's CRUD methods in the same 
 very elegant use::
 
 	$users = $userModel->where('status', 'active')
-						->orderBy('last_login', 'asc')
-						->findAll();
+			   ->orderBy('last_login', 'asc')
+			   ->findAll();
 
 .. note:: You can also access the model's database connection seamlessly::
 
@@ -570,7 +570,7 @@ When you need to grab the item in your controller, you can use the **findByHashe
 If you ever need to decode the hash, you may do so with the **decodeID()** method.
 ::
 
-	$hash = $model->encodeID(123);
+	$hash  = $model->encodeID(123);
 	$check = $model->decodeID($hash);
 
 .. note:: While the name is "hashed id", this is not actually a hashed variable, but that term has become

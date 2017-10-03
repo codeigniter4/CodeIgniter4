@@ -18,7 +18,7 @@ It is created automatically by inserting the following:
 
 	.. raw:: html
 
-  	<div class="custom-index container"></div>
+	<div class="custom-index container"></div>
 
 .. contents::
   :local:

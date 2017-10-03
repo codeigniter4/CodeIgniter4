@@ -19,7 +19,7 @@ Normally to echo, or print out a variable you would do this::
 
 With the alternative syntax you can instead do it this way::
 
-	<?= $variable?>
+	<?= $variable ?>
 
 Alternative Control Structures
 ==============================

@@ -84,8 +84,8 @@ should contain the following code::
 
     class AppInfo extends BaseCommand
     {
-        protected $group = 'demo';
-        protected $name  = 'app:info';
+        protected $group       = 'demo';
+        protected $name        = 'app:info';
         protected $description = 'Displays basic application information.';
 
         public function run(array $params)

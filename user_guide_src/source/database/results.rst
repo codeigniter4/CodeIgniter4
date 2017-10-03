@@ -18,14 +18,14 @@ This method returns the query result as an array of **objects**, or
 **an empty array** on failure. Typically you'll use this in a foreach
 loop, like this::
 
-	$query = $db->query("YOUR QUERY");
+    $query = $db->query("YOUR QUERY");
 
-	foreach ($query->getResult() as $row)
-	{
-		echo $row->title;
-		echo $row->name;
-		echo $row->body;
-	}
+    foreach ($query->getResult() as $row)
+    {
+        echo $row->title;
+        echo $row->name;
+        echo $row->body;
+    }
 
 The above method is an alias of ``getResultObject()``.
 
@@ -34,12 +34,12 @@ as an array of arrays::
 
     $query = $db->query("YOUR QUERY");
 
-	foreach ($query->getResult('array') as $row)
-	{
-		echo $row['title'];
-		echo $row['name'];
-		echo $row['body'];
-	}
+    foreach ($query->getResult('array') as $row)
+    {
+        echo $row['title'];
+        echo $row['name'];
+        echo $row['body'];
+    }
 
 The above usage is an alias of ``getResultArray()``.
 
@@ -48,13 +48,13 @@ instantiate for each result object
 
 ::
 
-	$query = $db->query("SELECT * FROM users;");
+    $query = $db->query("SELECT * FROM users;");
 
-	foreach ($query->getResult('User') as $user)
-	{
-		echo $user->name; // access attributes
-		echo $user->reverseName(); // or methods defined on the 'User' class
-	}
+    foreach ($query->getResult('User') as $user)
+    {
+        echo $user->name; // access attributes
+        echo $user->reverseName(); // or methods defined on the 'User' class
+    }
 
 The above method is an alias of ``getCustomResultObject()``.
 
@@ -64,14 +64,14 @@ This method returns the query result as a pure array, or an empty
 array when no result is produced. Typically you'll use this in a foreach
 loop, like this::
 
-	$query = $db->query("YOUR QUERY");
+    $query = $db->query("YOUR QUERY");
 
-	foreach ($query->getResultArray() as $row)
-	{
-		echo $row['title'];
-		echo $row['name'];
-		echo $row['body'];
-	}
+    foreach ($query->getResultArray() as $row)
+    {
+        echo $row['title'];
+        echo $row['name'];
+        echo $row['body'];
+    }
 
 ***********
 Result Rows
@@ -83,16 +83,16 @@ This method returns a single result row. If your query has more than
 one row, it returns only the first row. The result is returned as an
 **object**. Here's a usage example::
 
-	$query = $db->query("YOUR QUERY");
+    $query = $db->query("YOUR QUERY");
 
-	$row = $query->getRow();
+    $row = $query->getRow();
 
-	if (isset($row))
-	{
-		echo $row->title;
-		echo $row->name;
-		echo $row->body;
-	}
+    if (isset($row))
+    {
+        echo $row->title;
+        echo $row->name;
+        echo $row->body;
+    }
 
 If you want a specific row returned you can submit the row number as a
 digit in the first parameter::
@@ -113,16 +113,16 @@ to instantiate the row with::
 Identical to the above ``row()`` method, except it returns an array.
 Example::
 
-	$query = $db->query("YOUR QUERY");
+    $query = $db->query("YOUR QUERY");
 
-	$row = $query->getRowArray();
+    $row = $query->getRowArray();
 
-	if (isset($row))
-	{
-		echo $row['title'];
-		echo $row['name'];
-		echo $row['body'];
-	}
+    if (isset($row))
+    {
+        echo $row['title'];
+        echo $row['name'];
+        echo $row['body'];
+    }
 
 If you want a specific row returned you can submit the row number as a
 digit in the first parameter::
@@ -157,14 +157,14 @@ it returns the current row and moves the internal data pointer ahead.
 
 ::
 
-	$query = $db->query("YOUR QUERY");
+    $query = $db->query("YOUR QUERY");
 
-	while ($row = $query->getUnbufferedRow())
-	{	
-		echo $row->title;
-		echo $row->name;
-		echo $row->body;
-	}
+    while ($row = $query->getUnbufferedRow())
+    {
+        echo $row->title;
+        echo $row->name;
+        echo $row->body;
+    }
 
 You can optionally pass 'object' (default) or 'array' in order to specify
 the returned value's type::

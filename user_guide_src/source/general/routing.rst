@@ -196,7 +196,7 @@ extensive set of routes that all share the opening string, like when building an
 	$routes->group('admin', function($routes)
 	{
 		$routes->add('users', 'Admin\Users::index');
-		$routes->add('blog',  'Admin\Blog::index');
+		$routes->add('blog', 'Admin\Blog::index');
 	});
 
 This would prefix the 'users' and 'blog" URIs with "admin", handling URLs like ``/admin/users`` and ``/admin/blog``.
@@ -300,14 +300,14 @@ name::
     $routes->resource('photos');
 
     // Equivalent to the following:
-    $routes->get('photos',                    'Photos::index');
-    $routes->get('photos/new',                'Photos::new');
-    $routes->get('photos/(:segment)/edit',    'Photos::edit/$1');
-    $routes->get('photos/(:segment)',         'Photos::show/$1');
-    $routes->post('photos',                   'Photos::create');
-    $routes->patch('photos/(:segment)',       'Photos::update/$1');
-    $routes->put('photos/(:segment)',         'Photos::update/$1');
-    $routes->delete('photos/(:segment)',      'Photos::delete/$1');
+    $routes->get('photos',                 'Photos::index');
+    $routes->get('photos/new',             'Photos::new');
+    $routes->get('photos/(:segment)/edit', 'Photos::edit/$1');
+    $routes->get('photos/(:segment)',      'Photos::show/$1');
+    $routes->post('photos',                'Photos::create');
+    $routes->patch('photos/(:segment)',    'Photos::update/$1');
+    $routes->put('photos/(:segment)',      'Photos::update/$1');
+    $routes->delete('photos/(:segment)',   'Photos::delete/$1');
 
 .. important:: The routes are matched in the order they are specified, so if you have a resource photos above a get 'photos/poll'
 the show action's route for the resource line will be matched before the get line. To fix this, move the get line above the resource

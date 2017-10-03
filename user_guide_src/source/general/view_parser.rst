@@ -226,7 +226,7 @@ an associative array of values, like a record from a database::
 	$data = array(
 		'blog_title'   => 'My Blog Title',
 		'blog_heading' => 'My Blog Heading',
-		'blog_entry' => array(
+		'blog_entry'   => array(
 			'title' => 'Title 1', 'body' => 'Body 1'
 		)
 	);
@@ -277,8 +277,10 @@ The following example is not impacted by cascading::
 
 	$template = '{name} lives in {location}{city} on {planet}{/location}.';
 
-	$data = ['name' => 'George',
-		'location' => [ 'city' => 'Red City', 'planet' => 'Mars' ] ];
+	$data = [
+		'name'     => 'George',
+		'location' => [ 'city' => 'Red City', 'planet' => 'Mars' ]
+	];
 
 	echo $parser->setData($data)->renderString($template);
 	// Result: George lives in Red City on Mars.
@@ -287,8 +289,10 @@ This example gives different results, depending on cascading::
 
 	$template = '{location}{name} lives in {city} on {planet}{/location}.';
 
-	$data = ['name' => 'George',
-		'location' => [ 'city' => 'Red City', 'planet' => 'Mars' ] ];
+	$data = [
+		'name'     => 'George',
+		'location' => [ 'city' => 'Red City', 'planet' => 'Mars' ]
+	];
 
 	echo $parser->setData($data)->renderString($template, ['cascadeData'=>false]);
 	// Result: {name} lives in Red City on Mars.
@@ -425,8 +429,8 @@ You can easily create your own filters by editing **application/Config/View.php*
 callable::
 
 	public $filters = [
-		'abs'               => '\CodeIgniter\View\Filters::abs',
-		'capitalize'        => '\CodeIgniter\View\Filters::capitalize',
+		'abs'        => '\CodeIgniter\View\Filters::abs',
+		'capitalize' => '\CodeIgniter\View\Filters::capitalize',
 	];
 
 PHP Native functions as Filters
@@ -539,9 +543,9 @@ template, the original pseudo-variable is shown in the result::
 
 	$template = 'Hello, {firstname} {initials} {lastname}';
 	$data = array(
-		'title' => 'Mr',
+		'title'     => 'Mr',
 		'firstname' => 'John',
-		'lastname' => 'Doe'
+		'lastname'  => 'Doe'
 	);
 	echo $parser->setData($data)
 	             ->renderString($template);
@@ -554,10 +558,10 @@ pair tag, but the closing variable pair tag is not rendered properly::
 
 	$template = 'Hello, {firstname} {lastname} ({degrees}{degree} {/degrees})';
 	$data = array(
-		'degrees' => 'Mr',
+		'degrees'   => 'Mr',
 		'firstname' => 'John',
-		'lastname' => 'Doe',
-		'titles' => array(
+		'lastname'  => 'Doe',
+		'titles'    => array(
 			array('degree' => 'BSc'),
 			array('degree' => 'PhD')
 		)
