@@ -193,7 +193,50 @@ Checking the Response
 When the controller is executed, a new **ControllerResponse** instance will be returned that provides a number
 of helpful methods, as well as direct access to the Request and Response that were generated.
 
+**isOK()**
 
+This provides a simple check that the response would be considered a "successful" response. This primarily checks that
+the HTTP status code is within the 200 or 300 ranges::
+
+    $results = $this->withBody($body)
+                     ->controller(\App\Controllers\ForumController::class)
+                     ->execute('showCategories');
+
+    if ($results->isOK())
+    {
+        . . .
+    }
+
+**request()**
+
+You can access the Request object that was generated with this method::
+
+    $results = $this->withBody($body)
+                     ->controller(\App\Controllers\ForumController::class)
+                     ->execute('showCategories');
+
+    $request = $results->request();
+
+**response()**
+
+This allows you access to the response object that was generated, if any::
+
+    $results = $this->withBody($body)
+                     ->controller(\App\Controllers\ForumController::class)
+                     ->execute('showCategories');
+
+    $response = $results->response();
+
+**getBody()**
+
+You can access the body of the response that would have been sent to the client with the **getBody()** method. This could
+be generated HTML, or a JSON response, etc.::
+
+    $results = $this->withBody($body)
+                     ->controller(\App\Controllers\ForumController::class)
+                     ->execute('showCategories');
+
+    $body = $results->getBody();
 
 =====================
 Testing Your Database
