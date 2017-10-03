@@ -468,11 +468,6 @@ class Services
 			return self::getSharedInstance('renderer', $viewPath, $config);
 		}
 
-		if (is_null($config))
-		{
-			$config = new \Config\View();
-		}
-
 		return new \CodeIgniter\View\View($config, $viewPath, self::locator(true), CI_DEBUG, self::logger(true));
 	}
 
