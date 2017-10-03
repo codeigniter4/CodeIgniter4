@@ -87,9 +87,6 @@ instead of ``CodeIgniter\Router\RouterCollection``::
 	    return new \App\Router\MyRouter();
 	}
 
-	//--------------------------------------------------------------------
-
-
 Allowing Parameters
 -------------------
 
