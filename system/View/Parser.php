@@ -81,17 +81,23 @@ class Parser extends View
 
 	//--------------------------------------------------------------------
 
+
 	/**
 	 * Constructor
 	 *
-	 * @param \Config\View  $config
-	 * @param string $viewPath
-	 * @param mixed $loader
-	 * @param bool $debug
-	 * @param Logger $logger
+	 * @param \Config\View $config
+	 * @param string       $viewPath
+	 * @param mixed        $loader
+	 * @param bool         $debug
+	 * @param Logger       $logger
 	 */
-	public function __construct($config, string $viewPath = null, $loader = null, bool $debug = null, Logger $logger = null)
+	public function __construct($config = null, string $viewPath = null, $loader = null, bool $debug = null, Logger $logger = null)
 	{
+		if (is_null($config))
+		{
+			$config = new \Config\View();
+		}
+
 		// Ensure user plugins override core plugins.
 		$this->plugins = $config->plugins ?? [];
 
