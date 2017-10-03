@@ -75,7 +75,7 @@ if ( ! function_exists('set_cookie'))
 		$response = \Config\Services::response();
 		$response->setcookie
 				(
-				$name, $value, $expire, $domain, $path, $secure, $httpOnly
+				$name, $value, $expire, $domain, $path, $prefix, $secure, $httpOnly
 		);
 	}
 
