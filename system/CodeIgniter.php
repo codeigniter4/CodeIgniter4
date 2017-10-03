@@ -795,11 +795,11 @@ class CodeIgniter
 		// Show the 404 error page
 		if (is_cli())
 		{
-			require APPPATH . 'Views/errors/cli/error_404.php';
+			require  $this->config->errorViewPath . '/cli/error_404.php';
 		}
 		else
 		{
-			require APPPATH . 'Views/errors/html/error_404.php';
+			require  $this->config->errorViewPath . '/html/error_404.php';
 		}
 
 		$buffer = ob_get_contents();
