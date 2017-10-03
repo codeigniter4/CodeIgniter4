@@ -163,11 +163,11 @@ be familiar with when creating your own commands. It also has a :doc:`Logger </g
 
             try
             {
-            . . .
+                . . .
             }
             catch (\Exception $e)
             {
-            $this->showError($e);
+                $this->showError($e);
             }
 
     .. php:method:: showHelp()

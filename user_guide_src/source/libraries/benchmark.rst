@@ -53,9 +53,9 @@ This returns an array of benchmark information, including start, end, and durati
 
 	// Timers =
 	array(
-		'render view' => array(
-			'start' => 1234567890,
-			'end' => 1345678920,
+		'render view'  => array(
+			'start'    => 1234567890,
+			'end'      => 1345678920,
 			'duration' => 15.4315      // number of seconds
 		)
 	)

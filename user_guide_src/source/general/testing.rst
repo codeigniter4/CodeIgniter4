@@ -98,7 +98,7 @@ to run as the parameter::
         {
             $result = $this->withURI('http://example.com/categories')
 			    ->controller(\App\Controllers\ForumController::class)
-                ->execute('showCategories');
+			    ->execute('showCategories');
 
             $this->assertTrue($result->isOK());
         }
@@ -259,8 +259,8 @@ by adding a couple of class properties to your test.
 
     class MyTests extends \CIDatabaseTestCase
     {
-        protected $refresh = true;
-        protected $seed    = 'TestSeeder';
+        protected $refresh  = true;
+        protected $seed     = 'TestSeeder';
         protected $basePath = 'path/to/database/files';
     }
 
@@ -297,7 +297,7 @@ Asserts that a row with criteria matching the key/value pairs in ``$criteria`` D
 ::
 
     $criteria = [
-        'email' => 'joe@example.com',
+        'email'  => 'joe@example.com',
         'active' => 1
     ];
     $this->dontSeeInDatabase('users', $criteria);
@@ -308,7 +308,7 @@ Asserts that a row with criteria matching the key/value pairs in ``$criteria`` D
 ::
 
     $criteria = [
-        'email' => 'joe@example.com',
+        'email'  => 'joe@example.com',
         'active' => 1
     ];
     $this->seeInDatabase('users', $criteria);

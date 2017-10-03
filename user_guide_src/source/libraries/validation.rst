@@ -121,18 +121,18 @@ this code and save it to your **application/Controllers/** folder::
 
 	<?php namespace App\Controllers;
 
-    use CodeIgniter\Controller;
+	use CodeIgniter\Controller;
 
 	class Form extends Controller
 	{
 		public function index()
 		{
-		    helper(['form', 'url']);
+			helper(['form', 'url']);
 
-            if (! $this->validate([]))
+			if (! $this->validate([]))
 			{
 				echo view('Signup', [
-				    'validation' => $this->validation
+					'validation' => $this->validation
 				]);
 			}
 			else
@@ -300,9 +300,9 @@ be used for any errors when this group is used::
 
         public $signup_errors = [
             'username' => [
-                'required' => 'You must choose a username.',
+                'required'    => 'You must choose a username.',
             ],
-            'email' => [
+            'email'    => [
                 'valid_email' => 'Please check the Email field. It does not appear to be valid.'
             ]
         ];
@@ -362,7 +362,7 @@ Here is a more practical example::
 
     $rules = [
         'username' => [
-            'required' => 'All accounts must have usernames provided',
+            'required'   => 'All accounts must have usernames provided',
         ],
         'password' => [
             'min_length' => 'Your password is too short. You want to get hacked?'
@@ -441,7 +441,7 @@ the name of the field that had the error, and the value is the error message, li
 
     $errors = [
         'username' => 'The username field must be unique.',
-        'email' => 'You must provide a valid email address.'
+        'email'    => 'You must provide a valid email address.'
     ];
 
 There are actually two types of views that you can create. The first has an array of all of the errors, and is what
@@ -459,8 +459,8 @@ Inside, you'll find the ``$templates`` property where you can list as many custo
 short alias they can be referenced by. If we were to add our example file from above, it would look something like::
 
     public $templates = [
-        'list'   => 'CodeIgniter\Validation\Views\list',
-        'single' => 'CodeIgniter\Validation\Views\single',
+        'list'    => 'CodeIgniter\Validation\Views\list',
+        'single'  => 'CodeIgniter\Validation\Views\single',
         'my_list' => '_errors_list'
     ];
 
@@ -487,7 +487,7 @@ add the new file to the ``$ruleSets`` array::
     public $ruleSets = [
 		\CodeIgniter\Validation\Rules::class,
 		\CodeIgniter\Validation\FileRules::class,
-        \CodeIgniter\Validation\CreditCardRules::class,
+		\CodeIgniter\Validation\CreditCardRules::class,
 	];
 
 You can add it as either a simple string with the fully qualified class name, or using the ``::class`` suffix as
@@ -532,9 +532,9 @@ If your method needs to work with parameters, the function will need a minimum o
 the parameter string, and an array with all of the data that was submitted the form. The $data array is especially handy
 for rules like ``require_with`` that needs to check the value of another submitted field to base its result on::
 
-    public function required_with($str, string $fields, array $data): bool
+	public function required_with($str, string $fields, array $data): bool
 	{
-	    $fields = explode(',', $fields);
+		$fields = explode(',', $fields);
 
 		// If the field is present we can safely assume that
 		// the field is here, no matter whether the corresponding
