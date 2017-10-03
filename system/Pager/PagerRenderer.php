@@ -117,7 +117,7 @@ class PagerRenderer
 
 		$uri = clone $this->uri;
 
-		$uri->addQuery('page', $this->first - 1);
+		$uri->addQuery('page', $this->current - 1);
 
 		return (string) $uri;
 	}
@@ -131,6 +131,7 @@ class PagerRenderer
 	 */
 	public function hasNext(): bool
 	{
+		//return $this->pageCount > $this->current;
 		return $this->pageCount > $this->last;
 	}
 
@@ -154,7 +155,7 @@ class PagerRenderer
 
 		$uri = clone $this->uri;
 
-		$uri->addQuery('page', $this->last + 1);
+		$uri->addQuery('page', $this->current + 1);
 
 		return (string) $uri;
 	}
