@@ -147,12 +147,11 @@ You can use an anonymous function, or Closure, as the destination that a route m
 executed when the user visits that URI. This is handy for quickly executing small tasks, or even just showing
 a simple view::
 
-	$routes->add('feed', function()
-		{
-			$rss = new RSSFeeder();
-			return $rss->feed('general');
-		{
-	);
+    $routes->add('feed', function()
+    {
+        $rss = new RSSFeeder();
+        return $rss->feed('general');
+    });
 
 Mapping multiple routes
 =======================
@@ -258,9 +257,9 @@ with the name of the route::
     // The route is defined as:
     $routes->add('users/(:id)/gallery(:any)', 'Galleries::showUserGallery/$1/$2', ['as' => 'user_gallery');
 
-	// Generate the relative URL to link to user ID 15, gallery 12
-	// Generates: /users/15/gallery/12
-	<a href="<?= route_to('user_gallery', 15, 12) ?>">View Gallery</a>
+    // Generate the relative URL to link to user ID 15, gallery 12
+    // Generates: /users/15/gallery/12
+    <a href="<?= route_to('user_gallery', 15, 12) ?>">View Gallery</a>
 
 This has the added benefit of making the views more readable, too.
 
@@ -298,17 +297,17 @@ creates the five most common routes needed for full CRUD of a resource: create a
 list all of that resource, show a single resource, and delete a single resource. The first parameter is the resource
 name::
 
-	$routes->resource('photos');
+    $routes->resource('photos');
 
-	// Equivalent to the following:
-	$routes->get('photos',                    'Photos::index');
-	$routes->get('photos/new',                'Photos::new');
-	$routes->get('photos/(:segment)/edit',    'Photos::edit/$1');
-	$routes->get('photos/(:segment)',         'Photos::show/$1');
-	$routes->post('photos',                   'Photos::create');
+    // Equivalent to the following:
+    $routes->get('photos',                    'Photos::index');
+    $routes->get('photos/new',                'Photos::new');
+    $routes->get('photos/(:segment)/edit',    'Photos::edit/$1');
+    $routes->get('photos/(:segment)',         'Photos::show/$1');
+    $routes->post('photos',                   'Photos::create');
     $routes->patch('photos/(:segment)',       'Photos::update/$1');
-	$routes->put('photos/(:segment)',         'Photos::update/$1');
-	$routes->delete('photos/(:segment)',      'Photos::delete/$1');
+    $routes->put('photos/(:segment)',         'Photos::update/$1');
+    $routes->delete('photos/(:segment)',      'Photos::delete/$1');
 
 .. important:: The routes are matched in the order they are specified, so if you have a resource photos above a get 'photos/poll'
 the show action's route for the resource line will be matched before the get line. To fix this, move the get line above the resource
@@ -451,10 +450,10 @@ controller::
     $routes->setDefaultNamespace('');
 
     // Controller is \Users
-	$routes->add('users', 'Users::index');
+    $routes->add('users', 'Users::index');
 
-	// Controller is \Admin\Users
-	$routes->add('users', 'Admin\Users::index');
+    // Controller is \Admin\Users
+    $routes->add('users', 'Admin\Users::index');
 
 
 If your controllers are not explicitly namespaced, there is no need to change this. If you namespace your controllers,
@@ -523,7 +522,8 @@ a valid class/method pair, just like you would show in any route, or a Closure::
     $routes->set404Override('App\Errors::show404');
 
     // Will display a custom view
-    $routes->set404Override(function(){
+    $routes->set404Override(function()
+    {
         echo view('my_errors/not_found.html');
     });
 

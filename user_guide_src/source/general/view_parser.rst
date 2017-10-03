@@ -9,18 +9,18 @@ It can parse simple variables or variable tag pairs.
 Pseudo-variable names or control constructs are enclosed in braces, like this::
 
 	<html>
-		<head>
-			<title>{blog_title}</title>
-		</head>
-		<body>
-			<h3>{blog_heading}</h3>
+	<head>
+		<title>{blog_title}</title>
+	</head>
+	<body>
+		<h3>{blog_heading}</h3>
 
 		{blog_entries}
 			<h5>{title}</h5>
 			<p>{body}</p>
 		{/blog_entries}
 
-		</body>
+	</body>
 	</html>
 
 These variables are not actual PHP variables, but rather plain text
@@ -90,7 +90,7 @@ like this::
 	];
 
 	echo $parser->setData($data)
-		->render('blog_template');
+	             ->render('blog_template');
 
 View parameters are passed to ``setData()`` as an associative
 array of data to be replaced in the template. In the above example, the
@@ -160,18 +160,18 @@ iteration containing new values? Consider the template example we showed
 at the top of the page::
 
 	<html>
-		<head>
-			<title>{blog_title}</title>
-		</head>
-		<body>
-			<h3>{blog_heading}</h3>
+	<head>
+		<title>{blog_title}</title>
+	</head>
+	<body>
+		<h3>{blog_heading}</h3>
 
 		{blog_entries}
 			<h5>{title}</h5>
 			<p>{body}</p>
 		{/blog_entries}
 
-		</body>
+	</body>
 	</html>
 
 In the above code you'll notice a pair of variables: {blog_entries}
@@ -196,7 +196,7 @@ corresponding to your variable pair data. Consider this example::
 	);
 
 	echo $parser->setData($data)
-		->render('blog_template');
+	             ->render('blog_template');
 
 The value for the pseudo-variable ``blog_entries`` is a sequential
 array of associative arrays. The outer level does not have keys associated
@@ -215,7 +215,7 @@ method::
 	);
 
 	echo $parser->setData($data)
-		->render('blog_template');
+	             ->render('blog_template');
 
 Nested Substitutions
 ====================
@@ -232,7 +232,7 @@ an associative array of values, like a record from a database::
 	);
 
 	echo $parser->setData($data)
-		->render('blog_template');
+	             ->render('blog_template');
 
 The value for the pseudo-variable ``blog_entry`` is an associative
 array. The key/value pairs defined inside it will be exposed inside
@@ -434,11 +434,10 @@ PHP Native functions as Filters
 
 You can easily use native php function as filters by editing **application/Config/View.php** and adding new entries to the
 ``$filters`` array.Each key is the name of the native PHP function is called by in the view, and its value is any valid native PHP
-function prefixed with \::
+function prefixed with::
 
 	public $filters = [
-		'str_repeat'               => '\str_repeat',
-		
+		'str_repeat' => '\str_repeat',
 	];
 
 Parser Plugins
@@ -531,7 +530,7 @@ template, they are ignored::
 		'lastname' => 'Doe'
 	);
 	echo $parser->setData($data)
-		->renderString($template);
+	             ->renderString($template);
 
 	// Result: Hello, John Doe
 
@@ -545,7 +544,7 @@ template, the original pseudo-variable is shown in the result::
 		'lastname' => 'Doe'
 	);
 	echo $parser->setData($data)
-		->renderString($template);
+	             ->renderString($template);
 
 	// Result: Hello, John {initials} Doe
 
@@ -564,7 +563,7 @@ pair tag, but the closing variable pair tag is not rendered properly::
 		)
 	);
 	echo $parser->setData($data)
-		->renderString($template);
+	             ->renderString($template);
 
 	// Result: Hello, John Doe (Mr{degree} {/degrees})
 
@@ -590,7 +589,7 @@ An example with the iteration controlled in the view::
 		)
 	);
 	echo $parser->setData($data)
-		->renderString($template);
+	             ->renderString($template);
 
 Result::
 
@@ -619,7 +618,7 @@ using a view fragment::
 		'menuitems' => $temp
 	);
 	echo $parser->setData($data)
-		->renderString($template);
+	             ->renderString($template);
 
 Result::
 
