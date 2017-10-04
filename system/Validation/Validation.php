@@ -235,7 +235,7 @@ class Validation implements ValidationInterface
 				// should throw an exception so the developer can find it.
 				if ( ! $found)
 				{
-					throw new \InvalidArgumentException(lang('Validation.ruleNotFound'));
+					throw new \InvalidArgumentException(lang('Validation.ruleNotFound',['field'=>$rule]));
 				}
 			}
 
