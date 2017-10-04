@@ -112,7 +112,7 @@ class FormatRules
 	 *
 	 * @return    bool
 	 */
-	public function alpha_numeric_spaces(string $str = null): bool
+	public function alpha_numeric_space(string $str = null): bool
 	{
 		return (bool) preg_match('/^[A-Z0-9 ]+$/i', $str);
 	}

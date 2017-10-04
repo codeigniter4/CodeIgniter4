@@ -1010,7 +1010,7 @@ class ValidationTest extends \CIUnitTestCase
 		];
 
 		$this->validation->setRules([
-				'foo' => "alpha_numeric_spaces",
+				'foo' => "alpha_numeric_space",
 		]);
 
 		$this->assertEquals($expected, $this->validation->run($data));
