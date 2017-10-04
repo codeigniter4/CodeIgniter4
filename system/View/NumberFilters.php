@@ -93,7 +93,7 @@ class NumberFilters
 		static $formatter, $currentStyle;
 
 		$locale = $locale ?? \CodeIgniter\Config\Services::request()->getLocale();
-log_message('info',\CodeIgniter\Config\Services::request()->getLocale());
+
 		if ($formatter && $formatter->getLocale() === $locale && $currentStyle === $style)
 		{
 			// Return same instance of NumberFormatter if parameters are the same
