@@ -67,6 +67,13 @@ class Services
 	 */
 	static protected $instances = [];
 
+	/**
+	 * Mock objects for testing which are returned if exist.
+	 *
+	 * @var array
+	 */
+	static protected $mocks = [];
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -536,6 +543,31 @@ class Services
 	//--------------------------------------------------------------------
 
 	/**
+	 * The Redirect class provides nice way of working with redirects.
+	 *
+	 * @param \Config\App $config
+	 * @param bool        $getShared
+	 *
+	 * @return \CodeIgniter\HTTP\Response
+	 */
+	public static function redirectResponse(\Config\App $config = null, $getShared = true)
+	{
+		if ($getShared)
+		{
+			return self::getSharedInstance('redirectResponse', $config);
+		}
+
+		if ( ! is_object($config))
+		{
+			$config = new \Config\App();
+		}
+
+		return new \CodeIgniter\HTTP\RedirectResponse($config);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * The Routes service is a class that allows for easily building
 	 * a collection of routes.
 	 *
@@ -801,6 +833,12 @@ class Services
 	 */
 	protected static function getSharedInstance(string $key, ...$params)
 	{
+		// Returns mock if exists
+		if (isset(static::$mocks[$key]))
+		{
+			return static::$mocks[$key];
+		}
+
 		if ( ! isset(static::$instances[$key]))
 		{
 			// Make sure $getShared is false
@@ -831,6 +869,32 @@ class Services
 		{
 			return Services::$name(...$arguments);
 		}
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Reset shared instances and mocks for testing.
+	 */
+	public static function reset()
+	{
+		static::$mocks = [];
+
+		static::$instances = [];
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Inject mock object for testing.
+	 *
+	 * @param string $name
+	 * @param $mock
+	 */
+	public static function injectMock(string $name, $mock)
+	{
+		$name = strtolower($name);
+		static::$mocks[$name] = $mock;
 	}
 
 	//--------------------------------------------------------------------

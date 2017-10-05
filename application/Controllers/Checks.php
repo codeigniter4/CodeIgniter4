@@ -136,6 +136,8 @@ class Checks extends Controller
 
 	    $politician = $model->find(3);
 
+	    dd($politician);
+
 	}
 
     public function curl()
@@ -160,7 +162,7 @@ class Checks extends Controller
 
 	public function redirect()
 	{
-		redirect('/checks/model');
+		return redirect('/checks/model');
     }
 
 	public function image()
