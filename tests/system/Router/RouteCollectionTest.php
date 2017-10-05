@@ -569,7 +569,7 @@ class RouteCollectionTest extends \CIUnitTestCase
 		$expected = ['here' => '\there'];
 
 		$routes->cli('here', 'there');
-		$this->assertEquals($expected, $routes->getRoutes());
+		$this->assertEquals($expected, $routes->getRoutes('cli'));
 	}
 
 	//--------------------------------------------------------------------

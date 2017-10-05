@@ -1,6 +1,5 @@
 <?php namespace CodeIgniter\Validation;
 
-use CodeIgniter\Services;
 use Config\Database;
 
 class ValidationTest extends \CIUnitTestCase

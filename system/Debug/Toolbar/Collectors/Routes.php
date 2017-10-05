@@ -35,7 +35,7 @@
  * @since        Version 4.0.0
  * @filesource
  */
-use CodeIgniter\Services;
+use CodeIgniter\Config\Services;
 
 /**
  * Routes collector

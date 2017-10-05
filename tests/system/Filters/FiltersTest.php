@@ -1,7 +1,7 @@
 <?php namespace CodeIgniter\Filters;
 
 use CodeIgniter\HTTP\IncomingRequest;
-use CodeIgniter\Services;
+use CodeIgniter\Config\Services;
 
 require __DIR__.'/fixtures/InvalidClass.php';
 require __DIR__.'/fixtures/GoogleMe.php';
