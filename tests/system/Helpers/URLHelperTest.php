@@ -2,9 +2,10 @@
 
 namespace CodeIgniter\Helpers;
 
-use CodeIgniter\HTTP\URI;
 use Config\App;
-use CodeIgniter\Services;
+use CodeIgniter\HTTP\URI;
+use CodeIgniter\Config\Services;
+use CodeIgniter\HTTP\MockIncomingRequest;
 
 /**
  * @backupGlobals enabled

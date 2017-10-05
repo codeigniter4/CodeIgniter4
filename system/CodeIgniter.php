@@ -35,6 +35,7 @@
  * @since	Version 3.0.0
  * @filesource
  */
+use CodeIgniter\HTTP\RedirectResponse;
 use Config\Services;
 use Config\Cache;
 use CodeIgniter\HTTP\URI;
@@ -212,11 +213,7 @@ class CodeIgniter
 			$this->response->redirect($e->getMessage(), 'auto', $e->getCode());
 			$this->callExit(EXIT_SUCCESS);
 		}
-		// Catch Response::redirect()
-		catch (HTTP\RedirectException $e)
-		{
-			$this->callExit(EXIT_SUCCESS);
-		} catch (PageNotFoundException $e)
+		catch (PageNotFoundException $e)
 		{
 			$this->display404errors($e);
 		}
@@ -256,6 +253,12 @@ class CodeIgniter
 		{
 			$this->benchmark->stop('controller_constructor');
 			$this->benchmark->stop('controller');
+		}
+
+		// Handle any redirects
+		if ($returned instanceof RedirectResponse)
+		{
+			$this->callExit(EXIT_SUCCESS);
 		}
 
 		// If $returned is a string, then the controller output something,

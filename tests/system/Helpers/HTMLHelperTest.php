@@ -1,9 +1,5 @@
 <?php namespace CodeIgniter\HTTP;
 
-use CodeIgniter\HTTP\URI;
-use Config\App;
-use CodeIgniter\Services;
-
 final class HTMLHelperTest extends \CIUnitTestCase
 {
 

@@ -1,7 +1,7 @@
 <?php namespace CodeIgniter\HTTP;
 
 use Config\App;
-use CodeIgniter\Services;
+use CodeIgniter\Config\Services;
 
 final class cookieHelperTest extends \CIUnitTestCase
 {
