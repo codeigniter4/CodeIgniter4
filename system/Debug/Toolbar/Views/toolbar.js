@@ -17,6 +17,7 @@ var ciDebugBar = {
         ciDebugBar.createListeners();
         ciDebugBar.setToolbarState();
         ciDebugBar.setToolbarPosition();
+        ciDebugBar.setViewsHints();
     },
 
     //--------------------------------------------------------------------
@@ -144,6 +145,54 @@ var ciDebugBar = {
 
 	    ciDebugBar.icon.style.display = open != 'open' ? 'inline-block' : 'none';
 	    ciDebugBar.toolbar.style.display  = open == 'open' ? 'inline-block' : 'none';
+    },
+
+    //--------------------------------------------------------------------
+
+    setViewsHints: function()
+    {
+        var views = document.getElementsByClassName('debug-view');
+
+        if (ciDebugBar.readCookie('debug-view'))
+        {
+            for (var i = 0; i < views.length; i++)
+            {
+                ciDebugBar.removeClass(views[i], 'ci-hide');
+            }
+        }
+        else
+        {
+            for (var i = 0; i < views.length; i++)
+            {
+                ciDebugBar.addClass(views[i], 'ci-hide');
+            }
+        }
+
+        var btn = document.getElementById('toogle-debug-views');
+
+        btn.onclick = function() {
+            // Had AJAX? Reset view blocks
+            views = document.getElementsByClassName('debug-view');
+
+            if (ciDebugBar.readCookie('debug-view'))
+            {
+                for (var i = 0; i < views.length; i++)
+                {
+                    ciDebugBar.addClass(views[i], 'ci-hide');
+                }
+                ciDebugBar.createCookie('debug-view', '', -1);
+                ciDebugBar.addClass(this, 'active');
+            }
+            else
+            {
+                for (var i = 0; i < views.length; i++)
+                {
+                    ciDebugBar.removeClass(views[i], 'ci-hide');
+                }
+                ciDebugBar.createCookie('debug-view', 'show', 365);
+                ciDebugBar.removeClass(this, 'active');
+            }
+        };
     },
 
     //--------------------------------------------------------------------

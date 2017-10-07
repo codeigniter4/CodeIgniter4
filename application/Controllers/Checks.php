@@ -291,7 +291,7 @@ EOF;
 	<input type="file" name="avatar">
 
 	<input type="submit" value="Upload">
-	
+
 </form>
 
 </body>
@@ -304,6 +304,11 @@ EOF;
 	public function parser()
 	{
 		$this->parser = Services::parser();
+	}
+
+	public function blocks()
+	{
+		return view('blocks/index');
 	}
 
 }
