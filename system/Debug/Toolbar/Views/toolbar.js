@@ -152,12 +152,14 @@ var ciDebugBar = {
     setViewsHints: function()
     {
         var views = document.getElementsByClassName('debug-view');
+        var btn = document.getElementById('toogle-debug-views');
 
         if (ciDebugBar.readCookie('debug-view'))
         {
             for (var i = 0; i < views.length; i++)
             {
                 ciDebugBar.removeClass(views[i], 'ci-hide');
+                ciDebugBar.addClass(btn, 'active');
             }
         }
         else
@@ -167,8 +169,6 @@ var ciDebugBar = {
                 ciDebugBar.addClass(views[i], 'ci-hide');
             }
         }
-
-        var btn = document.getElementById('toogle-debug-views');
 
         btn.onclick = function() {
             // Had AJAX? Reset view blocks
@@ -181,7 +181,7 @@ var ciDebugBar = {
                     ciDebugBar.addClass(views[i], 'ci-hide');
                 }
                 ciDebugBar.createCookie('debug-view', '', -1);
-                ciDebugBar.addClass(this, 'active');
+                ciDebugBar.removeClass(btn, 'active');
             }
             else
             {
@@ -190,7 +190,7 @@ var ciDebugBar = {
                     ciDebugBar.removeClass(views[i], 'ci-hide');
                 }
                 ciDebugBar.createCookie('debug-view', 'show', 365);
-                ciDebugBar.removeClass(this, 'active');
+                ciDebugBar.addClass(btn, 'active');
             }
         };
     },
