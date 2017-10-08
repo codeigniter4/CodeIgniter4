@@ -35,7 +35,9 @@
  * @since	Version 3.0.0
  * @filesource
  */
-require __DIR__ . '/CustomExceptions.php';
+use Config\Services;
+
+require __DIR__.'/CustomExceptions.php';
 
 /**
  * Exceptions manager
@@ -108,7 +110,6 @@ class Exceptions
 		$codes = $this->determineCodes($exception);
 		$code = $codes[0];
 		$exit = $codes[1];
-		$code = $exception->getCode();
 		$message = $exception->getMessage();
 		$file = $exception->getFile();
 		$line = $exception->getLine();
@@ -122,6 +123,8 @@ class Exceptions
 
 		// Log it
 		// Fire an Event
+
+		// Display the error
 		$templates_path = $this->viewPath;
 		if (empty($templates_path))
 		{
@@ -134,7 +137,9 @@ class Exceptions
 		}
 		else
 		{
-			header('HTTP/1.1 500 Internal Server Error', true, 500);
+			$response = Services::response()->setStatusCode($code);
+			$header = "HTTP/1.1 {$response->getStatusCode()} {$response->getReason()}";
+			header($header, true, $code);
 			$templates_path .= 'html/';
 		}
 
