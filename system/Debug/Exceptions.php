@@ -222,6 +222,12 @@ class Exceptions
 			$view = 'error_exception.php';
 		}
 
+		// 403 Errors
+		if ($exception->getCode() === 403)
+		{
+			header('HTTP/1.1 403 Forbidden', true, 403);
+		}
+
 		// 404 Errors
 		if ($exception instanceof \CodeIgniter\PageNotFoundException)
 		{
