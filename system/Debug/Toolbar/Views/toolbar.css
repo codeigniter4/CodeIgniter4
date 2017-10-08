@@ -286,7 +286,7 @@
 	font-style: italic;
 }
 
-.debug-view {
+.debug-view.show-view {
 	border: 1px solid #dd4814;
 	margin: 4px;
 }
@@ -301,10 +301,6 @@
 	text-align: left;
 }
 
-.debug-view.ci-hide {
-	border: 0;
-	margin: 0;
-}
-.debug-view.ci-hide .debug-view-path {
-	display: none;
+.show-view .debug-view-path {
+	display: block !important;
 }

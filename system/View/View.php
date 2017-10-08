@@ -188,11 +188,9 @@ class View implements RendererInterface
 		$output = ob_get_contents();
 		@ob_end_clean();
 
-		// TODO: Check response Content-Type? Is here the correct place to do it?
-		// Compare Environment or some DebugBar Config?
 		if (ENVIRONMENT == 'development')
 		{
-			$output = '<div class="debug-view"><div class="debug-view-path">' . $file . '</div>'
+			$output = '<div class="debug-view"><div class="debug-view-path" style="display: none;">' . $file . '</div>'
 				. $output . '</div>';
 		}
 

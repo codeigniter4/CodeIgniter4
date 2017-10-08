@@ -158,7 +158,7 @@ var ciDebugBar = {
         {
             for (var i = 0; i < views.length; i++)
             {
-                ciDebugBar.removeClass(views[i], 'ci-hide');
+                ciDebugBar.addClass(views[i], 'show-view');
                 ciDebugBar.addClass(btn, 'active');
             }
         }
@@ -166,7 +166,7 @@ var ciDebugBar = {
         {
             for (var i = 0; i < views.length; i++)
             {
-                ciDebugBar.addClass(views[i], 'ci-hide');
+                ciDebugBar.removeClass(views[i], 'show-view');
             }
         }
 
@@ -178,7 +178,7 @@ var ciDebugBar = {
             {
                 for (var i = 0; i < views.length; i++)
                 {
-                    ciDebugBar.addClass(views[i], 'ci-hide');
+                    ciDebugBar.removeClass(views[i], 'show-view');
                 }
                 ciDebugBar.createCookie('debug-view', '', -1);
                 ciDebugBar.removeClass(btn, 'active');
@@ -187,7 +187,7 @@ var ciDebugBar = {
             {
                 for (var i = 0; i < views.length; i++)
                 {
-                    ciDebugBar.removeClass(views[i], 'ci-hide');
+                    ciDebugBar.addClass(views[i], 'show-view');
                 }
                 ciDebugBar.createCookie('debug-view', 'show', 365);
                 ciDebugBar.addClass(btn, 'active');
