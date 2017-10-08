@@ -35,7 +35,7 @@
  * @since	Version 3.0.0
  * @filesource
  */
-use CodeIgniter\DatabaseException;
+use \CodeIgniter\Database\Exceptions\DatabaseException;
 
 /**
  * Class BaseBuilder
@@ -357,7 +357,7 @@ class BaseBuilder
 	 * @param    string $type
 	 *
 	 * @return    BaseBuilder
-	 * @throws \CodeIgniter\DatabaseException
+	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
 	protected function maxMinAvgSum($select = '', $alias = '', $type = 'MAX')
 	{
@@ -1936,7 +1936,7 @@ class BaseBuilder
 	 *
 	 *
 	 * @return    bool
-	 * @throws \CodeIgniter\DatabaseException
+	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
 	protected function validateUpdate()
 	{
@@ -1966,7 +1966,7 @@ class BaseBuilder
 	 * @param    bool   $returnSQL  True means SQL is returned, false will execute the query
 	 *
 	 * @return    mixed    Number of rows affected or FALSE on failure
-	 * @throws \CodeIgniter\DatabaseException
+	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
 	public function updateBatch($set = null, $index = null, $batch_size = 100, $returnSQL = false)
 	{
@@ -2085,7 +2085,7 @@ class BaseBuilder
 	 * @param    bool   $escape
 	 *
 	 * @return    BaseBuilder
-	 * @throws \CodeIgniter\DatabaseException
+	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
 	public function setUpdateBatch($key, $index = '', $escape = null)
 	{
@@ -2234,7 +2234,7 @@ class BaseBuilder
 	 * @param    bool  $returnSQL
 	 *
 	 * @return    mixed
-	 * @throws \CodeIgniter\DatabaseException
+	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
 	public function delete($where = '', $limit = null, $reset_data = true, $returnSQL = false)
 	{

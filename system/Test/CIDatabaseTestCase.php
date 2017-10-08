@@ -255,7 +255,7 @@ class CIDatabaseTestCase extends CIUnitTestCase
 	 * @param array  $where
 	 *
 	 * @return bool
-	 * @throws \CodeIgniter\DatabaseException
+	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
 	public function seeInDatabase(string $table, array $where)
 	{
@@ -277,7 +277,7 @@ class CIDatabaseTestCase extends CIUnitTestCase
 	 * @param array  $where
 	 *
 	 * @return bool
-	 * @throws \CodeIgniter\DatabaseException
+	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
 	public function grabFromDatabase(string $table, string $column, array $where)
 	{
@@ -300,7 +300,7 @@ class CIDatabaseTestCase extends CIUnitTestCase
 	 * @param string $table
 	 * @param array  $data
 	 *
-	 * @throws \CodeIgniter\DatabaseException
+	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
 	public function hasInDatabase(string $table, array $data)
 	{
@@ -323,7 +323,7 @@ class CIDatabaseTestCase extends CIUnitTestCase
 	 * @param array  $where
 	 *
 	 * @return bool
-	 * @throws \CodeIgniter\DatabaseException
+	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
 	public function seeNumRecords(int $expected, string $table, array $where)
 	{

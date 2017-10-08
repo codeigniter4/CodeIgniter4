@@ -132,6 +132,6 @@ DatabaseException
 This exception is thrown for database errors, such as when the database connection cannot be created,
 or when it is temporarily lost::
 
-	throw new \CodeIgniter\DatabaseException();
+	throw new \CodeIgniter\Database\Exceptions\DatabaseException();
 
 This provides an HTTP status code of 500, and an exit code of 8.
