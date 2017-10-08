@@ -452,11 +452,6 @@ class Services
 			return self::getSharedInstance('parser', $viewPath, $config);
 		}
 
-		if (is_null($config))
-		{
-			$config = new \Config\View();
-		}
-
 		return new \CodeIgniter\View\Parser($config, $viewPath, self::locator(true), CI_DEBUG, self::logger(true));
 	}
 
@@ -478,11 +473,6 @@ class Services
 		if ($getShared)
 		{
 			return self::getSharedInstance('renderer', $viewPath, $config);
-		}
-
-		if (is_null($config))
-		{
-			$config = new \Config\View();
 		}
 
 		return new \CodeIgniter\View\View($config, $viewPath, self::locator(true), CI_DEBUG, self::logger(true));
