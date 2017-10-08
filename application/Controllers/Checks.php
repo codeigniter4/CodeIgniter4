@@ -306,4 +306,9 @@ EOF;
 		$this->parser = Services::parser();
 	}
 
+	public function error()
+	{
+		throw new \RuntimeException('Oops!', 403);
+	}
+
 }
