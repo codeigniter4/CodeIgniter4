@@ -36,6 +36,7 @@
  * @filesource
  */
 use Config\Services;
+use Psr\Log\LoggerAwareTrait;
 
 require __DIR__.'/CustomExceptions.php';
 
@@ -44,7 +45,6 @@ require __DIR__.'/CustomExceptions.php';
  */
 class Exceptions
 {
-
 	/**
 	 * Nesting level of the output buffering mechanism
 	 *
@@ -60,6 +60,11 @@ class Exceptions
 	 */
 	protected $viewPath;
 
+	/**
+	 * @var \Config\Exceptions
+	 */
+	protected $config;
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -67,11 +72,13 @@ class Exceptions
 	 *
 	 * @param \Config\App $config
 	 */
-	public function __construct(\Config\App $config)
+	public function __construct(\Config\Exceptions $config)
 	{
 		$this->ob_level = ob_get_level();
 
 		$this->viewPath = rtrim($config->errorViewPath, '/ ') . '/';
+
+		$this->config = $config;
 	}
 
 	//--------------------------------------------------------------------
@@ -109,7 +116,12 @@ class Exceptions
 		$exitCode = $codes[1];
 
 		// Log it
-		// Fire an Event
+		if ($this->config->log === true && ! in_array($statusCode, $this->config->ignoreCodes))
+		{
+			log_message('critical', $exception->getMessage()."\n{trace}", [
+				'trace' => $exception->getTraceAsString()
+			]);
+		}
 
 		if (! is_cli())
 		{

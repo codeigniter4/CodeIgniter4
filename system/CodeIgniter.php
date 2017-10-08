@@ -157,7 +157,7 @@ class CodeIgniter
 		date_default_timezone_set($this->config->appTimezone ?? 'UTC');
 
 		// Setup Exception Handling
-		Services::exceptions($this->config, true)
+		Services::exceptions()
 				->initialize();
 
 		$this->loadEnvironment();

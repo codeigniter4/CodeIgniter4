@@ -192,12 +192,12 @@ class Services
 	 *  - set_error_handler
 	 *  - register_shutdown_function
 	 *
-	 * @param \Config\App $config
-	 * @param bool        $getShared
+	 * @param \Config\Exceptions $config
+	 * @param bool               $getShared
 	 *
 	 * @return \CodeIgniter\Debug\Exceptions
 	 */
-	public static function exceptions(\Config\App $config = null, $getShared = true)
+	public static function exceptions(\Config\Exceptions $config = null, $getShared = true)
 	{
 		if ($getShared)
 		{
@@ -206,10 +206,10 @@ class Services
 
 		if (empty($config))
 		{
-			$config = new \Config\App();
+			$config = new \Config\Exceptions();
 		}
 
-		return new \CodeIgniter\Debug\Exceptions($config);
+		return (new \CodeIgniter\Debug\Exceptions($config));
 	}
 
 	//--------------------------------------------------------------------
