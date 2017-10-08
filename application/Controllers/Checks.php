@@ -306,9 +306,4 @@ EOF;
 		$this->parser = Services::parser();
 	}
 
-	public function blocks()
-	{
-		return view('blocks/index');
-	}
-
 }
