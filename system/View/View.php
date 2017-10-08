@@ -188,7 +188,9 @@ class View implements RendererInterface
 		$output = ob_get_contents();
 		@ob_end_clean();
 
-		if (ENVIRONMENT == 'development')
+		$after = (new \Config\Filters())->globals['after'];
+
+		if (in_array('toolbar', $after) || array_key_exists('toolbar', $after))
 		{
 			$output = '<div class="debug-view"><div class="debug-view-path" style="display: none;">' . $file . '</div>'
 				. $output . '</div>';
