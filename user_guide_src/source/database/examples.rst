@@ -44,7 +44,7 @@ Standard Query With Multiple Results (Array Version)
 
 ::
 
-	$query = $db->query('SELECT name, title, email FROM my_table');
+	$query   = $db->query('SELECT name, title, email FROM my_table');
 	$results = $query->getResultArray();
 
 	foreach ($results as $row)
@@ -63,7 +63,7 @@ Standard Query With Single Result
 ::
 
 	$query = $db->query('SELECT name FROM my_table LIMIT 1');
-	$row = $query->getRow();
+	$row   = $query->getRow();
 	echo $row->name;
 
 The above getRow() function returns an **object**. Example: $row->name
@@ -74,7 +74,7 @@ Standard Query With Single Result (Array version)
 ::
 
 	$query = $db->query('SELECT name FROM my_table LIMIT 1');
-	$row = $query->getRowArray();
+	$row   = $query->getRowArray();
 	echo $row['name'];
 
 The above getRowArray() function returns an **array**. Example:
@@ -113,8 +113,8 @@ Query Builder Insert
 
 	$data = array(
 		'title' => $title,
-		'name' => $name,
-		'date' => $date
+		'name'  => $name,
+		'date'  => $date
 	);
 	
 	$db->table('mytable')->insert($data);  // Produces: INSERT INTO mytable (title, name, date) VALUES ('{$title}', '{$name}', '{$date}')

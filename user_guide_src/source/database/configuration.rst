@@ -11,7 +11,7 @@ The config settings are stored in a class property that is an array with this
 prototype::
 
 	public $default = [
-		'DSN'	=> '',
+		'DSN'	   => '',
 		'hostname' => 'localhost',
 		'username' => 'root',
 		'password' => '',
@@ -103,7 +103,7 @@ connection group for each, then switch between groups as needed. For
 example, to set up a "test" environment you would do this::
 
 	public $test = [
-		'DSN'	=> '',
+		'DSN'	   => '',
 		'hostname' => 'localhost',
 		'username' => 'root',
 		'password' => '',

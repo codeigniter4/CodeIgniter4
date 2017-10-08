@@ -71,29 +71,29 @@ While PHP provides ways to interact with the request and response headers, CodeI
 abstract them so that you have a consistent, simple interface to them. The :doc:`IncomingRequest class </libraries/incomingrequest>`
 is an object-oriented representation of the HTTP request. It provides everything you need::
 
-  use CodeIgniter\HTTP\IncomingRequest;
+	use CodeIgniter\HTTP\IncomingRequest;
 
-  $request = new IncomingRequest(new \Config\App(), new \CodeIgniter\HTTP\URI());
+	$request = new IncomingRequest(new \Config\App(), new \CodeIgniter\HTTP\URI());
 
-  // the URI being requested (i.e. /about)
-  $request->uri->getPath();
+	// the URI being requested (i.e. /about)
+	$request->uri->getPath();
 
-  // Retrieve $_GET and $_POST variables
-  $request->getVar('foo');
-  $request->getGet('foo');
-  $request->getPost('foo');
+	// Retrieve $_GET and $_POST variables
+	$request->getVar('foo');
+	$request->getGet('foo');
+	$request->getPost('foo');
 
-  // Retrieve JSON from AJAX calls
-  $request->getJSON();
+	// Retrieve JSON from AJAX calls
+	$request->getJSON();
 
-  // Retrieve server variables
-  $request->getServer('Host');
+	// Retrieve server variables
+	$request->getServer('Host');
 
-  // Retrieve an HTTP Request header, with case-insensitive names
-  $request->getHeader('host');
-  $request->getHeader('Content-Type');
+	// Retrieve an HTTP Request header, with case-insensitive names
+	$request->getHeader('host');
+	$request->getHeader('Content-Type');
 
-  $request->getMethod();  // GET, POST, PUT, etc
+	$request->getMethod();  // GET, POST, PUT, etc
 
 
 The request class does a lot of work in the background for you, that you never need to worry about.

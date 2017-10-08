@@ -41,7 +41,7 @@ represent your settings::
 	
 	class App extends \CodeIgniter\Config\BaseConfig {
 	
-		public $siteName = 'My Great Site';
+		public $siteName  = 'My Great Site';
 		public $siteEmail = 'webmaster@example.com';
 		
 	}
@@ -148,7 +148,7 @@ contains a dot::
 
 If this was referring to a SimpleConfig configuration object, the above example would be treated as:: 
 
-    $address['city'] = "Berlin";
+    $address['city']    = "Berlin";
     $address['country'] = "Germany";
 
 Any other elements of the ``$address`` property would be unchanged.
@@ -187,8 +187,8 @@ A sample configuration class setup for this::
 
     namespace App\Config;
     class MySalesConfig extends \CodeIgniter\Config\BaseConfig {
-        public $target = 100;
-        public $campaign = "Winter Wonderland";
+        public $target        = 100;
+        public $campaign      = "Winter Wonderland";
         protected $registrars = [
             '\App\Models\RegionalSales';
         ];
@@ -207,6 +207,6 @@ With the above example, when `MySalesConfig` is instantiated, it will end up wit
 the two properties declared, but the value of the `$target` property will be over-ridden
 by treating `RegionalSalesModel` as a "registrar". The resulting configuration properties::
 
-    $target = 45;
+    $target   = 45;
     $campaign = "Winter Wonderland";
 
