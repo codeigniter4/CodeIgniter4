@@ -192,6 +192,15 @@ class View implements RendererInterface
 
 		if (in_array('toolbar', $after) || array_key_exists('toolbar', $after))
 		{
+			// Clean up our path names to make them a little cleaner
+			foreach (['APPPATH', 'BASEPATH', 'ROOTPATH'] as $path)
+			{
+				if (strpos($file, constant($path)) === 0)
+				{
+					$file = str_replace(constant($path), $path.'/', $file);
+				}
+			}
+
 			$output = '<div class="debug-view"><div class="debug-view-path" style="display: none;">' . $file . '</div>'
 				. $output . '</div>';
 		}
