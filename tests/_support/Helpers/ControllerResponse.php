@@ -1,5 +1,6 @@
 <?php namespace Tests\Support\Helpers;
 
+use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 
@@ -111,6 +112,16 @@ class ControllerResponse {
 		}
 
 		return true;
+	}
+
+	/**
+	 * Returns whether or not the Response was a redirect response
+	 *
+	 * @return bool
+	 */
+	public function isRedirect(): bool
+	{
+		return $this->response instanceof RedirectResponse;
 	}
 
 }
