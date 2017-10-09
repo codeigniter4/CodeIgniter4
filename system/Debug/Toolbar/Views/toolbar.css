@@ -146,6 +146,7 @@
 	color: rgba(0, 0, 0, 0.3);
 }
 
+#debug-bar .ci-action,
 #debug-bar .ci-label {
 	border-radius: 0.25em;
 	text-shadow: none;
@@ -154,10 +155,13 @@
 	margin-left: 0.4em;
 }
 
+#debug-bar .ci-action:hover,
 #debug-bar .ci-label:hover {
 	background-color: #eaeaea;
+	cursor: pointer;
 }
 
+#debug-bar .ci-action a,
 #debug-bar .ci-label a {
 	display: block;
 	width: 100%;
@@ -165,6 +169,7 @@
 	text-decoration: none;
 }
 
+#debug-bar .ci-action.active,
 #debug-bar .ci-label.active {
 	background-color: #ccc;
 	border-color: #bbb;
@@ -279,4 +284,23 @@
 	padding-left: 1em;
 	text-align: right;
 	font-style: italic;
+}
+
+.debug-view.show-view {
+	border: 1px solid #dd4814;
+	margin: 4px;
+}
+
+.debug-view-path {
+	background-color: #fdc894;
+	color: #000;
+	padding: 2px;
+	font-family: monospace;
+	font-size: 11px;
+	min-height: 16px;
+	text-align: left;
+}
+
+.show-view .debug-view-path {
+	display: block !important;
 }
