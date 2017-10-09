@@ -28,7 +28,7 @@ class ServicesTest extends \CIUnitTestCase
 
 	public function testNewExceptions()
 	{
-		$actual = Services::exceptions($this->config);
+		$actual = Services::exceptions(new Exceptions());
 		$this->assertInstanceOf(\CodeIgniter\Debug\Exceptions::class, $actual);
 	}
 
