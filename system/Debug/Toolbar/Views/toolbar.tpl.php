@@ -33,7 +33,7 @@
 		<span><?= $totalMemory ?> MB</span>
 		<span class="ci-label"><a href="javascript: void(0)" data-tab="ci-timeline">Timeline</a></span>
 		<?php foreach ($this->collectors as $c) : ?>
-			<?php if ($c->hasTabContent()) : ?>
+			<?php if ($c->hasTabContent() && $c->hasLabel()) : ?>
 				<span class="ci-label">
                     <a href="javascript: void(0)" data-tab="ci-<?= esc($c->getTitle(true)) ?>" >
                         <?= esc($c->getTitle()) ?>
@@ -45,7 +45,6 @@
 			<?php endif; ?>
 		<?php endforeach; ?>
 		<span class="ci-label"><a href="javascript: void(0)" data-tab="ci-vars">Vars</a></span>
-		<span class="ci-action" id="toogle-debug-views"><a href="javascript: void(0)">Views</a></span>
 		<span id="toolbar-position"><a href="javascript: void(0)">&#8597;</a></span>
 	</div>
 
