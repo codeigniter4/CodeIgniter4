@@ -128,7 +128,7 @@ class Forge extends \CodeIgniter\Database\Forge
 		return $sqls;
 	}
 
-        	//--------------------------------------------------------------------
+        //--------------------------------------------------------------------
 
 	/**
 	 * Process column
@@ -140,7 +140,6 @@ class Forge extends \CodeIgniter\Database\Forge
 	{
 		return $this->db->escapeIdentifiers($field['name'])
 				. ' ' . $field['type'] . $field['length']
-			//	. $field['unsigned']
 				. $field['default']
 				. $field['null']
 				. $field['auto_increment']
