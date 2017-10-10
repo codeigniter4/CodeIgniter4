@@ -17,7 +17,7 @@ var ciDebugBar = {
         ciDebugBar.createListeners();
         ciDebugBar.setToolbarState();
         ciDebugBar.setToolbarPosition();
-        ciDebugBar.setViewsHints();
+        ciDebugBar.toogleViewsHints();
     },
 
     //--------------------------------------------------------------------
@@ -35,15 +35,7 @@ var ciDebugBar = {
     //--------------------------------------------------------------------
 
     showTab: function()
-    {
-        // Get the target tab, if any
-        var tab = this.getAttribute('data-tab');
-
-        // Check our current state.
-        var state = document.getElementById(tab).style.display;
-
-        if (tab == undefined) return true;
-
+    {        
         // Hide all tabs
         var tabs = document.querySelectorAll('#debug-bar .tab');
 
@@ -58,14 +50,25 @@ var ciDebugBar = {
         for (var i=0; i < labels.length; i++)
         {
             ciDebugBar.removeClass(labels[i], 'active');
+        }        
+
+        // Get the target tab, if any
+        var tab = document.getElementById(this.getAttribute('data-tab')); 
+
+        // If the label have not a tab stops here
+        if (! tab) {
+            return;
         }
+
+        // Check our current state.
+        var state = tab.style.display;
 
         // Show/hide the selected tab
         if (state != 'block')
         {
-            document.getElementById(tab).style.display = 'block';
+            tab.style.display = 'block';
             ciDebugBar.addClass(this.parentNode, 'active');
-        }
+        }        
     },
 
     //--------------------------------------------------------------------
@@ -149,11 +152,20 @@ var ciDebugBar = {
 
     //--------------------------------------------------------------------
 
-    setViewsHints: function()
+    toogleViewsHints: function()
     {
-        var views = document.getElementsByClassName('debug-view');
-        var btn = document.getElementById('toogle-debug-views');
+        var btn = document.querySelector('[data-tab=ci-views]');
 
+        // If the Views Collector is inactive stops here
+        if (! btn)
+        {
+            return;
+        }
+
+        btn = btn.parentNode;
+
+        var views = document.getElementsByClassName('debug-view');
+      
         if (ciDebugBar.readCookie('debug-view'))
         {
             for (var i = 0; i < views.length; i++)
