@@ -36,6 +36,17 @@ var ciDebugBar = {
 
     showTab: function()
     {        
+        // Get the target tab, if any
+        var tab = document.getElementById(this.getAttribute('data-tab')); 
+
+        // If the label have not a tab stops here
+        if (! tab) {
+            return;
+        }
+
+        // Check our current state.
+        var state = tab.style.display;
+
         // Hide all tabs
         var tabs = document.querySelectorAll('#debug-bar .tab');
 
@@ -50,18 +61,7 @@ var ciDebugBar = {
         for (var i=0; i < labels.length; i++)
         {
             ciDebugBar.removeClass(labels[i], 'active');
-        }        
-
-        // Get the target tab, if any
-        var tab = document.getElementById(this.getAttribute('data-tab')); 
-
-        // If the label have not a tab stops here
-        if (! tab) {
-            return;
         }
-
-        // Check our current state.
-        var state = tab.style.display;
 
         // Show/hide the selected tab
         if (state != 'block')
