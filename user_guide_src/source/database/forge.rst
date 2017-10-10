@@ -72,7 +72,7 @@ also require a 'constraint' key.
 
 	$fields = array(
 		'users' => array(
-			'type' => 'VARCHAR',
+			'type'       => 'VARCHAR',
 			'constraint' => '100',
 		),
 	);
@@ -93,25 +93,25 @@ Additionally, the following key/values can be used:
 ::
 
 	$fields = array(
-		'blog_id' => array(
-			'type' => 'INT',
-			'constraint' => 5,
-			'unsigned' => TRUE,
+		'blog_id'          => array(
+			'type'           => 'INT',
+			'constraint'     => 5,
+			'unsigned'       => TRUE,
 			'auto_increment' => TRUE
 		),
-		'blog_title' => array(
-			'type' => 'VARCHAR',
-			'constraint' => '100',
-			'unique' => TRUE,
+		'blog_title'       => array(
+			'type'           => 'VARCHAR',
+			'constraint'     => '100',
+			'unique'         => TRUE,
 		),
-		'blog_author' => array(
-			'type' =>'VARCHAR',
-			'constraint' => '100',
-			'default' => 'King of Town',
+		'blog_author'      => array(
+			'type'           =>'VARCHAR',
+			'constraint'     => '100',
+			'default'        => 'King of Town',
 		),
 		'blog_description' => array(
-			'type' => 'TEXT',
-			'null' => TRUE,
+			'type'           => 'TEXT',
+			'null'           => TRUE,
 		),
 	);
 

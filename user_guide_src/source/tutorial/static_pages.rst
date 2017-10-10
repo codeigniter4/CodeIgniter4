@@ -34,7 +34,7 @@ code.
 
 		public function view($page = 'home')
 		{
-	    }
+		}
 	}
 
 You have created a class named ``Pages``, with a view method that accepts
@@ -73,8 +73,8 @@ includes the following code:
 
 ::
 
-			<em>&copy; 2016</em>
-		</body>
+		<em>&copy; 2016</em>
+	</body>
 	</html>
 
 Adding logic to the controller
@@ -96,10 +96,10 @@ page actually exists:
 
 	public function view($page = 'home')
 	{
-	    if ( ! file_exists(APPPATH.'/Views/Pages/'.$page.'.php'))
+		if ( ! file_exists(APPPATH.'/Views/Pages/'.$page.'.php'))
 		{
-			// Whoops, we don't have a page for that!
-			throw new \CodeIgniter\PageNotFoundException($page);
+		    // Whoops, we don't have a page for that!
+		    throw new \CodeIgniter\PageNotFoundException($page);
 		}
 
 		$data['title'] = ucfirst($page); // Capitalize the first letter

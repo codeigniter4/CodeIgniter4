@@ -30,7 +30,7 @@ The options are described later in this document::
 
 	$options = [
 		'base_uri' => 'http://example.com/api/v1/',
-		'timeout' => 3
+		'timeout'  => 3
 	];
 	$client = \Config\Services::curlrequest($options);
 
@@ -126,7 +126,7 @@ methods. The most commonly used methods let you determine the response itself.
 
 You can get the status code and reason phrase of the response::
 
-	$code = $response->statusCode();    // 200
+	$code   = $response->statusCode();    // 200
 	$reason = $response->reason();      // OK
 
 You can retrieve headers from the response::
@@ -174,14 +174,14 @@ Setting it to ``true`` will apply the default settings to the request::
 	$client->request('GET', 'http://example.com', ['allow_redirects' => true]);
 
 	// Sets the following defaults:
-	'max'       => 5,   // Maximum number of redirects to follow before stopping
-	'strict' => true,   // Ensure POST requests stay POST requests through redirects
+	'max'       => 5, // Maximum number of redirects to follow before stopping
+	'strict'    => true, // Ensure POST requests stay POST requests through redirects
 	'protocols' => ['http', 'https'] // Restrict redirects to one or more protocols
 
 You can pass in array as the value of the ``allow_redirects`` option to specify new settings in place of the defaults::
 
 	$client->request('GET', 'http://example.com', ['allow_redirects' => [
-		'max' => 10,
+		'max'       => 10,
 		'protocols' => ['https'] // Force HTTPS domains only.
 	]]);
 
@@ -295,11 +295,11 @@ By default, CURLRequest will fail if the HTTP code returned is greater than or e
 ``http_errors`` to ``false`` to return the content instead::
 
     $client->request('GET', '/status/500');
-	// Will fail verbosely
+    // Will fail verbosely
 
-	$res = $client->request('GET', '/status/500', ['http_errors' => false]);
-	echo $res->statusCode();
-	// 500
+    $res = $client->request('GET', '/status/500', ['http_errors' => false]);
+    echo $res->statusCode();
+    // 500
 
 json
 ====
@@ -323,7 +323,7 @@ of POST data to send. For safer usage, the legacy method of uploading files by p
 has been disabled. Any files that you want to send must be passed as instances of CURLFile::
 
 	$post_data = [
-		'foo' => 'bar',
+		'foo'      => 'bar',
 		'userfile' => new CURLFile('/path/to/file.txt')
 	];
 

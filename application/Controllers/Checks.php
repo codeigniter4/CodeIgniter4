@@ -136,6 +136,8 @@ class Checks extends Controller
 
 	    $politician = $model->find(3);
 
+	    dd($politician);
+
 	}
 
     public function curl()
@@ -160,7 +162,7 @@ class Checks extends Controller
 
 	public function redirect()
 	{
-		redirect('/checks/model');
+		return redirect('/checks/model');
     }
 
 	public function image()
@@ -289,7 +291,7 @@ EOF;
 	<input type="file" name="avatar">
 
 	<input type="submit" value="Upload">
-	
+
 </form>
 
 </body>
@@ -302,6 +304,11 @@ EOF;
 	public function parser()
 	{
 		$this->parser = Services::parser();
+	}
+
+	public function error()
+	{
+		throw new \RuntimeException('Oops!', 403);
 	}
 
 }

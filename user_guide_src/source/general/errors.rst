@@ -60,6 +60,27 @@ portion at the top of the main ``index.php`` file.
 
 .. important:: Disabling error reporting DOES NOT stop logs from being written if there are errors.
 
+Logging Exceptions
+------------------
+
+By default, all Exceptions other than 404 - Page Not Found exceptions are logged. This can be turned on and off
+by setting the **$log** value of ``Config\Exceptions``::
+
+    class Exceptions
+    {
+        public $log = true;
+    }
+
+To ignore logging on other status codes, you can set the status code to ignore in the same file::
+
+    class Exceptions
+    {
+        public $ignoredCodes = [ 404 ];
+    }
+
+.. note:: It is possible that logging still will not happen for exceptions if your current Log settings
+    are not setup to log **critical** errors, which all exceptions are logged as.
+
 Custom Exceptions
 =================
 
@@ -132,6 +153,6 @@ DatabaseException
 This exception is thrown for database errors, such as when the database connection cannot be created,
 or when it is temporarily lost::
 
-	throw new \CodeIgniter\DatabaseException();
+	throw new \CodeIgniter\Database\Exceptions\DatabaseException();
 
 This provides an HTTP status code of 500, and an exit code of 8.

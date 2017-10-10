@@ -101,7 +101,7 @@ html_theme = 'sphinx_rtd_theme'
 #
 # Specifying a few options; just a starting point & we can play with it.
 html_theme_options = {
-
+    'display_version': False
 }
 
 # Add any paths that contain custom themes here, relative to this directory.

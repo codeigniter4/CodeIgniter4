@@ -122,12 +122,15 @@ class MigrateLatest extends BaseCommand
 			{
 				CLI::write($message);
 			}
+
+			CLI::write('Done');
+			
 		} catch (\Exception $e)
 		{
 			$this->showError($e);
 		}
 
-		CLI::write('Done');
+		
 	}
 
 }

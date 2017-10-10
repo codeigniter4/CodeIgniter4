@@ -36,7 +36,7 @@
  * @filesource
  */
 use CodeIgniter\Database\BaseBuilder;
-use CodeIgniter\DatabaseException;
+use \CodeIgniter\Database\Exceptions\DatabaseException;
 
 /**
  * Builder for Postgre

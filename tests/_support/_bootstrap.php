@@ -1,4 +1,8 @@
 <?php
+ini_set('error_reporting', E_ALL);;
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
+
 // Make sure it recognizes that we're testing.
 $_SERVER['CI_ENVIRONMENT'] = 'testing';
 
@@ -39,7 +43,7 @@ define('SUPPORTPATH', realpath(TESTPATH.'_support/').'/');
 
 // Use special Services for testing. These allow
 // insert mocks in place of normal services.
-require SUPPORTPATH.'Services.php';
+include BASEPATH.'Config/Services.php';
 
 /*
  * ---------------------------------------------------------------
@@ -66,7 +70,7 @@ require BASEPATH.'Autoloader/Autoloader.php';
 require APPPATH .'Config/Autoload.php';
 require APPPATH .'Config/Services.php';
 
-$loader = CodeIgniter\Services::autoloader();
+$loader = CodeIgniter\Config\Services::autoloader();
 $loader->initialize(new Config\Autoload());
 $loader->register();    // Register the loader with the SPL autoloader stack.
 

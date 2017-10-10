@@ -188,6 +188,23 @@ class View implements RendererInterface
 		$output = ob_get_contents();
 		@ob_end_clean();
 
+		$after = (new \Config\Filters())->globals['after'];
+
+		if (in_array('toolbar', $after) || array_key_exists('toolbar', $after))
+		{
+			// Clean up our path names to make them a little cleaner
+			foreach (['APPPATH', 'BASEPATH', 'ROOTPATH'] as $path)
+			{
+				if (strpos($file, constant($path)) === 0)
+				{
+					$file = str_replace(constant($path), $path.'/', $file);
+				}
+			}
+
+			$output = '<div class="debug-view"><div class="debug-view-path" style="display: none;">' . $file . '</div>'
+				. $output . '</div>';
+		}
+
 		$this->logPerformance($start, microtime(true), $view);
 
 		// Should we cache?

@@ -114,7 +114,7 @@ The second section allows you to define any filters that should be applied to ev
 You should take care with how many you use here, since it could have performance implications to have too many
 run on every request. Filters can be specified by adding their alias to either the before or after array::
 
-    public $globals = [
+	public $globals = [
 		'before' => [
 			'csrf'
 		],
@@ -126,7 +126,7 @@ One common example is if you need to exclude a few URI's from the CSRF protectio
 third-party websites to hit one or two specific URI's, while keeping the rest of them protected. To do this, add
 an array with the 'except' key and a uri to match as the value alongside the alias::
 
-    public $globals = [
+	public $globals = [
 		'before' => [
 			'csrf' => ['except' => 'api/*']
 		],
@@ -138,7 +138,7 @@ an asterisk for a wildcard that will match all characters after that. In this ex
 would be exempted from CSRF protection, but the site's forms would all be protected. If you need to specify multiple
 URI's you can use an array of URI patterns::
 
-    public $globals = [
+	public $globals = [
 		'before' => [
 			'csrf' => ['except' => ['foo/*', 'bar/*']]
 		],

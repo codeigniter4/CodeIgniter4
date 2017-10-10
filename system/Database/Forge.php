@@ -35,7 +35,7 @@
  * @since	Version 3.0.0
  * @filesource
  */
-use CodeIgniter\DatabaseException;
+use \CodeIgniter\Database\Exceptions\DatabaseException;
 
 /**
  * Class Forge
@@ -184,7 +184,7 @@ class Forge
 	 * @param    string $db_name
 	 *
 	 * @return    bool
-	 * @throws \CodeIgniter\DatabaseException
+	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
 	public function createDatabase($db_name)
 	{
@@ -224,7 +224,7 @@ class Forge
 	 * @param    string $db_name
 	 *
 	 * @return    bool
-	 * @throws \CodeIgniter\DatabaseException
+	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
 	public function dropDatabase($db_name)
 	{
@@ -339,7 +339,7 @@ class Forge
 	 * @param    array  $attributes    Associative array of table attributes
 	 *
 	 * @return bool
-	 * @throws \CodeIgniter\DatabaseException
+	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
 	public function createTable($table, $if_not_exists = false, array $attributes = [])
 	{
@@ -474,7 +474,7 @@ class Forge
 	 * @param    bool   $if_exists  Whether to add an IF EXISTS condition
 	 *
 	 * @return mixed
-	 * @throws \CodeIgniter\DatabaseException
+	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
 	public function dropTable($table_name, $if_exists = false)
 	{
@@ -489,7 +489,7 @@ class Forge
 		}
 
 		// If the prefix is already starting the table name, remove it...
-		if (strpos($table_name, $this->db->DBPrefix) === 0)
+		if (! empty($this->db->DBPrefix) && strpos($table_name, $this->db->DBPrefix) === 0)
 		{
 			$table_name = substr($table_name, strlen($this->db->DBPrefix));
 		}
@@ -557,7 +557,7 @@ class Forge
 	 * @param    string $new_table_name New table name
 	 *
 	 * @return    mixed
-	 * @throws \CodeIgniter\DatabaseException
+	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
 	public function renameTable($table_name, $new_table_name)
 	{
@@ -599,7 +599,7 @@ class Forge
 	 * @param    array  $field  Column definition
 	 *
 	 * @return    bool
-	 *  @throws \CodeIgniter\DatabaseException
+	 *  @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
 	public function addColumn($table, $field)
 	{
@@ -643,7 +643,7 @@ class Forge
 	 * @param    string $column_name Column name
 	 *
 	 * @return    bool
-	 * @throws \CodeIgniter\DatabaseException
+	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
 	public function dropColumn($table, $column_name)
 	{
@@ -670,7 +670,7 @@ class Forge
 	 * @param    string $field Column definition
 	 *
 	 * @return    bool
-	 * @throws \CodeIgniter\DatabaseException
+	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
 	public function modifyColumn($table, $field)
 	{

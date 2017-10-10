@@ -98,7 +98,7 @@ to run as the parameter::
         {
             $result = $this->withURI('http://example.com/categories')
 			    ->controller(\App\Controllers\ForumController::class)
-                ->execute('showCategories');
+			    ->execute('showCategories');
 
             $this->assertTrue($result->isOK());
         }
@@ -193,7 +193,50 @@ Checking the Response
 When the controller is executed, a new **ControllerResponse** instance will be returned that provides a number
 of helpful methods, as well as direct access to the Request and Response that were generated.
 
+**isOK()**
 
+This provides a simple check that the response would be considered a "successful" response. This primarily checks that
+the HTTP status code is within the 200 or 300 ranges::
+
+    $results = $this->withBody($body)
+                     ->controller(\App\Controllers\ForumController::class)
+                     ->execute('showCategories');
+
+    if ($results->isOK())
+    {
+        . . .
+    }
+
+**request()**
+
+You can access the Request object that was generated with this method::
+
+    $results = $this->withBody($body)
+                     ->controller(\App\Controllers\ForumController::class)
+                     ->execute('showCategories');
+
+    $request = $results->request();
+
+**response()**
+
+This allows you access to the response object that was generated, if any::
+
+    $results = $this->withBody($body)
+                     ->controller(\App\Controllers\ForumController::class)
+                     ->execute('showCategories');
+
+    $response = $results->response();
+
+**getBody()**
+
+You can access the body of the response that would have been sent to the client with the **getBody()** method. This could
+be generated HTML, or a JSON response, etc.::
+
+    $results = $this->withBody($body)
+                     ->controller(\App\Controllers\ForumController::class)
+                     ->execute('showCategories');
+
+    $body = $results->getBody();
 
 =====================
 Testing Your Database
@@ -259,8 +302,8 @@ by adding a couple of class properties to your test.
 
     class MyTests extends \CIDatabaseTestCase
     {
-        protected $refresh = true;
-        protected $seed    = 'TestSeeder';
+        protected $refresh  = true;
+        protected $seed     = 'TestSeeder';
         protected $basePath = 'path/to/database/files';
     }
 
@@ -297,7 +340,7 @@ Asserts that a row with criteria matching the key/value pairs in ``$criteria`` D
 ::
 
     $criteria = [
-        'email' => 'joe@example.com',
+        'email'  => 'joe@example.com',
         'active' => 1
     ];
     $this->dontSeeInDatabase('users', $criteria);
@@ -308,7 +351,7 @@ Asserts that a row with criteria matching the key/value pairs in ``$criteria`` D
 ::
 
     $criteria = [
-        'email' => 'joe@example.com',
+        'email'  => 'joe@example.com',
         'active' => 1
     ];
     $this->seeInDatabase('users', $criteria);

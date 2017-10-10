@@ -51,10 +51,10 @@ identical. You will set some preferences corresponding to the action you
 intend to perform, then call one of the available processing functions.
 For example, to create an image thumbnail you'll do this::
 
-    $image = Config\Services::image()
-        ->withFile('/path/to/image/mypic.jpg')
-        ->fit(100, 100, 'center')
-        ->save('/path/to/image/mypic_thumb.jpg');
+	$image = Config\Services::image()
+		->withFile('/path/to/image/mypic.jpg')
+		->fit(100, 100, 'center')
+		->save('/path/to/image/mypic_thumb.jpg');
 
 The above code tells the library  to look for an image
 called *mypic.jpg* located in the source_image folder, then create a
@@ -68,12 +68,12 @@ needed before saving. The original image is left untouched, and a new image
 is used and passed through each method, applying the results on top of the
 previous results::
 
-    $image = Config\Services::image()
-        ->withFile('/path/to/image/mypic.jpg')
-        ->reorient()
-        ->rotate(90)
-        ->crop(100, 100, 0, 0)
-        ->save('/path/to/image/mypic_thumb.jpg');
+	$image = Config\Services::image()
+		->withFile('/path/to/image/mypic.jpg')
+		->reorient()
+		->rotate(90)
+		->crop(100, 100, 0, 0)
+		->save('/path/to/image/mypic_thumb.jpg');
 
 This example would take the same image and first fix any mobile phone orientation issues,
 rotate the image by 90 degress, and then crop the result into a 100x100 pixel image,
@@ -144,17 +144,17 @@ To take a 50x50 pixel square out of the center of an image, you would need to fi
 offset values::
 
     $info = Services::image('imagick')
-			->withFile('/path/to/image/mypic.jpg')
-			->getFile()
-			->getProperties(true);
+		->withFile('/path/to/image/mypic.jpg')
+		->getFile()
+		->getProperties(true);
 
     $xOffset = ($info['width'] / 2) - 25;
     $yOffset = ($info['height'] / 2) - 25;
 
     Services::image('imagick')
-        ->withFile('/path/to/image/mypic.jpg')
-        ->crop(50, 50, $xOffset, $yOffset)
-        ->save('path/to/new/image.jpg');
+		->withFile('/path/to/image/mypic.jpg')
+		->crop(50, 50, $xOffset, $yOffset)
+		->save('path/to/new/image.jpg');
 
 Fitting Images
 --------------
@@ -175,10 +175,10 @@ The ``fit()`` method aims to help simplify cropping a portion of an image in a "
 
 This provides a much simpler way to crop that will always maintain the aspect ratio::
 
-    Services::image('imagick')
-        ->withFile('/path/to/image/mypic.jpg')
-        ->fit(100, 150, 'left')
-        ->save('path/to/new/image.jpg');
+	Services::image('imagick')
+		->withFile('/path/to/image/mypic.jpg')
+		->fit(100, 150, 'left')
+		->save('path/to/new/image.jpg');
 
 Flattening Images
 -----------------
@@ -198,15 +198,15 @@ The ``flatten()`` method aims to add a background color behind transparent image
 
 ::
 
-    Services::image('imagick')
-        ->withFile('/path/to/image/mypic.png')
-        ->flatten()
-        ->save('path/to/new/image.jpg');
+	Services::image('imagick')
+		->withFile('/path/to/image/mypic.png')
+		->flatten()
+		->save('path/to/new/image.jpg');
 
-    Services::image('imagick')
-        ->withFile('/path/to/image/mypic.png')
-        ->flatten(25,25,112)
-        ->save('path/to/new/image.jpg');
+	Services::image('imagick')
+		->withFile('/path/to/image/mypic.png')
+		->flatten(25,25,112)
+		->save('path/to/new/image.jpg');
 
 Flipping Images
 ---------------
@@ -219,10 +219,10 @@ Images can be flipped along either their horizontal or vertical axis::
 
 ::
 
-    Services::image('imagick')
-        ->withFile('/path/to/image/mypic.jpg')
-        ->flip('horizontal')
-        ->save('path/to/new/image.jpg');
+	Services::image('imagick')
+		->withFile('/path/to/image/mypic.jpg')
+		->flip('horizontal')
+		->save('path/to/new/image.jpg');
 
 Resizing Images
 ---------------
@@ -243,9 +243,9 @@ while the other dimension will be altered to match the original image's aspect r
 ::
 
 	Services::image('imagick')
-        ->withFile('/path/to/image/mypic.jpg')
-        ->resize(200, 100, true, 'height')
-        ->save('path/to/new/image.jpg');
+		->withFile('/path/to/image/mypic.jpg')
+		->resize(200, 100, true, 'height')
+		->save('path/to/new/image.jpg');
 
 
 Rotating Images
@@ -276,16 +276,16 @@ The first parameter is the string of text that you wish to display. The second p
 that allow you to specify how the text should be displayed::
 
 	Services::image('imagick')
-        ->withFile('/path/to/image/mypic.jpg')
-        ->text('Copyright 2017 My Photo Co', [
-        	'color' => '#fff',
-        	'opacity' => 0.5,
-        	'withShadow' => true,
-        	'hAlign' => 'center',
-        	'vAlign' => 'bottom',
-        	'fontSize' => 20
-        ])
-        ->save('path/to/new/image.jpg');
+		->withFile('/path/to/image/mypic.jpg')
+		->text('Copyright 2017 My Photo Co', [
+		    'color'      => '#fff',
+		    'opacity'    => 0.5,
+		    'withShadow' => true,
+		    'hAlign'     => 'center',
+		    'vAlign'     => 'bottom',
+		    'fontSize'   => 20
+		])
+		->save('path/to/new/image.jpg');
 
 The possible options that are recognized are as follows:
 

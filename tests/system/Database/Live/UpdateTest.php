@@ -1,6 +1,6 @@
 <?php namespace CodeIgniter\Database\Live;
 
-use CodeIgniter\DatabaseException;
+use \CodeIgniter\Database\Exceptions\DatabaseException;
 
 /**
  * @group DatabaseLive

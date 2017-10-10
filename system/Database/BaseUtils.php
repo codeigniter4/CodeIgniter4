@@ -35,7 +35,7 @@
  * @since	Version 3.0.0
  * @filesource
  */
-use CodeIgniter\DatabaseException;
+use \CodeIgniter\Database\Exceptions\DatabaseException;
 
 /**
  * Class BaseUtils
@@ -91,7 +91,7 @@ abstract class BaseUtils
 	 * List databases
 	 *
 	 * @return	array|bool
-	 * @throws \CodeIgniter\DatabaseException
+	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
 	public function listDatabases()
 	{
@@ -145,7 +145,7 @@ abstract class BaseUtils
 	 *
 	 * @param	string	$table_name
 	 * @return bool|mixed
-	 * @throws \CodeIgniter\DatabaseException
+	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
 	public function optimizeTable($table_name)
 	{
@@ -174,7 +174,7 @@ abstract class BaseUtils
 	 * Optimize Database
 	 *
 	 * @return mixed
-	 * @throws \CodeIgniter\DatabaseException
+	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
 	public function optimizeDatabase()
 	{
@@ -216,7 +216,7 @@ abstract class BaseUtils
 	 *
 	 * @param	string	$table_name
 	 * @return	mixed
-	 * @throws \CodeIgniter\DatabaseException
+	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
 	public function repairTable($table_name)
 	{
@@ -324,7 +324,7 @@ abstract class BaseUtils
 	 *
 	 * @param	array	$params
 	 * @return	mixed
-	 * @throws \CodeIgniter\DatabaseException
+	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
 	public function backup($params = [])
 	{

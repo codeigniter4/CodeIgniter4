@@ -122,8 +122,8 @@ The following functions are available:
 	Example::
 
 		$str = array(
-			'question'  => 'Is your name O\'reilly?',
-			'answer' => 'No, my name is O\'connor.'
+			'question' => 'Is your name O\'reilly?',
+			'answer'   => 'No, my name is O\'connor.'
 		);
 
 		$str = strip_slashes($str);
@@ -131,8 +131,8 @@ The following functions are available:
 	The above will return the following array::
 
 		array(
-			'question'  => "Is your name O'reilly?",
-			'answer' => "No, my name is O'connor."
+			'question' => "Is your name O'reilly?",
+			'answer'   => "No, my name is O'connor."
 		);
 
 	.. note:: For historical reasons, this function will also accept
@@ -289,7 +289,7 @@ The following functions are available:
 	Example::
 
 		$disallowed = array('darn', 'shucks', 'golly', 'phooey');
-		$string = word_censor($string, $disallowed, 'Beep!');
+		$string     = word_censor($string, $disallowed, 'Beep!');
 
 .. php:function:: highlight_code($str)
 

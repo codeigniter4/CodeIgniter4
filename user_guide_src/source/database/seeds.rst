@@ -20,7 +20,7 @@ stored within the **application/Database/Seeds** directory. The name of the file
 		{
 			$data = [
 				'username' => 'darth',
-				'email' => 'darth@theempire.com'
+				'email'    => 'darth@theempire.com'
 			];
 
 			// Simple Queries

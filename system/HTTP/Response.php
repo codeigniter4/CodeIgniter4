@@ -556,6 +556,7 @@ class Response extends Message implements ResponseInterface
 	 * @param string $method
 	 * @param int    $code The type of redirection, defaults to 302
 	 *
+	 * @return $this
 	 * @throws \CodeIgniter\HTTP\RedirectException
 	 */
 	public function redirect(string $uri, string $method = 'auto', int $code = null)
@@ -592,8 +593,7 @@ class Response extends Message implements ResponseInterface
 
 		$this->sendHeaders();
 
-		// CodeIgniter will catch this exception and exit.
-		throw new RedirectException('Redirect to ' . $uri, $code);
+		return $this;
 	}
 
 	//--------------------------------------------------------------------

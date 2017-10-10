@@ -136,7 +136,7 @@ class ViewTest extends \CIUnitTestCase
 		$view->setVar('testString', 'Hello World');
 		$expected = '<h1>Hello World</h1>';
 
-		$this->assertEquals($expected, $view->render('simple'));
+		$this->assertTrue(strpos($view->render('simple'), $expected) !== false);
 	}
 
 	//--------------------------------------------------------------------

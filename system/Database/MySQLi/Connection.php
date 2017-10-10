@@ -37,7 +37,7 @@
  */
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\ConnectionInterface;
-use CodeIgniter\DatabaseException;
+use \CodeIgniter\Database\Exceptions\DatabaseException;
 
 /**
  * Connection for MySQLi
@@ -91,7 +91,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 * @param bool $persistent
 	 *
 	 * @return mixed
-	 * @throws \CodeIgniter\DatabaseException
+	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
 	public function connect($persistent = false)
 	{

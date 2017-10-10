@@ -61,19 +61,19 @@ as *20121031100537_Add_blog.php*.
 		public function up()
 		{
 			$this->forge->addField([
-				'blog_id' => [
-					'type' => 'INT',
-					'constraint' => 5,
-					'unsigned' => TRUE,
+				'blog_id'          => [
+					'type'           => 'INT',
+					'constraint'     => 5,
+					'unsigned'       => TRUE,
 					'auto_increment' => TRUE
 				],
-				'blog_title' => [
-					'type' => 'VARCHAR',
-					'constraint' => '100',
+				'blog_title'       => [
+					'type'           => 'VARCHAR',
+					'constraint'     => '100',
 				],
 				'blog_description' => [
-					'type' => 'TEXT',
-					'null' => TRUE,
+					'type'           => 'TEXT',
+					'null'           => TRUE,
 				],
 			]);
 			$this->forge->addKey('blog_id', TRUE);
@@ -137,7 +137,7 @@ For example, assume that we have the the following namespaces defined in our Aut
 configuration file::
 
 	$psr4 = [
-		'App' => APPPATH,
+		'App'       => APPPATH,
 		'MyCompany' => ROOTPATH.'MyCompany'
 	];
 
