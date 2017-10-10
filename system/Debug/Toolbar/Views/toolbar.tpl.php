@@ -33,7 +33,7 @@
 		<span><?= $totalMemory ?> MB</span>
 		<span class="ci-label"><a href="javascript: void(0)" data-tab="ci-timeline">Timeline</a></span>
 		<?php foreach ($this->collectors as $c) : ?>
-			<?php if ($c->hasTabContent() && $c->hasLabel()) : ?>
+			<?php if ($c->hasTabContent() || $c->hasLabel()) : ?>
 				<span class="ci-label">
                     <a href="javascript: void(0)" data-tab="ci-<?= esc($c->getTitle(true)) ?>" >
                         <?= esc($c->getTitle()) ?>

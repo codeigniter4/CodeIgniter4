@@ -64,7 +64,7 @@ class BaseCollector
 	 *
 	 * @var bool
 	 */
-	protected $hasLabel = true;
+	protected $hasLabel = false;
 
 	/**
 	 * Whether this collector has data that
