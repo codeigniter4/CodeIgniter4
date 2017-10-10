@@ -188,12 +188,17 @@ class View implements RendererInterface
 		$output = ob_get_contents();
 		@ob_end_clean();
 
-		$after = (new \Config\Filters())->globals['after'];
-
-		if (in_array('toolbar', $after) || array_key_exists('toolbar', $after))
+		if (CI_DEBUG)
 		{
-			$output = '<div class="debug-view"><div class="debug-view-path" style="display: none;">' . $file . '</div>'
-				. $output . '</div>';
+			$after = (new \Config\Filters())->globals['after'];
+			if (in_array('toolbar', $after) || array_key_exists('toolbar', $after))
+			{
+				$toolbarCollectors =  (new \Config\App())->toolbarCollectors;
+				if (in_array('CodeIgniter\Debug\Toolbar\Collectors\Views', $toolbarCollectors) || array_key_exists('CodeIgniter\Debug\Toolbar\Collectors\Views', $toolbarCollectors))
+				{
+					$output = '<div class="debug-view"><div class="debug-view-path" style="display: none;">' . $file . '</div>' . $output . '</div>';
+				}
+			}
 		}
 
 		$this->logPerformance($start, microtime(true), $view);
