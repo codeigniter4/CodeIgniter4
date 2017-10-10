@@ -196,4 +196,144 @@ class DOMParserTest extends CIUnitTestCase
 
 		$this->assertFalse($dom->see('Hello World', 'h2.heading'));
 	}
+
+	public function testSeeElementSuccess()
+	{
+		$dom = new DOMParser();
+
+		$html = '<html><body><h1 id="heading">Hello World Wide Web</h1></body></html>';
+		$dom->withString($html);
+
+		$this->assertTrue($dom->seeElement('#heading'));
+	}
+
+	public function testSeeElementFail()
+	{
+		$dom = new DOMParser();
+
+		$html = '<html><body><h1 id="heading">Hello World Wide Web</h1></body></html>';
+		$dom->withString($html);
+
+		$this->assertFalse($dom->seeElement('#headings'));
+	}
+
+	public function testDontSeeElementSuccess()
+	{
+		$dom = new DOMParser();
+
+		$html = '<html><body><h1 id="heading">Hello World Wide Web</h1></body></html>';
+		$dom->withString($html);
+
+		$this->assertTrue($dom->dontSeeElement('#head'));
+	}
+
+	public function testDontSeeElementFail()
+	{
+		$dom = new DOMParser();
+
+		$html = '<html><body><h1 id="heading">Hello World Wide Web</h1></body></html>';
+		$dom->withString($html);
+
+		$this->assertFalse($dom->dontSeeElement('#heading'));
+	}
+
+	public function testSeeLinkSuccess()
+	{
+		$dom = new DOMParser();
+
+		$html = '<html><body><a href="http://example.com">Hello</a></body></html>';
+		$dom->withString($html);
+
+		$this->assertTrue($dom->seeLink('Hello'));
+	}
+
+	public function testSeeLinkFalse()
+	{
+		$dom = new DOMParser();
+
+		$html = '<html><body><a href="http://example.com">Hello</a></body></html>';
+		$dom->withString($html);
+
+		$this->assertFalse($dom->seeLink('Hello World!'));
+	}
+
+	public function testSeeLinkClassSuccess()
+	{
+		$dom = new DOMParser();
+
+		$html = '<html><body><a class="btn" href="http://example.com">Hello</a></body></html>';
+		$dom->withString($html);
+
+		$this->assertTrue($dom->seeLink('Hello', '.btn'));
+	}
+
+	public function testSeeLinkClassFail()
+	{
+		$dom = new DOMParser();
+
+		$html = '<html><body><a class="button" href="http://example.com">Hello</a></body></html>';
+		$dom->withString($html);
+
+		$this->assertFalse($dom->seeLink('Hello', '.btn'));
+	}
+
+	public function testSeeInFieldSuccess()
+	{
+		$dom = new DOMParser();
+
+		$html = '<html><body><input type="text" name="user" value="Foobar"></body></html>';
+		$dom->withString($html);
+
+		$this->assertTrue($dom->seeInField('user', 'Foobar'));
+	}
+
+	public function testSeeInFieldFail()
+	{
+		$dom = new DOMParser();
+
+		$html = '<html><body><input type="text" name="user" value="Foobar"></body></html>';
+		$dom->withString($html);
+
+		$this->assertFalse($dom->seeInField('user', 'Foobars'));
+	}
+
+	public function testSeeInFieldSuccessArray()
+	{
+		$dom = new DOMParser();
+
+		$html = '<html><body><input type="text" name="user[name]" value="Foobar"></body></html>';
+		$dom->withString($html);
+
+		$this->assertTrue($dom->seeInField('user[name]', 'Foobar'));
+	}
+
+	public function testSeeCheckboxIsCheckedByIDTrue()
+	{
+		$dom = new DOMParser();
+
+		$html = '<html><body><input type="checkbox" name="user" id="user" value="1" checked></body></html>';
+		$dom->withString($html);
+
+		$this->assertTrue($dom->seeCheckboxIsChecked('#user'));
+	}
+
+	public function testSeeCheckboxIsCheckedByIDFail()
+	{
+		$dom = new DOMParser();
+
+		$html = '<html><body><input type="checkbox" name="user" id="users" value="1" checked></body></html>';
+		$dom->withString($html);
+
+		$this->assertFalse($dom->seeCheckboxIsChecked('#user'));
+	}
+
+	public function testSeeCheckboxIsCheckedByClassTrue()
+	{
+		$dom = new DOMParser();
+
+		$html = '<html><body><input type="checkbox" name="user" class="btn" value="1" checked></body></html>';
+		$dom->withString($html);
+
+		$this->assertTrue($dom->seeCheckboxIsChecked('.btn'));
+	}
 }
