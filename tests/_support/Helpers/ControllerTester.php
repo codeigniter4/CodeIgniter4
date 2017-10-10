@@ -113,6 +113,7 @@ trait ControllerTester
 			}
 
 			$result->response()->setBody($output);
+			$result->setBody($output);
 		}
 
 		// If not response code has been sent, assume a success

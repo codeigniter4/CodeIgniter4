@@ -1,5 +1,6 @@
 <?php namespace Tests\Support\Helpers;
 
+use Tests\Support\DOM\DOMParser;
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
@@ -21,6 +22,16 @@ class ControllerResponse {
 	 */
 	protected $body;
 
+	/**
+	 * @var DOMParser
+	 */
+	protected $dom;
+
+	public function __construct()
+	{
+		$this->dom = new DOMParser();
+	}
+
 	//--------------------------------------------------------------------
 	// Getters / Setters
 	//--------------------------------------------------------------------
@@ -33,6 +44,11 @@ class ControllerResponse {
 	public function setBody(string $body)
 	{
 		$this->body = $body;
+
+		if (! empty($body))
+		{
+			$this->dom = $this->dom->withString($body);
+		}
 
 		return $this;
 	}
@@ -66,6 +82,8 @@ class ControllerResponse {
 	public function setResponse(ResponseInterface $response)
 	{
 		$this->response = $response;
+
+		$this->setBody($response->getBody() ?? '');
 
 		return $this;
 	}
@@ -122,6 +140,18 @@ class ControllerResponse {
 	public function isRedirect(): bool
 	{
 		return $this->response instanceof RedirectResponse;
+	}
+
+	//--------------------------------------------------------------------
+	// Utility
+	//--------------------------------------------------------------------
+
+	public function __call($function, $params)
+	{
+		if (method_exists($this->dom, $function))
+		{
+			return $this->dom->{$function}(...$params);
+		}
 	}
 
 }
