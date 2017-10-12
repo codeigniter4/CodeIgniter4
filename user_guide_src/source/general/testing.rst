@@ -207,6 +207,19 @@ the HTTP status code is within the 200 or 300 ranges::
         . . .
     }
 
+**isRedirect()**
+
+Checks to see if the final response was a redirection of some sort::
+
+    $results = $this->withBody($body)
+                     ->controller(\App\Controllers\ForumController::class)
+                     ->execute('showCategories');
+
+    if ($results->isRedirect())
+    {
+        . . .
+    }
+
 **request()**
 
 You can access the Request object that was generated with this method::
@@ -237,6 +250,62 @@ be generated HTML, or a JSON response, etc.::
                      ->execute('showCategories');
 
     $body = $results->getBody();
+
+Response Helper methods
+-----------------------
+
+The response you get back contains a number of helper methods to inspect the HTML output within the response. These
+are useful for using within assertions in your tests.
+
+The **see()** method checks the text on the page to see if it exists either by itself, or more specifically within
+a tag, as specified by type, class, or id::
+
+    // Check that "Hello World" is on the page
+    $results->see('Hello World');
+    // Check that "Hello World" is within an h1 tag
+    $results->see('Hello World', 'h1');
+    // Check that "Hello World" is within an element with the "notice" class
+    $results->see('Hello World', '.notice');
+    // Check that "Hello World" is within an element with id of "title"
+    $results->see('Hellow World', '#title');
+
+The **dontSee()** method is the exact opposite::
+
+    // Checks that "Hello World" does NOT exist on the page
+    $results->dontSee('Hello World");
+    // Checks that "Hellow World" does NOT exist within any h1 tag
+    $results->dontSee('Hello World', 'h1');
+
+The **seeElement()** and **dontSeeElement()** are very similar to the previous methods, but do not look at the
+values of the elements. Instead, they simply check that the elements exist on the page::
+
+    // Check that an element with class 'notice' exists
+    $results->seeElement('.notice');
+    // Check that an element with id 'title' exists
+    $results->seeElement('#title')
+    // Verify that an element with id 'title' does NOT exist
+    $results->dontSeeElement('#title');
+
+You can use **seeLink()** to ensure that a link appears on the page with the specified text::
+
+    // Check that a link exists with 'Upgrade Account' as the text::
+    $results->seeLink('Upgrade Account');
+    // Check that a link exists with 'Upgrade Account' as the text, AND a class of 'upsell'
+    $results->seeLink('Upgrade Account', '.upsell');
+
+The **seeInField()** method checks for any input tags exist with the name and value::
+
+    // Check that an input exists named 'user' with the value 'John Snow'
+    $results->seeInField('user', 'John Snow');
+    // Check a multi-dimensional input
+    $results->seeInField('user[name]', 'John Snow');
+
+Finally, you can check if a checkbox exists and is checked with the **seeCheckboxIsChecked()** method::
+
+    // Check if checkbox is checked with class of 'foo'
+    $results->seeCheckboxIsChecked('.foo');
+    // Check if checkbox with id of 'bar' is checked
+    $results->seeCheckboxIsChecked('#bar');
 
 =====================
 Testing Your Database
