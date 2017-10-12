@@ -37,7 +37,7 @@
  */
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
-use CodeIgniter\Config\Services;
+use Config\Services;
 
 /**
  * Common Functions
@@ -339,7 +339,7 @@ if ( ! function_exists('service'))
 	 *
 	 * These are equal:
 	 *  - $timer = service('timer')
-	 *  - $timer = \CodeIgniter\Congif\Services::timer();
+	 *  - $timer = \CodeIgniter\Config\Services::timer();
 	 *
 	 * @param string $name
 	 * @param array  ...$params
