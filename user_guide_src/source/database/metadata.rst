@@ -118,7 +118,7 @@ Usage example::
 If you have run a query already you can use the result object instead of
 supplying the table name::
 
-	$query = $db->query("YOUR QUERY");
+	$query  = $db->query("YOUR QUERY");
 	$fields = $query->fieldData();
 
 The following data is available from this function if supported by your

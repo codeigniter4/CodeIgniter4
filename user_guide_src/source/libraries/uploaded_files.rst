@@ -100,23 +100,25 @@ For get the file instance::
 
 Multiple files
 ^^^^^^^^^^^^^^
+::
 
-	<input type="file" name="images[]" multiple />
+    <input type="file" name="images[]" multiple />
 
 In controller::
-	if($imagefile = $this->request->getFiles())
-	{  
-	   foreach($imagefile['images'] as $Im)
-	   {
-	      if ($im->isValid() && ! $im->hasMoved())
-	      {
-	           $newName = $img->getRandomName();
-	           $img->move(WRITEPATH.'uploads', $newName);
-	      }
-	   }
-	}
 
-	where the **images** is loop is from the form field name
+    if($imagefile = $this->request->getFiles())
+    {
+       foreach($imagefile['images'] as $Im)
+       {
+          if ($im->isValid() && ! $im->hasMoved())
+          {
+               $newName = $img->getRandomName();
+               $img->move(WRITEPATH.'uploads', $newName);
+          }
+       }
+    }
+
+where the **images** is loop is from the form field name
 	
 If there are multiple files with the same name you can use ``getFile()`` ro retrieve every file individually::
 In controller::

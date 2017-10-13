@@ -196,6 +196,14 @@ class View implements RendererInterface
 				$toolbarCollectors =  (new \Config\App())->toolbarCollectors;
 				if (in_array('CodeIgniter\Debug\Toolbar\Collectors\Views', $toolbarCollectors) || array_key_exists('CodeIgniter\Debug\Toolbar\Collectors\Views', $toolbarCollectors))
 				{
+					// Clean up our path names to make them a little cleaner
+					foreach (['APPPATH', 'BASEPATH', 'ROOTPATH'] as $path)
+					{
+						if (strpos($file, constant($path)) === 0)
+						{
+							$file = str_replace(constant($path), $path.'/', $file);
+						}
+					}
 					$output = '<div class="debug-view"><div class="debug-view-path" style="display: none;">' . $file . '</div>' . $output . '</div>';
 				}
 			}

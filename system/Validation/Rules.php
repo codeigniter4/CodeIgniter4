@@ -158,8 +158,11 @@ class Rules
 		sscanf($field, '%[^.].%[^.]', $table, $field);
 
 		$db = Database::connect();
+		
 		$row = $db->table($table)
-				->where($field, $str);
+				  ->select('1')
+				  ->where($field, $str)
+				  ->limit(1);
 
 		if ( ! empty($ignoreField) && ! empty($ignoreValue))
 		{

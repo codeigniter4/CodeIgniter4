@@ -157,7 +157,7 @@ class CodeIgniter
 		date_default_timezone_set($this->config->appTimezone ?? 'UTC');
 
 		// Setup Exception Handling
-		Services::exceptions($this->config, true)
+		Services::exceptions()
 				->initialize();
 
 		$this->loadEnvironment();
@@ -788,29 +788,7 @@ class CodeIgniter
 			}
 		}
 
-		ob_start();
-
-		// These might show as unused here - but don't delete!
-		// They are used within the view files.
-		$heading = 'Page Not Found';
-		$message = $e->getMessage();
-
-		// Show the 404 error page
-		if (is_cli())
-		{
-			require  $this->config->errorViewPath . '/cli/error_404.php';
-		}
-		else
-		{
-			require  $this->config->errorViewPath . '/html/error_404.php';
-		}
-
-		$buffer = ob_get_contents();
-		ob_end_clean();
-
-		$this->response->setBody($buffer);
-		$this->response->send();
-		$this->callExit(EXIT_UNKNOWN_FILE);	// Unknown file
+		throw new PageNotFoundException(lang('HTTP.pageNotFound'));
 	}
 
 	//--------------------------------------------------------------------

@@ -67,11 +67,11 @@ Create the model first at **application/Models/UserModel.php** so that we can in
 
     class UserModel extends Model
     {
-        protected $table = 'users';
+        protected $table         = 'users';
         protected $allowedFields = [
             'username', 'email', 'password'
         ];
-        protected $returnType = 'App\Entities\User';
+        protected $returnType    = 'App\Entities\User';
         protected $useTimestamps = true;
     }
 
@@ -103,7 +103,7 @@ Now that all of the pieces are in place, you would work with the Entity class as
     // Create
     $user = new App\Entities\User();
     $user->username = 'foo';
-    $user->email = 'foo@example.com';
+    $user->email    = 'foo@example.com';
     $userModel->save($user);
 
 You may have noticed that the User class has all of the properties as **protected** not **public**, but you can still
@@ -161,7 +161,7 @@ Here's an updated User entity to provide some examples of how this could be used
         {
             $this->created_at = new \DateTime($datetime, new \DateTimeZone('UTC'));
 
-            return
+            return $this;
         }
 
         public function getCreatedAt(string $format = 'Y-m-d H:i:s')
@@ -355,10 +355,10 @@ you can cast properties into, the **array** cast type will serialize the value w
         ];
     }
 
-    $user = $userModel->find(15);
+    $user    = $userModel->find(15);
     $options = $user->options;
 
     $options['foo'] = 'bar';
 
-    $user->options = $options;
+    $user->options  = $options;
     $userModel->save($user);

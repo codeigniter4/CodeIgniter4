@@ -80,7 +80,7 @@ class DOMParser
 	 *
 	 * @return bool
 	 */
-	public function see(string $search, string $element=null): bool
+	public function see(string $search=null, string $element=null): bool
 	{
 		// If Element is null, we're just scanning for text
 		if (is_null($element))
@@ -89,6 +89,100 @@ class DOMParser
 			return strpos($content, $search) !== false;
 		}
 
+		$result = $this->doXPath($search, $element);
+
+		return (bool)$result->length;
+	}
+
+	/**
+	 * Checks to see if the text is NOT found within the result.
+	 *
+	 * @param string      $search
+	 * @param string|null $element
+	 *
+	 * @return bool
+	 */
+	public function dontSee(string $search=null, string $element=null): bool
+	{
+		return ! $this->see($search, $element);
+	}
+
+	/**
+	 * Checks to see if an element with the matching CSS specifier
+	 * is found within the current DOM.
+	 *
+	 * @param string $element
+	 *
+	 * @return bool
+	 */
+	public function seeElement(string $element): bool
+	{
+		return $this->see(null, $element);
+	}
+
+	/**
+	 * Checks to see if the element is available within the result.
+	 *
+	 * @param string $element
+	 *
+	 * @return bool
+	 */
+	public function dontSeeElement(string $element): bool
+	{
+		return $this->dontSee(null, $element);
+	}
+
+	/**
+	 * Determines if a link with the specified text is found
+	 * within the results.
+	 *
+	 * @param string      $text
+	 * @param string|null $details
+	 *
+	 * @return bool
+	 */
+	public function seeLink(string $text, string $details=null): bool
+	{
+		return $this->see($text, 'a'.$details);
+	}
+
+	/**
+	 * Checks for an input named $field with a value of $value.
+	 *
+	 * @param string $field
+	 * @param string $value
+	 *
+	 * @return bool
+	 */
+	public function seeInField(string $field, string $value): bool
+	{
+		$result = $this->doXPath(null, "input", ["[@value=\"{$value}\"][@name=\"{$field}\"]"]);
+
+		return (bool)$result->length;
+	}
+
+	/**
+	 * Checks for checkboxes that are currently checked.
+	 *
+	 * @param string $element
+	 *
+	 * @return bool
+	 */
+	public function seeCheckboxIsChecked(string $element): bool
+	{
+		$result = $this->doXPath(null, "input".$element, [
+			'[@type="checkbox"]',
+			'[@checked="checked"]'
+		]);
+
+		return (bool)$result->length;
+	}
+
+
+	//--------------------------------------------------------------------
+
+	protected function doXPath(string $search=null, string $element, array $paths=[])
+	{
 		// Otherwise, grab any elements that match
 		// the selector
 		$selector = $this->parseSelector($element);
@@ -115,26 +209,34 @@ class DOMParser
 			$path = "//body//{$selector['tag']}";
 		}
 
-		$path .= "[contains(., \"{$search}\")]";
+		if (! empty($selector['attr']))
+		{
+			foreach ($selector['attr'] as $key => $value)
+			{
+				$path .= "[{$key}={$value}]";
+			}
+		}
+
+		// $paths might contain a number of different
+		// ready to go xpath portions to tack on.
+		if (! empty($paths) && is_array($paths))
+		{
+			foreach ($paths as $extra)
+			{
+				$path .= $extra;
+			}
+		}
+
+		if (! is_null($search))
+		{
+			$path .= "[contains(., \"{$search}\")]";
+		}
 
 		$xpath = new \DOMXPath($this->dom);
 
 		$result = $xpath->query($path);
 
-		return (bool)$result->length;
-	}
-
-	/**
-	 * Checks to see if the text is NOT found within the result.
-	 *
-	 * @param string      $search
-	 * @param string|null $element
-	 *
-	 * @return bool
-	 */
-	public function dontSee(string $search, string $element=null): bool
-	{
-		return ! $this->see($search, $element);
+		return $result;
 	}
 
 	public function parseSelector(string $selector)
@@ -165,7 +267,7 @@ class DOMParser
 			list($name, $value) = explode('=', $text);
 			$name = trim($name);
 			$value = trim($value);
-			$attr = [$name => $value];
+			$attr = [$name => trim($value, '] ')];
 		}
 		// Class?
 		elseif ($pos = strpos($selector, '.') !== false)

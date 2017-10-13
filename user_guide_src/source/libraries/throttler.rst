@@ -50,17 +50,17 @@ The Code
 
 You can find this file at **application/Filters/Throttle.php** but the relevant method is reproduced here::
 
-    public function before(RequestInterface $request)
+	public function before(RequestInterface $request)
 	{
-        $throttler = Services::throttler();
+		$throttler = Services::throttler();
 
-        // Restrict an IP address to no more
-        // than 1 request per second across the
-        // entire site.
-        if ($throttler->check($request->getIPAddress(), 60, MINUTE) === false)
-        {
-            return Services::response()->setStatusCode(429);
-        }
+		// Restrict an IP address to no more
+		// than 1 request per second across the
+		// entire site.
+		if ($throttler->check($request->getIPAddress(), 60, MINUTE) === false)
+		{
+		    return Services::response()->setStatusCode(429);
+		}
 	}
 
 When ran, this method first grabs an instance of the throttler. Next it uses the IP address as the bucket name,
@@ -77,10 +77,10 @@ to apply only to POST requests, though API's might want to limit to every reques
 this to incoming requests, you need to edit **/application/Config/Filters.php** and first add an alias to the
 filter::
 
-    public $aliases = [
+	public $aliases = [
 		'csrf' 	  => \App\Filters\CSRF::class,
 		'toolbar' => \App\Filters\DebugToolbar::class,
-        'throttle' => \App\Filters\Throttle::class
+		'throttle' => \App\Filters\Throttle::class
 	];
 
 Next, we assign it to all POST requests made on the site::

@@ -86,7 +86,7 @@ trait ControllerTester
 		// so ensure it's available.
 		helper('url');
 
-		$response = (new ControllerResponse())
+		$result = (new ControllerResponse())
 			->setRequest($this->request)
 			->setResponse($this->response);
 
@@ -94,27 +94,35 @@ trait ControllerTester
 		{
 			ob_start();
 
-			$this->controller->{$method}(...$params);
+			$response = $this->controller->{$method}(...$params);
 		}
 		catch (\Throwable $e)
 		{
-			$response->response()
-			         ->setStatusCode($e->getCode());
+			$result->response()
+			       ->setStatusCode($e->getCode());
 		}
 		finally
 		{
 			$output = ob_get_clean();
 
-			$response->response()->setBody($output);
+			// If the controller returned a redirect response
+			// then we need to use that...
+			if (isset($response) && $response instanceof Response)
+			{
+				$result->setResponse($response);
+			}
+
+			$result->response()->setBody($output);
+			$result->setBody($output);
 		}
 
 		// If not response code has been sent, assume a success
-		if (empty($response->response()->getStatusCode()))
+		if (empty($result->response()->getStatusCode()))
 		{
-			$response->response()->setStatusCode(200);
+			$result->response()->setStatusCode(200);
 		}
 
-		return $response;
+		return $result;
 	}
 
 	/**
