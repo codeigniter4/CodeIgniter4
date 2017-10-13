@@ -41,38 +41,16 @@ class DebugToolbar implements FilterInterface
 
 			$toolbar = Services::toolbar(new App());
 			$stats   = $app->getPerformanceStats();
-                        $output  = $toolbar->run(
+
+			return $response->appendBody(
+				$toolbar->run(
 					$stats['startTime'],
 					$stats['totalTime'],
 					$stats['startMemory'],
 					$request,
 					$response
-				);
-
-                        helper('filesystem');
-                        helper('text');
-                        $fileName = 'debugbar_' . random_string(); 
-                        write_file('./' . $fileName, $output, 'w+');
-                        return $response->appendBody( PHP_EOL .
-'<div id="ci_toolbar"></div>
-<script>
-    document.addEventListener(\'DOMContentLoaded\', loadDoc, false);
-
-    function loadDoc() {
-      var xhttp = new XMLHttpRequest();
-      xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-          var x = document.body.innerHTML;
-          document.body.innerHTML = x + this.responseText;
-          var arr = document.body.getElementsByTagName(\'script\')
-          for (var n = 0; n < arr.length; n++)
-            eval(arr[n].innerHTML)//run script inside div          
-        }
-      };
-      xhttp.open("GET", "/getdebugbar.php?f='.$fileName.'", true);
-      xhttp.send();
-    }
-</script>');
+				)
+			);
 		}
 	}
 
