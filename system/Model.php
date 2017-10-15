@@ -163,6 +163,13 @@ class Model
 	 */
 	protected $tempUseSoftDeletes;
 
+    /**
+	 * The column used to save soft delete state
+	 *
+	 * @var string
+	 */
+	protected $deletedField = 'deleted';
+
 	/**
 	 * Used by asArray and asObject to provide
 	 * temporary overrides of model default.
@@ -299,7 +306,7 @@ class Model
 
 		if ($this->tempUseSoftDeletes === true)
 		{
-			$builder->where('deleted', 0);
+			$builder->where($this->deletedField, 0);
 		}
 
 		if (is_array($id))
@@ -340,7 +347,7 @@ class Model
 
 		if ($this->tempUseSoftDeletes === true)
 		{
-			$builder->where('deleted', 0);
+			$builder->where($this->deletedField, 0);
 		}
 
 		$rows = $builder->where($key, $value)
@@ -373,7 +380,7 @@ class Model
 
 		if ($this->tempUseSoftDeletes === true)
 		{
-			$builder->where('deleted', 0);
+			$builder->where($this->deletedField, 0);
 		}
 
 		$row = $builder->limit($limit, $offset)
@@ -403,7 +410,7 @@ class Model
 
 		if ($this->tempUseSoftDeletes === true)
 		{
-			$builder->where('deleted', 0);
+			$builder->where($this->deletedField, 0);
 		}
 
 		// Some databases, like PostgreSQL, need order
@@ -817,7 +824,7 @@ class Model
 	{
 		if ($this->useSoftDeletes && ! $purge)
 		{
-            $set['deleted'] = 1;
+            $set[$this->deletedField] = 1;
 
             if ($this->useTimestamps)
             {
@@ -863,7 +870,7 @@ class Model
 
 		if ($this->useSoftDeletes && ! $purge)
 		{
-            $set['deleted'] = 1;
+            $set[$this->deletedField] = 1;
 
             if ($this->useTimestamps)
             {
@@ -903,7 +910,7 @@ class Model
 		}
 
 		return $this->builder()
-						->where('deleted', 1)
+						->where($this->deletedField, 1)
 						->delete();
 	}
 
@@ -937,7 +944,7 @@ class Model
 		$this->tempUseSoftDeletes = false;
 
 		$this->builder()
-				->where('deleted', 1);
+				->where($this->deletedField, 1);
 
 		return $this;
 	}
