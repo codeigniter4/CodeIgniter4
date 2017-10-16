@@ -204,7 +204,7 @@ class View implements RendererInterface
 							$file = str_replace(constant($path), $path.'/', $file);
 						}
 					}
-					$output = '<div class="debug-view"><div class="debug-view-path" style="display: none;">' . $file . '</div>' . $output . '</div>';
+					$output = '<!-- DEBUG-VIEW START ' . $file . ' -->' . $output . '<!-- DEBUG-VIEW ENDED ' . $file . ' -->';
 				}
 			}
 		}
