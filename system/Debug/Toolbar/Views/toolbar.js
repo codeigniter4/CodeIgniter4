@@ -355,9 +355,13 @@ var ciDebugBar = {
 					// Start
 					for( var i = 0; i < ChildArray.length; ++i )
 					{
-						if( ChildArray[i] === StartElement[0] )
+						// check for comment ( start & end ) -> if its before valid start element
+						if( ChildArray[i] === sortedComments[key][1] ||
+							ChildArray[i] === sortedComments[key][0] ||
+							ChildArray[i] === StartElement[0] )
 						{
 							Start = i;
+							if( ChildArray[i] === sortedComments[key][0] ) Start++; // increase to skip the start comment
 							break;
 						}
 					}
@@ -370,12 +374,19 @@ var ciDebugBar = {
 						if( ChildArray[i] === EndElement[0] )
 						{
 							End = i;
+							// dont break to check for end comment after end valid element
+						}
+						else if( ChildArray[i] === sortedComments[key][1] )
+						{
+							// if we found the end comment, we can break
+							End = i;
 							break;
 						}
 					}
 
 					// move elements
-					var Number = End - Start + 1;
+					var Number = End - Start;
+					if( EndElement[1] ) Number++;
 					for( var i = 0; i < Number; ++i )
 					{
 						if( InvalidElements.indexOf( ChildArray[Start] ) !== -1 )
