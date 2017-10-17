@@ -7,6 +7,15 @@ use CodeIgniter\I18n\Time;
 use CodeIgniter\Model;
 use Config\Database;
 
+/**
+ * NOTE: This is not a valid file for actual tests.
+ * This file came about as a small testbed I was using that
+ * accidentally got committed. It will be removed prior to release
+ * If you commit any changes to this file, it should be accompanied
+ * by actual tests also.
+ *
+ * @package App\Controllers
+ */
 class Checks extends Controller
 {
 	use ResponseTrait;
