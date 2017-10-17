@@ -112,6 +112,8 @@ class Connection extends BaseConnection implements ConnectionInterface
 		$client_flags = ($this->compress === true) ? MYSQLI_CLIENT_COMPRESS : 0;
 		$this->mysqli = mysqli_init();
 
+		mysqli_report(MYSQLI_REPORT_ALL & ~MYSQLI_REPORT_INDEX);
+		
 		$this->mysqli->options(MYSQLI_OPT_CONNECT_TIMEOUT, 10);
 
 		if (isset($this->strictOn))
