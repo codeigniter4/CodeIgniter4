@@ -29,13 +29,12 @@ class ForgeTest extends \CIDatabaseTestCase
 		]);
 
 		$this->forge->addKey('id', true);
-		$this->forge->createTable('forge_test_table', true);
+		$this->forge->createTable('forge_test_table');
 
 		$exist = $this->db->tableExists('forge_test_table');
+		$this->forge->dropTable('forge_test_table', true);
 
 		$this->assertTrue($exist);
-
-		$this->forge->dropTable('forge_test_table', true);
 	}
 
 	public function testAddFields()

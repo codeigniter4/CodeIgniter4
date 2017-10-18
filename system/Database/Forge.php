@@ -468,6 +468,7 @@ class Forge
 	 */
 	protected function _createTable($table, $if_not_exists, $attributes)
 	{
+		// For any platforms that don't support Create If Not Exists...
 		if ($if_not_exists === true && $this->createTableIfStr === false)
 		{
 			if ($this->db->tableExists($table))
@@ -488,10 +489,10 @@ class Forge
 			$columns[$i] = ($columns[$i]['_literal'] !== false) ? "\n\t" . $columns[$i]['_literal'] : "\n\t" . $this->_processColumn($columns[$i]);
 		}
 
-                $columns = implode(',', $columns);
-                
-                $columns .= $this->_processPrimaryKeys($table);
-                $columns .= $this->_processForeignKeys($table);
+        $columns = implode(',', $columns);
+
+        $columns .= $this->_processPrimaryKeys($table);
+        $columns .= $this->_processForeignKeys($table);
 
 		// Are indexes created from within the CREATE TABLE statement? (e.g. in MySQL)
 		if ($this->createTableKeys === true)
@@ -500,8 +501,7 @@ class Forge
 		}
 
 		// createTableStr will usually have the following format: "%s %s (%s\n)"
-		$sql = sprintf($this->createTableStr . '%s', $sql, $this->db->escapeIdentifiers($table), $columns, $this->_createTableAttributes($attributes)
-		);
+		$sql = sprintf($this->createTableStr . '%s', $sql, $this->db->escapeIdentifiers($table), $columns, $this->_createTableAttributes($attributes));
 
 		return $sql;
 	}
