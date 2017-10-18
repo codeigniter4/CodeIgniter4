@@ -156,29 +156,39 @@ var ciDebugBar = {
 	{
 		var nodeList 		= []; // [ Element, NewElement( 1 )/OldElement( 0 ) ]
 		var sortedComments 	= [];
+		var comments 		= [];
 
-		// get all comments | iterate over all nodes
-		// @return array of comment nodes
-		var getComments = function( parentElement )
+		var getComments = function()
 		{
-			var comments = [];
-			var childs = parentElement.childNodes;
-			for( var i = 0; i < childs.length; ++i )
+			var nodes = [];
+			var result = [];
+			var xpathResults = document.evaluate( "//comment()[starts-with(., ' DEBUG-VIEW')]", document, null, XPathResult.ANY_TYPE, null);
+			var nextNode = xpathResults.iterateNext();
+			while( nextNode )
 			{
-				if( childs[i].nodeType === Node.COMMENT_NODE &&
-					childs[i].nodeValue.startsWith( ' DEBUG-VIEW' ) )
-				{
-					comments.push( childs[i] );
-					continue;
-				}
+				nodes.push( nextNode );
+				nextNode = xpathResults.iterateNext();
+			}
 
-				if( childs[i].childNodes.length > 0 )
+			// sort comment by opening and closing tags
+			for( var i = 0; i < nodes.length; ++i )
+			{
+				// get file path + name to use as key
+				var path = nodes[i].nodeValue.substring( 18, nodes[i].nodeValue.length - 1 );
+
+				if( nodes[i].nodeValue[12] === 'S' ) // simple check for start comment
 				{
-					var childComments = getComments( childs[i] );
-					comments.push.apply( comments, childComments );
+					// create new entry
+					result[path] = [ nodes[i], null ];
+				}
+				else
+				{
+					// add to existing entry
+					result[path][1] = nodes[i];
 				}
 			}
-			return comments;
+
+			return result;
 		};
 
 		// find node that has TargetNode as parentNode
@@ -250,26 +260,6 @@ var ciDebugBar = {
 			return null;
 		};
 
-		var comments = getComments( document );
-		// sort comment by opening and closing tags
-		for( var i = 0; i < comments.length; ++i )
-		{
-			// get file path + name to use as key
-			var path = comments[i].nodeValue.substring( 18, comments[i].nodeValue.length - 1 );
-
-			if( comments[i].nodeValue[12] === 'S' ) // simple check for start comment
-			{
-				// create new entry
-				sortedComments[path] = [ comments[i], null ];
-			}
-			else
-			{
-				// add to existing entry
-				sortedComments[path][1] = comments[i];
-			}
-		}
-		comments.length = 0;
-
 		var btn = document.querySelector('[data-tab=ci-views]');
 
 		// If the Views Collector is inactive stops here
@@ -282,7 +272,7 @@ var ciDebugBar = {
 
 		btn.onclick = function() {
 			// Had AJAX? Reset view blocks
-			//comments = getComments( document ); // TODO : remove comment/enable line
+			sortedComments = getComments();
 
 			if (ciDebugBar.readCookie('debug-view'))
 			{
