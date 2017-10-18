@@ -17,7 +17,6 @@ class ForgeTest extends \CIDatabaseTestCase
 
 	public function testCreateTable()
 	{
-		// Ensure we have a clean slate
 		$this->forge->dropTable('forge_test_table', true);
 
 		$this->forge->addField([
@@ -27,14 +26,13 @@ class ForgeTest extends \CIDatabaseTestCase
 			],
 		]);
 
-		$this->forge->createTable('forge_test_table');
+		$this->forge->createTable('forge_test_table', true);
 
 		$exist = $this->db->tableExists('forge_test_table');
 
 		$this->assertTrue($exist);
 
 		$this->forge->dropTable('forge_test_table', true);
-
 	}
 
 	public function testAddFields()
