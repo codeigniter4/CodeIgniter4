@@ -20,12 +20,15 @@ class ForgeTest extends \CIDatabaseTestCase
 		$this->forge->dropTable('forge_test_table', true);
 
 		$this->forge->addField([
-			'name' => [
-				'type'       => 'VARCHAR',
-				'constraint' => 255,
+			'id'       => [
+				'type'           => 'INTEGER',
+				'constraint'     => 11,
+				'unsigned'       => false,
+				'auto_increment' => true,
 			],
 		]);
 
+		$this->forge->addKey('id', true);
 		$this->forge->createTable('forge_test_table', true);
 
 		$exist = $this->db->tableExists('forge_test_table');
@@ -68,7 +71,10 @@ class ForgeTest extends \CIDatabaseTestCase
 
 		//Check Field names
 		$fieldsNames = $this->db->getFieldNames('forge_test_fields');
-		$this->assertEquals($fieldsNames, ['id', 'username', 'name', 'active']);
+		$this->assertTrue(in_array('id', $fieldsNames));
+		$this->assertTrue(in_array('username', $fieldsNames));
+		$this->assertTrue(in_array('name', $fieldsNames));
+		$this->assertTrue(in_array('active', $fieldsNames));
 
 
 		$fieldsData = $this->db->getFieldData('forge_test_fields');
