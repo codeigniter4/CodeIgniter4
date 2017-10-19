@@ -401,10 +401,6 @@ var ciDebugBar = {
 		{			
 			showHints();
 		}
-		else
-		{
-			hideHints();
-		}
 
 		btn.onclick = function() {			
 			if (ciDebugBar.readCookie('debug-view'))
