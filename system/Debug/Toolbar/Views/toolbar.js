@@ -262,6 +262,130 @@ var ciDebugBar = {
 			return null;
 		};
 
+		function showHints() {
+			// Had AJAX? Reset view blocks
+			sortedComments = getComments();
+
+			for( var key in sortedComments )
+			{
+				var startElement 	= getValidElement( sortedComments[key][0] );
+				var endElement 		= getValidElement( sortedComments[key][1] );
+
+				// skip if we couldnt get a valid element
+				if( startElement === null || endElement === null ) continue;
+
+				// find element which has same parent as startelement
+				var jointParent = getParentNode( endElement[0], startElement[0].parentNode );
+				if( jointParent === null )
+				{
+					// find element which has same parent as endelement
+					jointParent = getParentNode( startElement[0], endElement[0].parentNode );
+					if( jointParent === null )
+					{
+						// both tries failed
+						continue;
+					}
+					else startElement[0] = jointParent;
+				}
+				else endElement[0] = jointParent;
+
+				var debugDiv 		= document.createElement( 'div' ); // holder
+				var debugPath		= document.createElement( 'div' ); // path
+				var childArray 		= startElement[0].parentNode.childNodes; // target child array
+				var parent			= startElement[0].parentNode;
+				var start, end;
+
+				// setup container
+				debugDiv.classList.add( 'debug-view' );
+				debugDiv.classList.add( 'show-view' );
+				debugPath.classList.add( 'debug-view-path' );
+				debugPath.innerText = key;
+				debugDiv.appendChild( debugPath );
+
+				// calc distance between them
+				// start
+				for( var i = 0; i < childArray.length; ++i )
+				{
+					// check for comment ( start & end ) -> if its before valid start element
+					if( childArray[i] === sortedComments[key][1] ||
+						childArray[i] === sortedComments[key][0] ||
+						childArray[i] === startElement[0] )
+					{
+						start = i;
+						if( childArray[i] === sortedComments[key][0] ) start++; // increase to skip the start comment
+						break;
+					}
+				}
+				// adjust if we want to skip the start element
+				if( startElement[1] ) start++;
+
+				// end
+				for( var i = start; i < childArray.length; ++i )
+				{
+					if( childArray[i] === endElement[0] )
+					{
+						end = i;
+						// dont break to check for end comment after end valid element
+					}
+					else if( childArray[i] === sortedComments[key][1] )
+					{
+						// if we found the end comment, we can break
+						end = i;
+						break;
+					}
+				}
+
+				// move elements
+				var number = end - start;
+				if( endElement[1] ) number++;
+				for( var i = 0; i < number; ++i )
+				{
+					if( INVALID_ELEMENTS.indexOf( childArray[start] ) !== -1 )
+					{
+						// skip invalid childs that can cause problems if moved
+						start++;
+						continue;
+					}
+					debugDiv.appendChild( childArray[start] );
+				}
+
+				// add container to DOM
+				nodeList.push( parent.insertBefore( debugDiv, childArray[start] ) );
+			}
+
+			ciDebugBar.createCookie('debug-view', 'show', 365);
+			ciDebugBar.addClass(btn, 'active');
+		}
+
+		function hideHints() {
+			for( var i = 0; i < nodeList.length; ++i )
+			{
+				var index;
+
+				// find index
+				for( var j = 0; j < nodeList[i].parentNode.childNodes.length; ++j )
+				{
+					if( nodeList[i].parentNode.childNodes[j] === nodeList[i] )
+					{
+						index = j;
+						break;
+					}
+				}
+
+				// move child back
+				while( nodeList[i].childNodes.length !== 1 )
+				{
+					nodeList[i].parentNode.insertBefore( nodeList[i].childNodes[1], nodeList[i].parentNode.childNodes[index].nextSibling  );
+				}
+
+				nodeList[i].parentNode.removeChild( nodeList[i] );
+			}
+			nodeList.length = 0;
+
+			ciDebugBar.createCookie('debug-view', '', -1);
+			ciDebugBar.removeClass(btn, 'active');
+		}
+
 		var btn = document.querySelector('[data-tab=ci-views]');
 
 		// If the Views Collector is inactive stops here
@@ -272,130 +396,24 @@ var ciDebugBar = {
 
 		btn = btn.parentNode;
 
-		btn.onclick = function() {
-			// Had AJAX? Reset view blocks
-			sortedComments = getComments();
+		// Determine Hints state on page load
+		if (ciDebugBar.readCookie('debug-view'))
+		{			
+			showHints();
+		}
+		else
+		{
+			hideHints();
+		}
 
+		btn.onclick = function() {			
 			if (ciDebugBar.readCookie('debug-view'))
 			{
-				for( var i = 0; i < nodeList.length; ++i )
-				{
-					var index;console.log(index);
-
-					// find index
-					for( var j = 0; j < nodeList[i].parentNode.childNodes.length; ++j )
-					{
-						if( nodeList[i].parentNode.childNodes[j] === nodeList[i] )
-						{
-							index = j;
-							break;
-						}
-					}
-
-					// move child back
-					while( nodeList[i].childNodes.length !== 1 )
-					{
-						nodeList[i].parentNode.insertBefore( nodeList[i].childNodes[1], nodeList[i].parentNode.childNodes[index].nextSibling  );
-					}
-
-					nodeList[i].parentNode.removeChild( nodeList[i] );
-				}
-				nodeList.length = 0;
-
-				ciDebugBar.createCookie('debug-view', '', -1);
-				ciDebugBar.removeClass(btn, 'active');
+				hideHints();
 			}
 			else
 			{
-				for( var key in sortedComments )
-				{
-					var startElement 	= getValidElement( sortedComments[key][0] );
-					var endElement 		= getValidElement( sortedComments[key][1] );
-
-					// skip if we couldnt get a valid element
-					if( startElement === null || endElement === null ) continue;
-
-					// find element which has same parent as startelement
-					var jointParent = getParentNode( endElement[0], startElement[0].parentNode );
-					if( jointParent === null )
-					{
-						// find element which has same parent as endelement
-						jointParent = getParentNode( startElement[0], endElement[0].parentNode );
-						if( jointParent === null )
-						{
-							// both tries failed
-							continue;
-						}
-						else startElement[0] = jointParent;
-					}
-					else endElement[0] = jointParent;
-
-					var debugDiv 		= document.createElement( 'div' ); // holder
-					var debugPath		= document.createElement( 'div' ); // path
-					var childArray 		= startElement[0].parentNode.childNodes; // target child array
-					var parent			= startElement[0].parentNode;
-					var start, end;
-
-					// setup container
-					debugDiv.classList.add( 'debug-view' );
-					debugDiv.classList.add( 'show-view' );
-					debugPath.classList.add( 'debug-view-path' );
-					debugPath.innerText = key;
-					debugDiv.appendChild( debugPath );
-
-					// calc distance between them
-					// start
-					for( var i = 0; i < childArray.length; ++i )
-					{
-						// check for comment ( start & end ) -> if its before valid start element
-						if( childArray[i] === sortedComments[key][1] ||
-							childArray[i] === sortedComments[key][0] ||
-							childArray[i] === startElement[0] )
-						{
-							start = i;
-							if( childArray[i] === sortedComments[key][0] ) start++; // increase to skip the start comment
-							break;
-						}
-					}
-					// adjust if we want to skip the start element
-					if( startElement[1] ) start++;
-
-					// end
-					for( var i = start; i < childArray.length; ++i )
-					{
-						if( childArray[i] === endElement[0] )
-						{
-							end = i;
-							// dont break to check for end comment after end valid element
-						}
-						else if( childArray[i] === sortedComments[key][1] )
-						{
-							// if we found the end comment, we can break
-							end = i;
-							break;
-						}
-					}
-
-					// move elements
-					var number = end - start;
-					if( endElement[1] ) number++;
-					for( var i = 0; i < number; ++i )
-					{
-						if( INVALID_ELEMENTS.indexOf( childArray[start] ) !== -1 )
-						{
-							// skip invalid childs that can cause problems if moved
-							start++;
-							continue;
-						}
-						debugDiv.appendChild( childArray[start] );
-					}
-
-					// add container to DOM
-					nodeList.push( parent.insertBefore( debugDiv, childArray[start] ) );
-				}
-
-				ciDebugBar.createCookie('debug-view', 'show', 365);
-				ciDebugBar.addClass(btn, 'active');
+				showHints();
 			}
 		};
 	},
