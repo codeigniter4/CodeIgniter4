@@ -511,7 +511,22 @@ class Session implements SessionInterface
 
 		return $userdata;
 	}
-
+	/**
+	 * Push a value into a session array.
+	 *
+	 * @param  string  $key
+	 * @param  mixed   $value
+	 * @return void
+	 */
+	public function push($key, $value)
+	{
+		if ($this->has($key)) 
+		{
+			$array = $this->get($key);
+			$array = array_merge($array, $value);
+			$this->set($key, $array);
+		}
+	}
 	//--------------------------------------------------------------------
 
 	/**
