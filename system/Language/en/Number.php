@@ -47,4 +47,5 @@ return [
 	'billion'       => ' billion',
 	'trillion'      => ' trillion',
 	'quadrillion'   => ' quadrillion',
+	'IntlNotFound'  => 'Intl extention is required',
 ];
