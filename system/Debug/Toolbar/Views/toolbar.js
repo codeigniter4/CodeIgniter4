@@ -154,121 +154,111 @@ var ciDebugBar = {
 
 	toogleViewsHints: function()
 	{
-		var NodeList 		= []; // [ Element, NewElement( 1 )/OldElement( 0 ) ]
+		var nodeList 		= []; // [ Element, NewElement( 1 )/OldElement( 0 ) ]
 		var sortedComments 	= [];
+		var comments 		= [];
 
-		// get all comments | iterate over all nodes
-		// @return array of comment nodes
-		var GetComments = function( parentElement )
+		var getComments = function()
 		{
-			var comments = [];
-			var childs = parentElement.childNodes;
-			for( var i = 0; i < childs.length; ++i )
+			var nodes = [];
+			var result = [];
+			var xpathResults = document.evaluate( "//comment()[starts-with(., ' DEBUG-VIEW')]", document, null, XPathResult.ANY_TYPE, null);
+			var nextNode = xpathResults.iterateNext();
+			while( nextNode )
 			{
-				if( childs[i].nodeType === Node.COMMENT_NODE &&
-					childs[i].nodeValue.startsWith( ' DEBUG-VIEW' ) )
-				{
-					comments.push( childs[i] );
-					continue;
-				}
+				nodes.push( nextNode );
+				nextNode = xpathResults.iterateNext();
+			}
 
-				if( childs[i].childNodes.length > 0 )
+			// sort comment by opening and closing tags
+			for( var i = 0; i < nodes.length; ++i )
+			{
+				// get file path + name to use as key
+				var path = nodes[i].nodeValue.substring( 18, nodes[i].nodeValue.length - 1 );
+
+				if( nodes[i].nodeValue[12] === 'S' ) // simple check for start comment
 				{
-					var childComments = GetComments( childs[i] );
-					comments.push.apply( comments, childComments );
+					// create new entry
+					result[path] = [ nodes[i], null ];
+				}
+				else
+				{
+					// add to existing entry
+					result[path][1] = nodes[i];
 				}
 			}
-			return comments;
+
+			return result;
 		};
 
 		// find node that has TargetNode as parentNode
-		var GetParentNode = function( Node, TargetNode )
+		var getParentNode = function( node, targetNode )
 		{
-			if( Node.parentNode === null )
+			if( node.parentNode === null )
 			{
 				return null;
 			}
 
-			if( Node.parentNode !== TargetNode )
+			if( node.parentNode !== targetNode )
 			{
-				return GetParentNode( Node.parentNode, TargetNode );
+				return getParentNode( node.parentNode, targetNode );
 			}
 
-			return Node;
+			return node;
 		};
 
 		// define invalid & outer ( also invalid ) elements
-		var InvalidElements = [ 'NOSCRIPT', 'SCRIPT', 'STYLE' ];
-		var OuterElements = [ 'HTML', 'BODY', 'HEAD' ];
+		const INVALID_ELEMENTS = [ 'NOSCRIPT', 'SCRIPT', 'STYLE' ];
+		const OUTER_ELEMENTS = [ 'HTML', 'BODY', 'HEAD' ];
 
-		var GetValidElementInner = function( Node, reverse )
+		var getValidElementInner = function( node, reverse )
 		{
 			// handle invalid tags
-			if( OuterElements.indexOf( Node.nodeName ) !== -1 )
+			if( OUTER_ELEMENTS.indexOf( node.nodeName ) !== -1 )
 			{
 				for( var i = 0; i < document.body.children.length; ++i )
 				{
-					var Index = reverse ? document.body.children.length - ( i + 1 ) : i;
-					var Element = document.body.children[Index];
+					var index = reverse ? document.body.children.length - ( i + 1 ) : i;
+					var element = document.body.children[index];
 
 					// skip invalid tags
-					if( InvalidElements.indexOf( Element.nodeName ) !== -1 ) continue;
+					if( INVALID_ELEMENTS.indexOf( element.nodeName ) !== -1 ) continue;
 
-					return [ Element, reverse ];
+					return [ element, reverse ];
 				}
 
 				return null;
 			}
 
 			// get to next valid element
-			while( Node !== null && InvalidElements.indexOf( Node.nodeName ) !== -1 )
+			while( node !== null && INVALID_ELEMENTS.indexOf( node.nodeName ) !== -1 )
 			{
-				Node = reverse ? Node.previousElementSibling : Node.nextElementSibling;
+				node = reverse ? node.previousElementSibling : node.nextElementSibling;
 			}
 
 			// return non array if we couldnt find something
-			if( Node === null ) return null;
+			if( node === null ) return null;
 
-			return [ Node, reverse ];
+			return [ node, reverse ];
 		};
 
 		// get next valid element ( to be safe to add divs )
 		// @return [ element, skip element ] or null if we couldnt find a valid place
-		var GetValidElement = function( NodeElement )
+		var getValidElement = function( nodeElement )
 		{
-			if( NodeElement.nextElementSibling !== null )
+			if( nodeElement.nextElementSibling !== null )
 			{
-				return GetValidElementInner( NodeElement.nextElementSibling, false )
-					|| GetValidElementInner( NodeElement.previousElementSibling, true );
+				return getValidElementInner( nodeElement.nextElementSibling, false )
+					|| getValidElementInner( nodeElement.previousElementSibling, true );
 			}
-			if( NodeElement.previousElementSibling !== null )
+			if( nodeElement.previousElementSibling !== null )
 			{
-				return GetValidElementInner( NodeElement.previousElementSibling, true );
+				return getValidElementInner( nodeElement.previousElementSibling, true );
 			}
 
 			// something went wrong! -> element is not in DOM
 			return null;
 		};
-
-		var comments = GetComments( document );
-		// sort comment by opening and closing tags
-		for( var i = 0; i < comments.length; ++i )
-		{
-			// get file path + name to use as key
-			var Path = comments[i].nodeValue.substring( 18, comments[i].nodeValue.length - 1 );
-
-			if( comments[i].nodeValue[12] === 'S' ) // simple check for start comment
-			{
-				// create new entry
-				sortedComments[Path] = [ comments[i], null ];
-			}
-			else
-			{
-				// add to existing entry
-				sortedComments[Path][1] = comments[i];
-			}
-		}
-		comments.length = 0;
 
 		var btn = document.querySelector('[data-tab=ci-views]');
 
@@ -282,18 +272,18 @@ var ciDebugBar = {
 
 		btn.onclick = function() {
 			// Had AJAX? Reset view blocks
-			//comments = GetComments( document ); // TODO : remove comment/enable line
+			sortedComments = getComments();
 
 			if (ciDebugBar.readCookie('debug-view'))
 			{
-				for( var i = 0; i < NodeList.length; ++i )
+				for( var i = 0; i < nodeList.length; ++i )
 				{
 					var index;
 
 					// find index
-					for( var j = 0; j < NodeList[i].parentNode.childNodes.length; ++j )
+					for( var j = 0; j < nodeList[i].parentNode.childNodes.length; ++j )
 					{
-						if( NodeList[i].parentNode.childNodes[j] === NodeList[i] )
+						if( nodeList[i].parentNode.childNodes[j] === nodeList[i] )
 						{
 							index = j;
 							break;
@@ -301,14 +291,14 @@ var ciDebugBar = {
 					}
 
 					// move child back
-					while( NodeList[i].childNodes.length !== 1 )
+					while( nodeList[i].childNodes.length !== 1 )
 					{
-						NodeList[i].parentNode.insertBefore( NodeList[i].childNodes[1], NodeList[i].parentNode.childNodes[index].nextSibling  );
+						nodeList[i].parentNode.insertBefore( nodeList[i].childNodes[1], nodeList[i].parentNode.childNodes[index].nextSibling  );
 					}
 
-					NodeList[i].parentNode.removeChild( NodeList[i] );
+					nodeList[i].parentNode.removeChild( nodeList[i] );
 				}
-				NodeList.length = 0;
+				nodeList.length = 0;
 
 				ciDebugBar.createCookie('debug-view', '', -1);
 				ciDebugBar.removeClass(btn, 'active');
@@ -317,89 +307,89 @@ var ciDebugBar = {
 			{
 				for( var key in sortedComments )
 				{
-					var StartElement 	= GetValidElement( sortedComments[key][0] );
-					var EndElement 		= GetValidElement( sortedComments[key][1] );
+					var startElement 	= getValidElement( sortedComments[key][0] );
+					var endElement 		= getValidElement( sortedComments[key][1] );
 
 					// skip if we couldnt get a valid element
-					if( StartElement === null || EndElement === null ) continue;
+					if( startElement === null || endElement === null ) continue;
 
 					// find element which has same parent as startelement
-					var JointParent = GetParentNode( EndElement[0], StartElement[0].parentNode );
-					if( JointParent === null )
+					var jointParent = getParentNode( endElement[0], startElement[0].parentNode );
+					if( jointParent === null )
 					{
 						// find element which has same parent as endelement
-						JointParent = GetParentNode( StartElement[0], EndElement[0].parentNode );
-						if( JointParent === null )
+						jointParent = getParentNode( startElement[0], endElement[0].parentNode );
+						if( jointParent === null )
 						{
 							// both tries failed
 							continue;
 						}
-						else StartElement[0] = JointParent;
+						else startElement[0] = jointParent;
 					}
-					else EndElement[0] = JointParent;
+					else endElement[0] = jointParent;
 
-					var DebugDiv 		= document.createElement( 'div' ); // holder
-					var DebugPath		= document.createElement( 'div' ); // path
-					var ChildArray 		= StartElement[0].parentNode.childNodes; // target child array
-					var Parent			= StartElement[0].parentNode;
-					var Start, End;
+					var debugDiv 		= document.createElement( 'div' ); // holder
+					var debugPath		= document.createElement( 'div' ); // path
+					var childArray 		= startElement[0].parentNode.childNodes; // target child array
+					var parent			= startElement[0].parentNode;
+					var start, end;
 
 					// setup container
-					DebugDiv.classList.add( 'debug-view' );
-					DebugDiv.classList.add( 'show-view' );
-					DebugPath.classList.add( 'debug-view-path' );
-					DebugPath.innerText = key;
-					DebugDiv.appendChild( DebugPath );
+					debugDiv.classList.add( 'debug-view' );
+					debugDiv.classList.add( 'show-view' );
+					debugPath.classList.add( 'debug-view-path' );
+					debugPath.innerText = key;
+					debugDiv.appendChild( debugPath );
 
 					// calc distance between them
-					// Start
-					for( var i = 0; i < ChildArray.length; ++i )
+					// start
+					for( var i = 0; i < childArray.length; ++i )
 					{
 						// check for comment ( start & end ) -> if its before valid start element
-						if( ChildArray[i] === sortedComments[key][1] ||
-							ChildArray[i] === sortedComments[key][0] ||
-							ChildArray[i] === StartElement[0] )
+						if( childArray[i] === sortedComments[key][1] ||
+							childArray[i] === sortedComments[key][0] ||
+							childArray[i] === startElement[0] )
 						{
-							Start = i;
-							if( ChildArray[i] === sortedComments[key][0] ) Start++; // increase to skip the start comment
+							start = i;
+							if( childArray[i] === sortedComments[key][0] ) start++; // increase to skip the start comment
 							break;
 						}
 					}
 					// adjust if we want to skip the start element
-					if( StartElement[1] ) Start++;
+					if( startElement[1] ) start++;
 
-					// End
-					for( var i = Start; i < ChildArray.length; ++i )
+					// end
+					for( var i = start; i < childArray.length; ++i )
 					{
-						if( ChildArray[i] === EndElement[0] )
+						if( childArray[i] === endElement[0] )
 						{
-							End = i;
+							end = i;
 							// dont break to check for end comment after end valid element
 						}
-						else if( ChildArray[i] === sortedComments[key][1] )
+						else if( childArray[i] === sortedComments[key][1] )
 						{
 							// if we found the end comment, we can break
-							End = i;
+							end = i;
 							break;
 						}
 					}
 
 					// move elements
-					var Number = End - Start;
-					if( EndElement[1] ) Number++;
-					for( var i = 0; i < Number; ++i )
+					var number = end - start;
+					if( endElement[1] ) number++;
+					for( var i = 0; i < number; ++i )
 					{
-						if( InvalidElements.indexOf( ChildArray[Start] ) !== -1 )
+						if( INVALID_ELEMENTS.indexOf( childArray[start] ) !== -1 )
 						{
 							// skip invalid childs that can cause problems if moved
-							Start++;
+							start++;
 							continue;
 						}
-						DebugDiv.appendChild( ChildArray[Start] );
+						debugDiv.appendChild( childArray[start] );
 					}
 
 					// add container to DOM
-					NodeList.push( Parent.insertBefore( DebugDiv, ChildArray[Start] ) );
+					nodeList.push( parent.insertBefore( debugDiv, childArray[start] ) );
 				}
 
 				ciDebugBar.createCookie('debug-view', 'show', 365);
