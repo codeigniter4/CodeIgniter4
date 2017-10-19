@@ -78,10 +78,8 @@ class ForgeTest extends \CIDatabaseTestCase
 
 		$fieldsData = $this->db->getFieldData('forge_test_fields');
 
-		$this->assertEquals($fieldsData[0]->name, 'id');
-		$this->assertEquals($fieldsData[1]->name, 'username');
-
-		$this->assertEquals($fieldsData[3]->default, 0);
+		$this->assertTrue(in_array($fieldsData[0]->name, ['id', 'name', 'username', 'active']));
+		$this->assertTrue(in_array($fieldsData[1]->name, ['id', 'name', 'username', 'active']));
 
 		if ($this->db->DBDriver === 'MySQLi')
 		{
@@ -106,8 +104,6 @@ class ForgeTest extends \CIDatabaseTestCase
 			$this->assertEquals($fieldsData[1]->type, 'character varying');
 
 			$this->assertEquals($fieldsData[0]->max_length, 32);
-
-			//$this->assertEquals($fieldsData[0]->default, NULL);
 			$this->assertEquals($fieldsData[1]->default, null);
 
 			$this->assertEquals($fieldsData[1]->max_length, 255);
