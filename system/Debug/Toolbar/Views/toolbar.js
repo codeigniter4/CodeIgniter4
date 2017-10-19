@@ -181,7 +181,7 @@ var ciDebugBar = {
 					// create new entry
 					result[path] = [ nodes[i], null ];
 				}
-				else
+				else if(result[path])
 				{
 					// add to existing entry
 					result[path][1] = nodes[i];
@@ -246,14 +246,16 @@ var ciDebugBar = {
 		// @return [ element, skip element ] or null if we couldnt find a valid place
 		var getValidElement = function( nodeElement )
 		{
-			if( nodeElement.nextElementSibling !== null )
-			{
-				return getValidElementInner( nodeElement.nextElementSibling, false )
-					|| getValidElementInner( nodeElement.previousElementSibling, true );
-			}
-			if( nodeElement.previousElementSibling !== null )
-			{
-				return getValidElementInner( nodeElement.previousElementSibling, true );
+			if (nodeElement) {
+				if( nodeElement.nextElementSibling !== null )
+				{
+					return getValidElementInner( nodeElement.nextElementSibling, false )
+						|| getValidElementInner( nodeElement.previousElementSibling, true );
+				}
+				if( nodeElement.previousElementSibling !== null )
+				{
+					return getValidElementInner( nodeElement.previousElementSibling, true );
+				}
 			}
 
 			// something went wrong! -> element is not in DOM
@@ -278,7 +280,7 @@ var ciDebugBar = {
 			{
 				for( var i = 0; i < nodeList.length; ++i )
 				{
-					var index;
+					var index;console.log(index);
 
 					// find index
 					for( var j = 0; j < nodeList[i].parentNode.childNodes.length; ++j )
