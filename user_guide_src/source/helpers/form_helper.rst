@@ -99,7 +99,7 @@ The following functions are available:
 			$hidden = array('username' => 'Joe', 'member_id' => '234');
 			echo form_open('email/send', '', $hidden);
 
-		You can skip the second parameter by passing any falsy value to it.
+		You can skip the second parameter by passing any false value to it.
 
 		The above example would create a form similar to this::
 

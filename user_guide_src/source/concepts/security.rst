@@ -112,7 +112,7 @@ that might compromise the security of the whole architecture.
 OWASP recommendations
 ---------------------
 
-- Presentation: harden web and application servers; use HTTP strict transport secutiry
+- Presentation: harden web and application servers; use HTTP strict transport security
 - Controller: harden web and application servers; protect your XML stack
 - Model: harden database servers
 

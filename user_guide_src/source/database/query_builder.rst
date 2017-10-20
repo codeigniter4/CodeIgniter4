@@ -657,7 +657,7 @@ will be reset (by default it will be--just like $builder->insert())::
 	// Produces string: INSERT INTO mytable (`title`, `content`) VALUES ('My Title', 'My Content')
 
 The key thing to notice in the above example is that the second query did not
-utlize `$builder->from()` nor did it pass a table name into the first
+utilize `$builder->from()` nor did it pass a table name into the first
 parameter. The reason this worked is because the query has not been executed
 using `$builder->insert()` which resets values or reset directly using
 `$builder->resetQuery()`.
@@ -994,7 +994,7 @@ Class Reference
 		:rtype:	BaseBuilder
 
 		Resets the current Query Builder state.  Useful when you want
-		to build a query that can be cancelled under certain conditions.
+		to build a query that can be canceled under certain conditions.
 
 	.. php:method:: countAllResults([$reset = TRUE])
 

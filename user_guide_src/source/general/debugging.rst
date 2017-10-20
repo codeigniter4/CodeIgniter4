@@ -60,7 +60,7 @@ to help you debug and optimize.
 Enabling the Toolbar
 ====================
 
-The toolbar is enabled by default in any environment _except_ production. It will be shown whenever the
+The toolbar is enabled by default in any environment *except* production. It will be shown whenever the
 constant CI_DEBUG is defined and it's value is positive. This is defined in the boot files (i.e.
 application/Config/Boot/development.php) and can be modified there to determine what environments it shows
 itself in.
@@ -121,13 +121,13 @@ the Collector to work
 
 	class MyCollector extends BaseCollector
 	{
-		protected $hasTimeline = false;
+		protected $hasTimeline   = false;
 
 		protected $hasTabContent = false;
 
-		protected $hasVarData = false;
+		protected $hasVarData    = false;
 
-		protected $title = '';
+		protected $title         = '';
 	}
 
 **$hasTimeline** should be set to ``true`` for any Collector that wants to display information in the toolbar's

@@ -166,7 +166,7 @@ Registrars
 ==========
 
 A configuration file can also specify any number of "registrars", which are any 
-other clases which might provide additional configuration properties.
+other classes which might provide additional configuration properties.
 This is done by adding a ``registrars`` property to your configuration file,
 holding an array of the names of candidate registrars.::
 

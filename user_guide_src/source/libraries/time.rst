@@ -4,7 +4,7 @@ Dates and Times
 
 CodeIgniter provides a fully-localized, immutable, date/time class that is built on PHP's DateTime object, but uses the Intl
 extension's features to convert times across timezones and display the output correctly for different locales. This class
-is the **Time** class and lives in the **CodeIgniter\I18n** namespace.
+is the **Time** class and lives in the **CodeIgniter\\I18n** namespace.
 
 .. note:: Since the Time class extends DateTime, if there are features that you need that this class doesn't provide,
     you can likely find them within the DateTime class itself.
@@ -85,9 +85,9 @@ Given separate inputs for **year**, **month**, and **day**, will return a new in
 are not provided, it will use the current value to fill it in. Accepts strings for the timezone and locale in the
 fourth and fifth parameters::
 
-    $today = Time::createFromDate();            // Uses current year, month, and day
+    $today       = Time::createFromDate();            // Uses current year, month, and day
     $anniversary = Time::createFromDate(2018);  // Uses current month and day
-    $date = Time::createFromDate(2018, 3, 15, 'America/Chicago', 'en_US');
+    $date        = Time::createFromDate(2018, 3, 15, 'America/Chicago', 'en_US');
 
 createFromTime()
 ----------------
@@ -96,9 +96,9 @@ Like **createFromDate** except it is only concerned with the **hours**, **minute
 current day for the date portion of the Time instance. Accepts strings for the timezone and locale in the
 fourth and fifth parameters::
 
-    $lunch = Time::createFromTime(11, 30)       // 11:30 am today
+    $lunch  = Time::createFromTime(11, 30)       // 11:30 am today
     $dinner = Time::createFromTime(18, 00, 00)  // 6:00 pm today
-    $time = Time::createFromTime($hour, $minutes, $seconds, $timezone, $locale);
+    $time   = Time::createFromTime($hour, $minutes, $seconds, $timezone, $locale);
 
 create()
 --------
@@ -131,7 +131,7 @@ When working with other libraries that provide a DateTime instance, you can use 
 to a Time instance, optionally setting the locale. The timezone will be automatically determined from the DateTime
 instance passed in::
 
-    $dt = new DateTime('now');
+    $dt   = new DateTime('now');
     $time = Time::instance($dt, 'en_US');
 
 toDateTime()
@@ -157,8 +157,8 @@ toLocalizedString()
 This is the localized version of DateTime's format() method. Instead of using the values you might be familiar with, though,
 you must use values acceptable to the `IntlDateFormatter <http://php.net/manual/en/class.intldateformatter.php>`_ class.
 A full listing of values can be found `here <http://www.icu-project.org/apiref/icu4c/classSimpleDateFormat.html#details>`_.
-
 ::
+
     $time = Time::parse('March 9, 2016 12:00:00', 'America/Chicago');
     echo $time->toLocalizedString('MMM d, yyyy');   // March 9, 2016
 
@@ -349,7 +349,7 @@ setTimezone()
 
 Converts the time from it's current timezone into the new one::
 
-    $time = Time::parse('May 10, 2017', 'America/Chicago');
+    $time  = Time::parse('May 10, 2017', 'America/Chicago');
     $time2 = $time->setTimezone('Europe/London');           // Returns new instance converted to new timezone
 
     echo $time->timezoneName;   // American/Chicago

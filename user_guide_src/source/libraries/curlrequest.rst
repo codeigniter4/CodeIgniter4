@@ -135,7 +135,7 @@ You can retrieve headers from the response::
 	echo $response->header('Content-type');
 
 	// Get all headers
-	foreach ($repsonse->headers() as $name => $value)
+	foreach ($response->headers() as $name => $value)
 	{
 		echo $name .': '. $response->headerLine($name) ."\n";
 	}
@@ -185,7 +185,7 @@ You can pass in array as the value of the ``allow_redirects`` option to specify 
 		'protocols' => ['https'] // Force HTTPS domains only.
 	]]);
 
-.. :note::  Following redirects does not work when PHP is in safe_mode or open_basedir is enabled.
+.. note:: Following redirects does not work when PHP is in safe_mode or open_basedir is enabled.
 
 auth
 ====
@@ -266,7 +266,7 @@ if it's not already set::
 		]
 	]);
 
-.. :note:: ``form_params`` cannot be used with the ``multipart`` option. You will need to use one or the other.
+.. note:: ``form_params`` cannot be used with the ``multipart`` option. You will need to use one or the other.
         Use ``form_params`` for ``application/x-www-form-urlencoded`` request, and ``multipart`` for ``multipart/form-data``
         requests.
 
@@ -310,7 +310,7 @@ this option can be any value that ``json_encode()`` accepts::
 
 	$response = $client->request('PUT', '/put', ['json' => ['foo' => 'bar']]);
 
-.. :note:: This option does not allow for any customization of the ``json_encode()`` function, or the Content-Type
+.. note:: This option does not allow for any customization of the ``json_encode()`` function, or the Content-Type
         header. If you need that ability, you will need to encode the data manually, passing it through the ``setBody()``
         method of CURLRequest, and set the Content-Type header with the ``setHeader()`` method.
 
@@ -327,7 +327,7 @@ has been disabled. Any files that you want to send must be passed as instances o
 		'userfile' => new CURLFile('/path/to/file.txt')
 	];
 
-.. :note:: ``multipart`` cannot be used with the ``form_params`` option. You can only use one or the other. Use
+.. note:: ``multipart`` cannot be used with the ``form_params`` option. You can only use one or the other. Use
         ``form_params`` for ``application/x-www-form-urlencoded`` requests, and ``multipart`` for ``multipart/form-data``
         requests.
 
