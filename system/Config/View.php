@@ -51,7 +51,7 @@ class View extends BaseConfig
 		'highlight_code' => '\CodeIgniter\View\Filters::highlight_code',
 		'limit_words'    => '\CodeIgniter\View\Filters::limit_words',
 		'limit_chars'    => '\CodeIgniter\View\Filters::limit_chars',
-		'local_number'   => '\CodeIgniter\View\NumberFilters::localizedNumber',
+		'local_number'   => '\CodeIgniter\View\Filters::localizedNumber',
 		'currency'       => '\CodeIgniter\View\Filters::currency',
 		'lower'          => '\strtolower',
 		'nl2br'          => '\CodeIgniter\View\Filters::nl2br',

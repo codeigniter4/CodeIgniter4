@@ -298,20 +298,52 @@ class Filters
 	}
 
 	//--------------------------------------------------------------------
-		/**
-		 * Returns given number as localized currency.
-		 *
-		 * @param float  $num
-		 * @param string $currency
-		 * @param string $locale
-		 *
-		 * @return string
-		 */
-	public static function currency($value, $currency, $locale = null)
+
+	/**
+	 * Returns given number as localized currency.
+	 *
+	 * @param float  $value
+	 * @param string $currency
+	 * @param string $locale
+	 *
+	 * @return string
+	 */
+	public static function currency($value, $currency, $locale = null):string
 	{
 		helper('number');
 		return number_to_currency($value, $currency, $locale);
 	}
+
 	//--------------------------------------------------------------------
 
+	/**
+	 * Returns localized number
+	 *
+	 * @param float       $num
+	 * @param int         $precision
+	 * @param string|null $locale
+	 * @param array       $options
+	 *
+	 * @return string
+	 */
+	public static function localizedNumber($value, $style = 'decimal', $locale = null , $type = 'default'):string
+	{
+		
+		static $typeValues = [
+			'default'  => \NumberFormatter::TYPE_DEFAULT,
+			'int32'    => \NumberFormatter::TYPE_INT32,
+			'int64'    => \NumberFormatter::TYPE_INT64,
+			'double'   => \NumberFormatter::TYPE_DOUBLE,
+			'currency' => \NumberFormatter::TYPE_CURRENCY,
+		];
+
+        if (! isset($typeValues[$type]))
+		{
+			throw new \Exception('syntax error');
+			//todo: raise mor appropriate /specific exception
+		}
+
+		return format_number($num, 1, $locale, ['type'=>$typeValues[$type]]);
+	
+		}
 }
