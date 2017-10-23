@@ -119,11 +119,14 @@ class ForgeTest extends \CIDatabaseTestCase
 
 	public function testCompositeKey()
 	{
+        // SQLite3 uses auto increment different
+        $unique_or_auto = $this->db->DBDriver == 'SQLite3' ? 'unique' : 'auto_increment';
+
 		$this->forge->addField([
 			'id'      => [
 				'type'           => 'INTEGER',
 				'constraint'     => 3,
-				'auto_increment' => true,
+                $unique_or_auto => true,
 			],
 			'code'    => [
 				'type'       => 'VARCHAR',
