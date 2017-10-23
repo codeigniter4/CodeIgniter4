@@ -574,8 +574,13 @@ class BaseBuilder
 	 *
 	 * @return    BaseBuilder
 	 */
-	public function where($key, $value = null, $escape = null)
+	public function where($key = null, $value = null, $escape = null)
 	{
+		if ($key === null)
+		{
+			return $this;
+		}
+		
 		return $this->whereHaving('QBWhere', $key, $value, 'AND ', $escape);
 	}
 
