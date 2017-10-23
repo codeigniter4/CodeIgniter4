@@ -46,8 +46,8 @@ The `setVar()` and `setData()` methods are chainable, allowing you to combine a
 number of different calls together in a chain::
 
 	$view->setVar('one', $one)
-		->setVar('two', $two)
-		->render('myView');
+	     ->setVar('two', $two)
+	     ->render('myView');
 
 Escaping Data
 =============

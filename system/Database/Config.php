@@ -98,7 +98,6 @@ class Config extends BaseConfig
 
 		self::ensureFactory();
 
-
 		if (isset($config->$group))
 		{
 			$config = $config->$group;

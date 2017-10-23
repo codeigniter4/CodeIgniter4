@@ -59,7 +59,7 @@ Under NGINX, you can define a location block and use the ``try_files`` directive
 the above Apache configuration::
 
 	location / {
-        try_files $uri $uri/ /index.php/$args;
+		try_files $uri $uri/ /index.php/$args;
 	}
 
 This will first look for a file or directory matching the URI (constructing the full path to each file from the

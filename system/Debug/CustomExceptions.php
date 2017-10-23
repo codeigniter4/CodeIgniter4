@@ -163,17 +163,3 @@ class UserInputException extends \OutOfBoundsException
 	protected $code = 7;
 
 }
-
-/**
- * Exception for automatic logging.
- */
-class DatabaseException extends Error
-{
-
-	/**
-	 * Error code
-	 * @var int
-	 */
-	protected $code = 8;
-
-}

@@ -39,7 +39,7 @@
 return [
 	// Core Messages
 	'noRuleSets'            => 'No rulesets specified in Validation configuration.',
-	'ruleNotFound'          => '{field} is not a valid rule.',
+	'ruleNotFound'          => '{rule} is not a valid rule.',
 	'groupNotFound'         => '%s is not a validation rules group.',
 	'groupNotArray'         => '%s rule group must be an array.',
 
@@ -47,7 +47,8 @@ return [
 	'alpha'                 => 'The {field} field may only contain alphabetical characters.',
 	'alpha_dash'            => 'The {field} field may only contain alpha-numeric characters, underscores, and dashes.',
 	'alpha_numeric'         => 'The {field} field may only contain alpha-numeric characters.',
-	'alpha_numeric_spaces'  => 'The {field} field may only contain alpha-numeric characters and spaces.',
+	'alpha_numeric_space'  => 'The {field} field may only contain alpha-numeric characters and spaces.',
+	'alpha_space'  			=> 'The {field} field may only contain alphabetical characters and spaces.',
 	'decimal'               => 'The {field} field must contain a decimal number.',
 	'differs'               => 'The {field} field must differ from the {param} field.',
 	'exact_length'          => 'The {field} field must be exactly {param} characters in length.',

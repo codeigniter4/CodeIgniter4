@@ -1,6 +1,5 @@
 <?php namespace CodeIgniter\Validation;
 
-use CodeIgniter\Services;
 use Config\Database;
 
 class ValidationTest extends \CIUnitTestCase
@@ -55,11 +54,11 @@ class ValidationTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	public function testRunReturnsTrueWithNothingToDo()
+	public function testRunReturnsFalseWithNothingToDo()
 	{
 		$this->validation->setRules([]);
 
-		$this->assertTrue($this->validation->run([]));
+		$this->assertFalse($this->validation->run([]));
 	}
 
 	//--------------------------------------------------------------------
@@ -1010,7 +1009,7 @@ class ValidationTest extends \CIUnitTestCase
 		];
 
 		$this->validation->setRules([
-				'foo' => "alpha_numeric_spaces",
+				'foo' => "alpha_numeric_space",
 		]);
 
 		$this->assertEquals($expected, $this->validation->run($data));

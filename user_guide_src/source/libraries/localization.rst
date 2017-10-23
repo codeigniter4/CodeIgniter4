@@ -34,9 +34,9 @@ Every site will have a default language/locale they operate in. This can be set 
     public $defaultLocale = 'en';
 
 The value can be any string that your application uses to manage text strings and other formats. It is
-recommended that a [BCP 47](http://www.rfc-editor.org/rfc/bcp/bcp47.txt) language code is used. This results in
+recommended that a `BCP 47 <http://www.rfc-editor.org/rfc/bcp/bcp47.txt>`_ language code is used. This results in
 language codes like en-US for American English, or fr-FR, for French/France. A more readable introduction
-to this can be found on the [W3C's site](https://www.w3.org/International/articles/language-tags/).
+to this can be found on the `W3C's site <https://www.w3.org/International/articles/language-tags/>`_.
 
 The system is smart enough to fallback to more generic language codes if an exact match
 cannot be found. If the locale code was set to **en_US** and we only have language files setup for **en**
@@ -186,17 +186,17 @@ Here are a few examples::
 
     // The language file, Tests.php
     return [
-        'shortTime' => 'The time is now {0, time, short}.',
+        'shortTime'  => 'The time is now {0, time, short}.',
         'mediumTime' => 'The time is now {0, time, medium}.',
-        'longTime' => 'The time is now {0, time, long}.',
-        'fullTime' => 'The time is now {0, time, full}.',
-        'shortDate' => 'The date is now {0, date, short}.',
+        'longTime'   => 'The time is now {0, time, long}.',
+        'fullTime'   => 'The time is now {0, time, full}.',
+        'shortDate'  => 'The date is now {0, date, short}.',
         'mediumDate' => 'The date is now {0, date, medium}.',
-        'longDate' => 'The date is now {0, date, long}.',
-        'fullDate' => 'The date is now {0, date, full}.',
+        'longDate'   => 'The date is now {0, date, long}.',
+        'fullDate'   => 'The date is now {0, date, full}.',
         'spelledOut' => '34 is {0, spellout}',
-        'ordinal' => 'The ordinal is {0, ordinal}',
-        'duration' => 'It has been {0, duration}',
+        'ordinal'    => 'The ordinal is {0, ordinal}',
+        'duration'   => 'It has been {0, duration}',
     ];
 
     // Displays "The time is now 11:18 PM"

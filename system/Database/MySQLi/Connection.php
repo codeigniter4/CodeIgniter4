@@ -37,7 +37,7 @@
  */
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\ConnectionInterface;
-use CodeIgniter\DatabaseException;
+use \CodeIgniter\Database\Exceptions\DatabaseException;
 
 /**
  * Connection for MySQLi
@@ -91,7 +91,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 * @param bool $persistent
 	 *
 	 * @return mixed
-	 * @throws \CodeIgniter\DatabaseException
+	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
 	public function connect($persistent = false)
 	{
@@ -112,6 +112,8 @@ class Connection extends BaseConnection implements ConnectionInterface
 		$client_flags = ($this->compress === true) ? MYSQLI_CLIENT_COMPRESS : 0;
 		$this->mysqli = mysqli_init();
 
+		mysqli_report(MYSQLI_REPORT_ALL & ~MYSQLI_REPORT_INDEX);
+		
 		$this->mysqli->options(MYSQLI_OPT_CONNECT_TIMEOUT, 10);
 
 		if (isset($this->strictOn))
@@ -346,7 +348,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 			return $str;
 		}
 
-		if (is_null($this->connID))
+		if (! $this->connID)
 		{
 			$this->initialize();
 		}
@@ -473,6 +475,49 @@ class Connection extends BaseConnection implements ConnectionInterface
 					throw new \LogicException('parsing key string failed.');
 				}
 			}
+		}
+
+		return $retval;
+	}
+
+	//--------------------------------------------------------------------
+        
+	/**
+	 * Returns an object with Foreign key data
+	 *
+	 * @param	string	$table
+	 * @return	array
+	 */
+	public function _foreignKeyData(string $table)
+	{
+		$sql = '
+                    SELECT
+                        tc.CONSTRAINT_NAME,
+                        tc.TABLE_NAME,
+                        rc.REFERENCED_TABLE_NAME
+                    FROM information_schema.TABLE_CONSTRAINTS AS tc
+                    INNER JOIN information_schema.REFERENTIAL_CONSTRAINTS AS rc
+                        ON tc.CONSTRAINT_NAME = rc.CONSTRAINT_NAME
+                    WHERE
+                        tc.CONSTRAINT_TYPE = '.$this->escape('FOREIGN KEY').' AND 
+                        tc.TABLE_SCHEMA = '.$this->escape($this->database).' AND
+                        tc.TABLE_NAME = '.$this->escape($table);
+                
+		if (($query = $this->query($sql)) === false)
+		{
+			return false;
+		}
+		$query = $query->getResultObject();
+                
+		$retval = [];
+		foreach ($query as $row)
+		{
+			$obj = new \stdClass();
+			$obj->constraint_name = $row->CONSTRAINT_NAME;
+                        $obj->table_name = $row->TABLE_NAME;
+                        $obj->foreign_table_name = $row->REFERENCED_TABLE_NAME;
+
+			$retval[] = $obj;
 		}
 
 		return $retval;

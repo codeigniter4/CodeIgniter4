@@ -121,5 +121,25 @@ class Plugins
 
 		return lang($line, $params);
 	}
+	
+	/**
+	 * @param array $params
+	 *
+	 * @return string
+	 */
+	public static function ValidationErrors(array $params = [])
+	{
+		
+		$validator = \config\services::validation();
+		if(empty($params))
+		{
+			return $validator->listErrors();
+		}
+		
+		return $validator->showError($params['field']);
+		
+
+		
+	}
 
 }

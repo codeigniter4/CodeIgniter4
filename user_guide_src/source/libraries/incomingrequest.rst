@@ -173,9 +173,9 @@ an array of all headers, with the key as the name of the header, and the value b
 	var_dump($request->getHeaders());
 
 	[
-		'Host' => CodeIgniter\HTTP\Header,
+		'Host'          => CodeIgniter\HTTP\Header,
 		'Cache-Control' => CodeIgniter\HTTP\Header,
-		'Accept' => CodeIgniter\HTTP\Header,
+		'Accept'        => CodeIgniter\HTTP\Header,
 	]
 
 If you only need a single header, you can pass the name into the ``getHeader()`` method. This will grab the

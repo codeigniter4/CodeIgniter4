@@ -5,12 +5,14 @@ use CodeIgniter\View\Parser;
 class ParserPluginTest extends \CIUnitTestCase
 {
 	protected $parser;
+	protected $validator;
 
 	public function setUp()
 	{
 		parent::setUp();
 
 		$this->parser = \Config\Services::parser();
+		$this->validator = \Config\Services::validation();
 	}
 
 	public function testCurrentURL()
@@ -53,6 +55,26 @@ class ParserPluginTest extends \CIUnitTestCase
 		$template = '{+ lang Number.terabyteAbbr +}';
 
 		$this->assertEquals('TB', $this->parser->renderString($template));
+	}
+
+	public function testValidationErrors()
+	{
+		
+		$this->validator->setError("email","Invalid email address");
+		
+		$template = '{+ validation_errors field=email +}';
+
+		$this->assertEquals($this->validator->showError('email'), $this->parser->renderString($template));
+	}
+
+	public function testValidationErrorsList()
+	{
+		
+		$this->validator->setError("email","Invalid email address");
+		$this->validator->setError("username","User name must be unique");
+		$template = '{+ validation_errors +}';
+
+		$this->assertEquals($this->validator->listErrors(), $this->parser->renderString($template));
 	}
 
 }

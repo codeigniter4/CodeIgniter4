@@ -99,7 +99,7 @@ The following functions are available:
 			$hidden = array('username' => 'Joe', 'member_id' => '234');
 			echo form_open('email/send', '', $hidden);
 
-		You can skip the second parameter by passing any falsy value to it.
+		You can skip the second parameter by passing any false value to it.
 
 		The above example would create a form similar to this::
 
@@ -205,12 +205,12 @@ The following functions are available:
 	form to contain::
 
 		$data = array(
-			'name'		=> 'username',
-			'id'		=> 'username',
-			'value'		=> 'johndoe',
-			'maxlength'	=> '100',
-			'size'		=> '50',
-			'style'		=> 'width:50%'
+			'name'      => 'username',
+			'id'        => 'username',
+			'value'     => 'johndoe',
+			'maxlength' => '100',
+			'size'      => '50',
+			'style'     => 'width:50%'
 		);
 
 		echo form_input($data);
@@ -300,10 +300,10 @@ The following functions are available:
     	Example::
 
 		$options = array(
-			'small'		=> 'Small Shirt',
-			'med'		=> 'Medium Shirt',
-			'large'		=> 'Large Shirt',
-			'xlarge'	=> 'Extra Large Shirt',
+			'small'  => 'Small Shirt',
+			'med'    => 'Medium Shirt',
+			'large'  => 'Large Shirt',
+			'xlarge' => 'Extra Large Shirt',
 		);
 
 		$shirts_on_sale = array('small', 'large');
@@ -457,11 +457,11 @@ The following functions are available:
 	array of attributes to the function::
 
 		$data = array(
-			'name'		=> 'newsletter',
-			'id'		=> 'newsletter',
-			'value'		=> 'accept',
-			'checked'	=> TRUE,
-			'style'		=> 'margin:10px'
+			'name'    => 'newsletter',
+			'id'      => 'newsletter',
+			'value'   => 'accept',
+			'checked' => TRUE,
+			'style'   => 'margin:10px'
 		);
 
 		echo form_checkbox($data);
@@ -568,11 +568,11 @@ The following functions are available:
 	form to contain::
 
 		$data = array(
-			'name'		=> 'button',
-			'id'		=> 'button',
-			'value'		=> 'true',
-			'type'		=> 'reset',
-			'content'	=> 'Reset'
+			'name'    => 'button',
+			'id'      => 'button',
+			'value'   => 'true',
+			'type'    => 'reset',
+			'content' => 'Reset'
 		);
 
 		echo form_button($data);

@@ -35,7 +35,7 @@
  * @since        Version 4.0.0
  * @filesource
  */
-use CodeIgniter\Services;
+use CodeIgniter\Config\Services;
 
 /**
  * Routes collector
@@ -96,7 +96,7 @@ class Routes extends BaseCollector
 		{
 			$params[] = [
 				'name'	 => $param->getName(),
-				'value'	 => $router->params()[$key] ?:
+				'value'	 => $router->params()[$key] ??
 				"&lt;empty&gt;&nbsp| default: " . var_export($param->getDefaultValue(), true)
 			];
 		}

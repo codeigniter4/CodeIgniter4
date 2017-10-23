@@ -125,12 +125,13 @@ class MigrateVersion extends BaseCommand
 		try
 		{
 			$runner->version($version, $namespace, $group);
+			CLI::write('Done');
 		} catch (\Exception $e)
 		{
 			$this->showError($e);
 		}
 
-		CLI::write('Done');
+		
 	}
 
 }

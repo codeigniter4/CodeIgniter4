@@ -566,7 +566,7 @@ table that we already mentioned and then set it as your
 For example, if you would like to use 'ci_sessions' as your table name,
 you would do this::
 
-	public $sessionDriver = 'database';
+	public $sessionDriver   = 'database';
 	public $sessionSavePath = 'ci_sessions';
 
 And then of course, create the database table ...
@@ -660,13 +660,13 @@ link you to it:
 For the most common case however, a simple ``host:port`` pair should be
 sufficient::
 
-	public $sessionDiver = 'redis';
+	public $sessionDiver    = 'redis';
 	public $sessionSavePath = 'tcp://localhost:6379';
 
 Memcached Driver
 ----------------
 
-.. note:: Since Memcache doesn't have a locking mechanism exposed, locks
+.. note:: Since Memcached doesn't have a locking mechanism exposed, locks
 	for this driver are emulated by a separate value that is kept for
 	up to 300 seconds.
 
@@ -688,7 +688,7 @@ considered as it may result in loss of sessions.
 The ``$sessionSavePath`` format is fairly straightforward here,
 being just a ``host:port`` pair::
 
-	public $sessionDriver = 'memcached';
+	public $sessionDriver   = 'memcached';
 	public $sessionSavePath = 'localhost:11211';
 
 Bonus Tip

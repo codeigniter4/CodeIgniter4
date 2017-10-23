@@ -7,6 +7,15 @@ use CodeIgniter\I18n\Time;
 use CodeIgniter\Model;
 use Config\Database;
 
+/**
+ * NOTE: This is not a valid file for actual tests.
+ * This file came about as a small testbed I was using that
+ * accidentally got committed. It will be removed prior to release
+ * If you commit any changes to this file, it should be accompanied
+ * by actual tests also.
+ *
+ * @package App\Controllers
+ */
 class Checks extends Controller
 {
 	use ResponseTrait;
@@ -15,6 +24,140 @@ class Checks extends Controller
 	{
 		session()->start();
 	}
+        
+        public function forge()
+        {
+            echo '<h1>MySQL</h1>';
+            
+            log_message('debug', 'MYSQL TEST');
+            
+            $forge_mysql = \Config\Database::forge();
+            
+            $forge_mysql->getConnection()->query('SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;');
+            
+            $forge_mysql->dropTable('users', true);
+            
+            $forge_mysql->getConnection()->query('SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;');
+            
+            $forge_mysql->addField([
+                'id' => [
+                    'type' => 'INTEGER',
+                    'constraint' => 11
+                ],
+                'name' => [
+                    'type' => 'VARCHAR',
+                    'constraint' => 50,
+                ]
+            ]);
+            $forge_mysql->addKey('id', true);
+            $attributes = array('ENGINE' => 'InnoDB');
+            $forge_mysql->createTable('users', true, $attributes);
+            
+            $data_insert = array(
+                'id' => 1,
+                'name' => 'User 1',
+            );
+            $forge_mysql->getConnection()->table('users')->insert($data_insert);
+
+            $drop = $forge_mysql->dropTable('invoices', true);
+            
+            $forge_mysql->addField([
+                'id' => [
+                    'type' => 'INTEGER',
+                    'constraint' => 11,
+                ],
+                'users_id' => [
+                    'type' => 'INTEGER',
+                    'constraint' => 11
+                ],
+                'other_id' => [
+                    'type' => 'INTEGER',
+                    'constraint' => 11
+                ]
+            ]);
+            $forge_mysql->addKey('id', true);
+
+            $forge_mysql->addForeignKey('users_id','users','id','CASCADE','CASCADE');
+            $forge_mysql->addForeignKey('other_id','users','id','CASCADE','CASCADE');
+
+            $attributes = array('ENGINE' => 'InnoDB');
+            $res = $forge_mysql->createTable('invoices', true,$attributes);
+
+            if(!$res){
+                var_dump($forge_mysql->getConnection()->mysqli);
+            }else{
+                echo '<br><br>OK';
+                
+                var_dump($forge_mysql->getConnection()->getForeignKeyData('invoices'));
+            }
+            
+            $res = $forge_mysql->dropForeignKey('invoices','invoices_other_id_foreign');
+            
+            
+            echo '<h1>PostgreSQL</h1>';
+            
+            $forge_pgsql = \Config\Database::forge('pgsql');
+
+            $forge_pgsql->dropTable('users',true, true);
+            
+            $forge_pgsql->addField([
+                'id' => [
+                    'type' => 'INTEGER',
+                    'constraint' => 11,
+                    'auto_increment' => true,
+                ],
+                'name' => [
+                    'type' => 'VARCHAR',
+                    'constraint' => 50,
+                ]
+            ]);
+            $forge_pgsql->addKey('id', true);
+            $forge_pgsql->createTable('users', true);
+            
+            
+            $data_insert = array(
+                'id' => 1,
+                'name' => 'User 1',
+            );
+            $forge_pgsql->getConnection()->table('users')->insert($data_insert);
+            
+            $forge_pgsql->dropTable('invoices',true);
+            $forge_pgsql->addField([
+                'id' => [
+                    'type' => 'INTEGER',
+                    'constraint' => 11,
+                    'auto_increment' => true,
+                ],
+                'users_id' => [
+                    'type' => 'INTEGER',
+                    'constraint' => 11
+                ],
+                'other_id' => [
+                    'type' => 'INTEGER',
+                    'constraint' => 11
+                ],
+                'another_id' => [
+                    'type' => 'INTEGER',
+                    'constraint' => 11
+                ]
+            ]);
+            $forge_pgsql->addKey('id', true);
+
+            $forge_pgsql->addForeignKey('users_id','users','id','CASCADE','CASCADE'); 
+            $forge_pgsql->addForeignKey('other_id','users','id');
+
+            $res = $forge_pgsql->createTable('invoices', true);
+
+            if(!$res){
+                var_dump($forge_pgsql->getConnection()->mysqli);
+            }else{
+                echo '<br><br>OK';
+                var_dump($forge_pgsql->getConnection()->getForeignKeyData('invoices'));
+            }
+            
+            //$res = $forge_pgsql->dropForeignKey('invoices','invoices_other_id_foreign');
+            
+        }
 
 
 	public function escape()
@@ -136,6 +279,8 @@ class Checks extends Controller
 
 	    $politician = $model->find(3);
 
+	    dd($politician);
+
 	}
 
     public function curl()
@@ -160,7 +305,7 @@ class Checks extends Controller
 
 	public function redirect()
 	{
-		redirect('/checks/model');
+		return redirect('/checks/model');
     }
 
 	public function image()
@@ -289,7 +434,7 @@ EOF;
 	<input type="file" name="avatar">
 
 	<input type="submit" value="Upload">
-	
+
 </form>
 
 </body>
@@ -302,6 +447,11 @@ EOF;
 	public function parser()
 	{
 		$this->parser = Services::parser();
+	}
+
+	public function error()
+	{
+		throw new \RuntimeException('Oops!', 403);
 	}
 
 }

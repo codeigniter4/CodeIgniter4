@@ -37,7 +37,7 @@
  */
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
-use CodeIgniter\Services;
+use Config\Services;
 
 /**
  * Common Functions
@@ -339,7 +339,7 @@ if ( ! function_exists('service'))
 	 *
 	 * These are equal:
 	 *  - $timer = service('timer')
-	 *  - $timer = \CodeIgniter\Services::timer();
+	 *  - $timer = \CodeIgniter\Config\Services::timer();
 	 *
 	 * @param string $name
 	 * @param array  ...$params
@@ -348,9 +348,6 @@ if ( ! function_exists('service'))
 	 */
 	function service(string $name, ...$params)
 	{
-		// Ensure it IS a shared instance
-		array_push($params, true);
-
 		return Services::$name(...$params);
 	}
 
@@ -725,64 +722,19 @@ if ( ! function_exists('redirect'))
 	 * If more control is needed, you must use $response->redirect explicitly.
 	 *
 	 * @param string $uri
-	 * @param array  $params
-	 */
-	function redirect(string $uri, ...$params)
-	{
-		$response = Services::response(null, true);
-		$routes = Services::routes(true);
-
-		if ($route = $routes->reverseRoute($uri, ...$params))
-		{
-			$uri = $route;
-		}
-
-		return $response->redirect($uri);
-	}
-
-}
-
-//--------------------------------------------------------------------
-
-if ( ! function_exists('redirect_with_input'))
-{
-
-	/**
-	 * Identical to the redirect() method, except that this will
-	 * send the current $_GET and $_POST contents in a _ci_old_input
-	 * variable flashed to the session, which can then be retrieved
-	 * via the old() method.
 	 *
-	 * @param string $uri
-	 * @param array  ...$params
+	 * @return \CodeIgniter\HTTP\RedirectResponse
 	 */
-	function redirect_with_input(string $uri, ...$params)
+	function redirect(string $uri=null)
 	{
-		$session = Services::session();
+		$response = Services::redirectResponse(null, true);
 
-		// Ensure we have the session started up.
-		if ( ! isset($_SESSION))
+		if (! empty($uri))
 		{
-			$session->start();
+			return $response->to($uri);
 		}
 
-		$input = [
-			'get'	 => $_GET ?? [],
-			'post'	 => $_POST ?? [],
-		];
-
-		$session->setFlashdata('_ci_old_input', $input);
-
-		// If the validator has any errors, transmit those back
-		// so they can be displayed when the validation is
-		// handled within a method different than displaying the form.
-		$validator = Services::validation();
-		if (! empty($validator->getErrors()))
-		{
-			$session->setFlashdata('_ci_validation_errors', serialize($validator->getErrors()));
-		}
-
-		redirect($uri, ...$params);
+		return $response;
 	}
 
 }

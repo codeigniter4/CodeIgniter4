@@ -20,13 +20,13 @@ Setting the Output
 ------------------
 
 When you need to set the output of the script directly, and not rely on CodeIgniter to automatically get it, you
-do it manually with the ``setBody`` method. This is usually used in conjuction with setting the status code of
+do it manually with the ``setBody`` method. This is usually used in conjunction with setting the status code of
 the response::
 
 	$this->response->setStatusCode(404)
 	               ->setBody($body);
 
-The reason phrase ('OK', 'Created', 'Moved Permenantly') will be automatically added, but you can add custom reasons
+The reason phrase ('OK', 'Created', 'Moved Permanently') will be automatically added, but you can add custom reasons
 as the second parameter of the ``setStatusCode()`` method::
 
 	$this->response->setStatusCode(404, 'Nope. Not here.');
@@ -42,7 +42,7 @@ prematurely, causing errors, and makes testing possible.
 ::
 
 	$response->setHeader('Location', 'http://example.com')
-			 ->setHeader('WWW-Authenticate', 'Negotiate');
+	         ->setHeader('WWW-Authenticate', 'Negotiate');
 
 If the header exists and can have more than one value, you may use the ``appendHeader()`` and ``prependHeader()``
 methods to add the value to the end or beginning of the values list, respectively. The first parameter is the name
@@ -50,7 +50,7 @@ of the header, while the second is the value to append or prepend.
 ::
 
 	$response->setHeader('Cache-Control', 'no-cache')
-			->appendHeader('Cache-Control', 'must-revalidate');
+	         ->appendHeader('Cache-Control', 'must-revalidate');
 
 Headers can be removed from the response with the ``removeHeader()`` method, which takes the header name as the only
 parameter. This is not case-sensitive.
@@ -61,7 +61,7 @@ parameter. This is not case-sensitive.
 Force File Download
 ===================
 
-The Reponse class provides a simple way to send a file to the client, prompting the browser to download the data
+The Response class provides a simple way to send a file to the client, prompting the browser to download the data
 to your computer. This sets the appropriate headers to make it happen.
 
 The first parameter is the **name you want the downloaded file to be named**, the second parameter is the
@@ -104,8 +104,8 @@ to set the Cache values to what you need, though, through the ``setCache()`` met
 
 	$options = [
 		'max-age'  => 300,
-	    's-maxage' => 900
-	    'etag'     => 'abcde',
+		's-maxage' => 900
+		'etag'     => 'abcde',
 	];
 	$this->response->setCache($options);
 
@@ -299,7 +299,7 @@ The methods provided by the parent class that are available are:
 		    $response->noCache();
 
 		    // Sets the following header:
-			Cache-Control: no-store, max-age=0, no-cache
+		    Cache-Control: no-store, max-age=0, no-cache
 
 	.. php:method:: setCache($options)
 

@@ -20,7 +20,7 @@ Class Reference
 	.. php:method:: getIPAddress()
 
 		:returns: The user's IP Address, if it can be detected, or null. If the IP address
-					is not a valid IP addresss, then will return 0.0.0.0
+					is not a valid IP address, then will return 0.0.0.0
 		:rtype: string
 
 		Returns the IP address for the current user. If the IP address is not valid, the method
@@ -32,7 +32,7 @@ Class Reference
 			return the reported HTTP_X_FORWARDED_FOR, HTTP_CLIENT_IP, HTTP_X_CLIENT_IP, or
 			HTTP_X_CLUSTER_CLIENT_IP address for the allowed IP address.
 
-	.. php:method:: validIP($ip[, $which = ''])
+	.. php:method:: isValidIP($ip[, $which = ''])
 
 		:param	string	$ip: IP address
 		:param	string	$which: IP protocol ('ipv4' or 'ipv6')
@@ -46,7 +46,7 @@ Class Reference
 
                 ::
 
-			if ( ! $request->validIP($ip))
+			if ( ! $request->isValidIP($ip))
 			{
                             echo 'Not Valid';
 			}

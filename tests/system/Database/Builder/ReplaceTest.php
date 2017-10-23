@@ -36,7 +36,7 @@ class ReplaceTest extends \CIUnitTestCase
 	{
 	    $builder = $this->db->table('jobs');
 
-		$this->expectException('CodeIgniter\DatabaseException');
+		$this->expectException('\CodeIgniter\Database\Exceptions\DatabaseException');
 		$this->expectExceptionMessage('You must use the "set" method to update an entry.');
 
 		$builder->replace();

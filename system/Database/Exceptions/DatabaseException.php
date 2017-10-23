@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Encryption;
+<?php namespace CodeIgniter\Database\Exceptions;
 
 /**
  * CodeIgniter
@@ -36,28 +36,13 @@
  * @filesource
  */
 
-/**
- * CodeIgniter Encryption Handler
- *
- * Provides two-way keyed encryption
- */
-interface EncrypterInterface
+class DatabaseException extends \Error
 {
 
 	/**
-	 * Encrypt - convert plaintext into ciphertext
-	 *
-	 * @param	string	$data	Input data
-	 * @return	string
+	 * Exit status code
+	 * @var int
 	 */
-	public function encrypt($data);
-
-	/**
-	 * Decrypt - convert ciphertext into plaintext
-	 *
-	 * @param	string	$data	Encrypted data
-	 * @return	string
-	 */
-	public function decrypt($data);
+	protected $code = 8;
 
 }
