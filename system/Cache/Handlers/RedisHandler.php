@@ -70,8 +70,9 @@ class RedisHandler implements CacheInterface
 
 	//--------------------------------------------------------------------
 
-	public function __construct(array $config)
+	public function __construct($config)
 	{
+		$config = (array)$config;
 		$this->prefix = $config['prefix'] ?? '';
 
 		if ( ! empty($config))
