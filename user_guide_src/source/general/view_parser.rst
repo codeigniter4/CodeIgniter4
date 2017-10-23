@@ -145,7 +145,7 @@ constructs for conditional substitution.
 When the parser executes, it will generally
 
 -	handle any conditional substitutions
--	handle any nested/looping substutions
+-	handle any nested/looping substitutions
 -	handle the remaining single substitutions
 
 Loop Substitutions
@@ -305,7 +305,7 @@ Preventing Parsing
 ==================
 
 You can specify portions of the page to not be parsed with the ``{noparse}{/noparse}`` tag pair. Anything in this
-section will stay exactly as it is, with no variable substition, looping, etc, happening to the markup between the brackets.
+section will stay exactly as it is, with no variable substitution, looping, etc, happening to the markup between the brackets.
 
 ::
 

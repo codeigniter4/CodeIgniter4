@@ -13,14 +13,14 @@ The second parameter is the message itself::
 
 There are eight different log levels, matching to the `RFC 5424 <http://tools.ietf.org/html/rfc5424>`_ levels, and they are as follows:
 
-* debug - Detailed debug information.
-* info - Interesting events in your application, like a user logging in, logging SQL queries, etc. 
-* notice - Normal, but significant events in your application.
-* warning - Exceptional occurrences that are not errors, like the user of deprecated APIs, poor use of an API, or other undesirable things that are not necessarily wrong.
-* error - Runtime errors that do not require immediate action but should typically be logged and monitored.
-* critical - Critical conditions, like an application component not available, or an unexpected exception.
-* alert - Action must be taken immediately, like when an entire website is down, the database unavailable, etc. 
-* emergency - The system is unusable.
+* **debug** - Detailed debug information.
+* **info** - Interesting events in your application, like a user logging in, logging SQL queries, etc. 
+* **notice** - Normal, but significant events in your application.
+* **warning** - Exceptional occurrences that are not errors, like the user of deprecated APIs, poor use of an API, or other undesirable things that are not necessarily wrong.
+* **error** - Runtime errors that do not require immediate action but should typically be logged and monitored.
+* **critical** - Critical conditions, like an application component not available, or an unexpected exception.
+* **alert** - Action must be taken immediately, like when an entire website is down, the database unavailable, etc. 
+* **emergency** - The system is unusable.
 
 The logging system does not provide ways to alert sysadmins or webmasters about these events, they solely log
 the information. For many of the more critical event levels, the logging happens automatically by the

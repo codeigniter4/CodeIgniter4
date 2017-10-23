@@ -401,7 +401,7 @@ The **CIDatabaseTestCase** class provides several helper methods to aid in testi
 **seed($name)**
 
 Allows you to manually load a Seed into the database. The only parameter is the name of the seed to run. The seed
-must pe present within the path specified in ``$basePath``.
+must be present within the path specified in ``$basePath``.
 
 **dontSeeInDatabase($table, $criteria)**
 
