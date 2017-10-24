@@ -159,6 +159,65 @@ class Checks extends Controller
             
         }
 
+	public function sqlite()
+	{
+		$forge = \Config\Database::forge();
+		$forge->dropTable('users', true);
+		$forge->dropTable('invoices', true);
+
+		// Ensure Foreign Keys are on
+		$forge->getConnection()->simpleQuery("PRAGMA foreign_keys=1");
+
+		// Create a table
+		$forge->addField([
+			'id' => [
+				'type' => 'INTEGER',
+				'constraint' => 11,
+				'auto_increment' => true,
+			],
+			'name' => [
+				'type' => 'VARCHAR',
+				'constraint' => 50,
+			]
+		]);
+		$forge->addKey('id', true);
+		$forge->createTable('users', true);
+
+		$data_insert = array(
+			'id' => 1,
+			'name' => 'User 1',
+		);
+
+		$forge->getConnection()->table('users')->insert($data_insert);
+		$forge->addField([
+			'id' => [
+				'type' => 'INTEGER',
+				'constraint' => 11,
+				'auto_increment' => true,
+			],
+			'users_id' => [
+				'type' => 'INTEGER',
+				'constraint' => 11
+			],
+			'other_id' => [
+				'type' => 'INTEGER',
+				'constraint' => 11
+			],
+			'another_id' => [
+				'type' => 'INTEGER',
+				'constraint' => 11
+			]
+		]);
+		$forge->addKey('id', true);
+
+		$forge->addForeignKey('users_id','users','id','CASCADE','CASCADE');
+		$forge->addForeignKey('other_id','users','id');
+
+		$res = $forge->createTable('invoices', true);
+
+		dd($forge->getConnection()->getForeignKeyData('invoices'));
+	}
+
 
 	public function escape()
 	{

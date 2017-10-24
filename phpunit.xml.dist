@@ -12,7 +12,10 @@
     <testsuites>
         <testsuite name="system">
             <directory>./tests/system</directory>
-            <!-- <exclude>./tests/system/Database/Live</exclude> -->
+            <exclude>./tests/system/Database</exclude>
+        </testsuite>
+        <testsuite name="database">
+            <directory>./tests/system/Database</directory>
         </testsuite>
     </testsuites>
 

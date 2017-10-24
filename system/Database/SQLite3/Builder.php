@@ -50,6 +50,22 @@ class Builder extends BaseBuilder
      */
     protected $escapeChar = '`';
 
+	/**
+	 * Default installs of SQLite typically do not
+	 * support limiting delete clauses.
+	 *
+	 * @var bool
+	 */
+    protected $canLimitDeletes = false;
+
+	/**
+	 * Default installs of SQLite do no support
+	 * limiting update queries in combo with WHERE.
+	 *
+	 * @var bool
+	 */
+    protected $canLimitWhereUpdates = false;
+
     //--------------------------------------------------------------------
 
     /**

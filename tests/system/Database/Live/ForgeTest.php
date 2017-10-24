@@ -75,7 +75,6 @@ class ForgeTest extends \CIDatabaseTestCase
 		$this->assertTrue(in_array('name', $fieldsNames));
 		$this->assertTrue(in_array('active', $fieldsNames));
 
-
 		$fieldsData = $this->db->getFieldData('forge_test_fields');
 
 		$this->assertTrue(in_array($fieldsData[0]->name, ['id', 'name', 'username', 'active']));
@@ -192,8 +191,7 @@ class ForgeTest extends \CIDatabaseTestCase
 
 		$foreignKeyData = $this->db->getForeignKeyData('forge_test_invoices');
 
-		$this->assertEquals($foreignKeyData[0]->constraint_name,
-			$this->db->DBPrefix.'forge_test_invoices_users_id_foreign');
+		$this->assertEquals($foreignKeyData[0]->constraint_name,$this->db->DBPrefix.'forge_test_invoices_users_id_foreign');
 		$this->assertEquals($foreignKeyData[0]->table_name, $this->db->DBPrefix.'forge_test_invoices');
 		$this->assertEquals($foreignKeyData[0]->foreign_table_name, $this->db->DBPrefix.'forge_test_users');
 

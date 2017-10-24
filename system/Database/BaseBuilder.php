@@ -195,6 +195,21 @@ class BaseBuilder
 	 */
 	protected $binds = [];
 
+	/**
+	 * Some databases, like SQLite, do not by default
+	 * allow limiting of delete clauses.
+	 *
+	 * @var bool
+	 */
+	protected $canLimitDeletes = true;
+
+	/**
+	 * Some databases do not by default
+	 * allow limit update queries with WHERE.
+	 * @var bool
+	 */
+	protected $canLimitWhereUpdates = true;
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -1880,6 +1895,11 @@ class BaseBuilder
 
 		if ( ! empty($limit))
 		{
+			if (! $this->canLimitWhereUpdates)
+			{
+				throw new DatabaseException('This driver does not allow LIMITs on UPDATE queries using WHERE.');
+			}
+
 			$this->limit($limit);
 		}
 
@@ -2264,6 +2284,11 @@ class BaseBuilder
 
 		if ( ! empty($this->QBLimit))
 		{
+			if (! $this->canLimitDeletes)
+			{
+				throw new DatabaseException('SQLite3 does not allow LIMITs on DELETE queries.');
+			}
+
 			$sql = $this->_limit($sql);
 		}
 
