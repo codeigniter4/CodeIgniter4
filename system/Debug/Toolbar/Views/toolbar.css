@@ -146,7 +146,6 @@
 	color: rgba(0, 0, 0, 0.3);
 }
 
-#debug-bar .ci-action,
 #debug-bar .ci-label {
 	border-radius: 0.25em;
 	text-shadow: none;
@@ -155,13 +154,11 @@
 	margin-left: 0.4em;
 }
 
-#debug-bar .ci-action:hover,
 #debug-bar .ci-label:hover {
 	background-color: #eaeaea;
 	cursor: pointer;
 }
 
-#debug-bar .ci-action a,
 #debug-bar .ci-label a {
 	display: block;
 	width: 100%;
@@ -169,7 +166,6 @@
 	text-decoration: none;
 }
 
-#debug-bar .ci-action.active,
 #debug-bar .ci-label.active {
 	background-color: #ccc;
 	border-color: #bbb;
