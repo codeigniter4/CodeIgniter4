@@ -114,7 +114,7 @@ The following functions are available:
 	The default mode is 'wb'. Please see the `PHP user guide <http://php.net/manual/en/function.fopen.php>`_
 	for mode options.
 
-	.. note: In order for this function to write data to a file, its permissions must
+	.. note:: In order for this function to write data to a file, its permissions must
 		be set such that it is writable. If the file does not already exist,
 		then the directory containing it must be writable.
 

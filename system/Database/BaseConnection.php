@@ -1452,7 +1452,7 @@ abstract class BaseConnection implements ConnectionInterface
 	public function listTables($constrain_by_prefix = FALSE)
 	{
 		// Is there a cached result?
-		if (isset($this->dataCache['table_names']))
+		if (isset($this->dataCache['table_names']) && count($this->dataCache['table_names']))
 		{
 			return $this->dataCache['table_names'];
 		}
@@ -1598,7 +1598,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 */
 	public function getFieldData(string $table)
 	{
-		$fields = $this->_fieldData($this->protectIdentifiers($table, true, null, false));
+		$fields = $this->_fieldData($this->protectIdentifiers($table, true, false, false));
 
 		return $fields ?? false;
 	}
@@ -1614,6 +1614,21 @@ abstract class BaseConnection implements ConnectionInterface
 	public function getIndexData(string $table)
 	{
 		$fields = $this->_indexData($this->protectIdentifiers($table, true, false, false));
+
+		return $fields ?? false;
+	}
+
+	//--------------------------------------------------------------------
+        
+	/**
+	 * Returns an object with foreign key data
+	 *
+	 * @param	string	$table	the table name
+	 * @return	array
+	 */
+	public function getForeignKeyData(string $table)
+	{
+		$fields = $this->_foreignKeyData($this->protectIdentifiers($table, true, false, false));
 
 		return $fields ?? false;
 	}

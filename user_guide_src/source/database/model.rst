@@ -124,7 +124,7 @@ can maintain a "recycle bin" of objects that can be restored, or even simply pre
 part of a security trail. If true, the find* methods will only return non-deleted rows, unless
 the withDeleted() method is called prior to calling the find* method.
 
-This requires an INT or TINYINT field named ``deleted`` to be present in the table.
+This requires an INT or TINYINT field to be present in the table for storing state.The default field name is  ``deleted`` however this name can be configured to any name of your choice by using $deletedField property.
 
 **$allowedFields**
 

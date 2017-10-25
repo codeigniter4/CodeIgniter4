@@ -66,7 +66,7 @@ Boot Files
 CodeIgniter requires that a PHP script matching the environment's name is located
 under **APPPATH/Config/Boot**. These files can contain any customizations that
 you would like to make for your environment, whether it's updating the error display
-settings, loading addtional developer tools, or anything else. These are
+settings, loading additional developer tools, or anything else. These are
 automatically loaded by the system. The following files are already created in
 a fresh install:
 

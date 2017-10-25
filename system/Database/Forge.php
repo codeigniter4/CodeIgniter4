@@ -69,6 +69,13 @@ class Forge
 	 * @var array
 	 */
 	protected $primaryKeys = [];
+        
+        /**
+	 * List of foreign keys.
+	 *
+	 * @var type
+	 */
+	protected $foreignKeys = [];
 
 	/**
 	 * Character set used.
@@ -330,7 +337,63 @@ class Forge
 	}
 
 	//--------------------------------------------------------------------
+        
+        /**
+	 * Add Foreign Key
+	 *
+	 * @param    array $field
+	 *
+	 * @return    \CodeIgniter\Database\Forge
+	 */
+	public function addForeignKey($fieldName= '',$tableName = '', $tableField = '', $onUpdate = false, $onDelete = false)
+	{
+            
+            if( ! isset($this->fields[$fieldName]))
+            {
+                throw new \RuntimeException('Field "'.$fieldName.'" not exist');
+            }	
+                
+            $this->foreignKeys[$fieldName] = [
+                'table' => $tableName,
+                'field' => $tableField,
+                'onDelete' => $onDelete,
+                'onUpdate' => $onUpdate
+            ];
+                
+            
+            return $this;
+	}
 
+	//--------------------------------------------------------------------
+        
+        /**
+	 * Foreign Key Drop
+	 *
+	 * @param    string $table       Table name
+	 * @param    string $foreign_name Foreign name
+	 *
+	 * @return    bool
+	 */
+	public function dropForeignKey($table, $foreign_name)
+	{
+		
+		$sql = sprintf($this->dropConstraintStr,$this->db->escapeIdentifiers($this->db->DBPrefix.$table),$this->db->escapeIdentifiers($this->db->DBPrefix.$foreign_name));
+            
+		if ($sql === false)
+		{
+			if ($this->db->DBDebug)
+			{
+				throw new DatabaseException('This feature is not available for the database you are using.');
+			}
+
+			return false;
+		}
+
+		return $this->db->query($sql);
+	}
+
+	//--------------------------------------------------------------------
+        
 	/**
 	 * Create Table
 	 *
@@ -405,6 +468,7 @@ class Forge
 	 */
 	protected function _createTable($table, $if_not_exists, $attributes)
 	{
+		// For any platforms that don't support Create If Not Exists...
 		if ($if_not_exists === true && $this->createTableIfStr === false)
 		{
 			if ($this->db->tableExists($table))
@@ -425,8 +489,10 @@ class Forge
 			$columns[$i] = ($columns[$i]['_literal'] !== false) ? "\n\t" . $columns[$i]['_literal'] : "\n\t" . $this->_processColumn($columns[$i]);
 		}
 
-		$columns = implode(',', $columns)
-				. $this->_processPrimaryKeys($table);
+        $columns = implode(',', $columns);
+
+        $columns .= $this->_processPrimaryKeys($table);
+        $columns .= $this->_processForeignKeys($table);
 
 		// Are indexes created from within the CREATE TABLE statement? (e.g. in MySQL)
 		if ($this->createTableKeys === true)
@@ -435,8 +501,7 @@ class Forge
 		}
 
 		// createTableStr will usually have the following format: "%s %s (%s\n)"
-		$sql = sprintf($this->createTableStr . '%s', $sql, $this->db->escapeIdentifiers($table), $columns, $this->_createTableAttributes($attributes)
-		);
+		$sql = sprintf($this->createTableStr . '%s', $sql, $this->db->escapeIdentifiers($table), $columns, $this->_createTableAttributes($attributes));
 
 		return $sql;
 	}
@@ -472,11 +537,12 @@ class Forge
 	 *
 	 * @param    string $table_name Table name
 	 * @param    bool   $if_exists  Whether to add an IF EXISTS condition
+	 * @param    bool   $cascade  Whether to add an CASCADE condition
 	 *
 	 * @return mixed
 	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
-	public function dropTable($table_name, $if_exists = false)
+	public function dropTable($table_name, $if_exists = false, $cascade = false)
 	{
 		if ($table_name === '')
 		{
@@ -488,13 +554,14 @@ class Forge
 			return false;
 		}
 
+                
 		// If the prefix is already starting the table name, remove it...
 		if (! empty($this->db->DBPrefix) && strpos($table_name, $this->db->DBPrefix) === 0)
 		{
 			$table_name = substr($table_name, strlen($this->db->DBPrefix));
 		}
 
-		if (($query = $this->_dropTable($this->db->DBPrefix . $table_name, $if_exists)) === true)
+		if (($query = $this->_dropTable($this->db->DBPrefix . $table_name, $if_exists, $cascade)) === true)
 		{
 			return true;
 		}
@@ -523,10 +590,11 @@ class Forge
 	 *
 	 * @param    string $table     Table name
 	 * @param    bool   $if_exists Whether to add an IF EXISTS condition
+	 * @param    bool   $cascade Whether to add an CASCADE condition
 	 *
 	 * @return    string
 	 */
-	protected function _dropTable($table, $if_exists)
+	protected function _dropTable($table, $if_exists, $cascade)
 	{
 		$sql = 'DROP TABLE';
 
@@ -545,7 +613,9 @@ class Forge
 			}
 		}
 
-		return $sql . ' ' . $this->db->escapeIdentifiers($table);
+                $sql = $sql . ' ' . $this->db->escapeIdentifiers($table);
+                
+		return $sql;
 	}
 
 	//--------------------------------------------------------------------
@@ -1076,6 +1146,38 @@ class Forge
 	}
 
 	//--------------------------------------------------------------------
+        /**
+	 * Process foreign keys
+	 *
+	 * @param    string $table Table name
+	 *
+	 * @return    string
+	 */
+	protected function _processForeignKeys($table) {
+            $sql = '';
+
+            $allowActions = array('CASCADE','SET NULL','NO ACTION','RESTRICT','SET DEFAULT');
+            
+            if (count($this->foreignKeys) > 0){
+                foreach ($this->foreignKeys as $field => $fkey) {
+                    $name_index = $table.'_'.$field.'_foreign';
+                    
+                    $sql .= ",\n\tCONSTRAINT " . $this->db->escapeIdentifiers($name_index)
+                        . ' FOREIGN KEY(' . $this->db->escapeIdentifiers($field) . ') REFERENCES '.$this->db->escapeIdentifiers($this->db->DBPrefix.$fkey['table']).' ('.$this->db->escapeIdentifiers($fkey['field']).')';
+                    
+                    if($fkey['onDelete'] !== false && in_array($fkey['onDelete'], $allowActions)){
+                        $sql .= " ON DELETE ".$fkey['onDelete'];
+                    }
+                    
+                    if($fkey['onUpdate'] !== false && in_array($fkey['onUpdate'], $allowActions)){
+                        $sql .= " ON UPDATE ".$fkey['onDelete'];
+                    }
+                    
+                }
+            }
+
+            return $sql;
+        }
 	//--------------------------------------------------------------------
 
 	/**

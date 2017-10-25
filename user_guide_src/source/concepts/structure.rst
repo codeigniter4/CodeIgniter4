@@ -49,7 +49,7 @@ All files in this directory live under the ``CodeIgniter`` namespace.
 public
 ------
 
-The **public** folder holds the browser-acceible portion of your web application,
+The **public** folder holds the browser-accessible portion of your web application,
 preventing direct access to your source code.
 It contains the main **.htaccess** file, **index.php**, and any application 
 assets that you add, like CSS, javascript, or

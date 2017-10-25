@@ -59,6 +59,14 @@ class BaseCollector
 	protected $hasTabContent = false;
 
 	/**
+	 * Whether this collector needs to display
+	 * a label or not.
+	 *
+	 * @var bool
+	 */
+	protected $hasLabel = false;
+
+	/**
 	 * Whether this collector has data that
 	 * should be shown in the Vars tab.
 	 *
@@ -114,6 +122,18 @@ class BaseCollector
 	public function hasTabContent(): bool
 	{
 		return (bool) $this->hasTabContent;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Does this collector have a label?
+	 *
+	 * @return bool
+	 */
+	public function hasLabel(): bool
+	{
+		return (bool) $this->hasLabel;
 	}
 
 	//--------------------------------------------------------------------

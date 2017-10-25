@@ -153,7 +153,7 @@ If you submit the form you should simply see the form reload. That's
 because you haven't set up any validation rules yet.
 
 **Since you haven't told the Validation class to validate anything
-yet, it returns false (boolean false) by default. The ``validate()`` method
+yet, it returns false (boolean false) by default. The** ``validate()`` **method
 only returns true if it has successfully applied your rules without any
 of them failing.**
 
@@ -249,7 +249,7 @@ data to be validated::
 Validate 1 Value
 ****************
 
-Validate one value against a rule.
+Validate one value against a rule::
 
     $validation->check($value, 'required');
 
@@ -316,14 +316,14 @@ Getting & Setting Rule Groups
 Get Rule Group
 --------------
 
-This method gets a rule group from the validation configuration.
+This method gets a rule group from the validation configuration::
 
     $validation->getRuleGroup('signup');
 
 Set Rule Group
 --------------
 
-This method sets a rule group from the validation configuration to the validation service.
+This method sets a rule group from the validation configuration to the validation service::
 
     $validation->setRuleGroup('signup');
 

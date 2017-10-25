@@ -666,7 +666,7 @@ sufficient::
 Memcached Driver
 ----------------
 
-.. note:: Since Memcache doesn't have a locking mechanism exposed, locks
+.. note:: Since Memcached doesn't have a locking mechanism exposed, locks
 	for this driver are emulated by a separate value that is kept for
 	up to 300 seconds.
 

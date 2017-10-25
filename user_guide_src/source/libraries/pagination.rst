@@ -50,7 +50,7 @@ Within the view, we then need to tell it where to display the resulting links::
 
     <?= $pager->links() ?>
 
-And that's all it takes. The Pager class will render a series of links that are compatible with the Boostrap CSS
+And that's all it takes. The Pager class will render a series of links that are compatible with the Bootstrap CSS
 framework by default. It will have First and Last page links, as well as Next and Previous links for any pages more
 than two pages on either side of the current page.
 
@@ -157,8 +157,8 @@ Creating the View
 =================
 
 When you create a new view, you only need to create the code that is needed for creating the pagination links themselves.
-You should never create unneccessary wrapping divs since it might be used in multiple places and you only limit their
-usefullness. It is easiest to demonstrate creating a new view by showing you the existing default_full template::
+You should never create unnecessary wrapping divs since it might be used in multiple places and you only limit their
+usefulness. It is easiest to demonstrate creating a new view by showing you the existing default_full template::
 
     <?php $pager->setSurroundCount(2) ?>
 

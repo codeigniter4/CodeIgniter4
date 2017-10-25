@@ -257,18 +257,18 @@ Control Structures
 Other
 =====
 
-- Argument separators (comma: `,`) MUST NOT be preceeded by a whitespace
+- Argument separators (comma: `,`) MUST NOT be preceded by a whitespace
   character and MUST be followed by a space character or a newline
   (LF: `\n`).
-- Semi-colons (i.e. `;`) MUST NOT be preceeded by a whitespace character
+- Semi-colons (i.e. `;`) MUST NOT be preceded by a whitespace character
   and MUST be followed by a newline (LF: `\n`).
 
 - Opening parentheses SHOULD NOT be followed by a space character.
-- Closing parentheses SHOULD NOT be preceeded by a space character.
+- Closing parentheses SHOULD NOT be preceded by a space character.
 
 - Opening square brackets SHOULD NOT be followed by a space character,
   unless when using the "short array" declaration syntax.
-- Closing square backets SHOULD NOT be preceeded by a space character,
+- Closing square brackets SHOULD NOT be preceded by a space character,
   unless when using the "short array" declaration syntax.
 
 - A curly brace SHOULD be the only printable character on a line, unless:

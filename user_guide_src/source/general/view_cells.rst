@@ -17,7 +17,7 @@ Cell Parameters
 ---------------
 
 You can further refine the call by passing a string with a list of parameters in the second parameter that are passed
-to the method as an array of key/value pairs, or a comma-seperated string of key/value pairs::
+to the method as an array of key/value pairs, or a comma-separated string of key/value pairs::
 
     // Passing Parameter Array
     <?= view_cell('\App\Libraries\Blog::recentPosts', ['category' => 'codeigniter', 'limit' => 5]) ?>

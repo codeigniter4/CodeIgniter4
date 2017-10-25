@@ -15,19 +15,121 @@ class ForgeTest extends \CIDatabaseTestCase
 		$this->forge = \Config\Database::forge($this->DBGroup);
 	}
 
+	public function testCreateTable()
+	{
+		$this->forge->dropTable('forge_test_table', true);
+
+		$this->forge->addField([
+			'id'       => [
+				'type'           => 'INTEGER',
+				'constraint'     => 11,
+				'unsigned'       => false,
+				'auto_increment' => true,
+			],
+		]);
+
+		$this->forge->addKey('id', true);
+		$this->forge->createTable('forge_test_table');
+
+		$exist = $this->db->tableExists('forge_test_table');
+		$this->forge->dropTable('forge_test_table', true);
+
+		$this->assertTrue($exist);
+	}
+
+	public function testAddFields()
+	{
+
+		$this->forge->dropTable('forge_test_fields', true);
+
+		$this->forge->addField([
+			'id'       => [
+				'type'           => 'INTEGER',
+				'constraint'     => 11,
+				'unsigned'       => false,
+				'auto_increment' => true,
+			],
+			'username' => [
+				'type'       => 'VARCHAR',
+				'constraint' => 255,
+				'unique'     => false,
+			],
+			'name'     => [
+				'type'       => 'VARCHAR',
+				'constraint' => 255,
+			],
+			'active'   => [
+				'type'       => 'INTEGER',
+				'constraint' => 11,
+				'default'    => 0,
+			],
+		]);
+
+		$this->forge->addKey('id', true);
+		$create = $this->forge->createTable('forge_test_fields', true);
+
+		//Check Field names
+		$fieldsNames = $this->db->getFieldNames('forge_test_fields');
+		$this->assertTrue(in_array('id', $fieldsNames));
+		$this->assertTrue(in_array('username', $fieldsNames));
+		$this->assertTrue(in_array('name', $fieldsNames));
+		$this->assertTrue(in_array('active', $fieldsNames));
+
+
+		$fieldsData = $this->db->getFieldData('forge_test_fields');
+
+		$this->assertTrue(in_array($fieldsData[0]->name, ['id', 'name', 'username', 'active']));
+		$this->assertTrue(in_array($fieldsData[1]->name, ['id', 'name', 'username', 'active']));
+
+		if ($this->db->DBDriver === 'MySQLi')
+		{
+			//Check types
+			$this->assertEquals($fieldsData[0]->type, 'int');
+			$this->assertEquals($fieldsData[1]->type, 'varchar');
+
+			$this->assertEquals($fieldsData[0]->max_length, 11);
+
+			$this->assertEquals($fieldsData[0]->default, null);
+			$this->assertEquals($fieldsData[1]->default, null);
+
+			$this->assertEquals($fieldsData[0]->primary_key, 1);
+
+			$this->assertEquals($fieldsData[1]->max_length, 255);
+
+		}
+		elseif ($this->db->DBDriver === 'Postgre')
+		{
+			//Check types
+			$this->assertEquals($fieldsData[0]->type, 'integer');
+			$this->assertEquals($fieldsData[1]->type, 'character varying');
+
+			$this->assertEquals($fieldsData[0]->max_length, 32);
+			$this->assertEquals($fieldsData[1]->default, null);
+
+			$this->assertEquals($fieldsData[1]->max_length, 255);
+		}
+		else
+		{
+			$this->assertTrue(false, "DB Driver not supported");
+		}
+
+		$this->forge->dropTable('forge_test_fields', true);
+
+	}
+
 	public function testCompositeKey()
 	{
 		$this->forge->addField([
-			'id'          => [
+			'id'      => [
 				'type'           => 'INTEGER',
 				'constraint'     => 3,
 				'auto_increment' => true,
 			],
-			'code'        => [
+			'code'    => [
 				'type'       => 'VARCHAR',
 				'constraint' => 40,
 			],
-			'company'        => [
+			'company' => [
 				'type'       => 'VARCHAR',
 				'constraint' => 40,
 			],
@@ -41,5 +143,112 @@ class ForgeTest extends \CIDatabaseTestCase
 		$this->assertEquals($keys[1]->fields, ['code', 'company']);
 
 		$this->forge->dropTable('forge_test_1', true);
+	}
+
+	public function testForeignKey()
+	{
+
+		$attributes = [];
+
+		if ($this->db->DBDriver == 'MySQLi')
+		{
+			$attributes = ['ENGINE' => 'InnoDB'];
+		}
+
+		$this->forge->addField([
+			'id'   => [
+				'type'       => 'INTEGER',
+				'constraint' => 11,
+			],
+			'name' => [
+				'type'       => 'VARCHAR',
+				'constraint' => 255,
+			],
+		]);
+		$this->forge->addKey('id', true);
+		$this->forge->createTable('forge_test_users', true, $attributes);
+
+		$this->forge->addField([
+			'id'       => [
+				'type'       => 'INTEGER',
+				'constraint' => 11,
+			],
+			'users_id' => [
+				'type'       => 'INTEGER',
+				'constraint' => 11,
+			],
+			'name'     => [
+				'type'       => 'VARCHAR',
+				'constraint' => 255,
+			],
+		]);
+		$this->forge->addKey('id', true);
+		$this->forge->addForeignKey('users_id', 'forge_test_users', 'id', 'CASCADE', 'CASCADE');
+
+		$this->forge->createTable('forge_test_invoices', true, $attributes);
+
+		$foreignKeyData = $this->db->getForeignKeyData('forge_test_invoices');
+
+		$this->assertEquals($foreignKeyData[0]->constraint_name,
+			$this->db->DBPrefix.'forge_test_invoices_users_id_foreign');
+		$this->assertEquals($foreignKeyData[0]->table_name, $this->db->DBPrefix.'forge_test_invoices');
+		$this->assertEquals($foreignKeyData[0]->foreign_table_name, $this->db->DBPrefix.'forge_test_users');
+
+		$this->forge->dropTable('forge_test_invoices', true);
+		$this->forge->dropTable('forge_test_users', true);
+
+	}
+
+	public function testDropForeignKey()
+	{
+
+		$attributes = [];
+
+		if ($this->db->DBDriver == 'MySQLi')
+		{
+			$attributes = ['ENGINE' => 'InnoDB'];
+		}
+
+		$this->forge->addField([
+			'id'   => [
+				'type'       => 'INTEGER',
+				'constraint' => 11,
+			],
+			'name' => [
+				'type'       => 'VARCHAR',
+				'constraint' => 255,
+			],
+		]);
+		$this->forge->addKey('id', true);
+		$this->forge->createTable('forge_test_users', true, $attributes);
+
+		$this->forge->addField([
+			'id'       => [
+				'type'       => 'INTEGER',
+				'constraint' => 11,
+			],
+			'users_id' => [
+				'type'       => 'INTEGER',
+				'constraint' => 11,
+			],
+			'name'     => [
+				'type'       => 'VARCHAR',
+				'constraint' => 255,
+			],
+		]);
+		$this->forge->addKey('id', true);
+		$this->forge->addForeignKey('users_id', 'forge_test_users', 'id', 'CASCADE', 'CASCADE');
+
+		$this->forge->createTable('forge_test_invoices', true, $attributes);
+
+		$this->forge->dropForeignKey('forge_test_invoices', 'forge_test_invoices_users_id_foreign');
+
+		$foreignKeyData = $this->db->getForeignKeyData('forge_test_invoices');
+
+		$this->assertEmpty($foreignKeyData);
+
+		$this->forge->dropTable('forge_test_invoices', true);
+		$this->forge->dropTable('forge_test_users', true);
+
 	}
 }
