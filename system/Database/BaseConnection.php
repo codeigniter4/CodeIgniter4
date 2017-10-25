@@ -1452,7 +1452,7 @@ abstract class BaseConnection implements ConnectionInterface
 	public function listTables($constrain_by_prefix = FALSE)
 	{
 		// Is there a cached result?
-		if (isset($this->dataCache['table_names']))
+		if (isset($this->dataCache['table_names']) && count($this->dataCache['table_names']))
 		{
 			return $this->dataCache['table_names'];
 		}

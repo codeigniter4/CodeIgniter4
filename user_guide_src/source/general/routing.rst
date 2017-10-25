@@ -118,7 +118,7 @@ Regular Expressions
 If you prefer you can use regular expressions to define your routing rules. Any valid regular expression
 is allowed, as are back-references.
 
-.. important::Note: If you use back-references you must use the dollar syntax rather than the double backslash syntax.
+.. important:: Note: If you use back-references you must use the dollar syntax rather than the double backslash syntax.
     A typical RegEx route might look something like this::
 
 	$routes->add('products/([a-z]+)/(\d+)', '$1::id_$2');

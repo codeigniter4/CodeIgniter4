@@ -108,9 +108,9 @@ In controller::
 
     if($imagefile = $this->request->getFiles())
     {
-       foreach($imagefile['images'] as $Im)
+       foreach($imagefile['images'] as $img)
        {
-          if ($im->isValid() && ! $im->hasMoved())
+          if ($img->isValid() && ! $img->hasMoved())
           {
                $newName = $img->getRandomName();
                $img->move(WRITEPATH.'uploads', $newName);

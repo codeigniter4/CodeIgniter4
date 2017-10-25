@@ -63,7 +63,7 @@ Class Reference
 
                 The headers are any SERVER data that starts with ``HTTP_``, like ``HTTP_HOST``. Each message
 		is converted from it's standard uppercase and underscore format to a ucwords and dash format.
-		The preceeding ``HTTP_`` is removed from the string. So ``HTTP_ACCEPT_LANGUAGE`` becomes
+		The preceding ``HTTP_`` is removed from the string. So ``HTTP_ACCEPT_LANGUAGE`` becomes
 		``Accept-Language``.
 
 	.. php:method:: headers()

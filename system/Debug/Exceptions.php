@@ -294,7 +294,7 @@ class Exceptions
 	{
 		$statusCode = abs($exception->getCode());
 
-		if ($statusCode < 100)
+		if ($statusCode < 100 || $statusCode > 599)
 		{
 			$exitStatus = $statusCode + EXIT__AUTO_MIN; // 9 is EXIT__AUTO_MIN
 			if ($exitStatus > EXIT__AUTO_MAX) // 125 is EXIT__AUTO_MAX

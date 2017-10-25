@@ -27,6 +27,30 @@ $paths = new Config\Paths();
 $app = require rtrim($paths->systemDirectory,'/ ').'/bootstrap.php';
 
 /*
+ * --------------------------------------------------------------
+ * HANDLE THE TOOLBAR
+ * --------------------------------------------------------------
+ */
+if (isset($_REQUEST['debug_toolbar'])) {
+    $js_file = rtrim($paths->systemDirectory,'/ ') . '/Debug/Toolbar/toolbarloader.js';
+    echo file_get_contents($js_file);
+    exit();
+}
+
+if (isset($_REQUEST['debug_toolbar_file'])) {
+    $writableDirectory = rtrim($paths->writableDirectory, '/ ');
+    $requestedFile = $_REQUEST['debug_toolbar_file'];
+    
+    require_once rtrim($paths->systemDirectory,'/ ') . '/Helpers/security_helper.php';        
+    $sanitizedFile = sanitize_filename($requestedFile);
+    $file = $writableDirectory . '/'. $sanitizedFile;    
+    echo file_get_contents($file);
+    unlink($file);
+    exit();
+}
+
+
+/*
  *---------------------------------------------------------------
  * LAUNCH THE APPLICATION
  *---------------------------------------------------------------

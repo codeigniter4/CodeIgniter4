@@ -41,20 +41,29 @@ class DebugToolbar implements FilterInterface
 
 			$toolbar = Services::toolbar(new App());
 			$stats   = $app->getPerformanceStats();
+                        $output  = $toolbar->run(
+					$stats['startTime'],
+					$stats['totalTime'],
+					$stats['startMemory'],
+					$request,
+					$response
+				);
 
-                        $output = $toolbar->run(
-                                $stats['startTime'], $stats['totalTime'], $stats['startMemory'], $request, $response
-                        );
+                        helper('text');
+                        $fileName = 'debugbar_' . random_string(); 
 
                         helper('filesystem');
-                        helper('text');
-                        $fileName = 'debugbar_' . random_string();
-                        write_file('./' . $fileName, $output, 'w+');
-                        return $response->appendBody(PHP_EOL .
-                                '<iframe src="/getdebugbar.php?f=' . $fileName .
-                                '" name="targetframe" allowTransparency="true" scrolling="no" '
-                                . 'frameborder="0" style="width:100%" ></iframe>');
-                }
+                        write_file( WRITEPATH . '/' . $fileName, $output, 'w+');
+
+                        helper('url');                        
+                        $url = rtrim(site_url(), '/');
+                        return $response->appendBody( PHP_EOL .
+                                '<script type="text/javascript" id="debugbarscript" '
+                                . 'data-filename="' . $fileName . '" '
+                                . 'data-url="' . $url . '" '
+                                . 'src="/'. $url .'?debug_toolbar"></script>');
+                        
+		}
 	}
 
 	//--------------------------------------------------------------------

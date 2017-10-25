@@ -22,6 +22,9 @@ your database properly as described :doc:`here <../database/configuration>`.
 ::
 
 	<?php
+
+	namespace App\Models;
+	
 	class NewsModel extends \CodeIgniter\Model
 	{
 		protected $table = 'news';

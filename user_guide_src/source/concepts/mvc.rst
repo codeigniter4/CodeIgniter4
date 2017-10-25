@@ -13,7 +13,7 @@ each piece as you need.
 
 **Views** are simple files, with little to no logic, that display the information to the user.
 
-**Controllers** act as glue code, marshalling data back and forth between the view (or the user that's seeing it) and
+**Controllers** act as glue code, marshaling data back and forth between the view (or the user that's seeing it) and
 the data storage.
 
 At their most basic, controllers and models are simply classes that have a specific job. They are not the only class

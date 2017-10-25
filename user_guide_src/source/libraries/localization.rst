@@ -34,9 +34,9 @@ Every site will have a default language/locale they operate in. This can be set 
     public $defaultLocale = 'en';
 
 The value can be any string that your application uses to manage text strings and other formats. It is
-recommended that a [BCP 47](http://www.rfc-editor.org/rfc/bcp/bcp47.txt) language code is used. This results in
+recommended that a `BCP 47 <http://www.rfc-editor.org/rfc/bcp/bcp47.txt>`_ language code is used. This results in
 language codes like en-US for American English, or fr-FR, for French/France. A more readable introduction
-to this can be found on the [W3C's site](https://www.w3.org/International/articles/language-tags/).
+to this can be found on the `W3C's site <https://www.w3.org/International/articles/language-tags/>`_.
 
 The system is smart enough to fallback to more generic language codes if an exact match
 cannot be found. If the locale code was set to **en_US** and we only have language files setup for **en**
