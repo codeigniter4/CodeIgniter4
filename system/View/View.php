@@ -99,6 +99,13 @@ class View implements RendererInterface
 	 */
 	protected $saveData;
 
+	/**
+	 * Number of loaded views
+	 *
+	 * @var int
+	 */
+	protected $viewsCount = 0;
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -204,7 +211,10 @@ class View implements RendererInterface
 							$file = str_replace(constant($path), $path.'/', $file);
 						}
 					}
-					$output = '<!-- DEBUG-VIEW START ' . $file . ' -->' . $output . '<!-- DEBUG-VIEW ENDED ' . $file . ' -->';
+					$file = ++$this->viewsCount . ' ' . $file;
+					$output = '<!-- DEBUG-VIEW START ' . $file . ' -->' . PHP_EOL
+						. $output . PHP_EOL
+						. '<!-- DEBUG-VIEW ENDED ' . $file . ' -->' . PHP_EOL;
 				}
 			}
 		}
