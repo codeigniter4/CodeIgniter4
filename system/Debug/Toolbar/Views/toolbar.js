@@ -376,6 +376,7 @@ var ciDebugBar = {
 				while( nodeList[i].childNodes.length !== 1 )
 				{
 					nodeList[i].parentNode.insertBefore( nodeList[i].childNodes[1], nodeList[i].parentNode.childNodes[index].nextSibling  );
+					index++;
 				}
 
 				nodeList[i].parentNode.removeChild( nodeList[i] );
