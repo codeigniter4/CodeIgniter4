@@ -183,21 +183,18 @@ below is for MySQL.
 Adding Foreign Keys
 ===========
 
-
-::
+Foreign Keys help to enforce relationships and actions across your tables. For tables that support Foreign Keys,
+you may add them directly in forge::
 
 
         $forge->addForeignKey('users_id','users','id');
         // gives CONSTRAINT `TABLENAME_users_foreign` FOREIGN KEY(`users_id`) REFERENCES `users`(`id`)
 
 
-You can specify the desired action for the "on delete" and "on update" properties of the constraint:
-
-::
+You can specify the desired action for the "on delete" and "on update" properties of the constraint::
 
         $forge->addForeignKey('users_id','users','id','CASCADE','CASCADE');
         // gives CONSTRAINT `TABLENAME_users_foreign` FOREIGN KEY(`users_id`) REFERENCES `users`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
-
 
 
 Creating a table
@@ -254,6 +251,7 @@ Execute a DROP FOREIGN KEY.
 	// Produces: ALTER TABLE 'tablename' DROP FOREIGN KEY 'users_foreign'
 	$forge->dropForeignKey('tablename','users_foreign');
 
+.. note:: SQlite database driver does not support dropping of foreign keys.
 
 Renaming a table
 ================
