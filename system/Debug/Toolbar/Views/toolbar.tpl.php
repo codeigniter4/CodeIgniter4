@@ -246,8 +246,3 @@
 			</table>
 		<?php endif; ?>
 	</div>
-
-
-<script>
-	ciDebugBar.init();
-</script>
