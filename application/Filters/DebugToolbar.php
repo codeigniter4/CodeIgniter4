@@ -41,28 +41,34 @@ class DebugToolbar implements FilterInterface
 
 			$toolbar = Services::toolbar(new App());
 			$stats   = $app->getPerformanceStats();
-                        $output  = $toolbar->run(
-					$stats['startTime'],
-					$stats['totalTime'],
-					$stats['startMemory'],
-					$request,
-					$response
-				);
+			$output  = $toolbar->run(
+				$stats['startTime'],
+				$stats['totalTime'],
+				$stats['startMemory'],
+				$request,
+				$response
+			);
 
-                        helper('text');
-                        $fileName = 'debugbar_' . random_string(); 
+			helper(['filesystem', 'url']);
 
-                        helper('filesystem');
-                        write_file( WRITEPATH . '/' . $fileName, $output, 'w+');
+			// Updated to time() to can get history
+			$time = time();
 
-                        helper('url');                        
-                        $url = rtrim(site_url(), '/');
-                        return $response->appendBody( PHP_EOL .
-                                '<script type="text/javascript" id="debugbarscript" '
-                                . 'data-filename="' . $fileName . '" '
-                                . 'data-url="' . $url . '" '
-                                . 'src="/'. $url .'?debug_toolbar"></script>');
-                        
+			write_file(WRITEPATH . 'debugbar_' . $time, $output, 'w+');
+
+			$script = PHP_EOL
+				. '<script type="text/javascript" id="debugbar_loader" '
+				. 'data-time="' . $time . '" '
+				. 'src="' . site_url() . '?debugbar"></script>'
+				. PHP_EOL;
+
+			if (strpos($response->getBody(), '</body>') !== false)
+			{
+				return $response->setBody(str_replace('</body>', $script . '</body>',
+					$response->getBody()));
+			}
+
+			return $response->appendBody($script);
 		}
 	}
 
