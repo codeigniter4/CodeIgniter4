@@ -42,6 +42,27 @@ $dbconfig = [
 	    'compress'     => false,
 	    'strictOn'     => false,
 	    'failover'     => [],
-    ]
+    ],
+
+	'sqlite' => [
+		'DSN'          => '',
+		'hostname'     => 'localhost',
+		'username'     => '',
+		'password'     => '',
+		'database'     => ':memory:',
+		'DBDriver'     => 'SQLite3',
+		'DBPrefix'     => 'db_',
+		'pConnect'     => false,
+		'DBDebug'     => (ENVIRONMENT !== 'production'),
+		'cacheOn'     => false,
+		'cacheDir'     => '',
+		'charset'      => 'utf8',
+		'DBCollat'     => 'utf8_general_ci',
+		'swapPre'      => '',
+		'encrypt'      => false,
+		'compress'     => false,
+		'strictOn'     => false,
+		'failover'     => [],
+	]
 
 ];

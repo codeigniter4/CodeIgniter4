@@ -23,6 +23,7 @@ dist: precise
 env:
   - DB=mysqli
   - DB=postgres
+  - DB=sqlite
 
 services:
   - memcached
