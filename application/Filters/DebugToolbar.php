@@ -59,7 +59,7 @@ class DebugToolbar implements FilterInterface
 			$script = PHP_EOL
 				. '<script type="text/javascript" id="debugbar_loader" '
 				. 'data-time="' . $time . '" '
-				. 'src="' . site_url() . '?debugbar"></script>'
+				. 'src="' . rtrim(site_url(), '/') . '?debugbar"></script>'
 				. PHP_EOL;
 
 			if (strpos($response->getBody(), '</body>') !== false)

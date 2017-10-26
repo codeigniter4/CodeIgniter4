@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', loadDoc, false);
 
 function loadDoc() {
     var time = document.getElementById("debugbar_loader").getAttribute("data-time");
-    var url = "<?php echo site_url() ?>";
+    var url = "<?php echo rtrim(site_url(), '/') ?>";
 
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
