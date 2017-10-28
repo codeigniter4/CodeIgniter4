@@ -1165,11 +1165,11 @@ class Forge
                     $sql .= ",\n\tCONSTRAINT " . $this->db->escapeIdentifiers($name_index)
                         . ' FOREIGN KEY(' . $this->db->escapeIdentifiers($field) . ') REFERENCES '.$this->db->escapeIdentifiers($this->db->DBPrefix.$fkey['table']).' ('.$this->db->escapeIdentifiers($fkey['field']).')';
 
-                    if($fkey['onDelete'] !== false && in_array($fkey['onDelete'], $allowActions)){
+                    if($fkey['onDelete'] !== false && in_array(strtoupper($fkey['onDelete']), $allowActions)){
                         $sql .= " ON DELETE ".$fkey['onDelete'];
                     }
 
-                    if($fkey['onUpdate'] !== false && in_array($fkey['onUpdate'], $allowActions)){
+                    if($fkey['onUpdate'] !== false && in_array(strtoupper($fkey['onUpdate']), $allowActions)){
                         $sql .= " ON UPDATE ".$fkey['onUpdate'];
                     }
 
