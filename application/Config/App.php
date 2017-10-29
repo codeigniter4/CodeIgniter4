@@ -279,18 +279,8 @@ class App extends BaseConfig
 //		'CodeIgniter\Debug\Toolbar\Collectors\Cache',
 		'CodeIgniter\Debug\Toolbar\Collectors\Files',
 		'CodeIgniter\Debug\Toolbar\Collectors\Routes',
+		'CodeIgniter\Debug\Toolbar\Collectors\Events',
 	];
-
-	/*
-	|--------------------------------------------------------------------------
-	| Error Views Path
-	|--------------------------------------------------------------------------
-	| This is the path to the directory that contains the 'cli' and 'html'
-	| directories that hold the views used to generate errors.
-	|
-	| Default: APPPATH.'Views/errors'
-	*/
-	public $errorViewPath = APPPATH.'Views/errors';
 
 	/*
 	|--------------------------------------------------------------------------

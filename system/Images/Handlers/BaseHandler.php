@@ -35,9 +35,9 @@
  * @since      Version 3.0.0
  * @filesource
  */
+use CodeIgniter\Images\Exceptions\ImageException;
 use CodeIgniter\Images\Image;
 use CodeIgniter\Images\ImageHandlerInterface;
-use CodeIgniter\Images\Exceptions\ImageException;
 
 abstract class BaseHandler implements ImageHandlerInterface
 {
@@ -106,6 +106,10 @@ abstract class BaseHandler implements ImageHandlerInterface
 	 */
 	public function withFile(string $path)
 	{
+		// Clear out the old resource so that
+		// it doesn't try to use a previous image
+		$this->resource = null;
+
 		$this->image = new Image($path, true);
 
 		$this->image->getProperties();
@@ -244,6 +248,40 @@ abstract class BaseHandler implements ImageHandlerInterface
 
 		return $this;
 	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Flattens transparencies, default white background
+	 *
+	 * @param int $red
+	 * @param int $green
+	 * @param int $blue
+	 *
+	 * @return mixed
+	 */
+	public function flatten(int $red = 255, int $green = 255, int $blue = 255)
+	{
+		$this->width = $this->image->origWidth;
+		$this->height = $this->image->origHeight;
+
+		return $this->_flatten();
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Handler-specific method to flattening an image's transparencies.
+	 *
+	 * @param int $red
+	 * @param int $green
+	 * @param int $blue
+	 *
+	 * @return mixed
+	 * @internal param int $angle
+	 *
+	 */
+	protected abstract function _flatten(int $red = 255, int $green = 255, int $blue = 255);
 
 	//--------------------------------------------------------------------
 

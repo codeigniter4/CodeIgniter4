@@ -81,18 +81,18 @@ class CreateMigration extends BaseCommand
 	 *
 	 * @var array
 	 */
-	protected $arguments = array(
+	protected $arguments = [
 		'migration_name' => 'The migration file name'
-	);
+	];
 
 	/**
 	 * the Command's Options
 	 *
 	 * @var array
 	 */
-	protected $options = array(
+	protected $options = [
 		'-n' => 'Set migration namespace'
-	);
+	];
 
 	/**
 	 * Creates a new migration file with the current timestamp.
@@ -131,6 +131,7 @@ class CreateMigration extends BaseCommand
 				if ($namespace == $ns)
 				{
 					$homepath = realpath($path);
+					break;
 				}
 			}
 		}

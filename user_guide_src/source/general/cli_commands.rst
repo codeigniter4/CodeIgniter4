@@ -15,24 +15,24 @@ Running Commands
 ****************
 
 Commands are run from the command line, in the root directory. The same one that holds the **/application**
-and **/system** directories. A custom script, **ci.php** has been provided that is used to run any of the
+and **/system** directories. A custom script, **spark** has been provided that is used to run any of the
 cli commands::
 
-    > php ci.php
+    > php spark
 
 When called without specifying a command, a simple help page is displayed that also provides a list of
 available commands. You should pass the name of the command as the first argument to run that command::
 
-    > php ci.php migrate
+    > php spark migrate
 
 Some commands take additional arguments, which should be provided directly after the command, separated by spaces::
 
-    > php ci.php db:seed DevUserSeeder
+    > php spark db:seed DevUserSeeder
 
 For all of the commands CodeIgniter provides, if you do not provide the required arguments, you will be prompted
 for the information it needs to run correctly::
 
-    > php ci.php migrate:version
+    > php spark migrate:version
     > Version?
 
 ******************
@@ -41,7 +41,7 @@ Using Help Command
 
 You can get help about any CLI command using the help command as follows::
 
-    > php ci.php help db:seed
+    > php spark help db:seed
 
 *********************
 Creating New Commands
@@ -84,8 +84,8 @@ should contain the following code::
 
     class AppInfo extends BaseCommand
     {
-        protected $group = 'demo';
-        protected $name  = 'app:info';
+        protected $group       = 'demo';
+        protected $name        = 'app:info';
         protected $description = 'Displays basic application information.';
 
         public function run(array $params)
@@ -112,7 +112,7 @@ run()
 The ``run()`` method is the method that is called when the command is being run. The ``$params`` array is a list of
 any cli arguments after the command name for your use. If the cli string was::
 
-    > php ci.php foo bar baz
+    > php spark foo bar baz
 
 Then **foo** is the command name, and the ``$params`` array would be::
 
@@ -163,11 +163,11 @@ be familiar with when creating your own commands. It also has a :doc:`Logger </g
 
             try
             {
-            . . .
+                . . .
             }
             catch (\Exception $e)
             {
-            $this->showError($e);
+                $this->showError($e);
             }
 
     .. php:method:: showHelp()

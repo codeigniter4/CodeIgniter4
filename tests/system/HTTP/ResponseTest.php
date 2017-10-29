@@ -83,17 +83,6 @@ class ResponseTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	public function testExceptionThrownWhenNoStatusCode()
-	{
-		$response = new Response(new App());
-
-		$this->expectException('BadMethodCallException');
-		$this->expectExceptionMessage('HTTP Response is missing a status code');
-		$response->getStatusCode();
-	}
-
-	//--------------------------------------------------------------------
-
 	public function testSetStatusCodeInterpretsReason()
 	{
 		$response = new Response(new App());
@@ -116,11 +105,11 @@ class ResponseTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	public function testGetReasonReturnsEmptyStringWithNoStatus()
+	public function testGetReasonDefaultsToOK()
 	{
 		$response = new Response(new App());
 
-		$this->assertEquals('', $response->getReason());
+		$this->assertEquals('OK', $response->getReason());
 	}
 
 	//--------------------------------------------------------------------
@@ -205,12 +194,7 @@ class ResponseTest extends \CIUnitTestCase
 	{
 		$response = new Response(new App());
 
-		try
-		{
-			$response->redirect('example.com');
-			$this->fail('RedirectException should be raised.');
-		}
-		catch (RedirectException $e) {}
+		$response->redirect('example.com');
 
 		$this->assertTrue($response->hasHeader('location'));
 		$this->assertEquals('example.com', $response->getHeaderLine('Location'));
@@ -223,12 +207,7 @@ class ResponseTest extends \CIUnitTestCase
 	{
 		$response = new Response(new App());
 
-		try
-		{
-			$response->redirect('example.com', 'auto', 307);
-			$this->fail('RedirectException should be raised.');
-		}
-		catch (RedirectException $e) {}
+		$response->redirect('example.com', 'auto', 307);
 
 		$this->assertTrue($response->hasHeader('location'));
 		$this->assertEquals('example.com', $response->getHeaderLine('Location'));

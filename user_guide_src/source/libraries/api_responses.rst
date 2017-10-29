@@ -27,7 +27,7 @@ The following example shows a common usage pattern within your controllers.
         public function createUser()
         {
             $model = new UserModel();
-            $user = $model->save($this->request->getPost());
+            $user  = $model->save($this->request->getPost());
 
             // Respond with 201 status code
             return $this->respondCreated();
@@ -145,8 +145,8 @@ Class Reference
     code of the error. The ``messages`` element contains an array of error messages. It would look something like::
 
 	    $response = [
-	        'status' => 400,
-	        'code' => '321a',
+	        'status'   => 400,
+	        'code'     => '321a',
 	        'messages' => [
 	            'Error message 1',
 	            'Error message 2'

@@ -99,6 +99,13 @@ class View implements RendererInterface
 	 */
 	protected $saveData;
 
+	/**
+	 * Number of loaded views
+	 *
+	 * @var int
+	 */
+	protected $viewsCount = 0;
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -187,6 +194,30 @@ class View implements RendererInterface
 		include($file); // PHP will be processed
 		$output = ob_get_contents();
 		@ob_end_clean();
+
+		if (CI_DEBUG)
+		{
+			$after = (new \Config\Filters())->globals['after'];
+			if (in_array('toolbar', $after) || array_key_exists('toolbar', $after))
+			{
+				$toolbarCollectors =  (new \Config\App())->toolbarCollectors;
+				if (in_array('CodeIgniter\Debug\Toolbar\Collectors\Views', $toolbarCollectors) || array_key_exists('CodeIgniter\Debug\Toolbar\Collectors\Views', $toolbarCollectors))
+				{
+					// Clean up our path names to make them a little cleaner
+					foreach (['APPPATH', 'BASEPATH', 'ROOTPATH'] as $path)
+					{
+						if (strpos($file, constant($path)) === 0)
+						{
+							$file = str_replace(constant($path), $path.'/', $file);
+						}
+					}
+					$file = ++$this->viewsCount . ' ' . $file;
+					$output = '<!-- DEBUG-VIEW START ' . $file . ' -->' . PHP_EOL
+						. $output . PHP_EOL
+						. '<!-- DEBUG-VIEW ENDED ' . $file . ' -->' . PHP_EOL;
+				}
+			}
+		}
 
 		$this->logPerformance($start, microtime(true), $view);
 

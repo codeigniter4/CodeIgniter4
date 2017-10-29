@@ -165,7 +165,7 @@ if ( ! function_exists('ascii_to_entities'))
 			}
 			else
 			{
-				if (count($temp) === 0)
+				if (empty($temp))
 				{
 					$count = ($ordinal < 224) ? 2 : 3;
 				}
@@ -510,7 +510,7 @@ if ( ! function_exists('word_wrap'))
 		}
 
 		// Put our markers back
-		if (count($unwrap) > 0)
+		if (! empty($unwrap))
 		{
 			foreach ($unwrap as $key => $val)
 			{
@@ -709,7 +709,7 @@ if ( ! function_exists('random_string'))
 	 *
 	 * Useful for generating passwords or hashes.
 	 *
-	 * @param    string $type Type of random string.  basic, alpha, alnum, numeric, nozero, unique, md5, encrypt and sha1
+	 * @param    string $type Type of random string.  basic, alpha, alnum, numeric, nozero, unique, md5, sha1, and crypto
 	 * @param    int    $len  Number of characters
 	 *
 	 * @return    string
@@ -742,9 +742,11 @@ if ( ! function_exists('random_string'))
 
 				return substr(str_shuffle(str_repeat($pool, ceil($len / strlen($pool)))), 0, $len);
 			case 'md5':
-				return md5(uniqid(mt_rand()));
+				return md5(uniqid(mt_rand(), true));
 			case 'sha1':
 				return sha1(uniqid(mt_rand(), true));
+			case 'crypto':
+				return bin2hex(random_bytes($len/2));
 		}
 	}
 

@@ -36,7 +36,7 @@
  * @filesource
  */
 use CodeIgniter\Database\BaseBuilder;
-use CodeIgniter\DatabaseException;
+use \CodeIgniter\Database\Exceptions\DatabaseException;
 
 /**
  * Builder for Postgre
@@ -354,7 +354,7 @@ class Builder extends BaseBuilder
 	{
 		$op = $insensitiveSearch === true ? 'ILIKE' : 'LIKE';
 
-		return "{$prefix} {$column} {$not} {$op} :{$bind}";
+		return "{$prefix} {$column} {$not} {$op} :{$bind}:";
 	}
 
 	//--------------------------------------------------------------------

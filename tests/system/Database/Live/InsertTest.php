@@ -11,7 +11,7 @@ class InsertTest extends \CIDatabaseTestCase
 
 	public function testInsert()
 	{
-		$job_data = array('name' => 'Grocery Sales', 'description' => 'Discount!');
+		$job_data = ['name' => 'Grocery Sales', 'description' => 'Discount!'];
 
 		$this->db->table('job')->insert($job_data);
 
@@ -22,10 +22,10 @@ class InsertTest extends \CIDatabaseTestCase
 
 	public function testInsertBatch()
 	{
-		$job_data = array(
-			array('name' => 'Comedian', 'description' => 'Theres something in your teeth'),
-			array('name' => 'Cab Driver', 'description' => 'Iam yellow'),
-		);
+		$job_data = [
+			['name' => 'Comedian', 'description' => 'Theres something in your teeth'],
+			['name' => 'Cab Driver', 'description' => 'Iam yellow'],
+		];
 
 		$this->db->table('job')->insertBatch($job_data);
 
@@ -37,7 +37,7 @@ class InsertTest extends \CIDatabaseTestCase
 
 	public function testReplaceWithNoMatchingData()
 	{
-		$data = array('id' => 5, 'name' => 'Cab Driver', 'description' => 'Iam yellow');
+		$data = ['id' => 5, 'name' => 'Cab Driver', 'description' => 'Iam yellow'];
 
 		$this->db->table('job')->replace($data);
 
@@ -52,7 +52,7 @@ class InsertTest extends \CIDatabaseTestCase
 
 	public function testReplaceWithMatchingData()
 	{
-		$data = array('id' => 1, 'name' => 'Cab Driver', 'description' => 'Iam yellow');
+		$data = ['id' => 1, 'name' => 'Cab Driver', 'description' => 'Iam yellow'];
 
 		$this->db->table('job')->replace($data);
 

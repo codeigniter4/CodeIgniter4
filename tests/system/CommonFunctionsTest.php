@@ -17,7 +17,7 @@ class CommomFunctionsTest extends \CIUnitTestCase
 
 	public function testStringifyAttributes()
 	{
-		$this->assertEquals(' class="foo" id="bar"', stringify_attributes(array('class' => 'foo', 'id' => 'bar')));
+		$this->assertEquals(' class="foo" id="bar"', stringify_attributes(['class' => 'foo', 'id' => 'bar']));
 
 		$atts = new stdClass;
 		$atts->class = 'foo';
@@ -29,14 +29,14 @@ class CommomFunctionsTest extends \CIUnitTestCase
 
 		$this->assertEquals(' class="foo" id="bar"', stringify_attributes('class="foo" id="bar"'));
 
-		$this->assertEquals('', stringify_attributes(array()));
+		$this->assertEquals('', stringify_attributes([]));
 	}
 
 	// ------------------------------------------------------------------------
 
 	public function testStringifyJsAttributes()
 	{
-		$this->assertEquals('width=800,height=600', stringify_attributes(array('width' => '800', 'height' => '600'), TRUE));
+		$this->assertEquals('width=800,height=600', stringify_attributes(['width' => '800', 'height' => '600'], TRUE));
 
 		$atts = new stdClass;
 		$atts->width = 800;
@@ -65,7 +65,7 @@ class CommomFunctionsTest extends \CIUnitTestCase
         $this->assertEquals('bar', env('foo', 'baz'));
     }
 
-	public function testRedirectReturnsNamedRouteFirst()
+	public function testRedirectReturnsRedirectResponse()
 	{
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 
@@ -79,39 +79,7 @@ class CommomFunctionsTest extends \CIUnitTestCase
 		$response->method('redirect')
 			->will($this->returnArgument(0));
 
-		$this->assertEquals('/home/base', redirect('base'));
+		$this->assertInstanceOf(\CodeIgniter\HTTP\RedirectResponse::class, redirect('base'));
     }
 
-	public function testRedirectReverseRouting()
-	{
-		$_SERVER['REQUEST_METHOD'] = 'GET';
-
-		$response = $this->createMock(\CodeIgniter\HTTP\Response::class);
-		$routes   = new \CodeIgniter\Router\RouteCollection(new \CodeIgniter\Autoloader\MockFileLocator(new \Config\Autoload()));
-		\CodeIgniter\Services::injectMock('response', $response);
-		\CodeIgniter\Services::injectMock('routes', $routes);
-
-		$routes->add('home/base', 'Controller::index', ['as' => 'base']);
-
-		$response->method('redirect')
-		         ->will($this->returnArgument(0));
-
-		$this->assertEquals('/home/base', redirect('Controller::index'));
-	}
-
-	public function testRedirectNormalRouting()
-	{
-		$_SERVER['REQUEST_METHOD'] = 'GET';
-
-		$response = $this->createMock(\CodeIgniter\HTTP\Response::class);
-		$routes   = new \CodeIgniter\Router\RouteCollection(new \CodeIgniter\Autoloader\MockFileLocator(new \Config\Autoload()));
-		\CodeIgniter\Services::injectMock('response', $response);
-		\CodeIgniter\Services::injectMock('routes', $routes);
-
-		$response->method('redirect')
-		         ->will($this->returnArgument(0));
-
-		$this->assertEquals('/home/base', redirect('/home/base'));
-		$this->assertEquals('home/base', redirect('home/base'));
-	}
 }

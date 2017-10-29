@@ -1040,7 +1040,8 @@ class Time extends DateTime
 	//--------------------------------------------------------------------
 
 	/**
-	 *
+	 * Determines if the current instance's time is before $testTime,
+	 * after converting to UTC.
 	 *
 	 * @param             $testTime
 	 * @param string|null $timezone
@@ -1059,7 +1060,7 @@ class Time extends DateTime
 
 	/**
 	 * Determines if the current instance's time is after $testTime,
-	 * after comparing in UTC.
+	 * after converting in UTC.
 	 *
 	 * @param             $testTime
 	 * @param string|null $timezone
@@ -1170,6 +1171,14 @@ class Time extends DateTime
 	// Utilities
 	//--------------------------------------------------------------------
 
+	/**
+	 * Returns a Time instance with the timezone converted to UTC.
+	 *
+	 * @param             $time
+	 * @param string|null $timezone
+	 *
+	 * @return \DateTime|static
+	 */
 	public function getUTCObject($time, string $timezone=null)
 	{
 		if ($time instanceof Time)

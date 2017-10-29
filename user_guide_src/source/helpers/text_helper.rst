@@ -43,6 +43,7 @@ The following functions are available:
 	-  **nozero**: Numeric string with no zeros.
 	-  **md5**: An encrypted random number based on ``md5()`` (fixed length of 32).
 	-  **sha1**: An encrypted random number based on ``sha1()`` (fixed length of 40).
+        -  **crypto**: A random string based on ``random_bytes()``.
 
 	Usage example::
 
@@ -121,8 +122,8 @@ The following functions are available:
 	Example::
 
 		$str = array(
-			'question'  => 'Is your name O\'reilly?',
-			'answer' => 'No, my name is O\'connor.'
+			'question' => 'Is your name O\'reilly?',
+			'answer'   => 'No, my name is O\'connor.'
 		);
 
 		$str = strip_slashes($str);
@@ -130,8 +131,8 @@ The following functions are available:
 	The above will return the following array::
 
 		array(
-			'question'  => "Is your name O'reilly?",
-			'answer' => "No, my name is O'connor."
+			'question' => "Is your name O'reilly?",
+			'answer'   => "No, my name is O'connor."
 		);
 
 	.. note:: For historical reasons, this function will also accept
@@ -147,7 +148,7 @@ The following functions are available:
 	:returns:	Reduced string
 	:rtype:	string
 
-	Reduces multiple instances of a particular character occuring directly
+	Reduces multiple instances of a particular character occurring directly
 	after each other. Example::
 
 		$string = "Fred, Bill,, Joe, Jimmy";
@@ -243,7 +244,7 @@ The following functions are available:
 
 		$string = ascii_to_entities($string);
 
-.. php:function::entities_to_ascii($str[, $all = TRUE])
+.. php:function:: entities_to_ascii($str[, $all = TRUE])
 
 	:param	string	$str: Input string
 	:param	bool	$all: Whether to convert unsafe entities as well
@@ -288,7 +289,7 @@ The following functions are available:
 	Example::
 
 		$disallowed = array('darn', 'shucks', 'golly', 'phooey');
-		$string = word_censor($string, $disallowed, 'Beep!');
+		$string     = word_censor($string, $disallowed, 'Beep!');
 
 .. php:function:: highlight_code($str)
 

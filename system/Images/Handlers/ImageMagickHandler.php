@@ -72,7 +72,14 @@ class ImageMagickHandler extends BaseHandler
 		$source = ! empty($this->resource) ? $this->resource : $this->image->getPathname();
 		$destination = $this->getResourcePath();
 
-		$action = $maintainRatio === true ? ' -resize ' . $this->width . 'x' . $this->height . ' "' . $source . '" "' . $destination . '"' : ' -resize ' . $this->width . 'x' . $this->height . '\! "' . $source . '" "' . $destination . '"';
+		//todo FIX THIS HANDLER PROPERLY
+
+		$escape = "\\";
+		if (strtoupper( substr( PHP_OS, 0, 3 ) ) === 'WIN') {
+			$escape = "";
+		}
+
+		$action = $maintainRatio === true ? ' -resize ' . $this->width . 'x' . $this->height . ' "' . $source . '" "' . $destination . '"' : ' -resize ' . $this->width . 'x' . $this->height . "{$escape}! \"" . $source . '" "' . $destination . '"';
 
 		$this->process($action);
 
@@ -116,6 +123,31 @@ class ImageMagickHandler extends BaseHandler
 		$destination = $this->getResourcePath();
 
 		$action = ' ' . $angle . ' "' . $source . '" "' . $destination . '"';
+
+		$this->process($action);
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Flattens transparencies, default white background
+	 *
+	 * @param int $red
+	 * @param int $green
+	 * @param int $blue
+	 *
+	 * @return $this
+	 */
+	public function _flatten(int $red = 255, int $green = 255, int $blue = 255){
+
+		$flatten =  "-background RGB({$red},{$green},{$blue}) -flatten";
+
+		$source = ! empty($this->resource) ? $this->resource : $this->image->getPathname();
+		$destination = $this->getResourcePath();
+
+		$action = ' ' . $flatten . ' "' . $source . '" "' . $destination . '"';
 
 		$this->process($action);
 

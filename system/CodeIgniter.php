@@ -35,6 +35,7 @@
  * @since	Version 3.0.0
  * @filesource
  */
+use CodeIgniter\HTTP\RedirectResponse;
 use Config\Services;
 use Config\Cache;
 use CodeIgniter\HTTP\URI;
@@ -156,7 +157,7 @@ class CodeIgniter
 		date_default_timezone_set($this->config->appTimezone ?? 'UTC');
 
 		// Setup Exception Handling
-		Services::exceptions($this->config, true)
+		Services::exceptions()
 				->initialize();
 
 		$this->loadEnvironment();
@@ -212,11 +213,7 @@ class CodeIgniter
 			$this->response->redirect($e->getMessage(), 'auto', $e->getCode());
 			$this->callExit(EXIT_SUCCESS);
 		}
-		// Catch Response::redirect()
-		catch (HTTP\RedirectException $e)
-		{
-			$this->callExit(EXIT_SUCCESS);
-		} catch (PageNotFoundException $e)
+		catch (PageNotFoundException $e)
 		{
 			$this->display404errors($e);
 		}
@@ -256,6 +253,12 @@ class CodeIgniter
 		{
 			$this->benchmark->stop('controller_constructor');
 			$this->benchmark->stop('controller');
+		}
+
+		// Handle any redirects
+		if ($returned instanceof RedirectResponse)
+		{
+			$this->callExit(EXIT_SUCCESS);
 		}
 
 		// If $returned is a string, then the controller output something,
@@ -785,29 +788,7 @@ class CodeIgniter
 			}
 		}
 
-		ob_start();
-
-		// These might show as unused here - but don't delete!
-		// They are used within the view files.
-		$heading = 'Page Not Found';
-		$message = $e->getMessage();
-
-		// Show the 404 error page
-		if (is_cli())
-		{
-			require APPPATH . 'Views/errors/cli/error_404.php';
-		}
-		else
-		{
-			require APPPATH . 'Views/errors/html/error_404.php';
-		}
-
-		$buffer = ob_get_contents();
-		ob_end_clean();
-
-		$this->response->setBody($buffer);
-		$this->response->send();
-		$this->callExit(EXIT_UNKNOWN_FILE);	// Unknown file
+		throw new PageNotFoundException(lang('HTTP.pageNotFound'));
 	}
 
 	//--------------------------------------------------------------------

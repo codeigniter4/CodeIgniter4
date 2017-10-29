@@ -35,7 +35,7 @@
  * @since        Version 4.0.0
  * @filesource
  */
-use CodeIgniter\Services;
+use CodeIgniter\Config\Services;
 
 /**
  * Loags collector
@@ -77,7 +77,7 @@ class Logs extends BaseCollector
 	 */
 	public function display(): string
 	{
-		$parser = \Config\Services::parser(BASEPATH . 'Debug/Toolbar/Views/');
+		$parser = \Config\Services::parser(BASEPATH . 'Debug/Toolbar/Views/', null, false);
 
 		$logger = Services::logger(true);
 		$logs = $logger->logCache;

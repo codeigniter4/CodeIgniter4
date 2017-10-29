@@ -18,7 +18,7 @@ More information about the plans for version 4 can be found in [the announcement
 
 ### Documentation
 
-The current documentation can be found [here](https://bcit-ci.github.io/CodeIgniter4/). As with the rest of the framwork, it is currently a work in progress, and will see changes over time to structure, explanations, etc.
+The current documentation can be found [here](https://bcit-ci.github.io/CodeIgniter4/). As with the rest of the framework, it is currently a work in progress, and will see changes over time to structure, explanations, etc.
 
 ## Important Change with index.php
 
@@ -66,7 +66,7 @@ We are not looking for out-of-scope contributions, only those that would be cons
 Please read the *Contributing to CodeIgniter* section in the user guide
 
 ## Server Requirements
-PHP version 7 or higher is required, with the following extensions installed: 
+PHP version 7.0.15 or higher is required, with the following extensions installed: 
 
 - intl
 

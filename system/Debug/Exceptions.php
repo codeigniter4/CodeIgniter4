@@ -35,14 +35,16 @@
  * @since	Version 3.0.0
  * @filesource
  */
-require __DIR__ . '/CustomExceptions.php';
+use Config\Services;
+use Psr\Log\LoggerAwareTrait;
+
+require __DIR__.'/CustomExceptions.php';
 
 /**
  * Exceptions manager
  */
 class Exceptions
 {
-
 	/**
 	 * Nesting level of the output buffering mechanism
 	 *
@@ -58,6 +60,11 @@ class Exceptions
 	 */
 	protected $viewPath;
 
+	/**
+	 * @var \Config\Exceptions
+	 */
+	protected $config;
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -65,11 +72,13 @@ class Exceptions
 	 *
 	 * @param \Config\App $config
 	 */
-	public function __construct(\Config\App $config)
+	public function __construct(\Config\Exceptions $config)
 	{
 		$this->ob_level = ob_get_level();
 
 		$this->viewPath = rtrim($config->errorViewPath, '/ ') . '/';
+
+		$this->config = $config;
 	}
 
 	//--------------------------------------------------------------------
@@ -102,56 +111,28 @@ class Exceptions
 	 */
 	public function exceptionHandler(\Throwable $exception)
 	{
-		// Get Exception Info - these are available
-		// directly in the template that's displayed.
-		$type = get_class($exception);
 		$codes = $this->determineCodes($exception);
-		$code = $codes[0];
-		$exit = $codes[1];
-		$code = $exception->getCode();
-		$message = $exception->getMessage();
-		$file = $exception->getFile();
-		$line = $exception->getLine();
-		$trace = $exception->getTrace();
-		$title = get_class($exception);
-
-		if (empty($message))
-		{
-			$message = '(null)';
-		}
+		$statusCode = $codes[0];
+		$exitCode = $codes[1];
 
 		// Log it
-		// Fire an Event
-		$templates_path = $this->viewPath;
-		if (empty($templates_path))
+		if ($this->config->log === true && ! in_array($statusCode, $this->config->ignoreCodes))
 		{
-			$templates_path = APPPATH . 'Views/errors/';
+			log_message('critical', $exception->getMessage()."\n{trace}", [
+				'trace' => $exception->getTraceAsString()
+			]);
 		}
 
-		if (is_cli())
+		if (! is_cli())
 		{
-			$templates_path .= 'cli/';
-		}
-		else
-		{
-			header('HTTP/1.1 500 Internal Server Error', true, 500);
-			$templates_path .= 'html/';
+			$response = Services::response()->setStatusCode($statusCode);
+			$header = "HTTP/1.1 {$response->getStatusCode()} {$response->getReason()}";
+			header($header, true, $statusCode);
 		}
 
-		$view = $this->determineView($exception, $templates_path);
+		$this->render($exception, $statusCode);
 
-		if (ob_get_level() > $this->ob_level + 1)
-		{
-			ob_end_clean();
-		}
-
-		ob_start();
-		include($templates_path . $view);
-		$buffer = ob_get_contents();
-		ob_end_clean();
-		echo $buffer;
-
-		exit($exit);
+		exit($exitCode);
 	}
 
 	//--------------------------------------------------------------------
@@ -240,6 +221,69 @@ class Exceptions
 	//--------------------------------------------------------------------
 
 	/**
+	 * Given an exception and status code will display the error to the client.
+	 *
+	 * @param \Throwable $exception
+	 * @param int        $statusCode
+	 */
+	protected function render(\Throwable $exception, int $statusCode)
+	{
+		// Determine directory with views
+		$path = $this->viewPath;
+		if (empty($path))
+		{
+			$path = APPPATH . 'Views/errors/';
+		}
+
+		$path = is_cli()
+			? $path.'cli/'
+			: $path.'html/';
+
+		// Determine the vew
+		$view = $this->determineView($exception, $path);
+
+		// Prepare the vars
+		$vars = $this->collectVars($exception, $statusCode);
+		extract($vars);
+
+		// Render it
+		if (ob_get_level() > $this->ob_level + 1)
+		{
+			ob_end_clean();
+		}
+
+		ob_start();
+		include($path . $view);
+		$buffer = ob_get_contents();
+		ob_end_clean();
+		echo $buffer;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Gathers the variables that will be made available to the view.
+	 *
+	 * @param \Throwable $exception
+	 * @param int        $statusCode
+	 *
+	 * @return array
+	 */
+	protected function collectVars(\Throwable $exception, int $statusCode)
+	{
+		return [
+			'type' => get_class($exception),
+			'code' => $statusCode,
+			'message' => $exception->getMessage() ?? '(null)',
+			'file' => $exception->getFile(),
+			'line' => $exception->getLine(),
+			'trace' => $exception->getTrace(),
+			'title' => get_class($exception)
+		];
+	}
+
+
+	/**
 	 * Determines the HTTP status code and the exit status code for this request.
 	 *
 	 * @param \Throwable $exception
@@ -250,7 +294,7 @@ class Exceptions
 	{
 		$statusCode = abs($exception->getCode());
 
-		if ($statusCode < 100)
+		if ($statusCode < 100 || $statusCode > 599)
 		{
 			$exitStatus = $statusCode + EXIT__AUTO_MIN; // 9 is EXIT__AUTO_MIN
 			if ($exitStatus > EXIT__AUTO_MAX) // 125 is EXIT__AUTO_MAX

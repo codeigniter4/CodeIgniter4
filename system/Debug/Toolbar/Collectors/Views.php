@@ -35,7 +35,7 @@
  * @since        Version 4.0.0
  * @filesource
  */
-use CodeIgniter\Services;
+use CodeIgniter\Config\Services;
 use CodeIgniter\View\RendererInterface;
 
 /**
@@ -61,6 +61,14 @@ class Views extends BaseCollector
 	protected $hasTabContent = false;
 
 	/**
+	 * Whether this collector needs to display
+	 * a label or not.
+	 *
+	 * @var bool
+	 */
+	protected $hasLabel = true;
+
+	/**
 	 * Whether this collector has data that
 	 * should be shown in the Vars tab.
 	 *
@@ -81,6 +89,13 @@ class Views extends BaseCollector
 	 * @var RendererInterface
 	 */
 	protected $viewer;
+
+	/**
+	 * Views counter
+	 *
+	 * @var array
+	 */
+	protected $views = [];
 
 	//--------------------------------------------------------------------
 
@@ -147,4 +162,15 @@ class Views extends BaseCollector
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Returns a count of all views.
+	 *
+	 * @return int
+	 */
+	public function getBadgeValue()
+	{
+		return count($this->viewer->getPerformanceData());
+	}
+
 }

@@ -161,7 +161,7 @@ class Database extends BaseCollector
 			'IN', 'LIKE', 'NOT&nbsp;LIKE', 'COUNT', 'MAX', 'MIN', 'ON', 'AS', 'AVG', 'SUM', '(', ')'
 		];
 
-		$parser = \Config\Services::parser(BASEPATH . 'Debug/Toolbar/Views/');
+		$parser = \Config\Services::parser(BASEPATH . 'Debug/Toolbar/Views/', null,false);
 
 		$data = [
 			'queries' => []
@@ -177,7 +177,7 @@ class Database extends BaseCollector
 			}
 
 			$data['queries'][] = [
-				'duration'	 => $query->getDuration(5) * 1000,
+				'duration'	 => ($query->getDuration(5) * 1000) .' ms',
 				'sql'		 => $sql
 			];
 		}
@@ -186,6 +186,18 @@ class Database extends BaseCollector
 				->render('_database.tpl');
 
 		return $output;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Gets the "badge" value for the button.
+	 *
+	 * @param string $value
+	 */
+	public function getBadgeValue()
+	{
+		return count(static::$queries);
 	}
 
 	//--------------------------------------------------------------------

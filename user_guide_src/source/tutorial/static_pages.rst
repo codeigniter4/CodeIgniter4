@@ -34,7 +34,7 @@ code.
 
 		public function view($page = 'home')
 		{
-	    }
+		}
 	}
 
 You have created a class named ``Pages``, with a view method that accepts
@@ -73,8 +73,8 @@ includes the following code:
 
 ::
 
-			<em>&copy; 2016</em>
-		</body>
+		<em>&copy; 2016</em>
+	</body>
 	</html>
 
 Adding logic to the controller
@@ -85,7 +85,7 @@ accepts one parameter, which is the name of the page to be loaded. The
 static page templates will be located in the *application/Views/Pages/*
 directory.
 
-In that directory, create two files named *Home.php* and *AHJomebout.php*.
+In that directory, create two files named *Home.php* and *About.php*.
 Within those files, type some text − anything you'd like − and save them.
 If you like to be particularly un-original, try "Hello World!".
 
@@ -96,17 +96,17 @@ page actually exists:
 
 	public function view($page = 'home')
 	{
-	    if ( ! file_exists(APPPATH.'/Views/Pages/'.$page.'.php'))
+		if ( ! file_exists(APPPATH.'/Views/Pages/'.$page.'.php'))
 		{
-			// Whoops, we don't have a page for that!
-			throw new \CodeIgniter\PageNotFoundException($page);
+		    // Whoops, we don't have a page for that!
+		    throw new \CodeIgniter\PageNotFoundException($page);
 		}
 
 		$data['title'] = ucfirst($page); // Capitalize the first letter
 
-		echo view('templates/header', $data);
-		echo view('pages/'.$page, $data);
-		echo view('templates/footer', $data);
+		echo view('Templates/Header', $data);
+		echo view('Pages/'.$page, $data);
+		echo view('Templates/Footer', $data);
 	}
 
 Now, when the page does exist, it is loaded, including the header and

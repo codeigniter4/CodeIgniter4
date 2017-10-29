@@ -119,7 +119,7 @@ class Model
 	 *
 	 * @var array
 	 */
-	protected $allowedFields = ['name'];
+	protected $allowedFields = [];
 
 	/**
 	 * If true, will set created_at, and updated_at
@@ -162,6 +162,13 @@ class Model
 	 * @var bool
 	 */
 	protected $tempUseSoftDeletes;
+
+    /**
+	 * The column used to save soft delete state
+	 *
+	 * @var string
+	 */
+	protected $deletedField = 'deleted';
 
 	/**
 	 * Used by asArray and asObject to provide
@@ -206,9 +213,9 @@ class Model
 	 * Contains any custom error messages to be
 	 * used during data validation.
 	 *
-	 * @var array|null
+	 * @var array
 	 */
-	protected $validationMessages = null;
+	protected $validationMessages = [];
 
 	/**
 	 * Skip the model's validation. Used in conjunction with skipValidation()
@@ -299,7 +306,7 @@ class Model
 
 		if ($this->tempUseSoftDeletes === true)
 		{
-			$builder->where('deleted', 0);
+			$builder->where($this->deletedField, 0);
 		}
 
 		if (is_array($id))
@@ -340,7 +347,7 @@ class Model
 
 		if ($this->tempUseSoftDeletes === true)
 		{
-			$builder->where('deleted', 0);
+			$builder->where($this->deletedField, 0);
 		}
 
 		$rows = $builder->where($key, $value)
@@ -373,7 +380,7 @@ class Model
 
 		if ($this->tempUseSoftDeletes === true)
 		{
-			$builder->where('deleted', 0);
+			$builder->where($this->deletedField, 0);
 		}
 
 		$row = $builder->limit($limit, $offset)
@@ -403,7 +410,7 @@ class Model
 
 		if ($this->tempUseSoftDeletes === true)
 		{
-			$builder->where('deleted', 0);
+			$builder->where($this->deletedField, 0);
 		}
 
 		// Some databases, like PostgreSQL, need order
@@ -558,7 +565,7 @@ class Model
 	 */
 	protected function getHash($str, $len)
 	{
-		return substr(sha1($str . $this->salt), 0, $len);
+		return substr(hash('sha256', $str . $this->salt), 0, $len);
 	}
 
 	//--------------------------------------------------------------------
@@ -597,15 +604,6 @@ class Model
 		else
 		{
 			$response = $this->insert($data);
-		}
-
-		// If it was an Entity class, check it for an onSave method.
-		if (is_object($saveData) && ! $saveData instanceof \stdClass)
-		{
-			if (method_exists($saveData, 'onSave'))
-			{
-				$saveData->onSave();
-			}
 		}
 
 		return $response;
@@ -826,9 +824,16 @@ class Model
 	{
 		if ($this->useSoftDeletes && ! $purge)
 		{
+            $set[$this->deletedField] = 1;
+
+            if ($this->useTimestamps)
+            {
+                $set[$this->updatedField] = $this->setDate();
+            }
+            
 			$result = $this->builder()
 					->where($this->primaryKey, $id)
-					->update(['deleted' => 1]);
+					->update($set);
 		}
 		else
 		{
@@ -865,9 +870,16 @@ class Model
 
 		if ($this->useSoftDeletes && ! $purge)
 		{
+            $set[$this->deletedField] = 1;
+
+            if ($this->useTimestamps)
+            {
+                $set[$this->updatedField] = $this->setDate();
+            }
+
 			$result = $this->builder()
 					->where($key, $value)
-					->update(['deleted' => 1]);
+					->update($set);
 		}
 		else
 		{
@@ -898,7 +910,7 @@ class Model
 		}
 
 		return $this->builder()
-						->where('deleted', 1)
+						->where($this->deletedField, 1)
 						->delete();
 	}
 
@@ -932,7 +944,7 @@ class Model
 		$this->tempUseSoftDeletes = false;
 
 		$this->builder()
-				->where('deleted', 1);
+				->where($this->deletedField, 1);
 
 		return $this;
 	}
@@ -1316,6 +1328,7 @@ class Model
 	}
 
 	//--------------------------------------------------------------------
+
 	//--------------------------------------------------------------------
 	// Magic
 	//--------------------------------------------------------------------

@@ -60,22 +60,22 @@ as *20121031100537_Add_blog.php*.
 
 		public function up()
 		{
-			$this->forge->addField(array(
-				'blog_id' => array(
-					'type' => 'INT',
-					'constraint' => 5,
-					'unsigned' => TRUE,
+			$this->forge->addField([
+				'blog_id'          => [
+					'type'           => 'INT',
+					'constraint'     => 5,
+					'unsigned'       => TRUE,
 					'auto_increment' => TRUE
-				),
-				'blog_title' => array(
-					'type' => 'VARCHAR',
-					'constraint' => '100',
-				),
-				'blog_description' => array(
-					'type' => 'TEXT',
-					'null' => TRUE,
-				),
-			));
+				],
+				'blog_title'       => [
+					'type'           => 'VARCHAR',
+					'constraint'     => '100',
+				],
+				'blog_description' => [
+					'type'           => 'TEXT',
+					'null'           => TRUE,
+				],
+			]);
 			$this->forge->addKey('blog_id', TRUE);
 			$this->forge->createTable('blog');
 		}
@@ -137,7 +137,7 @@ For example, assume that we have the the following namespaces defined in our Aut
 configuration file::
 
 	$psr4 = [
-		'App' => APPPATH,
+		'App'       => APPPATH,
 		'MyCompany' => ROOTPATH.'MyCompany'
 	];
 
@@ -184,7 +184,7 @@ that wish to use them. The tools primarily provide access to the same methods th
 
 Migrates all database groups to the latest available migrations::
 
-> php ci.php migrate:latest 
+> php spark migrate:latest
 
 You can use (latest) with the following options:
 
@@ -194,7 +194,7 @@ You can use (latest) with the following options:
 
 This example will migrate Blog namespace to latest::
 
-> php ci.php migrate:latest -g test -n Blog
+> php spark migrate:latest -g test -n Blog
  
 
 **current**
@@ -202,7 +202,7 @@ This example will migrate Blog namespace to latest::
 Migrates the (App) namespace to match the version set in ``$currentVersion``. This will migrate both
 up and down as needed to match the specified version::
 
-  > php ci.php migrate:current
+  > php spark migrate:current
 
 You can use (current) with the following options:
 
@@ -214,14 +214,14 @@ Migrates to the specified version. If no version is provided, you will be prompt
 for the version. ::
 
   // Asks you for the version...
-  > php ci.php migrate:version
+  > php spark migrate:version
   > Version:
 
   // Sequential
-  > php ci.php migrate:version 007
+  > php spark migrate:version 007
 
   // Timestamp
-  > php ci.php migrate:version 20161426211300
+  > php spark migrate:version 20161426211300
 
 You can use (version) with the following options:
 
@@ -232,7 +232,7 @@ You can use (version) with the following options:
 
 Rolls back all migrations, taking all database groups to a blank slate, effectively migration 0::
 
-  > php ci.php migrate:rollback
+  > php spark migrate:rollback
 
 You can use (rollback) with the following options:
 
@@ -245,7 +245,7 @@ You can use (rollback) with the following options:
 
 Refreshes the database state by first rolling back all migrations, and then migrating to the latest version::
 
-  > php ci.php migrate:refresh
+  > php spark migrate:refresh
 
 You can use (refresh) with the following options:
 
@@ -258,7 +258,7 @@ You can use (refresh) with the following options:
 
 Displays a list of all migrations and the date and time they were ran, or '--' if they have not be ran::
 
-  > php ci.php migrate:status
+  > php spark migrate:status
   Filename               Migrated On
   First_migration.php    2016-04-25 04:44:22
 
@@ -270,7 +270,7 @@ You can use (refresh) with the following options:
 
 Creates a skeleton migration file in **application/Database/Migrations** using the timestamp format::
 
-  > php ci.php migrate:create [filename]
+  > php spark migrate:create [filename]
 
 You can use (create) with the following options:
 

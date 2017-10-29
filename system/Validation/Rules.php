@@ -158,8 +158,11 @@ class Rules
 		sscanf($field, '%[^.].%[^.]', $table, $field);
 
 		$db = Database::connect();
+		
 		$row = $db->table($table)
-				->where($field, $str);
+				  ->select('1')
+				  ->where($field, $str)
+				  ->limit(1);
 
 		if ( ! empty($ignoreField) && ! empty($ignoreValue))
 		{
@@ -274,7 +277,7 @@ class Rules
 			return true;
 		}
 
-		return is_array($str) ? (bool) count($str) : (trim($str) !== '');
+		return is_array($str) ?  ! empty($str) : (trim($str) !== '');
 	}
 
 	//--------------------------------------------------------------------
@@ -326,7 +329,7 @@ class Rules
 			return ! empty($data[$item]);
 		});
 
-		return ! (bool) count($requiredFields);
+		return empty($requiredFields);
 	}
 
 	//--------------------------------------------------------------------

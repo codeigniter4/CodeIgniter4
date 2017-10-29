@@ -39,9 +39,9 @@ use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 
 /**
- * CI Help command for the ci.php script.
+ * CI Help command for the spark script.
  *
- * Lists the basic usage information for the ci.php script,
+ * Lists the basic usage information for the spark script,
  * and provides a way to list help for other commands.
  *
  * @package CodeIgniter\Commands
@@ -83,14 +83,14 @@ class ListCommands extends BaseCommand
 	 *
 	 * @var array
 	 */
-	protected $arguments = array();
+	protected $arguments = [];
 
 	/**
 	 * the Command's Options
 	 *
 	 * @var array
 	 */
-	protected $options = array();
+	protected $options = [];
 
 	/**
 	 * The length of the longest command name.
@@ -103,7 +103,7 @@ class ListCommands extends BaseCommand
 	//--------------------------------------------------------------------
 
 	/**
-	 * Displays the help for the ci.php cli script itself.
+	 * Displays the help for the spark cli script itself.
 	 *
 	 * @param array $params
 	 */
@@ -134,8 +134,8 @@ class ListCommands extends BaseCommand
 
 		// Pad each item to the same length
 		$names = $this->padArray($names, 2, 2);
-
-		for ($i = 0; $i < count($names); $i ++ )
+		$countNames = count($names);
+		for ($i = 0; $i < $countNames; $i ++ )
 		{
 			$lastGroup = $this->describeGroup($groups[$i], $lastGroup);
 

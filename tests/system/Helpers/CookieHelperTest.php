@@ -1,7 +1,7 @@
 <?php namespace CodeIgniter\HTTP;
 
 use Config\App;
-use CodeIgniter\Services;
+use CodeIgniter\Config\Services;
 
 final class cookieHelperTest extends \CIUnitTestCase
 {
@@ -41,12 +41,11 @@ final class cookieHelperTest extends \CIUnitTestCase
 
     public function testSetCookieByArrayParameters()
     {
-        $cookieAttr = array
-        (
+        $cookieAttr = [
             'name'   => $this->name, 
             'value'  => $this->value, 
             'expire' => $this->expire
-        );
+        ];
         //set_cookie($cookieAttr);
         $this->response->setCookie($cookieAttr);
         

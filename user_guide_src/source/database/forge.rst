@@ -72,7 +72,7 @@ also require a 'constraint' key.
 
 	$fields = array(
 		'users' => array(
-			'type' => 'VARCHAR',
+			'type'       => 'VARCHAR',
 			'constraint' => '100',
 		),
 	);
@@ -93,25 +93,25 @@ Additionally, the following key/values can be used:
 ::
 
 	$fields = array(
-		'blog_id' => array(
-			'type' => 'INT',
-			'constraint' => 5,
-			'unsigned' => TRUE,
+		'blog_id'          => array(
+			'type'           => 'INT',
+			'constraint'     => 5,
+			'unsigned'       => TRUE,
 			'auto_increment' => TRUE
 		),
-		'blog_title' => array(
-			'type' => 'VARCHAR',
-			'constraint' => '100',
-			'unique' => TRUE,
+		'blog_title'       => array(
+			'type'           => 'VARCHAR',
+			'constraint'     => '100',
+			'unique'         => TRUE,
 		),
-		'blog_author' => array(
-			'type' =>'VARCHAR',
-			'constraint' => '100',
-			'default' => 'King of Town',
+		'blog_author'      => array(
+			'type'           =>'VARCHAR',
+			'constraint'     => '100',
+			'default'        => 'King of Town',
 		),
 		'blog_description' => array(
-			'type' => 'TEXT',
-			'null' => TRUE,
+			'type'           => 'TEXT',
+			'null'           => TRUE,
 		),
 	);
 
@@ -180,6 +180,26 @@ below is for MySQL.
 	// gives KEY `blog_name_blog_label` (`blog_name`, `blog_label`)
 
 
+Adding Foreign Keys
+===========
+
+
+::
+
+
+        $forge->addForeignKey('users_id','users','id');
+        // gives CONSTRAINT `TABLENAME_users_foreign` FOREIGN KEY(`users_id`) REFERENCES `users`(`id`)
+
+
+You can specify the desired action for the "on delete" and "on update" properties of the constraint:
+
+::
+
+        $forge->addForeignKey('users_id','users','id','CASCADE','CASCADE');
+        // gives CONSTRAINT `TABLENAME_users_foreign` FOREIGN KEY(`users_id`) REFERENCES `users`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
+
+
+
 Creating a table
 ================
 
@@ -223,6 +243,16 @@ Execute a DROP TABLE statement and optionally add an IF EXISTS clause.
 
 	// Produces: DROP TABLE IF EXISTS table_name
 	$forge->dropTable('table_name',TRUE);
+
+Dropping a Foreign Key
+================
+
+Execute a DROP FOREIGN KEY.
+
+::
+
+	// Produces: ALTER TABLE 'tablename' DROP FOREIGN KEY 'users_foreign'
+	$forge->dropForeignKey('tablename','users_foreign');
 
 
 Renaming a table

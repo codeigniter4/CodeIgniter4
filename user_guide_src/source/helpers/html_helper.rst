@@ -54,13 +54,13 @@ The following functions are available:
     Example::
 
         $imageProperties = array(
-            'src'   => 'images/picture.jpg',
-            'alt'   => 'Me, demonstrating how to eat 4 slices of pizza at one time',
-            'class' => 'post_images',
-            'width' => '200',
-            'height'=> '200',
-            'title' => 'That was quite a night',
-            'rel'   => 'lightbox'
+            'src'    => 'images/picture.jpg',
+            'alt'    => 'Me, demonstrating how to eat 4 slices of pizza at one time',
+            'class'  => 'post_images',
+            'width'  => '200',
+            'height' => '200',
+            'title'  => 'That was quite a night',
+            'rel'    => 'lightbox'
         );
 
         img($imageProperties);
@@ -182,12 +182,12 @@ The following functions are available:
         );
 
         $list = array(
-            'colors'  => array(
+            'colors' => array(
                 'red',
                 'blue',
                 'green'
             ),
-            'shapes'  => array(
+            'shapes' => array(
                 'round',
                 'square',
                 'circles' => array(
@@ -198,7 +198,7 @@ The following functions are available:
             ),
             'moods'  => array(
                 'happy',
-                'upset' => array(
+                'upset'   => array(
                     'defeated' => array(
                         'dejected',
                         'disheartened',

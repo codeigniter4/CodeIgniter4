@@ -67,6 +67,21 @@ class Events
 	 */
 	protected static $eventsFile;
 
+	/**
+	 * If true, events will not actually be fired.
+	 * Useful during testing.
+	 *
+	 * @var bool
+	 */
+	protected static $simulate = false;
+
+	/**
+	 * Stores information about the events
+	 * for display in the debug toolbar.
+	 * @var array
+	 */
+	protected static $performanceLog = [];
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -132,12 +147,12 @@ class Events
 	 *  a) All subscribers have finished or
 	 *  b) a method returns false, at which point execution of subscribers stops.
 	 *
-	 * @param $event_name
+	 * @param $eventName
 	 * @param $arguments
 	 *
 	 * @return bool
 	 */
-	public static function trigger($event_name, ...$arguments): bool
+	public static function trigger($eventName, ...$arguments): bool
 	{
 		// Read in our Config/events file so that we have them all!
 		if ( ! self::$haveReadFromFile)
@@ -151,11 +166,24 @@ class Events
 			self::$haveReadFromFile = true;
 		}
 
-		$listeners = self::listeners($event_name);
+		$listeners = self::listeners($eventName);
 
 		foreach ($listeners as $listener)
 		{
-			$result = $listener(...$arguments);
+			$start = microtime(true);
+
+			$result = static::$simulate === false
+				? $listener(...$arguments)
+				: true;
+
+			if (CI_DEBUG)
+			{
+				static::$performanceLog[] = [
+					'start' => $start,
+					'end' => microtime(true),
+					'event' => strtolower($eventName)
+				];
+			}
 
 			if ($result === false)
 			{
@@ -268,4 +296,31 @@ class Events
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Turns simulation on or off. When on, events will not be triggered,
+	 * simply logged. Useful during testing when you don't actually want
+	 * the tests to run.
+	 *
+	 * @param bool $choice
+	 */
+	public static function simulate(bool $choice = true)
+	{
+		static::$simulate = $choice;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Getter for the performance log records.
+	 *
+	 * @return array
+	 */
+	public static function getPerformanceLogs()
+	{
+		return static::$performanceLog;
+	}
+
+	//--------------------------------------------------------------------
+
 }

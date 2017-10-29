@@ -244,5 +244,21 @@ class TimeDifference
 			: lang('Time.inFuture', [$phrase]);
 	}
 
+	/**
+	 * Allow property-like access to our calucalated values.
+	 *
+	 * @param $name
+	 *
+	 * @return mixed
+	 */
+	public function __get($name)
+	{
+		$name = ucfirst(strtolower($name));
+		$method = "get{$name}";
 
+		if (method_exists($this, $method))
+		{
+			return $this->{$method}($name);
+		}
+	}
 }

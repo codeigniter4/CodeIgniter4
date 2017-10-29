@@ -11,7 +11,7 @@ The config settings are stored in a class property that is an array with this
 prototype::
 
 	public $default = [
-		'DSN'	=> '',
+		'DSN'	   => '',
 		'hostname' => 'localhost',
 		'username' => 'root',
 		'password' => '',
@@ -103,7 +103,7 @@ connection group for each, then switch between groups as needed. For
 example, to set up a "test" environment you would do this::
 
 	public $test = [
-		'DSN'	=> '',
+		'DSN'	   => '',
 		'hostname' => 'localhost',
 		'username' => 'root',
 		'password' => '',
@@ -198,7 +198,7 @@ Explanation of Values:
 			    - 'ssl_key'    - Path to the private key file
 			    - 'ssl_cert'   - Path to the public key certificate file
 			    - 'ssl_ca'     - Path to the certificate authority file
-			    - 'ssl_capath' - Path to a directory containing trusted CA certificats in PEM format
+			    - 'ssl_capath' - Path to a directory containing trusted CA certificates in PEM format
 			    - 'ssl_cipher' - List of *allowed* ciphers to be used for the encryption, separated by colons (':')
 			    - 'ssl_verify' - TRUE/FALSE; Whether to verify the server certificate or not ('MySQLi' only)
 

@@ -2,10 +2,7 @@
 Server Requirements
 ###################
 
-`PHP <http://php.net/>`_ version 7.0 or newer is required.
-
-While not required, the *intl* extension is recommended, and some portions of the
-framework will provided enhanced functionality when it's present.
+`PHP <http://php.net/>`_ version 7.0.15 or newer is required, with the *intl* extension installed.
 
 A database is required for most web application programming.
 Currently supported databases are:

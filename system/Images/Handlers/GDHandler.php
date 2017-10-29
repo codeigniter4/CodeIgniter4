@@ -98,6 +98,50 @@ class GDHandler extends BaseHandler
 	//--------------------------------------------------------------------
 
 	/**
+	 * Flattens transparencies
+	 *
+	 * @param int $red
+	 * @param int $green
+	 * @param int $blue
+	 *
+	 * @return $this
+	 */
+	public function _flatten(int $red = 255, int $green = 255, int $blue = 255) {
+
+		if ( ! ($src = $this->createImage()))
+		{
+			return false;
+		}
+
+		if (function_exists('imagecreatetruecolor'))
+		{
+			$create = 'imagecreatetruecolor';
+			$copy = 'imagecopyresampled';
+		}
+		else
+		{
+			$create = 'imagecreate';
+			$copy = 'imagecopyresized';
+		}
+		$dest = $create($this->width, $this->height);
+
+		$matte = imagecolorallocate($dest, $red, $green, $blue);
+
+		imagefilledrectangle($dest, 0, 0, $this->width, $this->height, $matte);
+		imagecopy($dest, $src, 0, 0, 0, 0, $this->width, $this->height);
+
+		// Kill the file handles
+		imagedestroy($src);
+
+		$this->resource = $dest;
+
+		return $this;
+
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Flips an image along it's vertical or horizontal axis.
 	 *
 	 * @param string $direction
@@ -195,7 +239,7 @@ class GDHandler extends BaseHandler
 	 *
 	 * @return bool|\CodeIgniter\Images\Handlers\GDHandler
 	 */
-	public function _crops()
+	public function _crop()
 	{
 		return $this->process('crop');
 	}

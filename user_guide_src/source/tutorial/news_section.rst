@@ -22,6 +22,9 @@ your database properly as described :doc:`here <../database/configuration>`.
 ::
 
 	<?php
+
+	namespace App\Models;
+	
 	class NewsModel extends \CodeIgniter\Model
 	{
 		protected $table = 'news';
@@ -69,8 +72,8 @@ following code to your model.
 		}
 
 		return $this->asArray()
-		            ->where(['slug' => $slug])
-		            ->first();
+		             ->where(['slug' => $slug])
+		             ->first();
 	}
 
 With this code you can perform two different queries. You can get all

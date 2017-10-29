@@ -285,21 +285,6 @@ class ParserTest extends \CIUnitTestCase
         $this->assertEquals('<script>Heroes</script>', $parser->renderString($template));
     }
 
-    //--------------------------------------------------------------------
-
-//	public function testParserEscapesChooseContext()
-//	{
-//		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
-//
-//		$data = [
-//			'title' => "<script>alert('ci4')</script>",
-//		];
-//
-//		$template = "{ title|esc(attr) }";
-//		$parser->setData($data);
-//		$this->assertEquals('&lt;script&gt;alert&#x28;&quot;ci4&quot;&#x29;&lt;&#x2F;script&gt;', $parser->renderString($template));
-//	}
-
 	//--------------------------------------------------------------------
 
 	public function testIgnoresComments()
@@ -601,4 +586,24 @@ class ParserTest extends \CIUnitTestCase
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * @see https://github.com/bcit-ci/CodeIgniter4/issues/705
+	 */
+	public function testParseLoopWithDollarSign()
+	{
+		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
+		$data   = [
+			'books' => [
+				['price' => '12.50'],
+			],
+		];
+
+		$template = "{books}<p>Price $: {price}</p>{/books}";
+
+		$parser->setData($data);
+		$this->assertEquals("<p>Price $: 12.50</p>", $parser->renderString($template));
+	}
+
+	// --------------------------------------------------------------------
 }

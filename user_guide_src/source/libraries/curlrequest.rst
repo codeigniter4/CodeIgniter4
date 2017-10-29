@@ -30,7 +30,7 @@ The options are described later in this document::
 
 	$options = [
 		'base_uri' => 'http://example.com/api/v1/',
-		'timeout' => 3
+		'timeout'  => 3
 	];
 	$client = \Config\Services::curlrequest($options);
 
@@ -126,7 +126,7 @@ methods. The most commonly used methods let you determine the response itself.
 
 You can get the status code and reason phrase of the response::
 
-	$code = $response->statusCode();    // 200
+	$code   = $response->statusCode();    // 200
 	$reason = $response->reason();      // OK
 
 You can retrieve headers from the response::
@@ -135,7 +135,7 @@ You can retrieve headers from the response::
 	echo $response->header('Content-type');
 
 	// Get all headers
-	foreach ($repsonse->headers() as $name => $value)
+	foreach ($response->headers() as $name => $value)
 	{
 		echo $name .': '. $response->headerLine($name) ."\n";
 	}
@@ -174,18 +174,18 @@ Setting it to ``true`` will apply the default settings to the request::
 	$client->request('GET', 'http://example.com', ['allow_redirects' => true]);
 
 	// Sets the following defaults:
-	'max'       => 5,   // Maximum number of redirects to follow before stopping
-	'strict' => true,   // Ensure POST requests stay POST requests through redirects
+	'max'       => 5, // Maximum number of redirects to follow before stopping
+	'strict'    => true, // Ensure POST requests stay POST requests through redirects
 	'protocols' => ['http', 'https'] // Restrict redirects to one or more protocols
 
 You can pass in array as the value of the ``allow_redirects`` option to specify new settings in place of the defaults::
 
 	$client->request('GET', 'http://example.com', ['allow_redirects' => [
-		'max' => 10,
+		'max'       => 10,
 		'protocols' => ['https'] // Force HTTPS domains only.
 	]]);
 
-.. :note::  Following redirects does not work when PHP is in safe_mode or open_basedir is enabled.
+.. note:: Following redirects does not work when PHP is in safe_mode or open_basedir is enabled.
 
 auth
 ====
@@ -266,7 +266,7 @@ if it's not already set::
 		]
 	]);
 
-.. :note:: ``form_params`` cannot be used with the ``multipart`` option. You will need to use one or the other.
+.. note:: ``form_params`` cannot be used with the ``multipart`` option. You will need to use one or the other.
         Use ``form_params`` for ``application/x-www-form-urlencoded`` request, and ``multipart`` for ``multipart/form-data``
         requests.
 
@@ -295,11 +295,11 @@ By default, CURLRequest will fail if the HTTP code returned is greater than or e
 ``http_errors`` to ``false`` to return the content instead::
 
     $client->request('GET', '/status/500');
-	// Will fail verbosely
+    // Will fail verbosely
 
-	$res = $client->request('GET', '/status/500', ['http_errors' => false]);
-	echo $res->statusCode();
-	// 500
+    $res = $client->request('GET', '/status/500', ['http_errors' => false]);
+    echo $res->statusCode();
+    // 500
 
 json
 ====
@@ -310,7 +310,7 @@ this option can be any value that ``json_encode()`` accepts::
 
 	$response = $client->request('PUT', '/put', ['json' => ['foo' => 'bar']]);
 
-.. :note:: This option does not allow for any customization of the ``json_encode()`` function, or the Content-Type
+.. note:: This option does not allow for any customization of the ``json_encode()`` function, or the Content-Type
         header. If you need that ability, you will need to encode the data manually, passing it through the ``setBody()``
         method of CURLRequest, and set the Content-Type header with the ``setHeader()`` method.
 
@@ -323,11 +323,11 @@ of POST data to send. For safer usage, the legacy method of uploading files by p
 has been disabled. Any files that you want to send must be passed as instances of CURLFile::
 
 	$post_data = [
-		'foo' => 'bar',
+		'foo'      => 'bar',
 		'userfile' => new CURLFile('/path/to/file.txt')
 	];
 
-.. :note:: ``multipart`` cannot be used with the ``form_params`` option. You can only use one or the other. Use
+.. note:: ``multipart`` cannot be used with the ``form_params`` option. You can only use one or the other. Use
         ``form_params`` for ``application/x-www-form-urlencoded`` requests, and ``multipart`` for ``multipart/form-data``
         requests.
 

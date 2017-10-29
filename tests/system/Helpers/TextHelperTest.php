@@ -85,6 +85,8 @@ class TextHelperTest extends \CIUnitTestCase
 	{
 		$this->assertEquals(16, strlen(random_string('alnum', 16)));
 		$this->assertInternalType('string', random_string('numeric', 16));
+               $this->assertEquals(16, strlen($random = random_string('crypto', 16)));
+               $this->assertInternalType('string', $random);
 	}
 	// --------------------------------------------------------------------
 	public function test_increment_string()

@@ -45,7 +45,7 @@ class Format extends BaseConfig
 	 *
 	 * @param string $mime
 	 *
-	 * @return mixed
+	 * @return \CodeIgniter\Format\FormatterInterface
 	 */
 	public function getFormatter(string $mime)
 	{
