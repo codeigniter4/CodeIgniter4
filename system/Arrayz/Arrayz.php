@@ -1,8 +1,9 @@
 <?php namespace CodeIgniter\Arrayz;
+
 /**
 * Array Manipulations for Codeigniter
 * All features and examples avail following url:
-* https://github.com/giriannamalai/Arrayz/blob/master/README.md
+* Read: https://github.com/giriannamalai/Arrayz/blob/master/README.md
 */
 
 class Arrayz
