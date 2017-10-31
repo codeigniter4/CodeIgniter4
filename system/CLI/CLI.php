@@ -474,7 +474,7 @@ class CLI
 	 */
 	public static function getWidth(int $default = 80): int
 	{
-		if (static::isWindows())
+		if (static::isWindows() || (int) shell_exec('tput cols') == 0)
 		{
 			return $default;
 		}
