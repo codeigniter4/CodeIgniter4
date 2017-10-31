@@ -416,6 +416,16 @@ class Connection extends BaseConnection implements ConnectionInterface
 			sscanf($query[$i]->Type, '%[a-z](%d)', $retval[$i]->type, $retval[$i]->max_length
 			);
 
+			preg_match('#[a-z]+\((\'.+\')\)#', $query[$i]->Type, $matches);
+			if ( ! empty($matches[1]))
+			{
+				$options = explode("','", trim($matches[1], "'"));
+				if ( ! empty($options))
+				{
+					$retval[$i]->options = $options;	
+				}
+			}
+
 			$retval[$i]->default = $query[$i]->Default;
 			$retval[$i]->primary_key = (int) ($query[$i]->Key === 'PRI');
 		}
