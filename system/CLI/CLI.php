@@ -181,7 +181,7 @@ class CLI
 	 * $color = CLI::prompt('What is your favourite color?', array('red','blue'));
 	 *
 	 * // Do not provide options but requires a valid email
-	 * $color = CLI::prompt('What is your email?', null, 'required|valid_email');
+	 * $email = CLI::prompt('What is your email?', null, 'required|valid_email');
 	 *
 	 * @param  string       $field      Output "field" question
 	 * @param  string|array $options    String to a defaul value, array to a list of options (the first option will be the default value)
