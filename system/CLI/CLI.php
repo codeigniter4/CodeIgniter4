@@ -225,8 +225,6 @@ class CLI
 		// Read the input from keyboard.
 		$input = trim(static::input()) ? : $default;
 
-		var_dump($input);exit;
-
 		if (isset($validation))
 		{
 			while (! static::validate($field, $input, $validation))
