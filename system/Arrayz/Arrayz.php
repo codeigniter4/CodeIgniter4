@@ -1,11 +1,9 @@
 <?php namespace CodeIgniter\Arrayz;
-
 /**
-* Array Manipulations for Codeigniter
-* All features and examples avail following url:
-* Read: https://github.com/giriannamalai/Arrayz/blob/master/README.md
+* Array Manipulations
+* Developer - Giri Annamalai M
+* Version - 1.0
 */
-
 class Arrayz
 {
 	private $source;
@@ -20,7 +18,7 @@ class Arrayz
 	}
 
 	/*
-	* Object to callable conversion, to chain other methods
+	* Object to callable conversion
 	*/
 	public function __invoke($source=[])
 	{
@@ -30,91 +28,109 @@ class Arrayz
 
 	/*
 	* Match and return the array. supports regex
-	* @param1: search key
 	*/
 	public function pluck()
 	{	
 		$args = func_get_args();
 		$search = $args[0];
+		$this->intersected = [];
 		if($search !='')
 		{			
 			array_walk_recursive($this->source, function(&$value, &$key) use(&$search){				
-				if( preg_match('/^'.$search.'/', $key) )
+				if( preg_match('/'.$search.'/', $key) )
 				{
 					$this->intersected[][$key] = $value;
 				}
 			});	
-			$this->source = $this->intersected;			
+			$this->source = $this->intersected;
 		}
 		return $this;
 	}
-
 	/*
-	* Similar to codeigniter query builder where
-	* Supports operators. @param4 return actual key of element
+	* To increase performance select+where are combined to work along.
+	*/
+	public function select_where()
+	{
+		$args = func_get_args();
+		$select = array_map('trim', explode(",", $args[0]));
+		$op = $o = [];	
+		$cond = $args[1];//Format conditions		
+		array_walk($cond, function($v, $k) use(&$o) {
+			$key = array_map('trim', explode(" ", $k));
+			$key[1] = (isset($key[1]) && $key[1] != "") ? $key[1] : '==';
+			$key[2] = $v;
+			$o[] = $key;
+		});
+		 //Filter and select it
+		array_filter($this->source, function($src, $key) use ($o, $select, &$op){
+			$resp = FALSE;
+			foreach ($o as $k => $v) {
+				$resp = (isset($src[$v[0]])) ? ($this->_operator_check($src[$v[0]], $v[1], $v[2])) : $resp;
+				if($resp==FALSE)  break; //If one condition fails break it. It's not the one, we are searching
+			}
+			($resp==TRUE) ? ($op[$key] = array_intersect_key($src, array_flip($select))) : FALSE;
+			return $resp;
+		},ARRAY_FILTER_USE_BOTH);		
+		$preserve = isset($args[2]) && $args[2] ? TRUE : FALSE;
+		$this->_preserve_keys($op, $preserve);
+		return $this;
+	}
+	
+	/*
+	* Like SQL Where . Supports operators. @param3 return actual key of element
 	*/
 	public function where()
 	{
 		$args = func_get_args();
 		$op = [];
 		$operator = '=';
-		if(is_string($args[0]))
+		if(is_string($args[0])) //Single where condition
 		{
 			if (func_num_args() == 3 || func_num_args() == 4)  
-			{			    
+			{
 				$search_key = $args[0];
 				$operator = $args[1];
-				$search_value = $args[2];
+				$search_value = $args[2];					
 			}
 			else
-			{			    
+			{
 			    $search_key = $args[0];
 			    $search_value = $args[1];
 			}
-			$preserve = isset($args[4]) && $args[4] ? TRUE : FALSE;
-
-			$op = array_filter($this->source, function($src) use ($search_key, $search_value, $operator) {							 
-				return $this->_operator_check($src[$search_key], $operator, $search_value);			  	
+			$preserve = isset($args[3]) && $args[3] ? TRUE : FALSE;
+			$op = array_filter($this->source, function($src) use ($search_key, $search_value, $operator){
+				return isset($src[$search_key]) && $this->_operator_check($src[$search_key], $operator, $search_value);			
 			},ARRAY_FILTER_USE_BOTH);
 			$this->_preserve_keys($op, $preserve);
 		}
-		/* Support Condition similar to CI Array-where */
+		/* Support multiple AND Conditions similar to CI DB-where */
 		if(is_array($args[0]))
 		{
 			$cond = $args[0];
+			$o = [];
 			$preserve = isset($args[1]) && $args[1] ? TRUE : FALSE;
-			array_walk($this->source, function(&$value, &$key) use(&$op, &$cond, &$preserve){
-				$resp = $i = 0;
-				array_walk($cond, function($v, $k) use(&$resp, &$value) {
-					$k = explode(' ',$k);
-					if(isset($k[1]))
-					{
-						$resp = !($this->_operator_check($value[$k[0]], $k[1], $v)) ? 1 : $resp;						
-					}
-					else
-					{
-						$resp = !($this->_operator_check($value[$k[0]], '=', $v)) ? 1 : $resp;
-					}
-				});
-				if($resp==0)
-				{
-					if($preserve) //Preserve key
-					{
-						$op[$key] = $value;						
-					}
-					else
-					{
-						$op[] = $value;
-					}
+			//Format conditions
+			array_walk($cond, function($v, $k) use(&$resp, &$o) {
+				$key = array_map('trim', explode(" ", $k));
+				$key[1] = (isset($key[1]) && $key[1] != "") ? $key[1] : '='; //Default is =
+				$key[2] = $v;
+				$o[] = $key;
+			});
+			$op = array_filter($this->source, function($src) use ($o){
+				$resp = FALSE;
+				foreach ($o as $k => $v) {
+					$resp = (isset($src[$v[0]])) ? ($this->_operator_check($src[$v[0]], $v[1], $v[2])) : $resp;
+					if($resp==FALSE)  break; //If one condition fails break it. It's not the one, we are searching
 				}
-			});			
-			$this->source = $op;
+				return $resp;
+			},ARRAY_FILTER_USE_BOTH);
+			$this->_preserve_keys($op, $preserve);
 		}
 		return $this;
 	}
 
 	/*
-	* CI Query builder WhereIN. Supports operators.
+	* Like SQL WhereIN . Supports operators.
 	*/
 	public function whereIn()
 	{
@@ -122,9 +138,8 @@ class Arrayz
 		$op = [];
 		$search_key = $args[0];
 		$search_value = $args[1];
-
-		$op = array_filter($this->source, function($src) use ($search_key, $search_value) {							 
-			return in_array( $src[$search_key], $search_value);
+		$op = array_filter($this->source, function($src) use ($search_key, $search_value) {
+			return (isset($src[$search_key])) && in_array( $src[$search_key], $search_value);
 		},ARRAY_FILTER_USE_BOTH);
 		$preserve = isset($args[2]) && $args[2] ? TRUE : FALSE;
 		$this->_preserve_keys($op, $preserve);//Preserve keys or not		
@@ -132,34 +147,26 @@ class Arrayz
 	}
 
 	/*
-	* Check the key and value exists and return true
+	* search and return true. 
 	*/
-	public function contains(): boolean
+	public function contains()
 	{
 		$args = func_get_args();
-
 		$isValid = false;
-
 		if ( func_num_args() == 2 ) 
 		{			    
 			$search_key = $args[0];
-
 			$search_value = $args[1];
 		}
-		else			
+		else
 		{
 			$search_key = '';
-
 		    $search_value = $args[1];			
 		}
-
 		//If search value founds, to stop the iteration using try catch method for faster approach
-
 		try {
 			  array_walk_recursive($this->source, function(&$value, &$key) use(&$search_key, &$search_value){
-
 		    	if($search_value != ''){
-
 		    		if($search_value == $value && $key == $search_key){
 		    			$isThere = true;	
 		    		}
@@ -174,32 +181,26 @@ class Arrayz
 		        if ($isThere) {
 		            throw new Exception;
 		        } 
-
 		    });
 		   }
 		   catch(Exception $exception) {
 			  $isValid = true;
 		   }
-
 		return $this->source = $isValid;
 	}	
 
 
 	/*
-	* Collapse the array
+	* Converting Multidimensional Array into single array with/without null or empty 
 	*/
+
 	public function collapse()
 	{
 		$args = func_get_args();
-
 		$empty_remove = !empty ($args[0]) ? $args[0] : false ;
-
-		$op = [];
-			
+		$op = [];			
 		array_walk_recursive($this->source, function(&$value, &$key) use(&$op, &$empty_remove){
-
 			if( $empty_remove ){
-
 				if( $value != '' || $value != NULL )
 				{
 					$op[][$key] = $value;					
@@ -215,8 +216,9 @@ class Arrayz
 	}
 
 	/*
-	* Similar to mysql limit offset with Array
+	* Converting Two Dimensional Array with lImit offset 
 	*/
+
 	public function limit()
 	{
 		$this->source = array_values($this->source);
@@ -232,10 +234,7 @@ class Arrayz
 		$i = 0;
 		if( $limit <= 1)
 		{
-			if(isset($this->source[$offset]))
-			{
-				$op = $this->source[$offset];				
-			}
+			$op = isset($this->source[$offset]) ? $this->source[$offset] : $op;
 		}
 		else
 		{
@@ -266,7 +265,7 @@ class Arrayz
 		{
 			array_walk($this->source, function(&$value, &$key) use(&$select, &$op){
 				$op[] = array_values(array_intersect_key($value, array_flip($select)))[0];
-			});			
+			});
 		}
 		else
 		{
@@ -279,7 +278,7 @@ class Arrayz
 	}
 
 	/*
-	* Group by the array by its key & value 
+	* Group by a key value 
 	*/
 	public function group_by()
 	{
@@ -299,7 +298,7 @@ class Arrayz
 	}
 
 	/*
-	* Check the operators
+	* Check with operators
 	*/
     private function _operator_check($retrieved, $operator , $value)
 	{
@@ -318,7 +317,6 @@ class Arrayz
 		}
 	}
 
-	/* Check its an valid array */
 	private function _chk_arr($array)
 	{
 		if(is_array($array) && count($array) > 0 )
@@ -327,20 +325,31 @@ class Arrayz
 		}
 	}
 
-	/* Return output */
-	public function get(): array
+	/* Return output as Array */
+	public function get()
+	{		
+		return (empty($this->source)) ? NULL : $this->source;
+	}
+	
+	/* Return output as JSON */
+	public function toJson()
 	{
-		return $this->source;
+		return (empty($this->source)) ? NULL : json_encode($this->source);
 	}
 
-	/* Array keys to use with chaining */
+	/* Return output as Single Row Array */
+	public function get_row()
+	{		
+		return (is_array($this->source) && !(empty($this->source))) ? array_values($this->source)[0] : NULL;		 
+	}
+	/* Return array keys */
 	public function keys()
 	{		
 		$this->source = array_keys($this->source);
 		return $this;
 	}
 	
-	/* Array values to use with chaining */
+	/* Return array values */
 	public function values()
 	{		
 		$this->source = array_values($this->source);
@@ -348,7 +357,7 @@ class Arrayz
 	}
 
 	/*
-	* Similar to mysql WhereIN and CI QB whereIn.
+	* Like SQL WhereIN . Supports operators.
 	*/
 	public function whereNotIn()
 	{
@@ -356,9 +365,8 @@ class Arrayz
 		$op = [];
 		$search_key = $args[0];
 		$search_value = $args[1];
-
-		$op = array_filter($this->source, function($src) use ($search_key, $search_value) {							 
-			return !in_array( $src[$search_key], $search_value);
+		$op = array_filter($this->source, function($src) use ($search_key, $search_value) {
+			return (isset($src[$search_key])) && !in_array( $src[$search_key], $search_value);
 		},ARRAY_FILTER_USE_BOTH);
 		$preserve = isset($args[2]) && $args[2] ? TRUE : FALSE;
 		$this->_preserve_keys($op, $preserve);//Preserve keys or not		
@@ -366,30 +374,24 @@ class Arrayz
 	}
 
 	/*
-	* search the key and return true if found.
+	* search the key exists and return true if found.
 	*/
-	public function has(): boolean
+	public function has()
 	{
 		$args = func_get_args();
-
 		$array = $args[0];
-
 		$search_key = $args[1];
-
 		$isValid = false;
 		//If search value founds, to stop the iteration using try catch method for faster approach
 		try {
 			  array_walk_recursive($array, function(&$value, &$key) use(&$search_key){
-
 	    		if($search_key == $key){
 	    			$isThere = true;	
-	    		}
-		    	
+	    		}		    	
 		    	// If Value Exists
 		        if ($isThere) {
 		            throw new Exception;
 		        } 
-
 		    });
 		   }
 		   catch(Exception $exception) {
@@ -409,45 +411,65 @@ class Arrayz
 		return $this->source;
 	}
 
-	/* Count the no of elements in array. */
-	public function count(): int
+	public function count()
 	{
 		return count($this->source);
 	}
 
-	/* To preserve the key while using where. */
 	private function _preserve_keys($op=[], $preserve=TRUE)
 	{
-		if($preserve==TRUE)
-		{
-		  $this->source = $op;
-		}
-		else
-		{
-			$this->source = array_values($op);				
-		}
+		$this->source = ($preserve==TRUE) ? $op : array_values($op);
 	}
 
 	/*
-	* Orderby by Key and order.
+	* Orderby by flat/normal array
 	*/
 	public function order_by()
 	{
 		$args = func_get_args();
 		$op = [];
-		$sort_order = ['asc' => SORT_ASC, 'desc' => SORT_DESC];
 		$this->to_order = $this->source;
-		$args[1] = isset($args[1]) ? $args[1] : 'asc'; 
-		//Select the key
-		$sort_by = $this->select($args[0], TRUE);
-		//Sort
-		array_multisort($sort_by->source, $sort_order[strtolower($args[1])], $this->to_order);
-		$this->source =$this->to_order;
+		$sort_mode = ['asc', 'desc'];
+		//func_num_args()==1 ||  func_num_args()==2 && (in_array(strtolower($args[0]), $sort_mode))		
+		if(isset($this->source[0]) && is_array($this->source[0])) //Associatove Array
+		{	
+			$sort_order = ['asc' => SORT_ASC, 'desc' => SORT_DESC];
+			$sort_by = $this->select($args[0], TRUE); //Select the key to Sort
+			$args[1] = isset($args[1]) ? $args[1] : 'asc';
+			array_multisort($sort_by->source, $sort_order[strtolower($args[1])], $this->to_order);		
+			$this->source = $this->to_order;
+		}
+		else
+		{
+			$args_sort = strtolower($args[0]);			
+			$sort_order = ['asc' => 'asort', 'desc' => 'arsort'];
+			$sort_order[$args_sort]($this->source);
+			$preserve = isset($args[1]) && $args[1] ? TRUE : FALSE;
+			$this->_preserve_keys($this->source, $preserve);
+		}
 		return $this;
 	}
-
 	/*
-	* SImilar to CI QB like
+	* Flat Where
+	*/
+	public function flat_where()
+	{
+		$args = func_get_args();
+		$op = [];
+		if(is_string($args[0])) //Single where condition
+		{
+			$cond = array_map('trim', explode(" ", $args[0]));
+			$op = array_filter($this->source, function($src) use ($cond) {								
+				return $this->_operator_check($src, $cond[0], $cond[1]);
+			});			
+			$preserve = isset($args[1]) && $args[1] ? TRUE : FALSE;
+			$this->_preserve_keys($op, $preserve);
+		}
+		return $this;		
+	}
+	
+	/*
+	* Similar to Like query in SQL
 	*/
 	public function like()
 	{	
@@ -456,23 +478,15 @@ class Arrayz
 		$this->op = [];
 		if(is_string($search_key))
 		{
-			$search_string = $args[1];
-			array_walk($this->source, function(&$value, &$key) use(&$search_key, &$search_string){
-				$this->matcher($search_string, $value[$search_key], $value);
-			});			
+			$search_value = $args[1];
+			$op = array_filter($this->source, function($src) use ($search_key, $search_value){
+					return isset($src[$search_key]) && preg_match('/'.$search_value.'/', $src[$search_key]);
+			},ARRAY_FILTER_USE_BOTH);
+			$this->source = $op;
 		}
-		$this->source = $this->op;
-		$this->op = [];
+		$preserve = isset($args[3]) && $args[3] ? TRUE : FALSE;
+		$this->_preserve_keys($op, $preserve);
 		return $this;
-	}
-
-	/* Match key value by regex */
-	private function matcher($search_string, $search_value, $value)
-	{
-		if( preg_match('/'.$search_string.'/', $search_value) )
-		{
-			$this->op[] = $value;
-		}
 	}
 
 	/* Select a key and sum its values. @param1: single key of array to sum */
@@ -483,7 +497,7 @@ class Arrayz
 		$key = $args[0];
 		$this->select($key, TRUE);		
 		$this->source = array_sum($this->source);
-		return $this->source;
+		return $this;
 	}
 
 	/* Select the maximum value using the key */
@@ -492,17 +506,11 @@ class Arrayz
 		$args = func_get_args();		
 		$op = [];
 		$key = $args[0];
+		$source = $this->source;
 		$this->select($key, TRUE);
-		if(isset($args[1]) && $args[1])
-		{
-			$this->source = $source[array_keys($this->source, max($this->source))[0]];			
-			return $this;
-		}
-		else
-		{
-			$this->source = min($this->source);			
-			return $this->source;
-		}
+		$k = (isset($args[1]) && $args[1]) ? array_keys($this->source, max($this->source))[0] : '';
+		$this->source = (isset($args[1]) && $args[1]) ? [$k => $source[$k]] : max($this->source);
+		return $this;
 	}
 
 	/* Select the min value using the key */
@@ -513,27 +521,20 @@ class Arrayz
 		$key = $args[0];
 		$source = $this->source;	
 		$this->select($key, TRUE);
-		if(isset($args[1]) && $args[1])
-		{
-			$this->source = $source[array_keys($this->source, min($this->source))[0]];			
-			return $this;
-		}
-		else
-		{
-			$this->source = min($this->source);
-			return $this->source;
-		}
+		$k = (isset($args[1]) && $args[1]) ? array_keys($this->source, min($this->source))[0] : '';
+		$this->source = (isset($args[1]) && $args[1]) ? [$k => $source[$k]] : min($this->source);
+		return $this;		
 	}	
 
-	/* Calculate avg value by key */
+	/* Calculate avg value by key. @param2 is round off numeric */
 	public function select_avg()
 	{
 		$args = func_get_args();		
 		$op = [];
-		$key = $args[0];
+		$key = $args[0];		
 		$this->select($key, TRUE);
-		$this->source = (array_sum($this->source)/count($this->source));
-		return $this->source;
+		$this->source = (isset($args[1]) && is_numeric($args[1])) ? round((array_sum($this->source)/count($this->source)), $args[1]) : (array_sum($this->source)/count($this->source));
+		return $this;
 	}
 
 	/* Select Distinct values*/
@@ -548,8 +549,18 @@ class Arrayz
 		array_walk($this->source, function(&$value, &$key) use(&$op, &$source){
 			$op[] = $source[$value];
 		});	
-		$this->source = $op;		
+		$this->source = $op;	
 		return $this;
 	}
+		/*
+	* reverse the array
+	*/
+	public function reverse()
+	{	
+		$args = func_get_args();
+		$preserve = isset($args[0]) && $args[0] ? TRUE : FALSE;		
+		$this->source = array_reverse($this->source, $preserve);
+		return $this;
+	}	
 }
 /* End of the file arrayz.php */
