@@ -35,8 +35,7 @@ Sometimes you need to ask the user for more information. They might not have pro
 arguments, or the script may have encountered an existing file and needs confirmation before overwriting. This is
 handled with the ``prompt()`` method.
 
-You can get a little more specific and provide a question for them to answer by passing the question in
-as the first parameter::
+You can provide a question by passing it in as the first parameter::
 
 	$color = CLI::prompt('What is your favorite color?');
 
@@ -49,7 +48,7 @@ You can restrict the acceptable answers by passing in an array of allowed answer
 
 	$overwrite = CLI::prompt('File exists. Overwrite?', ['y','n']);
 
-Finally, you can pass validation rules to the input as the third parameter::
+Finally, you can pass validation rules to the answer input as the third parameter::
 
 	$email = CLI::prompt('What is your email?', null, 'required|valid_email');
 
