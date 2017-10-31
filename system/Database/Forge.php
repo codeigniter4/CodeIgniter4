@@ -1170,7 +1170,7 @@ class Forge
                     }
                     
                     if($fkey['onUpdate'] !== false && in_array($fkey['onUpdate'], $allowActions)){
-                        $sql .= " ON UPDATE ".$fkey['onDelete'];
+                        $sql .= " ON UPDATE ".$fkey['onUpdate'];
                     }
                     
                 }
