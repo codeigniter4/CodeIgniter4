@@ -559,7 +559,7 @@ class Response extends Message implements ResponseInterface
 	 * @return $this
 	 * @throws \CodeIgniter\HTTP\RedirectException
 	 */
-	public function redirect(string $uri, string $method = 'auto', int $code = null)
+	public function redirect(string $uri, $method = 'auto', $code = null)
 	{
 		// IIS environment likely? Use 'refresh' for better compatibility
 		if ($method === 'auto' && isset($_SERVER['SERVER_SOFTWARE']) && strpos($_SERVER['SERVER_SOFTWARE'], 'Microsoft-IIS') !== false)
