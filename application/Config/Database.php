@@ -30,9 +30,9 @@ class Database extends \CodeIgniter\Database\Config
 	public $default = [
 		'DSN'          => '',
 		'hostname'     => 'localhost',
-		'username'     => '',
+		'username'     => 'root',
 		'password'     => '',
-		'database'     => '',
+		'database'     => 'codeigniter4develop',
 		'DBDriver'     => 'MySQLi',
 		'DBPrefix'     => '',
 		'pConnect'     => false,
@@ -58,10 +58,10 @@ class Database extends \CodeIgniter\Database\Config
 	public $tests = [
 		'DSN'          => '',
 		'hostname'     => '127.0.0.1',
-		'username'     => '',
+		'username'     => 'root',
 		'password'     => '',
-		'database'     => '',
-		'DBDriver'     => '',
+		'database'     => 'codeigniter4unittests',
+		'DBDriver'     => 'MySQLi',
 		'DBPrefix'     => 'db_',  // Needed to ensure we're working correctly with prefixes live. DO NOT REMOVE.
 		'pConnect'     => false,
 		'DBDebug'     => (ENVIRONMENT !== 'production'),
