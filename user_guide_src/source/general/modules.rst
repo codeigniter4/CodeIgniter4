@@ -29,7 +29,7 @@ directory in the main project root::
     /tests
     /writable
 
-Open **/application\Config\Autoload.php** and add the **Acme** namespace to the ``psr4`` array property::
+Open **application/Config/Autoload.php** and add the **Acme** namespace to the ``psr4`` array property::
 
     public $psr4 = [
         'Acme' => ROOTPATH.'acme'
