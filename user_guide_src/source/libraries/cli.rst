@@ -35,13 +35,7 @@ Sometimes you need to ask the user for more information. They might not have pro
 arguments, or the script may have encountered an existing file and needs confirmation before overwriting. This is
 handled with the ``prompt()`` method.
 
-The most basic use case is to simply wait for the user to press a key::
-
-	// Wait for the user to press any key...
-	CLI::prompt();
-
-You can get a little more specific and provide a question for them to answer by passing the question in
-as the first parameter::
+You can provide a question by passing it in as the first parameter::
 
 	$color = CLI::prompt('What is your favorite color?');
 
@@ -50,9 +44,13 @@ second parameter::
 
 	$color = CLI::prompt('What is your favorite color?', 'blue');
 
-Finally, you can restrict the acceptable answers by passing in an array of allowed answers as the second parameter::
+You can restrict the acceptable answers by passing in an array of allowed answers as the second parameter::
 
 	$overwrite = CLI::prompt('File exists. Overwrite?', ['y','n']);
+
+Finally, you can pass validation rules to the answer input as the third parameter::
+
+	$email = CLI::prompt('What is your email?', null, 'required|valid_email');
 
 Providing Feedback
 ==================

@@ -69,7 +69,7 @@ class Forge
 	 * @var array
 	 */
 	protected $primaryKeys = [];
-        
+
         /**
 	 * List of foreign keys.
 	 *
@@ -337,7 +337,7 @@ class Forge
 	}
 
 	//--------------------------------------------------------------------
-        
+
         /**
 	 * Add Foreign Key
 	 *
@@ -347,25 +347,25 @@ class Forge
 	 */
 	public function addForeignKey($fieldName= '',$tableName = '', $tableField = '', $onUpdate = false, $onDelete = false)
 	{
-            
+
             if( ! isset($this->fields[$fieldName]))
             {
                 throw new \RuntimeException('Field "'.$fieldName.'" not exist');
-            }	
-                
+            }
+
             $this->foreignKeys[$fieldName] = [
-                'table' => $tableName,
-                'field' => $tableField,
-                'onDelete' => $onDelete,
-                'onUpdate' => $onUpdate
+                'table'    => $tableName,
+                'field'    => $tableField,
+                'onDelete' => strtoupper($onDelete),
+                'onUpdate' => strtoupper($onUpdate)
             ];
-                
-            
+
+
             return $this;
 	}
 
 	//--------------------------------------------------------------------
-        
+
         /**
 	 * Foreign Key Drop
 	 *
@@ -376,9 +376,9 @@ class Forge
 	 */
 	public function dropForeignKey($table, $foreign_name)
 	{
-		
+
 		$sql = sprintf($this->dropConstraintStr,$this->db->escapeIdentifiers($this->db->DBPrefix.$table),$this->db->escapeIdentifiers($this->db->DBPrefix.$foreign_name));
-            
+
 		if ($sql === false)
 		{
 			if ($this->db->DBDebug)
@@ -393,7 +393,7 @@ class Forge
 	}
 
 	//--------------------------------------------------------------------
-        
+
 	/**
 	 * Create Table
 	 *
@@ -554,7 +554,7 @@ class Forge
 			return false;
 		}
 
-                
+
 		// If the prefix is already starting the table name, remove it...
 		if (! empty($this->db->DBPrefix) && strpos($table_name, $this->db->DBPrefix) === 0)
 		{
@@ -614,7 +614,7 @@ class Forge
 		}
 
                 $sql = $sql . ' ' . $this->db->escapeIdentifiers($table);
-                
+
 		return $sql;
 	}
 
@@ -1157,22 +1157,22 @@ class Forge
             $sql = '';
 
             $allowActions = array('CASCADE','SET NULL','NO ACTION','RESTRICT','SET DEFAULT');
-            
+
             if (count($this->foreignKeys) > 0){
                 foreach ($this->foreignKeys as $field => $fkey) {
                     $name_index = $table.'_'.$field.'_foreign';
-                    
+
                     $sql .= ",\n\tCONSTRAINT " . $this->db->escapeIdentifiers($name_index)
                         . ' FOREIGN KEY(' . $this->db->escapeIdentifiers($field) . ') REFERENCES '.$this->db->escapeIdentifiers($this->db->DBPrefix.$fkey['table']).' ('.$this->db->escapeIdentifiers($fkey['field']).')';
-                    
+
                     if($fkey['onDelete'] !== false && in_array($fkey['onDelete'], $allowActions)){
                         $sql .= " ON DELETE ".$fkey['onDelete'];
                     }
-                    
+
                     if($fkey['onUpdate'] !== false && in_array($fkey['onUpdate'], $allowActions)){
                         $sql .= " ON UPDATE ".$fkey['onUpdate'];
                     }
-                    
+
                 }
             }
 

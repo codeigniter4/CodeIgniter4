@@ -179,7 +179,10 @@ class Services
 		}
 
 		return new \CodeIgniter\HTTP\CURLRequest(
-				$config, new \CodeIgniter\HTTP\URI(), $response, $options
+				$config,
+				new \CodeIgniter\HTTP\URI(isset($options['base_uri']) ? : null),
+				$response,
+				$options
 		);
 	}
 
