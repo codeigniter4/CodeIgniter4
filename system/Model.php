@@ -228,7 +228,7 @@ class Model
 	/**
 	 * Our validator instance.
 	 *
-	 * @var \CodeIgniter\Validation\ValidationInterface
+	 * @var \CodeIgniter\Validation\Validation
 	 */
 	protected $validation;
 
