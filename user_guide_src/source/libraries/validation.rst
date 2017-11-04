@@ -283,7 +283,7 @@ rules. As shown earlier, the validation array will have this prototype::
 
 You can specify the group to use when you call the ``run()`` method::
 
-    $validation->run($data, $signup);
+    $validation->run($data, 'signup');
 
 You can also store custom error messages in this configuration file by naming the
 property the same as the group, and appended with ``_errors``. These will automatically
@@ -360,7 +360,7 @@ The array is structured as follows::
 
 Here is a more practical example::
 
-    $rules = [
+    $messages = [
         'username' => [
             'required'   => 'All accounts must have usernames provided',
         ],
@@ -373,7 +373,7 @@ Here is a more practical example::
             'username' => 'required|is_unique[users.username]',
             'password' => 'required|min_length[10]'
         ],
-        $rules
+        $messages
     );
 
 Getting All Errors
