@@ -61,7 +61,7 @@ class Controller
 	/**
 	 * Instance of the main Request object.
 	 *
-	 * @var HTTP\Request|HTTP\IncomingRequest
+	 * @var HTTP\IncomingRequest
 	 */
 	protected $request;
 
