@@ -91,19 +91,19 @@ class CodeIgniter
 
 	/**
 	 * Current request.
-	 * @var \CodeIgniter\HTTP\Request|\CodeIgniter\HTTP\IncomingRequest|CLIRequest
+	 * @var HTTP\Request|HTTP\IncomingRequest|CLIRequest
 	 */
 	protected $request;
 
 	/**
 	 * Current response.
-	 * @var \CodeIgniter\HTTP\Response
+	 * @var HTTP\Response
 	 */
 	protected $response;
 
 	/**
 	 * Router to use.
-	 * @var \CodeIgniter\Router\Router
+	 * @var Router\Router
 	 */
 	protected $router;
 
