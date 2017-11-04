@@ -280,7 +280,7 @@ class Mimes
 	/**
 	 * Attempts to determine the best mime type for the given file extension.
 	 *
-	 * @param string $ext
+	 * @param string $extension
 	 *
 	 * @return string|null The mime type found, or none if unable to determine.
 	 */

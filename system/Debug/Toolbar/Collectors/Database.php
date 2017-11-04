@@ -193,7 +193,7 @@ class Database extends BaseCollector
 	/**
 	 * Gets the "badge" value for the button.
 	 *
-	 * @param string $value
+	 * @return int
 	 */
 	public function getBadgeValue()
 	{

@@ -492,6 +492,8 @@ class CodeIgniter
 	 * full-page caching for very high performance.
 	 *
 	 * @param \Config\Cache $config
+	 *
+	 * @return mixed
 	 */
 	public function cachePage(Cache $config)
 	{
