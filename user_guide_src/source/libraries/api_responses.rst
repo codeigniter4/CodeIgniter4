@@ -22,7 +22,7 @@ The following example shows a common usage pattern within your controllers.
 
     class Users extends \CodeIgniter\Controller
     {
-        use CodeIgniter\API\ResponseTrait;
+        use \CodeIgniter\API\ResponseTrait;
 
         public function createUser()
         {
