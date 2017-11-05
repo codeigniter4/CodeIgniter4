@@ -254,7 +254,7 @@ Whereas withDeleted() will return both deleted and not-deleted rows, this method
 the next find* methods to return only soft deleted rows::
 
 	$deletedUsers = $userModel->onlyDeleted()
-							  ->findAll();
+	                          ->findAll();
 
 Saving Data
 -----------
