@@ -352,4 +352,18 @@ class FormatRules
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Checks for a valid date format with the strtotime function
+	 *
+	 * @param string $str
+	 *
+	 * @return bool
+	 */
+	public function valid_date(string $str = null)
+	{
+		return (bool) strtotime($str);
+	}
+
+	//--------------------------------------------------------------------
 }
