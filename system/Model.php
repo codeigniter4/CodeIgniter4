@@ -282,8 +282,9 @@ class Model
 
 		if (is_null($validation))
 		{
-			$validation = \Config\Services::validation();
+			$validation = \Config\Services::validation(null, false);
 		}
+		
 		$this->validation = $validation;
 	}
 
