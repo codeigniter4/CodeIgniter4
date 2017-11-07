@@ -167,8 +167,8 @@ Class Reference
 .. php:method:: respondDeleted($data[, string $message = ''])
 
     :param mixed  $data: The data to return to the client. Either string or array.
-        :param string $message: A custom "reason" message to return.
-        :returns: The value of the Response object's send() method.
+    :param string $message: A custom "reason" message to return.
+    :returns: The value of the Response object's send() method.
 
     Sets the appropriate status code to use when a new resource was deleted as the result of this API call, typically 200.
 
@@ -209,9 +209,9 @@ Class Reference
 .. php:method:: failNotFound(string $description[, string $code=null[, string $message = '']])
 
     :param mixed  $description: The error message to show the user.
-        :param string $code: A custom, API-specific, error code.
-        :param string $message: A custom "reason" message to return.
-        :returns: The value of the Response object's send() method.
+    :param string $code: A custom, API-specific, error code.
+    :param string $message: A custom "reason" message to return.
+    :returns: The value of the Response object's send() method.
 
     Sets the appropriate status code to use when the requested resource cannot be found. Status code is 404.
 
