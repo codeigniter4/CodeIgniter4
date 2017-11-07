@@ -489,7 +489,7 @@ By default, the `Files Driver`_ will be used when a session is initialized,
 because it is the most safe choice and is expected to work everywhere
 (virtually every environment has a file system).
 
-However, any other driver may be selected via the ``$config['sessionDriver']``
+However, any other driver may be selected via the ``public $sessionDriver``
 line in your **application/Config/App.php** file, if you chose to do so.
 Have it in mind though, every driver has different caveats, so be sure to
 get yourself familiar with them (below) before you make that choice.
@@ -508,7 +508,7 @@ To be more specific, it doesn't support PHP's `directory level and mode
 formats used in session.save_path
 <http://php.net/manual/en/session.configuration.php#ini.session.save-path>`_,
 and it has most of the options hard-coded for safety. Instead, only
-absolute paths are supported for ``$config['sess_save_path']``.
+absolute paths are supported for ``public $sessionSavePath``.
 
 Another important thing that you should know, is to make sure that you
 don't use a publicly-readable or shared directory for storing your session
