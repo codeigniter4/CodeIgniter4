@@ -349,10 +349,14 @@ in the ``placeholder`` option with the new string to use::
 Limit the Routes Made
 ---------------------
 
-You can restrict the routes generated with the ``only`` option. This should be an array of method names that should
+You can restrict the routes generated with the ``only`` option. This should be an array or comma separated of method names that should
 be created. Only routes that match one of these methods will be created. The rest will be ignored::
 
-	$routes->resources('photos', ['only' => ['index', 'show']]);
+	$routes->resource('photos', ['only' => ['index', 'show']]);
+	
+Otherwise you can remove unused routes with the ``except`` option. This option run after ``only``::
+
+	$routes->resource('photos', ['except' => 'new,edit']);
 
 Valid methods are: index, show, create, update, new, edit and delete.
 

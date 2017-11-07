@@ -512,7 +512,7 @@ class RouteCollection implements RouteCollectionInterface
 	{
 		if (empty($verb))
 		{
-			$verb = $this->getHTTPVerb();	
+			$verb = $this->getHTTPVerb();
 		}
 
 		// Since this is the entry point for the Router,
@@ -781,6 +781,19 @@ class RouteCollection implements RouteCollectionInterface
 		$id = '(' . trim($id, '()') . ')';
 
 		$methods = isset($options['only']) ? is_string($options['only']) ? explode(',', $options['only']) : $options['only'] : ['index', 'show', 'create', 'update', 'delete', 'new', 'edit'];
+
+		if(isset($options['except']))
+		{
+			$options['except'] = is_array($options['except']) ? $options['except'] : explode(',', $options['except']);
+			$c = count($methods);
+			for($i = 0; $i < $c; $i++)
+			{
+				if(in_array($methods[$i], $options['except']))
+				{
+					unset($methods[$i]);
+				}
+			}
+		}
 
 		if (in_array('index', $methods))
 			$this->get($name, $new_name . '::index', $options);
