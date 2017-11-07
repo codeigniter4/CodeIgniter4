@@ -61,7 +61,7 @@ group names you are connecting to.
 	only need to use a different database on the same connection. You
 	can switch to a different database when you need to, like this:
 
-	| $db->dbSelect($database2_name);
+	| $db->setDatabase($database2_name);
 
 Reconnecting / Keeping the Connection Alive
 ===========================================
