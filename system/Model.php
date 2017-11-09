@@ -228,7 +228,7 @@ class Model
 	/**
 	 * Our validator instance.
 	 *
-	 * @var \CodeIgniter\Validation\ValidationInterface
+	 * @var \CodeIgniter\Validation\Validation
 	 */
 	protected $validation;
 
@@ -617,6 +617,7 @@ class Model
 	 * properties as an array suitable for use in creates and updates.
 	 *
 	 * @param string|object $data
+	 * @param string $dateFormat
 	 *
 	 * @return array
 	 */
@@ -819,7 +820,7 @@ class Model
 	 * @param bool  $purge Allows overriding the soft deletes setting.
 	 *
 	 * @return mixed
-	 * @throws DatabaseException
+	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
 	public function delete($id, $purge = false)
 	{
@@ -831,7 +832,7 @@ class Model
             {
                 $set[$this->updatedField] = $this->setDate();
             }
-            
+
 			$result = $this->builder()
 					->where($this->primaryKey, $id)
 					->update($set);
@@ -859,7 +860,7 @@ class Model
 	 * @param bool         $purge Allows overriding the soft deletes setting.
 	 *
 	 * @return mixed
-	 * @throws DatabaseException
+	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
 	public function deleteWhere($key, $value = null, $purge = false)
 	{
@@ -901,7 +902,6 @@ class Model
 	 * through soft deletes (deleted = 1)
 	 *
 	 * @return bool|mixed
-	 * @throws DatabaseException
 	 */
 	public function purgeDeleted()
 	{
@@ -996,7 +996,7 @@ class Model
 	 * @param int      $size
 	 * @param \Closure $userFunc
 	 *
-	 * @throws DatabaseException
+	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
 	public function chunk($size = 100, \Closure $userFunc)
 	{
@@ -1123,7 +1123,7 @@ class Model
 	 * @param array $data
 	 *
 	 * @return array
-	 * @throws DatabaseException
+	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
 	protected function doProtectFields($data)
 	{

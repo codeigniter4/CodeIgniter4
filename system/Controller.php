@@ -61,14 +61,14 @@ class Controller
 	/**
 	 * Instance of the main Request object.
 	 *
-	 * @var RequestInterface|\CodeIgniter\HTTP\Request|\CodeIgniter\HTTP\IncomingRequest
+	 * @var HTTP\IncomingRequest
 	 */
 	protected $request;
 
 	/**
 	 * Instance of the main response object.
 	 *
-	 * @var ResponseInterface|\CodeIgniter\HTTP\Response
+	 * @var HTTP\Response
 	 */
 	protected $response;
 

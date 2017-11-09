@@ -307,6 +307,7 @@ class IncomingRequest extends Request
 	 *
 	 * @param null $index
 	 * @param null $filter
+	 * @param null $flags
 	 *
 	 * @return mixed
 	 */
@@ -359,6 +360,7 @@ class IncomingRequest extends Request
 	 *
 	 * @param null $index  Index for item to fetch from $_GET.
 	 * @param null $filter A filter name to apply.
+	 * @param null $flags
 	 *
 	 * @return mixed
 	 */
@@ -374,6 +376,7 @@ class IncomingRequest extends Request
 	 *
 	 * @param null $index  Index for item to fetch from $_POST.
 	 * @param null $filter A filter name to apply
+	 * @param null $flags
 	 *
 	 * @return mixed
 	 */
@@ -389,6 +392,7 @@ class IncomingRequest extends Request
 	 *
 	 * @param null $index  Index for item to fetch from $_POST or $_GET
 	 * @param null $filter A filter name to apply
+	 * @param null $flags
 	 *
 	 * @return mixed
 	 */
@@ -407,6 +411,7 @@ class IncomingRequest extends Request
 	 *
 	 * @param null $index  Index for item to be fetched from $_GET or $_POST
 	 * @param null $filter A filter name to apply
+	 * @param null $flags
 	 *
 	 * @return mixed
 	 */
@@ -425,6 +430,7 @@ class IncomingRequest extends Request
 	 *
 	 * @param null $index  Index for item to be fetched from $_COOKIE
 	 * @param null $filter A filter name to be applied
+	 * @param null $flags
 	 *
 	 * @return mixed
 	 */

@@ -53,7 +53,7 @@ class CURLRequest extends Request
 	/**
 	 * The response object associated with this request
 	 *
-	 * @var ResponseInterface|\CodeIgniter\HTTP\Response
+	 * @var \CodeIgniter\HTTP\Response
 	 */
 	protected $response;
 
@@ -202,7 +202,7 @@ class CURLRequest extends Request
 	 * @param string $url
 	 * @param array  $options
 	 *
-	 * @return Response
+	 * @return \CodeIgniter\HTTP\ResponseInterface
 	 */
 	public function options(string $url, array $options = []): ResponseInterface
 	{

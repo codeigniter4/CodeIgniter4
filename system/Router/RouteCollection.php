@@ -506,13 +506,15 @@ class RouteCollection implements RouteCollectionInterface
 	/**
 	 * Returns the raw array of available routes.
 	 *
+	 * @param null $verb
+	 *
 	 * @return array
 	 */
 	public function getRoutes($verb = null): array
 	{
 		if (empty($verb))
 		{
-			$verb = $this->getHTTPVerb();	
+			$verb = $this->getHTTPVerb();
 		}
 
 		// Since this is the entry point for the Router,
@@ -1114,9 +1116,10 @@ class RouteCollection implements RouteCollectionInterface
 	 * the request method(s) that this route will work for. They can be separated
 	 * by a pipe character "|" if there is more than one.
 	 *
-	 * @param  string       $from
-	 * @param  array|string $to
-	 * @param array         $options
+	 * @param string     $verb
+	 * @param string     $from
+	 * @param            $to
+	 * @param array|null $options
 	 */
 	protected function create(string $verb, string $from, $to, array $options = null)
 	{
