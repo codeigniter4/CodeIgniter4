@@ -139,7 +139,7 @@ class ResponseTraitTest extends \CIUnitTestCase
 			'status' => 500,
 			'error' => 'WHAT!',
 			'messages' => [
-				'Failure to Launch'
+				'error' => 'Failure to Launch'
 			]
 		];
 
@@ -177,7 +177,7 @@ class ResponseTraitTest extends \CIUnitTestCase
 			'status' => 401,
 			'error' => 'FAT CHANCE',
 			'messages' => [
-				'Nope'
+				'error' => 'Nope'
 			]
 		];
 
@@ -195,7 +195,7 @@ class ResponseTraitTest extends \CIUnitTestCase
 			'status' => 403,
 			'error' => 'FAT CHANCE',
 			'messages' => [
-				'Nope'
+				'error' => 'Nope'
 			]
 		];
 
@@ -213,7 +213,7 @@ class ResponseTraitTest extends \CIUnitTestCase
 			'status' => 404,
 			'error' => 'FAT CHANCE',
 			'messages' => [
-				'Nope'
+				'error' => 'Nope'
 			]
 		];
 
@@ -231,7 +231,7 @@ class ResponseTraitTest extends \CIUnitTestCase
 			'status' => 400,
 			'error' => 'FAT CHANCE',
 			'messages' => [
-				'Nope'
+				'error' => 'Nope'
 			]
 		];
 
@@ -249,7 +249,7 @@ class ResponseTraitTest extends \CIUnitTestCase
 			'status' => 409,
 			'error' => 'FAT CHANCE',
 			'messages' => [
-				'Nope'
+				'error' => 'Nope'
 			]
 		];
 
@@ -267,7 +267,7 @@ class ResponseTraitTest extends \CIUnitTestCase
 			'status' => 410,
 			'error' => 'FAT CHANCE',
 			'messages' => [
-				'Nope'
+				'error' => 'Nope'
 			]
 		];
 
@@ -285,7 +285,7 @@ class ResponseTraitTest extends \CIUnitTestCase
 			'status' => 429,
 			'error' => 'FAT CHANCE',
 			'messages' => [
-				'Nope'
+				'error' => 'Nope'
 			]
 		];
 
@@ -305,7 +305,7 @@ class ResponseTraitTest extends \CIUnitTestCase
 					'status' => 500,
 					'error' => 'FAT-CHANCE',
 					'messages' => [
-						'Nope.'
+						'error' => 'Nope.'
 					]
 				]), $this->response->getBody());
 	}

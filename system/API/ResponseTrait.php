@@ -140,7 +140,7 @@ trait ResponseTrait
 	{
 		if ( ! is_array($messages))
 		{
-			$messages = [$messages];
+			$messages = ['error' => $messages];
 		}
 
 		$response = [
