@@ -48,6 +48,7 @@
  * - Message body
  *
  * @package CodeIgniter\HTTP
+ * @mixin \CodeIgniter\HTTP\RedirectResponse
  */
 interface ResponseInterface
 {

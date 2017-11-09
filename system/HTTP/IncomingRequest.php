@@ -62,7 +62,7 @@ use CodeIgniter\Services;
  * - Upload files, if any (as represented by $_FILES)
  * - Deserialized body binds (generally from $_POST)
  *
- * @package CodeIgniter\HTTPLite
+ * @package CodeIgniter\HTTP
  */
 class IncomingRequest extends Request
 {
