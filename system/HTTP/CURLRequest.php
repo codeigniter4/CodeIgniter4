@@ -45,7 +45,7 @@ use Config\App;
  *
  * @todo    Add a few helpers for dealing with JSON, forms, files, etc.
  *
- * @package CodeIgniter\HTTPLite
+ * @package CodeIgniter\HTTP
  */
 class CURLRequest extends Request
 {
