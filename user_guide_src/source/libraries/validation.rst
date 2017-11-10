@@ -606,7 +606,7 @@ valid_cc_number         Yes         Verifies that the credit card number matches
                                     Current supported providers are: American Express (amex), China Unionpay (unionpay),
                                     Diners Club CarteBlance (carteblanche), Diners Club (dinersclub), Discover Card (discover),
                                     Interpayment (interpayment), JCB (jcb), Maestro (maestro), Dankort (dankort), NSPK MIR (mir),
-                                    MasterCard (mastercard), Visa (visa), UATP (uatp), Verve (verve),
+                                    Troy (troy), MasterCard (mastercard), Visa (visa), UATP (uatp), Verve (verve),
                                     CIBC Convenience Card (cibc), Royal Bank of Canada Client Card (rbc),
                                     TD Canada Trust Access Card (tdtrust), Scotiabank Scotia Card (scotia), BMO ABM Card (bmoabm),
                                     HSBC Canada Card (hsbc)
