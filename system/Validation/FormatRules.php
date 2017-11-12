@@ -354,15 +354,24 @@ class FormatRules
 	//--------------------------------------------------------------------
 
 	/**
-	 * Checks for a valid date format with the strtotime function
+	 * Checks for a valid date and matches a given date format
 	 *
 	 * @param string $str
+	 * @param string $format
 	 *
 	 * @return bool
 	 */
-	public function valid_date(string $str = null)
+	public function valid_date(string $str = null, string $format = null): bool
 	{
-		return (bool) strtotime($str);
+		if (empty($format))
+		{
+			return (bool) strtotime($str);
+		}
+
+		$date = \DateTime::createFromFormat($format, $str);
+
+  		return (bool) $date && \DateTime::getLastErrors()['warning_count'] === 0
+	  				 		&& \DateTime::getLastErrors()['error_count'] === 0;
 	}
 
 	//--------------------------------------------------------------------
