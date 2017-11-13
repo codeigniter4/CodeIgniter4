@@ -252,6 +252,11 @@ class Connection extends BaseConnection implements ConnectionInterface
 			$databaseName = $this->database;
 		}
 
+		if (empty($this->connID))
+		{
+			$this->initialize();
+		}
+
 		if ($this->connID->select_db($databaseName))
 		{
 			$this->database = $databaseName;

@@ -300,7 +300,7 @@ class CIDatabaseTestCase extends CIUnitTestCase
 	 * @param string $table
 	 * @param array  $data
 	 *
-	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
+	 * @return bool
 	 */
 	public function hasInDatabase(string $table, array $data)
 	{

@@ -553,8 +553,9 @@ class Parser extends View
 	 *
 	 * @param array  $matches
 	 * @param string $replace
+	 * @param bool   $escape
 	 *
-	 * @return mixed|string
+	 * @return string
 	 */
 	protected function prepareReplacement(array $matches, string $replace, bool $escape = true)
 	{

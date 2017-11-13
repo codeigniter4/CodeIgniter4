@@ -177,7 +177,7 @@ Class Reference
 	    $user = $userModel->delete($id);
 	    return $this->respondDeleted(['id' => $id]);
 
-.. php:method:: failUnauthorized(string $description[, string $code = null[, string $message = '']])
+.. php:method:: failUnauthorized(string $description = 'Unauthorized'[, string $code=null[, string $message = '']])
 
     :param mixed  $description: The error message to show the user.
     :param string $code: A custom, API-specific, error code.
@@ -191,7 +191,7 @@ Class Reference
 
 	    return $this->failUnauthorized('Invalid Auth token');
 
-.. php:method:: failForbidden(string $description[, string $code = null[, string $message = '']])
+.. php:method:: failForbidden(string $description = 'Forbidden'[, string $code=null[, string $message = '']])
 
     :param mixed  $description: The error message to show the user.
     :param string $code: A custom, API-specific, error code.
@@ -206,7 +206,7 @@ Class Reference
 
     	return $this->failForbidden('Invalid API endpoint.');
 
-.. php:method:: failNotFound(string $description[, string $code = null[, string $message = '']])
+.. php:method:: failNotFound(string $description = 'Not Found'[, string $code=null[, string $message = '']])
 
     :param mixed  $description: The error message to show the user.
     :param string $code: A custom, API-specific, error code.
@@ -219,7 +219,7 @@ Class Reference
 
     	return $this->failNotFound('User 13 cannot be found.');
 
-.. php:method:: failValidationError(string $description[, string $code = null[, string $message = '']])
+.. php:method:: failValidationError(string $description = 'Bad Request'[, string $code=null[, string $message = '']])
 
     :param mixed  $description: The error message to show the user.
     :param string $code: A custom, API-specific, error code.
@@ -233,7 +233,7 @@ Class Reference
 
     	return $this->failValidationError($validation->getErrors());
 
-.. php:method:: failResourceExists(string $description[, string $code = null[, string $message = '']])
+.. php:method:: failResourceExists(string $description = 'Conflict'[, string $code=null[, string $message = '']])
 
     :param mixed  $description: The error message to show the user.
     :param string $code: A custom, API-specific, error code.
@@ -247,7 +247,7 @@ Class Reference
 
     	return $this->failResourceExists('A user already exists with that email.');
 
-.. php:method:: failResourceGone(string $description[, string $code = null[, string $message = '']])
+.. php:method:: failResourceGone(string $description = 'Gone'[, string $code=null[, string $message = '']])
 
     :param mixed  $description: The error message to show the user.
     :param string $code: A custom, API-specific, error code.
@@ -261,7 +261,7 @@ Class Reference
 
     	return $this->failResourceGone('That user has been previously deleted.');
 
-.. php:method:: failTooManyRequests(string $description[, string $code = null[, string $message = '']])
+.. php:method:: failTooManyRequests(string $description = 'Too Many Requests'[, string $code=null[, string $message = '']])
 
     :param mixed  $description: The error message to show the user.
     :param string $code: A custom, API-specific, error code.
@@ -275,7 +275,7 @@ Class Reference
 
     	return $this->failTooManyRequests('You must wait 15 seconds before making another request.');
 
-.. php:method:: failServerError(string $description[, string $code = null[, string $message = '']])
+.. php:method:: failServerError(string $description = 'Internal Server Error'[, string $code = null[, string $message = '']])
 
     :param string $description: The error message to show the user.
     :param string $code: A custom, API-specific, error code.

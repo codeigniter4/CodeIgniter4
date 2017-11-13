@@ -439,6 +439,23 @@ class RouteCollectionTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testResourcesWithExcept()
+	{
+		$_SERVER['REQUEST_METHOD'] = 'GET';
+		$routes = $this->getCollector();
+
+		$routes->resource('photos', ['except' => 'edit,new']);
+
+		$expected = [
+			'photos' => '\Photos::index',
+			'photos/(.*)' => '\Photos::show/$1'
+		];
+
+		$this->assertEquals($expected, $routes->getRoutes());
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testMatchSupportsMultipleMethods()
 	{
 		$_SERVER['REQUEST_METHOD'] = 'GET';
@@ -675,7 +692,7 @@ class RouteCollectionTest extends \CIUnitTestCase
 	public function testNamedRoutesWithSameURIDifferentMethods()
 	{
 		$routes = $this->getCollector();
-		
+
 		$routes->get('user/insert', 'myController::goto/$1/$2', ['as' => 'namedRoute1']);
 		$routes->post('user/insert', function() {}, ['as' => 'namedRoute2']);
 		$routes->put('user/insert', function() {}, ['as' => 'namedRoute3']);

@@ -338,10 +338,14 @@ class Forge
 
 	//--------------------------------------------------------------------
 
-        /**
+	/**
 	 * Add Foreign Key
 	 *
-	 * @param    array $field
+	 * @param string $fieldName
+	 * @param string $tableName
+	 * @param string $tableField
+	 * @param bool   $onUpdate
+	 * @param bool   $onDelete
 	 *
 	 * @return    \CodeIgniter\Database\Forge
 	 */
@@ -366,13 +370,14 @@ class Forge
 
 	//--------------------------------------------------------------------
 
-        /**
+	/**
 	 * Foreign Key Drop
 	 *
-	 * @param    string $table       Table name
+	 * @param    string $table        Table name
 	 * @param    string $foreign_name Foreign name
 	 *
-	 * @return    bool
+	 * @return bool|\CodeIgniter\Database\BaseResult|\CodeIgniter\Database\Query|false|mixed
+	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
 	public function dropForeignKey($table, $foreign_name)
 	{
