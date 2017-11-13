@@ -210,7 +210,14 @@ If you want to verify that a session value exists, simply check with
 Or you can call ``has()``::
 
 	$session->has('some_name');
+	
+Pushing new value to session data
+=====================
 
+The push method is used to push a new value onto a session value that is an array. 
+For instance, if the 'hobbies' key contains an array of hobbies, you can add a new value onto the array like so::
+
+$session->push('hobbies', ['sport'=>'tennis']);
 Removing Session Data
 =====================
 
