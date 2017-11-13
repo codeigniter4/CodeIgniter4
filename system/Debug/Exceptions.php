@@ -70,7 +70,7 @@ class Exceptions
 	/**
 	 * Constructor.
 	 *
-	 * @param \Config\App $config
+	 * @param \Config\Exceptions $config
 	 */
 	public function __construct(\Config\Exceptions $config)
 	{

@@ -188,6 +188,9 @@ class UploadedFile extends File implements UploadedFileInterface
 	/**
 	 * create file target path if
 	 * the set path does not exist
+	 *
+	 * @param string $path
+	 *
 	 * @return string The path set or created.
 	 */
    	protected function setPath($path)

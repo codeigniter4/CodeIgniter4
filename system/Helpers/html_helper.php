@@ -51,7 +51,7 @@ if ( ! function_exists('ul'))
 	/**
 	 * Unordered List
 	 *
-	 * Generates an HTML unordered list from an single or 
+	 * Generates an HTML unordered list from an single or
 	 * multi-dimensional array.
 	 *
 	 * @param   array   $list
@@ -186,7 +186,7 @@ if ( ! function_exists('img'))
 
 		foreach ($src as $k => $v)
 		{
-			//Include a protocol if nothing is explicitely defined. 
+			//Include a protocol if nothing is explicitely defined.
 			if ($k === 'src' && ! preg_match('#^([a-z]+:)?//#i', $v))
 			{
 				if ($indexPage === true)
@@ -392,16 +392,16 @@ if ( ! function_exists('link_tag'))
 		 *
 		 * Geneartes a video element to embed videos. The video element can
 		 * contain one or more video sources
-		 * 
+		 *
 		 * @param  mixed  $src                   Either a source string or
 		 * an array of sources
-		 * @param  string $unsupportedMessage    The message to display 
+		 * @param  string $unsupportedMessage    The message to display
 		 * if the media tag is not supported by the browser
 		 * @param  string $attributes            HTML attributes
 		 * @param  array  $tracks
 		 * @param  bool   $indexPage
 		 * @return string
-		 * 
+		 *
 		 */
 		function video
 		(
@@ -471,14 +471,14 @@ if ( ! function_exists('link_tag'))
 		 * Audio
 		 *
 		 * Generates an audio element to embed sounds
-		 * 
-		 * @param  mixed  $src                  Either a source string or
-		 * an array of sources
-		 * @param  string $unsupportedMessage   The message to display 
-		 * if the media tag is not supported by the browser.
-		 * @param  string $attributes           HTML attributes
-		 * @return string
 		 *
+		 * @param  mixed  $src                Either a source string or an array of sources
+		 * @param  string $unsupportedMessage The message to display if the media tag is not supported by the browser.
+		 * @param  string $attributes         HTML attributes
+		 * @param array   $tracks
+		 * @param bool    $indexPage
+		 *
+		 * @return string
 		 */
 		function audio
 		(
@@ -601,9 +601,9 @@ if ( ! function_exists('link_tag'))
 		 *
 		 * Generates a source element that specifies multiple media resources
 		 * for either audio or video element
-		 * 
+		 *
 		 * @param  string $src          The path of the media resource
-		 * @param  string $type         The MIME-type of the resource with 
+		 * @param  string $type         The MIME-type of the resource with
 		 * optional codecs parameters
 		 * @param  string $attributes   HTML attributes
 		 * @param  bool $indexPage
@@ -652,7 +652,7 @@ if ( ! function_exists('link_tag'))
 		 *
 		 * Generates a track element to specify timed tracks. The tracks are
 		 * formatted in WebVTT format.
-		 * 
+		 *
 		 * @param  string $src          The path of the .VTT file
 		 * @param  string $kind
 		 * @param  string $srcLanguage
@@ -682,13 +682,15 @@ if ( ! function_exists('link_tag'))
 		 * Object
 		 *
 		 * Generates an object element that represents the media
-		 * as either image or a resource plugin such as audio, video, 
+		 * as either image or a resource plugin such as audio, video,
 		 * Java applets, ActiveX, PDF and Flash
-		 * 
-		 * @param  string $data         A resource URL
-		 * @param  string $type         Content-type of the resource
-		 * @param  string $attributes   HTML attributes
-		 * @param  array  $params       
+		 *
+		 * @param  string $data       A resource URL
+		 * @param  string $type       Content-type of the resource
+		 * @param  string $attributes HTML attributes
+		 * @param  array  $params
+		 * @param bool    $indexPage
+		 *
 		 * @return string
 		 */
 		function object
@@ -737,9 +739,9 @@ if ( ! function_exists('link_tag'))
 		/**
 		 * Param
 		 *
-		 * Generates a param element that defines parameters 
+		 * Generates a param element that defines parameters
 		 * for the object element.
-		 * 
+		 *
 		 * @param  string $name        The name of the parameter
 		 * @param  string $value       The value of the parameter
 		 * @param  string $type        The MIME-type
@@ -768,9 +770,9 @@ if ( ! function_exists('link_tag'))
 		 * Embed
 		 *
 		 * Generates an embed element
-		 * 
+		 *
 		 * @param  string $src          The path of the resource to embed
-		 * @param  string $type         MIME-type 
+		 * @param  string $type         MIME-type
 		 * @param  string $attributes   HTML attributes
 		 * @param  bool   $indexPage
 		 * @return string

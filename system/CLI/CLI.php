@@ -167,12 +167,9 @@ class CLI
 	//--------------------------------------------------------------------
 
 	/**
-	 * Asks the user for input.  This can have either 1 or 2 arguments.
+	 * Asks the user for input.
 	 *
 	 * Usage:
-	 *
-	 * // Waits for any key press
-	 * CLI::prompt();
 	 *
 	 * // Takes any input
 	 * $color = CLI::prompt('What is your favorite color?');
@@ -180,105 +177,91 @@ class CLI
 	 * // Takes any input, but offers default
 	 * $color = CLI::prompt('What is your favourite color?', 'white');
 	 *
-	 * // Will only accept the options in the array
-	 * $ready = CLI::prompt('Are you ready?', array('y','n'));
+	 * // Will validate options with the in_list rule and accept only if one of the list
+	 * $color = CLI::prompt('What is your favourite color?', array('red','blue'));
 	 *
-	 * @return    string    The user input
+	 * // Do not provide options but requires a valid email
+	 * $email = CLI::prompt('What is your email?', null, 'required|valid_email');
+	 *
+	 * @param  string       $field      Output "field" question
+	 * @param  string|array $options    String to a defaul value, array to a list of options (the first option will be the default value)
+	 * @param  string       $validation Validation rules
+	 *
+	 * @return string                   The user input
 	 */
-	public static function prompt(): string
+	public static function prompt($field, $options = null, $validation = null): string
 	{
-		$args = func_get_args();
+		$extra_output = '';
+		$default = '';
 
-		$options = [];
-		$output = '';
-		$default = null;
-
-		// How many we got
-		$arg_count = count($args);
-
-		// Is the last argument a boolean? True means required
-		$required = end($args) === true;
-
-		// Reduce the argument count if required was passed, we don't care about that anymore
-		$required === true && -- $arg_count;
-
-		// This method can take a few crazy combinations of arguments, so lets work it out
-		switch ($arg_count)
+		if (is_string($options))
 		{
-			case 2:
-
-				// E.g: $ready = CLI::prompt('Are you ready?', array('y','n'));
-				if (is_array($args[1]))
-				{
-					list($output, $options) = $args;
-				}
-
-				// E.g: $color = CLI::prompt('What is your favourite color?', 'white');
-				elseif (is_string($args[1]))
-				{
-					list($output, $default) = $args;
-				}
-
-				break;
-
-			case 1:
-
-				// No question (probably been asked already) so just show options
-				// E.g: $ready = CLI::prompt(array('y','n'));
-				if (is_array($args[0]))
-				{
-					$options = $args[0];
-				}
-
-				// Question without options
-				// E.g: $ready = CLI::prompt('What did you do today?');
-				elseif (is_string($args[0]))
-				{
-					$output = $args[0];
-				}
-
-				break;
+			$extra_output = ' [' . static::color($options, 'white') .']';
+			$default = $options;
 		}
 
-		// If a question has been asked with the read
-		if ($output !== '')
+		if (is_array($options) && count($options))
 		{
-			$extra_output = '';
+			$opts = $options;
+			$extra_output_default = static::color($opts[0], 'white');
 
-			if ($default !== null)
+			unset($opts[0]);
+
+			if (empty($opts))
 			{
-				$extra_output = ' [ Default: "' . $default . '" ]';
+				$extra_output = $extra_output_default;
 			}
-			elseif (! empty($options))
+			else
 			{
-				$extra_output = ' [ ' . implode(', ', $options) . ' ]';
+				$extra_output = ' [' .$extra_output_default.', '. implode(', ', $opts) . ']';
+				$validation .= '|in_list['. implode(',', $options) .']';
+				$validation = trim($validation, '|');
 			}
 
-			fwrite(STDOUT, $output . $extra_output . ': ');
+			$default = $options[0];
 		}
+
+		fwrite(STDOUT, $field . $extra_output . ': ');
 
 		// Read the input from keyboard.
-		$input = trim(static::input()) ?: $default;
+		$input = trim(static::input()) ? : $default;
 
-		// No input provided and we require one (default will stop this being called)
-		if (empty($input) && $required === true)
+		if (isset($validation))
 		{
-			static::write('This is required.');
-			static::newLine();
-
-			$input = forward_static_call_array([__CLASS__, 'prompt'], $args);
-		}
-
-		// If options are provided and the choice is not in the array, tell them to try again
-		if ( ! empty($options) && ! in_array($input, $options))
-		{
-			static::write('This is not a valid option. Please try again.');
-			static::newLine();
-
-			$input = forward_static_call_array([__CLASS__, 'prompt'], $args);
+			while (! static::validate($field, $input, $validation))
+			{
+				$input = static::prompt($field, $options, $validation);
+			}
 		}
 
 		return empty($input) ? '' : $input;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Validate one prompt "field" at a time
+	 *
+	 * @param  string $field Prompt "field" output
+	 * @param  string $value Input value
+	 * @param  string $rules Validation rules
+	 *
+	 * @return boolean
+	 */
+	protected static function validate($field, $value, $rules)
+	{
+		$validation = \Config\Services::validation(null, false);
+		$validation->setRule($field, $rules);
+		$validation->run([$field => $value]);
+
+		if ($validation->hasError($field))
+		{
+			static::error($validation->getError($field));
+
+			return false;
+		}
+
+		return true;
 	}
 
 	//--------------------------------------------------------------------

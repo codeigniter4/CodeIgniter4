@@ -19,7 +19,7 @@ execution is then sent to the error handler which displays the appropriate error
 
 	throw new \Exception("Some message goes here");
 
-If you are calling a method that might throw an exception, you can catch that exception using a ``try/catch block``::
+If you are calling a method that might throw an exception, you can catch that exception using a ``try/catch`` block::
 
 	try {
 		$user = $userModel->find($id);

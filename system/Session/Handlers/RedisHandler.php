@@ -286,8 +286,9 @@ class RedisHandler extends BaseHandler implements \SessionHandlerInterface
 	 *
 	 * Destroys the current session.
 	 *
-	 * @param	string	$session_id	Session ID
-	 * @return	bool
+	 * @param string $sessionID
+	 *
+	 * @return bool
 	 */
 	public function destroy($sessionID)
 	{

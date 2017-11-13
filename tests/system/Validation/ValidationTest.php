@@ -1917,4 +1917,66 @@ class ValidationTest extends \CIUnitTestCase
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * @dataProvider validDateProvider
+	 *
+	 * @param $str
+	 * @param $format
+	 * @param $expected
+	 */
+	public function testValidDate($str, $format, $expected)
+	{
+		$data = [
+			'foo' => $str,
+		];
+
+		$this->validation->setRules([
+				'foo' => "valid_date[{$format}]",
+		]);
+
+		$this->assertEquals($expected, $this->validation->run($data));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function validDateProvider()
+	{
+		return [
+			['Sun', 'D', true],
+			['Sun', 'd', false],
+			['Sun', null, true],
+			['1500', 'Y', true],
+			['1500', 'y', false],
+			['1500', null, true],
+			['09:26:05', 'H:i:s', true],
+			['09:26:5', 'H:i:s', false],
+			['1992-02-29', 'Y-m-d', true],
+			['1991-02-29', 'Y-m-d', false],
+			['1718-05-10 15:25:59', 'Y-m-d H:i:s', true],
+			['1718-05-10 15:5:59', 'Y-m-d H:i:s', false],
+			['Thu, 31 Oct 2013 13:31:00', 'D, d M Y H:i:s', true],
+			['Thu, 31 Jun 2013 13:31:00', 'D, d M Y H:i:s', false],
+			['Thu, 31 Jun 2013 13:31:00', null, true],
+			['07.05.03', 'm.d.y', true],
+			['07.05.1803', 'm.d.y', false],
+			['19890109', 'Ymd', true],
+			['198919', 'Ymd', false],
+			['2, 7, 2001', 'j, n, Y', true],
+			['2, 17, 2001', 'j, n, Y', false],
+			['09-42-25, 12-11-17', 'h-i-s, j-m-y', true],
+			['09-42-25, 12-00-17', 'h-i-s, j-m-y', false],
+			['09-42-25, 12-00-17', null, false],
+			['November 12, 2017, 9:42 am', 'F j, Y, g:i a', true],
+			['November 12, 2017, 19:42 am', 'F j, Y, g:i a', false],
+			['November 12, 2017, 9:42 am', null, true],
+			['Monday 8th of August 2005 03:12:46 PM', 'l jS \of F Y h:i:s A', true],
+			['Monday 8th of August 2005 13:12:46 PM', 'l jS \of F Y h:i:s A', false],
+			['23:01:59 is now', 'H:m:s \i\s \n\o\w', true],
+			['23:01:59 is now', 'H:m:s is now', false],
+			['12/11/2017', 'd/m/Y', true],
+		];
+	}
+
+	//--------------------------------------------------------------------
 }

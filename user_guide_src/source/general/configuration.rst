@@ -37,14 +37,14 @@ If you need to create a new configuration file you would create a new file at yo
 **/application/Config** by default. Then create the class and fill it with public properties that
 represent your settings::
 
-	<?php namespace Config;
-	
-	class App extends \CodeIgniter\Config\BaseConfig {
-	
-		public $siteName  = 'My Great Site';
-		public $siteEmail = 'webmaster@example.com';
-		
-	}
+    <?php namespace Config;
+
+    class App extends \CodeIgniter\Config\BaseConfig
+    {	
+    	public $siteName  = 'My Great Site';
+    	public $siteEmail = 'webmaster@example.com';
+    	
+    }
 
 The class should extend ``\CodeIgniter\Config\BaseConfig`` to ensure that it can receive environment-specific
 settings.
@@ -186,7 +186,9 @@ the same way as described for namespaced variables.
 A sample configuration class setup for this::
 
     namespace App\Config;
-    class MySalesConfig extends \CodeIgniter\Config\BaseConfig {
+
+    class MySalesConfig extends \CodeIgniter\Config\BaseConfig
+    {
         public $target        = 100;
         public $campaign      = "Winter Wonderland";
         protected $registrars = [
@@ -197,8 +199,11 @@ A sample configuration class setup for this::
 ... and the associated regional sales model might look like::
 
     namespace App\Models;
-    class RegionalSales {   
-        public static function MySalesConfig() {
+
+    class RegionalSales
+    {   
+        public static function MySalesConfig()
+        {
             return ['target' => 45, 'actual' => 72];
         }
     }

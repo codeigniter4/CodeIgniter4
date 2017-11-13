@@ -326,7 +326,7 @@ For example, if you had a User entity with an **is_banned** property, you can ca
     {
         protected $is_banned;
 
-        protected _$options = [
+        protected $_options = [
             'casts' => [
                 'is_banned' => 'boolean'
             ]
@@ -348,7 +348,7 @@ you can cast properties into, the **array** cast type will serialize the value w
     {
         protected $options;
 
-        protected _$options = [
+        protected $_options = [
             'casts' => [
                 'options' => 'array'
             ]

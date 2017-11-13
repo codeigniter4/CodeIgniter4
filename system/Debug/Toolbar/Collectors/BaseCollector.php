@@ -271,7 +271,7 @@ class BaseCollector
 	/**
 	 * Gets the "badge" value for the button.
 	 *
-	 * @param string $value
+	 * @return null
 	 */
 	public function getBadgeValue()
 	{

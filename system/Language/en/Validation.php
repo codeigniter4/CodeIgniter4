@@ -75,6 +75,7 @@ return [
 	'valid_emails'          => 'The {field} field must contain all valid email addresses.',
 	'valid_ip'              => 'The {field} field must contain a valid IP.',
 	'valid_url'             => 'The {field} field must contain a valid URL.',
+	'valid_date'            => 'The {field} field must contain a valid date.',
 
 	// Credit Cards
 	'valid_cc_num'          => '{field} does not appear to be a valid credit card number.',

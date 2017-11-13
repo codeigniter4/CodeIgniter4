@@ -283,7 +283,7 @@ rules. As shown earlier, the validation array will have this prototype::
 
 You can specify the group to use when you call the ``run()`` method::
 
-    $validation->run($data, $signup);
+    $validation->run($data, 'signup');
 
 You can also store custom error messages in this configuration file by naming the
 property the same as the group, and appended with ``_errors``. These will automatically
@@ -360,7 +360,7 @@ The array is structured as follows::
 
 Here is a more practical example::
 
-    $rules = [
+    $messages = [
         'username' => [
             'required'   => 'All accounts must have usernames provided',
         ],
@@ -373,7 +373,7 @@ Here is a more practical example::
             'username' => 'required|is_unique[users.username]',
             'password' => 'required|min_length[10]'
         ],
-        $rules
+        $messages
     );
 
 Getting All Errors
@@ -602,11 +602,13 @@ valid_emails            No          Fails if any value provided in a comma separ
 valid_ip                No          Fails if the supplied IP is not valid. Accepts an optional parameter of ‘ipv4’ or               valid_ip[ipv6]
                                     ‘ipv6’ to specify an IP format.
 valid_url               No          Fails if field does not contain a valid URL.
+valid_date              No          Fails if field does not contain a valid date. Accepts an optional parameter                     valid_date[d/m/Y]
+                                    to matches a date format.
 valid_cc_number         Yes         Verifies that the credit card number matches the format used by the specified provider.         valid_cc_number[amex]
                                     Current supported providers are: American Express (amex), China Unionpay (unionpay),
                                     Diners Club CarteBlance (carteblanche), Diners Club (dinersclub), Discover Card (discover),
                                     Interpayment (interpayment), JCB (jcb), Maestro (maestro), Dankort (dankort), NSPK MIR (mir),
-                                    MasterCard (mastercard), Visa (visa), UATP (uatp), Verve (verve),
+                                    Troy (troy), MasterCard (mastercard), Visa (visa), UATP (uatp), Verve (verve),
                                     CIBC Convenience Card (cibc), Royal Bank of Canada Client Card (rbc),
                                     TD Canada Trust Access Card (tdtrust), Scotiabank Scotia Card (scotia), BMO ABM Card (bmoabm),
                                     HSBC Canada Card (hsbc)
