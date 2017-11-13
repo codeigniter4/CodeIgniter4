@@ -30,48 +30,6 @@ class ModelTest extends \CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
-	public function testHashIDsWithNumber()
-	{
-	    $expected = '123';
-
-		$str = $this->model->encodeID($expected);
-
-		$this->assertNotEquals($expected, $str);
-
-		$this->assertEquals($expected, $this->model->decodeID($str));
-	}
-
-	//--------------------------------------------------------------------
-
-	public function testHashIDsWithString()
-	{
-		$expected = 'my test hash';
-
-		$str = $this->model->encodeID($expected);
-
-		$this->assertNotEquals($expected, $str);
-
-		$this->assertEquals($expected, $this->model->decodeID($str));
-	}
-
-	//--------------------------------------------------------------------
-
-	public function testHashedIdsWithFind()
-	{
-		$hash = $this->model->encodeId(4);
-
-		$this->model->setTable('job')
-					->withDeleted();
-
-		$user = $this->model->asObject()
-							->findByHashedID($hash);
-
-		$this->assertNotEmpty($user);
-		$this->assertEquals(4, $user->id);
-	}
-
-	//--------------------------------------------------------------------
-
 	public function testFindReturnsRow()
 	{
 	    $model = new JobModel($this->db);
