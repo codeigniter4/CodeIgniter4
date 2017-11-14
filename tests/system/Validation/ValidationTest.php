@@ -1979,4 +1979,38 @@ class ValidationTest extends \CIUnitTestCase
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * @dataProvider rulesSetupProvider
+	 *
+	 * @param $rules
+	 * @param $expected
+	 */
+	public function testRulesSetup($rules, $expected)
+	{
+		$data = [
+			'foo' => '',
+		];
+
+		$this->validation->setRules([
+				'foo' => $rules,
+		]);
+
+		$this->validation->run($data);
+
+		$this->assertEquals($expected, $this->validation->getError('foo'));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function rulesSetupProvider()
+	{
+		return [
+			['min_length[10]', 'The foo field must be at least 10 characters in length.'],
+			[['min_length[10]'], 'The foo field must be at least 10 characters in length.'],
+			[['label' => 'Foo Bar', 'rules' => 'min_length[10]'], 'The Foo Bar field must be at least 10 characters in length.'],
+		];
+	}
+
+	//--------------------------------------------------------------------
 }

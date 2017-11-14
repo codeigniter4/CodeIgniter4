@@ -138,17 +138,17 @@ class Validation implements ValidationInterface
 
 		// Run through each rule. If we have any field set for
 		// this rule, then we need to run them through!
-		foreach ($this->rules as $rField => $ruleString)
+		foreach ($this->rules as $rField => $rSetup)
 		{
-			// Blast $ruleString apart, unless it's already an array.
-			$rules = $ruleString;
+			// Blast $rSetup apart, unless it's already an array.
+			$rules = $rSetup['rules'] ?? $rSetup;
 
 			if (is_string($rules))
 			{
 				$rules = explode('|', $rules);
 			}
 
-			$this->processRules($rField, $data[$rField] ?? null, $rules, $data);
+			$this->processRules($rField, $rSetup['label'] ?? $rField, $data[$rField] ?? null, $rules, $data);
 		}
 
 		return ! empty($this->errors) ? false : true;
@@ -169,7 +169,7 @@ class Validation implements ValidationInterface
 	public function check($value, string $rule, array $errors = []): bool
 	{
 		$this->reset();
-		$this->setRule('check', $rule, $errors);
+		$this->setRule('check', null, $rule, $errors);
 		return $this->run([
 					'check' => $value
 		]);
@@ -183,14 +183,15 @@ class Validation implements ValidationInterface
 	 * the error to $this->errors and moves on to the next,
 	 * so that we can collect all of the first errors.
 	 *
-	 * @param string     $field
-	 * @param string     $value
-	 * @param array|null $rules
-	 * @param array      $data // All of the fields to check.
+	 * @param string      $field
+	 * @param string|null $label
+	 * @param string      $value
+	 * @param array|null  $rules
+	 * @param array       $data // All of the fields to check.
 	 *
 	 * @return bool
 	 */
-	protected function processRules(string $field, $value, $rules = null, array $data)
+	protected function processRules(string $field, string $label = null, $value, $rules = null, array $data)
 	{
 		foreach ($rules as $rule)
 		{
@@ -242,7 +243,7 @@ class Validation implements ValidationInterface
 			// Set the error message if we didn't survive.
 			if ($passed === false)
 			{
-				$this->errors[$field] = is_null($error) ? $this->getErrorMessage($rule, $field, $param) : $error;
+				$this->errors[$field] = is_null($error) ? $this->getErrorMessage($rule, $label ?? $field, $param) : $error;
 
 				return false;
 			}
@@ -285,15 +286,19 @@ class Validation implements ValidationInterface
 	 *        'rule' => 'message'
 	 *    ]
 	 *
-	 * @param string $field
-	 * @param string $rule
-	 * @param array  $errors
+	 * @param string      $field
+	 * @param string|null $label
+	 * @param string      $rules
+	 * @param array       $errors
 	 *
 	 * @return $this
 	 */
-	public function setRule(string $field, string $rule, array $errors = [])
+	public function setRule(string $field, string $label = null, string $rules, array $errors = [])
 	{
-		$this->rules[$field] = $rule;
+		$this->rules[$field] = [
+			'label' => $label,
+			'rules' => $rules,
+		];
 		$this->customErrors = array_merge($this->customErrors, [
 			$field => $errors
 		]);
