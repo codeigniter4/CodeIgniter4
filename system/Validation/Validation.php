@@ -243,7 +243,7 @@ class Validation implements ValidationInterface
 			// Set the error message if we didn't survive.
 			if ($passed === false)
 			{
-				$this->errors[$field] = is_null($error) ? $this->getErrorMessage($rule, $label ?? $field, $param) : $error;
+				$this->errors[$field] = is_null($error) ? $this->getErrorMessage($rule, $field, $label, $param) : $error;
 
 				return false;
 			}
@@ -333,7 +333,17 @@ class Validation implements ValidationInterface
 	{
 		$this->rules = $rules;
 
-		if ( ! empty($errors))
+		if (empty($errors))
+		{
+			foreach ($rules as $field => $setup)
+			{
+				if (isset($setup['errors']))
+				{
+					$this->customErrors[$field] = $setup['errors'];
+				}
+			}
+		}
+		else
 		{
 			$this->customErrors = $errors;
 		}
@@ -614,13 +624,14 @@ class Validation implements ValidationInterface
 	/**
 	 * Attempts to find the appropriate error message
 	 *
-	 * @param string $rule
-	 * @param string $field
-	 * @param string $param
+	 * @param string      $rule
+	 * @param string      $field
+	 * @param string|null $label
+	 * @param string      $param
 	 *
 	 * @return string
 	 */
-	protected function getErrorMessage(string $rule, string $field, string $param = null): string
+	protected function getErrorMessage(string $rule, string $field, string $label = null, string $param = null): string
 	{
 		// Check if custom message has been defined by user
 		if (isset($this->customErrors[$field][$rule]))
@@ -635,7 +646,7 @@ class Validation implements ValidationInterface
 			$message = lang('Validation.' . $rule);
 		}
 
-		$message = str_replace('{field}', $field, $message);
+		$message = str_replace('{field}', $label ?? $field, $message);
 		$message = str_replace('{param}', $param, $message);
 
 		return $message;
