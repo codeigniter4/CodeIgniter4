@@ -27,10 +27,7 @@
 </div>
 <div id="debug-bar">
 	<div class="toolbar">
-		<h1><a id="debug-bar-link" href="javascript:void(0)">Debug Bar</a></h1>
-
-		<span><?= $totalTime ?> ms</span>
-		<span><?= $totalMemory ?> MB</span>
+        <span id="toolbar-position"><a href="javascript: void(0)">&#8597;</a></span>
 		<span class="ci-label"><a href="javascript: void(0)" data-tab="ci-timeline">Timeline</a></span>
 		<?php foreach ($this->collectors as $c) : ?>
 			<?php if ($c->hasTabContent() || $c->hasLabel()) : ?>
@@ -45,7 +42,10 @@
 			<?php endif; ?>
 		<?php endforeach; ?>
 		<span class="ci-label"><a href="javascript: void(0)" data-tab="ci-vars">Vars</a></span>
-		<span id="toolbar-position"><a href="javascript: void(0)">&#8597;</a></span>
+
+        <span><?= $totalTime ?> ms</span> &nbsp;&nbsp;
+        <span><?= $totalMemory ?> MB</span>
+        <h1><a id="debug-bar-link" href="javascript:void(0)">Debug Bar</a></h1>
 	</div>
 
 	<!-- Timeline -->
