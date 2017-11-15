@@ -18,6 +18,10 @@ var ciDebugBar = {
 		ciDebugBar.setToolbarState();
 		ciDebugBar.setToolbarPosition();
 		ciDebugBar.toogleViewsHints();
+                
+                document.getElementById('debug-bar-link').addEventListener('click', ciDebugBar.toggleToolbar, true);
+                document.getElementById('debug-icon-link').addEventListener('click', ciDebugBar.toggleToolbar, true);                
+                
 	},
 
 	//--------------------------------------------------------------------

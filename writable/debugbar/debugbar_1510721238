@@ -1,0 +1,1221 @@
+<style type="text/css">
+	#debug-icon { position: fixed; bottom: 0; left: 0; width: 36px; height: 36px; background: #fff; border: 1px solid #ddd; border-radius: .5em; margin: 5px; z-index: 10000; box-shadow: 0 -3px 10px rgba(0, 0, 0, 0.1); clear: both; text-align: center; } #debug-icon a svg { margin: 4px; max-width: 26px; max-height: 26px; } #debug-bar a:active, #debug-bar a:link, #debug-bar a:visited { color: #dd4814; } #debug-bar { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; font-size: 16px; line-height: 1.5; background: #fff; position: fixed; bottom: 0; left: 0; right: 0; height: 36px; z-index: 10000; } #debug-bar h1, #debug-bar h2, #debug-bar h3 { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; color: #666; line-height: 1.5; } #debug-bar p { font-size: 12px; margin: 0 0 10px 20px; padding: 0; } #debug-bar a { text-decoration: none; } #debug-bar a:hover { text-decoration: underline; text-decoration-color: #4e4a4a; } #debug-bar .muted, #debug-bar .muted td { color: #bbb; } #debug-bar .toolbar { display: block; background: inherit; overflow: hidden; overflow-y: auto; white-space: nowrap; border: solid #ddd; border-width: 1px 0; box-shadow: 0 -3px 10px rgba(0, 0, 0, 0.1); padding: 5px 12px 5px 20px; /* give room for OS X scrollbar */ text-align: right; z-index: 10000; } #debug-icon.fixed-top, #debug-bar.fixed-top { top: 0; bottom: auto; } #debug-icon.fixed-top, #debug-bar.fixed-top .toolbar { box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1); } #debug-bar h1 { font-size: 16px; font-weight: 300; margin: 0 2em 0 0; padding: 0; text-align: left; display: inline-block; float: left; } #debug-bar h2 { font-size: 16px; font-weight: 300; margin: 0; padding: 0; } #debug-bar h2 span { font-size: 13px; } #debug-bar h3 { text-transform: uppercase; font-size: 11px; font-weight: 200; margin-left: 10pt; } #debug-bar span { display: inline-block; font-size: 14px; padding: .3em 1em .3em; line-height: 1.0; vertical-align: baseline; } #debug-bar span .badge { display: inline-block; padding: 3px 6px; font-size: 75%; font-weight: 500; line-height: 1; color: #fff; text-align: center; white-space: nowrap; vertical-align: baseline; border-radius: 10rem; background-color: #5bc0de; margin-left: 0.5em; } #debug-bar table strong { font-weight: 500; color: rgba(0, 0, 0, 0.3); } #debug-bar .ci-label { border-radius: 0.25em; text-shadow: none; background-color: #eee; border: 1px solid #ddd; margin-left: 0.4em; } #debug-bar .ci-label:hover { background-color: #eaeaea; cursor: pointer; } #debug-bar .ci-label a { display: block; width: 100%; color: inherit; text-decoration: none; } #debug-bar .ci-label.active { background-color: #ccc; border-color: #bbb; } #debug-bar .tab { display: none; background: inherit; padding: 1em 2em; border: solid #ddd; border-width: 1px 0; position: fixed; bottom: 35px; left: 0; right: 0; z-index: 9999; box-shadow: 0 -3px 10px rgba(0, 0, 0, 0.1); overflow: hidden; overflow-y: auto; max-height: 62%; } #debug-bar.fixed-top .tab { top: 36px; bottom: auto; box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1); } #debug-bar table { margin: 0 0 10px 20px; font-size: 13px; border-collapse: collapse; width: 100%; } #debug-bar td, #debug-bar th { display: table-cell; text-align: left; } #debug-bar tr { border: none; } #debug-bar td { border: none; padding: 2px 10px 2px 5px; margin: 0; } #debug-bar th { padding-bottom: 0.7em; } #debug-bar tr td:first-child { width: 20%; } #debug-bar tr td:first-child.narrow { width: 7em; } #debug-bar tr:hover { background-color: #f3f3f3; } #debug-bar table.timeline { width: 100%; margin-left: 0; } #debug-bar table.timeline th { font-size: 0.7em; font-weight: 200; text-align: left; padding-bottom: 1em; } #debug-bar table.timeline td, #debug-bar table.timeline th { border-left: 1px solid #ddd; padding: 0 1em; position: relative; } #debug-bar table.timeline tr td:first-child, #debug-bar table.timeline tr th:first-child { border-left: 0; padding-left: 0; } #debug-bar table.timeline td { padding: 5px; } #debug-bar table.timeline .timer { position: absolute; display: inline-block; padding: 3px; bottom: 9px; border-radius: 3px; background-color: #999; } #debug-bar .route-params, #debug-bar .route-params-item { vertical-align: top; } #debug-bar .route-params-item td:first-child { padding-left: 1em; text-align: right; font-style: italic; } .debug-view.show-view { border: 1px solid #dd4814; margin: 4px; } .debug-view-path { background-color: #fdc894; color: #000; padding: 2px; font-family: monospace; font-size: 11px; min-height: 16px; text-align: left; } .show-view .debug-view-path { display: block !important; } </style>
+
+<script id="toolbar_js" type="text/javascript">
+	/*
+ * Functionality for the CodeIgniter Debug Toolbar.
+ */
+
+var ciDebugBar = {
+
+	toolbar : null,
+	icon : null,
+
+	//--------------------------------------------------------------------
+
+	init : function()
+	{
+		this.toolbar = document.getElementById('debug-bar');
+		this.icon = document.getElementById('debug-icon');
+
+		ciDebugBar.createListeners();
+		ciDebugBar.setToolbarState();
+		ciDebugBar.setToolbarPosition();
+		ciDebugBar.toogleViewsHints();
+                
+                document.getElementById('debug-bar-link').addEventListener('click', ciDebugBar.toggleToolbar, true);
+                document.getElementById('debug-icon-link').addEventListener('click', ciDebugBar.toggleToolbar, true);                
+                
+	},
+
+	//--------------------------------------------------------------------
+
+	createListeners : function()
+	{
+		var buttons = [].slice.call(document.querySelectorAll('#debug-bar .ci-label a'));
+
+		for (var i=0; i < buttons.length; i++)
+		{
+			buttons[i].addEventListener('click', ciDebugBar.showTab, true);
+		}
+	},
+
+	//--------------------------------------------------------------------
+
+	showTab: function()
+	{
+		// Get the target tab, if any
+		var tab = document.getElementById(this.getAttribute('data-tab'));
+
+		// If the label have not a tab stops here
+		if (! tab) {
+			return;
+		}
+
+		// Check our current state.
+		var state = tab.style.display;
+
+		// Hide all tabs
+		var tabs = document.querySelectorAll('#debug-bar .tab');
+
+		for (var i=0; i < tabs.length; i++)
+		{
+			tabs[i].style.display = 'none';
+		}
+
+		// Mark all labels as inactive
+		var labels = document.querySelectorAll('#debug-bar .ci-label');
+
+		for (var i=0; i < labels.length; i++)
+		{
+			ciDebugBar.removeClass(labels[i], 'active');
+		}
+
+		// Show/hide the selected tab
+		if (state != 'block')
+		{
+			tab.style.display = 'block';
+			ciDebugBar.addClass(this.parentNode, 'active');
+		}
+	},
+
+	//--------------------------------------------------------------------
+
+	addClass : function(el, className)
+	{
+		if (el.classList)
+		{
+			el.classList.add(className);
+		}
+		else
+		{
+			el.className += ' ' + className;
+		}
+	},
+
+	//--------------------------------------------------------------------
+
+	removeClass : function(el, className)
+	{
+		if (el.classList)
+		{
+			el.classList.remove(className);
+		}
+		else
+		{
+			el.className = el.className.replace(new RegExp('(^|\\b)' + className.split(' ').join('|') + '(\\b|$)', 'gi'), ' ');
+		}
+
+	},
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Toggle display of a data table
+	 * @param obj
+	 */
+	toggleDataTable : function(obj)
+	{
+		if (typeof obj == 'string')
+		{
+			obj = document.getElementById(obj + '_table');
+		}
+
+		if (obj)
+		{
+			obj.style.display = obj.style.display == 'none' ? 'block' : 'none';
+		}
+	},
+
+	//--------------------------------------------------------------------
+
+	/**
+	 *   Toggle tool bar from full to icon and icon to full
+	 */
+	toggleToolbar : function()
+	{
+		var open = ciDebugBar.toolbar.style.display != 'none';
+
+		ciDebugBar.icon.style.display = open == true ? 'inline-block' : 'none';
+		ciDebugBar.toolbar.style.display  = open == false ? 'inline-block' : 'none';
+
+		// Remember it for other page loads on this site
+		ciDebugBar.createCookie('debug-bar-state', '', -1);
+		ciDebugBar.createCookie('debug-bar-state', open == true ? 'minimized' : 'open' , 365);
+	},
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Sets the initial state of the toolbar (open or minimized) when
+	 * the page is first loaded to allow it to remember the state between refreshes.
+	 */
+	setToolbarState: function()
+	{
+		var open = ciDebugBar.readCookie('debug-bar-state');
+
+		ciDebugBar.icon.style.display = open != 'open' ? 'inline-block' : 'none';
+		ciDebugBar.toolbar.style.display  = open == 'open' ? 'inline-block' : 'none';
+	},
+
+	//--------------------------------------------------------------------
+
+	toogleViewsHints: function()
+	{
+		var nodeList 		= []; // [ Element, NewElement( 1 )/OldElement( 0 ) ]
+		var sortedComments 	= [];
+		var comments 		= [];
+
+		var getComments = function()
+		{
+			var nodes = [];
+			var result = [];
+			var xpathResults = document.evaluate( "//comment()[starts-with(., ' DEBUG-VIEW')]", document, null, XPathResult.ANY_TYPE, null);
+			var nextNode = xpathResults.iterateNext();
+			while( nextNode )
+			{
+				nodes.push( nextNode );
+				nextNode = xpathResults.iterateNext();
+			}
+
+			// sort comment by opening and closing tags
+			for( var i = 0; i < nodes.length; ++i )
+			{
+				// get file path + name to use as key
+				var path = nodes[i].nodeValue.substring( 18, nodes[i].nodeValue.length - 1 );
+
+				if( nodes[i].nodeValue[12] === 'S' ) // simple check for start comment
+				{
+					// create new entry
+					result[path] = [ nodes[i], null ];
+				}
+				else if(result[path])
+				{
+					// add to existing entry
+					result[path][1] = nodes[i];
+				}
+			}
+
+			return result;
+		};
+
+		// find node that has TargetNode as parentNode
+		var getParentNode = function( node, targetNode )
+		{
+			if( node.parentNode === null )
+			{
+				return null;
+			}
+
+			if( node.parentNode !== targetNode )
+			{
+				return getParentNode( node.parentNode, targetNode );
+			}
+
+			return node;
+		};
+
+		// define invalid & outer ( also invalid ) elements
+		const INVALID_ELEMENTS = [ 'NOSCRIPT', 'SCRIPT', 'STYLE' ];
+		const OUTER_ELEMENTS = [ 'HTML', 'BODY', 'HEAD' ];
+
+		var getValidElementInner = function( node, reverse )
+		{
+			// handle invalid tags
+			if( OUTER_ELEMENTS.indexOf( node.nodeName ) !== -1 )
+			{
+				for( var i = 0; i < document.body.children.length; ++i )
+				{
+					var index = reverse ? document.body.children.length - ( i + 1 ) : i;
+					var element = document.body.children[index];
+
+					// skip invalid tags
+					if( INVALID_ELEMENTS.indexOf( element.nodeName ) !== -1 ) continue;
+
+					return [ element, reverse ];
+				}
+
+				return null;
+			}
+
+			// get to next valid element
+			while( node !== null && INVALID_ELEMENTS.indexOf( node.nodeName ) !== -1 )
+			{
+				node = reverse ? node.previousElementSibling : node.nextElementSibling;
+			}
+
+			// return non array if we couldnt find something
+			if( node === null ) return null;
+
+			return [ node, reverse ];
+		};
+
+		// get next valid element ( to be safe to add divs )
+		// @return [ element, skip element ] or null if we couldnt find a valid place
+		var getValidElement = function( nodeElement )
+		{
+			if (nodeElement) {
+				if( nodeElement.nextElementSibling !== null )
+				{
+					return getValidElementInner( nodeElement.nextElementSibling, false )
+						|| getValidElementInner( nodeElement.previousElementSibling, true );
+				}
+				if( nodeElement.previousElementSibling !== null )
+				{
+					return getValidElementInner( nodeElement.previousElementSibling, true );
+				}
+			}
+
+			// something went wrong! -> element is not in DOM
+			return null;
+		};
+
+		function showHints() {
+			// Had AJAX? Reset view blocks
+			sortedComments = getComments();
+
+			for( var key in sortedComments )
+			{
+				var startElement 	= getValidElement( sortedComments[key][0] );
+				var endElement 		= getValidElement( sortedComments[key][1] );
+
+				// skip if we couldnt get a valid element
+				if( startElement === null || endElement === null ) continue;
+
+				// find element which has same parent as startelement
+				var jointParent = getParentNode( endElement[0], startElement[0].parentNode );
+				if( jointParent === null )
+				{
+					// find element which has same parent as endelement
+					jointParent = getParentNode( startElement[0], endElement[0].parentNode );
+					if( jointParent === null )
+					{
+						// both tries failed
+						continue;
+					}
+					else startElement[0] = jointParent;
+				}
+				else endElement[0] = jointParent;
+
+				var debugDiv 		= document.createElement( 'div' ); // holder
+				var debugPath		= document.createElement( 'div' ); // path
+				var childArray 		= startElement[0].parentNode.childNodes; // target child array
+				var parent			= startElement[0].parentNode;
+				var start, end;
+
+				// setup container
+				debugDiv.classList.add( 'debug-view' );
+				debugDiv.classList.add( 'show-view' );
+				debugPath.classList.add( 'debug-view-path' );
+				debugPath.innerText = key;
+				debugDiv.appendChild( debugPath );
+
+				// calc distance between them
+				// start
+				for( var i = 0; i < childArray.length; ++i )
+				{
+					// check for comment ( start & end ) -> if its before valid start element
+					if( childArray[i] === sortedComments[key][1] ||
+						childArray[i] === sortedComments[key][0] ||
+						childArray[i] === startElement[0] )
+					{
+						start = i;
+						if( childArray[i] === sortedComments[key][0] ) start++; // increase to skip the start comment
+						break;
+					}
+				}
+				// adjust if we want to skip the start element
+				if( startElement[1] ) start++;
+
+				// end
+				for( var i = start; i < childArray.length; ++i )
+				{
+					if( childArray[i] === endElement[0] )
+					{
+						end = i;
+						// dont break to check for end comment after end valid element
+					}
+					else if( childArray[i] === sortedComments[key][1] )
+					{
+						// if we found the end comment, we can break
+						end = i;
+						break;
+					}
+				}
+
+				// move elements
+				var number = end - start;
+				if( endElement[1] ) number++;
+				for( var i = 0; i < number; ++i )
+				{
+					if( INVALID_ELEMENTS.indexOf( childArray[start] ) !== -1 )
+					{
+						// skip invalid childs that can cause problems if moved
+						start++;
+						continue;
+					}
+					debugDiv.appendChild( childArray[start] );
+				}
+
+				// add container to DOM
+				nodeList.push( parent.insertBefore( debugDiv, childArray[start] ) );
+			}
+
+			ciDebugBar.createCookie('debug-view', 'show', 365);
+			ciDebugBar.addClass(btn, 'active');
+		}
+
+		function hideHints() {
+			for( var i = 0; i < nodeList.length; ++i )
+			{
+				var index;
+
+				// find index
+				for( var j = 0; j < nodeList[i].parentNode.childNodes.length; ++j )
+				{
+					if( nodeList[i].parentNode.childNodes[j] === nodeList[i] )
+					{
+						index = j;
+						break;
+					}
+				}
+
+				// move child back
+				while( nodeList[i].childNodes.length !== 1 )
+				{
+					nodeList[i].parentNode.insertBefore( nodeList[i].childNodes[1], nodeList[i].parentNode.childNodes[index].nextSibling  );
+					index++;
+				}
+
+				nodeList[i].parentNode.removeChild( nodeList[i] );
+			}
+			nodeList.length = 0;
+
+			ciDebugBar.createCookie('debug-view', '', -1);
+			ciDebugBar.removeClass(btn, 'active');
+		}
+
+		var btn = document.querySelector('[data-tab=ci-views]');
+
+		// If the Views Collector is inactive stops here
+		if (! btn)
+		{
+			return;
+		}
+
+		btn = btn.parentNode;
+
+		// Determine Hints state on page load
+		if (ciDebugBar.readCookie('debug-view'))
+		{			
+			showHints();
+		}
+
+		btn.onclick = function() {			
+			if (ciDebugBar.readCookie('debug-view'))
+			{
+				hideHints();
+			}
+			else
+			{
+				showHints();
+			}
+		};
+	},
+
+	//--------------------------------------------------------------------
+
+	setToolbarPosition: function ()
+	{
+		var btnPosition = document.getElementById('toolbar-position');
+
+		if (ciDebugBar.readCookie('debug-bar-position') === 'top')
+		{
+			ciDebugBar.addClass(ciDebugBar.icon, 'fixed-top');
+			ciDebugBar.addClass(ciDebugBar.toolbar, 'fixed-top');
+		}
+
+		btnPosition.addEventListener('click', function () {
+			var position = ciDebugBar.readCookie('debug-bar-position');
+
+			ciDebugBar.createCookie('debug-bar-position', '', -1);
+
+			if (!position || position === 'bottom')
+			{
+				ciDebugBar.createCookie('debug-bar-position', 'top', 365);
+				ciDebugBar.addClass(ciDebugBar.icon, 'fixed-top');
+				ciDebugBar.addClass(ciDebugBar.toolbar, 'fixed-top');
+			}
+			else
+			{
+				ciDebugBar.createCookie('debug-bar-position', 'bottom', 365);
+				ciDebugBar.removeClass(ciDebugBar.icon, 'fixed-top');
+				ciDebugBar.removeClass(ciDebugBar.toolbar, 'fixed-top');
+			}
+		}, true);
+	},
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Helper to create a cookie.
+	 *
+	 * @param name
+	 * @param value
+	 * @param days
+	 */
+	createCookie : function(name,value,days)
+	{
+		if (days)
+		{
+			var date = new Date();
+
+			date.setTime(date.getTime()+(days*24*60*60*1000));
+
+			var expires = "; expires="+date.toGMTString();
+		}
+		else
+		{
+			var expires = "";
+		}
+
+		document.cookie = name+"="+value+expires+"; path=/";
+	},
+
+	//--------------------------------------------------------------------
+
+	readCookie : function(name)
+	{
+		var nameEQ = name + "=";
+		var ca = document.cookie.split(';');
+
+		for(var i=0;i < ca.length;i++)
+		{
+			var c = ca[i];
+			while (c.charAt(0)==' ')
+			{
+				c = c.substring(1,c.length);
+			}
+			if (c.indexOf(nameEQ) == 0)
+			{
+				return c.substring(nameEQ.length,c.length);
+			}
+		}
+		return null;
+	}
+};
+</script>
+<div id="debug-icon" style="display:none">
+    <a id="debug-icon-link" href="javascript:void(0)">
+	    <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
+	         width="155.000000px" height="200.000000px" viewBox="0 0 155.000000 200.000000"
+	         preserveAspectRatio="xMidYMid meet">
+	    <g transform="translate(0.000000,200.000000) scale(0.100000,-0.100000)" fill="#dd4814" stroke="none">
+	    <path d="M737 1963 c22 -79 -7 -185 -78 -290 -18 -26 -107 -122 -197 -213
+	          -239 -240 -336 -371 -403 -544 -79 -206 -78 -408 5 -582 64 -134 212 -264 361
+	          -314 l60 -20 -30 22 c-210 152 -229 387 -48 588 25 27 48 50 51 50 4 0 7 -27
+	          7 -61 0 -57 2 -62 37 -95 30 -27 46 -34 78 -34 56 0 99 24 116 65 29 69 16
+	          120 -50 205 -105 134 -117 233 -43 347 l31 48 7 -47 c13 -82 58 -129 250 -258
+	          209 -141 306 -261 328 -405 11 -72 -1 -161 -31 -218 -27 -53 -112 -143 -165
+	          -174 -24 -14 -43 -26 -43 -28 0 -2 24 4 53 14 241 83 427 271 482 486 19 76
+	          19 202 -1 285 -35 152 -146 305 -299 412 l-70 49 -6 -33 c-8 -48 -26 -76 -59
+	          -93 -45 -23 -103 -19 -138 10 -67 57 -78 146 -37 305 30 116 32 206 5 291 -27
+	          89 -104 206 -162 247 -17 13 -18 12 -11 -15z"/>
+	    </g>
+	    </svg>
+		</a>
+</div>
+<div id="debug-bar">
+	<div class="toolbar">
+		<h1><a id="debug-bar-link" href="javascript:void(0)">Debug Bar</a></h1>
+
+		<span>17.8 ms</span>
+		<span>0.818 MB</span>
+		<span class="ci-label"><a href="javascript: void(0)" data-tab="ci-timeline">Timeline</a></span>
+														<span class="ci-label">
+                    <a href="javascript: void(0)" data-tab="ci-database" >
+                        Database	                                                <span class="badge">0</span>
+                                            </a>
+                </span>
+												<span class="ci-label">
+                    <a href="javascript: void(0)" data-tab="ci-logs" >
+                        Logs	                                        </a>
+                </span>
+												<span class="ci-label">
+                    <a href="javascript: void(0)" data-tab="ci-views" >
+                        Views	                                                <span class="badge">1</span>
+                                            </a>
+                </span>
+												<span class="ci-label">
+                    <a href="javascript: void(0)" data-tab="ci-files" >
+                        Files	                                                <span class="badge">85</span>
+                                            </a>
+                </span>
+												<span class="ci-label">
+                    <a href="javascript: void(0)" data-tab="ci-routes" >
+                        Routes	                                                <span class="badge">1</span>
+                                            </a>
+                </span>
+												<span class="ci-label">
+                    <a href="javascript: void(0)" data-tab="ci-events" >
+                        Events	                                                <span class="badge">1</span>
+                                            </a>
+                </span>
+							<span class="ci-label"><a href="javascript: void(0)" data-tab="ci-vars">Vars</a></span>
+		<span id="toolbar-position"><a href="javascript: void(0)">&#8597;</a></span>
+	</div>
+
+	<!-- Timeline -->
+	<div id="ci-timeline" class="tab">
+		<table class="timeline">
+			<thead>
+				<tr>
+					<th style="width: 30%">NAME</th>
+					<th style="width: 10%">COMPONENT</th>
+					<th style="width: 10%;">DURATION</th>
+											<th>0 ms</th>
+											<th>5 ms</th>
+											<th>10 ms</th>
+											<th>15 ms</th>
+									</tr>
+			</thead>
+			<tbody>
+				<tr><td>Bootstrap</td><td>Timer</td><td style='text-align: right'>13.03 ms</td><td colspan='4' style='overflow: hidden'><span class='timer' style='left: 1.33037567139%; width: 65.1502609253%;' title='65.15%'></span></td></tr><tr><td>Routing</td><td>Timer</td><td style='text-align: right'>0.07 ms</td><td colspan='4' style='overflow: hidden'><span class='timer' style='left: 66.5152072906%; width: 0.355243682861%;' title='0.36%'></span></td></tr><tr><td>Controller</td><td>Timer</td><td style='text-align: right'>3.56 ms</td><td colspan='4' style='overflow: hidden'><span class='timer' style='left: 71.2549686432%; width: 17.8098678589%;' title='17.81%'></span></td></tr><tr><td>Controller Constructor</td><td>Timer</td><td style='text-align: right'>1.43 ms</td><td colspan='4' style='overflow: hidden'><span class='timer' style='left: 71.280002594%; width: 7.14063644409%;' title='7.14%'></span></td></tr><tr><td>View: welcome_message.php</td><td>Views</td><td style='text-align: right'>0.61 ms</td><td colspan='4' style='overflow: hidden'><span class='timer' style='left: 85.9546661377%; width: 3.0505657196%;' title='3.05%'></span></td></tr>			</tbody>
+		</table>
+	</div>
+
+	<!-- Collector-provided Tabs -->
+									<div id="ci-database" class="tab">
+				<h2>Database <span>(0 Queries across 0 Connection)</span></h2>
+
+				<table>
+    <thead>
+        <tr>
+            <th style="width: 6rem;">Time</th>
+            <th>Query String</th>
+        </tr>
+    </thead>
+    <tbody>
+    
+    </tbody>
+</table>
+			</div>
+								<div id="ci-logs" class="tab">
+				<h2>Logs <span></span></h2>
+
+				<p>Nothing was logged. If you were expecting logged items, ensure that LoggerConfig file has the correct threshold set.</p>			</div>
+											<div id="ci-files" class="tab">
+				<h2>Files <span>( 86 )</span></h2>
+
+				<table>
+    <tbody>
+    
+        <tr>
+            <td>App.php</td>
+            <td>APPPATH/Config/App.php</td>
+        </tr>
+    
+        <tr>
+            <td>Autoload.php</td>
+            <td>APPPATH/Config/Autoload.php</td>
+        </tr>
+    
+        <tr>
+            <td>Cache.php</td>
+            <td>APPPATH/Config/Cache.php</td>
+        </tr>
+    
+        <tr>
+            <td>ClassLoader.php</td>
+            <td>/Users/kilishan/WebSites/CodeIgniter4/vendor/composer/ClassLoader.php</td>
+        </tr>
+    
+        <tr>
+            <td>Compat.php</td>
+            <td>/Users/kilishan/WebSites/CodeIgniter4/vendor/paragonie/sodium_compat/src/Compat.php</td>
+        </tr>
+    
+        <tr>
+            <td>Constants.php</td>
+            <td>APPPATH/Config/Constants.php</td>
+        </tr>
+    
+        <tr>
+            <td>Database.php</td>
+            <td>APPPATH/Config/Database.php</td>
+        </tr>
+    
+        <tr>
+            <td>DebugToolbar.php</td>
+            <td>APPPATH/Filters/DebugToolbar.php</td>
+        </tr>
+    
+        <tr>
+            <td>Events.php</td>
+            <td>APPPATH/Config/Events.php</td>
+        </tr>
+    
+        <tr>
+            <td>Exceptions.php</td>
+            <td>APPPATH/Config/Exceptions.php</td>
+        </tr>
+    
+        <tr>
+            <td>Filters.php</td>
+            <td>APPPATH/Config/Filters.php</td>
+        </tr>
+    
+        <tr>
+            <td>Home.php</td>
+            <td>APPPATH/Controllers/Home.php</td>
+        </tr>
+    
+        <tr>
+            <td>Kint.php</td>
+            <td>/Users/kilishan/WebSites/CodeIgniter4/vendor/kint-php/kint/src/Kint.php</td>
+        </tr>
+    
+        <tr>
+            <td>Logger.php</td>
+            <td>APPPATH/Config/Logger.php</td>
+        </tr>
+    
+        <tr>
+            <td>Paths.php</td>
+            <td>APPPATH/Config/Paths.php</td>
+        </tr>
+    
+        <tr>
+            <td>Routes.php</td>
+            <td>APPPATH/Config/Routes.php</td>
+        </tr>
+    
+        <tr>
+            <td>Services.php</td>
+            <td>APPPATH/Config/Services.php</td>
+        </tr>
+    
+        <tr>
+            <td>View.php</td>
+            <td>APPPATH/Config/View.php</td>
+        </tr>
+    
+        <tr>
+            <td>autoload.php</td>
+            <td>/Users/kilishan/WebSites/CodeIgniter4/vendor/autoload.php</td>
+        </tr>
+    
+        <tr>
+            <td>autoload.php</td>
+            <td>/Users/kilishan/WebSites/CodeIgniter4/vendor/paragonie/sodium_compat/autoload.php</td>
+        </tr>
+    
+        <tr>
+            <td>autoload_real.php</td>
+            <td>/Users/kilishan/WebSites/CodeIgniter4/vendor/composer/autoload_real.php</td>
+        </tr>
+    
+        <tr>
+            <td>autoload_static.php</td>
+            <td>/Users/kilishan/WebSites/CodeIgniter4/vendor/composer/autoload_static.php</td>
+        </tr>
+    
+        <tr>
+            <td>constants.php</td>
+            <td>/Users/kilishan/WebSites/CodeIgniter4/vendor/paragonie/sodium_compat/lib/constants.php</td>
+        </tr>
+    
+        <tr>
+            <td>development.php</td>
+            <td>APPPATH/Config/Boot/development.php</td>
+        </tr>
+    
+        <tr>
+            <td>index.php</td>
+            <td>FCPATH/index.php</td>
+        </tr>
+    
+        <tr>
+            <td>init.php</td>
+            <td>/Users/kilishan/WebSites/CodeIgniter4/vendor/kint-php/kint/init.php</td>
+        </tr>
+    
+        <tr>
+            <td>init_footer.php</td>
+            <td>/Users/kilishan/WebSites/CodeIgniter4/vendor/kint-php/kint/init_footer.php</td>
+        </tr>
+    
+        <tr>
+            <td>init_header.php</td>
+            <td>/Users/kilishan/WebSites/CodeIgniter4/vendor/kint-php/kint/init_header.php</td>
+        </tr>
+    
+        <tr>
+            <td>init_helpers.php</td>
+            <td>/Users/kilishan/WebSites/CodeIgniter4/vendor/kint-php/kint/init_helpers.php</td>
+        </tr>
+    
+        <tr>
+            <td>namespaced.php</td>
+            <td>/Users/kilishan/WebSites/CodeIgniter4/vendor/paragonie/sodium_compat/lib/namespaced.php</td>
+        </tr>
+    
+        <tr>
+            <td>php72compat.php</td>
+            <td>/Users/kilishan/WebSites/CodeIgniter4/vendor/paragonie/sodium_compat/lib/php72compat.php</td>
+        </tr>
+    
+        <tr>
+            <td>random.php</td>
+            <td>/Users/kilishan/WebSites/CodeIgniter4/vendor/paragonie/random_compat/lib/random.php</td>
+        </tr>
+    
+        <tr>
+            <td>sodium_compat.php</td>
+            <td>/Users/kilishan/WebSites/CodeIgniter4/vendor/paragonie/sodium_compat/lib/sodium_compat.php</td>
+        </tr>
+    
+        <tr>
+            <td>welcome_message.php</td>
+            <td>APPPATH/Views/welcome_message.php</td>
+        </tr>
+    
+    
+        <tr class="muted">
+            <td style="width: 20em;">AutoloadConfig.php</td>
+            <td>BASEPATH/Config/AutoloadConfig.php</td>
+        </tr>
+    
+        <tr class="muted">
+            <td style="width: 20em;">Autoloader.php</td>
+            <td>BASEPATH/Autoloader/Autoloader.php</td>
+        </tr>
+    
+        <tr class="muted">
+            <td style="width: 20em;">BaseCollector.php</td>
+            <td>BASEPATH/Debug/Toolbar/Collectors/BaseCollector.php</td>
+        </tr>
+    
+        <tr class="muted">
+            <td style="width: 20em;">BaseConfig.php</td>
+            <td>BASEPATH/Config/BaseConfig.php</td>
+        </tr>
+    
+        <tr class="muted">
+            <td style="width: 20em;">CacheFactory.php</td>
+            <td>BASEPATH/Cache/CacheFactory.php</td>
+        </tr>
+    
+        <tr class="muted">
+            <td style="width: 20em;">CacheInterface.php</td>
+            <td>BASEPATH/Cache/CacheInterface.php</td>
+        </tr>
+    
+        <tr class="muted">
+            <td style="width: 20em;">CodeIgniter.php</td>
+            <td>BASEPATH/CodeIgniter.php</td>
+        </tr>
+    
+        <tr class="muted">
+            <td style="width: 20em;">Common.php</td>
+            <td>BASEPATH/Common.php</td>
+        </tr>
+    
+        <tr class="muted">
+            <td style="width: 20em;">Config.php</td>
+            <td>BASEPATH/Database/Config.php</td>
+        </tr>
+    
+        <tr class="muted">
+            <td style="width: 20em;">Controller.php</td>
+            <td>BASEPATH/Controller.php</td>
+        </tr>
+    
+        <tr class="muted">
+            <td style="width: 20em;">CustomExceptions.php</td>
+            <td>BASEPATH/Debug/CustomExceptions.php</td>
+        </tr>
+    
+        <tr class="muted">
+            <td style="width: 20em;">Database.php</td>
+            <td>BASEPATH/Debug/Toolbar/Collectors/Database.php</td>
+        </tr>
+    
+        <tr class="muted">
+            <td style="width: 20em;">DotEnv.php</td>
+            <td>BASEPATH/Config/DotEnv.php</td>
+        </tr>
+    
+        <tr class="muted">
+            <td style="width: 20em;">Escaper.php</td>
+            <td>BASEPATH/ThirdParty/ZendEscaper/Escaper.php</td>
+        </tr>
+    
+        <tr class="muted">
+            <td style="width: 20em;">Events.php</td>
+            <td>BASEPATH/Debug/Toolbar/Collectors/Events.php</td>
+        </tr>
+    
+        <tr class="muted">
+            <td style="width: 20em;">Events.php</td>
+            <td>BASEPATH/Events/Events.php</td>
+        </tr>
+    
+        <tr class="muted">
+            <td style="width: 20em;">Exceptions.php</td>
+            <td>BASEPATH/Debug/Exceptions.php</td>
+        </tr>
+    
+        <tr class="muted">
+            <td style="width: 20em;">FileHandler.php</td>
+            <td>BASEPATH/Cache/Handlers/FileHandler.php</td>
+        </tr>
+    
+        <tr class="muted">
+            <td style="width: 20em;">FileLocator.php</td>
+            <td>BASEPATH/Autoloader/FileLocator.php</td>
+        </tr>
+    
+        <tr class="muted">
+            <td style="width: 20em;">Files.php</td>
+            <td>BASEPATH/Debug/Toolbar/Collectors/Files.php</td>
+        </tr>
+    
+        <tr class="muted">
+            <td style="width: 20em;">FilterInterface.php</td>
+            <td>BASEPATH/Filters/FilterInterface.php</td>
+        </tr>
+    
+        <tr class="muted">
+            <td style="width: 20em;">Filters.php</td>
+            <td>BASEPATH/Filters/Filters.php</td>
+        </tr>
+    
+        <tr class="muted">
+            <td style="width: 20em;">Header.php</td>
+            <td>BASEPATH/HTTP/Header.php</td>
+        </tr>
+    
+        <tr class="muted">
+            <td style="width: 20em;">IncomingRequest.php</td>
+            <td>BASEPATH/HTTP/IncomingRequest.php</td>
+        </tr>
+    
+        <tr class="muted">
+            <td style="width: 20em;">Logger.php</td>
+            <td>BASEPATH/Log/Logger.php</td>
+        </tr>
+    
+        <tr class="muted">
+            <td style="width: 20em;">LoggerInterface.php</td>
+            <td>BASEPATH/ThirdParty/PSR/Log/LoggerInterface.php</td>
+        </tr>
+    
+        <tr class="muted">
+            <td style="width: 20em;">Logs.php</td>
+            <td>BASEPATH/Debug/Toolbar/Collectors/Logs.php</td>
+        </tr>
+    
+        <tr class="muted">
+            <td style="width: 20em;">Message.php</td>
+            <td>BASEPATH/HTTP/Message.php</td>
+        </tr>
+    
+        <tr class="muted">
+            <td style="width: 20em;">Parser.php</td>
+            <td>BASEPATH/View/Parser.php</td>
+        </tr>
+    
+        <tr class="muted">
+            <td style="width: 20em;">RendererInterface.php</td>
+            <td>BASEPATH/View/RendererInterface.php</td>
+        </tr>
+    
+        <tr class="muted">
+            <td style="width: 20em;">Request.php</td>
+            <td>BASEPATH/HTTP/Request.php</td>
+        </tr>
+    
+        <tr class="muted">
+            <td style="width: 20em;">RequestInterface.php</td>
+            <td>BASEPATH/HTTP/RequestInterface.php</td>
+        </tr>
+    
+        <tr class="muted">
+            <td style="width: 20em;">Response.php</td>
+            <td>BASEPATH/HTTP/Response.php</td>
+        </tr>
+    
+        <tr class="muted">
+            <td style="width: 20em;">ResponseInterface.php</td>
+            <td>BASEPATH/HTTP/ResponseInterface.php</td>
+        </tr>
+    
+        <tr class="muted">
+            <td style="width: 20em;">RouteCollection.php</td>
+            <td>BASEPATH/Router/RouteCollection.php</td>
+        </tr>
+    
+        <tr class="muted">
+            <td style="width: 20em;">RouteCollectionInterface.php</td>
+            <td>BASEPATH/Router/RouteCollectionInterface.php</td>
+        </tr>
+    
+        <tr class="muted">
+            <td style="width: 20em;">Router.php</td>
+            <td>BASEPATH/Router/Router.php</td>
+        </tr>
+    
+        <tr class="muted">
+            <td style="width: 20em;">RouterInterface.php</td>
+            <td>BASEPATH/Router/RouterInterface.php</td>
+        </tr>
+    
+        <tr class="muted">
+            <td style="width: 20em;">Routes.php</td>
+            <td>BASEPATH/Config/Routes.php</td>
+        </tr>
+    
+        <tr class="muted">
+            <td style="width: 20em;">Routes.php</td>
+            <td>BASEPATH/Debug/Toolbar/Collectors/Routes.php</td>
+        </tr>
+    
+        <tr class="muted">
+            <td style="width: 20em;">Services.php</td>
+            <td>BASEPATH/Config/Services.php</td>
+        </tr>
+    
+        <tr class="muted">
+            <td style="width: 20em;">Timer.php</td>
+            <td>BASEPATH/Debug/Timer.php</td>
+        </tr>
+    
+        <tr class="muted">
+            <td style="width: 20em;">Timers.php</td>
+            <td>BASEPATH/Debug/Toolbar/Collectors/Timers.php</td>
+        </tr>
+    
+        <tr class="muted">
+            <td style="width: 20em;">Toolbar.php</td>
+            <td>BASEPATH/Debug/Toolbar.php</td>
+        </tr>
+    
+        <tr class="muted">
+            <td style="width: 20em;">URI.php</td>
+            <td>BASEPATH/HTTP/URI.php</td>
+        </tr>
+    
+        <tr class="muted">
+            <td style="width: 20em;">View.php</td>
+            <td>BASEPATH/Config/View.php</td>
+        </tr>
+    
+        <tr class="muted">
+            <td style="width: 20em;">View.php</td>
+            <td>BASEPATH/View/View.php</td>
+        </tr>
+    
+        <tr class="muted">
+            <td style="width: 20em;">Views.php</td>
+            <td>BASEPATH/Debug/Toolbar/Collectors/Views.php</td>
+        </tr>
+    
+        <tr class="muted">
+            <td style="width: 20em;">bootstrap.php</td>
+            <td>BASEPATH/bootstrap.php</td>
+        </tr>
+    
+        <tr class="muted">
+            <td style="width: 20em;">kint.php</td>
+            <td>BASEPATH/ThirdParty/Kint/kint.php</td>
+        </tr>
+    
+        <tr class="muted">
+            <td style="width: 20em;">toolbar.tpl.php</td>
+            <td>BASEPATH/Debug/Toolbar/Views/toolbar.tpl.php</td>
+        </tr>
+    
+        <tr class="muted">
+            <td style="width: 20em;">url_helper.php</td>
+            <td>BASEPATH/Helpers/url_helper.php</td>
+        </tr>
+    
+    </tbody>
+</table>
+			</div>
+								<div id="ci-routes" class="tab">
+				<h2>Routes <span></span></h2>
+
+				<h3>Matched Route</h3>
+
+<table>
+    <tbody>
+    
+        <tr>
+            <td>Directory:</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Controller:</td>
+            <td>\App\Controllers\Home</td>
+        </tr>
+        <tr>
+            <td>Method:</td>
+            <td>index</td>
+        </tr>
+        <tr>
+            <td>Params:</td>
+            <td>0 / 0</td>
+        </tr>
+        
+    
+    </tbody>
+</table>
+
+
+<h3>Defined Routes</h3>
+
+<table>
+    <tbody>
+    
+        <tr>
+            <td>/</td>
+            <td>\App\Controllers\Home::index</td>
+        </tr>
+    
+    </tbody>
+</table>
+			</div>
+								<div id="ci-events" class="tab">
+				<h2>Events <span></span></h2>
+
+				<table>
+    <thead>
+        <tr>
+            <th style="width: 6rem;">Time</th>
+            <th>Event Name</th>
+            <th>Times Called</th>
+        </tr>
+    </thead>
+    <tbody>
+    
+        <tr>
+            <td class="narrow">0.05 ms</td>
+            <td>pre_system</td>
+            <td>1</td>
+        </tr>
+    
+    </tbody>
+</table>
+			</div>
+			
+	<!-- In & Out -->
+	<div id="ci-vars" class="tab">
+
+		<!-- VarData from Collectors -->
+		
+			<a href="javascript:void(0)" onclick="ciDebugBar.toggleDataTable('view-data'); return false;">
+				<h2>View Data</h2>
+			</a>
+
+			
+				<table id="view-data_table">
+					<tbody>
+										</tbody>
+				</table>
+
+					
+		<!-- Session -->
+		<a href="javascript:void(0)" onclick="ciDebugBar.toggleDataTable('session'); return false;">
+			<h2>Session User Data</h2>
+		</a>
+
+					<p class="muted">Session doesn't seem to be active.</p>
+		
+		<h2>Request <span>( HTTP/1.1 )</span></h2>
+
+		
+		
+					<a href="javascript:void(0)" onclick="ciDebugBar.toggleDataTable('request_headers'); return false;">
+				<h3>Headers</h3>
+			</a>
+
+			<table id="request_headers_table">
+				<tbody>
+
+																									<tr>
+							<td>Cache-Control</td>
+							<td>no-cache</td>
+						</tr>
+																														<tr>
+							<td>Pragma</td>
+							<td>no-cache</td>
+						</tr>
+																														<tr>
+							<td>Upgrade-Insecure-Requests</td>
+							<td>1</td>
+						</tr>
+																														<tr>
+							<td>Connection</td>
+							<td>keep-alive</td>
+						</tr>
+																														<tr>
+							<td>Cookie</td>
+							<td>debug-bar-state=open</td>
+						</tr>
+																														<tr>
+							<td>Accept-Encoding</td>
+							<td>gzip, deflate</td>
+						</tr>
+																														<tr>
+							<td>Accept-Language</td>
+							<td>en-US,en;q=0.5</td>
+						</tr>
+																														<tr>
+							<td>Accept</td>
+							<td>text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</td>
+						</tr>
+																														<tr>
+							<td>User-Agent</td>
+							<td>Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:58.0) Gecko/20100101 Firefox/58.0</td>
+						</tr>
+																														<tr>
+							<td>Host</td>
+							<td>ci4.dev</td>
+						</tr>
+													</tbody>
+			</table>
+		
+					<a href="javascript:void(0)" onclick="ciDebugBar.toggleDataTable('cookie'); return false;">
+				<h3>Cookies</h3>
+			</a>
+
+			<table id="cookie_table">
+				<tbody>
+									<tr>
+						<td>debug-bar-state</td>
+						<td>open</td>
+					</tr>
+								</tbody>
+			</table>
+		
+		<h2>Response <span>( 200 - OK )</span></h2>
+
+					<a href="javascript:void(0)" onclick="ciDebugBar.toggleDataTable('response_headers'); return false;">
+				<h3>Headers</h3>
+			</a>
+
+			<table id="response_headers_table">
+				<tbody>
+									<tr>
+						<td>Cache-control</td>
+						<td>no-store, max-age=0, no-cache</td>
+					</tr>
+									<tr>
+						<td>Content-Type</td>
+						<td>text/html; charset=UTF-8</td>
+					</tr>
+								</tbody>
+			</table>
+			</div>

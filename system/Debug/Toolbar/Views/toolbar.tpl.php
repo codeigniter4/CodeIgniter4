@@ -2,11 +2,11 @@
 	<?= preg_replace('#[\r\n\t ]+#', ' ', file_get_contents(__DIR__.'/toolbar.css')) ?>
 </style>
 
-<script type="text/javascript">
+<script id="toolbar_js" type="text/javascript">
 	<?= file_get_contents(__DIR__.'/toolbar.js') ?>
 </script>
 <div id="debug-icon" style="display:none">
-    <a href="javascript:void(0)" onclick="ciDebugBar.toggleToolbar();">
+    <a id="debug-icon-link" href="javascript:void(0)">
 	    <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
 	         width="155.000000px" height="200.000000px" viewBox="0 0 155.000000 200.000000"
 	         preserveAspectRatio="xMidYMid meet">
@@ -27,10 +27,7 @@
 </div>
 <div id="debug-bar">
 	<div class="toolbar">
-		<h1><a href="javascript:void(0)" onclick="ciDebugBar.toggleToolbar();">Debug Bar</a></h1>
-
-		<span><?= $totalTime ?> ms</span>
-		<span><?= $totalMemory ?> MB</span>
+        <span id="toolbar-position"><a href="javascript: void(0)">&#8597;</a></span>
 		<span class="ci-label"><a href="javascript: void(0)" data-tab="ci-timeline">Timeline</a></span>
 		<?php foreach ($this->collectors as $c) : ?>
 			<?php if ($c->hasTabContent() || $c->hasLabel()) : ?>
@@ -45,7 +42,10 @@
 			<?php endif; ?>
 		<?php endforeach; ?>
 		<span class="ci-label"><a href="javascript: void(0)" data-tab="ci-vars">Vars</a></span>
-		<span id="toolbar-position"><a href="javascript: void(0)">&#8597;</a></span>
+
+        <span><?= $totalTime ?> ms</span> &nbsp;&nbsp;
+        <span><?= $totalMemory ?> MB</span>
+        <h1><a id="debug-bar-link" href="javascript:void(0)">Debug Bar</a></h1>
 	</div>
 
 	<!-- Timeline -->
@@ -246,8 +246,3 @@
 			</table>
 		<?php endif; ?>
 	</div>
-
-
-<script>
-	ciDebugBar.init();
-</script>
