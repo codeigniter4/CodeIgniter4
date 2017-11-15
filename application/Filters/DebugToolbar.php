@@ -51,10 +51,10 @@ class DebugToolbar implements FilterInterface
 
 			helper(['filesystem', 'url']);
 
-			// Updated to time() to can get history
+			// Updated to time() so we can get history
 			$time = time();
 
-			write_file(WRITEPATH . 'debugbar_' . $time, $output, 'w+');
+			write_file(WRITEPATH .'debugbar/'.'debugbar_' . $time, $output, 'w+');
 
 			$script = PHP_EOL
 				. '<script type="text/javascript" id="debugbar_loader" '

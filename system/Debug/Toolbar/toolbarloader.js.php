@@ -1,3 +1,4 @@
+
 document.addEventListener('DOMContentLoaded', loadDoc, false);
 
 function loadDoc() {
@@ -9,14 +10,13 @@ function loadDoc() {
         if (this.readyState == 4 && this.status == 200) {
             var x = document.body.innerHTML;
             document.body.innerHTML = x + this.responseText;
-	        eval(document.getElementById("toolbar_js").innerHTML);
-            if(typeof ciDebugBar === 'object')
-            {
-	            ciDebugBar.init();
+            eval(document.getElementById("toolbar_js").innerHTML);
+            if (typeof ciDebugBar === 'object') {
+                ciDebugBar.init();
             }
         }
     };
 
-    xhttp.open("GET", url + "?debugbar_time="+ time, true);
+    xhttp.open("GET", url + "?debugbar_time=" + time, true);
     xhttp.send();
 }

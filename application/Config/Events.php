@@ -31,5 +31,6 @@ if (ENVIRONMENT != 'production')
 {
 	Events::on('DBQuery', 'CodeIgniter\Debug\Toolbar\Collectors\Database::collect');
 
+	// Handles the display of the toolbar itself. MUST remain here for toolbar to be displayed.
 	Events::on('pre_system', 'CodeIgniter\Debug\Toolbar::eventHandler');
 }
