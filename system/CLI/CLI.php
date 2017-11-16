@@ -123,6 +123,20 @@ class CLI
 	 */
 	protected static $options = [];
 
+	/**
+	 * Has the table a head?
+	 *
+	 * @var bool
+	 */
+	protected static $tableHead = false;
+
+	/**
+	 * Table rows
+	 *
+	 * @var array
+	 */
+	protected static $tableRows = [];
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -747,6 +761,144 @@ class CLI
 		}
 
 		return $out;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns a well formated table
+	 *
+	 * @param  array  $tbody List of rows
+	 *         			[
+	 *         				['id' => 1, 'foo' => 'bar']
+	 *         			]
+	 * @param  array  $thead List of columns
+	 *         			['ID', 'Foo']
+	 *
+	 * @return string
+	 *
+	 * +----+-----+
+	 * | ID | Foo |
+	 * +----+-----+
+	 * | 1  | bar |
+	 * +----+-----+
+	 */
+	public static function table(array $tbody = [], array $thead = [])
+	{
+		if (! empty($thead))
+		{
+			static::$tableHead = true;
+			static::addTableRow($thead);
+		}
+
+		foreach ($tbody as $tr)
+		{
+			static::addTableRow($tr);
+		}
+
+		$total_rows = count(static::$tableRows);
+
+		/**
+		 * @var array All columns lenghts
+		 */
+		$cl = [];
+
+		/**
+		 * @var array Max lenghts by column
+		 */
+		$ml = [];
+
+		// Captura as maiores quantidades de caracteres de cada coluna em cada linha
+		for ($i = 0; $i < $total_rows; $i++)
+		{
+			$m = 0; // Índice da coluna com maior tamanho na linha atual
+			foreach (static::$tableRows[$i] as $col)
+			{
+				// Entre todas as colunas seta o tamanho dessa
+				$cl[$i][$m] = strlen($col);
+
+				// Se a coluna atual não possui um valor entre as de maior tamanhou
+				// ou o valor dessa é maior que o já existente
+				// então, agora, essa assume o maior tamanho
+				if (! isset($ml[$m]) || $cl[$i][$m] > $ml[$m])
+				{
+					$ml[$m] = $cl[$i][$m];
+				}
+
+				// Podemos ir conferir o tamanho da próxima coluna...
+				$m++;
+			}
+		}
+
+		/**
+		 * @var array Total columns
+		 */
+		$tc = count($ml);
+
+		// Adiciona espaços no fim das colunas para igualar a quantidade de caracteres
+		for ($i = 0; $i < $total_rows; $i++)
+		{
+			$m = 0;
+
+			foreach (static::$tableRows[$i] as $col)
+			{
+				$diff = $ml[$m] - strlen($col);
+				if ($diff)
+				{
+					static::$tableRows[$i][$m] = static::$tableRows[$i][$m] . str_repeat(' ', $diff);
+				}
+				$m++;
+			}
+		}
+
+		$table = '';
+
+		// Junta as colunas e mostra as linhas bem formatadas
+		for ($i = 0; $i < $total_rows; $i++)
+		{
+			if ($i === 0)
+			{
+				$cols = '+';
+				foreach (static::$tableRows[$i] as $col)
+				{
+					$cols .= str_repeat('-', strlen($col) + 2) . '+';
+				}
+				//CLI::write($cols);
+				$table .= $cols . PHP_EOL;
+			}
+
+			//CLI::write('| ' . implode(' | ', static::$tableRows[$i]) . ' |' );
+			$table .= '| ' . implode(' | ', static::$tableRows[$i]) . ' |' . PHP_EOL;
+
+			if ($i === 0 && static::$tableHead || $i + 1 === $total_rows)
+			{
+				//CLI::write($cols);
+				$table .= $cols . PHP_EOL;
+			}
+		}
+
+		// Zera as linhas para uma nova chamada
+		static::$tableHead = false;
+		static::$tableRows = [];
+
+		return $table;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Add one row in the table
+	 *
+	 * @param array $columns Row columns
+	 */
+	protected static function addTableRow(array $columns)
+	{
+		$cols = [];
+		foreach ($columns as $col)
+		{
+			$cols[] = $col;
+		}
+		static::$tableRows[] = $cols;
 	}
 
 	//--------------------------------------------------------------------

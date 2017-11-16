@@ -129,6 +129,57 @@ EOT;
 		$this->assertEquals('1234 5678 90'. PHP_EOL .'  abc de fghij'. PHP_EOL .'  0987654321', CLI::wrap('1234 5678 90'. PHP_EOL .'abc de fghij'. PHP_EOL .'0987654321', 999, 2));
 		$this->assertEquals('1234 5678 90'. PHP_EOL .'abc de fghij'. PHP_EOL .'0987654321', CLI::wrap('1234 5678 90'. PHP_EOL .'abc de fghij'. PHP_EOL .'0987654321'));
 	}
+
+	public function testTable()
+	{
+		$head = ['ID', 'Title'];
+
+		$oneRow      = ['id' => 1, 'foo' => 'bar'];
+		$oneExpected = <<<TABLE
++---+-----+
+| 1 | bar |
++---+-----+
+
+TABLE;
+		$this->assertEquals($oneExpected, CLI::table([$oneRow]));
+
+		$oneExpected = <<<TABLE
++----+-------+
+| ID | Title |
++----+-------+
+| 1  | bar   |
++----+-------+
+
+TABLE;
+		$this->assertEquals($oneExpected, CLI::table([$oneRow], $head));
+
+		$manyRows     = [
+			['id' => 1, 'foo' => 'bar'],
+			['id' => 2, 'foo' => 'bar * 2'],
+			['id' => 3, 'foo' => 'bar + bar + bar'],
+		];
+		$manyExpected = <<<TABLE
++---+-----------------+
+| 1 | bar             |
+| 2 | bar * 2         |
+| 3 | bar + bar + bar |
++---+-----------------+
+
+TABLE;
+		$this->assertEquals($manyExpected, CLI::table($manyRows));
+
+		$manyExpected = <<<TABLE
++----+-----------------+
+| ID | Title           |
++----+-----------------+
+| 1  | bar             |
+| 2  | bar * 2         |
+| 3  | bar + bar + bar |
++----+-----------------+
+
+TABLE;
+		$this->assertEquals($manyExpected, CLI::table($manyRows, $head));
+	}
 }
 
 
