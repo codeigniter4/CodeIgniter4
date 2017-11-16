@@ -276,4 +276,76 @@ class ValidationTest extends \CIUnitTestCase
 //		$this->assertTrue($this->validation->run($data));
 //	}
 
+	//--------------------------------------------------------------------
+
+	/**
+	 * @dataProvider rulesSetupProvider
+	 *
+	 * @param $rules
+	 * @param $expected
+	 * @param $errors
+	 */
+	public function testRulesSetup($rules, $expected, $errors = [])
+	{
+		$data = [
+			'foo' => '',
+		];
+
+		$this->validation->setRules([
+				'foo' => $rules,
+		], $errors);
+
+		$this->validation->run($data);
+
+		$this->assertEquals($expected, $this->validation->getError('foo'));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function rulesSetupProvider()
+	{
+		return [
+			[
+				'min_length[10]',
+				'The foo field must be at least 10 characters in length.'
+			],
+			[
+				'min_length[10]',
+				'The foo field is very short.',
+				['foo' => ['min_length' => 'The {field} field is very short.']]
+			],
+			[
+				['min_length[10]'],
+				'The foo field must be at least 10 characters in length.'
+			],
+			[
+				['min_length[10]'],
+				'The foo field is very short.',
+				['foo' => ['min_length' => 'The {field} field is very short.']]
+			],
+			[
+				['rules' => 'min_length[10]'],
+				'The foo field must be at least 10 characters in length.'
+			],
+			[
+				['label' => 'Foo Bar', 'rules' => 'min_length[10]'],
+				'The Foo Bar field must be at least 10 characters in length.'
+			],
+			[
+				['label' => 'Foo Bar', 'rules' => 'min_length[10]'],
+				'The Foo Bar field is very short.',
+				['foo' => ['min_length' => 'The {field} field is very short.']]
+			],
+			[
+				[
+					'label'  => 'Foo Bar',
+					'rules'  => 'min_length[10]',
+					'errors' => ['min_length' => 'The {field} field is very short.']
+				],
+				'The Foo Bar field is very short.',
+			],
+		];
+	}
+
+	//--------------------------------------------------------------------
 }
