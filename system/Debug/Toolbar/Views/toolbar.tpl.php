@@ -30,16 +30,18 @@
         <span id="toolbar-position"><a href="javascript: void(0)">&#8597;</a></span>
 		<span class="ci-label"><a href="javascript: void(0)" data-tab="ci-timeline">Timeline</a></span>
 		<?php foreach ($this->collectors as $c) : ?>
-			<?php if ($c->hasTabContent() || $c->hasLabel()) : ?>
-				<span class="ci-label">
-                    <a href="javascript: void(0)" data-tab="ci-<?= esc($c->getTitle(true)) ?>" >
-                        <?= esc($c->getTitle()) ?>
-	                    <?php if (! is_null($c->getBadgeValue())) : ?>
-                            <span class="badge"><?= $c->getBadgeValue() ?></span>
-                        <?php endif ?>
-                    </a>
-                </span>
-			<?php endif; ?>
+            <?php if (! $c->isEmpty()) : ?>
+                <?php if ($c->hasTabContent() || $c->hasLabel()) : ?>
+                    <span class="ci-label">
+                        <a href="javascript: void(0)" data-tab="ci-<?= esc($c->getTitle(true)) ?>" >
+                            <?= esc($c->getTitle()) ?>
+                            <?php if (! is_null($c->getBadgeValue())) : ?>
+                                <span class="badge"><?= $c->getBadgeValue() ?></span>
+                            <?php endif ?>
+                        </a>
+                    </span>
+                <?php endif ?>
+            <?php endif ?>
 		<?php endforeach; ?>
 		<span class="ci-label"><a href="javascript: void(0)" data-tab="ci-vars">Vars</a></span>
 
@@ -69,13 +71,15 @@
 
 	<!-- Collector-provided Tabs -->
 	<?php foreach ($this->collectors as $c) : ?>
-		<?php if  ($c->hasTabContent()) : ?>
-			<div id="ci-<?= esc($c->getTitle(true)) ?>" class="tab">
-				<h2><?= esc($c->getTitle()) ?> <span><?= esc($c->getTitleDetails()) ?></span></h2>
+        <?php if (! $c->isEmpty()) : ?>
+            <?php if  ($c->hasTabContent()) : ?>
+                <div id="ci-<?= esc($c->getTitle(true)) ?>" class="tab">
+                    <h2><?= esc($c->getTitle()) ?> <span><?= esc($c->getTitleDetails()) ?></span></h2>
 
-				<?= $c->display() ?>
-			</div>
-		<?php endif ?>
+                    <?= $c->display() ?>
+                </div>
+            <?php endif ?>
+        <?php endif ?>
 	<?php endforeach ?>
 
 	<!-- In & Out -->

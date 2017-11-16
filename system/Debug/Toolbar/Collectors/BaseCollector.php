@@ -278,4 +278,15 @@ class BaseCollector
 		return null;
 	}
 
+	/**
+	 * Does this collector have any data collected?
+	 *
+	 * If not, then the toolbar button won't get shown.
+	 *
+	 * @return bool
+	 */
+	public function isEmpty()
+	{
+		return false;
+	}
 }

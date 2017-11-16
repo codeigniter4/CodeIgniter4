@@ -214,4 +214,15 @@ class Database extends BaseCollector
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Does this collector have any data collected?
+	 *
+	 * @return bool
+	 */
+	public function isEmpty()
+	{
+		return empty(static::$queries);
+	}
+
 }
