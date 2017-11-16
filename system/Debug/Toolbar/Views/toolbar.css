@@ -70,11 +70,13 @@
 	overflow: hidden;
 	overflow-y: auto;
 	white-space: nowrap;
-	/*border: solid #ddd;*/
-	/*border-width: 1px 0;*/
 	box-shadow: 0 -3px 10px rgba(0, 0, 0, 0.1);
-	padding: 0 12px 0 20px;	/* give room for OS X scrollbar */
+	padding: 0 12px 0 12px;	/* give room for OS X scrollbar */
 	z-index: 10000;
+}
+
+#debug-bar #toolbar-position > a {
+	padding: 0 6px;
 }
 
 #debug-icon.fixed-top,
@@ -120,14 +122,21 @@
 	margin-left: 10pt;
 }
 
-#debug-bar span {
+#debug-bar span.ci-label {
 	display: inline-block;
 	font-size: 14px;
 	line-height: 36px;
 	vertical-align: baseline;
 }
 
-#debug-bar span .badge {
+#debug-bar span.ci-label img {
+	display: inline-block;
+	margin: 6px 3px 6px 0;
+	float: left;
+	clear: left;
+}
+
+#debug-bar span.ci-label .badge {
 	display: inline-block;
 	padding: 3px 6px;
 	font-size: 75%;
@@ -296,4 +305,10 @@
 
 .show-view .debug-view-path {
 	display: block !important;
+}
+
+@media screen and (max-width: 748px) {
+	.hide-sm {
+		display: none !important;
+	}
 }

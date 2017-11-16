@@ -289,4 +289,18 @@ class BaseCollector
 	{
 		return false;
 	}
+
+	/**
+	 * Returns the HTML to display the icon. Should either
+	 * be SVG, or a base-64 encoded.
+	 *
+	 * Recommended dimensions are 24px x 24px
+	 *
+	 * @return string
+	 */
+	public function icon(): string
+	{
+		return '';
+	}
+
 }

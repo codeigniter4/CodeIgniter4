@@ -89,6 +89,9 @@ Comment out any collectors that you do not want to show. Add custom Collectors h
 class name. The exact collectors that appear here will affect which tabs are shown, as well as what information is
 shown on the Timeline.
 
+.. note:: Some tabs, like Database and Logs, will only display when they have content to show. Otherwise, they
+    are removed to help out on smaller displays.
+
 The Collectors that ship with CodeIgniter are:
 
 * **Timers** collects all of the benchmark data, both by the system and by your application.

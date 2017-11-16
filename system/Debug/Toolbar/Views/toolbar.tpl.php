@@ -28,25 +28,36 @@
 <div id="debug-bar">
 	<div class="toolbar">
         <span id="toolbar-position"><a href="javascript: void(0)">&#8597;</a></span>
-		<span class="ci-label"><a href="javascript: void(0)" data-tab="ci-timeline">Timeline</a></span>
+		<span class="ci-label">
+            <a href="javascript: void(0)" data-tab="ci-timeline">
+                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAD7SURBVEhLY6ArSEtLK09NTbWHcvGC9PR0BaDaQiAdUl9fzwQVxg+AFvwHamqHcnGCpKQkeaDa9yD1UD09UCn8AKaBWJySkmIApFehi0ONwwRQBceBLurAh4FqFoHUAtkrgPgREN+ByYEw1DhMANVEMIhAYQ5U1wtU/wmILwLZRlAp/IBYC8gGw88CaFj3A/FnIL4ETDXGUCnyANSC/UC6HIpnQMXAqQXIvo0khxNDjcMEQEmU9AzDuNI7Lgw1DhOAJIEuhQcRKMcC+e+QNHdDpcgD6BaAANSSQqBcENFlDi6AzQKqgkFlwWhxjVI8o2OgmkFaXI8CTMDAAAAxd1O4FzLMaAAAAABJRU5ErkJggg==">
+                <span class="hide-sm"><?= $totalTime ?> ms &nbsp; <?= $totalMemory ?> MB</span>
+            </a>
+        </span>
 		<?php foreach ($this->collectors as $c) : ?>
             <?php if (! $c->isEmpty()) : ?>
                 <?php if ($c->hasTabContent() || $c->hasLabel()) : ?>
                     <span class="ci-label">
                         <a href="javascript: void(0)" data-tab="ci-<?= esc($c->getTitle(true)) ?>" >
-                            <?= esc($c->getTitle()) ?>
-                            <?php if (! is_null($c->getBadgeValue())) : ?>
-                                <span class="badge"><?= $c->getBadgeValue() ?></span>
-                            <?php endif ?>
+                            <?= $c->icon() ?>
+                            <span class="hide-sm">
+                                <?= esc($c->getTitle()) ?>
+	                            <?php if (! is_null($c->getBadgeValue())) : ?>
+                                    <span class="badge"><?= $c->getBadgeValue() ?></span>
+	                            <?php endif ?>
+                            </span>
                         </a>
                     </span>
                 <?php endif ?>
             <?php endif ?>
 		<?php endforeach; ?>
-		<span class="ci-label"><a href="javascript: void(0)" data-tab="ci-vars">Vars</a></span>
+		<span class="ci-label">
+            <a href="javascript: void(0)" data-tab="ci-vars">
+                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACLSURBVEhLYxgFJIHU1NSraWlp/6H4T0pKSjRUijoAyXAwBlrYDpViAFpmARQrJwZDtWACoCROC4D8CnR5XBiqBRMADfyNprgRKkUdAApzoCUdUNwE5MtApYYIALp6NBWBMVQLJgAaOJqK8AOgq+mSio6DggjEBtLUT0UwQ5HZIADkj6aiUTAggIEBANAEDa/lkCRlAAAAAElFTkSuQmCC">
+                <span class="hide-sm">Vars</span>
+            </a>
+        </span>
 
-        <span><?= $totalTime ?> ms</span> &nbsp;&nbsp;
-        <span><?= $totalMemory ?> MB</span>
         <h1><a id="debug-bar-link" href="javascript:void(0)">Debug Bar</a></h1>
 	</div>
 
