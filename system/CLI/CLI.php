@@ -123,20 +123,6 @@ class CLI
 	 */
 	protected static $options = [];
 
-	/**
-	 * Has the table a head?
-	 *
-	 * @var bool
-	 */
-	protected static $tableHead = false;
-
-	/**
-	 * Table rows
-	 *
-	 * @var array
-	 */
-	protected static $tableRows = [];
-
 	//--------------------------------------------------------------------
 
 	/**
@@ -783,122 +769,99 @@ class CLI
 	 * | 1  | bar |
 	 * +----+-----+
 	 */
-	public static function table(array $tbody = [], array $thead = [])
+	public static function table(array $tbody, array $thead = [])
 	{
+		// All the rows in the table will be here until the end
+		$table_rows = [];
+
+		// We need only indexes and not keys
 		if (! empty($thead))
 		{
-			static::$tableHead = true;
-			static::addTableRow($thead);
+			$table_rows[] = array_values($thead);
 		}
 
 		foreach ($tbody as $tr)
 		{
-			static::addTableRow($tr);
+			$table_rows[] = array_values($tr);
 		}
 
-		$total_rows = count(static::$tableRows);
+		// Yes, it really is necessary to know this count
+		$total_rows = count($table_rows);
 
-		/**
-		 * @var array All columns lenghts
-		 */
-		$cl = [];
+		// Store all columns lengths
+		// $all_cols_lengths[row][column] = length
+		$all_cols_lengths = [];
 
-		/**
-		 * @var array Max lenghts by column
-		 */
-		$ml = [];
+		// Store maximum lengths by column
+		// $max_cols_lengths[column] = length
+		$max_cols_lengths = [];
 
-		// Captura as maiores quantidades de caracteres de cada coluna em cada linha
+		// Read row by row and define the longest columns
 		for ($i = 0; $i < $total_rows; $i++)
 		{
-			$m = 0; // Índice da coluna com maior tamanho na linha atual
-			foreach (static::$tableRows[$i] as $col)
+			$column = 0; // Current column index
+			foreach ($table_rows[$i] as $col)
 			{
-				// Entre todas as colunas seta o tamanho dessa
-				$cl[$i][$m] = strlen($col);
+				// Sets the size of this column in the current row
+				$all_cols_lengths[$i][$column] = strlen($col);
 
-				// Se a coluna atual não possui um valor entre as de maior tamanhou
-				// ou o valor dessa é maior que o já existente
-				// então, agora, essa assume o maior tamanho
-				if (! isset($ml[$m]) || $cl[$i][$m] > $ml[$m])
+				// If the current column does not have a value among the larger ones
+				// or the value of this is greater than the existing one
+				// then, now, this assumes the maximum length
+				if (! isset($max_cols_lengths[$column]) || $all_cols_lengths[$i][$column] > $max_cols_lengths[$column])
 				{
-					$ml[$m] = $cl[$i][$m];
+					$max_cols_lengths[$column] = $all_cols_lengths[$i][$column];
 				}
 
-				// Podemos ir conferir o tamanho da próxima coluna...
-				$m++;
+				// We can go check the size of the next column...
+				$column++;
 			}
 		}
 
-		/**
-		 * @var array Total columns
-		 */
-		$tc = count($ml);
-
-		// Adiciona espaços no fim das colunas para igualar a quantidade de caracteres
+		// Read row by row and add spaces at the end of the columns
+		// to match the exact column length
 		for ($i = 0; $i < $total_rows; $i++)
 		{
-			$m = 0;
-
-			foreach (static::$tableRows[$i] as $col)
+			$column = 0;
+			foreach ($table_rows[$i] as $col)
 			{
-				$diff = $ml[$m] - strlen($col);
+				$diff = $max_cols_lengths[$column] - strlen($col);
 				if ($diff)
 				{
-					static::$tableRows[$i][$m] = static::$tableRows[$i][$m] . str_repeat(' ', $diff);
+					$table_rows[$i][$column] = $table_rows[$i][$column] . str_repeat(' ', $diff);
 				}
-				$m++;
+				$column++;
 			}
 		}
 
 		$table = '';
 
-		// Junta as colunas e mostra as linhas bem formatadas
+		// Joins columns and append the well formatted rows to the table
 		for ($i = 0; $i < $total_rows; $i++)
 		{
+			// Set the table border-top
 			if ($i === 0)
 			{
 				$cols = '+';
-				foreach (static::$tableRows[$i] as $col)
+				foreach ($table_rows[$i] as $col)
 				{
 					$cols .= str_repeat('-', strlen($col) + 2) . '+';
 				}
-				//CLI::write($cols);
 				$table .= $cols . PHP_EOL;
 			}
 
-			//CLI::write('| ' . implode(' | ', static::$tableRows[$i]) . ' |' );
-			$table .= '| ' . implode(' | ', static::$tableRows[$i]) . ' |' . PHP_EOL;
+			// Set the columns borders
+			$table .= '| ' . implode(' | ', $table_rows[$i]) . ' |' . PHP_EOL;
 
-			if ($i === 0 && static::$tableHead || $i + 1 === $total_rows)
+			// Set the thead and table borders-bottom
+			if ($i === 0 && ! empty($thead) || $i + 1 === $total_rows)
 			{
-				//CLI::write($cols);
 				$table .= $cols . PHP_EOL;
 			}
 		}
 
-		// Zera as linhas para uma nova chamada
-		static::$tableHead = false;
-		static::$tableRows = [];
-
+		//fwrite(STDOUT, $table . PHP_EOL);
 		return $table;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Add one row in the table
-	 *
-	 * @param array $columns Row columns
-	 */
-	protected static function addTableRow(array $columns)
-	{
-		$cols = [];
-		foreach ($columns as $col)
-		{
-			$cols[] = $col;
-		}
-		static::$tableRows[] = $cols;
 	}
 
 	//--------------------------------------------------------------------

@@ -142,6 +142,8 @@ EOT;
 
 TABLE;
 		$this->assertEquals($oneExpected, CLI::table([$oneRow]));
+		//CLI::table([$oneRow]);
+		//$this->assertEquals($oneExpected, CLITestStreamFilter::$buffer);
 
 		$oneExpected = <<<TABLE
 +----+-------+
