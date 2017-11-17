@@ -528,6 +528,22 @@ class RulesTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+
+    public function testExactLengthReturnsFalseWhenString()
+    {
+        $data = [
+            'foo' => 'bar',
+        ];
+
+        $this->validation->setRules([
+            'foo' => 'exact_length[abc]',
+        ]);
+
+        $this->assertFalse($this->validation->run($data));
+    }
+
+    //--------------------------------------------------------------------
+
 	/**
 	 * @dataProvider urlProvider
 	 */
