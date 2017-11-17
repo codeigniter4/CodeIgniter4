@@ -54,6 +54,11 @@ class DebugToolbar implements FilterInterface
 			// Updated to time() so we can get history
 			$time = time();
 
+			if (! is_dir(WRITEPATH.'debugbar'))
+			{
+				mkdir(WRITEPATH.'debugbar', 0777);
+			}
+
 			write_file(WRITEPATH .'debugbar/'.'debugbar_' . $time, $output, 'w+');
 
 			$script = PHP_EOL
