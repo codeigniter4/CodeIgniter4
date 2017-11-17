@@ -168,12 +168,14 @@ Instead of using the question mark to mark the location of the bound values,
 you can name the bindings, allowing the keys of the values passed in to match
 placeholders in the query::
 
-        $sql = "SELECT * FROM some_table WHERE id = :id AND status = :status AND author = :name";
+        $sql = "SELECT * FROM some_table WHERE id = :id: AND status = :status: AND author = :name:";
         $db->query($sql, [
                 'id'     => 3,
                 'status' => 'live',
                 'name'   => 'Rick'
         ]);
+
+.. note:: Each name in the query MUST be surrounded by colons.
 
 ***************
 Handling Errors

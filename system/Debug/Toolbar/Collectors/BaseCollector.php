@@ -271,11 +271,36 @@ class BaseCollector
 	/**
 	 * Gets the "badge" value for the button.
 	 *
-	 * @param string $value
+	 * @return null
 	 */
 	public function getBadgeValue()
 	{
 		return null;
+	}
+
+	/**
+	 * Does this collector have any data collected?
+	 *
+	 * If not, then the toolbar button won't get shown.
+	 *
+	 * @return bool
+	 */
+	public function isEmpty()
+	{
+		return false;
+	}
+
+	/**
+	 * Returns the HTML to display the icon. Should either
+	 * be SVG, or a base-64 encoded.
+	 *
+	 * Recommended dimensions are 24px x 24px
+	 *
+	 * @return string
+	 */
+	public function icon(): string
+	{
+		return '';
 	}
 
 }

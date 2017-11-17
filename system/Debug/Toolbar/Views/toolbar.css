@@ -1,13 +1,12 @@
 #debug-icon {
 	position: fixed;
 	bottom: 0;
-	left: 0;
+	right: 0;
 	width: 36px;
 	height: 36px;
 	background: #fff;
 	border: 1px solid #ddd;
-	border-radius: .5em;
-	margin: 5px;
+	margin: 0px;
 	z-index: 10000;
 	box-shadow: 0 -3px 10px rgba(0, 0, 0, 0.1);
 	clear: both;
@@ -27,7 +26,7 @@
 #debug-bar {
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-size: 16px;
-	line-height: 1.5;
+	line-height: 36px;
 	background: #fff;
 	position: fixed;
 	bottom: 0;
@@ -71,12 +70,13 @@
 	overflow: hidden;
 	overflow-y: auto;
 	white-space: nowrap;
-	border: solid #ddd;
-	border-width: 1px 0;
 	box-shadow: 0 -3px 10px rgba(0, 0, 0, 0.1);
-	padding: 5px 12px 5px 20px;	/* give room for OS X scrollbar */
-	text-align: right;
+	padding: 0 12px 0 12px;	/* give room for OS X scrollbar */
 	z-index: 10000;
+}
+
+#debug-bar #toolbar-position > a {
+	padding: 0 6px;
 }
 
 #debug-icon.fixed-top,
@@ -92,12 +92,28 @@
 
 #debug-bar h1 {
 	font-size: 16px;
+	line-height: 36px;
 	font-weight: 300;
-	margin: 0 2em 0 0;
+	margin: 0 16px 0 0;
 	padding: 0;
 	text-align: left;
 	display: inline-block;
-	float: left;
+	position: absolute;
+	right: 30px;
+	top: 0;
+	bottom: 0;
+}
+
+#debug-bar-link {
+	padding: 6px;
+	position: absolute;
+	display: inline-block;
+	top: 0;
+	bottom: 0;
+	right: 10px;
+	font-size: 16px;
+	line-height: 36px;
+	width: 24px;
 }
 
 #debug-bar h2 {
@@ -118,15 +134,21 @@
 	margin-left: 10pt;
 }
 
-#debug-bar span {
+#debug-bar span.ci-label {
 	display: inline-block;
 	font-size: 14px;
-	padding: .3em 1em .3em;
-	line-height: 1.0;
+	line-height: 36px;
 	vertical-align: baseline;
 }
 
-#debug-bar span .badge {
+#debug-bar span.ci-label img {
+	display: inline-block;
+	margin: 6px 3px 6px 0;
+	float: left;
+	clear: left;
+}
+
+#debug-bar span.ci-label .badge {
 	display: inline-block;
 	padding: 3px 6px;
 	font-size: 75%;
@@ -147,11 +169,7 @@
 }
 
 #debug-bar .ci-label {
-	border-radius: 0.25em;
 	text-shadow: none;
-	background-color: #eee;
-	border: 1px solid #ddd;
-	margin-left: 0.4em;
 }
 
 #debug-bar .ci-label:hover {
@@ -161,13 +179,13 @@
 
 #debug-bar .ci-label a {
 	display: block;
-	width: 100%;
+	padding: 0 10px;
 	color: inherit;
 	text-decoration: none;
 }
 
 #debug-bar .ci-label.active {
-	background-color: #ccc;
+	background-color: #eaeaea;
 	border-color: #bbb;
 }
 
@@ -299,4 +317,10 @@
 
 .show-view .debug-view-path {
 	display: block !important;
+}
+
+@media screen and (max-width: 748px) {
+	.hide-sm {
+		display: none !important;
+	}
 }

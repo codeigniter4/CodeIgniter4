@@ -215,10 +215,10 @@ setRule()
 ---------
 
 This method sets a single rule. It takes the name of field as
-the first parameter, and a string with a pipe-delimited list of rules
+the first parameter, an optional label and a string with a pipe-delimited list of rules
 that should be applied::
 
-    $validation->setRule('username', 'required');
+    $validation->setRule('username', 'Username', 'required');
 
 The **field name** must match the key of any data array that is sent in. If
 the data is taken directly from $_POST, then it must be an exact match for
@@ -233,6 +233,14 @@ Like, ``setRule()``, but accepts an array of field names and their rules::
         'username' => 'required',
         'password' => 'required|min_length[10]'
     ]);
+
+To give a labeled error message you can setup as::
+
+    $validation->setRules([
+        'username' => ['label' => 'Username', 'rules' => 'required'],
+        'password' => ['label' => 'Password', 'rules' => 'required|min_length[10]']
+    ]);
+
 
 withRequest()
 -------------
@@ -283,7 +291,7 @@ rules. As shown earlier, the validation array will have this prototype::
 
 You can specify the group to use when you call the ``run()`` method::
 
-    $validation->run($data, $signup);
+    $validation->run($data, 'signup');
 
 You can also store custom error messages in this configuration file by naming the
 property the same as the group, and appended with ``_errors``. These will automatically
@@ -303,6 +311,29 @@ be used for any errors when this group is used::
                 'required'    => 'You must choose a username.',
             ],
             'email'    => [
+                'valid_email' => 'Please check the Email field. It does not appear to be valid.'
+            ]
+        ];
+    }
+
+Or pass all settings in an array::
+
+
+    class Validation
+    {
+        public $signup = [
+            'username' => [
+                'label'  => 'Username',
+                'rules'  => 'required',
+                'errors' => [
+                    'required' => 'You must choose a {field}.'
+                ]
+            ],
+            'email'    => 'required|valid_email'
+        ];
+
+        public $signup_errors = [
+            'email' => [
                 'valid_email' => 'Please check the Email field. It does not appear to be valid.'
             ]
         ];
@@ -349,32 +380,46 @@ that will be used as errors specific to each field as their last parameter. This
 for a very pleasant experience for the user since the errors are tailored to each
 instance. If not custom error message is provided, the default value will be used.
 
-The array is structured as follows::
+These are two ways to provide custom error messages.
 
-    [
-        'field' => [
-            'rule' => 'message',
-            'rule' => 'message',
-        ],
-    ]
-
-Here is a more practical example::
-
-    $rules = [
-        'username' => [
-            'required'   => 'All accounts must have usernames provided',
-        ],
-        'password' => [
-            'min_length' => 'Your password is too short. You want to get hacked?'
-        ]
-    ];
+As the last parameter::
 
     $validation->setRules([
             'username' => 'required|is_unique[users.username]',
             'password' => 'required|min_length[10]'
         ],
-        $rules
+        [   // Errors
+            'username' => [
+                'required' => 'All accounts must have usernames provided',
+            ],
+            'password' => [
+                'min_length' => 'Your password is too short. You want to get hacked?'
+            ]
+        ]
     );
+
+Or as a labeled style::
+
+    $validation->setRules([
+            'username' => [
+                'label'  => 'Username',
+                'rules'  => 'required|is_unique[users.username]',
+                'errors' => [
+                    'required' => 'All accounts must have {field} provided'
+                ]
+            ],
+            'password' => [
+                'label'  => 'Password',
+                'rules'  => 'required|min_length[10]',
+                'errors' => [
+                    'min_length' => 'Your {field} is too short. You want to get hacked?'
+                ]
+            ]
+        ]
+    );
+
+.. note:: If you pass the last parameter the labeled style error messages will be ignored.
+
 
 Getting All Errors
 ==================
@@ -602,11 +647,13 @@ valid_emails            No          Fails if any value provided in a comma separ
 valid_ip                No          Fails if the supplied IP is not valid. Accepts an optional parameter of ‘ipv4’ or               valid_ip[ipv6]
                                     ‘ipv6’ to specify an IP format.
 valid_url               No          Fails if field does not contain a valid URL.
+valid_date              No          Fails if field does not contain a valid date. Accepts an optional parameter                     valid_date[d/m/Y]
+                                    to matches a date format.
 valid_cc_number         Yes         Verifies that the credit card number matches the format used by the specified provider.         valid_cc_number[amex]
                                     Current supported providers are: American Express (amex), China Unionpay (unionpay),
                                     Diners Club CarteBlance (carteblanche), Diners Club (dinersclub), Discover Card (discover),
                                     Interpayment (interpayment), JCB (jcb), Maestro (maestro), Dankort (dankort), NSPK MIR (mir),
-                                    MasterCard (mastercard), Visa (visa), UATP (uatp), Verve (verve),
+                                    Troy (troy), MasterCard (mastercard), Visa (visa), UATP (uatp), Verve (verve),
                                     CIBC Convenience Card (cibc), Royal Bank of Canada Client Card (rbc),
                                     TD Canada Trust Access Card (tdtrust), Scotiabank Scotia Card (scotia), BMO ABM Card (bmoabm),
                                     HSBC Canada Card (hsbc)

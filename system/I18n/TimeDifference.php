@@ -82,7 +82,9 @@ class TimeDifference
 	/**
 	 * Returns the number of years of difference between the two.
 	 *
-	 * @return mixed
+	 * @param bool $raw
+	 *
+	 * @return float|int
 	 */
 	public function getYears(bool $raw=false)
 	{
@@ -98,7 +100,9 @@ class TimeDifference
 	/**
 	 * Returns the number of months difference between the two dates.
 	 *
-	 * @return mixed
+	 * @param bool $raw
+	 *
+	 * @return float|int
 	 */
 	public function getMonths(bool $raw=false)
 	{
@@ -114,7 +118,9 @@ class TimeDifference
 	/**
 	 * Returns the number of weeks difference between the two dates.
 	 *
-	 * @return mixed
+	 * @param bool $raw
+	 *
+	 * @return float|int
 	 */
 	public function getWeeks(bool $raw=false)
 	{
@@ -130,7 +136,9 @@ class TimeDifference
 	/**
 	 * Returns the number of days difference between the two dates.
 	 *
-	 * @return mixed
+	 * @param bool $raw
+	 *
+	 * @return float|int
 	 */
 	public function getDays(bool $raw=false)
 	{
@@ -146,7 +154,9 @@ class TimeDifference
 	/**
 	 * Returns the number of hours difference between the two dates.
 	 *
-	 * @return mixed
+	 * @param bool $raw
+	 *
+	 * @return float|int
 	 */
 	public function getHours(bool $raw=false)
 	{
@@ -162,7 +172,9 @@ class TimeDifference
 	/**
 	 * Returns the number of minutes difference between the two dates.
 	 *
-	 * @return mixed
+	 * @param bool $raw
+	 *
+	 * @return float|int
 	 */
 	public function getMinutes(bool $raw=false)
 	{
@@ -178,7 +190,9 @@ class TimeDifference
 	/**
 	 * Returns the number of seconds difference between the two dates.
 	 *
-	 * @return mixed
+	 * @param bool $raw
+	 *
+	 * @return int
 	 */
 	public function getSeconds(bool $raw=false)
 	{

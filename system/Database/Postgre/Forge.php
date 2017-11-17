@@ -48,8 +48,8 @@ class Forge extends \CodeIgniter\Database\Forge
 	 * @var    string
 	 */
 	protected $dropConstraintStr = 'ALTER TABLE %s DROP CONSTRAINT %s';
-        
-        
+
+
 	/**
 	 * UNSIGNED support
 	 *
@@ -154,7 +154,7 @@ class Forge extends \CodeIgniter\Database\Forge
 				. $field['unique'];
 	}
 
-        
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -210,7 +210,7 @@ class Forge extends \CodeIgniter\Database\Forge
 	}
 
 	//--------------------------------------------------------------------
-        
+
 	/**
 	 * Drop Table
 	 *
@@ -218,18 +218,19 @@ class Forge extends \CodeIgniter\Database\Forge
 	 *
 	 * @param    string $table     Table name
 	 * @param    bool   $if_exists Whether to add an IF EXISTS condition
+	 * @param bool      $cascade
 	 *
 	 * @return    string
 	 */
 	protected function _dropTable($table, $if_exists, $cascade)
 	{
-                $sql = parent::_dropTable($table, $if_exists, $cascade);
-                
-                if($cascade === true)
-                {
-                    $sql .= ' CASCADE';
-                }
-                
+		$sql = parent::_dropTable($table, $if_exists, $cascade);
+
+		if ($cascade === true)
+		{
+			$sql .= ' CASCADE';
+		}
+
 		return $sql;
 	}
 

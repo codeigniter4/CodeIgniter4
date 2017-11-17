@@ -213,6 +213,15 @@ It is possible to nest groups within groups for finer organization if you need i
 
 This would handle the URL at ``admin/users/list``.
 
+If you need to assign options to a group, like a `namespace <#assigning-namespace>`_, do it before the callback::
+
+	$routes->group('api', ['namespace' => 'App\API\v1'], function($routes)
+	{
+		$routes->resource('users');
+	});
+
+This would handle a resource route to the ``App\API\v1\Users`` controller with the ``/api/users`` URI.
+
 Environment Restrictions
 ========================
 
@@ -309,9 +318,7 @@ name::
     $routes->put('photos/(:segment)',      'Photos::update/$1');
     $routes->delete('photos/(:segment)',   'Photos::delete/$1');
 
-.. important:: The routes are matched in the order they are specified, so if you have a resource photos above a get 'photos/poll'
-the show action's route for the resource line will be matched before the get line. To fix this, move the get line above the resource
-line so that it is matched first.
+.. important:: The routes are matched in the order they are specified, so if you have a resource photos above a get 'photos/poll' the show action's route for the resource line will be matched before the get line. To fix this, move the get line above the resource line so that it is matched first.
 
 
 The second parameter accepts an array of options that can be used to modify the routes that are generated. While these
@@ -330,7 +337,7 @@ Change the Controller Used
 You can specify the controller that should be used by passing in the ``controller`` option with the name of
 the controller that should be used::
 
-	$routes->resources('photos', ['controller' =>'App\Gallery']);
+	$routes->resource('photos', ['controller' =>'App\Gallery']);
 
 	// Would create routes like:
 	$routes->get('photos', 'App\Gallery::index');
@@ -341,7 +348,7 @@ Change the Placeholder Used
 By default, the ``segment`` placeholder is used when a resource ID is needed. You can change this by passing
 in the ``placeholder`` option with the new string to use::
 
-	$routes->resources('photos', ['placeholder' => '(:id)']);
+	$routes->resource('photos', ['placeholder' => '(:id)']);
 
 	// Generates routes like:
 	$routes->get('photos/(:id)', 'Photos::show/$1');
@@ -349,17 +356,21 @@ in the ``placeholder`` option with the new string to use::
 Limit the Routes Made
 ---------------------
 
-You can restrict the routes generated with the ``only`` option. This should be an array of method names that should
+You can restrict the routes generated with the ``only`` option. This should be an array or comma separated list of method names that should
 be created. Only routes that match one of these methods will be created. The rest will be ignored::
 
-	$routes->resources('photos', ['only' => ['index', 'show']]);
+	$routes->resource('photos', ['only' => ['index', 'show']]);
+	
+Otherwise you can remove unused routes with the ``except`` option. This option run after ``only``::
+
+	$routes->resource('photos', ['except' => 'new,edit']);
 
 Valid methods are: index, show, create, update, new, edit and delete.
 
 Global Options
 ==============
 
-All of the methods for creating a route (add, get, post, resources, etc) can take an array of options that
+All of the methods for creating a route (add, get, post, resource, etc) can take an array of options that
 can modify the generated routes, or further restrict them. The ``$options`` array is always the last parameter::
 
 	$routes->add('from', 'to', $options);
@@ -371,7 +382,7 @@ can modify the generated routes, or further restrict them. The ``$options`` arra
 	$routes->delete('from', 'to', $options);
 	$routes->patch('from', 'to', $options);
 	$routes->match(['get', 'put'], 'from', 'to', $options);
-	$routes->resources('photos', $options);
+	$routes->resource('photos', $options);
 	$routes->map($array, $options);
 	$routes->group('name', $options, function());
 

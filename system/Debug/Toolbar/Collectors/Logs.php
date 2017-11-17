@@ -67,6 +67,13 @@ class Logs extends BaseCollector
 	 */
 	protected $title = 'Logs';
 
+	/**
+	 * Our collected data.
+	 *
+	 * @var array
+	 */
+	protected $data;
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -77,10 +84,9 @@ class Logs extends BaseCollector
 	 */
 	public function display(): string
 	{
-		$parser = \Config\Services::parser(BASEPATH . 'Debug/Toolbar/Views/', null, false);
+		$this->collectLogs();
 
-		$logger = Services::logger(true);
-		$logs = $logger->logCache;
+		$parser = \Config\Services::parser(BASEPATH . 'Debug/Toolbar/Views/', null, false);
 
 		if (empty($logs) || ! is_array($logs))
 		{
@@ -91,6 +97,48 @@ class Logs extends BaseCollector
 							'logs' => $logs
 						])
 						->render('_logs.tpl');
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Does this collector actually have any data to display?
+	 */
+	public function isEmpty()
+	{
+		$this->collectLogs();
+
+		return empty($this->data);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Display the icon.
+	 *
+	 * Icon from https://icons8.com - 1em package
+	 *
+	 * @return string
+	 */
+	public function icon(): string
+	{
+		return <<<EOD
+<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACYSURBVEhLYxgFJIHU1FSjtLS0i0D8AYj7gEKMEBkqAaAFF4D4ERCvAFrwH4gDoFIMKSkpFkB+OTEYqgUTACXfA/GqjIwMQyD9H2hRHlQKJFcBEiMGQ7VgAqCBvUgK32dmZspCpagGGNPT0/1BLqeF4bQHQJePpiIwhmrBBEADR1MRfgB0+WgqAmOoFkwANHA0FY0CUgEDAwCQ0PUpNB3kqwAAAABJRU5ErkJggg==">
+EOD;
+
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Ensures the data has been collected.
+	 */
+	protected function collectLogs()
+	{
+		if (! is_null($this->data)) return;
+
+		$logger = Services::logger(true);
+		$this->data = $logger->logCache;
 	}
 
 	//--------------------------------------------------------------------

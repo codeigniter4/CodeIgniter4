@@ -275,7 +275,6 @@ class Time extends DateTime
 	 * @param string       $format
 	 * @param string       $datetime
 	 * @param DateTimeZone $timeZone
-	 * @param string|null  $locale
 	 *
 	 * @return \CodeIgniter\I18n\Time
 	 */

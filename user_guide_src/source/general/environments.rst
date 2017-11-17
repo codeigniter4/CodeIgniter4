@@ -46,7 +46,7 @@ like::
 	    include     conf/defaults.conf;
 	    root        /var/www;
 
-	    location    ~* "\.php$" {
+	    location    ~* \.php$ {
 	        fastcgi_param CI_ENVIRONMENT "production";
 	        include conf/fastcgi-php.conf;
 	    }

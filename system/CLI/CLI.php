@@ -215,6 +215,7 @@ class CLI
 			{
 				$extra_output = ' [' .$extra_output_default.', '. implode(', ', $opts) . ']';
 				$validation .= '|in_list['. implode(',', $options) .']';
+				$validation = trim($validation, '|');
 			}
 
 			$default = $options[0];

@@ -292,7 +292,6 @@ class App extends BaseConfig
 	| and can be of any length, though the more random the characters
 	| the better.
 	|
-	| If you use the Model class' hashedID methods, this must be filled out.
 	*/
 	public $salt = '';
 
