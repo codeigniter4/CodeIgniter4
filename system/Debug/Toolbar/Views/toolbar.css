@@ -94,14 +94,26 @@
 	font-size: 16px;
 	line-height: 36px;
 	font-weight: 300;
-	margin: 0 2em 0 0;
+	margin: 0 16px 0 0;
 	padding: 0;
 	text-align: left;
 	display: inline-block;
 	position: absolute;
-	right: 0;
+	right: 30px;
 	top: 0;
 	bottom: 0;
+}
+
+#debug-bar-link {
+	padding: 6px;
+	position: absolute;
+	display: inline-block;
+	top: 0;
+	bottom: 0;
+	right: 10px;
+	font-size: 16px;
+	line-height: 36px;
+	width: 24px;
 }
 
 #debug-bar h2 {
