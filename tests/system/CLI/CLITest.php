@@ -130,57 +130,51 @@ EOT;
 		$this->assertEquals('1234 5678 90'. PHP_EOL .'abc de fghij'. PHP_EOL .'0987654321', CLI::wrap('1234 5678 90'. PHP_EOL .'abc de fghij'. PHP_EOL .'0987654321'));
 	}
 
-	public function testTable()
+	/**
+	 * @dataProvider tableProvider
+	 *
+	 * @param  array $tbody
+	 * @param  array $thead
+	 * @param  array $expected
+	 */
+	public function testTable($tbody, $thead, $expected)
 	{
-		$head = ['ID', 'Title'];
+		CLI::table($tbody, $thead);
+		$this->assertEquals(CLITestStreamFilter::$buffer, $expected);
+	}
 
-		$oneRow      = ['id' => 1, 'foo' => 'bar'];
-		$oneExpected = <<<TABLE
-+---+-----+
-| 1 | bar |
-+---+-----+
-
-TABLE;
-		$this->assertEquals($oneExpected, CLI::table([$oneRow]));
-		//CLI::table([$oneRow]);
-		//$this->assertEquals($oneExpected, CLITestStreamFilter::$buffer);
-
-		$oneExpected = <<<TABLE
-+----+-------+
-| ID | Title |
-+----+-------+
-| 1  | bar   |
-+----+-------+
-
-TABLE;
-		$this->assertEquals($oneExpected, CLI::table([$oneRow], $head));
-
-		$manyRows     = [
+	public function tableProvider()
+	{
+		$head      = ['ID', 'Title'];
+		$one_row   = [['id' => 1, 'foo' => 'bar']];
+		$many_rows = [
 			['id' => 1, 'foo' => 'bar'],
 			['id' => 2, 'foo' => 'bar * 2'],
 			['id' => 3, 'foo' => 'bar + bar + bar'],
 		];
-		$manyExpected = <<<TABLE
-+---+-----------------+
-| 1 | bar             |
-| 2 | bar * 2         |
-| 3 | bar + bar + bar |
-+---+-----------------+
 
-TABLE;
-		$this->assertEquals($manyExpected, CLI::table($manyRows));
-
-		$manyExpected = <<<TABLE
-+----+-----------------+
-| ID | Title           |
-+----+-----------------+
-| 1  | bar             |
-| 2  | bar * 2         |
-| 3  | bar + bar + bar |
-+----+-----------------+
-
-TABLE;
-		$this->assertEquals($manyExpected, CLI::table($manyRows, $head));
+		return [
+			[$one_row, [], "+---+-----+\n" .
+						   "| 1 | bar |\n" .
+						   "+---+-----+\n"],
+			[$one_row, $head, "+----+-------+\n" .
+							  "| ID | Title |\n" .
+							  "+----+-------+\n" .
+							  "| 1  | bar   |\n" .
+							  "+----+-------+\n"],
+			[$many_rows, [], "+---+-----------------+\n" .
+							 "| 1 | bar             |\n" .
+							 "| 2 | bar * 2         |\n" .
+							 "| 3 | bar + bar + bar |\n" .
+							 "+---+-----------------+\n"],
+			[$many_rows, $head, "+----+-----------------+\n" .
+								"| ID | Title           |\n" .
+								"+----+-----------------+\n" .
+								"| 1  | bar             |\n" .
+								"| 2  | bar * 2         |\n" .
+								"| 3  | bar + bar + bar |\n" .
+								"+----+-----------------+\n"],
+		];
 	}
 }
 

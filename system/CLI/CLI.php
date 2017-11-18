@@ -755,19 +755,9 @@ class CLI
 	 * Returns a well formated table
 	 *
 	 * @param  array  $tbody List of rows
-	 *         			[
-	 *         				['id' => 1, 'foo' => 'bar']
-	 *         			]
 	 * @param  array  $thead List of columns
-	 *         			['ID', 'Foo']
 	 *
 	 * @return string
-	 *
-	 * +----+-----+
-	 * | ID | Foo |
-	 * +----+-----+
-	 * | 1  | bar |
-	 * +----+-----+
 	 */
 	public static function table(array $tbody, array $thead = [])
 	{
@@ -797,20 +787,20 @@ class CLI
 		$max_cols_lengths = [];
 
 		// Read row by row and define the longest columns
-		for ($i = 0; $i < $total_rows; $i++)
+		for ($row = 0; $row < $total_rows; $row++)
 		{
 			$column = 0; // Current column index
-			foreach ($table_rows[$i] as $col)
+			foreach ($table_rows[$row] as $col)
 			{
 				// Sets the size of this column in the current row
-				$all_cols_lengths[$i][$column] = strlen($col);
+				$all_cols_lengths[$row][$column] = strlen($col);
 
 				// If the current column does not have a value among the larger ones
 				// or the value of this is greater than the existing one
 				// then, now, this assumes the maximum length
-				if (! isset($max_cols_lengths[$column]) || $all_cols_lengths[$i][$column] > $max_cols_lengths[$column])
+				if (! isset($max_cols_lengths[$column]) || $all_cols_lengths[$row][$column] > $max_cols_lengths[$column])
 				{
-					$max_cols_lengths[$column] = $all_cols_lengths[$i][$column];
+					$max_cols_lengths[$column] = $all_cols_lengths[$row][$column];
 				}
 
 				// We can go check the size of the next column...
@@ -820,15 +810,15 @@ class CLI
 
 		// Read row by row and add spaces at the end of the columns
 		// to match the exact column length
-		for ($i = 0; $i < $total_rows; $i++)
+		for ($row = 0; $row < $total_rows; $row++)
 		{
 			$column = 0;
-			foreach ($table_rows[$i] as $col)
+			foreach ($table_rows[$row] as $col)
 			{
 				$diff = $max_cols_lengths[$column] - strlen($col);
 				if ($diff)
 				{
-					$table_rows[$i][$column] = $table_rows[$i][$column] . str_repeat(' ', $diff);
+					$table_rows[$row][$column] = $table_rows[$row][$column] . str_repeat(' ', $diff);
 				}
 				$column++;
 			}
@@ -837,13 +827,13 @@ class CLI
 		$table = '';
 
 		// Joins columns and append the well formatted rows to the table
-		for ($i = 0; $i < $total_rows; $i++)
+		for ($row = 0; $row < $total_rows; $row++)
 		{
 			// Set the table border-top
-			if ($i === 0)
+			if ($row === 0)
 			{
 				$cols = '+';
-				foreach ($table_rows[$i] as $col)
+				foreach ($table_rows[$row] as $col)
 				{
 					$cols .= str_repeat('-', strlen($col) + 2) . '+';
 				}
@@ -851,17 +841,16 @@ class CLI
 			}
 
 			// Set the columns borders
-			$table .= '| ' . implode(' | ', $table_rows[$i]) . ' |' . PHP_EOL;
+			$table .= '| ' . implode(' | ', $table_rows[$row]) . ' |' . PHP_EOL;
 
 			// Set the thead and table borders-bottom
-			if ($i === 0 && ! empty($thead) || $i + 1 === $total_rows)
+			if ($row === 0 && ! empty($thead) || $row + 1 === $total_rows)
 			{
 				$table .= $cols . PHP_EOL;
 			}
 		}
 
-		//fwrite(STDOUT, $table . PHP_EOL);
-		return $table;
+		fwrite(STDOUT, $table);
 	}
 
 	//--------------------------------------------------------------------
