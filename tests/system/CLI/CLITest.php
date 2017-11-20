@@ -129,6 +129,53 @@ EOT;
 		$this->assertEquals('1234 5678 90'. PHP_EOL .'  abc de fghij'. PHP_EOL .'  0987654321', CLI::wrap('1234 5678 90'. PHP_EOL .'abc de fghij'. PHP_EOL .'0987654321', 999, 2));
 		$this->assertEquals('1234 5678 90'. PHP_EOL .'abc de fghij'. PHP_EOL .'0987654321', CLI::wrap('1234 5678 90'. PHP_EOL .'abc de fghij'. PHP_EOL .'0987654321'));
 	}
+
+	/**
+	 * @dataProvider tableProvider
+	 *
+	 * @param  array $tbody
+	 * @param  array $thead
+	 * @param  array $expected
+	 */
+	public function testTable($tbody, $thead, $expected)
+	{
+		CLI::table($tbody, $thead);
+		$this->assertEquals(CLITestStreamFilter::$buffer, $expected);
+	}
+
+	public function tableProvider()
+	{
+		$head      = ['ID', 'Title'];
+		$one_row   = [['id' => 1, 'foo' => 'bar']];
+		$many_rows = [
+			['id' => 1, 'foo' => 'bar'],
+			['id' => 2, 'foo' => 'bar * 2'],
+			['id' => 3, 'foo' => 'bar + bar + bar'],
+		];
+
+		return [
+			[$one_row, [], "+---+-----+\n" .
+						   "| 1 | bar |\n" .
+						   "+---+-----+\n"],
+			[$one_row, $head, "+----+-------+\n" .
+							  "| ID | Title |\n" .
+							  "+----+-------+\n" .
+							  "| 1  | bar   |\n" .
+							  "+----+-------+\n"],
+			[$many_rows, [], "+---+-----------------+\n" .
+							 "| 1 | bar             |\n" .
+							 "| 2 | bar * 2         |\n" .
+							 "| 3 | bar + bar + bar |\n" .
+							 "+---+-----------------+\n"],
+			[$many_rows, $head, "+----+-----------------+\n" .
+								"| ID | Title           |\n" .
+								"+----+-----------------+\n" .
+								"| 1  | bar             |\n" .
+								"| 2  | bar * 2         |\n" .
+								"| 3  | bar + bar + bar |\n" .
+								"+----+-----------------+\n"],
+		];
+	}
 }
 
 

@@ -750,6 +750,110 @@ class CLI
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Returns a well formated table
+	 *
+	 * @param  array  $tbody List of rows
+	 * @param  array  $thead List of columns
+	 *
+	 * @return string
+	 */
+	public static function table(array $tbody, array $thead = [])
+	{
+		// All the rows in the table will be here until the end
+		$table_rows = [];
+
+		// We need only indexes and not keys
+		if (! empty($thead))
+		{
+			$table_rows[] = array_values($thead);
+		}
+
+		foreach ($tbody as $tr)
+		{
+			$table_rows[] = array_values($tr);
+		}
+
+		// Yes, it really is necessary to know this count
+		$total_rows = count($table_rows);
+
+		// Store all columns lengths
+		// $all_cols_lengths[row][column] = length
+		$all_cols_lengths = [];
+
+		// Store maximum lengths by column
+		// $max_cols_lengths[column] = length
+		$max_cols_lengths = [];
+
+		// Read row by row and define the longest columns
+		for ($row = 0; $row < $total_rows; $row++)
+		{
+			$column = 0; // Current column index
+			foreach ($table_rows[$row] as $col)
+			{
+				// Sets the size of this column in the current row
+				$all_cols_lengths[$row][$column] = strlen($col);
+
+				// If the current column does not have a value among the larger ones
+				// or the value of this is greater than the existing one
+				// then, now, this assumes the maximum length
+				if (! isset($max_cols_lengths[$column]) || $all_cols_lengths[$row][$column] > $max_cols_lengths[$column])
+				{
+					$max_cols_lengths[$column] = $all_cols_lengths[$row][$column];
+				}
+
+				// We can go check the size of the next column...
+				$column++;
+			}
+		}
+
+		// Read row by row and add spaces at the end of the columns
+		// to match the exact column length
+		for ($row = 0; $row < $total_rows; $row++)
+		{
+			$column = 0;
+			foreach ($table_rows[$row] as $col)
+			{
+				$diff = $max_cols_lengths[$column] - strlen($col);
+				if ($diff)
+				{
+					$table_rows[$row][$column] = $table_rows[$row][$column] . str_repeat(' ', $diff);
+				}
+				$column++;
+			}
+		}
+
+		$table = '';
+
+		// Joins columns and append the well formatted rows to the table
+		for ($row = 0; $row < $total_rows; $row++)
+		{
+			// Set the table border-top
+			if ($row === 0)
+			{
+				$cols = '+';
+				foreach ($table_rows[$row] as $col)
+				{
+					$cols .= str_repeat('-', strlen($col) + 2) . '+';
+				}
+				$table .= $cols . PHP_EOL;
+			}
+
+			// Set the columns borders
+			$table .= '| ' . implode(' | ', $table_rows[$row]) . ' |' . PHP_EOL;
+
+			// Set the thead and table borders-bottom
+			if ($row === 0 && ! empty($thead) || $row + 1 === $total_rows)
+			{
+				$table .= $cols . PHP_EOL;
+			}
+		}
+
+		fwrite(STDOUT, $table);
+	}
+
+	//--------------------------------------------------------------------
 }
 
 // Ensure the class is initialized.
