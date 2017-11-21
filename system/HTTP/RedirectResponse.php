@@ -102,7 +102,7 @@ class RedirectResponse extends Response
 	{
 		$this->ensureSession();
 
-		return $this->redirect(previous_url(), $code, $method);
+		return $this->redirect(previous_url(), $method, $code);
 	}
 
 
