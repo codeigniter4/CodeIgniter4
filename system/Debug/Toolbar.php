@@ -241,6 +241,9 @@ class Toolbar
 		// simply returning the loading script
 		if ($request->getGet('debugbar') !== null)
 		{
+			// Let the browser know that we are sending javascript
+			header('Content-Type: application/javascript');
+
 			ob_start();
 			include(BASEPATH.'Debug/Toolbar/toolbarloader.js.php');
 			$output = ob_get_contents();
