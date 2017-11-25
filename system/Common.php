@@ -117,13 +117,6 @@ if ( ! function_exists('view'))
 			unset($options['saveData']);
 		}
 
-		// Automatically inject any validation errors into the view
-		// that may have come from 'redirect()->withInput()'.
-		if (isset($_SESSION) && ! empty($_SESSION['errors']))
-		{
-			$data['errors'] = $_SESSION['errors'];
-		}
-
 		return $renderer->setData($data, 'raw')
 						->render($name, $options, $saveData);
 	}
