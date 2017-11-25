@@ -78,6 +78,32 @@ Service Accessors
 
 	For more information, see the :doc:`Localization </libraries/localization>` page.
 
+.. php:function:: old( $key[, $default] )
+
+	:param string $key: The name of the old form data to check for.
+	:param mixed  $default: The default value to return if $key doesn't exist.
+	:returns: The value of the defined key, or the default value.
+	:rtype: mixed
+
+	Provides a simple way to access "old input data" from submitting a form.
+
+	Example::
+
+		// in controller, checking form submittal
+		if (! $model->save($user))
+		{
+			// 'withInput' is what specifies "old data"
+			// should be saved.
+			return redirect()->back()->withInput();
+		}
+
+		// In the view
+		<input type="email" name="email" value="<?= old('email') ?>">
+
+	.. :note:: If you are using the form helper, this feature is built-in. You only
+		need to use this function when not using the form helper.
+
+
 .. php:function:: session( [$key] )
 
 	:param string $key: The name of the session item to check for.

@@ -709,6 +709,42 @@ if ( ! function_exists('force_https'))
 
 //--------------------------------------------------------------------
 
+if (! function_exists('old'))
+{
+	/**
+	 * Provides access to "old input" that was set in the session
+	 * during a redirect()->withInput().
+	 *
+	 * @param string $key
+	 * @param null   $default
+	 *
+	 * @return mixed|null
+	 */
+	function old(string $key, $default=null)
+	{
+		$request = Services::request();
+
+		$value = $request->getOldInput($key);
+
+		// Return the default value if nothing
+		// found in the old input.
+		if (is_null($value))
+		{
+			return $default;
+		}
+
+		// If the result was serialized array or string, then unserialize it for use...
+		if (substr($value, 0, 2) == 'a:' || substr($value, 0, 2) == 's:')
+		{
+			$value = unserialize($value);
+		}
+
+		return $value;
+	}
+}
+
+//--------------------------------------------------------------------
+
 if ( ! function_exists('redirect'))
 {
 
