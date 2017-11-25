@@ -1,5 +1,5 @@
 
-document.addEventListener('DOMContentLoaded', loadDoc, false);
+document.addEventListener('DOMContentLoaded', loadDoc, false );
 
 function loadDoc() {
     var time = document.getElementById("debugbar_loader").getAttribute("data-time");
@@ -8,8 +8,10 @@ function loadDoc() {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
-            var x = document.body.innerHTML;
-            document.body.innerHTML = x + this.responseText;
+        	var toolbar = document.createElement( 'div' );
+        	toolbar.setAttribute( 'id', 'toolbarContainer' );
+        	toolbar.innerHTML = this.responseText;
+            document.body.appendChild( toolbar );
             eval(document.getElementById("toolbar_js").innerHTML);
             if (typeof ciDebugBar === 'object') {
                 ciDebugBar.init();
