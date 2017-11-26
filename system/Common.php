@@ -285,7 +285,8 @@ if ( ! function_exists('session'))
 		// Returning a single item?
 		if (is_string($val))
 		{
-			return $_SESSION[$val] ?? null;
+			helper('array');
+			return dot_array_search($val, $_SESSION);
 		}
 
 		return \Config\Services::session();
