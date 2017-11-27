@@ -1154,6 +1154,43 @@ class Model
 	//--------------------------------------------------------------------
 
 	/**
+	 * Returns the model's defined validation rules so that they
+	 * can be used elsewhere, if needed.
+	 *
+	 * @return array
+	 */
+	public function getValidationRules(array $options=[])
+	{
+		$rules = $this->validationRules;
+
+		if (isset($options['except']))
+		{
+			$rules = array_diff_key($rules, array_flip($options['except']));
+		}
+		elseif (isset($options['only']))
+		{
+			$rules = array_intersect_key($rules, array_flip($options['only']));
+		}
+		
+		return $rules;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns the model's define validation messages so they
+	 * can be used elsewhere, if needed.
+	 *
+	 * @return array
+	 */
+	public function getValidationMessages()
+	{
+		return $this->validationMessages;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * A simple event trigger for Model Events that allows additional
 	 * data manipulation within the model. Specifically intended for
 	 * usage by child models this can be used to format data,
