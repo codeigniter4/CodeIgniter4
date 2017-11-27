@@ -180,12 +180,15 @@ class Forge extends \CodeIgniter\Database\Forge
 				$attributes['TYPE'] = 'SMALLINT';
 				$attributes['UNSIGNED'] = false;
 				return;
+				break;
 			case 'MEDIUMINT':
 				$attributes['TYPE'] = 'INTEGER';
 				$attributes['UNSIGNED'] = false;
 				return;
+				break;
 			case 'DATETIME':
 				$attributes['TYPE'] = 'TIMESTAMP';
+				break;
 			default:
 				return;
 		}
