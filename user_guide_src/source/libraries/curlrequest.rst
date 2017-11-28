@@ -23,7 +23,7 @@ The library can be loaded either manually or through the :doc:`Services class </
 
 To load with the Services class call the ``curlrequest()`` method::
 
-	$client = \CodeIgniter\HTTP\Services::curlrequest();
+	$client = \Config\Services::curlrequest();
 
 You can pass in an array of default options as the first parameter to modify how cURL will handle the request.
 The options are described later in this document::
@@ -41,7 +41,7 @@ parameter is a Response object. The fourth parameter is the optional ``$options`
 	$client = new \CodeIgniter\HTTP\CURLRequest(
 		new \Config\App(),
 		new \CodeIgniter\HTTP\URI(),
-		new \CodeIgniter\HTTP\Response(),
+		new \CodeIgniter\HTTP\Response(new \Config\App()),
 		$options
 	);
 
@@ -60,7 +60,7 @@ Most communication is done through the ``request()`` method, which fires off the
 a Response instance to you. This takes the HTTP method, the url and an array of options as the parameters.
 ::
 
-	$client = Services::curlrequest();
+	$client = \Config\Services::curlrequest();
 
 	$response = $client->request('GET', 'https://api.github.com/user', [
 		'auth' => ['user', 'pass']
@@ -69,9 +69,9 @@ a Response instance to you. This takes the HTTP method, the url and an array of 
 Since the response is an instance of ``CodeIgniter\HTTP\Response`` you have all of the normal information
 available to you::
 
-	echo $response->statusCode();
-	echo $response->body();
-	echo $response->header('Content-Type');
+	echo $response->getStatusCode();
+	echo $response->getBody();
+	echo $response->getHeader('Content-Type');
 	$language = $response->negotiateLanguage(['en', 'fr']);
 
 While the ``request()`` method is the most flexible, you can also use the following shortcut methods. They
@@ -92,7 +92,7 @@ A ``base_uri`` can be set as one of the options during the instantiation of the 
 set a base URI, and then make all requests with that client using relative URLs. This is especially handy
 when working with APIs::
 
-	$client = Services::curlrequest([
+	$client = \Config\Services::curlrequest([
 		'base_uri' => 'https://example.com/api/v1/'
 	]);
 
@@ -126,28 +126,28 @@ methods. The most commonly used methods let you determine the response itself.
 
 You can get the status code and reason phrase of the response::
 
-	$code   = $response->statusCode();    // 200
-	$reason = $response->reason();      // OK
+	$code   = $response->getStatusCode();    // 200
+	$reason = $response->getReason();      // OK
 
 You can retrieve headers from the response::
 
-	// Get a header
-	echo $response->header('Content-type');
+	// Get a header line
+	echo $response->getHeaderLine('Content-Type');
 
 	// Get all headers
-	foreach ($response->headers() as $name => $value)
+	foreach ($response->getHeaders() as $name => $value)
 	{
-		echo $name .': '. $response->headerLine($name) ."\n";
+		echo $name .': '. $response->getHeaderLine($name) ."\n";
 	}
 
-The body can be retrieved using the ``body()`` method::
+The body can be retrieved using the ``getBody()`` method::
 
-	$body = $response->body();
+	$body = $response->getBody();
 
 The body is the raw body provided by the remote getServer. If the content type requires formatting, you will need
 to ensure that your script handles that::
 
-	if (strpos($response->header('content-type'), 'application/json') !== false)
+	if (strpos($response->getHeader('content-type'), 'application/json') !== false)
 	{
 		$body = json_decode($body);
 	}
@@ -298,7 +298,7 @@ By default, CURLRequest will fail if the HTTP code returned is greater than or e
     // Will fail verbosely
 
     $res = $client->request('GET', '/status/500', ['http_errors' => false]);
-    echo $res->statusCode();
+    echo $res->getStatusCode();
     // 500
 
 json

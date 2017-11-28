@@ -65,7 +65,7 @@ The handlers are configured in the main configuration file, in the ``$handlers``
 an array of handlers and their configuration. Each handler is specified with the key being the fully
 name-spaced class name. The value will be an array of varying properties, specific to each handler.
 Each handler's section will have one property in common: ``handles``, which is an array of log level
-__names__ that the handler will log information for.
+*names* that the handler will log information for.
 ::
 
 	public $handlers = [

@@ -737,7 +737,6 @@ class ContentSecurityPolicy
 	 *
 	 * @param string            $name
 	 * @param array|string|null $values
-	 * @param ResponseInterface $response
 	 */
 	protected function addToHeader(string $name, $values = null)
 	{

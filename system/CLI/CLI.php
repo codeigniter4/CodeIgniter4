@@ -167,12 +167,9 @@ class CLI
 	//--------------------------------------------------------------------
 
 	/**
-	 * Asks the user for input.  This can have either 1 or 2 arguments.
+	 * Asks the user for input.
 	 *
 	 * Usage:
-	 *
-	 * // Waits for any key press
-	 * CLI::prompt();
 	 *
 	 * // Takes any input
 	 * $color = CLI::prompt('What is your favorite color?');
@@ -180,105 +177,91 @@ class CLI
 	 * // Takes any input, but offers default
 	 * $color = CLI::prompt('What is your favourite color?', 'white');
 	 *
-	 * // Will only accept the options in the array
-	 * $ready = CLI::prompt('Are you ready?', array('y','n'));
+	 * // Will validate options with the in_list rule and accept only if one of the list
+	 * $color = CLI::prompt('What is your favourite color?', array('red','blue'));
 	 *
-	 * @return    string    The user input
+	 * // Do not provide options but requires a valid email
+	 * $email = CLI::prompt('What is your email?', null, 'required|valid_email');
+	 *
+	 * @param  string       $field      Output "field" question
+	 * @param  string|array $options    String to a defaul value, array to a list of options (the first option will be the default value)
+	 * @param  string       $validation Validation rules
+	 *
+	 * @return string                   The user input
 	 */
-	public static function prompt(): string
+	public static function prompt($field, $options = null, $validation = null): string
 	{
-		$args = func_get_args();
+		$extra_output = '';
+		$default = '';
 
-		$options = [];
-		$output = '';
-		$default = null;
-
-		// How many we got
-		$arg_count = count($args);
-
-		// Is the last argument a boolean? True means required
-		$required = end($args) === true;
-
-		// Reduce the argument count if required was passed, we don't care about that anymore
-		$required === true && -- $arg_count;
-
-		// This method can take a few crazy combinations of arguments, so lets work it out
-		switch ($arg_count)
+		if (is_string($options))
 		{
-			case 2:
-
-				// E.g: $ready = CLI::prompt('Are you ready?', array('y','n'));
-				if (is_array($args[1]))
-				{
-					list($output, $options) = $args;
-				}
-
-				// E.g: $color = CLI::prompt('What is your favourite color?', 'white');
-				elseif (is_string($args[1]))
-				{
-					list($output, $default) = $args;
-				}
-
-				break;
-
-			case 1:
-
-				// No question (probably been asked already) so just show options
-				// E.g: $ready = CLI::prompt(array('y','n'));
-				if (is_array($args[0]))
-				{
-					$options = $args[0];
-				}
-
-				// Question without options
-				// E.g: $ready = CLI::prompt('What did you do today?');
-				elseif (is_string($args[0]))
-				{
-					$output = $args[0];
-				}
-
-				break;
+			$extra_output = ' [' . static::color($options, 'white') .']';
+			$default = $options;
 		}
 
-		// If a question has been asked with the read
-		if ($output !== '')
+		if (is_array($options) && count($options))
 		{
-			$extra_output = '';
+			$opts = $options;
+			$extra_output_default = static::color($opts[0], 'white');
 
-			if ($default !== null)
+			unset($opts[0]);
+
+			if (empty($opts))
 			{
-				$extra_output = ' [ Default: "' . $default . '" ]';
+				$extra_output = $extra_output_default;
 			}
-			elseif (! empty($options))
+			else
 			{
-				$extra_output = ' [ ' . implode(', ', $options) . ' ]';
+				$extra_output = ' [' .$extra_output_default.', '. implode(', ', $opts) . ']';
+				$validation .= '|in_list['. implode(',', $options) .']';
+				$validation = trim($validation, '|');
 			}
 
-			fwrite(STDOUT, $output . $extra_output . ': ');
+			$default = $options[0];
 		}
+
+		fwrite(STDOUT, $field . $extra_output . ': ');
 
 		// Read the input from keyboard.
-		$input = trim(static::input()) ?: $default;
+		$input = trim(static::input()) ? : $default;
 
-		// No input provided and we require one (default will stop this being called)
-		if (empty($input) && $required === true)
+		if (isset($validation))
 		{
-			static::write('This is required.');
-			static::newLine();
-
-			$input = forward_static_call_array([__CLASS__, 'prompt'], $args);
-		}
-
-		// If options are provided and the choice is not in the array, tell them to try again
-		if ( ! empty($options) && ! in_array($input, $options))
-		{
-			static::write('This is not a valid option. Please try again.');
-			static::newLine();
-
-			$input = forward_static_call_array([__CLASS__, 'prompt'], $args);
+			while (! static::validate($field, $input, $validation))
+			{
+				$input = static::prompt($field, $options, $validation);
+			}
 		}
 
 		return empty($input) ? '' : $input;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Validate one prompt "field" at a time
+	 *
+	 * @param  string $field Prompt "field" output
+	 * @param  string $value Input value
+	 * @param  string $rules Validation rules
+	 *
+	 * @return boolean
+	 */
+	protected static function validate($field, $value, $rules)
+	{
+		$validation = \Config\Services::validation(null, false);
+		$validation->setRule($field, $rules);
+		$validation->run([$field => $value]);
+
+		if ($validation->hasError($field))
+		{
+			static::error($validation->getError($field));
+
+			return false;
+		}
+
+		return true;
 	}
 
 	//--------------------------------------------------------------------
@@ -474,7 +457,7 @@ class CLI
 	 */
 	public static function getWidth(int $default = 80): int
 	{
-		if (static::isWindows())
+		if (static::isWindows() || (int) shell_exec('tput cols') == 0)
 		{
 			return $default;
 		}
@@ -764,6 +747,110 @@ class CLI
 		}
 
 		return $out;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns a well formated table
+	 *
+	 * @param  array  $tbody List of rows
+	 * @param  array  $thead List of columns
+	 *
+	 * @return string
+	 */
+	public static function table(array $tbody, array $thead = [])
+	{
+		// All the rows in the table will be here until the end
+		$table_rows = [];
+
+		// We need only indexes and not keys
+		if (! empty($thead))
+		{
+			$table_rows[] = array_values($thead);
+		}
+
+		foreach ($tbody as $tr)
+		{
+			$table_rows[] = array_values($tr);
+		}
+
+		// Yes, it really is necessary to know this count
+		$total_rows = count($table_rows);
+
+		// Store all columns lengths
+		// $all_cols_lengths[row][column] = length
+		$all_cols_lengths = [];
+
+		// Store maximum lengths by column
+		// $max_cols_lengths[column] = length
+		$max_cols_lengths = [];
+
+		// Read row by row and define the longest columns
+		for ($row = 0; $row < $total_rows; $row++)
+		{
+			$column = 0; // Current column index
+			foreach ($table_rows[$row] as $col)
+			{
+				// Sets the size of this column in the current row
+				$all_cols_lengths[$row][$column] = strlen($col);
+
+				// If the current column does not have a value among the larger ones
+				// or the value of this is greater than the existing one
+				// then, now, this assumes the maximum length
+				if (! isset($max_cols_lengths[$column]) || $all_cols_lengths[$row][$column] > $max_cols_lengths[$column])
+				{
+					$max_cols_lengths[$column] = $all_cols_lengths[$row][$column];
+				}
+
+				// We can go check the size of the next column...
+				$column++;
+			}
+		}
+
+		// Read row by row and add spaces at the end of the columns
+		// to match the exact column length
+		for ($row = 0; $row < $total_rows; $row++)
+		{
+			$column = 0;
+			foreach ($table_rows[$row] as $col)
+			{
+				$diff = $max_cols_lengths[$column] - strlen($col);
+				if ($diff)
+				{
+					$table_rows[$row][$column] = $table_rows[$row][$column] . str_repeat(' ', $diff);
+				}
+				$column++;
+			}
+		}
+
+		$table = '';
+
+		// Joins columns and append the well formatted rows to the table
+		for ($row = 0; $row < $total_rows; $row++)
+		{
+			// Set the table border-top
+			if ($row === 0)
+			{
+				$cols = '+';
+				foreach ($table_rows[$row] as $col)
+				{
+					$cols .= str_repeat('-', strlen($col) + 2) . '+';
+				}
+				$table .= $cols . PHP_EOL;
+			}
+
+			// Set the columns borders
+			$table .= '| ' . implode(' | ', $table_rows[$row]) . ' |' . PHP_EOL;
+
+			// Set the thead and table borders-bottom
+			if ($row === 0 && ! empty($thead) || $row + 1 === $total_rows)
+			{
+				$table .= $cols . PHP_EOL;
+			}
+		}
+
+		fwrite(STDOUT, $table);
 	}
 
 	//--------------------------------------------------------------------

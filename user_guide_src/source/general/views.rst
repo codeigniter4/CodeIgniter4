@@ -35,7 +35,7 @@ To load and display a particular view file you will use the following function::
 
 	echo view('name');
 
-Where _name_ is the name of your view file.
+Where *name* is the name of your view file.
 
 .. important:: The .php file extension does not need to be specified, but all views are expected to end with the .php extension.
 

@@ -273,8 +273,10 @@ class Request extends Message implements RequestInterface
 	/**
 	 * Fetch an item from the $_SERVER array.
 	 *
-	 * @param null $index   Index for item to be fetched from $_SERVER
-	 * @param null $filter  A filter name to be applied
+	 * @param int|null $index  Index for item to be fetched from $_SERVER
+	 * @param int|null $filter A filter name to be applied
+	 * @param null     $flags
+	 *
 	 * @return mixed
 	 */
 	public function getServer($index = null, $filter = null, $flags = null)
@@ -287,8 +289,10 @@ class Request extends Message implements RequestInterface
 	/**
 	 * Fetch an item from the $_ENV array.
 	 *
-	 * @param null $index   Index for item to be fetched from $_ENV
-	 * @param null $filter  A filter name to be applied
+	 * @param null $index  Index for item to be fetched from $_ENV
+	 * @param null $filter A filter name to be applied
+	 * @param null $flags
+	 *
 	 * @return mixed
 	 */
 	public function getEnv($index = null, $filter = null, $flags = null)
@@ -308,9 +312,10 @@ class Request extends Message implements RequestInterface
 	 *
 	 * http://php.net/manual/en/filter.filters.sanitize.php
 	 *
-	 * @param int  $type Input filter constant
+	 * @param int          $type   Input filter constant
 	 * @param string|array $index
-	 * @param int $filter Filter constant
+	 * @param int          $filter Filter constant
+	 * @param null         $flags
 	 *
 	 * @return mixed
 	 */

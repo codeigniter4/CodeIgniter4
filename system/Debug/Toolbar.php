@@ -27,15 +27,16 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package      CodeIgniter
+ * @author       CodeIgniter Dev Team
+ * @copyright    2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license      https://opensource.org/licenses/MIT	MIT License
+ * @link         https://codeigniter.com
+ * @since        Version 3.0.0
  * @filesource
  */
 use CodeIgniter\Config\BaseConfig;
+use Config\Services;
 
 /**
  * Debug Toolbar
@@ -72,7 +73,7 @@ class Toolbar
 	{
 		foreach ($config->toolbarCollectors as $collector)
 		{
-			if ( ! class_exists($collector))
+			if (! class_exists($collector))
 			{
 				// @todo Log this!
 				continue;
@@ -102,14 +103,14 @@ class Toolbar
 		// Data items used within the view.
 		$collectors = $this->collectors;
 
-		$totalTime = $totalTime * 1000;
-		$totalMemory = number_format((memory_get_peak_usage() - $startMemory) / 1048576, 3);
-		$segmentDuration = $this->roundTo($totalTime / 7, 5);
-		$segmentCount = (int) ceil($totalTime / $segmentDuration);
-		$varData = $this->collectVarData();
+		$totalTime       = $totalTime*1000;
+		$totalMemory     = number_format((memory_get_peak_usage()-$startMemory)/1048576, 3);
+		$segmentDuration = $this->roundTo($totalTime/7, 5);
+		$segmentCount    = (int)ceil($totalTime/$segmentDuration);
+		$varData         = $this->collectVarData();
 
 		ob_start();
-		include(__DIR__ . '/Toolbar/Views/toolbar.tpl.php');
+		include(__DIR__.'/Toolbar/Views/toolbar.tpl.php');
 		$output = ob_get_contents();
 		ob_end_clean();
 
@@ -123,11 +124,12 @@ class Toolbar
 	 *
 	 * @param int $segmentCount
 	 * @param int $segmentDuration
+	 *
 	 * @return string
 	 */
 	protected function renderTimeline(int $segmentCount, int $segmentDuration): string
 	{
-		$displayTime = $segmentCount * $segmentDuration;
+		$displayTime = $segmentCount*$segmentDuration;
 
 		$rows = $this->collectTimelineData();
 
@@ -138,14 +140,15 @@ class Toolbar
 			$output .= "<tr>";
 			$output .= "<td>{$row['name']}</td>";
 			$output .= "<td>{$row['component']}</td>";
-			$output .= "<td style='text-align: right'>" . number_format($row['duration'] * 1000, 2) . " ms</td>";
+			$output .= "<td style='text-align: right'>".number_format($row['duration']*1000, 2)." ms</td>";
 			$output .= "<td colspan='{$segmentCount}' style='overflow: hidden'>";
 
-			$offset = ((($row['start'] - $this->startTime) * 1000) /
-					$displayTime) * 100;
-			$length = (($row['duration'] * 1000) / $displayTime) * 100;
+			$offset = ((($row['start']-$this->startTime)*1000)/
+			           $displayTime)*100;
+			$length = (($row['duration']*1000)/$displayTime)*100;
 
-			$output .= "<span class='timer' style='left: {$offset}%; width: {$length}%;' title='" . number_format($length, 2) . "%'></span>";
+			$output .= "<span class='timer' style='left: {$offset}%; width: {$length}%;' title='".number_format($length,
+					2)."%'></span>";
 
 			$output .= "</td>";
 
@@ -169,7 +172,7 @@ class Toolbar
 		// Collect it
 		foreach ($this->collectors as $collector)
 		{
-			if ( ! $collector->hasTimelineData())
+			if (! $collector->hasTimelineData())
 			{
 				continue;
 			}
@@ -197,7 +200,7 @@ class Toolbar
 
 		foreach ($this->collectors as $collector)
 		{
-			if ( ! $collector->hasVarData())
+			if (! $collector->hasVarData())
 			{
 				continue;
 			}
@@ -220,10 +223,54 @@ class Toolbar
 	 */
 	protected function roundTo($number, $increments = 5)
 	{
-		$increments = 1 / $increments;
+		$increments = 1/$increments;
 
-		return (ceil($number * $increments) / $increments);
+		return (ceil($number*$increments)/$increments);
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 *
+	 */
+	public static function eventHandler()
+	{
+		$request = Services::request();
+
+		// If the request contains '?debugbar then we're
+		// simply returning the loading script
+		if ($request->getGet('debugbar') !== null)
+		{
+			// Let the browser know that we are sending javascript
+			header('Content-Type: application/javascript');
+
+			ob_start();
+			include(BASEPATH.'Debug/Toolbar/toolbarloader.js.php');
+			$output = ob_get_contents();
+			@ob_end_clean();
+
+			exit($output);
+		}
+
+		// Otherwise, if it includes ?debugbar_time, then
+		// we should return the entire debugbar.
+		if ($request->getGet('debugbar_time'))
+		{
+			helper('security');
+
+			$file     = sanitize_filename('debugbar_'.$request->getGet('debugbar_time'));
+			$filename = WRITEPATH.'debugbar/'.$file;
+
+			// Show the toolbar
+			if (file_exists($filename))
+			{
+				$contents = file_get_contents($filename);
+				unlink($filename);
+				exit($contents);
+			}
+
+			// File was not written or do not exists
+			exit('<script id="toolbar_js">console.log(\'CI DebugBar: File "WRITEPATH/'.$file.'" not found.\')</script>');
+		}
+	}
 }
