@@ -165,12 +165,12 @@ class ViewTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	public function testRenderScrapsDataByDefault()
+	public function testRenderScrapsData()
 	{
 		$view = new View($this->config, $this->viewsDir, $this->loader);
 
 		$view->setVar('testString', 'Hello World');
-		$view->render('simple');
+		$view->render('simple', null,false);
 
 		$this->assertTrue(empty($view->getData()));
 	}
