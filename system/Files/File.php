@@ -170,7 +170,7 @@ class File extends SplFileInfo
 	{
 		$targetPath = rtrim($targetPath, '/') . '/';
 		$name = $name ?? $this->getBaseName();
-		$destination = $overwrite ? $this->getDestination($targetPath . $name) : $targetPath . $name;
+		$destination = $overwrite ? $targetPath . $name : $this->getDestination($targetPath . $name);
 
 		if ( ! @rename($this->getPath(), $destination))
 		{
