@@ -635,6 +635,8 @@ max_length              Yes         Fails if field is longer than the parameter 
 min_length              Yes         Fails if field is shorter than the parameter value.                                             min_length[3]
 numeric                 No          Fails if field contains anything other than numeric characters.
 regex_match             Yes         Fails if field does not match the regular expression.                                           regex_match[/regex/]
+if_set                  No          If this rule is present the validation will only return possible errors if the field
+                                    is defined. E.g. If the field key is not sent there is no validation for it.
 required                No          Fails if the field is empty.
 required_with           Yes         The field is required if any of the fields in the parameter are set.                            required_with[field1,field2]
 required_without        Yes         The field is required when any of the fields in the parameter are not set.                      required_without[field1,field2]
