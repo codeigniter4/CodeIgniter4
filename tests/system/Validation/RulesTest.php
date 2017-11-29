@@ -132,6 +132,34 @@ class RulesTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * @dataProvider ifSetProvider
+	 *
+	 * @param $rules
+	 * @param $data
+	 * @param $expected
+	 */
+	public function testIfSet($rules, $data, $expected)
+	{
+		$this->validation->setRules($rules);
+
+		$this->assertEquals($expected, $this->validation->run($data));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function ifSetProvider()
+	{
+		return [
+			[['foo' => 'required'], ['foo' => ''], false],
+			[['foo' => 'required'], [], false],
+			[['foo' => 'if_set|required'], ['foo' => ''], false],
+			[['foo' => 'if_set|required'], [], true], // Input data not set
+		];
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testRegexMatch()
 	{
 		$data = [
