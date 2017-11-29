@@ -193,6 +193,19 @@ class Validation implements ValidationInterface
 	 */
 	protected function processRules(string $field, string $label = null, $value, $rules = null, array $data)
 	{
+		// If the if_set rule is defined...
+		if (in_array('if_set', $rules))
+		{
+			// and the current rule field is not set
+			// in the input data we can return true.
+			if (! isset($data[$field]))
+			{
+				return true;
+			}
+			// Otherwise remove the if_set rule and continue the process
+			$rules = array_diff($rules, ['if_set']);
+		}
+
 		foreach ($rules as $rule)
 		{
 			$callable = is_callable($rule);
