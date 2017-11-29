@@ -433,7 +433,7 @@ class FileCollectionTest extends \CIUnitTestCase
         $destination = '/tmp/destination/';
 
         // Create the destination if not exists
-        is_dir($destination) || mkdir($destination, 0777, false);
+        is_dir($destination) || mkdir($destination, 0777, true);
 
         foreach ($collection->all() as $file) {
             $this->assertTrue($file instanceof UploadedFile);
