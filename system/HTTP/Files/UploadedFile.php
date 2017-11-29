@@ -167,7 +167,7 @@ class UploadedFile extends File implements UploadedFileInterface
 
 		$targetPath = rtrim($targetPath, '/') . '/';
 		$name = is_null($name) ? $this->getName() : $name;
-		$destination = $overwrite ? $this->getDestination($targetPath . $name) : $targetPath . $name;
+		$destination = $overwrite ? $targetPath . $name : $this->getDestination($targetPath . $name);
 
 		if ( ! @move_uploaded_file($this->path, $destination))
 		{
@@ -179,7 +179,7 @@ class UploadedFile extends File implements UploadedFileInterface
 
 		// Success, so store our new information
 		$this->path = $targetPath;
-		$this->name = $name;
+		$this->name = basename($destination);
 		$this->hasMoved = true;
 
 		return true;

@@ -441,7 +441,7 @@ class FileCollectionTest extends \CIUnitTestCase
         }
 
         $this->assertFileExists($destination . $finalFilename . '.txt');
-        $this->assertFileNotExists($destination . $finalFilename . '_1.txt');
+        $this->assertFileExists($destination . $finalFilename . '_1.txt');
 
         // Delete the recently created files for the destination above
         foreach(glob($destination . "*") as $f) {
@@ -501,8 +501,8 @@ class FileCollectionTest extends \CIUnitTestCase
         }
 
         $this->assertFileExists($destination . $finalFilename . '.txt');
-        $this->assertFileExists($destination . $finalFilename . '_1.txt');
-        $this->assertFileExists($destination . $finalFilename . '_2.txt');
+        $this->assertFileNotExists($destination . $finalFilename . '_1.txt');
+        $this->assertFileNotExists($destination . $finalFilename . '_2.txt');
 
         // Delete the recently created files for the destination above
         foreach(glob($destination . "*") as $f) {
