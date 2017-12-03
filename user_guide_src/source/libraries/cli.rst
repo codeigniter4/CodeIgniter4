@@ -154,7 +154,7 @@ every line after the first line, so that you will have a crisp column edge on th
 
 Would create something like this:
 
-.. code-block:: txt
+.. code-block:: none
 
     task1a     Lorem Ipsum is simply dummy
                text of the printing and typesetting
@@ -181,7 +181,7 @@ this::
 If you have a long-running task that you would like to keep the user updated with the progress, you can use the
 ``showProgress()`` method which displays something like the following:
 
-.. code-block:: txt
+.. code-block:: none
 
 	[####......] 40% Complete
 
@@ -216,7 +216,7 @@ pass ``false`` as the first parameter and the progress bar will be removed.
 
 	CLI::table($tbody, $thead);
 
-.. code-block:: txt
+.. code-block:: none
 
 	+----+--------------------------+---------------------+--------+
 	| ID | Title                    | Updated At          | Active |

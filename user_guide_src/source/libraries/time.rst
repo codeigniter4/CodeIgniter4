@@ -214,6 +214,7 @@ $time == tomorrow / yesterday    Tomorrow / Yesterday
 $time > 59 minutes && < 1 day    1:37pm
 $time > now && < 1 hour          in 35 minutes / 35 minutes ago
 $time == now                     Now
+=============================== =================================
 
 The exact language used is controlled through the language file, Time.php.
 
@@ -229,7 +230,7 @@ All of the following `getX` and `setX` methods can also be used as if they were 
 like `getYear` can also be accessed through `$time->year`, and so on.
 
 Getters
-=======
+-------
 
 The following basic getters exist::
 
@@ -415,7 +416,7 @@ a timezone string in as the second parameter. If no timezone is given, the syste
     $time1->equals('January 11, 2017 03:50:00', 'Europe/London');  // true
 
 sameAs()
-------
+--------
 
 This is identical to the **equals** method, except that it only returns true when the date, time, AND timezone are
 all identical::
@@ -522,5 +523,6 @@ $time > today && < 7 days        in 4 days / 4 days ago
 $time > 1 hour && < 1 day        in 8 hours / 8 hours ago
 $time > 1 minute && < 1 hour     in 35 minutes / 35 minutes ago
 $time < 1 minute                 Now
+=============================== =================================
 
 The exact language used is controlled through the language file, Time.php.

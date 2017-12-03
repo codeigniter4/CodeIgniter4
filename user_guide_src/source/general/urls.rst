@@ -38,7 +38,9 @@ Apache Web Server
 
 Apache must have the *mod_rewrite* extension enabled. If it does, you can use a ``.htaccess`` file with some simple rules.
 Here is an example of such a file, using the "negative" method in which everything is redirected except the specified
-items::
+items:
+
+.. code-block:: apache
 
 	RewriteEngine On
 	RewriteCond %{REQUEST_FILENAME} !-f
@@ -56,7 +58,9 @@ NGINX
 -----
 
 Under NGINX, you can define a location block and use the ``try_files`` directive to get the same effect as we did with
-the above Apache configuration::
+the above Apache configuration:
+
+.. code-block:: nginx
 
 	location / {
 		try_files $uri $uri/ /index.php/$args;

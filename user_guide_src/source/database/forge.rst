@@ -181,8 +181,7 @@ below is for MySQL.
 
 
 Adding Foreign Keys
-===========
-
+===================
 
 ::
 
@@ -245,7 +244,7 @@ Execute a DROP TABLE statement and optionally add an IF EXISTS clause.
 	$forge->dropTable('table_name',TRUE);
 
 Dropping a Foreign Key
-================
+======================
 
 Execute a DROP FOREIGN KEY.
 
