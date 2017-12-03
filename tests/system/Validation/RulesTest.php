@@ -133,13 +133,13 @@ class RulesTest extends \CIUnitTestCase
 	//--------------------------------------------------------------------
 
 	/**
-	 * @dataProvider ifSetProvider
+	 * @dataProvider ifExistProvider
 	 *
 	 * @param $rules
 	 * @param $data
 	 * @param $expected
 	 */
-	public function testIfSet($rules, $data, $expected)
+	public function testIfExist($rules, $data, $expected)
 	{
 		$this->validation->setRules($rules);
 
@@ -148,13 +148,14 @@ class RulesTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	public function ifSetProvider()
+	public function ifExistProvider()
 	{
 		return [
 			[['foo' => 'required'], ['foo' => ''], false],
 			[['foo' => 'required'], [], false],
-			[['foo' => 'if_set|required'], ['foo' => ''], false],
-			[['foo' => 'if_set|required'], [], true], // Input data not set
+			[['foo' => 'if_exist|required'], ['foo' => ''], false],
+			// Input data does not exist then the other rules will be ignored
+			[['foo' => 'if_exist|required'], [], true],
 		];
 	}
 
