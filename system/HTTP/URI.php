@@ -1006,7 +1006,7 @@ class URI
 			{
 				$transformed->setPath($this->getPath());
 
-				if ( ! is_null($relative->getQuery()))
+				if ($relative->getQuery())
 				{
 					$transformed->setQuery($relative->getQuery());
 				}
