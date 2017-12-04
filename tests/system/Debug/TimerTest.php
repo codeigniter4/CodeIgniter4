@@ -90,7 +90,7 @@ class TimerTest extends \CIUnitTestCase
         $timer->start('longjohn', strtotime('-11 minutes'));
 
         // Use floor here to account for fractional differences in seconds.
-        $this->assertEquals(11 * 60, floor($timer->getElapsedTime('longjohn')));
+        $this->assertEquals(11 * 60, (int)$timer->getElapsedTime('longjohn'));
     }
 
     //--------------------------------------------------------------------
@@ -100,7 +100,7 @@ class TimerTest extends \CIUnitTestCase
         timer()->start('longjohn', strtotime('-11 minutes'));
 
         // Use floor here to account for fractional differences in seconds.
-        $this->assertEquals(11 * 60, floor(timer()->getElapsedTime('longjohn')));
+        $this->assertEquals(11 * 60, (int)timer()->getElapsedTime('longjohn'));
     }
 
     //--------------------------------------------------------------------

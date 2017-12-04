@@ -144,7 +144,7 @@ class RedirectResponse extends Response
 	 *
 	 * @return $this
 	 */
-	public function with(string $key, string $message)
+	public function with(string $key, $message)
 	{
 		$session = $this->ensureSession();
 
