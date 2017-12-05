@@ -319,6 +319,31 @@ class EntityTest extends \CIUnitTestCase
 	{
 		$entity = $this->getCastEntity();
 
+		$entity->setSeventh(['foo' => 'bar']);
+
+		$check = $this->getPrivateProperty($entity, 'seventh');
+		$this->assertEquals(['foo' => 'bar'], $check);
+
+		$this->assertEquals(['foo' => 'bar'], $entity->seventh);
+	}
+
+	public function testCastArrayByStringSerialize()
+	{
+		$entity = $this->getCastEntity();
+
+		$entity->seventh = 'foobar';
+
+		// Should be a serialized string now...
+		$check = $this->getPrivateProperty($entity, 'seventh');
+		$this->assertEquals(serialize('foobar'), $check);
+
+		$this->assertEquals(['foobar'], $entity->seventh);
+	}
+
+	public function testCastArrayByArraySerialize()
+	{
+		$entity = $this->getCastEntity();
+
 		$entity->seventh = ['foo' => 'bar'];
 
 		// Should be a serialized string now...
@@ -412,6 +437,11 @@ class EntityTest extends \CIUnitTestCase
 				'dates' => [],
 				'datamap' => []
 			];
+
+			public function setSeventh($seventh) {
+				$this->seventh = $seventh;
+			}
+
 		};
 	}
 }
