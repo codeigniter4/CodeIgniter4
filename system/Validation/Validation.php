@@ -198,7 +198,7 @@ class Validation implements ValidationInterface
 		{
 			// and the current field does not exists in the input data
 			// we can return true. Ignoring all other rules to this field.
-			if (! isset($data[$field]))
+			if (! array_key_exists($field, $data))
 			{
 				return true;
 			}
