@@ -206,6 +206,16 @@ class Validation implements ValidationInterface
 			$rules = array_diff($rules, ['if_exist']);
 		}
 
+		if (in_array('permit_empty', $rules))
+		{
+			if (! in_array('required', $rules) && (is_array($value) ? empty($value) : (trim($value) === '')))
+			{
+				return true;
+			}
+
+			$rules = array_diff($rules, ['permit_empty']);
+		}
+
 		foreach ($rules as $rule)
 		{
 			$callable = is_callable($rule);

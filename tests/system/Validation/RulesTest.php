@@ -161,6 +161,45 @@ class RulesTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * @dataProvider emptysProvider
+	 *
+	 * @param $rules
+	 * @param $data
+	 * @param $expected
+	 */
+	public function testEmptys($rules, $data, $expected)
+	{
+		$this->validation->setRules($rules);
+
+		$this->assertEquals($expected, $this->validation->run($data));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function emptysProvider()
+	{
+		return [
+			[['foo' => 'permit_empty'], ['foo' => ''], true],
+			[['foo' => 'permit_empty'], ['foo' => '0'], true],
+			[['foo' => 'permit_empty'], ['foo' => 0], true],
+			[['foo' => 'permit_empty'], ['foo' => 0.0], true],
+			[['foo' => 'permit_empty'], ['foo' => null], true],
+			[['foo' => 'permit_empty'], ['foo' => false], true],
+
+			[['foo' => 'permit_empty|required'], ['foo' => ''], false],
+			[['foo' => 'permit_empty|required'], ['foo' => null], false],
+			[['foo' => 'permit_empty|required'], ['foo' => false], false],
+
+			// This tests will return true because the input data is trimmed
+			[['foo' => 'permit_empty|required'], ['foo' => '0'], true],
+			[['foo' => 'permit_empty|required'], ['foo' => 0], true],
+			[['foo' => 'permit_empty|required'], ['foo' => 0.0], true],
+		];
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testRegexMatch()
 	{
 		$data = [
