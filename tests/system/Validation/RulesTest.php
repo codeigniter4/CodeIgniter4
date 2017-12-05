@@ -187,6 +187,13 @@ class RulesTest extends \CIUnitTestCase
 			[['foo' => 'permit_empty'], ['foo' => null], true],
 			[['foo' => 'permit_empty'], ['foo' => false], true],
 
+			[['foo' => 'permit_empty|valid_email'], ['foo' => ''], true],
+			[['foo' => 'permit_empty|valid_email'], ['foo' => 'user@domain.tld'], true],
+			[['foo' => 'permit_empty|valid_email'], ['foo' => 'invalid'], false],
+
+			// Required has more priority
+			[['foo' => 'permit_empty|required|valid_email'], ['foo' => ''], false],
+
 			[['foo' => 'permit_empty|required'], ['foo' => ''], false],
 			[['foo' => 'permit_empty|required'], ['foo' => null], false],
 			[['foo' => 'permit_empty|required'], ['foo' => false], false],
