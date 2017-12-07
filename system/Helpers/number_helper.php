@@ -193,13 +193,19 @@ if ( ! function_exists('format_number'))
 	 */
 	function format_number($num, int $precision = 1, string $locale = null, array $options = [])
 	{
+		//First of all check if intl extention is available or not
+		if (! class_exists('IntlDateFormatter'))
+		{
+			throw new \RuntimeException(lang('Number.IntlNotFound'));
+		}
+
 		// Locale is either passed in here, negotiated with client, or grabbed from our config file.
 		$locale = $locale ?? \CodeIgniter\Config\Services::request()->getLocale();
 
 		// Type can be any of the NumberFormatter options, but provide a default.
 		$type = isset($options['type']) ? (int) $options['type'] :
 				NumberFormatter::DECIMAL;
-
+				
 		// In order to specify a precision, we'll have to modify
 		// the pattern used by NumberFormatter.
 		$pattern = '#,##0.' . str_repeat('#', $precision);
