@@ -56,26 +56,36 @@ class View implements RendererInterface
 	/**
 	 * The base directory to look in for our Views.
 	 *
-	 * @var
+	 * @var string
 	 */
 	protected $viewPath;
 
 	/**
-	 * Instance of CodeIgniter\Loader for when
+	 * The current view filename
+	 *
+	 * @var string
+	 */
+	protected $viewFile;
+
+	/**
+	 * Instance of FileLocator for when
 	 * we need to attempt to find a view
 	 * that's not in standard place.
-	 * @var
+	 *
+	 * @var \CodeIgniter\Autoloader\FileLocator
 	 */
 	protected $loader;
 
 	/**
 	 * Logger instance.
+	 *
 	 * @var Logger
 	 */
 	protected $logger;
 
 	/**
 	 * Should we store performance info?
+	 *
 	 * @var bool
 	 */
 	protected $debug = false;
@@ -83,6 +93,7 @@ class View implements RendererInterface
 	/**
 	 * Cache stats about our performance here,
 	 * when CI_DEBUG = true
+	 *
 	 * @var array
 	 */
 	protected $performanceData = [];
@@ -169,15 +180,15 @@ class View implements RendererInterface
 			}
 		}
 
-		$file = $this->viewPath . $view;
+		$this->viewFile = $this->viewPath . $view;
 
-		if ( ! file_exists($file))
+		if ( ! file_exists($this->viewFile))
 		{
-			$file = $this->loader->locateFile($view, 'Views');
+			$this->viewFile = $this->loader->locateFile($view, 'Views');
 		}
 
 		// locateFile will return an empty string if the file cannot be found.
-		if (empty($file))
+		if (empty($this->viewFile))
 		{
 			throw new \InvalidArgumentException('View file not found: ' . $view);
 		}
@@ -191,7 +202,7 @@ class View implements RendererInterface
 		}
 
 		ob_start();
-		include($file); // PHP will be processed
+		include($this->viewFile); // PHP will be processed
 		$output = ob_get_contents();
 		@ob_end_clean();
 
@@ -206,15 +217,15 @@ class View implements RendererInterface
 					// Clean up our path names to make them a little cleaner
 					foreach (['APPPATH', 'BASEPATH', 'ROOTPATH'] as $path)
 					{
-						if (strpos($file, constant($path)) === 0)
+						if (strpos($this->viewFile, constant($path)) === 0)
 						{
-							$file = str_replace(constant($path), $path.'/', $file);
+							$this->viewFile = str_replace(constant($path), $path.'/', $this->viewFile);
 						}
 					}
-					$file = ++$this->viewsCount . ' ' . $file;
-					$output = '<!-- DEBUG-VIEW START ' . $file . ' -->' . PHP_EOL
+					$this->viewFile = ++$this->viewsCount . ' ' . $this->viewFile;
+					$output = '<!-- DEBUG-VIEW START ' . $this->viewFile . ' -->' . PHP_EOL
 						. $output . PHP_EOL
-						. '<!-- DEBUG-VIEW ENDED ' . $file . ' -->' . PHP_EOL;
+						. '<!-- DEBUG-VIEW ENDED ' . $this->viewFile . ' -->' . PHP_EOL;
 				}
 			}
 		}
