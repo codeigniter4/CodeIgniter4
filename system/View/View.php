@@ -206,6 +206,8 @@ class View implements RendererInterface
 		$output = ob_get_contents();
 		@ob_end_clean();
 
+		$this->logPerformance($start, microtime(true), $view);
+
 		if (CI_DEBUG)
 		{
 			$after = (new \Config\Filters())->globals['after'];
@@ -229,8 +231,6 @@ class View implements RendererInterface
 				}
 			}
 		}
-
-		$this->logPerformance($start, microtime(true), $view);
 
 		// Should we cache?
 		if (isset($options['cache']))
