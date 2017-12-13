@@ -237,7 +237,7 @@ if ( ! function_exists('doctype'))
 			$customDocTypesNs = "Config\{$env}\DocTypes";
 			$doctypes = $customDocTypesNs::$list;
 		}
-		return isset($doctypes[$type]) ? $doctypes[$type] : false;
+		return $doctypes[$type] ?? false;
 	}
 
 }

@@ -197,8 +197,7 @@ if ( ! function_exists('format_number'))
 		$locale = $locale ?? \CodeIgniter\Config\Services::request()->getLocale();
 
 		// Type can be any of the NumberFormatter options, but provide a default.
-		$type = isset($options['type']) ? (int) $options['type'] :
-				NumberFormatter::DECIMAL;
+		$type = (int) ($options['type'] ?? NumberFormatter::DECIMAL);
 
 		// In order to specify a precision, we'll have to modify
 		// the pattern used by NumberFormatter.
@@ -247,7 +246,7 @@ if ( ! function_exists('number_to_roman'))
 {
 	/**
 	* Convert a number to a roman numeral.
-	* 
+	*
 	* @param int $num it will convert to int
 	*
 	* @return string
@@ -267,22 +266,22 @@ if ( ! function_exists('number_to_roman'))
 			switch ($th)
 			{
 				case 1:
-					$key1  = 'I'; 
-					$key2  = 'V'; 
-					$key_f = 'X'; 
+					$key1  = 'I';
+					$key2  = 'V';
+					$key_f = 'X';
 					break;
 				case 2:
-					$key1  = 'X'; 
-					$key2  = 'L'; 
-					$key_f = 'C'; 
+					$key1  = 'X';
+					$key2  = 'L';
+					$key_f = 'C';
 					break;
 				case 3:
-					$key1  = 'C'; 
-					$key2  = 'D'; 
-					$key_f = 'M'; 
+					$key1  = 'C';
+					$key2  = 'D';
+					$key_f = 'M';
 					break;
 				case 4:
-					$key1  = 'M'; 
+					$key1  = 'M';
 					break;
 			}
 			$n = $num % 10;

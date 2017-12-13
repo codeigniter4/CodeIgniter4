@@ -113,7 +113,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 		$this->mysqli = mysqli_init();
 
 		mysqli_report(MYSQLI_REPORT_ALL & ~MYSQLI_REPORT_INDEX);
-		
+
 		$this->mysqli->options(MYSQLI_OPT_CONNECT_TIMEOUT, 10);
 
 		if (isset($this->strictOn))
@@ -169,7 +169,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 
 				$client_flags |= MYSQLI_CLIENT_SSL;
 				$this->mysqli->ssl_set(
-						isset($ssl['key']) ? $ssl['key'] : null, isset($ssl['cert']) ? $ssl['cert'] : null, isset($ssl['ca']) ? $ssl['ca'] : null, isset($ssl['capath']) ? $ssl['capath'] : null, isset($ssl['cipher']) ? $ssl['cipher'] : null
+						$ssl['key'] ?? null, $ssl['cert'] ?? null, $ssl['ca'] ?? null, $ssl['capath'] ?? null, $ssl['cipher'] ?? null
 				);
 			}
 		}
@@ -486,7 +486,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	}
 
 	//--------------------------------------------------------------------
-        
+
 	/**
 	 * Returns an object with Foreign key data
 	 *
@@ -504,16 +504,16 @@ class Connection extends BaseConnection implements ConnectionInterface
                     INNER JOIN information_schema.REFERENTIAL_CONSTRAINTS AS rc
                         ON tc.CONSTRAINT_NAME = rc.CONSTRAINT_NAME
                     WHERE
-                        tc.CONSTRAINT_TYPE = '.$this->escape('FOREIGN KEY').' AND 
+                        tc.CONSTRAINT_TYPE = '.$this->escape('FOREIGN KEY').' AND
                         tc.TABLE_SCHEMA = '.$this->escape($this->database).' AND
                         tc.TABLE_NAME = '.$this->escape($table);
-                
+
 		if (($query = $this->query($sql)) === false)
 		{
 			return false;
 		}
 		$query = $query->getResultObject();
-                
+
 		$retval = [];
 		foreach ($query as $row)
 		{

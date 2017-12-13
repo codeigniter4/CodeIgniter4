@@ -131,7 +131,7 @@ class Image extends File
 
 		$vals = getimagesize($path);
 		$types = [1 => 'gif', 2 => 'jpeg', 3 => 'png'];
-		$mime = (isset($types[$vals[2]])) ? 'image/' . $types[$vals[2]] : 'image/jpg';
+		$mime = 'image/' . ($types[$vals[2]] ?? 'jpg');
 
 		if ($return === true)
 		{

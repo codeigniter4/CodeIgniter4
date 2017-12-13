@@ -100,7 +100,7 @@ class Language
 		// Will load the language file and strings.
 		list($file, $line) = $this->parseLine($line);
 
-		$output = isset($this->language[$file][$line]) ? $this->language[$file][$line] : $line;
+		$output = $this->language[$file][$line] ?? $line;
 
 		if (! empty($args))
 		{

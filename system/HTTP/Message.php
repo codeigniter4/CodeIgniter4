@@ -130,7 +130,7 @@ class Message
 	 */
 	public function populateHeaders()
 	{
-		$contentType = isset($_SERVER['CONTENT_TYPE']) ? $_SERVER['CONTENT_TYPE'] : getenv('CONTENT_TYPE');
+		$contentType = $_SERVER['CONTENT_TYPE'] ?? getenv('CONTENT_TYPE');
 		if ( ! empty($contentType))
 		{
 			$this->setHeader('Content-Type', $contentType);
@@ -403,7 +403,7 @@ class Message
 	{
 		$lower_name = strtolower($name);
 
-		return isset($this->headerMap[$lower_name]) ? $this->headerMap[$lower_name] : $name;
+		return $this->headerMap[$lower_name] ?? $name;
 	}
 
 	//--------------------------------------------------------------------
