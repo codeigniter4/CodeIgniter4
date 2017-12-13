@@ -635,7 +635,10 @@ max_length              Yes         Fails if field is longer than the parameter 
 min_length              Yes         Fails if field is shorter than the parameter value.                                             min_length[3]
 numeric                 No          Fails if field contains anything other than numeric characters.
 regex_match             Yes         Fails if field does not match the regular expression.                                           regex_match[/regex/]
-required                No          Fails if the field is empty.
+if_exist                No          If this rule is present, validation will only return possible errors if the field key exists,
+                                    regardless of its value.
+permit_empty            No          Allows the field to receive an empty array, empty string, null or false.
+required                No          Fails if the field is an empty array, empty string, null or false.
 required_with           Yes         The field is required if any of the fields in the parameter are set.                            required_with[field1,field2]
 required_without        Yes         The field is required when any of the fields in the parameter are not set.                      required_without[field1,field2]
 is_unique               Yes         Checks if this field value exists in the database. Optionally set a                             is_unique[table.field,ignore_field,ignore_value]
