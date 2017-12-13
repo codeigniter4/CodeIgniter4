@@ -271,7 +271,7 @@ class UploadedFile extends File implements UploadedFileInterface
 
 		$error = is_null($this->error) ? UPLOAD_ERR_OK : $this->error;
 
-		return isset($errors[$error]) ? sprintf($errors[$error], $this->getName()) : sprintf('The file "%s" was not uploaded due to an unknown error.', $this->getName());
+		return sprintf($errors[$error] ?? 'The file "%s" was not uploaded due to an unknown error.', $this->getName());
 	}
 
 	//--------------------------------------------------------------------

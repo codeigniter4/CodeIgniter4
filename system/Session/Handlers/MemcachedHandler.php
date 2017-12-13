@@ -138,7 +138,7 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 				continue;
 			}
 
-			if ( ! $this->memcached->addServer($match[1], $match[2], isset($match[3]) ? $match[3] : 0))
+			if ( ! $this->memcached->addServer($match[1], $match[2], $match[3] ?? 0))
 			{
 				$this->logger->error('Could not add ' . $match[1] . ':' . $match[2] . ' to Memcached server pool.');
 			}

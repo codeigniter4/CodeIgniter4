@@ -306,7 +306,7 @@ class Filters
 		}
 
 		// Request method won't be set for CLI-based requests
-		$method = isset($_SERVER['REQUEST_METHOD']) ? strtolower($_SERVER['REQUEST_METHOD']) : 'cli';
+		$method = strtolower($_SERVER['REQUEST_METHOD'] ?? 'cli');
 
 		if (array_key_exists($method, $this->config->methods))
 		{

@@ -341,7 +341,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 			return false;
 		}
 		$query = $query->getResultObject();
-                
+
 		$retval = [];
 		foreach ($query as $row)
 		{
@@ -359,7 +359,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	}
 
 	//--------------------------------------------------------------------
-        
+
 /**
 	 * Returns an object with Foreign key data
 	 *
@@ -369,22 +369,22 @@ class Connection extends BaseConnection implements ConnectionInterface
 	public function _foreignKeyData(string $table)
 	{
 		$sql = 'SELECT
-                            tc.constraint_name, tc.table_name, kcu.column_name, 
+                            tc.constraint_name, tc.table_name, kcu.column_name,
                             ccu.table_name AS foreign_table_name,
                             ccu.column_name AS foreign_column_name
-                        FROM information_schema.table_constraints AS tc 
+                        FROM information_schema.table_constraints AS tc
                         JOIN information_schema.key_column_usage AS kcu
                             ON tc.constraint_name = kcu.constraint_name
                         JOIN information_schema.constraint_column_usage AS ccu
                             ON ccu.constraint_name = tc.constraint_name
                         WHERE constraint_type = '.$this->escape('FOREIGN KEY').' AND tc.table_name = '.$this->escape($table);
-                
+
 		if (($query = $this->query($sql)) === false)
 		{
 			return false;
 		}
 		$query = $query->getResultObject();
-                
+
 		$retval = [];
 		foreach ($query as $row)
 		{
@@ -400,7 +400,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	}
 
 	//--------------------------------------------------------------------
-        
+
 	/**
 	 * Returns the last error code and message.
 	 *
@@ -429,7 +429,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	{
 		$v = pg_version($this->connID);
 		// 'server' key is only available since PostgreSQL 7.4
-		$v = isset($v['server']) ? $v['server'] : 0;
+		$v = $v['server'] ?? 0;
 
 		$table = func_num_args() > 0 ? func_get_arg(0) : null;
 		$column = func_num_args() > 1 ? func_get_arg(1) : null;

@@ -327,7 +327,7 @@ if ( ! function_exists('anchor_popup'))
 
 		foreach (['width' => '800', 'height' => '600', 'scrollbars' => 'yes', 'menubar' => 'no', 'status' => 'yes', 'resizable' => 'yes', 'screenx' => '0', 'screeny' => '0'] as $key => $val)
 		{
-			$atts[$key] = isset($attributes[$key]) ? $attributes[$key] : $val;
+			$atts[$key] = $attributes[$key] ?? $val;
 			unset($attributes[$key]);
 		}
 
