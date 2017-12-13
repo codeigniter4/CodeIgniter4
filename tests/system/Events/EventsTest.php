@@ -124,7 +124,7 @@ class EventsTest extends \CIUnitTestCase
 		$this->assertTrue($result);
 
 		$result = false;
-		$this->assertTrue( Events::removeListener('foo', $callback) );
+		$this->assertTrue(Events::removeListener('foo', $callback));
 
 		Events::trigger('foo');
 		$this->assertFalse($result);
@@ -147,8 +147,8 @@ class EventsTest extends \CIUnitTestCase
 		$this->assertTrue($result);
 
 		$result = false;
-		$this->assertTrue( Events::removeListener('foo', $callback) );
-		$this->assertFalse( Events::removeListener('foo', $callback) );
+		$this->assertTrue(Events::removeListener('foo', $callback));
+		$this->assertFalse(Events::removeListener('foo', $callback));
 
 		Events::trigger('foo');
 		$this->assertFalse($result);
@@ -171,7 +171,7 @@ class EventsTest extends \CIUnitTestCase
 		$this->assertTrue($result);
 
 		$result = false;
-		$this->assertFalse( Events::removeListener('bar', $callback) );
+		$this->assertFalse(Events::removeListener('bar', $callback));
 
 		Events::trigger('foo');
 		$this->assertTrue($result);

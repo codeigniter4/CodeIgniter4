@@ -43,7 +43,7 @@ class BaseConfigTest extends CIUnitTestCase
 		// empty treated as boolean false
 		$this->assertEquals(false, $config->echo);
 		// 'true' should be treated as boolean true
-		$this->assertEquals(true, $config->foxtrot);
+		$this->assertTrue($config->foxtrot);
 		// numbers should be treated properly
 		$this->assertEquals(18, $config->golf);
 	}
@@ -64,8 +64,8 @@ class BaseConfigTest extends CIUnitTestCase
 		// override config with shortPrefix ENV var
 		$this->assertEquals('hubbahubba', $config->delta);
 		// incorrect env name should not inject property
-		$this->assertFalse(isset($config->notthere));
-		// same ENV var as property, but not namespaced, still over-rides 
+		$this->assertObjectNotHasAttribute('notthere', $config);
+		// same ENV var as property, but not namespaced, still over-rides
 		$this->assertEquals('kazaam', $config->bravo);
 	}
 
@@ -146,7 +146,7 @@ class BaseConfigTest extends CIUnitTestCase
 	{
 		$config = new \RegistrarConfig();
 
-		// no change to unmodified property	
+		// no change to unmodified property
 		$this->assertEquals('bar', $config->foo);
 		// add to an existing array property
 		$this->assertEquals(['baz', 'first', 'second'], $config->bar);

@@ -14,7 +14,7 @@ final class InflectorHelperTest extends \CIUnitTestCase
 
 	public function testSingular()
 	{
-		$strings = 
+		$strings =
 		[
 			'matrices'  => 'matrix',
 			'oxen'      => 'ox',
@@ -55,7 +55,7 @@ final class InflectorHelperTest extends \CIUnitTestCase
 
 	public function testPlural()
 	{
-		$strings = 
+		$strings =
 		[
 			'searches'  => 'search',
 			'matrices'  => 'matrix',
@@ -95,7 +95,7 @@ final class InflectorHelperTest extends \CIUnitTestCase
 
 	public function testCamelize()
 	{
-		$strings = 
+		$strings =
 		[
 			'hello from codeIgniter 4' => 'helloFromCodeIgniter4',
 			'hello_world'              => 'helloWorld'
@@ -112,7 +112,7 @@ final class InflectorHelperTest extends \CIUnitTestCase
 
 	public function testUnderscore()
 	{
-		$strings = 
+		$strings =
 		[
 			'Hello From CodeIgniter 4' => 'Hello_From_CodeIgniter_4',
 			'hello world'              => 'hello_world'
@@ -143,7 +143,7 @@ final class InflectorHelperTest extends \CIUnitTestCase
 
 	public function testIsCountable()
 	{
-		$words = 
+		$words =
 		[
 			'tip'        => 'advice',
 			'fight'      => 'bravery',
@@ -155,8 +155,8 @@ final class InflectorHelperTest extends \CIUnitTestCase
 
 		foreach ($words as $countable => $unCountable)
 		{
-			$this->assertEquals(is_countable($countable), true);
-			$this->assertEquals(is_countable($unCountable), false);
+			$this->assertTrue(is_countable($countable));
+			$this->assertFalse(is_countable($unCountable));
 		}
 	}
 
@@ -164,7 +164,7 @@ final class InflectorHelperTest extends \CIUnitTestCase
 
 	public function testDasherize()
 	{
-		$strings = 
+		$strings =
 		[
 			'hello_world'              => 'hello-world',
 			'Hello_From_CodeIgniter_4' => 'Hello-From-CodeIgniter-4'
@@ -181,7 +181,7 @@ final class InflectorHelperTest extends \CIUnitTestCase
 
 	public function testOrdinal()
 	{
-		$suffixes = 
+		$suffixes =
 		[
 			'st' => 1,
 			'nd' => 2,
@@ -195,7 +195,7 @@ final class InflectorHelperTest extends \CIUnitTestCase
 			'th' => 24
 		];
 
-		foreach ($suffixes as $suffix => $number) 
+		foreach ($suffixes as $suffix => $number)
 		{
 			$ordinal = ordinal($number);
 			$this->assertEquals($suffix, $ordinal);
@@ -206,7 +206,7 @@ final class InflectorHelperTest extends \CIUnitTestCase
 
 	public function testOrdinalize()
 	{
-		$suffixedNumbers = 
+		$suffixedNumbers =
 		[
 			'1st'  => 1,
 			'2nd'  => 2,
@@ -220,7 +220,7 @@ final class InflectorHelperTest extends \CIUnitTestCase
 			'24th' => 24
 		];
 
-		foreach ($suffixedNumbers as $suffixed => $number) 
+		foreach ($suffixedNumbers as $suffixed => $number)
 		{
 			$ordinalized = ordinalize($number);
 			$this->assertEquals($suffixed, $ordinalized);

@@ -84,7 +84,7 @@ class CodeIgniterTest extends \CIUnitTestCase
 //		$this->codeigniter->run($routes);
 //		$output = ob_get_clean();
 //
-//		$this->assertTrue(strpos($output, "Can't find a route for") !== false);
+//		$this->assertContains("Can't find a route for", $output);
 //	}
 	//--------------------------------------------------------------------
 

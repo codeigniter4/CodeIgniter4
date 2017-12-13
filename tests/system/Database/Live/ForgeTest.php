@@ -70,16 +70,16 @@ class ForgeTest extends \CIDatabaseTestCase
 
 		//Check Field names
 		$fieldsNames = $this->db->getFieldNames('forge_test_fields');
-		$this->assertTrue(in_array('id', $fieldsNames));
-		$this->assertTrue(in_array('username', $fieldsNames));
-		$this->assertTrue(in_array('name', $fieldsNames));
-		$this->assertTrue(in_array('active', $fieldsNames));
+		$this->assertContains('id', $fieldsNames);
+		$this->assertContains('username', $fieldsNames);
+		$this->assertContains('name', $fieldsNames);
+		$this->assertContains('active', $fieldsNames);
 
 
 		$fieldsData = $this->db->getFieldData('forge_test_fields');
 
-		$this->assertTrue(in_array($fieldsData[0]->name, ['id', 'name', 'username', 'active']));
-		$this->assertTrue(in_array($fieldsData[1]->name, ['id', 'name', 'username', 'active']));
+		$this->assertContains($fieldsData[0]->name, ['id', 'name', 'username', 'active']);
+		$this->assertContains($fieldsData[1]->name, ['id', 'name', 'username', 'active']);
 
 		if ($this->db->DBDriver === 'MySQLi')
 		{
@@ -89,8 +89,8 @@ class ForgeTest extends \CIDatabaseTestCase
 
 			$this->assertEquals($fieldsData[0]->max_length, 11);
 
-			$this->assertEquals($fieldsData[0]->default, null);
-			$this->assertEquals($fieldsData[1]->default, null);
+			$this->assertNull($fieldsData[0]->default);
+			$this->assertNull($fieldsData[1]->default);
 
 			$this->assertEquals($fieldsData[0]->primary_key, 1);
 
@@ -104,7 +104,7 @@ class ForgeTest extends \CIDatabaseTestCase
 			$this->assertEquals($fieldsData[1]->type, 'character varying');
 
 			$this->assertEquals($fieldsData[0]->max_length, 32);
-			$this->assertEquals($fieldsData[1]->default, null);
+			$this->assertNull($fieldsData[1]->default);
 
 			$this->assertEquals($fieldsData[1]->max_length, 255);
 		}

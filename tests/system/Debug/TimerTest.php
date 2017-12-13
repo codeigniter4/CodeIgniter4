@@ -26,7 +26,7 @@ class TimerTest extends \CIUnitTestCase
 
 		$timers = $timer->getTimers();
 
-		$this->assertTrue(count($timers) === 1, "No timers were stored.");
+		$this->assertCount(1, $timers, "No timers were stored.");
 		$this->assertArrayHasKey('test1', $timers, 'No "test1" array found.');
 		$this->assertArrayHasKey('start', $timers['test1'], 'No "start" value found.');
 		$this->assertArrayHasKey('end', $timers['test1'], 'No "end" value found.');

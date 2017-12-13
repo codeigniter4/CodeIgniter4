@@ -57,16 +57,16 @@ class BaseConnectionTest extends \CIUnitTestCase
 		$this->assertSame('last', $db->password);
 		$this->assertSame('dbname', $db->database);
 		$this->assertSame('MockDriver', $db->DBDriver);
-		$this->assertSame(true, $db->pConnect);
-		$this->assertSame(true, $db->DBDebug);
-		$this->assertSame(false, $db->cacheOn);
+		$this->assertTrue($db->pConnect);
+		$this->assertTrue($db->DBDebug);
+		$this->assertFalse($db->cacheOn);
 		$this->assertSame('my/cacheDir', $db->cacheDir);
 		$this->assertSame('utf8', $db->charset);
 		$this->assertSame('utf8_general_ci', $db->DBCollat);
 		$this->assertSame('', $db->swapPre);
-		$this->assertSame(false, $db->encrypt);
-		$this->assertSame(false, $db->compress);
-		$this->assertSame(true, $db->strictOn);
+		$this->assertFalse($db->encrypt);
+		$this->assertFalse($db->compress);
+		$this->assertTrue($db->strictOn);
 		$this->assertSame([], $db->failover);
 	}
 
@@ -125,8 +125,8 @@ class BaseConnectionTest extends \CIUnitTestCase
 
 		$db->initialize();
 
-		$this->assertTrue($db->getConnectStart() > $start);
-		$this->assertTrue($db->getConnectDuration() > 0.0);
+		$this->assertGreaterThan($start, $db->getConnectStart());
+		$this->assertGreaterThan(0.0, $db->getConnectDuration());
 	}
 
 	//--------------------------------------------------------------------

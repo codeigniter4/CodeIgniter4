@@ -25,7 +25,7 @@ class PretendTest extends \CIDatabaseTestCase
 					->table('user')
 					->get();
 
-		$this->assertTrue($result instanceof Query);
+		$this->assertInstanceOf(Query::class, $result);
 	}
 
 	//--------------------------------------------------------------------

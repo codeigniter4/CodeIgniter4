@@ -13,7 +13,7 @@ class FromTest extends \CIDatabaseTestCase
 	{
 		$result = $this->db->table('job')->from('misc')->get()->getResult();
 
-		$this->assertEquals(12, count($result));
+		$this->assertCount(12, $result);
 	}
 
 	//--------------------------------------------------------------------
@@ -23,7 +23,7 @@ class FromTest extends \CIDatabaseTestCase
 	{
 	    $result = $this->db->table('job')->from('misc', true)->get()->getResult();
 
-		$this->assertEquals(3, count($result));
+		$this->assertCount(3, $result);
 	}
 
 	//--------------------------------------------------------------------
@@ -32,7 +32,7 @@ class FromTest extends \CIDatabaseTestCase
 	{
 		$result = $this->db->table('job')->from('user')->where('user.id', 1)->get()->getResult();
 
-		$this->assertEquals(4, count($result));
+		$this->assertCount(4, $result);
 	}
 
 	//--------------------------------------------------------------------
