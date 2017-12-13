@@ -110,7 +110,7 @@ class FileRules
 
 		if (is_null($file))
 		{
-			return false;
+			return true;
 		}
 
 		return $params[0] > $file->getSize('kb');
@@ -139,7 +139,7 @@ class FileRules
 
 		if (is_null($file))
 		{
-			return false;
+			return true;
 		}
 
 		// We know that our mimes list always has the first mime
@@ -171,7 +171,7 @@ class FileRules
 
 		if (is_null($file))
 		{
-			return false;
+			return true;
 		}
 
 		return in_array($file->getType(), $params);
@@ -199,7 +199,7 @@ class FileRules
 
 		if (is_null($file))
 		{
-			return false;
+			return true;
 		}
 
 		return in_array($file->getExtension(), $params);
@@ -228,7 +228,7 @@ class FileRules
 
 		if (is_null($file))
 		{
-			return false;
+			return true;
 		}
 
 		// Get Parameter sizes
