@@ -38,6 +38,23 @@ class URLHelperTest extends \CIUnitTestCase
 		$this->assertEquals('http://example.com/index.php/', site_url('', null, $config));
 	}
 
+	public function testSiteURLHTTPS()
+	{
+		$_SERVER['HTTP_HOST'] = 'example.com';
+		$_SERVER['REQUEST_URI'] = '/';
+		$_SERVER['HTTPS'] = 'on';
+
+		$config = new App();
+		$config->baseURL = '';
+		$config->indexPage = 'index.php';
+		$request = Services::request($config);
+		$request->uri = new URI('http://example.com/');
+
+		Services::injectMock('request', $request);
+
+		$this->assertEquals('https://example.com/index.php/', site_url('', null, $config));
+	}
+
 	public function testSiteURLNoIndex()
 	{
 		$_SERVER['HTTP_HOST'] = 'example.com';
@@ -272,6 +289,18 @@ class URLHelperTest extends \CIUnitTestCase
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * @see https://github.com/bcit-ci/CodeIgniter4/issues/867
+	 */
+	public function testBaseURLHTTPS()
+	{
+		$_SERVER['HTTP_HOST'] = 'example.com';
+		$_SERVER['REQUEST_URI'] = '/';
+		$_SERVER['HTTPS'] = 'on';
+
+		$this->assertEquals('https://example.com/blog/post/123', base_url('blog/post/123'));
+	}
 
 	/**
 	 * @see https://github.com/bcit-ci/CodeIgniter4/issues/240
