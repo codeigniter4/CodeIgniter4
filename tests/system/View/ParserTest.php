@@ -218,7 +218,30 @@ class ParserTest extends \CIUnitTestCase
 		$this->assertEquals($expected, \esc($value, 'html'));
 	}
 
-	// ------------------------------------------------------------------------
+	//------------------------------------------------------------------------
+
+	/**
+	 * @see https://github.com/bcit-ci/CodeIgniter4/issues/788
+	 */
+	public function testEscapingRespectsSetDataRaw()
+	{
+		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
+
+		$template = '{ foo }';
+
+		$parser->setData(['foo' => '<script>'], 'raw');
+		$this->assertEquals('<script>', $parser->renderString($template));
+	}
+
+	public function testEscapingSetDataWithOtherContext()
+	{
+		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
+
+		$template = '{ foo }';
+
+		$parser->setData(['foo' => 'http://foo.com'], 'url');
+		$this->assertEquals('http%3A%2F%2Ffoo.com', $parser->renderString($template));
+	}
 
 	public function testFilterWithNoArgument()
 	{
