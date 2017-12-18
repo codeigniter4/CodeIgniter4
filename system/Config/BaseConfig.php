@@ -66,7 +66,7 @@ class BaseConfig
 	{
 		$properties = array_keys(get_object_vars($this));
 		$prefix = get_class($this);
-		$shortPrefix = strtolower(substr($prefix, strrpos($prefix, '\\') ));
+		$shortPrefix = strtolower(substr($prefix, strrpos($prefix, '\\')+1 ));
 
 		foreach ($properties as $property)
 		{

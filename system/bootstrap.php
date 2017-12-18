@@ -111,6 +111,13 @@ if (file_exists(COMPOSER_PATH))
 	require COMPOSER_PATH;
 }
 
+// Load environment settings from .env files
+// into $_SERVER and $_ENV
+require BASEPATH . 'Config/DotEnv.php';
+
+$env = new \CodeIgniter\Config\DotEnv(ROOTPATH);
+$env->load();
+
 // Always load the URL helper -
 // it should be used in 90% of apps.
 helper('url');

@@ -160,7 +160,6 @@ class CodeIgniter
 		Services::exceptions()
 				->initialize();
 
-		$this->loadEnvironment();
 		$this->detectEnvironment();
 		$this->bootstrapEnvironment();
 
@@ -334,21 +333,6 @@ class CodeIgniter
 			echo 'The application environment is not set correctly.';
 			exit(1); // EXIT_ERROR
 		}
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Loads any custom server config values from the .env file.
-	 */
-	protected function loadEnvironment()
-	{
-		// Load environment settings from .env files
-		// into $_SERVER and $_ENV
-		require BASEPATH . 'Config/DotEnv.php';
-
-		$env = new DotEnv(ROOTPATH);
-		$env->load();
 	}
 
 	//--------------------------------------------------------------------
