@@ -369,6 +369,7 @@ class IncomingRequestTest extends \CIUnitTestCase
 		$config = new App();
 		$config->negotiateLocale = true;
 		$config->supportedLocales = ['en', 'es'];
+		$config->baseURL = 'http://example.com';
 
 		$request = new IncomingRequest($config, new URI());
 
@@ -387,7 +388,10 @@ class IncomingRequestTest extends \CIUnitTestCase
 			'message' => 'ok'
 		];
 
-		$request = new IncomingRequest(new App(), new URI(), $json);
+		$config = new App();
+		$config->baseURL = 'http://example.com';
+
+		$request = new IncomingRequest($config, new URI(), $json);
 		
 		$this->assertEquals($expected, $request->getJSON(true));
 	}
@@ -403,7 +407,11 @@ class IncomingRequestTest extends \CIUnitTestCase
 			'role' => 'administrator',
 			'usepass' => 0
 		];
-		$request = new IncomingRequest(new App(), new URI(), $rawstring);
+
+		$config = new App();
+		$config->baseURL = 'http://example.com';
+
+		$request = new IncomingRequest($config, new URI(), $rawstring);
 
 		$this->assertEquals($expected, $request->getRawInput());
 	}
