@@ -93,7 +93,7 @@ class BaseConfigTest extends CIUnitTestCase
 		$this->assertEquals('ci4', $config->default['name']);
 		$this->assertEquals('Malcolm', $config->crew['captain']);
 		$this->assertEquals('Spock', $config->crew['science']);
-		$this->assertEmpty($config->crew['pilot']);
+		$this->assertFalse(array_key_exists('pilot', $config->crew));
 		$this->assertTrue($config->crew['comms']);
 		$this->assertFalse($config->crew['doctor']);
 	}
