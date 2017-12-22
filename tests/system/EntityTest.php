@@ -45,8 +45,8 @@ class EntityTest extends \CIUnitTestCase
 	{
 	    $entity = $this->getEntity();
 
-	    $this->assertTrue(isset($entity->default));
 	    $this->assertFalse(isset($entity->foo));
+	    $this->assertObjectHasAttribute('default', $entity);
 	}
 
 	public function testFill()
@@ -61,7 +61,7 @@ class EntityTest extends \CIUnitTestCase
 
 	    $this->assertEquals(123, $entity->foo);
 	    $this->assertEquals('bar:234:bar', $entity->bar);
-	    $this->assertTrue(! isset($entity->baz));
+	    $this->assertObjectNotHasAttribute('baz', $entity);
 	}
 
 	public function testDataMappingConvertsOriginalName()
@@ -103,8 +103,8 @@ class EntityTest extends \CIUnitTestCase
 		// maps to 'foo'
 		$entity->bar = 'here';
 
-		$this->assertTrue(isset($entity->foo));
-		$this->assertFalse(isset($entity->bar));
+		$this->assertObjectHasAttribute('foo', $entity);
+		$this->assertObjectNotHasAttribute('bar', $entity);
 	}
 
 	public function testUnsetWorksWithMapping()
@@ -132,7 +132,7 @@ class EntityTest extends \CIUnitTestCase
 
 		$time = $entity->created_at;
 
-		$this->assertTrue($time instanceof Time);
+		$this->assertInstanceOf(Time::class, $time);
 		$this->assertEquals('2017-07-15 13:23:34', $time->format('Y-m-d H:i:s'));
 	}
 
@@ -145,7 +145,7 @@ class EntityTest extends \CIUnitTestCase
 
 		$time = $entity->created_at;
 
-		$this->assertTrue($time instanceof Time);
+		$this->assertInstanceOf(Time::class, $time);
 		$this->assertEquals(date('Y-m-d H:i:s', $stamp), $time->format('Y-m-d H:i:s'));
 	}
 
@@ -157,7 +157,7 @@ class EntityTest extends \CIUnitTestCase
 
 		$time = $entity->created_at;
 
-		$this->assertTrue($time instanceof Time);
+		$this->assertInstanceOf(Time::class, $time);
 		$this->assertEquals($dt->format('Y-m-d H:i:s'), $time->format('Y-m-d H:i:s'));
 	}
 
@@ -169,7 +169,7 @@ class EntityTest extends \CIUnitTestCase
 
 		$time = $entity->created_at;
 
-		$this->assertTrue($time instanceof Time);
+		$this->assertInstanceOf(Time::class, $time);
 		$this->assertEquals($dt->format('Y-m-d H:i:s'), $time->format('Y-m-d H:i:s'));
 	}
 
@@ -181,7 +181,7 @@ class EntityTest extends \CIUnitTestCase
 
 		$time = $this->getPrivateProperty($entity, 'created_at');
 
-		$this->assertTrue($time instanceof Time);
+		$this->assertInstanceOf(Time::class, $time);
 		$this->assertEquals('2017-07-15 13:23:34', $time->format('Y-m-d H:i:s'));
 	}
 
@@ -194,7 +194,7 @@ class EntityTest extends \CIUnitTestCase
 
 		$time = $this->getPrivateProperty($entity, 'created_at');
 
-		$this->assertTrue($time instanceof Time);
+		$this->assertInstanceOf(Time::class, $time);
 		$this->assertEquals(date('Y-m-d H:i:s'), $time->format('Y-m-d H:i:s'));
 	}
 
@@ -207,7 +207,7 @@ class EntityTest extends \CIUnitTestCase
 
 		$time = $this->getPrivateProperty($entity, 'created_at');
 
-		$this->assertTrue($time instanceof Time);
+		$this->assertInstanceOf(Time::class, $time);
 		$this->assertEquals($dt->format('Y-m-d H:i:s'), $time->format('Y-m-d H:i:s'));
 	}
 
@@ -220,7 +220,7 @@ class EntityTest extends \CIUnitTestCase
 
 		$time = $this->getPrivateProperty($entity, 'created_at');
 
-		$this->assertTrue($time instanceof Time);
+		$this->assertInstanceOf(Time::class, $time);
 		$this->assertEquals($dt->format('Y-m-d H:i:s'), $time->format('Y-m-d H:i:s'));
 	}
 
@@ -229,7 +229,7 @@ class EntityTest extends \CIUnitTestCase
 		$entity = $this->getCastEntity();
 
 		$entity->first = 3.1;
-		$this->assertTrue(is_integer($entity->first));
+		$this->assertInternalType('integer', $entity->first);
 		$this->assertEquals(3, $entity->first);
 
 		$entity->first = 3.6;
@@ -241,11 +241,11 @@ class EntityTest extends \CIUnitTestCase
 		$entity = $this->getCastEntity();
 
 		$entity->second = 3;
-		$this->assertTrue(is_float($entity->second));
+		$this->assertInternalType('float', $entity->second);
 		$this->assertEquals(3.0, $entity->second);
 
 		$entity->second = '3.6';
-		$this->assertTrue(is_float($entity->second));
+		$this->assertInternalType('float', $entity->second);
 		$this->assertEquals(3.6, $entity->second);
 	}
 
@@ -254,11 +254,11 @@ class EntityTest extends \CIUnitTestCase
 		$entity = $this->getCastEntity();
 
 		$entity->third = 3;
-		$this->assertTrue(is_double($entity->third));
+		$this->assertInternalType('double', $entity->third);
 		$this->assertSame(3.0, $entity->third);
 
 		$entity->third = '3.6';
-		$this->assertTrue(is_double($entity->third));
+		$this->assertInternalType('double', $entity->third);
 		$this->assertSame(3.6, $entity->third);
 	}
 
@@ -267,7 +267,7 @@ class EntityTest extends \CIUnitTestCase
 		$entity = $this->getCastEntity();
 
 		$entity->fourth = 3.1415;
-		$this->assertTrue(is_string($entity->fourth));
+		$this->assertInternalType('string', $entity->fourth);
 		$this->assertSame('3.1415', $entity->fourth);
 	}
 
@@ -276,12 +276,12 @@ class EntityTest extends \CIUnitTestCase
 		$entity = $this->getCastEntity();
 
 		$entity->fifth = 1;
-		$this->assertTrue(is_bool($entity->fifth));
-		$this->assertSame(true, $entity->fifth);
+		$this->assertInternalType('bool', $entity->fifth);
+		$this->assertTrue($entity->fifth);
 
 		$entity->fifth = 0;
-		$this->assertTrue(is_bool($entity->fifth));
-		$this->assertSame(false, $entity->fifth);
+		$this->assertInternalType('bool', $entity->fifth);
+		$this->assertFalse($entity->fifth);
 	}
 
 	public function testCastObject()
@@ -291,7 +291,7 @@ class EntityTest extends \CIUnitTestCase
 		$data = ['foo' => 'bar'];
 
 		$entity->sixth = $data;
-		$this->assertTrue(is_object($entity->sixth));
+		$this->assertInternalType('object', $entity->sixth);
 		$this->assertEquals((object)$data, $entity->sixth);
 	}
 
@@ -311,7 +311,7 @@ class EntityTest extends \CIUnitTestCase
 		$date = 'March 12, 2017';
 
 		$entity->ninth = $date;
-		$this->assertTrue(is_integer($entity->ninth));
+		$this->assertInternalType('integer', $entity->ninth);
 		$this->assertEquals(strtotime($date), $entity->ninth);
 	}
 

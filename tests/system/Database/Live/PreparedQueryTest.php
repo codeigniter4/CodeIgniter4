@@ -22,7 +22,7 @@ class PreparedQueryTest extends \CIDatabaseTestCase
 			]);
 		});
 
-		$this->assertTrue($query instanceof BasePreparedQuery);
+		$this->assertInstanceOf(BasePreparedQuery::class, $query);
 
 		$ec = $this->db->escapeChar;
 		$pre = $this->db->DBPrefix;

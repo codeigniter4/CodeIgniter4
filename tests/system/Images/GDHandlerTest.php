@@ -8,7 +8,7 @@ class GDHandlerTest extends \CIUnitTestCase
 	{
 		$image = new Image(ROOTPATH.$this->path);
 
-		$this->assertTrue(is_array($image->getProperties(true)));
+		$this->assertInternalType('array', $image->getProperties(true));
 	}
 
 }

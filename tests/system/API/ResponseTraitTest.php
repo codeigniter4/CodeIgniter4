@@ -113,7 +113,7 @@ class ResponseTraitTest extends \CIUnitTestCase
 
 		$this->assertEquals(201, $this->response->getStatusCode());
 		$this->assertEquals('something', $this->response->getBody());
-		$this->assertTrue(strpos($this->response->getHeaderLine('Content-Type'), 'text/html') === 0);
+		$this->assertStringStartsWith('text/html', $this->response->getHeaderLine('Content-Type'));
 		$this->assertEquals('Created', $this->response->getReason());
 	}
 

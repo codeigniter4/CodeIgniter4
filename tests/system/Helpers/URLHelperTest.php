@@ -358,7 +358,7 @@ class URLHelperTest extends \CIUnitTestCase
 
 		$url = current_url(true);
 
-		$this->assertTrue($url instanceof URI);
+		$this->assertInstanceOf(URI::class, $url);
 		$this->assertEquals('http://example.com/public', (string) $url);
 	}
 

@@ -466,13 +466,13 @@ class ParserTest extends \CIUnitTestCase
 
         $setParsers = $this->getPrivateProperty($parser, 'plugins');
 
-        $this->assertTrue(array_key_exists('first', $setParsers));
+        $this->assertArrayHasKey('first', $setParsers);
 
         $parser->removePlugin('first');
 
         $setParsers = $this->getPrivateProperty($parser, 'plugins');
 
-        $this->assertFalse(array_key_exists('first', $setParsers));
+        $this->assertArrayNotHasKey('first', $setParsers);
     }
 
     //--------------------------------------------------------------------

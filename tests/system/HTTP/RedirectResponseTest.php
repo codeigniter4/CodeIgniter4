@@ -62,7 +62,7 @@ class RedirectResponseTest extends \CIUnitTestCase
 		$returned = $response->withInput();
 
 		$this->assertSame($response, $returned);
-		$this->assertTrue(array_key_exists('_ci_old_input', $_SESSION));
+		$this->assertArrayHasKey('_ci_old_input', $_SESSION);
 		$this->assertEquals('bar', $_SESSION['_ci_old_input']['get']['foo']);
 		$this->assertEquals('baz', $_SESSION['_ci_old_input']['post']['bar']);
 	}
@@ -81,7 +81,7 @@ class RedirectResponseTest extends \CIUnitTestCase
 
 		$response->withInput();
 
-		$this->assertTrue(array_key_exists('_ci_validation_errors', $_SESSION));
+		$this->assertArrayHasKey('_ci_validation_errors', $_SESSION);
 	}
 
 	public function testWith()
@@ -93,6 +93,6 @@ class RedirectResponseTest extends \CIUnitTestCase
 		$returned = $response->with('foo', 'bar');
 
 		$this->assertSame($response, $returned);
-		$this->assertTrue(array_key_exists('foo', $_SESSION));
+		$this->assertArrayHasKey('foo', $_SESSION);
 	}
 }
