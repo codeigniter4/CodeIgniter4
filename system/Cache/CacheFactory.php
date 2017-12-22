@@ -73,10 +73,11 @@ class CacheFactory
 		if ( ! array_key_exists($handler, $config->validHandlers) || ! array_key_exists($backup, $config->validHandlers))
 		{
 			throw new \InvalidArgumentException(lang('Cache.cacheHandlerNotFound'));
-		}
-
+		}		
+		// Give the cache a prefix
+		$config->$handler['prefix'] = $config->prefix;
 		// Get an instance of our handler.
-		$adapter = new $config->validHandlers[$handler]($config);
+		$adapter = new $config->validHandlers[$handler]($config->$handler);
 
 		if ( ! $adapter->isSupported())
 		{
