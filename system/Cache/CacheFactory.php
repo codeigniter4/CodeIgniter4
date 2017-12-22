@@ -74,9 +74,11 @@ class CacheFactory
 		{
 			throw new \InvalidArgumentException(lang('Cache.cacheHandlerNotFound'));
 		}
-
+		// print_r($config->$handler);exit;
+		// Give the cache a prefix
+		$config->$handler['prefix'] = $config->prefix;
 		// Get an instance of our handler.
-		$adapter = new $config->validHandlers[$handler]($config);
+		$adapter = new $config->validHandlers[$handler]($config->$handler);
 
 		if ( ! $adapter->isSupported())
 		{
