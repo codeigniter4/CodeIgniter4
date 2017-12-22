@@ -1,6 +1,5 @@
 <?php namespace Builder;
 
-use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\MockConnection;
 
 class WhereTest extends \CIUnitTestCase

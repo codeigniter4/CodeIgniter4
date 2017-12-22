@@ -41,7 +41,6 @@ use Config\Cache;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\Debug\Timer;
 use CodeIgniter\Events\Events;
-use CodeIgniter\Config\DotEnv;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\Router\RouteCollectionInterface;

@@ -36,7 +36,6 @@
  * @filesource
  */
 use Config\Services;
-use Psr\Log\LoggerAwareTrait;
 
 require __DIR__.'/CustomExceptions.php';
 

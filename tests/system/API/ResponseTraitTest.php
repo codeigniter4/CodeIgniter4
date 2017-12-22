@@ -1,6 +1,5 @@
 <?php namespace CodeIgniter\API;
 
-use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\Controller;
 use CodeIgniter\Format\JSONFormatter;
 use CodeIgniter\Format\XMLFormatter;

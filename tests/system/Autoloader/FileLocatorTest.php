@@ -1,8 +1,6 @@
 <?php namespace CodeIgniter\Autoloader;
 
 use Config\MockAutoload;
-use PHPUnit\Framework\TestCase;
-use org\bovigo\vfs\vfsStream;
 
 class FileLocatorTest extends \CIUnitTestCase
 {

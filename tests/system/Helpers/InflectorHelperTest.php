@@ -1,6 +1,5 @@
 <?php namespace CodeIgniter\HTTP;
 
-use Config\App;
 
 final class InflectorHelperTest extends \CIUnitTestCase
 {
