@@ -58,7 +58,7 @@ class FileHandler implements CacheInterface
 
 	public function __construct($config)
 	{
-		$this->prefix = $config['prefix'] ?: '';
+		$this->prefix = $config->prefix ?: '';
 		$this->path = ! empty($config->path) ? $config->path : WRITEPATH . 'cache';
 
 		$this->path = rtrim($this->path, '/') . '/';

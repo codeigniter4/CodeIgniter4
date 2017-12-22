@@ -13,7 +13,7 @@ class Cache extends BaseConfig
 	| it is not available, the $backupHandler will be used in its place.
 	|
 	*/
-	public $handler = 'redis';
+	public $handler = 'file';
 
 	/*
 	|--------------------------------------------------------------------------
@@ -27,6 +27,16 @@ class Cache extends BaseConfig
 	*/
 	public $backupHandler = 'dummy';
 
+	/*
+	|--------------------------------------------------------------------------
+	| Cache Directory Path
+	|--------------------------------------------------------------------------
+	|
+	| The path to where cache files should be stored, if using a file-based
+	| system.
+	|
+	*/
+	public $path = WRITEPATH.'cache/';
 
 	/*
 	|--------------------------------------------------------------------------
@@ -84,22 +94,9 @@ class Cache extends BaseConfig
 	*/
 	public $redis = [
 		'host'     => '127.0.0.1',
-		'password' => '',
+		'password' => null,
 		'port'     => 6379,
 		'timeout'  => 0,
-	];
-
-	/*
-	|--------------------------------------------------------------------------
-	| Cache Directory Path
-	|--------------------------------------------------------------------------
-	|
-	| The path to where cache files should be stored, if using a file-based
-	| system.
-	|
-	*/
-	public $file = [
-		'path' => WRITEPATH.'cache/'
 	];
 
 	/*
