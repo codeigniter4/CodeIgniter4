@@ -28,7 +28,7 @@ class URLHelperTest extends \CIUnitTestCase
 		$_SERVER['REQUEST_URI'] = '/';
 
 		$config = new App();
-		$config->baseURL = '';
+		$config->baseURL = 'http://example.com';
 		$config->indexPage = 'index.php';
 		$request = Services::request($config);
 		$request->uri = new URI('http://example.com/');
@@ -38,13 +38,30 @@ class URLHelperTest extends \CIUnitTestCase
 		$this->assertEquals('http://example.com/index.php/', site_url('', null, $config));
 	}
 
+	public function testSiteURLHTTPS()
+	{
+		$_SERVER['HTTP_HOST'] = 'example.com';
+		$_SERVER['REQUEST_URI'] = '/';
+		$_SERVER['HTTPS'] = 'on';
+
+		$config = new App();
+		$config->baseURL = 'http://example.com';
+		$config->indexPage = 'index.php';
+		$request = Services::request($config);
+		$request->uri = new URI('http://example.com/');
+
+		Services::injectMock('request', $request);
+
+		$this->assertEquals('https://example.com/index.php/', site_url('', null, $config));
+	}
+
 	public function testSiteURLNoIndex()
 	{
 		$_SERVER['HTTP_HOST'] = 'example.com';
 		$_SERVER['REQUEST_URI'] = '/';
 
 		$config = new App();
-		$config->baseURL = '';
+		$config->baseURL = 'http://example.com';
 		$config->indexPage = '';
 		$request = Services::request($config);
 		$request->uri = new URI('http://example.com/');
@@ -60,7 +77,7 @@ class URLHelperTest extends \CIUnitTestCase
 		$_SERVER['REQUEST_URI'] = '/';
 
 		$config = new App();
-		$config->baseURL = '';
+		$config->baseURL = 'http://example.com';
 		$config->indexPage = 'banana.php';
 		$request = Services::request($config);
 		$request->uri = new URI('http://example.com/');
@@ -76,7 +93,7 @@ class URLHelperTest extends \CIUnitTestCase
 		$_SERVER['REQUEST_URI'] = '/';
 
 		$config = new App();
-		$config->baseURL = '';
+		$config->baseURL = 'http://example.com';
 		$config->indexPage = '';
 		$request = Services::request($config);
 		$request->uri = new URI('http://example.com/');
@@ -92,7 +109,7 @@ class URLHelperTest extends \CIUnitTestCase
 		$_SERVER['REQUEST_URI'] = '/';
 
 		$config = new App();
-		$config->baseURL = '';
+		$config->baseURL = 'http://example.com';
 		$config->indexPage = 'index.php';
 		$request = Services::request($config);
 		$request->uri = new URI('http://example.com/');
@@ -108,7 +125,7 @@ class URLHelperTest extends \CIUnitTestCase
 		$_SERVER['REQUEST_URI'] = '/';
 
 		$config = new App();
-		$config->baseURL = '';
+		$config->baseURL = 'http://example.com';
 		$config->indexPage = 'index.php';
 		$request = Services::request($config);
 		$request->uri = new URI('http://example.com/');
@@ -124,7 +141,7 @@ class URLHelperTest extends \CIUnitTestCase
 		$_SERVER['REQUEST_URI'] = '/';
 
 		$config = new App();
-		$config->baseURL = '';
+		$config->baseURL = 'http://example.com';
 		$config->indexPage = 'index.php';
 		$request = Services::request($config);
 		$request->uri = new URI('http://example.com/');
@@ -140,7 +157,7 @@ class URLHelperTest extends \CIUnitTestCase
 		$_SERVER['REQUEST_URI'] = '/';
 
 		$config = new App();
-		$config->baseURL = '';
+		$config->baseURL = 'http://example.com';
 		$config->indexPage = 'index.php';
 		$request = Services::request($config);
 		$request->uri = new URI('http://example.com/');
@@ -181,7 +198,7 @@ class URLHelperTest extends \CIUnitTestCase
 
 		// Since we're on a CLI, we must provide our own URI
 		$config = new App();
-		$config->baseURL = '';
+		$config->baseURL = 'http://example.com';
 		$request = Services::request($config, false);
 		$request->uri = new URI('http://example.com/test/page');
 
@@ -201,7 +218,7 @@ class URLHelperTest extends \CIUnitTestCase
 		$_SERVER['HTTP_HOST'] = 'example.com';
 		$_SERVER['REQUEST_URI'] = '/';
 
-		$this->assertEquals('http://example.com/', base_url());
+		$this->assertEquals('http://example.com', base_url());
 	}
 
 	public function testBaseURLAttachesPath()
@@ -274,6 +291,18 @@ class URLHelperTest extends \CIUnitTestCase
 	//--------------------------------------------------------------------
 
 	/**
+	 * @see https://github.com/bcit-ci/CodeIgniter4/issues/867
+	 */
+	public function testBaseURLHTTPS()
+	{
+		$_SERVER['HTTP_HOST'] = 'example.com';
+		$_SERVER['REQUEST_URI'] = '/';
+		$_SERVER['HTTPS'] = 'on';
+
+		$this->assertEquals('https://example.com/blog/post/123', base_url('blog/post/123'));
+	}
+
+	/**
 	 * @see https://github.com/bcit-ci/CodeIgniter4/issues/240
 	 */
 	public function testBaseURLWithSegmentsAgain()
@@ -283,13 +312,13 @@ class URLHelperTest extends \CIUnitTestCase
 
 		// Since we're on a CLI, we must provide our own URI
 		$config = new App();
-		$config->baseURL = '';
+		$config->baseURL = 'http://example.com';
 		$request = Services::request($config, false);
 		$request->uri = new URI('http://example.com/test/page');
 
 		Services::injectMock('request', $request);
 
-		$this->assertEquals('http://example.com/', base_url());
+		$this->assertEquals('http://example.com', base_url());
 		$this->assertEquals('http://example.com/profile', base_url('profile'));
 	}
 
@@ -404,7 +433,7 @@ class URLHelperTest extends \CIUnitTestCase
 		$_SERVER['REQUEST_URI'] = '/';
 
 		$config = new App();
-		$config->baseURL = '';
+		$config->baseURL = 'http://example.com';
 		$config->indexPage = 'index.php';
 		$request = Services::request($config);
 		$request->uri = new URI('http://example.com/');
@@ -422,7 +451,7 @@ class URLHelperTest extends \CIUnitTestCase
 		$_SERVER['REQUEST_URI'] = '/assets/image.jpg';
 
 		$config = new App();
-		$config->baseURL = '';
+		$config->baseURL = 'http://example.com';
 		$config->indexPage = 'index.php';
 		$request = Services::request($config);
 		$request->uri = new URI('http://example.com/assets/image.jpg');
@@ -439,7 +468,7 @@ class URLHelperTest extends \CIUnitTestCase
 	public function testIndexPage()
 	{
 		$config = new App();
-		$config->baseURL = '';
+		$config->baseURL = 'http://example.com';
 		$config->indexPage = 'index.php';
 		$request = Services::request($config);
 		$request->uri = new URI('http://example.com/');
@@ -452,7 +481,7 @@ class URLHelperTest extends \CIUnitTestCase
 	public function testIndexPageAlt()
 	{
 		$config = new App();
-		$config->baseURL = '';
+		$config->baseURL = 'http://example.com';
 		$config->indexPage = 'banana.php';
 		$request = Services::request($config);
 		$request->uri = new URI('http://example.com/');
@@ -487,7 +516,7 @@ class URLHelperTest extends \CIUnitTestCase
 		$_SERVER['REQUEST_URI'] = '/';
 
 		$config = new App();
-		$config->baseURL = '';
+		$config->baseURL = 'http://example.com';
 		$config->indexPage = 'index.php';
 		$request = Services::request($config);
 		$request->uri = new URI('http://example.com/');
@@ -518,7 +547,7 @@ class URLHelperTest extends \CIUnitTestCase
 		$_SERVER['REQUEST_URI'] = '/';
 
 		$config = new App();
-		$config->baseURL = '';
+		$config->baseURL = 'http://example.com';
 		$config->indexPage = '';
 		$request = Services::request($config);
 		$request->uri = new URI('http://example.com/');
@@ -548,7 +577,7 @@ class URLHelperTest extends \CIUnitTestCase
 		$_SERVER['REQUEST_URI'] = '/';
 
 		$config = new App();
-		$config->baseURL = '';
+		$config->baseURL = 'http://example.com';
 		$config->indexPage = '';
 		$request = Services::request($config);
 		$request->uri = new URI('http://example.com/');
@@ -576,7 +605,7 @@ class URLHelperTest extends \CIUnitTestCase
 		$_SERVER['REQUEST_URI'] = '/';
 
 		$config = new App();
-		$config->baseURL = '';
+		$config->baseURL = 'http://example.com';
 		$config->indexPage = 'index.php';
 		$request = Services::request($config);
 		$request->uri = new URI('http://example.com/');
@@ -622,7 +651,7 @@ class URLHelperTest extends \CIUnitTestCase
 		$_SERVER['REQUEST_URI'] = '/';
 
 		$config = new App();
-		$config->baseURL = '';
+		$config->baseURL = 'http://example.com';
 		$config->indexPage = 'index.php';
 		$request = Services::request($config);
 		$request->uri = new URI('http://example.com/');
@@ -652,7 +681,7 @@ class URLHelperTest extends \CIUnitTestCase
 		$_SERVER['REQUEST_URI'] = '/';
 
 		$config = new App();
-		$config->baseURL = '';
+		$config->baseURL = 'http://example.com';
 		$config->indexPage = 'index.php';
 		$request = Services::request($config);
 		$request->uri = new URI('http://example.com/');
@@ -686,7 +715,7 @@ class URLHelperTest extends \CIUnitTestCase
 		$_SERVER['REQUEST_URI'] = '/';
 
 		$config = new App();
-		$config->baseURL = '';
+		$config->baseURL = 'http://example.com';
 		$config->indexPage = 'index.php';
 		$request = Services::request($config);
 		$request->uri = new URI('http://example.com/');

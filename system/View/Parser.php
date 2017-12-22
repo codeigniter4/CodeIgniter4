@@ -79,6 +79,14 @@ class Parser extends View
 	 */
 	protected $plugins = [];
 
+	/**
+	 * Stores the context for each data element
+	 * when set by `setData` so the context is respected.
+	 *
+	 * @var array
+	 */
+	protected $dataContexts = [];
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -195,6 +203,35 @@ class Parser extends View
 			$this->data = [];
 		}
 		return $output;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Sets several pieces of view data at once.
+	 * In the Parser, we need to store the context here
+	 * so that the variable is correctly handled within the
+	 * parsing itself, and contexts (including raw) are respected.
+	 *
+	 * @param array $data
+	 * @param string $context The context to escape it for: html, css, js, url, raw
+	 *                        If 'raw', no escaping will happen
+	 *
+	 * @return RendererInterface
+	 */
+	public function setData(array $data = [], string $context = null): RendererInterface
+	{
+		if ( ! empty($context))
+		{
+			foreach ($data as $key => $value)
+			{
+				$this->dataContexts[$key] = $context;
+			}
+		}
+
+		$this->data = array_merge($this->data, $data);
+
+		return $this;
 	}
 
 	//--------------------------------------------------------------------
@@ -565,9 +602,12 @@ class Parser extends View
 		// so we need to break them apart so we can apply them all.
 		$filters = isset($matches[0]) ? explode('|', $matches[0]) : [];
 
-		if ($escape && ( ! isset($matches[0]) || $this->shouldAddEscaping($orig)))
+		if ($escape && ! isset($matches[0]))
 		{
-			$filters[] = 'esc(html)';
+			if ($context = $this->shouldAddEscaping($orig))
+			{
+				$filters[] = "esc({$context})";
+			}
 		}
 
 		$replace = $this->applyFilters($replace, $filters);
@@ -582,16 +622,27 @@ class Parser extends View
 	 *
 	 * @param string $key
 	 *
-	 * @return bool
+	 * @return false|html
 	 */
 	public function shouldAddEscaping(string $key)
 	{
 		$escape = false;
 
-		// No pipes, then we know we need to escape
-		if (strpos($key, '|') === false)
+		$key = trim(str_replace(['{', '}'], '', $key));
+
+		// If the key has a context stored (from setData)
+		// we need to respect that.
+		if (array_key_exists($key, $this->dataContexts))
 		{
-			$escape = true;
+			if ($this->dataContexts[$key] !== 'raw')
+			{
+				return $this->dataContexts[$key];
+			}
+		}
+		// No pipes, then we know we need to escape
+		elseif (strpos($key, '|') === false)
+		{
+			$escape = 'html';
 		}
 		// If there's a `noescape` then we're definitely false.
 		elseif (strpos($key, 'noescape') !== false)
@@ -601,7 +652,7 @@ class Parser extends View
 		// If no `esc` filter is found, then we'll need to add one.
 		elseif ( ! preg_match('/^|\s+esc/', $key))
 		{
-			$escape = true;
+			$escape = 'html';
 		}
 
 		return $escape;

@@ -35,15 +35,16 @@
  * @since        Version 3.0.0
  * @filesource
  */
-use CodeIgniter\I18n\Time;
-use CodeIgniter\Pager\Pager;
-use CodeIgniter\Validation\ValidationInterface;
 use Config\App;
 use Config\Database;
+use CodeIgniter\I18n\Time;
+use CodeIgniter\Pager\Pager;
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\ConnectionInterface;
+use CodeIgniter\Validation\ValidationInterface;
+use CodeIgniter\Database\Exceptions\DatabaseException;
 
 /**
  * Class Model
