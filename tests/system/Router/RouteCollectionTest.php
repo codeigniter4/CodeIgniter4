@@ -1,6 +1,5 @@
 <?php namespace CodeIgniter\Router;
 
-use CodeIgniter\Autoloader\FileLocator;
 use CodeIgniter\Autoloader\MockFileLocator;
 
 /**

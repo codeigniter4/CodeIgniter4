@@ -1,6 +1,5 @@
 <?php namespace CodeIgniter\Filters;
 
-use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\Config\Services;
 
 require __DIR__.'/fixtures/InvalidClass.php';

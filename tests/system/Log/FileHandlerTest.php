@@ -1,8 +1,6 @@
 <?php namespace CodeIgniter\Log\Handlers;
 
 use Config\MockLogger as LoggerConfig;
-use Psr\Log\LogLevel;
-use CodeIgniter\Log\Handlers\TestHandler;
 
 class FileHandlerTest extends \CIUnitTestCase
 {

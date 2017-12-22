@@ -1,6 +1,5 @@
 <?php namespace CodeIgniter;
 
-use CodeIgniter\Entity;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Test\ReflectionHelper;
 

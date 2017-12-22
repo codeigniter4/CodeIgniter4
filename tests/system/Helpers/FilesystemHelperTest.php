@@ -3,8 +3,6 @@
 include BASEPATH.'../vendor/autoload.php';
 
 use org\bovigo\vfs\vfsStream;
-use org\bovigo\vfs\vfsStreamWrapper;
-use org\bovigo\vfs\vfsStreamDirectory;
 
 class FilesystemHelperTest extends \CIUnitTestCase
 {

@@ -1,6 +1,5 @@
 <?php namespace CodeIgniter;
 
-use CodeIgniter\HTTP;
 use Config\App;
 
 /**

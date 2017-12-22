@@ -1,6 +1,5 @@
 <?php namespace CodeIgniter\Database\Live;
 
-use CodeIgniter\Database\BaseResult;
 
 /**
  * @group DatabaseLive
