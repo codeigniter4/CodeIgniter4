@@ -55,7 +55,7 @@ class Forge extends \CodeIgniter\Database\Forge
 	 * @var    string
 	 */
 	protected $dropConstraintStr = 'ALTER TABLE %s DROP FOREIGN KEY %s';
-        
+
 	/**
 	 * CREATE TABLE keys flag
 	 *
@@ -109,18 +109,18 @@ class Forge extends \CodeIgniter\Database\Forge
 		{
 			if (is_string($key))
 			{
-				$sql .= ' ' . strtoupper($key) . ' = ' . $attributes[$key];
+				$sql .= ' ' . strtoupper($key) . ' = ' . $this->db->escape($attributes[$key]);
 			}
 		}
 
 		if ( ! empty($this->db->charset) && ! strpos($sql, 'CHARACTER SET') && ! strpos($sql, 'CHARSET'))
 		{
-			$sql .= ' DEFAULT CHARACTER SET = ' . $this->db->charset;
+			$sql .= ' DEFAULT CHARACTER SET = ' . $this->db->escape($this->db->charset);
 		}
 
 		if ( ! empty($this->db->DBCollat) && ! strpos($sql, 'COLLATE'))
 		{
-			$sql .= ' COLLATE = ' . $this->db->DBCollat;
+			$sql .= ' COLLATE = ' . $this->db->escape($this->db->DBCollat);
 		}
 
 		return $sql;

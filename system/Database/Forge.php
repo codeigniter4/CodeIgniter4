@@ -528,7 +528,7 @@ class Forge
 		{
 			if (is_string($key))
 			{
-				$sql .= ' ' . strtoupper($key) . ' ' . $attributes[$key];
+				$sql .= ' ' . strtoupper($key) . ' ' . $this->db->escape($attributes[$key]);
 			}
 		}
 
