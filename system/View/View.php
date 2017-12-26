@@ -35,8 +35,8 @@
  * @since	Version 3.0.0
  * @filesource
  */
-use Config\Services;
 use CodeIgniter\Log\Logger;
+use Config\Services;
 
 /**
  * Class View

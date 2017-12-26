@@ -1,11 +1,11 @@
 <?php namespace CodeIgniter\HTTP;
 
+use CodeIgniter\Autoloader\MockFileLocator;
+use CodeIgniter\Config\Services;
+use CodeIgniter\Router\RouteCollection;
+use CodeIgniter\Validation\Validation;
 use Config\App;
 use Config\Autoload;
-use CodeIgniter\Config\Services;
-use CodeIgniter\Validation\Validation;
-use CodeIgniter\Router\RouteCollection;
-use CodeIgniter\Autoloader\MockFileLocator;
 
 class RedirectResponseTest extends \CIUnitTestCase
 {

@@ -1,9 +1,9 @@
 <?php namespace Tests\Support\Helpers;
 
-use Tests\Support\DOM\DOMParser;
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
+use Tests\Support\DOM\DOMParser;
 
 class ControllerResponse {
 

@@ -35,8 +35,8 @@
  * @since	Version 3.0.0
  * @filesource
  */
-use CodeIgniter\Database\PreparedQueryInterface;
 use \CodeIgniter\Database\BasePreparedQuery;
+use CodeIgniter\Database\PreparedQueryInterface;
 
 class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 {

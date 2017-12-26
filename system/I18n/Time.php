@@ -35,11 +35,11 @@
  * @since      Version 3.0.0
  * @filesource
  */
-use Locale;
-use DateTime;
 use DateInterval;
+use DateTime;
 use DateTimeZone;
 use IntlDateFormatter;
+use Locale;
 
 /**
  * Class Time

@@ -1,7 +1,7 @@
 <?php
 
-use CodeIgniter\View\Cell;
 use CodeIgniter\Cache\Handlers\MockHandler;
+use CodeIgniter\View\Cell;
 
 include_once __DIR__ .'/SampleClass.php';
 

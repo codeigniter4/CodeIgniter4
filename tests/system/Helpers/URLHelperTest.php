@@ -2,9 +2,9 @@
 
 namespace CodeIgniter\Helpers;
 
-use Config\App;
-use CodeIgniter\HTTP\URI;
 use CodeIgniter\Config\Services;
+use CodeIgniter\HTTP\URI;
+use Config\App;
 
 /**
  * @backupGlobals enabled

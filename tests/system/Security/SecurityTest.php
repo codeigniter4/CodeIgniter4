@@ -1,9 +1,9 @@
 <?php namespace CodeIgniter\Security;
 
-use Config\MockAppConfig;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\Request;
 use CodeIgniter\HTTP\URI;
+use Config\MockAppConfig;
 
 //--------------------------------------------------------------------
 
