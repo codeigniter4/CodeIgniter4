@@ -277,9 +277,9 @@ class Forge
 	/**
 	 * Add Key
 	 *
-	 * @param    string $key
-	 * @param    bool   $primary
-	 * @param    bool   $unique
+	 * @param    string|array $key
+	 * @param    bool         $primary
+	 * @param    bool         $unique
 	 *
 	 * @return    Forge
 	 */
@@ -1153,10 +1153,21 @@ class Forge
 				continue;
 			}
 
+			if (in_array($i, $this->uniqueKeys))
+			{
+				$sqls[] = 'ALTER TABLE ' . $this->db->escapeIdentifiers($table)
+				        . ' ADD CONSTRAINT ' . $this->db->escapeIdentifiers($table . '_' . implode('_', $this->keys[$i]))
+					    . ' UNIQUE (' . implode(', ', $this->db->escapeIdentifiers($this->keys[$i])) . ');';
+				continue;
+			}
+
 			$sqls[] = 'CREATE INDEX ' . $this->db->escapeIdentifiers($table . '_' . implode('_', $this->keys[$i]))
 					. ' ON ' . $this->db->escapeIdentifiers($table)
 					. ' (' . implode(', ', $this->db->escapeIdentifiers($this->keys[$i])) . ');';
 		}
+
+		$this->keys = [];
+		$this->uniqueKeys = [];
 
 		return $sqls;
 	}
