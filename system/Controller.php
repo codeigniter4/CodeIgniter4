@@ -170,11 +170,11 @@ class Controller
 	//--------------------------------------------------------------------
 
 	/**
-	 * A shortcut to performing validation on $_POST input. If validation
+	 * A shortcut to performing validation on input data. If validation
 	 * is not successful, a $errors property will be set on this class.
 	 *
-	 * @param                                    $rules
-	 * @param array|null                         $messages
+	 * @param array  $rules
+	 * @param array  $messages An array of custom error messages
 	 *
 	 * @return bool
 	 */

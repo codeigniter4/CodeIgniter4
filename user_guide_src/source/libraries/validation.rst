@@ -246,8 +246,8 @@ withRequest()
 -------------
 
 One of the most common times you will use the validation library is when validating
-data that was input from an HTML form. If desired, you can pass an instance of the
-current Request object and it will take all of the $_POST data and set it as the
+data that was input from an HTTP Request. If desired, you can pass an instance of the
+current Request object and it will take all of the input data and set it as the
 data to be validated::
 
     $validation->withRequest($this->request)

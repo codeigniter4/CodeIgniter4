@@ -279,8 +279,8 @@ class Validation implements ValidationInterface
 	//--------------------------------------------------------------------
 
 	/**
-	 * Takes a Request object and grabs the data to use from its
-	 * POST array values.
+	 * Takes a Request object and grabs the input data to use from its
+	 * array values.
 	 *
 	 * @param \CodeIgniter\HTTP\RequestInterface|\CodeIgniter\HTTP\IncomingRequest $request
 	 *
@@ -288,7 +288,7 @@ class Validation implements ValidationInterface
 	 */
 	public function withRequest(RequestInterface $request): ValidationInterface
 	{
-		$this->data = $request->getPost() ?? [];
+		$this->data = $request->getVar() ?? [];
 
 		return $this;
 	}
