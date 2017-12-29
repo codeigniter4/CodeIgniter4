@@ -352,6 +352,15 @@ class Connection extends BaseConnection implements ConnectionInterface
 				return trim($v);
 			}, $_fields);
 
+			if (strpos($row->indexdef, 'CREATE UNIQUE INDEX pk') === 0)
+			{
+				$obj->type = 'PRIMARY';
+			}
+			else
+			{
+				$obj->type = (strpos($row->indexdef, 'CREATE UNIQUE') === 0) ? 'UNIQUE' :'INDEX';
+			}
+
 			$retval[] = $obj;
 	}
 
