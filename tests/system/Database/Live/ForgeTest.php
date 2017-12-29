@@ -151,12 +151,12 @@ class ForgeTest extends \CIDatabaseTestCase
 			$this->assertEquals($keys[0]->name, 'PRIMARY KEY');
 			$this->assertEquals($keys[0]->fields, ['id']);
 			$this->assertEquals($keys[0]->type, 'PRIMARY');
-			$this->assertEquals($keys[1]->name, 'code_company');
-			$this->assertEquals($keys[1]->fields, ['code', 'company']);
-			$this->assertEquals($keys[1]->type, 'INDEX');
-			$this->assertEquals($keys[2]->name, 'code_active');
-			$this->assertEquals($keys[2]->fields, ['code', 'active']);
-			$this->assertEquals($keys[2]->type, 'UNIQUE');
+			$this->assertEquals($keys[2]->name, 'code_company');
+			$this->assertEquals($keys[2]->fields, ['code', 'company']);
+			$this->assertEquals($keys[2]->type, 'INDEX');
+			$this->assertEquals($keys[1]->name, 'code_active');
+			$this->assertEquals($keys[1]->fields, ['code', 'active']);
+			$this->assertEquals($keys[1]->type, 'UNIQUE');
 		}
 		elseif($this->db->DBDriver == 'Postgre')
 		{
