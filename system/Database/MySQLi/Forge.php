@@ -55,7 +55,7 @@ class Forge extends \CodeIgniter\Database\Forge
 	 * @var    string
 	 */
 	protected $dropConstraintStr = 'ALTER TABLE %s DROP FOREIGN KEY %s';
-        
+
 	/**
 	 * CREATE TABLE keys flag
 	 *
@@ -230,7 +230,9 @@ class Forge extends \CodeIgniter\Database\Forge
 
 			is_array($this->keys[$i]) OR $this->keys[$i] = [$this->keys[$i]];
 
-			$sql .= ",\n\tKEY " . $this->db->escapeIdentifiers(implode('_', $this->keys[$i]))
+			$unique = in_array($i, $this->uniqueKeys) ? 'UNIQUE ' : '';
+
+			$sql .= ",\n\t{$unique}KEY " . $this->db->escapeIdentifiers(implode('_', $this->keys[$i]))
 					. ' (' . implode(', ', $this->db->escapeIdentifiers($this->keys[$i])) . ')';
 		}
 

@@ -64,6 +64,12 @@ class Forge
 	protected $keys = [];
 
 	/**
+	 * List of unique keys.
+	 * @var array
+	 */
+	protected $uniqueKeys = [];
+
+	/**
 	 * List of primary keys.
 	 *
 	 * @var array
@@ -273,10 +279,11 @@ class Forge
 	 *
 	 * @param    string $key
 	 * @param    bool   $primary
+	 * @param    bool   $unique
 	 *
 	 * @return    Forge
 	 */
-	public function addKey($key, $primary = false)
+	public function addKey($key, $primary = false, $unique = false)
 	{
 		if ($primary === true)
 		{
@@ -288,6 +295,10 @@ class Forge
 		else
 		{
 			$this->keys[] = $key;
+			if ($unique === true)
+			{
+				$this->uniqueKeys[] = ($c = count($this->keys)) ? $c - 1 : 0;
+			}
 		}
 
 		return $this;
