@@ -18,7 +18,6 @@ While not required, CodeIgniter can be installed via `composer <https://getcompo
 
     composer create-project codeigniter4/framework
 
-
 Running
 =======
 
@@ -60,7 +59,6 @@ That's it!
 If you're new to CodeIgniter, please read the :doc:`Getting
 Started <../intro/index>` section of the User Guide
 to begin learning how to build dynamic PHP applications. Enjoy!
-
 
 .. toctree::
     :hidden:

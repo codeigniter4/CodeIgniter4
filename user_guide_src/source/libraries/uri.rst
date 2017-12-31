@@ -8,7 +8,6 @@ relative URI to an existing one and have it resolved safely and correctly.
 
 .. contents:: Page Contents
 
-
 ======================
 Creating URI instances
 ======================

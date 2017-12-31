@@ -170,7 +170,6 @@ You can also use named keys to make it easier to keep things straight, if you'd 
     // Displays "I have 3 apples."
     echo lang("Tests.namedApples", ['number_apples' => 3]);
 
-
 Obviously, you can do more than just number replacement. According to the
 `official ICU docs <http://icu-project.org/apiref/icu4c/classMessageFormat.html#details>`_ for the underlying
 library, the following types of data can be replaced:

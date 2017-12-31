@@ -59,7 +59,6 @@ instead of the details pagination links::
 
     <?= $pager->simpleLinks() ?>
 
-
 Behind the scenes, the library loads a view file that determines how the links are formatted, making it simple to
 modify to your needs. See below for details on how to completely customize the output.
 

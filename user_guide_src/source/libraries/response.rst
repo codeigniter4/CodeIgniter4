@@ -354,7 +354,6 @@ The methods provided by the parent class that are available are:
 		:param	bool	$httponly: Whether to only make the cookie accessible for HTTP requests (no JavaScript)
 		:rtype:	void
 
-
 		Sets a cookie containing the values you specify. There are two ways to
 		pass information to this method so that a cookie can be set: Array
 		Method, and Discrete Parameters:

@@ -234,7 +234,6 @@ Returns the first row in the result set. This is best used in combination with t
 	$user = $userModel->where('deleted', 0)
 	                  ->first();
 
-
 **withDeleted()**
 
 If $useSoftDeletes is true, then the find* methods will not return any rows where 'deleted = 1'. To
@@ -496,7 +495,6 @@ very elegant use::
 
 			$user_name = $userModel->escape($name);
 
-
 Runtime Return Type Changes
 ----------------------------
 
@@ -522,7 +520,6 @@ Returns data from the next find*() method as standard objects or custom class in
 
 	// Return as custom class instances
 	$users = $userModel->asObject('User')->findWhere('status', 'active');
-
 
 Processing Large Amounts of Data
 --------------------------------

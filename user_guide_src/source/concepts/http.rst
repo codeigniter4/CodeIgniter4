@@ -57,7 +57,6 @@ a simple text message that looks something like this::
 		. . .
 	</html>
 
-
 The response tells the client what version of the HTTP specification that it's using and, probably most
 importantly, the status code (200). The status code is one of a number of codes that have been standardized
 to have a very specific meaning to the client. This can tell them that it was successful (200), or that the page
@@ -94,7 +93,6 @@ is an object-oriented representation of the HTTP request. It provides everything
 	$request->getHeader('Content-Type');
 
 	$request->getMethod();  // GET, POST, PUT, etc
-
 
 The request class does a lot of work in the background for you, that you never need to worry about.
 The ``isAJAX()`` and ``isSecure()`` methods check several different methods to determine the correct answer.

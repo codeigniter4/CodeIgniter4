@@ -12,7 +12,7 @@ Library Reference
     content_negotiation
     curlrequest
     files
-    images    
+    images
     incomingrequest
     localization
     message

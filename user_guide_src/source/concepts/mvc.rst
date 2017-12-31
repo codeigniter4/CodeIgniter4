@@ -23,7 +23,6 @@ wherever you desire, as long as they are properly namespaced. We will discuss th
 
 Let's take a closer look at each of these three main components.
 
-
 **************
 The Components
 **************
@@ -49,7 +48,6 @@ That's not a problem. As long as CodeIgniter can find the file, it can display i
 
 :doc:`Find out more about views </general/views>`
 
-
 Models
 ======
 
@@ -66,7 +64,6 @@ miss updating an area.
 Models are typically stored in **/application/Models**, though they can use a namespace to be grouped however you need.
 
 :doc:`Find out more about models </database/model>`
-
 
 Controllers
 ===========

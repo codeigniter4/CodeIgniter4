@@ -84,7 +84,6 @@ Helper Reference
 
 	helpers/index
 
-
 ***************************
 Contributing to CodeIgniter
 ***************************

@@ -31,7 +31,6 @@ New packages:
         -   \\ MySQLi \\ Builder, Connection, Forge, Result
         -   \\ Postgre \\ Builder, Connection, Forge, Result, Utils
 
-
     - Debug
 
         - \\ CustomExceptions, Exceptions, Iterator, Timer, Toolbar
@@ -64,6 +63,5 @@ New packages:
 
         -   Zend \\ Escaper, Exception \\ ... **third party**
         -   RendererInterface, View
-
 
 User Guide adapted or rewritten.

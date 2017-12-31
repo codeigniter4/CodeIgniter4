@@ -34,7 +34,6 @@ provided, the application defaults will be used.
 
     $myTime = new Time('now', 'America/Chicago', 'en_US');
 
-
 now()
 -----
 
@@ -162,7 +161,6 @@ A full listing of values can be found `here <http://www.icu-project.org/apiref/i
     $time = Time::parse('March 9, 2016 12:00:00', 'America/Chicago');
     echo $time->toLocalizedString('MMM d, yyyy');   // March 9, 2016
 
-
 toDateTimeString()
 ------------------
 
@@ -187,7 +185,6 @@ Displays just the time portion of the value::
 
     $time = Time::parse('March 9, 2016 12:00:00', 'America/Chicago');
     echo $time->toTimeString();     // 12:00:00
-
 
 humanize()
 ----------
@@ -323,7 +320,6 @@ Returns the full `timezone string <http://php.net/manual/en/timezones.php>`_ of 
     echo Time::now('America/Chicago')->getTimezoneName();   // America/Chicago
     echo Time::now('Europe/London')->timezoneName;          // Europe/London
 
-
 Setters
 =======
 
@@ -367,7 +363,6 @@ Returns a new instance with the date set to the new timestamp::
     echo $time->toDateTimeString();     // 2017-05-10 00:00:00
     echo $time2->toDateTimeString();     // 2017-04-01 00:00:00
 
-
 Modifying the Value
 ===================
 
@@ -389,7 +384,6 @@ modify the existing Time instance, but will return a new instance.
     $time = $time->subDays(21);
     $time = $time->subMonths(14);
     $time = $time->subYears(5);
-
 
 Comparing Two Times
 ===================
@@ -456,15 +450,12 @@ Works exactly the same as **isBefore()** except checks if the time is after the 
     $time1->isAfter($time2);  // false
     $time2->isAfter($time1);  // true
 
-
-
 Viewing Differences
 ===================
 
 To compare two Times directly, you would use the **difference()** method, which returns a **CodeIgniter\I18n\TimeDifference**
 instance. The first parameter is either a Time instance, a DateTime instance, or a string with the date/time. If
 a string is passed in the first parameter, the second parameter can be a timezone string::
-
 
     $time = Time::parse('March 10, 2017', 'America/Chicago');
 

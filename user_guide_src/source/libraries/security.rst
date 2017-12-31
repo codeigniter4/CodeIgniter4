@@ -57,7 +57,7 @@ and ``csrf_hash()`` functions
 
 	<input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />
 
-Additionally, you can use the ``csrf_field()`` method to generate this 
+Additionally, you can use the ``csrf_field()`` method to generate this
 hidden input field for you::
 
 	// Generates: <input type="hidden" name="{csrf_token}" value="{csrf_hash}" />

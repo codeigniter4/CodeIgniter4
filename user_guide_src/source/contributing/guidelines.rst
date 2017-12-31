@@ -14,7 +14,7 @@ All code must conform to our `Style Guide
 <./styleguide.html>`_, which is
 essentially the `Allman indent style
 <https://en.wikipedia.org/wiki/Indent_style#Allman_style>`_, with
-elaboration on naming and readable operators. 
+elaboration on naming and readable operators.
 
 This makes certain that all code is the same format as the
 existing code and means it will be as readable as possible.
@@ -33,8 +33,8 @@ In the CodeIgniter project, there is a ``tests`` folder, with a structure that
 parallels that of ``system``.
 
 The normal practice would be to have a unit test class for each of the classes
-in ``system``, named appropriately. For instance, the ``BananaTest`` 
-class would test the ``Banana`` class. There will be occasions when 
+in ``system``, named appropriately. For instance, the ``BananaTest``
+class would test the ``Banana`` class. There will be occasions when
 it is more convenient to have separate classes to test different functionality
 of a single CodeIgniter component.
 
@@ -44,13 +44,13 @@ PHPdoc Comments
 ===============
 
 Source code should be commented using PHPdoc comments blocks.
-Thie means implementation comments to explain potentially confusing sections 
+Thie means implementation comments to explain potentially confusing sections
 of code, and documentation comments before each public or protected
 class/interface/trait, method and variable.
 
 See the `phpDocumentor website <https://phpdoc.org/>`_ for more information.
 
-We use ``phpDocumentor2`` to generate the API documentation for the 
+We use ``phpDocumentor2`` to generate the API documentation for the
 framework, with configuration details in ``phpdoc.dist.xml`` in the project
 root.
 
@@ -70,8 +70,8 @@ The change-log, in the user guide root, needs to be kept up-to-date.
 Not all changes will need an entry in it, but new classes, major or BC changes
 to existing classes, and bug fixes should.
 
-See the `CodeIgniter 3 change log 
-<https://github.com/bcit-ci/CodeIgniter/blob/develop/user_guide_src/source/changelog.rst>`_ 
+See the `CodeIgniter 3 change log
+<https://github.com/bcit-ci/CodeIgniter/blob/develop/user_guide_src/source/changelog.rst>`_
 for an example.
 
 PHP Compatibility
@@ -79,7 +79,7 @@ PHP Compatibility
 
 CodeIgniter4 requires PHP 7.
 
-See the `CodeIgniter4-developer-setup <https://github.com/bcit-ci/CodeIgniter4-developer-setup>`_ 
+See the `CodeIgniter4-developer-setup <https://github.com/bcit-ci/CodeIgniter4-developer-setup>`_
 repository for tips on setting this up on your system.
 
 That repository also contains tips for configuring your IDE or editor to work

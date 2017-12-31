@@ -47,7 +47,6 @@ the controller, where you can save it as a class property::
 
 	$someClass = new SomeClass(\Config\Services::request());
 
-
 Determining Request Type
 ========================
 
@@ -66,7 +65,6 @@ be checked with the ``isAJAX()`` and ``isCLI()`` methods::
 		. . .
 	}
 
-
 You can check the HTTP method that this request represents with the ``method()`` method::
 
 	// Returns 'post'
@@ -84,7 +82,6 @@ You can also check if the request was made through and HTTPS connection with the
 	{
 		force_https();
 	}
-
 
 Retrieving Input
 ================
@@ -202,7 +199,6 @@ If you need the entire header, with the name and values in a single string, simp
 
 	echo (string)$header;
 
-
 The Request URL
 ===============
 
@@ -268,7 +264,6 @@ You can easily negotiate content types with the request through the ``negotiate(
 	$encoding    = $request->negotiate('encoding', ['gzip', 'compress']);
 
 See the :doc:`Content Negotiation </libraries/content_negotiation>` page for more details.
-
 
 Class Reference
 ---------------
