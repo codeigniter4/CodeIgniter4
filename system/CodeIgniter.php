@@ -656,27 +656,23 @@ class CodeIgniter
 			$controller = $this->controller;
 			return $controller(...$this->router->params());
 		}
-		else
+
+		// No controller specified - we don't know what to do now.
+		if (empty($this->controller))
 		{
-			// No controller specified - we don't know what to do now.
-			if (empty($this->controller))
-			{
-				throw new PageNotFoundException('Controller is empty.');
-			}
-			else
-			{
-				// Try to autoload the class
-				if ( ! class_exists($this->controller, true) || $this->method[0] === '_')
-				{
-					throw new PageNotFoundException('Controller or its method is not found.');
-				}
-				else if ( ! method_exists($this->controller, '_remap') &&
-						! is_callable([$this->controller, $this->method], false)
-				)
-				{
-					throw new PageNotFoundException('Controller method is not found.');
-				}
-			}
+			throw new PageNotFoundException('Controller is empty.');
+		}
+
+		// Try to autoload the class
+		if ( ! class_exists($this->controller, true) || $this->method[0] === '_')
+		{
+			throw new PageNotFoundException('Controller or its method is not found.');
+		}
+		else if ( ! method_exists($this->controller, '_remap') &&
+				! is_callable([$this->controller, $this->method], false)
+		)
+		{
+			throw new PageNotFoundException('Controller method is not found.');
 		}
 	}
 

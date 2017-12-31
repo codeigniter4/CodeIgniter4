@@ -415,49 +415,47 @@ if ( ! function_exists('link_tag'))
 						'video', $src, $unsupportedMessage, $attributes, $tracks
 				);
 			}
+
+			$video = '<video';
+
+			if (_has_protocol($src))
+			{
+				$video .= ' src="' . $src . '"';
+			}
+			elseif ($indexPage === true)
+			{
+				$video .= ' src="' . site_url($src) . '"';
+			}
 			else
 			{
-				$video = '<video';
-
-				if (_has_protocol($src))
-				{
-					$video .= ' src="' . $src . '"';
-				}
-				elseif ($indexPage === true)
-				{
-					$video .= ' src="' . site_url($src) . '"';
-				}
-				else
-				{
-					$video .= ' src="' . slash_item('baseURL') . $src . '"';
-				}
-
-				if ($attributes !== '')
-				{
-					$video .= ' ' . $attributes;
-				}
-
-				$video .= ">\n";
-
-				if ( ! empty($tracks))
-				{
-					foreach ($tracks as $track)
-					{
-						$video .= _space_indent() . $track . "\n";
-					}
-				}
-
-				if ( ! empty($unsupportedMessage))
-				{
-					$video .= _space_indent()
-							. $unsupportedMessage
-							. "\n";
-				}
-
-				$video .= "</video>\n";
-
-				return $video;
+				$video .= ' src="' . slash_item('baseURL') . $src . '"';
 			}
+
+			if ($attributes !== '')
+			{
+				$video .= ' ' . $attributes;
+			}
+
+			$video .= ">\n";
+
+			if ( ! empty($tracks))
+			{
+				foreach ($tracks as $track)
+				{
+					$video .= _space_indent() . $track . "\n";
+				}
+			}
+
+			if ( ! empty($unsupportedMessage))
+			{
+				$video .= _space_indent()
+						. $unsupportedMessage
+						. "\n";
+			}
+
+			$video .= "</video>\n";
+
+			return $video;
 		}
 
 	}
@@ -492,49 +490,47 @@ if ( ! function_exists('link_tag'))
 						'audio', $src, $unsupportedMessage, $attributes, $tracks
 				);
 			}
+
+			$audio = '<audio';
+
+			if (_has_protocol($src))
+			{
+				$audio .= ' src="' . $src . '"';
+			}
+			elseif ($indexPage === true)
+			{
+				$audio .= ' src="' . site_url($src) . '"';
+			}
 			else
 			{
-				$audio = '<audio';
-
-				if (_has_protocol($src))
-				{
-					$audio .= ' src="' . $src . '"';
-				}
-				elseif ($indexPage === true)
-				{
-					$audio .= ' src="' . site_url($src) . '"';
-				}
-				else
-				{
-					$audio .= ' src="' . slash_item('baseURL') . $src . '"';
-				}
-
-				if ($attributes !== '')
-				{
-					$audio .= ' ' . $attributes;
-				}
-
-				$audio .= '>';
-
-				if ( ! empty($tracks))
-				{
-					foreach ($tracks as $track)
-					{
-						$audio .= $track;
-					}
-				}
-
-				if ( ! empty($unsupportedMessage))
-				{
-					$video .= _space_indent()
-							. $unsupportedMessage
-							. "\n";
-				}
-
-				$audio .= "</audio>\n";
-
-				return $audio;
+				$audio .= ' src="' . slash_item('baseURL') . $src . '"';
 			}
+
+			if ($attributes !== '')
+			{
+				$audio .= ' ' . $attributes;
+			}
+
+			$audio .= '>';
+
+			if ( ! empty($tracks))
+			{
+				foreach ($tracks as $track)
+				{
+					$audio .= $track;
+				}
+			}
+
+			if ( ! empty($unsupportedMessage))
+			{
+				$video .= _space_indent()
+						. $unsupportedMessage
+						. "\n";
+			}
+
+			$audio .= "</audio>\n";
+
+			return $audio;
 		}
 
 	}
