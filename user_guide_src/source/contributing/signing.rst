@@ -30,7 +30,6 @@ contributions be securely signed.
 
 Read below to find out how to sign your commits :)
 
-
 Basic Signing
 =============
 You must sign your work, certifying that you either wrote the work or

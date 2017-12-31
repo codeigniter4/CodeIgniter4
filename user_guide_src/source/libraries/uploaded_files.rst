@@ -97,7 +97,6 @@ For get the file instance::
 
 	$file = $this->request->getFile('my-form.details.avatar');
 
-
 Multiple files
 ^^^^^^^^^^^^^^
 ::
@@ -189,7 +188,6 @@ Always returns the original name of the uploaded file as sent by the client, eve
 To get the full path of the temp file that was created during the upload, you can use the ``getTempName()`` method::
 
 	$tempfile = $file->getTempName();
-
 
 Other File Info
 ---------------

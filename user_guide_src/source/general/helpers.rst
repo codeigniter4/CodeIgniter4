@@ -132,7 +132,6 @@ functions::
 		return array_pop($array);
 	}
 
-
 Now What?
 =========
 

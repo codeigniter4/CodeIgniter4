@@ -67,7 +67,6 @@ The following functions are available:
 		echo increment_string('file', '-', 2); // "file-2"
 		echo increment_string('file_4'); // "file_5"
 
-
 .. php:function:: alternator($args)
 
 	:param	mixed	$args: A variable number of arguments
@@ -95,7 +94,6 @@ The following functions are available:
 	.. note:: To use multiple separate calls to this function simply call the
 		function with no arguments to re-initialize.
 
-
 .. php:function:: reduce_double_slashes($str)
 
 	:param	string	$str: Input string
@@ -109,7 +107,6 @@ The following functions are available:
 
 		$string = "http://example.com//index.php";
 		echo reduce_double_slashes($string); // results in "http://example.com/index.php"
-
 
 .. php:function:: strip_slashes($data)
 
@@ -138,7 +135,6 @@ The following functions are available:
 	.. note:: For historical reasons, this function will also accept
 		and handle string inputs. This however makes it just an
 		alias for ``stripslashes()``.
-
 
 .. php:function:: reduce_multiples($str[, $character = ''[, $trim = FALSE]])
 
@@ -172,7 +168,6 @@ The following functions are available:
 		$string = "Joe's \"dinner\"";
 		$string = quotes_to_entities($string); //results in "Joe&#39;s &quot;dinner&quot;"
 
-
 .. php:function:: strip_quotes($str)
 
 	:param	string	$str: Input string
@@ -200,7 +195,6 @@ The following functions are available:
 
 	The third parameter is an optional suffix added to the string. By
 	default it adds an ellipsis.
-
 
 .. php:function:: character_limiter($str[, $n = 500[, $end_char = '&#8230;']])
 
@@ -304,7 +298,6 @@ The following functions are available:
 	The function uses PHP's ``highlight_string()`` function, so the
 	colors used are the ones specified in your php.ini file.
 
-
 .. php:function:: highlight_phrase($str, $phrase[, $tag_open = '<mark>'[, $tag_close = '</mark>']])
 
 	:param	string	$str: Input string
@@ -338,7 +331,6 @@ The following functions are available:
 				color: #000;
 			};
 
-
 .. php:function:: word_wrap($str[, $charlim = 76])
 
 	:param	string	$str: Input string
@@ -359,7 +351,6 @@ The following functions are available:
 		// of text that will help us
 		// demonstrate this
 		// function.
-
 
 .. php:function:: ellipsize($str, $max_length[, $position = 1[, $ellipsis = '&hellip;']])
 

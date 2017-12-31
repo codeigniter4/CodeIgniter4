@@ -58,7 +58,6 @@ Class Reference
 		Accepts an optional second string parameter of 'ipv4' or 'ipv6' to specify
 		an IP format. The default checks for both formats.
 
-
 	.. php:method:: method([$upper = FALSE])
 
 		:param	bool	$upper: Whether to return the request method name in upper or lower case

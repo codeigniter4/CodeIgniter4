@@ -14,7 +14,6 @@ can instantiate it directly::
 
 	$view = new \CodeIgniter\View\View();
 
-
 .. important:: You should create services only within controllers. If you need
 	access to the View class from a library, you should set that as a dependency
 	in your library's constructor.
@@ -91,12 +90,10 @@ View Renderer Options
 
 Several options can be passed to the ``render()`` or ``renderString()`` methods:
 
-
 -   ``cache`` - the time in seconds, to save a view's results; ignored for renderString()
 -   ``cache_name`` - the ID used to save/retrieve a cached view result; defaults to the viewpath;
 		ignored for renderString()
 -   ``saveData`` - true if the view data parameters should be retained for subsequent calls
-
 
 Class Reference
 ---------------

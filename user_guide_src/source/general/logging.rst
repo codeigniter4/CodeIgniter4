@@ -80,8 +80,6 @@ Each handler's section will have one property in common: ``handles``, which is a
 		]
 	];
 
-
-
 Modifying the Message With Context
 ==================================
 
@@ -132,7 +130,6 @@ Several core placeholders exist that will be automatically expanded for you base
 | {env:foo}      | The value of 'foo' in $_ENV                       |
 +----------------+---------------------------------------------------+
 
-
 Using Third-Party Loggers
 =========================
 
@@ -154,7 +151,4 @@ If you would like to implement your libraries in a framework-agnostic method, yo
 the ``CodeIgniter\Log\LoggerAwareTrait`` which implements the ``setLogger()`` method for you.
 Then, when you use your library under different environments for frameworks, your library should
 still be able to log as it would expect, as long as it can find a PSR3 compatible logger.
-
-
-
 

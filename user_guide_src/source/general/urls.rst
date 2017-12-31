@@ -22,7 +22,6 @@ The :doc:`URI Library <../libraries/uri>` and the :doc:`URL Helper <../helpers/u
 to work with your URI data. In addition, your URLs can be remapped using the :doc:`URI Routing <routing>`
 feature for more flexibility.
 
-
 Removing the index.php file
 ===========================
 

@@ -125,4 +125,3 @@ By default, if no matches are found, **utf-8** will be returned::
 	// or
 	$charset = $negotiate->charset(['utf-8']);
 
-

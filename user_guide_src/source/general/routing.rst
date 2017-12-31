@@ -111,7 +111,6 @@ This must be called before you add the route::
 	$routes->addPlaceholder('uuid', '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}');
 	$routes->add('users/(:uuid)', 'Users::show/$1');
 
-
 Regular Expressions
 ===================
 
@@ -139,7 +138,6 @@ For those of you who don’t know regular expressions and want to learn more abo
 
 .. important:: Note: You can also mix and match wildcards with regular expressions.
 
-
 Closures
 ========
 
@@ -165,7 +163,6 @@ define an array of routes and then pass it as the first parameter to the `map()`
 	$routes['product/(:alphanum)'] = 'Catalog::productLookupByName';
 
 	$collection->map($routes);
-
 
 Redirecting Routes
 ==================
@@ -234,7 +231,6 @@ routes defined within this closure are only accessible from the given environmen
 	{
 		$routes->add('builder', 'Tools\Builder::index');
 	});
-
 
 Reverse Routing
 ===============
@@ -319,7 +315,6 @@ name::
     $routes->delete('photos/(:segment)',   'Photos::delete/$1');
 
 .. important:: The routes are matched in the order they are specified, so if you have a resource photos above a get 'photos/poll' the show action's route for the resource line will be matched before the get line. To fix this, move the get line above the resource line so that it is matched first.
-
 
 The second parameter accepts an array of options that can be used to modify the routes that are generated. While these
 routes are geared toward API-usage, where more methods are allowed, you can pass in the 'websafe' option to have it
@@ -444,7 +439,6 @@ be used when the first parameter is a language string::
 	// Creates:
 	$routes['users/(:num)'] = 'users/show/$2';
 
-
 Routes Configuration Options
 ============================
 
@@ -465,7 +459,6 @@ controller::
 
     // Controller is \Admin\Users
     $routes->add('users', 'Admin\Users::index');
-
 
 If your controllers are not explicitly namespaced, there is no need to change this. If you namespace your controllers,
 then you can change this value to save typing::

@@ -93,7 +93,6 @@ variable name within ``${...}``::
 	CACHE_DIR="${BASE_DIR}/cache"
 	TMP_DIR="${BASE_DIR}/tmp"
 
-
 Namespaced Variables
 ====================
 

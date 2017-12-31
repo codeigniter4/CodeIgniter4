@@ -24,7 +24,6 @@ Available Functions
 
 The following functions are available:
 
-
 .. php:function:: singular($string)
 
 	:param	string	$string: Input string

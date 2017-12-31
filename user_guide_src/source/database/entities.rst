@@ -199,7 +199,6 @@ business logic and create objects that are pleasant to use.
     $user->password = 'my great password';
     $user->setPassword('my great password');
 
-
 Data Mapping
 ============
 
@@ -262,7 +261,6 @@ class' ``$name`` property, so it can be set and retrieved through ``$user->name`
 through the original ``$user->full_name``, also, as this is needed for the model to get the data back out and save it
 to the database. However, ``unset`` and ``isset`` only work on the mapped property, ``$name``, not on the original name,
 ``full_name``.
-
 
 Mutators
 ========

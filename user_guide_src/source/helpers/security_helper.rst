@@ -44,7 +44,6 @@ The following functions are available:
 
 		$string = strip_image_tags($string);
 
-
 .. php:function:: encode_php_tags($str)
 
 	:param	string	$str: Input string

@@ -77,7 +77,6 @@ need to be unique, or a later parameter setting will over-ride an earlier one.
 This also impacts escaping parameter values for different contexts inside your
 script. You will have to give each escaped value a unique parameter name.
 
-
 Parser templates
 ================
 
@@ -98,12 +97,10 @@ template would contain two variables: {blog_title} and {blog_heading}
 The first parameter to ``render()`` contains the name of the :doc:`view
 file <../general/views>` (in this example the file would be called blog_template.php),
 
-
 Parser Configuration Options
 ============================
 
 Several options can be passed to the ``render()`` or ``renderString()`` methods.
-
 
 -   ``cache`` - the time in seconds, to save a view's results; ignored for renderString()
 -   ``cache_name`` - the ID used to save/retrieve a cached view result; defaults to the viewpath;
@@ -300,7 +297,6 @@ This example gives different results, depending on cascading::
 	echo $parser->setData($data)->renderString($template, ['cascadeData'=>true]);
 	// Result: George lives in Red City on Mars.
 
-
 Preventing Parsing
 ==================
 
@@ -342,7 +338,6 @@ of the comparison operators you would normally, like ``==``, ``===``, ``!==``, `
 	{else}
 		<h1>Welcome, User</h1>
 	{endif}
-
 
 .. note:: In the background, conditionals are parsed using an **eval()**, so you must ensure that you take
 	care with the user data that is used within conditionals, or you could open your application up to security risks.
@@ -485,7 +480,6 @@ lang                 language string            Alias for the lang helper functi
 validation_errors    fieldname(optional)        Returns either error string for the field (if specified) or all validation errors. {+ validation_errors +} , {+ validation_errors field="email" +}
 ==================== ========================== ================================================================================== ================================================================
 
-
 Registering a Plugin
 --------------------
 
@@ -518,7 +512,6 @@ the content between its tags::
 	];
 
 	{+ foo +} inner content {+ /foo +}
-
 
 ***********
 Usage Notes
@@ -570,7 +563,6 @@ pair tag, but the closing variable pair tag is not rendered properly::
 	             ->renderString($template);
 
 	// Result: Hello, John Doe (Mr{degree} {/degrees})
-
 
 View Fragments
 ==============
@@ -630,7 +622,6 @@ Result::
 		<li><a href="/first">First Link</a></li>
 		<li><a href="/second">Second Link</a></li>
 	</ul>
-
 
 ***************
 Class Reference

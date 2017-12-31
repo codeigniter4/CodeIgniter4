@@ -105,7 +105,6 @@ operators line up with each other::
         $third  = 3;
     }
 
-
 .. note:: Our indenting and alignment convention differs from PSR-2, which
     **only** uses spaces for both indenting and alignment.
 
@@ -172,7 +171,6 @@ MUST be used for each such property "x"
 - `isX()` returns true/false for boolean properties
 
 - Methods SHOULD use type hints and return type hints
-
 
 Procedural code
 ===============
