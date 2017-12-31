@@ -301,14 +301,18 @@ class CodeIgniter
 	 */
 	protected function detectEnvironment()
 	{
-		// running under Continuous Integration server?
-		if (getenv('CI') !== false)
+		// Make sure ENVIRONMENT isn't already set by other means.
+		if (! defined('ENVIRONMENT'))
 		{
-			define('ENVIRONMENT', 'testing');
-		}
-		else
-		{
-			define('ENVIRONMENT', $_SERVER['CI_ENVIRONMENT'] ?? 'production');
+			// running under Continuous Integration server?
+			if (getenv('CI') !== false)
+			{
+				define('ENVIRONMENT', 'testing');
+			}
+			else
+			{
+				define('ENVIRONMENT', $_SERVER['CI_ENVIRONMENT'] ?? 'production');
+			}
 		}
 	}
 
