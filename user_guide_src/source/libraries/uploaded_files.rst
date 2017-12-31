@@ -119,10 +119,10 @@ In controller::
     }
 
 where the **images** is loop is from the form field name
-	
+
 If there are multiple files with the same name you can use ``getFile()`` ro retrieve every file individually::
 In controller::
-	
+
 	$file1 = $this->request->getFile('images.0');
 	$file2 = $this->request->getFile('images.1');
 
@@ -136,7 +136,7 @@ In controller::
 	$file1 = $this->request->getFile('my-form.details.avatars.0');
 	$file2 = $this->request->getFile('my-form.details.avatars.1');
 
-.. note:: using ``getFiles()`` is more appropriate 
+.. note:: using ``getFiles()`` is more appropriate
 
 =====================
 Working With the File

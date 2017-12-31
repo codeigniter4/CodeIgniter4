@@ -111,8 +111,8 @@ The following functions are available:
 	:returns:	Ordinal suffix
 	:rtype:	string
 
-	Returns the suffix that should be added to a 
-	number to denote the position such as 
+	Returns the suffix that should be added to a
+	number to denote the position such as
 	1st, 2nd, 3rd, 4th. Example::
 
 		ordinal(1); // Returns 'st'
@@ -123,8 +123,8 @@ The following functions are available:
 	:returns:	Ordinalized integer
 	:rtype:	string
 
-	Turns a number into an ordinal string used 
-	to denote the position such as 1st, 2nd, 3rd, 4th. 
+	Turns a number into an ordinal string used
+	to denote the position such as 1st, 2nd, 3rd, 4th.
 	Example::
 
 		ordinalize(1); // Returns '1st'

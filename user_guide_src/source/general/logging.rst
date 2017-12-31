@@ -14,12 +14,12 @@ The second parameter is the message itself::
 There are eight different log levels, matching to the `RFC 5424 <http://tools.ietf.org/html/rfc5424>`_ levels, and they are as follows:
 
 * **debug** - Detailed debug information.
-* **info** - Interesting events in your application, like a user logging in, logging SQL queries, etc. 
+* **info** - Interesting events in your application, like a user logging in, logging SQL queries, etc.
 * **notice** - Normal, but significant events in your application.
 * **warning** - Exceptional occurrences that are not errors, like the user of deprecated APIs, poor use of an API, or other undesirable things that are not necessarily wrong.
 * **error** - Runtime errors that do not require immediate action but should typically be logged and monitored.
 * **critical** - Critical conditions, like an application component not available, or an unexpected exception.
-* **alert** - Action must be taken immediately, like when an entire website is down, the database unavailable, etc. 
+* **alert** - Action must be taken immediately, like when an entire website is down, the database unavailable, etc.
 * **emergency** - The system is unusable.
 
 The logging system does not provide ways to alert sysadmins or webmasters about these events, they solely log
@@ -55,7 +55,7 @@ Using Multiple Log Handlers
 The logging system can support multiple methods of handling logging running at the same time. Each handler can
 be set to handle specific levels and ignore the rest. Currently, two handlers come with a default install:
 
-- **File Handler** is the default handler and will create a single file for every day locally. This is the 
+- **File Handler** is the default handler and will create a single file for every day locally. This is the
   recommended method of logging.
 - **ChromeLogger Handler** If you have the `ChromeLogger extension <https://craig.is/writing/chrome-logger>`_
   installed in the Chrome web browser, you can use this handler to display the log information in
@@ -103,7 +103,7 @@ If you want to log an Exception or an Error, you can use the key of 'exception',
 Exception or Error itself. A string will be generated from that object containing the error message, the
 file name and line number.  You must still provide the exception placeholder in the message::
 
-	try 
+	try
 	{
 		... Something throws error here
 	}

@@ -138,7 +138,7 @@ The following functions are available:
 	.. note:: For historical reasons, this function will also accept
 		and handle string inputs. This however makes it just an
 		alias for ``stripslashes()``.
-		
+
 
 .. php:function:: reduce_multiples($str[, $character = ''[, $trim = FALSE]])
 
@@ -183,7 +183,7 @@ The following functions are available:
 
 		$string = "Joe's \"dinner\"";
 		$string = strip_quotes($string); //results in "Joes dinner"
-		
+
 .. php:function:: word_limiter($str[, $limit = 100[, $end_char = '&#8230;']])
 
 	:param	string	$str: Input string
@@ -337,7 +337,7 @@ The following functions are available:
 				background: #ff0;
 				color: #000;
 			};
-			
+
 
 .. php:function:: word_wrap($str[, $charlim = 76])
 
@@ -354,12 +354,12 @@ The following functions are available:
 		$string = "Here is a simple string of text that will help us demonstrate this function.";
 		echo word_wrap($string, 25);
 
-		// Would produce:  
+		// Would produce:
 		// Here is a simple string
 		// of text that will help us
 		// demonstrate this
 		// function.
-		
+
 
 .. php:function:: ellipsize($str, $max_length[, $position = 1[, $ellipsis = '&hellip;']])
 
@@ -390,7 +390,7 @@ The following functions are available:
 	Produces::
 
 		this_string_is_e&hellip;ak_my_design.jpg
-		
+
 .. php:function:: excerpt($text, $phrase = false, $radius = 100, $ellipsis = '...')
 
 	:param	string	$text: Text to extract an excerpt
@@ -402,7 +402,7 @@ The following functions are available:
 
 	This function will extract $radius number of characters before and after the
 	central $phrase with an elipsis before and after.
-	
+
 	The first paramenter is the text to extract an excerpt from, the second is the
 	central word or phrase to count before and after. The third parameter is the
 	number of characters to count before and after the central phrase. If no phrase
@@ -411,19 +411,19 @@ The following functions are available:
 
 	Example::
 
-		$text = 'Ut vel faucibus odio. Quisque quis congue libero. Etiam gravida 
-		eros lorem, eget porttitor augue dignissim tincidunt. In eget risus eget 
-		mauris faucibus molestie vitae ultricies odio. Vestibulum id ultricies diam. 
-		Curabitur non mauris lectus. Phasellus eu sodales sem. Integer dictum purus 
-		ac enim hendrerit gravida. Donec ac magna vel nunc tincidunt molestie sed 
-		vitae nisl. Cras sed auctor mauris, non dictum tortor. Nulla vel scelerisque 
-		arcu. Cras ac ipsum sit amet augue laoreet laoreet. Aenean a risus lacus. 
+		$text = 'Ut vel faucibus odio. Quisque quis congue libero. Etiam gravida
+		eros lorem, eget porttitor augue dignissim tincidunt. In eget risus eget
+		mauris faucibus molestie vitae ultricies odio. Vestibulum id ultricies diam.
+		Curabitur non mauris lectus. Phasellus eu sodales sem. Integer dictum purus
+		ac enim hendrerit gravida. Donec ac magna vel nunc tincidunt molestie sed
+		vitae nisl. Cras sed auctor mauris, non dictum tortor. Nulla vel scelerisque
+		arcu. Cras ac ipsum sit amet augue laoreet laoreet. Aenean a risus lacus.
 		Sed ut tortor diam.';
-		
+
 		echo excerpt($str, 'Donec');
 
 	Produces::
 
-		... non mauris lectus. Phasellus eu sodales sem. Integer dictum purus ac 
-		enim hendrerit gravida. Donec ac magna vel nunc tincidunt molestie sed 
+		... non mauris lectus. Phasellus eu sodales sem. Integer dictum purus ac
+		enim hendrerit gravida. Donec ac magna vel nunc tincidunt molestie sed
 		vitae nisl. Cras sed auctor mauris, non dictum ...

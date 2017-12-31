@@ -360,7 +360,7 @@ You can restrict the routes generated with the ``only`` option. This should be a
 be created. Only routes that match one of these methods will be created. The rest will be ignored::
 
 	$routes->resource('photos', ['only' => ['index', 'show']]);
-	
+
 Otherwise you can remove unused routes with the ``except`` option. This option run after ``only``::
 
 	$routes->resource('photos', ['except' => 'new,edit']);

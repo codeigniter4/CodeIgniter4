@@ -20,8 +20,8 @@ PSR-2 is PHP-FIG's Coding Style Guide. We do not claim conformance with it,
 although there are a lot of similarities. The differences will be pointed out
 below.
 
-.. note:: See the 
-    `CodeIgniter4-developer-setup <https://github.com/bcit-ci/CodeIgniter4-developer-setup>`_ 
+.. note:: See the
+    `CodeIgniter4-developer-setup <https://github.com/bcit-ci/CodeIgniter4-developer-setup>`_
     repository for tips on configuring your IDE or editor to help you conform
     to the style guide.
 
@@ -52,13 +52,13 @@ Structure
 
     -   `system/Debug/CustomExceptions` contains a number of CodeIgniter
         exceptions and errors, that we want to use for a consistent
-        experience across applications. 
-        If we stick with the purist route, then each of the 13+/- custom 
-        exceptions would require an additional file, which would have a 
-        performance impact at times. 
+        experience across applications.
+        If we stick with the purist route, then each of the 13+/- custom
+        exceptions would require an additional file, which would have a
+        performance impact at times.
     -   `system/HTTP/Response` provides a RedirectException, used with the
         Response class.
-    -   `system/Router/Router` similarly provides a RedirectException, used with 
+    -   `system/Router/Router` similarly provides a RedirectException, used with
         the Router class.
 
 - Files SHOULD either declare symbols (i.e. classes, functions, constants)
@@ -69,7 +69,7 @@ Naming
 
 - File names MUST end with a ".php" name extension and MUST NOT have
   multiple name extensions.
-- Files declaring classes, interfaces or traits MUST have names exactly matching 
+- Files declaring classes, interfaces or traits MUST have names exactly matching
   the classes that they declare (obviously excluding the ".php" name extension).
 - Files declaring functions SHOULD be named in *snake_case.php*.
 
@@ -84,7 +84,7 @@ Whitespace, indentation and alignment
 This will accommodate the widest range of developer environment options,
 while maintaining consistency of code appearance.
 
-Following the "best practice" above, 
+Following the "best practice" above,
 the following code block would have a single tab at the beginning of
 each line containing braces, and two tabs at the beginning of the
 nested statements. No alignment is implied::
@@ -117,7 +117,7 @@ operators line up with each other::
   well as any other whitespace usage that is not functionally required or
   explicitly described in this document.
 
-.. note:: With conforming tab settings, alignment spacing should 
+.. note:: With conforming tab settings, alignment spacing should
     be preserved in all development environments.
     A pull request that deals only with tabs or spaces for alignment
     will not be favorably considered.
@@ -143,7 +143,7 @@ PHP tags
 Namespaces and classes
 ======================
 
-- Class names and namespaces SHOULD be declared in `UpperCamelCase`, 
+- Class names and namespaces SHOULD be declared in `UpperCamelCase`,
   also called `StudlyCaps`, unless
   another form is *functionally* required.
 

@@ -15,7 +15,7 @@ You can access config files within your classes by creating a new instance. All 
 are public, so you access the settings like any other property::
 
 	$config = new \Config\EmailConfig();
-	
+
 	// Access settings as class properties
 	$protocol = $config->protocol;
 	$mailpath = $config->mailpath;
@@ -40,10 +40,10 @@ represent your settings::
     <?php namespace Config;
 
     class App extends \CodeIgniter\Config\BaseConfig
-    {	
+    {
     	public $siteName  = 'My Great Site';
     	public $siteEmail = 'webmaster@example.com';
-    	
+
     }
 
 The class should extend ``\CodeIgniter\Config\BaseConfig`` to ensure that it can receive environment-specific
@@ -63,7 +63,7 @@ It is simply a collection of name/value pairs separated by an equal sign, much l
 	S3_BUCKET="dotenv"
 	SECRET_KEY="super_secret_key"
 
-If the variable exists in the environment already, it will NOT be overwritten. 
+If the variable exists in the environment already, it will NOT be overwritten.
 
 .. important:: Make sure the **.env** file is added to **.gitignore** (or your version control system's equivalent)
 	so it is not checked in the code. Failure to do so could result in sensitive credentials being stored in the
@@ -91,7 +91,7 @@ variable name within ``${...}``::
 
 	BASE_DIR="/var/webroot/project-root"
 	CACHE_DIR="${BASE_DIR}/cache"
-	TMP_DIR="${BASE_DIR}/tmp" 
+	TMP_DIR="${BASE_DIR}/tmp"
 
 
 Namespaced Variables
@@ -135,7 +135,7 @@ Treating Environment Variables as Arrays
 ========================================
 
 A namespaced environment variable can be further treated as an array.
-If the prefix matches the configuration class, then the remainder of the 
+If the prefix matches the configuration class, then the remainder of the
 environment variable name is treated as an array reference if it also
 contains a dot::
 
@@ -146,7 +146,7 @@ contains a dot::
     SimpleConfig.address.city = "Berlin"
     SimpleConfig.address.country = "Germany"
 
-If this was referring to a SimpleConfig configuration object, the above example would be treated as:: 
+If this was referring to a SimpleConfig configuration object, the above example would be treated as::
 
     $address['city']    = "Berlin";
     $address['country'] = "Germany";
@@ -165,7 +165,7 @@ then the result would be the same as above.
 Registrars
 ==========
 
-A configuration file can also specify any number of "registrars", which are any 
+A configuration file can also specify any number of "registrars", which are any
 other classes which might provide additional configuration properties.
 This is done by adding a ``registrars`` property to your configuration file,
 holding an array of the names of candidate registrars.::
@@ -178,7 +178,7 @@ In order to act as a "registrar" the classes so identified must have a
 static function named the same as the configuration class, and it should return an associative
 array of property settings.
 
-When your configuration object is instantiated, it will loop over the 
+When your configuration object is instantiated, it will loop over the
 designated classes in ``$registrars``. For each of these classes, which contains a method name matching
 the configuration class, it will invoke that method, and incorporate any returned properties
 the same way as described for namespaced variables.
@@ -201,7 +201,7 @@ A sample configuration class setup for this::
     namespace App\Models;
 
     class RegionalSales
-    {   
+    {
         public static function MySalesConfig()
         {
             return ['target' => 45, 'actual' => 72];

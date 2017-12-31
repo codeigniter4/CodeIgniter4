@@ -47,6 +47,6 @@ There should be only one maintainer doing this, to avoid collisions.
 The user guide would get regenerated whenever there is a PR merge
 that affects it.
 
-Note: You might have to delete the ``user_guide_src/doctree`` folder before 
+Note: You might have to delete the ``user_guide_src/doctree`` folder before
 making the ``gh-pages`` version of the guide, to make sure that the TOC
 is properly rebuilt, especially if you are rebuilding the ``html`` target a number of times.
