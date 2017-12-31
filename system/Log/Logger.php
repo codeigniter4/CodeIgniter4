@@ -72,10 +72,10 @@ class Logger implements LoggerInterface
 		'alert'		 => 2,
 		'critical'	 => 3,
 		'error'		 => 4,
-		'debug'		 => 5,
-		'warning'	 => 6,
-		'notice'	 => 7,
-		'info'		 => 8,
+		'warning'	 => 5,
+		'notice'	 => 6,
+		'info'		 => 7,
+		'debug'		 => 8,
 	];
 
 	/**
