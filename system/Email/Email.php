@@ -703,14 +703,14 @@ class Email
 		{
 			if (strpos($file, '://') === false && ! file_exists($file))
 			{
-				$this->setErrorMessage('lang:email_attachment_missing', $file);
+				$this->setErrorMessage(lang('email.attachmentMissing', [$file]));
 
 				return false;
 			}
 
 			if (! $fp = @fopen($file, 'rb'))
 			{
-				$this->setErrorMessage('lang:email_attachment_unreadable', $file);
+				$this->setErrorMessage(lang('email.attachmentUnreadable', [$file]));
 
 				return false;
 			}
@@ -1029,7 +1029,7 @@ class Email
 	{
 		if (! is_array($email))
 		{
-			$this->setErrorMessage('lang:email_must_be_array');
+			$this->setErrorMessage(lang('email.mustBeArray'));
 
 			return false;
 		}
@@ -1038,7 +1038,7 @@ class Email
 		{
 			if (! $this->isValidEmail($val))
 			{
-				$this->setErrorMessage('lang:email_invalid_address', $val);
+				$this->setErrorMessage(lang('email.invalidAddress', $val));
 
 				return false;
 			}
@@ -1774,7 +1774,7 @@ class Email
 	{
 		if (! isset($this->headers['From']))
 		{
-			$this->setErrorMessage('lang:email_no_from');
+			$this->setErrorMessage(lang('email.noFrom'));
 
 			return false;
 		}
@@ -1789,7 +1789,7 @@ class Email
 		    && ! isset($this->headers['Bcc'])
 		    && ! isset($this->headers['Cc']))
 		{
-			$this->setErrorMessage('lang:email_no_recipients');
+			$this->setErrorMessage(lang('email.noRecipients'));
 
 			return false;
 		}
@@ -1919,12 +1919,12 @@ class Email
 		$method   = '_send_with_'.$protocol;
 		if (! $this->$method())
 		{
-			$this->setErrorMessage('lang:email_send_failure_'.($protocol === 'mail' ? 'phpmail' : $protocol));
+			$this->setErrorMessage(lang('email.sendFailure'.($protocol === 'mail' ? 'PHPMail' : ucfirst($protocol))));
 
 			return false;
 		}
 
-		$this->setErrorMessage('lang:email_sent', $protocol);
+		$this->setErrorMessage(lang('email.sent', [$protocol]));
 
 		return true;
 	}
@@ -2022,8 +2022,8 @@ class Email
 
 		if ($status !== 0)
 		{
-			$this->setErrorMessage('lang:email_exit_status', $status);
-			$this->setErrorMessage('lang:email_no_socket');
+			$this->setErrorMessage(lang('email.exitStatus', [$status]));
+			$this->setErrorMessage(lang('email.nosocket'));
 
 			return false;
 		}
@@ -2042,7 +2042,7 @@ class Email
 	{
 		if ($this->SMTPHost === '')
 		{
-			$this->setErrorMessage('lang:email_no_hostname');
+			$this->setErrorMessage(lang('email.noHostname'));
 
 			return false;
 		}
@@ -2107,7 +2107,7 @@ class Email
 
 		if (strpos($reply, '250') !== 0)
 		{
-			$this->setErrorMessage('lang:email_smtp_error', $reply);
+			$this->setErrorMessage(lang('email.SMTPError', [$reply]));
 
 			return false;
 		}
@@ -2155,7 +2155,7 @@ class Email
 
 		if (! is_resource($this->SMTPConnect))
 		{
-			$this->setErrorMessage('lang:email_smtp_error', $errno.' '.$errstr);
+			$this->setErrorMessage(lang('email.SMTPError', [$errno.' '.$errstr]));
 
 			return false;
 		}
@@ -2172,7 +2172,7 @@ class Email
 
 			if ($crypto !== true)
 			{
-				$this->setErrorMessage('lang:email_smtp_error', $this->getSMTPData());
+				$this->setErrorMessage(lang('email.SMTPError', $this->getSMTPData()));
 
 				return false;
 			}
@@ -2246,7 +2246,7 @@ class Email
 
 		if ((int)self::substr($reply, 0, 3) !== $resp)
 		{
-			$this->setErrorMessage('lang:email_smtp_error', $reply);
+			$this->setErrorMessage(lang('email.SMTPError', [$reply]));
 
 			return false;
 		}
@@ -2275,7 +2275,7 @@ class Email
 
 		if ($this->SMTPUser === '' && $this->SMTPPass === '')
 		{
-			$this->setErrorMessage('lang:email_no_smtp_unpw');
+			$this->setErrorMessage(lang('lang:email.noSMTPAuth'));
 
 			return false;
 		}
@@ -2289,7 +2289,7 @@ class Email
 		}
 		elseif (strpos($reply, '334') !== 0)
 		{
-			$this->setErrorMessage('lang:email_failed_smtp_login', $reply);
+			$this->setErrorMessage(lang('email.failedSMTPLogin', [$reply]));
 
 			return false;
 		}
@@ -2299,7 +2299,7 @@ class Email
 
 		if (strpos($reply, '334') !== 0)
 		{
-			$this->setErrorMessage('lang:email_smtp_auth_un', $reply);
+			$this->setErrorMessage(lang('email.SMTPAuthUsername', [$reply]));
 
 			return false;
 		}
@@ -2309,7 +2309,7 @@ class Email
 
 		if (strpos($reply, '235') !== 0)
 		{
-			$this->setErrorMessage('lang:email_smtp_auth_pw', $reply);
+			$this->setErrorMessage(lang('email.SMTPAuthPassword', [$reply]));
 
 			return false;
 		}
@@ -2364,7 +2364,7 @@ class Email
 
 		if ($result === false)
 		{
-			$this->setErrorMessage('lang:email_smtp_data_failure', $data);
+			$this->setErrorMessage(lang('email.SMTPDataFailure', $data));
 
 			return false;
 		}
@@ -2450,23 +2450,12 @@ class Email
 	 * Set Message
 	 *
 	 * @param    string $msg
-	 * @param    string $val = ''
 	 *
 	 * @return    void
 	 */
-	protected function setErrorMessage($msg, $val = '')
+	protected function setErrorMessage($msg)
 	{
-		$CI =& get_instance();
-		$CI->lang->load('email');
-
-		if (sscanf($msg, 'lang:%s', $line) !== 1 || false === ($line = $CI->lang->line($line)))
-		{
-			$this->debugMessage[] = str_replace('%s', $val, $msg).'<br />';
-		}
-		else
-		{
-			$this->debugMessage[] = str_replace('%s', $val, $line).'<br />';
-		}
+		$this->debugMessage[] = $msg.'<br />';
 	}
 
 	//--------------------------------------------------------------------
