@@ -294,17 +294,13 @@ class FileCollection
 		{
 			return $this->getValueDotNotationSyntax($index, $value[$current_index]);
 		}
-		else
+
+		if (isset($value[$current_index]))
 		{
-			if (isset($value[$current_index]))
-			{
-				return $value[$current_index];
-			}
-			else
-			{
-				return null;
-			}
+			return $value[$current_index];
 		}
+
+		return null;
 	}
 
 }
