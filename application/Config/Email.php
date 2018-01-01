@@ -36,7 +36,7 @@ class Email
 	 * SMTP Password
 	 * @var string
 	 */
-	public $SMTPPassword;
+	public $SMTPPass;
 
 	/**
 	 * SMTP Port
@@ -60,7 +60,7 @@ class Email
 	 * SMTP Encryption. Either tls or ssl
 	 * @var string
 	 */
-	public $SMTPCrypto;
+	public $SMTPCrypto = 'tls';
 
 	/**
 	 * Enable word-wrap
@@ -102,13 +102,13 @@ class Email
 	 * Newline character. (Use “\r\n” to comply with RFC 822)
 	 * @var string
 	 */
-	public $CRLF = "\n";
+	public $CRLF = "\r\n";
 
 	/**
 	 * Newline character. (Use “\r\n” to comply with RFC 822)
 	 * @var string
 	 */
-	public $newline = "\n";
+	public $newline = "\r\n";
 
 	/**
 	 * Enable BCC Batch Mode.

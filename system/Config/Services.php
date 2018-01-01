@@ -200,7 +200,7 @@ class Services
 	{
 		if ($getShared)
 		{
-			return self::getSharedInstance('email');
+			return self::getSharedInstance('email', $config);
 		}
 
 		if (empty($config))

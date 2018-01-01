@@ -59,14 +59,14 @@ class Email
 	 *
 	 * @var    string
 	 */
-	public $useragent = 'CodeIgniter';
+	public $userAgent = 'CodeIgniter';
 
 	/**
 	 * Path to the Sendmail binary.
 	 *
 	 * @var    string
 	 */
-	public $mailpath = '/usr/sbin/sendmail';    // Sendmail path
+	public $mailPath = '/usr/sbin/sendmail';    // Sendmail path
 
 	/**
 	 * Which method to use for sending e-mails.
@@ -411,9 +411,9 @@ class Email
 	{
 		$this->clear();
 
-		foreach (get_class_vars($this) as $key)
+		foreach (get_class_vars(get_class($this)) as $key => $value)
 		{
-			if (isset($this->$key))
+			if (isset($this->$key) && isset($config->$key))
 			{
 				$method = 'set'.ucfirst($key);
 
@@ -477,7 +477,7 @@ class Email
 	 *
 	 * @return    $this
 	 */
-	public function from($from, $name = '', $returnPath = null)
+	public function setFrom($from, $name = '', $returnPath = null)
 	{
 		if (preg_match('/\<(.*)\>/', $from, $match))
 		{
@@ -1231,9 +1231,9 @@ class Email
 	 */
 	protected function buildHeaders()
 	{
-		$this->setHeader('User-Agent', $this->useragent);
+		$this->setHeader('User-Agent', $this->userAgent);
 		$this->setHeader('X-Sender', $this->cleanEmail($this->headers['From']));
-		$this->setHeader('X-Mailer', $this->useragent);
+		$this->setHeader('X-Mailer', $this->userAgent);
 		$this->setHeader('X-Priority', $this->priorities[$this->priority]);
 		$this->setHeader('Message-ID', $this->getMessageID());
 		$this->setHeader('Mime-Version', '1.0');
@@ -1703,7 +1703,7 @@ class Email
 			// Note: We used to have mb_encode_mimeheader() as the first choice
 			//       here, but it turned out to be buggy and unreliable. DO NOT
 			//       re-add it! -- Narf
-			if (ICONV_ENABLED === true)
+			if (extension_loaded('iconv'))
 			{
 				$output = @iconv_mime_encode('', $str,
 					[
@@ -1725,8 +1725,7 @@ class Email
 				}
 
 				$chars = iconv_strlen($str, 'UTF-8');
-			}
-			elseif (MB_ENABLED === true)
+			} elseif (extension_loaded('mbstring'))
 			{
 				$chars = mb_strlen($str, 'UTF-8');
 			}
@@ -1746,11 +1745,10 @@ class Email
 			// We'll append ?= to the end of each line though.
 			if ($length+($l = self::strlen($chr)) > 74)
 			{
-				$output .= '?='.$this->CRLF // EOL
+				$output .= '?='.$this->crlf // EOL
 				           .' =?'.$this->charset.'?Q?'.$chr; // New line
 				$length = 6+self::strlen($this->charset)+$l; // Reset the length for the new line
-			}
-			else
+			} else
 			{
 				$output .= $chr;
 				$length += $l;
@@ -1916,7 +1914,7 @@ class Email
 		$this->unwrapSpecials();
 
 		$protocol = $this->getProtocol();
-		$method   = '_send_with_'.$protocol;
+		$method   = 'sendWith'.ucfirst($protocol);
 		if (! $this->$method())
 		{
 			$this->setErrorMessage(lang('email.sendFailure'.($protocol === 'mail' ? 'PHPMail' : ucfirst($protocol))));
@@ -2009,7 +2007,7 @@ class Email
 		}
 
 		// is popen() enabled?
-		if (! function_usable('popen') OR false === ($fp = @popen($this->mailpath.' -oi '.$from.' -t', 'w')))
+		if (! function_usable('popen') OR false === ($fp = @popen($this->mailPath.' -oi '.$from.' -t', 'w')))
 		{
 			// server probably has popen disabled, so nothing we can do to get a verbose error.
 			return false;
@@ -2038,7 +2036,7 @@ class Email
 	 *
 	 * @return    bool
 	 */
-	protected function sendWithSMTP()
+	protected function sendWithSmtp()
 	{
 		if ($this->SMTPHost === '')
 		{
