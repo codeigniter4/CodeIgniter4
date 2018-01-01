@@ -283,7 +283,7 @@ class Forge
 	 *
 	 * @return    Forge
 	 */
-	public function addKey($key, $primary = false, $unique = false)
+	public function addKey($key, bool $primary = false, bool $unique = false)
 	{
 		if ($primary === true)
 		{
@@ -302,6 +302,35 @@ class Forge
 		}
 
 		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Add Primary Key
+	 *
+	 * @param string|array $key
+	 *
+	 * @return Forge
+	 */
+	public function addPrimaryKey($key)
+	{
+		return $this->addKey($key, true);
+	}
+
+	//--------------------------------------------------------------------
+
+
+	/**
+	 * Add Unique Key
+	 *
+	 * @param string|array $key
+	 *
+	 * @return Forge
+	 */
+	public function addUniqueKey($key)
+	{
+		return $this->addKey($key, false, true);
 	}
 
 	//--------------------------------------------------------------------

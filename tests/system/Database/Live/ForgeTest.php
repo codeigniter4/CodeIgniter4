@@ -139,9 +139,9 @@ class ForgeTest extends \CIDatabaseTestCase
 				'constraint' => 1,
 			],
 		]);
-		$this->forge->addKey('id', true);
+		$this->forge->addPrimaryKey('id');
 		$this->forge->addKey(['code', 'company']);
-		$this->forge->addKey(['code', 'active'], false, true);
+		$this->forge->addUniqueKey(['code', 'active']);
 		$this->forge->createTable('forge_test_1', true);
 
 		$keys = $this->db->getIndexData('forge_test_1');
