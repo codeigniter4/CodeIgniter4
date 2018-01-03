@@ -2411,7 +2411,7 @@ class BaseBuilder
 				// is because until the user calls the from() function we don't know if there are aliases
 				foreach ($this->QBSelect as $key => $val)
 				{
-					$no_escape = isset($this->QBNoEscape[$key]) ? $this->QBNoEscape[$key] : null;
+					$no_escape = $this->QBNoEscape[$key] ?? null;
 					$this->QBSelect[$key] = $this->db->protectIdentifiers($val, false, $no_escape);
 				}
 

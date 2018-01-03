@@ -154,7 +154,7 @@ class RouterTest extends \CIUnitTestCase
 
 		$expects = call_user_func_array($closure, $router->params());
 
-		$this->assertTrue(is_callable($router->controllerName()));
+		$this->assertInternalType('callable', $router->controllerName());
 		$this->assertEquals($expects, '123-alpha');
 	}
 

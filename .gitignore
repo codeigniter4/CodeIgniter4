@@ -61,6 +61,8 @@ writable/uploads/*
 !writable/uploads/index.html
 !writable/uploads/.htaccess
 
+writable/debugbar/*
+
 #-------------------------
 # User Guide Temp Files
 #-------------------------

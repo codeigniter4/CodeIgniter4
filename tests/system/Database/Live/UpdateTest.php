@@ -71,7 +71,7 @@ class UpdateTest extends \CIDatabaseTestCase
 			}
 		}
 
-		$this->assertEquals(2, count($rows));
+		$this->assertCount(2, $rows);
 	}
 
 	//--------------------------------------------------------------------
@@ -148,7 +148,7 @@ class UpdateTest extends \CIDatabaseTestCase
 			}
 		}
 
-		$this->assertEquals(2, count($rows));
+		$this->assertCount(2, $rows);
 	}
 
 	//--------------------------------------------------------------------
@@ -173,7 +173,7 @@ class UpdateTest extends \CIDatabaseTestCase
 			}
 		}
 
-		$this->assertEquals(2, count($rows));
+		$this->assertCount(2, $rows);
 	}
 
 	//--------------------------------------------------------------------
@@ -197,7 +197,7 @@ class UpdateTest extends \CIDatabaseTestCase
 			}
 		}
 
-		$this->assertEquals(2, count($rows));
+		$this->assertCount(2, $rows);
 	}
 
 	//--------------------------------------------------------------------

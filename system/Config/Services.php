@@ -189,6 +189,31 @@ class Services
 	//--------------------------------------------------------------------
 
 	/**
+	 * The Email class allows you to send email via mail, sendmail, SMTP.
+	 *
+	 * @param null $config
+	 * @param bool $getShared
+	 *
+	 * @return \CodeIgniter\Email\Email|mixed
+	 */
+	public static function email($config = null, $getShared = true)
+	{
+		if ($getShared)
+		{
+			return self::getSharedInstance('email', $config);
+		}
+
+		if (empty($config))
+		{
+			$config = new \Config\Email();
+		}
+
+		return new \CodeIgniter\Email\Email($config);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * The Exceptions class holds the methods that handle:
 	 *
 	 *  - set_exception_handler
@@ -359,7 +384,6 @@ class Services
 	}
 
 	//--------------------------------------------------------------------
-
 
 	/**
 	 * @param \CodeIgniter\Config\BaseConfig            $config

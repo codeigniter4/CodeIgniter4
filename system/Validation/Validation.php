@@ -193,6 +193,29 @@ class Validation implements ValidationInterface
 	 */
 	protected function processRules(string $field, string $label = null, $value, $rules = null, array $data)
 	{
+		// If the if_exist rule is defined...
+		if (in_array('if_exist', $rules))
+		{
+			// and the current field does not exists in the input data
+			// we can return true. Ignoring all other rules to this field.
+			if (! array_key_exists($field, $data))
+			{
+				return true;
+			}
+			// Otherwise remove the if_exist rule and continue the process
+			$rules = array_diff($rules, ['if_exist']);
+		}
+
+		if (in_array('permit_empty', $rules))
+		{
+			if (! in_array('required', $rules) && (is_array($value) ? empty($value) : (trim($value) === '')))
+			{
+				return true;
+			}
+
+			$rules = array_diff($rules, ['permit_empty']);
+		}
+
 		foreach ($rules as $rule)
 		{
 			$callable = is_callable($rule);

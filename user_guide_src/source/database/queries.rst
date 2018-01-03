@@ -64,13 +64,11 @@ the following::
 
 	$db->prefixTable('tablename'); // outputs prefix_tablename
 
-
 If for any reason you would like to change the prefix programatically
 without needing to create a new connection, you can use this method::
 
 	$db->setPrefix('newprefix');
 	$db->prefixTable('tablename'); // outputs newprefix_tablename
-
 
 **********************
 Protecting identifiers
@@ -93,7 +91,6 @@ have a prefix specified in your database config file. To enable the
 prefixing set TRUE (boolean) via the second parameter::
 
 	$db->protectIdentifiers('table_name', TRUE);
-
 
 ****************
 Escaping Queries
@@ -132,7 +129,6 @@ this:
 	method escapes partial strings that you would wrap in quotes
 	yourself, it cannot automatically add the ``ESCAPE '!'``
 	condition for you, and so you'll have to manually do that.
-
 
 **************
 Query Bindings
@@ -191,7 +187,6 @@ example::
 	{
 		$error = $db->error(); // Has keys 'code' and 'message'
 	}
-
 
 ****************
 Prepared Queries

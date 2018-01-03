@@ -1,6 +1,5 @@
 <?php namespace Builder;
 
-use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\Query;
 use CodeIgniter\Database\MockConnection;
 
@@ -64,7 +63,7 @@ class InsertTest extends \CIUnitTestCase
 
 		$query = $this->db->getLastQuery();
 
-		$this->assertTrue($query instanceof Query);
+		$this->assertInstanceOf(Query::class, $query);
 
 		$raw = "INSERT INTO \"jobs\" (\"description\", \"id\", \"name\") VALUES (:description0:,:id0:,:name0:)";
 

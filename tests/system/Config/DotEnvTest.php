@@ -59,8 +59,8 @@ class DotEnvTest extends \CIUnitTestCase
 		$dotenv = new DotEnv($this->fixturesFolder, 'commented.env');
 		$dotenv->load();
 		$this->assertEquals('bar', getenv('CFOO'));
-		$this->assertEquals(false, getenv('CBAR'));
-		$this->assertEquals(false, getenv('CZOO'));
+		$this->assertFalse(getenv('CBAR'));
+		$this->assertFalse(getenv('CZOO'));
 		$this->assertEquals('with spaces', getenv('CSPACED'));
 		$this->assertEquals('a value with a # character', getenv('CQUOTES'));
 		$this->assertEquals('a value with a # character & a quote " character inside quotes', getenv('CQUOTESWITHQUOTE'));

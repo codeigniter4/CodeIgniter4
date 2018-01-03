@@ -66,7 +66,8 @@ class BaseConfig
 	{
 		$properties = array_keys(get_object_vars($this));
 		$prefix = get_class($this);
-		$shortPrefix = strtolower(substr($prefix, strrpos($prefix, '\\') ));
+		$slashAt = strrpos($prefix, '\\');
+		$shortPrefix = strtolower(substr($prefix, $slashAt === false ? 0  : $slashAt+1 ));
 
 		foreach ($properties as $property)
 		{
@@ -122,7 +123,6 @@ class BaseConfig
 	protected function getEnvValue(string $property, string $prefix, string $shortPrefix)
 	{
 		$shortPrefix = ltrim( $shortPrefix, '\\' );
-
 		switch (true) {
 			case array_key_exists( "{$shortPrefix}.{$property}", $_ENV ):
 				return $_ENV["{$shortPrefix}.{$property}"];
@@ -171,7 +171,7 @@ class BaseConfig
 
 			foreach ($properties as $property => $value)
 			{
-				if (is_array($this->$property) && is_array($value))
+				if (isset($this->$property) && is_array($this->$property) && is_array($value))
 				{
 					$this->$property = array_merge($this->$property, $value);
 				}

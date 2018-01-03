@@ -205,7 +205,7 @@ class RouteCollection implements RouteCollectionInterface
 	public function __construct(FileLocator $locator)
 	{
 		// Get HTTP verb
-		$this->HTTPVerb = isset($_SERVER['REQUEST_METHOD']) ? strtolower($_SERVER['REQUEST_METHOD']) : 'cli';
+		$this->HTTPVerb = strtolower($_SERVER['REQUEST_METHOD'] ?? 'cli');
 
 		$this->fileLocator = $locator;
 	}
@@ -771,8 +771,7 @@ class RouteCollection implements RouteCollectionInterface
 
 		// In order to allow customization of allowed id values
 		// we need someplace to store them.
-		$id = isset($this->placeholders[$this->defaultPlaceholder]) ? $this->placeholders[$this->defaultPlaceholder] :
-				'(:segment)';
+		$id = $this->placeholders[$this->defaultPlaceholder] ?? '(:segment)';
 
 		if (isset($options['placeholder']))
 		{

@@ -136,7 +136,7 @@ class ViewTest extends \CIUnitTestCase
 		$view->setVar('testString', 'Hello World');
 		$expected = '<h1>Hello World</h1>';
 
-		$this->assertTrue(strpos($view->render('simple'), $expected) !== false);
+		$this->assertContains($expected, $view->render('simple'));
 	}
 
 	//--------------------------------------------------------------------
@@ -165,14 +165,14 @@ class ViewTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	public function testRenderScrapsDataByDefault()
+	public function testRenderScrapsData()
 	{
 		$view = new View($this->config, $this->viewsDir, $this->loader);
 
 		$view->setVar('testString', 'Hello World');
-		$view->render('simple');
+		$view->render('simple', null,false);
 
-		$this->assertTrue(empty($view->getData()));
+		$this->assertEmpty($view->getData());
 	}
 
 	//--------------------------------------------------------------------

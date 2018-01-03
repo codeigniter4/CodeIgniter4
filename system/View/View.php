@@ -56,26 +56,36 @@ class View implements RendererInterface
 	/**
 	 * The base directory to look in for our Views.
 	 *
-	 * @var
+	 * @var string
 	 */
 	protected $viewPath;
 
 	/**
-	 * Instance of CodeIgniter\Loader for when
+	 * The render variables
+	 *
+	 * @var array
+	 */
+	protected $renderVars = [];
+
+	/**
+	 * Instance of FileLocator for when
 	 * we need to attempt to find a view
 	 * that's not in standard place.
-	 * @var
+	 *
+	 * @var \CodeIgniter\Autoloader\FileLocator
 	 */
 	protected $loader;
 
 	/**
 	 * Logger instance.
+	 *
 	 * @var Logger
 	 */
 	protected $logger;
 
 	/**
 	 * Should we store performance info?
+	 *
 	 * @var bool
 	 */
 	protected $debug = false;
@@ -83,6 +93,7 @@ class View implements RendererInterface
 	/**
 	 * Cache stats about our performance here,
 	 * when CI_DEBUG = true
+	 *
 	 * @var array
 	 */
 	protected $performanceData = [];
@@ -145,7 +156,7 @@ class View implements RendererInterface
 	 */
 	public function render(string $view, array $options = null, $saveData = null): string
 	{
-		$start = microtime(true);
+		$this->renderVars['start'] = microtime(true);
 
 		// Store the results here so even if
 		// multiple views are called in a view, it won't
@@ -155,31 +166,32 @@ class View implements RendererInterface
 			$this->saveData = $saveData;
 		}
 
-		$view = str_replace('.php', '', $view) . '.php';
+		$this->renderVars['view'] = str_replace('.php', '', $view) . '.php';
+		$this->renderVars['options'] = $options;
 
 		// Was it cached?
-		if (isset($options['cache']))
+		if (isset($this->renderVars['options']['cache']))
 		{
-			$cacheName = $options['cache_name'] ?? str_replace('.php', '', $view);
+			$this->renderVars['cacheName'] = $this->renderVars['options']['cache_name'] ?? str_replace('.php', '', $this->renderVars['view']);
 
-			if ($output = cache($cacheName))
+			if ($output = cache($this->renderVars['cacheName']))
 			{
-				$this->logPerformance($start, microtime(true), $view);
+				$this->logPerformance($this->renderVars['start'], microtime(true), $this->renderVars['view']);
 				return $output;
 			}
 		}
 
-		$file = $this->viewPath . $view;
+		$this->renderVars['file'] = $this->viewPath . $this->renderVars['view'];
 
-		if ( ! file_exists($file))
+		if ( ! file_exists($this->renderVars['file']))
 		{
-			$file = $this->loader->locateFile($view, 'Views');
+			$this->renderVars['file'] = $this->loader->locateFile($this->renderVars['view'], 'Views');
 		}
 
 		// locateFile will return an empty string if the file cannot be found.
-		if (empty($file))
+		if (empty($this->renderVars['file']))
 		{
-			throw new \InvalidArgumentException('View file not found: ' . $view);
+			throw new \InvalidArgumentException('View file not found: ' . $this->renderVars['view']);
 		}
 
 		// Make our view data available to the view.
@@ -191,9 +203,11 @@ class View implements RendererInterface
 		}
 
 		ob_start();
-		include($file); // PHP will be processed
+		include($this->renderVars['file']); // PHP will be processed
 		$output = ob_get_contents();
 		@ob_end_clean();
+
+		$this->logPerformance($this->renderVars['start'], microtime(true), $this->renderVars['view']);
 
 		if (CI_DEBUG)
 		{
@@ -206,25 +220,23 @@ class View implements RendererInterface
 					// Clean up our path names to make them a little cleaner
 					foreach (['APPPATH', 'BASEPATH', 'ROOTPATH'] as $path)
 					{
-						if (strpos($file, constant($path)) === 0)
+						if (strpos($this->renderVars['file'], constant($path)) === 0)
 						{
-							$file = str_replace(constant($path), $path.'/', $file);
+							$this->renderVars['file'] = str_replace(constant($path), $path.'/', $this->renderVars['file']);
 						}
 					}
-					$file = ++$this->viewsCount . ' ' . $file;
-					$output = '<!-- DEBUG-VIEW START ' . $file . ' -->' . PHP_EOL
+					$this->renderVars['file'] = ++$this->viewsCount . ' ' . $this->renderVars['file'];
+					$output = '<!-- DEBUG-VIEW START ' . $this->renderVars['file'] . ' -->' . PHP_EOL
 						. $output . PHP_EOL
-						. '<!-- DEBUG-VIEW ENDED ' . $file . ' -->' . PHP_EOL;
+						. '<!-- DEBUG-VIEW ENDED ' . $this->renderVars['file'] . ' -->' . PHP_EOL;
 				}
 			}
 		}
 
-		$this->logPerformance($start, microtime(true), $view);
-
 		// Should we cache?
-		if (isset($options['cache']))
+		if (isset($this->renderVars['options']['cache']))
 		{
-			cache()->save($cacheName, $output, (int) $options['cache']);
+			cache()->save($this->renderVars['cacheName'], $output, (int) $this->renderVars['options']['cache']);
 		}
 
 		return $output;

@@ -35,6 +35,7 @@
  * @since        Version 3.0.0
  * @filesource
  */
+use CodeIgniter\Exceptions\FrameworkException;
 use CodeIgniter\HTTP\Files\FileCollection;
 use CodeIgniter\HTTP\Files\UploadedFile;
 use CodeIgniter\Services;
@@ -554,16 +555,18 @@ class IncomingRequest extends Request
 		}
 		else
 		{
-			$this->isSecure() ? $this->uri->setScheme('https') : $this->uri->setScheme('http');
+			throw FrameworkException::forEmptyBaseURL();
 
-			// While both SERVER_NAME and HTTP_HOST are open to security issues,
-			// if we have to choose, we will go with the server-controlled version first.
-			! empty($_SERVER['SERVER_NAME']) ? (isset($_SERVER['SERVER_NAME']) ? $this->uri->setHost($_SERVER['SERVER_NAME']) : null) : (isset($_SERVER['HTTP_HOST']) ? $this->uri->setHost($_SERVER['HTTP_HOST']) : null);
-
-			if ( ! empty($_SERVER['SERVER_PORT']))
-			{
-				$this->uri->setPort($_SERVER['SERVER_PORT']);
-			}
+//			$this->isSecure() ? $this->uri->setScheme('https') : $this->uri->setScheme('http');
+//
+//			// While both SERVER_NAME and HTTP_HOST are open to security issues,
+//			// if we have to choose, we will go with the server-controlled version first.
+//			! empty($_SERVER['SERVER_NAME']) ? (isset($_SERVER['SERVER_NAME']) ? $this->uri->setHost($_SERVER['SERVER_NAME']) : null) : (isset($_SERVER['HTTP_HOST']) ? $this->uri->setHost($_SERVER['HTTP_HOST']) : null);
+//
+//			if ( ! empty($_SERVER['SERVER_PORT']))
+//			{
+//				$this->uri->setPort($_SERVER['SERVER_PORT']);
+//			}
 		}
 	}
 
@@ -594,7 +597,7 @@ class IncomingRequest extends Request
 				break;
 			case 'PATH_INFO':
 			default:
-				$path = isset($_SERVER[$protocol]) ? $_SERVER[$protocol] : $this->parseRequestURI();
+				$path = $_SERVER[$protocol] ?? $this->parseRequestURI();
 				break;
 		}
 
@@ -657,8 +660,8 @@ class IncomingRequest extends Request
 		// parse_url() returns false if no host is present, but the path or query string
 		// contains a colon followed by a number
 		$parts = parse_url('http://dummy' . $_SERVER['REQUEST_URI']);
-		$query = isset($parts['query']) ? $parts['query'] : '';
-		$uri = isset($parts['path']) ? $parts['path'] : '';
+		$query = $parts['query'] ?? '';
+		$uri = $parts['path'] ?? '';
 
 		if (isset($_SERVER['SCRIPT_NAME'][0]))
 		{
@@ -678,7 +681,7 @@ class IncomingRequest extends Request
 		{
 			$query = explode('?', $query, 2);
 			$uri = $query[0];
-			$_SERVER['QUERY_STRING'] = isset($query[1]) ? $query[1] : '';
+			$_SERVER['QUERY_STRING'] = $query[1] ?? '';
 		}
 		else
 		{
@@ -706,7 +709,7 @@ class IncomingRequest extends Request
 	 */
 	protected function parseQueryString(): string
 	{
-		$uri = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : @getenv('QUERY_STRING');
+		$uri = $_SERVER['QUERY_STRING'] ?? @getenv('QUERY_STRING');
 
 		if (trim($uri, '/') === '')
 		{
@@ -715,7 +718,7 @@ class IncomingRequest extends Request
 		elseif (strncmp($uri, '/', 1) === 0)
 		{
 			$uri = explode('?', $uri, 2);
-			$_SERVER['QUERY_STRING'] = isset($uri[1]) ? $uri[1] : '';
+			$_SERVER['QUERY_STRING'] = $uri[1] ?? '';
 			$uri = $uri[0];
 		}
 

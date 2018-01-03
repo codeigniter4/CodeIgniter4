@@ -132,6 +132,81 @@ class RulesTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * @dataProvider ifExistProvider
+	 *
+	 * @param $rules
+	 * @param $data
+	 * @param $expected
+	 */
+	public function testIfExist($rules, $data, $expected)
+	{
+		$this->validation->setRules($rules);
+
+		$this->assertEquals($expected, $this->validation->run($data));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function ifExistProvider()
+	{
+		return [
+			[['foo' => 'required'], ['foo' => ''], false],
+			[['foo' => 'required'], [], false],
+			[['foo' => 'if_exist|required'], ['foo' => ''], false],
+			// Input data does not exist then the other rules will be ignored
+			[['foo' => 'if_exist|required'], [], true],
+		];
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * @dataProvider emptysProvider
+	 *
+	 * @param $rules
+	 * @param $data
+	 * @param $expected
+	 */
+	public function testEmptys($rules, $data, $expected)
+	{
+		$this->validation->setRules($rules);
+
+		$this->assertEquals($expected, $this->validation->run($data));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function emptysProvider()
+	{
+		return [
+			[['foo' => 'permit_empty'], ['foo' => ''], true],
+			[['foo' => 'permit_empty'], ['foo' => '0'], true],
+			[['foo' => 'permit_empty'], ['foo' => 0], true],
+			[['foo' => 'permit_empty'], ['foo' => 0.0], true],
+			[['foo' => 'permit_empty'], ['foo' => null], true],
+			[['foo' => 'permit_empty'], ['foo' => false], true],
+
+			[['foo' => 'permit_empty|valid_email'], ['foo' => ''], true],
+			[['foo' => 'permit_empty|valid_email'], ['foo' => 'user@domain.tld'], true],
+			[['foo' => 'permit_empty|valid_email'], ['foo' => 'invalid'], false],
+
+			// Required has more priority
+			[['foo' => 'permit_empty|required|valid_email'], ['foo' => ''], false],
+
+			[['foo' => 'permit_empty|required'], ['foo' => ''], false],
+			[['foo' => 'permit_empty|required'], ['foo' => null], false],
+			[['foo' => 'permit_empty|required'], ['foo' => false], false],
+
+			// This tests will return true because the input data is trimmed
+			[['foo' => 'permit_empty|required'], ['foo' => '0'], true],
+			[['foo' => 'permit_empty|required'], ['foo' => 0], true],
+			[['foo' => 'permit_empty|required'], ['foo' => 0.0], true],
+		];
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testRegexMatch()
 	{
 		$data = [

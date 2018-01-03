@@ -10,10 +10,10 @@ hard-coding that location into your files in a series of ``requires()`` is a mas
 headache and very error-prone. That's where autoloaders come in.
 
 CodeIgniter provides a very flexible autoloader that can be used with very little configuration.
-It can locate individual non-namespaced classes, namespaced classes that adhere to 
+It can locate individual non-namespaced classes, namespaced classes that adhere to
 `PSR4 <http://www.php-fig.org/psr/psr-4/>`_ autoloading
 directory structures, and will even attempt to locate classes in common directories (like Controllers,
-Models, etc). 
+Models, etc).
 
 For performance improvement, the core CodeIgniter components have been added to the classmap.
 

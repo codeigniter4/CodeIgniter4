@@ -125,6 +125,13 @@ if ( ! function_exists('base_url'))
 			$url = $url->resolveRelativeURI($path);
 		}
 
+		// If the scheme wasn't provided, check to
+		// see if it was a secure request
+		if (empty($scheme) && \CodeIgniter\Config\Services::request()->isSecure())
+		{
+			$scheme = 'https';
+		}
+
 		if ( ! empty($scheme))
 		{
 			$url->setScheme($scheme);
@@ -327,7 +334,7 @@ if ( ! function_exists('anchor_popup'))
 
 		foreach (['width' => '800', 'height' => '600', 'scrollbars' => 'yes', 'menubar' => 'no', 'status' => 'yes', 'resizable' => 'yes', 'screenx' => '0', 'screeny' => '0'] as $key => $val)
 		{
-			$atts[$key] = isset($attributes[$key]) ? $attributes[$key] : $val;
+			$atts[$key] = $attributes[$key] ?? $val;
 			unset($attributes[$key]);
 		}
 

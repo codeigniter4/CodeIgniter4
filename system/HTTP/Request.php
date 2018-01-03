@@ -220,7 +220,7 @@ class Request extends Message implements RequestInterface
 	 *
 	 * @return bool
 	 */
-	public function isValidIP(string $ip, string $which = null): bool
+	public function isValidIP(string $ip = null, string $which = null): bool
 	{
 		switch (strtolower($which))
 		{

@@ -35,15 +35,16 @@
  * @since        Version 3.0.0
  * @filesource
  */
-use CodeIgniter\I18n\Time;
-use CodeIgniter\Pager\Pager;
-use CodeIgniter\Validation\ValidationInterface;
 use Config\App;
 use Config\Database;
+use CodeIgniter\I18n\Time;
+use CodeIgniter\Pager\Pager;
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\ConnectionInterface;
+use CodeIgniter\Validation\ValidationInterface;
+use CodeIgniter\Database\Exceptions\DatabaseException;
 
 /**
  * Class Model
@@ -1149,6 +1150,43 @@ class Model
 		}
 
 		return (bool) $valid;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns the model's defined validation rules so that they
+	 * can be used elsewhere, if needed.
+	 *
+	 * @return array
+	 */
+	public function getValidationRules(array $options=[])
+	{
+		$rules = $this->validationRules;
+
+		if (isset($options['except']))
+		{
+			$rules = array_diff_key($rules, array_flip($options['except']));
+		}
+		elseif (isset($options['only']))
+		{
+			$rules = array_intersect_key($rules, array_flip($options['only']));
+		}
+		
+		return $rules;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns the model's define validation messages so they
+	 * can be used elsewhere, if needed.
+	 *
+	 * @return array
+	 */
+	public function getValidationMessages()
+	{
+		return $this->validationMessages;
 	}
 
 	//--------------------------------------------------------------------

@@ -177,18 +177,11 @@ The form (Signup.php) is a standard web form with a couple exceptions:
    This function will return any error messages sent back by the
    validator. If there are no messages it returns an empty string.
 
-
 The controller (Form.php) has one method: ``index()``. This method
 uses the Controller-provided validate method and loads the form helper and URL
 helper used by your view files. It also runs the validation routine.
 Based on whether the validation was successful it either presents the
 form or the success page.
-
-
-
-
-
-
 
 Loading the Library
 ===================
@@ -240,7 +233,6 @@ To give a labeled error message you can setup as::
         'username' => ['label' => 'Username', 'rules' => 'required'],
         'password' => ['label' => 'Password', 'rules' => 'required|min_length[10]']
     ]);
-
 
 withRequest()
 -------------
@@ -317,7 +309,6 @@ be used for any errors when this group is used::
     }
 
 Or pass all settings in an array::
-
 
     class Validation
     {
@@ -420,7 +411,6 @@ Or as a labeled style::
 
 .. note:: If you pass the last parameter the labeled style error messages will be ignored.
 
-
 Getting All Errors
 ==================
 
@@ -455,7 +445,6 @@ You can check to see if an error exists with the ``hasError()`` method. The only
     {
         echo $validation->getError('username');
     }
-
 
 *************************
 Customizing Error Display
@@ -494,7 +483,6 @@ we just looked at. The other type is simpler, and only contains a single variabl
 error message. This is used with the ``showError()`` method where a field must be specified::
 
     <span class="help-block"><?= esc($error) ?></span>
-
 
 Configuration
 =============
@@ -635,7 +623,10 @@ max_length              Yes         Fails if field is longer than the parameter 
 min_length              Yes         Fails if field is shorter than the parameter value.                                             min_length[3]
 numeric                 No          Fails if field contains anything other than numeric characters.
 regex_match             Yes         Fails if field does not match the regular expression.                                           regex_match[/regex/]
-required                No          Fails if the field is empty.
+if_exist                No          If this rule is present, validation will only return possible errors if the field key exists,
+                                    regardless of its value.
+permit_empty            No          Allows the field to receive an empty array, empty string, null or false.
+required                No          Fails if the field is an empty array, empty string, null or false.
 required_with           Yes         The field is required if any of the fields in the parameter are set.                            required_with[field1,field2]
 required_without        Yes         The field is required when any of the fields in the parameter are not set.                      required_without[field1,field2]
 is_unique               Yes         Checks if this field value exists in the database. Optionally set a                             is_unique[table.field,ignore_field,ignore_value]
@@ -688,7 +679,6 @@ mime_in                 Yes         Fails if the file's mime type is not one lis
 ext_in                  Yes         Fails if the file's extension is not one listed in the parameter.                               ext_in[field_name,png,jpg,gif]
 is_image                Yes         Fails if the file cannot be determined to be an image based on the mime type.                   is_image[field_name]
 ======================= =========== =============================================================================================== ========================================
-
 
 .. note:: You can also use any native PHP functions that permit up
 	to two parameters, where at least one is required (to pass

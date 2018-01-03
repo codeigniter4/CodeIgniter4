@@ -89,7 +89,7 @@ class UpdateTest extends \CIUnitTestCase
 
 		$query = $this->db->getLastQuery();
 
-		$this->assertTrue($query instanceof MockQuery);
+		$this->assertInstanceOf(MockQuery::class, $query);
 
 		$expected = 'UPDATE "jobs" SET "name" = CASE 
 WHEN "id" = :id: THEN :name:

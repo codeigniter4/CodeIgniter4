@@ -488,7 +488,7 @@ class Session implements SessionInterface
 	{
 		if (isset($key))
 		{
-			return isset($_SESSION[$key]) ? $_SESSION[$key] : null;
+			return $_SESSION[$key] ?? null;
 		}
 		elseif (empty($_SESSION))
 		{

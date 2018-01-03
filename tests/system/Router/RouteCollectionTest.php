@@ -1,6 +1,5 @@
 <?php namespace CodeIgniter\Router;
 
-use CodeIgniter\Autoloader\FileLocator;
 use CodeIgniter\Autoloader\MockFileLocator;
 
 /**
@@ -237,7 +236,7 @@ class RouteCollectionTest extends \CIUnitTestCase
 		$routes = $this->getCollector();
 		$routes->setTranslateURIDashes(true);
 
-		$this->assertEquals(true, $routes->shouldTranslateURIDashes());
+		$this->assertTrue($routes->shouldTranslateURIDashes());
 	}
 
 	//--------------------------------------------------------------------
@@ -247,7 +246,7 @@ class RouteCollectionTest extends \CIUnitTestCase
 		$routes = $this->getCollector();
 		$routes->setAutoRoute(true);
 
-		$this->assertEquals(true, $routes->shouldAutoRoute());
+		$this->assertTrue($routes->shouldAutoRoute());
 	}
 
 	//--------------------------------------------------------------------
@@ -772,7 +771,7 @@ class RouteCollectionTest extends \CIUnitTestCase
 
 		$match = $routes->getRoutes();
 
-		$this->assertTrue(array_key_exists('testing', $match));
+		$this->assertArrayHasKey('testing', $match);
 		$this->assertEquals($match['testing'], '\TestController::index');
 	}
 }

@@ -1006,7 +1006,7 @@ class URI
 			{
 				$transformed->setPath($this->getPath());
 
-				if ( ! is_null($relative->getQuery()))
+				if ($relative->getQuery())
 				{
 					$transformed->setQuery($relative->getQuery());
 				}
@@ -1056,7 +1056,7 @@ class URI
 	{
 		if ( ! empty($base->getAuthority()) && empty($base->getPath()))
 		{
-			return '/' . ltrim($base->getPath(), '/ ');
+			return '/' . ltrim($reference->getPath(), '/ ');
 		}
 
 		$path = explode('/', $base->getPath());

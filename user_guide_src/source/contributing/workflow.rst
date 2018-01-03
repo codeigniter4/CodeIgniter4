@@ -3,7 +3,7 @@ Contribution Workflow
 =====================
 
 Much of the workflow for contributing to CodeIgniter (or any project) involves
-understanding how `Git <https://git-scm.com/>`_ is used to 
+understanding how `Git <https://git-scm.com/>`_ is used to
 manage a shared repository and contributions to it.
 Examples below use the Git bash shell, to be as platform neutral as
 possible. Your IDE may make some of these easier.
@@ -46,7 +46,7 @@ you cannot do the same with the shared one - you have to submit pull requests
 to it instead.
 
 `Creating a fork <https://help.github.com/articles/fork-a-repo/>`_ is done through the Github website. Navigate to `our
-repository <https://github.com/bcit-ci/CodeIgniter4>`_, 
+repository <https://github.com/bcit-ci/CodeIgniter4>`_,
 click the **Fork** button in the top-right of the page, and choose which account or
 organization of yours should contain that fork.
 
@@ -68,7 +68,7 @@ Clone your repository, leaving a local folder for you to work with::
 Synching
 ========
 
-Within your local repository, Git will have created an alias, **origin**, for the 
+Within your local repository, Git will have created an alias, **origin**, for the
 Github repository it is bound to. You want to create an alias for the shared
 repository, so that you can "synch" the two, making sure that your repository
 includes any other contributions that have been merged by us into the shared repo::
@@ -76,7 +76,7 @@ includes any other contributions that have been merged by us into the shared rep
     git remote add upstream UPSTREAM_URL
 
 Then synchronizing is done by pulling from us and pushing to you. This is normally
-done locally, so that you can resolve any merge conflicts. For instance, to 
+done locally, so that you can resolve any merge conflicts. For instance, to
 synchronize **develop** branches::
 
     git checkout develop
@@ -85,9 +85,9 @@ synchronize **develop** branches::
 
 You might get merge conflicts when you pull from upstream. It is your responsibility
 to resolve those locally, so that you can continue collaborating with the shared
-repository. Basically, the shared repository is updated in the order that contributions 
-are merged into it, not in the order that they might have been submitted. 
-If two PRs update the same piece of code, then the first one to be merged 
+repository. Basically, the shared repository is updated in the order that contributions
+are merged into it, not in the order that they might have been submitted.
+If two PRs update the same piece of code, then the first one to be merged
 will take precedence, even if it causes problems for other contributions.
 
 It is a good idea to synchronize repositories when the shared one changes.
@@ -95,7 +95,7 @@ It is a good idea to synchronize repositories when the shared one changes.
 Branching Revisited
 ===================
 
-The top of this page talked about the **master** and **develop** branches. 
+The top of this page talked about the **master** and **develop** branches.
 The *best practice* for your work is to create a *feature branch* locally,
 to hold a group of related changes (source, unit testing, documentation,
 change log, etc). This local branch should be named appropriately,
@@ -155,7 +155,7 @@ Synchronize your repository::
     git checkout develop
     git pull upstream develop
     git push origin develop
-    
+
 Bring your feature branch up to date::
 
     git checkout new/mind-reader
@@ -188,12 +188,12 @@ If the unit tests fail, or if there are merge conflicts, your PR will not
 be mergeable until fixed.
 
 Fix such changes locally, commit them properly, and then push your branch again.
-That will update the PR automatically, and re-run the CI tests. You don't need 
+That will update the PR automatically, and re-run the CI tests. You don't need
 to raise a new PR.
 
 If your PR does not follow our contribution guidelines, or is incomplete,
 the codebase maintainers will comment on it, pointing out what
-needs fixing. 
+needs fixing.
 
 Cleanup
 =======

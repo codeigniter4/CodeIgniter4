@@ -195,7 +195,6 @@ You can use (latest) with the following options:
 This example will migrate Blog namespace to latest::
 
 > php spark migrate:latest -g test -n Blog
- 
 
 **current**
 
@@ -240,7 +239,6 @@ You can use (rollback) with the following options:
 - (-n) to choose namespace, otherwise (App) namespace will be used.
 - (all) to migrate all namespaces to the latest migration
 
-
 **refresh**
 
 Refreshes the database state by first rolling back all migrations, and then migrating to the latest version::
@@ -252,7 +250,6 @@ You can use (refresh) with the following options:
 - (-g) to chose database group, otherwise default database group will be used.
 - (-n) to choose namespace, otherwise (App) namespace will be used.
 - (all) to migrate all namespaces to the latest migration
-
 
 **status**
 

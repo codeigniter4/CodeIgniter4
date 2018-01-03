@@ -347,10 +347,8 @@ class Entity
 				{
 					$value = unserialize($value);
 				}
-				else
-				{
-					$value = (object)$value;
-				}
+
+				$value = (array)$value;
 				break;
 			case 'datetime':
 				return new \DateTime($value);

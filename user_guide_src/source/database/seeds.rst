@@ -49,7 +49,7 @@ but organize the tasks into separate seeder files::
 		}
 	}
 
-You can also use a fully-qualified class name in the **call()** method, allowing you to keep your seeders 
+You can also use a fully-qualified class name in the **call()** method, allowing you to keep your seeders
 anywhere the autoloader can find them. This is great for more modular code bases::
 
 	public function run()

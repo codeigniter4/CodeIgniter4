@@ -254,10 +254,8 @@ class DotEnv
 				{
 					return $matchedPatterns[0];
 				}
-				else
-				{
-					return $nestedVariable;
-				}
+
+				return $nestedVariable;
 			}, $value
 			);
 		}

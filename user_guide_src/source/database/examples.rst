@@ -33,7 +33,7 @@ Standard Query With Multiple Results (Object Version)
 		echo $row->name;
 		echo $row->email;
 	}
-	
+
 	echo 'Total Results: ' . count($results);
 
 The above getResult() function returns an array of **objects**. Example:
@@ -96,7 +96,7 @@ The :doc:`Query Builder Pattern <query_builder>` gives you a simplified
 means of retrieving data::
 
 	$query = $db->table('table_name')->get();
-	
+
 	foreach ($query->getResult() as $row)
 	{
 		echo $row->title;
@@ -116,6 +116,6 @@ Query Builder Insert
 		'name'  => $name,
 		'date'  => $date
 	);
-	
+
 	$db->table('mytable')->insert($data);  // Produces: INSERT INTO mytable (title, name, date) VALUES ('{$title}', '{$name}', '{$date}')
 

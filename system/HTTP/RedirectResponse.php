@@ -102,7 +102,7 @@ class RedirectResponse extends Response
 	{
 		$this->ensureSession();
 
-		return $this->redirect(previous_url(), $code, $method);
+		return $this->redirect(previous_url(), $method, $code);
 	}
 
 
@@ -144,7 +144,7 @@ class RedirectResponse extends Response
 	 *
 	 * @return $this
 	 */
-	public function with(string $key, string $message)
+	public function with(string $key, $message)
 	{
 		$session = $this->ensureSession();
 

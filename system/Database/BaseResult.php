@@ -317,10 +317,8 @@ abstract class BaseResult implements ResultInterface
 		{
 			return $this->getRowArray($n);
 		}
-		else
-		{
-			return $this->getCustomRowObject($n, $type);
-		}
+
+		return $this->getCustomRowObject($n, $type);
 	}
 
 	//--------------------------------------------------------------------
