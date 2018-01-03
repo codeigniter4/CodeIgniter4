@@ -45,7 +45,6 @@ This provides a backtrace to the current execution point, with Kint's own unique
 
 For more information, see `Kint's page <https://raveren.github.io/kint/>`_.
 
-
 =================
 The Debug Toolbar
 =================
@@ -55,7 +54,6 @@ queries you have ran, request and response data, and more. This can all prove ve
 to help you debug and optimize.
 
 .. note:: The Debug Toolbar is still under construction with several planned features not yet implemented.
-
 
 Enabling the Toolbar
 ====================
@@ -146,7 +144,6 @@ to the right of the tab content's title.
 is true, you will need to implement the ``getVarData()`` method.
 
 **$title** is displayed on open tabs.
-
 
 Displaying a Toolbar Tab
 ------------------------

@@ -300,6 +300,14 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 */
 	public function execute($sql)
 	{
+		while($this->connID->more_results())
+		{
+			$this->connID->next_result();
+			if($res = $this->connID->store_result())
+			{
+				$res->free(); 
+			}
+		}
 		return $this->connID->query($this->prepQuery($sql));
 	}
 

@@ -1056,7 +1056,7 @@ class URI
 	{
 		if ( ! empty($base->getAuthority()) && empty($base->getPath()))
 		{
-			return '/' . ltrim($base->getPath(), '/ ');
+			return '/' . ltrim($reference->getPath(), '/ ');
 		}
 
 		$path = explode('/', $base->getPath());

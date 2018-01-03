@@ -2,7 +2,6 @@
 Connecting to your Database
 ###########################
 
-
 You can connect to your database by adding this line of code in any
 function where it is needed, or in your class constructor to make the
 database available globally in that class.
@@ -43,7 +42,6 @@ database connection every time. If you need to have a separate connection
 to the same database, send ``false`` as the second parameter::
 
 	$db = \Config\Database::connect('group_name', false);
-
 
 Connecting to Multiple Databases
 ================================

@@ -59,7 +59,7 @@ class SessionTest extends \CIUnitTestCase
         $session->start();
 
         $this->assertTrue($session->didRegenerate);
-        $this->assertTrue($_SESSION['__ci_last_regenerate'] > $time+90);
+        $this->assertGreaterThan($time + 90 ,$_SESSION['__ci_last_regenerate']);
     }
 
     public function testCanSetSingleValue()
@@ -84,7 +84,7 @@ class SessionTest extends \CIUnitTestCase
 
         $this->assertEquals('bar', $_SESSION['foo']);
         $this->assertEquals('baz', $_SESSION['bar']);
-        $this->assertFalse(isset($_SESSION['__ci_vars']));
+        $this->assertArrayNotHasKey('__ci_vars', $_SESSION);
     }
 
     public function testGetSimpleKey()
@@ -153,7 +153,7 @@ class SessionTest extends \CIUnitTestCase
         $_SESSION['foo'] = 'bar';
         $session->remove('foo');
 
-        $this->assertFalse(isset($_SESSION['foo']));
+        $this->assertArrayNotHasKey('foo', $_SESSION);
         $this->assertFalse($session->has('foo'));
     }
 
@@ -171,8 +171,8 @@ class SessionTest extends \CIUnitTestCase
 
         $session->remove(['foo', 'bar']);
 
-        $this->assertFalse(isset($_SESSION['foo']));
-        $this->assertFalse(isset($_SESSION['bar']));
+        $this->assertArrayNotHasKey('foo', $_SESSION);
+        $this->assertArrayNotHasKey('bar', $_SESSION);
     }
 
     public function testSetMagicMethod()
@@ -182,7 +182,7 @@ class SessionTest extends \CIUnitTestCase
 
         $session->foo = 'bar';
 
-        $this->assertTrue(isset($_SESSION['foo']));
+        $this->assertArrayHasKey('foo', $_SESSION);
         $this->assertEquals('bar', $_SESSION['foo']);
     }
 
@@ -260,7 +260,7 @@ class SessionTest extends \CIUnitTestCase
         $session->set('bar', 'baz');
 
         $this->assertTrue($session->has('foo'));
-        $this->assertTrue(isset($_SESSION['__ci_vars']['foo']));
+        $this->assertArrayHasKey('foo', $_SESSION['__ci_vars']);
 
         $session->unmarkFlashdata('foo');
 
@@ -280,8 +280,8 @@ class SessionTest extends \CIUnitTestCase
 
         $keys = $session->getFlashKeys();
 
-        $this->assertTrue(in_array('foo', $keys));
-        $this->assertFalse(in_array('bar', $keys));
+        $this->assertContains('foo', $keys);
+        $this->assertNotContains('bar', $keys);
     }
 
     public function testSetTempDataWorks()
@@ -290,7 +290,7 @@ class SessionTest extends \CIUnitTestCase
         $session->start();
 
         $session->setTempdata('foo', 'bar', 300);
-        $this->assertTrue((time() + 300) >= $_SESSION['__ci_vars']['foo']);
+        $this->assertGreaterThanOrEqual($_SESSION['__ci_vars']['foo'], time() + 300);
     }
 
     public function testSetTempDataArrayMultiTTL()
@@ -306,9 +306,9 @@ class SessionTest extends \CIUnitTestCase
             'baz' => 100
         ]);
 
-        $this->assertTrue(($time + 300) <= $_SESSION['__ci_vars']['foo']);
-        $this->assertTrue(($time + 400) <= $_SESSION['__ci_vars']['bar']);
-        $this->assertTrue(($time + 100) <= $_SESSION['__ci_vars']['baz']);
+        $this->assertLessThanOrEqual($_SESSION['__ci_vars']['foo'], $time + 300);
+        $this->assertLessThanOrEqual($_SESSION['__ci_vars']['bar'], $time + 400);
+        $this->assertLessThanOrEqual($_SESSION['__ci_vars']['baz'], $time + 100);
     }
 
     public function testSetTempDataArraySingleTTL()
@@ -320,9 +320,9 @@ class SessionTest extends \CIUnitTestCase
 
         $session->setTempdata(['foo', 'bar', 'baz'], null, 200);
 
-        $this->assertTrue(($time + 200) <= $_SESSION['__ci_vars']['foo']);
-        $this->assertTrue(($time + 200) <= $_SESSION['__ci_vars']['bar']);
-        $this->assertTrue(($time + 200) <= $_SESSION['__ci_vars']['baz']);
+        $this->assertLessThanOrEqual($_SESSION['__ci_vars']['foo'], $time + 200);
+        $this->assertLessThanOrEqual($_SESSION['__ci_vars']['bar'], $time + 200);
+        $this->assertLessThanOrEqual($_SESSION['__ci_vars']['baz'], $time + 200);
     }
 
     /**

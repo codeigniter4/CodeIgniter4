@@ -125,6 +125,13 @@ if ( ! function_exists('base_url'))
 			$url = $url->resolveRelativeURI($path);
 		}
 
+		// If the scheme wasn't provided, check to
+		// see if it was a secure request
+		if (empty($scheme) && \CodeIgniter\Config\Services::request()->isSecure())
+		{
+			$scheme = 'https';
+		}
+
 		if ( ! empty($scheme))
 		{
 			$url->setScheme($scheme);

@@ -133,8 +133,6 @@ Our demo command might have a ``run`` method something like::
         CLI::write('Included files: '. CLI::color(count(get_included_files()), 'yellow'));
     }
 
-
-
 ***********
 BaseCommand
 ***********

@@ -103,7 +103,6 @@ Service Accessors
 	.. :note:: If you are using the form helper, this feature is built-in. You only
 		need to use this function when not using the form helper.
 
-
 .. php:function:: session( [$key] )
 
 	:param string $key: The name of the session item to check for.
@@ -240,7 +239,6 @@ Miscellaneous Functions
 		// Set a flash message
 		return redirect()->back()->with('foo', 'message');
 
-
 .. php:function:: remove_invisible_characters($str[, $url_encoded = TRUE])
 
 	:param	string	$str: Input string
@@ -302,7 +300,6 @@ Miscellaneous Functions
 
 	Helper function used to convert a string, array, or object of attributes to a string.
 
-
 ================
 Global Constants
 ================
@@ -335,7 +332,6 @@ Core Constants
 .. php:const:: WRITEPATH
 
 	The path to the **writable** directory.
-
 
 Time Constants
 ==============

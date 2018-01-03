@@ -16,7 +16,7 @@ class OrderTest extends \CIDatabaseTestCase
 		                ->get()
 		                ->getResult();
 
-		$this->assertEquals(4, count($jobs));
+		$this->assertCount(4, $jobs);
 		$this->assertEquals('Accountant', $jobs[0]->name);
 		$this->assertEquals('Developer', $jobs[1]->name);
 		$this->assertEquals('Musician', $jobs[2]->name);
@@ -32,7 +32,7 @@ class OrderTest extends \CIDatabaseTestCase
 		                 ->get()
 		                 ->getResult();
 
-		$this->assertEquals(4, count($jobs));
+		$this->assertCount(4, $jobs);
 		$this->assertEquals('Accountant', $jobs[3]->name);
 		$this->assertEquals('Developer', $jobs[2]->name);
 		$this->assertEquals('Musician', $jobs[1]->name);
@@ -49,7 +49,7 @@ class OrderTest extends \CIDatabaseTestCase
 		                ->get()
 		                ->getResult();
 
-		$this->assertEquals(4, count($users));
+		$this->assertCount(4, $users);
 		$this->assertEquals('Ahmadinejad', $users[0]->name);
 		$this->assertEquals('Chris Martin', $users[1]->name);
 		$this->assertEquals('Richard A Causey', $users[2]->name);

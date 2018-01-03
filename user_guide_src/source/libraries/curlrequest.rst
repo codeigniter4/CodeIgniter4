@@ -212,8 +212,6 @@ and functions the exact same way as the previous example. The value must be a st
 
 	$client->request('put', 'http://example.com', ['body' => $body]);
 
-
-
 cert
 ====
 
@@ -338,7 +336,6 @@ You can pass along data to send as query string variables by passing an associat
 
 	// Send a GET request to /get?foo=bar
 	$client->request('GET', '/get', ['query' => ['foo' => 'bar']]);
-
 
 timeout
 =======

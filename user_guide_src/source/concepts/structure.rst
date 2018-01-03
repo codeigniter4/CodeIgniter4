@@ -28,7 +28,6 @@ structure that works well for many applications. The following folders make up t
 		/Models         Models work with the database to represent the business entities.
 		/Views          Views make up the HTML that is displayed to the client.
 
-
 Because the ``application`` directory is already namespaced, you should feel free to modify the structure
 of this directory to suit your application's needs. For example, you might decide to start using the Repository
 pattern and Entity Models to work with your data. In this case, you could rename the ``Models`` directory to
@@ -66,7 +65,6 @@ This directory holds any directories that might need to be written to in the cou
 This includes directories for storing cache files, logs, and any uploads a user might send. You should add any other
 directories that your application will need to write to here. This allows you to keep your other primary directories
 non-writable as an added security measure.
-
 
 tests
 -----

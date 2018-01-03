@@ -180,7 +180,7 @@ EOH;
 	public function testVideo()
 	{
 		$expected = <<<EOH
-<video src="test.mp4" controls>
+<video src="http://example.com/test.mp4" controls>
   Your browser does not support the video tag.
 </video>
 
@@ -215,10 +215,10 @@ EOH;
 
 		$expected = <<<EOH
 <video class="test" controls>
-  <source src="movie.mp4" type="video/mp4" class="test" />
-  <source src="movie.ogg" type="video/ogg" />
-  <source src="movie.mov" type="video/quicktime" />
-  <source src="movie.ogv" type="video/ogv; codecs=dirac, speex" />
+  <source src="http://example.com/movie.mp4" type="video/mp4" class="test" />
+  <source src="http://example.com/movie.ogg" type="video/ogg" />
+  <source src="http://example.com/movie.mov" type="video/quicktime" />
+  <source src="http://example.com/movie.ogv" type="video/ogv; codecs=dirac, speex" />
   <track src="subtitles_no.vtt" kind="subtitles" srclang="no" label="Norwegian No" />
   <track src="subtitles_yes.vtt" kind="subtitles" srclang="yes" label="Norwegian Yes" />
   Your browser does not support the video tag.
@@ -248,8 +248,8 @@ EOH;
 	{
 		$expected = <<<EOH
 <audio id="test" controls>
-  <source src="sound.ogg" type="audio/ogg" />
-  <source src="sound.mpeg" type="audio/mpeg" />
+  <source src="http://example.com/sound.ogg" type="audio/ogg" />
+  <source src="http://example.com/sound.mpeg" type="audio/mpeg" />
   <track src="subtitles_no.vtt" kind="subtitles" srclang="no" label="Norwegian No" />
   <track src="subtitles_yes.vtt" kind="subtitles" srclang="yes" label="Norwegian Yes" />
   Your browser does not support the audio tag.
@@ -276,7 +276,7 @@ EOH;
 	public function testEmbed()
 	{
 		$expected = <<<EOH
-<embed src="movie.mov" type="video/quicktime" class="test" />
+<embed src="http://example.com/movie.mov" type="video/quicktime" class="test" />
 
 EOH;
 
@@ -287,7 +287,7 @@ EOH;
 	public function testObject()
 	{
 		$expected = <<<EOH
-<object data="movie.swf" class="test"></object>
+<object data="http://example.com/movie.swf" class="test"></object>
 
 EOH;
 		
@@ -301,7 +301,7 @@ EOH;
 		$this->assertEquals($expected, $object);
 		
 		$expected = <<<EOH
-<object data="movie.swf" class="test">
+<object data="http://example.com/movie.swf" class="test">
   <param name="foo" type="ref" value="bar" class="test" />
   <param name="hello" type="ref" value="world" class="test" />
 </object>

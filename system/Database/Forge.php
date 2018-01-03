@@ -1195,9 +1195,6 @@ class Forge
 					. ' (' . implode(', ', $this->db->escapeIdentifiers($this->keys[$i])) . ');';
 		}
 
-		$this->keys = [];
-		$this->uniqueKeys = [];
-
 		return $sqls;
 	}
 
@@ -1245,7 +1242,7 @@ class Forge
 	 */
 	protected function _reset()
 	{
-		$this->fields = $this->keys = $this->primaryKeys = $this->foreignKeys = [];
+		$this->fields = $this->keys = $this->uniqueKeys = $this->primaryKeys = $this->foreignKeys = [];
 	}
 
 }

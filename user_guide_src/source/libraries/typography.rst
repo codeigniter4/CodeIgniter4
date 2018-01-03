@@ -40,7 +40,7 @@ The following functions are available:
 		you have a lot of content being formatted. If you choose to use this
 		function you may want to consider :doc:`caching <../general/caching>` your
 		pages.
-		
+
 **formatCharacters()**
 
 .. php:function:: formatCharacters($str)
@@ -56,7 +56,7 @@ The following functions are available:
 	Usage example::
 
 		$string = $typography->formatCharacters($string);
-		
+
 **nl2brExceptPre()**
 
 .. php:function:: nl2brExceptPre($str)

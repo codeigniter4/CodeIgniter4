@@ -104,7 +104,7 @@ to instantiate the row with::
 
 	$query = $db->query("SELECT * FROM users LIMIT 1;");
 	$row = $query->getRow(0, 'User');
-	
+
 	echo $row->name; // access attributes
 	echo $row->reverse_name(); // or methods defined on the 'User' class
 
@@ -153,7 +153,7 @@ parameter:
 
 This method returns a single result row without prefetching the whole
 result in memory as ``row()`` does. If your query has more than one row,
-it returns the current row and moves the internal data pointer ahead. 
+it returns the current row and moves the internal data pointer ahead.
 
 ::
 
@@ -264,7 +264,7 @@ Example::
 *********************
 Result Helper Methods
 *********************
-	
+
 **getFieldCount()**
 
 The number of FIELDS (columns) returned by the query. Make sure to call

@@ -133,7 +133,6 @@ never need to do that, since it is an auto-incrementing field in the database.
 This helps protect against Mass Assignment Vulnerabilities. If your model is
 handling your timestamps, you would also leave those out.
 
-
 Routing
 -------
 

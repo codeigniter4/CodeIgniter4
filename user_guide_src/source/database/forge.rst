@@ -51,7 +51,6 @@ Returns TRUE/FALSE based on success or failure::
 		echo 'Database deleted!';
 	}
 
-
 ****************************
 Creating and Dropping Tables
 ****************************
@@ -77,7 +76,6 @@ also require a 'constraint' key.
 		),
 	);
 	// will translate to "users VARCHAR(100)" when the field is added.
-
 
 Additionally, the following key/values can be used:
 
@@ -115,7 +113,6 @@ Additionally, the following key/values can be used:
 		),
 	);
 
-
 After the fields have been defined, they can be added using
 ``$forge->addField($fields);`` followed by a call to the
 ``createTable()`` method.
@@ -123,7 +120,6 @@ After the fields have been defined, they can be added using
 **$forge->addField()**
 
 The add fields method will accept the above array.
-
 
 Passing strings as fields
 -------------------------
@@ -134,7 +130,6 @@ string into the field definitions with addField()
 ::
 
 	$forge->addField("label varchar(100) NOT NULL DEFAULT 'default label'");
-
 
 .. note:: Passing raw strings as fields cannot be followed by ``add_key()`` calls on those fields.
 
@@ -151,7 +146,6 @@ Primary Key.
 
 	$forge->addField('id');
 	// gives id INT(9) NOT NULL AUTO_INCREMENT
-
 
 Adding Keys
 ===========
@@ -191,17 +185,15 @@ and unique keys with specific methods::
 
 	$forge->addUniqueKey(array('blog_id', 'uri'));
 	// gives UNIQUE KEY `blog_id_uri` (`blog_id`, `uri`)
- 
- 
+
+
 Adding Foreign Keys
 ===================
 
 ::
 
-
         $forge->addForeignKey('users_id','users','id');
         // gives CONSTRAINT `TABLENAME_users_foreign` FOREIGN KEY(`users_id`) REFERENCES `users`(`id`)
-
 
 You can specify the desired action for the "on delete" and "on update" properties of the constraint:
 
@@ -209,8 +201,6 @@ You can specify the desired action for the "on delete" and "on update" propertie
 
         $forge->addForeignKey('users_id','users','id','CASCADE','CASCADE');
         // gives CONSTRAINT `TABLENAME_users_foreign` FOREIGN KEY(`users_id`) REFERENCES `users`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
-
-
 
 Creating a table
 ================
@@ -222,7 +212,6 @@ with
 
 	$forge->createTable('table_name');
 	// gives CREATE TABLE table_name
-
 
 An optional second parameter set to TRUE adds an "IF NOT EXISTS" clause
 into the definition
@@ -241,7 +230,6 @@ You could also pass optional table attributes, such as MySQL's ``ENGINE``::
 .. note:: Unless you specify the ``CHARACTER SET`` and/or ``COLLATE`` attributes,
 	``createTable()`` will always add them with your configured *charset*
 	and *DBCollat* values, as long as they are not empty (MySQL only).
-
 
 Dropping a table
 ================
@@ -266,7 +254,6 @@ Execute a DROP FOREIGN KEY.
 	// Produces: ALTER TABLE 'tablename' DROP FOREIGN KEY 'users_foreign'
 	$forge->dropForeignKey('tablename','users_foreign');
 
-
 Renaming a table
 ================
 
@@ -276,7 +263,6 @@ Executes a TABLE rename
 
 	$forge->renameTable('old_table_name', 'new_table_name');
 	// gives ALTER TABLE old_table_name RENAME TO new_table_name
-
 
 ****************
 Modifying Tables
@@ -314,7 +300,6 @@ Examples::
 		'preferences' => array('type' => 'TEXT', 'first' => TRUE)
 	);
 
-
 Dropping a Column From a Table
 ==============================
 
@@ -325,8 +310,6 @@ Used to remove a column from a table.
 ::
 
 	$forge->dropColumn('table_name', 'column_to_drop');
-
-
 
 Modifying a Column in a Table
 =============================
@@ -347,7 +330,6 @@ change the name you can add a "name" key into the field defining array.
 	);
 	$forge->modifyColumn('table_name', $fields);
 	// gives ALTER TABLE table_name CHANGE old_name new_name TEXT
-
 
 ***************
 Class Reference

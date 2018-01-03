@@ -26,7 +26,7 @@ class IncomingRequestTest extends \CIUnitTestCase
 		$_REQUEST['TEST'] = 5;
 
 		$this->assertEquals(5, $this->request->getVar('TEST'));
-		$this->assertEquals(null, $this->request->getVar('TESTY'));
+		$this->assertNull($this->request->getVar('TESTY'));
 	}
 
 	//--------------------------------------------------------------------
@@ -36,7 +36,7 @@ class IncomingRequestTest extends \CIUnitTestCase
 		$_GET['TEST'] = 5;
 
 		$this->assertEquals(5, $this->request->getGet('TEST'));
-		$this->assertEquals(null, $this->request->getGEt('TESTY'));
+		$this->assertNull($this->request->getGEt('TESTY'));
 	}
 
 	//--------------------------------------------------------------------
@@ -46,7 +46,7 @@ class IncomingRequestTest extends \CIUnitTestCase
 		$_POST['TEST'] = 5;
 
 		$this->assertEquals(5, $this->request->getPost('TEST'));
-		$this->assertEquals(null, $this->request->getPost('TESTY'));
+		$this->assertNull($this->request->getPost('TESTY'));
 	}
 
 	//--------------------------------------------------------------------
@@ -82,7 +82,7 @@ class IncomingRequestTest extends \CIUnitTestCase
 		$_SERVER['TEST'] = 5;
 
 		$this->assertEquals(5, $this->request->getServer('TEST'));
-		$this->assertEquals(null, $this->request->getServer('TESTY'));
+		$this->assertNull($this->request->getServer('TESTY'));
 	}
 
 	//--------------------------------------------------------------------
@@ -92,7 +92,7 @@ class IncomingRequestTest extends \CIUnitTestCase
 		$_ENV['TEST'] = 5;
 
 		$this->assertEquals(5, $this->request->getEnv('TEST'));
-		$this->assertEquals(null, $this->request->getEnv('TESTY'));
+		$this->assertNull($this->request->getEnv('TESTY'));
 	}
 
 	//--------------------------------------------------------------------
@@ -102,7 +102,7 @@ class IncomingRequestTest extends \CIUnitTestCase
 		$_COOKIE['TEST'] = 5;
 
 		$this->assertEquals(5, $this->request->getCookie('TEST'));
-		$this->assertEquals(null, $this->request->getCookie('TESTY'));
+		$this->assertNull($this->request->getCookie('TESTY'));
 	}
 
 	//--------------------------------------------------------------------
@@ -200,8 +200,8 @@ class IncomingRequestTest extends \CIUnitTestCase
         $result = $this->request->getPost();
 
         $this->assertEquals($_POST, $result);
-        $this->assertTrue(is_array($result['ANNOUNCEMENTS']));
-        $this->assertEquals(2, count($result['ANNOUNCEMENTS']));
+        $this->assertInternalType('array', $result['ANNOUNCEMENTS']);
+        $this->assertCount(2, $result['ANNOUNCEMENTS']);
     }
 
     //--------------------------------------------------------------------
@@ -369,6 +369,7 @@ class IncomingRequestTest extends \CIUnitTestCase
 		$config = new App();
 		$config->negotiateLocale = true;
 		$config->supportedLocales = ['en', 'es'];
+		$config->baseURL = 'http://example.com';
 
 		$request = new IncomingRequest($config, new URI());
 
@@ -387,8 +388,11 @@ class IncomingRequestTest extends \CIUnitTestCase
 			'message' => 'ok'
 		];
 
-		$request = new IncomingRequest(new App(), new URI(), $json);
-		
+		$config = new App();
+		$config->baseURL = 'http://example.com';
+
+		$request = new IncomingRequest($config, new URI(), $json);
+
 		$this->assertEquals($expected, $request->getJSON(true));
 	}
 
@@ -403,7 +407,11 @@ class IncomingRequestTest extends \CIUnitTestCase
 			'role' => 'administrator',
 			'usepass' => 0
 		];
-		$request = new IncomingRequest(new App(), new URI(), $rawstring);
+
+		$config = new App();
+		$config->baseURL = 'http://example.com';
+
+		$request = new IncomingRequest($config, new URI(), $rawstring);
 
 		$this->assertEquals($expected, $request->getRawInput());
 	}

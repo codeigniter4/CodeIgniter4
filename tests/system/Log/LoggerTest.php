@@ -64,7 +64,7 @@ class LoggerTest extends \CIUnitTestCase
 
 		$logs = TestHandler::getLogs();
 
-		$this->assertEquals(1, count($logs));
+		$this->assertCount(1, $logs);
 		$this->assertEquals($expected, $logs[0]);
 	}
 
@@ -81,7 +81,7 @@ class LoggerTest extends \CIUnitTestCase
 
 		$logs = TestHandler::getLogs();
 
-		$this->assertEquals(0, count($logs));
+		$this->assertCount(0, $logs);
 	}
 
 	//--------------------------------------------------------------------
@@ -98,7 +98,7 @@ class LoggerTest extends \CIUnitTestCase
 
 		$logs = TestHandler::getLogs();
 
-		$this->assertEquals(1, count($logs));
+		$this->assertCount(1, $logs);
 		$this->assertEquals($expected, $logs[0]);
 	}
 
@@ -117,7 +117,7 @@ class LoggerTest extends \CIUnitTestCase
 
 		$logs = TestHandler::getLogs();
 
-		$this->assertEquals(1, count($logs));
+		$this->assertCount(1, $logs);
 		$this->assertEquals($expected, $logs[0]);
 	}
 
@@ -136,7 +136,7 @@ class LoggerTest extends \CIUnitTestCase
 
 		$logs = TestHandler::getLogs();
 
-		$this->assertEquals(1, count($logs));
+		$this->assertCount(1, $logs);
 		$this->assertEquals($expected, $logs[0]);
 	}
 
@@ -155,7 +155,7 @@ class LoggerTest extends \CIUnitTestCase
 
 		$logs = TestHandler::getLogs();
 
-		$this->assertEquals(1, count($logs));
+		$this->assertCount(1, $logs);
 		$this->assertEquals($expected, $logs[0]);
 	}
 
@@ -173,7 +173,7 @@ class LoggerTest extends \CIUnitTestCase
 
 		$logs = TestHandler::getLogs();
 
-		$this->assertEquals(1, count($logs));
+		$this->assertCount(1, $logs);
 		$this->assertEquals($expected, $logs[0]);
 	}
 
@@ -193,7 +193,7 @@ class LoggerTest extends \CIUnitTestCase
 
 		$logs = TestHandler::getLogs();
 
-		$this->assertEquals(1, count($logs));
+		$this->assertCount(1, $logs);
 		$this->assertEquals($expected, $logs[0]);
 	}
 
@@ -214,7 +214,7 @@ class LoggerTest extends \CIUnitTestCase
 
 		$logs = TestHandler::getLogs();
 
-		$this->assertEquals(1, count($logs));
+		$this->assertCount(1, $logs);
 		$this->assertEquals($expected, $logs[0]);
 	}
 
@@ -231,7 +231,7 @@ class LoggerTest extends \CIUnitTestCase
 
 		$logs = TestHandler::getLogs();
 
-		$this->assertEquals(1, count($logs));
+		$this->assertCount(1, $logs);
 		$this->assertEquals($expected, $logs[0]);
 	}
 
@@ -248,7 +248,7 @@ class LoggerTest extends \CIUnitTestCase
 
 		$logs = TestHandler::getLogs();
 
-		$this->assertEquals(1, count($logs));
+		$this->assertCount(1, $logs);
 		$this->assertEquals($expected, $logs[0]);
 	}
 
@@ -265,7 +265,7 @@ class LoggerTest extends \CIUnitTestCase
 
 		$logs = TestHandler::getLogs();
 
-		$this->assertEquals(1, count($logs));
+		$this->assertCount(1, $logs);
 		$this->assertEquals($expected, $logs[0]);
 	}
 
@@ -282,7 +282,7 @@ class LoggerTest extends \CIUnitTestCase
 
 		$logs = TestHandler::getLogs();
 
-		$this->assertEquals(1, count($logs));
+		$this->assertCount(1, $logs);
 		$this->assertEquals($expected, $logs[0]);
 	}
 
@@ -299,7 +299,7 @@ class LoggerTest extends \CIUnitTestCase
 
 		$logs = TestHandler::getLogs();
 
-		$this->assertEquals(1, count($logs));
+		$this->assertCount(1, $logs);
 		$this->assertEquals($expected, $logs[0]);
 	}
 
@@ -316,7 +316,7 @@ class LoggerTest extends \CIUnitTestCase
 
 		$logs = TestHandler::getLogs();
 
-		$this->assertEquals(1, count($logs));
+		$this->assertCount(1, $logs);
 		$this->assertEquals($expected, $logs[0]);
 	}
 
@@ -333,7 +333,7 @@ class LoggerTest extends \CIUnitTestCase
 
 		$logs = TestHandler::getLogs();
 
-		$this->assertEquals(1, count($logs));
+		$this->assertCount(1, $logs);
 		$this->assertEquals($expected, $logs[0]);
 	}
 
@@ -350,7 +350,7 @@ class LoggerTest extends \CIUnitTestCase
 
 		$logs = TestHandler::getLogs();
 
-		$this->assertEquals(1, count($logs));
+		$this->assertCount(1, $logs);
 		$this->assertEquals($expected, $logs[0]);
 	}
 }

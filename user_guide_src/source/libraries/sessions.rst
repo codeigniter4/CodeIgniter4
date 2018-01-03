@@ -102,7 +102,6 @@ current request after you no longer need it.
 
     $session->destroy();
 
-
 What is Session Data?
 =====================
 
@@ -245,7 +244,6 @@ This method also accepts an array of item keys to unset::
 
 	$array_items = array('username', 'email');
 	$session->remove($array_items);
-
 
 Flashdata
 =========

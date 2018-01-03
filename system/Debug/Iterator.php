@@ -136,6 +136,8 @@ class Iterator
 			return 'No results to display.';
 		}
 
+		helper('number');
+
 		// Template
 		$tpl = "<table>
 			<thead>
@@ -154,10 +156,12 @@ class Iterator
 
 		foreach ($this->results as $name => $result)
 		{
+		    $memory = number_to_size($result['memory'], 4);
+
 			$rows .= "<tr>
 				<td>{$name}</td>
 				<td>" . number_format($result['time'], 4) . "</td>
-				<td>{$result['memory']}</td>
+				<td>{$memory}</td>
 			</tr>";
 		}
 
@@ -167,4 +171,5 @@ class Iterator
 	}
 
 	//--------------------------------------------------------------------
+
 }

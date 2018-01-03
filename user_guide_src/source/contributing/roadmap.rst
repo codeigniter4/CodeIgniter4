@@ -8,8 +8,8 @@ The roadmap we are working to was `announced on our forum
 Phase 1: Essentials (done)
 ==========================
 
-The first phase focused on nailing the essentials in the framework. 
-This ensures that all of the basic parts needed to make it work are in place 
+The first phase focused on nailing the essentials in the framework.
+This ensures that all of the basic parts needed to make it work are in place
 and working well.
 
 Phase 1 packages include:
@@ -36,7 +36,7 @@ Completed: June 2016
 Phase 2: Core Components (in progress)
 ======================================
 
-The second phase focuses on providing and refining the existing classes and 
+The second phase focuses on providing and refining the existing classes and
 features that CodeIgniter users know and love.
 
 Phase 2 packages include:
@@ -64,8 +64,8 @@ Target completion: December 2016
 Phase 3: Expansion (not started)
 ================================
 
-The third phase includes fleshing out and working on the optional packages. 
-At this point, the framework can be released and need not wait for these libraries to be brought up to date. 
+The third phase includes fleshing out and working on the optional packages.
+At this point, the framework can be released and need not wait for these libraries to be brought up to date.
 
 Each optional package will have its own repository, and will be developed
 and managed independently of the main framework.
@@ -88,4 +88,4 @@ Target completion: April 2017
     very much on the quantity and quality of community contributions.
 
     Results may not be as depicted. Your mileage may vary. Contents will settle
-    during shipping. 
+    during shipping.

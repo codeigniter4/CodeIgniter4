@@ -23,7 +23,7 @@ class WhereTest extends \CIDatabaseTestCase
 	{
 	    $jobs = $this->db->table('job')->where('id !=', 1)->get()->getResult();
 
-		$this->assertEquals(3, count($jobs));
+		$this->assertCount(3, $jobs);
 	}
 
 	//--------------------------------------------------------------------
@@ -35,7 +35,7 @@ class WhereTest extends \CIDatabaseTestCase
 	        'name !=' => 'Accountant'
 	    ])->get()->getResult();
 
-		$this->assertEquals(1, count($jobs));
+		$this->assertCount(1, $jobs);
 
 		$job = current($jobs);
 		$this->assertEquals('Musician', $job->name);
@@ -49,7 +49,7 @@ class WhereTest extends \CIDatabaseTestCase
 		                    ->get()
 		                    ->getResult();
 
-		$this->assertEquals(1, count($jobs));
+		$this->assertCount(1, $jobs);
 
 		$job = current($jobs);
 		$this->assertEquals('Musician', $job->name);
@@ -65,7 +65,7 @@ class WhereTest extends \CIDatabaseTestCase
 		                ->get()
 		                ->getResult();
 
-		$this->assertEquals(3, count($jobs));
+		$this->assertCount(3, $jobs);
 		$this->assertEquals('Developer', $jobs[0]->name);
 		$this->assertEquals('Politician', $jobs[1]->name);
 		$this->assertEquals('Musician', $jobs[2]->name);
@@ -81,7 +81,7 @@ class WhereTest extends \CIDatabaseTestCase
 		                ->get()
 		                ->getResult();
 
-		$this->assertEquals(2, count($jobs));
+		$this->assertCount(2, $jobs);
 		$this->assertEquals('Developer', $jobs[0]->name);
 		$this->assertEquals('Politician', $jobs[1]->name);
 	}
@@ -95,7 +95,7 @@ class WhereTest extends \CIDatabaseTestCase
 		                ->get()
 		                ->getResult();
 
-		$this->assertEquals(2, count($jobs));
+		$this->assertCount(2, $jobs);
 		$this->assertEquals('Politician', $jobs[0]->name);
 		$this->assertEquals('Accountant', $jobs[1]->name);
 	}
@@ -112,7 +112,7 @@ class WhereTest extends \CIDatabaseTestCase
 		                 ->get()
 		                 ->getResult();
 
-		$this->assertEquals(2, count($jobs));
+		$this->assertCount(2, $jobs);
 		$this->assertEquals('Developer', $jobs[0]->name);
 		$this->assertEquals('Musician', $jobs[1]->name);
 	}
