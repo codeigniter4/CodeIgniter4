@@ -358,8 +358,12 @@ trait ResponseTrait
 			$this->formatter = $config->getFormatter($format);
 		}
 
-		// Recursively convert objects into associative arrays
-		$data = json_decode(json_encode($data), true);
+		if ($format !== 'application/json')
+		{
+			// Recursively convert objects into associative arrays
+			// Conversion not required for JSONFormatter
+			$data = json_decode(json_encode($data), true);
+		}
 
 		return $this->formatter->format($data);
 	}
