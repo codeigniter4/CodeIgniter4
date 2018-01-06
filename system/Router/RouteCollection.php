@@ -1009,7 +1009,7 @@ class RouteCollection implements RouteCollectionInterface
 	{
 		if (ENVIRONMENT == $env)
 		{
-			call_user_func($callback, $this);
+			$callback($this);
 		}
 
 		return $this;
