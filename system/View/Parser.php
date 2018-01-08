@@ -703,7 +703,7 @@ class Parser extends View
 				continue;
 
 			// Filter it....
-			$replace = call_user_func($this->config->filters[$filter], $replace, ...$param);
+			$replace = $this->config->filters[$filter]($replace, ...$param);
 		}
 
 		return $replace;

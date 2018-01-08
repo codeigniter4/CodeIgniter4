@@ -102,7 +102,7 @@ class Iterator
 
 			for ($i = 0; $i < $iterations; $i ++ )
 			{
-				$result = call_user_func($test);
+				$result = $test();
 
 				$max_memory = max($max_memory, memory_get_usage(true));
 
@@ -126,7 +126,7 @@ class Iterator
 
 	/**
 	 * Get results.
-	 * 
+	 *
 	 * @return string
 	 */
 	public function getReport()
