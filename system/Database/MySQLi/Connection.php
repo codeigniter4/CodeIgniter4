@@ -468,10 +468,11 @@ class Connection extends BaseConnection implements ConnectionInterface
 				$obj->fields = array_map(function($v) {
 					return trim($v, '`');
 				}, $_fields);
+				$obj->type = 'PRIMARY';
 
 				$retval[] = $obj;
 			}
-			elseif (strpos($line, 'UNIQUE KEY') === 0 || strpos($line, 'KEY') === 0)
+			elseif (($unique = strpos($line, 'UNIQUE KEY') === 0) || strpos($line, 'KEY') === 0)
 			{
 				if (preg_match('/KEY `([^`]+)` \((.+)\)/', $line, $matches))
 				{
@@ -480,6 +481,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 					$obj->fields = array_map(function($v) {
 						return trim($v, '`');
 					}, explode(',', $matches[2]));
+					$obj->type = $unique ? 'UNIQUE' : 'INDEX';
 
 					$retval[] = $obj;
 				}

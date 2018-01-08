@@ -151,8 +151,9 @@ Adding Keys
 ===========
 
 Generally speaking, you'll want your table to have Keys. This is
-accomplished with $forge->addKey('field'). An optional second
-parameter set to TRUE will make it a primary key. Note that addKey()
+accomplished with $forge->addKey('field'). The optional second
+parameter set to TRUE will make it a primary key and the third
+parameter set to TRUE will make it a unique key. Note that addKey()
 must be followed by a call to createTable().
 
 Multiple column non-primary keys must be sent as an array. Sample output
@@ -172,6 +173,19 @@ below is for MySQL.
 
 	$forge->addKey(array('blog_name', 'blog_label'));
 	// gives KEY `blog_name_blog_label` (`blog_name`, `blog_label`)
+
+	$forge->addKey(array('blog_id', 'uri'), FALSE, TRUE);
+	// gives UNIQUE KEY `blog_id_uri` (`blog_id`, `uri`)
+
+To make code reading more objective it is also possible to add primary
+and unique keys with specific methods::
+
+	$forge->addPrimaryKey('blog_id');
+	// gives PRIMARY KEY `blog_id` (`blog_id`)
+
+	$forge->addUniqueKey(array('blog_id', 'uri'));
+	// gives UNIQUE KEY `blog_id_uri` (`blog_id`, `uri`)
+
 
 Adding Foreign Keys
 ===================
@@ -340,14 +354,31 @@ Class Reference
 
                 Adds a field to the set that will be used to create a table. Usage:  See `Adding fields`_.
 
-	.. php:method:: addKey($key[, $primary = FALSE])
+	.. php:method:: addKey($key[, $primary = FALSE[, $unique = FALSE]])
 
-		:param	array	$key: Name of a key field
+		:param	mixed	$key: Name of a key field or an array of fields
 		:param	bool	$primary: Set to TRUE if it should be a primary key or a regular one
+		:param	bool	$unique: Set to TRUE if it should be a unique key or a regular one
 		:returns:	\CodeIgniter\Database\Forge instance (method chaining)
 		:rtype:	\CodeIgniter\Database\Forge
 
 		Adds a key to the set that will be used to create a table. Usage:  See `Adding Keys`_.
+
+	.. php:method:: addPrimaryKey($key)
+
+		:param	mixed	$key: Name of a key field or an array of fields
+		:returns:	\CodeIgniter\Database\Forge instance (method chaining)
+		:rtype:	\CodeIgniter\Database\Forge
+
+		Adds a primary key to the set that will be used to create a table. Usage:  See `Adding Keys`_.
+
+	.. php:method:: addUniqueKey($key)
+
+		:param	mixed	$key: Name of a key field or an array of fields
+		:returns:	\CodeIgniter\Database\Forge instance (method chaining)
+		:rtype:	\CodeIgniter\Database\Forge
+
+		Adds an unique key to the set that will be used to create a table. Usage:  See `Adding Keys`_.
 
 	.. php:method:: createDatabase($db_name)
 
