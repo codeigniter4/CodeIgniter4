@@ -14,7 +14,7 @@ class TimeTest extends \CIUnitTestCase
 
 	public function testNewTimeNow()
 	{
-		$time = new Time();
+		$time = new Time(null, 'America/Chicago');
 
 		$formatter = new IntlDateFormatter(
 			'en_US',
@@ -97,7 +97,7 @@ class TimeTest extends \CIUnitTestCase
 	public function testParse()
 	{
 		$time = Time::parse('next Tuesday', 'America/Chicago');
-		$time1 = new \DateTime();
+		$time1 = new \DateTime('now', new \DateTimeZone('America/Chicago'));
 		$time1->modify('next Tuesday');
 
 		$this->assertEquals($time->getTimestamp(), $time1->getTimestamp());
