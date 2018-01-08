@@ -245,6 +245,43 @@ data to be validated::
     $validation->withRequest($this->request)
                ->run();
 
+*******************************
+Validating Keys that are Arrays
+*******************************
+
+If your data is in a nested associative array, you can use "dot array syntax" to
+easily validate your data::
+
+    // The data to test:
+    'contacts' => [
+        'name' => 'Joe Smith',
+        'friends' => [
+            [
+                'name' => 'Fred Flinstone'
+            ],
+            [
+                'name' => 'Wilma'
+            ]
+        ]
+    ]
+
+    // Joe Smith
+    $validation->setRules([
+        'contacts.name' => 'required
+    ]);
+
+    // Fred Flintsone & Wilma
+    $validation->setRules([
+        'contacts.friends.name' => 'required'
+    ]);
+
+You can use the '*' wildcard symbol to match any one level of the array::
+
+    // Fred Flintsone & Wilma
+    $validation->setRules([
+        'contacts.*.name' => 'required'
+    ]);
+
 ****************
 Validate 1 Value
 ****************
