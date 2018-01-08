@@ -72,7 +72,8 @@ class Response extends Message implements ResponseInterface
 		// 1xx: Informational
 		100	 => 'Continue',
 		101	 => 'Switching Protocols',
-		102	 => 'Processing', // http://www.iana.org/go/rfc2518
+                102	 => 'Processing', // http://www.iana.org/go/rfc2518
+                103      => 'Early Hints',
 		// 2xx: Success
 		200	 => 'OK',
 		201	 => 'Created',
@@ -123,7 +124,8 @@ class Response extends Message implements ResponseInterface
 		428	 => 'Precondition Required', // 1.1; http://www.ietf.org/rfc/rfc6585.txt
 		429	 => 'Too Many Requests', // 1.1; http://www.ietf.org/rfc/rfc6585.txt
 		431	 => 'Request Header Fields Too Large', // 1.1; http://www.ietf.org/rfc/rfc6585.txt
-		451	 => 'Unavailable For Legal Reasons', // http://tools.ietf.org/html/rfc7725
+                451	 => 'Unavailable For Legal Reasons', // http://tools.ietf.org/html/rfc7725
+                499      => 'Client Closed Request',
 		// 5xx: Server error
 		500	 => 'Internal Server Error',
 		501	 => 'Not Implemented',
@@ -135,7 +137,8 @@ class Response extends Message implements ResponseInterface
 		507	 => 'Insufficient Storage', // http://www.iana.org/go/rfc4918
 		508	 => 'Loop Detected', // http://www.iana.org/go/rfc5842
 		510	 => 'Not Extended', // http://www.ietf.org/rfc/rfc2774.txt
-		511	 => 'Network Authentication Required' // http://www.ietf.org/rfc/rfc6585.txt
+        	511	 => 'Network Authentication Required', // http://www.ietf.org/rfc/rfc6585.txt
+        	599      => 'Network Connect Timeout Error',
 	];
 
 	/**
