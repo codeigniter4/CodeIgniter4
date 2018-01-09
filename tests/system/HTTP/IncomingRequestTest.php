@@ -355,9 +355,14 @@ class IncomingRequestTest extends \CIUnitTestCase
 
 	public function testSetLocaleSaves()
 	{
-		$this->request->setLocale('en');
+		$config = new App();
+		$config->supportedLocales = ['en', 'es'];
+		$config->defaultLocale = 'es';
 
-		$this->assertEquals('en', $this->request->getLocale());
+		$request = new IncomingRequest($config, new URI());
+
+		$request->setLocale('en');
+		$this->assertEquals('en', $request->getLocale());
 	}
 
 	//--------------------------------------------------------------------
