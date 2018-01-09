@@ -358,6 +358,7 @@ class IncomingRequestTest extends \CIUnitTestCase
 		$config = new App();
 		$config->supportedLocales = ['en', 'es'];
 		$config->defaultLocale = 'es';
+		$config->baseURL = 'http://example.com';
 
 		$request = new IncomingRequest($config, new URI());
 
