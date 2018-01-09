@@ -73,7 +73,7 @@ class Response extends Message implements ResponseInterface
 		100	 => 'Continue',
 		101	 => 'Switching Protocols',
                 102	 => 'Processing', // http://www.iana.org/go/rfc2518
-                103      => 'Early Hints',
+                103      => 'Early Hints', // http://www.ietf.org/rfc/rfc8297.txt
 		// 2xx: Success
 		200	 => 'OK',
 		201	 => 'Created',
@@ -125,7 +125,7 @@ class Response extends Message implements ResponseInterface
 		429	 => 'Too Many Requests', // 1.1; http://www.ietf.org/rfc/rfc6585.txt
 		431	 => 'Request Header Fields Too Large', // 1.1; http://www.ietf.org/rfc/rfc6585.txt
                 451	 => 'Unavailable For Legal Reasons', // http://tools.ietf.org/html/rfc7725
-                499      => 'Client Closed Request',
+                499      => 'Client Closed Request', // http://lxr.nginx.org/source/src/http/ngx_http_request.h#0133
 		// 5xx: Server error
 		500	 => 'Internal Server Error',
 		501	 => 'Not Implemented',
@@ -138,7 +138,7 @@ class Response extends Message implements ResponseInterface
 		508	 => 'Loop Detected', // http://www.iana.org/go/rfc5842
 		510	 => 'Not Extended', // http://www.ietf.org/rfc/rfc2774.txt
         	511	 => 'Network Authentication Required', // http://www.ietf.org/rfc/rfc6585.txt
-        	599      => 'Network Connect Timeout Error',
+        	599      => 'Network Connect Timeout Error', // https://httpstatuses.com/599
 	];
 
 	/**
