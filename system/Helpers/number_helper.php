@@ -58,29 +58,36 @@ if ( ! function_exists('number_to_size'))
 			return false;
 		}
 
+		// ignore sub part
+		$genralLocale = $locale;
+		if( ! empty($locale) && ( $underscorePos = strpos( $locale, '_' )))
+		{
+			$genralLocale = substr( $locale, 0, $underscorePos );
+		}
+
 		if ($num >= 1000000000000)
 		{
 			$num = round($num / 1099511627776, $precision);
-			$unit = lang('Number.terabyteAbbr');
+			$unit = lang('Number.terabyteAbbr', [], $genralLocale);
 		}
 		elseif ($num >= 1000000000)
 		{
 			$num = round($num / 1073741824, $precision);
-			$unit = lang('Number.gigabyteAbbr');
+			$unit = lang('Number.gigabyteAbbr', [], $genralLocale);
 		}
 		elseif ($num >= 1000000)
 		{
 			$num = round($num / 1048576, $precision);
-			$unit = lang('Number.megabyteAbbr');
+			$unit = lang('Number.megabyteAbbr', [], $genralLocale);
 		}
 		elseif ($num >= 1000)
 		{
 			$num = round($num / 1024, $precision);
-			$unit = lang('Number.kilobyteAbbr');
+			$unit = lang('Number.kilobyteAbbr', [], $genralLocale);
 		}
 		else
 		{
-			$unit = lang('Number.bytes');
+			$unit = lang('Number.bytes', [], $genralLocale);
 		}
 
 		return format_number($num, $precision, $locale, ['after' => ' ' . $unit]);
@@ -123,29 +130,36 @@ if ( ! function_exists('number_to_amount'))
 
 		$suffix = '';
 
+		// ignore sub part
+		$genralLocale = $locale;
+		if( ! empty($locale) && ( $underscorePos = strpos( $locale, '_' )))
+		{
+			$genralLocale = substr( $locale, 0, $underscorePos );
+		}
+
 		if ($num > 1000000000000000)
 		{
-			$suffix = lang('Number.quadrillion');
+			$suffix = lang('Number.quadrillion', [], $genralLocale);
 			$num = round(($num / 1000000000000000), $precision);
 		}
 		elseif ($num > 1000000000000)
 		{
-			$suffix = lang('Number.trillion');
+			$suffix = lang('Number.trillion', [], $genralLocale);
 			$num = round(($num / 1000000000000), $precision);
 		}
 		else if ($num > 1000000000)
 		{
-			$suffix = lang('Number.billion');
+			$suffix = lang('Number.billion', [], $genralLocale);
 			$num = round(($num / 1000000000), $precision);
 		}
 		else if ($num > 1000000)
 		{
-			$suffix = lang('Number.million');
+			$suffix = lang('Number.million', [], $genralLocale);
 			$num = round(($num / 1000000), $precision);
 		}
 		else if ($num > 1000)
 		{
-			$suffix = lang('Number.thousand');
+			$suffix = lang('Number.thousand', [], $genralLocale);
 			$num = round(($num / 1000), $precision);
 		}
 
