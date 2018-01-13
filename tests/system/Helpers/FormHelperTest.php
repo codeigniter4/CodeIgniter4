@@ -569,4 +569,57 @@ EOH;
 EOH;
         $this->assertEquals($expected, form_datalist('foo', 'bar', $options));
     }
+    // ------------------------------------------------------------------------
+    public function test_set_value()
+    {
+    	$_SESSION['_ci_old_input']['post']['foo'] = '<bar';
+    	$this->assertEquals('&lt;bar', set_value('foo'));
+
+    	unset($_SESSION['_ci_old_input']['post']['foo']);
+    	$this->assertEquals('baz', set_value('foo', 'baz'));
+    }
+    // ------------------------------------------------------------------------
+    public function test_set_select()
+    {
+    	$_SESSION['_ci_old_input']['post']['foo'] = 'bar';
+    	$this->assertEquals(' selected="selected"', set_select('foo', 'bar'));
+
+    	$_SESSION['_ci_old_input']['post']['foo'] = ['foo' => 'bar'];
+    	$this->assertEquals(' selected="selected"', set_select('foo', 'bar'));
+    	$this->assertEquals('', set_select('foo', 'baz'));
+
+    	unset($_SESSION['_ci_old_input']['post']['foo']);
+    	$this->assertEquals(' selected="selected"', set_select('foo', 'baz', true));
+    }
+    // ------------------------------------------------------------------------
+    public function test_set_checkbox()
+    {
+    	$_SESSION['_ci_old_input']['post']['foo'] = 'bar';
+    	$this->assertEquals(' checked="checked"', set_checkbox('foo', 'bar'));
+
+    	$_SESSION['_ci_old_input']['post']['foo'] = ['foo' => 'bar'];
+    	$this->assertEquals(' checked="checked"', set_checkbox('foo', 'bar'));
+    	$this->assertEquals('', set_checkbox('foo', 'baz'));
+
+    	unset($_SESSION['_ci_old_input']['post']['foo']);
+    	$this->assertEquals('', set_checkbox('foo', 'bar'));
+
+    	$_POST = [];
+    	$this->assertEquals(' checked="checked"', set_checkbox('foo', 'baz', true));
+    }
+    // ------------------------------------------------------------------------
+    public function test_set_radio()
+    {
+    	$_POST['foo'] = 'bar';
+    	$this->assertEquals(' checked="checked"', set_radio('foo', 'bar'));
+
+    	$_POST['foo'] = ['bar'];
+    	$this->assertEquals(' checked="checked"', set_radio('foo', 'bar'));
+
+    	$_POST['foo'] = ['baz'];
+    	$this->assertEquals('', set_radio('foo', 'bar'));
+
+    	$_POST = [];
+    	$this->assertEquals(' checked="checked"', set_radio('foo', 'bar', true));
+    }
 }
