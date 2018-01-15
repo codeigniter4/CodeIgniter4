@@ -587,25 +587,36 @@ passed to each event:
 ================ =========================================================================================================
 Event            $data contents
 ================ =========================================================================================================
-beforeInsert	  **data** = the key/value pairs that are being inserted. If an object or Entity class is passed to the insert
-				  method, it is first converted to an array.
-afterInsert		  **data** = the original key/value pairs being inserted. **result** = the results of the insert() method
-				  used through the Query Builder.
-beforeUpdate	  **id** = the primary key of the row being updated. **data** = the key/value pairs that are being
-				  inserted. If an object or Entity class is passed to the insert method, it is first converted to an array.
-afterUpdate		  **id** = the primary key of the row being updated. **data** = the original key/value pairs being updated.
-				  **result** = the results of the update() method used through the Query Builder.
-afterFind		  Varies by find* method. See the following:
-- find()		  **id** = the primary key of the row being searched for. **data** = The resulting row of data, or null if
-				  no result found.
-- findWhere()	  **data** = the resulting rows of data, or null if no result found.
-- findAll()		  **data** = the resulting rows of data, or null if no result found. **limit** = the number of rows to find.
-				  **offset** = the number of rows to skip during the search.
-- first()		  **data** = the resulting row found during the search, or null if none found.
-afterDelete		  Varies by delete* method. See the following:
-- delete()		  **id** = primary key of row being deleted. **purge** boolean whether soft-delete rows should be
-				  hard deleted. **result** = the result of the delete() call on the Query Builder. **data** = unused.
-- deleteWhere()	  **key**/**value** = the key/value pair used to search for rows to delete. **purge** boolean whether
-				  soft-delete rows should be hard deleted. **result** = the result of the delete() call on the Query
-				  Builder. **data** = unused.
+beforeInsert      **data** = the key/value pairs that are being inserted. If an object or Entity class is passed to the
+                  insert method, it is first converted to an array.
+afterInsert       **data** = the original key/value pairs being inserted.
+                  **result** = the results of the insert() method used through the Query Builder.
+beforeUpdate      **id** = the primary key of the row being updated.
+                  **data** = the key/value pairs that are being inserted. If an object or Entity class is passed to the
+                  insert method, it is first converted to an array.
+afterUpdate       **id** = the primary key of the row being updated.
+                  **data** = the original key/value pairs being updated.
+                  **result** = the results of the update() method used through the Query Builder.
+afterFind         Varies by find* method. See the following:
+- find()          **id** = the primary key of the row being searched for.
+                  **data** = The resulting row of data, or null if no result found.
+- findWhere()     **data** = the resulting rows of data, or null if no result found.
+- findAll()       **data** = the resulting rows of data, or null if no result found.
+                  **limit** = the number of rows to find.
+                  **offset** = the number of rows to skip during the search.
+- first()         **data** = the resulting row found during the search, or null if none found.
+beforeDelete      Varies by delete* method. See the following:
+- delete()        **id** = primary key of row being deleted.
+                  **purge** = boolean whether soft-delete rows should be hard deleted.
+- deleteWhere()   **key**/**value** = the key/value pair used to search for rows to delete.
+                  **purge** = boolean whether soft-delete rows should be hard deleted.
+afterDelete       Varies by delete* method. See the following:
+- delete()        **id** = primary key of row being deleted.
+                  **purge** = boolean whether soft-delete rows should be hard deleted.
+                  **result** = the result of the delete() call on the Query Builder.
+                  **data** = unused.
+- deleteWhere()	  **key**/**value** = the key/value pair used to search for rows to delete.
+                  **purge** boolean whether soft-delete rows should be hard deleted.
+                  **result** = the result of the delete() call on the Query Builder.
+                  **data** = unused.
 ================ =========================================================================================================
