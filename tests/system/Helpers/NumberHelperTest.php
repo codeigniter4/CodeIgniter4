@@ -31,37 +31,37 @@ class numberHelperTest extends \CIUnitTestCase
 
     public function test_number_to_size()
     {
-        $this->assertEquals('456 Bytes', number_to_size(456));
+        $this->assertEquals('456 Bytes', number_to_size(456, 1, 'en_US'));
     }
 
     public function test_kb_format()
     {
-        $this->assertEquals('4.5 KB', number_to_size(4567));
+        $this->assertEquals('4.5 KB', number_to_size(4567, 1, 'en_US'));
     }
 
     public function test_kb_format_medium()
     {
-        $this->assertEquals('44.6 KB', number_to_size(45678));
+        $this->assertEquals('44.6 KB', number_to_size(45678, 1, 'en_US'));
     }
 
     public function test_kb_format_large()
     {
-        $this->assertEquals('446.1 KB', number_to_size(456789));
+        $this->assertEquals('446.1 KB', number_to_size(456789, 1, 'en_US'));
     }
 
     public function test_mb_format()
     {
-        $this->assertEquals('3.3 MB', number_to_size(3456789));
+        $this->assertEquals('3.3 MB', number_to_size(3456789, 1, 'en_US'));
     }
 
     public function test_gb_format()
     {
-        $this->assertEquals('1.8 GB', number_to_size(1932735283.2));
+        $this->assertEquals('1.8 GB', number_to_size(1932735283.2, 1, 'en_US'));
     }
 
     public function test_tb_format()
     {
-        $this->assertEquals('112,283.3 TB', number_to_size(123456789123456789));
+        $this->assertEquals('112,283.3 TB', number_to_size(123456789123456789, 1, 'en_US'));
     }
 
     public function test_thousands()

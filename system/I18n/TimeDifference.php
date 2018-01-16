@@ -205,7 +205,7 @@ class TimeDifference
 		return $time->fieldDifference($this->testTime, \IntlCalendar::FIELD_SECOND);
 	}
 
-	public function humanize(): string
+	public function humanize( string $locale = null ): string
 	{
 		$current = clone($this->currentTime);
 
@@ -219,43 +219,43 @@ class TimeDifference
 
 		if ($years !== 0)
 		{
-			$phrase = lang('Time.years', [abs($years)]);
+			$phrase = lang('Time.years', [abs($years)], $locale);
 			$before = $years < 0;
 		}
 		else if ($months !== 0)
 		{
-			$phrase = lang('Time.months', [abs($months)]);
+			$phrase = lang('Time.months', [abs($months)], $locale);
 			$before = $months < 0;
 		}
 		else if ($days !== 0 && (abs($days) >= 7))
 		{
 			$weeks = ceil($days / 7);
-			$phrase = lang('Time.weeks', [abs($weeks)]);
+			$phrase = lang('Time.weeks', [abs($weeks)], $locale);
 			$before = $days < 0;
 		}
 		else if ($days !== 0)
 		{
-			$phrase = lang('Time.days', [abs($days)]);
+			$phrase = lang('Time.days', [abs($days)], $locale);
 			$before = $days < 0;
 		}
 		else if ($hours !== 0)
 		{
-			$phrase = lang('Time.hours', [abs($hours)]);
+			$phrase = lang('Time.hours', [abs($hours)], $locale);
 			$before = $hours < 0;
 		}
 		else if ($minutes !== 0)
 		{
-			$phrase = lang('Time.minutes', [abs($minutes)]);
+			$phrase = lang('Time.minutes', [abs($minutes)], $locale);
 			$before = $minutes < 0;
 		}
 		else
 		{
-			return lang('Time.now');
+			return lang('Time.now', [], $locale);
 		}
 
 		return $before
-			? lang('Time.ago', [$phrase])
-			: lang('Time.inFuture', [$phrase]);
+			? lang('Time.ago', [$phrase], $locale)
+			: lang('Time.inFuture', [$phrase], $locale);
 	}
 
 	/**

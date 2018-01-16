@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014-2017 British Columbia Institute of Technology
+ * Copyright (c) 2014-2018 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,7 @@
  *
  * @package      CodeIgniter
  * @author       CodeIgniter Dev Team
- * @copyright    2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
+ * @copyright    2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
  * @license      https://opensource.org/licenses/MIT	MIT License
  * @link         https://codeigniter.com
  * @since        Version 3.0.0
@@ -72,7 +72,8 @@ class Response extends Message implements ResponseInterface
 		// 1xx: Informational
 		100	 => 'Continue',
 		101	 => 'Switching Protocols',
-		102	 => 'Processing', // http://www.iana.org/go/rfc2518
+                102	 => 'Processing', // http://www.iana.org/go/rfc2518
+                103      => 'Early Hints', // http://www.ietf.org/rfc/rfc8297.txt
 		// 2xx: Success
 		200	 => 'OK',
 		201	 => 'Created',
@@ -123,7 +124,8 @@ class Response extends Message implements ResponseInterface
 		428	 => 'Precondition Required', // 1.1; http://www.ietf.org/rfc/rfc6585.txt
 		429	 => 'Too Many Requests', // 1.1; http://www.ietf.org/rfc/rfc6585.txt
 		431	 => 'Request Header Fields Too Large', // 1.1; http://www.ietf.org/rfc/rfc6585.txt
-		451	 => 'Unavailable For Legal Reasons', // http://tools.ietf.org/html/rfc7725
+                451	 => 'Unavailable For Legal Reasons', // http://tools.ietf.org/html/rfc7725
+                499      => 'Client Closed Request', // http://lxr.nginx.org/source/src/http/ngx_http_request.h#0133
 		// 5xx: Server error
 		500	 => 'Internal Server Error',
 		501	 => 'Not Implemented',
@@ -135,7 +137,8 @@ class Response extends Message implements ResponseInterface
 		507	 => 'Insufficient Storage', // http://www.iana.org/go/rfc4918
 		508	 => 'Loop Detected', // http://www.iana.org/go/rfc5842
 		510	 => 'Not Extended', // http://www.ietf.org/rfc/rfc2774.txt
-		511	 => 'Network Authentication Required' // http://www.ietf.org/rfc/rfc6585.txt
+        	511	 => 'Network Authentication Required', // http://www.ietf.org/rfc/rfc6585.txt
+        	599      => 'Network Connect Timeout Error', // https://httpstatuses.com/599
 	];
 
 	/**
