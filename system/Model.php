@@ -313,13 +313,13 @@ class Model
 
 		if (is_array($id))
 		{
-			$row = $builder->whereIn($this->primaryKey, $id)
+			$row = $builder->whereIn($this->table.'.'.$this->primaryKey, $id)
 					->get();
 			$row = $row->getResult($this->tempReturnType);
 		}
 		else
 		{
-			$row = $builder->where($this->primaryKey, $id)
+			$row = $builder->where($this->table.'.'.$this->primaryKey, $id)
 					->get();
 
 			$row = $row->getFirstRow($this->tempReturnType);
@@ -419,7 +419,7 @@ class Model
 		// information to consistently return correct results.
 		if (empty($builder->QBOrderBy))
 		{
-			$builder->orderBy($this->primaryKey, 'asc');
+			$builder->orderBy($this->table.'.'.$this->primaryKey, 'asc');
 		}
 
 		$row = $builder->limit(1, 0)
