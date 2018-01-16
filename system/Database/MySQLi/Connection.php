@@ -308,6 +308,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 				$res->free(); 
 			}
 		}
+
 		return $this->connID->query($this->prepQuery($sql));
 	}
 

@@ -142,13 +142,6 @@ class BaseBuilder
 	protected $QBSet = [];
 
 	/**
-	 * QB aliased tables list
-	 *
-	 * @var    array
-	 */
-	protected $QBAliasedTables = [];
-
-	/**
 	 * QB WHERE group started flag
 	 *
 	 * @var    bool
@@ -442,7 +435,7 @@ class BaseBuilder
 		if ($overwrite === true)
 		{
 			$this->QBFrom = [];
-			$this->QBAliasedTables = [];
+			$this->db->setAliasedTables([]);
 		}
 
 		foreach ((array) $from as $val)
@@ -2370,10 +2363,7 @@ class BaseBuilder
 			$table = trim(strrchr($table, ' '));
 
 			// Store the alias, if it doesn't already exist
-			if ( ! in_array($table, $this->QBAliasedTables))
-			{
-				$this->QBAliasedTables[] = $table;
-			}
+			$this->db->addTableAlias($table);
 		}
 	}
 
@@ -2738,12 +2728,16 @@ class BaseBuilder
 			'QBGroupBy'			 => [],
 			'QBHaving'			 => [],
 			'QBOrderBy'			 => [],
-			'QBAliasedTables'	 => [],
 			'QBNoEscape'		 => [],
 			'QBDistinct'		 => false,
 			'QBLimit'			 => false,
 			'QBOffset'			 => false,
 		]);
+
+		if (! empty($this->db))
+		{
+			$this->db->setAliasedTables([]);
+		}
 	}
 
 	//--------------------------------------------------------------------
