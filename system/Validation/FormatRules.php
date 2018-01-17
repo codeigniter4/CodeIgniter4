@@ -250,9 +250,9 @@ class FormatRules
 	 */
 	public function valid_email(string $str = null): bool
 	{
-		if (function_exists('idn_to_ascii') && $atpos = strpos($str, '@'))
+		if (function_exists('idn_to_ascii') && preg_match('#\A([^@]+)@(.+)\z#', $str, $matches))
 		{
-			$str = substr($str, 0, ++ $atpos) . idn_to_ascii(substr($str, $atpos));
+			$str = $matches[1] . '@' . idn_to_ascii($matches[2], 0, INTL_IDNA_VARIANT_UTS46);
 		}
 
 		return (bool) filter_var($str, FILTER_VALIDATE_EMAIL);
