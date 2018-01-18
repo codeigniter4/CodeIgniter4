@@ -41,7 +41,7 @@ class DebugToolbar implements FilterInterface
 
 			$toolbar = Services::toolbar(new App());
 			$stats   = $app->getPerformanceStats();
-			$output  = $toolbar->run(
+			$data    = $toolbar->run(
 				$stats['startTime'],
 				$stats['totalTime'],
 				$stats['startMemory'],
@@ -59,7 +59,7 @@ class DebugToolbar implements FilterInterface
 				mkdir(WRITEPATH.'debugbar', 0777);
 			}
 
-			write_file(WRITEPATH .'debugbar/'.'debugbar_' . $time, $output, 'w+');
+			write_file(WRITEPATH .'debugbar/'.'debugbar_' . $time, $data, 'w+');
 
 			$script = PHP_EOL
 				. '<script type="text/javascript" id="debugbar_loader" '

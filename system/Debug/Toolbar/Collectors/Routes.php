@@ -70,15 +70,12 @@ class Routes extends BaseCollector
 	//--------------------------------------------------------------------
 
 	/**
-	 * Builds and returns the HTML needed to fill a tab to display
-	 * within the Debug Bar
+	 * Returns the data of this collector to be formatted in the toolbar
 	 *
-	 * @return string
+	 * @return array
 	 */
-	public function display(): string
+	public function display(): array
 	{
-		$parser = \Config\Services::parser();
-
 		$rawRoutes = Services::routes(true);
 		$router = Services::router(null, true);
 
@@ -126,11 +123,10 @@ class Routes extends BaseCollector
 			];
 		}
 
-		return $parser->setData([
-							'matchedRoute'	 => $matchedRoute,
-							'routes'		 => $routes
-						])
-						->render('CodeIgniter\Debug\Toolbar\Views\_routes.tpl');
+		return [
+			'matchedRoute' => $matchedRoute,
+			'routes'       => $routes
+		];
 	}
 
 	//--------------------------------------------------------------------

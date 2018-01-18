@@ -81,15 +81,12 @@ class Files extends BaseCollector
 	//--------------------------------------------------------------------
 
 	/**
-	 * Builds and returns the HTML needed to fill a tab to display
-	 * within the Debug Bar
+	 * Returns the data of this collector to be formatted in the toolbar
 	 *
-	 * @return string
+	 * @return array
 	 */
-	public function display(): string
+	public function display(): array
 	{
-		$parser = \Config\Services::parser(BASEPATH . 'Debug/Toolbar/Views/', null, false);
-
 		$rawFiles = get_included_files();
 		$coreFiles = [];
 		$userFiles = [];
@@ -117,11 +114,10 @@ class Files extends BaseCollector
 		sort($userFiles);
 		sort($coreFiles);
 
-		return $parser->setData([
-							'coreFiles'	 => $coreFiles,
-							'userFiles'	 => $userFiles,
-						])
-						->render('_files.tpl');
+		return [
+			'coreFiles'	 => $coreFiles,
+			'userFiles'	 => $userFiles,
+		];
 	}
 
 	//--------------------------------------------------------------------

@@ -122,14 +122,12 @@ class Events extends BaseCollector
 	//--------------------------------------------------------------------
 
 	/**
-	 * Returns the HTML to fill the Events tab in the toolbar.
+	 * Returns the data of this collector to be formatted in the toolbar
 	 *
-	 * @return string The data formatted for the toolbar.
+	 * @return array
 	 */
-	public function display(): string
+	public function display(): array
 	{
-		$parser = \Config\Services::parser(BASEPATH . 'Debug/Toolbar/Views/', null,false);
-
 		$data = [
 			'events' => []
 		];
@@ -153,10 +151,7 @@ class Events extends BaseCollector
 			$data['events'][$key]['count']++;
 		}
 
-		$output = $parser->setData($data)
-		                 ->render('_events.tpl');
-
-		return $output;
+		return $data;
 	}
 
 	//--------------------------------------------------------------------

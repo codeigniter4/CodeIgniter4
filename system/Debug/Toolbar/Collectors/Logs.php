@@ -77,26 +77,22 @@ class Logs extends BaseCollector
 	//--------------------------------------------------------------------
 
 	/**
-	 * Builds and returns the HTML needed to fill a tab to display
-	 * within the Debug Bar
+	 * Returns the data of this collector to be formatted in the toolbar
 	 *
-	 * @return string
+	 * @return array
 	 */
-	public function display(): string
+	public function display(): array
 	{
-		$this->collectLogs();
-
-		$parser = \Config\Services::parser(BASEPATH . 'Debug/Toolbar/Views/', null, false);
+		$logs = $this->collectLogs();
 
 		if (empty($logs) || ! is_array($logs))
 		{
-			return '<p>Nothing was logged. If you were expecting logged items, ensure that LoggerConfig file has the correct threshold set.</p>';
+			$logs = '<p>Nothing was logged. If you were expecting logged items, ensure that LoggerConfig file has the correct threshold set.</p>';
 		}
 
-		return $parser->setData([
-							'logs' => $logs
-						])
-						->render('_logs.tpl');
+		return [
+			'logs' => $logs
+		];
 	}
 
 	//--------------------------------------------------------------------
