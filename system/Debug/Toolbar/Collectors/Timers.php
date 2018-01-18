@@ -98,30 +98,4 @@ class Timers extends BaseCollector
 		return $data;
 	}
 
-	public function display(): array
-	{
-		$data = [];
-
-		$benchmark = Services::timer(true);
-		$rows      = $benchmark->getTimers(6);
-
-		foreach ($rows as $name => $info)
-		{
-			if ($name == 'total_execution')
-			{
-				continue;
-			}
-
-			$data[] = [
-				'name'      => ucwords(str_replace('_', ' ', $name)),
-				'component' => 'Timer',
-				'start'     => $info['start'],
-				'duration'  => $info['end'] - $info['start']
-			];
-		}
-
-		return $data;
-	}
-
-	//--------------------------------------------------------------------
 }
