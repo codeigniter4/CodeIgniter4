@@ -87,7 +87,7 @@ class Logs extends BaseCollector
 
 		if (empty($logs) || ! is_array($logs))
 		{
-			$logs = '<p>Nothing was logged. If you were expecting logged items, ensure that LoggerConfig file has the correct threshold set.</p>';
+			$logs = [];
 		}
 
 		return [
