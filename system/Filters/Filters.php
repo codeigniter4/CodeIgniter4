@@ -244,7 +244,7 @@ class Filters
 					$path = trim(str_replace('*', '.+', $path), '/ ');
 
 					// Path doesn't match the URI? continue on...
-					if (preg_match('/' . $path . '/', $uri, $match) !== 1)
+					if (preg_match('#' . $path . '#', $uri, $match) !== 1)
 					{
 						continue;
 					}
@@ -282,7 +282,7 @@ class Filters
 					$path = trim(str_replace('*', '.+', $path), '/ ');
 
 					// Path doesn't match the URI? continue on...
-					if (preg_match('/' . $path . '/', $uri, $match) !== 1)
+					if (preg_match('#' . $path . '#', $uri, $match) !== 1)
 					{
 						continue;
 					}
@@ -339,7 +339,7 @@ class Filters
 					$path = str_replace('/*', '*', $path);
 					$path = trim(str_replace('*', '.+', $path), '/ ');
 
-					if (preg_match('/' . $path . '/', $uri) !== 1)
+					if (preg_match('#' . $path . '#', $uri) !== 1)
 					{
 						continue;
 					}
@@ -360,7 +360,7 @@ class Filters
 					$path = str_replace('/*', '*', $path);
 					$path = trim(str_replace('*', '.+', $path), '/ ');
 
-					if (preg_match('/' . $path . '/', $uri) !== 1)
+					if (preg_match('#' . $path . '#', $uri) !== 1)
 					{
 						continue;
 					}
