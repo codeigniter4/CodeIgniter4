@@ -397,7 +397,7 @@ class Toolbar
 					header('Content-Type: application/xml');
 					exit('<?xml version="1.0" encoding="UTF-8"?><error>'.$error.'</error>');
 				default:
-					header('Content-Type: application/javascript');
+					header('Content-Type: text/html');
 					exit('<script id="toolbar_js">console.log(\''.$error.'\')</script>');
 			}
 		}
