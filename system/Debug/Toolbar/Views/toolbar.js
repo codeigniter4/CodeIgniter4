@@ -18,10 +18,40 @@ var ciDebugBar = {
 		ciDebugBar.setToolbarState();
 		ciDebugBar.setToolbarPosition();
 		ciDebugBar.toogleViewsHints();
-                
-                document.getElementById('debug-bar-link').addEventListener('click', ciDebugBar.toggleToolbar, true);
-                document.getElementById('debug-icon-link').addEventListener('click', ciDebugBar.toggleToolbar, true);                
-                
+
+        document.getElementById('debug-bar-link').addEventListener('click', ciDebugBar.toggleToolbar, true);
+        document.getElementById('debug-icon-link').addEventListener('click', ciDebugBar.toggleToolbar, true);
+
+        historyLoad = document.getElementsByClassName('ci-history-load');
+
+        for (var i = 0; i < historyLoad.length; i++)
+		{
+			historyLoad[i].addEventListener('click', function() {
+				loadDoc(this.getAttribute('data-time'));
+			}, true);
+		}
+
+		historyDelete = document.getElementsByClassName('ci-history-delete');
+
+		for (var i = 0; i < historyLoad.length; i++)
+		{
+			historyDelete[i].addEventListener('click', function() {
+				console.log(this);
+			}, true);
+		}
+
+		var tab = ciDebugBar.readCookie('debug-bar-tab');
+		if (document.getElementById(tab)) {
+			var el = document.getElementById(tab);
+			console.log(tab);
+			el.style.display = 'block';
+			ciDebugBar.addClass(el, 'active');
+			tab = document.querySelector('[data-tab='+tab+']');
+			if (tab) {
+				ciDebugBar.addClass(tab.parentNode, 'active');
+			}
+		}
+
 	},
 
 	//--------------------------------------------------------------------
@@ -48,6 +78,9 @@ var ciDebugBar = {
 			return;
 		}
 
+		// Remove debug-bar-tab cookie
+		ciDebugBar.createCookie('debug-bar-tab', '', -1);
+
 		// Check our current state.
 		var state = tab.style.display;
 
@@ -72,6 +105,8 @@ var ciDebugBar = {
 		{
 			tab.style.display = 'block';
 			ciDebugBar.addClass(this.parentNode, 'active');
+			// Create debug-bar-tab cookie to persistent state
+			ciDebugBar.createCookie('debug-bar-tab', this.getAttribute('data-tab'), 365);
 		}
 	},
 
@@ -403,11 +438,11 @@ var ciDebugBar = {
 
 		// Determine Hints state on page load
 		if (ciDebugBar.readCookie('debug-view'))
-		{			
+		{
 			showHints();
 		}
 
-		btn.onclick = function() {			
+		btn.onclick = function() {
 			if (ciDebugBar.readCookie('debug-view'))
 			{
 				hideHints();

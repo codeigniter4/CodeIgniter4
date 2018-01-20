@@ -176,7 +176,7 @@
 }
 
 #debug-bar tr[data-active="1"] {
-	background-color: #f5f5f5;
+	background-color: #dff0d8;
 }
 
 #debug-bar table strong {

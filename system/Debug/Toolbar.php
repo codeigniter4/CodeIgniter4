@@ -230,6 +230,7 @@ class Toolbar
 			$file = json_decode($contents, true);
 
 			$files[$i] = [
+				'time'     => substr($filenames[$i], -10),
 				'datetime' => date('Y-m-d H:i:s', $time = substr($filenames[$i], -10)),
 				'active'   => (int)($time == $current),
 				'status'   => $file['vars']['response']['statusCode'],
