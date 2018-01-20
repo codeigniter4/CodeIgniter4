@@ -163,6 +163,22 @@
 	margin-left: 0.5em;
 }
 
+#debug-bar button {
+	border: 1px solid #ddd;
+	background-color: #fff;
+	cursor: pointer;
+	border-radius: 4px;
+	color: #333;
+}
+
+#debug-bar button:hover {
+	background-color: #eaeaea;
+}
+
+#debug-bar tr[data-active="1"] {
+	background-color: #f5f5f5;
+}
+
 #debug-bar table strong {
 	font-weight: 500;
 	color: rgba(0, 0, 0, 0.3);

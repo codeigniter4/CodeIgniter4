@@ -95,6 +95,9 @@ class Toolbar
 	public function run($startTime, $totalTime, $startMemory, $request, $response): string
 	{
 		// Data items used within the view.
+		$data['url']             = current_url();
+		$data['method']          = $request->getMethod(true);
+		$data['isAJAX']          = $request->isAJAX();
 		$data['startTime']       = $startTime;
 		$data['totalTime']       = $totalTime*1000;
 		$data['totalMemory']     = number_format((memory_get_peak_usage()-$startMemory)/1048576, 3);
@@ -204,10 +207,12 @@ class Toolbar
 
 		// History must be loaded on the fly
 		$filenames = glob(WRITEPATH.'debugbar/debugbar_*');
-+		$total     = count($filenames);
-+		rsort($filenames);
+		$total     = count($filenames);
+		rsort($filenames);
 
 		$files = [];
+
+		$current = Services::request()->getGet('debugbar_time');
 
 		for ($i = 0; $i < $total; $i++)
 		{
@@ -225,8 +230,14 @@ class Toolbar
 			$file = json_decode($contents, true);
 
 			$files[$i] = [
-				'datetime' => date('Y-m-d H:i:s', substr($filenames[$i], -10)),
-				'status' => $file['vars']['response']['statusCode'],
+				'datetime' => date('Y-m-d H:i:s', $time = substr($filenames[$i], -10)),
+				'active'   => (int)($time == $current),
+				'status'   => $file['vars']['response']['statusCode'],
+				'method'   => $file['method'],
+				'url'      => $file['url'],
+				'isAJAX'   => (int)$file['isAJAX'],
+				'accept'   => isset($file['vars']['headers']['Accept'])
+								? explode(',', $file['vars']['headers']['Accept'])[0] : '',
 			];
 		}
 
