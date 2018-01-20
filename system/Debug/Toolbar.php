@@ -200,12 +200,55 @@ class Toolbar
 	 */
 	protected static function format(string $data, string $format = 'html')
 	{
-		if ($format === 'json')
+		$data = json_decode($data, true);
+
+		// History must be loaded on the fly
+		$filenames = glob(WRITEPATH.'debugbar/debugbar_*');
++		$total     = count($filenames);
++		rsort($filenames);
+
+		$files = [];
+
+		for ($i = 0; $i < $total; $i++)
 		{
-			return $data;
+			if ($i >= 10)
+			{
+				unlink($filenames[$i]);
+				continue;
+			}
+
+			ob_start();
+			include($filenames[$i]);
+			$contents = ob_get_contents();
+			ob_end_clean();
+
+			$file = json_decode($contents, true);
+
+			$files[$i] = [
+				'datetime' => date('Y-m-d H:i:s', substr($filenames[$i], -10)),
+				'status' => $file['vars']['response']['statusCode'],
+			];
 		}
 
-		$data   = json_decode($data, true);
+		$data['collectors'][] = [
+			'title'           => 'History',
+			'titleSafe'       => 'history',
+			'titleDetails'    => '',
+			'display'         => ['files'=>$files],
+			'badgeValue'      => $hc = count($files),
+			'isEmpty'         => ! (bool)$hc,
+			'hasTabContent'   => true,
+			'hasLabel'        => true,
+			'icon'            => '<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAJySURBVEhL3ZU7aJNhGIVTpV6i4qCIgkIHxcXLErS4FBwUFNwiCKGhuTYJGaIgnRoo4qRu6iCiiIuIXXTTIkIpuqoFwaGgonUQlC5KafU5ycmNP0lTdPLA4fu+8573/a4/f6hXpFKpwUwmc9fDfweKbk+n07fgEv33TLSbtt/hvwNFT1PsG/zdTE0Gp+GFfD6/2fbVIxqNrqPIRbjg4t/hY8aztcngfDabHXbKyiiXy2vcrcPH8oDCry2FKDrA+Ar6L01E/ypyXzXaARjDGGcoeNxSDZXE0dHRA5VRE5LJ5CFy5jzJuOX2wHRHRnjbklZ6isQ3tIctBaAd4vlK3jLtkOVWqABBXd47jGHLmjTmSScttQV5J+SjfcUweFQEbsjAas5aqoCLXutJl7vtQsAzpRowYqkBinyCC8Vicb2lOih8zoldd0F8RD7qTFiqAnGrAy8stUAvi/hbqDM+YzkAFrLPdR5ZqoLXsd+Bh5YCIH7JniVdquUWxOPxDfboHhrI5XJ7HHhiqQXox+APe/Qk64+gGYVCYZs8cMpSFQj9JOoFzVqqo7k4HIvFYpscCoAjOmLffUsNUGRaQUwDlmofUa34ecsdgXdcXo4wbakBgiUFafXJV8A4DJ/2UrxUKm3E95H8RbjLcgOJRGILhnmCP+FBy5XvwN2uIPcy1AJvWgqC4xm2aU4Xb3lF4I+Tpyf8hRe5w3J7YLymSeA8Z3nSclv4WLRyFdfOjzrUFX0klJUEtZtntCNc+F69cz/FiDzEPtjzmcUMOr83kDQEX6pAJxJfpL3OX22n01YN7SZCoQnaSdoZ+Jz+PZihH3wt/xlCoT9M6nEtmRSPCQAAAABJRU5ErkJggg==">',
+			'hasTimelineData' => false,
+			'timelineData'    => [],
+		];
+
+		if ($format === 'json')
+		{
+			return json_encode($data);
+		}
+
 		$output = '';
 
 		if ($format === 'html')
@@ -382,7 +425,6 @@ class Toolbar
 			if (file_exists($filename))
 			{
 				$contents = self::format(file_get_contents($filename), $format);
-				//unlink($filename); // TODO - Keep history? 10 files
 				exit($contents);
 			}
 
