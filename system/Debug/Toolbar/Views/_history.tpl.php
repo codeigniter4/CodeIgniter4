@@ -6,7 +6,7 @@
             <th>Status</th>
             <th>Method</th>
             <th>URL</th>
-            <th>Accept</th>
+            <th>Content-Type</th>
             <th>Is AJAX?</th>
         </tr>
     </thead>
@@ -21,7 +21,7 @@
             <td>{status}</td>
             <td>{method}</td>
             <td>{url}</td>
-            <td>{accept}</td>
+            <td>{contentType}</td>
             <td>{isAJAX}</td>
         </tr>
     {/files}

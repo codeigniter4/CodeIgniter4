@@ -33,7 +33,7 @@ var ciDebugBar = {
 
 		historyDelete = document.getElementsByClassName('ci-history-delete');
 
-		for (var i = 0; i < historyLoad.length; i++)
+		for (var i = 0; i < historyDelete.length; i++)
 		{
 			historyDelete[i].addEventListener('click', function() {
 				console.log(this);
@@ -193,6 +193,11 @@ var ciDebugBar = {
 
 	toogleViewsHints: function()
 	{
+		if (localStorage.getItem('debugbar-time') != localStorage.getItem('debugbar-time-new'))
+		{
+			//return false;
+		}
+
 		var nodeList 		= []; // [ Element, NewElement( 1 )/OldElement( 0 ) ]
 		var sortedComments 	= [];
 		var comments 		= [];
@@ -434,15 +439,7 @@ var ciDebugBar = {
 			return;
 		}
 
-		btn = btn.parentNode;
-
-		// Determine Hints state on page load
-		if (ciDebugBar.readCookie('debug-view'))
-		{
-			showHints();
-		}
-
-		btn.onclick = function() {
+		btn.parentNode.onclick = function() {
 			if (ciDebugBar.readCookie('debug-view'))
 			{
 				hideHints();
@@ -452,6 +449,13 @@ var ciDebugBar = {
 				showHints();
 			}
 		};
+
+		// Determine Hints state on page load
+		if (ciDebugBar.readCookie('debug-view'))
+		{
+			// TODO: History is overriding it. Check if is the current time
+			showHints();
+		}
 	},
 
 	//--------------------------------------------------------------------

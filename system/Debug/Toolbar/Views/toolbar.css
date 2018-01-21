@@ -179,6 +179,10 @@
 	background-color: #dff0d8;
 }
 
+#debug-bar tr[data-active="1"]:hover {
+	background-color: #a7d499;
+}
+
 #debug-bar table strong {
 	font-weight: 500;
 	color: rgba(0, 0, 0, 0.3);

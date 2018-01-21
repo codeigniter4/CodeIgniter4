@@ -182,8 +182,9 @@ class Toolbar
 		$data['vars']['request'] = ($request->isSecure() ? 'HTTPS' : 'HTTP').'/'.$request->getProtocolVersion();
 
 		$data['vars']['response'] = [
-			'statusCode' => $response->getStatusCode(),
-			'reason'     => esc($response->getReason()),
+			'statusCode'      => $response->getStatusCode(),
+			'reason'          => esc($response->getReason()),
+			'contentType'     => esc($response->getHeaderLine('content-type')),
 		];
 
 		$data['config'] = \CodeIgniter\Debug\Toolbar\Collectors\Config::display();
@@ -216,7 +217,7 @@ class Toolbar
 
 		for ($i = 0; $i < $total; $i++)
 		{
-			if ($i >= 10)
+			if ($i >= 30)
 			{
 				unlink($filenames[$i]);
 				continue;
@@ -230,15 +231,14 @@ class Toolbar
 			$file = json_decode($contents, true);
 
 			$files[$i] = [
-				'time'     => substr($filenames[$i], -10),
-				'datetime' => date('Y-m-d H:i:s', $time = substr($filenames[$i], -10)),
-				'active'   => (int)($time == $current),
-				'status'   => $file['vars']['response']['statusCode'],
-				'method'   => $file['method'],
-				'url'      => $file['url'],
-				'isAJAX'   => (int)$file['isAJAX'],
-				'accept'   => isset($file['vars']['headers']['Accept'])
-								? explode(',', $file['vars']['headers']['Accept'])[0] : '',
+				'time'        => substr($filenames[$i], -10),
+				'datetime'    => date('Y-m-d H:i:s', $time = substr($filenames[$i], -10)),
+				'active'      => (int)($time == $current),
+				'status'      => $file['vars']['response']['statusCode'],
+				'method'      => $file['method'],
+				'url'         => $file['url'],
+				'isAJAX'      => (int)$file['isAJAX'],
+				'contentType' => $file['vars']['response']['contentType'],
 			];
 		}
 
@@ -256,11 +256,6 @@ class Toolbar
 			'timelineData'    => [],
 		];
 
-		if ($format === 'json')
-		{
-			return json_encode($data);
-		}
-
 		$output = '';
 
 		if ($format === 'html')
@@ -271,6 +266,10 @@ class Toolbar
 			include(__DIR__.'/Toolbar/Views/toolbar.tpl.php');
 			$output = ob_get_contents();
 			ob_end_clean();
+		}
+		elseif ($format === 'json')
+		{
+			$output = json_encode($data);
 		}
 		elseif ($format === 'xml')
 		{

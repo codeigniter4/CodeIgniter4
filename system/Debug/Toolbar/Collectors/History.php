@@ -8,9 +8,9 @@ class History extends BaseCollector
 
 	public function display(): array
 	{
-			$filenames = glob(WRITEPATH . 'debugbar/debugbar_*');
-		+ $total       = count($filenames);
-		+ rsort($filenames);
+		$filenames = glob(WRITEPATH . 'debugbar/debugbar_*');
+		$total     = count($filenames);
+		rsort($filenames);
 
 		$files = [];
 
