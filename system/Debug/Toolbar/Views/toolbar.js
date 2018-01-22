@@ -22,6 +22,11 @@ var ciDebugBar = {
         document.getElementById('debug-bar-link').addEventListener('click', ciDebugBar.toggleToolbar, true);
         document.getElementById('debug-icon-link').addEventListener('click', ciDebugBar.toggleToolbar, true);
 
+
+        // Allows to highlight the row of the current request
+        var btn = document.querySelector('button[data-time="'+localStorage.getItem('debugbar-time')+'"]');
+        ciDebugBar.addClass(btn.parentNode.parentNode, 'current');
+
         historyLoad = document.getElementsByClassName('ci-history-load');
 
         for (var i = 0; i < historyLoad.length; i++)

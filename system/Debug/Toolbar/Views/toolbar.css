@@ -183,6 +183,14 @@
 	background-color: #a7d499;
 }
 
+#debug-bar tr.current {
+	background-color: #FDC894;
+}
+
+#debug-bar tr.current:hover {
+	background-color: #DD4814;
+}
+
 #debug-bar table strong {
 	font-weight: 500;
 	color: rgba(0, 0, 0, 0.3);

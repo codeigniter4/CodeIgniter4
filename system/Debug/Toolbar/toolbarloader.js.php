@@ -7,7 +7,7 @@ function loadDoc(time) {
 		localStorage.setItem('debugbar-time', time);
 		localStorage.setItem('debugbar-view', true);
 	}
-	console.log(time);
+
 	localStorage.setItem('debugbar-time-new', time);
 
     var url = "<?= rtrim(site_url(), '/') ?>";
@@ -44,21 +44,15 @@ function newXHR() {
     var realXHR = new oldXHR();
     realXHR.addEventListener("readystatechange", function() {
     	// Only success responses and URLs that do not contains "debugbar_time" are tracked
-        if(realXHR.readyState == 4 && realXHR.status == 200 && realXHR.responseURL.indexOf('debugbar_time') == -1 ) {
-        	var debugbarLink = realXHR.getResponseHeader('Debugbar-Link');
+        if(realXHR.readyState == 4 && realXHR.status.toString()[0] == 2 && realXHR.responseURL.indexOf('debugbar_time') == -1 ) {
+        	var debugbarTime = realXHR.getResponseHeader('Debugbar-Time');
 
-        	if (debugbarLink) {
-        		console.log('debugbarLink is:');
-        		console.log(debugbarLink);
+        	if (debugbarTime) {
         		var h2 = document.querySelector('#ci-history > h2');
-        		h2.innerHTML = 'History <small>You have new debug data.</small> <button>Update</button>';
+        		h2.innerHTML = 'History <small>You have new debug data.</small> <button onclick="loadDoc(' + debugbarTime + ')">Update</button>';
         		var badge = document.querySelector('[data-tab="ci-history"] > span > .badge');
         		badge.style.background = 'red';
         	}
-            console.log('ajax request');
-            console.log(realXHR);
-            console.log(realXHR.getResponseHeader('Debugbar-Link'));
-            console.log(realXHR.responseText);
         }
     }, false);
     return realXHR;
