@@ -163,6 +163,10 @@
 	margin-left: 0.5em;
 }
 
+#debug-bar span.ci-label .badge.active {
+	background-color: red;
+}
+
 #debug-bar button {
 	border: 1px solid #ddd;
 	background-color: #fff;

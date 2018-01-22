@@ -58,6 +58,13 @@ class Toolbar
 	 */
 	protected $collectors = [];
 
+	/**
+	 * Incoming Request
+	 *
+	 * @var \CodeIgniter\HTTP\IncomingRequest
+	 */
+	protected static $request;
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -213,16 +220,12 @@ class Toolbar
 
 		$files = [];
 
-		$current = Services::request()->getGet('debugbar_time');
+		$current = self::$request->getGet('debugbar_time');
+		$app     = new \Config\App;
 
 		for ($i = 0; $i < $total; $i++)
 		{
-			if ($i >= 30)
-			{
-				unlink($filenames[$i]);
-				continue;
-			}
-
+			// Get the contents of this specific history request
 			ob_start();
 			include($filenames[$i]);
 			$contents = ob_get_contents();
@@ -230,25 +233,34 @@ class Toolbar
 
 			$file = json_decode($contents, true);
 
+			// Debugbar files shown in History Collector
 			$files[$i] = [
-				'time'        => substr($filenames[$i], -10),
-				'datetime'    => date('Y-m-d H:i:s', $time = substr($filenames[$i], -10)),
+				'time'        => (int)$time = substr($filenames[$i], -10),
+				'datetime'    => date('Y-m-d H:i:s', $time),
 				'active'      => (int)($time == $current),
 				'status'      => $file['vars']['response']['statusCode'],
 				'method'      => $file['method'],
 				'url'         => $file['url'],
-				'isAJAX'      => (int)$file['isAJAX'],
+				'isAJAX'      => $file['isAJAX'] ? 'Yes' : 'No',
 				'contentType' => $file['vars']['response']['contentType'],
 			];
+
+			// Oldest files will be deleted
+			if ($app->toolbarMaxHistory >= 0 && $i >= $app->toolbarMaxHistory)
+			{
+				unlink($filenames[$i]);
+				continue;
+			}
 		}
 
+		// Set the History here. Class is not necessary
 		$data['collectors'][] = [
 			'title'           => 'History',
 			'titleSafe'       => 'history',
 			'titleDetails'    => '',
-			'display'         => ['files'=>$files],
-			'badgeValue'      => $hc = count($files),
-			'isEmpty'         => ! (bool)$hc,
+			'display'         => ['files' => $files],
+			'badgeValue'      => $count = count($files),
+			'isEmpty'         => ! (bool)$count,
 			'hasTabContent'   => true,
 			'hasLabel'        => true,
 			'icon'            => '<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAJySURBVEhL3ZU7aJNhGIVTpV6i4qCIgkIHxcXLErS4FBwUFNwiCKGhuTYJGaIgnRoo4qRu6iCiiIuIXXTTIkIpuqoFwaGgonUQlC5KafU5ycmNP0lTdPLA4fu+8573/a4/f6hXpFKpwUwmc9fDfweKbk+n07fgEv33TLSbtt/hvwNFT1PsG/zdTE0Gp+GFfD6/2fbVIxqNrqPIRbjg4t/hY8aztcngfDabHXbKyiiXy2vcrcPH8oDCry2FKDrA+Ar6L01E/ypyXzXaARjDGGcoeNxSDZXE0dHRA5VRE5LJ5CFy5jzJuOX2wHRHRnjbklZ6isQ3tIctBaAd4vlK3jLtkOVWqABBXd47jGHLmjTmSScttQV5J+SjfcUweFQEbsjAas5aqoCLXutJl7vtQsAzpRowYqkBinyCC8Vicb2lOih8zoldd0F8RD7qTFiqAnGrAy8stUAvi/hbqDM+YzkAFrLPdR5ZqoLXsd+Bh5YCIH7JniVdquUWxOPxDfboHhrI5XJ7HHhiqQXox+APe/Qk64+gGYVCYZs8cMpSFQj9JOoFzVqqo7k4HIvFYpscCoAjOmLffUsNUGRaQUwDlmofUa34ecsdgXdcXo4wbakBgiUFafXJV8A4DJ/2UrxUKm3E95H8RbjLcgOJRGILhnmCP+FBy5XvwN2uIPcy1AJvWgqC4xm2aU4Xb3lF4I+Tpyf8hRe5w3J7YLymSeA8Z3nSclv4WLRyFdfOjzrUFX0klJUEtZtntCNc+F69cz/FiDzEPtjzmcUMOr83kDQEX6pAJxJfpL3OX22n01YN7SZCoQnaSdoZ+Jz+PZihH3wt/xlCoT9M6nEtmRSPCQAAAABJRU5ErkJggg==">',
@@ -258,23 +270,25 @@ class Toolbar
 
 		$output = '';
 
-		if ($format === 'html')
+		switch ($format)
 		{
-			extract($data);
-			$parser = \Config\Services::parser(BASEPATH . 'Debug/Toolbar/Views/', null,false);
-			ob_start();
-			include(__DIR__.'/Toolbar/Views/toolbar.tpl.php');
-			$output = ob_get_contents();
-			ob_end_clean();
-		}
-		elseif ($format === 'json')
-		{
-			$output = json_encode($data);
-		}
-		elseif ($format === 'xml')
-		{
-			$formatter = new XMLFormatter;
-			$output    = $formatter->format($data);
+			case 'html':
+				extract($data);
+				$parser = Services::parser(BASEPATH . 'Debug/Toolbar/Views/', null,false);
+				ob_start();
+				include(__DIR__.'/Toolbar/Views/toolbar.tpl.php');
+				$output = ob_get_contents();
+				ob_end_clean();
+				break;
+			case 'json':
+				$output = json_encode($data);
+				break;
+			case 'json':
+				$output = json_encode($data);
+			case 'xml':
+				$formatter = new XMLFormatter;
+				$output    = $formatter->format($data);
+				break;
 		}
 
 		return $output;
@@ -295,10 +309,8 @@ class Toolbar
 	protected static function renderTimeline(array $collectors, $startTime, int $segmentCount, int $segmentDuration): string
 	{
 		$displayTime = $segmentCount*$segmentDuration;
-
-		$rows = self::collectTimelineData($collectors);
-
-		$output = '';
+		$rows        = self::collectTimelineData($collectors);
+		$output      = '';
 
 		foreach ($rows as $row)
 		{
@@ -308,15 +320,12 @@ class Toolbar
 			$output .= "<td style='text-align: right'>".number_format($row['duration']*1000, 2)." ms</td>";
 			$output .= "<td colspan='{$segmentCount}' style='overflow: hidden'>";
 
-			$offset = ((($row['start']-$startTime)*1000)/
-			           $displayTime)*100;
+			$offset = ((($row['start']-$startTime)*1000)/$displayTime)*100;
 			$length = (($row['duration']*1000)/$displayTime)*100;
 
 			$output .= "<span class='timer' style='left: {$offset}%; width: {$length}%;' title='".number_format($length,
 					2)."%'></span>";
-
 			$output .= "</td>";
-
 			$output .= "</tr>";
 		}
 
@@ -399,11 +408,11 @@ class Toolbar
 	 */
 	public static function eventHandler()
 	{
-		$request = Services::request();
+		self::$request = Services::request();
 
 		// If the request contains '?debugbar then we're
 		// simply returning the loading script
-		if ($request->getGet('debugbar') !== null)
+		if (self::$request->getGet('debugbar') !== null)
 		{
 			// Let the browser know that we are sending javascript
 			header('Content-Type: application/javascript');
@@ -418,18 +427,19 @@ class Toolbar
 
 		// Otherwise, if it includes ?debugbar_time, then
 		// we should return the entire debugbar.
-		if ($request->getGet('debugbar_time'))
+		if (self::$request->getGet('debugbar_time'))
 		{
 			helper('security');
 
-			$format = $request->negotiate('media', [
+			// Negotiate the content-type to format the output
+			$format = self::$request->negotiate('media', [
 				'text/html',
 				'application/json',
 				'application/xml'
 			]);
 			$format = explode('/', $format)[1];
 
-			$file     = sanitize_filename('debugbar_'.$request->getGet('debugbar_time'));
+			$file     = sanitize_filename('debugbar_'.self::$request->getGet('debugbar_time'));
 			$filename = WRITEPATH.'debugbar/'.$file;
 
 			// Show the toolbar
@@ -440,19 +450,8 @@ class Toolbar
 			}
 
 			// File was not written or do not exists
-			$error = 'CI DebugBar: File "WRITEPATH/'.$file.'" not found.';
-			switch ($format)
-			{
-				case 'json':
-					header('Content-Type: application/json');
-					exit($error);
-				case 'xml':
-					header('Content-Type: application/xml');
-					exit('<?xml version="1.0" encoding="UTF-8"?><error>'.$error.'</error>');
-				default:
-					header('Content-Type: text/html');
-					exit('<script id="toolbar_js">console.log(\''.$error.'\')</script>');
-			}
+			http_response_code(404);
+			exit(); // Exit here is needed to avoid load the index page
 		}
 	}
 }

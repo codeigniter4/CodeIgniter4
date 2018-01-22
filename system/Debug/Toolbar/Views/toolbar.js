@@ -17,38 +17,28 @@ var ciDebugBar = {
 		ciDebugBar.createListeners();
 		ciDebugBar.setToolbarState();
 		ciDebugBar.setToolbarPosition();
-		ciDebugBar.toogleViewsHints();
+		ciDebugBar.toggleViewsHints();
 
-        document.getElementById('debug-bar-link').addEventListener('click', ciDebugBar.toggleToolbar, true);
-        document.getElementById('debug-icon-link').addEventListener('click', ciDebugBar.toggleToolbar, true);
+		document.getElementById('debug-bar-link').addEventListener('click', ciDebugBar.toggleToolbar, true);
+		document.getElementById('debug-icon-link').addEventListener('click', ciDebugBar.toggleToolbar, true);
 
+		// Allows to highlight the row of the current history request
+		var btn = document.querySelector('button[data-time="'+localStorage.getItem('debugbar-time')+'"]');
+		ciDebugBar.addClass(btn.parentNode.parentNode, 'current');
 
-        // Allows to highlight the row of the current request
-        var btn = document.querySelector('button[data-time="'+localStorage.getItem('debugbar-time')+'"]');
-        ciDebugBar.addClass(btn.parentNode.parentNode, 'current');
+		historyLoad = document.getElementsByClassName('ci-history-load');
 
-        historyLoad = document.getElementsByClassName('ci-history-load');
-
-        for (var i = 0; i < historyLoad.length; i++)
+		for (var i = 0; i < historyLoad.length; i++)
 		{
 			historyLoad[i].addEventListener('click', function() {
 				loadDoc(this.getAttribute('data-time'));
 			}, true);
 		}
 
-		historyDelete = document.getElementsByClassName('ci-history-delete');
-
-		for (var i = 0; i < historyDelete.length; i++)
-		{
-			historyDelete[i].addEventListener('click', function() {
-				console.log(this);
-			}, true);
-		}
-
+		// Display the active Tab on page load
 		var tab = ciDebugBar.readCookie('debug-bar-tab');
 		if (document.getElementById(tab)) {
 			var el = document.getElementById(tab);
-			console.log(tab);
 			el.style.display = 'block';
 			ciDebugBar.addClass(el, 'active');
 			tab = document.querySelector('[data-tab='+tab+']');
@@ -196,11 +186,14 @@ var ciDebugBar = {
 
 	//--------------------------------------------------------------------
 
-	toogleViewsHints: function()
+	toggleViewsHints: function()
 	{
+		// Avoid toggle hints on history requests that are not the initial
 		if (localStorage.getItem('debugbar-time') != localStorage.getItem('debugbar-time-new'))
 		{
-			//return false;
+			var a = document.querySelector('a[data-tab="ci-views"]');
+			a.href = '#';
+			return;
 		}
 
 		var nodeList 		= []; // [ Element, NewElement( 1 )/OldElement( 0 ) ]
@@ -458,7 +451,6 @@ var ciDebugBar = {
 		// Determine Hints state on page load
 		if (ciDebugBar.readCookie('debug-view'))
 		{
-			// TODO: History is overriding it. Check if is the current time
 			showHints();
 		}
 	},

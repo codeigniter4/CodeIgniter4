@@ -47,7 +47,7 @@ class DebugToolbar implements FilterInterface
 				$response
 			);
 
-			helper(['filesystem', 'url']);
+			helper('filesystem');
 
 			// Updated to time() so we can get history
 			$time = time();

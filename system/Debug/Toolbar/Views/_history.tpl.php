@@ -13,9 +13,8 @@
     <tbody>
     {files}
         <tr data-active="{active}">
-        	<td style="width: 150px">
+        	<td style="width: 70px">
             	<button class="ci-history-load" data-time="{time}">Load</button>
-            	<button class="ci-history-delete" data-time="{time}">Delete</button>
             </td>
             <td style="width: 140px">{datetime}</td>
             <td>{status}</td>
