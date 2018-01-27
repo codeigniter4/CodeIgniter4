@@ -334,37 +334,6 @@ class Model
 		return $row['data'];
 	}
 
-	//--------------------------------------------------------------------
-
-	/**
-	 * Extract a subset of data
-	 *
-	 * @param string|array $key
-	 * @param string|null  $value
-	 *
-	 * @return array|null The rows of data.
-	 */
-	public function findWhere($key, $value = null)
-	{
-		$builder = $this->builder();
-
-		if ($this->tempUseSoftDeletes === true)
-		{
-			$builder->where($this->deletedField, 0);
-		}
-
-		$rows = $builder->where($key, $value)
-				->get();
-
-		$rows = $rows->getResult($this->tempReturnType);
-
-		$rows = $this->trigger('afterFind', ['data' => $rows]);
-
-		$this->tempReturnType = $this->returnType;
-		$this->tempUseSoftDeletes = $this->useSoftDeletes;
-
-		return $rows['data'];
-	}
 
 	//--------------------------------------------------------------------
 
@@ -612,13 +581,34 @@ class Model
 	 * Updates a single record in $this->table. If an object is provided,
 	 * it will attempt to convert it into an array.
 	 *
+	 * updates a single item by id
+	 * $model->update(id, data)
+	 *
+	 * updates multiple items by array of ids
+	 * $model->update(array_id, data)
+	 *
 	 * @param int|string   $id
 	 * @param array|object $data
 	 *
 	 * @return bool
 	 */
-	public function update($id, $data)
+	public function update($id, $data = null)
 	{
+        // because we're going to use "where" for the items to updated
+        // id became a surrogate for data argument
+        // not ideal, but lets see where this goes...
+        if ($data === null)
+        {
+            $data = $id;
+            $id = null;
+        }
+
+        // you can not proceed.
+        if ($id === null && $data === null) return false;
+
+        // convert id to array if not already
+		if ($id !== null && !is_array($id)) $id = [$id];
+
 		// If $data is using a custom class with public or protected
 		// properties representing the table elements, we need to grab
 		// them as an array.
@@ -666,10 +656,21 @@ class Model
 		}
 
 		// Must use the set() method to ensure objects get converted to arrays
-		$result = $this->builder()
-				->where($this->primaryKey, $id)
-				->set($data['data'])
-				->update();
+
+        if ($id === null)
+        {
+    		$result = $this->builder()
+    				->set($data['data'])
+    				->update();
+        }
+        else
+        {
+            $result = $this->builder()
+    				->whereIn($this->primaryKey, $id)
+    				->set($data['data'])
+    				->update();
+        }
+
 
 		$this->trigger('afterUpdate', ['id' => $id, 'data' => $originalData, 'result' => $result]);
 
@@ -679,18 +680,27 @@ class Model
 	//--------------------------------------------------------------------
 
 	/**
-	 * Deletes a single record from $this->table where $id matches
+	 * Deletes a single or many records from $this->table where $id matches
 	 * the table's primaryKey
 	 *
-	 * @param mixed $id    The rows primary key
+	 * deletes multiple items by a where clause
+	 * $model->where(array)->delete()
+	 *
+	 * deletes multiple items by ids
+	 * $model->delete(ids)
+	 *
+	 * deletes a single item by id
+	 * $model->delete(id)
+	 *
+	 * @param mixed $id    The rows primary key (values)
 	 * @param bool  $purge Allows overriding the soft deletes setting.
 	 *
 	 * @return mixed
 	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
-	public function delete($id, $purge = false)
+	public function delete($id = null, $purge = false)
 	{
-		$this->trigger('beforeDelete', ['id' => $id, 'purge' => $purge]);
+		if ($id !== null && !is_array($id)) $id = [$id];
 
 		if ($this->useSoftDeletes && ! $purge)
 		{
@@ -701,15 +711,29 @@ class Model
                 $set[$this->updatedField] = $this->setDate();
             }
 
-			$result = $this->builder()
-					->where($this->primaryKey, $id)
+			if ($id)
+			{
+				$result = $this->builder()
+					->whereIn($this->primaryKey, $id)
 					->update($set);
+			}
+			else
+			{
+				$result = $this->builder()->update($set);
+			}
 		}
 		else
 		{
-			$result = $this->builder()
-					->where($this->primaryKey, $id)
+			if ($id)
+			{
+				$result = $this->builder()
+					->whereIn($this->primaryKey, $id)
 					->delete();
+			}
+			else
+			{
+				$result = $this->builder()->delete();
+			}
 		}
 
 		$this->trigger('afterDelete', ['id' => $id, 'purge' => $purge, 'result' => $result, 'data' => null]);
@@ -717,53 +741,6 @@ class Model
 		return $result;
 	}
 
-	//--------------------------------------------------------------------
-
-	/**
-	 * Deletes multiple records from $this->table where the specified
-	 * key/value matches.
-	 *
-	 * @param string|array $key
-	 * @param string|null  $value
-	 * @param bool         $purge Allows overriding the soft deletes setting.
-	 *
-	 * @return mixed
-	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
-	 */
-	public function deleteWhere($key, $value = null, $purge = false)
-	{
-		// Don't let them shoot themselves in the foot...
-		if (empty($key))
-		{
-			throw new DatabaseException('You must provided a valid key to deleteWhere.');
-		}
-
-		$this->trigger('beforeDelete', ['key' => $key, 'value' => $value, 'purge' => $purge]);
-
-		if ($this->useSoftDeletes && ! $purge)
-		{
-            $set[$this->deletedField] = 1;
-
-            if ($this->useTimestamps)
-            {
-                $set[$this->updatedField] = $this->setDate();
-            }
-
-			$result = $this->builder()
-					->where($key, $value)
-					->update($set);
-		}
-		else
-		{
-			$result = $this->builder()
-					->where($key, $value)
-					->delete();
-		}
-
-		$this->trigger('afterDelete', ['key' => $key, 'value' => $value, 'purge' => $purge, 'result' => $result, 'data' => null]);
-
-		return $result;
-	}
 
 	//--------------------------------------------------------------------
 
