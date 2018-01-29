@@ -774,4 +774,17 @@ class RouteCollectionTest extends \CIUnitTestCase
 		$this->assertArrayHasKey('testing', $match);
 		$this->assertEquals($match['testing'], '\TestController::index');
 	}
+
+	//--------------------------------------------------------------------
+
+	public function testRoutesOptions()
+	{
+		$routes = $this->getCollector();
+
+		$routes->add('administrator', function() {}, ['as' => 'admin', 'foo' => 'baz']);
+
+		$options = $routes->getRoutesOptions('administrator');
+
+		$this->assertEquals($options, ['as' => 'admin', 'foo' => 'baz']);
+	}
 }

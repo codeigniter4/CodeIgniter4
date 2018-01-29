@@ -236,4 +236,15 @@ class RouterTest extends \CIUnitTestCase
 
     //--------------------------------------------------------------------
 
+    public function testMatchedRouteOptions()
+    {
+    	$this->collection->add('foo', function() {}, ['as' => 'login', 'foo' => 'baz']);
+    	$this->collection->add('baz', function() {}, ['as' => 'admin', 'foo' => 'bar']);
+
+    	$router = new Router($this->collection);
+
+    	$router->handle('foo');
+
+    	$this->assertEquals($router->getMatchedRouteOptions(), ['as' => 'login', 'foo' => 'baz']);
+    }
 }

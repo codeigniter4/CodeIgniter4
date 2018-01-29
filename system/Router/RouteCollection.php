@@ -144,6 +144,13 @@ class RouteCollection implements RouteCollectionInterface
 	];
 
 	/**
+	 * Array of routes options
+	 *
+	 * @var array
+	 */
+	protected $routesOptions = [];
+
+	/**
 	 * The current method that the script is being called by.
 	 *
 	 * @var
@@ -536,6 +543,20 @@ class RouteCollection implements RouteCollectionInterface
 		}
 
 		return $routes;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns one or all routes options
+	 *
+	 * @param  string $from
+	 *
+	 * @return array
+	 */
+	public function getRoutesOptions(string $from = null)
+	{
+		return $from ? $this->routesOptions[$from] ?? [] : $this->routesOptions;
 	}
 
 	//--------------------------------------------------------------------
@@ -1207,6 +1228,8 @@ class RouteCollection implements RouteCollectionInterface
 		{
 			$to = '\\' . ltrim($to, '\\');
 		}
+
+		$this->routesOptions[$from] = $options;
 
 		$name = $options['as'] ?? $from;
 
