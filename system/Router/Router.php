@@ -110,6 +110,13 @@ class Router implements RouterInterface
 	protected $matchedRoute = null;
 
 	/**
+	 * The options set for the matched route.
+	 *
+	 * @var array|null
+	 */
+	protected $matchedRouteOptions = null;
+
+	/**
 	 * The locale that was detected in a route.
 	 * @var string
 	 */
@@ -267,6 +274,18 @@ class Router implements RouterInterface
 	//--------------------------------------------------------------------
 
 	/**
+	 * Returns all options set for the matched route
+	 *
+	 * @return array|null
+	 */
+	public function getMatchedRouteOptions()
+	{
+		return $this->matchedRouteOptions;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Sets the value that should be used to match the index.php file. Defaults
 	 * to index.php but this allows you to modify it in case your are using
 	 * something like mod_rewrite to remove the page. This allows you to set
@@ -387,6 +406,8 @@ class Router implements RouterInterface
 
 					$this->matchedRoute = [$key, $val];
 
+					$this->matchedRouteOptions = $this->collection->getRoutesOptions($key);
+
 					return true;
 				}
 				// Are we using the default method for back-references?
@@ -417,6 +438,8 @@ class Router implements RouterInterface
 				$this->setRequest(explode('/', $val));
 
 				$this->matchedRoute = [$key, $val];
+
+				$this->matchedRouteOptions = $this->collection->getRoutesOptions($key);
 
 				return true;
 			}
