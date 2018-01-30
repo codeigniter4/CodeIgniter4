@@ -3,19 +3,11 @@
 
 use CodeIgniter\Database\Config;
 
-class AliasTest extends \CIUnitTestCase
+class AliasTest extends \CIDatabaseTestCase
 {
 	protected $refresh = true;
 
-	protected $db;
-
-	public function setUp()
-	{
-		parent::setUp();
-
-		$this->db = Config::connect();
-	}
-
+	protected $seed = 'CITestSeeder';
 
 	public function testAlias()
 	{
