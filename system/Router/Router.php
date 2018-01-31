@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014-2017 British Columbia Institute of Technology
+ * Copyright (c) 2014-2018 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,7 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
+ * @copyright	2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 3.0.0
@@ -108,6 +108,13 @@ class Router implements RouterInterface
 	 * @var array|null
 	 */
 	protected $matchedRoute = null;
+
+	/**
+	 * The options set for the matched route.
+	 *
+	 * @var array|null
+	 */
+	protected $matchedRouteOptions = null;
 
 	/**
 	 * The locale that was detected in a route.
@@ -267,6 +274,18 @@ class Router implements RouterInterface
 	//--------------------------------------------------------------------
 
 	/**
+	 * Returns all options set for the matched route
+	 *
+	 * @return array|null
+	 */
+	public function getMatchedRouteOptions()
+	{
+		return $this->matchedRouteOptions;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Sets the value that should be used to match the index.php file. Defaults
 	 * to index.php but this allows you to modify it in case your are using
 	 * something like mod_rewrite to remove the page. This allows you to set
@@ -387,27 +406,27 @@ class Router implements RouterInterface
 
 					$this->matchedRoute = [$key, $val];
 
+					$this->matchedRouteOptions = $this->collection->getRoutesOptions($key);
+
 					return true;
 				}
 				// Are we using the default method for back-references?
-				else
+
+				// Support resource route when function with subdirectory
+				// ex: $routes->resource('Admin/Admins');
+				if (strpos($val, '$') !== false && strpos($key, '(') !== false && strpos($key, '/') !== false)
 				{
-					// Support resource route when function with subdirectory
-					// ex: $routes->resource('Admin/Admins');
-					if (strpos($val, '$') !== false && strpos($key, '(') !== false && strpos($key, '/') !== false)
-					{
-						$replacekey = str_replace('/(.*)', '', $key);
-						$val = preg_replace('#^' . $key . '$#', $val, $uri);
-						$val = str_replace($replacekey, str_replace("/", "\\", $replacekey), $val);
-					}
-					elseif (strpos($val, '$') !== false && strpos($key, '(') !== false)
-					{
-						$val = preg_replace('#^' . $key . '$#', $val, $uri);
-					}
-					elseif (strpos($key, '/') !== false)
-					{
-						$val = str_replace('/', '\\', $val);
-					}
+					$replacekey = str_replace('/(.*)', '', $key);
+					$val = preg_replace('#^' . $key . '$#', $val, $uri);
+					$val = str_replace($replacekey, str_replace("/", "\\", $replacekey), $val);
+				}
+				elseif (strpos($val, '$') !== false && strpos($key, '(') !== false)
+				{
+					$val = preg_replace('#^' . $key . '$#', $val, $uri);
+				}
+				elseif (strpos($key, '/') !== false)
+				{
+					$val = str_replace('/', '\\', $val);
 				}
 
 				// Is this route supposed to redirect to another?
@@ -419,6 +438,8 @@ class Router implements RouterInterface
 				$this->setRequest(explode('/', $val));
 
 				$this->matchedRoute = [$key, $val];
+
+				$this->matchedRouteOptions = $this->collection->getRoutesOptions($key);
 
 				return true;
 			}

@@ -11,8 +11,8 @@ Library Reference
     cli
     content_negotiation
     curlrequest
-    images
     files
+    images
     incomingrequest
     localization
     message
@@ -22,6 +22,7 @@ Library Reference
     security
     sessions
     throttler
+    time
     typography
     uploaded_files
     uri

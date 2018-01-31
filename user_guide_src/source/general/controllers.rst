@@ -206,7 +206,6 @@ Trying to access it via the URL, like this, will not work::
 
 	example.com/index.php/blog/utility/
 
-
 Organizing Your Controllers into Sub-directories
 ================================================
 

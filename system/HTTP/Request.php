@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014-2017 British Columbia Institute of Technology
+ * Copyright (c) 2014-2018 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,7 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
+ * @copyright	2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 3.0.0
@@ -220,7 +220,7 @@ class Request extends Message implements RequestInterface
 	 *
 	 * @return bool
 	 */
-	public function isValidIP(string $ip, string $which = null): bool
+	public function isValidIP(string $ip = null, string $which = null): bool
 	{
 		switch (strtolower($which))
 		{
@@ -273,8 +273,10 @@ class Request extends Message implements RequestInterface
 	/**
 	 * Fetch an item from the $_SERVER array.
 	 *
-	 * @param null $index   Index for item to be fetched from $_SERVER
-	 * @param null $filter  A filter name to be applied
+	 * @param int|null $index  Index for item to be fetched from $_SERVER
+	 * @param int|null $filter A filter name to be applied
+	 * @param null     $flags
+	 *
 	 * @return mixed
 	 */
 	public function getServer($index = null, $filter = null, $flags = null)
@@ -287,8 +289,10 @@ class Request extends Message implements RequestInterface
 	/**
 	 * Fetch an item from the $_ENV array.
 	 *
-	 * @param null $index   Index for item to be fetched from $_ENV
-	 * @param null $filter  A filter name to be applied
+	 * @param null $index  Index for item to be fetched from $_ENV
+	 * @param null $filter A filter name to be applied
+	 * @param null $flags
+	 *
 	 * @return mixed
 	 */
 	public function getEnv($index = null, $filter = null, $flags = null)
@@ -308,9 +312,10 @@ class Request extends Message implements RequestInterface
 	 *
 	 * http://php.net/manual/en/filter.filters.sanitize.php
 	 *
-	 * @param int  $type Input filter constant
+	 * @param int          $type   Input filter constant
 	 * @param string|array $index
-	 * @param int $filter Filter constant
+	 * @param int          $filter Filter constant
+	 * @param null         $flags
 	 *
 	 * @return mixed
 	 */

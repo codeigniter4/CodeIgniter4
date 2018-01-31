@@ -199,7 +199,6 @@ business logic and create objects that are pleasant to use.
     $user->password = 'my great password';
     $user->setPassword('my great password');
 
-
 Data Mapping
 ============
 
@@ -263,7 +262,6 @@ through the original ``$user->full_name``, also, as this is needed for the model
 to the database. However, ``unset`` and ``isset`` only work on the mapped property, ``$name``, not on the original name,
 ``full_name``.
 
-
 Mutators
 ========
 
@@ -271,7 +269,7 @@ Date Mutators
 -------------
 
 By default, the Entity class will convert fields named `created_at`, `updated_at`, or `deleted_at` into
-:doc:`Time </libraries/time>`_ instances whenever they are set or retrieved. The Time class provides a large number
+:doc:`Time </libraries/time>` instances whenever they are set or retrieved. The Time class provides a large number
 of helpful methods in a immutable, localized way.
 
 You can define which properties are automatically converted by adding the name to the **options['dates']** array::
@@ -326,7 +324,7 @@ For example, if you had a User entity with an **is_banned** property, you can ca
     {
         protected $is_banned;
 
-        protected _$options = [
+        protected $_options = [
             'casts' => [
                 'is_banned' => 'boolean'
             ]
@@ -348,7 +346,7 @@ you can cast properties into, the **array** cast type will serialize the value w
     {
         protected $options;
 
-        protected _$options = [
+        protected $_options = [
             'casts' => [
                 'options' => 'array'
             ]

@@ -153,7 +153,7 @@ If you submit the form you should simply see the form reload. That's
 because you haven't set up any validation rules yet.
 
 **Since you haven't told the Validation class to validate anything
-yet, it returns false (boolean false) by default. The ``validate()`` method
+yet, it returns false (boolean false) by default. The** ``validate()`` **method
 only returns true if it has successfully applied your rules without any
 of them failing.**
 
@@ -177,18 +177,11 @@ The form (Signup.php) is a standard web form with a couple exceptions:
    This function will return any error messages sent back by the
    validator. If there are no messages it returns an empty string.
 
-
 The controller (Form.php) has one method: ``index()``. This method
 uses the Controller-provided validate method and loads the form helper and URL
 helper used by your view files. It also runs the validation routine.
 Based on whether the validation was successful it either presents the
 form or the success page.
-
-
-
-
-
-
 
 Loading the Library
 ===================
@@ -215,10 +208,10 @@ setRule()
 ---------
 
 This method sets a single rule. It takes the name of field as
-the first parameter, and a string with a pipe-delimited list of rules
+the first parameter, an optional label and a string with a pipe-delimited list of rules
 that should be applied::
 
-    $validation->setRule('username', 'required');
+    $validation->setRule('username', 'Username', 'required');
 
 The **field name** must match the key of any data array that is sent in. If
 the data is taken directly from $_POST, then it must be an exact match for
@@ -234,6 +227,13 @@ Like, ``setRule()``, but accepts an array of field names and their rules::
         'password' => 'required|min_length[10]'
     ]);
 
+To give a labeled error message you can setup as::
+
+    $validation->setRules([
+        'username' => ['label' => 'Username', 'rules' => 'required'],
+        'password' => ['label' => 'Password', 'rules' => 'required|min_length[10]']
+    ]);
+
 withRequest()
 -------------
 
@@ -245,11 +245,48 @@ data to be validated::
     $validation->withRequest($this->request)
                ->run();
 
+*******************************
+Validating Keys that are Arrays
+*******************************
+
+If your data is in a nested associative array, you can use "dot array syntax" to
+easily validate your data::
+
+    // The data to test:
+    'contacts' => [
+        'name' => 'Joe Smith',
+        'friends' => [
+            [
+                'name' => 'Fred Flinstone'
+            ],
+            [
+                'name' => 'Wilma'
+            ]
+        ]
+    ]
+
+    // Joe Smith
+    $validation->setRules([
+        'contacts.name' => 'required
+    ]);
+
+    // Fred Flintsone & Wilma
+    $validation->setRules([
+        'contacts.friends.name' => 'required'
+    ]);
+
+You can use the '*' wildcard symbol to match any one level of the array::
+
+    // Fred Flintsone & Wilma
+    $validation->setRules([
+        'contacts.*.name' => 'required'
+    ]);
+
 ****************
 Validate 1 Value
 ****************
 
-Validate one value against a rule.
+Validate one value against a rule::
 
     $validation->check($value, 'required');
 
@@ -283,7 +320,7 @@ rules. As shown earlier, the validation array will have this prototype::
 
 You can specify the group to use when you call the ``run()`` method::
 
-    $validation->run($data, $signup);
+    $validation->run($data, 'signup');
 
 You can also store custom error messages in this configuration file by naming the
 property the same as the group, and appended with ``_errors``. These will automatically
@@ -308,6 +345,28 @@ be used for any errors when this group is used::
         ];
     }
 
+Or pass all settings in an array::
+
+    class Validation
+    {
+        public $signup = [
+            'username' => [
+                'label'  => 'Username',
+                'rules'  => 'required',
+                'errors' => [
+                    'required' => 'You must choose a {field}.'
+                ]
+            ],
+            'email'    => 'required|valid_email'
+        ];
+
+        public $signup_errors = [
+            'email' => [
+                'valid_email' => 'Please check the Email field. It does not appear to be valid.'
+            ]
+        ];
+    }
+
 See below for details on the formatting of the array.
 
 Getting & Setting Rule Groups
@@ -316,14 +375,14 @@ Getting & Setting Rule Groups
 Get Rule Group
 --------------
 
-This method gets a rule group from the validation configuration.
+This method gets a rule group from the validation configuration::
 
     $validation->getRuleGroup('signup');
 
 Set Rule Group
 --------------
 
-This method sets a rule group from the validation configuration to the validation service.
+This method sets a rule group from the validation configuration to the validation service::
 
     $validation->setRuleGroup('signup');
 
@@ -349,32 +408,45 @@ that will be used as errors specific to each field as their last parameter. This
 for a very pleasant experience for the user since the errors are tailored to each
 instance. If not custom error message is provided, the default value will be used.
 
-The array is structured as follows::
+These are two ways to provide custom error messages.
 
-    [
-        'field' => [
-            'rule' => 'message',
-            'rule' => 'message',
-        ],
-    ]
-
-Here is a more practical example::
-
-    $rules = [
-        'username' => [
-            'required'   => 'All accounts must have usernames provided',
-        ],
-        'password' => [
-            'min_length' => 'Your password is too short. You want to get hacked?'
-        ]
-    ];
+As the last parameter::
 
     $validation->setRules([
             'username' => 'required|is_unique[users.username]',
             'password' => 'required|min_length[10]'
         ],
-        $rules
+        [   // Errors
+            'username' => [
+                'required' => 'All accounts must have usernames provided',
+            ],
+            'password' => [
+                'min_length' => 'Your password is too short. You want to get hacked?'
+            ]
+        ]
     );
+
+Or as a labeled style::
+
+    $validation->setRules([
+            'username' => [
+                'label'  => 'Username',
+                'rules'  => 'required|is_unique[users.username]',
+                'errors' => [
+                    'required' => 'All accounts must have {field} provided'
+                ]
+            ],
+            'password' => [
+                'label'  => 'Password',
+                'rules'  => 'required|min_length[10]',
+                'errors' => [
+                    'min_length' => 'Your {field} is too short. You want to get hacked?'
+                ]
+            ]
+        ]
+    );
+
+.. note:: If you pass the last parameter the labeled style error messages will be ignored.
 
 Getting All Errors
 ==================
@@ -410,7 +482,6 @@ You can check to see if an error exists with the ``hasError()`` method. The only
     {
         echo $validation->getError('username');
     }
-
 
 *************************
 Customizing Error Display
@@ -449,7 +520,6 @@ we just looked at. The other type is simpler, and only contains a single variabl
 error message. This is used with the ``showError()`` method where a field must be specified::
 
     <span class="help-block"><?= esc($error) ?></span>
-
 
 Configuration
 =============
@@ -590,7 +660,10 @@ max_length              Yes         Fails if field is longer than the parameter 
 min_length              Yes         Fails if field is shorter than the parameter value.                                             min_length[3]
 numeric                 No          Fails if field contains anything other than numeric characters.
 regex_match             Yes         Fails if field does not match the regular expression.                                           regex_match[/regex/]
-required                No          Fails if the field is empty.
+if_exist                No          If this rule is present, validation will only return possible errors if the field key exists,
+                                    regardless of its value.
+permit_empty            No          Allows the field to receive an empty array, empty string, null or false.
+required                No          Fails if the field is an empty array, empty string, null or false.
 required_with           Yes         The field is required if any of the fields in the parameter are set.                            required_with[field1,field2]
 required_without        Yes         The field is required when any of the fields in the parameter are not set.                      required_without[field1,field2]
 is_unique               Yes         Checks if this field value exists in the database. Optionally set a                             is_unique[table.field,ignore_field,ignore_value]
@@ -602,11 +675,13 @@ valid_emails            No          Fails if any value provided in a comma separ
 valid_ip                No          Fails if the supplied IP is not valid. Accepts an optional parameter of ‘ipv4’ or               valid_ip[ipv6]
                                     ‘ipv6’ to specify an IP format.
 valid_url               No          Fails if field does not contain a valid URL.
+valid_date              No          Fails if field does not contain a valid date. Accepts an optional parameter                     valid_date[d/m/Y]
+                                    to matches a date format.
 valid_cc_number         Yes         Verifies that the credit card number matches the format used by the specified provider.         valid_cc_number[amex]
                                     Current supported providers are: American Express (amex), China Unionpay (unionpay),
                                     Diners Club CarteBlance (carteblanche), Diners Club (dinersclub), Discover Card (discover),
                                     Interpayment (interpayment), JCB (jcb), Maestro (maestro), Dankort (dankort), NSPK MIR (mir),
-                                    MasterCard (mastercard), Visa (visa), UATP (uatp), Verve (verve),
+                                    Troy (troy), MasterCard (mastercard), Visa (visa), UATP (uatp), Verve (verve),
                                     CIBC Convenience Card (cibc), Royal Bank of Canada Client Card (rbc),
                                     TD Canada Trust Access Card (tdtrust), Scotiabank Scotia Card (scotia), BMO ABM Card (bmoabm),
                                     HSBC Canada Card (hsbc)
@@ -641,7 +716,6 @@ mime_in                 Yes         Fails if the file's mime type is not one lis
 ext_in                  Yes         Fails if the file's extension is not one listed in the parameter.                               ext_in[field_name,png,jpg,gif]
 is_image                Yes         Fails if the file cannot be determined to be an image based on the mime type.                   is_image[field_name]
 ======================= =========== =============================================================================================== ========================================
-
 
 .. note:: You can also use any native PHP functions that permit up
 	to two parameters, where at least one is required (to pass

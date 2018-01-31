@@ -1,6 +1,5 @@
 <?php namespace CodeIgniter\Router;
 
-use CodeIgniter\Autoloader\FileLocator;
 use CodeIgniter\Autoloader\MockFileLocator;
 
 /**
@@ -237,7 +236,7 @@ class RouteCollectionTest extends \CIUnitTestCase
 		$routes = $this->getCollector();
 		$routes->setTranslateURIDashes(true);
 
-		$this->assertEquals(true, $routes->shouldTranslateURIDashes());
+		$this->assertTrue($routes->shouldTranslateURIDashes());
 	}
 
 	//--------------------------------------------------------------------
@@ -247,7 +246,7 @@ class RouteCollectionTest extends \CIUnitTestCase
 		$routes = $this->getCollector();
 		$routes->setAutoRoute(true);
 
-		$this->assertEquals(true, $routes->shouldAutoRoute());
+		$this->assertTrue($routes->shouldAutoRoute());
 	}
 
 	//--------------------------------------------------------------------
@@ -432,6 +431,23 @@ class RouteCollectionTest extends \CIUnitTestCase
 
 		$expected = [
 			'photos' => '\Photos::index'
+		];
+
+		$this->assertEquals($expected, $routes->getRoutes());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testResourcesWithExcept()
+	{
+		$_SERVER['REQUEST_METHOD'] = 'GET';
+		$routes = $this->getCollector();
+
+		$routes->resource('photos', ['except' => 'edit,new']);
+
+		$expected = [
+			'photos' => '\Photos::index',
+			'photos/(.*)' => '\Photos::show/$1'
 		];
 
 		$this->assertEquals($expected, $routes->getRoutes());
@@ -675,7 +691,7 @@ class RouteCollectionTest extends \CIUnitTestCase
 	public function testNamedRoutesWithSameURIDifferentMethods()
 	{
 		$routes = $this->getCollector();
-		
+
 		$routes->get('user/insert', 'myController::goto/$1/$2', ['as' => 'namedRoute1']);
 		$routes->post('user/insert', function() {}, ['as' => 'namedRoute2']);
 		$routes->put('user/insert', function() {}, ['as' => 'namedRoute3']);
@@ -755,7 +771,20 @@ class RouteCollectionTest extends \CIUnitTestCase
 
 		$match = $routes->getRoutes();
 
-		$this->assertTrue(array_key_exists('testing', $match));
+		$this->assertArrayHasKey('testing', $match);
 		$this->assertEquals($match['testing'], '\TestController::index');
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testRoutesOptions()
+	{
+		$routes = $this->getCollector();
+
+		$routes->add('administrator', function() {}, ['as' => 'admin', 'foo' => 'baz']);
+
+		$options = $routes->getRoutesOptions('administrator');
+
+		$this->assertEquals($options, ['as' => 'admin', 'foo' => 'baz']);
 	}
 }

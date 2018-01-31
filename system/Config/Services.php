@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014-2017 British Columbia Institute of Technology
+ * Copyright (c) 2014-2018 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,7 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
+ * @copyright	2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 3.0.0
@@ -179,8 +179,36 @@ class Services
 		}
 
 		return new \CodeIgniter\HTTP\CURLRequest(
-				$config, new \CodeIgniter\HTTP\URI(), $response, $options
+				$config,
+				new \CodeIgniter\HTTP\URI(isset($options['base_uri']) ? : null),
+				$response,
+				$options
 		);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * The Email class allows you to send email via mail, sendmail, SMTP.
+	 *
+	 * @param null $config
+	 * @param bool $getShared
+	 *
+	 * @return \CodeIgniter\Email\Email|mixed
+	 */
+	public static function email($config = null, $getShared = true)
+	{
+		if ($getShared)
+		{
+			return self::getSharedInstance('email', $config);
+		}
+
+		if (empty($config))
+		{
+			$config = new \Config\Email();
+		}
+
+		return new \CodeIgniter\Email\Email($config);
 	}
 
 	//--------------------------------------------------------------------
@@ -356,7 +384,6 @@ class Services
 	}
 
 	//--------------------------------------------------------------------
-
 
 	/**
 	 * @param \CodeIgniter\Config\BaseConfig            $config

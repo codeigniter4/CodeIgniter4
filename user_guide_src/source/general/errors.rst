@@ -8,7 +8,6 @@ default action when an error or exception is thrown is to display a detailed err
 is running under the ``production`` environment. In this case, a more generic  message is displayed to
 keep the best user experience for your users.
 
-
 Using Exceptions
 ================
 
@@ -19,7 +18,7 @@ execution is then sent to the error handler which displays the appropriate error
 
 	throw new \Exception("Some message goes here");
 
-If you are calling a method that might throw an exception, you can catch that exception using a ``try/catch block``::
+If you are calling a method that might throw an exception, you can catch that exception using a ``try/catch`` block::
 
 	try {
 		$user = $userModel->find($id);

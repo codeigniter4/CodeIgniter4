@@ -26,7 +26,6 @@ Available Functions
 
 The following functions are available:
 
-
 .. php:function:: directory_map($source_dir[, $directory_depth = 0[, $hidden = FALSE]])
 
 	:param	string	$source_dir: Path to the source directory
@@ -40,7 +39,6 @@ The following functions are available:
 		$map = directory_map('./mydirectory/');
 
 	.. note:: Paths are almost always relative to your main index.php file.
-
 
 	Sub-folders contained within the directory will be mapped as well. If
 	you wish to control the recursion depth, you can do so using the second
@@ -114,7 +112,7 @@ The following functions are available:
 	The default mode is 'wb'. Please see the `PHP user guide <http://php.net/manual/en/function.fopen.php>`_
 	for mode options.
 
-	.. note: In order for this function to write data to a file, its permissions must
+	.. note:: In order for this function to write data to a file, its permissions must
 		be set such that it is writable. If the file does not already exist,
 		then the directory containing it must be writable.
 

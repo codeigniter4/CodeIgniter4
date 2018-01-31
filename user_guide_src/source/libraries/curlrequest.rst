@@ -23,7 +23,7 @@ The library can be loaded either manually or through the :doc:`Services class </
 
 To load with the Services class call the ``curlrequest()`` method::
 
-	$client = \CodeIgniter\HTTP\Services::curlrequest();
+	$client = \Config\Services::curlrequest();
 
 You can pass in an array of default options as the first parameter to modify how cURL will handle the request.
 The options are described later in this document::
@@ -41,7 +41,7 @@ parameter is a Response object. The fourth parameter is the optional ``$options`
 	$client = new \CodeIgniter\HTTP\CURLRequest(
 		new \Config\App(),
 		new \CodeIgniter\HTTP\URI(),
-		new \CodeIgniter\HTTP\Response(),
+		new \CodeIgniter\HTTP\Response(new \Config\App()),
 		$options
 	);
 
@@ -60,7 +60,7 @@ Most communication is done through the ``request()`` method, which fires off the
 a Response instance to you. This takes the HTTP method, the url and an array of options as the parameters.
 ::
 
-	$client = Services::curlrequest();
+	$client = \Config\Services::curlrequest();
 
 	$response = $client->request('GET', 'https://api.github.com/user', [
 		'auth' => ['user', 'pass']
@@ -69,9 +69,9 @@ a Response instance to you. This takes the HTTP method, the url and an array of 
 Since the response is an instance of ``CodeIgniter\HTTP\Response`` you have all of the normal information
 available to you::
 
-	echo $response->statusCode();
-	echo $response->body();
-	echo $response->header('Content-Type');
+	echo $response->getStatusCode();
+	echo $response->getBody();
+	echo $response->getHeader('Content-Type');
 	$language = $response->negotiateLanguage(['en', 'fr']);
 
 While the ``request()`` method is the most flexible, you can also use the following shortcut methods. They
@@ -92,7 +92,7 @@ A ``base_uri`` can be set as one of the options during the instantiation of the 
 set a base URI, and then make all requests with that client using relative URLs. This is especially handy
 when working with APIs::
 
-	$client = Services::curlrequest([
+	$client = \Config\Services::curlrequest([
 		'base_uri' => 'https://example.com/api/v1/'
 	]);
 
@@ -126,28 +126,28 @@ methods. The most commonly used methods let you determine the response itself.
 
 You can get the status code and reason phrase of the response::
 
-	$code   = $response->statusCode();    // 200
-	$reason = $response->reason();      // OK
+	$code   = $response->getStatusCode();    // 200
+	$reason = $response->getReason();      // OK
 
 You can retrieve headers from the response::
 
-	// Get a header
-	echo $response->header('Content-type');
+	// Get a header line
+	echo $response->getHeaderLine('Content-Type');
 
 	// Get all headers
-	foreach ($repsonse->headers() as $name => $value)
+	foreach ($response->getHeaders() as $name => $value)
 	{
-		echo $name .': '. $response->headerLine($name) ."\n";
+		echo $name .': '. $response->getHeaderLine($name) ."\n";
 	}
 
-The body can be retrieved using the ``body()`` method::
+The body can be retrieved using the ``getBody()`` method::
 
-	$body = $response->body();
+	$body = $response->getBody();
 
 The body is the raw body provided by the remote getServer. If the content type requires formatting, you will need
 to ensure that your script handles that::
 
-	if (strpos($response->header('content-type'), 'application/json') !== false)
+	if (strpos($response->getHeader('content-type'), 'application/json') !== false)
 	{
 		$body = json_decode($body);
 	}
@@ -185,7 +185,7 @@ You can pass in array as the value of the ``allow_redirects`` option to specify 
 		'protocols' => ['https'] // Force HTTPS domains only.
 	]]);
 
-.. :note::  Following redirects does not work when PHP is in safe_mode or open_basedir is enabled.
+.. note:: Following redirects does not work when PHP is in safe_mode or open_basedir is enabled.
 
 auth
 ====
@@ -211,8 +211,6 @@ The second method is by passing a ``body`` option in. This is provided to mainta
 and functions the exact same way as the previous example. The value must be a string::
 
 	$client->request('put', 'http://example.com', ['body' => $body]);
-
-
 
 cert
 ====
@@ -266,7 +264,7 @@ if it's not already set::
 		]
 	]);
 
-.. :note:: ``form_params`` cannot be used with the ``multipart`` option. You will need to use one or the other.
+.. note:: ``form_params`` cannot be used with the ``multipart`` option. You will need to use one or the other.
         Use ``form_params`` for ``application/x-www-form-urlencoded`` request, and ``multipart`` for ``multipart/form-data``
         requests.
 
@@ -298,7 +296,7 @@ By default, CURLRequest will fail if the HTTP code returned is greater than or e
     // Will fail verbosely
 
     $res = $client->request('GET', '/status/500', ['http_errors' => false]);
-    echo $res->statusCode();
+    echo $res->getStatusCode();
     // 500
 
 json
@@ -310,7 +308,7 @@ this option can be any value that ``json_encode()`` accepts::
 
 	$response = $client->request('PUT', '/put', ['json' => ['foo' => 'bar']]);
 
-.. :note:: This option does not allow for any customization of the ``json_encode()`` function, or the Content-Type
+.. note:: This option does not allow for any customization of the ``json_encode()`` function, or the Content-Type
         header. If you need that ability, you will need to encode the data manually, passing it through the ``setBody()``
         method of CURLRequest, and set the Content-Type header with the ``setHeader()`` method.
 
@@ -327,7 +325,7 @@ has been disabled. Any files that you want to send must be passed as instances o
 		'userfile' => new CURLFile('/path/to/file.txt')
 	];
 
-.. :note:: ``multipart`` cannot be used with the ``form_params`` option. You can only use one or the other. Use
+.. note:: ``multipart`` cannot be used with the ``form_params`` option. You can only use one or the other. Use
         ``form_params`` for ``application/x-www-form-urlencoded`` requests, and ``multipart`` for ``multipart/form-data``
         requests.
 
@@ -338,7 +336,6 @@ You can pass along data to send as query string variables by passing an associat
 
 	// Send a GET request to /get?foo=bar
 	$client->request('GET', '/get', ['query' => ['foo' => 'bar']]);
-
 
 timeout
 =======

@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014-2017 British Columbia Institute of Technology
+ * Copyright (c) 2014-2018 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,7 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
+ * @copyright	2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 3.0.0
@@ -250,9 +250,9 @@ class FormatRules
 	 */
 	public function valid_email(string $str = null): bool
 	{
-		if (function_exists('idn_to_ascii') && $atpos = strpos($str, '@'))
+		if (function_exists('idn_to_ascii') && preg_match('#\A([^@]+)@(.+)\z#', $str, $matches))
 		{
-			$str = substr($str, 0, ++ $atpos) . idn_to_ascii(substr($str, $atpos));
+			$str = $matches[1] . '@' . idn_to_ascii($matches[2], 0, INTL_IDNA_VARIANT_UTS46);
 		}
 
 		return (bool) filter_var($str, FILTER_VALIDATE_EMAIL);
@@ -349,6 +349,29 @@ class FormatRules
 		$str = 'http://' . $str;
 
 		return (filter_var($str, FILTER_VALIDATE_URL) !== false);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Checks for a valid date and matches a given date format
+	 *
+	 * @param string $str
+	 * @param string $format
+	 *
+	 * @return bool
+	 */
+	public function valid_date(string $str = null, string $format = null): bool
+	{
+		if (empty($format))
+		{
+			return (bool) strtotime($str);
+		}
+
+		$date = \DateTime::createFromFormat($format, $str);
+
+  		return (bool) $date && \DateTime::getLastErrors()['warning_count'] === 0
+	  				 		&& \DateTime::getLastErrors()['error_count'] === 0;
 	}
 
 	//--------------------------------------------------------------------

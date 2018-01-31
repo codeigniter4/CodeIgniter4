@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014-2017 British Columbia Institute of Technology
+ * Copyright (c) 2014-2018 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,7 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
+ * @copyright	2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 3.0.0
@@ -102,7 +102,7 @@ class Iterator
 
 			for ($i = 0; $i < $iterations; $i ++ )
 			{
-				$result = call_user_func($test);
+				$result = $test();
 
 				$max_memory = max($max_memory, memory_get_usage(true));
 
@@ -126,7 +126,7 @@ class Iterator
 
 	/**
 	 * Get results.
-	 * 
+	 *
 	 * @return string
 	 */
 	public function getReport()
@@ -135,6 +135,8 @@ class Iterator
 		{
 			return 'No results to display.';
 		}
+
+		helper('number');
 
 		// Template
 		$tpl = "<table>
@@ -154,10 +156,12 @@ class Iterator
 
 		foreach ($this->results as $name => $result)
 		{
+		    $memory = number_to_size($result['memory'], 4);
+
 			$rows .= "<tr>
 				<td>{$name}</td>
 				<td>" . number_format($result['time'], 4) . "</td>
-				<td>{$result['memory']}</td>
+				<td>{$memory}</td>
 			</tr>";
 		}
 
@@ -167,4 +171,5 @@ class Iterator
 	}
 
 	//--------------------------------------------------------------------
+
 }

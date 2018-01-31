@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014-2017 British Columbia Institute of Technology
+ * Copyright (c) 2014-2018 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,7 @@
  *
  * @package      CodeIgniter
  * @author       CodeIgniter Dev Team
- * @copyright    2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
+ * @copyright    2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
  * @license      https://opensource.org/licenses/MIT	MIT License
  * @link         https://codeigniter.com
  * @since        Version 3.0.0
@@ -66,7 +66,8 @@ class BaseConfig
 	{
 		$properties = array_keys(get_object_vars($this));
 		$prefix = get_class($this);
-		$shortPrefix = strtolower(substr($prefix, strrpos($prefix, '\\') ));
+		$slashAt = strrpos($prefix, '\\');
+		$shortPrefix = strtolower(substr($prefix, $slashAt === false ? 0  : $slashAt+1 ));
 
 		foreach ($properties as $property)
 		{
@@ -121,22 +122,24 @@ class BaseConfig
 	 */
 	protected function getEnvValue(string $property, string $prefix, string $shortPrefix)
 	{
-		$shortPrefix = ltrim($shortPrefix, '\\');
-
-		if (($value = getenv("{$shortPrefix}.{$property}")) !== false)
-		{
-			return $value;
+		$shortPrefix = ltrim( $shortPrefix, '\\' );
+		switch (true) {
+			case array_key_exists( "{$shortPrefix}.{$property}", $_ENV ):
+				return $_ENV["{$shortPrefix}.{$property}"];
+				break;
+			case array_key_exists( "{$shortPrefix}.{$property}", $_SERVER ):
+				return $_SERVER["{$shortPrefix}.{$property}"];
+				break;
+			case array_key_exists( "{$prefix}.{$property}", $_ENV ):
+				return $_ENV["{$prefix}.{$property}"];
+				break;
+			case array_key_exists( "{$prefix}.{$property}", $_SERVER ):
+				return $_SERVER["{$prefix}.{$property}"];
+				break;
+			default:
+				$value = getenv( $property );
+				return $value === false ? null : $value;
 		}
-		elseif (($value = getenv("{$prefix}.{$property}")) !== false)
-		{
-			return $value;
-		}
-		elseif (($value = getenv($property)) !== false && $property != 'path')
-		{
-			return $value;
-		}
-
-		return null;
 	}
 
 	//--------------------------------------------------------------------
@@ -168,7 +171,7 @@ class BaseConfig
 
 			foreach ($properties as $property => $value)
 			{
-				if (is_array($this->$property) && is_array($value))
+				if (isset($this->$property) && is_array($this->$property) && is_array($value))
 				{
 					$this->$property = array_merge($this->$property, $value);
 				}

@@ -1,13 +1,12 @@
 <?php namespace CodeIgniter;
 
-use CodeIgniter\HTTP;
 use Config\App;
 
 /**
  * Exercise our core Controller class.
  * Not a lot of business logic, so concentrate on making sure
  * we can exercise everything without blowing up :-/
- * 
+ *
  * @backupGlobals enabled
  */
 class ControllerTest extends \CIUnitTestCase
@@ -53,7 +52,7 @@ class ControllerTest extends \CIUnitTestCase
 	{
 		// make sure we can instantiate one
 		$this->controller = new Controller($this->request, $this->response);
-		$this->assertTrue($this->controller instanceof Controller);
+		$this->assertInstanceOf(Controller::class, $this->controller);
 	}
 
 	public function testConstructorHTTPS()
@@ -66,7 +65,7 @@ class ControllerTest extends \CIUnitTestCase
 
 			protected $forceHTTPS = 1;
 		};
-		$this->assertTrue($this->controller instanceof Controller);
+		$this->assertInstanceOf(Controller::class, $this->controller);
 		$_SERVER = $original; // restore so code coverage doesn't break
 	}
 
@@ -93,7 +92,7 @@ class ControllerTest extends \CIUnitTestCase
 
 			protected $helpers = ['cookie', 'text'];
 		};
-		$this->assertTrue($this->controller instanceof Controller);
+		$this->assertInstanceOf(Controller::class, $this->controller);
 	}
 
 }

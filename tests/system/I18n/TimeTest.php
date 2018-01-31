@@ -14,7 +14,7 @@ class TimeTest extends \CIUnitTestCase
 
 	public function testNewTimeNow()
 	{
-		$time = new Time();
+		$time = new Time(null, 'America/Chicago');
 
 		$formatter = new IntlDateFormatter(
 			'en_US',
@@ -82,7 +82,7 @@ class TimeTest extends \CIUnitTestCase
 
 		$obj = $time->toDateTime();
 
-		$this->assertTrue($obj instanceof \DateTime);
+		$this->assertInstanceOf(\DateTime::class, $obj);
 	}
 
 	public function testNow()
@@ -90,14 +90,14 @@ class TimeTest extends \CIUnitTestCase
 		$time = Time::now();
 		$time1 = new \DateTime();
 
-		$this->assertTrue($time instanceof Time);
+		$this->assertInstanceOf(Time::class, $time);
 		$this->assertEquals($time->getTimestamp(), $time1->getTimestamp());
 	}
 
 	public function testParse()
 	{
 		$time = Time::parse('next Tuesday', 'America/Chicago');
-		$time1 = new \DateTime();
+		$time1 = new \DateTime('now', new \DateTimeZone('America/Chicago'));
 		$time1->modify('next Tuesday');
 
 		$this->assertEquals($time->getTimestamp(), $time1->getTimestamp());
@@ -231,7 +231,7 @@ class TimeTest extends \CIUnitTestCase
 		Time::setTestNow();
 		$this->assertEquals(date('Y-m-d H:i:s', time()), Time::now()->toDateTimeString());
 	}
-	
+
 	//--------------------------------------------------------------------
 
 	public function testGetYear()
@@ -348,7 +348,7 @@ class TimeTest extends \CIUnitTestCase
 	{
 		$instance = Time::now()->getTimezone();
 
-		$this->assertTrue($instance instanceof \DateTimeZone);
+		$this->assertInstanceOf(\DateTimeZone::class, $instance);
 	}
 
 	public function testGetTimezonename()
@@ -362,7 +362,7 @@ class TimeTest extends \CIUnitTestCase
 		$time = Time::parse('May 10, 2017');
 		$time2 = $time->setYear(2015);
 
-		$this->assertTrue($time2 instanceof Time);
+		$this->assertInstanceOf(Time::class, $time2);
 		$this->assertNotSame($time, $time2);
 		$this->assertEquals('2015-05-10 00:00:00', $time2->toDateTimeString());
 	}
@@ -372,7 +372,7 @@ class TimeTest extends \CIUnitTestCase
 		$time = Time::parse('May 10, 2017');
 		$time2 = $time->setMonth(4);
 
-		$this->assertTrue($time2 instanceof Time);
+		$this->assertInstanceOf(Time::class, $time2);
 		$this->assertNotSame($time, $time2);
 		$this->assertEquals('2017-04-10 00:00:00', $time2->toDateTimeString());
 	}
@@ -382,7 +382,7 @@ class TimeTest extends \CIUnitTestCase
 		$time = Time::parse('May 10, 2017');
 		$time2 = $time->setMonth('April');
 
-		$this->assertTrue($time2 instanceof Time);
+		$this->assertInstanceOf(Time::class, $time2);
 		$this->assertNotSame($time, $time2);
 		$this->assertEquals('2017-04-10 00:00:00', $time2->toDateTimeString());
 	}
@@ -392,7 +392,7 @@ class TimeTest extends \CIUnitTestCase
 		$time = Time::parse('May 10, 2017');
 		$time2 = $time->setMonth('Feb');
 
-		$this->assertTrue($time2 instanceof Time);
+		$this->assertInstanceOf(Time::class, $time2);
 		$this->assertNotSame($time, $time2);
 		$this->assertEquals('2017-02-10 00:00:00', $time2->toDateTimeString());
 	}
@@ -402,7 +402,7 @@ class TimeTest extends \CIUnitTestCase
 		$time = Time::parse('May 10, 2017');
 		$time2 = $time->setDay(15);
 
-		$this->assertTrue($time2 instanceof Time);
+		$this->assertInstanceOf(Time::class, $time2);
 		$this->assertNotSame($time, $time2);
 		$this->assertEquals('2017-05-15 00:00:00', $time2->toDateTimeString());
 	}
@@ -412,7 +412,7 @@ class TimeTest extends \CIUnitTestCase
 		$time = Time::parse('May 10, 2017');
 		$time2 = $time->setHour(15);
 
-		$this->assertTrue($time2 instanceof Time);
+		$this->assertInstanceOf(Time::class, $time2);
 		$this->assertNotSame($time, $time2);
 		$this->assertEquals('2017-05-10 15:00:00', $time2->toDateTimeString());
 	}
@@ -422,7 +422,7 @@ class TimeTest extends \CIUnitTestCase
 		$time = Time::parse('May 10, 2017');
 		$time2 = $time->setMinute(30);
 
-		$this->assertTrue($time2 instanceof Time);
+		$this->assertInstanceOf(Time::class, $time2);
 		$this->assertNotSame($time, $time2);
 		$this->assertEquals('2017-05-10 00:30:00', $time2->toDateTimeString());
 	}
@@ -432,7 +432,7 @@ class TimeTest extends \CIUnitTestCase
 		$time = Time::parse('May 10, 2017');
 		$time2 = $time->setSecond(20);
 
-		$this->assertTrue($time2 instanceof Time);
+		$this->assertInstanceOf(Time::class, $time2);
 		$this->assertNotSame($time, $time2);
 		$this->assertEquals('2017-05-10 00:00:20', $time2->toDateTimeString());
 	}
@@ -532,7 +532,7 @@ class TimeTest extends \CIUnitTestCase
 		$time = Time::parse('May 10, 2017', 'America/Chicago');
 		$time2 = $time->setTimezone('Europe/London');
 
-		$this->assertTrue($time2 instanceof Time);
+		$this->assertInstanceOf(Time::class, $time2);
 		$this->assertNotSame($time, $time2);
 		$this->assertEquals('America/Chicago', $time->getTimezoneName());
 		$this->assertEquals('Europe/London', $time2->getTimezoneName());
@@ -544,7 +544,7 @@ class TimeTest extends \CIUnitTestCase
 		$stamp = strtotime('April 1, 2017');
 		$time2 = $time->setTimestamp($stamp);
 
-		$this->assertTrue($time2 instanceof Time);
+		$this->assertInstanceOf(Time::class, $time2);
 		$this->assertNotSame($time, $time2);
 		$this->assertEquals('2017-04-01 00:00:00', $time2->toDateTimeString());
 	}

@@ -35,13 +35,7 @@ Sometimes you need to ask the user for more information. They might not have pro
 arguments, or the script may have encountered an existing file and needs confirmation before overwriting. This is
 handled with the ``prompt()`` method.
 
-The most basic use case is to simply wait for the user to press a key::
-
-	// Wait for the user to press any key...
-	CLI::prompt();
-
-You can get a little more specific and provide a question for them to answer by passing the question in
-as the first parameter::
+You can provide a question by passing it in as the first parameter::
 
 	$color = CLI::prompt('What is your favorite color?');
 
@@ -50,9 +44,13 @@ second parameter::
 
 	$color = CLI::prompt('What is your favorite color?', 'blue');
 
-Finally, you can restrict the acceptable answers by passing in an array of allowed answers as the second parameter::
+You can restrict the acceptable answers by passing in an array of allowed answers as the second parameter::
 
 	$overwrite = CLI::prompt('File exists. Overwrite?', ['y','n']);
+
+Finally, you can pass validation rules to the answer input as the third parameter::
+
+	$email = CLI::prompt('What is your email?', null, 'required|valid_email');
 
 Providing Feedback
 ==================
@@ -136,8 +134,7 @@ will break the string at the nearest word barrier so that words are not broken.
 You may find that you want a column on the left of titles, files, or tasks, while you want a column of text
 on the right with their descriptions. By default, this will wrap back to the left edge of the window, which
 doesn't allow things to line up in columns. In cases like this, you can pass in a number of spaces to pad
-every line after the first line, so that you will have a crisp column edge on the left.
-::
+every line after the first line, so that you will have a crisp column edge on the left::
 
 	// Determine the maximum length of all titles
 	// to determine the width of the left column
@@ -155,12 +152,15 @@ every line after the first line, so that you will have a crisp column edge on th
 		);
 	}
 
-	// Would create something like this:
-	task1a     Lorem Ipsum is simply dummy
-	           text of the printing and typesetting
-	           industry.
-	task1abc   Lorem Ipsum has been the industry's
-	           standard dummy text ever since the
+Would create something like this:
+
+.. code-block:: none
+
+    task1a     Lorem Ipsum is simply dummy
+               text of the printing and typesetting
+               industry.
+    task1abc   Lorem Ipsum has been the industry's
+               standard dummy text ever since the
 
 **newLine()**
 
@@ -181,7 +181,7 @@ this::
 If you have a long-running task that you would like to keep the user updated with the progress, you can use the
 ``showProgress()`` method which displays something like the following:
 
-.. code-block:: bash
+.. code-block:: none
 
 	[####......] 40% Complete
 
@@ -193,7 +193,7 @@ pass ``false`` as the first parameter and the progress bar will be removed.
 ::
 
 	$totalSteps = count($tasks);
-	$currStep = 1;
+	$currStep   = 1;
 
 	foreach ($tasks as $task)
 	{
@@ -204,4 +204,23 @@ pass ``false`` as the first parameter and the progress bar will be removed.
 	// Done, so erase it...
 	CLI::showProgress(false);
 
+**table()**
 
+::
+
+	$thead = ['ID', 'Title', 'Updated At', 'Active'];
+	$tbody = [
+		[7, 'A great item title', '2017-11-15 10:35:02', 1],
+		[8, 'Another great item title', '2017-11-16 13:46:54', 0]
+	];
+
+	CLI::table($tbody, $thead);
+
+.. code-block:: none
+
+	+----+--------------------------+---------------------+--------+
+	| ID | Title                    | Updated At          | Active |
+	+----+--------------------------+---------------------+--------+
+	| 7  | A great item title       | 2017-11-16 10:35:02 | 1      |
+	| 8  | Another great item title | 2017-11-16 13:46:54 | 0      |
+	+----+--------------------------+---------------------+--------+

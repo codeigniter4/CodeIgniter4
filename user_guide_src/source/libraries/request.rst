@@ -20,7 +20,7 @@ Class Reference
 	.. php:method:: getIPAddress()
 
 		:returns: The user's IP Address, if it can be detected, or null. If the IP address
-					is not a valid IP addresss, then will return 0.0.0.0
+					is not a valid IP address, then will return 0.0.0.0
 		:rtype: string
 
 		Returns the IP address for the current user. If the IP address is not valid, the method
@@ -57,7 +57,6 @@ Class Reference
 
 		Accepts an optional second string parameter of 'ipv4' or 'ipv6' to specify
 		an IP format. The default checks for both formats.
-
 
 	.. php:method:: method([$upper = FALSE])
 

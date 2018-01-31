@@ -67,7 +67,6 @@ The following functions are available:
 		echo increment_string('file', '-', 2); // "file-2"
 		echo increment_string('file_4'); // "file_5"
 
-
 .. php:function:: alternator($args)
 
 	:param	mixed	$args: A variable number of arguments
@@ -95,7 +94,6 @@ The following functions are available:
 	.. note:: To use multiple separate calls to this function simply call the
 		function with no arguments to re-initialize.
 
-
 .. php:function:: reduce_double_slashes($str)
 
 	:param	string	$str: Input string
@@ -109,7 +107,6 @@ The following functions are available:
 
 		$string = "http://example.com//index.php";
 		echo reduce_double_slashes($string); // results in "http://example.com/index.php"
-
 
 .. php:function:: strip_slashes($data)
 
@@ -138,7 +135,6 @@ The following functions are available:
 	.. note:: For historical reasons, this function will also accept
 		and handle string inputs. This however makes it just an
 		alias for ``stripslashes()``.
-		
 
 .. php:function:: reduce_multiples($str[, $character = ''[, $trim = FALSE]])
 
@@ -148,7 +144,7 @@ The following functions are available:
 	:returns:	Reduced string
 	:rtype:	string
 
-	Reduces multiple instances of a particular character occuring directly
+	Reduces multiple instances of a particular character occurring directly
 	after each other. Example::
 
 		$string = "Fred, Bill,, Joe, Jimmy";
@@ -172,7 +168,6 @@ The following functions are available:
 		$string = "Joe's \"dinner\"";
 		$string = quotes_to_entities($string); //results in "Joe&#39;s &quot;dinner&quot;"
 
-
 .. php:function:: strip_quotes($str)
 
 	:param	string	$str: Input string
@@ -183,7 +178,7 @@ The following functions are available:
 
 		$string = "Joe's \"dinner\"";
 		$string = strip_quotes($string); //results in "Joes dinner"
-		
+
 .. php:function:: word_limiter($str[, $limit = 100[, $end_char = '&#8230;']])
 
 	:param	string	$str: Input string
@@ -200,7 +195,6 @@ The following functions are available:
 
 	The third parameter is an optional suffix added to the string. By
 	default it adds an ellipsis.
-
 
 .. php:function:: character_limiter($str[, $n = 500[, $end_char = '&#8230;']])
 
@@ -244,7 +238,7 @@ The following functions are available:
 
 		$string = ascii_to_entities($string);
 
-.. php:function::entities_to_ascii($str[, $all = TRUE])
+.. php:function:: entities_to_ascii($str[, $all = TRUE])
 
 	:param	string	$str: Input string
 	:param	bool	$all: Whether to convert unsafe entities as well
@@ -304,7 +298,6 @@ The following functions are available:
 	The function uses PHP's ``highlight_string()`` function, so the
 	colors used are the ones specified in your php.ini file.
 
-
 .. php:function:: highlight_phrase($str, $phrase[, $tag_open = '<mark>'[, $tag_close = '</mark>']])
 
 	:param	string	$str: Input string
@@ -337,7 +330,6 @@ The following functions are available:
 				background: #ff0;
 				color: #000;
 			};
-			
 
 .. php:function:: word_wrap($str[, $charlim = 76])
 
@@ -354,12 +346,11 @@ The following functions are available:
 		$string = "Here is a simple string of text that will help us demonstrate this function.";
 		echo word_wrap($string, 25);
 
-		// Would produce:  
+		// Would produce:
 		// Here is a simple string
 		// of text that will help us
 		// demonstrate this
 		// function.
-		
 
 .. php:function:: ellipsize($str, $max_length[, $position = 1[, $ellipsis = '&hellip;']])
 
@@ -390,7 +381,7 @@ The following functions are available:
 	Produces::
 
 		this_string_is_e&hellip;ak_my_design.jpg
-		
+
 .. php:function:: excerpt($text, $phrase = false, $radius = 100, $ellipsis = '...')
 
 	:param	string	$text: Text to extract an excerpt
@@ -402,7 +393,7 @@ The following functions are available:
 
 	This function will extract $radius number of characters before and after the
 	central $phrase with an elipsis before and after.
-	
+
 	The first paramenter is the text to extract an excerpt from, the second is the
 	central word or phrase to count before and after. The third parameter is the
 	number of characters to count before and after the central phrase. If no phrase
@@ -411,19 +402,19 @@ The following functions are available:
 
 	Example::
 
-		$text = 'Ut vel faucibus odio. Quisque quis congue libero. Etiam gravida 
-		eros lorem, eget porttitor augue dignissim tincidunt. In eget risus eget 
-		mauris faucibus molestie vitae ultricies odio. Vestibulum id ultricies diam. 
-		Curabitur non mauris lectus. Phasellus eu sodales sem. Integer dictum purus 
-		ac enim hendrerit gravida. Donec ac magna vel nunc tincidunt molestie sed 
-		vitae nisl. Cras sed auctor mauris, non dictum tortor. Nulla vel scelerisque 
-		arcu. Cras ac ipsum sit amet augue laoreet laoreet. Aenean a risus lacus. 
+		$text = 'Ut vel faucibus odio. Quisque quis congue libero. Etiam gravida
+		eros lorem, eget porttitor augue dignissim tincidunt. In eget risus eget
+		mauris faucibus molestie vitae ultricies odio. Vestibulum id ultricies diam.
+		Curabitur non mauris lectus. Phasellus eu sodales sem. Integer dictum purus
+		ac enim hendrerit gravida. Donec ac magna vel nunc tincidunt molestie sed
+		vitae nisl. Cras sed auctor mauris, non dictum tortor. Nulla vel scelerisque
+		arcu. Cras ac ipsum sit amet augue laoreet laoreet. Aenean a risus lacus.
 		Sed ut tortor diam.';
-		
+
 		echo excerpt($str, 'Donec');
 
 	Produces::
 
-		... non mauris lectus. Phasellus eu sodales sem. Integer dictum purus ac 
-		enim hendrerit gravida. Donec ac magna vel nunc tincidunt molestie sed 
+		... non mauris lectus. Phasellus eu sodales sem. Integer dictum purus ac
+		enim hendrerit gravida. Donec ac magna vel nunc tincidunt molestie sed
 		vitae nisl. Cras sed auctor mauris, non dictum ...

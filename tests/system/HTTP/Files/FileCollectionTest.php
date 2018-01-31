@@ -32,10 +32,10 @@ class FileCollectionTest extends \CIUnitTestCase
 
 		$collection = new FileCollection();
 		$files      = $collection->all();
-		$this->assertEquals(1, count($files));
+		$this->assertCount(1, $files);
 
 		$file = array_shift($files);
-		$this->assertTrue($file instanceof UploadedFile);
+		$this->assertInstanceOf(UploadedFile::class, $file);
 
 		$this->assertEquals('someFile.txt', $file->getName());
 		$this->assertEquals(124, $file->getSize());
@@ -57,14 +57,14 @@ class FileCollectionTest extends \CIUnitTestCase
 
 		$collection = new FileCollection();
 		$files      = $collection->all();
-		$this->assertEquals(1, count($files));
+		$this->assertCount(1, $files);
 		$this->assertEquals('userfile', key($files));
 
 		$files = array_shift($files);
-		$this->assertEquals(2, count($files));
+		$this->assertCount(2, $files);
 
 		$file = $files[0];
-		$this->assertTrue($file instanceof UploadedFile);
+		$this->assertInstanceOf(UploadedFile::class, $file);
 
 		$this->assertEquals('fileA.txt', $file->getName());
 		$this->assertEquals('/tmp/fileA.txt', $file->getTempName());
@@ -97,11 +97,11 @@ class FileCollectionTest extends \CIUnitTestCase
 
 		$collection = new FileCollection();
 		$files      = $collection->all();
-		$this->assertEquals(2, count($files));
+		$this->assertCount(2, $files);
 		$this->assertEquals('userfile1', key($files));
 
 		$file = array_shift($files);
-		$this->assertTrue($file instanceof UploadedFile);
+		$this->assertInstanceOf(UploadedFile::class, $file);
 
 		$this->assertEquals('fileA.txt', $file->getName());
 		$this->assertEquals('/tmp/fileA.txt', $file->getTempName());
@@ -110,7 +110,7 @@ class FileCollectionTest extends \CIUnitTestCase
 		$this->assertEquals(124, $file->getSize());
 
 		$file = array_pop($files);
-		$this->assertTrue($file instanceof UploadedFile);
+		$this->assertInstanceOf(UploadedFile::class, $file);
 
 		$this->assertEquals('fileB.txt', $file->getName());
 		$this->assertEquals('/tmp/fileB.txt', $file->getTempName());
@@ -154,13 +154,13 @@ class FileCollectionTest extends \CIUnitTestCase
 
 		$collection = new FileCollection();
 		$files      = $collection->all();
-		$this->assertEquals(1, count($files));
+		$this->assertCount(1, $files);
 		$this->assertEquals('userfile', key($files));
 
-		$this->assertTrue(isset($files['userfile']['foo']['bar']));
+		$this->assertArrayHasKey('bar', $files['userfile']['foo']);
 
 		$file = $files['userfile']['foo']['bar'];
-		$this->assertTrue($file instanceof UploadedFile);
+		$this->assertInstanceOf(UploadedFile::class, $file);
 
 		$this->assertEquals('fileA.txt', $file->getName());
 		$this->assertEquals('/tmp/fileA.txt', $file->getTempName());
@@ -255,7 +255,7 @@ class FileCollectionTest extends \CIUnitTestCase
 		$this->assertTrue($collection->hasFile('userfile.foo'));
 		$this->assertTrue($collection->hasFile('userfile.foo.bar'));
 	}
-        
+
 	//--------------------------------------------------------------------
 
 	public function testErrorString()
@@ -279,7 +279,7 @@ class FileCollectionTest extends \CIUnitTestCase
 	}
 
     //--------------------------------------------------------------------
-        
+
         public function testFileReturnsValidSingleFile() {
             $_FILES = [
                         'userfile' => [
@@ -293,12 +293,12 @@ class FileCollectionTest extends \CIUnitTestCase
 
                 $collection = new FileCollection();
                 $file = $collection->getFile('userfile');
-                $this->assertTrue($file instanceof UploadedFile);
+                $this->assertInstanceOf(UploadedFile::class, $file);
 
                 $this->assertEquals('someFile.txt', $file->getName());
                 $this->assertEquals(124, $file->getSize());
         }
-        
+
     //--------------------------------------------------------------------
 
         public function testFileNoExistSingleFile() {
@@ -316,9 +316,9 @@ class FileCollectionTest extends \CIUnitTestCase
                 $file = $collection->getFile('fileuser');
                 $this->AssertNull($file);
         }
-        
+
     //--------------------------------------------------------------------
-        
+
         public function testFileReturnValidMultipleFiles() {
             $_FILES = [
 			'userfile' => [
@@ -329,28 +329,28 @@ class FileCollectionTest extends \CIUnitTestCase
 				'error' => 0
 			]
 		];
-            
+
 		$collection = new FileCollection();
 
 		$file_1 = $collection->getFile('userfile.0');
-		$this->assertTrue($file_1 instanceof UploadedFile);
+		$this->assertInstanceOf(UploadedFile::class, $file_1);
 		$this->assertEquals('fileA.txt', $file_1->getName());
 		$this->assertEquals('/tmp/fileA.txt', $file_1->getTempName());
 		$this->assertEquals('txt', $file_1->getClientExtension());
 		$this->assertEquals('text/plain', $file_1->getClientMimeType());
 		$this->assertEquals(124, $file_1->getSize());
-                
+
 		$file_2 = $collection->getFile('userfile.1');
-		$this->assertTrue($file_2 instanceof UploadedFile);
+		$this->assertInstanceOf(UploadedFile::class, $file_2);
 		$this->assertEquals('fileB.txt', $file_2->getName());
 		$this->assertEquals('/tmp/fileB.txt', $file_2->getTempName());
 		$this->assertEquals('txt', $file_2->getClientExtension());
 		$this->assertEquals('text/csv', $file_2->getClientMimeType());
 		$this->assertEquals(248, $file_2->getSize());
     }
-        
+
     //--------------------------------------------------------------------
-        
+
     public function testFileWithMultipleFilesNestedName() {
         $_FILES = [
 			'my-form' => [
@@ -381,11 +381,11 @@ class FileCollectionTest extends \CIUnitTestCase
 				],
 			]
 		];
-        
+
         $collection = new FileCollection();
 
         $file_1 = $collection->getFile('my-form.details.avatars.0');
-        $this->assertTrue($file_1 instanceof UploadedFile);
+        $this->assertInstanceOf(UploadedFile::class, $file_1);
         $this->assertEquals('fileA.txt', $file_1->getName());
 		$this->assertEquals('/tmp/fileA.txt', $file_1->getTempName());
 		$this->assertEquals('txt', $file_1->getClientExtension());
@@ -393,7 +393,7 @@ class FileCollectionTest extends \CIUnitTestCase
 		$this->assertEquals(125, $file_1->getSize());
 
         $file_2 = $collection->getFile('my-form.details.avatars.1');
-        $this->assertTrue($file_2 instanceof UploadedFile);
+        $this->assertInstanceOf(UploadedFile::class, $file_2);
         $this->assertEquals('fileB.txt', $file_2->getName());
 		$this->assertEquals('/tmp/fileB.txt', $file_2->getTempName());
 		$this->assertEquals('txt', $file_2->getClientExtension());
@@ -436,12 +436,12 @@ class FileCollectionTest extends \CIUnitTestCase
         is_dir($destination) || mkdir($destination, 0777, true);
 
         foreach ($collection->all() as $file) {
-            $this->assertTrue($file instanceof UploadedFile);
+            $this->assertInstanceOf(UploadedFile::class, $file);
             $file->move($destination, $file->getName(), false);
         }
 
         $this->assertFileExists($destination . $finalFilename . '.txt');
-        $this->assertFileNotExists($destination . $finalFilename . '_1.txt');
+        $this->assertFileExists($destination . $finalFilename . '_1.txt');
 
         // Delete the recently created files for the destination above
         foreach(glob($destination . "*") as $f) {
@@ -496,13 +496,13 @@ class FileCollectionTest extends \CIUnitTestCase
         is_dir($destination) || mkdir($destination, 0777, true);
 
         foreach ($collection->all() as $file) {
-            $this->assertTrue($file instanceof UploadedFile);
+            $this->assertInstanceOf(UploadedFile::class, $file);
             $file->move($destination, $file->getName(), true);
         }
 
         $this->assertFileExists($destination . $finalFilename . '.txt');
-        $this->assertFileExists($destination . $finalFilename . '_1.txt');
-        $this->assertFileExists($destination . $finalFilename . '_2.txt');
+        $this->assertFileNotExists($destination . $finalFilename . '_1.txt');
+        $this->assertFileNotExists($destination . $finalFilename . '_2.txt');
 
         // Delete the recently created files for the destination above
         foreach(glob($destination . "*") as $f) {

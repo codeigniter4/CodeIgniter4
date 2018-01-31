@@ -21,7 +21,6 @@ For example, let's say we want to keep a simple blog module that we can re-use b
 folder with our company name, Acme, to store all of our modules within. We will put it right alongside our **application**
 directory in the main project root::
 
-
     /acme        // New modules directory
     /application
     /public
@@ -29,7 +28,7 @@ directory in the main project root::
     /tests
     /writable
 
-Open **/application\Config\Autoload.php** and add the **Acme** namespace to the ``psr4`` array property::
+Open **application/Config/Autoload.php** and add the **Acme** namespace to the ``psr4`` array property::
 
     public $psr4 = [
         'Acme' => ROOTPATH.'acme'

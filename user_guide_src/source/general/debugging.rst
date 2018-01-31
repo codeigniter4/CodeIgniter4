@@ -45,7 +45,6 @@ This provides a backtrace to the current execution point, with Kint's own unique
 
 For more information, see `Kint's page <https://raveren.github.io/kint/>`_.
 
-
 =================
 The Debug Toolbar
 =================
@@ -56,11 +55,10 @@ to help you debug and optimize.
 
 .. note:: The Debug Toolbar is still under construction with several planned features not yet implemented.
 
-
 Enabling the Toolbar
 ====================
 
-The toolbar is enabled by default in any environment _except_ production. It will be shown whenever the
+The toolbar is enabled by default in any environment *except* production. It will be shown whenever the
 constant CI_DEBUG is defined and it's value is positive. This is defined in the boot files (i.e.
 application/Config/Boot/development.php) and can be modified there to determine what environments it shows
 itself in.
@@ -88,6 +86,9 @@ the App configuration file::
 Comment out any collectors that you do not want to show. Add custom Collectors here by providing the fully-qualified
 class name. The exact collectors that appear here will affect which tabs are shown, as well as what information is
 shown on the Timeline.
+
+.. note:: Some tabs, like Database and Logs, will only display when they have content to show. Otherwise, they
+    are removed to help out on smaller displays.
 
 The Collectors that ship with CodeIgniter are:
 
@@ -121,13 +122,13 @@ the Collector to work
 
 	class MyCollector extends BaseCollector
 	{
-		protected $hasTimeline = false;
+		protected $hasTimeline   = false;
 
 		protected $hasTabContent = false;
 
-		protected $hasVarData = false;
+		protected $hasVarData    = false;
 
-		protected $title = '';
+		protected $title         = '';
 	}
 
 **$hasTimeline** should be set to ``true`` for any Collector that wants to display information in the toolbar's
@@ -143,7 +144,6 @@ to the right of the tab content's title.
 is true, you will need to implement the ``getVarData()`` method.
 
 **$title** is displayed on open tabs.
-
 
 Displaying a Toolbar Tab
 ------------------------

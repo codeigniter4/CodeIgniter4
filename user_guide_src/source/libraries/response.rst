@@ -20,13 +20,13 @@ Setting the Output
 ------------------
 
 When you need to set the output of the script directly, and not rely on CodeIgniter to automatically get it, you
-do it manually with the ``setBody`` method. This is usually used in conjuction with setting the status code of
+do it manually with the ``setBody`` method. This is usually used in conjunction with setting the status code of
 the response::
 
 	$this->response->setStatusCode(404)
 	               ->setBody($body);
 
-The reason phrase ('OK', 'Created', 'Moved Permenantly') will be automatically added, but you can add custom reasons
+The reason phrase ('OK', 'Created', 'Moved Permanently') will be automatically added, but you can add custom reasons
 as the second parameter of the ``setStatusCode()`` method::
 
 	$this->response->setStatusCode(404, 'Nope. Not here.');
@@ -61,7 +61,7 @@ parameter. This is not case-sensitive.
 Force File Download
 ===================
 
-The Reponse class provides a simple way to send a file to the client, prompting the browser to download the data
+The Response class provides a simple way to send a file to the client, prompting the browser to download the data
 to your computer. This sets the appropriate headers to make it happen.
 
 The first parameter is the **name you want the downloaded file to be named**, the second parameter is the
@@ -353,7 +353,6 @@ The methods provided by the parent class that are available are:
 		:param	bool	$secure: Whether to only transfer the cookie through HTTPS
 		:param	bool	$httponly: Whether to only make the cookie accessible for HTTP requests (no JavaScript)
 		:rtype:	void
-
 
 		Sets a cookie containing the values you specify. There are two ways to
 		pass information to this method so that a cookie can be set: Array

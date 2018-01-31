@@ -59,22 +59,27 @@ class ParserPluginTest extends \CIUnitTestCase
 
 	public function testValidationErrors()
 	{
-		
+
 		$this->validator->setError("email","Invalid email address");
-		
+
 		$template = '{+ validation_errors field=email +}';
 
-		$this->assertEquals($this->validator->showError('email'), $this->parser->renderString($template));
+		$this->assertEquals($this->setHints($this->validator->showError('email')), $this->setHints($this->parser->renderString($template)));
 	}
 
 	public function testValidationErrorsList()
 	{
-		
+
 		$this->validator->setError("email","Invalid email address");
 		$this->validator->setError("username","User name must be unique");
 		$template = '{+ validation_errors +}';
 
-		$this->assertEquals($this->validator->listErrors(), $this->parser->renderString($template));
+		$this->assertEquals($this->setHints($this->validator->listErrors()), $this->setHints($this->parser->renderString($template)));
+	}
+
+	public function setHints($output)
+	{
+		return preg_replace('/(<!-- DEBUG-VIEW+) (\w+) (\d+)/', '${1}', $output);
 	}
 
 }

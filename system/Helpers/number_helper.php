@@ -6,7 +6,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014-2017 British Columbia Institute of Technology
+ * Copyright (c) 2014-2018 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,7 @@
  * @package	CodeIgniter
  * @author	EllisLab Dev Team
  * @copyright	2008-2014 EllisLab, Inc. (https://ellislab.com/)
- * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
+ * @copyright	2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 1.0.0
@@ -58,29 +58,36 @@ if ( ! function_exists('number_to_size'))
 			return false;
 		}
 
+		// ignore sub part
+		$genralLocale = $locale;
+		if( ! empty($locale) && ( $underscorePos = strpos( $locale, '_' )))
+		{
+			$genralLocale = substr( $locale, 0, $underscorePos );
+		}
+
 		if ($num >= 1000000000000)
 		{
 			$num = round($num / 1099511627776, $precision);
-			$unit = lang('Number.terabyteAbbr');
+			$unit = lang('Number.terabyteAbbr', [], $genralLocale);
 		}
 		elseif ($num >= 1000000000)
 		{
 			$num = round($num / 1073741824, $precision);
-			$unit = lang('Number.gigabyteAbbr');
+			$unit = lang('Number.gigabyteAbbr', [], $genralLocale);
 		}
 		elseif ($num >= 1000000)
 		{
 			$num = round($num / 1048576, $precision);
-			$unit = lang('Number.megabyteAbbr');
+			$unit = lang('Number.megabyteAbbr', [], $genralLocale);
 		}
 		elseif ($num >= 1000)
 		{
 			$num = round($num / 1024, $precision);
-			$unit = lang('Number.kilobyteAbbr');
+			$unit = lang('Number.kilobyteAbbr', [], $genralLocale);
 		}
 		else
 		{
-			$unit = lang('Number.bytes');
+			$unit = lang('Number.bytes', [], $genralLocale);
 		}
 
 		return format_number($num, $precision, $locale, ['after' => ' ' . $unit]);
@@ -123,29 +130,36 @@ if ( ! function_exists('number_to_amount'))
 
 		$suffix = '';
 
+		// ignore sub part
+		$genralLocale = $locale;
+		if( ! empty($locale) && ( $underscorePos = strpos( $locale, '_' )))
+		{
+			$genralLocale = substr( $locale, 0, $underscorePos );
+		}
+
 		if ($num > 1000000000000000)
 		{
-			$suffix = lang('Number.quadrillion');
+			$suffix = lang('Number.quadrillion', [], $genralLocale);
 			$num = round(($num / 1000000000000000), $precision);
 		}
 		elseif ($num > 1000000000000)
 		{
-			$suffix = lang('Number.trillion');
+			$suffix = lang('Number.trillion', [], $genralLocale);
 			$num = round(($num / 1000000000000), $precision);
 		}
 		else if ($num > 1000000000)
 		{
-			$suffix = lang('Number.billion');
+			$suffix = lang('Number.billion', [], $genralLocale);
 			$num = round(($num / 1000000000), $precision);
 		}
 		else if ($num > 1000000)
 		{
-			$suffix = lang('Number.million');
+			$suffix = lang('Number.million', [], $genralLocale);
 			$num = round(($num / 1000000), $precision);
 		}
 		else if ($num > 1000)
 		{
-			$suffix = lang('Number.thousand');
+			$suffix = lang('Number.thousand', [], $genralLocale);
 			$num = round(($num / 1000), $precision);
 		}
 
@@ -197,8 +211,7 @@ if ( ! function_exists('format_number'))
 		$locale = $locale ?? \CodeIgniter\Config\Services::request()->getLocale();
 
 		// Type can be any of the NumberFormatter options, but provide a default.
-		$type = isset($options['type']) ? (int) $options['type'] :
-				NumberFormatter::DECIMAL;
+		$type = (int) ($options['type'] ?? NumberFormatter::DECIMAL);
 
 		// In order to specify a precision, we'll have to modify
 		// the pattern used by NumberFormatter.
@@ -247,7 +260,7 @@ if ( ! function_exists('number_to_roman'))
 {
 	/**
 	* Convert a number to a roman numeral.
-	* 
+	*
 	* @param int $num it will convert to int
 	*
 	* @return string
@@ -267,22 +280,22 @@ if ( ! function_exists('number_to_roman'))
 			switch ($th)
 			{
 				case 1:
-					$key1  = 'I'; 
-					$key2  = 'V'; 
-					$key_f = 'X'; 
+					$key1  = 'I';
+					$key2  = 'V';
+					$key_f = 'X';
 					break;
 				case 2:
-					$key1  = 'X'; 
-					$key2  = 'L'; 
-					$key_f = 'C'; 
+					$key1  = 'X';
+					$key2  = 'L';
+					$key_f = 'C';
 					break;
 				case 3:
-					$key1  = 'C'; 
-					$key2  = 'D'; 
-					$key_f = 'M'; 
+					$key1  = 'C';
+					$key2  = 'D';
+					$key_f = 'M';
 					break;
 				case 4:
-					$key1  = 'M'; 
+					$key1  = 'M';
 					break;
 			}
 			$n = $num % 10;

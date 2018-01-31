@@ -62,7 +62,7 @@ directory.
 
 The the Router as an example. The Router lives in the ``CodeIgniter\Router`` namespace. It has two classes,
 **RouteCollection** and **Router**, which are in the files, **system/Router/RouteCollection.php** and
-**system/Router/Router.php** respectively. 
+**system/Router/Router.php** respectively.
 
 Interfaces
 ----------
@@ -71,7 +71,7 @@ Most base classes should have an interface defined for them. At the very least t
 and passed in other classes as a dependency without breaking the type-hinting. The interface names should match
 the name of the class with "Interface" appended to it, like ``RouteCollectionInterface``.
 
-The Router package mentioned above includes the 
+The Router package mentioned above includes the
 ``CodeIgniter\Router\RouterCollectionInterface`` and ``CodeIgniter\Router\RouterInterface``
 interfaces to provide the abstractions for the two classes in the package.
 

@@ -23,7 +23,7 @@ will be retrieved and sent to the requesting user's browser. If it has
 expired, it will be deleted and refreshed before being sent to the
 browser.
 
-.. note: The Benchmark tag is not cached so you can still view your page
+.. note:: The Benchmark tag is not cached so you can still view your page
 	load speed when caching is enabled.
 
 Enabling Caching

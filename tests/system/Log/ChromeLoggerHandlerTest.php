@@ -1,10 +1,6 @@
 <?php namespace CodeIgniter\Log\Handlers;
 
 use Config\MockLogger as LoggerConfig;
-use Psr\Log\LogLevel;
-use CodeIgniter\Log\Handlers\TestHandler;
-use CodeIgniter\Events\Events;
-use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Services;
 
 class ChromeLoggerHandlerTest extends \CIUnitTestCase

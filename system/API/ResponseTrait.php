@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014-2017 British Columbia Institute of Technology
+ * Copyright (c) 2014-2018 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,7 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
+ * @copyright	2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 3.0.0
@@ -140,7 +140,7 @@ trait ResponseTrait
 	{
 		if ( ! is_array($messages))
 		{
-			$messages = [$messages];
+			$messages = ['error' => $messages];
 		}
 
 		$response = [
@@ -198,7 +198,7 @@ trait ResponseTrait
 	 *
 	 * @return mixed
 	 */
-	public function failUnauthorized(string $description, string $code = null, string $message = '')
+	public function failUnauthorized(string $description = 'Unauthorized', string $code = null, string $message = '')
 	{
 		return $this->fail($description, $this->codes['unauthorized'], $code, $message);
 	}
@@ -215,7 +215,7 @@ trait ResponseTrait
 	 *
 	 * @return mixed
 	 */
-	public function failForbidden(string $description, string $code = null, string $message = '')
+	public function failForbidden(string $description = 'Forbidden', string $code = null, string $message = '')
 	{
 		return $this->fail($description, $this->codes['forbidden'], $code, $message);
 	}
@@ -231,7 +231,7 @@ trait ResponseTrait
 	 *
 	 * @return mixed
 	 */
-	public function failNotFound(string $description, string $code = null, string $message = '')
+	public function failNotFound(string $description = 'Not Found', string $code = null, string $message = '')
 	{
 		return $this->fail($description, $this->codes['resource_not_found'], $code, $message);
 	}
@@ -247,7 +247,7 @@ trait ResponseTrait
 	 *
 	 * @return mixed
 	 */
-	public function failValidationError(string $description, string $code = null, string $message = '')
+	public function failValidationError(string $description = 'Bad Request', string $code = null, string $message = '')
 	{
 		return $this->fail($description, $this->codes['invalid_data'], $code, $message);
 	}
@@ -263,7 +263,7 @@ trait ResponseTrait
 	 *
 	 * @return mixed
 	 */
-	public function failResourceExists(string $description, string $code = null, string $message = '')
+	public function failResourceExists(string $description = 'Conflict', string $code = null, string $message = '')
 	{
 		return $this->fail($description, $this->codes['resource_exists'], $code, $message);
 	}
@@ -281,7 +281,7 @@ trait ResponseTrait
 	 *
 	 * @return mixed
 	 */
-	public function failResourceGone(string $description, string $code = null, string $message = '')
+	public function failResourceGone(string $description = 'Gone', string $code = null, string $message = '')
 	{
 		return $this->fail($description, $this->codes['resource_gone'], $code, $message);
 	}
@@ -297,7 +297,7 @@ trait ResponseTrait
 	 *
 	 * @return mixed
 	 */
-	public function failTooManyRequests(string $description, string $code = null, string $message = '')
+	public function failTooManyRequests(string $description = 'Too Many Requests', string $code = null, string $message = '')
 	{
 		return $this->fail($description, $this->codes['too_many_requests'], $code, $message);
 	}
@@ -313,7 +313,7 @@ trait ResponseTrait
 	 *
 	 * @return Response The value of the Response's send() method.
 	 */
-	public function failServerError(string $description, string $code = null, string $message = ''): Response
+	public function failServerError(string $description = 'Internal Server Error', string $code = null, string $message = ''): Response
 	{
 		return $this->fail($description, $this->codes['server_error'], $code, $message);
 	}
@@ -358,8 +358,12 @@ trait ResponseTrait
 			$this->formatter = $config->getFormatter($format);
 		}
 
-		// Recursively convert objects into associative arrays
-		$data = json_decode(json_encode($data), true);
+		if ($format !== 'application/json')
+		{
+			// Recursively convert objects into associative arrays
+			// Conversion not required for JSONFormatter
+			$data = json_decode(json_encode($data), true);
+		}
 
 		return $this->formatter->format($data);
 	}

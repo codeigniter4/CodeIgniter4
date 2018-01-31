@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014-2017 British Columbia Institute of Technology
+ * Copyright (c) 2014-2018 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,7 @@
  *
  * @package      CodeIgniter
  * @author       CodeIgniter Dev Team
- * @copyright    2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
+ * @copyright    2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
  * @license      https://opensource.org/licenses/MIT	MIT License
  * @link         https://codeigniter.com
  * @since        Version 4.0.0
@@ -61,6 +61,14 @@ class Views extends BaseCollector
 	protected $hasTabContent = false;
 
 	/**
+	 * Whether this collector needs to display
+	 * a label or not.
+	 *
+	 * @var bool
+	 */
+	protected $hasLabel = true;
+
+	/**
 	 * Whether this collector has data that
 	 * should be shown in the Vars tab.
 	 *
@@ -81,6 +89,13 @@ class Views extends BaseCollector
 	 * @var RendererInterface
 	 */
 	protected $viewer;
+
+	/**
+	 * Views counter
+	 *
+	 * @var array
+	 */
+	protected $views = [];
 
 	//--------------------------------------------------------------------
 
@@ -148,4 +163,28 @@ class Views extends BaseCollector
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Returns a count of all views.
+	 *
+	 * @return int
+	 */
+	public function getBadgeValue()
+	{
+		return count($this->viewer->getPerformanceData());
+	}
+
+	/**
+	 * Display the icon.
+	 *
+	 * Icon from https://icons8.com - 1em package
+	 *
+	 * @return string
+	 */
+	public function icon(): string
+	{
+		return <<<EOD
+<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADeSURBVEhL7ZSxDcIwEEWNYA0YgGmgyAaJLTcUaaBzQQEVjMEabBQxAdw53zTHiThEovGTfnE/9rsoRUxhKLOmaa6Uh7X2+UvguLCzVxN1XW9x4EYHzik033Hp3X0LO+DaQG8MDQcuq6qao4qkHuMgQggLvkPLjqh00ZgFDBacMJYFkuwFlH1mshdkZ5JPJERA9JpI6xNCBESvibQ+IURA9JpI6xNCBESvibQ+IURA9DTsuHTOrVFFxixgB/eUFlU8uKJ0eDBFOu/9EvoeKnlJS2/08Tc8NOwQ8sIfMeYFjqKDjdU2sp4AAAAASUVORK5CYII=">
+EOD;
+
+	}
 }

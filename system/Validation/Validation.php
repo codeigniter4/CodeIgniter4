@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014-2017 British Columbia Institute of Technology
+ * Copyright (c) 2014-2018 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,7 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
+ * @copyright	2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 3.0.0
@@ -136,19 +136,24 @@ class Validation implements ValidationInterface
 			return false;
 		}
 
+		// Need this for searching arrays in validation.
+		helper('array');
+
 		// Run through each rule. If we have any field set for
 		// this rule, then we need to run them through!
-		foreach ($this->rules as $rField => $ruleString)
+		foreach ($this->rules as $rField => $rSetup)
 		{
-			// Blast $ruleString apart, unless it's already an array.
-			$rules = $ruleString;
+			// Blast $rSetup apart, unless it's already an array.
+			$rules = $rSetup['rules'] ?? $rSetup;
 
 			if (is_string($rules))
 			{
 				$rules = explode('|', $rules);
 			}
 
-			$this->processRules($rField, $data[$rField] ?? null, $rules, $data);
+			$value = dot_array_search($rField, $data);
+
+			$this->processRules($rField, $rSetup['label'] ?? $rField, $value ?? null, $rules, $data);
 		}
 
 		return ! empty($this->errors) ? false : true;
@@ -169,7 +174,7 @@ class Validation implements ValidationInterface
 	public function check($value, string $rule, array $errors = []): bool
 	{
 		$this->reset();
-		$this->setRule('check', $rule, $errors);
+		$this->setRule('check', null, $rule, $errors);
 		return $this->run([
 					'check' => $value
 		]);
@@ -183,15 +188,39 @@ class Validation implements ValidationInterface
 	 * the error to $this->errors and moves on to the next,
 	 * so that we can collect all of the first errors.
 	 *
-	 * @param string     $field
-	 * @param string     $value
-	 * @param array|null $rules
-	 * @param array      $data // All of the fields to check.
+	 * @param string      $field
+	 * @param string|null $label
+	 * @param string      $value
+	 * @param array|null  $rules
+	 * @param array       $data // All of the fields to check.
 	 *
 	 * @return bool
 	 */
-	protected function processRules(string $field, $value, $rules = null, array $data)
+	protected function processRules(string $field, string $label = null, $value, $rules = null, array $data)
 	{
+		// If the if_exist rule is defined...
+		if (in_array('if_exist', $rules))
+		{
+			// and the current field does not exists in the input data
+			// we can return true. Ignoring all other rules to this field.
+			if (! array_key_exists($field, $data))
+			{
+				return true;
+			}
+			// Otherwise remove the if_exist rule and continue the process
+			$rules = array_diff($rules, ['if_exist']);
+		}
+
+		if (in_array('permit_empty', $rules))
+		{
+			if (! in_array('required', $rules) && (is_array($value) ? empty($value) : (trim($value) === '')))
+			{
+				return true;
+			}
+
+			$rules = array_diff($rules, ['permit_empty']);
+		}
+
 		foreach ($rules as $rule)
 		{
 			$callable = is_callable($rule);
@@ -242,7 +271,7 @@ class Validation implements ValidationInterface
 			// Set the error message if we didn't survive.
 			if ($passed === false)
 			{
-				$this->errors[$field] = is_null($error) ? $this->getErrorMessage($rule, $field, $param) : $error;
+				$this->errors[$field] = is_null($error) ? $this->getErrorMessage($rule, $field, $label, $param) : $error;
 
 				return false;
 			}
@@ -285,15 +314,19 @@ class Validation implements ValidationInterface
 	 *        'rule' => 'message'
 	 *    ]
 	 *
-	 * @param string $field
-	 * @param string $rule
-	 * @param array  $errors
+	 * @param string      $field
+	 * @param string|null $label
+	 * @param string      $rules
+	 * @param array       $errors
 	 *
 	 * @return $this
 	 */
-	public function setRule(string $field, string $rule, array $errors = [])
+	public function setRule(string $field, string $label = null, string $rules, array $errors = [])
 	{
-		$this->rules[$field] = $rule;
+		$this->rules[$field] = [
+			'label' => $label,
+			'rules' => $rules,
+		];
 		$this->customErrors = array_merge($this->customErrors, [
 			$field => $errors
 		]);
@@ -328,7 +361,17 @@ class Validation implements ValidationInterface
 	{
 		$this->rules = $rules;
 
-		if ( ! empty($errors))
+		if (empty($errors))
+		{
+			foreach ($rules as $field => $setup)
+			{
+				if (isset($setup['errors']))
+				{
+					$this->customErrors[$field] = $setup['errors'];
+				}
+			}
+		}
+		else
 		{
 			$this->customErrors = $errors;
 		}
@@ -570,7 +613,7 @@ class Validation implements ValidationInterface
 		// If we already have errors, we'll use those.
 		// If we don't, check the session to see if any were
 		// passed along from a redirect_with_input request.
-		if (empty($this->errors))
+		if (empty($this->errors) && ! is_cli())
 		{
 			// Start up the session if it's not already
 			if ( ! isset($_SESSION))
@@ -609,13 +652,14 @@ class Validation implements ValidationInterface
 	/**
 	 * Attempts to find the appropriate error message
 	 *
-	 * @param string $rule
-	 * @param string $field
-	 * @param string $param
+	 * @param string      $rule
+	 * @param string      $field
+	 * @param string|null $label
+	 * @param string      $param
 	 *
 	 * @return string
 	 */
-	protected function getErrorMessage(string $rule, string $field, string $param = null): string
+	protected function getErrorMessage(string $rule, string $field, string $label = null, string $param = null): string
 	{
 		// Check if custom message has been defined by user
 		if (isset($this->customErrors[$field][$rule]))
@@ -630,7 +674,7 @@ class Validation implements ValidationInterface
 			$message = lang('Validation.' . $rule);
 		}
 
-		$message = str_replace('{field}', $field, $message);
+		$message = str_replace('{field}', $label ?? $field, $message);
 		$message = str_replace('{param}', $param, $message);
 
 		return $message;

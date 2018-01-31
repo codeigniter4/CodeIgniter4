@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014-2017 British Columbia Institute of Technology
+ * Copyright (c) 2014-2018 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,7 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
+ * @copyright	2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 3.0.0
@@ -167,7 +167,7 @@ class UploadedFile extends File implements UploadedFileInterface
 
 		$targetPath = rtrim($targetPath, '/') . '/';
 		$name = is_null($name) ? $this->getName() : $name;
-		$destination = $overwrite ? $this->getDestination($targetPath . $name) : $targetPath . $name;
+		$destination = $overwrite ? $targetPath . $name : $this->getDestination($targetPath . $name);
 
 		if ( ! @move_uploaded_file($this->path, $destination))
 		{
@@ -179,7 +179,7 @@ class UploadedFile extends File implements UploadedFileInterface
 
 		// Success, so store our new information
 		$this->path = $targetPath;
-		$this->name = $name;
+		$this->name = basename($destination);
 		$this->hasMoved = true;
 
 		return true;
@@ -188,6 +188,9 @@ class UploadedFile extends File implements UploadedFileInterface
 	/**
 	 * create file target path if
 	 * the set path does not exist
+	 *
+	 * @param string $path
+	 *
 	 * @return string The path set or created.
 	 */
    	protected function setPath($path)
@@ -268,7 +271,7 @@ class UploadedFile extends File implements UploadedFileInterface
 
 		$error = is_null($this->error) ? UPLOAD_ERR_OK : $this->error;
 
-		return isset($errors[$error]) ? sprintf($errors[$error], $this->getName()) : sprintf('The file "%s" was not uploaded due to an unknown error.', $this->getName());
+		return sprintf($errors[$error] ?? 'The file "%s" was not uploaded due to an unknown error.', $this->getName());
 	}
 
 	//--------------------------------------------------------------------

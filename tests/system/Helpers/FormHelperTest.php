@@ -3,6 +3,7 @@
 use CodeIgniter\HTTP\URI;
 use Config\App;
 use CodeIgniter\Services;
+use Config\Filters;
 
 class FormHelperTest extends \CIUnitTestCase
 {
@@ -21,10 +22,25 @@ class FormHelperTest extends \CIUnitTestCase
 
         Services::injectMock('request', $request);
 
-        $expected = <<<EOH
+		$before = (new Filters())->globals['before'];
+		if (in_array('csrf', $before) || array_key_exists('csrf', $before ))
+		{
+			$Value = csrf_hash();
+			$Name = csrf_token();
+			$expected = <<<EOH
+<form action="http://example.com/index.php/foo/bar" name="form" id="form" method="POST" accept-charset="utf-8">
+<input type="hidden" name="$Name" value="$Value" style="display: none;" />
+
+EOH;
+		}
+		else
+		{
+			$expected = <<<EOH
 <form action="http://example.com/index.php/foo/bar" name="form" id="form" method="POST" accept-charset="utf-8">
 
 EOH;
+		}
+
         $attributes = [
             'name'   => 'form',
             'id'     => 'form',
@@ -43,10 +59,24 @@ EOH;
 
         Services::injectMock('request', $request);
 
-        $expected = <<<EOH
+		$before = (new Filters())->globals['before'];
+		if (in_array('csrf', $before) || array_key_exists('csrf', $before ))
+		{
+			$Value = csrf_hash();
+			$Name = csrf_token();
+			$expected = <<<EOH
+<form action="http://example.com/" name="form" id="form" method="POST" accept-charset="utf-8">
+<input type="hidden" name="$Name" value="$Value" style="display: none;" />
+
+EOH;
+		}
+		else
+		{
+			$expected = <<<EOH
 <form action="http://example.com/" name="form" id="form" method="POST" accept-charset="utf-8">
 
 EOH;
+		}
         $attributes = [
             'name'   => 'form',
             'id'     => 'form',
@@ -65,10 +95,25 @@ EOH;
 
         Services::injectMock('request', $request);
 
-        $expected = <<<EOH
+		$before = (new Filters())->globals['before'];
+		if (in_array('csrf', $before) || array_key_exists('csrf', $before ))
+		{
+			$Value = csrf_hash();
+			$Name = csrf_token();
+			$expected = <<<EOH
+<form action="http://example.com/index.php/foo/bar" name="form" id="form" method="post" accept-charset="utf-8">
+<input type="hidden" name="$Name" value="$Value" style="display: none;" />
+
+EOH;
+		}
+		else
+		{
+			$expected = <<<EOH
 <form action="http://example.com/index.php/foo/bar" name="form" id="form" method="post" accept-charset="utf-8">
 
 EOH;
+		}
+
         $attributes = [
             'name'   => 'form',
             'id'     => 'form'
@@ -86,11 +131,27 @@ EOH;
 
         Services::injectMock('request', $request);
 
-        $expected = <<<EOH
+		$before = (new Filters())->globals['before'];
+		if (in_array('csrf', $before) || array_key_exists('csrf', $before ))
+		{
+			$Value = csrf_hash();
+			$Name = csrf_token();
+			$expected = <<<EOH
+<form action="http://example.com/index.php/foo/bar" name="form" id="form" method="POST" accept-charset="utf-8">
+<input type="hidden" name="foo" value="bar" style="display: none;" />
+<input type="hidden" name="$Name" value="$Value" style="display: none;" />
+
+EOH;
+		}
+		else
+		{
+			$expected = <<<EOH
 <form action="http://example.com/index.php/foo/bar" name="form" id="form" method="POST" accept-charset="utf-8">
 <input type="hidden" name="foo" value="bar" style="display: none;" />
 
 EOH;
+		}
+
         $attributes = [
             'name'   => 'form',
             'id'     => 'form',
@@ -112,10 +173,24 @@ EOH;
 
         Services::injectMock('request', $request);
 
-        $expected = <<<EOH
+		$before = (new Filters())->globals['before'];
+		if (in_array('csrf', $before) || array_key_exists('csrf', $before ))
+		{
+			$Value = csrf_hash();
+			$Name = csrf_token();
+			$expected = <<<EOH
+<form action="http://example.com/index.php/foo/bar" name="form" id="form" method="POST" enctype="multipart&#x2F;form-data" accept-charset="utf-8">
+<input type="hidden" name="$Name" value="$Value" style="display: none;" />
+
+EOH;
+		}
+		else
+		{
+			$expected = <<<EOH
 <form action="http://example.com/index.php/foo/bar" name="form" id="form" method="POST" enctype="multipart&#x2F;form-data" accept-charset="utf-8">
 
 EOH;
+		}
         $attributes = [
             'name'   => 'form',
             'id'     => 'form',
@@ -493,5 +568,58 @@ EOH;
 
 EOH;
         $this->assertEquals($expected, form_datalist('foo', 'bar', $options));
+    }
+    // ------------------------------------------------------------------------
+    public function test_set_value()
+    {
+    	$_SESSION['_ci_old_input']['post']['foo'] = '<bar';
+    	$this->assertEquals('&lt;bar', set_value('foo'));
+
+    	unset($_SESSION['_ci_old_input']['post']['foo']);
+    	$this->assertEquals('baz', set_value('foo', 'baz'));
+    }
+    // ------------------------------------------------------------------------
+    public function test_set_select()
+    {
+    	$_SESSION['_ci_old_input']['post']['foo'] = 'bar';
+    	$this->assertEquals(' selected="selected"', set_select('foo', 'bar'));
+
+    	$_SESSION['_ci_old_input']['post']['foo'] = ['foo' => 'bar'];
+    	$this->assertEquals(' selected="selected"', set_select('foo', 'bar'));
+    	$this->assertEquals('', set_select('foo', 'baz'));
+
+    	unset($_SESSION['_ci_old_input']['post']['foo']);
+    	$this->assertEquals(' selected="selected"', set_select('foo', 'baz', true));
+    }
+    // ------------------------------------------------------------------------
+    public function test_set_checkbox()
+    {
+    	$_SESSION['_ci_old_input']['post']['foo'] = 'bar';
+    	$this->assertEquals(' checked="checked"', set_checkbox('foo', 'bar'));
+
+    	$_SESSION['_ci_old_input']['post']['foo'] = ['foo' => 'bar'];
+    	$this->assertEquals(' checked="checked"', set_checkbox('foo', 'bar'));
+    	$this->assertEquals('', set_checkbox('foo', 'baz'));
+
+    	unset($_SESSION['_ci_old_input']['post']['foo']);
+    	$this->assertEquals('', set_checkbox('foo', 'bar'));
+
+    	$_POST = [];
+    	$this->assertEquals(' checked="checked"', set_checkbox('foo', 'baz', true));
+    }
+    // ------------------------------------------------------------------------
+    public function test_set_radio()
+    {
+    	$_POST['foo'] = 'bar';
+    	$this->assertEquals(' checked="checked"', set_radio('foo', 'bar'));
+
+    	$_POST['foo'] = ['bar'];
+    	$this->assertEquals(' checked="checked"', set_radio('foo', 'bar'));
+
+    	$_POST['foo'] = ['baz'];
+    	$this->assertEquals('', set_radio('foo', 'bar'));
+
+    	$_POST = [];
+    	$this->assertEquals(' checked="checked"', set_radio('foo', 'bar', true));
     }
 }

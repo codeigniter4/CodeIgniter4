@@ -26,7 +26,7 @@ class TimerTest extends \CIUnitTestCase
 
 		$timers = $timer->getTimers();
 
-		$this->assertTrue(count($timers) === 1, "No timers were stored.");
+		$this->assertCount(1, $timers, "No timers were stored.");
 		$this->assertArrayHasKey('test1', $timers, 'No "test1" array found.');
 		$this->assertArrayHasKey('start', $timers['test1'], 'No "start" value found.');
 		$this->assertArrayHasKey('end', $timers['test1'], 'No "end" value found.');
@@ -90,7 +90,7 @@ class TimerTest extends \CIUnitTestCase
         $timer->start('longjohn', strtotime('-11 minutes'));
 
         // Use floor here to account for fractional differences in seconds.
-        $this->assertEquals(11 * 60, floor($timer->getElapsedTime('longjohn')));
+        $this->assertEquals(11 * 60, (int)$timer->getElapsedTime('longjohn'));
     }
 
     //--------------------------------------------------------------------
@@ -100,7 +100,7 @@ class TimerTest extends \CIUnitTestCase
         timer()->start('longjohn', strtotime('-11 minutes'));
 
         // Use floor here to account for fractional differences in seconds.
-        $this->assertEquals(11 * 60, floor(timer()->getElapsedTime('longjohn')));
+        $this->assertEquals(11 * 60, (int)timer()->getElapsedTime('longjohn'));
     }
 
     //--------------------------------------------------------------------

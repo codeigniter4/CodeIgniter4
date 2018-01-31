@@ -22,7 +22,7 @@ The following example shows a common usage pattern within your controllers.
 
     class Users extends \CodeIgniter\Controller
     {
-        use CodeIgniter\API\ResponseTrait;
+        use \CodeIgniter\API\ResponseTrait;
 
         public function createUser()
         {
@@ -85,7 +85,7 @@ type of response to return. If no matches are found between what the client requ
 format in this array is what will be returned.
 
 Next, you need to define the class that is used to format the array of data. This must be a fully qualified class
-name, and the class must implement **CodeIgniter\API\FormatterInterface**. Formatters come out of the box that
+name, and the class must implement **CodeIgniter\\API\\FormatterInterface**. Formatters come out of the box that
 support both JSON and XML::
 
     public $formatters = [
@@ -94,7 +94,7 @@ support both JSON and XML::
     ];
 
 So, if your request asks for JSON formatted data in an **Accept** header, the data array you pass any of the
-``respond*`` or ``fail*`` methods will be formatted by the **CodeIgniter\API\JSONFormatter** class. The resulting
+``respond*`` or ``fail*`` methods will be formatted by the **CodeIgniter\\API\\JSONFormatter** class. The resulting
 JSON data will be sent back to the client.
 
 ===============
@@ -153,7 +153,7 @@ Class Reference
 	        ]
 	    ];
 
-.. php:method:: respondCreated($data[, string $message = ''])
+.. php:method:: respondCreated($data = null[, string $message = ''])
 
     :param mixed  $data: The data to return to the client. Either string or array.
     :param string $message: A custom "reason" message to return.
@@ -164,11 +164,11 @@ Class Reference
 	    $user = $userModel->insert($data);
 	    return $this->respondCreated($user);
 
-.. php:method:: respondDeleted($data[, string $message = ''])
+.. php:method:: respondDeleted($data = null[, string $message = ''])
 
     :param mixed  $data: The data to return to the client. Either string or array.
-        :param string $message: A custom "reason" message to return.
-        :returns: The value of the Response object's send() method.
+    :param string $message: A custom "reason" message to return.
+    :returns: The value of the Response object's send() method.
 
     Sets the appropriate status code to use when a new resource was deleted as the result of this API call, typically 200.
 
@@ -177,7 +177,7 @@ Class Reference
 	    $user = $userModel->delete($id);
 	    return $this->respondDeleted(['id' => $id]);
 
-.. php:method:: failUnauthorized(string $description[, string $code=null[, string $message = '']])
+.. php:method:: failUnauthorized(string $description = 'Unauthorized'[, string $code=null[, string $message = '']])
 
     :param mixed  $description: The error message to show the user.
     :param string $code: A custom, API-specific, error code.
@@ -191,7 +191,7 @@ Class Reference
 
 	    return $this->failUnauthorized('Invalid Auth token');
 
-.. php:method:: failForbidden(string $description[, string $code=null[, string $message = '']])
+.. php:method:: failForbidden(string $description = 'Forbidden'[, string $code=null[, string $message = '']])
 
     :param mixed  $description: The error message to show the user.
     :param string $code: A custom, API-specific, error code.
@@ -206,12 +206,12 @@ Class Reference
 
     	return $this->failForbidden('Invalid API endpoint.');
 
-.. php:method:: failNotFound(string $description[, string $code=null[, string $message = '']])
+.. php:method:: failNotFound(string $description = 'Not Found'[, string $code=null[, string $message = '']])
 
     :param mixed  $description: The error message to show the user.
-        :param string $code: A custom, API-specific, error code.
-        :param string $message: A custom "reason" message to return.
-        :returns: The value of the Response object's send() method.
+    :param string $code: A custom, API-specific, error code.
+    :param string $message: A custom "reason" message to return.
+    :returns: The value of the Response object's send() method.
 
     Sets the appropriate status code to use when the requested resource cannot be found. Status code is 404.
 
@@ -219,7 +219,7 @@ Class Reference
 
     	return $this->failNotFound('User 13 cannot be found.');
 
-.. php:method:: failValidationError(string $description[, string $code=null[, string $message = '']])
+.. php:method:: failValidationError(string $description = 'Bad Request'[, string $code=null[, string $message = '']])
 
     :param mixed  $description: The error message to show the user.
     :param string $code: A custom, API-specific, error code.
@@ -233,7 +233,7 @@ Class Reference
 
     	return $this->failValidationError($validation->getErrors());
 
-.. php:method:: failResourceExists(string $description[, string $code=null[, string $message = '']])
+.. php:method:: failResourceExists(string $description = 'Conflict'[, string $code=null[, string $message = '']])
 
     :param mixed  $description: The error message to show the user.
     :param string $code: A custom, API-specific, error code.
@@ -247,7 +247,7 @@ Class Reference
 
     	return $this->failResourceExists('A user already exists with that email.');
 
-.. php:method:: failResourceGone(string $description[, string $code=null[, string $message = '']])
+.. php:method:: failResourceGone(string $description = 'Gone'[, string $code=null[, string $message = '']])
 
     :param mixed  $description: The error message to show the user.
     :param string $code: A custom, API-specific, error code.
@@ -261,7 +261,7 @@ Class Reference
 
     	return $this->failResourceGone('That user has been previously deleted.');
 
-.. php:method:: failTooManyRequests(string $description[, string $code=null[, string $message = '']])
+.. php:method:: failTooManyRequests(string $description = 'Too Many Requests'[, string $code=null[, string $message = '']])
 
     :param mixed  $description: The error message to show the user.
     :param string $code: A custom, API-specific, error code.
@@ -275,7 +275,7 @@ Class Reference
 
     	return $this->failTooManyRequests('You must wait 15 seconds before making another request.');
 
-.. php:method:: failServerError(string $description[, string $code = null[, string $message = '']])
+.. php:method:: failServerError(string $description = 'Internal Server Error'[, string $code = null[, string $message = '']])
 
     :param string $description: The error message to show the user.
     :param string $code: A custom, API-specific, error code.

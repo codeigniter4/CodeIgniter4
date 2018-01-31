@@ -47,7 +47,6 @@ the controller, where you can save it as a class property::
 
 	$someClass = new SomeClass(\Config\Services::request());
 
-
 Determining Request Type
 ========================
 
@@ -66,7 +65,6 @@ be checked with the ``isAJAX()`` and ``isCLI()`` methods::
 		. . .
 	}
 
-
 You can check the HTTP method that this request represents with the ``method()`` method::
 
 	// Returns 'post'
@@ -84,7 +82,6 @@ You can also check if the request was made through and HTTPS connection with the
 	{
 		force_https();
 	}
-
 
 Retrieving Input
 ================
@@ -135,7 +132,7 @@ The second and third parameters match up to the ``depth`` and ``options`` argume
 
 **Retrieving Raw data (PUT, PATCH, DELETE)**
 
-Finally, you can grab the contents of php://input as a raw stream with ``getRawInput()``.
+Finally, you can grab the contents of php://input as a raw stream with ``getRawInput()``::
 
 	$data = $request->getRawInput();
 
@@ -195,13 +192,12 @@ You can always use ``hasHeader()`` to see if the header existed in this request:
 
 If you need the value of header as a string with all values on one line, you can use the ``getHeaderLine()`` method::
 
-	// Accept-Encoding: gzip, deflate, sdch
+    // Accept-Encoding: gzip, deflate, sdch
     echo 'Accept-Encoding: '.$request->getHeaderLine('accept-encoding');
 
 If you need the entire header, with the name and values in a single string, simply cast the header as a string::
 
 	echo (string)$header;
-
 
 The Request URL
 ===============
@@ -269,9 +265,8 @@ You can easily negotiate content types with the request through the ``negotiate(
 
 See the :doc:`Content Negotiation </libraries/content_negotiation>` page for more details.
 
-***************
 Class Reference
-***************
+---------------
 
 .. note:: In addition to the methods listed here, this class inherits the methods from the
 	:doc:`Request Class </libraries/request>` and the :doc:`Message Class </libraries/message>`.

@@ -109,7 +109,6 @@ this test by. The second parameter is the Closure, itself::
 		}
 	);
 
-
 Running the Tasks
 =================
 

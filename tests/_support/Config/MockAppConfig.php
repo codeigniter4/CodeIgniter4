@@ -2,7 +2,7 @@
 
 class MockAppConfig
 {
-	public $baseURL = '';
+	public $baseURL = 'http://example.com';
 
 	public $uriProtocol = 'REQUEST_URI';
 

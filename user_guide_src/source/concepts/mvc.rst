@@ -13,7 +13,7 @@ each piece as you need.
 
 **Views** are simple files, with little to no logic, that display the information to the user.
 
-**Controllers** act as glue code, marshalling data back and forth between the view (or the user that's seeing it) and
+**Controllers** act as glue code, marshaling data back and forth between the view (or the user that's seeing it) and
 the data storage.
 
 At their most basic, controllers and models are simply classes that have a specific job. They are not the only class
@@ -22,7 +22,6 @@ have designated directories in the **/application** directory for their storage,
 wherever you desire, as long as they are properly namespaced. We will discuss that in more detail below.
 
 Let's take a closer look at each of these three main components.
-
 
 **************
 The Components
@@ -49,7 +48,6 @@ That's not a problem. As long as CodeIgniter can find the file, it can display i
 
 :doc:`Find out more about views </general/views>`
 
-
 Models
 ======
 
@@ -66,7 +64,6 @@ miss updating an area.
 Models are typically stored in **/application/Models**, though they can use a namespace to be grouped however you need.
 
 :doc:`Find out more about models </database/model>`
-
 
 Controllers
 ===========

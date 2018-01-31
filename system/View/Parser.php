@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014-2017 British Columbia Institute of Technology
+ * Copyright (c) 2014-2018 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,7 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
+ * @copyright	2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 3.0.0
@@ -78,6 +78,14 @@ class Parser extends View
 	 * @var array
 	 */
 	protected $plugins = [];
+
+	/**
+	 * Stores the context for each data element
+	 * when set by `setData` so the context is respected.
+	 *
+	 * @var array
+	 */
+	protected $dataContexts = [];
 
 	//--------------------------------------------------------------------
 
@@ -195,6 +203,35 @@ class Parser extends View
 			$this->data = [];
 		}
 		return $output;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Sets several pieces of view data at once.
+	 * In the Parser, we need to store the context here
+	 * so that the variable is correctly handled within the
+	 * parsing itself, and contexts (including raw) are respected.
+	 *
+	 * @param array $data
+	 * @param string $context The context to escape it for: html, css, js, url, raw
+	 *                        If 'raw', no escaping will happen
+	 *
+	 * @return RendererInterface
+	 */
+	public function setData(array $data = [], string $context = null): RendererInterface
+	{
+		if ( ! empty($context))
+		{
+			foreach ($data as $key => $value)
+			{
+				$this->dataContexts[$key] = $context;
+			}
+		}
+
+		$this->data = array_merge($this->data, $data);
+
+		return $this;
 	}
 
 	//--------------------------------------------------------------------
@@ -553,8 +590,9 @@ class Parser extends View
 	 *
 	 * @param array  $matches
 	 * @param string $replace
+	 * @param bool   $escape
 	 *
-	 * @return mixed|string
+	 * @return string
 	 */
 	protected function prepareReplacement(array $matches, string $replace, bool $escape = true)
 	{
@@ -564,9 +602,12 @@ class Parser extends View
 		// so we need to break them apart so we can apply them all.
 		$filters = isset($matches[0]) ? explode('|', $matches[0]) : [];
 
-		if ($escape && ( ! isset($matches[0]) || $this->shouldAddEscaping($orig)))
+		if ($escape && ! isset($matches[0]))
 		{
-			$filters[] = 'esc(html)';
+			if ($context = $this->shouldAddEscaping($orig))
+			{
+				$filters[] = "esc({$context})";
+			}
 		}
 
 		$replace = $this->applyFilters($replace, $filters);
@@ -581,16 +622,27 @@ class Parser extends View
 	 *
 	 * @param string $key
 	 *
-	 * @return bool
+	 * @return false|html
 	 */
 	public function shouldAddEscaping(string $key)
 	{
 		$escape = false;
 
-		// No pipes, then we know we need to escape
-		if (strpos($key, '|') === false)
+		$key = trim(str_replace(['{', '}'], '', $key));
+
+		// If the key has a context stored (from setData)
+		// we need to respect that.
+		if (array_key_exists($key, $this->dataContexts))
 		{
-			$escape = true;
+			if ($this->dataContexts[$key] !== 'raw')
+			{
+				return $this->dataContexts[$key];
+			}
+		}
+		// No pipes, then we know we need to escape
+		elseif (strpos($key, '|') === false)
+		{
+			$escape = 'html';
 		}
 		// If there's a `noescape` then we're definitely false.
 		elseif (strpos($key, 'noescape') !== false)
@@ -600,7 +652,7 @@ class Parser extends View
 		// If no `esc` filter is found, then we'll need to add one.
 		elseif ( ! preg_match('/^|\s+esc/', $key))
 		{
-			$escape = true;
+			$escape = 'html';
 		}
 
 		return $escape;
@@ -651,7 +703,7 @@ class Parser extends View
 				continue;
 
 			// Filter it....
-			$replace = call_user_func($this->config->filters[$filter], $replace, ...$param);
+			$replace = $this->config->filters[$filter]($replace, ...$param);
 		}
 
 		return $replace;

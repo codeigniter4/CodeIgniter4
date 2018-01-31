@@ -30,48 +30,6 @@ class ModelTest extends \CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
-	public function testHashIDsWithNumber()
-	{
-	    $expected = '123';
-
-		$str = $this->model->encodeID($expected);
-
-		$this->assertNotEquals($expected, $str);
-
-		$this->assertEquals($expected, $this->model->decodeID($str));
-	}
-
-	//--------------------------------------------------------------------
-
-	public function testHashIDsWithString()
-	{
-		$expected = 'my test hash';
-
-		$str = $this->model->encodeID($expected);
-
-		$this->assertNotEquals($expected, $str);
-
-		$this->assertEquals($expected, $this->model->decodeID($str));
-	}
-
-	//--------------------------------------------------------------------
-
-	public function testHashedIdsWithFind()
-	{
-		$hash = $this->model->encodeId(4);
-
-		$this->model->setTable('job')
-					->withDeleted();
-
-		$user = $this->model->asObject()
-							->findByHashedID($hash);
-
-		$this->assertNotEmpty($user);
-		$this->assertEquals(4, $user->id);
-	}
-
-	//--------------------------------------------------------------------
-
 	public function testFindReturnsRow()
 	{
 	    $model = new JobModel($this->db);
@@ -101,7 +59,7 @@ class ModelTest extends \CIDatabaseTestCase
 
 		$job = $model->asArray()->find(4);
 
-		$this->assertTrue(is_array($job));
+		$this->assertInternalType('array', $job);
 	}
 
 	//--------------------------------------------------------------------
@@ -112,7 +70,7 @@ class ModelTest extends \CIDatabaseTestCase
 
 		$job = $model->asObject()->find(4);
 
-		$this->assertTrue(is_object($job));
+		$this->assertInternalType('object', $job);
 	}
 
 	//--------------------------------------------------------------------
@@ -125,7 +83,7 @@ class ModelTest extends \CIDatabaseTestCase
 
 		$user = $model->asObject()->find(4);
 
-		$this->assertTrue(empty($user));
+		$this->assertEmpty($user);
 
 		$user = $model->withDeleted()->find(4);
 
@@ -140,7 +98,7 @@ class ModelTest extends \CIDatabaseTestCase
 
 		$jobs = $model->asObject()->findWhere('id >', 2);
 
-		$this->assertEquals(2, count($jobs));
+		$this->assertCount(2, $jobs);
 		$this->assertEquals('Accountant', $jobs[0]->name);
 		$this->assertEquals('Musician',   $jobs[1]->name);
 	}
@@ -153,7 +111,7 @@ class ModelTest extends \CIDatabaseTestCase
 
 		$jobs = $model->asArray()->findWhere(['id' => 1]);
 
-		$this->assertEquals(1, count($jobs));
+		$this->assertCount(1, $jobs);
 		$this->assertEquals('Developer', $jobs[0]['name']);
 	}
 
@@ -167,11 +125,11 @@ class ModelTest extends \CIDatabaseTestCase
 
 		$user = $model->findWhere('id >', '2');
 
-		$this->assertEquals(1, count($user));
+		$this->assertCount(1, $user);
 
 		$user = $model->withDeleted()->findWhere('id >', 2);
 
-		$this->assertEquals(2, count($user));
+		$this->assertCount(2, $user);
 	}
 
 	//--------------------------------------------------------------------
@@ -182,7 +140,7 @@ class ModelTest extends \CIDatabaseTestCase
 
 		$users = $model->findAll();
 
-		$this->assertEquals(4, count($users));
+		$this->assertCount(4, $users);
 	}
 
 	//--------------------------------------------------------------------
@@ -193,7 +151,7 @@ class ModelTest extends \CIDatabaseTestCase
 
 		$users = $model->findAll(2);
 
-		$this->assertEquals(2, count($users));
+		$this->assertCount(2, $users);
 		$this->assertEquals('Derek Jones', $users[0]->name);
 	}
 
@@ -205,7 +163,7 @@ class ModelTest extends \CIDatabaseTestCase
 
 		$users = $model->findAll(2, 2);
 
-		$this->assertEquals(2, count($users));
+		$this->assertCount(2, $users);
 		$this->assertEquals('Richard A Causey', $users[0]->name);
 	}
 
@@ -219,11 +177,11 @@ class ModelTest extends \CIDatabaseTestCase
 
 		$user = $model->findAll();
 
-		$this->assertEquals(3, count($user));
+		$this->assertCount(3, $user);
 
 		$user = $model->withDeleted()->findAll();
 
-		$this->assertEquals(4, count($user));
+		$this->assertCount(4, $user);
 	}
 
 	//--------------------------------------------------------------------
@@ -416,7 +374,7 @@ class ModelTest extends \CIDatabaseTestCase
 
 		$users = $model->withDeleted()->findAll();
 
-		$this->assertEquals(3, count($users));
+		$this->assertCount(3, $users);
 	}
 
 	//--------------------------------------------------------------------
@@ -429,7 +387,7 @@ class ModelTest extends \CIDatabaseTestCase
 
 		$users = $model->onlyDeleted()->findAll();
 
-		$this->assertEquals(1, count($users));
+		$this->assertCount(1, $users);
 	}
 
 	//--------------------------------------------------------------------
@@ -475,7 +433,7 @@ class ModelTest extends \CIDatabaseTestCase
             'description' => 'some great marketing stuff'
         ];
 
-        $this->assertTrue(is_numeric($model->skipValidation(true)->insert($data)));
+        $this->assertInternalType('numeric', $model->skipValidation(true)->insert($data));
     }
 
     //--------------------------------------------------------------------
@@ -486,7 +444,7 @@ class ModelTest extends \CIDatabaseTestCase
 
         $entity = $model->where('name', 'Developer')->first();
 
-        $this->assertTrue($entity instanceof SimpleEntity);
+        $this->assertInstanceOf(SimpleEntity::class, $entity);
         $this->assertEquals('Developer', $entity->name);
         $this->assertEquals('Awesome job, but sometimes makes you bored', $entity->description);
 
@@ -494,7 +452,7 @@ class ModelTest extends \CIDatabaseTestCase
         $entity->created_at = '2017-07-15';
 
         $date = $this->getPrivateProperty($entity, 'created_at');
-        $this->assertTrue($date instanceof Time);
+        $this->assertInstanceOf(Time::class, $date);
 
         $this->assertTrue($model->save($entity));
 
@@ -575,4 +533,3 @@ class ModelTest extends \CIDatabaseTestCase
 		$this->assertTrue($model->hasToken('afterDelete'));
 	}
 }
-

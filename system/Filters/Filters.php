@@ -7,7 +7,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014-2017 British Columbia Institute of Technology
+ * Copyright (c) 2014-2018 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,7 @@
  *
  * @package	CodeIgniter
  * @author	CodeIgniter Dev Team
- * @copyright	2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
+ * @copyright	2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 3.0.0
@@ -244,7 +244,7 @@ class Filters
 					$path = trim(str_replace('*', '.+', $path), '/ ');
 
 					// Path doesn't match the URI? continue on...
-					if (preg_match('/' . $path . '/', $uri, $match) !== 1)
+					if (preg_match('#' . $path . '#', $uri, $match) !== 1)
 					{
 						continue;
 					}
@@ -282,7 +282,7 @@ class Filters
 					$path = trim(str_replace('*', '.+', $path), '/ ');
 
 					// Path doesn't match the URI? continue on...
-					if (preg_match('/' . $path . '/', $uri, $match) !== 1)
+					if (preg_match('#' . $path . '#', $uri, $match) !== 1)
 					{
 						continue;
 					}
@@ -306,7 +306,7 @@ class Filters
 		}
 
 		// Request method won't be set for CLI-based requests
-		$method = isset($_SERVER['REQUEST_METHOD']) ? strtolower($_SERVER['REQUEST_METHOD']) : 'cli';
+		$method = strtolower($_SERVER['REQUEST_METHOD'] ?? 'cli');
 
 		if (array_key_exists($method, $this->config->methods))
 		{
@@ -339,7 +339,7 @@ class Filters
 					$path = str_replace('/*', '*', $path);
 					$path = trim(str_replace('*', '.+', $path), '/ ');
 
-					if (preg_match('/' . $path . '/', $uri) !== 1)
+					if (preg_match('#' . $path . '#', $uri) !== 1)
 					{
 						continue;
 					}
@@ -360,7 +360,7 @@ class Filters
 					$path = str_replace('/*', '*', $path);
 					$path = trim(str_replace('*', '.+', $path), '/ ');
 
-					if (preg_match('/' . $path . '/', $uri) !== 1)
+					if (preg_match('#' . $path . '#', $uri) !== 1)
 					{
 						continue;
 					}

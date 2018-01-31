@@ -144,7 +144,6 @@ include a second parameter to rename the resulting field.
 	$builder->selectMax('age', 'member_age');
 	$query = $builder->get(); // Produces: SELECT MAX(age) as member_age FROM mytable
 
-
 **$builder->selectMin()**
 
 Writes a "SELECT MIN(field)" portion for your query. As with
@@ -156,7 +155,6 @@ the resulting field.
 	$builder->selectMin('age');
 	$query = $builder->get(); // Produces: SELECT MIN(age) as age FROM mytable
 
-
 **$builder->selectAvg()**
 
 Writes a "SELECT AVG(field)" portion for your query. As with
@@ -167,7 +165,6 @@ the resulting field.
 
 	$builder->selectAvg('age');
 	$query = $builder->get(); // Produces: SELECT AVG(age) as age FROM mytable
-
 
 **$builder->selectSum()**
 
@@ -277,7 +274,6 @@ methods:
 		$where = "name='Joe' AND status='boss' OR status='active'";
 		$builder->where($where);
 
-
 ``$builder->where()`` accepts an optional third parameter. If you set it to
 FALSE, CodeIgniter will not try to protect your field or table names.
 
@@ -304,7 +300,6 @@ appropriate
 	$builder->whereIn('username', $names);
 	// Produces: WHERE username IN ('Frank', 'Todd', 'James')
 
-
 **$builder->orWhereIn()**
 
 Generates a WHERE field IN ('item', 'item') SQL query joined with OR if
@@ -326,7 +321,6 @@ AND if appropriate
 	$names = array('Frank', 'Todd', 'James');
 	$builder->whereNotIn('username', $names);
 	// Produces: WHERE username NOT IN ('Frank', 'Todd', 'James')
-
 
 **$builder->orWhereNotIn()**
 
@@ -387,7 +381,6 @@ searches.
 		$builder->like($array);
 		// WHERE `title` LIKE '%match%' ESCAPE '!' AND  `page1` LIKE '%match%' ESCAPE '!' AND  `page2` LIKE '%match%' ESCAPE '!'
 
-
 **$builder->orLike()**
 
 This method is identical to the one above, except that multiple
@@ -422,7 +415,6 @@ You can also pass an array of multiple values as well::
 
 	$builder->groupBy(array("title", "date"));  // Produces: GROUP BY title, date
 
-
 **$builder->distinct()**
 
 Adds the "DISTINCT" keyword to a query
@@ -445,7 +437,6 @@ You can also pass an array of multiple values as well::
 	$builder->having(['title =' => 'My Title', 'id <' => $id]);
 	// Produces: HAVING title = 'My Title', id < 45
 
-
 If you are using a database that CodeIgniter escapes queries for, you
 can prevent escaping content by passing an optional third argument, and
 setting it to FALSE.
@@ -454,7 +445,6 @@ setting it to FALSE.
 
 	$builder->having('user_id',  45);  // Produces: HAVING `user_id` = 45 in some databases such as MySQL
 	$builder->having('user_id',  45, FALSE);  // Produces: HAVING user_id = 45
-
 
 **$builder->orHaving()**
 
@@ -657,7 +647,7 @@ will be reset (by default it will be--just like $builder->insert())::
 	// Produces string: INSERT INTO mytable (`title`, `content`) VALUES ('My Title', 'My Content')
 
 The key thing to notice in the above example is that the second query did not
-utlize `$builder->from()` nor did it pass a table name into the first
+utilize `$builder->from()` nor did it pass a table name into the first
 parameter. The reason this worked is because the query has not been executed
 using `$builder->insert()` which resets values or reset directly using
 `$builder->resetQuery()`.
@@ -953,7 +943,6 @@ multiple functions. Consider this example::
 
 .. _ar-caching:
 
-
 ***********************
 Resetting Query Builder
 ***********************
@@ -994,7 +983,7 @@ Class Reference
 		:rtype:	BaseBuilder
 
 		Resets the current Query Builder state.  Useful when you want
-		to build a query that can be cancelled under certain conditions.
+		to build a query that can be canceled under certain conditions.
 
 	.. php:method:: countAllResults([$reset = TRUE])
 

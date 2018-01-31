@@ -71,7 +71,7 @@ class LikeTest extends \CIDatabaseTestCase
 		                ->get()
 		                ->getResult();
 
-		$this->assertEquals(3, count($jobs));
+		$this->assertCount(3, $jobs);
 		$this->assertEquals('Developer', $jobs[0]->name);
 		$this->assertEquals('Politician', $jobs[1]->name);
 		$this->assertEquals('Musician', $jobs[2]->name);
@@ -86,7 +86,7 @@ class LikeTest extends \CIDatabaseTestCase
 		                 ->get()
 		                 ->getResult();
 
-		$this->assertEquals(3, count($jobs));
+		$this->assertCount(3, $jobs);
 		$this->assertEquals('Politician', $jobs[0]->name);
 		$this->assertEquals('Accountant', $jobs[1]->name);
 		$this->assertEquals('Musician', $jobs[2]->name);
@@ -102,7 +102,7 @@ class LikeTest extends \CIDatabaseTestCase
 		                 ->get()
 		                 ->getResult();
 
-		$this->assertEquals(3, count($jobs));
+		$this->assertCount(3, $jobs);
 		$this->assertEquals('Politician', $jobs[0]->name);
 		$this->assertEquals('Accountant', $jobs[1]->name);
 		$this->assertEquals('Musician', $jobs[2]->name);
@@ -116,8 +116,8 @@ class LikeTest extends \CIDatabaseTestCase
 	    $spaces = $builder->like('value', '   ')->get()->getResult();
 	    $tabs = $builder->like('value', "\t")->get()->getResult();
 
-		$this->assertEquals(1, count($spaces));
-		$this->assertEquals(1, count($tabs));
+		$this->assertCount(1, $spaces);
+		$this->assertCount(1, $tabs);
 	}
 
 	//--------------------------------------------------------------------

@@ -6,7 +6,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014-2017 British Columbia Institute of Technology
+ * Copyright (c) 2014-2018 British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,7 +28,7 @@
  *
  * @package    CodeIgniter
  * @author     CodeIgniter Dev Team
- * @copyright  2014-2017 British Columbia Institute of Technology (https://bcit.ca/)
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
  * @license    https://opensource.org/licenses/MIT    MIT License
  * @link       https://codeigniter.com
  * @since      Version 3.0.0
@@ -51,7 +51,7 @@ if ( ! function_exists('ul'))
 	/**
 	 * Unordered List
 	 *
-	 * Generates an HTML unordered list from an single or 
+	 * Generates an HTML unordered list from an single or
 	 * multi-dimensional array.
 	 *
 	 * @param   array   $list
@@ -186,7 +186,7 @@ if ( ! function_exists('img'))
 
 		foreach ($src as $k => $v)
 		{
-			//Include a protocol if nothing is explicitely defined. 
+			//Include a protocol if nothing is explicitely defined.
 			if ($k === 'src' && ! preg_match('#^([a-z]+:)?//#i', $v))
 			{
 				if ($indexPage === true)
@@ -237,7 +237,7 @@ if ( ! function_exists('doctype'))
 			$customDocTypesNs = "Config\{$env}\DocTypes";
 			$doctypes = $customDocTypesNs::$list;
 		}
-		return isset($doctypes[$type]) ? $doctypes[$type] : false;
+		return $doctypes[$type] ?? false;
 	}
 
 }
@@ -392,16 +392,16 @@ if ( ! function_exists('link_tag'))
 		 *
 		 * Geneartes a video element to embed videos. The video element can
 		 * contain one or more video sources
-		 * 
+		 *
 		 * @param  mixed  $src                   Either a source string or
 		 * an array of sources
-		 * @param  string $unsupportedMessage    The message to display 
+		 * @param  string $unsupportedMessage    The message to display
 		 * if the media tag is not supported by the browser
 		 * @param  string $attributes            HTML attributes
 		 * @param  array  $tracks
 		 * @param  bool   $indexPage
 		 * @return string
-		 * 
+		 *
 		 */
 		function video
 		(
@@ -415,49 +415,47 @@ if ( ! function_exists('link_tag'))
 						'video', $src, $unsupportedMessage, $attributes, $tracks
 				);
 			}
+
+			$video = '<video';
+
+			if (_has_protocol($src))
+			{
+				$video .= ' src="' . $src . '"';
+			}
+			elseif ($indexPage === true)
+			{
+				$video .= ' src="' . site_url($src) . '"';
+			}
 			else
 			{
-				$video = '<video';
-
-				if (_has_protocol($src))
-				{
-					$video .= ' src="' . $src . '"';
-				}
-				elseif ($indexPage === true)
-				{
-					$video .= ' src="' . site_url($src) . '"';
-				}
-				else
-				{
-					$video .= ' src="' . slash_item('baseURL') . $src . '"';
-				}
-
-				if ($attributes !== '')
-				{
-					$video .= ' ' . $attributes;
-				}
-
-				$video .= ">\n";
-
-				if ( ! empty($tracks))
-				{
-					foreach ($tracks as $track)
-					{
-						$video .= _space_indent() . $track . "\n";
-					}
-				}
-
-				if ( ! empty($unsupportedMessage))
-				{
-					$video .= _space_indent()
-							. $unsupportedMessage
-							. "\n";
-				}
-
-				$video .= "</video>\n";
-
-				return $video;
+				$video .= ' src="' . slash_item('baseURL') . $src . '"';
 			}
+
+			if ($attributes !== '')
+			{
+				$video .= ' ' . $attributes;
+			}
+
+			$video .= ">\n";
+
+			if ( ! empty($tracks))
+			{
+				foreach ($tracks as $track)
+				{
+					$video .= _space_indent() . $track . "\n";
+				}
+			}
+
+			if ( ! empty($unsupportedMessage))
+			{
+				$video .= _space_indent()
+						. $unsupportedMessage
+						. "\n";
+			}
+
+			$video .= "</video>\n";
+
+			return $video;
 		}
 
 	}
@@ -471,14 +469,14 @@ if ( ! function_exists('link_tag'))
 		 * Audio
 		 *
 		 * Generates an audio element to embed sounds
-		 * 
-		 * @param  mixed  $src                  Either a source string or
-		 * an array of sources
-		 * @param  string $unsupportedMessage   The message to display 
-		 * if the media tag is not supported by the browser.
-		 * @param  string $attributes           HTML attributes
-		 * @return string
 		 *
+		 * @param  mixed  $src                Either a source string or an array of sources
+		 * @param  string $unsupportedMessage The message to display if the media tag is not supported by the browser.
+		 * @param  string $attributes         HTML attributes
+		 * @param array   $tracks
+		 * @param bool    $indexPage
+		 *
+		 * @return string
 		 */
 		function audio
 		(
@@ -492,49 +490,47 @@ if ( ! function_exists('link_tag'))
 						'audio', $src, $unsupportedMessage, $attributes, $tracks
 				);
 			}
+
+			$audio = '<audio';
+
+			if (_has_protocol($src))
+			{
+				$audio .= ' src="' . $src . '"';
+			}
+			elseif ($indexPage === true)
+			{
+				$audio .= ' src="' . site_url($src) . '"';
+			}
 			else
 			{
-				$audio = '<audio';
-
-				if (_has_protocol($src))
-				{
-					$audio .= ' src="' . $src . '"';
-				}
-				elseif ($indexPage === true)
-				{
-					$audio .= ' src="' . site_url($src) . '"';
-				}
-				else
-				{
-					$audio .= ' src="' . slash_item('baseURL') . $src . '"';
-				}
-
-				if ($attributes !== '')
-				{
-					$audio .= ' ' . $attributes;
-				}
-
-				$audio .= '>';
-
-				if ( ! empty($tracks))
-				{
-					foreach ($tracks as $track)
-					{
-						$audio .= $track;
-					}
-				}
-
-				if ( ! empty($unsupportedMessage))
-				{
-					$video .= _space_indent()
-							. $unsupportedMessage
-							. "\n";
-				}
-
-				$audio .= "</audio>\n";
-
-				return $audio;
+				$audio .= ' src="' . slash_item('baseURL') . $src . '"';
 			}
+
+			if ($attributes !== '')
+			{
+				$audio .= ' ' . $attributes;
+			}
+
+			$audio .= '>';
+
+			if ( ! empty($tracks))
+			{
+				foreach ($tracks as $track)
+				{
+					$audio .= $track;
+				}
+			}
+
+			if ( ! empty($unsupportedMessage))
+			{
+				$video .= _space_indent()
+						. $unsupportedMessage
+						. "\n";
+			}
+
+			$audio .= "</audio>\n";
+
+			return $audio;
 		}
 
 	}
@@ -601,9 +597,9 @@ if ( ! function_exists('link_tag'))
 		 *
 		 * Generates a source element that specifies multiple media resources
 		 * for either audio or video element
-		 * 
+		 *
 		 * @param  string $src          The path of the media resource
-		 * @param  string $type         The MIME-type of the resource with 
+		 * @param  string $type         The MIME-type of the resource with
 		 * optional codecs parameters
 		 * @param  string $attributes   HTML attributes
 		 * @param  bool $indexPage
@@ -652,7 +648,7 @@ if ( ! function_exists('link_tag'))
 		 *
 		 * Generates a track element to specify timed tracks. The tracks are
 		 * formatted in WebVTT format.
-		 * 
+		 *
 		 * @param  string $src          The path of the .VTT file
 		 * @param  string $kind
 		 * @param  string $srcLanguage
@@ -682,13 +678,15 @@ if ( ! function_exists('link_tag'))
 		 * Object
 		 *
 		 * Generates an object element that represents the media
-		 * as either image or a resource plugin such as audio, video, 
+		 * as either image or a resource plugin such as audio, video,
 		 * Java applets, ActiveX, PDF and Flash
-		 * 
-		 * @param  string $data         A resource URL
-		 * @param  string $type         Content-type of the resource
-		 * @param  string $attributes   HTML attributes
-		 * @param  array  $params       
+		 *
+		 * @param  string $data       A resource URL
+		 * @param  string $type       Content-type of the resource
+		 * @param  string $attributes HTML attributes
+		 * @param  array  $params
+		 * @param bool    $indexPage
+		 *
 		 * @return string
 		 */
 		function object
@@ -737,9 +735,9 @@ if ( ! function_exists('link_tag'))
 		/**
 		 * Param
 		 *
-		 * Generates a param element that defines parameters 
+		 * Generates a param element that defines parameters
 		 * for the object element.
-		 * 
+		 *
 		 * @param  string $name        The name of the parameter
 		 * @param  string $value       The value of the parameter
 		 * @param  string $type        The MIME-type
@@ -768,9 +766,9 @@ if ( ! function_exists('link_tag'))
 		 * Embed
 		 *
 		 * Generates an embed element
-		 * 
+		 *
 		 * @param  string $src          The path of the resource to embed
-		 * @param  string $type         MIME-type 
+		 * @param  string $type         MIME-type
 		 * @param  string $attributes   HTML attributes
 		 * @param  bool   $indexPage
 		 * @return string
