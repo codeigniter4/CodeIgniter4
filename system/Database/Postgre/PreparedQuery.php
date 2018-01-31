@@ -73,7 +73,7 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 	 */
 	public function _prepare(string $sql, array $options = [])
 	{
-		$this->name = mt_rand(1, 10000000000000000);
+		$this->name = random_int(1, 10000000000000000);
 
 		$sql = $this->parameterize($sql);
 
