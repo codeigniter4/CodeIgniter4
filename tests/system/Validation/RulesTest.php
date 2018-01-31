@@ -2,8 +2,10 @@
 
 use Config\Database;
 
-class RulesTest extends \CIUnitTestCase
+class RulesTest extends \CIDatabaseTestCase
 {
+	protected $refresh =true;
+
 	/**
 	 * @var Validation
 	 */
