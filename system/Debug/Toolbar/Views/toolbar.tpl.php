@@ -39,7 +39,7 @@
 			<?php if (! $c['isEmpty'] && ($c['hasTabContent'] || $c['hasLabel'])) : ?>
 				<span class="ci-label">
 					<a href="javascript: void(0)" data-tab="ci-<?= $c['titleSafe'] ?>" >
-						<?= $c['icon'] ?>
+						<img src="<?= $c['icon'] ?>">
 						<span class="hide-sm">
 							<?= $c['title'] ?>
 							<?php if (! is_null($c['badgeValue'])) : ?>
