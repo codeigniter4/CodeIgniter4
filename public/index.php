@@ -24,7 +24,7 @@ chdir(__DIR__);
 require $pathsPath;
 $paths = new Config\Paths();
 
-$app = require rtrim($paths->systemDirectory,'/ ').'/bootstrap.php';
+$app = require rtrim($paths->systemDirectory,DIRECTORY_SEPARATOR) . '/bootstrap.php';
 
 /*
  *---------------------------------------------------------------
