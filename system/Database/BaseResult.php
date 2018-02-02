@@ -152,7 +152,7 @@ abstract class BaseResult implements ResultInterface
 		{
 			return $this->customResultObject[$className];
 		}
-		elseif ( ! $this->resultID OR $this->numRows === 0)
+		elseif ( ! $this->resultID || $this->numRows === 0)
 		{
 			return [];
 		}
@@ -183,7 +183,7 @@ abstract class BaseResult implements ResultInterface
 			return $this->customResultObject[$className];
 		}
 
-		is_null($this->rowData) OR $this->dataSeek(0);
+		is_null($this->rowData) || $this->dataSeek(0);
 		$this->customResultObject[$className] = [];
 
 		while ($row = $this->fetchObject($className))
@@ -213,7 +213,7 @@ abstract class BaseResult implements ResultInterface
 		// In the event that query caching is on, the result_id variable
 		// will not be a valid resource so we'll simply return an empty
 		// array.
-		if ( ! $this->resultID OR $this->numRows === 0)
+		if ( ! $this->resultID || $this->numRows === 0)
 		{
 			return [];
 		}
@@ -228,7 +228,7 @@ abstract class BaseResult implements ResultInterface
 			return $this->resultArray;
 		}
 
-		is_null($this->rowData) OR $this->dataSeek(0);
+		is_null($this->rowData) || $this->dataSeek(0);
 		while ($row = $this->fetchAssoc())
 		{
 			$this->resultArray[] = $row;
@@ -256,7 +256,7 @@ abstract class BaseResult implements ResultInterface
 		// In the event that query caching is on, the result_id variable
 		// will not be a valid resource so we'll simply return an empty
 		// array.
-		if ( ! $this->resultID OR $this->numRows === 0)
+		if ( ! $this->resultID || $this->numRows === 0)
 		{
 			return [];
 		}
@@ -271,7 +271,7 @@ abstract class BaseResult implements ResultInterface
 			return $this->resultObject;
 		}
 
-		is_null($this->rowData) OR $this->dataSeek(0);
+		is_null($this->rowData) || $this->dataSeek(0);
 		while ($row = $this->fetchObject())
 		{
 			$this->resultObject[] = $row;
@@ -298,7 +298,7 @@ abstract class BaseResult implements ResultInterface
 		if ( ! is_numeric($n))
 		{
 			// We cache the row data for subsequent uses
-			is_array($this->rowData) OR $this->row_data = $this->getRowArray(0);
+			is_array($this->rowData)this->row_data = $this->getRowArray(0);
 
 			// array_key_exists() instead of isset() to allow for NULL values
 			if (empty($this->rowData) OR ! array_key_exists($n, $this->rowData))
@@ -335,7 +335,7 @@ abstract class BaseResult implements ResultInterface
 	 */
 	public function getCustomRowObject($n, string $className)
 	{
-		isset($this->customResultObject[$className]) OR $this->customResultObject($className);
+		isset($this->customResultObject[$className]) || $this->customResultObject($className);
 
 		if (empty($this->customResultObject[$className]))
 		{

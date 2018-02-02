@@ -228,7 +228,7 @@ class Forge extends \CodeIgniter\Database\Forge
 				continue;
 			}
 
-			is_array($this->keys[$i]) OR $this->keys[$i] = [$this->keys[$i]];
+			is_array($this->keys[$i]) || $this->keys[$i] = [$this->keys[$i]];
 
 			$unique = in_array($i, $this->uniqueKeys) ? 'UNIQUE ' : '';
 

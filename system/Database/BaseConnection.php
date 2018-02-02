@@ -772,7 +772,7 @@ abstract class BaseConnection implements ConnectionInterface
 		}
 
 		// The query() function will set this flag to FALSE in the event that a query failed
-		if ($this->transStatus === false OR $this->transFailure === true)
+		if ($this->transStatus === false || $this->transFailure === true)
 		{
 			$this->transRollback();
 
@@ -875,12 +875,12 @@ abstract class BaseConnection implements ConnectionInterface
 	 */
 	public function transRollback(): bool
 	{
-		if (! $this->transEnabled OR $this->transDepth === 0)
+		if (! $this->transEnabled || $this->transDepth === 0)
 		{
 			return false;
 		}
 		// When transactions are nested we only begin/commit/rollback the outermost ones
-		elseif ($this->transDepth > 1 OR $this->_transRollback())
+		elseif ($this->transDepth > 1 || $this->_transRollback())
 		{
 			$this->transDepth --;
 			return true;
@@ -1255,7 +1255,7 @@ abstract class BaseConnection implements ConnectionInterface
 			return $item;
 		}
 		// Avoid breaking functions and literal values inside queries
-		elseif (ctype_digit($item) OR $item[0] === "'" OR ( $this->escapeChar !== '"' && $item[0] === '"') OR
+		elseif (ctype_digit($item) || $item[0] === "'" OR ( $this->escapeChar !== '"' && $item[0] === '"') OR
 				strpos($item, '(') !== false
 		)
 		{
@@ -1662,7 +1662,7 @@ abstract class BaseConnection implements ConnectionInterface
 	}
 
 	//--------------------------------------------------------------------
-        
+
 	/**
 	 * Returns an object with foreign key data
 	 *

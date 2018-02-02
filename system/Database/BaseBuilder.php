@@ -753,7 +753,7 @@ class BaseBuilder
 	 */
 	protected function _whereIn($key = null, $values = null, $not = false, $type = 'AND ', $escape = null)
 	{
-		if ($key === null OR $values === null)
+		if ($key === null || $values === null)
 		{
 			return $this;
 		}

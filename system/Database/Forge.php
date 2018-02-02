@@ -481,7 +481,7 @@ class Forge
 
 		if (($result = $this->db->query($sql)) !== false)
 		{
-			empty($this->db->dataCache['table_names']) OR $this->db->dataCache['table_names'][] = $table;
+			empty($this->db->dataCache['table_names']) || $this->db->dataCache['table_names'][] = $table;
 
 			// Most databases don't support creating indexes from within the CREATE TABLE statement
 			if ( ! empty($this->keys))
@@ -672,7 +672,7 @@ class Forge
 	 */
 	public function renameTable($table_name, $new_table_name)
 	{
-		if ($table_name === '' OR $new_table_name === '')
+		if ($table_name === '' || $new_table_name === '')
 		{
 			throw new \InvalidArgumentException('A table name is required for that operation.');
 		}
@@ -715,7 +715,7 @@ class Forge
 	public function addColumn($table, $field)
 	{
 		// Work-around for literal column definitions
-		is_array($field) OR $field = [$field];
+		is_array($field) || $field = [$field];
 
 		foreach (array_keys($field) as $k)
 		{
@@ -786,7 +786,7 @@ class Forge
 	public function modifyColumn($table, $field)
 	{
 		// Work-around for literal column definitions
-		is_array($field) OR $field = [$field];
+		is_array($field) || $field = [$field];
 
 		foreach (array_keys($field) as $k)
 		{
@@ -1015,7 +1015,7 @@ class Forge
 	 */
 	protected function _attributeUnsigned(&$attributes, &$field)
 	{
-		if (empty($attributes['UNSIGNED']) OR $attributes['UNSIGNED'] !== true)
+		if (empty($attributes['UNSIGNED']) || $attributes['UNSIGNED'] !== true)
 		{
 			return;
 		}

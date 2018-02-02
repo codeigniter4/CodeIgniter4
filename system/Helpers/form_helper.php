@@ -236,7 +236,7 @@ if ( ! function_exists('form_password'))
 	 */
 	function form_password($data = '', string $value = '', $extra = ''): string
 	{
-		is_array($data) OR $data = ['name' => $data];
+		is_array($data) || $data = ['name' => $data];
 		$data['type'] = 'password';
 
 		return form_input($data, $value, $extra);
@@ -263,7 +263,7 @@ if ( ! function_exists('form_upload'))
 	function form_upload($data = '', string $value = '', $extra = ''): string
 	{
 		$defaults = ['type' => 'file', 'name' => ''];
-		is_array($data) OR $data = ['name' => $data];
+		is_array($data) || $data = ['name' => $data];
 		$data['type'] = 'file';
 
 		return '<input ' . parse_form_attributes($data, $defaults) . stringify_attributes($extra) . " />\n";
@@ -374,8 +374,8 @@ if ( ! function_exists('form_dropdown'))
 			$defaults = ['name' => $data];
 		}
 
-		is_array($selected) OR $selected = [$selected];
-		is_array($options) OR $options = [$options];
+		is_array($selected) || $selected = [$selected];
+		is_array($options) || $options = [$options];
 
 		// If no selected state was submitted we will attempt to set it automatically
 		if (empty($selected))
@@ -490,7 +490,7 @@ if ( ! function_exists('form_radio'))
 	 */
 	function form_radio($data = '', string $value = '', bool $checked = false, $extra = ''): string
 	{
-		is_array($data) OR $data = ['name' => $data];
+		is_array($data) || $data = ['name' => $data];
 		$data['type'] = 'radio';
 
 		return form_checkbox($data, $value, $checked, $extra);

@@ -711,7 +711,7 @@ class Response extends Message implements ResponseInterface
 
 		if ($setMime === true)
 		{
-			if (count($x) === 1 OR $extension === '')
+			if (count($x) === 1 || $extension === '')
 			{
 				/* If we're going to detect the MIME type,
 				 * we'll need a file extension.

@@ -137,7 +137,7 @@ class RedisHandler implements CacheInterface
 
 		$data = $this->redis->hMGet($key, ['__ci_type', '__ci_value']);
 
-		if ( ! isset($data['__ci_type'], $data['__ci_value']) OR $data['__ci_value'] === false)
+		if ( ! isset($data['__ci_type'], $data['__ci_value']) || $data['__ci_value'] === false)
 		{
 			return false;
 		}
