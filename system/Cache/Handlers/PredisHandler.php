@@ -263,7 +263,7 @@ class PredisHandler implements CacheInterface
 	{
 		$data = array_combine(['__ci_value'], $this->redis->hmget($key, ['__ci_value']));
 
-		if (isset($data['__ci_value']) AND $data['__ci_value'] !== false)
+		if (isset($data['__ci_value']) && $data['__ci_value'] !== false)
 		{
 			return [
 				'expire' => time() + $this->redis->ttl($key),
