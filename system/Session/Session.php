@@ -743,7 +743,7 @@ class Session implements SessionInterface
 		$keys = [];
 		foreach (array_keys($_SESSION['__ci_vars']) as $key)
 		{
-			is_int($_SESSION['__ci_vars'][$key])keys[] = $key;
+			is_int($_SESSION['__ci_vars'][$key]) || $keys[] = $key;
 		}
 
 		return $keys;
