@@ -101,7 +101,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 				return false;
 			}
 
-			empty($this->schema) or $this->simpleQuery("SET search_path TO {$this->schema},public");
+			empty($this->schema) || $this->simpleQuery("SET search_path TO {$this->schema},public");
 
 			if ($this->setClientEncoding($this->charset) === false)
 			{
@@ -483,7 +483,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 */
 	protected function buildDSN()
 	{
-		$this->DSN === '' or $this->DSN = '';
+		$this->DSN === '' || $this->DSN = '';
 
 		// If UNIX sockets are used, we shouldn't set a port
 		if (strpos($this->hostname, '/') !== false)
@@ -491,7 +491,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 			$this->port = '';
 		}
 
-		$this->hostname === '' or $this->DSN = "host={$this->hostname} ";
+		$this->hostname === '' || $this->DSN = "host={$this->hostname} ";
 
 		if ( ! empty($this->port) && ctype_digit($this->port))
 		{
@@ -505,10 +505,10 @@ class Connection extends BaseConnection implements ConnectionInterface
 			// An empty password is valid!
 			// password must be set to null to ignore it.
 
-			$this->password === null or $this->DSN .= "password='{$this->password}' ";
+			$this->password === null || $this->DSN .= "password='{$this->password}' ";
 		}
 
-		$this->database === '' or $this->DSN .= "dbname={$this->database} ";
+		$this->database === '' || $this->DSN .= "dbname={$this->database} ";
 
 		// We don't have these options as elements in our standard configuration
 		// array, but they might be set by parse_url() if the configuration was

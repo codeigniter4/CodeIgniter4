@@ -441,7 +441,7 @@ if ( ! function_exists('word_wrap'))
 	function word_wrap(string $str, int $charlim = 76): string
 	{
 		// Set the character limit
-		is_numeric($charlim) OR $charlim = 76;
+		is_numeric($charlim) || $charlim = 76;
 
 		// Reduce multiple spaces
 		$str = preg_replace('| +|', ' ', $str);

@@ -510,7 +510,7 @@ class Email
 
 		$this->setHeader('From', $name.' <'.$from.'>');
 
-		isset($returnPath) OR $returnPath = $from;
+		isset($returnPath) || $returnPath = $from;
 		$this->setHeader('Return-Path', '<'.$returnPath.'>');
 
 		return $this;
@@ -937,7 +937,7 @@ class Email
 	protected function getProtocol()
 	{
 		$this->protocol = strtolower($this->protocol);
-		in_array($this->protocol, $this->protocols, true) OR $this->protocol = 'mail';
+		in_array($this->protocol, $this->protocols, true) || $this->protocol = 'mail';
 
 		return $this->protocol;
 	}
@@ -951,7 +951,7 @@ class Email
 	 */
 	protected function getEncoding()
 	{
-		in_array($this->encoding, $this->bitDepths) OR $this->encoding = '8bit';
+		in_array($this->encoding, $this->bitDepths) || $this->encoding = '8bit';
 
 		foreach ($this->baseCharsets as $charset)
 		{
@@ -1501,7 +1501,7 @@ class Email
 
 		// $name won't be set if no attachments were appended,
 		// and therefore a boundary wouldn't be necessary
-		empty($name) OR $body .= '--'.$boundary.'--';
+		empty($name) || $body .= '--'.$boundary.'--';
 	}
 
 	//--------------------------------------------------------------------
@@ -1641,7 +1641,7 @@ class Email
 				$ascii = ord($char);
 
 				// Convert spaces and tabs but only if it's the end of the line
-				if ($ascii === 32 OR $ascii === 9)
+				if ($ascii === 32 || $ascii === 9)
 				{
 					if ($i === ($length-1))
 					{
@@ -1732,7 +1732,7 @@ class Email
 		}
 
 		// We might already have this set for UTF-8
-		isset($chars) OR $chars = self::strlen($str);
+		isset($chars) || $chars = self::strlen($str);
 
 		$output = '=?'.$this->charset.'?Q?';
 		for ($i = 0, $length = self::strlen($output); $i < $chars; $i++)
@@ -2194,7 +2194,7 @@ class Email
 		switch ($cmd)
 		{
 			case 'hello':
-				if ($this->SMTPAuth OR $this->getEncoding() === '8bit')
+				if ($this->SMTPAuth || $this->getEncoding() === '8bit')
 				{
 					$this->sendData('EHLO '.$this->getHostname());
 				}
@@ -2433,7 +2433,7 @@ class Email
 
 		// Determine which parts of our raw data needs to be printed
 		$raw_data = '';
-		is_array($include) OR $include = [$include];
+		is_array($include) || $include = [$include];
 
 		in_array('headers', $include, true) && $raw_data = htmlspecialchars($this->headerStr)."\n";
 		in_array('subject', $include, true) && $raw_data .= htmlspecialchars($this->subject)."\n";

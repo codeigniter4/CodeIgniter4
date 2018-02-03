@@ -565,7 +565,7 @@ if ( ! function_exists('prep_url'))
 	 */
 	function prep_url($str = ''): string
 	{
-		if ($str === 'http://' OR $str === '')
+		if ($str === 'http://' || $str === '')
 		{
 			return '';
 		}

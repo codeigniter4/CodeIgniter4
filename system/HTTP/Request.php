@@ -141,7 +141,7 @@ class Request extends Message implements RequestInterface
 					}
 
 					// We have a subnet ... now the heavy lifting begins
-					isset($separator) OR $separator = $this->isValidIP($this->ipAddress, 'ipv6') ? ':' : '.';
+					isset($separator) || $separator = $this->isValidIP($this->ipAddress, 'ipv6') ? ':' : '.';
 
 					// If the proxy entry doesn't match the IP protocol - skip it
 					if (strpos($proxy_ips[$i], $separator) === FALSE)

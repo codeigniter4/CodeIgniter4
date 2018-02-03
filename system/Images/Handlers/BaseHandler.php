@@ -232,7 +232,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 		}
 
 		// Reassign the width and height
-		if ($angle === 90 OR $angle === 270)
+		if ($angle === 90 || $angle === 270)
 		{
 			$this->width = $this->image->origHeight;
 			$this->height = $this->image->origWidth;
