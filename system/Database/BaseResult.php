@@ -298,10 +298,10 @@ abstract class BaseResult implements ResultInterface
 		if ( ! is_numeric($n))
 		{
 			// We cache the row data for subsequent uses
-			is_array($this->rowData)this->row_data = $this->getRowArray(0);
+			is_array($this->rowData) || $this->row_data = $this->getRowArray(0);
 
 			// array_key_exists() instead of isset() to allow for NULL values
-			if (empty($this->rowData) OR ! array_key_exists($n, $this->rowData))
+			if (empty($this->rowData) || ! array_key_exists($n, $this->rowData))
 			{
 				return null;
 			}
