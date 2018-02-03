@@ -165,21 +165,21 @@ class UploadedFile extends File implements UploadedFileInterface
 			throw new FileException('The original file is not a valid file.');
 		}
 
-		$targetPath = rtrim($targetPath, '/') . '/';
-		$name = is_null($name) ? $this->getName() : $name;
+		$targetPath = \rtrim($targetPath, '/') . '/';
+		$name = \is_null($name) ? $this->getName() : $name;
 		$destination = $overwrite ? $targetPath . $name : $this->getDestination($targetPath . $name);
 
-		if ( ! @move_uploaded_file($this->path, $destination))
+		if ( ! @\move_uploaded_file($this->path, $destination))
 		{
-			$error = error_get_last();
-			throw new \RuntimeException(sprintf('Could not move file %s to %s (%s)', basename($this->path), $targetPath, strip_tags($error['message'])));
+			$error = \error_get_last();
+			throw new \RuntimeException(\sprintf('Could not move file %s to %s (%s)', \basename($this->path), $targetPath, \strip_tags($error['message'])));
 		}
 
-		@chmod($targetPath, 0777 & ~umask());
+		@\chmod($targetPath, 0777 & ~\umask());
 
 		// Success, so store our new information
 		$this->path = $targetPath;
-		$this->name = basename($destination);
+		$this->name = \basename($destination);
 		$this->hasMoved = true;
 
 		return true;
@@ -195,14 +195,14 @@ class UploadedFile extends File implements UploadedFileInterface
 	 */
    	protected function setPath($path)
    	{
-     		if (!is_dir($path))
+     		if (!\is_dir($path))
      		{
-         		mkdir($path, 0777, true);
+         		\mkdir($path, 0777, true);
          		//create the index.html file
-         		if (!file_exists($path.'index.html'))
+         		if (!\file_exists($path.'index.html'))
          		{
-            			$file = fopen($path.'index.html', 'x+');
-            			fclose($file);
+            			$file = \fopen($path.'index.html', 'x+');
+            			\fclose($file);
          		}
      		}
      		return $path;
@@ -240,7 +240,7 @@ class UploadedFile extends File implements UploadedFileInterface
 	 */
 	public function getError(): int
 	{
-		if (is_null($this->error))
+		if (\is_null($this->error))
 		{
 			return UPLOAD_ERR_OK;
 		}
@@ -269,9 +269,9 @@ class UploadedFile extends File implements UploadedFileInterface
 			UPLOAD_ERR_EXTENSION	 => 'File upload was stopped by a PHP extension.',
 		];
 
-		$error = is_null($this->error) ? UPLOAD_ERR_OK : $this->error;
+		$error = \is_null($this->error) ? UPLOAD_ERR_OK : $this->error;
 
-		return sprintf($errors[$error] ?? 'The file "%s" was not uploaded due to an unknown error.', $this->getName());
+		return \sprintf($errors[$error] ?? 'The file "%s" was not uploaded due to an unknown error.', $this->getName());
 	}
 
 	//--------------------------------------------------------------------
@@ -351,7 +351,7 @@ class UploadedFile extends File implements UploadedFileInterface
 	 */
 	public function getClientExtension(): string
 	{
-		return pathinfo($this->originalName, PATHINFO_EXTENSION);
+		return \pathinfo($this->originalName, PATHINFO_EXTENSION);
 	}
 
 	//--------------------------------------------------------------------
@@ -364,7 +364,7 @@ class UploadedFile extends File implements UploadedFileInterface
 	 */
 	public function isValid(): bool
 	{
-		return is_uploaded_file($this->path) && $this->error === UPLOAD_ERR_OK;
+		return \is_uploaded_file($this->path) && $this->error === UPLOAD_ERR_OK;
 	}
 
 	//--------------------------------------------------------------------

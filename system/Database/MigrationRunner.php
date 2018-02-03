@@ -155,7 +155,7 @@ class MigrationRunner
 			throw new ConfigException(lang('Migrations.migMissingTable'));
 		}
 
-		if ( ! in_array($this->type, ['sequential', 'timestamp']))
+		if ( ! \in_array($this->type, ['sequential', 'timestamp']))
 		{
 			throw new ConfigException(lang('Migrations.migInvalidType') . $this->type);
 		}
@@ -192,13 +192,13 @@ class MigrationRunner
 			throw new ConfigException(lang('Migrations.migDisabled'));
 		}
 		// Set Namespace if not null
-		if ( ! is_null($namespace))
+		if ( ! \is_null($namespace))
 		{
 			$this->setNamespace($namespace);
 		}
 
 		// Set database group if not null
-		if ( ! is_null($group))
+		if ( ! \is_null($group))
 		{
 			$this->setGroup($group);
 		}
@@ -217,13 +217,13 @@ class MigrationRunner
 		{
 			// Moving Up
 			$method = 'up';
-			ksort($migrations);
+			\ksort($migrations);
 		}
 		else
 		{
 			// Moving Down, apply in reverse order
 			$method = 'down';
-			krsort($migrations);
+			\krsort($migrations);
 		}
 
 		// Check Migration consistency
@@ -245,17 +245,17 @@ class MigrationRunner
 				$this->setName($migration->name);
 
 				// Validate the migration file structure
-				if ( ! class_exists($class, false))
+				if ( ! \class_exists($class, false))
 				{
-					throw new \RuntimeException(sprintf(lang('Migrations.migClassNotFound'), $class));
+					throw new \RuntimeException(\sprintf(lang('Migrations.migClassNotFound'), $class));
 				}
 
 				// Forcing migration to selected database group
 				$instance = new $class(\Config\Database::forge($this->group));
 
-				if ( ! is_callable([$instance, $method]))
+				if ( ! \is_callable([$instance, $method]))
 				{
-					throw new \RuntimeException(sprintf(lang('Migrations.migMissingMethod'), $method));
+					throw new \RuntimeException(\sprintf(lang('Migrations.migMissingMethod'), $method));
 				}
 
 				$instance->{$method}();
@@ -287,19 +287,19 @@ class MigrationRunner
 	{
 
 		// Set Namespace if not null
-		if ( ! is_null($namespace))
+		if ( ! \is_null($namespace))
 		{
 			$this->setNamespace($namespace);
 		}
 		// Set database group if not null
-		if ( ! is_null($group))
+		if ( ! \is_null($group))
 		{
 			$this->setGroup($group);
 		}
 
 		$migrations = $this->findMigrations();
 
-		$lastMigration = end($migrations)->version ?? 0;
+		$lastMigration = \end($migrations)->version ?? 0;
 
 		// Calculate the last migration step from existing migration
 		// filenames and proceed to the standard version migration
@@ -318,7 +318,7 @@ class MigrationRunner
 	public function latestAll($group = null)
 	{
 		// Set database group if not null
-		if ( ! is_null($group))
+		if ( ! \is_null($group))
 		{
 			$this->setGroup($group);
 		}
@@ -338,7 +338,7 @@ class MigrationRunner
 				continue;
 			}
 
-			$lastMigration = end($migrations)->version;
+			$lastMigration = \end($migrations)->version;
 			// No New migrations to add
 			if ($lastMigration == $this->getVersion())
 			{
@@ -365,7 +365,7 @@ class MigrationRunner
 	public function current($group = null)
 	{
 		// Set database group if not null
-		if ( ! is_null($group))
+		if ( ! \is_null($group))
 		{
 			$this->setGroup($group);
 		}
@@ -389,14 +389,14 @@ class MigrationRunner
 		$location = $config->psr4[$this->namespace];
 
 		// Setting migration directories.
-		$dir = rtrim($location, '/') . '/Database/Migrations/';
+		$dir = \rtrim($location, '/') . '/Database/Migrations/';
 
 		// Load all *_*.php files in the migrations path
-		foreach (glob($dir . '*_*.php') as $file)
+		foreach (\glob($dir . '*_*.php') as $file)
 		{
-			$name = basename($file, '.php');
+			$name = \basename($file, '.php');
 			// Filter out non-migration files
-			if (preg_match($this->regex, $name))
+			if (\preg_match($this->regex, $name))
 			{
 				// Create migration object using stdClass
 				$migration = new \stdClass();
@@ -439,7 +439,7 @@ class MigrationRunner
 		}
 
 		// Check if $targetversion file is found
-		if ($targetversion != 0 && ! array_key_exists($targetversion, $migrations))
+		if ($targetversion != 0 && ! \array_key_exists($targetversion, $migrations))
 		{
 			if ($this->silent)
 			{
@@ -448,18 +448,18 @@ class MigrationRunner
 			throw new \RuntimeException(lang('Migrations.migNotFound') . $targetversion);
 		}
 
-		ksort($migrations);
+		\ksort($migrations);
 
 		if ($method === 'down')
 		{
 			$history_migrations = $this->getHistory($this->group);
-			$history_size = count($history_migrations) - 1;
+			$history_size = \count($history_migrations) - 1;
 		}
 		// Check for sequence gaps
 		$loop = 0;
 		foreach ($migrations as $migration)
 		{
-			if ($this->type === 'sequential' && abs($migration->version - $loop) > 1)
+			if ($this->type === 'sequential' && \abs($migration->version - $loop) > 1)
 			{
 				throw new \RuntimeException(lang('Migration.migGap') . " " . $migration->version);
 			}
@@ -576,7 +576,7 @@ class MigrationRunner
 	 */
 	protected function getMigrationNumber($migration)
 	{
-		return sscanf($migration, '%[0-9]+', $number) ? $number : '0';
+		return \sscanf($migration, '%[0-9]+', $number) ? $number : '0';
 	}
 
 	//--------------------------------------------------------------------
@@ -590,10 +590,10 @@ class MigrationRunner
 	 */
 	protected function getMigrationName($migration)
 	{
-		$parts = explode('_', $migration);
-		array_shift($parts);
+		$parts = \explode('_', $migration);
+		\array_shift($parts);
 
-		return implode('_', $parts);
+		return \implode('_', $parts);
 	}
 
 	//--------------------------------------------------------------------
@@ -612,7 +612,7 @@ class MigrationRunner
 				->orderBy('version', 'DESC')
 				->get();
 
-		return $row && ! is_null($row->getRow()) ? $row->getRow()->version : '0';
+		return $row && ! \is_null($row->getRow()) ? $row->getRow()->version : '0';
 	}
 
 	//--------------------------------------------------------------------
@@ -646,7 +646,7 @@ class MigrationRunner
 					'name'		 => $this->name,
 					'group'		 => $this->group,
 					'namespace'	 => $this->namespace,
-					'time'		 => time(),
+					'time'		 => \time(),
 		]);
 		if (is_cli())
 		{

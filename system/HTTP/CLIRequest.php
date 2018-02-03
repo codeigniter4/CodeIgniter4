@@ -80,7 +80,7 @@ class CLIRequest extends Request
 		parent::__construct($config);
 
 		// Don't terminate the script when the cli's tty goes away
-		ignore_user_abort(true);
+		\ignore_user_abort(true);
 
 		$this->parseCommand();
 	}
@@ -104,7 +104,7 @@ class CLIRequest extends Request
 	 */
 	public function getPath(): string
 	{
-		$path = implode('/', $this->segments);
+		$path = \implode('/', $this->segments);
 
 		return empty($path) ? '' : $path;
 	}
@@ -133,7 +133,7 @@ class CLIRequest extends Request
 	 */
 	public function getOption(string $key)
 	{
-		if (array_key_exists($key, $this->options))
+		if (\array_key_exists($key, $this->options))
 		{
 			return $this->options[$key];
 		}
@@ -170,7 +170,7 @@ class CLIRequest extends Request
 		{
 			// If there's a space, we need to group
 			// so it will pass correctly.
-			if (strpos($value, ' ') !== false)
+			if (\strpos($value, ' ') !== false)
 			{
 				$value = '"' . $value . '"';
 			}
@@ -205,26 +205,26 @@ class CLIRequest extends Request
 		{
 			// If there's no '-' at the beginning of the argument
 			// then add it to our segments.
-			if ( ! $options_found && strpos($argv[$i], '-') === false)
+			if ( ! $options_found && \strpos($argv[$i], '-') === false)
 			{
-				$this->segments[] = filter_var($argv[$i], FILTER_SANITIZE_STRING);
+				$this->segments[] = \filter_var($argv[$i], FILTER_SANITIZE_STRING);
 				continue;
 			}
 
 			$options_found = true;
 
-			if (substr($argv[$i], 0, 1) != '-')
+			if (\substr($argv[$i], 0, 1) != '-')
 			{
 				continue;
 			}
 
-			$arg = filter_var(str_replace('-', '', $argv[$i]), FILTER_SANITIZE_STRING);
+			$arg = \filter_var(\str_replace('-', '', $argv[$i]), FILTER_SANITIZE_STRING);
 			$value = null;
 
 			// If the next item starts with a dash it's a value
-			if (isset($argv[$i + 1]) && substr($argv[$i + 1], 0, 1) != '-')
+			if (isset($argv[$i + 1]) && \substr($argv[$i + 1], 0, 1) != '-')
 			{
-				$value = filter_var($argv[$i + 1], FILTER_SANITIZE_STRING);
+				$value = \filter_var($argv[$i + 1], FILTER_SANITIZE_STRING);
 				$i ++;
 			}
 

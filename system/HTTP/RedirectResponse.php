@@ -53,7 +53,7 @@ class RedirectResponse extends Response
 	{
 		// If it appears to be a relative URL, then convert to full URL
 		// for better security.
-		if (strpos($uri, 'http') !== 0)
+		if (\strpos($uri, 'http') !== 0)
 		{
 			$url = current_url(true)->resolveRelativeURI($uri);
 			$uri = (string)$url;
@@ -130,7 +130,7 @@ class RedirectResponse extends Response
 		$validator = Services::validation();
 		if (! empty($validator->getErrors()))
 		{
-			$session->setFlashdata('_ci_validation_errors', serialize($validator->getErrors()));
+			$session->setFlashdata('_ci_validation_errors', \serialize($validator->getErrors()));
 		}
 
 		return $this;

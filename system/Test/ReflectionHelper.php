@@ -56,10 +56,10 @@ trait ReflectionHelper
 	{
 		$ref_method = new ReflectionMethod($obj, $method);
 		$ref_method->setAccessible(true);
-		$obj = (gettype($obj) === 'object') ? $obj : null;
+		$obj = (\gettype($obj) === 'object') ? $obj : null;
 
 		return function () use ($obj, $ref_method) {
-			$args = func_get_args();
+			$args = \func_get_args();
 			return $ref_method->invokeArgs($obj, $args);
 		};
 	}
@@ -74,7 +74,7 @@ trait ReflectionHelper
 	 */
 	private static function getAccessibleRefProperty($obj, $property)
 	{
-		if (is_object($obj))
+		if (\is_object($obj))
 		{
 			$ref_class = new ReflectionObject($obj);
 		}

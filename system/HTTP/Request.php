@@ -93,9 +93,9 @@ class Request extends Message implements RequestInterface
 		}
 
 		$proxy_ips = $this->proxyIPs;
-		if ( ! empty($this->proxyIPs) && ! is_array($this->proxyIPs))
+		if ( ! empty($this->proxyIPs) && ! \is_array($this->proxyIPs))
 		{
-			$proxy_ips = explode(',', str_replace(' ', '', $this->proxyIPs));
+			$proxy_ips = \explode(',', \str_replace(' ', '', $this->proxyIPs));
 		}
 
 		$this->ipAddress = $this->getServer('REMOTE_ADDR');
@@ -109,7 +109,7 @@ class Request extends Message implements RequestInterface
 					// Some proxies typically list the whole chain of IP
 					// addresses through which the client has reached us.
 					// e.g. client_ip, proxy_ip1, proxy_ip2, etc.
-					sscanf($spoof, '%[^,]', $spoof);
+					\sscanf($spoof, '%[^,]', $spoof);
 
 					if ( ! $this->isValidIP($spoof))
 					{
@@ -124,10 +124,10 @@ class Request extends Message implements RequestInterface
 
 			if ($spoof)
 			{
-				for ($i = 0, $c = count($this->proxyIPs); $i < $c; $i ++ )
+				for ($i = 0, $c = \count($this->proxyIPs); $i < $c; $i ++ )
 				{
 					// Check if we have an IP address or a subnet
-					if (strpos($proxy_ips[$i], '/') === FALSE)
+					if (\strpos($proxy_ips[$i], '/') === FALSE)
 					{
 						// An IP address (and not a subnet) is specified.
 						// We can compare right away.
@@ -144,7 +144,7 @@ class Request extends Message implements RequestInterface
 					isset($separator) || $separator = $this->isValidIP($this->ipAddress, 'ipv6') ? ':' : '.';
 
 					// If the proxy entry doesn't match the IP protocol - skip it
-					if (strpos($proxy_ips[$i], $separator) === FALSE)
+					if (\strpos($proxy_ips[$i], $separator) === FALSE)
 					{
 						continue;
 					}
@@ -155,45 +155,45 @@ class Request extends Message implements RequestInterface
 						if ($separator === ':')
 						{
 							// Make sure we're have the "full" IPv6 format
-							$ip = explode(':', str_replace('::', str_repeat(':', 9 - substr_count($this->ipAddress, ':')), $this->ipAddress
+							$ip = \explode(':', \str_replace('::', \str_repeat(':', 9 - \substr_count($this->ipAddress, ':')), $this->ipAddress
 									)
 							);
 
 							for ($j = 0; $j < 8; $j ++ )
 							{
-								$ip[$j] = intval($ip[$j], 16);
+								$ip[$j] = \intval($ip[$j], 16);
 							}
 
 							$sprintf = '%016b%016b%016b%016b%016b%016b%016b%016b';
 						}
 						else
 						{
-							$ip = explode('.', $this->ipAddress);
+							$ip = \explode('.', $this->ipAddress);
 							$sprintf = '%08b%08b%08b%08b';
 						}
 
-						$ip = vsprintf($sprintf, $ip);
+						$ip = \vsprintf($sprintf, $ip);
 					}
 
 					// Split the netmask length off the network address
-					sscanf($proxy_ips[$i], '%[^/]/%d', $netaddr, $masklen);
+					\sscanf($proxy_ips[$i], '%[^/]/%d', $netaddr, $masklen);
 
 					// Again, an IPv6 address is most likely in a compressed form
 					if ($separator === ':')
 					{
-						$netaddr = explode(':', str_replace('::', str_repeat(':', 9 - substr_count($netaddr, ':')), $netaddr));
+						$netaddr = \explode(':', \str_replace('::', \str_repeat(':', 9 - \substr_count($netaddr, ':')), $netaddr));
 						for ($i = 0; $i < 8; $i ++ )
 						{
-							$netaddr[$i] = intval($netaddr[$i], 16);
+							$netaddr[$i] = \intval($netaddr[$i], 16);
 						}
 					}
 					else
 					{
-						$netaddr = explode('.', $netaddr);
+						$netaddr = \explode('.', $netaddr);
 					}
 
 					// Convert to binary and finally compare
-					if (strncmp($ip, vsprintf($sprintf, $netaddr), $masklen) === 0)
+					if (\strncmp($ip, \vsprintf($sprintf, $netaddr), $masklen) === 0)
 					{
 						$this->ipAddress = $spoof;
 						break;
@@ -222,7 +222,7 @@ class Request extends Message implements RequestInterface
 	 */
 	public function isValidIP(string $ip = null, string $which = null): bool
 	{
-		switch (strtolower($which))
+		switch (\strtolower($which))
 		{
 			case 'ipv4':
 				$which = FILTER_FLAG_IPV4;
@@ -235,7 +235,7 @@ class Request extends Message implements RequestInterface
 				break;
 		}
 
-		return (bool) filter_var($ip, FILTER_VALIDATE_IP, $which);
+		return (bool) \filter_var($ip, FILTER_VALIDATE_IP, $which);
 	}
 
 	//--------------------------------------------------------------------
@@ -249,7 +249,7 @@ class Request extends Message implements RequestInterface
 	 */
 	public function getMethod($upper = false): string
 	{
-		return ($upper) ? strtoupper($this->method) : strtolower($this->method);
+		return ($upper) ? \strtoupper($this->method) : \strtolower($this->method);
 	}
 
 	//--------------------------------------------------------------------
@@ -322,7 +322,7 @@ class Request extends Message implements RequestInterface
 	protected function fetchGlobal($type, $index = null, $filter = null, $flags = null )
 	{
 		// Null filters cause null values to return.
-		if (is_null($filter))
+		if (\is_null($filter))
 		{
 			$filter = FILTER_DEFAULT;
 		}
@@ -345,19 +345,19 @@ class Request extends Message implements RequestInterface
 		}
 
 		// If $index is null, it means that the whole input type array is requested
-		if (is_null($index))
+		if (\is_null($index))
 		{
 			$values = [];
 			foreach ($loopThrough as $key => $value)
 			{
-				$values[$key] = is_array($value) ? $this->fetchGlobal($type, $key, $filter, $flags) : filter_var($value, $filter, $flags);
+				$values[$key] = \is_array($value) ? $this->fetchGlobal($type, $key, $filter, $flags) : \filter_var($value, $filter, $flags);
 			}
 
 			return $values;
 		}
 
 		// allow fetching multiple keys at once
-		if (is_array($index))
+		if (\is_array($index))
 		{
 			$output = [];
 
@@ -370,12 +370,12 @@ class Request extends Message implements RequestInterface
 		}
 
 		// Does the index contain array notation?
-		if (($count = preg_match_all('/(?:^[^\[]+)|\[[^]]*\]/', $index, $matches)) > 1)
+		if (($count = \preg_match_all('/(?:^[^\[]+)|\[[^]]*\]/', $index, $matches)) > 1)
 		{
 			$value = $loopThrough;
 			for ($i = 0; $i < $count; $i++)
 			{
-				$key = trim($matches[0][$i], '[]');
+				$key = \trim($matches[0][$i], '[]');
 
 				if ($key === '') // Empty notation will return the value as array
 				{
@@ -401,12 +401,12 @@ class Request extends Message implements RequestInterface
 			$value = $loopThrough[$index] ?? null;
 		}
 
-		if (is_array($value) || is_object($value) || is_null($value))
+		if (\is_array($value) || \is_object($value) || \is_null($value))
 		{
 			return $value;
 		}
 
-		return filter_var($value, $filter, $flags);
+		return \filter_var($value, $filter, $flags);
 	}
 
 	//--------------------------------------------------------------------

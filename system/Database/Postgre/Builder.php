@@ -64,15 +64,15 @@ class Builder extends BaseBuilder
 	 */
 	public function orderBy($orderby, $direction = '', $escape = null)
 	{
-		$direction = strtoupper(trim($direction));
+		$direction = \strtoupper(\trim($direction));
 		if ($direction === 'RANDOM')
 		{
-			if ( ! is_float($orderby) && ctype_digit((string) $orderby))
+			if ( ! \is_float($orderby) && \ctype_digit((string) $orderby))
 			{
 				$orderby = (float) ($orderby > 1 ? "0.{$orderby}" : $orderby);
 			}
 
-			if (is_float($orderby))
+			if (\is_float($orderby))
 			{
 				$this->db->simpleQuery("SET SEED {$orderby}");
 			}
@@ -148,7 +148,7 @@ class Builder extends BaseBuilder
 			$this->set($set);
 		}
 
-		if (count($this->QBSet) === 0)
+		if (\count($this->QBSet) === 0)
 		{
 			if (CI_DEBUG)
 			{
@@ -160,8 +160,8 @@ class Builder extends BaseBuilder
 		$table = $this->QBFrom[0];
 
 		$set = $this->binds;
-		$keys = array_keys($set);
-		$values = array_values($set);
+		$keys = \array_keys($set);
+		$values = \array_values($set);
 
 		$builder = $this->db->table($table);
 		$exists = $builder->where("$keys[0] = $values[0]", null, false)->get()->getFirstRow();
@@ -172,7 +172,7 @@ class Builder extends BaseBuilder
 		}
 		else
 		{
-			array_pop($set);
+			\array_pop($set);
 			$result = $builder->update($set, "$keys[0] = $values[0]");
 		}
 
@@ -274,7 +274,7 @@ class Builder extends BaseBuilder
 		{
 			$ids[] = $val[$index];
 
-			foreach (array_keys($val) as $field)
+			foreach (\array_keys($val) as $field)
 			{
 				if ($field !== $index)
 				{
@@ -287,13 +287,13 @@ class Builder extends BaseBuilder
 		foreach ($final as $k => $v)
 		{
 			$cases .= "{$k} = (CASE {$index}\n"
-					. implode("\n", $v)
+					. \implode("\n", $v)
 					. "\nELSE {$k} END), ";
 		}
 
-		$this->where("{$index} IN(" . implode(',', $ids) . ')', null, false);
+		$this->where("{$index} IN(" . \implode(',', $ids) . ')', null, false);
 
-		return "UPDATE {$table} SET " . substr($cases, 0, -2) . $this->compileWhereHaving('QBWhere');
+		return "UPDATE {$table} SET " . \substr($cases, 0, -2) . $this->compileWhereHaving('QBWhere');
 	}
 
 	//--------------------------------------------------------------------

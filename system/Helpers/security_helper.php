@@ -37,7 +37,7 @@
  */
 use Config\Services;
 
-if ( ! function_exists('sanitize_filename'))
+if ( ! \function_exists('sanitize_filename'))
 {
 
 	/**
@@ -54,7 +54,7 @@ if ( ! function_exists('sanitize_filename'))
 
 //--------------------------------------------------------------------
 
-if ( ! function_exists('strip_image_tags'))
+if ( ! \function_exists('strip_image_tags'))
 {
 
 	/**
@@ -65,7 +65,7 @@ if ( ! function_exists('strip_image_tags'))
 	 */
 	function strip_image_tags(string $str)
 	{
-		return preg_replace(
+		return \preg_replace(
 				[
 			'#<img[\s/]+.*?src\s*=\s*(["\'])([^\\1]+?)\\1.*?\>#i',
 			'#<img[\s/]+.*?src\s*=\s*?(([^\s"\'=<>`]+)).*?\>#i'
@@ -77,7 +77,7 @@ if ( ! function_exists('strip_image_tags'))
 
 //--------------------------------------------------------------------
 
-if ( ! function_exists('encode_php_tags'))
+if ( ! \function_exists('encode_php_tags'))
 {
 
 	/**
@@ -88,7 +88,7 @@ if ( ! function_exists('encode_php_tags'))
 	 */
 	function encode_php_tags(string $str): string
 	{
-		return str_replace(['<?', '?>'], ['&lt;?', '?&gt;'], $str);
+		return \str_replace(['<?', '?>'], ['&lt;?', '?&gt;'], $str);
 	}
 
 }

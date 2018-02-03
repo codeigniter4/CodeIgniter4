@@ -84,11 +84,11 @@ class Checks extends Controller
             $res = $forge_mysql->createTable('invoices', true,$attributes);
 
             if(!$res){
-                var_dump($forge_mysql->getConnection()->mysqli);
+                \var_dump($forge_mysql->getConnection()->mysqli);
             }else{
                 echo '<br><br>OK';
                 
-                var_dump($forge_mysql->getConnection()->getForeignKeyData('invoices'));
+                \var_dump($forge_mysql->getConnection()->getForeignKeyData('invoices'));
             }
             
             $res = $forge_mysql->dropForeignKey('invoices','invoices_other_id_foreign');
@@ -149,10 +149,10 @@ class Checks extends Controller
             $res = $forge_pgsql->createTable('invoices', true);
 
             if(!$res){
-                var_dump($forge_pgsql->getConnection()->mysqli);
+                \var_dump($forge_pgsql->getConnection()->mysqli);
             }else{
                 echo '<br><br>OK';
-                var_dump($forge_pgsql->getConnection()->getForeignKeyData('invoices'));
+                \var_dump($forge_pgsql->getConnection()->getForeignKeyData('invoices'));
             }
             
             //$res = $forge_pgsql->dropForeignKey('invoices','invoices_other_id_foreign');
@@ -170,7 +170,7 @@ class Checks extends Controller
 						 ->get()
 						 ->getResult();
 
-		die(var_dump($jobs));
+		die(\var_dump($jobs));
 	}
 
 	public function password()
@@ -184,7 +184,7 @@ class Checks extends Controller
 						'value' => '$2y$10$ErQlCj/Mo10il.FthAm0WOjYdf3chZEGPFqaPzjqOX2aj2uYf5Ihq'
 					]);
 
-		die(var_dump($result));
+		die(\var_dump($result));
 	}
 
 
@@ -192,7 +192,7 @@ class Checks extends Controller
 	{
 		helper('form');
 
-		var_dump(form_open());
+		\var_dump(form_open());
 	}
 
 	public function api()
@@ -264,7 +264,7 @@ class Checks extends Controller
 	public function format()
 	{
 		echo '<pre>';
-		var_dump($this->response->getHeaderLine('content-type'));
+		\var_dump($this->response->getHeaderLine('content-type'));
 	}
 
 	public function model()
@@ -299,7 +299,7 @@ class Checks extends Controller
     // Simply echos back what's given in the body.
     public function catch()
     {
-        $body = print_r($this->request->getRawInput(), true);
+        $body = \print_r($this->request->getRawInput(), true);
         echo $body;
     }
 

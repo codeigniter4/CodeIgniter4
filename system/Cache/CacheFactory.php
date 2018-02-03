@@ -57,7 +57,7 @@ class CacheFactory
 	 */
 	public static function getHandler($config, string $handler = null, string $backup = null)
 	{
-		if ( ! isset($config->validHandlers) || ! is_array($config->validHandlers))
+		if ( ! isset($config->validHandlers) || ! \is_array($config->validHandlers))
 		{
 			throw new \InvalidArgumentException(lang('Cache.cacheInvalidHandlers'));
 		}
@@ -70,7 +70,7 @@ class CacheFactory
 		$handler = ! empty($handler) ? $handler : $config->handler;
 		$backup = ! empty($backup) ? $backup : $config->backupHandler;
 
-		if ( ! array_key_exists($handler, $config->validHandlers) || ! array_key_exists($backup, $config->validHandlers))
+		if ( ! \array_key_exists($handler, $config->validHandlers) || ! \array_key_exists($backup, $config->validHandlers))
 		{
 			throw new \InvalidArgumentException(lang('Cache.cacheHandlerNotFound'));
 		}

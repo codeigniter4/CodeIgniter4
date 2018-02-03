@@ -103,7 +103,7 @@ class CreditCardRules
 	 */
 	public function valid_cc_number(string $ccNumber = null, string $type, array $data): bool
 	{
-		$type = strtolower($type);
+		$type = \strtolower($type);
 		$info = null;
 
 		// Get our card info based on provided name.
@@ -122,36 +122,36 @@ class CreditCardRules
 		}
 
 		// Make sure we have a valid length
-		if (mb_strlen($ccNumber) === 0)
+		if (\mb_strlen($ccNumber) === 0)
 		{
 			return false;
 		}
 
 		// Remove any spaces and dashes
-		$ccNumber = str_replace([' ', '-'], '', $ccNumber);
+		$ccNumber = \str_replace([' ', '-'], '', $ccNumber);
 
 		// Non-numeric values cannot be a number...duh
-		if ( ! is_numeric($ccNumber))
+		if ( ! \is_numeric($ccNumber))
 		{
 			return false;
 		}
 
 		// Make sure it's a valid length for this card
-		$lengths = explode(',', $info['length']);
+		$lengths = \explode(',', $info['length']);
 
-		if ( ! in_array(mb_strlen($ccNumber), $lengths))
+		if ( ! \in_array(\mb_strlen($ccNumber), $lengths))
 		{
 			return false;
 		}
 
 		// Make sure it has a valid prefix
-		$prefixes = explode(',', $info['prefixes']);
+		$prefixes = \explode(',', $info['prefixes']);
 
 		$validPrefix = false;
 
 		foreach ($prefixes as $prefix)
 		{
-			if ($prefix == mb_substr($ccNumber, 0, mb_strlen($prefix)))
+			if ($prefix == \mb_substr($ccNumber, 0, \mb_strlen($prefix)))
 			{
 				$validPrefix = true;
 			}
@@ -184,7 +184,7 @@ class CreditCardRules
 	 */
 	protected function isValidLuhn(string $number = null): bool
 	{
-		settype($number, 'string');
+		\settype($number, 'string');
 
 		$sumTable = [
 			[0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
@@ -194,7 +194,7 @@ class CreditCardRules
 		$sum = 0;
 		$flip = 0;
 
-		for ($i = strlen($number) - 1; $i >= 0; $i -- )
+		for ($i = \strlen($number) - 1; $i >= 0; $i -- )
 		{
 			$sum += $sumTable[$flip ++ & 0x1][$number[$i]];
 		}

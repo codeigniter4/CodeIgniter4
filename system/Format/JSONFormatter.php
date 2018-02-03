@@ -51,11 +51,11 @@ class JSONFormatter implements FormatterInterface
 
 		$options = ENVIRONMENT === 'production' ? $options : $options | JSON_PRETTY_PRINT;
 
-		$result = json_encode($data, $options, 512);
+		$result = \json_encode($data, $options, 512);
 
-		if (json_last_error() !== JSON_ERROR_NONE)
+		if (\json_last_error() !== JSON_ERROR_NONE)
 		{
-			throw new \RuntimeException(sprintf("Failed to parse json string, error: '%s'", json_last_error_msg()));
+			throw new \RuntimeException(\sprintf("Failed to parse json string, error: '%s'", \json_last_error_msg()));
 		}
 
 		return $result;

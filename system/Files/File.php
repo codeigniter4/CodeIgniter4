@@ -60,7 +60,7 @@ class File extends SplFileInfo
 	 */
 	public function __construct(string $path, bool $checkFile = false)
 	{
-		if ($checkFile && ! is_file($path))
+		if ($checkFile && ! \is_file($path))
 		{
 			throw new FileNotFoundException();
 		}
@@ -86,18 +86,18 @@ class File extends SplFileInfo
 	 */
 	public function getSize(string $unit = 'b')
 	{
-		if (is_null($this->size))
+		if (\is_null($this->size))
 		{
-			$this->size = filesize($this->getPathname());
+			$this->size = \filesize($this->getPathname());
 		}
 
-		switch (strtolower($unit))
+		switch (\strtolower($unit))
 		{
 			case 'kb':
-				return number_format($this->size / 1024, 3);
+				return \number_format($this->size / 1024, 3);
 				break;
 			case 'mb':
-				return number_format(($this->size / 1024) / 1024, 3);
+				return \number_format(($this->size / 1024) / 1024, 3);
 				break;
 		}
 
@@ -128,15 +128,15 @@ class File extends SplFileInfo
 	 */
 	public function getMimeType(): string
 	{
-		if (function_exists('finfo_file'))
+		if (\function_exists('finfo_file'))
 		{
-			$finfo = finfo_open(FILEINFO_MIME_TYPE);
-			$mimeType = finfo_file($finfo, $this->getRealPath());
-			finfo_close($finfo);
+			$finfo = \finfo_open(FILEINFO_MIME_TYPE);
+			$mimeType = \finfo_file($finfo, $this->getRealPath());
+			\finfo_close($finfo);
 		}
 		else
 		{
-			$mimeType = mime_content_type($this->getRealPath());
+			$mimeType = \mime_content_type($this->getRealPath());
 		}
 
 		return $mimeType;
@@ -152,7 +152,7 @@ class File extends SplFileInfo
 	 */
 	public function getRandomName(): string
 	{
-		return time() . '_' . bin2hex(random_bytes(10)) . '.' . $this->getExtension();
+		return \time() . '_' . \bin2hex(\random_bytes(10)) . '.' . $this->getExtension();
 	}
 
 	//--------------------------------------------------------------------
@@ -168,17 +168,17 @@ class File extends SplFileInfo
 	 */
 	public function move(string $targetPath, string $name = null, bool $overwrite = false)
 	{
-		$targetPath = rtrim($targetPath, '/') . '/';
+		$targetPath = \rtrim($targetPath, '/') . '/';
 		$name = $name ?? $this->getBaseName();
 		$destination = $overwrite ? $targetPath . $name : $this->getDestination($targetPath . $name);
 
-		if ( ! @rename($this->getPath(), $destination))
+		if ( ! @\rename($this->getPath(), $destination))
 		{
-			$error = error_get_last();
-			throw new \RuntimeException(sprintf('Could not move file %s to %s (%s)', $this->getBasename(), $targetPath, strip_tags($error['message'])));
+			$error = \error_get_last();
+			throw new \RuntimeException(\sprintf('Could not move file %s to %s (%s)', $this->getBasename(), $targetPath, \strip_tags($error['message'])));
 		}
 
-		@chmod($targetPath, 0777 & ~umask());
+		@\chmod($targetPath, 0777 & ~\umask());
 
 		return true;
 	}
@@ -200,18 +200,18 @@ class File extends SplFileInfo
 	 */
 	public function getDestination(string $destination, string $delimiter = '_', int $i = 0): string
 	{
-		while (file_exists($destination))
+		while (\file_exists($destination))
 		{
-			$info = pathinfo($destination);
-			if (strpos($info['filename'], $delimiter) !== false)
+			$info = \pathinfo($destination);
+			if (\strpos($info['filename'], $delimiter) !== false)
 			{
-				$parts = explode($delimiter, $info['filename']);
-				if (is_numeric(end($parts)))
+				$parts = \explode($delimiter, $info['filename']);
+				if (\is_numeric(\end($parts)))
 				{
-					$i = end($parts);
-					array_pop($parts);
-					array_push($parts, ++ $i);
-					$destination = $info['dirname'] . '/' . implode($delimiter, $parts) . '.' . $info['extension'];
+					$i = \end($parts);
+					\array_pop($parts);
+					\array_push($parts, ++ $i);
+					$destination = $info['dirname'] . '/' . \implode($delimiter, $parts) . '.' . $info['extension'];
 				}
 				else
 				{

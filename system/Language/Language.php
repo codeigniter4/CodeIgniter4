@@ -77,7 +77,7 @@ class Language
 	{
 		$this->locale = $locale;
 
-		if (class_exists('\MessageFormatter'))
+		if (\class_exists('\MessageFormatter'))
 		{
 			$this->intlSupport = true;
 		};
@@ -125,7 +125,7 @@ class Language
 		// If there's no possibility of a filename being in the string
 		// simply return the string, and they can parse the replacement
 		// without it being in a file.
-		if (strpos($line, '.') === false)
+		if (\strpos($line, '.') === false)
 		{
 			return [
 				null,
@@ -133,10 +133,10 @@ class Language
 			];
 		}
 
-		$file = substr($line, 0, strpos($line, '.'));
-		$line = substr($line, strlen($file) + 1);
+		$file = \substr($line, 0, \strpos($line, '.'));
+		$line = \substr($line, \strlen($file) + 1);
 
-		if ( ! array_key_exists($line, $this->language))
+		if ( ! \array_key_exists($line, $this->language))
 		{
 			$this->load($file, $this->locale);
 		}
@@ -159,12 +159,12 @@ class Language
 	 */
 	protected function formatMessage($message, array $args = [])
 	{
-		if ( ! $this->intlSupport || ! count($args))
+		if ( ! $this->intlSupport || ! \count($args))
 		{
 			return $message;
 		}
 
-		if (is_array($message))
+		if (\is_array($message))
 		{
 			foreach ($message as $index => $value)
 			{
@@ -191,12 +191,12 @@ class Language
 	 */
 	protected function load(string $file, string $locale, bool $return = false)
 	{
-		if (in_array($file, $this->loadedFiles))
+		if (\in_array($file, $this->loadedFiles))
 		{
 			return [];
 		}
 
-		if ( ! array_key_exists($file, $this->language))
+		if ( ! \array_key_exists($file, $this->language))
 		{
 			$this->language[$file] = [];
 		}
@@ -235,7 +235,7 @@ class Language
 
 		foreach ($files as $file)
 		{
-			if ( ! is_file($file))
+			if ( ! \is_file($file))
 			{
 				continue;
 			}

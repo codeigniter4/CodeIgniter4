@@ -102,7 +102,7 @@ class MigrateStatus extends BaseCommand
 	{
 		$runner = Services::migrations();
 
-		if ( ! is_null(CLI::getOption('g')))
+		if ( ! \is_null(CLI::getOption('g')))
 		{
 			$runner->setGroup(CLI::getOption('g'));
 		}
@@ -125,7 +125,7 @@ class MigrateStatus extends BaseCommand
 				continue;
 			}
 
-			ksort($migrations);
+			\ksort($migrations);
 
 			CLI::newLine(1);
 
@@ -136,13 +136,13 @@ class MigrateStatus extends BaseCommand
 			$max = 0;
 			foreach ($migrations as $version => $migration)
 			{
-				$file = substr($migration->name, strpos($migration->name, $version . '_'));
+				$file = \substr($migration->name, \strpos($migration->name, $version . '_'));
 				$migrations[$version]->name = $file;
 
-				$max = max($max, strlen($file));
+				$max = \max($max, \strlen($file));
 			}
 
-			CLI::write(str_pad(lang('Migrations.filename'), $max + 6) . lang('Migrations.migOn'), 'yellow');
+			CLI::write(\str_pad(lang('Migrations.filename'), $max + 6) . lang('Migrations.migOn'), 'yellow');
 
 
 			foreach ($migrations as $version => $migration)
@@ -155,9 +155,9 @@ class MigrateStatus extends BaseCommand
 						continue;
 					}
 
-					$date = date("Y-m-d H:i:s", $row['time']);
+					$date = \date("Y-m-d H:i:s", $row['time']);
 				}
-				CLI::write(str_pad($migration->name, $max + 6) . ($date ? $date : '---'));
+				CLI::write(\str_pad($migration->name, $max + 6) . ($date ? $date : '---'));
 			}
 		}
 	}

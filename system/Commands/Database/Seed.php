@@ -103,7 +103,7 @@ class Seed extends BaseCommand
 	{
 		$seeder = new Seeder(new \Config\Database());
 
-		$seedName = array_shift($params);
+		$seedName = \array_shift($params);
 
 		if (empty($seedName))
 		{

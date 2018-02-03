@@ -110,7 +110,7 @@ trait ResponseTrait
 			// Create the output var here in case of $this->response([]);
 			$output = null;
 		} // If data is null but status provided, keep the output empty.
-		elseif ($data === null && is_numeric($status))
+		elseif ($data === null && \is_numeric($status))
 		{
 			$output = null;
 		}
@@ -138,7 +138,7 @@ trait ResponseTrait
 	 */
 	public function fail($messages, int $status = 400, string $code = null, string $customMessage = '')
 	{
-		if ( ! is_array($messages))
+		if ( ! \is_array($messages))
 		{
 			$messages = ['error' => $messages];
 		}
@@ -333,12 +333,12 @@ trait ResponseTrait
 	protected function format($data = null)
 	{
 		// If the data is a string, there's not much we can do to it...
-		if (is_string($data))
+		if (\is_string($data))
 		{
 			// The content type should be text/... and not application/...
 			$contentType = $this->response->getHeaderLine('Content-Type');
-			$contentType = str_replace('application/json', 'text/html', $contentType);
-			$contentType = str_replace('application/', 'text/', $contentType);
+			$contentType = \str_replace('application/json', 'text/html', $contentType);
+			$contentType = \str_replace('application/', 'text/', $contentType);
 			$this->response->setContentType($contentType);
 
 			return $data;
@@ -362,7 +362,7 @@ trait ResponseTrait
 		{
 			// Recursively convert objects into associative arrays
 			// Conversion not required for JSONFormatter
-			$data = json_decode(json_encode($data), true);
+			$data = \json_decode(\json_encode($data), true);
 		}
 
 		return $this->formatter->format($data);

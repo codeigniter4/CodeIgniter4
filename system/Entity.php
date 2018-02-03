@@ -71,7 +71,7 @@ class Entity
 	 */
 	public function __construct(array $data = null)
 	{
-		if (is_array($data))
+		if (\is_array($data))
 		{
 			$this->fill($data);
 		}
@@ -88,13 +88,13 @@ class Entity
 	{
 		foreach ($data as $key => $value)
 		{
-			$method = 'set' . str_replace(' ', '', ucwords(str_replace(['-', '_'], ' ', $key)));
+			$method = 'set' . \str_replace(' ', '', \ucwords(\str_replace(['-', '_'], ' ', $key)));
 
-			if (method_exists($this, $method))
+			if (\method_exists($this, $method))
 			{
 				$this->$method($value);
 			}
-			elseif (property_exists($this, $key))
+			elseif (\property_exists($this, $key))
 			{
 				$this->$key = $value;
 			}
@@ -122,29 +122,29 @@ class Entity
 		$key = $this->mapProperty($key);
 
 		// Convert to CamelCase for the method
-		$method = 'get' . str_replace(' ', '', ucwords(str_replace(['-', '_'], ' ', $key)));
+		$method = 'get' . \str_replace(' ', '', \ucwords(\str_replace(['-', '_'], ' ', $key)));
 
 		// if a set* method exists for this key, 
 		// use that method to insert this value. 
-		if (method_exists($this, $method))
+		if (\method_exists($this, $method))
 		{
 			$result = $this->$method();
 		}
 
 		// Otherwise return the protected property
 		// if it exists.
-		else if (property_exists($this, $key))
+		else if (\property_exists($this, $key))
 		{
 			$result = $this->$key;
 		}
 
 		// Do we need to mutate this into a date?
-		if (in_array($key, $this->_options['dates']))
+		if (\in_array($key, $this->_options['dates']))
 		{
 			$result = $this->mutateDate($result);
 		}
 		// Or cast it as something?
-		else if (array_key_exists($key, $this->_options['casts']))
+		else if (\array_key_exists($key, $this->_options['casts']))
 		{
 			$result = $this->castAs($result, $this->_options['casts'][$key]);
 		}
@@ -173,7 +173,7 @@ class Entity
 		$key = $this->mapProperty($key);
 
 		// Check if the field should be mutated into a date
-		if (in_array($key, $this->_options['dates']))
+		if (\in_array($key, $this->_options['dates']))
 		{
 			$value = $this->mutateDate($value);
 		}
@@ -181,15 +181,15 @@ class Entity
 		// Array casting requires that we serialize the value
 		// when setting it so that it can easily be stored
 		// back to the database.
-		if (array_key_exists($key, $this->_options['casts']) && $this->_options['casts'][$key] === 'array')
+		if (\array_key_exists($key, $this->_options['casts']) && $this->_options['casts'][$key] === 'array')
 		{
-			$value = serialize($value);
+			$value = \serialize($value);
 		}
 
 		// if a set* method exists for this key, 
 		// use that method to insert this value. 
-		$method = 'set' . str_replace(' ', '', ucwords(str_replace(['-', '_'], ' ', $key)));
-		if (method_exists($this, $method))
+		$method = 'set' . \str_replace(' ', '', \ucwords(\str_replace(['-', '_'], ' ', $key)));
+		if (\method_exists($this, $method))
 		{
 			$this->$method($value);
 
@@ -220,7 +220,7 @@ class Entity
 	{
 		// If not actual property exists, get out
 		// before we confuse our data mapping.
-		if ( ! property_exists($this, $key))
+		if ( ! \property_exists($this, $key))
 			return;
 
 		$this->$key = null;
@@ -250,9 +250,9 @@ class Entity
 	{
 		// Ensure an actual property exists, otherwise
 		// we confuse the data mapping.
-		$value = property_exists($this, $key) ? $this->$key : null;
+		$value = \property_exists($this, $key) ? $this->$key : null;
 
-		return ! is_null($value);
+		return ! \is_null($value);
 	}
 
 	//--------------------------------------------------------------------
@@ -267,7 +267,7 @@ class Entity
 	 */
 	protected function mapProperty(string $key)
 	{
-		if (array_key_exists($key, $this->_options['datamap']))
+		if (\array_key_exists($key, $this->_options['datamap']))
 		{
 			return $this->_options['datamap'][$key];
 		}
@@ -297,12 +297,12 @@ class Entity
 			return Time::instance($value);
 		}
 
-		if (is_numeric($value))
+		if (\is_numeric($value))
 		{
 			return Time::createFromTimestamp($value);
 		}
 
-		if (is_string($value))
+		if (\is_string($value))
 		{
 			return Time::parse($value);
 		}
@@ -343,9 +343,9 @@ class Entity
 				$value = (object)$value;
 				break;
 			case 'array':
-				if (is_string($value) && (substr($value, 0, 2) === 'a:' || substr($value, 0, 2) === 's:'))
+				if (\is_string($value) && (\substr($value, 0, 2) === 'a:' || \substr($value, 0, 2) === 's:'))
 				{
-					$value = unserialize($value);
+					$value = \unserialize($value);
 				}
 
 				$value = (array)$value;
@@ -354,7 +354,7 @@ class Entity
 				return new \DateTime($value);
 				break;
 			case 'timestamp':
-				return strtotime($value);
+				return \strtotime($value);
 				break;
 		}
 

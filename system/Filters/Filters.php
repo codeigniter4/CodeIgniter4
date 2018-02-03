@@ -103,12 +103,12 @@ class Filters
 
 		foreach ($this->filters[$position] as $alias => $rules)
 		{
-			if (is_numeric($alias) && is_string($rules))
+			if (\is_numeric($alias) && \is_string($rules))
 			{
 				$alias = $rules;
 			}
 
-			if ( ! array_key_exists($alias, $this->config->aliases))
+			if ( ! \array_key_exists($alias, $this->config->aliases))
 			{
 				throw new \InvalidArgumentException("'{$alias}' filter must have a matching alias defined.");
 			}
@@ -117,7 +117,7 @@ class Filters
 
 			if ( ! $class instanceof FilterInterface)
 			{
-				throw new \RuntimeException(get_class($class) . ' must implement CodeIgniter\Filters\FilterInterface.');
+				throw new \RuntimeException(\get_class($class) . ' must implement CodeIgniter\Filters\FilterInterface.');
 			}
 
 			if ($position == 'before')
@@ -214,7 +214,7 @@ class Filters
 
 	protected function processGlobals(string $uri = null)
 	{
-		if ( ! isset($this->config->globals) || ! is_array($this->config->globals))
+		if ( ! isset($this->config->globals) || ! \is_array($this->config->globals))
 		{
 			return;
 		}
@@ -225,14 +225,14 @@ class Filters
 			// Take any 'except' routes into consideration
 			foreach ($this->config->globals['before'] as $alias => $rules)
 			{
-				if ( ! is_array($rules) || ! array_key_exists('except', $rules))
+				if ( ! \is_array($rules) || ! \array_key_exists('except', $rules))
 				{
 					continue;
 				}
 
 				$rules = $rules['except'];
 
-				if (is_string($rules))
+				if (\is_string($rules))
 				{
 					$rules = [$rules];
 				}
@@ -240,11 +240,11 @@ class Filters
 				foreach ($rules as $path)
 				{
 					// Prep it for regex
-					$path = str_replace('/*', '*', $path);
-					$path = trim(str_replace('*', '.+', $path), '/ ');
+					$path = \str_replace('/*', '*', $path);
+					$path = \trim(\str_replace('*', '.+', $path), '/ ');
 
 					// Path doesn't match the URI? continue on...
-					if (preg_match('#' . $path . '#', $uri, $match) !== 1)
+					if (\preg_match('#' . $path . '#', $uri, $match) !== 1)
 					{
 						continue;
 					}
@@ -254,7 +254,7 @@ class Filters
 				}
 			}
 
-			$this->filters['before'] = array_merge($this->filters['before'], $this->config->globals['before']);
+			$this->filters['before'] = \array_merge($this->filters['before'], $this->config->globals['before']);
 		}
 
 		// After
@@ -263,14 +263,14 @@ class Filters
 			// Take any 'except' routes into consideration
 			foreach ($this->config->globals['after'] as $alias => $rules)
 			{
-				if ( ! is_array($rules) || ! array_key_exists('except', $rules))
+				if ( ! \is_array($rules) || ! \array_key_exists('except', $rules))
 				{
 					continue;
 				}
 
 				$rules = $rules['except'];
 
-				if (is_string($rules))
+				if (\is_string($rules))
 				{
 					$rules = [$rules];
 				}
@@ -278,11 +278,11 @@ class Filters
 				foreach ($rules as $path)
 				{
 					// Prep it for regex
-					$path = str_replace('/*', '*', $path);
-					$path = trim(str_replace('*', '.+', $path), '/ ');
+					$path = \str_replace('/*', '*', $path);
+					$path = \trim(\str_replace('*', '.+', $path), '/ ');
 
 					// Path doesn't match the URI? continue on...
-					if (preg_match('#' . $path . '#', $uri, $match) !== 1)
+					if (\preg_match('#' . $path . '#', $uri, $match) !== 1)
 					{
 						continue;
 					}
@@ -292,7 +292,7 @@ class Filters
 				}
 			}
 
-			$this->filters['after'] = array_merge($this->filters['after'], $this->config->globals['after']);
+			$this->filters['after'] = \array_merge($this->filters['after'], $this->config->globals['after']);
 		}
 	}
 
@@ -300,17 +300,17 @@ class Filters
 
 	protected function processMethods()
 	{
-		if ( ! isset($this->config->methods) || ! is_array($this->config->methods))
+		if ( ! isset($this->config->methods) || ! \is_array($this->config->methods))
 		{
 			return;
 		}
 
 		// Request method won't be set for CLI-based requests
-		$method = strtolower($_SERVER['REQUEST_METHOD'] ?? 'cli');
+		$method = \strtolower($_SERVER['REQUEST_METHOD'] ?? 'cli');
 
-		if (array_key_exists($method, $this->config->methods))
+		if (\array_key_exists($method, $this->config->methods))
 		{
-			$this->filters['before'] = array_merge($this->filters['before'], $this->config->methods[$method]);
+			$this->filters['before'] = \array_merge($this->filters['before'], $this->config->methods[$method]);
 			return;
 		}
 	}
@@ -319,12 +319,12 @@ class Filters
 
 	protected function processFilters(string $uri = null)
 	{
-		if ( ! isset($this->config->filters) || ! count($this->config->filters))
+		if ( ! isset($this->config->filters) || ! \count($this->config->filters))
 		{
 			return;
 		}
 
-		$uri = trim($uri, '/ ');
+		$uri = \trim($uri, '/ ');
 
 		$matches = [];
 
@@ -336,10 +336,10 @@ class Filters
 				foreach ($settings['before'] as $path)
 				{
 					// Prep it for regex
-					$path = str_replace('/*', '*', $path);
-					$path = trim(str_replace('*', '.+', $path), '/ ');
+					$path = \str_replace('/*', '*', $path);
+					$path = \trim(\str_replace('*', '.+', $path), '/ ');
 
-					if (preg_match('#' . $path . '#', $uri) !== 1)
+					if (\preg_match('#' . $path . '#', $uri) !== 1)
 					{
 						continue;
 					}
@@ -347,7 +347,7 @@ class Filters
 					$matches[] = $alias;
 				}
 
-				$this->filters['before'] = array_merge($this->filters['before'], $matches);
+				$this->filters['before'] = \array_merge($this->filters['before'], $matches);
 				$matches = [];
 			}
 
@@ -357,10 +357,10 @@ class Filters
 				foreach ($settings['after'] as $path)
 				{
 					// Prep it for regex
-					$path = str_replace('/*', '*', $path);
-					$path = trim(str_replace('*', '.+', $path), '/ ');
+					$path = \str_replace('/*', '*', $path);
+					$path = \trim(\str_replace('*', '.+', $path), '/ ');
 
-					if (preg_match('#' . $path . '#', $uri) !== 1)
+					if (\preg_match('#' . $path . '#', $uri) !== 1)
 					{
 						continue;
 					}
@@ -368,7 +368,7 @@ class Filters
 					$matches[] = $alias;
 				}
 
-				$this->filters['after'] = array_merge($this->filters['after'], $matches);
+				$this->filters['after'] = \array_merge($this->filters['after'], $matches);
 			}
 		}
 	}

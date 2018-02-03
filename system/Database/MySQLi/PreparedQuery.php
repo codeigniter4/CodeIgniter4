@@ -58,7 +58,7 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 	{
 		// Mysqli driver doesn't like statements
 		// with terminating semicolons.
-		$sql = rtrim($sql, ';');
+		$sql = \rtrim($sql, ';');
 
 		if ( ! $this->statement = $this->db->mysqli->prepare($sql))
 		{
@@ -81,7 +81,7 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 	 */
 	public function _execute($data)
 	{
-		if (is_null($this->statement))
+		if (\is_null($this->statement))
 		{
 			throw new \BadMethodCallException('You must call prepare before trying to execute a prepared statement.');
 		}
@@ -92,11 +92,11 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 		// Determine the type string
 		foreach ($data as $item)
 		{
-			if (is_integer($item))
+			if (\is_integer($item))
 			{
 				$bindTypes .= 'i';
 			}
-			elseif (is_numeric($item))
+			elseif (\is_numeric($item))
 			{
 				$bindTypes .= 'd';
 			}

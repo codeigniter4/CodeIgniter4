@@ -35,7 +35,7 @@ class DebugToolbar implements FilterInterface
 	{
 		$format = $response->getHeaderLine('content-type');
 
-		if ( ! is_cli() && CI_DEBUG && strpos($format, 'html') !== false)
+		if ( ! is_cli() && CI_DEBUG && \strpos($format, 'html') !== false)
 		{
 			global $app;
 
@@ -52,11 +52,11 @@ class DebugToolbar implements FilterInterface
 			helper(['filesystem', 'url']);
 
 			// Updated to time() so we can get history
-			$time = time();
+			$time = \time();
 
-			if (! is_dir(WRITEPATH.'debugbar'))
+			if (! \is_dir(WRITEPATH.'debugbar'))
 			{
-				mkdir(WRITEPATH.'debugbar', 0777);
+				\mkdir(WRITEPATH.'debugbar', 0777);
 			}
 
 			write_file(WRITEPATH .'debugbar/'.'debugbar_' . $time, $output, 'w+');
@@ -64,12 +64,12 @@ class DebugToolbar implements FilterInterface
 			$script = PHP_EOL
 				. '<script type="text/javascript" id="debugbar_loader" '
 				. 'data-time="' . $time . '" '
-				. 'src="' . rtrim(site_url(), '/') . '?debugbar"></script>'
+				. 'src="' . \rtrim(site_url(), '/') . '?debugbar"></script>'
 				. PHP_EOL;
 
-			if (strpos($response->getBody(), '</body>') !== false)
+			if (\strpos($response->getBody(), '</body>') !== false)
 			{
-				return $response->setBody(str_replace('</body>', $script . '</body>',
+				return $response->setBody(\str_replace('</body>', $script . '</body>',
 					$response->getBody()));
 			}
 

@@ -102,7 +102,7 @@ class Cell
 		list($class, $method) = $this->determineClass($library);
 
 		// Is it cached?
-		$cacheName = ! empty($cacheName) ? $cacheName : $class . $method . md5(serialize($params));
+		$cacheName = ! empty($cacheName) ? $cacheName : $class . $method . \md5(\serialize($params));
 
 		if ( ! empty($this->cache) && $output = $this->cache->get($cacheName))
 		{
@@ -112,7 +112,7 @@ class Cell
 		// Not cached - so grab it...
 		$instance = new $class();
 
-		if ( ! method_exists($instance, $method))
+		if ( ! \method_exists($instance, $method))
 		{
 			throw new \InvalidArgumentException("{$class}::{$method} is not a valid method.");
 		}
@@ -134,7 +134,7 @@ class Cell
 			$output = $instance->{$method}();
 		}
 		elseif (
-				($paramCount === 1) && ( ( ! array_key_exists($refParams[0]->name, $paramArray)) || (array_key_exists($refParams[0]->name, $paramArray) && count($paramArray) !== 1) )
+				($paramCount === 1) && ( ( ! \array_key_exists($refParams[0]->name, $paramArray)) || (\array_key_exists($refParams[0]->name, $paramArray) && \count($paramArray) !== 1) )
 		)
 		{
 			$output = $instance->{$method}($paramArray);
@@ -147,7 +147,7 @@ class Cell
 			foreach ($refParams as $arg)
 			{
 				$method_params[$arg->name] = true;
-				if (array_key_exists($arg->name, $paramArray))
+				if (\array_key_exists($arg->name, $paramArray))
 				{
 					$fireArgs[$arg->name] = $paramArray[$arg->name];
 				}
@@ -161,7 +161,7 @@ class Cell
 				}
 			}
 
-			$output = call_user_func_array([$instance, $method], $fireArgs);
+			$output = \call_user_func_array([$instance, $method], $fireArgs);
 		}
 		// Can we cache it?
 		if ( ! empty($this->cache) && $ttl !== 0)
@@ -184,28 +184,28 @@ class Cell
 	 */
 	public function prepareParams($params)
 	{
-		if (empty($params) || ( ! is_string($params) && ! is_array($params)))
+		if (empty($params) || ( ! \is_string($params) && ! \is_array($params)))
 		{
 			return [];
 		}
 
-		if (is_string($params))
+		if (\is_string($params))
 		{
 			$new_params = [];
 			$separator = ' ';
 
-			if (strpos($params, ',') !== false)
+			if (\strpos($params, ',') !== false)
 			{
 				$separator = ',';
 			}
 
-			$params = explode($separator, $params);
+			$params = \explode($separator, $params);
 			unset($separator);
 
 			foreach ($params as $p)
 			{
-				list($key, $val) = explode('=', $p);
-				$new_params[trim($key)] = trim($val, ', ');
+				list($key, $val) = \explode('=', $p);
+				$new_params[\trim($key)] = \trim($val, ', ');
 			}
 
 			$params = $new_params;
@@ -213,7 +213,7 @@ class Cell
 			unset($new_params);
 		}
 
-		if (is_array($params) && empty($params))
+		if (\is_array($params) && empty($params))
 		{
 			return [];
 		}
@@ -235,16 +235,16 @@ class Cell
 	{
 		// We don't want to actually call static methods
 		// by default, so convert any double colons.
-		$library = str_replace('::', ':', $library);
+		$library = \str_replace('::', ':', $library);
 
-		list($class, $method) = explode(':', $library);
+		list($class, $method) = \explode(':', $library);
 
 		if (empty($class))
 		{
 			throw new \InvalidArgumentException('No view cell class provided.');
 		}
 
-		if ( ! class_exists($class, true))
+		if ( ! \class_exists($class, true))
 		{
 			throw new \InvalidArgumentException('Unable to locate view cell class: ' . $class . '.');
 		}

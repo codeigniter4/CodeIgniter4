@@ -70,8 +70,8 @@ class View extends BaseConfig
 
 	public function __construct()
 	{
-		$this->filters = array_merge($this->filters, $this->coreFilters);
-		$this->plugins = array_merge($this->plugins, $this->corePlugins);
+		$this->filters = \array_merge($this->filters, $this->coreFilters);
+		$this->plugins = \array_merge($this->plugins, $this->corePlugins);
 
 		parent::__construct();
 	}

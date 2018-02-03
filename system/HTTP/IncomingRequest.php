@@ -147,7 +147,7 @@ class IncomingRequest extends Request
 		// Get our body from php://input
 		if ($body == 'php://input')
 		{
-			$body = file_get_contents('php://input');
+			$body = \file_get_contents('php://input');
 		}
 
 		$this->body = $body;
@@ -224,7 +224,7 @@ class IncomingRequest extends Request
 	{
 		// If it's not a valid locale, set it
 		// to the default locale for the site.
-		if ( ! in_array($locale, $this->validLocales))
+		if ( ! \in_array($locale, $this->validLocales))
 		{
 			$locale = $this->defaultLocale;
 		}
@@ -236,7 +236,7 @@ class IncomingRequest extends Request
 		// don't worry about it.
 		try
 		{
-			if (class_exists('\Locale', false))
+			if (\class_exists('\Locale', false))
 			{
 				\Locale::setDefault($locale);
 			}
@@ -257,7 +257,7 @@ class IncomingRequest extends Request
 	 */
 	public function isCLI(): bool
 	{
-		return (PHP_SAPI === 'cli' || defined('STDIN'));
+		return (PHP_SAPI === 'cli' || \defined('STDIN'));
 	}
 
 	//--------------------------------------------------------------------
@@ -270,7 +270,7 @@ class IncomingRequest extends Request
 	public function isAJAX(): bool
 	{
 		return ( ! empty($_SERVER['HTTP_X_REQUESTED_WITH']) &&
-				strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest');
+				\strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest');
 	}
 
 	//--------------------------------------------------------------------
@@ -283,7 +283,7 @@ class IncomingRequest extends Request
 	 */
 	public function isSecure(): bool
 	{
-		if ( ! empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) !== 'off')
+		if ( ! empty($_SERVER['HTTPS']) && \strtolower($_SERVER['HTTPS']) !== 'off')
 		{
 			return true;
 		}
@@ -291,7 +291,7 @@ class IncomingRequest extends Request
 		{
 			return true;
 		}
-		elseif ( ! empty($_SERVER['HTTP_FRONT_END_HTTPS']) && strtolower($_SERVER['HTTP_FRONT_END_HTTPS']) !== 'off')
+		elseif ( ! empty($_SERVER['HTTP_FRONT_END_HTTPS']) && \strtolower($_SERVER['HTTP_FRONT_END_HTTPS']) !== 'off')
 		{
 			return true;
 		}
@@ -336,7 +336,7 @@ class IncomingRequest extends Request
 	 */
 	public function getJSON(bool $assoc = false, int $depth = 512, int $options = 0)
 	{
-		return json_decode($this->body, $assoc, $depth, $options);
+		return \json_decode($this->body, $assoc, $depth, $options);
 	}
 
 	//--------------------------------------------------------------------
@@ -349,7 +349,7 @@ class IncomingRequest extends Request
 	 */
 	public function getRawInput()
 	{
-		parse_str($this->body, $output);
+		\parse_str($this->body, $output);
 
 		return $output;
 	}
@@ -493,7 +493,7 @@ class IncomingRequest extends Request
 	 */
 	public function getFiles()
 	{
-		if (is_null($this->files))
+		if (\is_null($this->files))
 		{
 			$this->files = new FileCollection();
 		}
@@ -514,7 +514,7 @@ class IncomingRequest extends Request
 	 */
 	public function getFile(string $fileID)
 	{
-		if (is_null($this->files))
+		if (\is_null($this->files))
 		{
 			$this->files = new FileCollection();
 		}
@@ -538,7 +538,7 @@ class IncomingRequest extends Request
 
 		// It's possible the user forgot a trailing slash on their
 		// baseURL, so let's help them out.
-		$baseURL = ! empty($baseURL) ? rtrim($baseURL, '/ ') . '/' : $baseURL;
+		$baseURL = ! empty($baseURL) ? \rtrim($baseURL, '/ ') . '/' : $baseURL;
 
 		// Based on our baseURL provided by the developer (if set)
 		// set our current domain name, scheme
@@ -548,10 +548,10 @@ class IncomingRequest extends Request
 			// that the routing will not work correctly if we are
 			// within a sub-folder scheme. So it's modified in
 			// the
-			$this->uri->setScheme(parse_url($baseURL, PHP_URL_SCHEME));
-			$this->uri->setHost(parse_url($baseURL, PHP_URL_HOST));
-			$this->uri->setPort(parse_url($baseURL, PHP_URL_PORT));
-			$this->uri->resolveRelativeURI(parse_url($baseURL, PHP_URL_PATH));
+			$this->uri->setScheme(\parse_url($baseURL, PHP_URL_SCHEME));
+			$this->uri->setHost(\parse_url($baseURL, PHP_URL_HOST));
+			$this->uri->setPort(\parse_url($baseURL, PHP_URL_PORT));
+			$this->uri->resolveRelativeURI(\parse_url($baseURL, PHP_URL_PATH));
 		}
 		else
 		{
@@ -618,12 +618,12 @@ class IncomingRequest extends Request
 	 */
 	public function negotiate(string $type, array $supported, bool $strictMatch = false)
 	{
-		if (is_null($this->negotiate))
+		if (\is_null($this->negotiate))
 		{
 			$this->negotiate = Services::negotiator($this, true);
 		}
 
-		switch (strtolower($type))
+		switch (\strtolower($type))
 		{
 			case 'media':
 				return $this->negotiate->media($supported, $strictMatch);
@@ -659,27 +659,27 @@ class IncomingRequest extends Request
 
 		// parse_url() returns false if no host is present, but the path or query string
 		// contains a colon followed by a number
-		$parts = parse_url('http://dummy' . $_SERVER['REQUEST_URI']);
+		$parts = \parse_url('http://dummy' . $_SERVER['REQUEST_URI']);
 		$query = $parts['query'] ?? '';
 		$uri = $parts['path'] ?? '';
 
 		if (isset($_SERVER['SCRIPT_NAME'][0]))
 		{
-			if (strpos($uri, $_SERVER['SCRIPT_NAME']) === 0)
+			if (\strpos($uri, $_SERVER['SCRIPT_NAME']) === 0)
 			{
-				$uri = (string) substr($uri, strlen($_SERVER['SCRIPT_NAME']));
+				$uri = (string) \substr($uri, \strlen($_SERVER['SCRIPT_NAME']));
 			}
-			elseif (strpos($uri, dirname($_SERVER['SCRIPT_NAME'])) === 0)
+			elseif (\strpos($uri, \dirname($_SERVER['SCRIPT_NAME'])) === 0)
 			{
-				$uri = (string) substr($uri, strlen(dirname($_SERVER['SCRIPT_NAME'])));
+				$uri = (string) \substr($uri, \strlen(\dirname($_SERVER['SCRIPT_NAME'])));
 			}
 		}
 
 		// This section ensures that even on servers that require the URI to be in the query string (Nginx) a correct
 		// URI is found, and also fixes the QUERY_STRING getServer var and $_GET array.
-		if (trim($uri, '/') === '' && strncmp($query, '/', 1) === 0)
+		if (\trim($uri, '/') === '' && \strncmp($query, '/', 1) === 0)
 		{
-			$query = explode('?', $query, 2);
+			$query = \explode('?', $query, 2);
 			$uri = $query[0];
 			$_SERVER['QUERY_STRING'] = $query[1] ?? '';
 		}
@@ -688,7 +688,7 @@ class IncomingRequest extends Request
 			$_SERVER['QUERY_STRING'] = $query;
 		}
 
-		parse_str($_SERVER['QUERY_STRING'], $_GET);
+		\parse_str($_SERVER['QUERY_STRING'], $_GET);
 
 		if ($uri === '/' || $uri === '')
 		{
@@ -709,20 +709,20 @@ class IncomingRequest extends Request
 	 */
 	protected function parseQueryString(): string
 	{
-		$uri = $_SERVER['QUERY_STRING'] ?? @getenv('QUERY_STRING');
+		$uri = $_SERVER['QUERY_STRING'] ?? @\getenv('QUERY_STRING');
 
-		if (trim($uri, '/') === '')
+		if (\trim($uri, '/') === '')
 		{
 			return '';
 		}
-		elseif (strncmp($uri, '/', 1) === 0)
+		elseif (\strncmp($uri, '/', 1) === 0)
 		{
-			$uri = explode('?', $uri, 2);
+			$uri = \explode('?', $uri, 2);
 			$_SERVER['QUERY_STRING'] = $uri[1] ?? '';
 			$uri = $uri[0];
 		}
 
-		parse_str($_SERVER['QUERY_STRING'], $_GET);
+		\parse_str($_SERVER['QUERY_STRING'], $_GET);
 
 		return $this->removeRelativeDirectory($uri);
 	}
@@ -741,17 +741,17 @@ class IncomingRequest extends Request
 	protected function removeRelativeDirectory($uri)
 	{
 		$uris = [];
-		$tok = strtok($uri, '/');
+		$tok = \strtok($uri, '/');
 		while ($tok !== false)
 		{
 			if (( ! empty($tok) || $tok === '0') && $tok !== '..')
 			{
 				$uris[] = $tok;
 			}
-			$tok = strtok('/');
+			$tok = \strtok('/');
 		}
 
-		return implode('/', $uris);
+		return \implode('/', $uris);
 	}
 
 	// --------------------------------------------------------------------

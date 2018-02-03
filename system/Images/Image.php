@@ -90,26 +90,26 @@ class Image extends File
 	 */
 	public function copy(string $targetPath, string $targetName = null, int $perms = 0644)
 	{
-		$targetPath = rtrim($targetPath, '/ ') . '/';
+		$targetPath = \rtrim($targetPath, '/ ') . '/';
 
-		$targetName = is_null($targetName) ? $this->getFilename() : $targetName;
+		$targetName = \is_null($targetName) ? $this->getFilename() : $targetName;
 
 		if (empty($targetName))
 		{
 			throw new ImageException('Invalid file name.');
 		}
 
-		if ( ! is_dir($targetPath))
+		if ( ! \is_dir($targetPath))
 		{
-			mkdir($targetName, 0755, true);
+			\mkdir($targetName, 0755, true);
 		}
 
-		if ( ! copy($this->getPathname(), "{$targetPath}{$targetName}"))
+		if ( ! \copy($this->getPathname(), "{$targetPath}{$targetName}"))
 		{
 			throw new ImageException('Unable to copy image to new destination.');
 		}
 
-		chmod("{$targetPath}/{$targetName}", $perms);
+		\chmod("{$targetPath}/{$targetName}", $perms);
 
 		return true;
 	}
@@ -129,7 +129,7 @@ class Image extends File
 	{
 		$path = $this->getPathname();
 
-		$vals = getimagesize($path);
+		$vals = \getimagesize($path);
 		$types = [1 => 'gif', 2 => 'jpeg', 3 => 'png'];
 		$mime = 'image/' . ($types[$vals[2]] ?? 'jpg');
 

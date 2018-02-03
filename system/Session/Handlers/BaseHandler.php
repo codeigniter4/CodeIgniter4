@@ -140,7 +140,7 @@ abstract class BaseHandler implements \SessionHandlerInterface
 	 */
 	protected function destroyCookie(): bool
 	{
-		return setcookie(
+		return \setcookie(
 				$this->cookieName, null, 1, $this->cookiePath, $this->cookieDomain, $this->cookieSecure, true
 		);
 	}
@@ -193,7 +193,7 @@ abstract class BaseHandler implements \SessionHandlerInterface
 	 */
 	protected function fail()
 	{
-		ini_set('session.save_path', $this->savePath);
+		\ini_set('session.save_path', $this->savePath);
 
 		return false;
 	}

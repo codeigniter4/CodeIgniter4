@@ -61,7 +61,7 @@ class CommandRunner extends Controller
 		// The first param is usually empty, so scrap it.
 		if (empty($params[0]))
 		{
-			array_shift($params);
+			\array_shift($params);
 		}
 
 		$this->index($params);
@@ -77,11 +77,11 @@ class CommandRunner extends Controller
 	 */
 	public function index(array $params)
 	{
-		$command = array_shift($params);
+		$command = \array_shift($params);
 
 		$this->createCommandList();
 
-		if (is_null($command))
+		if (\is_null($command))
 		{
 			$command = 'help';
 		}
@@ -140,7 +140,7 @@ class CommandRunner extends Controller
 		{
 			$className = service('locator')->findQualifiedNameFromPath($file);
 
-			if (empty($className) || ! class_exists($className))
+			if (empty($className) || ! \class_exists($className))
 			{
 				continue;
 			}
@@ -162,7 +162,7 @@ class CommandRunner extends Controller
 			unset($class);
 		}
 
-		asort($this->commands);
+		\asort($this->commands);
 	}
 
 	//--------------------------------------------------------------------

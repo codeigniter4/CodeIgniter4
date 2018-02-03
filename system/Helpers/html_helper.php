@@ -45,7 +45,7 @@
  * @author      CodeIgniter Dev Team
  * @link        https://codeigniter.com/user_guide/helpers/html_helper.html
  */
-if ( ! function_exists('ul'))
+if ( ! \function_exists('ul'))
 {
 
 	/**
@@ -67,7 +67,7 @@ if ( ! function_exists('ul'))
 
 // ------------------------------------------------------------------------
 
-if ( ! function_exists('ol'))
+if ( ! \function_exists('ol'))
 {
 
 	/**
@@ -88,7 +88,7 @@ if ( ! function_exists('ol'))
 
 // ------------------------------------------------------------------------
 
-if ( ! function_exists('_list'))
+if ( ! \function_exists('_list'))
 {
 
 	/**
@@ -108,13 +108,13 @@ if ( ! function_exists('_list'))
 	): string
 	{
 		// If an array wasn't submitted there's nothing to do...
-		if ( ! is_array($list))
+		if ( ! \is_array($list))
 		{
 			return $list;
 		}
 
 		// Set the indentation based on the depth
-		$out = str_repeat(' ', $depth)
+		$out = \str_repeat(' ', $depth)
 				// Write the opening list tag
 				. '<' . $type . stringify_attributes($attributes) . ">\n";
 
@@ -127,9 +127,9 @@ if ( ! function_exists('_list'))
 		{
 			$_last_list_item = $key;
 
-			$out .= str_repeat(' ', $depth + 2) . '<li>';
+			$out .= \str_repeat(' ', $depth + 2) . '<li>';
 
-			if ( ! is_array($val))
+			if ( ! \is_array($val))
 			{
 				$out .= $val;
 			}
@@ -138,21 +138,21 @@ if ( ! function_exists('_list'))
 				$out .= $_last_list_item
 						. "\n"
 						. _list($type, $val, '', $depth + 4)
-						. str_repeat(' ', $depth + 2);
+						. \str_repeat(' ', $depth + 2);
 			}
 
 			$out .= "</li>\n";
 		}
 
 		// Set the indentation for the closing tag and apply it
-		return $out . str_repeat(' ', $depth) . '</' . $type . ">\n";
+		return $out . \str_repeat(' ', $depth) . '</' . $type . ">\n";
 	}
 
 }
 
 // ------------------------------------------------------------------------
 
-if ( ! function_exists('img'))
+if ( ! \function_exists('img'))
 {
 
 	/**
@@ -170,7 +170,7 @@ if ( ! function_exists('img'))
 	$src = '', bool $indexPage = false, string $attributes = ''
 	): string
 	{
-		if ( ! is_array($src))
+		if ( ! \is_array($src))
 		{
 			$src = ['src' => $src];
 		}
@@ -187,7 +187,7 @@ if ( ! function_exists('img'))
 		foreach ($src as $k => $v)
 		{
 			//Include a protocol if nothing is explicitely defined.
-			if ($k === 'src' && ! preg_match('#^([a-z]+:)?//#i', $v))
+			if ($k === 'src' && ! \preg_match('#^([a-z]+:)?//#i', $v))
 			{
 				if ($indexPage === true)
 				{
@@ -211,7 +211,7 @@ if ( ! function_exists('img'))
 
 // ------------------------------------------------------------------------
 
-if ( ! function_exists('doctype'))
+if ( ! \function_exists('doctype'))
 {
 
 	/**
@@ -232,7 +232,7 @@ if ( ! function_exists('doctype'))
 		$env = ENVIRONMENT;
 		$doctypes = Config\DocTypes::$list;
 		$customDocTypesPath = APPPATH . "Config/{$env}/DocTypes.php";
-		if (file_exists($customDocTypesPath))
+		if (\file_exists($customDocTypesPath))
 		{
 			$customDocTypesNs = "Config\{$env}\DocTypes";
 			$doctypes = $customDocTypesNs::$list;
@@ -244,7 +244,7 @@ if ( ! function_exists('doctype'))
 
 // ------------------------------------------------------------------------
 
-if ( ! function_exists('script_tag'))
+if ( ! \function_exists('script_tag'))
 {
 
 	/**
@@ -263,11 +263,11 @@ if ( ! function_exists('script_tag'))
 	{
 		$script = '<script ';
 
-		if (is_array($src))
+		if (\is_array($src))
 		{
 			foreach ($src as $k => $v)
 			{
-				if ($k === 'src' && ! preg_match('#^([a-z]+:)?//#i', $v))
+				if ($k === 'src' && ! \preg_match('#^([a-z]+:)?//#i', $v))
 				{
 					if ($indexPage === true)
 					{
@@ -286,7 +286,7 @@ if ( ! function_exists('script_tag'))
 		}
 		else
 		{
-			if (preg_match('#^([a-z]+:)?//#i', $src))
+			if (\preg_match('#^([a-z]+:)?//#i', $src))
 			{
 				$script .= 'src="' . $src . '" ';
 			}
@@ -307,7 +307,7 @@ if ( ! function_exists('script_tag'))
 
 // ------------------------------------------------------------------------
 
-if ( ! function_exists('link_tag'))
+if ( ! \function_exists('link_tag'))
 {
 
 	/**
@@ -330,11 +330,11 @@ if ( ! function_exists('link_tag'))
 	{
 		$link = '<link ';
 
-		if (is_array($href))
+		if (\is_array($href))
 		{
 			foreach ($href as $k => $v)
 			{
-				if ($k === 'href' && ! preg_match('#^([a-z]+:)?//#i', $v))
+				if ($k === 'href' && ! \preg_match('#^([a-z]+:)?//#i', $v))
 				{
 					if ($indexPage === true)
 					{
@@ -353,7 +353,7 @@ if ( ! function_exists('link_tag'))
 		}
 		else
 		{
-			if (preg_match('#^([a-z]+:)?//#i', $href))
+			if (\preg_match('#^([a-z]+:)?//#i', $href))
 			{
 				$link .= 'href="' . $href . '" ';
 			}
@@ -384,7 +384,7 @@ if ( ! function_exists('link_tag'))
 
 	// ------------------------------------------------------------------------
 
-	if ( ! function_exists('video'))
+	if ( ! \function_exists('video'))
 	{
 
 		/**
@@ -408,7 +408,7 @@ if ( ! function_exists('link_tag'))
 		$src, string $unsupportedMessage = '', string $attributes = '', array $tracks = [], bool $indexPage = false
 		): string
 		{
-			if (is_array($src))
+			if (\is_array($src))
 			{
 				return _media
 						(
@@ -462,7 +462,7 @@ if ( ! function_exists('link_tag'))
 
 	// ------------------------------------------------------------------------
 
-	if ( ! function_exists('audio'))
+	if ( ! \function_exists('audio'))
 	{
 
 		/**
@@ -483,7 +483,7 @@ if ( ! function_exists('link_tag'))
 		$src, string $unsupportedMessage = '', string $attributes = '', array $tracks = [], bool $indexPage = false
 		): string
 		{
-			if (is_array($src))
+			if (\is_array($src))
 			{
 				return _media
 						(
@@ -537,7 +537,7 @@ if ( ! function_exists('link_tag'))
 
 	// ------------------------------------------------------------------------
 
-	if ( ! function_exists('_media'))
+	if ( ! \function_exists('_media'))
 	{
 
 		function _media
@@ -589,7 +589,7 @@ if ( ! function_exists('link_tag'))
 
 	// ------------------------------------------------------------------------
 
-	if ( ! function_exists('source'))
+	if ( ! \function_exists('source'))
 	{
 
 		/**
@@ -640,7 +640,7 @@ if ( ! function_exists('link_tag'))
 
 	// ------------------------------------------------------------------------
 
-	if ( ! function_exists('track'))
+	if ( ! \function_exists('track'))
 	{
 
 		/**
@@ -671,7 +671,7 @@ if ( ! function_exists('link_tag'))
 
 	// ------------------------------------------------------------------------
 
-	if ( ! function_exists('object'))
+	if ( ! \function_exists('object'))
 	{
 
 		/**
@@ -729,7 +729,7 @@ if ( ! function_exists('link_tag'))
 
 	// ------------------------------------------------------------------------
 
-	if ( ! function_exists('param'))
+	if ( ! \function_exists('param'))
 	{
 
 		/**
@@ -759,7 +759,7 @@ if ( ! function_exists('link_tag'))
 
 	// ------------------------------------------------------------------------
 
-	if ( ! function_exists('embed'))
+	if ( ! \function_exists('embed'))
 	{
 
 		/**
@@ -800,24 +800,24 @@ if ( ! function_exists('link_tag'))
 
 	// ------------------------------------------------------------------------
 
-	if ( ! function_exists('_has_protocol'))
+	if ( ! \function_exists('_has_protocol'))
 	{
 
 		function _has_protocol($url)
 		{
-			return preg_match('#^([a-z]+:)?//#i', $url);
+			return \preg_match('#^([a-z]+:)?//#i', $url);
 		}
 
 	}
 
 	// ------------------------------------------------------------------------
 
-	if ( ! function_exists('_space_indent'))
+	if ( ! \function_exists('_space_indent'))
 	{
 
 		function _space_indent($depth = 2)
 		{
-			return str_repeat(' ', $depth);
+			return \str_repeat(' ', $depth);
 		}
 
 	}

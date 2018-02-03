@@ -86,7 +86,7 @@ class AutoloadConfig
 		 *   `];
 		 */
 		$this->psr4 = [
-			'CodeIgniter' => realpath(BASEPATH)
+			'CodeIgniter' => \realpath(BASEPATH)
 		];
 
 		if (isset($_SERVER['CI_ENVIRONMENT']) && $_SERVER['CI_ENVIRONMENT'] === 'testing')

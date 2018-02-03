@@ -105,20 +105,20 @@ class MigrateVersion extends BaseCommand
 		$runner = Services::migrations();
 
 		// Get the version number
-		$version = array_shift($params);
+		$version = \array_shift($params);
 
-		if (is_null($version))
+		if (\is_null($version))
 		{
 			$version = CLI::prompt(lang('Migrations.version'));
 		}
 
-		if (is_null($version))
+		if (\is_null($version))
 		{
 			CLI::error(lang('Migrations.invalidVersion'));
 			exit();
 		}
 
-		CLI::write(sprintf(lang('Migrations.migToVersionPH'), $version), 'yellow');
+		CLI::write(\sprintf(lang('Migrations.migToVersionPH'), $version), 'yellow');
 
 		$namespace = CLI::getOption('n');
 		$group = CLI::getOption('g');

@@ -75,7 +75,7 @@ class ImageMagickHandler extends BaseHandler
 		//todo FIX THIS HANDLER PROPERLY
 
 		$escape = "\\";
-		if (strtoupper( substr( PHP_OS, 0, 3 ) ) === 'WIN') {
+		if (\strtoupper( \substr( PHP_OS, 0, 3 ) ) === 'WIN') {
 			$escape = "";
 		}
 
@@ -189,9 +189,9 @@ class ImageMagickHandler extends BaseHandler
 		$result = $this->process('-version');
 
 		// The first line has the version in it...
-		preg_match('/(ImageMagick\s[\S]+)/', $result[0], $matches);
+		\preg_match('/(ImageMagick\s[\S]+)/', $result[0], $matches);
 
-		return str_replace('ImageMagick ', '', $matches[0]);
+		return \str_replace('ImageMagick ', '', $matches[0]);
 	}
 
 	//--------------------------------------------------------------------
@@ -212,9 +212,9 @@ class ImageMagickHandler extends BaseHandler
 			throw new ImageException(lang('images.libPathInvalid'));
 		}
 
-		if ( ! preg_match('/convert$/i', $this->config->libraryPath))
+		if ( ! \preg_match('/convert$/i', $this->config->libraryPath))
 		{
-			$this->config->libraryPath = rtrim($this->config->libraryPath, '/') . '/convert';
+			$this->config->libraryPath = \rtrim($this->config->libraryPath, '/') . '/convert';
 		}
 
 		$cmd = $this->config->libraryPath;
@@ -224,7 +224,7 @@ class ImageMagickHandler extends BaseHandler
 		// exec() might be disabled
 		if (function_usable('exec'))
 		{
-			@exec($cmd, $output, $retval);
+			@\exec($cmd, $output, $retval);
 		}
 
 		// Did it work?
@@ -260,8 +260,8 @@ class ImageMagickHandler extends BaseHandler
 		// simply copy the existing one.
 		if (empty($this->resource))
 		{
-			$name = basename($target);
-			$path = pathinfo($target, PATHINFO_DIRNAME);
+			$name = \basename($target);
+			$path = \pathinfo($target, PATHINFO_DIRNAME);
 
 			return $this->image->copy($path, $name);
 		}
@@ -272,7 +272,7 @@ class ImageMagickHandler extends BaseHandler
 
 		$result = $this->process($action, $quality);
 
-		unlink($this->resource);
+		\unlink($this->resource);
 
 		return $result;
 	}
@@ -295,12 +295,12 @@ class ImageMagickHandler extends BaseHandler
 	 */
 	protected function getResourcePath()
 	{
-		if ( ! is_null($this->resource))
+		if ( ! \is_null($this->resource))
 		{
 			return $this->resource;
 		}
 
-		$this->resource = WRITEPATH . 'cache/' . time() . '_' . bin2hex(random_bytes(10)) . '.png';
+		$this->resource = WRITEPATH . 'cache/' . \time() . '_' . \bin2hex(\random_bytes(10)) . '.png';
 
 		return $this->resource;
 	}
@@ -384,7 +384,7 @@ class ImageMagickHandler extends BaseHandler
 		// Color
 		if (isset($options['color']))
 		{
-			list($r, $g, $b) = sscanf("#{$options['color']}", "#%02x%02x%02x");
+			list($r, $g, $b) = \sscanf("#{$options['color']}", "#%02x%02x%02x");
 
 			$cmd .= " -fill 'rgba({$r},{$g},{$b},{$options['opacity']})'";
 		}

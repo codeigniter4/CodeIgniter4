@@ -59,12 +59,12 @@ class DotEnv
 	 */
 	public function __construct(string $path, $file = '.env')
 	{
-		if ( ! is_string($file))
+		if ( ! \is_string($file))
 		{
 			$file = '.env';
 		}
 
-		$this->path = rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $file;
+		$this->path = \rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $file;
 	}
 
 	//--------------------------------------------------------------------
@@ -80,30 +80,30 @@ class DotEnv
 	{
 		// We don't want to enforce the presence of a .env file,
 		// they should be optional.
-		if ( ! is_file($this->path))
+		if ( ! \is_file($this->path))
 		{
 			return false;
 		}
 
 		// Ensure file is readable
-		if ( ! is_readable($this->path))
+		if ( ! \is_readable($this->path))
 		{
 			throw new \InvalidArgumentException("The .env file is not readable: {$this->path}");
 		}
 
-		$lines = file($this->path, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+		$lines = \file($this->path, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 
 		foreach ($lines as $line)
 		{
 			// Is it a comment?
-			if (strpos(trim($line), '#') === 0)
+			if (\strpos(\trim($line), '#') === 0)
 			{
 				continue;
 			}
 
 			// If there is an equal sign, then we know we
 			// are assigning a variable.
-			if (strpos($line, '=') !== false)
+			if (\strpos($line, '=') !== false)
 			{
 				$this->setVariable($line);
 			}
@@ -125,8 +125,8 @@ class DotEnv
 	{
 		list($name, $value) = $this->normaliseVariable($name, $value);
 
-		if ( ! getenv($name, true))
-			putenv("$name=$value");
+		if ( ! \getenv($name, true))
+			\putenv("$name=$value");
 		if (empty($_ENV[$name]))
 			$_ENV[$name] = $value;
 		if (empty($_SERVER[$name]))
@@ -147,16 +147,16 @@ class DotEnv
 	public function normaliseVariable(string $name, string $value = ''): array
 	{
 		// Split our compound string into it's parts.
-		if (strpos($name, '=') !== false)
+		if (\strpos($name, '=') !== false)
 		{
-			list($name, $value) = explode('=', $name, 2);
+			list($name, $value) = \explode('=', $name, 2);
 		}
 
-		$name = trim($name);
-		$value = trim($value);
+		$name = \trim($name);
+		$value = \trim($value);
 
 		// Sanitize the name
-		$name = str_replace(['export', '\'', '"'], '', $name);
+		$name = \str_replace(['export', '\'', '"'], '', $name);
 
 		// Sanitize the value
 		$value = $this->sanitizeValue($value);
@@ -187,11 +187,11 @@ class DotEnv
 		}
 
 		// Does it begin with a quote?
-		if (strpbrk($value[0], '"\'') !== false)
+		if (\strpbrk($value[0], '"\'') !== false)
 		{
 			// value starts with a quote
 			$quote = $value[0];
-			$regexPattern = sprintf(
+			$regexPattern = \sprintf(
 					'/^
 					%1$s          # match a quote at the start of the value
 					(             # capturing sub-pattern used
@@ -205,18 +205,18 @@ class DotEnv
 					.*$           # and discard any string after the closing quote
 					/mx', $quote
 			);
-			$value = preg_replace($regexPattern, '$1', $value);
-			$value = str_replace("\\$quote", $quote, $value);
-			$value = str_replace('\\\\', '\\', $value);
+			$value = \preg_replace($regexPattern, '$1', $value);
+			$value = \str_replace("\\$quote", $quote, $value);
+			$value = \str_replace('\\\\', '\\', $value);
 		}
 		else
 		{
-			$parts = explode(' #', $value, 2);
+			$parts = \explode(' #', $value, 2);
 
-			$value = trim($parts[0]);
+			$value = \trim($parts[0]);
 
 			// Unquoted values cannot contain whitespace
-			if (preg_match('/\s+/', $value) > 0)
+			if (\preg_match('/\s+/', $value) > 0)
 			{
 				throw new \InvalidArgumentException('.env values containing spaces must be surrounded by quotes.');
 			}
@@ -242,15 +242,15 @@ class DotEnv
 	 */
 	protected function resolveNestedVariables(string $value): string
 	{
-		if (strpos($value, '$') !== false)
+		if (\strpos($value, '$') !== false)
 		{
 			$loader = $this;
 
-			$value = preg_replace_callback(
+			$value = \preg_replace_callback(
 					'/\${([a-zA-Z0-9_]+)}/', function ($matchedPatterns) use ($loader) {
 				$nestedVariable = $loader->getVariable($matchedPatterns[1]);
 
-				if (is_null($nestedVariable))
+				if (\is_null($nestedVariable))
 				{
 					return $matchedPatterns[0];
 				}
@@ -279,14 +279,14 @@ class DotEnv
 	{
 		switch (true)
 		{
-			case array_key_exists($name, $_ENV):
+			case \array_key_exists($name, $_ENV):
 				return $_ENV[$name];
 				break;
-			case array_key_exists($name, $_SERVER):
+			case \array_key_exists($name, $_SERVER):
 				return $_SERVER[$name];
 				break;
 			default:
-				$value = getenv($name);
+				$value = \getenv($name);
 
 				// switch getenv default to null
 				return $value === false ? null : $value;

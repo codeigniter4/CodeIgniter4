@@ -35,9 +35,9 @@
  * @since	Version 3.0.0
  * @filesource
  */
-define('EVENT_PRIORITY_LOW', 200);
-define('EVENT_PRIORITY_NORMAL', 100);
-define('EVENT_PRIORITY_HIGH', 10);
+\define('EVENT_PRIORITY_LOW', 200);
+\define('EVENT_PRIORITY_NORMAL', 100);
+\define('EVENT_PRIORITY_HIGH', 10);
 
 /**
  * Events
@@ -159,7 +159,7 @@ class Events
 		{
 			self::initialize();
 
-			if (is_file(self::$eventsFile))
+			if (\is_file(self::$eventsFile))
 			{
 				include self::$eventsFile;
 			}
@@ -170,7 +170,7 @@ class Events
 
 		foreach ($listeners as $listener)
 		{
-			$start = microtime(true);
+			$start = \microtime(true);
 
 			$result = static::$simulate === false
 				? $listener(...$arguments)
@@ -180,8 +180,8 @@ class Events
 			{
 				static::$performanceLog[] = [
 					'start' => $start,
-					'end' => microtime(true),
-					'event' => strtolower($eventName)
+					'end' => \microtime(true),
+					'event' => \strtolower($eventName)
 				];
 			}
 
@@ -218,7 +218,7 @@ class Events
 		if ( ! self::$listeners[$event_name][0])
 		{
 			// Sort it!
-			array_multisort(self::$listeners[$event_name][1], SORT_NUMERIC, self::$listeners[$event_name][2]);
+			\array_multisort(self::$listeners[$event_name][1], SORT_NUMERIC, self::$listeners[$event_name][2]);
 
 			// Mark it as sorted already!
 			self::$listeners[$event_name][0] = true;
@@ -273,7 +273,7 @@ class Events
 	 */
 	public static function removeAllListeners($event_name = null)
 	{
-		if ( ! is_null($event_name))
+		if ( ! \is_null($event_name))
 		{
 			unset(self::$listeners[$event_name]);
 		}

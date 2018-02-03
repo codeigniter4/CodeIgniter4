@@ -57,7 +57,7 @@ class Rules
 	 */
 	public function differs(string $str = null, string $field, array $data): bool
 	{
-		return array_key_exists($field, $data) ? ($str !== $data[$field]) : false;
+		return \array_key_exists($field, $data) ? ($str !== $data[$field]) : false;
 	}
 
 	//--------------------------------------------------------------------
@@ -73,12 +73,12 @@ class Rules
 	 */
 	public function exact_length(string $str = null, string $val, array $data): bool
 	{
-		if ( ! is_numeric($val))
+		if ( ! \is_numeric($val))
 		{
 			return false;
 		}
 
-		return ((int) $val == mb_strlen($str));
+		return ((int) $val == \mb_strlen($str));
 	}
 
 	//--------------------------------------------------------------------
@@ -94,7 +94,7 @@ class Rules
 	 */
 	public function greater_than(string $str = null, string $min, array $data): bool
 	{
-		return is_numeric($str) ? ($str > $min) : false;
+		return \is_numeric($str) ? ($str > $min) : false;
 	}
 
 	//--------------------------------------------------------------------
@@ -110,7 +110,7 @@ class Rules
 	 */
 	public function greater_than_equal_to(string $str = null, string $min, array $data): bool
 	{
-		return is_numeric($str) ? ($str >= $min) : false;
+		return \is_numeric($str) ? ($str >= $min) : false;
 	}
 
 	//--------------------------------------------------------------------
@@ -125,11 +125,11 @@ class Rules
 	 */
 	public function in_list(string $value = null, string $list, array $data): bool
 	{
-		$list = explode(',', $list);
-		$list = array_map(function($value) {
-			return trim($value);
+		$list = \explode(',', $list);
+		$list = \array_map(function($value) {
+			return \trim($value);
 		}, $list);
-		return in_array($value, $list, TRUE);
+		return \in_array($value, $list, TRUE);
 	}
 
 	//--------------------------------------------------------------------
@@ -152,10 +152,10 @@ class Rules
 	public function is_unique(string $str = null, string $field, array $data): bool
 	{
 		// Grab any data for exclusion of a single row.
-		list($field, $ignoreField, $ignoreValue) = array_pad(explode(',', $field), 3, null);
+		list($field, $ignoreField, $ignoreValue) = \array_pad(\explode(',', $field), 3, null);
 
 		// Break the table and field apart
-		sscanf($field, '%[^.].%[^.]', $table, $field);
+		\sscanf($field, '%[^.].%[^.]', $table, $field);
 
 		$db = Database::connect();
 		
@@ -185,7 +185,7 @@ class Rules
 	 */
 	public function less_than(string $str = null, string $max): bool
 	{
-		return is_numeric($str) ? ($str < $max) : false;
+		return \is_numeric($str) ? ($str < $max) : false;
 	}
 
 	//--------------------------------------------------------------------
@@ -200,7 +200,7 @@ class Rules
 	 */
 	public function less_than_equal_to(string $str = null, string $max): bool
 	{
-		return is_numeric($str) ? ($str <= $max) : false;
+		return \is_numeric($str) ? ($str <= $max) : false;
 	}
 
 	//--------------------------------------------------------------------
@@ -216,7 +216,7 @@ class Rules
 	 */
 	public function matches(string $str = null, string $field, array $data): bool
 	{
-		return array_key_exists($field, $data) ? ($str === $data[$field]) : false;
+		return \array_key_exists($field, $data) ? ($str === $data[$field]) : false;
 	}
 
 	//--------------------------------------------------------------------
@@ -232,12 +232,12 @@ class Rules
 	 */
 	public function max_length(string $str = null, string $val, array $data): bool
 	{
-		if ( ! is_numeric($val))
+		if ( ! \is_numeric($val))
 		{
 			return false;
 		}
 
-		return ($val >= mb_strlen($str));
+		return ($val >= \mb_strlen($str));
 	}
 
 	//--------------------------------------------------------------------
@@ -253,12 +253,12 @@ class Rules
 	 */
 	public function min_length(string $str = null, string $val, array $data): bool
 	{
-		if ( ! is_numeric($val))
+		if ( ! \is_numeric($val))
 		{
 			return false;
 		}
 
-		return ($val <= mb_strlen($str));
+		return ($val <= \mb_strlen($str));
 	}
 
 	//--------------------------------------------------------------------
@@ -272,12 +272,12 @@ class Rules
 	 */
 	public function required($str = null): bool
 	{
-		if (is_object($str))
+		if (\is_object($str))
 		{
 			return true;
 		}
 
-		return is_array($str) ?  ! empty($str) : (trim($str) !== '');
+		return \is_array($str) ?  ! empty($str) : (\trim($str) !== '');
 	}
 
 	//--------------------------------------------------------------------
@@ -298,7 +298,7 @@ class Rules
 	 */
 	public function required_with($str = null, string $fields, array $data): bool
 	{
-		$fields = explode(',', $fields);
+		$fields = \explode(',', $fields);
 
 		// If the field is present we can safely assume that
 		// the field is here, no matter whether the corresponding
@@ -317,7 +317,7 @@ class Rules
 
 		foreach ($fields as $field)
 		{
-			if (array_key_exists($field, $data))
+			if (\array_key_exists($field, $data))
 			{
 				$requiredFields[] = $field;
 			}
@@ -325,7 +325,7 @@ class Rules
 
 		// Remove any keys with empty values since, that means they
 		// weren't truly there, as far as this is concerned.
-		$requiredFields = array_filter($requiredFields, function($item) use($data) {
+		$requiredFields = \array_filter($requiredFields, function($item) use($data) {
 			return ! empty($data[$item]);
 		});
 
@@ -350,7 +350,7 @@ class Rules
 	 */
 	public function required_without($str = null, string $fields, array $data): bool
 	{
-		$fields = explode(',', $fields);
+		$fields = \explode(',', $fields);
 
 		// If the field is present we can safely assume that
 		// the field is here, no matter whether the corresponding
@@ -366,7 +366,7 @@ class Rules
 		// any of the fields are not present in $data
 		foreach ($fields as $field)
 		{
-			if ( ! array_key_exists($field, $data))
+			if ( ! \array_key_exists($field, $data))
 			{
 				return false;
 			}

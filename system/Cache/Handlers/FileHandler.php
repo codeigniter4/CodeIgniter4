@@ -61,7 +61,7 @@ class FileHandler implements CacheInterface
 		$this->prefix = $config->prefix ?: '';
 		$this->path = ! empty($config->path) ? $config->path : WRITEPATH . 'cache';
 
-		$this->path = rtrim($this->path, '/') . '/';
+		$this->path = \rtrim($this->path, '/') . '/';
 	}
 
 	//--------------------------------------------------------------------
@@ -89,7 +89,7 @@ class FileHandler implements CacheInterface
 
 		$data = $this->getItem($key);
 
-		return is_array($data) ? $data['data'] : false;
+		return \is_array($data) ? $data['data'] : false;
 	}
 
 	//--------------------------------------------------------------------
@@ -108,14 +108,14 @@ class FileHandler implements CacheInterface
 		$key = $this->prefix . $key;
 
 		$contents = [
-			'time'	 => time(),
+			'time'	 => \time(),
 			'ttl'	 => $ttl,
 			'data'	 => $value,
 		];
 
-		if ($this->writeFile($this->path . $key, serialize($contents)))
+		if ($this->writeFile($this->path . $key, \serialize($contents)))
 		{
-			chmod($this->path . $key, 0640);
+			\chmod($this->path . $key, 0640);
 
 			return true;
 		}
@@ -136,7 +136,7 @@ class FileHandler implements CacheInterface
 	{
 		$key = $this->prefix . $key;
 
-		return file_exists($this->path . $key) ? unlink($this->path . $key) : false;
+		return \file_exists($this->path . $key) ? \unlink($this->path . $key) : false;
 	}
 
 	//--------------------------------------------------------------------
@@ -159,7 +159,7 @@ class FileHandler implements CacheInterface
 		{
 			$data = ['data' => 0, 'ttl' => 60];
 		}
-		elseif ( ! is_int($data['data']))
+		elseif ( ! \is_int($data['data']))
 		{
 			return false;
 		}
@@ -189,7 +189,7 @@ class FileHandler implements CacheInterface
 		{
 			$data = ['data' => 0, 'ttl' => 60];
 		}
-		elseif ( ! is_int($data['data']))
+		elseif ( ! \is_int($data['data']))
 		{
 			return false;
 		}
@@ -239,16 +239,16 @@ class FileHandler implements CacheInterface
 	{
 		$key = $this->prefix . $key;
 
-		if ( ! file_exists($this->path . $key))
+		if ( ! \file_exists($this->path . $key))
 		{
 			return FALSE;
 		}
 
-		$data = @unserialize(file_get_contents($this->path . $key));
+		$data = @\unserialize(\file_get_contents($this->path . $key));
 
-		if (is_array($data))
+		if (\is_array($data))
 		{
-			$mtime = filemtime($this->path . $key);
+			$mtime = \filemtime($this->path . $key);
 
 			if ( ! isset($data['ttl']))
 			{
@@ -274,7 +274,7 @@ class FileHandler implements CacheInterface
 	 */
 	public function isSupported(): bool
 	{
-		return is_writable($this->path);
+		return \is_writable($this->path);
 	}
 
 	//--------------------------------------------------------------------
@@ -289,16 +289,16 @@ class FileHandler implements CacheInterface
 	 */
 	protected function getItem(string $key)
 	{
-		if ( ! is_file($this->path . $key))
+		if ( ! \is_file($this->path . $key))
 		{
 			return false;
 		}
 
-		$data = unserialize(file_get_contents($this->path . $key));
+		$data = \unserialize(\file_get_contents($this->path . $key));
 
-		if ($data['ttl'] > 0 && time() > $data['time'] + $data['ttl'])
+		if ($data['ttl'] > 0 && \time() > $data['time'] + $data['ttl'])
 		{
-			unlink($this->path . $key);
+			\unlink($this->path . $key);
 
 			return false;
 		}
@@ -322,25 +322,25 @@ class FileHandler implements CacheInterface
 	 */
 	protected function writeFile($path, $data, $mode = 'wb')
 	{
-		if (($fp = @fopen($path, $mode)) === false)
+		if (($fp = @\fopen($path, $mode)) === false)
 		{
 			return false;
 		}
 
-		flock($fp, LOCK_EX);
+		\flock($fp, LOCK_EX);
 
-		for ($result = $written = 0, $length = strlen($data); $written < $length; $written += $result)
+		for ($result = $written = 0, $length = \strlen($data); $written < $length; $written += $result)
 		{
-			if (($result = fwrite($fp, substr($data, $written))) === false)
+			if (($result = \fwrite($fp, \substr($data, $written))) === false)
 			{
 				break;
 			}
 		}
 
-		flock($fp, LOCK_UN);
-		fclose($fp);
+		\flock($fp, LOCK_UN);
+		\fclose($fp);
 
-		return is_int($result);
+		return \is_int($result);
 	}
 
 	//--------------------------------------------------------------------
@@ -363,31 +363,31 @@ class FileHandler implements CacheInterface
 	protected function deleteFiles($path, $del_dir = false, $htdocs = false, $_level = 0)
 	{
 		// Trim the trailing slash
-		$path = rtrim($path, '/\\');
+		$path = \rtrim($path, '/\\');
 
-		if ( ! $current_dir = @opendir($path))
+		if ( ! $current_dir = @\opendir($path))
 		{
 			return false;
 		}
 
-		while (false !== ($filename = @readdir($current_dir)))
+		while (false !== ($filename = @\readdir($current_dir)))
 		{
 			if ($filename !== '.' && $filename !== '..')
 			{
-				if (is_dir($path . DIRECTORY_SEPARATOR . $filename) && $filename[0] !== '.')
+				if (\is_dir($path . DIRECTORY_SEPARATOR . $filename) && $filename[0] !== '.')
 				{
 					$this->deleteFiles($path . DIRECTORY_SEPARATOR . $filename, $del_dir, $htdocs, $_level + 1);
 				}
-				elseif ($htdocs !== true || ! preg_match('/^(\.htaccess|index\.(html|htm|php)|web\.config)$/i', $filename))
+				elseif ($htdocs !== true || ! \preg_match('/^(\.htaccess|index\.(html|htm|php)|web\.config)$/i', $filename))
 				{
-					@unlink($path . DIRECTORY_SEPARATOR . $filename);
+					@\unlink($path . DIRECTORY_SEPARATOR . $filename);
 				}
 			}
 		}
 
-		closedir($current_dir);
+		\closedir($current_dir);
 
-		return ($del_dir === true && $_level > 0) ? @rmdir($path) : true;
+		return ($del_dir === true && $_level > 0) ? @\rmdir($path) : true;
 	}
 
 	//--------------------------------------------------------------------
@@ -411,19 +411,19 @@ class FileHandler implements CacheInterface
 		static $_filedata = [];
 		$relative_path = $source_dir;
 
-		if ($fp = @opendir($source_dir))
+		if ($fp = @\opendir($source_dir))
 		{
 			// reset the array and make sure $source_dir has a trailing slash on the initial call
 			if ($_recursion === false)
 			{
 				$_filedata = [];
-				$source_dir = rtrim(realpath($source_dir), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+				$source_dir = \rtrim(\realpath($source_dir), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
 			}
 
 			// Used to be foreach (scandir($source_dir, 1) as $file), but scandir() is simply not as fast
-			while (false !== ($file = readdir($fp)))
+			while (false !== ($file = \readdir($fp)))
 			{
-				if (is_dir($source_dir . $file) && $file[0] !== '.' && $top_level_only === false)
+				if (\is_dir($source_dir . $file) && $file[0] !== '.' && $top_level_only === false)
 				{
 					$this->getDirFileInfo($source_dir . $file . DIRECTORY_SEPARATOR, $top_level_only, true);
 				}
@@ -434,7 +434,7 @@ class FileHandler implements CacheInterface
 				}
 			}
 
-			closedir($fp);
+			\closedir($fp);
 
 			return $_filedata;
 		}
@@ -459,7 +459,7 @@ class FileHandler implements CacheInterface
 	 */
 	protected function getFileInfo(string $file, array $returned_values = ['name', 'server_path', 'size', 'date'])
 	{
-		if ( ! file_exists($file))
+		if ( ! \file_exists($file))
 		{
 			return false;
 		}
@@ -469,28 +469,28 @@ class FileHandler implements CacheInterface
 			switch ($key)
 			{
 				case 'name':
-					$fileinfo['name'] = basename($file);
+					$fileinfo['name'] = \basename($file);
 					break;
 				case 'server_path':
 					$fileinfo['server_path'] = $file;
 					break;
 				case 'size':
-					$fileinfo['size'] = filesize($file);
+					$fileinfo['size'] = \filesize($file);
 					break;
 				case 'date':
-					$fileinfo['date'] = filemtime($file);
+					$fileinfo['date'] = \filemtime($file);
 					break;
 				case 'readable':
-					$fileinfo['readable'] = is_readable($file);
+					$fileinfo['readable'] = \is_readable($file);
 					break;
 				case 'writable':
-					$fileinfo['writable'] = is_writable($file);
+					$fileinfo['writable'] = \is_writable($file);
 					break;
 				case 'executable':
-					$fileinfo['executable'] = is_executable($file);
+					$fileinfo['executable'] = \is_executable($file);
 					break;
 				case 'fileperms':
-					$fileinfo['fileperms'] = fileperms($file);
+					$fileinfo['fileperms'] = \fileperms($file);
 					break;
 			}
 		}

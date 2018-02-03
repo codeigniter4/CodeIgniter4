@@ -129,7 +129,7 @@ class Pager implements PagerInterface
 	 */
 	public function makeLinks(int $page, int $perPage, int $total, string $template = 'default_full'): string
 	{
-		$name = time();
+		$name = \time();
 
 		$this->store($name, $page, $perPage, $total);
 
@@ -151,7 +151,7 @@ class Pager implements PagerInterface
 	{
 		$pager = new PagerRenderer($this->getDetails($group));
 
-		if ( ! array_key_exists($template, $this->config->templates))
+		if ( ! \array_key_exists($template, $this->config->templates))
 		{
 			throw new \InvalidArgumentException($template . ' is not a valid Pager template.');
 		}
@@ -180,7 +180,7 @@ class Pager implements PagerInterface
 		$this->groups[$group]['currentPage'] = $page;
 		$this->groups[$group]['perPage'] = $perPage;
 		$this->groups[$group]['total'] = $total;
-		$this->groups[$group]['pageCount'] = ceil($total / $perPage);
+		$this->groups[$group]['pageCount'] = \ceil($total / $perPage);
 
 		return $this;
 	}
@@ -265,12 +265,12 @@ class Pager implements PagerInterface
 	{
 		$this->ensureGroup($group);
 
-		if ( ! is_numeric($this->groups[$group]['total']) || ! is_numeric($this->groups[$group]['perPage']))
+		if ( ! \is_numeric($this->groups[$group]['total']) || ! \is_numeric($this->groups[$group]['perPage']))
 		{
 			return null;
 		}
 
-		return ceil($this->groups[$group]['total'] / $this->groups[$group]['perPage']);
+		return \ceil($this->groups[$group]['total'] / $this->groups[$group]['perPage']);
 	}
 
 	//--------------------------------------------------------------------
@@ -404,7 +404,7 @@ class Pager implements PagerInterface
 	 */
 	public function getDetails(string $group = 'default'): array
 	{
-		if ( ! array_key_exists($group, $this->groups))
+		if ( ! \array_key_exists($group, $this->groups))
 		{
 			throw new \InvalidArgumentException($group . ' is not a valid Pagination group.');
 		}
@@ -426,7 +426,7 @@ class Pager implements PagerInterface
 	 */
 	protected function ensureGroup(string $group)
 	{
-		if (array_key_exists($group, $this->groups))
+		if (\array_key_exists($group, $this->groups))
 		{
 			return;
 		}

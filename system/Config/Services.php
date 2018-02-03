@@ -112,7 +112,7 @@ class Services
 			return self::getSharedInstance('cache', $config);
 		}
 
-		if ( ! is_object($config))
+		if ( ! \is_object($config))
 		{
 			$config = new \Config\Cache();
 		}
@@ -138,7 +138,7 @@ class Services
 			return self::getSharedInstance('clirequest', $config);
 		}
 
-		if ( ! is_object($config))
+		if ( ! \is_object($config))
 		{
 			$config = new \Config\App();
 		}
@@ -168,12 +168,12 @@ class Services
 			return self::getSharedInstance('curlrequest', $options, $response, $config);
 		}
 
-		if ( ! is_object($config))
+		if ( ! \is_object($config))
 		{
 			$config = new \Config\App();
 		}
 
-		if ( ! is_object($response))
+		if ( ! \is_object($response))
 		{
 			$response = new \CodeIgniter\HTTP\Response($config);
 		}
@@ -292,7 +292,7 @@ class Services
 			$config = new \Config\Images();
 		}
 
-		$handler = is_null($handler) ? $config->defaultHandler : $handler;
+		$handler = \is_null($handler) ? $config->defaultHandler : $handler;
 
 		$class = $config->handlers[$handler];
 
@@ -423,7 +423,7 @@ class Services
 			return self::getSharedInstance('negotiator', $request);
 		}
 
-		if (is_null($request))
+		if (\is_null($request))
 		{
 			$request = self::request();
 		}
@@ -479,7 +479,7 @@ class Services
 			return self::getSharedInstance('parser', $viewPath, $config);
 		}
 
-		if (is_null($config))
+		if (\is_null($config))
 		{
 			$config = new \Config\View();
 		}
@@ -507,7 +507,7 @@ class Services
 			return self::getSharedInstance('renderer', $viewPath, $config);
 		}
 
-		if (is_null($config))
+		if (\is_null($config))
 		{
 			$config = new \Config\View();
 		}
@@ -532,7 +532,7 @@ class Services
 			return self::getSharedInstance('request', $config);
 		}
 
-		if ( ! is_object($config))
+		if ( ! \is_object($config))
 		{
 			$config = new \Config\App();
 		}
@@ -559,7 +559,7 @@ class Services
 			return self::getSharedInstance('response', $config);
 		}
 
-		if ( ! is_object($config))
+		if ( ! \is_object($config))
 		{
 			$config = new \Config\App();
 		}
@@ -584,7 +584,7 @@ class Services
 			return self::getSharedInstance('redirectResponse', $config);
 		}
 
-		if ( ! is_object($config))
+		if ( ! \is_object($config))
 		{
 			$config = new \Config\App();
 		}
@@ -656,7 +656,7 @@ class Services
 			return self::getSharedInstance('security', $config);
 		}
 
-		if ( ! is_object($config))
+		if ( ! \is_object($config))
 		{
 			$config = new \Config\App();
 		}
@@ -679,7 +679,7 @@ class Services
 			return self::getSharedInstance('session', $config);
 		}
 
-		if ( ! is_object($config))
+		if ( ! \is_object($config))
 		{
 			$config = new \Config\App();
 		}
@@ -751,7 +751,7 @@ class Services
 			return self::getSharedInstance('toolbar', $config);
 		}
 
-		if ( ! is_object($config))
+		if ( ! \is_object($config))
 		{
 			$config = new \Config\App();
 		}
@@ -796,7 +796,7 @@ class Services
 			return self::getSharedInstance('validation', $config);
 		}
 
-		if (is_null($config))
+		if (\is_null($config))
 		{
 			$config = new \Config\Validation();
 		}
@@ -869,7 +869,7 @@ class Services
 		if ( ! isset(static::$instances[$key]))
 		{
 			// Make sure $getShared is false
-			array_push($params, false);
+			\array_push($params, false);
 
 			static::$instances[$key] = static::$key(...$params);
 		}
@@ -890,9 +890,9 @@ class Services
 	 */
 	public static function __callStatic(string $name, array $arguments)
 	{
-		$name = strtolower($name);
+		$name = \strtolower($name);
 
-		if (method_exists(__CLASS__, $name))
+		if (\method_exists(__CLASS__, $name))
 		{
 			return Services::$name(...$arguments);
 		}
@@ -920,7 +920,7 @@ class Services
 	 */
 	public static function injectMock(string $name, $mock)
 	{
-		$name = strtolower($name);
+		$name = \strtolower($name);
 		static::$mocks[$name] = $mock;
 	}
 

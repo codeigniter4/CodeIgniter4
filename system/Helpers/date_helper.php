@@ -34,7 +34,7 @@
  * @since      Version 3.0.0
  * @filesource
  */
-if ( ! function_exists('now'))
+if ( ! \function_exists('now'))
 {
 
 	/**
@@ -51,15 +51,15 @@ if ( ! function_exists('now'))
 	{
 		$timezone = empty($timezone) ? app_timezone() : $timezone;
 
-		if ($timezone === 'local' || $timezone === date_default_timezone_get())
+		if ($timezone === 'local' || $timezone === \date_default_timezone_get())
 		{
-			return time();
+			return \time();
 		}
 
 		$datetime = new DateTime('now', new DateTimeZone($timezone));
-		sscanf($datetime->format('j-n-Y G:i:s'), '%d-%d-%d %d:%d:%d', $day, $month, $year, $hour, $minute, $second);
+		\sscanf($datetime->format('j-n-Y G:i:s'), '%d-%d-%d %d:%d:%d', $day, $month, $year, $hour, $minute, $second);
 
-		return mktime($hour, $minute, $second, $month, $day, $year);
+		return \mktime($hour, $minute, $second, $month, $day, $year);
 	}
 
 }

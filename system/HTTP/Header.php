@@ -144,7 +144,7 @@ class Header
 	 */
 	public function appendValue($value = null)
 	{
-		if ( ! is_array($this->value))
+		if ( ! \is_array($this->value))
 		{
 			$this->value = [$this->value];
 		}
@@ -166,12 +166,12 @@ class Header
 	 */
 	public function prependValue($value = null)
 	{
-		if ( ! is_array($this->value))
+		if ( ! \is_array($this->value))
 		{
 			$this->value = [$this->value];
 		}
 
-		array_unshift($this->value, $value);
+		\array_unshift($this->value, $value);
 
 		return $this;
 	}
@@ -189,11 +189,11 @@ class Header
 	 */
 	public function getValueLine(): string
 	{
-		if (is_string($this->value))
+		if (\is_string($this->value))
 		{
 			return $this->value;
 		}
-		else if ( ! is_array($this->value))
+		else if ( ! \is_array($this->value))
 		{
 			return '';
 		}
@@ -202,22 +202,22 @@ class Header
 
 		foreach ($this->value as $key => $value)
 		{
-			if (is_string($key) && ! is_array($value))
+			if (\is_string($key) && ! \is_array($value))
 			{
 				$options[] = $key . '=' . $value;
 			}
-			else if (is_array($value))
+			else if (\is_array($value))
 			{
-				$key = key($value);
+				$key = \key($value);
 				$options[] = $key . '=' . $value[$key];
 			}
-			else if (is_numeric($key))
+			else if (\is_numeric($key))
 			{
 				$options[] = $value;
 			}
 		}
 
-		return implode(', ', $options);
+		return \implode(', ', $options);
 	}
 
 	//--------------------------------------------------------------------

@@ -45,7 +45,7 @@
  * @author      CodeIgniter Dev Team
  * @link        https://codeigniter.com/user_guide/helpers/cookie_helper.html
  */
-if ( ! function_exists('set_cookie'))
+if ( ! \function_exists('set_cookie'))
 {
 
 	/**
@@ -83,7 +83,7 @@ if ( ! function_exists('set_cookie'))
 
 //--------------------------------------------------------------------
 
-if ( ! function_exists('get_cookie'))
+if ( ! \function_exists('get_cookie'))
 {
 
 	/**
@@ -113,7 +113,7 @@ if ( ! function_exists('get_cookie'))
 
 //--------------------------------------------------------------------
 
-if ( ! function_exists('delete_cookie'))
+if ( ! \function_exists('delete_cookie'))
 {
 
 	/**

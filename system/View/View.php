@@ -131,10 +131,10 @@ class View implements RendererInterface
 	public function __construct($config, string $viewPath = null, $loader = null, bool $debug = null, Logger $logger = null)
 	{
 		$this->config = $config;
-		$this->viewPath = rtrim($viewPath, '/ ') . '/';
-		$this->loader = is_null($loader) ? Services::locator() : $loader;
-		$this->logger = is_null($logger) ? Services::logger() : $logger;
-		$this->debug = is_null($debug) ? CI_DEBUG : $debug;
+		$this->viewPath = \rtrim($viewPath, '/ ') . '/';
+		$this->loader = \is_null($loader) ? Services::locator() : $loader;
+		$this->logger = \is_null($logger) ? Services::logger() : $logger;
+		$this->debug = \is_null($debug) ? CI_DEBUG : $debug;
 		$this->saveData = $config->saveData ?? null;
 	}
 
@@ -156,7 +156,7 @@ class View implements RendererInterface
 	 */
 	public function render(string $view, array $options = null, $saveData = null): string
 	{
-		$this->renderVars['start'] = microtime(true);
+		$this->renderVars['start'] = \microtime(true);
 
 		// Store the results here so even if
 		// multiple views are called in a view, it won't
@@ -166,24 +166,24 @@ class View implements RendererInterface
 			$this->saveData = $saveData;
 		}
 
-		$this->renderVars['view'] = str_replace('.php', '', $view) . '.php';
+		$this->renderVars['view'] = \str_replace('.php', '', $view) . '.php';
 		$this->renderVars['options'] = $options;
 
 		// Was it cached?
 		if (isset($this->renderVars['options']['cache']))
 		{
-			$this->renderVars['cacheName'] = $this->renderVars['options']['cache_name'] ?? str_replace('.php', '', $this->renderVars['view']);
+			$this->renderVars['cacheName'] = $this->renderVars['options']['cache_name'] ?? \str_replace('.php', '', $this->renderVars['view']);
 
 			if ($output = cache($this->renderVars['cacheName']))
 			{
-				$this->logPerformance($this->renderVars['start'], microtime(true), $this->renderVars['view']);
+				$this->logPerformance($this->renderVars['start'], \microtime(true), $this->renderVars['view']);
 				return $output;
 			}
 		}
 
 		$this->renderVars['file'] = $this->viewPath . $this->renderVars['view'];
 
-		if ( ! file_exists($this->renderVars['file']))
+		if ( ! \file_exists($this->renderVars['file']))
 		{
 			$this->renderVars['file'] = $this->loader->locateFile($this->renderVars['view'], 'Views');
 		}
@@ -195,34 +195,34 @@ class View implements RendererInterface
 		}
 
 		// Make our view data available to the view.
-		extract($this->data);
+		\extract($this->data);
 
 		if ( ! $this->saveData)
 		{
 			$this->data = [];
 		}
 
-		ob_start();
+		\ob_start();
 		include($this->renderVars['file']); // PHP will be processed
-		$output = ob_get_contents();
-		@ob_end_clean();
+		$output = \ob_get_contents();
+		@\ob_end_clean();
 
-		$this->logPerformance($this->renderVars['start'], microtime(true), $this->renderVars['view']);
+		$this->logPerformance($this->renderVars['start'], \microtime(true), $this->renderVars['view']);
 
 		if (CI_DEBUG)
 		{
 			$after = (new \Config\Filters())->globals['after'];
-			if (in_array('toolbar', $after) || array_key_exists('toolbar', $after))
+			if (\in_array('toolbar', $after) || \array_key_exists('toolbar', $after))
 			{
 				$toolbarCollectors =  (new \Config\App())->toolbarCollectors;
-				if (in_array('CodeIgniter\Debug\Toolbar\Collectors\Views', $toolbarCollectors) || array_key_exists('CodeIgniter\Debug\Toolbar\Collectors\Views', $toolbarCollectors))
+				if (\in_array('CodeIgniter\Debug\Toolbar\Collectors\Views', $toolbarCollectors) || \array_key_exists('CodeIgniter\Debug\Toolbar\Collectors\Views', $toolbarCollectors))
 				{
 					// Clean up our path names to make them a little cleaner
 					foreach (['APPPATH', 'BASEPATH', 'ROOTPATH'] as $path)
 					{
-						if (strpos($this->renderVars['file'], constant($path)) === 0)
+						if (\strpos($this->renderVars['file'], \constant($path)) === 0)
 						{
-							$this->renderVars['file'] = str_replace(constant($path), $path.'/', $this->renderVars['file']);
+							$this->renderVars['file'] = \str_replace(\constant($path), $path.'/', $this->renderVars['file']);
 						}
 					}
 					$this->renderVars['file'] = ++$this->viewsCount . ' ' . $this->renderVars['file'];
@@ -261,26 +261,26 @@ class View implements RendererInterface
 	 */
 	public function renderString(string $view, array $options = null, $saveData = null): string
 	{
-		$start = microtime(true);
-		if (is_null($saveData))
+		$start = \microtime(true);
+		if (\is_null($saveData))
 		{
 			$saveData = $this->config->saveData;
 		}
 
-		extract($this->data);
+		\extract($this->data);
 
 		if ( ! $saveData)
 		{
 			$this->data = [];
 		}
 
-		ob_start();
+		\ob_start();
 		$incoming = "?>" . $view;
 		eval($incoming);
-		$output = ob_get_contents();
-		@ob_end_clean();
+		$output = \ob_get_contents();
+		@\ob_end_clean();
 
-		$this->logPerformance($start, microtime(true), $this->excerpt($view));
+		$this->logPerformance($start, \microtime(true), $this->excerpt($view));
 
 		return $output;
 	}
@@ -296,7 +296,7 @@ class View implements RendererInterface
 	 */
 	public function excerpt(string $string, int $length = 20): string
 	{
-		return (strlen($string) > $length) ? substr($string, 0, $length - 3) . '...' : $string;
+		return (\strlen($string) > $length) ? \substr($string, 0, $length - 3) . '...' : $string;
 	}
 
 	//--------------------------------------------------------------------
@@ -317,7 +317,7 @@ class View implements RendererInterface
 			$data = \esc($data, $context);
 		}
 
-		$this->data = array_merge($this->data, $data);
+		$this->data = \array_merge($this->data, $data);
 
 		return $this;
 	}

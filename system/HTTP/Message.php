@@ -130,7 +130,7 @@ class Message
 	 */
 	public function populateHeaders()
 	{
-		$contentType = $_SERVER['CONTENT_TYPE'] ?? getenv('CONTENT_TYPE');
+		$contentType = $_SERVER['CONTENT_TYPE'] ?? \getenv('CONTENT_TYPE');
 		if ( ! empty($contentType))
 		{
 			$this->setHeader('Content-Type', $contentType);
@@ -139,13 +139,13 @@ class Message
 
 		foreach ($_SERVER as $key => $val)
 		{
-			if (sscanf($key, 'HTTP_%s', $header) === 1)
+			if (\sscanf($key, 'HTTP_%s', $header) === 1)
 			{
 				// take SOME_HEADER and turn it into Some-Header
-				$header = str_replace('_', ' ', strtolower($header));
-				$header = str_replace(' ', '-', ucwords($header));
+				$header = \str_replace('_', ' ', \strtolower($header));
+				$header = \str_replace(' ', '-', \ucwords($header));
 
-				if (array_key_exists($key, $_SERVER))
+				if (\array_key_exists($key, $_SERVER))
 				{
 					$this->setHeader($header, $_SERVER[$key]);
 				}
@@ -155,7 +155,7 @@ class Message
 				}
 
 				// Add us to the header map so we can find them case-insensitively
-				$this->headerMap[strtolower($header)] = $header;
+				$this->headerMap[\strtolower($header)] = $header;
 			}
 		}
 	}
@@ -239,14 +239,14 @@ class Message
 	{
 		$orig_name = $this->getHeaderName($name);
 
-		if ( ! array_key_exists($orig_name, $this->headers))
+		if ( ! \array_key_exists($orig_name, $this->headers))
 		{
 			return '';
 		}
 
 		// If there are more than 1 headers with this name,
 		// then return the value of the first.
-		if (is_array($this->headers[$orig_name]))
+		if (\is_array($this->headers[$orig_name]))
 		{
 			return $this->headers[$orig_name][0]->getValueLine();
 		}
@@ -270,12 +270,12 @@ class Message
 		{
 			$this->headers[$name] = new Header($name, $value);
 
-			$this->headerMap[strtolower($name)] = $name;
+			$this->headerMap[\strtolower($name)] = $name;
 
 			return $this;
 		}
 
-		if ( ! is_array($this->headers[$name]))
+		if ( ! \is_array($this->headers[$name]))
 		{
 			$this->headers[$name] = [$this->headers[$name]];
 		}
@@ -306,7 +306,7 @@ class Message
 		$orig_name = $this->getHeaderName($name);
 
 		unset($this->headers[$orig_name]);
-		unset($this->headerMap[strtolower($name)]);
+		unset($this->headerMap[\strtolower($name)]);
 
 		return $this;
 	}
@@ -374,14 +374,14 @@ class Message
 	 */
 	public function setProtocolVersion(string $version)
 	{
-		if ( ! is_numeric($version))
+		if ( ! \is_numeric($version))
 		{
-			$version = substr($version, strpos($version, '/') + 1);
+			$version = \substr($version, \strpos($version, '/') + 1);
 		}
 
-		if ( ! in_array($version, $this->validProtocolVersions))
+		if ( ! \in_array($version, $this->validProtocolVersions))
 		{
-			throw new \InvalidArgumentException('Invalid HTTP Protocol Version. Must be one of: ' . implode(', ', $this->validProtocolVersions));
+			throw new \InvalidArgumentException('Invalid HTTP Protocol Version. Must be one of: ' . \implode(', ', $this->validProtocolVersions));
 		}
 
 		$this->protocolVersion = $version;
@@ -401,7 +401,7 @@ class Message
 	 */
 	protected function getHeaderName($name): string
 	{
-		$lower_name = strtolower($name);
+		$lower_name = \strtolower($name);
 
 		return $this->headerMap[$lower_name] ?? $name;
 	}

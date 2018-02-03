@@ -92,7 +92,7 @@ class Time extends DateTime
 		$this->locale = ! empty($locale) ? $locale : Locale::getDefault();
 
 		// If a test instance has been provided, use it instead.
-		if (is_null($time) && static::$testNow instanceof Time)
+		if (\is_null($time) && static::$testNow instanceof Time)
 		{
 			if (empty($timezone))
 			{
@@ -102,7 +102,7 @@ class Time extends DateTime
 			$time = static::$testNow->toDateTimeString();
 		}
 
-		$timezone = ! empty($timezone) ? $timezone : date_default_timezone_get();
+		$timezone = ! empty($timezone) ? $timezone : \date_default_timezone_get();
 		$this->timezone = $timezone instanceof DateTimeZone ? $timezone : new DateTimeZone($timezone);
 
 		if ( ! empty($time))
@@ -110,7 +110,7 @@ class Time extends DateTime
 			// If the time string was a relative string (i.e. 'next Tuesday')
 			// then we need to adjust the time going in so that we have a current
 			// timezone to work with.
-			if (is_string($time) && static::hasRelativeKeywords($time))
+			if (\is_string($time) && static::hasRelativeKeywords($time))
 			{
 				$instance = new DateTime('now', $this->timezone);
 				$instance->modify($time);
@@ -168,7 +168,7 @@ class Time extends DateTime
 	 */
 	public static function today($timezone = null, string $locale = null)
 	{
-		return new Time(date('Y-m-d 00:00:00'), $timezone, $locale);
+		return new Time(\date('Y-m-d 00:00:00'), $timezone, $locale);
 	}
 
 	//--------------------------------------------------------------------
@@ -183,7 +183,7 @@ class Time extends DateTime
 	 */
 	public static function yesterday($timezone = null, string $locale = null)
 	{
-		return new Time(date('Y-m-d 00:00:00', strtotime('-1 day')), $timezone, $locale);
+		return new Time(\date('Y-m-d 00:00:00', \strtotime('-1 day')), $timezone, $locale);
 	}
 
 	//--------------------------------------------------------------------
@@ -198,7 +198,7 @@ class Time extends DateTime
 	 */
 	public static function tomorrow($timezone = null, string $locale = null)
 	{
-		return new Time(date('Y-m-d 00:00:00', strtotime('+1 day')), $timezone, $locale);
+		return new Time(\date('Y-m-d 00:00:00', \strtotime('+1 day')), $timezone, $locale);
 	}
 
 	//--------------------------------------------------------------------
@@ -256,14 +256,14 @@ class Time extends DateTime
 	 */
 	public static function create(int $year = null, int $month = null, int $day = null, int $hour = null, int $minutes = null, int $seconds = null, $timezone = null, string $locale = null)
 	{
-		$year = is_null($year) ? date('Y') : $year;
-		$month = is_null($month) ? date('m') : $month;
-		$day = is_null($day) ? date('d') : $day;
+		$year = \is_null($year) ? \date('Y') : $year;
+		$month = \is_null($month) ? \date('m') : $month;
+		$day = \is_null($day) ? \date('d') : $day;
 		$hour = empty($hour) ? 0 : $hour;
 		$minutes = empty($minutes) ? 0 : $minutes;
 		$seconds = empty($seconds) ? 0 : $seconds;
 
-		return new Time(date("Y-m-d H:i:s", strtotime("{$year}-{$month}-{$day} {$hour}:{$minutes}:{$seconds}")), $timezone, $locale);
+		return new Time(\date("Y-m-d H:i:s", \strtotime("{$year}-{$month}-{$day} {$hour}:{$minutes}:{$seconds}")), $timezone, $locale);
 	}
 
 	//--------------------------------------------------------------------
@@ -298,7 +298,7 @@ class Time extends DateTime
 	 */
 	public static function createFromTimestamp(int $timestamp, $timeZone = null, string $locale = null)
 	{
-		return new Time(date('Y-m-d H:i:s', $timestamp), $timeZone, $locale);
+		return new Time(\date('Y-m-d H:i:s', $timestamp), $timeZone, $locale);
 	}
 
 	//--------------------------------------------------------------------
@@ -349,14 +349,14 @@ class Time extends DateTime
 	public static function setTestNow($datetime = null, $timezone = null, string $locale = null)
 	{
 		// Reset the test instance
-		if (is_null($datetime))
+		if (\is_null($datetime))
 		{
 			static::$testNow = null;
 			return;
 		}
 
 		// Convert to a Time instance
-		if (is_string($datetime))
+		if (\is_string($datetime))
 		{
 			$datetime = new Time($datetime, $timezone, $locale);
 		}
@@ -377,7 +377,7 @@ class Time extends DateTime
 	 */
 	public static function hasTestNow(): bool
 	{
-		return ! is_null(static::$testNow);
+		return ! \is_null(static::$testNow);
 	}
 
 	//--------------------------------------------------------------------
@@ -516,7 +516,7 @@ class Time extends DateTime
 		if ( ! $now >= $time)
 			return 0;
 
-		return date('Y', $now) - date('Y', $time);
+		return \date('Y', $now) - \date('Y', $time);
 	}
 
 	//--------------------------------------------------------------------
@@ -538,8 +538,8 @@ class Time extends DateTime
 	 */
 	public function getDst()
 	{
-		$start = strtotime('-1 year', $this->getTimestamp());
-		$end = strtotime('+2 year', $start);
+		$start = \strtotime('-1 year', $this->getTimestamp());
+		$end = \strtotime('+2 year', $start);
 
 		$transitions = $this->timezone->getTransitions($start, $end);
 
@@ -562,7 +562,7 @@ class Time extends DateTime
 	 */
 	public function getLocal()
 	{
-		$local = date_default_timezone_get();
+		$local = \date_default_timezone_get();
 
 		return $local === $this->timezone->getName();
 	}
@@ -619,9 +619,9 @@ class Time extends DateTime
 			throw new \InvalidArgumentException(lang('time.invalidMonth'));
 		}
 
-		if (is_string($value) && ! is_numeric($value))
+		if (\is_string($value) && ! \is_numeric($value))
 		{
-			$value = date('m', strtotime("{$value} 1 2017"));
+			$value = \date('m', \strtotime("{$value} 1 2017"));
 		}
 
 		return $this->setValue('month', $value);
@@ -707,7 +707,7 @@ class Time extends DateTime
 	 */
 	protected function setValue(string $name, $value)
 	{
-		list($year, $month, $day, $hour, $minute, $second) = explode('-', $this->format('Y-n-j-G-i-s'));
+		list($year, $month, $day, $hour, $minute, $second) = \explode('-', $this->format('Y-n-j-G-i-s'));
 		$$name = $value;
 
 		return Time::create($year, $month, $day, $hour, $minute, $second, $this->getTimezoneName(), $this->locale);
@@ -734,7 +734,7 @@ class Time extends DateTime
 	 */
 	public function setTimestamp($timestamp)
 	{
-		$time = date('Y-m-d H:i:s', $timestamp);
+		$time = \date('Y-m-d H:i:s', $timestamp);
 
 		return Time::parse($time, $this->timezone, $this->locale);
 	}
@@ -974,7 +974,7 @@ class Time extends DateTime
 	 */
 	public function toLocalizedString(string $format = null)
 	{
-		$format = is_null($format) ? $this->toStringFormat : $format;
+		$format = \is_null($format) ? $this->toStringFormat : $format;
 
 		return IntlDateFormatter::formatObject($this->toDateTime(), $format, $this->locale);
 	}
@@ -1023,7 +1023,7 @@ class Time extends DateTime
 		{
 			$testTime = $testTime->format('Y-m-d H:i:s');
 		}
-		else if (is_string($testTime))
+		else if (\is_string($testTime))
 		{
 			$timezone = $timezone ?: $this->timezone;
 			$timezone = $timezone instanceof DateTimeZone ? $timezone : new DateTimeZone($timezone);
@@ -1103,18 +1103,18 @@ class Time extends DateTime
 
 		if ($years !== 0)
 		{
-			$phrase = lang('Time.years', [abs($years)]);
+			$phrase = lang('Time.years', [\abs($years)]);
 			$before = $years < 0;
 		}
 		else if ($months !== 0)
 		{
-			$phrase = lang('Time.months', [abs($months)]);
+			$phrase = lang('Time.months', [\abs($months)]);
 			$before = $months < 0;
 		}
-		else if ($days !== 0 && (abs($days) >= 7))
+		else if ($days !== 0 && (\abs($days) >= 7))
 		{
-			$weeks = ceil($days / 7);
-			$phrase = lang('Time.weeks', [abs($weeks)]);
+			$weeks = \ceil($days / 7);
+			$phrase = lang('Time.weeks', [\abs($weeks)]);
 			$before = $days < 0;
 		}
 		else if ($days !== 0)
@@ -1122,14 +1122,14 @@ class Time extends DateTime
 			$before = $days < 0;
 
 			// Yesterday/Tommorrow special cases
-			if (abs($days) === 1)
+			if (\abs($days) === 1)
 			{
 				return $before
 					? lang('Time.yesterday')
 					: lang('Time.tomorrow');
 			}
 
-			$phrase = lang('Time.days', [abs($days)]);
+			$phrase = lang('Time.days', [\abs($days)]);
 		}
 		else if ($hours !== 0)
 		{
@@ -1138,7 +1138,7 @@ class Time extends DateTime
 		}
 		else if ($minutes !== 0)
 		{
-			$phrase = lang('Time.minutes', [abs($minutes)]);
+			$phrase = lang('Time.minutes', [\abs($minutes)]);
 			$before = $minutes < 0;
 		}
 		else
@@ -1189,7 +1189,7 @@ class Time extends DateTime
 		{
 			$time = $time->setTimezone(new DateTimeZone('UTC'));
 		}
-		else if (is_string($time))
+		else if (\is_string($time))
 		{
 			$timezone = $timezone ?: $this->timezone;
 			$timezone = $timezone instanceof DateTimeZone ? $timezone : new DateTimeZone($timezone);
@@ -1228,9 +1228,9 @@ class Time extends DateTime
 	protected static function hasRelativeKeywords(string $time): bool
 	{
 		// skip common format with a '-' in it
-		if (preg_match('/[0-9]{4}-[0-9]{1,2}-[0-9]{1,2}/', $time) !== 1)
+		if (\preg_match('/[0-9]{4}-[0-9]{1,2}-[0-9]{1,2}/', $time) !== 1)
 		{
-			return preg_match(static::$relativePattern, $time) > 0;
+			return \preg_match(static::$relativePattern, $time) > 0;
 		}
 
 		return false;
@@ -1259,9 +1259,9 @@ class Time extends DateTime
 	 */
 	public function __get($name)
 	{
-		$method = 'get' . ucfirst($name);
+		$method = 'get' . \ucfirst($name);
 
-		if (method_exists($this, $method))
+		if (\method_exists($this, $method))
 		{
 			return $this->$method();
 		}
@@ -1271,9 +1271,9 @@ class Time extends DateTime
 
 	public function __set($name, $value)
 	{
-		$method = 'set' . ucfirst($name);
+		$method = 'set' . \ucfirst($name);
 
-		if (method_exists($this, $method))
+		if (\method_exists($this, $method))
 		{
 			return $this->$method($value);
 		}

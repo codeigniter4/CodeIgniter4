@@ -34,7 +34,7 @@
  * @since      Version 3.0.0
  * @filesource
  */
-if ( ! function_exists('site_url'))
+if ( ! \function_exists('site_url'))
 {
 
 	/**
@@ -49,9 +49,9 @@ if ( ! function_exists('site_url'))
 	function site_url($path = '', string $scheme = null, \Config\App $altConfig = null): string
 	{
 		// convert segment array to string
-		if (is_array($path))
+		if (\is_array($path))
 		{
-			$path = implode('/', $path);
+			$path = \implode('/', $path);
 		}
 
 		// use alternate config if provided, else default one
@@ -62,11 +62,11 @@ if ( ! function_exists('site_url'))
 		// Add index page, if so configured
 		if ( ! empty($config->indexPage))
 		{
-			$path = rtrim($base, '/') . '/' . rtrim($config->indexPage, '/') . '/' . $path;
+			$path = \rtrim($base, '/') . '/' . \rtrim($config->indexPage, '/') . '/' . $path;
 		}
 		else
 		{
-			$path = rtrim($base, '/') . '/' . $path;
+			$path = \rtrim($base, '/') . '/' . $path;
 		}
 
 		$url = new \CodeIgniter\HTTP\URI($path);
@@ -84,7 +84,7 @@ if ( ! function_exists('site_url'))
 
 //--------------------------------------------------------------------
 
-if ( ! function_exists('base_url'))
+if ( ! \function_exists('base_url'))
 {
 
 	/**
@@ -97,9 +97,9 @@ if ( ! function_exists('base_url'))
 	function base_url($path = '', string $scheme = null): string
 	{
 		// convert segment array to string
-		if (is_array($path))
+		if (\is_array($path))
 		{
-			$path = implode('/', $path);
+			$path = \implode('/', $path);
 		}
 
 		// We should be using the set baseURL the user set
@@ -144,7 +144,7 @@ if ( ! function_exists('base_url'))
 
 //--------------------------------------------------------------------
 
-if ( ! function_exists('current_url'))
+if ( ! \function_exists('current_url'))
 {
 
 	/**
@@ -166,7 +166,7 @@ if ( ! function_exists('current_url'))
 
 //--------------------------------------------------------------------
 
-if ( ! function_exists('previous_url'))
+if ( ! \function_exists('previous_url'))
 {
 
 	/**
@@ -195,7 +195,7 @@ if ( ! function_exists('previous_url'))
 
 //--------------------------------------------------------------------
 
-if ( ! function_exists('uri_string'))
+if ( ! \function_exists('uri_string'))
 {
 
 	/**
@@ -214,7 +214,7 @@ if ( ! function_exists('uri_string'))
 
 //--------------------------------------------------------------------
 
-if ( ! function_exists('index_page'))
+if ( ! \function_exists('index_page'))
 {
 
 	/**
@@ -237,7 +237,7 @@ if ( ! function_exists('index_page'))
 
 // ------------------------------------------------------------------------
 
-if ( ! function_exists('anchor'))
+if ( ! \function_exists('anchor'))
 {
 
 	/**
@@ -259,9 +259,9 @@ if ( ! function_exists('anchor'))
 
 		$title = (string) $title;
 
-		$site_url = is_array($uri) ? site_url($uri, null, $config) : (preg_match('#^(\w+:)?//#i', $uri) ? $uri : site_url($uri, null, $config));
+		$site_url = \is_array($uri) ? site_url($uri, null, $config) : (\preg_match('#^(\w+:)?//#i', $uri) ? $uri : site_url($uri, null, $config));
 		// eliminate trailing slash
-		$site_url = rtrim($site_url, '/');
+		$site_url = \rtrim($site_url, '/');
 
 		if ($title === '')
 		{
@@ -280,7 +280,7 @@ if ( ! function_exists('anchor'))
 
 // ------------------------------------------------------------------------
 
-if ( ! function_exists('anchor_popup'))
+if ( ! \function_exists('anchor_popup'))
 {
 
 	/**
@@ -302,8 +302,8 @@ if ( ! function_exists('anchor_popup'))
 		$config = empty($altConfig) ? new \Config\App() : $altConfig;
 
 		$title = (string) $title;
-		$site_url = preg_match('#^(\w+:)?//#i', $uri) ? $uri : site_url($uri, '', $config);
-		$site_url = rtrim($site_url, '/');
+		$site_url = \preg_match('#^(\w+:)?//#i', $uri) ? $uri : site_url($uri, '', $config);
+		$site_url = \rtrim($site_url, '/');
 
 		if ($title === '')
 		{
@@ -315,7 +315,7 @@ if ( ! function_exists('anchor_popup'))
 			return '<a href="' . $site_url . '" onclick="window.open(\'' . $site_url . "', '_blank'); return false;\">" . $title . '</a>';
 		}
 
-		if ( ! is_array($attributes))
+		if ( ! \is_array($attributes))
 		{
 			$attributes = [$attributes];
 
@@ -349,7 +349,7 @@ if ( ! function_exists('anchor_popup'))
 
 // ------------------------------------------------------------------------
 
-if ( ! function_exists('mailto'))
+if ( ! \function_exists('mailto'))
 {
 
 	/**
@@ -377,7 +377,7 @@ if ( ! function_exists('mailto'))
 
 // ------------------------------------------------------------------------
 
-if ( ! function_exists('safe_mailto'))
+if ( ! \function_exists('safe_mailto'))
 {
 
 	/**
@@ -400,32 +400,32 @@ if ( ! function_exists('safe_mailto'))
 			$title = $email;
 		}
 
-		$x = str_split('<a href="mailto:', 1);
+		$x = \str_split('<a href="mailto:', 1);
 
-		for ($i = 0, $l = strlen($email); $i < $l; $i ++)
+		for ($i = 0, $l = \strlen($email); $i < $l; $i ++)
 		{
-			$x[] = '|' . ord($email[$i]);
+			$x[] = '|' . \ord($email[$i]);
 		}
 
 		$x[] = '"';
 
 		if ($attributes !== '')
 		{
-			if (is_array($attributes))
+			if (\is_array($attributes))
 			{
 				foreach ($attributes as $key => $val)
 				{
 					$x[] = ' ' . $key . '="';
-					for ($i = 0, $l = strlen($val); $i < $l; $i ++)
+					for ($i = 0, $l = \strlen($val); $i < $l; $i ++)
 					{
-						$x[] = '|' . ord($val[$i]);
+						$x[] = '|' . \ord($val[$i]);
 					}
 					$x[] = '"';
 				}
 			}
 			else
 			{
-				for ($i = 0, $l = strlen($attributes); $i < $l; $i ++)
+				for ($i = 0, $l = \strlen($attributes); $i < $l; $i ++)
 				{
 					$x[] = $attributes[$i];
 				}
@@ -435,9 +435,9 @@ if ( ! function_exists('safe_mailto'))
 		$x[] = '>';
 
 		$temp = [];
-		for ($i = 0, $l = strlen($title); $i < $l; $i ++)
+		for ($i = 0, $l = \strlen($title); $i < $l; $i ++)
 		{
-			$ordinal = ord($title[$i]);
+			$ordinal = \ord($title[$i]);
 
 			if ($ordinal < 128)
 			{
@@ -451,7 +451,7 @@ if ( ! function_exists('safe_mailto'))
 				}
 
 				$temp[] = $ordinal;
-				if (count($temp) === $count)
+				if (\count($temp) === $count)
 				{
 					$number = ($count === 3) ? (($temp[0] % 16) * 4096) + (($temp[1] % 64) * 64) + ($temp[2] % 64) : (($temp[0] % 32) * 64) + ($temp[1] % 64);
 					$x[] = '|' . $number;
@@ -466,14 +466,14 @@ if ( ! function_exists('safe_mailto'))
 		$x[] = 'a';
 		$x[] = '>';
 
-		$x = array_reverse($x);
+		$x = \array_reverse($x);
 
 		// improve obfuscation by eliminating newlines & whitespace
 		$output = "<script type=\"text/javascript\">"
 				. "//<![CDATA["
 				. "var l=new Array();";
 
-		for ($i = 0, $c = count($x); $i < $c; $i ++)
+		for ($i = 0, $c = \count($x); $i < $c; $i ++)
 		{
 			$output .= "l[" . $i . "] = '" . $x[$i] . "';";
 		}
@@ -492,7 +492,7 @@ if ( ! function_exists('safe_mailto'))
 
 // ------------------------------------------------------------------------
 
-if ( ! function_exists('auto_link'))
+if ( ! \function_exists('auto_link'))
 {
 
 	/**
@@ -512,7 +512,7 @@ if ( ! function_exists('auto_link'))
 	function auto_link($str, $type = 'both', $popup = false): string
 	{
 		// Find and replace any URLs.
-		if ($type !== 'email' && preg_match_all('#(\w*://|www\.)[^\s()<>;]+\w#i', $str, $matches, PREG_OFFSET_CAPTURE | PREG_SET_ORDER))
+		if ($type !== 'email' && \preg_match_all('#(\w*://|www\.)[^\s()<>;]+\w#i', $str, $matches, PREG_OFFSET_CAPTURE | PREG_SET_ORDER))
 		{
 			// Set our target HTML if using popup links.
 			$target = ($popup) ? ' target="_blank"' : '';
@@ -520,26 +520,26 @@ if ( ! function_exists('auto_link'))
 			// We process the links in reverse order (last -> first) so that
 			// the returned string offsets from preg_match_all() are not
 			// moved as we add more HTML.
-			foreach (array_reverse($matches) as $match)
+			foreach (\array_reverse($matches) as $match)
 			{
 				// $match[0] is the matched string/link
 				// $match[1] is either a protocol prefix or 'www.'
 				//
                 // With PREG_OFFSET_CAPTURE, both of the above is an array,
 				// where the actual value is held in [0] and its offset at the [1] index.
-				$a = '<a href="' . (strpos($match[1][0], '/') ? '' : 'http://') . $match[0][0] . '"' . $target . '>' . $match[0][0] . '</a>';
-				$str = substr_replace($str, $a, $match[0][1], strlen($match[0][0]));
+				$a = '<a href="' . (\strpos($match[1][0], '/') ? '' : 'http://') . $match[0][0] . '"' . $target . '>' . $match[0][0] . '</a>';
+				$str = \substr_replace($str, $a, $match[0][1], \strlen($match[0][0]));
 			}
 		}
 
 		// Find and replace any emails.
-		if ($type !== 'url' && preg_match_all('#([\w\.\-\+]+@[a-z0-9\-]+\.[a-z0-9\-\.]+[^[:punct:]\s])#i', $str, $matches, PREG_OFFSET_CAPTURE))
+		if ($type !== 'url' && \preg_match_all('#([\w\.\-\+]+@[a-z0-9\-]+\.[a-z0-9\-\.]+[^[:punct:]\s])#i', $str, $matches, PREG_OFFSET_CAPTURE))
 		{
-			foreach (array_reverse($matches[0]) as $match)
+			foreach (\array_reverse($matches[0]) as $match)
 			{
-				if (filter_var($match[0], FILTER_VALIDATE_EMAIL) !== false)
+				if (\filter_var($match[0], FILTER_VALIDATE_EMAIL) !== false)
 				{
-					$str = substr_replace($str, safe_mailto($match[0]), $match[1], strlen($match[0]));
+					$str = \substr_replace($str, safe_mailto($match[0]), $match[1], \strlen($match[0]));
 				}
 			}
 		}
@@ -551,7 +551,7 @@ if ( ! function_exists('auto_link'))
 
 // ------------------------------------------------------------------------
 
-if ( ! function_exists('prep_url'))
+if ( ! \function_exists('prep_url'))
 {
 
 	/**
@@ -570,7 +570,7 @@ if ( ! function_exists('prep_url'))
 			return '';
 		}
 
-		$url = parse_url($str);
+		$url = \parse_url($str);
 
 		if ( ! $url OR ! isset($url['scheme']))
 		{
@@ -584,7 +584,7 @@ if ( ! function_exists('prep_url'))
 
 // ------------------------------------------------------------------------
 
-if ( ! function_exists('url_title'))
+if ( ! \function_exists('url_title'))
 {
 
 	/**
@@ -602,7 +602,7 @@ if ( ! function_exists('url_title'))
 	 */
 	function url_title($str, $separator = '-', $lowercase = false): string
 	{
-		$q_separator = preg_quote($separator, '#');
+		$q_separator = \preg_quote($separator, '#');
 
 		$trans = [
 			'&.+?;'					 => '',
@@ -611,19 +611,19 @@ if ( ! function_exists('url_title'))
 			'(' . $q_separator . ')+'	 => $separator
 		];
 
-		$str = strip_tags($str);
+		$str = \strip_tags($str);
 		foreach ($trans as $key => $val)
 		{
 			//			$str = preg_replace('#'.$key.'#i'.( UTF8_ENABLED ? 'u' : ''), $val, $str);
-			$str = preg_replace('#' . $key . '#iu', $val, $str);
+			$str = \preg_replace('#' . $key . '#iu', $val, $str);
 		}
 
 		if ($lowercase === true)
 		{
-			$str = strtolower($str);
+			$str = \strtolower($str);
 		}
 
-		return trim(trim($str, $separator));
+		return \trim(\trim($str, $separator));
 	}
 
 }

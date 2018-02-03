@@ -65,7 +65,7 @@ class Negotiate
 	 */
 	public function __construct(\CodeIgniter\HTTP\RequestInterface $request = null)
 	{
-		if ( ! is_null($request))
+		if ( ! \is_null($request))
 		{
 			$this->request = $request;
 		}
@@ -152,7 +152,7 @@ class Negotiate
 	 */
 	public function encoding(array $supported = []): string
 	{
-		array_push($supported, 'identity');
+		\array_push($supported, 'identity');
 
 		return $this->getBestMatch($supported, $this->request->getHeaderLine('accept-encoding'));
 	}
@@ -258,11 +258,11 @@ class Negotiate
 	public function parseHeader(string $header)
 	{
 		$results = [];
-		$acceptable = explode(',', $header);
+		$acceptable = \explode(',', $header);
 
 		foreach ($acceptable as $value)
 		{
-			$pairs = explode(';', $value);
+			$pairs = \explode(';', $value);
 
 			$value = $pairs[0];
 
@@ -273,33 +273,33 @@ class Negotiate
 			foreach ($pairs as $pair)
 			{
 				$param = [];
-				preg_match(
+				\preg_match(
 						'/^(?P<name>.+?)=(?P<quoted>"|\')?(?P<value>.*?)(?:\k<quoted>)?$/', $pair, $param
 				);
-				$parameters[trim($param['name'])] = trim($param['value']);
+				$parameters[\trim($param['name'])] = \trim($param['value']);
 			}
 
 			$quality = 1.0;
 
-			if (array_key_exists('q', $parameters))
+			if (\array_key_exists('q', $parameters))
 			{
 				$quality = $parameters['q'];
 				unset($parameters['q']);
 			}
 
 			$results[] = [
-				'value'	 => trim($value),
+				'value'	 => \trim($value),
 				'q'		 => (float) $quality,
 				'params' => $parameters
 			];
 		}
 
 		// Sort to get the highest results first
-		usort($results, function ($a, $b) {
+		\usort($results, function ($a, $b) {
 			if ($a['q'] == $b['q'])
 			{
-				$a_ast = substr_count($a['value'], '*');
-				$b_ast = substr_count($b['value'], '*');
+				$a_ast = \substr_count($a['value'], '*');
+				$b_ast = \substr_count($b['value'], '*');
 
 				// '*/*' has lower precedence than 'text/*',
 				// and 'text/*' has lower priority than 'text/plain'
@@ -320,7 +320,7 @@ class Negotiate
 				// elements created by reference.
 				if ($a_ast == $b_ast)
 				{
-					return count($b['params']) - count($a['params']);
+					return \count($b['params']) - \count($a['params']);
 				}
 
 				return 0;
@@ -346,7 +346,7 @@ class Negotiate
 	protected function match(array $acceptable, string $supported, bool $enforceTypes = false)
 	{
 		$supported = $this->parseHeader($supported);
-		if (is_array($supported) && count($supported) == 1)
+		if (\is_array($supported) && \count($supported) == 1)
 		{
 			$supported = $supported[0];
 		}
@@ -380,7 +380,7 @@ class Negotiate
 	 */
 	protected function matchParameters(array $acceptable, array $supported): bool
 	{
-		if (count($acceptable['params']) != count($supported['params']))
+		if (\count($acceptable['params']) != \count($supported['params']))
 		{
 			return false;
 		}
@@ -410,8 +410,8 @@ class Negotiate
 	 */
 	public function matchTypes(array $acceptable, array $supported): bool
 	{
-		list($aType, $aSubType) = explode('/', $acceptable['value']);
-		list($sType, $sSubType) = explode('/', $supported['value']);
+		list($aType, $aSubType) = \explode('/', $acceptable['value']);
+		list($sType, $sSubType) = \explode('/', $supported['value']);
 
 		// If the types don't match, we're done.
 		if ($aType != $sType)

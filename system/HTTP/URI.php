@@ -155,7 +155,7 @@ class URI
 	 */
 	public function __construct(string $uri = null)
 	{
-		if ( ! is_null($uri))
+		if ( ! \is_null($uri))
 		{
 			$this->setURI($uri);
 		}
@@ -172,9 +172,9 @@ class URI
 	 */
 	public function setURI(string $uri = null)
 	{
-		if ( ! is_null($uri))
+		if ( ! \is_null($uri))
 		{
-			$parts = parse_url($uri);
+			$parts = \parse_url($uri);
 
 			if ($parts === false)
 			{
@@ -380,7 +380,7 @@ class URI
 	 */
 	public function getPath(): string
 	{
-		return (is_null($this->path)) ? '' : $this->path;
+		return (\is_null($this->path)) ? '' : $this->path;
 	}
 
 	//--------------------------------------------------------------------
@@ -396,20 +396,20 @@ class URI
 	{
 		$vars = $this->query;
 
-		if (array_key_exists('except', $options))
+		if (\array_key_exists('except', $options))
 		{
 			foreach ($options['except'] as $var)
 			{
 				unset($vars[$var]);
 			}
 		}
-		elseif (array_key_exists('only', $options))
+		elseif (\array_key_exists('only', $options))
 		{
 			$temp = [];
 
 			foreach ($options['only'] as $var)
 			{
-				if (array_key_exists($var, $vars))
+				if (\array_key_exists($var, $vars))
 				{
 					$temp[$var] = $vars[$var];
 				}
@@ -418,7 +418,7 @@ class URI
 			$vars = $temp;
 		}
 
-		return empty($vars) ? '' : http_build_query($vars);
+		return empty($vars) ? '' : \http_build_query($vars);
 	}
 
 	//--------------------------------------------------------------------
@@ -430,7 +430,7 @@ class URI
 	 */
 	public function getFragment(): string
 	{
-		return is_null($this->fragment) ? '' : $this->fragment;
+		return \is_null($this->fragment) ? '' : $this->fragment;
 	}
 
 	//--------------------------------------------------------------------
@@ -461,7 +461,7 @@ class URI
 		// but we still have to deal with a zero-based array.
 		$number -= 1;
 
-		if ($number > count($this->segments))
+		if ($number > \count($this->segments))
 		{
 			throw new \InvalidArgumentException('Request URI segment is our of range.');
 		}
@@ -478,7 +478,7 @@ class URI
 	 */
 	public function getTotalSegments(): int
 	{
-		return count($this->segments);
+		return \count($this->segments);
 	}
 
 	//--------------------------------------------------------------------
@@ -523,7 +523,7 @@ class URI
 
 		if ($path)
 		{
-			$uri .= substr($uri, -1, 1) !== '/' ? '/' . ltrim($path, '/') : $path;
+			$uri .= \substr($uri, -1, 1) !== '/' ? '/' . \ltrim($path, '/') : $path;
 		}
 
 		if ($query)
@@ -550,7 +550,7 @@ class URI
 	 */
 	public function setAuthority(string $str)
 	{
-		$parts = parse_url($str);
+		$parts = \parse_url($str);
 
 		if (empty($parts['host']) && ! empty($parts['path']))
 		{
@@ -579,8 +579,8 @@ class URI
 	 */
 	public function setScheme(string $str)
 	{
-		$str = strtolower($str);
-		$str = preg_replace('#:(//)?$#', '', $str);
+		$str = \strtolower($str);
+		$str = \preg_replace('#:(//)?$#', '', $str);
 
 		$this->scheme = $str;
 
@@ -599,8 +599,8 @@ class URI
 	 */
 	public function setUserInfo(string $user, string $pass)
 	{
-		$this->user = trim($user);
-		$this->password = trim($pass);
+		$this->user = \trim($user);
+		$this->password = \trim($pass);
 
 		return $this;
 	}
@@ -616,7 +616,7 @@ class URI
 	 */
 	public function setHost(string $str)
 	{
-		$this->host = trim($str);
+		$this->host = \trim($str);
 
 		return $this;
 	}
@@ -632,7 +632,7 @@ class URI
 	 */
 	public function setPort($port)
 	{
-		if (is_null($port))
+		if (\is_null($port))
 		{
 			return $this;
 		}
@@ -660,7 +660,7 @@ class URI
 	{
 		$this->path = $this->filterPath($path);
 
-		$this->segments = explode('/', $this->path);
+		$this->segments = \explode('/', $this->path);
 
 		return $this;
 	}
@@ -677,18 +677,18 @@ class URI
 	 */
 	public function setQuery(string $query)
 	{
-		if (strpos($query, '#') !== false)
+		if (\strpos($query, '#') !== false)
 		{
 			throw new \InvalidArgumentException('Query strings may not include URI fragments.');
 		}
 
 		// Can't have leading ?
-		if ( ! empty($query) && strpos($query, '?') === 0)
+		if ( ! empty($query) && \strpos($query, '?') === 0)
 		{
-			$query = substr($query, 1);
+			$query = \substr($query, 1);
 		}
 
-		$temp = explode('&', $query);
+		$temp = \explode('&', $query);
 		$parts = [];
 
 		foreach ($temp as $index => $part)
@@ -696,7 +696,7 @@ class URI
 			list($key, $value) = $this->splitQueryPart($part);
 
 			// Only 1 part?
-			if (is_null($value))
+			if (\is_null($value))
 			{
 				$parts[$this->filterQuery($key)] = null;
 				continue;
@@ -722,11 +722,11 @@ class URI
 	 */
 	protected function splitQueryPart(string $part)
 	{
-		$parts = explode('=', $part, 2);
+		$parts = \explode('=', $part, 2);
 
 		// If there's only a single element, no pair,
 		// then we return null
-		if (count($parts) === 1)
+		if (\count($parts) === 1)
 		{
 			$parts = null;
 		}
@@ -748,9 +748,9 @@ class URI
 	 */
 	protected function filterQuery($str)
 	{
-		return preg_replace_callback(
+		return \preg_replace_callback(
 				'/(?:[^' . self::CHAR_UNRESERVED . self::CHAR_SUB_DELIMS . '%:@\/\?]+|%(?![A-Fa-f0-9]{2}))/', function(array $matches) {
-			return rawurlencode($matches[0]);
+			return \rawurlencode($matches[0]);
 		}, $str
 		);
 	}
@@ -767,7 +767,7 @@ class URI
 	 */
 	public function setQueryArray(array $query)
 	{
-		$query = http_build_query($query);
+		$query = \http_build_query($query);
 
 		return $this->setQuery($query);
 	}
@@ -824,7 +824,7 @@ class URI
 
 		foreach ($this->query as $key => $value)
 		{
-			if ( ! in_array($key, $params))
+			if ( ! \in_array($key, $params))
 			{
 				continue;
 			}
@@ -850,7 +850,7 @@ class URI
 	 */
 	public function setFragment(string $string)
 	{
-		$this->fragment = trim($string, '# ');
+		$this->fragment = \trim($string, '# ');
 
 		return $this;
 	}
@@ -872,25 +872,25 @@ class URI
 
 		// Decode/normalize percent-encoded chars so
 		// we can always have matching for Routes, etc.
-		$path = urldecode($path);
+		$path = \urldecode($path);
 
 		// Remove dot segments
 		$path = $this->removeDotSegments($path);
 
 		// Fix up some leading slash edge cases...
-		if (strpos($orig, './') === 0)
+		if (\strpos($orig, './') === 0)
 		{
 			$path = '/' . $path;
 		}
-		if (strpos($orig, '../') === 0)
+		if (\strpos($orig, '../') === 0)
 		{
 			$path = '/' . $path;
 		}
 
 		// Encode characters
-		$path = preg_replace_callback(
+		$path = \preg_replace_callback(
 				'/(?:[^' . self::CHAR_UNRESERVED . ':@&=\+\$,\/;%]+|%(?![A-Fa-f0-9]{2}))/', function(array $matches) {
-			return rawurlencode($matches[0]);
+			return \rawurlencode($matches[0]);
 		}, $path
 		);
 
@@ -930,7 +930,7 @@ class URI
 		// Scheme
 		if (isset($parts['scheme']))
 		{
-			$this->setScheme(rtrim(strtolower($parts['scheme']), ':/'));
+			$this->setScheme(\rtrim(\strtolower($parts['scheme']), ':/'));
 		}
 		else
 		{
@@ -940,7 +940,7 @@ class URI
 		// Port
 		if (isset($parts['port']))
 		{
-			if ( ! is_null($parts['port']))
+			if ( ! \is_null($parts['port']))
 			{
 				$port = (int) $parts['port'];
 
@@ -961,7 +961,7 @@ class URI
 		// Populate our segments array
 		if ( ! empty($parts['path']))
 		{
-			$this->segments = explode('/', trim($parts['path'], '/'));
+			$this->segments = \explode('/', \trim($parts['path'], '/'));
 		}
 	}
 
@@ -1017,7 +1017,7 @@ class URI
 			}
 			else
 			{
-				if (substr($relative->getPath(), 0, 1) == '/')
+				if (\substr($relative->getPath(), 0, 1) == '/')
 				{
 					$transformed->setPath($relative->getPath());
 				}
@@ -1056,20 +1056,20 @@ class URI
 	{
 		if ( ! empty($base->getAuthority()) && empty($base->getPath()))
 		{
-			return '/' . ltrim($reference->getPath(), '/ ');
+			return '/' . \ltrim($reference->getPath(), '/ ');
 		}
 
-		$path = explode('/', $base->getPath());
+		$path = \explode('/', $base->getPath());
 
 		if (empty($path[0]))
 		{
 			unset($path[0]);
 		}
 
-		array_pop($path);
-		array_push($path, $reference->getPath());
+		\array_pop($path);
+		\array_push($path, $reference->getPath());
 
-		return implode('/', $path);
+		return \implode('/', $path);
 	}
 
 	//--------------------------------------------------------------------
@@ -1096,12 +1096,12 @@ class URI
 
 		$output = [];
 
-		$input = explode('/', $path);
+		$input = \explode('/', $path);
 
 		if (empty($input[0]))
 		{
 			unset($input[0]);
-			$input = array_values($input);
+			$input = \array_values($input);
 		}
 
 		// This is not a perfect representation of the
@@ -1112,27 +1112,27 @@ class URI
 		{
 			if ($segment == '..')
 			{
-				array_pop($output);
+				\array_pop($output);
 			}
 			else if ($segment != '.' && $segment != '')
 			{
-				array_push($output, $segment);
+				\array_push($output, $segment);
 			}
 		}
 
-		$output = implode('/', $output);
-		$output = ltrim($output, '/ ');
+		$output = \implode('/', $output);
+		$output = \ltrim($output, '/ ');
 
 		if ($output != '/')
 		{
 			// Add leading slash if necessary
-			if (substr($path, 0, 1) == '/')
+			if (\substr($path, 0, 1) == '/')
 			{
 				$output = '/' . $output;
 			}
 
 			// Add trailing slash if necessary
-			if (substr($path, -1, 1) == '/')
+			if (\substr($path, -1, 1) == '/')
 			{
 				$output .= '/';
 			}

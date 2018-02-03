@@ -286,14 +286,14 @@ class Mimes
 	 */
 	public static function guessTypeFromExtension(string $extension)
 	{
-		$extension = trim(strtolower($extension), '. ');
+		$extension = \trim(\strtolower($extension), '. ');
 
-		if (! array_key_exists($extension, self::$mimes))
+		if (! \array_key_exists($extension, self::$mimes))
 		{
 			return null;
 		}
 
-		return is_array(self::$mimes[$extension]) ? self::$mimes[$extension][0] : self::$mimes[$extension];
+		return \is_array(self::$mimes[$extension]) ? self::$mimes[$extension][0] : self::$mimes[$extension];
 	}
 
 	//--------------------------------------------------------------------
@@ -307,15 +307,15 @@ class Mimes
 	 */
 	public static function guessExtensionFromType(string $type)
 	{
-		$type = trim(strtolower($type), '. ');
+		$type = \trim(\strtolower($type), '. ');
 
 		foreach (self::$mimes as $ext => $types)
 		{
-			if (is_string($types) && $types == $type)
+			if (\is_string($types) && $types == $type)
 			{
 				return $ext;
 			}
-			else if (is_array($types) && in_array($type, $types))
+			else if (\is_array($types) && \in_array($type, $types))
 			{
 				return $ext;
 			}

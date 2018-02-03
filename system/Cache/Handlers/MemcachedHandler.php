@@ -74,7 +74,7 @@ class MemcachedHandler implements CacheInterface
 
 		if ( ! empty($config))
 		{
-			$this->config = array_merge($this->config, $config);
+			$this->config = \array_merge($this->config, $config);
 		}
 	}
 
@@ -102,7 +102,7 @@ class MemcachedHandler implements CacheInterface
 	 */
 	public function initialize()
 	{
-		if (class_exists('\Memcached'))
+		if (\class_exists('\Memcached'))
 		{
 			$this->memcached = new \Memcached();
 			if ($this->config['raw'])
@@ -110,7 +110,7 @@ class MemcachedHandler implements CacheInterface
 				$this->memcached->setOption(\Memcached::OPT_BINARY_PROTOCOL, true);
 			}
 		}
-		elseif (class_exists('\Memcache'))
+		elseif (\class_exists('\Memcache'))
 		{
 			$this->memcached = new \Memcache();
 		}
@@ -149,7 +149,7 @@ class MemcachedHandler implements CacheInterface
 
 		$data = $this->memcached->get($key);
 
-		return is_array($data) ? $data[0] : $data;
+		return \is_array($data) ? $data[0] : $data;
 	}
 
 	//--------------------------------------------------------------------
@@ -169,7 +169,7 @@ class MemcachedHandler implements CacheInterface
 
 		if ( ! $this->config['raw'])
 		{
-			$value = [$value, time(), $ttl];
+			$value = [$value, \time(), $ttl];
 		}
 
 		if ($this->memcached instanceof \Memcached)
@@ -287,7 +287,7 @@ class MemcachedHandler implements CacheInterface
 
 		$stored = $this->memcached->get($key);
 
-		if (count($stored) !== 3)
+		if (\count($stored) !== 3)
 		{
 			return FALSE;
 		}
@@ -310,7 +310,7 @@ class MemcachedHandler implements CacheInterface
 	 */
 	public function isSupported(): bool
 	{
-		return (extension_loaded('memcached') OR extension_loaded('memcache'));
+		return (\extension_loaded('memcached') OR \extension_loaded('memcache'));
 	}
 
 }

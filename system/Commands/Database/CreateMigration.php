@@ -104,7 +104,7 @@ class CreateMigration extends BaseCommand
 	public function run(array $params = [])
 	{
 
-		$name = array_shift($params);
+		$name = \array_shift($params);
 
 		if (empty($name))
 		{
@@ -130,7 +130,7 @@ class CreateMigration extends BaseCommand
 
 				if ($namespace == $ns)
 				{
-					$homepath = realpath($path);
+					$homepath = \realpath($path);
 					break;
 				}
 			}
@@ -140,7 +140,7 @@ class CreateMigration extends BaseCommand
 			$ns = "App";
 		}
 
-		$path = $homepath . '/Database/Migrations/' . date('YmdHis_') . $name . '.php';
+		$path = $homepath . '/Database/Migrations/' . \date('YmdHis_') . $name . '.php';
 
 		$template = <<<EOD
 <?php namespace $ns\Database\Migrations;
@@ -163,7 +163,7 @@ class Migration_{name} extends Migration
 }
 
 EOD;
-		$template = str_replace('{name}', $name, $template);
+		$template = \str_replace('{name}', $name, $template);
 
 		helper('filesystem');
 		if ( ! write_file($path, $template))
@@ -172,7 +172,7 @@ EOD;
 			return;
 		}
 
-		CLI::write('Created file: ' . CLI::color(str_replace($homepath, $ns, $path), 'green'));
+		CLI::write('Created file: ' . CLI::color(\str_replace($homepath, $ns, $path), 'green'));
 	}
 
 }

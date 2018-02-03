@@ -97,16 +97,16 @@ class Seeder
 			throw new \InvalidArgumentException('Invalid filesPath set in the Config\Database.');
 		}
 
-		$this->seedPath = rtrim($this->seedPath, '/') . '/Seeds/';
+		$this->seedPath = \rtrim($this->seedPath, '/') . '/Seeds/';
 
-		if ( ! is_dir($this->seedPath))
+		if ( ! \is_dir($this->seedPath))
 		{
 			throw new \InvalidArgumentException('Unable to locate the seeds directory. Please check Config\Database::filesPath');
 		}
 
 		$this->config = & $config;
 
-		if (is_null($db))
+		if (\is_null($db))
 		{
 			$db = \Config\Database::connect($this->DBGroup);
 		}
@@ -130,10 +130,10 @@ class Seeder
 			throw new \InvalidArgumentException('No Seeder was specified.');
 		}
 
-		$path = str_replace('.php', '', $class) . '.php';
+		$path = \str_replace('.php', '', $class) . '.php';
 
 		// If we have namespaced class, simply try to load it.
-		if (strpos($class, '\\') !== false)
+		if (\strpos($class, '\\') !== false)
 		{
 			$seeder = new $class($this->config);
 		}
@@ -142,12 +142,12 @@ class Seeder
 		{
 			$path = $this->seedPath . $path;
 
-			if ( ! is_file($path))
+			if ( ! \is_file($path))
 			{
 				throw new \InvalidArgumentException('The specified Seeder is not a valid file: ' . $path);
 			}
 
-			if ( ! class_exists($class, false))
+			if ( ! \class_exists($class, false))
 			{
 				require $path;
 			}
@@ -176,7 +176,7 @@ class Seeder
 	 */
 	public function setPath(string $path)
 	{
-		$this->seedPath = rtrim($path, '/') . '/';
+		$this->seedPath = \rtrim($path, '/') . '/';
 
 		return $this;
 	}

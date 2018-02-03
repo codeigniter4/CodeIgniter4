@@ -92,13 +92,13 @@ class Database extends \CodeIgniter\Database\Config
 
 			// Under Travis-CI, we can set an ENV var named 'DB_GROUP'
 			// so that we can test against multiple databases.
-			if ($group = getenv('DB'))
+			if ($group = \getenv('DB'))
 			{
-				if (is_file(TESTPATH.'travis/Database.php'))
+				if (\is_file(TESTPATH.'travis/Database.php'))
 				{
 					require TESTPATH.'travis/Database.php';
 
-					if ( ! empty($dbconfig) && array_key_exists($group, $dbconfig))
+					if ( ! empty($dbconfig) && \array_key_exists($group, $dbconfig))
 					{
 						$this->tests = $dbconfig[$group];
 					}

@@ -591,12 +591,12 @@ class ContentSecurityPolicy
 	protected function addOption($options, string $target, bool $reportOnly = false)
 	{
 		// Ensure we have an array to work with...
-		if (is_string($this->{$target}))
+		if (\is_string($this->{$target}))
 		{
 			$this->{$target} = [$this->{$target}];
 		}
 
-		if (is_array($options))
+		if (\is_array($options))
 		{
 			$newOptions = [];
 			foreach ($options as $opt)
@@ -604,7 +604,7 @@ class ContentSecurityPolicy
 				$newOptions[] = [$opt => $reportOnly];
 			}
 
-			$this->{$target} = array_merge($this->{$target}, $newOptions);
+			$this->{$target} = \array_merge($this->{$target}, $newOptions);
 			unset($newOptions);
 		}
 		else
@@ -629,15 +629,15 @@ class ContentSecurityPolicy
 		if (empty($body))
 			return;
 
-		if ( ! is_array($this->styleSrc))
+		if ( ! \is_array($this->styleSrc))
 			$this->styleSrc = [$this->styleSrc];
-		if ( ! is_array($this->scriptSrc))
+		if ( ! \is_array($this->scriptSrc))
 			$this->scriptSrc = [$this->scriptSrc];
 
 		// Replace style placeholders with nonces
-		$body = preg_replace_callback(
+		$body = \preg_replace_callback(
 				'/{csp-style-nonce}/', function ($matches) {
-			$nonce = bin2hex(random_bytes(12));
+			$nonce = \bin2hex(\random_bytes(12));
 
 			$this->styleSrc[] = 'nonce-' . $nonce;
 
@@ -646,9 +646,9 @@ class ContentSecurityPolicy
 		);
 
 		// Replace script placeholders with nonces
-		$body = preg_replace_callback(
+		$body = \preg_replace_callback(
 				'/{csp-script-nonce}/', function ($matches) {
-			$nonce = bin2hex(random_bytes(12));
+			$nonce = \bin2hex(\random_bytes(12));
 
 			$this->scriptSrc[] = 'nonce-' . $nonce;
 
@@ -748,7 +748,7 @@ class ContentSecurityPolicy
 			return;
 		}
 
-		if (is_string($values))
+		if (\is_string($values))
 		{
 			$values = [$values => 0];
 		}
@@ -758,7 +758,7 @@ class ContentSecurityPolicy
 
 		foreach ($values as $value => $reportOnly)
 		{
-			if (is_numeric($value) && is_string($reportOnly) && ! empty($reportOnly))
+			if (\is_numeric($value) && \is_string($reportOnly) && ! empty($reportOnly))
 			{
 				$value = $reportOnly;
 				$reportOnly = 0;
@@ -766,29 +766,29 @@ class ContentSecurityPolicy
 
 			if ($reportOnly === true)
 			{
-				$reportSources[] = in_array($value, $this->validSources) ? "'{$value}'" : $value;
+				$reportSources[] = \in_array($value, $this->validSources) ? "'{$value}'" : $value;
 			}
 			else
 			{
-				if (strpos($value, 'nonce-') === 0)
+				if (\strpos($value, 'nonce-') === 0)
 				{
 					$sources[] = "'{$value}'";
 				}
 				else
 				{
-					$sources[] = in_array($value, $this->validSources) ? "'{$value}'" : $value;
+					$sources[] = \in_array($value, $this->validSources) ? "'{$value}'" : $value;
 				}
 			}
 		}
 
 		if (! empty($sources))
 		{
-			$this->tempHeaders[$name] = implode(' ', $sources);
+			$this->tempHeaders[$name] = \implode(' ', $sources);
 		}
 
 		if (! empty($reportSources))
 		{
-			$this->reportOnlyHeaders[$name] = implode(' ', $reportSources);
+			$this->reportOnlyHeaders[$name] = \implode(' ', $reportSources);
 		}
 	}
 

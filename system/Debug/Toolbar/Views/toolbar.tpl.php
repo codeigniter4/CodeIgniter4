@@ -1,9 +1,9 @@
 <style type="text/css">
-	<?= preg_replace('#[\r\n\t ]+#', ' ', file_get_contents(__DIR__.'/toolbar.css')) ?>
+	<?= \preg_replace('#[\r\n\t ]+#', ' ', \file_get_contents(__DIR__.'/toolbar.css')) ?>
 </style>
 
 <script id="toolbar_js" type="text/javascript">
-	<?= file_get_contents(__DIR__.'/toolbar.js') ?>
+	<?= \file_get_contents(__DIR__.'/toolbar.js') ?>
 </script>
 <div id="debug-icon" style="display:none">
     <a id="debug-icon-link" href="javascript:void(0)">
@@ -42,7 +42,7 @@
                             <?= $c->icon() ?>
                             <span class="hide-sm">
                                 <?= esc($c->getTitle()) ?>
-	                            <?php if (! is_null($c->getBadgeValue())) : ?>
+	                            <?php if (! \is_null($c->getBadgeValue())) : ?>
                                     <span class="badge"><?= $c->getBadgeValue() ?></span>
 	                            <?php endif ?>
                             </span>
@@ -126,26 +126,26 @@
 		<!-- VarData from Collectors -->
 		<?php foreach ($varData as $heading => $items) : ?>
 
-			<a href="javascript:void(0)" onclick="ciDebugBar.toggleDataTable('<?= strtolower(str_replace(' ', '-', $heading)) ?>'); return false;">
+			<a href="javascript:void(0)" onclick="ciDebugBar.toggleDataTable('<?= \strtolower(\str_replace(' ', '-', $heading)) ?>'); return false;">
 				<h2><?= esc($heading) ?></h2>
 			</a>
 
-			<?php if (is_array($items)) : ?>
+			<?php if (\is_array($items)) : ?>
 
-				<table id="<?= strtolower(str_replace(' ', '-', $heading.'_table')) ?>">
+				<table id="<?= \strtolower(\str_replace(' ', '-', $heading.'_table')) ?>">
 					<tbody>
 					<?php foreach ($items as $key => $value) : ?>
 						<tr>
 							<td><?= esc($key) ?></td>
 							<td>
 							<?php
-								if (is_string($value))
+								if (\is_string($value))
 								{
 									echo esc($value);
 								}
 								else
 								{
-									echo print_r($value, true);
+									echo \print_r($value, true);
 								}
 							?>
 							</td>
@@ -173,13 +173,13 @@
 							<td><?= esc($key) ?></td>
 							<td>
 							<?php
-								if (is_string($value))
+								if (\is_string($value))
 								{
 									echo esc($value);
 								}
 								else
 								{
-									echo print_r($value, true);
+									echo \print_r($value, true);
 								}
 							?>
 							</td>
@@ -223,7 +223,7 @@
 				<?php foreach ($post as $name => $value) : ?>
 					<tr>
 						<td><?= esc($name) ?></td>
-						<td><?= is_array($value) ? esc(print_r($value, true)) : esc($value) ?></td>
+						<td><?= \is_array($value) ? esc(\print_r($value, true)) : esc($value) ?></td>
 					</tr>
 				<?php endforeach; ?>
 				</tbody>
@@ -240,7 +240,7 @@
 
 				<?php foreach ($headers as $header => $value) : ?>
 					<?php if (empty($value)) continue; ?>
-					<?php if (! is_array($value)) { $value = [$value]; } ?>
+					<?php if (! \is_array($value)) { $value = [$value]; } ?>
 					<?php foreach ($value as $h) : ?>
 						<tr>
 							<td><?= esc($h->getName()) ?></td>

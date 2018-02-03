@@ -85,7 +85,7 @@ class Result extends BaseResult implements ResultInterface
 		$retval = [];
 		$fieldData = $this->resultID->fetch_fields();
 
-		for ($i = 0, $c = count($fieldData); $i < $c; $i ++ )
+		for ($i = 0, $c = \count($fieldData); $i < $c; $i ++ )
 		{
 			$retval[$i] = new \stdClass();
 			$retval[$i]->name = $fieldData[$i]->name;
@@ -105,7 +105,7 @@ class Result extends BaseResult implements ResultInterface
 	 */
 	public function freeResult()
 	{
-		if (is_object($this->resultID))
+		if (\is_object($this->resultID))
 		{
 			$this->resultID->free();
 			$this->resultID = false;

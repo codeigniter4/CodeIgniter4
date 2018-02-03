@@ -46,34 +46,34 @@
  * so they are available in the config files that are loaded.
  */
 
-$public = trim($paths->publicDirectory, '/');
+$public = \trim($paths->publicDirectory, '/');
 
-$pos = strrpos(FCPATH, $public.DIRECTORY_SEPARATOR);
+$pos = \strrpos(FCPATH, $public.DIRECTORY_SEPARATOR);
 
 /**
  * The path to the main application directory. Just above public.
  */
-define('ROOTPATH', substr_replace(FCPATH, '', $pos, strlen($public.DIRECTORY_SEPARATOR)));
+\define('ROOTPATH', \substr_replace(FCPATH, '', $pos, \strlen($public.DIRECTORY_SEPARATOR)));
 
 /**
  * The path to the application directory.
  */
-define('APPPATH', realpath($paths->applicationDirectory).DIRECTORY_SEPARATOR);
+\define('APPPATH', \realpath($paths->applicationDirectory).DIRECTORY_SEPARATOR);
 
 /**
  * The path to the system directory.
  */
-define('BASEPATH', realpath($paths->systemDirectory).DIRECTORY_SEPARATOR);
+\define('BASEPATH', \realpath($paths->systemDirectory).DIRECTORY_SEPARATOR);
 
 /**
  * The path to the writable directory.
  */
-define('WRITEPATH', realpath($paths->writableDirectory).DIRECTORY_SEPARATOR);
+\define('WRITEPATH', \realpath($paths->writableDirectory).DIRECTORY_SEPARATOR);
 
 /**
  * The path to the tests directory
  */
-define('TESTPATH', realpath($paths->testsDirectory).DIRECTORY_SEPARATOR);
+\define('TESTPATH', \realpath($paths->testsDirectory).DIRECTORY_SEPARATOR);
 
 /*
  * ---------------------------------------------------------------
@@ -99,14 +99,14 @@ require APPPATH .'Config/Autoload.php';
 require APPPATH .'Config/Services.php';
 
 // Use Config\Services as CodeIgniter\Services
-class_alias('Config\Services', 'CodeIgniter\Services');
+\class_alias('Config\Services', 'CodeIgniter\Services');
 
 $loader = CodeIgniter\Services::autoloader();
 $loader->initialize(new Config\Autoload());
 $loader->register();    // Register the loader with the SPL autoloader stack.
 
 // Now load Composer's if it's available
-if (file_exists(COMPOSER_PATH))
+if (\file_exists(COMPOSER_PATH))
 {
 	require COMPOSER_PATH;
 }

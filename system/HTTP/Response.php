@@ -283,7 +283,7 @@ class Response extends Message implements ResponseInterface
 		}
 
 		// Unknown and no message?
-		if ( ! array_key_exists($code, static::$statusCodes) && empty($reason))
+		if ( ! \array_key_exists($code, static::$statusCodes) && empty($reason))
 		{
 			throw new \InvalidArgumentException('Unknown HTTP status code provided with no message');
 		}
@@ -357,7 +357,7 @@ class Response extends Message implements ResponseInterface
 	public function setContentType(string $mime, string $charset = 'UTF-8')
 	{
 		// add charset attribute if not already there and provided as parm
-		if ((strpos($mime, 'charset=') < 1) && ! empty($charset))
+		if ((\strpos($mime, 'charset=') < 1) && ! empty($charset))
 		{
 			$mime .= '; charset=' . $charset;
 		}
@@ -469,7 +469,7 @@ class Response extends Message implements ResponseInterface
 			$date->setTimezone(new \DateTimeZone('UTC'));
 			$this->setHeader('Last-Modified', $date->format('D, d M Y H:i:s') . ' GMT');
 		}
-		elseif (is_string($date))
+		elseif (\is_string($date))
 		{
 			$this->setHeader('Last-Modified', $date);
 		}
@@ -512,7 +512,7 @@ class Response extends Message implements ResponseInterface
 	public function sendHeaders()
 	{
 		// Have the headers already been sent?
-		if (headers_sent())
+		if (\headers_sent())
 		{
 			return $this;
 		}
@@ -521,16 +521,16 @@ class Response extends Message implements ResponseInterface
 		// http://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html
 		if (isset($this->headers['Date']))
 		{
-			$this->setDate(\DateTime::createFromFormat('U', time()));
+			$this->setDate(\DateTime::createFromFormat('U', \time()));
 		}
 
 		// HTTP Status
-		header(sprintf('HTTP/%s %s %s', $this->protocolVersion, $this->statusCode, $this->reason), true, $this->statusCode);
+		\header(\sprintf('HTTP/%s %s %s', $this->protocolVersion, $this->statusCode, $this->reason), true, $this->statusCode);
 
 		// Send all of our headers
 		foreach ($this->getHeaders() as $name => $values)
 		{
-			header($name . ': ' . $this->getHeaderLine($name), false, $this->statusCode);
+			\header($name . ': ' . $this->getHeaderLine($name), false, $this->statusCode);
 		}
 
 		return $this;
@@ -565,11 +565,11 @@ class Response extends Message implements ResponseInterface
 	public function redirect(string $uri, string $method = 'auto', int $code = null)
 	{
 		// IIS environment likely? Use 'refresh' for better compatibility
-		if ($method === 'auto' && isset($_SERVER['SERVER_SOFTWARE']) && strpos($_SERVER['SERVER_SOFTWARE'], 'Microsoft-IIS') !== false)
+		if ($method === 'auto' && isset($_SERVER['SERVER_SOFTWARE']) && \strpos($_SERVER['SERVER_SOFTWARE'], 'Microsoft-IIS') !== false)
 		{
 			$method = 'refresh';
 		}
-		elseif ($method !== 'refresh' && (empty($code) || ! is_numeric($code)))
+		elseif ($method !== 'refresh' && (empty($code) || ! \is_numeric($code)))
 		{
 			if (isset($_SERVER['SERVER_PROTOCOL'], $_SERVER['REQUEST_METHOD']) && $_SERVER['SERVER_PROTOCOL'] === 'HTTP/1.1')
 			{
@@ -620,7 +620,7 @@ class Response extends Message implements ResponseInterface
 	$name, $value = '', $expire = '', $domain = '', $path = '/', $prefix = '', $secure = false, $httponly = false
 	)
 	{
-		if (is_array($name))
+		if (\is_array($name))
 		{
 			// always leave 'name' in last place, as the loop will break otherwise, due to $$item
 			foreach (['value', 'expire', 'domain', 'path', 'prefix', 'secure', 'httponly', 'name'] as $item)
@@ -657,16 +657,16 @@ class Response extends Message implements ResponseInterface
 			$httponly = $this->cookieHTTPOnly;
 		}
 
-		if ( ! is_numeric($expire))
+		if ( ! \is_numeric($expire))
 		{
-			$expire = time() - 86500;
+			$expire = \time() - 86500;
 		}
 		else
 		{
-			$expire = ($expire > 0) ? time() + $expire : 0;
+			$expire = ($expire > 0) ? \time() + $expire : 0;
 		}
 
-		setcookie($prefix . $name, $value, $expire, $path, $domain, $secure, $httponly);
+		\setcookie($prefix . $name, $value, $expire, $path, $domain, $secure, $httponly);
 	}
 
 	//--------------------------------------------------------------------
@@ -689,29 +689,29 @@ class Response extends Message implements ResponseInterface
 		}
 		elseif ($data === null)
 		{
-			if ( ! @is_file($filename) || ($filesize = @filesize($filename)) === false)
+			if ( ! @\is_file($filename) || ($filesize = @\filesize($filename)) === false)
 			{
 				return;
 			}
 
 			$filepath = $filename;
-			$filename = explode('/', str_replace(DIRECTORY_SEPARATOR, '/', $filename));
-			$filename = end($filename);
+			$filename = \explode('/', \str_replace(DIRECTORY_SEPARATOR, '/', $filename));
+			$filename = \end($filename);
 		}
 		else
 		{
-			$filesize = strlen($data);
+			$filesize = \strlen($data);
 		}
 
 		// Set the default MIME type to send
 		$mime = 'application/octet-stream';
 
-		$x = explode('.', $filename);
-		$extension = end($x);
+		$x = \explode('.', $filename);
+		$extension = \end($x);
 
 		if ($setMime === true)
 		{
-			if (count($x) === 1 || $extension === '')
+			if (\count($x) === 1 || $extension === '')
 			{
 				/* If we're going to detect the MIME type,
 				 * we'll need a file extension.
@@ -728,30 +728,30 @@ class Response extends Message implements ResponseInterface
 		 *
 		 * Reference: http://digiblog.de/2011/04/19/android-and-the-download-file-headers/
 		 */
-		if (count($x) !== 1 && isset($_SERVER['HTTP_USER_AGENT']) && preg_match('/Android\s(1|2\.[01])/', $_SERVER['HTTP_USER_AGENT']))
+		if (\count($x) !== 1 && isset($_SERVER['HTTP_USER_AGENT']) && \preg_match('/Android\s(1|2\.[01])/', $_SERVER['HTTP_USER_AGENT']))
 		{
-			$x[count($x) - 1] = strtoupper($extension);
-			$filename = implode('.', $x);
+			$x[\count($x) - 1] = \strtoupper($extension);
+			$filename = \implode('.', $x);
 		}
 
-		if ($data === null && ($fp = @fopen($filepath, 'rb')) === false)
+		if ($data === null && ($fp = @\fopen($filepath, 'rb')) === false)
 		{
 			return;
 		}
 
 		// Clean output buffer
-		if (ob_get_level() !== 0 && @ob_end_clean() === false)
+		if (\ob_get_level() !== 0 && @\ob_end_clean() === false)
 		{
-			@ob_clean();
+			@\ob_clean();
 		}
 
 		// Generate the server headers
-		header('Content-Type: ' . $mime);
-		header('Content-Disposition: attachment; filename="' . $filename . '"');
-		header('Expires: 0');
-		header('Content-Transfer-Encoding: binary');
-		header('Content-Length: ' . $filesize);
-		header('Cache-Control: private, no-transform, no-store, must-revalidate');
+		\header('Content-Type: ' . $mime);
+		\header('Content-Disposition: attachment; filename="' . $filename . '"');
+		\header('Expires: 0');
+		\header('Content-Transfer-Encoding: binary');
+		\header('Content-Length: ' . $filesize);
+		\header('Cache-Control: private, no-transform, no-store, must-revalidate');
 
 		// If we have raw data - just dump it
 		if ($data !== null)
@@ -760,12 +760,12 @@ class Response extends Message implements ResponseInterface
 		}
 
 		// Flush 1MB chunks of data
-		while ( ! feof($fp) && ($data = fread($fp, 1048576)) !== false)
+		while ( ! \feof($fp) && ($data = \fread($fp, 1048576)) !== false)
 		{
 			echo $data;
 		}
 
-		fclose($fp);
+		\fclose($fp);
 		exit;
 	}
 

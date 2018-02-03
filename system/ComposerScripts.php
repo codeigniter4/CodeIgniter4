@@ -74,19 +74,19 @@ class ComposerScripts
 	 */
 	protected static function moveFile(string $source, string $destination)
 	{
-		$source = realpath($source);
+		$source = \realpath($source);
 
 		if (empty($source))
 		{
 			die('Cannot move file. Source path invalid.');
 		}
 
-		if (! is_file($source))
+		if (! \is_file($source))
 		{
 			return false;
 		}
 
-		return copy($source, $destination);
+		return \copy($source, $destination);
 	}
 
 	//--------------------------------------------------------------------
@@ -114,25 +114,25 @@ class ComposerScripts
 	 */
 	protected static function removeDir($dir)
 	{
-		if (is_dir($dir))
+		if (\is_dir($dir))
 		{
-			$objects = scandir($dir);
+			$objects = \scandir($dir);
 			foreach ($objects as $object)
 			{
 				if ($object != "." && $object != "..")
 				{
-					if (filetype($dir."/".$object) == "dir")
+					if (\filetype($dir."/".$object) == "dir")
 					{
 						static::removeDir($dir."/".$object);
 					}
 					else
 					{
-						unlink($dir."/".$object);
+						\unlink($dir."/".$object);
 					}
 				}
 			}
-			reset($objects);
-			rmdir($dir);
+			\reset($objects);
+			\rmdir($dir);
 		}
 	}
 
@@ -142,15 +142,15 @@ class ComposerScripts
 	 */
 	public static function moveEscaper()
 	{
-		if (class_exists('\\Zend\\Escaper\\Escaper') && file_exists(self::getClassFilePath('\\Zend\\Escaper\\Escaper')))
+		if (\class_exists('\\Zend\\Escaper\\Escaper') && \file_exists(self::getClassFilePath('\\Zend\\Escaper\\Escaper')))
 		{
 			$base = static::$basePath.'ZendEscaper';
 
 			foreach ([$base, $base.'/Exception'] as $path)
 			{
-				if (! is_dir($path))
+				if (! \is_dir($path))
 				{
-					mkdir($path, 0755);
+					\mkdir($path, 0755);
 				}
 			}
 
@@ -181,20 +181,20 @@ class ComposerScripts
 	{
 		$filename = 'vendor/kint-php/kint/build/kint-aante-light.php';
 
-		if (file_exists($filename))
+		if (\file_exists($filename))
 		{
 			$base = static::$basePath.'Kint';
 
 			// Remove the contents of the previous Kint folder, if any.
-			if (is_dir($base))
+			if (\is_dir($base))
 			{
 				static::removeDir($base);
 			}
 
 			// Create Kint if it doesn't exist already
-			if (! is_dir($base))
+			if (! \is_dir($base))
 			{
-				mkdir($base, 0755);
+				\mkdir($base, 0755);
 			}
 
 			if (! self::moveFile($filename, $base.'/kint.php'))

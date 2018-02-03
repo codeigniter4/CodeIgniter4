@@ -137,8 +137,8 @@ class ChromeLoggerHandler extends BaseHandler implements HandlerInterface
 		$message = $this->format($message);
 
 		// Generate Backtrace info
-		$backtrace = debug_backtrace(false, $this->backtraceLevel);
-		$backtrace = end($backtrace);
+		$backtrace = \debug_backtrace(false, $this->backtraceLevel);
+		$backtrace = \end($backtrace);
 
 		$backtraceMessage = 'unknown';
 		if (isset($backtrace['file']) && isset($backtrace['line']))
@@ -149,7 +149,7 @@ class ChromeLoggerHandler extends BaseHandler implements HandlerInterface
 		// Default to 'log' type.
 		$type = '';
 
-		if (in_array($level, $this->levels))
+		if (\in_array($level, $this->levels))
 		{
 			$type = $this->levels[$level];
 		}
@@ -170,7 +170,7 @@ class ChromeLoggerHandler extends BaseHandler implements HandlerInterface
 	 */
 	protected function format($object)
 	{
-		if ( ! is_object($object))
+		if ( ! \is_object($object))
 		{
 			return $object;
 		}
@@ -178,7 +178,7 @@ class ChromeLoggerHandler extends BaseHandler implements HandlerInterface
 		// @todo Modify formatting of objects once we can view them in browser.
 		$objectArray = (array) $object;
 
-		$objectArray['___class_name'] = get_class($object);
+		$objectArray['___class_name'] = \get_class($object);
 
 		return $objectArray;
 	}
@@ -192,12 +192,12 @@ class ChromeLoggerHandler extends BaseHandler implements HandlerInterface
 	 */
 	public function sendLogs(ResponseInterface &$response = null)
 	{
-		if (is_null($response))
+		if (\is_null($response))
 		{
 			$response = Services::response(null, true);
 		}
 
-		$data = base64_encode(utf8_encode(json_encode($this->json)));
+		$data = \base64_encode(\utf8_encode(\json_encode($this->json)));
 
 		$response->setHeader($this->header, $data);
 	}

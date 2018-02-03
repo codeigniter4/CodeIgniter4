@@ -85,14 +85,14 @@ class FileCollection
 	{
 		$this->populateFiles();
 
-		$name = strtolower($name);
+		$name = \strtolower($name);
 
 		if ($this->hasFile($name))
 		{
 
-			if (strpos($name, '.') !== false)
+			if (\strpos($name, '.') !== false)
 			{
-				$name = explode('.', $name);
+				$name = \explode('.', $name);
 				$uploadedFile = $this->getValueDotNotationSyntax($name, $this->files);
 				if ($uploadedFile instanceof \CodeIgniter\HTTP\Files\UploadedFile)
 				{
@@ -102,7 +102,7 @@ class FileCollection
 				return null;
 			}
 
-			if (array_key_exists($name, $this->files))
+			if (\array_key_exists($name, $this->files))
 			{
 				$uploadedFile = $this->files[$name];
 				if ($uploadedFile instanceof \CodeIgniter\HTTP\Files\UploadedFile)
@@ -133,15 +133,15 @@ class FileCollection
 	{
 		$this->populateFiles();
 
-		if (strpos($fileID, '.') !== false)
+		if (\strpos($fileID, '.') !== false)
 		{
-			$segments = explode('.', $fileID);
+			$segments = \explode('.', $fileID);
 
 			$el = $this->files;
 
 			foreach ($segments as $segment)
 			{
-				if ( ! array_key_exists($segment, $el))
+				if ( ! \array_key_exists($segment, $el))
 				{
 					return false;
 				}
@@ -165,7 +165,7 @@ class FileCollection
 	 */
 	protected function populateFiles()
 	{
-		if (is_array($this->files))
+		if (\is_array($this->files))
 		{
 			return;
 		}
@@ -203,7 +203,7 @@ class FileCollection
 
 			foreach ($array as $key => $values)
 			{
-				if ( ! is_array($values))
+				if ( ! \is_array($values))
 				{
 					continue;
 				}
@@ -244,7 +244,7 @@ class FileCollection
 			{
 				$pointer = &$output[$name];
 
-				if ( ! is_array($value))
+				if ( ! \is_array($value))
 				{
 					$pointer[$field] = $value;
 					continue;
@@ -257,8 +257,8 @@ class FileCollection
 
 				foreach ($iterator as $key => $value)
 				{
-					array_splice($stack, $iterator->getDepth() + 1);
-					$pointer = &$stack[count($stack) - 1];
+					\array_splice($stack, $iterator->getDepth() + 1);
+					$pointer = &$stack[\count($stack) - 1];
 					$pointer = &$pointer[$key];
 					$stack[] = &$pointer;
 					if ( ! $iterator->hasChildren())
@@ -284,12 +284,12 @@ class FileCollection
 	 */
 	protected function getValueDotNotationSyntax($index, $value)
 	{
-		if (is_array($index) && ! empty($index)
+		if (\is_array($index) && ! empty($index)
 		)
 		{
-			$current_index = array_shift($index);
+			$current_index = \array_shift($index);
 		}
-		if (is_array($index) && count($index) && is_array($value[$current_index]) && count($value[$current_index])
+		if (\is_array($index) && \count($index) && \is_array($value[$current_index]) && \count($value[$current_index])
 		)
 		{
 			return $this->getValueDotNotationSyntax($index, $value[$current_index]);

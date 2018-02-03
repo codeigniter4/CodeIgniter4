@@ -138,7 +138,7 @@ class Query implements QueryInterface
 	{
 		$this->originalQueryString = $sql;
 
-		if ( ! is_null($binds))
+		if ( ! \is_null($binds))
 		{
 			$this->binds = $binds;
 		}
@@ -198,9 +198,9 @@ class Query implements QueryInterface
 	{
 		$this->startTime = $start;
 
-		if (is_null($end))
+		if (\is_null($end))
 		{
-			$end = microtime(true);
+			$end = \microtime(true);
 		}
 
 		$this->endTime = $end;
@@ -225,7 +225,7 @@ class Query implements QueryInterface
 			return $this->startTime;
 		}
 
-		return number_format($this->startTime, $decimals);
+		return \number_format($this->startTime, $decimals);
 	}
 
 	//--------------------------------------------------------------------
@@ -239,7 +239,7 @@ class Query implements QueryInterface
 	 */
 	public function getDuration(int $decimals = 6)
 	{
-		return number_format(($this->endTime - $this->startTime), $decimals);
+		return \number_format(($this->endTime - $this->startTime), $decimals);
 	}
 
 	//--------------------------------------------------------------------
@@ -305,7 +305,7 @@ class Query implements QueryInterface
 	 */
 	public function isWriteType(): bool
 	{
-		return (bool) preg_match(
+		return (bool) \preg_match(
 						'/^\s*"?(SET|INSERT|UPDATE|DELETE|REPLACE|CREATE|DROP|TRUNCATE|LOAD|COPY|ALTER|RENAME|GRANT|REVOKE|LOCK|UNLOCK|REINDEX)\s/i', $this->originalQueryString);
 	}
 
@@ -323,7 +323,7 @@ class Query implements QueryInterface
 	{
 		$sql = empty($this->finalQueryString) ? $this->originalQueryString : $this->finalQueryString;
 
-		$this->finalQueryString = preg_replace('/(\W)' . $orig . '(\S+?)/', '\\1' . $swap . '\\2', $sql);
+		$this->finalQueryString = \preg_replace('/(\W)' . $orig . '(\S+?)/', '\\1' . $swap . '\\2', $sql);
 
 		return $this;
 	}
@@ -349,17 +349,17 @@ class Query implements QueryInterface
 	{
 		$sql = $this->finalQueryString;
 
-		$hasNamedBinds = strpos($sql, ':') !== false;
+		$hasNamedBinds = \strpos($sql, ':') !== false;
 
 		if (empty($this->binds) || empty($this->bindMarker) ||
-				(strpos($sql, $this->bindMarker) === false &&
+				(\strpos($sql, $this->bindMarker) === false &&
 				$hasNamedBinds === false)
 		)
 		{
 			return;
 		}
 
-		if ( ! is_array($this->binds))
+		if ( ! \is_array($this->binds))
 		{
 			$binds = [$this->binds];
 			$bindCount = 1;
@@ -367,18 +367,18 @@ class Query implements QueryInterface
 		else
 		{
 			$binds = $this->binds;
-			$bindCount = count($binds);
+			$bindCount = \count($binds);
 		}
 
 		// Reverse the binds so that duplicate named binds
 		// will be processed prior to the original binds.
-		if ( ! is_numeric(key(array_slice($binds, 0, 1))))
+		if ( ! \is_numeric(\key(\array_slice($binds, 0, 1))))
 		{
-			$binds = array_reverse($binds);
+			$binds = \array_reverse($binds);
 		}
 
 		// We'll need marker length later
-		$ml = strlen($this->bindMarker);
+		$ml = \strlen($this->bindMarker);
 
 		if ($hasNamedBinds)
 		{
@@ -411,9 +411,9 @@ class Query implements QueryInterface
 			// In order to correctly handle backlashes in saved strings
 			// we will need to preg_quote, so remove the wrapping escape characters
 			// otherwise it will get escaped.
-			if (is_array($value))
+			if (\is_array($value))
 			{
-				$escapedValue = '(' . implode(',', $escapedValue) . ')';
+				$escapedValue = '(' . \implode(',', $escapedValue) . ')';
 			}
 
 			$replacers[":{$placeholder}:"] = $escapedValue;
@@ -421,7 +421,7 @@ class Query implements QueryInterface
 //			$sql = preg_replace('|:' . $placeholder . '(?!\w)|', $escapedValue, $sql);
 		}
 
-		$sql = strtr($sql, $replacers);
+		$sql = \strtr($sql, $replacers);
 
 		return $sql;
 	}
@@ -439,9 +439,9 @@ class Query implements QueryInterface
 	protected function matchSimpleBinds(string $sql, array $binds, int $bindCount, int $ml)
 	{
 		// Make sure not to replace a chunk inside a string that happens to match the bind marker
-		if ($c = preg_match_all("/'[^']*'/i", $sql, $matches))
+		if ($c = \preg_match_all("/'[^']*'/i", $sql, $matches))
 		{
-			$c = preg_match_all('/' . preg_quote($this->bindMarker, '/') . '/i', str_replace($matches[0], str_replace($this->bindMarker, str_repeat(' ', $ml), $matches[0]), $sql, $c), $matches, PREG_OFFSET_CAPTURE);
+			$c = \preg_match_all('/' . \preg_quote($this->bindMarker, '/') . '/i', \str_replace($matches[0], \str_replace($this->bindMarker, \str_repeat(' ', $ml), $matches[0]), $sql, $c), $matches, PREG_OFFSET_CAPTURE);
 
 			// Bind values' count must match the count of markers in the query
 			if ($bindCount !== $c)
@@ -450,7 +450,7 @@ class Query implements QueryInterface
 			}
 		}
 		// Number of binds must match bindMarkers in the string.
-		else if (($c = preg_match_all('/' . preg_quote($this->bindMarker, '/') . '/i', $sql, $matches, PREG_OFFSET_CAPTURE)) !== $bindCount)
+		else if (($c = \preg_match_all('/' . \preg_quote($this->bindMarker, '/') . '/i', $sql, $matches, PREG_OFFSET_CAPTURE)) !== $bindCount)
 		{
 			return $sql;
 		}
@@ -459,11 +459,11 @@ class Query implements QueryInterface
 		{
 			$c --;
 			$escapedValue = $this->db->escape($binds[$c]);
-			if (is_array($escapedValue))
+			if (\is_array($escapedValue))
 			{
-				$escapedValue = '(' . implode(',', $escapedValue) . ')';
+				$escapedValue = '(' . \implode(',', $escapedValue) . ')';
 			}
-			$sql = substr_replace($sql, $escapedValue, $matches[0][$c][1], $ml);
+			$sql = \substr_replace($sql, $escapedValue, $matches[0][$c][1], $ml);
 		} while ($c !== 0);
 
 		return $sql;

@@ -71,7 +71,7 @@ class FileLocator
 		unset($autoload);
 
 		// Always keep the Application directory as a "package".
-		array_unshift($this->namespaces, APPPATH);
+		\array_unshift($this->namespaces, APPPATH);
 	}
 
 	//--------------------------------------------------------------------
@@ -89,24 +89,24 @@ class FileLocator
 	public function locateFile(string $file, string $folder = null, string $ext = 'php'): string
 	{
 		// Ensure the extension is on the filename
-		$file = strpos($file, '.' . $ext) !== false ? $file : $file . '.' . $ext;
+		$file = \strpos($file, '.' . $ext) !== false ? $file : $file . '.' . $ext;
 
 		// Clean the folder name from the filename
 		if ( ! empty($folder))
 		{
-			$file = str_replace($folder . '/', '', $file);
+			$file = \str_replace($folder . '/', '', $file);
 		}
 
 		// No namespaceing? Try the application folder.
-		if (strpos($file, '\\') === false)
+		if (\strpos($file, '\\') === false)
 		{
 			return $this->legacyLocate($file, $folder);
 		}
 
 		// Standardize slashes to handle nested directories.
-		$file = str_replace('/', '\\', $file);
+		$file = \str_replace('/', '\\', $file);
 
-		$segments = explode('\\', $file);
+		$segments = \explode('\\', $file);
 
 		// The first segment will be empty if a slash started the filename.
 		if (empty($segments[0]))
@@ -118,15 +118,15 @@ class FileLocator
 
 		while ( ! empty($segments))
 		{
-			$prefix .= empty($prefix) ? ucfirst(array_shift($segments)) : '\\' . ucfirst(array_shift($segments));
+			$prefix .= empty($prefix) ? \ucfirst(\array_shift($segments)) : '\\' . \ucfirst(\array_shift($segments));
 
-			if ( ! array_key_exists($prefix, $this->namespaces))
+			if ( ! \array_key_exists($prefix, $this->namespaces))
 			{
 				continue;
 			}
 
 			$path = $this->namespaces[$prefix] . '/';
-			$filename = implode('/', $segments);
+			$filename = \implode('/', $segments);
 			break;
 		}
 
@@ -134,7 +134,7 @@ class FileLocator
 		// expects this file to be within that folder, like 'Views',
 		// or 'libraries'.
 		// @todo Allow it to check with and without the nested folder.
-		if ( ! empty($folder) && strpos($filename, $folder) === false)
+		if ( ! empty($folder) && \strpos($filename, $folder) === false)
 		{
 			$filename = $folder . '/' . $filename;
 		}
@@ -174,20 +174,20 @@ class FileLocator
 		$foundPaths = [];
 
 		// Ensure the extension is on the filename
-		$path = strpos($path, '.' . $ext) !== false ? $path : $path . '.' . $ext;
+		$path = \strpos($path, '.' . $ext) !== false ? $path : $path . '.' . $ext;
 
 		foreach ($this->namespaces as $name => $folder)
 		{
-			$folder = rtrim($folder, '/') . '/';
+			$folder = \rtrim($folder, '/') . '/';
 
-			if (file_exists($folder . $path))
+			if (\file_exists($folder . $path))
 			{
 				$foundPaths[] = $folder . $path;
 			}
 		}
 
 		// Remove any duplicates
-		$foundPaths = array_unique($foundPaths);
+		$foundPaths = \array_unique($foundPaths);
 
 		return $foundPaths;
 	}
@@ -205,7 +205,7 @@ class FileLocator
 	 */
 	public function findQualifiedNameFromPath(string $path)
 	{
-		$path = realpath($path);
+		$path = \realpath($path);
 
 		if ( ! $path)
 		{
@@ -214,16 +214,16 @@ class FileLocator
 
 		foreach ($this->namespaces as $namespace => $nsPath)
 		{
-			$nsPath = realpath($nsPath);
-			if (is_numeric($namespace) || empty($nsPath))
+			$nsPath = \realpath($nsPath);
+			if (\is_numeric($namespace) || empty($nsPath))
 				continue;
 
-			if (mb_strpos($path, $nsPath) === 0)
+			if (\mb_strpos($path, $nsPath) === 0)
 			{
 				$className = '\\' . $namespace . '\\' .
-						ltrim(str_replace('/', '\\', mb_substr($path, mb_strlen($nsPath))), '\\');
+						\ltrim(\str_replace('/', '\\', \mb_substr($path, \mb_strlen($nsPath))), '\\');
 				// Remove the file extension (.php)
-				$className = mb_substr($className, 0, -4);
+				$className = \mb_substr($className, 0, -4);
 
 				return $className;
 			}
@@ -250,16 +250,16 @@ class FileLocator
 
 		foreach ($this->namespaces as $namespace => $nsPath)
 		{
-			$fullPath = realpath(rtrim($nsPath, '/') . '/' . $path);
+			$fullPath = \realpath(\rtrim($nsPath, '/') . '/' . $path);
 
-			if ( ! is_dir($fullPath))
+			if ( ! \is_dir($fullPath))
 				continue;
 
 			$tempFiles = get_filenames($fullPath, true);
 			//CLI::newLine($tempFiles);
 
 			if (! empty($tempFiles))
-				$files = array_merge($files, $tempFiles);
+				$files = \array_merge($files, $tempFiles);
 		}
 
 		return $files;
@@ -306,7 +306,7 @@ class FileLocator
 	 */
 	protected function requireFile(string $path): bool
 	{
-		return file_exists($path);
+		return \file_exists($path);
 	}
 
 	//--------------------------------------------------------------------

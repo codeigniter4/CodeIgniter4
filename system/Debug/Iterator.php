@@ -71,7 +71,7 @@ class Iterator
 	 */
 	public function add($name, \Closure $closure)
 	{
-		$name = strtolower($name);
+		$name = \strtolower($name);
 
 		$this->tests[$name] = $closure;
 
@@ -95,22 +95,22 @@ class Iterator
 		foreach ($this->tests as $name => $test)
 		{
 			// clear memory before start
-			gc_collect_cycles();
+			\gc_collect_cycles();
 
-			$start = microtime(true);
-			$start_mem = $max_memory = memory_get_usage(true);
+			$start = \microtime(true);
+			$start_mem = $max_memory = \memory_get_usage(true);
 
 			for ($i = 0; $i < $iterations; $i ++ )
 			{
 				$result = $test();
 
-				$max_memory = max($max_memory, memory_get_usage(true));
+				$max_memory = \max($max_memory, \memory_get_usage(true));
 
 				unset($result);
 			}
 
 			$this->results[$name] = [
-				'time'	 => microtime(true) - $start,
+				'time'	 => \microtime(true) - $start,
 				'memory' => $max_memory - $start_mem,
 				'n'		 => $iterations,
 			];
@@ -160,12 +160,12 @@ class Iterator
 
 			$rows .= "<tr>
 				<td>{$name}</td>
-				<td>" . number_format($result['time'], 4) . "</td>
+				<td>" . \number_format($result['time'], 4) . "</td>
 				<td>{$memory}</td>
 			</tr>";
 		}
 
-		$tpl = str_replace('{rows}', $rows, $tpl);
+		$tpl = \str_replace('{rows}', $rows, $tpl);
 
 		return $tpl . "<br/>";
 	}

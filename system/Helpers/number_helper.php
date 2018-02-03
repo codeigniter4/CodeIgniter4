@@ -35,7 +35,7 @@
  * @since	Version 1.0.0
  * @filesource
  */
-if ( ! function_exists('number_to_size'))
+if ( ! \function_exists('number_to_size'))
 {
 
 	/**
@@ -50,39 +50,39 @@ if ( ! function_exists('number_to_size'))
 	function number_to_size($num, int $precision = 1, string $locale = null)
 	{
 		// Strip any formatting
-		$num = 0 + str_replace(',', '', $num);
+		$num = 0 + \str_replace(',', '', $num);
 
 		// Can't work with non-numbers...
-		if ( ! is_numeric($num))
+		if ( ! \is_numeric($num))
 		{
 			return false;
 		}
 
 		// ignore sub part
 		$genralLocale = $locale;
-		if( ! empty($locale) && ( $underscorePos = strpos( $locale, '_' )))
+		if( ! empty($locale) && ( $underscorePos = \strpos( $locale, '_' )))
 		{
-			$genralLocale = substr( $locale, 0, $underscorePos );
+			$genralLocale = \substr( $locale, 0, $underscorePos );
 		}
 
 		if ($num >= 1000000000000)
 		{
-			$num = round($num / 1099511627776, $precision);
+			$num = \round($num / 1099511627776, $precision);
 			$unit = lang('Number.terabyteAbbr', [], $genralLocale);
 		}
 		elseif ($num >= 1000000000)
 		{
-			$num = round($num / 1073741824, $precision);
+			$num = \round($num / 1073741824, $precision);
 			$unit = lang('Number.gigabyteAbbr', [], $genralLocale);
 		}
 		elseif ($num >= 1000000)
 		{
-			$num = round($num / 1048576, $precision);
+			$num = \round($num / 1048576, $precision);
 			$unit = lang('Number.megabyteAbbr', [], $genralLocale);
 		}
 		elseif ($num >= 1000)
 		{
-			$num = round($num / 1024, $precision);
+			$num = \round($num / 1024, $precision);
 			$unit = lang('Number.kilobyteAbbr', [], $genralLocale);
 		}
 		else
@@ -97,7 +97,7 @@ if ( ! function_exists('number_to_size'))
 
 //--------------------------------------------------------------------
 
-if ( ! function_exists('number_to_amount'))
+if ( ! \function_exists('number_to_amount'))
 {
 
 	/**
@@ -120,10 +120,10 @@ if ( ! function_exists('number_to_amount'))
 	function number_to_amount($num, int $precision = 0, string $locale = null)
 	{
 		// Strip any formatting
-		$num = 0 + str_replace(',', '', $num);
+		$num = 0 + \str_replace(',', '', $num);
 
 		// Can't work with non-numbers...
-		if ( ! is_numeric($num))
+		if ( ! \is_numeric($num))
 		{
 			return false;
 		}
@@ -132,35 +132,35 @@ if ( ! function_exists('number_to_amount'))
 
 		// ignore sub part
 		$genralLocale = $locale;
-		if( ! empty($locale) && ( $underscorePos = strpos( $locale, '_' )))
+		if( ! empty($locale) && ( $underscorePos = \strpos( $locale, '_' )))
 		{
-			$genralLocale = substr( $locale, 0, $underscorePos );
+			$genralLocale = \substr( $locale, 0, $underscorePos );
 		}
 
 		if ($num > 1000000000000000)
 		{
 			$suffix = lang('Number.quadrillion', [], $genralLocale);
-			$num = round(($num / 1000000000000000), $precision);
+			$num = \round(($num / 1000000000000000), $precision);
 		}
 		elseif ($num > 1000000000000)
 		{
 			$suffix = lang('Number.trillion', [], $genralLocale);
-			$num = round(($num / 1000000000000), $precision);
+			$num = \round(($num / 1000000000000), $precision);
 		}
 		else if ($num > 1000000000)
 		{
 			$suffix = lang('Number.billion', [], $genralLocale);
-			$num = round(($num / 1000000000), $precision);
+			$num = \round(($num / 1000000000), $precision);
 		}
 		else if ($num > 1000000)
 		{
 			$suffix = lang('Number.million', [], $genralLocale);
-			$num = round(($num / 1000000), $precision);
+			$num = \round(($num / 1000000), $precision);
 		}
 		else if ($num > 1000)
 		{
 			$suffix = lang('Number.thousand', [], $genralLocale);
-			$num = round(($num / 1000), $precision);
+			$num = \round(($num / 1000), $precision);
 		}
 
 		return format_number($num, $precision, $locale, ['after' => $suffix]);
@@ -170,7 +170,7 @@ if ( ! function_exists('number_to_amount'))
 
 //--------------------------------------------------------------------
 
-if ( ! function_exists('number_to_currency'))
+if ( ! \function_exists('number_to_currency'))
 {
 	/**
 	 * @param float  $num
@@ -191,7 +191,7 @@ if ( ! function_exists('number_to_currency'))
 
 //--------------------------------------------------------------------
 
-if ( ! function_exists('format_number'))
+if ( ! \function_exists('format_number'))
 {
 
 	/**
@@ -215,7 +215,7 @@ if ( ! function_exists('format_number'))
 
 		// In order to specify a precision, we'll have to modify
 		// the pattern used by NumberFormatter.
-		$pattern = '#,##0.' . str_repeat('#', $precision);
+		$pattern = '#,##0.' . \str_repeat('#', $precision);
 
 		$formatter = new NumberFormatter($locale, $type);
 
@@ -231,20 +231,20 @@ if ( ! function_exists('format_number'))
 		}
 
 		// This might lead a trailing period if $precision == 0
-		$output = trim($output, '. ');
+		$output = \trim($output, '. ');
 
-		if (intl_is_failure($formatter->getErrorCode()))
+		if (\intl_is_failure($formatter->getErrorCode()))
 		{
 			throw new BadFunctionCallException($formatter->getErrorMessage());
 		}
 
 		// Add on any before/after text.
-		if (isset($options['before']) && is_string($options['before']))
+		if (isset($options['before']) && \is_string($options['before']))
 		{
 			$output = $options['before'] . $output;
 		}
 
-		if (isset($options['after']) && is_string($options['after']))
+		if (isset($options['after']) && \is_string($options['after']))
 		{
 			$output .= $options['after'];
 		}
@@ -256,7 +256,7 @@ if ( ! function_exists('format_number'))
 
 //--------------------------------------------------------------------
 
-if ( ! function_exists('number_to_roman'))
+if ( ! \function_exists('number_to_roman'))
 {
 	/**
 	* Convert a number to a roman numeral.
@@ -304,7 +304,7 @@ if ( ! function_exists('number_to_roman'))
 				case 1:
 				case 2:
 				case 3:
-					$return = str_repeat($key1, $n);
+					$return = \str_repeat($key1, $n);
 					break;
 				case 4:
 					$return = $key1 . $key2;
@@ -315,7 +315,7 @@ if ( ! function_exists('number_to_roman'))
 				case 6:
 				case 7:
 				case 8:
-					$return = $key2 . str_repeat($key1, $n - 5);
+					$return = $key2 . \str_repeat($key1, $n - 5);
 					break;
 				case 9:
 					$return = $key1 . $key_f;

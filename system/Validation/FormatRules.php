@@ -53,7 +53,7 @@ class FormatRules
 	 */
 	public function alpha(string $str = null): bool
 	{
-		return ctype_alpha($str);
+		return \ctype_alpha($str);
 	}
 
 	//--------------------------------------------------------------------
@@ -72,7 +72,7 @@ class FormatRules
 			return true;
 		}
 
-		return (bool) preg_match('/^[A-Z ]+$/i', $value);
+		return (bool) \preg_match('/^[A-Z ]+$/i', $value);
 	}
 
 	//--------------------------------------------------------------------
@@ -86,7 +86,7 @@ class FormatRules
 	 */
 	public function alpha_dash(string $str = null): bool
 	{
-		return (bool) preg_match('/^[a-z0-9_-]+$/i', $str);
+		return (bool) \preg_match('/^[a-z0-9_-]+$/i', $str);
 	}
 
 	//--------------------------------------------------------------------
@@ -100,7 +100,7 @@ class FormatRules
 	 */
 	public function alpha_numeric(string $str = null): bool
 	{
-		return ctype_alnum((string) $str);
+		return \ctype_alnum((string) $str);
 	}
 
 	//--------------------------------------------------------------------
@@ -114,7 +114,7 @@ class FormatRules
 	 */
 	public function alpha_numeric_space(string $str = null): bool
 	{
-		return (bool) preg_match('/^[A-Z0-9 ]+$/i', $str);
+		return (bool) \preg_match('/^[A-Z0-9 ]+$/i', $str);
 	}
 
 	//--------------------------------------------------------------------
@@ -128,7 +128,7 @@ class FormatRules
 	 */
 	public function decimal(string $str = null): bool
 	{
-		return (bool) preg_match('/^[\-+]?[0-9]+\.[0-9]+$/', $str);
+		return (bool) \preg_match('/^[\-+]?[0-9]+\.[0-9]+$/', $str);
 	}
 
 	//--------------------------------------------------------------------
@@ -142,7 +142,7 @@ class FormatRules
 	 */
 	public function integer(string $str = null): bool
 	{
-		return (bool) preg_match('/^[\-+]?[0-9]+$/', $str);
+		return (bool) \preg_match('/^[\-+]?[0-9]+$/', $str);
 	}
 
 	//--------------------------------------------------------------------
@@ -155,7 +155,7 @@ class FormatRules
 	 */
 	public function is_natural(string $str = null): bool
 	{
-		return ctype_digit((string) $str);
+		return \ctype_digit((string) $str);
 	}
 
 	//--------------------------------------------------------------------
@@ -168,7 +168,7 @@ class FormatRules
 	 */
 	public function is_natural_no_zero(string $str = null): bool
 	{
-		return ($str != 0 && ctype_digit((string) $str));
+		return ($str != 0 && \ctype_digit((string) $str));
 	}
 
 	//--------------------------------------------------------------------
@@ -182,7 +182,7 @@ class FormatRules
 	 */
 	public function numeric(string $str = null): bool
 	{
-		return (bool) preg_match('/^[\-+]?[0-9]*\.?[0-9]+$/', $str);
+		return (bool) \preg_match('/^[\-+]?[0-9]*\.?[0-9]+$/', $str);
 	}
 
 	//--------------------------------------------------------------------
@@ -198,12 +198,12 @@ class FormatRules
 	 */
 	public function regex_match(string $str = null, string $pattern, array $data): bool
 	{
-		if (substr($pattern, 0, 1) != '/')
+		if (\substr($pattern, 0, 1) != '/')
 		{
 			$pattern = "/{$pattern}/";
 		}
 
-		return (bool) preg_match($pattern, $str);
+		return (bool) \preg_match($pattern, $str);
 	}
 
 	//--------------------------------------------------------------------
@@ -220,7 +220,7 @@ class FormatRules
 	 */
 	public function timezone(string $str = null): bool
 	{
-		return in_array($str, timezone_identifiers_list());
+		return \in_array($str, \timezone_identifiers_list());
 	}
 
 	//--------------------------------------------------------------------
@@ -236,7 +236,7 @@ class FormatRules
 	 */
 	public function valid_base64(string $str = null): bool
 	{
-		return (base64_encode(base64_decode($str)) === $str);
+		return (\base64_encode(\base64_decode($str)) === $str);
 	}
 
 	//--------------------------------------------------------------------
@@ -250,12 +250,12 @@ class FormatRules
 	 */
 	public function valid_email(string $str = null): bool
 	{
-		if (function_exists('idn_to_ascii') && preg_match('#\A([^@]+)@(.+)\z#', $str, $matches))
+		if (\function_exists('idn_to_ascii') && \preg_match('#\A([^@]+)@(.+)\z#', $str, $matches))
 		{
-			$str = $matches[1] . '@' . idn_to_ascii($matches[2], 0, INTL_IDNA_VARIANT_UTS46);
+			$str = $matches[1] . '@' . \idn_to_ascii($matches[2], 0, INTL_IDNA_VARIANT_UTS46);
 		}
 
-		return (bool) filter_var($str, FILTER_VALIDATE_EMAIL);
+		return (bool) \filter_var($str, FILTER_VALIDATE_EMAIL);
 	}
 
 	//--------------------------------------------------------------------
@@ -272,14 +272,14 @@ class FormatRules
 	 */
 	public function valid_emails(string $str = null): bool
 	{
-		if (strpos($str, ',') === false)
+		if (\strpos($str, ',') === false)
 		{
-			return $this->valid_email(trim($str));
+			return $this->valid_email(\trim($str));
 		}
 
-		foreach (explode(',', $str) as $email)
+		foreach (\explode(',', $str) as $email)
 		{
-			if (trim($email) !== '' && $this->valid_email(trim($email)) === false)
+			if (\trim($email) !== '' && $this->valid_email(\trim($email)) === false)
 			{
 				return false;
 			}
@@ -301,7 +301,7 @@ class FormatRules
 	 */
 	public function valid_ip(string $ip = null, string $which = null, array $data): bool
 	{
-		switch (strtolower($which))
+		switch (\strtolower($which))
 		{
 			case 'ipv4':
 				$which = FILTER_FLAG_IPV4;
@@ -314,7 +314,7 @@ class FormatRules
 				break;
 		}
 
-		return (bool) filter_var($ip, FILTER_VALIDATE_IP, $which);
+		return (bool) \filter_var($ip, FILTER_VALIDATE_IP, $which);
 	}
 
 	//--------------------------------------------------------------------
@@ -332,13 +332,13 @@ class FormatRules
 		{
 			return false;
 		}
-		elseif (preg_match('/^(?:([^:]*)\:)?\/\/(.+)$/', $str, $matches))
+		elseif (\preg_match('/^(?:([^:]*)\:)?\/\/(.+)$/', $str, $matches))
 		{
 			if (empty($matches[2]))
 			{
 				return false;
 			}
-			elseif ( ! in_array($matches[1], ['http', 'https'], true))
+			elseif ( ! \in_array($matches[1], ['http', 'https'], true))
 			{
 				return false;
 			}
@@ -348,7 +348,7 @@ class FormatRules
 
 		$str = 'http://' . $str;
 
-		return (filter_var($str, FILTER_VALIDATE_URL) !== false);
+		return (\filter_var($str, FILTER_VALIDATE_URL) !== false);
 	}
 
 	//--------------------------------------------------------------------
@@ -365,7 +365,7 @@ class FormatRules
 	{
 		if (empty($format))
 		{
-			return (bool) strtotime($str);
+			return (bool) \strtotime($str);
 		}
 
 		$date = \DateTime::createFromFormat($format, $str);
