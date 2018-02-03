@@ -21,26 +21,26 @@
  * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-if (\defined('KINT_DIR')) {
+if (defined('KINT_DIR')) {
     return;
 }
 
-if (\version_compare(PHP_VERSION, '5.1.2') < 0) {
+if (version_compare(PHP_VERSION, '5.1.2') < 0) {
     throw new Exception('Kint 2.0 requires PHP 5.1.2 or higher');
 }
 
-\define('KINT_DIR', \dirname(__FILE__));
-\define('KINT_WIN', DIRECTORY_SEPARATOR !== '/');
-\define('KINT_PHP52', (\version_compare(PHP_VERSION, '5.2') >= 0));
-\define('KINT_PHP522', (\version_compare(PHP_VERSION, '5.2.2') >= 0));
-\define('KINT_PHP523', (\version_compare(PHP_VERSION, '5.2.3') >= 0));
-\define('KINT_PHP524', (\version_compare(PHP_VERSION, '5.2.4') >= 0));
-\define('KINT_PHP525', (\version_compare(PHP_VERSION, '5.2.5') >= 0));
-\define('KINT_PHP53', (\version_compare(PHP_VERSION, '5.3') >= 0));
-\define('KINT_PHP56', (\version_compare(PHP_VERSION, '5.6') >= 0));
-\define('KINT_PHP70', (\version_compare(PHP_VERSION, '7.0') >= 0));
-\define('KINT_PHP72', (\version_compare(PHP_VERSION, '7.2') >= 0));
-eval(\gzuncompress('xœí½]w¹±(ú¾E[Ñ¸É1ESŸ–)KŽ,kÆÚ‘-IN&GR¸šdSbL²™nÒ²ãÑYwçûpö]ëþ¾óK.ª
+define('KINT_DIR', dirname(__FILE__));
+define('KINT_WIN', DIRECTORY_SEPARATOR !== '/');
+define('KINT_PHP52', (version_compare(PHP_VERSION, '5.2') >= 0));
+define('KINT_PHP522', (version_compare(PHP_VERSION, '5.2.2') >= 0));
+define('KINT_PHP523', (version_compare(PHP_VERSION, '5.2.3') >= 0));
+define('KINT_PHP524', (version_compare(PHP_VERSION, '5.2.4') >= 0));
+define('KINT_PHP525', (version_compare(PHP_VERSION, '5.2.5') >= 0));
+define('KINT_PHP53', (version_compare(PHP_VERSION, '5.3') >= 0));
+define('KINT_PHP56', (version_compare(PHP_VERSION, '5.6') >= 0));
+define('KINT_PHP70', (version_compare(PHP_VERSION, '7.0') >= 0));
+define('KINT_PHP72', (version_compare(PHP_VERSION, '7.2') >= 0));
+eval(gzuncompress('xœí½]w¹±(ú¾E[Ñ¸É1ESŸ–)KŽ,kÆÚ‘-IN&GR¸šdSbL²™nÒ²ãÑYwçûpö]ëþ¾óK.ª
 …&)Û3™d\'Ûl P' . "\0" . '
 …B¡P(tIQDè&Ñçh<mú¨˜$ñÏr:JÚƒ´ÛfÝ4Ú&ù4Ýqa ¯ÕM{Ét00E:è5›¯O^¶N^Íou}»ÈÁñ‘W"O\'Ó|ä%÷úƒ´5èÞ·zY>L î8ö ºýb<H>µ:É' . "\0" . ':ÒË³aYG’ñ¸•gÙ¤Õíç…' . "\0" . 'Jò<ùT©ú=H>ŠŒ\'7fËËM?Ž“Q7íŠÌ^2(üjDŸEñIÚ™ô³Qi[ý¤HM+ä?1S\\‹âît8Ž«57y’\'ÒýVç©hUž²ž¹CíîEˆ©u*a[§ýÎÀË' . "\0" . 'ßï½	@¾$ý‘z~øÓy' . "\0" . 'ò<ý8±Å àý;ÒÉFÅ$bÍŒâ<¶’©&Ñ};ñFqÇN•=ˆâ±Ï-ãÁôº?b$¢6½MòB´è…’­ ³•:H:ïýbâfÀÄzNn²nÌ;ÃZyY1ÍS/9d¹›ø2™¤çý¡üCñ6™Ü¸©G“4O&>–ÿ,²‘›öºßÉ³I' . "\0" . 'õY8¤?½>>¤Ãtäuûl<øALÍ£Q/d´ÿ*8ÿL4"¹öQOò4º©ç ƒ¼Ä›<»fˆ&‹áÓÃÍÈúþèÚKÇ9ã$þ4óóþAc‡CZã,”‹ˆÞtD³»H\'QeQAÀhY}‹¢£é`PW!~Ÿ~â|\'' . "\0" . '´Ë’K`I”¾ƒd.½ñ[Š&øíJOHÓ‚?˜œv¿AnCš–)ôb~ÉYD\\Î¦N)Q]štn¢
 õ8)°ë@	€¼€+½&,ÃçNtõ{¢€¦Þƒ]C¿åþH¡o‰ti‰b¾†¨­ºE!Y3Hžå	…©Tà„T¨û.¢®!H(l¾•eü‡06]&îÚÉ8zsÞzûêíæÚ&vEí¦íéu«-ä
