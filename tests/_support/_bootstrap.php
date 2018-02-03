@@ -1,7 +1,7 @@
 <?php
-ini_set('error_reporting', E_ALL);;
-ini_set('display_errors', '1');
-ini_set('display_startup_errors', '1');
+\ini_set('error_reporting', E_ALL);;
+\ini_set('display_errors', '1');
+\ini_set('display_startup_errors', '1');
 
 // Make sure it recognizes that we're testing.
 $_SERVER['CI_ENVIRONMENT'] = 'testing';
@@ -11,7 +11,7 @@ require 'application/Config/Paths.php';
 $paths  = new \Config\Paths();
 
 // Path to the front controller (this file)
-define('FCPATH', getcwd().'/public'.DIRECTORY_SEPARATOR);
+\define('FCPATH', \getcwd().'/public'.DIRECTORY_SEPARATOR);
 
 /*
  * ---------------------------------------------------------------
@@ -24,22 +24,22 @@ define('FCPATH', getcwd().'/public'.DIRECTORY_SEPARATOR);
  */
 
 // Path to code root folder (just up from public)
-$pos = strrpos(FCPATH, 'public'.DIRECTORY_SEPARATOR);
-define('ROOTPATH', substr_replace(FCPATH, '', $pos, strlen('public'.DIRECTORY_SEPARATOR)));
+$pos = \strrpos(FCPATH, 'public'.DIRECTORY_SEPARATOR);
+\define('ROOTPATH', \substr_replace(FCPATH, '', $pos, \strlen('public'.DIRECTORY_SEPARATOR)));
 
 // The path to the "application" folder
-define('APPPATH', realpath(FCPATH.$paths->applicationDirectory).DIRECTORY_SEPARATOR);
+\define('APPPATH', \realpath(FCPATH.$paths->applicationDirectory).DIRECTORY_SEPARATOR);
 
 // Path to the system folder
-define('BASEPATH', realpath(FCPATH.$paths->systemDirectory).DIRECTORY_SEPARATOR);
+\define('BASEPATH', \realpath(FCPATH.$paths->systemDirectory).DIRECTORY_SEPARATOR);
 
 // Path to the writable directory.
-define('WRITEPATH', realpath(FCPATH.$paths->writableDirectory).DIRECTORY_SEPARATOR);
+\define('WRITEPATH', \realpath(FCPATH.$paths->writableDirectory).DIRECTORY_SEPARATOR);
 
 // The path to the "tests" directory
-define('TESTPATH', realpath(FCPATH.$paths->testsDirectory).DIRECTORY_SEPARATOR);
+\define('TESTPATH', \realpath(FCPATH.$paths->testsDirectory).DIRECTORY_SEPARATOR);
 
-define('SUPPORTPATH', realpath(TESTPATH.'_support/').'/');
+\define('SUPPORTPATH', \realpath(TESTPATH.'_support/').'/');
 
 // Use special Services for testing. These allow
 // insert mocks in place of normal services.
@@ -80,7 +80,7 @@ $loader->addNamespace('Config',        SUPPORTPATH.'Config');
 $loader->addNamespace('Tests\Support', SUPPORTPATH);
 
 // Now load Composer's if it's available
-if (file_exists(COMPOSER_PATH))
+if (\file_exists(COMPOSER_PATH))
 {
     require COMPOSER_PATH;
 }

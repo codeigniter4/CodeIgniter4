@@ -13,19 +13,19 @@ class BaseConfigTest extends CIUnitTestCase
 	{
 		$this->fixturesFolder = __DIR__ . '/fixtures';
 
-		if ( ! class_exists('SimpleConfig', false))
+		if ( ! \class_exists('SimpleConfig', false))
 		{
 			require $this->fixturesFolder . '/SimpleConfig.php';
 		}
-		if ( ! class_exists('RegistrarConfig', false))
+		if ( ! \class_exists('RegistrarConfig', false))
 		{
 			require $this->fixturesFolder . '/RegistrarConfig.php';
 		}
-		if ( ! class_exists('RegistrarConfig2', false))
+		if ( ! \class_exists('RegistrarConfig2', false))
 		{
 			require $this->fixturesFolder . '/RegistrarConfig2.php';
 		}
-		if ( ! class_exists('RegistrarConfig3', false))
+		if ( ! \class_exists('RegistrarConfig3', false))
 		{
 			require $this->fixturesFolder . '/RegistrarConfig3.php';
 		}
@@ -93,7 +93,7 @@ class BaseConfigTest extends CIUnitTestCase
 		$this->assertEquals('ci4', $config->default['name']);
 		$this->assertEquals('Malcolm', $config->crew['captain']);
 		$this->assertEquals('Spock', $config->crew['science']);
-		$this->assertFalse(array_key_exists('pilot', $config->crew));
+		$this->assertFalse(\array_key_exists('pilot', $config->crew));
 		$this->assertTrue($config->crew['comms']);
 		$this->assertFalse($config->crew['doctor']);
 	}

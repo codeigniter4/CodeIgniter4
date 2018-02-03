@@ -7,12 +7,12 @@ class CLITest extends \CIUnitTestCase
 	public function setUp()
 	{
 		CLITestStreamFilter::$buffer = '';
-		$this->stream_filter = stream_filter_append(STDOUT, 'CLITestStreamFilter');
+		$this->stream_filter = \stream_filter_append(STDOUT, 'CLITestStreamFilter');
 	}
 
 	public function tearDown()
 	{
-		stream_filter_remove($this->stream_filter);
+		\stream_filter_remove($this->stream_filter);
 	}
 
 	public function testNew()
@@ -35,19 +35,19 @@ class CLITest extends \CIUnitTestCase
 
 	public function testWait()
 	{
-		$time = time();
+		$time = \time();
 		CLI::wait(1, true);
-		$this->assertEquals(1, time() - $time);
+		$this->assertEquals(1, \time() - $time);
 
-		$time = time();
+		$time = \time();
 		CLI::wait(1);
-		$this->assertEquals(1, time() - $time);
+		$this->assertEquals(1, \time() - $time);
 	}
 
 	public function testIsWindows()
 	{
 		$this->assertEquals(('\\' === DIRECTORY_SEPARATOR), CLI::isWindows());
-		$this->assertEquals(defined('PHP_WINDOWS_VERSION_MAJOR'), CLI::isWindows());
+		$this->assertEquals(\defined('PHP_WINDOWS_VERSION_MAJOR'), CLI::isWindows());
 	}
 
 	public function testNewLine()
@@ -185,7 +185,7 @@ class CLITestStreamFilter extends \php_user_filter
 
 	public function filter($in, $out, &$consumed, $closing)
 	{
-		while ($bucket = stream_bucket_make_writeable($in)) {
+		while ($bucket = \stream_bucket_make_writeable($in)) {
 			self::$buffer .= $bucket->data;
 			$consumed += $bucket->datalen;
 		}
@@ -193,4 +193,4 @@ class CLITestStreamFilter extends \php_user_filter
 	}
 }
 
-stream_filter_register('CLITestStreamFilter', 'CodeIgniter\CLI\CLITestStreamFilter');
+\stream_filter_register('CLITestStreamFilter', 'CodeIgniter\CLI\CLITestStreamFilter');

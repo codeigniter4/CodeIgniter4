@@ -16,7 +16,7 @@ class MockResponse extends Response
         $httponly = false
     )
     {
-        if (is_array($name))
+        if (\is_array($name))
         {
             foreach
             (
@@ -62,7 +62,7 @@ class MockResponse extends Response
 
     public function hasCookie(string $name): bool
     {
-        return array_key_exists($name, $_COOKIE);
+        return \array_key_exists($name, $_COOKIE);
     }
 
     //--------------------------------------------------------------------

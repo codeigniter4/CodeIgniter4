@@ -16,7 +16,7 @@ class MockFileLocator extends FileLocator
 
 	protected function requireFile(string $file): bool
 	{
-		return in_array($file, $this->files) ? $file : false;
+		return \in_array($file, $this->files) ? $file : false;
 	}
 
 	//--------------------------------------------------------------------

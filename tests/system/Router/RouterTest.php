@@ -152,7 +152,7 @@ class RouterTest extends \CIUnitTestCase
 
 		$closure = $router->controllerName();
 
-		$expects = call_user_func_array($closure, $router->params());
+		$expects = \call_user_func_array($closure, $router->params());
 
 		$this->assertInternalType('callable', $router->controllerName());
 		$this->assertEquals($expects, '123-alpha');
@@ -188,11 +188,11 @@ class RouterTest extends \CIUnitTestCase
 	{
 		$router = new Router($this->collection);
 
-		mkdir(APPPATH.'Controllers/Subfolder');
+		\mkdir(APPPATH.'Controllers/Subfolder');
 
 		$router->autoRoute('subfolder/myController/someMethod');
 
-		rmdir(APPPATH.'Controllers/Subfolder');
+		\rmdir(APPPATH.'Controllers/Subfolder');
 
 		$this->assertEquals('MyController', $router->controllerName());
 		$this->assertEquals('someMethod', $router->methodName());

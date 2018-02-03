@@ -9,7 +9,7 @@ class DOMParser
 
 	public function __construct()
 	{
-		if (! extension_loaded('DOM'))
+		if (! \extension_loaded('DOM'))
 		{
 			throw new \BadMethodCallException('DOM extension is required, but not currently loaded.');
 		}
@@ -37,10 +37,10 @@ class DOMParser
 	public function withString(string $content)
 	{
 		// converts all special characters to utf-8
-		$content = mb_convert_encoding($content, 'HTML-ENTITIES', 'UTF-8');
+		$content = \mb_convert_encoding($content, 'HTML-ENTITIES', 'UTF-8');
 
 		//turning off some errors
-		libxml_use_internal_errors(true);
+		\libxml_use_internal_errors(true);
 
 		if (! $this->dom->loadHTML($content))
 		{
@@ -63,12 +63,12 @@ class DOMParser
 	 */
 	public function withFile(string $path)
 	{
-		if (! is_file($path))
+		if (! \is_file($path))
 		{
-			throw new \InvalidArgumentException(basename($path).' is not a valid file.');
+			throw new \InvalidArgumentException(\basename($path).' is not a valid file.');
 		}
 
-		$content = file_get_contents($path);
+		$content = \file_get_contents($path);
 
 		return $this->withString($content);
 	}
@@ -83,10 +83,10 @@ class DOMParser
 	public function see(string $search=null, string $element=null): bool
 	{
 		// If Element is null, we're just scanning for text
-		if (is_null($element))
+		if (\is_null($element))
 		{
 			$content = $this->dom->saveHTML();
-			return strpos($content, $search) !== false;
+			return \strpos($content, $search) !== false;
 		}
 
 		$result = $this->doXPath($search, $element);
@@ -219,7 +219,7 @@ class DOMParser
 
 		// $paths might contain a number of different
 		// ready to go xpath portions to tack on.
-		if (! empty($paths) && is_array($paths))
+		if (! empty($paths) && \is_array($paths))
 		{
 			foreach ($paths as $extra)
 			{
@@ -227,7 +227,7 @@ class DOMParser
 			}
 		}
 
-		if (! is_null($search))
+		if (! \is_null($search))
 		{
 			$path .= "[contains(., \"{$search}\")]";
 		}
@@ -247,32 +247,32 @@ class DOMParser
 		$attr  = null;
 
 		// ID?
-		if ($pos = strpos($selector, '#') !== false)
+		if ($pos = \strpos($selector, '#') !== false)
 		{
-			list($tag, $id) = explode('#', $selector);
+			list($tag, $id) = \explode('#', $selector);
 		}
 		// Attribute
-		elseif (strpos($selector, '[') !== false && strpos($selector, ']') !== false)
+		elseif (\strpos($selector, '[') !== false && \strpos($selector, ']') !== false)
 		{
-			$open = strpos($selector, '[');
-			$close = strpos($selector, ']');
+			$open = \strpos($selector, '[');
+			$close = \strpos($selector, ']');
 
-			$tag = substr($selector, 0, $open);
-			$text = substr($selector, $open+1, $close-2);
+			$tag = \substr($selector, 0, $open);
+			$text = \substr($selector, $open+1, $close-2);
 
 			// We only support a single attribute currently
-			$text = explode(',', $text);
-			$text = trim(array_shift($text));
+			$text = \explode(',', $text);
+			$text = \trim(\array_shift($text));
 
-			list($name, $value) = explode('=', $text);
-			$name = trim($name);
-			$value = trim($value);
-			$attr = [$name => trim($value, '] ')];
+			list($name, $value) = \explode('=', $text);
+			$name = \trim($name);
+			$value = \trim($value);
+			$attr = [$name => \trim($value, '] ')];
 		}
 		// Class?
-		elseif ($pos = strpos($selector, '.') !== false)
+		elseif ($pos = \strpos($selector, '.') !== false)
 		{
-			list($tag, $class) = explode('.', $selector);
+			list($tag, $class) = \explode('.', $selector);
 		}
 		// Otherwise, assume the entire string is our tag
 		else

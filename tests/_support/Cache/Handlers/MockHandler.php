@@ -40,7 +40,7 @@ class MockHandler implements CacheInterface
 	{
 		$key = $this->prefix.$key;
 
-		return array_key_exists($key, $this->cache)
+		return \array_key_exists($key, $this->cache)
 			? $this->cache[$key]
 			: false;
 	}
@@ -103,7 +103,7 @@ class MockHandler implements CacheInterface
 		{
 			$data = 0;
 		}
-		elseif (! is_int($data))
+		elseif (! \is_int($data))
 		{
 			return false;
 		}
@@ -131,7 +131,7 @@ class MockHandler implements CacheInterface
 		{
 			$data = 0;
 		}
-		elseif (! is_int($data))
+		elseif (! \is_int($data))
 		{
 			return false;
 		}

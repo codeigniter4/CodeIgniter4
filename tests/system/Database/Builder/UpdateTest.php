@@ -26,7 +26,7 @@ class UpdateTest extends \CIUnitTestCase
 		$expectedSQL = "UPDATE \"jobs\" SET \"name\" = :name: WHERE \"id\" = :id:";
 		$expectedBinds = ['id' => 1, 'name' => 'Programmer'];
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledUpdate()));
+		$this->assertEquals($expectedSQL, \str_replace("\n", ' ', $builder->getCompiledUpdate()));
 		$this->assertEquals($expectedBinds, $builder->getBinds());
 	}
 
@@ -41,7 +41,7 @@ class UpdateTest extends \CIUnitTestCase
 		$expectedSQL = "UPDATE \"jobs\" SET \"name\" = :name: WHERE \"id\" = :id:  LIMIT 5";
 		$expectedBinds = ['id' => 1, 'name' => 'Programmer'];
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledUpdate()));
+		$this->assertEquals($expectedSQL, \str_replace("\n", ' ', $builder->getCompiledUpdate()));
 		$this->assertEquals($expectedBinds, $builder->getBinds());
 	}
 
@@ -56,7 +56,7 @@ class UpdateTest extends \CIUnitTestCase
 		$expectedSQL = "UPDATE \"jobs\" SET \"name\" = :name: WHERE \"id\" = :id:";
 		$expectedBinds = ['id' => 1, 'name' => 'Programmer'];
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledUpdate()));
+		$this->assertEquals($expectedSQL, \str_replace("\n", ' ', $builder->getCompiledUpdate()));
 		$this->assertEquals($expectedBinds, $builder->getBinds());
 	}
 
@@ -161,7 +161,7 @@ WHERE "id" IN(2,3)';
 		$expectedSQL = 'UPDATE "jobs" SET "name" = :name: WHERE "name" = :name0:';
 		$expectedBinds = ['name' => 'foobar', 'name0' => 'Programmer'];
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledUpdate()));
+		$this->assertEquals($expectedSQL, \str_replace("\n", ' ', $builder->getCompiledUpdate()));
 		$this->assertEquals($expectedBinds, $builder->getBinds());
 	}
 
@@ -179,7 +179,7 @@ WHERE "id" IN(2,3)';
 		$expectedSQL = 'UPDATE "jobs" SET "name" = :name: WHERE "name" = :name0:';
 		$expectedBinds = ['name' => 'foobar', 'name0' => 'Programmer'];
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledUpdate()));
+		$this->assertEquals($expectedSQL, \str_replace("\n", ' ', $builder->getCompiledUpdate()));
 		$this->assertEquals($expectedBinds, $builder->getBinds());
 	}
 
@@ -196,7 +196,7 @@ WHERE "id" IN(2,3)';
 		$expectedSQL = 'UPDATE "jobs" SET "name" = :name0: WHERE "name" = :name:';
 		$expectedBinds = ['name' => 'Programmer', 'name0' => 'foobar'];
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledUpdate()));
+		$this->assertEquals($expectedSQL, \str_replace("\n", ' ', $builder->getCompiledUpdate()));
 		$this->assertEquals($expectedBinds, $builder->getBinds());
 	}
 
@@ -214,7 +214,7 @@ WHERE "id" IN(2,3)';
 		$expectedSQL = 'UPDATE "mytable" SET field = field+1 WHERE "id" = :id:';
 		$expectedBinds = ['id' => 2];
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledUpdate()));
+		$this->assertEquals($expectedSQL, \str_replace("\n", ' ', $builder->getCompiledUpdate()));
 		$this->assertEquals($expectedBinds, $builder->getBinds());
 	}
 }

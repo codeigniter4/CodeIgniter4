@@ -118,7 +118,7 @@ class BaseConnectionTest extends \CIUnitTestCase
 
 	public function testStoresConnectionTimings()
 	{
-	    $start = microtime(true);
+	    $start = \microtime(true);
 
 		$db = new MockConnection($this->options);
 

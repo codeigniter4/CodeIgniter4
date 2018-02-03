@@ -25,14 +25,14 @@ class TestLogger extends Logger
 
 		// Determine the file and line by finding the first
 		// backtrace that is not part of our logging system.
-		$trace = debug_backtrace();
+		$trace = \debug_backtrace();
 		$file = null;
 
 		foreach ($trace as $row)
 		{
-			if (! in_array($row['function'], ['log', 'log_message']))
+			if (! \in_array($row['function'], ['log', 'log_message']))
 			{
-				$file = basename($row['file']);
+				$file = \basename($row['file']);
 				break;
 			}
 		}
@@ -61,7 +61,7 @@ class TestLogger extends Logger
 	{
 		foreach (self::$op_logs as $log)
 		{
-			if (strtolower($log['level']) == strtolower($level)
+			if (\strtolower($log['level']) == \strtolower($level)
 				&& $message == $log['message'])
 			{
 				return true;

@@ -37,7 +37,7 @@ class Services
 	 */
 	public static function injectMock(string $name, $mock)
 	{
-		$name = strtolower($name);
+		$name = \strtolower($name);
 		static::$mocks[$name] = $mock;
 	}
 
@@ -51,7 +51,7 @@ class Services
 	 */
 	public static function __callStatic(string $name, array $arguments)
 	{
-		$name = strtolower($name);
+		$name = \strtolower($name);
 
 		// Returns mock if exists
 		if (isset(static::$mocks[$name]))
@@ -59,7 +59,7 @@ class Services
 			return static::$mocks[$name];
 		}
 
-		if (method_exists(ConfigServices::class, $name))
+		if (\method_exists(ConfigServices::class, $name))
 		{
 			return ConfigServices::$name(...$arguments);
 		}

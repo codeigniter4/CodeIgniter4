@@ -29,7 +29,7 @@ class InsertTest extends \CIUnitTestCase
 		$expectedSQL   = "INSERT INTO \"jobs\" (\"id\", \"name\") VALUES (:id:, :name:)";
 		$expectedBinds = $insertData;
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledInsert()));
+		$this->assertEquals($expectedSQL, \str_replace("\n", ' ', $builder->getCompiledInsert()));
 		$this->assertEquals($expectedBinds, $builder->getBinds());
 	}
 
@@ -67,11 +67,11 @@ class InsertTest extends \CIUnitTestCase
 
 		$raw = "INSERT INTO \"jobs\" (\"description\", \"id\", \"name\") VALUES (:description0:,:id0:,:name0:)";
 
-		$this->assertEquals($raw, str_replace("\n", ' ', $query->getOriginalQuery() ));
+		$this->assertEquals($raw, \str_replace("\n", ' ', $query->getOriginalQuery() ));
 
 		$expected   = "INSERT INTO \"jobs\" (\"description\", \"id\", \"name\") VALUES ('Iam yellow',3,'Cab Driver')";
 
-		$this->assertEquals($expected, str_replace("\n", ' ', $query->getQuery() ));
+		$this->assertEquals($expected, \str_replace("\n", ' ', $query->getQuery() ));
 	}
 
 	//--------------------------------------------------------------------

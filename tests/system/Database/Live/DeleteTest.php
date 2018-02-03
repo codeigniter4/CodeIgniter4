@@ -57,7 +57,7 @@ class DeleteTest extends \CIDatabaseTestCase
 		}
 		catch (DatabaseException $e)
 		{
-			if (strpos($e->getMessage(), 'does not allow LIMITs on DELETE queries.') !== false)
+			if (\strpos($e->getMessage(), 'does not allow LIMITs on DELETE queries.') !== false)
 			{
 				return;
 			}

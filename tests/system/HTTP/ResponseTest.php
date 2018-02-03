@@ -156,7 +156,7 @@ class ResponseTest extends \CIUnitTestCase
 	{
 		$response = new Response(new App());
 
-		$date = date('r');
+		$date = \date('r');
 
 		$options = [
 			'etag' => '12345678',

@@ -148,7 +148,7 @@ class ControllerResponse {
 
 	public function __call($function, $params)
 	{
-		if (method_exists($this->dom, $function))
+		if (\method_exists($this->dom, $function))
 		{
 			return $this->dom->{$function}(...$params);
 		}

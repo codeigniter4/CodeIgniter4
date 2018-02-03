@@ -37,7 +37,7 @@ class WhereTest extends \CIDatabaseTestCase
 
 		$this->assertCount(1, $jobs);
 
-		$job = current($jobs);
+		$job = \current($jobs);
 		$this->assertEquals('Musician', $job->name);
 	}
 
@@ -51,7 +51,7 @@ class WhereTest extends \CIDatabaseTestCase
 
 		$this->assertCount(1, $jobs);
 
-		$job = current($jobs);
+		$job = \current($jobs);
 		$this->assertEquals('Musician', $job->name);
 	}
 

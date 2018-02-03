@@ -55,11 +55,11 @@ class ParserFilterTest extends \CIUnitTestCase
 	{
 		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
 
-		$today = date('Y-m-d');
+		$today = \date('Y-m-d');
 
 		$data = [
-			'value1' => time(),
-			'value2' => date('Y-m-d H:i:s'),
+			'value1' => \time(),
+			'value2' => \date('Y-m-d H:i:s'),
 		];
 
 		$template = '{ value1|date(Y-m-d) } { value2|date(Y-m-d) }';
@@ -74,12 +74,12 @@ class ParserFilterTest extends \CIUnitTestCase
 	{
 		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
 
-		$today = date('Y-m-d');
-		$tommorrow = date('Y-m-d', strtotime('+1 day'));
+		$today = \date('Y-m-d');
+		$tommorrow = \date('Y-m-d', \strtotime('+1 day'));
 
 		$data = [
-			'value1' => time(),
-			'value2' => date('Y-m-d H:i:s'),
+			'value1' => \time(),
+			'value2' => \date('Y-m-d H:i:s'),
 		];
 
 		$template = '{ value1|date_modify(+1 day)|date(Y-m-d) } { value2|date_modify(+1 day)|date(Y-m-d) }';

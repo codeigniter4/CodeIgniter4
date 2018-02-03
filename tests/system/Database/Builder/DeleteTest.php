@@ -24,7 +24,7 @@ class DeleteTest extends \CIUnitTestCase
 		$expectedSQL   = "DELETE FROM \"jobs\" WHERE \"id\" = :id:";
 		$expectedBinds = ['id' => 1];
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $answer));
+		$this->assertEquals($expectedSQL, \str_replace("\n", ' ', $answer));
 		$this->assertEquals($expectedBinds, $builder->getBinds());
 	}
 

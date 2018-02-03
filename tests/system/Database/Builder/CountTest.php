@@ -35,7 +35,7 @@ class CountTest extends \CIUnitTestCase
 
 		$expectedSQL   = "SELECT COUNT(*) AS \"numrows\" FROM \"jobs\" WHERE \"id\" > :id:";
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $answer));
+		$this->assertEquals($expectedSQL, \str_replace("\n", ' ', $answer));
 	}
 
 	//--------------------------------------------------------------------

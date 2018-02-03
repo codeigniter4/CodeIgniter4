@@ -23,7 +23,7 @@ class FormHelperTest extends \CIUnitTestCase
         Services::injectMock('request', $request);
 
 		$before = (new Filters())->globals['before'];
-		if (in_array('csrf', $before) || array_key_exists('csrf', $before ))
+		if (\in_array('csrf', $before) || \array_key_exists('csrf', $before ))
 		{
 			$Value = csrf_hash();
 			$Name = csrf_token();
@@ -60,7 +60,7 @@ EOH;
         Services::injectMock('request', $request);
 
 		$before = (new Filters())->globals['before'];
-		if (in_array('csrf', $before) || array_key_exists('csrf', $before ))
+		if (\in_array('csrf', $before) || \array_key_exists('csrf', $before ))
 		{
 			$Value = csrf_hash();
 			$Name = csrf_token();
@@ -96,7 +96,7 @@ EOH;
         Services::injectMock('request', $request);
 
 		$before = (new Filters())->globals['before'];
-		if (in_array('csrf', $before) || array_key_exists('csrf', $before ))
+		if (\in_array('csrf', $before) || \array_key_exists('csrf', $before ))
 		{
 			$Value = csrf_hash();
 			$Name = csrf_token();
@@ -132,7 +132,7 @@ EOH;
         Services::injectMock('request', $request);
 
 		$before = (new Filters())->globals['before'];
-		if (in_array('csrf', $before) || array_key_exists('csrf', $before ))
+		if (\in_array('csrf', $before) || \array_key_exists('csrf', $before ))
 		{
 			$Value = csrf_hash();
 			$Name = csrf_token();
@@ -174,7 +174,7 @@ EOH;
         Services::injectMock('request', $request);
 
 		$before = (new Filters())->globals['before'];
-		if (in_array('csrf', $before) || array_key_exists('csrf', $before ))
+		if (\in_array('csrf', $before) || \array_key_exists('csrf', $before ))
 		{
 			$Value = csrf_hash();
 			$Name = csrf_token();

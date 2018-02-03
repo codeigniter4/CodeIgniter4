@@ -39,7 +39,7 @@ class ImageTest extends \CIUnitTestCase
 
 		$this->assertFileExists(WRITEPATH.'ci-logo.png');
 
-		unlink(WRITEPATH.'ci-logo.png');
+		\unlink(WRITEPATH.'ci-logo.png');
 	}
 
 	public function testCanCopyNewName()
@@ -50,7 +50,7 @@ class ImageTest extends \CIUnitTestCase
 
 		$this->assertFileExists(WRITEPATH.'new-logo.png');
 
-		unlink(WRITEPATH.'new-logo.png');
+		\unlink(WRITEPATH.'new-logo.png');
 	}
 
 }

@@ -45,7 +45,7 @@ class TestHandler implements HandlerInterface
 	 */
 	public function canHandle(string $level): bool
 	{
-		return in_array($level, $this->handles);
+		return \in_array($level, $this->handles);
 	}
 
 	//--------------------------------------------------------------------
@@ -79,9 +79,9 @@ class TestHandler implements HandlerInterface
 	 */
 	public function handle($level, $message): bool
 	{
-		$date = date($this->dateFormat);
+		$date = \date($this->dateFormat);
 
-		self::$logs[] = strtoupper($level).' - '.$date.' --> '.$message;
+		self::$logs[] = \strtoupper($level).' - '.$date.' --> '.$message;
 
 		return true;
 	}

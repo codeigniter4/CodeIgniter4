@@ -1,6 +1,6 @@
 <?php namespace CodeIgniter\Cache\Handlers;
 
-set_error_handler(function (int $errno, string $errstr, string $errfile, int $errline, array $errcontext) {
+\set_error_handler(function (int $errno, string $errstr, string $errfile, int $errline, array $errcontext) {
 	//throw new \ErrorException($errstr, $errno, 0, $errfile, $errline);
 });
 
@@ -26,8 +26,8 @@ class FileHandlerTest extends \CIUnitTestCase
 		//Initialize path
 		$this->config = new \Config\Cache();
 		$this->config->path .= self::$directory;
-		if (!is_dir($this->config->path)) {
-			mkdir($this->config->path, 0777, true);
+		if (!\is_dir($this->config->path)) {
+			\mkdir($this->config->path, 0777, true);
 		}
 
 		$this->fileHandler = new FileHandler($this->config);
@@ -36,17 +36,17 @@ class FileHandlerTest extends \CIUnitTestCase
 
 	public function tearDown()
 	{
-		if (is_dir($this->config->path)) {
-			chmod($this->config->path, 0777);
+		if (\is_dir($this->config->path)) {
+			\chmod($this->config->path, 0777);
 
 			foreach (self::getKeyArray() as $key) {
-				if (is_file($this->config->path . DIRECTORY_SEPARATOR . $key)) {
-					chmod($this->config->path . DIRECTORY_SEPARATOR . $key, 0777);
-					unlink($this->config->path . DIRECTORY_SEPARATOR . $key);
+				if (\is_file($this->config->path . DIRECTORY_SEPARATOR . $key)) {
+					\chmod($this->config->path . DIRECTORY_SEPARATOR . $key, 0777);
+					\unlink($this->config->path . DIRECTORY_SEPARATOR . $key);
 				}
 			}
 
-			rmdir($this->config->path);
+			\rmdir($this->config->path);
 		}
 	}
 
@@ -82,7 +82,7 @@ class FileHandlerTest extends \CIUnitTestCase
 	{
 		$this->assertTrue($this->fileHandler->save(self::$key1, 'value'));
 
-		chmod($this->config->path, 0444);
+		\chmod($this->config->path, 0444);
 		$this->assertFalse($this->fileHandler->save(self::$key2, 'value'));
 	}
 
@@ -103,7 +103,7 @@ class FileHandlerTest extends \CIUnitTestCase
 		$this->assertFalse($this->fileHandler->increment(self::$key2, 10));
 		$this->assertSame(10, $this->fileHandler->increment(self::$key3, 10));
 
-		chmod($this->config->path, 0444);
+		\chmod($this->config->path, 0444);
 		$this->assertFalse($this->fileHandler->increment(self::$key1, 10));
 	}
 
@@ -116,7 +116,7 @@ class FileHandlerTest extends \CIUnitTestCase
 		$this->assertFalse($this->fileHandler->decrement(self::$key2, 1));
 		$this->assertSame(-1, $this->fileHandler->decrement(self::$key3, 1));
 
-		chmod($this->config->path, 0444);
+		\chmod($this->config->path, 0444);
 		$this->assertFalse($this->fileHandler->decrement(self::$key1, 10));
 	}
 
@@ -129,7 +129,7 @@ class FileHandlerTest extends \CIUnitTestCase
 
 		$this->fileHandler->save(self::$key1, 1);
 		$this->fileHandler->save(self::$key2, 'value');
-		chmod($this->config->path, 0000);
+		\chmod($this->config->path, 0000);
 
 		$this->assertFalse($this->fileHandler->clean());
 	}
@@ -145,13 +145,13 @@ class FileHandlerTest extends \CIUnitTestCase
 			$this->assertSame($this->config->path . DIRECTORY_SEPARATOR . self::$key1, $value['server_path']);
 		}
 
-		chmod($this->config->path, 0000);
+		\chmod($this->config->path, 0000);
 		$this->assertFalse($this->fileHandler->getCacheInfo());
 	}
 
 	public function testGetMetaData()
 	{
-		$time = time();
+		$time = \time();
 		$this->fileHandler->save(self::$key1, 'value');
 
 		$this->assertFalse($this->fileHandler->getMetaData(self::$dummy));
@@ -166,7 +166,7 @@ class FileHandlerTest extends \CIUnitTestCase
 	{
 		$this->assertTrue($this->fileHandler->isSupported());
 
-		chmod($this->config->path, 0444);
+		\chmod($this->config->path, 0444);
 		$this->assertFalse($this->fileHandler->isSupported());
 	}
 

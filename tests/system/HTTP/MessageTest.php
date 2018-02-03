@@ -34,7 +34,7 @@ class MessageTest extends \CIUnitTestCase
 		$headers = $this->message->getHeaders();
 
 		// Content-Type is likely set...
-		$this->assertGreaterThanOrEqual(2, count($headers));
+		$this->assertGreaterThanOrEqual(2, \count($headers));
 
 		$this->assertSame('daisyduke.com', $headers['Host']->getValue());
 		$this->assertSame('RoscoePekoTrain.com', $headers['Referer']->getValue());
@@ -206,13 +206,13 @@ class MessageTest extends \CIUnitTestCase
 		// fail path, if the CONTENT_TYPE doesn't exist
 		$original = $_SERVER;
 		$_SERVER = ['HTTP_ACCEPT_LANGUAGE' => 'en-us,en;q=0.50'];
-		$original_env = getenv("CONTENT_TYPE");
-		putenv("CONTENT_TYPE");
+		$original_env = \getenv("CONTENT_TYPE");
+		\putenv("CONTENT_TYPE");
 
 		$this->message->populateHeaders();
 
 		$this->assertNull($this->message->getHeader('content-type'));
-		putenv("CONTENT_TYPE=$original_env");
+		\putenv("CONTENT_TYPE=$original_env");
 		$this->message->removeHeader('accept-language');
 		$_SERVER = $original; // restore so code coverage doesn't break
 	}

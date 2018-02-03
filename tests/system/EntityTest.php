@@ -137,7 +137,7 @@ class EntityTest extends \CIUnitTestCase
 
 	public function testDateMutationFromTimestamp()
 	{
-		$stamp = time();
+		$stamp = \time();
 
 		$entity = $this->getEntity();
 		$this->setPrivateProperty($entity, 'created_at', $stamp);
@@ -145,7 +145,7 @@ class EntityTest extends \CIUnitTestCase
 		$time = $entity->created_at;
 
 		$this->assertInstanceOf(Time::class, $time);
-		$this->assertEquals(date('Y-m-d H:i:s', $stamp), $time->format('Y-m-d H:i:s'));
+		$this->assertEquals(\date('Y-m-d H:i:s', $stamp), $time->format('Y-m-d H:i:s'));
 	}
 
 	public function testDateMutationFromDatetime()
@@ -186,7 +186,7 @@ class EntityTest extends \CIUnitTestCase
 
 	public function testDateMutationTimestampToTime()
 	{
-		$stamp = time();
+		$stamp = \time();
 		$entity = $this->getEntity();
 
 		$entity->created_at = $stamp;
@@ -194,7 +194,7 @@ class EntityTest extends \CIUnitTestCase
 		$time = $this->getPrivateProperty($entity, 'created_at');
 
 		$this->assertInstanceOf(Time::class, $time);
-		$this->assertEquals(date('Y-m-d H:i:s'), $time->format('Y-m-d H:i:s'));
+		$this->assertEquals(\date('Y-m-d H:i:s'), $time->format('Y-m-d H:i:s'));
 	}
 
 	public function testDateMutationDatetimeToTime()
@@ -311,7 +311,7 @@ class EntityTest extends \CIUnitTestCase
 
 		$entity->ninth = $date;
 		$this->assertInternalType('integer', $entity->ninth);
-		$this->assertEquals(strtotime($date), $entity->ninth);
+		$this->assertEquals(\strtotime($date), $entity->ninth);
 	}
 
 	public function testCastArray()
@@ -334,7 +334,7 @@ class EntityTest extends \CIUnitTestCase
 
 		// Should be a serialized string now...
 		$check = $this->getPrivateProperty($entity, 'seventh');
-		$this->assertEquals(serialize('foobar'), $check);
+		$this->assertEquals(\serialize('foobar'), $check);
 
 		$this->assertEquals(['foobar'], $entity->seventh);
 	}
@@ -347,7 +347,7 @@ class EntityTest extends \CIUnitTestCase
 
 		// Should be a serialized string now...
 		$check = $this->getPrivateProperty($entity, 'seventh');
-		$this->assertEquals(serialize(['foo' => 'bar']), $check);
+		$this->assertEquals(\serialize(['foo' => 'bar']), $check);
 
 		$this->assertEquals(['foo' => 'bar'], $entity->seventh);
 	}

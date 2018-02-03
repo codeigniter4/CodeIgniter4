@@ -25,7 +25,7 @@ class TimeTest extends \CIUnitTestCase
 			'yyyy-MM-dd HH:mm:ss'
 		);
 
-		$this->assertEquals($formatter->format(strtotime('now')), (string)$time);
+		$this->assertEquals($formatter->format(\strtotime('now')), (string)$time);
 	}
 
 	public function testTimeWithTimezone()
@@ -41,7 +41,7 @@ class TimeTest extends \CIUnitTestCase
 			'yyyy-MM-dd HH:mm:ss'
 		);
 
-		$this->assertEquals($formatter->format(strtotime('now')), (string)$time);
+		$this->assertEquals($formatter->format(\strtotime('now')), (string)$time);
 	}
 
 	public function testTimeWithTimezoneAndLocale()
@@ -57,7 +57,7 @@ class TimeTest extends \CIUnitTestCase
 			'yyyy-MM-dd HH:mm:ss'
 		);
 
-		$this->assertEquals($formatter->format(strtotime('now')), (string)$time);
+		$this->assertEquals($formatter->format(\strtotime('now')), (string)$time);
 	}
 
 	public function testTimeWithDateTimeZone()
@@ -73,7 +73,7 @@ class TimeTest extends \CIUnitTestCase
 			'yyyy-MM-dd HH:mm:ss'
 		);
 
-		$this->assertEquals($formatter->format(strtotime('now')), (string)$time);
+		$this->assertEquals($formatter->format(\strtotime('now')), (string)$time);
 	}
 
 	public function testToDateTime()
@@ -124,63 +124,63 @@ class TimeTest extends \CIUnitTestCase
 	{
 		$time = Time::today();
 
-		$this->assertEquals(date('Y-m-d 00:00:00'), $time->toDateTimeString());
+		$this->assertEquals(\date('Y-m-d 00:00:00'), $time->toDateTimeString());
 	}
 
 	public function testTodayLocalized()
 	{
 		$time = Time::today('Europe/London');
 
-		$this->assertEquals(date('Y-m-d 00:00:00'), $time->toDateTimeString());
+		$this->assertEquals(\date('Y-m-d 00:00:00'), $time->toDateTimeString());
 	}
 
 	public function testYesterday()
 	{
 		$time = Time::yesterday();
 
-		$this->assertEquals(date('Y-m-d 00:00:00', strtotime('-1 day')), $time->toDateTimeString());
+		$this->assertEquals(\date('Y-m-d 00:00:00', \strtotime('-1 day')), $time->toDateTimeString());
 	}
 
 	public function testTomorrow()
 	{
 		$time = Time::tomorrow();
 
-		$this->assertEquals(date('Y-m-d 00:00:00', strtotime('+1 day')), $time->toDateTimeString());
+		$this->assertEquals(\date('Y-m-d 00:00:00', \strtotime('+1 day')), $time->toDateTimeString());
 	}
 
 	public function testCreateFromDate()
 	{
 		$time = Time::createFromDate(2017, 03, 05, 'America/Chicago');
 
-		$this->assertEquals(date('Y-m-d 00:00:00', strtotime('2017-03-05 00:00:00')), $time->toDateTimeString());
+		$this->assertEquals(\date('Y-m-d 00:00:00', \strtotime('2017-03-05 00:00:00')), $time->toDateTimeString());
 	}
 
 	public function testCreateFromDateLocalized()
 	{
 		$time = Time::createFromDate(2017, 03, 05, 'Europe/London');
 
-		$this->assertEquals(date('Y-m-d 00:00:00', strtotime('2017-03-05 00:00:00')), $time->toDateTimeString());
+		$this->assertEquals(\date('Y-m-d 00:00:00', \strtotime('2017-03-05 00:00:00')), $time->toDateTimeString());
 	}
 
 	public function testCreateFromTime()
 	{
 		$time = Time::createFromTime(10, 03, 05, 'America/Chicago');
 
-		$this->assertEquals(date('Y-m-d 10:03:05'), $time->toDateTimeString());
+		$this->assertEquals(\date('Y-m-d 10:03:05'), $time->toDateTimeString());
 	}
 
 	public function testCreateFromTimeEvening()
 	{
 		$time = Time::createFromTime(20, 03, 05, 'America/Chicago');
 
-		$this->assertEquals(date('Y-m-d 20:03:05'), $time->toDateTimeString());
+		$this->assertEquals(\date('Y-m-d 20:03:05'), $time->toDateTimeString());
 	}
 
 	public function testCreateFromTimeLocalized()
 	{
 		$time = Time::createFromTime(10, 03, 05, 'Europe/London');
 
-		$this->assertEquals(date('Y-m-d 10:03:05'), $time->toDateTimeString());
+		$this->assertEquals(\date('Y-m-d 10:03:05'), $time->toDateTimeString());
 	}
 
 	public function testCreateFromFormat()
@@ -190,7 +190,7 @@ class TimeTest extends \CIUnitTestCase
 		Time::setTestNow($now);
 		$time = Time::createFromFormat('F j, Y', 'January 15, 2017', 'America/Chicago');
 
-		$this->assertEquals(date('2017-01-15 H:i:s', $now->getTimestamp()), $time->toDateTimeString());
+		$this->assertEquals(\date('2017-01-15 H:i:s', $now->getTimestamp()), $time->toDateTimeString());
 		Time::setTestNow();
 	}
 
@@ -198,7 +198,7 @@ class TimeTest extends \CIUnitTestCase
 	{
 		$time = Time::createFromFormat('F j, Y', 'January 15, 2017', 'Europe/London');
 
-		$this->assertEquals(date('2017-01-15 H:i:s'), $time->toDateTimeString());
+		$this->assertEquals(\date('2017-01-15 H:i:s'), $time->toDateTimeString());
 	}
 
 	public function testCreateFromFormatWithTimezoneObject()
@@ -207,20 +207,20 @@ class TimeTest extends \CIUnitTestCase
 
 		$time = Time::createFromFormat('F j, Y', 'January 15, 2017', $tz);
 
-		$this->assertEquals(date('2017-01-15 H:i:s'), $time->toDateTimeString());
+		$this->assertEquals(\date('2017-01-15 H:i:s'), $time->toDateTimeString());
 	}
 
 	public function testCreateFromTimestamp()
 	{
-		$time = Time::createFromTimestamp(strtotime('2017-03-18 midnight'));
+		$time = Time::createFromTimestamp(\strtotime('2017-03-18 midnight'));
 
-		$this->assertEquals(date('2017-03-18 00:00:00'), $time->toDateTimeString());
+		$this->assertEquals(\date('2017-03-18 00:00:00'), $time->toDateTimeString());
 	}
 
 	public function testTestNow()
 	{
 		$this->assertFalse(Time::hasTestNow());
-		$this->assertEquals(date('Y-m-d H:i:s', time()), Time::now()->toDateTimeString());
+		$this->assertEquals(\date('Y-m-d H:i:s', \time()), Time::now()->toDateTimeString());
 
 		$t = new Time('2000-01-02');
 		Time::setTestNow($t);
@@ -229,7 +229,7 @@ class TimeTest extends \CIUnitTestCase
 		$this->assertEquals('2000-01-02 00:00:00', Time::now()->toDateTimeString());
 
 		Time::setTestNow();
-		$this->assertEquals(date('Y-m-d H:i:s', time()), Time::now()->toDateTimeString());
+		$this->assertEquals(\date('Y-m-d H:i:s', \time()), Time::now()->toDateTimeString());
 	}
 
 	//--------------------------------------------------------------------
@@ -307,7 +307,7 @@ class TimeTest extends \CIUnitTestCase
 	public function testGetTimestamp()
 	{
 		$time = Time::parse('August 12, 2016 4:15:23pm');
-		$expected = strtotime('August 12, 2016 4:15:23pm');
+		$expected = \strtotime('August 12, 2016 4:15:23pm');
 
 		$this->assertEquals($expected, $time->timestamp);
 	}
@@ -541,7 +541,7 @@ class TimeTest extends \CIUnitTestCase
 	public function testSetTimestamp()
 	{
 		$time = Time::parse('May 10, 2017', 'America/Chicago');
-		$stamp = strtotime('April 1, 2017');
+		$stamp = \strtotime('April 1, 2017');
 		$time2 = $time->setTimestamp($stamp);
 
 		$this->assertInstanceOf(Time::class, $time2);

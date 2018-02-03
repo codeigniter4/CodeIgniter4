@@ -17,9 +17,9 @@ class CacheFactoryTest extends \CIUnitTestCase
 
 	public function tearDown()
 	{
-		if (is_dir($this->config->path)) {
-			chmod($this->config->path, 0777);
-			rmdir($this->config->path);
+		if (\is_dir($this->config->path)) {
+			\chmod($this->config->path, 0777);
+			\rmdir($this->config->path);
 		}
 	}
 
@@ -74,8 +74,8 @@ class CacheFactoryTest extends \CIUnitTestCase
 
 	public function testGetDummyHandler()
 	{
-		if (!is_dir($this->config->path)) {
-			mkdir($this->config->path, 0555, true);
+		if (!\is_dir($this->config->path)) {
+			\mkdir($this->config->path, 0555, true);
 		}
 
 		$this->config->backupHandler = 'file';

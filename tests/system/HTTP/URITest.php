@@ -451,7 +451,7 @@ class URITest extends \CIUnitTestCase
     {
         $base = 'https://a/b/c/d';
 
-        $expected = str_replace('http:', 'https:', $expected);
+        $expected = \str_replace('http:', 'https:', $expected);
 
         $uri = new URI($base);
 

@@ -25,7 +25,7 @@ class EmptyTest extends \CIUnitTestCase
 
 		$expectedSQL   = "DELETE FROM \"jobs\"";
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $answer));
+		$this->assertEquals($expectedSQL, \str_replace("\n", ' ', $answer));
 	}
 
 	//--------------------------------------------------------------------
