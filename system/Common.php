@@ -51,7 +51,7 @@ use Config\Services;
 // Services Convenience Functions
 //--------------------------------------------------------------------
 
-if ( ! function_exists('cache'))
+if ( ! \function_exists('cache'))
 {
 
 	/**
@@ -72,7 +72,7 @@ if ( ! function_exists('cache'))
 		$cache = \Config\Services::cache();
 
 		// No params - return cache object
-		if (is_null($key))
+		if (\is_null($key))
 		{
 			return $cache;
 		}
@@ -85,7 +85,7 @@ if ( ! function_exists('cache'))
 
 //--------------------------------------------------------------------
 
-if ( ! function_exists('view'))
+if ( ! \function_exists('view'))
 {
 
 	/**
@@ -111,7 +111,7 @@ if ( ! function_exists('view'))
 		$renderer = Services::renderer();
 
 		$saveData = null;
-		if (array_key_exists('saveData', $options) && $options['saveData'] === true)
+		if (\array_key_exists('saveData', $options) && $options['saveData'] === true)
 		{
 			$saveData = (bool) $options['saveData'];
 			unset($options['saveData']);
@@ -125,7 +125,7 @@ if ( ! function_exists('view'))
 
 //--------------------------------------------------------------------
 
-if ( ! function_exists('view_cell'))
+if ( ! \function_exists('view_cell'))
 {
 
 	/**
@@ -149,7 +149,7 @@ if ( ! function_exists('view_cell'))
 
 //--------------------------------------------------------------------
 
-if ( ! function_exists('env'))
+if ( ! \function_exists('env'))
 {
 
 	/**
@@ -165,7 +165,7 @@ if ( ! function_exists('env'))
 	 */
 	function env(string $key, $default = null)
 	{
-		$value = getenv($key);
+		$value = \getenv($key);
 		if ($value === false)
 		{
 			$value = $_ENV[$key] ?? $_SERVER[$key] ?? false;
@@ -178,7 +178,7 @@ if ( ! function_exists('env'))
 		}
 
 		// Handle any boolean values
-		switch (strtolower($value))
+		switch (\strtolower($value))
 		{
 			case 'true':
 				return true;
@@ -197,7 +197,7 @@ if ( ! function_exists('env'))
 
 //--------------------------------------------------------------------
 
-if ( ! function_exists('esc'))
+if ( ! \function_exists('esc'))
 {
 
 	/**
@@ -218,7 +218,7 @@ if ( ! function_exists('esc'))
 	 */
 	function esc($data, $context = 'html', $encoding = null)
 	{
-		if (is_array($data))
+		if (\is_array($data))
 		{
 			foreach ($data as $key => &$value)
 			{
@@ -226,9 +226,9 @@ if ( ! function_exists('esc'))
 			}
 		}
 
-		if (is_string($data))
+		if (\is_string($data))
 		{
-			$context = strtolower($context);
+			$context = \strtolower($context);
 
 			// Provide a way to NOT escape data since
 			// this could be called automatically by
@@ -238,7 +238,7 @@ if ( ! function_exists('esc'))
 				return $data;
 			}
 
-			if ( ! in_array($context, ['html', 'js', 'css', 'url', 'attr']))
+			if ( ! \in_array($context, ['html', 'js', 'css', 'url', 'attr']))
 			{
 				throw new \InvalidArgumentException('Invalid escape context provided.');
 			}
@@ -249,7 +249,7 @@ if ( ! function_exists('esc'))
 			}
 			else
 			{
-				$method = 'escape' . ucfirst($context);
+				$method = 'escape' . \ucfirst($context);
 			}
 
 			// @todo Optimize this to only load a single instance during page request.
@@ -265,7 +265,7 @@ if ( ! function_exists('esc'))
 
 //--------------------------------------------------------------------
 
-if ( ! function_exists('session'))
+if ( ! \function_exists('session'))
 {
 
 	/**
@@ -283,7 +283,7 @@ if ( ! function_exists('session'))
 	function session($val = null)
 	{
 		// Returning a single item?
-		if (is_string($val))
+		if (\is_string($val))
 		{
 			helper('array');
 			return dot_array_search($val, $_SESSION);
@@ -296,7 +296,7 @@ if ( ! function_exists('session'))
 
 //--------------------------------------------------------------------
 
-if ( ! function_exists('timer'))
+if ( ! \function_exists('timer'))
 {
 
 	/**
@@ -329,7 +329,7 @@ if ( ! function_exists('timer'))
 
 //--------------------------------------------------------------------
 
-if ( ! function_exists('service'))
+if ( ! \function_exists('service'))
 {
 
 	/**
@@ -356,7 +356,7 @@ if ( ! function_exists('service'))
 
 //--------------------------------------------------------------------
 
-if ( ! function_exists('single_service'))
+if ( ! \function_exists('single_service'))
 {
 
 	/**
@@ -371,7 +371,7 @@ if ( ! function_exists('single_service'))
 	function single_service(string $name, ...$params)
 	{
 		// Ensure it's NOT a shared instance
-		array_push($params, false);
+		\array_push($params, false);
 
 		return Services::$name(...$params);
 	}
@@ -380,7 +380,7 @@ if ( ! function_exists('single_service'))
 
 //--------------------------------------------------------------------
 
-if ( ! function_exists('lang'))
+if ( ! \function_exists('lang'))
 {
 
 	/**
@@ -404,7 +404,7 @@ if ( ! function_exists('lang'))
 //--------------------------------------------------------------------
 
 
-if ( ! function_exists('log_message'))
+if ( ! \function_exists('log_message'))
 {
 
 	/**
@@ -447,7 +447,7 @@ if ( ! function_exists('log_message'))
 
 //--------------------------------------------------------------------
 
-if ( ! function_exists('is_cli'))
+if ( ! \function_exists('is_cli'))
 {
 
 	/**
@@ -459,14 +459,14 @@ if ( ! function_exists('is_cli'))
 	 */
 	function is_cli()
 	{
-		return (PHP_SAPI === 'cli' || defined('STDIN'));
+		return (PHP_SAPI === 'cli' || \defined('STDIN'));
 	}
 
 }
 
 //--------------------------------------------------------------------
 
-if ( ! function_exists('route_to'))
+if ( ! \function_exists('route_to'))
 {
 
 	/**
@@ -493,7 +493,7 @@ if ( ! function_exists('route_to'))
 
 //--------------------------------------------------------------------
 
-if ( ! function_exists('remove_invisible_characters'))
+if ( ! \function_exists('remove_invisible_characters'))
 {
 
 	/**
@@ -523,7 +523,7 @@ if ( ! function_exists('remove_invisible_characters'))
 
 		do
 		{
-			$str = preg_replace($non_displayables, '', $str, -1, $count);
+			$str = \preg_replace($non_displayables, '', $str, -1, $count);
 		} while ($count);
 
 		return $str;
@@ -533,7 +533,7 @@ if ( ! function_exists('remove_invisible_characters'))
 
 //--------------------------------------------------------------------
 
-if ( ! function_exists('helper'))
+if ( ! \function_exists('helper'))
 {
 
 	/**
@@ -546,14 +546,14 @@ if ( ! function_exists('helper'))
 	{
 		$loader = Services::locator(true);
 
-		if ( ! is_array($filenames))
+		if ( ! \is_array($filenames))
 		{
 			$filenames = [$filenames];
 		}
 
 		foreach ($filenames as $filename)
 		{
-			if (strpos($filename, '_helper') === false)
+			if (\strpos($filename, '_helper') === false)
 			{
 				$filename .= '_helper';
 			}
@@ -571,7 +571,7 @@ if ( ! function_exists('helper'))
 
 //--------------------------------------------------------------------
 
-if ( ! function_exists('app_timezone'))
+if ( ! \function_exists('app_timezone'))
 {
 
 	/**
@@ -593,7 +593,7 @@ if ( ! function_exists('app_timezone'))
 
 //--------------------------------------------------------------------
 
-if ( ! function_exists('csrf_token'))
+if ( ! \function_exists('csrf_token'))
 {
 
 	/**
@@ -614,7 +614,7 @@ if ( ! function_exists('csrf_token'))
 
 //--------------------------------------------------------------------
 
-if ( ! function_exists('csrf_hash'))
+if ( ! \function_exists('csrf_hash'))
 {
 
 	/**
@@ -635,7 +635,7 @@ if ( ! function_exists('csrf_hash'))
 
 //--------------------------------------------------------------------
 
-if ( ! function_exists('csrf_field'))
+if ( ! \function_exists('csrf_field'))
 {
 
 	/**
@@ -652,7 +652,7 @@ if ( ! function_exists('csrf_field'))
 
 //--------------------------------------------------------------------
 
-if ( ! function_exists('force_https'))
+if ( ! \function_exists('force_https'))
 {
 
 	/**
@@ -670,11 +670,11 @@ if ( ! function_exists('force_https'))
 	 */
 	function force_https(int $duration = 31536000, RequestInterface $request = null, ResponseInterface $response = null)
 	{
-		if (is_null($request))
+		if (\is_null($request))
 		{
 			$request = Services::request(null, true);
 		}
-		if (is_null($response))
+		if (\is_null($response))
 		{
 			$response = Services::response(null, true);
 		}
@@ -686,7 +686,7 @@ if ( ! function_exists('force_https'))
 
 		// If the session library is loaded, we should regenerate
 		// the session ID for safety sake.
-		if (class_exists('Session', false))
+		if (\class_exists('Session', false))
 		{
 			Services::session(null, true)
 					->regenerate();
@@ -710,7 +710,7 @@ if ( ! function_exists('force_https'))
 
 //--------------------------------------------------------------------
 
-if (! function_exists('old'))
+if (! \function_exists('old'))
 {
 	/**
 	 * Provides access to "old input" that was set in the session
@@ -729,15 +729,15 @@ if (! function_exists('old'))
 
 		// Return the default value if nothing
 		// found in the old input.
-		if (is_null($value))
+		if (\is_null($value))
 		{
 			return $default;
 		}
 
 		// If the result was serialized array or string, then unserialize it for use...
-		if (substr($value, 0, 2) == 'a:' || substr($value, 0, 2) == 's:')
+		if (\substr($value, 0, 2) == 'a:' || \substr($value, 0, 2) == 's:')
 		{
-			$value = unserialize($value);
+			$value = \unserialize($value);
 		}
 
 		return $value;
@@ -746,7 +746,7 @@ if (! function_exists('old'))
 
 //--------------------------------------------------------------------
 
-if ( ! function_exists('redirect'))
+if ( ! \function_exists('redirect'))
 {
 
 	/**
@@ -778,7 +778,7 @@ if ( ! function_exists('redirect'))
 
 //--------------------------------------------------------------------
 
-if ( ! function_exists('stringify_attributes'))
+if ( ! \function_exists('stringify_attributes'))
 {
 
 	/**
@@ -801,7 +801,7 @@ if ( ! function_exists('stringify_attributes'))
 			return $atts;
 		}
 
-		if (is_string($attributes))
+		if (\is_string($attributes))
 		{
 			return ' ' . $attributes;
 		}
@@ -813,14 +813,14 @@ if ( ! function_exists('stringify_attributes'))
 			$atts .= ($js) ? $key . '=' . esc($val, 'js') . ',' : ' ' . $key . '="' . esc($val, 'attr') . '"';
 		}
 
-		return rtrim($atts, ',');
+		return \rtrim($atts, ',');
 	}
 
 }
 
 //--------------------------------------------------------------------
 
-if ( ! function_exists('is_really_writable'))
+if ( ! \function_exists('is_really_writable'))
 {
 
 	/**
@@ -839,34 +839,34 @@ if ( ! function_exists('is_really_writable'))
 	function is_really_writable($file)
 	{
 		// If we're on a Unix server with safe_mode off we call is_writable
-		if (DIRECTORY_SEPARATOR === '/' || ! ini_get('safe_mode'))
+		if (DIRECTORY_SEPARATOR === '/' || ! \ini_get('safe_mode'))
 		{
-			return is_writable($file);
+			return \is_writable($file);
 		}
 
 		/* For Windows servers and safe_mode "on" installations we'll actually
 		 * write a file then read it. Bah...
 		 */
-		if (is_dir($file))
+		if (\is_dir($file))
 		{
-			$file = rtrim($file, '/') . '/' . bin2hex(random_bytes(16));
-			if (($fp = @fopen($file, 'ab')) === false)
+			$file = \rtrim($file, '/') . '/' . \bin2hex(\random_bytes(16));
+			if (($fp = @\fopen($file, 'ab')) === false)
 			{
 				return false;
 			}
 
-			fclose($fp);
-			@chmod($file, 0777);
-			@unlink($file);
+			\fclose($fp);
+			@\chmod($file, 0777);
+			@\unlink($file);
 
 			return true;
 		}
-		elseif ( ! is_file($file) OR ( $fp = @fopen($file, 'ab')) === false)
+		elseif ( ! \is_file($file) OR ( $fp = @\fopen($file, 'ab')) === false)
 		{
 			return false;
 		}
 
-		fclose($fp);
+		\fclose($fp);
 
 		return true;
 	}
@@ -875,7 +875,7 @@ if ( ! function_exists('is_really_writable'))
 
 //--------------------------------------------------------------------
 
-if ( ! function_exists('slash_item'))
+if ( ! \function_exists('slash_item'))
 {
 
 	//Unlike CI3, this function is placed here because
@@ -893,18 +893,18 @@ if ( ! function_exists('slash_item'))
 		$config = new \Config\App();
 		$configItem = $config->{$item};
 
-		if ( ! isset($configItem) || empty(trim($configItem)))
+		if ( ! isset($configItem) || empty(\trim($configItem)))
 		{
 			return $configItem;
 		}
 
-		return rtrim($configItem, '/') . '/';
+		return \rtrim($configItem, '/') . '/';
 	}
 
 }
 //--------------------------------------------------------------------
 
-if ( ! function_exists('function_usable'))
+if ( ! \function_exists('function_usable'))
 {
 
 	/**
@@ -934,14 +934,14 @@ if ( ! function_exists('function_usable'))
 	{
 		static $_suhosin_func_blacklist;
 
-		if (function_exists($function_name))
+		if (\function_exists($function_name))
 		{
 			if ( ! isset($_suhosin_func_blacklist))
 			{
-				$_suhosin_func_blacklist = extension_loaded('suhosin') ? explode(',', trim(ini_get('suhosin.executor.func.blacklist'))) : [];
+				$_suhosin_func_blacklist = \extension_loaded('suhosin') ? \explode(',', \trim(\ini_get('suhosin.executor.func.blacklist'))) : [];
 			}
 
-			return ! in_array($function_name, $_suhosin_func_blacklist, TRUE);
+			return ! \in_array($function_name, $_suhosin_func_blacklist, TRUE);
 		}
 
 		return FALSE;
@@ -951,7 +951,7 @@ if ( ! function_exists('function_usable'))
 
 //--------------------------------------------------------------------
 
-if (! function_exists('dd'))
+if (! \function_exists('dd'))
 {
 	/**
 	 * Prints a Kint debug report and exits.

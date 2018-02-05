@@ -173,7 +173,7 @@ class Database extends BaseCollector
 
 			foreach ($highlight as $term)
 			{
-				$sql = str_replace($term, "<strong>{$term}</strong>", $sql);
+				$sql = \str_replace($term, "<strong>{$term}</strong>", $sql);
 			}
 
 			$data['queries'][] = [
@@ -197,7 +197,7 @@ class Database extends BaseCollector
 	 */
 	public function getBadgeValue()
 	{
-		return count(static::$queries);
+		return \count(static::$queries);
 	}
 
 	//--------------------------------------------------------------------
@@ -209,8 +209,8 @@ class Database extends BaseCollector
 	 */
 	public function getTitleDetails(): string
 	{
-		return '(' . count(static::$queries) . ' Queries across ' . count($this->connections) . ' Connection' .
-				(count($this->connections) > 1 ? 's' : '') . ')';
+		return '(' . \count(static::$queries) . ' Queries across ' . \count($this->connections) . ' Connection' .
+				(\count($this->connections) > 1 ? 's' : '') . ')';
 	}
 
 	//--------------------------------------------------------------------

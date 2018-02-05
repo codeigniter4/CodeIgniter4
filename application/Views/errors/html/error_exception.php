@@ -1,17 +1,17 @@
-<?php $error_id = uniqid('error'); ?>
+<?php $error_id = \uniqid('error'); ?>
 <!doctype html>
 <html>
 <head>
 	<meta charset="UTF-8">
 	<meta name="robots" content="noindex">
 
-	<title><?= htmlspecialchars($title, ENT_SUBSTITUTE, 'UTF-8') ?></title>
+	<title><?= \htmlspecialchars($title, ENT_SUBSTITUTE, 'UTF-8') ?></title>
 	<style type="text/css">
-		<?= preg_replace('#[\r\n\t ]+#', ' ', file_get_contents(__DIR__.DIRECTORY_SEPARATOR.'debug.css')) ?>
+		<?= \preg_replace('#[\r\n\t ]+#', ' ', \file_get_contents(__DIR__.DIRECTORY_SEPARATOR.'debug.css')) ?>
 	</style>
 
 	<script type="text/javascript">
-		<?= file_get_contents(__DIR__.DIRECTORY_SEPARATOR.'debug.js') ?>
+		<?= \file_get_contents(__DIR__.DIRECTORY_SEPARATOR.'debug.js') ?>
 	</script>
 </head>
 <body onload="init()">
@@ -19,10 +19,10 @@
 	<!-- Header -->
 	<div class="header">
 		<div class="container">
-			<h1><?= htmlspecialchars($title, ENT_SUBSTITUTE, 'UTF-8'), ($exception->getCode() ? ' #'.$exception->getCode() : '') ?></h1>
+			<h1><?= \htmlspecialchars($title, ENT_SUBSTITUTE, 'UTF-8'), ($exception->getCode() ? ' #'.$exception->getCode() : '') ?></h1>
 			<p>
 				<?= $exception->getMessage() ?>
-				<a href="https://www.google.com/search?q=<?= urlencode($title.' '.preg_replace('#\'.*\'|".*"#Us', '', $exception->getMessage())) ?>"
+				<a href="https://www.google.com/search?q=<?= \urlencode($title.' '.\preg_replace('#\'.*\'|".*"#Us', '', $exception->getMessage())) ?>"
 				   rel="noreferrer" target="_blank">search &rarr;</a>
 			</p>
 		</div>
@@ -32,7 +32,7 @@
 	<div class="container">
 		<p><b><?= self::cleanPath($file, $line) ?></b> at line <b><?= $line ?></b></p>
 
-		<?php if (is_file($file)) : ?>
+		<?php if (\is_file($file)) : ?>
 			<div class="source">
 				<?= self::highlightFile($file, $line, 15); ?>
 			</div>
@@ -62,9 +62,9 @@
 					<li>
 						<p>
 							<!-- Trace info -->
-							<?php if (isset($row['file']) && is_file($row['file'])) :?>
+							<?php if (isset($row['file']) && \is_file($row['file'])) :?>
 								<?php
-									if (isset($row['function']) && in_array($row['function'], ['include', 'include_once', 'require', 'require_once']))
+									if (isset($row['function']) && \in_array($row['function'], ['include', 'include_once', 'require', 'require_once']))
 									{
 										echo $row['function'].' '. self::cleanPath($row['file']);
 									}
@@ -89,15 +89,15 @@
 										<?php
 										$params = null;
 										// Reflection by name is not available for closure function
-										if( substr( $row['function'], -1 ) !== '}' )
+										if( \substr( $row['function'], -1 ) !== '}' )
 										{
 											$mirror = isset( $row['class'] ) ? new \ReflectionMethod( $row['class'], $row['function'] ) : new \ReflectionFunction( $row['function'] );
 											$params = $mirror->getParameters();
 										}
 										foreach ($row['args'] as $key => $value) : ?>
 											<tr>
-												<td><code><?= htmlspecialchars(isset($params[$key]) ? '$'.$params[$key]->name : "#$key", ENT_SUBSTITUTE, 'UTF-8') ?></code></td>
-												<td><pre><?= print_r($value, true) ?></pre></td>
+												<td><code><?= \htmlspecialchars(isset($params[$key]) ? '$'.$params[$key]->name : "#$key", ENT_SUBSTITUTE, 'UTF-8') ?></code></td>
+												<td><pre><?= \print_r($value, true) ?></pre></td>
 											</tr>
 										<?php endforeach ?>
 
@@ -114,7 +114,7 @@
 						</p>
 
 						<!-- Source? -->
-						<?php if (isset($row['file']) && is_file($row['file']) &&  isset($row['class'])) : ?>
+						<?php if (isset($row['file']) && \is_file($row['file']) &&  isset($row['class'])) : ?>
 							<div class="source">
 								<?= self::highlightFile($row['file'], $row['line']) ?>
 							</div>
@@ -129,7 +129,7 @@
 			<!-- Server -->
 			<div class="content" id="server">
 				<?php foreach (['_SERVER', '_SESSION'] as $var) : ?>
-					<?php if (empty($GLOBALS[$var]) || ! is_array($GLOBALS[$var])) continue; ?>
+					<?php if (empty($GLOBALS[$var]) || ! \is_array($GLOBALS[$var])) continue; ?>
 
 					<h3>$<?= $var ?></h3>
 
@@ -143,12 +143,12 @@
 						<tbody>
 						<?php foreach ($GLOBALS[$var] as $key => $value) : ?>
 							<tr>
-								<td><?= htmlspecialchars($key, ENT_IGNORE, 'UTF-8') ?></td>
+								<td><?= \htmlspecialchars($key, ENT_IGNORE, 'UTF-8') ?></td>
 								<td>
-									<?php if (is_string($value)) : ?>
-										<?= htmlspecialchars($value, ENT_SUBSTITUTE, 'UTF-8') ?>
+									<?php if (\is_string($value)) : ?>
+										<?= \htmlspecialchars($value, ENT_SUBSTITUTE, 'UTF-8') ?>
 									<?php else: ?>
-										<?= '<pre>'.print_r($value, true) ?>
+										<?= '<pre>'.\print_r($value, true) ?>
 									<?php endif; ?>
 								</td>
 							</tr>
@@ -159,7 +159,7 @@
 				<?php endforeach ?>
 
 				<!-- Constants -->
-				<?php $constants = get_defined_constants(true); ?>
+				<?php $constants = \get_defined_constants(true); ?>
 				<?php if (! empty($constants['user'])) : ?>
 					<h3>Constants</h3>
 
@@ -173,12 +173,12 @@
 						<tbody>
 						<?php foreach ($constants['user'] as $key => $value) : ?>
 							<tr>
-								<td><?= htmlspecialchars($key, ENT_IGNORE, 'UTF-8') ?></td>
+								<td><?= \htmlspecialchars($key, ENT_IGNORE, 'UTF-8') ?></td>
 								<td>
-									<?php if (!is_array($value) && ! is_object($value)) : ?>
-										<?= htmlspecialchars($value, ENT_SUBSTITUTE, 'UTF-8') ?>
+									<?php if (!\is_array($value) && ! \is_object($value)) : ?>
+										<?= \htmlspecialchars($value, ENT_SUBSTITUTE, 'UTF-8') ?>
 									<?php else: ?>
-										<?= '<pre>'.print_r($value, true) ?>
+										<?= '<pre>'.\print_r($value, true) ?>
 									<?php endif; ?>
 								</td>
 							</tr>
@@ -229,7 +229,7 @@
 
 				<?php $empty = true; ?>
 				<?php foreach (['_GET', '_POST', '_COOKIE'] as $var) : ?>
-					<?php if (empty($GLOBALS[$var]) || ! is_array($GLOBALS[$var])) continue; ?>
+					<?php if (empty($GLOBALS[$var]) || ! \is_array($GLOBALS[$var])) continue; ?>
 
 					<?php $empty = false; ?>
 
@@ -245,12 +245,12 @@
 						<tbody>
 						<?php foreach ($GLOBALS[$var] as $key => $value) : ?>
 							<tr>
-								<td><?= htmlspecialchars($key, ENT_IGNORE, 'UTF-8') ?></td>
+								<td><?= \htmlspecialchars($key, ENT_IGNORE, 'UTF-8') ?></td>
 								<td>
-									<?php if (!is_array($value) && ! is_object($value)) : ?>
-										<?= htmlspecialchars($value, ENT_SUBSTITUTE, 'UTF-8') ?>
+									<?php if (!\is_array($value) && ! \is_object($value)) : ?>
+										<?= \htmlspecialchars($value, ENT_SUBSTITUTE, 'UTF-8') ?>
 									<?php else: ?>
-										<?= '<pre>'.print_r($value, true) ?>
+										<?= '<pre>'.\print_r($value, true) ?>
 									<?php endif; ?>
 								</td>
 							</tr>
@@ -283,7 +283,7 @@
 						<tbody>
 						<?php foreach ($headers as $name => $value) : ?>
 							<?php if (empty($value)) continue; ?>
-							<?php if (! is_array($value)) { $value = [$value]; } ?>
+							<?php if (! \is_array($value)) { $value = [$value]; } ?>
 							<?php foreach ($value as $h) : ?>
 								<tr>
 									<td><?= esc($h->getName(), 'html') ?></td>
@@ -300,7 +300,7 @@
 			<!-- Response -->
 			<?php
 				$response = \CodeIgniter\Config\Services::response(null, true);
-				$response->setStatusCode(http_response_code());
+				$response->setStatusCode(\http_response_code());
 			?>
 			<div class="content" id="response">
 				<table>
@@ -312,7 +312,7 @@
 
 				<?php $headers = $response->getHeaders(); ?>
 				<?php if (! empty($headers)) : ?>
-					<?php natsort($headers) ?>
+					<?php \natsort($headers) ?>
 
 					<h3>Headers</h3>
 
@@ -338,11 +338,11 @@
 
 			<!-- Files -->
 			<div class="content" id="files">
-				<?php $files = get_included_files(); ?>
+				<?php $files = \get_included_files(); ?>
 
 				<ol>
 				<?php foreach ($files as $file) :?>
-					<li><?= htmlspecialchars( self::cleanPath($file), ENT_SUBSTITUTE, 'UTF-8') ?></li>
+					<li><?= \htmlspecialchars( self::cleanPath($file), ENT_SUBSTITUTE, 'UTF-8') ?></li>
 				<?php endforeach ?>
 				</ol>
 			</div>
@@ -354,15 +354,15 @@
 					<tbody>
 						<tr>
 							<td>Memory Usage</td>
-							<td><?= self::describeMemory(memory_get_usage(true)) ?></td>
+							<td><?= self::describeMemory(\memory_get_usage(true)) ?></td>
 						</tr>
 						<tr>
 							<td style="width: 12em">Peak Memory Usage:</td>
-							<td><?= self::describeMemory(memory_get_peak_usage(true)) ?></td>
+							<td><?= self::describeMemory(\memory_get_peak_usage(true)) ?></td>
 						</tr>
 						<tr>
 							<td>Memory Limit:</td>
-							<td><?= ini_get('memory_limit') ?></td>
+							<td><?= \ini_get('memory_limit') ?></td>
 						</tr>
 					</tbody>
 				</table>
@@ -377,8 +377,8 @@
 		<div class="container">
 
 			<p>
-				Displayed at <?= date('H:i:sa') ?> &mdash;
-				PHP: <?= phpversion() ?>  &mdash;
+				Displayed at <?= \date('H:i:sa') ?> &mdash;
+				PHP: <?= \phpversion() ?>  &mdash;
 				CodeIgniter: <?= \CodeIgniter\CodeIgniter::CI_VERSION ?>
 			</p>
 

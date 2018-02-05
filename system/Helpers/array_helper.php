@@ -1,6 +1,6 @@
 <?php
 
-if (! function_exists('array_value_dot'))
+if (! \function_exists('array_value_dot'))
 {
 	/**
 	 * Searches an array through dot syntax. Supports
@@ -13,13 +13,13 @@ if (! function_exists('array_value_dot'))
 	 */
 	function dot_array_search(string $index, array $array)
 	{
-		$segments = explode('.', rtrim(rtrim($index, '* '), '.'));
+		$segments = \explode('.', \rtrim(\rtrim($index, '* '), '.'));
 
 		return _array_search_dot($segments, $array);
 	}
 }
 
-if (! function_exists('array_search_dot'))
+if (! \function_exists('array_search_dot'))
 {
 	/**
 	 * Used by array_value_dot to recursively search the
@@ -33,8 +33,8 @@ if (! function_exists('array_search_dot'))
 	function _array_search_dot(array $indexes, array $array)
 	{
 		// Grab the current index
-		$currentIndex = count($indexes)
-			? array_shift($indexes)
+		$currentIndex = \count($indexes)
+			? \array_shift($indexes)
 			: null;
 
 		if (empty($currentIndex) || (! isset($array[$currentIndex]) && $currentIndex != '*'))
@@ -46,7 +46,7 @@ if (! function_exists('array_search_dot'))
 		if ($currentIndex == '*')
 		{
 			// If $array has more than 1 item, we have to loop over each.
-			if (is_array($array))
+			if (\is_array($array))
 			{
 				foreach ($array as $key => $value)
 				{
@@ -71,7 +71,7 @@ if (! function_exists('array_search_dot'))
 		}
 
 		// Do we need to recursively search this value?
-		if (is_array($array[$currentIndex]) && count($array[$currentIndex]))
+		if (\is_array($array[$currentIndex]) && \count($array[$currentIndex]))
 		{
 			return _array_search_dot($indexes, $array[$currentIndex]);
 		}

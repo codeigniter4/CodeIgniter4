@@ -25,7 +25,7 @@ class GroupTest extends \CIUnitTestCase
 
 		$expectedSQL   = "SELECT \"name\" FROM \"user\" GROUP BY \"name\"";
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+		$this->assertEquals($expectedSQL, \str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
 
 	//--------------------------------------------------------------------
@@ -40,7 +40,7 @@ class GroupTest extends \CIUnitTestCase
 
 		$expectedSQL   = "SELECT \"name\" FROM \"user\" GROUP BY \"name\" HAVING SUM(id) > 2";
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+		$this->assertEquals($expectedSQL, \str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
 
 	//--------------------------------------------------------------------
@@ -56,7 +56,7 @@ class GroupTest extends \CIUnitTestCase
 
 		$expectedSQL   = "SELECT \"name\" FROM \"user\" GROUP BY \"name\" HAVING \"id\" > :id: OR SUM(id) > 2";
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+		$this->assertEquals($expectedSQL, \str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
 
 	//--------------------------------------------------------------------
@@ -73,7 +73,7 @@ class GroupTest extends \CIUnitTestCase
 
 		$expectedSQL   = "SELECT * FROM \"user\" WHERE   ( \"id\" > :id: AND \"name\" != :name:  ) AND \"name\" = :name0:";
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+		$this->assertEquals($expectedSQL, \str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
 
 	//--------------------------------------------------------------------
@@ -90,7 +90,7 @@ class GroupTest extends \CIUnitTestCase
 
 		$expectedSQL   = "SELECT * FROM \"user\" WHERE \"name\" = :name: OR   ( \"id\" > :id: AND \"name\" != :name0:  )";
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+		$this->assertEquals($expectedSQL, \str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
 
 	//--------------------------------------------------------------------
@@ -107,7 +107,7 @@ class GroupTest extends \CIUnitTestCase
 
 		$expectedSQL   = "SELECT * FROM \"user\" WHERE \"name\" = :name: AND NOT   ( \"id\" > :id: AND \"name\" != :name0:  )";
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+		$this->assertEquals($expectedSQL, \str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
 
 	//--------------------------------------------------------------------
@@ -124,7 +124,7 @@ class GroupTest extends \CIUnitTestCase
 
 		$expectedSQL   = "SELECT * FROM \"user\" WHERE \"name\" = :name: OR NOT   ( \"id\" > :id: AND \"name\" != :name0:  )";
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+		$this->assertEquals($expectedSQL, \str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
 
 	//--------------------------------------------------------------------

@@ -164,7 +164,7 @@ class CIDatabaseTestCase extends CIUnitTestCase
 			// Delete all of the tables to ensure we're at a clean start.
 			$tables = $this->db->listTables();
 
-			if (is_array($tables))
+			if (\is_array($tables))
 			{
 				$forge = \Config\Database::forge('tests');
 
@@ -184,7 +184,7 @@ class CIDatabaseTestCase extends CIUnitTestCase
 		{
 			if ( ! empty($this->basePath))
 			{
-				$this->seeder->setPath(rtrim($this->basePath, '/') . '/seeds');
+				$this->seeder->setPath(\rtrim($this->basePath, '/') . '/seeds');
 			}
 
 			$this->seed($this->seed);

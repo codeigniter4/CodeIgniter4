@@ -62,7 +62,7 @@ class ThrottleTest extends \CIUnitTestCase
 		$throttler->check('127.0.0.1', $rate, MINUTE);
 		$this->assertEquals($rate - 1, $this->cache->get('throttler_127.0.0.1'));
 
-		sleep(2); // should be more tokens available
+		\sleep(2); // should be more tokens available
 		$this->assertTrue($throttler->check('127.0.0.1', $rate, MINUTE));
 		// but the bucket should not be over-filled
 		$this->assertEquals($rate - 1, $this->cache->get('throttler_127.0.0.1'));
@@ -95,7 +95,7 @@ class ThrottleTest extends \CIUnitTestCase
 		// but a third request isn't allowed through
 		$this->assertFalse($throttler->check('127.0.0.1', $rate, MINUTE, $cost));
 		// but if we sleep for a bit
-		sleep(2);
+		\sleep(2);
 		// then it will succeed
 		$this->assertTrue($throttler->check('127.0.0.1', $rate, MINUTE, $cost));
 	}

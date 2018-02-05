@@ -69,7 +69,7 @@ abstract class Migration
 	 */
 	public function __construct(Forge $forge = null)
 	{
-		$this->forge = ! is_null($forge) ? $forge : \Config\Database::forge($this->DBGroup);
+		$this->forge = ! \is_null($forge) ? $forge : \Config\Database::forge($this->DBGroup);
 
 		$this->db = $this->forge->getConnection();
 	}

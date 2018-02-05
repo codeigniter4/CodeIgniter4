@@ -133,7 +133,7 @@ class CLI
 		// Readline is an extension for PHP that makes interactivity with PHP
 		// much more bash-like.
 		// http://www.php.net/manual/en/readline.installation.php
-		static::$readline_support = extension_loaded('readline');
+		static::$readline_support = \extension_loaded('readline');
 
 		static::parseCommandLine();
 
@@ -156,12 +156,12 @@ class CLI
 	{
 		if (static::$readline_support)
 		{
-			return readline($prefix);
+			return \readline($prefix);
 		}
 
 		echo $prefix;
 
-		return fgets(STDIN);
+		return \fgets(STDIN);
 	}
 
 	//--------------------------------------------------------------------
@@ -194,13 +194,13 @@ class CLI
 		$extra_output = '';
 		$default = '';
 
-		if (is_string($options))
+		if (\is_string($options))
 		{
 			$extra_output = ' [' . static::color($options, 'white') .']';
 			$default = $options;
 		}
 
-		if (is_array($options) && count($options))
+		if (\is_array($options) && \count($options))
 		{
 			$opts = $options;
 			$extra_output_default = static::color($opts[0], 'white');
@@ -213,18 +213,18 @@ class CLI
 			}
 			else
 			{
-				$extra_output = ' [' .$extra_output_default.', '. implode(', ', $opts) . ']';
-				$validation .= '|in_list['. implode(',', $options) .']';
-				$validation = trim($validation, '|');
+				$extra_output = ' [' .$extra_output_default.', '. \implode(', ', $opts) . ']';
+				$validation .= '|in_list['. \implode(',', $options) .']';
+				$validation = \trim($validation, '|');
 			}
 
 			$default = $options[0];
 		}
 
-		fwrite(STDOUT, $field . $extra_output . ': ');
+		\fwrite(STDOUT, $field . $extra_output . ': ');
 
 		// Read the input from keyboard.
-		$input = trim(static::input()) ? : $default;
+		$input = \trim(static::input()) ? : $default;
 
 		if (isset($validation))
 		{
@@ -280,7 +280,7 @@ class CLI
 			$text = static::color($text, $foreground, $background);
 		}
 
-		fwrite(STDOUT, $text . PHP_EOL);
+		\fwrite(STDOUT, $text . PHP_EOL);
 	}
 
 	//--------------------------------------------------------------------
@@ -299,7 +299,7 @@ class CLI
 			$text = static::color($text, $foreground, $background);
 		}
 
-		fwrite(STDERR, $text . PHP_EOL);
+		\fwrite(STDERR, $text . PHP_EOL);
 	}
 
 	//--------------------------------------------------------------------
@@ -311,7 +311,7 @@ class CLI
 	 */
 	public static function beep(int $num = 1)
 	{
-		echo str_repeat("\x07", $num);
+		echo \str_repeat("\x07", $num);
 	}
 
 	//--------------------------------------------------------------------
@@ -331,8 +331,8 @@ class CLI
 
 			while ($time > 0)
 			{
-				fwrite(STDOUT, $time . '... ');
-				sleep(1);
+				\fwrite(STDOUT, $time . '... ');
+				\sleep(1);
 				$time --;
 			}
 			static::write();
@@ -341,7 +341,7 @@ class CLI
 		{
 			if ($seconds > 0)
 			{
-				sleep($seconds);
+				\sleep($seconds);
 			}
 			else
 			{
@@ -358,7 +358,7 @@ class CLI
 	 */
 	public static function isWindows()
 	{
-		return 'win' === strtolower(substr(php_uname("s"), 0, 3));
+		return 'win' === \strtolower(\substr(\php_uname("s"), 0, 3));
 	}
 
 	//--------------------------------------------------------------------
@@ -394,7 +394,7 @@ class CLI
 						? static::newLine(40)
 
 				// Anything with a flair of Unix will handle these magic characters
-						: fwrite(STDOUT, chr(27) . "[H" . chr(27) . "[2J");
+						: \fwrite(STDOUT, \chr(27) . "[H" . \chr(27) . "[2J");
 	}
 
 	//--------------------------------------------------------------------
@@ -417,12 +417,12 @@ class CLI
 			return $text;
 		}
 
-		if ( ! array_key_exists($foreground, static::$foreground_colors))
+		if ( ! \array_key_exists($foreground, static::$foreground_colors))
 		{
 			throw new \RuntimeException('Invalid CLI foreground color: ' . $foreground);
 		}
 
-		if ($background !== null && ! array_key_exists($background, static::$background_colors))
+		if ($background !== null && ! \array_key_exists($background, static::$background_colors))
 		{
 			throw new \RuntimeException('Invalid CLI background color: ' . $background);
 		}
@@ -457,12 +457,12 @@ class CLI
 	 */
 	public static function getWidth(int $default = 80): int
 	{
-		if (static::isWindows() || (int) shell_exec('tput cols') == 0)
+		if (static::isWindows() || (int) \shell_exec('tput cols') == 0)
 		{
 			return $default;
 		}
 
-		return (int) shell_exec('tput cols');
+		return (int) \shell_exec('tput cols');
 	}
 
 	//--------------------------------------------------------------------
@@ -483,7 +483,7 @@ class CLI
 			return $default;
 		}
 
-		return (int) shell_exec('tput lines');
+		return (int) \shell_exec('tput lines');
 	}
 
 	//--------------------------------------------------------------------
@@ -502,27 +502,27 @@ class CLI
 		// restore cursor position when progress is continuing.
 		if ($inProgress !== false && $inProgress <= $thisStep)
 		{
-			fwrite(STDOUT, "\033[1A");
+			\fwrite(STDOUT, "\033[1A");
 		}
 		$inProgress = $thisStep;
 
 		if ($thisStep !== false)
 		{
 			// Don't allow div by zero or negative numbers....
-			$thisStep = abs($thisStep);
+			$thisStep = \abs($thisStep);
 			$totalSteps = $totalSteps < 1 ? 1 : $totalSteps;
 
-			$percent = intval(($thisStep / $totalSteps) * 100);
-			$step = (int) round($percent / 10);
+			$percent = \intval(($thisStep / $totalSteps) * 100);
+			$step = (int) \round($percent / 10);
 
 			// Write the progress bar
-			fwrite(STDOUT, "[\033[32m" . str_repeat('#', $step) . str_repeat('.', 10 - $step) . "\033[0m]");
+			\fwrite(STDOUT, "[\033[32m" . \str_repeat('#', $step) . \str_repeat('.', 10 - $step) . "\033[0m]");
 			// Textual representation...
-			fwrite(STDOUT, sprintf(" %3d%% Complete", $percent) . PHP_EOL);
+			\fwrite(STDOUT, \sprintf(" %3d%% Complete", $percent) . PHP_EOL);
 		}
 		else
 		{
-			fwrite(STDOUT, "\007");
+			\fwrite(STDOUT, "\007");
 		}
 	}
 
@@ -562,18 +562,18 @@ class CLI
 
 		$max = $max - $pad_left;
 
-		$lines = wordwrap($string, $max);
+		$lines = \wordwrap($string, $max);
 
 		if ($pad_left > 0)
 		{
-			$lines = explode(PHP_EOL, $lines);
+			$lines = \explode(PHP_EOL, $lines);
 
 			$first = true;
 
-			array_walk($lines, function (&$line, $index) use ($pad_left, &$first) {
+			\array_walk($lines, function (&$line, $index) use ($pad_left, &$first) {
 				if ( ! $first)
 				{
-					$line = str_repeat(" ", $pad_left) . $line;
+					$line = \str_repeat(" ", $pad_left) . $line;
 				}
 				else
 				{
@@ -581,7 +581,7 @@ class CLI
 				}
 			});
 
-			$lines = implode(PHP_EOL, $lines);
+			$lines = \implode(PHP_EOL, $lines);
 		}
 
 		return $lines;
@@ -608,7 +608,7 @@ class CLI
 		{
 			// If there's no '-' at the beginning of the argument
 			// then add it to our segments.
-			if ( ! $optionsFound && mb_strpos($_SERVER['argv'][$i], '-') === false)
+			if ( ! $optionsFound && \mb_strpos($_SERVER['argv'][$i], '-') === false)
 			{
 				static::$segments[] = $_SERVER['argv'][$i];
 				continue;
@@ -619,16 +619,16 @@ class CLI
 			// value belonging to this option.
 			$optionsFound = true;
 
-			if (mb_substr($_SERVER['argv'][$i], 0, 1) != '-')
+			if (\mb_substr($_SERVER['argv'][$i], 0, 1) != '-')
 			{
 				continue;
 			}
 
-			$arg = str_replace('-', '', $_SERVER['argv'][$i]);
+			$arg = \str_replace('-', '', $_SERVER['argv'][$i]);
 			$value = null;
 
 			// if the next item doesn't have a dash it's a value.
-			if (isset($_SERVER['argv'][$i + 1]) && mb_substr($_SERVER['argv'][$i + 1], 0, 1) != '-')
+			if (isset($_SERVER['argv'][$i + 1]) && \mb_substr($_SERVER['argv'][$i + 1], 0, 1) != '-')
 			{
 				$value = $_SERVER['argv'][$i + 1];
 				$i ++;
@@ -653,7 +653,7 @@ class CLI
 	 */
 	public static function getURI()
 	{
-		return implode('/', static::$segments);
+		return \implode('/', static::$segments);
 	}
 
 	//--------------------------------------------------------------------
@@ -693,7 +693,7 @@ class CLI
 	 */
 	public static function getOption(string $name)
 	{
-		if ( ! array_key_exists($name, static::$options))
+		if ( ! \array_key_exists($name, static::$options))
 		{
 			return null;
 		}
@@ -738,7 +738,7 @@ class CLI
 		{
 			// If there's a space, we need to group
 			// so it will pass correctly.
-			if (mb_strpos($value, ' ') !== false)
+			if (\mb_strpos($value, ' ') !== false)
 			{
 				$value = '"' . $value . '"';
 			}
@@ -767,16 +767,16 @@ class CLI
 		// We need only indexes and not keys
 		if (! empty($thead))
 		{
-			$table_rows[] = array_values($thead);
+			$table_rows[] = \array_values($thead);
 		}
 
 		foreach ($tbody as $tr)
 		{
-			$table_rows[] = array_values($tr);
+			$table_rows[] = \array_values($tr);
 		}
 
 		// Yes, it really is necessary to know this count
-		$total_rows = count($table_rows);
+		$total_rows = \count($table_rows);
 
 		// Store all columns lengths
 		// $all_cols_lengths[row][column] = length
@@ -793,7 +793,7 @@ class CLI
 			foreach ($table_rows[$row] as $col)
 			{
 				// Sets the size of this column in the current row
-				$all_cols_lengths[$row][$column] = strlen($col);
+				$all_cols_lengths[$row][$column] = \strlen($col);
 
 				// If the current column does not have a value among the larger ones
 				// or the value of this is greater than the existing one
@@ -815,10 +815,10 @@ class CLI
 			$column = 0;
 			foreach ($table_rows[$row] as $col)
 			{
-				$diff = $max_cols_lengths[$column] - strlen($col);
+				$diff = $max_cols_lengths[$column] - \strlen($col);
 				if ($diff)
 				{
-					$table_rows[$row][$column] = $table_rows[$row][$column] . str_repeat(' ', $diff);
+					$table_rows[$row][$column] = $table_rows[$row][$column] . \str_repeat(' ', $diff);
 				}
 				$column++;
 			}
@@ -835,13 +835,13 @@ class CLI
 				$cols = '+';
 				foreach ($table_rows[$row] as $col)
 				{
-					$cols .= str_repeat('-', strlen($col) + 2) . '+';
+					$cols .= \str_repeat('-', \strlen($col) + 2) . '+';
 				}
 				$table .= $cols . PHP_EOL;
 			}
 
 			// Set the columns borders
-			$table .= '| ' . implode(' | ', $table_rows[$row]) . ' |' . PHP_EOL;
+			$table .= '| ' . \implode(' | ', $table_rows[$row]) . ' |' . PHP_EOL;
 
 			// Set the thead and table borders-bottom
 			if ($row === 0 && ! empty($thead) || $row + 1 === $total_rows)
@@ -850,7 +850,7 @@ class CLI
 			}
 		}
 
-		fwrite(STDOUT, $table);
+		\fwrite(STDOUT, $table);
 	}
 
 	//--------------------------------------------------------------------

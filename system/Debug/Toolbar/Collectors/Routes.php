@@ -88,7 +88,7 @@ class Routes extends BaseCollector
 		$route = $router->getMatchedRoute();
 
 		// Get our parameters
-		$method = is_callable($router->controllerName()) ? new \ReflectionFunction($router->controllerName()) : new \ReflectionMethod($router->controllerName(), $router->methodName());
+		$method = \is_callable($router->controllerName()) ? new \ReflectionFunction($router->controllerName()) : new \ReflectionMethod($router->controllerName(), $router->methodName());
 		$rawParams = $method->getParameters();
 
 		$params = [];
@@ -97,7 +97,7 @@ class Routes extends BaseCollector
 			$params[] = [
 				'name'	 => $param->getName(),
 				'value'	 => $router->params()[$key] ??
-				"&lt;empty&gt;&nbsp| default: " . var_export($param->getDefaultValue(), true)
+				"&lt;empty&gt;&nbsp| default: " . \var_export($param->getDefaultValue(), true)
 			];
 		}
 
@@ -106,8 +106,8 @@ class Routes extends BaseCollector
 				'directory'	 => $router->directory(),
 				'controller' => $router->controllerName(),
 				'method'	 => $router->methodName(),
-				'paramCount' => count($router->params()),
-				'truePCount' => count($params),
+				'paramCount' => \count($router->params()),
+				'truePCount' => \count($params),
 				'params'	 => $params ?? []
 			]
 		];
@@ -144,7 +144,7 @@ class Routes extends BaseCollector
 	{
 		$rawRoutes = Services::routes(true);
 
-		return count($rawRoutes->getRoutes());
+		return \count($rawRoutes->getRoutes());
 	}
 
 	//--------------------------------------------------------------------

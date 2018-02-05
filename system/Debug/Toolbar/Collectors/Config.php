@@ -13,8 +13,8 @@ class Config
 
 		$data = [
 			'ciVersion' => CodeIgniter::CI_VERSION,
-			'phpVersion' => phpversion(),
-			'phpSAPI' => php_sapi_name(),
+			'phpVersion' => \phpversion(),
+			'phpSAPI' => \php_sapi_name(),
 			'environment' => ENVIRONMENT,
 			'baseURL' => $config->baseURL,
 			'timezone' => app_timezone(),

@@ -73,7 +73,7 @@ class Config extends BaseConfig
 	 */
 	public static function connect($group = null, $getShared = true)
 	{
-		if (is_array($group))
+		if (\is_array($group))
 		{
 			$config = $group;
 			$group = 'custom';
@@ -86,7 +86,7 @@ class Config extends BaseConfig
 			$group = ENVIRONMENT == 'testing' ? 'tests' : $config->defaultGroup;
 		}
 
-		if (is_string($group) && ! isset($config->$group) && $group != 'custom')
+		if (\is_string($group) && ! isset($config->$group) && $group != 'custom')
 		{
 			throw new \InvalidArgumentException($group . ' is not a valid database connection group.');
 		}

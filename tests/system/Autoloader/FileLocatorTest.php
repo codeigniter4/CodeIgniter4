@@ -123,7 +123,7 @@ class FileLocatorTest extends \CIUnitTestCase
 
 	public function testSearchSimple()
 	{
-		$expected = rtrim(APPPATH, '/') . '/Config/App.php';
+		$expected = \rtrim(APPPATH, '/') . '/Config/App.php';
 
 		$foundFiles = $this->loader->search('Config/App.php');
 
@@ -134,7 +134,7 @@ class FileLocatorTest extends \CIUnitTestCase
 
 	public function testSearchWithFileExtension()
 	{
-		$expected = rtrim(APPPATH, '/') . '/Config/App.php';
+		$expected = \rtrim(APPPATH, '/') . '/Config/App.php';
 
 		$foundFiles = $this->loader->search('Config/App', 'php');
 
@@ -147,10 +147,10 @@ class FileLocatorTest extends \CIUnitTestCase
 	{
 		$foundFiles = $this->loader->search('index', 'html');
 
-		$expected = rtrim(APPPATH, '/') . '/index.html';
+		$expected = \rtrim(APPPATH, '/') . '/index.html';
 		$this->assertContains($expected, $foundFiles);
 
-		$expected = rtrim(BASEPATH, '/') . '/index.html';
+		$expected = \rtrim(BASEPATH, '/') . '/index.html';
 		$this->assertContains($expected, $foundFiles);
 	}
 
@@ -171,7 +171,7 @@ class FileLocatorTest extends \CIUnitTestCase
 
 		$expectedWin = APPPATH . 'Config\App.php';
 		$expectedLin = APPPATH . 'Config/App.php';
-		$this->assertTrue(in_array($expectedWin, $files) || in_array($expectedLin, $files));
+		$this->assertTrue(\in_array($expectedWin, $files) || \in_array($expectedLin, $files));
 	}
 
 	//--------------------------------------------------------------------
@@ -191,11 +191,11 @@ class FileLocatorTest extends \CIUnitTestCase
 
 		$expectedWin = APPPATH . 'Filters\DebugToolbar.php';
 		$expectedLin = APPPATH . 'Filters/DebugToolbar.php';
-		$this->assertTrue(in_array($expectedWin, $files) || in_array($expectedLin, $files));
+		$this->assertTrue(\in_array($expectedWin, $files) || \in_array($expectedLin, $files));
 
 		$expectedWin = BASEPATH . 'Filters\Filters.php';
 		$expectedLin = BASEPATH . 'Filters/Filters.php';
-		$this->assertTrue(in_array($expectedWin, $files) || in_array($expectedLin, $files));
+		$this->assertTrue(\in_array($expectedWin, $files) || \in_array($expectedLin, $files));
 	}
 
 	//--------------------------------------------------------------------

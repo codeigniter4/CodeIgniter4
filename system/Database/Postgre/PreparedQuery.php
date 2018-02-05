@@ -73,7 +73,7 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 	 */
 	public function _prepare(string $sql, array $options = [])
 	{
-		$this->name = random_int(1, 10000000000000000);
+		$this->name = \random_int(1, 10000000000000000);
 
 		$sql = $this->parameterize($sql);
 
@@ -81,10 +81,10 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 		// than what was put in.
 		$this->query->setQuery($sql);
 
-		if ( ! $this->statement = pg_prepare($this->db->connID, $this->name, $sql))
+		if ( ! $this->statement = \pg_prepare($this->db->connID, $this->name, $sql))
 		{
 			$this->errorCode = 0;
-			$this->errorString = pg_last_error($this->db->connID);
+			$this->errorString = \pg_last_error($this->db->connID);
 		}
 
 		return $this;
@@ -102,12 +102,12 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 	 */
 	public function _execute($data)
 	{
-		if (is_null($this->statement))
+		if (\is_null($this->statement))
 		{
 			throw new \BadMethodCallException('You must call prepare before trying to execute a prepared statement.');
 		}
 
-		$this->result = pg_execute($this->db->connID, $this->name, $data);
+		$this->result = \pg_execute($this->db->connID, $this->name, $data);
 
 		return (bool) $this->result;
 	}
@@ -139,7 +139,7 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 		// Track our current value
 		$count = 0;
 
-		$sql = preg_replace_callback('/\?/', function($matches) use (&$count) {
+		$sql = \preg_replace_callback('/\?/', function($matches) use (&$count) {
 			$count ++;
 			return "\${$count}";
 		}, $sql);

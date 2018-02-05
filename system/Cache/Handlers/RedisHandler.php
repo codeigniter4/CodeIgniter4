@@ -76,7 +76,7 @@ class RedisHandler implements CacheInterface
 
 		if ( ! empty($config))
 		{
-			$this->config = array_merge($this->config, $config);
+			$this->config = \array_merge($this->config, $config);
 		}
 	}
 
@@ -146,13 +146,13 @@ class RedisHandler implements CacheInterface
 		{
 			case 'array':
 			case 'object':
-				return unserialize($data['__ci_value']);
+				return \unserialize($data['__ci_value']);
 			case 'boolean':
 			case 'integer':
 			case 'double': // Yes, 'double' is returned and NOT 'float'
 			case 'string':
 			case 'NULL':
-				return settype($data['__ci_value'], $data['__ci_type']) ? $data['__ci_value'] : false;
+				return \settype($data['__ci_value'], $data['__ci_type']) ? $data['__ci_value'] : false;
 			case 'resource':
 			default:
 				return false;
@@ -174,11 +174,11 @@ class RedisHandler implements CacheInterface
 	{
 		$key = $this->prefix . $key;
 
-		switch ($data_type = gettype($value))
+		switch ($data_type = \gettype($value))
 		{
 			case 'array':
 			case 'object':
-				$value = serialize($value);
+				$value = \serialize($value);
 				break;
 			case 'boolean':
 			case 'integer':
@@ -197,7 +197,7 @@ class RedisHandler implements CacheInterface
 		}
 		elseif ($ttl)
 		{
-			$this->redis->expireAt($key, time() + $ttl);
+			$this->redis->expireAt($key, \time() + $ttl);
 		}
 
 		return true;
@@ -297,7 +297,7 @@ class RedisHandler implements CacheInterface
 
 		if ($value !== FALSE)
 		{
-			$time = time();
+			$time = \time();
 			return [
 				'expire' => $time + $this->redis->ttl($key),
 				'mtime' => $time,
@@ -317,7 +317,7 @@ class RedisHandler implements CacheInterface
 	 */
 	public function isSupported(): bool
 	{
-		return extension_loaded('redis');
+		return \extension_loaded('redis');
 	}
 
 	//--------------------------------------------------------------------

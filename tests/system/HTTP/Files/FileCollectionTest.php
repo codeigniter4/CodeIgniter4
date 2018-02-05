@@ -34,7 +34,7 @@ class FileCollectionTest extends \CIUnitTestCase
 		$files      = $collection->all();
 		$this->assertCount(1, $files);
 
-		$file = array_shift($files);
+		$file = \array_shift($files);
 		$this->assertInstanceOf(UploadedFile::class, $file);
 
 		$this->assertEquals('someFile.txt', $file->getName());
@@ -58,9 +58,9 @@ class FileCollectionTest extends \CIUnitTestCase
 		$collection = new FileCollection();
 		$files      = $collection->all();
 		$this->assertCount(1, $files);
-		$this->assertEquals('userfile', key($files));
+		$this->assertEquals('userfile', \key($files));
 
-		$files = array_shift($files);
+		$files = \array_shift($files);
 		$this->assertCount(2, $files);
 
 		$file = $files[0];
@@ -98,9 +98,9 @@ class FileCollectionTest extends \CIUnitTestCase
 		$collection = new FileCollection();
 		$files      = $collection->all();
 		$this->assertCount(2, $files);
-		$this->assertEquals('userfile1', key($files));
+		$this->assertEquals('userfile1', \key($files));
 
-		$file = array_shift($files);
+		$file = \array_shift($files);
 		$this->assertInstanceOf(UploadedFile::class, $file);
 
 		$this->assertEquals('fileA.txt', $file->getName());
@@ -109,7 +109,7 @@ class FileCollectionTest extends \CIUnitTestCase
 		$this->assertEquals('text/plain', $file->getClientMimeType());
 		$this->assertEquals(124, $file->getSize());
 
-		$file = array_pop($files);
+		$file = \array_pop($files);
 		$this->assertInstanceOf(UploadedFile::class, $file);
 
 		$this->assertEquals('fileB.txt', $file->getName());
@@ -155,7 +155,7 @@ class FileCollectionTest extends \CIUnitTestCase
 		$collection = new FileCollection();
 		$files      = $collection->all();
 		$this->assertCount(1, $files);
-		$this->assertEquals('userfile', key($files));
+		$this->assertEquals('userfile', \key($files));
 
 		$this->assertArrayHasKey('bar', $files['userfile']['foo']);
 
@@ -433,7 +433,7 @@ class FileCollectionTest extends \CIUnitTestCase
         $destination = '/tmp/destination/';
 
         // Create the destination if not exists
-        is_dir($destination) || mkdir($destination, 0777, true);
+        \is_dir($destination) || \mkdir($destination, 0777, true);
 
         foreach ($collection->all() as $file) {
             $this->assertInstanceOf(UploadedFile::class, $file);
@@ -444,11 +444,11 @@ class FileCollectionTest extends \CIUnitTestCase
         $this->assertFileExists($destination . $finalFilename . '_1.txt');
 
         // Delete the recently created files for the destination above
-        foreach(glob($destination . "*") as $f) {
-            unlink($f);
+        foreach(\glob($destination . "*") as $f) {
+            \unlink($f);
         }
         // Delete the recently created destination dir
-        rmdir($destination);
+        \rmdir($destination);
     }
 
     //--------------------------------------------------------------------
@@ -493,7 +493,7 @@ class FileCollectionTest extends \CIUnitTestCase
         $destination = '/tmp/destination/';
 
         // Create the destination if not exists
-        is_dir($destination) || mkdir($destination, 0777, true);
+        \is_dir($destination) || \mkdir($destination, 0777, true);
 
         foreach ($collection->all() as $file) {
             $this->assertInstanceOf(UploadedFile::class, $file);
@@ -505,11 +505,11 @@ class FileCollectionTest extends \CIUnitTestCase
         $this->assertFileNotExists($destination . $finalFilename . '_2.txt');
 
         // Delete the recently created files for the destination above
-        foreach(glob($destination . "*") as $f) {
-            unlink($f);
+        foreach(\glob($destination . "*") as $f) {
+            \unlink($f);
         }
         // Delete the recently created destination dir
-        rmdir($destination);
+        \rmdir($destination);
     }
 
 	//--------------------------------------------------------------------
@@ -523,11 +523,11 @@ class FileCollectionTest extends \CIUnitTestCase
  */
 function is_uploaded_file($filename)
 {
-    if (! file_exists($filename))
+    if (! \file_exists($filename))
     {
-        file_put_contents($filename, 'data');
+        \file_put_contents($filename, 'data');
     }
-    return file_exists($filename);
+    return \file_exists($filename);
 }
 
 /*
@@ -537,5 +537,5 @@ function is_uploaded_file($filename)
  */
 function move_uploaded_file($filename, $destination)
 {
-    return copy($filename, $destination);
+    return \copy($filename, $destination);
 }

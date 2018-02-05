@@ -75,7 +75,7 @@ class Files extends BaseCollector
 	 */
 	public function getTitleDetails(): string
 	{
-		return '( ' . (int) count(get_included_files()) . ' )';
+		return '( ' . (int) \count(\get_included_files()) . ' )';
 	}
 
 	//--------------------------------------------------------------------
@@ -90,7 +90,7 @@ class Files extends BaseCollector
 	{
 		$parser = \Config\Services::parser(BASEPATH . 'Debug/Toolbar/Views/', null, false);
 
-		$rawFiles = get_included_files();
+		$rawFiles = \get_included_files();
 		$coreFiles = [];
 		$userFiles = [];
 
@@ -98,24 +98,24 @@ class Files extends BaseCollector
 		{
 			$path = $this->cleanPath($file);
 
-			if (strpos($path, 'BASEPATH') !== false)
+			if (\strpos($path, 'BASEPATH') !== false)
 			{
 				$coreFiles[] = [
-					'name'	 => basename($file),
+					'name'	 => \basename($file),
 					'path'	 => $path
 				];
 			}
 			else
 			{
 				$userFiles[] = [
-					'name'	 => basename($file),
+					'name'	 => \basename($file),
 					'path'	 => $path
 				];
 			}
 		}
 
-		sort($userFiles);
-		sort($coreFiles);
+		\sort($userFiles);
+		\sort($coreFiles);
 
 		return $parser->setData([
 							'coreFiles'	 => $coreFiles,
@@ -133,7 +133,7 @@ class Files extends BaseCollector
 	 */
 	public function getBadgeValue()
 	{
-		return count(get_included_files());
+		return \count(\get_included_files());
 	}
 
 	//--------------------------------------------------------------------

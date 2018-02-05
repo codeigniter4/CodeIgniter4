@@ -45,7 +45,7 @@
  * @author		CodeIgniter Dev Team
  * @link		https://codeigniter.com/user_guide/helpers/inflector_helper.html
  */
-if ( ! function_exists('singular'))
+if ( ! \function_exists('singular'))
 {
 
 	/**
@@ -58,7 +58,7 @@ if ( ! function_exists('singular'))
 	 */
 	function singular(string $string): string
 	{
-		$result = strval($string);
+		$result = \strval($string);
 
 		if ( ! is_countable($result))
 		{
@@ -99,9 +99,9 @@ if ( ! function_exists('singular'))
 
 		foreach ($singularRules as $rule => $replacement)
 		{
-			if (preg_match($rule, $result))
+			if (\preg_match($rule, $result))
 			{
-				$result = preg_replace($rule, $replacement, $result);
+				$result = \preg_replace($rule, $replacement, $result);
 				break;
 			}
 		}
@@ -113,7 +113,7 @@ if ( ! function_exists('singular'))
 
 //--------------------------------------------------------------------
 
-if ( ! function_exists('plural'))
+if ( ! \function_exists('plural'))
 {
 
 	/**
@@ -126,7 +126,7 @@ if ( ! function_exists('plural'))
 	 */
 	function plural(string $string): string
 	{
-		$result = strval($string);
+		$result = \strval($string);
 
 		if ( ! is_countable($result))
 		{
@@ -158,9 +158,9 @@ if ( ! function_exists('plural'))
 
 		foreach ($pluralRules as $rule => $replacement)
 		{
-			if (preg_match($rule, $result))
+			if (\preg_match($rule, $result))
 			{
-				$result = preg_replace($rule, $replacement, $result);
+				$result = \preg_replace($rule, $replacement, $result);
 				break;
 			}
 		}
@@ -172,7 +172,7 @@ if ( ! function_exists('plural'))
 
 //--------------------------------------------------------------------
 
-if ( ! function_exists('camelize'))
+if ( ! \function_exists('camelize'))
 {
 
 	/**
@@ -186,13 +186,13 @@ if ( ! function_exists('camelize'))
 	 */
 	function camelize(string $string): string
 	{
-		return lcfirst(str_replace(' ', '', ucwords(preg_replace('/[\s_]+/', ' ', $string))));
+		return \lcfirst(\str_replace(' ', '', \ucwords(\preg_replace('/[\s_]+/', ' ', $string))));
 	}
 
 }
 //--------------------------------------------------------------------
 
-if ( ! function_exists('underscore'))
+if ( ! \function_exists('underscore'))
 {
 
 	/**
@@ -205,16 +205,16 @@ if ( ! function_exists('underscore'))
 	 */
 	function underscore(string $string): string
 	{
-		$replacement = trim($string);
+		$replacement = \trim($string);
 
-		return preg_replace('/[\s]+/', '_', $replacement);
+		return \preg_replace('/[\s]+/', '_', $replacement);
 	}
 
 }
 
 //--------------------------------------------------------------------
 
-if ( ! function_exists('humanize'))
+if ( ! \function_exists('humanize'))
 {
 
 	/**
@@ -229,10 +229,10 @@ if ( ! function_exists('humanize'))
 	 */
 	function humanize(string $string, string $separator = '_'): string
 	{
-		$replacement = trim($string);
-		$upperCased = ucwords
+		$replacement = \trim($string);
+		$upperCased = \ucwords
 				(
-				preg_replace('/[' . $separator . ']+/', ' ', $replacement)
+				\preg_replace('/[' . $separator . ']+/', ' ', $replacement)
 		);
 
 		return $upperCased;
@@ -242,7 +242,7 @@ if ( ! function_exists('humanize'))
 
 // ------------------------------------------------------------------------
 
-if ( ! function_exists('is_countable'))
+if ( ! \function_exists('is_countable'))
 {
 
 	/**
@@ -253,9 +253,9 @@ if ( ! function_exists('is_countable'))
 	 */
 	function is_countable($word): bool
 	{
-		$uncountables = in_array
+		$uncountables = \in_array
 				(
-				strtolower($word), [
+				\strtolower($word), [
 			'advice',
 			'bravery',
 			'butter',
@@ -307,7 +307,7 @@ if ( ! function_exists('is_countable'))
 
 // ------------------------------------------------------------------------
 
-if ( ! function_exists('dasherize'))
+if ( ! \function_exists('dasherize'))
 {
 
 	/**
@@ -318,14 +318,14 @@ if ( ! function_exists('dasherize'))
 	 */
 	function dasherize(string $string): string
 	{
-		return str_replace('_', '-', $string);
+		return \str_replace('_', '-', $string);
 	}
 
 }
 
 // ------------------------------------------------------------------------
 
-if ( ! function_exists('ordinal'))
+if ( ! \function_exists('ordinal'))
 {
 
 	/**
@@ -359,7 +359,7 @@ if ( ! function_exists('ordinal'))
 
 // ------------------------------------------------------------------------
 
-if ( ! function_exists('ordinalize'))
+if ( ! \function_exists('ordinalize'))
 {
 
 	/**

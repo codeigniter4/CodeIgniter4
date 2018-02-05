@@ -10,7 +10,7 @@ class FilesystemHelperTest extends \CIUnitTestCase
     public function testDirectoryMapDefaults()
     {
         helper('filesystem');
-        $this->assertTrue(function_exists('directory_map'));
+        $this->assertTrue(\function_exists('directory_map'));
 
         $structure = [
             'foo' => [
@@ -50,7 +50,7 @@ class FilesystemHelperTest extends \CIUnitTestCase
     public function testDirectoryMapShowsHiddenFiles()
     {
         helper('filesystem');
-        $this->assertTrue(function_exists('directory_map'));
+        $this->assertTrue(\function_exists('directory_map'));
 
         $structure = [
             'foo' => [
@@ -90,7 +90,7 @@ class FilesystemHelperTest extends \CIUnitTestCase
 
     public function testDirectoryMapLimitsRecursion()
     {
-        $this->assertTrue(function_exists('directory_map'));
+        $this->assertTrue(\function_exists('directory_map'));
 
         $structure = [
             'foo' => [
@@ -134,7 +134,7 @@ class FilesystemHelperTest extends \CIUnitTestCase
 
     public function testDeleteFilesDefaultsToOneLevelDeep()
     {
-        $this->assertTrue(function_exists('delete_files'));
+        $this->assertTrue(\function_exists('delete_files'));
 
         $structure = [
             'foo' => [
@@ -165,7 +165,7 @@ class FilesystemHelperTest extends \CIUnitTestCase
 
     public function testDeleteFilesHandlesRecursion()
     {
-        $this->assertTrue(function_exists('delete_files'));
+        $this->assertTrue(\function_exists('delete_files'));
 
         $structure = [
             'foo' => [
@@ -230,7 +230,7 @@ class FilesystemHelperTest extends \CIUnitTestCase
 
     public function testGetFilenames()
     {
-        $this->assertTrue(function_exists('delete_files'));
+        $this->assertTrue(\function_exists('delete_files'));
 
         $structure = [
             'foo' => [
@@ -264,7 +264,7 @@ class FilesystemHelperTest extends \CIUnitTestCase
 
     public function testGetFilenamesWithSource()
     {
-        $this->assertTrue(function_exists('delete_files'));
+        $this->assertTrue(\function_exists('delete_files'));
 
         $structure = [
             'foo' => [

@@ -50,7 +50,7 @@ class LanguageTest extends \CIUnitTestCase
 	public function testGetLineFormatsMessage()
 	{
 		// No intl extension? then we can't test this - go away....
-		if (! class_exists('\MessageFormatter')) return;
+		if (! \class_exists('\MessageFormatter')) return;
 
 	    $lang = new MockLanguage('en');
 
@@ -66,7 +66,7 @@ class LanguageTest extends \CIUnitTestCase
 	public function testGetLineArrayFormatsMessages()
 	{
 		// No intl extension? Then we can't test this - go away...
-		if (! class_exists('\MessageFormatter'))
+		if (! \class_exists('\MessageFormatter'))
 		{
 			return;
 		}

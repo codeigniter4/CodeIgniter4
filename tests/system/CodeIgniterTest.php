@@ -36,9 +36,9 @@ class CodeIgniterTest extends \CIUnitTestCase
 		];
 		$_SERVER['argc'] = 2;
 
-		ob_start();
+		\ob_start();
 		$this->codeigniter->run();
-		$output = ob_get_clean();
+		$output = \ob_get_clean();
 
 		$this->assertContains('<h1>Welcome to CodeIgniter</h1>', $output);
 	}
@@ -52,9 +52,9 @@ class CodeIgniterTest extends \CIUnitTestCase
 		];
 		$_SERVER['argc'] = 1;
 
-		ob_start();
+		\ob_start();
 		$this->codeigniter->run();
-		$output = ob_get_clean();
+		$output = \ob_get_clean();
 
 		$this->assertContains('<h1>Welcome to CodeIgniter</h1>', $output);
 	}
@@ -104,9 +104,9 @@ class CodeIgniterTest extends \CIUnitTestCase
 		$router = Services::router($routes);
 		Services::injectMock('router', $router);
 
-		ob_start();
+		\ob_start();
 		$this->codeigniter->run();
-		$output = ob_get_clean();
+		$output = \ob_get_clean();
 
 		$this->assertContains('You want to see "about" page.', $output);
 	}
@@ -128,9 +128,9 @@ class CodeIgniterTest extends \CIUnitTestCase
 		$router = Services::router($routes);
 		Services::injectMock('router', $router);
 
-		ob_start();
+		\ob_start();
 		$this->codeigniter->run();
-		$output = ob_get_clean();
+		$output = \ob_get_clean();
 
 		$this->assertContains('<h1>Welcome to CodeIgniter</h1>', $output);
 	}
@@ -154,9 +154,9 @@ class CodeIgniterTest extends \CIUnitTestCase
 		$router = Services::router($routes);
 		Services::injectMock('router', $router);
 
-		ob_start();
+		\ob_start();
 		$this->codeigniter->run($routes);
-		$output = ob_get_clean();
+		$output = \ob_get_clean();
 
 		$this->assertContains('404 Override by Closure.', $output);
 	}
@@ -179,9 +179,9 @@ class CodeIgniterTest extends \CIUnitTestCase
 		$router = Services::router($routes);
 		Services::injectMock('router', $router);
 
-		ob_start();
+		\ob_start();
 		$this->codeigniter->run();
-		$output = ob_get_clean();
+		$output = \ob_get_clean();
 
 		$this->assertContains('You want to see "about" page.', $output);
 	}
@@ -204,9 +204,9 @@ class CodeIgniterTest extends \CIUnitTestCase
 		$router = Services::router($routes);
 		Services::injectMock('router', $router);
 
-		ob_start();
+		\ob_start();
 		$this->codeigniter->run();
-		$output = ob_get_clean();
+		$output = \ob_get_clean();
 
 		$this->assertContains("You want to see 'about' page.", $output);
 	}
@@ -240,9 +240,9 @@ class CodeIgniterTest extends \CIUnitTestCase
 		$router = Services::router(null, false);
 		Services::injectMock('router', $router);
 
-		ob_start();
+		\ob_start();
 		$this->codeigniter->run();
-		$output = ob_get_clean();
+		$output = \ob_get_clean();
 
 		$this->assertContains('<h1>Welcome to CodeIgniter</h1>', $output);
 	}

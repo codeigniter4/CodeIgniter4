@@ -51,7 +51,7 @@ class XMLFormatter implements FormatterInterface
 
 		// SimpleXML is installed but default
 		// but best to check, and then provide a fallback.
-		if ( ! extension_loaded('simplexml'))
+		if ( ! \extension_loaded('simplexml'))
 		{
 			throw new \RuntimeException('The SimpleXML extension is required to format XML.');
 		}
@@ -79,9 +79,9 @@ class XMLFormatter implements FormatterInterface
 	{
 		foreach ($data as $key => $value)
 		{
-			if (is_array($value))
+			if (\is_array($value))
 			{
-				if ( ! is_numeric($key))
+				if ( ! \is_numeric($key))
 				{
 					$subnode = $output->addChild("$key");
 					$this->arrayToXML($value, $subnode);
@@ -94,7 +94,7 @@ class XMLFormatter implements FormatterInterface
 			}
 			else
 			{
-				$output->addChild("$key", htmlspecialchars("$value"));
+				$output->addChild("$key", \htmlspecialchars("$value"));
 			}
 		}
 	}

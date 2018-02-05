@@ -271,7 +271,7 @@ class Model
 			$this->db = Database::connect($this->DBGroup);
 		}
 
-		if (is_null($config) || ! isset($config->salt))
+		if (\is_null($config) || ! isset($config->salt))
 		{
 			$config = new App();
 		}
@@ -282,7 +282,7 @@ class Model
 		$this->tempReturnType = $this->returnType;
 		$this->tempUseSoftDeletes = $this->useSoftDeletes;
 
-		if (is_null($validation))
+		if (\is_null($validation))
 		{
 			$validation = \Config\Services::validation(null, false);
 		}
@@ -312,7 +312,7 @@ class Model
 			$builder->where($this->deletedField, 0);
 		}
 
-		if (is_array($id))
+		if (\is_array($id))
 		{
 			$row = $builder->whereIn($this->table.'.'.$this->primaryKey, $id)
 					->get();
@@ -455,16 +455,16 @@ class Model
 		// If $data is using a custom class with public or protected
 		// properties representing the table elements, we need to grab
 		// them as an array.
-		if (is_object($data) && ! $data instanceof \stdClass)
+		if (\is_object($data) && ! $data instanceof \stdClass)
 		{
 			$data = static::classToArray($data, $this->dateFormat);
 		}
 
-		if (is_object($data) && isset($data->{$this->primaryKey}))
+		if (\is_object($data) && isset($data->{$this->primaryKey}))
 		{
 			$response = $this->update($data->{$this->primaryKey}, $data);
 		}
-		elseif (is_array($data) && ! empty($data[$this->primaryKey]))
+		elseif (\is_array($data) && ! empty($data[$this->primaryKey]))
 		{
 			$response = $this->update($data[$this->primaryKey], $data);
 		}
@@ -544,7 +544,7 @@ class Model
 		// If $data is using a custom class with public or protected
 		// properties representing the table elements, we need to grab
 		// them as an array.
-		if (is_object($data) && ! $data instanceof \stdClass)
+		if (\is_object($data) && ! $data instanceof \stdClass)
 		{
 			$data = static::classToArray($data, $this->dateFormat);
 		}
@@ -552,7 +552,7 @@ class Model
 		// If it's still a stdClass, go ahead and convert to
 		// an array so doProtectFields and other model methods
 		// don't have to do special checks.
-		if (is_object($data))
+		if (\is_object($data))
 		{
 			$data = (array) $data;
 		}
@@ -575,7 +575,7 @@ class Model
 		// strip out created_at values.
 		$data = $this->doProtectFields($data);
 
-		if ($this->useTimestamps && ! array_key_exists($this->createdField, $data))
+		if ($this->useTimestamps && ! \array_key_exists($this->createdField, $data))
 		{
 			$date = $this->setDate();
 			$data[$this->createdField] = $date;
@@ -622,7 +622,7 @@ class Model
 		// If $data is using a custom class with public or protected
 		// properties representing the table elements, we need to grab
 		// them as an array.
-		if (is_object($data) && ! $data instanceof \stdClass)
+		if (\is_object($data) && ! $data instanceof \stdClass)
 		{
 			$data = static::classToArray($data, $this->dateFormat);
 		}
@@ -630,7 +630,7 @@ class Model
 		// If it's still a stdClass, go ahead and convert to
 		// an array so doProtectFields and other model methods
 		// don't have to do special checks.
-		if (is_object($data))
+		if (\is_object($data))
 		{
 			$data = (array) $data;
 		}
@@ -653,7 +653,7 @@ class Model
 		// strip out updated_at values.
 		$data = $this->doProtectFields($data);
 
-		if ($this->useTimestamps && ! array_key_exists($this->updatedField, $data))
+		if ($this->useTimestamps && ! \array_key_exists($this->updatedField, $data))
 		{
 			$data[$this->updatedField] = $this->setDate();
 		}
@@ -1004,12 +1004,12 @@ class Model
 
 		if (empty($this->allowedFields))
 		{
-			throw new DatabaseException('No Allowed fields specified for model: ' . get_class($this));
+			throw new DatabaseException('No Allowed fields specified for model: ' . \get_class($this));
 		}
 
 		foreach ($data as $key => $val)
 		{
-			if ( ! in_array($key, $this->allowedFields))
+			if ( ! \in_array($key, $this->allowedFields))
 			{
 				unset($data[$key]);
 			}
@@ -1037,7 +1037,7 @@ class Model
 	 */
 	protected function setDate($userData = null)
 	{
-		$currentDate = is_numeric($userData) ? (int) $userData : time();
+		$currentDate = \is_numeric($userData) ? (int) $userData : \time();
 
 		switch ($this->dateFormat)
 		{
@@ -1045,10 +1045,10 @@ class Model
 				return $currentDate;
 				break;
 			case 'datetime':
-				return date('Y-m-d H:i:s', $currentDate);
+				return \date('Y-m-d H:i:s', $currentDate);
 				break;
 			case 'date':
-				return date('Y-m-d', $currentDate);
+				return \date('Y-m-d', $currentDate);
 				break;
 		}
 	}
@@ -1137,14 +1137,14 @@ class Model
 
 		// Query Builder works with objects as well as arrays,
 		// but validation requires array, so cast away.
-		if (is_object($data))
+		if (\is_object($data))
 		{
 			$data = (array) $data;
 		}
 
 		// ValidationRules can be either a string, which is the group name,
 		// or an array of rules.
-		if (is_string($this->validationRules))
+		if (\is_string($this->validationRules))
 		{
 			$valid = $this->validation->run($data, $this->validationRules);
 		}
@@ -1171,11 +1171,11 @@ class Model
 
 		if (isset($options['except']))
 		{
-			$rules = array_diff_key($rules, array_flip($options['except']));
+			$rules = \array_diff_key($rules, \array_flip($options['except']));
 		}
 		elseif (isset($options['only']))
 		{
-			$rules = array_intersect_key($rules, array_flip($options['only']));
+			$rules = \array_intersect_key($rules, \array_flip($options['only']));
 		}
 
 		return $rules;
@@ -1224,7 +1224,7 @@ class Model
 
 		foreach ($this->{$event} as $callback)
 		{
-			if ( ! method_exists($this, $callback))
+			if ( ! \method_exists($this, $callback))
 			{
 				throw new \BadMethodCallException(lang('Database.invalidEvent', [$callback]));
 			}
@@ -1277,13 +1277,13 @@ class Model
 	{
 		$result = null;
 
-		if (method_exists($this->db, $name))
+		if (\method_exists($this->db, $name))
 		{
-			$result = call_user_func_array([$this->db, $name], $params);
+			$result = \call_user_func_array([$this->db, $name], $params);
 		}
-		elseif (method_exists($this->builder(), $name))
+		elseif (\method_exists($this->builder(), $name))
 		{
-			$result = call_user_func_array([$this->builder(), $name], $params);
+			$result = \call_user_func_array([$this->builder(), $name], $params);
 		}
 
 		// Don't return the builder object unless specifically requested

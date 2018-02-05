@@ -87,7 +87,7 @@ class ModelTest extends \CIDatabaseTestCase
 
 		$user = $model->withDeleted()->find(4);
 
-		$this->assertEquals(1, count($user));
+		$this->assertEquals(1, \count($user));
 	}
 
 	//--------------------------------------------------------------------
@@ -192,7 +192,7 @@ class ModelTest extends \CIDatabaseTestCase
 
 		$user = $model->where('id >', 2)->first();
 
-		$this->assertEquals(1, count($user));
+		$this->assertEquals(1, \count($user));
 		$this->assertEquals(3, $user->id);
 	}
 
@@ -206,7 +206,7 @@ class ModelTest extends \CIDatabaseTestCase
 
 		$user = $model->first();
 
-		$this->assertEquals(1, count($user));
+		$this->assertEquals(1, \count($user));
 		$this->assertEquals(2, $user->id);
 
 		$user = $model->withDeleted()->first();
@@ -466,7 +466,7 @@ class ModelTest extends \CIDatabaseTestCase
     {
 		$model = new UserModel();
 
-		$pass = password_hash('secret123', PASSWORD_BCRYPT);
+		$pass = \password_hash('secret123', PASSWORD_BCRYPT);
 
 		$data = [
 			'name'  => 	$pass,

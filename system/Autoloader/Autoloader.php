@@ -135,16 +135,16 @@ class Autoloader
 		// put the .php extension first to eek out a bit
 		// better performance.
 		// http://php.net/manual/en/function.spl-autoload.php#78053
-		spl_autoload_extensions('.php,.inc');
+		\spl_autoload_extensions('.php,.inc');
 
 		// Prepend the PSR4  autoloader for maximum performance.
-		spl_autoload_register([$this, 'loadClass'], true, true);
+		\spl_autoload_register([$this, 'loadClass'], true, true);
 
 		// Now prepend another loader for the files in our class map.
-		$config = is_array($this->classmap) ? $this->classmap : [];
+		$config = \is_array($this->classmap) ? $this->classmap : [];
 
-		spl_autoload_register(function ($class) use ($config) {
-			if ( ! array_key_exists($class, $config))
+		\spl_autoload_register(function ($class) use ($config) {
+			if ( ! \array_key_exists($class, $config))
 			{
 				return false;
 			}
@@ -169,12 +169,12 @@ class Autoloader
 	{
 		if (isset($this->prefixes[$namespace]))
 		{
-			if (is_string($this->prefixes[$namespace]))
+			if (\is_string($this->prefixes[$namespace]))
 			{
 				$this->prefixes[$namespace] = [$this->prefixes[$namespace]];
 			}
 
-			$this->prefixes[$namespace] = array_merge($this->prefixes[$namespace], [$path]);
+			$this->prefixes[$namespace] = \array_merge($this->prefixes[$namespace], [$path]);
 		}
 		else
 		{
@@ -213,8 +213,8 @@ class Autoloader
 	 */
 	public function loadClass($class)
 	{
-		$class = trim($class, '\\');
-		$class = str_ireplace('.php', '', $class);
+		$class = \trim($class, '\\');
+		$class = \str_ireplace('.php', '', $class);
 
 		$mapped_file = $this->loadInNamespace($class);
 
@@ -239,25 +239,25 @@ class Autoloader
 	 */
 	protected function loadInNamespace($class)
 	{
-		if (strpos($class, '\\') === false)
+		if (\strpos($class, '\\') === false)
 		{
 			return false;
 		}
 
 		foreach ($this->prefixes as $namespace => $directories)
 		{
-			if (is_string($directories))
+			if (\is_string($directories))
 			{
 				$directories = [$directories];
 			}
 
 			foreach ($directories as $directory)
 			{
-				$directory = rtrim($directory, '/');
+				$directory = \rtrim($directory, '/');
 
-				if (strpos($class, $namespace) === 0)
+				if (\strpos($class, $namespace) === 0)
 				{
-					$filePath = $directory . str_replace('\\', '/', substr($class, strlen($namespace))) . '.php';
+					$filePath = $directory . \str_replace('\\', '/', \substr($class, \strlen($namespace))) . '.php';
 					$filename = $this->requireFile($filePath);
 
 					if ($filename)
@@ -287,7 +287,7 @@ class Autoloader
 	{
 		// If there is a namespace on this class, then
 		// we cannot load it from traditional locations.
-		if (strpos($class, '\\') !== false)
+		if (\strpos($class, '\\') !== false)
 		{
 			return false;
 		}
@@ -298,7 +298,7 @@ class Autoloader
 			APPPATH . 'Models/',
 		];
 
-		$class = str_replace('\\', '/', $class) . '.php';
+		$class = \str_replace('\\', '/', $class) . '.php';
 
 		foreach ($paths as $path)
 		{
@@ -327,7 +327,7 @@ class Autoloader
 	{
 		$file = $this->sanitizeFilename($file);
 
-		if (file_exists($file))
+		if (\file_exists($file))
 		{
 			require_once $file;
 
@@ -359,10 +359,10 @@ class Autoloader
 		// be a path.
 		// http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap03.html#tag_03_278
 		// Modified to allow backslash and colons for on Windows machines.
-		$filename = preg_replace('/[^a-zA-Z0-9\s\/\-\_\.\:\\\\]/', '', $filename);
+		$filename = \preg_replace('/[^a-zA-Z0-9\s\/\-\_\.\:\\\\]/', '', $filename);
 
 		// Clean up our filename edges.
-		$filename = trim($filename, '.-_');
+		$filename = \trim($filename, '.-_');
 
 		return $filename;
 	}

@@ -125,7 +125,7 @@ class Throttler implements ThrottlerInterface
 			// If it hasn't been created, then we'll set it to the maximum
 			// capacity - 1, and save it to the cache.
 			$this->cache->save($tokenName, $capacity - $cost, $seconds);
-			$this->cache->save($tokenName . 'Time', time());
+			$this->cache->save($tokenName . 'Time', \time());
 
 			return true;
 		}
@@ -133,11 +133,11 @@ class Throttler implements ThrottlerInterface
 		// If $tokens > 0, then we need to replenish the bucket
 		// based on how long it's been since the last update.
 		$throttleTime = $this->cache->get($tokenName . 'Time');
-		$elapsed = time() - $throttleTime;
-		$rate = (int) ceil($elapsed / $capacity);
+		$elapsed = \time() - $throttleTime;
+		$rate = (int) \ceil($elapsed / $capacity);
 
 		// We must have a minimum wait of 1 second for a new token
-		$this->tokenTime = max(1, $rate);
+		$this->tokenTime = \max(1, $rate);
 
 		// Add tokens based up on number per second that
 		// should be refilled, then checked against capacity
@@ -154,7 +154,7 @@ class Throttler implements ThrottlerInterface
 			$response = true;
 
 			$this->cache->save($tokenName, $tokens - $cost, $elapsed);
-			$this->cache->save($tokenName . 'Time', time());
+			$this->cache->save($tokenName . 'Time', \time());
 		}
 
 		return $response;

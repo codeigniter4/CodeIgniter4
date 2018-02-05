@@ -21,7 +21,7 @@ class MockConnection extends BaseConnection
 
 	public function query(string $sql, $binds = null, $queryClass = 'CodeIgniter\\Database\\Query')
 	{
-		$queryClass = str_replace('Connection', 'Query', get_class($this));
+		$queryClass = \str_replace('Connection', 'Query', \get_class($this));
 
 		$query = new $queryClass($this);
 
@@ -32,7 +32,7 @@ class MockConnection extends BaseConnection
 			$query->swapPrefix($this->DBPrefix, $this->swapPre);
 		}
 
-		$startTime = microtime(true);
+		$startTime = \microtime(true);
 
         $this->lastQuery = $query;
 
@@ -48,7 +48,7 @@ class MockConnection extends BaseConnection
 
 		$query->setDuration($startTime);
 
-		$resultClass = str_replace('Connection', 'Result', get_class($this));
+		$resultClass = \str_replace('Connection', 'Result', \get_class($this));
 
 		return new $resultClass($this->connID, $this->resultID);
 	}
@@ -64,11 +64,11 @@ class MockConnection extends BaseConnection
 	{
 		$return = $this->returnValues['connect'] ?? true;
 
-		if (is_array($return))
+		if (\is_array($return))
 		{
 			// By removing the top item here, we can
 			// get a different value for, say, testing failover connections.
-			$return = array_shift($this->returnValues['connect']);
+			$return = \array_shift($this->returnValues['connect']);
 		}
 
 		return $return;

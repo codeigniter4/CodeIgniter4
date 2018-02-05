@@ -24,7 +24,7 @@ class FromTest extends \CIUnitTestCase
 
 		$expectedSQL   = "SELECT * FROM \"user\", \"jobs\"";
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+		$this->assertEquals($expectedSQL, \str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
 
 	//--------------------------------------------------------------------
@@ -37,7 +37,7 @@ class FromTest extends \CIUnitTestCase
 
 		$expectedSQL   = "SELECT * FROM \"jobs\"";
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+		$this->assertEquals($expectedSQL, \str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
 
 	//--------------------------------------------------------------------
@@ -50,7 +50,7 @@ class FromTest extends \CIUnitTestCase
 
 		$expectedSQL   = "SELECT * FROM \"user\", \"jobs\", \"roles\"";
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+		$this->assertEquals($expectedSQL, \str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
 
 	//--------------------------------------------------------------------
@@ -63,7 +63,7 @@ class FromTest extends \CIUnitTestCase
 
 		$expectedSQL   = "SELECT * FROM \"user\", \"jobs\", \"roles\"";
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+		$this->assertEquals($expectedSQL, \str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
 
 	//--------------------------------------------------------------------

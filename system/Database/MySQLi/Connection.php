@@ -110,9 +110,9 @@ class Connection extends BaseConnection implements ConnectionInterface
 		}
 
 		$client_flags = ($this->compress === true) ? MYSQLI_CLIENT_COMPRESS : 0;
-		$this->mysqli = mysqli_init();
+		$this->mysqli = \mysqli_init();
 
-		mysqli_report(MYSQLI_REPORT_ALL & ~MYSQLI_REPORT_INDEX);
+		\mysqli_report(MYSQLI_REPORT_ALL & ~MYSQLI_REPORT_INDEX);
 
 		$this->mysqli->options(MYSQLI_OPT_CONNECT_TIMEOUT, 10);
 
@@ -137,7 +137,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 			}
 		}
 
-		if (is_array($this->encrypt))
+		if (\is_array($this->encrypt))
 		{
 			$ssl = [];
 			empty($this->encrypt['ssl_key']) || $ssl['key'] = $this->encrypt['ssl_key'];
@@ -152,7 +152,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 				{
 					if ($this->encrypt['ssl_verify'])
 					{
-						defined('MYSQLI_OPT_SSL_VERIFY_SERVER_CERT') &&
+						\defined('MYSQLI_OPT_SSL_VERIFY_SERVER_CERT') &&
 								$this->mysqli->options(MYSQLI_OPT_SSL_VERIFY_SERVER_CERT, true);
 					}
 					// Apparently (when it exists), setting MYSQLI_OPT_SSL_VERIFY_SERVER_CERT
@@ -161,7 +161,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 					//
 					// https://secure.php.net/ChangeLog-5.php#5.6.16
 					// https://bugs.php.net/bug.php?id=68344
-					elseif (defined('MYSQLI_CLIENT_SSL_DONT_VERIFY_SERVER_CERT'))
+					elseif (\defined('MYSQLI_CLIENT_SSL_DONT_VERIFY_SERVER_CERT'))
 					{
 						$this->mysqli->options(MYSQLI_CLIENT_SSL_DONT_VERIFY_SERVER_CERT, true);
 					}
@@ -179,7 +179,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 		{
 			// Prior to version 5.7.3, MySQL silently downgrades to an unencrypted connection if SSL setup fails
 			if (
-					($client_flags & MYSQLI_CLIENT_SSL) && version_compare($this->mysqli->client_info, '5.7.3', '<=') && empty($this->mysqli->query("SHOW STATUS LIKE 'ssl_cipher'")
+					($client_flags & MYSQLI_CLIENT_SSL) && \version_compare($this->mysqli->client_info, '5.7.3', '<=') && empty($this->mysqli->query("SHOW STATUS LIKE 'ssl_cipher'")
 									->fetch_object()->Value)
 			)
 			{
@@ -327,9 +327,9 @@ class Connection extends BaseConnection implements ConnectionInterface
 	{
 		// mysqli_affected_rows() returns 0 for "DELETE FROM TABLE" queries. This hack
 		// modifies the query so that it a proper number of affected rows is returned.
-		if ($this->deleteHack === true && preg_match('/^\s*DELETE\s+FROM\s+(\S+)\s*$/i', $sql))
+		if ($this->deleteHack === true && \preg_match('/^\s*DELETE\s+FROM\s+(\S+)\s*$/i', $sql))
 		{
-			return trim($sql) . ' WHERE 1=1';
+			return \trim($sql) . ' WHERE 1=1';
 		}
 
 		return $sql;
@@ -357,7 +357,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 	 */
 	protected function _escapeString(string $str): string
 	{
-		if (is_bool($str))
+		if (\is_bool($str))
 		{
 			return $str;
 		}
@@ -422,12 +422,12 @@ class Connection extends BaseConnection implements ConnectionInterface
 		$query = $query->getResultObject();
 
 		$retval = [];
-		for ($i = 0, $c = count($query); $i < $c; $i ++ )
+		for ($i = 0, $c = \count($query); $i < $c; $i ++ )
 		{
 			$retval[$i] = new \stdClass();
 			$retval[$i]->name = $query[$i]->Field;
 
-			sscanf($query[$i]->Type, '%[a-z](%d)', $retval[$i]->type, $retval[$i]->max_length
+			\sscanf($query[$i]->Type, '%[a-z](%d)', $retval[$i]->type, $retval[$i]->max_length
 			);
 
 			$retval[$i]->default = $query[$i]->Default;
@@ -458,30 +458,30 @@ class Connection extends BaseConnection implements ConnectionInterface
 		}
 
 		$retval = [];
-		foreach (explode("\n", $row['Create Table']) as $line)
+		foreach (\explode("\n", $row['Create Table']) as $line)
 		{
-			$line = trim($line);
-			if (strpos($line, 'PRIMARY KEY') === 0)
+			$line = \trim($line);
+			if (\strpos($line, 'PRIMARY KEY') === 0)
 			{
 				$obj = new \stdClass();
 				$obj->name = 'PRIMARY KEY';
-				$_fields = explode(',', preg_replace('/^.*\((.+)\).*$/', '$1', $line));
-				$obj->fields = array_map(function($v) {
-					return trim($v, '`');
+				$_fields = \explode(',', \preg_replace('/^.*\((.+)\).*$/', '$1', $line));
+				$obj->fields = \array_map(function($v) {
+					return \trim($v, '`');
 				}, $_fields);
 				$obj->type = 'PRIMARY';
 
 				$retval[] = $obj;
 			}
-			elseif (($unique = strpos($line, 'UNIQUE KEY') === 0) || strpos($line, 'KEY') === 0)
+			elseif (($unique = \strpos($line, 'UNIQUE KEY') === 0) || \strpos($line, 'KEY') === 0)
 			{
-				if (preg_match('/KEY `([^`]+)` \((.+)\)/', $line, $matches))
+				if (\preg_match('/KEY `([^`]+)` \((.+)\)/', $line, $matches))
 				{
 					$obj = new \stdClass();
 					$obj->name = $matches[1];
-					$obj->fields = array_map(function($v) {
-						return trim($v, '`');
-					}, explode(',', $matches[2]));
+					$obj->fields = \array_map(function($v) {
+						return \trim($v, '`');
+					}, \explode(',', $matches[2]));
 					$obj->type = $unique ? 'UNIQUE' : 'INDEX';
 
 					$retval[] = $obj;

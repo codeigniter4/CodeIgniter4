@@ -88,7 +88,7 @@ class Logs extends BaseCollector
 
 		$parser = \Config\Services::parser(BASEPATH . 'Debug/Toolbar/Views/', null, false);
 
-		if (empty($logs) || ! is_array($logs))
+		if (empty($logs) || ! \is_array($logs))
 		{
 			return '<p>Nothing was logged. If you were expecting logged items, ensure that LoggerConfig file has the correct threshold set.</p>';
 		}
@@ -135,7 +135,7 @@ EOD;
 	 */
 	protected function collectLogs()
 	{
-		if (! is_null($this->data)) return;
+		if (! \is_null($this->data)) return;
 
 		$logger = Services::logger(true);
 		$this->data = $logger->logCache;

@@ -22,7 +22,7 @@ class SelectTest extends \CIUnitTestCase
 
 		$expected = "SELECT * FROM \"users\"";
 
-		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+		$this->assertEquals($expected, \str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
 
 	//--------------------------------------------------------------------
@@ -35,7 +35,7 @@ class SelectTest extends \CIUnitTestCase
 
 		$expected = "SELECT \"name\" FROM \"users\"";
 
-		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+		$this->assertEquals($expected, \str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
 
 	//--------------------------------------------------------------------
@@ -48,7 +48,7 @@ class SelectTest extends \CIUnitTestCase
 
 		$expected = "SELECT \"name\", \"role\" FROM \"users\"";
 
-		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+		$this->assertEquals($expected, \str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
 
 	//--------------------------------------------------------------------
@@ -61,7 +61,7 @@ class SelectTest extends \CIUnitTestCase
 
 		$expected = "SELECT \"name\", \"role\" FROM \"users\"";
 
-		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+		$this->assertEquals($expected, \str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
 
 	//--------------------------------------------------------------------
@@ -74,7 +74,7 @@ class SelectTest extends \CIUnitTestCase
 
 		$expected = "SELECT \"name\", \"role\" as \"myRole\" FROM \"users\"";
 
-		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+		$this->assertEquals($expected, \str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
 
 	//--------------------------------------------------------------------
@@ -87,7 +87,7 @@ class SelectTest extends \CIUnitTestCase
 
 		$expected = "SELECT (SELECT SUM(payments.amount) FROM payments WHERE payments.invoice_id=4) AS amount_paid FROM \"users\"";
 
-		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+		$this->assertEquals($expected, \str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
 
 	//--------------------------------------------------------------------
@@ -100,7 +100,7 @@ class SelectTest extends \CIUnitTestCase
 
 		$expected = "SELECT MIN(\"payments\") AS \"payments\" FROM \"invoices\"";
 
-		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+		$this->assertEquals($expected, \str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
 
 	//--------------------------------------------------------------------
@@ -113,7 +113,7 @@ class SelectTest extends \CIUnitTestCase
 
 		$expected = "SELECT MIN(\"payments\") AS \"myAlias\" FROM \"invoices\"";
 
-		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+		$this->assertEquals($expected, \str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
 
 	//--------------------------------------------------------------------
@@ -126,7 +126,7 @@ class SelectTest extends \CIUnitTestCase
 
 		$expected = "SELECT MAX(\"payments\") AS \"payments\" FROM \"invoices\"";
 
-		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+		$this->assertEquals($expected, \str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
 
 	//--------------------------------------------------------------------
@@ -139,7 +139,7 @@ class SelectTest extends \CIUnitTestCase
 
 		$expected = "SELECT MAX(\"payments\") AS \"myAlias\" FROM \"invoices\"";
 
-		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+		$this->assertEquals($expected, \str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
 
 	//--------------------------------------------------------------------
@@ -152,7 +152,7 @@ class SelectTest extends \CIUnitTestCase
 
 		$expected = "SELECT AVG(\"payments\") AS \"payments\" FROM \"invoices\"";
 
-		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+		$this->assertEquals($expected, \str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
 
 	//--------------------------------------------------------------------
@@ -165,7 +165,7 @@ class SelectTest extends \CIUnitTestCase
 
 		$expected = "SELECT AVG(\"payments\") AS \"myAlias\" FROM \"invoices\"";
 
-		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+		$this->assertEquals($expected, \str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
 
 	//--------------------------------------------------------------------
@@ -178,7 +178,7 @@ class SelectTest extends \CIUnitTestCase
 
 		$expected = "SELECT SUM(\"payments\") AS \"payments\" FROM \"invoices\"";
 
-		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+		$this->assertEquals($expected, \str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
 
 	//--------------------------------------------------------------------
@@ -191,7 +191,7 @@ class SelectTest extends \CIUnitTestCase
 
 		$expected = "SELECT SUM(\"payments\") AS \"myAlias\" FROM \"invoices\"";
 
-		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+		$this->assertEquals($expected, \str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
 
 	//--------------------------------------------------------------------
@@ -216,7 +216,7 @@ class SelectTest extends \CIUnitTestCase
 
 		$expected = "SELECT MAX(\"db\".\"payments\") AS \"payments\" FROM \"invoices\"";
 
-		$this->assertEquals($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+		$this->assertEquals($expected, \str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
 
 	//--------------------------------------------------------------------

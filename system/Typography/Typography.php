@@ -109,49 +109,49 @@ class Typography
 		}
 
 		// Standardize Newlines to make matching easier
-		if (strpos($str, "\r") !== false)
+		if (\strpos($str, "\r") !== false)
 		{
-			$str = str_replace(["\r\n", "\r"], "\n", $str);
+			$str = \str_replace(["\r\n", "\r"], "\n", $str);
 		}
 
 		// Reduce line breaks.  If there are more than two consecutive linebreaks
 		// we'll compress them down to a maximum of two since there's no benefit to more.
 		if ($reduce_linebreaks === false)
 		{
-			$str = preg_replace("/\n\n+/", "\n\n", $str);
+			$str = \preg_replace("/\n\n+/", "\n\n", $str);
 		}
 
 		// HTML comment tags don't conform to patterns of normal tags, so pull them out separately, only if needed
 		$html_comments = [];
-		if (strpos($str, '<!--') !== false && preg_match_all('#(<!\-\-.*?\-\->)#s', $str, $matches))
+		if (\strpos($str, '<!--') !== false && \preg_match_all('#(<!\-\-.*?\-\->)#s', $str, $matches))
 		{
-			for ($i = 0, $total = count($matches[0]); $i < $total; $i ++ )
+			for ($i = 0, $total = \count($matches[0]); $i < $total; $i ++ )
 			{
 				$html_comments[] = $matches[0][$i];
-				$str = str_replace($matches[0][$i], '{@HC' . $i . '}', $str);
+				$str = \str_replace($matches[0][$i], '{@HC' . $i . '}', $str);
 			}
 		}
 
 		// match and yank <pre> tags if they exist.  It's cheaper to do this separately since most content will
 		// not contain <pre> tags, and it keeps the PCRE patterns below simpler and faster
-		if (strpos($str, '<pre') !== false)
+		if (\strpos($str, '<pre') !== false)
 		{
-			$str = preg_replace_callback('#<pre.*?>.*?</pre>#si', [$this, 'protectCharacters'], $str);
+			$str = \preg_replace_callback('#<pre.*?>.*?</pre>#si', [$this, 'protectCharacters'], $str);
 		}
 
 		// Convert quotes within tags to temporary markers.
-		$str = preg_replace_callback('#<.+?>#si', [$this, 'protectCharacters'], $str);
+		$str = \preg_replace_callback('#<.+?>#si', [$this, 'protectCharacters'], $str);
 
 		// Do the same with braces if necessary
 		if ($this->protectBracedQuotes === false)
 		{
-			$str = preg_replace_callback('#\{.+?\}#si', [$this, 'protectCharacters'], $str);
+			$str = \preg_replace_callback('#\{.+?\}#si', [$this, 'protectCharacters'], $str);
 		}
 
 		// Convert "ignore" tags to temporary marker.  The parser splits out the string at every tag
 		// it encounters.  Certain inline tags, like image tags, links, span tags, etc. will be
 		// adversely affected if they are split out so we'll convert the opening bracket < temporarily to: {@TAG}
-		$str = preg_replace('#<(/*)(' . $this->inlineElements . ')([ >])#i', '{@TAG}\\1\\2\\3', $str);
+		$str = \preg_replace('#<(/*)(' . $this->inlineElements . ')([ >])#i', '{@TAG}\\1\\2\\3', $str);
 
 		/* Split the string at every tag. This expression creates an array with this prototype:
 		 *
@@ -163,19 +163,19 @@ class Typography
 		 * 		Etc...
 		 * 	}
 		 */
-		$chunks = preg_split('/(<(?:[^<>]+(?:"[^"]*"|\'[^\']*\')?)+>)/', $str, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
+		$chunks = \preg_split('/(<(?:[^<>]+(?:"[^"]*"|\'[^\']*\')?)+>)/', $str, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
 
 		// Build our finalized string.  We cycle through the array, skipping tags, and processing the contained text
 		$str = '';
 		$process = true;
 
-		for ($i = 0, $c = count($chunks) - 1; $i <= $c; $i ++ )
+		for ($i = 0, $c = \count($chunks) - 1; $i <= $c; $i ++ )
 		{
 			// Are we dealing with a tag? If so, we'll skip the processing for this cycle.
 			// Well also set the "process" flag which allows us to skip <pre> tags and a few other things.
-			if (preg_match('#<(/*)(' . $this->blockElements . ').*?>#', $chunks[$i], $match))
+			if (\preg_match('#<(/*)(' . $this->blockElements . ').*?>#', $chunks[$i], $match))
 			{
-				if (preg_match('#' . $this->skipElements . '#', $match[2]))
+				if (\preg_match('#' . $this->skipElements . '#', $match[2]))
 				{
 					$process = ($match[1] === '/');
 				}
@@ -206,21 +206,21 @@ class Typography
 		}
 
 		// No opening block level tag? Add it if needed.
-		if ( ! preg_match('/^\s*<(?:' . $this->blockElements . ')/i', $str))
+		if ( ! \preg_match('/^\s*<(?:' . $this->blockElements . ')/i', $str))
 		{
-			$str = preg_replace('/^(.*?)<(' . $this->blockElements . ')/i', '<p>$1</p><$2', $str);
+			$str = \preg_replace('/^(.*?)<(' . $this->blockElements . ')/i', '<p>$1</p><$2', $str);
 		}
 
 		// Convert quotes, elipsis, em-dashes, non-breaking spaces, and ampersands
 		$str = $this->formatCharacters($str);
 
 		// restore HTML comments
-		for ($i = 0, $total = count($html_comments); $i < $total; $i ++ )
+		for ($i = 0, $total = \count($html_comments); $i < $total; $i ++ )
 		{
 			// remove surrounding paragraph tags, but only if there's an opening paragraph tag
 			// otherwise HTML comments at the ends of paragraphs will have the closing tag removed
 			// if '<p>{@HC1}' then replace <p>{@HC1}</p> with the comment, else replace only {@HC1} with the comment
-			$str = preg_replace('#(?(?=<p>\{@HC' . $i . '\})<p>\{@HC' . $i . '\}(\s*</p>)|\{@HC' . $i . '\})#s', $html_comments[$i], $str);
+			$str = \preg_replace('#(?(?=<p>\{@HC' . $i . '\})<p>\{@HC' . $i . '\}(\s*</p>)|\{@HC' . $i . '\})#s', $html_comments[$i], $str);
 		}
 
 		// Final clean up
@@ -263,7 +263,7 @@ class Typography
 			$table['#<p></p>#'] = '<p>&nbsp;</p>';
 		}
 
-		return preg_replace(array_keys($table), $table, $str);
+		return \preg_replace(\array_keys($table), $table, $str);
 	}
 
 	// --------------------------------------------------------------------
@@ -322,7 +322,7 @@ class Typography
 			];
 		}
 
-		return preg_replace(array_keys($table), $table, $str);
+		return \preg_replace(\array_keys($table), $table, $str);
 	}
 
 	// --------------------------------------------------------------------
@@ -337,16 +337,16 @@ class Typography
 	 */
 	protected function formatNewLines(string $str): string
 	{
-		if ($str === '' OR ( strpos($str, "\n") === false && ! in_array($this->lastBlockElement, $this->innerBlockRequired)))
+		if ($str === '' OR ( \strpos($str, "\n") === false && ! \in_array($this->lastBlockElement, $this->innerBlockRequired)))
 		{
 			return $str;
 		}
 
 		// Convert two consecutive newlines to paragraphs
-		$str = str_replace("\n\n", "</p>\n\n<p>", $str);
+		$str = \str_replace("\n\n", "</p>\n\n<p>", $str);
 
 		// Convert single spaces to <br /> tags
-		$str = preg_replace("/([^\n])(\n)([^\n])/", '\\1<br />\\2\\3', $str);
+		$str = \preg_replace("/([^\n])(\n)([^\n])/", '\\1<br />\\2\\3', $str);
 
 		// Wrap the whole enchilada in enclosing paragraphs
 		if ($str !== "\n")
@@ -354,12 +354,12 @@ class Typography
 			// We trim off the right-side new line so that the closing </p> tag
 			// will be positioned immediately following the string, matching
 			// the behavior of the opening <p> tag
-			$str = '<p>' . rtrim($str) . '</p>';
+			$str = '<p>' . \rtrim($str) . '</p>';
 		}
 
 		// Remove empty paragraphs if they are on the first line, as this
 		// is a potential unintended consequence of the previous code
-		return preg_replace('/<p><\/p>(.*)/', '\\1', $str, 1);
+		return \preg_replace('/<p><\/p>(.*)/', '\\1', $str, 1);
 	}
 
 	// ------------------------------------------------------------------------
@@ -377,7 +377,7 @@ class Typography
 	 */
 	protected function protectCharacters(array $match): string
 	{
-		return str_replace(["'", '"', '--', '  '], ['{@SQ}', '{@DQ}', '{@DD}', '{@NBS}'], $match[0]);
+		return \str_replace(["'", '"', '--', '  '], ['{@SQ}', '{@DQ}', '{@DD}', '{@NBS}'], $match[0]);
 	}
 
 	// --------------------------------------------------------------------
@@ -391,9 +391,9 @@ class Typography
 	public function nl2brExceptPre(string $str): string
 	{
 		$newstr = '';
-		for ($ex = explode('pre>', $str), $ct = count($ex), $i = 0; $i < $ct; $i ++ )
+		for ($ex = \explode('pre>', $str), $ct = \count($ex), $i = 0; $i < $ct; $i ++ )
 		{
-			$newstr .= (($i % 2) === 0) ? nl2br($ex[$i]) : $ex[$i];
+			$newstr .= (($i % 2) === 0) ? \nl2br($ex[$i]) : $ex[$i];
 			if ($ct - 1 !== $i)
 			{
 				$newstr .= 'pre>';

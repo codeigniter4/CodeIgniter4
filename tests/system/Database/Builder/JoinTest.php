@@ -24,7 +24,7 @@ class JoinTest extends \CIUnitTestCase
 
 		$expectedSQL   = "SELECT * FROM \"user\" JOIN \"job\" ON \"user\".\"id\" = \"job\".\"id\"";
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+		$this->assertEquals($expectedSQL, \str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
 
 	//--------------------------------------------------------------------
@@ -37,7 +37,7 @@ class JoinTest extends \CIUnitTestCase
 
 		$expectedSQL   = "SELECT * FROM \"table1\" JOIN \"table2\" ON \"field\" IS NULL";
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+		$this->assertEquals($expectedSQL, \str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
 
 	//--------------------------------------------------------------------
@@ -50,7 +50,7 @@ class JoinTest extends \CIUnitTestCase
 
 		$expectedSQL   = "SELECT * FROM \"table1\" JOIN \"table2\" ON \"field\" IS NOT NULL";
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+		$this->assertEquals($expectedSQL, \str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
 
 	//--------------------------------------------------------------------
@@ -63,7 +63,7 @@ class JoinTest extends \CIUnitTestCase
 
 		$expectedSQL   = "SELECT * FROM \"table1\" LEFT JOIN \"table2\" ON \"table1\".\"field1\" = \"table2\".\"field2\" AND \"table1\".\"field1\" = 'foo' AND \"table2\".\"field2\" = 0";
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+		$this->assertEquals($expectedSQL, \str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
 
 	//--------------------------------------------------------------------

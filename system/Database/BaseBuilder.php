@@ -245,17 +245,17 @@ class BaseBuilder
 	 */
 	public function select($select = '*', $escape = null)
 	{
-		if (is_string($select))
+		if (\is_string($select))
 		{
-			$select = explode(',', $select);
+			$select = \explode(',', $select);
 		}
 
 		// If the escape value was not set, we will base it on the global setting
-		is_bool($escape) || $escape = $this->db->protectIdentifiers;
+		\is_bool($escape) || $escape = $this->db->protectIdentifiers;
 
 		foreach ($select as $val)
 		{
-			$val = trim($val);
+			$val = \trim($val);
 
 			if ($val !== '')
 			{
@@ -354,24 +354,24 @@ class BaseBuilder
 	 */
 	protected function maxMinAvgSum($select = '', $alias = '', $type = 'MAX')
 	{
-		if ( ! is_string($select) || $select === '')
+		if ( ! \is_string($select) || $select === '')
 		{
 			throw new DatabaseException('The query you submitted is not valid.');
 		}
 
-		$type = strtoupper($type);
+		$type = \strtoupper($type);
 
-		if ( ! in_array($type, ['MAX', 'MIN', 'AVG', 'SUM']))
+		if ( ! \in_array($type, ['MAX', 'MIN', 'AVG', 'SUM']))
 		{
 			throw new DatabaseException('Invalid function type: ' . $type);
 		}
 
 		if ($alias === '')
 		{
-			$alias = $this->createAliasFromTable(trim($select));
+			$alias = $this->createAliasFromTable(\trim($select));
 		}
 
-		$sql = $type . '(' . $this->db->protectIdentifiers(trim($select)) . ') AS ' . $this->db->escapeIdentifiers(trim($alias));
+		$sql = $type . '(' . $this->db->protectIdentifiers(\trim($select)) . ') AS ' . $this->db->escapeIdentifiers(\trim($alias));
 
 		$this->QBSelect[] = $sql;
 		$this->QBNoEscape[] = null;
@@ -390,11 +390,11 @@ class BaseBuilder
 	 */
 	protected function createAliasFromTable($item)
 	{
-		if (strpos($item, '.') !== false)
+		if (\strpos($item, '.') !== false)
 		{
-			$item = explode('.', $item);
+			$item = \explode('.', $item);
 
-			return end($item);
+			return \end($item);
 		}
 
 		return $item;
@@ -413,7 +413,7 @@ class BaseBuilder
 	 */
 	public function distinct($val = true)
 	{
-		$this->QBDistinct = is_bool($val) ? $val : true;
+		$this->QBDistinct = \is_bool($val) ? $val : true;
 
 		return $this;
 	}
@@ -440,11 +440,11 @@ class BaseBuilder
 
 		foreach ((array) $from as $val)
 		{
-			if (strpos($val, ',') !== false)
+			if (\strpos($val, ',') !== false)
 			{
-				foreach (explode(',', $val) as $v)
+				foreach (\explode(',', $val) as $v)
 				{
-					$v = trim($v);
+					$v = \trim($v);
 					$this->trackAliases($v);
 
 					$this->QBFrom[] = $v = $this->db->protectIdentifiers($v, true, null, false);
@@ -452,7 +452,7 @@ class BaseBuilder
 			}
 			else
 			{
-				$val = trim($val);
+				$val = \trim($val);
 
 				// Extract any aliases that might exist. We use this information
 				// in the protectIdentifiers to know whether to add a table prefix
@@ -483,9 +483,9 @@ class BaseBuilder
 	{
 		if ($type !== '')
 		{
-			$type = strtoupper(trim($type));
+			$type = \strtoupper(\trim($type));
 
-			if ( ! in_array($type, ['LEFT', 'RIGHT', 'OUTER', 'INNER', 'LEFT OUTER', 'RIGHT OUTER'], true))
+			if ( ! \in_array($type, ['LEFT', 'RIGHT', 'OUTER', 'INNER', 'LEFT OUTER', 'RIGHT OUTER'], true))
 			{
 				$type = '';
 			}
@@ -499,7 +499,7 @@ class BaseBuilder
 		// in the protectIdentifiers to know whether to add a table prefix
 		$this->trackAliases($table);
 
-		is_bool($escape) || $escape = $this->db->protectIdentifiers;
+		\is_bool($escape) || $escape = $this->db->protectIdentifiers;
 
 		if ( ! $this->hasOperator($cond))
 		{
@@ -512,17 +512,17 @@ class BaseBuilder
 		else
 		{
 			// Split multiple conditions
-			if (preg_match_all('/\sAND\s|\sOR\s/i', $cond, $joints, PREG_OFFSET_CAPTURE))
+			if (\preg_match_all('/\sAND\s|\sOR\s/i', $cond, $joints, PREG_OFFSET_CAPTURE))
 			{
 				$conditions = [];
 				$joints = $joints[0];
-				array_unshift($joints, ['', 0]);
+				\array_unshift($joints, ['', 0]);
 
-				for ($i = count($joints) - 1, $pos = strlen($cond); $i >= 0; $i -- )
+				for ($i = \count($joints) - 1, $pos = \strlen($cond); $i >= 0; $i -- )
 				{
-					$joints[$i][1] += strlen($joints[$i][0]); // offset
-					$conditions[$i] = substr($cond, $joints[$i][1], $pos - $joints[$i][1]);
-					$pos = $joints[$i][1] - strlen($joints[$i][0]);
+					$joints[$i][1] += \strlen($joints[$i][0]); // offset
+					$conditions[$i] = \substr($cond, $joints[$i][1], $pos - $joints[$i][1]);
+					$pos = $joints[$i][1] - \strlen($joints[$i][0]);
 					$joints[$i] = $joints[$i][0];
 				}
 			}
@@ -533,11 +533,11 @@ class BaseBuilder
 			}
 
 			$cond = ' ON ';
-			for ($i = 0, $c = count($conditions); $i < $c; $i ++ )
+			for ($i = 0, $c = \count($conditions); $i < $c; $i ++ )
 			{
 				$operator = $this->getOperator($conditions[$i]);
 				$cond .= $joints[$i];
-				$cond .= preg_match("/(\(*)?([\[\]\w\.'-]+)" . preg_quote($operator) . "(.*)/i", $conditions[$i], $match) ? $match[1] . $this->db->protectIdentifiers($match[2]) . $operator . $this->db->protectIdentifiers($match[3]) : $conditions[$i];
+				$cond .= \preg_match("/(\(*)?([\[\]\w\.'-]+)" . \preg_quote($operator) . "(.*)/i", $conditions[$i], $match) ? $match[1] . $this->db->protectIdentifiers($match[2]) . $operator . $this->db->protectIdentifiers($match[3]) : $conditions[$i];
 			}
 		}
 
@@ -611,13 +611,13 @@ class BaseBuilder
 	 */
 	protected function whereHaving($qb_key, $key, $value = null, $type = 'AND ', $escape = null)
 	{
-		if ( ! is_array($key))
+		if ( ! \is_array($key))
 		{
 			$key = [$key => $value];
 		}
 
 		// If the escape value was not set will base it on the global setting
-		is_bool($escape) || $escape = $this->db->protectIdentifiers;
+		\is_bool($escape) || $escape = $this->db->protectIdentifiers;
 
 		foreach ($key as $k => $v)
 		{
@@ -626,7 +626,7 @@ class BaseBuilder
 			if ($v !== null)
 			{
 				$op = $this->getOperator($k);
-				$k = trim(str_replace($op, '', $k));
+				$k = \trim(\str_replace($op, '', $k));
 
 				$bind = $this->setBind($k, $v);
 
@@ -644,12 +644,12 @@ class BaseBuilder
 				// value appears not to have been set, assign the test to IS NULL
 				$k .= ' IS NULL';
 			}
-			elseif (preg_match('/\s*(!?=|<>|IS(?:\s+NOT)?)\s*$/i', $k, $match, PREG_OFFSET_CAPTURE))
+			elseif (\preg_match('/\s*(!?=|<>|IS(?:\s+NOT)?)\s*$/i', $k, $match, PREG_OFFSET_CAPTURE))
 			{
-				$k = substr($k, 0, $match[0][1]) . ($match[1][0] === '=' ? ' IS NULL' : ' IS NOT NULL');
+				$k = \substr($k, 0, $match[0][1]) . ($match[1][0] === '=' ? ' IS NULL' : ' IS NOT NULL');
 			}
 
-			$v = ! is_null($v) ? " :$bind:" : $v;
+			$v = ! \is_null($v) ? " :$bind:" : $v;
 
 			$this->{$qb_key}[] = ['condition' => $prefix . $k . $v, 'escape' => $escape];
 		}
@@ -758,12 +758,12 @@ class BaseBuilder
 			return $this;
 		}
 
-		if ( ! is_array($values))
+		if ( ! \is_array($values))
 		{
 			$values = [$values];
 		}
 
-		is_bool($escape) || $escape = $this->db->protectIdentifiers;
+		\is_bool($escape) || $escape = $this->db->protectIdentifiers;
 
 		$ok = $key;
 
@@ -774,7 +774,7 @@ class BaseBuilder
 
 		$not = ($not) ? ' NOT' : '';
 
-		$where_in = array_values($values);
+		$where_in = \array_values($values);
 		$this->binds[$ok] = $where_in;
 
 		$prefix = empty($this->QBWhere) ? $this->groupGetType('') : $this->groupGetType($type);
@@ -895,15 +895,15 @@ class BaseBuilder
 	 */
 	protected function _like($field, $match = '', $type = 'AND ', $side = 'both', $not = '', $escape = null, $insensitiveSearch = false)
 	{
-		if ( ! is_array($field))
+		if ( ! \is_array($field))
 		{
 			$field = [$field => $match];
 		}
 
-		$escape = is_bool($escape) ? $escape : $this->db->protectIdentifiers;
+		$escape = \is_bool($escape) ? $escape : $this->db->protectIdentifiers;
 
 		// lowercase $side in case somebody writes e.g. 'BEFORE' instead of 'before' (doh)
-		$side = strtolower($side);
+		$side = \strtolower($side);
 
 		foreach ($field as $k => $v)
 		{
@@ -911,7 +911,7 @@ class BaseBuilder
 
 			if ($insensitiveSearch === true)
 			{
-				$v = strtolower($v);
+				$v = \strtolower($v);
 			}
 
 			if ($side === 'none')
@@ -936,7 +936,7 @@ class BaseBuilder
 			// some platforms require an escape sequence definition for LIKE wildcards
 			if ($escape === true && $this->db->likeEscapeStr !== '')
 			{
-				$like_statement .= sprintf($this->db->likeEscapeStr, $this->db->likeEscapeChar);
+				$like_statement .= \sprintf($this->db->likeEscapeStr, $this->db->likeEscapeChar);
 			}
 
 			$this->QBWhere[] = ['condition' => $like_statement, 'escape' => $escape];
@@ -987,7 +987,7 @@ class BaseBuilder
 		$this->QBWhereGroupStarted = true;
 		$prefix = empty($this->QBWhere) ? '' : $type;
 		$where = [
-			'condition'	 => $prefix . $not . str_repeat(' ', ++ $this->QBWhereGroupCount) . ' (',
+			'condition'	 => $prefix . $not . \str_repeat(' ', ++ $this->QBWhereGroupCount) . ' (',
 			'escape'	 => false,
 		];
 
@@ -1043,7 +1043,7 @@ class BaseBuilder
 	{
 		$this->QBWhereGroupStarted = false;
 		$where = [
-			'condition'	 => str_repeat(' ', $this->QBWhereGroupCount -- ) . ')',
+			'condition'	 => \str_repeat(' ', $this->QBWhereGroupCount -- ) . ')',
 			'escape'	 => false,
 		];
 
@@ -1089,16 +1089,16 @@ class BaseBuilder
 	 */
 	public function groupBy($by, $escape = null)
 	{
-		is_bool($escape) || $escape = $this->db->protectIdentifiers;
+		\is_bool($escape) || $escape = $this->db->protectIdentifiers;
 
-		if (is_string($by))
+		if (\is_string($by))
 		{
-			$by = ($escape === true) ? explode(',', $by) : [$by];
+			$by = ($escape === true) ? \explode(',', $by) : [$by];
 		}
 
 		foreach ($by as $val)
 		{
-			$val = trim($val);
+			$val = \trim($val);
 
 			if ($val !== '')
 			{
@@ -1160,14 +1160,14 @@ class BaseBuilder
 	 */
 	public function orderBy($orderby, $direction = '', $escape = null)
 	{
-		$direction = strtoupper(trim($direction));
+		$direction = \strtoupper(\trim($direction));
 
 		if ($direction === 'RANDOM')
 		{
 			$direction = '';
 
 			// Do we have a seed value?
-			$orderby = ctype_digit((string) $orderby) ? sprintf($this->randomKeyword[1], $orderby) : $this->randomKeyword[0];
+			$orderby = \ctype_digit((string) $orderby) ? \sprintf($this->randomKeyword[1], $orderby) : $this->randomKeyword[0];
 		}
 		elseif (empty($orderby))
 		{
@@ -1175,10 +1175,10 @@ class BaseBuilder
 		}
 		elseif ($direction !== '')
 		{
-			$direction = in_array($direction, ['ASC', 'DESC'], true) ? ' ' . $direction : '';
+			$direction = \in_array($direction, ['ASC', 'DESC'], true) ? ' ' . $direction : '';
 		}
 
-		is_bool($escape) || $escape = $this->db->protectIdentifiers;
+		\is_bool($escape) || $escape = $this->db->protectIdentifiers;
 
 		if ($escape === false)
 		{
@@ -1187,18 +1187,18 @@ class BaseBuilder
 		else
 		{
 			$qb_orderby = [];
-			foreach (explode(',', $orderby) as $field)
+			foreach (\explode(',', $orderby) as $field)
 			{
 				$qb_orderby[] = ($direction === '' &&
-						preg_match('/\s+(ASC|DESC)$/i', rtrim($field), $match, PREG_OFFSET_CAPTURE)) ? [
-					'field'		 => ltrim(substr($field, 0, $match[0][1])),
+						\preg_match('/\s+(ASC|DESC)$/i', \rtrim($field), $match, PREG_OFFSET_CAPTURE)) ? [
+					'field'		 => \ltrim(\substr($field, 0, $match[0][1])),
 					'direction'	 => ' ' . $match[1][0],
 					'escape'	 => true,
-						] : ['field' => trim($field), 'direction' => $direction, 'escape' => true];
+						] : ['field' => \trim($field), 'direction' => $direction, 'escape' => true];
 			}
 		}
 
-		$this->QBOrderBy = array_merge($this->QBOrderBy, $qb_orderby);
+		$this->QBOrderBy = \array_merge($this->QBOrderBy, $qb_orderby);
 
 		return $this;
 	}
@@ -1215,7 +1215,7 @@ class BaseBuilder
 	 */
 	public function limit(int $value = null, int $offset = 0)
 	{
-		if ( ! is_null($value))
+		if ( ! \is_null($value))
 		{
 			$this->QBLimit = $value;
 		}
@@ -1280,12 +1280,12 @@ class BaseBuilder
 	{
 		$key = $this->objectToArray($key);
 
-		if ( ! is_array($key))
+		if ( ! \is_array($key))
 		{
 			$key = [$key => $value];
 		}
 
-		$escape = is_bool($escape) ? $escape : $this->db->protectIdentifiers;
+		$escape = \is_bool($escape) ? $escape : $this->db->protectIdentifiers;
 
 		foreach ($key as $k => $v)
 		{
@@ -1342,7 +1342,7 @@ class BaseBuilder
 	 */
 	public function get(int $limit = null, int $offset = 0, $returnSQL = false)
 	{
-		if ( ! is_null($limit))
+		if ( ! \is_null($limit))
 		{
 			$this->limit($limit, $offset);
 		}
@@ -1525,9 +1525,9 @@ class BaseBuilder
 
 		// Batch this baby
 		$affected_rows = 0;
-		for ($i = 0, $total = count($this->QBSet); $i < $total; $i += $batch_size)
+		for ($i = 0, $total = \count($this->QBSet); $i < $total; $i += $batch_size)
 		{
-			$sql = $this->_insertBatch($this->db->protectIdentifiers($table, true, $escape, false), $this->QBKeys, array_slice($this->QBSet, $i, $batch_size));
+			$sql = $this->_insertBatch($this->db->protectIdentifiers($table, true, $escape, false), $this->QBKeys, \array_slice($this->QBSet, $i, $batch_size));
 
 			if ($testing)
 			{
@@ -1563,7 +1563,7 @@ class BaseBuilder
 	 */
 	protected function _insertBatch($table, $keys, $values)
 	{
-		return 'INSERT INTO ' . $table . ' (' . implode(', ', $keys) . ') VALUES ' . implode(', ', $values);
+		return 'INSERT INTO ' . $table . ' (' . \implode(', ', $keys) . ') VALUES ' . \implode(', ', $values);
 	}
 
 	//--------------------------------------------------------------------
@@ -1581,20 +1581,20 @@ class BaseBuilder
 	{
 		$key = $this->batchObjectToArray($key);
 
-		if ( ! is_array($key))
+		if ( ! \is_array($key))
 		{
 			$key = [$key => $value];
 		}
 
-		$escape = is_bool($escape) ? $escape : $this->db->protectIdentifiers;
+		$escape = \is_bool($escape) ? $escape : $this->db->protectIdentifiers;
 
-		$keys = array_keys($this->objectToArray(current($key)));
-		sort($keys);
+		$keys = \array_keys($this->objectToArray(\current($key)));
+		\sort($keys);
 
 		foreach ($key as $row)
 		{
 			$row = $this->objectToArray($row);
-			if (count(array_diff($keys, array_keys($row))) > 0 || count(array_diff(array_keys($row), $keys)) > 0)
+			if (\count(\array_diff($keys, \array_keys($row))) > 0 || \count(\array_diff(\array_keys($row), $keys)) > 0)
 			{
 				// batch function above returns an error on an empty array
 				$this->QBSet[] = [];
@@ -1602,7 +1602,7 @@ class BaseBuilder
 				return;
 			}
 
-			ksort($row); // puts $row in the same order as our keys
+			\ksort($row); // puts $row in the same order as our keys
 
 			$clean = [];
 			foreach ($row as $k => $value)
@@ -1612,7 +1612,7 @@ class BaseBuilder
 
 			$row = $clean;
 
-			$this->QBSet[] = '(' . implode(',', $row) . ')';
+			$this->QBSet[] = '(' . \implode(',', $row) . ')';
 		}
 
 		foreach ($keys as $k)
@@ -1644,7 +1644,7 @@ class BaseBuilder
 		$sql = $this->_insert(
 				$this->db->protectIdentifiers(
 						$this->QBFrom[0], true, null, false
-				), array_keys($this->QBSet), array_values($this->QBSet)
+				), \array_keys($this->QBSet), \array_values($this->QBSet)
 		);
 
 		if ($reset === true)
@@ -1683,7 +1683,7 @@ class BaseBuilder
 		$sql = $this->_insert(
 				$this->db->protectIdentifiers(
 						$this->QBFrom[0], true, $escape, false
-				), array_keys($this->QBSet), array_values($this->QBSet)
+				), \array_keys($this->QBSet), \array_values($this->QBSet)
 		);
 
 		if ($test === false)
@@ -1736,7 +1736,7 @@ class BaseBuilder
 	 */
 	protected function _insert($table, array $keys, array $unescapedKeys)
 	{
-		return 'INSERT INTO ' . $table . ' (' . implode(', ', $keys) . ') VALUES (' . implode(', ', $unescapedKeys) . ')';
+		return 'INSERT INTO ' . $table . ' (' . \implode(', ', $keys) . ') VALUES (' . \implode(', ', $unescapedKeys) . ')';
 	}
 
 	//--------------------------------------------------------------------
@@ -1770,7 +1770,7 @@ class BaseBuilder
 
 		$table = $this->QBFrom[0];
 
-		$sql = $this->_replace($table, array_keys($this->QBSet), array_values($this->QBSet));
+		$sql = $this->_replace($table, \array_keys($this->QBSet), \array_values($this->QBSet));
 
 		$this->resetWrite();
 
@@ -1792,7 +1792,7 @@ class BaseBuilder
 	 */
 	protected function _replace($table, $keys, $values)
 	{
-		return 'REPLACE INTO ' . $table . ' (' . implode(', ', $keys) . ') VALUES (' . implode(', ', $values) . ')';
+		return 'REPLACE INTO ' . $table . ' (' . \implode(', ', $keys) . ') VALUES (' . \implode(', ', $values) . ')';
 	}
 
 	//--------------------------------------------------------------------
@@ -1809,7 +1809,7 @@ class BaseBuilder
 	 */
 	protected function _fromTables()
 	{
-		return implode(', ', $this->QBFrom);
+		return \implode(', ', $this->QBFrom);
 	}
 
 	//--------------------------------------------------------------------
@@ -1912,7 +1912,7 @@ class BaseBuilder
 			$valstr[] = $key . ' = ' . $val;
 		}
 
-		return 'UPDATE ' . $table . ' SET ' . implode(', ', $valstr)
+		return 'UPDATE ' . $table . ' SET ' . \implode(', ', $valstr)
 				. $this->compileWhereHaving('QBWhere')
 				. $this->compileOrderBy()
 				. ($this->QBLimit ? $this->_limit(' ') : '');
@@ -2003,9 +2003,9 @@ class BaseBuilder
 		// Batch this baby
 		$affected_rows = 0;
 		$savedSQL = [];
-		for ($i = 0, $total = count($this->QBSet); $i < $total; $i += $batch_size)
+		for ($i = 0, $total = \count($this->QBSet); $i < $total; $i += $batch_size)
 		{
-			$sql = $this->_updateBatch($table, array_slice($this->QBSet, $i, $batch_size), $this->db->protectIdentifiers($index)
+			$sql = $this->_updateBatch($table, \array_slice($this->QBSet, $i, $batch_size), $this->db->protectIdentifiers($index)
 			);
 
 			if ($returnSQL)
@@ -2046,7 +2046,7 @@ class BaseBuilder
 		{
 			$ids[] = $val[$index];
 
-			foreach (array_keys($val) as $field)
+			foreach (\array_keys($val) as $field)
 			{
 				if ($field !== $index)
 				{
@@ -2059,13 +2059,13 @@ class BaseBuilder
 		foreach ($final as $k => $v)
 		{
 			$cases .= $k . " = CASE \n"
-					. implode("\n", $v) . "\n"
+					. \implode("\n", $v) . "\n"
 					. 'ELSE ' . $k . ' END, ';
 		}
 
-		$this->where($index . ' IN(' . implode(',', $ids) . ')', null, false);
+		$this->where($index . ' IN(' . \implode(',', $ids) . ')', null, false);
 
-		return 'UPDATE ' . $table . ' SET ' . substr($cases, 0, -2) . $this->compileWhereHaving('QBWhere');
+		return 'UPDATE ' . $table . ' SET ' . \substr($cases, 0, -2) . $this->compileWhereHaving('QBWhere');
 	}
 
 	//--------------------------------------------------------------------
@@ -2084,12 +2084,12 @@ class BaseBuilder
 	{
 		$key = $this->batchObjectToArray($key);
 
-		if ( ! is_array($key))
+		if ( ! \is_array($key))
 		{
 			// @todo error
 		}
 
-		is_bool($escape) || $escape = $this->db->protectIdentifiers;
+		\is_bool($escape) || $escape = $this->db->protectIdentifiers;
 
 		foreach ($key as $k => $v)
 		{
@@ -2336,7 +2336,7 @@ class BaseBuilder
 	 */
 	protected function trackAliases($table)
 	{
-		if (is_array($table))
+		if (\is_array($table))
 		{
 			foreach ($table as $t)
 			{
@@ -2348,19 +2348,19 @@ class BaseBuilder
 
 		// Does the string contain a comma?  If so, we need to separate
 		// the string into discreet statements
-		if (strpos($table, ',') !== false)
+		if (\strpos($table, ',') !== false)
 		{
-			return $this->trackAliases(explode(',', $table));
+			return $this->trackAliases(\explode(',', $table));
 		}
 
 		// if a table alias is used we can recognize it by a space
-		if (strpos($table, ' ') !== false)
+		if (\strpos($table, ' ') !== false)
 		{
 			// if the alias is written with the AS keyword, remove it
-			$table = preg_replace('/\s+AS\s+/i', ' ', $table);
+			$table = \preg_replace('/\s+AS\s+/i', ' ', $table);
 
 			// Grab the alias
-			$table = trim(strrchr($table, ' '));
+			$table = \trim(\strrchr($table, ' '));
 
 			// Store the alias, if it doesn't already exist
 			$this->db->addTableAlias($table);
@@ -2405,7 +2405,7 @@ class BaseBuilder
 					$this->QBSelect[$key] = $this->db->protectIdentifiers($val, false, $no_escape);
 				}
 
-				$sql .= implode(', ', $this->QBSelect);
+				$sql .= \implode(', ', $this->QBSelect);
 			}
 		}
 
@@ -2418,7 +2418,7 @@ class BaseBuilder
 		// Write the "JOIN" portion of the query
 		if (! empty($this->QBJoin))
 		{
-			$sql .= "\n" . implode("\n", $this->QBJoin);
+			$sql .= "\n" . \implode("\n", $this->QBJoin);
 		}
 
 		$sql .= $this->compileWhereHaving('QBWhere')
@@ -2453,10 +2453,10 @@ class BaseBuilder
 	{
 		if (! empty($this->$qb_key))
 		{
-			for ($i = 0, $c = count($this->$qb_key); $i < $c; $i ++ )
+			for ($i = 0, $c = \count($this->$qb_key); $i < $c; $i ++ )
 			{
 				// Is this condition already compiled?
-				if (is_string($this->{$qb_key}[$i]))
+				if (\is_string($this->{$qb_key}[$i]))
 				{
 					continue;
 				}
@@ -2467,14 +2467,14 @@ class BaseBuilder
 				}
 
 				// Split multiple conditions
-				$conditions = preg_split(
+				$conditions = \preg_split(
 						'/((?:^|\s+)AND\s+|(?:^|\s+)OR\s+)/i', $this->{$qb_key}[$i]['condition'], -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY
 				);
 
-				for ($ci = 0, $cc = count($conditions); $ci < $cc; $ci ++ )
+				for ($ci = 0, $cc = \count($conditions); $ci < $cc; $ci ++ )
 				{
 					if (($op = $this->getOperator($conditions[$ci])) === false
-							OR ! preg_match('/^(\(?)(.*)(' . preg_quote($op, '/') . ')\s*(.*(?<!\)))?(\)?)$/i', $conditions[$ci], $matches)
+							OR ! \preg_match('/^(\(?)(.*)(' . \preg_quote($op, '/') . ')\s*(.*(?<!\)))?(\)?)$/i', $conditions[$ci], $matches)
 					)
 					{
 						continue;
@@ -2495,15 +2495,15 @@ class BaseBuilder
 						$matches[4] = ' ' . $matches[4];
 					}
 
-					$conditions[$ci] = $matches[1] . $this->db->protectIdentifiers(trim($matches[2]))
-							. ' ' . trim($matches[3]) . $matches[4] . $matches[5];
+					$conditions[$ci] = $matches[1] . $this->db->protectIdentifiers(\trim($matches[2]))
+							. ' ' . \trim($matches[3]) . $matches[4] . $matches[5];
 				}
 
-				$this->{$qb_key}[$i] = implode('', $conditions);
+				$this->{$qb_key}[$i] = \implode('', $conditions);
 			}
 
 			return ($qb_key === 'QBHaving' ? "\nHAVING " : "\nWHERE ")
-					. implode("\n", $this->$qb_key);
+					. \implode("\n", $this->$qb_key);
 		}
 
 		return '';
@@ -2526,10 +2526,10 @@ class BaseBuilder
 	{
 		if (! empty($this->QBGroupBy))
 		{
-			for ($i = 0, $c = count($this->QBGroupBy); $i < $c; $i ++ )
+			for ($i = 0, $c = \count($this->QBGroupBy); $i < $c; $i ++ )
 			{
 				// Is it already compiled?
-				if (is_string($this->QBGroupBy[$i]))
+				if (\is_string($this->QBGroupBy[$i]))
 				{
 					continue;
 				}
@@ -2538,7 +2538,7 @@ class BaseBuilder
 						$this->isLiteral($this->QBGroupBy[$i]['field'])) ? $this->QBGroupBy[$i]['field'] : $this->db->protectIdentifiers($this->QBGroupBy[$i]['field']);
 			}
 
-			return "\nGROUP BY " . implode(', ', $this->QBGroupBy);
+			return "\nGROUP BY " . \implode(', ', $this->QBGroupBy);
 		}
 
 		return '';
@@ -2559,9 +2559,9 @@ class BaseBuilder
 	 */
 	protected function compileOrderBy()
 	{
-		if (is_array($this->QBOrderBy) && ! empty($this->QBOrderBy))
+		if (\is_array($this->QBOrderBy) && ! empty($this->QBOrderBy))
 		{
-			for ($i = 0, $c = count($this->QBOrderBy); $i < $c; $i ++ )
+			for ($i = 0, $c = \count($this->QBOrderBy); $i < $c; $i ++ )
 			{
 				if ($this->QBOrderBy[$i]['escape'] !== false && ! $this->isLiteral($this->QBOrderBy[$i]['field']))
 				{
@@ -2571,9 +2571,9 @@ class BaseBuilder
 				$this->QBOrderBy[$i] = $this->QBOrderBy[$i]['field'] . $this->QBOrderBy[$i]['direction'];
 			}
 
-			return $this->QBOrderBy = "\nORDER BY " . implode(', ', $this->QBOrderBy);
+			return $this->QBOrderBy = "\nORDER BY " . \implode(', ', $this->QBOrderBy);
 		}
-		elseif (is_string($this->QBOrderBy))
+		elseif (\is_string($this->QBOrderBy))
 		{
 			return $this->QBOrderBy;
 		}
@@ -2594,16 +2594,16 @@ class BaseBuilder
 	 */
 	protected function objectToArray($object)
 	{
-		if ( ! is_object($object))
+		if ( ! \is_object($object))
 		{
 			return $object;
 		}
 
 		$array = [];
-		foreach (get_object_vars($object) as $key => $val)
+		foreach (\get_object_vars($object) as $key => $val)
 		{
 			// There are some built in keys we need to ignore for this conversion
-			if ( ! is_object($val) && ! is_array($val) && $key !== '_parent_name')
+			if ( ! \is_object($val) && ! \is_array($val) && $key !== '_parent_name')
 			{
 				$array[$key] = $val;
 			}
@@ -2625,14 +2625,14 @@ class BaseBuilder
 	 */
 	protected function batchObjectToArray($object)
 	{
-		if ( ! is_object($object))
+		if ( ! \is_object($object))
 		{
 			return $object;
 		}
 
 		$array = [];
-		$out = get_object_vars($object);
-		$fields = array_keys($out);
+		$out = \get_object_vars($object);
+		$fields = \array_keys($out);
 
 		foreach ($fields as $val)
 		{
@@ -2663,10 +2663,10 @@ class BaseBuilder
 	 */
 	protected function isLiteral($str)
 	{
-		$str = trim($str);
+		$str = \trim($str);
 
-		if (empty($str) || ctype_digit($str) || (string) (float) $str === $str ||
-				in_array(strtoupper($str), ['TRUE', 'FALSE'], true)
+		if (empty($str) || \ctype_digit($str) || (string) (float) $str === $str ||
+				\in_array(\strtoupper($str), ['TRUE', 'FALSE'], true)
 		)
 		{
 			return true;
@@ -2679,7 +2679,7 @@ class BaseBuilder
 			$_str = ($this->db->escapeChar !== '"') ? ['"', "'"] : ["'"];
 		}
 
-		return in_array($str[0], $_str, true);
+		return \in_array($str[0], $_str, true);
 	}
 
 	//--------------------------------------------------------------------
@@ -2770,7 +2770,7 @@ class BaseBuilder
 	 */
 	protected function hasOperator($str)
 	{
-		return (bool) preg_match('/(<|>|!|=|\sIS NULL|\sIS NOT NULL|\sEXISTS|\sBETWEEN|\sLIKE|\sIN\s*\(|\s)/i', trim($str));
+		return (bool) \preg_match('/(<|>|!|=|\sIS NULL|\sIS NOT NULL|\sEXISTS|\sBETWEEN|\sLIKE|\sIN\s*\(|\s)/i', \trim($str));
 	}
 
 	// --------------------------------------------------------------------
@@ -2788,7 +2788,7 @@ class BaseBuilder
 
 		if (empty($_operators))
 		{
-			$_les = ($this->db->likeEscapeStr !== '') ? '\s+' . preg_quote(trim(sprintf($this->db->likeEscapeStr, $this->db->likeEscapeChar)), '/') : '';
+			$_les = ($this->db->likeEscapeStr !== '') ? '\s+' . \preg_quote(\trim(\sprintf($this->db->likeEscapeStr, $this->db->likeEscapeChar)), '/') : '';
 			$_operators = [
 				'\s*(?:<|>|!)?=\s*', // =, <=, >=, !=
 				'\s*<>?\s*', // <, <>
@@ -2805,7 +2805,7 @@ class BaseBuilder
 			];
 		}
 
-		return preg_match('/' . implode('|', $_operators) . '/i', $str, $match) ? $match[0] : false;
+		return \preg_match('/' . \implode('|', $_operators) . '/i', $str, $match) ? $match[0] : false;
 	}
 
 	// --------------------------------------------------------------------
@@ -2820,7 +2820,7 @@ class BaseBuilder
 	 */
 	protected function setBind(string $key, $value = null)
 	{
-		if ( ! array_key_exists($key, $this->binds))
+		if ( ! \array_key_exists($key, $this->binds))
 		{
 			$this->binds[$key] = $value;
 
@@ -2829,7 +2829,7 @@ class BaseBuilder
 
 		$count = 0;
 
-		while (array_key_exists($key . $count, $this->binds))
+		while (\array_key_exists($key . $count, $this->binds))
 		{
 			++ $count;
 		}

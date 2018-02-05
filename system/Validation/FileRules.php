@@ -52,7 +52,7 @@ class FileRules
 
 	public function __construct(RequestInterface $request = null)
 	{
-		if (is_null($request))
+		if (\is_null($request))
 		{
 			$request = Services::request();
 		}
@@ -75,7 +75,7 @@ class FileRules
 	{
 		$file = $this->request->getFile($name);
 
-		if (is_null($file))
+		if (\is_null($file))
 		{
 			return false;
 		}
@@ -103,12 +103,12 @@ class FileRules
 	{
 		// Grab the file name off the top of the $params
 		// after we split it.
-		$params = explode(',', $params);
-		$name = array_shift($params);
+		$params = \explode(',', $params);
+		$name = \array_shift($params);
 
 		$file = $this->request->getFile($name);
 
-		if (is_null($file))
+		if (\is_null($file))
 		{
 			return false;
 		}
@@ -132,12 +132,12 @@ class FileRules
 	{
 		// Grab the file name off the top of the $params
 		// after we split it.
-		$params = explode(',', $params);
-		$name = array_shift($params);
+		$params = \explode(',', $params);
+		$name = \array_shift($params);
 
 		$file = $this->request->getFile($name);
 
-		if (is_null($file))
+		if (\is_null($file))
 		{
 			return false;
 		}
@@ -146,7 +146,7 @@ class FileRules
 		// start with `image` even when then are multiple accepted types.
 		$type = \Config\Mimes::guessTypeFromExtension($file->getExtension());
 
-		return mb_strpos($type, 'image') === 0;
+		return \mb_strpos($type, 'image') === 0;
 	}
 
 	//--------------------------------------------------------------------
@@ -164,17 +164,17 @@ class FileRules
 	{
 		// Grab the file name off the top of the $params
 		// after we split it.
-		$params = explode(',', $params);
-		$name = array_shift($params);
+		$params = \explode(',', $params);
+		$name = \array_shift($params);
 
 		$file = $this->request->getFile($name);
 
-		if (is_null($file))
+		if (\is_null($file))
 		{
 			return false;
 		}
 
-		return in_array($file->getType(), $params);
+		return \in_array($file->getType(), $params);
 	}
 
 	//--------------------------------------------------------------------
@@ -192,17 +192,17 @@ class FileRules
 	{
 		// Grab the file name off the top of the $params
 		// after we split it.
-		$params = explode(',', $params);
-		$name = array_shift($params);
+		$params = \explode(',', $params);
+		$name = \array_shift($params);
 
 		$file = $this->request->getFile($name);
 
-		if (is_null($file))
+		if (\is_null($file))
 		{
 			return false;
 		}
 
-		return in_array($file->getExtension(), $params);
+		return \in_array($file->getExtension(), $params);
 	}
 
 	//--------------------------------------------------------------------
@@ -221,12 +221,12 @@ class FileRules
 	{
 		// Grab the file name off the top of the $params
 		// after we split it.
-		$params = explode(',', $params);
-		$name = array_shift($params);
+		$params = \explode(',', $params);
+		$name = \array_shift($params);
 
 		$file = $this->request->getFile($name);
 
-		if (is_null($file))
+		if (\is_null($file))
 		{
 			return false;
 		}
@@ -236,7 +236,7 @@ class FileRules
 		$allowedHeight = $params[1] ?? 0;
 
 		// Get uploaded image size
-		$info = getimagesize($file->getTempName());
+		$info = \getimagesize($file->getTempName());
 		$fileWidth = $info[0];
 		$fileHeight = $info[1];
 

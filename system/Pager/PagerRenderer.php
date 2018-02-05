@@ -230,7 +230,7 @@ class PagerRenderer
 	 */
 	protected function updatePages(int $count = null)
 	{
-		if (is_null($count))
+		if (\is_null($count))
 		{
 			return;
 		}

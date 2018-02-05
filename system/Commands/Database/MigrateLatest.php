@@ -109,7 +109,7 @@ class MigrateLatest extends BaseCommand
 
 		try
 		{
-			if ( ! is_null(CLI::getOption('all')))
+			if ( ! \is_null(CLI::getOption('all')))
 			{
 				$runner->latestAll($group);
 			}

@@ -46,7 +46,7 @@ class Filters
 	 */
 	public static function capitalize(string $value): string
 	{
-		return ucfirst(strtolower($value));
+		return \ucfirst(\strtolower($value));
 	}
 
 	//--------------------------------------------------------------------
@@ -61,12 +61,12 @@ class Filters
 	 */
 	public static function date($value, string $format): string
 	{
-		if (is_string($value) && ! is_numeric($value))
+		if (\is_string($value) && ! \is_numeric($value))
 		{
-			$value = strtotime($value);
+			$value = \strtotime($value);
 		}
 
-		return date($format, $value);
+		return \date($format, $value);
 	}
 
 	//--------------------------------------------------------------------
@@ -88,7 +88,7 @@ class Filters
 	public static function date_modify($value, string $adjustment): string
 	{
 		$value = self::date($value, 'Y-m-d H:i:s');
-		return strtotime($adjustment, strtotime($value));
+		return \strtotime($adjustment, \strtotime($value));
 	}
 
 	//--------------------------------------------------------------------
@@ -262,7 +262,7 @@ public static function prose(string $value): string
 public static function round($value, $precision = 2, $type = 'common')
 {
 
-	if ( ! is_numeric($precision))
+	if ( ! \is_numeric($precision))
 	{
 		$type = $precision;
 		$precision = 2;
@@ -271,13 +271,13 @@ public static function round($value, $precision = 2, $type = 'common')
 	switch ($type)
 	{
 		case 'common':
-			return round($value, $precision);
+			return \round($value, $precision);
 			break;
 		case 'ceil':
-			return ceil($value);
+			return \ceil($value);
 			break;
 		case 'floor':
-			return floor($value);
+			return \floor($value);
 			break;
 	}
 
@@ -297,7 +297,7 @@ public static function round($value, $precision = 2, $type = 'common')
  */
 public static function title(string $value): string
 {
-	return ucwords(strtolower($value));
+	return \ucwords(\strtolower($value));
 }
 
 //--------------------------------------------------------------------

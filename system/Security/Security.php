@@ -180,7 +180,7 @@ class Security
 	public function CSRFVerify(RequestInterface $request)
 	{
 		// If it's not a POST request we will set the CSRF cookie
-		if (strtoupper($_SERVER['REQUEST_METHOD']) !== 'POST')
+		if (\strtoupper($_SERVER['REQUEST_METHOD']) !== 'POST')
 		{
 			return $this->CSRFSetCookie($request);
 		}
@@ -223,7 +223,7 @@ class Security
 	 */
 	public function CSRFSetCookie(RequestInterface $request)
 	{
-		$expire = time() + $this->CSRFExpire;
+		$expire = \time() + $this->CSRFExpire;
 		$secure_cookie = (bool) $this->cookieSecure;
 
 		if ($secure_cookie && ! $request->isSecure())
@@ -231,7 +231,7 @@ class Security
 			return false;
 		}
 
-		setcookie(
+		\setcookie(
 				$this->CSRFCookieName, $this->CSRFHash, $expire, $this->cookiePath, $this->cookieDomain, $secure_cookie, true				// Enforce HTTP only cookie for security
 		);
 
@@ -279,14 +279,14 @@ class Security
 			// We don't necessarily want to regenerate it with
 			// each page load since a page could contain embedded
 			// sub-pages causing this feature to fail
-			if (isset($_COOKIE[$this->CSRFCookieName]) && is_string($_COOKIE[$this->CSRFCookieName]) && preg_match('#^[0-9a-f]{32}$#iS', $_COOKIE[$this->CSRFCookieName]) === 1
+			if (isset($_COOKIE[$this->CSRFCookieName]) && \is_string($_COOKIE[$this->CSRFCookieName]) && \preg_match('#^[0-9a-f]{32}$#iS', $_COOKIE[$this->CSRFCookieName]) === 1
 			)
 			{
 				return $this->CSRFHash = $_COOKIE[$this->CSRFCookieName];
 			}
 
-			$rand = random_bytes(16);
-			$this->CSRFHash = bin2hex($rand);
+			$rand = \random_bytes(16);
+			$this->CSRFHash = \bin2hex($rand);
 		}
 
 		return $this->CSRFHash;
@@ -325,10 +325,10 @@ class Security
 		do
 		{
 			$old = $str;
-			$str = str_replace($bad, '', $str);
+			$str = \str_replace($bad, '', $str);
 		} while ($old !== $str);
 
-		return stripslashes($str);
+		return \stripslashes($str);
 	}
 
 	//--------------------------------------------------------------------

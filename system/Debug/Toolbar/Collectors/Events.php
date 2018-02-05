@@ -138,18 +138,18 @@ class Events extends BaseCollector
 		{
 			$key = $row['event'];
 
-			if (! array_key_exists($key, $data['events']))
+			if (! \array_key_exists($key, $data['events']))
 			{
 				$data['events'][$key] = [
 					'event' => $key,
-					'duration' => number_format(($row['end']-$row['start']) * 1000, 2),
+					'duration' => \number_format(($row['end']-$row['start']) * 1000, 2),
 					'count' => 1,
 				];
 
 				continue;
 			}
 
-			$data['events'][$key]['duration'] += number_format(($row['end']-$row['start']) * 1000, 2);
+			$data['events'][$key]['duration'] += \number_format(($row['end']-$row['start']) * 1000, 2);
 			$data['events'][$key]['count']++;
 		}
 
@@ -166,7 +166,7 @@ class Events extends BaseCollector
 	 */
 	public function getBadgeValue()
 	{
-		return count(\CodeIgniter\Events\Events::getPerformanceLogs());
+		return \count(\CodeIgniter\Events\Events::getPerformanceLogs());
 	}
 
 	//--------------------------------------------------------------------

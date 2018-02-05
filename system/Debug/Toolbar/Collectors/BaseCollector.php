@@ -94,7 +94,7 @@ class BaseCollector
 	{
 		if ($safe)
 		{
-			return str_replace(' ', '-', strtolower($this->title));
+			return \str_replace(' ', '-', \strtolower($this->title));
 		}
 
 		return $this->title;
@@ -252,17 +252,17 @@ class BaseCollector
 	 */
 	public function cleanPath($file)
 	{
-		if (strpos($file, APPPATH) === 0)
+		if (\strpos($file, APPPATH) === 0)
 		{
-			$file = 'APPPATH/' . substr($file, strlen(APPPATH));
+			$file = 'APPPATH/' . \substr($file, \strlen(APPPATH));
 		}
-		elseif (strpos($file, BASEPATH) === 0)
+		elseif (\strpos($file, BASEPATH) === 0)
 		{
-			$file = 'BASEPATH/' . substr($file, strlen(BASEPATH));
+			$file = 'BASEPATH/' . \substr($file, \strlen(BASEPATH));
 		}
-		elseif (strpos($file, FCPATH) === 0)
+		elseif (\strpos($file, FCPATH) === 0)
 		{
-			$file = 'FCPATH/' . substr($file, strlen(FCPATH));
+			$file = 'FCPATH/' . \substr($file, \strlen(FCPATH));
 		}
 
 		return $file;

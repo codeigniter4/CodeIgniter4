@@ -80,7 +80,7 @@ abstract class BaseHandler implements HandlerInterface
 	 */
 	public function canHandle(string $level): bool
 	{
-		return in_array($level, $this->handles);
+		return \in_array($level, $this->handles);
 	}
 
 	//--------------------------------------------------------------------

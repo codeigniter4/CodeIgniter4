@@ -119,7 +119,7 @@ class MemcachedHandlerTest extends \CIUnitTestCase
 
 	public function testGetMetaData()
 	{
-		$time = time();
+		$time = \time();
 		$this->memcachedHandler->save(self::$key1, 'value');
 
 		$this->assertFalse($this->memcachedHandler->getMetaData(self::$dummy));

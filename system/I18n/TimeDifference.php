@@ -219,33 +219,33 @@ class TimeDifference
 
 		if ($years !== 0)
 		{
-			$phrase = lang('Time.years', [abs($years)], $locale);
+			$phrase = lang('Time.years', [\abs($years)], $locale);
 			$before = $years < 0;
 		}
 		else if ($months !== 0)
 		{
-			$phrase = lang('Time.months', [abs($months)], $locale);
+			$phrase = lang('Time.months', [\abs($months)], $locale);
 			$before = $months < 0;
 		}
-		else if ($days !== 0 && (abs($days) >= 7))
+		else if ($days !== 0 && (\abs($days) >= 7))
 		{
-			$weeks = ceil($days / 7);
-			$phrase = lang('Time.weeks', [abs($weeks)], $locale);
+			$weeks = \ceil($days / 7);
+			$phrase = lang('Time.weeks', [\abs($weeks)], $locale);
 			$before = $days < 0;
 		}
 		else if ($days !== 0)
 		{
-			$phrase = lang('Time.days', [abs($days)], $locale);
+			$phrase = lang('Time.days', [\abs($days)], $locale);
 			$before = $days < 0;
 		}
 		else if ($hours !== 0)
 		{
-			$phrase = lang('Time.hours', [abs($hours)], $locale);
+			$phrase = lang('Time.hours', [\abs($hours)], $locale);
 			$before = $hours < 0;
 		}
 		else if ($minutes !== 0)
 		{
-			$phrase = lang('Time.minutes', [abs($minutes)], $locale);
+			$phrase = lang('Time.minutes', [\abs($minutes)], $locale);
 			$before = $minutes < 0;
 		}
 		else
@@ -267,10 +267,10 @@ class TimeDifference
 	 */
 	public function __get($name)
 	{
-		$name = ucfirst(strtolower($name));
+		$name = \ucfirst(\strtolower($name));
 		$method = "get{$name}";
 
-		if (method_exists($this, $method))
+		if (\method_exists($this, $method))
 		{
 			return $this->{$method}($name);
 		}

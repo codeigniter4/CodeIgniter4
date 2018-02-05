@@ -33,7 +33,7 @@ class SessionTest extends \CIUnitTestCase
             'cookieSecure' => false,
         ];
 
-        $config = array_merge($defaults, $options);
+        $config = \array_merge($defaults, $options);
         $config = (object)$config;
 
         $session = new MockSession(new FileHandler($config), $config);
@@ -54,7 +54,7 @@ class SessionTest extends \CIUnitTestCase
     {
         $session = $this->getInstance();
 
-        $time = time()-400;
+        $time = \time()-400;
         $_SESSION['__ci_last_regenerate'] = $time;
         $session->start();
 
@@ -290,7 +290,7 @@ class SessionTest extends \CIUnitTestCase
         $session->start();
 
         $session->setTempdata('foo', 'bar', 300);
-        $this->assertGreaterThanOrEqual($_SESSION['__ci_vars']['foo'], time() + 300);
+        $this->assertGreaterThanOrEqual($_SESSION['__ci_vars']['foo'], \time() + 300);
     }
 
     public function testSetTempDataArrayMultiTTL()
@@ -298,7 +298,7 @@ class SessionTest extends \CIUnitTestCase
         $session = $this->getInstance();
         $session->start();
 
-        $time = time();
+        $time = \time();
 
         $session->setTempdata([
             'foo' => 300,
@@ -316,7 +316,7 @@ class SessionTest extends \CIUnitTestCase
         $session = $this->getInstance();
         $session->start();
 
-        $time = time();
+        $time = \time();
 
         $session->setTempdata(['foo', 'bar', 'baz'], null, 200);
 

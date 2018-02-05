@@ -51,7 +51,7 @@ class Result extends BaseResult implements ResultInterface
 	 */
 	public function getFieldCount(): int
 	{
-		return pg_num_fields($this->resultID);
+		return \pg_num_fields($this->resultID);
 	}
 
 	//--------------------------------------------------------------------
@@ -66,7 +66,7 @@ class Result extends BaseResult implements ResultInterface
 		$fieldNames = [];
 		for ($i = 0, $c = $this->getFieldCount(); $i < $c; $i ++ )
 		{
-			$fieldNames[] = pg_field_name($this->resultID, $i);
+			$fieldNames[] = \pg_field_name($this->resultID, $i);
 		}
 
 		return $fieldNames;
@@ -86,9 +86,9 @@ class Result extends BaseResult implements ResultInterface
 		for ($i = 0, $c = $this->getFieldCount(); $i < $c; $i ++ )
 		{
 			$retval[$i] = new \stdClass();
-			$retval[$i]->name = pg_field_name($this->resultID, $i);
-			$retval[$i]->type = pg_field_type($this->resultID, $i);
-			$retval[$i]->max_length = pg_field_size($this->resultID, $i);
+			$retval[$i]->name = \pg_field_name($this->resultID, $i);
+			$retval[$i]->type = \pg_field_type($this->resultID, $i);
+			$retval[$i]->max_length = \pg_field_size($this->resultID, $i);
 			// $retval[$i]->primary_key = (int)($fieldData[$i]->flags & 2);
 			// $retval[$i]->default     = $fieldData[$i]->def;
 		}
@@ -105,9 +105,9 @@ class Result extends BaseResult implements ResultInterface
 	 */
 	public function freeResult()
 	{
-		if (is_resource($this->resultID))
+		if (\is_resource($this->resultID))
 		{
-			pg_free_result($this->resultID);
+			\pg_free_result($this->resultID);
 			$this->resultID = false;
 		}
 	}
@@ -125,7 +125,7 @@ class Result extends BaseResult implements ResultInterface
 	 */
 	public function dataSeek($n = 0)
 	{
-		return pg_result_seek($this->resultID, $n);
+		return \pg_result_seek($this->resultID, $n);
 	}
 
 	//--------------------------------------------------------------------
@@ -139,7 +139,7 @@ class Result extends BaseResult implements ResultInterface
 	 */
 	protected function fetchAssoc()
 	{
-		return pg_fetch_assoc($this->resultID);
+		return \pg_fetch_assoc($this->resultID);
 	}
 
 	//--------------------------------------------------------------------
@@ -155,7 +155,7 @@ class Result extends BaseResult implements ResultInterface
 	 */
 	protected function fetchObject($className = 'stdClass')
 	{
-		return pg_fetch_object($this->resultID, null, $className);
+		return \pg_fetch_object($this->resultID, null, $className);
 	}
 
 	//--------------------------------------------------------------------

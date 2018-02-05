@@ -70,7 +70,7 @@ class EventModel extends Model
 
 	public function hasToken(string $token)
 	{
-		return in_array($token, $this->tokens);
+		return \in_array($token, $this->tokens);
 	}
 
 }

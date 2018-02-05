@@ -363,7 +363,7 @@ abstract class BaseConnection implements ConnectionInterface
 
 		//--------------------------------------------------------------------
 
-		$this->connectTime = microtime(true);
+		$this->connectTime = \microtime(true);
 
 		// Connect to the database and set the connection ID
 		$this->connID = $this->connect($this->pConnect);
@@ -372,7 +372,7 @@ abstract class BaseConnection implements ConnectionInterface
 		if ( ! $this->connID)
 		{
 			// Check if there is a failover set
-			if ( ! empty($this->failover) && is_array($this->failover))
+			if ( ! empty($this->failover) && \is_array($this->failover))
 			{
 				// Go over all the failovers
 				foreach ($this->failover as $failover)
@@ -401,7 +401,7 @@ abstract class BaseConnection implements ConnectionInterface
 			}
 		}
 
-		$this->connectDuration = microtime(true) - $this->connectTime;
+		$this->connectDuration = \microtime(true) - $this->connectTime;
 	}
 
 	//--------------------------------------------------------------------
@@ -562,7 +562,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 */
 	public function addTableAlias(string $table)
 	{
-		if ( ! in_array($table, $this->aliasedTables))
+		if ( ! \in_array($table, $this->aliasedTables))
 		{
 			$this->aliasedTables[] = $table;
 		}
@@ -602,7 +602,7 @@ abstract class BaseConnection implements ConnectionInterface
 			$this->initialize();
 		}
 
-		$resultClass = str_replace('Connection', 'Result', get_class($this));
+		$resultClass = \str_replace('Connection', 'Result', \get_class($this));
 
 		/**
 		 * @var Query $query
@@ -616,7 +616,7 @@ abstract class BaseConnection implements ConnectionInterface
 			$query->swapPrefix($this->DBPrefix, $this->swapPre);
 		}
 
-		$startTime = microtime(true);
+		$startTime = \microtime(true);
 
 		// Always save the last query so we can use
 		// the getLastQuery() method.
@@ -933,7 +933,7 @@ abstract class BaseConnection implements ConnectionInterface
 			throw new DatabaseException('You must set the database table to be used with your query.');
 		}
 
-		$className = str_replace('Connection', 'Builder', get_class($this));
+		$className = \str_replace('Connection', 'Builder', \get_class($this));
 
 		return new $className($tableName, $this);
 	}
@@ -972,7 +972,7 @@ abstract class BaseConnection implements ConnectionInterface
 			$sql = $sql->getOriginalQuery();
 		}
 
-		$class = str_ireplace('Connection', 'PreparedQuery', get_class($this));
+		$class = \str_ireplace('Connection', 'PreparedQuery', \get_class($this));
 		/**
 		 * @var BasePreparedQuery $class
 		 */
@@ -1034,7 +1034,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 */
 	public function getConnectDuration($decimals = 6)
 	{
-		return number_format($this->connectDuration, $decimals);
+		return \number_format($this->connectDuration, $decimals);
 	}
 
 	//--------------------------------------------------------------------
@@ -1068,12 +1068,12 @@ abstract class BaseConnection implements ConnectionInterface
 	 */
 	public function protectIdentifiers($item, $prefixSingle = false, $protectIdentifiers = null, $fieldExists = true)
 	{
-		if ( ! is_bool($protectIdentifiers))
+		if ( ! \is_bool($protectIdentifiers))
 		{
 			$protectIdentifiers = $this->protectIdentifiers;
 		}
 
-		if (is_array($item))
+		if (\is_array($item))
 		{
 			$escaped_array = [];
 			foreach ($item as $k => $v)
@@ -1091,25 +1091,25 @@ abstract class BaseConnection implements ConnectionInterface
 		//
 		// Added exception for single quotes as well, we don't want to alter
 		// literal strings. -- Narf
-		if (strcspn($item, "()'") !== strlen($item))
+		if (\strcspn($item, "()'") !== \strlen($item))
 		{
 			return $item;
 		}
 
 		// Convert tabs or multiple spaces into single spaces
-		$item = preg_replace('/\s+/', ' ', trim($item));
+		$item = \preg_replace('/\s+/', ' ', \trim($item));
 
 		// If the item has an alias declaration we remove it and set it aside.
 		// Note: strripos() is used in order to support spaces in table names
-		if ($offset = strripos($item, ' AS '))
+		if ($offset = \strripos($item, ' AS '))
 		{
-			$alias = ($protectIdentifiers) ? substr($item, $offset, 4) . $this->escapeIdentifiers(substr($item, $offset + 4)) : substr($item, $offset);
-			$item = substr($item, 0, $offset);
+			$alias = ($protectIdentifiers) ? \substr($item, $offset, 4) . $this->escapeIdentifiers(\substr($item, $offset + 4)) : \substr($item, $offset);
+			$item = \substr($item, 0, $offset);
 		}
-		elseif ($offset = strrpos($item, ' '))
+		elseif ($offset = \strrpos($item, ' '))
 		{
-			$alias = ($protectIdentifiers) ? ' ' . $this->escapeIdentifiers(substr($item, $offset + 1)) : substr($item, $offset);
-			$item = substr($item, 0, $offset);
+			$alias = ($protectIdentifiers) ? ' ' . $this->escapeIdentifiers(\substr($item, $offset + 1)) : \substr($item, $offset);
+			$item = \substr($item, 0, $offset);
 		}
 		else
 		{
@@ -1119,9 +1119,9 @@ abstract class BaseConnection implements ConnectionInterface
 		// Break the string apart if it contains periods, then insert the table prefix
 		// in the correct location, assuming the period doesn't indicate that we're dealing
 		// with an alias. While we're at it, we will escape the components
-		if (strpos($item, '.') !== false)
+		if (\strpos($item, '.') !== false)
 		{
-			$parts = explode('.', $item);
+			$parts = \explode('.', $item);
 
 			// Does the first segment of the exploded item match
 			// one of the aliases previously identified? If so,
@@ -1129,19 +1129,19 @@ abstract class BaseConnection implements ConnectionInterface
 			//
 			// NOTE: The ! empty() condition prevents this method
 			//       from breaking when QB isn't enabled.
-			if ( ! empty($this->aliasedTables) && in_array($parts[0], $this->aliasedTables))
+			if ( ! empty($this->aliasedTables) && \in_array($parts[0], $this->aliasedTables))
 			{
 				if ($protectIdentifiers === true)
 				{
 					foreach ($parts as $key => $val)
 					{
-						if ( ! in_array($val, $this->reservedIdentifiers))
+						if ( ! \in_array($val, $this->reservedIdentifiers))
 						{
 							$parts[$key] = $this->escapeIdentifiers($val);
 						}
 					}
 
-					$item = implode('.', $parts);
+					$item = \implode('.', $parts);
 				}
 
 				return $item . $alias;
@@ -1178,18 +1178,18 @@ abstract class BaseConnection implements ConnectionInterface
 				}
 
 				// Verify table prefix and replace if necessary
-				if ($this->swapPre !== '' && strpos($parts[$i], $this->swapPre) === 0)
+				if ($this->swapPre !== '' && \strpos($parts[$i], $this->swapPre) === 0)
 				{
-					$parts[$i] = preg_replace('/^' . $this->swapPre . '(\S+?)/', $this->DBPrefix . '\\1', $parts[$i]);
+					$parts[$i] = \preg_replace('/^' . $this->swapPre . '(\S+?)/', $this->DBPrefix . '\\1', $parts[$i]);
 				}
 				// We only add the table prefix if it does not already exist
-				elseif (strpos($parts[$i], $this->DBPrefix) !== 0)
+				elseif (\strpos($parts[$i], $this->DBPrefix) !== 0)
 				{
 					$parts[$i] = $this->DBPrefix . $parts[$i];
 				}
 
 				// Put the parts back together
-				$item = implode('.', $parts);
+				$item = \implode('.', $parts);
 			}
 
 			if ($protectIdentifiers === true)
@@ -1203,24 +1203,24 @@ abstract class BaseConnection implements ConnectionInterface
 		// In some cases, especially 'from', we end up running through
 		// protect_identifiers twice. This algorithm won't work when
 		// it contains the escapeChar so strip it out.
-		$item = trim($item, $this->escapeChar);
+		$item = \trim($item, $this->escapeChar);
 
 		// Is there a table prefix? If not, no need to insert it
 		if ($this->DBPrefix !== '')
 		{
 			// Verify table prefix and replace if necessary
-			if ($this->swapPre !== '' && strpos($item, $this->swapPre) === 0)
+			if ($this->swapPre !== '' && \strpos($item, $this->swapPre) === 0)
 			{
-				$item = preg_replace('/^' . $this->swapPre . '(\S+?)/', $this->DBPrefix . '\\1', $item);
+				$item = \preg_replace('/^' . $this->swapPre . '(\S+?)/', $this->DBPrefix . '\\1', $item);
 			}
 			// Do we prefix an item with no segments?
-			elseif ($prefixSingle === true && strpos($item, $this->DBPrefix) !== 0)
+			elseif ($prefixSingle === true && \strpos($item, $this->DBPrefix) !== 0)
 			{
 				$item = $this->DBPrefix . $item;
 			}
 		}
 
-		if ($protectIdentifiers === true && ! in_array($item, $this->reservedIdentifiers))
+		if ($protectIdentifiers === true && ! \in_array($item, $this->reservedIdentifiers))
 		{
 			$item = $this->escapeIdentifiers($item);
 		}
@@ -1241,11 +1241,11 @@ abstract class BaseConnection implements ConnectionInterface
 	 */
 	public function escapeIdentifiers($item)
 	{
-		if ($this->escapeChar === '' OR empty($item) OR in_array($item, $this->reservedIdentifiers))
+		if ($this->escapeChar === '' OR empty($item) OR \in_array($item, $this->reservedIdentifiers))
 		{
 			return $item;
 		}
-		elseif (is_array($item))
+		elseif (\is_array($item))
 		{
 			foreach ($item as $key => $value)
 			{
@@ -1255,8 +1255,8 @@ abstract class BaseConnection implements ConnectionInterface
 			return $item;
 		}
 		// Avoid breaking functions and literal values inside queries
-		elseif (ctype_digit($item) || $item[0] === "'" OR ( $this->escapeChar !== '"' && $item[0] === '"') OR
-				strpos($item, '(') !== false
+		elseif (\ctype_digit($item) || $item[0] === "'" OR ( $this->escapeChar !== '"' && $item[0] === '"') OR
+				\strpos($item, '(') !== false
 		)
 		{
 			return $item;
@@ -1266,31 +1266,31 @@ abstract class BaseConnection implements ConnectionInterface
 
 		if (empty($preg_ec))
 		{
-			if (is_array($this->escapeChar))
+			if (\is_array($this->escapeChar))
 			{
 				$preg_ec = [
-					preg_quote($this->escapeChar[0], '/'),
-					preg_quote($this->escapeChar[1], '/'),
+					\preg_quote($this->escapeChar[0], '/'),
+					\preg_quote($this->escapeChar[1], '/'),
 					$this->escapeChar[0],
 					$this->escapeChar[1],
 				];
 			}
 			else
 			{
-				$preg_ec[0] = $preg_ec[1] = preg_quote($this->escapeChar, '/');
+				$preg_ec[0] = $preg_ec[1] = \preg_quote($this->escapeChar, '/');
 				$preg_ec[2] = $preg_ec[3] = $this->escapeChar;
 			}
 		}
 
 		foreach ($this->reservedIdentifiers as $id)
 		{
-			if (strpos($item, '.' . $id) !== false)
+			if (\strpos($item, '.' . $id) !== false)
 			{
-				return preg_replace('/' . $preg_ec[0] . '?([^' . $preg_ec[1] . '\.]+)' . $preg_ec[1] . '?\./i', $preg_ec[2] . '$1' . $preg_ec[3] . '.', $item);
+				return \preg_replace('/' . $preg_ec[0] . '?([^' . $preg_ec[1] . '\.]+)' . $preg_ec[1] . '?\./i', $preg_ec[2] . '$1' . $preg_ec[3] . '.', $item);
 			}
 		}
 
-		return preg_replace('/' . $preg_ec[0] . '?([^' . $preg_ec[1] . '\.]+)' . $preg_ec[1] . '?(\.)?/i', $preg_ec[2] . '$1' . $preg_ec[3] . '$2', $item);
+		return \preg_replace('/' . $preg_ec[0] . '?([^' . $preg_ec[1] . '\.]+)' . $preg_ec[1] . '?(\.)?/i', $preg_ec[2] . '$1' . $preg_ec[3] . '$2', $item);
 	}
 
 	//--------------------------------------------------------------------
@@ -1354,21 +1354,21 @@ abstract class BaseConnection implements ConnectionInterface
 	 */
 	public function escape($str)
 	{
-		if (is_array($str))
+		if (\is_array($str))
 		{
-			$str = array_map([&$this, 'escape'], $str);
+			$str = \array_map([&$this, 'escape'], $str);
 
 			return $str;
 		}
-		else if (is_string($str) OR ( is_object($str) && method_exists($str, '__toString')))
+		else if (\is_string($str) OR ( \is_object($str) && \method_exists($str, '__toString')))
 		{
 			return "'" . $this->escapeString($str) . "'";
 		}
-		else if (is_bool($str))
+		else if (\is_bool($str))
 		{
 			return ($str === false) ? 0 : 1;
 		}
-		else if (is_numeric($str) && $str < 0)
+		else if (\is_numeric($str) && $str < 0)
 		{
 			return "'{$str}'";
 		}
@@ -1391,7 +1391,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 */
 	public function escapeString($str, $like = FALSE)
 	{
-		if (is_array($str))
+		if (\is_array($str))
 		{
 			foreach ($str as $key => $val)
 			{
@@ -1406,7 +1406,7 @@ abstract class BaseConnection implements ConnectionInterface
 		// escape LIKE condition wildcards
 		if ($like === true)
 		{
-			return str_replace(
+			return \str_replace(
 					[$this->likeEscapeChar, '%', '_'], [$this->likeEscapeChar . $this->likeEscapeChar, $this->likeEscapeChar . '%', $this->likeEscapeChar . '_'], $str
 			);
 		}
@@ -1443,7 +1443,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 */
 	protected function _escapeString(string $str): string
 	{
-		return str_replace("'", "''", remove_invisible_characters($str, false));
+		return \str_replace("'", "''", remove_invisible_characters($str, false));
 	}
 
 	//--------------------------------------------------------------------
@@ -1460,14 +1460,14 @@ abstract class BaseConnection implements ConnectionInterface
 	 */
 	public function callFunction(string $functionName, ...$params)
 	{
-		$driver = ($this->DBDriver === 'postgre' ? 'pg' : strtolower($this->DBDriver)) . '_';
+		$driver = ($this->DBDriver === 'postgre' ? 'pg' : \strtolower($this->DBDriver)) . '_';
 
-		if (FALSE === strpos($driver, $functionName))
+		if (FALSE === \strpos($driver, $functionName))
 		{
 			$functionName = $driver . $functionName;
 		}
 
-		if ( ! function_exists($functionName))
+		if ( ! \function_exists($functionName))
 		{
 			if ($this->DBDebug)
 			{
@@ -1495,7 +1495,7 @@ abstract class BaseConnection implements ConnectionInterface
 	public function listTables($constrain_by_prefix = FALSE)
 	{
 		// Is there a cached result?
-		if (isset($this->dataCache['table_names']) && count($this->dataCache['table_names']))
+		if (isset($this->dataCache['table_names']) && \count($this->dataCache['table_names']))
 		{
 			return $this->dataCache['table_names'];
 		}
@@ -1532,8 +1532,8 @@ abstract class BaseConnection implements ConnectionInterface
 					 * E_STRICT is on, this would trigger a warning. So we'll have to
 					 * assign it first.
 					 */
-					$key = array_keys($row);
-					$key = array_shift($key);
+					$key = \array_keys($row);
+					$key = \array_shift($key);
 				}
 			}
 
@@ -1553,7 +1553,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 */
 	public function tableExists($table_name)
 	{
-		return in_array($this->protectIdentifiers($table_name, TRUE, FALSE, FALSE), $this->listTables());
+		return \in_array($this->protectIdentifiers($table_name, TRUE, FALSE, FALSE), $this->listTables());
 	}
 
 	//--------------------------------------------------------------------
@@ -1607,7 +1607,7 @@ abstract class BaseConnection implements ConnectionInterface
 				else
 				{
 					// We have no other choice but to just get the first element's key.
-					$key = key($row);
+					$key = \key($row);
 				}
 			}
 
@@ -1628,7 +1628,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 */
 	public function fieldExists($fieldName, $tableName)
 	{
-		return in_array($fieldName, $this->getFieldNames($tableName));
+		return \in_array($fieldName, $this->getFieldNames($tableName));
 	}
 
 	//--------------------------------------------------------------------

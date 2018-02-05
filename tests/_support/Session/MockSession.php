@@ -48,8 +48,8 @@ class MockSession extends Session
     {
         $this->cookies[] = [
             $this->sessionCookieName,
-            session_id(),
-            (empty($this->sessionExpiration) ? 0 : time()+$this->sessionExpiration),
+            \session_id(),
+            (empty($this->sessionExpiration) ? 0 : \time()+$this->sessionExpiration),
             $this->cookiePath,
             $this->cookieDomain,
             $this->cookieSecure,
@@ -62,7 +62,7 @@ class MockSession extends Session
     public function regenerate(bool $destroy = false)
     {
         $this->didRegenerate = true;
-        $_SESSION['__ci_last_regenerate'] = time();
+        $_SESSION['__ci_last_regenerate'] = \time();
     }
 
     //--------------------------------------------------------------------

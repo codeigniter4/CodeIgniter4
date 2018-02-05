@@ -73,7 +73,7 @@ class Toolbar
 	{
 		foreach ($config->toolbarCollectors as $collector)
 		{
-			if (! class_exists($collector))
+			if (! \class_exists($collector))
 			{
 				// @todo Log this!
 				continue;
@@ -104,15 +104,15 @@ class Toolbar
 		$collectors = $this->collectors;
 
 		$totalTime       = $totalTime*1000;
-		$totalMemory     = number_format((memory_get_peak_usage()-$startMemory)/1048576, 3);
+		$totalMemory     = \number_format((\memory_get_peak_usage()-$startMemory)/1048576, 3);
 		$segmentDuration = $this->roundTo($totalTime/7, 5);
-		$segmentCount    = (int)ceil($totalTime/$segmentDuration);
+		$segmentCount    = (int)\ceil($totalTime/$segmentDuration);
 		$varData         = $this->collectVarData();
 
-		ob_start();
+		\ob_start();
 		include(__DIR__.'/Toolbar/Views/toolbar.tpl.php');
-		$output = ob_get_contents();
-		ob_end_clean();
+		$output = \ob_get_contents();
+		\ob_end_clean();
 
 		return $output;
 	}
@@ -140,14 +140,14 @@ class Toolbar
 			$output .= "<tr>";
 			$output .= "<td>{$row['name']}</td>";
 			$output .= "<td>{$row['component']}</td>";
-			$output .= "<td style='text-align: right'>".number_format($row['duration']*1000, 2)." ms</td>";
+			$output .= "<td style='text-align: right'>".\number_format($row['duration']*1000, 2)." ms</td>";
 			$output .= "<td colspan='{$segmentCount}' style='overflow: hidden'>";
 
 			$offset = ((($row['start']-$this->startTime)*1000)/
 			           $displayTime)*100;
 			$length = (($row['duration']*1000)/$displayTime)*100;
 
-			$output .= "<span class='timer' style='left: {$offset}%; width: {$length}%;' title='".number_format($length,
+			$output .= "<span class='timer' style='left: {$offset}%; width: {$length}%;' title='".\number_format($length,
 					2)."%'></span>";
 
 			$output .= "</td>";
@@ -177,7 +177,7 @@ class Toolbar
 				continue;
 			}
 
-			$data = array_merge($data, $collector->timelineData());
+			$data = \array_merge($data, $collector->timelineData());
 		}
 
 		// Sort it
@@ -205,7 +205,7 @@ class Toolbar
 				continue;
 			}
 
-			$data = array_merge($data, $collector->getVarData());
+			$data = \array_merge($data, $collector->getVarData());
 		}
 
 		return $data;
@@ -225,7 +225,7 @@ class Toolbar
 	{
 		$increments = 1/$increments;
 
-		return (ceil($number*$increments)/$increments);
+		return (\ceil($number*$increments)/$increments);
 	}
 
 	//--------------------------------------------------------------------
@@ -242,12 +242,12 @@ class Toolbar
 		if ($request->getGet('debugbar') !== null)
 		{
 			// Let the browser know that we are sending javascript
-			header('Content-Type: application/javascript');
+			\header('Content-Type: application/javascript');
 
-			ob_start();
+			\ob_start();
 			include(BASEPATH.'Debug/Toolbar/toolbarloader.js.php');
-			$output = ob_get_contents();
-			@ob_end_clean();
+			$output = \ob_get_contents();
+			@\ob_end_clean();
 
 			exit($output);
 		}
@@ -262,10 +262,10 @@ class Toolbar
 			$filename = WRITEPATH.'debugbar/'.$file;
 
 			// Show the toolbar
-			if (file_exists($filename))
+			if (\file_exists($filename))
 			{
-				$contents = file_get_contents($filename);
-				unlink($filename);
+				$contents = \file_get_contents($filename);
+				\unlink($filename);
 				exit($contents);
 			}
 

@@ -224,7 +224,7 @@ class WincacheHandler implements CacheInterface
 	 */
 	public function isSupported(): bool
 	{
-		return (extension_loaded('wincache') && ini_get('wincache.ucenabled'));
+		return (\extension_loaded('wincache') && \ini_get('wincache.ucenabled'));
 	}
 
 	//--------------------------------------------------------------------

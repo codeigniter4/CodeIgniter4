@@ -42,7 +42,7 @@ class ResponseTraitTest extends \CIUnitTestCase
 			'proxyIPs' => []
 		];
 
-		$config = array_merge($config, $userConfig);
+		$config = \array_merge($config, $userConfig);
 
 		$this->request = new MockIncomingRequest((object) $config, new URI($uri), null);
 		$this->response = new MockResponse((object) $config);
@@ -51,12 +51,12 @@ class ResponseTraitTest extends \CIUnitTestCase
 		$headers = [
 			'Accept' => 'text/html'
 		];
-		$headers = array_merge($headers, $userHeaders);
+		$headers = \array_merge($headers, $userHeaders);
 
 		foreach ($headers as $key => $value)
 		{
 			$this->request->setHeader($key, $value);
-			if (($key == 'Accept') && ! is_array($value))
+			if (($key == 'Accept') && ! \is_array($value))
 				$this->response->setContentType($value);
 		}
 
@@ -313,7 +313,7 @@ class ResponseTraitTest extends \CIUnitTestCase
 	{
 		$chars = '; charset=UTF-8';
 		$goodMimes = ['text/xml', 'text/html', 'application/json', 'application/xml'];
-		for ($i = 0; $i < count($goodMimes); $i ++ )
+		for ($i = 0; $i < \count($goodMimes); $i ++ )
 			$this->tryValidContentType($goodMimes[$i], $goodMimes[$i] . $chars);
 	}
 
@@ -334,7 +334,7 @@ class ResponseTraitTest extends \CIUnitTestCase
 	{
 		$chars = '; charset=UTF-8';
 		$goodMimes = ['text/xml', 'text/html', 'application/json', 'application/xml'];
-		for ($i = 0; $i < count($goodMimes); $i ++ )
+		for ($i = 0; $i < \count($goodMimes); $i ++ )
 			$this->tryValidContentType($goodMimes[$i], $goodMimes[$i] . $chars);
 	}
 
@@ -362,7 +362,7 @@ class ResponseTraitTest extends \CIUnitTestCase
 		$this->formatter = new XMLFormatter();
 		$controller = $this->makeController();
 
-		$this->assertEquals('CodeIgniter\Format\XMLFormatter', get_class($this->formatter));
+		$this->assertEquals('CodeIgniter\Format\XMLFormatter', \get_class($this->formatter));
 
 		$controller->respondCreated(['id' => 3], 'A Custom Reason');
 		$expected = <<<EOH

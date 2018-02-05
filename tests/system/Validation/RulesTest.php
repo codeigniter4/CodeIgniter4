@@ -1294,7 +1294,7 @@ class RulesTest extends \CIUnitTestCase
 	public function base64Provider()
 	{
 		return [
-			[base64_encode('string'), true],
+			[\base64_encode('string'), true],
 			['FA08GG', false],
 			[null, false]
 		];
@@ -1687,19 +1687,19 @@ class RulesTest extends \CIUnitTestCase
 	 */
 	protected function generateCardNum(int $prefix, int $length)
 	{
-		$pos        = mb_strlen($prefix);
+		$pos        = \mb_strlen($prefix);
 		$finalDigit = 0;
 		$sum        = 0;
 
 		// Fill in the first values of the string based on $prefix
-		$string = str_split($prefix);
+		$string = \str_split($prefix);
 
 		// Pad out the array to the appropriate length
-		$string = array_pad($string, $length, 0);
+		$string = \array_pad($string, $length, 0);
 
 		// Fill all of the remaining values with random numbers, except the last one.
 		while ($pos < $length-1) {
-			$string[$pos++] = random_int(0, 9);
+			$string[$pos++] = \random_int(0, 9);
 		}
 
 		// Calculate the Luhn checksum of the current values.
@@ -1721,7 +1721,7 @@ class RulesTest extends \CIUnitTestCase
 		$finalDigit        = (10-($sum%10))%10;
 		$string[$length-1] = $finalDigit;
 
-		return implode('', $string);
+		return \implode('', $string);
 	}
 
 	//--------------------------------------------------------------------

@@ -13,7 +13,7 @@ class FileTest extends \CIUnitTestCase {
 	{
 		$file = new File(BASEPATH.'Common.php');
 
-		$size = number_format(filesize(BASEPATH.'Common.php') / 1024, 3);
+		$size = \number_format(\filesize(BASEPATH.'Common.php') / 1024, 3);
 
 		$this->assertEquals($size, $file->getSize('kb'));
 	}
@@ -22,7 +22,7 @@ class FileTest extends \CIUnitTestCase {
 	{
 		$file = new File(BASEPATH.'Common.php');
 
-		$size = number_format(filesize(BASEPATH.'Common.php') / 1024 / 1024, 3);
+		$size = \number_format(\filesize(BASEPATH.'Common.php') / 1024 / 1024, 3);
 
 		$this->assertEquals($size, $file->getSize('mb'));
 	}

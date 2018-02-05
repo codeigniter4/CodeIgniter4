@@ -109,9 +109,9 @@ class Controller
 
 		$this->response = $response;
 
-		$this->logger = is_null($logger) ? Services::logger(true) : $logger;
+		$this->logger = \is_null($logger) ? Services::logger(true) : $logger;
 
-		$this->logger->info('Controller "' . get_class($this) . '" loaded.');
+		$this->logger->info('Controller "' . \get_class($this) . '" loaded.');
 
 		if ($this->forceHTTPS > 0)
 		{

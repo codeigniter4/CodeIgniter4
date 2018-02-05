@@ -72,8 +72,8 @@ class Timer
 	 */
 	public function start(string $name, float $time = null)
 	{
-		$this->timers[strtolower($name)] = [
-			'start'	 => ! empty($time) ? $time : microtime(true),
+		$this->timers[\strtolower($name)] = [
+			'start'	 => ! empty($time) ? $time : \microtime(true),
 			'end'	 => null,
 		];
 
@@ -94,14 +94,14 @@ class Timer
 	 */
 	public function stop(string $name)
 	{
-		$name = strtolower($name);
+		$name = \strtolower($name);
 
 		if (empty($this->timers[$name]))
 		{
 			throw new \RuntimeException('Cannot stop timer: invalid name given.');
 		}
 
-		$this->timers[$name]['end'] = microtime(true);
+		$this->timers[$name]['end'] = \microtime(true);
 
 		return $this;
 	}
@@ -120,7 +120,7 @@ class Timer
 	 */
 	public function getElapsedTime(string $name, int $decimals = 4)
 	{
-		$name = strtolower($name);
+		$name = \strtolower($name);
 
 		if (empty($this->timers[$name]))
 		{
@@ -131,10 +131,10 @@ class Timer
 
 		if (empty($timer['end']))
 		{
-			$timer['end'] = microtime(true);
+			$timer['end'] = \microtime(true);
 		}
 
-		return (float) number_format($timer['end'] - $timer['start'], $decimals);
+		return (float) \number_format($timer['end'] - $timer['start'], $decimals);
 	}
 
 	//--------------------------------------------------------------------
@@ -154,10 +154,10 @@ class Timer
 		{
 			if (empty($timer['end']))
 			{
-				$timer['end'] = microtime(true);
+				$timer['end'] = \microtime(true);
 			}
 
-			$timer['duration'] = (float) number_format($timer['end'] - $timer['start'], $decimals);
+			$timer['duration'] = (float) \number_format($timer['end'] - $timer['start'], $decimals);
 		}
 
 		return $timers;
@@ -174,7 +174,7 @@ class Timer
 	 */
 	public function has(string $name)
 	{
-		return array_key_exists(strtolower($name), $this->timers);
+		return \array_key_exists(\strtolower($name), $this->timers);
 	}
 
 	//--------------------------------------------------------------------

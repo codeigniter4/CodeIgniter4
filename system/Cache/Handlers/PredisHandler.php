@@ -77,7 +77,7 @@ class PredisHandler implements CacheInterface
 
 		if (isset($config->redis))
 		{
-			$this->config = array_merge($this->config, $config->redis);
+			$this->config = \array_merge($this->config, $config->redis);
 		}
 	}
 
@@ -113,7 +113,7 @@ class PredisHandler implements CacheInterface
 	 */
 	public function get(string $key)
 	{
-		$data = array_combine(
+		$data = \array_combine(
 				['__ci_type', '__ci_value'], $this->redis->hmget($key, ['__ci_type', '__ci_value'])
 		);
 
@@ -126,13 +126,13 @@ class PredisHandler implements CacheInterface
 		{
 			case 'array':
 			case 'object':
-				return unserialize($data['__ci_value']);
+				return \unserialize($data['__ci_value']);
 			case 'boolean':
 			case 'integer':
 			case 'double': // Yes, 'double' is returned and NOT 'float'
 			case 'string':
 			case 'NULL':
-				return settype($data['__ci_value'], $data['__ci_type']) ? $data['__ci_value'] : false;
+				return \settype($data['__ci_value'], $data['__ci_type']) ? $data['__ci_value'] : false;
 			case 'resource':
 			default:
 				return false;
@@ -152,11 +152,11 @@ class PredisHandler implements CacheInterface
 	 */
 	public function save(string $key, $value, int $ttl = 60)
 	{
-		switch ($data_type = gettype($value))
+		switch ($data_type = \gettype($value))
 		{
 			case 'array':
 			case 'object':
-				$value = serialize($value);
+				$value = \serialize($value);
 				break;
 			case 'boolean':
 			case 'integer':
@@ -174,7 +174,7 @@ class PredisHandler implements CacheInterface
 			return false;
 		}
 
-		$this->redis->expireat($key, time() + $ttl);
+		$this->redis->expireat($key, \time() + $ttl);
 
 		return true;
 	}
@@ -261,12 +261,12 @@ class PredisHandler implements CacheInterface
 	 */
 	public function getMetaData(string $key)
 	{
-		$data = array_combine(['__ci_value'], $this->redis->hmget($key, ['__ci_value']));
+		$data = \array_combine(['__ci_value'], $this->redis->hmget($key, ['__ci_value']));
 
 		if (isset($data['__ci_value']) && $data['__ci_value'] !== false)
 		{
 			return [
-				'expire' => time() + $this->redis->ttl($key),
+				'expire' => \time() + $this->redis->ttl($key),
 				'data'	 => $data['__ci_value']
 			];
 		}
@@ -283,7 +283,7 @@ class PredisHandler implements CacheInterface
 	 */
 	public function isSupported(): bool
 	{
-		return class_exists('\Predis\Client');
+		return \class_exists('\Predis\Client');
 	}
 
 }

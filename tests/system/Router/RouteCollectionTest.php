@@ -26,7 +26,7 @@ class RouteCollectionTest extends \CIUnitTestCase
 			'Config'        => APPPATH.'Config',
 			'App'           => APPPATH,
 		];
-		$config   = array_merge($config, $defaults);
+		$config   = \array_merge($config, $defaults);
 
 		$autoload = new \Config\Autoload();
 		$autoload->psr4 = $config;

@@ -105,20 +105,20 @@ class Forge extends \CodeIgniter\Database\Forge
 	{
 		$sql = '';
 
-		foreach (array_keys($attributes) as $key)
+		foreach (\array_keys($attributes) as $key)
 		{
-			if (is_string($key))
+			if (\is_string($key))
 			{
-				$sql .= ' ' . strtoupper($key) . ' = ' . $attributes[$key];
+				$sql .= ' ' . \strtoupper($key) . ' = ' . $attributes[$key];
 			}
 		}
 
-		if ( ! empty($this->db->charset) && ! strpos($sql, 'CHARACTER SET') && ! strpos($sql, 'CHARSET'))
+		if ( ! empty($this->db->charset) && ! \strpos($sql, 'CHARACTER SET') && ! \strpos($sql, 'CHARSET'))
 		{
 			$sql .= ' DEFAULT CHARACTER SET = ' . $this->db->charset;
 		}
 
-		if ( ! empty($this->db->DBCollat) && ! strpos($sql, 'COLLATE'))
+		if ( ! empty($this->db->DBCollat) && ! \strpos($sql, 'COLLATE'))
 		{
 			$sql .= ' COLLATE = ' . $this->db->DBCollat;
 		}
@@ -144,7 +144,7 @@ class Forge extends \CodeIgniter\Database\Forge
 		}
 
 		$sql = 'ALTER TABLE ' . $this->db->escapeIdentifiers($table);
-		for ($i = 0, $c = count($field); $i < $c; $i ++ )
+		for ($i = 0, $c = \count($field); $i < $c; $i ++ )
 		{
 			if ($field[$i]['_literal'] !== FALSE)
 			{
@@ -165,7 +165,7 @@ class Forge extends \CodeIgniter\Database\Forge
 			}
 		}
 
-		return [$sql . implode(',', $field)];
+		return [$sql . \implode(',', $field)];
 	}
 
 	//--------------------------------------------------------------------
@@ -209,11 +209,11 @@ class Forge extends \CodeIgniter\Database\Forge
 	{
 		$sql = '';
 
-		for ($i = 0, $c = count($this->keys); $i < $c; $i ++ )
+		for ($i = 0, $c = \count($this->keys); $i < $c; $i ++ )
 		{
-			if (is_array($this->keys[$i]))
+			if (\is_array($this->keys[$i]))
 			{
-				for ($i2 = 0, $c2 = count($this->keys[$i]); $i2 < $c2; $i2 ++ )
+				for ($i2 = 0, $c2 = \count($this->keys[$i]); $i2 < $c2; $i2 ++ )
 				{
 					if ( ! isset($this->fields[$this->keys[$i][$i2]]))
 					{
@@ -228,12 +228,12 @@ class Forge extends \CodeIgniter\Database\Forge
 				continue;
 			}
 
-			is_array($this->keys[$i]) || $this->keys[$i] = [$this->keys[$i]];
+			\is_array($this->keys[$i]) || $this->keys[$i] = [$this->keys[$i]];
 
-			$unique = in_array($i, $this->uniqueKeys) ? 'UNIQUE ' : '';
+			$unique = \in_array($i, $this->uniqueKeys) ? 'UNIQUE ' : '';
 
-			$sql .= ",\n\t{$unique}KEY " . $this->db->escapeIdentifiers(implode('_', $this->keys[$i]))
-					. ' (' . implode(', ', $this->db->escapeIdentifiers($this->keys[$i])) . ')';
+			$sql .= ",\n\t{$unique}KEY " . $this->db->escapeIdentifiers(\implode('_', $this->keys[$i]))
+					. ' (' . \implode(', ', $this->db->escapeIdentifiers($this->keys[$i])) . ')';
 		}
 
 		$this->keys = [];

@@ -64,20 +64,20 @@ class BaseConfig
 	 */
 	public function __construct()
 	{
-		$properties = array_keys(get_object_vars($this));
-		$prefix = get_class($this);
-		$slashAt = strrpos($prefix, '\\');
-		$shortPrefix = strtolower(substr($prefix, $slashAt === false ? 0  : $slashAt+1 ));
+		$properties = \array_keys(\get_object_vars($this));
+		$prefix = \get_class($this);
+		$slashAt = \strrpos($prefix, '\\');
+		$shortPrefix = \strtolower(\substr($prefix, $slashAt === false ? 0  : $slashAt+1 ));
 
 		foreach ($properties as $property)
 		{
-			if (is_array($this->$property))
+			if (\is_array($this->$property))
 			{
 				foreach ($this->$property as $key => $val)
 				{
 					if ($value = $this->getEnvValue("{$property}.{$key}", $prefix, $shortPrefix))
 					{
-						if (is_null($value))
+						if (\is_null($value))
 							continue;
 
 						if ($value === 'false')
@@ -93,7 +93,7 @@ class BaseConfig
 			{
 				if (($value = $this->getEnvValue($property, $prefix, $shortPrefix)) !== false)
 				{
-					if (is_null($value))
+					if (\is_null($value))
 						continue;
 
 					if ($value === 'false')
@@ -122,22 +122,22 @@ class BaseConfig
 	 */
 	protected function getEnvValue(string $property, string $prefix, string $shortPrefix)
 	{
-		$shortPrefix = ltrim( $shortPrefix, '\\' );
+		$shortPrefix = \ltrim( $shortPrefix, '\\' );
 		switch (true) {
-			case array_key_exists( "{$shortPrefix}.{$property}", $_ENV ):
+			case \array_key_exists( "{$shortPrefix}.{$property}", $_ENV ):
 				return $_ENV["{$shortPrefix}.{$property}"];
 				break;
-			case array_key_exists( "{$shortPrefix}.{$property}", $_SERVER ):
+			case \array_key_exists( "{$shortPrefix}.{$property}", $_SERVER ):
 				return $_SERVER["{$shortPrefix}.{$property}"];
 				break;
-			case array_key_exists( "{$prefix}.{$property}", $_ENV ):
+			case \array_key_exists( "{$prefix}.{$property}", $_ENV ):
 				return $_ENV["{$prefix}.{$property}"];
 				break;
-			case array_key_exists( "{$prefix}.{$property}", $_SERVER ):
+			case \array_key_exists( "{$prefix}.{$property}", $_SERVER ):
 				return $_SERVER["{$prefix}.{$property}"];
 				break;
 			default:
-				$value = getenv( $property );
+				$value = \getenv( $property );
 				return $value === false ? null : $value;
 		}
 	}
@@ -159,21 +159,21 @@ class BaseConfig
 		foreach ($this->registrars as $callable)
 		{
 			// ignore non-applicable registrars
-			if ( ! method_exists($callable, $shortName))
+			if ( ! \method_exists($callable, $shortName))
 				continue;
 
 			$properties = $callable::$shortName();
 
-			if ( ! is_array($properties))
+			if ( ! \is_array($properties))
 			{
 				throw new \RuntimeException('Registrars must return an array of properties and their values.');
 			}
 
 			foreach ($properties as $property => $value)
 			{
-				if (isset($this->$property) && is_array($this->$property) && is_array($value))
+				if (isset($this->$property) && \is_array($this->$property) && \is_array($value))
 				{
-					$this->$property = array_merge($this->$property, $value);
+					$this->$property = \array_merge($this->$property, $value);
 				}
 				else
 				{

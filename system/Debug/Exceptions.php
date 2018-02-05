@@ -73,9 +73,9 @@ class Exceptions
 	 */
 	public function __construct(\Config\Exceptions $config)
 	{
-		$this->ob_level = ob_get_level();
+		$this->ob_level = \ob_get_level();
 
-		$this->viewPath = rtrim($config->errorViewPath, '/ ') . '/';
+		$this->viewPath = \rtrim($config->errorViewPath, '/ ') . '/';
 
 		$this->config = $config;
 	}
@@ -89,14 +89,14 @@ class Exceptions
 	public function initialize()
 	{
 		//Set the Exception Handler
-		set_exception_handler([$this, 'exceptionHandler']);
+		\set_exception_handler([$this, 'exceptionHandler']);
 
 		// Set the Error Handler
-		set_error_handler([$this, 'errorHandler']);
+		\set_error_handler([$this, 'errorHandler']);
 
 		// Set the handler for shutdown to catch Parse errors
 		// Do we need this in PHP7?
-		register_shutdown_function([$this, 'shutdownHandler']);
+		\register_shutdown_function([$this, 'shutdownHandler']);
 	}
 
 	//--------------------------------------------------------------------
@@ -115,7 +115,7 @@ class Exceptions
 		$exitCode = $codes[1];
 
 		// Log it
-		if ($this->config->log === true && ! in_array($statusCode, $this->config->ignoreCodes))
+		if ($this->config->log === true && ! \in_array($statusCode, $this->config->ignoreCodes))
 		{
 			log_message('critical', $exception->getMessage()."\n{trace}", [
 				'trace' => $exception->getTraceAsString()
@@ -126,7 +126,7 @@ class Exceptions
 		{
 			$response = Services::response()->setStatusCode($statusCode);
 			$header = "HTTP/1.1 {$response->getStatusCode()} {$response->getReason()}";
-			header($header, true, $statusCode);
+			\header($header, true, $statusCode);
 		}
 
 		$this->render($exception, $statusCode);
@@ -165,15 +165,15 @@ class Exceptions
 	 */
 	public function shutdownHandler()
 	{
-		$error = error_get_last();
+		$error = \error_get_last();
 
 		// If we've got an error that hasn't been displayed, then convert
 		// it to an Exception and use the Exception handler to display it
 		// to the user.
-		if ( ! is_null($error))
+		if ( ! \is_null($error))
 		{
 			// Fatal Error?
-			if (in_array($error['type'], [E_ERROR, E_CORE_ERROR, E_COMPILE_ERROR, E_PARSE]))
+			if (\in_array($error['type'], [E_ERROR, E_CORE_ERROR, E_COMPILE_ERROR, E_PARSE]))
 			{
 				$this->exceptionHandler(new \ErrorException($error['message'], $error['type'], 0, $error['file'], $error['line']));
 			}
@@ -195,9 +195,9 @@ class Exceptions
 	{
 		// Production environments should have a custom exception file.
 		$view = 'production.php';
-		$template_path = rtrim($template_path, '/ ') . '/';
+		$template_path = \rtrim($template_path, '/ ') . '/';
 
-		if (str_ireplace(['off', 'none', 'no', 'false', 'null'], '', ini_get('display_errors')))
+		if (\str_ireplace(['off', 'none', 'no', 'false', 'null'], '', \ini_get('display_errors')))
 		{
 			$view = 'error_exception.php';
 		}
@@ -209,7 +209,7 @@ class Exceptions
 		}
 
 		// Allow for custom views based upon the status code
-		else if (is_file($template_path . 'error_' . $exception->getCode() . '.php'))
+		else if (\is_file($template_path . 'error_' . $exception->getCode() . '.php'))
 		{
 			return 'error_' . $exception->getCode() . '.php';
 		}
@@ -243,18 +243,18 @@ class Exceptions
 
 		// Prepare the vars
 		$vars = $this->collectVars($exception, $statusCode);
-		extract($vars);
+		\extract($vars);
 
 		// Render it
-		if (ob_get_level() > $this->ob_level + 1)
+		if (\ob_get_level() > $this->ob_level + 1)
 		{
-			ob_end_clean();
+			\ob_end_clean();
 		}
 
-		ob_start();
+		\ob_start();
 		include($path . $view);
-		$buffer = ob_get_contents();
-		ob_end_clean();
+		$buffer = \ob_get_contents();
+		\ob_end_clean();
 		echo $buffer;
 	}
 
@@ -271,13 +271,13 @@ class Exceptions
 	protected function collectVars(\Throwable $exception, int $statusCode)
 	{
 		return [
-			'type' => get_class($exception),
+			'type' => \get_class($exception),
 			'code' => $statusCode,
 			'message' => $exception->getMessage() ?? '(null)',
 			'file' => $exception->getFile(),
 			'line' => $exception->getLine(),
 			'trace' => $exception->getTrace(),
-			'title' => get_class($exception)
+			'title' => \get_class($exception)
 		];
 	}
 
@@ -291,7 +291,7 @@ class Exceptions
 	 */
 	protected function determineCodes(\Throwable $exception): array
 	{
-		$statusCode = abs($exception->getCode());
+		$statusCode = \abs($exception->getCode());
 
 		if ($statusCode < 100 || $statusCode > 599)
 		{
@@ -329,17 +329,17 @@ class Exceptions
 	 */
 	public static function cleanPath($file)
 	{
-		if (strpos($file, APPPATH) === 0)
+		if (\strpos($file, APPPATH) === 0)
 		{
-			$file = 'APPPATH/' . substr($file, strlen(APPPATH));
+			$file = 'APPPATH/' . \substr($file, \strlen(APPPATH));
 		}
-		elseif (strpos($file, BASEPATH) === 0)
+		elseif (\strpos($file, BASEPATH) === 0)
 		{
-			$file = 'BASEPATH/' . substr($file, strlen(BASEPATH));
+			$file = 'BASEPATH/' . \substr($file, \strlen(BASEPATH));
 		}
-		elseif (strpos($file, FCPATH) === 0)
+		elseif (\strpos($file, FCPATH) === 0)
 		{
-			$file = 'FCPATH/' . substr($file, strlen(FCPATH));
+			$file = 'FCPATH/' . \substr($file, \strlen(FCPATH));
 		}
 
 		return $file;
@@ -363,10 +363,10 @@ class Exceptions
 		}
 		else if ($bytes < 1048576)
 		{
-			return round($bytes / 1024, 2) . 'KB';
+			return \round($bytes / 1024, 2) . 'KB';
 		}
 
-		return round($bytes / 1048576, 2) . 'MB';
+		return \round($bytes / 1048576, 2) . 'MB';
 	}
 
 	//--------------------------------------------------------------------
@@ -382,44 +382,44 @@ class Exceptions
 	 */
 	public static function highlightFile($file, $lineNumber, $lines = 15)
 	{
-		if (empty($file) || ! is_readable($file))
+		if (empty($file) || ! \is_readable($file))
 		{
 			return false;
 		}
 
 		// Set our highlight colors:
-		if (function_exists('ini_set'))
+		if (\function_exists('ini_set'))
 		{
-			ini_set('highlight.comment', '#767a7e; font-style: italic');
-			ini_set('highlight.default', '#c7c7c7');
-			ini_set('highlight.html', '#06B');
-			ini_set('highlight.keyword', '#f1ce61;');
-			ini_set('highlight.string', '#869d6a');
+			\ini_set('highlight.comment', '#767a7e; font-style: italic');
+			\ini_set('highlight.default', '#c7c7c7');
+			\ini_set('highlight.html', '#06B');
+			\ini_set('highlight.keyword', '#f1ce61;');
+			\ini_set('highlight.string', '#869d6a');
 		}
 
 		try
 		{
-			$source = file_get_contents($file);
+			$source = \file_get_contents($file);
 		} catch (\Throwable $e)
 		{
 			return false;
 		}
 
-		$source = str_replace(["\r\n", "\r"], "\n", $source);
-		$source = explode("\n", highlight_string($source, true));
-		$source = str_replace('<br />', "\n", $source[1]);
+		$source = \str_replace(["\r\n", "\r"], "\n", $source);
+		$source = \explode("\n", \highlight_string($source, true));
+		$source = \str_replace('<br />', "\n", $source[1]);
 
-		$source = explode("\n", str_replace("\r\n", "\n", $source));
+		$source = \explode("\n", \str_replace("\r\n", "\n", $source));
 
 		// Get just the part to show
-		$start = $lineNumber - (int) round($lines / 2);
+		$start = $lineNumber - (int) \round($lines / 2);
 		$start = $start < 0 ? 0 : $start;
 
 		// Get just the lines we need to display, while keeping line numbers...
-		$source = array_splice($source, $start, $lines, true);
+		$source = \array_splice($source, $start, $lines, true);
 
 		// Used to format the line number in the source
-		$format = '% ' . strlen($start + $lines) . 'd';
+		$format = '% ' . \strlen($start + $lines) . 'd';
 
 		$out = '';
 		// Because the highlighting may have an uneven number
@@ -430,24 +430,24 @@ class Exceptions
 
 		foreach ($source as $n => $row)
 		{
-			$spans += substr_count($row, '<span') - substr_count($row, '</span');
-			$row = str_replace(["\r", "\n"], ['', ''], $row);
+			$spans += \substr_count($row, '<span') - \substr_count($row, '</span');
+			$row = \str_replace(["\r", "\n"], ['', ''], $row);
 
 			if (($n + $start + 1) == $lineNumber)
 			{
-				preg_match_all('#<[^>]+>#', $row, $tags);
-				$out .= sprintf("<span class='line highlight'><span class='number'>{$format}</span> %s\n</span>%s", $n + $start + 1, strip_tags($row), implode('', $tags[0])
+				\preg_match_all('#<[^>]+>#', $row, $tags);
+				$out .= \sprintf("<span class='line highlight'><span class='number'>{$format}</span> %s\n</span>%s", $n + $start + 1, \strip_tags($row), \implode('', $tags[0])
 				);
 			}
 			else
 			{
-				$out .= sprintf('<span class="line"><span class="number">' . $format . '</span> %s', $n + $start + 1, $row) . "\n";
+				$out .= \sprintf('<span class="line"><span class="number">' . $format . '</span> %s', $n + $start + 1, $row) . "\n";
 			}
 		}
 
 		if ($spans > 0)
 		{
-			$out .= str_repeat('</span>', $spans);
+			$out .= \str_repeat('</span>', $spans);
 		}
 
 		return '<pre><code>' . $out . '</code></pre>';

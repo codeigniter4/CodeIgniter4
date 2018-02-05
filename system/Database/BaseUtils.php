@@ -117,9 +117,9 @@ abstract class BaseUtils
 			return $this->db->dataCache['db_names'];
 		}
 
-		for ($i = 0, $query = $query->getResultArray(), $c = count($query); $i < $c; $i ++ )
+		for ($i = 0, $query = $query->getResultArray(), $c = \count($query); $i < $c; $i ++ )
 		{
-			$this->db->dataCache['db_names'][] = current($query[$i]);
+			$this->db->dataCache['db_names'][] = \current($query[$i]);
 		}
 
 		return $this->db->dataCache['db_names'];
@@ -135,7 +135,7 @@ abstract class BaseUtils
 	 */
 	public function databaseExists($database_name)
 	{
-		return in_array($database_name, $this->listDatabases());
+		return \in_array($database_name, $this->listDatabases());
 	}
 
 	//--------------------------------------------------------------------
@@ -158,11 +158,11 @@ abstract class BaseUtils
 			return false;
 		}
 
-		$query = $this->db->query(sprintf($this->optimizeTable, $this->db->escapeIdentifiers($table_name)));
+		$query = $this->db->query(\sprintf($this->optimizeTable, $this->db->escapeIdentifiers($table_name)));
 		if ($query !== FALSE)
 		{
 			$query = $query->getResultArray();
-			return current($query);
+			return \current($query);
 		}
 
 		return FALSE;
@@ -190,17 +190,17 @@ abstract class BaseUtils
 		$result = [];
 		foreach ($this->db->listTables() as $table_name)
 		{
-			$res = $this->db->query(sprintf($this->optimizeTable, $this->db->escapeIdentifiers($table_name)));
-			if (is_bool($res))
+			$res = $this->db->query(\sprintf($this->optimizeTable, $this->db->escapeIdentifiers($table_name)));
+			if (\is_bool($res))
 			{
 				return $res;
 			}
 
 			// Build the result array...
 			$res = $res->getResultArray();
-			$res = current($res);
-			$key = str_replace($this->db->database . '.', '', current($res));
-			$keys = array_keys($res);
+			$res = \current($res);
+			$key = \str_replace($this->db->database . '.', '', \current($res));
+			$keys = \array_keys($res);
 			unset($res[$keys[0]]);
 
 			$result[$key] = $res;
@@ -229,14 +229,14 @@ abstract class BaseUtils
 			return false;
 		}
 
-		$query = $this->db->query(sprintf($this->repairTable, $this->db->escapeIdentifiers($table_name)));
-		if (is_bool($query))
+		$query = $this->db->query(\sprintf($this->repairTable, $this->db->escapeIdentifiers($table_name)));
+		if (\is_bool($query))
 		{
 			return $query;
 		}
 
 		$query = $query->getResultArray();
-		return current($query);
+		return \current($query);
 	}
 
 	//--------------------------------------------------------------------
@@ -257,10 +257,10 @@ abstract class BaseUtils
 		// First generate the headings from the table column names
 		foreach ($query->getFieldNames() as $name)
 		{
-			$out .= $enclosure . str_replace($enclosure, $enclosure . $enclosure, $name) . $enclosure . $delim;
+			$out .= $enclosure . \str_replace($enclosure, $enclosure . $enclosure, $name) . $enclosure . $delim;
 		}
 
-		$out = substr($out, 0, -strlen($delim)) . $newline;
+		$out = \substr($out, 0, -\strlen($delim)) . $newline;
 
 		// Next blast through the result array and build out the rows
 		while ($row = $query->getUnbufferedRow('array'))
@@ -268,9 +268,9 @@ abstract class BaseUtils
 			$line = [];
 			foreach ($row as $item)
 			{
-				$line[] = $enclosure . str_replace($enclosure, $enclosure . $enclosure, $item) . $enclosure;
+				$line[] = $enclosure . \str_replace($enclosure, $enclosure . $enclosure, $item) . $enclosure;
 			}
-			$out .= implode($delim, $line) . $newline;
+			$out .= \implode($delim, $line) . $newline;
 		}
 
 		return $out;
@@ -298,7 +298,7 @@ abstract class BaseUtils
 		}
 
 		// Create variables for convenience
-		extract($params);
+		\extract($params);
 
 		// Load the xml helper
 //		get_instance()->load->helper('xml');
@@ -331,7 +331,7 @@ abstract class BaseUtils
 		// If the parameters have not been submitted as an
 		// array then we know that it is simply the table
 		// name, which is a valid short cut.
-		if (is_string($params))
+		if (\is_string($params))
 		{
 			$params = ['tables' => $params];
 		}
@@ -368,15 +368,15 @@ abstract class BaseUtils
 		}
 
 		// Validate the format
-		if ( ! in_array($prefs['format'], ['gzip', 'zip', 'txt'], TRUE))
+		if ( ! \in_array($prefs['format'], ['gzip', 'zip', 'txt'], TRUE))
 		{
 			$prefs['format'] = 'txt';
 		}
 
 		// Is the encoder supported? If not, we'll either issue an
 		// error or use plain text depending on the debug settings
-		if (($prefs['format'] === 'gzip' && ! function_exists('gzencode'))
-				OR ( $prefs['format'] === 'zip' && ! function_exists('gzcompress')))
+		if (($prefs['format'] === 'gzip' && ! \function_exists('gzencode'))
+				OR ( $prefs['format'] === 'zip' && ! \function_exists('gzcompress')))
 		{
 			if ($this->db->DBDebug)
 			{
@@ -392,19 +392,19 @@ abstract class BaseUtils
 			// Set the filename if not provided (only needed with Zip files)
 			if ($prefs['filename'] === '')
 			{
-				$prefs['filename'] = (count($prefs['tables']) === 1 ? $prefs['tables'] : $this->db->database)
-						. date('Y-m-d_H-i', time()) . '.sql';
+				$prefs['filename'] = (\count($prefs['tables']) === 1 ? $prefs['tables'] : $this->db->database)
+						. \date('Y-m-d_H-i', \time()) . '.sql';
 			}
 			else
 			{
 				// If they included the .zip file extension we'll remove it
-				if (preg_match('|.+?\.zip$|', $prefs['filename']))
+				if (\preg_match('|.+?\.zip$|', $prefs['filename']))
 				{
-					$prefs['filename'] = str_replace('.zip', '', $prefs['filename']);
+					$prefs['filename'] = \str_replace('.zip', '', $prefs['filename']);
 				}
 
 				// Tack on the ".sql" file extension if needed
-				if ( ! preg_match('|.+?\.sql$|', $prefs['filename']))
+				if ( ! \preg_match('|.+?\.sql$|', $prefs['filename']))
 				{
 					$prefs['filename'] .= '.sql';
 				}
@@ -422,7 +422,7 @@ abstract class BaseUtils
 		}
 		elseif ($prefs['format'] === 'gzip') // Was a Gzip file requested?
 		{
-			return gzencode($this->_backup($prefs));
+			return \gzencode($this->_backup($prefs));
 		}
 
 		return;

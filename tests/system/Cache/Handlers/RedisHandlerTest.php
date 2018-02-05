@@ -134,7 +134,7 @@ class RedisHandlerTest extends \CIUnitTestCase
 
 	public function testGetMetaData()
 	{
-		$time = time();
+		$time = \time();
 		$this->redisHandler->save(self::$key1, 'value');
 
 		$this->assertFalse($this->redisHandler->getMetaData(self::$dummy));

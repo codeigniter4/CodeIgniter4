@@ -79,7 +79,7 @@ class ParserPluginTest extends \CIUnitTestCase
 
 	public function setHints($output)
 	{
-		return preg_replace('/(<!-- DEBUG-VIEW+) (\w+) (\d+)/', '${1}', $output);
+		return \preg_replace('/(<!-- DEBUG-VIEW+) (\w+) (\d+)/', '${1}', $output);
 	}
 
 }

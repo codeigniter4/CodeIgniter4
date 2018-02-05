@@ -85,7 +85,7 @@ class Console
 
 		CLI::write(CLI::color('CodeIgniter CLI Tool', 'green')
 				. ' - Version ' . CodeIgniter::CI_VERSION
-				. ' - Server-Time: ' . date('Y-m-d H:i:sa'));
+				. ' - Server-Time: ' . \date('Y-m-d H:i:sa'));
 
 		CLI::newLine(1);
 	}

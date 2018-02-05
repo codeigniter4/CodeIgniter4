@@ -24,7 +24,7 @@ class DistinctTest extends \CIUnitTestCase
 
 		$expectedSQL   = "SELECT DISTINCT \"country\" FROM \"user\"";
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+		$this->assertEquals($expectedSQL, \str_replace("\n", ' ', $builder->getCompiledSelect()));
 	}
 
 	//--------------------------------------------------------------------

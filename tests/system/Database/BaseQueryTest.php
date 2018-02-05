@@ -31,7 +31,7 @@ class QueryTest extends \CIUnitTestCase
 	{
 	    $query = new Query($this->db);
 
-		$start = microtime(true);
+		$start = \microtime(true);
 
 		$query->setDuration($start, $start+5);
 

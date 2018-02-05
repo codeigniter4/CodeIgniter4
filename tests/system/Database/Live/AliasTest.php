@@ -17,7 +17,7 @@ class AliasTest extends \CIDatabaseTestCase
 			->where('j.name', 'Developer')
 			->get();
 
-		$this->assertEquals(1, count($jobs->getResult()));
+		$this->assertEquals(1, \count($jobs->getResult()));
 	}
 
 	//--------------------------------------------------------------------

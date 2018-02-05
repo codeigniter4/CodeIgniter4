@@ -100,7 +100,7 @@ class CreateMigration extends BaseCommand
 
 		$tableName = CLI::getOption('t') ?? $config->sessionSavePath ?? 'ci_sessions';
 
-		$path = APPPATH . 'Database/Migrations/' . date('YmdHis_') . 'create_' . $tableName . '_table' . '.php';
+		$path = APPPATH . 'Database/Migrations/' . \date('YmdHis_') . 'create_' . $tableName . '_table' . '.php';
 
 		$data = [
 			'namespace'	 => CLI::getOption('n') ?? APP_NAMESPACE ?? 'App',
@@ -110,7 +110,7 @@ class CreateMigration extends BaseCommand
 		];
 
 		$template = view('\CodeIgniter\Commands\Sessions\Views\migration.tpl', $data);
-		$template = str_replace('@php', '<?php', $template);
+		$template = \str_replace('@php', '<?php', $template);
 
 		// Write the file out.
 		helper('filesystem');
@@ -120,7 +120,7 @@ class CreateMigration extends BaseCommand
 			return;
 		}
 
-		CLI::write('Created file: ' . CLI::color(str_replace(APPPATH, 'APPPATH/', $path), 'green'));
+		CLI::write('Created file: ' . CLI::color(\str_replace(APPPATH, 'APPPATH/', $path), 'green'));
 	}
 
 }

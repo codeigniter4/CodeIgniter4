@@ -108,13 +108,13 @@ class MigrateRollback extends BaseCommand
 
 		CLI::write(lang('Migrations.migRollingBack'), 'yellow');
 		$group = CLI::getOption('g');
-		if ( ! is_null($group))
+		if ( ! \is_null($group))
 		{
 			$runner->setGroup($group);
 		}
 		try
 		{
-			if (is_null(CLI::getOption('all')))
+			if (\is_null(CLI::getOption('all')))
 			{
 				$namespace = CLI::getOption('n');
 				$runner->version(0, $namespace);

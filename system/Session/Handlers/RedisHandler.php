@@ -94,19 +94,19 @@ class RedisHandler extends BaseHandler implements \SessionHandlerInterface
 		{
 			throw new \Exception('Session: No Redis save path configured.');
 		}
-		elseif (preg_match('#(?:tcp://)?([^:?]+)(?:\:(\d+))?(\?.+)?#', $this->savePath, $matches))
+		elseif (\preg_match('#(?:tcp://)?([^:?]+)(?:\:(\d+))?(\?.+)?#', $this->savePath, $matches))
 		{
 			isset($matches[3]) || $matches[3] = ''; // Just to avoid undefined index notices below
 
 			$this->savePath = [
 				'host'		 => $matches[1],
 				'port'		 => empty($matches[2]) ? null : $matches[2],
-				'password'	 => preg_match('#auth=([^\s&]+)#', $matches[3], $match) ? $match[1] : null,
-				'database'	 => preg_match('#database=(\d+)#', $matches[3], $match) ? (int) $match[1] : null,
-				'timeout'	 => preg_match('#timeout=(\d+\.\d+)#', $matches[3], $match) ? (float) $match[1] : null,
+				'password'	 => \preg_match('#auth=([^\s&]+)#', $matches[3], $match) ? $match[1] : null,
+				'database'	 => \preg_match('#database=(\d+)#', $matches[3], $match) ? (int) $match[1] : null,
+				'timeout'	 => \preg_match('#timeout=(\d+\.\d+)#', $matches[3], $match) ? (float) $match[1] : null,
 			];
 
-			preg_match('#prefix=([^\s&]+)#', $matches[3], $match) && $this->keyPrefix = $match[1];
+			\preg_match('#prefix=([^\s&]+)#', $matches[3], $match) && $this->keyPrefix = $match[1];
 		}
 		else
 		{
@@ -181,9 +181,9 @@ class RedisHandler extends BaseHandler implements \SessionHandlerInterface
 			$this->sessionID = $sessionID;
 
 			$session_data = $this->redis->get($this->keyPrefix . $sessionID);
-			is_string($session_data) ? $this->keyExists = TRUE : $session_data = '';
+			\is_string($session_data) ? $this->keyExists = TRUE : $session_data = '';
 
-			$this->fingerprint = md5($session_data);
+			$this->fingerprint = \md5($session_data);
 			return $session_data;
 		}
 
@@ -224,7 +224,7 @@ class RedisHandler extends BaseHandler implements \SessionHandlerInterface
 		{
 			$this->redis->setTimeout($this->lockKey, 300);
 
-			if ($this->fingerprint !== ($fingerprint = md5($sessionData)) || $this->keyExists === FALSE)
+			if ($this->fingerprint !== ($fingerprint = \md5($sessionData)) || $this->keyExists === FALSE)
 			{
 				if ($this->redis->set($this->keyPrefix . $sessionID, $sessionData, $this->sessionExpiration))
 				{
@@ -296,7 +296,7 @@ class RedisHandler extends BaseHandler implements \SessionHandlerInterface
 		{
 			if (($result = $this->redis->delete($this->keyPrefix . $sessionID)) !== 1)
 			{
-				$this->logger->debug('Session: Redis::delete() expected to return 1, got ' . var_export($result, TRUE) . ' instead.');
+				$this->logger->debug('Session: Redis::delete() expected to return 1, got ' . \var_export($result, TRUE) . ' instead.');
 			}
 
 			return $this->destroyCookie();
@@ -350,11 +350,11 @@ class RedisHandler extends BaseHandler implements \SessionHandlerInterface
 		{
 			if (($ttl = $this->redis->ttl($lock_key)) > 0)
 			{
-				sleep(1);
+				\sleep(1);
 				continue;
 			}
 
-			if ( ! $this->redis->setex($lock_key, 300, time()))
+			if ( ! $this->redis->setex($lock_key, 300, \time()))
 			{
 				$this->logger->error('Session: Error while trying to obtain lock for ' . $this->keyPrefix . $sessionID);
 				return FALSE;

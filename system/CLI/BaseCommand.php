@@ -138,7 +138,7 @@ abstract class BaseCommand
 	{
 		// The CommandRunner will grab the first element
 		// for the command name.
-		array_unshift($params, $command);
+		\array_unshift($params, $command);
 
 		return $this->commands->index($params);
 	}
@@ -194,14 +194,14 @@ abstract class BaseCommand
 		CLI::write($tab . $usage);
 		CLI::newLine();
 
-		$pad = max($this->getPad($this->options, 6), $this->getPad($this->arguments, 6));
+		$pad = \max($this->getPad($this->options, 6), $this->getPad($this->arguments, 6));
 
 		if ( ! empty($this->arguments))
 		{
 			CLI::write(lang('CLI.helpArguments'), 'yellow');
 			foreach ($this->arguments as $argument => $description)
 			{
-				CLI::write($tab . CLI::color(str_pad($argument, $pad), 'green') . $description, 'yellow');
+				CLI::write($tab . CLI::color(\str_pad($argument, $pad), 'green') . $description, 'yellow');
 			}
 			CLI::newLine();
 		}
@@ -211,7 +211,7 @@ abstract class BaseCommand
 			CLI::write(lang('CLI.helpOptions'), 'yellow');
 			foreach ($this->options as $option => $description)
 			{
-				CLI::write($tab . CLI::color(str_pad($option, $pad), 'green') . $description, 'yellow');
+				CLI::write($tab . CLI::color(\str_pad($option, $pad), 'green') . $description, 'yellow');
 			}
 			CLI::newLine();
 		}
@@ -232,7 +232,7 @@ abstract class BaseCommand
 		$max = 0;
 		foreach ($array as $key => $value)
 		{
-			$max = max($max, strlen($key));
+			$max = \max($max, \strlen($key));
 		}
 		return $max + $pad;
 	}

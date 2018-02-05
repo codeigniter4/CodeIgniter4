@@ -140,8 +140,8 @@ class CodeIgniter
 
 	public function __construct($config)
 	{
-		$this->startTime = microtime(true);
-		$this->startMemory = memory_get_usage(true);
+		$this->startTime = \microtime(true);
+		$this->startMemory = \memory_get_usage(true);
 		$this->config = $config;
 	}
 
@@ -153,7 +153,7 @@ class CodeIgniter
 	public function initialize()
 	{
 		// Set default timezone on the server
-		date_default_timezone_set($this->config->appTimezone ?? 'UTC');
+		\date_default_timezone_set($this->config->appTimezone ?? 'UTC');
 
 		// Setup Exception Handling
 		Services::exceptions()
@@ -238,7 +238,7 @@ class CodeIgniter
 		$returned = $this->startController();
 
 		// Closure controller has run in startController().
-		if ( ! is_callable($this->controller))
+		if ( ! \is_callable($this->controller))
 		{
 			$controller = $this->createController();
 
@@ -302,16 +302,16 @@ class CodeIgniter
 	protected function detectEnvironment()
 	{
 		// Make sure ENVIRONMENT isn't already set by other means.
-		if (! defined('ENVIRONMENT'))
+		if (! \defined('ENVIRONMENT'))
 		{
 			// running under Continuous Integration server?
-			if (getenv('CI') !== false)
+			if (\getenv('CI') !== false)
 			{
-				define('ENVIRONMENT', 'testing');
+				\define('ENVIRONMENT', 'testing');
 			}
 			else
 			{
-				define('ENVIRONMENT', $_SERVER['CI_ENVIRONMENT'] ?? 'production');
+				\define('ENVIRONMENT', $_SERVER['CI_ENVIRONMENT'] ?? 'production');
 			}
 		}
 	}
@@ -326,13 +326,13 @@ class CodeIgniter
 	 */
 	protected function bootstrapEnvironment()
 	{
-		if (file_exists(APPPATH . 'Config/Boot/' . ENVIRONMENT . '.php'))
+		if (\file_exists(APPPATH . 'Config/Boot/' . ENVIRONMENT . '.php'))
 		{
 			require_once APPPATH . 'Config/Boot/' . ENVIRONMENT . '.php';
 		}
 		else
 		{
-			header('HTTP/1.1 503 Service Unavailable.', true, 503);
+			\header('HTTP/1.1 503 Service Unavailable.', true, 503);
 			echo 'The application environment is not set correctly.';
 			exit(1); // EXIT_ERROR
 		}
@@ -348,7 +348,7 @@ class CodeIgniter
 	 */
 	protected function startBenchmark()
 	{
-		$this->startTime = microtime(true);
+		$this->startTime = \microtime(true);
 
 		$this->benchmark = Services::timer();
 		$this->benchmark->start('total_execution', $this->startTime);
@@ -431,8 +431,8 @@ class CodeIgniter
 	{
 		if ($cachedResponse = cache()->get($this->generateCacheName($config)))
 		{
-			$cachedResponse = unserialize($cachedResponse);
-			if ( ! is_array($cachedResponse) || ! isset($cachedResponse['output']) || ! isset($cachedResponse['headers']))
+			$cachedResponse = \unserialize($cachedResponse);
+			if ( ! \is_array($cachedResponse) || ! isset($cachedResponse['output']) || ! isset($cachedResponse['headers']))
 			{
 				throw new \Exception("Error unserializing page cache");
 			}
@@ -491,7 +491,7 @@ class CodeIgniter
 		}
 
 		return cache()->save(
-						$this->generateCacheName($config), serialize(['headers' => $headers, 'output' => $this->output]), self::$cacheTTL
+						$this->generateCacheName($config), \serialize(['headers' => $headers, 'output' => $this->output]), self::$cacheTTL
 		);
 	}
 
@@ -524,7 +524,7 @@ class CodeIgniter
 	{
 		if (is_cli())
 		{
-			return md5($this->request->getPath());
+			return \md5($this->request->getPath());
 		}
 
 		$uri = $this->request->uri;
@@ -542,7 +542,7 @@ class CodeIgniter
 			);
 		}
 
-		return md5($name);
+		return \md5($name);
 	}
 
 	//--------------------------------------------------------------------
@@ -558,7 +558,7 @@ class CodeIgniter
 	{
 		$this->totalTime = $this->benchmark->getElapsedTime('total_execution');
 
-		$output = str_replace('{elapsed_time}', $this->totalTime, $output);
+		$output = \str_replace('{elapsed_time}', $this->totalTime, $output);
 
 		return $output;
 	}
@@ -588,7 +588,7 @@ class CodeIgniter
 		$this->benchmark->stop('bootstrap');
 		$this->benchmark->start('routing');
 
-		ob_start();
+		\ob_start();
 
 		$this->controller = $this->router->handle($path);
 		$this->method = $this->router->methodName();
@@ -651,7 +651,7 @@ class CodeIgniter
 		$this->benchmark->start('controller_constructor');
 
 		// Is it routed to a Closure?
-		if (is_object($this->controller) && (get_class($this->controller) == 'Closure'))
+		if (\is_object($this->controller) && (\get_class($this->controller) == 'Closure'))
 		{
 			$controller = $this->controller;
 			return $controller(...$this->router->params());
@@ -664,12 +664,12 @@ class CodeIgniter
 		}
 
 		// Try to autoload the class
-		if ( ! class_exists($this->controller, true) || $this->method[0] === '_')
+		if ( ! \class_exists($this->controller, true) || $this->method[0] === '_')
 		{
 			throw new PageNotFoundException('Controller or its method is not found.');
 		}
-		else if ( ! method_exists($this->controller, '_remap') &&
-				! is_callable([$this->controller, $this->method], false)
+		else if ( ! \method_exists($this->controller, '_remap') &&
+				! \is_callable([$this->controller, $this->method], false)
 		)
 		{
 			throw new PageNotFoundException('Controller method is not found.');
@@ -703,7 +703,7 @@ class CodeIgniter
 	 */
 	protected function runController($class)
 	{
-		if (method_exists($class, '_remap'))
+		if (\method_exists($class, '_remap'))
 		{
 			$output = $class->_remap($this->method, ...$this->router->params());
 		}
@@ -734,7 +734,7 @@ class CodeIgniter
 			{
 				echo $override();
 			}
-			else if (is_array($override))
+			else if (\is_array($override))
 			{
 				$this->benchmark->start('controller');
 				$this->benchmark->start('controller_constructor');
@@ -759,17 +759,17 @@ class CodeIgniter
 
 		if (ENVIRONMENT !== 'testing')
 		{
-			if (ob_get_level() > 0)
+			if (\ob_get_level() > 0)
 			{
-				ob_end_flush();
+				\ob_end_flush();
 			}
 		}
 		else
 		{
 			// When testing, one is for phpunit, another is for test case.
-			if (ob_get_level() > 2)
+			if (\ob_get_level() > 2)
 			{
-				ob_end_flush();
+				\ob_end_flush();
 			}
 		}
 
@@ -787,8 +787,8 @@ class CodeIgniter
 	 */
 	protected function gatherOutput($cacheConfig = null, $returned = null)
 	{
-		$this->output = ob_get_contents();
-		ob_end_clean();
+		$this->output = \ob_get_contents();
+		\ob_end_clean();
 
 		// If the controller returned a response object,
 		// we need to grab the body from it so it can
@@ -802,7 +802,7 @@ class CodeIgniter
 			$returned = $returned->getBody();
 		}
 
-		if (is_string($returned))
+		if (\is_string($returned))
 		{
 			$this->output .= $returned;
 		}
@@ -833,7 +833,7 @@ class CodeIgniter
 	public function storePreviousURL($uri)
 	{
 		// This is mainly needed during testing...
-		if (is_string($uri))
+		if (\is_string($uri))
 		{
 			$uri = new URI($uri);
 		}

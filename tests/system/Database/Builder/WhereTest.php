@@ -23,7 +23,7 @@ class WhereTest extends \CIUnitTestCase
 		$expectedBinds = ['id' => 3];
 
 		$builder->where('id', 3);
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+		$this->assertEquals($expectedSQL, \str_replace("\n", ' ', $builder->getCompiledSelect()));
 		$this->assertEquals($expectedBinds, $builder->getBinds());
 	}
 
@@ -37,7 +37,7 @@ class WhereTest extends \CIUnitTestCase
 		$expectedBinds = ['id' => 3];
 
 		$builder->where('id', 3, false);
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+		$this->assertEquals($expectedSQL, \str_replace("\n", ' ', $builder->getCompiledSelect()));
 		$this->assertSame($expectedBinds, $builder->getBinds());
 	}
 
@@ -51,7 +51,7 @@ class WhereTest extends \CIUnitTestCase
 		$expectedBinds = ['id' => 3];
 
 		$builder->where('id !=', 3);
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+		$this->assertEquals($expectedSQL, \str_replace("\n", ' ', $builder->getCompiledSelect()));
 		$this->assertSame($expectedBinds, $builder->getBinds());
 	}
 
@@ -71,7 +71,7 @@ class WhereTest extends \CIUnitTestCase
 
 
 		$builder->where($where);
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+		$this->assertEquals($expectedSQL, \str_replace("\n", ' ', $builder->getCompiledSelect()));
 		$this->assertSame($expectedBinds, $builder->getBinds());
 	}
 
@@ -88,7 +88,7 @@ class WhereTest extends \CIUnitTestCase
 
 
 		$builder->where($where);
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+		$this->assertEquals($expectedSQL, \str_replace("\n", ' ', $builder->getCompiledSelect()));
 		$this->assertSame($expectedBinds, $builder->getBinds());
 	}
 
@@ -104,7 +104,7 @@ class WhereTest extends \CIUnitTestCase
 		$expectedSQL   = "SELECT * FROM \"jobs\" WHERE \"name\" != :name: OR \"id\" > :id:";
 		$expectedBinds = ['name' => 'Accountant', 'id' => 3];
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+		$this->assertEquals($expectedSQL, \str_replace("\n", ' ', $builder->getCompiledSelect()));
 		$this->assertSame($expectedBinds, $builder->getBinds());
 	}
 
@@ -120,7 +120,7 @@ class WhereTest extends \CIUnitTestCase
 		$expectedSQL   = 'SELECT * FROM "jobs" WHERE "name" = :name: OR "name" = :name0:';
 		$expectedBinds = ['name' => 'Accountant', 'name0' => 'foobar'];
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+		$this->assertEquals($expectedSQL, \str_replace("\n", ' ', $builder->getCompiledSelect()));
 		$this->assertSame($expectedBinds, $builder->getBinds());
 	}
 
@@ -135,7 +135,7 @@ class WhereTest extends \CIUnitTestCase
 		$expectedSQL   = "SELECT * FROM \"jobs\" WHERE \"name\" IN :name:";
 		$expectedBinds = ['name' => ['Politician', 'Accountant']];
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+		$this->assertEquals($expectedSQL, \str_replace("\n", ' ', $builder->getCompiledSelect()));
 		$this->assertSame($expectedBinds, $builder->getBinds());
 	}
 
@@ -150,7 +150,7 @@ class WhereTest extends \CIUnitTestCase
 		$expectedSQL   = "SELECT * FROM \"jobs\" WHERE \"name\" NOT IN :name:";
 		$expectedBinds = ['name' => ['Politician', 'Accountant']];
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+		$this->assertEquals($expectedSQL, \str_replace("\n", ' ', $builder->getCompiledSelect()));
 		$this->assertSame($expectedBinds, $builder->getBinds());
 	}
 
@@ -165,7 +165,7 @@ class WhereTest extends \CIUnitTestCase
 		$expectedSQL   = "SELECT * FROM \"jobs\" WHERE \"id\" = :id: OR \"name\" IN :name:";
 		$expectedBinds = ['id' => 2, 'name' => ['Politician', 'Accountant']];
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+		$this->assertEquals($expectedSQL, \str_replace("\n", ' ', $builder->getCompiledSelect()));
 		$this->assertSame($expectedBinds, $builder->getBinds());
 	}
 
@@ -180,7 +180,7 @@ class WhereTest extends \CIUnitTestCase
 		$expectedSQL   = "SELECT * FROM \"jobs\" WHERE \"id\" = :id: OR \"name\" NOT IN :name:";
 		$expectedBinds = ['id' => 2, 'name' => ['Politician', 'Accountant']];
 
-		$this->assertEquals($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+		$this->assertEquals($expectedSQL, \str_replace("\n", ' ', $builder->getCompiledSelect()));
 		$this->assertSame($expectedBinds, $builder->getBinds());
 	}
 

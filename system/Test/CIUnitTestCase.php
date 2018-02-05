@@ -74,7 +74,7 @@ class CIUnitTestCase extends TestCase
 	public function assertEventTriggered(string $eventName): bool
 	{
 		$found = false;
-		$eventName = strtolower($eventName);
+		$eventName = \strtolower($eventName);
 
 		foreach (Events::getPerformanceLogs() as $log)
 		{

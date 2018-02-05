@@ -45,7 +45,7 @@ class Plugins
 	 */
 	public static function currentURL(array $params = [])
 	{
-		if ( ! function_exists('current_url'))
+		if ( ! \function_exists('current_url'))
 			helper('url');
 
 		return current_url();
@@ -61,7 +61,7 @@ class Plugins
 	 */
 	public static function previousURL(array $params = [])
 	{
-		if ( ! function_exists('previous_url'))
+		if ( ! \function_exists('previous_url'))
 			helper('url');
 
 		return previous_url();
@@ -77,7 +77,7 @@ class Plugins
 	 */
 	public static function mailto(array $params = [])
 	{
-		if ( ! function_exists('mailto'))
+		if ( ! \function_exists('mailto'))
 			helper('url');
 
 		$email = $params['email'] ?? '';
@@ -97,7 +97,7 @@ class Plugins
 	 */
 	public static function safeMailto(array $params = [])
 	{
-		if ( ! function_exists('safe_mailto'))
+		if ( ! \function_exists('safe_mailto'))
 			helper('url');
 
 		$email = $params['email'] ?? '';
@@ -117,7 +117,7 @@ class Plugins
 	 */
 	public static function lang(array $params = [])
 	{
-		$line = array_shift($params);
+		$line = \array_shift($params);
 
 		return lang($line, $params);
 	}

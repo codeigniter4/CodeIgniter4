@@ -87,21 +87,21 @@ class Forge extends \CodeIgniter\Database\Forge
 	 */
 	protected function _alterTable($alter_type, $table, $field)
 	{
-		if (in_array($alter_type, ['DROP', 'ADD'], true))
+		if (\in_array($alter_type, ['DROP', 'ADD'], true))
 		{
 			return parent::_alterTable($alter_type, $table, $field);
 		}
 
 		$sql = 'ALTER TABLE ' . $this->db->escapeIdentifiers($table);
 		$sqls = [];
-		for ($i = 0, $c = count($field); $i < $c; $i ++ )
+		for ($i = 0, $c = \count($field); $i < $c; $i ++ )
 		{
 			if ($field[$i]['_literal'] !== false)
 			{
 				return false;
 			}
 
-			if (version_compare($this->db->getVersion(), '8', '>=') && isset($field[$i]['type']))
+			if (\version_compare($this->db->getVersion(), '8', '>=') && isset($field[$i]['type']))
 			{
 				$sqls[] = $sql . ' ALTER COLUMN ' . $this->db->escapeIdentifiers($field[$i]['name'])
 						. " TYPE {$field[$i]['type']}{$field[$i]['length']}";
@@ -169,12 +169,12 @@ class Forge extends \CodeIgniter\Database\Forge
 	protected function _attributeType(&$attributes)
 	{
 		// Reset field lengths for data types that don't support it
-		if (isset($attributes['CONSTRAINT']) && stripos($attributes['TYPE'], 'int') !== false)
+		if (isset($attributes['CONSTRAINT']) && \stripos($attributes['TYPE'], 'int') !== false)
 		{
 			$attributes['CONSTRAINT'] = null;
 		}
 
-		switch (strtoupper($attributes['TYPE']))
+		switch (\strtoupper($attributes['TYPE']))
 		{
 			case 'TINYINT':
 				$attributes['TYPE'] = 'SMALLINT';

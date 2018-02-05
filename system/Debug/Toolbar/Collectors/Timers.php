@@ -88,7 +88,7 @@ class Timers extends BaseCollector
 				continue;
 
 			$data[] = [
-				'name'		 => ucwords(str_replace('_', ' ', $name)),
+				'name'		 => \ucwords(\str_replace('_', ' ', $name)),
 				'component'	 => 'Timer',
 				'start'		 => $info['start'],
 				'duration'	 => $info['end'] - $info['start']

@@ -103,7 +103,7 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
 		// We only supports positional placeholders (?)
 		// in order to work with the execute method below, so we
 		// need to replace our named placeholders (:name)
-		$sql = preg_replace('/:[^\s,)]+/', '?', $sql);
+		$sql = \preg_replace('/:[^\s,)]+/', '?', $sql);
 
 		/**
 		 * @var \CodeIgniter\Database\Query $query
@@ -147,7 +147,7 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
 	public function execute(...$data)
 	{
 		// Execute the Query.
-		$startTime = microtime(true);
+		$startTime = \microtime(true);
 
 		$result = $this->_execute($data);
 
@@ -161,7 +161,7 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
 		Events::trigger('DBQuery', $query);
 
 		// Return a result object
-		$resultClass = str_replace('PreparedQuery', 'Result', get_class($this));
+		$resultClass = \str_replace('PreparedQuery', 'Result', \get_class($this));
 
 		$resultID = $this->_getResult();
 
@@ -195,7 +195,7 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
 	 */
 	public function close()
 	{
-		if ( ! is_object($this->statement))
+		if ( ! \is_object($this->statement))
 		{
 			return;
 		}

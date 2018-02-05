@@ -150,16 +150,16 @@ class Logger implements LoggerInterface
 	 */
 	public function __construct($config, bool $debug = CI_DEBUG)
 	{
-		$this->loggableLevels = is_array($config->threshold) ? $config->threshold : range(1, (int) $config->threshold);
+		$this->loggableLevels = \is_array($config->threshold) ? $config->threshold : \range(1, (int) $config->threshold);
 
 		// Now convert loggable levels to strings.
 		// We only use numbers to make the threshold setting convenient for users.
-		if (count($this->loggableLevels))
+		if (\count($this->loggableLevels))
 		{
 			$temp = [];
 			foreach ($this->loggableLevels as $level)
 			{
-				$temp[] = array_search((int) $level, $this->logLevels);
+				$temp[] = \array_search((int) $level, $this->logLevels);
 			}
 
 			$this->loggableLevels = $temp;
@@ -168,7 +168,7 @@ class Logger implements LoggerInterface
 
 		$this->dateFormat = $config->dateFormat ?? $this->dateFormat;
 
-		if ( ! is_array($config->handlers) || empty($config->handlers))
+		if ( ! \is_array($config->handlers) || empty($config->handlers))
 		{
 			throw new \RuntimeException('LoggerConfig must provide at least one Handler.');
 		}
@@ -328,19 +328,19 @@ class Logger implements LoggerInterface
 	 */
 	public function log($level, $message, array $context = []): bool
 	{
-		if (is_numeric($level))
+		if (\is_numeric($level))
 		{
-			$level = array_search((int) $level, $this->logLevels);
+			$level = \array_search((int) $level, $this->logLevels);
 		}
 
 		// Is the level a valid level?
-		if ( ! array_key_exists($level, $this->logLevels))
+		if ( ! \array_key_exists($level, $this->logLevels))
 		{
 			throw new \InvalidArgumentException($level . ' is an invalid log level.');
 		}
 
 		// Does the app want to log this right now?
-		if ( ! in_array($level, $this->loggableLevels))
+		if ( ! \in_array($level, $this->loggableLevels))
 		{
 			return false;
 		}
@@ -348,9 +348,9 @@ class Logger implements LoggerInterface
 		// Parse our placeholders
 		$message = $this->interpolate($message, $context);
 
-		if ( ! is_string($message))
+		if ( ! \is_string($message))
 		{
-			$message = print_r($message, true);
+			$message = \print_r($message, true);
 		}
 
 		if ($this->cacheLogs)
@@ -405,7 +405,7 @@ class Logger implements LoggerInterface
 	 */
 	protected function interpolate($message, array $context = [])
 	{
-		if ( ! is_string($message))
+		if ( ! \is_string($message))
 			return $message;
 
 		// build a replacement array with braces around the context keys
@@ -425,12 +425,12 @@ class Logger implements LoggerInterface
 		}
 
 		// Add special placeholders
-		$replace['{post_vars}'] = '$_POST: ' . print_r($_POST, true);
-		$replace['{get_vars}'] = '$_GET: ' . print_r($_GET, true);
+		$replace['{post_vars}'] = '$_POST: ' . \print_r($_POST, true);
+		$replace['{get_vars}'] = '$_GET: ' . \print_r($_GET, true);
 		$replace['{env}'] = ENVIRONMENT;
 
 		// Allow us to log the file/line that we are logging from
-		if (strpos($message, '{file}') !== false)
+		if (\strpos($message, '{file}') !== false)
 		{
 			list($file, $line) = $this->determineFile();
 
@@ -439,15 +439,15 @@ class Logger implements LoggerInterface
 		}
 
 		// Match up environment variables in {env:foo} tags.
-		if (strpos($message, 'env:') !== false)
+		if (\strpos($message, 'env:') !== false)
 		{
-			preg_match('/env:[^}]+/', $message, $matches);
+			\preg_match('/env:[^}]+/', $message, $matches);
 
-			if (count($matches))
+			if (\count($matches))
 			{
 				foreach ($matches as $str)
 				{
-					$key = str_replace('env:', '', $str);
+					$key = \str_replace('env:', '', $str);
 					$replace["{{$str}}"] = $_ENV[$key] ?? 'n/a';
 				}
 			}
@@ -455,11 +455,11 @@ class Logger implements LoggerInterface
 
 		if (isset($_SESSION))
 		{
-			$replace['{session_vars}'] = '$_SESSION: ' . print_r($_SESSION, true);
+			$replace['{session_vars}'] = '$_SESSION: ' . \print_r($_SESSION, true);
 		}
 
 		// interpolate replacement values into the message and return
-		return strtr($message, $replace);
+		return \strtr($message, $replace);
 	}
 
 	//--------------------------------------------------------------------
@@ -474,18 +474,18 @@ class Logger implements LoggerInterface
 	{
 		// Determine the file and line by finding the first
 		// backtrace that is not part of our logging system.
-		$trace = debug_backtrace();
+		$trace = \debug_backtrace();
 		$file = null;
 		$line = null;
 
 		foreach ($trace as $row)
 		{
-			if (in_array($row['function'], ['interpolate', 'determineFile', 'log', 'log_message']))
+			if (\in_array($row['function'], ['interpolate', 'determineFile', 'log', 'log_message']))
 			{
 				continue;
 			}
 
-			$file = $row['file'] ?? isset($row['object']) ? get_class($row['object']) : 'unknown';
+			$file = $row['file'] ?? isset($row['object']) ? \get_class($row['object']) : 'unknown';
 			$line = $row['line'] ?? $row['function'] ?? 'unknown';
 			break;
 		}
@@ -512,9 +512,9 @@ class Logger implements LoggerInterface
 	 */
 	protected function cleanFileNames($file)
 	{
-		$file = str_replace(APPPATH, 'APPPATH/', $file);
-		$file = str_replace(BASEPATH, 'BASEPATH/', $file);
-		$file = str_replace(FCPATH, 'FCPATH/', $file);
+		$file = \str_replace(APPPATH, 'APPPATH/', $file);
+		$file = \str_replace(BASEPATH, 'BASEPATH/', $file);
+		$file = \str_replace(FCPATH, 'FCPATH/', $file);
 
 		return $file;
 	}

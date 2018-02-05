@@ -9,7 +9,7 @@
  * @category Common Functions
  */
 
-if ( ! function_exists('is_cli'))
+if ( ! \function_exists('is_cli'))
 {
 	/**
 	 * Is CLI?

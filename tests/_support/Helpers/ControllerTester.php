@@ -42,7 +42,7 @@ trait ControllerTester
 	 */
 	public function controller(string $name)
 	{
-		if (! class_exists($name))
+		if (! \class_exists($name))
 		{
 			throw new \InvalidArgumentException('Invalid Controller: '.$name);
 		}
@@ -77,7 +77,7 @@ trait ControllerTester
 	 */
 	public function execute(string $method, ...$params)
 	{
-		if (! method_exists($this->controller, $method) || ! is_callable([$this->controller, $method]))
+		if (! \method_exists($this->controller, $method) || ! \is_callable([$this->controller, $method]))
 		{
 			throw new \InvalidArgumentException('Method does not exist or is not callable in controller: '.$method);
 		}
@@ -92,7 +92,7 @@ trait ControllerTester
 
 		try
 		{
-			ob_start();
+			\ob_start();
 
 			$response = $this->controller->{$method}(...$params);
 		}
@@ -103,7 +103,7 @@ trait ControllerTester
 		}
 		finally
 		{
-			$output = ob_get_clean();
+			$output = \ob_get_clean();
 
 			// If the controller returned a redirect response
 			// then we need to use that...

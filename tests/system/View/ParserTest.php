@@ -60,7 +60,7 @@ class ParserTest extends \CIUnitTestCase
 
 		$template = "{title}\n{body}";
 
-		$result = implode("\n", $data);
+		$result = \implode("\n", $data);
 
 		$parser->setData($data);
 		$this->assertEquals($result, $parser->renderString($template));
@@ -78,7 +78,7 @@ class ParserTest extends \CIUnitTestCase
 
 		$template = "{title}\n{body}\n{name}";
 
-		$result = implode("\n", $data)."\n{name}";
+		$result = \implode("\n", $data)."\n{name}";
 
 		$parser->setData($data);
 		$this->assertEquals($result, $parser->renderString($template));
@@ -263,7 +263,7 @@ class ParserTest extends \CIUnitTestCase
 	{
 		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
 
-		$date = time();
+		$date = \time();
 
 		$data = [
 			'my_date' => $date
@@ -272,7 +272,7 @@ class ParserTest extends \CIUnitTestCase
 		$template = '{ my_date| date(Y-m-d ) }';
 
 		$parser->setData($data);
-		$this->assertEquals(date('Y-m-d', $date), $parser->renderString($template));
+		$this->assertEquals(\date('Y-m-d', $date), $parser->renderString($template));
 	}
 
 	//--------------------------------------------------------------------
@@ -430,7 +430,7 @@ class ParserTest extends \CIUnitTestCase
 
 		$template = "{ title}\n{ body }";
 
-		$result = implode("\n", $data);
+		$result = \implode("\n", $data);
 
 		$parser->setData($data);
 		$this->assertEquals($result, $parser->renderString($template));
@@ -448,7 +448,7 @@ class ParserTest extends \CIUnitTestCase
 
         $template = "{ title}\n{ body }";
 
-        $result = implode("\n", $data);
+        $result = \implode("\n", $data);
 
         $parser->setData($data);
         $this->assertEquals($result, $parser->renderString($template));
@@ -498,7 +498,7 @@ class ParserTest extends \CIUnitTestCase
     {
         $parser = new Parser($this->config, $this->viewsDir, $this->loader);
         $parser->addPlugin('hit:it', function($str){
-            return str_replace('here', "Hip to the Hop", $str);
+            return \str_replace('here', "Hip to the Hop", $str);
         }, true);
 
         $template = "{+ hit:it +} stuff here {+ /hit:it +}";

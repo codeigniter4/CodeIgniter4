@@ -25,7 +25,7 @@ class SecurityTest extends \CIUnitTestCase {
 
 		$hash = $security->getCSRFHash();
 
-		$this->assertEquals(32, strlen($hash));
+		$this->assertEquals(32, \strlen($hash));
 		$this->assertEquals('csrf_test_name', $security->getCSRFTokenName());
 	}
 

@@ -83,9 +83,9 @@ class TextHelperTest extends \CIUnitTestCase
 	// --------------------------------------------------------------------
 	public function test_random_string()
 	{
-		$this->assertEquals(16, strlen(random_string('alnum', 16)));
+		$this->assertEquals(16, \strlen(random_string('alnum', 16)));
 		$this->assertInternalType('string', random_string('numeric', 16));
-               $this->assertEquals(16, strlen($random = random_string('crypto', 16)));
+               $this->assertEquals(16, \strlen($random = random_string('crypto', 16)));
                $this->assertInternalType('string', $random);
 	}
 	// --------------------------------------------------------------------
@@ -224,13 +224,13 @@ class TextHelperTest extends \CIUnitTestCase
     public function test_word_wrap()
     {
         $string = 'Here is a simple string of text that will help us demonstrate this function.';
-        $this->assertEquals(substr_count(word_wrap($string, 25), "\n"), 4);
+        $this->assertEquals(\substr_count(word_wrap($string, 25), "\n"), 4);
     }
     // ------------------------------------------------------------------------
     public function test_default_word_wrap_charlim()
     {
         $string = "Here is a longer string of text that will help us demonstrate the default charlim of this function.";
-        $this->assertEquals(strpos(word_wrap($string), "\n"), 73);
+        $this->assertEquals(\strpos(word_wrap($string), "\n"), 73);
     }
     
     // -----------------------------------------------------------------------

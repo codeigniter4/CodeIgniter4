@@ -76,7 +76,7 @@ class Database
 			throw new \InvalidArgumentException('You have not selected a database type to connect to.');
 		}
 
-		$className = strpos($params['DBDriver'], '\\') === false ? '\CodeIgniter\Database\\' . $params['DBDriver'] . '\\Connection' : $params['DBDriver'] . '\\Connection';
+		$className = \strpos($params['DBDriver'], '\\') === false ? '\CodeIgniter\Database\\' . $params['DBDriver'] . '\\Connection' : $params['DBDriver'] . '\\Connection';
 
 		$class = new $className($params);
 
@@ -97,7 +97,7 @@ class Database
 	 */
 	public function loadForge(ConnectionInterface $db)
 	{
-		$className = strpos($db->DBDriver, '\\') === false ? '\CodeIgniter\Database\\' . $db->DBDriver . '\\Forge' : $db->DBDriver . '\\Connection';
+		$className = \strpos($db->DBDriver, '\\') === false ? '\CodeIgniter\Database\\' . $db->DBDriver . '\\Forge' : $db->DBDriver . '\\Connection';
 
 		// Make sure a connection exists
 		if ( ! $db->connID)
@@ -121,7 +121,7 @@ class Database
 	 */
 	public function loadUtils(ConnectionInterface $db)
 	{
-		$className = strpos($db->DBDriver, '\\') === false ? '\CodeIgniter\Database\\' . $db->DBDriver . '\\Utils' : $db->DBDriver . '\\Utils';
+		$className = \strpos($db->DBDriver, '\\') === false ? '\CodeIgniter\Database\\' . $db->DBDriver . '\\Utils' : $db->DBDriver . '\\Utils';
 
 		// Make sure a connection exists
 		if ( ! $db->connID)

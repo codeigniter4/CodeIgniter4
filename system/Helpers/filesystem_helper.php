@@ -35,7 +35,7 @@
  * @since	Version 1.0.0
  * @filesource
  */
-defined('BASEPATH') OR exit('No direct script access allowed');
+\defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
  * CodeIgniter Directory Helpers
@@ -48,7 +48,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  */
 // ------------------------------------------------------------------------
 
-if ( ! function_exists('directory_map'))
+if ( ! \function_exists('directory_map'))
 {
 
 	/**
@@ -67,13 +67,13 @@ if ( ! function_exists('directory_map'))
 	 */
 	function directory_map(string $source_dir, int $directory_depth = 0, bool $hidden = false): array
 	{
-		if ($fp = @opendir($source_dir))
+		if ($fp = @\opendir($source_dir))
 		{
 			$filedata = [];
 			$new_depth = $directory_depth - 1;
-			$source_dir = rtrim($source_dir, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+			$source_dir = \rtrim($source_dir, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
 
-			while (false !== ($file = readdir($fp)))
+			while (false !== ($file = \readdir($fp)))
 			{
 				// Remove '.', '..', and hidden files [optional]
 				if ($file === '.' || $file === '..' || ($hidden === false && $file[0] === '.'))
@@ -81,9 +81,9 @@ if ( ! function_exists('directory_map'))
 					continue;
 				}
 
-				is_dir($source_dir . $file) && $file .= DIRECTORY_SEPARATOR;
+				\is_dir($source_dir . $file) && $file .= DIRECTORY_SEPARATOR;
 
-				if (($directory_depth < 1 || $new_depth > 0) && is_dir($source_dir . $file))
+				if (($directory_depth < 1 || $new_depth > 0) && \is_dir($source_dir . $file))
 				{
 					$filedata[$file] = directory_map($source_dir . $file, $new_depth, $hidden);
 				}
@@ -93,7 +93,7 @@ if ( ! function_exists('directory_map'))
 				}
 			}
 
-			closedir($fp);
+			\closedir($fp);
 			return $filedata;
 		}
 
@@ -104,7 +104,7 @@ if ( ! function_exists('directory_map'))
 
 // ------------------------------------------------------------------------
 
-if ( ! function_exists('write_file'))
+if ( ! \function_exists('write_file'))
 {
 
 	/**
@@ -121,32 +121,32 @@ if ( ! function_exists('write_file'))
 	 */
 	function write_file(string $path, string $data, string $mode = 'wb'): bool
 	{
-		if ( ! $fp = @fopen($path, $mode))
+		if ( ! $fp = @\fopen($path, $mode))
 		{
 			return false;
 		}
 
-		flock($fp, LOCK_EX);
+		\flock($fp, LOCK_EX);
 
-		for ($result = $written = 0, $length = strlen($data); $written < $length; $written += $result)
+		for ($result = $written = 0, $length = \strlen($data); $written < $length; $written += $result)
 		{
-			if (($result = fwrite($fp, substr($data, $written))) === false)
+			if (($result = \fwrite($fp, \substr($data, $written))) === false)
 			{
 				break;
 			}
 		}
 
-		flock($fp, LOCK_UN);
-		fclose($fp);
+		\flock($fp, LOCK_UN);
+		\fclose($fp);
 
-		return is_int($result);
+		return \is_int($result);
 	}
 
 }
 
 // ------------------------------------------------------------------------
 
-if ( ! function_exists('delete_files'))
+if ( ! \function_exists('delete_files'))
 {
 
 	/**
@@ -167,38 +167,38 @@ if ( ! function_exists('delete_files'))
 	function delete_files(string $path, bool $delDir = false, bool $htdocs = false, int $_level = 0): bool
 	{
 		// Trim the trailing slash
-		$path = rtrim($path, '/\\');
+		$path = \rtrim($path, '/\\');
 
-		if ( ! $current_dir = @opendir($path))
+		if ( ! $current_dir = @\opendir($path))
 		{
 			return false;
 		}
 
-		while (false !== ($filename = @readdir($current_dir)))
+		while (false !== ($filename = @\readdir($current_dir)))
 		{
 			if ($filename !== '.' && $filename !== '..')
 			{
-				if (is_dir($path . DIRECTORY_SEPARATOR . $filename) && $filename[0] !== '.')
+				if (\is_dir($path . DIRECTORY_SEPARATOR . $filename) && $filename[0] !== '.')
 				{
 					delete_files($path . DIRECTORY_SEPARATOR . $filename, $delDir, $htdocs, $_level + 1);
 				}
-				elseif ($htdocs !== true || ! preg_match('/^(\.htaccess|index\.(html|htm|php)|web\.config)$/i', $filename))
+				elseif ($htdocs !== true || ! \preg_match('/^(\.htaccess|index\.(html|htm|php)|web\.config)$/i', $filename))
 				{
-					@unlink($path . DIRECTORY_SEPARATOR . $filename);
+					@\unlink($path . DIRECTORY_SEPARATOR . $filename);
 				}
 			}
 		}
 
-		closedir($current_dir);
+		\closedir($current_dir);
 
-		return ($delDir === true && $_level > 0) ? @rmdir($path) : true;
+		return ($delDir === true && $_level > 0) ? @\rmdir($path) : true;
 	}
 
 }
 
 // ------------------------------------------------------------------------
 
-if ( ! function_exists('get_filenames'))
+if ( ! \function_exists('get_filenames'))
 {
 
 	/**
@@ -217,18 +217,18 @@ if ( ! function_exists('get_filenames'))
 	{
 		static $filedata = [];
 
-		if ($fp = @opendir($source_dir))
+		if ($fp = @\opendir($source_dir))
 		{
 			// reset the array and make sure $source_dir has a trailing slash on the initial call
 			if ($recursion === false)
 			{
 				$filedata = [];
-				$source_dir = rtrim(realpath($source_dir), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+				$source_dir = \rtrim(\realpath($source_dir), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
 			}
 
-			while (false !== ($file = readdir($fp)))
+			while (false !== ($file = \readdir($fp)))
 			{
-				if (is_dir($source_dir . $file) && $file[0] !== '.')
+				if (\is_dir($source_dir . $file) && $file[0] !== '.')
 				{
 					get_filenames($source_dir . $file . DIRECTORY_SEPARATOR, $include_path, true);
 				}
@@ -238,7 +238,7 @@ if ( ! function_exists('get_filenames'))
 				}
 			}
 
-			closedir($fp);
+			\closedir($fp);
 			return $filedata;
 		}
 
@@ -249,7 +249,7 @@ if ( ! function_exists('get_filenames'))
 
 // --------------------------------------------------------------------
 
-if ( ! function_exists('get_dir_file_info'))
+if ( ! \function_exists('get_dir_file_info'))
 {
 
 	/**
@@ -271,19 +271,19 @@ if ( ! function_exists('get_dir_file_info'))
 		static $filedata = [];
 		$relative_path = $source_dir;
 
-		if ($fp = @opendir($source_dir))
+		if ($fp = @\opendir($source_dir))
 		{
 			// reset the array and make sure $source_dir has a trailing slash on the initial call
 			if ($recursion === false)
 			{
 				$filedata = [];
-				$source_dir = rtrim(realpath($source_dir), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+				$source_dir = \rtrim(\realpath($source_dir), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
 			}
 
 			// Used to be foreach (scandir($source_dir, 1) as $file), but scandir() is simply not as fast
-			while (false !== ($file = readdir($fp)))
+			while (false !== ($file = \readdir($fp)))
 			{
-				if (is_dir($source_dir . $file) && $file[0] !== '.' && $top_level_only === false)
+				if (\is_dir($source_dir . $file) && $file[0] !== '.' && $top_level_only === false)
 				{
 					get_dir_file_info($source_dir . $file . DIRECTORY_SEPARATOR, $top_level_only, true);
 				}
@@ -294,7 +294,7 @@ if ( ! function_exists('get_dir_file_info'))
 				}
 			}
 
-			closedir($fp);
+			\closedir($fp);
 			return $filedata;
 		}
 
@@ -305,7 +305,7 @@ if ( ! function_exists('get_dir_file_info'))
 
 // --------------------------------------------------------------------
 
-if ( ! function_exists('get_file_info'))
+if ( ! \function_exists('get_file_info'))
 {
 
 	/**
@@ -323,14 +323,14 @@ if ( ! function_exists('get_file_info'))
 	 */
 	function get_file_info(string $file, $returned_values = ['name', 'server_path', 'size', 'date']): array
 	{
-		if ( ! file_exists($file))
+		if ( ! \file_exists($file))
 		{
 			return null;
 		}
 
-		if (is_string($returned_values))
+		if (\is_string($returned_values))
 		{
-			$returned_values = explode(',', $returned_values);
+			$returned_values = \explode(',', $returned_values);
 		}
 
 		foreach ($returned_values as $key)
@@ -338,28 +338,28 @@ if ( ! function_exists('get_file_info'))
 			switch ($key)
 			{
 				case 'name':
-					$fileinfo['name'] = basename($file);
+					$fileinfo['name'] = \basename($file);
 					break;
 				case 'server_path':
 					$fileinfo['server_path'] = $file;
 					break;
 				case 'size':
-					$fileinfo['size'] = filesize($file);
+					$fileinfo['size'] = \filesize($file);
 					break;
 				case 'date':
-					$fileinfo['date'] = filemtime($file);
+					$fileinfo['date'] = \filemtime($file);
 					break;
 				case 'readable':
-					$fileinfo['readable'] = is_readable($file);
+					$fileinfo['readable'] = \is_readable($file);
 					break;
 				case 'writable':
 					$fileinfo['writable'] = is_really_writable($file);
 					break;
 				case 'executable':
-					$fileinfo['executable'] = is_executable($file);
+					$fileinfo['executable'] = \is_executable($file);
 					break;
 				case 'fileperms':
-					$fileinfo['fileperms'] = fileperms($file);
+					$fileinfo['fileperms'] = \fileperms($file);
 					break;
 			}
 		}
@@ -371,7 +371,7 @@ if ( ! function_exists('get_file_info'))
 
 // --------------------------------------------------------------------
 
-if ( ! function_exists('symbolic_permissions'))
+if ( ! \function_exists('symbolic_permissions'))
 {
 
 	/**
@@ -440,7 +440,7 @@ if ( ! function_exists('symbolic_permissions'))
 
 // --------------------------------------------------------------------
 
-if ( ! function_exists('octal_permissions'))
+if ( ! \function_exists('octal_permissions'))
 {
 
 	/**
@@ -454,14 +454,14 @@ if ( ! function_exists('octal_permissions'))
 	 */
 	function octal_permissions(int $perms): string
 	{
-		return substr(sprintf('%o', $perms), -3);
+		return \substr(\sprintf('%o', $perms), -3);
 	}
 
 }
 
 // ------------------------------------------------------------------------
 
-if ( ! function_exists('set_realpath'))
+if ( ! \function_exists('set_realpath'))
 {
 
 	/**
@@ -475,23 +475,23 @@ if ( ! function_exists('set_realpath'))
 	function set_realpath(string $path, bool $checkExistance = false): string
 	{
 		// Security check to make sure the path is NOT a URL. No remote file inclusion!
-		if (preg_match('#^(http:\/\/|https:\/\/|www\.|ftp)#i', $path) || filter_var($path, FILTER_VALIDATE_IP) === $path)
+		if (\preg_match('#^(http:\/\/|https:\/\/|www\.|ftp)#i', $path) || \filter_var($path, FILTER_VALIDATE_IP) === $path)
 		{
 			throw new InvalidArgumentException('The path you submitted must be a local server path, not a URL');
 		}
 
 		// Resolve the path
-		if (realpath($path) !== false)
+		if (\realpath($path) !== false)
 		{
-			$path = realpath($path);
+			$path = \realpath($path);
 		}
-		elseif ($checkExistance && ! is_dir($path) && ! is_file($path))
+		elseif ($checkExistance && ! \is_dir($path) && ! \is_file($path))
 		{
 			throw new InvalidArgumentException('Not a valid path: ' . $path);
 		}
 
 		// Add a trailing slash, if this is a directory
-		return is_dir($path) ? rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR : $path;
+		return \is_dir($path) ? \rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR : $path;
 	}
 
 }

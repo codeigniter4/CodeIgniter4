@@ -125,16 +125,16 @@ class ListCommands extends BaseCommand
 	 */
 	protected function describeCommands(array $commands = [])
 	{
-		arsort($commands);
+		\arsort($commands);
 
-		$names = array_keys($commands);
-		$descs = array_column($commands, 'description');
-		$groups = array_column($commands, 'group');
+		$names = \array_keys($commands);
+		$descs = \array_column($commands, 'description');
+		$groups = \array_column($commands, 'group');
 		$lastGroup = '';
 
 		// Pad each item to the same length
 		$names = $this->padArray($names, 2, 2);
-		$countNames = count($names);
+		$countNames = \count($names);
 		for ($i = 0; $i < $countNames; $i ++ )
 		{
 			$lastGroup = $this->describeGroup($groups[$i], $lastGroup);
@@ -143,7 +143,7 @@ class ListCommands extends BaseCommand
 
 			if (isset($descs[$i]))
 			{
-				$out .= CLI::wrap($descs[$i], 125, strlen($names[$i]));
+				$out .= CLI::wrap($descs[$i], 125, \strlen($names[$i]));
 			}
 
 			CLI::write($out);
@@ -187,12 +187,12 @@ class ListCommands extends BaseCommand
 	 */
 	protected function padArray($array, $extra = 2, $indent = 0)
 	{
-		$max = max(array_map('strlen', $array)) + $extra + $indent;
+		$max = \max(\array_map('strlen', $array)) + $extra + $indent;
 
 		foreach ($array as &$item)
 		{
-			$item = str_repeat(' ', $indent) . $item;
-			$item = str_pad($item, $max);
+			$item = \str_repeat(' ', $indent) . $item;
+			$item = \str_pad($item, $max);
 		}
 
 		return $array;
