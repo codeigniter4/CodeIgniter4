@@ -232,7 +232,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @return mixed
 	 */
-	public function addPlaceholder(string $placeholder, string $pattern = null): RouteCollectionInterface
+	public function addPlaceholder($placeholder, string $pattern = null): RouteCollectionInterface
 	{
 		if ( ! is_array($placeholder))
 		{
