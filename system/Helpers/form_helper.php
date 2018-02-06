@@ -292,7 +292,7 @@ if ( ! function_exists('form_textarea'))
 			'cols'	 => '40',
 			'rows'	 => '10',
 		];
-		if ( ! is_array($data) OR ! isset($data['value']))
+		if ( ! is_array($data) || ! isset($data['value']))
 		{
 			$val = $value;
 		}
