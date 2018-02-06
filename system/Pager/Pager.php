@@ -35,8 +35,8 @@
  * @since	Version 3.0.0
  * @filesource
  */
-use Config\Services;
 use CodeIgniter\View\RendererInterface;
+use Config\Services;
 
 /**
  * Class Pager

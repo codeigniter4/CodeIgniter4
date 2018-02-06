@@ -36,8 +36,8 @@
  * @filesource
  */
 use CodeIgniter\Events\Events;
-use PHPUnit\Framework\TestCase;
 use CodeIgniter\Log\TestLogger;
+use PHPUnit\Framework\TestCase;
 
 /**
  * PHPunit test case.

@@ -35,8 +35,8 @@
  * @since	Version 3.0.0
  * @filesource
  */
-use CodeIgniter\Events\Events;
 use CodeIgniter\Database\Exceptions\DatabaseException;
+use CodeIgniter\Events\Events;
 
 /**
  * Class BaseConnection

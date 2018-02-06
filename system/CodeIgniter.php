@@ -35,15 +35,15 @@
  * @since	Version 3.0.0
  * @filesource
  */
-use CodeIgniter\HTTP\RedirectResponse;
-use Config\Services;
-use Config\Cache;
-use CodeIgniter\HTTP\URI;
 use CodeIgniter\Debug\Timer;
 use CodeIgniter\Events\Events;
-use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\CLIRequest;
+use CodeIgniter\HTTP\RedirectResponse;
+use CodeIgniter\HTTP\Response;
+use CodeIgniter\HTTP\URI;
 use CodeIgniter\Router\RouteCollectionInterface;
+use Config\Cache;
+use Config\Services;
 
 /**
  * This class is the core of the framework, and will analyse the

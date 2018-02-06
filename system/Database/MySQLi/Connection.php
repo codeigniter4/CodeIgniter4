@@ -35,9 +35,9 @@
  * @since	Version 3.0.0
  * @filesource
  */
+use \CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\ConnectionInterface;
-use \CodeIgniter\Database\Exceptions\DatabaseException;
 
 /**
  * Connection for MySQLi

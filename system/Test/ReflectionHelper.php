@@ -35,9 +35,9 @@
  * @since	Version 3.0.0
  * @filesource
  */
+use ReflectionClass;
 use ReflectionMethod;
 use ReflectionObject;
-use ReflectionClass;
 
 /**
  * Testing helper.

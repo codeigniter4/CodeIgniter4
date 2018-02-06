@@ -1,7 +1,7 @@
 <?php namespace CodeIgniter\Log\Handlers;
 
-use Config\MockLogger as LoggerConfig;
 use CodeIgniter\Services;
+use Config\MockLogger as LoggerConfig;
 
 class ChromeLoggerHandlerTest extends \CIUnitTestCase
 {
