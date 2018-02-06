@@ -102,7 +102,7 @@ class Cell
 		list($class, $method) = $this->determineClass($library);
 
 		// Is it cached?
-		$cacheName = ! empty($cacheName) ? $cacheName : $class . $method . md5(serialize($params));
+		$cacheName = ! empty($cacheName) ? $cacheName : $class . $method . hash('sha256', serialize($params));
 
 		if ( ! empty($this->cache) && $output = $this->cache->get($cacheName))
 		{

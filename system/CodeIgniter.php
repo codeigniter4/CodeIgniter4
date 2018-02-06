@@ -524,7 +524,7 @@ class CodeIgniter
 	{
 		if (is_cli())
 		{
-			return md5($this->request->getPath());
+			return hash('sha256', $this->request->getPath());
 		}
 
 		$uri = $this->request->uri;
@@ -542,7 +542,7 @@ class CodeIgniter
 			);
 		}
 
-		return md5($name);
+		return hash('sha256', $name);
 	}
 
 	//--------------------------------------------------------------------

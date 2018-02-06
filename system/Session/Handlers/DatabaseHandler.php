@@ -153,7 +153,7 @@ class DatabaseHandler extends BaseHandler implements \SessionHandlerInterface
 	{
 		if ($this->lockSession($sessionID) == false)
 		{
-			$this->fingerprint = md5('');
+			$this->fingerprint = hash('sha256', '');
 			return '';
 		}
 
@@ -175,7 +175,7 @@ class DatabaseHandler extends BaseHandler implements \SessionHandlerInterface
 			// ID regeneration, so we need to explicitly set this to
 			// FALSE instead of relying on the default ...
 			$this->rowExists = FALSE;
-			$this->fingerprint = md5('');
+			$this->fingerprint = hash('sha256', '');
 
 			return '';
 		}
@@ -192,7 +192,7 @@ class DatabaseHandler extends BaseHandler implements \SessionHandlerInterface
 			$result = ($this->platform === 'postgre') ? base64_decode(rtrim($result->data)) : $result->data;
 		}
 
-		$this->fingerprint = md5($result);
+		$this->fingerprint = hash('sha256', $result);
 		$this->rowExists = true;
 
 		return $result;
@@ -243,7 +243,7 @@ class DatabaseHandler extends BaseHandler implements \SessionHandlerInterface
 				return $this->fail();
 			}
 
-			$this->fingerprint = md5($sessionData);
+			$this->fingerprint = hash('sha256', $sessionData);
 			$this->rowExists = true;
 
 			return true;
@@ -260,7 +260,7 @@ class DatabaseHandler extends BaseHandler implements \SessionHandlerInterface
 			'timestamp' => time()
 		];
 
-		if ($this->fingerprint !== md5($sessionData))
+		if ($this->fingerprint !== hash('sha256', $sessionData))
 		{
 			$updateData['data'] = ($this->platform === 'postgre') ? base64_encode($sessionData) : $sessionData;
 		}
@@ -270,7 +270,7 @@ class DatabaseHandler extends BaseHandler implements \SessionHandlerInterface
 			return $this->fail();
 		}
 
-		$this->fingerprint = md5($sessionData);
+		$this->fingerprint = hash('sha256', $sessionData);
 
 		return true;
 	}
@@ -349,7 +349,7 @@ class DatabaseHandler extends BaseHandler implements \SessionHandlerInterface
 	{
 		if ($this->platform === 'mysql')
 		{
-			$arg = md5($sessionID . ($this->matchIP ? '_' . $_SERVER['REMOTE_ADDR'] : ''));
+			$arg = hash('sha256', $sessionID . ($this->matchIP ? '_' . $_SERVER['REMOTE_ADDR'] : ''));
 			if ($this->db->query("SELECT GET_LOCK('{$arg}', 300) AS ci_session_lock")->getRow()->ci_session_lock)
 			{
 				$this->lock = $arg;
