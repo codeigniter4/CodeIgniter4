@@ -144,7 +144,7 @@ class Entity
 			$result = $this->mutateDate($result);
 		}
 		// Or cast it as something?
-		else if (array_key_exists($key, $this->_options['casts']))
+		else if (isset($this->_options['casts'][$key]) && ! empty($this->_options['casts'][$key]))
 		{
 			$result = $this->castAs($result, $this->_options['casts'][$key]);
 		}
@@ -267,7 +267,12 @@ class Entity
 	 */
 	protected function mapProperty(string $key)
 	{
-		if (array_key_exists($key, $this->_options['datamap']))
+		if (empty($this->_options['datamap']))
+		{
+			return $key;
+		}
+
+		if (isset($this->_options['datamap'][$key]) && ! empty($this->_options['datamap'][$key]))
 		{
 			return $this->_options['datamap'][$key];
 		}
