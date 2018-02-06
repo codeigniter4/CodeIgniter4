@@ -76,7 +76,7 @@ interface RouteCollectionInterface
 	 *
 	 * @return mixed
 	 */
-	public function addPlaceholder(string $placeholder, string $pattern = null);
+	public function addPlaceholder($placeholder, string $pattern = null);
 
 	//--------------------------------------------------------------------
 
