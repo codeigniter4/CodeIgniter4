@@ -424,7 +424,33 @@ class ModelTest extends \CIDatabaseTestCase
 
     //--------------------------------------------------------------------
 
-    public function testSkipValidation()
+	public function testValidationPlaceholdersSuccess()
+	{
+		$model = new ValidModel($this->db);
+
+		$data = [
+			'name' => 'abc',
+			'id' => 13,
+			'token' => 13
+		];
+
+		$this->assertTrue($model->validate($data));
+	}
+
+	public function testValidationPlaceholdersFail()
+	{
+		$model = new ValidModel($this->db);
+
+		$data = [
+			'name' => 'abc',
+			'id' => 13,
+			'token' => 12
+		];
+
+		$this->assertFalse($model->validate($data));
+	}
+
+	public function testSkipValidation()
     {
         $model = new ValidModel($this->db);
 
