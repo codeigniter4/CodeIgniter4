@@ -573,6 +573,7 @@ class Response extends Message implements ResponseInterface
 		{
 			if (isset($_SERVER['SERVER_PROTOCOL'], $_SERVER['REQUEST_METHOD']) && $_SERVER['SERVER_PROTOCOL'] === 'HTTP/1.1')
 			{
+				$this->setProtocolVersion('1.1');
 				$code = ($_SERVER['REQUEST_METHOD'] !== 'GET') ? 303 // reference: http://en.wikipedia.org/wiki/Post/Redirect/Get
 						: 307;
 			}
