@@ -76,7 +76,9 @@ class Database
 			throw new \InvalidArgumentException('You have not selected a database type to connect to.');
 		}
 
-		$className = strpos($params['DBDriver'], '\\') === false ? '\CodeIgniter\Database\\' . $params['DBDriver'] . '\\Connection' : $params['DBDriver'] . '\\Connection';
+		$className = strpos($params['DBDriver'], '\\') === false
+			? '\CodeIgniter\Database\\' . $params['DBDriver'] . '\\Connection'
+			: $params['DBDriver'] . '\\Connection';
 
 		$class = new $className($params);
 
