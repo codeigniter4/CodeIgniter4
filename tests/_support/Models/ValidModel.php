@@ -15,7 +15,7 @@ class ValidModel extends Model
     protected $allowedFields = ['name', 'description'];
 
     protected $validationRules = [
-        'name'  => 'required|min_length[3]',
+        'name'  => ['required', 'min_length[3]'],
 	    'token' => 'in_list[{id}]'
     ];
 

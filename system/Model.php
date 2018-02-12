@@ -1196,6 +1196,15 @@ class Model
 		{
 			foreach ($rules as &$rule)
 			{
+				if (is_array($rule))
+				{
+					foreach ($rule as &$row)
+					{
+						$row = strtr($row, $replacements);
+					}
+					continue;
+				}
+
 				$rule = strtr($rule, $replacements);
 			}
 		}
