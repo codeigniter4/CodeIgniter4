@@ -6,6 +6,7 @@ use CodeIgniter\Format\XMLFormatter;
 use CodeIgniter\HTTP\MockIncomingRequest;
 use CodeIgniter\HTTP\MockResponse;
 use CodeIgniter\HTTP\URI;
+use CodeIgniter\HTTP\UserAgent;
 
 class ResponseTraitTest extends \CIUnitTestCase
 {
@@ -44,7 +45,7 @@ class ResponseTraitTest extends \CIUnitTestCase
 
 		$config = array_merge($config, $userConfig);
 
-		$this->request = new MockIncomingRequest((object) $config, new URI($uri), null);
+		$this->request = new MockIncomingRequest((object) $config, new URI($uri), null, new UserAgent());
 		$this->response = new MockResponse((object) $config);
 
 		// Insert headers into request.

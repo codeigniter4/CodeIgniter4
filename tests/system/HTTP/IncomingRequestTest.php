@@ -14,7 +14,7 @@ class IncomingRequestTest extends \CIUnitTestCase
 
 	public function setUp()
 	{
-		$this->request = new IncomingRequest(new App(), new URI());
+		$this->request = new IncomingRequest(new App(), new URI(), null, new UserAgent());
 
 		$_POST = $_GET = $_SERVER = $_REQUEST = $_ENV = $_COOKIE = $_SESSION = [];
 	}
@@ -360,7 +360,7 @@ class IncomingRequestTest extends \CIUnitTestCase
 		$config->defaultLocale = 'es';
 		$config->baseURL = 'http://example.com';
 
-		$request = new IncomingRequest($config, new URI());
+		$request = new IncomingRequest($config, new URI(), null, new UserAgent());
 
 		$request->setLocale('en');
 		$this->assertEquals('en', $request->getLocale());
@@ -377,7 +377,7 @@ class IncomingRequestTest extends \CIUnitTestCase
 		$config->supportedLocales = ['en', 'es'];
 		$config->baseURL = 'http://example.com';
 
-		$request = new IncomingRequest($config, new URI());
+		$request = new IncomingRequest($config, new URI(), null, new UserAgent());
 
 		$this->assertEquals($config->defaultLocale, $request->getDefaultLocale());
 		$this->assertEquals('es', $request->getLocale());
@@ -397,7 +397,7 @@ class IncomingRequestTest extends \CIUnitTestCase
 		$config = new App();
 		$config->baseURL = 'http://example.com';
 
-		$request = new IncomingRequest($config, new URI(), $json);
+		$request = new IncomingRequest($config, new URI(), $json, new UserAgent());
 
 		$this->assertEquals($expected, $request->getJSON(true));
 	}
@@ -417,7 +417,7 @@ class IncomingRequestTest extends \CIUnitTestCase
 		$config = new App();
 		$config->baseURL = 'http://example.com';
 
-		$request = new IncomingRequest($config, new URI(), $rawstring);
+		$request = new IncomingRequest($config, new URI(), $rawstring, new UserAgent());
 
 		$this->assertEquals($expected, $request->getRawInput());
 	}

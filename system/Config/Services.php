@@ -538,7 +538,10 @@ class Services
 		}
 
 		return new \CodeIgniter\HTTP\IncomingRequest(
-				$config, new \CodeIgniter\HTTP\URI()
+				$config,
+				new \CodeIgniter\HTTP\URI(),
+				'php://input',
+				new \CodeIgniter\HTTP\UserAgent()
 		);
 	}
 
