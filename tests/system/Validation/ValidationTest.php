@@ -1,6 +1,8 @@
 <?php namespace CodeIgniter\Validation;
 
 
+use Config\Services;
+
 class ValidationTest extends \CIUnitTestCase
 {
 	/**
@@ -31,6 +33,9 @@ class ValidationTest extends \CIUnitTestCase
 	public function setUp()
 	{
 		parent::setUp();
+
+		Services::reset();
+
 		$this->validation = new Validation((object)$this->config, \Config\Services::renderer());
 		$this->validation->reset();
 
@@ -88,7 +93,7 @@ class ValidationTest extends \CIUnitTestCase
 		]);
 
 		$this->assertFalse($this->validation->run($data));
-		$this->assertEquals('is_numeric', $this->validation->getError('foo'));
+		$this->assertEquals('Validation.is_numeric', $this->validation->getError('foo'));
 	}
 
 	//--------------------------------------------------------------------
@@ -125,7 +130,7 @@ class ValidationTest extends \CIUnitTestCase
 	public function testCheckLocalizedError()
 	{
 		$this->assertFalse($this->validation->check('notanumber', 'is_numeric'));
-		$this->assertEquals('is_numeric', $this->validation->getError());
+		$this->assertEquals('Validation.is_numeric', $this->validation->getError());
 	}
 
 	//--------------------------------------------------------------------
@@ -152,7 +157,7 @@ class ValidationTest extends \CIUnitTestCase
 
 		$this->validation->run($data);
 
-		$this->assertEquals(['foo' => 'is_numeric'], $this->validation->getErrors());
+		$this->assertEquals(['foo' => 'Validation.is_numeric'], $this->validation->getErrors());
 	}
 
 	//--------------------------------------------------------------------
@@ -260,29 +265,8 @@ class ValidationTest extends \CIUnitTestCase
 		$this->validation->setRuleGroup('groupZ');
 	}
 
-//	public function testValidateArray()
-//	{
-//		$data = [
-//			'foo' => [
-//				'bar' => 23
-//			]
-//		];
-//
-//		$this->validation->setRules([
-//			'foo[bar]' => 'is_numeric',
-//		]);
-//
-//		$this->assertTrue($this->validation->run($data));
-//	}
-
-	//--------------------------------------------------------------------
-
 	/**
 	 * @dataProvider rulesSetupProvider
-	 *
-	 * @param $rules
-	 * @param $expected
-	 * @param $errors
 	 */
 	public function testRulesSetup($rules, $expected, $errors = [])
 	{
