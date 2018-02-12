@@ -572,7 +572,7 @@ if ( ! function_exists('prep_url'))
 
 		$url = parse_url($str);
 
-		if ( ! $url OR ! isset($url['scheme']))
+		if ( ! $url || ! isset($url['scheme']))
 		{
 			return 'http://' . $str;
 		}

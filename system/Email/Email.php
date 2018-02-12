@@ -2045,7 +2045,7 @@ class Email
 			return false;
 		}
 
-		if (! $this->SMTPConnect() OR ! $this->SMTPAuthenticate())
+		if (! $this->SMTPConnect() || ! $this->SMTPAuthenticate())
 		{
 			return false;
 		}
