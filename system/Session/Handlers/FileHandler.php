@@ -124,7 +124,7 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 		$this->savePath = $savePath;
 		$this->filePath = $this->savePath . '/'
 				. $name // we'll use the session cookie name as a prefix to avoid collisions
-				. ($this->matchIP ? md5($_SERVER['REMOTE_ADDR']) : '');
+				. ($this->matchIP ? hash('sha256', $_SERVER['REMOTE_ADDR']) : '');
 
 		return true;
 	}
@@ -170,7 +170,7 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 			if ($this->fileNew)
 			{
 				chmod($this->filePath . $sessionID, 0600);
-				$this->fingerprint = md5('');
+				$this->fingerprint = hash('sha256', '');
 
 				return '';
 			}
@@ -191,7 +191,7 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 			$session_data .= $buffer;
 		}
 
-		$this->fingerprint = md5($session_data);
+		$this->fingerprint = hash('sha256', $session_data);
 
 		return $session_data;
 	}
@@ -221,7 +221,7 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 		{
 			return false;
 		}
-		elseif ($this->fingerprint === md5($sessionData))
+		elseif ($this->fingerprint === hash('sha256', $sessionData))
 		{
 			return ($this->fileNew) ? true : touch($this->filePath . $sessionID);
 		}
@@ -244,14 +244,14 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 
 			if ( ! is_int($result))
 			{
-				$this->fingerprint = md5(substr($sessionData, 0, $written));
+				$this->fingerprint = hash('sha256', substr($sessionData, 0, $written));
 				$this->logger->error('Session: Unable to write data.');
 
 				return false;
 			}
 		}
 
-		$this->fingerprint = md5($sessionData);
+		$this->fingerprint = hash('sha256', $sessionData);
 
 		return true;
 	}

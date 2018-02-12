@@ -183,7 +183,7 @@ class RedisHandler extends BaseHandler implements \SessionHandlerInterface
 			$session_data = $this->redis->get($this->keyPrefix . $sessionID);
 			is_string($session_data) ? $this->keyExists = TRUE : $session_data = '';
 
-			$this->fingerprint = md5($session_data);
+			$this->fingerprint = hash('sha256', $session_data);
 			return $session_data;
 		}
 
@@ -224,7 +224,7 @@ class RedisHandler extends BaseHandler implements \SessionHandlerInterface
 		{
 			$this->redis->setTimeout($this->lockKey, 300);
 
-			if ($this->fingerprint !== ($fingerprint = md5($sessionData)) || $this->keyExists === FALSE)
+			if ($this->fingerprint !== ($fingerprint = hash('sha256', $sessionData)) || $this->keyExists === FALSE)
 			{
 				if ($this->redis->set($this->keyPrefix . $sessionID, $sessionData, $this->sessionExpiration))
 				{

@@ -177,7 +177,7 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 			$this->sessionID = $sessionID;
 
 			$session_data = (string) $this->memcached->get($this->keyPrefix . $sessionID);
-			$this->fingerprint = md5($session_data);
+			$this->fingerprint = hash('sha256', $session_data);
 
 			return $session_data;
 		}
@@ -211,7 +211,7 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 				return false;
 			}
 
-			$this->fingerprint = md5('');
+			$this->fingerprint = hash('sha256', '');
 			$this->sessionID = $sessionID;
 		}
 
@@ -219,7 +219,7 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 		{
 			$this->memcached->replace($this->lockKey, time(), 300);
 
-			if ($this->fingerprint !== ($fingerprint = md5($sessionData)))
+			if ($this->fingerprint !== ($fingerprint = hash('sha256', $sessionData)))
 			{
 				if ($this->memcached->set($this->keyPrefix . $sessionID, $sessionData, $this->sessionExpiration))
 				{
