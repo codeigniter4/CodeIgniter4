@@ -334,7 +334,7 @@ class Services
 	{
 		if ($getShared)
 		{
-			return self::getSharedInstance('language', $locale);
+			return self::getSharedInstance('language', $locale)->setLocale($locale);
 		}
 
 		$locale = ! empty($locale) ? $locale : self::request()->getLocale();

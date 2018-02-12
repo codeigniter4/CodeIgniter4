@@ -44,9 +44,6 @@ class LanguageTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	/**
-	 * @group single
-	 */
 	public function testGetLineFormatsMessage()
 	{
 		// No intl extension? then we can't test this - go away....
@@ -83,5 +80,17 @@ class LanguageTest extends \CIUnitTestCase
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * @see https://github.com/bcit-ci/CodeIgniter4/issues/891
+	 */
+	public function testLangAllowsOtherLocales()
+	{
+		$str1 = lang('Language.languageGetLineInvalidArgumentException', [], 'en');
+		$str2 = lang('Language.languageGetLineInvalidArgumentException', [], 'ru');
+
+		$this->assertEquals('Get line must be a string or array of strings.', $str1);
+		$this->assertEquals('Language.languageGetLineInvalidArgumentException', $str2);
+	}
 
 }
