@@ -1,5 +1,6 @@
 <?php namespace CodeIgniter\Security;
 
+use CodeIgniter\HTTP\UserAgent;
 use Config\MockAppConfig;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\Request;
@@ -60,7 +61,7 @@ class SecurityTest extends \CIUnitTestCase {
 	public function testCSRFVerifyThrowsExceptionOnNoMatch()
 	{
 		$security = new MockSecurity(new MockAppConfig());
-		$request  = new IncomingRequest(new MockAppConfig(), new URI('http://badurl.com'));
+		$request  = new IncomingRequest(new MockAppConfig(), new URI('http://badurl.com'), null, new UserAgent());
 
 		$_SERVER['REQUEST_METHOD'] = 'POST';
 		$_POST['csrf_test_name']  = '8b9218a55906f9dcc1dc263dce7f005a';
@@ -77,7 +78,7 @@ class SecurityTest extends \CIUnitTestCase {
 	public function testCSRFVerifyReturnsSelfOnMatch()
 	{
 		$security = new MockSecurity(new MockAppConfig());
-		$request  = new IncomingRequest(new MockAppConfig(), new URI('http://badurl.com'));
+		$request  = new IncomingRequest(new MockAppConfig(), new URI('http://badurl.com'), null, new UserAgent());
 
 		$_SERVER['REQUEST_METHOD'] = 'POST';
 		$_POST['csrf_test_name']  = '8b9218a55906f9dcc1dc263dce7f005a';

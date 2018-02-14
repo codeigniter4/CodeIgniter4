@@ -1,5 +1,6 @@
 <?php namespace CodeIgniter;
 
+use CodeIgniter\HTTP\UserAgent;
 use Config\App;
 
 /**
@@ -41,7 +42,7 @@ class ControllerTest extends \CIUnitTestCase
 		Services::reset();
 
 		$this->config = new App();
-		$this->request = new \CodeIgniter\HTTP\IncomingRequest($this->config, new \CodeIgniter\HTTP\URI('https://somwhere.com'));
+		$this->request = new \CodeIgniter\HTTP\IncomingRequest($this->config, new \CodeIgniter\HTTP\URI('https://somwhere.com'), null, new UserAgent());
 		$this->response = new \CodeIgniter\HTTP\Response($this->config);
 		$this->codeigniter = new MockCodeIgniter($this->config);
 	}
