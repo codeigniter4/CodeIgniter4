@@ -1334,11 +1334,11 @@ class Model
 
 		if (method_exists($this->db, $name))
 		{
-			$result = call_user_func_array([$this->db, $name], $params);
+			$result = [$this->db, $name](...$params);
 		}
 		elseif (method_exists($this->builder(), $name))
 		{
-			$result = call_user_func_array([$this->builder(), $name], $params);
+			$result = [$this->builder(), $name](...$params);
 		}
 
 		// Don't return the builder object unless specifically requested

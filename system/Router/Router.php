@@ -234,7 +234,7 @@ class Router implements RouterInterface
 	/**
 	 * Returns the binds that have been matched and collected
 	 * during the parsing process as an array, ready to send to
-	 * call_user_func_array().
+	 * [instance, method](...$params).
 	 *
 	 * @return mixed
 	 */

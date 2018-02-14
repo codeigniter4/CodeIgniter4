@@ -161,7 +161,7 @@ class Cell
 				}
 			}
 
-			$output = call_user_func_array([$instance, $method], $fireArgs);
+			$output = [$instance, $method](...$fireArgs);
 		}
 		// Can we cache it?
 		if ( ! empty($this->cache) && $ttl !== 0)
