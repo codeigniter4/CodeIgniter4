@@ -563,17 +563,6 @@ class IncomingRequest extends Request
 		else
 		{
 			throw FrameworkException::forEmptyBaseURL();
-
-//			$this->isSecure() ? $this->uri->setScheme('https') : $this->uri->setScheme('http');
-//
-//			// While both SERVER_NAME and HTTP_HOST are open to security issues,
-//			// if we have to choose, we will go with the server-controlled version first.
-//			! empty($_SERVER['SERVER_NAME']) ? (isset($_SERVER['SERVER_NAME']) ? $this->uri->setHost($_SERVER['SERVER_NAME']) : null) : (isset($_SERVER['HTTP_HOST']) ? $this->uri->setHost($_SERVER['HTTP_HOST']) : null);
-//
-//			if ( ! empty($_SERVER['SERVER_PORT']))
-//			{
-//				$this->uri->setPort($_SERVER['SERVER_PORT']);
-//			}
 		}
 	}
 
