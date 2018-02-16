@@ -220,7 +220,7 @@
 						</tr>
 						<tr>
 							<td>User Agent</td>
-							<td><?= $request->getUserAgent() ?></td>
+							<td><?= $request->getUserAgent()->getAgentString() ?></td>
 						</tr>
 
 					</tbody>

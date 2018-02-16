@@ -312,8 +312,12 @@ class Session implements SessionInterface
 	 */
 	protected function configureSidLength()
 	{
-		$bits_per_character = (int) ini_get('session.sid_bits_per_character');
-		$sid_length = (int) ini_get('session.sid_length');
+		$bits_per_character = (int) (ini_get('session.sid_bits_per_character') !== false
+			? ini_get('session.sid_bits_per_character')
+			: 4);
+		$sid_length = (int) (ini_get('session.sid_length') !== false
+			? ini_get('session.sid_length')
+			: 40);
 		if (($sid_length * $bits_per_character) < 160)
 		{
 			$bits = ($sid_length * $bits_per_character);
