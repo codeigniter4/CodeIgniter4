@@ -1338,7 +1338,7 @@ class Model
 		}
 		elseif (method_exists($this->builder(), $name))
 		{
-			$result = [$this->builder(), $name](...$params);
+			$result = $this->builder()->$name(...$params);
 		}
 
 		// Don't return the builder object unless specifically requested
