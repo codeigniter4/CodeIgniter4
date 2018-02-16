@@ -26,5 +26,5 @@ Library Reference
     typography
     uploaded_files
     uri
-    useer_agent
+    user_agent
     validation
