@@ -1334,7 +1334,7 @@ class Model
 
 		if (method_exists($this->db, $name))
 		{
-			$result = [$this->db, $name](...$params);
+			$result = $this->db->$name(...$params);
 		}
 		elseif (method_exists($this->builder(), $name))
 		{

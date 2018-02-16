@@ -161,7 +161,7 @@ class Cell
 				}
 			}
 
-			$output = [$instance, $method](...$fireArgs);
+			$output = $instance->$method(...$fireArgs);
 		}
 		// Can we cache it?
 		if ( ! empty($this->cache) && $ttl !== 0)
