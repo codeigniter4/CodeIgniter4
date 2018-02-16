@@ -592,7 +592,10 @@ class Services
 			$config = new \Config\App();
 		}
 
-		return new \CodeIgniter\HTTP\RedirectResponse($config);
+		$response = new \CodeIgniter\HTTP\RedirectResponse($config);
+		$response->setProtocolVersion(self::request()->getProtocolVersion());
+
+		return $response;
 	}
 
 	//--------------------------------------------------------------------
