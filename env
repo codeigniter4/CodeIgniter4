@@ -20,7 +20,7 @@
 # app.sessionDriver = 'CodeIgniter\Session\Handlers\FileHandler'
 # app.sessionCookieName = 'ci_session'
 # app.sessionSavePath = NULL
-# app.sessionMachIP = false
+# app.sessionMatchIP = false
 # app.sessionTimeToUpdate = 300
 # app.sessionRegenerateDestroy = false
 
