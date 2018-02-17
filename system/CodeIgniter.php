@@ -364,7 +364,7 @@ class CodeIgniter
 	 */
 	protected function getRequestObject()
 	{
-		if (is_cli() && ! ENVIRONMENT == 'testing')
+		if (is_cli() && ! (ENVIRONMENT == 'testing'))
 		{
 			$this->request = Services::clirequest($this->config);
 		}
@@ -522,7 +522,7 @@ class CodeIgniter
 	 */
 	protected function generateCacheName($config): string
 	{
-		if (is_cli() && ! ENVIRONMENT == 'testing')
+		if (is_cli() && ! (ENVIRONMENT == 'testing'))
 		{
 			return md5($this->request->getPath());
 		}
@@ -616,7 +616,7 @@ class CodeIgniter
 			return $this->path;
 		}
 
-		return (is_cli() && ! ENVIRONMENT == 'testing') ? $this->request->getPath() : $this->request->uri->getPath();
+		return (is_cli() && ! (ENVIRONMENT == 'testing')) ? $this->request->getPath() : $this->request->uri->getPath();
 	}
 
 	//--------------------------------------------------------------------
