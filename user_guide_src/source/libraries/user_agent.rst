@@ -17,7 +17,7 @@ Using the User Agent Class
 Initializing the Class
 ======================
 
-The User Agent class is always available directly from the current IncomingRequest instance.
+The User Agent class is always available directly from the current :doc:`IncomingRequest </libraries/incomingrequest>` instance.
 By default, you will have a request instance in your controller that you can retrieve the
 User Agent class from::
 
@@ -27,7 +27,7 @@ User Agent Definitions
 ======================
 
 The user agent name definitions are located in a config file located at:
-application/Config/UserAgents.php. You may add items to the various
+**application/Config/UserAgents.php**. You may add items to the various
 user agent arrays if needed.
 
 Example
@@ -65,7 +65,7 @@ is available::
 Class Reference
 ***************
 
-.. php:class:: CodeIgniter\HTTP\UserAgent
+.. php:class:: CodeIgniter\\HTTP\\UserAgent
 
 	.. php:method:: isBrowser([$key = NULL])
 
@@ -86,8 +86,8 @@ Class Reference
 			}
 
 		.. note:: The string "Safari" in this example is an array key in the list of browser definitions.
-You can find this list in **application/Config/UserAgents.php** if you want to add new
-			browsers or change the stings.
+				  You can find this list in **application/Config/UserAgents.php** if you want to add new
+				  browsers or change the strings.
 
 	.. php:method:: isMobile([$key = NULL])
 
@@ -120,9 +120,9 @@ You can find this list in **application/Config/UserAgents.php** if you want to a
     		Returns TRUE/FALSE (boolean) if the user agent is a known robot.
 
     		.. note:: The user agent library only contains the most common robot definitions. It is not a complete list of bots.
-There are hundreds of them so searching for each one would not be very efficient. If you find that some bots
-			that commonly visit your site are missing from the list you can add them to your
-			**application/Config/UserAgents.php** file.
+    				  There are hundreds of them so searching for each one would not be very efficient. If you find that some bots
+    				  that commonly visit your site are missing from the list you can add them to your
+    				  **application/Config/UserAgents.php** file.
 
 	.. php:method:: isReferral()
 
