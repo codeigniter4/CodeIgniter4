@@ -190,7 +190,7 @@
 
 			<!-- Request -->
 			<div class="content" id="request">
-				<?php $request = \CodeIgniter\Config\Services::request(null, true); ?>
+				<?php $request = \Config\Services::request(); ?>
 
 				<table>
 					<tbody>
@@ -299,7 +299,7 @@
 
 			<!-- Response -->
 			<?php
-				$response = \CodeIgniter\Config\Services::response(null, true);
+				$response = \Config\Services::response();
 				$response->setStatusCode(http_response_code());
 			?>
 			<div class="content" id="response">
