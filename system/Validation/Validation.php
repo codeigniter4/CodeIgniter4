@@ -288,7 +288,14 @@ class Validation implements ValidationInterface
 	 */
 	public function withRequest(RequestInterface $request): ValidationInterface
 	{
-		$this->data = $request->getVar() ?? [];
+		if (in_array($request->getMethod(), ['put', 'patch', 'delete']))
+		{
+			$this->data = $request->getRawInput();
+		}
+		else
+		{
+			$this->data = $request->getVar() ?? [];
+		}
 
 		return $this;
 	}
