@@ -141,15 +141,17 @@ class Throttler implements ThrottlerInterface
 		// based on how long it's been since the last update.
 		$throttleTime = $this->cache->get($tokenName . 'Time');
 		$elapsed = $this->time() - $throttleTime;
-		$rate = (int) ceil($elapsed / $capacity);
+		// Number of tokens to add back per second
+		$rate = $capacity / $seconds;
 
 		// We must have a minimum wait of 1 second for a new token
+		// Primarily stored to allow devs to report back to users.
 		$this->tokenTime = max(1, $rate);
 
 		// Add tokens based up on number per second that
 		// should be refilled, then checked against capacity
 		// to be sure the bucket didn't overflow.
-		$tokens += ($rate * $seconds);
+		$tokens += $rate * $elapsed;
 		$tokens = $tokens > $capacity ? $capacity : $tokens;
 
 		// If $tokens > 0, then we are save to perform the action, but
