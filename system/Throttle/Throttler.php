@@ -74,6 +74,13 @@ class Throttler implements ThrottlerInterface
 	 */
 	protected $prefix = 'throttler_';
 
+	/**
+	 * Timestamp to use (during testing)
+	 *
+	 * @var int
+	 */
+	protected $testTime;
+
 	//--------------------------------------------------------------------
 
 	public function __construct(CacheInterface $cache)
@@ -133,7 +140,7 @@ class Throttler implements ThrottlerInterface
 		// If $tokens > 0, then we need to replenish the bucket
 		// based on how long it's been since the last update.
 		$throttleTime = $this->cache->get($tokenName . 'Time');
-		$elapsed = time() - $throttleTime;
+		$elapsed = $this->time() - $throttleTime;
 		$rate = (int) ceil($elapsed / $capacity);
 
 		// We must have a minimum wait of 1 second for a new token
@@ -161,4 +168,32 @@ class Throttler implements ThrottlerInterface
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Used during testing to set the current timestamp to use.
+	 *
+	 * @param int $time
+	 *
+	 * @return $this
+	 */
+	public function setTestTime(int $time)
+	{
+		$this->testTime = $time;
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 *
+	 *
+	 * @return int
+	 */
+	public function time()
+	{
+		return $this->testTime ?? time();
+	}
+
+
 }
