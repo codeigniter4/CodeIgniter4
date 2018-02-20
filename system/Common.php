@@ -740,7 +740,7 @@ if (! function_exists('old'))
 			$value = unserialize($value);
 		}
 
-		return $value;
+		return esc($value);
 	}
 }
 
