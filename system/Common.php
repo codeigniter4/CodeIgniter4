@@ -716,12 +716,13 @@ if (! function_exists('old'))
 	 * Provides access to "old input" that was set in the session
 	 * during a redirect()->withInput().
 	 *
-	 * @param string $key
-	 * @param null   $default
+	 * @param string       $key
+	 * @param null         $default
+	 * @param string|bool  $escape
 	 *
 	 * @return mixed|null
 	 */
-	function old(string $key, $default=null)
+	function old(string $key, $default = null, $escape = 'html')
 	{
 		$request = Services::request();
 
@@ -740,7 +741,7 @@ if (! function_exists('old'))
 			$value = unserialize($value);
 		}
 
-		return esc($value);
+		return $escape === false ? $value : esc($value, $escape);
 	}
 }
 
