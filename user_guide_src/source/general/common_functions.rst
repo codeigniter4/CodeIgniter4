@@ -78,10 +78,11 @@ Service Accessors
 
 	For more information, see the :doc:`Localization </libraries/localization>` page.
 
-.. php:function:: old( $key[, $default] )
+.. php:function:: old( $key[, $default = null, [, $escape = 'html' ]] )
 
 	:param string $key: The name of the old form data to check for.
 	:param mixed  $default: The default value to return if $key doesn't exist.
+	:param mixed  $escape: An `escape <#esc>`_ context or false to disable it.
 	:returns: The value of the defined key, or the default value.
 	:rtype: mixed
 
@@ -100,7 +101,7 @@ Service Accessors
 		// In the view
 		<input type="email" name="email" value="<?= old('email') ?>">
 
-	.. :note:: If you are using the form helper, this feature is built-in. You only
+.. note:: If you are using the :doc:`form helper </helpers/form_helper>`, this feature is built-in. You only
 		need to use this function when not using the form helper.
 
 .. php:function:: session( [$key] )
