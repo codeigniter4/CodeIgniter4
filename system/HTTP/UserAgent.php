@@ -450,4 +450,14 @@ class UserAgent
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Outputs the original Agent String when cast as a string. 
+	 *
+	 * @return string
+	 */
+	public function __toString()
+	{
+		return $this->getAgentString();
+	}
+
 }
