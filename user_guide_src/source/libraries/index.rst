@@ -11,6 +11,7 @@ Library Reference
     cli
     content_negotiation
     curlrequest
+    email
     files
     images
     incomingrequest
