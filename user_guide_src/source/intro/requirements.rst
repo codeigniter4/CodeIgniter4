@@ -2,7 +2,7 @@
 Server Requirements
 ###################
 
-`PHP <http://php.net/>`_ version 7.1 or newer is required, with the *intl* extension installed. [Why 7.1](https://gophp71.org/)?
+`PHP <http://php.net/>`_ version 7.1 or newer is required, with the *intl* extension installed. `Why 7.1 <https://gophp71.org/>`_?
 
 A database is required for most web application programming.
 Currently supported databases are:
