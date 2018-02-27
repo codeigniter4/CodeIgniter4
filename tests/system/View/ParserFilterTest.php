@@ -359,4 +359,19 @@ class ParserFilterTest extends \CIUnitTestCase
 		$parser->setData($data);
 		$this->assertEquals('1.234.567,8912', $parser->renderString($template));
 	}
+
+	public function testLocalCurrency()
+	{
+		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
+
+		$data = [
+			'mynum' => 	1234567.891234567890000
+		];
+
+		$template = '{ mynum|local_currency(EUR,de_DE) }';
+
+		$parser->setData($data);
+		$this->assertEquals('1.234.567,89 €', $parser->renderString($template));
+	}
+
 }

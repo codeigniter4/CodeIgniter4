@@ -403,6 +403,8 @@ highlight            phrase                     Highlights a given phrase within
 highlight_code                                  Highlights code samples with HTML/CSS.                               { v|highlight_code }
 limit_chars          limit                      Limits the number of chracters to $limit.                            { v|limit_chars(100) }
 limit_words          limit                      Limits the number of words to $limit.                                { v|limit_words(20) }
+local_currency       currency, locale           Displays a localized version of a currency. "currency" value is any  { v|local_currency(EUR,en_US) }
+                                                3-letter ISO 4217 currency code.
 local_number         type, precision, locale    Displays a localized version of a number. "type" can be one of:      { v|local_number(decimal,2,en_US) }
                                                 decimal, currency, percent, scientific, spellout, ordinal, duration.
                                                 See `PHP's NumberFormatter <http://php.net/manual/en/numberformatter.create.php>`_ for details.

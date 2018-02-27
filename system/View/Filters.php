@@ -213,7 +213,7 @@ class Filters
 	//--------------------------------------------------------------------
 
 	/**
-	 * Returns the $value displayed in the current
+	 * Returns the $value displayed in a localized manner.
 	 *
 	 * @param             $value
 	 * @param int         $precision
@@ -240,6 +240,27 @@ class Filters
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Returns the $value displayed as a currency string.
+	 *
+	 * @param             $value
+	 * @param string      $currency
+	 * @param string|null $locale
+	 *
+	 * @return string
+	 */
+	public static function local_currency($value, string $currency, string $locale = null): string
+	{
+		helper('number');
+
+		$options = [
+			'type' => \NumberFormatter::CURRENCY,
+			'currency' => $currency
+		];
+
+		return format_number($value, 2, $locale, $options);
+	}
 
 	/**
 	 * Returns a string with all instances of newline character (\n)
