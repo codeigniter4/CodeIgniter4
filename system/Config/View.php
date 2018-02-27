@@ -27,45 +27,46 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package      CodeIgniter
+ * @author       CodeIgniter Dev Team
+ * @copyright    2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license      https://opensource.org/licenses/MIT	MIT License
+ * @link         https://codeigniter.com
+ * @since        Version 4.0.0
  * @filesource
  */
 class View extends BaseConfig
 {
 
 	protected $coreFilters = [
-		'abs'		 => '\abs',
-		'capitalize'	 => '\CodeIgniter\View\Filters::capitalize',
-		'date'		 => '\CodeIgniter\View\Filters::date',
-		'date_modify'	 => '\CodeIgniter\View\Filters::date_modify',
-		'default'	 => '\CodeIgniter\View\Filters::default',
-		'esc'		 => '\CodeIgniter\View\Filters::esc',
-		'excerpt'	 => '\CodeIgniter\View\Filters::excerpt',
-		'highlight'	 => '\CodeIgniter\View\Filters::highlight',
+		'abs'            => '\abs',
+		'capitalize'     => '\CodeIgniter\View\Filters::capitalize',
+		'date'           => '\CodeIgniter\View\Filters::date',
+		'date_modify'    => '\CodeIgniter\View\Filters::date_modify',
+		'default'        => '\CodeIgniter\View\Filters::default',
+		'esc'            => '\CodeIgniter\View\Filters::esc',
+		'excerpt'        => '\CodeIgniter\View\Filters::excerpt',
+		'highlight'      => '\CodeIgniter\View\Filters::highlight',
 		'highlight_code' => '\CodeIgniter\View\Filters::highlight_code',
-		'limit_words'	 => '\CodeIgniter\View\Filters::limit_words',
-		'limit_chars'	 => '\CodeIgniter\View\Filters::limit_chars',
-		'lower'		 => '\strtolower',
-		'nl2br'		 => '\CodeIgniter\View\Filters::nl2br',
-		'number_format'	 => '\number_format',
-		'prose'		 => '\CodeIgniter\View\Filters::prose',
-		'round'		 => '\CodeIgniter\View\Filters::round',
-		'strip_tags'	 => '\strip_tags',
-		'title'		 => '\CodeIgniter\View\Filters::title',
-		'upper'		 => '\strtoupper',
+		'limit_words'    => '\CodeIgniter\View\Filters::limit_words',
+		'limit_chars'    => '\CodeIgniter\View\Filters::limit_chars',
+		'local_number'   => '\CodeIgniter\View\Filters::local_number',
+		'lower'          => '\strtolower',
+		'nl2br'          => '\CodeIgniter\View\Filters::nl2br',
+		'number_format'  => '\number_format',
+		'prose'          => '\CodeIgniter\View\Filters::prose',
+		'round'          => '\CodeIgniter\View\Filters::round',
+		'strip_tags'     => '\strip_tags',
+		'title'          => '\CodeIgniter\View\Filters::title',
+		'upper'          => '\strtoupper',
 	];
 	protected $corePlugins = [
-		'current_url'	        => '\CodeIgniter\View\Plugins::currentURL',
-		'previous_url'	        => '\CodeIgniter\View\Plugins::previousURL',
-		'mailto'		=> '\CodeIgniter\View\Plugins::mailto',
-		'safe_mailto'	  	=> '\CodeIgniter\View\Plugins::safeMailto',
-		'lang'	 		=> '\CodeIgniter\View\Plugins::lang',
-		'validation_errors' 	=> '\CodeIgniter\View\Plugins::validationErrors',
+		'current_url'       => '\CodeIgniter\View\Plugins::currentURL',
+		'previous_url'      => '\CodeIgniter\View\Plugins::previousURL',
+		'mailto'            => '\CodeIgniter\View\Plugins::mailto',
+		'safe_mailto'       => '\CodeIgniter\View\Plugins::safeMailto',
+		'lang'              => '\CodeIgniter\View\Plugins::lang',
+		'validation_errors' => '\CodeIgniter\View\Plugins::validationErrors',
 	];
 
 	public function __construct()

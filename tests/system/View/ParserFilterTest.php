@@ -302,4 +302,61 @@ class ParserFilterTest extends \CIUnitTestCase
 	}
 
 	//--------------------------------------------------------------------
+
+	public function testLocalNumberBase()
+	{
+		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
+
+		$data = [
+			'mynum' => 	1234567.891234567890000
+		];
+
+		$template = '{ mynum|local_number }';
+
+		$parser->setData($data);
+		$this->assertEquals('1,234,567.8912', $parser->renderString($template));
+	}
+
+	public function testLocalNumberPrecision()
+	{
+		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
+
+		$data = [
+			'mynum' => 	1234567.891234567890000
+		];
+
+		$template = '{ mynum|local_number(decimal,2) }';
+
+		$parser->setData($data);
+		$this->assertEquals('1,234,567.89', $parser->renderString($template));
+	}
+
+	public function testLocalNumberType()
+	{
+		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
+
+		$data = [
+			'mynum' => 	1234567.891234567890000
+		];
+
+
+		$template = '{ mynum|local_number(spellout) }';
+
+		$parser->setData($data);
+		$this->assertEquals('one million two hundred thirty-four thousand five hundred sixty-seven point eight nine one two three four six', $parser->renderString($template));
+	}
+
+	public function testLocalNumberLocale()
+	{
+		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
+
+		$data = [
+			'mynum' => 	1234567.891234567890000
+		];
+
+		$template = '{ mynum|local_number(decimal,4,de_DE) }';
+
+		$parser->setData($data);
+		$this->assertEquals('1.234.567,8912', $parser->renderString($template));
+	}
 }
