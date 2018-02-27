@@ -698,11 +698,11 @@ class URI
 			// Only 1 part?
 			if (is_null($value))
 			{
-				$parts[$this->filterQuery($key)] = null;
+				$parts[$key] = null;
 				continue;
 			}
 
-			$parts[$this->filterQuery($key)] = $this->filterQuery($value);
+			$parts[$key] = $value;
 		}
 
 		$this->query = $parts;
@@ -732,27 +732,6 @@ class URI
 		}
 
 		return $parts;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Ensures the query string has only acceptable characters
-	 * per RFC 3986
-	 *
-	 * @see http://tools.ietf.org/html/rfc3986
-	 *
-	 * @param $str
-	 *
-	 * @return string The filtered query value.
-	 */
-	protected function filterQuery($str)
-	{
-		return preg_replace_callback(
-				'/(?:[^' . self::CHAR_UNRESERVED . self::CHAR_SUB_DELIMS . '%:@\/\?]+|%(?![A-Fa-f0-9]{2}))/', function(array $matches) {
-			return rawurlencode($matches[0]);
-		}, $str
-		);
 	}
 
 	//--------------------------------------------------------------------
@@ -924,7 +903,7 @@ class URI
 		}
 		if ( ! empty($parts['fragment']))
 		{
-			$this->fragment = $this->filterQuery($parts['fragment']);
+			$this->fragment = $parts['fragment'];
 		}
 
 		// Scheme

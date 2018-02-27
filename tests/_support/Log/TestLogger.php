@@ -32,7 +32,7 @@ class TestLogger extends Logger
 		{
 			if (! in_array($row['function'], ['log', 'log_message']))
 			{
-				$file = basename($row['file']);
+				$file = basename($row['file'] ?? '');
 				break;
 			}
 		}
