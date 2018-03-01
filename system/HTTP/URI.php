@@ -702,7 +702,7 @@ class URI
 				continue;
 			}
 
-			$parts[$key] = $value;
+			$parts[$key] = urldecode($value);
 		}
 
 		$this->query = $parts;
@@ -763,7 +763,7 @@ class URI
 	 */
 	public function addQuery(string $key, $value = null)
 	{
-		$this->query[$key] = $value;
+		$this->query[$key] = urldecode($value);
 
 		return $this;
 	}
