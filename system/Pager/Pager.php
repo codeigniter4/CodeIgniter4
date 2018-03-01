@@ -72,6 +72,13 @@ class Pager implements PagerInterface
 	 */
 	protected $view;
 
+	/**
+	 * List of only permitted queries
+	 *
+	 * @var array
+	 */
+	protected $only = [];
+
 	//--------------------------------------------------------------------
 
 	public function __construct($config, RendererInterface $view)
@@ -295,11 +302,11 @@ class Pager implements PagerInterface
 	/**
 	 * Returns the URI for a specific page for the specified group.
 	 *
-	 * @param int    $page
-	 * @param string $group
-	 * @param bool   $returnObject
+	 * @param int|null $page
+	 * @param string   $group
+	 * @param bool     $returnObject
 	 *
-	 * @return string
+	 * @return string|\CodeIgniter\HTTP\URI
 	 */
 	public function getPageURI(int $page = null, string $group = 'default', $returnObject = false)
 	{
@@ -307,7 +314,18 @@ class Pager implements PagerInterface
 
 		$uri = $this->groups[$group]['uri'];
 
-		$uri->addQuery('page', $page);
+		if ($this->only)
+		{
+			$query = array_intersect_key($_GET, array_flip($this->only));
+
+			$query['page'] = $page;
+
+			$uri->setQueryArray($query);
+		}
+		else
+		{
+			$uri->addQuery('page', $page);
+		}
 
 		return $returnObject === true ? $uri : (string) $uri;
 	}
@@ -415,6 +433,22 @@ class Pager implements PagerInterface
 		$newGroup['previous'] = $this->getPreviousPageURI($group);
 
 		return $newGroup;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Sets only allowed queries on pagination links.
+	 *
+	 * @param array $queries
+	 *
+	 * @return Pager
+	 */
+	public function only(array $queries):Pager
+	{
+		$this->only = $queries;
+
+		return $this;
 	}
 
 	//--------------------------------------------------------------------
