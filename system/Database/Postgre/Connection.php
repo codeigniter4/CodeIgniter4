@@ -217,7 +217,7 @@ class Connection extends BaseConnection implements ConnectionInterface
 			$this->initialize();
 		}
 
-		if (is_string($str) OR ( is_object($str) && method_exists($str, '__toString')))
+		if (is_string($str) || ( is_object($str) && method_exists($str, '__toString')))
 		{
 			return pg_escape_literal($this->connID, $str);
 		}
