@@ -234,7 +234,7 @@ class MigrationRunner
 		{
 
 			// Only include migrations within the scoop
-			if (($method === 'up' && $version > $currentVersion && $version <= $targetVersion) OR ( $method === 'down' && $version <= $currentVersion && $version > $targetVersion)
+			if (($method === 'up' && $version > $currentVersion && $version <= $targetVersion) || ( $method === 'down' && $version <= $currentVersion && $version > $targetVersion)
 			)
 			{
 

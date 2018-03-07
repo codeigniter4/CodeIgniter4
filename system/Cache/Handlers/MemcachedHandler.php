@@ -310,7 +310,7 @@ class MemcachedHandler implements CacheInterface
 	 */
 	public function isSupported(): bool
 	{
-		return (extension_loaded('memcached') OR extension_loaded('memcache'));
+		return (extension_loaded('memcached') || extension_loaded('memcache'));
 	}
 
 }

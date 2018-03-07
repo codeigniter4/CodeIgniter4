@@ -1241,7 +1241,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 */
 	public function escapeIdentifiers($item)
 	{
-		if ($this->escapeChar === '' OR empty($item) OR in_array($item, $this->reservedIdentifiers))
+		if ($this->escapeChar === '' || empty($item) || in_array($item, $this->reservedIdentifiers))
 		{
 			return $item;
 		}
@@ -1360,7 +1360,7 @@ abstract class BaseConnection implements ConnectionInterface
 
 			return $str;
 		}
-		else if (is_string($str) OR ( is_object($str) && method_exists($str, '__toString')))
+		else if (is_string($str) || ( is_object($str) && method_exists($str, '__toString')))
 		{
 			return "'" . $this->escapeString($str) . "'";
 		}
