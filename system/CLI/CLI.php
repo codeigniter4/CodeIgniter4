@@ -36,6 +36,8 @@
  * @filesource
  */
 
+use CodeIgniter\CLI\Exceptions\CLIException;
+
 /**
  * Class CLI
  *
@@ -419,12 +421,12 @@ class CLI
 
 		if ( ! array_key_exists($foreground, static::$foreground_colors))
 		{
-			throw new \RuntimeException('Invalid CLI foreground color: ' . $foreground);
+			throw CLIException::forInvalidColor('foreground', $foreground);
 		}
 
 		if ($background !== null && ! array_key_exists($background, static::$background_colors))
 		{
-			throw new \RuntimeException('Invalid CLI background color: ' . $background);
+			throw CLIException::forInvalidColor('background', $background);
 		}
 
 		$string = "\033[" . static::$foreground_colors[$foreground] . "m";
