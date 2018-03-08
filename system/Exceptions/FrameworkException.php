@@ -8,7 +8,7 @@
  *
  * @package CodeIgniter\Exceptions
  */
-class FrameworkException extends \RuntimeException
+class FrameworkException extends \RuntimeException implements ExceptionInterface
 {
 	public static function forEmptyBaseURL(): self
 	{

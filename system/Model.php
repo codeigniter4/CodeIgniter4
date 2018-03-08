@@ -35,6 +35,7 @@
  * @since        Version 3.0.0
  * @filesource
  */
+use CodeIgniter\Database\Exceptions\DatabaseException;
 use Config\App;
 use Config\Database;
 use CodeIgniter\I18n\Time;
@@ -44,7 +45,7 @@ use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Validation\ValidationInterface;
-use CodeIgniter\Database\Exceptions\DatabaseException;
+use CodeIgniter\Database\Exceptions\DataException;
 
 /**
  * Class Model
@@ -586,7 +587,7 @@ class Model
 
 		if (empty($data))
 		{
-			throw new \InvalidArgumentException('No data to insert.');
+			throw DataException::forEmptyDataset('insert');
 		}
 
 		// Must use the set() method to ensure objects get converted to arrays
@@ -662,7 +663,7 @@ class Model
 
 		if (empty($data))
 		{
-			throw new \InvalidArgumentException('No data to update.');
+			throw DataException::forEmptyDataset('update');
 		}
 
 		// Must use the set() method to ensure objects get converted to arrays
@@ -728,14 +729,14 @@ class Model
 	 * @param bool         $purge Allows overriding the soft deletes setting.
 	 *
 	 * @return mixed
-	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
+	 * @throws \CodeIgniter\Database\Exceptions\DataException
 	 */
 	public function deleteWhere($key, $value = null, $purge = false)
 	{
 		// Don't let them shoot themselves in the foot...
 		if (empty($key))
 		{
-			throw new DatabaseException('You must provided a valid key to deleteWhere.');
+			throw DataException::forInvalidArgument('key');
 		}
 
 		$this->trigger('beforeDelete', ['key' => $key, 'value' => $value, 'purge' => $purge]);
@@ -866,7 +867,7 @@ class Model
 	 * @param int      $size
 	 * @param \Closure $userFunc
 	 *
-	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
+	 * @throws \CodeIgniter\Database\Exceptions\DataException
 	 */
 	public function chunk($size = 100, \Closure $userFunc)
 	{
@@ -883,7 +884,7 @@ class Model
 
 			if ($rows === false)
 			{
-				throw new DatabaseException('Unable to get results from the query.');
+				throw DataException::forEmptyDataset('chunk');
 			}
 
 			$rows = $rows->getResult();
@@ -993,7 +994,7 @@ class Model
 	 * @param array $data
 	 *
 	 * @return array
-	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
+	 * @throws \CodeIgniter\Database\Exceptions\DataException
 	 */
 	protected function doProtectFields($data)
 	{
@@ -1004,7 +1005,7 @@ class Model
 
 		if (empty($this->allowedFields))
 		{
-			throw new DatabaseException('No Allowed fields specified for model: ' . get_class($this));
+			throw DataException::forInvalidAllowedFields(get_class($this));
 		}
 
 		foreach ($data as $key => $val)
@@ -1268,6 +1269,7 @@ class Model
 	 * @param array  $data
 	 *
 	 * @return mixed
+	 * @throws \CodeIgniter\Database\Exceptions\DataException
 	 */
 	protected function trigger(string $event, array $data)
 	{
@@ -1281,7 +1283,7 @@ class Model
 		{
 			if ( ! method_exists($this, $callback))
 			{
-				throw new \BadMethodCallException(lang('Database.invalidEvent', [$callback]));
+				throw DataException::forInvalidMethodTriggered($callback);
 			}
 
 			$data = $this->{$callback}($data);

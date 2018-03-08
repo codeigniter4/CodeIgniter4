@@ -1,5 +1,7 @@
 <?php namespace CodeIgniter\Database\Exceptions;
 
+use CodeIgniter\Exceptions\ExceptionInterface;
+
 /**
  * CodeIgniter
  *
@@ -36,13 +38,11 @@
  * @filesource
  */
 
-class DatabaseException extends \Error
+class DatabaseException extends \Error implements ExceptionInterface
 {
-
 	/**
 	 * Exit status code
 	 * @var int
 	 */
 	protected $code = 8;
-
 }
