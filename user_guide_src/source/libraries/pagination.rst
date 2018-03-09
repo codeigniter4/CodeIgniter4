@@ -103,6 +103,23 @@ sections.
 
     <?= $pager->makeLinks($page, $perPage, $total, 'template_name') ?>
 
+Paginating with Only Expected Queries
+=====================================
+
+By default all GET queries are shown in the pagination links.
+
+For example, when accessing the URL *http://domain.tld?search=foo&order=asc&hello=i+am+here&page=2*, the page 3 link can be generated, along with the other links, as follows::
+
+    echo $pager->links();
+    // Page 3 link: http://domain.tld?search=foo&order=asc&hello=i+am+here&page=3
+
+The ``only()`` method allows you to limit this just to queries already expected::
+
+    echo $pager->only(['search', 'order'])->links();
+    // Page 3 link: http://domain.tld?search=foo&order=asc&page=3
+
+The *page* query is enabled by default. And ``only()`` acts in all pagination links.
+
 *********************
 Customizing the Links
 *********************
