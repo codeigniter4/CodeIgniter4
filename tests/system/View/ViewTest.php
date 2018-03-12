@@ -6,7 +6,7 @@ class ViewTest extends \CIUnitTestCase
 {
 	protected $loader;
 	protected $viewsDir;
-    protected $config;
+	protected $config;
 
 	//--------------------------------------------------------------------
 
@@ -14,14 +14,14 @@ class ViewTest extends \CIUnitTestCase
 	{
 		$this->loader = new \CodeIgniter\Autoloader\FileLocator(new \Config\Autoload());
 		$this->viewsDir = __DIR__.'/Views';
-        $this->config   = new Config\View();
+		$this->config   = new Config\View();
 	}
 
 	//--------------------------------------------------------------------
 
 	public function testSetVarStoresData()
 	{
-	    $view = new View($this->config, $this->viewsDir, $this->loader);
+		$view = new View($this->config, $this->viewsDir, $this->loader);
 
 		$view->setVar('foo', 'bar');
 
@@ -48,7 +48,7 @@ class ViewTest extends \CIUnitTestCase
 
 		$expected = [
 			'foo' => 'bar',
-		    'bar' => 'baz'
+			'bar' => 'baz'
 		];
 
 		$view->setData($expected);
@@ -191,21 +191,21 @@ class ViewTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-    public function testRenderCanSaveDataThroughConfigSetting()
-    {
-        $this->config->saveData = true;
+	public function testRenderCanSaveDataThroughConfigSetting()
+	{
+		$this->config->saveData = true;
 
-        $view = new View($this->config, $this->viewsDir, $this->loader);
+		$view = new View($this->config, $this->viewsDir, $this->loader);
 
-        $view->setVar('testString', 'Hello World');
-        $view->render('simple');
+		$view->setVar('testString', 'Hello World');
+		$view->render('simple');
 
-        $expected = ['testString' => 'Hello World'];
+		$expected = ['testString' => 'Hello World'];
 
-        $this->assertEquals($expected, $view->getData());
-    }
+		$this->assertEquals($expected, $view->getData());
+	}
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
 	public function testCanDeleteData()
 	{
