@@ -494,13 +494,13 @@ class IncomingRequest extends Request
 		helper('array');
 
 		// Check for an array value in POST.
-		if (dot_array_search($key, $_SESSION['_ci_old_input']['post']))
+		if (isset($_SESSION['_ci_old_input']['post']) && dot_array_search($key, $_SESSION['_ci_old_input']['post']))
 		{
 			return dot_array_search($key, $_SESSION['_ci_old_input']['post']);
 		}
 
 		// Check for an array value in GET.
-		if (dot_array_search($key, $_SESSION['_ci_old_input']['get']))
+		if (isset($_SESSION['_ci_old_input']['get']) && dot_array_search($key, $_SESSION['_ci_old_input']['get']))
 		{
 			return dot_array_search($key, $_SESSION['_ci_old_input']['get']);
 		}
