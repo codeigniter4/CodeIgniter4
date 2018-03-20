@@ -81,9 +81,11 @@ class Exceptions
 	/**
 	 * Constructor.
 	 *
-	 * @param \Config\Exceptions $config
+	 * @param \Config\Exceptions                $config
+	 * @param \CodeIgniter\HTTP\IncomingRequest $request
+	 * @param \CodeIgniter\HTTP\Response        $response
 	 */
-	public function __construct(\Config\Exceptions $config)
+	public function __construct(\Config\Exceptions $config, \CodeIgniter\HTTP\IncomingRequest $request, \CodeIgniter\HTTP\Response $response)
 	{
 		$this->ob_level = ob_get_level();
 
@@ -91,8 +93,8 @@ class Exceptions
 
 		$this->config = $config;
 
-		$this->request  = Services::request();
-		$this->response = Services::response();
+		$this->request  = $request;
+		$this->response = $response;
 	}
 
 	//--------------------------------------------------------------------
