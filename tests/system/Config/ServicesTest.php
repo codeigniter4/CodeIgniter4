@@ -28,13 +28,13 @@ class ServicesTest extends \CIUnitTestCase
 
 	public function testNewExceptions()
 	{
-		$actual = Services::exceptions(new Exceptions());
+		$actual = Services::exceptions(new Exceptions(), Services::request(), Services::response());
 		$this->assertInstanceOf(\CodeIgniter\Debug\Exceptions::class, $actual);
 	}
 
 	public function testNewExceptionsWithNullConfig()
 	{
-		$actual = Services::exceptions(null, false);
+		$actual = Services::exceptions(null, null, null, false);
 		$this->assertInstanceOf(\CodeIgniter\Debug\Exceptions::class, $actual);
 	}
 
