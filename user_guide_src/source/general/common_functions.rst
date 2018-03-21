@@ -100,6 +100,8 @@ Service Accessors
 
 		// In the view
 		<input type="email" name="email" value="<?= old('email') ?>">
+		// Or with arrays
+		<input type="email" name="user[email]" value="<?= old('user.email') ?>">
 
 .. note:: If you are using the :doc:`form helper </helpers/form_helper>`, this feature is built-in. You only
 		need to use this function when not using the form helper.
