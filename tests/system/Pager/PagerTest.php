@@ -268,7 +268,7 @@ class PagerTest extends \CIUnitTestCase
 
 		$this->assertEquals((string)$expected, $this->pager->getNextPageURI('foo'));
 	}
- 
+
 	//--------------------------------------------------------------------
 
 	public function testGetPreviousURIWithQueryStringUsesCurrentURI()
@@ -283,6 +283,37 @@ class PagerTest extends \CIUnitTestCase
 		$this->pager->store('foo', $_GET['page']+1, 12, 70);
 
 		$this->assertEquals((string)$expected, $this->pager->getPreviousPageURI('foo'));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testGetOnlyQueries()
+	{
+		$_GET = [
+			'page'     => 2,
+			'search'   => 'foo',
+			'order'    => 'asc',
+			'hello'    => 'xxx',
+			'category' => 'baz',
+		];
+		$onlyQueries = ['search', 'order'];
+
+		$this->pager->store('default', $_GET['page'], 10, 100);
+
+		$uri = current_url(true);
+
+		$this->assertEquals(
+			$this->pager->only($onlyQueries)->getPreviousPageURI(),
+			(string)$uri->setQuery('search=foo&order=asc&page=1')
+		);
+		$this->assertEquals(
+			$this->pager->only($onlyQueries)->getNextPageURI(),
+			(string)$uri->setQuery('search=foo&order=asc&page=3')
+		);
+		$this->assertEquals(
+			$this->pager->only($onlyQueries)->getPageURI(4),
+			(string)$uri->setQuery('search=foo&order=asc&page=4')
+		);
 	}
 
 	//--------------------------------------------------------------------
