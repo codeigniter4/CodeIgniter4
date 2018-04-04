@@ -543,7 +543,7 @@ Query grouping allows you to create groups of WHERE clauses by enclosing them in
 you to create queries with complex WHERE clauses. Nested groups are supported. Example::
 
 	$builder->select('*')->from('my_table')
-		->group_start()
+		->groupStart()
 			->where('a', 'a')
 			->orGroupStart()
 				->where('b', 'b')
@@ -556,7 +556,7 @@ you to create queries with complex WHERE clauses. Nested groups are supported. E
 	// Generates:
 	// SELECT * FROM (`my_table`) WHERE ( `a` = 'a' OR ( `b` = 'b' AND `c` = 'c' ) ) AND `d` = 'd'
 
-.. note:: groups need to be balanced, make sure every group_start() is matched by a group_end().
+.. note:: groups need to be balanced, make sure every groupStart() is matched by a groupEnd().
 
 **$builder->groupStart()**
 
