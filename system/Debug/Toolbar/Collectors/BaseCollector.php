@@ -229,14 +229,13 @@ class BaseCollector
 	//--------------------------------------------------------------------
 
 	/**
-	 * Builds and returns the HTML needed to fill a tab to display
-	 * within the Debug Bar
+	 * Returns the data of this collector to be formatted in the toolbar
 	 *
-	 * @return string
+	 * @return array
 	 */
-	public function display(): string
+	public function display(): array
 	{
-		return '';
+		return [];
 	}
 
 	//--------------------------------------------------------------------

@@ -163,6 +163,38 @@
 	margin-left: 0.5em;
 }
 
+#debug-bar span.ci-label .badge.active {
+	background-color: red;
+}
+
+#debug-bar button {
+	border: 1px solid #ddd;
+	background-color: #fff;
+	cursor: pointer;
+	border-radius: 4px;
+	color: #333;
+}
+
+#debug-bar button:hover {
+	background-color: #eaeaea;
+}
+
+#debug-bar tr[data-active="1"] {
+	background-color: #dff0d8;
+}
+
+#debug-bar tr[data-active="1"]:hover {
+	background-color: #a7d499;
+}
+
+#debug-bar tr.current {
+	background-color: #FDC894;
+}
+
+#debug-bar tr.current:hover {
+	background-color: #DD4814;
+}
+
 #debug-bar table strong {
 	font-weight: 500;
 	color: rgba(0, 0, 0, 0.3);
