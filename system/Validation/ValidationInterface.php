@@ -68,8 +68,8 @@ interface ValidationInterface
 	//--------------------------------------------------------------------
 
 	/**
-	 * Takes a Request object and grabs the data to use from its
-	 * POST array values.
+	 * Takes a Request object and grabs the input data to use from its
+	 * array values.
 	 *
 	 * @param \CodeIgniter\HTTP\RequestInterface $request
 	 *
