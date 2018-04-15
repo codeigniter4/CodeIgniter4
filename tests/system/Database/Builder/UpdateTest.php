@@ -104,6 +104,8 @@ WHEN "id" = :id0 THEN :description0
 ELSE "description" END
 WHERE "id" IN(:id,:id0)';
 
+        $expected = preg_replace("/\r\n/", "\n", $expected);
+
 		$this->assertEquals($expected, $query->getOriginalQuery() );
 
 		$expected = 'UPDATE "jobs" SET "name" = CASE 
@@ -114,6 +116,8 @@ WHEN "id" = 2 THEN \'Theres something in your teeth\'
 WHEN "id" = 3 THEN \'Iam yellow\'
 ELSE "description" END
 WHERE "id" IN(2,3)';
+
+        $expected = preg_replace("/\r\n/", "\n", $expected);
 
 		$this->assertEquals($expected, $query->getQuery() );
 	}
