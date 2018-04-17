@@ -63,7 +63,7 @@ Service Accessors
 
 .. php:function:: helper( $filename )
 
-	:param   string   $filename: The name of the helper file to load.
+	:param   string|array  $filename: The name of the helper file to load, or an array of names.
 
 	Loads a helper file.
 
