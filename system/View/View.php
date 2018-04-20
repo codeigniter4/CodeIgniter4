@@ -209,7 +209,7 @@ class View implements RendererInterface
 
 		$this->logPerformance($this->renderVars['start'], microtime(true), $this->renderVars['view']);
 
-		if (CI_DEBUG)
+		if (CI_DEBUG && (! isset($options['debug']) || $options['debug'] === true))
 		{
 			$after = (new \Config\Filters())->globals['after'];
 			if (in_array('toolbar', $after) || array_key_exists('toolbar', $after))
