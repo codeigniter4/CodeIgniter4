@@ -11,8 +11,8 @@ class CacheFactoryTest extends \CIUnitTestCase
 		$this->cacheFactory = new CacheFactory();
 
 		//Initialize path
-		$this->config = new \Config\Cache();
-		$this->config->path .= self::$directory;
+		$this->config            = new \Config\Cache();
+		$this->config->storePath .= self::$directory;
 	}
 
 	public function tearDown()
@@ -83,7 +83,7 @@ class CacheFactoryTest extends \CIUnitTestCase
 		$this->assertInstanceOf(\CodeIgniter\Cache\Handlers\DummyHandler::class, $this->cacheFactory->getHandler($this->config));
 
 		//Initialize path
-		$this->config = new \Config\Cache();
-		$this->config->path .= self::$directory;
+		$this->config            = new \Config\Cache();
+		$this->config->storePath .= self::$directory;
 	}
 }
