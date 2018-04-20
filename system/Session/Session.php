@@ -166,6 +166,8 @@ class Session implements SessionInterface
 		$this->cookieDomain = $config->cookieDomain;
 		$this->cookiePath = $config->cookiePath;
 		$this->cookieSecure = $config->cookieSecure;
+
+		helper('array');
 	}
 
 	//--------------------------------------------------------------------
@@ -463,9 +465,9 @@ class Session implements SessionInterface
 	 */
 	public function get(string $key = null)
 	{
-		if (isset($key))
+		if ($value = dot_array_search($key, $_SESSION))
 		{
-			return $_SESSION[$key] ?? null;
+			return $value;
 		}
 		elseif (empty($_SESSION))
 		{
