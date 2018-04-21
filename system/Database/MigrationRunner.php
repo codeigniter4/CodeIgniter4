@@ -389,6 +389,7 @@ class MigrationRunner
 		$location = $config->psr4[$this->namespace];
 
 		// Setting migration directories.
+		$location = rtrim($location, '\\'); //in Case Windows is used
 		$dir = rtrim($location, '/') . '/Database/Migrations/';
 
 		// Load all *_*.php files in the migrations path
