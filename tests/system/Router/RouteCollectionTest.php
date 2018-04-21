@@ -707,6 +707,18 @@ class RouteCollectionTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testReverseRouteMatching()
+	{
+		$routes = $this->getCollector();
+
+		$routes->get('test/(:segment)/(:segment)', 'TestController::test/$1/$2', ['as' => 'testRouter']);
+
+		$match = $routes->reverseRoute('testRouter', 1, 2);
+
+		$this->assertEquals('/test/1/2', $match);
+	}
+
+
 	public function testAddRedirect()
 	{
 		$routes = $this->getCollector();
