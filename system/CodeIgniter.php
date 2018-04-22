@@ -773,7 +773,7 @@ class CodeIgniter
 			}
 		}
 
-		throw new PageNotFoundException(lang('HTTP.pageNotFound'));
+		throw new PageNotFoundException(empty($e->getMessage()) ? lang('HTTP.pageNotFound') : $e->getMessage());
 	}
 
 	//--------------------------------------------------------------------
