@@ -280,4 +280,43 @@ class ForgeTest extends \CIDatabaseTestCase
 		$this->forge->dropTable('forge_test_users', true);
 
 	}
+
+	public function testEnumSetFields()
+	{
+		if ($this->db->DBDriver !== 'MySQLi')
+		{
+			$this->doesNotPerformAssertions();
+		}
+
+		$this->forge->addField([
+			'enum_string'       => [
+				'type'       => 'ENUM("a","b")',
+			],
+			'enum_array'       => [
+				'type'       => 'ENUM',
+				'constraint' => ['a', 'b'],
+			],
+			'set_string'       => [
+				'type'       => 'SET("a","b")',
+			],
+			'set_array'       => [
+				'type'       => 'SET',
+				'constraint' => ['a', 'b'],
+			],
+		]);
+		$this->forge->createTable('forge_test_enum_set');
+
+		$fields = $this->db->getFieldData('forge_test_enum_set');
+
+		$this->forge->dropTable('forge_test_enum_set');
+
+		$this->assertEquals('enum_string', $fields[0]->name);
+		$this->assertEquals('enum', $fields[0]->type);
+		$this->assertEquals('enum_array', $fields[1]->name);
+		$this->assertEquals('enum', $fields[1]->type);
+		$this->assertEquals('set_string', $fields[2]->name);
+		$this->assertEquals('set', $fields[2]->type);
+		$this->assertEquals('set_array', $fields[3]->name);
+		$this->assertEquals('set', $fields[3]->type);
+	}
 }
