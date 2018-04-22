@@ -47,7 +47,7 @@ return [
 	'alpha'                 => 'The {field} field may only contain alphabetical characters.',
 	'alpha_dash'            => 'The {field} field may only contain alpha-numeric characters, underscores, and dashes.',
 	'alpha_numeric'         => 'The {field} field may only contain alpha-numeric characters.',
-	'alpha_numeric_space'  => 'The {field} field may only contain alpha-numeric characters and spaces.',
+	'alpha_numeric_space'  	=> 'The {field} field may only contain alpha-numeric characters and spaces.',
 	'alpha_space'  			=> 'The {field} field may only contain alphabetical characters and spaces.',
 	'decimal'               => 'The {field} field must contain a decimal number.',
 	'differs'               => 'The {field} field must differ from the {param} field.',
@@ -87,5 +87,4 @@ return [
 	'mime_in'               => '{field} does not have a valid mime type.',
 	'ext_in'                => '{field} does not have a valid file extension.',
 	'max_dims'              => '{field} is either not an image, or it is too wide or tall.',
-	'',
 ];
