@@ -101,7 +101,7 @@ class BaseConfig
 					elseif ($value === 'true')
 						$value = true;
 
-					$this->$property = $value;
+					$this->$property = trim($value, '\'"');
 				}
 			}
 		}
