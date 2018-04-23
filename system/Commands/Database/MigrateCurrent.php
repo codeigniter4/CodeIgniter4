@@ -102,7 +102,7 @@ class MigrateCurrent extends BaseCommand
 	{
 		$runner = Services::migrations();
 
-		CLI::write(lang('Migrations.migToVersion'), 'yellow');
+		CLI::write(lang('Migrations.toVersion'), 'yellow');
 
 		$group = CLI::getOption('g');
 		try
@@ -115,13 +115,13 @@ class MigrateCurrent extends BaseCommand
 			}
 
 			CLI::write('Done');
-			
+
 		} catch (\Exception $e)
 		{
 			$this->showError($e);
 		}
 
-		
+
 	}
 
 }

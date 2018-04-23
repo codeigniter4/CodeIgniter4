@@ -35,10 +35,10 @@
  * @since	Version 3.0.0
  * @filesource
  */
-use CodeIgniter\ConfigException;
+use Config\Services;
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\MigrationRunner;
-use Config\Services;
+use CodeIgniter\Exceptions\ConfigException;
 
 /**
  * CIDatabaseTestCase

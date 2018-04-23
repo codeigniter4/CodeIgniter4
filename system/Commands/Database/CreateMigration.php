@@ -108,12 +108,12 @@ class CreateMigration extends BaseCommand
 
 		if (empty($name))
 		{
-			$name = CLI::prompt(lang('Migrations.migNameMigration'));
+			$name = CLI::prompt(lang('Migrations.nameMigration'));
 		}
 
 		if (empty($name))
 		{
-			CLI::error(lang('Migrations.migBadCreateName'));
+			CLI::error(lang('Migrations.badCreateName'));
 			return;
 		}
 		$namespace = CLI::getOption('n');
@@ -168,7 +168,7 @@ EOD;
 		helper('filesystem');
 		if ( ! write_file($path, $template))
 		{
-			CLI::error(lang('Migrations.migWriteError'));
+			CLI::error(lang('Migrations.writeError'));
 			return;
 		}
 
