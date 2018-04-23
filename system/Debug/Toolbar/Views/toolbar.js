@@ -17,11 +17,36 @@ var ciDebugBar = {
 		ciDebugBar.createListeners();
 		ciDebugBar.setToolbarState();
 		ciDebugBar.setToolbarPosition();
-		ciDebugBar.toogleViewsHints();
-                
-                document.getElementById('debug-bar-link').addEventListener('click', ciDebugBar.toggleToolbar, true);
-                document.getElementById('debug-icon-link').addEventListener('click', ciDebugBar.toggleToolbar, true);                
-                
+		ciDebugBar.toggleViewsHints();
+
+		document.getElementById('debug-bar-link').addEventListener('click', ciDebugBar.toggleToolbar, true);
+		document.getElementById('debug-icon-link').addEventListener('click', ciDebugBar.toggleToolbar, true);
+
+		// Allows to highlight the row of the current history request
+		var btn = document.querySelector('button[data-time="'+localStorage.getItem('debugbar-time')+'"]');
+		ciDebugBar.addClass(btn.parentNode.parentNode, 'current');
+
+		historyLoad = document.getElementsByClassName('ci-history-load');
+
+		for (var i = 0; i < historyLoad.length; i++)
+		{
+			historyLoad[i].addEventListener('click', function() {
+				loadDoc(this.getAttribute('data-time'));
+			}, true);
+		}
+
+		// Display the active Tab on page load
+		var tab = ciDebugBar.readCookie('debug-bar-tab');
+		if (document.getElementById(tab)) {
+			var el = document.getElementById(tab);
+			el.style.display = 'block';
+			ciDebugBar.addClass(el, 'active');
+			tab = document.querySelector('[data-tab='+tab+']');
+			if (tab) {
+				ciDebugBar.addClass(tab.parentNode, 'active');
+			}
+		}
+
 	},
 
 	//--------------------------------------------------------------------
@@ -48,6 +73,9 @@ var ciDebugBar = {
 			return;
 		}
 
+		// Remove debug-bar-tab cookie
+		ciDebugBar.createCookie('debug-bar-tab', '', -1);
+
 		// Check our current state.
 		var state = tab.style.display;
 
@@ -72,6 +100,8 @@ var ciDebugBar = {
 		{
 			tab.style.display = 'block';
 			ciDebugBar.addClass(this.parentNode, 'active');
+			// Create debug-bar-tab cookie to persistent state
+			ciDebugBar.createCookie('debug-bar-tab', this.getAttribute('data-tab'), 365);
 		}
 	},
 
@@ -156,8 +186,16 @@ var ciDebugBar = {
 
 	//--------------------------------------------------------------------
 
-	toogleViewsHints: function()
+	toggleViewsHints: function()
 	{
+		// Avoid toggle hints on history requests that are not the initial
+		if (localStorage.getItem('debugbar-time') != localStorage.getItem('debugbar-time-new'))
+		{
+			var a = document.querySelector('a[data-tab="ci-views"]');
+			a.href = '#';
+			return;
+		}
+
 		var nodeList 		= []; // [ Element, NewElement( 1 )/OldElement( 0 ) ]
 		var sortedComments 	= [];
 		var comments 		= [];
@@ -399,15 +437,7 @@ var ciDebugBar = {
 			return;
 		}
 
-		btn = btn.parentNode;
-
-		// Determine Hints state on page load
-		if (ciDebugBar.readCookie('debug-view'))
-		{			
-			showHints();
-		}
-
-		btn.onclick = function() {			
+		btn.parentNode.onclick = function() {
 			if (ciDebugBar.readCookie('debug-view'))
 			{
 				hideHints();
@@ -417,6 +447,12 @@ var ciDebugBar = {
 				showHints();
 			}
 		};
+
+		// Determine Hints state on page load
+		if (ciDebugBar.readCookie('debug-view'))
+		{
+			showHints();
+		}
 	},
 
 	//--------------------------------------------------------------------

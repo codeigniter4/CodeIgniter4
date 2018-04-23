@@ -219,8 +219,8 @@ Logical Operators
             higher precedence::
 
                 $result = true && false; // $result is false, expected
-                $result = true OR false; // $result is true, evaluated as "($result = true) OR false"
-                $result = (true OR false); // $result is false
+                $result = true AND false; // $result is true, evaluated as "($result = true) AND false"
+                $result = (true AND false); // $result is false
 
 -   The logical negation operator MUST be separated from its argument by a
     single space, as in **! $result** instead of **!$result**

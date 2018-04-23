@@ -220,16 +220,18 @@ class Services
 	 *  - set_error_handler
 	 *  - register_shutdown_function
 	 *
-	 * @param \Config\Exceptions $config
-	 * @param bool               $getShared
+	 * @param \Config\Exceptions                $config
+	 * @param \CodeIgniter\HTTP\IncomingRequest $request
+	 * @param \CodeIgniter\HTTP\Response        $response
+	 * @param bool                              $getShared
 	 *
 	 * @return \CodeIgniter\Debug\Exceptions
 	 */
-	public static function exceptions(\Config\Exceptions $config = null, $getShared = true)
+	public static function exceptions(\Config\Exceptions $config = null, \CodeIgniter\HTTP\IncomingRequest $request = null, \CodeIgniter\HTTP\Response $response = null, $getShared = true)
 	{
 		if ($getShared)
 		{
-			return self::getSharedInstance('exceptions', $config);
+			return self::getSharedInstance('exceptions', $config, $request, $response);
 		}
 
 		if (empty($config))
@@ -237,7 +239,17 @@ class Services
 			$config = new \Config\Exceptions();
 		}
 
-		return (new \CodeIgniter\Debug\Exceptions($config));
+		if (empty($request))
+		{
+			$request = static::request();
+		}
+
+		if (empty($response))
+		{
+			$response = static::response();
+		}
+
+		return (new \CodeIgniter\Debug\Exceptions($config, $request, $response));
 	}
 
 	//--------------------------------------------------------------------

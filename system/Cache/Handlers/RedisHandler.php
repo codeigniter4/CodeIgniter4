@@ -35,8 +35,8 @@
  * @since	Version 3.0.0
  * @filesource
  */
-use CodeIgniter\Cache\CacheInterface;
 use CodeIgniter\CriticalError;
+use CodeIgniter\Cache\CacheInterface;
 
 class RedisHandler implements CacheInterface
 {
@@ -70,8 +70,9 @@ class RedisHandler implements CacheInterface
 
 	//--------------------------------------------------------------------
 
-	public function __construct(array $config)
+	public function __construct($config)
 	{
+		$config = (array)$config;
 		$this->prefix = $config['prefix'] ?? '';
 
 		if ( ! empty($config))

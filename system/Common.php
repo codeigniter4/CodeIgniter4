@@ -282,14 +282,15 @@ if ( ! function_exists('session'))
 	 */
 	function session($val = null)
 	{
+		$session = \Config\Services::session();
+
 		// Returning a single item?
 		if (is_string($val))
 		{
-			helper('array');
-			return dot_array_search($val, $_SESSION);
+			return $session->get($val);
 		}
 
-		return \Config\Services::session();
+		return $session;
 	}
 
 }

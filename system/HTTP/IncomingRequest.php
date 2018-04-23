@@ -466,7 +466,7 @@ class IncomingRequest extends Request
 	/**
 	 * Attempts to get old Input data that has been flashed to the session
 	 * with redirect_with_input(). It first checks for the data in the old
-	 * POST data, then the old GET data.
+	 * POST data, then the old GET data and finally check for dot arrays
 	 *
 	 * @param string $key
 	 *
@@ -489,6 +489,28 @@ class IncomingRequest extends Request
 		if (isset($_SESSION['_ci_old_input']['get'][$key]))
 		{
 			return $_SESSION['_ci_old_input']['get'][$key];
+		}
+
+		helper('array');
+
+		// Check for an array value in POST.
+		if (isset($_SESSION['_ci_old_input']['post']))
+		{
+			$value = dot_array_search($key, $_SESSION['_ci_old_input']['post']);
+			if ( ! is_null($value))
+			{
+				return $value;
+			}
+		}
+
+		// Check for an array value in GET.
+		if (isset($_SESSION['_ci_old_input']['get']))
+		{
+			$value = dot_array_search($key, $_SESSION['_ci_old_input']['get']);
+			if ( ! is_null($value))
+			{
+				return $value;
+			}
 		}
 	}
 

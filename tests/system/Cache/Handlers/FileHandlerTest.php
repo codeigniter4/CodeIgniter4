@@ -24,10 +24,10 @@ class FileHandlerTest extends \CIUnitTestCase
 	public function setUp()
 	{
 		//Initialize path
-		$this->config = new \Config\Cache();
-		$this->config->path .= self::$directory;
-		if (!is_dir($this->config->path)) {
-			mkdir($this->config->path, 0777, true);
+		$this->config            = new \Config\Cache();
+		$this->config->storePath .= self::$directory;
+		if (!is_dir($this->config->storePath)) {
+			mkdir($this->config->storePath, 0777, true);
 		}
 
 		$this->fileHandler = new FileHandler($this->config);
@@ -58,8 +58,8 @@ class FileHandlerTest extends \CIUnitTestCase
 	public function testSetDefaultPath()
 	{
 		//Initialize path
-		$config = new \Config\Cache();
-		$config->path = null;
+		$config            = new \Config\Cache();
+		$config->storePath = null;
 
 		$this->fileHandler = new FileHandler($config);
 		$this->fileHandler->initialize();
@@ -198,15 +198,15 @@ final class BaseTestFileHandler extends FileHandler
 
 	public function __construct()
 	{
-		$this->config = new \Config\Cache();
-		$this->config->path .= self::$directory;
+		$this->config            = new \Config\Cache();
+		$this->config->storePath .= self::$directory;
 
 		parent::__construct($this->config);
 	}
 
 	public function getFileInfoTest()
 	{
-		return $this->getFileInfo($this->config->path, [
+		return $this->getFileInfo($this->config->storePath, [
 			'name',
 			'server_path',
 			'size',

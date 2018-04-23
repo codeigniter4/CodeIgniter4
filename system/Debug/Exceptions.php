@@ -35,7 +35,6 @@
  * @since	Version 3.0.0
  * @filesource
  */
-use Config\Services;
 
 require __DIR__.'/CustomExceptions.php';
 
@@ -44,6 +43,8 @@ require __DIR__.'/CustomExceptions.php';
  */
 class Exceptions
 {
+	use \CodeIgniter\API\ResponseTrait;
+
 	/**
 	 * Nesting level of the output buffering mechanism
 	 *
@@ -64,20 +65,35 @@ class Exceptions
 	 */
 	protected $config;
 
+	/**
+	 * @var \CodeIgniter\HTTP\IncomingRequest
+	 */
+	protected $request;
+
+	/**
+	 * @var \CodeIgniter\HTTP\Response
+	 */
+	protected $response;
+
 	//--------------------------------------------------------------------
 
 	/**
 	 * Constructor.
 	 *
-	 * @param \Config\Exceptions $config
+	 * @param \Config\Exceptions                $config
+	 * @param \CodeIgniter\HTTP\IncomingRequest $request
+	 * @param \CodeIgniter\HTTP\Response        $response
 	 */
-	public function __construct(\Config\Exceptions $config)
+	public function __construct(\Config\Exceptions $config, \CodeIgniter\HTTP\IncomingRequest $request, \CodeIgniter\HTTP\Response $response)
 	{
 		$this->ob_level = ob_get_level();
 
 		$this->viewPath = rtrim($config->errorViewPath, '/ ') . '/';
 
 		$this->config = $config;
+
+		$this->request  = $request;
+		$this->response = $response;
 	}
 
 	//--------------------------------------------------------------------
@@ -124,9 +140,16 @@ class Exceptions
 
 		if (! is_cli())
 		{
-			$response = Services::response()->setStatusCode($statusCode);
-			$header = "HTTP/1.1 {$response->getStatusCode()} {$response->getReason()}";
+			$this->response->setStatusCode($statusCode);
+			$header = "HTTP/{$this->request->getProtocolVersion()} {$this->response->getStatusCode()} {$this->response->getReason()}";
 			header($header, true, $statusCode);
+
+			if (strpos($this->request->getHeaderLine('accept'), 'text/html') === false)
+			{
+				$this->respond(ENVIRONMENT === 'development' ? $this->collectVars($exception, $statusCode) : '', $statusCode)->send();
+
+				exit($exitCode);
+			}
 		}
 
 		$this->render($exception, $statusCode);
@@ -271,13 +294,13 @@ class Exceptions
 	protected function collectVars(\Throwable $exception, int $statusCode)
 	{
 		return [
-			'type' => get_class($exception),
-			'code' => $statusCode,
+			'title'   => get_class($exception),
+			'type'    => get_class($exception),
+			'code'    => $statusCode,
 			'message' => $exception->getMessage() ?? '(null)',
-			'file' => $exception->getFile(),
-			'line' => $exception->getLine(),
-			'trace' => $exception->getTrace(),
-			'title' => get_class($exception)
+			'file'    => $exception->getFile(),
+			'line'    => $exception->getLine(),
+			'trace'   => $exception->getTrace(),
 		];
 	}
 
