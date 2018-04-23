@@ -38,6 +38,7 @@
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
+use CodeIgniter\Filters\Exceptions\FilterException;
 
 class Filters
 {
@@ -110,14 +111,14 @@ class Filters
 
 			if ( ! array_key_exists($alias, $this->config->aliases))
 			{
-				throw new \InvalidArgumentException("'{$alias}' filter must have a matching alias defined.");
+				throw FilterException::forNoAlias($alias);
 			}
 
 			$class = new $this->config->aliases[$alias]();
 
 			if ( ! $class instanceof FilterInterface)
 			{
-				throw new \RuntimeException(get_class($class) . ' must implement CodeIgniter\Filters\FilterInterface.');
+				throw FilterException::forIncorrectInterface($class);
 			}
 
 			if ($position == 'before')

@@ -6,6 +6,6 @@ class FileNotFoundException extends \RuntimeException implements ExceptionInterf
 {
 	public static function forFileNotFound(string $path)
 	{
-		throw new self(lang('Files.fileNotFound', [$path]));
+		return new self(lang('Files.fileNotFound', [$path]));
 	}
 }

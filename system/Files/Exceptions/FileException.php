@@ -6,6 +6,6 @@ class FileException extends \RuntimeException implements ExceptionInterface
 {
 	public static function forUnableToMove(string $from = null, string $to = null, string $error = null)
 	{
-		throw new self(lang('Files.'));
+		return new self(lang('Files.'));
 	}
 }
