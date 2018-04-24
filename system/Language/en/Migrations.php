@@ -73,6 +73,6 @@ return [
 	'migRemoved'        => 'Rolling back: ',
 	'migAdded'          => 'Running: ',
 
-	'version'  			=> 'Version',
-	'filename' 			=> 'Filename',
+	'version'           => 'Version',
+	'filename'          => 'Filename',
 ];
