@@ -1,39 +1,11 @@
 <?php
 
 /**
- * CodeIgniter
- *
- * An open source application development framework for PHP
- *
- * This content is released under the MIT License (MIT)
- *
- * Copyright (c) 2014-2018 British Columbia Institute of Technology
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
- * @package      CodeIgniter
- * @author       CodeIgniter Dev Team
- * @copyright    2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
- * @license      https://opensource.org/licenses/MIT	MIT License
- * @link         https://codeigniter.com
- * @since        Version 3.0.0
- * @filesource
+ * System messages translation for CodeIgniter(tm)
+ * @author	    CodeIgniter community
+ * @copyright	Copyright (c) 2014-2018, British Columbia Institute of Technology (http://bcit.ca/)
+ * @license	    http://opensource.org/licenses/MIT	MIT License
+ * @link	    https://codeigniter.com
  */
 
 return [
@@ -47,8 +19,8 @@ return [
 	'alpha'                 => 'The {field} field may only contain alphabetical characters.',
 	'alpha_dash'            => 'The {field} field may only contain alpha-numeric characters, underscores, and dashes.',
 	'alpha_numeric'         => 'The {field} field may only contain alpha-numeric characters.',
-	'alpha_numeric_space'  => 'The {field} field may only contain alpha-numeric characters and spaces.',
-	'alpha_space'  			=> 'The {field} field may only contain alphabetical characters and spaces.',
+	'alpha_numeric_space'  	=> 'The {field} field may only contain alpha-numeric characters and spaces.',
+	'alpha_space'           => 'The {field} field may only contain alphabetical characters and spaces.',
 	'decimal'               => 'The {field} field must contain a decimal number.',
 	'differs'               => 'The {field} field must differ from the {param} field.',
 	'exact_length'          => 'The {field} field must be exactly {param} characters in length.',
@@ -87,5 +59,4 @@ return [
 	'mime_in'               => '{field} does not have a valid mime type.',
 	'ext_in'                => '{field} does not have a valid file extension.',
 	'max_dims'              => '{field} is either not an image, or it is too wide or tall.',
-	'',
 ];

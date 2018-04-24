@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * System messages translation for CodeIgniter(tm)
+ * @author	    CodeIgniter community
+ * @copyright	Copyright (c) 2014-2018, British Columbia Institute of Technology (http://bcit.ca/)
+ * @license	    http://opensource.org/licenses/MIT	MIT License
+ * @link	    https://codeigniter.com
+ */
+
 return [
 	'sourceImageRequired'    => 'You must specify a source image in your preferences.',
 	'gdRequired'             => 'The GD image library is required to use this feature.',
