@@ -35,6 +35,7 @@
  * @since	Version 3.0.0
  * @filesource
  */
+use CodeIgniter\HTTP\Exceptions\HTTPException;
 use Config\Services;
 
 class RedirectResponse extends Response
@@ -81,7 +82,7 @@ class RedirectResponse extends Response
 
 		if (! $route)
 		{
-			throw new \InvalidArgumentException(lang('HTTP.invalidRoute', [$route]));
+			throw HTTPException::forInvalidRedirectRoute($route);
 		}
 
 		return $this->redirect($route, $method, $code);

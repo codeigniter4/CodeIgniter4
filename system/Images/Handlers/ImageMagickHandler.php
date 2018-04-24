@@ -36,6 +36,7 @@
  * @filesource
  */
 use CodeIgniter\Images\Exceptions\ImageException;
+use CodeIgniter\Images\Image;
 
 /**
  * Class ImageMagickHandler
@@ -209,7 +210,7 @@ class ImageMagickHandler extends BaseHandler
 		// Do we have a vaild library path?
 		if (empty($this->config->libraryPath))
 		{
-			throw new ImageException(lang('images.libPathInvalid'));
+			throw ImageException::forInvalidImageLibraryPath($this->config->libraryPath);
 		}
 
 		if ( ! preg_match('/convert$/i', $this->config->libraryPath))
@@ -230,7 +231,7 @@ class ImageMagickHandler extends BaseHandler
 		// Did it work?
 		if ($retval > 0)
 		{
-			throw new ImageException(lang('imageProcessFailed'));
+			throw ImageException::forImageProcessFailed();
 		}
 
 		return $output;

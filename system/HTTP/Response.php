@@ -35,6 +35,7 @@
  * @since        Version 3.0.0
  * @filesource
  */
+use CodeIgniter\HTTP\Exceptions\HTTPException;
 use Config\App;
 use Config\Mimes;
 
@@ -249,7 +250,7 @@ class Response extends Message implements ResponseInterface
 	{
 		if (empty($this->statusCode))
 		{
-			throw new \BadMethodCallException('HTTP Response is missing a status code');
+			throw HTTPException::forMissingResponseStatus();
 		}
 
 		return $this->statusCode;
@@ -279,13 +280,13 @@ class Response extends Message implements ResponseInterface
 		// Valid range?
 		if ($code < 100 || $code > 599)
 		{
-			throw new \InvalidArgumentException($code . ' is not a valid HTTP return status code');
+			throw HTTPException::forInvalidStatusCode($code);
 		}
 
 		// Unknown and no message?
 		if ( ! array_key_exists($code, static::$statusCodes) && empty($reason))
 		{
-			throw new \InvalidArgumentException('Unknown HTTP status code provided with no message');
+			throw HTTPException::forUnkownStatusCode($code);
 		}
 
 		$this->statusCode = $code;
