@@ -8,14 +8,22 @@
  * functionality so the site will operate as normal.
  */
 
+// Avoid this file run when listing commands
+if (php_sapi_name() === 'cli')
+{
+	return;
+}
+
 // If we're serving the site locally, then we need
 // to let the application know that we're in development mode
 $_SERVER['CI_ENVIRONMENT'] = 'development';
 
 $uri = urldecode(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
 
-$fcpath = __DIR__ . '/../../public/';
+// Front Controller path - expected to be in the default folder
+$fcpath = realpath(__DIR__ . '/../../../public') . DIRECTORY_SEPARATOR;
 
+// Full path
 $path = $fcpath . ltrim($uri, '/');
 
 // If $path is an existing file or folder within the public folder

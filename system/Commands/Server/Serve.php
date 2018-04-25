@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Commands;
+<?php namespace CodeIgniter\Commands\Server;
 
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
@@ -31,7 +31,7 @@ class Serve extends BaseCommand
 		$docroot = FCPATH;
 
 		// Mimic Apache's mod_rewrite functionality with user settings
-		$rewrite = APPPATH . 'Config/Rewrite.php';
+		$rewrite = __DIR__ . '/rewrite.php';
 
 		// Call PHP's built-in webserver, making sure to set our
 		// base path to the public folder, and to use the rewrite file
