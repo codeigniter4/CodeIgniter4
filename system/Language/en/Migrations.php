@@ -47,6 +47,6 @@ return [
 	'removed'           => 'Rolling back: ',
 	'added'             => 'Running: ',
 
-	'version'  => 'Version',
-	'filename' => 'Filename',
+	'version'           => 'Version',
+	'filename'          => 'Filename',
 ];

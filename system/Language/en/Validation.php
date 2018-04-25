@@ -1,6 +1,7 @@
 <?php
 
 /**
+<<<<<<< HEAD
  * Validation language strings.
  *
  * @package      CodeIgniter
@@ -10,6 +11,13 @@
  * @link         https://codeigniter.com
  * @since        Version 3.0.0
  * @filesource
+=======
+ * System messages translation for CodeIgniter(tm)
+ * @author	    CodeIgniter community
+ * @copyright	Copyright (c) 2014-2018, British Columbia Institute of Technology (http://bcit.ca/)
+ * @license	    http://opensource.org/licenses/MIT	MIT License
+ * @link	    https://codeigniter.com
+>>>>>>> develop
  */
 
 return [
@@ -64,5 +72,4 @@ return [
 	'mime_in'               => '{field} does not have a valid mime type.',
 	'ext_in'                => '{field} does not have a valid file extension.',
 	'max_dims'              => '{field} is either not an image, or it is too wide or tall.',
-	'',
 ];
