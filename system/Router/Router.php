@@ -36,6 +36,7 @@
  * @filesource
  */
 use CodeIgniter\PageNotFoundException;
+use CodeIgniter\Router\Exceptions\RouterException;
 
 /**
  * Routing exception
@@ -613,7 +614,7 @@ class Router implements RouterInterface
 	{
 		if (empty($this->controller))
 		{
-			throw new \RuntimeException('Unable to determine what should be displayed. A default route has not been specified in the routing file.');
+			throw RouterException::forMissingDefaultRoute();
 		}
 
 		// Is the method being specified?

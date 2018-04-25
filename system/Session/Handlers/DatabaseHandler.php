@@ -35,6 +35,7 @@
  * @since	Version 3.0.0
  * @filesource
  */
+use CodeIgniter\Session\Exceptions\SessionException;
 use Config\Database;
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Database\BaseConnection;
@@ -95,7 +96,7 @@ class DatabaseHandler extends BaseHandler implements \SessionHandlerInterface
 
 		if (empty($this->table))
 		{
-			throw new \BadMethodCallException('`sessionSavePath` must have the table name for the Database Session Handler to work.');
+			throw SessionException::forMissingDatabaseTable();
 		}
 
 		// Get DB Connection

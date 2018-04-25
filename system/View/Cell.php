@@ -36,6 +36,7 @@
  * @filesource
  */
 use CodeIgniter\Cache\CacheInterface;
+use CodeIgniter\View\Exceptions\ViewException;
 
 /**
  * Class Cell
@@ -114,7 +115,7 @@ class Cell
 
 		if ( ! method_exists($instance, $method))
 		{
-			throw new \InvalidArgumentException("{$class}::{$method} is not a valid method.");
+			throw ViewException::forInvalidCellMethod($class, $method);
 		}
 
 		// Try to match up the parameter list we were provided
@@ -128,7 +129,7 @@ class Cell
 		{
 			if (! empty($paramArray))
 			{
-				throw new \InvalidArgumentException("{$class}::{$method} has no params.");
+				throw ViewException::forMissingCellParameters($class, $method);
 			}
 
 			$output = $instance->{$method}();
@@ -157,7 +158,7 @@ class Cell
 			{
 				if ( ! isset($method_params[$key]))
 				{
-					throw new \InvalidArgumentException("{$key} is not a valid param name.");
+					throw ViewException::forInvalidCellParameter($key);
 				}
 			}
 
@@ -241,12 +242,12 @@ class Cell
 
 		if (empty($class))
 		{
-			throw new \InvalidArgumentException('No view cell class provided.');
+			throw ViewException::forNoCellClass();
 		}
 
 		if ( ! class_exists($class, true))
 		{
-			throw new \InvalidArgumentException('Unable to locate view cell class: ' . $class . '.');
+			throw ViewException::forInvalidCellClass($class);
 		}
 
 		if (empty($method))

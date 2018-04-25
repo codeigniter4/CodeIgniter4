@@ -1,7 +1,7 @@
 <?php
 
 /**
- * CLI language strings.
+ * Router language strings.
  *
  * @package      CodeIgniter
  * @author       CodeIgniter Dev Team
@@ -12,9 +12,6 @@
  * @filesource
  */
 return [
-	'helpUsage'       => 'Usage:',
-	'helpDescription' => 'Description:',
-	'helpOptions'     => 'Options:',
-	'helpArguments'   => 'Arguments:',
-	'invalidColor'    => 'Invalid {0, string} color: {1, string}.',
+	'invalidParameter'    => 'A parameter does not match the expected type.',
+	'missingDefaultRoute' => 'Unable to determine what should be displayed. A default route has not been specified in the routing file.',
 ];

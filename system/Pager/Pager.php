@@ -35,6 +35,7 @@
  * @since	Version 3.0.0
  * @filesource
  */
+use CodeIgniter\Pager\Exceptions\PagerException;
 use Config\Services;
 use CodeIgniter\View\RendererInterface;
 
@@ -160,7 +161,7 @@ class Pager implements PagerInterface
 
 		if ( ! array_key_exists($template, $this->config->templates))
 		{
-			throw new \InvalidArgumentException($template . ' is not a valid Pager template.');
+			throw PagerException::forInvalidTemplate($template);
 		}
 
 		return $this->view->setVar('pager', $pager)
@@ -424,7 +425,7 @@ class Pager implements PagerInterface
 	{
 		if ( ! array_key_exists($group, $this->groups))
 		{
-			throw new \InvalidArgumentException($group . ' is not a valid Pagination group.');
+			throw PagerException::forInvalidPaginationGroup($group);
 		}
 
 		$newGroup = $this->groups[$group];

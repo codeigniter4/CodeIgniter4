@@ -36,6 +36,7 @@
  * @filesource
  */
 use CodeIgniter\HTTP\RequestInterface;
+use CodeIgniter\Security\Exceptions\SecurityException;
 
 /**
  * HTTP security handler.
@@ -189,7 +190,7 @@ class Security
 		if ( ! isset($_POST[$this->CSRFTokenName], $_COOKIE[$this->CSRFCookieName]) || $_POST[$this->CSRFTokenName] !== $_COOKIE[$this->CSRFCookieName]
 		) // Do the tokens match?
 		{
-			throw new \LogicException('The action you requested is not allowed', 403);
+			throw SecurityException::forDisallowedAction();
 		}
 
 		// We kill this since we're done and we don't want to pollute the _POST array
