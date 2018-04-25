@@ -21,7 +21,7 @@ class ResponseTest extends \CIUnitTestCase
 	{
 		$response = new Response(new App());
 
-		$this->expectException('InvalidArgumentException');
+		$this->expectException(HTTPException::class);
 		$response->setStatusCode(54322);
 	}
 
@@ -54,7 +54,7 @@ class ResponseTest extends \CIUnitTestCase
 	{
 		$response = new Response(new App());
 
-		$this->expectException('InvalidArgumentException');
+		$this->expectException(HTTPException::class);
 		$this->expectExceptionMessage('Unknown HTTP status code provided with no message');
 		$response->setStatusCode(115);
 	}
@@ -65,7 +65,7 @@ class ResponseTest extends \CIUnitTestCase
 	{
 		$response = new Response(new App());
 
-		$this->expectException('InvalidArgumentException');
+		$this->expectException(HTTPException::class);
 		$this->expectExceptionMessage('95 is not a valid HTTP return status code');
 		$response->setStatusCode(95);
 	}
@@ -76,7 +76,7 @@ class ResponseTest extends \CIUnitTestCase
 	{
 		$response = new Response(new App());
 
-		$this->expectException('InvalidArgumentException');
+		$this->expectException(HTTPException::class);
 		$this->expectExceptionMessage('695 is not a valid HTTP return status code');
 		$response->setStatusCode(695);
 	}

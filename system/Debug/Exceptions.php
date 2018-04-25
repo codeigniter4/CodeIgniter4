@@ -36,8 +36,6 @@
  * @filesource
  */
 
-require __DIR__.'/CustomExceptions.php';
-
 /**
  * Exceptions manager
  */

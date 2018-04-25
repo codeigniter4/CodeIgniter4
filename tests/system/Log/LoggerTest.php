@@ -1,5 +1,6 @@
 <?php namespace CodeIgniter\Log;
 
+use CodeIgniter\Log\Exceptions\LogException;
 use Config\MockLogger as LoggerConfig;
 use Psr\Log\LogLevel;
 use CodeIgniter\Log\Handlers\TestHandler;
@@ -29,7 +30,7 @@ class LoggerTest extends \CIUnitTestCase
 	{
 		$config = new LoggerConfig();
 
-		$this->expectException('InvalidArgumentException');
+		$this->expectException(LogException::class);
 		$this->expectExceptionMessage('foo is an invalid log level.');
 
 		$logger = new Logger($config);

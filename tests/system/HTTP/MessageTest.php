@@ -2,6 +2,8 @@
 
 namespace CodeIgniter\HTTP;
 
+use CodeIgniter\HTTP\Exceptions\HTTPException;
+
 class MessageTest extends \CIUnitTestCase
 {
 
@@ -147,7 +149,7 @@ class MessageTest extends \CIUnitTestCase
 
 	public function testSetProtocolThrowsExceptionWithInvalidProtocol()
 	{
-		$this->expectException('InvalidArgumentException');
+		$this->expectException(HTTPException::class);
 		$this->message->setProtocolVersion('1.2');
 	}
 

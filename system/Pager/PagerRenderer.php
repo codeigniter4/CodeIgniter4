@@ -215,7 +215,7 @@ class PagerRenderer
 				'active' => ($i == $this->current)
 			];
 		}
-dd($links);
+
 		return $links;
 	}
 

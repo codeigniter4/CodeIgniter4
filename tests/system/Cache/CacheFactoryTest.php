@@ -29,7 +29,7 @@ class CacheFactoryTest extends \CIUnitTestCase
 	}
 
 	/**
-	 * @expectedException        InvalidArgumentException
+	 * @expectedException        \CodeIgniter\HTTP\Exceptions\HTTPException
 	 * @expectedExceptionMessage Cache config must have an array of $validHandlers.
 	 */
 	public function testGetHandlerExceptionCacheInvalidHandlers()
@@ -40,7 +40,7 @@ class CacheFactoryTest extends \CIUnitTestCase
 	}
 
 	/**
-	 * @expectedException        InvalidArgumentException
+	 * @expectedException        \CodeIgniter\HTTP\Exceptions\HTTPException
 	 * @expectedExceptionMessage Cache config must have a handler and backupHandler set.
 	 */
 	public function testGetHandlerExceptionCacheNoBackup()
@@ -51,7 +51,7 @@ class CacheFactoryTest extends \CIUnitTestCase
 	}
 
 	/**
-	 * @expectedException        InvalidArgumentException
+	 * @expectedException        \CodeIgniter\HTTP\Exceptions\HTTPException
 	 * @expectedExceptionMessage Cache config must have a handler and backupHandler set.
 	 */
 	public function testGetHandlerExceptionCacheNoHandler()
@@ -62,7 +62,7 @@ class CacheFactoryTest extends \CIUnitTestCase
 	}
 
 	/**
-	 * @expectedException        InvalidArgumentException
+	 * @expectedException        \CodeIgniter\HTTP\Exceptions\HTTPException
 	 * @expectedExceptionMessage Cache config has an invalid handler or backup handler specified.
 	 */
 	public function testGetHandlerExceptionCacheHandlerNotFound()

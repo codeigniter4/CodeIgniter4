@@ -2,6 +2,8 @@
 
 namespace CodeIgniter\HTTP;
 
+use CodeIgniter\HTTP\Exceptions\HTTPException;
+
 class URITest extends \CIUnitTestCase
 {
 
@@ -194,7 +196,7 @@ class URITest extends \CIUnitTestCase
 		$url = 'http://example.com/path';
 		$uri = new URI($url);
 
-		$this->expectException('InvalidArgumentException');
+		$this->expectException(HTTPException::class);
 		$this->expectExceptionMessage('Invalid port given.');
 		$uri->setPort(70000);
 	}
@@ -206,7 +208,7 @@ class URITest extends \CIUnitTestCase
 		$url = 'http://example.com/path';
 		$uri = new URI($url);
 
-		$this->expectException('InvalidArgumentException');
+		$this->expectException(HTTPException::class);
 		$this->expectExceptionMessage('Invalid port given.');
 		$uri->setPort(-1);
 	}
@@ -218,7 +220,7 @@ class URITest extends \CIUnitTestCase
 		$url = 'http://example.com/path';
 		$uri = new URI($url);
 
-		$this->expectException('InvalidArgumentException');
+		$this->expectException(HTTPException::class);
 		$this->expectExceptionMessage('Invalid port given.');
 		$uri->setPort(0);
 	}
@@ -314,7 +316,7 @@ class URITest extends \CIUnitTestCase
 
 		$expected = 'http://example.com/path?key=value';
 
-		$this->expectException('InvalidArgumentException');
+		$this->expectException(HTTPException::class);
 		$uri->setQuery('?key=value#fragment');
 	}
 

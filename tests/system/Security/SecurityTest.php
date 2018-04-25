@@ -1,6 +1,7 @@
 <?php namespace CodeIgniter\Security;
 
 use CodeIgniter\HTTP\UserAgent;
+use CodeIgniter\Security\Exceptions\SecurityException;
 use Config\MockAppConfig;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\Request;
@@ -69,7 +70,7 @@ class SecurityTest extends \CIUnitTestCase {
 			'csrf_cookie_name' => '8b9218a55906f9dcc1dc263dce7f005b'
 		];
 
-		$this->expectException('LogicException');
+		$this->expectException(SecurityException::class);
 		$security->CSRFVerify($request);
 	}
 
