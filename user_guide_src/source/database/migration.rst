@@ -54,7 +54,7 @@ migrations go in the **application/Database/Migrations/** directory and have nam
 as *20121031100537_Add_blog.php*.
 ::
 
-	<?php
+	<?php namespace App\Database\Migrations;
 
 	class Migration_Add_blog extends \CodeIgniter\Database\Migration {
 
