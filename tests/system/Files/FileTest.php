@@ -28,7 +28,7 @@ class FileTest extends \CIUnitTestCase {
 	}
 
 	/**
-	 * @expectedException \CodeIgniter\Files\FileNotFoundException
+	 * @expectedException \CodeIgniter\Files\Exceptions\FileNotFoundException
 	 */
 	public function testThrowsExceptionIfNotAFile()
 	{

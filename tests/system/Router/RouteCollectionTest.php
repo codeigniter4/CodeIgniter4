@@ -1,6 +1,7 @@
 <?php namespace CodeIgniter\Router;
 
 use CodeIgniter\Autoloader\MockFileLocator;
+use CodeIgniter\Router\Exceptions\RouterException;
 
 /**
  * @backupGlobals enabled
@@ -655,7 +656,7 @@ class RouteCollectionTest extends \CIUnitTestCase
 
 		$routes->add('path/(:any)/to/(:num)', 'myController::goto/$1/$2');
 
-		$this->expectException('LogicException');
+		$this->expectException(RouterException::class);
 		$match = $routes->reverseRoute('myController::goto', 13, 'string');
 	}
 

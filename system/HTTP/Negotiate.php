@@ -36,6 +36,8 @@
  * @filesource
  */
 
+use CodeIgniter\HTTP\Exceptions\HTTPException;
+
 /**
  * Class Negotiate
  *
@@ -199,7 +201,7 @@ class Negotiate
 	{
 		if (empty($supported))
 		{
-			throw new \InvalidArgumentException('You must provide an array of supported values to all Negotiations.');
+			throw HTTPException::forEmptySupportedNegotiations();
 		}
 
 		if (empty($header))

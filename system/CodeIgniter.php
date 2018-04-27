@@ -44,6 +44,7 @@ use CodeIgniter\Events\Events;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\Router\RouteCollectionInterface;
+use CodeIgniter\Exceptions\PageNotFoundException;
 
 /**
  * This class is the core of the framework, and will analyse the
@@ -660,19 +661,19 @@ class CodeIgniter
 		// No controller specified - we don't know what to do now.
 		if (empty($this->controller))
 		{
-			throw new PageNotFoundException('Controller is empty.');
+			throw PageNotFoundException::forEmptyController();
 		}
 
 		// Try to autoload the class
 		if ( ! class_exists($this->controller, true) || $this->method[0] === '_')
 		{
-			throw new PageNotFoundException('Controller or its method is not found.');
+			throw PageNotFoundException::forControllerNotFound($this->controller, $this->method);
 		}
 		else if ( ! method_exists($this->controller, '_remap') &&
 				! is_callable([$this->controller, $this->method], false)
 		)
 		{
-			throw new PageNotFoundException('Controller method is not found.');
+			throw PageNotFoundException::forMethodNotFound($this->method);
 		}
 	}
 
@@ -755,7 +756,7 @@ class CodeIgniter
 		}
 
 		// Display 404 Errors
-		$this->response->setStatusCode(404);
+		$this->response->setStatusCode($e->getCode());
 
 		if (ENVIRONMENT !== 'testing')
 		{
@@ -773,7 +774,7 @@ class CodeIgniter
 			}
 		}
 
-		throw new PageNotFoundException(lang('HTTP.pageNotFound'));
+		throw PageNotFoundException::forPageNotFound();
 	}
 
 	//--------------------------------------------------------------------

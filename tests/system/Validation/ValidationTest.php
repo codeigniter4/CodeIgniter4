@@ -1,6 +1,7 @@
 <?php namespace CodeIgniter\Validation;
 
 
+use CodeIgniter\Validation\Exceptions\ValidationException;
 use Config\Services;
 
 class ValidationTest extends \CIUnitTestCase
@@ -241,7 +242,7 @@ class ValidationTest extends \CIUnitTestCase
 
 	public function testGetRuleGroupException()
 	{
-		$this->expectException('\InvalidArgumentException');
+		$this->expectException(ValidationException::class);
 		$this->validation->getRuleGroup('groupZ');
 	}
 
@@ -260,7 +261,7 @@ class ValidationTest extends \CIUnitTestCase
 
 	public function testSetRuleGroupException()
 	{
-		$this->expectException('\InvalidArgumentException');
+		$this->expectException(ValidationException::class);
 
 		$this->validation->setRuleGroup('groupZ');
 	}

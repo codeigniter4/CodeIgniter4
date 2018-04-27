@@ -36,6 +36,7 @@
  * @filesource
  */
 use CodeIgniter\Config\BaseConfig;
+use CodeIgniter\Session\Exceptions\SessionException;
 
 /**
  * Session handler using Redis for persistence
@@ -84,6 +85,7 @@ class RedisHandler extends BaseHandler implements \SessionHandlerInterface
 	 * Constructor
 	 *
 	 * @param BaseConfig $config
+	 *
 	 * @throws \Exception
 	 */
 	public function __construct(BaseConfig $config)
@@ -92,7 +94,7 @@ class RedisHandler extends BaseHandler implements \SessionHandlerInterface
 
 		if (empty($this->savePath))
 		{
-			throw new \Exception('Session: No Redis save path configured.');
+			throw SessionException::forEmptySavepath();
 		}
 		elseif (preg_match('#(?:tcp://)?([^:?]+)(?:\:(\d+))?(\?.+)?#', $this->savePath, $matches))
 		{
@@ -110,7 +112,7 @@ class RedisHandler extends BaseHandler implements \SessionHandlerInterface
 		}
 		else
 		{
-			throw new \Exception('Session: Invalid Redis save path format: ' . $this->savePath);
+			throw SessionException::forInvalidSavePathFormat($this->savePath);
 		}
 
 		if ($this->matchIP === true)

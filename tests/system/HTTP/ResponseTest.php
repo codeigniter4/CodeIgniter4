@@ -1,5 +1,6 @@
 <?php namespace CodeIgniter\HTTP;
 
+use CodeIgniter\HTTP\Exceptions\HTTPException;
 use Config\App;
 use DateTime;
 use DateTimeZone;
@@ -21,7 +22,7 @@ class ResponseTest extends \CIUnitTestCase
 	{
 		$response = new Response(new App());
 
-		$this->expectException('InvalidArgumentException');
+		$this->expectException(HTTPException::class);
 		$response->setStatusCode(54322);
 	}
 
@@ -54,7 +55,7 @@ class ResponseTest extends \CIUnitTestCase
 	{
 		$response = new Response(new App());
 
-		$this->expectException('InvalidArgumentException');
+		$this->expectException(HTTPException::class);
 		$this->expectExceptionMessage('Unknown HTTP status code provided with no message');
 		$response->setStatusCode(115);
 	}
@@ -65,8 +66,8 @@ class ResponseTest extends \CIUnitTestCase
 	{
 		$response = new Response(new App());
 
-		$this->expectException('InvalidArgumentException');
-		$this->expectExceptionMessage('95 is not a valid HTTP return status code');
+		$this->expectException(HTTPException::class);
+		$this->expectExceptionMessage(lang('HTTP.invalidStatusCode', [95]));
 		$response->setStatusCode(95);
 	}
 
@@ -76,8 +77,8 @@ class ResponseTest extends \CIUnitTestCase
 	{
 		$response = new Response(new App());
 
-		$this->expectException('InvalidArgumentException');
-		$this->expectExceptionMessage('695 is not a valid HTTP return status code');
+		$this->expectException(HTTPException::class);
+		$this->expectExceptionMessage(lang('HTTP.invalidStatusCode', [695]));
 		$response->setStatusCode(695);
 	}
 

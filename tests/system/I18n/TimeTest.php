@@ -438,7 +438,7 @@ class TimeTest extends \CIUnitTestCase
 	}
 
 	/**
-	 * @expectedException \InvalidArgumentException
+	 * @expectedException \CodeIgniter\I18n\Exceptions\I18nException
 	 */
 	public function testSetMonthTooSmall()
 	{
@@ -447,7 +447,7 @@ class TimeTest extends \CIUnitTestCase
 	}
 
 	/**
-	 * @expectedException \InvalidArgumentException
+	 * @expectedException \CodeIgniter\I18n\Exceptions\I18nException
 	 */
 	public function testSetMonthTooBig()
 	{
@@ -456,7 +456,7 @@ class TimeTest extends \CIUnitTestCase
 	}
 
 	/**
-	 * @expectedException \InvalidArgumentException
+	 * @expectedException \CodeIgniter\I18n\Exceptions\I18nException
 	 */
 	public function testSetDayTooSmall()
 	{
@@ -465,7 +465,7 @@ class TimeTest extends \CIUnitTestCase
 	}
 
 	/**
-	 * @expectedException \InvalidArgumentException
+	 * @expectedException \CodeIgniter\I18n\Exceptions\I18nException
 	 */
 	public function testSetDayTooBig()
 	{
@@ -474,7 +474,7 @@ class TimeTest extends \CIUnitTestCase
 	}
 
 	/**
-	 * @expectedException \InvalidArgumentException
+	 * @expectedException \CodeIgniter\I18n\Exceptions\I18nException
 	 */
 	public function testSetHourTooSmall()
 	{
@@ -483,7 +483,7 @@ class TimeTest extends \CIUnitTestCase
 	}
 
 	/**
-	 * @expectedException \InvalidArgumentException
+	 * @expectedException \CodeIgniter\I18n\Exceptions\I18nException
 	 */
 	public function testSetHourTooBig()
 	{
@@ -492,7 +492,7 @@ class TimeTest extends \CIUnitTestCase
 	}
 
 	/**
-	 * @expectedException \InvalidArgumentException
+	 * @expectedException \CodeIgniter\I18n\Exceptions\I18nException
 	 */
 	public function testSetMinuteTooSmall()
 	{
@@ -501,7 +501,7 @@ class TimeTest extends \CIUnitTestCase
 	}
 
 	/**
-	 * @expectedException \InvalidArgumentException
+	 * @expectedException \CodeIgniter\I18n\Exceptions\I18nException
 	 */
 	public function testSetMinuteTooBig()
 	{
@@ -510,7 +510,7 @@ class TimeTest extends \CIUnitTestCase
 	}
 
 	/**
-	 * @expectedException \InvalidArgumentException
+	 * @expectedException \CodeIgniter\I18n\Exceptions\I18nException
 	 */
 	public function testSetSecondTooSmall()
 	{
@@ -519,7 +519,7 @@ class TimeTest extends \CIUnitTestCase
 	}
 
 	/**
-	 * @expectedException \InvalidArgumentException
+	 * @expectedException \CodeIgniter\I18n\Exceptions\I18nException
 	 */
 	public function testSetSecondTooBig()
 	{

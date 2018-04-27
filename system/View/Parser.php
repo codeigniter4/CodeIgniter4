@@ -36,6 +36,7 @@
  * @filesource
  */
 use CodeIgniter\Log\Logger;
+use CodeIgniter\View\Exceptions\ViewException;
 
 /**
  * Class Parser
@@ -152,7 +153,7 @@ class Parser extends View
 		// locateFile will return an empty string if the file cannot be found.
 		if (empty($file))
 		{
-			throw new \InvalidArgumentException('View file not found: ' . $file);
+			throw ViewException::forInvalidFile($file);
 		}
 
 		$template = file_get_contents($file);
@@ -527,8 +528,7 @@ class Parser extends View
 
 		if ($result === false)
 		{
-			$output = 'You have a syntax error in your Parser tags: ';
-			throw new \RuntimeException($output . str_replace(['?>', '<?php '], '', $template));
+			throw ViewException::forTagSyntaxError(str_replace(['?>', '<?php '], '', $template));
 		}
 
 		return ob_get_clean();

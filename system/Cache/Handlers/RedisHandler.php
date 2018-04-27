@@ -117,7 +117,7 @@ class RedisHandler implements CacheInterface
 			{
 //				log_message('error', 'Cache: Redis authentication failed.');
 			}
-		} catch (RedisException $e)
+		} catch (\RedisException $e)
 		{
 			throw new CriticalError('Cache: Redis connection refused (' . $e->getMessage() . ')');
 		}

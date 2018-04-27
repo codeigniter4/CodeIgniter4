@@ -35,6 +35,7 @@
  * @since	Version 3.0.0
  * @filesource
  */
+use CodeIgniter\HTTP\Exceptions\HTTPException;
 use Config\App;
 
 /**
@@ -113,7 +114,7 @@ class CURLRequest extends Request
 	{
 		if ( ! function_exists('curl_version'))
 		{
-			throw new \RuntimeException('CURL must be enabled to use the CURLRequest class.');
+			throw HTTPException::forMissingCurl();
 		}
 
 		parent::__construct($config);
@@ -570,9 +571,9 @@ class CURLRequest extends Request
 				$cert = $cert[0];
 			}
 
-			if ( ! file_exists($cert))
+			if (! file_exists($cert))
 			{
-				throw new \InvalidArgumentException('SSL certificate not found at: ' . $cert);
+				throw HTTPException::forSSLCertNotFound($cert);
 			}
 
 			$curl_options[CURLOPT_SSLCERT] = $cert;
@@ -585,11 +586,11 @@ class CURLRequest extends Request
 			{
 				$file = realpath($config['ssl_key']);
 
-				if ( ! $file)
+				if (! $file)
 				{
-					throw new \InvalidArgumentException('Cannot set SSL Key. ' . $config['ssl_key'] .
-					' is not a valid file.');
+					throw HTTPException::forInvalidSSLKey($config['ssl_key']);
 				}
+
 				$curl_options[CURLOPT_CAINFO] = $file;
 				$curl_options[CURLOPT_SSL_VERIFYPEER] = 1;
 			}
@@ -737,7 +738,7 @@ class CURLRequest extends Request
 
 		if ($output === false)
 		{
-			throw new \RuntimeException(curl_errno($ch) . ': ' . curl_error($ch));
+			throw HTTPException::forCurlError(curl_errno($ch), curl_error($ch));
 		}
 
 		curl_close($ch);

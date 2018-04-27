@@ -55,7 +55,7 @@ class GDHandler extends BaseHandler
 
 		if ( ! extension_loaded('gd'))
 		{
-			throw new ImageException('GD Extension is not loaded.');
+			throw ImageException::forMissingExtension('GD');
 		}
 	}
 
@@ -326,38 +326,38 @@ class GDHandler extends BaseHandler
 			case IMAGETYPE_GIF:
 				if ( ! function_exists('imagegif'))
 				{
-					throw new ImageException(lang('images.unsupportedImagecreate') . ' ' . lang('images.gifNotSupported'));
+					throw ImageException::forInvalidImageCreate(lang('images.gifNotSupported'));
 				}
 
 				if ( ! @imagegif($this->resource, $target))
 				{
-					throw new ImageException(lang('images.saveFailed'));
+					throw ImageException::forSaveFailed();
 				}
 				break;
 			case IMAGETYPE_JPEG:
 				if ( ! function_exists('imagejpeg'))
 				{
-					throw new ImageException(lang('images.unsupportedImagecreate') . ' ' . lang('images.jpgNotSupported'));
+					throw ImageException::forInvalidImageCreate(lang('images.jpgNotSupported'));
 				}
 
 				if ( ! @imagejpeg($this->resource, $target, $quality))
 				{
-					throw new ImageException(lang('images.saveFailed'));
+					throw ImageException::forSaveFailed();
 				}
 				break;
 			case IMAGETYPE_PNG:
 				if ( ! function_exists('imagepng'))
 				{
-					throw new ImageException(lang('images.unsupportedImagecreate') . ' ' . lang('images.pngNotSupported'));
+					throw ImageException::forInvalidImageCreate(lang('images.pngNotSupported'));
 				}
 
 				if ( ! @imagepng($this->resource, $target))
 				{
-					throw new ImageException(lang('images.saveFailed'));
+					throw ImageException::forSaveFailed();
 				}
 				break;
 			default:
-				throw new ImageException(lang('images.unsupportedImagecreate'));
+				throw ImageException::forInvalidImageCreate();
 				break;
 		}
 
@@ -403,26 +403,26 @@ class GDHandler extends BaseHandler
 			case IMAGETYPE_GIF:
 				if ( ! function_exists('imagecreatefromgif'))
 				{
-					throw new ImageException(lang('images.gifNotSupported'));
+					throw ImageException::forInvalidImageCreate(lang('images.gifNotSupported'));
 				}
 
 				return imagecreatefromgif($path);
 			case IMAGETYPE_JPEG:
 				if ( ! function_exists('imagecreatefromjpeg'))
 				{
-					throw new ImageException(lang('images.jpgNotSupported'));
+					throw ImageException::forInvalidImageCreate(lang('images.jpgNotSupported'));
 				}
 
 				return imagecreatefromjpeg($path);
 			case IMAGETYPE_PNG:
 				if ( ! function_exists('imagecreatefrompng'))
 				{
-					throw new ImageException(lang('images.pngNotSupported'));
+					throw ImageException::forInvalidImageCreate(lang('images.pngNotSupported'));
 				}
 
 				return imagecreatefrompng($path);
 			default:
-				throw new ImageException(lang('images.unsupportedImagecreate'));
+				throw ImageException::forInvalidImageCreate();
 		}
 	}
 

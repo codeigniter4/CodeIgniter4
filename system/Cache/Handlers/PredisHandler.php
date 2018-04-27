@@ -95,7 +95,7 @@ class PredisHandler implements CacheInterface
 
 			// Check if the connection is valid by trying to get the time.
 			$this->redis->time();
-		} catch (Exception $e)
+		} catch (\Exception $e)
 		{
 			// thrown if can't connect to redis server.
 			throw new CriticalError('Cache: Predis connection refused (' . $e->getMessage() . ')');

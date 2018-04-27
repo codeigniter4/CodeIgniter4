@@ -1,5 +1,7 @@
 <?php namespace CodeIgniter\Format;
 
+use CodeIgniter\Format\Exceptions\FormatException;
+
 /**
  * CodeIgniter
  *
@@ -53,7 +55,7 @@ class XMLFormatter implements FormatterInterface
 		// but best to check, and then provide a fallback.
 		if ( ! extension_loaded('simplexml'))
 		{
-			throw new \RuntimeException('The SimpleXML extension is required to format XML.');
+			throw FormatException::forMissingExtension();
 		}
 
 		$output = new \SimpleXMLElement("<?xml version=\"1.0\"?><response></response>");

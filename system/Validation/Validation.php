@@ -36,6 +36,7 @@
  * @filesource
  */
 use CodeIgniter\HTTP\RequestInterface;
+use CodeIgniter\Validation\Exceptions\ValidationException;
 use CodeIgniter\View\RendererInterface;
 
 class Validation implements ValidationInterface
@@ -264,7 +265,7 @@ class Validation implements ValidationInterface
 				// should throw an exception so the developer can find it.
 				if ( ! $found)
 				{
-					throw new \InvalidArgumentException(lang('Validation.ruleNotFound',['rule'=>$rule]));
+					throw ValidationException::forRuleNotFound($rule);
 				}
 			}
 
@@ -427,12 +428,12 @@ class Validation implements ValidationInterface
 	{
 		if ( ! isset($this->config->$group))
 		{
-			throw new \InvalidArgumentException(sprintf(lang('Validation.groupNotFound'), $group));
+			throw ValidationException::forGroupNotFound($group);
 		}
 
 		if ( ! is_array($this->config->$group))
 		{
-			throw new \InvalidArgumentException(sprintf(lang('Validation.groupNotArray'), $group));
+			throw ValidationException::forGroupNotArray($group);
 		}
 
 		return $this->config->$group;
@@ -471,7 +472,7 @@ class Validation implements ValidationInterface
 	{
 		if ( ! array_key_exists($template, $this->config->templates))
 		{
-			throw new \InvalidArgumentException($template . ' is not a valid Validation template.');
+			throw ValidationException::forInvalidTemplate($template);
 		}
 
 		return $this->view->setVar('errors', $this->getErrors())
@@ -497,7 +498,7 @@ class Validation implements ValidationInterface
 
 		if ( ! array_key_exists($template, $this->config->templates))
 		{
-			throw new \InvalidArgumentException($template . ' is not a valid Validation template.');
+			throw ValidationException::forInvalidTemplate($template);
 		}
 
 		return $this->view->setVar('error', $this->getError($field))
@@ -514,7 +515,7 @@ class Validation implements ValidationInterface
 	{
 		if (empty($this->ruleSetFiles))
 		{
-			throw new \RuntimeException(lang('Validation.noRuleSets'));
+			throw ValidationException::forNoRuleSets();
 		}
 
 		foreach ($this->ruleSetFiles as $file)
@@ -544,12 +545,12 @@ class Validation implements ValidationInterface
 
 		if ( ! isset($this->config->$group))
 		{
-			throw new \InvalidArgumentException(sprintf(lang('Validation.groupNotFound'), $group));
+			throw ValidationException::forGroupNotFound($group);
 		}
 
 		if ( ! is_array($this->config->$group))
 		{
-			throw new \InvalidArgumentException(sprintf(lang('Validation.groupNotArray'), $group));
+			throw ValidationException::forGroupNotArray($group);
 		}
 
 		$this->rules = $this->config->$group;

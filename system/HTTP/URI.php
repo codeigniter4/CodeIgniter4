@@ -1,5 +1,7 @@
 <?php namespace CodeIgniter\HTTP;
 
+use CodeIgniter\HTTP\Exceptions\HTTPException;
+
 /**
  * CodeIgniter
  *
@@ -178,7 +180,7 @@ class URI
 
 			if ($parts === false)
 			{
-				throw new \InvalidArgumentException("Unable to parse URI: {$uri}");
+				throw HTTPException::forUnableToParseURI($uri);
 			}
 
 			$this->applyParts($parts);
@@ -463,7 +465,7 @@ class URI
 
 		if ($number > count($this->segments))
 		{
-			throw new \InvalidArgumentException('Request URI segment is our of range.');
+			throw HTTPException::forURISegmentOutOfRange($number);
 		}
 
 		return $this->segments[$number] ?? '';
@@ -639,7 +641,7 @@ class URI
 
 		if ($port <= 0 || $port > 65535)
 		{
-			throw new \InvalidArgumentException('Invalid port given.');
+			throw HTTPException::forInvalidPort($port);
 		}
 
 		$this->port = $port;
@@ -679,7 +681,7 @@ class URI
 	{
 		if (strpos($query, '#') !== false)
 		{
-			throw new \InvalidArgumentException('Query strings may not include URI fragments.');
+			throw HTTPException::forMalformedQueryString();
 		}
 
 		// Can't have leading ?
@@ -925,7 +927,7 @@ class URI
 
 				if (1 > $port || 0xffff < $port)
 				{
-					throw new \InvalidArgumentException('Ports must be between 1 and 65535');
+					throw HTTPException::forInvalidPort($port);
 				}
 
 				$this->port = $port;

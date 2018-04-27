@@ -36,6 +36,7 @@
  * @filesource
  */
 use CodeIgniter\Exceptions\FrameworkException;
+use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\HTTP\Files\FileCollection;
 use CodeIgniter\HTTP\Files\UploadedFile;
 use CodeIgniter\Services;
@@ -657,7 +658,7 @@ class IncomingRequest extends Request
 				break;
 		}
 
-		throw new \InvalidArgumentException($type . ' is not a valid negotiation type.');
+		throw HTTPException::forInvalidNegotiationType($type);
 	}
 
 	//--------------------------------------------------------------------

@@ -1,5 +1,7 @@
 <?php namespace CodeIgniter\Log;
 
+use CodeIgniter\Exceptions\FrameworkException;
+use CodeIgniter\Log\Exceptions\LogException;
 use Config\MockLogger as LoggerConfig;
 use Psr\Log\LogLevel;
 use CodeIgniter\Log\Handlers\TestHandler;
@@ -17,8 +19,8 @@ class LoggerTest extends \CIUnitTestCase
 		$config = new LoggerConfig();
 		$config->handlers = null;
 
-		$this->expectException('RuntimeException');
-		$this->expectExceptionMessage('LoggerConfig must provide at least one Handler.');
+		$this->expectException(FrameworkException::class);
+		$this->expectExceptionMessage(lang('Core.noHandlers', ['LoggerConfig']));
 
 		$logger = new Logger($config);
 	}
@@ -29,8 +31,8 @@ class LoggerTest extends \CIUnitTestCase
 	{
 		$config = new LoggerConfig();
 
-		$this->expectException('InvalidArgumentException');
-		$this->expectExceptionMessage('foo is an invalid log level.');
+		$this->expectException(LogException::class);
+		$this->expectExceptionMessage(lang('Log.invalidLogLevel', ['foo']));
 
 		$logger = new Logger($config);
 

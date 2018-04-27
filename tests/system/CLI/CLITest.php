@@ -58,7 +58,7 @@ class CLITest extends \CIUnitTestCase
 
 	/**
 	 * @expectedException        RuntimeException
-	 * @expectedExceptionMessage Invalid CLI foreground color: Foreground
+	 * @expectedExceptionMessage Invalid foreground color: Foreground
 	 */
 	public function testColorExceptionForeground()
 	{
@@ -67,7 +67,7 @@ class CLITest extends \CIUnitTestCase
 
 	/**
 	 * @expectedException        RuntimeException
-	 * @expectedExceptionMessage Invalid CLI background color: Background
+	 * @expectedExceptionMessage Invalid background color: Background
 	 */
 	public function testColorExceptionBackground()
 	{

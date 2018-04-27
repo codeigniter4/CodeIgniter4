@@ -228,7 +228,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 
 		if ($angle === '' || ! in_array($angle, $degs))
 		{
-			throw new ImageException(lang('images.rotationAngleRequired'));
+			throw ImageException::forMissingAngle();
 		}
 
 		// Reassign the width and height
@@ -438,7 +438,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 				return null;
 			}
 
-			throw new ImageException(lang('images.exifNotSupported'));
+			throw ImageException::forEXIFUnsupported();
 		}
 
 		$exif = exif_read_data($this->image->getPathname());

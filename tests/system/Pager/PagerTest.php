@@ -1,5 +1,6 @@
 <?php namespace CodeIgniter\Pager;
 
+use CodeIgniter\Pager\Exceptions\PagerException;
 use Config\Pager;
 use Config\Services;
 
@@ -73,7 +74,7 @@ class PagerTest extends \CIUnitTestCase
 
 	public function testGetDetailsThrowExceptionIfGroupNotFound()
 	{
-	    $this->expectException('InvalidArgumentException');
+	    $this->expectException(PagerException::class);
 
 		$this->pager->getDetails('foo');
 	}

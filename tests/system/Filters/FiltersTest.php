@@ -1,6 +1,7 @@
 <?php namespace CodeIgniter\Filters;
 
 use CodeIgniter\Config\Services;
+use CodeIgniter\Filters\Exceptions\FilterException;
 
 require __DIR__.'/fixtures/InvalidClass.php';
 require __DIR__.'/fixtures/GoogleMe.php';
@@ -252,7 +253,7 @@ class FiltersTest extends \CIUnitTestCase
 
 		$filters = new Filters((object)$config, $this->request, $this->response);
 
-		$this->expectException('InvalidArgumentException');
+		$this->expectException(FilterException::class);
 		$uri = 'admin/foo/bar';
 
 		$filters->run($uri);
@@ -274,7 +275,7 @@ class FiltersTest extends \CIUnitTestCase
 
 		$filters = new Filters((object)$config, $this->request, $this->response);
 
-		$this->expectException('RuntimeException');
+		$this->expectException(FilterException::class);
 		$uri = 'admin/foo/bar';
 
 		$filters->run($uri);
