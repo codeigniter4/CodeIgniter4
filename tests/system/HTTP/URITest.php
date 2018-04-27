@@ -196,8 +196,11 @@ class URITest extends \CIUnitTestCase
 		$url = 'http://example.com/path';
 		$uri = new URI($url);
 
+		$errorString = lang('HTTP.invalidPort', [70000]);
+		$this->assertNotEmpty($errorString);
+
 		$this->expectException(HTTPException::class);
-		$this->expectExceptionMessage('Invalid port given.');
+		$this->expectExceptionMessage(lang('HTTP.invalidPort', ['70000']));
 		$uri->setPort(70000);
 	}
 
@@ -209,7 +212,7 @@ class URITest extends \CIUnitTestCase
 		$uri = new URI($url);
 
 		$this->expectException(HTTPException::class);
-		$this->expectExceptionMessage('Invalid port given.');
+		$this->expectExceptionMessage(lang('HTTP.invalidPort', [-1]));
 		$uri->setPort(-1);
 	}
 
@@ -221,7 +224,7 @@ class URITest extends \CIUnitTestCase
 		$uri = new URI($url);
 
 		$this->expectException(HTTPException::class);
-		$this->expectExceptionMessage('Invalid port given.');
+		$this->expectExceptionMessage(lang('HTTP.invalidPort', [0]));
 		$uri->setPort(0);
 	}
 

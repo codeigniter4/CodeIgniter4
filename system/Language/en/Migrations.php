@@ -14,7 +14,7 @@
 return [
 	// Migration Runner
 	'missingTable'    => 'Migrations table must be set.',
-	'invalidType'     => 'An invalid migration numbering type was specified: {0, string}',
+	'invalidType'     => 'An invalid migration numbering type was specified: {0}',
 	'disabled'        => 'Migrations have been loaded but are disabled or setup incorrectly.',
 	'notFound'        => 'Migration file not found: ',
 	'empty'           => 'No Migration files found',

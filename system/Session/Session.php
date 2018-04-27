@@ -465,7 +465,7 @@ class Session implements SessionInterface
 	 */
 	public function get(string $key = null)
 	{
-		if ($value = dot_array_search($key, $_SESSION))
+		if (! empty($key) && $value = dot_array_search($key, $_SESSION))
 		{
 			return $value;
 		}
@@ -474,9 +474,14 @@ class Session implements SessionInterface
 			return [];
 		}
 
+		if (! empty($key))
+		{
+			return null;
+		}
+
 		$userdata = [];
 		$_exclude = array_merge(
-				['__ci_vars'], $this->getFlashKeys(), $this->getTempKeys()
+			['__ci_vars'], $this->getFlashKeys(), $this->getTempKeys()
 		);
 
 		$keys = array_keys($_SESSION);

@@ -28,6 +28,6 @@ return [
 	'copyFailed'             => 'The image copy routine failed.',
 	'missingFont'            => 'Unable to find a font to use.',
 	'saveFailed'             => 'Unable to save the image. Please make sure the image and file directory are writable.',
-	'invalidDirection'       => 'Flip direction can be only `vertical` or `horizontal`. Given: {0, string}',
+	'invalidDirection'       => 'Flip direction can be only `vertical` or `horizontal`. Given: {0}',
 	'exifNotSupported'       => 'Reading EXIF data is not supported by this PHP installation.',
 ];

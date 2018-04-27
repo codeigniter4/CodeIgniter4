@@ -1,5 +1,6 @@
 <?php namespace CodeIgniter\HTTP;
 
+use CodeIgniter\HTTP\Exceptions\HTTPException;
 use Config\App;
 use DateTime;
 use DateTimeZone;
@@ -66,7 +67,7 @@ class ResponseTest extends \CIUnitTestCase
 		$response = new Response(new App());
 
 		$this->expectException(HTTPException::class);
-		$this->expectExceptionMessage('95 is not a valid HTTP return status code');
+		$this->expectExceptionMessage(lang('HTTP.invalidStatusCode', [95]));
 		$response->setStatusCode(95);
 	}
 
@@ -77,7 +78,7 @@ class ResponseTest extends \CIUnitTestCase
 		$response = new Response(new App());
 
 		$this->expectException(HTTPException::class);
-		$this->expectExceptionMessage('695 is not a valid HTTP return status code');
+		$this->expectExceptionMessage(lang('HTTP.invalidStatusCode', [695]));
 		$response->setStatusCode(695);
 	}
 

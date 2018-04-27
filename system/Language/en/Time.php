@@ -12,11 +12,11 @@
  * @filesource
  */
 return [
-	'invalidMonth'   => 'Months must be between 0 and 12. Given: {0, string}',
-	'invalidDay'     => 'Days must be between 0 and 31. Given: {0, string}',
-	'invalidHours'   => 'Hours must be between 0 and 23. Given: {0, string}',
-	'invalidMinutes' => 'Minutes must be between 0 and 59. Given: {0, string}',
-	'invalidSeconds' => 'Seconds must be between 0 and 59. Given: {0, string}',
+	'invalidMonth'   => 'Months must be between 0 and 12. Given: {0}',
+	'invalidDay'     => 'Days must be between 0 and 31. Given: {0}',
+	'invalidHours'   => 'Hours must be between 0 and 23. Given: {0}',
+	'invalidMinutes' => 'Minutes must be between 0 and 59. Given: {0}',
+	'invalidSeconds' => 'Seconds must be between 0 and 59. Given: {0}',
 	'years'          => '{0, plural, =1{# year} other{# years}}',
 	'months'         => '{0, plural, =1{# month} other{# months}}',
 	'weeks'          => '{0, plural, =1{# week} other{# weeks}}',

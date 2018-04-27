@@ -123,7 +123,6 @@ class Language
 		{
 			$output = $this->formatMessage($output, $args);
 		}
-
 		return $output;
 	}
 

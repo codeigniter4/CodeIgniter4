@@ -97,6 +97,7 @@ class Filters
 	 * @param string $position
 	 *
 	 * @return \CodeIgniter\HTTP\RequestInterface|\CodeIgniter\HTTP\ResponseInterface|mixed
+	 * @throws \CodeIgniter\Filters\Exceptions\FilterException
 	 */
 	public function run(string $uri, $position = 'before')
 	{
@@ -118,7 +119,7 @@ class Filters
 
 			if ( ! $class instanceof FilterInterface)
 			{
-				throw FilterException::forIncorrectInterface($class);
+				throw FilterException::forIncorrectInterface(get_class($class));
 			}
 
 			if ($position == 'before')

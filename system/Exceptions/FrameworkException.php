@@ -32,6 +32,6 @@ class FrameworkException extends \RuntimeException implements ExceptionInterface
 
 	public static function forNoHandlers(string $class)
 	{
-		return new self(lang('Core.noHandlers'));
+		return new self(lang('Core.noHandlers', [$class]));
 	}
 }

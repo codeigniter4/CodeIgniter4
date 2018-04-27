@@ -23,10 +23,10 @@
 return [
 	// Core Messages
 	'noRuleSets'            => 'No rulesets specified in Validation configuration.',
-	'ruleNotFound'          => '{0, string} is not a valid rule.',
-	'groupNotFound'         => '{0, string} is not a validation rules group.',
-	'groupNotArray'         => '{0, string} rule group must be an array.',
-	'invalidTemplate'       => '{0, string} is not a valid Validation template.',
+	'ruleNotFound'          => '{0} is not a valid rule.',
+	'groupNotFound'         => '{0} is not a validation rules group.',
+	'groupNotArray'         => '{0} rule group must be an array.',
+	'invalidTemplate'       => '{0} is not a valid Validation template.',
 
 	// Rule Messages
 	'alpha'                 => 'The {field} field may only contain alphabetical characters.',

@@ -16,5 +16,5 @@ return [
 	'helpDescription' => 'Description:',
 	'helpOptions'     => 'Options:',
 	'helpArguments'   => 'Arguments:',
-	'invalidColor'    => 'Invalid {0, string} color: {1, string}.',
+	'invalidColor'    => 'Invalid {0} color: {1}.',
 ];

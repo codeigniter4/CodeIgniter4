@@ -12,6 +12,6 @@
  * @filesource
  */
 return [
-	'invalidJSON'      => 'Failed to parse json string, error: "{0, string}".',
+	'invalidJSON'      => 'Failed to parse json string, error: "{0}".',
 	'missingExtension' => 'The SimpleXML extension is required to format XML.',
 ];
