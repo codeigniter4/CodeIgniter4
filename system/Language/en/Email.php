@@ -24,7 +24,7 @@ return [
 	'sent'                 => 'Your message has been successfully sent using the following protocol: {0, string}',
 	'noSocket'             => 'Unable to open a socket to Sendmail. Please check settings.',
 	'noHostname'           => 'You did not specify a SMTP hostname.',
-	'SMYPError'            => 'The following SMTP error was encountered: {0}',
+	'SMTPError'            => 'The following SMTP error was encountered: {0}',
 	'noSMTPAuth'           => 'Error: You must assign a SMTP username and password.',
 	'failedSMTPLogin'      => 'Failed to send AUTH LOGIN command. Error: {0}',
 	'SMTPAuthUsername'     => 'Failed to authenticate username. Error: {0}',
