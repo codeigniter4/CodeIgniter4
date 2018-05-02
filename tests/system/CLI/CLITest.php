@@ -79,6 +79,70 @@ class CLITest extends \CIUnitTestCase
 		$this->assertEquals("\033[1;37m\033[42m\033[4mtest\033[0m", CLI::color('test', 'white', 'green', 'underline'));
 	}
 
+	public function testWrite()
+	{
+		CLI::write('test');
+		$expected = <<<EOT
+test
+
+EOT;
+		$this->assertEquals($expected, CLITestStreamFilter::$buffer);
+	}
+
+	public function testWriteForeground()
+	{
+		CLI::write('test', 'red');
+		$expected = <<<EOT
+\033[0;31mtest\033[0m
+
+EOT;
+		$this->assertEquals($expected, CLITestStreamFilter::$buffer);
+	}
+
+	public function testWriteBackground()
+	{
+		CLI::write('test', 'red', 'green');
+		$expected = <<<EOT
+\033[0;31m\033[42mtest\033[0m
+
+EOT;
+		$this->assertEquals($expected, CLITestStreamFilter::$buffer);
+	}
+
+	public function testError()
+	{
+		$this->stream_filter = stream_filter_append(STDERR, 'CLITestStreamFilter');
+		CLI::error('test');
+		// red expected cuz stderr
+		$expected = <<<EOT
+\033[1;31mtest\033[0m
+
+EOT;
+		$this->assertEquals($expected, CLITestStreamFilter::$buffer);
+	}
+
+	public function testErrorForeground()
+	{
+		$this->stream_filter = stream_filter_append(STDERR, 'CLITestStreamFilter');
+		CLI::error('test', 'purple');
+		$expected = <<<EOT
+\033[0;35mtest\033[0m
+
+EOT;
+		$this->assertEquals($expected, CLITestStreamFilter::$buffer);
+	}
+
+	public function testErrorBackground()
+	{
+		$this->stream_filter = stream_filter_append(STDERR, 'CLITestStreamFilter');
+		CLI::error('test', 'purple', 'green');
+		$expected = <<<EOT
+\033[0;35m\033[42mtest\033[0m
+
+EOT;
+		$this->assertEquals($expected, CLITestStreamFilter::$buffer);
+	}
+
 	public function testShowProgress()
 	{
 		CLI::write('first.');
