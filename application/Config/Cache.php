@@ -86,6 +86,20 @@ class Cache extends BaseConfig
 
 	/*
 	| -------------------------------------------------------------------------
+	| Memcached test settings
+	| -------------------------------------------------------------------------
+	| This Memcahed server configuration is used when running PHPUnit tests
+	|
+	*/
+	public $testMemcached = [
+		'host'	 => '127.0.0.1',
+		'port'	 => 11211,
+		'weight' => 1,
+		'raw'	 => false,
+	];
+
+	/*
+	| -------------------------------------------------------------------------
 	| Redis settings
 	| -------------------------------------------------------------------------
 	| Your Redis server can be specified below, if you are using
@@ -93,6 +107,20 @@ class Cache extends BaseConfig
 	|
 	*/
 	public $redis = [
+		'host'     => '127.0.0.1',
+		'password' => null,
+		'port'     => 6379,
+		'timeout'  => 0,
+	];
+
+	/*
+	| -------------------------------------------------------------------------
+	| Redis test settings
+	| -------------------------------------------------------------------------
+	| This Redis server configuration is used when running PHPUnit tests
+	|
+	*/
+	public $testRedis = [
 		'host'     => '127.0.0.1',
 		'password' => null,
 		'port'     => 6379,

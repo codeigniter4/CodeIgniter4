@@ -20,7 +20,7 @@ class MemcachedHandlerTest extends \CIUnitTestCase
 	{
 		$this->config = new \Config\Cache();
 
-		$this->memcachedHandler = new MemcachedHandler($this->config->memcached);
+		$this->memcachedHandler = new MemcachedHandler($this->config->testMemcached);
 		if (!$this->memcachedHandler->isSupported()) {
 			$this->markTestSkipped('Not support memcached and memcache');
 		}
@@ -71,8 +71,8 @@ class MemcachedHandlerTest extends \CIUnitTestCase
 		$this->assertFalse($this->memcachedHandler->increment(self::$key1, 10));
 
 		$config = new \Config\Cache();
-		$config->memcached['raw'] = true;
-		$memcachedHandler = new MemcachedHandler($config->memcached);
+		$config->testMemcached['raw'] = true;
+		$memcachedHandler = new MemcachedHandler($config->testMemcached);
 		$memcachedHandler->initialize();
 
 		$memcachedHandler->save(self::$key1, 1);
@@ -90,8 +90,8 @@ class MemcachedHandlerTest extends \CIUnitTestCase
 		$this->assertFalse($this->memcachedHandler->decrement(self::$key1, 1));
 
 		$config = new \Config\Cache();
-		$config->memcached['raw'] = true;
-		$memcachedHandler = new MemcachedHandler($config->memcached);
+		$config->testMemcached['raw'] = true;
+		$memcachedHandler = new MemcachedHandler($config->testMemcached);
 		$memcachedHandler->initialize();
 
 		$memcachedHandler->save(self::$key1, 10);
