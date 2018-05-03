@@ -5,65 +5,65 @@
  */
 class InsertTest extends \CIDatabaseTestCase
 {
-	protected $refresh = true;
+    protected $refresh = true;
 
-	protected $seed = 'CITestSeeder';
+    protected $seed = 'CITestSeeder';
 
-	public function testInsert()
-	{
-		$job_data = ['name' => 'Grocery Sales', 'description' => 'Discount!'];
+    public function testInsert()
+    {
+        $job_data = ['name' => 'Grocery Sales', 'description' => 'Discount!'];
 
-		$this->db->table('job')->insert($job_data);
+        $this->db->table('job')->insert($job_data);
 
-		$this->seeInDatabase('job', ['name' => 'Grocery Sales']);
-	}
+        $this->seeInDatabase('job', ['name' => 'Grocery Sales']);
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testInsertBatch()
-	{
-		$job_data = [
-			['name' => 'Comedian', 'description' => 'Theres something in your teeth'],
-			['name' => 'Cab Driver', 'description' => 'Iam yellow'],
-		];
+    public function testInsertBatch()
+    {
+        $job_data = [
+            ['name' => 'Comedian', 'description' => 'Theres something in your teeth'],
+            ['name' => 'Cab Driver', 'description' => 'Iam yellow'],
+        ];
 
-		$this->db->table('job')->insertBatch($job_data);
+        $this->db->table('job')->insertBatch($job_data);
 
-		$this->seeInDatabase('job', ['name' => 'Comedian']);
-		$this->seeInDatabase('job', ['name' => 'Cab Driver']);
-	}
+        $this->seeInDatabase('job', ['name' => 'Comedian']);
+        $this->seeInDatabase('job', ['name' => 'Cab Driver']);
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testReplaceWithNoMatchingData()
-	{
-		$data = ['id' => 5, 'name' => 'Cab Driver', 'description' => 'Iam yellow'];
+    public function testReplaceWithNoMatchingData()
+    {
+        $data = ['id' => 5, 'name' => 'Cab Driver', 'description' => 'Iam yellow'];
 
-		$this->db->table('job')->replace($data);
+        $this->db->table('job')->replace($data);
 
-		$row = $this->db->table('job')
-						->getwhere(['id' => 5])
-						->getRow();
+        $row = $this->db->table('job')
+                        ->getwhere(['id' => 5])
+                        ->getRow();
 
-		$this->assertEquals('Cab Driver', $row->name);
-	}
+        $this->assertEquals('Cab Driver', $row->name);
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testReplaceWithMatchingData()
-	{
-		$data = ['id' => 1, 'name' => 'Cab Driver', 'description' => 'Iam yellow'];
+    public function testReplaceWithMatchingData()
+    {
+        $data = ['id' => 1, 'name' => 'Cab Driver', 'description' => 'Iam yellow'];
 
-		$this->db->table('job')->replace($data);
+        $this->db->table('job')->replace($data);
 
-		$row = $this->db->table('job')
-		                ->getwhere(['id' => 1])
-		                ->getRow();
+        $row = $this->db->table('job')
+                        ->getwhere(['id' => 1])
+                        ->getRow();
 
-		$this->assertEquals('Cab Driver', $row->name);
-	}
+        $this->assertEquals('Cab Driver', $row->name);
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
     public function testBug302()
     {

@@ -9,29 +9,29 @@
  */
 class MockCURLRequest extends CURLRequest
 {
-	public $curl_options;
+    public $curl_options;
 
-	protected $output = '';
+    protected $output = '';
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function setOutput($output)
-	{
-		$this->output = $output;
+    public function setOutput($output)
+    {
+        $this->output = $output;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	protected function sendRequest(array $curl_options = []): string
-	{
-		// Save so we can access later.
-		$this->curl_options = $curl_options;
+    protected function sendRequest(array $curl_options = []): string
+    {
+        // Save so we can access later.
+        $this->curl_options = $curl_options;
 
-		return $this->output;
-	}
+        return $this->output;
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
 }

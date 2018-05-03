@@ -4,13 +4,13 @@ use CodeIgniter\Model;
 
 class UserModel extends Model
 {
-	protected $table = 'user';
+    protected $table = 'user';
 
-	protected $allowedFields = ['name', 'email', 'country', 'deleted'];
+    protected $allowedFields = ['name', 'email', 'country', 'deleted'];
 
-	protected $returnType = 'object';
+    protected $returnType = 'object';
 
-	protected $useSoftDeletes = true;
+    protected $useSoftDeletes = true;
 
-	protected $dateFormat = 'integer';
+    protected $dateFormat = 'integer';
 }

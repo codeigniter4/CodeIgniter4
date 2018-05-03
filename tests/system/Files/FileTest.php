@@ -2,37 +2,37 @@
 
 class FileTest extends \CIUnitTestCase {
 
-	public function testCanAccessSPLFileInfoMethods()
-	{
-		$file = new File(BASEPATH.'Common.php');
+    public function testCanAccessSPLFileInfoMethods()
+    {
+        $file = new File(BASEPATH.'Common.php');
 
-		$this->assertEquals('file', $file->getType());
-	}
+        $this->assertEquals('file', $file->getType());
+    }
 
-	public function testGetSizeReturnsKB()
-	{
-		$file = new File(BASEPATH.'Common.php');
+    public function testGetSizeReturnsKB()
+    {
+        $file = new File(BASEPATH.'Common.php');
 
-		$size = number_format(filesize(BASEPATH.'Common.php') / 1024, 3);
+        $size = number_format(filesize(BASEPATH.'Common.php') / 1024, 3);
 
-		$this->assertEquals($size, $file->getSize('kb'));
-	}
+        $this->assertEquals($size, $file->getSize('kb'));
+    }
 
-	public function testGetSizeReturnsMB()
-	{
-		$file = new File(BASEPATH.'Common.php');
+    public function testGetSizeReturnsMB()
+    {
+        $file = new File(BASEPATH.'Common.php');
 
-		$size = number_format(filesize(BASEPATH.'Common.php') / 1024 / 1024, 3);
+        $size = number_format(filesize(BASEPATH.'Common.php') / 1024 / 1024, 3);
 
-		$this->assertEquals($size, $file->getSize('mb'));
-	}
+        $this->assertEquals($size, $file->getSize('mb'));
+    }
 
-	/**
-	 * @expectedException \CodeIgniter\Files\Exceptions\FileNotFoundException
-	 */
-	public function testThrowsExceptionIfNotAFile()
-	{
-		$file = new File(BASEPATH.'Commoner.php',true);
-	}
+    /**
+     * @expectedException \CodeIgniter\Files\Exceptions\FileNotFoundException
+     */
+    public function testThrowsExceptionIfNotAFile()
+    {
+        $file = new File(BASEPATH.'Commoner.php',true);
+    }
 
 }

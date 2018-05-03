@@ -9,11 +9,11 @@ Line Number: <?= $exception->getLine(); ?>
 
 <?php if (defined('SHOW_DEBUG_BACKTRACE') && SHOW_DEBUG_BACKTRACE === TRUE): ?>
 
-	Backtrace:
-	<?php foreach ($exception->getTrace() as $error): ?>
-		<?php if (isset($error['file'])): ?>
+    Backtrace:
+    <?php foreach ($exception->getTrace() as $error): ?>
+        <?php if (isset($error['file'])): ?>
 <?= trim('-'. $error['line'] .' - '. $error['file'] .'::'. $error['function']) ."\n" ?>
-		<?php endif ?>
-	<?php endforeach ?>
+        <?php endif ?>
+    <?php endforeach ?>
 
 <?php endif ?>

@@ -2,12 +2,12 @@
 
 class RegistrarConfig extends \CodeIgniter\Config\BaseConfig
 {
-	public $foo = 'bar';
-	public $bar = [
-		'baz'
-	];
+    public $foo = 'bar';
+    public $bar = [
+        'baz'
+    ];
 
-	protected $registrars = [
-		\Tests\Support\Config\Registrar::class
-	];
+    protected $registrars = [
+        \Tests\Support\Config\Registrar::class
+    ];
 }

@@ -2,5 +2,5 @@
 
 class MockQuery extends Query
 {
-	
+
 }

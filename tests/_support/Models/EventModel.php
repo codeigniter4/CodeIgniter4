@@ -4,13 +4,13 @@ use CodeIgniter\Model;
 
 class EventModel extends Model
 {
-	protected $table = 'user';
+    protected $table = 'user';
 
-	protected $returnType = 'array';
+    protected $returnType = 'array';
 
-	protected $useSoftDeletes = false;
+    protected $useSoftDeletes = false;
 
-	protected $dateFormat = 'integer';
+    protected $dateFormat = 'integer';
 
     protected $allowedFields = [
         'name', 'email', 'country', 'deleted'
@@ -26,51 +26,51 @@ class EventModel extends Model
     // Holds stuff for testing events
     protected $tokens = [];
 
-	protected function beforeInsertMethod(array $data)
-	{
-		$this->tokens[] = 'beforeInsert';
+    protected function beforeInsertMethod(array $data)
+    {
+        $this->tokens[] = 'beforeInsert';
 
-		return $data;
+        return $data;
     }
 
-	protected function afterInsertMethod(array $data)
-	{
-		$this->tokens[] = 'afterInsert';
+    protected function afterInsertMethod(array $data)
+    {
+        $this->tokens[] = 'afterInsert';
 
-		return $data;
-	}
+        return $data;
+    }
 
-	protected function beforeUpdateMethod(array $data)
-	{
-		$this->tokens[] = 'beforeUpdate';
+    protected function beforeUpdateMethod(array $data)
+    {
+        $this->tokens[] = 'beforeUpdate';
 
-		return $data;
-	}
+        return $data;
+    }
 
-	protected function afterUpdateMethod(array $data)
-	{
-		$this->tokens[] = 'afterUpdate';
+    protected function afterUpdateMethod(array $data)
+    {
+        $this->tokens[] = 'afterUpdate';
 
-		return $data;
-	}
+        return $data;
+    }
 
-	protected function afterFindMethod(array $data)
-	{
-		$this->tokens[] = 'afterFind';
+    protected function afterFindMethod(array $data)
+    {
+        $this->tokens[] = 'afterFind';
 
-		return $data;
-	}
+        return $data;
+    }
 
-	protected function afterDeleteMethod(array $data)
-	{
-		$this->tokens[] = 'afterDelete';
+    protected function afterDeleteMethod(array $data)
+    {
+        $this->tokens[] = 'afterDelete';
 
-		return $data;
-	}
+        return $data;
+    }
 
-	public function hasToken(string $token)
-	{
-		return in_array($token, $this->tokens);
-	}
+    public function hasToken(string $token)
+    {
+        return in_array($token, $this->tokens);
+    }
 
 }

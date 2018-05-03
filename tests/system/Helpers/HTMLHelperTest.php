@@ -3,26 +3,26 @@
 final class HTMLHelperTest extends \CIUnitTestCase
 {
 
-	private $tracks;
+    private $tracks;
 
-	public function setUp()
-	{
-		//URL is needed by the HTML Helper.
-		helper('url');
-		helper('html');
+    public function setUp()
+    {
+        //URL is needed by the HTML Helper.
+        helper('url');
+        helper('html');
 
-		$this->tracks = 
-		[
-			track('subtitles_no.vtt',  'subtitles', 'no',  'Norwegian No'),
-			track('subtitles_yes.vtt', 'subtitles', 'yes', 'Norwegian Yes')
-		];
-	}
+        $this->tracks =
+        [
+            track('subtitles_no.vtt',  'subtitles', 'no',  'Norwegian No'),
+            track('subtitles_yes.vtt', 'subtitles', 'yes', 'Norwegian Yes')
+        ];
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testBasicUL()
-	{
-		$expected = <<<EOH
+    public function testBasicUL()
+    {
+        $expected = <<<EOH
 <ul>
   <li>foo</li>
   <li>bar</li>
@@ -30,15 +30,15 @@ final class HTMLHelperTest extends \CIUnitTestCase
 
 EOH;
 
-		$expected = ltrim($expected);
-		$list     = ['foo', 'bar'];
+        $expected = ltrim($expected);
+        $list     = ['foo', 'bar'];
 
-		$this->assertEquals(ltrim($expected), ul($list));
-	}
+        $this->assertEquals(ltrim($expected), ul($list));
+    }
 
-	public function testULWithClass()
-	{
-		$expected = <<<EOH
+    public function testULWithClass()
+    {
+        $expected = <<<EOH
 <ul class="test">
   <li>foo</li>
   <li>bar</li>
@@ -46,15 +46,15 @@ EOH;
 
 EOH;
 
-		$expected = ltrim($expected);
-		$list     = ['foo', 'bar'];
+        $expected = ltrim($expected);
+        $list     = ['foo', 'bar'];
 
-		$this->assertEquals($expected, ul($list, 'class="test"'));
-	}
+        $this->assertEquals($expected, ul($list, 'class="test"'));
+    }
 
-	public function testMultiLevelUL()
-	{
-		$expected = <<<EOH
+    public function testMultiLevelUL()
+    {
+        $expected = <<<EOH
 <ul>
   <li>foo</li>
   <li>bar</li>
@@ -68,17 +68,17 @@ EOH;
 
 EOH;
 
-		$expected = ltrim($expected);
-		$list     = ['foo', 'bar', ['foo', 'bar']];
+        $expected = ltrim($expected);
+        $list     = ['foo', 'bar', ['foo', 'bar']];
 
-		$this->assertEquals(ltrim($expected), ul($list));
-	}
+        $this->assertEquals(ltrim($expected), ul($list));
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testBasicOL()
-	{
-		$expected = <<<EOH
+    public function testBasicOL()
+    {
+        $expected = <<<EOH
 <ol>
   <li>foo</li>
   <li>bar</li>
@@ -86,15 +86,15 @@ EOH;
 
 EOH;
 
-		$expected = ltrim($expected);
-		$list     = ['foo', 'bar'];
+        $expected = ltrim($expected);
+        $list     = ['foo', 'bar'];
 
-		$this->assertEquals(ltrim($expected), ol($list));
-	}
+        $this->assertEquals(ltrim($expected), ol($list));
+    }
 
-	public function testOLWithClass()
-	{
-		$expected = <<<EOH
+    public function testOLWithClass()
+    {
+        $expected = <<<EOH
 <ol class="test">
   <li>foo</li>
   <li>bar</li>
@@ -102,15 +102,15 @@ EOH;
 
 EOH;
 
-		$expected = ltrim($expected);
-		$list     = ['foo', 'bar'];
+        $expected = ltrim($expected);
+        $list     = ['foo', 'bar'];
 
-		$this->assertEquals($expected, ol($list, 'class="test"'));
-	}
+        $this->assertEquals($expected, ol($list, 'class="test"'));
+    }
 
-	public function testMultiLevelOL()
-	{
-		$expected = <<<EOH
+    public function testMultiLevelOL()
+    {
+        $expected = <<<EOH
 <ol>
   <li>foo</li>
   <li>bar</li>
@@ -124,78 +124,78 @@ EOH;
 
 EOH;
 
-		$expected = ltrim($expected);
-		$list     = ['foo', 'bar', ['foo', 'bar']];
+        $expected = ltrim($expected);
+        $list     = ['foo', 'bar', ['foo', 'bar']];
 
-		$this->assertEquals(ltrim($expected), ol($list));
-	}
+        $this->assertEquals(ltrim($expected), ol($list));
+    }
 
-	// ------------------------------------------------------------------------
+    // ------------------------------------------------------------------------
 
-	public function testIMG()
-	{
-		//TODO: Mock baseURL and siteURL.
-		$this->assertEquals
-		(
-			'<img src="http://site.com/images/picture.jpg" alt="" />', 
-			img('http://site.com/images/picture.jpg')
-		);
-	}
+    public function testIMG()
+    {
+        //TODO: Mock baseURL and siteURL.
+        $this->assertEquals
+        (
+            '<img src="http://site.com/images/picture.jpg" alt="" />',
+            img('http://site.com/images/picture.jpg')
+        );
+    }
 
-	// ------------------------------------------------------------------------
+    // ------------------------------------------------------------------------
 
-	public function testScriptTag()
-	{
-		$this->assertEquals
-		(
-			'<script src="http://site.com/js/mystyles.js" type="text/javascript"></script>',
-			script_tag('http://site.com/js/mystyles.js')
-		);
-	}
+    public function testScriptTag()
+    {
+        $this->assertEquals
+        (
+            '<script src="http://site.com/js/mystyles.js" type="text/javascript"></script>',
+            script_tag('http://site.com/js/mystyles.js')
+        );
+    }
 
-	// ------------------------------------------------------------------------
+    // ------------------------------------------------------------------------
 
-	public function testLinkTag()
-	{
-		$this->assertEquals
-		(
-			'<link href="http://site.com/css/mystyles.css" rel="stylesheet" type="text/css" />',
-			link_tag('http://site.com/css/mystyles.css')
-		);
-	}
+    public function testLinkTag()
+    {
+        $this->assertEquals
+        (
+            '<link href="http://site.com/css/mystyles.css" rel="stylesheet" type="text/css" />',
+            link_tag('http://site.com/css/mystyles.css')
+        );
+    }
 
-	// ------------------------------------------------------------------------
+    // ------------------------------------------------------------------------
 
-	public function testDocType()
-	{
-		$this->assertEquals
-		(
-			'<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">',
-			doctype('html4-strict')
-		);
-	}
+    public function testDocType()
+    {
+        $this->assertEquals
+        (
+            '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">',
+            doctype('html4-strict')
+        );
+    }
 
-	// ------------------------------------------------------------------------
+    // ------------------------------------------------------------------------
 
-	public function testVideo()
-	{
-		$expected = <<<EOH
+    public function testVideo()
+    {
+        $expected = <<<EOH
 <video src="http://example.com/test.mp4" controls>
   Your browser does not support the video tag.
 </video>
 
 EOH;
 
-		$video = video
-		(
-			'test.mp4', 
-			'Your browser does not support the video tag.', 
-			'controls'
-		);
+        $video = video
+        (
+            'test.mp4',
+            'Your browser does not support the video tag.',
+            'controls'
+        );
 
-		$this->assertEquals($expected, $video);
+        $this->assertEquals($expected, $video);
 
-		$expected = <<<EOH
+        $expected = <<<EOH
 <video src="http://www.codeigniter.com/test.mp4" controls>
   <track src="subtitles_no.vtt" kind="subtitles" srclang="no" label="Norwegian No" />
   <track src="subtitles_yes.vtt" kind="subtitles" srclang="yes" label="Norwegian Yes" />
@@ -204,16 +204,16 @@ EOH;
 
 EOH;
 
-		$video = video
-		(
-			'http://www.codeigniter.com/test.mp4', 
-			'Your browser does not support the video tag.', 
-			'controls',
-			$this->tracks
-		);
-		$this->assertEquals($expected, $video);
+        $video = video
+        (
+            'http://www.codeigniter.com/test.mp4',
+            'Your browser does not support the video tag.',
+            'controls',
+            $this->tracks
+        );
+        $this->assertEquals($expected, $video);
 
-		$expected = <<<EOH
+        $expected = <<<EOH
 <video class="test" controls>
   <source src="http://example.com/movie.mp4" type="video/mp4" class="test" />
   <source src="http://example.com/movie.ogg" type="video/ogg" />
@@ -226,27 +226,27 @@ EOH;
 
 EOH;
 
-		$video = video
-		(
-			[
-			  source('movie.mp4', 'video/mp4', 'class="test"'),
-			  source('movie.ogg', 'video/ogg'),
-			  source('movie.mov', 'video/quicktime'),
-			  source('movie.ogv', 'video/ogv; codecs=dirac, speex')
-			],
-			'Your browser does not support the video tag.',
-			'class="test" controls',
-			$this->tracks
-		 );
+        $video = video
+        (
+            [
+              source('movie.mp4', 'video/mp4', 'class="test"'),
+              source('movie.ogg', 'video/ogg'),
+              source('movie.mov', 'video/quicktime'),
+              source('movie.ogv', 'video/ogv; codecs=dirac, speex')
+            ],
+            'Your browser does not support the video tag.',
+            'class="test" controls',
+            $this->tracks
+         );
 
-		 $this->assertEquals($expected, $video);
-	}
+         $this->assertEquals($expected, $video);
+    }
 
-	// ------------------------------------------------------------------------
+    // ------------------------------------------------------------------------
 
-	public function testAudio()
-	{
-		$expected = <<<EOH
+    public function testAudio()
+    {
+        $expected = <<<EOH
 <audio id="test" controls>
   <source src="http://example.com/sound.ogg" type="audio/ogg" />
   <source src="http://example.com/sound.mpeg" type="audio/mpeg" />
@@ -257,70 +257,70 @@ EOH;
 
 EOH;
 
-		$audio = audio
-		(
-			[
-				source('sound.ogg', 'audio/ogg'),
-				source('sound.mpeg', 'audio/mpeg')
-			],
-			'Your browser does not support the audio tag.',
-			'id="test" controls',
-			$this->tracks
-		 );
+        $audio = audio
+        (
+            [
+                source('sound.ogg', 'audio/ogg'),
+                source('sound.mpeg', 'audio/mpeg')
+            ],
+            'Your browser does not support the audio tag.',
+            'id="test" controls',
+            $this->tracks
+         );
 
-		$this->assertEquals($expected, $audio);
-	}
+        $this->assertEquals($expected, $audio);
+    }
 
-	// ------------------------------------------------------------------------
+    // ------------------------------------------------------------------------
 
-	public function testEmbed()
-	{
-		$expected = <<<EOH
+    public function testEmbed()
+    {
+        $expected = <<<EOH
 <embed src="http://example.com/movie.mov" type="video/quicktime" class="test" />
 
 EOH;
 
-		$embed = embed('movie.mov', 'video/quicktime', 'class="test"');
-		$this->assertEquals($expected, $embed);
-	}
+        $embed = embed('movie.mov', 'video/quicktime', 'class="test"');
+        $this->assertEquals($expected, $embed);
+    }
 
-	public function testObject()
-	{
-		$expected = <<<EOH
+    public function testObject()
+    {
+        $expected = <<<EOH
 <object data="http://example.com/movie.swf" class="test"></object>
 
 EOH;
-		
-		$object = object
-		 (
-			'movie.swf', 
-			'application/x-shockwave-flash', 
-			'class="test"'
-		);
 
-		$this->assertEquals($expected, $object);
-		
-		$expected = <<<EOH
+        $object = object
+         (
+            'movie.swf',
+            'application/x-shockwave-flash',
+            'class="test"'
+        );
+
+        $this->assertEquals($expected, $object);
+
+        $expected = <<<EOH
 <object data="http://example.com/movie.swf" class="test">
   <param name="foo" type="ref" value="bar" class="test" />
   <param name="hello" type="ref" value="world" class="test" />
 </object>
 
 EOH;
-		
-		$object = object
-		(
-			'movie.swf', 
-			'application/x-shockwave-flash', 
-			'class="test"',
-			[
-				param('foo', 'bar', 'ref', 'class="test"'),
-				param('hello', 'world', 'ref', 'class="test"')
-			]
-		);
-		$this->assertEquals($expected, $object);
-	}
 
-	// ------------------------------------------------------------------------
+        $object = object
+        (
+            'movie.swf',
+            'application/x-shockwave-flash',
+            'class="test"',
+            [
+                param('foo', 'bar', 'ref', 'class="test"'),
+                param('hello', 'world', 'ref', 'class="test"')
+            ]
+        );
+        $this->assertEquals($expected, $object);
+    }
+
+    // ------------------------------------------------------------------------
 
 }

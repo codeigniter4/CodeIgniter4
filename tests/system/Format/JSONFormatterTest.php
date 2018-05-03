@@ -23,41 +23,41 @@ class JSONFormatterTest extends \CIUnitTestCase
         $this->assertEquals($expected, $this->jsonFormatter->format($data));
     }
 
-	public function testUnicodeOutput()
-	{
-		$data = [
-			'foo' => 'База данни грешка'
-		];
+    public function testUnicodeOutput()
+    {
+        $data = [
+            'foo' => 'База данни грешка'
+        ];
 
-		$expected = '{
+        $expected = '{
     "foo": "База данни грешка"
 }';
 
-		$this->assertEquals($expected, $this->jsonFormatter->format($data));
+        $this->assertEquals($expected, $this->jsonFormatter->format($data));
     }
 
-	public function testKeepsURLs()
-	{
-		$data = [
-			'foo' => 'https://www.example.com/foo/bar'
-		];
+    public function testKeepsURLs()
+    {
+        $data = [
+            'foo' => 'https://www.example.com/foo/bar'
+        ];
 
-		$expected = '{
+        $expected = '{
     "foo": "https://www.example.com/foo/bar"
 }';
 
-		$this->assertEquals($expected, $this->jsonFormatter->format($data));
-	}
+        $this->assertEquals($expected, $this->jsonFormatter->format($data));
+    }
 
-	
+
     /**
      * @expectedException RuntimeException
      */
-	public function testJSONError()
-	{
+    public function testJSONError()
+    {
         $data = ["\xB1\x31"];
-		$expected = "Boom";
-		$this->assertEquals($expected, $this->jsonFormatter->format($data));
-	}
+        $expected = "Boom";
+        $this->assertEquals($expected, $this->jsonFormatter->format($data));
+    }
 
 }

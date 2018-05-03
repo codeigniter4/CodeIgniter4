@@ -13,37 +13,37 @@ use CodeIgniter\Config\BaseConfig;
  */
 class ContentSecurityPolicy extends BaseConfig
 {
-	public $reportOnly = false;
+    public $reportOnly = false;
 
-	public $defaultSrc = 'none';
+    public $defaultSrc = 'none';
 
-	public $scriptSrc = 'self';
+    public $scriptSrc = 'self';
 
-	public $styleSrc = 'self';
+    public $styleSrc = 'self';
 
-	public $imageSrc = 'self';
+    public $imageSrc = 'self';
 
-	public $base_uri = null;
+    public $base_uri = null;
 
-	public $childSrc = null;
+    public $childSrc = null;
 
-	public $connectSrc = 'self';
+    public $connectSrc = 'self';
 
-	public $fontSrc = null;
+    public $fontSrc = null;
 
-	public $formAction = null;
+    public $formAction = null;
 
-	public $frameAncestors = null;
+    public $frameAncestors = null;
 
-	public $mediaSrc = null;
+    public $mediaSrc = null;
 
-	public $objectSrc = null;
+    public $objectSrc = null;
 
-	public $pluginTypes = null;
+    public $pluginTypes = null;
 
-	public $reportURI = null;
+    public $reportURI = null;
 
-	public $sandbox = false;
+    public $sandbox = false;
 
-	public $upgradeInsecureRequests = false;
+    public $upgradeInsecureRequests = false;
 }

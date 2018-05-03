@@ -2,13 +2,13 @@
 
 class GDHandlerTest extends \CIUnitTestCase
 {
-	protected $path = 'tests/_support/ci-logo.png';
+    protected $path = 'tests/_support/ci-logo.png';
 
-	public function testCanReachImageMethods()
-	{
-		$image = new Image(ROOTPATH.$this->path);
+    public function testCanReachImageMethods()
+    {
+        $image = new Image(ROOTPATH.$this->path);
 
-		$this->assertInternalType('array', $image->getProperties(true));
-	}
+        $this->assertInternalType('array', $image->getProperties(true));
+    }
 
 }

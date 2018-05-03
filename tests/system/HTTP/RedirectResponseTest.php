@@ -9,90 +9,90 @@ use CodeIgniter\Autoloader\MockFileLocator;
 
 class RedirectResponseTest extends \CIUnitTestCase
 {
-	protected $routes;
+    protected $routes;
 
-	protected $request;
+    protected $request;
 
-	protected $config;
+    protected $config;
 
-	public function setUp()
-	{
-		parent::setUp();
+    public function setUp()
+    {
+        parent::setUp();
 
-		$_SERVER['REQUEST_METHOD'] = 'GET';
+        $_SERVER['REQUEST_METHOD'] = 'GET';
 
-		$this->config = new App();
-		$this->config->baseURL = 'http://example.com';
+        $this->config = new App();
+        $this->config->baseURL = 'http://example.com';
 
-		$this->routes = new RouteCollection(new MockFileLocator(new Autoload()));
-		Services::injectMock('routes', $this->routes);
+        $this->routes = new RouteCollection(new MockFileLocator(new Autoload()));
+        Services::injectMock('routes', $this->routes);
 
-		$this->request = new MockIncomingRequest($this->config, new URI('http://example.com'), null, new UserAgent());
-		Services::injectMock('request', $this->request);
-	}
+        $this->request = new MockIncomingRequest($this->config, new URI('http://example.com'), null, new UserAgent());
+        Services::injectMock('request', $this->request);
+    }
 
-	public function testRedirectToFullURI()
-	{
-		$response = new RedirectResponse(new App());
+    public function testRedirectToFullURI()
+    {
+        $response = new RedirectResponse(new App());
 
-		$response = $response->to('http://example.com/foo');
+        $response = $response->to('http://example.com/foo');
 
-		$this->assertTrue($response->hasHeader('Location'));
-		$this->assertEquals('http://example.com/foo', $response->getHeaderLine('Location'));
-	}
+        $this->assertTrue($response->hasHeader('Location'));
+        $this->assertEquals('http://example.com/foo', $response->getHeaderLine('Location'));
+    }
 
-	public function testRedirectRelativeConvertsToFullURI()
-	{
-		$response = new RedirectResponse($this->config);
+    public function testRedirectRelativeConvertsToFullURI()
+    {
+        $response = new RedirectResponse($this->config);
 
-		$response = $response->to('/foo');
+        $response = $response->to('/foo');
 
-		$this->assertTrue($response->hasHeader('Location'));
-		$this->assertEquals('http://example.com/foo', $response->getHeaderLine('Location'));
-	}
+        $this->assertTrue($response->hasHeader('Location'));
+        $this->assertEquals('http://example.com/foo', $response->getHeaderLine('Location'));
+    }
 
-	public function testWithInput()
-	{
-		$_SESSION = [];
-		$_GET = ['foo' => 'bar'];
-		$_POST = ['bar' => 'baz'];
+    public function testWithInput()
+    {
+        $_SESSION = [];
+        $_GET = ['foo' => 'bar'];
+        $_POST = ['bar' => 'baz'];
 
-		$response = new RedirectResponse(new App());
+        $response = new RedirectResponse(new App());
 
-		$returned = $response->withInput();
+        $returned = $response->withInput();
 
-		$this->assertSame($response, $returned);
-		$this->assertArrayHasKey('_ci_old_input', $_SESSION);
-		$this->assertEquals('bar', $_SESSION['_ci_old_input']['get']['foo']);
-		$this->assertEquals('baz', $_SESSION['_ci_old_input']['post']['bar']);
-	}
+        $this->assertSame($response, $returned);
+        $this->assertArrayHasKey('_ci_old_input', $_SESSION);
+        $this->assertEquals('bar', $_SESSION['_ci_old_input']['get']['foo']);
+        $this->assertEquals('baz', $_SESSION['_ci_old_input']['post']['bar']);
+    }
 
-	public function testWithValidationErrors()
-	{
-		$_SESSION = [];
+    public function testWithValidationErrors()
+    {
+        $_SESSION = [];
 
-		$response = new RedirectResponse(new App());
+        $response = new RedirectResponse(new App());
 
-		$validation = $this->createMock(Validation::class);
-		$validation->method('getErrors')
-		           ->willReturn(['foo' =>'bar']);
+        $validation = $this->createMock(Validation::class);
+        $validation->method('getErrors')
+                   ->willReturn(['foo' =>'bar']);
 
-		Services::injectMock('validation', $validation);
+        Services::injectMock('validation', $validation);
 
-		$response->withInput();
+        $response->withInput();
 
-		$this->assertArrayHasKey('_ci_validation_errors', $_SESSION);
-	}
+        $this->assertArrayHasKey('_ci_validation_errors', $_SESSION);
+    }
 
-	public function testWith()
-	{
-		$_SESSION = [];
+    public function testWith()
+    {
+        $_SESSION = [];
 
-		$response = new RedirectResponse(new App());
+        $response = new RedirectResponse(new App());
 
-		$returned = $response->with('foo', 'bar');
+        $returned = $response->with('foo', 'bar');
 
-		$this->assertSame($response, $returned);
-		$this->assertArrayHasKey('foo', $_SESSION);
-	}
+        $this->assertSame($response, $returned);
+        $this->assertArrayHasKey('foo', $_SESSION);
+    }
 }
