@@ -43,6 +43,21 @@ class CLITest extends \CIUnitTestCase
 		$time = time();
 		CLI::wait(1);
 		$this->assertEquals(1, time() - $time);
+
+		// Leaving the code fragment below in, to remind myself (or others)
+		// of what appears to be the most likely path to test this last
+		// bit of wait() functionality.
+		// The problem: if the block below is enabled, the phpunit tests
+		// go catatonic when it is executed, presumably because of
+		// the CLI::input() waiting for a key press
+//		// test the press any key to continue...
+//		CLITestKeyboardFilter::$spoofed = ' \n';
+//		stream_filter_register('CLITestKeyboardFilter', 'CodeIgniter\CLI\CLITestKeyboardFilter');
+//		$spoofed = stream_filter_prepend(STDIN, 'CLITestKeyboardFilter');
+//		$time = time();
+//		CLI::wait(0);
+//		stream_filter_remove($spoofed);
+//		$this->assertEquals(10, time() - $time);
 	}
 
 	public function testIsWindows()
@@ -299,6 +314,7 @@ EOT;
 
 }
 
+// class to extract output snapshot
 class CLITestStreamFilter extends \php_user_filter
 {
 
@@ -310,6 +326,26 @@ class CLITestStreamFilter extends \php_user_filter
 		{
 			self::$buffer .= $bucket->data;
 			$consumed += $bucket->datalen;
+		}
+		return PSFS_PASS_ON;
+	}
+
+}
+
+// class to spoof keyboard input
+class CLITestKeyboardFilter extends \php_user_filter
+{
+
+	public static $buffer = '';
+	public static $spoofed = '';
+
+	public function filter($in, $out, &$consumed, $closing)
+	{
+		while ($bucket = stream_bucket_make_writeable($in))
+		{
+			$consumed += $bucket->datalen;
+			$bucket = $spoofed;
+			stream_bucket_append($out, $bucket);
 		}
 		return PSFS_PASS_ON;
 	}
