@@ -118,6 +118,12 @@ class Language
 		list($file, $parsedLine) = $this->parseLine($line);
 
 		$output = $this->language[$this->locale][$file][$parsedLine] ?? $line;
+		
+		if($output == $line)
+		{
+			list($file, $parsedLine) = $this->parseLine($line, service('request')->getDefaultLocale());
+			$output = $this->language[$this->locale][$file][$parsedLine] ?? $line;
+		}
 
 		if (! empty($args))
 		{
@@ -136,11 +142,14 @@ class Language
 	 *
 	 * @return array
 	 */
-	protected function parseLine(string $line): array
+	protected function parseLine(string $line, $lang = ''): array
 	{
 		// If there's no possibility of a filename being in the string
 		// simply return the string, and they can parse the replacement
 		// without it being in a file.
+		if(empty($lang))
+			$lang = service('request')->getDefaultLocale();
+		
 		if (strpos($line, '.') === false)
 		{
 			return [
@@ -154,12 +163,12 @@ class Language
 
 		if ( ! array_key_exists($line, $this->language))
 		{
-			$this->load($file, $this->locale);
+			$this->load($file, $lang);
 		}
 
 		return [
 			$file,
-			$this->language[$this->locale][$line] ?? $line
+			$this->language[$lang][$line] ?? $line
 		];
 	}
 
