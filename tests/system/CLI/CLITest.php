@@ -204,7 +204,7 @@ EOT;
 		$this->assertEquals('b', CLI::getSegment(1));
 		$this->assertEquals('c', CLI::getSegment(2));
 		$this->assertEquals('b/c', CLI::getURI());
-		$this->assertEquals([],CLI::getOptions());
+		$this->assertEquals([], CLI::getOptions());
 		$this->assertEmpty(CLI::getOptionString());
 		$this->assertEquals(['b', 'c'], CLI::getSegments());
 	}
@@ -242,6 +242,12 @@ EOT;
 		$this->assertEquals('pvalue', CLI::getOption('parm'));
 		$this->assertEquals('-parm pvalue -p2  -p3 "value 3" ', CLI::getOptionString());
 		$this->assertEquals(['b', 'c', 'd'], CLI::getSegments());
+	}
+
+	public function testWindow()
+	{
+		$this->assertTrue(is_int(CLI::getHeight()));
+		$this->assertTrue(is_int(CLI::getWidth()));
 	}
 
 	/**
