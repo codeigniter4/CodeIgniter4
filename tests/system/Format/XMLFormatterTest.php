@@ -54,9 +54,9 @@ EOH;
 
         $this->assertEquals($expected, $this->xmlFormatter->format($data));
     }
-	
-	public function testStringFormatting() {
-		$data = ['Something'];
+
+    public function testStringFormatting() {
+        $data = ['Something'];
         $expected = <<<EOH
 <?xml version="1.0"?>
 <response><0>Something</0></response>
@@ -64,5 +64,5 @@ EOH;
 EOH;
 
         $this->assertEquals($expected, $this->xmlFormatter->format($data));
-	}
+    }
 }

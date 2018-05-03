@@ -21,169 +21,169 @@ use Config\App;
  */
 trait ControllerTester
 {
-	protected $appConfig;
+    protected $appConfig;
 
-	protected $request;
+    protected $request;
 
-	protected $response;
+    protected $response;
 
-	protected $controller;
+    protected $controller;
 
-	protected $uri = 'http://example.com';
+    protected $uri = 'http://example.com';
 
-	protected $body;
+    protected $body;
 
-	/**
-	 * Loads the specified controller, and generates any needed dependencies.
-	 *
-	 * @param string $name
-	 *
-	 * @return mixed
-	 */
-	public function controller(string $name)
-	{
-		if (! class_exists($name))
-		{
-			throw new \InvalidArgumentException('Invalid Controller: '.$name);
-		}
+    /**
+     * Loads the specified controller, and generates any needed dependencies.
+     *
+     * @param string $name
+     *
+     * @return mixed
+     */
+    public function controller(string $name)
+    {
+        if (! class_exists($name))
+        {
+            throw new \InvalidArgumentException('Invalid Controller: '.$name);
+        }
 
-		if (empty($this->appConfig))
-		{
-			$this->appConfig = new App();
-		}
+        if (empty($this->appConfig))
+        {
+            $this->appConfig = new App();
+        }
 
-		if (empty($this->request))
-		{
-			$this->request = new IncomingRequest($this->appConfig, $this->uri, $this->body);
-		}
+        if (empty($this->request))
+        {
+            $this->request = new IncomingRequest($this->appConfig, $this->uri, $this->body);
+        }
 
-		if (empty($this->response))
-		{
-			$this->response = new Response($this->appConfig);
-		}
+        if (empty($this->response))
+        {
+            $this->response = new Response($this->appConfig);
+        }
 
-		$this->controller = new $name($this->request, $this->response);
+        $this->controller = new $name($this->request, $this->response);
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * Runs the specified method on the controller and returns the results.
-	 *
-	 * @param string $method
-	 * @param array  $params
-	 *
-	 * @return \Tests\Support\Helpers\ControllerResponse
-	 */
-	public function execute(string $method, ...$params)
-	{
-		if (! method_exists($this->controller, $method) || ! is_callable([$this->controller, $method]))
-		{
-			throw new \InvalidArgumentException('Method does not exist or is not callable in controller: '.$method);
-		}
+    /**
+     * Runs the specified method on the controller and returns the results.
+     *
+     * @param string $method
+     * @param array  $params
+     *
+     * @return \Tests\Support\Helpers\ControllerResponse
+     */
+    public function execute(string $method, ...$params)
+    {
+        if (! method_exists($this->controller, $method) || ! is_callable([$this->controller, $method]))
+        {
+            throw new \InvalidArgumentException('Method does not exist or is not callable in controller: '.$method);
+        }
 
-		// The URL helper is always loaded by the system
-		// so ensure it's available.
-		helper('url');
+        // The URL helper is always loaded by the system
+        // so ensure it's available.
+        helper('url');
 
-		$result = (new ControllerResponse())
-			->setRequest($this->request)
-			->setResponse($this->response);
+        $result = (new ControllerResponse())
+            ->setRequest($this->request)
+            ->setResponse($this->response);
 
-		try
-		{
-			ob_start();
+        try
+        {
+            ob_start();
 
-			$response = $this->controller->{$method}(...$params);
-		}
-		catch (\Throwable $e)
-		{
-			$result->response()
-			       ->setStatusCode($e->getCode());
-		}
-		finally
-		{
-			$output = ob_get_clean();
+            $response = $this->controller->{$method}(...$params);
+        }
+        catch (\Throwable $e)
+        {
+            $result->response()
+                   ->setStatusCode($e->getCode());
+        }
+        finally
+        {
+            $output = ob_get_clean();
 
-			// If the controller returned a redirect response
-			// then we need to use that...
-			if (isset($response) && $response instanceof Response)
-			{
-				$result->setResponse($response);
-			}
+            // If the controller returned a redirect response
+            // then we need to use that...
+            if (isset($response) && $response instanceof Response)
+            {
+                $result->setResponse($response);
+            }
 
-			$result->response()->setBody($output);
-			$result->setBody($output);
-		}
+            $result->response()->setBody($output);
+            $result->setBody($output);
+        }
 
-		// If not response code has been sent, assume a success
-		if (empty($result->response()->getStatusCode()))
-		{
-			$result->response()->setStatusCode(200);
-		}
+        // If not response code has been sent, assume a success
+        if (empty($result->response()->getStatusCode()))
+        {
+            $result->response()->setStatusCode(200);
+        }
 
-		return $result;
-	}
+        return $result;
+    }
 
-	/**
-	 * @param mixed $appConfig
-	 *
-	 * @return mixed
-	 */
-	public function withConfig($appConfig)
-	{
-		$this->appConfig = $appConfig;
+    /**
+     * @param mixed $appConfig
+     *
+     * @return mixed
+     */
+    public function withConfig($appConfig)
+    {
+        $this->appConfig = $appConfig;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * @param mixed $request
-	 *
-	 * @return mixed
-	 */
-	public function withRequest($request)
-	{
-		$this->request = $request;
+    /**
+     * @param mixed $request
+     *
+     * @return mixed
+     */
+    public function withRequest($request)
+    {
+        $this->request = $request;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * @param mixed $response
-	 *
-	 * @return mixed
-	 */
-	public function withResponse($response)
-	{
-		$this->response = $response;
+    /**
+     * @param mixed $response
+     *
+     * @return mixed
+     */
+    public function withResponse($response)
+    {
+        $this->response = $response;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * @param string $uri
-	 *
-	 * @return mixed
-	 */
-	public function withUri(string $uri)
-	{
-		$this->uri = new URI($uri);
+    /**
+     * @param string $uri
+     *
+     * @return mixed
+     */
+    public function withUri(string $uri)
+    {
+        $this->uri = new URI($uri);
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * @param mixed $body
-	 *
-	 * @return mixed
-	 */
-	public function withBody($body)
-	{
-		$this->body = $body;
+    /**
+     * @param mixed $body
+     *
+     * @return mixed
+     */
+    public function withBody($body)
+    {
+        $this->body = $body;
 
-		return $this;
-	}
+        return $this;
+    }
 
 
 }

@@ -4,19 +4,19 @@ use CodeIgniter\Model;
 
 class ValidModel extends Model
 {
-	protected $table = 'job';
+    protected $table = 'job';
 
-	protected $returnType = 'object';
+    protected $returnType = 'object';
 
-	protected $useSoftDeletes = false;
+    protected $useSoftDeletes = false;
 
-	protected $dateFormat = 'integer';
+    protected $dateFormat = 'integer';
 
     protected $allowedFields = ['name', 'description'];
 
     protected $validationRules = [
         'name'  => ['required', 'min_length[3]'],
-	    'token' => 'in_list[{id}]'
+        'token' => 'in_list[{id}]'
     ];
 
     protected $validationMessages = [

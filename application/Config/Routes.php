@@ -25,7 +25,7 @@ $routes = Services::routes(true);
 // can override as needed.
 if (file_exists(BASEPATH.'Config/Routes.php'))
 {
-	require BASEPATH.'Config/Routes.php';
+    require BASEPATH.'Config/Routes.php';
 }
 
 /**
@@ -91,5 +91,5 @@ $routes->add('/', 'Home::index');
  */
 if (file_exists(APPPATH.'Config/'.ENVIRONMENT.'/Routes.php'))
 {
-	require APPPATH.'Config/'.ENVIRONMENT.'/Routes.php';
+    require APPPATH.'Config/'.ENVIRONMENT.'/Routes.php';
 }

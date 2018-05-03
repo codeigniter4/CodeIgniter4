@@ -5,36 +5,36 @@
  */
 class LimitTest extends \CIDatabaseTestCase
 {
-	protected $refresh = true;
+    protected $refresh = true;
 
-	protected $seed = 'CITestSeeder';
+    protected $seed = 'CITestSeeder';
 
-	public function testLimit()
-	{
-	    $jobs = $this->db->table('job')
-		                ->limit(2)
-		                ->get()
-		                ->getResult();
+    public function testLimit()
+    {
+        $jobs = $this->db->table('job')
+                        ->limit(2)
+                        ->get()
+                        ->getResult();
 
-		$this->assertCount(2, $jobs);
-		$this->assertEquals('Developer', $jobs[0]->name);
-		$this->assertEquals('Politician', $jobs[1]->name);
-	}
+        $this->assertCount(2, $jobs);
+        $this->assertEquals('Developer', $jobs[0]->name);
+        $this->assertEquals('Politician', $jobs[1]->name);
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testLimitAndOffset()
-	{
-	    $jobs = $this->db->table('job')
-		                ->limit(2, 2)
-		                ->get()
-		                ->getResult();
+    public function testLimitAndOffset()
+    {
+        $jobs = $this->db->table('job')
+                        ->limit(2, 2)
+                        ->get()
+                        ->getResult();
 
-		$this->assertCount(2, $jobs);
-		$this->assertEquals('Accountant', $jobs[0]->name);
-		$this->assertEquals('Musician', $jobs[1]->name);
-	}
+        $this->assertCount(2, $jobs);
+        $this->assertEquals('Accountant', $jobs[0]->name);
+        $this->assertEquals('Musician', $jobs[1]->name);
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
 }

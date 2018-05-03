@@ -2,61 +2,61 @@
 
 class DummyHandlerTest extends \CIUnitTestCase
 {
-	private $dummyHandler;
+    private $dummyHandler;
 
-	public function setUp()
-	{
-		$this->dummyHandler = new DummyHandler();
-		$this->dummyHandler->initialize();
-	}
+    public function setUp()
+    {
+        $this->dummyHandler = new DummyHandler();
+        $this->dummyHandler->initialize();
+    }
 
-	public function testNew()
-	{
-		$this->assertInstanceOf(DummyHandler::class, $this->dummyHandler);
-	}
+    public function testNew()
+    {
+        $this->assertInstanceOf(DummyHandler::class, $this->dummyHandler);
+    }
 
-	public function testGet()
-	{
-		$this->assertNull($this->dummyHandler->get('key'));
-	}
+    public function testGet()
+    {
+        $this->assertNull($this->dummyHandler->get('key'));
+    }
 
-	public function testSave()
-	{
-		$this->assertTrue($this->dummyHandler->save('key', 'value'));
-	}
+    public function testSave()
+    {
+        $this->assertTrue($this->dummyHandler->save('key', 'value'));
+    }
 
-	public function testDelete()
-	{
-		$this->assertTrue($this->dummyHandler->delete('key'));
-	}
+    public function testDelete()
+    {
+        $this->assertTrue($this->dummyHandler->delete('key'));
+    }
 
-	public function testIncrement()
-	{
-		$this->assertTrue($this->dummyHandler->increment('key'));
-	}
+    public function testIncrement()
+    {
+        $this->assertTrue($this->dummyHandler->increment('key'));
+    }
 
-	public function testDecrement()
-	{
-		$this->assertTrue($this->dummyHandler->decrement('key'));
-	}
+    public function testDecrement()
+    {
+        $this->assertTrue($this->dummyHandler->decrement('key'));
+    }
 
-	public function testClean()
-	{
-		$this->assertTrue($this->dummyHandler->clean());
-	}
+    public function testClean()
+    {
+        $this->assertTrue($this->dummyHandler->clean());
+    }
 
-	public function testGetCacheInfo()
-	{
-		$this->assertNull($this->dummyHandler->getCacheInfo());
-	}
+    public function testGetCacheInfo()
+    {
+        $this->assertNull($this->dummyHandler->getCacheInfo());
+    }
 
-	public function testGetMetaData()
-	{
-		$this->assertNull($this->dummyHandler->getMetaData('key'));
-	}
+    public function testGetMetaData()
+    {
+        $this->assertNull($this->dummyHandler->getMetaData('key'));
+    }
 
-	public function testIsSupported()
-	{
-		$this->assertTrue($this->dummyHandler->isSupported());
-	}
+    public function testIsSupported()
+    {
+        $this->assertTrue($this->dummyHandler->isSupported());
+    }
 }

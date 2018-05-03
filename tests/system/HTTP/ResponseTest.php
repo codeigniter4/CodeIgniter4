@@ -7,214 +7,214 @@ use DateTimeZone;
 
 class ResponseTest extends \CIUnitTestCase
 {
-	public function testCanSetStatusCode()
-	{
-		$response = new Response(new App());
+    public function testCanSetStatusCode()
+    {
+        $response = new Response(new App());
 
-		$response->setStatusCode(200);
+        $response->setStatusCode(200);
 
-		$this->assertEquals(200, $response->getStatusCode());
-	}
+        $this->assertEquals(200, $response->getStatusCode());
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testSetStatusCodeThrowsExceptionForBadCodes()
-	{
-		$response = new Response(new App());
+    public function testSetStatusCodeThrowsExceptionForBadCodes()
+    {
+        $response = new Response(new App());
 
-		$this->expectException(HTTPException::class);
-		$response->setStatusCode(54322);
-	}
+        $this->expectException(HTTPException::class);
+        $response->setStatusCode(54322);
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
 
-	public function testSetStatusCodeSetsReason()
-	{
-		$response = new Response(new App());
+    public function testSetStatusCodeSetsReason()
+    {
+        $response = new Response(new App());
 
-		$response->setStatusCode(200);
+        $response->setStatusCode(200);
 
-		$this->assertEquals('OK', $response->getReason());
-	}
+        $this->assertEquals('OK', $response->getReason());
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testCanSetCustomReasonCode()
-	{
-		$response = new Response(new App());
+    public function testCanSetCustomReasonCode()
+    {
+        $response = new Response(new App());
 
-		$response->setStatusCode(200, 'Not the mama');
+        $response->setStatusCode(200, 'Not the mama');
 
-		$this->assertEquals('Not the mama', $response->getReason());
-	}
+        $this->assertEquals('Not the mama', $response->getReason());
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testRequiresMessageWithUnknownStatusCode()
-	{
-		$response = new Response(new App());
+    public function testRequiresMessageWithUnknownStatusCode()
+    {
+        $response = new Response(new App());
 
-		$this->expectException(HTTPException::class);
-		$this->expectExceptionMessage('Unknown HTTP status code provided with no message');
-		$response->setStatusCode(115);
-	}
+        $this->expectException(HTTPException::class);
+        $this->expectExceptionMessage('Unknown HTTP status code provided with no message');
+        $response->setStatusCode(115);
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testRequiresMessageWithSmallStatusCode()
-	{
-		$response = new Response(new App());
+    public function testRequiresMessageWithSmallStatusCode()
+    {
+        $response = new Response(new App());
 
-		$this->expectException(HTTPException::class);
-		$this->expectExceptionMessage(lang('HTTP.invalidStatusCode', [95]));
-		$response->setStatusCode(95);
-	}
+        $this->expectException(HTTPException::class);
+        $this->expectExceptionMessage(lang('HTTP.invalidStatusCode', [95]));
+        $response->setStatusCode(95);
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testRequiresMessageWithLargeStatusCode()
-	{
-		$response = new Response(new App());
+    public function testRequiresMessageWithLargeStatusCode()
+    {
+        $response = new Response(new App());
 
-		$this->expectException(HTTPException::class);
-		$this->expectExceptionMessage(lang('HTTP.invalidStatusCode', [695]));
-		$response->setStatusCode(695);
-	}
+        $this->expectException(HTTPException::class);
+        $this->expectExceptionMessage(lang('HTTP.invalidStatusCode', [695]));
+        $response->setStatusCode(695);
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testSetStatusCodeInterpretsReason()
-	{
-		$response = new Response(new App());
+    public function testSetStatusCodeInterpretsReason()
+    {
+        $response = new Response(new App());
 
-		$response->setStatusCode(300);
+        $response->setStatusCode(300);
 
-		$this->assertEquals('Multiple Choices', $response->getReason());
-	}
+        $this->assertEquals('Multiple Choices', $response->getReason());
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testSetStatusCodeSavesCustomReason()
-	{
-		$response = new Response(new App());
+    public function testSetStatusCodeSavesCustomReason()
+    {
+        $response = new Response(new App());
 
-		$response->setStatusCode(300, 'My Little Pony');
+        $response->setStatusCode(300, 'My Little Pony');
 
-		$this->assertEquals('My Little Pony', $response->getReason());
-	}
+        $this->assertEquals('My Little Pony', $response->getReason());
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testGetReasonDefaultsToOK()
-	{
-		$response = new Response(new App());
+    public function testGetReasonDefaultsToOK()
+    {
+        $response = new Response(new App());
 
-		$this->assertEquals('OK', $response->getReason());
-	}
+        $this->assertEquals('OK', $response->getReason());
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testSetDateRemembersDateInUTC()
-	{
-		$response = new Response(new App());
+    public function testSetDateRemembersDateInUTC()
+    {
+        $response = new Response(new App());
 
-		$response->setDate(DateTime::createFromFormat('Y-m-d', '2000-03-10'));
+        $response->setDate(DateTime::createFromFormat('Y-m-d', '2000-03-10'));
 
-		$date = DateTime::createFromFormat('Y-m-d', '2000-03-10');
-		$date->setTimezone(new DateTimeZone('UTC'));
+        $date = DateTime::createFromFormat('Y-m-d', '2000-03-10');
+        $date->setTimezone(new DateTimeZone('UTC'));
 
-		$header = $response->getHeaderLine('Date');
+        $header = $response->getHeaderLine('Date');
 
-		$this->assertEquals($date->format('D, d M Y H:i:s').' GMT', $header);
-	}
+        $this->assertEquals($date->format('D, d M Y H:i:s').' GMT', $header);
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testSetContentType()
-	{
-		$response = new Response(new App());
+    public function testSetContentType()
+    {
+        $response = new Response(new App());
 
-		$response->setContentType('text/json');
+        $response->setContentType('text/json');
 
-		$this->assertEquals('text/json; charset=UTF-8', $response->getHeaderLine('Content-Type'));
-	}
+        $this->assertEquals('text/json; charset=UTF-8', $response->getHeaderLine('Content-Type'));
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testNoCache()
-	{
-		$response = new Response(new App());
+    public function testNoCache()
+    {
+        $response = new Response(new App());
 
-		$response->noCache();
+        $response->noCache();
 
-		$this->assertEquals('no-store, max-age=0, no-cache', $response->getHeaderLine('Cache-control'));
-	}
+        $this->assertEquals('no-store, max-age=0, no-cache', $response->getHeaderLine('Cache-control'));
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testSetCache()
-	{
-		$response = new Response(new App());
+    public function testSetCache()
+    {
+        $response = new Response(new App());
 
-		$date = date('r');
+        $date = date('r');
 
-		$options = [
-			'etag' => '12345678',
-			'last-modified' => $date,
-			'max-age' => 300,
-			'must-revalidate'
-		];
+        $options = [
+            'etag' => '12345678',
+            'last-modified' => $date,
+            'max-age' => 300,
+            'must-revalidate'
+        ];
 
-		$response->setCache($options);
+        $response->setCache($options);
 
-		$this->assertEquals('12345678', $response->getHeaderLine('ETag'));
-		$this->assertEquals($date, $response->getHeaderLine('Last-Modified'));
-		$this->assertEquals('max-age=300, must-revalidate', $response->getHeaderLine('Cache-Control'));
-	}
+        $this->assertEquals('12345678', $response->getHeaderLine('ETag'));
+        $this->assertEquals($date, $response->getHeaderLine('Last-Modified'));
+        $this->assertEquals('max-age=300, must-revalidate', $response->getHeaderLine('Cache-Control'));
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testSetLastModifiedWithDateTimeObject()
-	{
-		$response = new Response(new App());
+    public function testSetLastModifiedWithDateTimeObject()
+    {
+        $response = new Response(new App());
 
-		$response->setLastModified(DateTime::createFromFormat('Y-m-d', '2000-03-10'));
+        $response->setLastModified(DateTime::createFromFormat('Y-m-d', '2000-03-10'));
 
-		$date = DateTime::createFromFormat('Y-m-d', '2000-03-10');
-		$date->setTimezone(new DateTimeZone('UTC'));
+        $date = DateTime::createFromFormat('Y-m-d', '2000-03-10');
+        $date->setTimezone(new DateTimeZone('UTC'));
 
-		$header = $response->getHeaderLine('Last-Modified');
+        $header = $response->getHeaderLine('Last-Modified');
 
-		$this->assertEquals($date->format('D, d M Y H:i:s').' GMT', $header);
-	}
+        $this->assertEquals($date->format('D, d M Y H:i:s').' GMT', $header);
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testRedirectSetsDefaultCodeAndLocationHeader()
-	{
-		$response = new Response(new App());
+    public function testRedirectSetsDefaultCodeAndLocationHeader()
+    {
+        $response = new Response(new App());
 
-		$response->redirect('example.com');
+        $response->redirect('example.com');
 
-		$this->assertTrue($response->hasHeader('location'));
-		$this->assertEquals('example.com', $response->getHeaderLine('Location'));
-		$this->assertEquals(302, $response->getStatusCode());
-	}
+        $this->assertTrue($response->hasHeader('location'));
+        $this->assertEquals('example.com', $response->getHeaderLine('Location'));
+        $this->assertEquals(302, $response->getStatusCode());
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testRedirectSetsCode()
-	{
-		$response = new Response(new App());
+    public function testRedirectSetsCode()
+    {
+        $response = new Response(new App());
 
-		$response->redirect('example.com', 'auto', 307);
+        $response->redirect('example.com', 'auto', 307);
 
-		$this->assertTrue($response->hasHeader('location'));
-		$this->assertEquals('example.com', $response->getHeaderLine('Location'));
-		$this->assertEquals(307, $response->getStatusCode());
-	}
+        $this->assertTrue($response->hasHeader('location'));
+        $this->assertEquals('example.com', $response->getHeaderLine('Location'));
+        $this->assertEquals(307, $response->getStatusCode());
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
 }

@@ -5,37 +5,37 @@
  */
 class FromTest extends \CIDatabaseTestCase
 {
-	protected $refresh = true;
+    protected $refresh = true;
 
-	protected $seed = 'CITestSeeder';
+    protected $seed = 'CITestSeeder';
 
-	public function testFromCanAddTables()
-	{
-		$result = $this->db->table('job')->from('misc')->get()->getResult();
+    public function testFromCanAddTables()
+    {
+        $result = $this->db->table('job')->from('misc')->get()->getResult();
 
-		$this->assertCount(12, $result);
-	}
+        $this->assertCount(12, $result);
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
 
-	public function testFromCanOverride()
-	{
-	    $result = $this->db->table('job')->from('misc', true)->get()->getResult();
+    public function testFromCanOverride()
+    {
+        $result = $this->db->table('job')->from('misc', true)->get()->getResult();
 
-		$this->assertCount(3, $result);
-	}
+        $this->assertCount(3, $result);
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testFromWithWhere()
-	{
-		$result = $this->db->table('job')->from('user')->where('user.id', 1)->get()->getResult();
+    public function testFromWithWhere()
+    {
+        $result = $this->db->table('job')->from('user')->where('user.id', 1)->get()->getResult();
 
-		$this->assertCount(4, $result);
-	}
+        $this->assertCount(4, $result);
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
 
 }

@@ -15,397 +15,397 @@ use Tests\Support\Models\ValidModel;
  */
 class ModelTest extends \CIDatabaseTestCase
 {
-	use ReflectionHelper;
+    use ReflectionHelper;
 
-	protected $refresh = true;
+    protected $refresh = true;
 
-	protected $seed = 'CITestSeeder';
+    protected $seed = 'CITestSeeder';
 
-	public function setUp()
-	{
-	    parent::setUp();
+    public function setUp()
+    {
+        parent::setUp();
 
-		$this->model = new Model($this->db);
-	}
+        $this->model = new Model($this->db);
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testFindReturnsRow()
-	{
-	    $model = new JobModel($this->db);
+    public function testFindReturnsRow()
+    {
+        $model = new JobModel($this->db);
 
-		$job = $model->find(4);
+        $job = $model->find(4);
 
-		$this->assertEquals('Musician', $job->name);
-	}
+        $this->assertEquals('Musician', $job->name);
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testFindReturnsMultipleRows()
-	{
-		$model = new JobModel($this->db);
+    public function testFindReturnsMultipleRows()
+    {
+        $model = new JobModel($this->db);
 
-		$job = $model->find([1,4]);
+        $job = $model->find([1,4]);
 
-		$this->assertEquals('Developer', $job[0]->name);
-		$this->assertEquals('Musician',  $job[1]->name);
-	}
+        $this->assertEquals('Developer', $job[0]->name);
+        $this->assertEquals('Musician',  $job[1]->name);
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testFindRespectsReturnArray()
-	{
-		$model = new JobModel($this->db);
+    public function testFindRespectsReturnArray()
+    {
+        $model = new JobModel($this->db);
 
-		$job = $model->asArray()->find(4);
+        $job = $model->asArray()->find(4);
 
-		$this->assertInternalType('array', $job);
-	}
+        $this->assertInternalType('array', $job);
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testFindRespectsReturnObject()
-	{
-		$model = new JobModel($this->db);
+    public function testFindRespectsReturnObject()
+    {
+        $model = new JobModel($this->db);
 
-		$job = $model->asObject()->find(4);
+        $job = $model->asObject()->find(4);
 
-		$this->assertInternalType('object', $job);
-	}
+        $this->assertInternalType('object', $job);
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testFindRespectsSoftDeletes()
-	{
-		$this->db->table('user')->where('id', 4)->update(['deleted' => 1]);
+    public function testFindRespectsSoftDeletes()
+    {
+        $this->db->table('user')->where('id', 4)->update(['deleted' => 1]);
 
-		$model = new UserModel($this->db);
+        $model = new UserModel($this->db);
 
-		$user = $model->asObject()->find(4);
+        $user = $model->asObject()->find(4);
 
-		$this->assertEmpty($user);
+        $this->assertEmpty($user);
 
-		$user = $model->withDeleted()->find(4);
+        $user = $model->withDeleted()->find(4);
 
-		$this->assertEquals(1, count($user));
-	}
+        $this->assertEquals(1, count($user));
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testFindWhereSimple()
-	{
-	    $model = new JobModel($this->db);
+    public function testFindWhereSimple()
+    {
+        $model = new JobModel($this->db);
 
-		$jobs = $model->asObject()->findWhere('id >', 2);
+        $jobs = $model->asObject()->findWhere('id >', 2);
 
-		$this->assertCount(2, $jobs);
-		$this->assertEquals('Accountant', $jobs[0]->name);
-		$this->assertEquals('Musician',   $jobs[1]->name);
-	}
+        $this->assertCount(2, $jobs);
+        $this->assertEquals('Accountant', $jobs[0]->name);
+        $this->assertEquals('Musician',   $jobs[1]->name);
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testFindWhereWithArrayWhere()
-	{
-		$model = new JobModel($this->db);
+    public function testFindWhereWithArrayWhere()
+    {
+        $model = new JobModel($this->db);
 
-		$jobs = $model->asArray()->findWhere(['id' => 1]);
+        $jobs = $model->asArray()->findWhere(['id' => 1]);
 
-		$this->assertCount(1, $jobs);
-		$this->assertEquals('Developer', $jobs[0]['name']);
-	}
+        $this->assertCount(1, $jobs);
+        $this->assertEquals('Developer', $jobs[0]['name']);
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testFindWhereRespectsSoftDeletes()
-	{
-		$this->db->table('user')->where('id', 4)->update(['deleted' => 1]);
+    public function testFindWhereRespectsSoftDeletes()
+    {
+        $this->db->table('user')->where('id', 4)->update(['deleted' => 1]);
 
-		$model = new UserModel($this->db);
+        $model = new UserModel($this->db);
 
-		$user = $model->findWhere('id >', '2');
+        $user = $model->findWhere('id >', '2');
 
-		$this->assertCount(1, $user);
+        $this->assertCount(1, $user);
 
-		$user = $model->withDeleted()->findWhere('id >', 2);
+        $user = $model->withDeleted()->findWhere('id >', 2);
 
-		$this->assertCount(2, $user);
-	}
+        $this->assertCount(2, $user);
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testFindAllReturnsAllRecords()
-	{
-	    $model = new UserModel($this->db);
+    public function testFindAllReturnsAllRecords()
+    {
+        $model = new UserModel($this->db);
 
-		$users = $model->findAll();
+        $users = $model->findAll();
 
-		$this->assertCount(4, $users);
-	}
+        $this->assertCount(4, $users);
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testFindAllRespectsLimits()
-	{
-		$model = new UserModel($this->db);
+    public function testFindAllRespectsLimits()
+    {
+        $model = new UserModel($this->db);
 
-		$users = $model->findAll(2);
+        $users = $model->findAll(2);
 
-		$this->assertCount(2, $users);
-		$this->assertEquals('Derek Jones', $users[0]->name);
-	}
+        $this->assertCount(2, $users);
+        $this->assertEquals('Derek Jones', $users[0]->name);
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testFindAllRespectsLimitsAndOffset()
-	{
-		$model = new UserModel($this->db);
+    public function testFindAllRespectsLimitsAndOffset()
+    {
+        $model = new UserModel($this->db);
 
-		$users = $model->findAll(2, 2);
+        $users = $model->findAll(2, 2);
 
-		$this->assertCount(2, $users);
-		$this->assertEquals('Richard A Causey', $users[0]->name);
-	}
+        $this->assertCount(2, $users);
+        $this->assertEquals('Richard A Causey', $users[0]->name);
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testFindAllRespectsSoftDeletes()
-	{
-		$this->db->table('user')->where('id', 4)->update(['deleted' => 1]);
+    public function testFindAllRespectsSoftDeletes()
+    {
+        $this->db->table('user')->where('id', 4)->update(['deleted' => 1]);
 
-		$model = new UserModel($this->db);
+        $model = new UserModel($this->db);
 
-		$user = $model->findAll();
+        $user = $model->findAll();
 
-		$this->assertCount(3, $user);
+        $this->assertCount(3, $user);
 
-		$user = $model->withDeleted()->findAll();
+        $user = $model->withDeleted()->findAll();
 
-		$this->assertCount(4, $user);
-	}
+        $this->assertCount(4, $user);
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testFirst()
-	{
-	    $model = new UserModel();
+    public function testFirst()
+    {
+        $model = new UserModel();
 
-		$user = $model->where('id >', 2)->first();
+        $user = $model->where('id >', 2)->first();
 
-		$this->assertEquals(1, count($user));
-		$this->assertEquals(3, $user->id);
-	}
+        $this->assertEquals(1, count($user));
+        $this->assertEquals(3, $user->id);
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testFirstRespectsSoftDeletes()
-	{
-		$this->db->table('user')->where('id', 1)->update(['deleted' => 1]);
+    public function testFirstRespectsSoftDeletes()
+    {
+        $this->db->table('user')->where('id', 1)->update(['deleted' => 1]);
 
-		$model = new UserModel();
+        $model = new UserModel();
 
-		$user = $model->first();
+        $user = $model->first();
 
-		$this->assertEquals(1, count($user));
-		$this->assertEquals(2, $user->id);
+        $this->assertEquals(1, count($user));
+        $this->assertEquals(2, $user->id);
 
-		$user = $model->withDeleted()->first();
+        $user = $model->withDeleted()->first();
 
-		$this->assertEquals(1, $user->id);
-	}
+        $this->assertEquals(1, $user->id);
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testSaveNewRecordObject()
-	{
-	    $model = new JobModel();
+    public function testSaveNewRecordObject()
+    {
+        $model = new JobModel();
 
-		$data = new \stdClass();
-		$data->name = 'Magician';
-		$data->description = 'Makes peoples things dissappear.';
+        $data = new \stdClass();
+        $data->name = 'Magician';
+        $data->description = 'Makes peoples things dissappear.';
 
-		$model->protect(false)->save($data);
+        $model->protect(false)->save($data);
 
-		$this->seeInDatabase('job', ['name' => 'Magician']);
-	}
+        $this->seeInDatabase('job', ['name' => 'Magician']);
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testSaveNewRecordArray()
-	{
-		$model = new JobModel();
+    public function testSaveNewRecordArray()
+    {
+        $model = new JobModel();
 
-		$data = [
-			'name' => 'Apprentice',
-		    'description' => 'That thing you do.'
-		];
+        $data = [
+            'name' => 'Apprentice',
+            'description' => 'That thing you do.'
+        ];
 
-		$result = $model->protect(false)->save($data);
+        $result = $model->protect(false)->save($data);
 
-		$this->seeInDatabase('job', ['name' => 'Apprentice']);
-	}
+        $this->seeInDatabase('job', ['name' => 'Apprentice']);
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testSaveUpdateRecordObject()
-	{
-		$model = new JobModel();
+    public function testSaveUpdateRecordObject()
+    {
+        $model = new JobModel();
 
-		$data = [
-			'id' => 1,
-			'name' => 'Apprentice',
-			'description' => 'That thing you do.'
-		];
+        $data = [
+            'id' => 1,
+            'name' => 'Apprentice',
+            'description' => 'That thing you do.'
+        ];
 
-		$result = $model->protect(false)->save($data);
+        $result = $model->protect(false)->save($data);
 
-		$this->seeInDatabase('job', ['name' => 'Apprentice']);
-		$this->assertTrue($result);
-	}
+        $this->seeInDatabase('job', ['name' => 'Apprentice']);
+        $this->assertTrue($result);
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testSaveUpdateRecordArray()
-	{
-		$model = new JobModel();
+    public function testSaveUpdateRecordArray()
+    {
+        $model = new JobModel();
 
-		$data = new \stdClass();
-		$data->id = 1;
-		$data->name = 'Engineer';
-		$data->description = 'A fancier term for Developer.';
+        $data = new \stdClass();
+        $data->id = 1;
+        $data->name = 'Engineer';
+        $data->description = 'A fancier term for Developer.';
 
-		$result = $model->protect(false)->save($data);
+        $result = $model->protect(false)->save($data);
 
-		$this->seeInDatabase('job', ['name' => 'Engineer']);
-		$this->assertTrue($result);
-	}
+        $this->seeInDatabase('job', ['name' => 'Engineer']);
+        $this->assertTrue($result);
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testSaveProtected()
-	{
-		$model = new JobModel();
+    public function testSaveProtected()
+    {
+        $model = new JobModel();
 
-		$data = new \stdClass();
-		$data->id = 1;
-		$data->name = 'Engineer';
-		$data->description = 'A fancier term for Developer.';
-		$data->random_thing = 'Something wicked'; // If not protected, this would kill the script.
+        $data = new \stdClass();
+        $data->id = 1;
+        $data->name = 'Engineer';
+        $data->description = 'A fancier term for Developer.';
+        $data->random_thing = 'Something wicked'; // If not protected, this would kill the script.
 
-		$result = $model->protect(true)->save($data);
+        $result = $model->protect(true)->save($data);
 
         $this->assertTrue($result);
-	}
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testDeleteBasics()
-	{
-	    $model = new JobModel();
+    public function testDeleteBasics()
+    {
+        $model = new JobModel();
 
-		$this->seeInDatabase('job', ['name' =>'Developer']);
+        $this->seeInDatabase('job', ['name' =>'Developer']);
 
-		$model->delete(1);
+        $model->delete(1);
 
-		$this->dontSeeInDatabase('job', ['name' => 'Developer']);
-	}
+        $this->dontSeeInDatabase('job', ['name' => 'Developer']);
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testDeleteWithSoftDeletes()
-	{
-		$model = new UserModel();
+    public function testDeleteWithSoftDeletes()
+    {
+        $model = new UserModel();
 
-		$this->seeInDatabase('user', ['name' =>'Derek Jones', 'deleted' => 0]);
+        $this->seeInDatabase('user', ['name' =>'Derek Jones', 'deleted' => 0]);
 
-		$model->delete(1);
+        $model->delete(1);
 
-		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted' => 1]);
-	}
+        $this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted' => 1]);
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testDeleteWithSoftDeletesPurge()
-	{
-		$model = new UserModel();
+    public function testDeleteWithSoftDeletesPurge()
+    {
+        $model = new UserModel();
 
-		$this->seeInDatabase('user', ['name' =>'Derek Jones', 'deleted' => 0]);
+        $this->seeInDatabase('user', ['name' =>'Derek Jones', 'deleted' => 0]);
 
-		$model->delete(1, true);
+        $model->delete(1, true);
 
-		$this->dontSeeInDatabase('user', ['name' => 'Derek Jones']);
-	}
+        $this->dontSeeInDatabase('user', ['name' => 'Derek Jones']);
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testDeleteWhereWithSoftDeletes()
-	{
-		$model = new UserModel();
+    public function testDeleteWhereWithSoftDeletes()
+    {
+        $model = new UserModel();
 
-		$this->seeInDatabase('user', ['name' =>'Derek Jones', 'deleted' => 0]);
+        $this->seeInDatabase('user', ['name' =>'Derek Jones', 'deleted' => 0]);
 
-		$model->deleteWhere('name', 'Derek Jones');
+        $model->deleteWhere('name', 'Derek Jones');
 
-		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted' => 1]);
-	}
+        $this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted' => 1]);
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testDeleteWhereWithSoftDeletesPurge()
-	{
-		$model = new UserModel();
+    public function testDeleteWhereWithSoftDeletesPurge()
+    {
+        $model = new UserModel();
 
-		$this->seeInDatabase('user', ['name' =>'Derek Jones', 'deleted' => 0]);
+        $this->seeInDatabase('user', ['name' =>'Derek Jones', 'deleted' => 0]);
 
-		$model->deleteWhere('name', 'Derek Jones', true);
+        $model->deleteWhere('name', 'Derek Jones', true);
 
-		$this->dontSeeInDatabase('user', ['name' => 'Derek Jones']);
-	}
+        $this->dontSeeInDatabase('user', ['name' => 'Derek Jones']);
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testPurgeDeleted()
-	{
-	    $model = new UserModel();
+    public function testPurgeDeleted()
+    {
+        $model = new UserModel();
 
-		$this->db->table('user')->where('id', 1)->update(['deleted' => 1]);
+        $this->db->table('user')->where('id', 1)->update(['deleted' => 1]);
 
-		$model->purgeDeleted();
+        $model->purgeDeleted();
 
-		$users = $model->withDeleted()->findAll();
+        $users = $model->withDeleted()->findAll();
 
-		$this->assertCount(3, $users);
-	}
+        $this->assertCount(3, $users);
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testOnlyDeleted()
-	{
-		$model = new UserModel($this->db);
+    public function testOnlyDeleted()
+    {
+        $model = new UserModel($this->db);
 
-		$this->db->table('user')->where('id', 1)->update(['deleted' => 1]);
+        $this->db->table('user')->where('id', 1)->update(['deleted' => 1]);
 
-		$users = $model->onlyDeleted()->findAll();
+        $users = $model->onlyDeleted()->findAll();
 
-		$this->assertCount(1, $users);
-	}
+        $this->assertCount(1, $users);
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testChunk()
-	{
-	    $model = new UserModel();
+    public function testChunk()
+    {
+        $model = new UserModel();
 
-		$rowCount = 0;
+        $rowCount = 0;
 
-		$model->chunk(2, function($row) use (&$rowCount) {
-			$rowCount++;
-		});
+        $model->chunk(2, function($row) use (&$rowCount) {
+            $rowCount++;
+        });
 
-		$this->assertEquals(4, $rowCount);
-	}
+        $this->assertEquals(4, $rowCount);
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
     public function testValidationBasics()
     {
@@ -424,33 +424,33 @@ class ModelTest extends \CIDatabaseTestCase
 
     //--------------------------------------------------------------------
 
-	public function testValidationPlaceholdersSuccess()
-	{
-		$model = new ValidModel($this->db);
+    public function testValidationPlaceholdersSuccess()
+    {
+        $model = new ValidModel($this->db);
 
-		$data = [
-			'name' => 'abc',
-			'id' => 13,
-			'token' => 13
-		];
+        $data = [
+            'name' => 'abc',
+            'id' => 13,
+            'token' => 13
+        ];
 
-		$this->assertTrue($model->validate($data));
-	}
+        $this->assertTrue($model->validate($data));
+    }
 
-	public function testValidationPlaceholdersFail()
-	{
-		$model = new ValidModel($this->db);
+    public function testValidationPlaceholdersFail()
+    {
+        $model = new ValidModel($this->db);
 
-		$data = [
-			'name' => 'abc',
-			'id' => 13,
-			'token' => 12
-		];
+        $data = [
+            'name' => 'abc',
+            'id' => 13,
+            'token' => 12
+        ];
 
-		$this->assertFalse($model->validate($data));
-	}
+        $this->assertFalse($model->validate($data));
+    }
 
-	public function testSkipValidation()
+    public function testSkipValidation()
     {
         $model = new ValidModel($this->db);
 
@@ -485,77 +485,77 @@ class ModelTest extends \CIDatabaseTestCase
         $this->seeInDatabase('job', ['name' => 'Senior Developer', 'created_at' => '2017-07-15 00:00:00']);
     }
 
-	/**
-	 * @see https://github.com/bcit-ci/CodeIgniter4/issues/580
-	 */
-	public function testPasswordsStoreCorrectly()
+    /**
+     * @see https://github.com/bcit-ci/CodeIgniter4/issues/580
+     */
+    public function testPasswordsStoreCorrectly()
     {
-		$model = new UserModel();
+        $model = new UserModel();
 
-		$pass = password_hash('secret123', PASSWORD_BCRYPT);
+        $pass = password_hash('secret123', PASSWORD_BCRYPT);
 
-		$data = [
-			'name'  => 	$pass,
-			'email' => 'foo@example.com',
-			'country' => 'US',
-			'deleted' => 0
-		];
+        $data = [
+            'name'  =>  $pass,
+            'email' => 'foo@example.com',
+            'country' => 'US',
+            'deleted' => 0
+        ];
 
-		$model->insert($data);
+        $model->insert($data);
 
-		$this->seeInDatabase('user', $data);
+        $this->seeInDatabase('user', $data);
     }
 
-	public function testInsertEvent()
-	{
-		$model = new EventModel();
+    public function testInsertEvent()
+    {
+        $model = new EventModel();
 
-		$data = [
-			'name'  => 	'Foo',
-			'email' => 'foo@example.com',
-			'country' => 'US',
-			'deleted' => 0
-		];
+        $data = [
+            'name'  =>  'Foo',
+            'email' => 'foo@example.com',
+            'country' => 'US',
+            'deleted' => 0
+        ];
 
-		$model->insert($data);
+        $model->insert($data);
 
-		$this->assertTrue($model->hasToken('beforeInsert'));
-		$this->assertTrue($model->hasToken('afterInsert'));
+        $this->assertTrue($model->hasToken('beforeInsert'));
+        $this->assertTrue($model->hasToken('afterInsert'));
     }
 
-	public function testUpdateEvent()
-	{
-		$model = new EventModel();
+    public function testUpdateEvent()
+    {
+        $model = new EventModel();
 
-		$data = [
-			'name'  => 	'Foo',
-			'email' => 'foo@example.com',
-			'country' => 'US',
-			'deleted' => 0
-		];
+        $data = [
+            'name'  =>  'Foo',
+            'email' => 'foo@example.com',
+            'country' => 'US',
+            'deleted' => 0
+        ];
 
-		$id = $model->insert($data);
-		$model->update($id, $data);
+        $id = $model->insert($data);
+        $model->update($id, $data);
 
-		$this->assertTrue($model->hasToken('beforeUpdate'));
-		$this->assertTrue($model->hasToken('afterUpdate'));
-	}
+        $this->assertTrue($model->hasToken('beforeUpdate'));
+        $this->assertTrue($model->hasToken('afterUpdate'));
+    }
 
-	public function testFindEvent()
-	{
-		$model = new EventModel();
+    public function testFindEvent()
+    {
+        $model = new EventModel();
 
-		$model->find(1);
+        $model->find(1);
 
-		$this->assertTrue($model->hasToken('afterFind'));
-	}
+        $this->assertTrue($model->hasToken('afterFind'));
+    }
 
-	public function testDeleteEvent()
-	{
-		$model = new EventModel();
+    public function testDeleteEvent()
+    {
+        $model = new EventModel();
 
-		$model->delete(1);
+        $model->delete(1);
 
-		$this->assertTrue($model->hasToken('afterDelete'));
-	}
+        $this->assertTrue($model->hasToken('afterDelete'));
+    }
 }

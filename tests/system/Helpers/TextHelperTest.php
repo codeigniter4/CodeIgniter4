@@ -3,107 +3,107 @@
 class TextHelperTest extends \CIUnitTestCase
 {
     private $_long_string = 'Once upon a time, a framework had no tests. It sad. So some nice people began to write tests. The more time that went on, the happier it became. Everyone was happy.';
-    
+
     public function setUp()
     {
         helper('text');
     }
-    
+
     // --------------------------------------------------------------------
-    
+
     public function test_strip_slashes()
-	{
-		$expected = [
-			"Is your name O'reilly?",
-			"No, my name is O'connor."
-		];
-		$str = [
-			"Is your name O\'reilly?",
-			"No, my name is O\'connor."
-		];
-		$this->assertEquals($expected, strip_slashes($str));
-	}
-	// --------------------------------------------------------------------
-	public function test_strip_quotes()
-	{
-		$strs = [
-			'"me oh my!"'		=> 'me oh my!',
-			"it's a winner!"	=> 'its a winner!',
-		];
-		foreach ($strs as $str => $expect)
-		{
-			$this->assertEquals($expect, strip_quotes($str));
-		}
-	}
-	// --------------------------------------------------------------------
-	public function test_quotes_to_entities()
-	{
-		$strs = [
-			'"me oh my!"'		=> '&quot;me oh my!&quot;',
-			"it's a winner!"	=> 'it&#39;s a winner!',
-		];
-		foreach ($strs as $str => $expect)
-		{
-			$this->assertEquals($expect, quotes_to_entities($str));
-		}
-	}
-	// --------------------------------------------------------------------
-	public function test_reduce_double_slashes()
-	{
-		$strs = [
-			'http://codeigniter.com'		=> 'http://codeigniter.com',
-			'//var/www/html/example.com/'	=> '/var/www/html/example.com/',
-			'/var/www/html//index.php'		=> '/var/www/html/index.php'
-		];
-		foreach ($strs as $str => $expect)
-		{
-			$this->assertEquals($expect, reduce_double_slashes($str));
-		}
-	}
-	// --------------------------------------------------------------------
-	public function test_reduce_multiples()
-	{
-		$strs = [
-			'Fred, Bill,, Joe, Jimmy'	=> 'Fred, Bill, Joe, Jimmy',
-			'Ringo, John, Paul,,'		=> 'Ringo, John, Paul,'
-		];
-		foreach ($strs as $str => $expect)
-		{
-			$this->assertEquals($expect, reduce_multiples($str));
-		}
-		$strs = [
-			'Fred, Bill,, Joe, Jimmy'	=> 'Fred, Bill, Joe, Jimmy',
-			'Ringo, John, Paul,,'		=> 'Ringo, John, Paul'
-		];
-		foreach ($strs as $str => $expect)
-		{
-			$this->assertEquals($expect, reduce_multiples($str, ',', TRUE));
-		}
-	}
-	// --------------------------------------------------------------------
-	public function test_random_string()
-	{
-		$this->assertEquals(16, strlen(random_string('alnum', 16)));
-		$this->assertInternalType('string', random_string('numeric', 16));
+    {
+        $expected = [
+            "Is your name O'reilly?",
+            "No, my name is O'connor."
+        ];
+        $str = [
+            "Is your name O\'reilly?",
+            "No, my name is O\'connor."
+        ];
+        $this->assertEquals($expected, strip_slashes($str));
+    }
+    // --------------------------------------------------------------------
+    public function test_strip_quotes()
+    {
+        $strs = [
+            '"me oh my!"'       => 'me oh my!',
+            "it's a winner!"    => 'its a winner!',
+        ];
+        foreach ($strs as $str => $expect)
+        {
+            $this->assertEquals($expect, strip_quotes($str));
+        }
+    }
+    // --------------------------------------------------------------------
+    public function test_quotes_to_entities()
+    {
+        $strs = [
+            '"me oh my!"'       => '&quot;me oh my!&quot;',
+            "it's a winner!"    => 'it&#39;s a winner!',
+        ];
+        foreach ($strs as $str => $expect)
+        {
+            $this->assertEquals($expect, quotes_to_entities($str));
+        }
+    }
+    // --------------------------------------------------------------------
+    public function test_reduce_double_slashes()
+    {
+        $strs = [
+            'http://codeigniter.com'        => 'http://codeigniter.com',
+            '//var/www/html/example.com/'   => '/var/www/html/example.com/',
+            '/var/www/html//index.php'      => '/var/www/html/index.php'
+        ];
+        foreach ($strs as $str => $expect)
+        {
+            $this->assertEquals($expect, reduce_double_slashes($str));
+        }
+    }
+    // --------------------------------------------------------------------
+    public function test_reduce_multiples()
+    {
+        $strs = [
+            'Fred, Bill,, Joe, Jimmy'   => 'Fred, Bill, Joe, Jimmy',
+            'Ringo, John, Paul,,'       => 'Ringo, John, Paul,'
+        ];
+        foreach ($strs as $str => $expect)
+        {
+            $this->assertEquals($expect, reduce_multiples($str));
+        }
+        $strs = [
+            'Fred, Bill,, Joe, Jimmy'   => 'Fred, Bill, Joe, Jimmy',
+            'Ringo, John, Paul,,'       => 'Ringo, John, Paul'
+        ];
+        foreach ($strs as $str => $expect)
+        {
+            $this->assertEquals($expect, reduce_multiples($str, ',', TRUE));
+        }
+    }
+    // --------------------------------------------------------------------
+    public function test_random_string()
+    {
+        $this->assertEquals(16, strlen(random_string('alnum', 16)));
+        $this->assertInternalType('string', random_string('numeric', 16));
                $this->assertEquals(16, strlen($random = random_string('crypto', 16)));
                $this->assertInternalType('string', $random);
-	}
-	// --------------------------------------------------------------------
-	public function test_increment_string()
-	{
-		$this->assertEquals('my-test_1', increment_string('my-test'));
-		$this->assertEquals('my-test-1', increment_string('my-test', '-'));
-		$this->assertEquals('file_5', increment_string('file_4'));
-		$this->assertEquals('file-5', increment_string('file-4', '-'));
-		$this->assertEquals('file-5', increment_string('file-4', '-'));
-		$this->assertEquals('file-1', increment_string('file', '-', '1'));
-		$this->assertEquals(124, increment_string('123', ''));
-	}
-	
-	// -------------------------------------------------------------------
-	// Functions from text_helper_test.php
-	// -------------------------------------------------------------------
-	
+    }
+    // --------------------------------------------------------------------
+    public function test_increment_string()
+    {
+        $this->assertEquals('my-test_1', increment_string('my-test'));
+        $this->assertEquals('my-test-1', increment_string('my-test', '-'));
+        $this->assertEquals('file_5', increment_string('file_4'));
+        $this->assertEquals('file-5', increment_string('file-4', '-'));
+        $this->assertEquals('file-5', increment_string('file-4', '-'));
+        $this->assertEquals('file-1', increment_string('file', '-', '1'));
+        $this->assertEquals(124, increment_string('123', ''));
+    }
+
+    // -------------------------------------------------------------------
+    // Functions from text_helper_test.php
+    // -------------------------------------------------------------------
+
     public function test_word_limiter()
     {
         $this->assertEquals('Once upon a time,&#8230;', word_limiter($this->_long_string, 4));
@@ -122,8 +122,8 @@ class TextHelperTest extends \CIUnitTestCase
     public function test_ascii_to_entities()
     {
         $strs = [
-                '“‘ “test”'			=> '&#8220;&#8216; &#8220;test&#8221;',
-                '†¥¨ˆøåß∂ƒ©˙∆˚¬'	=> '&#8224;&#165;&#168;&#710;&#248;&#229;&#223;&#8706;&#402;&#169;&#729;&#8710;&#730;&#172;'
+                '“‘ “test”'         => '&#8220;&#8216; &#8220;test&#8221;',
+                '†¥¨ˆøåß∂ƒ©˙∆˚¬'    => '&#8224;&#165;&#168;&#710;&#248;&#229;&#223;&#8706;&#402;&#169;&#729;&#8710;&#730;&#172;'
         ];
         foreach ($strs as $str => $expect)
         {
@@ -154,11 +154,11 @@ class TextHelperTest extends \CIUnitTestCase
     {
         $censored = ['boob', 'nerd', 'ass', 'fart'];
         $strs = [
-                'Ted bobbled the ball' 			=> 'Ted bobbled the ball',
-                'Jake is a nerdo'				=> 'Jake is a nerdo',
-                'The borg will assimilate you'	=> 'The borg will assimilate you',
-                'Did Mary Fart?'				=> 'Did Mary $*#?',
-                'Jake is really a boob'			=> 'Jake is really a $*#'
+                'Ted bobbled the ball'          => 'Ted bobbled the ball',
+                'Jake is a nerdo'               => 'Jake is a nerdo',
+                'The borg will assimilate you'  => 'The borg will assimilate you',
+                'Did Mary Fart?'                => 'Did Mary $*#?',
+                'Jake is really a boob'         => 'Jake is really a $*#'
         ];
         foreach ($strs as $str => $expect)
         {
@@ -193,23 +193,23 @@ class TextHelperTest extends \CIUnitTestCase
     public function test_ellipsize()
     {
         $strs = [
-                '0'		=> [
-                        'this is my string'				=> '&hellip; my string',
-                        "here's another one"			=> '&hellip;nother one',
-                        'this one is just a bit longer'	=> '&hellip;bit longer',
-                        'short'							=> 'short'
+                '0'     => [
+                        'this is my string'             => '&hellip; my string',
+                        "here's another one"            => '&hellip;nother one',
+                        'this one is just a bit longer' => '&hellip;bit longer',
+                        'short'                         => 'short'
                 ],
-                '.5'	=> [
-                        'this is my string'				=> 'this &hellip;tring',
-                        "here's another one"			=> "here'&hellip;r one",
-                        'this one is just a bit longer'	=> 'this &hellip;onger',
-                        'short'							=> 'short'
+                '.5'    => [
+                        'this is my string'             => 'this &hellip;tring',
+                        "here's another one"            => "here'&hellip;r one",
+                        'this one is just a bit longer' => 'this &hellip;onger',
+                        'short'                         => 'short'
                 ],
-                '1'	=> [
-                        'this is my string'				=> 'this is my&hellip;',
-                        "here's another one"			=> "here's ano&hellip;",
-                        'this one is just a bit longer'	=> 'this one i&hellip;',
-                        'short'							=> 'short'
+                '1' => [
+                        'this is my string'             => 'this is my&hellip;',
+                        "here's another one"            => "here's ano&hellip;",
+                        'this one is just a bit longer' => 'this one i&hellip;',
+                        'short'                         => 'short'
                 ],
         ];
         foreach ($strs as $pos => $s)
@@ -232,18 +232,18 @@ class TextHelperTest extends \CIUnitTestCase
         $string = "Here is a longer string of text that will help us demonstrate the default charlim of this function.";
         $this->assertEquals(strpos(word_wrap($string), "\n"), 73);
     }
-    
+
     // -----------------------------------------------------------------------
-    
+
     public function test_excerpt()
     {
         $string = $this->_long_string;
         $result = ' Once upon a time, a framework had no tests. It sad  So some nice people began to write tests. The more time that went on, the happier it became. ...';
         $this->assertEquals(excerpt($string), $result);
     }
-    
+
     // -----------------------------------------------------------------------
-    
+
     public function test_excerpt_radius()
     {
         $string = $this->_long_string;

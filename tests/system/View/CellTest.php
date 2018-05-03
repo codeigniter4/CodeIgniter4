@@ -7,125 +7,125 @@ include_once __DIR__ .'/SampleClass.php';
 
 class CellTest extends \CIUnitTestCase
 {
-	protected $cache;
+    protected $cache;
 
-	/**
-	 * @var Cell
-	 */
-	protected $cell;
+    /**
+     * @var Cell
+     */
+    protected $cell;
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function setup()
-	{
-		$this->cache = new MockHandler();
-	    $this->cell = new Cell($this->cache);
-	}
+    public function setup()
+    {
+        $this->cache = new MockHandler();
+        $this->cell = new Cell($this->cache);
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testPrepareParamsReturnsEmptyArrayWithInvalidParam()
-	{
-	    $this->assertEquals([], $this->cell->prepareParams(1.023));
-	}
+    public function testPrepareParamsReturnsEmptyArrayWithInvalidParam()
+    {
+        $this->assertEquals([], $this->cell->prepareParams(1.023));
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testPrepareParamsReturnsNullWithEmptyString()
-	{
-	    $this->assertEquals([], $this->cell->prepareParams(''));
-	}
+    public function testPrepareParamsReturnsNullWithEmptyString()
+    {
+        $this->assertEquals([], $this->cell->prepareParams(''));
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testPrepareParamsReturnsSelfWhenArray()
-	{
-	    $object = ['one' => 'two', 'three' => 'four'];
+    public function testPrepareParamsReturnsSelfWhenArray()
+    {
+        $object = ['one' => 'two', 'three' => 'four'];
 
-		$this->assertEquals($object, $this->cell->prepareParams($object));
-	}
+        $this->assertEquals($object, $this->cell->prepareParams($object));
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testPrepareParamsReturnsEmptyArrayWithEmptyArray()
-	{
-	    $this->assertEquals([], $this->cell->prepareParams([]));
-	}
+    public function testPrepareParamsReturnsEmptyArrayWithEmptyArray()
+    {
+        $this->assertEquals([], $this->cell->prepareParams([]));
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testPrepareParamsReturnsArrayWithString()
-	{
-	    $params = 'one=two three=four';
-		$expected = ['one' => 'two', 'three' => 'four'];
+    public function testPrepareParamsReturnsArrayWithString()
+    {
+        $params = 'one=two three=four';
+        $expected = ['one' => 'two', 'three' => 'four'];
 
-		$this->assertEquals($expected, $this->cell->prepareParams($params));
-	}
+        $this->assertEquals($expected, $this->cell->prepareParams($params));
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testPrepareParamsHandlesCommas()
-	{
-		$params = 'one=2, three=4.15';
-		$expected = ['one' => 2, 'three' => 4.15];
+    public function testPrepareParamsHandlesCommas()
+    {
+        $params = 'one=2, three=4.15';
+        $expected = ['one' => 2, 'three' => 4.15];
 
-		$this->assertEquals($expected, $this->cell->prepareParams($params));
-	}
+        $this->assertEquals($expected, $this->cell->prepareParams($params));
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testPrepareParamsWorksWithoutSpaces()
-	{
-		$params = 'one=two,three=four';
-		$expected = ['one' => 'two', 'three' => 'four'];
+    public function testPrepareParamsWorksWithoutSpaces()
+    {
+        $params = 'one=two,three=four';
+        $expected = ['one' => 'two', 'three' => 'four'];
 
-		$this->assertEquals($expected, $this->cell->prepareParams($params));
-	}
+        $this->assertEquals($expected, $this->cell->prepareParams($params));
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testPrepareParamsWorksWithOddEqualsSpaces()
-	{
-		$params = 'one= two,three =four, five = six';
-		$expected = ['one' => 'two', 'three' => 'four', 'five' => 'six'];
+    public function testPrepareParamsWorksWithOddEqualsSpaces()
+    {
+        $params = 'one= two,three =four, five = six';
+        $expected = ['one' => 'two', 'three' => 'four', 'five' => 'six'];
 
-		$this->assertEquals($expected, $this->cell->prepareParams($params));
-	}
+        $this->assertEquals($expected, $this->cell->prepareParams($params));
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	//--------------------------------------------------------------------
-	// Render
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
+    // Render
+    //--------------------------------------------------------------------
 
-	public function testDisplayRendersWithNamespacedClass()
-	{
-		$expected = 'Hello';
+    public function testDisplayRendersWithNamespacedClass()
+    {
+        $expected = 'Hello';
 
-		$this->assertEquals($expected, $this->cell->render('\CodeIgniter\View\SampleClass::hello'));
-	}
+        $this->assertEquals($expected, $this->cell->render('\CodeIgniter\View\SampleClass::hello'));
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testDisplayRendersWithValidParamString()
-	{
-		$params = 'one=two,three=four';
-		$expected = ['one' => 'two', 'three' => 'four'];
+    public function testDisplayRendersWithValidParamString()
+    {
+        $params = 'one=two,three=four';
+        $expected = ['one' => 'two', 'three' => 'four'];
 
-		$this->assertEquals(implode(',', $expected), $this->cell->render('\CodeIgniter\View\SampleClass::echobox', $params));
-	}
+        $this->assertEquals(implode(',', $expected), $this->cell->render('\CodeIgniter\View\SampleClass::echobox', $params));
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testDisplayRendersWithStaticMethods()
-	{
-		$params = 'one=two,three=four';
-		$expected = ['one' => 'two', 'three' => 'four'];
+    public function testDisplayRendersWithStaticMethods()
+    {
+        $params = 'one=two,three=four';
+        $expected = ['one' => 'two', 'three' => 'four'];
 
-		$this->assertEquals(implode(',', $expected), $this->cell->render('\CodeIgniter\View\SampleClass::staticEcho', $params));
-	}
+        $this->assertEquals(implode(',', $expected), $this->cell->render('\CodeIgniter\View\SampleClass::staticEcho', $params));
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
     public function testOptionsEmptyArray()
     {

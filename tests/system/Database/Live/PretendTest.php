@@ -7,27 +7,27 @@ use CodeIgniter\Database\Query;
  */
 class PretendTest extends \CIDatabaseTestCase
 {
-	public function tearDown()
-	{
-		// We share `$this->db` in testing, so we need to restore the state.
-		$this->db->pretend(false);
-	}
+    public function tearDown()
+    {
+        // We share `$this->db` in testing, so we need to restore the state.
+        $this->db->pretend(false);
+    }
 
-	public function testPretendReturnsQueryObject()
-	{
-		$result = $this->db->pretend(false)
-						   ->table('user')
-						   ->get();
+    public function testPretendReturnsQueryObject()
+    {
+        $result = $this->db->pretend(false)
+                           ->table('user')
+                           ->get();
 
-		$this->assertFalse($result instanceof Query);
+        $this->assertFalse($result instanceof Query);
 
-		$result = $this->db->pretend(true)
-					->table('user')
-					->get();
+        $result = $this->db->pretend(true)
+                    ->table('user')
+                    ->get();
 
-		$this->assertInstanceOf(Query::class, $result);
-	}
+        $this->assertInstanceOf(Query::class, $result);
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
 }

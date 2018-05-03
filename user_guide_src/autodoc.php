@@ -45,261 +45,261 @@ $loader->register();
  */
 class Document
 {
-	protected $source;
-	protected $destination;
+    protected $source;
+    protected $destination;
 
-	/**
-	 * @var string The current text of the parsed docComment, if any.
-	 */
-	protected $currentDocString;
-	protected $currentDocAttributes = [];
+    /**
+     * @var string The current text of the parsed docComment, if any.
+     */
+    protected $currentDocString;
+    protected $currentDocAttributes = [];
 
-	public $prose = '';
+    public $prose = '';
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function readSource(string $source)
-	{
-		if (! is_file($source))
-		{
-			CLI::error('Not a valid source file: '. $source);
-			die();
-		}
+    public function readSource(string $source)
+    {
+        if (! is_file($source))
+        {
+            CLI::error('Not a valid source file: '. $source);
+            die();
+        }
 
-		$this->source = $source;
+        $this->source = $source;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function writeTo(string $dest)
-	{
-		if (file_exists($dest))
-		{
-			if ('n' == CLI::prompt('Destination exists. Overwrite?', ['y', 'n']))
-			{
-				die();
-			}
-		}
+    public function writeTo(string $dest)
+    {
+        if (file_exists($dest))
+        {
+            if ('n' == CLI::prompt('Destination exists. Overwrite?', ['y', 'n']))
+            {
+                die();
+            }
+        }
 
-		if (strpos($dest, 'user_guide_src/source/') !== false)
-		{
-			$dest = substr($dest, strlen('user_guide_src/source/'));
-		}
+        if (strpos($dest, 'user_guide_src/source/') !== false)
+        {
+            $dest = substr($dest, strlen('user_guide_src/source/'));
+        }
 
-		str_ireplace('.rst', '', $dest);
+        str_ireplace('.rst', '', $dest);
 
-		$dest = dirname(__FILE__).'/source/'.$dest.'.rst';
+        $dest = dirname(__FILE__).'/source/'.$dest.'.rst';
 
-		if (! $fp = fopen($dest, 'wb'))
-		{
-			die('Unable to write to: '. $dest);
-		}
+        if (! $fp = fopen($dest, 'wb'))
+        {
+            die('Unable to write to: '. $dest);
+        }
 
-		fwrite($fp, $this->prose."\n");
-		fclose($fp);
-	}
+        fwrite($fp, $this->prose."\n");
+        fclose($fp);
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	/**
-	 * @todo Needs to describe interface and parent methods?
-	 * @todo Needs to describe parent class, if any
-	 * @param string $className
-	 */
-	public function build(string $className)
-	{
-		require_once $this->source;
+    /**
+     * @todo Needs to describe interface and parent methods?
+     * @todo Needs to describe parent class, if any
+     * @param string $className
+     */
+    public function build(string $className)
+    {
+        require_once $this->source;
 
-		$mirror = new ReflectionClass($className);
+        $mirror = new ReflectionClass($className);
 
-		$this->parseDocComment($mirror->getDocComment(), 0);
+        $this->parseDocComment($mirror->getDocComment(), 0);
 
-		$namespace = $mirror->getNamespaceName();
-		$className = str_replace($namespace.'\\', '', $mirror->getName());
-		$namespace = str_replace('\\', '\\\\', $namespace);
+        $namespace = $mirror->getNamespaceName();
+        $className = str_replace($namespace.'\\', '', $mirror->getName());
+        $namespace = str_replace('\\', '\\\\', $namespace);
 
-		$output  = $className." Class\n";
-		$output .= str_repeat('#', strlen($output))."\n\n";
+        $output  = $className." Class\n";
+        $output .= str_repeat('#', strlen($output))."\n\n";
 
-		$output .= $this->currentDocString."\n";
+        $output .= $this->currentDocString."\n";
 
-		$output .= ".. php:class:: ". $namespace.'\\\\'.$className."\n\n";
+        $output .= ".. php:class:: ". $namespace.'\\\\'.$className."\n\n";
 
-		$output .= $this->describeInterfaces($mirror);
+        $output .= $this->describeInterfaces($mirror);
 
-		$methods = $mirror->getMethods();
+        $methods = $mirror->getMethods();
 
-		foreach ($methods as $methodMirror)
-		{
-			$output .= $this->describeMethod($methodMirror);
-		}
+        foreach ($methods as $methodMirror)
+        {
+            $output .= $this->describeMethod($methodMirror);
+        }
 
-		$this->prose = $output;
-	}
+        $this->prose = $output;
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function describeInterfaces(ReflectionClass $mirror): string
-	{
-		$interfaces = $mirror->getInterfaceNames();
+    public function describeInterfaces(ReflectionClass $mirror): string
+    {
+        $interfaces = $mirror->getInterfaceNames();
 
-		if (! count($interfaces)) return '';
+        if (! count($interfaces)) return '';
 
-		$output = "\tImplements: ". implode(', ', $interfaces);
+        $output = "\tImplements: ". implode(', ', $interfaces);
 
-		return $output."\n\n";
-	}
+        return $output."\n\n";
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
 
-	/**
-	 * @param $methodMirror
-	 *
-	 * @return string
-	 */
-	protected function describeMethod(ReflectionMethod $methodMirror): string
-	{
-		if ($methodMirror->isProtected() || $methodMirror->isPrivate()) return '';
+    /**
+     * @param $methodMirror
+     *
+     * @return string
+     */
+    protected function describeMethod(ReflectionMethod $methodMirror): string
+    {
+        if ($methodMirror->isProtected() || $methodMirror->isPrivate()) return '';
 
-		$this->parseDocComment($methodMirror->getDocComment(), 2);
+        $this->parseDocComment($methodMirror->getDocComment(), 2);
 
-		$output = "\t.. php:method:: ".$methodMirror->name." ( ";
+        $output = "\t.. php:method:: ".$methodMirror->name." ( ";
 
-		$output .= $this->buildParameterList($methodMirror->getParameters()) ." )\n\n";
+        $output .= $this->buildParameterList($methodMirror->getParameters()) ." )\n\n";
 
-		$output .= $this->describeParameters($methodMirror->getParameters());
+        $output .= $this->describeParameters($methodMirror->getParameters());
 
-		if ($methodMirror->hasReturnType())
-		{
-			$output .= "\t\t:returns: \n\t\t:rtype: {$methodMirror->getReturnType()}";
-		}
+        if ($methodMirror->hasReturnType())
+        {
+            $output .= "\t\t:returns: \n\t\t:rtype: {$methodMirror->getReturnType()}";
+        }
 
-		$output .= "\n\n";
+        $output .= "\n\n";
 
-		$output .= $this->currentDocString."\n\n";
+        $output .= $this->currentDocString."\n\n";
 
-		return $output;
-	}
+        return $output;
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	protected function buildParameterList(array $params=[]): string
-	{
-		if (! count($params)) return '';
+    protected function buildParameterList(array $params=[]): string
+    {
+        if (! count($params)) return '';
 
-		$output = '';
-		$optionalCount = 0;
+        $output = '';
+        $optionalCount = 0;
 
-		foreach ($params as $paramMirror)
-		{
-			if ($paramMirror->isOptional())
-			{
-				$output .= $optionalCount > 0 ? "[, " : "[ ";
-				++$optionalCount;
-			}
+        foreach ($params as $paramMirror)
+        {
+            if ($paramMirror->isOptional())
+            {
+                $output .= $optionalCount > 0 ? "[, " : "[ ";
+                ++$optionalCount;
+            }
 
-			if ($paramMirror->hasType())
-			{
-				$output .= (string)$paramMirror->getType()." ";
-			}
+            if ($paramMirror->hasType())
+            {
+                $output .= (string)$paramMirror->getType()." ";
+            }
 
-			if ($paramMirror->isPassedByReference()) $output .= "&";
+            if ($paramMirror->isPassedByReference()) $output .= "&";
 
-			if ($paramMirror->isVariadic()) $output .= "...";
+            if ($paramMirror->isVariadic()) $output .= "...";
 
-			$output .= "\${$paramMirror->getName()} ";
-		}
+            $output .= "\${$paramMirror->getName()} ";
+        }
 
-		if ($optionalCount > 0)
-		{
-			$output .= str_repeat(']', $optionalCount);
-		}
+        if ($optionalCount > 0)
+        {
+            $output .= str_repeat(']', $optionalCount);
+        }
 
-		return $output;
-	}
+        return $output;
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	protected function describeParameters(array $params = []): string
-	{
-		if (! count($params)) return '';
+    protected function describeParameters(array $params = []): string
+    {
+        if (! count($params)) return '';
 
-		$output = '';
+        $output = '';
 
-		foreach ($params as $paramMirror)
-		{
-			$output .= "\t\t:param ";
+        foreach ($params as $paramMirror)
+        {
+            $output .= "\t\t:param ";
 
-			if ($paramMirror->hasType())
-			{
-				$output .= $paramMirror->getType()." ";
-			}
+            if ($paramMirror->hasType())
+            {
+                $output .= $paramMirror->getType()." ";
+            }
 
-			$output .= "\${$paramMirror->getName()}: \n";
-		}
+            $output .= "\${$paramMirror->getName()}: \n";
+        }
 
-		return $output;
-	}
+        return $output;
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	protected function parseDocComment(string $docblock, $nesting=0)
-	{
-		$this->currentDocString = '';
-		$this->currentDocAttributes = [];
+    protected function parseDocComment(string $docblock, $nesting=0)
+    {
+        $this->currentDocString = '';
+        $this->currentDocAttributes = [];
 
-		$lines = explode("\n", $docblock);
+        $lines = explode("\n", $docblock);
 
-		$output = '';
-		$attributes = [];
+        $output = '';
+        $attributes = [];
 
-		foreach ($lines as $line)
-		{
-			$line = trim($line);
-			
-			if ($line == '/**' || $line == '*/') continue;
+        foreach ($lines as $line)
+        {
+            $line = trim($line);
 
-			if ($line == '*')
-			{
-				$output .= "\n";
-				continue;
-			}
+            if ($line == '/**' || $line == '*/') continue;
 
-			$line = trim($line);
-			
-			if (substr($line, 0, 1) == '*')
-			{
-				$line = trim(substr($line, 1));
-			}
+            if ($line == '*')
+            {
+                $output .= "\n";
+                continue;
+            }
 
-			if (substr($line, 0, 1) == '@')
-			{
-				$tempLine = trim(substr($line, 1));
-				$segments = explode(' ', $tempLine);
+            $line = trim($line);
 
-				$att = [
-					'paramType' => array_shift($segments),
-					'valueType' => array_shift($segments)
-				];
+            if (substr($line, 0, 1) == '*')
+            {
+                $line = trim(substr($line, 1));
+            }
 
-				if (count($segments)) $att['valueName'] = array_shift($segments);
-				if (count($segments)) $att['valueDesc'] = implode(' ', $segments);
+            if (substr($line, 0, 1) == '@')
+            {
+                $tempLine = trim(substr($line, 1));
+                $segments = explode(' ', $tempLine);
 
-				$attributes[] = $att;
-				continue;
-			}
+                $att = [
+                    'paramType' => array_shift($segments),
+                    'valueType' => array_shift($segments)
+                ];
 
-			$output .= str_repeat("\t", $nesting)."{$line}\n";
-		}
+                if (count($segments)) $att['valueName'] = array_shift($segments);
+                if (count($segments)) $att['valueDesc'] = implode(' ', $segments);
 
-		$this->currentDocString = $output;
-		$this->currentDocAttributes = $attributes;
-	}
+                $attributes[] = $att;
+                continue;
+            }
 
-	//--------------------------------------------------------------------
+            $output .= str_repeat("\t", $nesting)."{$line}\n";
+        }
+
+        $this->currentDocString = $output;
+        $this->currentDocAttributes = $attributes;
+    }
+
+    //--------------------------------------------------------------------
 
 }
 
@@ -312,8 +312,8 @@ $source_file = realpath($source_file);
 
 if (empty($source_file))
 {
-	CLI::error('Unable to locate the source file.');
-	die();
+    CLI::error('Unable to locate the source file.');
+    die();
 }
 
 /*

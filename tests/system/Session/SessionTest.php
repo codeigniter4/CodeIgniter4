@@ -99,7 +99,7 @@ class SessionTest extends \CIUnitTestCase
 
     public function testGetReturnsNullWhenNotFound()
     {
-    	$_SESSION = [];
+        $_SESSION = [];
 
         $session = $this->getInstance();
         $session->start();
@@ -107,24 +107,24 @@ class SessionTest extends \CIUnitTestCase
         $this->assertNull($session->get('foo'));
     }
 
-	public function testGetReturnsAllWithNoKeys()
-	{
-		$_SESSION = [
-			'foo' => 'bar',
-			'bar' => 'baz'
-		];
+    public function testGetReturnsAllWithNoKeys()
+    {
+        $_SESSION = [
+            'foo' => 'bar',
+            'bar' => 'baz'
+        ];
 
-		$session = $this->getInstance();
-		$session->start();
+        $session = $this->getInstance();
+        $session->start();
 
-		$result = $session->get();
+        $result = $session->get();
 
-		$this->assertTrue(array_key_exists('foo', $result));
-		$this->assertTrue(array_key_exists('bar', $result));
+        $this->assertTrue(array_key_exists('foo', $result));
+        $this->assertTrue(array_key_exists('bar', $result));
     }
 
 
-	public function testGetAsProperty()
+    public function testGetAsProperty()
     {
         $session = $this->getInstance();
         $session->start();
