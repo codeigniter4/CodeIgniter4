@@ -2,6 +2,7 @@
 
 class CLITest extends \CIUnitTestCase
 {
+
 	private $stream_filter;
 
 	public function setUp()
@@ -189,9 +190,58 @@ EOT;
 	public function testWrap()
 	{
 		$this->assertEquals('', CLI::wrap(''));
-		$this->assertEquals('1234'. PHP_EOL .' 5678'. PHP_EOL .' 90'. PHP_EOL .' abc'. PHP_EOL .' de'. PHP_EOL .' fghij'. PHP_EOL .' 0987654321', CLI::wrap('1234 5678 90'. PHP_EOL .'abc de fghij'. PHP_EOL .'0987654321', 5, 1));
-		$this->assertEquals('1234 5678 90'. PHP_EOL .'  abc de fghij'. PHP_EOL .'  0987654321', CLI::wrap('1234 5678 90'. PHP_EOL .'abc de fghij'. PHP_EOL .'0987654321', 999, 2));
-		$this->assertEquals('1234 5678 90'. PHP_EOL .'abc de fghij'. PHP_EOL .'0987654321', CLI::wrap('1234 5678 90'. PHP_EOL .'abc de fghij'. PHP_EOL .'0987654321'));
+		$this->assertEquals('1234' . PHP_EOL . ' 5678' . PHP_EOL . ' 90' . PHP_EOL . ' abc' . PHP_EOL . ' de' . PHP_EOL . ' fghij' . PHP_EOL . ' 0987654321', CLI::wrap('1234 5678 90' . PHP_EOL . 'abc de fghij' . PHP_EOL . '0987654321', 5, 1));
+		$this->assertEquals('1234 5678 90' . PHP_EOL . '  abc de fghij' . PHP_EOL . '  0987654321', CLI::wrap('1234 5678 90' . PHP_EOL . 'abc de fghij' . PHP_EOL . '0987654321', 999, 2));
+		$this->assertEquals('1234 5678 90' . PHP_EOL . 'abc de fghij' . PHP_EOL . '0987654321', CLI::wrap('1234 5678 90' . PHP_EOL . 'abc de fghij' . PHP_EOL . '0987654321'));
+	}
+
+	public function testParseCommand()
+	{
+		$_SERVER['argv'] = ['ignored', 'b', 'c'];
+		$_SERVER['argc'] = 3;
+		CLI::init();
+		$this->assertEquals(null, CLI::getSegment(3));
+		$this->assertEquals('b', CLI::getSegment(1));
+		$this->assertEquals('c', CLI::getSegment(2));
+		$this->assertEquals('b/c', CLI::getURI());
+		$this->assertEquals([],CLI::getOptions());
+		$this->assertEmpty(CLI::getOptionString());
+		$this->assertEquals(['b', 'c'], CLI::getSegments());
+	}
+
+	public function testParseCommandMixed()
+	{
+		$_SERVER['argv'] = ['ignored', 'b', 'c', 'd', '-parm', 'pvalue', 'd2'];
+		$_SERVER['argc'] = 7;
+		CLI::init();
+		$this->assertEquals(null, CLI::getSegment(7));
+		$this->assertEquals('b', CLI::getSegment(1));
+		$this->assertEquals('c', CLI::getSegment(2));
+		$this->assertEquals('d', CLI::getSegment(3));
+		$this->assertEquals(['b', 'c', 'd', 'd2'], CLI::getSegments());
+	}
+
+	public function testParseCommandOption()
+	{
+		$_SERVER['argv'] = ['ignored', 'b', 'c', '-parm', 'pvalue', 'd'];
+		$_SERVER['argc'] = 6;
+		CLI::init();
+		$this->assertEquals(['parm' => 'pvalue'], CLI::getOptions());
+		$this->assertEquals('pvalue', CLI::getOption('parm'));
+		$this->assertEquals('-parm pvalue ', CLI::getOptionString());
+		$this->assertNull(CLI::getOption('bogus'));
+		$this->assertEquals(['b', 'c', 'd'], CLI::getSegments());
+	}
+
+	public function testParseCommandMultipleOptions()
+	{
+		$_SERVER['argv'] = ['ignored', 'b', 'c', '-parm', 'pvalue', 'd', '-p2', '-p3', 'value 3'];
+		$_SERVER['argc'] = 9;
+		CLI::init();
+		$this->assertEquals(['parm' => 'pvalue', 'p2' => null, 'p3' => 'value 3'], CLI::getOptions());
+		$this->assertEquals('pvalue', CLI::getOption('parm'));
+		$this->assertEquals('-parm pvalue -p2  -p3 "value 3" ', CLI::getOptionString());
+		$this->assertEquals(['b', 'c', 'd'], CLI::getSegments());
 	}
 
 	/**
@@ -209,8 +259,8 @@ EOT;
 
 	public function tableProvider()
 	{
-		$head      = ['ID', 'Title'];
-		$one_row   = [['id' => 1, 'foo' => 'bar']];
+		$head = ['ID', 'Title'];
+		$one_row = [['id' => 1, 'foo' => 'bar']];
 		$many_rows = [
 			['id' => 1, 'foo' => 'bar'],
 			['id' => 2, 'foo' => 'bar * 2'],
@@ -219,42 +269,45 @@ EOT;
 
 		return [
 			[$one_row, [], "+---+-----+\n" .
-						   "| 1 | bar |\n" .
-						   "+---+-----+\n"],
+				"| 1 | bar |\n" .
+				"+---+-----+\n"],
 			[$one_row, $head, "+----+-------+\n" .
-							  "| ID | Title |\n" .
-							  "+----+-------+\n" .
-							  "| 1  | bar   |\n" .
-							  "+----+-------+\n"],
+				"| ID | Title |\n" .
+				"+----+-------+\n" .
+				"| 1  | bar   |\n" .
+				"+----+-------+\n"],
 			[$many_rows, [], "+---+-----------------+\n" .
-							 "| 1 | bar             |\n" .
-							 "| 2 | bar * 2         |\n" .
-							 "| 3 | bar + bar + bar |\n" .
-							 "+---+-----------------+\n"],
+				"| 1 | bar             |\n" .
+				"| 2 | bar * 2         |\n" .
+				"| 3 | bar + bar + bar |\n" .
+				"+---+-----------------+\n"],
 			[$many_rows, $head, "+----+-----------------+\n" .
-								"| ID | Title           |\n" .
-								"+----+-----------------+\n" .
-								"| 1  | bar             |\n" .
-								"| 2  | bar * 2         |\n" .
-								"| 3  | bar + bar + bar |\n" .
-								"+----+-----------------+\n"],
+				"| ID | Title           |\n" .
+				"+----+-----------------+\n" .
+				"| 1  | bar             |\n" .
+				"| 2  | bar * 2         |\n" .
+				"| 3  | bar + bar + bar |\n" .
+				"+----+-----------------+\n"],
 		];
 	}
-}
 
+}
 
 class CLITestStreamFilter extends \php_user_filter
 {
+
 	public static $buffer = '';
 
 	public function filter($in, $out, &$consumed, $closing)
 	{
-		while ($bucket = stream_bucket_make_writeable($in)) {
+		while ($bucket = stream_bucket_make_writeable($in))
+		{
 			self::$buffer .= $bucket->data;
 			$consumed += $bucket->datalen;
 		}
 		return PSFS_PASS_ON;
 	}
+
 }
 
 stream_filter_register('CLITestStreamFilter', 'CodeIgniter\CLI\CLITestStreamFilter');
