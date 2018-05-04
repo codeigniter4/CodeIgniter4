@@ -71,7 +71,7 @@ class Console
 		// Set the path for the application to route to.
 		$this->app->setPath("ci{$path}");
 
-		return $this->app->run();
+		$this->app->run();
 	}
 
 	//--------------------------------------------------------------------

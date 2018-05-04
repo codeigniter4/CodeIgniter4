@@ -1219,6 +1219,8 @@ class Model
 	 * Returns the model's defined validation rules so that they
 	 * can be used elsewhere, if needed.
 	 *
+     * @param array $options
+     *
 	 * @return array
 	 */
 	public function getValidationRules(array $options=[])

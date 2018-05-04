@@ -219,7 +219,7 @@ class CIDatabaseTestCase extends CIUnitTestCase
 	 */
 	public function seed(string $name)
 	{
-		return $this->seeder->call($name);
+		$this->seeder->call($name);
 	}
 
 	//--------------------------------------------------------------------
