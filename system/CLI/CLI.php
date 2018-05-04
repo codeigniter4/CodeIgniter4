@@ -51,6 +51,13 @@ use CodeIgniter\CLI\Exceptions\CLIException;
  * possible to test using travis-ci. It has been phpunit-annotated
  * to prevent messing up code coverage.
  * 
+ * Some of the methods require keyboard input, and are not unit-testable
+ * as a result: input() and prompt().
+ * validate() is internal, and not testable if prompt() isn't.
+ * The wait() method is mostly testable, as long as you don't give it
+ * an argument of "0". 
+ * These have been flagged to ignore for code coverage purposes.
+ * 
  * @package CodeIgniter\HTTP
  */
 class CLI
@@ -158,7 +165,8 @@ class CLI
 	 *
 	 * @param    string $prefix
 	 * @return    string
-
+	 * 
+	 * @codeCoverageIgnore
 	 */
 	public static function input(string $prefix = null): string
 	{
@@ -196,7 +204,7 @@ class CLI
 	 * @param  string       $validation Validation rules
 	 *
 	 * @return string                   The user input
-
+	 * @codeCoverageIgnore
 	 */
 	public static function prompt($field, $options = null, $validation = null): string
 	{
@@ -256,6 +264,7 @@ class CLI
 	 * @param  string $rules Validation rules
 	 *
 	 * @return boolean
+	 * @codeCoverageIgnore
 	 */
 	protected static function validate($field, $value, $rules)
 	{
@@ -354,8 +363,11 @@ class CLI
 			}
 			else
 			{
+				// this chunk cannot be tested because of keyboard input
+				// @codeCoverageIgnoreStart
 				static::write(static::$wait_msg);
 				static::input();
+				// @codeCoverageIgnoreEnd
 			}
 		}
 	}
@@ -382,7 +394,7 @@ class CLI
 	public static function newLine(int $num = 1)
 	{
 		// Do it once or more, write with empty string gives us a new line
-		for ($i = 0; $i < $num; $i ++ )
+		for ($i = 0; $i < $num; $i ++)
 		{
 			static::write('');
 		}
@@ -621,7 +633,7 @@ class CLI
 		$optionsFound = false;
 
 		// start picking segments off from #1, ignoring the invoking program
-		for ($i = 1; $i < $_SERVER['argc']; $i ++ )
+		for ($i = 1; $i < $_SERVER['argc']; $i ++)
 		{
 			// If there's no '-' at the beginning of the argument
 			// then add it to our segments.
@@ -811,7 +823,7 @@ class CLI
 		$max_cols_lengths = [];
 
 		// Read row by row and define the longest columns
-		for ($row = 0; $row < $total_rows; $row ++)
+		for ($row = 0; $row < $total_rows; $row ++ )
 		{
 			$column = 0; // Current column index
 			foreach ($table_rows[$row] as $col)
@@ -834,7 +846,7 @@ class CLI
 
 		// Read row by row and add spaces at the end of the columns
 		// to match the exact column length
-		for ($row = 0; $row < $total_rows; $row ++)
+		for ($row = 0; $row < $total_rows; $row ++ )
 		{
 			$column = 0;
 			foreach ($table_rows[$row] as $col)
@@ -851,7 +863,7 @@ class CLI
 		$table = '';
 
 		// Joins columns and append the well formatted rows to the table
-		for ($row = 0; $row < $total_rows; $row ++)
+		for ($row = 0; $row < $total_rows; $row ++ )
 		{
 			// Set the table border-top
 			if ($row === 0)
@@ -880,5 +892,7 @@ class CLI
 	//--------------------------------------------------------------------
 }
 
-// Ensure the class is initialized.
+// Ensure the class is initialized. Done outside of code coverage
+// @codeCoverageIgnoreStart
 CLI::init();
+// @codeCoverageIgnoreEnd

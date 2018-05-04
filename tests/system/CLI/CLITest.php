@@ -51,13 +51,13 @@ class CLITest extends \CIUnitTestCase
 		// go catatonic when it is executed, presumably because of
 		// the CLI::input() waiting for a key press
 //		// test the press any key to continue...
-//		CLITestKeyboardFilter::$spoofed = ' \n';
 //		stream_filter_register('CLITestKeyboardFilter', 'CodeIgniter\CLI\CLITestKeyboardFilter');
-//		$spoofed = stream_filter_prepend(STDIN, 'CLITestKeyboardFilter');
+//		$spoofer = stream_filter_append(STDIN, 'CLITestKeyboardFilter');
 //		$time = time();
+//		CLITestKeyboardFilter::$spoofed = ' ';
 //		CLI::wait(0);
-//		stream_filter_remove($spoofed);
-//		$this->assertEquals(10, time() - $time);
+//		stream_filter_remove($spoofer);
+//		$this->assertEquals(0, time() - $time);
 	}
 
 	public function testIsWindows()
@@ -336,7 +336,6 @@ class CLITestStreamFilter extends \php_user_filter
 class CLITestKeyboardFilter extends \php_user_filter
 {
 
-	public static $buffer = '';
 	public static $spoofed = '';
 
 	public function filter($in, $out, &$consumed, $closing)
@@ -344,7 +343,8 @@ class CLITestKeyboardFilter extends \php_user_filter
 		while ($bucket = stream_bucket_make_writeable($in))
 		{
 			$consumed += $bucket->datalen;
-			$bucket = $spoofed;
+			$bucket->data = static::$spoofed . '\n';
+			$bucket->datalen = strlen(static::$spoofed);
 			stream_bucket_append($out, $bucket);
 		}
 		return PSFS_PASS_ON;
