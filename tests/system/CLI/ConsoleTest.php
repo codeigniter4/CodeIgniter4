@@ -9,7 +9,7 @@ class ConsoleTest extends \CIUnitTestCase
 
 	public function setUp()
 	{
-		CLITestStreamFilter::$buffer = '';
+		CLICTestStreamFilter::$buffer = '';
 		$this->stream_filter = stream_filter_append(STDOUT, 'CLICTestStreamFilter');
 
 		$this->env = new \CodeIgniter\Config\DotEnv(ROOTPATH);
