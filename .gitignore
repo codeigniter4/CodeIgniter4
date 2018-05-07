@@ -124,3 +124,5 @@ nb-configuration.xml
 .vscode/
 
 /results/
+/phpunit.xml
+/application/Database/Migrations/
