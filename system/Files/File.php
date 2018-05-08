@@ -95,10 +95,8 @@ class File extends SplFileInfo
 		{
 			case 'kb':
 				return number_format($this->size / 1024, 3);
-				break;
 			case 'mb':
 				return number_format(($this->size / 1024) / 1024, 3);
-				break;
 		}
 
 		return $this->size;
@@ -128,17 +126,9 @@ class File extends SplFileInfo
 	 */
 	public function getMimeType(): string
 	{
-		if (function_exists('finfo_file'))
-		{
-			$finfo = finfo_open(FILEINFO_MIME_TYPE);
-			$mimeType = finfo_file($finfo, $this->getRealPath());
-			finfo_close($finfo);
-		}
-		else
-		{
-			$mimeType = mime_content_type($this->getRealPath());
-		}
-
+		$finfo = finfo_open(FILEINFO_MIME_TYPE);
+		$mimeType = finfo_file($finfo, $this->getRealPath());
+		finfo_close($finfo);
 		return $mimeType;
 	}
 
