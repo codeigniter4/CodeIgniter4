@@ -36,6 +36,7 @@
  * @filesource
  */
 use CodeIgniter\Events\Events;
+use Config\Paths;
 use PHPUnit\Framework\TestCase;
 use CodeIgniter\Log\TestLogger;
 
@@ -44,8 +45,31 @@ use CodeIgniter\Log\TestLogger;
  */
 class CIUnitTestCase extends TestCase
 {
-
 	use ReflectionHelper;
+
+	/**
+	 * @var \CodeIgniter\CodeIgniter
+	 */
+	protected $app;
+
+	/**
+	 * Path to Config folder, relative
+	 * to the system folder.
+	 * @var string
+	 */
+	protected $configPath = '../application/Config';
+
+	public function setUp()
+	{
+		parent::setUp();
+
+		if (! $this->app)
+		{
+			$this->app = $this->createApplication();
+		}
+
+		helper('url');
+	}
 
 	/**
 	 * Custom function to hook into CodeIgniter's Logging mechanism
@@ -53,6 +77,8 @@ class CIUnitTestCase extends TestCase
 	 *
 	 * @param string $level
 	 * @param null   $expectedMessage
+	 *
+	 * @throws \Exception
 	 */
 	public function assertLogged(string $level, $expectedMessage = null)
 	{
@@ -61,8 +87,6 @@ class CIUnitTestCase extends TestCase
 		$this->assertTrue($result);
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Hooks into CodeIgniter's Events system to check if a specific
 	 * event was triggered or not.
@@ -70,6 +94,7 @@ class CIUnitTestCase extends TestCase
 	 * @param string $eventName
 	 *
 	 * @return bool
+	 * @throws \Exception
 	 */
 	public function assertEventTriggered(string $eventName): bool
 	{
@@ -87,5 +112,52 @@ class CIUnitTestCase extends TestCase
 		$this->assertTrue($found);
 	}
 
-	//--------------------------------------------------------------------
+	/**
+	 * Loads up an instance of CodeIgniter
+	 * and gets the environment setup.
+	 *
+	 * @return mixed
+	 */
+	protected function createApplication()
+	{
+		$systemPath = realpath(__DIR__.'/../');
+
+		require_once $systemPath.'/'.$this->configPath.'/Paths.php';
+		$paths = $this->adjustPaths(new \Config\Paths());
+
+		$app = require $systemPath.'/bootstrap.php';
+		return $app;
+	}
+
+	/**
+	 * Attempts to adjust our system paths to account
+	 * for relative location of our tests folder.
+	 * Not foolproof, but works well for default locations.
+	 *
+	 * @param \Config\Paths $paths
+	 *
+	 * @return \Config\Paths
+	 */
+	protected function adjustPaths(Paths $paths)
+	{
+		$tests = [
+			'systemDirectory', 'applicationDirectory', 'writableDirectory', 'testsDirectory'
+		];
+
+		foreach ($tests as $test)
+		{
+			if (is_dir($paths->$test) || strpos($paths->$test, '../') !== 0)
+			{
+				continue;
+			}
+
+			$check = substr($paths->$test, 3);
+			if (is_dir($check))
+			{
+				$paths->$test = $check;
+			}
+		}
+
+		return $paths;
+	}
 }

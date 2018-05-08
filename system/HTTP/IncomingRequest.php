@@ -616,7 +616,7 @@ class IncomingRequest extends Request
 				break;
 			case 'PATH_INFO':
 			default:
-				$path = $_SERVER[$protocol] ?? $this->parseRequestURI();
+				$path = $this->fetchGlobal('server', $protocol) ?? $this->parseRequestURI();
 				break;
 		}
 

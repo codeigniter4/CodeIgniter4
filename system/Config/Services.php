@@ -37,6 +37,7 @@
  */
 use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Database\MigrationRunner;
+use CodeIgniter\HTTP\URI;
 use CodeIgniter\View\RendererInterface;
 
 /**

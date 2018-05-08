@@ -7,7 +7,7 @@ class EventsTest extends \CIUnitTestCase
 	 */
 	protected $tester;
 
-	protected function setUp()
+	public function setUp()
 	{
 		Events::removeAllListeners();
 	}

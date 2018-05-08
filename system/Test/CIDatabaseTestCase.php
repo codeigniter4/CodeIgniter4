@@ -152,6 +152,8 @@ class CIDatabaseTestCase extends CIUnitTestCase
 	 */
 	public function setUp()
 	{
+		parent::setUp();
+
 		$this->loadDependencies();
 
 		if ($this->refresh === true)

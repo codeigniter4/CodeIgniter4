@@ -11,7 +11,7 @@ class AutoloaderTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	protected function setUp()
+	public function setUp()
 	{
 		$config = new Autoload();
 
