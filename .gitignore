@@ -125,4 +125,3 @@ nb-configuration.xml
 
 /results/
 /phpunit.xml
-/application/Database/Migrations/
