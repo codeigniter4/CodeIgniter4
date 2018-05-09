@@ -65,7 +65,7 @@ class Events
 	 *
 	 * @var string
 	 */
-	protected static $eventsFile;
+	protected static $eventsFile = '';
 
 	/**
 	 * If true, events will not actually be fired.
