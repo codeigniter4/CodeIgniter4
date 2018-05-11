@@ -69,26 +69,35 @@ class FileWithVfsTest extends \CIUnitTestCase
 	}
 
 	//---------------------------------------------------------------
-//	public function testMoveNormal()
-//	{
-//		$destination = $this->start . 'baker';
-//		$this->file->move($destination);
-//		$this->assertTrue($this->root->hasChild('baker/apple.php'));
-//		$this->assertFalse($this->root->hasChild('able/apple.php'));
-//	}
-//
-//	public function testMoveRename()
-//	{
-//		
-//	}
-//
+	public function testMoveNormal()
+	{
+		$destination = $this->start . 'baker';
+		$this->file->move($destination);
+		$this->assertTrue($this->root->hasChild('baker/apple.php'));
+		$this->assertFalse($this->root->hasChild('able/apple.php'));
+	}
+
+	public function testMoveRename()
+	{
+		$destination = $this->start . 'baker';
+		$this->file->move($destination, 'popcorn.php');
+		$this->assertTrue($this->root->hasChild('baker/popcorn.php'));
+		$this->assertFalse($this->root->hasChild('able/apple.php'));
+	}
+
 //	public function testMoveOverwrite()
 //	{
 //		
 //	}
 //
+//	/**
+//	 * @expectedException FileException
+//	 */
 //	public function testMoveFailure()
 //	{
-//		
+//		$this->root->
+//		$destination = $this->start . 'baker';
+//		$this->file->move($destination);
 //	}
+
 }
