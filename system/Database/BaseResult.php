@@ -335,7 +335,7 @@ abstract class BaseResult implements ResultInterface
 	 */
 	public function getCustomRowObject($n, string $className)
 	{
-		isset($this->customResultObject[$className]) || $this->customResultObject($className);
+		isset($this->customResultObject[$className]) || $this->getCustomResultObject($className);
 
 		if (empty($this->customResultObject[$className]))
 		{
