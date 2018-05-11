@@ -35,7 +35,7 @@
  * @since	Version 3.0.0
  * @filesource
  */
-use CodeIgniter\PageNotFoundException;
+use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\Router\Exceptions\RouterException;
 
 /**

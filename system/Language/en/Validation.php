@@ -53,7 +53,7 @@ return [
 	'regex_match'           => 'The {field} field is not in the correct format.',
 	'required'              => 'The {field} field is required.',
 	'required_with'         => 'The {field} field is required when {param} is present.',
-	'required_without'      => 'The {field} field is required when {param} in not present.',
+	'required_without'      => 'The {field} field is required when {param} is not present.',
 	'timezone'              => 'The {field} field must be a valid timezone.',
 	'valid_base64'          => 'The {field} field must be a valid base64 string.',
 	'valid_email'           => 'The {field} field must contain a valid email address.',
