@@ -126,9 +126,17 @@ class File extends SplFileInfo
 	 */
 	public function getMimeType(): string
 	{
-		$finfo = finfo_open(FILEINFO_MIME_TYPE);
-		$mimeType = finfo_file($finfo, $this->getRealPath());
-		finfo_close($finfo);
+		if (function_exists('finfo_file'))
+		{
+			$finfo = finfo_open(FILEINFO_MIME_TYPE);
+			$mimeType = finfo_file($finfo, $this->getRealPath());
+			finfo_close($finfo);
+		}
+		else
+		{
+			$mimeType = mime_content_type($this->getRealPath());
+		}
+
 		return $mimeType;
 	}
 
