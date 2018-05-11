@@ -85,19 +85,31 @@ class FileWithVfsTest extends \CIUnitTestCase
 		$this->assertFalse($this->root->hasChild('able/apple.php'));
 	}
 
-//	public function testMoveOverwrite()
-//	{
-//		
-//	}
-//
-//	/**
-//	 * @expectedException FileException
-//	 */
-//	public function testMoveFailure()
-//	{
-//		$this->root->
-//		$destination = $this->start . 'baker';
-//		$this->file->move($destination);
-//	}
+	public function testMoveOverwrite()
+	{
+		$destination = $this->start . 'baker';
+		$this->file->move($destination, 'banana.php', true);
+		$this->assertTrue($this->root->hasChild('baker/banana.php'));
+		$this->assertFalse($this->root->hasChild('able/apple.php'));
+	}
+
+	public function testMoveDontOverwrite()
+	{
+		$destination = $this->start . 'baker';
+		$this->file->move($destination, 'banana.php');
+		$this->assertTrue($this->root->hasChild('baker/banana_1.php'));
+		$this->assertFalse($this->root->hasChild('able/apple.php'));
+	}
+
+	/**
+	 * @expectedException \CodeIgniter\Files\Exceptions\FileException
+	 */
+	public function testMoveFailure()
+	{
+		$here = $this->root->url();
+		mkdir($here,400,true); // make a read-only folder
+		$destination = here . 'charlie';
+		$this->file->move($destination); // try to move our file there
+	}
 
 }
