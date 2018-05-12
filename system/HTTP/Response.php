@@ -36,7 +36,9 @@
  * @filesource
  */
 use CodeIgniter\HTTP\Exceptions\HTTPException;
+use CodeIgniter\Services;
 use Config\App;
+use Config\Format;
 use Config\Mimes;
 
 /**
@@ -220,6 +222,14 @@ class Response extends Message implements ResponseInterface
 	 */
 	protected $pretend = false;
 
+	/**
+	 * Type of format the body is in.
+	 * Valid: html, json, xml
+	 *
+	 * @var string
+	 */
+	protected $bodyFormat = 'html';
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -398,6 +408,114 @@ class Response extends Message implements ResponseInterface
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Converts the $body into JSON and sets the Content Type header.
+	 *
+	 * @param $body
+	 *
+	 * @return $this
+	 */
+	public function setJSON($body)
+	{
+		$this->body = $this->formatBody($body, 'json');
+
+		return $this;
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns the current body, converted to JSON is it isn't already.
+	 *
+	 * @return mixed|string
+	 */
+	public function getJSON()
+	{
+		$body = $this->body;
+
+		if ($this->bodyFormat != 'json')
+		{
+			$config = new Format();
+			$formatter = $config->getFormatter('application/json');
+
+			$body = $formatter->format($body);
+		}
+
+		return $body;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Converts $body into XML, and sets the correct Content-Type.
+	 *
+	 * @param $body
+	 *
+	 * @return $this
+	 */
+	public function setXML($body)
+	{
+		$this->body = $this->formatBody($body, 'xml');
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Retrieves the current body into XML and returns it.
+	 *
+	 * @return mixed|string
+	 */
+	public function getXML()
+	{
+		$body = $this->body;
+
+		if ($this->bodyFormat != 'xml')
+		{
+			$config = new Format();
+			$formatter = $config->getFormatter('application/xml');
+
+			$body = $formatter->format($body);
+		}
+
+		return $body;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Handles conversion of the of the data into the appropriate format,
+	 * and sets the correct Content-Type header for our response.
+	 *
+	 * @param        $body
+	 * @param string $format Valid: json, xml
+	 *
+	 * @return mixed
+	 */
+	protected function formatBody($body, string $format)
+	{
+		$mime = "application/{$format}";
+		$this->setContentType($mime);
+		$this->bodyFormat = $format;
+
+		// Nothing much to do for a string...
+		if (! is_string($body))
+		{
+			$config    = new Format();
+			$formatter = $config->getFormatter($mime);
+
+			$body = $formatter->format($body);
+		}
+
+		return $body;
+	}
+
+	//--------------------------------------------------------------------
+
 	//--------------------------------------------------------------------
 	// Cache Control Methods
 	//
@@ -907,5 +1025,4 @@ class Response extends Message implements ResponseInterface
 		exit;
 	}
 
-	//--------------------------------------------------------------------
 }
