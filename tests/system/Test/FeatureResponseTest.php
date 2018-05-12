@@ -177,8 +177,25 @@ class FeatureResponseTest extends CIUnitTestCase
 		$this->feature->assertCookieExpired('foo');
 	}
 
+	public function testGetJSON()
+	{
+		$this->getFeatureResponse(['foo' => 'bar']);
+		$config = new \Config\Format();
+		$formatter = $config->getFormatter('application/json');
 
-	protected function getFeatureResponse(string $body=null, array $responseOptions = null, array $headers = null)
+		$this->assertEquals($formatter->format(['foo' => 'bar']), $this->feature->getJSON());
+	}
+
+	public function testGetXML()
+	{
+		$this->getFeatureResponse(['foo' => 'bar']);
+		$config = new \Config\Format();
+		$formatter = $config->getFormatter('application/xml');
+
+		$this->assertEquals($formatter->format(['foo' => 'bar']), $this->feature->getXML());
+	}
+
+	protected function getFeatureResponse($body=null, array $responseOptions = null, array $headers = null)
 	{
 		$this->response = new Response(new \Config\App());
 		$this->response->setBody($body);

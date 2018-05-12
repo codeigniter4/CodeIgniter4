@@ -21,7 +21,10 @@ class FeatureResponse extends TestCase
 	{
 		$this->response = $response;
 
-		$this->domParser = (new DOMParser())->withString($this->response->getBody());
+		if (is_string($this->response->getBody()))
+		{
+			$this->domParser = (new DOMParser())->withString($this->response->getBody());
+		}
 	}
 
 	//--------------------------------------------------------------------
@@ -288,5 +291,31 @@ class FeatureResponse extends TestCase
 		$this->assertTrue($this->domParser->seeInField($field, $value), "Do no see input named {$field} with value {$value} in response.");
 	}
 
+	//--------------------------------------------------------------------
+	// JSON Methods
+	//--------------------------------------------------------------------
 
+	/**
+	 * Returns the response's body as JSON
+	 *
+	 * @return mixed|string
+	 */
+	public function getJSON()
+	{
+		return $this->response->getJSON();
+	}
+
+	//--------------------------------------------------------------------
+	// XML Methods
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns the response' body as XML
+	 *
+	 * @return mixed|string
+	 */
+	public function getXML()
+	{
+		return $this->response->getXML();
+	}
 }
