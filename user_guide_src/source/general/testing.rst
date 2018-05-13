@@ -166,7 +166,7 @@ into your controller.
 
 **withURI($uri)**
 
-Allows you to provide a new URI that simulates the URL the client was visiting when this controller was run.
+Allows you to provide a new URI that simulates the URL the client was visiting when this controller was ran.
 This is helpful if you need to check URI segments within your controller. The only parameter is a string
 representing a valid URI::
 
@@ -322,7 +322,7 @@ tests must extend ``\CIDatabaseTestCase``::
         . . .
     }
 
-Because special functionality executed during the ``setUp()`` and ``tearDown()`` phases, you must ensure
+Because special functionality is ran during the ``setUp()`` and ``tearDown()`` phases, you must ensure
 that you call the parent's methods if you need to use those methods, otherwise you will lose much
 of the functionality described here.
 ::
@@ -383,7 +383,7 @@ all migrations are rolled back to version 0, then the database is migrated to th
 
 **$seed**
 
-If present and not empty, this specifies the name of a Seed file that is used to populate the database with
+If present and not empty, this specifies the name of a Seed file that is ran to populate the database with
 test data prior to every test running.
 
 **$basePath**

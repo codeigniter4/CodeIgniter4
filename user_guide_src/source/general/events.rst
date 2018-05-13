@@ -29,7 +29,7 @@ a callable that will be run when that event is triggered::
 	Events::on('pre_system', ['MyClass', 'MyFunction']);
 
 In this example, whenever the **pre_controller** event is executed, an instance of ``MyClass`` is created and the
-``MyFunction`` method is run. Note that the second parameter can be *any* form of
+``MyFunction`` method is ran. Note that the second parameter can be *any* form of
 `callable <http://php.net/manual/en/function.is-callable.php>`_ that PHP recognizes::
 
 	// Call a standalone function

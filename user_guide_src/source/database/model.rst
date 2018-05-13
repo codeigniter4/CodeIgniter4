@@ -171,7 +171,7 @@ this model will never validate.
 **afterFind**
 **afterDelete**
 
-These arrays allow you to specify callback methods that will be run on the data at the
+These arrays allow you to specify callback methods that will be ran on the data at the
 time specified in the property name.
 
 Working With Data

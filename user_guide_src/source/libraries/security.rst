@@ -11,10 +11,10 @@ The Security Class contains methods that help protect your site against Cross-Si
 Loading the Library
 *******************
 
-If your only interest in loading the library is to handle CSRF protection, then you will never need to load it, 
-as it runs as a filter and has no manual interaction.
+If your only interest in loading the library is to handle CSRF protection, then you will never need to load it,
+as it is ran as filter and has no manual interaction.
 
-If you find a case where you do need direct access though, you may load it through the Services file::
+If you find a case where you do need direct access, though, you may load it through the Services file::
 
 	$security = \Config\Services::security();
 

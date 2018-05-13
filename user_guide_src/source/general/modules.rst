@@ -111,7 +111,7 @@ Migrations
 ==========
 
 Migration files will be automatically discovered within defined namespaces. All migrations found across all
-namespaces will be run every time.
+namespaces will be ran every time.
 
 Seeds
 =====

@@ -107,7 +107,7 @@ that your development machines are always running the bleeding edge schema.
 Database Groups
 ===============
 
-A migration will only be run against a single database group. If you have multiple groups defined in
+A migration will only be ran against a single database group. If you have multiple groups defined in
 **application/Config/Database.php**, then it will run against the ``$defaultGroup`` as specified
 in that same configuration file. There may be times when you need different schemas for different
 database groups. Perhaps you have one database that is used for all general site information, while
@@ -253,7 +253,7 @@ You can use (refresh) with the following options:
 
 **status**
 
-Displays a list of all migrations and the date and time they ran, or '--' if they have not been run::
+Displays a list of all migrations and the date and time they were ran, or '--' if they have not be ran::
 
   > php spark migrate:status
   Filename               Migrated On
