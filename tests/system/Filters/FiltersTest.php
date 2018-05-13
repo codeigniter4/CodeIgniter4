@@ -376,5 +376,117 @@ class FiltersTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	
+	public function testBeforeExceptString()
+	{
+		$_SERVER['REQUEST_METHOD'] = 'GET';
+
+		$config = [
+			'globals' => [
+				'before' => [
+					'foo' => ['except' => 'admin/*'],
+					'bar'
+				],
+				'after'	 => [
+					'baz'
+				]
+			]
+		];
+		$filters = new Filters((object) $config, $this->request, $this->response);
+		$uri = 'admin/foo/bar';
+
+		$expected = [
+			'before' => [
+				'bar'
+			],
+			'after'	 => ['baz']
+		];
+
+		$this->assertEquals($expected, $filters->initialize($uri)->getFilters());
 	}
+
+	public function testBeforeExceptInapplicable()
+	{
+		$_SERVER['REQUEST_METHOD'] = 'GET';
+
+		$config = [
+			'globals' => [
+				'before' => [
+					'foo' => ['except' => 'george/*'],
+					'bar'
+				],
+				'after'	 => [
+					'baz'
+				]
+			]
+		];
+		$filters = new Filters((object) $config, $this->request, $this->response);
+		$uri = 'admin/foo/bar';
+
+		$expected = [
+			'before' => [
+				'bar', 'foo' => ['except' => 'george/*']
+			],
+			'after'	 => ['baz']
+		];
+
+		$this->assertEquals($expected, $filters->initialize($uri)->getFilters());
+	}
+
+	public function testAfterExceptString()
+	{
+		$_SERVER['REQUEST_METHOD'] = 'GET';
+
+		$config = [
+			'globals' => [
+				'before' => [
+					'bar'
+				],
+				'after'	 => [
+					'foo' => ['except' => 'admin/*'],
+					'baz'
+				]
+			]
+		];
+		$filters = new Filters((object) $config, $this->request, $this->response);
+		$uri = 'admin/foo/bar';
+
+		$expected = [
+			'before' => [
+				'bar'
+			],
+			'after'	 => ['baz']
+		];
+
+		$this->assertEquals($expected, $filters->initialize($uri)->getFilters());
+	}
+
+	public function testAfterExceptInapplicable()
+	{
+		$_SERVER['REQUEST_METHOD'] = 'GET';
+
+		$config = [
+			'globals' => [
+				'before' => [
+					'bar'
+				],
+				'after'	 => [
+					'foo' => ['except' => 'george/*'],
+					'baz'
+				]
+			]
+		];
+		$filters = new Filters((object) $config, $this->request, $this->response);
+		$uri = 'admin/foo/bar';
+
+		$expected = [
+			'before' => [
+				'bar'
+			],
+			'after'	 => ['baz', 'foo' => ['except' => 'george/*']
+			]
+		];
+
+		$this->assertEquals($expected, $filters->initialize($uri)->getFilters());
+	}
+
+}

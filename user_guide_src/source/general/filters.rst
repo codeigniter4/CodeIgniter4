@@ -59,7 +59,9 @@ This is typically used to peform redirects, like in this example::
 
         if (! $auth->isLoggedIn())
         {
-            return redirect('login');
+            $response = Services::response();
+            $response->redirect('login',$request,$response);
+            return $response;
         }
     }
 
