@@ -10,4 +10,9 @@ class FileException extends \RuntimeException implements ExceptionInterface
 		return new self(lang('Files.cannotMove', [$from, $to, $error]));
 	}
 
+	public static function forInvalidFilename(string $to = null)
+	{
+		return new self(lang('Files.invalidFilename', [$to]));
+	}
+
 }

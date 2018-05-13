@@ -38,6 +38,7 @@
 use CodeIgniter\Files\File;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\Images\Exceptions\ImageException;
+use CodeIgniter\Files\Exceptions\FileException;
 
 class Image extends File
 {
@@ -97,7 +98,7 @@ class Image extends File
 
 		if (empty($targetName))
 		{
-			throw ImageException::forInvalidFile($targetName);
+			throw FileException::forInvalidFilename($targetName);
 		}
 
 		if ( ! is_dir($targetPath))
