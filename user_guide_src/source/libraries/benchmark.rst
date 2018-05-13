@@ -119,7 +119,7 @@ to run the tests more times than that, you can pass the number as the first para
 	// Run the tests 3000 times.
 	$iterator->run(3000);
 
-Once it has ran, it will return an HTML table with the results of the test. If you don't want the results
+Once it has run, it will return an HTML table with the results of the test. If you don't want the results
 displayed, you can pass in `false` as the second parameter::
 
 	// Don't display the results.
