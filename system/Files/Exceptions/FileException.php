@@ -15,4 +15,9 @@ class FileException extends \RuntimeException implements ExceptionInterface
 		return new self(lang('Files.invalidFilename', [$to]));
 	}
 
+	public static function forCopyError(string $to = null)
+	{
+		return new self(lang('Files.cannotCopy', [$to]));
+	}
+
 }

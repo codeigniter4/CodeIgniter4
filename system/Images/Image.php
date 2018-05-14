@@ -108,7 +108,7 @@ class Image extends File
 
 		if ( ! copy($this->getPathname(), "{$targetPath}{$targetName}"))
 		{
-			throw ImageException::forCopyError();
+			throw FileException::forCopyError($targetPath);
 		}
 
 		chmod("{$targetPath}/{$targetName}", $perms);

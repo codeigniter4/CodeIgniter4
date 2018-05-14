@@ -2,26 +2,42 @@
 
 use CodeIgniter\Images\Exceptions\ImageException;
 use CodeIgniter\Files\Exceptions\FileException;
+use org\bovigo\vfs\vfsStream;
+use org\bovigo\vfs\vfsStreamDirectory;
 
 class ImageTest extends \CIUnitTestCase
 {
 
 	protected $path = 'tests/_support/ci-logo.png';
 
+	public function setup()
+	{
+		// create virtual file system
+		$this->root = vfsStream::setup();
+		// copy our support files
+		$this->origin = '_support/Images/';
+		vfsStream::copyFromFileSystem(TESTPATH . $this->origin, $root);
+		// make subfolders
+		$structure = ['work' => [], 'wontwork' => []];
+		vfsStream::create($structure);
+		// with one of them read only
+		$wont = $this->root->getChild('wontwork')->chmod(0400);
+
+		$this->start = $this->root->url() . '/';
+
+		$this->image = new Image($this->start . 'ci-logo.png');
+	}
+
 	public function testBasicPropertiesInherited()
 	{
-		$image = new Image(ROOTPATH . $this->path);
-
-		$this->assertEquals('ci-logo.png', $image->getFilename());
-		$this->assertEquals(ROOTPATH . $this->path, $image->getPathname());
-		$this->assertEquals(ROOTPATH . 'tests/_support', $image->getPath());
-		$this->assertEquals('ci-logo.png', $image->getBasename());
+		$this->assertEquals('ci-logo.png', $this->image->getFilename());
+		$this->assertEquals($this->start . 'ci-logo.png', $this->image->getPathname());
+		$this->assertEquals($this->root->url(), $this->image->getPath());
+		$this->assertEquals('ci-logo.png', $this->image->getBasename());
 	}
 
 	public function testGetProperties()
 	{
-		$image = new Image(ROOTPATH . $this->path);
-
 		$expected = [
 			'width'		 => 155,
 			'height'	 => 200,
@@ -30,48 +46,46 @@ class ImageTest extends \CIUnitTestCase
 			'mime_type'	 => "image/png",
 		];
 
-		$this->assertEquals($expected, $image->getProperties(true));
+		$this->assertEquals($expected, $this->image->getProperties(true));
 	}
 
 	public function testExtractProperties()
 	{
-		$image = new Image(ROOTPATH . $this->path);
-		$this->assertTrue($image->getProperties(false));
+		// extract properties from the image
+		$this->assertTrue($this->image->getProperties(false));
 
-		$this->assertEquals(155, $image->origWidth);
-		$this->assertEquals(200, $image->origHeight);
-		$this->assertEquals(IMAGETYPE_PNG, $image->imageType);
-		$this->assertEquals('width="155" height="200"', $image->sizeStr);
-		$this->assertEquals("image/png", $image->mime);
+		$this->assertEquals(155, $this->image->origWidth);
+		$this->assertEquals(200, $this->image->origHeight);
+		$this->assertEquals(IMAGETYPE_PNG, $this->image->imageType);
+		$this->assertEquals('width="155" height="200"', $this->image->sizeStr);
+		$this->assertEquals("image/png", $this->image->mime);
 	}
 
-	public function testCanCopyDefaultName()
+	public function testCopyDefaultName()
 	{
-		$image = new Image(ROOTPATH . $this->path);
-
-		$image->copy(WRITEPATH);
-
-		$this->assertFileExists(WRITEPATH . 'ci-logo.png');
-
-		unlink(WRITEPATH . 'ci-logo.png');
+		$targetPath = $this->start . 'work';
+		$this->image->copy($targetPath);
+		$this->assertTrue($this->root->hasChild('work/ci-logo.png'));
 	}
 
-	public function testCanCopyNewName()
+	public function testCopyNewName()
 	{
-		$image = new Image(ROOTPATH . $this->path);
-
-		$image->copy(WRITEPATH, 'new-logo.png');
-
-		$this->assertFileExists(WRITEPATH . 'new-logo.png');
-
-		unlink(WRITEPATH . 'new-logo.png');
+		$this->image->copy($this->root->url(), 'new-logo.png');
+		$this->assertTrue($this->root->hasChild('new-logo.png'));
 	}
 
 	public function testCopyNowhere()
 	{
-		$image = new Image(ROOTPATH . $this->path);
 		$this->expectException(FileException::class);
-		$image->copy(WRITEPATH, '');
+		$targetPath = $this->start . 'work';
+		$this->image->copy($targetPath, '');
+	}
+
+	public function testCopyWontWork()
+	{
+		$this->expectException(FileException::class);
+		$targetPath = $this->start . 'wontwork';
+		$this->image->copy($targetPath, 'something.png');
 	}
 
 }
