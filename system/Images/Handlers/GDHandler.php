@@ -53,10 +53,13 @@ class GDHandler extends BaseHandler
 	{
 		parent::__construct($config);
 
+		// We should never see this, so can't test it
+		// @codeCoverageIgnoreStart
 		if ( ! extension_loaded('gd'))
 		{
 			throw ImageException::forMissingExtension('GD');
 		}
+		// @codeCoverageIgnoreEnd
 	}
 
 	//--------------------------------------------------------------------
@@ -106,7 +109,8 @@ class GDHandler extends BaseHandler
 	 *
 	 * @return $this
 	 */
-	public function _flatten(int $red = 255, int $green = 255, int $blue = 255) {
+	public function _flatten(int $red = 255, int $green = 255, int $blue = 255)
+	{
 
 		if ( ! ($src = $this->createImage()))
 		{
@@ -136,7 +140,6 @@ class GDHandler extends BaseHandler
 		$this->resource = $dest;
 
 		return $this;
-
 	}
 
 	//--------------------------------------------------------------------
@@ -157,7 +160,7 @@ class GDHandler extends BaseHandler
 
 		if ($direction === 'horizontal')
 		{
-			for ($i = 0; $i < $height; $i ++ )
+			for ($i = 0; $i < $height; $i ++)
 			{
 				$left = 0;
 				$right = $width - 1;
@@ -177,7 +180,7 @@ class GDHandler extends BaseHandler
 		}
 		else
 		{
-			for ($i = 0; $i < $width; $i ++ )
+			for ($i = 0; $i < $width; $i ++)
 			{
 				$top = 0;
 				$bottom = $height - 1;
@@ -560,4 +563,15 @@ class GDHandler extends BaseHandler
 	}
 
 	//--------------------------------------------------------------------
+
+	public function _getWidth()
+	{
+		return imagesx($this->resource);
+	}
+
+	public function _getHeight()
+	{
+		return imagesy($this->resource);
+	}
+
 }

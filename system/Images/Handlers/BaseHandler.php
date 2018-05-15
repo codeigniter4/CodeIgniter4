@@ -52,9 +52,9 @@ abstract class BaseHandler implements ImageHandlerInterface
 	 * d
 	 * @var \CodeIgniter\Images\Image
 	 */
-	protected $image;
-	protected $width;
-	protected $height;
+	protected $image = '';
+	protected $width = 0;
+	protected $height = 0;
 	protected $filePermissions = 0644;
 	protected $xAxis = 0;
 	protected $yAxis = 0;
@@ -113,6 +113,8 @@ abstract class BaseHandler implements ImageHandlerInterface
 		$this->image = new Image($path, true);
 
 		$this->image->getProperties();
+		$this->width = $this->image->origWidth;
+		$this->height = $this->image->origHeight;
 
 		return $this;
 	}
@@ -231,16 +233,15 @@ abstract class BaseHandler implements ImageHandlerInterface
 			throw ImageException::forMissingAngle();
 		}
 
+		// cast angle as an int, for our use
+		$angle = (int) $angle;
+
 		// Reassign the width and height
 		if ($angle === 90 || $angle === 270)
 		{
-			$this->width = $this->image->origHeight;
-			$this->height = $this->image->origWidth;
-		}
-		else
-		{
-			$this->width = $this->image->origWidth;
-			$this->height = $this->image->origHeight;
+			$temp = $this->height;
+			$this->width = $this->height;
+			$this->height = $temp;
 		}
 
 		// Call the Handler-specific version.
@@ -700,4 +701,16 @@ abstract class BaseHandler implements ImageHandlerInterface
 	}
 
 	//--------------------------------------------------------------------
+	// accessor for testing; not part of interface
+	public function getWidth()
+	{
+		return $this->resource ? $this->_getWidth() : $this->width;
+	}
+
+	// accessor for testing; not part of interface
+	public function getHeight()
+	{
+		return $this->resource ? $this->_getHeight() : $this->height;
+	}
+
 }
