@@ -8,6 +8,11 @@ use org\bovigo\vfs\vfsStreamDirectory;
 
 /**
  * Test the common image processing functionality.
+ * 
+ * Note: some of the underlying PHP functions do not play nicely
+ * with vfsStream, so the support files are used directly for
+ * most work, and the virtual file system will be used for
+ * testing saving only.
  */
 class BaseHandlerTest extends \CIUnitTestCase
 {
@@ -39,13 +44,13 @@ class BaseHandlerTest extends \CIUnitTestCase
 
 	public function testNew()
 	{
-		$handler = Services::image('gd');
+		$handler = Services::image('gd', null, false);
 		$this->assertTrue($handler instanceof Handlers\BaseHandler);
 	}
 
 	public function testWithFile()
 	{
-		$handler = Services::image('gd');
+		$handler = Services::image('gd', null, false);
 		$handler->withFile($this->path);
 
 		$this->assertNull($handler->getResource());
@@ -58,7 +63,7 @@ class BaseHandlerTest extends \CIUnitTestCase
 	public function testMissingFile()
 	{
 		$this->expectException(\CodeIgniter\Files\Exceptions\FileNotFoundException::class);
-		$handler = Services::image('gd');
+		$handler = Services::image('gd', null, false);
 		$handler->withFile($this->start . 'No_such_file.jpg');
 	}
 
@@ -67,7 +72,7 @@ class BaseHandlerTest extends \CIUnitTestCase
 	// The functionality is read-only, so we need to use the original file
 	public function testEXIF()
 	{
-		$handler = Services::image('gd');
+		$handler = Services::image('gd', null, false);
 
 		// nothing in our logo
 		$handler->withFile(TESTPATH . $this->origin . 'ci-logo.jpeg');
@@ -80,7 +85,7 @@ class BaseHandlerTest extends \CIUnitTestCase
 
 	public function testFileTypes()
 	{
-		$handler = Services::image('gd');
+		$handler = Services::image('gd', null, false);
 		$handler->withFile($this->start . 'ci-logo.png');
 		$image = $handler->getFile();
 		$this->assertTrue($image instanceof Image);

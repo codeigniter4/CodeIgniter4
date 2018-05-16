@@ -39,7 +39,8 @@ class GDHandlerTest extends \CIUnitTestCase
 		$this->start = $this->root->url() . '/';
 
 		$this->path = $this->start . 'ci-logo.png';
-		$this->handler = Services::image('gd');
+		$this->path = TESTPATH . $this->origin . 'ci-logo.png';
+		$this->handler = Services::image('gd', null, false);
 	}
 
 	public function testGetVersion()
@@ -52,34 +53,101 @@ class GDHandlerTest extends \CIUnitTestCase
 		$this->assertLessThan(999, $version);
 	}
 
-	//--------------------------------------------------------------------
-//	public function testResize()
-//	{
-//		
-//	}
-//
+	public function testImageProperties()
+	{
+		$this->handler->withFile($this->path);
+		$file = $this->handler->getFile();
+		$props = $file->getProperties(true);
+
+		$this->assertEquals(155, $this->handler->getWidth());
+		$this->assertEquals(155, $props['width']);
+		$this->assertEquals(155, $file->origWidth);
+
+		$this->assertEquals(200, $this->handler->getHeight());
+		$this->assertEquals(200, $props['height']);
+		$this->assertEquals(200, $file->origHeight);
+
+		$this->assertEquals('width="155" height="200"', $props['size_str']);
+	}
+
+	public function testImageTypeProperties()
+	{
+		$this->handler->withFile($this->path);
+		$file = $this->handler->getFile();
+		$props = $file->getProperties(true);
+
+		//FIXME Why is this failing? It detects the file as type 1, GIF
+		$this->assertEquals(IMAGETYPE_PNG, $props['image_type']);
+		$this->assertEquals('image/png', $props['mime_type']);
+	}
+
+//--------------------------------------------------------------------
+
+	public function testResizeIgnored()
+	{
+		$this->handler->withFile($this->path);
+		$this->handler->resize(155, 200); // 155x200 result
+		$this->assertEquals(155, $this->handler->getWidth());
+		$this->assertEquals(200, $this->handler->getHeight());
+	}
+
+	public function testResizeAbsolute()
+	{
+		$this->handler->withFile($this->path);
+		$this->handler->resize(123, 456, false); // 123x456 result
+		$this->assertEquals(123, $this->handler->getWidth());
+		$this->assertEquals(456, $this->handler->getHeight());
+	}
+
+	public function testResizeAspect()
+	{
+		$this->handler->withFile($this->path);
+		$this->handler->resize(123, 456, true); // 123x159 result
+		$this->assertEquals(123, $this->handler->getWidth());
+		$this->assertEquals(159, $this->handler->getHeight());
+	}
+
+	public function testResizeAspectWidth()
+	{
+		$this->handler->withFile($this->path);
+		$this->handler->resize(123, 0, true); // 123x159 result
+		$this->assertEquals(123, $this->handler->getWidth());
+		$this->assertEquals(159, $this->handler->getHeight());
+	}
+
+	public function testResizeAspectHeight()
+	{
+		$this->handler->withFile($this->path);
+		$this->handler->resize(0, 456, true); // 354x456 result
+		$this->assertEquals(354, $this->handler->getWidth());
+		$this->assertEquals(456, $this->handler->getHeight());
+	}
+
+//--------------------------------------------------------------------
 //	public function testCrop()
 //	{
 //		
 //	}
-	//--------------------------------------------------------------------
+//--------------------------------------------------------------------
 
 	public function testRotate()
 	{
-		$this->handler->withImage($this->path);
-		$this->assertEquals(155,$this->handler->getWidth());
-		$this->assertEquals(200,$this->handler->getHeight());
-		$this->assertInstanceOf(ImageHandlerInterface::class, $this->handler->rotate(90));
-		$this->assertEquals(200,$this->handler->getWidth());
-		
+		$this->handler->withFile($this->path); // 155x200
+		$this->assertEquals(155, $this->handler->getWidth());
+		$this->assertEquals(200, $this->handler->getHeight());
+
+		// first rotation
+		$this->handler->rotate(90); // 200x155
+		$this->assertEquals(200, $this->handler->getWidth());
+
 		// check image size again after another rotation
-		$this->handler->rotate(180);
-		$this->assertEquals(200,$this->handler->getWidth());
+		$this->handler->rotate(180); // 200x155
+		$this->assertEquals(200, $this->handler->getWidth());
 	}
 
 	public function testRotateBadAngle()
 	{
-		$this->handler->withImage($this->path);
+		$this->handler->withFile($this->path);
 		$this->expectException(ImageException::class);
 		$this->handler->rotate(77);
 	}

@@ -42,13 +42,6 @@ class GDHandler extends BaseHandler
 
 	public $version;
 
-	/**
-	 * Stores image resource in memory.
-	 *
-	 * @var
-	 */
-	protected $resource;
-
 	public function __construct($config = null)
 	{
 		parent::__construct($config);

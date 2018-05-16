@@ -52,7 +52,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 	 * d
 	 * @var \CodeIgniter\Images\Image
 	 */
-	protected $image = '';
+	protected $image = null;
 	protected $width = 0;
 	protected $height = 0;
 	protected $filePermissions = 0644;
@@ -112,7 +112,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 
 		$this->image = new Image($path, true);
 
-		$this->image->getProperties();
+		$this->image->getProperties(false);
 		$this->width = $this->image->origWidth;
 		$this->height = $this->image->origHeight;
 
@@ -663,7 +663,12 @@ abstract class BaseHandler implements ImageHandlerInterface
 	 */
 	protected function reproportion()
 	{
-		if (($this->width === 0 && $this->height === 0) || $this->image->origWidth === 0 || $this->image->origHeight === 0 || ( ! ctype_digit((string) $this->width) && ! ctype_digit((string) $this->height)) || ! ctype_digit((string) $this->image->origWidth) || ! ctype_digit((string) $this->image->origHeight)
+		if (($this->width === 0 && $this->height === 0) || 
+				$this->image->origWidth === 0 || 
+				$this->image->origHeight === 0 || 
+				( ! ctype_digit((string) $this->width) && ! ctype_digit((string) $this->height)) || 
+				! ctype_digit((string) $this->image->origWidth) || 
+				! ctype_digit((string) $this->image->origHeight)
 		)
 		{
 			return;
@@ -704,13 +709,13 @@ abstract class BaseHandler implements ImageHandlerInterface
 	// accessor for testing; not part of interface
 	public function getWidth()
 	{
-		return $this->resource ? $this->_getWidth() : $this->width;
+		return ($this->resource != null) ? $this->_getWidth() : $this->width;
 	}
 
 	// accessor for testing; not part of interface
 	public function getHeight()
 	{
-		return $this->resource ? $this->_getHeight() : $this->height;
+		return ($this->resource != null) ? $this->_getHeight() : $this->height;
 	}
 
 }
