@@ -1,5 +1,6 @@
 <?php namespace CodeIgniter\HTTP;
 
+use CodeIgniter\Config\Services;
 use Config\App;
 
 class CURLRequestTest extends \CIUnitTestCase
@@ -8,7 +9,48 @@ class CURLRequestTest extends \CIUnitTestCase
 
 	public function setUp()
 	{
-	    $this->request = new MockCURLRequest(new App(), new URI(), new Response(new \Config\App()));
+	    $this->request = $this->getRequest();
+	}
+
+	protected function getRequest(array $options = [])
+	{
+		$uri = isset($options['base_uri'])
+			? new URI($options['base_uri'])
+			: new URI();
+
+		return new MockCURLRequest(new App(), $uri, new Response(new \Config\App()), $options);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * @see https://github.com/bcit-ci/CodeIgniter4/issues/1029
+	 */
+	public function testGetRemembersBaseURI()
+	{
+		$request = $this->getRequest([
+			'base_uri' => 'http://www.foo.com/api/v1/'
+		]);
+
+		$response = $request->get('products');
+
+		$options = $request->curl_options;
+
+		$this->assertEquals('http://www.foo.com/api/v1/products', $options[CURLOPT_URL]);
+	}
+
+	/**
+	 * @see https://github.com/bcit-ci/CodeIgniter4/issues/1029
+	 */
+	public function testGetRemembersBaseURIWithHelperMethod()
+	{
+		$request = Services::curlrequest([
+			'base_uri' => 'http://www.foo.com/api/v1/'
+		]);
+
+		$uri = $this->getPrivateProperty($request, 'baseURI');
+		$this->assertEquals('www.foo.com', $uri->getHost());
+		$this->assertEquals('/api/v1/', $uri->getPath());
 	}
 
 	//--------------------------------------------------------------------

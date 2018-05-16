@@ -180,7 +180,7 @@ class Services
 
 		return new \CodeIgniter\HTTP\CURLRequest(
 				$config,
-				new \CodeIgniter\HTTP\URI(isset($options['base_uri']) ? : null),
+				new \CodeIgniter\HTTP\URI($options['base_uri'] ?? null),
 				$response,
 				$options
 		);
