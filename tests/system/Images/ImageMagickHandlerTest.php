@@ -5,7 +5,7 @@ use CodeIgniter\Files\Exceptions\FileException;
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamDirectory;
 
-class ImageMagickHandlerTest extends \CIUnitTestCase
+class ImageMagickHandlerTest extends GDHandlerTest
 {
 
 	public function setUp()
@@ -20,7 +20,8 @@ class ImageMagickHandlerTest extends \CIUnitTestCase
 		$this->root = vfsStream::setup();
 		// copy our support files
 		$this->origin = '_support/Images/';
-		vfsStream::copyFromFileSystem(TESTPATH . $this->origin, $root);
+// Next line would be needed for tests using VFS		
+//		vfsStream::copyFromFileSystem(TESTPATH . $this->origin, $root);
 		// make subfolders
 		$structure = ['work' => [], 'wontwork' => []];
 		vfsStream::create($structure);
@@ -29,12 +30,9 @@ class ImageMagickHandlerTest extends \CIUnitTestCase
 
 		$this->start = $this->root->url() . '/';
 
-		$this->image = new Image($this->start . 'ci-logo.png');
-	}
-
-	public function testCanReachImageMethods()
-	{
-		$this->assertInternalType('array', $this->image->getProperties(true));
+//		$this->path = $this->start . 'ci-logo.png';
+		$this->path = TESTPATH . $this->origin . 'ci-logo.png';
+		$this->handler = Services::image('gd', null, false);
 	}
 
 }
