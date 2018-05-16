@@ -51,7 +51,7 @@ Now that you've created your first method, it's time to make some basic page
 templates. We will be creating two "views" (page templates) that act as
 our page footer and header.
 
-Create the header at *application/Views/Templates/Header.php* and add
+Create the header at *application/Views/templates/header.php* and add
 the following code:
 
 ::
@@ -68,7 +68,7 @@ the following code:
 The header contains the basic HTML code that you'll want to display
 before loading the main view, together with a heading. It will also
 output the ``$title`` variable, which we'll define later in the controller.
-Now, create a footer at *application/Views/Templates/Footer.php* that
+Now, create a footer at *application/Views/templates/footer.php* that
 includes the following code:
 
 ::
@@ -82,10 +82,10 @@ Adding logic to the controller
 
 Earlier you set up a controller with a ``view()`` method. The method
 accepts one parameter, which is the name of the page to be loaded. The
-static page templates will be located in the *application/Views/Pages/*
+static page templates will be located in the *application/Views/pages/*
 directory.
 
-In that directory, create two files named *Home.php* and *About.php*.
+In that directory, create two files named *home.php* and *about.php*.
 Within those files, type some text − anything you'd like − and save them.
 If you like to be particularly un-original, try "Hello World!".
 
@@ -96,17 +96,17 @@ page actually exists:
 
 	public function view($page = 'home')
 	{
-		if ( ! file_exists(APPPATH.'/Views/Pages/'.$page.'.php'))
+		if ( ! file_exists(APPPATH.'/Views/pages/'.$page.'.php'))
 		{
 		    // Whoops, we don't have a page for that!
-		    throw new \CodeIgniter\PageNotFoundException($page);
+		    throw new \CodeIgniter\Exceptions\PageNotFoundException($page);
 		}
 
 		$data['title'] = ucfirst($page); // Capitalize the first letter
 
-		echo view('Templates/Header', $data);
-		echo view('Pages/'.$page, $data);
-		echo view('Templates/Footer', $data);
+		echo view('templates/header', $data);
+		echo view('pages/'.$page, $data);
+		echo view('templates/footer', $data);
 	}
 
 Now, when the page does exist, it is loaded, including the header and
@@ -129,6 +129,10 @@ used to pass values to the view. Each value in the ``$data`` array is
 assigned to a variable with the name of its key. So the value of
 ``$data['title']`` in the controller is equivalent to ``$title`` in the
 view.
+
+.. note:: Any files and directory names passed into the **view()** function MUST
+	match the case of the actual directory and file itself or the system will
+	throw errors on case-sensitive platforms.
 
 Routing
 -------
