@@ -1,6 +1,15 @@
 <?php namespace Config;
 
 /**
+ * Using environment-specific database connection settings (if exists)
+ */
+if (file_exists(APPPATH.'Config/'.ENVIRONMENT.'/Database.php'))
+{
+    require APPPATH.'Config/'.ENVIRONMENT.'/Database.php';
+    return;
+}
+
+/**
  * Database Configuration
  *
  * @package Config
