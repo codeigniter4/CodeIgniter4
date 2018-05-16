@@ -88,6 +88,9 @@ $routes->add('/', 'Home::index');
  *
  * You will have access to the $routes object within that file without
  * needing to reload it.
+ *
+ * If you using environment-specific routes (e.g.: development, production, etc...)
+ * the following lines must be comment, otherwise an endless cycle is created.
  */
 if (file_exists(APPPATH.'Config/'.ENVIRONMENT.'/Routes.php'))
 {
