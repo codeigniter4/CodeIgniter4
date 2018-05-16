@@ -1,11 +1,12 @@
 <?php namespace CodeIgniter\Database\Live;
 
 use \CodeIgniter\Database\Exceptions\DatabaseException;
+use CodeIgniter\Test\CIDatabaseTestCase;
 
 /**
  * @group DatabaseLive
  */
-class DeleteTest extends \CIDatabaseTestCase
+class DeleteTest extends CIDatabaseTestCase
 {
 	protected $refresh = true;
 

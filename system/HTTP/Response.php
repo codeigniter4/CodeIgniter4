@@ -444,7 +444,7 @@ class Response extends Message implements ResponseInterface
 			$body = $formatter->format($body);
 		}
 
-		return $body;
+		return $body ?: null;
 	}
 
 	//--------------------------------------------------------------------

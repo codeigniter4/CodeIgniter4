@@ -1,16 +1,14 @@
 <?php namespace CodeIgniter\API;
 
-use CodeIgniter\Controller;
-use CodeIgniter\Format\JSONFormatter;
-use CodeIgniter\Format\XMLFormatter;
-use CodeIgniter\HTTP\MockIncomingRequest;
-use CodeIgniter\HTTP\MockResponse;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\HTTP\UserAgent;
+use Tests\Support\HTTP\MockResponse;
+use CodeIgniter\Format\XMLFormatter;
+use CodeIgniter\Format\JSONFormatter;
+use Tests\Support\HTTP\MockIncomingRequest;
 
 class ResponseTraitTest extends \CIUnitTestCase
 {
-
 	protected $request;
 	protected $response;
 
@@ -45,8 +43,11 @@ class ResponseTraitTest extends \CIUnitTestCase
 
 		$config = array_merge($config, $userConfig);
 
-		$this->request = new MockIncomingRequest((object) $config, new URI($uri), null, new UserAgent());
-		$this->response = new MockResponse((object) $config);
+		if (is_null($this->request))
+		{
+			$this->request  = new MockIncomingRequest((object)$config, new URI($uri), null, new UserAgent());
+			$this->response = new MockResponse((object)$config);
+		}
 
 		// Insert headers into request.
 		$headers = [

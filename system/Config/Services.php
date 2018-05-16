@@ -39,6 +39,7 @@ use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Database\MigrationRunner;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\View\RendererInterface;
+use Config\App;
 
 /**
  * Services Configuration file.
@@ -547,7 +548,7 @@ class Services
 
 		if ( ! is_object($config))
 		{
-			$config = new \Config\App();
+			$config = new App();
 		}
 
 		return new \CodeIgniter\HTTP\IncomingRequest(

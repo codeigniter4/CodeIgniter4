@@ -15,16 +15,10 @@ class PagerTest extends \CIUnitTestCase
 	protected $pager;
 	protected $config;
 
-	public function __construct()
-	{
-	    parent::__construct();
-		helper('url');
-	}
-
-	//--------------------------------------------------------------------
-
 	public function setUp()
 	{
+		helper('url');
+
 		$_SERVER['HTTP_HOST'] = 'example.com';
 		$_GET = [];
 		$this->config = new Pager();

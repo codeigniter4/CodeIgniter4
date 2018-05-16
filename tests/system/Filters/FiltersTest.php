@@ -14,9 +14,9 @@ class FiltersTest extends \CIUnitTestCase
 	protected $request;
 	protected $response;
 
-	public function __construct()
+	public function setUp()
 	{
-	    parent::__construct();
+		parent::setUp();
 
 		$this->request = Services::request();
 		$this->response = Services::response();
@@ -24,19 +24,6 @@ class FiltersTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	public function setUp()
-	{
-
-	}
-
-	//--------------------------------------------------------------------
-
-	public function tearDown()
-	{
-
-	}
-
-	//--------------------------------------------------------------------
 
 	public function testProcessMethodDetectsCLI()
 	{

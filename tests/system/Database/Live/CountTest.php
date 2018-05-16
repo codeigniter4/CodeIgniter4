@@ -1,9 +1,11 @@
 <?php namespace CodeIgniter\Database\Live;
 
+use CodeIgniter\Test\CIDatabaseTestCase;
+
 /**
  * @group DatabaseLive
  */
-class CountTest extends \CIDatabaseTestCase
+class CountTest extends CIDatabaseTestCase
 {
 	protected $refresh = true;
 

@@ -1,9 +1,11 @@
 <?php namespace CodeIgniter\Database\Live;
 
+use CodeIgniter\Test\CIDatabaseTestCase;
+
 /**
  * @group DatabaseLive
  */
-class InsertTest extends \CIDatabaseTestCase
+class InsertTest extends CIDatabaseTestCase
 {
 	protected $refresh = true;
 

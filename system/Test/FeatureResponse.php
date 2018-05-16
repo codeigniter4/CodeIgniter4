@@ -302,8 +302,52 @@ class FeatureResponse extends TestCase
 	 */
 	public function getJSON()
 	{
-		return $this->response->getJSON();
+		$response = $this->response->getJSON();
+
+		if (is_null($response))
+		{
+			$this->fail('The Response contained invalid JSON.');
+		}
+
+		return $response;
 	}
+
+	/**
+	 *
+	 *
+	 * @param array $fragment
+	 *
+	 * @throws \Exception
+	 */
+	public function assertJSONFragment(array $fragment)
+	{
+		$json = json_decode($this->getJSON(), true);
+
+		$this->assertArraySubset($fragment, $json, false, "Response does not contain a matching JSON fragment.");
+	}
+
+	/**
+	 * Asserts that the JSON exactly matches the passed in data.
+	 * If the value being passed in is a string, it must be a json_encoded string.
+	 *
+	 * @param string|array $test
+	 *
+	 * @throws \Exception
+	 */
+	public function assertJSONExact($test)
+	{
+		$json = $this->getJSON();
+
+		if (is_array($test))
+		{
+			$config    = new \Config\Format();
+			$formatter = $config->getFormatter('application/json');
+			$test      = $formatter->format($test);
+		}
+
+		$this->assertJsonStringEqualsJsonString($test, $json, "Response does not contain matching JSON.");
+	}
+
 
 	//--------------------------------------------------------------------
 	// XML Methods

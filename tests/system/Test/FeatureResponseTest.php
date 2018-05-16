@@ -195,6 +195,48 @@ class FeatureResponseTest extends CIUnitTestCase
 		$this->assertEquals($formatter->format(['foo' => 'bar']), $this->feature->getXML());
 	}
 
+	public function testJsonFragment()
+	{
+		$this->getFeatureResponse([
+			'config' => [
+				'key-a', 'key-b'
+			]
+		]);
+
+		$this->feature->assertJSONFragment(['config' => ['key-a']]);
+	}
+
+	public function testJsonExact()
+	{
+		$data = [
+			'config' => [
+				'key-a', 'key-b'
+			]
+		];
+
+		$this->getFeatureResponse($data);
+
+		$this->feature->assertJSONExact($data);
+	}
+
+	public function testJsonExactString()
+	{
+		$data = [
+			'config' => [
+				'key-a', 'key-b'
+			]
+		];
+
+		$this->getFeatureResponse($data);
+
+		$config = new \Config\Format();
+		$formatter = $config->getFormatter('application/json');
+		$expected = $formatter->format($data);
+
+		$this->feature->assertJSONExact($expected);
+	}
+
+
 	protected function getFeatureResponse($body=null, array $responseOptions = null, array $headers = null)
 	{
 		$this->response = new Response(new \Config\App());
