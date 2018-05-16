@@ -140,8 +140,8 @@ class RedirectResponse extends Response
 	/**
 	 * Adds a key and message to the session as Flashdata.
 	 *
-	 * @param string $key
-	 * @param string $message
+	 * @param string       $key
+	 * @param string|array $message
 	 *
 	 * @return $this
 	 */

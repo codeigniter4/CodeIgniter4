@@ -591,7 +591,7 @@ class Session implements SessionInterface
 	 * flashdata property, with $value containing the property value.
 	 *
 	 * @param array|string $data  Property identifier or associative array of properties
-	 * @param null         $value Property value if $data is a scalar
+	 * @param string|array $value Property value if $data is a scalar
 	 */
 	public function setFlashdata($data, $value = null)
 	{
