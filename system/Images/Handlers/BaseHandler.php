@@ -304,7 +304,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 	 *
 	 * @return $this
 	 */
-	public function flip(string $dir)
+	public function flip(string $dir = 'vertical')
 	{
 		$dir = strtolower($dir);
 
@@ -348,7 +348,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 	 * @param string $text
 	 * @param array  $options
 	 *
-	 * @return BaseHandler
+	 * @return $this
 	 */
 	public function text(string $text, array $options = [])
 	{
@@ -434,12 +434,15 @@ abstract class BaseHandler implements ImageHandlerInterface
 	{
 		if ( ! function_exists('exif_read_data'))
 		{
+			// not testable, since we cannot turn on/off extensions
+			// @codeCoverageIgnoreStart
 			if ($silent)
 			{
 				return null;
 			}
 
 			throw ImageException::forEXIFUnsupported();
+			// @codeCoverageIgnoreEnd
 		}
 
 		$exif = exif_read_data($this->image->getPathname());
@@ -663,11 +666,11 @@ abstract class BaseHandler implements ImageHandlerInterface
 	 */
 	protected function reproportion()
 	{
-		if (($this->width === 0 && $this->height === 0) || 
-				$this->image->origWidth === 0 || 
-				$this->image->origHeight === 0 || 
-				( ! ctype_digit((string) $this->width) && ! ctype_digit((string) $this->height)) || 
-				! ctype_digit((string) $this->image->origWidth) || 
+		if (($this->width === 0 && $this->height === 0) ||
+				$this->image->origWidth === 0 ||
+				$this->image->origHeight === 0 ||
+				( ! ctype_digit((string) $this->width) && ! ctype_digit((string) $this->height)) ||
+				! ctype_digit((string) $this->image->origWidth) ||
 				! ctype_digit((string) $this->image->origHeight)
 		)
 		{

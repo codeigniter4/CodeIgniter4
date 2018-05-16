@@ -6,6 +6,7 @@ use CodeIgniter\Files\Exceptions\FileException;
 use CodeIgniter\Config\Services;
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamDirectory;
+use DirectoryIterator;
 
 /**
  * Unit testing for the GD image handler.
@@ -29,7 +30,8 @@ class GDHandlerTest extends \CIUnitTestCase
 		$this->root = vfsStream::setup();
 		// copy our support files
 		$this->origin = '_support/Images/';
-		vfsStream::copyFromFileSystem(TESTPATH . $this->origin, $root);
+// Next line would be needed for tests using VFS		
+//		vfsStream::copyFromFileSystem(TESTPATH . $this->origin, $root);
 		// make subfolders
 		$structure = ['work' => [], 'wontwork' => []];
 		vfsStream::create($structure);
@@ -38,7 +40,7 @@ class GDHandlerTest extends \CIUnitTestCase
 
 		$this->start = $this->root->url() . '/';
 
-		$this->path = $this->start . 'ci-logo.png';
+//		$this->path = $this->start . 'ci-logo.png';
 		$this->path = TESTPATH . $this->origin . 'ci-logo.png';
 		$this->handler = Services::image('gd', null, false);
 	}
@@ -76,7 +78,6 @@ class GDHandlerTest extends \CIUnitTestCase
 		$file = $this->handler->getFile();
 		$props = $file->getProperties(true);
 
-		//FIXME Why is this failing? It detects the file as type 1, GIF
 		$this->assertEquals(IMAGETYPE_PNG, $props['image_type']);
 		$this->assertEquals('image/png', $props['mime_type']);
 	}
@@ -124,10 +125,55 @@ class GDHandlerTest extends \CIUnitTestCase
 	}
 
 //--------------------------------------------------------------------
-//	public function testCrop()
-//	{
-//		
-//	}
+
+	public function testCropTopLeft()
+	{
+		$this->handler->withFile($this->path);
+		$this->handler->crop(100, 100); // 100x100 result
+		$this->assertEquals(100, $this->handler->getWidth());
+		$this->assertEquals(100, $this->handler->getHeight());
+	}
+
+	public function testCropMiddle()
+	{
+		$this->handler->withFile($this->path);
+		$this->handler->crop(100, 100, 50, 50, false); // 100x100 result
+		$this->assertEquals(100, $this->handler->getWidth());
+		$this->assertEquals(100, $this->handler->getHeight());
+	}
+
+	public function testCropMiddlePreserved()
+	{
+		$this->handler->withFile($this->path);
+		$this->handler->crop(100, 100, 50, 50, true); // 78x100 result
+		$this->assertEquals(78, $this->handler->getWidth());
+		$this->assertEquals(100, $this->handler->getHeight());
+	}
+
+	public function testCropTopLeftPreserveAspect()
+	{
+		$this->handler->withFile($this->path);
+		$this->handler->crop(100, 100); // 100x100 result
+		$this->assertEquals(100, $this->handler->getWidth());
+		$this->assertEquals(100, $this->handler->getHeight());
+	}
+
+	public function testCropNothing()
+	{
+		$this->handler->withFile($this->path);
+		$this->handler->crop(155, 200); // 155x200 result
+		$this->assertEquals(155, $this->handler->getWidth());
+		$this->assertEquals(200, $this->handler->getHeight());
+	}
+
+	public function testCropOutOfBounds()
+	{
+		$this->handler->withFile($this->path);
+		$this->handler->crop(100, 100, 100); // 55x100 result in 100x100
+		$this->assertEquals(100, $this->handler->getWidth());
+		$this->assertEquals(100, $this->handler->getHeight());
+	}
+
 //--------------------------------------------------------------------
 
 	public function testRotate()
@@ -152,23 +198,115 @@ class GDHandlerTest extends \CIUnitTestCase
 		$this->handler->rotate(77);
 	}
 
-//	public function testFlatten()
-//	{
-//		
-//	}
-//
-//	public function testReorient()
-//	{
-//		
-//	}
-//
-//	public function testGetEXIT()
-//	{
-//		
-//	}
-//
-//	public function testFit()
-//	{
-//		
-//	}
+//--------------------------------------------------------------------
+
+	public function testFlatten()
+	{
+		$this->handler->withFile($this->path);
+		$this->handler->flatten();
+		$this->assertEquals(155, $this->handler->getWidth());
+		$this->assertEquals(200, $this->handler->getHeight());
+	}
+
+//--------------------------------------------------------------------
+
+	public function testFlip()
+	{
+		$this->handler->withFile($this->path);
+		$this->handler->flip();
+		$this->assertEquals(155, $this->handler->getWidth());
+		$this->assertEquals(200, $this->handler->getHeight());
+	}
+
+	public function testHorizontal()
+	{
+		$this->handler->withFile($this->path);
+		$this->handler->flip('horizontal');
+		$this->assertEquals(155, $this->handler->getWidth());
+		$this->assertEquals(200, $this->handler->getHeight());
+	}
+
+	public function testFlipVertical()
+	{
+		$this->handler->withFile($this->path);
+		$this->handler->flip('vertical');
+		$this->assertEquals(155, $this->handler->getWidth());
+		$this->assertEquals(200, $this->handler->getHeight());
+	}
+
+	public function testFlipUnknown()
+	{
+		$this->handler->withFile($this->path);
+		$this->expectException(ImageException::class);
+		$this->handler->flip('bogus');
+	}
+
+//--------------------------------------------------------------------
+	public function testFit()
+	{
+		$this->handler->withFile($this->path);
+		$this->handler->fit(100, 100);
+		$this->assertEquals(100, $this->handler->getWidth());
+		$this->assertEquals(100, $this->handler->getHeight());
+	}
+
+	public function testFitTaller()
+	{
+		$this->handler->withFile($this->path);
+		$this->handler->fit(100, 400);
+		$this->assertEquals(100, $this->handler->getWidth());
+		$this->assertEquals(400, $this->handler->getHeight());
+	}
+
+	public function testFitAutoHeight()
+	{
+		$this->handler->withFile($this->path);
+		$this->handler->fit(100);
+		$this->assertEquals(100, $this->handler->getWidth());
+		$this->assertEquals(129, $this->handler->getHeight());
+	}
+
+	public function testFitPositions()
+	{
+		$choices = ['top-left', 'top', 'top-right', 'left', 'center', 'right', 'bottom-left', 'bottom', 'bottom-right'];
+		$this->handler->withFile($this->path);
+		foreach ($choices as $position)
+		{
+			$this->handler->fit(100, 100, $position);
+			$this->assertEquals(100, $this->handler->getWidth(), 'Position ' . $position . ' failed');
+			$this->assertEquals(100, $this->handler->getHeight(), 'Position ' . $position . ' failed');
+		}
+	}
+
+//--------------------------------------------------------------------
+
+	public function testText()
+	{
+		$this->handler->withFile($this->path);
+		$this->handler->text('vertical');
+		$this->assertEquals(155, $this->handler->getWidth());
+		$this->assertEquals(200, $this->handler->getHeight());
+	}
+
+//--------------------------------------------------------------------
+
+	public function testReorient()
+	{
+		// use sample images from http://www.galloway.me.uk/2012/01/uiimageorientation-exif-orientation-sample-images/
+		// one dimension should be 640, the other 480
+		// there is onsistent guidance about expectations, however
+		// the best we can hope for is that we process all without blowing up :-/
+		$path = TESTPATH . $this->origin . 'EXIFsamples';
+		foreach (new DirectoryIterator($path) as $one)
+		{
+			$filename = $one->getFilename();
+			if ($filename == '.' || $filename == '..')
+				continue;
+			$this->handler = Services::image('gd', null, false);
+			$this->handler->withFile($one->getPathname());
+			$this->handler->reorient(true);
+		}
+		$this->assertNotEmpty($path);
+	}
+
 }

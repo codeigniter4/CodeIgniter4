@@ -72,6 +72,10 @@ class BaseHandlerTest extends \CIUnitTestCase
 	// The functionality is read-only, so we need to use the original file
 	public function testEXIF()
 	{
+		// for testing, skip this if EXIF is not enabled.
+		// real-world, our handler will throw an exception, but not testable
+		if ( ! function_exists('exif_read_data'))
+			$this->markTestSkipped('EXIF needs to be enabled to run this test.');
 		$handler = Services::image('gd', null, false);
 
 		// nothing in our logo
@@ -97,6 +101,15 @@ class BaseHandlerTest extends \CIUnitTestCase
 		$handler->withFile($this->start . 'ci-logo.gif');
 		$image = $handler->getFile();
 		$this->assertTrue($image instanceof Image);
+	}
+
+	//--------------------------------------------------------------------
+	// Something handled by our Image
+	public function testImageHandled()
+	{
+		$handler = Services::image('gd', null, false);
+		$handler->withFile($this->path);
+		$this->assertEquals($this->path, $handler->getPathname());
 	}
 
 }
