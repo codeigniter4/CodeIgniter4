@@ -4,6 +4,8 @@ class SecurityHelperTest extends \CIUnitTestCase
 {
     public function setUp()
     {
+	    parent::setUp();
+
         helper('security');
     }
 

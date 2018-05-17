@@ -1,6 +1,6 @@
 <?php namespace Builder;
 
-use CodeIgniter\Database\MockConnection;
+use Tests\Support\Database\MockConnection;
 
 class WhereTest extends \CIUnitTestCase
 {
@@ -10,6 +10,8 @@ class WhereTest extends \CIUnitTestCase
 
 	public function setUp()
 	{
+		parent::setUp();
+
 		$this->db = new MockConnection([]);
 	}
 

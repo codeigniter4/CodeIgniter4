@@ -1,6 +1,7 @@
 <?php namespace CodeIgniter\Autoloader;
 
 use Config\Autoload;
+use Tests\Support\Autoloader\MockAutoloader;
 
 //--------------------------------------------------------------------
 
@@ -13,6 +14,8 @@ class AutoloaderTest extends \CIUnitTestCase
 
 	public function setUp()
 	{
+		parent::setUp();
+
 		$config = new Autoload();
 
 		$config->classmap = [

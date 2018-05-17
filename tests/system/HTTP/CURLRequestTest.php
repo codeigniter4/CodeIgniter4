@@ -1,6 +1,7 @@
 <?php namespace CodeIgniter\HTTP;
 
 use Config\App;
+use Tests\Support\HTTP\MockCURLRequest;
 
 class CURLRequestTest extends \CIUnitTestCase
 {
@@ -8,6 +9,8 @@ class CURLRequestTest extends \CIUnitTestCase
 
 	public function setUp()
 	{
+		parent::setUp();
+
 	    $this->request = new MockCURLRequest(new App(), new URI(), new Response(new \Config\App()));
 	}
 

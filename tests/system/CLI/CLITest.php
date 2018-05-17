@@ -6,6 +6,8 @@ class CLITest extends \CIUnitTestCase
 
 	public function setUp()
 	{
+		parent::setUp();
+
 		CLITestStreamFilter::$buffer = '';
 		$this->stream_filter = stream_filter_append(STDOUT, 'CLITestStreamFilter');
 	}

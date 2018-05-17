@@ -2,18 +2,11 @@
 
 use CodeIgniter\Exceptions\FrameworkException;
 use CodeIgniter\Log\Exceptions\LogException;
-use Config\MockLogger as LoggerConfig;
-use Psr\Log\LogLevel;
+use Tests\Support\Config\MockLogger as LoggerConfig;
 use CodeIgniter\Log\Handlers\TestHandler;
 
 class LoggerTest extends \CIUnitTestCase
 {
-	public function setUp()
-	{
-	}
-
-	//--------------------------------------------------------------------
-
 	public function testThrowsExceptionWithBadHandlerSettings()
 	{
 		$config = new LoggerConfig();

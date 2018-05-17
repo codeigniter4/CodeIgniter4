@@ -14,6 +14,8 @@ class IncomingRequestTest extends \CIUnitTestCase
 
 	public function setUp()
 	{
+		parent::setUp();
+
 		$this->request = new IncomingRequest(new App(), new URI(), null, new UserAgent());
 
 		$_POST = $_GET = $_SERVER = $_REQUEST = $_ENV = $_COOKIE = $_SESSION = [];
@@ -79,7 +81,9 @@ class IncomingRequestTest extends \CIUnitTestCase
 
 	public function testCanGrabServerVars()
 	{
-		$_SERVER['TEST'] = 5;
+		$server = $this->getPrivateProperty($this->request, 'globals');
+		$server['server']['TEST'] = 5;
+		$this->setPrivateProperty($this->request, 'globals', $server);
 
 		$this->assertEquals(5, $this->request->getServer('TEST'));
 		$this->assertNull($this->request->getServer('TESTY'));
@@ -89,7 +93,9 @@ class IncomingRequestTest extends \CIUnitTestCase
 
 	public function testCanGrabEnvVars()
 	{
-		$_ENV['TEST'] = 5;
+		$server = $this->getPrivateProperty($this->request, 'globals');
+		$server['env']['TEST'] = 5;
+		$this->setPrivateProperty($this->request, 'globals', $server);
 
 		$this->assertEquals(5, $this->request->getEnv('TEST'));
 		$this->assertNull($this->request->getEnv('TESTY'));

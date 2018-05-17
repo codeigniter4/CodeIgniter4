@@ -35,8 +35,8 @@
  * @since	Version 3.0.0
  * @filesource
  */
-use CodeIgniter\Events\Events;
 use Config\Paths;
+use CodeIgniter\Events\Events;
 use PHPUnit\Framework\TestCase;
 use CodeIgniter\Log\TestLogger;
 

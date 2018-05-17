@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Language;
+<?php namespace Tests\Support\Language;
+
+use CodeIgniter\Language\Language;
 
 class MockLanguage extends Language
 {

@@ -1,7 +1,7 @@
 <?php namespace Builder;
 
 use CodeIgniter\Database\BaseBuilder;
-use CodeIgniter\Database\MockConnection;
+use Tests\Support\Database\MockConnection;
 
 class LikeTest extends \CIUnitTestCase
 {
@@ -11,6 +11,8 @@ class LikeTest extends \CIUnitTestCase
 
 	public function setUp()
 	{
+		parent::setUp();
+
 		$this->db = new MockConnection([]);
 	}
 

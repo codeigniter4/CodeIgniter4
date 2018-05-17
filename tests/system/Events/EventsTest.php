@@ -9,6 +9,8 @@ class EventsTest extends \CIUnitTestCase
 
 	public function setUp()
 	{
+		parent::setUp();
+
 		Events::removeAllListeners();
 	}
 

@@ -9,6 +9,8 @@ class FormHelperTest extends \CIUnitTestCase
 {
     public function setUp()
     {
+	    parent::setUp();
+
         helper('form');
     }
     // ------------------------------------------------------------------------

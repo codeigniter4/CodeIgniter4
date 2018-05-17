@@ -5,6 +5,7 @@ ini_set('display_startup_errors', '1');
 
 // Make sure it recognizes that we're testing.
 $_SERVER['CI_ENVIRONMENT'] = 'testing';
+define('ENVIRONMENT', 'testing');
 
 // Path to the front controller (this file)
 define('FCPATH', getcwd().'/public'.DIRECTORY_SEPARATOR);

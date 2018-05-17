@@ -3,14 +3,16 @@
 class TextHelperTest extends \CIUnitTestCase
 {
     private $_long_string = 'Once upon a time, a framework had no tests. It sad. So some nice people began to write tests. The more time that went on, the happier it became. Everyone was happy.';
-    
+
     public function setUp()
     {
+	    parent::setUp();
+
         helper('text');
     }
-    
+
     // --------------------------------------------------------------------
-    
+
     public function test_strip_slashes()
 	{
 		$expected = [
@@ -99,11 +101,11 @@ class TextHelperTest extends \CIUnitTestCase
 		$this->assertEquals('file-1', increment_string('file', '-', '1'));
 		$this->assertEquals(124, increment_string('123', ''));
 	}
-	
+
 	// -------------------------------------------------------------------
 	// Functions from text_helper_test.php
 	// -------------------------------------------------------------------
-	
+
     public function test_word_limiter()
     {
         $this->assertEquals('Once upon a time,&#8230;', word_limiter($this->_long_string, 4));
@@ -232,18 +234,18 @@ class TextHelperTest extends \CIUnitTestCase
         $string = "Here is a longer string of text that will help us demonstrate the default charlim of this function.";
         $this->assertEquals(strpos(word_wrap($string), "\n"), 73);
     }
-    
+
     // -----------------------------------------------------------------------
-    
+
     public function test_excerpt()
     {
         $string = $this->_long_string;
         $result = ' Once upon a time, a framework had no tests. It sad  So some nice people began to write tests. The more time that went on, the happier it became. ...';
         $this->assertEquals(excerpt($string), $result);
     }
-    
+
     // -----------------------------------------------------------------------
-    
+
     public function test_excerpt_radius()
     {
         $string = $this->_long_string;

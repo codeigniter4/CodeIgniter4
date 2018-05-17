@@ -288,7 +288,7 @@ class Request extends Message implements RequestInterface
 	 */
 	public function getServer($index = null, $filter = null, $flags = null)
 	{
-		return $this->fetchGlobal(INPUT_SERVER, $index, $filter, $flags);
+		return $this->fetchGlobal('server', $index, $filter, $flags);
 	}
 
 	//--------------------------------------------------------------------
@@ -304,7 +304,7 @@ class Request extends Message implements RequestInterface
 	 */
 	public function getEnv($index = null, $filter = null, $flags = null)
 	{
-		return $this->fetchGlobal(INPUT_ENV, $index, $filter, $flags);
+		return $this->fetchGlobal('env', $index, $filter, $flags);
 	}
 
 	//--------------------------------------------------------------------

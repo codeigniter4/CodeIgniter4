@@ -14,6 +14,8 @@ class URLHelperTest extends \CIUnitTestCase
 
 	public function setUp()
 	{
+		parent::setUp();
+
 		helper('url');
 		Services::reset();
 	}

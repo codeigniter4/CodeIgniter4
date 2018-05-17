@@ -26,6 +26,8 @@ class FileHandlerTest extends \CIUnitTestCase
 
 	public function setUp()
 	{
+		parent::setUp();
+
 		//Initialize path
 		$this->config            = new \Config\Cache();
 		$this->config->storePath .= self::$directory;

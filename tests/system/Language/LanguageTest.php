@@ -1,5 +1,7 @@
 <?php namespace CodeIgniter\Language;
 
+use Tests\Support\Language\MockLanguage;
+
 class LanguageTest extends \CIUnitTestCase
 {
 	public function testReturnsStringWithNoFileInMessage()
