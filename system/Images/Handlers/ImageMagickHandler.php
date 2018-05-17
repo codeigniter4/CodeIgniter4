@@ -46,7 +46,8 @@ use CodeIgniter\Images\Image;
  * but simply use the command line version.
  * 
  * hmm - the width & height accessors at the end use the imagick extension.
- * FIXME - Resolution needs to happen!
+ * 
+ * FIXME - This needs conversion to use the imagick extension
  *
  * @package CodeIgniter\Images\Handlers
  */
