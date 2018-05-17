@@ -2,6 +2,7 @@
 
 class MockLanguage extends Language
 {
+
 	/**
 	 * Stores the data that should be
 	 * returned by the 'requireFile()' method.
@@ -23,26 +24,34 @@ class MockLanguage extends Language
 	 */
 	public function setData($data)
 	{
-	    $this->data = $data;
+		$this->data = $data;
 
 		return $this;
 	}
 
 	//--------------------------------------------------------------------
 
-	/**
-	 * Provides an override that allows us to set custom
-	 * data to be returned easily during testing.
-	 *
-	 * @param string $path
-	 *
-	 * @return array|mixed
-	 */
-	protected function requireFile(string $path): array
-	{
-	    return $this->data ?? [];
-	}
-
+//	/**
+//	 * Provides an override that allows us to set custom
+//	 * data to be returned easily during testing.
+//	 *
+//	 * @param string $path
+//	 *
+//	 * @return array|mixed
+//	 */
+//	protected function requireFile(string $path): array
+//	{
+//		return $this->data ?? [];
+//	}
+//
 	//--------------------------------------------------------------------
+
+	/**
+	 * Arbitrarily turnoff internationalization support for testing
+	 */
+	public function disableIntlSupport()
+	{
+		$this->intlSupport = false;
+	}
 
 }
