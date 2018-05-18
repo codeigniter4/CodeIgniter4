@@ -1,5 +1,7 @@
 <?php namespace CodeIgniter\CLI;
 
+use CodeIgniter\Test\Filters\CITestStreamFilter;
+
 class CLITest extends \CIUnitTestCase
 {
 
@@ -7,8 +9,8 @@ class CLITest extends \CIUnitTestCase
 
 	public function setUp()
 	{
-		CLITestStreamFilter::$buffer = '';
-		$this->stream_filter = stream_filter_append(STDOUT, 'CLITestStreamFilter');
+		CITestStreamFilter::$buffer = '';
+		$this->stream_filter = stream_filter_append(STDOUT, 'CITestStreamFilter');
 	}
 
 	public function tearDown()
@@ -102,7 +104,7 @@ class CLITest extends \CIUnitTestCase
 test
 
 EOT;
-		$this->assertEquals($expected, CLITestStreamFilter::$buffer);
+		$this->assertEquals($expected, CITestStreamFilter::$buffer);
 	}
 
 	public function testWriteForeground()
@@ -112,7 +114,7 @@ EOT;
 \033[0;31mtest\033[0m
 
 EOT;
-		$this->assertEquals($expected, CLITestStreamFilter::$buffer);
+		$this->assertEquals($expected, CITestStreamFilter::$buffer);
 	}
 
 	public function testWriteBackground()
@@ -122,41 +124,41 @@ EOT;
 \033[0;31m\033[42mtest\033[0m
 
 EOT;
-		$this->assertEquals($expected, CLITestStreamFilter::$buffer);
+		$this->assertEquals($expected, CITestStreamFilter::$buffer);
 	}
 
 	public function testError()
 	{
-		$this->stream_filter = stream_filter_append(STDERR, 'CLITestStreamFilter');
+		$this->stream_filter = stream_filter_append(STDERR, 'CITestStreamFilter');
 		CLI::error('test');
 		// red expected cuz stderr
 		$expected = <<<EOT
 \033[1;31mtest\033[0m
 
 EOT;
-		$this->assertEquals($expected, CLITestStreamFilter::$buffer);
+		$this->assertEquals($expected, CITestStreamFilter::$buffer);
 	}
 
 	public function testErrorForeground()
 	{
-		$this->stream_filter = stream_filter_append(STDERR, 'CLITestStreamFilter');
+		$this->stream_filter = stream_filter_append(STDERR, 'CITestStreamFilter');
 		CLI::error('test', 'purple');
 		$expected = <<<EOT
 \033[0;35mtest\033[0m
 
 EOT;
-		$this->assertEquals($expected, CLITestStreamFilter::$buffer);
+		$this->assertEquals($expected, CITestStreamFilter::$buffer);
 	}
 
 	public function testErrorBackground()
 	{
-		$this->stream_filter = stream_filter_append(STDERR, 'CLITestStreamFilter');
+		$this->stream_filter = stream_filter_append(STDERR, 'CITestStreamFilter');
 		CLI::error('test', 'purple', 'green');
 		$expected = <<<EOT
 \033[0;35m\033[42mtest\033[0m
 
 EOT;
-		$this->assertEquals($expected, CLITestStreamFilter::$buffer);
+		$this->assertEquals($expected, CITestStreamFilter::$buffer);
 	}
 
 	public function testShowProgress()
@@ -185,7 +187,7 @@ third.
 [\033[32m#.........\033[0m]   5% Complete
 
 EOT;
-		$this->assertEquals($expected, CLITestStreamFilter::$buffer);
+		$this->assertEquals($expected, CITestStreamFilter::$buffer);
 	}
 
 	public function testShowProgressWithoutBar()
@@ -199,7 +201,7 @@ EOT;
 first.
 \007\007\007
 EOT;
-		$this->assertEquals($expected, CLITestStreamFilter::$buffer);
+		$this->assertEquals($expected, CITestStreamFilter::$buffer);
 	}
 
 	public function testWrap()
@@ -314,42 +316,3 @@ EOT;
 
 }
 
-// class to extract output snapshot
-class CLITestStreamFilter extends \php_user_filter
-{
-
-	public static $buffer = '';
-
-	public function filter($in, $out, &$consumed, $closing)
-	{
-		while ($bucket = stream_bucket_make_writeable($in))
-		{
-			self::$buffer .= $bucket->data;
-			$consumed += $bucket->datalen;
-		}
-		return PSFS_PASS_ON;
-	}
-
-}
-
-// class to spoof keyboard input
-class CLITestKeyboardFilter extends \php_user_filter
-{
-
-	public static $spoofed = '';
-
-	public function filter($in, $out, &$consumed, $closing)
-	{
-		while ($bucket = stream_bucket_make_writeable($in))
-		{
-			$consumed += $bucket->datalen;
-			$bucket->data = static::$spoofed . '\n';
-			$bucket->datalen = strlen(static::$spoofed);
-			stream_bucket_append($out, $bucket);
-		}
-		return PSFS_PASS_ON;
-	}
-
-}
-
-stream_filter_register('CLITestStreamFilter', 'CodeIgniter\CLI\CLITestStreamFilter');
