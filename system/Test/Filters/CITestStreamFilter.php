@@ -59,4 +59,6 @@ class CITestStreamFilter extends \php_user_filter
 
 }
 
+// @codeCoverageIgnoreStart
 stream_filter_register('CITestStreamFilter', 'CodeIgniter\Test\Filters\CITestStreamFilter');
+// @codeCoverageIgnoreEnd
