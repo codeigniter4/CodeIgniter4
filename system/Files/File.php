@@ -95,10 +95,8 @@ class File extends SplFileInfo
 		{
 			case 'kb':
 				return number_format($this->size / 1024, 3);
-				break;
 			case 'mb':
 				return number_format(($this->size / 1024) / 1024, 3);
-				break;
 		}
 
 		return $this->size;

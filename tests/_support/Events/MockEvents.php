@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Test;
+<?php namespace CodeIgniter\Events;
 
 /**
  * CodeIgniter
@@ -35,57 +35,26 @@
  * @since	Version 3.0.0
  * @filesource
  */
-use CodeIgniter\Events\Events;
-use PHPUnit\Framework\TestCase;
-use CodeIgniter\Log\TestLogger;
 
 /**
- * PHPunit test case.
+ * Events
  */
-class CIUnitTestCase extends TestCase
+class MockEvents extends Events
 {
 
-	use ReflectionHelper;
-
-	/**
-	 * Custom function to hook into CodeIgniter's Logging mechanism
-	 * to check if certain messages were logged during code execution.
-	 *
-	 * @param string $level
-	 * @param null   $expectedMessage
-	 */
-	public function assertLogged(string $level, $expectedMessage = null)
+	public function getListeners()
 	{
-		$result = TestLogger::didLog($level, $expectedMessage);
-
-		$this->assertTrue($result);
-		return $result;
+		return self::$listeners;
 	}
 
-	//--------------------------------------------------------------------
-
-	/**
-	 * Hooks into CodeIgniter's Events system to check if a specific
-	 * event was triggered or not.
-	 *
-	 * @param string $eventName
-	 */
-	public function assertEventTriggered(string $eventName): bool
+	public function getEventsFile()
 	{
-		$found = false;
-		$eventName = strtolower($eventName);
-
-		foreach (Events::getPerformanceLogs() as $log)
-		{
-			if ($log['event'] !== $eventName) continue;
-
-			$found = true;
-			break;
-		}
-
-		$this->assertTrue($found);
-		return $found;
+		return self::$eventsFile;
 	}
 
-	//--------------------------------------------------------------------
+	public function getSimulate()
+	{
+		return self::$simulate;
+	}
+
 }

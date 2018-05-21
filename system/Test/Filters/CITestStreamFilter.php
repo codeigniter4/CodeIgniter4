@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Test;
+<?php namespace CodeIgniter\Test\Filters;
 
 /**
  * CodeIgniter
@@ -35,57 +35,30 @@
  * @since	Version 3.0.0
  * @filesource
  */
-use CodeIgniter\Events\Events;
-use PHPUnit\Framework\TestCase;
-use CodeIgniter\Log\TestLogger;
 
 /**
- * PHPunit test case.
+ * Class to extract an output snapshot.
+ * Used to capture output during unit testing, so that it can
+ * be used in assertions.
  */
-class CIUnitTestCase extends TestCase
+// class to extract output snapshot
+class CITestStreamFilter extends \php_user_filter
 {
 
-	use ReflectionHelper;
+	public static $buffer = '';
 
-	/**
-	 * Custom function to hook into CodeIgniter's Logging mechanism
-	 * to check if certain messages were logged during code execution.
-	 *
-	 * @param string $level
-	 * @param null   $expectedMessage
-	 */
-	public function assertLogged(string $level, $expectedMessage = null)
+	public function filter($in, $out, &$consumed, $closing)
 	{
-		$result = TestLogger::didLog($level, $expectedMessage);
-
-		$this->assertTrue($result);
-		return $result;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Hooks into CodeIgniter's Events system to check if a specific
-	 * event was triggered or not.
-	 *
-	 * @param string $eventName
-	 */
-	public function assertEventTriggered(string $eventName): bool
-	{
-		$found = false;
-		$eventName = strtolower($eventName);
-
-		foreach (Events::getPerformanceLogs() as $log)
+		while ($bucket = stream_bucket_make_writeable($in))
 		{
-			if ($log['event'] !== $eventName) continue;
-
-			$found = true;
-			break;
+			self::$buffer .= $bucket->data;
+			$consumed += $bucket->datalen;
 		}
-
-		$this->assertTrue($found);
-		return $found;
+		return PSFS_PASS_ON;
 	}
 
-	//--------------------------------------------------------------------
 }
+
+// @codeCoverageIgnoreStart
+stream_filter_register('CITestStreamFilter', 'CodeIgniter\Test\Filters\CITestStreamFilter');
+// @codeCoverageIgnoreEnd

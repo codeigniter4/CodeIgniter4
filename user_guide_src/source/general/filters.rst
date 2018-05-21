@@ -18,9 +18,10 @@ and power. Some common examples of tasks that might be performed with filters ar
 Creating a Filter
 *****************
 
-Filters are simple classes that implement ``CodeIgniter\Filters\FilterInterface``. They contain two methods: ``before()``
-and ``after()``, which contain the code that will be ran before and after the controller, respectively. Your class
-must contain both methods, but may leave the methods empty if they are not needed. A skeleton filter class looks like::
+Filters are simple classes that implement ``CodeIgniter\Filters\FilterInterface``. 
+They contain two methods: ``before()`` and ``after()`` which hold the code that 
+will run before and after the controller respectively. Your class must contain both methods 
+but may leave the methods empty if they are not needed. A skeleton filter class looks like::
 
     <?php namespace App\Filters;
 

@@ -277,7 +277,7 @@ EOT;
 	public function testTable($tbody, $thead, $expected)
 	{
 		CLI::table($tbody, $thead);
-		$this->assertEquals(CLITestStreamFilter::$buffer, $expected);
+		$this->assertEquals(CITestStreamFilter::$buffer, $expected);
 	}
 
 	public function tableProvider()
@@ -313,6 +313,4 @@ EOT;
 				"+----+-----------------+\n"],
 		];
 	}
-
 }
-
