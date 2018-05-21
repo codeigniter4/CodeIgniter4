@@ -1,13 +1,15 @@
 <?php namespace CodeIgniter\CLI;
 
+use CodeIgniter\Test\Filters\CITestStreamFilter;
+
 class CLITest extends \CIUnitTestCase
 {
 	private $stream_filter;
 
 	public function setUp()
 	{
-		CLITestStreamFilter::$buffer = '';
-		$this->stream_filter = stream_filter_append(STDOUT, 'CLITestStreamFilter');
+		CITestStreamFilter::$buffer = '';
+		$this->stream_filter = stream_filter_append(STDOUT, 'CITestStreamFilter');
 	}
 
 	public function tearDown()
@@ -105,7 +107,7 @@ third.
 [\033[32m#.........\033[0m]   5% Complete
 
 EOT;
-		$this->assertEquals($expected, CLITestStreamFilter::$buffer);
+		$this->assertEquals($expected, CITestStreamFilter::$buffer);
 	}
 
 	public function testShowProgressWithoutBar()
@@ -119,7 +121,7 @@ EOT;
 first.
 \007\007\007
 EOT;
-		$this->assertEquals($expected, CLITestStreamFilter::$buffer);
+		$this->assertEquals($expected, CITestStreamFilter::$buffer);
 	}
 
 	public function testWrap()
@@ -140,7 +142,7 @@ EOT;
 	public function testTable($tbody, $thead, $expected)
 	{
 		CLI::table($tbody, $thead);
-		$this->assertEquals(CLITestStreamFilter::$buffer, $expected);
+		$this->assertEquals(CITestStreamFilter::$buffer, $expected);
 	}
 
 	public function tableProvider()
@@ -177,20 +179,3 @@ EOT;
 		];
 	}
 }
-
-
-class CLITestStreamFilter extends \php_user_filter
-{
-	public static $buffer = '';
-
-	public function filter($in, $out, &$consumed, $closing)
-	{
-		while ($bucket = stream_bucket_make_writeable($in)) {
-			self::$buffer .= $bucket->data;
-			$consumed += $bucket->datalen;
-		}
-		return PSFS_PASS_ON;
-	}
-}
-
-stream_filter_register('CLITestStreamFilter', 'CodeIgniter\CLI\CLITestStreamFilter');

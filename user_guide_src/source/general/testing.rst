@@ -3,9 +3,8 @@ Testing
 #######
 
 CodeIgniter has been built to make testing both the framework and your application as simple as possible.
-Support for ``PHPUnit`` is built in, and a ``phpunit.xml`` file is already setup for your application.
-It also provides a number of convenient helper methods to make testing every aspect of your application
-as painless as possible.
+Support for ``PHPUnit`` is built in, and the framework provides a number of convenient 
+helper methods to make testing every aspect of your application as painless as possible.
 
 .. contents::
     :local:
@@ -25,7 +24,6 @@ In order to take advantage of the additional tools provided, your tests must ext
         . . .
     }
 
-.. note:: More features are planned, but are not implemented yet. Stay tuned.
 
 Mocking Services
 ================
@@ -59,6 +57,16 @@ class exactly. The second parameter is the instance to replace it with.
 **reset()**
 
 Removes all mocked classes from the Services class, bringing it back to its original state.
+
+PHPUnit Configuration
+=====================
+
+The framework has a ``phpunit.xml.dist`` file in the project root. This controls unit
+testing of the framework itself. If you provide your own ``phpunit.xml``, it will
+over-ride this.
+
+Your ``phpunit.xml`` should exclude the ``system`` folder, as well as any ``vendor`` or
+``ThirdParty`` folders, if you are unit testing your application.
 
 ===================
 Testing Controllers
@@ -306,6 +314,67 @@ Finally, you can check if a checkbox exists and is checked with the **seeCheckbo
     $results->seeCheckboxIsChecked('.foo');
     // Check if checkbox with id of 'bar' is checked
     $results->seeCheckboxIsChecked('#bar');
+
+Stream Filters
+==============
+
+Some stream filters have been provided as an alternate to these helper methods.
+
+CITestStreamFilter
+------------------
+
+This filter captures output and makes it available to you.
+
+An example demonstrating this inside one of your test cases:
+
+            public function setUp()
+            {
+                    CITestStreamFilter::$buffer = '';
+                    $this->stream_filter = stream_filter_append(STDOUT, 'CITestStreamFilter');
+            }
+
+            public function tearDown()
+            {
+                    stream_filter_remove($this->stream_filter);
+            }
+
+            public function testSomeOutput()
+            {
+                    CLI::write('first.');
+                    $expected = "first.\n";
+                    $this->assertEquals($expected, CITestStreamFilter::$buffer);
+            }
+
+
+Additional Assertions
+=====================
+
+``CIUnitTestCase`` provides additional unit testing assertions that you might find useful.
+
+**assertLogged($level, $expectedMessage)**
+
+Ensure that something you expected to be logged actually was.
+
+        $config = new LoggerConfig();
+        $logger = new Logger($config);
+
+        ... do something that you expect a log entry from
+        $logger->log('error', "That's no moon");
+
+        $this->assertLogged('error', "That's no moon");
+
+**assertEventTriggered($eventName)**
+
+Ensure that an event you excpected to be triggered actually was:
+
+		Events::on('foo', function($arg) use(&$result) {
+			$result = $arg;
+		});
+
+		Events::trigger('foo', 'bar');
+
+                $this->assertEventTriggered('foo');
+
 
 =====================
 Testing Your Database
