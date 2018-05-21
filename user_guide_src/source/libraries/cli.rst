@@ -224,3 +224,19 @@ pass ``false`` as the first parameter and the progress bar will be removed.
 	| 7  | A great item title       | 2017-11-16 10:35:02 | 1      |
 	| 8  | Another great item title | 2017-11-16 13:46:54 | 0      |
 	+----+--------------------------+---------------------+--------+
+
+**wait()**
+
+Waits a certain number of seconds, optionally showing a wait message and
+waiting for a key press.
+
+::
+
+        // wait for specified interval, with countdown displayed
+        CLI::wait($seconds, true);
+
+        // show continuation message and wait for input
+        CLI::wait(0, false);
+
+        // wait for specified interval
+        CLI::wait($seconds, false);
