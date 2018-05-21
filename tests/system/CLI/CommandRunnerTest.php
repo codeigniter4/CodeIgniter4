@@ -2,6 +2,7 @@
 
 use Config\MockCLIConfig;
 use CodeIgniter\HTTP\UserAgent;
+use CodeIgniter\Test\Filters\CITestStreamFilter;
 
 class CommandRunnerTest extends \CIUnitTestCase
 {
@@ -10,8 +11,8 @@ class CommandRunnerTest extends \CIUnitTestCase
 
 	public function setUp()
 	{
-		CLICommandStreamFilter::$buffer = '';
-		$this->stream_filter = stream_filter_append(STDOUT, 'CLICommandStreamFilter');
+		CITestStreamFilter::$buffer = '';
+		$this->stream_filter = stream_filter_append(STDOUT, 'CITestStreamFilter');
 
 		$this->env = new \CodeIgniter\Config\DotEnv(ROOTPATH);
 		$this->env->load();
@@ -40,7 +41,7 @@ class CommandRunnerTest extends \CIUnitTestCase
 	public function testGoodCommand()
 	{
 		$this->runner->index(['list']);
-		$result = CLICommandStreamFilter::$buffer;
+		$result = CITestStreamFilter::$buffer;
 
 		// make sure the result looks like a command list
 		$this->assertContains('Lists the available commands.', $result);
@@ -50,7 +51,7 @@ class CommandRunnerTest extends \CIUnitTestCase
 	public function testDefaultCommand()
 	{
 		$this->runner->index([]);
-		$result = CLICommandStreamFilter::$buffer;
+		$result = CITestStreamFilter::$buffer;
 
 		// make sure the result looks like basic help
 		$this->assertContains('Displays basic usage information.', $result);
@@ -60,7 +61,7 @@ class CommandRunnerTest extends \CIUnitTestCase
 	public function testEmptyCommand()
 	{
 		$this->runner->index([null,'list']);
-		$result = CLICommandStreamFilter::$buffer;
+		$result = CITestStreamFilter::$buffer;
 
 		// make sure the result looks like a command list
 		$this->assertContains('Lists the available commands.', $result);
@@ -68,9 +69,9 @@ class CommandRunnerTest extends \CIUnitTestCase
 
 	public function testBadCommand()
 	{
-		$this->error_filter = stream_filter_append(STDERR, 'CLICommandStreamFilter');
+		$this->error_filter = stream_filter_append(STDERR, 'CITestStreamFilter');
 		$this->runner->index(['bogus']);
-		$result = CLICommandStreamFilter::$buffer;
+		$result = CITestStreamFilter::$buffer;
 		stream_filter_remove($this->error_filter);
 
 		// make sure the result looks like a command list
@@ -78,22 +79,3 @@ class CommandRunnerTest extends \CIUnitTestCase
 	}
 
 }
-
-class CLICommandStreamFilter extends \php_user_filter
-{
-
-	public static $buffer = '';
-
-	public function filter($in, $out, &$consumed, $closing)
-	{
-		while ($bucket = stream_bucket_make_writeable($in))
-		{
-			self::$buffer .= $bucket->data;
-			$consumed += $bucket->datalen;
-		}
-		return PSFS_PASS_ON;
-	}
-
-}
-
-stream_filter_register('CLICommandStreamFilter', 'CodeIgniter\CLI\CLICommandStreamFilter');
