@@ -84,7 +84,7 @@ class MockLogger
 		// File Handler
 		//--------------------------------------------------------------------
 
-		'CodeIgniter\Log\Handlers\TestHandler' => [
+		'Tests\Support\Log\Handlers\TestHandler' => [
 
 			/*
 			 * The log levels that this handler will handle.

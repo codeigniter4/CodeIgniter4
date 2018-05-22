@@ -17,6 +17,8 @@ class PagerTest extends \CIUnitTestCase
 
 	public function setUp()
 	{
+		parent::setUp();
+
 		helper('url');
 
 		$_SERVER['HTTP_HOST'] = 'example.com';

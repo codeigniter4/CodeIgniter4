@@ -1,6 +1,6 @@
 <?php namespace CodeIgniter\Router;
 
-use CodeIgniter\Autoloader\MockFileLocator;
+use Tests\Support\Autoloader\MockFileLocator;
 use CodeIgniter\Router\Exceptions\RouterException;
 
 /**
@@ -8,13 +8,6 @@ use CodeIgniter\Router\Exceptions\RouterException;
  */
 class RouteCollectionTest extends \CIUnitTestCase
 {
-
-	public function setUp()
-	{
-	}
-
-	//--------------------------------------------------------------------
-
 	public function tearDown()
 	{
 	}

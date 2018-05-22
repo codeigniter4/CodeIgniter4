@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Validation;
+<?php namespace Tests\Support\Validation;
 
 class TestRules {
 

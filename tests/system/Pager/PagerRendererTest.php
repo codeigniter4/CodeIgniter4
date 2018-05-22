@@ -10,6 +10,8 @@ class PagerRendererTest extends \CIUnitTestCase
 
 	public function setUp()
 	{
+		parent::setUp();
+
 		$this->uri = new URI('http://example.com/foo');
 	}
 

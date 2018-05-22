@@ -478,7 +478,9 @@ class IncomingRequest extends Request
 		// If the session hasn't been started, or no
 		// data was previously saved, we're done.
 		if (empty($_SESSION['_ci_old_input']))
+		{
 			return;
+		}
 
 		// Check for the value in the POST array first.
 		if (isset($_SESSION['_ci_old_input']['post'][$key]))

@@ -38,7 +38,7 @@
 use Config\Paths;
 use CodeIgniter\Events\Events;
 use PHPUnit\Framework\TestCase;
-use CodeIgniter\Log\TestLogger;
+use Tests\Support\Log\TestLogger;
 
 /**
  * PHPunit test case.

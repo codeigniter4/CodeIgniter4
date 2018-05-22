@@ -1,9 +1,10 @@
-<?php namespace CodeIgniter\Log;
+<?php
 
+use CodeIgniter\Log\Logger;
 use CodeIgniter\Exceptions\FrameworkException;
 use CodeIgniter\Log\Exceptions\LogException;
 use Tests\Support\Config\MockLogger as LoggerConfig;
-use CodeIgniter\Log\Handlers\TestHandler;
+use Tests\Support\Log\Handlers\TestHandler;
 
 class LoggerTest extends \CIUnitTestCase
 {
@@ -68,7 +69,7 @@ class LoggerTest extends \CIUnitTestCase
 	public function testLogDoesnotLogUnhandledLevels()
 	{
 		$config = new LoggerConfig();
-		$config->handlers['CodeIgniter\Log\Handlers\TestHandler']['handles'] =  ['critical'];
+		$config->handlers['Tests\Support\Log\Handlers\TestHandler']['handles'] =  ['critical'];
 
 		$logger = new Logger($config);
 
@@ -204,7 +205,7 @@ class LoggerTest extends \CIUnitTestCase
 
 		// For whatever reason, this will often be the class/function instead of file and line.
 		// Other times it actually returns the line number, so don't look for either
-		$expected = 'DEBUG - '.date('Y-m-d').' --> Test message CodeIgniter\Log\LoggerTest';
+		$expected = 'DEBUG - '.date('Y-m-d').' --> Test message LoggerTest';
 
 		$logger->log('debug', 'Test message {file} {line}');
 
