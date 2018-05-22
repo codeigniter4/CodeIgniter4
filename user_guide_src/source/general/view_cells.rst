@@ -3,21 +3,21 @@ View Cells
 ##########
 
 View Cells allow you to insert HTML that is generated outside of your controller. It simply calls the specified
-class and method, which must return valid HTML. This method could be in an callable method, found in any class
+class and method, which must return a string of valid HTML. This method could be in any callable method, found in any class
 that the autoloader can locate. The only restriction is that the class can not have any constructor parameters.
 This is intended to be used within views, and is a great aid to modularizing your code.
 ::
 
     <?= view_cell('\App\Libraries\Blog::recentPosts') ?>
 
-In this example, the class ``App\Libraries\Blog`` is loaded, and the method ``recentPosts()`` is ran. That method
-must return a string with the generated HTML. The method used can be either a static method or not. Either way works.
+In this example, the class ``App\Libraries\Blog`` is loaded, and the method ``recentPosts()`` is run. The method
+must return the generated HTML as a string. The method can be either a static method or not. Either way works.
 
 Cell Parameters
 ---------------
 
-You can further refine the call by passing a string with a list of parameters in the second parameter that are passed
-to the method as an array of key/value pairs, or a comma-separated string of key/value pairs::
+You can further refine the call by passing a list of parameters in the second parameter to the method. The values passed 
+can be an array of key/value pairs, or a comma-separated string of key/value pairs::
 
     // Passing Parameter Array
     <?= view_cell('\App\Libraries\Blog::recentPosts', ['category' => 'codeigniter', 'limit' => 5]) ?>

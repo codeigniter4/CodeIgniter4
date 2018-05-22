@@ -412,7 +412,8 @@ class CodeIgniter
 		else
 		{
 			$this->request = Services::request($this->config);
-			$this->request->setProtocolVersion($_SERVER['SERVER_PROTOCOL']);
+			// guess at protocol if needed
+			$this->request->setProtocolVersion($_SERVER['SERVER_PROTOCOL'] ?? 'HTTP/1.1');
 		}
 	}
 

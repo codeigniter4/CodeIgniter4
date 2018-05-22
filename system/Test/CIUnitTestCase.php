@@ -85,6 +85,7 @@ class CIUnitTestCase extends TestCase
 		$result = TestLogger::didLog($level, $expectedMessage);
 
 		$this->assertTrue($result);
+		return $result;
 	}
 
 	/**
@@ -110,6 +111,7 @@ class CIUnitTestCase extends TestCase
 		}
 
 		$this->assertTrue($found);
+		return $found;
 	}
 
 	/**
