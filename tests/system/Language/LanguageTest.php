@@ -113,12 +113,39 @@ class LanguageTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	public function testLanguageFileNotDoubled()
+	public function testLanguageDuplicateKey()
 	{
-		$lang = new MockLanguage('en');
-		$path = TESTPATH . '_support/Language/More.php';
-		$this->assertEquals('These are not the droids you are looking for', $lang->getLine('more.strongForce', []));
-		$this->assertEquals('I have a very bad feeling about this', $lang->getLine('more.badFeeling', []));
+		$lang = new Language('en');
+		$this->assertEquals('These are not the droids you are looking for', $lang->getLine('More.strongForce', []));
+		$this->assertEquals('I have a very bad feeling about this', $lang->getLine('More.cannotMove', []));
+		$this->assertEquals('Could not move file {0} to {1} ({2})', $lang->getLine('Files.cannotMove', []));
+		$this->assertEquals('I have a very bad feeling about this', $lang->getLine('More.cannotMove', []));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testLanguageFileLoading()
+	{
+		$lang = new SecondMockLanguage('en');
+
+		$result = $lang->loadem('More', 'en');
+		$this->assertTrue(in_array('More', $lang->loaded()));
+		$result = $lang->loadem('More', 'en');
+		$this->assertEquals(1, count($lang->loaded())); // should only be there once
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testLanguageFileLoadingReturns()
+	{
+		$lang = new SecondMockLanguage('en');
+
+		$result = $lang->loadem('More', 'en', true);
+		$this->assertFalse(in_array('More', $lang->loaded()));
+		$this->assertEquals(3, count($result));
+		$result = $lang->loadem('More', 'en');
+		$this->assertTrue(in_array('More', $lang->loaded()));
+		$this->assertEquals(1, count($lang->loaded()));
 	}
 
 }

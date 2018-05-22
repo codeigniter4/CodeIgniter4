@@ -31,19 +31,19 @@ class MockLanguage extends Language
 
 	//--------------------------------------------------------------------
 
-//	/**
-//	 * Provides an override that allows us to set custom
-//	 * data to be returned easily during testing.
-//	 *
-//	 * @param string $path
-//	 *
-//	 * @return array|mixed
-//	 */
-//	protected function requireFile(string $path): array
-//	{
-//		return $this->data ?? [];
-//	}
-//
+	/**
+	 * Provides an override that allows us to set custom
+	 * data to be returned easily during testing.
+	 *
+	 * @param string $path
+	 *
+	 * @return array|mixed
+	 */
+	protected function requireFile(string $path): array
+	{
+		return $this->data ?? [];
+	}
+
 	//--------------------------------------------------------------------
 
 	/**
