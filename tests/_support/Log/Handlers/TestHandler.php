@@ -6,62 +6,27 @@
  * A simple LogHandler that stores the logs in memory.
  * Only used for testing purposes.
  */
-class TestHandler implements HandlerInterface
+class TestHandler extends FileHandler
 {
-	/**
-	 * @var array
-	 */
-	protected $handles;
-
-	/**
-	 * @var string
-	 */
-	protected $dateFormat = 'Y-m-d H:i:s';
-
 	/**
 	 * Local storage for logs.
 	 * @var array
 	 */
 	protected static $logs = [];
+	
+	/**
+	 * Where would the log be written?
+	 */
 
 	//--------------------------------------------------------------------
 
 	public function __construct(array $config)
 	{
+		parent::__construct($config);
 		$this->handles = $config['handles'] ?? [];
+		$this->destination = $this->path . 'log-' . date('Y-m-d') . '.' . $this->fileExtension;
 
 		self::$logs = [];
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Checks whether the Handler will handle logging items of this
-	 * log Level.
-	 *
-	 * @param $level
-	 *
-	 * @return bool
-	 */
-	public function canHandle(string $level): bool
-	{
-		return in_array($level, $this->handles);
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Stores the date format to use while logging messages.
-	 *
-	 * @param string $format
-	 *
-	 * @return HandlerInterface
-	 */
-	public function setDateFormat(string $format)
-	{
-		$this->dateFormat = $format;
-
-		return $this;
 	}
 
 	//--------------------------------------------------------------------
