@@ -32,7 +32,7 @@ class FileHandlerTest extends \CIUnitTestCase
 	{
 		$config = new LoggerConfig();
 		$config->path = $this->start . 'charlie/';
-		$logger = new MockHandler((array) $config);
+		$logger = new MockFileHandler((array) $config);
 
 		$logger->setDateFormat("Y-m-d H:i:s:u");
 		$logger->handle("warning", "This is a test log");
@@ -46,7 +46,7 @@ class FileHandlerTest extends \CIUnitTestCase
 	{
 		$config = new LoggerConfig();
 		$config->path = $this->start;
-		$logger = new MockHandler((array) $config);
+		$logger = new MockFileHandler((array) $config);
 
 		$logger->setDateFormat("Y-m-d H:i:s:u");
 		$logger->handle("warning", "This is a test log");
@@ -65,7 +65,7 @@ class FileHandlerTest extends \CIUnitTestCase
 	{
 		$config = new LoggerConfig();
 		$config->path = $this->start;
-		$logger = new MockHandler((array) $config);
+		$logger = new MockFileHandler((array) $config);
 
 		$logger->setDateFormat('Y-m-d');
 		$expected = 'log-' . date('Y-m-d') . '.php';
@@ -83,8 +83,4 @@ class FileHandlerTest extends \CIUnitTestCase
 		
 	}
 
-//	public function testHandleNewFilePermissions()
-//	{
-//		
-//	}
 }

@@ -5,7 +5,7 @@
  *
  * Extends FileHandler, exposing some inner workings
  */
-class MockHandler extends FileHandler
+class MockFileHandler extends FileHandler
 {
 	/**
 	 * Where would the log be written?
