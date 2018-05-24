@@ -54,6 +54,20 @@ use Config\Mimes;
 class Email
 {
 	/**
+	 * Sender email
+	 * 
+	 * @var string
+	 */
+	public $fromEmail = '';
+
+	/**
+	 * Sender name
+	 * 
+	 * @var string
+	 */
+	public $fromName = '';
+	
+	/**
 	 * Used as the User-Agent and X-Mailer headers' value.
 	 *
 	 * @var string
@@ -423,6 +437,11 @@ class Email
 					$this->$key = $config->$key;
 				}
 			}
+		}
+		
+		if ($this->fromEmail)
+		{
+			$this->setFrom($this->fromEmail, $this->fromName);
 		}
 
 		$this->charset  = strtoupper($this->charset);
