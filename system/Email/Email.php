@@ -37,6 +37,7 @@
  * @filesource
  */
 
+use CodeIgniter\Config\BaseConfig;
 use Config\Mimes;
 
 
@@ -400,7 +401,7 @@ class Email
 	/**
 	 * Initialize preferences
 	 *
-	 * @param array $config
+	 * @param array|\Config\Email $config
 	 *
 	 * @return Email
 	 */
@@ -408,7 +409,12 @@ class Email
 	{
 		$this->clear();
 
-		foreach (get_class_vars(get_class($this)) as $key => $value)
+		if ($config instanceof \Config\Email)
+		{
+			$config = get_class_vars(get_class($this));
+		}
+
+		foreach ($config as $key => $value)
 		{
 			if (isset($this->$key) && isset($config->$key))
 			{
