@@ -37,6 +37,7 @@
  * @filesource
  */
 
+use Config\Email as ConfigEmail;
 use Config\Mimes;
 
 
@@ -384,7 +385,7 @@ class Email
 	 *
 	 * The constructor can be passed an array of config values
 	 *
-	 * @param array|null $config
+	 * @param ConfigEmail|array|null $config
 	 */
 	public function __construct($config = null)
 	{
@@ -400,13 +401,21 @@ class Email
 	/**
 	 * Initialize preferences
 	 *
-	 * @param array $config
+	 * @param ConfigEmail|array $config
 	 *
 	 * @return Email
 	 */
 	public function initialize($config)
 	{
 		$this->clear();
+
+               if (is_array($config)) {
+                   $configEmail = new ConfigEmail();
+                   foreach ($config as $key => $value) {
+                       $configEmail->$key = $value;
+                   }
+                   $config = $configEmail;
+               }
 
 		foreach (get_class_vars(get_class($this)) as $key => $value)
 		{
