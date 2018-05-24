@@ -6,15 +6,17 @@ use org\bovigo\vfs\vfsStreamDirectory;
 class FileWithVfsTest extends \CIUnitTestCase
 {
 
-	private $root;
+	protected $root;
 
 	//--------------------------------------------------------------------
 
 	public function setup()
 	{
+		parent::setUp();
+
 		$this->root = vfsStream::setup();
 		$this->path = '_support/Files/';
-		vfsStream::copyFromFileSystem(TESTPATH . $this->path, $root);
+		vfsStream::copyFromFileSystem(TESTPATH . $this->path, $this->root);
 		$this->start = $this->root->url() . '/';
 		$this->file = new File($this->start . 'able/apple.php');
 	}
@@ -107,8 +109,9 @@ class FileWithVfsTest extends \CIUnitTestCase
 	public function testMoveFailure()
 	{
 		$here = $this->root->url();
-		mkdir($here,400,true); // make a read-only folder
-		$destination = here . 'charlie';
+
+		chmod($here,400); // make a read-only folder
+		$destination = $here . 'charlie';
 		$this->file->move($destination); // try to move our file there
 	}
 

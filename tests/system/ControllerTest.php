@@ -40,6 +40,8 @@ class ControllerTest extends \CIUnitTestCase
 
 	public function setUp()
 	{
+		parent::setUp();
+
 		Services::reset();
 
 		$this->config = new App();
