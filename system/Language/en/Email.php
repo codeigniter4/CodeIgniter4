@@ -10,6 +10,8 @@
  * @link         https://codeigniter.com
  * @since        Version 3.0.0
  * @filesource
+ * 
+ * @codeCoverageIgnore
  */
 return [
 	'mustBeArray'          => 'The email validation method must be passed an array.',

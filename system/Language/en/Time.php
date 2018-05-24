@@ -10,6 +10,8 @@
  * @link         https://codeigniter.com
  * @since        Version 3.0.0
  * @filesource
+ * 
+ * @codeCoverageIgnore
  */
 return [
 	'invalidMonth'   => 'Months must be between 0 and 12. Given: {0}',

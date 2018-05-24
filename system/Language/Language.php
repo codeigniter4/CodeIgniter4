@@ -35,7 +35,6 @@
  * @since	Version 3.0.0
  * @filesource
  */
-
 class Language
 {
 
@@ -94,7 +93,7 @@ class Language
 	 */
 	public function setLocale(string $locale = null)
 	{
-		if (! is_null($locale))
+		if ( ! is_null($locale))
 		{
 			$this->locale = $locale;
 		}
@@ -119,7 +118,7 @@ class Language
 
 		$output = $this->language[$this->locale][$file][$parsedLine] ?? $line;
 
-		if (! empty($args))
+		if ( ! empty($args))
 		{
 			$output = $this->formatMessage($output, $args);
 		}
@@ -207,13 +206,14 @@ class Language
 	 */
 	protected function load(string $file, string $locale, bool $return = false)
 	{
-		if (! array_key_exists($locale, $this->loadedFiles))
+		if ( ! array_key_exists($locale, $this->loadedFiles))
 		{
 			$this->loadedFiles[$locale] = [];
 		}
 
 		if (in_array($file, $this->loadedFiles[$locale]))
 		{
+			// Don't load it more than once.
 			return [];
 		}
 
@@ -231,13 +231,12 @@ class Language
 
 		$lang = $this->requireFile($path);
 
-		// Don't load it more than once.
-		$this->loadedFiles[] = $file;
-
 		if ($return)
 		{
 			return $lang;
 		}
+
+		$this->loadedFiles[$locale][] = $file;
 
 		// Merge our string
 		$this->language[$this->locale][$file] = $lang;
