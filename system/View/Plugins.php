@@ -53,7 +53,6 @@ class Plugins
 
 	//--------------------------------------------------------------------
 
-
 	/**
 	 * @param array $params
 	 *
@@ -68,7 +67,6 @@ class Plugins
 	}
 
 	//--------------------------------------------------------------------
-
 
 	/**
 	 * @param array $params
@@ -89,7 +87,6 @@ class Plugins
 
 	//--------------------------------------------------------------------
 
-
 	/**
 	 * @param array $params
 	 *
@@ -109,7 +106,6 @@ class Plugins
 
 	//--------------------------------------------------------------------
 
-
 	/**
 	 * @param array $params
 	 *
@@ -121,7 +117,9 @@ class Plugins
 
 		return lang($line, $params);
 	}
-	
+
+	//--------------------------------------------------------------------
+
 	/**
 	 * @param array $params
 	 *
@@ -129,17 +127,14 @@ class Plugins
 	 */
 	public static function ValidationErrors(array $params = [])
 	{
-		
+
 		$validator = \config\services::validation();
-		if(empty($params))
+		if (empty($params))
 		{
 			return $validator->listErrors();
 		}
-		
-		return $validator->showError($params['field']);
-		
 
-		
+		return $validator->showError($params['field']);
 	}
 
 }
