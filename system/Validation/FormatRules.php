@@ -334,11 +334,14 @@ class FormatRules
 		}
 		elseif (preg_match('/^(?:([^:]*)\:)?\/\/(.+)$/', $str, $matches))
 		{
-			if (empty($matches[2]))
-			{
-				return false;
-			}
-			elseif ( ! in_array($matches[1], ['http', 'https'], true))
+// removed the test for an empty second match segment. 
+// it should never be found, because of the "(.+)" pattern, which is one or more
+//			if (empty($matches[2]))
+//			{
+//				return false;
+//			}
+//			else
+				if ( ! in_array($matches[1], ['http', 'https'], true))
 			{
 				return false;
 			}

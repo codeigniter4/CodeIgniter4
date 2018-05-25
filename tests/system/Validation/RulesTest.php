@@ -539,6 +539,21 @@ class RulesTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testExactLengthDetectsBadLength()
+	{
+		$data = [
+			'foo' => 'bar',
+		];
+
+		$this->validation->setRules([
+			'foo' => 'exact_length[abc]',
+		]);
+
+		$this->assertFalse($this->validation->run($data));
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testExactLengthReturnsFalseWhenShort()
 	{
 		$data = [

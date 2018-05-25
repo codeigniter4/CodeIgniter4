@@ -102,6 +102,11 @@ class FormatRulesTest extends \CIUnitTestCase
 			['', false],
 			['code igniter', false],
 			[null, false],
+			['http://', true], // this is apparently valid!
+			['http:///oops.com', false],
+			['123.com', true],
+			['abc.123', true],
+			['http:8080//abc.com', true],
 		];
 	}
 
@@ -129,7 +134,7 @@ class FormatRulesTest extends \CIUnitTestCase
 	//--------------------------------------------------------------------
 
 	/**
-	 * @dataProvider emailProviderSingle
+	 * @dataProvider emailsProvider
 	 *
 	 * @param $email
 	 * @param $expected
