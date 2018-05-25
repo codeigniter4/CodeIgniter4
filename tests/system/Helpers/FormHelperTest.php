@@ -604,7 +604,7 @@ EOH;
 		    ]
 	    ];
 
-//    	$this->assertEquals(' checked="checked"', set_checkbox('foo', 'bar'));
+    	$this->assertEquals(' checked="checked"', set_checkbox('foo', 'bar'));
 
     	$_SESSION = [
     		'_ci_old_input' => [
@@ -613,27 +613,24 @@ EOH;
 	            ]
 	        ]
 	    ];
-//    	$this->assertEquals(' checked="checked"', set_checkbox('foo', 'bar'));
-//    	$this->assertEquals('', set_checkbox('foo', 'baz'));
+    	$this->assertEquals(' checked="checked"', set_checkbox('foo', 'bar'));
+    	$this->assertEquals('', set_checkbox('foo', 'baz'));
 
 		$_SESSION = [];
-//    	$this->assertEquals('', set_checkbox('foo', 'bar'));
-
-    	$_POST = [];
-    	$this->assertEquals(' checked="checked"', set_checkbox('foo', 'baz', true));
+    	$this->assertEquals('', set_checkbox('foo', 'bar'));
     }
     // ------------------------------------------------------------------------
     public function test_set_radio()
     {
-    	$request = Services::request(new App());
-
-    	$request->setGlobal('post', ['foo' => 'bar']);
-	    Services::injectMock('request', $request);
+	    $_SESSION = [
+		    '_ci_old_input' => [
+			    'post' => [
+				    'foo' => 'bar'
+			    ]
+		    ]
+	    ];
 
     	$this->assertEquals(' checked="checked"', set_radio('foo', 'bar'));
     	$this->assertEquals('', set_radio('foo', 'baz'));
-
-    	$this->setPrivateProperty($request, 'globals', []);
-    	$this->assertEquals(' checked="checked"', set_radio('foo', 'bar', true));
     }
 }

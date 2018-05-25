@@ -8,8 +8,6 @@ class FileWithVfsTest extends \CIUnitTestCase
 
 	protected $root;
 
-	//--------------------------------------------------------------------
-
 	public function setup()
 	{
 		parent::setUp();
@@ -21,7 +19,13 @@ class FileWithVfsTest extends \CIUnitTestCase
 		$this->file = new File($this->start . 'able/apple.php');
 	}
 
-	//---------------------------------------------------------------
+	public function tearDown()
+	{
+		parent::tearDown();
+
+		$this->root = null;
+	}
+
 	public function testDestinationUnknown()
 	{
 		$destination = $this->start . 'charlie/cherry.php';
@@ -70,7 +74,6 @@ class FileWithVfsTest extends \CIUnitTestCase
 		$this->assertEquals($this->start . 'able/prune_ripe_1.php', $this->file->getDestination($destination));
 	}
 
-	//---------------------------------------------------------------
 	public function testMoveNormal()
 	{
 		$destination = $this->start . 'baker';
@@ -104,14 +107,14 @@ class FileWithVfsTest extends \CIUnitTestCase
 	}
 
 	/**
-	 * @expectedException \CodeIgniter\Files\Exceptions\FileException
+	 * @expectedException \Exception
 	 */
 	public function testMoveFailure()
 	{
 		$here = $this->root->url();
 
 		chmod($here,400); // make a read-only folder
-		$destination = $here . 'charlie';
+		$destination = $here . '/charlie';
 		$this->file->move($destination); // try to move our file there
 	}
 

@@ -42,8 +42,6 @@ class ControllerTest extends \CIUnitTestCase
 	{
 		parent::setUp();
 
-		Services::reset();
-
 		$this->config = new App();
 		$this->request = new \CodeIgniter\HTTP\IncomingRequest($this->config, new \CodeIgniter\HTTP\URI('https://somwhere.com'), null, new UserAgent());
 		$this->response = new \CodeIgniter\HTTP\Response($this->config);

@@ -19,7 +19,7 @@ class FileTest extends \CIUnitTestCase
 
 	public function testNewBadUnchecked()
 	{
-		$path = $path . 'bogus';
+		$path = BASEPATH . 'bogus';
 		$file = new File($path, false);
 		$this->assertFalse($file->getRealPath());
 	}

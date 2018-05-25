@@ -12,6 +12,7 @@ class CURLRequestTest extends \CIUnitTestCase
 	{
 		parent::setUp();
 
+		Services::reset();
 	    $this->request = $this->getRequest();
 	}
 
