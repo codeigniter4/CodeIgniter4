@@ -150,7 +150,7 @@ class ViewTest extends \CIUnitTestCase
 	{
 		$view = new View($this->config, $this->viewsDir, $this->loader);
 
-		$this->expectException(\CodeIgniter\Exceptions\FrameworkException::class);
+		$this->expectException(\CodeIgniter\View\Exceptions\ViewException::class);
 		$view->setVar('testString', 'Hello World');
 
 		$view->render('missing');
