@@ -1,19 +1,6 @@
 <?php namespace CodeIgniter\Log\Handlers;
 
 use Tests\Support\Config\MockLogger as LoggerConfig;
-
-class FileHandlerTest extends \CIUnitTestCase
-{
-
-        public function testHandle()
-        {
-                $config = new LoggerConfig();
-                $config->handlers['CodeIgniter\Log\Handlers\TestHandler']['handles'] =  ['critical'];
-
-                $logger = new FileHandler($config->handlers['CodeIgniter\Log\Handlers\TestHandler']);
-                $logger->setDateFormat("Y-m-d H:i:s:u");
-                $this->assertTrue($logger->handle("warning", "This is a test log") );
-        }
 use Config\MockLogger as LoggerConfig;
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamDirectory;
@@ -27,6 +14,16 @@ class FileHandlerTest extends \CIUnitTestCase
 	{
 		$this->root = vfsStream::setup('root');
 		$this->start = $this->root->url() . '/';
+	}
+
+	public function testHandle()
+	{
+		$config = new LoggerConfig();
+		$config->handlers['CodeIgniter\Log\Handlers\TestHandler']['handles'] = ['critical'];
+
+		$logger = new FileHandler($config->handlers['CodeIgniter\Log\Handlers\TestHandler']);
+		$logger->setDateFormat("Y-m-d H:i:s:u");
+		$this->assertTrue($logger->handle("warning", "This is a test log"));
 	}
 
 	//--------------------------------------------------------------------
@@ -93,8 +90,7 @@ class FileHandlerTest extends \CIUnitTestCase
 		fclose($fp);
 
 		$expectedResult = 'DEBUG - ' . date('Y-m-d') . ' --> Test message';
-		$this->assertEquals($expectedResult, substr($line,0,strlen($expectedResult)));
-		
+		$this->assertEquals($expectedResult, substr($line, 0, strlen($expectedResult)));
 	}
 
 }
