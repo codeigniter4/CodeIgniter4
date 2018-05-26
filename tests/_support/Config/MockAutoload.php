@@ -1,4 +1,6 @@
-<?php namespace Config;
+<?php namespace Tests\Support\Config;
+
+use Config\Autoload;
 
 class MockAutoload extends Autoload
 {

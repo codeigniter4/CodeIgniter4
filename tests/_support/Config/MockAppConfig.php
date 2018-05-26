@@ -1,4 +1,4 @@
-<?php namespace Config;
+<?php namespace Tests\Support\Config;
 
 class MockAppConfig
 {

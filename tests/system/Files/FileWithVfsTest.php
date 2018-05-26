@@ -6,20 +6,26 @@ use org\bovigo\vfs\vfsStreamDirectory;
 class FileWithVfsTest extends \CIUnitTestCase
 {
 
-	private $root;
-
-	//--------------------------------------------------------------------
+	protected $root;
 
 	public function setup()
 	{
+		parent::setUp();
+
 		$this->root = vfsStream::setup();
 		$this->path = '_support/Files/';
-		vfsStream::copyFromFileSystem(TESTPATH . $this->path, $root);
+		vfsStream::copyFromFileSystem(TESTPATH . $this->path, $this->root);
 		$this->start = $this->root->url() . '/';
 		$this->file = new File($this->start . 'able/apple.php');
 	}
 
-	//---------------------------------------------------------------
+	public function tearDown()
+	{
+		parent::tearDown();
+
+		$this->root = null;
+	}
+
 	public function testDestinationUnknown()
 	{
 		$destination = $this->start . 'charlie/cherry.php';
@@ -68,7 +74,6 @@ class FileWithVfsTest extends \CIUnitTestCase
 		$this->assertEquals($this->start . 'able/prune_ripe_1.php', $this->file->getDestination($destination));
 	}
 
-	//---------------------------------------------------------------
 	public function testMoveNormal()
 	{
 		$destination = $this->start . 'baker';
@@ -102,13 +107,14 @@ class FileWithVfsTest extends \CIUnitTestCase
 	}
 
 	/**
-	 * @expectedException \CodeIgniter\Files\Exceptions\FileException
+	 * @expectedException \Exception
 	 */
 	public function testMoveFailure()
 	{
 		$here = $this->root->url();
-		mkdir($here,400,true); // make a read-only folder
-		$destination = here . 'charlie';
+
+		chmod($here,400); // make a read-only folder
+		$destination = $here . '/charlie';
 		$this->file->move($destination); // try to move our file there
 	}
 

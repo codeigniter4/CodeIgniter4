@@ -9,6 +9,8 @@ class FormHelperTest extends \CIUnitTestCase
 {
     public function setUp()
     {
+	    parent::setUp();
+
         helper('form');
     }
     // ------------------------------------------------------------------------
@@ -594,32 +596,41 @@ EOH;
     // ------------------------------------------------------------------------
     public function test_set_checkbox()
     {
-    	$_SESSION['_ci_old_input']['post']['foo'] = 'bar';
+	    $_SESSION = [
+	    	'_ci_old_input' => [
+	    		'post' => [
+	    			'foo' => 'bar'
+			    ]
+		    ]
+	    ];
+
     	$this->assertEquals(' checked="checked"', set_checkbox('foo', 'bar'));
 
-    	$_SESSION['_ci_old_input']['post']['foo'] = ['foo' => 'bar'];
+    	$_SESSION = [
+    		'_ci_old_input' => [
+    			'post' => [
+    				'foo' => ['foo' => 'bar']
+	            ]
+	        ]
+	    ];
     	$this->assertEquals(' checked="checked"', set_checkbox('foo', 'bar'));
     	$this->assertEquals('', set_checkbox('foo', 'baz'));
 
-    	unset($_SESSION['_ci_old_input']['post']['foo']);
+		$_SESSION = [];
     	$this->assertEquals('', set_checkbox('foo', 'bar'));
-
-    	$_POST = [];
-    	$this->assertEquals(' checked="checked"', set_checkbox('foo', 'baz', true));
     }
     // ------------------------------------------------------------------------
     public function test_set_radio()
     {
-    	$_POST['foo'] = 'bar';
+	    $_SESSION = [
+		    '_ci_old_input' => [
+			    'post' => [
+				    'foo' => 'bar'
+			    ]
+		    ]
+	    ];
+
     	$this->assertEquals(' checked="checked"', set_radio('foo', 'bar'));
-
-    	$_POST['foo'] = ['bar'];
-    	$this->assertEquals(' checked="checked"', set_radio('foo', 'bar'));
-
-    	$_POST['foo'] = ['baz'];
-    	$this->assertEquals('', set_radio('foo', 'bar'));
-
-    	$_POST = [];
-    	$this->assertEquals(' checked="checked"', set_radio('foo', 'bar', true));
+    	$this->assertEquals('', set_radio('foo', 'baz'));
     }
 }

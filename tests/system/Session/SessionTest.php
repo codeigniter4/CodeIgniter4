@@ -1,13 +1,16 @@
 <?php namespace CodeIgniter\Session;
 
-use CodeIgniter\Log\TestLogger;
-use CodeIgniter\Session\Handlers\FileHandler;
 use Config\Logger;
+use Tests\Support\Log\TestLogger;
+use Tests\Support\Session\MockSession;
+use CodeIgniter\Session\Handlers\FileHandler;
 
 class SessionTest extends \CIUnitTestCase
 {
     public function setUp()
     {
+        parent::setUp();
+
         $_COOKIE = [];
         $_SESSION = [];
     }

@@ -1,6 +1,8 @@
 <?php namespace CodeIgniter\Database\Live;
 
-class AliasTest extends \CIDatabaseTestCase
+use CodeIgniter\Test\CIDatabaseTestCase;
+
+class AliasTest extends CIDatabaseTestCase
 {
 	protected $refresh = true;
 

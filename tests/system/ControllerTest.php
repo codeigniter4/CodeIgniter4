@@ -1,7 +1,8 @@
 <?php namespace CodeIgniter;
 
-use CodeIgniter\HTTP\UserAgent;
 use Config\App;
+use CodeIgniter\HTTP\UserAgent;
+use Tests\Support\MockCodeIgniter;
 
 /**
  * Exercise our core Controller class.
@@ -39,7 +40,7 @@ class ControllerTest extends \CIUnitTestCase
 
 	public function setUp()
 	{
-		Services::reset();
+		parent::setUp();
 
 		$this->config = new App();
 		$this->request = new \CodeIgniter\HTTP\IncomingRequest($this->config, new \CodeIgniter\HTTP\URI('https://somwhere.com'), null, new UserAgent());

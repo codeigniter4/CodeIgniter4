@@ -2,6 +2,7 @@
 
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use Config\App;
+use Config\Format;
 use DateTime;
 use DateTimeZone;
 
@@ -217,4 +218,105 @@ class ResponseTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testSetCookieFails()
+	{
+		$response = new Response(new App());
+
+		$this->assertFalse($response->hasCookie('foo'));
+	}
+
+	public function testSetCookieMatch()
+	{
+		$response = new Response(new App());
+		$response->setCookie('foo', 'bar');
+
+		$this->assertTrue($response->hasCookie('foo'));
+		$this->assertTrue($response->hasCookie('foo', 'bar'));
+	}
+
+	public function testSetCookieFailDifferentPrefix()
+	{
+		$response = new Response(new App());
+		$response->setCookie('foo', 'bar', '', '', '', 'ack');
+
+		$this->assertFalse($response->hasCookie('foo'));
+	}
+
+	public function testSetCookieSuccessOnPrefix()
+	{
+		$response = new Response(new App());
+		$response->setCookie('foo', 'bar', '', '', '', 'ack');
+
+		$this->assertFalse($response->hasCookie('foo', null, 'ack'));
+	}
+
+	public function testJSONWithArray()
+	{
+		$response = new Response(new App());
+		$config = new Format();
+		$formatter = $config->getFormatter('application/json');
+
+		$body = [
+			'foo' => 'bar',
+			'bar' => [1, 2, 3]
+		];
+		$expected = $formatter->format($body);
+
+		$response->setJSON($body);
+
+		$this->assertEquals($expected, $response->getJSON());
+		$this->assertTrue(strpos($response->getHeaderLine('content-type'), 'application/json') !== false);
+	}
+
+	public function testJSONGetFromNormalBody()
+	{
+		$response = new Response(new App());
+		$config = new Format();
+		$formatter = $config->getFormatter('application/json');
+
+		$body = [
+			'foo' => 'bar',
+			'bar' => [1, 2, 3]
+		];
+		$expected = $formatter->format($body);
+
+		$response->setBody($body);
+
+		$this->assertEquals($expected, $response->getJSON());
+	}
+
+	public function testXMLWithArray()
+	{
+		$response = new Response(new App());
+		$config = new Format();
+		$formatter = $config->getFormatter('application/xml');
+
+		$body = [
+			'foo' => 'bar',
+			'bar' => [1, 2, 3]
+		];
+		$expected = $formatter->format($body);
+
+		$response->setXML($body);
+
+		$this->assertEquals($expected, $response->getXML());
+		$this->assertTrue(strpos($response->getHeaderLine('content-type'), 'application/xml') !== false);
+	}
+
+	public function testXMLGetFromNormalBody()
+	{
+		$response = new Response(new App());
+		$config = new Format();
+		$formatter = $config->getFormatter('application/xml');
+
+		$body = [
+			'foo' => 'bar',
+			'bar' => [1, 2, 3]
+		];
+		$expected = $formatter->format($body);
+
+		$response->setBody($body);
+
+		$this->assertEquals($expected, $response->getXML());
+	}
 }

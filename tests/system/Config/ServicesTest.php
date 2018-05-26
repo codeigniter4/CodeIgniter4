@@ -8,6 +8,8 @@ class ServicesTest extends \CIUnitTestCase
 
 	public function setUp()
 	{
+		parent::setUp();
+
 		$this->original = $_SERVER;
 //		$_SERVER['HTTP_ACCEPT_LANGUAGE'] = 'es; q=1.0, en; q=0.5';
 		$this->config = new App();

@@ -1,6 +1,7 @@
 <?php namespace CodeIgniter\CLI;
 
-use Config\MockCLIConfig;
+use Tests\Support\MockCodeIgniter;
+use Tests\Support\Config\MockCLIConfig;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
 
 class ConsoleTest extends \CIUnitTestCase
@@ -10,6 +11,8 @@ class ConsoleTest extends \CIUnitTestCase
 
 	public function setUp()
 	{
+		parent::setUp();
+
 		CITestStreamFilter::$buffer = '';
 		$this->stream_filter = stream_filter_append(STDOUT, 'CITestStreamFilter');
 
@@ -25,9 +28,8 @@ class ConsoleTest extends \CIUnitTestCase
 		$_SERVER['argv'] = ['spark', 'list'];
 		$_SERVER['argc'] = 2;
 		CLI::init();
-		
-		$this->app = new \CodeIgniter\MockCodeIgniter(new MockCLIConfig());
-//		$this->app->initialize();
+
+		$this->app = new MockCodeIgniter(new MockCLIConfig());
 	}
 
 	public function tearDown()

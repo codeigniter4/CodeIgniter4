@@ -18,6 +18,8 @@ class MemcachedHandlerTest extends \CIUnitTestCase
 
 	public function setUp()
 	{
+		parent::setUp();
+
 		$this->config = new \Config\Cache();
 
 		$this->memcachedHandler = new MemcachedHandler($this->config->memcached);

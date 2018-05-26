@@ -9,7 +9,7 @@ class URITest extends \CIUnitTestCase
 
 	public function setUp()
 	{
-
+		parent::setUp();
 	}
 
 	//--------------------------------------------------------------------
