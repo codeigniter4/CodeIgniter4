@@ -1,7 +1,6 @@
 <?php namespace CodeIgniter\Log\Handlers;
 
 use Tests\Support\Config\MockLogger as LoggerConfig;
-use Config\MockLogger as LoggerConfig;
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamDirectory;
 use org\bovigo\vfs\visitor\vfsStreamPrintVisitor;

@@ -9,13 +9,6 @@ use Tests\Support\Log\Handlers\TestHandler;
 class LoggerTest extends \CIUnitTestCase
 {
 
-	public function setUp()
-	{
-		
-	}
-
-	//--------------------------------------------------------------------
-
 	public function testThrowsExceptionWithBadHandlerSettings()
 	{
 		$config = new LoggerConfig();
