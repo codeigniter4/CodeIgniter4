@@ -2,17 +2,18 @@
 
 class TextHelperTest extends \CIUnitTestCase
 {
+    private $_long_string = 'Once upon a time, a framework had no tests. It sad. So some nice people began to write tests. The more time that went on, the happier it became. Everyone was happy.';
 
-	private $_long_string = 'Once upon a time, a framework had no tests. It sad. So some nice people began to write tests. The more time that went on, the happier it became. Everyone was happy.';
+    public function setUp()
+    {
+	    parent::setUp();
 
-	public function setUp()
-	{
-		helper('text');
-	}
+        helper('text');
+    }
 
-	// --------------------------------------------------------------------
+    // --------------------------------------------------------------------
 
-	public function test_strip_slashes()
+    public function test_strip_slashes()
 	{
 		$expected = [
 			"Is your name O'reilly?",
@@ -289,5 +290,4 @@ class TextHelperTest extends \CIUnitTestCase
 			$result .= alternator() . $phrase;
 		$this->assertEquals(' scream!  scream!  scream!  scream! ', $result);
 	}
-
 }

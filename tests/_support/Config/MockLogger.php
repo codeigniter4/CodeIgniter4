@@ -1,5 +1,4 @@
-<?php namespace Config;
-
+<?php namespace Tests\Support\Config;
 
 class MockLogger
 {
@@ -85,7 +84,7 @@ class MockLogger
 		// File Handler
 		//--------------------------------------------------------------------
 
-		'CodeIgniter\Log\Handlers\TestHandler' => [
+		'Tests\Support\Log\Handlers\TestHandler' => [
 
 			/*
 			 * The log levels that this handler will handle.

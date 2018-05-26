@@ -10,6 +10,8 @@
  * @link         https://codeigniter.com
  * @since        Version 3.0.0
  * @filesource
+ * 
+ * @codeCoverageIgnore
  */
 return [
 	'missingDatabaseTable'   => '`sessionSavePath` must have the table name for the Database Session Handler to work.',

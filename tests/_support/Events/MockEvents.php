@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Events;
+<?php namespace Tests\Support\Events;
 
 /**
  * CodeIgniter
@@ -35,6 +35,8 @@
  * @since	Version 3.0.0
  * @filesource
  */
+
+use CodeIgniter\Events\Events;
 
 /**
  * Events

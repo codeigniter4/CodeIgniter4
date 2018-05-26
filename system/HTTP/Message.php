@@ -362,7 +362,7 @@ class Message
 	 */
 	public function getProtocolVersion(): string
 	{
-		return $this->protocolVersion;
+		return $this->protocolVersion ?? '1.1';
 	}
 
 	//--------------------------------------------------------------------

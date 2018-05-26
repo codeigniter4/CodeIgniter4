@@ -361,6 +361,8 @@ class Router implements RouterInterface
 	{
 		$routes = $this->collection->getRoutes($this->collection->getHTTPVerb());
 
+		$uri = ltrim($uri, '/ ');
+
 		// Don't waste any time
 		if (empty($routes))
 		{

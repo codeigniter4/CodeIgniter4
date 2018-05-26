@@ -53,6 +53,8 @@ class RedisHandlerTest extends \CIUnitTestCase
 
 	public function setUp()
 	{
+		parent::setUp();
+
 		$this->config = new \Config\Cache();
 
 		$this->redisHandler = new RedisHandler($this->config->redis);

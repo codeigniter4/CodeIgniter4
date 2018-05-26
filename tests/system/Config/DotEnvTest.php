@@ -14,6 +14,8 @@ class DotEnvTest extends \CIUnitTestCase
 
 	public function setup()
 	{
+		parent::setUp();
+
 		$this->fixturesFolder = __DIR__.'/fixtures';
                 $file = "unreadable.env";
 		$path = rtrim($this->fixturesFolder, DIRECTORY_SEPARATOR).DIRECTORY_SEPARATOR.$file;

@@ -1,11 +1,12 @@
 <?php namespace CodeIgniter\Database\Live;
 
 use CodeIgniter\Database\BasePreparedQuery;
+use CodeIgniter\Test\CIDatabaseTestCase;
 
 /**
  * @group DatabaseLive
  */
-class PreparedQueryTest extends \CIDatabaseTestCase
+class PreparedQueryTest extends CIDatabaseTestCase
 {
 	protected $refresh = true;
 

@@ -1,8 +1,8 @@
 <?php namespace CodeIgniter\Validation;
 
 
-use CodeIgniter\Validation\Exceptions\ValidationException;
 use Config\Services;
+use CodeIgniter\Validation\Exceptions\ValidationException;
 
 class ValidationTest extends \CIUnitTestCase
 {
@@ -17,7 +17,7 @@ class ValidationTest extends \CIUnitTestCase
 			\CodeIgniter\Validation\FormatRules::class,
 			\CodeIgniter\Validation\FileRules::class,
 			\CodeIgniter\Validation\CreditCardRules::class,
-			\CodeIgniter\Validation\TestRules::class,
+			\Tests\Support\Validation\TestRules::class,
 		],
 		'groupA'        => [
 			'foo' => 'required|min_length[5]',

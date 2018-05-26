@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Session;
+<?php namespace Tests\Support\Session;
+
+use CodeIgniter\Session\Session;
 
 /**
  * Class MockSession

@@ -11,6 +11,8 @@ class BaseConfigTest extends CIUnitTestCase
 
 	public function setup()
 	{
+		parent::setUp();
+
 		$this->fixturesFolder = __DIR__ . '/fixtures';
 
 		if ( ! class_exists('SimpleConfig', false))
