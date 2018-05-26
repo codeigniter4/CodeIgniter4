@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Log\Handlers;
+<?php namespace Tests\Support\Log\Handlers;
 
 /**
  * Class MockHandler
