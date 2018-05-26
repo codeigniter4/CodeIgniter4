@@ -77,7 +77,7 @@ class LoggerTest extends \CIUnitTestCase
 	public function testLogDoesnotLogUnhandledLevels()
 	{
 		$config = new LoggerConfig();
-		$config->handlers['Tests\Support\Log\Handlers\TestHandler']['handles'] =  ['critical'];
+		$config->handlers['Tests\Support\Log\Handlers\TestHandler']['handles'] = ['critical'];
 
 		$logger = new Logger($config);
 
@@ -213,7 +213,7 @@ class LoggerTest extends \CIUnitTestCase
 
 		// For whatever reason, this will often be the class/function instead of file and line.
 		// Other times it actually returns the line number, so don't look for either
-		$expected = 'DEBUG - '.date('Y-m-d').' --> Test message LoggerTest';
+		$expected = 'DEBUG - ' . date('Y-m-d') . ' --> Test message LoggerTest';
 
 		$logger->log('debug', 'Test message {file} {line}');
 
