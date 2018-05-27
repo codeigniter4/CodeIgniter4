@@ -528,6 +528,7 @@ class Parser extends View
 		extract($this->data);
 		$result = eval('?>' . $template . '<?php ');
 
+		//TODO under what circumstances would we ever get a FALSE? Could not induce one
 		if ($result === false)
 		{
 			throw ViewException::forTagSyntaxError(str_replace(['?>', '<?php '], '', $template));

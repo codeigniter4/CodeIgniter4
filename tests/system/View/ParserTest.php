@@ -440,22 +440,6 @@ class ParserTest extends \CIUnitTestCase
 		$this->assertEquals('Welcome', $parser->renderString($template));
 	}
 
-	public function testBadConditional()
-	{
-		$this->expectException(ViewException::class);
-		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
-		$data = [
-			'doit'		 => true,
-			'dontdoit'	 => false
-		];
-
-		$template = "{if doit}achoo 'howdy'{endif}";
-		$parser->setData($data);
-
-		$result = $parser->renderString($template);
-		echo var_dump($result);
-	}
-
 	//--------------------------------------------------------------------
 
 	public function testWontParsePHP()
