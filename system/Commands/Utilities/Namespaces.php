@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Commands;
+<?php namespace CodeIgniter\Commands\Utilities;
 
 /**
  * CodeIgniter
