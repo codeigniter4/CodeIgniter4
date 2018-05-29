@@ -3,8 +3,12 @@
 use CodeIgniter\Test\FeatureTestCase;
 use CodeIgniter\Test\FeatureResponse;
 
+/**
+ * @group DatabaseLive
+ */
 class FeatureTestCaseTest extends FeatureTestCase
 {
+
 	public function setUp()
 	{
 		parent::setUp();
@@ -16,8 +20,8 @@ class FeatureTestCaseTest extends FeatureTestCase
 	{
 		$this->withRoutes([
 			['add', 'home', function() {
-				return 'Hello World';
-			}]
+					return 'Hello World';
+				}]
 		]);
 		$response = $this->call('get', 'home');
 
@@ -32,8 +36,8 @@ class FeatureTestCaseTest extends FeatureTestCase
 	{
 		$this->withRoutes([
 			['get', 'home', function() {
-				return 'Hello World';
-			}]
+					return 'Hello World';
+				}]
 		]);
 		$response = $this->get('home');
 
@@ -45,8 +49,8 @@ class FeatureTestCaseTest extends FeatureTestCase
 	{
 		$this->withRoutes([
 			['post', 'home', function() {
-				return 'Hello World';
-			}]
+					return 'Hello World';
+				}]
 		]);
 		$response = $this->post('home');
 
@@ -57,8 +61,8 @@ class FeatureTestCaseTest extends FeatureTestCase
 	{
 		$this->withRoutes([
 			['put', 'home', function() {
-				return 'Hello World';
-			}]
+					return 'Hello World';
+				}]
 		]);
 		$response = $this->put('home');
 
@@ -69,8 +73,8 @@ class FeatureTestCaseTest extends FeatureTestCase
 	{
 		$this->withRoutes([
 			['patch', 'home', function() {
-				return 'Hello World';
-			}]
+					return 'Hello World';
+				}]
 		]);
 		$response = $this->patch('home');
 
@@ -81,8 +85,8 @@ class FeatureTestCaseTest extends FeatureTestCase
 	{
 		$this->withRoutes([
 			['options', 'home', function() {
-				return 'Hello World';
-			}]
+					return 'Hello World';
+				}]
 		]);
 		$response = $this->options('home');
 
@@ -93,8 +97,8 @@ class FeatureTestCaseTest extends FeatureTestCase
 	{
 		$this->withRoutes([
 			['delete', 'home', function() {
-				return 'Hello World';
-			}]
+					return 'Hello World';
+				}]
 		]);
 		$response = $this->delete('home');
 
