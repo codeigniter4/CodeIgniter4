@@ -1,6 +1,7 @@
 <?php namespace CodeIgniter\Log\Handlers;
 
 use Tests\Support\Config\MockLogger as LoggerConfig;
+use Tests\Support\Log\Handlers\MockChromeHandler;
 use CodeIgniter\Services;
 
 class ChromeLoggerHandlerTest extends \CIUnitTestCase
@@ -53,6 +54,25 @@ class ChromeLoggerHandlerTest extends \CIUnitTestCase
 
 		$this->assertObjectHasAttribute('dateFormat', $result);
 		$this->assertObjectHasAttribute('dateFormat', $logger);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testObjectMessage()
+	{
+		$config = new LoggerConfig();
+		$config->handlers['CodeIgniter\Log\Handlers\TestHandler']['handles'] = ['critical'];
+
+		$logger = new MockChromeHandler($config->handlers['CodeIgniter\Log\Handlers\TestHandler']);
+		$data = new \stdClass();
+		$data->code = 123;
+		$data->explanation = "That's no moon, it's a pumpkin";
+		$result = $logger->setDateFormat('F j, Y');
+		
+		$logger->handle('debug',$data);
+		$peek = $logger->peekaboo();
+				
+		$this->assertEquals($data->explanation, $peek[0]['explanation']);
 	}
 
 }

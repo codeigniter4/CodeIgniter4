@@ -33,23 +33,9 @@ class FileHandlerTest extends \CIUnitTestCase
 		$config = new LoggerConfig();
 		$config->path = $this->start . 'charlie/';
 		$config->handlers['Tests\Support\Log\Handlers\TestHandler']['handles'] = ['critical'];
-		$logger = new TestHandler($config->handlers['Tests\Support\Log\Handlers\TestHandler']);
+		$logger = new MockFileHandler($config->handlers['Tests\Support\Log\Handlers\TestHandler']);
 		$logger->setDateFormat("Y-m-d H:i:s:u");
 		$this->assertTrue($logger->handle("warning", "This is a test log"));
-	}
-
-	public function testHandleExpectedFile()
-	{
-		$config = new LoggerConfig();
-		$config->path = $this->start . 'charlie/';
-		$logger = new MockFileHandler((array) $config);
-
-		$logger->setDateFormat("Y-m-d H:i:s:u");
-		$logger->handle("warning", "This is a test log");
-
-		//are we in agreement re destination of log file?
-		$expected = 'log-' . date('Y-m-d') . '.php';
-		$this->assertEquals($config->path . $expected, $logger->destination);
 	}
 
 	public function testHandleCreateFile()
