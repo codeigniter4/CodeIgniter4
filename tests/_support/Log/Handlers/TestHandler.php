@@ -10,16 +10,16 @@ use CodeIgniter\Log\Handlers\HandlerInterface;
  */
 class TestHandler extends \CodeIgniter\Log\Handlers\FileHandler
 {
+
 	/**
 	 * Local storage for logs.
 	 * @var array
 	 */
 	protected static $logs = [];
-	
+
 	/**
 	 * Where would the log be written?
 	 */
-
 	//--------------------------------------------------------------------
 
 	public function __construct(array $config)
@@ -48,7 +48,7 @@ class TestHandler extends \CodeIgniter\Log\Handlers\FileHandler
 	{
 		$date = date($this->dateFormat);
 
-		self::$logs[] = strtoupper($level).' - '.$date.' --> '.$message;
+		self::$logs[] = strtoupper($level) . ' - ' . $date . ' --> ' . $message;
 
 		return true;
 	}
@@ -57,10 +57,8 @@ class TestHandler extends \CodeIgniter\Log\Handlers\FileHandler
 
 	public static function getLogs()
 	{
-	    return self::$logs;
+		return self::$logs;
 	}
 
 	//--------------------------------------------------------------------
-
-
 }

@@ -68,10 +68,10 @@ class ChromeLoggerHandlerTest extends \CIUnitTestCase
 		$data->code = 123;
 		$data->explanation = "That's no moon, it's a pumpkin";
 		$result = $logger->setDateFormat('F j, Y');
-		
-		$logger->handle('debug',$data);
+
+		$logger->handle('debug', $data);
 		$peek = $logger->peekaboo();
-				
+
 		$this->assertEquals($data->explanation, $peek[0]['explanation']);
 	}
 
