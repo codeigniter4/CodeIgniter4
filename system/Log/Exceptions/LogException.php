@@ -7,7 +7,7 @@ class LogException extends FrameworkException implements ExceptionInterface
 {
 	public static function forInvalidLogLevel(string $level)
 	{
-		return new self(lang('Log.invalidLogLevel', [$level]));
+		return new static(lang('Log.invalidLogLevel', [$level]));
 	}
 
 

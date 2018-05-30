@@ -7,11 +7,11 @@ class PagerException extends FrameworkException implements ExceptionInterface
 {
 	public static function forInvalidTemplate(string $template=null)
 	{
-		return new self(lang('Pager.invalidTemplate', [$template]));
+		return new static(lang('Pager.invalidTemplate', [$template]));
 	}
 
 	public static function forInvalidPaginationGroup(string $group = null)
 	{
-		return new self(lang('Pager.invalidPaginationGroup', [$group]));
+		return new static(lang('Pager.invalidPaginationGroup', [$group]));
 	}
 }
