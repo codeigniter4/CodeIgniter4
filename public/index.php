@@ -25,7 +25,7 @@ $paths = new Config\Paths();
 
 // Location of the framework bootstrap file.
 // This is the second of two lines that might need to be changed, depending on your folder structure.
-$app = require FCPATH . '../system//bootstrap.php';
+$app = require FCPATH . '../system/bootstrap.php';
 
 /*
  *---------------------------------------------------------------
