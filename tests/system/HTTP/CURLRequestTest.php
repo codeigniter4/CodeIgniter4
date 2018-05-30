@@ -2,6 +2,7 @@
 
 use CodeIgniter\Config\Services;
 use Config\App;
+use Tests\Support\HTTP\MockCURLRequest;
 
 class CURLRequestTest extends \CIUnitTestCase
 {
@@ -9,6 +10,9 @@ class CURLRequestTest extends \CIUnitTestCase
 
 	public function setUp()
 	{
+		parent::setUp();
+
+		Services::reset();
 	    $this->request = $this->getRequest();
 	}
 

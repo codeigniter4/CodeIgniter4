@@ -1,6 +1,6 @@
 <?php namespace CodeIgniter\Database\Builder;
 
-use CodeIgniter\Database\MockConnection;
+use Tests\Support\Database\MockConnection;
 
 class PrefixTest extends \CIUnitTestCase
 {
@@ -10,6 +10,8 @@ class PrefixTest extends \CIUnitTestCase
 
 	public function setUp()
 	{
+		parent::setUp();
+
 		$this->db = new MockConnection(['DBPrefix' => 'ci_']);
 	}
 

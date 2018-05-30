@@ -1,4 +1,7 @@
-<?php namespace CodeIgniter\Database;
+<?php namespace Tests\Support\Database;
+
+use CodeIgniter\Database\BaseBuilder;
+use CodeIgniter\Database\ConnectionInterface;
 
 class MockBuilder extends BaseBuilder {
 

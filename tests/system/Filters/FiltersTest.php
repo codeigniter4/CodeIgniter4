@@ -20,26 +20,12 @@ class FiltersTest extends \CIUnitTestCase
 	protected $request;
 	protected $response;
 
-	public function __construct()
+	public function setUp()
 	{
-		parent::__construct();
+		parent::setUp();
 
 		$this->request = Services::request();
 		$this->response = Services::response();
-	}
-
-	//--------------------------------------------------------------------
-
-	public function setUp()
-	{
-		
-	}
-
-	//--------------------------------------------------------------------
-
-	public function tearDown()
-	{
-		
 	}
 
 	//--------------------------------------------------------------------

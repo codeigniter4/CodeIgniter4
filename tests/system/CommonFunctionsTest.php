@@ -10,6 +10,8 @@ class CommomFunctionsTest extends \CIUnitTestCase
 
 	public function setUp()
 	{
+		parent::setUp();
+
 	    unset($_ENV['foo'], $_SERVER['foo']);
 	}
 
@@ -70,7 +72,7 @@ class CommomFunctionsTest extends \CIUnitTestCase
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 
 		$response = $this->createMock(\CodeIgniter\HTTP\Response::class);
-		$routes   = new \CodeIgniter\Router\RouteCollection(new \CodeIgniter\Autoloader\MockFileLocator(new \Config\Autoload()));
+		$routes   = new \CodeIgniter\Router\RouteCollection(new \Tests\Support\Autoloader\MockFileLocator(new \Config\Autoload()));
 		\CodeIgniter\Services::injectMock('response', $response);
 		\CodeIgniter\Services::injectMock('routes', $routes);
 

@@ -147,12 +147,12 @@ the view file through it's namespace::
     'default_full'   => 'App\Views\Pagers\foundation_full',
 
 Since it is under the standard **application/Views** directory, though, you do not need to namespace it since the
-``view()`` method will locate. In that case, you can simple give the sub-directory and file name::
+``view()`` method can locate it by filename. In that case, you can simple give the sub-directory and file name::
 
     'default_full'   => 'Pagers/foundation_full',
 
 Once you have created the view and set it in the configuration, it will automatically be used. You don't have to
-just replace the existing templates. You can create as many additional templates as you need in the configuration
+replace the existing templates. You can create as many additional templates as you need in the configuration
 file. A common situation would be needing different styles for the frontend and the backend of your application.
 ::
 
@@ -173,7 +173,7 @@ Creating the View
 =================
 
 When you create a new view, you only need to create the code that is needed for creating the pagination links themselves.
-You should never create unnecessary wrapping divs since it might be used in multiple places and you only limit their
+You should not create unnecessary wrapping divs since it might be used in multiple places and you only limit their
 usefulness. It is easiest to demonstrate creating a new view by showing you the existing default_full template::
 
     <?php $pager->setSurroundCount(2) ?>
@@ -221,23 +221,20 @@ usefulness. It is easiest to demonstrate creating a new view by showing you the 
 In the first line, the ``setSurroundCount()`` method specifies that we want to show two links to either side of
 the current page link. The only parameter that it accepts is the number of links to show.
 
-**hasPrevious()**
-**hasNext()**
+**hasPrevious()** & **hasNext()**
 
-These methods return a boolean true if it has more links than can be displayed on either side of the current page,
+These methods return a boolean true if there are more links than can be displayed on either side of the current page,
 based on the value passed to ``setSurroundCount``. For example, let's say we have 20 pages of data. The current
 page is page 3. If the surround count is 2, then the following links would show up in the list: 1, 2, 3, 4, and 5.
 Since the first link displayed is page one, ``hasPrevious()`` would return **false** since there is no page zero. However,
 ``hasNext()`` would return **true** since there are 15 additional pages of results after page five.
 
-**getPrevious()**
-**getNext()**
+**getPrevious()** & **getNext()**
 
 These methods return the URL for the previous or next pages of results on either side of the numbered links. See the
 previous paragraph for a full explanation.
 
-**getFirst()**
-**getLast()**
+**getFirst()** & **getLast()**
 
 Much like ``getPrevious()`` and ``getNext()``, these methods return links to the first and last pages in the
 result set.

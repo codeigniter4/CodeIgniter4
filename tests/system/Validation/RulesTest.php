@@ -5,6 +5,7 @@ use Config\Database;
 class RulesTest extends \CIUnitTestCase
 {
 
+
 	/**
 	 * @var Validation
 	 */
@@ -15,7 +16,7 @@ class RulesTest extends \CIUnitTestCase
 			\CodeIgniter\Validation\FormatRules::class,
 			\CodeIgniter\Validation\FileRules::class,
 			\CodeIgniter\Validation\CreditCardRules::class,
-			\CodeIgniter\Validation\TestRules::class,
+			\Tests\Support\Validation\TestRules::class,
 		],
 		'groupA'		 => [
 			'foo' => 'required|min_length[5]',
@@ -32,7 +33,8 @@ class RulesTest extends \CIUnitTestCase
 	public function setUp()
 	{
 		parent::setUp();
-		$this->validation = new Validation((object) $this->config, \Config\Services::renderer());
+
+		$this->validation = new Validation((object)$this->config, \Config\Services::renderer());
 		$this->validation->reset();
 
 		$_FILES = [];
@@ -304,6 +306,12 @@ class RulesTest extends \CIUnitTestCase
 	 */
 	public function testIsUniqueFalse()
 	{
+		$db  = Database::connect();
+		$db->table('user')->insert([
+			'name' => 'Derek Travis',
+			'email' => 'derek@world.com'
+		]);
+
 		$data = [
 			'email' => 'derek@world.com',
 		];
@@ -340,7 +348,12 @@ class RulesTest extends \CIUnitTestCase
 	 */
 	public function testIsUniqueIgnoresParams()
 	{
-		$db = Database::connect();
+		$db  = Database::connect();
+		$user = $db->table('user')
+			->insert([
+				'name' => 'Developer A',
+				'email' => 'deva@example.com',
+			]);
 		$row = $db->table('user')
 				->limit(1)
 				->get()
