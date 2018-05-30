@@ -218,6 +218,29 @@ class LoggerTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testLogInterpolatesExceptions()
+	{
+		$config = new LoggerConfig();
+		$logger = new Logger($config);
+
+		$expected = 'ERROR - ' . date('Y-m-d') . ' --> [ERROR] These are not the droids you are looking for';
+
+		try
+		{
+			throw new Exception('These are not the droids you are looking for');
+		} catch (\Exception $e)
+		{
+			$logger->log('error', '[ERROR] {exception}', ['exception' => $e]);
+		}
+
+		$logs = TestHandler::getLogs();
+
+		$this->assertCount(1, $logs);
+		$this->assertTrue(strpos($logs[0], $expected) === 0);
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testEmergencyLogsCorrectly()
 	{
 		$config = new LoggerConfig();
@@ -376,7 +399,7 @@ class LoggerTest extends \CIUnitTestCase
 		$config = new LoggerConfig();
 		$logger = new Logger($config);
 
-		$expected = '[CodeIgniter\Log\Handlers\TestHandler]';
+		$expected = '[Tests\Support\Log\Handlers\TestHandler]';
 		$logger->log(5, $config);
 
 		$logs = TestHandler::getLogs();
@@ -390,7 +413,7 @@ class LoggerTest extends \CIUnitTestCase
 	public function testFilenameCleaning()
 	{
 		$config = new LoggerConfig();
-		$logger = new \CodeIgniter\Log\TestLogger($config);
+		$logger = new \Tests\Support\Log\TestLogger($config);
 
 		$ohoh = APPPATH . 'LoggerTest';
 		$expected = 'APPPATH/LoggerTest';

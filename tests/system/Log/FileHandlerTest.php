@@ -1,6 +1,7 @@
 <?php namespace CodeIgniter\Log\Handlers;
 
 use Tests\Support\Config\MockLogger as LoggerConfig;
+use Tests\Support\Log\Handlers\MockFileHandler as MockFileHandler;
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamDirectory;
 use org\bovigo\vfs\visitor\vfsStreamPrintVisitor;
@@ -18,9 +19,9 @@ class FileHandlerTest extends \CIUnitTestCase
 	public function testHandle()
 	{
 		$config = new LoggerConfig();
-		$config->handlers['CodeIgniter\Log\Handlers\TestHandler']['handles'] = ['critical'];
+		$config->handlers['Tests\Support\Log\Handlers\TestHandler']['handles'] = ['critical'];
 
-		$logger = new FileHandler($config->handlers['CodeIgniter\Log\Handlers\TestHandler']);
+		$logger = new FileHandler($config->handlers['Tests\Support\Log\Handlers\TestHandler']);
 		$logger->setDateFormat("Y-m-d H:i:s:u");
 		$this->assertTrue($logger->handle("warning", "This is a test log"));
 	}
@@ -31,9 +32,8 @@ class FileHandlerTest extends \CIUnitTestCase
 	{
 		$config = new LoggerConfig();
 		$config->path = $this->start . 'charlie/';
-		$config->handlers['CodeIgniter\Log\Handlers\TestHandler']['handles'] = ['critical'];
-		$logger = new TestHandler($config->handlers['CodeIgniter\Log\Handlers\TestHandler']);
-//		$logger = new FileHandler($config->handlers['CodeIgniter\Log\Handlers\TestHandler']);
+		$config->handlers['Tests\Support\Log\Handlers\TestHandler']['handles'] = ['critical'];
+		$logger = new TestHandler($config->handlers['Tests\Support\Log\Handlers\TestHandler']);
 		$logger->setDateFormat("Y-m-d H:i:s:u");
 		$this->assertTrue($logger->handle("warning", "This is a test log"));
 	}

@@ -5,7 +5,7 @@
  *
  * Extends ChromeLoggerHandler, exposing some inner workings
  */
-class MockChromeHandler extends ChromeLoggerHandler
+class MockChromeHandler extends \CodeIgniter\Log\Handlers\ChromeLoggerHandler
 {
 
 	//--------------------------------------------------------------------
