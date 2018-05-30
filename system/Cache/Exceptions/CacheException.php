@@ -7,7 +7,7 @@ class CacheException extends \RuntimeException implements ExceptionInterface
 	 */
 	public static function forInvalidHandlers()
 	{
-		return new self(lang('Cache.invalidHandlers'));
+		return new static(lang('Cache.invalidHandlers'));
 	}
 
 	/**
@@ -15,7 +15,7 @@ class CacheException extends \RuntimeException implements ExceptionInterface
 	 */
 	public static function forNoBackup()
 	{
-		return new self(lang('Cache.noBackup'));
+		return new static(lang('Cache.noBackup'));
 	}
 
 	/**
@@ -23,6 +23,6 @@ class CacheException extends \RuntimeException implements ExceptionInterface
 	 */
 	public static function forHandlerNotFound()
 	{
-		return new self(lang('Cache.handlerNotFound'));
+		return new static(lang('Cache.handlerNotFound'));
 	}
 }

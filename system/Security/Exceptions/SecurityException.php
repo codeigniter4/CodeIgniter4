@@ -7,6 +7,6 @@ class SecurityException extends FrameworkException implements ExceptionInterface
 {
 	public static function forDisallowedAction()
 	{
-		return new self(lang('HTTP.disallowedAction'), 403);
+		return new static(lang('HTTP.disallowedAction'), 403);
 	}
 }
