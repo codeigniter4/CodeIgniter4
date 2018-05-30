@@ -15,7 +15,7 @@ class CreditCardRulesTest extends \CIUnitTestCase
 			\CodeIgniter\Validation\FormatRules::class,
 			\CodeIgniter\Validation\FileRules::class,
 			\CodeIgniter\Validation\CreditCardRules::class,
-			\CodeIgniter\Validation\TestRules::class,
+			\Tests\Support\Validation\TestRules::class,
 		],
 		'groupA'		 => [
 			'foo' => 'required|min_length[5]',

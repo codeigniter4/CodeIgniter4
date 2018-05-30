@@ -5,7 +5,7 @@ use CodeIgniter\Test\FeatureTestCase;
 /**
  * This relies on a database connection
  * 
- * @codeCoverageIgnore
+ * @group DatabaseLive
  */
 class HomeTest extends FeatureTestCase
 {
