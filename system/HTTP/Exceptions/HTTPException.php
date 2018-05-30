@@ -12,7 +12,7 @@ class HTTPException extends FrameworkException implements ExceptionInterface
 	 */
 	public static function forMissingCurl()
 	{
-		return new self(lang('HTTP.missingCurl'));
+		return new static(lang('HTTP.missingCurl'));
 	}
 
 	/**
@@ -24,7 +24,7 @@ class HTTPException extends FrameworkException implements ExceptionInterface
 	 */
 	public static function forSSLCertNotFound(string $cert)
 	{
-		return new self(lang('HTTP.sslCertNotFound', [$cert]));
+		return new static(lang('HTTP.sslCertNotFound', [$cert]));
 	}
 
 	/**
@@ -36,7 +36,7 @@ class HTTPException extends FrameworkException implements ExceptionInterface
 	 */
 	public static function forInvalidSSLKey(string $key)
 	{
-		return new self(lang('HTTP.invalidSSLKey', [$key]));
+		return new static(lang('HTTP.invalidSSLKey', [$key]));
 	}
 
 	/**
@@ -49,7 +49,7 @@ class HTTPException extends FrameworkException implements ExceptionInterface
 	 */
 	public static function forCurlError(string $errorNum, string $error)
 	{
-		return new self(lang('HTTP.curlError', [$errorNum, $error]));
+		return new static(lang('HTTP.curlError', [$errorNum, $error]));
 	}
 
 	/**
@@ -61,7 +61,7 @@ class HTTPException extends FrameworkException implements ExceptionInterface
 	 */
 	public static function forInvalidNegotiationType(string $type)
 	{
-		return new self(lang('HTTP.invalidNegotiationType', [$type]));
+		return new static(lang('HTTP.invalidNegotiationType', [$type]));
 	}
 
 	/**
@@ -73,7 +73,7 @@ class HTTPException extends FrameworkException implements ExceptionInterface
 	 */
 	public static function forInvalidHTTPProtocol(string $protocols)
 	{
-		return new self(lang('HTTP.invalidHTTPProtocol', [$protocols]));
+		return new static(lang('HTTP.invalidHTTPProtocol', [$protocols]));
 	}
 
 	/**
@@ -83,7 +83,7 @@ class HTTPException extends FrameworkException implements ExceptionInterface
 	 */
 	public static function forEmptySupportedNegotiations()
 	{
-		return new self(lang('HTTP.emptySupportedNegotiations'));
+		return new static(lang('HTTP.emptySupportedNegotiations'));
 	}
 
 	/**
@@ -95,7 +95,7 @@ class HTTPException extends FrameworkException implements ExceptionInterface
 	 */
 	public static function forInvalidRedirectRoute(string $route)
 	{
-		return new self(lang('HTTP.invalidRoute', [$route]));
+		return new static(lang('HTTP.invalidRoute', [$route]));
 	}
 
 	/**
@@ -105,7 +105,7 @@ class HTTPException extends FrameworkException implements ExceptionInterface
 	 */
 	public static function forMissingResponseStatus()
 	{
-		return new self(lang('HTTP.missingResponseStatus'));
+		return new static(lang('HTTP.missingResponseStatus'));
 	}
 
 	/**
@@ -117,7 +117,7 @@ class HTTPException extends FrameworkException implements ExceptionInterface
 	 */
 	public static function forInvalidStatusCode(int $code)
 	{
-		return new self(lang('HTTP.invalidStatusCode', [$code]));
+		return new static(lang('HTTP.invalidStatusCode', [$code]));
 	}
 
 	/**
@@ -129,7 +129,7 @@ class HTTPException extends FrameworkException implements ExceptionInterface
 	 */
 	public static function forUnkownStatusCode(int $code)
 	{
-		return new self(lang('HTTP.unknownStatusCode', [$code]));
+		return new static(lang('HTTP.unknownStatusCode', [$code]));
 	}
 
 	/**
@@ -141,7 +141,7 @@ class HTTPException extends FrameworkException implements ExceptionInterface
 	 */
 	public static function forUnableToParseURI(string $uri)
 	{
-		return new self(lang('HTTP.cannotParseURI', [$uri]));
+		return new static(lang('HTTP.cannotParseURI', [$uri]));
 	}
 
 	/**
@@ -153,7 +153,7 @@ class HTTPException extends FrameworkException implements ExceptionInterface
 	 */
 	public static function forURISegmentOutOfRange(int $segment)
 	{
-		return new self(lang('HTTP.segmentOutOfRange', [$segment]));
+		return new static(lang('HTTP.segmentOutOfRange', [$segment]));
 	}
 
 	/**
@@ -165,7 +165,7 @@ class HTTPException extends FrameworkException implements ExceptionInterface
 	 */
 	public static function forInvalidPort(int $port)
 	{
-		return new self(lang('HTTP.invalidPort', [$port]));
+		return new static(lang('HTTP.invalidPort', [$port]));
 	}
 
 	/**
@@ -175,6 +175,6 @@ class HTTPException extends FrameworkException implements ExceptionInterface
 	 */
 	public static function forMalformedQueryString()
 	{
-		return new self(lang('HTTP.malformedQueryString'));
+		return new static(lang('HTTP.malformedQueryString'));
 	}
 }
