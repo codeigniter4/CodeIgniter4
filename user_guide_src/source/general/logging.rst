@@ -105,7 +105,7 @@ file name and line number.  You must still provide the exception placeholder in 
 	{
 		... Something throws error here
 	}
-	catch (\Exception #e)
+	catch (\Exception $e)
 	{
 		log_message('error', '[ERROR] {exception}', ['exception' => $e]);
 	}
