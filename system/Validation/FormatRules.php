@@ -334,14 +334,7 @@ class FormatRules
 		}
 		elseif (preg_match('/^(?:([^:]*)\:)?\/\/(.+)$/', $str, $matches))
 		{
-// removed the test for an empty second match segment. 
-// it should never be found, because of the "(.+)" pattern, which is one or more
-//			if (empty($matches[2]))
-//			{
-//				return false;
-//			}
-//			else
-				if ( ! in_array($matches[1], ['http', 'https'], true))
+			if ( ! in_array($matches[1], ['http', 'https'], true))
 			{
 				return false;
 			}
@@ -373,8 +366,7 @@ class FormatRules
 
 		$date = \DateTime::createFromFormat($format, $str);
 
-  		return (bool) $date && \DateTime::getLastErrors()['warning_count'] === 0
-	  				 		&& \DateTime::getLastErrors()['error_count'] === 0;
+		return (bool) $date && \DateTime::getLastErrors()['warning_count'] === 0 && \DateTime::getLastErrors()['error_count'] === 0;
 	}
 
 	//--------------------------------------------------------------------

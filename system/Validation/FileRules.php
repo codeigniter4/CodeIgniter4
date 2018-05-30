@@ -176,8 +176,6 @@ class FileRules
 			return false;
 		}
 
-//		echo var_dump($file);
-//		echo var_dump($file->getMimeType());
 		return in_array($file->getMimeType(), $params);
 	}
 
