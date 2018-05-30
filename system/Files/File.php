@@ -99,7 +99,7 @@ class File extends SplFileInfo
 				return number_format(($this->size / 1024) / 1024, 3);
 		}
 
-		return $this->size;
+		return (int) $this->size;
 	}
 
 	//--------------------------------------------------------------------
