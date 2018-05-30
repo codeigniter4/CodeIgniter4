@@ -2,6 +2,11 @@
 
 use CodeIgniter\Test\FeatureTestCase;
 
+/**
+ * This relies on a database connection
+ * 
+ * @codeCoverageIgnore
+ */
 class HomeTest extends FeatureTestCase
 {
 	public function testCanLoadPage()
