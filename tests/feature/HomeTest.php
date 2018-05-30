@@ -3,8 +3,6 @@
 use CodeIgniter\Test\FeatureTestCase;
 
 /**
- * This relies on a database connection
- * 
  * @group DatabaseLive
  */
 class HomeTest extends FeatureTestCase
