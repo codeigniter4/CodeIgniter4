@@ -1,6 +1,11 @@
 <?php namespace CodeIgniter\Validation;
 
 use Config\Database;
+use \CodeIgniter\Validation\Rules;
+use \CodeIgniter\Validation\FormatRules;
+use \CodeIgniter\Validation\FileRules;
+use \CodeIgniter\Validation\CreditCardRules;
+use \CodeIgniter\Validation\TestRules;
 
 class FormatRulesTest extends \CIUnitTestCase
 {
