@@ -290,7 +290,7 @@ class Events
 	 *
 	 * @param string $path
 	 */
-	public function setFile(string $path)
+	public static function setFile(string $path)
 	{
 		self::$eventsFile = $path;
 	}

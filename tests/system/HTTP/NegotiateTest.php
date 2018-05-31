@@ -16,6 +16,8 @@ class NegotiateTest extends \CIUnitTestCase
 
 	public function setUp()
 	{
+		parent::setUp();
+
 		$this->request = new Request(new App());
 
 		$this->negotiate = new Negotiate($this->request);

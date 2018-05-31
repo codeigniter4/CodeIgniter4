@@ -64,6 +64,13 @@ class Request extends Message implements RequestInterface
 	 */
 	protected $method;
 
+	/**
+	 * Stores values we've retrieved from
+	 * PHP globals.
+	 * @var array
+	 */
+	protected $globals = [];
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -281,7 +288,7 @@ class Request extends Message implements RequestInterface
 	 */
 	public function getServer($index = null, $filter = null, $flags = null)
 	{
-		return $this->fetchGlobal(INPUT_SERVER, $index, $filter, $flags);
+		return $this->fetchGlobal('server', $index, $filter, $flags);
 	}
 
 	//--------------------------------------------------------------------
@@ -297,7 +304,24 @@ class Request extends Message implements RequestInterface
 	 */
 	public function getEnv($index = null, $filter = null, $flags = null)
 	{
-		return $this->fetchGlobal(INPUT_ENV, $index, $filter, $flags);
+		return $this->fetchGlobal('env', $index, $filter, $flags);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Allows manually setting the value of PHP global, like $_GET, $_POST, etc.
+	 *
+	 * @param string $method
+	 * @param        $value
+	 *
+	 * @return $this
+	 */
+	public function setGlobal(string $method, $value)
+	{
+		$this->globals[$method] = $value;
+
+		return $this;
 	}
 
 	//--------------------------------------------------------------------
@@ -312,45 +336,37 @@ class Request extends Message implements RequestInterface
 	 *
 	 * http://php.net/manual/en/filter.filters.sanitize.php
 	 *
-	 * @param int          $type   Input filter constant
+	 * @param int          $method Input filter constant
 	 * @param string|array $index
 	 * @param int          $filter Filter constant
 	 * @param null         $flags
 	 *
 	 * @return mixed
 	 */
-	protected function fetchGlobal($type, $index = null, $filter = null, $flags = null )
+	public function fetchGlobal($method, $index = null, $filter = null, $flags = null )
 	{
+		$method = strtolower($method);
+
+		if (! isset($this->globals[$method]))
+		{
+			$this->populateGlobals($method);
+		}
+
 		// Null filters cause null values to return.
 		if (is_null($filter))
 		{
 			$filter = FILTER_DEFAULT;
 		}
 
-		$loopThrough = [];
-		switch ($type)
-		{
-			case INPUT_GET : $loopThrough = $_GET;
-				break;
-			case INPUT_POST : $loopThrough = $_POST;
-				break;
-			case INPUT_COOKIE : $loopThrough = $_COOKIE;
-				break;
-			case INPUT_SERVER : $loopThrough = $_SERVER;
-				break;
-			case INPUT_ENV : $loopThrough = $_ENV;
-				break;
-			case INPUT_REQUEST : $loopThrough = $_REQUEST;
-				break;
-		}
-
-		// If $index is null, it means that the whole input type array is requested
+		// Return all values when $index is null
 		if (is_null($index))
 		{
 			$values = [];
-			foreach ($loopThrough as $key => $value)
+			foreach ($this->globals[$method] as $key => $value)
 			{
-				$values[$key] = is_array($value) ? $this->fetchGlobal($type, $key, $filter, $flags) : filter_var($value, $filter, $flags);
+				$values[$key] = is_array($value)
+					? $this->fetchGlobal($method, $key, $filter, $flags)
+					: filter_var($value, $filter, $flags);
 			}
 
 			return $values;
@@ -363,7 +379,7 @@ class Request extends Message implements RequestInterface
 
 			foreach ($index as $key)
 			{
-				$output[$key] = $this->fetchGlobal($type, $key, $filter, $flags);
+				$output[$key] = $this->fetchGlobal($method, $key, $filter, $flags);
 			}
 
 			return $output;
@@ -372,7 +388,7 @@ class Request extends Message implements RequestInterface
 		// Does the index contain array notation?
 		if (($count = preg_match_all('/(?:^[^\[]+)|\[[^]]*\]/', $index, $matches)) > 1)
 		{
-			$value = $loopThrough;
+			$value = $this->globals[$method];
 			for ($i = 0; $i < $count; $i++)
 			{
 				$key = trim($matches[0][$i], '[]');
@@ -393,14 +409,12 @@ class Request extends Message implements RequestInterface
 			}
 		}
 
-		// Due to issues with FastCGI and testing,
-		// we need to do these all manually instead
-		// of the simpler filter_input();
 		if (empty($value))
 		{
-			$value = $loopThrough[$index] ?? null;
+			$value = $this->globals[$method][$index] ?? null;
 		}
 
+		// Cannot filter these types of data automatically...
 		if (is_array($value) || is_object($value) || is_null($value))
 		{
 			return $value;
@@ -410,4 +424,39 @@ class Request extends Message implements RequestInterface
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Saves a copy of the current state of one of several PHP globals
+	 * so we can retrieve them later.
+	 *
+	 * @param string $method
+	 */
+	protected function populateGlobals(string $method)
+	{
+		if (! isset($this->globals[$method]))
+		{
+			$this->globals[$method] = [];
+		}
+
+		// Don't populate ENV as it might contain
+		// sensitive data that we don't want to get logged.
+		switch($method)
+		{
+			case 'get':
+				$this->globals['get'] = $_GET;
+				break;
+			case 'post':
+				$this->globals['post'] = $_POST;
+				break;
+			case 'request':
+				$this->globals['request'] = $_REQUEST;
+				break;
+			case 'cookie':
+				$this->globals['cookie'] = $_COOKIE;
+				break;
+			case 'server':
+				$this->globals['server'] = $_SERVER;
+				break;
+		}
+	}
 }

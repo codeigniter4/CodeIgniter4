@@ -1,12 +1,11 @@
 <?php
 
-// Location to the Paths config file.
-// This should be the only line you need to
-// edit in this file.
-$pathsPath = '../application/Config/Paths.php';
-
 // Path to the front controller (this file)
 define('FCPATH', __DIR__.DIRECTORY_SEPARATOR);
+
+// Location of the Paths config file.
+// This is the first of two lines that might need to be changed, depending on your folder structure.
+$pathsPath = FCPATH . '../application/Config/Paths.php';
 
 /*
  *---------------------------------------------------------------
@@ -24,7 +23,9 @@ chdir(__DIR__);
 require $pathsPath;
 $paths = new Config\Paths();
 
-$app = require rtrim($paths->systemDirectory,DIRECTORY_SEPARATOR) . '/bootstrap.php';
+// Location of the framework bootstrap file.
+// This is the second of two lines that might need to be changed, depending on your folder structure.
+$app = require FCPATH . '../system/bootstrap.php';
 
 /*
  *---------------------------------------------------------------

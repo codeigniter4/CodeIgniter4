@@ -95,7 +95,7 @@ If, in ``Config/Routes.php``, you have specified a 404 Override, that will be ca
 
 	if (! $page = $pageModel->find($id))
 	{
-		throw \CodeIgniter\ExceptionsPageNotFoundException::forPageNotFound();
+		throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
 	}
 
 You can pass a message into the exception that will be displayed in place of the default message on the 404 page.

@@ -91,7 +91,7 @@ class AutoloadConfig
 
 		if (isset($_SERVER['CI_ENVIRONMENT']) && $_SERVER['CI_ENVIRONMENT'] === 'testing')
 		{
-			$this->psr4['Tests\Support'] = BASEPATH . '../tests/_support/';
+			$this->psr4['Tests\Support'] = BASEPATH . '../tests/_support';
 		}
 
 		/**
@@ -143,10 +143,6 @@ class AutoloadConfig
 			'CodeIgniter\Debug\Exceptions'					 => BASEPATH . 'Debug/Exceptions.php',
 			'CodeIgniter\Debug\Timer'						 => BASEPATH . 'Debug/Timer.php',
 			'CodeIgniter\Debug\Iterator'					 => BASEPATH . 'Debug/Iterator.php',
-			'CodeIgniter\Encryption\Encryption'				 => BASEPATH . 'Encryption/Encryption.php',
-			'CodeIgniter\Encryption\EncrypterInterface'		 => BASEPATH . 'Encryption/EncrypterInterface.php',
-			'CodeIgniter\Encryption\Handlers\BaseHandler'	 => BASEPATH . 'Encryption/Handlers/BaseHandler.php',
-			'CodeIgniter\Encryption\Handlers\OpenSSLHandler' => BASEPATH . 'Encryption/Handlers/OpenSSLHandler.php',
 			'CodeIgniter\Events\Events'						 => BASEPATH . 'Events/Events.php',
 			'CodeIgniter\HTTP\CLIRequest'					 => BASEPATH . 'HTTP/CLIRequest.php',
 			'CodeIgniter\HTTP\ContentSecurityPolicy'		 => BASEPATH . 'HTTP/ContentSecurityPolicy.php',

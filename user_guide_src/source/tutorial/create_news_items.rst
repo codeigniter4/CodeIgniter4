@@ -18,7 +18,7 @@ To input data into the database you need to create a form where you can
 input the information to be stored. This means you'll be needing a form
 with two fields, one for the title and one for the text. You'll derive
 the slug from our title in the model. Create the new view at
-*application/Views/News/Create.php*.
+*application/Views/news/create.php*.
 
 ::
 
@@ -64,9 +64,9 @@ validation <../libraries/validation>` library to do this.
             'text'  => 'required'
         ]))
         {
-            echo view('Templates/Header', ['title' => 'Create a news item']);
-            echo view('News/Create');
-            echo view('Templates/Footer');
+            echo view('templates/header', ['title' => 'Create a news item']);
+            echo view('news/create');
+            echo view('templates/footer');
 
         }
         else
@@ -76,7 +76,7 @@ validation <../libraries/validation>` library to do this.
                 'slug'  => url_title($this->request->getVar('title')),
                 'text'  => $this->request->getVar('text'),
             ]);
-            echo view('News/Success');
+            echo view('news/success');
         }
     }
 
@@ -100,7 +100,7 @@ sure everything is in lowercase characters. This leaves you with a nice
 slug, perfect for creating URIs.
 
 After this, a view is loaded to display a success message. Create a view at
-**application/Views/News/Success.php** and write a success message.
+**application/Views/news/success.php** and write a success message.
 
 Model
 -----

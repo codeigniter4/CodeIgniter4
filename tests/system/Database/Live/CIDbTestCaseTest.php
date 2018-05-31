@@ -1,9 +1,11 @@
 <?php namespace CodeIgniter\Database\Live;
 
+use CodeIgniter\Test\CIDatabaseTestCase;
+
 /**
  * @group DatabaseLive
  */
-class CIDbTestCaseTest extends \CIDatabaseTestCase
+class CIDbTestCaseTest extends CIDatabaseTestCase
 {
 	protected $refresh = true;
 
@@ -15,7 +17,7 @@ class CIDbTestCaseTest extends \CIDatabaseTestCase
 
 		$this->seeInDatabase('user', ['name' => 'Ricky', 'email' => 'sofine@example.com', 'country' => 'US']);
 	}
-	
+
 	//--------------------------------------------------------------------
 
 	public function testDontSeeInDatabase()
@@ -43,5 +45,5 @@ class CIDbTestCaseTest extends \CIDatabaseTestCase
 	//--------------------------------------------------------------------
 
 
-	
+
 }

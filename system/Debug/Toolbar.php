@@ -155,7 +155,7 @@ class Toolbar
 
 		foreach ($request->getGet() as $name => $value)
 		{
-			$data['vars']['get'][esc($name)] = esc($value);
+			$data['vars']['get'][esc($name)] = is_array($value) ? esc(print_r($value, true)) : esc($value);
 		}
 
 		foreach ($request->getPost() as $name => $value)
@@ -409,6 +409,11 @@ class Toolbar
 	public static function eventHandler()
 	{
 		self::$request = Services::request();
+
+		if(ENVIRONMENT == 'testing')
+		{
+			return;
+		}
 
 		// If the request contains '?debugbar then we're
 		// simply returning the loading script

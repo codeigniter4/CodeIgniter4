@@ -8,6 +8,8 @@ class CacheFactoryTest extends \CIUnitTestCase
 
 	public function setUp()
 	{
+		parent::setUp();
+
 		$this->cacheFactory = new CacheFactory();
 
 		//Initialize path

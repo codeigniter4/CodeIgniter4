@@ -1,3 +1,4 @@
+<?php if (ENVIRONMENT != 'testing') : ?>
 document.addEventListener('DOMContentLoaded', loadDoc, false);
 
 function loadDoc(time) {
@@ -56,3 +57,4 @@ function newXHR() {
 }
 
 window.XMLHttpRequest = newXHR;
+<?php endif; ?>

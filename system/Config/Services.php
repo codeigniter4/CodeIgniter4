@@ -37,7 +37,9 @@
  */
 use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Database\MigrationRunner;
+use CodeIgniter\HTTP\URI;
 use CodeIgniter\View\RendererInterface;
+use Config\App;
 
 /**
  * Services Configuration file.
@@ -180,7 +182,7 @@ class Services
 
 		return new \CodeIgniter\HTTP\CURLRequest(
 				$config,
-				new \CodeIgniter\HTTP\URI(isset($options['base_uri']) ? : null),
+				new \CodeIgniter\HTTP\URI($options['base_uri'] ?? null),
 				$response,
 				$options
 		);
@@ -546,7 +548,7 @@ class Services
 
 		if ( ! is_object($config))
 		{
-			$config = new \Config\App();
+			$config = new App();
 		}
 
 		return new \CodeIgniter\HTTP\IncomingRequest(

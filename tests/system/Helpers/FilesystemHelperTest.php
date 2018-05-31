@@ -1,7 +1,5 @@
 <?php namespace CodeIgniter\Helpers;
 
-include BASEPATH.'../vendor/autoload.php';
-
 use org\bovigo\vfs\vfsStream;
 
 class FilesystemHelperTest extends \CIUnitTestCase

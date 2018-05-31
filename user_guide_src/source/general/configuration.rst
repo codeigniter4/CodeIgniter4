@@ -74,10 +74,8 @@ needs with empty or dummy data. In each environment, you can then copy the file 
 appropriate data.
 
 When your application runs, this file will be automatically loaded and the variables will be put into
-the environment. This will work in any environment except for production, where the variables should be
-set in the environment through whatever means your getServer supports, such as .htaccess files, etc. These
-variables are then available through ``getenv()``, ``$_SERVER``, and ``$_ENV``. Of the three, ``getenv()`` function
-is recommended since it is not case-sensitive::
+the environment. This will work in any environment. These variables are then available through ``getenv()``,
+``$_SERVER``, and ``$_ENV``. Of the three, ``getenv()`` function is recommended since it is not case-sensitive::
 
 	$s3_bucket = getenv('S3_BUCKET');
 	$s3_bucket = $_ENV['S3_BUCKET'];

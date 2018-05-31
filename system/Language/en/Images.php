@@ -10,6 +10,8 @@
  * @link         https://codeigniter.com
  * @since        Version 3.0.0
  * @filesource
+ * 
+ * @codeCoverageIgnore
  */
 return [
 	'sourceImageRequired'    => 'You must specify a source image in your preferences.',

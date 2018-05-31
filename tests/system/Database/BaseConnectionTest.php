@@ -1,6 +1,8 @@
 <?php namespace CodeIgniter\Database;
 
 
+use Tests\Support\Database\MockConnection;
+
 class BaseConnectionTest extends \CIUnitTestCase
 {
 	protected $options = [

@@ -1,6 +1,8 @@
 <?php namespace CodeIgniter\CLI;
 
-use Config\MockCLIConfig;
+use Tests\Support\MockCodeIgniter;
+use Tests\Support\Config\MockCLIConfig;
+use CodeIgniter\Test\Filters\CITestStreamFilter;
 
 class ConsoleTest extends \CIUnitTestCase
 {
@@ -9,8 +11,10 @@ class ConsoleTest extends \CIUnitTestCase
 
 	public function setUp()
 	{
-		CLICTestStreamFilter::$buffer = '';
-		$this->stream_filter = stream_filter_append(STDOUT, 'CLICTestStreamFilter');
+		parent::setUp();
+
+		CITestStreamFilter::$buffer = '';
+		$this->stream_filter = stream_filter_append(STDOUT, 'CITestStreamFilter');
 
 		$this->env = new \CodeIgniter\Config\DotEnv(ROOTPATH);
 		$this->env->load();
@@ -24,9 +28,8 @@ class ConsoleTest extends \CIUnitTestCase
 		$_SERVER['argv'] = ['spark', 'list'];
 		$_SERVER['argc'] = 2;
 		CLI::init();
-		
-		$this->app = new \CodeIgniter\MockCodeIgniter(new MockCLIConfig());
-//		$this->app->initialize();
+
+		$this->app = new MockCodeIgniter(new MockCLIConfig());
 	}
 
 	public function tearDown()
@@ -44,7 +47,7 @@ class ConsoleTest extends \CIUnitTestCase
 	{
 		$console = new \CodeIgniter\CLI\Console($this->app);
 		$console->showHeader();
-		$result = CLICTestStreamFilter::$buffer;
+		$result = CITestStreamFilter::$buffer;
 		$this->assertTrue(strpos($result, 'CodeIgniter CLI Tool') > 0);
 	}
 
@@ -52,7 +55,7 @@ class ConsoleTest extends \CIUnitTestCase
 	{
 		$console = new \CodeIgniter\CLI\Console($this->app);
 		$console->run();
-		$result = CLICTestStreamFilter::$buffer;
+		$result = CITestStreamFilter::$buffer;
 
 		// make sure the result looks like a command list
 		$this->assertContains('Lists the available commands.', $result);
@@ -60,22 +63,3 @@ class ConsoleTest extends \CIUnitTestCase
 	}
 
 }
-
-class CLICTestStreamFilter extends \php_user_filter
-{
-
-	public static $buffer = '';
-
-	public function filter($in, $out, &$consumed, $closing)
-	{
-		while ($bucket = stream_bucket_make_writeable($in))
-		{
-			self::$buffer .= $bucket->data;
-			$consumed += $bucket->datalen;
-		}
-		return PSFS_PASS_ON;
-	}
-
-}
-
-stream_filter_register('CLICTestStreamFilter', 'CodeIgniter\CLI\CLICTestStreamFilter');

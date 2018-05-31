@@ -1,14 +1,17 @@
 <?php namespace CodeIgniter\Database;
 
+use Tests\Support\Database\MockConnection;
+
 class QueryTest extends \CIUnitTestCase
 {
-
 	protected $db;
 
 	//--------------------------------------------------------------------
 
 	public function setUp()
 	{
+		parent::setUp();
+
 		$this->db = new MockConnection([]);
 	}
 

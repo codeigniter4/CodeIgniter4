@@ -204,7 +204,7 @@ class Validation implements ValidationInterface
 		{
 			// and the current field does not exists in the input data
 			// we can return true. Ignoring all other rules to this field.
-			if (! array_key_exists($field, $data))
+			if ( ! array_key_exists($field, $data))
 			{
 				return true;
 			}
@@ -214,7 +214,7 @@ class Validation implements ValidationInterface
 
 		if (in_array('permit_empty', $rules))
 		{
-			if (! in_array('required', $rules) && (is_array($value) ? empty($value) : (trim($value) === '')))
+			if ( ! in_array('required', $rules) && (is_array($value) ? empty($value) : (trim($value) === '')))
 			{
 				return true;
 			}
@@ -332,8 +332,8 @@ class Validation implements ValidationInterface
 	public function setRule(string $field, string $label = null, string $rules, array $errors = [])
 	{
 		$this->rules[$field] = [
-			'label' => $label,
-			'rules' => $rules,
+			'label'	 => $label,
+			'rules'	 => $rules,
 		];
 		$this->customErrors = array_merge($this->customErrors, [
 			$field => $errors
@@ -615,6 +615,11 @@ class Validation implements ValidationInterface
 	 *    ]
 	 *
 	 * @return array
+	 * 
+	 * Excluded from code coverage because that it always run as cli
+	 * 
+	 * @codeCoverageIgnore
+	 * 
 	 */
 	public function getErrors(): array
 	{

@@ -50,7 +50,7 @@ The Debug Toolbar
 =================
 
 The Debug Toolbar provides at-a-glance information about the current page request, including benchmark results,
-queries you have ran, request and response data, and more. This can all prove very useful during development
+queries you have run, request and response data, and more. This can all prove very useful during development
 to help you debug and optimize.
 
 .. note:: The Debug Toolbar is still under construction with several planned features not yet implemented.
