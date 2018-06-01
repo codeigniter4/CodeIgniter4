@@ -141,7 +141,7 @@ A small example should clarify this.
 
 Imagine that you've created a new directory, ``Blog`` in your root directory. This will hold a blog module with controllers,
 models, etc, and you'd like to make some of the classes available as a service. The first step is to create a new file:
-``Blog\Config\Services.php``. The skeleton of the file should be:
+``Blog\Config\Services.php``. The skeleton of the file should be::
 
     <?php namespace Blog\Config;
 
@@ -156,7 +156,7 @@ models, etc, and you'd like to make some of the classes available as a service. 
     }
 
 Now you can use this file as described above. When you want to grab the posts service from any controller, you
-would simply use the framework's ``Config\Services`` class to grab your service:
+would simply use the framework's ``Config\Services`` class to grab your service::
 
     $postManager = Config\Services::postManager();
 
