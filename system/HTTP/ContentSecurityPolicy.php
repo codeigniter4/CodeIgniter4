@@ -140,6 +140,12 @@ class ContentSecurityPolicy
 	 * @var array
 	 */
 	protected $styleSrc = [];
+	
+	/**
+	 * Used for security enforcement
+	 * @var array
+	 */
+	protected $manifestSrc = [];
 
 	/**
 	 * Used for security enforcement
@@ -688,6 +694,7 @@ class ContentSecurityPolicy
 			'plugin-types'		 => 'pluginTypes',
 			'script-src'		 => 'scriptSrc',
 			'style-src'			 => 'styleSrc',
+			'manifest-src'		 => 'manifestSrc',
 			'sandbox'			 => 'sandbox',
 			'report-uri'		 => 'reportURI'
 		];
