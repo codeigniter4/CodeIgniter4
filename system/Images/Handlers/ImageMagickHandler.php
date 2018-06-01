@@ -47,7 +47,7 @@ use CodeIgniter\Images\Image;
  * 
  * hmm - the width & height accessors at the end use the imagick extension.
  * 
- * FIXME - This needs conversion to use the imagick extension
+ * FIXME - This needs conversion & unit testing, to use the imagick extension
  *
  * @package CodeIgniter\Images\Handlers
  */
@@ -68,14 +68,6 @@ class ImageMagickHandler extends BaseHandler
 	public function __construct($config = null)
 	{
 		parent::__construct($config);
-
-		// We should never see this, so can't test it
-		// @codeCoverageIgnoreStart
-		if ( ! extension_loaded('imagick'))
-		{
-			throw ImageException::forMissingExtension('imagick');
-		}
-		// @codeCoverageIgnoreEnd
 	}
 
 	//--------------------------------------------------------------------
@@ -434,12 +426,12 @@ class ImageMagickHandler extends BaseHandler
 
 	public function _getWidth()
 	{
-		return $this->resource->getImageWidth();
+		return imagesx($this->resource);
 	}
 
 	public function _getHeight()
 	{
-		return $this->resource->getImageHeight();
+		return imagesy($this->resource);
 	}
 
 
