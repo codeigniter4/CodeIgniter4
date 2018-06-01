@@ -8,8 +8,6 @@ about the browser, mobile device, or robot visiting your site.
 .. contents::
     :local:
 
-.. raw:: html
-
 **************************
 Using the User Agent Class
 **************************

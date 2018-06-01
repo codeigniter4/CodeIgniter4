@@ -280,7 +280,7 @@ a tag, as specified by type, class, or id::
 The **dontSee()** method is the exact opposite::
 
     // Checks that "Hello World" does NOT exist on the page
-    $results->dontSee('Hello World");
+    $results->dontSee('Hello World');
     // Checks that "Hellow World" does NOT exist within any h1 tag
     $results->dontSee('Hello World', 'h1');
 
@@ -325,25 +325,25 @@ CITestStreamFilter
 
 This filter captures output and makes it available to you.
 
-An example demonstrating this inside one of your test cases:
+An example demonstrating this inside one of your test cases::
 
-            public function setUp()
-            {
-                    CITestStreamFilter::$buffer = '';
-                    $this->stream_filter = stream_filter_append(STDOUT, 'CITestStreamFilter');
-            }
+    public function setUp()
+    {
+        CITestStreamFilter::$buffer = '';
+        $this->stream_filter = stream_filter_append(STDOUT, 'CITestStreamFilter');
+    }
 
-            public function tearDown()
-            {
-                    stream_filter_remove($this->stream_filter);
-            }
+    public function tearDown()
+    {
+        stream_filter_remove($this->stream_filter);
+    }
 
-            public function testSomeOutput()
-            {
-                    CLI::write('first.');
-                    $expected = "first.\n";
-                    $this->assertEquals($expected, CITestStreamFilter::$buffer);
-            }
+    public function testSomeOutput()
+    {
+        CLI::write('first.');
+        $expected = "first.\n";
+        $this->assertEquals($expected, CITestStreamFilter::$buffer);
+    }
 
 
 Additional Assertions
@@ -353,7 +353,7 @@ Additional Assertions
 
 **assertLogged($level, $expectedMessage)**
 
-Ensure that something you expected to be logged actually was.
+Ensure that something you expected to be logged actually was::
 
         $config = new LoggerConfig();
         $logger = new Logger($config);
@@ -365,15 +365,15 @@ Ensure that something you expected to be logged actually was.
 
 **assertEventTriggered($eventName)**
 
-Ensure that an event you excpected to be triggered actually was:
+Ensure that an event you excpected to be triggered actually was::
 
-		Events::on('foo', function($arg) use(&$result) {
-			$result = $arg;
-		});
+    Events::on('foo', function($arg) use(&$result) {
+        $result = $arg;
+    });
 
-		Events::trigger('foo', 'bar');
+    Events::trigger('foo', 'bar');
 
-                $this->assertEventTriggered('foo');
+    $this->assertEventTriggered('foo');
 
 
 =====================

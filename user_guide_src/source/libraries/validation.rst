@@ -267,7 +267,7 @@ easily validate your data::
 
     // Joe Smith
     $validation->setRules([
-        'contacts.name' => 'required
+        'contacts.name' => 'required'
     ]);
 
     // Fred Flintsone & Wilma
