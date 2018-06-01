@@ -14,6 +14,8 @@ use DirectoryIterator;
  * different transformations, so we have to rely on the underlying package.
  * We can make sure that we can call it without blowing up,
  * and we can make sure the code coverage is good.
+ * 
+ * Was unable to test fontPath & related logic.
  */
 class GDHandlerTest extends \CIUnitTestCase
 {
@@ -29,9 +31,7 @@ class GDHandlerTest extends \CIUnitTestCase
 		// create virtual file system
 		$this->root = vfsStream::setup();
 		// copy our support files
-		$this->origin = '_support/Images/';
-// Next line would be needed for tests using VFS		
-//		vfsStream::copyFromFileSystem(TESTPATH . $this->origin, $root);
+		$this->origin = SUPPORTPATH . 'Images/';
 		// make subfolders
 		$structure = ['work' => [], 'wontwork' => []];
 		vfsStream::create($structure);
@@ -40,8 +40,7 @@ class GDHandlerTest extends \CIUnitTestCase
 
 		$this->start = $this->root->url() . '/';
 
-//		$this->path = $this->start . 'ci-logo.png';
-		$this->path = TESTPATH . $this->origin . 'ci-logo.png';
+		$this->path = $this->origin . 'ci-logo.png';
 		$this->handler = Services::image('gd', null, false);
 	}
 
@@ -283,30 +282,45 @@ class GDHandlerTest extends \CIUnitTestCase
 	public function testText()
 	{
 		$this->handler->withFile($this->path);
-		$this->handler->text('vertical');
+		$this->handler->text('vertical', ['hAlign' => 'right', 'vAlign' => 'bottom']);
 		$this->assertEquals(155, $this->handler->getWidth());
 		$this->assertEquals(200, $this->handler->getHeight());
 	}
 
 //--------------------------------------------------------------------
 
-	public function testReorient()
+	public function testMoreText()
 	{
-		// use sample images from http://www.galloway.me.uk/2012/01/uiimageorientation-exif-orientation-sample-images/
-		// one dimension should be 640, the other 480
-		// there is onsistent guidance about expectations, however
-		// the best we can hope for is that we process all without blowing up :-/
-		$path = TESTPATH . $this->origin . 'EXIFsamples';
-		foreach (new DirectoryIterator($path) as $one)
+		$this->handler->withFile($this->path);
+		$this->handler->text('vertical', ['vAlign' => 'middle', 'withShadow' => 'sure', 'shadowOffset' => 3]);
+		$this->assertEquals(155, $this->handler->getWidth());
+		$this->assertEquals(200, $this->handler->getHeight());
+	}
+
+//--------------------------------------------------------------------
+
+	public function testImageCreation()
+	{
+		foreach (['gif', 'jpeg', 'png'] as $type)
 		{
-			$filename = $one->getFilename();
-			if ($filename == '.' || $filename == '..')
-				continue;
-			$this->handler = Services::image('gd', null, false);
-			$this->handler->withFile($one->getPathname());
-			$this->handler->reorient(true);
+			$this->handler->withFile($this->origin . 'ci-logo.' . $type);
+			$this->handler->text('vertical');
+			$this->assertEquals(155, $this->handler->getWidth());
+			$this->assertEquals(200, $this->handler->getHeight());
 		}
-		$this->assertNotEmpty($path);
+	}
+
+//--------------------------------------------------------------------
+
+	public function testImageSave()
+	{
+		foreach (['gif', 'jpeg', 'png'] as $type)
+		{
+			$this->handler->withFile($this->origin . 'ci-logo.' . $type);
+			$this->handler->getResource(); // make sure resource is loaded
+			$this->handler->save($this->start . 'work/ci-logo.' . $type);
+			$this->assertTrue($this->root->hasChild('work/ci-logo.' . $type));
+		}
 	}
 
 }

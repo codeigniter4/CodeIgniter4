@@ -16,7 +16,7 @@ class ImageTest extends \CIUnitTestCase
 		$this->root = vfsStream::setup();
 		// copy our support files
 		$this->origin = '_support/Images/';
-		vfsStream::copyFromFileSystem(TESTPATH . $this->origin, $root);
+		vfsStream::copyFromFileSystem(TESTPATH . $this->origin, $this->root);
 		// make subfolders
 		$structure = ['work' => [], 'wontwork' => []];
 		vfsStream::create($structure);
@@ -79,13 +79,6 @@ class ImageTest extends \CIUnitTestCase
 		$this->expectException(FileException::class);
 		$targetPath = $this->start . 'work';
 		$this->image->copy($targetPath, '');
-	}
-
-	public function testCopyWontWork()
-	{
-		$this->expectException(FileException::class);
-		$targetPath = $this->start . 'wontwork';
-		$this->image->copy($targetPath, 'something.png');
 	}
 
 }

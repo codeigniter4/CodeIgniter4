@@ -28,16 +28,17 @@ class BaseHandlerTest extends \CIUnitTestCase
 		// create virtual file system
 		$this->root = vfsStream::setup();
 		// copy our support files
-		$this->origin = '_support/Images/';
-		vfsStream::copyFromFileSystem(TESTPATH . $this->origin, $root);
+		$this->origin = SUPPORTPATH . 'Images/';
+		vfsStream::copyFromFileSystem($this->origin, $this->root);
 		// make subfolders
 		$structure = ['work' => [], 'wontwork' => []];
 		vfsStream::create($structure);
 		// with one of them read only
 		$wont = $this->root->getChild('wontwork')->chmod(0400);
 
-		$this->start = $this->root->url() . '/';
-		$this->path = $this->start . 'ci-logo.png';
+		// for VFS tests
+		$this->start = $this->root->url() . '/'; 
+		$this->path = $this->start . 'ci-logo.png'; 
 	}
 
 	//--------------------------------------------------------------------
@@ -50,14 +51,14 @@ class BaseHandlerTest extends \CIUnitTestCase
 
 	public function testWithFile()
 	{
+		$path = $this->origin . 'ci-logo.png';
 		$handler = Services::image('gd', null, false);
-		$handler->withFile($this->path);
+		$handler->withFile($path);
 
-		$this->assertNull($handler->getResource());
 		$image = $handler->getFile();
 		$this->assertTrue($image instanceof Image);
 		$this->assertEquals(155, $image->origWidth);
-		$this->assertEquals($this->path, $image->getPathname());
+		$this->assertEquals($path, $image->getPathname());
 	}
 
 	public function testMissingFile()
@@ -65,26 +66,6 @@ class BaseHandlerTest extends \CIUnitTestCase
 		$this->expectException(\CodeIgniter\Files\Exceptions\FileNotFoundException::class);
 		$handler = Services::image('gd', null, false);
 		$handler->withFile($this->start . 'No_such_file.jpg');
-	}
-
-	// exif_read_data is not supported by vfsStream. 
-	// See https://github.com/mikey179/vfsStream/wiki/Known-Issues
-	// The functionality is read-only, so we need to use the original file
-	public function testEXIF()
-	{
-		// for testing, skip this if EXIF is not enabled.
-		// real-world, our handler will throw an exception, but not testable
-		if ( ! function_exists('exif_read_data'))
-			$this->markTestSkipped('EXIF needs to be enabled to run this test.');
-		$handler = Services::image('gd', null, false);
-
-		// nothing in our logo
-		$handler->withFile(TESTPATH . $this->origin . 'ci-logo.jpeg');
-		$this->assertFalse($handler->getEXIF('ExposureTime'));
-
-		// test EXIF image, from https://commons.wikimedia.org/wiki/File:Steveston_dusk.JPG
-		$handler->withFile(TESTPATH . $this->origin . 'Steveston_dusk.JPG');
-		$this->assertEquals('1/33', $handler->getEXIF('ExposureTime'));
 	}
 
 	public function testFileTypes()

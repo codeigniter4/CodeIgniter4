@@ -68,10 +68,7 @@ class GDHandler extends BaseHandler
 	protected function _rotate(int $angle)
 	{
 		// Create the image handle
-		if ( ! ($srcImg = $this->createImage()))
-		{
-			return false;
-		}
+		$srcImg = $this->createImage();
 
 		// Set the background color
 		// This won't work with transparent PNG files so we are
@@ -81,7 +78,7 @@ class GDHandler extends BaseHandler
 		$white = imagecolorallocate($srcImg, 255, 255, 255);
 
 		// Rotate it!
-		$destImg = imagerotate($this->resource, $angle, $white);
+		$destImg = imagerotate($srcImg, $angle, $white);
 
 		// Kill the file handles
 		imagedestroy($srcImg);
@@ -104,11 +101,7 @@ class GDHandler extends BaseHandler
 	 */
 	public function _flatten(int $red = 255, int $green = 255, int $blue = 255)
 	{
-
-		if ( ! ($src = $this->createImage()))
-		{
-			return false;
-		}
+		$srcImg = $this->createImage();
 
 		if (function_exists('imagecreatetruecolor'))
 		{
@@ -125,10 +118,10 @@ class GDHandler extends BaseHandler
 		$matte = imagecolorallocate($dest, $red, $green, $blue);
 
 		imagefilledrectangle($dest, 0, 0, $this->width, $this->height, $matte);
-		imagecopy($dest, $src, 0, 0, 0, 0, $this->width, $this->height);
+		imagecopy($dest, $srcImg, 0, 0, 0, 0, $this->width, $this->height);
 
 		// Kill the file handles
-		imagedestroy($src);
+		imagedestroy($srcImg);
 
 		$this->resource = $dest;
 
@@ -418,7 +411,7 @@ class GDHandler extends BaseHandler
 
 				return imagecreatefrompng($path);
 			default:
-				throw ImageException::forInvalidImageCreate();
+				throw ImageException::forInvalidImageCreate('Ima');
 		}
 	}
 

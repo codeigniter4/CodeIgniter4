@@ -122,6 +122,32 @@ abstract class BaseHandler implements ImageHandlerInterface
 	//--------------------------------------------------------------------
 
 	/**
+	 * Make the image resource object if needed
+	 */
+	protected function ensureResource()
+	{
+		if ($this->resource == null)
+		{
+			$path = $this->image->getPathname();
+			// if valid image type, make corresponding image resource
+			switch ($this->image->imageType)
+			{
+				case IMAGETYPE_GIF:
+					$this->resource = imagecreatefromgif($path);
+					break;
+				case IMAGETYPE_JPEG:
+					$this->resource = imagecreatefromjpeg($path);
+					break;
+				case IMAGETYPE_PNG:
+					$this->resource = imagecreatefrompng($path);
+					break;
+			}
+		}
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Returns the image instance.
 	 *
 	 * @return \CodeIgniter\Images\Image
@@ -142,6 +168,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 	 */
 	public function getResource()
 	{
+		$this->ensureResource();
 		return $this->resource;
 	}
 
@@ -434,19 +461,13 @@ abstract class BaseHandler implements ImageHandlerInterface
 	{
 		if ( ! function_exists('exif_read_data'))
 		{
-			// not testable, since we cannot turn on/off extensions
-			// @codeCoverageIgnoreStart
 			if ($silent)
 			{
 				return null;
 			}
-
-			throw ImageException::forEXIFUnsupported();
-			// @codeCoverageIgnoreEnd
 		}
 
 		$exif = exif_read_data($this->image->getPathname());
-
 		if ( ! is_null($key) && is_array($exif))
 		{
 			$exif = array_key_exists($key, $exif) ? $exif[$key] : false;
