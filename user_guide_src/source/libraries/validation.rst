@@ -709,11 +709,11 @@ Rule                    Parameter   Description                                 
 uploaded                Yes         Fails if the name of the parameter does not match the name of any uploaded files.               uploaded[field_name]
 max_size                Yes         Fails if the uploaded file named in the parameter is larger than the second parameter in        max_size[field_name,2048]
                                     kilobytes (kb).
-max_dims                Yes         Files if the maximum width and height of an uploaded image exceeds values. The first parameter  max_dims[field_name,300,150]
+max_dims                Yes         Fails if the maximum width and height of an uploaded image exceed values. The first parameter   max_dims[field_name,300,150]
                                     is the field name. The second is the width, and the third is the height. Will also fail if
                                     the file cannot be determined to be an image.
-mime_in                 Yes         Fails if the file's mime type is not one listed in the parameter.                               mime_in[field_name,image/png,image/jpg]
-ext_in                  Yes         Fails if the file's extension is not one listed in the parameter.                               ext_in[field_name,png,jpg,gif]
+mime_in                 Yes         Fails if the file's mime type is not one listed in the parameters.                              mime_in[field_name,image/png,image/jpg]
+ext_in                  Yes         Fails if the file's extension is not one listed in the parameters.                              ext_in[field_name,png,jpg,gif]
 is_image                Yes         Fails if the file cannot be determined to be an image based on the mime type.                   is_image[field_name]
 ======================= =========== =============================================================================================== ========================================
 
