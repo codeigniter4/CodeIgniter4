@@ -111,6 +111,7 @@ require_once BASEPATH.'Common.php';
 
 require_once BASEPATH.'Autoloader/Autoloader.php';
 require_once APPPATH .'Config/Autoload.php';
+require_once BASEPATH .'Config/BaseService.php';
 require_once APPPATH .'Config/Services.php';
 
 // Use Config\Services as CodeIgniter\Services

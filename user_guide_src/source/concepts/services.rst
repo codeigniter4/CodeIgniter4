@@ -35,6 +35,7 @@ error-resistant.
 
 .. note:: It is recommended to only create services within controllers. Other files, like models and libraries should have the dependencies either passed into the constructor or through a setter method.
 
+
 Convenience Functions
 ---------------------
 
@@ -124,3 +125,39 @@ within the class, and, if not, creates a new one. All of the factory methods pro
             return self::getSharedInstance('routes');
         }
     }
+
+Service Discovery
+-----------------
+
+CodeIgniter can automatically discover any Config\Services.php files you may have created within any defined namespaces.
+This allows simple use of any module Services files. In order for custom Services files to be discovered, they must
+meet these requirements:
+
+- It's namespace must be defined ``Config\Autoload.php``
+- Inside the namespace, the file must be found at ``Config\Services.php``
+- It must extend ``CodeIgniter\Config\BaseService``
+
+A small example should clarify this.
+
+Imagine that you've created a new directory, ``Blog`` in your root directory. This will hold a blog module with controllers,
+models, etc, and you'd like to make some of the classes available as a service. The first step is to create a new file:
+``Blog\Config\Services.php``. The skeleton of the file should be:
+
+    <?php namespace Blog\Config;
+
+    use CodeIgniter\Config\BaseService;
+
+    class Services extends BaseService
+    {
+        public static function postManager()
+        {
+            ...
+        }
+    }
+
+Now you can use this file as described above. When you want to grab the posts service from any controller, you
+would simply use the framework's ``Config\Services`` class to grab your service:
+
+    $postManager = Config\Services::postManager();
+
+.. note:: If multiple Services file have the same method name, the first one found will be the instance returned.
