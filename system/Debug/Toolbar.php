@@ -410,6 +410,11 @@ class Toolbar
 	{
 		self::$request = Services::request();
 
+		if(ENVIRONMENT == 'testing')
+		{
+			return;
+		}
+
 		// If the request contains '?debugbar then we're
 		// simply returning the loading script
 		if (self::$request->getGet('debugbar') !== null)

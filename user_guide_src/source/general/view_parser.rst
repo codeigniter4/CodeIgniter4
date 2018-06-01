@@ -385,9 +385,9 @@ Provided Filters
 
 The following filters are available when using the parser:
 
-==================== ========================== =================================================================== =================================
-Filter               Arguments                  Description                                                         Example
-==================== ========================== =================================================================== =================================
+==================== ========================== ==================================================================== =================================
+Filter               Arguments                  Description                                                          Example
+==================== ========================== ==================================================================== =================================
 abs                                             Displays the absolute value of a number.                             { v|abs }
 capitalize                                      Displays the string in sentence case: all lowercase with first       { v|capitalize}
                                                 letter capitalized.
@@ -399,7 +399,7 @@ esc                  html, attr, css, js        Specifies the context to escape 
 excerpt              phrase, radius             Returns the text within a radius of words from a given phrase.       { v|excerpt(green giant, 20) }
                                                 Same as **excerpt** helper function.
 highlight            phrase                     Highlights a given phrase within the text using '<mark></mark>'
-												tags.                                                                { v|highlight(view parser) }
+                                                tags.                                                                { v|highlight(view parser) }
 highlight_code                                  Highlights code samples with HTML/CSS.                               { v|highlight_code }
 limit_chars          limit                      Limits the number of chracters to $limit.                            { v|limit_chars(100) }
 limit_words          limit                      Limits the number of words to $limit.                                { v|limit_words(20) }
@@ -407,7 +407,6 @@ local_currency       currency, locale           Displays a localized version of 
                                                 3-letter ISO 4217 currency code.
 local_number         type, precision, locale    Displays a localized version of a number. "type" can be one of:      { v|local_number(decimal,2,en_US) }
                                                 decimal, currency, percent, scientific, spellout, ordinal, duration.
-                                                See `PHP's NumberFormatter <http://php.net/manual/en/numberformatter.create.php>`_ for details.
 lower                                           Converts a string to lowercase.                                      { v|lower }
 nl2br                                           Replaces all newline characters (\n) to an HTML <br/> tag.           { v|nl2br }
 number_format        places                     Wraps PHP **number_format** function for use within the parser.      { v|number_format(3) }
@@ -419,7 +418,10 @@ strip_tags           allowed chars              Wraps PHP **strip_tags**. Can ac
 title                                           Displays a "title case" version of the string, with all lowercase,   { v|title }
                                                 and each word capitalized.
 upper                                           Displays the string in all uppercase.                                { v|upper }
-==================== ========================== =================================================================== =================================
+==================== ========================== ==================================================================== =================================
+
+See `PHP's NumberFormatter <http://php.net/manual/en/numberformatter.create.php>`_ for details relevant to the
+"local_number" filter.
 
 Custom Filters
 --------------

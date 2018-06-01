@@ -1,8 +1,9 @@
 <?php namespace CodeIgniter;
 
-use CodeIgniter\Autoloader\MockFileLocator;
-use CodeIgniter\Router\RouteCollection;
 use Config\App;
+use Tests\Support\MockCodeIgniter;
+use CodeIgniter\Router\RouteCollection;
+use Tests\Support\Autoloader\MockFileLocator;
 
 /**
  * @backupGlobals enabled
@@ -20,6 +21,8 @@ class CodeIgniterTest extends \CIUnitTestCase
 
 	public function setUp()
 	{
+		parent::setUp();
+
 		Services::reset();
 
 		$_SERVER['SERVER_PROTOCOL'] = 'HTTP/1.1';

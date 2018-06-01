@@ -8,9 +8,11 @@ class ParserTest extends \CIUnitTestCase
 
 	public function setUp()
 	{
-		$this->loader = new \CodeIgniter\Autoloader\FileLocator(new \Config\Autoload());
-		$this->viewsDir = __DIR__ . '/Views';
-		$this->config = new Config\View();
+		parent::setUp();
+
+		$this->loader   = new \CodeIgniter\Autoloader\FileLocator(new \Config\Autoload());
+		$this->viewsDir = __DIR__.'/Views';
+		$this->config   = new Config\View();
 	}
 
 	// --------------------------------------------------------------------

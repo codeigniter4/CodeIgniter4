@@ -11,7 +11,7 @@ class DataException extends \RuntimeException implements ExceptionInterface
 	 */
 	public static function forInvalidMethodTriggered(string $method)
 	{
-		return new self(lang('Database.invalidEvent', [$method]));
+		return new static(lang('Database.invalidEvent', [$method]));
 	}
 
 	/**
@@ -24,7 +24,7 @@ class DataException extends \RuntimeException implements ExceptionInterface
 	 */
 	public static function forEmptyDataset(string $mode)
 	{
-		return new self(lang('Database.emptyDataset', [$mode]));
+		return new static(lang('Database.emptyDataset', [$mode]));
 	}
 
 	/**
@@ -38,11 +38,11 @@ class DataException extends \RuntimeException implements ExceptionInterface
 	 */
 	public static function forInvalidArgument(string $argument)
 	{
-		return new self(lang('Database.invalidArgument', [$argument]));
+		return new static(lang('Database.invalidArgument', [$argument]));
 	}
 
 	public static function forInvalidAllowedFields(string $model)
 	{
-		return new self(lang('Database.invalidAllowedFields', [$model]));
+		return new static(lang('Database.invalidAllowedFields', [$model]));
 	}
 }

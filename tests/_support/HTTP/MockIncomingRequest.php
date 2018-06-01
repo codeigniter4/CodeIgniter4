@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\HTTP;
+<?php namespace Tests\Support\HTTP;
+
+use CodeIgniter\HTTP\IncomingRequest;
 
 class MockIncomingRequest extends IncomingRequest
 {

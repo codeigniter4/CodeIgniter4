@@ -1,6 +1,7 @@
 <?php namespace CodeIgniter\Autoloader;
 
-use Config\MockAutoload;
+use Tests\Support\Config\MockAutoload;
+use Tests\Support\Autoloader\MockFileLocator;
 
 class FileLocatorTest extends \CIUnitTestCase
 {
@@ -14,12 +15,15 @@ class FileLocatorTest extends \CIUnitTestCase
 
 	public function setUp()
 	{
+		parent::setUp();
+
 		$config = new MockAutoload();
 		$config->psr4 = [
 			'App\Libraries'	 => '/application/somewhere',
 			'App'			 => '/application',
 			'Sys'			 => BASEPATH,
-			'Blog'			 => '/modules/blog'
+			'Blog'			 => '/modules/blog',
+			'Tests/Support' => TESTPATH.'_support/',
 		];
 
 		$this->loader = new MockFileLocator($config);

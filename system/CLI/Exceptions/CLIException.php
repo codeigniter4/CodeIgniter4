@@ -10,6 +10,6 @@ class CLIException extends \RuntimeException
 	 */
 	public static function forInvalidColor(string $type, string $color)
 	{
-		return new self(lang('CLI.invalidColor', [$type, $color]));
+		return new static(lang('CLI.invalidColor', [$type, $color]));
 	}
 }

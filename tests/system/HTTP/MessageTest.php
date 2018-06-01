@@ -14,6 +14,8 @@ class MessageTest extends \CIUnitTestCase
 
 	public function setUp()
 	{
+		parent::setUp();
+
 		$this->message = new Message();
 	}
 

@@ -1,7 +1,7 @@
 <?php namespace CodeIgniter\CLI;
 
-use Config\MockCLIConfig;
 use CodeIgniter\HTTP\UserAgent;
+use Tests\Support\Config\MockCLIConfig;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
 
 class CommandRunnerTest extends \CIUnitTestCase
@@ -11,6 +11,8 @@ class CommandRunnerTest extends \CIUnitTestCase
 
 	public function setUp()
 	{
+		parent::setUp();
+
 		CITestStreamFilter::$buffer = '';
 		$this->stream_filter = stream_filter_append(STDOUT, 'CITestStreamFilter');
 

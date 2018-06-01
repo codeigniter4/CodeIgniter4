@@ -14,16 +14,16 @@ class ConfigException extends CriticalError
 
 	public static function forMissingMigrationsTable()
 	{
-		throw new self(lang('Migrations.missingTable'));
+		throw new static(lang('Migrations.missingTable'));
 	}
 
 	public static function forInvalidMigrationType(string $type = null)
 	{
-		throw new self(lang('Migrations.invalidType', [$type]));
+		throw new static(lang('Migrations.invalidType', [$type]));
 	}
 
 	public static function forDisabledMigrations()
 	{
-		throw new self(lang('Migrations.disabled'));
+		throw new static(lang('Migrations.disabled'));
 	}
 }

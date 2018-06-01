@@ -322,7 +322,7 @@ class IncomingRequest extends Request
 	 */
 	public function getVar($index = null, $filter = null, $flags = null)
 	{
-		return $this->fetchGlobal(INPUT_REQUEST, $index, $filter, $flags);
+		return $this->fetchGlobal('request', $index, $filter, $flags);
 	}
 
 	//--------------------------------------------------------------------
@@ -375,7 +375,7 @@ class IncomingRequest extends Request
 	 */
 	public function getGet($index = null, $filter = null, $flags = null)
 	{
-		return $this->fetchGlobal(INPUT_GET, $index, $filter, $flags);
+		return $this->fetchGlobal('get', $index, $filter, $flags);
 	}
 
 	//--------------------------------------------------------------------
@@ -391,7 +391,7 @@ class IncomingRequest extends Request
 	 */
 	public function getPost($index = null, $filter = null, $flags = null)
 	{
-		return $this->fetchGlobal(INPUT_POST, $index, $filter, $flags);
+		return $this->fetchGlobal('post', $index, $filter, $flags);
 	}
 
 	//--------------------------------------------------------------------
@@ -445,7 +445,7 @@ class IncomingRequest extends Request
 	 */
 	public function getCookie($index = null, $filter = null, $flags = null)
 	{
-		return $this->fetchGlobal(INPUT_COOKIE, $index, $filter, $flags);
+		return $this->fetchGlobal('cookie', $index, $filter, $flags);
 	}
 
 	//--------------------------------------------------------------------
@@ -478,7 +478,9 @@ class IncomingRequest extends Request
 		// If the session hasn't been started, or no
 		// data was previously saved, we're done.
 		if (empty($_SESSION['_ci_old_input']))
+		{
 			return;
+		}
 
 		// Check for the value in the POST array first.
 		if (isset($_SESSION['_ci_old_input']['post'][$key]))
@@ -616,7 +618,7 @@ class IncomingRequest extends Request
 				break;
 			case 'PATH_INFO':
 			default:
-				$path = $_SERVER[$protocol] ?? $this->parseRequestURI();
+				$path = $this->fetchGlobal('server', $protocol) ?? $this->parseRequestURI();
 				break;
 		}
 

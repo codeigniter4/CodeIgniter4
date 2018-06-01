@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter;
+<?php namespace Tests\Support;
+
+use CodeIgniter\CodeIgniter;
 
 class MockCodeIgniter extends CodeIgniter
 {

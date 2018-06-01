@@ -3,8 +3,6 @@
 class FileTest extends \CIUnitTestCase
 {
 
-	//---------------------------------------------------------------
-
 	public function testNewGoodChecked()
 	{
 		$path = BASEPATH . 'Common.php';
@@ -21,12 +19,11 @@ class FileTest extends \CIUnitTestCase
 
 	public function testNewBadUnchecked()
 	{
-		$path = $path . 'bogus';
+		$path = BASEPATH . 'bogus';
 		$file = new File($path, false);
 		$this->assertFalse($file->getRealPath());
 	}
 
-	//---------------------------------------------------------------
 	public function testGuessExtension()
 	{
 		$file = new File(BASEPATH . 'Common.php');
@@ -37,15 +34,12 @@ class FileTest extends \CIUnitTestCase
 		$this->assertEquals('xml', $file->guessExtension());
 	}
 
-	//---------------------------------------------------------------
 	public function testRandomName()
 	{
 		$file = new File(BASEPATH . 'Common.php');
 		$result1 = $file->getRandomName();
 		$this->assertNotEquals($result1, $file->getRandomName());
 	}
-
-	//---------------------------------------------------------------
 
 	public function testCanAccessSPLFileInfoMethods()
 	{
