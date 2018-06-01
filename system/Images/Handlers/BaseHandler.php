@@ -337,7 +337,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 
 		if ($dir !== 'vertical' && $dir !== 'horizontal')
 		{
-			throw new ImageException(lang('images.invalidDirection'));
+			throw ImageException::forInvalidDirection($dir);
 		}
 
 		return $this->_flip($dir);

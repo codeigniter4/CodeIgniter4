@@ -76,7 +76,7 @@ class ImageTest extends \CIUnitTestCase
 
 	public function testCopyNowhere()
 	{
-		$this->expectException(FileException::class);
+		$this->expectException(ImageException::class);
 		$targetPath = $this->start . 'work';
 		$this->image->copy($targetPath, '');
 	}
