@@ -334,11 +334,7 @@ class FormatRules
 		}
 		elseif (preg_match('/^(?:([^:]*)\:)?\/\/(.+)$/', $str, $matches))
 		{
-			if (empty($matches[2]))
-			{
-				return false;
-			}
-			elseif ( ! in_array($matches[1], ['http', 'https'], true))
+			if ( ! in_array($matches[1], ['http', 'https'], true))
 			{
 				return false;
 			}
@@ -370,8 +366,7 @@ class FormatRules
 
 		$date = \DateTime::createFromFormat($format, $str);
 
-  		return (bool) $date && \DateTime::getLastErrors()['warning_count'] === 0
-	  				 		&& \DateTime::getLastErrors()['error_count'] === 0;
+		return (bool) $date && \DateTime::getLastErrors()['warning_count'] === 0 && \DateTime::getLastErrors()['error_count'] === 0;
 	}
 
 	//--------------------------------------------------------------------

@@ -2,6 +2,9 @@
 
 use CodeIgniter\Test\FeatureTestCase;
 
+/**
+ * @group DatabaseLive
+ */
 class HomeTest extends FeatureTestCase
 {
 	public function testCanLoadPage()

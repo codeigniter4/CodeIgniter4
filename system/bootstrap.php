@@ -63,7 +63,7 @@ if (! defined('ROOTPATH'))
  */
 if (! defined('APPPATH'))
 {
-	define('APPPATH', realpath($paths->applicationDirectory).DIRECTORY_SEPARATOR);
+	define('APPPATH', realpath(ROOTPATH . $paths->applicationDirectory).DIRECTORY_SEPARATOR);
 }
 
 /**
@@ -71,7 +71,7 @@ if (! defined('APPPATH'))
  */
 if (! defined('BASEPATH'))
 {
-	define('BASEPATH', realpath($paths->systemDirectory).DIRECTORY_SEPARATOR);
+	define('BASEPATH', realpath(ROOTPATH . $paths->systemDirectory).DIRECTORY_SEPARATOR);
 }
 
 /**
@@ -79,7 +79,7 @@ if (! defined('BASEPATH'))
  */
 if (! defined('WRITEPATH'))
 {
-	define('WRITEPATH', realpath($paths->writableDirectory).DIRECTORY_SEPARATOR);
+	define('WRITEPATH', realpath(ROOTPATH . $paths->writableDirectory).DIRECTORY_SEPARATOR);
 }
 
 /**
@@ -87,7 +87,7 @@ if (! defined('WRITEPATH'))
  */
 if (! defined('TESTPATH'))
 {
-	define('TESTPATH', realpath($paths->testsDirectory).DIRECTORY_SEPARATOR);
+	define('TESTPATH', realpath(ROOTPATH . $paths->testsDirectory).DIRECTORY_SEPARATOR);
 }
 
 /*
@@ -111,6 +111,7 @@ require_once BASEPATH.'Common.php';
 
 require_once BASEPATH.'Autoloader/Autoloader.php';
 require_once APPPATH .'Config/Autoload.php';
+require_once BASEPATH .'Config/BaseService.php';
 require_once APPPATH .'Config/Services.php';
 
 // Use Config\Services as CodeIgniter\Services
