@@ -9,15 +9,18 @@ class Filters extends BaseConfig
 	public $aliases = [
 		'csrf' 	  => \App\Filters\CSRF::class,
 		'toolbar' => \App\Filters\DebugToolbar::class,
+		'honeypot' => \App\Filters\Honeypot::class
 	];
 
 	// Always applied before every request
 	public $globals = [
 		'before' => [
-			// 'csrf'
+			//'honeypot'
+			// 'csrf',
 		],
 		'after'  => [
-			'toolbar'
+			'toolbar',
+			//'honeypot'
 		]
 	];
 
