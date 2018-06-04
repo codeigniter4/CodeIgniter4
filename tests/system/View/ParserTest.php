@@ -10,9 +10,9 @@ class ParserTest extends \CIUnitTestCase
 	{
 		parent::setUp();
 
-		$this->loader   = new \CodeIgniter\Autoloader\FileLocator(new \Config\Autoload());
-		$this->viewsDir = __DIR__.'/Views';
-		$this->config   = new Config\View();
+		$this->loader = new \CodeIgniter\Autoloader\FileLocator(new \Config\Autoload());
+		$this->viewsDir = __DIR__ . '/Views';
+		$this->config = new Config\View();
 	}
 
 	// --------------------------------------------------------------------
@@ -173,11 +173,11 @@ class ParserTest extends \CIUnitTestCase
 		$eagle->home = 'Rockies';
 		$data = [
 			'birds' => [[
-				'pop' => $eagle,
-				'mom' => 'Owl',
-				'kids' => ['Tom', 'Dick', 'Harry'],
-				'home' => opendir('.'),
-			]],
+			'pop'	 => $eagle,
+			'mom'	 => 'Owl',
+			'kids'	 => ['Tom', 'Dick', 'Harry'],
+			'home'	 => opendir('.'),
+				]],
 		];
 
 		$template = "{ birds }{mom} and {pop} work at {home}{/birds}";
@@ -283,6 +283,32 @@ class ParserTest extends \CIUnitTestCase
 
 		$parser->setData(['foo' => 'http://foo.com'], 'url');
 		$this->assertEquals('http%3A%2F%2Ffoo.com', $parser->renderString($template));
+	}
+
+	public function testNoEscapingSetData()
+	{
+		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
+
+		$template = '{ foo | noescape}';
+
+		$parser->setData(['foo' => 'http://foo.com'], 'unknown');
+		$this->assertEquals('http://foo.com', $parser->renderString($template));
+	}
+
+	public function testAutoEscaping()
+	{
+		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
+		$parser->setData(['foo' => 'http://foo.com'], 'unknown');
+
+		$this->assertEquals('html', $parser->shouldAddEscaping('{ foo | this | that }'));
+	}
+
+	public function testAutoEscapingNot()
+	{
+		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
+		$parser->setData(['foo' => 'http://foo.com'], 'unknown');
+
+		$this->assertEquals(false, $parser->shouldAddEscaping('{ foo | noescape }'));
 	}
 
 	//--------------------------------------------------------------------
@@ -440,6 +466,24 @@ class ParserTest extends \CIUnitTestCase
 		$parser->setData($data);
 
 		$this->assertEquals('Welcome', $parser->renderString($template));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testConditionalBadSyntax()
+	{
+		$this->expectException(ViewException::class);
+		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
+		$data = [
+			'doit'		 => true,
+			'dontdoit'	 => false
+		];
+
+		// the template is purposefully malformed
+		$template = "{if doit}Howdy{elseif doit}Welcome{ endif )}";
+
+		$parser->setData($data);
+		$this->assertEquals('HowdyWelcome', $parser->renderString($template));
 	}
 
 	//--------------------------------------------------------------------
@@ -666,9 +710,9 @@ class ParserTest extends \CIUnitTestCase
 		$parser->setVar('teststring', 'Hello World');
 
 		$expected = '<h1>Hello World</h1>';
-		$this->assertEquals($expected, $parser->render('template1', ['cache' => 10]));
+		$this->assertEquals($expected, $parser->render('template1', ['cache' => 10, 'cache_name' => 'HelloWorld']));
 		// this second renderings should go thru the cache
-		$this->assertEquals($expected, $parser->render('template1', ['cache' => 10]));
+		$this->assertEquals($expected, $parser->render('template1', ['cache' => 10, 'cache_name' => 'HelloWorld']));
 	}
 
 	//--------------------------------------------------------------------
@@ -680,15 +724,6 @@ class ParserTest extends \CIUnitTestCase
 
 		$expected = '<h1>Hello World</h1>';
 		$this->assertEquals($expected, $parser->render('Simpler'));
-	}
-
-	public function testRenderSearchesForView()
-	{
-		$_SERVER['HTTP_HOST'] = 'example.com';
-		$_GET = [];
-		$this->config = new \Config\Pager();
-		$this->pager = new \CodeIgniter\Pager\Pager($this->config, \Config\Services::parser());
-		$this->assertTrue(strpos($this->pager->links(), '<ul class="pagination">') > 0);
 	}
 
 	public function testRenderCantFindView()

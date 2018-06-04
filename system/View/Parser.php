@@ -297,15 +297,12 @@ class Parser extends View
 	}
 
 	//--------------------------------------------------------------------
-
 //FIXME the following method does not appear to be used anywhere, so commented out	
 //	protected function is_assoc($arr)
 //	{
 //		return array_keys($arr) !== range(0, count($arr) - 1);
 //	}
-
 	//--------------------------------------------------------------------
-
 //FIXME the following method does not appear to be used anywhere, so commented out	
 //	function strpos_all($haystack, $needle)
 //	{
@@ -318,7 +315,6 @@ class Parser extends View
 //		}
 //		return $allpos;
 //	}
-
 	//--------------------------------------------------------------------
 
 	/**
@@ -526,14 +522,14 @@ class Parser extends View
 		// Parse the PHP itself, or insert an error so they can debug
 		ob_start();
 		extract($this->data);
-		$result = eval('?>' . $template . '<?php ');
-
-		//TODO under what circumstances would we ever get a FALSE? Could not induce one
-		if ($result === false)
+		try
 		{
+			$result = eval('?>' . $template . '<?php ');
+		} catch (\ParseError $e)
+		{
+			ob_end_clean();
 			throw ViewException::forTagSyntaxError(str_replace(['?>', '<?php '], '', $template));
 		}
-
 		return ob_get_clean();
 	}
 
@@ -653,7 +649,7 @@ class Parser extends View
 			$escape = false;
 		}
 		// If no `esc` filter is found, then we'll need to add one.
-		elseif ( ! preg_match('/^|\s+esc/', $key))
+		elseif ( ! preg_match('/\s+esc/', $key))
 		{
 			$escape = 'html';
 		}
