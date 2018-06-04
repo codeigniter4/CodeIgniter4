@@ -438,6 +438,26 @@ class ContentSecurityPolicy
 
 		return $this;
 	}
+	
+	//--------------------------------------------------------------------
+
+	/**
+	 * Adds a new valid endpoint for manifest sources. Can be either
+	 * a URI class or simple string.
+	 *
+	 * @see https://www.w3.org/TR/CSP/#directive-manifest-src
+	 *
+	 * @param	   $uri
+	 * @param bool $reportOnly
+	 *
+	 * @return $this
+	 */
+	public function addManifestSrc($uri, bool $reportOnly = false)
+	{
+		$this->addOption($uri, 'manifestSrc', $reportOnly);
+
+		return $this;
+	}
 
 	//--------------------------------------------------------------------
 
