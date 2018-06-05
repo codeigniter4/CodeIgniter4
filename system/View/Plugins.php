@@ -46,7 +46,10 @@ class Plugins
 	public static function currentURL(array $params = [])
 	{
 		if ( ! function_exists('current_url'))
+			// can't unit test this since it is loaded in CIUnitTestCase setup
+			// @codeCoverageIgnoreStart
 			helper('url');
+			// @codeCoverageIgnoreEnd
 
 		return current_url();
 	}
@@ -61,7 +64,10 @@ class Plugins
 	public static function previousURL(array $params = [])
 	{
 		if ( ! function_exists('previous_url'))
+			// can't unit test this since it is loaded in CIUnitTestCase setup
+			// @codeCoverageIgnoreStart
 			helper('url');
+			// @codeCoverageIgnoreEnd
 
 		return previous_url();
 	}
@@ -76,7 +82,10 @@ class Plugins
 	public static function mailto(array $params = [])
 	{
 		if ( ! function_exists('mailto'))
+			// can't unit test this since it is loaded in CIUnitTestCase setup
+			// @codeCoverageIgnoreStart
 			helper('url');
+			// @codeCoverageIgnoreEnd
 
 		$email = $params['email'] ?? '';
 		$title = $params['title'] ?? '';
@@ -95,7 +104,10 @@ class Plugins
 	public static function safeMailto(array $params = [])
 	{
 		if ( ! function_exists('safe_mailto'))
+			// can't unit test this since it is loaded in CIUnitTestCase setup
+			// @codeCoverageIgnoreStart
 			helper('url');
+			// @codeCoverageIgnoreEnd
 
 		$email = $params['email'] ?? '';
 		$title = $params['title'] ?? '';

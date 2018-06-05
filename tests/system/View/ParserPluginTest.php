@@ -1,6 +1,7 @@
 <?php
 
 use CodeIgniter\View\Parser;
+use CodeIgniter\View\Plugins;
 
 class ParserPluginTest extends \CIUnitTestCase
 {
