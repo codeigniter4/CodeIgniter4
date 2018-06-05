@@ -5,6 +5,12 @@ use CodeIgniter\Config\BaseConfig;
 class Honeypot extends BaseConfig
 {
 
+	/**
+	 * Makes Honeypot visible or not to human
+	 * 
+	 * @var boolean
+	 */
+	public $hidden = '';
     /**
 	 * Honeypot Label Content
 	 * @var String

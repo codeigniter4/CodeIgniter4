@@ -1,46 +1,43 @@
 <?php namespace CodeIgniter\Honeypot;
 
 use CodeIgniter\Test\CIUnitTestCase;
-use CodeIgniter\Honeypot\Honeypoter;
-use CodeIgniter\HTTP\IncomingRequest;
+use CodeIgniter\Honeypot\Honeypot;
 use CodeIgniter\Config\Services;
-use Config\App;
 
 class HoneypotTest extends CIUnitTestCase
 {
 
     protected $request;
     protected $response;
+    protected $honeypot;
     
     public function setUp()
     {
         parent::setUp();
-        $this->request = new IncomingRequest(new App(),
-                new \CodeIgniter\HTTP\URI(),
-                null,
-                new \CodeIgniter\HTTP\UserAgent()
-            );
+        $this->request = Services::request();
         $this->response = Services::response();    
+        $this->honeypot = new Honeypot();    
+        
     }
 
     public function testAttachHoneypot()
     {     
 
         $this->response->setBody('<form></form>');
-        Honeypoter::attachHoneypot($this->response);      
-        $this->assertContains('honeypot',$this->response->getBody());
+        $this->honeypot->attachHoneypot($this->response);      
+        $this->assertContains('honeypot', $this->response->getBody());
         $this->response->setBody('<div></div>');
-        $this->assertNotContains('honeypot',$this->response->getBody());
+        $this->assertNotContains('honeypot', $this->response->getBody());
     }
 
-    public function testCheckHoneypot()
+    public function testHasHoneypot()
     {
             
         $_REQUEST['honeypot'] = 'hey';
-        $this->assertEquals(true, Honeypoter::honeypotHasContent($this->request));
+        $this->assertEquals(true, $this->honeypot->hasContent($this->request));
         $_POST['honeypot'] = 'hey';
-        $this->assertEquals(true, Honeypoter::honeypotHasContent($this->request));
+        $this->assertEquals(true, $this->honeypot->hasContent($this->request));
         $_GET['honeypot'] = 'hey';
-        $this->assertEquals(true, Honeypoter::honeypotHasContent($this->request));
+        $this->assertEquals(true, $this->honeypot->hasContent($this->request));
     }
 }

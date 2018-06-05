@@ -3,7 +3,7 @@
 use CodeIgniter\Filters\FilterInterface;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
-use CodeIgniter\Honeypot\Honeypoter;
+use Config\Services;
 
 class Honeypot implements FilterInterface 
 {
@@ -22,10 +22,10 @@ class Honeypot implements FilterInterface
     {
 
         // Checks honeypot field if value was entered then show blank if so.
-        if(Honeypoter::honeypotHasContent($request))
+        $honeypot = Services::honeypot();
+        if($honeypot->hasContent($request))
         {
             die();
-            //Is Redirection needed
         }
         
     }
@@ -42,6 +42,7 @@ class Honeypot implements FilterInterface
 
     public function after (RequestInterface $request, ResponseInterface $response) 
     {
-        Honeypoter::attachHoneypot($response);
+        $honeypot = Services::honeypot();
+        $honeypot->attachHoneypot($response);
     }
 }

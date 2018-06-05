@@ -39,9 +39,10 @@
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
-use Config\Honeypot;
+use Config\Honeypot as HoneypotConfig;
+use CodeIgniter\Honeypot\Exceptions\HoneypotException;
 
-class Honeypoter 
+class Honeypot 
 {
 
     /**
@@ -64,23 +65,29 @@ class Honeypoter
 
     /**
 	 * Self Instance of Class
-	 * @var Honeypoter
+	 * @var Honeypot
 	 */
-    static protected $selfObject = null;
+    protected $honeypotConfig;
 
     //--------------------------------------------------------------------
 
     function __construct () {
-        $honeypotConfig = new Honeypot();
-        $this->template = ($honeypotConfig->template === '') ? 
-            $this->getDefaultTemplate(): $honeypotConfig->template;
+        $this->honeypotConfig = new HoneypotConfig();
 
-        $this->name = ($honeypotConfig->name === '') ? 
-            $this->getDefaultName(): $honeypotConfig->name;
+        if($this->honeypotConfig->hidden === '')
+        {
+            throw HoneypotException::forNoHiddenValue();
+        }
 
-        $this->label = ($honeypotConfig->label === '') ? 
-            $this->getDefaultLabel(): $honeypotConfig->label;
+        if($this->honeypotConfig->template === '')
+        {
+            throw HoneypotException::forNoTemplate();
+        }
 
+        if($this->honeypotConfig->name === '')
+        {
+            throw HoneypotException::forNoNameField();
+        }
     }
 
     //--------------------------------------------------------------------
@@ -91,25 +98,11 @@ class Honeypoter
 	 * @param \CodeIgniter\HTTP\RequestInterface $request
 	 * 
 	 */
-    static function honeypotHasContent(RequestInterface $request) 
+    public function hasContent(RequestInterface $request) 
     {
-        self::$selfObject = (self::$selfObject === null) ? 
-            new self(): self::$selfObject;
-        
-        // TODO Will there be need to protect against bad data?
-        if($request->getVar(self::$selfObject->name)){
-            
+        if($request->getVar($this->honeypotConfig->name))
+        {
             return true;
-        }
-
-        if($request->getGet(self::$selfObject->name)){
-            
-            return true;
-        }
-
-        if($request->getPost(self::$selfObject->name)){
-            return true;
-            
         }
         return false;
     }
@@ -117,20 +110,14 @@ class Honeypoter
     /**
 	 * Attachs Honeypot template to response.
 	 *
-	 * @param \CodeIgniter\HTTP\RequestInterface $request
 	 * @param \CodeIgniter\HTTP\ResponseInterface $response
 	 */
-    static function attachHoneypot(ResponseInterface $response)
+    public function attachHoneypot(ResponseInterface $response)
     {
-        self::$selfObject = (self::$selfObject === null) ? 
-            new self(): self::$selfObject;
-
-        $prep_field = self::$selfObject->prepareTemplate(self::$selfObject->template);
-        $style = self::$selfObject->getStyle();    
+        $prep_field = $this->prepareTemplate($this->honeypotConfig->template);  
         
         $body = $response->getBody();
-        $body = preg_replace('/<\/form>/', $prep_field, $body);
-        $body = preg_replace('/<\/head>/', $style, $body);
+        $body = str_ireplace('</form>', $prep_field, $body);
         $response->setBody($body);
     }
 
@@ -143,61 +130,14 @@ class Honeypoter
 	 */
     protected function prepareTemplate($template): string
     {
-        $template = preg_replace('/{label}/', $this->label, $template);
-        $template = preg_replace('/{name}/', $this->name, $template);
+        $template = str_ireplace('{label}', $this->honeypotConfig->label, $template);
+        $template = str_ireplace('{name}', $this->honeypotConfig->name, $template);
+
+        if($this->honeypotConfig->hidden)
+        {
+            $template = '<div style="display:none">'. $template . '</div>';
+        }
         return $template;
     }
-
-    /**
-	 * Returns the default template which 
-     * is used when the user enters none.
-	 *
-	 * @return string
-	 */
-    protected function getDefaultTemplate(): string
-    {
-        return '<div class="hidden" style="display:none">
-                    <label>{label}</label>
-                    <input type="text" name="{name}" value=""/>
-                </div>
-            </form>';
-    }
-
-    /**
-	 * Returns the css style to hide the 
-     * Honeypot template.
-	 *
-	 * @return string
-	 */
-    protected function getStyle(): string
-    {
-        return '<script type="text/css" media="all">
-                    .hidden { display:none;}
-                </script>
-            </head>';
-    }
-
-    /**
-	 * Returns default label for the template
-     * which is used when user enters none
-	 *
-	 * @return string
-	 */
-    protected function getDefaultLabel(): string
-    {
-        return 'Fill This Field';
-    }
-
-    /**
-	 * Returns default field name for the template
-     * which is used when user enters none
-	 *
-	 * @return string
-	 */
-    protected function getDefaultName(): string
-    {   
-        return 'honeypot';
-    }
-
     
 }
