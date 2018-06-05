@@ -38,6 +38,8 @@ class ContentSecurityPolicy extends BaseConfig
 	public $mediaSrc = null;
 
 	public $objectSrc = null;
+	
+	public $manifestSrc = null;
 
 	public $pluginTypes = null;
 
