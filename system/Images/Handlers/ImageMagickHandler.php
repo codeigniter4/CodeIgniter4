@@ -44,6 +44,10 @@ use CodeIgniter\Images\Image;
  * To make this library as compatible as possible with the broadest
  * number of installations, we do not use the Imagick extension,
  * but simply use the command line version.
+ * 
+ * hmm - the width & height accessors at the end use the imagick extension.
+ * 
+ * FIXME - This needs conversion & unit testing, to use the imagick extension
  *
  * @package CodeIgniter\Images\Handlers
  */
@@ -58,6 +62,13 @@ class ImageMagickHandler extends BaseHandler
 	 * @var
 	 */
 	protected $resource;
+
+	//--------------------------------------------------------------------
+
+	public function __construct($config = null)
+	{
+		parent::__construct($config);
+	}
 
 	//--------------------------------------------------------------------
 
@@ -76,7 +87,8 @@ class ImageMagickHandler extends BaseHandler
 		//todo FIX THIS HANDLER PROPERLY
 
 		$escape = "\\";
-		if (strtoupper( substr( PHP_OS, 0, 3 ) ) === 'WIN') {
+		if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN')
+		{
 			$escape = "";
 		}
 
@@ -141,9 +153,10 @@ class ImageMagickHandler extends BaseHandler
 	 *
 	 * @return $this
 	 */
-	public function _flatten(int $red = 255, int $green = 255, int $blue = 255){
+	public function _flatten(int $red = 255, int $green = 255, int $blue = 255)
+	{
 
-		$flatten =  "-background RGB({$red},{$green},{$blue}) -flatten";
+		$flatten = "-background RGB({$red},{$green},{$blue}) -flatten";
 
 		$source = ! empty($this->resource) ? $this->resource : $this->image->getPathname();
 		$destination = $this->getResourcePath();
@@ -408,4 +421,18 @@ class ImageMagickHandler extends BaseHandler
 	}
 
 	//--------------------------------------------------------------------
+	
+		//--------------------------------------------------------------------
+
+	public function _getWidth()
+	{
+		return imagesx($this->resource);
+	}
+
+	public function _getHeight()
+	{
+		return imagesy($this->resource);
+	}
+
+
 }

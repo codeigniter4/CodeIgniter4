@@ -179,6 +179,7 @@ class holds a number of methods that map pretty clearly to the appropriate heade
 	$response->CSP->addFrameAncestor('none', $reportOnly);
 	$response->CSP->addImageSrc('cdn.example.com', $reportOnly);
 	$response->CSP->addMediaSrc('cdn.example.com', $reportOnly);
+	$response->CSP->addManifestSrc('cdn.example.com', $reportOnly);
 	$response->CSP->addObjectSrc('cdn.example.com', $reportOnly);
 	$response->CSP->addPluginType('application/pdf', $reportOnly);
 	$response->CSP->addScriptSrc('scripts.example.com', $reportOnly);
