@@ -39,6 +39,12 @@ use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 use Config\App;
 
+/**
+ * Creates a migration file for database sessions.
+ *
+ * @package CodeIgniter\Commands
+ */
+
 class CreateMigration extends BaseCommand
 {
 

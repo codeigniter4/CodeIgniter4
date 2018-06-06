@@ -6,8 +6,9 @@
  * development server based around PHP's built-in development
  * server. This file simply tries to mimic Apache's mod_rewrite
  * functionality so the site will operate as normal.
+ * 
  */
-
+// @codeCoverageIgnoreStart
 // Avoid this file run when listing commands
 if (php_sapi_name() === 'cli')
 {
@@ -36,3 +37,4 @@ if ($uri !== '/' && (is_file($path) || is_dir($path)))
 // Otherwise, we'll load the index file and let
 // the framework handle the request from here.
 require_once $fcpath . 'index.php';
+// @codeCoverageIgnoreEnd
