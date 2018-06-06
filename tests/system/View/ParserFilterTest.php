@@ -159,6 +159,39 @@ class ParserFilterTest extends \CIUnitTestCase
 		$this->assertEquals("The quick red fox <mark>jumped over</mark> the lazy brown dog", $parser->renderString($template));
 	}
 
+	public function testHighlightCode()
+	{
+		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
+
+		$data = [
+			'value1' => 'Sincerely'
+		];
+		$parser->setData($data);
+
+		$template = '{ value1|highlight_code }';
+		$expected = <<<EOF
+<code><span style="color: #000000">
+<span style="color: #0000BB">Sincerely&nbsp;</span>
+</span>
+</code>
+EOF;
+		$this->assertEquals($expected, $parser->renderString($template));
+	}
+
+	public function testProse()
+	{
+		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
+
+		$data = [
+			'value1' => 'Sincerely\nMe'
+		];
+		$parser->setData($data);
+
+		$template = '{ value1|prose }';
+		$expected = '<p>Sincerely\nMe</p>';
+		$this->assertEquals($expected, $parser->renderString($template));
+	}
+
 	//--------------------------------------------------------------------
 
 	public function testLimitChars()
@@ -249,10 +282,10 @@ class ParserFilterTest extends \CIUnitTestCase
 			'value1' => 5.55,
 		];
 
-		$template = '{ value1|round(1) } { value1|round(1, common) } { value1|round(ceil) } { value1|round(floor) }';
+		$template = '{ value1|round(1) } { value1|round(1, common) } { value1|round(ceil) } { value1|round(floor) } { value1|round(unknown) }';
 
 		$parser->setData($data);
-		$this->assertEquals('5.6 5.6 6 5', $parser->renderString($template));
+		$this->assertEquals('5.6 5.6 6 5 5.55', $parser->renderString($template));
 	}
 
 	//--------------------------------------------------------------------

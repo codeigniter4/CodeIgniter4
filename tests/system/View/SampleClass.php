@@ -8,6 +8,11 @@
  */
 class SampleClass {
 
+	public function index()
+	{
+		return 'Hello World';
+	}
+
 	public function hello()
 	{
 		return 'Hello';
@@ -39,5 +44,7 @@ class SampleClass {
 
 	//--------------------------------------------------------------------
 
-
+	public function work($p1, $p2, $p4) {
+		return 'Right on';
+	}
 }

@@ -77,7 +77,6 @@ class Cell
 
 	//--------------------------------------------------------------------
 
-
 	/**
 	 * Cell constructor.
 	 *
@@ -127,7 +126,7 @@ class Cell
 
 		if ($paramCount === 0)
 		{
-			if (! empty($paramArray))
+			if ( ! empty($paramArray))
 			{
 				throw ViewException::forMissingCellParameters($class, $method);
 			}
@@ -135,7 +134,9 @@ class Cell
 			$output = $instance->{$method}();
 		}
 		elseif (
-				($paramCount === 1) && ( ( ! array_key_exists($refParams[0]->name, $paramArray)) || (array_key_exists($refParams[0]->name, $paramArray) && count($paramArray) !== 1) )
+				($paramCount === 1) && (
+				( ! array_key_exists($refParams[0]->name, $paramArray)) ||
+				(array_key_exists($refParams[0]->name, $paramArray) && count($paramArray) !== 1) )
 		)
 		{
 			$output = $instance->{$method}($paramArray);
@@ -162,7 +163,7 @@ class Cell
 				}
 			}
 
-			$output = $instance->$method(...$fireArgs);
+			$output = $instance->$method(...array_values($fireArgs));
 		}
 		// Can we cache it?
 		if ( ! empty($this->cache) && $ttl !== 0)
@@ -205,8 +206,11 @@ class Cell
 
 			foreach ($params as $p)
 			{
-				list($key, $val) = explode('=', $p);
-				$new_params[trim($key)] = trim($val, ', ');
+				if ( ! empty($p))
+				{
+					list($key, $val) = explode('=', $p);
+					$new_params[trim($key)] = trim($val, ', ');
+				}
 			}
 
 			$params = $new_params;
