@@ -1,9 +1,10 @@
 <?php namespace CodeIgniter\Commands;
 
-use Config\MockAppConfig;
+use Tests\Support\Config\MockAppConfig;
 use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\CLI\CommandRunner;
+use CodeIgniter\Test\Filters\CITestStreamFilter;
 
 class CommandsTest extends \CIUnitTestCase
 {
@@ -12,8 +13,8 @@ class CommandsTest extends \CIUnitTestCase
 
 	public function setUp()
 	{
-		CommandsTestStreamFilter::$buffer = '';
-		$this->stream_filter = stream_filter_append(STDOUT, 'CommandsTestStreamFilter');
+		CITestStreamFilter::$buffer = '';
+		$this->stream_filter = stream_filter_append(STDOUT, 'CITestStreamFilter');
 
 		$this->env = new \CodeIgniter\Config\DotEnv(ROOTPATH);
 		$this->env->load();
@@ -42,7 +43,7 @@ class CommandsTest extends \CIUnitTestCase
 	public function testHelpCommand()
 	{
 		$this->runner->index(['help']);
-		$result = CommandsTestStreamFilter::$buffer;
+		$result = CITestStreamFilter::$buffer;
 
 		// make sure the result looks like a command list
 		$this->assertContains('Displays basic usage information.', $result);
@@ -52,7 +53,7 @@ class CommandsTest extends \CIUnitTestCase
 	public function testListCommands()
 	{
 		$this->runner->index(['list']);
-		$result = CommandsTestStreamFilter::$buffer;
+		$result = CITestStreamFilter::$buffer;
 
 		// make sure the result looks like a command list
 		$this->assertContains('Lists the available commands.', $result);
