@@ -1,9 +1,10 @@
 <?php namespace CodeIgniter\Commands;
 
-use Config\MockAppConfig;
+use Tests\Support\Config\MockAppConfig;
 use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\CLI\CommandRunner;
+use CodeIgniter\Test\Filters\CITestStreamFilter;
 
 class SessionsCommandsTest extends \CIUnitTestCase
 {
@@ -11,8 +12,8 @@ class SessionsCommandsTest extends \CIUnitTestCase
 
 	public function setUp()
 	{
-		CommandsTestStreamFilter::$buffer = '';
-		$this->stream_filter = stream_filter_append(STDOUT, 'CommandsTestStreamFilter');
+		CITestStreamFilter::$buffer = '';
+		$this->stream_filter = stream_filter_append(STDOUT, 'CITestStreamFilter');
 
 		$this->env = new \CodeIgniter\Config\DotEnv(ROOTPATH);
 		$this->env->load();
@@ -41,7 +42,7 @@ class SessionsCommandsTest extends \CIUnitTestCase
 	public function testCreateMigrationCommand()
 	{
 		$this->runner->index(['session:migration']);
-		$result = CommandsTestStreamFilter::$buffer;
+		$result = CITestStreamFilter::$buffer;
 
 		// make sure we end up with a migration class in the right place
 		// or at least that we claim to have done so
@@ -58,7 +59,7 @@ class SessionsCommandsTest extends \CIUnitTestCase
 		CLI::init();
 		
 		$this->runner->index(['session:migration']);
-		$result = CommandsTestStreamFilter::$buffer;
+		$result = CITestStreamFilter::$buffer;
 
 		// make sure we end up with a migration class in the right place
 		$this->assertContains('Created file:', $result);
