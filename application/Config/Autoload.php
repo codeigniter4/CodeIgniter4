@@ -1,6 +1,6 @@
 <?php namespace Config;
 
-require BASEPATH.'Config/AutoloadConfig.php';
+require_once BASEPATH.'Config/AutoloadConfig.php';
 
 /**
  * -------------------------------------------------------------------

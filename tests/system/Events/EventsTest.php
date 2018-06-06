@@ -1,23 +1,67 @@
 <?php namespace CodeIgniter\Events;
 
+use Tests\Support\Events\MockEvents;
+
 class EventsTest extends \CIUnitTestCase
 {
 	/**
-	 * @var \UnitTester
+	 * Accessible event manager instance
 	 */
-	protected $tester;
+	protected $manager;
 
-	protected function setUp()
+	public function setUp()
 	{
+		parent::setUp();
+
+		$this->manager = new MockEvents();
+
 		Events::removeAllListeners();
 	}
 
 	//--------------------------------------------------------------------
 
+	public function testInitialize()
+	{
+		// it should start out empty
+		$default = APPPATH . 'Config/Events.php';
+		Events::setFile('');
+		$this->assertEmpty($this->manager->getEventsFile());
+
+		// make sure we have a default events file
+		Events::initialize();
+		$this->assertEquals($default, $this->manager->getEventsFile());
+
+		// and we should not be able to change it normally
+		Events::initialize('abracadabra');
+		$this->assertEquals($default, $this->manager->getEventsFile());
+
+		// but we should be able to change it through the backdoor
+		Events::setFile('/peanuts');
+		$this->assertEquals('/peanuts', $this->manager->getEventsFile());
+	}
+
+	//--------------------------------------------------------------------
+
+	// Not working currently - might want to revisit at some point.
+//	public function testPerformance()
+//	{
+//		$logged = Events::getPerformanceLogs();
+//		// there should be a few event activities logged
+//		$this->assertGreaterThan(0,count($logged));
+//
+//		// might want additional tests after some activity, or to inspect what has happened so far
+//	}
+
+	//--------------------------------------------------------------------
+
 	public function testListeners()
 	{
-		$callback1 = function() {};
-		$callback2 = function() {};
+		$callback1 = function() {
+
+		};
+		$callback2 = function() {
+
+		};
 
 		Events::on('foo', $callback1, EVENT_PRIORITY_HIGH);
 		Events::on('foo', $callback2, EVENT_PRIORITY_NORMAL);
@@ -35,7 +79,7 @@ class EventsTest extends \CIUnitTestCase
 			$result = $arg;
 		});
 
-		$this->assertTrue(Events::trigger('foo', 'bar') );
+		$this->assertTrue(Events::trigger('foo', 'bar'));
 
 		$this->assertEquals('bar', $result);
 	}
@@ -113,8 +157,7 @@ class EventsTest extends \CIUnitTestCase
 	{
 		$result = false;
 
-		$callback = function() use (&$result)
-		{
+		$callback = function() use (&$result) {
 			$result = true;
 		};
 
@@ -136,8 +179,7 @@ class EventsTest extends \CIUnitTestCase
 	{
 		$result = false;
 
-		$callback = function() use (&$result)
-		{
+		$callback = function() use (&$result) {
 			$result = true;
 		};
 
@@ -160,8 +202,7 @@ class EventsTest extends \CIUnitTestCase
 	{
 		$result = false;
 
-		$callback = function() use (&$result)
-		{
+		$callback = function() use (&$result) {
 			$result = true;
 		};
 
@@ -183,8 +224,7 @@ class EventsTest extends \CIUnitTestCase
 	{
 		$result = false;
 
-		$callback = function() use (&$result)
-		{
+		$callback = function() use (&$result) {
 			$result = true;
 		};
 
@@ -204,8 +244,7 @@ class EventsTest extends \CIUnitTestCase
 	{
 		$result = false;
 
-		$callback = function() use (&$result)
-		{
+		$callback = function() use (&$result) {
 			$result = true;
 		};
 
@@ -224,8 +263,7 @@ class EventsTest extends \CIUnitTestCase
 	{
 		$result = 0;
 
-		$callback = function() use (&$result)
-		{
+		$callback = function() use (&$result) {
 			$result += 2;
 		};
 
@@ -236,6 +274,5 @@ class EventsTest extends \CIUnitTestCase
 
 		$this->assertEquals(0, $result);
 	}
-
 
 }

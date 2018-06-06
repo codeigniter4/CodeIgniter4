@@ -7,11 +7,11 @@ class RouterException extends FrameworkException implements ExceptionInterface
 {
 	public static function forInvalidParameterType()
 	{
-		return new self(lang('Router.invalidParameterType'));
+		return new static(lang('Router.invalidParameterType'));
 	}
 
 	public static function forMissingDefaultRoute()
 	{
-		return new self(lang('Router.missingDefaultRoute'));
+		return new static(lang('Router.missingDefaultRoute'));
 	}
 }

@@ -1,7 +1,7 @@
 <?php
 
 use CodeIgniter\View\Cell;
-use CodeIgniter\Cache\Handlers\MockHandler;
+use Tests\Support\Cache\Handlers\MockHandler;
 
 include_once __DIR__ .'/SampleClass.php';
 
@@ -18,6 +18,8 @@ class CellTest extends \CIUnitTestCase
 
 	public function setup()
 	{
+		parent::setUp();
+
 		$this->cache = new MockHandler();
 	    $this->cell = new Cell($this->cache);
 	}

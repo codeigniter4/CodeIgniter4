@@ -2,14 +2,12 @@
 
 class numberHelperTest extends \CIUnitTestCase
 {
-    public function __construct(...$params)
-    {
-        parent::__construct(...$params);
+	public function setUp()
+	{
+		parent::setUp();
 
-        helper('number');
+		helper('number');
     }
-
-    //--------------------------------------------------------------------
 
     public function test_roman_number()
     {

@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Log;
+<?php namespace Tests\Support\Log;
+
+use CodeIgniter\Log\Logger;
 
 class TestLogger extends Logger
 {
@@ -30,7 +32,7 @@ class TestLogger extends Logger
 
 		foreach ($trace as $row)
 		{
-			if (! in_array($row['function'], ['log', 'log_message']))
+			if ( ! in_array($row['function'], ['log', 'log_message']))
 			{
 				$file = basename($row['file'] ?? '');
 				break;
@@ -38,9 +40,9 @@ class TestLogger extends Logger
 		}
 
 		self::$op_logs[] = [
-			'level'   => $level,
-		    'message' => $log_message,
-		    'file'    => $file,
+			'level'		 => $level,
+			'message'	 => $log_message,
+			'file'		 => $file,
 		];
 
 		// Let the parent do it's thing.
@@ -61,8 +63,7 @@ class TestLogger extends Logger
 	{
 		foreach (self::$op_logs as $log)
 		{
-			if (strtolower($log['level']) == strtolower($level)
-				&& $message == $log['message'])
+			if (strtolower($log['level']) == strtolower($level) && $message == $log['message'])
 			{
 				return true;
 			}
@@ -72,5 +73,10 @@ class TestLogger extends Logger
 	}
 
 	//--------------------------------------------------------------------
+	// Expose cleanFileNames()
+	public function cleanup($file)
+	{
+		return $this->cleanFileNames($file);
+	}
 
 }

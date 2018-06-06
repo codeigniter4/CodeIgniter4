@@ -136,10 +136,11 @@ class Filters
 				// then send it and quit.
 				if ($result instanceof ResponseInterface)
 				{
-					$result->send();
-					exit(EXIT_ERROR);
+					// short circuit - bypass any other filters
+					return $result;
 				}
 
+				// Ignore an empty result
 				if (empty($result))
 				{
 					continue;

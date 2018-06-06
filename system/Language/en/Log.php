@@ -10,6 +10,8 @@
  * @link         https://codeigniter.com
  * @since        Version 3.0.0
  * @filesource
+ * 
+ * @codeCoverageIgnore
  */
 return [
 	'invalidLogLevel' => '{0} is an invalid log level.',

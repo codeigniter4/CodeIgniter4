@@ -1,7 +1,7 @@
 <?php namespace Builder;
 
 use CodeIgniter\Database\Query;
-use CodeIgniter\Database\MockConnection;
+use Tests\Support\Database\MockConnection;
 
 class InsertTest extends \CIUnitTestCase
 {
@@ -11,6 +11,8 @@ class InsertTest extends \CIUnitTestCase
 
 	public function setUp()
 	{
+		parent::setUp();
+
 		$this->db = new MockConnection([]);
 	}
 

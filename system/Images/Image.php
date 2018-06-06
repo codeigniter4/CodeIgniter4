@@ -107,7 +107,7 @@ class Image extends File
 
 		if ( ! copy($this->getPathname(), "{$targetPath}{$targetName}"))
 		{
-			throw ImageException::forCopyError();
+			throw ImageException::forCopyError($targetPath);
 		}
 
 		chmod("{$targetPath}/{$targetName}", $perms);
@@ -132,6 +132,7 @@ class Image extends File
 
 		$vals = getimagesize($path);
 		$types = [1 => 'gif', 2 => 'jpeg', 3 => 'png'];
+
 		$mime = 'image/' . ($types[$vals[2]] ?? 'jpg');
 
 		if ($return === true)

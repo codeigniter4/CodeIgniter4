@@ -31,6 +31,18 @@ as the second parameter of the ``setStatusCode()`` method::
 
 	$this->response->setStatusCode(404, 'Nope. Not here.');
 
+You can set format an array into either JSON or XML and set the content type header to the appropriate mime with the
+``setJSON`` and ``setXML`` methods. Typically, you will send an array of data to be converted::
+
+	$data = [
+		'success' => true,
+		'id' => 123
+	];
+
+	return $this->response->setJSON($data);
+		or
+	return $this->response->setXML($data);
+
 Setting Headers
 ---------------
 
@@ -167,6 +179,7 @@ class holds a number of methods that map pretty clearly to the appropriate heade
 	$response->CSP->addFrameAncestor('none', $reportOnly);
 	$response->CSP->addImageSrc('cdn.example.com', $reportOnly);
 	$response->CSP->addMediaSrc('cdn.example.com', $reportOnly);
+	$response->CSP->addManifestSrc('cdn.example.com', $reportOnly);
 	$response->CSP->addObjectSrc('cdn.example.com', $reportOnly);
 	$response->CSP->addPluginType('application/pdf', $reportOnly);
 	$response->CSP->addScriptSrc('scripts.example.com', $reportOnly);

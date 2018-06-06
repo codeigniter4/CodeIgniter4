@@ -37,6 +37,7 @@
  * @filesource
  */
 
+use CodeIgniter\Config\BaseConfig;
 use Config\Mimes;
 
 
@@ -53,6 +54,16 @@ use Config\Mimes;
  */
 class Email
 {
+	/**
+	 * @var string
+	 */
+	public $fromEmail;
+
+	/**
+	 * @var string
+	 */
+	public $fromName;
+
 	/**
 	 * Used as the User-Agent and X-Mailer headers' value.
 	 *
@@ -400,7 +411,7 @@ class Email
 	/**
 	 * Initialize preferences
 	 *
-	 * @param array $config
+	 * @param array|\Config\Email $config
 	 *
 	 * @return Email
 	 */
@@ -408,19 +419,24 @@ class Email
 	{
 		$this->clear();
 
+		if ($config instanceof \Config\Email)
+		{
+			$config = get_object_vars($config);
+		}
+
 		foreach (get_class_vars(get_class($this)) as $key => $value)
 		{
-			if (isset($this->$key) && isset($config->$key))
+			if (property_exists($this, $key) && isset($config[$key]))
 			{
 				$method = 'set'.ucfirst($key);
 
 				if (method_exists($this, $method))
 				{
-					$this->$method($config->$key);
+					$this->$method($config[$key]);
 				}
 				else
 				{
-					$this->$key = $config->$key;
+					$this->$key = $config[$key];
 				}
 			}
 		}
@@ -1761,6 +1777,11 @@ class Email
 	 */
 	public function send($autoClear = true)
 	{
+		if (! isset($this->headers['From']) && ! empty($this->fromEmail))
+		{
+			$this->setFrom($this->fromEmail, $this->fromName);
+		}
+
 		if (! isset($this->headers['From']))
 		{
 			$this->setErrorMessage(lang('email.noFrom'));

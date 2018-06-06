@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\Database;
+<?php namespace Tests\Support\Database;
+
+use CodeIgniter\Database\BaseResult;
 
 class MockResult extends BaseResult
 {
@@ -9,7 +11,7 @@ class MockResult extends BaseResult
 	 */
 	public function getFieldCount(): int
 	{
-		
+
 	}
 
 	//--------------------------------------------------------------------

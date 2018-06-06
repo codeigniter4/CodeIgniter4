@@ -65,7 +65,7 @@ class Events
 	 *
 	 * @var string
 	 */
-	protected static $eventsFile;
+	protected static $eventsFile = '';
 
 	/**
 	 * If true, events will not actually be fired.
@@ -290,7 +290,7 @@ class Events
 	 *
 	 * @param string $path
 	 */
-	public function setFile(string $path)
+	public static function setFile(string $path)
 	{
 		self::$eventsFile = $path;
 	}

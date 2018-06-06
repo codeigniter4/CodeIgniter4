@@ -36,6 +36,7 @@
  * @filesource
  */
 use CodeIgniter\HTTP\RedirectResponse;
+use CodeIgniter\HTTP\Request;
 use Config\Services;
 use Config\Cache;
 use CodeIgniter\HTTP\URI;
@@ -180,8 +181,12 @@ class CodeIgniter
 	 * makes all of the pieces work together.
 	 *
 	 * @param \CodeIgniter\Router\RouteCollectionInterface $routes
+	 * @param bool                                         $returnResponse
+	 *
+	 * @throws \CodeIgniter\HTTP\RedirectException
+	 * @throws \Exception
 	 */
-	public function run(RouteCollectionInterface $routes = null)
+	public function run(RouteCollectionInterface $routes = null, bool $returnResponse = false)
 	{
 		$this->startBenchmark();
 
@@ -201,7 +206,7 @@ class CodeIgniter
 
 		try
 		{
-			$this->handleRequest($routes, $cacheConfig);
+			return $this->handleRequest($routes, $cacheConfig, $returnResponse);
 		} catch (Router\RedirectException $e)
 		{
 			$logger = Services::logger();
@@ -225,8 +230,11 @@ class CodeIgniter
 	 *
 	 * @param \CodeIgniter\Router\RouteCollectionInterface $routes
 	 * @param                                              $cacheConfig
+	 * @param bool                                         $returnResponse
+	 *
+	 * @throws \CodeIgniter\Filters\Exceptions\FilterException
 	 */
-	protected function handleRequest(RouteCollectionInterface $routes = null, $cacheConfig)
+	protected function handleRequest(RouteCollectionInterface $routes = null, $cacheConfig, bool $returnResponse = false)
 	{
 		$this->tryToRouteIt($routes);
 
@@ -257,6 +265,11 @@ class CodeIgniter
 		// Handle any redirects
 		if ($returned instanceof RedirectResponse)
 		{
+			if ($returnResponse)
+			{
+				return $returned;
+			}
+
 			$this->callExit(EXIT_SUCCESS);
 		}
 
@@ -279,12 +292,17 @@ class CodeIgniter
 
 		unset($uri);
 
-		$this->sendResponse();
+		if (! $returnResponse)
+		{
+			$this->sendResponse();
+		}
 
 		//--------------------------------------------------------------------
 		// Is there a post-system event?
 		//--------------------------------------------------------------------
 		Events::trigger('post_system');
+
+		return $this->response;
 	}
 
 	//--------------------------------------------------------------------
@@ -359,12 +377,34 @@ class CodeIgniter
 	//--------------------------------------------------------------------
 
 	/**
+	 * Sets a Request object to be used for this request.
+	 * Used when running certain tests.
+	 *
+	 * @param \CodeIgniter\HTTP\Request $request
+	 *
+	 * @return \CodeIgniter\CodeIgniter
+	 */
+	public function setRequest(Request $request)
+	{
+		$this->request = $request;
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Get our Request object, (either IncomingRequest or CLIRequest)
 	 * and set the server protocol based on the information provided
 	 * by the server.
 	 */
 	protected function getRequestObject()
 	{
+		if ($this->request instanceof Request)
+		{
+			return;
+		}
+
 		if (is_cli() && ! (ENVIRONMENT == 'testing'))
 		{
 			$this->request = Services::clirequest($this->config);
@@ -372,7 +412,8 @@ class CodeIgniter
 		else
 		{
 			$this->request = Services::request($this->config);
-			$this->request->setProtocolVersion($_SERVER['SERVER_PROTOCOL']);
+			// guess at protocol if needed
+			$this->request->setProtocolVersion($_SERVER['SERVER_PROTOCOL'] ?? 'HTTP/1.1');
 		}
 	}
 

@@ -35,7 +35,7 @@
  * @since	Version 3.0.0
  * @filesource
  */
-use CodeIgniter\PageNotFoundException;
+use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\Router\Exceptions\RouterException;
 
 /**
@@ -360,6 +360,10 @@ class Router implements RouterInterface
 	protected function checkRoutes(string $uri): bool
 	{
 		$routes = $this->collection->getRoutes($this->collection->getHTTPVerb());
+
+		$uri = $uri == '/'
+			? $uri
+			: ltrim($uri, '/ ');
 
 		// Don't waste any time
 		if (empty($routes))

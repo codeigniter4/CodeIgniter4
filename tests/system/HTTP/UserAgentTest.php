@@ -14,6 +14,8 @@ class UserAgent_test extends \CIUnitTestCase {
 
 	public function setUp()
 	{
+		parent::setUp();
+
 		// set a baseline user agent
 		$_SERVER['HTTP_USER_AGENT'] = $this->_user_agent;
 

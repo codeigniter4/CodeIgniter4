@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Files language strings.
  *
@@ -10,8 +9,12 @@
  * @link         https://codeigniter.com
  * @since        Version 3.0.0
  * @filesource
+ * 
+ * @codeCoverageIgnore
  */
 return [
-	'fileNotFound' => 'File not found: {0}',
-	'cannotMove'   => 'Could not move file {0} to {1} ({2})',
+	'fileNotFound'		 => 'File not found: {0}',
+	'cannotMove'		 => 'Could not move file {0} to {1} ({2})',
+	'invalidFilename'	 => 'Target filename missing or invalid: {0}',
+	'cannotCopy'		 => 'Could not copy to {0} - make sure the folder is writeable',
 ];

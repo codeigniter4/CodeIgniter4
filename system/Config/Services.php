@@ -27,17 +27,19 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package      CodeIgniter
+ * @author       CodeIgniter Dev Team
+ * @copyright    2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license      https://opensource.org/licenses/MIT	MIT License
+ * @link         https://codeigniter.com
+ * @since        Version 3.0.0
  * @filesource
  */
 use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Database\MigrationRunner;
+use CodeIgniter\HTTP\URI;
 use CodeIgniter\View\RendererInterface;
+use Config\App;
 
 /**
  * Services Configuration file.
@@ -56,26 +58,8 @@ use CodeIgniter\View\RendererInterface;
  * @see http://blog.ircmaxell.com/2015/11/simple-easy-risk-and-change.html
  * @see http://www.infoq.com/presentations/Simple-Made-Easy
  */
-class Services
+class Services extends BaseService
 {
-
-	/**
-	 * Cache for instance of any services that
-	 * have been requested as a "shared" instance.
-	 *
-	 * @var array
-	 */
-	static protected $instances = [];
-
-	/**
-	 * Mock objects for testing which are returned if exist.
-	 *
-	 * @var array
-	 */
-	static protected $mocks = [];
-
-	//--------------------------------------------------------------------
-
 	/**
 	 * The Autoloader class is the central class that handles our
 	 * spl_autoload_register method, and helper methods.
@@ -112,7 +96,7 @@ class Services
 			return self::getSharedInstance('cache', $config);
 		}
 
-		if ( ! is_object($config))
+		if (! is_object($config))
 		{
 			$config = new \Config\Cache();
 		}
@@ -138,13 +122,13 @@ class Services
 			return self::getSharedInstance('clirequest', $config);
 		}
 
-		if ( ! is_object($config))
+		if (! is_object($config))
 		{
 			$config = new \Config\App();
 		}
 
 		return new \CodeIgniter\HTTP\CLIRequest(
-				$config, new \CodeIgniter\HTTP\URI()
+			$config, new \CodeIgniter\HTTP\URI()
 		);
 	}
 
@@ -161,28 +145,32 @@ class Services
 	 *
 	 * @return \CodeIgniter\HTTP\CURLRequest
 	 */
-	public static function curlrequest(array $options = [], $response = null, \Config\App $config = null, $getShared = true)
-	{
+	public static function curlrequest(
+		array $options = [],
+		$response = null,
+		\Config\App $config = null,
+		$getShared = true
+	) {
 		if ($getShared === true)
 		{
 			return self::getSharedInstance('curlrequest', $options, $response, $config);
 		}
 
-		if ( ! is_object($config))
+		if (! is_object($config))
 		{
 			$config = new \Config\App();
 		}
 
-		if ( ! is_object($response))
+		if (! is_object($response))
 		{
 			$response = new \CodeIgniter\HTTP\Response($config);
 		}
 
 		return new \CodeIgniter\HTTP\CURLRequest(
-				$config,
-				new \CodeIgniter\HTTP\URI(isset($options['base_uri']) ? : null),
-				$response,
-				$options
+			$config,
+			new \CodeIgniter\HTTP\URI($options['base_uri'] ?? null),
+			$response,
+			$options
 		);
 	}
 
@@ -227,8 +215,12 @@ class Services
 	 *
 	 * @return \CodeIgniter\Debug\Exceptions
 	 */
-	public static function exceptions(\Config\Exceptions $config = null, \CodeIgniter\HTTP\IncomingRequest $request = null, \CodeIgniter\HTTP\Response $response = null, $getShared = true)
-	{
+	public static function exceptions(
+		\Config\Exceptions $config = null,
+		\CodeIgniter\HTTP\IncomingRequest $request = null,
+		\CodeIgniter\HTTP\Response $response = null,
+		$getShared = true
+	) {
 		if ($getShared)
 		{
 			return self::getSharedInstance('exceptions', $config, $request, $response);
@@ -261,7 +253,7 @@ class Services
 	 * act on or modify the response itself before it is sent to the client.
 	 *
 	 * @param mixed $config
-	 * @param bool $getShared
+	 * @param bool  $getShared
 	 *
 	 * @return \CodeIgniter\Filters\Filters
 	 */
@@ -346,10 +338,14 @@ class Services
 	{
 		if ($getShared)
 		{
-			return self::getSharedInstance('language', $locale)->setLocale($locale);
+			return self::getSharedInstance('language', $locale)
+			           ->setLocale($locale);
 		}
 
-		$locale = ! empty($locale) ? $locale : self::request()->getLocale();
+		$locale = ! empty($locale)
+			? $locale
+			: self::request()
+			      ->getLocale();
 
 		return new \CodeIgniter\Language\Language($locale);
 	}
@@ -465,7 +461,7 @@ class Services
 			$config = new \Config\Pager();
 		}
 
-		if ( ! $view instanceof RendererInterface)
+		if (! $view instanceof RendererInterface)
 		{
 			$view = self::renderer();
 		}
@@ -479,12 +475,12 @@ class Services
 	 * The Parser is a simple template parser.
 	 *
 	 * @param string $viewPath
-	 * @param mixed   $config
+	 * @param mixed  $config
 	 * @param bool   $getShared
 	 *
 	 * @return \CodeIgniter\View\Parser
 	 */
-	public static function parser($viewPath = APPPATH . 'Views/', $config = null, $getShared = true)
+	public static function parser($viewPath = APPPATH.'Views/', $config = null, $getShared = true)
 	{
 		if ($getShared)
 		{
@@ -512,7 +508,7 @@ class Services
 	 *
 	 * @return \CodeIgniter\View\View
 	 */
-	public static function renderer($viewPath = APPPATH . 'Views/', $config = null, $getShared = true)
+	public static function renderer($viewPath = APPPATH.'Views/', $config = null, $getShared = true)
 	{
 		if ($getShared)
 		{
@@ -544,16 +540,16 @@ class Services
 			return self::getSharedInstance('request', $config);
 		}
 
-		if ( ! is_object($config))
+		if (! is_object($config))
 		{
-			$config = new \Config\App();
+			$config = new App();
 		}
 
 		return new \CodeIgniter\HTTP\IncomingRequest(
-				$config,
-				new \CodeIgniter\HTTP\URI(),
-				'php://input',
-				new \CodeIgniter\HTTP\UserAgent()
+			$config,
+			new \CodeIgniter\HTTP\URI(),
+			'php://input',
+			new \CodeIgniter\HTTP\UserAgent()
 		);
 	}
 
@@ -574,7 +570,7 @@ class Services
 			return self::getSharedInstance('response', $config);
 		}
 
-		if ( ! is_object($config))
+		if (! is_object($config))
 		{
 			$config = new \Config\App();
 		}
@@ -599,13 +595,14 @@ class Services
 			return self::getSharedInstance('redirectResponse', $config);
 		}
 
-		if ( ! is_object($config))
+		if (! is_object($config))
 		{
 			$config = new \Config\App();
 		}
 
 		$response = new \CodeIgniter\HTTP\RedirectResponse($config);
-		$response->setProtocolVersion(self::request()->getProtocolVersion());
+		$response->setProtocolVersion(self::request()
+		                                  ->getProtocolVersion());
 
 		return $response;
 	}
@@ -674,7 +671,7 @@ class Services
 			return self::getSharedInstance('security', $config);
 		}
 
-		if ( ! is_object($config))
+		if (! is_object($config))
 		{
 			$config = new \Config\App();
 		}
@@ -697,7 +694,7 @@ class Services
 			return self::getSharedInstance('session', $config);
 		}
 
-		if ( ! is_object($config))
+		if (! is_object($config))
 		{
 			$config = new \Config\App();
 		}
@@ -705,7 +702,7 @@ class Services
 		$logger = self::logger(true);
 
 		$driverName = $config->sessionDriver;
-		$driver = new $driverName($config);
+		$driver     = new $driverName($config);
 		$driver->setLogger($logger);
 
 		$session = new \CodeIgniter\Session\Session($driver, $config);
@@ -769,7 +766,7 @@ class Services
 			return self::getSharedInstance('toolbar', $config);
 		}
 
-		if ( ! is_object($config))
+		if (! is_object($config))
 		{
 			$config = new \Config\App();
 		}
@@ -862,85 +859,5 @@ class Services
 	}
 
 	//--------------------------------------------------------------------
-	//--------------------------------------------------------------------
-	// Utility Methods - DO NOT EDIT
-	//--------------------------------------------------------------------
 
-	/**
-	 * Returns a shared instance of any of the class' services.
-	 *
-	 * $key must be a name matching a service.
-	 *
-	 * @param string $key
-	 * @param array  ...$params
-	 *
-	 * @return mixed
-	 */
-	protected static function getSharedInstance(string $key, ...$params)
-	{
-		// Returns mock if exists
-		if (isset(static::$mocks[$key]))
-		{
-			return static::$mocks[$key];
-		}
-
-		if ( ! isset(static::$instances[$key]))
-		{
-			// Make sure $getShared is false
-			array_push($params, false);
-
-			static::$instances[$key] = static::$key(...$params);
-		}
-
-		return static::$instances[$key];
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Provides the ability to perform case-insensitive calling of service
-	 * names.
-	 *
-	 * @param string $name
-	 * @param array  $arguments
-	 *
-	 * @return mixed
-	 */
-	public static function __callStatic(string $name, array $arguments)
-	{
-		$name = strtolower($name);
-
-		if (method_exists(__CLASS__, $name))
-		{
-			return Services::$name(...$arguments);
-		}
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Reset shared instances and mocks for testing.
-	 */
-	public static function reset()
-	{
-		static::$mocks = [];
-
-		static::$instances = [];
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Inject mock object for testing.
-	 *
-	 * @param string $name
-	 * @param $mock
-	 */
-	public static function injectMock(string $name, $mock)
-	{
-		$name = strtolower($name);
-		static::$mocks[$name] = $mock;
-	}
-
-	//--------------------------------------------------------------------
 }

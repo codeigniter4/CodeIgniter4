@@ -2,6 +2,7 @@
 
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Model;
+use CodeIgniter\Test\CIDatabaseTestCase;
 use CodeIgniter\Test\ReflectionHelper;
 use Tests\Support\Models\EntityModel;
 use Tests\Support\Models\EventModel;
@@ -13,7 +14,7 @@ use Tests\Support\Models\ValidModel;
 /**
  * @group DatabaseLive
  */
-class ModelTest extends \CIDatabaseTestCase
+class ModelTest extends CIDatabaseTestCase
 {
 	use ReflectionHelper;
 
