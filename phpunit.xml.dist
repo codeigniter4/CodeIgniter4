@@ -10,6 +10,10 @@
         stopOnIncomplete="false"
         stopOnSkipped="false">
     <testsuites>
+        <testsuite name="app">
+            <directory>./tests</directory>
+            <exclude>./tests/system</exclude>
+        </testsuite>
         <testsuite name="system">
             <directory>./tests/system</directory>
             <!-- <exclude>./tests/system/Database/Live</exclude> -->

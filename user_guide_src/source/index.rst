@@ -84,6 +84,15 @@ Helper Reference
 
 	helpers/index
 
+*******
+Testing
+*******
+
+.. toctree::
+   :titlesonly:
+
+   testing.index
+
 ***************************
 Contributing to CodeIgniter
 ***************************
