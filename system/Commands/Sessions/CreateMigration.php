@@ -104,7 +104,7 @@ class CreateMigration extends BaseCommand
 	{
 		$config = new App();
 
-		$tableName = CLI::getOption('t') ?? $config->sessionSavePath ?? 'ci_sessions';
+		$tableName = CLI::getOption('t') ?? 'ci_sessions';
 
 		$path = APPPATH . 'Database/Migrations/' . date('YmdHis_') . 'create_' . $tableName . '_table' . '.php';
 
