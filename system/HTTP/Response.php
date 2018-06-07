@@ -922,6 +922,9 @@ class Response extends Message implements ResponseInterface
 
 		foreach ($this->cookies as $params)
 		{
+			// PHP cannot unpack array with string keys
+			$params = array_values($params);
+
 			setcookie(...$params);
 		}
 	}
