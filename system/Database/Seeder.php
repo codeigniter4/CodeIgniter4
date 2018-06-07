@@ -149,7 +149,7 @@ class Seeder
 
 			if ( ! class_exists($class, false))
 			{
-				require $path;
+				require_once $path;
 			}
 
 			$seeder = new $class($this->config);
