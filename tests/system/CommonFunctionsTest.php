@@ -1,7 +1,15 @@
 <?php
 
-use Tests\Support\Autoloader\MockFileLocator;
+use Config\App;
+use Config\Autoload;
+use CodeIgniter\Config\Services;
 use CodeIgniter\Router\RouteCollection;
+use CodeIgniter\HTTP\RequestResponse;
+use CodeIgniter\HTTP\RedirectResponse;
+use CodeIgniter\HTTP\URI;
+use CodeIgniter\HTTP\UserAgent;
+use Tests\Support\Autoloader\MockFileLocator;
+use Tests\Support\HTTP\MockIncomingRequest;
 
 /**
  * @backupGlobals enabled
@@ -100,6 +108,11 @@ class CommomFunctionsTest extends \CIUnitTestCase
 				->will($this->returnArgument(0));
 
 		$this->assertInstanceOf(\CodeIgniter\HTTP\RedirectResponse::class, redirect('base'));
+	}
+
+	public function testRedirectDefault()
+	{
+		$this->assertInstanceOf(\CodeIgniter\HTTP\RedirectResponse::class, redirect());
 	}
 
 	// ------------------------------------------------------------------------
@@ -214,6 +227,52 @@ class CommomFunctionsTest extends \CIUnitTestCase
 	public function testCSRFField()
 	{
 		$this->assertContains('<input type="hidden" ', csrf_field());
+	}
+
+	// ------------------------------------------------------------------------
+
+	public function testOldInput()
+	{
+		// setup from RedirectResponseTest...
+		$_SERVER['REQUEST_METHOD'] = 'GET';
+
+		$this->config = new App();
+		$this->config->baseURL = 'http://example.com';
+
+		$this->routes = new RouteCollection(new MockFileLocator(new Autoload()));
+		Services::injectMock('routes', $this->routes);
+
+		$this->request = new MockIncomingRequest($this->config, new URI('http://example.com'), null, new UserAgent());
+		Services::injectMock('request', $this->request);
+
+		// setup & ask for a redirect...
+		$_SESSION = [];
+		$_GET = ['foo' => 'bar'];
+		$_POST = ['bar' => 'baz', 'zibble' => serialize('fritz')];
+
+		$response = new RedirectResponse(new App());
+		$returned = $response->withInput();
+
+		$this->assertEquals('bar', old('foo')); // regular parameter
+		$this->assertEquals('doo', old('yabba dabba', 'doo')); // non-existing parameter
+		$this->assertEquals('fritz', old('zibble')); // serialized parameter
+	}
+
+	// ------------------------------------------------------------------------
+
+	public function testReallyWritable()
+	{
+		// cannot test fully on *nix
+		$this->assertTrue(is_really_writable(WRITEPATH));
+	}
+
+	// ------------------------------------------------------------------------
+
+	public function testSlashItem()
+	{
+		$this->assertEquals('/', slash_item('cookiePath')); // slash already there
+		$this->assertEquals('', slash_item('cookieDomain')); // empty, so untouched
+		$this->assertEquals('en/', slash_item('defaultLocale')); // slash appended
 	}
 
 }
