@@ -20,4 +20,9 @@ class HoneypotException extends ConfigException implements ExceptionInterface
 		return new static(lang('Honeypot.noHiddenValue'));
 	}
 
+	public static function isBot()
+	{
+		return new static(lang('Honeypot.theClientIsABot'));
+	}
+
 }

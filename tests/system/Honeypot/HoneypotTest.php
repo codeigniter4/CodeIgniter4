@@ -16,7 +16,8 @@ class HoneypotTest extends CIUnitTestCase
         parent::setUp();
         $this->request = Services::request();
         $this->response = Services::response();    
-        $this->honeypot = new Honeypot();    
+        $config = new \Config\Honeypot();
+        $this->honeypot = new Honeypot($config);    
         
     }
 

@@ -10,22 +10,22 @@ class Honeypot extends BaseConfig
 	 * 
 	 * @var boolean
 	 */
-	public $hidden = '';
+	public $hidden = true;
     /**
 	 * Honeypot Label Content
 	 * @var String
 	 */
-    public $label = '';
+    public $label = 'Fill This Field';
 
     /**
 	 * Honeypot Field Name 
 	 * @var String
 	 */
-    public $name = '';
+    public $name = 'honeypot';
 
     /**
 	 * Honeypot HTML Template 
 	 * @var String
 	 */
-    public $template = '';
+    public $template = '<label>{label}</label><input type="text" name="{name}" value=""/>';
 }

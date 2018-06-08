@@ -67,24 +67,24 @@ class Honeypot
 	 * Self Instance of Class
 	 * @var Honeypot
 	 */
-    protected $honeypotConfig;
+    protected $config;
 
     //--------------------------------------------------------------------
 
-    function __construct () {
-        $this->honeypotConfig = new HoneypotConfig();
+    function __construct (BaseConfig $config) {
+        $this->config = $config;
 
-        if($this->honeypotConfig->hidden === '')
+        if($this->config->hidden === '')
         {
             throw HoneypotException::forNoHiddenValue();
         }
 
-        if($this->honeypotConfig->template === '')
+        if($this->config->template === '')
         {
             throw HoneypotException::forNoTemplate();
         }
 
-        if($this->honeypotConfig->name === '')
+        if($this->config->name === '')
         {
             throw HoneypotException::forNoNameField();
         }
@@ -100,7 +100,7 @@ class Honeypot
 	 */
     public function hasContent(RequestInterface $request) 
     {
-        if($request->getVar($this->honeypotConfig->name))
+        if($request->getVar($this->config->name))
         {
             return true;
         }
@@ -114,7 +114,7 @@ class Honeypot
 	 */
     public function attachHoneypot(ResponseInterface $response)
     {
-        $prep_field = $this->prepareTemplate($this->honeypotConfig->template);  
+        $prep_field = $this->prepareTemplate($this->config->template);  
         
         $body = $response->getBody();
         $body = str_ireplace('</form>', $prep_field, $body);
@@ -130,10 +130,10 @@ class Honeypot
 	 */
     protected function prepareTemplate($template): string
     {
-        $template = str_ireplace('{label}', $this->honeypotConfig->label, $template);
-        $template = str_ireplace('{name}', $this->honeypotConfig->name, $template);
+        $template = str_ireplace('{label}', $this->config->label, $template);
+        $template = str_ireplace('{name}', $this->config->name, $template);
 
-        if($this->honeypotConfig->hidden)
+        if($this->config->hidden)
         {
             $template = '<div style="display:none">'. $template . '</div>';
         }
