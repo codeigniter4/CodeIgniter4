@@ -46,13 +46,15 @@ class Plugins
 	public static function currentURL(array $params = [])
 	{
 		if ( ! function_exists('current_url'))
+			// can't unit test this since it is loaded in CIUnitTestCase setup
+			// @codeCoverageIgnoreStart
 			helper('url');
+			// @codeCoverageIgnoreEnd
 
 		return current_url();
 	}
 
 	//--------------------------------------------------------------------
-
 
 	/**
 	 * @param array $params
@@ -62,13 +64,15 @@ class Plugins
 	public static function previousURL(array $params = [])
 	{
 		if ( ! function_exists('previous_url'))
+			// can't unit test this since it is loaded in CIUnitTestCase setup
+			// @codeCoverageIgnoreStart
 			helper('url');
+			// @codeCoverageIgnoreEnd
 
 		return previous_url();
 	}
 
 	//--------------------------------------------------------------------
-
 
 	/**
 	 * @param array $params
@@ -78,7 +82,10 @@ class Plugins
 	public static function mailto(array $params = [])
 	{
 		if ( ! function_exists('mailto'))
+			// can't unit test this since it is loaded in CIUnitTestCase setup
+			// @codeCoverageIgnoreStart
 			helper('url');
+			// @codeCoverageIgnoreEnd
 
 		$email = $params['email'] ?? '';
 		$title = $params['title'] ?? '';
@@ -89,7 +96,6 @@ class Plugins
 
 	//--------------------------------------------------------------------
 
-
 	/**
 	 * @param array $params
 	 *
@@ -98,7 +104,10 @@ class Plugins
 	public static function safeMailto(array $params = [])
 	{
 		if ( ! function_exists('safe_mailto'))
+			// can't unit test this since it is loaded in CIUnitTestCase setup
+			// @codeCoverageIgnoreStart
 			helper('url');
+			// @codeCoverageIgnoreEnd
 
 		$email = $params['email'] ?? '';
 		$title = $params['title'] ?? '';
@@ -108,7 +117,6 @@ class Plugins
 	}
 
 	//--------------------------------------------------------------------
-
 
 	/**
 	 * @param array $params
@@ -121,7 +129,9 @@ class Plugins
 
 		return lang($line, $params);
 	}
-	
+
+	//--------------------------------------------------------------------
+
 	/**
 	 * @param array $params
 	 *
@@ -129,17 +139,14 @@ class Plugins
 	 */
 	public static function ValidationErrors(array $params = [])
 	{
-		
+
 		$validator = \config\services::validation();
-		if(empty($params))
+		if (empty($params))
 		{
 			return $validator->listErrors();
 		}
-		
-		return $validator->showError($params['field']);
-		
 
-		
+		return $validator->showError($params['field']);
 	}
 
 }

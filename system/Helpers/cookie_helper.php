@@ -73,10 +73,7 @@ if ( ! function_exists('set_cookie'))
 		// The following line shows as a syntax error in NetBeans IDE
 		//(\Config\Services::response())->setcookie
 		$response = \Config\Services::response();
-		$response->setcookie
-				(
-				$name, $value, $expire, $domain, $path, $prefix, $secure, $httpOnly
-		);
+		$response->setcookie($name, $value, $expire, $domain, $path, $prefix, $secure, $httpOnly);
 	}
 
 }
