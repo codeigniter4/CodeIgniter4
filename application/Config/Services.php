@@ -31,12 +31,18 @@ class Services extends CoreServices
 //        return new \CodeIgniter\Example();
 //    }
 
-    public static function honeypot(BaseConfig $config = null)
+    public static function honeypot(BaseConfig $config = null, $getShared = true)
     {
+        if ($getShared)
+        {
+            return self::getSharedInstance('honeypot', $config);
+        }
+
         if (is_null($config)) 
         {
             $config = new \Config\Honeypot();
         }
+
         return new \CodeIgniter\Honeypot\Honeypot($config);
     }
 
