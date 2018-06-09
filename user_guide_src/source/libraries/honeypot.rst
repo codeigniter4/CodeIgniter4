@@ -3,7 +3,7 @@ Honeypot Class
 =====================
 
 The Honeypot Class makes it possible to determine when a Bot makes a request to a CodeIgniter4 application,
-If it's enabled in ``Application\Config\Filters.php`` file. This done by attaching form fields to any form,
+If it's enabled in ``Application\Config\Filters.php`` file. This is done by attaching form fields to any form,
 and this form field is hidden from human but accessible to Bot. When data is entered into the field it's 
 assumed the request is coming from a Bot, then an execption is thrown.
 
@@ -29,8 +29,8 @@ from the ``$globals`` Array.::
 Customizing Honeypot
 =====================
 
-Honeypot can be customized. It allows the following customization. Customization file can found in ``
-Application\Config\Honeypot.php`` and ``.env``.
+Honeypot can be customized. It allows the following customization. Customization file can found in 
+``Application\Config\Honeypot.php`` and ``.env``.
 
 * ``Display``
 * ``Label``
