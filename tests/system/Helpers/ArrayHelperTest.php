@@ -90,6 +90,22 @@ class ArrayHelperTest extends \CIUnitTestCase
 		$this->assertEquals(23, dot_array_search('foo.*.baz', $data));
 	}
 
+	public function testArrayDotNestedNotFound()
+	{
+		$data = [
+			'foo' => [
+				'buzz' => [
+					'fizz' => 11
+				],
+				'bar' => [
+					'baz' => 23
+				]
+			]
+		];
+
+		$this->assertNull(dot_array_search('foo.*.notthere', $data));
+	}
+
 	public function testArrayDotIgnoresLastWildcard()
 	{
 		$data = [
