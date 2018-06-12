@@ -76,3 +76,12 @@
 # contentsecuritypolicy.reportURI = null
 # contentsecuritypolicy.sandbox = false
 # contentsecuritypolicy.upgradeInsecureRequests = false
+
+#--------------------------------------------------------------------
+# HONEYPOT
+#--------------------------------------------------------------------
+
+#  honeypot.hidden = 'true'
+#  honeypot.label = 'Fill This Field'
+#  honeypot.name = 'honeypot'
+#  honeypot.template = '<label>{label}</label><input type="text" name="{name}" value=""/>'

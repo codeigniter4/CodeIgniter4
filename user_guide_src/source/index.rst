@@ -61,10 +61,7 @@ General Topics
 Library Reference
 *****************
 
-.. toctree::
-	:titlesonly:
-
-	libraries/index
+* ``Honeypot``
 
 ******************
 Database Reference
