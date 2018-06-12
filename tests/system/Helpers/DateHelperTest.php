@@ -23,7 +23,7 @@ final class DateHelperTest extends \CIUnitTestCase
 	public function testNowDefault()
 	{
 		$time = new \DateTime();
-		$this->assertLessThan(1, abs(now() - time()));
+		$this->assertLessThan(1, abs(now() - time()));  // close enough
 	}
 
 	//--------------------------------------------------------------------
@@ -32,13 +32,6 @@ final class DateHelperTest extends \CIUnitTestCase
 	{
 		// Chicago should be two hours ahead of Vancouver
 		$this->assertEquals(7200,now('America/Chicago')-now('America/Vancouver'));
-//		$zone = 'America/Vancouver';
-//		$time = new \DateTime('now', new \DateTimeZone($zone));
-//		echo now($zone) . '\n';
-//		echo now() . '\n';
-//		echo $time->getTimestamp() . '\n';
-//				
-//		$this->assertLessThan(1, abs(now($zone) - $time->getTimestamp()));
 	}
 
 }
