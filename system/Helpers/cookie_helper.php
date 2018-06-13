@@ -95,7 +95,7 @@ if ( ! function_exists('get_cookie'))
 	 */
 	function get_cookie($index, bool $xssClean = false)
 	{
-		$app = new \Config\App();
+		$app = \CodeIgniter\Config\Services::app();
 		$appCookiePrefix = $app->cookiePrefix;
 		$prefix = isset($_COOKIE[$index]) ? '' : $appCookiePrefix;
 

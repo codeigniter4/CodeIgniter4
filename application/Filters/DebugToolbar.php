@@ -37,7 +37,7 @@ class DebugToolbar implements FilterInterface
 		{
 			global $app;
 
-			$toolbar = Services::toolbar(new App());
+			$toolbar = Services::toolbar();
 			$stats   = $app->getPerformanceStats();
 			$data    = $toolbar->run(
 				$stats['startTime'],

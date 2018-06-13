@@ -8,7 +8,7 @@ class Config
 {
 	public static function display()
 	{
-		$config = new App();
+		$config = Services::app();
 
 		return [
 			'ciVersion'   => CodeIgniter::CI_VERSION,
