@@ -75,7 +75,7 @@ if ( ! function_exists('form_open'))
 		}
 		if (stripos($attributes, 'accept-charset=') === false)
 		{
-			$config = new \Config\App();
+			$config = Services::app();
 			$attributes .= ' accept-charset="' . strtolower($config->charset) . '"';
 		}
 

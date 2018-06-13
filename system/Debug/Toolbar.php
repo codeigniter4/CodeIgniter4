@@ -221,7 +221,7 @@ class Toolbar
 		$files = [];
 
 		$current = self::$request->getGet('debugbar_time');
-		$app     = new \Config\App;
+		$app     = Services::app();
 
 		for ($i = 0; $i < $total; $i++)
 		{

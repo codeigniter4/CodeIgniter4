@@ -37,7 +37,6 @@
  */
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
-use Config\App;
 
 /**
  * Creates a migration file for database sessions.
@@ -102,7 +101,7 @@ class CreateMigration extends BaseCommand
 	 */
 	public function run(array $params = [])
 	{
-		$config = new App();
+		$config = \CodeIgniter\Config\Services::app();
 
 		$tableName = CLI::getOption('t') ?? 'ci_sessions';
 

@@ -274,7 +274,7 @@ class Model
 
 		if (is_null($config) || ! isset($config->salt))
 		{
-			$config = new App();
+			$config = \Config\Services::app();
 		}
 
 		$this->salt = $config->salt ?: '';

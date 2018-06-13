@@ -55,7 +55,7 @@ if ( ! function_exists('site_url'))
 		}
 
 		// use alternate config if provided, else default one
-		$config = empty($altConfig) ? new \Config\App() : $altConfig;
+		$config = empty($altConfig) ? \CodeIgniter\Config\Services::app() : $altConfig;
 
 		$base = base_url();
 
@@ -228,7 +228,7 @@ if ( ! function_exists('index_page'))
 	function index_page(\Config\App $altConfig = null): string
 	{
 		// use alternate config if provided, else default one
-		$config = empty($altConfig) ? new \Config\App() : $altConfig;
+		$config = empty($altConfig) ? \CodeIgniter\Config\Services::app() : $altConfig;
 
 		return $config->indexPage;
 	}
@@ -255,7 +255,7 @@ if ( ! function_exists('anchor'))
 	function anchor($uri = '', $title = '', $attributes = '', \Config\App $altConfig = null): string
 	{
 		// use alternate config if provided, else default one
-		$config = empty($altConfig) ? new \Config\App() : $altConfig;
+		$config = empty($altConfig) ? \CodeIgniter\Config\Services::app() : $altConfig;
 
 		$title = (string) $title;
 
@@ -299,7 +299,7 @@ if ( ! function_exists('anchor_popup'))
 	function anchor_popup($uri = '', $title = '', $attributes = false, \Config\App $altConfig = null): string
 	{
 		// use alternate config if provided, else default one
-		$config = empty($altConfig) ? new \Config\App() : $altConfig;
+		$config = empty($altConfig) ? \CodeIgniter\Config\Services::app() : $altConfig;
 
 		$title = (string) $title;
 		$site_url = preg_match('#^(\w+:)?//#i', $uri) ? $uri : site_url($uri, '', $config);
