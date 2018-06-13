@@ -37,7 +37,6 @@
  */
 use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Database\MigrationRunner;
-use CodeIgniter\HTTP\URI;
 use CodeIgniter\View\RendererInterface;
 use Config\App;
 
@@ -79,6 +78,15 @@ class Services extends BaseService
 	}
 
 	//--------------------------------------------------------------------
+
+	public static function app(bool $getShared = true) : \Config\App
+	{
+		if ($getShared)
+		{
+			return self::getSharedInstance('app');
+		}
+		return new \Config\App();
+	}
 
 	/**
 	 * The cache class provides a simple way to store and retrieve
@@ -124,7 +132,7 @@ class Services extends BaseService
 
 		if (! is_object($config))
 		{
-			$config = new \Config\App();
+			$config = self::getSharedInstance('app');
 		}
 
 		return new \CodeIgniter\HTTP\CLIRequest(
@@ -158,7 +166,7 @@ class Services extends BaseService
 
 		if (! is_object($config))
 		{
-			$config = new \Config\App();
+			$config = self::getSharedInstance('app');
 		}
 
 		if (! is_object($response))
@@ -542,7 +550,7 @@ class Services extends BaseService
 
 		if (! is_object($config))
 		{
-			$config = new App();
+			$config = self::getSharedInstance('app');
 		}
 
 		return new \CodeIgniter\HTTP\IncomingRequest(
@@ -572,7 +580,7 @@ class Services extends BaseService
 
 		if (! is_object($config))
 		{
-			$config = new \Config\App();
+			$config = self::getSharedInstance('app');
 		}
 
 		return new \CodeIgniter\HTTP\Response($config);
@@ -597,7 +605,7 @@ class Services extends BaseService
 
 		if (! is_object($config))
 		{
-			$config = new \Config\App();
+			$config = self::getSharedInstance('app');
 		}
 
 		$response = new \CodeIgniter\HTTP\RedirectResponse($config);
@@ -673,7 +681,7 @@ class Services extends BaseService
 
 		if (! is_object($config))
 		{
-			$config = new \Config\App();
+			$config = self::getSharedInstance('app');
 		}
 
 		return new \CodeIgniter\Security\Security($config);
@@ -696,7 +704,7 @@ class Services extends BaseService
 
 		if (! is_object($config))
 		{
-			$config = new \Config\App();
+			$config = self::getSharedInstance('app');
 		}
 
 		$logger = self::logger(true);
@@ -768,7 +776,7 @@ class Services extends BaseService
 
 		if (! is_object($config))
 		{
-			$config = new \Config\App();
+			$config = self::getSharedInstance('app');
 		}
 
 		return new \CodeIgniter\Debug\Toolbar($config);
