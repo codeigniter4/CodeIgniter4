@@ -19,8 +19,7 @@ tests must extend ``\CIDatabaseTestCase``::
 
 Because special functionality executed during the ``setUp()`` and ``tearDown()`` phases, you must ensure
 that you call the parent's methods if you need to use those methods, otherwise you will lose much
-of the functionality described here.
-::
+of the functionality described here::
 
     class MyTests extends \CIDatabaseTestCase
     {

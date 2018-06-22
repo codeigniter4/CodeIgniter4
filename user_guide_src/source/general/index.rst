@@ -28,4 +28,3 @@ General Topics
     managing_apps
     environments
     alternative_php
-    testing

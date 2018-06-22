@@ -11,4 +11,4 @@ get you quickly testing your applications.
 	Getting Started <overview>
     Database <database>
     Controller Testing <controllers>
-    HTTP Testing <http>
+    HTTP Testing <feature>
