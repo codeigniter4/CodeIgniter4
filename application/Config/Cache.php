@@ -100,6 +100,28 @@ class Cache extends BaseConfig
 	];
 
 	/*
+	| -------------------------------------------------------------------------
+	| Aerospike settings
+	| -------------------------------------------------------------------------
+	| Your Aerospike server can be specified below, if you are using
+	| the Aerospike drivers.
+	|
+	*/
+	public $aerospike = [
+	    'hosts'			=> [
+	        [
+	        	'addr'		=> '127.0.0.1',
+				'port'		=> 3000
+	        ]
+	    ],
+		'namespace'		=> 'test',
+		'set'			=> 'cache',
+	    'persistent'	=> false,
+		'prefix'		=> '',
+		'options'		=> []
+	];
+
+	/*
 	|--------------------------------------------------------------------------
 	| Available Cache Handlers
 	|--------------------------------------------------------------------------
@@ -115,5 +137,6 @@ class Cache extends BaseConfig
 		'predis'    => \CodeIgniter\Cache\Handlers\PredisHandler::class,
 		'redis'     => \CodeIgniter\Cache\Handlers\RedisHandler::class,
 		'wincache'  => \CodeIgniter\Cache\Handlers\WincacheHandler::class,
+		'aerospike' => \CodeIgniter\Cache\Handlers\AerospikeHandler::class,
 	];
 }

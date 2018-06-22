@@ -70,6 +70,10 @@ This is an array of servers that will be used when using the ``Memcache(d)`` han
 
 The settings for the Redis server that you wish to use when using the ``Redis`` handler.
 
+**$aerospike**
+
+The settings for the Aerospike server that you wish to use when using the ``Aerospike`` handler.
+
 ===============
 Class Reference
 ===============
@@ -248,6 +252,31 @@ Available options are::
 
 For more information on Redis, please see
 `http://redis.io <http://redis.io>`_.
+
+=============
+Aerospike Caching
+=============
+
+Aerospike is an in-memory key-value store which can operate in LRU cache mode.
+To use it, you need `Aerospike server PHP extension <https://github.com/aerospike/aerospike-client-php>`_.
+
+Config options to connect to aerospike server must be stored in the application/config/aerospike.php file.
+Available options are::
+
+	$config['hosts'] = [
+        [
+        	'addr'		=> '127.0.0.1',
+			'port'		=> 3000
+        ]
+	];
+	$config['namespace'] = 'test';
+	$config['set'] = 'cache';
+	$config['persistent'] = false;
+	$config['prefix'] = '';
+	$config['options'] = [];
+
+For more information on Redis, please see
+`http://aerospike.com <http://aerospike.com>`_.
 
 ===========
 Dummy Cache
