@@ -259,7 +259,7 @@ class AerospikeHandler implements CacheInterface
 			return true;
 		}
 
-		return true;
+		return false;
 	}
 
 	//--------------------------------------------------------------------

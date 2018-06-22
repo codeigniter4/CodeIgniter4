@@ -263,11 +263,6 @@ To use it, you need `Aerospike server PHP extension <https://github.com/aerospik
 Config options to connect to aerospike server must be stored in the application/config/aerospike.php file.
 Available options are::
 
-	$config['host'] = '127.0.0.1';
-	$config['password'] = NULL;
-	$config['port'] = 6379;
-	$config['timeout'] = 0;
-
 	$config['hosts'] = [
         [
         	'addr'		=> '127.0.0.1',
