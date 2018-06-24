@@ -55,6 +55,13 @@ use Config\App;
 class CLIRequest extends Request
 {
 
+        /**
+	 * A \CodeIgniter\HTTPLite\URI instance.
+	 *
+	 * @var URI
+	 */
+	public $uri;
+        
 	/**
 	 * Stores the segments of our cli "URI" command.
 	 *
@@ -68,20 +75,23 @@ class CLIRequest extends Request
 	 */
 	protected $options = [];
 
+        
 	//--------------------------------------------------------------------
 
 	/**
 	 * Constructor
 	 *
 	 * @param App $config
+         * @param URI $uri
 	 */
-	public function __construct(App $config)
+	public function __construct(App $config, $uri = null)
 	{
 		parent::__construct($config);
 
 		// Don't terminate the script when the cli's tty goes away
 		ignore_user_abort(true);
-
+                
+                $this->uri = $uri;
 		$this->parseCommand();
 	}
 
