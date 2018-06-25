@@ -1,205 +1,249 @@
-<?php namespace CodeIgniter\Helpers;
+<?php
+
+namespace CodeIgniter\Helpers;
 
 use org\bovigo\vfs\vfsStream;
 
-class FilesystemHelperTest extends \CIUnitTestCase
-{
+class FilesystemHelperTest extends \CIUnitTestCase {
 
-	public function setUp()
-	{
-		parent::setUp();
+    public function setUp() {
+        parent::setUp();
 
-		$this->structure = [
-			'foo'			 => [
-				'bar'	 => 'Once upon a midnight dreary',
-				'baz'	 => 'While I pondered weak and weary'
-			],
-			'boo'			 => [
-				'far'	 => 'Upon a tome of long-forgotten lore',
-				'faz'	 => 'There came a tapping up on the door'
-			],
-			'AnEmptyFolder'	 => [],
-			'simpleFile'	 => 'A tap-tap-tapping upon my door',
-			'.hidden'		 => 'There is no spoon'
-		];
-	}
+        $this->structure = [
+            'foo' => [
+                'bar' => 'Once upon a midnight dreary',
+                'baz' => 'While I pondered weak and weary'
+            ],
+            'boo' => [
+                'far' => 'Upon a tome of long-forgotten lore',
+                'faz' => 'There came a tapping up on the door'
+            ],
+            'AnEmptyFolder' => [],
+            'simpleFile' => 'A tap-tap-tapping upon my door',
+            '.hidden' => 'There is no spoon'
+        ];
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-	public function testDirectoryMapDefaults()
-	{
-		helper('filesystem');
-		$this->assertTrue(function_exists('directory_map'));
+    public function testDirectoryMapDefaults() {
+        helper('filesystem');
+        $this->assertTrue(function_exists('directory_map'));
 
-		$expected = [
-			'foo' . DIRECTORY_SEPARATOR				 => [
-				'bar',
-				'baz'
-			],
-			'boo' . DIRECTORY_SEPARATOR				 => [
-				'far',
-				'faz'
-			],
-			'AnEmptyFolder' . DIRECTORY_SEPARATOR	 => [],
-			'simpleFile'
-		];
+        $expected = [
+            'foo' . DIRECTORY_SEPARATOR => [
+                'bar',
+                'baz'
+            ],
+            'boo' . DIRECTORY_SEPARATOR => [
+                'far',
+                'faz'
+            ],
+            'AnEmptyFolder' . DIRECTORY_SEPARATOR => [],
+            'simpleFile'
+        ];
 
-		$root = vfsStream::setup('root', null, $this->structure);
-		$this->assertTrue($root->hasChild('foo'));
+        $root = vfsStream::setup('root', null, $this->structure);
+        $this->assertTrue($root->hasChild('foo'));
 
-		$this->assertEquals($expected, directory_map(vfsStream::url('root')));
-	}
+        $this->assertEquals($expected, directory_map(vfsStream::url('root')));
+    }
 
-	public function testDirectoryMapShowsHiddenFiles()
-	{
-		helper('filesystem');
-		$this->assertTrue(function_exists('directory_map'));
+    public function testDirectoryMapShowsHiddenFiles() {
+        helper('filesystem');
+        $this->assertTrue(function_exists('directory_map'));
 
-		$expected = [
-			'foo' . DIRECTORY_SEPARATOR				 => [
-				'bar',
-				'baz'
-			],
-			'boo' . DIRECTORY_SEPARATOR				 => [
-				'far',
-				'faz'
-			],
-			'AnEmptyFolder' . DIRECTORY_SEPARATOR	 => [],
-			'simpleFile',
-			'.hidden'
-		];
+        $expected = [
+            'foo' . DIRECTORY_SEPARATOR => [
+                'bar',
+                'baz'
+            ],
+            'boo' . DIRECTORY_SEPARATOR => [
+                'far',
+                'faz'
+            ],
+            'AnEmptyFolder' . DIRECTORY_SEPARATOR => [],
+            'simpleFile',
+            '.hidden'
+        ];
 
-		$root = vfsStream::setup('root', null, $this->structure);
-		$this->assertTrue($root->hasChild('foo'));
+        $root = vfsStream::setup('root', null, $this->structure);
+        $this->assertTrue($root->hasChild('foo'));
 
-		$this->assertEquals($expected, directory_map(vfsStream::url('root'), false, true));
-	}
+        $this->assertEquals($expected, directory_map(vfsStream::url('root'), false, true));
+    }
 
-	public function testDirectoryMapLimitsRecursion()
-	{
-		$this->assertTrue(function_exists('directory_map'));
+    public function testDirectoryMapLimitsRecursion() {
+        $this->assertTrue(function_exists('directory_map'));
 
-		$expected = [
-			'foo' . DIRECTORY_SEPARATOR,
-			'boo' . DIRECTORY_SEPARATOR,
-			'AnEmptyFolder' . DIRECTORY_SEPARATOR,
-			'simpleFile',
-			'.hidden'
-		];
+        $expected = [
+            'foo' . DIRECTORY_SEPARATOR,
+            'boo' . DIRECTORY_SEPARATOR,
+            'AnEmptyFolder' . DIRECTORY_SEPARATOR,
+            'simpleFile',
+            '.hidden'
+        ];
 
-		$root = vfsStream::setup('root', null, $this->structure);
-		$this->assertTrue($root->hasChild('foo'));
+        $root = vfsStream::setup('root', null, $this->structure);
+        $this->assertTrue($root->hasChild('foo'));
 
-		$this->assertEquals($expected, directory_map(vfsStream::url('root'), 1, true));
-	}
+        $this->assertEquals($expected, directory_map(vfsStream::url('root'), 1, true));
+    }
 
-	//--------------------------------------------------------------------
+    public function testDirectoryMapHandlesNotfound() {
+        $this->assertEquals([], directory_map(SUPPORTPATH . 'Files/shaker/'));
+    }
 
-	public function testWriteFileSuccess()
-	{
-		$vfs = vfsStream::setup('root');
+    //--------------------------------------------------------------------
 
-		$this->assertTrue(write_file(vfsStream::url('root/test.php'), 'Simple'));
-		$this->assertFileExists($vfs->getChild('test.php')->url());
-	}
+    public function testWriteFileSuccess() {
+        $vfs = vfsStream::setup('root');
 
-	//--------------------------------------------------------------------
+        $this->assertTrue(write_file(vfsStream::url('root/test.php'), 'Simple'));
+        $this->assertFileExists($vfs->getChild('test.php')->url());
+    }
 
-	public function testDeleteFilesDefaultsToOneLevelDeep()
-	{
-		$this->assertTrue(function_exists('delete_files'));
+    //--------------------------------------------------------------------
 
-		$vfs = vfsStream::setup('root', null, $this->structure);
+    public function testDeleteFilesDefaultsToOneLevelDeep() {
+        $this->assertTrue(function_exists('delete_files'));
 
-		delete_files(vfsStream::url('root'));
+        $vfs = vfsStream::setup('root', null, $this->structure);
 
-		$this->assertFalse($vfs->hasChild('simpleFile'));
-		$this->assertFalse($vfs->hasChild('.hidden'));
-		$this->assertTrue($vfs->hasChild('foo'));
-		$this->assertTrue($vfs->hasChild('boo'));
-		$this->assertTrue($vfs->hasChild('AnEmptyFolder'));
-	}
+        delete_files(vfsStream::url('root'));
 
-	public function testDeleteFilesHandlesRecursion()
-	{
-		$this->assertTrue(function_exists('delete_files'));
+        $this->assertFalse($vfs->hasChild('simpleFile'));
+        $this->assertFalse($vfs->hasChild('.hidden'));
+        $this->assertTrue($vfs->hasChild('foo'));
+        $this->assertTrue($vfs->hasChild('boo'));
+        $this->assertTrue($vfs->hasChild('AnEmptyFolder'));
+    }
 
-		$vfs = vfsStream::setup('root', null, $this->structure);
+    public function testDeleteFilesHandlesRecursion() {
+        $this->assertTrue(function_exists('delete_files'));
 
-		delete_files(vfsStream::url('root'), true);
+        $vfs = vfsStream::setup('root', null, $this->structure);
 
-		$this->assertFalse($vfs->hasChild('simpleFile'));
-		$this->assertFalse($vfs->hasChild('.hidden'));
-		$this->assertFalse($vfs->hasChild('foo'));
-		$this->assertFalse($vfs->hasChild('boo'));
-		$this->assertFalse($vfs->hasChild('AnEmptyFolder'));
-	}
+        delete_files(vfsStream::url('root'), true);
 
-	public function testDeleteFilesLeavesHTFiles()
-	{
-		$structure = array_merge($this->structure, [
-			'.htaccess'		 => 'Deny All',
-			'index.html'	 => 'foo',
-			'index.php'		 => 'blah'
-		]);
+        $this->assertFalse($vfs->hasChild('simpleFile'));
+        $this->assertFalse($vfs->hasChild('.hidden'));
+        $this->assertFalse($vfs->hasChild('foo'));
+        $this->assertFalse($vfs->hasChild('boo'));
+        $this->assertFalse($vfs->hasChild('AnEmptyFolder'));
+    }
 
-		$vfs = vfsStream::setup('root', null, $structure);
+    public function testDeleteFilesLeavesHTFiles() {
+        $structure = array_merge($this->structure, [
+            '.htaccess' => 'Deny All',
+            'index.html' => 'foo',
+            'index.php' => 'blah'
+        ]);
 
-		delete_files(vfsStream::url('root'), true, true);
+        $vfs = vfsStream::setup('root', null, $structure);
 
-		$this->assertFalse($vfs->hasChild('simpleFile'));
-		$this->assertFalse($vfs->hasChild('foo'));
-		$this->assertFalse($vfs->hasChild('boo'));
-		$this->assertFalse($vfs->hasChild('AnEmptyFolder'));
-		$this->assertTrue($vfs->hasChild('.htaccess'));
-		$this->assertTrue($vfs->hasChild('index.html'));
-		$this->assertTrue($vfs->hasChild('index.php'));
-	}
+        delete_files(vfsStream::url('root'), true, true);
 
-	//--------------------------------------------------------------------
+        $this->assertFalse($vfs->hasChild('simpleFile'));
+        $this->assertFalse($vfs->hasChild('foo'));
+        $this->assertFalse($vfs->hasChild('boo'));
+        $this->assertFalse($vfs->hasChild('AnEmptyFolder'));
+        $this->assertTrue($vfs->hasChild('.htaccess'));
+        $this->assertTrue($vfs->hasChild('index.html'));
+        $this->assertTrue($vfs->hasChild('index.php'));
+    }
 
-	public function testGetFilenames()
-	{
-		$this->assertTrue(function_exists('delete_files'));
+    //--------------------------------------------------------------------
 
-		// Not sure the directory names should actually show up
-		// here but this matches v3.x results.
-		$expected = [
-			'foo',
-			'boo',
-			'AnEmptyFolder',
-			'simpleFile'
-		];
+    public function testGetFilenames() {
+        $this->assertTrue(function_exists('delete_files'));
 
-		$vfs = vfsStream::setup('root', null, $this->structure);
+        // Not sure the directory names should actually show up
+        // here but this matches v3.x results.
+        $expected = [
+            'foo',
+            'boo',
+            'AnEmptyFolder',
+            'simpleFile'
+        ];
 
-		$this->assertEquals($expected, get_filenames($vfs->url(), false));
-	}
+        $vfs = vfsStream::setup('root', null, $this->structure);
 
-	public function testGetFilenamesWithSource()
-	{
-		$this->assertTrue(function_exists('delete_files'));
+        $this->assertEquals($expected, get_filenames($vfs->url(), false));
+    }
 
-		// Not sure the directory names should actually show up
-		// here but this matches v3.x results.
-		$expected = [
-			DIRECTORY_SEPARATOR . 'foo',
-			DIRECTORY_SEPARATOR . 'boo',
-			DIRECTORY_SEPARATOR . 'AnEmptyFolder',
-			DIRECTORY_SEPARATOR . 'simpleFile'
-		];
+    public function testGetFilenamesWithSource() {
+        $this->assertTrue(function_exists('delete_files'));
 
-		$vfs = vfsStream::setup('root', null, $this->structure);
+        // Not sure the directory names should actually show up
+        // here but this matches v3.x results.
+        $expected = [
+            DIRECTORY_SEPARATOR . 'foo',
+            DIRECTORY_SEPARATOR . 'boo',
+            DIRECTORY_SEPARATOR . 'AnEmptyFolder',
+            DIRECTORY_SEPARATOR . 'simpleFile'
+        ];
 
-		$this->assertEquals($expected, get_filenames($vfs->url(), true));
-	}
+        $vfs = vfsStream::setup('root', null, $this->structure);
 
-	//--------------------------------------------------------------------
-	
-	public function testGetFileInfo(){
-		$vfs = vfsStream::setup('root', null, $this->structure);
+        $this->assertEquals($expected, get_filenames($vfs->url(), true));
+    }
 
-		$this->assertEquals($expected, get_filenames($vfs->url(), true));
-		
-	}
+    //--------------------------------------------------------------------
+
+    public function testGetDirFileInfo() {
+
+        $expected = [
+            'banana.php' => [
+                'name' => 'banana.php',
+                'server_path' => '/pub7/htdocs/CodeIgniter4/tests/_support/Files/baker/banana.php',
+                'size' => 193,
+                'date' => 1529305930,
+                'relative_path' => '/pub7/htdocs/CodeIgniter4/tests/_support/Files/baker',
+            ]
+        ];
+
+
+        $this->assertEquals($expected, get_dir_file_info(SUPPORTPATH . 'Files/baker'));
+    }
+
+    public function testGetFileInfo() {
+
+        $expected = [
+            'name' => 'banana.php',
+            'server_path' => '/pub7/htdocs/CodeIgniter4/tests/_support/Files/baker/banana.php',
+            'size' => 193,
+            'date' => 1529305930,
+        ];
+
+
+        $this->assertEquals($expected, get_file_info(SUPPORTPATH . 'Files/baker/banana.php'));
+    }
+
+    public function testGetFileInfoCustom() {
+
+        $expected = [
+            'readable' => true,
+            'writable' => true,
+            'executable' => false,
+        ];
+
+        $this->assertEquals($expected, get_file_info(SUPPORTPATH . 'Files/baker/banana.php', 'readable,writable,executable'));
+    }
+
+    public function testGetFileInfoPerms() {
+
+        $expected = 0664;
+
+        $stuff = get_file_info(SUPPORTPATH . 'Files/baker/banana.php', 'fileperms');
+        $this->assertEquals($expected, $stuff['fileperms'] & 0777);
+    }
+
+    public function testGetFileNotThereInfo() {
+
+        $expected = null;
+
+        $this->assertEquals($expected, get_file_info(SUPPORTPATH . 'Files/icer'));
+    }
+
 }

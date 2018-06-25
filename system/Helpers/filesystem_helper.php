@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CodeIgniter
  *
@@ -35,7 +36,6 @@
  * @since	Version 1.0.0
  * @filesource
  */
-
 /**
  * CodeIgniter Directory Helpers
  *
@@ -66,8 +66,10 @@ if ( ! function_exists('directory_map'))
 	 */
 	function directory_map(string $source_dir, int $directory_depth = 0, bool $hidden = false): array
 	{
-		if ($fp = @opendir($source_dir))
+		try
 		{
+			$fp = opendir($source_dir);
+
 			$filedata = [];
 			$new_depth = $directory_depth - 1;
 			$source_dir = rtrim($source_dir, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
@@ -85,8 +87,7 @@ if ( ! function_exists('directory_map'))
 				if (($directory_depth < 1 || $new_depth > 0) && is_dir($source_dir . $file))
 				{
 					$filedata[$file] = directory_map($source_dir . $file, $new_depth, $hidden);
-				}
-				else
+				} else
 				{
 					$filedata[] = $file;
 				}
@@ -94,9 +95,10 @@ if ( ! function_exists('directory_map'))
 
 			closedir($fp);
 			return $filedata;
+		} catch (Exception $fe)
+		{
+			return [];
 		}
-
-		return [];
 	}
 
 }
@@ -180,8 +182,7 @@ if ( ! function_exists('delete_files'))
 				if (is_dir($path . DIRECTORY_SEPARATOR . $filename) && $filename[0] !== '.')
 				{
 					delete_files($path . DIRECTORY_SEPARATOR . $filename, $delDir, $htdocs, $_level + 1);
-				}
-				elseif ($htdocs !== true || ! preg_match('/^(\.htaccess|index\.(html|htm|php)|web\.config)$/i', $filename))
+				} elseif ($htdocs !== true || ! preg_match('/^(\.htaccess|index\.(html|htm|php)|web\.config)$/i', $filename))
 				{
 					@unlink($path . DIRECTORY_SEPARATOR . $filename);
 				}
@@ -230,8 +231,7 @@ if ( ! function_exists('get_filenames'))
 				if (is_dir($source_dir . $file) && $file[0] !== '.')
 				{
 					get_filenames($source_dir . $file . DIRECTORY_SEPARATOR, $include_path, true);
-				}
-				elseif ($file[0] !== '.')
+				} elseif ($file[0] !== '.')
 				{
 					$filedata[] = ($include_path === true) ? $source_dir . $file : $file;
 				}
@@ -285,8 +285,7 @@ if ( ! function_exists('get_dir_file_info'))
 				if (is_dir($source_dir . $file) && $file[0] !== '.' && $top_level_only === false)
 				{
 					get_dir_file_info($source_dir . $file . DIRECTORY_SEPARATOR, $top_level_only, true);
-				}
-				elseif ($file[0] !== '.')
+				} elseif ($file[0] !== '.')
 				{
 					$filedata[$file] = get_file_info($source_dir . $file);
 					$filedata[$file]['relative_path'] = $relative_path;
@@ -318,9 +317,9 @@ if ( ! function_exists('get_file_info'))
 	 * @param    string $file            Path to file
 	 * @param    mixed  $returned_values Array or comma separated string of information returned
 	 *
-	 * @return    array
+	 * @return    array|null
 	 */
-	function get_file_info(string $file, $returned_values = ['name', 'server_path', 'size', 'date']): array
+	function get_file_info(string $file, $returned_values = ['name', 'server_path', 'size', 'date'])
 	{
 		if ( ! file_exists($file))
 		{
@@ -334,8 +333,7 @@ if ( ! function_exists('get_file_info'))
 
 		foreach ($returned_values as $key)
 		{
-			switch ($key)
-			{
+			switch ($key) {
 				case 'name':
 					$fileinfo['name'] = basename($file);
 					break;
@@ -387,32 +385,25 @@ if ( ! function_exists('symbolic_permissions'))
 		if (($perms & 0xC000) === 0xC000)
 		{
 			$symbolic = 's'; // Socket
-		}
-		elseif (($perms & 0xA000) === 0xA000)
+		} elseif (($perms & 0xA000) === 0xA000)
 		{
 			$symbolic = 'l'; // Symbolic Link
-		}
-		elseif (($perms & 0x8000) === 0x8000)
+		} elseif (($perms & 0x8000) === 0x8000)
 		{
 			$symbolic = '-'; // Regular
-		}
-		elseif (($perms & 0x6000) === 0x6000)
+		} elseif (($perms & 0x6000) === 0x6000)
 		{
 			$symbolic = 'b'; // Block special
-		}
-		elseif (($perms & 0x4000) === 0x4000)
+		} elseif (($perms & 0x4000) === 0x4000)
 		{
 			$symbolic = 'd'; // Directory
-		}
-		elseif (($perms & 0x2000) === 0x2000)
+		} elseif (($perms & 0x2000) === 0x2000)
 		{
 			$symbolic = 'c'; // Character special
-		}
-		elseif (($perms & 0x1000) === 0x1000)
+		} elseif (($perms & 0x1000) === 0x1000)
 		{
 			$symbolic = 'p'; // FIFO pipe
-		}
-		else
+		} else
 		{
 			$symbolic = 'u'; // Unknown
 		}
@@ -483,8 +474,7 @@ if ( ! function_exists('set_realpath'))
 		if (realpath($path) !== false)
 		{
 			$path = realpath($path);
-		}
-		elseif ($checkExistance && ! is_dir($path) && ! is_file($path))
+		} elseif ($checkExistance && ! is_dir($path) && ! is_file($path))
 		{
 			throw new InvalidArgumentException('Not a valid path: ' . $path);
 		}
