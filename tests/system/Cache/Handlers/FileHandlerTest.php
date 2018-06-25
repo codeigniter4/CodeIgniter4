@@ -92,9 +92,8 @@ class FileHandlerTest extends \CIUnitTestCase
 	{
 		$this->assertTrue($this->fileHandler->save(self::$key1, 'value'));
 
-		// The FileHandler always ensures the directory is writable...
 		chmod($this->config->storePath, 0444);
-		$this->assertTrue($this->fileHandler->save(self::$key2, 'value'));
+		$this->assertFalse($this->fileHandler->save(self::$key2, 'value'));
 	}
 
 	public function testDelete()
