@@ -35,7 +35,7 @@
  * @since	Version 3.0.0
  * @filesource
  */
-use CodeIgniter\CriticalError;
+use CodeIgniter\Exceptions\CriticalError;
 use CodeIgniter\Cache\CacheInterface;
 
 class RedisHandler implements CacheInterface
@@ -77,7 +77,7 @@ class RedisHandler implements CacheInterface
 
 		if ( ! empty($config))
 		{
-			$this->config = array_merge($this->config, $config);
+			$this->config = array_merge($this->config, $config['redis']);
 		}
 	}
 
