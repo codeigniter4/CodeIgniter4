@@ -127,9 +127,7 @@ class Services extends BaseService
 			$config = new \Config\App();
 		}
 
-		return new \CodeIgniter\HTTP\CLIRequest(
-			$config, new \CodeIgniter\HTTP\URI()
-		);
+		return new \CodeIgniter\HTTP\CLIRequest($config);
 	}
 
 	//--------------------------------------------------------------------
