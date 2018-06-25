@@ -364,10 +364,14 @@ class Logger implements LoggerInterface
 
 		foreach ($this->handlerConfig as $className => $config)
 		{
+			if ( ! array_key_exists($className, $this->handlers)) {
+				$this->handlers[$className] = new $className($config);
+			}
+			
 			/**
 			 * @var \CodeIgniter\Log\Handlers\HandlerInterface
 			 */
-			$handler = new $className($config);
+			$handler = $this->handlers[$className];
 
 			if ( ! $handler->canHandle($level))
 			{
