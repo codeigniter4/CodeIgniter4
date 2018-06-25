@@ -248,7 +248,9 @@ simply map the ``full_name`` column in the database to the ``$name`` property, a
         protected $_options = [
             'datamap' => [
                 'full_name' => 'name'
-            ]
+            ],
+            'dates' => ['created_at', 'updated_at', 'deleted_at'],
+            'casts' => []
         ];
     }
 
@@ -289,6 +291,8 @@ You can define which properties are automatically converted by adding the name t
 
         protected $_options = [
             'dates' => ['created_at', 'updated_at', 'deleted_at'],
+            'casts' => [],
+            'datamap' => []
         ];
     }
 
@@ -327,7 +331,9 @@ For example, if you had a User entity with an **is_banned** property, you can ca
         protected $_options = [
             'casts' => [
                 'is_banned' => 'boolean'
-            ]
+            ],
+            'dates' => ['created_at', 'updated_at', 'deleted_at'],
+            'datamap' => []
         ];
     }
 
@@ -349,7 +355,9 @@ you can cast properties into, the **array** cast type will serialize the value w
         protected $_options = [
             'casts' => [
                 'options' => 'array'
-            ]
+            ],
+             'dates' => ['created_at', 'updated_at', 'deleted_at'],
+            'datamap' => []
         ];
     }
 
