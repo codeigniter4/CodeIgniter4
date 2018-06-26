@@ -13,6 +13,7 @@ Library Reference
     curlrequest
     email
     files
+    honeypot
     images
     incomingrequest
     localization
