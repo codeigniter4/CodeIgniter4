@@ -4,7 +4,7 @@ use Config\App;
 use CodeIgniter\Config\Services;
 use Tests\Support\HTTP\MockResponse;
 
-final class cookieHelperTest extends \CIUnitTestCase
+final class CookieHelperTest extends \CIUnitTestCase
 {
 
     private $name;
@@ -22,6 +22,8 @@ final class cookieHelperTest extends \CIUnitTestCase
 
         Services::injectMock('response', new MockResponse(new App()));
         $this->response = service('response');
+		$this->request = new IncomingRequest(new App(), new URI(), null, new UserAgent());
+        Services::injectMock('request', $this->request);
 
         helper('cookie');
     }
@@ -30,14 +32,11 @@ final class cookieHelperTest extends \CIUnitTestCase
 
     public function testSetCookie()
     {
-        $this->response->setCookie($this->name, $this->value, $this->expire);
-
-        //TODO: Find a way for set_cookie() to use the MockResponse object.
-        //set_cookie($this->name, $this->value, $this->expire);
+        set_cookie($this->name, $this->value, $this->expire);
 
         $this->assertTrue($this->response->hasCookie($this->name));
 
-        $this->response->deleteCookie($this->name);
+        delete_cookie($this->name);
     }
 
     //--------------------------------------------------------------------
@@ -49,17 +48,16 @@ final class cookieHelperTest extends \CIUnitTestCase
             'value'  => $this->value,
             'expire' => $this->expire
         ];
-        //set_cookie($cookieAttr);
-        $this->response->setCookie($cookieAttr);
-
+        set_cookie($cookieAttr);
+ 
         $this->assertTrue($this->response->hasCookie($this->name, $this->value));
 
-        $this->response->deleteCookie($this->name);
+        delete_cookie($this->name);
     }
 
     //--------------------------------------------------------------------
 
-    public function testGetCookie()
+    public function testSetCookieSecured()
     {
         $pre  = 'Hello, I try to';
         $pst  = 'your site';
@@ -68,29 +66,35 @@ final class cookieHelperTest extends \CIUnitTestCase
         $unsecured = 'unsecured';
         $secured   = 'secured';
 
-        //set_cookie($unsecured, $unsec, $this->expire);
-        //set_cookie($secured,   $sec,   $this->expire);
-        $this->response->setCookie($unsecured, $unsec, $this->expire);
-        $this->response->setCookie($secured, $sec, $this->expire);
+        set_cookie($unsecured, $unsec, $this->expire);
+        set_cookie($secured,   $sec,   $this->expire);
 
 	    $this->assertTrue($this->response->hasCookie($unsecured, $unsec));
 	    $this->assertTrue($this->response->hasCookie($secured, $sec));
 
-        $this->response->deleteCookie($unsecured);
-        $this->response->deleteCookie($secured);
+        delete_cookie($unsecured);
+        delete_cookie($secured);
     }
 
     //--------------------------------------------------------------------
 
     public function testDeleteCookie()
     {
-        //set_cookie($this->name, $this->value, $this->expire);
-        $this->response->setCookie($this->name, $this->value, $this->expire);
+        set_cookie($this->name, $this->value, $this->expire);
+        //$this->response->setCookie($this->name, $this->value, $this->expire);
 
-        $this->response->deleteCookie($this->name);
+        delete_cookie($this->name);
 
-        //$this->assertEquals(get_cookie($this->name), '');
-        $this->assertTrue($this->response->hasCookie($this->name));
+        $this->assertEmpty($this->response->getCookie($this->name));
+    }
+
+    //--------------------------------------------------------------------
+
+    public function testGetCookie()
+    {
+		$_COOKIE['TEST'] = 5;
+
+		$this->assertEquals(5, get_cookie('TEST'));
     }
 
 }
