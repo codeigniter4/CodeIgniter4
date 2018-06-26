@@ -44,9 +44,9 @@ Tutorial
 CodeIgniter4 Overview
 *********************
 .. toctree::
-   :titlesonly:
+	:titlesonly:
 
-   concepts/index
+	concepts/index
 
 **************
 General Topics
@@ -61,7 +61,10 @@ General Topics
 Library Reference
 *****************
 
-* ``Honeypot``
+.. toctree::
+	:titlesonly:
+
+	libraries/index
 
 ******************
 Database Reference
@@ -86,9 +89,9 @@ Testing
 *******
 
 .. toctree::
-   :titlesonly:
+	:titlesonly:
 
-   testing.index
+	testing/index
 
 ***************************
 Contributing to CodeIgniter
@@ -97,4 +100,4 @@ Contributing to CodeIgniter
 .. toctree::
 	:titlesonly:
 
-   	contributing/index
+	contributing/index
