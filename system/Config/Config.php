@@ -59,16 +59,22 @@ class Config
 	 */
 	public static function get(string $name, bool $getShared = true)
 	{
-		if (! $getShared)
+		$class = $name;
+		if( ($pos = strrpos($name, '\\')) !== -1 )
 		{
-			return self::createClass( $name);
+			$class = substr($name, $pos+1);
 		}
 
-		if( !isset( self::$instances[$name] ) )
+		if (! $getShared)
 		{
-			self::$instances[$name] = self::createClass($name);
+			return self::createClass($name);
 		}
-		return self::$instances[$name];
+
+		if( !isset( self::$instances[$class] ) )
+		{
+			self::$instances[$class] = self::createClass($name);
+		}
+		return self::$instances[$class];
 	}
 
 	/**
@@ -78,7 +84,7 @@ class Config
 	 */
 	private static function createClass(string $name)
 	{
-		if( class_exists( $name ) )
+		if( class_exists($name))
 		{
 			return new $name();
 		}
@@ -91,58 +97,10 @@ class Config
 			return null;
 		}
 
-		$classname = self::getClassname($file);
+		$classname = $locator->getClassname($file);
 
-		/*if (strpos( $classname, 'App\\' ) !== false)
-		{
-
-		}*/
 		return new $classname();
 	}
 
-	/**
-	 * Examines a file and returns the fully qualified domain name.
-	 *
-	 * @param string $file
-	 *
-	 * @return string
-	 */
-	private static function getClassname(string $file) : string
-	{
-		$php    = file_get_contents($file);
-		$tokens = token_get_all($php);
-		$count  = count($tokens);
-		$dlm    = false;
-		$namespace = '';
-		$class_name = '';
 
-		for ($i = 2; $i < $count; $i++)
-		{
-			if ((isset($tokens[$i-2][1]) && ($tokens[$i-2][1] == "phpnamespace" || $tokens[$i-2][1] == "namespace")) || ($dlm && $tokens[$i-1][0] == T_NS_SEPARATOR && $tokens[$i][0] == T_STRING))
-			{
-				if (! $dlm)
-				{
-					$namespace = 0;
-				}
-				if (isset($tokens[$i][1]))
-				{
-					$namespace = $namespace ? $namespace."\\".$tokens[$i][1] : $tokens[$i][1];
-					$dlm       = true;
-				}
-			}
-			elseif ($dlm && ($tokens[$i][0] != T_NS_SEPARATOR) && ($tokens[$i][0] != T_STRING))
-			{
-				$dlm = false;
-			}
-			if (($tokens[$i-2][0] == T_CLASS || (isset($tokens[$i-2][1]) && $tokens[$i-2][1] == "phpclass"))
-				&& $tokens[$i-1][0] == T_WHITESPACE
-				&& $tokens[$i][0] == T_STRING)
-			{
-				$class_name = $tokens[$i][1];
-				break;
-			}
-		}
-
-		return $namespace .'\\'. $class_name;
-	}
 }
