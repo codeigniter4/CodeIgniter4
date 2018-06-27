@@ -27,12 +27,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 3.0.0
  * @filesource
  */
 
@@ -51,56 +51,72 @@ class Config
 	 */
 	static private $instances = [];
 
+	//--------------------------------------------------------------------
+
 	/**
-	 * @param string $name
-	 * @param bool   $getShared
+	 * Create new configuration instances or return
+	 * a shared instance
+	 *
+	 * @param string  $name      Configuration name
+	 * @param boolean $getShared Use shared instance
 	 *
 	 * @return mixed|null
 	 */
 	public static function get(string $name, bool $getShared = true)
 	{
 		$class = $name;
-		if( ($pos = strrpos($name, '\\')) !== -1 )
+		if (($pos = strrpos($name, '\\')) !== false)
 		{
-			$class = substr($name, $pos+1);
+			$class = substr($name, $pos + 1);
 		}
+
+		$class = strtolower($class);
 
 		if (! $getShared)
 		{
 			return self::createClass($name);
 		}
 
-		if( !isset( self::$instances[$class] ) )
+		if (! isset( self::$instances[$class] ))
 		{
 			self::$instances[$class] = self::createClass($name);
 		}
 		return self::$instances[$class];
 	}
 
+	//--------------------------------------------------------------------
+
 	/**
-	 * @param string $name
+	 * Find configuration class and create instance
+	 *
+	 * @param string $name Classname
 	 *
 	 * @return mixed|null
 	 */
 	private static function createClass(string $name)
 	{
-		if( class_exists($name))
+		if (class_exists($name))
 		{
 			return new $name();
 		}
 
 		$locator = Services::locator();
-		$file = $locator->locateFile($name,'Config');
+		$file    = $locator->locateFile($name, 'Config');
 
 		if (empty($file))
 		{
 			return null;
 		}
 
-		$classname = $locator->getClassname($file);
+		$name = $locator->getClassname($file);
 
-		return new $classname();
+		if (empty($name))
+		{
+			return null;
+		}
+
+		return new $name();
 	}
 
-
+	//--------------------------------------------------------------------
 }

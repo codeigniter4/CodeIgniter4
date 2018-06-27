@@ -194,6 +194,8 @@ class FileLocator
 			}
 		}
 
+		if( empty( $class_name ) ) return "";
+
 		return $namespace .'\\'. $class_name;
 	}
 
