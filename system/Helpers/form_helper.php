@@ -82,7 +82,7 @@ if ( ! function_exists('form_open'))
 		$form = '<form action="' . $action . '"' . $attributes . ">\n";
 
 		// Add CSRF field if enabled, but leave it out for GET requests and requests to external websites
-		$before = (new \Config\Filters())->globals['before'];
+		$before = Services::filters()->getFilters()['before'];
 
 		if ((in_array('csrf', $before) || array_key_exists('csrf', $before)) && strpos($action, base_url()) !== false && ! stripos($form, 'method="get"')
 		)
