@@ -11,10 +11,17 @@ create an instance of the class and all your settings are there for you.
 Accessing Config Files
 ======================
 
-You can access config files within your classes by creating a new instance. All of the properties
+You can access config files within your classes by creating a new instance or using the config function. All of the properties
 are public, so you access the settings like any other property::
 
+	// Creating new class by hand
 	$config = new \Config\EmailConfig();
+
+	// Creating new class with config function
+	$config = config( 'EmailConfig', false );
+
+	// Get shared instance with config function
+	$config = config( 'EmailConfig' );
 
 	// Access settings as class properties
 	$protocol = $config->protocol;
