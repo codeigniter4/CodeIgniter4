@@ -36,6 +36,8 @@
  * @filesource
  */
 
+use CodeIgniter\Autoloader\FileLocator;
+
 /**
  * Services Configuration file.
  *
@@ -191,7 +193,7 @@ class BaseService
 			// Get instances of all service classes and cache them locally.
 			foreach ($files as $file)
 			{
-				$classname = static::getClassName($file);
+				$classname = $locator->getClassname($file);
 
 				if (! in_array($classname, ['Config\\Services', 'CodeIgniter\\Config\\Services']))
 				{
@@ -213,51 +215,5 @@ class BaseService
 				return $class::$name(...$arguments);
 			}
 		}
-	}
-
-	/**
-	 * Examines a file and returns the fully qualified domain name.
-	 *
-	 * @param string $file
-	 *
-	 * @return string
-	 */
-	private static function getClassname(string $file)
-	{
-		$php    = file_get_contents($file);
-		$tokens = token_get_all($php);
-		$count  = count($tokens);
-		$dlm    = false;
-		$namespace = '';
-		$class_name = '';
-
-		for ($i = 2; $i < $count; $i++)
-		{
-			if ((isset($tokens[$i-2][1]) && ($tokens[$i-2][1] == "phpnamespace" || $tokens[$i-2][1] == "namespace")) || ($dlm && $tokens[$i-1][0] == T_NS_SEPARATOR && $tokens[$i][0] == T_STRING))
-			{
-				if (! $dlm)
-				{
-					$namespace = 0;
-				}
-				if (isset($tokens[$i][1]))
-				{
-					$namespace = $namespace ? $namespace."\\".$tokens[$i][1] : $tokens[$i][1];
-					$dlm       = true;
-				}
-			}
-			elseif ($dlm && ($tokens[$i][0] != T_NS_SEPARATOR) && ($tokens[$i][0] != T_STRING))
-			{
-				$dlm = false;
-			}
-			if (($tokens[$i-2][0] == T_CLASS || (isset($tokens[$i-2][1]) && $tokens[$i-2][1] == "phpclass"))
-			    && $tokens[$i-1][0] == T_WHITESPACE
-			    && $tokens[$i][0] == T_STRING)
-			{
-				$class_name = $tokens[$i][1];
-				break;
-			}
-		}
-
-		return $namespace .'\\'. $class_name;
 	}
 }
