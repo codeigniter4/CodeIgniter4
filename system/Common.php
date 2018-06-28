@@ -85,6 +85,24 @@ if ( ! function_exists('cache'))
 
 //--------------------------------------------------------------------
 
+if ( ! function_exists('config'))
+{
+	/**
+	 * More simple way of getting config instances
+	 *
+	 * @param string $name
+	 * @param bool   $getShared
+	 *
+	 * @return mixed
+	 */
+	function config(string $name, bool $getShared = true)
+	{
+		return \CodeIgniter\Config\Config::get($name, $getShared);
+	}
+}
+
+//--------------------------------------------------------------------
+
 if ( ! function_exists('view'))
 {
 

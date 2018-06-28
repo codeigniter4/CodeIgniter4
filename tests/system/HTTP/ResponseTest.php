@@ -57,7 +57,7 @@ class ResponseTest extends \CIUnitTestCase
 		$response = new Response(new App());
 
 		$this->expectException(HTTPException::class);
-		$this->expectExceptionMessage('Unknown HTTP status code provided with no message');
+		$this->expectExceptionMessage(lang('HTTP.unknownStatusCode', [115]));
 		$response->setStatusCode(115);
 	}
 
