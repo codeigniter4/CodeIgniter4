@@ -23,6 +23,9 @@ are public, so you access the settings like any other property::
 	// Get shared instance with config function
 	$config = config( 'EmailConfig' );
 
+	// Access config class with namespace
+	$config = config( 'Config\\EmailConfig' );
+
 	// Access settings as class properties
 	$protocol = $config->protocol;
 	$mailpath = $config->mailpath;
