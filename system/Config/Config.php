@@ -70,7 +70,7 @@ class Config
 			$class = substr($name, $pos + 1);
 		}
 
-		$class = strtolower($class);
+		//$class = strtolower($class);
 
 		if (! $getShared)
 		{
