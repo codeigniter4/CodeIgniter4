@@ -49,20 +49,21 @@ if ( ! function_exists('number_to_size'))
 	 */
 	function number_to_size($num, int $precision = 1, string $locale = null)
 	{
-		// Strip any formatting
-		$num = 0 + str_replace(',', '', $num);
-
-		// Can't work with non-numbers...
-		if ( ! is_numeric($num))
+		// Strip any formatting & ensure numeric input
+		try
+		{
+			$num = 0 + str_replace(',', '', $num);
+		}
+		catch (\ErrorException $ee)
 		{
 			return false;
 		}
 
 		// ignore sub part
 		$genralLocale = $locale;
-		if( ! empty($locale) && ( $underscorePos = strpos( $locale, '_' )))
+		if ( ! empty($locale) && ( $underscorePos = strpos($locale, '_')))
 		{
-			$genralLocale = substr( $locale, 0, $underscorePos );
+			$genralLocale = substr($locale, 0, $underscorePos);
 		}
 
 		if ($num >= 1000000000000)
@@ -119,22 +120,24 @@ if ( ! function_exists('number_to_amount'))
 	 */
 	function number_to_amount($num, int $precision = 0, string $locale = null)
 	{
-		// Strip any formatting
-		$num = 0 + str_replace(',', '', $num);
-
-		// Can't work with non-numbers...
-		if ( ! is_numeric($num))
+		// Strip any formatting & ensure numeric input
+		try
+		{
+			$num = 0 + str_replace(',', '', $num);
+		}
+		catch (\ErrorException $ee)
 		{
 			return false;
 		}
+
 
 		$suffix = '';
 
 		// ignore sub part
 		$genralLocale = $locale;
-		if( ! empty($locale) && ( $underscorePos = strpos( $locale, '_' )))
+		if ( ! empty($locale) && ( $underscorePos = strpos($locale, '_')))
 		{
-			$genralLocale = substr( $locale, 0, $underscorePos );
+			$genralLocale = substr($locale, 0, $underscorePos);
 		}
 
 		if ($num > 1000000000000000)
@@ -172,6 +175,7 @@ if ( ! function_exists('number_to_amount'))
 
 if ( ! function_exists('number_to_currency'))
 {
+
 	/**
 	 * @param float  $num
 	 * @param string $currency
@@ -182,8 +186,8 @@ if ( ! function_exists('number_to_currency'))
 	function number_to_currency($num, string $currency, string $locale = null)
 	{
 		return format_number($num, 1, $locale, [
-			'type'		 => NumberFormatter::CURRENCY,
-			'currency'	 => $currency
+			'type' => NumberFormatter::CURRENCY,
+			'currency' => $currency
 		]);
 	}
 
@@ -258,49 +262,48 @@ if ( ! function_exists('format_number'))
 
 if ( ! function_exists('number_to_roman'))
 {
+
 	/**
-	* Convert a number to a roman numeral.
-	*
-	* @param int $num it will convert to int
-	*
-	* @return string
-	*/
+	 * Convert a number to a roman numeral.
+	 *
+	 * @param int $num it will convert to int
+	 *
+	 * @return string
+	 */
 	function number_to_roman($num)
 	{
 		$num = (int) $num;
 		if ($num < 1 || $num > 3999)
 		{
-				return;
+			return;
 		}
 
 		$_number_to_roman = function($num, $th) use ( &$_number_to_roman ) {
 			$return = '';
 			$key1 = NULL;
 			$key2 = NULL;
-			switch ($th)
-			{
+			switch ($th) {
 				case 1:
-					$key1  = 'I';
-					$key2  = 'V';
+					$key1 = 'I';
+					$key2 = 'V';
 					$key_f = 'X';
 					break;
 				case 2:
-					$key1  = 'X';
-					$key2  = 'L';
+					$key1 = 'X';
+					$key2 = 'L';
 					$key_f = 'C';
 					break;
 				case 3:
-					$key1  = 'C';
-					$key2  = 'D';
+					$key1 = 'C';
+					$key2 = 'D';
 					$key_f = 'M';
 					break;
 				case 4:
-					$key1  = 'M';
+					$key1 = 'M';
 					break;
 			}
 			$n = $num % 10;
-			switch ($n)
-			{
+			switch ($n) {
 				case 1:
 				case 2:
 				case 3:
@@ -321,8 +324,7 @@ if ( ! function_exists('number_to_roman'))
 					$return = $key1 . $key_f;
 					break;
 			}
-			switch ($num)
-			{
+			switch ($num) {
 				case 10:
 					$return = $key_f;
 					break;
@@ -335,4 +337,5 @@ if ( ! function_exists('number_to_roman'))
 		};
 		return $_number_to_roman($num, 1);
 	}
+
 }

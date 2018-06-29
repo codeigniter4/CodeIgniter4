@@ -19,6 +19,13 @@ This helper is loaded using the following code::
 
 	helper('number');
 
+When Things Go Wrong
+====================
+
+If PHP's internationalization and localization logic cannot handle
+a value provided, for the given locale and options, then a
+``BadFunctionCallException()`` will be thrown.
+
 Available Functions
 ===================
 
@@ -28,7 +35,7 @@ The following functions are available:
 
     :param	mixed	$num: Number of bytes
     :param	int	$precision: Floating point precision
-    :returns:	Formatted data size string
+    :returns:	Formatted data size string, or false if the provided value is not numeric
     :rtype:	string
 
     Formats numbers as bytes, based on size, and adds the appropriate
@@ -64,7 +71,7 @@ The following functions are available:
     :param	mixed	$num: Number to format
     :param	int	$precision: Floating point precision
     :param  string $locale: The locale to use for formatting
-    :returns:	A human-readable version of the string
+    :returns:	A human-readable version of the string, or false if the provided value is not numeric
     :rtype:	string
 
     Converts a number into a human-readable version, like **123.4 trillion**
@@ -109,3 +116,6 @@ The following functions are available:
         echo number_to_roman(23);  // Returns XXIII
         echo number_to_roman(324);  // Returns CCCXXIV
         echo number_to_roman(2534);  // Returns MMDXXXIV
+
+    This function only handles numbers in the range 1 through 3999.
+    It will return null for any value outside that range .
