@@ -344,16 +344,15 @@ trait ResponseTrait
 			return $data;
 		}
 
+		// Determine correct response type through content negotiation
+		$config = new Format();
+		$format = $this->request->negotiate('media', $config->supportedResponseFormats, true);
+
+		$this->response->setContentType($format);
+
 		// if we don't have a formatter, make one
 		if ( ! isset($this->formatter))
 		{
-			$config = new Format();
-
-			// Determine correct response type through content negotiation
-			$format = $this->request->negotiate('media', $config->supportedResponseFormats, true);
-
-			$this->response->setContentType($format);
-
 			// if no formatter, use the default
 			$this->formatter = $config->getFormatter($format);
 		}

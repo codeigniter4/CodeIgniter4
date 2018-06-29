@@ -149,7 +149,7 @@ class ChromeLoggerHandler extends BaseHandler implements HandlerInterface
 		// Default to 'log' type.
 		$type = '';
 
-		if (in_array($level, $this->levels))
+		if (array_key_exists($level, $this->levels))
 		{
 			$type = $this->levels[$level];
 		}

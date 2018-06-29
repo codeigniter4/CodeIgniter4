@@ -5,7 +5,8 @@ use Config\Autoload;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Validation\Validation;
 use CodeIgniter\Router\RouteCollection;
-use CodeIgniter\Autoloader\MockFileLocator;
+use Tests\Support\Autoloader\MockFileLocator;
+use Tests\Support\HTTP\MockIncomingRequest;
 
 class RedirectResponseTest extends \CIUnitTestCase
 {
@@ -27,7 +28,7 @@ class RedirectResponseTest extends \CIUnitTestCase
 		$this->routes = new RouteCollection(new MockFileLocator(new Autoload()));
 		Services::injectMock('routes', $this->routes);
 
-		$this->request = new MockIncomingRequest($this->config, new URI('http://example.com'));
+		$this->request = new MockIncomingRequest($this->config, new URI('http://example.com'), null, new UserAgent());
 		Services::injectMock('request', $this->request);
 	}
 

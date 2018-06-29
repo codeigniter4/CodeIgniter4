@@ -753,7 +753,7 @@ class BaseBuilder
 	 */
 	protected function _whereIn($key = null, $values = null, $not = false, $type = 'AND ', $escape = null)
 	{
-		if ($key === null OR $values === null)
+		if ($key === null || $values === null)
 		{
 			return $this;
 		}
@@ -2474,7 +2474,7 @@ class BaseBuilder
 				for ($ci = 0, $cc = count($conditions); $ci < $cc; $ci ++ )
 				{
 					if (($op = $this->getOperator($conditions[$ci])) === false
-							OR ! preg_match('/^(\(?)(.*)(' . preg_quote($op, '/') . ')\s*(.*(?<!\)))?(\)?)$/i', $conditions[$ci], $matches)
+							|| ! preg_match('/^(\(?)(.*)(' . preg_quote($op, '/') . ')\s*(.*(?<!\)))?(\)?)$/i', $conditions[$ci], $matches)
 					)
 					{
 						continue;

@@ -36,6 +36,7 @@
  * @filesource
  */
 use CodeIgniter\Files\File;
+use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\Images\Exceptions\ImageException;
 
 class Image extends File
@@ -96,7 +97,7 @@ class Image extends File
 
 		if (empty($targetName))
 		{
-			throw new ImageException('Invalid file name.');
+			throw ImageException::forInvalidFile($targetName);
 		}
 
 		if ( ! is_dir($targetPath))
@@ -106,7 +107,7 @@ class Image extends File
 
 		if ( ! copy($this->getPathname(), "{$targetPath}{$targetName}"))
 		{
-			throw new ImageException('Unable to copy image to new destination.');
+			throw ImageException::forCopyError($targetPath);
 		}
 
 		chmod("{$targetPath}/{$targetName}", $perms);
@@ -131,6 +132,7 @@ class Image extends File
 
 		$vals = getimagesize($path);
 		$types = [1 => 'gif', 2 => 'jpeg', 3 => 'png'];
+
 		$mime = 'image/' . ($types[$vals[2]] ?? 'jpg');
 
 		if ($return === true)

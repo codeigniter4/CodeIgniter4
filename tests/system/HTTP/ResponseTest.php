@@ -1,6 +1,8 @@
 <?php namespace CodeIgniter\HTTP;
 
+use CodeIgniter\HTTP\Exceptions\HTTPException;
 use Config\App;
+use Config\Format;
 use DateTime;
 use DateTimeZone;
 
@@ -21,7 +23,7 @@ class ResponseTest extends \CIUnitTestCase
 	{
 		$response = new Response(new App());
 
-		$this->expectException('InvalidArgumentException');
+		$this->expectException(HTTPException::class);
 		$response->setStatusCode(54322);
 	}
 
@@ -54,8 +56,8 @@ class ResponseTest extends \CIUnitTestCase
 	{
 		$response = new Response(new App());
 
-		$this->expectException('InvalidArgumentException');
-		$this->expectExceptionMessage('Unknown HTTP status code provided with no message');
+		$this->expectException(HTTPException::class);
+		$this->expectExceptionMessage(lang('HTTP.unknownStatusCode', [115]));
 		$response->setStatusCode(115);
 	}
 
@@ -65,8 +67,8 @@ class ResponseTest extends \CIUnitTestCase
 	{
 		$response = new Response(new App());
 
-		$this->expectException('InvalidArgumentException');
-		$this->expectExceptionMessage('95 is not a valid HTTP return status code');
+		$this->expectException(HTTPException::class);
+		$this->expectExceptionMessage(lang('HTTP.invalidStatusCode', [95]));
 		$response->setStatusCode(95);
 	}
 
@@ -76,8 +78,8 @@ class ResponseTest extends \CIUnitTestCase
 	{
 		$response = new Response(new App());
 
-		$this->expectException('InvalidArgumentException');
-		$this->expectExceptionMessage('695 is not a valid HTTP return status code');
+		$this->expectException(HTTPException::class);
+		$this->expectExceptionMessage(lang('HTTP.invalidStatusCode', [695]));
 		$response->setStatusCode(695);
 	}
 
@@ -216,4 +218,105 @@ class ResponseTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testSetCookieFails()
+	{
+		$response = new Response(new App());
+
+		$this->assertFalse($response->hasCookie('foo'));
+	}
+
+	public function testSetCookieMatch()
+	{
+		$response = new Response(new App());
+		$response->setCookie('foo', 'bar');
+
+		$this->assertTrue($response->hasCookie('foo'));
+		$this->assertTrue($response->hasCookie('foo', 'bar'));
+	}
+
+	public function testSetCookieFailDifferentPrefix()
+	{
+		$response = new Response(new App());
+		$response->setCookie('foo', 'bar', '', '', '', 'ack');
+
+		$this->assertFalse($response->hasCookie('foo'));
+	}
+
+	public function testSetCookieSuccessOnPrefix()
+	{
+		$response = new Response(new App());
+		$response->setCookie('foo', 'bar', '', '', '', 'ack');
+
+		$this->assertFalse($response->hasCookie('foo', null, 'ack'));
+	}
+
+	public function testJSONWithArray()
+	{
+		$response = new Response(new App());
+		$config = new Format();
+		$formatter = $config->getFormatter('application/json');
+
+		$body = [
+			'foo' => 'bar',
+			'bar' => [1, 2, 3]
+		];
+		$expected = $formatter->format($body);
+
+		$response->setJSON($body);
+
+		$this->assertEquals($expected, $response->getJSON());
+		$this->assertTrue(strpos($response->getHeaderLine('content-type'), 'application/json') !== false);
+	}
+
+	public function testJSONGetFromNormalBody()
+	{
+		$response = new Response(new App());
+		$config = new Format();
+		$formatter = $config->getFormatter('application/json');
+
+		$body = [
+			'foo' => 'bar',
+			'bar' => [1, 2, 3]
+		];
+		$expected = $formatter->format($body);
+
+		$response->setBody($body);
+
+		$this->assertEquals($expected, $response->getJSON());
+	}
+
+	public function testXMLWithArray()
+	{
+		$response = new Response(new App());
+		$config = new Format();
+		$formatter = $config->getFormatter('application/xml');
+
+		$body = [
+			'foo' => 'bar',
+			'bar' => [1, 2, 3]
+		];
+		$expected = $formatter->format($body);
+
+		$response->setXML($body);
+
+		$this->assertEquals($expected, $response->getXML());
+		$this->assertTrue(strpos($response->getHeaderLine('content-type'), 'application/xml') !== false);
+	}
+
+	public function testXMLGetFromNormalBody()
+	{
+		$response = new Response(new App());
+		$config = new Format();
+		$formatter = $config->getFormatter('application/xml');
+
+		$body = [
+			'foo' => 'bar',
+			'bar' => [1, 2, 3]
+		];
+		$expected = $formatter->format($body);
+
+		$response->setBody($body);
+
+		$this->assertEquals($expected, $response->getXML());
+	}
 }

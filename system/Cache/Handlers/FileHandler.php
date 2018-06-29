@@ -59,7 +59,7 @@ class FileHandler implements CacheInterface
 	public function __construct($config)
 	{
 		$this->prefix = $config->prefix ?: '';
-		$this->path = ! empty($config->path) ? $config->path : WRITEPATH . 'cache';
+		$this->path = ! empty($config->storePath) ? $config->storePath : WRITEPATH . 'cache';
 
 		$this->path = rtrim($this->path, '/') . '/';
 	}
@@ -322,7 +322,14 @@ class FileHandler implements CacheInterface
 	 */
 	protected function writeFile($path, $data, $mode = 'wb')
 	{
-		if (($fp = @fopen($path, $mode)) === false)
+		try
+		{
+			if (($fp = @fopen($path, $mode)) === false)
+			{
+				return false;
+			}
+		}
+		catch (\ErrorException $e)
 		{
 			return false;
 		}

@@ -10,6 +10,8 @@ class ParserFilterTest extends \CIUnitTestCase
 
 	public function setUp()
 	{
+		parent::setUp();
+
 		$this->loader   = new \CodeIgniter\Autoloader\FileLocator(new \Config\Autoload());
 		$this->viewsDir = __DIR__.'/Views';
 		$this->config   = new Config\View();
@@ -157,6 +159,39 @@ class ParserFilterTest extends \CIUnitTestCase
 		$this->assertEquals("The quick red fox <mark>jumped over</mark> the lazy brown dog", $parser->renderString($template));
 	}
 
+	public function testHighlightCode()
+	{
+		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
+
+		$data = [
+			'value1' => 'Sincerely'
+		];
+		$parser->setData($data);
+
+		$template = '{ value1|highlight_code }';
+		$expected = <<<EOF
+<code><span style="color: #000000">
+<span style="color: #0000BB">Sincerely&nbsp;</span>
+</span>
+</code>
+EOF;
+		$this->assertEquals($expected, $parser->renderString($template));
+	}
+
+	public function testProse()
+	{
+		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
+
+		$data = [
+			'value1' => 'Sincerely\nMe'
+		];
+		$parser->setData($data);
+
+		$template = '{ value1|prose }';
+		$expected = '<p>Sincerely\nMe</p>';
+		$this->assertEquals($expected, $parser->renderString($template));
+	}
+
 	//--------------------------------------------------------------------
 
 	public function testLimitChars()
@@ -247,10 +282,10 @@ class ParserFilterTest extends \CIUnitTestCase
 			'value1' => 5.55,
 		];
 
-		$template = '{ value1|round(1) } { value1|round(1, common) } { value1|round(ceil) } { value1|round(floor) }';
+		$template = '{ value1|round(1) } { value1|round(1, common) } { value1|round(ceil) } { value1|round(floor) } { value1|round(unknown) }';
 
 		$parser->setData($data);
-		$this->assertEquals('5.6 5.6 6 5', $parser->renderString($template));
+		$this->assertEquals('5.6 5.6 6 5 5.55', $parser->renderString($template));
 	}
 
 	//--------------------------------------------------------------------
@@ -302,4 +337,76 @@ class ParserFilterTest extends \CIUnitTestCase
 	}
 
 	//--------------------------------------------------------------------
+
+	public function testLocalNumberBase()
+	{
+		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
+
+		$data = [
+			'mynum' => 	1234567.891234567890000
+		];
+
+		$template = '{ mynum|local_number }';
+
+		$parser->setData($data);
+		$this->assertEquals('1,234,567.8912', $parser->renderString($template));
+	}
+
+	public function testLocalNumberPrecision()
+	{
+		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
+
+		$data = [
+			'mynum' => 	1234567.891234567890000
+		];
+
+		$template = '{ mynum|local_number(decimal,2) }';
+
+		$parser->setData($data);
+		$this->assertEquals('1,234,567.89', $parser->renderString($template));
+	}
+
+	public function testLocalNumberType()
+	{
+		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
+
+		$data = [
+			'mynum' => 	1234567.891234567890000
+		];
+
+
+		$template = '{ mynum|local_number(spellout) }';
+
+		$parser->setData($data);
+		$this->assertEquals('one million two hundred thirty-four thousand five hundred sixty-seven point eight nine one two three four six', $parser->renderString($template));
+	}
+
+	public function testLocalNumberLocale()
+	{
+		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
+
+		$data = [
+			'mynum' => 	1234567.891234567890000
+		];
+
+		$template = '{ mynum|local_number(decimal,4,de_DE) }';
+
+		$parser->setData($data);
+		$this->assertEquals('1.234.567,8912', $parser->renderString($template));
+	}
+
+	public function testLocalCurrency()
+	{
+		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
+
+		$data = [
+			'mynum' => 	1234567.891234567890000
+		];
+
+		$template = '{ mynum|local_currency(EUR,de_DE) }';
+
+		$parser->setData($data);
+		$this->assertEquals('1.234.567,89 €', $parser->renderString($template));
+	}
+
 }

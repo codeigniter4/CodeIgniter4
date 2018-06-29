@@ -1,4 +1,6 @@
-<?php namespace CodeIgniter\HTTP;
+<?php namespace Tests\Support\HTTP;
+
+use CodeIgniter\HTTP\Response;
 
 /**
  * Class MockResponse
@@ -21,13 +23,13 @@ class MockResponse extends Response
             foreach
             (
                 [
-                    'value', 
-                    'expire', 
-                    'domain', 
-                    'path', 
-                    'prefix', 
-                    'secure', 
-                    'httponly', 
+                    'value',
+                    'expire',
+                    'domain',
+                    'path',
+                    'prefix',
+                    'secure',
+                    'httponly',
                     'name'
                 ] as $item
             )
@@ -43,16 +45,16 @@ class MockResponse extends Response
         $_COOKIE[$prefix . $name] = $value;
 
         /*
-            TODO: Find a way to use setcookie() 
+            TODO: Find a way to use setcookie()
             without it throwing header issues.
             setcookie
             (
-                $prefix.$name, 
-                $value, 
-                $expire, 
-                $path, 
-                $domain, 
-                $secure, 
+                $prefix.$name,
+                $value,
+                $expire,
+                $path,
+                $domain,
+                $secure,
                 $httponly
             );
         */
@@ -60,7 +62,7 @@ class MockResponse extends Response
 
     //--------------------------------------------------------------------
 
-    public function hasCookie(string $name): bool
+    public function hasCookie(string $name, $value = null, string $prefix = ''): bool
     {
         return array_key_exists($name, $_COOKIE);
     }
@@ -69,15 +71,15 @@ class MockResponse extends Response
 
     public function deleteCookie
     (
-        $name, 
-        string $domain = '', 
-        string $path   = '/', 
+        $name,
+        string $domain = '',
+        string $path   = '/',
         string $prefix = ''
     )
     {
         $COOKIE[$name] = null;
         unset($COOKIE[$name]);
-        
+
         //set_cookie($name, '', '', $domain, $path, $prefix);
     }
 

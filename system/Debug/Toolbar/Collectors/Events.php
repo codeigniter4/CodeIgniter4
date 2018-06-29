@@ -122,14 +122,12 @@ class Events extends BaseCollector
 	//--------------------------------------------------------------------
 
 	/**
-	 * Returns the HTML to fill the Events tab in the toolbar.
+	 * Returns the data of this collector to be formatted in the toolbar
 	 *
-	 * @return string The data formatted for the toolbar.
+	 * @return array
 	 */
-	public function display(): string
+	public function display(): array
 	{
-		$parser = \Config\Services::parser(BASEPATH . 'Debug/Toolbar/Views/', null,false);
-
 		$data = [
 			'events' => []
 		];
@@ -153,10 +151,7 @@ class Events extends BaseCollector
 			$data['events'][$key]['count']++;
 		}
 
-		$output = $parser->setData($data)
-		                 ->render('_events.tpl');
-
-		return $output;
+		return $data;
 	}
 
 	//--------------------------------------------------------------------
@@ -180,9 +175,7 @@ class Events extends BaseCollector
 	 */
 	public function icon(): string
 	{
-		return <<<EOD
-<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAEASURBVEhL7ZXNDcIwDIVTsRBH1uDQDdquUA6IM1xgCA6MwJUN2hk6AQzAz0vl0ETUxC5VT3zSU5w81/mRMGZysixbFEVR0jSKNt8geQU9aRpFmp/keX6AbjZ5oB74vsaN5lSzA4tLSjpBFxsjeSuRy4d2mDdQTWU7YLbXTNN05mKyovj5KL6B7q3hoy3KwdZxBlT+Ipz+jPHrBqOIynZgcZonoukb/0ckiTHqNvDXtXEAaygRbaB9FvUTjRUHsIYS0QaSp+Dw6wT4hiTmYHOcYZsdLQ2CbXa4ftuuYR4x9vYZgdb4vsFYUdmABMYeukK9/SUme3KMFQ77+Yfzh8eYF8+orDuDWU5LAAAAAElFTkSuQmCC">
-EOD;
+		return 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAEASURBVEhL7ZXNDcIwDIVTsRBH1uDQDdquUA6IM1xgCA6MwJUN2hk6AQzAz0vl0ETUxC5VT3zSU5w81/mRMGZysixbFEVR0jSKNt8geQU9aRpFmp/keX6AbjZ5oB74vsaN5lSzA4tLSjpBFxsjeSuRy4d2mDdQTWU7YLbXTNN05mKyovj5KL6B7q3hoy3KwdZxBlT+Ipz+jPHrBqOIynZgcZonoukb/0ckiTHqNvDXtXEAaygRbaB9FvUTjRUHsIYS0QaSp+Dw6wT4hiTmYHOcYZsdLQ2CbXa4ftuuYR4x9vYZgdb4vsFYUdmABMYeukK9/SUme3KMFQ77+Yfzh8eYF8+orDuDWU5LAAAAAElFTkSuQmCC';
 
 	}
 }

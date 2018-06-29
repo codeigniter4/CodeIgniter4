@@ -250,9 +250,9 @@ class FormatRules
 	 */
 	public function valid_email(string $str = null): bool
 	{
-		if (function_exists('idn_to_ascii') && $atpos = strpos($str, '@'))
+		if (function_exists('idn_to_ascii') && defined('INTL_IDNA_VARIANT_UTS46') && preg_match('#\A([^@]+)@(.+)\z#', $str, $matches))
 		{
-			$str = substr($str, 0, ++ $atpos) . idn_to_ascii(substr($str, $atpos));
+			$str = $matches[1] . '@' . idn_to_ascii($matches[2], 0, INTL_IDNA_VARIANT_UTS46);
 		}
 
 		return (bool) filter_var($str, FILTER_VALIDATE_EMAIL);
@@ -334,11 +334,7 @@ class FormatRules
 		}
 		elseif (preg_match('/^(?:([^:]*)\:)?\/\/(.+)$/', $str, $matches))
 		{
-			if (empty($matches[2]))
-			{
-				return false;
-			}
-			elseif ( ! in_array($matches[1], ['http', 'https'], true))
+			if ( ! in_array($matches[1], ['http', 'https'], true))
 			{
 				return false;
 			}
@@ -370,8 +366,7 @@ class FormatRules
 
 		$date = \DateTime::createFromFormat($format, $str);
 
-  		return (bool) $date && \DateTime::getLastErrors()['warning_count'] === 0
-	  				 		&& \DateTime::getLastErrors()['error_count'] === 0;
+		return (bool) $date && \DateTime::getLastErrors()['warning_count'] === 0 && \DateTime::getLastErrors()['error_count'] === 0;
 	}
 
 	//--------------------------------------------------------------------

@@ -140,6 +140,12 @@ class ContentSecurityPolicy
 	 * @var array
 	 */
 	protected $styleSrc = [];
+	
+	/**
+	 * Used for security enforcement
+	 * @var array
+	 */
+	protected $manifestSrc = [];
 
 	/**
 	 * Used for security enforcement
@@ -432,6 +438,26 @@ class ContentSecurityPolicy
 
 		return $this;
 	}
+	
+	//--------------------------------------------------------------------
+
+	/**
+	 * Adds a new valid endpoint for manifest sources. Can be either
+	 * a URI class or simple string.
+	 *
+	 * @see https://www.w3.org/TR/CSP/#directive-manifest-src
+	 *
+	 * @param	   $uri
+	 * @param bool $reportOnly
+	 *
+	 * @return $this
+	 */
+	public function addManifestSrc($uri, bool $reportOnly = false)
+	{
+		$this->addOption($uri, 'manifestSrc', $reportOnly);
+
+		return $this;
+	}
 
 	//--------------------------------------------------------------------
 
@@ -688,6 +714,7 @@ class ContentSecurityPolicy
 			'plugin-types'		 => 'pluginTypes',
 			'script-src'		 => 'scriptSrc',
 			'style-src'			 => 'styleSrc',
+			'manifest-src'		 => 'manifestSrc',
 			'sandbox'			 => 'sandbox',
 			'report-uri'		 => 'reportURI'
 		];

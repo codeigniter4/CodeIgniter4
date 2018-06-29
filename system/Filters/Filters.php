@@ -38,6 +38,7 @@
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
+use CodeIgniter\Filters\Exceptions\FilterException;
 
 class Filters
 {
@@ -96,6 +97,7 @@ class Filters
 	 * @param string $position
 	 *
 	 * @return \CodeIgniter\HTTP\RequestInterface|\CodeIgniter\HTTP\ResponseInterface|mixed
+	 * @throws \CodeIgniter\Filters\Exceptions\FilterException
 	 */
 	public function run(string $uri, $position = 'before')
 	{
@@ -110,14 +112,14 @@ class Filters
 
 			if ( ! array_key_exists($alias, $this->config->aliases))
 			{
-				throw new \InvalidArgumentException("'{$alias}' filter must have a matching alias defined.");
+				throw FilterException::forNoAlias($alias);
 			}
 
 			$class = new $this->config->aliases[$alias]();
 
 			if ( ! $class instanceof FilterInterface)
 			{
-				throw new \RuntimeException(get_class($class) . ' must implement CodeIgniter\Filters\FilterInterface.');
+				throw FilterException::forIncorrectInterface(get_class($class));
 			}
 
 			if ($position == 'before')
@@ -134,10 +136,11 @@ class Filters
 				// then send it and quit.
 				if ($result instanceof ResponseInterface)
 				{
-					$result->send();
-					exit(EXIT_ERROR);
+					// short circuit - bypass any other filters
+					return $result;
 				}
 
+				// Ignore an empty result
 				if (empty($result))
 				{
 					continue;

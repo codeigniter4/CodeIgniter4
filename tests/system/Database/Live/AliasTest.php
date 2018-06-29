@@ -1,21 +1,12 @@
 <?php namespace CodeIgniter\Database\Live;
 
+use CodeIgniter\Test\CIDatabaseTestCase;
 
-use CodeIgniter\Database\Config;
-
-class AliasTest extends \CIUnitTestCase
+class AliasTest extends CIDatabaseTestCase
 {
 	protected $refresh = true;
 
-	protected $db;
-
-	public function setUp()
-	{
-		parent::setUp();
-
-		$this->db = Config::connect();
-	}
-
+	protected $seed = 'Tests\Support\Database\Seeds\CITestSeeder';
 
 	public function testAlias()
 	{

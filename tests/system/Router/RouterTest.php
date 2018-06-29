@@ -1,6 +1,6 @@
 <?php namespace CodeIgniter\Router;
 
-use CodeIgniter\Autoloader\MockFileLocator;
+use Tests\Support\Autoloader\MockFileLocator;
 
 class RouterTest extends \CIUnitTestCase
 {
@@ -18,6 +18,8 @@ class RouterTest extends \CIUnitTestCase
 
 	public function setUp()
 	{
+		parent::setUp();
+
 		$this->collection = new RouteCollection(new MockFileLocator(new \Config\Autoload()));
 
 		$routes = [
@@ -152,7 +154,7 @@ class RouterTest extends \CIUnitTestCase
 
 		$closure = $router->controllerName();
 
-		$expects = call_user_func_array($closure, $router->params());
+		$expects = $closure(...$router->params());
 
 		$this->assertInternalType('callable', $router->controllerName());
 		$this->assertEquals($expects, '123-alpha');
@@ -236,4 +238,15 @@ class RouterTest extends \CIUnitTestCase
 
     //--------------------------------------------------------------------
 
+    public function testMatchedRouteOptions()
+    {
+    	$this->collection->add('foo', function() {}, ['as' => 'login', 'foo' => 'baz']);
+    	$this->collection->add('baz', function() {}, ['as' => 'admin', 'foo' => 'bar']);
+
+    	$router = new Router($this->collection);
+
+    	$router->handle('foo');
+
+    	$this->assertEquals($router->getMatchedRouteOptions(), ['as' => 'login', 'foo' => 'baz']);
+    }
 }

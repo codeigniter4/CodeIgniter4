@@ -35,6 +35,9 @@
  * @since	Version 3.0.0
  * @filesource
  */
+
+use CodeIgniter\Format\Exceptions\FormatException;
+
 class JSONFormatter implements FormatterInterface
 {
 
@@ -55,7 +58,7 @@ class JSONFormatter implements FormatterInterface
 
 		if (json_last_error() !== JSON_ERROR_NONE)
 		{
-			throw new \RuntimeException(sprintf("Failed to parse json string, error: '%s'", json_last_error_msg()));
+			throw FormatException::forInvalidJSON(json_last_error_msg());
 		}
 
 		return $result;

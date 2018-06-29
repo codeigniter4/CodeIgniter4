@@ -35,10 +35,15 @@ Loading a helper file is quite simple using the following method::
 Where **name** is the file name of the helper, without the .php file
 extension or the "helper" part.
 
-For example, to load the **URL Helper** file, which is named
-**url_helper.php**, you would do this::
+For example, to load the **Cookie Helper** file, which is named
+**cookie_helper.php**, you would do this::
 
-	helper('url');
+	helper('cookie');
+
+If you need to load more than one helper at a time, you can pass
+an array of file names in and all of them will be loaded::
+
+	helper(['cookie', 'date']);
 
 A helper can be loaded anywhere within your controller methods (or
 even within your View files, although that's not a good practice), as
@@ -49,6 +54,8 @@ it.
 
 .. note:: The Helper loading method above does not return a value, so
 	don't try to assign it to a variable. Just use it as shown.
+
+.. note:: The URL helper is always loaded so you do not need to load it yourself.
 
 Loading from Non-standard Locations
 -----------------------------------

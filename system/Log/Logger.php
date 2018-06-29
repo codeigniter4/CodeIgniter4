@@ -36,6 +36,7 @@
  * @filesource
  */
 use Psr\Log\LoggerInterface;
+use CodeIgniter\Log\Exceptions\LogException;
 
 /**
  * The CodeIgntier Logger
@@ -143,7 +144,7 @@ class Logger implements LoggerInterface
 
 	/**
 	 * Constructor.
-	 * 
+	 *
 	 * @param type $config
 	 * @param bool $debug
 	 * @throws \RuntimeException
@@ -170,7 +171,7 @@ class Logger implements LoggerInterface
 
 		if ( ! is_array($config->handlers) || empty($config->handlers))
 		{
-			throw new \RuntimeException('LoggerConfig must provide at least one Handler.');
+			throw LogException::forNoHandlers('LoggerConfig');
 		}
 
 		// Save the handler configuration for later.
@@ -336,7 +337,7 @@ class Logger implements LoggerInterface
 		// Is the level a valid level?
 		if ( ! array_key_exists($level, $this->logLevels))
 		{
-			throw new \InvalidArgumentException($level . ' is an invalid log level.');
+			throw LogException::forInvalidLogLevel($level);
 		}
 
 		// Does the app want to log this right now?

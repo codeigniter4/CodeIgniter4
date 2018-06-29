@@ -1,5 +1,7 @@
 <?php namespace CodeIgniter\HTTP;
 
+use CodeIgniter\HTTP\Exceptions\HTTPException;
+
 /**
  * CodeIgniter
  *
@@ -360,7 +362,7 @@ class Message
 	 */
 	public function getProtocolVersion(): string
 	{
-		return $this->protocolVersion;
+		return $this->protocolVersion ?? '1.1';
 	}
 
 	//--------------------------------------------------------------------
@@ -381,7 +383,7 @@ class Message
 
 		if ( ! in_array($version, $this->validProtocolVersions))
 		{
-			throw new \InvalidArgumentException('Invalid HTTP Protocol Version. Must be one of: ' . implode(', ', $this->validProtocolVersions));
+			throw HTTPException::forInvalidHTTPProtocol(implode(', ', $this->validProtocolVersions));
 		}
 
 		$this->protocolVersion = $version;

@@ -36,6 +36,7 @@
  * @filesource
  */
 use CodeIgniter\HTTP\RedirectResponse;
+use CodeIgniter\HTTP\Request;
 use Config\Services;
 use Config\Cache;
 use CodeIgniter\HTTP\URI;
@@ -44,6 +45,7 @@ use CodeIgniter\Events\Events;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\Router\RouteCollectionInterface;
+use CodeIgniter\Exceptions\PageNotFoundException;
 
 /**
  * This class is the core of the framework, and will analyse the
@@ -179,8 +181,12 @@ class CodeIgniter
 	 * makes all of the pieces work together.
 	 *
 	 * @param \CodeIgniter\Router\RouteCollectionInterface $routes
+	 * @param bool                                         $returnResponse
+	 *
+	 * @throws \CodeIgniter\HTTP\RedirectException
+	 * @throws \Exception
 	 */
-	public function run(RouteCollectionInterface $routes = null)
+	public function run(RouteCollectionInterface $routes = null, bool $returnResponse = false)
 	{
 		$this->startBenchmark();
 
@@ -200,7 +206,7 @@ class CodeIgniter
 
 		try
 		{
-			$this->handleRequest($routes, $cacheConfig);
+			return $this->handleRequest($routes, $cacheConfig, $returnResponse);
 		} catch (Router\RedirectException $e)
 		{
 			$logger = Services::logger();
@@ -224,8 +230,11 @@ class CodeIgniter
 	 *
 	 * @param \CodeIgniter\Router\RouteCollectionInterface $routes
 	 * @param                                              $cacheConfig
+	 * @param bool                                         $returnResponse
+	 *
+	 * @throws \CodeIgniter\Filters\Exceptions\FilterException
 	 */
-	protected function handleRequest(RouteCollectionInterface $routes = null, $cacheConfig)
+	protected function handleRequest(RouteCollectionInterface $routes = null, $cacheConfig, bool $returnResponse = false)
 	{
 		$this->tryToRouteIt($routes);
 
@@ -256,6 +265,11 @@ class CodeIgniter
 		// Handle any redirects
 		if ($returned instanceof RedirectResponse)
 		{
+			if ($returnResponse)
+			{
+				return $returned;
+			}
+
 			$this->callExit(EXIT_SUCCESS);
 		}
 
@@ -278,12 +292,17 @@ class CodeIgniter
 
 		unset($uri);
 
-		$this->sendResponse();
+		if (! $returnResponse)
+		{
+			$this->sendResponse();
+		}
 
 		//--------------------------------------------------------------------
 		// Is there a post-system event?
 		//--------------------------------------------------------------------
 		Events::trigger('post_system');
+
+		return $this->response;
 	}
 
 	//--------------------------------------------------------------------
@@ -358,20 +377,43 @@ class CodeIgniter
 	//--------------------------------------------------------------------
 
 	/**
+	 * Sets a Request object to be used for this request.
+	 * Used when running certain tests.
+	 *
+	 * @param \CodeIgniter\HTTP\Request $request
+	 *
+	 * @return \CodeIgniter\CodeIgniter
+	 */
+	public function setRequest(Request $request)
+	{
+		$this->request = $request;
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Get our Request object, (either IncomingRequest or CLIRequest)
 	 * and set the server protocol based on the information provided
 	 * by the server.
 	 */
 	protected function getRequestObject()
 	{
-		if (is_cli())
+		if ($this->request instanceof Request)
+		{
+			return;
+		}
+
+		if (is_cli() && ! (ENVIRONMENT == 'testing'))
 		{
 			$this->request = Services::clirequest($this->config);
 		}
 		else
 		{
 			$this->request = Services::request($this->config);
-			$this->request->setProtocolVersion($_SERVER['SERVER_PROTOCOL']);
+			// guess at protocol if needed
+			$this->request->setProtocolVersion($_SERVER['SERVER_PROTOCOL'] ?? 'HTTP/1.1');
 		}
 	}
 
@@ -385,7 +427,7 @@ class CodeIgniter
 	{
 		$this->response = Services::response($this->config);
 
-		if ( ! is_cli())
+		if ( ! is_cli() || ENVIRONMENT == 'testing')
 		{
 			$this->response->setProtocolVersion($this->request->getProtocolVersion());
 		}
@@ -522,7 +564,7 @@ class CodeIgniter
 	 */
 	protected function generateCacheName($config): string
 	{
-		if (is_cli())
+		if (is_cli() && ! (ENVIRONMENT == 'testing'))
 		{
 			return md5($this->request->getPath());
 		}
@@ -616,7 +658,7 @@ class CodeIgniter
 			return $this->path;
 		}
 
-		return is_cli() ? $this->request->getPath() : $this->request->uri->getPath();
+		return (is_cli() && ! (ENVIRONMENT == 'testing')) ? $this->request->getPath() : $this->request->uri->getPath();
 	}
 
 	//--------------------------------------------------------------------
@@ -660,19 +702,19 @@ class CodeIgniter
 		// No controller specified - we don't know what to do now.
 		if (empty($this->controller))
 		{
-			throw new PageNotFoundException('Controller is empty.');
+			throw PageNotFoundException::forEmptyController();
 		}
 
 		// Try to autoload the class
 		if ( ! class_exists($this->controller, true) || $this->method[0] === '_')
 		{
-			throw new PageNotFoundException('Controller or its method is not found.');
+			throw PageNotFoundException::forControllerNotFound($this->controller, $this->method);
 		}
 		else if ( ! method_exists($this->controller, '_remap') &&
 				! is_callable([$this->controller, $this->method], false)
 		)
 		{
-			throw new PageNotFoundException('Controller method is not found.');
+			throw PageNotFoundException::forMethodNotFound($this->method);
 		}
 	}
 
@@ -755,7 +797,7 @@ class CodeIgniter
 		}
 
 		// Display 404 Errors
-		$this->response->setStatusCode(404);
+		$this->response->setStatusCode($e->getCode());
 
 		if (ENVIRONMENT !== 'testing')
 		{
@@ -773,7 +815,7 @@ class CodeIgniter
 			}
 		}
 
-		throw new PageNotFoundException(lang('HTTP.pageNotFound'));
+		throw PageNotFoundException::forPageNotFound();
 	}
 
 	//--------------------------------------------------------------------

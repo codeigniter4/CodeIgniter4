@@ -1,19 +1,13 @@
 <?php namespace CodeIgniter\Router;
 
-use CodeIgniter\Autoloader\MockFileLocator;
+use Tests\Support\Autoloader\MockFileLocator;
+use CodeIgniter\Router\Exceptions\RouterException;
 
 /**
  * @backupGlobals enabled
  */
 class RouteCollectionTest extends \CIUnitTestCase
 {
-
-	public function setUp()
-	{
-	}
-
-	//--------------------------------------------------------------------
-
 	public function tearDown()
 	{
 	}
@@ -655,7 +649,7 @@ class RouteCollectionTest extends \CIUnitTestCase
 
 		$routes->add('path/(:any)/to/(:num)', 'myController::goto/$1/$2');
 
-		$this->expectException('LogicException');
+		$this->expectException(RouterException::class);
 		$match = $routes->reverseRoute('myController::goto', 13, 'string');
 	}
 
@@ -706,6 +700,18 @@ class RouteCollectionTest extends \CIUnitTestCase
 	}
 
 	//--------------------------------------------------------------------
+
+	public function testReverseRouteMatching()
+	{
+		$routes = $this->getCollector();
+
+		$routes->get('test/(:segment)/(:segment)', 'TestController::test/$1/$2', ['as' => 'testRouter']);
+
+		$match = $routes->reverseRoute('testRouter', 1, 2);
+
+		$this->assertEquals('/test/1/2', $match);
+	}
+
 
 	public function testAddRedirect()
 	{
@@ -773,5 +779,18 @@ class RouteCollectionTest extends \CIUnitTestCase
 
 		$this->assertArrayHasKey('testing', $match);
 		$this->assertEquals($match['testing'], '\TestController::index');
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testRoutesOptions()
+	{
+		$routes = $this->getCollector();
+
+		$routes->add('administrator', function() {}, ['as' => 'admin', 'foo' => 'baz']);
+
+		$options = $routes->getRoutesOptions('administrator');
+
+		$this->assertEquals($options, ['as' => 'admin', 'foo' => 'baz']);
 	}
 }

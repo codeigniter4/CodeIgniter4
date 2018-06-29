@@ -52,9 +52,9 @@ abstract class BaseHandler implements ImageHandlerInterface
 	 * d
 	 * @var \CodeIgniter\Images\Image
 	 */
-	protected $image;
-	protected $width;
-	protected $height;
+	protected $image = null;
+	protected $width = 0;
+	protected $height = 0;
 	protected $filePermissions = 0644;
 	protected $xAxis = 0;
 	protected $yAxis = 0;
@@ -112,9 +112,37 @@ abstract class BaseHandler implements ImageHandlerInterface
 
 		$this->image = new Image($path, true);
 
-		$this->image->getProperties();
+		$this->image->getProperties(false);
+		$this->width = $this->image->origWidth;
+		$this->height = $this->image->origHeight;
 
 		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Make the image resource object if needed
+	 */
+	protected function ensureResource()
+	{
+		if ($this->resource == null)
+		{
+			$path = $this->image->getPathname();
+			// if valid image type, make corresponding image resource
+			switch ($this->image->imageType)
+			{
+				case IMAGETYPE_GIF:
+					$this->resource = imagecreatefromgif($path);
+					break;
+				case IMAGETYPE_JPEG:
+					$this->resource = imagecreatefromjpeg($path);
+					break;
+				case IMAGETYPE_PNG:
+					$this->resource = imagecreatefrompng($path);
+					break;
+			}
+		}
 	}
 
 	//--------------------------------------------------------------------
@@ -140,6 +168,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 	 */
 	public function getResource()
 	{
+		$this->ensureResource();
 		return $this->resource;
 	}
 
@@ -228,19 +257,18 @@ abstract class BaseHandler implements ImageHandlerInterface
 
 		if ($angle === '' || ! in_array($angle, $degs))
 		{
-			throw new ImageException(lang('images.rotationAngleRequired'));
+			throw ImageException::forMissingAngle();
 		}
 
+		// cast angle as an int, for our use
+		$angle = (int) $angle;
+
 		// Reassign the width and height
-		if ($angle === 90 OR $angle === 270)
+		if ($angle === 90 || $angle === 270)
 		{
-			$this->width = $this->image->origHeight;
-			$this->height = $this->image->origWidth;
-		}
-		else
-		{
-			$this->width = $this->image->origWidth;
-			$this->height = $this->image->origHeight;
+			$temp = $this->height;
+			$this->width = $this->height;
+			$this->height = $temp;
 		}
 
 		// Call the Handler-specific version.
@@ -303,13 +331,13 @@ abstract class BaseHandler implements ImageHandlerInterface
 	 *
 	 * @return $this
 	 */
-	public function flip(string $dir)
+	public function flip(string $dir = 'vertical')
 	{
 		$dir = strtolower($dir);
 
 		if ($dir !== 'vertical' && $dir !== 'horizontal')
 		{
-			throw new ImageException(lang('images.invalidDirection'));
+			throw ImageException::forInvalidDirection($dir);
 		}
 
 		return $this->_flip($dir);
@@ -347,7 +375,7 @@ abstract class BaseHandler implements ImageHandlerInterface
 	 * @param string $text
 	 * @param array  $options
 	 *
-	 * @return BaseHandler
+	 * @return $this
 	 */
 	public function text(string $text, array $options = [])
 	{
@@ -437,12 +465,9 @@ abstract class BaseHandler implements ImageHandlerInterface
 			{
 				return null;
 			}
-
-			throw new ImageException(lang('images.exifNotSupported'));
 		}
 
 		$exif = exif_read_data($this->image->getPathname());
-
 		if ( ! is_null($key) && is_array($exif))
 		{
 			$exif = array_key_exists($key, $exif) ? $exif[$key] : false;
@@ -662,7 +687,12 @@ abstract class BaseHandler implements ImageHandlerInterface
 	 */
 	protected function reproportion()
 	{
-		if (($this->width === 0 && $this->height === 0) || $this->image->origWidth === 0 || $this->image->origHeight === 0 || ( ! ctype_digit((string) $this->width) && ! ctype_digit((string) $this->height)) || ! ctype_digit((string) $this->image->origWidth) || ! ctype_digit((string) $this->image->origHeight)
+		if (($this->width === 0 && $this->height === 0) ||
+				$this->image->origWidth === 0 ||
+				$this->image->origHeight === 0 ||
+				( ! ctype_digit((string) $this->width) && ! ctype_digit((string) $this->height)) ||
+				! ctype_digit((string) $this->image->origWidth) ||
+				! ctype_digit((string) $this->image->origHeight)
 		)
 		{
 			return;
@@ -700,4 +730,16 @@ abstract class BaseHandler implements ImageHandlerInterface
 	}
 
 	//--------------------------------------------------------------------
+	// accessor for testing; not part of interface
+	public function getWidth()
+	{
+		return ($this->resource != null) ? $this->_getWidth() : $this->width;
+	}
+
+	// accessor for testing; not part of interface
+	public function getHeight()
+	{
+		return ($this->resource != null) ? $this->_getHeight() : $this->height;
+	}
+
 }

@@ -36,6 +36,7 @@
  * @filesource
  */
 use CodeIgniter\Autoloader\FileLocator;
+use CodeIgniter\Router\Exceptions\RouterException;
 
 /**
  * Class RouteCollection
@@ -144,6 +145,13 @@ class RouteCollection implements RouteCollectionInterface
 	];
 
 	/**
+	 * Array of routes options
+	 *
+	 * @var array
+	 */
+	protected $routesOptions = [];
+
+	/**
 	 * The current method that the script is being called by.
 	 *
 	 * @var
@@ -225,7 +233,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @return mixed
 	 */
-	public function addPlaceholder(string $placeholder, string $pattern = null): RouteCollectionInterface
+	public function addPlaceholder($placeholder, string $pattern = null): RouteCollectionInterface
 	{
 		if ( ! is_array($placeholder))
 		{
@@ -536,6 +544,20 @@ class RouteCollection implements RouteCollectionInterface
 		}
 
 		return $routes;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns one or all routes options
+	 *
+	 * @param  string $from
+	 *
+	 * @return array
+	 */
+	public function getRoutesOptions(string $from = null)
+	{
+		return $from ? $this->routesOptions[$from] ?? [] : $this->routesOptions;
 	}
 
 	//--------------------------------------------------------------------
@@ -1108,13 +1130,15 @@ class RouteCollection implements RouteCollectionInterface
 		{
 			// Ensure that the param we're inserting matches
 			// the expected param type.
+			$pos = strpos($from, $pattern);
+
 			if (preg_match("|{$pattern}|", $params[$index]))
 			{
-				$from = str_replace($pattern, $params[$index], $from);
+				$from = substr_replace($from, $params[$index], $pos, strlen($pattern));
 			}
 			else
 			{
-				throw new \LogicException('A parameter does not match the expected type.');
+				throw RouterException::forInvalidParameterType();
 			}
 		}
 
@@ -1207,6 +1231,8 @@ class RouteCollection implements RouteCollectionInterface
 		{
 			$to = '\\' . ltrim($to, '\\');
 		}
+
+		$this->routesOptions[$from] = $options;
 
 		$name = $options['as'] ?? $from;
 

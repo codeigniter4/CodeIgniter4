@@ -63,6 +63,10 @@ writable/uploads/*
 
 writable/debugbar/*
 
+application/Database/Migrations/2*
+
+php_errors.log
+
 #-------------------------
 # User Guide Temp Files
 #-------------------------
@@ -122,3 +126,4 @@ nb-configuration.xml
 .vscode/
 
 /results/
+/phpunit.xml

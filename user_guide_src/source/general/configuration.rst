@@ -11,10 +11,20 @@ create an instance of the class and all your settings are there for you.
 Accessing Config Files
 ======================
 
-You can access config files within your classes by creating a new instance. All of the properties
+You can access config files within your classes by creating a new instance or using the config function. All of the properties
 are public, so you access the settings like any other property::
 
+	// Creating new class by hand
 	$config = new \Config\EmailConfig();
+
+	// Creating new class with config function
+	$config = config( 'EmailConfig', false );
+
+	// Get shared instance with config function
+	$config = config( 'EmailConfig' );
+
+	// Access config class with namespace
+	$config = config( 'Config\\EmailConfig' );
 
 	// Access settings as class properties
 	$protocol = $config->protocol;
@@ -74,10 +84,8 @@ needs with empty or dummy data. In each environment, you can then copy the file 
 appropriate data.
 
 When your application runs, this file will be automatically loaded and the variables will be put into
-the environment. This will work in any environment except for production, where the variables should be
-set in the environment through whatever means your getServer supports, such as .htaccess files, etc. These
-variables are then available through ``getenv()``, ``$_SERVER``, and ``$_ENV``. Of the three, ``getenv()`` function
-is recommended since it is not case-sensitive::
+the environment. This will work in any environment. These variables are then available through ``getenv()``,
+``$_SERVER``, and ``$_ENV``. Of the three, ``getenv()`` function is recommended since it is not case-sensitive::
 
 	$s3_bucket = getenv('S3_BUCKET');
 	$s3_bucket = $_ENV['S3_BUCKET'];

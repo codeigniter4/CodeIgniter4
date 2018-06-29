@@ -1,31 +1,7 @@
 <?php
 
 /**
- * CodeIgniter
- *
- * An open source application development framework for PHP
- *
- * This content is released under the MIT License (MIT)
- *
- * Copyright (c) 2014-2018 British Columbia Institute of Technology
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ * Validation language strings.
  *
  * @package      CodeIgniter
  * @author       CodeIgniter Dev Team
@@ -34,20 +10,23 @@
  * @link         https://codeigniter.com
  * @since        Version 3.0.0
  * @filesource
+ * 
+ * @codeCoverageIgnore
  */
 
 return [
 	// Core Messages
 	'noRuleSets'            => 'No rulesets specified in Validation configuration.',
-	'ruleNotFound'          => '{rule} is not a valid rule.',
-	'groupNotFound'         => '%s is not a validation rules group.',
-	'groupNotArray'         => '%s rule group must be an array.',
+	'ruleNotFound'          => '{0} is not a valid rule.',
+	'groupNotFound'         => '{0} is not a validation rules group.',
+	'groupNotArray'         => '{0} rule group must be an array.',
+	'invalidTemplate'       => '{0} is not a valid Validation template.',
 
 	// Rule Messages
 	'alpha'                 => 'The {field} field may only contain alphabetical characters.',
 	'alpha_dash'            => 'The {field} field may only contain alpha-numeric characters, underscores, and dashes.',
 	'alpha_numeric'         => 'The {field} field may only contain alpha-numeric characters.',
-	'alpha_numeric_space'  => 'The {field} field may only contain alpha-numeric characters and spaces.',
+	'alpha_numeric_space'   => 'The {field} field may only contain alpha-numeric characters and spaces.',
 	'alpha_space'  			=> 'The {field} field may only contain alphabetical characters and spaces.',
 	'decimal'               => 'The {field} field must contain a decimal number.',
 	'differs'               => 'The {field} field must differ from the {param} field.',
@@ -68,7 +47,7 @@ return [
 	'regex_match'           => 'The {field} field is not in the correct format.',
 	'required'              => 'The {field} field is required.',
 	'required_with'         => 'The {field} field is required when {param} is present.',
-	'required_without'      => 'The {field} field is required when {param} in not present.',
+	'required_without'      => 'The {field} field is required when {param} is not present.',
 	'timezone'              => 'The {field} field must be a valid timezone.',
 	'valid_base64'          => 'The {field} field must be a valid base64 string.',
 	'valid_email'           => 'The {field} field must contain a valid email address.',
@@ -87,5 +66,4 @@ return [
 	'mime_in'               => '{field} does not have a valid mime type.',
 	'ext_in'                => '{field} does not have a valid file extension.',
 	'max_dims'              => '{field} is either not an image, or it is too wide or tall.',
-	'',
 ];

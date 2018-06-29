@@ -50,7 +50,7 @@ Entity itself at **application/Entities/User.php**.
         protected $email;
         protected $password;
         protected $created_at;
-        protected $updated_on;
+        protected $updated_at;
     }
 
 At its simplest, this is all you need to do, though we'll make it more useful in a minute. Note that all of the
@@ -76,7 +76,7 @@ Create the model first at **application/Models/UserModel.php** so that we can in
     }
 
 The model uses the ``users`` table in the database for all of its activities. We've set the ``$allowedFields`` property
-to include all of the fields that we want outside classes to change. The ``id``, ``created_at``, and ``updated_on`` fields
+to include all of the fields that we want outside classes to change. The ``id``, ``created_at``, and ``updated_at`` fields
 are handled automatically by the class or the database, so we don't want to change those. Finally, we've set our Entity
 class as the ``$returnType``. This ensures that all methods on the model that return rows from the database will return
 instances of our User Entity class instead of an object or array like normal.
@@ -248,7 +248,9 @@ simply map the ``full_name`` column in the database to the ``$name`` property, a
         protected $_options = [
             'datamap' => [
                 'full_name' => 'name'
-            ]
+            ],
+            'dates' => ['created_at', 'updated_at', 'deleted_at'],
+            'casts' => []
         ];
     }
 
@@ -289,6 +291,8 @@ You can define which properties are automatically converted by adding the name t
 
         protected $_options = [
             'dates' => ['created_at', 'updated_at', 'deleted_at'],
+            'casts' => [],
+            'datamap' => []
         ];
     }
 
@@ -327,7 +331,9 @@ For example, if you had a User entity with an **is_banned** property, you can ca
         protected $_options = [
             'casts' => [
                 'is_banned' => 'boolean'
-            ]
+            ],
+            'dates' => ['created_at', 'updated_at', 'deleted_at'],
+            'datamap' => []
         ];
     }
 
@@ -349,7 +355,9 @@ you can cast properties into, the **array** cast type will serialize the value w
         protected $_options = [
             'casts' => [
                 'options' => 'array'
-            ]
+            ],
+             'dates' => ['created_at', 'updated_at', 'deleted_at'],
+            'datamap' => []
         ];
     }
 

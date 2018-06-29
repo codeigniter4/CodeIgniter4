@@ -85,6 +85,24 @@ if ( ! function_exists('cache'))
 
 //--------------------------------------------------------------------
 
+if ( ! function_exists('config'))
+{
+	/**
+	 * More simple way of getting config instances
+	 *
+	 * @param string $name
+	 * @param bool   $getShared
+	 *
+	 * @return mixed
+	 */
+	function config(string $name, bool $getShared = true)
+	{
+		return \CodeIgniter\Config\Config::get($name, $getShared);
+	}
+}
+
+//--------------------------------------------------------------------
+
 if ( ! function_exists('view'))
 {
 
@@ -282,14 +300,15 @@ if ( ! function_exists('session'))
 	 */
 	function session($val = null)
 	{
+		$session = \Config\Services::session();
+
 		// Returning a single item?
 		if (is_string($val))
 		{
-			helper('array');
-			return dot_array_search($val, $_SESSION);
+			return $session->get($val);
 		}
 
-		return \Config\Services::session();
+		return $session;
 	}
 
 }
@@ -434,13 +453,15 @@ if ( ! function_exists('log_message'))
 		// for asserting that logs were called in the test code.
 		if (ENVIRONMENT == 'testing')
 		{
-			$logger = new \CodeIgniter\Log\TestLogger(new \Config\Logger());
+			$logger = new \Tests\Support\Log\TestLogger(new \Config\Logger());
 
 			return $logger->log($level, $message, $context);
 		}
 
+		// @codeCoverageIgnoreStart
 		return Services::logger(true)
 						->log($level, $message, $context);
+		// @codeCoverageIgnoreEnd
 	}
 
 }
@@ -667,6 +688,11 @@ if ( ! function_exists('force_https'))
 	 *                                    Defaults to 1 year.
 	 * @param RequestInterface  $request
 	 * @param ResponseInterface $response
+	 *
+	 * Not testable, as it will exit!
+	 *
+	 * @throws \CodeIgniter\HTTP\RedirectException
+	 * @codeCoverageIgnore
 	 */
 	function force_https(int $duration = 31536000, RequestInterface $request = null, ResponseInterface $response = null)
 	{
@@ -679,7 +705,7 @@ if ( ! function_exists('force_https'))
 			$response = Services::response(null, true);
 		}
 
-		if ($request->isSecure())
+		if (is_cli() || $request->isSecure())
 		{
 			return;
 		}
@@ -716,12 +742,13 @@ if (! function_exists('old'))
 	 * Provides access to "old input" that was set in the session
 	 * during a redirect()->withInput().
 	 *
-	 * @param string $key
-	 * @param null   $default
+	 * @param string       $key
+	 * @param null         $default
+	 * @param string|bool  $escape
 	 *
 	 * @return mixed|null
 	 */
-	function old(string $key, $default=null)
+	function old(string $key, $default = null, $escape = 'html')
 	{
 		$request = Services::request();
 
@@ -740,7 +767,7 @@ if (! function_exists('old'))
 			$value = unserialize($value);
 		}
 
-		return $value;
+		return $escape === false ? $value : esc($value, $escape);
 	}
 }
 
@@ -835,6 +862,8 @@ if ( ! function_exists('is_really_writable'))
 	 * @param   string $file
 	 *
 	 * @return  bool
+	 *
+	 * @codeCoverageIgnore	Not practical to test, as travis runs on linux
 	 */
 	function is_really_writable($file)
 	{
@@ -861,7 +890,7 @@ if ( ! function_exists('is_really_writable'))
 
 			return true;
 		}
-		elseif ( ! is_file($file) OR ( $fp = @fopen($file, 'ab')) === false)
+		elseif ( ! is_file($file) || ( $fp = @fopen($file, 'ab')) === false)
 		{
 			return false;
 		}
@@ -929,6 +958,8 @@ if ( ! function_exists('function_usable'))
 	 * @param	string	$function_name	Function to check for
 	 * @return	bool	TRUE if the function exists and is safe to call,
 	 * 			FALSE otherwise.
+	 *
+	 * @codeCoverageIgnore	This is too exotic
 	 */
 	function function_usable($function_name)
 	{
@@ -957,6 +988,8 @@ if (! function_exists('dd'))
 	 * Prints a Kint debug report and exits.
 	 *
 	 * @param array ...$vars
+	 *
+	 * @codeCoverageIgnore	Can't be tested ... exits
 	 */
 	function dd(...$vars)
 	{

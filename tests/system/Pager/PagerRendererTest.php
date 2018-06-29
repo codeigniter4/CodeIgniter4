@@ -4,24 +4,28 @@ use CodeIgniter\HTTP\URI;
 
 class PagerRendererTest extends \CIUnitTestCase
 {
+
 	protected $uri;
 
 	//--------------------------------------------------------------------
 
 	public function setUp()
 	{
+		parent::setUp();
+
 		$this->uri = new URI('http://example.com/foo');
+		$this->expect = 'http://example.com/foo?page=';
 	}
 
 	//--------------------------------------------------------------------
 
 	public function testHasPreviousReturnsFalseWhenFirstIsOne()
 	{
-	    $details = [
-	    	'uri' => $this->uri,
-			'pageCount' => 5,
-			'currentPage' => 1,
-			'total'	=> 100
+		$details = [
+			'uri'			 => $this->uri,
+			'pageCount'		 => 5,
+			'currentPage'	 => 1,
+			'total'			 => 100
 		];
 
 		$pager = new PagerRenderer($details);
@@ -37,10 +41,10 @@ class PagerRendererTest extends \CIUnitTestCase
 		$uri->addQuery('foo', 'bar');
 
 		$details = [
-			'uri' => $uri,
-			'pageCount' => 10,
-			'currentPage' => 5,
-			'total'	=> 100
+			'uri'			 => $uri,
+			'pageCount'		 => 10,
+			'currentPage'	 => 5,
+			'total'			 => 100
 		];
 
 		$pager = new PagerRenderer($details);
@@ -58,10 +62,10 @@ class PagerRendererTest extends \CIUnitTestCase
 		$uri->addQuery('foo', 'bar');
 
 		$details = [
-			'uri' => $uri,
-			'pageCount' => 50,
-			'currentPage' => 4,
-			'total'	=> 100
+			'uri'			 => $uri,
+			'pageCount'		 => 50,
+			'currentPage'	 => 4,
+			'total'			 => 100
 		];
 
 		$pager = new PagerRenderer($details);
@@ -79,10 +83,10 @@ class PagerRendererTest extends \CIUnitTestCase
 		$uri->addQuery('foo', 'bar');
 
 		$details = [
-			'uri' => $uri,
-			'pageCount' => 5,
-			'currentPage' => 4,
-			'total'	=> 100
+			'uri'			 => $uri,
+			'pageCount'		 => 5,
+			'currentPage'	 => 4,
+			'total'			 => 100
 		];
 
 		$pager = new PagerRenderer($details);
@@ -99,10 +103,10 @@ class PagerRendererTest extends \CIUnitTestCase
 		$uri->addQuery('foo', 'bar');
 
 		$details = [
-			'uri' => $uri,
-			'pageCount' => 50,
-			'currentPage' => 4,
-			'total'	=> 100
+			'uri'			 => $uri,
+			'pageCount'		 => 50,
+			'currentPage'	 => 4,
+			'total'			 => 100
 		];
 
 		$pager = new PagerRenderer($details);
@@ -120,10 +124,10 @@ class PagerRendererTest extends \CIUnitTestCase
 		$uri->addQuery('foo', 'bar');
 
 		$details = [
-			'uri' => $uri,
-			'pageCount' => 50,
-			'currentPage' => 4,
-			'total'	=> 100
+			'uri'			 => $uri,
+			'pageCount'		 => 50,
+			'currentPage'	 => 4,
+			'total'			 => 100
 		];
 
 		$pager = new PagerRenderer($details);
@@ -138,10 +142,10 @@ class PagerRendererTest extends \CIUnitTestCase
 	public function testLinksBasics()
 	{
 		$details = [
-			'uri' => $this->uri,
-			'pageCount' => 50,
-			'currentPage' => 4,
-			'total'	=> 100
+			'uri'			 => $this->uri,
+			'pageCount'		 => 50,
+			'currentPage'	 => 4,
+			'total'			 => 100
 		];
 
 		$pager = new PagerRenderer($details);
@@ -149,18 +153,18 @@ class PagerRendererTest extends \CIUnitTestCase
 
 		$expected = [
 			[
-				'uri' => 'http://example.com/foo?page=3',
-				'title' => 3,
+				'uri'	 => 'http://example.com/foo?page=3',
+				'title'	 => 3,
 				'active' => false
 			],
 			[
-				'uri' => 'http://example.com/foo?page=4',
-				'title' => 4,
+				'uri'	 => 'http://example.com/foo?page=4',
+				'title'	 => 4,
 				'active' => true
 			],
 			[
-				'uri' => 'http://example.com/foo?page=5',
-				'title' => 5,
+				'uri'	 => 'http://example.com/foo?page=5',
+				'title'	 => 5,
 				'active' => false
 			],
 		];
@@ -176,10 +180,10 @@ class PagerRendererTest extends \CIUnitTestCase
 		$uri->addQuery('foo', 'bar');
 
 		$details = [
-			'uri' => $uri,
-			'pageCount' => 50,
-			'currentPage' => 4,
-			'total'	=> 100
+			'uri'			 => $uri,
+			'pageCount'		 => 50,
+			'currentPage'	 => 4,
+			'total'			 => 100
 		];
 
 		$pager = new PagerRenderer($details);
@@ -189,4 +193,38 @@ class PagerRendererTest extends \CIUnitTestCase
 	}
 
 	//--------------------------------------------------------------------
+
+	public function testSurroundCount()
+	{
+		$uri = $this->uri;
+
+		$details = [
+			'uri'			 => $uri,
+			'pageCount'		 => 10, // 10 pages
+			'currentPage'	 => 4,
+			'total'			 => 100 // 100 records, so 10 per page
+		];
+
+		$pager = new PagerRenderer($details);
+
+		// without any surround count
+		$this->assertEquals(null, $pager->getPrevious());
+		$this->assertEquals(null, $pager->getNext());
+
+		// with surropund count of 2
+		$pager->setSurroundCount(2);
+		$this->assertEquals($this->expect . '1', $pager->getPrevious());
+		$this->assertEquals($this->expect . '7', $pager->getNext());
+
+		// with unchanged surround count
+		$pager->setSurroundCount();
+		$this->assertEquals($this->expect . '1', $pager->getPrevious());
+		$this->assertEquals($this->expect . '7', $pager->getNext());
+
+		// and with huge surround count
+		$pager->setSurroundCount(100);
+		$this->assertEquals(null, $pager->getPrevious());
+		$this->assertEquals(null, $pager->getNext());
+	}
+
 }

@@ -2,6 +2,7 @@
 
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Model;
+use CodeIgniter\Test\CIDatabaseTestCase;
 use CodeIgniter\Test\ReflectionHelper;
 use Tests\Support\Models\EntityModel;
 use Tests\Support\Models\EventModel;
@@ -13,13 +14,13 @@ use Tests\Support\Models\ValidModel;
 /**
  * @group DatabaseLive
  */
-class ModelTest extends \CIDatabaseTestCase
+class ModelTest extends CIDatabaseTestCase
 {
 	use ReflectionHelper;
 
 	protected $refresh = true;
 
-	protected $seed = 'CITestSeeder';
+	protected $seed = 'Tests\Support\Database\Seeds\CITestSeeder';
 
 	public function setUp()
 	{
@@ -424,7 +425,33 @@ class ModelTest extends \CIDatabaseTestCase
 
     //--------------------------------------------------------------------
 
-    public function testSkipValidation()
+	public function testValidationPlaceholdersSuccess()
+	{
+		$model = new ValidModel($this->db);
+
+		$data = [
+			'name' => 'abc',
+			'id' => 13,
+			'token' => 13
+		];
+
+		$this->assertTrue($model->validate($data));
+	}
+
+	public function testValidationPlaceholdersFail()
+	{
+		$model = new ValidModel($this->db);
+
+		$data = [
+			'name' => 'abc',
+			'id' => 13,
+			'token' => 12
+		];
+
+		$this->assertFalse($model->validate($data));
+	}
+
+	public function testSkipValidation()
     {
         $model = new ValidModel($this->db);
 

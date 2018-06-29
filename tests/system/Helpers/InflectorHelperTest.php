@@ -6,6 +6,8 @@ final class InflectorHelperTest extends \CIUnitTestCase
 
 	public function setUp()
 	{
+		parent::setUp();
+
 	    helper('inflector');
 	}
 

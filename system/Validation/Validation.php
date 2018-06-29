@@ -36,6 +36,7 @@
  * @filesource
  */
 use CodeIgniter\HTTP\RequestInterface;
+use CodeIgniter\Validation\Exceptions\ValidationException;
 use CodeIgniter\View\RendererInterface;
 
 class Validation implements ValidationInterface
@@ -203,7 +204,7 @@ class Validation implements ValidationInterface
 		{
 			// and the current field does not exists in the input data
 			// we can return true. Ignoring all other rules to this field.
-			if (! array_key_exists($field, $data))
+			if ( ! array_key_exists($field, $data))
 			{
 				return true;
 			}
@@ -213,7 +214,7 @@ class Validation implements ValidationInterface
 
 		if (in_array('permit_empty', $rules))
 		{
-			if (! in_array('required', $rules) && (is_array($value) ? empty($value) : (trim($value) === '')))
+			if ( ! in_array('required', $rules) && (is_array($value) ? empty($value) : (trim($value) === '')))
 			{
 				return true;
 			}
@@ -264,7 +265,7 @@ class Validation implements ValidationInterface
 				// should throw an exception so the developer can find it.
 				if ( ! $found)
 				{
-					throw new \InvalidArgumentException(lang('Validation.ruleNotFound',['rule'=>$rule]));
+					throw ValidationException::forRuleNotFound($rule);
 				}
 			}
 
@@ -284,8 +285,8 @@ class Validation implements ValidationInterface
 	//--------------------------------------------------------------------
 
 	/**
-	 * Takes a Request object and grabs the data to use from its
-	 * POST array values.
+	 * Takes a Request object and grabs the input data to use from its
+	 * array values.
 	 *
 	 * @param \CodeIgniter\HTTP\RequestInterface|\CodeIgniter\HTTP\IncomingRequest $request
 	 *
@@ -293,7 +294,14 @@ class Validation implements ValidationInterface
 	 */
 	public function withRequest(RequestInterface $request): ValidationInterface
 	{
-		$this->data = $request->getPost() ?? [];
+		if (in_array($request->getMethod(), ['put', 'patch', 'delete']))
+		{
+			$this->data = $request->getRawInput();
+		}
+		else
+		{
+			$this->data = $request->getVar() ?? [];
+		}
 
 		return $this;
 	}
@@ -324,8 +332,8 @@ class Validation implements ValidationInterface
 	public function setRule(string $field, string $label = null, string $rules, array $errors = [])
 	{
 		$this->rules[$field] = [
-			'label' => $label,
-			'rules' => $rules,
+			'label'	 => $label,
+			'rules'	 => $rules,
 		];
 		$this->customErrors = array_merge($this->customErrors, [
 			$field => $errors
@@ -420,12 +428,12 @@ class Validation implements ValidationInterface
 	{
 		if ( ! isset($this->config->$group))
 		{
-			throw new \InvalidArgumentException(sprintf(lang('Validation.groupNotFound'), $group));
+			throw ValidationException::forGroupNotFound($group);
 		}
 
 		if ( ! is_array($this->config->$group))
 		{
-			throw new \InvalidArgumentException(sprintf(lang('Validation.groupNotArray'), $group));
+			throw ValidationException::forGroupNotArray($group);
 		}
 
 		return $this->config->$group;
@@ -464,7 +472,7 @@ class Validation implements ValidationInterface
 	{
 		if ( ! array_key_exists($template, $this->config->templates))
 		{
-			throw new \InvalidArgumentException($template . ' is not a valid Validation template.');
+			throw ValidationException::forInvalidTemplate($template);
 		}
 
 		return $this->view->setVar('errors', $this->getErrors())
@@ -490,7 +498,7 @@ class Validation implements ValidationInterface
 
 		if ( ! array_key_exists($template, $this->config->templates))
 		{
-			throw new \InvalidArgumentException($template . ' is not a valid Validation template.');
+			throw ValidationException::forInvalidTemplate($template);
 		}
 
 		return $this->view->setVar('error', $this->getError($field))
@@ -507,7 +515,7 @@ class Validation implements ValidationInterface
 	{
 		if (empty($this->ruleSetFiles))
 		{
-			throw new \RuntimeException(lang('Validation.noRuleSets'));
+			throw ValidationException::forNoRuleSets();
 		}
 
 		foreach ($this->ruleSetFiles as $file)
@@ -537,12 +545,12 @@ class Validation implements ValidationInterface
 
 		if ( ! isset($this->config->$group))
 		{
-			throw new \InvalidArgumentException(sprintf(lang('Validation.groupNotFound'), $group));
+			throw ValidationException::forGroupNotFound($group);
 		}
 
 		if ( ! is_array($this->config->$group))
 		{
-			throw new \InvalidArgumentException(sprintf(lang('Validation.groupNotArray'), $group));
+			throw ValidationException::forGroupNotArray($group);
 		}
 
 		$this->rules = $this->config->$group;
@@ -607,6 +615,11 @@ class Validation implements ValidationInterface
 	 *    ]
 	 *
 	 * @return array
+	 * 
+	 * Excluded from code coverage because that it always run as cli
+	 * 
+	 * @codeCoverageIgnore
+	 * 
 	 */
 	public function getErrors(): array
 	{
@@ -675,7 +688,7 @@ class Validation implements ValidationInterface
 		}
 
 		$message = str_replace('{field}', $label ?? $field, $message);
-		$message = str_replace('{param}', $param, $message);
+		$message = str_replace('{param}', $this->rules[$param]['label'] ?? $param, $message);
 
 		return $message;
 	}

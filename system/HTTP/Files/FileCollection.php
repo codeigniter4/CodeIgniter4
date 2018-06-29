@@ -79,7 +79,7 @@ class FileCollection
 	 *
 	 * @param string $name
 	 *
-	 * @return null
+	 * @return UploadedFile|null
 	 */
 	public function getFile(string $name)
 	{

@@ -36,8 +36,8 @@
  * @filesource
  */
 use SPLFileInfo;
-
-require_once __DIR__ . '/Exceptions.php';
+use CodeIgniter\Files\Exceptions\FileException;
+use CodeIgniter\Files\Exceptions\FileNotFoundException;
 
 class File extends SplFileInfo
 {
@@ -62,7 +62,7 @@ class File extends SplFileInfo
 	{
 		if ($checkFile && ! is_file($path))
 		{
-			throw new FileNotFoundException();
+			throw FileNotFoundException::forFileNotFound($path);
 		}
 
 		parent::__construct($path);
@@ -95,13 +95,11 @@ class File extends SplFileInfo
 		{
 			case 'kb':
 				return number_format($this->size / 1024, 3);
-				break;
 			case 'mb':
 				return number_format(($this->size / 1024) / 1024, 3);
-				break;
 		}
 
-		return $this->size;
+		return (int) $this->size;
 	}
 
 	//--------------------------------------------------------------------
@@ -175,7 +173,7 @@ class File extends SplFileInfo
 		if ( ! @rename($this->getPath(), $destination))
 		{
 			$error = error_get_last();
-			throw new \RuntimeException(sprintf('Could not move file %s to %s (%s)', $this->getBasename(), $targetPath, strip_tags($error['message'])));
+			throw FileException::forUnableToMove($this->getBasename(), $targetPath, strip_tags($error['message']));
 		}
 
 		@chmod($targetPath, 0777 & ~umask());

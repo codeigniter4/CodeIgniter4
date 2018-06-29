@@ -36,6 +36,7 @@
  * @filesource
  */
 use CodeIgniter\Log\Logger;
+use CodeIgniter\View\Exceptions\ViewException;
 
 /**
  * Class Parser
@@ -152,7 +153,7 @@ class Parser extends View
 		// locateFile will return an empty string if the file cannot be found.
 		if (empty($file))
 		{
-			throw new \InvalidArgumentException('View file not found: ' . $file);
+			throw ViewException::forInvalidFile($file);
 		}
 
 		$template = file_get_contents($file);
@@ -296,26 +297,24 @@ class Parser extends View
 	}
 
 	//--------------------------------------------------------------------
-
-	protected function is_assoc($arr)
-	{
-		return array_keys($arr) !== range(0, count($arr) - 1);
-	}
-
+//FIXME the following method does not appear to be used anywhere, so commented out	
+//	protected function is_assoc($arr)
+//	{
+//		return array_keys($arr) !== range(0, count($arr) - 1);
+//	}
 	//--------------------------------------------------------------------
-
-	function strpos_all($haystack, $needle)
-	{
-		$offset = 0;
-		$allpos = [];
-		while (($pos = strpos($haystack, $needle, $offset)) !== FALSE)
-		{
-			$offset = $pos + 1;
-			$allpos[] = $pos;
-		}
-		return $allpos;
-	}
-
+//FIXME the following method does not appear to be used anywhere, so commented out	
+//	function strpos_all($haystack, $needle)
+//	{
+//		$offset = 0;
+//		$allpos = [];
+//		while (($pos = strpos($haystack, $needle, $offset)) !== FALSE)
+//		{
+//			$offset = $pos + 1;
+//			$allpos[] = $pos;
+//		}
+//		return $allpos;
+//	}
 	//--------------------------------------------------------------------
 
 	/**
@@ -523,14 +522,14 @@ class Parser extends View
 		// Parse the PHP itself, or insert an error so they can debug
 		ob_start();
 		extract($this->data);
-		$result = eval('?>' . $template . '<?php ');
-
-		if ($result === false)
+		try
 		{
-			$output = 'You have a syntax error in your Parser tags: ';
-			throw new \RuntimeException($output . str_replace(['?>', '<?php '], '', $template));
+			$result = eval('?>' . $template . '<?php ');
+		} catch (\ParseError $e)
+		{
+			ob_end_clean();
+			throw ViewException::forTagSyntaxError(str_replace(['?>', '<?php '], '', $template));
 		}
-
 		return ob_get_clean();
 	}
 
@@ -650,7 +649,7 @@ class Parser extends View
 			$escape = false;
 		}
 		// If no `esc` filter is found, then we'll need to add one.
-		elseif ( ! preg_match('/^|\s+esc/', $key))
+		elseif ( ! preg_match('/\s+esc/', $key))
 		{
 			$escape = 'html';
 		}

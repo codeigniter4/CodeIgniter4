@@ -8,6 +8,8 @@ class ServicesTest extends \CIUnitTestCase
 
 	public function setUp()
 	{
+		parent::setUp();
+
 		$this->original = $_SERVER;
 //		$_SERVER['HTTP_ACCEPT_LANGUAGE'] = 'es; q=1.0, en; q=0.5';
 		$this->config = new App();
@@ -28,13 +30,13 @@ class ServicesTest extends \CIUnitTestCase
 
 	public function testNewExceptions()
 	{
-		$actual = Services::exceptions(new Exceptions());
+		$actual = Services::exceptions(new Exceptions(), Services::request(), Services::response());
 		$this->assertInstanceOf(\CodeIgniter\Debug\Exceptions::class, $actual);
 	}
 
 	public function testNewExceptionsWithNullConfig()
 	{
-		$actual = Services::exceptions(null, false);
+		$actual = Services::exceptions(null, null, null, false);
 		$this->assertInstanceOf(\CodeIgniter\Debug\Exceptions::class, $actual);
 	}
 

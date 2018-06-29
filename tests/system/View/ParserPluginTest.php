@@ -1,6 +1,7 @@
 <?php
 
 use CodeIgniter\View\Parser;
+use CodeIgniter\View\Plugins;
 
 class ParserPluginTest extends \CIUnitTestCase
 {
@@ -11,6 +12,7 @@ class ParserPluginTest extends \CIUnitTestCase
 	{
 		parent::setUp();
 
+		\Config\Services::reset();
 		$this->parser = \Config\Services::parser();
 		$this->validator = \Config\Services::validation();
 	}

@@ -1,13 +1,16 @@
 <?php namespace CodeIgniter\Session;
 
-use CodeIgniter\Log\TestLogger;
-use CodeIgniter\Session\Handlers\FileHandler;
 use Config\Logger;
+use Tests\Support\Log\TestLogger;
+use Tests\Support\Session\MockSession;
+use CodeIgniter\Session\Handlers\FileHandler;
 
 class SessionTest extends \CIUnitTestCase
 {
     public function setUp()
     {
+        parent::setUp();
+
         $_COOKIE = [];
         $_SESSION = [];
     }
@@ -99,13 +102,32 @@ class SessionTest extends \CIUnitTestCase
 
     public function testGetReturnsNullWhenNotFound()
     {
+    	$_SESSION = [];
+
         $session = $this->getInstance();
         $session->start();
 
         $this->assertNull($session->get('foo'));
     }
 
-    public function testGetAsProperty()
+	public function testGetReturnsAllWithNoKeys()
+	{
+		$_SESSION = [
+			'foo' => 'bar',
+			'bar' => 'baz'
+		];
+
+		$session = $this->getInstance();
+		$session->start();
+
+		$result = $session->get();
+
+		$this->assertTrue(array_key_exists('foo', $result));
+		$this->assertTrue(array_key_exists('bar', $result));
+    }
+
+
+	public function testGetAsProperty()
     {
         $session = $this->getInstance();
         $session->start();

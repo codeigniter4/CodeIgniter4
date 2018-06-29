@@ -35,7 +35,6 @@
  * @since	Version 3.0.0
  * @filesource
  */
-
 class Language
 {
 
@@ -86,6 +85,23 @@ class Language
 	//--------------------------------------------------------------------
 
 	/**
+	 * Sets the current locale to use when performing string lookups.
+	 *
+	 * @param string $locale
+	 *
+	 * @return $this
+	 */
+	public function setLocale(string $locale = null)
+	{
+		if ( ! is_null($locale))
+		{
+			$this->locale = $locale;
+		}
+
+		return $this;
+	}
+
+	/**
 	 * Parses the language string for a file, loads the file, if necessary,
 	 * getting the line.
 	 *
@@ -98,15 +114,14 @@ class Language
 	{
 		// Parse out the file name and the actual alias.
 		// Will load the language file and strings.
-		list($file, $line) = $this->parseLine($line);
+		list($file, $parsedLine) = $this->parseLine($line);
 
-		$output = $this->language[$file][$line] ?? $line;
+		$output = $this->language[$this->locale][$file][$parsedLine] ?? $line;
 
-		if (! empty($args))
+		if ( ! empty($args))
 		{
 			$output = $this->formatMessage($output, $args);
 		}
-
 		return $output;
 	}
 
@@ -143,7 +158,7 @@ class Language
 
 		return [
 			$file,
-			$this->language[$line] ?? $line
+			$this->language[$this->locale][$line] ?? $line
 		];
 	}
 
@@ -191,30 +206,40 @@ class Language
 	 */
 	protected function load(string $file, string $locale, bool $return = false)
 	{
-		if (in_array($file, $this->loadedFiles))
+		if ( ! array_key_exists($locale, $this->loadedFiles))
 		{
+			$this->loadedFiles[$locale] = [];
+		}
+
+		if (in_array($file, $this->loadedFiles[$locale]))
+		{
+			// Don't load it more than once.
 			return [];
 		}
 
-		if ( ! array_key_exists($file, $this->language))
+		if ( ! array_key_exists($locale, $this->language))
 		{
-			$this->language[$file] = [];
+			$this->language[$locale] = [];
+		}
+
+		if ( ! array_key_exists($file, $this->language[$locale]))
+		{
+			$this->language[$locale][$file] = [];
 		}
 
 		$path = "Language/{$locale}/{$file}.php";
 
 		$lang = $this->requireFile($path);
 
-		// Don't load it more than once.
-		$this->loadedFiles[] = $file;
-
 		if ($return)
 		{
 			return $lang;
 		}
 
+		$this->loadedFiles[$locale][] = $file;
+
 		// Merge our string
-		$this->language[$file] = $lang;
+		$this->language[$this->locale][$file] = $lang;
 	}
 
 	//--------------------------------------------------------------------

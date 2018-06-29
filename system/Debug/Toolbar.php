@@ -37,6 +37,7 @@
  */
 use CodeIgniter\Config\BaseConfig;
 use Config\Services;
+use CodeIgniter\Format\XMLFormatter;
 
 /**
  * Debug Toolbar
@@ -58,9 +59,11 @@ class Toolbar
 	protected $collectors = [];
 
 	/**
-	 * @var float App start time
+	 * Incoming Request
+	 *
+	 * @var \CodeIgniter\HTTP\IncomingRequest
 	 */
-	protected $startTime;
+	protected static $request;
 
 	//--------------------------------------------------------------------
 
@@ -86,33 +89,207 @@ class Toolbar
 	//--------------------------------------------------------------------
 
 	/**
-	 * Run
+	 * Returns all the data required by Debug Bar
 	 *
-	 * @param float                               $startTime
+	 * @param float                               $startTime   App start time
 	 * @param float                               $totalTime
 	 * @param float                               $startMemory
 	 * @param \CodeIgniter\HTTP\RequestInterface  $request
 	 * @param \CodeIgniter\HTTP\ResponseInterface $response
 	 *
-	 * @return string
+	 * @return string JSON encoded data
 	 */
 	public function run($startTime, $totalTime, $startMemory, $request, $response): string
 	{
-		$this->startTime = $startTime;
-
 		// Data items used within the view.
-		$collectors = $this->collectors;
+		$data['url']             = current_url();
+		$data['method']          = $request->getMethod(true);
+		$data['isAJAX']          = $request->isAJAX();
+		$data['startTime']       = $startTime;
+		$data['totalTime']       = $totalTime*1000;
+		$data['totalMemory']     = number_format((memory_get_peak_usage()-$startMemory)/1048576, 3);
+		$data['segmentDuration'] = $this->roundTo($data['totalTime']/7, 5);
+		$data['segmentCount']    = (int)ceil($data['totalTime']/$data['segmentDuration']);
+		$data['CI_VERSION']      = \CodeIgniter\CodeIgniter::CI_VERSION;
+		$data['collectors']      = [];
 
-		$totalTime       = $totalTime*1000;
-		$totalMemory     = number_format((memory_get_peak_usage()-$startMemory)/1048576, 3);
-		$segmentDuration = $this->roundTo($totalTime/7, 5);
-		$segmentCount    = (int)ceil($totalTime/$segmentDuration);
-		$varData         = $this->collectVarData();
+		foreach($this->collectors as $collector)
+		{
+			$data['collectors'][] = [
+				'title'           => $collector->getTitle(),
+				'titleSafe'       => $collector->getTitle(true),
+				'titleDetails'    => $collector->getTitleDetails(),
+				'display'         => $collector->display(),
+				'badgeValue'      => $collector->getBadgeValue(),
+				'isEmpty'         => $collector->isEmpty(),
+				'hasTabContent'   => $collector->hasTabContent(),
+				'hasLabel'        => $collector->hasLabel(),
+				'icon'            => $collector->icon(),
+				'hasTimelineData' => $collector->hasTimelineData(),
+				'timelineData'    => $collector->timelineData(),
+			];
+		}
 
-		ob_start();
-		include(__DIR__.'/Toolbar/Views/toolbar.tpl.php');
-		$output = ob_get_contents();
-		ob_end_clean();
+		foreach ($this->collectVarData() as $heading => $items)
+		{
+			$vardata = [];
+
+			if (is_array($items))
+			{
+				foreach ($items as $key => $value)
+				{
+					$vardata[esc($key)] = is_string($value) ? esc($value) : print_r($value, true);
+				}
+			}
+
+			$data['vars']['varData'][esc($heading)] = $vardata;
+		}
+
+		if (isset($_SESSION) && ! empty($_SESSION))
+		{
+			foreach ($_SESSION as $key => $value)
+			{
+				$data['vars']['session'][esc($key)] = is_string($value) ? esc($value) : print_r($value, true);
+			}
+		}
+
+		foreach ($request->getGet() as $name => $value)
+		{
+			$data['vars']['get'][esc($name)] = is_array($value) ? esc(print_r($value, true)) : esc($value);
+		}
+
+		foreach ($request->getPost() as $name => $value)
+		{
+			$data['vars']['post'][esc($name)] = is_array($value) ? esc(print_r($value, true)) : esc($value);
+		}
+
+		foreach ($request->getHeaders() as $header => $value)
+		{
+			if (empty($value))
+			{
+				continue;
+			}
+
+			if (! is_array($value))
+			{
+				$value = [$value];
+			}
+
+			foreach ($value as $h)
+			{
+				$data['vars']['headers'][esc($h->getName())] = esc($h->getValueLine());
+			}
+		}
+
+		foreach ($request->getCookie() as $name => $value)
+		{
+			$data['vars']['cookies'][esc($name)] = esc($value);
+		}
+
+		$data['vars']['request'] = ($request->isSecure() ? 'HTTPS' : 'HTTP').'/'.$request->getProtocolVersion();
+
+		$data['vars']['response'] = [
+			'statusCode'      => $response->getStatusCode(),
+			'reason'          => esc($response->getReason()),
+			'contentType'     => esc($response->getHeaderLine('content-type')),
+		];
+
+		$data['config'] = \CodeIgniter\Debug\Toolbar\Collectors\Config::display();
+
+		return json_encode($data);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Format output
+	 *
+	 * @param  string $data   JSON encoded Toolbar data
+	 * @param  string $format html, json, xml
+	 *
+	 * @return string
+	 */
+	protected static function format(string $data, string $format = 'html')
+	{
+		$data = json_decode($data, true);
+
+		// History must be loaded on the fly
+		$filenames = glob(WRITEPATH.'debugbar/debugbar_*');
+		$total     = count($filenames);
+		rsort($filenames);
+
+		$files = [];
+
+		$current = self::$request->getGet('debugbar_time');
+		$app     = new \Config\App;
+
+		for ($i = 0; $i < $total; $i++)
+		{
+			// Get the contents of this specific history request
+			ob_start();
+			include($filenames[$i]);
+			$contents = ob_get_contents();
+			ob_end_clean();
+
+			$file = json_decode($contents, true);
+
+			// Debugbar files shown in History Collector
+			$files[$i] = [
+				'time'        => (int)$time = substr($filenames[$i], -10),
+				'datetime'    => date('Y-m-d H:i:s', $time),
+				'active'      => (int)($time == $current),
+				'status'      => $file['vars']['response']['statusCode'],
+				'method'      => $file['method'],
+				'url'         => $file['url'],
+				'isAJAX'      => $file['isAJAX'] ? 'Yes' : 'No',
+				'contentType' => $file['vars']['response']['contentType'],
+			];
+
+			// Oldest files will be deleted
+			if ($app->toolbarMaxHistory >= 0 && $i >= $app->toolbarMaxHistory)
+			{
+				unlink($filenames[$i]);
+				continue;
+			}
+		}
+
+		// Set the History here. Class is not necessary
+		$data['collectors'][] = [
+			'title'           => 'History',
+			'titleSafe'       => 'history',
+			'titleDetails'    => '',
+			'display'         => ['files' => $files],
+			'badgeValue'      => $count = count($files),
+			'isEmpty'         => ! (bool)$count,
+			'hasTabContent'   => true,
+			'hasLabel'        => true,
+			'icon'            => 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAJySURBVEhL3ZU7aJNhGIVTpV6i4qCIgkIHxcXLErS4FBwUFNwiCKGhuTYJGaIgnRoo4qRu6iCiiIuIXXTTIkIpuqoFwaGgonUQlC5KafU5ycmNP0lTdPLA4fu+8573/a4/f6hXpFKpwUwmc9fDfweKbk+n07fgEv33TLSbtt/hvwNFT1PsG/zdTE0Gp+GFfD6/2fbVIxqNrqPIRbjg4t/hY8aztcngfDabHXbKyiiXy2vcrcPH8oDCry2FKDrA+Ar6L01E/ypyXzXaARjDGGcoeNxSDZXE0dHRA5VRE5LJ5CFy5jzJuOX2wHRHRnjbklZ6isQ3tIctBaAd4vlK3jLtkOVWqABBXd47jGHLmjTmSScttQV5J+SjfcUweFQEbsjAas5aqoCLXutJl7vtQsAzpRowYqkBinyCC8Vicb2lOih8zoldd0F8RD7qTFiqAnGrAy8stUAvi/hbqDM+YzkAFrLPdR5ZqoLXsd+Bh5YCIH7JniVdquUWxOPxDfboHhrI5XJ7HHhiqQXox+APe/Qk64+gGYVCYZs8cMpSFQj9JOoFzVqqo7k4HIvFYpscCoAjOmLffUsNUGRaQUwDlmofUa34ecsdgXdcXo4wbakBgiUFafXJV8A4DJ/2UrxUKm3E95H8RbjLcgOJRGILhnmCP+FBy5XvwN2uIPcy1AJvWgqC4xm2aU4Xb3lF4I+Tpyf8hRe5w3J7YLymSeA8Z3nSclv4WLRyFdfOjzrUFX0klJUEtZtntCNc+F69cz/FiDzEPtjzmcUMOr83kDQEX6pAJxJfpL3OX22n01YN7SZCoQnaSdoZ+Jz+PZihH3wt/xlCoT9M6nEtmRSPCQAAAABJRU5ErkJggg==',
+			'hasTimelineData' => false,
+			'timelineData'    => [],
+		];
+
+		$output = '';
+
+		switch ($format)
+		{
+			case 'html':
+				extract($data);
+				$parser = Services::parser(BASEPATH . 'Debug/Toolbar/Views/', null,false);
+				ob_start();
+				include(__DIR__.'/Toolbar/Views/toolbar.tpl.php');
+				$output = ob_get_contents();
+				ob_end_clean();
+				break;
+			case 'json':
+				$output = json_encode($data);
+				break;
+			case 'json':
+				$output = json_encode($data);
+			case 'xml':
+				$formatter = new XMLFormatter;
+				$output    = $formatter->format($data);
+				break;
+		}
 
 		return $output;
 	}
@@ -122,18 +299,18 @@ class Toolbar
 	/**
 	 * Called within the view to display the timeline itself.
 	 *
-	 * @param int $segmentCount
-	 * @param int $segmentDuration
+	 * @param array $collectors
+	 * @param float $startTime
+	 * @param int   $segmentCount
+	 * @param int   $segmentDuration
 	 *
 	 * @return string
 	 */
-	protected function renderTimeline(int $segmentCount, int $segmentDuration): string
+	protected static function renderTimeline(array $collectors, $startTime, int $segmentCount, int $segmentDuration): string
 	{
 		$displayTime = $segmentCount*$segmentDuration;
-
-		$rows = $this->collectTimelineData();
-
-		$output = '';
+		$rows        = self::collectTimelineData($collectors);
+		$output      = '';
 
 		foreach ($rows as $row)
 		{
@@ -143,15 +320,12 @@ class Toolbar
 			$output .= "<td style='text-align: right'>".number_format($row['duration']*1000, 2)." ms</td>";
 			$output .= "<td colspan='{$segmentCount}' style='overflow: hidden'>";
 
-			$offset = ((($row['start']-$this->startTime)*1000)/
-			           $displayTime)*100;
+			$offset = ((($row['start']-$startTime)*1000)/$displayTime)*100;
 			$length = (($row['duration']*1000)/$displayTime)*100;
 
 			$output .= "<span class='timer' style='left: {$offset}%; width: {$length}%;' title='".number_format($length,
 					2)."%'></span>";
-
 			$output .= "</td>";
-
 			$output .= "</tr>";
 		}
 
@@ -165,23 +339,22 @@ class Toolbar
 	 *
 	 * @return array
 	 */
-	protected function collectTimelineData(): array
+	protected static function collectTimelineData($collectors): array
 	{
 		$data = [];
 
 		// Collect it
-		foreach ($this->collectors as $collector)
+		foreach ($collectors as $collector)
 		{
-			if (! $collector->hasTimelineData())
+			if (! $collector['hasTimelineData'])
 			{
 				continue;
 			}
 
-			$data = array_merge($data, $collector->timelineData());
+			$data = array_merge($data, $collector['timelineData']);
 		}
 
 		// Sort it
-
 
 		return $data;
 	}
@@ -235,11 +408,16 @@ class Toolbar
 	 */
 	public static function eventHandler()
 	{
-		$request = Services::request();
+		self::$request = Services::request();
+
+		if(ENVIRONMENT == 'testing')
+		{
+			return;
+		}
 
 		// If the request contains '?debugbar then we're
 		// simply returning the loading script
-		if ($request->getGet('debugbar') !== null)
+		if (self::$request->getGet('debugbar') !== null)
 		{
 			// Let the browser know that we are sending javascript
 			header('Content-Type: application/javascript');
@@ -254,23 +432,31 @@ class Toolbar
 
 		// Otherwise, if it includes ?debugbar_time, then
 		// we should return the entire debugbar.
-		if ($request->getGet('debugbar_time'))
+		if (self::$request->getGet('debugbar_time'))
 		{
 			helper('security');
 
-			$file     = sanitize_filename('debugbar_'.$request->getGet('debugbar_time'));
+			// Negotiate the content-type to format the output
+			$format = self::$request->negotiate('media', [
+				'text/html',
+				'application/json',
+				'application/xml'
+			]);
+			$format = explode('/', $format)[1];
+
+			$file     = sanitize_filename('debugbar_'.self::$request->getGet('debugbar_time'));
 			$filename = WRITEPATH.'debugbar/'.$file;
 
 			// Show the toolbar
 			if (file_exists($filename))
 			{
-				$contents = file_get_contents($filename);
-				unlink($filename);
+				$contents = self::format(file_get_contents($filename), $format);
 				exit($contents);
 			}
 
 			// File was not written or do not exists
-			exit('<script id="toolbar_js">console.log(\'CI DebugBar: File "WRITEPATH/'.$file.'" not found.\')</script>');
+			http_response_code(404);
+			exit(); // Exit here is needed to avoid load the index page
 		}
 	}
 }

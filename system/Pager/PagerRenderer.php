@@ -74,11 +74,11 @@ class PagerRenderer
 	 * side of the current page. Adjusts the first and last counts
 	 * to reflect it.
 	 *
-	 * @param int $count
+	 * @param int|null $count
 	 *
 	 * @return PagerRenderer
 	 */
-	public function setSurroundCount(int $count)
+	public function setSurroundCount(int $count = null)
 	{
 		$this->updatePages($count);
 
@@ -226,7 +226,7 @@ class PagerRenderer
 	 * which is the number of links surrounding the active page
 	 * to show.
 	 *
-	 * @param int|null $count
+	 * @param int|null $count The new "surroundCount"
 	 */
 	protected function updatePages(int $count = null)
 	{

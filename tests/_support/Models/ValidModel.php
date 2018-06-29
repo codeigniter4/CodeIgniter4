@@ -15,13 +15,14 @@ class ValidModel extends Model
     protected $allowedFields = ['name', 'description'];
 
     protected $validationRules = [
-        'name' => 'required|min_length[3]'
+        'name'  => ['required', 'min_length[3]'],
+	    'token' => 'in_list[{id}]'
     ];
 
     protected $validationMessages = [
         'name' => [
             'required' => 'You forgot to name the baby.',
-            'min_length' => 'Too short, man!'
+            'min_length' => 'Too short, man!',
         ]
     ];
 }

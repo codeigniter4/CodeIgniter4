@@ -36,6 +36,8 @@
  * @filesource
  */
 
+use CodeIgniter\Cache\Exceptions\CacheException;
+
 /**
  * Class Cache
  *
@@ -45,7 +47,6 @@
  */
 class CacheFactory
 {
-
 	/**
 	 * Attempts to create the desired cache handler, based upon the
 	 *
@@ -59,12 +60,12 @@ class CacheFactory
 	{
 		if ( ! isset($config->validHandlers) || ! is_array($config->validHandlers))
 		{
-			throw new \InvalidArgumentException(lang('Cache.cacheInvalidHandlers'));
+			throw CacheException::forInvalidHandlers();
 		}
 
 		if ( ! isset($config->handler) || ! isset($config->backupHandler))
 		{
-			throw new \InvalidArgumentException(lang('Cache.cacheNoBackup'));
+			throw CacheException::forNoBackup();
 		}
 
 		$handler = ! empty($handler) ? $handler : $config->handler;
@@ -72,7 +73,7 @@ class CacheFactory
 
 		if ( ! array_key_exists($handler, $config->validHandlers) || ! array_key_exists($backup, $config->validHandlers))
 		{
-			throw new \InvalidArgumentException(lang('Cache.cacheHandlerNotFound'));
+			throw CacheException::forHandlerNotFound();
 		}
 
 		// Get an instance of our handler.

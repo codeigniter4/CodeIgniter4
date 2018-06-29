@@ -12,7 +12,8 @@
 	},
 	"autoload": {
 		"psr-4": {
-			"CodeIgniter\\": "system/"
+			"CodeIgniter\\": "system/",
+			"Psr\\Log\\": "system/ThirdParty/PSR/Log/"
 		}
 	},
 	"require": {
@@ -22,7 +23,7 @@
 		"kint-php/kint": "^2.1"
 	},
 	"require-dev": {
-		"phpunit/phpunit": "^6.0",
+		"phpunit/phpunit": "^7.0",
 		"mikey179/vfsStream": "1.6.*",
 		"codeigniter4/codeigniter4-standard": "^1.0"
 	},

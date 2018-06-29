@@ -35,6 +35,7 @@
  * @since	Version 3.0.0
  * @filesource
  */
+use CodeIgniter\CLI\Exceptions\CLIException;
 
 /**
  * Class CLI
@@ -44,10 +45,19 @@
  *
  * Portions of this code were initially from the FuelPHP Framework,
  * version 1.7.x, and used here under the MIT license they were
- * originally made available under.
+ * originally made available under. Reference: http://fuelphp.com
  *
- * http://fuelphp.com
- *
+ * Some of the code in this class is Windows-specific, and not
+ * possible to test using travis-ci. It has been phpunit-annotated
+ * to prevent messing up code coverage.
+ * 
+ * Some of the methods require keyboard input, and are not unit-testable
+ * as a result: input() and prompt().
+ * validate() is internal, and not testable if prompt() isn't.
+ * The wait() method is mostly testable, as long as you don't give it
+ * an argument of "0". 
+ * These have been flagged to ignore for code coverage purposes.
+ * 
  * @package CodeIgniter\HTTP
  */
 class CLI
@@ -118,6 +128,7 @@ class CLI
 	 * @var array
 	 */
 	protected static $segments = [];
+
 	/**
 	 * @var array
 	 */
@@ -135,6 +146,10 @@ class CLI
 		// http://www.php.net/manual/en/readline.installation.php
 		static::$readline_support = extension_loaded('readline');
 
+		// clear segments & options to keep testing clean
+		static::$segments = [];
+		static::$options = [];
+
 		static::parseCommandLine();
 
 		static::$initialized = true;
@@ -149,8 +164,9 @@ class CLI
 	 * php index.php user -v --v -name=John --name=John
 	 *
 	 * @param    string $prefix
-	 *
 	 * @return    string
+	 * 
+	 * @codeCoverageIgnore
 	 */
 	public static function input(string $prefix = null): string
 	{
@@ -188,6 +204,7 @@ class CLI
 	 * @param  string       $validation Validation rules
 	 *
 	 * @return string                   The user input
+	 * @codeCoverageIgnore
 	 */
 	public static function prompt($field, $options = null, $validation = null): string
 	{
@@ -196,7 +213,7 @@ class CLI
 
 		if (is_string($options))
 		{
-			$extra_output = ' [' . static::color($options, 'white') .']';
+			$extra_output = ' [' . static::color($options, 'white') . ']';
 			$default = $options;
 		}
 
@@ -213,8 +230,8 @@ class CLI
 			}
 			else
 			{
-				$extra_output = ' [' .$extra_output_default.', '. implode(', ', $opts) . ']';
-				$validation .= '|in_list['. implode(',', $options) .']';
+				$extra_output = ' [' . $extra_output_default . ', ' . implode(', ', $opts) . ']';
+				$validation .= '|in_list[' . implode(',', $options) . ']';
 				$validation = trim($validation, '|');
 			}
 
@@ -224,11 +241,11 @@ class CLI
 		fwrite(STDOUT, $field . $extra_output . ': ');
 
 		// Read the input from keyboard.
-		$input = trim(static::input()) ? : $default;
+		$input = trim(static::input()) ?: $default;
 
 		if (isset($validation))
 		{
-			while (! static::validate($field, $input, $validation))
+			while ( ! static::validate($field, $input, $validation))
 			{
 				$input = static::prompt($field, $options, $validation);
 			}
@@ -247,11 +264,12 @@ class CLI
 	 * @param  string $rules Validation rules
 	 *
 	 * @return boolean
+	 * @codeCoverageIgnore
 	 */
 	protected static function validate($field, $value, $rules)
 	{
 		$validation = \Config\Services::validation(null, false);
-		$validation->setRule($field, $rules);
+		$validation->setRule($field, null, $rules);
 		$validation->run([$field => $value]);
 
 		if ($validation->hasError($field))
@@ -345,8 +363,11 @@ class CLI
 			}
 			else
 			{
+				// this chunk cannot be tested because of keyboard input
+				// @codeCoverageIgnoreStart
 				static::write(static::$wait_msg);
 				static::input();
+				// @codeCoverageIgnoreEnd
 			}
 		}
 	}
@@ -373,7 +394,7 @@ class CLI
 	public static function newLine(int $num = 1)
 	{
 		// Do it once or more, write with empty string gives us a new line
-		for ($i = 0; $i < $num; $i ++ )
+		for ($i = 0; $i < $num; $i ++)
 		{
 			static::write('');
 		}
@@ -385,6 +406,7 @@ class CLI
 	 * Clears the screen of output
 	 *
 	 * @return    void
+	 * @codeCoverageIgnore
 	 */
 	public static function clearScreen()
 	{
@@ -414,17 +436,19 @@ class CLI
 	{
 		if (static::isWindows() && ! isset($_SERVER['ANSICON']))
 		{
+			// @codeCoverageIgnoreStart
 			return $text;
+			// @codeCoverageIgnoreEnd
 		}
 
 		if ( ! array_key_exists($foreground, static::$foreground_colors))
 		{
-			throw new \RuntimeException('Invalid CLI foreground color: ' . $foreground);
+			throw CLIException::forInvalidColor('foreground', $foreground);
 		}
 
 		if ($background !== null && ! array_key_exists($background, static::$background_colors))
 		{
-			throw new \RuntimeException('Invalid CLI background color: ' . $background);
+			throw CLIException::forInvalidColor('background', $background);
 		}
 
 		$string = "\033[" . static::$foreground_colors[$foreground] . "m";
@@ -459,7 +483,9 @@ class CLI
 	{
 		if (static::isWindows() || (int) shell_exec('tput cols') == 0)
 		{
+			// @codeCoverageIgnoreStart
 			return $default;
+			// @codeCoverageIgnoreEnd
 		}
 
 		return (int) shell_exec('tput cols');
@@ -480,7 +506,9 @@ class CLI
 	{
 		if (static::isWindows())
 		{
+			// @codeCoverageIgnoreStart
 			return $default;
+			// @codeCoverageIgnoreEnd
 		}
 
 		return (int) shell_exec('tput lines');
@@ -604,7 +632,8 @@ class CLI
 	{
 		$optionsFound = false;
 
-		for ($i = 1; $i < $_SERVER['argc']; $i ++ )
+		// start picking segments off from #1, ignoring the invoking program
+		for ($i = 1; $i < $_SERVER['argc']; $i ++)
 		{
 			// If there's no '-' at the beginning of the argument
 			// then add it to our segments.
@@ -619,15 +648,10 @@ class CLI
 			// value belonging to this option.
 			$optionsFound = true;
 
-			if (mb_substr($_SERVER['argv'][$i], 0, 1) != '-')
-			{
-				continue;
-			}
-
 			$arg = str_replace('-', '', $_SERVER['argv'][$i]);
 			$value = null;
 
-			// if the next item doesn't have a dash it's a value.
+			// if there is a following segment, and it doesn't start with a dash, it's a value.
 			if (isset($_SERVER['argv'][$i + 1]) && mb_substr($_SERVER['argv'][$i + 1], 0, 1) != '-')
 			{
 				$value = $_SERVER['argv'][$i + 1];
@@ -684,6 +708,18 @@ class CLI
 	//--------------------------------------------------------------------
 
 	/**
+	 * Returns the raw array of segments found.
+	 *
+	 * @return array
+	 */
+	public static function getSegments()
+	{
+		return static::$segments;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Gets a single command-line option. Returns TRUE if the option
 	 * exists, but doesn't have a value, and is simply acting as a flag.
 	 *
@@ -720,7 +756,7 @@ class CLI
 	//--------------------------------------------------------------------
 
 	/**
-	 * Returns the options a string, suitable for passing along on
+	 * Returns the options as a string, suitable for passing along on
 	 * the CLI to other commands.
 	 *
 	 * @return string
@@ -765,7 +801,7 @@ class CLI
 		$table_rows = [];
 
 		// We need only indexes and not keys
-		if (! empty($thead))
+		if ( ! empty($thead))
 		{
 			$table_rows[] = array_values($thead);
 		}
@@ -787,7 +823,7 @@ class CLI
 		$max_cols_lengths = [];
 
 		// Read row by row and define the longest columns
-		for ($row = 0; $row < $total_rows; $row++)
+		for ($row = 0; $row < $total_rows; $row ++ )
 		{
 			$column = 0; // Current column index
 			foreach ($table_rows[$row] as $col)
@@ -798,19 +834,19 @@ class CLI
 				// If the current column does not have a value among the larger ones
 				// or the value of this is greater than the existing one
 				// then, now, this assumes the maximum length
-				if (! isset($max_cols_lengths[$column]) || $all_cols_lengths[$row][$column] > $max_cols_lengths[$column])
+				if ( ! isset($max_cols_lengths[$column]) || $all_cols_lengths[$row][$column] > $max_cols_lengths[$column])
 				{
 					$max_cols_lengths[$column] = $all_cols_lengths[$row][$column];
 				}
 
 				// We can go check the size of the next column...
-				$column++;
+				$column ++;
 			}
 		}
 
 		// Read row by row and add spaces at the end of the columns
 		// to match the exact column length
-		for ($row = 0; $row < $total_rows; $row++)
+		for ($row = 0; $row < $total_rows; $row ++ )
 		{
 			$column = 0;
 			foreach ($table_rows[$row] as $col)
@@ -820,14 +856,14 @@ class CLI
 				{
 					$table_rows[$row][$column] = $table_rows[$row][$column] . str_repeat(' ', $diff);
 				}
-				$column++;
+				$column ++;
 			}
 		}
 
 		$table = '';
 
 		// Joins columns and append the well formatted rows to the table
-		for ($row = 0; $row < $total_rows; $row++)
+		for ($row = 0; $row < $total_rows; $row ++ )
 		{
 			// Set the table border-top
 			if ($row === 0)
@@ -856,5 +892,7 @@ class CLI
 	//--------------------------------------------------------------------
 }
 
-// Ensure the class is initialized.
+// Ensure the class is initialized. Done outside of code coverage
+// @codeCoverageIgnoreStart
 CLI::init();
+// @codeCoverageIgnoreEnd

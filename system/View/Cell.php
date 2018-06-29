@@ -36,6 +36,7 @@
  * @filesource
  */
 use CodeIgniter\Cache\CacheInterface;
+use CodeIgniter\View\Exceptions\ViewException;
 
 /**
  * Class Cell
@@ -76,7 +77,6 @@ class Cell
 
 	//--------------------------------------------------------------------
 
-
 	/**
 	 * Cell constructor.
 	 *
@@ -114,7 +114,7 @@ class Cell
 
 		if ( ! method_exists($instance, $method))
 		{
-			throw new \InvalidArgumentException("{$class}::{$method} is not a valid method.");
+			throw ViewException::forInvalidCellMethod($class, $method);
 		}
 
 		// Try to match up the parameter list we were provided
@@ -126,15 +126,17 @@ class Cell
 
 		if ($paramCount === 0)
 		{
-			if (! empty($paramArray))
+			if ( ! empty($paramArray))
 			{
-				throw new \InvalidArgumentException("{$class}::{$method} has no params.");
+				throw ViewException::forMissingCellParameters($class, $method);
 			}
 
 			$output = $instance->{$method}();
 		}
 		elseif (
-				($paramCount === 1) && ( ( ! array_key_exists($refParams[0]->name, $paramArray)) || (array_key_exists($refParams[0]->name, $paramArray) && count($paramArray) !== 1) )
+				($paramCount === 1) && (
+				( ! array_key_exists($refParams[0]->name, $paramArray)) ||
+				(array_key_exists($refParams[0]->name, $paramArray) && count($paramArray) !== 1) )
 		)
 		{
 			$output = $instance->{$method}($paramArray);
@@ -157,11 +159,11 @@ class Cell
 			{
 				if ( ! isset($method_params[$key]))
 				{
-					throw new \InvalidArgumentException("{$key} is not a valid param name.");
+					throw ViewException::forInvalidCellParameter($key);
 				}
 			}
 
-			$output = call_user_func_array([$instance, $method], $fireArgs);
+			$output = $instance->$method(...array_values($fireArgs));
 		}
 		// Can we cache it?
 		if ( ! empty($this->cache) && $ttl !== 0)
@@ -204,8 +206,11 @@ class Cell
 
 			foreach ($params as $p)
 			{
-				list($key, $val) = explode('=', $p);
-				$new_params[trim($key)] = trim($val, ', ');
+				if ( ! empty($p))
+				{
+					list($key, $val) = explode('=', $p);
+					$new_params[trim($key)] = trim($val, ', ');
+				}
 			}
 
 			$params = $new_params;
@@ -241,12 +246,12 @@ class Cell
 
 		if (empty($class))
 		{
-			throw new \InvalidArgumentException('No view cell class provided.');
+			throw ViewException::forNoCellClass();
 		}
 
 		if ( ! class_exists($class, true))
 		{
-			throw new \InvalidArgumentException('Unable to locate view cell class: ' . $class . '.');
+			throw ViewException::forInvalidCellClass($class);
 		}
 
 		if (empty($method))

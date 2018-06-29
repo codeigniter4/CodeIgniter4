@@ -35,7 +35,8 @@
  * @since	Version 3.0.0
  * @filesource
  */
-use CodeIgniter\PageNotFoundException;
+use CodeIgniter\Exceptions\PageNotFoundException;
+use CodeIgniter\Router\Exceptions\RouterException;
 
 /**
  * Routing exception
@@ -108,6 +109,13 @@ class Router implements RouterInterface
 	 * @var array|null
 	 */
 	protected $matchedRoute = null;
+
+	/**
+	 * The options set for the matched route.
+	 *
+	 * @var array|null
+	 */
+	protected $matchedRouteOptions = null;
 
 	/**
 	 * The locale that was detected in a route.
@@ -227,7 +235,7 @@ class Router implements RouterInterface
 	/**
 	 * Returns the binds that have been matched and collected
 	 * during the parsing process as an array, ready to send to
-	 * call_user_func_array().
+	 * instance->method(...$params).
 	 *
 	 * @return mixed
 	 */
@@ -262,6 +270,18 @@ class Router implements RouterInterface
 	public function getMatchedRoute()
 	{
 		return $this->matchedRoute;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns all options set for the matched route
+	 *
+	 * @return array|null
+	 */
+	public function getMatchedRouteOptions()
+	{
+		return $this->matchedRouteOptions;
 	}
 
 	//--------------------------------------------------------------------
@@ -341,6 +361,10 @@ class Router implements RouterInterface
 	{
 		$routes = $this->collection->getRoutes($this->collection->getHTTPVerb());
 
+		$uri = $uri == '/'
+			? $uri
+			: ltrim($uri, '/ ');
+
 		// Don't waste any time
 		if (empty($routes))
 		{
@@ -387,6 +411,8 @@ class Router implements RouterInterface
 
 					$this->matchedRoute = [$key, $val];
 
+					$this->matchedRouteOptions = $this->collection->getRoutesOptions($key);
+
 					return true;
 				}
 				// Are we using the default method for back-references?
@@ -417,6 +443,8 @@ class Router implements RouterInterface
 				$this->setRequest(explode('/', $val));
 
 				$this->matchedRoute = [$key, $val];
+
+				$this->matchedRouteOptions = $this->collection->getRoutesOptions($key);
 
 				return true;
 			}
@@ -590,7 +618,7 @@ class Router implements RouterInterface
 	{
 		if (empty($this->controller))
 		{
-			throw new \RuntimeException('Unable to determine what should be displayed. A default route has not been specified in the routing file.');
+			throw RouterException::forMissingDefaultRoute();
 		}
 
 		// Is the method being specified?

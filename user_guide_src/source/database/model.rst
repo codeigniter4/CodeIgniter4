@@ -171,7 +171,7 @@ this model will never validate.
 **afterFind**
 **afterDelete**
 
-These arrays allow you to specify callback methods that will be ran on the data at the
+These arrays allow you to specify callback methods that will be run on the data at the
 time specified in the property name.
 
 Working With Data
@@ -455,6 +455,37 @@ and simply set ``$validationRules`` to the name of the validation rule group you
 	{
 		protected $validationRules = 'users';
 	}
+
+Validation Placeholders
+-----------------------
+
+The model provides a simple method to replace parts of your rules based on data that's being passed into it. This
+sounds fairly obscure but can be especially handy with the ``is_unique`` validation rule. Placeholders are simply
+the name of the field (or array key) that was passed in as $data surrounded by curly brackets. It will be
+replaced by the **value** of the matched incoming field. An example should clarify this::
+
+    protected $validationRules = [
+        'email' => 'required|valid_email|is_unique[users.email,id,{id}]'
+    ];
+
+In this set of rules, it states that the email address should be unique in the database, except for the row
+that has an id matching the placeholder's value. Assuming that the form POST data had the following::
+
+    $_POST = [
+        'id' => 4,
+        'email' => 'foo@example.com'
+    ]
+
+then the ``{id}`` placeholder would be replaced with the number **4**, giving this revised rule::
+
+    protected $validationRules = [
+        'email' => 'required|valid_email|is_unique[users.email,id,4]'
+    ];
+
+So it will ignore the row in the database that has ``id=4`` when it verifies the email is unique.
+
+This can also be used to create more dynamic rules at runtime, as long as you take care that any dynamic
+keys passed in don't conflict with your form data.
 
 Protecting Fields
 -----------------

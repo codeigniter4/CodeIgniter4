@@ -144,15 +144,15 @@ the views. Modify the ``index()`` method to look like this::
 			'title' => 'News archive',
 		];
 
-		echo view('Templates/Header', $data);
-		echo view('News/Index', $data);
-		echo view('Templates/Footer');
+		echo view('templates/header', $data);
+		echo view('news/index', $data);
+		echo view('templates/footer');
 	}
 
 The code above gets all news records from the model and assigns it to a
 variable. The value for the title is also assigned to the ``$data['title']``
 element and all data is passed to the views. You now need to create a
-view to render the news items. Create *application/Views/News/Index.php*
+view to render the news items. Create *application/Views/news/index.php*
 and add the next piece of code.
 
 ::
@@ -206,15 +206,15 @@ add some code to the controller and create a new view. Go back to the
 
 		$data['title'] = $data['news']['title'];
 
-		echo view('Templates/Header', $data);
-		echo view('News/View', $data);
-		echo view('Templates/Footer');
+		echo view('templates/header', $data);
+		echo view('news/view', $data);
+		echo view('templates/footer');
 	}
 
 Instead of calling the ``getNews()`` method without a parameter, the
 ``$slug`` variable is passed, so it will return the specific news item.
 The only things left to do is create the corresponding view at
-*application/Views/News/View.php*. Put the following code in this file.
+*application/Views/news/view.php*. Put the following code in this file.
 
 ::
 

@@ -1,13 +1,15 @@
 <?php namespace CodeIgniter\Database\Live;
 
+use CodeIgniter\Test\CIDatabaseTestCase;
+
 /**
  * @group DatabaseLive
  */
-class InsertTest extends \CIDatabaseTestCase
+class InsertTest extends CIDatabaseTestCase
 {
 	protected $refresh = true;
 
-	protected $seed = 'CITestSeeder';
+	protected $seed = 'Tests\Support\Database\Seeds\CITestSeeder';
 
 	public function testInsert()
 	{

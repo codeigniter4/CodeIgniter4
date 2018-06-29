@@ -268,7 +268,7 @@ if ( ! function_exists('number_to_roman'))
 	function number_to_roman($num)
 	{
 		$num = (int) $num;
-		if ($num < 1 OR $num > 3999)
+		if ($num < 1 || $num > 3999)
 		{
 				return;
 		}

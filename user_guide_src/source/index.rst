@@ -44,9 +44,9 @@ Tutorial
 CodeIgniter4 Overview
 *********************
 .. toctree::
-   :titlesonly:
+	:titlesonly:
 
-   concepts/index
+	concepts/index
 
 **************
 General Topics
@@ -84,6 +84,15 @@ Helper Reference
 
 	helpers/index
 
+*******
+Testing
+*******
+
+.. toctree::
+	:titlesonly:
+
+	testing/index
+
 ***************************
 Contributing to CodeIgniter
 ***************************
@@ -91,4 +100,4 @@ Contributing to CodeIgniter
 .. toctree::
 	:titlesonly:
 
-   	contributing/index
+	contributing/index

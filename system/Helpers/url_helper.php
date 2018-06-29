@@ -565,14 +565,14 @@ if ( ! function_exists('prep_url'))
 	 */
 	function prep_url($str = ''): string
 	{
-		if ($str === 'http://' OR $str === '')
+		if ($str === 'http://' || $str === '')
 		{
 			return '';
 		}
 
 		$url = parse_url($str);
 
-		if ( ! $url OR ! isset($url['scheme']))
+		if ( ! $url || ! isset($url['scheme']))
 		{
 			return 'http://' . $str;
 		}

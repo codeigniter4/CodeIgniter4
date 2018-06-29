@@ -23,7 +23,7 @@ class ContentSecurityPolicy extends BaseConfig
 
 	public $imageSrc = 'self';
 
-	public $base_uri = null;
+	public $baseURI = 'none';
 
 	public $childSrc = null;
 
@@ -38,6 +38,8 @@ class ContentSecurityPolicy extends BaseConfig
 	public $mediaSrc = null;
 
 	public $objectSrc = null;
+	
+	public $manifestSrc = null;
 
 	public $pluginTypes = null;
 

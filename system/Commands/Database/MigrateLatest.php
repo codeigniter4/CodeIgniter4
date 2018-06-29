@@ -102,7 +102,7 @@ class MigrateLatest extends BaseCommand
 	{
 		$runner = Services::migrations();
 
-		CLI::write(lang('Migrations.migToLatest'), 'yellow');
+		CLI::write(lang('Migrations.toLatest'), 'yellow');
 
 		$namespace = CLI::getOption('n');
 		$group = CLI::getOption('g');
@@ -124,13 +124,13 @@ class MigrateLatest extends BaseCommand
 			}
 
 			CLI::write('Done');
-			
+
 		} catch (\Exception $e)
 		{
 			$this->showError($e);
 		}
 
-		
+
 	}
 
 }

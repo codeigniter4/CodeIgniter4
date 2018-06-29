@@ -53,9 +53,11 @@ class RedisHandlerTest extends \CIUnitTestCase
 
 	public function setUp()
 	{
+		parent::setUp();
+
 		$this->config = new \Config\Cache();
 
-		$this->redisHandler = new RedisHandler($this->config->redis);
+		$this->redisHandler = new RedisHandler($this->config);
 		if (!$this->redisHandler->isSupported()) {
 			$this->markTestSkipped('Not support redis');
 		}

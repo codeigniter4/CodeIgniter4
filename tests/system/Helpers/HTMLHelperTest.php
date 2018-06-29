@@ -7,11 +7,13 @@ final class HTMLHelperTest extends \CIUnitTestCase
 
 	public function setUp()
 	{
+		parent::setUp();
+
 		//URL is needed by the HTML Helper.
 		helper('url');
 		helper('html');
 
-		$this->tracks = 
+		$this->tracks =
 		[
 			track('subtitles_no.vtt',  'subtitles', 'no',  'Norwegian No'),
 			track('subtitles_yes.vtt', 'subtitles', 'yes', 'Norwegian Yes')
@@ -137,7 +139,7 @@ EOH;
 		//TODO: Mock baseURL and siteURL.
 		$this->assertEquals
 		(
-			'<img src="http://site.com/images/picture.jpg" alt="" />', 
+			'<img src="http://site.com/images/picture.jpg" alt="" />',
 			img('http://site.com/images/picture.jpg')
 		);
 	}
@@ -188,8 +190,8 @@ EOH;
 
 		$video = video
 		(
-			'test.mp4', 
-			'Your browser does not support the video tag.', 
+			'test.mp4',
+			'Your browser does not support the video tag.',
 			'controls'
 		);
 
@@ -206,8 +208,8 @@ EOH;
 
 		$video = video
 		(
-			'http://www.codeigniter.com/test.mp4', 
-			'Your browser does not support the video tag.', 
+			'http://www.codeigniter.com/test.mp4',
+			'Your browser does not support the video tag.',
 			'controls',
 			$this->tracks
 		);
@@ -290,16 +292,16 @@ EOH;
 <object data="http://example.com/movie.swf" class="test"></object>
 
 EOH;
-		
+
 		$object = object
 		 (
-			'movie.swf', 
-			'application/x-shockwave-flash', 
+			'movie.swf',
+			'application/x-shockwave-flash',
 			'class="test"'
 		);
 
 		$this->assertEquals($expected, $object);
-		
+
 		$expected = <<<EOH
 <object data="http://example.com/movie.swf" class="test">
   <param name="foo" type="ref" value="bar" class="test" />
@@ -307,11 +309,11 @@ EOH;
 </object>
 
 EOH;
-		
+
 		$object = object
 		(
-			'movie.swf', 
-			'application/x-shockwave-flash', 
+			'movie.swf',
+			'application/x-shockwave-flash',
 			'class="test"',
 			[
 				param('foo', 'bar', 'ref', 'class="test"'),

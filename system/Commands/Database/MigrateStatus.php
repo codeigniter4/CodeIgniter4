@@ -121,7 +121,7 @@ class MigrateStatus extends BaseCommand
 
 			if (empty($migrations))
 			{
-				CLI::error("$namespace: " . lang('Migrations.migNoneFound'));
+				CLI::error("$namespace: " . lang('Migrations.noneFound'));
 				continue;
 			}
 
@@ -129,7 +129,7 @@ class MigrateStatus extends BaseCommand
 
 			CLI::newLine(1);
 
-			CLI::write(lang('Migrations.migHistoryFor') . "$namespace: ", 'green');
+			CLI::write(lang('Migrations.historyFor') . "$namespace: ", 'green');
 
 			CLI::newLine(1);
 
@@ -142,7 +142,7 @@ class MigrateStatus extends BaseCommand
 				$max = max($max, strlen($file));
 			}
 
-			CLI::write(str_pad(lang('Migrations.filename'), $max + 6) . lang('Migrations.migOn'), 'yellow');
+			CLI::write(str_pad(lang('Migrations.filename'), $max + 6) . lang('Migrations.on'), 'yellow');
 
 
 			foreach ($migrations as $version => $migration)

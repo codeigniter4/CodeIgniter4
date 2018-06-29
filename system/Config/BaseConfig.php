@@ -59,7 +59,7 @@ class BaseConfig
 	/**
 	 * Will attempt to get environment variables with names
 	 * that match the properties of the child class.
-	 * 
+	 *
 	 * The "shortPrefix" is the lowercase-only config class name.
 	 */
 	public function __construct()
@@ -78,12 +78,18 @@ class BaseConfig
 					if ($value = $this->getEnvValue("{$property}.{$key}", $prefix, $shortPrefix))
 					{
 						if (is_null($value))
+						{
 							continue;
+						}
 
 						if ($value === 'false')
+						{
 							$value = false;
+						}
 						elseif ($value === 'true')
+						{
 							$value = true;
+						}
 
 						$this->$property[$key] = $value;
 					}
@@ -94,14 +100,22 @@ class BaseConfig
 				if (($value = $this->getEnvValue($property, $prefix, $shortPrefix)) !== false)
 				{
 					if (is_null($value))
+					{
 						continue;
+					}
 
 					if ($value === 'false')
+					{
 						$value = false;
+					}
 					elseif ($value === 'true')
+					{
 						$value = true;
+					}
 
-					$this->$property = $value;
+					$this->$property = is_bool($value)
+						? $value
+						: trim($value, '\'"');
 				}
 			}
 		}
@@ -123,7 +137,8 @@ class BaseConfig
 	protected function getEnvValue(string $property, string $prefix, string $shortPrefix)
 	{
 		$shortPrefix = ltrim( $shortPrefix, '\\' );
-		switch (true) {
+		switch (true)
+		{
 			case array_key_exists( "{$shortPrefix}.{$property}", $_ENV ):
 				return $_ENV["{$shortPrefix}.{$property}"];
 				break;
@@ -160,7 +175,9 @@ class BaseConfig
 		{
 			// ignore non-applicable registrars
 			if ( ! method_exists($callable, $shortName))
+			{
 				continue;
+			}
 
 			$properties = $callable::$shortName();
 

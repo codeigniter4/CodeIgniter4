@@ -36,6 +36,7 @@
  * @filesource
  */
 use CodeIgniter\Exceptions\FrameworkException;
+use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\HTTP\Files\FileCollection;
 use CodeIgniter\HTTP\Files\UploadedFile;
 use CodeIgniter\Services;
@@ -133,16 +134,22 @@ class IncomingRequest extends Request
 	 */
 	protected $oldInput = [];
 
+	/**
+	 * @var \CodeIgniter\HTTP\UserAgent
+	 */
+	protected $userAgent;
+
 	//--------------------------------------------------------------------
 
 	/**
 	 * Constructor
 	 *
-	 * @param object $config
-	 * @param URI $uri
-	 * @param string $body
+	 * @param object                      $config
+	 * @param URI                         $uri
+	 * @param string                      $body
+	 * @param \CodeIgniter\HTTP\UserAgent $userAgent
 	 */
-	public function __construct($config, $uri = null, $body = 'php://input')
+	public function __construct($config, $uri = null, $body = 'php://input', UserAgent $userAgent)
 	{
 		// Get our body from php://input
 		if ($body == 'php://input')
@@ -152,6 +159,7 @@ class IncomingRequest extends Request
 
 		$this->body = $body;
 		$this->config = $config;
+		$this->userAgent = $userAgent;
 
 		parent::__construct($config);
 
@@ -314,7 +322,7 @@ class IncomingRequest extends Request
 	 */
 	public function getVar($index = null, $filter = null, $flags = null)
 	{
-		return $this->fetchGlobal(INPUT_REQUEST, $index, $filter, $flags);
+		return $this->fetchGlobal('request', $index, $filter, $flags);
 	}
 
 	//--------------------------------------------------------------------
@@ -367,7 +375,7 @@ class IncomingRequest extends Request
 	 */
 	public function getGet($index = null, $filter = null, $flags = null)
 	{
-		return $this->fetchGlobal(INPUT_GET, $index, $filter, $flags);
+		return $this->fetchGlobal('get', $index, $filter, $flags);
 	}
 
 	//--------------------------------------------------------------------
@@ -383,7 +391,7 @@ class IncomingRequest extends Request
 	 */
 	public function getPost($index = null, $filter = null, $flags = null)
 	{
-		return $this->fetchGlobal(INPUT_POST, $index, $filter, $flags);
+		return $this->fetchGlobal('post', $index, $filter, $flags);
 	}
 
 	//--------------------------------------------------------------------
@@ -437,7 +445,7 @@ class IncomingRequest extends Request
 	 */
 	public function getCookie($index = null, $filter = null, $flags = null)
 	{
-		return $this->fetchGlobal(INPUT_COOKIE, $index, $filter, $flags);
+		return $this->fetchGlobal('cookie', $index, $filter, $flags);
 	}
 
 	//--------------------------------------------------------------------
@@ -449,9 +457,9 @@ class IncomingRequest extends Request
 	 *
 	 * @return mixed
 	 */
-	public function getUserAgent($filter = null)
+	public function getUserAgent()
 	{
-		return $this->fetchGlobal(INPUT_SERVER, 'HTTP_USER_AGENT', $filter);
+		return $this->userAgent;
 	}
 
 	//--------------------------------------------------------------------
@@ -459,7 +467,7 @@ class IncomingRequest extends Request
 	/**
 	 * Attempts to get old Input data that has been flashed to the session
 	 * with redirect_with_input(). It first checks for the data in the old
-	 * POST data, then the old GET data.
+	 * POST data, then the old GET data and finally check for dot arrays
 	 *
 	 * @param string $key
 	 *
@@ -470,7 +478,9 @@ class IncomingRequest extends Request
 		// If the session hasn't been started, or no
 		// data was previously saved, we're done.
 		if (empty($_SESSION['_ci_old_input']))
+		{
 			return;
+		}
 
 		// Check for the value in the POST array first.
 		if (isset($_SESSION['_ci_old_input']['post'][$key]))
@@ -482,6 +492,28 @@ class IncomingRequest extends Request
 		if (isset($_SESSION['_ci_old_input']['get'][$key]))
 		{
 			return $_SESSION['_ci_old_input']['get'][$key];
+		}
+
+		helper('array');
+
+		// Check for an array value in POST.
+		if (isset($_SESSION['_ci_old_input']['post']))
+		{
+			$value = dot_array_search($key, $_SESSION['_ci_old_input']['post']);
+			if ( ! is_null($value))
+			{
+				return $value;
+			}
+		}
+
+		// Check for an array value in GET.
+		if (isset($_SESSION['_ci_old_input']['get']))
+		{
+			$value = dot_array_search($key, $_SESSION['_ci_old_input']['get']);
+			if ( ! is_null($value))
+			{
+				return $value;
+			}
 		}
 	}
 
@@ -556,17 +588,6 @@ class IncomingRequest extends Request
 		else
 		{
 			throw FrameworkException::forEmptyBaseURL();
-
-//			$this->isSecure() ? $this->uri->setScheme('https') : $this->uri->setScheme('http');
-//
-//			// While both SERVER_NAME and HTTP_HOST are open to security issues,
-//			// if we have to choose, we will go with the server-controlled version first.
-//			! empty($_SERVER['SERVER_NAME']) ? (isset($_SERVER['SERVER_NAME']) ? $this->uri->setHost($_SERVER['SERVER_NAME']) : null) : (isset($_SERVER['HTTP_HOST']) ? $this->uri->setHost($_SERVER['HTTP_HOST']) : null);
-//
-//			if ( ! empty($_SERVER['SERVER_PORT']))
-//			{
-//				$this->uri->setPort($_SERVER['SERVER_PORT']);
-//			}
 		}
 	}
 
@@ -597,7 +618,7 @@ class IncomingRequest extends Request
 				break;
 			case 'PATH_INFO':
 			default:
-				$path = $_SERVER[$protocol] ?? $this->parseRequestURI();
+				$path = $this->fetchGlobal('server', $protocol) ?? $this->parseRequestURI();
 				break;
 		}
 
@@ -639,7 +660,7 @@ class IncomingRequest extends Request
 				break;
 		}
 
-		throw new \InvalidArgumentException($type . ' is not a valid negotiation type.');
+		throw HTTPException::forInvalidNegotiationType($type);
 	}
 
 	//--------------------------------------------------------------------

@@ -36,6 +36,7 @@
  * @filesource
  */
 use CodeIgniter\Config\BaseConfig;
+use CodeIgniter\Session\Exceptions\SessionException;
 
 /**
  * Session handler using Memcache for persistence
@@ -77,7 +78,7 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 	 * Constructor
 	 *
 	 * @param BaseConfig $config
-	 * @throws \Exception
+	 * @throws \CodeIgniter\Session\Exceptions\SessionException
 	 */
 	public function __construct(BaseConfig $config)
 	{
@@ -85,7 +86,7 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 
 		if (empty($this->savePath))
 		{
-			throw new \Exception('Session: No Memcached save path configured.');
+			throw SessionException::forEmptySavepath();
 		}
 
 		if ($this->matchIP === true)
