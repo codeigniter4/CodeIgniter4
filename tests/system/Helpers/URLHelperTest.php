@@ -187,8 +187,6 @@ class URLHelperTest extends \CIUnitTestCase
 		$this->assertEquals('http://example.com/index.php/', site_url());
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * @see https://github.com/bcit-ci/CodeIgniter4/issues/240
 	 */
@@ -208,8 +206,6 @@ class URLHelperTest extends \CIUnitTestCase
 		$this->assertEquals('http://example.com/index.php/', site_url());
 		$this->assertEquals('http://example.com/index.php/profile', site_url('profile'));
 	}
-
-	//--------------------------------------------------------------------
 
 	//--------------------------------------------------------------------
 	// Test base_url
@@ -289,8 +285,6 @@ class URLHelperTest extends \CIUnitTestCase
 		$this->assertEquals('http://example.com/', base_url());
 	}
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * @see https://github.com/bcit-ci/CodeIgniter4/issues/867
 	 */
@@ -322,8 +316,6 @@ class URLHelperTest extends \CIUnitTestCase
 		$this->assertEquals('http://example.com', base_url());
 		$this->assertEquals('http://example.com/profile', base_url('profile'));
 	}
-
-	//--------------------------------------------------------------------
 
 	//--------------------------------------------------------------------
 	// Test current_url
@@ -856,6 +848,8 @@ class URLHelperTest extends \CIUnitTestCase
 	{
 		$this->assertEquals('http://codeigniter.com', prep_url('codeigniter.com'));
 		$this->assertEquals('http://www.codeigniter.com', prep_url('www.codeigniter.com'));
+		$this->assertEquals('', prep_url());
+		$this->assertEquals('http://www.codeigniter.com', prep_url('http://www.codeigniter.com'));
 	}
 
 	//--------------------------------------------------------------------
