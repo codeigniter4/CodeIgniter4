@@ -33,7 +33,7 @@ if (! function_exists('array_search_dot'))
 	function _array_search_dot(array $indexes, array $array)
 	{
 		// Grab the current index
-		$currentIndex = count($indexes)
+		$currentIndex = $indexes
 			? array_shift($indexes)
 			: null;
 
@@ -71,7 +71,7 @@ if (! function_exists('array_search_dot'))
 		}
 
 		// Do we need to recursively search this value?
-		if (is_array($array[$currentIndex]) && count($array[$currentIndex]))
+		if (is_array($array[$currentIndex]) && $array[$currentIndex])
 		{
 			return _array_search_dot($indexes, $array[$currentIndex]);
 		}

@@ -349,7 +349,7 @@ class UserAgent
 	 */
 	protected function setPlatform()
 	{
-		if (is_array($this->config->platforms) && count($this->config->platforms) > 0)
+		if (is_array($this->config->platforms) && $this->config->platforms)
 		{
 			foreach ($this->config->platforms as $key => $val)
 			{
@@ -376,7 +376,7 @@ class UserAgent
 	 */
 	protected function setBrowser()
 	{
-		if (is_array($this->config->browsers) && count($this->config->browsers) > 0)
+		if (is_array($this->config->browsers) && $this->config->browsers)
 		{
 			foreach ($this->config->browsers as $key => $val)
 			{
@@ -404,7 +404,7 @@ class UserAgent
 	 */
 	protected function setRobot()
 	{
-		if (is_array($this->config->robots) && count($this->config->robots) > 0)
+		if (is_array($this->config->robots) && $this->config->robots)
 		{
 			foreach ($this->config->robots as $key => $val)
 			{
@@ -431,7 +431,7 @@ class UserAgent
 	 */
 	protected function setMobile()
 	{
-		if (is_array($this->config->mobiles) && count($this->config->mobiles) > 0)
+		if (is_array($this->config->mobiles) && $this->config->mobiles)
 		{
 			foreach ($this->config->mobiles as $key => $val)
 			{

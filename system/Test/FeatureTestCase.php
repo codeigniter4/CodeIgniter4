@@ -42,7 +42,7 @@ class FeatureTestCase extends CIDatabaseTestCase
 	{
 		$collection = \Config\Services::routes();
 
-		if (count($routes))
+		if ($routes)
 		{
 			foreach ($routes as $route)
 			{

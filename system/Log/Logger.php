@@ -155,7 +155,7 @@ class Logger implements LoggerInterface
 
 		// Now convert loggable levels to strings.
 		// We only use numbers to make the threshold setting convenient for users.
-		if (count($this->loggableLevels))
+		if ($this->loggableLevels)
 		{
 			$temp = [];
 			foreach ($this->loggableLevels as $level)
@@ -444,7 +444,7 @@ class Logger implements LoggerInterface
 		{
 			preg_match('/env:[^}]+/', $message, $matches);
 
-			if (count($matches))
+			if ($matches)
 			{
 				foreach ($matches as $str)
 				{

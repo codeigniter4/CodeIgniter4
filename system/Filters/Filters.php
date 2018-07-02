@@ -322,7 +322,7 @@ class Filters
 
 	protected function processFilters(string $uri = null)
 	{
-		if ( ! isset($this->config->filters) || ! count($this->config->filters))
+		if ( ! isset($this->config->filters) || ! $this->config->filters)
 		{
 			return;
 		}

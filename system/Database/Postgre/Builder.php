@@ -148,7 +148,7 @@ class Builder extends BaseBuilder
 			$this->set($set);
 		}
 
-		if (count($this->QBSet) === 0)
+		if (! $this->QBSet)
 		{
 			if (CI_DEBUG)
 			{
