@@ -213,7 +213,7 @@ class CLIRequest extends Request
 
 			$options_found = true;
 
-			if (substr($argv[$i], 0, 1) != '-')
+			if (0 !== strpos($argv[$i], '-'))
 			{
 				continue;
 			}
@@ -222,7 +222,7 @@ class CLIRequest extends Request
 			$value = null;
 
 			// If the next item starts with a dash it's a value
-			if (isset($argv[$i + 1]) && substr($argv[$i + 1], 0, 1) != '-')
+			if (isset($argv[$i + 1]) && 0 !== strpos($argv[$i + 1], '-'))
 			{
 				$value = filter_var($argv[$i + 1], FILTER_SANITIZE_STRING);
 				$i ++;

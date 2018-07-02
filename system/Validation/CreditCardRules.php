@@ -74,7 +74,7 @@ class CreditCardRules
 		'UATP'					 => ['name' => 'uatp', 'length' => '15', 'prefixes' => '1', 'checkdigit' => true],
 		'Verve'					 => ['name' => 'verve', 'length' => '16,19', 'prefixes' => '506,650', 'checkdigit' => true],
 		'Visa'					 => ['name' => 'visa', 'length' => '13,16,19', 'prefixes' => '4', 'checkdigit' => true],
-		// Canadian Cards	
+		// Canadian Cards
 		'BMO ABM Card'				 => ['name' => 'bmoabm', 'length' => '16', 'prefixes' => '500', 'checkdigit' => false],
 		'CIBC Convenience Card'			 => ['name' => 'cibc', 'length' => '16', 'prefixes' => '4506', 'checkdigit' => false],
 		'HSBC Canada Card'			 => ['name' => 'hsbc', 'length' => '16', 'prefixes' => '56', 'checkdigit' => false],
@@ -151,7 +151,7 @@ class CreditCardRules
 
 		foreach ($prefixes as $prefix)
 		{
-			if ($prefix == mb_substr($ccNumber, 0, mb_strlen($prefix)))
+			if (0 === mb_strpos($ccNumber, $prefix))
 			{
 				$validPrefix = true;
 			}
