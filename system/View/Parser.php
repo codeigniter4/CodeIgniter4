@@ -571,7 +571,7 @@ class Parser extends View
 		$template = preg_replace_callback($pattern, function ($matches) use ($content, $escape) {
 
 			// Check for {! !} syntax to not-escape this one.
-			if (0 === strpos($matches[0], '{!') && substr($matches[0], -2) == '!}')
+			if (strpos($matches[0], '{!') === 0 && substr($matches[0], -2) == '!}')
 			{
 				$escape = false;
 			}

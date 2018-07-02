@@ -348,7 +348,7 @@ class Entity
 				$value = (object)$value;
 				break;
 			case 'array':
-				if (is_string($value) && (0 === strpos($value,'a:') || 0 === strpos($value, 's:')))
+				if (is_string($value) && (strpos($value,'a:') === 0 || strpos($value, 's:') === 0))
 				{
 					$value = unserialize($value);
 				}

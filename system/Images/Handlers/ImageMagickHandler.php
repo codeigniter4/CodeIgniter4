@@ -87,7 +87,7 @@ class ImageMagickHandler extends BaseHandler
 		//todo FIX THIS HANDLER PROPERLY
 
 		$escape = "\\";
-		if (0 === stripos(PHP_OS, 'WIN'))
+		if (stripos(PHP_OS, 'WIN') === 0)
 		{
 			$escape = "";
 		}

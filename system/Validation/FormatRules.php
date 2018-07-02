@@ -198,7 +198,7 @@ class FormatRules
 	 */
 	public function regex_match(string $str = null, string $pattern, array $data): bool
 	{
-		if (0 !== strpos($pattern, '/'))
+		if (strpos($pattern, '/') !== 0)
 		{
 			$pattern = "/{$pattern}/";
 		}

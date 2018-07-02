@@ -151,7 +151,7 @@ class CreditCardRules
 
 		foreach ($prefixes as $prefix)
 		{
-			if (0 === mb_strpos($ccNumber, $prefix))
+			if (mb_strpos($ccNumber, $prefix) === 0)
 			{
 				$validPrefix = true;
 			}
