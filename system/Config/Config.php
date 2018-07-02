@@ -70,8 +70,6 @@ class Config
 			$class = substr($name, $pos + 1);
 		}
 
-		$class = strtolower($class);
-
 		if (! $getShared)
 		{
 			return self::createClass($name);
