@@ -29,7 +29,7 @@ services:
   - redis-server
 
 script:
-  - php -d display_errors=On vendor/bin/phpunit -v
+  - php --debug vendor/bin/phpunit -v
 
 before_install:
   - mysql -e "CREATE DATABASE IF NOT EXISTS test;" -uroot;
