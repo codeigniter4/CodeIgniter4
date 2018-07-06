@@ -142,7 +142,7 @@ class FeatureResponseTest extends CIUnitTestCase
 
 	public function testAssertHeader()
 	{
-		$this->getFeatureResponse('<h1>Hello World</h1>', null, ['foo' => 'bar']);
+		$this->getFeatureResponse('<h1>Hello World</h1>', [], ['foo' => 'bar']);
 
 		$this->feature->assertHeader('foo');
 		$this->feature->assertHeader('foo', 'bar');
@@ -237,7 +237,7 @@ class FeatureResponseTest extends CIUnitTestCase
 	}
 
 
-	protected function getFeatureResponse($body=null, array $responseOptions = null, array $headers = null)
+	protected function getFeatureResponse($body=null, array $responseOptions = [], array $headers = [])
 	{
 		$this->response = new Response(new \Config\App());
 		$this->response->setBody($body);
