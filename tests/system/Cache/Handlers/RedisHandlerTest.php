@@ -79,7 +79,7 @@ class RedisHandlerTest extends \CIUnitTestCase
 
 	public function testDestruct()
 	{
-		$this->redisHandler = new RedisHandler($this->config->redis);
+		$this->redisHandler = new RedisHandler($this->config);
 		$this->redisHandler->initialize();
 
 		$this->assertInstanceOf(RedisHandler::class, $this->redisHandler);
