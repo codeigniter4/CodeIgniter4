@@ -32,19 +32,6 @@ class FeatureTestCaseTest extends FeatureTestCase
 		$this->assertEquals(200, $response->response->getStatusCode());
 	}
 
-	public function testCallGet()
-	{
-		$this->withRoutes([
-			['get', 'home', function() {
-					return 'Hello World';
-				}]
-		]);
-		$response = $this->get('home');
-
-		$response->assertSee('Hello World');
-		$response->assertDontSee('Again');
-	}
-
 	public function testCallPost()
 	{
 		$this->withRoutes([

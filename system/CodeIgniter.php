@@ -37,6 +37,7 @@
  */
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\Request;
+use CodeIgniter\HTTP\ResponseInterface;
 use Config\Services;
 use Config\Cache;
 use CodeIgniter\HTTP\URI;
@@ -202,7 +203,17 @@ class CodeIgniter
 		// Check for a cached page. Execution will stop
 		// if the page has been cached.
 		$cacheConfig = new Cache();
-		$this->displayCache($cacheConfig);
+		$response = $this->displayCache($cacheConfig);
+		if ($response instanceof ResponseInterface)
+		{
+			if ($returnResponse)
+			{
+				return $response;
+			}
+
+			$this->response->send();
+			$this->callExit(EXIT_SUCCESS);
+		}
 
 		try
 		{
@@ -232,6 +243,7 @@ class CodeIgniter
 	 * @param                                              $cacheConfig
 	 * @param bool                                         $returnResponse
 	 *
+	 * @return \CodeIgniter\HTTP\RequestInterface|\CodeIgniter\HTTP\Response|\CodeIgniter\HTTP\ResponseInterface|mixed
 	 * @throws \CodeIgniter\Filters\Exceptions\FilterException
 	 */
 	protected function handleRequest(RouteCollectionInterface $routes = null, $cacheConfig, bool $returnResponse = false)
@@ -495,8 +507,9 @@ class CodeIgniter
 			}
 
 			$output = $this->displayPerformanceMetrics($output);
-			$this->response->setBody($output)->send();
-			$this->callExit(EXIT_SUCCESS);
+			$this->response->setBody($output);
+
+			return $this->response;
 		};
 	}
 
