@@ -29,7 +29,7 @@ services:
   - redis-server
 
 script:
-  - php -d memory_limit=1024M vendor/bin/phpunit -v
+  - php vendor/bin/phpunit -v
 
 before_install:
   - mysql -e "CREATE DATABASE IF NOT EXISTS test;" -uroot;
