@@ -84,7 +84,7 @@ The following functions are available:
 
 		echo humanize('my-dog-spot', '-'); // Prints 'My Dog Spot'
 
-.. php:function:: is_countable($word)
+.. php:function:: is_pluralizable($word)
 
 	:param	string	$word: Input string
 	:returns:	TRUE if the word is countable or FALSE if not
@@ -92,7 +92,7 @@ The following functions are available:
 
 	Checks if the given word has a plural version. Example::
 
-		is_countable('equipment'); // Returns FALSE
+		is_pluralizable('equipment'); // Returns FALSE
 
 .. php:function:: dasherize($string)
 
