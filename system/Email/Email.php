@@ -1224,7 +1224,7 @@ class Email
 		}
 
 		// Put our markers back
-		if (count($unwrap) > 0)
+		if ($unwrap)
 		{
 			foreach ($unwrap as $key => $val)
 			{

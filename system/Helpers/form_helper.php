@@ -609,7 +609,7 @@ if ( ! function_exists('form_label'))
 			$label .= ' for="' . $id . '"';
 		}
 
-		if (is_array($attributes) && count($attributes) > 0)
+		if (is_array($attributes) && $attributes)
 		{
 			foreach ($attributes as $key => $val)
 			{
