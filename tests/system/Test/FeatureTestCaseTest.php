@@ -16,6 +16,19 @@ class FeatureTestCaseTest extends FeatureTestCase
 		$this->skipEvents();
 	}
 
+	public function testCallGet()
+	{
+		$this->withRoutes([
+			['get', 'home', function() {
+					return 'Hello World';
+				}]
+		]);
+		$response = $this->get('home');
+
+		$response->assertSee('Hello World');
+		$response->assertDontSee('Again');
+	}
+
 	public function testCallSimpleGet()
 	{
 		$this->withRoutes([
@@ -30,19 +43,6 @@ class FeatureTestCaseTest extends FeatureTestCase
 		$this->assertTrue($response->isOK());
 		$this->assertEquals('Hello World', $response->response->getBody());
 		$this->assertEquals(200, $response->response->getStatusCode());
-	}
-
-	public function testCallGet()
-	{
-		$this->withRoutes([
-			['get', 'home', function() {
-					return 'Hello World';
-				}]
-		]);
-		$response = $this->get('home');
-
-		$response->assertSee('Hello World');
-		$response->assertDontSee('Again');
 	}
 
 	public function testCallPost()

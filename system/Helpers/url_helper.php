@@ -102,21 +102,11 @@ if ( ! function_exists('base_url'))
 			$path = implode('/', $path);
 		}
 
-		// We should be using the set baseURL the user set
-		// otherwise get rid of the path because we have
+		// We should be using the configured baseURL that the user set;
+		// otherwise get rid of the path, because we have
 		// no way of knowing the intent...
 		$config = \CodeIgniter\Config\Services::request()->config;
-
-		if ( ! empty($config->baseURL))
-		{
-			$url = new \CodeIgniter\HTTP\URI($config->baseURL);
-		}
-		else
-		{
-			$url = \CodeIgniter\Config\Services::request($config, false)->uri;
-			$url->setPath('/');
-		}
-
+		$url = new \CodeIgniter\HTTP\URI($config->baseURL);
 		unset($config);
 
 		// Merge in the path set by the user, if any
@@ -402,7 +392,7 @@ if ( ! function_exists('safe_mailto'))
 
 		$x = str_split('<a href="mailto:', 1);
 
-		for ($i = 0, $l = strlen($email); $i < $l; $i ++)
+		for ($i = 0, $l = strlen($email); $i < $l; $i ++ )
 		{
 			$x[] = '|' . ord($email[$i]);
 		}
@@ -416,7 +406,7 @@ if ( ! function_exists('safe_mailto'))
 				foreach ($attributes as $key => $val)
 				{
 					$x[] = ' ' . $key . '="';
-					for ($i = 0, $l = strlen($val); $i < $l; $i ++)
+					for ($i = 0, $l = strlen($val); $i < $l; $i ++ )
 					{
 						$x[] = '|' . ord($val[$i]);
 					}
@@ -425,7 +415,7 @@ if ( ! function_exists('safe_mailto'))
 			}
 			else
 			{
-				for ($i = 0, $l = strlen($attributes); $i < $l; $i ++)
+				for ($i = 0, $l = strlen($attributes); $i < $l; $i ++ )
 				{
 					$x[] = $attributes[$i];
 				}
@@ -435,7 +425,7 @@ if ( ! function_exists('safe_mailto'))
 		$x[] = '>';
 
 		$temp = [];
-		for ($i = 0, $l = strlen($title); $i < $l; $i ++)
+		for ($i = 0, $l = strlen($title); $i < $l; $i ++ )
 		{
 			$ordinal = ord($title[$i]);
 
@@ -473,7 +463,7 @@ if ( ! function_exists('safe_mailto'))
 				. "//<![CDATA["
 				. "var l=new Array();";
 
-		for ($i = 0, $c = count($x); $i < $c; $i ++)
+		for ($i = 0, $c = count($x); $i < $c; $i ++ )
 		{
 			$output .= "l[" . $i . "] = '" . $x[$i] . "';";
 		}
@@ -605,10 +595,10 @@ if ( ! function_exists('url_title'))
 		$q_separator = preg_quote($separator, '#');
 
 		$trans = [
-			'&.+?;'					 => '',
-			'[^\w\d _-]'			 => '',
-			'\s+'					 => $separator,
-			'(' . $q_separator . ')+'	 => $separator
+			'&.+?;' => '',
+			'[^\w\d _-]' => '',
+			'\s+' => $separator,
+			'(' . $q_separator . ')+' => $separator
 		];
 
 		$str = strip_tags($str);
