@@ -516,7 +516,7 @@ class CURLRequest extends Request
 
 				$this->response->setHeader($title, $value);
 			}
-			else if (substr($header, 0, 4) == 'HTTP')
+			else if (strpos($header, 'HTTP') === 0)
 			{
 				preg_match('#^HTTP\/([12]\.[01]) ([0-9]+) (.+)#', $header, $matches);
 

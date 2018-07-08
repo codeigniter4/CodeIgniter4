@@ -44,9 +44,9 @@ use CodeIgniter\Images\Image;
  * To make this library as compatible as possible with the broadest
  * number of installations, we do not use the Imagick extension,
  * but simply use the command line version.
- * 
+ *
  * hmm - the width & height accessors at the end use the imagick extension.
- * 
+ *
  * FIXME - This needs conversion & unit testing, to use the imagick extension
  *
  * @package CodeIgniter\Images\Handlers
@@ -87,7 +87,7 @@ class ImageMagickHandler extends BaseHandler
 		//todo FIX THIS HANDLER PROPERLY
 
 		$escape = "\\";
-		if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN')
+		if (stripos(PHP_OS, 'WIN') === 0)
 		{
 			$escape = "";
 		}
@@ -421,7 +421,7 @@ class ImageMagickHandler extends BaseHandler
 	}
 
 	//--------------------------------------------------------------------
-	
+
 		//--------------------------------------------------------------------
 
 	public function _getWidth()

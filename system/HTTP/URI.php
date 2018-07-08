@@ -998,7 +998,7 @@ class URI
 			}
 			else
 			{
-				if (substr($relative->getPath(), 0, 1) == '/')
+				if (strpos($relative->getPath(), '/') === 0)
 				{
 					$transformed->setPath($relative->getPath());
 				}
@@ -1107,7 +1107,7 @@ class URI
 		if ($output != '/')
 		{
 			// Add leading slash if necessary
-			if (substr($path, 0, 1) == '/')
+			if (strpos($path, '/') === 0)
 			{
 				$output = '/' . $output;
 			}

@@ -379,7 +379,7 @@ class CLI
 	 */
 	public static function isWindows()
 	{
-		return 'win' === strtolower(substr(php_uname("s"), 0, 3));
+               return stripos(PHP_OS, 'WIN') === 0;
 	}
 
 	//--------------------------------------------------------------------
@@ -652,7 +652,7 @@ class CLI
 			$value = null;
 
 			// if there is a following segment, and it doesn't start with a dash, it's a value.
-			if (isset($_SERVER['argv'][$i + 1]) && mb_substr($_SERVER['argv'][$i + 1], 0, 1) != '-')
+			if (isset($_SERVER['argv'][$i + 1]) && mb_strpos($_SERVER['argv'][$i + 1], '-') !== 0)
 			{
 				$value = $_SERVER['argv'][$i + 1];
 				$i ++;

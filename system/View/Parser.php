@@ -297,13 +297,13 @@ class Parser extends View
 	}
 
 	//--------------------------------------------------------------------
-//FIXME the following method does not appear to be used anywhere, so commented out	
+//FIXME the following method does not appear to be used anywhere, so commented out
 //	protected function is_assoc($arr)
 //	{
 //		return array_keys($arr) !== range(0, count($arr) - 1);
 //	}
 	//--------------------------------------------------------------------
-//FIXME the following method does not appear to be used anywhere, so commented out	
+//FIXME the following method does not appear to be used anywhere, so commented out
 //	function strpos_all($haystack, $needle)
 //	{
 //		$offset = 0;
@@ -571,7 +571,7 @@ class Parser extends View
 		$template = preg_replace_callback($pattern, function ($matches) use ($content, $escape) {
 
 			// Check for {! !} syntax to not-escape this one.
-			if (substr($matches[0], 0, 2) == '{!' && substr($matches[0], -2) == '!}')
+			if (strpos($matches[0], '{!') === 0 && substr($matches[0], -2) == '!}')
 			{
 				$escape = false;
 			}
