@@ -85,8 +85,6 @@ class FileCollection
 	{
 		$this->populateFiles();
 
-		$name = strtolower($name);
-
 		if ($this->hasFile($name))
 		{
 
