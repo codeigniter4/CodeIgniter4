@@ -88,7 +88,9 @@ class ModelTest extends CIDatabaseTestCase
 
 		$user = $model->withDeleted()->find(4);
 
-		$this->assertEquals(1, count($user));
+        // fix for PHP7.2
+        $count = is_array($user) ? count($user) : 1;
+		$this->assertEquals(1, $count);
 	}
 
 	//--------------------------------------------------------------------
@@ -193,7 +195,9 @@ class ModelTest extends CIDatabaseTestCase
 
 		$user = $model->where('id >', 2)->first();
 
-		$this->assertEquals(1, count($user));
+        // fix for PHP7.2
+        $count = is_array($user) ? count($user) : 1;
+		$this->assertEquals(1, $count);
 		$this->assertEquals(3, $user->id);
 	}
 
@@ -207,7 +211,9 @@ class ModelTest extends CIDatabaseTestCase
 
 		$user = $model->first();
 
-		$this->assertEquals(1, count($user));
+        // fix for PHP7.2
+        $count = is_array($user) ? count($user) : 1;
+		$this->assertEquals(1, $count);
 		$this->assertEquals(2, $user->id);
 
 		$user = $model->withDeleted()->first();
