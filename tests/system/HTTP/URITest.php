@@ -480,6 +480,23 @@ class URITest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * @see https://github.com/bcit-ci/CodeIgniter4/pull/954
+	 */
+	public function testSetQueryDecode()
+	{
+		$base = 'http://example.com/foo';
+
+		$uri = new URI($base);
+		$encoded = urlencode('you+alice+to+the+little');
+
+		$uri->setQuery("q={$encoded}");
+
+		// Should NOT be double-encoded, since http_build_query
+		// will encode the value again.
+		$this->assertEquals("q={$encoded}", $uri->getQuery());
+	}
+
 	public function testAddQueryVarRespectsExistingQueryVars()
 	{
 		$base = 'http://example.com/foo?bar=baz';

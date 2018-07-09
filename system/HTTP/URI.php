@@ -704,7 +704,10 @@ class URI
 				continue;
 			}
 
-			$parts[$key] = $value;
+			// URL Decode the value to protect
+			// from double-encoding a URL.
+			// Especially useful with the Pager.
+			$parts[$key] = $this->decode($value);
 		}
 
 		$this->query = $parts;
@@ -713,6 +716,31 @@ class URI
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Checks the value to see if it has been urlencoded and decodes it if so.
+	 * The urlencode check is not perfect but should catch most cases.
+	 *
+	 * @param string $value
+	 *
+	 * @return string
+	 */
+	protected function decode(string $value)
+	{
+		if (empty($value))
+		{
+			return $value;
+		}
+
+		$decoded = urldecode($value);
+
+		// This won't catch all cases, specifically
+		// changing ' ' to '+' has the same length
+		// but doesn't really matter for our cases here.
+		return strlen($decoded) < strlen($value)
+			? $decoded
+			: $value;
+	}
 
 	/**
 	 * Split a query value into it's key/value elements, if both
