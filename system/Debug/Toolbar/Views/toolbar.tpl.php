@@ -237,7 +237,7 @@
 				<?php foreach ($cookies as $name => $value) : ?>
 					<tr>
 						<td><?= $name ?></td>
-						<td><?= $value ?></td>
+						<td><?= is_array($value) ? var_dump($value) : $value ?></td>
 					</tr>
 				<?php endforeach ?>
 				</tbody>
