@@ -35,11 +35,10 @@
  * @since        Version 3.0.0
  * @filesource
  */
-use CodeIgniter\HTTP\Exceptions\HTTPException;
-use CodeIgniter\Services;
 use Config\App;
-use Config\Format;
 use Config\Mimes;
+use Config\Format;
+use CodeIgniter\HTTP\Exceptions\HTTPException;
 
 /**
  * Redirect exception
@@ -438,7 +437,7 @@ class Response extends Message implements ResponseInterface
 
 		if ($this->bodyFormat != 'json')
 		{
-			$config = new Format();
+			$config = config(Format::class);
 			$formatter = $config->getFormatter('application/json');
 
 			$body = $formatter->format($body);
@@ -476,7 +475,7 @@ class Response extends Message implements ResponseInterface
 
 		if ($this->bodyFormat != 'xml')
 		{
-			$config = new Format();
+			$config = config(Format::class);
 			$formatter = $config->getFormatter('application/xml');
 
 			$body = $formatter->format($body);
@@ -505,7 +504,7 @@ class Response extends Message implements ResponseInterface
 		// Nothing much to do for a string...
 		if (! is_string($body))
 		{
-			$config    = new Format();
+			$config    = config(Format::class);
 			$formatter = $config->getFormatter($mime);
 
 			$body = $formatter->format($body);

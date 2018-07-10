@@ -35,11 +35,10 @@
  * @since        Version 3.0.0
  * @filesource
  */
+use Config\App;
 use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Database\MigrationRunner;
-use CodeIgniter\HTTP\URI;
 use CodeIgniter\View\RendererInterface;
-use Config\App;
 
 /**
  * Services Configuration file.
@@ -124,7 +123,7 @@ class Services extends BaseService
 
 		if (! is_object($config))
 		{
-			$config = new \Config\App();
+			$config = config(App::class);
 		}
 
 		return new \CodeIgniter\HTTP\CLIRequest($config);
@@ -143,12 +142,7 @@ class Services extends BaseService
 	 *
 	 * @return \CodeIgniter\HTTP\CURLRequest
 	 */
-	public static function curlrequest(
-		array $options = [],
-		$response = null,
-		\Config\App $config = null,
-		$getShared = true
-	) {
+	public static function curlrequest(array $options = [], $response = null, \Config\App $config = null, $getShared = true) {
 		if ($getShared === true)
 		{
 			return self::getSharedInstance('curlrequest', $options, $response, $config);
@@ -156,7 +150,7 @@ class Services extends BaseService
 
 		if (! is_object($config))
 		{
-			$config = new \Config\App();
+			$config = config(App::class);
 		}
 
 		if (! is_object($response))
@@ -540,7 +534,7 @@ class Services extends BaseService
 
 		if (! is_object($config))
 		{
-			$config = new App();
+			$config = config(App::class);
 		}
 
 		return new \CodeIgniter\HTTP\IncomingRequest(
@@ -570,7 +564,7 @@ class Services extends BaseService
 
 		if (! is_object($config))
 		{
-			$config = new \Config\App();
+			$config = config(App::class);
 		}
 
 		return new \CodeIgniter\HTTP\Response($config);
@@ -595,7 +589,7 @@ class Services extends BaseService
 
 		if (! is_object($config))
 		{
-			$config = new \Config\App();
+			$config = config(App::class);
 		}
 
 		$response = new \CodeIgniter\HTTP\RedirectResponse($config);
@@ -671,7 +665,7 @@ class Services extends BaseService
 
 		if (! is_object($config))
 		{
-			$config = new \Config\App();
+			$config = config(App::class);
 		}
 
 		return new \CodeIgniter\Security\Security($config);
@@ -694,7 +688,7 @@ class Services extends BaseService
 
 		if (! is_object($config))
 		{
-			$config = new \Config\App();
+			$config = config(App::class);
 		}
 
 		$logger = self::logger(true);
@@ -766,7 +760,7 @@ class Services extends BaseService
 
 		if (! is_object($config))
 		{
-			$config = new \Config\App();
+			$config = config(App::class);
 		}
 
 		return new \CodeIgniter\Debug\Toolbar($config);

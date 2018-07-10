@@ -35,8 +35,9 @@
  * @since        Version 3.0.0
  * @filesource
  */
-use CodeIgniter\Config\BaseConfig;
+use Config\App;
 use Config\Services;
+use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Format\XMLFormatter;
 
 /**
@@ -220,7 +221,7 @@ class Toolbar
 		$files = [];
 
 		$current = self::$request->getGet('debugbar_time');
-		$app     = new \Config\App;
+		$app     = config(App::class);
 
 		for ($i = 0; $i < $total; $i++)
 		{

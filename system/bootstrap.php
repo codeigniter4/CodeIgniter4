@@ -151,7 +151,8 @@ helper('url');
  * the pieces all working together.
  */
 
-$app = new \CodeIgniter\CodeIgniter(new \Config\App());
+$appConfig = config(\Config\App::class);
+$app = new \CodeIgniter\CodeIgniter($appConfig);
 $app->initialize();
 
 return $app;

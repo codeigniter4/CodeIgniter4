@@ -5,6 +5,7 @@ use CodeIgniter\HTTP\Request;
 use CodeIgniter\Events\Events;
 use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\HTTP\IncomingRequest;
+use Config\App;
 
 /**
  * Class FeatureTestCase
@@ -212,7 +213,7 @@ class FeatureTestCase extends CIDatabaseTestCase
 	 */
 	protected function setupRequest(string $method, string $path=null, $params = null)
 	{
-		$config = new \Config\App();
+		$config = config(App::class);
 		$uri    = new URI($config->baseURL .'/'. trim($path, '/ '));
 
 		$request = new IncomingRequest($config, clone($uri), $params, new UserAgent());

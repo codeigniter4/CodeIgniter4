@@ -605,7 +605,7 @@ if ( ! function_exists('app_timezone'))
 	 */
 	function app_timezone()
 	{
-		$config = new \Config\App();
+		$config = config(\Config\App::class);
 
 		return $config->appTimezone;
 	}
@@ -626,7 +626,7 @@ if ( ! function_exists('csrf_token'))
 	 */
 	function csrf_token()
 	{
-		$config = new \Config\App();
+		$config = config(\Config\App::class);
 
 		return $config->CSRFTokenName;
 	}
@@ -919,7 +919,7 @@ if ( ! function_exists('slash_item'))
 	 */
 	function slash_item($item)
 	{
-		$config = new \Config\App();
+		$config = config(\Config\App::class);
 		$configItem = $config->{$item};
 
 		if ( ! isset($configItem) || empty(trim($configItem)))

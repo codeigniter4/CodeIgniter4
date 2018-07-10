@@ -35,8 +35,6 @@
  * @since        Version 3.0.0
  * @filesource
  */
-use CodeIgniter\Database\Exceptions\DatabaseException;
-use Config\App;
 use Config\Database;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Pager\Pager;
@@ -274,7 +272,7 @@ class Model
 
 		if (is_null($config) || ! isset($config->salt))
 		{
-			$config = new App();
+			$config = config(\Config\App::class);
 		}
 
 		$this->salt = $config->salt ?: '';
