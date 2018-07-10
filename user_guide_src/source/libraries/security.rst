@@ -80,7 +80,7 @@ than simply crashing. This can be turned off by editing the ``$CSRFRedirect`` va
 
 	public $CSRFRedirect = false;
 
-Even when the redirect value is **true**, AJAX calls will not redirect, but will throw an error. 
+Even when the redirect value is **true**, AJAX calls will not redirect, but will throw an error.
 
 *********************
 Other Helpful Methods
