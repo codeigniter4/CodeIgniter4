@@ -42,7 +42,6 @@ class DebugToolbar implements FilterInterface
 			$data    = $toolbar->run(
 				$stats['startTime'],
 				$stats['totalTime'],
-				$stats['startMemory'],
 				$request,
 				$response
 			);

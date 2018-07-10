@@ -68,12 +68,6 @@ class CodeIgniter
 	protected $startTime;
 
 	/**
-	 * Amount of memory at app start.
-	 * @var int
-	 */
-	protected $startMemory;
-
-	/**
 	 * Total app execution time
 	 * @var float
 	 */
@@ -144,7 +138,6 @@ class CodeIgniter
 	public function __construct($config)
 	{
 		$this->startTime = microtime(true);
-		$this->startMemory = memory_get_usage(true);
 		$this->config = $config;
 	}
 
@@ -562,7 +555,6 @@ class CodeIgniter
 		return [
 			'startTime'		 => $this->startTime,
 			'totalTime'		 => $this->totalTime,
-			'startMemory'	 => $this->startMemory
 		];
 	}
 
