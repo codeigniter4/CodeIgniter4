@@ -211,7 +211,8 @@ class CodeIgniter
 		try
 		{
 			return $this->handleRequest($routes, $cacheConfig, $returnResponse);
-		} catch (Router\RedirectException $e)
+		}
+		catch (Router\RedirectException $e)
 		{
 			$logger = Services::logger();
 			$logger->info('REDIRECTED ROUTE at ' . $e->getMessage());
@@ -732,7 +733,8 @@ class CodeIgniter
 	 */
 	protected function createController()
 	{
-		$class = new $this->controller($this->request, $this->response);
+		$class = new $this->controller();
+		$class->initController($this->request, $this->response, Services::logger());
 
 		$this->benchmark->stop('controller_constructor');
 

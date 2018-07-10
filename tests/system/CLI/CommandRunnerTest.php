@@ -1,6 +1,7 @@
 <?php namespace CodeIgniter\CLI;
 
 use CodeIgniter\HTTP\UserAgent;
+use Config\Services;
 use Tests\Support\Config\MockCLIConfig;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
 
@@ -8,6 +9,13 @@ class CommandRunnerTest extends \CIUnitTestCase
 {
 
 	private $stream_filter;
+
+	protected $env;
+	protected $config;
+	protected $request;
+	protected $response;
+	protected $logger;
+	protected $runner;
 
 	public function setUp()
 	{
@@ -32,7 +40,9 @@ class CommandRunnerTest extends \CIUnitTestCase
 		$this->config = new MockCLIConfig();
 		$this->request = new \CodeIgniter\HTTP\IncomingRequest($this->config, new \CodeIgniter\HTTP\URI('https://somwhere.com'), null, new UserAgent());
 		$this->response = new \CodeIgniter\HTTP\Response($this->config);
-		$this->runner = new CommandRunner($this->request, $this->response);
+		$this->logger = Services::logger();
+		$this->runner = new CommandRunner();
+		$this->runner->initController($this->request, $this->response, $this->logger);
 	}
 
 	public function tearDown()
