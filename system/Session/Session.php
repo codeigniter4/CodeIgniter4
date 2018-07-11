@@ -189,6 +189,12 @@ class Session implements SessionInterface
 
 			return;
 		}
+		elseif (session_status() === PHP_SESSION_ACTIVE)
+		{
+			$this->logger->warning('Session: Sessions is enabled, and one exists.Please don\'t $session->start();');
+
+			return;
+		}
 
 		if ( ! $this->driver instanceof \SessionHandlerInterface)
 		{
