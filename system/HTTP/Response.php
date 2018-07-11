@@ -659,7 +659,7 @@ class Response extends Message implements ResponseInterface
 	public function sendHeaders()
 	{
 		// Have the headers already been sent?
-		if (headers_sent())
+		if ($this->pretend || headers_sent())
 		{
 			return $this;
 		}

@@ -54,7 +54,7 @@ class ConsoleTest extends \CIUnitTestCase
 	public function testRun()
 	{
 		$console = new \CodeIgniter\CLI\Console($this->app);
-		$console->run();
+		$console->run(true);
 		$result = CITestStreamFilter::$buffer;
 
 		// make sure the result looks like a command list

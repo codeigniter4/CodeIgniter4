@@ -133,6 +133,13 @@ class CodeIgniter
 	 */
 	protected $path;
 
+	/**
+	 * Should the Response instance "pretend"
+	 * to keep from setting headers/cookies/etc
+	 * @var bool
+	 */
+	protected $useSafeOutput = false;
+
 	//--------------------------------------------------------------------
 
 	public function __construct($config)
@@ -204,7 +211,7 @@ class CodeIgniter
 				return $response;
 			}
 
-			$this->response->send();
+			$this->response->pretend($this->useSafeOutput)->send();
 			$this->callExit(EXIT_SUCCESS);
 		}
 
@@ -226,6 +233,24 @@ class CodeIgniter
 		{
 			$this->display404errors($e);
 		}
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Set our Response instance to "pretend" mode so that things like
+	 * cookies and headers are not actually sent, allowing PHP 7.2+ to
+	 * not complain when ini_set() function is used.
+	 *
+	 * @param bool $safe
+	 *
+	 * @return $this
+	 */
+	public function useSafeOutput(bool $safe = true)
+	{
+		$this->useSafeOutput = $safe;
+
+		return $this;
 	}
 
 	//--------------------------------------------------------------------
@@ -924,7 +949,7 @@ class CodeIgniter
 	 */
 	protected function sendResponse()
 	{
-		$this->response->send();
+		$this->response->pretend($this->useSafeOutput)->send();
 	}
 
 	//--------------------------------------------------------------------
