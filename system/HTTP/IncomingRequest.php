@@ -587,7 +587,10 @@ class IncomingRequest extends Request
 		}
 		else
 		{
-			throw FrameworkException::forEmptyBaseURL();
+			if(! is_cli())
+			{
+				throw FrameworkException::forEmptyBaseURL();
+			}
 		}
 	}
 
