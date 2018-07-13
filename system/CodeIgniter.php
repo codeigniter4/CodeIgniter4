@@ -273,7 +273,11 @@ class CodeIgniter
 		$filters = Services::filters();
 		$uri = $this->request instanceof CLIRequest ? $this->request->getPath() : $this->request->uri->getPath();
 
-		$filters->run($uri, 'before');
+		$possibleRedirect = $filters->run($uri, 'before');
+		if($possibleRedirect instanceof RedirectResponse)
+		{
+			return $possibleRedirect;
+		}
 
 		$returned = $this->startController();
 
