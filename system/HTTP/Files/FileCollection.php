@@ -1,4 +1,5 @@
-<?php namespace CodeIgniter\HTTP\Files;
+<?php
+namespace CodeIgniter\HTTP\Files;
 
 /**
  * CodeIgniter
@@ -282,8 +283,7 @@ class FileCollection
 	 */
 	protected function getValueDotNotationSyntax($index, $value)
 	{
-		if (is_array($index) && ! empty($index)
-		)
+		if (is_array($index) && ! empty($index))
 		{
 			$current_index = array_shift($index);
 		}
