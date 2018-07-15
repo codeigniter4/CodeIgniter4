@@ -33,8 +33,8 @@ class FileCollectionTest extends \CIUnitTestCase
 			]
 		];
 
-		$collection = new FileCollection();
-		$files = $collection->all();
+		$collection	 = new FileCollection();
+		$files		 = $collection->all();
 		$this->assertCount(1, $files);
 
 		$file = array_shift($files);
@@ -58,8 +58,8 @@ class FileCollectionTest extends \CIUnitTestCase
 			]
 		];
 
-		$collection = new FileCollection();
-		$files = $collection->all();
+		$collection	 = new FileCollection();
+		$files		 = $collection->all();
 		$this->assertCount(1, $files);
 		$this->assertEquals('userfile', key($files));
 
@@ -98,8 +98,8 @@ class FileCollectionTest extends \CIUnitTestCase
 			],
 		];
 
-		$collection = new FileCollection();
-		$files = $collection->all();
+		$collection	 = new FileCollection();
+		$files		 = $collection->all();
 		$this->assertCount(2, $files);
 		$this->assertEquals('userfile1', key($files));
 
@@ -157,8 +157,8 @@ class FileCollectionTest extends \CIUnitTestCase
 			]
 		];
 
-		$collection = new FileCollection();
-		$files = $collection->all();
+		$collection	 = new FileCollection();
+		$files		 = $collection->all();
 		$this->assertCount(1, $files);
 		$this->assertEquals('userfile', key($files));
 
@@ -277,8 +277,8 @@ class FileCollectionTest extends \CIUnitTestCase
 
 		$expected = 'The file "someFile.txt" exceeds your upload_max_filesize ini directive.';
 
-		$collection = new FileCollection();
-		$file = $collection->getFile('userfile');
+		$collection	 = new FileCollection();
+		$file		 = $collection->getFile('userfile');
 
 		$this->assertEquals($expected, $file->getErrorString());
 	}
@@ -297,8 +297,8 @@ class FileCollectionTest extends \CIUnitTestCase
 
 		$expected = 'The file "someFile.txt" was not uploaded due to an unknown error.';
 
-		$collection = new FileCollection();
-		$file = $collection->getFile('userfile');
+		$collection	 = new FileCollection();
+		$file		 = $collection->getFile('userfile');
 
 		$this->assertEquals($expected, $file->getErrorString());
 	}
@@ -316,8 +316,8 @@ class FileCollectionTest extends \CIUnitTestCase
 
 		$expected = 'The file uploaded with success.';
 
-		$collection = new FileCollection();
-		$file = $collection->getFile('userfile');
+		$collection	 = new FileCollection();
+		$file		 = $collection->getFile('userfile');
 
 		$this->assertEquals($expected, $file->getErrorString());
 	}
@@ -336,8 +336,8 @@ class FileCollectionTest extends \CIUnitTestCase
 			]
 		];
 
-		$collection = new FileCollection();
-		$file = $collection->getFile('userfile');
+		$collection	 = new FileCollection();
+		$file		 = $collection->getFile('userfile');
 
 		$this->assertEquals(UPLOAD_ERR_INI_SIZE, $file->getError());
 	}
@@ -353,8 +353,8 @@ class FileCollectionTest extends \CIUnitTestCase
 			]
 		];
 
-		$collection = new FileCollection();
-		$file = $collection->getFile('userfile');
+		$collection	 = new FileCollection();
+		$file		 = $collection->getFile('userfile');
 
 		$this->assertEquals(0, $file->getError());
 	}
@@ -371,8 +371,8 @@ class FileCollectionTest extends \CIUnitTestCase
 			]
 		];
 
-		$collection = new FileCollection();
-		$file = $collection->getFile('userfile');
+		$collection	 = new FileCollection();
+		$file		 = $collection->getFile('userfile');
 
 		$this->assertEquals(UPLOAD_ERR_OK, $file->getError());
 	}
@@ -391,8 +391,8 @@ class FileCollectionTest extends \CIUnitTestCase
 			]
 		];
 
-		$collection = new FileCollection();
-		$file = $collection->getFile('userfile');
+		$collection	 = new FileCollection();
+		$file		 = $collection->getFile('userfile');
 		$this->assertInstanceOf(UploadedFile::class, $file);
 
 		$this->assertEquals('someFile.txt', $file->getName());
@@ -413,8 +413,8 @@ class FileCollectionTest extends \CIUnitTestCase
 			]
 		];
 
-		$collection = new FileCollection();
-		$file = $collection->getFile('fileuser');
+		$collection	 = new FileCollection();
+		$file		 = $collection->getFile('fileuser');
 		$this->AssertNull($file);
 	}
 
@@ -502,6 +502,46 @@ class FileCollectionTest extends \CIUnitTestCase
 		$this->assertEquals('txt', $file_2->getClientExtension());
 		$this->assertEquals('text/plain', $file_2->getClientMimeType());
 		$this->assertEquals(243, $file_2->getSize());
+	}
+
+	//--------------------------------------------------------------------
+	
+	public function testDoesntHaveFile()
+	{
+		$_FILES = [
+			'my-form' => [
+				'name'		 => [
+					'details' => [
+						'avatars' => ['fileA.txt', 'fileB.txt']
+					]
+				],
+				'type'		 => [
+					'details' => [
+						'avatars' => ['text/plain', 'text/plain']
+					]
+				],
+				'size'		 => [
+					'details' => [
+						'avatars' => [125, 243]
+					]
+				],
+				'tmp_name'	 => [
+					'details' => [
+						'avatars' => ['/tmp/fileA.txt', '/tmp/fileB.txt']
+					]
+				],
+				'error'		 => [
+					'details' => [
+						'avatars' => [0, 0]
+					]
+				],
+			]
+		];
+
+		$collection = new FileCollection();
+
+		$this->assertFalse($collection->hasFile('my-form.detailz.avatars.0'));
+		$this->assertNull($collection->getFile('my-form.detailz.avatars.0'));
 	}
 
 	//--------------------------------------------------------------------
