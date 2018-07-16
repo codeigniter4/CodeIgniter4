@@ -1306,6 +1306,28 @@ class BaseBuilder
 	//--------------------------------------------------------------------
 
 	/**
+	 * Returns the previously set() data, alternatively resetting it
+	 * if needed.
+	 *
+	 * @param bool $clean
+	 *
+	 * @return array
+	 */
+	public function getSetData(bool $clean = false)
+	{
+		$data = $this->QBSet;
+
+		if ($clean)
+		{
+			$this->QBSet = [];
+		}
+
+		return $data;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Get SELECT query string
 	 *
 	 * Compiles a SELECT query string and returns the sql.

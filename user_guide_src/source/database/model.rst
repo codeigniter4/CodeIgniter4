@@ -196,19 +196,8 @@ of just one::
 
 	$users = $userModel->find([1,2,3]);
 
-**findWhere()**
-
-Allows you to specify one or more criteria that must be matched against the data. Returns
-all rows that match::
-
-	// Use simple where
-	$users = $userModel->findWhere('role_id >', '10');
-
-	// Use array of where values
-	$users = $userModel->findWhere([
-		'status'  => 'active',
-		'deleted' => 0
-	]);
+If no parameters are passed in, will return all rows in that model's table, effectively acting
+like findAll(), though less explicit.
 
 **findAll()**
 
@@ -283,6 +272,22 @@ of the columns in $table, while the array's values are the values to save for th
 	];
 
 	$userModel->update($id, $data);
+
+Multiple records may be updated with a single call by passing an array of primary keys as the first parameter::
+
+    $data = [
+		'active' => 1
+	];
+
+	$userModel->update([1, 2, 3], $data);
+
+When you need a more flexible solution, you can leaven the parameters empty and it functions like the Query Builder's
+update command, with the added benefit of validation, events, etc::
+
+    $userModel
+        ->whereIn('id', [1,2,3])
+        ->set(['active' => 1]
+        ->update();
 
 **save()**
 
@@ -380,22 +385,14 @@ Takes a primary key value as the first parameter and deletes the matching record
 If the model's $useSoftDeletes value is true, this will update the row to set 'deleted = 1'. You can force
 a permanent delete by setting the second parameter as true.
 
-**deleteWhere()**
+An array of primary keys can be passed in as the first parameter to delete multiple records at once::
 
-Deletes multiple records from the model's table based on the criteria pass into the first two parameters.
-::
+    $userModel->delete([1,2,3]);
 
-	// Simple where
-	$userMdoel->deleteWhere('status', 'inactive');
+If no parameters are passed in, will act like the Query Builder's delete method, requiring a where call
+previously::
 
-	// Complex where
-	$userModel->deleteWhere([
-		'status'      => 'inactive',
-		'warn_lvl >=' => 50
-	]);
-
-If the model's $useSoftDeletes value is true, this will update the rows to set 'deleted = 1'. You can force
-a permanent delete by setting the third parameter as true.
+    $userModel->where('id', 12)->delete();
 
 **purgeDeleted()**
 
@@ -540,17 +537,17 @@ provides methods that allow you to do just that.
 
 Returns data from the next find*() method as associative arrays::
 
-	$users = $userModel->asArray()->findWhere('status', 'active');
+	$users = $userModel->asArray()->where('status', 'active')->findAll();
 
 **asObject()**
 
 Returns data from the next find*() method as standard objects or custom class intances::
 
 	// Return as standard objects
-	$users = $userModel->asObject()->findWhere('status', 'active');
+	$users = $userModel->asObject()->where('status', 'active')->findAll();
 
 	// Return as custom class instances
-	$users = $userModel->asObject('User')->findWhere('status', 'active');
+	$users = $userModel->asObject('User')->where('status', 'active')->findAll();
 
 Processing Large Amounts of Data
 --------------------------------
@@ -631,7 +628,6 @@ afterUpdate       **id** = the primary key of the row being updated.
 afterFind         Varies by find* method. See the following:
 - find()          **id** = the primary key of the row being searched for.
                   **data** = The resulting row of data, or null if no result found.
-- findWhere()     **data** = the resulting rows of data, or null if no result found.
 - findAll()       **data** = the resulting rows of data, or null if no result found.
                   **limit** = the number of rows to find.
                   **offset** = the number of rows to skip during the search.
@@ -639,15 +635,9 @@ afterFind         Varies by find* method. See the following:
 beforeDelete      Varies by delete* method. See the following:
 - delete()        **id** = primary key of row being deleted.
                   **purge** = boolean whether soft-delete rows should be hard deleted.
-- deleteWhere()   **key**/**value** = the key/value pair used to search for rows to delete.
-                  **purge** = boolean whether soft-delete rows should be hard deleted.
 afterDelete       Varies by delete* method. See the following:
 - delete()        **id** = primary key of row being deleted.
                   **purge** = boolean whether soft-delete rows should be hard deleted.
-                  **result** = the result of the delete() call on the Query Builder.
-                  **data** = unused.
-- deleteWhere()	  **key**/**value** = the key/value pair used to search for rows to delete.
-                  **purge** boolean whether soft-delete rows should be hard deleted.
                   **result** = the result of the delete() call on the Query Builder.
                   **data** = unused.
 ================ =========================================================================================================
