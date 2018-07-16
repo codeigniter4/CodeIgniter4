@@ -196,20 +196,6 @@ of just one::
 
 	$users = $userModel->find([1,2,3]);
 
-**findWhere()**
-
-Allows you to specify one or more criteria that must be matched against the data. Returns
-all rows that match::
-
-	// Use simple where
-	$users = $userModel->findWhere('role_id >', '10');
-
-	// Use array of where values
-	$users = $userModel->findWhere([
-		'status'  => 'active',
-		'deleted' => 0
-	]);
-
 **findAll()**
 
 Returns all results::
@@ -380,23 +366,6 @@ Takes a primary key value as the first parameter and deletes the matching record
 If the model's $useSoftDeletes value is true, this will update the row to set 'deleted = 1'. You can force
 a permanent delete by setting the second parameter as true.
 
-**deleteWhere()**
-
-Deletes multiple records from the model's table based on the criteria pass into the first two parameters.
-::
-
-	// Simple where
-	$userMdoel->deleteWhere('status', 'inactive');
-
-	// Complex where
-	$userModel->deleteWhere([
-		'status'      => 'inactive',
-		'warn_lvl >=' => 50
-	]);
-
-If the model's $useSoftDeletes value is true, this will update the rows to set 'deleted = 1'. You can force
-a permanent delete by setting the third parameter as true.
-
 **purgeDeleted()**
 
 Cleans out the database table by permanently removing all rows that have 'deleted = 1'. ::
@@ -540,17 +509,17 @@ provides methods that allow you to do just that.
 
 Returns data from the next find*() method as associative arrays::
 
-	$users = $userModel->asArray()->findWhere('status', 'active');
+	$users = $userModel->asArray()->where('status', 'active')->findAll();
 
 **asObject()**
 
 Returns data from the next find*() method as standard objects or custom class intances::
 
 	// Return as standard objects
-	$users = $userModel->asObject()->findWhere('status', 'active');
+	$users = $userModel->asObject()->where('status', 'active')->findAll();
 
 	// Return as custom class instances
-	$users = $userModel->asObject('User')->findWhere('status', 'active');
+	$users = $userModel->asObject('User')->where('status', 'active')->findAll();
 
 Processing Large Amounts of Data
 --------------------------------
@@ -631,7 +600,6 @@ afterUpdate       **id** = the primary key of the row being updated.
 afterFind         Varies by find* method. See the following:
 - find()          **id** = the primary key of the row being searched for.
                   **data** = The resulting row of data, or null if no result found.
-- findWhere()     **data** = the resulting rows of data, or null if no result found.
 - findAll()       **data** = the resulting rows of data, or null if no result found.
                   **limit** = the number of rows to find.
                   **offset** = the number of rows to skip during the search.
@@ -639,15 +607,9 @@ afterFind         Varies by find* method. See the following:
 beforeDelete      Varies by delete* method. See the following:
 - delete()        **id** = primary key of row being deleted.
                   **purge** = boolean whether soft-delete rows should be hard deleted.
-- deleteWhere()   **key**/**value** = the key/value pair used to search for rows to delete.
-                  **purge** = boolean whether soft-delete rows should be hard deleted.
 afterDelete       Varies by delete* method. See the following:
 - delete()        **id** = primary key of row being deleted.
                   **purge** = boolean whether soft-delete rows should be hard deleted.
-                  **result** = the result of the delete() call on the Query Builder.
-                  **data** = unused.
-- deleteWhere()	  **key**/**value** = the key/value pair used to search for rows to delete.
-                  **purge** boolean whether soft-delete rows should be hard deleted.
                   **result** = the result of the delete() call on the Query Builder.
                   **data** = unused.
 ================ =========================================================================================================

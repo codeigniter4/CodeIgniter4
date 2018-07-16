@@ -345,38 +345,6 @@ class Model
 	//--------------------------------------------------------------------
 
 	/**
-	 * Extract a subset of data
-	 *
-	 * @param string|array $key
-	 * @param string|null  $value
-	 *
-	 * @return array|null The rows of data.
-	 */
-	public function findWhere($key, $value = null)
-	{
-		$builder = $this->builder();
-
-		if ($this->tempUseSoftDeletes === true)
-		{
-			$builder->where($this->deletedField, 0);
-		}
-
-		$rows = $builder->where($key, $value)
-				->get();
-
-		$rows = $rows->getResult($this->tempReturnType);
-
-		$rows = $this->trigger('afterFind', ['data' => $rows]);
-
-		$this->tempReturnType = $this->returnType;
-		$this->tempUseSoftDeletes = $this->useSoftDeletes;
-
-		return $rows['data'];
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
 	 * Works with the current Query Builder instance to return
 	 * all results, while optionally limiting them.
 	 *
@@ -768,54 +736,6 @@ class Model
 		}
 
 		$this->trigger('afterDelete', ['id' => $id, 'purge' => $purge, 'result' => $result, 'data' => null]);
-
-		return $result;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Deletes multiple records from $this->table where the specified
-	 * key/value matches.
-	 *
-	 * @param string|array $key
-	 * @param string|null  $value
-	 * @param bool         $purge Allows overriding the soft deletes setting.
-	 *
-	 * @return mixed
-	 * @throws \CodeIgniter\Database\Exceptions\DataException
-	 */
-	public function deleteWhere($key, $value = null, $purge = false)
-	{
-		// Don't let them shoot themselves in the foot...
-		if (empty($key))
-		{
-			throw DataException::forInvalidArgument('key');
-		}
-
-		$this->trigger('beforeDelete', ['key' => $key, 'value' => $value, 'purge' => $purge]);
-
-		if ($this->useSoftDeletes && ! $purge)
-		{
-            $set[$this->deletedField] = 1;
-
-            if ($this->useTimestamps)
-            {
-                $set[$this->updatedField] = $this->setDate();
-            }
-
-			$result = $this->builder()
-					->where($key, $value)
-					->update($set);
-		}
-		else
-		{
-			$result = $this->builder()
-					->where($key, $value)
-					->delete();
-		}
-
-		$this->trigger('afterDelete', ['key' => $key, 'value' => $value, 'purge' => $purge, 'result' => $result, 'data' => null]);
 
 		return $result;
 	}

@@ -95,48 +95,6 @@ class ModelTest extends CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
-	public function testFindWhereSimple()
-	{
-	    $model = new JobModel($this->db);
-
-		$jobs = $model->asObject()->findWhere('id >', 2);
-
-		$this->assertCount(2, $jobs);
-		$this->assertEquals('Accountant', $jobs[0]->name);
-		$this->assertEquals('Musician',   $jobs[1]->name);
-	}
-
-	//--------------------------------------------------------------------
-
-	public function testFindWhereWithArrayWhere()
-	{
-		$model = new JobModel($this->db);
-
-		$jobs = $model->asArray()->findWhere(['id' => 1]);
-
-		$this->assertCount(1, $jobs);
-		$this->assertEquals('Developer', $jobs[0]['name']);
-	}
-
-	//--------------------------------------------------------------------
-
-	public function testFindWhereRespectsSoftDeletes()
-	{
-		$this->db->table('user')->where('id', 4)->update(['deleted' => 1]);
-
-		$model = new UserModel($this->db);
-
-		$user = $model->findWhere('id >', '2');
-
-		$this->assertCount(1, $user);
-
-		$user = $model->withDeleted()->findWhere('id >', 2);
-
-		$this->assertCount(2, $user);
-	}
-
-	//--------------------------------------------------------------------
-
 	public function testFindAllReturnsAllRecords()
 	{
 	    $model = new UserModel($this->db);
@@ -339,32 +297,6 @@ class ModelTest extends CIDatabaseTestCase
 		$this->seeInDatabase('user', ['name' =>'Derek Jones', 'deleted' => 0]);
 
 		$model->delete(1, true);
-
-		$this->dontSeeInDatabase('user', ['name' => 'Derek Jones']);
-	}
-
-	//--------------------------------------------------------------------
-
-	public function testDeleteWhereWithSoftDeletes()
-	{
-		$model = new UserModel();
-
-		$this->seeInDatabase('user', ['name' =>'Derek Jones', 'deleted' => 0]);
-
-		$model->deleteWhere('name', 'Derek Jones');
-
-		$this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted' => 1]);
-	}
-
-	//--------------------------------------------------------------------
-
-	public function testDeleteWhereWithSoftDeletesPurge()
-	{
-		$model = new UserModel();
-
-		$this->seeInDatabase('user', ['name' =>'Derek Jones', 'deleted' => 0]);
-
-		$model->deleteWhere('name', 'Derek Jones', true);
 
 		$this->dontSeeInDatabase('user', ['name' => 'Derek Jones']);
 	}
