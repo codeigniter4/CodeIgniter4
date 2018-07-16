@@ -307,11 +307,11 @@ class Model
 	 * Fetches the row of database from $this->table with a primary key
 	 * matching $id.
 	 *
-	 * @param mixed|array $id One primary key or an array of primary keys
+	 * @param mixed|array|null   $id One primary key or an array of primary keys
 	 *
 	 * @return array|object|null    The resulting row of data, or null.
 	 */
-	public function find($id)
+	public function find($id = null)
 	{
 		$builder = $this->builder();
 
@@ -326,12 +326,18 @@ class Model
 					->get();
 			$row = $row->getResult($this->tempReturnType);
 		}
-		else
+		elseif (is_numeric($id))
 		{
 			$row = $builder->where($this->table.'.'.$this->primaryKey, $id)
 					->get();
 
 			$row = $row->getFirstRow($this->tempReturnType);
+		}
+		else
+		{
+			$row = $builder->get();
+
+			$row = $row->getResult($this->tempReturnType);
 		}
 
 		$row = $this->trigger('afterFind', ['id' => $id, 'data' => $row]);
@@ -686,7 +692,7 @@ class Model
 
 		if ($id)
 		{
-			$builder = $builder->where($this->primaryKey, $id);
+			$builder = $builder->where($this->table.'.'.$this->primaryKey, $id);
 		}
 
 		// Must use the set() method to ensure objects get converted to arrays

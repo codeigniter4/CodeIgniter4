@@ -196,6 +196,9 @@ of just one::
 
 	$users = $userModel->find([1,2,3]);
 
+If no parameters are passed in, will return all rows in that model's table, effectively acting
+like findAll(), though less explicit.
+
 **findAll()**
 
 Returns all results::

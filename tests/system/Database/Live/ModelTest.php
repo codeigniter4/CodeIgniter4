@@ -54,6 +54,23 @@ class ModelTest extends CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testFindActsAsGetWithNoParams()
+	{
+		$model = new JobModel($this->db);
+
+		$jobs = $model->asArray()->find();
+
+		$this->assertCount(4, $jobs);
+
+		$names = array_column($jobs, 'name');
+		$this->assertTrue(in_array('Developer', $names));
+		$this->assertTrue(in_array('Politician', $names));
+		$this->assertTrue(in_array('Accountant', $names));
+		$this->assertTrue(in_array('Musician', $names));
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testFindRespectsReturnArray()
 	{
 		$model = new JobModel($this->db);
