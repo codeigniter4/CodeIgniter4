@@ -565,4 +565,75 @@ class ModelTest extends CIDatabaseTestCase
 
 		$this->assertTrue($model->hasToken('afterDelete'));
 	}
+
+	public function testSetWorksWithInsert()
+	{
+		$model = new EventModel();
+
+		$this->dontSeeInDatabase('user', [
+			'email' => 'foo@example.com'
+		]);
+
+		$model->set([
+			'email' => 'foo@example.com',
+			'name' => 'Foo Bar',
+			'country' => 'US'
+		])->insert();
+
+		$this->seeInDatabase('user', [
+			'email' => 'foo@example.com'
+		]);
+	}
+
+	public function testSetWorksWithUpdate()
+	{
+		$model = new EventModel();
+
+		$this->dontSeeInDatabase('user', [
+			'email' => 'foo@example.com'
+		]);
+
+		$userId = $model->insert([
+			'email' => 'foo@example.com',
+			'name' => 'Foo Bar',
+			'country' => 'US'
+		]);
+
+		$model->set([
+			'name' => 'Fred Flintstone'
+		])->update($userId);
+
+		$this->seeInDatabase('user', [
+			'id' => $userId,
+			'email' => 'foo@example.com',
+			'name' => 'Fred Flintstone'
+		]);
+	}
+
+	public function testSetWorksWithUpdateNoId()
+	{
+		$model = new EventModel();
+
+		$this->dontSeeInDatabase('user', [
+			'email' => 'foo@example.com'
+		]);
+
+		$userId = $model->insert([
+			'email' => 'foo@example.com',
+			'name' => 'Foo Bar',
+			'country' => 'US'
+		]);
+
+		$model
+			->where('id', $userId)
+			->set([
+			'name' => 'Fred Flintstone'
+		])->update();
+
+		$this->seeInDatabase('user', [
+			'id' => $userId,
+			'email' => 'foo@example.com',
+			'name' => 'Fred Flintstone'
+		]);
+	}
 }

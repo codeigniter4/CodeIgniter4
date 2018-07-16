@@ -250,6 +250,15 @@ class Model
 	protected $beforeDelete = [];
 	protected $afterDelete = [];
 
+	/**
+	 * Holds information passed in via 'set'
+	 * so that we can capture it (not the builder)
+	 * and ensure it gets validated first.
+	 *
+	 * @var array
+	 */
+	protected $tempData = [];
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -437,6 +446,31 @@ class Model
 	//--------------------------------------------------------------------
 
 	/**
+	 * Captures the builder's set() method so that we can validate the
+	 * data here. This allows it to be used with any of the other
+	 * builder methods and still get validated data, like replace.
+	 *
+	 * @param           $key
+	 * @param string    $value
+	 * @param bool|null $escape
+	 *
+	 * @return $this
+	 */
+	public function set($key, $value = '', bool $escape = null)
+	{
+		$data = is_array($key)
+			? $key
+			: [$key => $value];
+
+		$this->tempData['escape'] = $escape;
+		$this->tempData['data'] = array_merge($this->tempData['data'] ?? [], $data);
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * A convenience method that will attempt to determine whether the
 	 * data should be inserted or updated. Will work with either
 	 * an array or object. When using with custom class objects,
@@ -449,8 +483,6 @@ class Model
 	 */
 	public function save($data)
 	{
-		$saveData = $data;
-
 		// If $data is using a custom class with public or protected
 		// properties representing the table elements, we need to grab
 		// them as an array.
@@ -538,8 +570,17 @@ class Model
 	 *
 	 * @return int|string|bool
 	 */
-	public function insert($data, bool $returnID = true)
+	public function insert($data = null, bool $returnID = true)
 	{
+		$escape = null;
+
+		if (empty($data))
+		{
+			$data   = $this->tempData['data'] ?? null;
+			$escape = $this->tempData['escape'] ?? null;
+			$this->tempData = [];
+		}
+
 		// If $data is using a custom class with public or protected
 		// properties representing the table elements, we need to grab
 		// them as an array.
@@ -590,7 +631,7 @@ class Model
 
 		// Must use the set() method to ensure objects get converted to arrays
 		$result = $this->builder()
-				->set($data['data'])
+				->set($data['data'], '', $escape)
 				->insert();
 
 		$this->trigger('afterInsert', ['data' => $originalData, 'result' => $result]);
@@ -616,8 +657,17 @@ class Model
 	 *
 	 * @return bool
 	 */
-	public function update($id, $data)
+	public function update($id = null, $data = null)
 	{
+		$escape = null;
+
+		if (empty($data))
+		{
+			$data   = $this->tempData['data'] ?? null;
+			$escape = $this->tempData['escape'] ?? null;
+			$this->tempData = [];
+		}
+
 		// If $data is using a custom class with public or protected
 		// properties representing the table elements, we need to grab
 		// them as an array.
@@ -664,10 +714,16 @@ class Model
 			throw DataException::forEmptyDataset('update');
 		}
 
+		$builder = $this->builder();
+
+		if ($id)
+		{
+			$builder = $builder->where($this->primaryKey, $id);
+		}
+
 		// Must use the set() method to ensure objects get converted to arrays
-		$result = $this->builder()
-				->where($this->primaryKey, $id)
-				->set($data['data'])
+		$result = $builder
+				->set($data['data'], '', $escape)
 				->update();
 
 		$this->trigger('afterUpdate', ['id' => $id, 'data' => $originalData, 'result' => $result]);
@@ -1129,7 +1185,7 @@ class Model
 	 */
 	public function validate($data): bool
 	{
-		if ($this->skipValidation === true || empty($this->validationRules))
+		if ($this->skipValidation === true || empty($this->validationRules) || empty($data))
 		{
 			return true;
 		}
