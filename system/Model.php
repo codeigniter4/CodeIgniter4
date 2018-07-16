@@ -814,6 +814,31 @@ class Model
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Replace
+	 *
+	 * Compiles an replace into string and runs the query
+	 *
+	 * @param null $data
+	 * @param bool $returnSQL
+	 *
+	 * @return bool TRUE on success, FALSE on failure
+	 */
+	public function replace($data = null, $returnSQL = false)
+	{
+		// Validate data before saving.
+		if (! empty($data) && $this->skipValidation === false)
+		{
+			if ($this->validate($data) === false)
+			{
+				return false;
+			}
+		}
+
+		return $this->builder()->replace($data, $returnSQL);
+	}
+
 	//--------------------------------------------------------------------
 	// Utility
 	//--------------------------------------------------------------------
