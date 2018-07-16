@@ -1,10 +1,12 @@
-<?php namespace CodeIgniter\HTTP\Exceptions;
+<?php
+namespace CodeIgniter\HTTP\Exceptions;
 
 use CodeIgniter\Exceptions\ExceptionInterface;
 use CodeIgniter\Exceptions\FrameworkException;
 
 class HTTPException extends FrameworkException implements ExceptionInterface
 {
+
 	/**
 	 * For CurlRequest
 	 *
@@ -177,4 +179,35 @@ class HTTPException extends FrameworkException implements ExceptionInterface
 	{
 		return new static(lang('HTTP.malformedQueryString'));
 	}
+
+	/**
+	 * For Uploaded file move
+	 *
+	 * @return \CodeIgniter\HTTP\Exceptions\HTTPException
+	 */
+	public static function forAlreadyMoved()
+	{
+		return new static(lang('HTTP.alreadyMoved'));
+	}
+
+	/**
+	 * For Uploaded file move
+	 *
+	 * @return \CodeIgniter\HTTP\Exceptions\HTTPException
+	 */
+	public static function forInvalidFile()
+	{
+		return new static(lang('HTTP.invalidFile'));
+	}
+
+	/**
+	 * For Uploaded file move
+	 *
+	 * @return \CodeIgniter\HTTP\Exceptions\HTTPException
+	 */
+	public static function forMoveFailed(string $source, string $target, string $error)
+	{
+		return new static(lang('HTTP.moveFailed', [$source, $target, $error]));
+	}
+
 }
