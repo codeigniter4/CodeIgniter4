@@ -303,6 +303,36 @@ class ModelTest extends CIDatabaseTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testDeleteMultiple()
+	{
+		$model = new JobModel();
+
+
+		$this->seeInDatabase('job', ['name' =>'Developer']);
+		$this->seeInDatabase('job', ['name' =>'Politician']);
+
+		$model->delete([1, 2]);
+
+		$this->dontSeeInDatabase('job', ['name' => 'Developer']);
+		$this->dontSeeInDatabase('job', ['name' => 'Politician']);
+		$this->seeInDatabase('job', ['name' =>'Accountant']);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testDeleteNoParams()
+	{
+		$model = new JobModel();
+
+		$this->seeInDatabase('job', ['name' =>'Developer']);
+
+		$model->where('id', 1)->delete();
+
+		$this->dontSeeInDatabase('job', ['name' => 'Developer']);
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testPurgeDeleted()
 	{
 	    $model = new UserModel();

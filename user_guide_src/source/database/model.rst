@@ -366,6 +366,15 @@ Takes a primary key value as the first parameter and deletes the matching record
 If the model's $useSoftDeletes value is true, this will update the row to set 'deleted = 1'. You can force
 a permanent delete by setting the second parameter as true.
 
+An array of primary keys can be passed in as the first parameter to delete multiple records at once::
+
+    $userModel->delete([1,2,3]);
+
+If no parameters are passed in, will act like the Query Builder's delete method, requiring a where call
+previously::
+
+    $userModel->where('id', 12)->delete();
+
 **purgeDeleted()**
 
 Cleans out the database table by permanently removing all rows that have 'deleted = 1'. ::

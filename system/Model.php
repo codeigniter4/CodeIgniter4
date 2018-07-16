@@ -620,7 +620,7 @@ class Model
 	 * Updates a single record in $this->table. If an object is provided,
 	 * it will attempt to convert it into an array.
 	 *
-	 * @param int|string   $id
+	 * @param int|array|string   $id
 	 * @param array|object $data
 	 *
 	 * @return bool
@@ -705,14 +705,25 @@ class Model
 	 * Deletes a single record from $this->table where $id matches
 	 * the table's primaryKey
 	 *
-	 * @param mixed $id    The rows primary key
-	 * @param bool  $purge Allows overriding the soft deletes setting.
+	 * @param int|array|null $id    The rows primary key(s)
+	 * @param bool           $purge Allows overriding the soft deletes setting.
 	 *
 	 * @return mixed
 	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
-	public function delete($id, $purge = false)
+	public function delete($id = null, $purge = false)
 	{
+		if (! empty($id) && is_numeric($id))
+		{
+			$id = [$id];
+		}
+
+		$builder = $this->builder();
+		if (! empty($id))
+		{
+			$builder = $builder->whereIn($this->primaryKey, $id);
+		}
+
 		$this->trigger('beforeDelete', ['id' => $id, 'purge' => $purge]);
 
 		if ($this->useSoftDeletes && ! $purge)
@@ -724,15 +735,11 @@ class Model
                 $set[$this->updatedField] = $this->setDate();
             }
 
-			$result = $this->builder()
-					->where($this->primaryKey, $id)
-					->update($set);
+			$result = $builder->update($set);
 		}
 		else
 		{
-			$result = $this->builder()
-					->where($this->primaryKey, $id)
-					->delete();
+			$result = $builder->delete();
 		}
 
 		$this->trigger('afterDelete', ['id' => $id, 'purge' => $purge, 'result' => $result, 'data' => null]);
