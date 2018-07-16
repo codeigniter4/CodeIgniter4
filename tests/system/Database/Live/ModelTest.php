@@ -615,4 +615,22 @@ class ModelTest extends CIDatabaseTestCase
 			'name' => 'Fred Flintstone'
 		]);
 	}
+
+	public function testUpdateArray()
+	{
+		$model = new EventModel();
+
+		$data = [
+			'name'  => 	'Foo',
+			'email' => 'foo@example.com',
+			'country' => 'US',
+			'deleted' => 0
+		];
+
+		$id = $model->insert($data);
+		$model->update([1,2], ['name' => 'Foo Bar']);
+
+		$this->seeInDatabase('user', ['id' => 1, 'name' => 'Foo Bar']);
+		$this->seeInDatabase('user', ['id' => 2, 'name' => 'Foo Bar']);
+	}
 }

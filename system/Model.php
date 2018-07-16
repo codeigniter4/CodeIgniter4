@@ -635,6 +635,11 @@ class Model
 	{
 		$escape = null;
 
+		if (is_numeric($id))
+		{
+			$id = [$id];
+		}
+
 		if (empty($data))
 		{
 			$data   = $this->tempData['data'] ?? null;
@@ -692,7 +697,7 @@ class Model
 
 		if ($id)
 		{
-			$builder = $builder->where($this->table.'.'.$this->primaryKey, $id);
+			$builder = $builder->whereIn($this->table.'.'.$this->primaryKey, $id);
 		}
 
 		// Must use the set() method to ensure objects get converted to arrays

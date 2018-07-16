@@ -273,6 +273,22 @@ of the columns in $table, while the array's values are the values to save for th
 
 	$userModel->update($id, $data);
 
+Multiple records may be updated with a single call by passing an array of primary keys as the first parameter::
+
+    $data = [
+		'active' => 1
+	];
+
+	$userModel->update([1, 2, 3], $data);
+
+When you need a more flexible solution, you can leaven the parameters empty and it functions like the Query Builder's
+update command, with the added benefit of validation, events, etc::
+
+    $userModel
+        ->whereIn('id', [1,2,3])
+        ->set(['active' => 1]
+        ->update();
+
 **save()**
 
 This is a wrapper around the insert() and update() methods that handles inserting or updating the record
