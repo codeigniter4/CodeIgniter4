@@ -420,8 +420,6 @@ class Response extends Message implements ResponseInterface
 		$this->body = $this->formatBody($body, 'json');
 
 		return $this;
-
-		return $this;
 	}
 
 	//--------------------------------------------------------------------
