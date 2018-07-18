@@ -193,9 +193,11 @@ class HTTPException extends FrameworkException implements ExceptionInterface
 	/**
 	 * For Uploaded file move
 	 *
+	 * @param string|null $path
+	 *
 	 * @return \CodeIgniter\HTTP\Exceptions\HTTPException
 	 */
-	public static function forInvalidFile()
+	public static function forInvalidFile(string $path=null)
 	{
 		return new static(lang('HTTP.invalidFile'));
 	}

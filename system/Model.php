@@ -623,6 +623,35 @@ class Model
 	//--------------------------------------------------------------------
 
 	/**
+	 * Compiles batch insert strings and runs the queries, validating each row prior.
+	 *
+	 * @param    array $set    An associative array of insert values
+	 * @param    bool  $escape Whether to escape values and identifiers
+	 *
+	 * @param int      $batchSize
+	 * @param bool     $testing
+	 *
+	 * @return int Number of rows inserted or FALSE on failure
+	 */
+	public function insertBatch($set = null, $escape = null, $batchSize = 100, $testing = false)
+	{
+		if (is_array($set) && $this->skipValidation === false)
+		{
+			foreach ($set as $row)
+			{
+				if ($this->validate($row) === false)
+				{
+					return false;
+				}
+			}
+		}
+
+		return $this->builder()->insertBatch($set, $escape, $batchSize, $testing);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Updates a single record in $this->table. If an object is provided,
 	 * it will attempt to convert it into an array.
 	 *
@@ -708,6 +737,37 @@ class Model
 		$this->trigger('afterUpdate', ['id' => $id, 'data' => $originalData, 'result' => $result]);
 
 		return $result;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Update_Batch
+	 *
+	 * Compiles an update string and runs the query
+	 *
+	 * @param    array  $set       An associative array of update values
+	 * @param    string $index     The where key
+	 * @param    int    $batchSize The size of the batch to run
+	 * @param    bool   $returnSQL True means SQL is returned, false will execute the query
+	 *
+	 * @return    mixed    Number of rows affected or FALSE on failure
+	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
+	 */
+	public function updateBatch($set = null, $index = null, $batchSize = 100, $returnSQL = false)
+	{
+		if (is_array($set) && $this->skipValidation === false)
+		{
+			foreach ($set as $row)
+			{
+				if ($this->validate($row) === false)
+				{
+					return false;
+				}
+			}
+		}
+
+		return $this->builder()->updateBatch($set, $index, $batchSize, $returnSQL);
 	}
 
 	//--------------------------------------------------------------------

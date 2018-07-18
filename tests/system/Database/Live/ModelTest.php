@@ -633,4 +633,83 @@ class ModelTest extends CIDatabaseTestCase
 		$this->seeInDatabase('user', ['id' => 1, 'name' => 'Foo Bar']);
 		$this->seeInDatabase('user', ['id' => 2, 'name' => 'Foo Bar']);
 	}
+
+	public function testInsertBatchSuccess()
+	{
+		$job_data = [
+			['name' => 'Comedian', 'description' => 'Theres something in your teeth'],
+			['name' => 'Cab Driver', 'description' => 'Iam yellow'],
+		];
+
+		$model = new JobModel($this->db);
+		$model->insertBatch($job_data);
+
+		$this->seeInDatabase('job', ['name' => 'Comedian']);
+		$this->seeInDatabase('job', ['name' => 'Cab Driver']);
+	}
+
+	public function testInsertBatchValidationFail()
+	{
+		$job_data = [
+			['name' => 'Comedian', 'description' => null],
+		];
+
+		$model = new JobModel($this->db);
+
+		$this->setPrivateProperty($model, 'validationRules', ['description' => 'required']);
+
+		$this->assertFalse($model->insertBatch($job_data));
+
+		$error = $model->errors();
+		$this->assertTrue(isset($error['description']));
+	}
+
+	public function testUpdateBatchSuccess()
+	{
+		$data = [
+			[
+				'name' => 'Derek Jones',
+				'country' => 'Greece'
+			],
+			[
+				'name' => 'Ahmadinejad',
+				'country' => 'Greece'
+			],
+		];
+
+		$model = new EventModel($this->db);
+
+		$model->updateBatch($data, 'name');
+
+		$this->seeInDatabase('user', [
+			'name' => 'Derek Jones',
+			'country' => 'Greece'
+		]);
+		$this->seeInDatabase('user', [
+			'name' => 'Ahmadinejad',
+			'country' => 'Greece'
+		]);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testUpdateBatchValidationFail()
+	{
+		$data = [
+			[
+				'name' => 'Derek Jones',
+				'country' => null
+			],
+		];
+
+		$model = new EventModel($this->db);
+		$this->setPrivateProperty($model, 'validationRules', ['country' => 'required']);
+
+		$this->assertFalse($model->updateBatch($data, 'name'));
+
+		$error = $model->errors();
+		$this->assertTrue(isset($error['country']));
+	}
+
+	//--------------------------------------------------------------------
 }
