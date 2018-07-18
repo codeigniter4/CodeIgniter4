@@ -460,7 +460,6 @@ if ( ! function_exists('safe_mailto'))
 
 		// improve obfuscation by eliminating newlines & whitespace
 		$output = "<script type=\"text/javascript\">"
-				. "//<![CDATA["
 				. "var l=new Array();";
 
 		for ($i = 0, $c = count($x); $i < $c; $i ++ )
@@ -472,7 +471,6 @@ if ( ! function_exists('safe_mailto'))
 				. "if (l[i].substring(0, 1) === '|') document.write(\"&#\"+unescape(l[i].substring(1))+\";\");"
 				. "else document.write(unescape(l[i]));"
 				. "}"
-				. "//]]>"
 				. '</script>';
 
 		return $output;
