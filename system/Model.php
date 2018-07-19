@@ -683,7 +683,7 @@ class Model
 	 * Deletes a single record from $this->table where $id matches
 	 * the table's primaryKey
 	 *
-	 * @param mixed $id    The rows primary key
+	 * @param mixed|array $id One primary key or an array of primary keys
 	 * @param bool  $purge Allows overriding the soft deletes setting.
 	 *
 	 * @return mixed
@@ -692,6 +692,8 @@ class Model
 	public function delete($id, $purge = false)
 	{
 		$this->trigger('beforeDelete', ['id' => $id, 'purge' => $purge]);
+		
+		$whereType = is_array($id) ? 'whereIn' : 'where';
 
 		if ($this->useSoftDeletes && ! $purge)
 		{
@@ -703,13 +705,13 @@ class Model
             }
 
 			$result = $this->builder()
-					->where($this->primaryKey, $id)
+					->$whereType($this->primaryKey, $id)
 					->update($set);
 		}
 		else
 		{
 			$result = $this->builder()
-					->where($this->primaryKey, $id)
+					->$whereType($this->primaryKey, $id)
 					->delete();
 		}
 
