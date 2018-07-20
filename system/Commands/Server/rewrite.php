@@ -22,7 +22,7 @@ $_SERVER['CI_ENVIRONMENT'] = 'development';
 $uri = urldecode(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
 
 // Front Controller path - expected to be in the default folder
-$fcpath = realpath(__DIR__ . '/../../../public') . DIRECTORY_SEPARATOR;
+$fcpath = FCPATH;
 
 // Full path
 $path = $fcpath . ltrim($uri, '/');
