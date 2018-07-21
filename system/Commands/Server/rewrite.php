@@ -6,7 +6,7 @@
  * development server based around PHP's built-in development
  * server. This file simply tries to mimic Apache's mod_rewrite
  * functionality so the site will operate as normal.
- * 
+ *
  */
 // @codeCoverageIgnoreStart
 // Avoid this file run when listing commands
@@ -22,7 +22,7 @@ $_SERVER['CI_ENVIRONMENT'] = 'development';
 $uri = urldecode(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
 
 // Front Controller path - expected to be in the default folder
-$fcpath = realpath(__DIR__ . '/../../../public') . DIRECTORY_SEPARATOR;
+$fcpath = $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR;
 
 // Full path
 $path = $fcpath . ltrim($uri, '/');
