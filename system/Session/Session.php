@@ -1,4 +1,5 @@
-<?php namespace CodeIgniter\Session;
+<?php
+namespace CodeIgniter\Session;
 
 /**
  * CodeIgniter
@@ -272,7 +273,7 @@ class Session implements SessionInterface
 		}
 		else
 		{
-			ini_set('session.name', $this->sessionCookieName);
+			$this->safeSet('session.name', $this->sessionCookieName);
 		}
 
 		session_set_cookie_params(
@@ -285,16 +286,40 @@ class Session implements SessionInterface
 		}
 		else
 		{
-			ini_set('session.gc_maxlifetime', (int) $this->sessionExpiration);
+			$this->safeSet('session.gc_maxlifetime', (int) $this->sessionExpiration);
 		}
 
 		// Security is king
-		ini_set('session.use_trans_sid', 0);
-		ini_set('session.use_strict_mode', 1);
-		ini_set('session.use_cookies', 1);
-		ini_set('session.use_only_cookies', 1);
+		$this->safeSet('session.use_trans_sid', 0);
+		$this->safeSet('session.use_strict_mode', 1);
+		$this->safeSet('session.use_cookies', 1);
+		$this->safeSet('session.use_only_cookies', 1);
 
 		$this->configureSidLength();
+	}
+
+	// song & dance to prevent "Headers already sent" message with PHP7.2
+	private function safeSet(string $key, string $value)
+	{
+		$iniGet = ini_get($key);
+		if (false !== $iniGet && (string) $iniGet === (string) $value)
+			return;
+
+		if (PHP_VERSION < 7.2) return ini_set($key,$value);
+		
+		$sessionRequiresRestart = false;
+		if (session_status() == PHP_SESSION_ACTIVE)
+		{
+			session_write_close();
+			$sessionRequiresRestart = true;
+		}
+
+		@ini_set($key, $value);
+
+		if ($sessionRequiresRestart)
+		{
+			session_start();
+		}
 	}
 
 	// ------------------------------------------------------------------------
@@ -316,18 +341,14 @@ class Session implements SessionInterface
 	 */
 	protected function configureSidLength()
 	{
-		$bits_per_character = (int) (ini_get('session.sid_bits_per_character') !== false
-			? ini_get('session.sid_bits_per_character')
-			: 4);
-		$sid_length = (int) (ini_get('session.sid_length') !== false
-			? ini_get('session.sid_length')
-			: 40);
+		$bits_per_character = (int) (ini_get('session.sid_bits_per_character') !== false ? ini_get('session.sid_bits_per_character') : 4);
+		$sid_length = (int) (ini_get('session.sid_length') !== false ? ini_get('session.sid_length') : 40);
 		if (($sid_length * $bits_per_character) < 160)
 		{
 			$bits = ($sid_length * $bits_per_character);
 			// Add as many more characters as necessary to reach at least 160 bits
 			$sid_length += (int) ceil((160 % $bits) / $bits_per_character);
-			ini_set('session.sid_length', $sid_length);
+			$this->safeSet('session.sid_length', $sid_length);
 		}
 
 		// Yes, 4,5,6 are the only known possible values as of 2016-10-27
@@ -465,7 +486,7 @@ class Session implements SessionInterface
 	 */
 	public function get(string $key = null)
 	{
-		if (! empty($key) && $value = dot_array_search($key, $_SESSION))
+		if ( ! empty($key) && $value = dot_array_search($key, $_SESSION))
 		{
 			return $value;
 		}
@@ -474,14 +495,14 @@ class Session implements SessionInterface
 			return [];
 		}
 
-		if (! empty($key))
+		if ( ! empty($key))
 		{
 			return null;
 		}
 
 		$userdata = [];
 		$_exclude = array_merge(
-			['__ci_vars'], $this->getFlashKeys(), $this->getTempKeys()
+				['__ci_vars'], $this->getFlashKeys(), $this->getTempKeys()
 		);
 
 		$keys = array_keys($_SESSION);

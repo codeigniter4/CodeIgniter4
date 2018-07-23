@@ -13,10 +13,15 @@ class SessionTest extends \CIUnitTestCase
 
         $_COOKIE = [];
         $_SESSION = [];
-    }
+ 
+   }
 
     public function tearDown()
     {
+		if (session_status() == PHP_SESSION_ACTIVE)
+		{
+			session_write_close();
+		}
 
     }
 
