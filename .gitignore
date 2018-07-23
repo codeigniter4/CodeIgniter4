@@ -126,6 +126,4 @@ nb-configuration.xml
 .vscode/
 
 /results/
-/phpunit.xml
-/phpunit-db.xml
-/phpunit-nodb.xml
+/phpunit*.xml

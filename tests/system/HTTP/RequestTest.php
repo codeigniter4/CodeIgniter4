@@ -1,4 +1,5 @@
-<?php namespace CodeIgniter\HTTP;
+<?php
+namespace CodeIgniter\HTTP;
 
 use Config\App;
 
@@ -7,6 +8,7 @@ use Config\App;
  */
 class RequestTest extends \CIUnitTestCase
 {
+
 	/**
 	 * @var \CodeIgniter\HTTP\Request
 	 */
@@ -16,15 +18,17 @@ class RequestTest extends \CIUnitTestCase
 	{
 		parent::setUp();
 
-		$this->request = new Request(new App());
-		$_POST = [];
-		$_GET = [];
+		$this->request	 = new Request(new App());
+		$_POST			 = [];
+		$_GET			 = [];
 	}
+
+	//--------------------------------------------------------------------
 
 	public function testFetchGlobalsSingleValue()
 	{
-		$_POST['foo'] = 'bar';
-		$_GET['bar']  = 'baz';
+		$_POST['foo']	 = 'bar';
+		$_GET['bar']	 = 'baz';
 
 		$this->assertEquals('bar', $this->request->fetchGlobal('post', 'foo'));
 		$this->assertEquals('baz', $this->request->fetchGlobal('get', 'bar'));
@@ -38,8 +42,8 @@ class RequestTest extends \CIUnitTestCase
 	public function testFetchGlobalsFiltersValues()
 	{
 		$this->request->setGlobal('post', [
-			'foo' => 'bar<script>',
-			'bar' => 'baz',
+			'foo'	 => 'bar<script>',
+			'bar'	 => 'baz',
 		]);
 
 		$this->assertEquals('bar%3Cscript%3E', $this->request->fetchGlobal('post', 'foo', FILTER_SANITIZE_ENCODED));
@@ -49,21 +53,21 @@ class RequestTest extends \CIUnitTestCase
 	public function testFetchGlobalsWithFilterFlag()
 	{
 		$this->request->setGlobal('post', [
-			'foo' => '`bar<script>',
-			'bar' => 'baz',
+			'foo'	 => '`bar<script>',
+			'bar'	 => 'baz',
 		]);
 
-		$this->assertEquals('bar%3Cscript%3E', $this->request->fetchGlobal('post','foo', FILTER_SANITIZE_ENCODED, FILTER_FLAG_STRIP_BACKTICK));
+		$this->assertEquals('bar%3Cscript%3E', $this->request->fetchGlobal('post', 'foo', FILTER_SANITIZE_ENCODED, FILTER_FLAG_STRIP_BACKTICK));
 		$this->assertEquals('baz', $this->request->fetchGlobal('post', 'bar'));
 	}
 
 	public function testFetchGlobalReturnsAllWhenEmpty()
 	{
 		$post = [
-			'foo' => 'bar',
-			'bar' => 'baz',
-			'xxx' => 'yyy',
-			'yyy' => 'zzz'
+			'foo'	 => 'bar',
+			'bar'	 => 'baz',
+			'xxx'	 => 'yyy',
+			'yyy'	 => 'zzz'
 		];
 		$this->request->setGlobal('post', $post);
 
@@ -72,18 +76,18 @@ class RequestTest extends \CIUnitTestCase
 
 	public function testFetchGlobalFiltersAllValues()
 	{
-		$post = [
-			'foo' => 'bar<script>',
-			'bar' => 'baz<script>',
-			'xxx' => 'yyy<script>',
-			'yyy' => 'zzz<script>'
+		$post		 = [
+			'foo'	 => 'bar<script>',
+			'bar'	 => 'baz<script>',
+			'xxx'	 => 'yyy<script>',
+			'yyy'	 => 'zzz<script>'
 		];
 		$this->request->setGlobal('post', $post);
-		$expected = [
-			'foo' => 'bar%3Cscript%3E',
-			'bar' => 'baz%3Cscript%3E',
-			'xxx' => 'yyy%3Cscript%3E',
-			'yyy' => 'zzz%3Cscript%3E'
+		$expected	 = [
+			'foo'	 => 'bar%3Cscript%3E',
+			'bar'	 => 'baz%3Cscript%3E',
+			'xxx'	 => 'yyy%3Cscript%3E',
+			'yyy'	 => 'zzz%3Cscript%3E'
 		];
 
 		$this->assertEquals($expected, $this->request->fetchGlobal('post', null, FILTER_SANITIZE_ENCODED));
@@ -91,35 +95,35 @@ class RequestTest extends \CIUnitTestCase
 
 	public function testFetchGlobalFilterWithFlagAllValues()
 	{
-		$post = [
-			'foo' => '`bar<script>',
-			'bar' => '`baz<script>',
-			'xxx' => '`yyy<script>',
-			'yyy' => '`zzz<script>'
+		$post		 = [
+			'foo'	 => '`bar<script>',
+			'bar'	 => '`baz<script>',
+			'xxx'	 => '`yyy<script>',
+			'yyy'	 => '`zzz<script>'
 		];
 		$this->request->setGlobal('post', $post);
-		$expected = [
-			'foo' => 'bar%3Cscript%3E',
-			'bar' => 'baz%3Cscript%3E',
-			'xxx' => 'yyy%3Cscript%3E',
-			'yyy' => 'zzz%3Cscript%3E'
+		$expected	 = [
+			'foo'	 => 'bar%3Cscript%3E',
+			'bar'	 => 'baz%3Cscript%3E',
+			'xxx'	 => 'yyy%3Cscript%3E',
+			'yyy'	 => 'zzz%3Cscript%3E'
 		];
 
-		$this->assertEquals($expected, $this->request->fetchGlobal('post',null, FILTER_SANITIZE_ENCODED, FILTER_FLAG_STRIP_BACKTICK));
+		$this->assertEquals($expected, $this->request->fetchGlobal('post', null, FILTER_SANITIZE_ENCODED, FILTER_FLAG_STRIP_BACKTICK));
 	}
 
 	public function testFetchGlobalReturnsSelectedKeys()
 	{
-		$post = [
-			'foo' => 'bar',
-			'bar' => 'baz',
-			'xxx' => 'yyy',
-			'yyy' => 'zzz'
+		$post		 = [
+			'foo'	 => 'bar',
+			'bar'	 => 'baz',
+			'xxx'	 => 'yyy',
+			'yyy'	 => 'zzz'
 		];
 		$this->request->setGlobal('post', $post);
-		$expected = [
-			'foo' => 'bar',
-			'bar' => 'baz',
+		$expected	 = [
+			'foo'	 => 'bar',
+			'bar'	 => 'baz',
 		];
 
 		$this->assertEquals($expected, $this->request->fetchGlobal('post', ['foo', 'bar']));
@@ -127,16 +131,16 @@ class RequestTest extends \CIUnitTestCase
 
 	public function testFetchGlobalFiltersSelectedValues()
 	{
-		$post = [
-			'foo' => 'bar<script>',
-			'bar' => 'baz<script>',
-			'xxx' => 'yyy<script>',
-			'yyy' => 'zzz<script>'
+		$post		 = [
+			'foo'	 => 'bar<script>',
+			'bar'	 => 'baz<script>',
+			'xxx'	 => 'yyy<script>',
+			'yyy'	 => 'zzz<script>'
 		];
 		$this->request->setGlobal('post', $post);
-		$expected = [
-			'foo' => 'bar%3Cscript%3E',
-			'bar' => 'baz%3Cscript%3E',
+		$expected	 = [
+			'foo'	 => 'bar%3Cscript%3E',
+			'bar'	 => 'baz%3Cscript%3E',
 		];
 
 		$this->assertEquals($expected, $this->request->fetchGlobal('post', ['foo', 'bar'], FILTER_SANITIZE_ENCODED));
@@ -144,16 +148,16 @@ class RequestTest extends \CIUnitTestCase
 
 	public function testFetchGlobalFilterWithFlagSelectedValues()
 	{
-		$post = [
-			'foo' => '`bar<script>',
-			'bar' => '`baz<script>',
-			'xxx' => '`yyy<script>',
-			'yyy' => '`zzz<script>'
+		$post		 = [
+			'foo'	 => '`bar<script>',
+			'bar'	 => '`baz<script>',
+			'xxx'	 => '`yyy<script>',
+			'yyy'	 => '`zzz<script>'
 		];
 		$this->request->setGlobal('post', $post);
-		$expected = [
-			'foo' => 'bar%3Cscript%3E',
-			'bar' => 'baz%3Cscript%3E',
+		$expected	 = [
+			'foo'	 => 'bar%3Cscript%3E',
+			'bar'	 => 'baz%3Cscript%3E',
 		];
 
 		$this->assertEquals($expected, $this->request->fetchGlobal('post', ['foo', 'bar'], FILTER_SANITIZE_ENCODED, FILTER_FLAG_STRIP_BACKTICK));
@@ -164,19 +168,19 @@ class RequestTest extends \CIUnitTestCase
 	 */
 	public function testFetchGlobalReturnsArrayValues()
 	{
-		$post = [
-			'ANNOUNCEMENTS' => [
-				1 => [
+		$post	 = [
+			'ANNOUNCEMENTS'	 => [
+				1	 => [
 					'DETAIL' => 'asdf'
 				],
-				2 => [
+				2	 => [
 					'DETAIL' => 'sdfg'
 				]
 			],
-			'submit' => 'SAVE'
+			'submit'		 => 'SAVE'
 		];
 		$this->request->setGlobal('post', $post);
-		$result = $this->request->fetchGlobal('post');
+		$result	 = $this->request->fetchGlobal('post');
 
 		$this->assertEquals($post, $result);
 		$this->assertInternalType('array', $result['ANNOUNCEMENTS']);
@@ -194,7 +198,7 @@ class RequestTest extends \CIUnitTestCase
 		];
 		$this->request->setGlobal('post', $post);
 
-		$this->assertEquals(['address' => ['zipcode' => 90210]], $this->request->fetchGlobal('post','clients'));
+		$this->assertEquals(['address' => ['zipcode' => 90210]], $this->request->fetchGlobal('post', 'clients'));
 	}
 
 	public function testFetchGlobalWithArrayChildNumeric()
@@ -215,7 +219,7 @@ class RequestTest extends \CIUnitTestCase
 		];
 		$this->request->setGlobal('post', $post);
 
-		$this->assertEquals(['zipcode' => 60610], $this->request->fetchGlobal('post','clients[1][address]'));
+		$this->assertEquals(['zipcode' => 60610], $this->request->fetchGlobal('post', 'clients[1][address]'));
 	}
 
 	public function testFetchGlobalWithArrayChildElement()
@@ -229,7 +233,23 @@ class RequestTest extends \CIUnitTestCase
 		];
 		$this->request->setGlobal('post', $post);
 
-		$this->assertEquals(['zipcode' => 90210], $this->request->fetchGlobal('post','clients[address]'));
+		$this->assertEquals(['zipcode' => 90210], $this->request->fetchGlobal('post', 'clients[address]'));
+		$this->assertEquals(null, $this->request->fetchGlobal('post', 'clients[zipcode]'));
+	}
+
+	public function testFetchGlobalWithKeylessArrayChildElement()
+	{
+		$post = [
+			'clients' => [
+				'address'	 => [
+					'zipcode' => 90210
+				],
+				'stuff'		 => [['a']]
+			]
+		];
+		$this->request->setGlobal('post', $post);
+
+		$this->assertEquals([['a']], $this->request->fetchGlobal('post', 'clients[stuff]'));
 	}
 
 	public function testFetchGlobalWithArrayLastElement()
@@ -246,28 +266,139 @@ class RequestTest extends \CIUnitTestCase
 		$this->assertEquals(90210, $this->request->fetchGlobal('post', 'clients[address][zipcode]'));
 	}
 
+	public function testFetchGlobalWithEmptyNotation()
+	{
+		$expected	 = [
+			[
+				'address' => [
+					'zipcode' => 90210
+				],
+			],
+			[
+				'address' => [
+					'zipcode' => 60610
+				],
+			],
+		];
+		$post		 = [
+			'clients' => $expected
+		];
+		$this->request->setGlobal('post', $post);
+
+//		echo var_dump($this->request->fetchGlobal('post', 'clients[][zipcode]'));
+		$this->assertEquals($expected, $this->request->fetchGlobal('post', 'clients[]'));
+	}
+
+	//--------------------------------------------------------------------
+
 	public function ipAddressChecks()
 	{
 		return [
-			'empty' => [false, ''],
-			'zero'  => [false , 0],
-			'large_ipv4' => [false, '256.256.256.999', 'ipv4'],
-			'good_ipv4'  => [true, '100.100.100.0', 'ipv4'],
-			'good_default'  => [true, '100.100.100.0'],
-			'zeroed_ipv4' => [true, '0.0.0.0'],
-			'large_ipv6' => [false, 'h123:0000:0000:0000:0000:0000:0000:0000', 'ipv6'],
-			'good_ipv6' => [true, '2001:0db8:85a3:0000:0000:8a2e:0370:7334'],
-			'confused_ipv6' => [false, '255.255.255.255', 'ipv6'],
+			'empty'			 => [false, ''],
+			'zero'			 => [false, 0],
+			'large_ipv4'	 => [false, '256.256.256.999', 'ipv4'],
+			'good_ipv4'		 => [true, '100.100.100.0', 'ipv4'],
+			'good_default'	 => [true, '100.100.100.0'],
+			'zeroed_ipv4'	 => [true, '0.0.0.0'],
+			'large_ipv6'	 => [false, 'h123:0000:0000:0000:0000:0000:0000:0000', 'ipv6'],
+			'good_ipv6'		 => [true, '2001:0db8:85a3:0000:0000:8a2e:0370:7334'],
+			'confused_ipv6'	 => [false, '255.255.255.255', 'ipv6'],
 		];
 	}
 
 	/**
 	 * @dataProvider ipAddressChecks
 	 */
-	public function testValidIPAddress($expected, $address, $type=null)
+	public function testValidIPAddress($expected, $address, $type = null)
 	{
 		$this->assertEquals($expected, $this->request->isValidIP($address, $type));
 	}
+
+	//--------------------------------------------------------------------
+
+	public function testGetIPAddressDefault()
+	{
+		$this->assertEquals('0.0.0.0', $this->request->getIPAddress());
+	}
+
+	public function testGetIPAddressNormal()
+	{
+		$expected				 = '123.123.123.123';
+		$_SERVER['REMOTE_ADDR']	 = $expected;
+		$this->request			 = new Request(new App());
+		$this->assertEquals($expected, $this->request->getIPAddress());
+		// call a second time to exercise the initial conditional block in getIPAddress()
+		$this->assertEquals($expected, $this->request->getIPAddress());
+	}
+
+	public function testGetIPAddressThruProxy()
+	{
+		$expected						 = '123.123.123.123';
+		$_SERVER['REMOTE_ADDR']			 = '10.0.1.200';
+		$config							 = new App();
+		$config->proxyIPs				 = '10.0.1.200,192.168.5.0/24';
+		$_SERVER['HTTP_X_FORWARDED_FOR'] = $expected;
+		$this->request					 = new Request($config);
+
+		// we should see the original forwarded address
+		$this->assertEquals($expected, $this->request->getIPAddress());
+	}
+
+	public function testGetIPAddressThruProxyInvalid()
+	{
+		$expected						 = '123.456.23.123';
+		$_SERVER['REMOTE_ADDR']			 = '10.0.1.200';
+		$config							 = new App();
+		$config->proxyIPs				 = '10.0.1.200,192.168.5.0/24';
+		$_SERVER['HTTP_X_FORWARDED_FOR'] = $expected;
+		$this->request					 = new Request($config);
+
+		// spoofed address invalid
+		$this->assertEquals('10.0.1.200', $this->request->getIPAddress());
+	}
+
+	public function testGetIPAddressThruProxyNotWhitelisted()
+	{
+		$expected						 = '123.456.23.123';
+		$_SERVER['REMOTE_ADDR']			 = '10.10.1.200';
+		$config							 = new App();
+		$config->proxyIPs				 = '10.0.1.200,192.168.5.0/24';
+		$_SERVER['HTTP_X_FORWARDED_FOR'] = $expected;
+		$this->request					 = new Request($config);
+
+		// spoofed address invalid
+		$this->assertEquals('10.10.1.200', $this->request->getIPAddress());
+	}
+
+	public function testGetIPAddressThruProxySubnet()
+	{
+		$expected						 = '123.123.123.123';
+		$_SERVER['REMOTE_ADDR']			 = '192.168.5.21';
+		$config							 = new App();
+		$config->proxyIPs				 = ['192.168.5.0/24'];
+		$_SERVER['HTTP_X_FORWARDED_FOR'] = $expected;
+		$this->request					 = new Request($config);
+
+		// we should see the original forwarded address
+		$this->assertEquals($expected, $this->request->getIPAddress());
+	}
+
+	public function testGetIPAddressThruProxyOutofSubnet()
+	{
+		$expected						 = '123.123.123.123';
+		$_SERVER['REMOTE_ADDR']			 = '192.168.5.21';
+		$config							 = new App();
+		$config->proxyIPs				 = ['192.168.5.0/28'];
+		$_SERVER['HTTP_X_FORWARDED_FOR'] = $expected;
+		$this->request					 = new Request($config);
+
+		// we should see the original forwarded address
+		$this->assertEquals('192.168.5.21', $this->request->getIPAddress());
+	}
+
+	//FIXME getIPAddress should have more testing, to 100% code coverage
+	
+	//--------------------------------------------------------------------
 
 	public function testMethodReturnsRightStuff()
 	{
@@ -275,4 +406,5 @@ class RequestTest extends \CIUnitTestCase
 		$this->assertEquals('get', $this->request->getMethod());
 		$this->assertEquals('GET', $this->request->getMethod(true));
 	}
+
 }

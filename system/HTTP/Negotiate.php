@@ -213,7 +213,7 @@ class Negotiate
 
 		// If no acceptable values exist, return the
 		// first that we support.
-		if (empty($acceptable))
+		if (count($acceptable) === 0)
 		{
 			return $supported[0];
 		}
