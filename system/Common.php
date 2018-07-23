@@ -276,6 +276,11 @@ if ( ! function_exists('esc'))
 			        $escaper = new \Zend\Escaper\Escaper($encoding);
                        }
 
+                       if ($encoding && $escaper->getEncoding() !== $encoding)
+                       {
+                               $escaper = new \Zend\Escaper\Escaper($encoding);
+                       }
+
 			$data = $escaper->$method($data);
 		}
 
