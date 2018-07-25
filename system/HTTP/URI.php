@@ -1,4 +1,5 @@
-<?php namespace CodeIgniter\HTTP;
+<?php
+namespace CodeIgniter\HTTP;
 
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 
@@ -493,7 +494,7 @@ class URI
 	{
 		return self::createURIString(
 						$this->getScheme(), $this->getAuthority(), $this->getPath(), // Absolute URIs should use a "/" for an empty path
-	  $this->getQuery(), $this->getFragment()
+						$this->getQuery(), $this->getFragment()
 		);
 	}
 
@@ -737,9 +738,7 @@ class URI
 		// This won't catch all cases, specifically
 		// changing ' ' to '+' has the same length
 		// but doesn't really matter for our cases here.
-		return strlen($decoded) < strlen($value)
-			? $decoded
-			: $value;
+		return strlen($decoded) < strlen($value) ? $decoded : $value;
 	}
 
 	/**
@@ -898,7 +897,8 @@ class URI
 
 		// Encode characters
 		$path = preg_replace_callback(
-				'/(?:[^' . self::CHAR_UNRESERVED . ':@&=\+\$,\/;%]+|%(?![A-Fa-f0-9]{2}))/', function(array $matches) {
+				'/(?:[^' . self::CHAR_UNRESERVED . ':@&=\+\$,\/;%]+|%(?![A-Fa-f0-9]{2}))/', function(array $matches)
+		{
 			return rawurlencode($matches[0]);
 		}, $path
 		);
@@ -951,13 +951,8 @@ class URI
 		{
 			if ( ! is_null($parts['port']))
 			{
+				// Valid port numbers are enforced by earlier parse_url or setPort()
 				$port = (int) $parts['port'];
-
-				if (1 > $port || 0xffff < $port)
-				{
-					throw HTTPException::forInvalidPort($port);
-				}
-
 				$this->port = $port;
 			}
 		}
