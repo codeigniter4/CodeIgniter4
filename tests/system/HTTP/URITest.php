@@ -1,5 +1,4 @@
 <?php
-
 namespace CodeIgniter\HTTP;
 
 use CodeIgniter\HTTP\Exceptions\HTTPException;
@@ -16,7 +15,7 @@ class URITest extends \CIUnitTestCase
 
 	public function tearDown()
 	{
-
+		
 	}
 
 	//--------------------------------------------------------------------
@@ -55,6 +54,16 @@ class URITest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testSegmentOutOfRange()
+	{
+		$this->expectException(HTTPException::class);
+		$url = "http://abc.com/a123/b/c";
+		$uri = new URI($url);
+		$uri->getSegment(22);
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testCanCastAsString()
 	{
 		$url = 'http://username:password@hostname:9090/path?arg=value#anchor';
@@ -84,10 +93,19 @@ class URITest extends \CIUnitTestCase
 	{
 		$url = '';
 		$uri = new URI($url);
-		$this->assertEquals('http://'.$url, (string) $uri);
+		$this->assertEquals('http://' . $url, (string) $uri);
 		$url = '/';
 		$uri = new URI($url);
-		$this->assertEquals('http://'.$url, (string) $uri);
+		$this->assertEquals('http://' . $url, (string) $uri);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testMalformedUri()
+	{
+		$this->expectException(HTTPException::class);
+		$url = "http://abc:a123";
+		$uri = new URI($url);
 	}
 
 	//--------------------------------------------------------------------
@@ -107,9 +125,9 @@ class URITest extends \CIUnitTestCase
 	public function testSchemeSub()
 	{
 		$url = 'example.com';
-		$uri = new URI('http://'.$url);
+		$uri = new URI('http://' . $url);
 		$uri->setScheme('x');
-		$this->assertEquals('x://'.$url, (string) $uri);
+		$this->assertEquals('x://' . $url, (string) $uri);
 	}
 
 	//--------------------------------------------------------------------
@@ -226,6 +244,16 @@ class URITest extends \CIUnitTestCase
 		$this->expectException(HTTPException::class);
 		$this->expectExceptionMessage(lang('HTTP.invalidPort', [0]));
 		$uri->setPort(0);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testCatchesBadPort()
+	{
+		$this->expectException(HTTPException::class);
+		$url = 'http://username:password@hostname:90909/path?arg=value#anchor';
+		$uri = new URI();
+		$uri->setURI($url);
 	}
 
 	//--------------------------------------------------------------------
@@ -427,10 +455,10 @@ class URITest extends \CIUnitTestCase
 			['g/', 'http://a/b/c/g/'],
 			['/g', 'http://a/g'],
 			['#s', 'http://a/b/c/d#s'],
+			['http://abc.com/x', 'http://abc.com/x'],
+			['?fruit=banana', 'http://a/b/c/d?fruit=banana'],
 		];
 	}
-
-	//--------------------------------------------------------------------
 
 	/**
 	 * @dataProvider defaultResolutions
@@ -446,36 +474,34 @@ class URITest extends \CIUnitTestCase
 		$this->assertEquals($expected, (string) $new);
 	}
 
+	/**
+	 * @dataProvider defaultResolutions
+	 * @group single
+	 */
+	public function testResolveRelativeURIHTTPS($rel, $expected)
+	{
+		$base = 'https://a/b/c/d';
+
+		$expected = str_replace('http:', 'https:', $expected);
+
+		$uri = new URI($base);
+
+		$new = $uri->resolveRelativeURI($rel);
+
+		$this->assertEquals($expected, (string) $new);
+	}
+
 	//--------------------------------------------------------------------
-
-    /**
-     * @dataProvider defaultResolutions
-     * @group single
-     */
-    public function testResolveRelativeURIHTTPS($rel, $expected)
-    {
-        $base = 'https://a/b/c/d';
-
-        $expected = str_replace('http:', 'https:', $expected);
-
-        $uri = new URI($base);
-
-        $new = $uri->resolveRelativeURI($rel);
-
-        $this->assertEquals($expected, (string) $new);
-    }
-
-    //--------------------------------------------------------------------
 
 	public function testAddQueryVar()
 	{
-	    $base = 'http://example.com/foo';
+		$base = 'http://example.com/foo';
 
 		$uri = new URI($base);
 
 		$uri->addQuery('bar', 'baz');
 
-		$this->assertEquals('http://example.com/foo?bar=baz', (string)$uri);
+		$this->assertEquals('http://example.com/foo?bar=baz', (string) $uri);
 	}
 
 	//--------------------------------------------------------------------
@@ -505,7 +531,7 @@ class URITest extends \CIUnitTestCase
 
 		$uri->addQuery('baz', 'foz');
 
-		$this->assertEquals('http://example.com/foo?bar=baz&baz=foz', (string)$uri);
+		$this->assertEquals('http://example.com/foo?bar=baz&baz=foz', (string) $uri);
 	}
 
 	//--------------------------------------------------------------------
@@ -518,7 +544,7 @@ class URITest extends \CIUnitTestCase
 
 		$uri->stripQuery('bar', 'baz');
 
-		$this->assertEquals('http://example.com/foo?foo=bar', (string)$uri);
+		$this->assertEquals('http://example.com/foo?foo=bar', (string) $uri);
 	}
 
 	//--------------------------------------------------------------------
@@ -531,7 +557,18 @@ class URITest extends \CIUnitTestCase
 
 		$uri->keepQuery('bar', 'baz');
 
-		$this->assertEquals('http://example.com/foo?bar=baz&baz=foz', (string)$uri);
+		$this->assertEquals('http://example.com/foo?bar=baz&baz=foz', (string) $uri);
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testEmptyQueryVars()
+	{
+		$base = 'http://example.com/foo';
+
+		$uri = new URI($base);
+		$uri->setQuery('foo=&bar=baz&baz=foz');
+		$this->assertEquals('http://example.com/foo?foo=&bar=baz&baz=foz', (string) $uri);
 	}
 
 	//--------------------------------------------------------------------
@@ -558,15 +595,15 @@ class URITest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-    /**
-     * @see https://github.com/bcit-ci/CodeIgniter4/issues/331
-     * @group single
-     */
-    public function testNoExtraSlashes()
-    {
-        $this->assertEquals('http://entirely.different.com/subfolder', (string)(new URI('entirely.different.com/subfolder')));
-        $this->assertEquals('http://localhost/subfolder', (string)(new URI('localhost/subfolder')));
-        $this->assertEquals('http://localtest.me/subfolder', (string)(new URI('localtest.me/subfolder')));
-    }
+	/**
+	 * @see https://github.com/bcit-ci/CodeIgniter4/issues/331
+	 * @group single
+	 */
+	public function testNoExtraSlashes()
+	{
+		$this->assertEquals('http://entirely.different.com/subfolder', (string) (new URI('entirely.different.com/subfolder')));
+		$this->assertEquals('http://localhost/subfolder', (string) (new URI('localhost/subfolder')));
+		$this->assertEquals('http://localtest.me/subfolder', (string) (new URI('localtest.me/subfolder')));
+	}
 
 }

@@ -270,8 +270,16 @@ if ( ! function_exists('esc'))
 				$method = 'escape' . ucfirst($context);
 			}
 
-			// @todo Optimize this to only load a single instance during page request.
-			$escaper = new \Zend\Escaper\Escaper($encoding);
+                       static $escaper;
+                       if (! $escaper)
+                       {
+			        $escaper = new \Zend\Escaper\Escaper($encoding);
+                       }
+
+                       if ($encoding && $escaper->getEncoding() !== $encoding)
+                       {
+                               $escaper = new \Zend\Escaper\Escaper($encoding);
+                       }
 
 			$data = $escaper->$method($data);
 		}

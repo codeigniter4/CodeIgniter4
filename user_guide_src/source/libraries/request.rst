@@ -15,7 +15,7 @@ See the documentation for the :doc:`IncomingRequest Class </libraries/incomingre
 Class Reference
 ===============
 
-.. php:class:: CodeIgniter\\HTTP\\IncomingRequest
+.. php:class:: CodeIgniter\\HTTP\\Request
 
 	.. php:method:: getIPAddress()
 
@@ -28,7 +28,7 @@ Class Reference
 
 			echo $request->getIPAddress();
 
-		.. important:: This method takes into account the ``App->proxy_ips`` setting and will
+		.. important:: This method takes into account the ``App->proxyIPs`` setting and will
 			return the reported HTTP_X_FORWARDED_FOR, HTTP_CLIENT_IP, HTTP_X_CLIENT_IP, or
 			HTTP_X_CLUSTER_CLIENT_IP address for the allowed IP address.
 
@@ -58,7 +58,7 @@ Class Reference
 		Accepts an optional second string parameter of 'ipv4' or 'ipv6' to specify
 		an IP format. The default checks for both formats.
 
-	.. php:method:: method([$upper = FALSE])
+	.. php:method:: getMethod([$upper = FALSE])
 
 		:param	bool	$upper: Whether to return the request method name in upper or lower case
 		:returns:	HTTP request method
@@ -68,9 +68,9 @@ Class Reference
 		in uppercase or lowercase.
 		::
 
-			echo $request->method(TRUE); // Outputs: POST
-			echo $request->method(FALSE); // Outputs: post
-			echo $request->method(); // Outputs: post
+			echo $request->getMethod(TRUE); // Outputs: POST
+			echo $request->getMethod(FALSE); // Outputs: post
+			echo $request->getMethod(); // Outputs: post
 
 	.. php:method:: getServer([$index = null[, $filter = null[, $flags = null]]])
 
