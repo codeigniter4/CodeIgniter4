@@ -93,6 +93,12 @@ class MigrateStatus extends BaseCommand
 		'-g' => 'Set database group',
 	];
 
+	protected $ignoredNamespaces = [
+		'CodeIgniter',
+		'Config',
+		'Tests\Support'
+	];
+
 	/**
 	 * Displays a list of all migrations and whether they've been run or not.
 	 *
@@ -114,24 +120,24 @@ class MigrateStatus extends BaseCommand
 		// Loop for all $namespaces
 		foreach ($namespaces as $namespace => $path)
 		{
+			if (in_array($namespace, $this->ignoredNamespaces))
+			{
+				continue;
+			}
 
 			$runner->setNamespace($namespace);
 			$migrations = $runner->findMigrations();
 			$history = $runner->getHistory();
 
+			CLI::write($namespace);
+
 			if (empty($migrations))
 			{
-				CLI::error("$namespace: " . lang('Migrations.noneFound'));
+				CLI::error(lang('Migrations.noneFound'));
 				continue;
 			}
 
 			ksort($migrations);
-
-			CLI::newLine(1);
-
-			CLI::write(lang('Migrations.historyFor') . "$namespace: ", 'green');
-
-			CLI::newLine(1);
 
 			$max = 0;
 			foreach ($migrations as $version => $migration)
@@ -142,7 +148,7 @@ class MigrateStatus extends BaseCommand
 				$max = max($max, strlen($file));
 			}
 
-			CLI::write(str_pad(lang('Migrations.filename'), $max + 6) . lang('Migrations.on'), 'yellow');
+			CLI::write('  '. str_pad(lang('Migrations.filename'), $max + 4) . lang('Migrations.on'), 'yellow');
 
 
 			foreach ($migrations as $version => $migration)
@@ -157,7 +163,7 @@ class MigrateStatus extends BaseCommand
 
 					$date = date("Y-m-d H:i:s", $row['time']);
 				}
-				CLI::write(str_pad($migration->name, $max + 6) . ($date ? $date : '---'));
+				CLI::write(str_pad('  '.$migration->name, $max + 6) . ($date ? $date : '---'));
 			}
 		}
 	}
