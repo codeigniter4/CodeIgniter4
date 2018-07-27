@@ -1,9 +1,12 @@
-<?php namespace CodeIgniter\HTTP;
+<?php
+
+namespace CodeIgniter\HTTP;
 
 use Config\App;
 
 class NegotiateTest extends \CIUnitTestCase
 {
+
 	/**
 	 * @var CodeIgniter\HTTP\Request
 	 */
@@ -36,6 +39,7 @@ class NegotiateTest extends \CIUnitTestCase
 	public function testNegotiateMediaFindsHighestMatch()
 	{
 		$this->request->setHeader('Accept', 'text/plain; q=0.5, text/html, text/x-dvi; q=0.8, text/x-c');
+		$this->negotiate->setRequest($this->request);
 
 		$this->assertEquals('text/html', $this->negotiate->media(['text/html', 'text/x-c', 'text/x-dvi', 'text/plain']));
 		$this->assertEquals('text/x-c', $this->negotiate->media(['text/x-c', 'text/x-dvi', 'text/plain']));
@@ -50,7 +54,7 @@ class NegotiateTest extends \CIUnitTestCase
 
 	public function testParseHeaderDeterminesCorrectPrecedence()
 	{
-		$header =$this->negotiate->parseHeader('text/*, text/plain, text/plain;format=flowed, */*');
+		$header = $this->negotiate->parseHeader('text/*, text/plain, text/plain;format=flowed, */*');
 
 		$this->assertEquals('text/plain', $header[0]['value']);
 		$this->assertEquals('flowed', $header[0]['params']['format']);
@@ -134,4 +138,36 @@ class NegotiateTest extends \CIUnitTestCase
 	}
 
 	//--------------------------------------------------------------------
+	public function testBestMatchEmpty()
+	{
+		$this->expectException(Exceptions\HTTPException::class);
+		$this->negotiate->media([]);
+	}
+
+	public function testBestMatchNoHeader()
+	{
+		$this->request->setHeader('Accept','');
+		$this->assertEquals('', $this->negotiate->media(['apple', 'banana'], true));
+		$this->assertEquals('apple/mac', $this->negotiate->media(['apple/mac', 'banana/yellow'], false));
+	}
+
+	public function testBestMatchNotAcceptable()
+	{
+		$this->request->setHeader('Accept','popcorn/cheddar');
+		$this->assertEquals('apple/mac', $this->negotiate->media(['apple/mac', 'banana/yellow'],false));
+	}
+
+	public function testBestMatchFirstSupported()
+	{
+		$this->request->setHeader('Accept','popcorn/cheddar, */*');
+		$this->assertEquals('apple/mac', $this->negotiate->media(['apple/mac', 'banana/yellow'],false));
+	}
+
+	public function testBestMatchLowQuality()
+	{
+		$this->request->setHeader('Accept','popcorn/cheddar;q=0, apple/mac, */*');
+		$this->assertEquals('apple/mac', $this->negotiate->media(['apple/mac', 'popcorn/cheddar'],false));
+		$this->assertEquals('apple/mac', $this->negotiate->media(['popcorn/cheddar','apple/mac'],false));
+	}
+
 }

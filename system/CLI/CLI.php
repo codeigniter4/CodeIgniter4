@@ -50,14 +50,14 @@ use CodeIgniter\CLI\Exceptions\CLIException;
  * Some of the code in this class is Windows-specific, and not
  * possible to test using travis-ci. It has been phpunit-annotated
  * to prevent messing up code coverage.
- * 
+ *
  * Some of the methods require keyboard input, and are not unit-testable
  * as a result: input() and prompt().
  * validate() is internal, and not testable if prompt() isn't.
  * The wait() method is mostly testable, as long as you don't give it
- * an argument of "0". 
+ * an argument of "0".
  * These have been flagged to ignore for code coverage purposes.
- * 
+ *
  * @package CodeIgniter\HTTP
  */
 class CLI
@@ -165,7 +165,7 @@ class CLI
 	 *
 	 * @param    string $prefix
 	 * @return    string
-	 * 
+	 *
 	 * @codeCoverageIgnore
 	 */
 	public static function input(string $prefix = null): string
@@ -217,7 +217,7 @@ class CLI
 			$default = $options;
 		}
 
-		if (is_array($options) && count($options))
+		if (is_array($options) && $options)
 		{
 			$opts = $options;
 			$extra_output_default = static::color($opts[0], 'white');
@@ -379,7 +379,7 @@ class CLI
 	 */
 	public static function isWindows()
 	{
-		return 'win' === strtolower(substr(php_uname("s"), 0, 3));
+               return stripos(PHP_OS, 'WIN') === 0;
 	}
 
 	//--------------------------------------------------------------------
@@ -652,7 +652,7 @@ class CLI
 			$value = null;
 
 			// if there is a following segment, and it doesn't start with a dash, it's a value.
-			if (isset($_SERVER['argv'][$i + 1]) && mb_substr($_SERVER['argv'][$i + 1], 0, 1) != '-')
+			if (isset($_SERVER['argv'][$i + 1]) && mb_strpos($_SERVER['argv'][$i + 1], '-') !== 0)
 			{
 				$value = $_SERVER['argv'][$i + 1];
 				$i ++;

@@ -221,7 +221,7 @@ class MessageTest extends \CIUnitTestCase
 		$_SERVER = $original; // restore so code coverage doesn't break
 	}
 
-	//--------------------------------------------------------------------
+ 	//--------------------------------------------------------------------
 
 	public function testPopulateHeadersWithoutHTTP()
 	{

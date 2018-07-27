@@ -26,9 +26,9 @@ The following functions are available:
 
 .. php:function:: img([$src = ''[, $indexPage = false[, $attributes = '']]])
 
-    :param  string  $src:        Image source data
+    :param  mixed  $src:        Image source data
     :param  bool    $indexPage:  Whether to treat $src as a routed URI string
-    :param  array   $attributes: HTML attributes
+    :param  mixed   $attributes: HTML attributes
     :returns:   HTML image tag
     :rtype: string
 
@@ -46,7 +46,7 @@ The following functions are available:
         echo img('images/picture.jpg', true);
         // <img src="http://site.com/index.php/images/picture.jpg" alt="" />
 
-    Additionally, an associative array can be passed to the ``img()`` function
+    Additionally, an associative array can be passed as the first parameter,
     for complete control over all attributes and values. If an *alt* attribute
     is not provided, CodeIgniter will generate an empty string.
 
@@ -96,7 +96,7 @@ The following functions are available:
         echo link_tag('feed', 'alternate', 'application/rss+xml', 'My RSS Feed');
         // <link href="http://site.com/feed" rel="alternate" type="application/rss+xml" title="My RSS Feed" />
 
-    Additionally, an associative array can be passed to the ``link()`` function
+    Alternately, an associative array can be passed to the ``link_tag()`` function
     for complete control over all attributes and values::
 
         $link = array(
@@ -111,7 +111,7 @@ The following functions are available:
 
 .. php:function:: script_tag([$src = ''[, $indexPage = false]])
 
-    :param  string  $src: The source of JavaScript file
+    :param  mixed  $src: The source name of a JavaScript file
     :param  bool    $indexPage: Whether to treat $src as a routed URI string
     :returns:   HTML script tag
     :rtype: string
@@ -126,11 +126,7 @@ The following functions are available:
         echo script_tag('js/mystyles.js');
         // <script src="http://site.com/js/mystyles.js" type="text/javascript"></script>
 
-    Further examples::
-
-        // to be done
-
-    Additionally, an associative array can be passed to the ``script_tag()`` function
+    Alternately, an associative array can be passed to the ``script_tag()`` function
     for complete control over all attributes and values::
 
         $script = array('src'  => 'js/printer.js');
@@ -341,7 +337,7 @@ The following functions are available:
     :param  string  $attributes:
     :param  array   $tracks:             Use the track function inside an array. See :php:func:`track()` function
     :param  bool    $indexPage:
-    :returns:                            HTML-formatted video element
+    :returns:                            HTML-formatted audio element
     :rtype: string
 
     Identical to :php:func:`video()`, only it produces the <audio> tag instead of <video>.
@@ -456,8 +452,8 @@ The following functions are available:
         echo doctype('html4-trans');
         // <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 
-    The following is a list of doctype choices. These are configurable, and
-    pulled from application/config/doctypes.php
+    The following is a list of the pre-defined doctype choices. These are configurable, 
+    pulled from `application/Config/DocTypes.php`, or they could be over-ridden in your `.env` configuration.
 
     =============================== =================== ==================================================================================================================================================
     Document type                   Option              Result

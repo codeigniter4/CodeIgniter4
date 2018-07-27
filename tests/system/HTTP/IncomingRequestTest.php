@@ -1,12 +1,16 @@
-<?php namespace CodeIgniter\HTTP;
+<?php
+
+namespace CodeIgniter\HTTP;
 
 use Config\App;
+use CodeIgniter\HTTP\Files\UploadedFile;
 
 /**
  * @backupGlobals enabled
  */
 class IncomingRequestTest extends \CIUnitTestCase
 {
+
 	/**
 	 * @var \CodeIgniter\HTTP\IncomingRequest
 	 */
@@ -31,8 +35,6 @@ class IncomingRequestTest extends \CIUnitTestCase
 		$this->assertNull($this->request->getVar('TESTY'));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testCanGrabGetVars()
 	{
 		$_GET['TEST'] = 5;
@@ -41,8 +43,6 @@ class IncomingRequestTest extends \CIUnitTestCase
 		$this->assertNull($this->request->getGEt('TESTY'));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testCanGrabPostVars()
 	{
 		$_POST['TEST'] = 5;
@@ -50,8 +50,6 @@ class IncomingRequestTest extends \CIUnitTestCase
 		$this->assertEquals(5, $this->request->getPost('TEST'));
 		$this->assertNull($this->request->getPost('TESTY'));
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testCanGrabPostBeforeGet()
 	{
@@ -64,20 +62,29 @@ class IncomingRequestTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-    /**
-     * @group single
-     */
-    public function testCanGetOldInput()
-    {
-        $_SESSION['_ci_old_input'] = [
-            'get' => ['one' => 'two'],
-            'post' => ['name' => 'foo']
-        ];
+	public function testCanGetOldInput()
+	{
+		$_SESSION['_ci_old_input'] = [
+			'get' => ['one' => 'two'],
+			'post' => ['name' => 'foo']
+		];
 
-        $this->assertEquals('foo', $this->request->getOldInput('name'));
-        $this->assertEquals('two', $this->request->getOldInput('one'));
-    }
+		$this->assertEquals('foo', $this->request->getOldInput('name'));
+		$this->assertEquals('two', $this->request->getOldInput('one'));
+	}
 
+	public function testCanGetOldInputDotted()
+	{
+		$_SESSION['_ci_old_input'] = [
+			'get' => ['apple' => ['name' => 'two']],
+			'post' => ['banana' => ['name' => 'foo']],
+		];
+
+		$this->assertEquals('foo', $this->request->getOldInput('banana.name'));
+		$this->assertEquals('two', $this->request->getOldInput('apple.name'));
+	}
+
+	//--------------------------------------------------------------------
 
 	public function testCanGrabServerVars()
 	{
@@ -89,8 +96,6 @@ class IncomingRequestTest extends \CIUnitTestCase
 		$this->assertNull($this->request->getServer('TESTY'));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testCanGrabEnvVars()
 	{
 		$server = $this->getPrivateProperty($this->request, 'globals');
@@ -101,8 +106,6 @@ class IncomingRequestTest extends \CIUnitTestCase
 		$this->assertNull($this->request->getEnv('TESTY'));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testCanGrabCookieVars()
 	{
 		$_COOKIE['TEST'] = 5;
@@ -111,7 +114,7 @@ class IncomingRequestTest extends \CIUnitTestCase
 		$this->assertNull($this->request->getCookie('TESTY'));
 	}
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
 	public function testStoresDefaultLocale()
 	{
@@ -120,8 +123,6 @@ class IncomingRequestTest extends \CIUnitTestCase
 		$this->assertEquals($config->defaultLocale, $this->request->getDefaultLocale());
 		$this->assertEquals($config->defaultLocale, $this->request->getLocale());
 	}
-
-	//--------------------------------------------------------------------
 
 	public function testSetLocaleSaves()
 	{
@@ -134,6 +135,19 @@ class IncomingRequestTest extends \CIUnitTestCase
 
 		$request->setLocale('en');
 		$this->assertEquals('en', $request->getLocale());
+	}
+
+	public function testSetBadLocale()
+	{
+		$config = new App();
+		$config->supportedLocales = ['en', 'es'];
+		$config->defaultLocale = 'es';
+		$config->baseURL = 'http://example.com';
+
+		$request = new IncomingRequest($config, new URI(), null, new UserAgent());
+
+		$request->setLocale('xx');
+		$this->assertEquals('es', $request->getLocale());
 	}
 
 	//--------------------------------------------------------------------
@@ -151,6 +165,44 @@ class IncomingRequestTest extends \CIUnitTestCase
 
 		$this->assertEquals($config->defaultLocale, $request->getDefaultLocale());
 		$this->assertEquals('es', $request->getLocale());
+	}
+
+	// The negotiation tests below are not intended to exercise the HTTP\Negotiate class -
+	// that is up to the NegotiateTest. These are only to make sure that the requests
+	// flow through to the negotiator
+	
+	public function testNegotiatesNot()
+	{
+		$this->request->setHeader('Accept-Charset', 'iso-8859-5, unicode-1-1;q=0.8');
+
+		$this->expectException(Exceptions\HTTPException::class);
+		$this->request->negotiate('something bogus', ['iso-8859-5', 'unicode-1-1']);
+	}
+
+	public function testNegotiatesCharset()
+	{
+//		$_SERVER['HTTP_ACCEPT_CHARSET'] = 'iso-8859-5, unicode-1-1;q=0.8';
+		$this->request->setHeader('Accept-Charset', 'iso-8859-5, unicode-1-1;q=0.8');
+
+		$this->assertEquals(strtolower($this->request->config->charset), $this->request->negotiate('charset', ['iso-8859', 'unicode-1-2']));
+	}
+
+	public function testNegotiatesMedia()
+	{
+		$this->request->setHeader('Accept', 'text/plain; q=0.5, text/html, text/x-dvi; q=0.8, text/x-c');
+		$this->assertEquals('text/html', $this->request->negotiate('media', ['text/html', 'text/x-c', 'text/x-dvi', 'text/plain']));
+	}
+
+	public function testNegotiatesEncoding()
+	{
+		$this->request->setHeader('Accept-Encoding', 'gzip;q=1.0, identity; q=0.4, compress;q=0.5');
+		$this->assertEquals('gzip', $this->request->negotiate('encoding', ['gzip', 'compress']));
+	}
+
+	public function testNegotiatesLanguage()
+	{
+		$this->request->setHeader('Accept-Language', 'da, en-gb;q=0.8, en;q=0.7');
+		$this->assertEquals('en', $this->request->negotiate('language', ['en', 'da']));
 	}
 
 	//--------------------------------------------------------------------
@@ -172,8 +224,6 @@ class IncomingRequestTest extends \CIUnitTestCase
 		$this->assertEquals($expected, $request->getJSON(true));
 	}
 
-	//--------------------------------------------------------------------
-
 	public function testCanGrabGetRawInput()
 	{
 		$rawstring = 'username=admin001&role=administrator&usepass=0';
@@ -193,4 +243,73 @@ class IncomingRequestTest extends \CIUnitTestCase
 	}
 
 	//--------------------------------------------------------------------
+
+	public function testIsCLI()
+	{
+		// this should be the case in unit testing
+		$this->assertTrue($this->request->isCLI());
+	}
+
+	public function testIsAJAX()
+	{
+		$_SERVER['HTTP_X_REQUESTED_WITH'] = 'xmlhttprequest';
+		$this->assertTrue($this->request->isAJAX());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testIsSecure()
+	{
+		$_SERVER['HTTPS'] = 'on';
+		$this->assertTrue($this->request->isSecure());
+	}
+
+	public function testIsSecureFrontEnd()
+	{
+		$_SERVER['HTTP_FRONT_END_HTTPS'] = 'on';
+		$this->assertTrue($this->request->isSecure());
+	}
+
+	public function testIsSecureForwarded()
+	{
+		$_SERVER['HTTP_X_FORWARDED_PROTO'] = 'https';
+		$this->assertTrue($this->request->isSecure());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testUserAgent()
+	{
+		$_SERVER['HTTP_USER_AGENT'] = 'Mozilla';
+		$config = new App();
+		$request = new IncomingRequest($config, new URI(), null, new UserAgent());
+		$this->assertEquals('Mozilla', $request->getUserAgent());
+	}
+
+	//--------------------------------------------------------------------
+
+	public function testFileCollectionFactory()
+	{
+		$_FILES = [
+			'userfile' => [
+				'name' => 'someFile.txt',
+				'type' => 'text/plain',
+				'size' => '124',
+				'tmp_name' => '/tmp/myTempFile.txt',
+				'error' => 0
+			]
+		];
+
+		$files = $this->request->getFiles();
+		$this->assertCount(1, $files);
+
+		$file = array_shift($files);
+		$this->assertInstanceOf(UploadedFile::class, $file);
+
+		$this->assertEquals('someFile.txt', $file->getName());
+		$this->assertEquals(124, $file->getSize());
+	}
+
+		//--------------------------------------------------------------------
+
 }

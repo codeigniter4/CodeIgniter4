@@ -215,7 +215,7 @@ class View implements RendererInterface
 			$after = (new \Config\Filters())->globals['after'];
 			if (in_array('toolbar', $after) || array_key_exists('toolbar', $after))
 			{
-				$toolbarCollectors =  (new \Config\App())->toolbarCollectors;
+				$toolbarCollectors =  (config(\Config\App::class))->toolbarCollectors;
 				if (in_array('CodeIgniter\Debug\Toolbar\Collectors\Views', $toolbarCollectors) || array_key_exists('CodeIgniter\Debug\Toolbar\Collectors\Views', $toolbarCollectors))
 				{
 					// Clean up our path names to make them a little cleaner

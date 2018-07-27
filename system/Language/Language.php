@@ -174,7 +174,7 @@ class Language
 	 */
 	protected function formatMessage($message, array $args = [])
 	{
-		if ( ! $this->intlSupport || ! count($args))
+		if ( ! $this->intlSupport || ! $args)
 		{
 			return $message;
 		}

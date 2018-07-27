@@ -51,4 +51,9 @@ return [
 
 	// CSRF
 	'disallowedAction'           => 'The action you requested is not allowed.',
+	
+	// Uploaded file moving
+	'alreadyMoved'				 => 'The uploaded file has already been moved.',
+	'invalidFile'				 => 'The original file is not a valid file.',
+	'moveFailed'				 => 'Could not move file {0} to {1} ({2})',
 ];

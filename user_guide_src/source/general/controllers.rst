@@ -233,34 +233,6 @@ your *application/Config/Routes.php* file.
 
 CodeIgniter also permits you to remap your URIs using its :doc:`URI Routing <routing>` feature.
 
-Class Constructors
-==================
-
-If you intend to use a constructor in any of your Controllers, you
-**MUST** place the following line of code in it::
-
-	parent::__construct(...$params);
-
-The reason this line is necessary is because your local constructor will
-be overriding the one in the parent controller class so we need to
-manually call it.
-
-Example::
-
-	<?php
-	class Blog extends \CodeIgniter\Controller
-	{
-		public function __construct(...$params)
-		{
-			parent::__construct(...$params);
-
-			// Your own constructor code
-		}
-	}
-
-Constructors are useful if you need to set some default values, or run a
-default process when your class is instantiated. Constructors can't
-return a value, but they can do some default work.
 
 Included Properties
 ===================

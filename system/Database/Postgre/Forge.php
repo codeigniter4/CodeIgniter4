@@ -77,6 +77,19 @@ class Forge extends \CodeIgniter\Database\Forge
 	//--------------------------------------------------------------------
 
 	/**
+	 * CREATE TABLE attributes
+	 *
+	 * @param	array	$attributes	Associative array of table attributes
+	 * @return	string
+	 */
+	protected function _createTableAttributes($attributes)
+	{
+		return '';
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * ALTER TABLE
 	 *
 	 * @param    string $alter_type ALTER type

@@ -1,14 +1,14 @@
 <?php namespace CodeIgniter\Debug\Toolbar\Collectors;
 
-use CodeIgniter\CodeIgniter;
 use Config\App;
 use Config\Services;
+use CodeIgniter\CodeIgniter;
 
 class Config
 {
 	public static function display()
 	{
-		$config = new App();
+		$config = config(App::class);
 
 		return [
 			'ciVersion'   => CodeIgniter::CI_VERSION,

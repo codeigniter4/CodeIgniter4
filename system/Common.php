@@ -270,8 +270,16 @@ if ( ! function_exists('esc'))
 				$method = 'escape' . ucfirst($context);
 			}
 
-			// @todo Optimize this to only load a single instance during page request.
-			$escaper = new \Zend\Escaper\Escaper($encoding);
+                       static $escaper;
+                       if (! $escaper)
+                       {
+			        $escaper = new \Zend\Escaper\Escaper($encoding);
+                       }
+
+                       if ($encoding && $escaper->getEncoding() !== $encoding)
+                       {
+                               $escaper = new \Zend\Escaper\Escaper($encoding);
+                       }
 
 			$data = $escaper->$method($data);
 		}
@@ -605,7 +613,7 @@ if ( ! function_exists('app_timezone'))
 	 */
 	function app_timezone()
 	{
-		$config = new \Config\App();
+		$config = config(\Config\App::class);
 
 		return $config->appTimezone;
 	}
@@ -626,7 +634,7 @@ if ( ! function_exists('csrf_token'))
 	 */
 	function csrf_token()
 	{
-		$config = new \Config\App();
+		$config = config(\Config\App::class);
 
 		return $config->CSRFTokenName;
 	}
@@ -762,7 +770,7 @@ if (! function_exists('old'))
 		}
 
 		// If the result was serialized array or string, then unserialize it for use...
-		if (substr($value, 0, 2) == 'a:' || substr($value, 0, 2) == 's:')
+		if (strpos($value, 'a:') === 0 || strpos($value, 's:') === 0)
 		{
 			$value = unserialize($value);
 		}
@@ -919,7 +927,7 @@ if ( ! function_exists('slash_item'))
 	 */
 	function slash_item($item)
 	{
-		$config = new \Config\App();
+		$config = config(\Config\App::class);
 		$configItem = $config->{$item};
 
 		if ( ! isset($configItem) || empty(trim($configItem)))

@@ -38,7 +38,7 @@ The following functions are available:
 
 	-  **alpha**: A string with lower and uppercase letters only.
 	-  **alnum**: Alpha-numeric string with lower and uppercase characters.
-	-  **basic**: A random number based on ``mt_rand()``.
+	-  **basic**: A random number based on ``mt_rand()`` (length ignored).
 	-  **numeric**: Numeric string.
 	-  **nozero**: Numeric string with no zeros.
 	-  **md5**: An encrypted random number based on ``md5()`` (fixed length of 32).
@@ -351,6 +351,8 @@ The following functions are available:
 		// of text that will help us
 		// demonstrate this
 		// function.
+
+        Excessively long words will be split, but URLs will not be.
 
 .. php:function:: ellipsize($str, $max_length[, $position = 1[, $ellipsis = '&hellip;']])
 

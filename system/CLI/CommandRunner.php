@@ -39,13 +39,17 @@ use CodeIgniter\Controller;
 
 class CommandRunner extends Controller
 {
-
 	/**
 	 * Stores the info about found Commands.
 	 *
 	 * @var array
 	 */
 	protected $commands = [];
+
+	/**
+	 * @var \CodeIgniter\Log\Logger
+	 */
+	protected $logger;
 
 	//--------------------------------------------------------------------
 

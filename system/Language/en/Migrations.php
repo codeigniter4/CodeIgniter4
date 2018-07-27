@@ -45,7 +45,6 @@ return [
 	'on'                => 'Migrated On: ',
 	'migSeeder'         => 'Seeder name',
 	'migMissingSeeder'  => 'You must provide a seeder name.',
-	'historyFor'        => 'Migration history For ',
 	'removed'           => 'Rolling back: ',
 	'added'             => 'Running: ',
 

@@ -1,4 +1,5 @@
-<?php namespace CodeIgniter\HTTP;
+<?php
+namespace CodeIgniter\HTTP;
 
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 
@@ -493,7 +494,7 @@ class URI
 	{
 		return self::createURIString(
 						$this->getScheme(), $this->getAuthority(), $this->getPath(), // Absolute URIs should use a "/" for an empty path
-	  $this->getQuery(), $this->getFragment()
+						$this->getQuery(), $this->getFragment()
 		);
 	}
 
@@ -704,7 +705,10 @@ class URI
 				continue;
 			}
 
-			$parts[$key] = $value;
+			// URL Decode the value to protect
+			// from double-encoding a URL.
+			// Especially useful with the Pager.
+			$parts[$key] = $this->decode($value);
 		}
 
 		$this->query = $parts;
@@ -713,6 +717,29 @@ class URI
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Checks the value to see if it has been urlencoded and decodes it if so.
+	 * The urlencode check is not perfect but should catch most cases.
+	 *
+	 * @param string $value
+	 *
+	 * @return string
+	 */
+	protected function decode(string $value)
+	{
+		if (empty($value))
+		{
+			return $value;
+		}
+
+		$decoded = urldecode($value);
+
+		// This won't catch all cases, specifically
+		// changing ' ' to '+' has the same length
+		// but doesn't really matter for our cases here.
+		return strlen($decoded) < strlen($value) ? $decoded : $value;
+	}
 
 	/**
 	 * Split a query value into it's key/value elements, if both
@@ -870,7 +897,8 @@ class URI
 
 		// Encode characters
 		$path = preg_replace_callback(
-				'/(?:[^' . self::CHAR_UNRESERVED . ':@&=\+\$,\/;%]+|%(?![A-Fa-f0-9]{2}))/', function(array $matches) {
+				'/(?:[^' . self::CHAR_UNRESERVED . ':@&=\+\$,\/;%]+|%(?![A-Fa-f0-9]{2}))/', function(array $matches)
+		{
 			return rawurlencode($matches[0]);
 		}, $path
 		);
@@ -923,13 +951,8 @@ class URI
 		{
 			if ( ! is_null($parts['port']))
 			{
+				// Valid port numbers are enforced by earlier parse_url or setPort()
 				$port = (int) $parts['port'];
-
-				if (1 > $port || 0xffff < $port)
-				{
-					throw HTTPException::forInvalidPort($port);
-				}
-
 				$this->port = $port;
 			}
 		}
@@ -998,7 +1021,7 @@ class URI
 			}
 			else
 			{
-				if (substr($relative->getPath(), 0, 1) == '/')
+				if (strpos($relative->getPath(), '/') === 0)
 				{
 					$transformed->setPath($relative->getPath());
 				}
@@ -1107,7 +1130,7 @@ class URI
 		if ($output != '/')
 		{
 			// Add leading slash if necessary
-			if (substr($path, 0, 1) == '/')
+			if (strpos($path, '/') === 0)
 			{
 				$output = '/' . $output;
 			}

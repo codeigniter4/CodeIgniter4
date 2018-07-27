@@ -95,4 +95,15 @@ class UserAgent_test extends \CIUnitTestCase {
 		$this->assertTrue($this->agent->isMobile('android'));
 	}
 
+	public function testParseBot()
+	{
+		$new_agent = 'Mozilla/5.0 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)';
+		$this->agent->parse($new_agent);
+
+		$this->assertFalse($this->agent->isBrowser());
+		$this->assertTrue($this->agent->isRobot());
+		$this->assertFalse($this->agent->isRobot('Bob'));
+		$this->assertFalse($this->agent->isMobile());
+	}
+
 }

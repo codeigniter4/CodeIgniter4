@@ -40,9 +40,10 @@ characters so that it can be used safely::
 	<input type="text" name="myfield" value="<?= esc($string); ?>" />
 
 .. note:: If you use any of the form helper functions listed on this page,
+        and you pass values as an associative array,
 	the form values will be automatically escaped, so there is no need
 	to call this function. Use it only if you are creating your own
-	form elements.
+	form elements, which you would pass as strings.
 
 Available Functions
 ===================
@@ -52,7 +53,7 @@ The following functions are available:
 .. php:function:: form_open([$action = ''[, $attributes = ''[, $hidden = array()]]])
 
 	:param	string	$action: Form action/target URI string
-    	:param	array	$attributes: HTML attributes
+    	:param	mixed	$attributes: HTML attributes, as an array or escaped string
     	:param	array	$hidden: An array of hidden fields' definitions
     	:returns:	An HTML form opening tag
     	:rtype:	string
@@ -106,15 +107,15 @@ The following functions are available:
 				<input type="hidden" name="username" value="Joe" />
 				<input type="hidden" name="member_id" value="234" />
 
-.. php:function:: form_open_multipart([$action = ''[, $attributes = array()[, $hidden = array()]]])
+.. php:function:: form_open_multipart([$action = ''[, $attributes = ''[, $hidden = array()]]])
 
 	:param	string	$action: Form action/target URI string
-    	:param	array	$attributes: HTML attributes
+    	:param	mixed	$attributes: HTML attributes, as an array or escaped string
     	:param	array	$hidden: An array of hidden fields' definitions
     	:returns:	An HTML multipart form opening tag
     	:rtype:	string
 
-    	This function is absolutely identical to :php:func:`form_open()` above,
+    	This function is identical to :php:func:`form_open()` above,
 	except that it adds a *multipart* attribute, which is necessary if you
 	would like to use the form to upload files with.
 
@@ -289,7 +290,7 @@ The following functions are available:
     	contain the name of the field, the second parameter will contain an
     	associative array of options, and the third parameter will contain the
     	value you wish to be selected. You can also pass an array of multiple
-    	items through the third parameter, and CodeIgniter will create a
+    	items through the third parameter, and the helper will create a
     	multiple select for you.
 
     	Example::

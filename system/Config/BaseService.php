@@ -202,7 +202,7 @@ class BaseService
 			}
 		}
 
-		if (! count(static::$services))
+		if (! static::$services)
 		{
 			return;
 		}

@@ -222,13 +222,16 @@ class FilesystemHelperTest extends \CIUnitTestCase
 
 	public function testGetDirFileInfo()
 	{
+		$file = SUPPORTPATH.'Files/baker/banana.php';
+		$info = get_file_info($file);
+
 		$expected = [
 			'banana.php' => [
 				'name' => 'banana.php',
-				'server_path' => '/pub7/htdocs/CodeIgniter4/tests/_support/Files/baker/banana.php',
-				'size' => 193,
-				'date' => 1529305930,
-				'relative_path' => '/pub7/htdocs/CodeIgniter4/tests/_support/Files/baker',
+				'server_path' => $file,
+				'size' => $info['size'],
+				'date' => $info['date'],
+				'relative_path' => realpath(__DIR__ .'/../../_support/Files/baker'),
 			]
 		];
 
@@ -255,11 +258,14 @@ class FilesystemHelperTest extends \CIUnitTestCase
 
 	public function testGetFileInfo()
 	{
+		$file = SUPPORTPATH.'Files/baker/banana.php';
+		$info = get_file_info($file);
+
 		$expected = [
 			'name' => 'banana.php',
-			'server_path' => '/pub7/htdocs/CodeIgniter4/tests/_support/Files/baker/banana.php',
-			'size' => 193,
-			'date' => 1529305930,
+			'server_path' => $file,
+			'size' => $info['size'],
+			'date' => $info['date'],
 		];
 
 
@@ -279,9 +285,12 @@ class FilesystemHelperTest extends \CIUnitTestCase
 
 	public function testGetFileInfoPerms()
 	{
+		$file = SUPPORTPATH.'Files/baker/banana.php';
 		$expected = 0664;
+		chmod($file, $expected);
 
-		$stuff = get_file_info(SUPPORTPATH . 'Files/baker/banana.php', 'fileperms');
+		$stuff = get_file_info($file, 'fileperms');
+
 		$this->assertEquals($expected, $stuff['fileperms'] & 0777);
 	}
 

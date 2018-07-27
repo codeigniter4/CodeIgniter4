@@ -73,6 +73,15 @@ may alter this behavior by editing the following config parameter
 
 	public $CSRFRegenerate  = true;
 
+When a request fails the CSRF validation check, it will redirect to the previous page by default,
+setting an ``error`` flash message that you can display to the end user. This provides a nicer experience
+than simply crashing. This can be turned off by editing the ``$CSRFRedirect`` value in
+**application/Config/App.php**::
+
+	public $CSRFRedirect = false;
+
+Even when the redirect value is **true**, AJAX calls will not redirect, but will throw an error.
+
 *********************
 Other Helpful Methods
 *********************

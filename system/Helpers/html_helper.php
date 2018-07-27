@@ -97,22 +97,13 @@ if ( ! function_exists('_list'))
 	 * Generates an HTML ordered list from an single or multi-dimensional array.
 	 *
 	 * @param   string   $type
-	 * @param   array    $list
+	 * @param   mixed    $list
 	 * @param   string   $attributes
 	 * @param   int      $depth
 	 * @return  string
 	 */
-	function _list
-	(
-	string $type = 'ul', array $list = [], string $attributes = '', int $depth = 0
-	): string
+	function _list(string $type = 'ul', $list = [], string $attributes = '', int $depth = 0): string
 	{
-		// If an array wasn't submitted there's nothing to do...
-		if ( ! is_array($list))
-		{
-			return $list;
-		}
-
 		// Set the indentation based on the depth
 		$out = str_repeat(' ', $depth)
 				// Write the opening list tag
@@ -162,19 +153,15 @@ if ( ! function_exists('img'))
 	 *
 	 * @param   mixed   $src
 	 * @param   bool    $indexPage
-	 * @param   string  $attributes
+	 * @param   mixed  $attributes
 	 * @return  string
 	 */
-	function img
-	(
-	$src = '', bool $indexPage = false, string $attributes = ''
-	): string
+	function img($src = '', bool $indexPage = false, $attributes = ''): string
 	{
 		if ( ! is_array($src))
 		{
 			$src = ['src' => $src];
 		}
-
 
 		//If there is no alt attribute defined, set it to an empty string.
 		if ( ! isset($src['alt']))
@@ -223,20 +210,13 @@ if ( ! function_exists('doctype'))
 	 * xhtml-frame, html4-strict, html4-trans, and html4-frame.
 	 * All values are saved in the doctypes config file.
 	 *
-	 * @param   mixed  $type    The doctype to be generated
+	 * @param   string  $type    The doctype to be generated
 	 * @return  string
 	 */
-	function doctype($type = 'html5'): string
+	function doctype(string $type = 'html5'): string
 	{
-		$doctypes = null;
-		$env = ENVIRONMENT;
-		$doctypes = Config\DocTypes::$list;
-		$customDocTypesPath = APPPATH . "Config/{$env}/DocTypes.php";
-		if (file_exists($customDocTypesPath))
-		{
-			$customDocTypesNs = "Config\{$env}\DocTypes";
-			$doctypes = $customDocTypesNs::$list;
-		}
+		$config = new \Config\DocTypes();
+		$doctypes = $config->list;
 		return $doctypes[$type] ?? false;
 	}
 
@@ -256,47 +236,30 @@ if ( ! function_exists('script_tag'))
 	 * @param   bool    $indexPage  Should indexPage be added to the JS path
 	 * @return  string
 	 */
-	function script_tag
-	(
-	$src = '', bool $indexPage = false
-	): string
+	function script_tag($src = '', bool $indexPage = false): string
 	{
 		$script = '<script ';
-
-		if (is_array($src))
+		if ( ! is_array($src))
 		{
-			foreach ($src as $k => $v)
+			$src = ['src' => $src];
+		}
+
+		foreach ($src as $k => $v)
+		{
+			if ($k === 'src' && ! preg_match('#^([a-z]+:)?//#i', $v))
 			{
-				if ($k === 'src' && ! preg_match('#^([a-z]+:)?//#i', $v))
+				if ($indexPage === true)
 				{
-					if ($indexPage === true)
-					{
-						$script .= 'src="' . site_url($v) . '" ';
-					}
-					else
-					{
-						$script .= 'src="' . slash_item('baseURL') . $v . '" ';
-					}
+					$script .= 'src="' . site_url($v) . '" ';
 				}
 				else
 				{
-					$script .= $k . '="' . $v . '" ';
+					$script .= 'src="' . slash_item('baseURL') . $v . '" ';
 				}
-			}
-		}
-		else
-		{
-			if (preg_match('#^([a-z]+:)?//#i', $src))
-			{
-				$script .= 'src="' . $src . '" ';
-			}
-			elseif ($indexPage === true)
-			{
-				$script .= 'src="' . site_url($src) . '" ';
 			}
 			else
 			{
-				$script .= 'src="' . slash_item('baseURL') . $src . '" ';
+				$script .= $k . '="' . $v . '" ';
 			}
 		}
 
@@ -315,7 +278,7 @@ if ( ! function_exists('link_tag'))
 	 *
 	 * Generates link to a CSS file
 	 *
-	 * @param   mixed   $href       Stylesheet hrefs or an array
+	 * @param   mixed   $href       Stylesheet href or an array
 	 * @param   string  $rel
 	 * @param   string  $type
 	 * @param   string  $title
@@ -323,41 +286,24 @@ if ( ! function_exists('link_tag'))
 	 * @param   bool    $indexPage  should indexPage be added to the CSS path.
 	 * @return  string
 	 */
-	function link_tag
-	(
-	$href = '', string $rel = 'stylesheet', string $type = 'text/css', string $title = '', string $media = '', bool $indexPage = false
-	): string
+	function link_tag($href = '', string $rel = 'stylesheet', string $type = 'text/css', string $title = '', string $media = '', bool $indexPage = false): string
 	{
 		$link = '<link ';
 
+		// extract fields if needed
 		if (is_array($href))
 		{
-			foreach ($href as $k => $v)
-			{
-				if ($k === 'href' && ! preg_match('#^([a-z]+:)?//#i', $v))
-				{
-					if ($indexPage === true)
-					{
-						$link .= 'href="' . site_url($v) . '" ';
-					}
-					else
-					{
-						$link .= 'href="' . slash_item('baseURL') . $v . '" ';
-					}
-				}
-				else
-				{
-					$link .= $k . '="' . $v . '" ';
-				}
-			}
+			$rel = $href['rel'] ?? $rel;
+			$type = $href['type'] ?? $type;
+			$title = $href['title'] ?? $title;
+			$media = $href['media'] ?? $media;
+			$indexPage = $href['indexPage'] ?? $indexPage;
+			$href = $href['href'] ?? '';
 		}
-		else
+
+		if ( ! preg_match('#^([a-z]+:)?//#i', $href))
 		{
-			if (preg_match('#^([a-z]+:)?//#i', $href))
-			{
-				$link .= 'href="' . $href . '" ';
-			}
-			elseif ($indexPage === true)
+			if ($indexPage === true)
 			{
 				$link .= 'href="' . site_url($href) . '" ';
 			}
@@ -365,18 +311,20 @@ if ( ! function_exists('link_tag'))
 			{
 				$link .= 'href="' . slash_item('baseURL') . $href . '" ';
 			}
+		}
+		else
+			$link .= 'href="' . $href . '" ';
 
-			$link .= 'rel="' . $rel . '" type="' . $type . '" ';
+		$link .= 'rel="' . $rel . '" type="' . $type . '" ';
 
-			if ($media !== '')
-			{
-				$link .= 'media="' . $media . '" ';
-			}
+		if ($media !== '')
+		{
+			$link .= 'media="' . $media . '" ';
+		}
 
-			if ($title !== '')
-			{
-				$link .= 'title="' . $title . '" ';
-			}
+		if ($title !== '')
+		{
+			$link .= 'title="' . $title . '" ';
 		}
 
 		return $link . "/>";
@@ -393,27 +341,20 @@ if ( ! function_exists('link_tag'))
 		 * Geneartes a video element to embed videos. The video element can
 		 * contain one or more video sources
 		 *
-		 * @param  mixed  $src                   Either a source string or
-		 * an array of sources
+		 * @param  mixed  $src     Either a source string or an array of sources
 		 * @param  string $unsupportedMessage    The message to display
-		 * if the media tag is not supported by the browser
+		 * 		if the media tag is not supported by the browser
 		 * @param  string $attributes            HTML attributes
 		 * @param  array  $tracks
 		 * @param  bool   $indexPage
 		 * @return string
 		 *
 		 */
-		function video
-		(
-		$src, string $unsupportedMessage = '', string $attributes = '', array $tracks = [], bool $indexPage = false
-		): string
+		function video($src, string $unsupportedMessage = '', string $attributes = '', array $tracks = [], bool $indexPage = false): string
 		{
 			if (is_array($src))
 			{
-				return _media
-						(
-						'video', $src, $unsupportedMessage, $attributes, $tracks
-				);
+				return _media('video', $src, $unsupportedMessage, $attributes, $tracks);
 			}
 
 			$video = '<video';
@@ -478,17 +419,11 @@ if ( ! function_exists('link_tag'))
 		 *
 		 * @return string
 		 */
-		function audio
-		(
-		$src, string $unsupportedMessage = '', string $attributes = '', array $tracks = [], bool $indexPage = false
-		): string
+		function audio($src, string $unsupportedMessage = '', string $attributes = '', array $tracks = [], bool $indexPage = false): string
 		{
 			if (is_array($src))
 			{
-				return _media
-						(
-						'audio', $src, $unsupportedMessage, $attributes, $tracks
-				);
+				return _media('audio', $src, $unsupportedMessage, $attributes, $tracks);
 			}
 
 			$audio = '<audio';
@@ -517,15 +452,13 @@ if ( ! function_exists('link_tag'))
 			{
 				foreach ($tracks as $track)
 				{
-					$audio .= $track;
+					$audio .= "\n" . _space_indent() . $track;
 				}
 			}
 
 			if ( ! empty($unsupportedMessage))
 			{
-				$video .= _space_indent()
-						. $unsupportedMessage
-						. "\n";
+				$audio .= "\n" . _space_indent() . $unsupportedMessage . "\n";
 			}
 
 			$audio .= "</audio>\n";
@@ -540,10 +473,7 @@ if ( ! function_exists('link_tag'))
 	if ( ! function_exists('_media'))
 	{
 
-		function _media
-		(
-		string $name, array $types, string $unsupportedMessage = '', string $attributes = '', array $tracks = []
-		): string
+		function _media(string $name, array $types = [], string $unsupportedMessage = '', string $attributes = '', array $tracks = []): string
 		{
 			$media = '<' . $name;
 
@@ -563,11 +493,7 @@ if ( ! function_exists('link_tag'))
 				$media .= _space_indent() . $option . "\n";
 			}
 
-			if (empty($tracks))
-			{
-				$media .= "/>";
-			}
-			else
+			if ( ! empty($tracks))
 			{
 				foreach ($tracks as $track)
 				{
@@ -605,23 +531,17 @@ if ( ! function_exists('link_tag'))
 		 * @param  bool $indexPage
 		 * @return string
 		 */
-		function source
-		(
-		string $src, string $type, string $attributes = '', bool $indexPage = false
-		): string
+		function source(string $src, string $type = 'unknown', string $attributes = '', bool $indexPage = false): string
 		{
-			if (_has_protocol($src))
-			{
-				//Do nothing.
-			}
-			elseif ($indexPage === true)
-			{
-				$src = site_url($src);
-			}
-			else
-			{
-				$src = slash_item('baseURL') . $src;
-			}
+			if ( ! _has_protocol($src))
+				if ($indexPage === true)
+				{
+					$src = site_url($src);
+				}
+				else
+				{
+					$src = slash_item('baseURL') . $src;
+				}
 
 			$source = '<source src="' . $src
 					. '" type="' . $type . '"';
@@ -655,10 +575,7 @@ if ( ! function_exists('link_tag'))
 		 * @param  string $label
 		 * @return string
 		 */
-		function track
-		(
-		string $src, string $kind, string $srcLanguage, string $label
-		): string
+		function track(string $src, string $kind, string $srcLanguage, string $label): string
 		{
 			return '<track src="' . $src
 					. '" kind="' . $kind
@@ -689,23 +606,17 @@ if ( ! function_exists('link_tag'))
 		 *
 		 * @return string
 		 */
-		function object
-		(
-		string $data, string $type, string $attributes = '', array $params = [], bool $indexPage = false
-		): string
+		function object(string $data, string $type = 'unknown', string $attributes = '', array $params = [], bool $indexPage = false): string
 		{
-			if (_has_protocol($data))
-			{
-				//Do nothing.
-			}
-			elseif ($indexPage === true)
-			{
-				$data = site_url($data);
-			}
-			else
-			{
-				$data = slash_item('baseURL') . $data;
-			}
+			if ( ! _has_protocol($data))
+				if ($indexPage === true)
+				{
+					$data = site_url($data);
+				}
+				else
+				{
+					$data = slash_item('baseURL') . $data;
+				}
 
 			$object = '<object data="' . $data . '" '
 					. $attributes . '>';
@@ -744,10 +655,7 @@ if ( ! function_exists('link_tag'))
 		 * @param  string $attributes  HTML attributes
 		 * @return string
 		 */
-		function param
-		(
-		string $name, string $value, string $type = 'ref', string $attributes = ''
-		): string
+		function param(string $name, string $value, string $type = 'ref', string $attributes = ''): string
 		{
 			return '<param name="' . $name
 					. '" type="' . $type
@@ -773,23 +681,17 @@ if ( ! function_exists('link_tag'))
 		 * @param  bool   $indexPage
 		 * @return string
 		 */
-		function embed
-		(
-		string $src, string $type, string $attributes = '', bool $indexPage = false
-		): string
+		function embed(string $src, string $type='unknown', string $attributes = '', bool $indexPage = false): string
 		{
-			if (_has_protocol($src))
-			{
-				//Do nothing.
-			}
-			elseif ($indexPage === true)
-			{
-				$src = site_url($src);
-			}
-			else
-			{
-				$src = slash_item('baseURL') . $src;
-			}
+			if ( ! _has_protocol($src))
+				if ($indexPage === true)
+				{
+					$src = site_url($src);
+				}
+				else
+				{
+					$src = slash_item('baseURL') . $src;
+				}
 
 			return '<embed src="' . $src
 					. '" type="' . $type . '" '

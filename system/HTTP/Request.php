@@ -131,7 +131,7 @@ class Request extends Message implements RequestInterface
 
 			if ($spoof)
 			{
-				for ($i = 0, $c = count($this->proxyIPs); $i < $c; $i ++ )
+				for ($i = 0, $c = count($proxy_ips); $i < $c; $i ++ )
 				{
 					// Check if we have an IP address or a subnet
 					if (strpos($proxy_ips[$i], '/') === FALSE)

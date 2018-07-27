@@ -35,8 +35,9 @@
  * @since        Version 3.0.0
  * @filesource
  */
-use CodeIgniter\Config\BaseConfig;
+use Config\App;
 use Config\Services;
+use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Format\XMLFormatter;
 
 /**
@@ -93,13 +94,12 @@ class Toolbar
 	 *
 	 * @param float                               $startTime   App start time
 	 * @param float                               $totalTime
-	 * @param float                               $startMemory
 	 * @param \CodeIgniter\HTTP\RequestInterface  $request
 	 * @param \CodeIgniter\HTTP\ResponseInterface $response
 	 *
 	 * @return string JSON encoded data
 	 */
-	public function run($startTime, $totalTime, $startMemory, $request, $response): string
+	public function run($startTime, $totalTime, $request, $response): string
 	{
 		// Data items used within the view.
 		$data['url']             = current_url();
@@ -107,7 +107,7 @@ class Toolbar
 		$data['isAJAX']          = $request->isAJAX();
 		$data['startTime']       = $startTime;
 		$data['totalTime']       = $totalTime*1000;
-		$data['totalMemory']     = number_format((memory_get_peak_usage()-$startMemory)/1048576, 3);
+		$data['totalMemory']     = number_format((memory_get_peak_usage())/1024/1024, 3);
 		$data['segmentDuration'] = $this->roundTo($data['totalTime']/7, 5);
 		$data['segmentCount']    = (int)ceil($data['totalTime']/$data['segmentDuration']);
 		$data['CI_VERSION']      = \CodeIgniter\CodeIgniter::CI_VERSION;
@@ -221,7 +221,7 @@ class Toolbar
 		$files = [];
 
 		$current = self::$request->getGet('debugbar_time');
-		$app     = new \Config\App;
+		$app     = config(App::class);
 
 		for ($i = 0; $i < $total; $i++)
 		{

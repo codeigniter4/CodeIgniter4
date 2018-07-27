@@ -60,7 +60,7 @@ if ( ! function_exists('singular'))
 	{
 		$result = strval($string);
 
-		if ( ! is_countable($result))
+		if ( ! is_pluralizable($result))
 		{
 			return $result;
 		}
@@ -128,7 +128,7 @@ if ( ! function_exists('plural'))
 	{
 		$result = strval($string);
 
-		if ( ! is_countable($result))
+		if ( ! is_pluralizable($result))
 		{
 			return $result;
 		}
@@ -242,7 +242,7 @@ if ( ! function_exists('humanize'))
 
 // ------------------------------------------------------------------------
 
-if ( ! function_exists('is_countable'))
+if ( ! function_exists('is_pluralizable'))
 {
 
 	/**
@@ -251,7 +251,7 @@ if ( ! function_exists('is_countable'))
 	 * @param	string	$word	Word to check
 	 * @return	bool
 	 */
-	function is_countable($word): bool
+	function is_pluralizable($word): bool
 	{
 		$uncountables = in_array
 				(
