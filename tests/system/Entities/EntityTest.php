@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter;
+<?php namespace CodeIgniter\Entities;
 
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Test\ReflectionHelper;

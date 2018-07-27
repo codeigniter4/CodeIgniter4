@@ -1,6 +1,6 @@
 <?php namespace Tests\Support\Models;
 
-use CodeIgniter\Entity;
+use CodeIgniter\Entities\Entity;
 
 /**
  * Class SimpleEntity

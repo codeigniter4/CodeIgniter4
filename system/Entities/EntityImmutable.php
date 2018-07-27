@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter;
+<?php namespace CodeIgniter\Entities;
 
 use CodeIgniter\I18n\Time;
 
@@ -37,7 +37,7 @@ use CodeIgniter\I18n\Time;
  * @since	Version 3.0.0
  * @filesource
  */
-class Entity
+class EntityImmutable
 {
 	protected $_options = [
 		/*
@@ -84,7 +84,7 @@ class Entity
 	 *
 	 * @param array $data
 	 */
-	public function fill(array $data)
+	protected function fill(array $data)
 	{
 		foreach ($data as $key => $value)
 		{
@@ -150,90 +150,6 @@ class Entity
 		}
 
 		return $result;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Magic method to all protected/private class properties to be easily set,
-	 * either through a direct access or a `setCamelCasedProperty()` method.
-	 *
-	 * Examples:
-	 *
-	 *      $this->my_property = $p;
-	 *      $this->setMyProperty() = $p;
-	 *
-	 * @param string $key
-	 * @param null   $value
-	 *
-	 * @return $this
-	 */
-	public function __set(string $key, $value = null)
-	{
-		$key = $this->mapProperty($key);
-
-		// Check if the field should be mutated into a date
-		if (in_array($key, $this->_options['dates']))
-		{
-			$value = $this->mutateDate($value);
-		}
-
-		// Array casting requires that we serialize the value
-		// when setting it so that it can easily be stored
-		// back to the database.
-		if (array_key_exists($key, $this->_options['casts']) && $this->_options['casts'][$key] === 'array')
-		{
-			$value = serialize($value);
-		}
-
-		// if a set* method exists for this key, 
-		// use that method to insert this value. 
-		$method = 'set' . str_replace(' ', '', ucwords(str_replace(['-', '_'], ' ', $key)));
-		if (method_exists($this, $method))
-		{
-			$this->$method($value);
-
-			return $this;
-		}
-
-		// Otherwise, just the value.
-		// This allows for creation of new class
-		// properties that are undefined, though
-		// they cannot be saved. Useful for
-		// grabbing values through joins,
-		// assigning relationships, etc.
-		$this->$key = $value;
-
-		return $this;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Unsets a protected/private class property. Sets the value to null.
-	 * However, if there was a default value for the parent class, this
-	 * attribute will be reset to that default value.
-	 *
-	 * @param string $key
-	 */
-	public function __unset(string $key)
-	{
-		// If not actual property exists, get out
-		// before we confuse our data mapping.
-		if ( ! property_exists($this, $key))
-			return;
-
-		$this->$key = null;
-
-		// Get the class' original default value for this property
-		// so we can reset it to the original value.
-		$reflectionClass = new \ReflectionClass($this);
-		$defaultProperties = $reflectionClass->getDefaultProperties();
-
-		if (isset($defaultProperties[$key]))
-		{
-			$this->$key = $defaultProperties[$key];
-		}
 	}
 
 	//--------------------------------------------------------------------
