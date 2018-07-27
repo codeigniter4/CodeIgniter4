@@ -178,7 +178,7 @@ class Logger implements LoggerInterface
 		// Instances will be created on demand.
 		$this->handlerConfig = $config->handlers;
 
-		$this->cacheLogs = (bool) $debug;
+		$this->cacheLogs = $debug;
 		if ($this->cacheLogs)
 		{
 			$this->logCache = [];
@@ -367,7 +367,7 @@ class Logger implements LoggerInterface
 			if ( ! array_key_exists($className, $this->handlers)) {
 				$this->handlers[$className] = new $className($config);
 			}
-			
+
 			/**
 			 * @var \CodeIgniter\Log\Handlers\HandlerInterface
 			 */
