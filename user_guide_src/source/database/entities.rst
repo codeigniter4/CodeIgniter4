@@ -41,7 +41,7 @@ Entity itself at **application/Entities/User.php**.
 
     <?php namespace App\Entities;
 
-    use CodeIgniter\Entity;
+    use CodeIgniter\Entities\Entity;
 
     class User extends Entity
     {
@@ -139,7 +139,7 @@ Here's an updated User entity to provide some examples of how this could be used
 
     <?php namespace App\Entities;
 
-    use CodeIgniter\Entity;
+    use CodeIgniter\Entities\Entity;
 
     class User extends Entity
     {
@@ -211,7 +211,7 @@ As an example, imagine your have the simplified User Entity that is used through
 
     <?php namespace App\Entities;
 
-    use CodeIgniter\Entity;
+    use CodeIgniter\Entities\Entity;
 
     class User extends Entity
     {
@@ -234,7 +234,7 @@ simply map the ``full_name`` column in the database to the ``$name`` property, a
 
     <?php namespace App\Entities;
 
-    use CodeIgniter\Entity;
+    use CodeIgniter\Entities\Entity;
 
     class User extends Entity
     {
@@ -278,7 +278,7 @@ You can define which properties are automatically converted by adding the name t
 
     <?php namespace App\Entities;
 
-    use CodeIgniter\Entity;
+    use CodeIgniter\Entities\Entity;
 
     class User extends Entity
     {
@@ -322,7 +322,7 @@ For example, if you had a User entity with an **is_banned** property, you can ca
 
     <?php namespace App\Entities;
 
-    use CodeIgniter\Entity;
+    use CodeIgniter\Entities\Entity;
 
     class User extends Entity
     {
@@ -346,7 +346,7 @@ you can cast properties into, the **array** cast type will serialize the value w
 
     <?php namespace App\Entities;
 
-    use CodeIgniter\Entity;
+    use CodeIgniter\Entities\Entity;
 
     class User extends Entity
     {
