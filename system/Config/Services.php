@@ -699,6 +699,11 @@ class Services extends BaseService
 
 		$session = new \CodeIgniter\Session\Session($driver, $config);
 		$session->setLogger($logger);
+		
+		if (session_status() == PHP_SESSION_NONE)
+		{
+			$session->start();
+		}
 
 		return $session;
 	}

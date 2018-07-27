@@ -32,7 +32,6 @@ class should be magically initialized.
 To access and initialize the session::
 
 	$session = \Config\Services::session($config);
-	$session->start();
 
 The ``$config`` parameter is optional - your application configuration.
 If not provided, the services register will instantiate your default
@@ -47,7 +46,7 @@ configuration options. This version is a little friendlier to read,
 but does not take any configuration options.
 ::
 
-	$session = session()->start();
+	$session = session();
 
 How do Sessions work?
 =====================
