@@ -152,7 +152,7 @@ class Throttler implements ThrottlerInterface
 		// should be refilled, then checked against capacity
 		// to be sure the bucket didn't overflow.
 		$tokens += $rate * $elapsed;
-		$tokens = $tokens > $capacity ? $capacity : $tokens;
+		$tokens = min($tokens, $capacity);
 
 		// If $tokens > 0, then we are save to perform the action, but
 		// we need to decrement the number of available tokens.
