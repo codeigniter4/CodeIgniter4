@@ -615,11 +615,11 @@ class Validation implements ValidationInterface
 	 *    ]
 	 *
 	 * @return array
-	 *
+	 * 
 	 * Excluded from code coverage because that it always run as cli
-	 *
+	 * 
 	 * @codeCoverageIgnore
-	 *
+	 * 
 	 */
 	public function getErrors(): array
 	{
