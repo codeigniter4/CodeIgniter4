@@ -149,7 +149,7 @@ class Validation implements ValidationInterface
 
 			if (is_string($rules))
 			{
-				$rules = explode('|', $rules);
+                $rules = $this->splitRules($rules);
 			}
 
 			$value = dot_array_search($rField, $data);
@@ -693,6 +693,48 @@ class Validation implements ValidationInterface
 		return $message;
 	}
 
+    /**
+     *
+     * Split rules string by pipe operator.
+     *
+     * @param string $rules
+     *
+     * @return array
+     */
+    protected function splitRules(string $rules): array
+    {
+        $_rules = [];
+        $pipe_pos = strpos($rules, '|');
+        while ($pipe_pos !== false) {
+
+            // the if is for the regex_match
+            // if the pattern contains | (pipe) the split was incorrect
+            // so we make sure that, if the pipe is in a pattern we find the separator and
+            // grab the string up to the separator + closing bracket
+            $open_bracket_pos = strpos($rules, '[');
+            if ($open_bracket_pos !== false && $open_bracket_pos < $pipe_pos) {
+                $separator = $rules[$open_bracket_pos + 1];
+
+                $regex_end_pos = strpos($rules, $separator . ']');
+                $_rules[] = substr($rules, 0, $regex_end_pos + 2);
+
+                $rules = substr($rules, $regex_end_pos + 3);
+            } else {
+                $_rules[] = substr($rules, 0, $pipe_pos);
+                $rules = substr($rules, $pipe_pos + 1);
+            }
+
+            $pipe_pos = strpos($rules, '|');
+        }
+
+        // if there is another rule remaining but no separator just add it to the list
+        if (!empty($rules)) {
+            $_rules[] = $rules;
+        }
+
+        return array_unique($_rules);
+    }
+
 	//--------------------------------------------------------------------
 	//--------------------------------------------------------------------
 	// Misc
@@ -714,5 +756,5 @@ class Validation implements ValidationInterface
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 }
