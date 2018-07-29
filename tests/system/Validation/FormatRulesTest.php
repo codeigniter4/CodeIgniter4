@@ -44,12 +44,12 @@ class FormatRulesTest extends \CIUnitTestCase
 	{
 		$data = [
 			'foo' => 'abcde',
-            'phone' => '0987654321',
+			'phone' => '0987654321',
 		];
 
 		$this->validation->setRules([
 			'foo' => 'regex_match[/[a-z]/]',
-            'phone' => 'regex_match[/^(01[2689]|09)[0-9]{8}$/]',
+			'phone' => 'regex_match[/^(01[2689]|09)[0-9]{8}$/]',
 		]);
 
 		$this->assertTrue($this->validation->run($data));
@@ -61,13 +61,13 @@ class FormatRulesTest extends \CIUnitTestCase
 	{
 		$data = [
 			'foo' => 'abcde',
-            'phone' => '09876543214',
-        ];
+			'phone' => '09876543214',
+		];
 
 		$this->validation->setRules([
 			'foo' => 'regex_match[\d]',
-            'phone' => 'regex_match[/^(01[2689]|09)[0-9]{8}$/]',
-        ]);
+			'phone' => 'regex_match[/^(01[2689]|09)[0-9]{8}$/]',
+		]);
 
 		$this->assertFalse($this->validation->run($data));
 	}
@@ -258,7 +258,7 @@ class FormatRulesTest extends \CIUnitTestCase
 	/**
 	 * Test alpha with spaces.
 	 *
-	 * @param mixed $value    Value.
+	 * @param mixed $value	Value.
 	 * @param bool  $expected Expected.
 	 *
 	 * @dataProvider alphaSpaceProvider

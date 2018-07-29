@@ -503,33 +503,33 @@ class ValidationTest extends \CIUnitTestCase
 
 //--------------------------------------------------------------------
 
-    public function testSplitRulesTrue()
-    {
-        $data = [
-            'phone' => '0987654321',
-        ];
+	public function testSplitRulesTrue()
+	{
+		$data = [
+			'phone' => '0987654321',
+		];
 
-        $this->validation->setRules([
-            'phone' => 'required|regex_match[/^(01[2689]|09)[0-9]{8}$/]|numeric',
-        ]);
+		$this->validation->setRules([
+			'phone' => 'required|regex_match[/^(01[2689]|09)[0-9]{8}$/]|numeric',
+		]);
 
-        $result = $this->validation->run($data);
+		$result = $this->validation->run($data);
 
-        $this->assertTrue($result);
-    }
+		$this->assertTrue($result);
+	}
 
-    public function testSplitRulesFalse()
-    {
-        $data = [
-            'phone' => '09876543214',
-        ];
+	public function testSplitRulesFalse()
+	{
+		$data = [
+			'phone' => '09876543214',
+		];
 
-        $this->validation->setRules([
-            'phone' => 'required|regex_match[/^(01[2689]|09)[0-9]{8}$/]|numeric',
-        ]);
+		$this->validation->setRules([
+			'phone' => 'required|regex_match[/^(01[2689]|09)[0-9]{8}$/]|numeric',
+		]);
 
-        $result = $this->validation->run($data);
+		$result = $this->validation->run($data);
 
-        $this->assertFalse($result);
-    }
+		$this->assertFalse($result);
+	}
 }

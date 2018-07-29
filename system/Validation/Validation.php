@@ -149,7 +149,7 @@ class Validation implements ValidationInterface
 
 			if (is_string($rules))
 			{
-                $rules = $this->splitRules($rules);
+				$rules = $this->splitRules($rules);
 			}
 
 			$value = dot_array_search($rField, $data);
@@ -166,7 +166,7 @@ class Validation implements ValidationInterface
 	 * Check; runs the validation process, returning true or false
 	 * determining whether or not validation was successful.
 	 *
-	 * @param mixed    $value  Value to validation.
+	 * @param mixed	$value  Value to validation.
 	 * @param string   $rule   Rule.
 	 * @param string[] $errors Errors.
 	 *
@@ -189,11 +189,11 @@ class Validation implements ValidationInterface
 	 * the error to $this->errors and moves on to the next,
 	 * so that we can collect all of the first errors.
 	 *
-	 * @param string      $field
+	 * @param string	  $field
 	 * @param string|null $label
-	 * @param string      $value
+	 * @param string	  $value
 	 * @param array|null  $rules
-	 * @param array       $data // All of the fields to check.
+	 * @param array	   $data // All of the fields to check.
 	 *
 	 * @return bool
 	 */
@@ -317,15 +317,15 @@ class Validation implements ValidationInterface
 	 * The custom error message should be just the messages that apply to
 	 * this field, like so:
 	 *
-	 *    [
-	 *        'rule' => 'message',
-	 *        'rule' => 'message'
-	 *    ]
+	 *	[
+	 *		'rule' => 'message',
+	 *		'rule' => 'message'
+	 *	]
 	 *
-	 * @param string      $field
+	 * @param string	  $field
 	 * @param string|null $label
-	 * @param string      $rules
-	 * @param array       $errors
+	 * @param string	  $rules
+	 * @param array	   $errors
 	 *
 	 * @return $this
 	 */
@@ -348,17 +348,17 @@ class Validation implements ValidationInterface
 	 * Stores the rules that should be used to validate the items.
 	 * Rules should be an array formatted like:
 	 *
-	 *    [
-	 *        'field' => 'rule1|rule2'
-	 *    ]
+	 *	[
+	 *		'field' => 'rule1|rule2'
+	 *	]
 	 *
 	 * The $errors array should be formatted like:
-	 *    [
-	 *        'field' => [
-	 *            'rule' => 'message',
-	 *            'rule' => 'message
-	 *        ],
-	 *    ]
+	 *	[
+	 *		'field' => [
+	 *			'rule' => 'message',
+	 *			'rule' => 'message
+	 *		],
+	 *	]
 	 *
 	 * @param array $rules
 	 * @param array $errors // An array of custom error messages
@@ -609,17 +609,17 @@ class Validation implements ValidationInterface
 	 * Returns the array of errors that were encountered during
 	 * a run() call. The array should be in the followig format:
 	 *
-	 *    [
-	 *        'field1' => 'error message',
-	 *        'field2' => 'error message',
-	 *    ]
+	 *	[
+	 *		'field1' => 'error message',
+	 *		'field2' => 'error message',
+	 *	]
 	 *
 	 * @return array
-	 * 
+	 *
 	 * Excluded from code coverage because that it always run as cli
-	 * 
+	 *
 	 * @codeCoverageIgnore
-	 * 
+	 *
 	 */
 	public function getErrors(): array
 	{
@@ -665,10 +665,10 @@ class Validation implements ValidationInterface
 	/**
 	 * Attempts to find the appropriate error message
 	 *
-	 * @param string      $rule
-	 * @param string      $field
+	 * @param string	  $rule
+	 * @param string	  $field
 	 * @param string|null $label
-	 * @param string      $param
+	 * @param string	  $param
 	 *
 	 * @return string
 	 */
@@ -693,47 +693,47 @@ class Validation implements ValidationInterface
 		return $message;
 	}
 
-    /**
-     *
-     * Split rules string by pipe operator.
-     *
-     * @param string $rules
-     *
-     * @return array
-     */
-    protected function splitRules(string $rules): array
-    {
-        $_rules = [];
-        $pipe_pos = strpos($rules, '|');
-        while ($pipe_pos !== false) {
+	/**
+	 *
+	 * Split rules string by pipe operator.
+	 *
+	 * @param string $rules
+	 *
+	 * @return array
+	 */
+	protected function splitRules(string $rules): array
+	{
+		$_rules = [];
+		$pipe_pos = strpos($rules, '|');
+		while ($pipe_pos !== false) {
 
-            // the if is for the regex_match
-            // if the pattern contains | (pipe) the split was incorrect
-            // so we make sure that, if the pipe is in a pattern we find the separator and
-            // grab the string up to the separator + closing bracket
-            $open_bracket_pos = strpos($rules, '[');
-            if ($open_bracket_pos !== false && $open_bracket_pos < $pipe_pos) {
-                $separator = $rules[$open_bracket_pos + 1];
+			// the if is for the regex_match
+			// if the pattern contains | (pipe) the split was incorrect
+			// so we make sure that, if the pipe is in a pattern we find the separator and
+			// grab the string up to the separator + closing bracket
+			$open_bracket_pos = strpos($rules, '[');
+			if ($open_bracket_pos !== false && $open_bracket_pos < $pipe_pos) {
+				$separator = $rules[$open_bracket_pos + 1];
 
-                $regex_end_pos = strpos($rules, $separator . ']');
-                $_rules[] = substr($rules, 0, $regex_end_pos + 2);
+				$regex_end_pos = strpos($rules, $separator . ']');
+				$_rules[] = substr($rules, 0, $regex_end_pos + 2);
 
-                $rules = substr($rules, $regex_end_pos + 3);
-            } else {
-                $_rules[] = substr($rules, 0, $pipe_pos);
-                $rules = substr($rules, $pipe_pos + 1);
-            }
+				$rules = substr($rules, $regex_end_pos + 3);
+			} else {
+				$_rules[] = substr($rules, 0, $pipe_pos);
+				$rules = substr($rules, $pipe_pos + 1);
+			}
 
-            $pipe_pos = strpos($rules, '|');
-        }
+			$pipe_pos = strpos($rules, '|');
+		}
 
-        // if there is another rule remaining but no separator just add it to the list
-        if (!empty($rules)) {
-            $_rules[] = $rules;
-        }
+		// if there is another rule remaining but no separator just add it to the list
+		if (!empty($rules)) {
+			$_rules[] = $rules;
+		}
 
-        return array_unique($_rules);
-    }
+		return array_unique($_rules);
+	}
 
 	//--------------------------------------------------------------------
 	//--------------------------------------------------------------------
@@ -756,5 +756,5 @@ class Validation implements ValidationInterface
 		return $this;
 	}
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 }
