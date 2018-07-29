@@ -503,6 +503,7 @@ class ValidationTest extends \CIUnitTestCase
 
 //--------------------------------------------------------------------
 
+
 	public function testSplitRulesTrue()
 	{
 		$data = [

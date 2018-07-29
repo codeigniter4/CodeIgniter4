@@ -166,7 +166,7 @@ class Validation implements ValidationInterface
 	 * Check; runs the validation process, returning true or false
 	 * determining whether or not validation was successful.
 	 *
-	 * @param mixed	$value  Value to validation.
+	 * @param mixed    $value  Value to validation.
 	 * @param string   $rule   Rule.
 	 * @param string[] $errors Errors.
 	 *
@@ -189,11 +189,11 @@ class Validation implements ValidationInterface
 	 * the error to $this->errors and moves on to the next,
 	 * so that we can collect all of the first errors.
 	 *
-	 * @param string	  $field
+	 * @param string      $field
 	 * @param string|null $label
-	 * @param string	  $value
+	 * @param string      $value
 	 * @param array|null  $rules
-	 * @param array	   $data // All of the fields to check.
+	 * @param array       $data // All of the fields to check.
 	 *
 	 * @return bool
 	 */
@@ -317,15 +317,15 @@ class Validation implements ValidationInterface
 	 * The custom error message should be just the messages that apply to
 	 * this field, like so:
 	 *
-	 *	[
-	 *		'rule' => 'message',
-	 *		'rule' => 'message'
-	 *	]
+	 *    [
+	 *        'rule' => 'message',
+	 *        'rule' => 'message'
+	 *    ]
 	 *
-	 * @param string	  $field
+	 * @param string      $field
 	 * @param string|null $label
-	 * @param string	  $rules
-	 * @param array	   $errors
+	 * @param string      $rules
+	 * @param array       $errors
 	 *
 	 * @return $this
 	 */
@@ -348,17 +348,17 @@ class Validation implements ValidationInterface
 	 * Stores the rules that should be used to validate the items.
 	 * Rules should be an array formatted like:
 	 *
-	 *	[
-	 *		'field' => 'rule1|rule2'
-	 *	]
+	 *    [
+	 *        'field' => 'rule1|rule2'
+	 *    ]
 	 *
 	 * The $errors array should be formatted like:
-	 *	[
-	 *		'field' => [
-	 *			'rule' => 'message',
-	 *			'rule' => 'message
-	 *		],
-	 *	]
+	 *    [
+	 *        'field' => [
+	 *            'rule' => 'message',
+	 *            'rule' => 'message
+	 *        ],
+	 *    ]
 	 *
 	 * @param array $rules
 	 * @param array $errors // An array of custom error messages
@@ -609,10 +609,10 @@ class Validation implements ValidationInterface
 	 * Returns the array of errors that were encountered during
 	 * a run() call. The array should be in the followig format:
 	 *
-	 *	[
-	 *		'field1' => 'error message',
-	 *		'field2' => 'error message',
-	 *	]
+	 *    [
+	 *        'field1' => 'error message',
+	 *        'field2' => 'error message',
+	 *    ]
 	 *
 	 * @return array
 	 *
@@ -665,10 +665,10 @@ class Validation implements ValidationInterface
 	/**
 	 * Attempts to find the appropriate error message
 	 *
-	 * @param string	  $rule
-	 * @param string	  $field
+	 * @param string      $rule
+	 * @param string      $field
 	 * @param string|null $label
-	 * @param string	  $param
+	 * @param string      $param
 	 *
 	 * @return string
 	 */
@@ -756,5 +756,5 @@ class Validation implements ValidationInterface
 		return $this;
 	}
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 }
