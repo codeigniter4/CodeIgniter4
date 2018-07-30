@@ -140,7 +140,7 @@ class Plugins
 	public static function ValidationErrors(array $params = [])
 	{
 
-		$validator = \config\services::validation();
+		$validator = \Config\Services::validation();
 		if (empty($params))
 		{
 			return $validator->listErrors();
