@@ -313,9 +313,9 @@ class Router implements RouterInterface
 	 *
 	 * @return $this
 	 */
-	public function setTranslateURIDashes($val = false): self
+	public function setTranslateURIDashes(bool $val = false): self
 	{
-		$this->translateURIDashes = (bool) $val;
+		$this->translateURIDashes = $val;
 
 		return $this;
 	}
