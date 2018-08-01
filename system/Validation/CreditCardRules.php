@@ -153,7 +153,8 @@ class CreditCardRules
 		{
 			if (mb_strpos($ccNumber, $prefix) === 0)
 			{
-				$validPrefix = true;
+                              $validPrefix = true;
+                              break;
 			}
 		}
 
