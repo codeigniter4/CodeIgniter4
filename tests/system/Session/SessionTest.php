@@ -45,6 +45,9 @@ class SessionTest extends \CIUnitTestCase
         return $session;
     }
 
+    /**
+     * @runInSeparateProcess
+     */
     public function testSessionSetsRegenerateTime()
     {
         $session = $this->getInstance();
@@ -53,6 +56,9 @@ class SessionTest extends \CIUnitTestCase
         $this->assertTrue(isset($_SESSION['__ci_last_regenerate']) && ! empty($_SESSION['__ci_last_regenerate']));
     }
 
+    /**
+     * @runInSeparateProcess
+     */
     public function testWillRegenerateSessionAutomatically()
     {
         $session = $this->getInstance();
@@ -65,6 +71,9 @@ class SessionTest extends \CIUnitTestCase
         $this->assertGreaterThan($time + 90 ,$_SESSION['__ci_last_regenerate']);
     }
 
+    /**
+     * @runInSeparateProcess
+     */
     public function testCanSetSingleValue()
     {
         $session = $this->getInstance();
@@ -75,6 +84,9 @@ class SessionTest extends \CIUnitTestCase
         $this->assertEquals('bar', $_SESSION['foo']);
     }
 
+    /**
+     * @runInSeparateProcess
+     */
     public function testCanSetArray()
     {
         $session = $this->getInstance();
@@ -90,6 +102,9 @@ class SessionTest extends \CIUnitTestCase
         $this->assertArrayNotHasKey('__ci_vars', $_SESSION);
     }
 
+    /**
+     * @runInSeparateProcess
+     */
     public function testGetSimpleKey()
     {
         $session = $this->getInstance();
@@ -100,6 +115,9 @@ class SessionTest extends \CIUnitTestCase
         $this->assertEquals('bar', $session->get('foo'));
     }
 
+    /**
+     * @runInSeparateProcess
+     */
     public function testGetReturnsNullWhenNotFound()
     {
     	$_SESSION = [];
@@ -110,7 +128,10 @@ class SessionTest extends \CIUnitTestCase
         $this->assertNull($session->get('foo'));
     }
 
-	public function testGetReturnsAllWithNoKeys()
+    /**
+     * @runInSeparateProcess
+     */
+    public function testGetReturnsAllWithNoKeys()
 	{
 		$_SESSION = [
 			'foo' => 'bar',
@@ -126,8 +147,10 @@ class SessionTest extends \CIUnitTestCase
 		$this->assertTrue(array_key_exists('bar', $result));
     }
 
-
-	public function testGetAsProperty()
+    /**
+     * @runInSeparateProcess
+     */
+    public function testGetAsProperty()
     {
         $session = $this->getInstance();
         $session->start();
@@ -137,6 +160,9 @@ class SessionTest extends \CIUnitTestCase
         $this->assertEquals('bar', $session->foo);
     }
 
+    /**
+     * @runInSeparateProcess
+     */
     public function testGetAsNormal()
     {
         $session = $this->getInstance();
@@ -147,6 +173,9 @@ class SessionTest extends \CIUnitTestCase
         $this->assertEquals('bar', $_SESSION['foo']);
     }
 
+    /**
+     * @runInSeparateProcess
+     */
     public function testHasReturnsTrueOnSuccess()
     {
         $session = $this->getInstance();
@@ -157,6 +186,9 @@ class SessionTest extends \CIUnitTestCase
         $this->assertTrue($session->has('foo'));
     }
 
+    /**
+     * @runInSeparateProcess
+     */
     public function testHasReturnsFalseOnNotFound()
     {
         $session = $this->getInstance();
@@ -167,6 +199,9 @@ class SessionTest extends \CIUnitTestCase
         $this->assertFalse($session->has('bar'));
     }
 
+    /**
+     * @runInSeparateProcess
+     */
     public function testRemoveActuallyRemoves()
     {
         $session = $this->getInstance();
@@ -179,6 +214,9 @@ class SessionTest extends \CIUnitTestCase
         $this->assertFalse($session->has('foo'));
     }
 
+    /**
+     * @runInSeparateProcess
+     */
     public function testHasReturnsCanRemoveArray()
     {
         $session = $this->getInstance();
@@ -197,6 +235,9 @@ class SessionTest extends \CIUnitTestCase
         $this->assertArrayNotHasKey('bar', $_SESSION);
     }
 
+    /**
+     * @runInSeparateProcess
+     */
     public function testSetMagicMethod()
     {
         $session = $this->getInstance();
@@ -208,6 +249,9 @@ class SessionTest extends \CIUnitTestCase
         $this->assertEquals('bar', $_SESSION['foo']);
     }
 
+    /**
+     * @runInSeparateProcess
+     */
     public function testCanFlashData()
     {
         $session = $this->getInstance();
@@ -230,6 +274,9 @@ class SessionTest extends \CIUnitTestCase
         $this->assertFalse($session->has('foo'));
     }
 
+    /**
+     * @runInSeparateProcess
+     */
     public function testCanFlashArray()
     {
         $session = $this->getInstance();
@@ -246,6 +293,9 @@ class SessionTest extends \CIUnitTestCase
         $this->assertEquals('new', $_SESSION['__ci_vars']['bar']);
     }
 
+    /**
+     * @runInSeparateProcess
+     */
     public function testKeepFlashData()
     {
         $session = $this->getInstance();
@@ -273,6 +323,9 @@ class SessionTest extends \CIUnitTestCase
         $this->assertEquals('old', $_SESSION['__ci_vars']['foo']);
     }
 
+    /**
+     * @runInSeparateProcess
+     */
     public function testUnmarkFlashDataRemovesData()
     {
         $session = $this->getInstance();
@@ -292,6 +345,9 @@ class SessionTest extends \CIUnitTestCase
         $this->assertFalse(isset($_SESSION['__ci_vars']['foo']));
     }
 
+    /**
+     * @runInSeparateProcess
+     */
     public function testGetFlashKeysOnlyReturnsFlashKeys()
     {
         $session = $this->getInstance();
@@ -306,6 +362,9 @@ class SessionTest extends \CIUnitTestCase
         $this->assertNotContains('bar', $keys);
     }
 
+    /**
+     * @runInSeparateProcess
+     */
     public function testSetTempDataWorks()
     {
         $session = $this->getInstance();
@@ -315,6 +374,9 @@ class SessionTest extends \CIUnitTestCase
         $this->assertGreaterThanOrEqual($_SESSION['__ci_vars']['foo'], time() + 300);
     }
 
+    /**
+     * @runInSeparateProcess
+     */
     public function testSetTempDataArrayMultiTTL()
     {
         $session = $this->getInstance();
@@ -333,6 +395,9 @@ class SessionTest extends \CIUnitTestCase
         $this->assertLessThanOrEqual($_SESSION['__ci_vars']['baz'], $time + 100);
     }
 
+    /**
+     * @runInSeparateProcess
+     */
     public function testSetTempDataArraySingleTTL()
     {
         $session = $this->getInstance();
@@ -349,6 +414,7 @@ class SessionTest extends \CIUnitTestCase
 
     /**
      * @group single
+     * @runInSeparateProcess
      */
     public function testGetTestDataReturnsAll()
     {
@@ -366,6 +432,9 @@ class SessionTest extends \CIUnitTestCase
         $this->assertEquals($data, $session->getTempdata());
     }
 
+    /**
+     * @runInSeparateProcess
+     */
     public function testGetTestDataReturnsSingle()
     {
         $session = $this->getInstance();
@@ -381,6 +450,9 @@ class SessionTest extends \CIUnitTestCase
         $this->assertEquals('bar', $session->getTempdata('foo'));
     }
 
+    /**
+     * @runInSeparateProcess
+     */
     public function testRemoveTempDataActuallyDeletes()
     {
         $session = $this->getInstance();
@@ -397,6 +469,9 @@ class SessionTest extends \CIUnitTestCase
         $this->assertEquals(['bar' => 'baz'], $session->getTempdata());
     }
 
+    /**
+     * @runInSeparateProcess
+     */
     public function testUnMarkTempDataSingle()
     {
         $session = $this->getInstance();
@@ -413,6 +488,9 @@ class SessionTest extends \CIUnitTestCase
         $this->assertEquals(['bar' => 'baz'], $session->getTempdata());
     }
 
+    /**
+     * @runInSeparateProcess
+     */
     public function testUnMarkTempDataArray()
     {
         $session = $this->getInstance();
@@ -429,6 +507,9 @@ class SessionTest extends \CIUnitTestCase
         $this->assertEquals([], $session->getTempdata());
     }
 
+    /**
+     * @runInSeparateProcess
+     */
     public function testGetTempdataKeys()
     {
         $session = $this->getInstance();
