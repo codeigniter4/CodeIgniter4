@@ -121,7 +121,8 @@ class Response extends Message implements ResponseInterface
 		421 => 'Misdirected Request', // http://www.iana.org/go/rfc7540 Section 9.1.2
 		422 => 'Unprocessable Entity', // http://www.iana.org/go/rfc4918
 		423 => 'Locked', // http://www.iana.org/go/rfc4918
-		424 => 'Failed Dependency', // http://www.iana.org/go/rfc4918
+              424 => 'Failed Dependency', // http://www.iana.org/go/rfc4918
+              425 => 'Too Early', // https://datatracker.ietf.org/doc/draft-ietf-httpbis-replay/
 		426 => 'Upgrade Required',
 		428 => 'Precondition Required', // 1.1; http://www.ietf.org/rfc/rfc6585.txt
 		429 => 'Too Many Requests', // 1.1; http://www.ietf.org/rfc/rfc6585.txt
