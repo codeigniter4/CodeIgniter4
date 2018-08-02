@@ -21,21 +21,18 @@ function loadDoc(time) {
 				document.body.appendChild(toolbar);
 			}
 			// get csp blocked parts
-			let Style;
-			let Script;
+			// the style block is the first and starts at 0
 			{
 				let PosBeg = this.responseText.indexOf( '>', this.responseText.indexOf( '<style' ) ) + 1;
 				let PosEnd = this.responseText.indexOf( '</style>' );
-				Style = this.responseText.substr( PosBeg, PosEnd - PosBeg );
-				document.getElementById( 'debugbar_dynamic_style' ).innerHTML = Style;
+				document.getElementById( 'debugbar_dynamic_style' ).innerHTML = this.responseText.substr( PosBeg, PosEnd )
 				this.responseText = this.responseText.substr( PosEnd + 8 );
 			}
+			// the script block starts right after style blocks ended
 			{
-
 				let PosBeg = this.responseText.indexOf( '>', this.responseText.indexOf( '<script' ) ) + 1;
 				let PosEnd = this.responseText.indexOf( '</script>' );
-				Script = this.responseText.substr( PosBeg, PosEnd - PosBeg );
-				document.getElementById( 'debugbar_dynamic_script' ).innerHTML = Script;
+				document.getElementById( 'debugbar_dynamic_script' ).innerHTML = this.responseText.substr( PosBeg, PosEnd - PosBeg );
 				this.responseText = this.responseText.substr( PosEnd + 9 );
 			}
 
