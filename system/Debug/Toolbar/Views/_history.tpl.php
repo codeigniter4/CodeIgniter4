@@ -13,10 +13,10 @@
     <tbody>
     {files}
         <tr data-active="{active}">
-        	<td style="width: 70px">
+        	<td class="debug-bar-width70p">
             	<button class="ci-history-load" data-time="{time}">Load</button>
             </td>
-            <td style="width: 140px">{datetime}</td>
+            <td class="debug-bar-width140p">{datetime}</td>
             <td>{status}</td>
             <td>{method}</td>
             <td>{url}</td>

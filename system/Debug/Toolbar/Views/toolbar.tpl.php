@@ -5,7 +5,7 @@
 <script id="toolbar_js" type="text/javascript">
 	<?= file_get_contents(__DIR__.'/toolbar.js') ?>
 </script>
-<div id="debug-icon" style="display:none">
+<div id="debug-icon" class="debug-bar-ndisplay">
 	<a id="debug-icon-link" href="javascript:void(0)">
 		<svg version="1.0" xmlns="http://www.w3.org/2000/svg"
 			width="155.000000px" height="200.000000px" viewBox="0 0 155.000000 200.000000"
@@ -93,9 +93,9 @@
 		<table class="timeline">
 			<thead>
 				<tr>
-					<th style="width: 30%">NAME</th>
-					<th style="width: 10%">COMPONENT</th>
-					<th style="width: 10%;">DURATION</th>
+					<th class="debug-bar-width30">NAME</th>
+					<th class="debug-bar-width10">COMPONENT</th>
+					<th class="debug-bar-width10">DURATION</th>
 					<?php for ($i = 0; $i < $segmentCount; $i++) : ?>
 						<th><?= $i * $segmentDuration ?> ms</th>
 					<?php endfor ?>
