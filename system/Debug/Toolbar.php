@@ -196,6 +196,11 @@ class Toolbar
 
 		$data['config'] = \CodeIgniter\Debug\Toolbar\Collectors\Config::display();
 
+		if( $response->CSP !== null )
+		{
+			$response->CSP->addImageSrc( 'data:' );
+		}
+
 		return json_encode($data);
 	}
 

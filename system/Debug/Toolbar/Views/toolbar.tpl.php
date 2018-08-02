@@ -270,11 +270,11 @@
 
 		<?= $parser->setData($config)->render('_config.tpl') ?>
 	</div>
-	<style type="text/css">
-		<?php foreach( $styles as $name => $style ) : ?>
-		.<?= $name ?> {
-			<?= $style ?>
-		}
-		<?php endforeach ?>
-	</style>
 </div>
+<style type="text/css">
+	<?php foreach( $styles as $name => $style ) : ?>
+	.<?= $name ?> {
+	<?= $style ?>
+	}
+	<?php endforeach ?>
+</style>
