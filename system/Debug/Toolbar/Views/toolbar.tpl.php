@@ -102,7 +102,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<?= self::renderTimeline($collectors, $startTime, $segmentCount, $segmentDuration) ?>
+				<?= self::renderTimeline($collectors, $startTime, $segmentCount, $segmentDuration, $styles) ?>
 			</tbody>
 		</table>
 	</div>
@@ -270,5 +270,11 @@
 
 		<?= $parser->setData($config)->render('_config.tpl') ?>
 	</div>
-
+	<style type="text/css">
+		<?php foreach( $styles as $name => $style ) : ?>
+		.<?= $name ?> {
+			<?= $style ?>
+		}
+		<?php endforeach ?>
+	</style>
 </div>

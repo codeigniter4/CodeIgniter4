@@ -391,3 +391,11 @@ simple styles to replace inline styles
 .debug-bar-alignRight {
 	text-align: right;
 }
+
+.debug-bar-alignLeft {
+	text-align: left;
+}
+
+.debug-bar-noverflow {
+	overflow: hidden;
+}
