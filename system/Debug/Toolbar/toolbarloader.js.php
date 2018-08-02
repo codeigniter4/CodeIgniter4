@@ -18,12 +18,28 @@ function loadDoc(time) {
 			if (!toolbar) {
 				toolbar = document.createElement('div');
 				toolbar.setAttribute('id', 'toolbarContainer');
-				toolbar.innerHTML = this.responseText;
 				document.body.appendChild(toolbar);
-			} else {
-				toolbar.innerHTML = this.responseText;
 			}
-			eval(document.getElementById("toolbar_js").innerHTML);
+			// get csp blocked parts
+			let Style;
+			let Script;
+			{
+				let PosBeg = this.responseText.indexOf( '>', this.responseText.indexOf( '<style' ) ) + 1;
+				let PosEnd = this.responseText.indexOf( '</style>' );
+				Style = this.responseText.substr( PosBeg, PosEnd - PosBeg );
+				document.getElementById( 'debugbar_dynamic_style' ).innerHTML = Style;
+				this.responseText = this.responseText.substr( PosEnd + 8 );
+			}
+			{
+
+				let PosBeg = this.responseText.indexOf( '>', this.responseText.indexOf( '<script' ) ) + 1;
+				let PosEnd = this.responseText.indexOf( '</script>' );
+				Script = this.responseText.substr( PosBeg, PosEnd - PosBeg );
+				document.getElementById( 'debugbar_dynamic_script' ).innerHTML = Script;
+				this.responseText = this.responseText.substr( PosEnd + 9 );
+			}
+
+			toolbar.innerHTML = this.responseText;
 			if (typeof ciDebugBar === 'object') {
 				ciDebugBar.init();
 			}
