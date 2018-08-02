@@ -52,6 +52,10 @@ class RedirectResponseTest extends \CIUnitTestCase
 		$this->assertEquals('http://example.com/foo', $response->getHeaderLine('Location'));
 	}
 
+	/**
+	 * @runTestsInSeparateProcesses
+	 * @preserveGlobalState disabled
+	 */
 	public function testWithInput()
 	{
 		$_SESSION = [];
@@ -68,6 +72,10 @@ class RedirectResponseTest extends \CIUnitTestCase
 		$this->assertEquals('baz', $_SESSION['_ci_old_input']['post']['bar']);
 	}
 
+	/**
+	 * @runTestsInSeparateProcesses
+	 * @preserveGlobalState disabled
+	 */
 	public function testWithValidationErrors()
 	{
 		$_SESSION = [];
@@ -85,6 +93,10 @@ class RedirectResponseTest extends \CIUnitTestCase
 		$this->assertArrayHasKey('_ci_validation_errors', $_SESSION);
 	}
 
+	/**
+	 * @runTestsInSeparateProcesses
+	 * @preserveGlobalState disabled
+	 */
 	public function testWith()
 	{
 		$_SESSION = [];

@@ -156,17 +156,29 @@ class CommomFunctionsTest extends \CIUnitTestCase
 
 	// ------------------------------------------------------------------------
 
+	/**
+	 * @runTestsInSeparateProcesses
+	 * @preserveGlobalState disabled
+	 */
 	public function testSessionInstance()
 	{
 		$this->assertInstanceOf(CodeIgniter\Session\Session::class, session());
 	}
 
+	/**
+	 * @runTestsInSeparateProcesses
+	 * @preserveGlobalState disabled
+	 */
 	public function testSessionVariable()
 	{
 		$_SESSION['notbogus'] = 'Hi there';
 		$this->assertEquals('Hi there', session('notbogus'));
 	}
 
+	/**
+	 * @runTestsInSeparateProcesses
+	 * @preserveGlobalState disabled
+	 */
 	public function testSessionVariableNotThere()
 	{
 		$_SESSION['bogus'] = 'Hi there';

@@ -19,7 +19,7 @@ ini_set('display_errors', 1);
 | backtraces along with the other error information. If you would
 | prefer to not see this, set this value to false.
 */
-defined('SHOW_DEBUG_BACKTRACE') or define('SHOW_DEBUG_BACKTRACE', true);
+define('SHOW_DEBUG_BACKTRACE', true);
 
 /*
 |--------------------------------------------------------------------------
@@ -30,4 +30,4 @@ defined('SHOW_DEBUG_BACKTRACE') or define('SHOW_DEBUG_BACKTRACE', true);
 | release of the framework.
 */
 
-defined('CI_DEBUG') or define('CI_DEBUG', 1);
+define('CI_DEBUG', 1);

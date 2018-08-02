@@ -129,18 +129,30 @@ class ServicesTest extends \CIUnitTestCase
 		$this->assertInstanceOf(\CodeIgniter\View\Cell::class, $actual);
 	}
 
+	/**
+	 * @runTestsInSeparateProcesses
+	 * @preserveGlobalState disabled
+	 */
 	public function testNewSession()
 	{
 		$actual = Services::session($this->config);
 		$this->assertInstanceOf(\CodeIgniter\Session\Session::class, $actual);
 	}
 
+	/**
+	 * @runTestsInSeparateProcesses
+	 * @preserveGlobalState disabled
+	 */
 	public function testNewSessionWithNullConfig()
 	{
 		$actual = Services::session(null, false);
 		$this->assertInstanceOf(\CodeIgniter\Session\Session::class, $actual);
 	}
 
+	/**
+	 * @runTestsInSeparateProcesses
+	 * @preserveGlobalState disabled
+	 */
 	public function testCallStatic()
 	{
 		// __callStatic should kick in for this but fail
