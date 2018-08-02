@@ -53,7 +53,7 @@ class RedirectResponseTest extends \CIUnitTestCase
 	}
 
 	/**
-	 * @runTestsInSeparateProcesses
+	 * @runInSeparateProcess
 	 * @preserveGlobalState disabled
 	 */
 	public function testWithInput()
@@ -73,7 +73,7 @@ class RedirectResponseTest extends \CIUnitTestCase
 	}
 
 	/**
-	 * @runTestsInSeparateProcesses
+	 * @runInSeparateProcess
 	 * @preserveGlobalState disabled
 	 */
 	public function testWithValidationErrors()
@@ -94,7 +94,7 @@ class RedirectResponseTest extends \CIUnitTestCase
 	}
 
 	/**
-	 * @runTestsInSeparateProcesses
+	 * @runInSeparateProcess
 	 * @preserveGlobalState disabled
 	 */
 	public function testWith()

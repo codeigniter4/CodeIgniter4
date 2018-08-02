@@ -157,7 +157,7 @@ class CommomFunctionsTest extends \CIUnitTestCase
 	// ------------------------------------------------------------------------
 
 	/**
-	 * @runTestsInSeparateProcesses
+	 * @runInSeparateProcess
 	 * @preserveGlobalState disabled
 	 */
 	public function testSessionInstance()
@@ -166,7 +166,7 @@ class CommomFunctionsTest extends \CIUnitTestCase
 	}
 
 	/**
-	 * @runTestsInSeparateProcesses
+	 * @runInSeparateProcess
 	 * @preserveGlobalState disabled
 	 */
 	public function testSessionVariable()
@@ -176,7 +176,7 @@ class CommomFunctionsTest extends \CIUnitTestCase
 	}
 
 	/**
-	 * @runTestsInSeparateProcesses
+	 * @runInSeparateProcess
 	 * @preserveGlobalState disabled
 	 */
 	public function testSessionVariableNotThere()

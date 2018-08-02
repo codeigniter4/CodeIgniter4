@@ -130,7 +130,7 @@ class ServicesTest extends \CIUnitTestCase
 	}
 
 	/**
-	 * @runTestsInSeparateProcesses
+	 * @runInSeparateProcess
 	 * @preserveGlobalState disabled
 	 */
 	public function testNewSession()
@@ -140,7 +140,7 @@ class ServicesTest extends \CIUnitTestCase
 	}
 
 	/**
-	 * @runTestsInSeparateProcesses
+	 * @runInSeparateProcess
 	 * @preserveGlobalState disabled
 	 */
 	public function testNewSessionWithNullConfig()
@@ -150,7 +150,7 @@ class ServicesTest extends \CIUnitTestCase
 	}
 
 	/**
-	 * @runTestsInSeparateProcesses
+	 * @runInSeparateProcess
 	 * @preserveGlobalState disabled
 	 */
 	public function testCallStatic()
