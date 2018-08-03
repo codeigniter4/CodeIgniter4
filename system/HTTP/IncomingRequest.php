@@ -568,8 +568,6 @@ class IncomingRequest extends Request
 	 */
 	protected function detectURI($protocol, $baseURL)
 	{
-		$this->uri->setPath($this->detectPath($protocol));
-
 		// It's possible the user forgot a trailing slash on their
 		// baseURL, so let's help them out.
 		$baseURL = ! empty($baseURL) ? rtrim($baseURL, '/ ') . '/' : $baseURL;
@@ -585,7 +583,7 @@ class IncomingRequest extends Request
 			$this->uri->setScheme(parse_url($baseURL, PHP_URL_SCHEME));
 			$this->uri->setHost(parse_url($baseURL, PHP_URL_HOST));
 			$this->uri->setPort(parse_url($baseURL, PHP_URL_PORT));
-			$this->uri->resolveRelativeURI(parse_url($baseURL, PHP_URL_PATH));
+			$this->uri->setBasePath(parse_url($baseURL, PHP_URL_PATH));
 		} else
 		{
 			// @codeCoverageIgnoreStart
@@ -595,6 +593,9 @@ class IncomingRequest extends Request
 			}
 			// @codeCoverageIgnoreEnd
 		}
+
+		$path = $this->detectPath($protocol);
+		$this->uri->setPath($this->uri->trimBasePath($path));
 	}
 
 	//--------------------------------------------------------------------
