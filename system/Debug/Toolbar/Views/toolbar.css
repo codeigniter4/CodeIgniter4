@@ -356,3 +356,46 @@
 		display: none !important;
 	}
 }
+
+/**
+simple styles to replace inline styles
+ */
+.debug-bar-width30 {
+	width: 30%;
+}
+
+.debug-bar-width10 {
+	width: 10%;
+}
+
+.debug-bar-width70p {
+	width: 70px;
+}
+
+.debug-bar-width140p {
+	width: 140px;
+}
+
+.debug-bar-width20e {
+	width: 20em;
+}
+
+.debug-bar-width6r {
+	width: 6rem;
+}
+
+.debug-bar-ndisplay {
+	display: none;
+}
+
+.debug-bar-alignRight {
+	text-align: right;
+}
+
+.debug-bar-alignLeft {
+	text-align: left;
+}
+
+.debug-bar-noverflow {
+	overflow: hidden;
+}
