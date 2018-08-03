@@ -42,4 +42,4 @@ before_script:
   - composer install --prefer-source
 
 after_success:
-  - travis_retry php tests/bin/coveralls.phar -v
+  - travis_retry php tests/bin/php-coveralls.phar -v
