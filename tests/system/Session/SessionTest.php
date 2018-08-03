@@ -5,6 +5,10 @@ use Tests\Support\Log\TestLogger;
 use Tests\Support\Session\MockSession;
 use CodeIgniter\Session\Handlers\FileHandler;
 
+/**
+ * @runTestsInSeparateProcesses
+ * @preserveGlobalState disabled
+ */
 class SessionTest extends \CIUnitTestCase
 {
     public function setUp()
@@ -110,7 +114,7 @@ class SessionTest extends \CIUnitTestCase
         $this->assertNull($session->get('foo'));
     }
 
-	public function testGetReturnsAllWithNoKeys()
+    public function testGetReturnsAllWithNoKeys()
 	{
 		$_SESSION = [
 			'foo' => 'bar',
@@ -126,8 +130,7 @@ class SessionTest extends \CIUnitTestCase
 		$this->assertTrue(array_key_exists('bar', $result));
     }
 
-
-	public function testGetAsProperty()
+    public function testGetAsProperty()
     {
         $session = $this->getInstance();
         $session->start();
