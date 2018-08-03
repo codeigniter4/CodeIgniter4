@@ -114,6 +114,13 @@ class URI
 	protected $path;
 
 	/**
+	 * URI base path.
+	 *
+	 * @var string
+	 */
+	protected $basePath;
+
+	/**
 	 * The name of any fragment.
 	 *
 	 * @var
@@ -967,6 +974,34 @@ class URI
 		{
 			$this->segments = explode('/', trim($parts['path'], '/'));
 		}
+	}
+
+	/**
+	 * Set path that will not be changed.
+	 *
+	 * @param string $path
+	 */
+	public function setBasePath(string $path) : void
+	{
+		$this->basePath = rtrim($path, '/');
+	}
+
+	/**
+	 * trim basePath
+	 *
+	 * @param string $path
+	 *
+	 * @return string
+	 */
+	public function trimBasePath(string $path) : string
+	{
+		$path = '/'.ltrim($path, '/');
+		$base_path = $this->basePath ?? '';
+		if (strlen($base_path) && strpos($path, $base_path) === 0) {
+			return substr($path, strlen($base_path));
+		}
+
+		return $path;
 	}
 
 	//--------------------------------------------------------------------
