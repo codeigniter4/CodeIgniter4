@@ -390,7 +390,7 @@ class URI
 	 */
 	public function getPath(): string
 	{
-		return (is_null($this->path)) ? '' : $this->path;
+		return (is_null($this->path)) ? '' : $this->basePath.$this->path;
 	}
 
 	//--------------------------------------------------------------------
@@ -1058,7 +1058,7 @@ class URI
 			{
 				if (strpos($relative->getPath(), '/') === 0)
 				{
-					$transformed->setPath($relative->getPath());
+					$transformed->setPath($this->basePath . $relative->getPath());
 				}
 				else
 				{
