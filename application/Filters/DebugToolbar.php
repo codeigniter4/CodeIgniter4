@@ -35,10 +35,10 @@ class DebugToolbar implements FilterInterface
 	{
 		if ( ! is_cli() && CI_DEBUG)
 		{
-			global $app;
-
+			$app     = Services::application();
 			$toolbar = Services::toolbar(config(App::class));
-			$stats   = $app->getPerformanceStats();
+
+                      $stats   = $app->getPerformanceStats();
 			$data    = $toolbar->run(
 				$stats['startTime'],
 				$stats['totalTime'],

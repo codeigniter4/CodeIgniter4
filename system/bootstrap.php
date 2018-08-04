@@ -145,14 +145,6 @@ helper('url');
  * ---------------------------------------------------------------
  * GRAB OUR CODEIGNITER INSTANCE
  * ---------------------------------------------------------------
- *
- * The CodeIgniter class contains the core functionality to make
- * the application run, and does all of the dirty work to get
- * the pieces all working together.
  */
 
-$appConfig = config(\Config\App::class);
-$app = new \CodeIgniter\CodeIgniter($appConfig);
-$app->initialize();
-
-return $app;
+return CodeIgniter\Services::application();

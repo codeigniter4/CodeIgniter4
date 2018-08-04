@@ -1,12 +1,5 @@
 <?php
 
-// Path to the front controller (this file)
-define('FCPATH', __DIR__.DIRECTORY_SEPARATOR);
-
-// Location of the Paths config file.
-// This is the first of two lines that might need to be changed, depending on your folder structure.
-$pathsPath = FCPATH . '../application/Config/Paths.php';
-
 /*
  *---------------------------------------------------------------
  * BOOTSTRAP THE APPLICATION
@@ -16,22 +9,31 @@ $pathsPath = FCPATH . '../application/Config/Paths.php';
  * and fires up an environment-specific bootstrapping.
  */
 
+// Path to the front controller (this file)
+define('FCPATH', __DIR__.DIRECTORY_SEPARATOR);
+
 // Ensure the current directory is pointing to the front controller's directory
 chdir(__DIR__);
 
-// Load our paths config file
-require $pathsPath;
-$paths = new Config\Paths();
+(function () {
+    // Location of the Paths config file.
+    // This is the first of two lines that might need to be changed, depending on your folder structure.
+    $pathsPath = FCPATH . '../application/Config/Paths.php';
 
-// Location of the framework bootstrap file.
-// This is the second of two lines that might need to be changed, depending on your folder structure.
-$app = require FCPATH . '../system/bootstrap.php';
+    // Load our paths config file
+    require $pathsPath;
+    $paths = new Config\Paths();
 
-/*
- *---------------------------------------------------------------
- * LAUNCH THE APPLICATION
- *---------------------------------------------------------------
- * Now that everything is setup, it's time to actually fire
- * up the engines and make this app do it's thang.
- */
-$app->run();
+    // Location of the framework bootstrap file.
+    // This is the second of two lines that might need to be changed, depending on your folder structure.
+    $app = require FCPATH . '../system/bootstrap.php';
+
+    /*
+    *---------------------------------------------------------------
+    * LAUNCH THE APPLICATION
+    *---------------------------------------------------------------
+    * Now that everything is setup, it's time to actually fire
+    * up the engines and make this app do it's thang.
+    */
+    $app->run();
+})();

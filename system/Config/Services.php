@@ -77,6 +77,31 @@ class Services extends BaseService
 		return new \CodeIgniter\Autoloader\Autoloader();
 	}
 
+    //--------------------------------------------------------------------
+
+      /**
+       * The CodeIgniter class that contains the core functionality to make
+       * the application run, and does all of the dirty work to get
+       * the pieces all working together.
+	 *
+	 * @param bool $getShared
+	 *
+	 * @return  \CodeIgniter\CodeIgniter
+	 */
+	public static function application($getShared = true)
+	{
+		if ($getShared)
+		{
+			return self::getSharedInstance('application');
+		}
+
+		$appConfig = config(\Config\App::class);
+              $app = new \CodeIgniter\CodeIgniter($appConfig);
+              $app->initialize();
+
+              return $app;
+	}
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -699,7 +724,7 @@ class Services extends BaseService
 
 		$session = new \CodeIgniter\Session\Session($driver, $config);
 		$session->setLogger($logger);
-		
+
 		if (session_status() == PHP_SESSION_NONE)
 		{
 			$session->start();
