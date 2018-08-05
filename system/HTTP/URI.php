@@ -633,7 +633,7 @@ class URI
 	 *
 	 * @return $this
 	 */
-	public function setPort($port)
+	public function setPort(int $port = null)
 	{
 		if (is_null($port))
 		{
