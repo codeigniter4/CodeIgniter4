@@ -1,5 +1,9 @@
-<!doctype html>
-<html>
+<?php 
+declare(strict_types=1);
+
+
+?><!DOCTYPE HTML>
+<html lang="en-GB">
 <head>
 	<meta charset="UTF-8">
 	<meta name="robots" content="noindex">

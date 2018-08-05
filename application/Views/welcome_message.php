@@ -1,83 +1,85 @@
-<!doctype html>
-<html>
-	<head>
-		<title>Welcome to CodeIgniter</title>
+<?php 
+declare(strict_types=1);
 
-		<link rel="shortcut icon" type="image/png" href="/favicon.ico"/>
-	</head>
-	<body>
+?><!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Welcome to CodeIgniter</title>
 
-		<style {csp-style-nonce}>
-			div.logo {
-				height: 200px;
-				width: 155px;
-				display: inline-block;
-				opacity: 0.08;
-				position: absolute;
-				top: 2rem;
-				left: 50%;
-				margin-left: -73px;
-			}
-			body {
-				height: 100%;
-				background: #fafafa;
-				font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-				color: #777;
-				font-weight: 300;
-			}
-			h1 {
-				font-weight: lighter;
-				letter-spacing: 0.8;
-				font-size: 3rem;
-				margin-top: 145px;
-				margin-bottom: 0;
-				color: #222;
-			}
-			.wrap {
-				max-width: 1024px;
-				margin: 5rem auto;
-				padding: 2rem;
-				background: #fff;
-				text-align: center;
-				border: 1px solid #efefef;
-				border-radius: 0.5rem;
-				position: relative;
-			}
-			.version {
-				margin-top: 0;
-				color: #999;
-			}
-			.guide {
-				margin-top: 3rem;
-				text-align: left;
-			}
-			pre {
-				white-space: normal;
-				margin-top: 1.5rem;
-			}
-			code {
-				background: #fafafa;
-				border: 1px solid #efefef;
-				padding: 0.5rem 1rem;
-				border-radius: 5px;
-				display: block;
-			}
-			p {
-				margin-top: 1.5rem;
-			}
-			.footer {
-				margin-top: 2rem;
-				border-top: 1px solid #efefef;
-				padding: 1em 2em 0 2em;
-				font-size: 85%;
-				color: #999;
-			}
-			a:active,
-			a:link,
-			a:visited {
-				color: #dd4814;
-			}
-		</style>
+<link rel="shortcut icon" type="image/png" href="/favicon.ico"/>
+<style>
+	div.logo {
+		height: 200px;
+		width: 155px;
+		display: inline-block;
+		opacity: 0.08;
+		position: absolute;
+		top: 2rem;
+		left: 50%;
+		margin-left: -73px;
+	}
+	body {
+		height: 100%;
+		background: #fafafa;
+		font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+		color: #777;
+		font-weight: 300;
+	}
+	h1 {
+		font-weight: lighter;
+		letter-spacing: 0.8px;
+		font-size: 3rem;
+		margin-top: 145px;
+		margin-bottom: 0;
+		color: #222;
+	}
+	.wrap {
+		max-width: 1024px;
+		margin: 0 auto 5rem;
+		padding: 2rem;
+		background: #fff;
+		text-align: center;
+		border: 1px solid #efefef;
+		border-radius: 0.5rem;
+		position: relative;
+	}
+	.version {
+		margin-top: 0;
+		color: #999;
+	}
+	.guide {
+		margin-top: 3rem;
+		text-align: left;
+	}
+	pre {
+		white-space: normal;
+		margin-top: 1.5rem;
+	}
+	code {
+		background: #fafafa;
+		border: 1px solid #efefef;
+		padding: 0.5rem 1rem;
+		border-radius: 5px;
+		display: block;
+	}
+	p {
+		margin-top: 1.5rem;
+	}
+	.footer {
+		margin-top: 2rem;
+		border-top: 1px solid #efefef;
+		padding: 1em 2em 0 2em;
+		font-size: 85%;
+		color: #999;
+	}
+	a:active,
+	a:link,
+	a:visited {
+		color: #dd4814;
+	}
+</style>
+</head>
+<body>
 
 		<div class="wrap">
 
@@ -86,10 +88,10 @@
 			<p class="version">version <?= CodeIgniter\CodeIgniter::CI_VERSION ?></p>
 
 			<div class="logo">
-				<svg version="1.0" xmlns="http://www.w3.org/2000/svg"
-					 width="155.000000px" height="200.000000px" viewBox="0 0 155.000000 200.000000"
+				<svg  xmlns="http://www.w3.org/2000/svg"
+					 width="155" height="200" viewBox="0 0 155 200"
 					 preserveAspectRatio="xMidYMid meet">
-				<g transform="translate(0.000000,200.000000) scale(0.100000,-0.100000)" fill="#000000" stroke="none">
+				<g transform="translate(0,200) scale(0.1,-0.1)" fill="#0" stroke="none">
 				<path d="M737 1963 c22 -79 -7 -185 -78 -290 -18 -26 -107 -122 -197 -213
 					  -239 -240 -336 -371 -403 -544 -79 -206 -78 -408 5 -582 64 -134 212 -264 361
 					  -314 l60 -20 -30 22 c-210 152 -229 387 -48 588 25 27 48 50 51 50 4 0 7 -27

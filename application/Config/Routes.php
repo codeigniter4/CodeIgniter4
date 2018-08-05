@@ -1,4 +1,6 @@
-<?php namespace Config;
+<?php 
+declare(strict_types=1);
+namespace Config;
 
 /**
  * --------------------------------------------------------------------
@@ -59,13 +61,18 @@ if (file_exists(BASEPATH.'Config/Routes.php'))
  * only routes that have been defined here will be available.
  */
 $routes->setDefaultNamespace('App\Controllers');
-$routes->setDefaultController('Home');
-$routes->setDefaultMethod('index');
+if(0):
+  # $routes->setDefaultController('Home');
+  # $routes->setDefaultMethod('index');
+else:
+  $routes->setDefaultController('C_Mods');
+  $routes->setDefaultMethod('todo');
+endif;  
 $routes->setTranslateURIDashes(false);
 $routes->set404Override();
 $routes->setAutoRoute(true);
 $routes->discoverLocal(false);
-
+ 
 /**
  * --------------------------------------------------------------------
  * Route Definitions
@@ -74,7 +81,14 @@ $routes->discoverLocal(false);
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
-$routes->add('/', 'Home::index');
+$routes->add('/welcome',            'Home::index');
+if(1):
+$routes->add('/v_blurb',            'C_Mods::blurb');
+$routes->add('/v_mods',             'C_Mods::index');
+$routes->add('/v_github',           'C_Mods::github');
+$routes->add('/v_welcome_message',  'C_Mods::v_welcome');
+$routes->add('/',                   'C_Mods::todo');
+endif;
 
 /**
  * --------------------------------------------------------------------

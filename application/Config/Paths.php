@@ -1,4 +1,7 @@
-<?php namespace Config;
+<?php 
+declare(strict_types=1);
+
+namespace Config;
 
 /**
  * Holds the paths that are used by the system to
@@ -19,8 +22,8 @@ class Paths
 	 * Include the path if the folder is not in the same directory
 	 * as this file.
 	 */
-	public $systemDirectory = 'system';
-
+	public $systemDirectory = BASEPATH; // 'system';
+ 
 	/*
 	 *---------------------------------------------------------------
 	 * APPLICATION FOLDER NAME
@@ -34,7 +37,7 @@ class Paths
 	 *
 	 * NO TRAILING SLASH!
 	 */
-	public $applicationDirectory = 'application';
+	public $applicationDirectory = JB_APPLICATION; // 'application';
 
 	/*
 	 * ---------------------------------------------------------------
@@ -74,5 +77,5 @@ class Paths
 	 * can change this to `public_html`, for example, to comply
 	 * with your host's needs.
 	 */
-	public $publicDirectory = 'public';
+	public $publicDirectory = 'public_html'; // 'public';
 }

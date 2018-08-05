@@ -1,4 +1,8 @@
-<br><br><br>
+<?php 
+declare(strict_types=1);
+
+
+?><br><br><br><br>
 
 
 <form method="post" action="" enctype="multipart/form-data">

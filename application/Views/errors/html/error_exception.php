@@ -1,5 +1,12 @@
-<?php $error_id = uniqid('error'); ?>
-<!doctype html>
+<?php 
+declare(strict_types=1);
+
+$error_id = uniqid('error'); 
+
+$value = $value ?? '$value NOT defined???';
+$value = (string) $value;
+
+?><!DOCTYPE HTML>
 <html>
 <head>
 	<meta charset="UTF-8">
