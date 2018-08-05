@@ -952,7 +952,7 @@ class URI
 			if ( ! is_null($parts['port']))
 			{
 				// Valid port numbers are enforced by earlier parse_url or setPort()
-				$port = (int) $parts['port'];
+				$port = $parts['port'];
 				$this->port = $port;
 			}
 		}
