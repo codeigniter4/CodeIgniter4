@@ -413,7 +413,7 @@ class TimeTest extends \CIUnitTestCase
        public function testSetDayOverMaxInCurrentMonth()
        {
 		$time = Time::parse('Feb 02, 2009');
-	        $time2 = $time->setDay(29);
+	        $time->setDay(29);
        }
 
        public function testSetDayNotOverMaxInCurrentMonth()
