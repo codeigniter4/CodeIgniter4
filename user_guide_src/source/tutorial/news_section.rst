@@ -99,7 +99,7 @@ a new ``News`` controller is defined. Create the new controller at
 
 ::
 
-	<?php
+	<?php namespace App\Controllers;
 
 	use App\Models\NewsModel;
 
