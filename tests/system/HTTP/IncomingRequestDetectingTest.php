@@ -22,7 +22,7 @@ class IncomingRequestDetectingTest extends \CIUnitTestCase
 
 		$_POST = $_GET = $_SERVER = $_REQUEST = $_ENV = $_COOKIE = $_SESSION = [];
 		$origin = 'http://www.example.com/index.php/woot?code=good#pos';
-		$this->request = new IncomingRequest( new App(), new URI( $origin ), null, new UserAgent() );
+		$this->request = new IncomingRequest(new App(), new URI($origin), null, new UserAgent());
 	}
 
 	//--------------------------------------------------------------------
@@ -33,7 +33,7 @@ class IncomingRequestDetectingTest extends \CIUnitTestCase
 		$_SERVER['REQUEST_URI'] = '/index.php/woot';
 		$_SERVER['SCRIPT_NAME'] = '/index.php';
 		$expected = 'woot';
-		$this->assertEquals( $expected, $this->request->detectPath() );
+		$this->assertEquals($expected, $this->request->detectPath());
 	}
 
 	public function testPathRequestURI()
@@ -42,7 +42,7 @@ class IncomingRequestDetectingTest extends \CIUnitTestCase
 		$_SERVER['REQUEST_URI'] = '/index.php/woot';
 		$_SERVER['SCRIPT_NAME'] = '/index.php';
 		$expected = 'woot';
-		$this->assertEquals( $expected, $this->request->detectPath( 'REQUEST_URI' ) );
+		$this->assertEquals($expected, $this->request->detectPath('REQUEST_URI'));
 	}
 
 	public function testPathRequestURINested()
@@ -51,7 +51,7 @@ class IncomingRequestDetectingTest extends \CIUnitTestCase
 		$_SERVER['REQUEST_URI'] = '/index.php/woot';
 		$_SERVER['SCRIPT_NAME'] = '/index.php';
 		$expected = 'woot';
-		$this->assertEquals( $expected, $this->request->detectPath( 'REQUEST_URI' ) );
+		$this->assertEquals($expected, $this->request->detectPath('REQUEST_URI'));
 	}
 
 	public function testPathRequestURISubfolder()
@@ -60,7 +60,7 @@ class IncomingRequestDetectingTest extends \CIUnitTestCase
 		$_SERVER['REQUEST_URI'] = '/ci/index.php/popcorn/woot';
 		$_SERVER['SCRIPT_NAME'] = '/index.php';
 		$expected = 'popcorn/woot';
-		$this->assertEquals( $expected, $this->request->detectPath( 'REQUEST_URI' ) );
+		$this->assertEquals($expected, $this->request->detectPath('REQUEST_URI'));
 	}
 
 	public function testPathRequestURINoIndex()
@@ -69,7 +69,7 @@ class IncomingRequestDetectingTest extends \CIUnitTestCase
 		$_SERVER['REQUEST_URI'] = '/sub/example';
 		$_SERVER['SCRIPT_NAME'] = '/sub/index.php';
 		$expected = 'example';
-		$this->assertEquals( $expected, $this->request->detectPath( 'REQUEST_URI' ) );
+		$this->assertEquals($expected, $this->request->detectPath('REQUEST_URI'));
 	}
 
 	public function testPathRequestURINginx()
@@ -78,7 +78,7 @@ class IncomingRequestDetectingTest extends \CIUnitTestCase
 		$_SERVER['REQUEST_URI'] = '/index.php/woot?code=good';
 		$_SERVER['SCRIPT_NAME'] = '/index.php';
 		$expected = 'woot';
-		$this->assertEquals( $expected, $this->request->detectPath( 'REQUEST_URI' ) );
+		$this->assertEquals($expected, $this->request->detectPath('REQUEST_URI'));
 	}
 
 	public function testPathRequestURINginxRedirecting()
@@ -87,7 +87,7 @@ class IncomingRequestDetectingTest extends \CIUnitTestCase
 		$_SERVER['REQUEST_URI'] = '/?/ci/woot';
 		$_SERVER['SCRIPT_NAME'] = '/index.php';
 		$expected = 'ci/woot';
-		$this->assertEquals( $expected, $this->request->detectPath( 'REQUEST_URI' ) );
+		$this->assertEquals($expected, $this->request->detectPath('REQUEST_URI'));
 	}
 
 	public function testPathRequestURISuppressed()
@@ -96,7 +96,7 @@ class IncomingRequestDetectingTest extends \CIUnitTestCase
 		$_SERVER['REQUEST_URI'] = '/woot';
 		$_SERVER['SCRIPT_NAME'] = '/';
 		$expected = 'woot';
-		$this->assertEquals( $expected, $this->request->detectPath( 'REQUEST_URI' ) );
+		$this->assertEquals($expected, $this->request->detectPath('REQUEST_URI'));
 	}
 
 	//--------------------------------------------------------------------
@@ -108,7 +108,7 @@ class IncomingRequestDetectingTest extends \CIUnitTestCase
 		$_SERVER['QUERY_STRING'] = '/ci/woot';
 		$_SERVER['SCRIPT_NAME'] = '/index.php';
 		$expected = 'ci/woot';
-		$this->assertEquals( $expected, $this->request->detectPath( 'QUERY_STRING' ) );
+		$this->assertEquals($expected, $this->request->detectPath('QUERY_STRING'));
 	}
 
 	public function testPathQueryStringEmpty()
@@ -118,7 +118,7 @@ class IncomingRequestDetectingTest extends \CIUnitTestCase
 		$_SERVER['QUERY_STRING'] = '';
 		$_SERVER['SCRIPT_NAME'] = '/index.php';
 		$expected = '';
-		$this->assertEquals( $expected, $this->request->detectPath( 'QUERY_STRING' ) );
+		$this->assertEquals($expected, $this->request->detectPath('QUERY_STRING'));
 	}
 
 	//--------------------------------------------------------------------
@@ -126,27 +126,27 @@ class IncomingRequestDetectingTest extends \CIUnitTestCase
 	public function testPathPathInfo()
 	{
 		$this->request->uri = '/index.php/woot?code=good#pos';
-		$this->request->setGlobal( 'server', [
+		$this->request->setGlobal('server', [
 			'PATH_INFO' => null,
-		] );
+		]);
 		$_SERVER['REQUEST_URI'] = '/index.php/woot';
 		$_SERVER['SCRIPT_NAME'] = '/index.php';
 		$expected = 'woot';
-		$this->assertEquals( $expected, $this->request->detectPath( 'PATH_INFO' ) );
+		$this->assertEquals($expected, $this->request->detectPath('PATH_INFO'));
 	}
 
 	public function testPathPathInfoGlobal()
 	{
 		$this->request->uri = '/index.php/woot?code=good#pos';
 		$this->request->uri = '/index.php/woot?code=good#pos';
-		$this->request->setGlobal( 'server', [
+		$this->request->setGlobal('server', [
 			'PATH_INFO' => 'silliness',
-		] );
+		]);
 		$_SERVER['REQUEST_URI'] = '/index.php/woot';
 		$_SERVER['SCRIPT_NAME'] = '/index.php';
 
 		$expected = 'silliness';
-		$this->assertEquals( $expected, $this->request->detectPath( 'PATH_INFO' ) );
+		$this->assertEquals($expected, $this->request->detectPath('PATH_INFO'));
 	}
 
 }
