@@ -36,7 +36,6 @@
  * @filesource
  */
 use CodeIgniter\Files\File;
-use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\Images\Exceptions\ImageException;
 
 class Image extends File
