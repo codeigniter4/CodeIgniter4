@@ -170,6 +170,23 @@ class SessionTest extends \CIUnitTestCase
         $this->assertFalse($session->has('bar'));
     }
 
+    public function testPushNewValueIntoArraySessionValue()
+    {
+        $session = $this->getInstance();
+        $session->start();
+
+        $session->set('hobbies', ['cooking' => 'baking']);
+        $session->push('hobbies', ['sport'=>'tennis']);
+
+        $this->assertEquals(
+            [
+                'cooking' => 'baking',
+                'sport'   => 'tennis',
+            ],
+            $session->get('hobbies')
+        );
+    }
+
     public function testRemoveActuallyRemoves()
     {
         $session = $this->getInstance();
