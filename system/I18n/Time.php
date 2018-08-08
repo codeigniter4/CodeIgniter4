@@ -607,8 +607,6 @@ class Time extends DateTime
 	/**
 	 * Sets the month of the year.
 	 *
-	 * @todo check max months in current calendar (localized)
-	 *
 	 * @param $value
 	 *
 	 * @return \CodeIgniter\I18n\Time
