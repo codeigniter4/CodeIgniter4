@@ -35,7 +35,7 @@
  * @since	Version 3.0.0
  * @filesource
  */
-use SPLFileInfo;
+use SplFileInfo;
 use CodeIgniter\Files\Exceptions\FileException;
 use CodeIgniter\Files\Exceptions\FileNotFoundException;
 
@@ -52,7 +52,7 @@ class File extends SplFileInfo
 	//--------------------------------------------------------------------
 
 	/**
-	 * Run our SPLFileInfo constructor with an optional verification
+	 * Run our SplFileInfo constructor with an optional verification
 	 * that the path is really a file.
 	 *
 	 * @param string $path
