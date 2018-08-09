@@ -200,11 +200,6 @@ class BaseService
 	 */
 	protected static function discoverServices(string $name, array $arguments)
 	{
-		if (static::$discovered)
-		{
-			return;
-		}
-
 		if (! static::$discovered)
 		{
 			$locator = static::locator();
