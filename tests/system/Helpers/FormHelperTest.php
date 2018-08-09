@@ -756,6 +756,10 @@ EOH;
 	}
 
 	// ------------------------------------------------------------------------
+	/**
+	 * @runInSeparateProcess
+	 * @preserveGlobalState disabled
+	 */
 	public function testSetRadio()
 	{
 		$_SESSION = [
@@ -771,6 +775,10 @@ EOH;
 		unset($_SESSION['_ci_old_input']);
 	}
 
+	/**
+	 * @runInSeparateProcess
+	 * @preserveGlobalState disabled
+	 */
 	public function testSetRadioFromPost()
 	{
 		$_POST['bar'] = 'baz';

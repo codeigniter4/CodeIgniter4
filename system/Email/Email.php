@@ -37,7 +37,6 @@
  * @filesource
  */
 
-use CodeIgniter\Config\BaseConfig;
 use Config\Mimes;
 
 

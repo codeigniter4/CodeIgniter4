@@ -10,6 +10,7 @@ use Tests\Support\HTTP\MockIncomingRequest;
 
 class RedirectResponseTest extends \CIUnitTestCase
 {
+	/** @var RouteCollection */
 	protected $routes;
 
 	protected $request;
@@ -42,6 +43,18 @@ class RedirectResponseTest extends \CIUnitTestCase
 		$this->assertEquals('http://example.com/foo', $response->getHeaderLine('Location'));
 	}
 
+	public function testRedirectRoute()
+	{
+		$response = new RedirectResponse(new App());
+
+		$this->routes->add( 'exampleRoute', 'Home::index' );
+
+		$response->route( 'exampleRoute' );
+
+		$this->assertTrue($response->hasHeader('Location'));
+		$this->assertEquals('http://example.com/exampleRoute', $response->getHeaderLine('Location'));
+	}
+
 	public function testRedirectRelativeConvertsToFullURI()
 	{
 		$response = new RedirectResponse($this->config);
@@ -52,6 +65,10 @@ class RedirectResponseTest extends \CIUnitTestCase
 		$this->assertEquals('http://example.com/foo', $response->getHeaderLine('Location'));
 	}
 
+	/**
+	 * @runInSeparateProcess
+	 * @preserveGlobalState disabled
+	 */
 	public function testWithInput()
 	{
 		$_SESSION = [];
@@ -68,6 +85,10 @@ class RedirectResponseTest extends \CIUnitTestCase
 		$this->assertEquals('baz', $_SESSION['_ci_old_input']['post']['bar']);
 	}
 
+	/**
+	 * @runInSeparateProcess
+	 * @preserveGlobalState disabled
+	 */
 	public function testWithValidationErrors()
 	{
 		$_SESSION = [];
@@ -85,6 +106,10 @@ class RedirectResponseTest extends \CIUnitTestCase
 		$this->assertArrayHasKey('_ci_validation_errors', $_SESSION);
 	}
 
+	/**
+	 * @runInSeparateProcess
+	 * @preserveGlobalState disabled
+	 */
 	public function testWith()
 	{
 		$_SESSION = [];

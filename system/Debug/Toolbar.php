@@ -145,7 +145,7 @@ class Toolbar
 			$data['vars']['varData'][esc($heading)] = $vardata;
 		}
 
-		if (isset($_SESSION) && ! empty($_SESSION))
+		if (! empty($_SESSION))
 		{
 			foreach ($_SESSION as $key => $value)
 			{
@@ -195,6 +195,11 @@ class Toolbar
 		];
 
 		$data['config'] = \CodeIgniter\Debug\Toolbar\Collectors\Config::display();
+
+		if( $response->CSP !== null )
+		{
+			$response->CSP->addImageSrc( 'data:' );
+		}
 
 		return json_encode($data);
 	}
@@ -273,6 +278,7 @@ class Toolbar
 		switch ($format)
 		{
 			case 'html':
+				$data['styles'] = [];
 				extract($data);
 				$parser = Services::parser(BASEPATH . 'Debug/Toolbar/Views/', null,false);
 				ob_start();
@@ -283,8 +289,6 @@ class Toolbar
 			case 'json':
 				$output = json_encode($data);
 				break;
-			case 'json':
-				$output = json_encode($data);
 			case 'xml':
 				$formatter = new XMLFormatter;
 				$output    = $formatter->format($data);
@@ -306,27 +310,31 @@ class Toolbar
 	 *
 	 * @return string
 	 */
-	protected static function renderTimeline(array $collectors, $startTime, int $segmentCount, int $segmentDuration): string
+	protected static function renderTimeline(array $collectors, $startTime, int $segmentCount, int $segmentDuration, array& $styles ): string
 	{
 		$displayTime = $segmentCount*$segmentDuration;
 		$rows        = self::collectTimelineData($collectors);
 		$output      = '';
+		$styleCount	 = 0;
 
 		foreach ($rows as $row)
 		{
 			$output .= "<tr>";
 			$output .= "<td>{$row['name']}</td>";
 			$output .= "<td>{$row['component']}</td>";
-			$output .= "<td style='text-align: right'>".number_format($row['duration']*1000, 2)." ms</td>";
-			$output .= "<td colspan='{$segmentCount}' style='overflow: hidden'>";
+			$output .= "<td class='debug-bar-alignRight'>".number_format($row['duration']*1000, 2)." ms</td>";
+			$output .= "<td class='debug-bar-noverflow' colspan='{$segmentCount}'>";
 
 			$offset = ((($row['start']-$startTime)*1000)/$displayTime)*100;
 			$length = (($row['duration']*1000)/$displayTime)*100;
 
-			$output .= "<span class='timer' style='left: {$offset}%; width: {$length}%;' title='".number_format($length,
+			$styles['debug-bar-timeline-'.$styleCount] = "left: {$offset}%; width: {$length}%;";
+			$output .= "<span class='timer debug-bar-timeline-{$styleCount}' title='".number_format($length,
 					2)."%'></span>";
 			$output .= "</td>";
 			$output .= "</tr>";
+
+			$styleCount++;
 		}
 
 		return $output;

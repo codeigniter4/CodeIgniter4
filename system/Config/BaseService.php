@@ -36,7 +36,6 @@
  * @filesource
  */
 
-use CodeIgniter\Autoloader\FileLocator;
 
 /**
  * Services Configuration file.
@@ -121,6 +120,27 @@ class BaseService
 	//--------------------------------------------------------------------
 
 	/**
+	 * The file locator provides utility methods for looking for non-classes
+	 * within namespaced folders, as well as convenience methods for
+	 * loading 'helpers', and 'libraries'.
+	 *
+	 * @param bool $getShared
+	 *
+	 * @return \CodeIgniter\Autoloader\FileLocator
+	 */
+	public static function locator($getShared = true)
+	{
+		if ($getShared)
+		{
+			return self::getSharedInstance('locator');
+		}
+
+		return new \CodeIgniter\Autoloader\FileLocator(new \Config\Autoload());
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Provides the ability to perform case-insensitive calling of service
 	 * names.
 	 *
@@ -200,6 +220,8 @@ class BaseService
 					static::$services[] = new $classname();
 				}
 			}
+
+			static::$discovered = true;
 		}
 
 		if (! static::$services)

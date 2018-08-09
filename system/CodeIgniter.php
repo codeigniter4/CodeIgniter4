@@ -552,7 +552,7 @@ class CodeIgniter
 	 */
 	public static function cache(int $time)
 	{
-		self::$cacheTTL = (int) $time;
+		self::$cacheTTL = $time;
 	}
 
 	//--------------------------------------------------------------------

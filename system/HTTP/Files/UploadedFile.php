@@ -38,7 +38,6 @@ use CodeIgniter\HTTP\Exceptions\HTTPException;
  * @filesource
  */
 use CodeIgniter\Files\File;
-use CodeIgniter\Files\FileException;
 
 /**
  * Value object representing a single file uploaded through an

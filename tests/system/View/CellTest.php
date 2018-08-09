@@ -3,8 +3,7 @@
 use CodeIgniter\View\Cell;
 use CodeIgniter\View\Exceptions\ViewException;
 use Tests\Support\Cache\Handlers\MockHandler;
-
-include_once __DIR__ . '/SampleClass.php';
+use Tests\Support\View\SampleClass;
 
 class CellTest extends \CIUnitTestCase
 {
@@ -105,7 +104,7 @@ class CellTest extends \CIUnitTestCase
 	{
 		$expected = 'Hello';
 
-		$this->assertEquals($expected, $this->cell->render('\CodeIgniter\View\SampleClass::hello'));
+		$this->assertEquals($expected, $this->cell->render('\Tests\Support\View\SampleClass::hello'));
 	}
 
 	//--------------------------------------------------------------------
@@ -115,7 +114,7 @@ class CellTest extends \CIUnitTestCase
 		$params = 'one=two,three=four';
 		$expected = ['one' => 'two', 'three' => 'four'];
 
-		$this->assertEquals(implode(',', $expected), $this->cell->render('\CodeIgniter\View\SampleClass::echobox', $params));
+		$this->assertEquals(implode(',', $expected), $this->cell->render('\Tests\Support\View\SampleClass::echobox', $params));
 	}
 
 	//--------------------------------------------------------------------
@@ -125,7 +124,7 @@ class CellTest extends \CIUnitTestCase
 		$params = 'one=two,three=four';
 		$expected = ['one' => 'two', 'three' => 'four'];
 
-		$this->assertEquals(implode(',', $expected), $this->cell->render('\CodeIgniter\View\SampleClass::staticEcho', $params));
+		$this->assertEquals(implode(',', $expected), $this->cell->render('\Tests\Support\View\SampleClass::staticEcho', $params));
 	}
 
 	//--------------------------------------------------------------------
@@ -135,14 +134,14 @@ class CellTest extends \CIUnitTestCase
 		$params = [];
 		$expected = [];
 
-		$this->assertEquals(implode(',', $expected), $this->cell->render('\CodeIgniter\View\SampleClass::staticEcho', $params));
+		$this->assertEquals(implode(',', $expected), $this->cell->render('\Tests\Support\View\SampleClass::staticEcho', $params));
 	}
 
 	public function testOptionsNoParams()
 	{
 		$expected = [];
 
-		$this->assertEquals(implode(',', $expected), $this->cell->render('\CodeIgniter\View\SampleClass::staticEcho'));
+		$this->assertEquals(implode(',', $expected), $this->cell->render('\Tests\Support\View\SampleClass::staticEcho'));
 	}
 
 	public function testCellEmptyParams()
@@ -150,7 +149,7 @@ class CellTest extends \CIUnitTestCase
 		$params = ',';
 		$expected = 'Hello World';
 
-		$this->assertEquals($expected, $this->cell->render('\CodeIgniter\View\SampleClass::index', $params));
+		$this->assertEquals($expected, $this->cell->render('\Tests\Support\View\SampleClass::index', $params));
 	}
 
 	//--------------------------------------------------------------------
@@ -170,7 +169,7 @@ class CellTest extends \CIUnitTestCase
 		$params = 'one=two,three=four';
 		$expected = ['one' => 'two', 'three' => 'four'];
 
-		$this->assertEquals(implode(',', $expected), $this->cell->render('\CodeIgniter\View\SampleClass::', $params));
+		$this->assertEquals(implode(',', $expected), $this->cell->render('\Tests\Support\View\SampleClass::', $params));
 	}
 
 	public function testCellBadClass()
@@ -188,7 +187,7 @@ class CellTest extends \CIUnitTestCase
 		$params = 'one=two,three=four';
 		$expected = 'Hello World';
 
-		$this->assertEquals($expected, $this->cell->render('\CodeIgniter\View\SampleClass::notThere', $params));
+		$this->assertEquals($expected, $this->cell->render('\Tests\Support\View\SampleClass::notThere', $params));
 	}
 
 	//--------------------------------------------------------------------
@@ -198,9 +197,9 @@ class CellTest extends \CIUnitTestCase
 		$params = 'one=two,three=four';
 		$expected = ['one' => 'two', 'three' => 'four'];
 
-		$this->assertEquals(implode(',', $expected), $this->cell->render('\CodeIgniter\View\SampleClass::echobox', $params, 60, 'rememberme'));
+		$this->assertEquals(implode(',', $expected), $this->cell->render('\Tests\Support\View\SampleClass::echobox', $params, 60, 'rememberme'));
 		$params = 'one=six,three=five';
-		$this->assertEquals(implode(',', $expected), $this->cell->render('\CodeIgniter\View\SampleClass::echobox', $params, 1, 'rememberme'));
+		$this->assertEquals(implode(',', $expected), $this->cell->render('\Tests\Support\View\SampleClass::echobox', $params, 1, 'rememberme'));
 	}
 
 	//--------------------------------------------------------------------
@@ -210,7 +209,7 @@ class CellTest extends \CIUnitTestCase
 		$params = ['p1' => 'one', 'p2' => 'two', 'p4' => 'three'];
 		$expected = 'Right on';
 
-		$this->assertEquals($expected, $this->cell->render('\CodeIgniter\View\SampleClass::work', $params));
+		$this->assertEquals($expected, $this->cell->render('\Tests\Support\View\SampleClass::work', $params));
 	}
 
 	public function testParametersDontMatch()
@@ -219,7 +218,7 @@ class CellTest extends \CIUnitTestCase
 		$params = 'p1=one,p2=two,p3=three';
 		$expected = 'Right on';
 
-		$this->assertEquals($expected, $this->cell->render('\CodeIgniter\View\SampleClass::work', $params));
+		$this->assertEquals($expected, $this->cell->render('\Tests\Support\View\SampleClass::work', $params));
 	}
 
 }
