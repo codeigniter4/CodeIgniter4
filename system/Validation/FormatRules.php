@@ -100,7 +100,7 @@ class FormatRules
 	 */
 	public function alpha_numeric(string $str = null): bool
 	{
-		return ctype_alnum((string) $str);
+		return ctype_alnum($str);
 	}
 
 	//--------------------------------------------------------------------
@@ -155,7 +155,7 @@ class FormatRules
 	 */
 	public function is_natural(string $str = null): bool
 	{
-		return ctype_digit((string) $str);
+		return ctype_digit($str);
 	}
 
 	//--------------------------------------------------------------------
@@ -168,7 +168,7 @@ class FormatRules
 	 */
 	public function is_natural_no_zero(string $str = null): bool
 	{
-		return ($str != 0 && ctype_digit((string) $str));
+		return ($str != 0 && ctype_digit($str));
 	}
 
 	//--------------------------------------------------------------------

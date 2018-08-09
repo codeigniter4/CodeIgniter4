@@ -802,8 +802,6 @@ if ( ! function_exists('set_select'))
 
 		if (is_array($input))
 		{
-			$value = (string) $value;
-
 			// Note: in_array('', array(0)) returns TRUE, do not use it
 			foreach ($input as &$v)
 			{
@@ -840,9 +838,6 @@ if ( ! function_exists('set_checkbox'))
 	 */
 	function set_checkbox(string $field, string $value = '', bool $default = false): string
 	{
-		// Form inputs are always strings ...
-		$value = (string) $value;
-
 		$request = Services::request();
 
 		// Try any old input data we may have first
@@ -897,9 +892,6 @@ if ( ! function_exists('set_radio'))
 	 */
 	function set_radio(string $field, string $value = '', bool $default = false): string
 	{
-		// Form inputs are always strings ...
-		$value = (string) $value;
-
 		$request = Services::request();
 
 		// Try any old input data we may have first

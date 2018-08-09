@@ -242,12 +242,10 @@ if ( ! function_exists('anchor'))
 	 *
 	 * @return string
 	 */
-	function anchor($uri = '', $title = '', $attributes = '', \Config\App $altConfig = null): string
+	function anchor($uri = '', string $title = '', $attributes = '', \Config\App $altConfig = null): string
 	{
 		// use alternate config if provided, else default one
 		$config = empty($altConfig) ? config(\Config\App::class) : $altConfig;
-
-		$title = (string) $title;
 
 		$site_url = is_array($uri) ? site_url($uri, null, $config) : (preg_match('#^(\w+:)?//#i', $uri) ? $uri : site_url($uri, null, $config));
 		// eliminate trailing slash
@@ -286,12 +284,11 @@ if ( ! function_exists('anchor_popup'))
 	 *
 	 * @return string
 	 */
-	function anchor_popup($uri = '', $title = '', $attributes = false, \Config\App $altConfig = null): string
+	function anchor_popup($uri = '', string $title = '', $attributes = false, \Config\App $altConfig = null): string
 	{
 		// use alternate config if provided, else default one
 		$config = empty($altConfig) ? config(\Config\App::class) : $altConfig;
 
-		$title = (string) $title;
 		$site_url = preg_match('#^(\w+:)?//#i', $uri) ? $uri : site_url($uri, '', $config);
 		$site_url = rtrim($site_url, '/');
 
@@ -351,10 +348,8 @@ if ( ! function_exists('mailto'))
 	 *
 	 * @return string
 	 */
-	function mailto($email, $title = '', $attributes = ''): string
+	function mailto($email, string $title = '', $attributes = ''): string
 	{
-		$title = (string) $title;
-
 		if ($title === '')
 		{
 			$title = $email;
@@ -381,10 +376,8 @@ if ( ! function_exists('safe_mailto'))
 	 *
 	 * @return string
 	 */
-	function safe_mailto($email, $title = '', $attributes = ''): string
+	function safe_mailto($email, string $title = '', $attributes = ''): string
 	{
-		$title = (string) $title;
-
 		if ($title === '')
 		{
 			$title = $email;
