@@ -20,7 +20,8 @@
 		"php": ">=7.1",
 		"zendframework/zend-escaper": "^2.5",
 		"paragonie/sodium_compat": "^1.1",
-		"kint-php/kint": "^2.1"
+              "kint-php/kint": "^2.1",
+              "ext-intl": "*"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "^7.0",
