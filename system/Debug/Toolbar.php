@@ -145,7 +145,7 @@ class Toolbar
 			$data['vars']['varData'][esc($heading)] = $vardata;
 		}
 
-		if (isset($_SESSION) && ! empty($_SESSION))
+		if (! empty($_SESSION))
 		{
 			foreach ($_SESSION as $key => $value)
 			{
