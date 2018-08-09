@@ -143,7 +143,7 @@ class CommomFunctionsTest extends \CIUnitTestCase
 	public function testViewCell()
 	{
 		$expected = 'Hello';
-		$this->assertEquals($expected, view_cell('\CodeIgniter\View\SampleClass::hello'));
+		$this->assertEquals($expected, view_cell('\Tests\Support\View\SampleClass::hello'));
 	}
 
 	// ------------------------------------------------------------------------

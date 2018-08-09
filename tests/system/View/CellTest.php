@@ -4,7 +4,7 @@ use CodeIgniter\View\Cell;
 use CodeIgniter\View\Exceptions\ViewException;
 use Tests\Support\Cache\Handlers\MockHandler;
 
-include_once __DIR__ . '/SampleClass.php';
+include_once __DIR__.'/SampleClass.php';
 
 class CellTest extends \CIUnitTestCase
 {

@@ -1,4 +1,4 @@
-<?php namespace Tests\system\View;
+<?php namespace Tests\Support\View;
 
 /**
  * Class SampleClass
