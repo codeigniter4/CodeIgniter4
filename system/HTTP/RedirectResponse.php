@@ -35,7 +35,9 @@
  * @since	Version 3.0.0
  * @filesource
  */
+
 use CodeIgniter\HTTP\Exceptions\HTTPException;
+use Config\App;
 use Config\Services;
 
 class RedirectResponse extends Response
@@ -74,7 +76,7 @@ class RedirectResponse extends Response
 	 *
 	 * @return $this
 	 */
-	public function route(string $route, array $params=[], int $code=null, string $method='auto')
+	public function route(string $route, array $params=[], int $code=302, string $method='auto')
 	{
 		$routes = Services::routes(true);
 
@@ -85,7 +87,7 @@ class RedirectResponse extends Response
 			throw HTTPException::forInvalidRedirectRoute($route);
 		}
 
-		return $this->redirect($route, $method, $code);
+		return $this->redirect( config( App::class )->baseURL.rtrim( $route, '\\' ), $method, $code);
 	}
 
 	/**

@@ -39,7 +39,6 @@
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
-use Config\Honeypot as HoneypotConfig;
 use CodeIgniter\Honeypot\Exceptions\HoneypotException;
 
 class Honeypot 

@@ -1,5 +1,6 @@
 <?php
 
+use CodeIgniter\Session\Handlers\FileHandler;
 use Config\App;
 use Config\Autoload;
 use CodeIgniter\Config\Services;
@@ -8,8 +9,11 @@ use CodeIgniter\HTTP\RequestResponse;
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\HTTP\UserAgent;
+use Config\Logger;
 use Tests\Support\Autoloader\MockFileLocator;
 use Tests\Support\HTTP\MockIncomingRequest;
+use Tests\Support\Log\TestLogger;
+use Tests\Support\Session\MockSession;
 
 /**
  * @backupGlobals enabled
@@ -156,19 +160,38 @@ class CommomFunctionsTest extends \CIUnitTestCase
 
 	// ------------------------------------------------------------------------
 
+	/**
+	 * @runInSeparateProcess
+	 * @preserveGlobalState disabled
+	 */
 	public function testSessionInstance()
 	{
+		$this->injectSessionMock();
+
 		$this->assertInstanceOf(CodeIgniter\Session\Session::class, session());
 	}
 
+	/**
+	 * @runInSeparateProcess
+	 * @preserveGlobalState disabled
+	 */
 	public function testSessionVariable()
 	{
+		$this->injectSessionMock();
+
 		$_SESSION['notbogus'] = 'Hi there';
+
 		$this->assertEquals('Hi there', session('notbogus'));
 	}
 
+	/**
+	 * @runInSeparateProcess
+	 * @preserveGlobalState disabled
+	 */
 	public function testSessionVariableNotThere()
 	{
+		$this->injectSessionMock();
+
 		$_SESSION['bogus'] = 'Hi there';
 		$this->assertEquals(null, session('notbogus'));
 	}
@@ -231,8 +254,13 @@ class CommomFunctionsTest extends \CIUnitTestCase
 
 	// ------------------------------------------------------------------------
 
+	/**
+	 * @runInSeparateProcess
+	 * @preserveGlobalState disabled
+	 */
 	public function testOldInput()
 	{
+		$this->injectSessionMock();
 		// setup from RedirectResponseTest...
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 
@@ -273,6 +301,29 @@ class CommomFunctionsTest extends \CIUnitTestCase
 		$this->assertEquals('/', slash_item('cookiePath')); // slash already there
 		$this->assertEquals('', slash_item('cookieDomain')); // empty, so untouched
 		$this->assertEquals('en/', slash_item('defaultLocale')); // slash appended
+	}
+
+	protected function injectSessionMock()
+	{
+		$defaults = [
+			'sessionDriver' => 'CodeIgniter\Session\Handlers\FileHandler',
+			'sessionCookieName' => 'ci_session',
+			'sessionExpiration' => 7200,
+			'sessionSavePath' => null,
+			'sessionMatchIP' => false,
+			'sessionTimeToUpdate' => 300,
+			'sessionRegenerateDestroy' => false,
+			'cookieDomain' => '',
+			'cookiePrefix' => '',
+			'cookiePath' => '/',
+			'cookieSecure' => false,
+		];
+
+		$config = (object)$defaults;
+
+		$session = new MockSession(new FileHandler($config), $config);
+		$session->setLogger(new TestLogger(new Logger()));
+		\CodeIgniter\Config\BaseService::injectMock('session', $session);
 	}
 
 }

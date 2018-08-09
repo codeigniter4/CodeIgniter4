@@ -8,7 +8,7 @@
     {/userFiles}
     {coreFiles}
         <tr class="muted">
-            <td style="width: 20em;">{name}</td>
+            <td class="debug-bar-width20e">{name}</td>
             <td>{path}</td>
         </tr>
     {/coreFiles}

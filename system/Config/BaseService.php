@@ -36,7 +36,6 @@
  * @filesource
  */
 
-use CodeIgniter\Autoloader\FileLocator;
 
 /**
  * Services Configuration file.

@@ -18,12 +18,36 @@ function loadDoc(time) {
 			if (!toolbar) {
 				toolbar = document.createElement('div');
 				toolbar.setAttribute('id', 'toolbarContainer');
-				toolbar.innerHTML = this.responseText;
 				document.body.appendChild(toolbar);
-			} else {
-				toolbar.innerHTML = this.responseText;
 			}
-			eval(document.getElementById("toolbar_js").innerHTML);
+
+			// copy for easier manipulation
+			let responseText = this.responseText;
+
+			// get csp blocked parts
+			// the style block is the first and starts at 0
+			{
+				let PosBeg = responseText.indexOf( '>', responseText.indexOf( '<style' ) ) + 1;
+				let PosEnd = responseText.indexOf( '</style>', PosBeg );
+				document.getElementById( 'debugbar_dynamic_style' ).innerHTML = responseText.substr( PosBeg, PosEnd )
+				responseText = responseText.substr( PosEnd + 8 );
+			}
+			// the script block starts right after style blocks ended
+			{
+				let PosBeg = responseText.indexOf( '>', responseText.indexOf( '<script' ) ) + 1;
+				let PosEnd = responseText.indexOf( '</script>' );
+				document.getElementById( 'debugbar_dynamic_script' ).innerHTML = responseText.substr( PosBeg, PosEnd - PosBeg );
+				responseText = responseText.substr( PosEnd + 9 );
+			}
+			// check for last style block
+			{
+				let PosBeg = responseText.indexOf( '>', responseText.lastIndexOf( '<style' ) ) + 1;
+				let PosEnd = responseText.indexOf( '</style>', PosBeg );
+				document.getElementById( 'debugbar_dynamic_style' ).innerHTML += responseText.substr( PosBeg, PosEnd - PosBeg );
+				responseText = responseText.substr( 0, PosBeg );
+			}
+
+			toolbar.innerHTML = responseText;
 			if (typeof ciDebugBar === 'object') {
 				ciDebugBar.init();
 			}

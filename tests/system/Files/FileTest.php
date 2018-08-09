@@ -41,7 +41,7 @@ class FileTest extends \CIUnitTestCase
 		$this->assertNotEquals($result1, $file->getRandomName());
 	}
 
-	public function testCanAccessSPLFileInfoMethods()
+	public function testCanAccessSplFileInfoMethods()
 	{
 		$file = new File(BASEPATH . 'Common.php');
 		$this->assertEquals('file', $file->getType());
