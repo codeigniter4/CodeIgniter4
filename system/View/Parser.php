@@ -328,7 +328,7 @@ class Parser extends View
 	{
 		$pattern = '#' . $this->leftDelimiter . '!?\s*' . preg_quote($key) . '\s*\|*\s*([|a-zA-Z0-9<>=\(\),:_\-\s\+]+)*\s*!?' . $this->rightDelimiter . '#ms';
 
-		return [$pattern => (string) $val];
+		return [$pattern => $val];
 	}
 
 	//--------------------------------------------------------------------
