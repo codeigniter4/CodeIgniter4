@@ -345,27 +345,6 @@ class Services extends BaseService
 	//--------------------------------------------------------------------
 
 	/**
-	 * The file locator provides utility methods for looking for non-classes
-	 * within namespaced folders, as well as convenience methods for
-	 * loading 'helpers', and 'libraries'.
-	 *
-	 * @param bool $getShared
-	 *
-	 * @return \CodeIgniter\Autoloader\FileLocator
-	 */
-	public static function locator($getShared = true)
-	{
-		if ($getShared)
-		{
-			return self::getSharedInstance('locator');
-		}
-
-		return new \CodeIgniter\Autoloader\FileLocator(new \Config\Autoload());
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
 	 * The Logger class is a PSR-3 compatible Logging class that supports
 	 * multiple handlers that process the actual logging.
 	 *
@@ -699,7 +678,7 @@ class Services extends BaseService
 
 		$session = new \CodeIgniter\Session\Session($driver, $config);
 		$session->setLogger($logger);
-		
+
 		if (session_status() == PHP_SESSION_NONE)
 		{
 			$session->start();
