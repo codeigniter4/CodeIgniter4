@@ -698,6 +698,8 @@ class IncomingRequest extends Request
 					$uri = (string) substr($uri, strpos($uri, $_SERVER['SCRIPT_NAME']) + strlen($_SERVER['SCRIPT_NAME']));
 				elseif (strpos($uri, dirname($_SERVER['SCRIPT_NAME'])) > 0)
 					$uri = (string) substr($uri, strpos($uri, dirname($_SERVER['SCRIPT_NAME'])));
+				else
+					$uri = (string) substr($uri, strlen(dirname($_SERVER['SCRIPT_NAME'])));
 		}
 
 		// This section ensures that even on servers that require the URI to contain the query string (Nginx) a correct
