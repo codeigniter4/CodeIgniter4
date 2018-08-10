@@ -230,6 +230,13 @@ class Toolbar
 
 		for ($i = 0; $i < $total; $i++)
 		{
+                        // Oldest files will be deleted
+			if ($app->toolbarMaxHistory >= 0 && $i+1 > $app->toolbarMaxHistory)
+			{
+				unlink($filenames[$i]);
+				continue;
+                        }
+
 			// Get the contents of this specific history request
 			ob_start();
 			include($filenames[$i]);
@@ -239,7 +246,7 @@ class Toolbar
 			$file = json_decode($contents, true);
 
 			// Debugbar files shown in History Collector
-			$files[$i] = [
+			$files[] = [
 				'time'        => (int)$time = substr($filenames[$i], -10),
 				'datetime'    => date('Y-m-d H:i:s', $time),
 				'active'      => (int)($time == $current),
@@ -249,13 +256,6 @@ class Toolbar
 				'isAJAX'      => $file['isAJAX'] ? 'Yes' : 'No',
 				'contentType' => $file['vars']['response']['contentType'],
 			];
-
-			// Oldest files will be deleted
-			if ($app->toolbarMaxHistory >= 0 && $i >= $app->toolbarMaxHistory)
-			{
-				unlink($filenames[$i]);
-				continue;
-			}
 		}
 
 		// Set the History here. Class is not necessary
