@@ -168,7 +168,7 @@ class View implements RendererInterface
 		}
 
 		$fileExt = pathinfo($view, PATHINFO_EXTENSION);
-		$realPath = ($fileExt === NULL) ? $view.'.php' : $view; // allow Views as .html, .tpl, etc (from CI3)
+		$realPath = empty($fileExt) ? $view.'.php' : $view; // allow Views as .html, .tpl, etc (from CI3)
 		$this->renderVars['view'] = $realPath;
 		$this->renderVars['options'] = $options;
 
