@@ -1173,7 +1173,7 @@ class RouteCollection implements RouteCollectionInterface
 		$options = array_merge((array)$this->currentOptions, (array)$options);
 
 		// Hostname limiting?
-		if (isset($options['hostname']) && ! empty($options['hostname']))
+		if (! empty($options['hostname']))
 		{
 			// @todo determine if there's a way to whitelist hosts?
 			if (strtolower($_SERVER['HTTP_HOST']) != strtolower($options['hostname']))
