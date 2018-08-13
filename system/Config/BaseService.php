@@ -215,7 +215,7 @@ class BaseService
 			{
 				$classname = $locator->getClassname($file);
 
-				if (! in_array($classname, ['Config\\Services', 'CodeIgniter\\Config\\Services']))
+				if (! in_array($classname, ['CodeIgniter\\Config\\Services']))
 				{
 					static::$services[] = new $classname();
 				}
@@ -232,7 +232,7 @@ class BaseService
 		// Try to find the desired service method
 		foreach (static::$services as $class)
 		{
-			if (method_exists($class, $name))
+			if (method_exists(get_class($class), $name))
 			{
 				return $class::$name(...$arguments);
 			}
