@@ -297,25 +297,6 @@ class Parser extends View
 	}
 
 	//--------------------------------------------------------------------
-//FIXME the following method does not appear to be used anywhere, so commented out
-//	protected function is_assoc($arr)
-//	{
-//		return array_keys($arr) !== range(0, count($arr) - 1);
-//	}
-	//--------------------------------------------------------------------
-//FIXME the following method does not appear to be used anywhere, so commented out
-//	function strpos_all($haystack, $needle)
-//	{
-//		$offset = 0;
-//		$allpos = [];
-//		while (($pos = strpos($haystack, $needle, $offset)) !== FALSE)
-//		{
-//			$offset = $pos + 1;
-//			$allpos[] = $pos;
-//		}
-//		return $allpos;
-//	}
-	//--------------------------------------------------------------------
 
 	/**
 	 * Parse a single key/value, extracting it

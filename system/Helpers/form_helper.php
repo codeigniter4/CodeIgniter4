@@ -58,12 +58,10 @@ if ( ! function_exists('form_open'))
 		// If no action is provided then set to the current url
 		if ( ! $action)
 		{
-			helper('url');
 			$action = current_url(true);
 		} // If an action is not a full URL then turn it into one
 		elseif (strpos($action, '://') === false)
 		{
-			helper('url');
 			$action = site_url($action);
 		}
 
