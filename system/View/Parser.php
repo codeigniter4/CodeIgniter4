@@ -143,7 +143,7 @@ class Parser extends View
 			}
 		}
 
-                $view = $view . '.php';
+               $view = $view . '.php';
 		$file = $this->viewPath . $view;
 
 		if ( ! file_exists($file))
