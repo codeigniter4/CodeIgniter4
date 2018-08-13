@@ -711,7 +711,7 @@ class Parser extends View
 			$isPair = is_array($callable);
 			$callable = $isPair ? array_shift($callable) : $callable;
 
-			$pattern = $isPair ? '#{\+\s*' . $plugin . '([\w\d=-_:\+\s()\"@.]*)?\s*\+}(.+?){\+\s*/' . $plugin . '\s*\+}#ims' : '#{\+\s*' . $plugin . '([\w\d=-_:\+\s()\"@.]*)?\s*\+}#ims';
+			$pattern = $isPair ? '#{\+\s*' . $plugin . '([\w\d=-_:\+\s()/\"@.]*)?\s*\+}(.+?){\+\s*/' . $plugin . '\s*\+}#ims' : '#{\+\s*' . $plugin . '([\w\d=-_:\+\s()/\"@.]*)?\s*\+}#ims';
 
 			/**
 			 * Match tag pairs
