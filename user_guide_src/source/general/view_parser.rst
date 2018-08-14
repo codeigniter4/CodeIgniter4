@@ -481,10 +481,12 @@ Plugin               Arguments                  Description                     
 ==================== ========================== ================================================================================== ================================================================
 current_url                                     Alias for the current_url helper function.                            			   {+ current_url +}
 previous_url                                    Alias for the previous_url helper function.                           			   {+ previous_url +}
+site_url                                        Alias for the site_url helper function.                                            {+ site_url "login" +}
 mailto               email, title, attributes   Alias for the mailto helper function.                                 			   {+ mailto email=foo@example.com title="Stranger Things" +}
 safe_mailto          email, title, attributes   Alias for the safe_mailto helper function.                            			   {+ safe_mailto email=foo@example.com title="Stranger Things" +}
 lang                 language string            Alias for the lang helper function.                                    			   {+ lang number.terabyteAbbr +}
 validation_errors    fieldname(optional)        Returns either error string for the field (if specified) or all validation errors. {+ validation_errors +} , {+ validation_errors field="email" +}
+route                route name                 Alias for the route_to helper function.                                            {+ route "login" +}
 ==================== ========================== ================================================================================== ================================================================
 
 Registering a Plugin

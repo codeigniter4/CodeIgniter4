@@ -125,4 +125,27 @@ class Plugins
 		return $validator->showError($params['field']);
 	}
 
+	//--------------------------------------------------------------------
+
+	/**
+	 * @param array $params
+	 *
+	 * @return string|
+	 */
+	public static function route(array $params = [])
+	{
+		return route_to(...$params);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * @param array $params
+	 *
+	 * @return string
+	 */
+	public static function siteURL(array $params = [])
+	{
+		return site_url(...$params);
+	}
 }

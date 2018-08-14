@@ -68,6 +68,8 @@ class View extends BaseConfig
 		'safe_mailto'       => '\CodeIgniter\View\Plugins::safeMailto',
 		'lang'              => '\CodeIgniter\View\Plugins::lang',
 		'validation_errors' => '\CodeIgniter\View\Plugins::validationErrors',
+		'route'             => '\CodeIgniter\View\Plugins::route',
+		'siteURL'           => '\CodeIgniter\View\Plugins::siteURL',
 	];
 
 	public function __construct()
