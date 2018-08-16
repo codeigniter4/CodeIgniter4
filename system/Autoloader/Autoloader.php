@@ -165,7 +165,7 @@ class Autoloader
 	 *
 	 * @return Autoloader
 	 */
-	public function addNamespace($namespace, $path)
+	public function addNamespace(string $namespace, string $path)
 	{
 		if (isset($this->prefixes[$namespace]))
 		{
@@ -194,7 +194,7 @@ class Autoloader
 	 *
 	 * @return Autoloader
 	 */
-	public function removeNamespace($namespace)
+	public function removeNamespace(string $namespace)
 	{
 		unset($this->prefixes[$namespace]);
 
@@ -211,7 +211,7 @@ class Autoloader
 	 * @return mixed            The mapped file on success, or boolean false
 	 *                          on failure.
 	 */
-	public function loadClass($class)
+	public function loadClass(string $class)
 	{
 		$class = trim($class, '\\');
 		$class = str_ireplace('.php', '', $class);
@@ -237,7 +237,7 @@ class Autoloader
 	 *
 	 * @return mixed            The mapped file name on success, or boolean false on fail
 	 */
-	protected function loadInNamespace($class)
+	protected function loadInNamespace(string $class)
 	{
 		if (strpos($class, '\\') === false)
 		{
@@ -283,7 +283,7 @@ class Autoloader
 	 *
 	 * @return mixed    The mapped file name on success, or boolean false on failure
 	 */
-	protected function loadLegacy($class)
+	protected function loadLegacy(string $class)
 	{
 		// If there is a namespace on this class, then
 		// we cannot load it from traditional locations.
@@ -323,7 +323,7 @@ class Autoloader
 	 *
 	 * @return bool
 	 */
-	protected function requireFile($file)
+	protected function requireFile(string $file)
 	{
 		$file = $this->sanitizeFilename($file);
 
