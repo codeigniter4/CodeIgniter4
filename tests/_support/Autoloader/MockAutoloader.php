@@ -16,7 +16,7 @@ class MockAutoloader extends Autoloader
 
 	//--------------------------------------------------------------------
 
-	protected function requireFile($file)
+	protected function requireFile(string $file)
 	{
 		return in_array($file, $this->files) ? $file : false;
 	}
