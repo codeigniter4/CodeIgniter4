@@ -58,12 +58,13 @@ class DebugToolbar implements FilterInterface
 
 			write_file(WRITEPATH .'debugbar/'.'debugbar_' . $time, $data, 'w+');
 
-			$format = $response->getHeaderLine('content-type');
+                        $format = $response->getHeaderLine('content-type');
+                        $hasHtmlBody = strpos($response->getBody(), '</body>') !== false;
 
-			// Non-HTML formats should not include the debugbar
+			// Ajax, Non-HTML formats and not has HTML </body> should not include the debugbar
 			// then we send headers saying where to find the debug data
 			// for this response
-			if ($request->isAJAX() || strpos($format, 'html') === false)
+			if ($request->isAJAX() || strpos($format, 'html') === false || $hasHtmlBody === false)
 			{
 				return $response->setHeader('Debugbar-Time', (string)$time)
 								->setHeader('Debugbar-Link', site_url("?debugbar_time={$time}"))
@@ -78,7 +79,7 @@ class DebugToolbar implements FilterInterface
 				. '<style type="text/css" {csp-style-nonce} id="debugbar_dynamic_style"></style>'
 				. PHP_EOL;
 
-			if (strpos($response->getBody(), '</body>') !== false)
+			if ($hasHtmlBody === true)
 			{
 				return $response->setBody(str_replace('</body>', $script . '</body>',
 					$response->getBody()));
