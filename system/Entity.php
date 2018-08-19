@@ -104,6 +104,32 @@ class Entity
 	//--------------------------------------------------------------------
 
 	/**
+	 * General method that will return all public and protected
+	 * values of this entity as an array. All values are accessed
+	 * through the __get() magic method so will have any casts, etc
+	 * applied to them.
+	 */
+	public function toArray(): array
+	{
+		$return = [];
+
+		// we need to loop over our properties so that we
+		// allow our magic methods a chance to do their thing.
+		$properties = get_object_vars($this);
+
+		foreach ($properties as $key => $value)
+		{
+			if ($key == '_options') continue;
+
+			$return[$key] = $this->__get($key);
+		}
+
+		return $return;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Magic method to allow retrieval of protected and private
 	 * class properties either by their name, or through a `getCamelCasedProperty()`
 	 * method.

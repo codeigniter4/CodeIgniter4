@@ -352,6 +352,20 @@ class EntityTest extends \CIUnitTestCase
 		$this->assertEquals(['foo' => 'bar'], $entity->seventh);
 	}
 
+	public function testAsArray()
+	{
+		$entity = $this->getEntity();
+
+		$result = $entity->toArray();
+
+		$this->assertEquals($result, [
+			'foo' => null,
+			'bar' => ':bar',
+			'default' => 'sumfin',
+			'created_at' => null
+		]);
+	}
+
 
 	protected function getEntity()
 	{

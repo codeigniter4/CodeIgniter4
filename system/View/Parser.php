@@ -255,6 +255,7 @@ class Parser extends View
 		{
 			return '';
 		}
+		if ($template=='forums/categories') { dd($data); }
 
 		// Remove any possible PHP tags since we don't support it
 		// and parseConditionals needs it clean anyway...
@@ -351,6 +352,18 @@ class Parser extends View
 			$str = '';  // holds the new contents for this tag pair.
 			foreach ($data as $row)
 			{
+				// Objects that have a `toArray()` method should be
+				// converted with that method (i.e. Entities)
+				if (is_object($row) && method_exists($row, 'toArray'))
+				{
+					$row = $row->toArray();
+				}
+				// Otherwise, cast as an array and it will grab public properties.
+				else if (is_object($row))
+				{
+					$row = (array)$row;
+				}
+
 				$temp = [];
 				$out = $match[1];
 				foreach ($row as $key => $val)
@@ -494,7 +507,7 @@ class Parser extends View
 			// Build the string to replace the `if` statement with.
 			$condition = $match[2];
 
-			$statement = $match[1] == 'elseif' ? '<?php elseif ($' . $condition . '): ?>' : '<?php if ($' . $condition . '): ?>';
+			$statement = $match[1] == 'elseif' ? '<?php elseif (' . $condition . '): ?>' : '<?php if (' . $condition . '): ?>';
 			$template = str_replace($match[0], $statement, $template);
 		}
 

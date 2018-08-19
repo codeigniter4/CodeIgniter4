@@ -208,6 +208,40 @@ class ParserTest extends \CIUnitTestCase
 
 	// --------------------------------------------------------------------
 
+	public function testParseLoopEntityProperties()
+	{
+		$power = new class extends \CodeIgniter\Entity {
+			public $foo = 'bar';
+			protected $bar = 'baz';
+			public function shout()
+			{
+				return $this->bar;
+			}
+			public function toArray(): array
+			{
+				return [
+					'foo' => $this->foo,
+					'bar' => $this->bar,
+				];
+			}
+		};
+
+		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
+		$data = [
+			'title'	 => 'Super Heroes',
+			'powers' => [
+				$power
+			],
+		];
+
+		$template = "{title}\n{powers} {foo} {bar} {/powers}";
+
+		$parser->setData($data);
+		$this->assertEquals("Super Heroes\n bar baz ", $parser->renderString($template));
+	}
+
+	// --------------------------------------------------------------------
+
 	public function testMismatchedVarPair()
 	{
 		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
