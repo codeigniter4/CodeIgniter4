@@ -64,12 +64,12 @@ class Header
 	//--------------------------------------------------------------------
 
 	/**
-	 * Header constructor. If a name or value is provided they will be set.
+	 * Header constructor. name is mandatory, if a value is provided, it will be set.
 	 *
-	 * @param string|null        $name
+	 * @param string             $name
 	 * @param string|array|null  $value
 	 */
-	public function __construct(string $name = null, $value = null)
+	public function __construct(string $name, $value = null)
 	{
 		$this->name = $name;
 		$this->value = $value;
