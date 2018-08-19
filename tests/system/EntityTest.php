@@ -366,6 +366,20 @@ class EntityTest extends \CIUnitTestCase
 		]);
 	}
 
+	public function testAsArrayMapped()
+	{
+		$entity = $this->getMappedEntity();
+
+		$result = $entity->toArray();
+
+		$this->assertEquals($result, [
+			'foo' => null,
+			'simple' => ':oo',
+			'bar' => null,
+			'orig' => ':oo'
+		]);
+	}
+
 
 	protected function getEntity()
 	{

@@ -124,6 +124,15 @@ class Entity
 			$return[$key] = $this->__get($key);
 		}
 
+		// Loop over our mapped properties and add them to the list...
+		if (is_array($this->_options['datamap']))
+		{
+			foreach ($this->_options['datamap'] as $from => $to)
+			{
+				$return[$from] = $this->__get($to);
+			}
+		}
+
 		return $return;
 	}
 
