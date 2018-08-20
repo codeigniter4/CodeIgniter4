@@ -856,7 +856,7 @@ class CodeIgniter
 			}
 		}
 
-		throw PageNotFoundException::forPageNotFound();
+		throw PageNotFoundException::forPageNotFound($e->getMessage());
 	}
 
 	//--------------------------------------------------------------------
