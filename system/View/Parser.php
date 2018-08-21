@@ -255,7 +255,6 @@ class Parser extends View
 		{
 			return '';
 		}
-		if ($template=='forums/categories') { dd($data); }
 
 		// Remove any possible PHP tags since we don't support it
 		// and parseConditionals needs it clean anyway...
