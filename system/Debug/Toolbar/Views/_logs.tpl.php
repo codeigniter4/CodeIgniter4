@@ -1,4 +1,4 @@
-{ if logs == [] }
+{ if $logs == [] }
 <p>Nothing was logged. If you were expecting logged items, ensure that LoggerConfig file has the correct threshold set.</p>
 { else }
 <table>
