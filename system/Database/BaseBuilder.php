@@ -260,6 +260,19 @@ class BaseBuilder
 			if ($val !== '')
 			{
 				$this->QBSelect[] = $val;
+
+				/*
+				 * When doing 'SELECT NULL as field_alias FROM table'
+				 * null gets taken as a field, and therefore escaped
+				 * with backticks.
+				 * This prevents NULL being escaped
+				 * @see https://github.com/bcit-ci/CodeIgniter4/issues/1169
+				 */
+				if ( strtoupper(mb_substr(trim($val), 0, 4)) == 'NULL')
+				{
+					$escape = false;
+				}
+
 				$this->QBNoEscape[] = $escape;
 			}
 		}
