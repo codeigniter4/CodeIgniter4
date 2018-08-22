@@ -143,7 +143,7 @@ class Parser extends View
 			}
 		}
 
-               $view = $view . '.php';
+		$view = $view . '.php';
 		$file = $this->viewPath . $view;
 
 		if ( ! file_exists($file))
@@ -225,8 +225,20 @@ class Parser extends View
 	{
 		if ( ! empty($context))
 		{
-			foreach ($data as $key => $value)
+			foreach ($data as $key => &$value)
 			{
+				if (is_array($value))
+				{
+					foreach ($value as &$obj)
+					{
+						$obj = $this->objectToArray($obj);
+					}
+				}
+				else
+				{
+					$value = $this->objectToArray($value);
+				}
+
 				$this->dataContexts[$key] = $context;
 			}
 		}
@@ -367,10 +379,12 @@ class Parser extends View
 				$out = $match[1];
 				foreach ($row as $key => $val)
 				{
+
 					// For nested data, send us back through this method...
 					if (is_array($val))
 					{
 						$pair = $this->parsePair($key, $val, $match[1]);
+
 						if ( ! empty($pair))
 						{
 							$temp = array_merge($temp, $pair);
@@ -804,6 +818,31 @@ class Parser extends View
 		unset($this->plugins[$alias]);
 
 		return $this;
+	}
+
+	/**
+	 * Converts an object to an array, respecting any
+	 * toArray() methods on an object.
+	 *
+	 * @param $value
+	 *
+	 * @return mixed
+	 */
+	protected function objectToArray($value)
+	{
+		// Objects that have a `toArray()` method should be
+		// converted with that method (i.e. Entities)
+		if (is_object($value) && method_exists($value, 'toArray'))
+		{
+			$value = $value->toArray();
+		}
+		// Otherwise, cast as an array and it will grab public properties.
+		else if (is_object($value))
+		{
+			$value = (array)$value;
+		}
+
+		return $value;
 	}
 
 	//--------------------------------------------------------------------

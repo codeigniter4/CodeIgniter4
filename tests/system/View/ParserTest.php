@@ -213,15 +213,15 @@ class ParserTest extends \CIUnitTestCase
 		$power = new class extends \CodeIgniter\Entity {
 			public $foo = 'bar';
 			protected $bar = 'baz';
-			public function shout()
-			{
-				return $this->bar;
-			}
 			public function toArray(): array
 			{
 				return [
 					'foo' => $this->foo,
 					'bar' => $this->bar,
+					'bobbles' => [
+						['name' => 'first'],
+						['name' => 'second'],
+					],
 				];
 			}
 		};
@@ -234,10 +234,10 @@ class ParserTest extends \CIUnitTestCase
 			],
 		];
 
-		$template = "{title}\n{powers} {foo} {bar} {/powers}";
+		$template = "{title}\n{powers} {foo} {bar} {bobbles}{name} {/bobbles}{/powers}";
 
 		$parser->setData($data);
-		$this->assertEquals("Super Heroes\n bar baz ", $parser->renderString($template));
+		$this->assertEquals("Super Heroes\n bar baz first second ", $parser->renderString($template));
 	}
 
 	// --------------------------------------------------------------------
