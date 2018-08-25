@@ -1,8 +1,9 @@
 <?php namespace CodeIgniter\Validation;
 
 use Config\Database;
+use CodeIgniter\Test\CIDatabaseTestCase;
 
-class UniqueRulesTest extends \CIDatabaseTestCase
+class UniqueRulesTest extends CIDatabaseTestCase
 {
 	protected $refresh =true;
 
@@ -17,7 +18,7 @@ class UniqueRulesTest extends \CIDatabaseTestCase
 			\CodeIgniter\Validation\FormatRules::class,
 			\CodeIgniter\Validation\FileRules::class,
 			\CodeIgniter\Validation\CreditCardRules::class,
-			\CodeIgniter\Validation\TestRules::class,
+			\Tests\Support\Validation\TestRules::class,
 		],
 		'groupA'        => [
 			'foo' => 'required|min_length[5]',
