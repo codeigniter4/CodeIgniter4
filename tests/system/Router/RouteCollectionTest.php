@@ -783,6 +783,25 @@ class RouteCollectionTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	public function testDiscoverLocalAllowsConfigToOverridePackages()
+	{
+		$config = [
+			'SampleSpace' => TESTPATH .'_support'
+		];
+
+		$routes = $this->getCollector($config);
+		$routes->discoverLocal(true);
+
+		$routes->add('testing', 'MainRoutes::index');
+
+		$match = $routes->getRoutes();
+
+		$this->assertArrayHasKey('testing', $match);
+		$this->assertEquals($match['testing'], '\MainRoutes::index');
+	}
+
+	//--------------------------------------------------------------------
+
 	public function testRoutesOptions()
 	{
 		$routes = $this->getCollector();

@@ -1232,13 +1232,23 @@ class RouteCollection implements RouteCollectionInterface
 			$to = '\\' . ltrim($to, '\\');
 		}
 
-		$this->routesOptions[$from] = $options;
-
 		$name = $options['as'] ?? $from;
+
+		// Don't overwrite any existing 'froms' so that auto-discovered routes
+		// do not overwrite any application/Config/Routes settings. The app
+		// routes should always be the "source of truth".
+		// this works only because discovered routes are added just prior
+		// to attempting to route the request.
+		if (isset($this->routes[$verb][$name]))
+		{
+			return;
+		}
 
 		$this->routes[$verb][$name] = [
 			'route' => [$from => $to]
 		];
+
+		$this->routesOptions[$from] = $options;
 
 		// Is this a redirect?
 		if (isset($options['redirect']) && is_numeric($options['redirect']))
