@@ -42,21 +42,17 @@ class GDHandler extends BaseHandler
 
 	public $version;
 
-	/**
-	 * Stores image resource in memory.
-	 *
-	 * @var
-	 */
-	protected $resource;
-
 	public function __construct($config = null)
 	{
 		parent::__construct($config);
 
+		// We should never see this, so can't test it
+		// @codeCoverageIgnoreStart
 		if ( ! extension_loaded('gd'))
 		{
-			throw new ImageException('GD Extension is not loaded.');
+			throw ImageException::forMissingExtension('GD');
 		}
+		// @codeCoverageIgnoreEnd
 	}
 
 	//--------------------------------------------------------------------
@@ -72,10 +68,7 @@ class GDHandler extends BaseHandler
 	protected function _rotate(int $angle)
 	{
 		// Create the image handle
-		if ( ! ($srcImg = $this->createImage()))
-		{
-			return false;
-		}
+		$srcImg = $this->createImage();
 
 		// Set the background color
 		// This won't work with transparent PNG files so we are
@@ -85,7 +78,7 @@ class GDHandler extends BaseHandler
 		$white = imagecolorallocate($srcImg, 255, 255, 255);
 
 		// Rotate it!
-		$destImg = imagerotate($this->resource, $angle, $white);
+		$destImg = imagerotate($srcImg, $angle, $white);
 
 		// Kill the file handles
 		imagedestroy($srcImg);
@@ -106,12 +99,9 @@ class GDHandler extends BaseHandler
 	 *
 	 * @return $this
 	 */
-	public function _flatten(int $red = 255, int $green = 255, int $blue = 255) {
-
-		if ( ! ($src = $this->createImage()))
-		{
-			return false;
-		}
+	public function _flatten(int $red = 255, int $green = 255, int $blue = 255)
+	{
+		$srcImg = $this->createImage();
 
 		if (function_exists('imagecreatetruecolor'))
 		{
@@ -128,15 +118,14 @@ class GDHandler extends BaseHandler
 		$matte = imagecolorallocate($dest, $red, $green, $blue);
 
 		imagefilledrectangle($dest, 0, 0, $this->width, $this->height, $matte);
-		imagecopy($dest, $src, 0, 0, 0, 0, $this->width, $this->height);
+		imagecopy($dest, $srcImg, 0, 0, 0, 0, $this->width, $this->height);
 
 		// Kill the file handles
-		imagedestroy($src);
+		imagedestroy($srcImg);
 
 		$this->resource = $dest;
 
 		return $this;
-
 	}
 
 	//--------------------------------------------------------------------
@@ -157,7 +146,7 @@ class GDHandler extends BaseHandler
 
 		if ($direction === 'horizontal')
 		{
-			for ($i = 0; $i < $height; $i ++ )
+			for ($i = 0; $i < $height; $i ++)
 			{
 				$left = 0;
 				$right = $width - 1;
@@ -177,7 +166,7 @@ class GDHandler extends BaseHandler
 		}
 		else
 		{
-			for ($i = 0; $i < $width; $i ++ )
+			for ($i = 0; $i < $width; $i ++)
 			{
 				$top = 0;
 				$bottom = $height - 1;
@@ -326,38 +315,38 @@ class GDHandler extends BaseHandler
 			case IMAGETYPE_GIF:
 				if ( ! function_exists('imagegif'))
 				{
-					throw new ImageException(lang('images.unsupportedImagecreate') . ' ' . lang('images.gifNotSupported'));
+					throw ImageException::forInvalidImageCreate(lang('images.gifNotSupported'));
 				}
 
 				if ( ! @imagegif($this->resource, $target))
 				{
-					throw new ImageException(lang('images.saveFailed'));
+					throw ImageException::forSaveFailed();
 				}
 				break;
 			case IMAGETYPE_JPEG:
 				if ( ! function_exists('imagejpeg'))
 				{
-					throw new ImageException(lang('images.unsupportedImagecreate') . ' ' . lang('images.jpgNotSupported'));
+					throw ImageException::forInvalidImageCreate(lang('images.jpgNotSupported'));
 				}
 
 				if ( ! @imagejpeg($this->resource, $target, $quality))
 				{
-					throw new ImageException(lang('images.saveFailed'));
+					throw ImageException::forSaveFailed();
 				}
 				break;
 			case IMAGETYPE_PNG:
 				if ( ! function_exists('imagepng'))
 				{
-					throw new ImageException(lang('images.unsupportedImagecreate') . ' ' . lang('images.pngNotSupported'));
+					throw ImageException::forInvalidImageCreate(lang('images.pngNotSupported'));
 				}
 
 				if ( ! @imagepng($this->resource, $target))
 				{
-					throw new ImageException(lang('images.saveFailed'));
+					throw ImageException::forSaveFailed();
 				}
 				break;
 			default:
-				throw new ImageException(lang('images.unsupportedImagecreate'));
+				throw ImageException::forInvalidImageCreate();
 				break;
 		}
 
@@ -403,26 +392,26 @@ class GDHandler extends BaseHandler
 			case IMAGETYPE_GIF:
 				if ( ! function_exists('imagecreatefromgif'))
 				{
-					throw new ImageException(lang('images.gifNotSupported'));
+					throw ImageException::forInvalidImageCreate(lang('images.gifNotSupported'));
 				}
 
 				return imagecreatefromgif($path);
 			case IMAGETYPE_JPEG:
 				if ( ! function_exists('imagecreatefromjpeg'))
 				{
-					throw new ImageException(lang('images.jpgNotSupported'));
+					throw ImageException::forInvalidImageCreate(lang('images.jpgNotSupported'));
 				}
 
 				return imagecreatefromjpeg($path);
 			case IMAGETYPE_PNG:
 				if ( ! function_exists('imagecreatefrompng'))
 				{
-					throw new ImageException(lang('images.pngNotSupported'));
+					throw ImageException::forInvalidImageCreate(lang('images.pngNotSupported'));
 				}
 
 				return imagecreatefrompng($path);
 			default:
-				throw new ImageException(lang('images.unsupportedImagecreate'));
+				throw ImageException::forInvalidImageCreate('Ima');
 		}
 	}
 
@@ -560,4 +549,15 @@ class GDHandler extends BaseHandler
 	}
 
 	//--------------------------------------------------------------------
+
+	public function _getWidth()
+	{
+		return imagesx($this->resource);
+	}
+
+	public function _getHeight()
+	{
+		return imagesy($this->resource);
+	}
+
 }

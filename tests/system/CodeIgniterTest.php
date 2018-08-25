@@ -1,8 +1,9 @@
 <?php namespace CodeIgniter;
 
-use CodeIgniter\Autoloader\MockFileLocator;
-use CodeIgniter\Router\RouteCollection;
 use Config\App;
+use Tests\Support\MockCodeIgniter;
+use CodeIgniter\Router\RouteCollection;
+use Tests\Support\Autoloader\MockFileLocator;
 
 /**
  * @backupGlobals enabled
@@ -20,7 +21,11 @@ class CodeIgniterTest extends \CIUnitTestCase
 
 	public function setUp()
 	{
+		parent::setUp();
+
 		Services::reset();
+
+		$_SERVER['SERVER_PROTOCOL'] = 'HTTP/1.1';
 
 		$config = new App();
 		$this->codeigniter = new MockCodeIgniter($config);
@@ -37,7 +42,7 @@ class CodeIgniterTest extends \CIUnitTestCase
 		$_SERVER['argc'] = 2;
 
 		ob_start();
-		$this->codeigniter->run();
+		$this->codeigniter->useSafeOutput(true)->run();
 		$output = ob_get_clean();
 
 		$this->assertContains('<h1>Welcome to CodeIgniter</h1>', $output);
@@ -53,39 +58,12 @@ class CodeIgniterTest extends \CIUnitTestCase
 		$_SERVER['argc'] = 1;
 
 		ob_start();
-		$this->codeigniter->run();
+		$this->codeigniter->useSafeOutput(true)->run();
 		$output = ob_get_clean();
 
 		$this->assertContains('<h1>Welcome to CodeIgniter</h1>', $output);
 	}
 
-	//--------------------------------------------------------------------
-
-	/**
-	 * Well, crikey. Since we've changed the error template
-	 * to use STDOUT and STDERR, there's no great way to test
-	 * this any more. Need to think on this a bit....
-	 */
-//	public function testRunDefaultRouteNoAutoRoute()
-//	{
-//		$_SERVER['argv'] = [
-//			'index.php',
-//			'/',
-//		];
-//		$_SERVER['argc'] = 2;
-//
-//		// Inject mock router.
-//		$routes = Services::routes();
-//		$routes->setAutoRoute(false);
-//		$router = Services::router($routes);
-//		Services::injectMock('router', $router);
-//
-//		ob_start();
-//		$this->codeigniter->run($routes);
-//		$output = ob_get_clean();
-//
-//		$this->assertContains("Can't find a route for", $output);
-//	}
 	//--------------------------------------------------------------------
 
 	public function testRunClosureRoute()
@@ -95,6 +73,7 @@ class CodeIgniterTest extends \CIUnitTestCase
 			'pages/about',
 		];
 		$_SERVER['argc'] = 2;
+		$_SERVER['REQUEST_URI'] = '/pages/about';
 
 		// Inject mock router.
 		$routes = Services::routes();
@@ -105,7 +84,7 @@ class CodeIgniterTest extends \CIUnitTestCase
 		Services::injectMock('router', $router);
 
 		ob_start();
-		$this->codeigniter->run();
+		$this->codeigniter->useSafeOutput(true)->run();
 		$output = ob_get_clean();
 
 		$this->assertContains('You want to see "about" page.', $output);
@@ -129,7 +108,7 @@ class CodeIgniterTest extends \CIUnitTestCase
 		Services::injectMock('router', $router);
 
 		ob_start();
-		$this->codeigniter->run();
+		$this->codeigniter->useSafeOutput(true)->run();
 		$output = ob_get_clean();
 
 		$this->assertContains('<h1>Welcome to CodeIgniter</h1>', $output);
@@ -155,7 +134,7 @@ class CodeIgniterTest extends \CIUnitTestCase
 		Services::injectMock('router', $router);
 
 		ob_start();
-		$this->codeigniter->run($routes);
+		$this->codeigniter->useSafeOutput(true)->run($routes);
 		$output = ob_get_clean();
 
 		$this->assertContains('404 Override by Closure.', $output);
@@ -170,6 +149,7 @@ class CodeIgniterTest extends \CIUnitTestCase
 			'pages/about',
 		];
 		$_SERVER['argc'] = 2;
+		$_SERVER['REQUEST_URI'] = '/pages/about';
 
 		// Inject mock router.
 		$routes = Services::routes();
@@ -180,11 +160,13 @@ class CodeIgniterTest extends \CIUnitTestCase
 		Services::injectMock('router', $router);
 
 		ob_start();
-		$this->codeigniter->run();
+		$this->codeigniter->useSafeOutput(true)->run();
 		$output = ob_get_clean();
 
 		$this->assertContains('You want to see "about" page.', $output);
 	}
+
+	//--------------------------------------------------------------------
 
 	public function testControllersCanReturnResponseObject()
 	{
@@ -193,6 +175,7 @@ class CodeIgniterTest extends \CIUnitTestCase
 			'pages/about',
 		];
 		$_SERVER['argc'] = 2;
+		$_SERVER['REQUEST_URI'] = '/pages/about';
 
 		// Inject mock router.
 		$routes = Services::routes();
@@ -205,7 +188,7 @@ class CodeIgniterTest extends \CIUnitTestCase
 		Services::injectMock('router', $router);
 
 		ob_start();
-		$this->codeigniter->run();
+		$this->codeigniter->useSafeOutput(true)->run();
 		$output = ob_get_clean();
 
 		$this->assertContains("You want to see 'about' page.", $output);
@@ -213,7 +196,7 @@ class CodeIgniterTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-    public function testResposeConfigEmpty()
+    public function testResponseConfigEmpty()
 	{
 		$_SERVER['argv'] = [
 			'index.php',
@@ -241,10 +224,29 @@ class CodeIgniterTest extends \CIUnitTestCase
 		Services::injectMock('router', $router);
 
 		ob_start();
-		$this->codeigniter->run();
+		$this->codeigniter->useSafeOutput(true)->run();
 		$output = ob_get_clean();
 
 		$this->assertContains('<h1>Welcome to CodeIgniter</h1>', $output);
 	}
+
+	public function testTransfersCorrectHTTPVersion()
+	{
+		$_SERVER['argv'] = [
+			'index.php',
+			'/',
+		];
+		$_SERVER['argc'] = 2;
+		$_SERVER['SERVER_PROTOCOL'] = 'HTTP/2';
+
+		ob_start();
+		$this->codeigniter->useSafeOutput(true)->run();
+		$output = ob_get_clean();
+
+		$response = $this->getPrivateProperty($this->codeigniter, 'response');
+
+		$this->assertEquals(2, $response->getProtocolVersion());
+	}
+
 
 }

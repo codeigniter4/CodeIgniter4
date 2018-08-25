@@ -37,7 +37,7 @@ To load and display a particular view file you will use the following function::
 
 Where *name* is the name of your view file.
 
-.. important:: The .php file extension does not need to be specified, but all views are expected to end with the .php extension.
+.. important:: If the file extension is omitted, then the views are expected to end with the .php extension.
 
 Now, open the controller file you made earlier called ``Blog.php``, and replace the echo statement with the view function::
 

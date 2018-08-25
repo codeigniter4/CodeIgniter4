@@ -98,5 +98,4 @@ class Timers extends BaseCollector
 		return $data;
 	}
 
-	//--------------------------------------------------------------------
 }

@@ -1,5 +1,7 @@
-<?php namespace CodeIgniter\HTTP\Files;
+<?php
+namespace CodeIgniter\HTTP\Files;
 
+use CodeIgniter\HTTP\Exceptions\HTTPException;
 /**
  * CodeIgniter
  *
@@ -36,7 +38,6 @@
  * @filesource
  */
 use CodeIgniter\Files\File;
-use CodeIgniter\Files\FileException;
 
 /**
  * Value object representing a single file uploaded through an
@@ -106,12 +107,12 @@ class UploadedFile extends File implements UploadedFileInterface
 	 */
 	public function __construct(string $path, string $originalName, string $mimeType = null, int $size = null, int $error = null)
 	{
-		$this->path = $path;
-		$this->name = $originalName;
-		$this->originalName = $originalName;
-		$this->originalMimeType = $mimeType;
-		$this->size = $size;
-		$this->error = $error;
+		$this->path				 = $path;
+		$this->name				 = $originalName;
+		$this->originalName		 = $originalName;
+		$this->originalMimeType	 = $mimeType;
+		$this->size				 = $size;
+		$this->error			 = $error;
 
 		parent::__construct($path, false);
 	}
@@ -157,30 +158,34 @@ class UploadedFile extends File implements UploadedFileInterface
 
 		if ($this->hasMoved)
 		{
-			throw new FileException('The file has already been moved.');
+			throw HTTPException::forAlreadyMoved();
 		}
 
 		if ( ! $this->isValid())
 		{
-			throw new FileException('The original file is not a valid file.');
+			throw HTTPException::forInvalidFile();
 		}
 
-		$targetPath = rtrim($targetPath, '/') . '/';
-		$name = is_null($name) ? $this->getName() : $name;
+		$targetPath	 = rtrim($targetPath, '/') . '/';
+		$name		 = is_null($name) ? $this->getName() : $name;
 		$destination = $overwrite ? $targetPath . $name : $this->getDestination($targetPath . $name);
 
-		if ( ! @move_uploaded_file($this->path, $destination))
+		try
+		{
+			@move_uploaded_file($this->path, $destination);
+		}
+		catch (\Exception $e)
 		{
 			$error = error_get_last();
-			throw new \RuntimeException(sprintf('Could not move file %s to %s (%s)', basename($this->path), $targetPath, strip_tags($error['message'])));
+			throw HTTPException::forMoveFailed(basename($this->path), $targetPath, strip_tags($error['message']));
 		}
 
 		@chmod($targetPath, 0777 & ~umask());
 
 		// Success, so store our new information
-		$this->path = $targetPath;
-		$this->name = basename($destination);
-		$this->hasMoved = true;
+		$this->path		 = $targetPath;
+		$this->name		 = basename($destination);
+		$this->hasMoved	 = true;
 
 		return true;
 	}
@@ -193,20 +198,20 @@ class UploadedFile extends File implements UploadedFileInterface
 	 *
 	 * @return string The path set or created.
 	 */
-   	protected function setPath($path)
-   	{
-     		if (!is_dir($path))
-     		{
-         		mkdir($path, 0777, true);
-         		//create the index.html file
-         		if (!file_exists($path.'index.html'))
-         		{
-            			$file = fopen($path.'index.html', 'x+');
-            			fclose($file);
-         		}
-     		}
-     		return $path;
- 	}
+	protected function setPath($path)
+	{
+		if ( ! is_dir($path))
+		{
+			mkdir($path, 0777, true);
+			//create the index.html file
+			if ( ! file_exists($path . 'index.html'))
+			{
+				$file = fopen($path . 'index.html', 'x+');
+				fclose($file);
+			}
+		}
+		return $path;
+	}
 
 	//--------------------------------------------------------------------
 
@@ -260,6 +265,7 @@ class UploadedFile extends File implements UploadedFileInterface
 	public function getErrorString()
 	{
 		static $errors = [
+			UPLOAD_ERR_OK			 => 'The file uploaded with success.',
 			UPLOAD_ERR_INI_SIZE		 => 'The file "%s" exceeds your upload_max_filesize ini directive.',
 			UPLOAD_ERR_FORM_SIZE	 => 'The file "%s" exceeds the upload limit defined in your form.',
 			UPLOAD_ERR_PARTIAL		 => 'The file "%s" was only partially uploaded.',

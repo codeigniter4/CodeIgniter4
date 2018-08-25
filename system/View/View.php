@@ -35,6 +35,7 @@
  * @since	Version 3.0.0
  * @filesource
  */
+use CodeIgniter\View\Exceptions\ViewException;
 use Config\Services;
 use CodeIgniter\Log\Logger;
 
@@ -166,7 +167,9 @@ class View implements RendererInterface
 			$this->saveData = $saveData;
 		}
 
-		$this->renderVars['view'] = str_replace('.php', '', $view) . '.php';
+		$fileExt = pathinfo($view, PATHINFO_EXTENSION);
+		$realPath = empty($fileExt) ? $view.'.php' : $view; // allow Views as .html, .tpl, etc (from CI3)
+		$this->renderVars['view'] = $realPath;
 		$this->renderVars['options'] = $options;
 
 		// Was it cached?
@@ -191,7 +194,7 @@ class View implements RendererInterface
 		// locateFile will return an empty string if the file cannot be found.
 		if (empty($this->renderVars['file']))
 		{
-			throw new \InvalidArgumentException('View file not found: ' . $this->renderVars['view']);
+			throw ViewException::forInvalidFile($this->renderVars['view']);
 		}
 
 		// Make our view data available to the view.
@@ -209,12 +212,12 @@ class View implements RendererInterface
 
 		$this->logPerformance($this->renderVars['start'], microtime(true), $this->renderVars['view']);
 
-		if (CI_DEBUG)
+		if (CI_DEBUG && (! isset($options['debug']) || $options['debug'] === true))
 		{
 			$after = (new \Config\Filters())->globals['after'];
 			if (in_array('toolbar', $after) || array_key_exists('toolbar', $after))
 			{
-				$toolbarCollectors =  (new \Config\App())->toolbarCollectors;
+				$toolbarCollectors =  (config(\Config\App::class))->toolbarCollectors;
 				if (in_array('CodeIgniter\Debug\Toolbar\Collectors\Views', $toolbarCollectors) || array_key_exists('CodeIgniter\Debug\Toolbar\Collectors\Views', $toolbarCollectors))
 				{
 					// Clean up our path names to make them a little cleaner

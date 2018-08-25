@@ -35,10 +35,10 @@
  * @since        Version 3.0.0
  * @filesource
  */
-use CodeIgniter\Config\BaseConfig;
-use CodeIgniter\ConfigException;
 use Config\Autoload;
 use CodeIgniter\CLI\CLI;
+use CodeIgniter\Config\BaseConfig;
+use CodeIgniter\Exceptions\ConfigException;
 
 /**
  * Class MigrationRunner
@@ -152,12 +152,12 @@ class MigrationRunner
 
 		if (empty($this->table))
 		{
-			throw new ConfigException(lang('Migrations.migMissingTable'));
+			throw ConfigException::forMissingMigrationsTable();
 		}
 
 		if ( ! in_array($this->type, ['sequential', 'timestamp']))
 		{
-			throw new ConfigException(lang('Migrations.migInvalidType') . $this->type);
+			throw ConfigException::forInvalidMigrationType($this->type);
 		}
 
 		// Migration basename regex
@@ -189,7 +189,7 @@ class MigrationRunner
 	{
 		if ( ! $this->enabled)
 		{
-			throw new ConfigException(lang('Migrations.migDisabled'));
+			throw ConfigException::forDisabledMigrations();
 		}
 		// Set Namespace if not null
 		if ( ! is_null($namespace))
@@ -234,7 +234,7 @@ class MigrationRunner
 		{
 
 			// Only include migrations within the scoop
-			if (($method === 'up' && $version > $currentVersion && $version <= $targetVersion) OR ( $method === 'down' && $version <= $currentVersion && $version > $targetVersion)
+			if (($method === 'up' && $version > $currentVersion && $version <= $targetVersion) || ( $method === 'down' && $version <= $currentVersion && $version > $targetVersion)
 			)
 			{
 
@@ -247,7 +247,7 @@ class MigrationRunner
 				// Validate the migration file structure
 				if ( ! class_exists($class, false))
 				{
-					throw new \RuntimeException(sprintf(lang('Migrations.migClassNotFound'), $class));
+					throw new \RuntimeException(sprintf(lang('Migrations.classNotFound'), $class));
 				}
 
 				// Forcing migration to selected database group
@@ -255,7 +255,7 @@ class MigrationRunner
 
 				if ( ! is_callable([$instance, $method]))
 				{
-					throw new \RuntimeException(sprintf(lang('Migrations.migMissingMethod'), $method));
+					throw new \RuntimeException(sprintf(lang('Migrations.missingMethod'), $method));
 				}
 
 				$instance->{$method}();
@@ -389,7 +389,7 @@ class MigrationRunner
 		$location = $config->psr4[$this->namespace];
 
 		// Setting migration directories.
-		$dir = rtrim($location, '/') . '/Database/Migrations/';
+		$dir = rtrim($location, DIRECTORY_SEPARATOR) . '/Database/Migrations/';
 
 		// Load all *_*.php files in the migrations path
 		foreach (glob($dir . '*_*.php') as $file)
@@ -435,7 +435,7 @@ class MigrationRunner
 			{
 				return false;
 			}
-			throw new \RuntimeException(lang('Migrations.migEmpty'));
+			throw new \RuntimeException(lang('Migrations.empty'));
 		}
 
 		// Check if $targetversion file is found
@@ -445,7 +445,7 @@ class MigrationRunner
 			{
 				return false;
 			}
-			throw new \RuntimeException(lang('Migrations.migNotFound') . $targetversion);
+			throw new \RuntimeException(lang('Migrations.notFound') . $targetversion);
 		}
 
 		ksort($migrations);
@@ -461,14 +461,14 @@ class MigrationRunner
 		{
 			if ($this->type === 'sequential' && abs($migration->version - $loop) > 1)
 			{
-				throw new \RuntimeException(lang('Migration.migGap') . " " . $migration->version);
+				throw new \RuntimeException(lang('Migration.gap') . " " . $migration->version);
 			}
 			// Check if all old migration files are all available to do downgrading
 			if ($method === 'down')
 			{
 				if ($loop <= $history_size && $history_migrations[$loop]['version'] != $migration->version)
 				{
-					throw new \RuntimeException(lang('Migration.migGap') . " " . $migration->version);
+					throw new \RuntimeException(lang('Migration.gap') . " " . $migration->version);
 				}
 			}
 			$loop ++;
@@ -650,7 +650,7 @@ class MigrationRunner
 		]);
 		if (is_cli())
 		{
-			$this->cliMessages[] = "\t" . CLI::color(lang('Migrations.migAdded'), 'yellow') . "($this->namespace) " . $version . '_' . $this->name;
+			$this->cliMessages[] = "\t" . CLI::color(lang('Migrations.added'), 'yellow') . "($this->namespace) " . $version . '_' . $this->name;
 		}
 	}
 
@@ -670,7 +670,7 @@ class MigrationRunner
 				->delete();
 		if (is_cli())
 		{
-			$this->cliMessages[] = "\t" . CLI::color(lang('Migrations.migRemoved'), 'yellow') . "($this->namespace) " . $version . '_' . $this->name;
+			$this->cliMessages[] = "\t" . CLI::color(lang('Migrations.removed'), 'yellow') . "($this->namespace) " . $version . '_' . $this->name;
 		}
 	}
 

@@ -1,4 +1,4 @@
-<?php namespace Config;
+<?php namespace Tests\Support\Config;
 
 class MockAppConfig
 {
@@ -20,6 +20,7 @@ class MockAppConfig
 	public $CSRFExpire      = 7200;
 	public $CSRFRegenerate  = true;
 	public $CSRFExcludeURIs = ['http://example.com'];
+	public $CSRFRedirect    = false;
 
 	public $CSPEnabled = false;
 

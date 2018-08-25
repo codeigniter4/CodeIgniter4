@@ -215,7 +215,7 @@ class App extends BaseConfig
 	| Reverse Proxy IPs
 	|--------------------------------------------------------------------------
 	|
-	| If your getServer is behind a reverse proxy, you must whitelist the proxy
+	| If your server is behind a reverse proxy, you must whitelist the proxy
 	| IP addresses from which CodeIgniter should trust headers such as
 	| HTTP_X_FORWARDED_FOR and HTTP_CLIENT_IP in order to properly identify
 	| the visitor's IP address.
@@ -240,11 +240,13 @@ class App extends BaseConfig
 	| CSRFCookieName  = The cookie name
 	| CSRFExpire      = The number in seconds the token should expire.
 	| CSRFRegenerate  = Regenerate token on every submission
+	| CSRFRedirect    = Redirect to previous page with error on failure
 	*/
 	public $CSRFTokenName   = 'csrf_test_name';
 	public $CSRFCookieName  = 'csrf_cookie_name';
 	public $CSRFExpire      = 7200;
 	public $CSRFRegenerate  = true;
+	public $CSRFRedirect    = true;
 
 	/*
 	|--------------------------------------------------------------------------
@@ -270,6 +272,9 @@ class App extends BaseConfig
 	| and state of your application during that page display. By default it will
 	| NOT be displayed under production environments, and will only display if
 	| CI_DEBUG is true, since if it's not, there's not much to display anyway.
+	|
+	| toolbarMaxHistory = Number of history files, 0 for none or -1 for unlimited
+	|
 	*/
 	public $toolbarCollectors = [
 		'CodeIgniter\Debug\Toolbar\Collectors\Timers',
@@ -281,6 +286,7 @@ class App extends BaseConfig
 		'CodeIgniter\Debug\Toolbar\Collectors\Routes',
 		'CodeIgniter\Debug\Toolbar\Collectors\Events',
 	];
+	public $toolbarMaxHistory = 20;
 
 	/*
 	|--------------------------------------------------------------------------

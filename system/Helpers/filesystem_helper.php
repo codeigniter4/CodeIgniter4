@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CodeIgniter
  *
@@ -35,8 +36,6 @@
  * @since	Version 1.0.0
  * @filesource
  */
-defined('BASEPATH') OR exit('No direct script access allowed');
-
 /**
  * CodeIgniter Directory Helpers
  *
@@ -67,8 +66,10 @@ if ( ! function_exists('directory_map'))
 	 */
 	function directory_map(string $source_dir, int $directory_depth = 0, bool $hidden = false): array
 	{
-		if ($fp = @opendir($source_dir))
+		try
 		{
+			$fp = opendir($source_dir);
+
 			$filedata = [];
 			$new_depth = $directory_depth - 1;
 			$source_dir = rtrim($source_dir, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
@@ -96,8 +97,10 @@ if ( ! function_exists('directory_map'))
 			closedir($fp);
 			return $filedata;
 		}
-
-		return [];
+		catch (\Exception $fe)
+		{
+			return [];
+		}
 	}
 
 }
@@ -121,25 +124,29 @@ if ( ! function_exists('write_file'))
 	 */
 	function write_file(string $path, string $data, string $mode = 'wb'): bool
 	{
-		if ( ! $fp = @fopen($path, $mode))
+		try
+		{
+			$fp = fopen($path, $mode);
+
+			flock($fp, LOCK_EX);
+
+			for ($result = $written = 0, $length = strlen($data); $written < $length; $written += $result)
+			{
+				if (($result = fwrite($fp, substr($data, $written))) === false)
+				{
+					break;
+				}
+			}
+
+			flock($fp, LOCK_UN);
+			fclose($fp);
+
+			return is_int($result);
+		}
+		catch (\Exception $fe)
 		{
 			return false;
 		}
-
-		flock($fp, LOCK_EX);
-
-		for ($result = $written = 0, $length = strlen($data); $written < $length; $written += $result)
-		{
-			if (($result = fwrite($fp, substr($data, $written))) === false)
-			{
-				break;
-			}
-		}
-
-		flock($fp, LOCK_UN);
-		fclose($fp);
-
-		return is_int($result);
 	}
 
 }
@@ -169,29 +176,33 @@ if ( ! function_exists('delete_files'))
 		// Trim the trailing slash
 		$path = rtrim($path, '/\\');
 
-		if ( ! $current_dir = @opendir($path))
+		try
+		{
+			$current_dir = opendir($path);
+
+			while (false !== ($filename = @readdir($current_dir)))
+			{
+				if ($filename !== '.' && $filename !== '..')
+				{
+					if (is_dir($path . DIRECTORY_SEPARATOR . $filename) && $filename[0] !== '.')
+					{
+						delete_files($path . DIRECTORY_SEPARATOR . $filename, $delDir, $htdocs, $_level + 1);
+					}
+					elseif ($htdocs !== true || ! preg_match('/^(\.htaccess|index\.(html|htm|php)|web\.config)$/i', $filename))
+					{
+						@unlink($path . DIRECTORY_SEPARATOR . $filename);
+					}
+				}
+			}
+
+			closedir($current_dir);
+
+			return ($delDir === true && $_level > 0) ? @rmdir($path) : true;
+		}
+		catch (\Exception $fe)
 		{
 			return false;
 		}
-
-		while (false !== ($filename = @readdir($current_dir)))
-		{
-			if ($filename !== '.' && $filename !== '..')
-			{
-				if (is_dir($path . DIRECTORY_SEPARATOR . $filename) && $filename[0] !== '.')
-				{
-					delete_files($path . DIRECTORY_SEPARATOR . $filename, $delDir, $htdocs, $_level + 1);
-				}
-				elseif ($htdocs !== true || ! preg_match('/^(\.htaccess|index\.(html|htm|php)|web\.config)$/i', $filename))
-				{
-					@unlink($path . DIRECTORY_SEPARATOR . $filename);
-				}
-			}
-		}
-
-		closedir($current_dir);
-
-		return ($delDir === true && $_level > 0) ? @rmdir($path) : true;
 	}
 
 }
@@ -217,8 +228,9 @@ if ( ! function_exists('get_filenames'))
 	{
 		static $filedata = [];
 
-		if ($fp = @opendir($source_dir))
+		try
 		{
+			$fp = opendir($source_dir);
 			// reset the array and make sure $source_dir has a trailing slash on the initial call
 			if ($recursion === false)
 			{
@@ -241,8 +253,10 @@ if ( ! function_exists('get_filenames'))
 			closedir($fp);
 			return $filedata;
 		}
-
-		return [];
+		catch (\Exception $fe)
+		{
+			return [];
+		}
 	}
 
 }
@@ -271,34 +285,38 @@ if ( ! function_exists('get_dir_file_info'))
 		static $filedata = [];
 		$relative_path = $source_dir;
 
-		if ($fp = @opendir($source_dir))
+		try
 		{
-			// reset the array and make sure $source_dir has a trailing slash on the initial call
-			if ($recursion === false)
-			{
-				$filedata = [];
-				$source_dir = rtrim(realpath($source_dir), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
-			}
-
-			// Used to be foreach (scandir($source_dir, 1) as $file), but scandir() is simply not as fast
-			while (false !== ($file = readdir($fp)))
-			{
-				if (is_dir($source_dir . $file) && $file[0] !== '.' && $top_level_only === false)
+			$fp = @opendir($source_dir); {
+				// reset the array and make sure $source_dir has a trailing slash on the initial call
+				if ($recursion === false)
 				{
-					get_dir_file_info($source_dir . $file . DIRECTORY_SEPARATOR, $top_level_only, true);
+					$filedata = [];
+					$source_dir = rtrim(realpath($source_dir), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
 				}
-				elseif ($file[0] !== '.')
-				{
-					$filedata[$file] = get_file_info($source_dir . $file);
-					$filedata[$file]['relative_path'] = $relative_path;
-				}
-			}
 
-			closedir($fp);
-			return $filedata;
+				// Used to be foreach (scandir($source_dir, 1) as $file), but scandir() is simply not as fast
+				while (false !== ($file = readdir($fp)))
+				{
+					if (is_dir($source_dir . $file) && $file[0] !== '.' && $top_level_only === false)
+					{
+						get_dir_file_info($source_dir . $file . DIRECTORY_SEPARATOR, $top_level_only, true);
+					}
+					elseif ($file[0] !== '.')
+					{
+						$filedata[$file] = get_file_info($source_dir . $file);
+						$filedata[$file]['relative_path'] = $relative_path;
+					}
+				}
+
+				closedir($fp);
+				return $filedata;
+			}
 		}
-
-		return [];
+		catch (\Exception $fe)
+		{
+			return [];
+		}
 	}
 
 }
@@ -319,9 +337,9 @@ if ( ! function_exists('get_file_info'))
 	 * @param    string $file            Path to file
 	 * @param    mixed  $returned_values Array or comma separated string of information returned
 	 *
-	 * @return    array
+	 * @return    array|null
 	 */
-	function get_file_info(string $file, $returned_values = ['name', 'server_path', 'size', 'date']): array
+	function get_file_info(string $file, $returned_values = ['name', 'server_path', 'size', 'date'])
 	{
 		if ( ! file_exists($file))
 		{
@@ -335,8 +353,7 @@ if ( ! function_exists('get_file_info'))
 
 		foreach ($returned_values as $key)
 		{
-			switch ($key)
-			{
+			switch ($key) {
 				case 'name':
 					$fileinfo['name'] = basename($file);
 					break;

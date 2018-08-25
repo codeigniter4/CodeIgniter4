@@ -72,5 +72,5 @@ Command Line Seeding
 You can also seed data from the command line, as part of the Migrations CLI tools, if you don't want to create
 a dedicated controller::
 
-	> php index.php migrations seed TestSeeder
+	> php spark db:seed TestSeeder
 

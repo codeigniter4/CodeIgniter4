@@ -35,8 +35,8 @@
  * @since	Version 3.0.0
  * @filesource
  */
+use CodeIgniter\Exceptions\CriticalError;
 use CodeIgniter\Cache\CacheInterface;
-use CodeIgniter\CriticalError;
 
 class RedisHandler implements CacheInterface
 {
@@ -70,13 +70,14 @@ class RedisHandler implements CacheInterface
 
 	//--------------------------------------------------------------------
 
-	public function __construct(array $config)
+	public function __construct($config)
 	{
+		$config = (array)$config;
 		$this->prefix = $config['prefix'] ?? '';
 
 		if ( ! empty($config))
 		{
-			$this->config = array_merge($this->config, $config);
+			$this->config = array_merge($this->config, $config['redis']);
 		}
 	}
 
@@ -116,7 +117,7 @@ class RedisHandler implements CacheInterface
 			{
 //				log_message('error', 'Cache: Redis authentication failed.');
 			}
-		} catch (RedisException $e)
+		} catch (\RedisException $e)
 		{
 			throw new CriticalError('Cache: Redis connection refused (' . $e->getMessage() . ')');
 		}
@@ -137,7 +138,7 @@ class RedisHandler implements CacheInterface
 
 		$data = $this->redis->hMGet($key, ['__ci_type', '__ci_value']);
 
-		if ( ! isset($data['__ci_type'], $data['__ci_value']) OR $data['__ci_value'] === false)
+		if ( ! isset($data['__ci_type'], $data['__ci_value']) || $data['__ci_value'] === false)
 		{
 			return false;
 		}

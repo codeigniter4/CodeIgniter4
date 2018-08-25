@@ -35,10 +35,10 @@
  * @since	Version 3.0.0
  * @filesource
  */
-use CodeIgniter\ConfigException;
+use Config\Services;
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\MigrationRunner;
-use Config\Services;
+use CodeIgniter\Exceptions\ConfigException;
 
 /**
  * CIDatabaseTestCase
@@ -152,6 +152,8 @@ class CIDatabaseTestCase extends CIUnitTestCase
 	 */
 	public function setUp()
 	{
+		parent::setUp();
+
 		$this->loadDependencies();
 
 		if ($this->refresh === true)
@@ -170,7 +172,7 @@ class CIDatabaseTestCase extends CIUnitTestCase
 
 				foreach ($tables as $table)
 				{
-					if ($table = $this->db->DBPrefix.'migrations') continue;
+					if ($table == $this->db->DBPrefix.'migrations') continue;
 
 					$forge->dropTable($table, true);
 				}

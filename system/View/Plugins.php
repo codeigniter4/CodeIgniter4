@@ -45,14 +45,10 @@ class Plugins
 	 */
 	public static function currentURL(array $params = [])
 	{
-		if ( ! function_exists('current_url'))
-			helper('url');
-
 		return current_url();
 	}
 
 	//--------------------------------------------------------------------
-
 
 	/**
 	 * @param array $params
@@ -61,14 +57,10 @@ class Plugins
 	 */
 	public static function previousURL(array $params = [])
 	{
-		if ( ! function_exists('previous_url'))
-			helper('url');
-
 		return previous_url();
 	}
 
 	//--------------------------------------------------------------------
-
 
 	/**
 	 * @param array $params
@@ -77,9 +69,6 @@ class Plugins
 	 */
 	public static function mailto(array $params = [])
 	{
-		if ( ! function_exists('mailto'))
-			helper('url');
-
 		$email = $params['email'] ?? '';
 		$title = $params['title'] ?? '';
 		$attrs = $params['attributes'] ?? '';
@@ -89,7 +78,6 @@ class Plugins
 
 	//--------------------------------------------------------------------
 
-
 	/**
 	 * @param array $params
 	 *
@@ -97,9 +85,6 @@ class Plugins
 	 */
 	public static function safeMailto(array $params = [])
 	{
-		if ( ! function_exists('safe_mailto'))
-			helper('url');
-
 		$email = $params['email'] ?? '';
 		$title = $params['title'] ?? '';
 		$attrs = $params['attributes'] ?? '';
@@ -108,7 +93,6 @@ class Plugins
 	}
 
 	//--------------------------------------------------------------------
-
 
 	/**
 	 * @param array $params
@@ -121,7 +105,9 @@ class Plugins
 
 		return lang($line, $params);
 	}
-	
+
+	//--------------------------------------------------------------------
+
 	/**
 	 * @param array $params
 	 *
@@ -129,17 +115,37 @@ class Plugins
 	 */
 	public static function ValidationErrors(array $params = [])
 	{
-		
-		$validator = \config\services::validation();
-		if(empty($params))
+
+		$validator = \Config\Services::validation();
+		if (empty($params))
 		{
 			return $validator->listErrors();
 		}
-		
-		return $validator->showError($params['field']);
-		
 
-		
+		return $validator->showError($params['field']);
 	}
 
+	//--------------------------------------------------------------------
+
+	/**
+	 * @param array $params
+	 *
+	 * @return string|
+	 */
+	public static function route(array $params = [])
+	{
+		return route_to(...$params);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * @param array $params
+	 *
+	 * @return string
+	 */
+	public static function siteURL(array $params = [])
+	{
+		return site_url(...$params);
+	}
 }

@@ -35,7 +35,6 @@
  * @since        Version 3.0.0
  * @filesource
  */
-use Config\App;
 use Config\Database;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Pager\Pager;
@@ -44,7 +43,7 @@ use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Validation\ValidationInterface;
-use CodeIgniter\Database\Exceptions\DatabaseException;
+use CodeIgniter\Database\Exceptions\DataException;
 
 /**
  * Class Model
@@ -251,6 +250,15 @@ class Model
 	protected $beforeDelete = [];
 	protected $afterDelete = [];
 
+	/**
+	 * Holds information passed in via 'set'
+	 * so that we can capture it (not the builder)
+	 * and ensure it gets validated first.
+	 *
+	 * @var array
+	 */
+	protected $tempData = [];
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -273,7 +281,7 @@ class Model
 
 		if (is_null($config) || ! isset($config->salt))
 		{
-			$config = new App();
+			$config = config(\Config\App::class);
 		}
 
 		$this->salt = $config->salt ?: '';
@@ -299,11 +307,11 @@ class Model
 	 * Fetches the row of database from $this->table with a primary key
 	 * matching $id.
 	 *
-	 * @param mixed|array $id One primary key or an array of primary keys
+	 * @param mixed|array|null   $id One primary key or an array of primary keys
 	 *
 	 * @return array|object|null    The resulting row of data, or null.
 	 */
-	public function find($id)
+	public function find($id = null)
 	{
 		$builder = $this->builder();
 
@@ -318,12 +326,18 @@ class Model
 					->get();
 			$row = $row->getResult($this->tempReturnType);
 		}
-		else
+		elseif (is_numeric($id))
 		{
 			$row = $builder->where($this->table.'.'.$this->primaryKey, $id)
 					->get();
 
 			$row = $row->getFirstRow($this->tempReturnType);
+		}
+		else
+		{
+			$row = $builder->get();
+
+			$row = $row->getResult($this->tempReturnType);
 		}
 
 		$row = $this->trigger('afterFind', ['id' => $id, 'data' => $row]);
@@ -332,38 +346,6 @@ class Model
 		$this->tempUseSoftDeletes = $this->useSoftDeletes;
 
 		return $row['data'];
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Extract a subset of data
-	 *
-	 * @param string|array $key
-	 * @param string|null  $value
-	 *
-	 * @return array|null The rows of data.
-	 */
-	public function findWhere($key, $value = null)
-	{
-		$builder = $this->builder();
-
-		if ($this->tempUseSoftDeletes === true)
-		{
-			$builder->where($this->deletedField, 0);
-		}
-
-		$rows = $builder->where($key, $value)
-				->get();
-
-		$rows = $rows->getResult($this->tempReturnType);
-
-		$rows = $this->trigger('afterFind', ['data' => $rows]);
-
-		$this->tempReturnType = $this->returnType;
-		$this->tempUseSoftDeletes = $this->useSoftDeletes;
-
-		return $rows['data'];
 	}
 
 	//--------------------------------------------------------------------
@@ -438,6 +420,31 @@ class Model
 	//--------------------------------------------------------------------
 
 	/**
+	 * Captures the builder's set() method so that we can validate the
+	 * data here. This allows it to be used with any of the other
+	 * builder methods and still get validated data, like replace.
+	 *
+	 * @param           $key
+	 * @param string    $value
+	 * @param bool|null $escape
+	 *
+	 * @return $this
+	 */
+	public function set($key, $value = '', bool $escape = null)
+	{
+		$data = is_array($key)
+			? $key
+			: [$key => $value];
+
+		$this->tempData['escape'] = $escape;
+		$this->tempData['data'] = array_merge($this->tempData['data'] ?? [], $data);
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * A convenience method that will attempt to determine whether the
 	 * data should be inserted or updated. Will work with either
 	 * an array or object. When using with custom class objects,
@@ -450,8 +457,6 @@ class Model
 	 */
 	public function save($data)
 	{
-		$saveData = $data;
-
 		// If $data is using a custom class with public or protected
 		// properties representing the table elements, we need to grab
 		// them as an array.
@@ -539,8 +544,17 @@ class Model
 	 *
 	 * @return int|string|bool
 	 */
-	public function insert($data, bool $returnID = true)
+	public function insert($data = null, bool $returnID = true)
 	{
+		$escape = null;
+
+		if (empty($data))
+		{
+			$data   = $this->tempData['data'] ?? null;
+			$escape = $this->tempData['escape'] ?? null;
+			$this->tempData = [];
+		}
+
 		// If $data is using a custom class with public or protected
 		// properties representing the table elements, we need to grab
 		// them as an array.
@@ -586,12 +600,12 @@ class Model
 
 		if (empty($data))
 		{
-			throw new \InvalidArgumentException('No data to insert.');
+			throw DataException::forEmptyDataset('insert');
 		}
 
 		// Must use the set() method to ensure objects get converted to arrays
 		$result = $this->builder()
-				->set($data['data'])
+				->set($data['data'], '', $escape)
 				->insert();
 
 		$this->trigger('afterInsert', ['data' => $originalData, 'result' => $result]);
@@ -609,16 +623,59 @@ class Model
 	//--------------------------------------------------------------------
 
 	/**
+	 * Compiles batch insert strings and runs the queries, validating each row prior.
+	 *
+	 * @param    array $set    An associative array of insert values
+	 * @param    bool  $escape Whether to escape values and identifiers
+	 *
+	 * @param int      $batchSize
+	 * @param bool     $testing
+	 *
+	 * @return int Number of rows inserted or FALSE on failure
+	 */
+	public function insertBatch($set = null, $escape = null, $batchSize = 100, $testing = false)
+	{
+		if (is_array($set) && $this->skipValidation === false)
+		{
+			foreach ($set as $row)
+			{
+				if ($this->validate($row) === false)
+				{
+					return false;
+				}
+			}
+		}
+
+		return $this->builder()->insertBatch($set, $escape, $batchSize, $testing);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Updates a single record in $this->table. If an object is provided,
 	 * it will attempt to convert it into an array.
 	 *
-	 * @param int|string   $id
+	 * @param int|array|string   $id
 	 * @param array|object $data
 	 *
 	 * @return bool
 	 */
-	public function update($id, $data)
+	public function update($id = null, $data = null)
 	{
+		$escape = null;
+
+		if (is_numeric($id))
+		{
+			$id = [$id];
+		}
+
+		if (empty($data))
+		{
+			$data   = $this->tempData['data'] ?? null;
+			$escape = $this->tempData['escape'] ?? null;
+			$this->tempData = [];
+		}
+
 		// If $data is using a custom class with public or protected
 		// properties representing the table elements, we need to grab
 		// them as an array.
@@ -662,13 +719,19 @@ class Model
 
 		if (empty($data))
 		{
-			throw new \InvalidArgumentException('No data to update.');
+			throw DataException::forEmptyDataset('update');
+		}
+
+		$builder = $this->builder();
+
+		if ($id)
+		{
+			$builder = $builder->whereIn($this->table.'.'.$this->primaryKey, $id);
 		}
 
 		// Must use the set() method to ensure objects get converted to arrays
-		$result = $this->builder()
-				->where($this->primaryKey, $id)
-				->set($data['data'])
+		$result = $builder
+				->set($data['data'], '', $escape)
 				->update();
 
 		$this->trigger('afterUpdate', ['id' => $id, 'data' => $originalData, 'result' => $result]);
@@ -679,17 +742,59 @@ class Model
 	//--------------------------------------------------------------------
 
 	/**
+	 * Update_Batch
+	 *
+	 * Compiles an update string and runs the query
+	 *
+	 * @param    array  $set       An associative array of update values
+	 * @param    string $index     The where key
+	 * @param    int    $batchSize The size of the batch to run
+	 * @param    bool   $returnSQL True means SQL is returned, false will execute the query
+	 *
+	 * @return    mixed    Number of rows affected or FALSE on failure
+	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
+	 */
+	public function updateBatch($set = null, $index = null, $batchSize = 100, $returnSQL = false)
+	{
+		if (is_array($set) && $this->skipValidation === false)
+		{
+			foreach ($set as $row)
+			{
+				if ($this->validate($row) === false)
+				{
+					return false;
+				}
+			}
+		}
+
+		return $this->builder()->updateBatch($set, $index, $batchSize, $returnSQL);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Deletes a single record from $this->table where $id matches
 	 * the table's primaryKey
 	 *
-	 * @param mixed $id    The rows primary key
-	 * @param bool  $purge Allows overriding the soft deletes setting.
+	 * @param int|array|null $id    The rows primary key(s)
+	 * @param bool           $purge Allows overriding the soft deletes setting.
 	 *
 	 * @return mixed
 	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
-	public function delete($id, $purge = false)
+	public function delete($id = null, $purge = false)
 	{
+		if (! empty($id) && is_numeric($id))
+		{
+			$id = [$id];
+		}
+
+		$builder = $this->builder();
+		if (! empty($id))
+		{
+			$builder = $builder->whereIn($this->primaryKey, $id);
+		}
+
 		$this->trigger('beforeDelete', ['id' => $id, 'purge' => $purge]);
 
 		if ($this->useSoftDeletes && ! $purge)
@@ -701,66 +806,14 @@ class Model
                 $set[$this->updatedField] = $this->setDate();
             }
 
-			$result = $this->builder()
-					->where($this->primaryKey, $id)
-					->update($set);
+			$result = $builder->update($set);
 		}
 		else
 		{
-			$result = $this->builder()
-					->where($this->primaryKey, $id)
-					->delete();
+			$result = $builder->delete();
 		}
 
 		$this->trigger('afterDelete', ['id' => $id, 'purge' => $purge, 'result' => $result, 'data' => null]);
-
-		return $result;
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
-	 * Deletes multiple records from $this->table where the specified
-	 * key/value matches.
-	 *
-	 * @param string|array $key
-	 * @param string|null  $value
-	 * @param bool         $purge Allows overriding the soft deletes setting.
-	 *
-	 * @return mixed
-	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
-	 */
-	public function deleteWhere($key, $value = null, $purge = false)
-	{
-		// Don't let them shoot themselves in the foot...
-		if (empty($key))
-		{
-			throw new DatabaseException('You must provided a valid key to deleteWhere.');
-		}
-
-		$this->trigger('beforeDelete', ['key' => $key, 'value' => $value, 'purge' => $purge]);
-
-		if ($this->useSoftDeletes && ! $purge)
-		{
-            $set[$this->deletedField] = 1;
-
-            if ($this->useTimestamps)
-            {
-                $set[$this->updatedField] = $this->setDate();
-            }
-
-			$result = $this->builder()
-					->where($key, $value)
-					->update($set);
-		}
-		else
-		{
-			$result = $this->builder()
-					->where($key, $value)
-					->delete();
-		}
-
-		$this->trigger('afterDelete', ['key' => $key, 'value' => $value, 'purge' => $purge, 'result' => $result, 'data' => null]);
 
 		return $result;
 	}
@@ -821,6 +874,31 @@ class Model
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Replace
+	 *
+	 * Compiles an replace into string and runs the query
+	 *
+	 * @param null $data
+	 * @param bool $returnSQL
+	 *
+	 * @return bool TRUE on success, FALSE on failure
+	 */
+	public function replace($data = null, $returnSQL = false)
+	{
+		// Validate data before saving.
+		if (! empty($data) && $this->skipValidation === false)
+		{
+			if ($this->validate($data) === false)
+			{
+				return false;
+			}
+		}
+
+		return $this->builder()->replace($data, $returnSQL);
+	}
+
 	//--------------------------------------------------------------------
 	// Utility
 	//--------------------------------------------------------------------
@@ -866,7 +944,7 @@ class Model
 	 * @param int      $size
 	 * @param \Closure $userFunc
 	 *
-	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
+	 * @throws \CodeIgniter\Database\Exceptions\DataException
 	 */
 	public function chunk($size = 100, \Closure $userFunc)
 	{
@@ -883,7 +961,7 @@ class Model
 
 			if ($rows === false)
 			{
-				throw new DatabaseException('Unable to get results from the query.');
+				throw DataException::forEmptyDataset('chunk');
 			}
 
 			$rows = $rows->getResult();
@@ -921,7 +999,7 @@ class Model
 	public function paginate(int $perPage = 20, string $group = 'default')
 	{
 		// Get the necessary parts.
-		$page = isset($_GET['page']) && $_GET['page'] > 1 ? $_GET['page'] : 1;
+		$page = ctype_digit($_GET['page'] ?? '') && $_GET['page'] > 1 ? $_GET['page'] : 1;
 
 		$total = $this->countAllResults(false);
 
@@ -993,7 +1071,7 @@ class Model
 	 * @param array $data
 	 *
 	 * @return array
-	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
+	 * @throws \CodeIgniter\Database\Exceptions\DataException
 	 */
 	protected function doProtectFields($data)
 	{
@@ -1004,7 +1082,7 @@ class Model
 
 		if (empty($this->allowedFields))
 		{
-			throw new DatabaseException('No Allowed fields specified for model: ' . get_class($this));
+			throw DataException::forInvalidAllowedFields(get_class($this));
 		}
 
 		foreach ($data as $key => $val)
@@ -1130,7 +1208,7 @@ class Model
 	 */
 	public function validate($data): bool
 	{
-		if ($this->skipValidation === true || empty($this->validationRules))
+		if ($this->skipValidation === true || empty($this->validationRules) || empty($data))
 		{
 			return true;
 		}
@@ -1150,11 +1228,66 @@ class Model
 		}
 		else
 		{
-			$this->validation->setRules($this->validationRules, $this->validationMessages);
+			// Replace any placeholders (i.e. {id}) in the rules with
+			// the value found in $data, if exists.
+			$rules = $this->fillPlaceholders($this->validationRules, $data);
+
+			$this->validation->setRules($rules, $this->validationMessages);
 			$valid = $this->validation->run($data);
 		}
 
 		return (bool) $valid;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Replace any placeholders within the rules with the values that
+	 * match the 'key' of any properties being set. For example, if
+	 * we had the following $data array:
+	 *
+	 * [ 'id' => 13 ]
+	 *
+	 * and the following rule:
+	 *
+	 *  'required|is_unique[users,email,id,{id}]'
+	 *
+	 * The value of {id} would be replaced with the actual id in the form data:
+	 *
+	 *  'required|is_unique[users,email,id,13]'
+	 *
+	 * @param array $rules
+	 * @param array $data
+	 *
+	 * @return array
+	 */
+	protected function fillPlaceholders(array $rules, array $data)
+	{
+		$replacements = [];
+
+		foreach ($data as $key => $value)
+		{
+			$replacements["{{$key}}"] = $value;
+		}
+
+		if (! empty($replacements))
+		{
+			foreach ($rules as &$rule)
+			{
+				if (is_array($rule))
+				{
+					foreach ($rule as &$row)
+					{
+						$row = strtr($row, $replacements);
+					}
+					continue;
+				}
+
+				$rule = strtr($rule, $replacements);
+			}
+		}
+
+		return $rules;
 	}
 
 	//--------------------------------------------------------------------
@@ -1213,6 +1346,7 @@ class Model
 	 * @param array  $data
 	 *
 	 * @return mixed
+	 * @throws \CodeIgniter\Database\Exceptions\DataException
 	 */
 	protected function trigger(string $event, array $data)
 	{
@@ -1226,7 +1360,7 @@ class Model
 		{
 			if ( ! method_exists($this, $callback))
 			{
-				throw new \BadMethodCallException(lang('Database.invalidEvent', [$callback]));
+				throw DataException::forInvalidMethodTriggered($callback);
 			}
 
 			$data = $this->{$callback}($data);
@@ -1279,11 +1413,11 @@ class Model
 
 		if (method_exists($this->db, $name))
 		{
-			$result = call_user_func_array([$this->db, $name], $params);
+			$result = $this->db->$name(...$params);
 		}
-		elseif (method_exists($this->builder(), $name))
+		elseif (method_exists($builder = $this->builder(), $name))
 		{
-			$result = call_user_func_array([$this->builder(), $name], $params);
+			$result = $builder->$name(...$params);
 		}
 
 		// Don't return the builder object unless specifically requested

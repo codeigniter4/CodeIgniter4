@@ -10,6 +10,10 @@
         stopOnIncomplete="false"
         stopOnSkipped="false">
     <testsuites>
+        <testsuite name="app">
+            <directory>./tests</directory>
+            <exclude>./tests/system</exclude>
+        </testsuite>
         <testsuite name="system">
             <directory>./tests/system</directory>
             <exclude>./tests/system/Database</exclude>
@@ -23,14 +27,14 @@
         <whitelist processUncoveredFilesFromWhitelist="true">
             <directory suffix=".php">./system</directory>
             <exclude>
-                <file>./system/bootstrap.php</file>
-                <file>./system/Commands/Sessions/Views/migration.tpl.php</file>
-                <file>./system/ComposerScripts.php</file>
-                <file>./system/Config/Routes.php</file>
                 <directory>./system/Debug/Toolbar/Views</directory>
                 <directory>./system/Pager/Views</directory>
                 <directory>./system/ThirdParty</directory>
                 <directory>./system/Validation/Views</directory>
+                <file>./system/bootstrap.php</file>
+                <file>./system/Commands/Sessions/Views/migration.tpl.php</file>
+                <file>./system/ComposerScripts.php</file>
+                <file>./system/Config/Routes.php</file>
             </exclude>
         </whitelist>
     </filter>

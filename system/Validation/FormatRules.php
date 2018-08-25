@@ -100,7 +100,7 @@ class FormatRules
 	 */
 	public function alpha_numeric(string $str = null): bool
 	{
-		return ctype_alnum((string) $str);
+		return ctype_alnum($str);
 	}
 
 	//--------------------------------------------------------------------
@@ -155,7 +155,7 @@ class FormatRules
 	 */
 	public function is_natural(string $str = null): bool
 	{
-		return ctype_digit((string) $str);
+		return ctype_digit($str);
 	}
 
 	//--------------------------------------------------------------------
@@ -168,7 +168,7 @@ class FormatRules
 	 */
 	public function is_natural_no_zero(string $str = null): bool
 	{
-		return ($str != 0 && ctype_digit((string) $str));
+		return ($str != 0 && ctype_digit($str));
 	}
 
 	//--------------------------------------------------------------------
@@ -198,7 +198,7 @@ class FormatRules
 	 */
 	public function regex_match(string $str = null, string $pattern, array $data): bool
 	{
-		if (substr($pattern, 0, 1) != '/')
+		if (strpos($pattern, '/') !== 0)
 		{
 			$pattern = "/{$pattern}/";
 		}
@@ -250,7 +250,7 @@ class FormatRules
 	 */
 	public function valid_email(string $str = null): bool
 	{
-		if (function_exists('idn_to_ascii') && preg_match('#\A([^@]+)@(.+)\z#', $str, $matches))
+		if (function_exists('idn_to_ascii') && defined('INTL_IDNA_VARIANT_UTS46') && preg_match('#\A([^@]+)@(.+)\z#', $str, $matches))
 		{
 			$str = $matches[1] . '@' . idn_to_ascii($matches[2], 0, INTL_IDNA_VARIANT_UTS46);
 		}
@@ -334,11 +334,7 @@ class FormatRules
 		}
 		elseif (preg_match('/^(?:([^:]*)\:)?\/\/(.+)$/', $str, $matches))
 		{
-			if (empty($matches[2]))
-			{
-				return false;
-			}
-			elseif ( ! in_array($matches[1], ['http', 'https'], true))
+			if ( ! in_array($matches[1], ['http', 'https'], true))
 			{
 				return false;
 			}
@@ -370,8 +366,7 @@ class FormatRules
 
 		$date = \DateTime::createFromFormat($format, $str);
 
-  		return (bool) $date && \DateTime::getLastErrors()['warning_count'] === 0
-	  				 		&& \DateTime::getLastErrors()['error_count'] === 0;
+		return (bool) $date && \DateTime::getLastErrors()['warning_count'] === 0 && \DateTime::getLastErrors()['error_count'] === 0;
 	}
 
 	//--------------------------------------------------------------------

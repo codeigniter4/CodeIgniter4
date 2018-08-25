@@ -33,23 +33,20 @@ class DebugToolbar implements FilterInterface
 	 */
 	public function after(RequestInterface $request, ResponseInterface $response)
 	{
-		$format = $response->getHeaderLine('content-type');
-
-		if ( ! is_cli() && CI_DEBUG && strpos($format, 'html') !== false)
+		if ( ! is_cli() && CI_DEBUG)
 		{
 			global $app;
 
-			$toolbar = Services::toolbar(new App());
+			$toolbar = Services::toolbar(config(App::class));
 			$stats   = $app->getPerformanceStats();
-			$output  = $toolbar->run(
+			$data    = $toolbar->run(
 				$stats['startTime'],
 				$stats['totalTime'],
-				$stats['startMemory'],
 				$request,
 				$response
 			);
 
-			helper(['filesystem', 'url']);
+			helper('filesystem');
 
 			// Updated to time() so we can get history
 			$time = time();
@@ -59,12 +56,26 @@ class DebugToolbar implements FilterInterface
 				mkdir(WRITEPATH.'debugbar', 0777);
 			}
 
-			write_file(WRITEPATH .'debugbar/'.'debugbar_' . $time, $output, 'w+');
+			write_file(WRITEPATH .'debugbar/'.'debugbar_' . $time, $data, 'w+');
+
+			$format = $response->getHeaderLine('content-type');
+
+			// Non-HTML formats should not include the debugbar
+			// then we send headers saying where to find the debug data
+			// for this response
+			if ($request->isAJAX() || strpos($format, 'html') === false)
+			{
+				return $response->setHeader('Debugbar-Time', (string)$time)
+								->setHeader('Debugbar-Link', site_url("?debugbar_time={$time}"))
+								->getBody();
+			}
 
 			$script = PHP_EOL
-				. '<script type="text/javascript" id="debugbar_loader" '
+				. '<script type="text/javascript" {csp-script-nonce} id="debugbar_loader" '
 				. 'data-time="' . $time . '" '
 				. 'src="' . rtrim(site_url(), '/') . '?debugbar"></script>'
+				. '<script type="text/javascript" {csp-script-nonce} id="debugbar_dynamic_script"></script>'
+				. '<style type="text/css" {csp-style-nonce} id="debugbar_dynamic_style"></style>'
 				. PHP_EOL;
 
 			if (strpos($response->getBody(), '</body>') !== false)

@@ -11,10 +11,10 @@ The Security Class contains methods that help protect your site against Cross-Si
 Loading the Library
 *******************
 
-If your only interest in loading the library is to handle CSRF protection, then you will never need to load it,
-as it is ran as filter and has no manual interaction.
+If your only interest in loading the library is to handle CSRF protection, then you will never need to load it, 
+as it runs as a filter and has no manual interaction.
 
-If you find a case where you do need direct access, though, you may load it through the Services file::
+If you find a case where you do need direct access though, you may load it through the Services file::
 
 	$security = \Config\Services::security();
 
@@ -72,6 +72,15 @@ may alter this behavior by editing the following config parameter
 ::
 
 	public $CSRFRegenerate  = true;
+
+When a request fails the CSRF validation check, it will redirect to the previous page by default,
+setting an ``error`` flash message that you can display to the end user. This provides a nicer experience
+than simply crashing. This can be turned off by editing the ``$CSRFRedirect`` value in
+**application/Config/App.php**::
+
+	public $CSRFRedirect = false;
+
+Even when the redirect value is **true**, AJAX calls will not redirect, but will throw an error.
 
 *********************
 Other Helpful Methods

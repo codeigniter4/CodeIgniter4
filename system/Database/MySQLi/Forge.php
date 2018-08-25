@@ -109,18 +109,18 @@ class Forge extends \CodeIgniter\Database\Forge
 		{
 			if (is_string($key))
 			{
-				$sql .= ' ' . strtoupper($key) . ' = ' . $attributes[$key];
+				$sql .= ' ' . strtoupper($key) . ' = ' . $this->db->escape($attributes[$key]);
 			}
 		}
 
 		if ( ! empty($this->db->charset) && ! strpos($sql, 'CHARACTER SET') && ! strpos($sql, 'CHARSET'))
 		{
-			$sql .= ' DEFAULT CHARACTER SET = ' . $this->db->charset;
+			$sql .= ' DEFAULT CHARACTER SET = ' . $this->db->escape($this->db->charset);
 		}
 
 		if ( ! empty($this->db->DBCollat) && ! strpos($sql, 'COLLATE'))
 		{
-			$sql .= ' COLLATE = ' . $this->db->DBCollat;
+			$sql .= ' COLLATE = ' . $this->db->escape($this->db->DBCollat);
 		}
 
 		return $sql;
@@ -228,7 +228,7 @@ class Forge extends \CodeIgniter\Database\Forge
 				continue;
 			}
 
-			is_array($this->keys[$i]) OR $this->keys[$i] = [$this->keys[$i]];
+			is_array($this->keys[$i]) || $this->keys[$i] = [$this->keys[$i]];
 
 			$unique = in_array($i, $this->uniqueKeys) ? 'UNIQUE ' : '';
 

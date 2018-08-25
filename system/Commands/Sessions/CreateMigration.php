@@ -39,6 +39,12 @@ use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 use Config\App;
 
+/**
+ * Creates a migration file for database sessions.
+ *
+ * @package CodeIgniter\Commands
+ */
+
 class CreateMigration extends BaseCommand
 {
 
@@ -98,7 +104,7 @@ class CreateMigration extends BaseCommand
 	{
 		$config = new App();
 
-		$tableName = CLI::getOption('t') ?? $config->sessionSavePath ?? 'ci_sessions';
+		$tableName = CLI::getOption('t') ?? 'ci_sessions';
 
 		$path = APPPATH . 'Database/Migrations/' . date('YmdHis_') . 'create_' . $tableName . '_table' . '.php';
 
@@ -109,7 +115,7 @@ class CreateMigration extends BaseCommand
 			'matchIP'	 => $config->sessionMatchIP ?? false,
 		];
 
-		$template = view('\CodeIgniter\Commands\Sessions\Views\migration.tpl', $data);
+		$template = view('\CodeIgniter\Commands\Sessions\Views\migration.tpl', $data, ['debug' => false]);
 		$template = str_replace('@php', '<?php', $template);
 
 		// Write the file out.

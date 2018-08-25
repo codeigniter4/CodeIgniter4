@@ -11,7 +11,9 @@ Library Reference
     cli
     content_negotiation
     curlrequest
+    email
     files
+    honeypot
     images
     incomingrequest
     localization
@@ -26,4 +28,5 @@ Library Reference
     typography
     uploaded_files
     uri
+    user_agent
     validation

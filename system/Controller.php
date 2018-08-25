@@ -39,6 +39,7 @@ use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Log\Logger;
 use CodeIgniter\Validation\Validation;
+use Psr\Log\LoggerInterface;
 
 /**
  * Class Controller
@@ -99,18 +100,17 @@ class Controller
 	/**
 	 * Constructor.
 	 *
-	 * @param RequestInterface $request
-	 * @param ResponseInterface $response
-	 * @param Logger $logger
+	 * @param RequestInterface         $request
+	 * @param ResponseInterface        $response
+	 * @param \Psr\Log\LoggerInterface $logger
+	 *
+	 * @throws \CodeIgniter\HTTP\RedirectException
 	 */
-	public function __construct(RequestInterface $request, ResponseInterface $response, Logger $logger = null)
+	public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
 	{
 		$this->request = $request;
-
 		$this->response = $response;
-
-		$this->logger = is_null($logger) ? Services::logger(true) : $logger;
-
+		$this->logger = $logger;
 		$this->logger->info('Controller "' . get_class($this) . '" loaded.');
 
 		if ($this->forceHTTPS > 0)
@@ -132,6 +132,8 @@ class Controller
 	 * @param int $duration The number of seconds this link should be
 	 *                      considered secure for. Only with HSTS header.
 	 *                      Default value is 1 year.
+	 *
+	 * @throws \CodeIgniter\HTTP\RedirectException
 	 */
 	public function forceHTTPS(int $duration = 31536000)
 	{
@@ -170,11 +172,11 @@ class Controller
 	//--------------------------------------------------------------------
 
 	/**
-	 * A shortcut to performing validation on $_POST input. If validation
+	 * A shortcut to performing validation on input data. If validation
 	 * is not successful, a $errors property will be set on this class.
 	 *
-	 * @param                                    $rules
-	 * @param array|null                         $messages
+	 * @param array  $rules
+	 * @param array  $messages An array of custom error messages
 	 *
 	 * @return bool
 	 */
@@ -182,9 +184,10 @@ class Controller
 	{
 		$this->validator = Services::validation();
 
-		$success = $this->validator->withRequest($this->request)
-				->setRules($rules, $messages)
-				->run();
+		$success = $this->validator
+			->withRequest($this->request)
+			->setRules($rules, $messages)
+			->run();
 
 		return $success;
 	}

@@ -5,10 +5,12 @@ use Config\Autoload;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Validation\Validation;
 use CodeIgniter\Router\RouteCollection;
-use CodeIgniter\Autoloader\MockFileLocator;
+use Tests\Support\Autoloader\MockFileLocator;
+use Tests\Support\HTTP\MockIncomingRequest;
 
 class RedirectResponseTest extends \CIUnitTestCase
 {
+	/** @var RouteCollection */
 	protected $routes;
 
 	protected $request;
@@ -27,7 +29,7 @@ class RedirectResponseTest extends \CIUnitTestCase
 		$this->routes = new RouteCollection(new MockFileLocator(new Autoload()));
 		Services::injectMock('routes', $this->routes);
 
-		$this->request = new MockIncomingRequest($this->config, new URI('http://example.com'));
+		$this->request = new MockIncomingRequest($this->config, new URI('http://example.com'), null, new UserAgent());
 		Services::injectMock('request', $this->request);
 	}
 
@@ -41,6 +43,18 @@ class RedirectResponseTest extends \CIUnitTestCase
 		$this->assertEquals('http://example.com/foo', $response->getHeaderLine('Location'));
 	}
 
+	public function testRedirectRoute()
+	{
+		$response = new RedirectResponse(new App());
+
+		$this->routes->add( 'exampleRoute', 'Home::index' );
+
+		$response->route( 'exampleRoute' );
+
+		$this->assertTrue($response->hasHeader('Location'));
+		$this->assertEquals('http://example.com/exampleRoute', $response->getHeaderLine('Location'));
+	}
+
 	public function testRedirectRelativeConvertsToFullURI()
 	{
 		$response = new RedirectResponse($this->config);
@@ -51,6 +65,10 @@ class RedirectResponseTest extends \CIUnitTestCase
 		$this->assertEquals('http://example.com/foo', $response->getHeaderLine('Location'));
 	}
 
+	/**
+	 * @runInSeparateProcess
+	 * @preserveGlobalState disabled
+	 */
 	public function testWithInput()
 	{
 		$_SESSION = [];
@@ -67,6 +85,10 @@ class RedirectResponseTest extends \CIUnitTestCase
 		$this->assertEquals('baz', $_SESSION['_ci_old_input']['post']['bar']);
 	}
 
+	/**
+	 * @runInSeparateProcess
+	 * @preserveGlobalState disabled
+	 */
 	public function testWithValidationErrors()
 	{
 		$_SESSION = [];
@@ -84,6 +106,10 @@ class RedirectResponseTest extends \CIUnitTestCase
 		$this->assertArrayHasKey('_ci_validation_errors', $_SESSION);
 	}
 
+	/**
+	 * @runInSeparateProcess
+	 * @preserveGlobalState disabled
+	 */
 	public function testWith()
 	{
 		$_SESSION = [];

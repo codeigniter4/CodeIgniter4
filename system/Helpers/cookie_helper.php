@@ -73,10 +73,7 @@ if ( ! function_exists('set_cookie'))
 		// The following line shows as a syntax error in NetBeans IDE
 		//(\Config\Services::response())->setcookie
 		$response = \Config\Services::response();
-		$response->setcookie
-				(
-				$name, $value, $expire, $domain, $path, $prefix, $secure, $httpOnly
-		);
+		$response->setcookie($name, $value, $expire, $domain, $path, $prefix, $secure, $httpOnly);
 	}
 
 }
@@ -98,7 +95,7 @@ if ( ! function_exists('get_cookie'))
 	 */
 	function get_cookie($index, bool $xssClean = false)
 	{
-		$app = new \Config\App();
+		$app = config(\Config\App::class);
 		$appCookiePrefix = $app->cookiePrefix;
 		$prefix = isset($_COOKIE[$index]) ? '' : $appCookiePrefix;
 

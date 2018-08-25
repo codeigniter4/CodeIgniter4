@@ -109,6 +109,7 @@ class DotEnv
 			}
 		}
 
+		return true; // for success
 	}
 
 	//--------------------------------------------------------------------
@@ -126,11 +127,17 @@ class DotEnv
 		list($name, $value) = $this->normaliseVariable($name, $value);
 
 		if ( ! getenv($name, true))
+		{
 			putenv("$name=$value");
+		}
 		if (empty($_ENV[$name]))
+		{
 			$_ENV[$name] = $value;
+		}
 		if (empty($_SERVER[$name]))
+		{
 			$_SERVER[$name] = $value;
+		}
 	}
 
 	//--------------------------------------------------------------------

@@ -118,7 +118,7 @@ class MigrateVersion extends BaseCommand
 			exit();
 		}
 
-		CLI::write(sprintf(lang('Migrations.migToVersionPH'), $version), 'yellow');
+		CLI::write(sprintf(lang('Migrations.toVersionPH'), $version), 'yellow');
 
 		$namespace = CLI::getOption('n');
 		$group = CLI::getOption('g');
@@ -131,7 +131,7 @@ class MigrateVersion extends BaseCommand
 			$this->showError($e);
 		}
 
-		
+
 	}
 
 }

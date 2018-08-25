@@ -1,13 +1,20 @@
 <?php namespace CodeIgniter\Session;
 
-use CodeIgniter\Log\TestLogger;
-use CodeIgniter\Session\Handlers\FileHandler;
 use Config\Logger;
+use Tests\Support\Log\TestLogger;
+use Tests\Support\Session\MockSession;
+use CodeIgniter\Session\Handlers\FileHandler;
 
+/**
+ * @runTestsInSeparateProcesses
+ * @preserveGlobalState disabled
+ */
 class SessionTest extends \CIUnitTestCase
 {
     public function setUp()
     {
+        parent::setUp();
+
         $_COOKIE = [];
         $_SESSION = [];
     }
@@ -99,10 +106,28 @@ class SessionTest extends \CIUnitTestCase
 
     public function testGetReturnsNullWhenNotFound()
     {
+    	$_SESSION = [];
+
         $session = $this->getInstance();
         $session->start();
 
         $this->assertNull($session->get('foo'));
+    }
+
+    public function testGetReturnsAllWithNoKeys()
+	{
+		$_SESSION = [
+			'foo' => 'bar',
+			'bar' => 'baz'
+		];
+
+		$session = $this->getInstance();
+		$session->start();
+
+		$result = $session->get();
+
+		$this->assertTrue(array_key_exists('foo', $result));
+		$this->assertTrue(array_key_exists('bar', $result));
     }
 
     public function testGetAsProperty()
@@ -143,6 +168,23 @@ class SessionTest extends \CIUnitTestCase
         $_SESSION['foo'] = 'bar';
 
         $this->assertFalse($session->has('bar'));
+    }
+
+    public function testPushNewValueIntoArraySessionValue()
+    {
+        $session = $this->getInstance();
+        $session->start();
+
+        $session->set('hobbies', ['cooking' => 'baking']);
+        $session->push('hobbies', ['sport'=>'tennis']);
+
+        $this->assertEquals(
+            [
+                'cooking' => 'baking',
+                'sport'   => 'tennis',
+            ],
+            $session->get('hobbies')
+        );
     }
 
     public function testRemoveActuallyRemoves()

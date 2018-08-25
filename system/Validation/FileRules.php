@@ -85,13 +85,16 @@ class FileRules
 			return $file->getError() === 0;
 		}
 
+		// Note: cannot unit test this; no way to over-ride ENVIRONMENT?
+		// @codeCoverageIgnoreStart
 		return $file->isValid();
+		// @codeCoverageIgnoreEnd
 	}
 
 	//--------------------------------------------------------------------
 
 	/**
-	 * Verifies if the file's size in Kilobytes is larger than the parameter.
+	 * Verifies if the file's size in Kilobytes is no larger than the parameter.
 	 *
 	 * @param string|null $blank
 	 * @param string      $params
@@ -112,8 +115,7 @@ class FileRules
 		{
 			return false;
 		}
-
-		return $params[0] > $file->getSize('kb');
+		return $params[0] >= $file->getSize('kb');
 	}
 
 	//--------------------------------------------------------------------
@@ -174,7 +176,7 @@ class FileRules
 			return false;
 		}
 
-		return in_array($file->getType(), $params);
+		return in_array($file->getMimeType(), $params);
 	}
 
 	//--------------------------------------------------------------------

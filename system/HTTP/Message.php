@@ -1,4 +1,7 @@
-<?php namespace CodeIgniter\HTTP;
+<?php
+namespace CodeIgniter\HTTP;
+
+use CodeIgniter\HTTP\Exceptions\HTTPException;
 
 /**
  * CodeIgniter
@@ -145,14 +148,7 @@ class Message
 				$header = str_replace('_', ' ', strtolower($header));
 				$header = str_replace(' ', '-', ucwords($header));
 
-				if (array_key_exists($key, $_SERVER))
-				{
-					$this->setHeader($header, $_SERVER[$key]);
-				}
-				else
-				{
-					$this->setHeader($header, '');
-				}
+				$this->setHeader($header, $_SERVER[$key]);
 
 				// Add us to the header map so we can find them case-insensitively
 				$this->headerMap[strtolower($header)] = $header;
@@ -244,13 +240,6 @@ class Message
 			return '';
 		}
 
-		// If there are more than 1 headers with this name,
-		// then return the value of the first.
-		if (is_array($this->headers[$orig_name]))
-		{
-			return $this->headers[$orig_name][0]->getValueLine();
-		}
-
 		return $this->headers[$orig_name]->getValueLine();
 	}
 
@@ -283,10 +272,6 @@ class Message
 		if (isset($this->headers[$name]))
 		{
 			$this->headers[$name] = new Header($name, $value);
-		}
-		else
-		{
-			$this->headers[$name][] = new Header($name, $value);
 		}
 
 		return $this;
@@ -360,7 +345,7 @@ class Message
 	 */
 	public function getProtocolVersion(): string
 	{
-		return $this->protocolVersion;
+		return $this->protocolVersion ?? '1.1';
 	}
 
 	//--------------------------------------------------------------------
@@ -381,7 +366,7 @@ class Message
 
 		if ( ! in_array($version, $this->validProtocolVersions))
 		{
-			throw new \InvalidArgumentException('Invalid HTTP Protocol Version. Must be one of: ' . implode(', ', $this->validProtocolVersions));
+			throw HTTPException::forInvalidHTTPProtocol(implode(', ', $this->validProtocolVersions));
 		}
 
 		$this->protocolVersion = $version;

@@ -36,6 +36,7 @@
  * @filesource
  */
 use CodeIgniter\Config\BaseConfig;
+use CodeIgniter\Session\Exceptions\SessionException;
 
 /**
  * Session handler using file system for storage
@@ -111,14 +112,12 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 		{
 			if ( ! mkdir($savePath, 0700, true))
 			{
-				throw new \Exception("Session: Configured save path '" . $this->savePath .
-				"' is not a directory, doesn't exist or cannot be created.");
+				throw SessionException::forInvalidSavePath($this->savePath);
 			}
 		}
 		elseif ( ! is_writable($savePath))
 		{
-			throw new \Exception("Session: Configured save path '" . $this->savePath .
-			"' is not writable by the PHP process.");
+			throw SessionException::forWriteProtectedSavePath($this->savePath);
 		}
 
 		$this->savePath = $savePath;

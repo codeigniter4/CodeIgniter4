@@ -8,6 +8,8 @@ class ServicesTest extends \CIUnitTestCase
 
 	public function setUp()
 	{
+		parent::setUp();
+
 		$this->original = $_SERVER;
 //		$_SERVER['HTTP_ACCEPT_LANGUAGE'] = 'es; q=1.0, en; q=0.5';
 		$this->config = new App();
@@ -28,13 +30,13 @@ class ServicesTest extends \CIUnitTestCase
 
 	public function testNewExceptions()
 	{
-		$actual = Services::exceptions(new Exceptions());
+		$actual = Services::exceptions(new Exceptions(), Services::request(), Services::response());
 		$this->assertInstanceOf(\CodeIgniter\Debug\Exceptions::class, $actual);
 	}
 
 	public function testNewExceptionsWithNullConfig()
 	{
-		$actual = Services::exceptions(null, false);
+		$actual = Services::exceptions(null, null, null, false);
 		$this->assertInstanceOf(\CodeIgniter\Debug\Exceptions::class, $actual);
 	}
 
@@ -127,18 +129,30 @@ class ServicesTest extends \CIUnitTestCase
 		$this->assertInstanceOf(\CodeIgniter\View\Cell::class, $actual);
 	}
 
+	/**
+	 * @runInSeparateProcess
+	 * @preserveGlobalState disabled
+	 */
 	public function testNewSession()
 	{
 		$actual = Services::session($this->config);
 		$this->assertInstanceOf(\CodeIgniter\Session\Session::class, $actual);
 	}
 
+	/**
+	 * @runInSeparateProcess
+	 * @preserveGlobalState disabled
+	 */
 	public function testNewSessionWithNullConfig()
 	{
 		$actual = Services::session(null, false);
 		$this->assertInstanceOf(\CodeIgniter\Session\Session::class, $actual);
 	}
 
+	/**
+	 * @runInSeparateProcess
+	 * @preserveGlobalState disabled
+	 */
 	public function testCallStatic()
 	{
 		// __callStatic should kick in for this but fail

@@ -275,6 +275,19 @@ class BaseBuilder
 			if ($val !== '')
 			{
 				$this->QBSelect[] = $val;
+
+				/*
+				 * When doing 'SELECT NULL as field_alias FROM table'
+				 * null gets taken as a field, and therefore escaped
+				 * with backticks.
+				 * This prevents NULL being escaped
+				 * @see https://github.com/bcit-ci/CodeIgniter4/issues/1169
+				 */
+				if ( strtoupper(mb_substr(trim($val), 0, 4)) == 'NULL')
+				{
+					$escape = false;
+				}
+
 				$this->QBNoEscape[] = $escape;
 			}
 		}
@@ -768,7 +781,7 @@ class BaseBuilder
 	 */
 	protected function _whereIn($key = null, $values = null, $not = false, $type = 'AND ', $escape = null)
 	{
-		if ($key === null OR $values === null)
+		if ($key === null || $values === null)
 		{
 			return $this;
 		}
@@ -1321,6 +1334,28 @@ class BaseBuilder
 	//--------------------------------------------------------------------
 
 	/**
+	 * Returns the previously set() data, alternatively resetting it
+	 * if needed.
+	 *
+	 * @param bool $clean
+	 *
+	 * @return array
+	 */
+	public function getSetData(bool $clean = false)
+	{
+		$data = $this->QBSet;
+
+		if ($clean)
+		{
+			$this->QBSet = [];
+		}
+
+		return $data;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Get SELECT query string
 	 *
 	 * Compiles a SELECT query string and returns the sql.
@@ -1501,13 +1536,13 @@ class BaseBuilder
 	 * @param    array $set    An associative array of insert values
 	 * @param    bool  $escape Whether to escape values and identifiers
 	 *
-	 * @param int      $batch_size
+	 * @param int      $batchSize
 	 * @param bool     $testing
 	 *
 	 * @return int Number of rows inserted or FALSE on failure
 	 * @throws DatabaseException
 	 */
-	public function insertBatch($set = null, $escape = null, $batch_size = 100, $testing = false)
+	public function insertBatch($set = null, $escape = null, $batchSize = 100, $testing = false)
 	{
 		if ($set === null)
 		{
@@ -1540,9 +1575,9 @@ class BaseBuilder
 
 		// Batch this baby
 		$affected_rows = 0;
-		for ($i = 0, $total = count($this->QBSet); $i < $total; $i += $batch_size)
+		for ($i = 0, $total = count($this->QBSet); $i < $total; $i += $batchSize)
 		{
-			$sql = $this->_insertBatch($this->db->protectIdentifiers($table, true, $escape, false), $this->QBKeys, array_slice($this->QBSet, $i, $batch_size));
+			$sql = $this->_insertBatch($this->db->protectIdentifiers($table, true, $escape, false), $this->QBKeys, array_slice($this->QBSet, $i, $batchSize));
 
 			if ($testing)
 			{
@@ -1973,15 +2008,15 @@ class BaseBuilder
 	 *
 	 * Compiles an update string and runs the query
 	 *
-	 * @param    array  $set        An associative array of update values
-	 * @param    string $index      The where key
-	 * @param    int    $batch_size The size of the batch to run
-	 * @param    bool   $returnSQL  True means SQL is returned, false will execute the query
+	 * @param    array  $set       An associative array of update values
+	 * @param    string $index     The where key
+	 * @param    int    $batchSize The size of the batch to run
+	 * @param    bool   $returnSQL True means SQL is returned, false will execute the query
 	 *
 	 * @return    mixed    Number of rows affected or FALSE on failure
 	 * @throws \CodeIgniter\Database\Exceptions\DatabaseException
 	 */
-	public function updateBatch($set = null, $index = null, $batch_size = 100, $returnSQL = false)
+	public function updateBatch($set = null, $index = null, $batchSize = 100, $returnSQL = false)
 	{
 		if ($index === null)
 		{
@@ -2023,9 +2058,9 @@ class BaseBuilder
 		// Batch this baby
 		$affected_rows = 0;
 		$savedSQL = [];
-		for ($i = 0, $total = count($this->QBSet); $i < $total; $i += $batch_size)
+		for ($i = 0, $total = count($this->QBSet); $i < $total; $i += $batchSize)
 		{
-			$sql = $this->_updateBatch($table, array_slice($this->QBSet, $i, $batch_size), $this->db->protectIdentifiers($index)
+			$sql = $this->_updateBatch($table, array_slice($this->QBSet, $i, $batchSize), $this->db->protectIdentifiers($index)
 			);
 
 			if ($returnSQL)
@@ -2499,7 +2534,7 @@ class BaseBuilder
 				for ($ci = 0, $cc = count($conditions); $ci < $cc; $ci ++ )
 				{
 					if (($op = $this->getOperator($conditions[$ci])) === false
-							OR ! preg_match('/^(\(?)(.*)(' . preg_quote($op, '/') . ')\s*(.*(?<!\)))?(\)?)$/i', $conditions[$ci], $matches)
+							|| ! preg_match('/^(\(?)(.*)(' . preg_quote($op, '/') . ')\s*(.*(?<!\)))?(\)?)$/i', $conditions[$ci], $matches)
 					)
 					{
 						continue;

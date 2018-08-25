@@ -33,7 +33,7 @@ allows the script to continue executing::
 
     d($_SERVER);
 
-**ddd()**
+**dd()**
 
 This method is identical to ``d()``, except that it also ``dies()`` and no further code is executed this request.
 
@@ -43,14 +43,14 @@ This provides a backtrace to the current execution point, with Kint's own unique
 
     Kint::trace();
 
-For more information, see `Kint's page <https://raveren.github.io/kint/>`_.
+For more information, see `Kint's page <https://kint-php.github.io/kint//>`_.
 
 =================
 The Debug Toolbar
 =================
 
 The Debug Toolbar provides at-a-glance information about the current page request, including benchmark results,
-queries you have ran, request and response data, and more. This can all prove very useful during development
+queries you have run, request and response data, and more. This can all prove very useful during development
 to help you debug and optimize.
 
 .. note:: The Debug Toolbar is still under construction with several planned features not yet implemented.

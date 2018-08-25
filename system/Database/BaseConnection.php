@@ -49,49 +49,49 @@ abstract class BaseConnection implements ConnectionInterface
 	 *
 	 * @var    string
 	 */
-	public $DSN;
+	protected $DSN;
 
 	/**
 	 * Database port
 	 *
 	 * @var    int
 	 */
-	public $port = '';
+	protected $port = '';
 
 	/**
 	 * Hostname
 	 *
 	 * @var    string
 	 */
-	public $hostname;
+	protected $hostname;
 
 	/**
 	 * Username
 	 *
 	 * @var    string
 	 */
-	public $username;
+	protected $username;
 
 	/**
 	 * Password
 	 *
 	 * @var    string
 	 */
-	public $password;
+	protected $password;
 
 	/**
 	 * Database name
 	 *
 	 * @var    string
 	 */
-	public $database;
+	protected $database;
 
 	/**
 	 * Database driver
 	 *
 	 * @var    string
 	 */
-	public $DBDriver = 'MySQLi';
+	protected $DBDriver = 'MySQLi';
 
 	/**
 	 * Sub-driver
@@ -99,21 +99,21 @@ abstract class BaseConnection implements ConnectionInterface
 	 * @used-by    CI_DB_pdo_driver
 	 * @var    string
 	 */
-	public $subdriver;
+	protected $subdriver;
 
 	/**
 	 * Table prefix
 	 *
 	 * @var    string
 	 */
-	public $DBPrefix = '';
+	protected $DBPrefix = '';
 
 	/**
 	 * Persistent connection flag
 	 *
 	 * @var    bool
 	 */
-	public $pConnect = false;
+	protected $pConnect = false;
 
 	/**
 	 * Debug flag
@@ -122,56 +122,56 @@ abstract class BaseConnection implements ConnectionInterface
 	 *
 	 * @var    bool
 	 */
-	public $DBDebug = false;
+	protected $DBDebug = false;
 
 	/**
 	 * Should we cache results?
 	 *
 	 * @var bool
 	 */
-	public $cacheOn = false;
+	protected $cacheOn = false;
 
 	/**
 	 * Path to store cache files.
 	 *
 	 * @var string
 	 */
-	public $cacheDir;
+	protected $cacheDir;
 
 	/**
 	 * Character set
 	 *
 	 * @var    string
 	 */
-	public $charset = 'utf8';
+	protected $charset = 'utf8';
 
 	/**
 	 * Collation
 	 *
 	 * @var    string
 	 */
-	public $DBCollat = 'utf8_general_ci';
+	protected $DBCollat = 'utf8_general_ci';
 
 	/**
 	 * Swap Prefix
 	 *
 	 * @var    string
 	 */
-	public $swapPre = '';
+	protected $swapPre = '';
 
 	/**
 	 * Encryption flag/data
 	 *
 	 * @var    mixed
 	 */
-	public $encrypt = false;
+	protected $encrypt = false;
 
 	/**
 	 * Compression flag
 	 *
 	 * @var    bool
 	 */
-	public $compress = false;
+	protected $compress = false;
 
 	/**
 	 * Strict ON flag
@@ -180,14 +180,14 @@ abstract class BaseConnection implements ConnectionInterface
 	 *
 	 * @var    bool
 	 */
-	public $strictOn;
+	protected $strictOn;
 
 	/**
 	 * Settings for a failover connection.
 	 *
 	 * @var array
 	 */
-	public $failover = [];
+	protected $failover = [];
 
 	//--------------------------------------------------------------------
 
@@ -772,7 +772,7 @@ abstract class BaseConnection implements ConnectionInterface
 		}
 
 		// The query() function will set this flag to FALSE in the event that a query failed
-		if ($this->transStatus === false OR $this->transFailure === true)
+		if ($this->transStatus === false || $this->transFailure === true)
 		{
 			$this->transRollback();
 
@@ -875,12 +875,12 @@ abstract class BaseConnection implements ConnectionInterface
 	 */
 	public function transRollback(): bool
 	{
-		if (! $this->transEnabled OR $this->transDepth === 0)
+		if (! $this->transEnabled || $this->transDepth === 0)
 		{
 			return false;
 		}
 		// When transactions are nested we only begin/commit/rollback the outermost ones
-		elseif ($this->transDepth > 1 OR $this->_transRollback())
+		elseif ($this->transDepth > 1 || $this->_transRollback())
 		{
 			$this->transDepth --;
 			return true;
@@ -1241,7 +1241,7 @@ abstract class BaseConnection implements ConnectionInterface
 	 */
 	public function escapeIdentifiers($item)
 	{
-		if ($this->escapeChar === '' OR empty($item) OR in_array($item, $this->reservedIdentifiers))
+		if ($this->escapeChar === '' || empty($item) || in_array($item, $this->reservedIdentifiers))
 		{
 			return $item;
 		}
@@ -1255,7 +1255,7 @@ abstract class BaseConnection implements ConnectionInterface
 			return $item;
 		}
 		// Avoid breaking functions and literal values inside queries
-		elseif (ctype_digit($item) OR $item[0] === "'" OR ( $this->escapeChar !== '"' && $item[0] === '"') OR
+		elseif (ctype_digit($item) || $item[0] === "'" OR ( $this->escapeChar !== '"' && $item[0] === '"') OR
 				strpos($item, '(') !== false
 		)
 		{
@@ -1360,7 +1360,7 @@ abstract class BaseConnection implements ConnectionInterface
 
 			return $str;
 		}
-		else if (is_string($str) OR ( is_object($str) && method_exists($str, '__toString')))
+		else if (is_string($str) || ( is_object($str) && method_exists($str, '__toString')))
 		{
 			return "'" . $this->escapeString($str) . "'";
 		}
@@ -1495,7 +1495,7 @@ abstract class BaseConnection implements ConnectionInterface
 	public function listTables($constrain_by_prefix = FALSE)
 	{
 		// Is there a cached result?
-		if (isset($this->dataCache['table_names']) && count($this->dataCache['table_names']))
+		if (isset($this->dataCache['table_names']) && $this->dataCache['table_names'])
 		{
 			return $this->dataCache['table_names'];
 		}
@@ -1662,7 +1662,7 @@ abstract class BaseConnection implements ConnectionInterface
 	}
 
 	//--------------------------------------------------------------------
-        
+
 	/**
 	 * Returns an object with foreign key data
 	 *
@@ -1740,4 +1740,15 @@ abstract class BaseConnection implements ConnectionInterface
 	abstract protected function _listColumns(string $table = ''): string;
 
 	//--------------------------------------------------------------------
+
+	public function __get($key)
+	{
+		if (property_exists($this, $key))
+		{
+			return $this->$key;
+		}
+	}
+
+	//--------------------------------------------------------------------
+
 }

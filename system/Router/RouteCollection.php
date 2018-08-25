@@ -36,6 +36,7 @@
  * @filesource
  */
 use CodeIgniter\Autoloader\FileLocator;
+use CodeIgniter\Router\Exceptions\RouterException;
 
 /**
  * Class RouteCollection
@@ -232,7 +233,7 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @return mixed
 	 */
-	public function addPlaceholder(string $placeholder, string $pattern = null): RouteCollectionInterface
+	public function addPlaceholder($placeholder, string $pattern = null): RouteCollectionInterface
 	{
 		if ( ! is_array($placeholder))
 		{
@@ -717,7 +718,7 @@ class RouteCollection implements RouteCollectionInterface
 
 		$callback = array_pop($params);
 
-		if (count($params) && is_array($params[0]))
+		if ($params && is_array($params[0]))
 		{
 			$this->currentOptions = array_shift($params);
 		}
@@ -1129,13 +1130,15 @@ class RouteCollection implements RouteCollectionInterface
 		{
 			// Ensure that the param we're inserting matches
 			// the expected param type.
+			$pos = strpos($from, $pattern);
+
 			if (preg_match("|{$pattern}|", $params[$index]))
 			{
-				$from = str_replace($pattern, $params[$index], $from);
+				$from = substr_replace($from, $params[$index], $pos, strlen($pattern));
 			}
 			else
 			{
-				throw new \LogicException('A parameter does not match the expected type.');
+				throw RouterException::forInvalidParameterType();
 			}
 		}
 
@@ -1229,13 +1232,23 @@ class RouteCollection implements RouteCollectionInterface
 			$to = '\\' . ltrim($to, '\\');
 		}
 
-		$this->routesOptions[$from] = $options;
-
 		$name = $options['as'] ?? $from;
+
+		// Don't overwrite any existing 'froms' so that auto-discovered routes
+		// do not overwrite any application/Config/Routes settings. The app
+		// routes should always be the "source of truth".
+		// this works only because discovered routes are added just prior
+		// to attempting to route the request.
+		if (isset($this->routes[$verb][$name]))
+		{
+			return;
+		}
 
 		$this->routes[$verb][$name] = [
 			'route' => [$from => $to]
 		];
+
+		$this->routesOptions[$from] = $options;
 
 		// Is this a redirect?
 		if (isset($options['redirect']) && is_numeric($options['redirect']))

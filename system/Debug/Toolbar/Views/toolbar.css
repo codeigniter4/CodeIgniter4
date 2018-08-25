@@ -163,6 +163,38 @@
 	margin-left: 0.5em;
 }
 
+#debug-bar span.ci-label .badge.active {
+	background-color: red;
+}
+
+#debug-bar button {
+	border: 1px solid #ddd;
+	background-color: #fff;
+	cursor: pointer;
+	border-radius: 4px;
+	color: #333;
+}
+
+#debug-bar button:hover {
+	background-color: #eaeaea;
+}
+
+#debug-bar tr[data-active="1"] {
+	background-color: #dff0d8;
+}
+
+#debug-bar tr[data-active="1"]:hover {
+	background-color: #a7d499;
+}
+
+#debug-bar tr.current {
+	background-color: #FDC894;
+}
+
+#debug-bar tr.current:hover {
+	background-color: #DD4814;
+}
+
 #debug-bar table strong {
 	font-weight: 500;
 	color: rgba(0, 0, 0, 0.3);
@@ -323,4 +355,47 @@
 	.hide-sm {
 		display: none !important;
 	}
+}
+
+/**
+simple styles to replace inline styles
+ */
+.debug-bar-width30 {
+	width: 30%;
+}
+
+.debug-bar-width10 {
+	width: 10%;
+}
+
+.debug-bar-width70p {
+	width: 70px;
+}
+
+.debug-bar-width140p {
+	width: 140px;
+}
+
+.debug-bar-width20e {
+	width: 20em;
+}
+
+.debug-bar-width6r {
+	width: 6rem;
+}
+
+.debug-bar-ndisplay {
+	display: none;
+}
+
+.debug-bar-alignRight {
+	text-align: right;
+}
+
+.debug-bar-alignLeft {
+	text-align: left;
+}
+
+.debug-bar-noverflow {
+	overflow: hidden;
 }

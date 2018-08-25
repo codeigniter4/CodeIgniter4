@@ -6,6 +6,8 @@ final class InflectorHelperTest extends \CIUnitTestCase
 
 	public function setUp()
 	{
+		parent::setUp();
+
 	    helper('inflector');
 	}
 
@@ -154,8 +156,8 @@ final class InflectorHelperTest extends \CIUnitTestCase
 
 		foreach ($words as $countable => $unCountable)
 		{
-			$this->assertTrue(is_countable($countable));
-			$this->assertFalse(is_countable($unCountable));
+			$this->assertTrue(is_pluralizable($countable));
+			$this->assertFalse(is_pluralizable($unCountable));
 		}
 	}
 

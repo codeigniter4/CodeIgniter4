@@ -63,15 +63,20 @@ class Console
 
 	/**
 	 * Runs the current command discovered on the CLI.
+	 *
+	 * @param bool $useSafeOutput
+	 *
+	 * @return \CodeIgniter\HTTP\RequestInterface|\CodeIgniter\HTTP\Response|\CodeIgniter\HTTP\ResponseInterface|mixed
+	 * @throws \CodeIgniter\HTTP\RedirectException
 	 */
-	public function run()
+	public function run(bool $useSafeOutput = false)
 	{
 		$path = CLI::getURI() ?: 'list';
 
 		// Set the path for the application to route to.
 		$this->app->setPath("ci{$path}");
 
-		return $this->app->run();
+		return $this->app->useSafeOutput($useSafeOutput)->run();
 	}
 
 	//--------------------------------------------------------------------

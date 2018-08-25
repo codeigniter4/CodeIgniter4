@@ -35,6 +35,7 @@
  * @since	Version 3.0.0
  * @filesource
  */
+use CodeIgniter\Pager\Exceptions\PagerException;
 use Config\Services;
 use CodeIgniter\View\RendererInterface;
 
@@ -71,6 +72,13 @@ class Pager implements PagerInterface
 	 * @var RendererInterface
 	 */
 	protected $view;
+
+	/**
+	 * List of only permitted queries
+	 *
+	 * @var array
+	 */
+	protected $only = [];
 
 	//--------------------------------------------------------------------
 
@@ -153,7 +161,7 @@ class Pager implements PagerInterface
 
 		if ( ! array_key_exists($template, $this->config->templates))
 		{
-			throw new \InvalidArgumentException($template . ' is not a valid Pager template.');
+			throw PagerException::forInvalidTemplate($template);
 		}
 
 		return $this->view->setVar('pager', $pager)
@@ -295,11 +303,11 @@ class Pager implements PagerInterface
 	/**
 	 * Returns the URI for a specific page for the specified group.
 	 *
-	 * @param int    $page
-	 * @param string $group
-	 * @param bool   $returnObject
+	 * @param int|null $page
+	 * @param string   $group
+	 * @param bool     $returnObject
 	 *
-	 * @return string
+	 * @return string|\CodeIgniter\HTTP\URI
 	 */
 	public function getPageURI(int $page = null, string $group = 'default', $returnObject = false)
 	{
@@ -307,7 +315,18 @@ class Pager implements PagerInterface
 
 		$uri = $this->groups[$group]['uri'];
 
-		$uri->addQuery('page', $page);
+		if ($this->only)
+		{
+			$query = array_intersect_key($_GET, array_flip($this->only));
+
+			$query['page'] = $page;
+
+			$uri->setQueryArray($query);
+		}
+		else
+		{
+			$uri->addQuery('page', $page);
+		}
 
 		return $returnObject === true ? $uri : (string) $uri;
 	}
@@ -406,7 +425,7 @@ class Pager implements PagerInterface
 	{
 		if ( ! array_key_exists($group, $this->groups))
 		{
-			throw new \InvalidArgumentException($group . ' is not a valid Pagination group.');
+			throw PagerException::forInvalidPaginationGroup($group);
 		}
 
 		$newGroup = $this->groups[$group];
@@ -415,6 +434,22 @@ class Pager implements PagerInterface
 		$newGroup['previous'] = $this->getPreviousPageURI($group);
 
 		return $newGroup;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Sets only allowed queries on pagination links.
+	 *
+	 * @param array $queries
+	 *
+	 * @return Pager
+	 */
+	public function only(array $queries):Pager
+	{
+		$this->only = $queries;
+
+		return $this;
 	}
 
 	//--------------------------------------------------------------------

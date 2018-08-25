@@ -3,6 +3,16 @@
 class Email
 {
 	/**
+	 * @var string
+	 */
+	public $fromEmail;
+
+	/**
+	 * @var string
+	 */
+	public $fromName;
+
+	/**
 	 * The "user agent"
 	 * @var string
 	 */

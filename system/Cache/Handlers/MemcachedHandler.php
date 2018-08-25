@@ -287,7 +287,8 @@ class MemcachedHandler implements CacheInterface
 
 		$stored = $this->memcached->get($key);
 
-		if (count($stored) !== 3)
+        // if not an array, don't try to count for PHP7.2
+		if (! is_array($stored) || count($stored) !== 3)
 		{
 			return FALSE;
 		}
@@ -310,7 +311,7 @@ class MemcachedHandler implements CacheInterface
 	 */
 	public function isSupported(): bool
 	{
-		return (extension_loaded('memcached') OR extension_loaded('memcache'));
+		return (extension_loaded('memcached') || extension_loaded('memcache'));
 	}
 
 }

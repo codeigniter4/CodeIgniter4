@@ -2,6 +2,8 @@
 
 namespace CodeIgniter\HTTP;
 
+use CodeIgniter\HTTP\Exceptions\HTTPException;
+
 class MessageTest extends \CIUnitTestCase
 {
 
@@ -12,6 +14,8 @@ class MessageTest extends \CIUnitTestCase
 
 	public function setUp()
 	{
+		parent::setUp();
+
 		$this->message = new Message();
 	}
 
@@ -147,7 +151,7 @@ class MessageTest extends \CIUnitTestCase
 
 	public function testSetProtocolThrowsExceptionWithInvalidProtocol()
 	{
-		$this->expectException('InvalidArgumentException');
+		$this->expectException(HTTPException::class);
 		$this->message->setProtocolVersion('1.2');
 	}
 
@@ -217,7 +221,7 @@ class MessageTest extends \CIUnitTestCase
 		$_SERVER = $original; // restore so code coverage doesn't break
 	}
 
-	//--------------------------------------------------------------------
+ 	//--------------------------------------------------------------------
 
 	public function testPopulateHeadersWithoutHTTP()
 	{

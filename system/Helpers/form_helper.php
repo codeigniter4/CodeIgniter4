@@ -48,22 +48,20 @@ if ( ! function_exists('form_open'))
 	 * Creates the opening portion of the form.
 	 *
 	 * @param    string $action     the URI segments of the form destination
-	 * @param    array  $attributes a key/value pair of attributes
+	 * @param    array|string  $attributes a key/value pair of attributes, or string representation
 	 * @param    array  $hidden     a key/value pair hidden data
 	 *
 	 * @return    string
 	 */
-	function form_open(string $action = '', array $attributes = [], array $hidden = []): string
+	function form_open(string $action = '', $attributes = [], array $hidden = []): string
 	{
 		// If no action is provided then set to the current url
 		if ( ! $action)
 		{
-			helper('url');
 			$action = current_url(true);
 		} // If an action is not a full URL then turn it into one
 		elseif (strpos($action, '://') === false)
 		{
-			helper('url');
 			$action = site_url($action);
 		}
 
@@ -75,14 +73,14 @@ if ( ! function_exists('form_open'))
 		}
 		if (stripos($attributes, 'accept-charset=') === false)
 		{
-			$config = new \Config\App();
+			$config = config(\Config\App::class);
 			$attributes .= ' accept-charset="' . strtolower($config->charset) . '"';
 		}
 
 		$form = '<form action="' . $action . '"' . $attributes . ">\n";
 
 		// Add CSRF field if enabled, but leave it out for GET requests and requests to external websites
-		$before = (new \Config\Filters())->globals['before'];
+		$before = Services::filters()->getFilters()['before'];
 
 		if ((in_array('csrf', $before) || array_key_exists('csrf', $before)) && strpos($action, base_url()) !== false && ! stripos($form, 'method="get"')
 		)
@@ -114,16 +112,16 @@ if ( ! function_exists('form_open_multipart'))
 	 * Creates the opening portion of the form, but with "multipart/form-data".
 	 *
 	 * @param    string $action     The URI segments of the form destination
-	 * @param    array  $attributes A key/value pair of attributes
+	 * @param    array|string  $attributes A key/value pair of attributes, or the same as a string
 	 * @param    array  $hidden     A key/value pair hidden data
 	 *
 	 * @return    string
 	 */
-	function form_open_multipart(string $action = '', array $attributes = [], array $hidden = []): string
+	function form_open_multipart(string $action = '', $attributes = [], array $hidden = []): string
 	{
 		if (is_string($attributes))
 		{
-			$attributes .= ' enctype="multipart/form-data"';
+			$attributes .= ' enctype="' . esc('multipart/form-data', 'attr') . '"';
 		}
 		else
 		{
@@ -208,9 +206,9 @@ if ( ! function_exists('form_input'))
 	function form_input($data = '', string $value = '', $extra = '', string $type = 'text'): string
 	{
 		$defaults = [
-			'type'	 => $type,
-			'name'	 => is_array($data) ? '' : $data,
-			'value'	 => $value,
+			'type' => $type,
+			'name' => is_array($data) ? '' : $data,
+			'value' => $value,
 		];
 
 		return '<input ' . parse_form_attributes($data, $defaults) . stringify_attributes($extra) . " />\n";
@@ -236,7 +234,7 @@ if ( ! function_exists('form_password'))
 	 */
 	function form_password($data = '', string $value = '', $extra = ''): string
 	{
-		is_array($data) OR $data = ['name' => $data];
+		is_array($data) || $data = ['name' => $data];
 		$data['type'] = 'password';
 
 		return form_input($data, $value, $extra);
@@ -263,7 +261,7 @@ if ( ! function_exists('form_upload'))
 	function form_upload($data = '', string $value = '', $extra = ''): string
 	{
 		$defaults = ['type' => 'file', 'name' => ''];
-		is_array($data) OR $data = ['name' => $data];
+		is_array($data) || $data = ['name' => $data];
 		$data['type'] = 'file';
 
 		return '<input ' . parse_form_attributes($data, $defaults) . stringify_attributes($extra) . " />\n";
@@ -288,11 +286,11 @@ if ( ! function_exists('form_textarea'))
 	function form_textarea($data = '', string $value = '', $extra = ''): string
 	{
 		$defaults = [
-			'name'	 => is_array($data) ? '' : $data,
-			'cols'	 => '40',
-			'rows'	 => '10',
+			'name' => is_array($data) ? '' : $data,
+			'cols' => '40',
+			'rows' => '10',
 		];
-		if ( ! is_array($data) OR ! isset($data['value']))
+		if ( ! is_array($data) || ! isset($data['value']))
 		{
 			$val = $value;
 		}
@@ -374,8 +372,8 @@ if ( ! function_exists('form_dropdown'))
 			$defaults = ['name' => $data];
 		}
 
-		is_array($selected) OR $selected = [$selected];
-		is_array($options) OR $options = [$options];
+		is_array($selected) || $selected = [$selected];
+		is_array($options) || $options = [$options];
 
 		// If no selected state was submitted we will attempt to set it automatically
 		if (empty($selected))
@@ -490,7 +488,7 @@ if ( ! function_exists('form_radio'))
 	 */
 	function form_radio($data = '', string $value = '', bool $checked = false, $extra = ''): string
 	{
-		is_array($data) OR $data = ['name' => $data];
+		is_array($data) || $data = ['name' => $data];
 		$data['type'] = 'radio';
 
 		return form_checkbox($data, $value, $checked, $extra);
@@ -515,9 +513,9 @@ if ( ! function_exists('form_submit'))
 	function form_submit($data = '', string $value = '', $extra = ''): string
 	{
 		$defaults = [
-			'type'	 => 'submit',
-			'name'	 => is_array($data) ? '' : $data,
-			'value'	 => $value,
+			'type' => 'submit',
+			'name' => is_array($data) ? '' : $data,
+			'value' => $value,
 		];
 
 		return '<input ' . parse_form_attributes($data, $defaults) . stringify_attributes($extra) . " />\n";
@@ -542,9 +540,9 @@ if ( ! function_exists('form_reset'))
 	function form_reset($data = '', string $value = '', $extra = ''): string
 	{
 		$defaults = [
-			'type'	 => 'reset',
-			'name'	 => is_array($data) ? '' : $data,
-			'value'	 => $value,
+			'type' => 'reset',
+			'name' => is_array($data) ? '' : $data,
+			'value' => $value,
 		];
 
 		return '<input ' . parse_form_attributes($data, $defaults) . stringify_attributes($extra) . " />\n";
@@ -569,8 +567,8 @@ if ( ! function_exists('form_button'))
 	function form_button($data = '', string $content = '', $extra = ''): string
 	{
 		$defaults = [
-			'name'	 => is_array($data) ? '' : $data,
-			'type'	 => 'button',
+			'name' => is_array($data) ? '' : $data,
+			'type' => 'button',
 		];
 
 		if (is_array($data) && isset($data['content']))
@@ -609,7 +607,7 @@ if ( ! function_exists('form_label'))
 			$label .= ' for="' . $id . '"';
 		}
 
-		if (is_array($attributes) && count($attributes) > 0)
+		if (is_array($attributes) && $attributes)
 		{
 			foreach ($attributes as $key => $val)
 			{
@@ -643,10 +641,10 @@ if ( ! function_exists('form_datalist'))
 	function form_datalist($name, $value, $options)
 	{
 		$data = [
-			'type'	 => 'text',
-			'name'	 => $name,
-			'list'	 => $name . '_list',
-			'value'	 => $value,
+			'type' => 'text',
+			'name' => $name,
+			'list' => $name . '_list',
+			'value' => $value,
 		];
 
 		$out = form_input($data) . "\n";
@@ -802,8 +800,6 @@ if ( ! function_exists('set_select'))
 
 		if (is_array($input))
 		{
-			$value = (string) $value;
-
 			// Note: in_array('', array(0)) returns TRUE, do not use it
 			foreach ($input as &$v)
 			{
@@ -840,9 +836,6 @@ if ( ! function_exists('set_checkbox'))
 	 */
 	function set_checkbox(string $field, string $value = '', bool $default = false): string
 	{
-		// Form inputs are always strings ...
-		$value = (string) $value;
-
 		$request = Services::request();
 
 		// Try any old input data we may have first
@@ -868,7 +861,7 @@ if ( ! function_exists('set_checkbox'))
 		}
 
 		// Unchecked checkbox and radio inputs are not even submitted by browsers ...
-		if ($_POST)
+		if ( ! empty($request->getPost()) || ! empty(old($field)))
 		{
 			return ($input === $value) ? ' checked="checked"' : '';
 		}
@@ -897,14 +890,10 @@ if ( ! function_exists('set_radio'))
 	 */
 	function set_radio(string $field, string $value = '', bool $default = false): string
 	{
-		// Form inputs are always strings ...
-		$value = (string) $value;
-
 		$request = Services::request();
 
 		// Try any old input data we may have first
 		$input = $request->getOldInput($field);
-
 		if ($input === null)
 		{
 			$input = $request->getPost($field) ?? $default;
@@ -925,12 +914,15 @@ if ( ! function_exists('set_radio'))
 		}
 
 		// Unchecked checkbox and radio inputs are not even submitted by browsers ...
-		if ($_POST)
+		$result = '';
+		if (!empty($input = $request->getPost($field)) || !empty($input = old($field)))
 		{
-			return ($input === $value) ? ' checked="checked"' : '';
+			$result = ($input === $value) ? ' checked="checked"' : '';
 		}
 
-		return ($default === true) ? ' checked="checked"' : '';
+		if (empty($result))
+			$result = ($default === true) ? ' checked="checked"' : '';
+		return $result;
 	}
 
 }
@@ -962,7 +954,7 @@ if ( ! function_exists('parse_form_attributes'))
 					unset($attributes[$key]);
 				}
 			}
-			if (! empty($attributes))
+			if ( ! empty($attributes))
 			{
 				$default = array_merge($default, $attributes);
 			}

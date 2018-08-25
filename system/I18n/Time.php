@@ -35,6 +35,7 @@
  * @since      Version 3.0.0
  * @filesource
  */
+use CodeIgniter\I18n\Exceptions\I18nException;
 use Locale;
 use DateTime;
 use DateInterval;
@@ -606,17 +607,15 @@ class Time extends DateTime
 	/**
 	 * Sets the month of the year.
 	 *
-	 * @todo check max months in current calendar (localized)
-	 *
 	 * @param $value
 	 *
 	 * @return \CodeIgniter\I18n\Time
 	 */
 	public function setMonth($value)
 	{
-		if ($value < 0 || $value > 12)
+		if (is_numeric($value) && $value < 1 || $value > 12)
 		{
-			throw new \InvalidArgumentException(lang('time.invalidMonth'));
+			throw I18nException::forInvalidMonth($value);
 		}
 
 		if (is_string($value) && ! is_numeric($value))
@@ -630,18 +629,23 @@ class Time extends DateTime
 	/**
 	 * Sets the day of the month.
 	 *
-	 * @todo check max days in month (localized)
-	 *
 	 * @param $value
 	 *
 	 * @return \CodeIgniter\I18n\Time
 	 */
 	public function setDay($value)
 	{
-		if ($value < 0 || $value > 31)
+		if ($value < 1 || $value > 31)
 		{
-			throw new \InvalidArgumentException(lang('time.invalidDay'));
-		}
+			throw I18nException::forInvalidDay($value);
+               }
+
+               $date    = $this->getYear() . '-' . $this->getMonth();
+               $lastDay = date('t', strtotime($date));
+               if ($value > $lastDay)
+               {
+                        throw I18nException::forInvalidOverDay($lastDay, $value);
+               }
 
 		return $this->setValue('day', $value);
 	}
@@ -657,7 +661,7 @@ class Time extends DateTime
 	{
 		if ($value < 0 || $value > 23)
 		{
-			throw new \InvalidArgumentException(lang('time.invalidHours'));
+			throw I18nException::forInvalidHour($value);
 		}
 
 		return $this->setValue('hour', $value);
@@ -674,7 +678,7 @@ class Time extends DateTime
 	{
 		if ($value < 0 || $value > 59)
 		{
-			throw new \InvalidArgumentException(lang('time.invalidMinutes'));
+			throw I18nException::forInvalidMinutes($value);
 		}
 
 		return $this->setValue('minute', $value);
@@ -691,7 +695,7 @@ class Time extends DateTime
 	{
 		if ($value < 0 || $value > 59)
 		{
-			throw new \InvalidArgumentException(lang('time.invalidSeconds'));
+			throw I18nException::forInvalidSeconds($value);
 		}
 
 		return $this->setValue('second', $value);

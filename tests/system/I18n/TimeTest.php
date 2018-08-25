@@ -405,6 +405,25 @@ class TimeTest extends \CIUnitTestCase
 		$this->assertInstanceOf(Time::class, $time2);
 		$this->assertNotSame($time, $time2);
 		$this->assertEquals('2017-05-15 00:00:00', $time2->toDateTimeString());
+    }
+
+       /**
+        * @expectedException \CodeIgniter\I18n\Exceptions\I18nException
+        */
+       public function testSetDayOverMaxInCurrentMonth()
+       {
+		$time = Time::parse('Feb 02, 2009');
+	        $time->setDay(29);
+       }
+
+       public function testSetDayNotOverMaxInCurrentMonth()
+       {
+		$time = Time::parse('Feb 02, 2012');
+               $time2 = $time->setDay(29);
+
+               $this->assertInstanceOf(Time::class, $time2);
+		$this->assertNotSame($time, $time2);
+		$this->assertEquals('2012-02-29 00:00:00', $time2->toDateTimeString());
 	}
 
 	public function testSetHour()
@@ -438,7 +457,7 @@ class TimeTest extends \CIUnitTestCase
 	}
 
 	/**
-	 * @expectedException \InvalidArgumentException
+	 * @expectedException \CodeIgniter\I18n\Exceptions\I18nException
 	 */
 	public function testSetMonthTooSmall()
 	{
@@ -447,7 +466,7 @@ class TimeTest extends \CIUnitTestCase
 	}
 
 	/**
-	 * @expectedException \InvalidArgumentException
+	 * @expectedException \CodeIgniter\I18n\Exceptions\I18nException
 	 */
 	public function testSetMonthTooBig()
 	{
@@ -456,7 +475,7 @@ class TimeTest extends \CIUnitTestCase
 	}
 
 	/**
-	 * @expectedException \InvalidArgumentException
+	 * @expectedException \CodeIgniter\I18n\Exceptions\I18nException
 	 */
 	public function testSetDayTooSmall()
 	{
@@ -465,7 +484,7 @@ class TimeTest extends \CIUnitTestCase
 	}
 
 	/**
-	 * @expectedException \InvalidArgumentException
+	 * @expectedException \CodeIgniter\I18n\Exceptions\I18nException
 	 */
 	public function testSetDayTooBig()
 	{
@@ -474,7 +493,7 @@ class TimeTest extends \CIUnitTestCase
 	}
 
 	/**
-	 * @expectedException \InvalidArgumentException
+	 * @expectedException \CodeIgniter\I18n\Exceptions\I18nException
 	 */
 	public function testSetHourTooSmall()
 	{
@@ -483,7 +502,7 @@ class TimeTest extends \CIUnitTestCase
 	}
 
 	/**
-	 * @expectedException \InvalidArgumentException
+	 * @expectedException \CodeIgniter\I18n\Exceptions\I18nException
 	 */
 	public function testSetHourTooBig()
 	{
@@ -492,7 +511,7 @@ class TimeTest extends \CIUnitTestCase
 	}
 
 	/**
-	 * @expectedException \InvalidArgumentException
+	 * @expectedException \CodeIgniter\I18n\Exceptions\I18nException
 	 */
 	public function testSetMinuteTooSmall()
 	{
@@ -501,7 +520,7 @@ class TimeTest extends \CIUnitTestCase
 	}
 
 	/**
-	 * @expectedException \InvalidArgumentException
+	 * @expectedException \CodeIgniter\I18n\Exceptions\I18nException
 	 */
 	public function testSetMinuteTooBig()
 	{
@@ -510,7 +529,7 @@ class TimeTest extends \CIUnitTestCase
 	}
 
 	/**
-	 * @expectedException \InvalidArgumentException
+	 * @expectedException \CodeIgniter\I18n\Exceptions\I18nException
 	 */
 	public function testSetSecondTooSmall()
 	{
@@ -519,7 +538,7 @@ class TimeTest extends \CIUnitTestCase
 	}
 
 	/**
-	 * @expectedException \InvalidArgumentException
+	 * @expectedException \CodeIgniter\I18n\Exceptions\I18nException
 	 */
 	public function testSetSecondTooBig()
 	{

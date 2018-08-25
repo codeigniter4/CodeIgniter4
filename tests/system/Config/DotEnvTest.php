@@ -1,4 +1,8 @@
-<?php namespace CodeIgniter\Config;
+<?php
+namespace CodeIgniter\Config;
+
+use org\bovigo\vfs\vfsStream;
+use org\bovigo\vfs\vfsStreamDirectory;
 
 //require_once 'system/Benchmark/Timer.php';
 
@@ -14,17 +18,30 @@ class DotEnvTest extends \CIUnitTestCase
 
 	public function setup()
 	{
-		$this->fixturesFolder = __DIR__.'/fixtures';
-                $file = "unreadable.env";
-		$path = rtrim($this->fixturesFolder, DIRECTORY_SEPARATOR).DIRECTORY_SEPARATOR.$file;
-                chmod($path, 0644);
+		parent::setUp();
+
+		$this->root = vfsStream::setup();
+		$this->fixturesFolder = $this->root->url();
+		$this->path = TESTPATH . 'system/Config/fixtures';
+		vfsStream::copyFromFileSystem($this->path, $this->root);
+
+		$file = "unreadable.env";
+		$path = rtrim($this->fixturesFolder, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $file;
+		chmod($path, 0644);
+	}
+
+	public function tearDown()
+	{
+		parent::tearDown();
+
+		$this->root = null;
 	}
 
 	//--------------------------------------------------------------------
 
 	public function testReturnsFalseIfCannotFindFile()
 	{
-		$dotenv = new DotEnv(__DIR__);
+		$dotenv = new DotEnv($this->fixturesFolder, 'bogus');
 		$this->assertFalse($dotenv->load());
 	}
 
@@ -72,9 +89,9 @@ class DotEnvTest extends \CIUnitTestCase
 	public function testLoadsUnreadableFile()
 	{
 		$file = "unreadable.env";
-		$path = rtrim($this->fixturesFolder, DIRECTORY_SEPARATOR).DIRECTORY_SEPARATOR.$file;
-                chmod($path, 0000);
-		$this->expectException('InvalidArgumentException');
+		$path = rtrim($this->fixturesFolder, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $file;
+		chmod($path, 0000);
+		$this->expectException('\InvalidArgumentException');
 		$this->expectExceptionMessage("The .env file is not readable: {$path}");
 		$dotenv = new DotEnv($this->fixturesFolder, $file);
 		$dotenv->load();
@@ -176,5 +193,4 @@ class DotEnvTest extends \CIUnitTestCase
 	}
 
 	//--------------------------------------------------------------------
-
 }

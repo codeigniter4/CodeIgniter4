@@ -106,7 +106,7 @@ class MigrateRollback extends BaseCommand
 	{
 		$runner = Services::migrations();
 
-		CLI::write(lang('Migrations.migRollingBack'), 'yellow');
+		CLI::write(lang('Migrations.rollingBack'), 'yellow');
 		$group = CLI::getOption('g');
 		if ( ! is_null($group))
 		{
@@ -148,7 +148,7 @@ class MigrateRollback extends BaseCommand
 			$this->showError($e);
 		}
 
-		
+
 	}
 
 }

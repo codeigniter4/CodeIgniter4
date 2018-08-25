@@ -184,11 +184,11 @@ corresponding to your variable pair data. Consider this example::
 		'blog_title'   => 'My Blog Title',
 		'blog_heading' => 'My Blog Heading',
 		'blog_entries' => array(
-			array('title' => 'Title 1', 'body' => 'Body 1'),
-			array('title' => 'Title 2', 'body' => 'Body 2'),
-			array('title' => 'Title 3', 'body' => 'Body 3'),
-			array('title' => 'Title 4', 'body' => 'Body 4'),
-			array('title' => 'Title 5', 'body' => 'Body 5')
+			['title' => 'Title 1', 'body' => 'Body 1'],
+			['title' => 'Title 2', 'body' => 'Body 2'],
+			['title' => 'Title 3', 'body' => 'Body 3'],
+			['title' => 'Title 4', 'body' => 'Body 4'],
+			['title' => 'Title 5', 'body' => 'Body 5']
 		)
 	);
 
@@ -213,6 +213,16 @@ method::
 
 	echo $parser->setData($data)
 	             ->render('blog_template');
+
+If the array you are trying to loop over contains objects instead of arrays,
+the parser will first look for an ``asArray`` method on the object. If it exists,
+that method will be called and the resulting array is then looped over just as
+described above. If no ``asArray`` method exists, the object will be cast as
+an array and its public properties will be made available to the Parser.
+
+This is especially useful with the Entity classes, which has an asArray method
+that returns all public and protected properties (minus the _options property) and
+makes them available to the Parser.
 
 Nested Substitutions
 ====================
@@ -315,7 +325,7 @@ Conditional Logic
 The Parser class supports some basic conditionals to handle ``if``, ``else``, and ``elseif`` syntax. All ``if``
 blocks must be closed with an ``endif`` tag::
 
-	{if role=='admin'}
+	{if $role=='admin'}
 		<h1>Welcome, Admin!</h1>
 	{endif}
 
@@ -331,9 +341,9 @@ of the comparison operators you would normally, like ``==``, ``===``, ``!==``, `
 
 ::
 
-	{if role=='admin'}
+	{if $role=='admin'}
 		<h1>Welcome, Admin</h1>
-	{elseif role=='moderator'}
+	{elseif $role=='moderator'}
 		<h1>Welcome, Moderator</h1>
 	{else}
 		<h1>Welcome, User</h1>
@@ -385,9 +395,9 @@ Provided Filters
 
 The following filters are available when using the parser:
 
-==================== ========================== =================================================================== =================================
-Filter               Arguments                  Description                                                         Example
-==================== ========================== =================================================================== =================================
+==================== ========================== ==================================================================== =================================
+Filter               Arguments                  Description                                                          Example
+==================== ========================== ==================================================================== =================================
 abs                                             Displays the absolute value of a number.                             { v|abs }
 capitalize                                      Displays the string in sentence case: all lowercase with first       { v|capitalize}
                                                 letter capitalized.
@@ -399,10 +409,14 @@ esc                  html, attr, css, js        Specifies the context to escape 
 excerpt              phrase, radius             Returns the text within a radius of words from a given phrase.       { v|excerpt(green giant, 20) }
                                                 Same as **excerpt** helper function.
 highlight            phrase                     Highlights a given phrase within the text using '<mark></mark>'
-												tags.                                                                { v|highlight(view parser) }
+                                                tags.                                                                { v|highlight(view parser) }
 highlight_code                                  Highlights code samples with HTML/CSS.                               { v|highlight_code }
 limit_chars          limit                      Limits the number of chracters to $limit.                            { v|limit_chars(100) }
 limit_words          limit                      Limits the number of words to $limit.                                { v|limit_words(20) }
+local_currency       currency, locale           Displays a localized version of a currency. "currency" value is any  { v|local_currency(EUR,en_US) }
+                                                3-letter ISO 4217 currency code.
+local_number         type, precision, locale    Displays a localized version of a number. "type" can be one of:      { v|local_number(decimal,2,en_US) }
+                                                decimal, currency, percent, scientific, spellout, ordinal, duration.
 lower                                           Converts a string to lowercase.                                      { v|lower }
 nl2br                                           Replaces all newline characters (\n) to an HTML <br/> tag.           { v|nl2br }
 number_format        places                     Wraps PHP **number_format** function for use within the parser.      { v|number_format(3) }
@@ -414,7 +428,10 @@ strip_tags           allowed chars              Wraps PHP **strip_tags**. Can ac
 title                                           Displays a "title case" version of the string, with all lowercase,   { v|title }
                                                 and each word capitalized.
 upper                                           Displays the string in all uppercase.                                { v|upper }
-==================== ========================== =================================================================== =================================
+==================== ========================== ==================================================================== =================================
+
+See `PHP's NumberFormatter <http://php.net/manual/en/numberformatter.create.php>`_ for details relevant to the
+"local_number" filter.
 
 Custom Filters
 --------------
@@ -474,10 +491,12 @@ Plugin               Arguments                  Description                     
 ==================== ========================== ================================================================================== ================================================================
 current_url                                     Alias for the current_url helper function.                            			   {+ current_url +}
 previous_url                                    Alias for the previous_url helper function.                           			   {+ previous_url +}
+site_url                                        Alias for the site_url helper function.                                            {+ site_url "login" +}
 mailto               email, title, attributes   Alias for the mailto helper function.                                 			   {+ mailto email=foo@example.com title="Stranger Things" +}
 safe_mailto          email, title, attributes   Alias for the safe_mailto helper function.                            			   {+ safe_mailto email=foo@example.com title="Stranger Things" +}
 lang                 language string            Alias for the lang helper function.                                    			   {+ lang number.terabyteAbbr +}
 validation_errors    fieldname(optional)        Returns either error string for the field (if specified) or all validation errors. {+ validation_errors +} , {+ validation_errors field="email" +}
+route                route name                 Alias for the route_to helper function.                                            {+ route "login" +}
 ==================== ========================== ================================================================================== ================================================================
 
 Registering a Plugin

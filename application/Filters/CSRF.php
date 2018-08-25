@@ -3,6 +3,7 @@
 use CodeIgniter\Filters\FilterInterface;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
+use CodeIgniter\Security\Exceptions\SecurityException;
 use Config\Services;
 
 class CSRF implements FilterInterface
@@ -30,7 +31,19 @@ class CSRF implements FilterInterface
 
 		$security = Services::security();
 
-		$security->CSRFVerify($request);
+		try
+		{
+			$security->CSRFVerify($request);
+		}
+		catch (SecurityException $e)
+		{
+			if (config('App')->CSRFRedirect && ! $request->isAJAX())
+			{
+				return redirect()->back()->with('error', $e->getMessage());
+			}
+
+			throw $e;
+		}
 	}
 
 	//--------------------------------------------------------------------

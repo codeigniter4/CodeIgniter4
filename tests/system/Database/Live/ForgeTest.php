@@ -1,15 +1,15 @@
 <?php namespace CodeIgniter\Database\Live;
 
-use CodeIgniter\Database\Exceptions\DatabaseException;
+use CodeIgniter\Test\CIDatabaseTestCase;
 
 /**
  * @group DatabaseLive
  */
-class ForgeTest extends \CIDatabaseTestCase
+class ForgeTest extends CIDatabaseTestCase
 {
 	protected $refresh = true;
 
-	protected $seed = 'CITestSeeder';
+	protected $seed = 'Tests\Support\Database\Seeds\CITestSeeder';
 
 	public function setUp()
 	{
@@ -35,6 +35,24 @@ class ForgeTest extends \CIDatabaseTestCase
 
 		$exist = $this->db->tableExists('forge_test_table');
 		$this->forge->dropTable('forge_test_table', true);
+
+		$this->assertTrue($exist);
+	}
+
+	public function testCreateTableWithAttributes()
+	{
+		$this->forge->dropTable('forge_test_attributes', true);
+
+		$this->forge->addField('id');
+
+		$attributes = [
+			'comment' => "Forge's Test"
+		];
+
+		$this->forge->createTable('forge_test_attributes', false, $attributes);
+
+		$exist = $this->db->tableExists('forge_test_attributes');
+		$this->forge->dropTable('forge_test_attributes', true, true);
 
 		$this->assertTrue($exist);
 	}

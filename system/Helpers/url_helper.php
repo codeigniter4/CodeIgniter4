@@ -55,7 +55,7 @@ if ( ! function_exists('site_url'))
 		}
 
 		// use alternate config if provided, else default one
-		$config = empty($altConfig) ? new \Config\App() : $altConfig;
+		$config = empty($altConfig) ? config(\Config\App::class) : $altConfig;
 
 		$base = base_url();
 
@@ -102,21 +102,11 @@ if ( ! function_exists('base_url'))
 			$path = implode('/', $path);
 		}
 
-		// We should be using the set baseURL the user set
-		// otherwise get rid of the path because we have
+		// We should be using the configured baseURL that the user set;
+		// otherwise get rid of the path, because we have
 		// no way of knowing the intent...
 		$config = \CodeIgniter\Config\Services::request()->config;
-
-		if ( ! empty($config->baseURL))
-		{
-			$url = new \CodeIgniter\HTTP\URI($config->baseURL);
-		}
-		else
-		{
-			$url = \CodeIgniter\Config\Services::request($config, false)->uri;
-			$url->setPath('/');
-		}
-
+		$url = new \CodeIgniter\HTTP\URI($config->baseURL);
 		unset($config);
 
 		// Merge in the path set by the user, if any
@@ -228,7 +218,7 @@ if ( ! function_exists('index_page'))
 	function index_page(\Config\App $altConfig = null): string
 	{
 		// use alternate config if provided, else default one
-		$config = empty($altConfig) ? new \Config\App() : $altConfig;
+		$config = empty($altConfig) ? config(\Config\App::class) : $altConfig;
 
 		return $config->indexPage;
 	}
@@ -252,12 +242,10 @@ if ( ! function_exists('anchor'))
 	 *
 	 * @return string
 	 */
-	function anchor($uri = '', $title = '', $attributes = '', \Config\App $altConfig = null): string
+	function anchor($uri = '', string $title = '', $attributes = '', \Config\App $altConfig = null): string
 	{
 		// use alternate config if provided, else default one
-		$config = empty($altConfig) ? new \Config\App() : $altConfig;
-
-		$title = (string) $title;
+		$config = empty($altConfig) ? config(\Config\App::class) : $altConfig;
 
 		$site_url = is_array($uri) ? site_url($uri, null, $config) : (preg_match('#^(\w+:)?//#i', $uri) ? $uri : site_url($uri, null, $config));
 		// eliminate trailing slash
@@ -296,12 +284,11 @@ if ( ! function_exists('anchor_popup'))
 	 *
 	 * @return string
 	 */
-	function anchor_popup($uri = '', $title = '', $attributes = false, \Config\App $altConfig = null): string
+	function anchor_popup($uri = '', string $title = '', $attributes = false, \Config\App $altConfig = null): string
 	{
 		// use alternate config if provided, else default one
-		$config = empty($altConfig) ? new \Config\App() : $altConfig;
+		$config = empty($altConfig) ? config(\Config\App::class) : $altConfig;
 
-		$title = (string) $title;
 		$site_url = preg_match('#^(\w+:)?//#i', $uri) ? $uri : site_url($uri, '', $config);
 		$site_url = rtrim($site_url, '/');
 
@@ -361,10 +348,8 @@ if ( ! function_exists('mailto'))
 	 *
 	 * @return string
 	 */
-	function mailto($email, $title = '', $attributes = ''): string
+	function mailto($email, string $title = '', $attributes = ''): string
 	{
-		$title = (string) $title;
-
 		if ($title === '')
 		{
 			$title = $email;
@@ -391,10 +376,8 @@ if ( ! function_exists('safe_mailto'))
 	 *
 	 * @return string
 	 */
-	function safe_mailto($email, $title = '', $attributes = ''): string
+	function safe_mailto($email, string $title = '', $attributes = ''): string
 	{
-		$title = (string) $title;
-
 		if ($title === '')
 		{
 			$title = $email;
@@ -402,7 +385,7 @@ if ( ! function_exists('safe_mailto'))
 
 		$x = str_split('<a href="mailto:', 1);
 
-		for ($i = 0, $l = strlen($email); $i < $l; $i ++)
+		for ($i = 0, $l = strlen($email); $i < $l; $i ++ )
 		{
 			$x[] = '|' . ord($email[$i]);
 		}
@@ -416,7 +399,7 @@ if ( ! function_exists('safe_mailto'))
 				foreach ($attributes as $key => $val)
 				{
 					$x[] = ' ' . $key . '="';
-					for ($i = 0, $l = strlen($val); $i < $l; $i ++)
+					for ($i = 0, $l = strlen($val); $i < $l; $i ++ )
 					{
 						$x[] = '|' . ord($val[$i]);
 					}
@@ -425,7 +408,7 @@ if ( ! function_exists('safe_mailto'))
 			}
 			else
 			{
-				for ($i = 0, $l = strlen($attributes); $i < $l; $i ++)
+				for ($i = 0, $l = strlen($attributes); $i < $l; $i ++ )
 				{
 					$x[] = $attributes[$i];
 				}
@@ -435,7 +418,7 @@ if ( ! function_exists('safe_mailto'))
 		$x[] = '>';
 
 		$temp = [];
-		for ($i = 0, $l = strlen($title); $i < $l; $i ++)
+		for ($i = 0, $l = strlen($title); $i < $l; $i ++ )
 		{
 			$ordinal = ord($title[$i]);
 
@@ -470,10 +453,9 @@ if ( ! function_exists('safe_mailto'))
 
 		// improve obfuscation by eliminating newlines & whitespace
 		$output = "<script type=\"text/javascript\">"
-				. "//<![CDATA["
 				. "var l=new Array();";
 
-		for ($i = 0, $c = count($x); $i < $c; $i ++)
+		for ($i = 0, $c = count($x); $i < $c; $i ++ )
 		{
 			$output .= "l[" . $i . "] = '" . $x[$i] . "';";
 		}
@@ -482,7 +464,6 @@ if ( ! function_exists('safe_mailto'))
 				. "if (l[i].substring(0, 1) === '|') document.write(\"&#\"+unescape(l[i].substring(1))+\";\");"
 				. "else document.write(unescape(l[i]));"
 				. "}"
-				. "//]]>"
 				. '</script>';
 
 		return $output;
@@ -565,14 +546,14 @@ if ( ! function_exists('prep_url'))
 	 */
 	function prep_url($str = ''): string
 	{
-		if ($str === 'http://' OR $str === '')
+		if ($str === 'http://' || $str === '')
 		{
 			return '';
 		}
 
 		$url = parse_url($str);
 
-		if ( ! $url OR ! isset($url['scheme']))
+		if ( ! $url || ! isset($url['scheme']))
 		{
 			return 'http://' . $str;
 		}
@@ -605,10 +586,10 @@ if ( ! function_exists('url_title'))
 		$q_separator = preg_quote($separator, '#');
 
 		$trans = [
-			'&.+?;'					 => '',
-			'[^\w\d _-]'			 => '',
-			'\s+'					 => $separator,
-			'(' . $q_separator . ')+'	 => $separator
+			'&.+?;' => '',
+			'[^\w\d _-]' => '',
+			'\s+' => $separator,
+			'(' . $q_separator . ')+' => $separator
 		];
 
 		$str = strip_tags($str);

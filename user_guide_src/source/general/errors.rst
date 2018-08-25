@@ -40,7 +40,7 @@ not child classes of the caught exception will be passed on to the error handler
 		// do something here...
 	}
 
-This can be handy for handling the error yourself, or for performaing cleanup before the script ends. If you want
+This can be handy for handling the error yourself, or for performing cleanup before the script ends. If you want
 the error handler to function as normal, you can throw a new exception within the catch block::
 
 	catch (\CodeIgniter\UnknownFileException $e)
@@ -95,7 +95,7 @@ If, in ``Config/Routes.php``, you have specified a 404 Override, that will be ca
 
 	if (! $page = $pageModel->find($id))
 	{
-		throw new \CodeIgniter\PageNotFoundException();
+		throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
 	}
 
 You can pass a message into the exception that will be displayed in place of the default message on the 404 page.
@@ -106,45 +106,9 @@ ConfigException
 This exception should be used when the values from the configuration class are invalid, or when the config class
 is not the right type, etc::
 
-	throw new \CodeIgniter\ConfigException();
+	throw new \CodeIgniter\Exceptions\ConfigException();
 
 This provides an HTTP status code of 500, and an exit code of 3.
-
-UnknownFileException
---------------------
-
-Use this exception when a file cannot be found::
-
-	throw new \CodeIgniter\UnknownFileException();
-
-This provides an HTTP status code of 500, and an exit code of 4.
-
-UnknownClassException
----------------------
-
-Use this exception when a class cannot be found::
-
-	throw new \CodeIgniter\UnknownClassException($className);
-
-This provides an HTTP status code of 500, and an exit code of 5.
-
-UnknownMethodException
-----------------------
-
-Use this exception when a class' method does not exist::
-
-	throw new \CodeIgniter\UnknownMethodException();
-
-This provides an HTTP status code of 500, and an exit code of 6.
-
-UserInputException
-------------------
-
-Use this exception when the user's input is not valid::
-
-	throw new \CodeIgniter\UserInputException();
-
-This provides an HTTP status code of 500, and an exit code of 7.
 
 DatabaseException
 -----------------

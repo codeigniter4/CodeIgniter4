@@ -44,8 +44,9 @@ interface ImageHandlerInterface
 	 * @param int  $width
 	 * @param int  $height
 	 * @param bool $maintainRatio  If true, will get the closest match possible while keeping aspect ratio true.
+	 * @param string $masterDim
 	 */
-	public function resize(int $width, int $height, bool $maintainRatio = false);
+	public function resize(int $width, int $height, bool $maintainRatio = false, string $masterDim = 'auto');
 
 	//--------------------------------------------------------------------
 
@@ -58,10 +59,12 @@ interface ImageHandlerInterface
 	 * @param int|null $height
 	 * @param int|null $x       X-axis coord to start cropping from the left of image
 	 * @param int|null $y       Y-axis coord to start cropping from the top of image
+	 * @param bool     $maintainRatio
+	 * @param string   $masterDim
 	 *
 	 * @return mixed
 	 */
-	public function crop(int $width = null, int $height = null, int $x = null, int $y = null);
+	public function crop(int $width = null, int $height = null, int $x = null, int $y = null, bool $maintainRatio = false, string $masterDim = 'auto');
 
 	//--------------------------------------------------------------------
 
@@ -111,6 +114,17 @@ interface ImageHandlerInterface
 	//--------------------------------------------------------------------
 
 	/**
+	 * Flip an image horizontally or vertically
+	 *
+	 * @param string $dir  Direction to flip, either 'vertical' or 'horizontal'
+	 *
+	 * @return mixed
+	 */
+	public function flip(string $dir = 'vertical');
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Combine cropping and resizing into a single command.
 	 *
 	 * Supported positions:
@@ -133,4 +147,42 @@ interface ImageHandlerInterface
 	public function fit(int $width, int $height, string $position);
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Overlays a string of text over the image.
+	 *
+	 * Valid options:
+	 *
+	 *  - color         Text Color (hex number)
+	 *  - shadowColor   Color of the shadow (hex number)
+	 *  - hAlign        Horizontal alignment: left, center, right
+	 *  - vAlign        Vertical alignment: top, middle, bottom
+	 *  - hOffset
+	 *  - vOffset
+	 *  - fontPath
+	 *  - fontSize
+	 *  - shadowOffset
+	 *
+	 * @param string $text
+	 * @param array  $options
+	 *
+	 * @return $this
+	 */
+	public function text(string $text, array $options = []);
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Saves any changes that have been made to file.
+	 *
+	 * Example:
+	 *    $image->resize(100, 200, true)
+	 *          ->save($target);
+	 *
+	 * @param string $target
+	 * @param int    $quality
+	 *
+	 * @return mixed
+	 */
+	public function save(string $target = null, int $quality = 90);
 }

@@ -1,7 +1,7 @@
 <table>
     <thead>
         <tr>
-            <th style="width: 6rem;">Time</th>
+            <th class="debug-bar-width6r">Time</th>
             <th>Event Name</th>
             <th>Times Called</th>
         </tr>
