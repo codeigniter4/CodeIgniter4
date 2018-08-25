@@ -167,7 +167,7 @@ class DatabaseHandler extends BaseHandler implements \SessionHandlerInterface
 
 		if ($this->matchIP)
 		{
-			$builder = $builder->where('ip_address', $_SERVER['REMOTE_ADDR']);
+			$builder = $builder->where('ip_address', (new \CodeIgniter\HTTP\Request(new \Config\App()))->getIpAddress());
 		}
 
 		$result = $builder->get()->getRow();
@@ -236,7 +236,7 @@ class DatabaseHandler extends BaseHandler implements \SessionHandlerInterface
 		{
 			$insertData = [
 				'id'		 => $sessionID,
-				'ip_address' => $_SERVER['REMOTE_ADDR'],
+				'ip_address' => (new \CodeIgniter\HTTP\Request(new \Config\App()))->getIpAddress(),
 				'timestamp'	 => time(),
 				'data'		 => $this->platform === 'postgre' ? base64_encode($sessionData) : $sessionData
 			];
@@ -256,7 +256,7 @@ class DatabaseHandler extends BaseHandler implements \SessionHandlerInterface
 
 		if ($this->matchIP)
 		{
-			$builder = $builder->where('ip_address', $_SERVER['REMOTE_ADDR']);
+			$builder = $builder->where('ip_address', (new \CodeIgniter\HTTP\Request(new \Config\App()))->getIpAddress());
 		}
 
 		$updateData = [
@@ -311,7 +311,7 @@ class DatabaseHandler extends BaseHandler implements \SessionHandlerInterface
 
 			if ($this->matchIP)
 			{
-				$builder = $builder->where('ip_address', $_SERVER['REMOTE_ADDR']);
+				$builder = $builder->where('ip_address', (new \CodeIgniter\HTTP\Request(new \Config\App()))->getIpAddress());
 			}
 
 			if ( ! $builder->delete())
@@ -350,9 +350,10 @@ class DatabaseHandler extends BaseHandler implements \SessionHandlerInterface
 
 	protected function lockSession(string $sessionID): bool
 	{
+               $ipAddress = (new \CodeIgniter\HTTP\Request(new \Config\App()))->getIpAddress();
 		if ($this->platform === 'mysql')
 		{
-			$arg = md5($sessionID . ($this->matchIP ? '_' . $_SERVER['REMOTE_ADDR'] : ''));
+			$arg = md5($sessionID . ($this->matchIP ? '_' . $ipAddress : ''));
 			if ($this->db->query("SELECT GET_LOCK('{$arg}', 300) AS ci_session_lock")->getRow()->ci_session_lock)
 			{
 				$this->lock = $arg;
@@ -363,7 +364,7 @@ class DatabaseHandler extends BaseHandler implements \SessionHandlerInterface
 		}
 		elseif ($this->platform === 'postgre')
 		{
-			$arg = "hashtext('{$sessionID}')" . ($this->matchIP ? ", hashtext('{$_SERVER['REMOTE_ADDR']}')" : '');
+			$arg = "hashtext('{$sessionID}')" . ($this->matchIP ? ", hashtext('{$ipAddress}')" : '');
 			if ($this->db->simpleQuery("SELECT pg_advisory_lock({$arg})"))
 			{
 				$this->lock = $arg;

@@ -129,7 +129,7 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 		$this->savePath = $savePath;
 		$this->filePath = $this->savePath . '/'
 				. $name // we'll use the session cookie name as a prefix to avoid collisions
-				. ($this->matchIP ? md5($_SERVER['REMOTE_ADDR']) : '');
+				. ($this->matchIP ? md5((new \CodeIgniter\HTTP\Request(new \Config\App()))->getIpAddress()) : '');
 
 		return true;
 	}

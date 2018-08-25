@@ -117,7 +117,7 @@ class RedisHandler extends BaseHandler implements \SessionHandlerInterface
 
 		if ($this->matchIP === true)
 		{
-			$this->keyPrefix .= $_SERVER['REMOTE_ADDR'] . ':';
+			$this->keyPrefix .= (new \CodeIgniter\HTTP\Request(new \Config\App()))->getIpAddress() . ':';
 		}
 
 		$this->sessionExpiration = $config->sessionExpiration;
