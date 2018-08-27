@@ -210,6 +210,41 @@ class Filters
 		return $this->filters;
 	}
 
+	/**
+	 * Adds a new alias to the config file.
+	 * MUST be called prior to initialize();
+	 * Intended for use within routes files.
+	 *
+	 * @param string      $class
+	 * @param string|null $alias
+	 * @param string      $when
+	 * @param string      $section
+	 *
+	 * @return $this
+	 */
+	public function addFilter(string $class, string $alias = null, string $when = 'before', string $section = 'globals')
+	{
+		$alias = is_null($alias)
+			? md5($class)
+			: $alias;
+
+		if (! isset($this->config->{$section}))
+		{
+			$this->config->{$section} = [];
+		}
+
+		if (! isset($this->config->{$section}[$when]))
+		{
+			$this->config->{$section}[$when] = [];
+		}
+
+		$this->config->aliases[$alias] = $class;
+
+		$this->config->{$section}[$when][] = $alias;
+
+		return $this;
+	}
+
 	//--------------------------------------------------------------------
 	//--------------------------------------------------------------------
 	// Processors

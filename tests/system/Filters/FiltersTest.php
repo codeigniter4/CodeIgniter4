@@ -475,4 +475,26 @@ class FiltersTest extends \CIUnitTestCase
 		$this->assertEquals($expected, $filters->initialize($uri)->getFilters());
 	}
 
+	public function testAddFilter()
+	{
+		$_SERVER['REQUEST_METHOD'] = 'GET';
+
+		$config = [
+			'aliases'	 => ['google' => 'CodeIgniter\Filters\fixtures\GoogleMe'],
+			'globals'	 => [
+				'before' => ['google'],
+				'after'	 => []
+			]
+		];
+
+		$filters = new Filters((object) $config, $this->request, $this->response);
+
+		$filters = $filters->addFilter('Some\Class', 'some_alias');
+
+		$filters = $filters->initialize('admin/foo/bar');
+
+		$filters = $filters->getFilters();
+
+		$this->assertTrue(in_array('some_alias', $filters['before']));
+	}
 }
