@@ -246,6 +246,31 @@ class Filters
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Ensures that a specific filter is on and enabled for the current request.
+	 *
+	 * @param string $name
+	 * @param string $when
+	 *
+	 * @return \CodeIgniter\Filters\Filters
+	 */
+	public function enableFilter(string $name, string $when = 'before')
+	{
+		if (! array_key_exists($name, $this->config->aliases))
+		{
+			throw FilterException::forNoAlias($name);
+		}
+
+		if (! isset($this->filters[$when][$name]))
+		{
+			$this->filters[$when][] = $name;
+		}
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
 	//--------------------------------------------------------------------
 	// Processors
 	//--------------------------------------------------------------------

@@ -219,6 +219,16 @@ If you need to assign options to a group, like a `namespace <#assigning-namespac
 
 This would handle a resource route to the ``App\API\v1\Users`` controller with the ``/api/users`` URI.
 
+You can also use ensure that a specific `filter </general/filters>`_ gets ran for a group of routes. This will always
+run the filter before the controller. This is especially handy during authentication::
+
+    $routes->group('api', ['filter' => 'api-auth'], function($routes)
+    {
+        $routes->resource('users');
+    });
+
+The value for the filter must match one of the aliases defined within ``application/Config/Filters.php``.
+
 Environment Restrictions
 ========================
 

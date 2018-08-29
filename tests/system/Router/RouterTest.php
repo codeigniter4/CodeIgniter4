@@ -249,4 +249,23 @@ class RouterTest extends \CIUnitTestCase
 
     	$this->assertEquals($router->getMatchedRouteOptions(), ['as' => 'login', 'foo' => 'baz']);
     }
+
+	public function testRouteWorksWithFilters()
+	{
+		$collection = $this->collection;
+
+		$collection->group('foo', ['filter' => 'test'], function($routes) {
+			$routes->add('bar', 'TestController::foobar');
+		});
+
+		$router = new Router($collection);
+
+		$router->handle('foo/bar');
+
+		$this->assertEquals('\TestController', $router->controllerName());
+		$this->assertEquals('foobar', $router->methodName());
+		$this->assertEquals(['filter' => 'test', 'params' => null], $router->getFilter());
+	}
+
+	//--------------------------------------------------------------------
 }

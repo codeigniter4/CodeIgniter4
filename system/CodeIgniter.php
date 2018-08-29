@@ -267,10 +267,18 @@ class CodeIgniter
 	 */
 	protected function handleRequest(RouteCollectionInterface $routes = null, $cacheConfig, bool $returnResponse = false)
 	{
-		$this->tryToRouteIt($routes);
+		$routeFilters = $this->tryToRouteIt($routes);
 
 		// Run "before" filters
 		$filters = Services::filters();
+
+		// If any filters were specified within the routes file,
+		// we need to ensure it's active for the current request (before only)
+		if (! is_null($routeFilters))
+		{
+			$filters->enableFilter($routeFilters['filter'], 'before');
+		}
+
 		$uri = $this->request instanceof CLIRequest ? $this->request->getPath() : $this->request->uri->getPath();
 
 		$possibleRedirect = $filters->run($uri, 'before');
@@ -654,6 +662,8 @@ class CodeIgniter
 	 *
 	 * @param RouteCollectionInterface $routes  An collection interface to use in place
 	 *                                          of the config file.
+	 *
+	 * @return array
 	 */
 	protected function tryToRouteIt(RouteCollectionInterface $routes = null)
 	{
@@ -683,6 +693,8 @@ class CodeIgniter
 		}
 
 		$this->benchmark->stop('routing');
+
+		return $this->router->getFilter();
 	}
 
 	//--------------------------------------------------------------------

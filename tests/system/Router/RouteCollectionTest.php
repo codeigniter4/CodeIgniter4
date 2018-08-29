@@ -812,4 +812,46 @@ class RouteCollectionTest extends \CIUnitTestCase
 
 		$this->assertEquals($options, ['as' => 'admin', 'foo' => 'baz']);
 	}
+
+	public function testRouteGroupWithFilterSimple()
+	{
+		$_SERVER['REQUEST_METHOD'] = 'GET';
+		$routes = $this->getCollector();
+
+		$routes->group('admin', ['filter' => 'role'], function($routes)
+		{
+			$routes->add('users', '\Users::list');
+		});
+
+		$this->assertTrue($routes->isFiltered('admin/users'));
+		$this->assertFalse($routes->isFiltered('admin/franky'));
+
+		$expect = [
+			'filter' => 'role',
+			'params' => null
+		];
+
+		$this->assertEquals($expect, $routes->getFilterForRoute('admin/users'));
+	}
+
+	public function testRouteGroupWithFilterWithParams()
+	{
+		$_SERVER['REQUEST_METHOD'] = 'GET';
+		$routes = $this->getCollector();
+
+		$routes->group('admin', ['filter' => 'role:admin,manager'], function($routes)
+		{
+			$routes->add('users', '\Users::list');
+		});
+
+		$this->assertTrue($routes->isFiltered('admin/users'));
+		$this->assertFalse($routes->isFiltered('admin/franky'));
+
+		$expect = [
+			'filter' => 'role',
+			'params' => ['admin', 'manager']
+		];
+
+		$this->assertEquals($expect, $routes->getFilterForRoute('admin/users'));
+	}
 }

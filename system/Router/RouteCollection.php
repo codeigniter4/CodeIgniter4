@@ -1107,6 +1107,56 @@ class RouteCollection implements RouteCollectionInterface
 	//--------------------------------------------------------------------
 
 	/**
+	 * Checks a route (using the "from") to see if it's filtered or not.
+	 *
+	 * @param string $search
+	 *
+	 * @return bool
+	 */
+	public function isFiltered(string $search): bool
+	{
+		return isset($this->routesOptions[$search]['filter']);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns the filter that should be applied for a single route, along
+	 * with any parameters it might have. Parameters are found by splitting
+	 * the parameter name on a colon to separate the filter name from the parameter list,
+	 * and the splitting the result on commas. So:
+	 *
+	 *    'role:admin,manager'
+	 *
+	 * has a filter of "role", with parameters of ['admin', 'manager'].
+	 *
+	 * @param string $search
+	 *
+	 * @return array
+	 */
+	public function getFilterForRoute(string $search): array
+	{
+		if (! $this->isFiltered($search))
+		{
+			return [];
+		}
+
+		$params = explode(':', $this->routesOptions[$search]['filter']);
+		$filter = array_shift($params);
+
+		$params = ! empty($params)
+			? explode(',', $params[0])
+			: null;
+
+		return [
+			'filter' => $filter,
+			'params' => $params
+		];
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Given a
 	 *
 	 * @param string     $from
