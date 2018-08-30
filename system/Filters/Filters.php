@@ -78,6 +78,13 @@ class Filters
 	 */
 	protected $initialized = false;
 
+	/**
+	 * Any arguments to be passed to filters.
+	 *
+	 * @var array
+	 */
+	protected $arguments = [];
+
 	//--------------------------------------------------------------------
 
 	public function __construct($config, RequestInterface $request, ResponseInterface $response)
@@ -124,7 +131,7 @@ class Filters
 
 			if ($position == 'before')
 			{
-				$result = $class->before($this->request);
+				$result = $class->before($this->request, $this->arguments[$alias] ?? null);
 
 				if ($result instanceof RequestInterface)
 				{
@@ -250,6 +257,10 @@ class Filters
 	/**
 	 * Ensures that a specific filter is on and enabled for the current request.
 	 *
+	 * Filters can have "arguments". This is done by placing a colon immediately
+	 * after the filter name, followed by a comma-separated list of arguments that
+	 * are passed to the filter when executed.
+	 *
 	 * @param string $name
 	 * @param string $when
 	 *
@@ -257,6 +268,19 @@ class Filters
 	 */
 	public function enableFilter(string $name, string $when = 'before')
 	{
+		// Get parameters and clean name
+		if (strpos($name, ':') !== false)
+		{
+			list($name, $params) = explode(':', $name);
+
+			$params = explode(',', $params);
+			array_walk($params, function(&$item){
+				$item = trim($item);
+			});
+
+			$this->arguments[$name] = $params;
+		}
+
 		if (! array_key_exists($name, $this->config->aliases))
 		{
 			throw FilterException::forNoAlias($name);
@@ -268,6 +292,20 @@ class Filters
 		}
 
 		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns the arguments for a specified key, or all.
+	 *
+	 * @return array
+	 */
+	public function getArguments(string $key = null)
+	{
+		return is_null($key)
+			? $this->arguments
+			: $this->arguments[$key];
 	}
 
 	//--------------------------------------------------------------------

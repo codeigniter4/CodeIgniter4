@@ -520,4 +520,28 @@ class FiltersTest extends \CIUnitTestCase
 
 		$this->assertTrue(in_array('google', $filters['before']));
 	}
+
+	public function testEnableFilterWithArguments()
+	{
+		$_SERVER['REQUEST_METHOD'] = 'GET';
+
+		$config = [
+			'aliases'	 => ['role' => 'CodeIgniter\Filters\fixtures\Role'],
+			'globals'	 => [
+				'before' => [],
+				'after'	 => []
+			]
+		];
+
+		$filters = new Filters((object) $config, $this->request, $this->response);
+
+		$filters = $filters->initialize('admin/foo/bar');
+
+		$filters->enableFilter('role:admin , super', 'before');
+
+		$found = $filters->getFilters();
+
+		$this->assertTrue(in_array('role', $found['before']));
+		$this->assertEquals(['admin', 'super'], $filters->getArguments('role'));
+	}
 }

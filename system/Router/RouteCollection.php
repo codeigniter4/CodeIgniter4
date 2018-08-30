@@ -1132,26 +1132,16 @@ class RouteCollection implements RouteCollectionInterface
 	 *
 	 * @param string $search
 	 *
-	 * @return array
+	 * @return string
 	 */
-	public function getFilterForRoute(string $search): array
+	public function getFilterForRoute(string $search): string
 	{
 		if (! $this->isFiltered($search))
 		{
-			return [];
+			return '';
 		}
 
-		$params = explode(':', $this->routesOptions[$search]['filter']);
-		$filter = array_shift($params);
-
-		$params = ! empty($params)
-			? explode(',', $params[0])
-			: null;
-
-		return [
-			'filter' => $filter,
-			'params' => $params
-		];
+		return $this->routesOptions[$search]['filter'];
 	}
 
 	//--------------------------------------------------------------------

@@ -267,16 +267,16 @@ class CodeIgniter
 	 */
 	protected function handleRequest(RouteCollectionInterface $routes = null, $cacheConfig, bool $returnResponse = false)
 	{
-		$routeFilters = $this->tryToRouteIt($routes);
+		$routeFilter = $this->tryToRouteIt($routes);
 
 		// Run "before" filters
 		$filters = Services::filters();
 
 		// If any filters were specified within the routes file,
 		// we need to ensure it's active for the current request (before only)
-		if (! is_null($routeFilters))
+		if (! is_null($routeFilter))
 		{
-			$filters->enableFilter($routeFilters['filter'], 'before');
+			$filters->enableFilter($routeFilter, 'before');
 		}
 
 		$uri = $this->request instanceof CLIRequest ? $this->request->getPath() : $this->request->uri->getPath();
