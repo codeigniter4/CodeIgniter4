@@ -631,7 +631,7 @@ class Validation implements ValidationInterface
 			// Start up the session if it's not already
 			if ( ! isset($_SESSION))
 			{
-				session()->start();
+				session();
 			}
 
 			if ($errors = session('_ci_validation_errors'))
