@@ -1922,10 +1922,17 @@ class Email
 
 		$protocol = $this->getProtocol();
 		$method   = 'sendWith'.ucfirst($protocol);
-		if (! $this->$method())
+		try
+		{
+			$failed = $this->$method();
+		} catch(\ErrorException $e)
+		{
+			$failed = true;
+		}
+
+		if ($failed)
 		{
 			$this->setErrorMessage(lang('email.sendFailure'.($protocol === 'mail' ? 'PHPMail' : ucfirst($protocol))));
-
 			return false;
 		}
 
