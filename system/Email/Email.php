@@ -1924,13 +1924,13 @@ class Email
 		$method   = 'sendWith'.ucfirst($protocol);
 		try
 		{
-			$failed = $this->$method();
+			$success = $this->$method();
 		} catch(\ErrorException $e)
 		{
-			$failed = true;
+			$success = false;
 		}
 
-		if ($failed)
+		if (! $success)
 		{
 			$this->setErrorMessage(lang('email.sendFailure'.($protocol === 'mail' ? 'PHPMail' : ucfirst($protocol))));
 			return false;
