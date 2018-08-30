@@ -221,6 +221,14 @@ class Entity
 			$value = serialize($value);
 		}
 
+		// JSON casting requires that we JSONize the value
+		// when setting it so that it can easily be stored
+		// back to the database.
+		if (function_exists('json_encode') && array_key_exists($key, $this->_options['casts']) && ($this->_options['casts'][$key] === 'json' || $this->_options['casts'][$key] === 'json-array'))
+		{
+			$value = json_encode($value);
+		}
+
 		// if a set* method exists for this key, 
 		// use that method to insert this value. 
 		$method = 'set' . str_replace(' ', '', ucwords(str_replace(['-', '_'], ' ', $key)));
@@ -386,6 +394,22 @@ class Entity
 				if (is_string($value) && (strpos($value,'a:') === 0 || strpos($value, 's:') === 0))
 				{
 					$value = unserialize($value);
+				}
+
+				$value = (array)$value;
+				break;
+			case 'json':
+				if (function_exists('json_decode') && is_string($value) && (strpos($value, '[') === 0 || strpos($value, '{') === 0))
+				{
+					$value = json_decode($value, false);
+				}
+
+				$value = (object)$value;
+				break;
+			case 'json-array':
+				if (function_exists('json_decode') && is_string($value) && (strpos($value, '[') === 0 || strpos($value, '{') === 0))
+				{
+					$value = json_decode($value, true);
 				}
 
 				$value = (array)$value;
