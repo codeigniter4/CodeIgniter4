@@ -128,7 +128,7 @@ class BaseService
 	 *
 	 * @return \CodeIgniter\Autoloader\FileLocator
 	 */
-	public static function locator($getShared = true)
+	public static function locator(bool $getShared = true)
 	{
 		if ($getShared)
 		{

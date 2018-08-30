@@ -71,7 +71,7 @@ class Config extends BaseConfig
 	 *
 	 * @return BaseConnection
 	 */
-	public static function connect($group = null, $getShared = true)
+	public static function connect($group = null, bool $getShared = true)
 	{
 		if (is_array($group))
 		{
