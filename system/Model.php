@@ -326,7 +326,7 @@ class Model
 					->get();
 			$row = $row->getResult($this->tempReturnType);
 		}
-		elseif (is_numeric($id))
+		elseif (is_numeric($id) || is_string($id))
 		{
 			$row = $builder->where($this->table.'.'.$this->primaryKey, $id)
 					->get();
