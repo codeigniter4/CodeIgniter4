@@ -824,14 +824,8 @@ class RouteCollectionTest extends \CIUnitTestCase
 		});
 
 		$this->assertTrue($routes->isFiltered('admin/users'));
-		$this->assertFalse($routes->isFiltered('admin/franky'));
-
-		$expect = [
-			'filter' => 'role',
-			'params' => null
-		];
-
-		$this->assertEquals($expect, $routes->getFilterForRoute('admin/users'));
+               $this->assertFalse($routes->isFiltered('admin/franky'));
+               $this->assertEquals('role', $routes->getFilterForRoute('admin/users'));
 	}
 
 	public function testRouteGroupWithFilterWithParams()
@@ -846,12 +840,6 @@ class RouteCollectionTest extends \CIUnitTestCase
 
 		$this->assertTrue($routes->isFiltered('admin/users'));
 		$this->assertFalse($routes->isFiltered('admin/franky'));
-
-		$expect = [
-			'filter' => 'role',
-			'params' => ['admin', 'manager']
-		];
-
-		$this->assertEquals($expect, $routes->getFilterForRoute('admin/users'));
+		$this->assertEquals('role:admin,manager', $routes->getFilterForRoute('admin/users'));
 	}
 }
