@@ -670,6 +670,7 @@ is_unique               Yes         Checks if this field value exists in the dat
                                     column and value to ignore, useful when updating records to ignore itself.
 timezone                No          Fails if field does match a timezone per ``timezone_identifiers_list``
 valid_base64            No          Fails if field contains anything other than valid Base64 characters.
+valid_json              No          Fails if field does not contain a valid JSON string.
 valid_email             No          Fails if field does not contain a valid email address.
 valid_emails            No          Fails if any value provided in a comma separated list is not a valid email.
 valid_ip                No          Fails if the supplied IP is not valid. Accepts an optional parameter of ‘ipv4’ or               valid_ip[ipv6]
