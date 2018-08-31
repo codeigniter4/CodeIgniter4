@@ -597,6 +597,44 @@ class FormatRulesTest extends \CIUnitTestCase
 	//-------------------------------------------------------------------
 
 	/**
+	 * @dataProvider jsonProvider
+	 *
+	 * @param $str
+	 * @param $expected
+	 */
+	public function testJson($first, $expected)
+	{
+		$data = [
+			'foo' => $first,
+		];
+
+		$this->validation->setRules([
+			'foo' => "valid_json",
+		]);
+
+		$this->assertEquals($expected, $this->validation->run($data));
+	}
+
+	//--------------------------------------------------------------------
+
+	public function jsonProvider()
+	{
+		return [
+			['null', true],
+			['"null"', true],
+			['600100825', true],
+			['{"A":"Yay.", "B":[0,5]}', true],
+			['[0,"2",2.2,"3.3"]', true],
+			[null, false],
+			['600-Nope. Should not pass.', false],
+			['{"A":SHOULD_NOT_PASS}', false],
+			['[0,"2",2.2 "3.3"]', false]
+		];
+	}
+
+	//-------------------------------------------------------------------
+
+	/**
 	 * @dataProvider timezoneProvider
 	 *
 	 * @param $value
