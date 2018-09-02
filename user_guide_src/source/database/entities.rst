@@ -337,12 +337,22 @@ For example, if you had a User entity with an **is_banned** property, you can ca
         ];
     }
 
-Array Casting
+Array/Json Casting
 -------------
 
-Array casting is especially useful with fields that store serialized arrays or json in them. When cast as an array,
-they will automatically be unserialized when you read the property's value. Unlike the rest of the data types that
-you can cast properties into, the **array** cast type will serialize the value whenever the property is set::
+Array/Json casting is especially useful with fields that store serialized arrays or json in them. When cast as:
+
+* an **array**, they will automatically be unserialized,
+* a **json**, they will automatically be set as an value of json_decode($value, false),
+* a **json-array**, they will automatically be set as an value of  json_decode($value, true),
+
+when you read the property's value.
+Unlike the rest of the data types that you can cast properties into, the:
+
+* **array** cast type will serialize,
+* **json** and **json-array** cast will use json_encode function on
+
+the value whenever the property is set::
 
     <?php namespace App\Entities;
 
@@ -354,7 +364,9 @@ you can cast properties into, the **array** cast type will serialize the value w
 
         protected $_options = [
             'casts' => [
-                'options' => 'array'
+                'options' => 'array',
+		'options_object' => 'json',
+		'options_array' => 'json-array'
             ],
              'dates' => ['created_at', 'updated_at', 'deleted_at'],
             'datamap' => []
