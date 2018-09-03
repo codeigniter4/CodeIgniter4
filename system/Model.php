@@ -1376,7 +1376,7 @@ class Model
 	//--------------------------------------------------------------------
 
 	/**
-	 * Provides/instantiates the builder/db connection.
+	 * Provides/instantiates the builder/db connection and model's table/primary key names and return type.
 	 *
 	 * @param string $name
 	 *
@@ -1384,7 +1384,11 @@ class Model
 	 */
 	public function __get(string $name)
 	{
-		if (isset($this->db->$name))
+		if(in_array($name, ['primaryKey', 'table', 'returnType']))
+		{
+			return $this->{$name};
+		}
+		elseif (isset($this->db->$name))
 		{
 			return $this->db->$name;
 		}
