@@ -38,6 +38,7 @@
  */
 
 use Config\Mimes;
+use Config\Services;
 
 
 /**
@@ -1928,6 +1929,7 @@ class Email
 		} catch(\ErrorException $e)
 		{
 			$success = false;
+			Services::logger()->error('Email: '.$method.' throwed '.$e->getMessage());
 		}
 
 		if (! $success)
