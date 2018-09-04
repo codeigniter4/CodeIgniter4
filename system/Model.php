@@ -993,13 +993,14 @@ class Model
 	 * @param int    $perPage
 	 * @param string $group    Will be used by the pagination library
 	 *                         to identify a unique pagination set.
+	 * @param int    $page     Optional page number (useful when the page number is provided in different way)
 	 *
 	 * @return array|null
 	 */
-	public function paginate(int $perPage = 20, string $group = 'default')
+	public function paginate(int $perPage = 20, string $group = 'default', int $page = 0)
 	{
 		// Get the necessary parts.
-		$page = ctype_digit($_GET['page'] ?? '') && $_GET['page'] > 1 ? $_GET['page'] : 1;
+		$page = $page >= 1 ? $page : (ctype_digit($_GET['page'] ?? '') && $_GET['page'] > 1 ? $_GET['page'] : 1);
 
 		$total = $this->countAllResults(false);
 
