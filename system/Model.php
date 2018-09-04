@@ -265,10 +265,9 @@ class Model
 	 * Model constructor.
 	 *
 	 * @param ConnectionInterface $db
-	 * @param BaseConfig          $config Config/App()
 	 * @param ValidationInterface $validation
 	 */
-	public function __construct(ConnectionInterface &$db = null, BaseConfig $config = null, ValidationInterface $validation = null)
+	public function __construct(ConnectionInterface &$db = null, ValidationInterface $validation = null)
 	{
 		if ($db instanceof ConnectionInterface)
 		{
@@ -278,14 +277,6 @@ class Model
 		{
 			$this->db = Database::connect($this->DBGroup);
 		}
-
-		if (is_null($config) || ! isset($config->salt))
-		{
-			$config = config(\Config\App::class);
-		}
-
-		$this->salt = $config->salt ?: '';
-		unset($config);
 
 		$this->tempReturnType = $this->returnType;
 		$this->tempUseSoftDeletes = $this->useSoftDeletes;
