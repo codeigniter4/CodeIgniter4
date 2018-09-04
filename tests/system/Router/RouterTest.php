@@ -264,7 +264,7 @@ class RouterTest extends \CIUnitTestCase
 
 		$this->assertEquals('\TestController', $router->controllerName());
 		$this->assertEquals('foobar', $router->methodName());
-		$this->assertEquals(['filter' => 'test', 'params' => null], $router->getFilter());
+		$this->assertEquals('test', $router->getFilter());
 	}
 
 	//--------------------------------------------------------------------
