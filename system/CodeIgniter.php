@@ -883,7 +883,12 @@ class CodeIgniter
 	protected function gatherOutput($cacheConfig = null, $returned = null)
 	{
 		$this->output = ob_get_contents();
-		ob_end_clean();
+		// If buffering is not null.
+		// Clean (erase) the output buffer and turn off output buffering
+		if (ob_get_length())
+		{
+			ob_end_clean();
+		}
 
 		// If the controller returned a response object,
 		// we need to grab the body from it so it can
