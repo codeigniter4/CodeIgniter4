@@ -89,7 +89,13 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 		}
 		else
 		{
-			$this->savePath = rtrim(ini_get('session.save_path'), '/\\');
+                       $sessionPath    = rtrim(ini_get('session.save_path'), '/\\');
+                       if (! $sessionPath)
+                       {
+                           $sessionPath = WRITEPATH . 'session';
+                       }
+
+                       $this->savePath = $sessionPath;
 		}
 	}
 
