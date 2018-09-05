@@ -716,12 +716,14 @@ class Validation implements ValidationInterface
 				$separator = $rules[$open_bracket_pos + 1];
 
 				$regex_end_pos = strpos($rules, $separator . ']');
-				$_rules[] = substr($rules, 0, $regex_end_pos + 2);
+				if ($regex_end_pos !== false) {
+					$_rules[] = substr($rules, 0, $regex_end_pos + 2);
 
-				$rules = substr($rules, $regex_end_pos + 3);
+					$rules = substr($rules, $regex_end_pos + 3);
 
-				$pipe_pos = strpos($rules, '|');
-				continue;
+					$pipe_pos = strpos($rules, '|');
+					continue;
+				}
 			}
 
 			$_rules[] = substr($rules, 0, $pipe_pos);
