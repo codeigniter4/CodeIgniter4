@@ -157,7 +157,7 @@ class Validation implements ValidationInterface
 			$this->processRules($rField, $rSetup['label'] ?? $rField, $value ?? null, $rules, $data);
 		}
 
-		return ! empty($this->errors) ? false : true;
+		return ! empty($this->getErrors()) ? false : true;
 	}
 
 	//--------------------------------------------------------------------
@@ -491,7 +491,7 @@ class Validation implements ValidationInterface
 	 */
 	public function showError(string $field, string $template = 'single'): string
 	{
-		if ( ! array_key_exists($field, $this->errors))
+		if ( ! array_key_exists($field, $this->getErrors()))
 		{
 			return '';
 		}
@@ -579,7 +579,7 @@ class Validation implements ValidationInterface
 	 */
 	public function hasError(string $field): bool
 	{
-		return array_key_exists($field, $this->errors);
+		return array_key_exists($field, $this->getErrors());
 	}
 
 	//--------------------------------------------------------------------
@@ -600,7 +600,7 @@ class Validation implements ValidationInterface
 			$field = key($this->rules);
 		}
 
-		return array_key_exists($field, $this->errors) ? $this->errors[$field] : '';
+		return array_key_exists($field, $this->getErrors()) ? $this->errors[$field] : '';
 	}
 
 	//--------------------------------------------------------------------
@@ -615,11 +615,11 @@ class Validation implements ValidationInterface
 	 *    ]
 	 *
 	 * @return array
-	 * 
+	 *
 	 * Excluded from code coverage because that it always run as cli
-	 * 
+	 *
 	 * @codeCoverageIgnore
-	 * 
+	 *
 	 */
 	public function getErrors(): array
 	{
