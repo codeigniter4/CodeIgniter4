@@ -356,10 +356,13 @@ class RedisHandler extends BaseHandler implements \SessionHandlerInterface
 				continue;
 			}
 
-			if ( ! $this->redis->setex($lock_key, 300, time()))
+			$result = ($ttl === -2)
+				? $this->_redis->set($lock_key, time(), array('nx', 'ex' => 300))
+				: $this->_redis->setex($lock_key, 300, time());
+
+			if ( ! $result)
 			{
-				$this->logger->error('Session: Error while trying to obtain lock for ' . $this->keyPrefix . $sessionID);
-				return FALSE;
+				continue;
 			}
 
 			$this->lockKey = $lock_key;
