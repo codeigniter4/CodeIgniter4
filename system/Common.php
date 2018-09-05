@@ -1005,3 +1005,14 @@ if (! function_exists('dd'))
 		exit;
 	}
 }
+
+if (! function_exists('validation_errors'))
+{
+	/**
+	 * Report errors related to form validation.
+	 */
+	function validation_errors(array $params = []): string
+	{
+               return \CodeIgniter\View\Plugins::ValidationErrors($params);
+	}
+}
