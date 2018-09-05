@@ -38,8 +38,7 @@
  */
 
 use Config\Mimes;
-use Config\Services;
-
+use Psr\Log\LoggerAwareTrait;
 
 /**
  * CodeIgniter Email Class
@@ -54,6 +53,7 @@ use Config\Services;
  */
 class Email
 {
+	use LoggerAwareTrait;
 	/**
 	 * @var string
 	 */
@@ -387,6 +387,12 @@ class Email
 	 * @var bool
 	 */
 	protected static $func_overload;
+
+	/**
+	 * Logger instance to record error messages and awarnings.
+	 * @var \PSR\Log\LoggerInterface
+	 */
+	protected $logger;
 
 	//--------------------------------------------------------------------
 
@@ -1929,7 +1935,7 @@ class Email
 		} catch(\ErrorException $e)
 		{
 			$success = false;
-			Services::logger()->error('Email: '.$method.' throwed '.$e->getMessage());
+			$this->logger->error('Email: '.$method.' throwed '.$e->getMessage());
 		}
 
 		if (! $success)
