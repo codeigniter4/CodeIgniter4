@@ -503,7 +503,8 @@ class ValidationTest extends \CIUnitTestCase
 
 //--------------------------------------------------------------------
 
-	public function testSplitRuleNotRegexMatchTrue(){
+	public function testSplitRuleNotRegexMatchTrue()
+	{
 		$this->validation->setRules([
 			'number' => 'greater_than[10]|less_than[12]',
 		]);
@@ -515,7 +516,8 @@ class ValidationTest extends \CIUnitTestCase
 		$this->assertTrue($result);
 	}
 
-	public function testSplitRuleNotRegexMatchFalse(){
+	public function testSplitRuleNotRegexMatchFalse()
+	{
 		$this->validation->setRules([
 			'number' => 'greater_than[10]|less_than[12]',
 		]);
