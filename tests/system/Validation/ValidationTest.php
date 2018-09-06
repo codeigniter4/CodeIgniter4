@@ -533,4 +533,16 @@ class ValidationTest extends \CIUnitTestCase
 
 		$this->assertFalse($result);
 	}
+
+	/**
+	 * @see https://github.com/bcit-ci/CodeIgniter4/issues/1201
+	 */
+	public function testSplitNotRegex()
+	{
+		$method = $this->getPrivateMethodInvoker($this->validation, 'splitRules');
+
+		$result = $method('uploaded[avatar]|max_size[avatar,1024]');
+
+		$this->assertEquals('uploaded[avatar]', $result[0]);
+	}
 }
