@@ -720,10 +720,10 @@ class Validation implements ValidationInterface
 			{
 				$separator = $rules[$open_bracket_pos+1];
 
-				$regex_end_pos = strpos($rules, $separator.']');
-
-				if ($regex_end_pos !== false)
+				if (preg_match('/(?<!\\\\)(?:\\\\\\\\)*\\'.$separator.'\]/', $rules, $matches, PREG_OFFSET_CAPTURE))
 				{
+					$regex_end_pos = $matches[0][1];
+
 					$_rules[] = substr($rules, 0, $regex_end_pos+2);
 
 					$rules = substr($rules, $regex_end_pos+3);
