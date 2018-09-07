@@ -37,6 +37,7 @@
  */
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Session\Exceptions\SessionException;
+use Config\Services;
 
 /**
  * Session handler using Memcache for persistence
@@ -72,6 +73,11 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 	 */
 	protected $sessionExpiration = 7200;
 
+        /**
+         * @var string
+         */
+        protected $ipAddress;
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -91,10 +97,11 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 
 		if ($this->matchIP === true)
 		{
-			$this->keyPrefix .= (new \CodeIgniter\HTTP\Request(new \Config\App()))->getIpAddress() . ':';
+			$this->keyPrefix .= $this->ipAddress . ':';
 		}
 
 		$this->sessionExpiration = $config->sessionExpiration;
+                $this->ipAdddress = Services::request()->getIpAddress();
 	}
 
 	//--------------------------------------------------------------------

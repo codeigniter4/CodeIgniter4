@@ -37,6 +37,7 @@
  */
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Session\Exceptions\SessionException;
+use Config\Services;
 
 /**
  * Session handler using Redis for persistence
@@ -77,7 +78,12 @@ class RedisHandler extends BaseHandler implements \SessionHandlerInterface
 	 *
 	 * @var int
 	 */
-	protected $sessionExpiration = 7200;
+        protected $sessionExpiration = 7200;
+
+        /**
+         * @var string
+         */
+        protected $ipAddress;
 
 	//--------------------------------------------------------------------
 
@@ -117,10 +123,11 @@ class RedisHandler extends BaseHandler implements \SessionHandlerInterface
 
 		if ($this->matchIP === true)
 		{
-			$this->keyPrefix .= (new \CodeIgniter\HTTP\Request(new \Config\App()))->getIpAddress() . ':';
+			$this->keyPrefix .= $this->ipAddress . ':';
 		}
 
-		$this->sessionExpiration = $config->sessionExpiration;
+                $this->sessionExpiration = $config->sessionExpiration;
+                $this->ipAdddress = Services::request()->getIpAddress();
 	}
 
 	//--------------------------------------------------------------------

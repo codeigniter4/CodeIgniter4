@@ -36,9 +36,10 @@
  * @filesource
  */
 use CodeIgniter\Session\Exceptions\SessionException;
-use Config\Database;
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Database\BaseConnection;
+use Config\Database;
+use Config\Services;
 
 /**
  * Session handler using current Database for storage
@@ -81,6 +82,11 @@ class DatabaseHandler extends BaseHandler implements \SessionHandlerInterface
 	 */
 	protected $rowExists = false;
 
+        /**
+         * @var string
+         */
+        protected $ipAddress;
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -114,6 +120,8 @@ class DatabaseHandler extends BaseHandler implements \SessionHandlerInterface
 		{
 			$this->platform = 'postgre';
 		}
+
+                $this->ipAddress = Services::request()->getIpAddress();
 	}
 
 	//--------------------------------------------------------------------
@@ -167,7 +175,7 @@ class DatabaseHandler extends BaseHandler implements \SessionHandlerInterface
 
 		if ($this->matchIP)
 		{
-			$builder = $builder->where('ip_address', (new \CodeIgniter\HTTP\Request(new \Config\App()))->getIpAddress());
+			$builder = $builder->where('ip_address', $this->ipAddress);
 		}
 
 		$result = $builder->get()->getRow();
@@ -236,7 +244,7 @@ class DatabaseHandler extends BaseHandler implements \SessionHandlerInterface
 		{
 			$insertData = [
 				'id'		 => $sessionID,
-				'ip_address' => (new \CodeIgniter\HTTP\Request(new \Config\App()))->getIpAddress(),
+				'ip_address' => $this->ipAddress,
 				'timestamp'	 => time(),
 				'data'		 => $this->platform === 'postgre' ? base64_encode($sessionData) : $sessionData
 			];
@@ -256,7 +264,7 @@ class DatabaseHandler extends BaseHandler implements \SessionHandlerInterface
 
 		if ($this->matchIP)
 		{
-			$builder = $builder->where('ip_address', (new \CodeIgniter\HTTP\Request(new \Config\App()))->getIpAddress());
+			$builder = $builder->where('ip_address', $this->ipAddress);
 		}
 
 		$updateData = [
@@ -311,7 +319,7 @@ class DatabaseHandler extends BaseHandler implements \SessionHandlerInterface
 
 			if ($this->matchIP)
 			{
-				$builder = $builder->where('ip_address', (new \CodeIgniter\HTTP\Request(new \Config\App()))->getIpAddress());
+				$builder = $builder->where('ip_address', $this->ipAddress);
 			}
 
 			if ( ! $builder->delete())
@@ -350,10 +358,9 @@ class DatabaseHandler extends BaseHandler implements \SessionHandlerInterface
 
 	protected function lockSession(string $sessionID): bool
 	{
-               $ipAddress = (new \CodeIgniter\HTTP\Request(new \Config\App()))->getIpAddress();
-		if ($this->platform === 'mysql')
+        if ($this->platform === 'mysql')
 		{
-			$arg = md5($sessionID . ($this->matchIP ? '_' . $ipAddress : ''));
+			$arg = md5($sessionID . ($this->matchIP ? '_' . $this->ipAddress : ''));
 			if ($this->db->query("SELECT GET_LOCK('{$arg}', 300) AS ci_session_lock")->getRow()->ci_session_lock)
 			{
 				$this->lock = $arg;
@@ -364,7 +371,7 @@ class DatabaseHandler extends BaseHandler implements \SessionHandlerInterface
 		}
 		elseif ($this->platform === 'postgre')
 		{
-			$arg = "hashtext('{$sessionID}')" . ($this->matchIP ? ", hashtext('{$ipAddress}')" : '');
+			$arg = "hashtext('{$sessionID}')" . ($this->matchIP ? ", hashtext('{$this->ipAddress}')" : '');
 			if ($this->db->simpleQuery("SELECT pg_advisory_lock({$arg})"))
 			{
 				$this->lock = $arg;

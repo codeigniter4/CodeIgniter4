@@ -37,6 +37,7 @@
  */
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Session\Exceptions\SessionException;
+use Config\Services;
 
 /**
  * Session handler using file system for storage
@@ -72,6 +73,11 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 	 */
 	protected $fileNew;
 
+        /**
+         * @var string
+         */
+        protected $ipAddress;
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -97,6 +103,8 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 
                        $this->savePath = $sessionPath;
 		}
+
+                $this->ipAdddress = Services::request()->getIpAddress();
 	}
 
 	//--------------------------------------------------------------------
@@ -129,7 +137,7 @@ class FileHandler extends BaseHandler implements \SessionHandlerInterface
 		$this->savePath = $savePath;
 		$this->filePath = $this->savePath . '/'
 				. $name // we'll use the session cookie name as a prefix to avoid collisions
-				. ($this->matchIP ? md5((new \CodeIgniter\HTTP\Request(new \Config\App()))->getIpAddress()) : '');
+				. ($this->matchIP ? md5($this->ipAddress) : '');
 
 		return true;
 	}
