@@ -95,13 +95,13 @@ class MemcachedHandler extends BaseHandler implements \SessionHandlerInterface
 			throw SessionException::forEmptySavepath();
 		}
 
+                $this->ipAdddress = Services::request()->getIpAddress();
 		if ($this->matchIP === true)
 		{
 			$this->keyPrefix .= $this->ipAddress . ':';
 		}
 
 		$this->sessionExpiration = $config->sessionExpiration;
-                $this->ipAdddress = Services::request()->getIpAddress();
 	}
 
 	//--------------------------------------------------------------------
