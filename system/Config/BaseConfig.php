@@ -54,7 +54,9 @@ class BaseConfig
 	 *
 	 * @var array
 	 */
-	protected $registrars;
+	protected static $registrars = [];
+
+	protected static $didDiscovery = false;
 
 	/**
 	 * Will attempt to get environment variables with names
@@ -165,13 +167,23 @@ class BaseConfig
 	 */
 	protected function registerProperties()
 	{
-		if (empty($this->registrars))
+		$config = config('Modules');
+
+		if (! $config->shouldDiscover('registrars'))
+		{
 			return;
+		}
+
+		if (! static::$didDiscovery)
+		{
+			$locator = \Config\Services::locator();
+			static::$registrars = $locator->search('Config/Registrar.php');
+		}
 
 		$shortName = (new \ReflectionClass($this))->getShortName();
 
 		// Check the registrar class for a method named after this class' shortName
-		foreach ($this->registrars as $callable)
+		foreach (static::$registrars as $callable)
 		{
 			// ignore non-applicable registrars
 			if ( ! method_exists($callable, $shortName))
