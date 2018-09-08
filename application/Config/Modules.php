@@ -14,6 +14,7 @@ class Modules
 	*/
 	public $enabled = [
 		'events',
+		'helpers',
 		'registrars',
 		'routes',
 		'services',
@@ -38,6 +39,7 @@ class Modules
 	 *
 	 * Valid values are:
 	 *  - events
+	 *  - helpers
 	 *  - registrars
 	 *  - routes
 	 *  - services
