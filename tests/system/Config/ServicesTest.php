@@ -90,13 +90,13 @@ class ServicesTest extends \CIUnitTestCase
 	public function testNewThrottlerFromShared()
 	{
 		$actual = Services::throttler();
-		$this->assertInstanceOf(\CodeIgniter\Throttle\Throttler::class, $actual);
+		$this->assertInstanceOf(\CodeIgniter\Filters\Throttler::class, $actual);
 	}
 
 	public function testNewThrottler()
 	{
 		$actual = Services::throttler(false);
-		$this->assertInstanceOf(\CodeIgniter\Throttle\Throttler::class, $actual);
+		$this->assertInstanceOf(\CodeIgniter\Filters\Throttler::class, $actual);
 	}
 
 	public function testNewToolbar()

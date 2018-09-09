@@ -1,12 +1,12 @@
-<?php namespace CodeIgniter\Security;
+<?php namespace CodeIgniter\Filters;
 
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\HTTP\Request;
 use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\HTTP\IncomingRequest;
 use Tests\Support\Config\MockAppConfig;
-use CodeIgniter\Security\Exceptions\SecurityException;
-use Tests\Support\Security\MockSecurity;
+use CodeIgniter\Filters\Exceptions\SecurityException;
+use Tests\Support\Filters\MockSecurity;
 
 //--------------------------------------------------------------------
 
@@ -90,7 +90,7 @@ class SecurityTest extends \CIUnitTestCase {
 			'csrf_cookie_name' => '8b9218a55906f9dcc1dc263dce7f005a'
 		];
 
-		$this->assertInstanceOf('CodeIgniter\Security\Security' ,$security->CSRFVerify($request));
+		$this->assertInstanceOf('CodeIgniter\Filters\Security' ,$security->CSRFVerify($request));
 		$this->assertLogged('info', 'CSRF token verified');
 	}
 

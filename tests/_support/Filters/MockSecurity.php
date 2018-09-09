@@ -1,6 +1,6 @@
-<?php namespace Tests\Support\Security;
+<?php namespace Tests\Support\Filters;
 
-use CodeIgniter\Security\Security;
+use CodeIgniter\Filters\Security;
 use CodeIgniter\HTTP\RequestInterface;
 
 class MockSecurity extends Security
