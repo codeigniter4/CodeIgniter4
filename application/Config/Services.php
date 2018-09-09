@@ -43,7 +43,7 @@ class Services extends CoreServices
             $config = new \Config\Honeypot();
         }
 
-        return new \CodeIgniter\Honeypot\Honeypot($config);
+        return new \CodeIgniter\Filters\Honeypot($config);
     }
 
 

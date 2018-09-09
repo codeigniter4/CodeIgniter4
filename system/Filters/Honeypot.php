@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Honeypot;
+<?php namespace CodeIgniter\Filters;
 
 /**
  * CodeIgniter
@@ -39,7 +39,7 @@
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
-use CodeIgniter\Honeypot\Exceptions\HoneypotException;
+use CodeIgniter\Filters\Exceptions\HoneypotException;
 
 class Honeypot 
 {

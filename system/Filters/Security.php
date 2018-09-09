@@ -1,4 +1,4 @@
-<?php namespace CodeIgniter\Security;
+<?php namespace CodeIgniter\Filters;
 
 /**
  * CodeIgniter
@@ -36,7 +36,7 @@
  * @filesource
  */
 use CodeIgniter\HTTP\RequestInterface;
-use CodeIgniter\Security\Exceptions\SecurityException;
+use CodeIgniter\Filters\Exceptions\SecurityException;
 
 /**
  * HTTP security handler.

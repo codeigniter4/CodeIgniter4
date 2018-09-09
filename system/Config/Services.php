@@ -636,7 +636,7 @@ class Services extends BaseService
 	 * @param \Config\App $config
 	 * @param bool        $getShared
 	 *
-	 * @return \CodeIgniter\Security\Security
+	 * @return \CodeIgniter\Filters\Security
 	 */
 	public static function security(\Config\App $config = null, bool $getShared = true)
 	{
@@ -650,7 +650,7 @@ class Services extends BaseService
 			$config = config(App::class);
 		}
 
-		return new \CodeIgniter\Security\Security($config);
+		return new \CodeIgniter\Filters\Security($config);
 	}
 
 	//--------------------------------------------------------------------
@@ -707,7 +707,7 @@ class Services extends BaseService
 			return self::getSharedInstance('throttler');
 		}
 
-		return new \CodeIgniter\Throttle\Throttler(self::cache());
+		return new \CodeIgniter\Filters\Throttler(self::cache());
 	}
 
 	//--------------------------------------------------------------------
