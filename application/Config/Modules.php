@@ -4,6 +4,17 @@
 class Modules
 {
 	/*
+	 |--------------------------------------------------------------------------
+	 | Auto-Discovery Enabled?
+	 |--------------------------------------------------------------------------
+	 |
+	 | If true, then auto-discovery will happen across all elements listed in
+	 | $activeExplorers below. If false, no auto-discovery will happen at all,
+	 | giving a slight performance boost.
+	 */
+	public $enabled = true;
+
+	/*
 	|--------------------------------------------------------------------------
 	| Auto-discover Rules
 	|--------------------------------------------------------------------------
@@ -12,9 +23,8 @@ class Modules
 	| and used during the current application request. If it is not
 	| listed here, only the base application elements will be used.
 	*/
-	public $enabled = [
+	public $activeExplorers = [
 		'events',
-		'helpers',
 		'registrars',
 		'routes',
 		'services',
@@ -39,7 +49,6 @@ class Modules
 	 *
 	 * Valid values are:
 	 *  - events
-	 *  - helpers
 	 *  - registrars
 	 *  - routes
 	 *  - services
@@ -51,8 +60,10 @@ class Modules
 	 */
 	public function shouldDiscover(string $alias)
 	{
+		if (! $this->enabled) return false;
+
 		$alias = strtolower($alias);
 
-		return in_array($alias, $this->enabled);
+		return in_array($alias, $this->activeExplorers);
 	}
 }

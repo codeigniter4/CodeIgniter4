@@ -20,7 +20,9 @@ class RouterTest extends \CIUnitTestCase
 	{
 		parent::setUp();
 
-		$this->collection = new RouteCollection(new MockFileLocator(new \Config\Autoload()));
+		$moduleConfig = new \Config\Modules;
+		$moduleConfig->enabled = false;
+		$this->collection = new RouteCollection(new MockFileLocator(new \Config\Autoload()), $moduleConfig);
 
 		$routes = [
 			'users'                        => 'Users::index',
