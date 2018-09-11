@@ -103,6 +103,11 @@ sections.
 
     <?= $pager->makeLinks($page, $perPage, $total, 'template_name') ?>
 
+In case you find useful to use one of URI segments instead of ``$_GET['page']`` to provide page number. You can create
+links with the ``makeLinks()`` adding as a 5th parameter URI segment number, which contains page number.
+
+    <?= $pager->makeLinks($page, $perPage, $total, 'template_name', $segment) ?>
+    
 Paginating with Only Expected Queries
 =====================================
 
