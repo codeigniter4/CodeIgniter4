@@ -66,7 +66,7 @@ class PagerRenderer
 		$this->total = $details['total'];
 		$this->uri = $details['uri'];
 		$this->pageCount = $details['pageCount'];
-		$this->segment = $details['segment'];
+		$this->segment = $details['segment'] ?? 0;
 	}
 
 	//--------------------------------------------------------------------
