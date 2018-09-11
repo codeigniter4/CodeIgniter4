@@ -12,7 +12,7 @@
  * 
  * @codeCoverageIgnore
  */
-<?php
+
 return [
 	'Cast.jsonErrorDepth' 		=> 'Maximum stack depth exceeded',
 	'Cast.jsonErrorStateMismatch'	=> 'Underflow or the modes mismatch',
