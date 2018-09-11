@@ -398,14 +398,14 @@ class Entity
 
 				$value = (array)$value;
 				break;
-			case 'json':
+						case 'json':
 				if (function_exists('json_decode') && is_string($value) && (strpos($value, '[') === 0 || strpos($value, '{') === 0))
 				{
 					$value = json_decode($value, false);
-					$json_last_error = json_last_error();
-					if($json_last_error !== JSON_ERROR_NONE)
+
+					if(json_last_error() !== JSON_ERROR_NONE)
 					{
-						throw CastException::forInvalidJsonFormatException($json_last_error);
+						throw CastException::forInvalidJsonFormatException(json_last_error());
 					}
 				}
 				$value = (object)$value;
@@ -414,10 +414,10 @@ class Entity
 				if (function_exists('json_decode') && is_string($value) && (strpos($value, '[') === 0 || strpos($value, '{') === 0))
 				{
 					$value = json_decode($value, true);
-					$json_last_error = json_last_error();
-					if($json_last_error !== JSON_ERROR_NONE)
+
+					if(json_last_error() !== JSON_ERROR_NONE)
 					{
-						throw CastException::forInvalidJsonFormatException($json_last_error);
+						throw CastException::forInvalidJsonFormatException(json_last_error());
 					}
 				}
 				$value = (array)$value;
