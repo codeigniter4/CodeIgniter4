@@ -65,7 +65,7 @@ class Pager implements PagerInterface
 	 * @var array
 	 */
 	protected $segment = [];
-
+	
 	/**
 	 * Our configuration instance.
 	 *
@@ -151,7 +151,7 @@ class Pager implements PagerInterface
 
 		return $this->displayLinks($name, $template);
 	}
-
+	
 	//--------------------------------------------------------------------
 
 	/**
@@ -352,7 +352,6 @@ class Pager implements PagerInterface
 
 		}
 
-
 		return $returnObject === true ? $uri : (string) $uri;
 	}
 
@@ -453,7 +452,6 @@ class Pager implements PagerInterface
 			throw PagerException::forInvalidPaginationGroup($group);
 		}
 
-
 		$newGroup = $this->groups[$group];
 
 		$newGroup['next'] = $this->getNextPageURI($group);
@@ -509,8 +507,7 @@ class Pager implements PagerInterface
 		{
 			$this->groups[$group]['currentPage'] = $_GET['page_' . $group] ?? $_GET['page'] ?? 1;
 		}
-
-
+		
 		if ($_GET)
 		{
 			$this->groups[$group]['uri'] = $this->groups[$group]['uri']->setQueryArray($_GET);
