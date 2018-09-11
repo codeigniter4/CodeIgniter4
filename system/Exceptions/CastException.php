@@ -18,19 +18,19 @@ class CastException extends CriticalError
 		{
 			throw new static(lang('Cast.jsonErrorDepth'));
 		}
-		else if($error == JSON_ERROR_STATE_MISMATCH)
+		else if($error === JSON_ERROR_STATE_MISMATCH)
 		{
 			throw new static(lang('Cast.jsonErrorStateMismatch'));
 		}
-		else if($error == JSON_ERROR_CTRL_CHAR)
+		else if($error === JSON_ERROR_CTRL_CHAR)
 		{
 			throw new static(lang('Cast.jsonErrorCtrlChar'));
 		}
-		else if($error == JSON_ERROR_SYNTAX)
+		else if($error === JSON_ERROR_SYNTAX)
 		{
 			throw new static(lang('Cast.jsonErrorSyntax'));
 		}
-		else if($error == JSON_ERROR_UTF8)
+		else if($error === JSON_ERROR_UTF8)
 		{
 			throw new static(lang('Cast.jsonErrorUtf8'));
 		}
