@@ -330,10 +330,10 @@ class Pager implements PagerInterface
 
 		if ($this->only)
 		{
+			$query = array_intersect_key($_GET, array_flip($this->only));
+			
 			if($segment == 0)
 			{
-				$query = array_intersect_key($_GET, array_flip($this->only));
-
 				$query['page'] = $page;
 			}
 
