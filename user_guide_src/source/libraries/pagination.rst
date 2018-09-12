@@ -103,11 +103,12 @@ sections.
 
     <?= $pager->makeLinks($page, $perPage, $total, 'template_name') ?>
 
-In case you find useful to use one of URI segments instead of ``$_GET['page']`` to provide page number. You can create
-links with the ``makeLinks()`` adding as a 5th parameter URI segment number, which contains page number.
+In case is preferred to use one of URI segments instead of ``$_GET['page']`` as an page number then 5th parameter ``$segment`` of ``makeLinks()`` method will be useful. Generated URIs in pager will look like *https://domain.tld/model/[pageNumber]* instead of *https://domain.tld/model?page=[pageNumber]* when you pass 2 as an $segment in your call. 
 
     <?= $pager->makeLinks($page, $perPage, $total, 'template_name', $segment) ?>
-    
+
+Please note: $segment value can not be greater than the number of URI segments plus 1. If value sof provided URI segment won't be positive natural number then page will be set to 1.
+
 Paginating with Only Expected Queries
 =====================================
 
