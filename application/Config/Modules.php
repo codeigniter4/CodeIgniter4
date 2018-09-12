@@ -28,21 +28,7 @@ class Modules
 		'registrars',
 		'routes',
 		'services',
-		'views'
 	];
-
-	/*
-	|--------------------------------------------------------------------------
-	| Cache Results?
-	|--------------------------------------------------------------------------
-	|
-	| If true, the results of all discoveries will be cached and will be
-	| not be searched for until the cache is cleared, increasing performance
-	| at the cost of any additional discovery.
-	|
-	| This is a good setting to use in production where changes are infrequent.
-	*/
-	public $cache = false;
 
 	/**
 	 * Should the application auto-discover the requested resources.
@@ -52,7 +38,6 @@ class Modules
 	 *  - registrars
 	 *  - routes
 	 *  - services
-	 *  - views
 	 *
 	 * @param string $alias
 	 *
