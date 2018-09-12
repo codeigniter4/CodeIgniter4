@@ -192,13 +192,14 @@ class Pager implements PagerInterface
 	 */
 	public function store(string $group, int $page, int $perPage, int $total, int $segment = 0)
 	{
+		$this->segment[$group] = $segment;
+
 		$this->ensureGroup($group);
 
 		$this->groups[$group]['currentPage'] = $page;
 		$this->groups[$group]['perPage'] = $perPage;
 		$this->groups[$group]['total'] = $total;
 		$this->groups[$group]['pageCount'] = ceil($total / $perPage);
-		$this->segment[$group] = $segment;
 
 		return $this;
 	}
@@ -330,9 +331,14 @@ class Pager implements PagerInterface
 
 		if ($this->only)
 		{
+
 			$query = array_intersect_key($_GET, array_flip($this->only));
-			
-			if($segment == 0)
+
+			if($segment > 0)
+			{
+				$uri->setSegment($segment, $page);
+			}
+			else
 			{
 				$query['page'] = $page;
 			}
@@ -501,7 +507,14 @@ class Pager implements PagerInterface
 
 		if(array_key_exists($group, $this->segment))
 		{
-			$this->groups[$group]['currentPage'] = $this->groups[$group]->getSegment($this->segment[$group]);
+			try
+			{
+				$this->groups[$group]['currentPage'] = $this->groups[$group]['uri']->getSegment($this->segment[$group]);
+			}
+			catch (\CodeIgniter\HTTP\Exceptions\HTTPException $e)
+			{
+				$this->groups[$group]['currentPage'] = 1;
+			}
 		}
 		else
 		{
