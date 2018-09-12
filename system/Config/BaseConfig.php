@@ -58,6 +58,8 @@ class BaseConfig
 
 	protected static $didDiscovery = false;
 
+	protected static $moduleConfig;
+
 	/**
 	 * Will attempt to get environment variables with names
 	 * that match the properties of the child class.
@@ -66,6 +68,8 @@ class BaseConfig
 	 */
 	public function __construct()
 	{
+		static::$moduleConfig = config('Modules');
+
 		$properties = array_keys(get_object_vars($this));
 		$prefix = get_class($this);
 		$slashAt = strrpos($prefix, '\\');
@@ -167,9 +171,7 @@ class BaseConfig
 	 */
 	protected function registerProperties()
 	{
-		$config = config('Modules');
-
-		if (! $config->shouldDiscover('registrars'))
+		if (! static::$moduleConfig->shouldDiscover('registrars'))
 		{
 			return;
 		}
