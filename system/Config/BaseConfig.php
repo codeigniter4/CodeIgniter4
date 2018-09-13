@@ -126,7 +126,7 @@ class BaseConfig
 			}
 		}
 
-		if (ENVIRONMENT != 'testing')
+		if (defined('ENVIRONMENT') && ENVIRONMENT != 'testing')
 		{
 			$this->registerProperties();
 		}
