@@ -48,7 +48,7 @@ copyright = u'2014-2018 British Columbia Institute of Technology'
 # built documents.
 #
 # The short X.Y version.
-version = '4.0.0-dev'
+version = '4.0.0'
 # The full version, including alpha/beta/rc tags.
 release = '4.0.0-dev'
 
