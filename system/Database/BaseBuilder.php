@@ -1371,11 +1371,12 @@ class BaseBuilder
 	 *
 	 * @param    int $limit     The limit clause
 	 * @param    int $offset    The offset clause
-	 * @param    bool   $returnSQL If true, returns the generate SQL, otherwise executes the query.
+	 * @param    bool $returnSQL If true, returns the generate SQL, otherwise executes the query.
+	 * @param    bool $reset     Are we want to clear query builder values?
 	 *
 	 * @return    ResultInterface
 	 */
-	public function get(int $limit = null, int $offset = 0, $returnSQL = false)
+	public function get(int $limit = null, int $offset = 0, $returnSQL = false, $reset = true)
 	{
 		if ( ! is_null($limit))
 		{
@@ -1383,7 +1384,10 @@ class BaseBuilder
 		}
 		$result = $returnSQL ? $this->getCompiledSelect() : $this->db->query($this->compileSelect(), $this->binds);
 
-		$this->resetSelect();
+		if($reset == true)
+		{
+			$this->resetSelect();
+		}
 
 		return $result;
 	}
@@ -1396,8 +1400,8 @@ class BaseBuilder
 	 * Generates a platform-specific query string that counts all records in
 	 * the specified database
 	 *
-	 * @param    bool $reset Are we want to clear query builder values.
-	 * @param    bool $test Are we running automated tests?
+	 * @param    bool $reset Are we want to clear query builder values?
+	 * @param    bool $test  Are we running automated tests?
 	 *
 	 * @return    int
 	 */
