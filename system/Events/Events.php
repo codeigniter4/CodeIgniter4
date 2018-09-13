@@ -77,6 +77,12 @@ class Events
 	 */
 	protected static $performanceLog = [];
 
+	/**
+	 * A list of found files.
+	 * @var array
+	 */
+	protected static $files = [];
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -94,16 +100,17 @@ class Events
 
 		$config = config('Modules');
 
-		if (! $config->shouldDiscover('events'))
+		$files = [APPPATH.'Config/Events.php'];
+
+		if ($config->shouldDiscover('events'))
 		{
-			return;
+			$locator = Services::locator();
+			$files = $locator->search('Config/Events.php');
 		}
 
-		$locator = Services::locator();
+		static::$files = $files;
 
-		$files = $locator->search('Config/Events.php');
-
-		foreach ($files as $file)
+		foreach (static::$files as $file)
 		{
 			if (! file_exists($file))
 			{
@@ -292,11 +299,23 @@ class Events
 	/**
 	 * Sets the path to the file that routes are read from.
 	 *
-	 * @param string $path
+	 * @param array $files
 	 */
-	public static function setFile(string $path)
+	public static function setFiles(array $files)
 	{
-		self::$eventsFile = $path;
+		static::$files = $files;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns the files that were found/loaded during this request.
+	 *
+	 * @return mixed
+	 */
+	public function getFiles()
+	{
+		return static::$files;
 	}
 
 	//--------------------------------------------------------------------

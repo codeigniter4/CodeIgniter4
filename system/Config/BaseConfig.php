@@ -54,7 +54,7 @@ class BaseConfig
 	 *
 	 * @var array
 	 */
-	protected static $registrars = [];
+	public static $registrars = [];
 
 	protected static $didDiscovery = false;
 
@@ -126,7 +126,10 @@ class BaseConfig
 			}
 		}
 
-		$this->registerProperties();
+		if (ENVIRONMENT != 'testing')
+		{
+			$this->registerProperties();
+		}
 	}
 
 	//--------------------------------------------------------------------

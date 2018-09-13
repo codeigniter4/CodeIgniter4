@@ -1,5 +1,6 @@
 <?php namespace CodeIgniter\Events;
 
+use CodeIgniter\Config\Config;
 use Tests\Support\Events\MockEvents;
 
 class EventsTest extends \CIUnitTestCase
@@ -22,22 +23,26 @@ class EventsTest extends \CIUnitTestCase
 
 	public function testInitialize()
 	{
+		$config = config('Modules');
+		$config->activeExplorers = [];
+		Config::injectMock('Modules', $config);
+
 		// it should start out empty
-		$default = APPPATH . 'Config/Events.php';
-		Events::setFile('');
-		$this->assertEmpty($this->manager->getEventsFile());
+		$default = [APPPATH . 'Config/Events.php'];
+		Events::setFiles([]);
+		$this->assertEmpty($this->manager->getFiles());
 
 		// make sure we have a default events file
 		Events::initialize();
-		$this->assertEquals($default, $this->manager->getEventsFile());
+		$this->assertEquals($default, $this->manager->getFiles());
 
 		// and we should not be able to change it normally
 		Events::initialize('abracadabra');
-		$this->assertEquals($default, $this->manager->getEventsFile());
+		$this->assertEquals($default, $this->manager->getFiles());
 
 		// but we should be able to change it through the backdoor
-		Events::setFile('/peanuts');
-		$this->assertEquals('/peanuts', $this->manager->getEventsFile());
+		Events::setFiles(['/peanuts']);
+		$this->assertEquals(['/peanuts'], $this->manager->getFiles());
 	}
 
 	//--------------------------------------------------------------------

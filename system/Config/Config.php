@@ -85,6 +85,19 @@ class Config
 	//--------------------------------------------------------------------
 
 	/**
+	 * Helper method for injecting mock instances while testing.
+	 *
+	 * @param string $class
+	 * @param        $instance
+	 */
+	public static function injectMock(string $class, $instance)
+	{
+		self::$instances[$class] = $instance;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Find configuration class and create instance
 	 *
 	 * @param string $name Classname
