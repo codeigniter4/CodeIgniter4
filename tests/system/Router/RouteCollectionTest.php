@@ -14,7 +14,7 @@ class RouteCollectionTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
-	protected function getCollector(array $config=[], array $files=[])
+	protected function getCollector(array $config=[], array $files=[], $moduleConfig = null)
 	{
 		$defaults = [
 			'Config'        => APPPATH.'Config',
@@ -28,7 +28,13 @@ class RouteCollectionTest extends \CIUnitTestCase
 		$loader = new MockFileLocator($autoload);
 		$loader->setFiles($files);
 
-		return new RouteCollection($loader);
+		if ($moduleConfig === null)
+		{
+			$moduleConfig = new \Config\Modules();
+			$moduleConfig->enabled = false;
+		}
+
+		return new RouteCollection($loader, $moduleConfig);
 	}
 
 	public function testBasicAdd()
@@ -772,8 +778,10 @@ class RouteCollectionTest extends \CIUnitTestCase
 			'SampleSpace' => TESTPATH .'_support'
 		];
 
-		$routes = $this->getCollector($config);
-		$routes->discoverLocal(true);
+		$moduleConfig = new \Config\Modules();
+		$moduleConfig->enabled = true;
+
+		$routes = $this->getCollector($config, [], $moduleConfig);
 
 		$match = $routes->getRoutes();
 
@@ -789,8 +797,10 @@ class RouteCollectionTest extends \CIUnitTestCase
 			'SampleSpace' => TESTPATH .'_support'
 		];
 
-		$routes = $this->getCollector($config);
-		$routes->discoverLocal(true);
+		$moduleConfig = new \Config\Modules();
+		$moduleConfig->enabled = true;
+
+		$routes = $this->getCollector($config, [], $moduleConfig);
 
 		$routes->add('testing', 'MainRoutes::index');
 

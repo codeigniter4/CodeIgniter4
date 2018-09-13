@@ -598,7 +598,7 @@ class Services extends BaseService
 			return self::getSharedInstance('routes');
 		}
 
-		return new \CodeIgniter\Router\RouteCollection(self::locator());
+		return new \CodeIgniter\Router\RouteCollection(self::locator(), config('Modules'));
 	}
 
 	//--------------------------------------------------------------------

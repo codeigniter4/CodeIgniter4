@@ -26,7 +26,7 @@ class RedirectResponseTest extends \CIUnitTestCase
 		$this->config = new App();
 		$this->config->baseURL = 'http://example.com';
 
-		$this->routes = new RouteCollection(new MockFileLocator(new Autoload()));
+		$this->routes = new RouteCollection(new MockFileLocator(new Autoload()), new \Config\Modules());
 		Services::injectMock('routes', $this->routes);
 
 		$this->request = new MockIncomingRequest($this->config, new URI('http://example.com'), null, new UserAgent());

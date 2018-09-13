@@ -2,7 +2,7 @@
 Code Modules
 ############
 
-CodeIgniter supports a very simple form of modularization to help you create reusable code. Modules are typically
+CodeIgniter supports a form of code modularization to help you create reusable code. Modules are typically
 centered around a specific subject, and can be thought of as mini-applications within your larger application. Any
 of the standard file types within the framework are supported, like controllers, models, views, config files, helpers,
 language files, etc. Modules may contain as few, or as many, of these as you like.
@@ -17,7 +17,7 @@ The core element of the modules functionality comes from the :doc:`PSR4-compatib
 that CodeIgniter uses. While any code can use the PSR4 autoloader and namespaces, the only way to take full advantage of
 modules is to namespace your code and add it to **application/Config/Autoload.php**, in the ``psr4`` section.
 
-For example, let's say we want to keep a simple blog module that we can re-use between components. We might create
+For example, let's say we want to keep a simple blog module that we can re-use between applications. We might create
 folder with our company name, Acme, to store all of our modules within. We will put it right alongside our **application**
 directory in the main project root::
 
@@ -59,6 +59,41 @@ Of course, there is nothing forcing you to use this exact structure, and you sho
 best suits your module, leaving out directories you don't need, creating new directories for Entities, Interfaces,
 or Repositories, etc.
 
+==============
+Auto-Discovery
+==============
+
+Many times, you will need to specify the full namespace to files you want to include, but CodeIgniter can be
+configured to make integrating modules into your applications simpler by automatically discovering many different
+file types, including:
+
+- :doc:`Events </general/events>`
+- :ref:`registrars`
+- :doc:`Route files </general/routing>`
+- :doc:`Services </concepts/services>`
+
+This is configured in the file **application/Config/Modules.php**.
+
+The auto-discovery system works by scanning any psr4 namespaces that have been defined within **Config/Autoload.php**
+for familiar directories/files.
+
+When at the **acme** namespace above, we would need to make one small adjustment to make it so the files could be found:
+each "module" within the namespace would have to have it's own namespace defined there. **Acme** would be changed
+to **Acme\Blog**. Once  your module folder has been defined, the discover process would look for a Routes file, for example,
+at **/acme/Blog/Config/Routes.php**, just as if it was another application.
+
+Enable/Disable Discover
+=======================
+
+You can turn on or off all auto-discovery in the system with the **$enabled** class variable. False will disable
+all discovery, optimizing performance, but negating the special capabilities of your modules.
+
+Specify Discovery Items
+=======================
+
+With the **$activeExplorers** option, you can specify which items are automatically discovered. If the item is not
+present, then no auto-discovery will happen for that item, but the others in the array will still be discovered.
+
 ==================
 Working With Files
 ==================
@@ -70,16 +105,8 @@ guide, but is being reproduced here so that it's easier to grasp how all of the 
 Routes
 ======
 
-By default, :doc:`routes </general/routing>` are not automatically scanned for within modules. This is to boost
-performance when modules are not in use. However, it's a simple thing to scan for any Routes file within modules.
-Simply change the ``discoverLocal`` setting to true in **/application/Config/Routes.php**::
-
-    $routes->discoverLocal(true);
-
-This will scan all PSR4 namespaced directories specified in **/application/Config/Autoload.php**. It will look for
-**{namespace}/Config/Routes.php** files and load them if they exist. This way, each module can contain its own
-Routes file that is kept with it whenever you add it to new projects. For our blog example, it would look for
-**/acme/Blog/Config/Routes.php**.
+By default, :doc:`routes </general/routing>` are automatically scanned for within modules. If can be turned off in
+the **Modules** config file, described above.
 
 .. note:: Since the files are being included into the current scope, the ``$routes`` instance is already defined for you.
     It will cause errors if you attempt to redefine that class.
@@ -87,7 +114,8 @@ Routes file that is kept with it whenever you add it to new projects. For our bl
 Controllers
 ===========
 
-Controllers cannot be automatically routed by URI detection, but must be specified within the Routes file itself::
+Controllers outside of the main **application/Controllers** directory cannot be automatically routed by URI detection,
+but must be specified within the Routes file itself::
 
     // Routes.php
     $routes->get('blog', 'Acme\Blog\Controllers\Blog::index');
@@ -107,6 +135,8 @@ with the ``new`` command::
 
     $config = new \Acme\Blog\Config\Blog();
 
+Config files are automatically discovered whenever using the **config()** function that is always available.
+
 Migrations
 ==========
 
@@ -116,7 +146,7 @@ namespaces will be run every time.
 Seeds
 =====
 
-Seeds files can be used from both the CLI and called from within other seed files as long as the full namespace
+Seed files can be used from both the CLI and called from within other seed files as long as the full namespace
 is provided. If calling on the CLI, you will need to provide double backslashes::
 
     > php public/index.php migrations seed Acme\\Blog\\Database\\Seeds\\TestPostSeeder
