@@ -2,16 +2,13 @@
 Contributing to CodeIgniter
 ###########################
 
-.. toctree::
-    :titlesonly:
-
-    guidelines
-    workflow
-    signing
-    internals
-    documentation
-    PHP Style Guide <styleguide>
-    ../DCO
+- `Contribution guidelines<./guidelines.rst>`_
+- `Contribution workflow<./workflow.rst>`_
+- `Contribution signing<./signing.rst>`_
+- `Framework internals<./internals.rst>`_
+- `CodeIgniter documentation<./documentation.rst>`_
+- `PHP Style Guide <./styleguide.rst>`_
+- `Developer's Certificate of Origin<../DCO.txt>`_
 
 CodeIgniter is a community driven project and accepts contributions of code
 and documentation from the community. These contributions are made in the form
