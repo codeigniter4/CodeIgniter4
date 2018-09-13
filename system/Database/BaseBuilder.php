@@ -1451,6 +1451,7 @@ class BaseBuilder
 		// ORDER BY usage is often problematic here (most notably
 		// on Microsoft SQL Server) and ultimately unnecessary
 		// for selecting COUNT(*) ...
+		$orderby = [];
 		if ( ! empty($this->QBOrderBy))
 		{
 			$orderby = $this->QBOrderBy;
@@ -1474,7 +1475,7 @@ class BaseBuilder
 		// If we've previously reset the QBOrderBy values, get them back
 		elseif ( ! isset($this->QBOrderBy))
 		{
-			$this->QBOrderBy = $orderby;
+			$this->QBOrderBy = $orderby??[];
 		}
 
 		$row = (! $result instanceof ResultInterface)
