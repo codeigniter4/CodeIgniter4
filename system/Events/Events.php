@@ -87,13 +87,11 @@ class Events
 
 	/**
 	 * Ensures that we have a events file ready.
-	 *
-	 * @param string|null $file
 	 */
-	public static function initialize(string $file = null)
+	public static function initialize()
 	{
 		// Don't overwrite anything....
-		if (self::$initialized)
+		if (static::$initialized)
 		{
 			return;
 		}
@@ -120,7 +118,7 @@ class Events
 			include $file;
 		}
 
-		self::$initialized = true;
+		static::$initialized = true;
 	}
 
 	//--------------------------------------------------------------------
