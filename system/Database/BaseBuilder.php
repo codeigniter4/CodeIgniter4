@@ -1396,11 +1396,12 @@ class BaseBuilder
 	 * Generates a platform-specific query string that counts all records in
 	 * the specified database
 	 *
+	 * @param    bool $reset Are we want to clear query builder values.
 	 * @param    bool $test Are we running automated tests?
 	 *
 	 * @return    int
 	 */
-	public function countAll($test = false)
+	public function countAll($reset = true, $test = false)
 	{
 		$table = $this->QBFrom[0];
 
@@ -1419,7 +1420,11 @@ class BaseBuilder
 		}
 
 		$query = $query->getRow();
-		$this->resetSelect();
+		
+		if ($reset === true)
+		{
+			$this->resetSelect();
+		}
 
 		return (int) $query->numrows;
 	}
