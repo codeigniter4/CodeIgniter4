@@ -64,4 +64,4 @@ The audience for your commit messages will be the codebase maintainers, any
 code reviewers, and debuggers trying to figure out when a bug might have been
 introduced.
 
-Do try to make your commit messages meaningful.
+Make your commit messages meaningful.
