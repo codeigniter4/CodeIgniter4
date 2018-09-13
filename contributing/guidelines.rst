@@ -11,7 +11,7 @@ PHP Style
 =========
 
 All code must conform to our `Style Guide
-<./styleguide.html>`_, which is
+<./styleguide.rst>`_, which is
 essentially the `Allman indent style
 <https://en.wikipedia.org/wiki/Indent_style#Allman_style>`_, with
 elaboration on naming and readable operators.
@@ -50,10 +50,6 @@ class/interface/trait, method and variable.
 
 See the `phpDocumentor website <https://phpdoc.org/>`_ for more information.
 
-We use ``phpDocumentor2`` to generate the API documentation for the
-framework, with configuration details in ``phpdoc.dist.xml`` in the project
-root.
-
 Documentation
 =============
 
@@ -77,13 +73,7 @@ for an example.
 PHP Compatibility
 =================
 
-CodeIgniter4 requires PHP 7.
-
-See the `CodeIgniter4-developer-setup <https://github.com/bcit-ci/CodeIgniter4-developer-setup>`_
-repository for tips on setting this up on your system.
-
-That repository also contains tips for configuring your IDE or editor to work
-better with PHP7 and CodeIgniter4.
+CodeIgniter4 requires PHP 7.1.
 
 Backwards Compatibility
 =======================
@@ -91,7 +81,7 @@ Backwards Compatibility
 Generally, we aim to maintain backwards compatibility between minor
 versions of the framework. Any changes that break compatibility need
 a good reason to do so, and need to be pointed out in the
-`Upgrading <../installation/upgrading.html>`_ guide.
+`Upgrading <https://bcit-ci.github.io/CodeIgniter4/installation/upgrading.html>`_ guide.
 
 CodeIgniter4 itself represents a significant backwards compatibility break
 with earlier versions of the framework.
@@ -102,6 +92,7 @@ Mergeability
 Your PRs need to be mergeable before they will be considered.
 
 We suggest that you synchronize your repository's ``develop`` branch with
-that in the main repository before submitting a PR.
+that in the main repository, and then your feature branch and
+your develop branch, before submitting a PR.
 You will need to resolve any merge conflicts introduced by changes
 incorporated since you started working on your contribution.
