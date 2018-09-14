@@ -368,6 +368,7 @@ class Entity
 	 *
 	 * @return mixed
 	 */
+	
 	protected function castAs($value, string $type)
 	{
 		switch($type)
@@ -398,29 +399,11 @@ class Entity
 
 				$value = (array)$value;
 				break;
-						case 'json':
-				if (function_exists('json_decode') && is_string($value) && (strpos($value, '[') === 0 || strpos($value, '{') === 0))
-				{
-					$value = json_decode($value, false);
-
-					if(json_last_error() !== JSON_ERROR_NONE)
-					{
-						throw CastException::forInvalidJsonFormatException(json_last_error());
-					}
-				}
-				$value = (object)$value;
+			case 'json':
+				$value = $this->castAsJson($value, false);
 				break;
 			case 'json-array':
-				if (function_exists('json_decode') && is_string($value) && (strpos($value, '[') === 0 || strpos($value, '{') === 0))
-				{
-					$value = json_decode($value, true);
-
-					if(json_last_error() !== JSON_ERROR_NONE)
-					{
-						throw CastException::forInvalidJsonFormatException(json_last_error());
-					}
-				}
-				$value = (array)$value;
+				$value = $this->castAsJson($value, true);
 				break;
 			case 'datetime':
 				return new \DateTime($value);
@@ -431,5 +414,33 @@ class Entity
 		}
 
 		return $value;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Cast as JSON
+	 *
+	 * @param mixed $value
+	 * @param bool $asArray 
+	 *
+	 * @return mixed
+	 */
+	private function castAsJson($value, bool $asArray = false)
+	{
+		$tmp = !is_null($value) ? ($asArray ? [] : new \stdClass) : null;
+		if(function_exists('json_decode'))
+		{
+			if((is_string($value) && (strpos($value, '[') === 0 || strpos($value, '{') === 0 || (strpos($value, '"') === 0 && strrpos($value, '"') === 0 ))) || is_numeric($value))
+			{
+				$tmp = json_decode($value, $asArray);
+
+				if(json_last_error() !== JSON_ERROR_NONE)
+				{
+					throw CastException::forInvalidJsonFormatException(json_last_error());
+				}
+			}
+		}
+		return $tmp;
 	}
 }
