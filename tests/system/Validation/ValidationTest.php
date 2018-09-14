@@ -550,8 +550,8 @@ class ValidationTest extends \CIUnitTestCase
 	{
 		$method = $this->getPrivateMethodInvoker($this->validation, 'splitRules');
 
-		$result = $method('required|regex_match[/^[0-9]{4}[\-\.\/][0-9]{2}[\-\.\/][0-9]{2}/]|max_length[10]');
+		$result = $method('required|regex_match[/^[0-9]{4}[\-\.\[\/][0-9]{2}[\-\.\[\/][0-9]{2}/]|max_length[10]');
 
-		$this->assertEquals('regex_match[/^[0-9]{4}[\-\.\/][0-9]{2}[\-\.\/][0-9]{2}/]', $result[1]);
+		$this->assertEquals('regex_match[/^[0-9]{4}[\-\.\[\/][0-9]{2}[\-\.\[\/][0-9]{2}/]', $result[1]);
 	}
 }
