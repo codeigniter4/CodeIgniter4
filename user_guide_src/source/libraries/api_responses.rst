@@ -85,12 +85,12 @@ type of response to return. If no matches are found between what the client requ
 format in this array is what will be returned.
 
 Next, you need to define the class that is used to format the array of data. This must be a fully qualified class
-name, and the class must implement **CodeIgniter\\API\\FormatterInterface**. Formatters come out of the box that
+name, and the class must implement **CodeIgniter\\Format\\FormatterInterface**. Formatters come out of the box that
 support both JSON and XML::
 
     public $formatters = [
-        'application/json' => \CodeIgniter\API\JSONFormatter::class,
-        'application/xml'  => \CodeIgniter\API\XMLFormatter::class
+        'application/json' => \CodeIgniter\Format\JSONFormatter::class,
+        'application/xml'  => \CodeIgniter\Format\XMLFormatter::class
     ];
 
 So, if your request asks for JSON formatted data in an **Accept** header, the data array you pass any of the
