@@ -183,6 +183,50 @@ class Forge extends \CodeIgniter\Database\Forge
 	//--------------------------------------------------------------------
 
 	/**
+	 * Process indexes
+	 *
+	 * @param    string $table
+	 *
+	 * @return    array
+	 */
+	protected function _processIndexes($table)
+	{
+		$sqls = [];
+
+		for ($i = 0, $c = count($this->keys); $i < $c; $i++)
+		{
+			$this->keys[$i] = (array)$this->keys[$i];
+
+			for ($i2 = 0, $c2 = count($this->keys[$i]); $i2 < $c2; $i2++)
+			{
+				if (! isset($this->fields[$this->keys[$i][$i2]]))
+				{
+					unset($this->keys[$i][$i2]);
+				}
+			}
+			if (count($this->keys[$i]) <= 0)
+			{
+				continue;
+			}
+
+			if (in_array($i, $this->uniqueKeys))
+			{
+				$sqls[] = 'CREATE UNIQUE INDEX '.$this->db->escapeIdentifiers($table.'_'.implode('_', $this->keys[$i]))
+				          .' ON '.$this->db->escapeIdentifiers($table)
+				          .' ('.implode(', ', $this->db->escapeIdentifiers($this->keys[$i])).');';
+				continue;
+			}
+
+			$sqls[] = 'CREATE INDEX '.$this->db->escapeIdentifiers($table.'_'.implode('_', $this->keys[$i]))
+			          .' ON '.$this->db->escapeIdentifiers($table)
+			          .' ('.implode(', ', $this->db->escapeIdentifiers($this->keys[$i])).');';
+		}
+
+		return $sqls;
+	}
+
+	//--------------------------------------------------------------------
+	/**
 	 * Field attribute TYPE
 	 *
 	 * Performs a data type mapping between different databases.

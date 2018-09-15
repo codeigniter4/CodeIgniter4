@@ -1,5 +1,6 @@
 <?php namespace CodeIgniter\Database\Live;
 
+use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Test\CIDatabaseTestCase;
 
 /**
@@ -41,6 +42,11 @@ class ForgeTest extends CIDatabaseTestCase
 
 	public function testCreateTableWithAttributes()
 	{
+		if ($this->db->DBDriver == 'SQLite3')
+		{
+			$this->markTestSkipped('SQLite3 does not support comments on tables or columns.');
+		}
+
 		$this->forge->dropTable('forge_test_attributes', true);
 
 		$this->forge->addField('id');
@@ -86,7 +92,7 @@ class ForgeTest extends CIDatabaseTestCase
 		]);
 
 		$this->forge->addKey('id', true);
-		$this->forge->addKey(['username', 'active'], false, true);
+		$this->forge->addUniqueKey(['username', 'active']);
 		$create = $this->forge->createTable('forge_test_fields', true);
 
 		//Check Field names
