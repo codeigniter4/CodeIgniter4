@@ -47,7 +47,9 @@ class UniqueRulesTest extends CIDatabaseTestCase
 	public function testIsUniqueFalse()
 	{
 		$this->hasInDatabase('user', [
-			'email' => 'derek@world.com'
+			'name' => 'Derek',
+			'email' => 'derek@world.com',
+			'country' => 'USA',
 		]);
 
 		$data = [
@@ -87,7 +89,9 @@ class UniqueRulesTest extends CIDatabaseTestCase
 	public function testIsUniqueIgnoresParams()
 	{
 		$this->hasInDatabase('user', [
-			'email' => 'derek@world.co.uk'
+			'name' => 'Derek',
+			'email' => 'derek@world.co.uk',
+			'country' => 'GB',
 		]);
 
 		$db  = Database::connect();
