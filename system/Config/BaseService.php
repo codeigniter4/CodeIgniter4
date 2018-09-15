@@ -128,7 +128,7 @@ class BaseService
 	 *
 	 * @return \CodeIgniter\Autoloader\FileLocator
 	 */
-	public static function locator($getShared = true)
+	public static function locator(bool $getShared = true)
 	{
 		if ($getShared)
 		{
@@ -202,22 +202,27 @@ class BaseService
 	{
 		if (! static::$discovered)
 		{
-			$locator = static::locator();
-			$files   = $locator->search('Config/Services');
+			$config = config('Modules');
 
-			if (empty($files))
+			if ($config->shouldDiscover('services'))
 			{
-				return;
-			}
+				$locator = static::locator();
+				$files   = $locator->search('Config/Services');
 
-			// Get instances of all service classes and cache them locally.
-			foreach ($files as $file)
-			{
-				$classname = $locator->getClassname($file);
-
-				if (! in_array($classname, ['CodeIgniter\\Config\\Services']))
+				if (empty($files))
 				{
-					static::$services[] = new $classname();
+					return;
+				}
+
+				// Get instances of all service classes and cache them locally.
+				foreach ($files as $file)
+				{
+					$classname = $locator->getClassname($file);
+
+					if (! in_array($classname, ['CodeIgniter\\Config\\Services']))
+					{
+						static::$services[] = new $classname();
+					}
 				}
 			}
 

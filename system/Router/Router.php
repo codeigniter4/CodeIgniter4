@@ -123,6 +123,13 @@ class Router implements RouterInterface
 	 */
 	protected $detectedLocale = null;
 
+	/**
+	 * The filter info from Route Collection
+	 * if the matched route should be filtered.
+	 * @var string
+	 */
+	protected $filterInfo;
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -156,11 +163,18 @@ class Router implements RouterInterface
 		// everything runs off of it's default settings.
 		if (empty($uri))
 		{
-			return strpos($this->controller, '\\') === false ? $this->collection->getDefaultNamespace() . $this->controller : $this->controller;
+			return strpos($this->controller, '\\') === false
+				? $this->collection->getDefaultNamespace() . $this->controller
+				: $this->controller;
 		}
 
 		if ($this->checkRoutes($uri))
 		{
+			if ($this->collection->isFiltered($uri))
+			{
+				$this->filterInfo = $this->collection->getFilterForRoute($uri);
+			}
+
 			return $this->controller;
 		}
 
@@ -175,6 +189,18 @@ class Router implements RouterInterface
 		$this->autoRoute($uri);
 
 		return $this->controller;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns the filter info for the matched route, if any.
+	 *
+	 * @return string
+	 */
+	public function getFilter()
+	{
+		return $this->filterInfo;
 	}
 
 	//--------------------------------------------------------------------

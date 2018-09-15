@@ -23,14 +23,6 @@ class BaseConfigTest extends CIUnitTestCase
 		{
 			require $this->fixturesFolder . '/RegistrarConfig.php';
 		}
-		if ( ! class_exists('RegistrarConfig2', false))
-		{
-			require $this->fixturesFolder . '/RegistrarConfig2.php';
-		}
-		if ( ! class_exists('RegistrarConfig3', false))
-		{
-			require $this->fixturesFolder . '/RegistrarConfig3.php';
-		}
 	}
 
 	//--------------------------------------------------------------------
@@ -147,6 +139,10 @@ class BaseConfigTest extends CIUnitTestCase
 	public function testRegistrars()
 	{
 		$config = new \RegistrarConfig();
+		$config::$registrars = ['\Tests\Support\Config\Registrar'];
+		$this->setPrivateProperty($config, 'didDiscovery', true);
+		$method = $this->getPrivateMethodInvoker($config, 'registerProperties');
+		$method();
 
 		// no change to unmodified property
 		$this->assertEquals('bar', $config->foo);
@@ -160,16 +156,13 @@ class BaseConfigTest extends CIUnitTestCase
 
 	public function testBadRegistrar()
 	{
-		$this->expectException('RuntimeException');
-		$config = new \RegistrarConfig2();
-		$this->assertEquals('bar', $config->foo);
-	}
+		// Shouldn't change any values.
+		$config = new \RegistrarConfig();
+		$config::$registrars = ['\Tests\Support\Config\BadRegistrar'];
+		$this->setPrivateProperty($config, 'didDiscovery', true);
+		$method = $this->getPrivateMethodInvoker($config, 'registerProperties');
+		$method();
 
-	// not very interesting, but useful for code coverage
-	public function testWorseRegistrar()
-	{
-		$config = new \RegistrarConfig3();
-		// there should be no change
 		$this->assertEquals('bar', $config->foo);
 	}
 

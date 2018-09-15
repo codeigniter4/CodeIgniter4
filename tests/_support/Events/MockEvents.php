@@ -59,4 +59,8 @@ class MockEvents extends Events
 		return self::$simulate;
 	}
 
+	public function unInitialize()
+	{
+		static::$initialized = false;
+	}
 }

@@ -1,4 +1,5 @@
-<?php namespace CodeIgniter\HTTP;
+<?php
+namespace CodeIgniter\Helpers;
 
 final class HTMLHelperTest extends \CIUnitTestCase
 {

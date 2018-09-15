@@ -78,6 +78,13 @@ class Filters
 	 */
 	protected $initialized = false;
 
+	/**
+	 * Any arguments to be passed to filters.
+	 *
+	 * @var array
+	 */
+	protected $arguments = [];
+
 	//--------------------------------------------------------------------
 
 	public function __construct($config, RequestInterface $request, ResponseInterface $response)
@@ -124,7 +131,7 @@ class Filters
 
 			if ($position == 'before')
 			{
-				$result = $class->before($this->request);
+				$result = $class->before($this->request, $this->arguments[$alias] ?? null);
 
 				if ($result instanceof RequestInterface)
 				{
@@ -208,6 +215,97 @@ class Filters
 	public function getFilters()
 	{
 		return $this->filters;
+	}
+
+	/**
+	 * Adds a new alias to the config file.
+	 * MUST be called prior to initialize();
+	 * Intended for use within routes files.
+	 *
+	 * @param string      $class
+	 * @param string|null $alias
+	 * @param string      $when
+	 * @param string      $section
+	 *
+	 * @return $this
+	 */
+	public function addFilter(string $class, string $alias = null, string $when = 'before', string $section = 'globals')
+	{
+		$alias = is_null($alias)
+			? md5($class)
+			: $alias;
+
+		if (! isset($this->config->{$section}))
+		{
+			$this->config->{$section} = [];
+		}
+
+		if (! isset($this->config->{$section}[$when]))
+		{
+			$this->config->{$section}[$when] = [];
+		}
+
+		$this->config->aliases[$alias] = $class;
+
+		$this->config->{$section}[$when][] = $alias;
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Ensures that a specific filter is on and enabled for the current request.
+	 *
+	 * Filters can have "arguments". This is done by placing a colon immediately
+	 * after the filter name, followed by a comma-separated list of arguments that
+	 * are passed to the filter when executed.
+	 *
+	 * @param string $name
+	 * @param string $when
+	 *
+	 * @return \CodeIgniter\Filters\Filters
+	 */
+	public function enableFilter(string $name, string $when = 'before')
+	{
+		// Get parameters and clean name
+		if (strpos($name, ':') !== false)
+		{
+			list($name, $params) = explode(':', $name);
+
+			$params = explode(',', $params);
+			array_walk($params, function(&$item){
+				$item = trim($item);
+			});
+
+			$this->arguments[$name] = $params;
+		}
+
+		if (! array_key_exists($name, $this->config->aliases))
+		{
+			throw FilterException::forNoAlias($name);
+		}
+
+		if (! isset($this->filters[$when][$name]))
+		{
+			$this->filters[$when][] = $name;
+		}
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns the arguments for a specified key, or all.
+	 *
+	 * @return array
+	 */
+	public function getArguments(string $key = null)
+	{
+		return is_null($key)
+			? $this->arguments
+			: $this->arguments[$key];
 	}
 
 	//--------------------------------------------------------------------

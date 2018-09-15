@@ -115,7 +115,7 @@ class FileRules
 		{
 			return false;
 		}
-		return $params[0] >= $file->getSize('kb');
+		return $params[0] >= $file->getSize() / 1024;
 	}
 
 	//--------------------------------------------------------------------

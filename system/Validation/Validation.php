@@ -27,14 +27,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	CodeIgniter Dev Team
- * @copyright	2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
- * @license	https://opensource.org/licenses/MIT	MIT License
- * @link	https://codeigniter.com
- * @since	Version 3.0.0
+ * @package      CodeIgniter
+ * @author       CodeIgniter Dev Team
+ * @copyright    2014-2018 British Columbia Institute of Technology (https://bcit.ca/)
+ * @license      https://opensource.org/licenses/MIT	MIT License
+ * @link         https://codeigniter.com
+ * @since        Version 3.0.0
  * @filesource
  */
+
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\Validation\Exceptions\ValidationException;
 use CodeIgniter\View\RendererInterface;
@@ -100,7 +101,7 @@ class Validation implements ValidationInterface
 	 * Validation constructor.
 	 *
 	 * @param \Config\Validation $config
-	 * @param RendererInterface $view
+	 * @param RendererInterface  $view
 	 */
 	public function __construct($config, RendererInterface $view)
 	{
@@ -157,7 +158,7 @@ class Validation implements ValidationInterface
 			$this->processRules($rField, $rSetup['label'] ?? $rField, $value ?? null, $rules, $data);
 		}
 
-		return ! empty($this->errors) ? false : true;
+		return ! empty($this->getErrors()) ? false : true;
 	}
 
 	//--------------------------------------------------------------------
@@ -176,8 +177,9 @@ class Validation implements ValidationInterface
 	{
 		$this->reset();
 		$this->setRule('check', null, $rule, $errors);
+
 		return $this->run([
-					'check' => $value
+			'check' => $value,
 		]);
 	}
 
@@ -204,7 +206,7 @@ class Validation implements ValidationInterface
 		{
 			// and the current field does not exists in the input data
 			// we can return true. Ignoring all other rules to this field.
-			if ( ! array_key_exists($field, $data))
+			if (! array_key_exists($field, $data))
 			{
 				return true;
 			}
@@ -214,7 +216,7 @@ class Validation implements ValidationInterface
 
 		if (in_array('permit_empty', $rules))
 		{
-			if ( ! in_array('required', $rules) && (is_array($value) ? empty($value) : (trim($value) === '')))
+			if (! in_array('required', $rules) && (is_array($value) ? empty($value) : (trim($value) === '')))
 			{
 				return true;
 			}
@@ -225,13 +227,13 @@ class Validation implements ValidationInterface
 		foreach ($rules as $rule)
 		{
 			$callable = is_callable($rule);
-			$passed = false;
+			$passed   = false;
 
 			// Rules can contain parameters: max_length[5]
 			$param = false;
-			if ( ! $callable && preg_match('/(.*?)\[(.*)\]/', $rule, $match))
+			if (! $callable && preg_match('/(.*?)\[(.*)\]/', $rule, $match))
 			{
-				$rule = $match[1];
+				$rule  = $match[1];
 				$param = $match[2];
 			}
 
@@ -250,20 +252,21 @@ class Validation implements ValidationInterface
 				// Check in our rulesets
 				foreach ($this->ruleSetInstances as $set)
 				{
-					if ( ! method_exists($set, $rule))
+					if (! method_exists($set, $rule))
 					{
 						continue;
 					}
 
 					$found = true;
 
-					$passed = $param === false ? $set->$rule($value, $error) : $set->$rule($value, $param, $data, $error);
+					$passed = $param === false ? $set->$rule($value, $error)
+						: $set->$rule($value, $param, $data, $error);
 					break;
 				}
 
 				// If the rule wasn't found anywhere, we
 				// should throw an exception so the developer can find it.
-				if ( ! $found)
+				if (! $found)
 				{
 					throw ValidationException::forRuleNotFound($rule);
 				}
@@ -272,7 +275,8 @@ class Validation implements ValidationInterface
 			// Set the error message if we didn't survive.
 			if ($passed === false)
 			{
-				$this->errors[$field] = is_null($error) ? $this->getErrorMessage($rule, $field, $label, $param) : $error;
+				$this->errors[$field] = is_null($error) ? $this->getErrorMessage($rule, $field, $label, $param)
+					: $error;
 
 				return false;
 			}
@@ -332,11 +336,11 @@ class Validation implements ValidationInterface
 	public function setRule(string $field, string $label = null, string $rules, array $errors = [])
 	{
 		$this->rules[$field] = [
-			'label'	 => $label,
-			'rules'	 => $rules,
+			'label' => $label,
+			'rules' => $rules,
 		];
-		$this->customErrors = array_merge($this->customErrors, [
-			$field => $errors
+		$this->customErrors  = array_merge($this->customErrors, [
+			$field => $errors,
 		]);
 
 		return $this;
@@ -426,12 +430,12 @@ class Validation implements ValidationInterface
 	 */
 	public function getRuleGroup(string $group): array
 	{
-		if ( ! isset($this->config->$group))
+		if (! isset($this->config->$group))
 		{
 			throw ValidationException::forGroupNotFound($group);
 		}
 
-		if ( ! is_array($this->config->$group))
+		if (! is_array($this->config->$group))
 		{
 			throw ValidationException::forGroupNotArray($group);
 		}
@@ -451,10 +455,10 @@ class Validation implements ValidationInterface
 	 */
 	public function setRuleGroup(string $group)
 	{
-		$rules = $this->getRuleGroup($group);
+		$rules       = $this->getRuleGroup($group);
 		$this->rules = $rules;
 
-		$errorName = $group . '_errors';
+		$errorName = $group.'_errors';
 		if (isset($this->config->$errorName))
 		{
 			$this->customErrors = $this->config->$errorName;
@@ -470,13 +474,13 @@ class Validation implements ValidationInterface
 	 */
 	public function listErrors(string $template = 'list'): string
 	{
-		if ( ! array_key_exists($template, $this->config->templates))
+		if (! array_key_exists($template, $this->config->templates))
 		{
 			throw ValidationException::forInvalidTemplate($template);
 		}
 
 		return $this->view->setVar('errors', $this->getErrors())
-						->render($this->config->templates[$template]);
+		                  ->render($this->config->templates[$template]);
 	}
 
 	//--------------------------------------------------------------------
@@ -491,18 +495,18 @@ class Validation implements ValidationInterface
 	 */
 	public function showError(string $field, string $template = 'single'): string
 	{
-		if ( ! array_key_exists($field, $this->errors))
+		if ( ! array_key_exists($field, $this->getErrors()))
 		{
 			return '';
 		}
 
-		if ( ! array_key_exists($template, $this->config->templates))
+		if (! array_key_exists($template, $this->config->templates))
 		{
 			throw ValidationException::forInvalidTemplate($template);
 		}
 
 		return $this->view->setVar('error', $this->getError($field))
-						->render($this->config->templates[$template]);
+		                  ->render($this->config->templates[$template]);
 	}
 
 	//--------------------------------------------------------------------
@@ -543,12 +547,12 @@ class Validation implements ValidationInterface
 			return;
 		}
 
-		if ( ! isset($this->config->$group))
+		if (! isset($this->config->$group))
 		{
 			throw ValidationException::forGroupNotFound($group);
 		}
 
-		if ( ! is_array($this->config->$group))
+		if (! is_array($this->config->$group))
 		{
 			throw ValidationException::forGroupNotArray($group);
 		}
@@ -557,7 +561,7 @@ class Validation implements ValidationInterface
 
 		// If {group}_errors exists in the config file,
 		// then override our custom errors with them.
-		$errorName = $group . '_errors';
+		$errorName = $group.'_errors';
 
 		if (isset($this->config->$errorName))
 		{
@@ -579,7 +583,7 @@ class Validation implements ValidationInterface
 	 */
 	public function hasError(string $field): bool
 	{
-		return array_key_exists($field, $this->errors);
+		return array_key_exists($field, $this->getErrors());
 	}
 
 	//--------------------------------------------------------------------
@@ -600,7 +604,7 @@ class Validation implements ValidationInterface
 			$field = key($this->rules);
 		}
 
-		return array_key_exists($field, $this->errors) ? $this->errors[$field] : '';
+		return array_key_exists($field, $this->getErrors()) ? $this->errors[$field] : '';
 	}
 
 	//--------------------------------------------------------------------
@@ -615,11 +619,11 @@ class Validation implements ValidationInterface
 	 *    ]
 	 *
 	 * @return array
-	 * 
+	 *
 	 * Excluded from code coverage because that it always run as cli
-	 * 
+	 *
 	 * @codeCoverageIgnore
-	 * 
+	 *
 	 */
 	public function getErrors(): array
 	{
@@ -629,9 +633,9 @@ class Validation implements ValidationInterface
 		if (empty($this->errors) && ! is_cli())
 		{
 			// Start up the session if it's not already
-			if ( ! isset($_SESSION))
+			if (! isset($_SESSION))
 			{
-				session()->start();
+				session();
 			}
 
 			if ($errors = session('_ci_validation_errors'))
@@ -684,7 +688,7 @@ class Validation implements ValidationInterface
 			// Try to grab a localized version of the message...
 			// lang() will return the rule name back if not found,
 			// so there will always be a string being returned.
-			$message = lang('Validation.' . $rule);
+			$message = lang('Validation.'.$rule);
 		}
 
 		$message = str_replace('{field}', $label ?? $field, $message);
@@ -703,35 +707,41 @@ class Validation implements ValidationInterface
 	 */
 	protected function splitRules(string $rules): array
 	{
-		$_rules = [];
+		$_rules   = [];
 		$pipe_pos = strpos($rules, '|');
-		while ($pipe_pos !== false) {
-
+		while ($pipe_pos !== false)
+		{
 			// the if is for the regex_match
 			// if the pattern contains | (pipe) the split was incorrect
 			// so we make sure that, if the pipe is in a pattern we find the separator and
 			// grab the string up to the separator + closing bracket
 			$open_bracket_pos = strpos($rules, '[');
-			if ($open_bracket_pos !== false && $open_bracket_pos < $pipe_pos) {
-				$separator = $rules[$open_bracket_pos + 1];
+			if ($open_bracket_pos !== false && $open_bracket_pos < $pipe_pos)
+			{
+				$separator = $rules[$open_bracket_pos+1];
 
-				$regex_end_pos = strpos($rules, $separator . ']');
-				$_rules[] = substr($rules, 0, $regex_end_pos + 2);
+				if (preg_match('/(?<!\\\\)(?:\\\\\\\\)*\\'.$separator.'\]/', $rules, $matches, PREG_OFFSET_CAPTURE))
+				{
+					$regex_end_pos = $matches[0][1];
 
-				$rules = substr($rules, $regex_end_pos + 3);
+					$_rules[] = substr($rules, 0, $regex_end_pos+2);
 
-				$pipe_pos = strpos($rules, '|');
-				continue;
+					$rules = substr($rules, $regex_end_pos+3);
+
+					$pipe_pos = strpos($rules, '|');
+					continue;
+				}
 			}
 
 			$_rules[] = substr($rules, 0, $pipe_pos);
-			$rules = substr($rules, $pipe_pos + 1);
+			$rules    = substr($rules, $pipe_pos+1);
 
 			$pipe_pos = strpos($rules, '|');
 		}
 
 		// if there is another rule remaining but no separator just add it to the list
-		if (!empty($rules)) {
+		if (! empty($rules))
+		{
 			$_rules[] = $rules;
 		}
 
@@ -751,9 +761,9 @@ class Validation implements ValidationInterface
 	 */
 	public function reset(): ValidationInterface
 	{
-		$this->data = [];
-		$this->rules = [];
-		$this->errors = [];
+		$this->data         = [];
+		$this->rules        = [];
+		$this->errors       = [];
 		$this->customErrors = [];
 
 		return $this;

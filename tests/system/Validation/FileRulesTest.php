@@ -44,7 +44,16 @@ class FileRulesTest extends \CIUnitTestCase
 				'error'		 => 0,
 				'width'		 => 640,
 				'height'	 => 400,
-			]
+            ],
+            'bigfile' => [
+				'tmp_name'	 => TESTPATH . '_support/Validation/uploads/phpUxc0ty',
+				'name'		 => 'my-big-file.png',
+				'size'		 => 1024000,
+				'type'		 => 'image/png',
+				'error'		 => 0,
+				'width'		 => 640,
+				'height'	 => 400,
+            ],
 		];
 	}
 
@@ -77,13 +86,31 @@ class FileRulesTest extends \CIUnitTestCase
 		]);
 
 		$this->assertTrue($this->validation->run([]));
+    }
+
+    public function testMaxSizeBigFile()
+	{
+		$this->validation->setRules([
+			'bigfile' => "max_size[bigfile,9999]",
+		]);
+
+		$this->assertTrue($this->validation->run([]));
 	}
 
-	public function testMaxSizeFail()
-	{
+	   public function testMaxSizeFail()
+	   {
 		$this->validation->setRules([
 			'avatar' => "max_size[avatar,4]",
 		]);
+		$this->assertFalse($this->validation->run([]));
+       }
+
+       public function testMaxSizeBigFileFail()
+	{
+		$this->validation->setRules([
+			'bigfile' => "max_size[bigfile,10]",
+		]);
+
 		$this->assertFalse($this->validation->run([]));
 	}
 
@@ -205,5 +232,5 @@ class FileRulesTest extends \CIUnitTestCase
 		]);
 		$this->assertFalse($this->validation->run([]));
 	}
-	
+
 }

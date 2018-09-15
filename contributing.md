@@ -5,7 +5,7 @@
 
 We expect all contributions to conform to our style guide, be commented (inside the PHP source files), 
 be documented (in the user guide), and unit tested (in the test folder). 
-There is a [Contributing to CodeIgniter](https://bcit-ci.github.io/CodeIgniter4/contributing/index.html) section in the user guide which describes the contribution process; this page is an overview.
+There is a [Contributing to CodeIgniter](./contributing/index.rst) section in the repository which describes the contribution process; this page is an overview.
 
 ## Issues
 
@@ -35,7 +35,7 @@ If you change anything that requires a change to documentation then you will nee
 
 ### Compatibility
 
-CodeIgniter4 requires PHP 7.
+CodeIgniter4 requires PHP 7.1.
 
 ### Branching
 
