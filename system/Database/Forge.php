@@ -1216,7 +1216,7 @@ class Forge
 	protected function _processForeignKeys($table) {
         $sql = '';
 
-        $allowActions = array('CASCADE','SET NULL','NO ACTION','RESTRICT','SET DEFAULT');
+        $allowActions = ['CASCADE','SET NULL','NO ACTION','RESTRICT','SET DEFAULT'];
 
         if (count($this->foreignKeys) > 0){
             foreach ($this->foreignKeys as $field => $fkey) {
