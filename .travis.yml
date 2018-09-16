@@ -40,7 +40,6 @@ before_install:
 before_script:
   - echo 'extension = memcached.so' >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - if [[ $TRAVIS_PHP_VERSION != ^nightly ]]; then echo 'extension = redis.so' >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini; fi
-  - if [[ $TRAVIS_PHP_VERSION =~ ^nightly ]]; then wget https://github.com/phpredis/phpredis/archive/4.1.1.tar.gz && tar xfz 4.1.1.tar.gz && rm -r 4.1.1.tar.gz && cd phpredis-4.1.1 && phpize && ./configure && make && make install && echo "extension = redis.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini && cd ..; fi
   - composer install --prefer-source
 
 after_success:
