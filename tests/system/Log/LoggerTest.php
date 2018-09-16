@@ -382,7 +382,7 @@ class LoggerTest extends \CIUnitTestCase
 		$config = new LoggerConfig();
 		$logger = new Logger($config);
 
-		$expected = 'DEBUG - ' . date('Y-m-d') . ' --> Test message';
+		$expected = 'WARNING - ' . date('Y-m-d') . ' --> Test message';
 
 		$logger->log(5, 'Test message');
 

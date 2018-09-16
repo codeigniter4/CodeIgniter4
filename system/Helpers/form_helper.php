@@ -58,12 +58,10 @@ if ( ! function_exists('form_open'))
 		// If no action is provided then set to the current url
 		if ( ! $action)
 		{
-			helper('url');
 			$action = current_url(true);
 		} // If an action is not a full URL then turn it into one
 		elseif (strpos($action, '://') === false)
 		{
-			helper('url');
 			$action = site_url($action);
 		}
 
@@ -802,8 +800,6 @@ if ( ! function_exists('set_select'))
 
 		if (is_array($input))
 		{
-			$value = (string) $value;
-
 			// Note: in_array('', array(0)) returns TRUE, do not use it
 			foreach ($input as &$v)
 			{
@@ -840,9 +836,6 @@ if ( ! function_exists('set_checkbox'))
 	 */
 	function set_checkbox(string $field, string $value = '', bool $default = false): string
 	{
-		// Form inputs are always strings ...
-		$value = (string) $value;
-
 		$request = Services::request();
 
 		// Try any old input data we may have first
@@ -897,9 +890,6 @@ if ( ! function_exists('set_radio'))
 	 */
 	function set_radio(string $field, string $value = '', bool $default = false): string
 	{
-		// Form inputs are always strings ...
-		$value = (string) $value;
-
 		$request = Services::request();
 
 		// Try any old input data we may have first

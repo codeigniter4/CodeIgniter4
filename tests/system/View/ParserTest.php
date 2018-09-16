@@ -208,6 +208,40 @@ class ParserTest extends \CIUnitTestCase
 
 	// --------------------------------------------------------------------
 
+	public function testParseLoopEntityProperties()
+	{
+		$power = new class extends \CodeIgniter\Entity {
+			public $foo = 'bar';
+			protected $bar = 'baz';
+			public function toArray(): array
+			{
+				return [
+					'foo' => $this->foo,
+					'bar' => $this->bar,
+					'bobbles' => [
+						['name' => 'first'],
+						['name' => 'second'],
+					],
+				];
+			}
+		};
+
+		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
+		$data = [
+			'title'	 => 'Super Heroes',
+			'powers' => [
+				$power
+			],
+		];
+
+		$template = "{title}\n{powers} {foo} {bar} {bobbles}{name} {/bobbles}{/powers}";
+
+		$parser->setData($data);
+		$this->assertEquals("Super Heroes\n bar baz first second ", $parser->renderString($template));
+	}
+
+	// --------------------------------------------------------------------
+
 	public function testMismatchedVarPair()
 	{
 		$parser = new Parser($this->config, $this->viewsDir, $this->loader);
@@ -422,7 +456,7 @@ class ParserTest extends \CIUnitTestCase
 			'dontdoit'	 => false
 		];
 
-		$template = "{if doit}Howdy{endif}{ if dontdoit === false}Welcome{ endif }";
+		$template = "{if \$doit}Howdy{endif}{ if \$dontdoit === false}Welcome{ endif }";
 		$parser->setData($data);
 
 		$this->assertEquals('HowdyWelcome', $parser->renderString($template));
@@ -435,7 +469,7 @@ class ParserTest extends \CIUnitTestCase
 			'doit' => true,
 		];
 
-		$template = "{if doit}Howdy{else}Welcome{ endif }";
+		$template = "{if \$doit}Howdy{else}Welcome{ endif }";
 		$parser->setData($data);
 
 		$this->assertEquals('Howdy', $parser->renderString($template));
@@ -448,7 +482,7 @@ class ParserTest extends \CIUnitTestCase
 			'doit' => false,
 		];
 
-		$template = "{if doit}Howdy{else}Welcome{ endif }";
+		$template = "{if \$doit}Howdy{else}Welcome{ endif }";
 		$parser->setData($data);
 
 		$this->assertEquals('Welcome', $parser->renderString($template));
@@ -462,7 +496,7 @@ class ParserTest extends \CIUnitTestCase
 			'dontdoit'	 => true
 		];
 
-		$template = "{if doit}Howdy{elseif dontdoit}Welcome{ endif }";
+		$template = "{if \$doit}Howdy{elseif \$dontdoit}Welcome{ endif }";
 		$parser->setData($data);
 
 		$this->assertEquals('Welcome', $parser->renderString($template));

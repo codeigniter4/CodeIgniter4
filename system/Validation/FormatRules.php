@@ -100,7 +100,7 @@ class FormatRules
 	 */
 	public function alpha_numeric(string $str = null): bool
 	{
-		return ctype_alnum((string) $str);
+		return ctype_alnum($str);
 	}
 
 	//--------------------------------------------------------------------
@@ -155,7 +155,7 @@ class FormatRules
 	 */
 	public function is_natural(string $str = null): bool
 	{
-		return ctype_digit((string) $str);
+		return ctype_digit($str);
 	}
 
 	//--------------------------------------------------------------------
@@ -168,7 +168,7 @@ class FormatRules
 	 */
 	public function is_natural_no_zero(string $str = null): bool
 	{
-		return ($str != 0 && ctype_digit((string) $str));
+		return ($str != 0 && ctype_digit($str));
 	}
 
 	//--------------------------------------------------------------------
@@ -237,6 +237,21 @@ class FormatRules
 	public function valid_base64(string $str = null): bool
 	{
 		return (base64_encode(base64_decode($str)) === $str);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Valid JSON
+	 *
+	 * @param	string
+	 *
+	 * @return	bool
+	 */
+	public function valid_json(string $str = null): bool
+	{
+		json_decode($str);
+		return json_last_error() === JSON_ERROR_NONE;
 	}
 
 	//--------------------------------------------------------------------

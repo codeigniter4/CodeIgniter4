@@ -265,10 +265,9 @@ class Model
 	 * Model constructor.
 	 *
 	 * @param ConnectionInterface $db
-	 * @param BaseConfig          $config Config/App()
 	 * @param ValidationInterface $validation
 	 */
-	public function __construct(ConnectionInterface &$db = null, BaseConfig $config = null, ValidationInterface $validation = null)
+	public function __construct(ConnectionInterface &$db = null, ValidationInterface $validation = null)
 	{
 		if ($db instanceof ConnectionInterface)
 		{
@@ -278,14 +277,6 @@ class Model
 		{
 			$this->db = Database::connect($this->DBGroup);
 		}
-
-		if (is_null($config) || ! isset($config->salt))
-		{
-			$config = config(\Config\App::class);
-		}
-
-		$this->salt = $config->salt ?: '';
-		unset($config);
 
 		$this->tempReturnType = $this->returnType;
 		$this->tempUseSoftDeletes = $this->useSoftDeletes;
@@ -326,7 +317,7 @@ class Model
 					->get();
 			$row = $row->getResult($this->tempReturnType);
 		}
-		elseif (is_numeric($id))
+		elseif (is_numeric($id) || is_string($id))
 		{
 			$row = $builder->where($this->table.'.'.$this->primaryKey, $id)
 					->get();
@@ -993,13 +984,14 @@ class Model
 	 * @param int    $perPage
 	 * @param string $group    Will be used by the pagination library
 	 *                         to identify a unique pagination set.
+	 * @param int    $page     Optional page number (useful when the page number is provided in different way)
 	 *
 	 * @return array|null
 	 */
-	public function paginate(int $perPage = 20, string $group = 'default')
+	public function paginate(int $perPage = 20, string $group = 'default', int $page = 0)
 	{
 		// Get the necessary parts.
-		$page = isset($_GET['page']) && $_GET['page'] > 1 ? $_GET['page'] : 1;
+		$page = $page >= 1 ? $page : (ctype_digit($_GET['page'] ?? '') && $_GET['page'] > 1 ? $_GET['page'] : 1);
 
 		$total = $this->countAllResults(false);
 
@@ -1376,7 +1368,7 @@ class Model
 	//--------------------------------------------------------------------
 
 	/**
-	 * Provides/instantiates the builder/db connection.
+	 * Provides/instantiates the builder/db connection and model's table/primary key names and return type.
 	 *
 	 * @param string $name
 	 *
@@ -1384,7 +1376,11 @@ class Model
 	 */
 	public function __get(string $name)
 	{
-		if (isset($this->db->$name))
+		if(in_array($name, ['primaryKey', 'table', 'returnType']))
+		{
+			return $this->{$name};
+		}
+		elseif (isset($this->db->$name))
 		{
 			return $this->db->$name;
 		}

@@ -167,7 +167,9 @@ class View implements RendererInterface
 			$this->saveData = $saveData;
 		}
 
-		$this->renderVars['view'] = str_replace('.php', '', $view) . '.php';
+		$fileExt = pathinfo($view, PATHINFO_EXTENSION);
+		$realPath = empty($fileExt) ? $view.'.php' : $view; // allow Views as .html, .tpl, etc (from CI3)
+		$this->renderVars['view'] = $realPath;
 		$this->renderVars['options'] = $options;
 
 		// Was it cached?

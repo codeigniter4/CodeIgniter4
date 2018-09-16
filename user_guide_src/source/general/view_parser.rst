@@ -184,11 +184,11 @@ corresponding to your variable pair data. Consider this example::
 		'blog_title'   => 'My Blog Title',
 		'blog_heading' => 'My Blog Heading',
 		'blog_entries' => array(
-			array('title' => 'Title 1', 'body' => 'Body 1'),
-			array('title' => 'Title 2', 'body' => 'Body 2'),
-			array('title' => 'Title 3', 'body' => 'Body 3'),
-			array('title' => 'Title 4', 'body' => 'Body 4'),
-			array('title' => 'Title 5', 'body' => 'Body 5')
+			['title' => 'Title 1', 'body' => 'Body 1'],
+			['title' => 'Title 2', 'body' => 'Body 2'],
+			['title' => 'Title 3', 'body' => 'Body 3'],
+			['title' => 'Title 4', 'body' => 'Body 4'],
+			['title' => 'Title 5', 'body' => 'Body 5']
 		)
 	);
 
@@ -213,6 +213,16 @@ method::
 
 	echo $parser->setData($data)
 	             ->render('blog_template');
+
+If the array you are trying to loop over contains objects instead of arrays,
+the parser will first look for an ``asArray`` method on the object. If it exists,
+that method will be called and the resulting array is then looped over just as
+described above. If no ``asArray`` method exists, the object will be cast as
+an array and its public properties will be made available to the Parser.
+
+This is especially useful with the Entity classes, which has an asArray method
+that returns all public and protected properties (minus the _options property) and
+makes them available to the Parser.
 
 Nested Substitutions
 ====================
@@ -315,7 +325,7 @@ Conditional Logic
 The Parser class supports some basic conditionals to handle ``if``, ``else``, and ``elseif`` syntax. All ``if``
 blocks must be closed with an ``endif`` tag::
 
-	{if role=='admin'}
+	{if $role=='admin'}
 		<h1>Welcome, Admin!</h1>
 	{endif}
 
@@ -331,9 +341,9 @@ of the comparison operators you would normally, like ``==``, ``===``, ``!==``, `
 
 ::
 
-	{if role=='admin'}
+	{if $role=='admin'}
 		<h1>Welcome, Admin</h1>
-	{elseif role=='moderator'}
+	{elseif $role=='moderator'}
 		<h1>Welcome, Moderator</h1>
 	{else}
 		<h1>Welcome, User</h1>
@@ -481,10 +491,12 @@ Plugin               Arguments                  Description                     
 ==================== ========================== ================================================================================== ================================================================
 current_url                                     Alias for the current_url helper function.                            			   {+ current_url +}
 previous_url                                    Alias for the previous_url helper function.                           			   {+ previous_url +}
+site_url                                        Alias for the site_url helper function.                                            {+ site_url "login" +}
 mailto               email, title, attributes   Alias for the mailto helper function.                                 			   {+ mailto email=foo@example.com title="Stranger Things" +}
 safe_mailto          email, title, attributes   Alias for the safe_mailto helper function.                            			   {+ safe_mailto email=foo@example.com title="Stranger Things" +}
 lang                 language string            Alias for the lang helper function.                                    			   {+ lang number.terabyteAbbr +}
 validation_errors    fieldname(optional)        Returns either error string for the field (if specified) or all validation errors. {+ validation_errors +} , {+ validation_errors field="email" +}
+route                route name                 Alias for the route_to helper function.                                            {+ route "login" +}
 ==================== ========================== ================================================================================== ================================================================
 
 Registering a Plugin

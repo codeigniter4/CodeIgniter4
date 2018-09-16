@@ -92,12 +92,3 @@ Testing
 	:titlesonly:
 
 	testing/index
-
-***************************
-Contributing to CodeIgniter
-***************************
-
-.. toctree::
-	:titlesonly:
-
-	contributing/index

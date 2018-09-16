@@ -516,6 +516,24 @@ class Session implements SessionInterface
 		return isset($_SESSION[$key]);
 	}
 
+       //--------------------------------------------------------------------
+
+      /**
+	 * Push new value onto session value that is array.
+	 *
+	 * @param string	   $key	Identifier of the session property we are interested in.
+       * @param array            $data   value to be pushed to existing session key.
+	 *
+	 * @return void
+	 */
+	public function push(string $key, array $data)
+	{
+               if ($this->has($key) && is_array($value = $this->get($key)))
+               {
+                   $this->set($key, array_merge($value, $data));
+               }
+	}
+
 	//--------------------------------------------------------------------
 
 	/**

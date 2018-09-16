@@ -33,7 +33,7 @@ allows the script to continue executing::
 
     d($_SERVER);
 
-**ddd()**
+**dd()**
 
 This method is identical to ``d()``, except that it also ``dies()`` and no further code is executed this request.
 
@@ -43,7 +43,7 @@ This provides a backtrace to the current execution point, with Kint's own unique
 
     Kint::trace();
 
-For more information, see `Kint's page <https://raveren.github.io/kint/>`_.
+For more information, see `Kint's page <https://kint-php.github.io/kint//>`_.
 
 =================
 The Debug Toolbar

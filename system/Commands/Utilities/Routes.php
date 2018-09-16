@@ -37,7 +37,6 @@
  */
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
-use Config\Autoload;
 use Config\Services;
 
 /**

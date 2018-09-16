@@ -10,6 +10,7 @@ use Tests\Support\HTTP\MockIncomingRequest;
 
 class RedirectResponseTest extends \CIUnitTestCase
 {
+	/** @var RouteCollection */
 	protected $routes;
 
 	protected $request;
@@ -25,7 +26,7 @@ class RedirectResponseTest extends \CIUnitTestCase
 		$this->config = new App();
 		$this->config->baseURL = 'http://example.com';
 
-		$this->routes = new RouteCollection(new MockFileLocator(new Autoload()));
+		$this->routes = new RouteCollection(new MockFileLocator(new Autoload()), new \Config\Modules());
 		Services::injectMock('routes', $this->routes);
 
 		$this->request = new MockIncomingRequest($this->config, new URI('http://example.com'), null, new UserAgent());
@@ -40,6 +41,18 @@ class RedirectResponseTest extends \CIUnitTestCase
 
 		$this->assertTrue($response->hasHeader('Location'));
 		$this->assertEquals('http://example.com/foo', $response->getHeaderLine('Location'));
+	}
+
+	public function testRedirectRoute()
+	{
+		$response = new RedirectResponse(new App());
+
+		$this->routes->add( 'exampleRoute', 'Home::index' );
+
+		$response->route( 'exampleRoute' );
+
+		$this->assertTrue($response->hasHeader('Location'));
+		$this->assertEquals('http://example.com/exampleRoute', $response->getHeaderLine('Location'));
 	}
 
 	public function testRedirectRelativeConvertsToFullURI()

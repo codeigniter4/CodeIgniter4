@@ -20,11 +20,6 @@ PSR-2 is PHP-FIG's Coding Style Guide. We do not claim conformance with it,
 although there are a lot of similarities. The differences will be pointed out
 below.
 
-.. note:: See the
-    `CodeIgniter4-developer-setup <https://github.com/bcit-ci/CodeIgniter4-developer-setup>`_
-    repository for tips on configuring your IDE or editor to help you conform
-    to the style guide.
-
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD",
 "SHOULD NOT", "RECOMMENDED",  "MAY", and "OPTIONAL" in this document are to
 be interpreted as described in `RFC 2119 <http://www.ietf.org/rfc/rfc2119.txt>`_.

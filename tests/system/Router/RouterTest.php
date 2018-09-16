@@ -20,7 +20,9 @@ class RouterTest extends \CIUnitTestCase
 	{
 		parent::setUp();
 
-		$this->collection = new RouteCollection(new MockFileLocator(new \Config\Autoload()));
+		$moduleConfig = new \Config\Modules;
+		$moduleConfig->enabled = false;
+		$this->collection = new RouteCollection(new MockFileLocator(new \Config\Autoload()), $moduleConfig);
 
 		$routes = [
 			'users'                        => 'Users::index',
@@ -249,4 +251,23 @@ class RouterTest extends \CIUnitTestCase
 
     	$this->assertEquals($router->getMatchedRouteOptions(), ['as' => 'login', 'foo' => 'baz']);
     }
+
+	public function testRouteWorksWithFilters()
+	{
+		$collection = $this->collection;
+
+		$collection->group('foo', ['filter' => 'test'], function($routes) {
+			$routes->add('bar', 'TestController::foobar');
+		});
+
+		$router = new Router($collection);
+
+		$router->handle('foo/bar');
+
+		$this->assertEquals('\TestController', $router->controllerName());
+		$this->assertEquals('foobar', $router->methodName());
+		$this->assertEquals('test', $router->getFilter());
+	}
+
+	//--------------------------------------------------------------------
 }

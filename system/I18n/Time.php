@@ -607,8 +607,6 @@ class Time extends DateTime
 	/**
 	 * Sets the month of the year.
 	 *
-	 * @todo check max months in current calendar (localized)
-	 *
 	 * @param $value
 	 *
 	 * @return \CodeIgniter\I18n\Time
@@ -631,8 +629,6 @@ class Time extends DateTime
 	/**
 	 * Sets the day of the month.
 	 *
-	 * @todo check max days in month (localized)
-	 *
 	 * @param $value
 	 *
 	 * @return \CodeIgniter\I18n\Time
@@ -642,7 +638,14 @@ class Time extends DateTime
 		if ($value < 1 || $value > 31)
 		{
 			throw I18nException::forInvalidDay($value);
-		}
+               }
+
+               $date    = $this->getYear() . '-' . $this->getMonth();
+               $lastDay = date('t', strtotime($date));
+               if ($value > $lastDay)
+               {
+                        throw I18nException::forInvalidOverDay($lastDay, $value);
+               }
 
 		return $this->setValue('day', $value);
 	}

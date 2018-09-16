@@ -36,7 +36,6 @@
  * @filesource
  */
 
-use CodeIgniter\Autoloader\FileLocator;
 
 /**
  * Services Configuration file.
@@ -121,6 +120,27 @@ class BaseService
 	//--------------------------------------------------------------------
 
 	/**
+	 * The file locator provides utility methods for looking for non-classes
+	 * within namespaced folders, as well as convenience methods for
+	 * loading 'helpers', and 'libraries'.
+	 *
+	 * @param bool $getShared
+	 *
+	 * @return \CodeIgniter\Autoloader\FileLocator
+	 */
+	public static function locator(bool $getShared = true)
+	{
+		if ($getShared)
+		{
+			return self::getSharedInstance('locator');
+		}
+
+		return new \CodeIgniter\Autoloader\FileLocator(new \Config\Autoload());
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
 	 * Provides the ability to perform case-insensitive calling of service
 	 * names.
 	 *
@@ -182,24 +202,31 @@ class BaseService
 	{
 		if (! static::$discovered)
 		{
-			$locator = static::locator();
-			$files   = $locator->search('Config/Services');
+			$config = config('Modules');
 
-			if (empty($files))
+			if ($config->shouldDiscover('services'))
 			{
-				return;
-			}
+				$locator = static::locator();
+				$files   = $locator->search('Config/Services');
 
-			// Get instances of all service classes and cache them locally.
-			foreach ($files as $file)
-			{
-				$classname = $locator->getClassname($file);
-
-				if (! in_array($classname, ['Config\\Services', 'CodeIgniter\\Config\\Services']))
+				if (empty($files))
 				{
-					static::$services[] = new $classname();
+					return;
+				}
+
+				// Get instances of all service classes and cache them locally.
+				foreach ($files as $file)
+				{
+					$classname = $locator->getClassname($file);
+
+					if (! in_array($classname, ['CodeIgniter\\Config\\Services']))
+					{
+						static::$services[] = new $classname();
+					}
 				}
 			}
+
+			static::$discovered = true;
 		}
 
 		if (! static::$services)
@@ -210,7 +237,7 @@ class BaseService
 		// Try to find the desired service method
 		foreach (static::$services as $class)
 		{
-			if (method_exists($class, $name))
+			if (method_exists(get_class($class), $name))
 			{
 				return $class::$name(...$arguments);
 			}

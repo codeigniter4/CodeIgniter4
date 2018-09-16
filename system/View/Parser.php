@@ -129,12 +129,12 @@ class Parser extends View
 			$saveData = $this->config->saveData;
 		}
 
-		$view = str_replace('.php', '', $view) . '.php';
+		$view = str_replace('.php', '', $view);
 
 		// Was it cached?
 		if (isset($options['cache']))
 		{
-			$cacheName = $options['cache_name'] ?: str_replace('.php', '', $view);
+			$cacheName = $options['cache_name'] ?: $view;
 
 			if ($output = cache($cacheName))
 			{
@@ -143,6 +143,7 @@ class Parser extends View
 			}
 		}
 
+		$view = $view . '.php';
 		$file = $this->viewPath . $view;
 
 		if ( ! file_exists($file))
@@ -224,8 +225,20 @@ class Parser extends View
 	{
 		if ( ! empty($context))
 		{
-			foreach ($data as $key => $value)
+			foreach ($data as $key => &$value)
 			{
+				if (is_array($value))
+				{
+					foreach ($value as &$obj)
+					{
+						$obj = $this->objectToArray($obj);
+					}
+				}
+				else
+				{
+					$value = $this->objectToArray($value);
+				}
+
 				$this->dataContexts[$key] = $context;
 			}
 		}
@@ -297,25 +310,6 @@ class Parser extends View
 	}
 
 	//--------------------------------------------------------------------
-//FIXME the following method does not appear to be used anywhere, so commented out
-//	protected function is_assoc($arr)
-//	{
-//		return array_keys($arr) !== range(0, count($arr) - 1);
-//	}
-	//--------------------------------------------------------------------
-//FIXME the following method does not appear to be used anywhere, so commented out
-//	function strpos_all($haystack, $needle)
-//	{
-//		$offset = 0;
-//		$allpos = [];
-//		while (($pos = strpos($haystack, $needle, $offset)) !== FALSE)
-//		{
-//			$offset = $pos + 1;
-//			$allpos[] = $pos;
-//		}
-//		return $allpos;
-//	}
-	//--------------------------------------------------------------------
 
 	/**
 	 * Parse a single key/value, extracting it
@@ -328,7 +322,7 @@ class Parser extends View
 	{
 		$pattern = '#' . $this->leftDelimiter . '!?\s*' . preg_quote($key) . '\s*\|*\s*([|a-zA-Z0-9<>=\(\),:_\-\s\+]+)*\s*!?' . $this->rightDelimiter . '#ms';
 
-		return [$pattern => (string) $val];
+		return [$pattern => $val];
 	}
 
 	//--------------------------------------------------------------------
@@ -369,14 +363,28 @@ class Parser extends View
 			$str = '';  // holds the new contents for this tag pair.
 			foreach ($data as $row)
 			{
+				// Objects that have a `toArray()` method should be
+				// converted with that method (i.e. Entities)
+				if (is_object($row) && method_exists($row, 'toArray'))
+				{
+					$row = $row->toArray();
+				}
+				// Otherwise, cast as an array and it will grab public properties.
+				else if (is_object($row))
+				{
+					$row = (array)$row;
+				}
+
 				$temp = [];
 				$out = $match[1];
 				foreach ($row as $key => $val)
 				{
+
 					// For nested data, send us back through this method...
 					if (is_array($val))
 					{
 						$pair = $this->parsePair($key, $val, $match[1]);
+
 						if ( ! empty($pair))
 						{
 							$temp = array_merge($temp, $pair);
@@ -512,7 +520,7 @@ class Parser extends View
 			// Build the string to replace the `if` statement with.
 			$condition = $match[2];
 
-			$statement = $match[1] == 'elseif' ? '<?php elseif ($' . $condition . '): ?>' : '<?php if ($' . $condition . '): ?>';
+			$statement = $match[1] == 'elseif' ? '<?php elseif (' . $condition . '): ?>' : '<?php if (' . $condition . '): ?>';
 			$template = str_replace($match[0], $statement, $template);
 		}
 
@@ -730,7 +738,7 @@ class Parser extends View
 			$isPair = is_array($callable);
 			$callable = $isPair ? array_shift($callable) : $callable;
 
-			$pattern = $isPair ? '#{\+\s*' . $plugin . '([\w\d=-_:\+\s()\"@.]*)?\s*\+}(.+?){\+\s*/' . $plugin . '\s*\+}#ims' : '#{\+\s*' . $plugin . '([\w\d=-_:\+\s()\"@.]*)?\s*\+}#ims';
+			$pattern = $isPair ? '#{\+\s*' . $plugin . '([\w\d=-_:\+\s()/\"@.]*)?\s*\+}(.+?){\+\s*/' . $plugin . '\s*\+}#ims' : '#{\+\s*' . $plugin . '([\w\d=-_:\+\s()/\"@.]*)?\s*\+}#ims';
 
 			/**
 			 * Match tag pairs
@@ -810,6 +818,31 @@ class Parser extends View
 		unset($this->plugins[$alias]);
 
 		return $this;
+	}
+
+	/**
+	 * Converts an object to an array, respecting any
+	 * toArray() methods on an object.
+	 *
+	 * @param $value
+	 *
+	 * @return mixed
+	 */
+	protected function objectToArray($value)
+	{
+		// Objects that have a `toArray()` method should be
+		// converted with that method (i.e. Entities)
+		if (is_object($value) && method_exists($value, 'toArray'))
+		{
+			$value = $value->toArray();
+		}
+		// Otherwise, cast as an array and it will grab public properties.
+		else if (is_object($value))
+		{
+			$value = (array)$value;
+		}
+
+		return $value;
 	}
 
 	//--------------------------------------------------------------------

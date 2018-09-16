@@ -102,7 +102,7 @@ class CommomFunctionsTest extends \CIUnitTestCase
 		$_SERVER['REQUEST_METHOD'] = 'GET';
 
 		$response = $this->createMock(\CodeIgniter\HTTP\Response::class);
-		$routes = new \CodeIgniter\Router\RouteCollection(new \Tests\Support\Autoloader\MockFileLocator(new \Config\Autoload()));
+		$routes = new \CodeIgniter\Router\RouteCollection(new \Tests\Support\Autoloader\MockFileLocator(new \Config\Autoload()), new \Config\Modules());
 		\CodeIgniter\Services::injectMock('response', $response);
 		\CodeIgniter\Services::injectMock('routes', $routes);
 
@@ -147,7 +147,7 @@ class CommomFunctionsTest extends \CIUnitTestCase
 	public function testViewCell()
 	{
 		$expected = 'Hello';
-		$this->assertEquals($expected, view_cell('\CodeIgniter\View\SampleClass::hello'));
+		$this->assertEquals($expected, view_cell('\Tests\Support\View\SampleClass::hello'));
 	}
 
 	// ------------------------------------------------------------------------
@@ -267,7 +267,7 @@ class CommomFunctionsTest extends \CIUnitTestCase
 		$this->config = new App();
 		$this->config->baseURL = 'http://example.com';
 
-		$this->routes = new RouteCollection(new MockFileLocator(new Autoload()));
+		$this->routes = new RouteCollection(new MockFileLocator(new Autoload()), new \Config\Modules());
 		Services::injectMock('routes', $this->routes);
 
 		$this->request = new MockIncomingRequest($this->config, new URI('http://example.com'), null, new UserAgent());

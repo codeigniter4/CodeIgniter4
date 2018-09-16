@@ -188,6 +188,21 @@ class BaseBuilder
 	 */
 	protected $binds = [];
 
+	/**
+	 * Some databases, like SQLite, do not by default
+	 * allow limiting of delete clauses.
+	 *
+	 * @var bool
+	 */
+	protected $canLimitDeletes = true;
+
+	/**
+	 * Some databases do not by default
+	 * allow limit update queries with WHERE.
+	 * @var bool
+	 */
+	protected $canLimitWhereUpdates = true;
+
 	//--------------------------------------------------------------------
 
 	/**
@@ -260,6 +275,19 @@ class BaseBuilder
 			if ($val !== '')
 			{
 				$this->QBSelect[] = $val;
+
+				/*
+				 * When doing 'SELECT NULL as field_alias FROM table'
+				 * null gets taken as a field, and therefore escaped
+				 * with backticks.
+				 * This prevents NULL being escaped
+				 * @see https://github.com/bcit-ci/CodeIgniter4/issues/1169
+				 */
+				if ( strtoupper(mb_substr(trim($val), 0, 4)) == 'NULL')
+				{
+					$escape = false;
+				}
+
 				$this->QBNoEscape[] = $escape;
 			}
 		}
@@ -1895,6 +1923,11 @@ class BaseBuilder
 
 		if ( ! empty($limit))
 		{
+			if (! $this->canLimitWhereUpdates)
+			{
+				throw new DatabaseException('This driver does not allow LIMITs on UPDATE queries using WHERE.');
+			}
+
 			$this->limit($limit);
 		}
 
@@ -2279,6 +2312,11 @@ class BaseBuilder
 
 		if ( ! empty($this->QBLimit))
 		{
+			if (! $this->canLimitDeletes)
+			{
+				throw new DatabaseException('SQLite3 does not allow LIMITs on DELETE queries.');
+			}
+
 			$sql = $this->_limit($sql);
 		}
 
