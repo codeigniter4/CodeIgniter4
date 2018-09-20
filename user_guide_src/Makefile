@@ -6,7 +6,6 @@ SPHINXOPTS    =
 SPHINXBUILD   = sphinx-build
 PAPER         =
 BUILDDIR      = build
-GHBUILDDIR    = ../../CodeIgniter4-guide
 
 # Internal variables.
 PAPEROPT_a4     = -D latex_paper_size=a4
@@ -129,9 +128,3 @@ doctest:
 	$(SPHINXBUILD) -b doctest $(ALLSPHINXOPTS) $(BUILDDIR)/doctest
 	@echo "Testing of doctests in the sources finished, look at the " \
 	      "results in $(BUILDDIR)/doctest/output.txt."
-
-ghpages:
-	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(GHBUILDDIR)/html
-	@echo
-	@echo "Build finished. The HTML pages are in $(GHBUILDDIR)/html."
-
