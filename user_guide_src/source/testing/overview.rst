@@ -17,18 +17,18 @@ System Setup
 Installing phpUnit
 ==================
 
-CodeIgniter uses `phpUnit <https://phpunit.de/>`_ as the basis for all of its testing. There are two ways to install
+CodeIgniter uses `phpUnit <https://phpunit.de/>`__ as the basis for all of its testing. There are two ways to install
 phpUnit to use within your system.
 
 Composer
 --------
 
-The recommended method is to install it in your project using `Composer <https://getcomposer.org/>`_. While it's possible
+The recommended method is to install it in your project using `Composer <https://getcomposer.org/>`__. While it's possible
 to install it globally we do not recommend it, since it can cause compatibility issues with other projects on your
 system as time goes on.
 
 Ensure that you have Composer installed on your system. From the project root (the directory that contains the
-application and system directories) type the followin from the command line::
+application and system directories) type the following from the command line::
 
     > composer require --dev phpunit/phpunit
 
@@ -40,7 +40,7 @@ tests for this project by typing::
 Phar
 ----
 
-The other option is to download the .phar file from the `phpUnit <https://phpunit.de/getting-started/phpunit-7.html>`_ site.
+The other option is to download the .phar file from the `phpUnit <https://phpunit.de/getting-started/phpunit-7.html>`__ site.
 This is standalone file that should be placed within your project root.
 
 
@@ -52,9 +52,9 @@ this file should be done in a separate file so that it doesn't get overwritten b
 to ``phpunit.xml`` will create a file that phpUnit will use instead of the original file.
 
 
-========================
+************************
 Testing Your Application
-========================
+************************
 
 PHPUnit Configuration
 =====================
@@ -232,4 +232,3 @@ An example demonstrating this inside one of your test cases::
         $expected = "first.\n";
         $this->assertEquals($expected, CITestStreamFilter::$buffer);
     }
-

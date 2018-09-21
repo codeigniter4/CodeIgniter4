@@ -95,7 +95,6 @@ The following functions are available:
 	viewed.
 
 	.. note:: Calling this function is the same as doing this::
-
 		base_url(uri_string());
 
 .. php:function:: previous_url([$returnObject = false])

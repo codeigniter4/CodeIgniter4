@@ -68,7 +68,7 @@ configured to make integrating modules into your applications simpler by automat
 file types, including:
 
 - :doc:`Events </general/events>`
-- :ref:`registrars`
+- :doc:`Registrars </general/configuration>`
 - :doc:`Route files </general/routing>`
 - :doc:`Services </concepts/services>`
 

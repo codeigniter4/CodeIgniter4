@@ -8,7 +8,7 @@ Often times, using the `Feature Testing tools </testing/feature>`_ will be simpl
 case you need it.
 
 .. note:: Because the entire framework has not been bootstrapped, there will be times when you cannot test a controller
-this way.
+    this way.
 
 The Helper Trait
 ================
