@@ -347,6 +347,7 @@ The methods provided by the parent class that are available are:
 			$response->setLastModified(DateTime::createFromFormat('u', $time));
 
 	.. php:method:: send()
+                :noindex:
 
 		:returns: The current response instance.
 		:rtype: CodeIgniter\HTTP\Response

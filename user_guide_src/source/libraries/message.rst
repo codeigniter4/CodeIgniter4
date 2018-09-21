@@ -118,6 +118,7 @@ Class Reference
 			en, en-US
 
 	.. php:method:: setHeader([$name[, $value]])
+                :noindex:
 
 		:param string $name: The name of the header to set the value for.
 		:param mixed  $value: The value to set the header to.

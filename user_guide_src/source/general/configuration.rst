@@ -170,6 +170,7 @@ held instead::
 then the result would be the same as above.
 
 .. _registrars:
+
 Registrars
 ==========
 
@@ -222,4 +223,3 @@ by treating `RegionalSalesModel` as a "registrar". The resulting configuration p
 
     $target   = 45;
     $campaign = "Winter Wonderland";
-

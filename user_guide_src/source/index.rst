@@ -2,9 +2,6 @@
 CodeIgniter4 User Guide
 #######################
 
-- :doc:`License Agreement <license>`
-- :doc:`Change Log <changelog>`
-
 .. contents::
    :local:
    :depth: 2
@@ -92,3 +89,9 @@ Testing
 	:titlesonly:
 
 	testing/index
+
+.. toctree::
+        :hidden:
+
+        license
+        changelog
