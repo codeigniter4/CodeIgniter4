@@ -56,6 +56,17 @@ git checkout -b $branch
 # Update version dependencies
 echo -e "${BOLD}Updating version dependencies${NORMAL}"
 
+function check_unique (pattern, sourcefile) {
+    count=`grep -o $1 < $2 | wc -l`
+    if [ count -ne 1 ]; then
+        echo "${BOLD}${COLOR}$2 has more than 1 occurence of '$1'${NORMAL}"
+        exit 1
+    fi
+}
+
+# Make sure there is only one line to affect in each file
+check_unique "const CI_VERSION" "system/CodeIgniter.php"
+
 # CI_VERSION definition in system/CodeIgniter.php
 sed -i "/const CI_VERSION/s/'.*'/'${version}${qualifier}'/" system/CodeIgniter.php
 
@@ -113,6 +124,7 @@ read answer
 if [ $answer != 'yes' ]; then
     echo -e "${BOLD}Your $branch branch is ready to inspect.${NORMAL}"
     echo "Rerun this script when ready to deploy"
+    exit 1
 fi
 
 #---------------------------------------------------
