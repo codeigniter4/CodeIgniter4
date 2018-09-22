@@ -2,12 +2,12 @@
 Change Log
 ##########
 
-Version |version|
+Version |release|
 =================
 
-**Rewrite of the CodeIgniter framework**
-
 Release Date: Not Released
+
+**Rewrite of the CodeIgniter framework**
 
 New core classes:
     - CodeIgniter (bootstrap)
