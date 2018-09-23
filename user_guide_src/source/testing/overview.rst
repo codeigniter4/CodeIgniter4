@@ -44,14 +44,6 @@ The other option is to download the .phar file from the `phpUnit <https://phpuni
 This is standalone file that should be placed within your project root.
 
 
-phpunit.xml
-===========
-
-A basic configuration for phpUnit has already been defined in ``phpunit.xml.dist``. Any project-specific changes to
-this file should be done in a separate file so that it doesn't get overwritten by any framework updates. Copying the file
-to ``phpunit.xml`` will create a file that phpUnit will use instead of the original file.
-
-
 ************************
 Testing Your Application
 ************************
@@ -205,10 +197,7 @@ Removes all mocked classes from the Services class, bringing it back to its orig
 Stream Filters
 ==============
 
-Some stream filters have been provided as an alternate to these helper methods.
-
-CITestStreamFilter
-------------------
+**CITestStreamFilter** provides an alternate to these helper methods.
 
 You may need to test things that are difficult to test. Sometimes, capturing a stream, like PHP's own STDOUT, or STDERR,
 might be helpful. The ``CITestStreamFilter`` helps you capture the output from the stream of your choice.

@@ -5,7 +5,9 @@ Validation
 CodeIgniter provides a comprehensive data validation class that
 helps minimize the amount of code you'll write.
 
-.. contents:: Page Contents
+.. contents::
+    :local:
+    :depth: 2
 
 ********
 Overview

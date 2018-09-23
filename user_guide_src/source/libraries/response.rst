@@ -5,7 +5,9 @@ HTTP Responses
 The Response class extends the :doc:`HTTP Message Class </libraries/message>` with methods only appropriate for
 a server responding to the client that called it.
 
-.. contents:: Page Contents
+.. contents::
+    :local:
+    :depth: 2
 
 Working with the Response
 =========================

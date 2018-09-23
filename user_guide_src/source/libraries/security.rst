@@ -4,8 +4,9 @@ Security Class
 
 The Security Class contains methods that help protect your site against Cross-Site Request Forgery attacks.
 
-.. contents:: Page Contents
-	:local:
+.. contents::
+    :local:
+    :depth: 2
 
 *******************
 Loading the Library

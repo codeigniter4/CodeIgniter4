@@ -3,7 +3,7 @@ Managing your Applications
 ##########################
 
 By default it is assumed that you only intend to use CodeIgniter to
-manage one application, which you will build in your **application/**
+manage one application, which you will build in your **application**
 directory. It is possible, however, to have multiple sets of
 applications that share a single CodeIgniter installation, or even to
 rename or relocate your application directory.
@@ -12,7 +12,7 @@ Renaming the Application Directory
 ==================================
 
 If you would like to rename your application directory you may do so
-as long as you open your main **index.php** file and set its name using
+as long as you open **application/Config/Paths.php** file and set its name using
 the ``$application_directory`` variable::
 
 	$application_directory = 'application';

@@ -2,6 +2,10 @@
 Views
 #####
 
+.. contents::
+    :local:
+    :depth: 2
+
 A view is simply a web page, or a page fragment, like a header, footer, sidebar, etc. In fact,
 views can flexibly be embedded within other views (within other views, etc.) if you need
 this type of hierarchy.

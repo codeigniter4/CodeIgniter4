@@ -7,7 +7,9 @@ If it's enabled in ``Application\Config\Filters.php`` file. This is done by atta
 and this form field is hidden from human but accessible to Bot. When data is entered into the field it's 
 assumed the request is coming from a Bot, then an execption is thrown.
 
-.. contents:: Page Contents
+.. contents::
+    :local:
+    :depth: 2
 
 Enabling Honeypot
 =====================

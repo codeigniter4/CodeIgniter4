@@ -10,8 +10,9 @@ performance and memory statistics to help you decide which version is the best.
 The Timer class is always active, being started from the moment the framework is invoked until right before
 sending the output to the user, enabling a very accurate timing of the entire system execution.
 
-.. contents:: Page Contents
-	:local:
+.. contents::
+    :local:
+    :depth: 2
 
 ===============
 Using the Timer

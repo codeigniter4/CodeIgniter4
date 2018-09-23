@@ -2,8 +2,9 @@
 Debugging Your Application
 **************************
 
-.. contents:: Table of Contents
-	:depth: 3
+.. contents::
+    :local:
+    :depth: 2
 
 ================
 Replace var_dump

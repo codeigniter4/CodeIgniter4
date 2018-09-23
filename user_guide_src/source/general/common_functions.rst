@@ -5,8 +5,10 @@ Global Functions and Constants
 CodeIgniter uses provides a few functions and variables that are globally defined, and are available to you at any point.
 These do not require loading any additional libraries or helpers.
 
-.. contents:: Page Contents
-	:local:
+.. contents::
+    :local:
+    :depth: 2
+
 
 ================
 Global Functions

@@ -17,7 +17,8 @@ CodeIgniter's robust Email Class supports the following features:
 -  Email Debugging tools
 
 .. contents::
-  :local:
+    :local:
+    :depth: 2
 
 .. raw:: html
 

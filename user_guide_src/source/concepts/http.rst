@@ -12,18 +12,18 @@ how to work with the requests and responses within CodeIgniter.
 What is HTTP?
 =============
 
-HTTP is simply a text-based language that allows two machines to talk to each other. When a browser
+HTTP is simply a text-based convention that allows two machines to talk to each other. When a browser
 requests a page, it asks the server if it can get the page. The server then prepares the page and sends
-response back to the browser that asked for it. That's pretty much it. Obviously, there are some complexities
+a response back to the browser that asked for it. That's pretty much it. Obviously, there are some complexities
 that you can use, but the basics are really pretty simple.
 
-HTTP is the term used to describe that language. It stands for HyperText Transfer Protocol. Your goal when
+HTTP is the term used to describe that exchange convention. It stands for HyperText Transfer Protocol. Your goal when
 you develop web applications is to always understand what the browser is requesting, and be able to
 respond appropriately.
 
 The Request
 -----------
-Whenever a client makes a request (a web browser, smartphone app, etc), it is sending a small text message
+Whenever a client (a web browser, smartphone app, etc) makes a request, it sends a small text message
 to the server and waits for a response.
 
 The request would look something like this::
@@ -67,7 +67,7 @@ Working with Requests and Responses
 -----------------------------------
 
 While PHP provides ways to interact with the request and response headers, CodeIgniter, like most frameworks,
-abstract them so that you have a consistent, simple interface to them. The :doc:`IncomingRequest class </libraries/incomingrequest>`
+abstracts them so that you have a consistent, simple interface to them. The :doc:`IncomingRequest class </libraries/incomingrequest>`
 is an object-oriented representation of the HTTP request. It provides everything you need::
 
 	use CodeIgniter\HTTP\IncomingRequest;

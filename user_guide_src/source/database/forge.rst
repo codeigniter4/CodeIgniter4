@@ -5,8 +5,9 @@ Database Forge Class
 The Database Forge Class contains methods that help you manage your
 database.
 
-.. contents:: Table of Contents
-    :depth: 3
+.. contents::
+    :local:
+    :depth: 2
 
 ****************************
 Initializing the Forge Class

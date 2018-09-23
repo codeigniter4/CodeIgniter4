@@ -2,6 +2,10 @@
 Controller Filters
 ##################
 
+.. contents::
+    :local:
+    :depth: 2
+
 Controller Filters allow you to perform actions either before or after the controllers execute. Unlike :doc:`events </general/events>`,
 you can very simply choose which URI's in your application have the filters applied to them. Incoming filters may
 modify the Request, while after filters can act on and even modify the Response, allowing for a lot of flexibility
@@ -173,8 +177,7 @@ a list of URI patterns that filter should apply to::
         'bar' => ['before' => ['api/*', 'admin/*']]
     ];
 
-================
 Provided Filters
-================
+****************
 
-To be determined.
+Three filters are bundled with CodeIgniter4: Honeypot, Security, and Throttler.

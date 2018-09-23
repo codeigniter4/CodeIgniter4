@@ -7,8 +7,9 @@ single page application, or as a standalone product. CodeIgniter provides an API
 used with any controller to make common response types simple, with no need to remember which HTTP status code
 should be returned for which response types.
 
-.. contents:: Page Contents
-	:local:
+.. contents::
+    :local:
+    :depth: 2
 
 *************
 Example Usage
@@ -97,9 +98,8 @@ So, if your request asks for JSON formatted data in an **Accept** header, the da
 ``respond*`` or ``fail*`` methods will be formatted by the **CodeIgniter\\API\\JSONFormatter** class. The resulting
 JSON data will be sent back to the client.
 
-===============
 Class Reference
-===============
+***************
 
 .. php:method:: respond($data[, $statusCode=200[, $message='']])
 

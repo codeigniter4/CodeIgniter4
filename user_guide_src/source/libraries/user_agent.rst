@@ -7,6 +7,7 @@ about the browser, mobile device, or robot visiting your site.
 
 .. contents::
     :local:
+    :depth: 2
 
 **************************
 Using the User Agent Class

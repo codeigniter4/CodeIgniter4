@@ -4,6 +4,7 @@ Throttler
 
 .. contents::
     :local:
+    :depth: 2
 
 The Throttler class provides a very simple way to limit an activity to be performed to a certain number of attempts
 within a set period of time. This is most often used for performing rate limiting on API's, or restricting the number

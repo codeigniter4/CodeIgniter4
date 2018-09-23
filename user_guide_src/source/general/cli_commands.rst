@@ -8,7 +8,9 @@ need to have routes defined for, making them perfect for building tools that dev
 their jobs simpler, whether by handling migrations or database seeding, checking cronjob status, or even
 building out custom code generators for your company.
 
-.. contents:: Page Contents
+.. contents::
+    :local:
+    :depth: 2
 
 ****************
 Running Commands

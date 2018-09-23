@@ -12,8 +12,9 @@ CodeIgniter comes with a few session storage drivers:
   - redis
   - memcached
 
-.. contents:: Page Contents
-  :local:
+.. contents::
+    :local:
+    :depth: 2
 
 .. raw:: html
 

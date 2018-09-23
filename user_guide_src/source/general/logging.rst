@@ -2,6 +2,10 @@
 Logging Information
 ###################
 
+.. contents::
+    :local:
+    :depth: 2
+
 You can log information to the local log files by using the ``log_message()`` method. You must supply
 the "level" of the error in the first parameter, indicating what type of message it is (debug, error, etc).
 The second parameter is the message itself::

@@ -9,6 +9,10 @@ you create form elements, **Text Helpers** perform various text formatting
 routines, **Cookie Helpers** set and read cookies, **File Helpers** help you
 deal with files, etc.
 
+.. contents::
+    :local:
+    :depth: 2
+
 Unlike most other systems in CodeIgniter, Helpers are not written in an
 Object Oriented format. They are simple, procedural functions. Each
 helper function performs one specific task, with no dependence on other

@@ -2,6 +2,10 @@
 View Parser
 ###########
 
+.. contents::
+    :local:
+    :depth: 2
+
 The View Parser can perform simple text substitution for
 pseudo-variables contained within your view files.
 It can parse simple variables or variable tag pairs.
