@@ -177,6 +177,7 @@ a list of URI patterns that filter should apply to::
         'bar' => ['before' => ['api/*', 'admin/*']]
     ];
 
+****************
 Provided Filters
 ****************
 
