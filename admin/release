@@ -87,12 +87,11 @@ cd user_guide_src
 
 # make the UG & embed it in the project root
 make html
-rm -Rf ../UserGuide
-mv build/html ../UserGuide
+rm -Rf ../docs
+mv build/html ../docs
 
-# make the epub & stick it in the project's "build" folder for now
+# make the epub, but leave it inside the gitignored user_guide_src to deal with separately
 make epub
-mv build/epub/CodeIgniter4.epub "../build/CodeIgniter-UserGuide-${version}${qualifier}.epub"
 
 cd ..
 
@@ -136,13 +135,14 @@ echo -e "${BOLD}Merge the release into master${NORMAL}"
 git checkout master
 git merge $branch
 git push UPSTREAM master
+git push UPSTREAM --tags
 
 #---------------------------------------------------
 # Put our house back in order
 echo -e "${BOLD}Put our house back in order${NORMAL}"
 
 mv -r admin/previous-gitignore .gitignore
-rm -Rf UserGuide
+rm -Rf docs
 rm -f build/*.epub
 
 #---------------------------------------------------
@@ -168,7 +168,8 @@ git merge master
 git push origin develop
 git push UPSTREAM develop
 
-git branch -d $branch
+# keep or delete the release branch? up to you
+#git branch -d $branch
 
 #---------------------------------------------------
 # Phew!
