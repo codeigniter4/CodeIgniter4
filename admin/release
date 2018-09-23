@@ -59,7 +59,7 @@ echo -e "${BOLD}Updating version dependencies${NORMAL}"
 function check_unique {
     count=`grep -c '$1' < $2 | wc -l`
     if [ $count -ne 1 ]; then
-        echo "${BOLD}${COLOR}$2 has ${count} occurences of '$1'${NORMAL}"
+        echo -e "${BOLD}${COLOR}$2 has ${count} occurences of '$1'${NORMAL}"
         exit 1
     fi
 }
@@ -113,6 +113,8 @@ done
 #---------------------------------------------------
 # And finally, the release tag
 echo -e "${BOLD}Tag this branch for release${NORMAL}"
+git add .
+git commit -m "Release ${version}${qualifier}"
 git tag -a v${version}${qualifier} -m "Release ${version}${qualifier} build"
 
 #---------------------------------------------------
@@ -143,7 +145,6 @@ echo -e "${BOLD}Put our house back in order${NORMAL}"
 
 mv -r admin/previous-gitignore .gitignore
 rm -Rf docs
-rm -f build/*.epub
 
 #---------------------------------------------------
 # Add next version block in changelog.rst
