@@ -243,23 +243,23 @@ Included Properties
 Every controller you create should extend ``CodeIgniter\Controller`` class.
 This class provides several features that are available to all of your controllers.
 
-Request Object
---------------
+**Request Object**
+
 The application's main :doc:`Request Instance <../libraries/request>` is always available
 as a class property, ``$this->request``.
 
-Response Object
----------------
+**Response Object**
+
 The application's main :doc:`Response Instance <../libraries/response>` is always available
 as a class property, ``$this->response``.
 
-Logger Object
--------------
+**Logger Object**
+
 An instance of the :doc:`Logger <../general/logging>` class is available as a class property,
 ``$this->logger``.
 
-forceHTTPS
-----------
+**forceHTTPS**
+
 A convenience method for forcing a method to be accessed via HTTPS is available within all
 controllers::
 

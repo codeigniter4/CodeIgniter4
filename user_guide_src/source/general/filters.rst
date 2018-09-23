@@ -177,8 +177,7 @@ a list of URI patterns that filter should apply to::
         'bar' => ['before' => ['api/*', 'admin/*']]
     ];
 
-================
 Provided Filters
-================
+****************
 
 Three filters are bundled with CodeIgniter4: Honeypot, Security, and Throttler.

@@ -100,7 +100,7 @@ Several options can be passed to the ``render()`` or ``renderString()`` methods:
 -   ``saveData`` - true if the view data parameters should be retained for subsequent calls
 
 Class Reference
----------------
+===============
 
 .. php:class:: CodeIgniter\\View\\View
 

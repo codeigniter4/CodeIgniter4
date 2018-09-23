@@ -11,7 +11,7 @@ is the **Time** class and lives in the **CodeIgniter\\I18n** namespace.
 
 .. contents::
     :local:
-    :depth: 2
+    :depth: 1
 
 =============
 Instantiating
