@@ -13,7 +13,7 @@ mkdir build/html
 cd build/html
 git init
 git remote add origin $UPSTREAM
-git fetch origin gh-pages
+git fetch 
 git checkout gh-pages
 git reset --hard origin/gh-pages
 rm -r *
