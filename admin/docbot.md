@@ -24,7 +24,7 @@ GPG-signing key as appropriate.
 
 Inside a shell prompt, in the project root:
 
-    `admin/docbot.sh [deploy]`
+    `admin/docbot [deploy]`
 
 If "deploy" is not added, the script execution is considered
 a trial run, and nothing is pushed to the repo.
