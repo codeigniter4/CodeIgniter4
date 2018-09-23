@@ -1,6 +1,6 @@
-###################
-Running via the CLI
-###################
+############################
+Running via the Command Line
+############################
 
 As well as calling an applications :doc:`Controllers <./controllers>`
 via the URL in a browser they can also be loaded via the command-line

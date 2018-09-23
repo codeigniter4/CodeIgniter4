@@ -39,9 +39,9 @@ language codes like en-US for American English, or fr-FR, for French/France. A m
 to this can be found on the `W3C's site <https://www.w3.org/International/articles/language-tags/>`_.
 
 The system is smart enough to fallback to more generic language codes if an exact match
-cannot be found. If the locale code was set to **en_US** and we only have language files setup for **en**
-then those will be used since nothing exists for the more specific **en_US**. If, however, a language
-directory existed at **application/Language/en_US** then that we be used first.
+cannot be found. If the locale code was set to **en-US** and we only have language files setup for **en**
+then those will be used since nothing exists for the more specific **en-US**. If, however, a language
+directory existed at **application/Language/en-US** then that would be used first.
 
 Locale Detection
 ================
@@ -64,7 +64,7 @@ of locales that you have defined in ``$supportLocales``. If no match is found be
 that you support, and the requested language, the first item in $supportedLocales will be used. In
 the following example, the **en** locale would be used if no match is found::
 
-    public $supportedLocales = ['en', 'es', 'fr_FR'];
+    public $supportedLocales = ['en', 'es', 'fr-FR'];
 
 In Routes
 ---------
@@ -108,7 +108,7 @@ Language Localization
 Creating Language Files
 =======================
 
-Language do not have any specific naming convention that are required. The file should be named logically to
+Languages do not have any specific naming convention that are required. The file should be named logically to
 describe the type of content it holds. For example, let's say you want to create a file containing error messages.
 You might name it simply: **Errors.php**.
 
@@ -234,12 +234,12 @@ third parameter to the ``lang()`` method.
 ::
 
     // Displays "The time is now 23:21:28 GMT-5"
-    echo lang('Test.longTime', [time()], 'ru_RU');
+    echo lang('Test.longTime', [time()], 'ru-RU');
 
     // Displays "£7.41"
-    echo lang('{price, number, currency}', ['price' => 7.41], 'en_GB');
+    echo lang('{price, number, currency}', ['price' => 7.41], 'en-GB');
     // Displays "$7.41"
-    echo lang('{price, number, currency}', ['price' => 7.41], 'en_US');
+    echo lang('{price, number, currency}', ['price' => 7.41], 'en-US');
 
 Nested Arrays
 -------------

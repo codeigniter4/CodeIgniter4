@@ -74,14 +74,11 @@ production servers.
 
 docs
 ----
-This directory holds the CodeIgniter documentation. The ``user_guide`` subfolder contains a local copy of the
-User Guide, and the ``api_docs`` subfolder contains a local copy of the CodeIgniter components API reference.
+This directory holds a local copy of the CodeIgniter4
+User Guide.
 
 Modifying Directory Locations
 -----------------------------
 
-If you've relocated any of the main directories, you can let the application
-know the new location within the main ``index.php`` file.
-
-Starting around line 50, you will find three variables that hold the location to the **application**,
-**system**, and **writable** directories. These paths are relative to **index.php**.
+If you've relocated any of the main directories, you can change the configuration
+settings inside ``application/Config/Paths``.

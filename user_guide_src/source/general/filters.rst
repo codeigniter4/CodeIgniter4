@@ -177,4 +177,4 @@ a list of URI patterns that filter should apply to::
 Provided Filters
 ================
 
-To be determined.
+Three filters are bundled with CodeIgniter4: Honeypot, Security, and Throttler.

@@ -73,7 +73,7 @@ then determine what to do with it. This often involves passing the data to a mod
 the model that is then passed on to the view to be displayed. This also includes loading up other utility classes,
 if needed, to handle specialized tasks that is outside of the purview of the model.
 
-The other responsibility of the controller is to handles everything that pertains to HTTP requests - redirects,
+The other responsibility of the controller is to handle everything that pertains to HTTP requests - redirects,
 authentication, web safety, encoding, etc. In short, the controller is where you make sure that people are allowed to
 be there, and they get the data they need in a format they can use.
 
