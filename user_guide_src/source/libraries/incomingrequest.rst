@@ -6,7 +6,9 @@ The IncomingRequest class provides an object-oriented representation of an HTTP 
 It extends from, and has access to all the methods of the :doc:`Request </libraries/request>` and :doc:`Message </libraries/message>`
 classes, in addition to the methods listed below.
 
-.. contents:: Page Contents
+.. contents::
+    :local:
+    :depth: 2
 
 Accessing the Request
 =====================

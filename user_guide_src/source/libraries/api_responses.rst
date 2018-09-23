@@ -7,8 +7,9 @@ single page application, or as a standalone product. CodeIgniter provides an API
 used with any controller to make common response types simple, with no need to remember which HTTP status code
 should be returned for which response types.
 
-.. contents:: Page Contents
-	:local:
+.. contents::
+    :local:
+    :depth: 2
 
 *************
 Example Usage

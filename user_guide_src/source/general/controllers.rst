@@ -4,7 +4,10 @@ Controllers
 
 Controllers are the heart of your application, as they determine how HTTP requests should be handled.
 
-.. contents:: Page Contents
+.. contents::
+    :local:
+    :depth: 2
+
 
 What is a Controller?
 =====================

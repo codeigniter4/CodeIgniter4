@@ -10,7 +10,9 @@ CodeIgniter's CLI library makes creating interactive command-line scripts simple
 * Showing progress bars during long tasks
 * Wrapping long text lines to fit the window.
 
-.. contents:: Page Contents
+.. contents::
+    :local:
+    :depth: 2
 
 Initializing the Class
 ======================

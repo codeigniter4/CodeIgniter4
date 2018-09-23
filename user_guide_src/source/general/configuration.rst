@@ -8,6 +8,10 @@ hold a class that contains its settings as public properties. Unlike in many oth
 there is no single class that you need to use to access your settings. Instead, you simply
 create an instance of the class and all your settings are there for you.
 
+.. contents::
+    :local:
+    :depth: 2
+
 Accessing Config Files
 ======================
 

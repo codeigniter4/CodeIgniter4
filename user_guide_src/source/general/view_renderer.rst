@@ -2,6 +2,10 @@
 View Renderer
 #############
 
+.. contents::
+    :local:
+    :depth: 2
+
 The ``view()`` function is a convenience function that grabs an instance of the
 ``renderer`` service, sets the data, and renders the view. While this is often
 exactly what you want, you may find times where you want to work with it more directly.

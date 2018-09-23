@@ -9,8 +9,9 @@ is the **Time** class and lives in the **CodeIgniter\\I18n** namespace.
 .. note:: Since the Time class extends DateTime, if there are features that you need that this class doesn't provide,
     you can likely find them within the DateTime class itself.
 
-.. contents:: Page Contents
+.. contents::
     :local:
+    :depth: 2
 
 =============
 Instantiating

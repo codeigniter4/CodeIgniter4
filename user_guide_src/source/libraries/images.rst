@@ -15,6 +15,7 @@ The following image libraries are supported: GD/GD2, and ImageMagick.
 
 .. contents::
     :local:
+    :depth: 2
 
 **********************
 Initializing the Class

@@ -2,6 +2,10 @@
 Database Metadata
 #################
 
+.. contents::
+    :local:
+    :depth: 2
+
 **************
 Table MetaData
 **************

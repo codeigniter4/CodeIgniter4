@@ -6,8 +6,9 @@ CodeIgniter supports Entity classes as a first-class citizen in it's database la
 them completely optional to use. They are commonly used as part of the Repository pattern, but can
 be used directly with the :doc:`Model </database/model>` if that fits your needs better.
 
-.. contents:: Page Contents
-	:local:
+.. contents::
+    :local:
+    :depth: 2
 
 Entity Usage
 ============

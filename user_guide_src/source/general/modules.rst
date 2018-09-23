@@ -7,7 +7,9 @@ centered around a specific subject, and can be thought of as mini-applications w
 of the standard file types within the framework are supported, like controllers, models, views, config files, helpers,
 language files, etc. Modules may contain as few, or as many, of these as you like.
 
-.. contents:: Page Contents
+.. contents::
+    :local:
+    :depth: 2
 
 ==========
 Namespaces

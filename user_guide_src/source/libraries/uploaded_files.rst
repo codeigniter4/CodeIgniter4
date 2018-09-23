@@ -8,8 +8,9 @@ array directly. This extends the :doc:`File class </libraries/files>` and thus g
 .. note:: This is not the same as the File Uploading class in previous versions of CodeIgniter. This provides a raw
 	interface to the uploaded files with a few small features. 
 
-.. contents:: Page Contents
-  :local:
+.. contents::
+    :local:
+    :depth: 2
 
 ===============
 Accessing Files
