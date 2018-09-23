@@ -39,7 +39,6 @@ a controller that extends ``CodeIgniter\Controller`` you can get it like::
 
 Second, you can use one of the functions available in the **url_helper**::
 
-	helper('url');
 	$uri = current_url(true);
 
 You must pass ``true`` as the first parameter, otherwise it will return the string representation of the current URL.
