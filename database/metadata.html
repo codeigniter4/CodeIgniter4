@@ -1,0 +1,413 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Database Metadata &mdash; CodeIgniter4 4.0.0-alpha.1 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/ci-icon.ico"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="CodeIgniter4 4.0.0-alpha.1 documentation" href="../index.html"/>
+        <link rel="up" title="Database Reference" href="index.html"/>
+        <link rel="next" title="Custom Function Calls" href="call_function.html"/>
+        <link rel="prev" title="Transactions" href="transactions.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> CodeIgniter4
+          
+
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Welcome to CodeIgniter4</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Installation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">Tutorial</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/index.html">CodeIgniter4 Overview</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../general/index.html">General Topics</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../libraries/index.html">Library Reference</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Database Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="examples.html">Quick Start: Usage Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html">Database Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="connecting.html">Connecting to a Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="queries.html">Running Queries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="results.html">Generating Query Results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="helpers.html">Query Helper Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="query_builder.html">Query Builder Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transactions.html">Transactions</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Getting MetaData</a></li>
+<li class="toctree-l2"><a class="reference internal" href="call_function.html">Custom Function Calls</a></li>
+<li class="toctree-l2"><a class="reference internal" href="model.html">Using CodeIgniter&#8217;s Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="entities.html">Using Entity Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="forge.html">Database Manipulation with Database Forge</a></li>
+<li class="toctree-l2"><a class="reference internal" href="migration.html">Database Migrations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="seeds.html">Database Seeding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="events.html">Database Events</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../helpers/index.html">Helpers</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../testing/index.html">Testing</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">The MIT License (MIT)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Change Log</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CodeIgniter4</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Database Reference</a> &raquo;</li>
+        
+      <li>Database Metadata</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="database-metadata">
+<h1>Database Metadata<a class="headerlink" href="#database-metadata" title="Permalink to this headline">¶</a></h1>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#table-metadata" id="id1">Table MetaData</a><ul>
+<li><a class="reference internal" href="#list-the-tables-in-your-database" id="id2">List the Tables in Your Database</a></li>
+<li><a class="reference internal" href="#determine-if-a-table-exists" id="id3">Determine If a Table Exists</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#field-metadata" id="id4">Field MetaData</a><ul>
+<li><a class="reference internal" href="#list-the-fields-in-a-table" id="id5">List the Fields in a Table</a></li>
+<li><a class="reference internal" href="#determine-if-a-field-is-present-in-a-table" id="id6">Determine If a Field is Present in a Table</a></li>
+<li><a class="reference internal" href="#retrieve-field-metadata" id="id7">Retrieve Field Metadata</a></li>
+<li><a class="reference internal" href="#list-the-indexes-in-a-table" id="id8">List the Indexes in a Table</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="table-metadata">
+<h2><a class="toc-backref" href="#id1">Table MetaData</a><a class="headerlink" href="#table-metadata" title="Permalink to this headline">¶</a></h2>
+<p>These functions let you fetch table information.</p>
+<div class="section" id="list-the-tables-in-your-database">
+<h3><a class="toc-backref" href="#id2">List the Tables in Your Database</a><a class="headerlink" href="#list-the-tables-in-your-database" title="Permalink to this headline">¶</a></h3>
+<p><strong>$db-&gt;listTables();</strong></p>
+<p>Returns an array containing the names of all the tables in the database
+you are currently connected to. Example:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$tables</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">listTables</span><span class="p">();</span>
+
+<span class="k">foreach</span> <span class="p">(</span><span class="nv">$tables</span> <span class="k">as</span> <span class="nv">$table</span><span class="p">)</span>
+<span class="p">{</span>
+        <span class="k">echo</span> <span class="nv">$table</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="determine-if-a-table-exists">
+<h3><a class="toc-backref" href="#id3">Determine If a Table Exists</a><a class="headerlink" href="#determine-if-a-table-exists" title="Permalink to this headline">¶</a></h3>
+<p><strong>$db-&gt;tableExists();</strong></p>
+<p>Sometimes it&#8217;s helpful to know whether a particular table exists before
+running an operation on it. Returns a boolean TRUE/FALSE. Usage example:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nv">$db</span><span class="o">-&gt;</span><span class="na">tableExists</span><span class="p">(</span><span class="s1">&#39;table_name&#39;</span><span class="p">))</span>
+<span class="p">{</span>
+        <span class="c1">// some code...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Replace <em>table_name</em> with the name of the table you are looking for.</p>
+</div>
+</div>
+</div>
+<div class="section" id="field-metadata">
+<h2><a class="toc-backref" href="#id4">Field MetaData</a><a class="headerlink" href="#field-metadata" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="list-the-fields-in-a-table">
+<h3><a class="toc-backref" href="#id5">List the Fields in a Table</a><a class="headerlink" href="#list-the-fields-in-a-table" title="Permalink to this headline">¶</a></h3>
+<p><strong>$db-&gt;getFieldNames()</strong></p>
+<p>Returns an array containing the field names. This query can be called
+two ways:</p>
+<p>1. You can supply the table name and call it from the $db-&gt;
+object:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$fields</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">getFieldNames</span><span class="p">(</span><span class="s1">&#39;table_name&#39;</span><span class="p">);</span>
+
+<span class="k">foreach</span> <span class="p">(</span><span class="nv">$fields</span> <span class="k">as</span> <span class="nv">$field</span><span class="p">)</span>
+<span class="p">{</span>
+        <span class="k">echo</span> <span class="nv">$field</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>2. You can gather the field names associated with any query you run by
+calling the function from your query result object:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$query</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s1">&#39;SELECT * FROM some_table&#39;</span><span class="p">);</span>
+
+<span class="k">foreach</span> <span class="p">(</span><span class="nv">$query</span><span class="o">-&gt;</span><span class="na">getFieldNames</span><span class="p">()</span> <span class="k">as</span> <span class="nv">$field</span><span class="p">)</span>
+<span class="p">{</span>
+        <span class="k">echo</span> <span class="nv">$field</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="determine-if-a-field-is-present-in-a-table">
+<h3><a class="toc-backref" href="#id6">Determine If a Field is Present in a Table</a><a class="headerlink" href="#determine-if-a-field-is-present-in-a-table" title="Permalink to this headline">¶</a></h3>
+<p><strong>$db-&gt;fieldExists()</strong></p>
+<p>Sometimes it&#8217;s helpful to know whether a particular field exists before
+performing an action. Returns a boolean TRUE/FALSE. Usage example:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nv">$db</span><span class="o">-&gt;</span><span class="na">fieldExists</span><span class="p">(</span><span class="s1">&#39;field_name&#39;</span><span class="p">,</span> <span class="s1">&#39;table_name&#39;</span><span class="p">))</span>
+<span class="p">{</span>
+        <span class="c1">// some code...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Replace <em>field_name</em> with the name of the column you are looking
+for, and replace <em>table_name</em> with the name of the table you are
+looking for.</p>
+</div>
+</div>
+<div class="section" id="retrieve-field-metadata">
+<h3><a class="toc-backref" href="#id7">Retrieve Field Metadata</a><a class="headerlink" href="#retrieve-field-metadata" title="Permalink to this headline">¶</a></h3>
+<p><strong>$db-&gt;getFieldData()</strong></p>
+<p>Returns an array of objects containing field information.</p>
+<p>Sometimes it&#8217;s helpful to gather the field names or other metadata, like
+the column type, max length, etc.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Not all databases provide meta-data.</p>
+</div>
+<p>Usage example:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$fields</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">getFieldData</span><span class="p">(</span><span class="s1">&#39;table_name&#39;</span><span class="p">);</span>
+
+<span class="k">foreach</span> <span class="p">(</span><span class="nv">$fields</span> <span class="k">as</span> <span class="nv">$field</span><span class="p">)</span>
+<span class="p">{</span>
+        <span class="k">echo</span> <span class="nv">$field</span><span class="o">-&gt;</span><span class="na">name</span><span class="p">;</span>
+        <span class="k">echo</span> <span class="nv">$field</span><span class="o">-&gt;</span><span class="na">type</span><span class="p">;</span>
+        <span class="k">echo</span> <span class="nv">$field</span><span class="o">-&gt;</span><span class="na">max_length</span><span class="p">;</span>
+        <span class="k">echo</span> <span class="nv">$field</span><span class="o">-&gt;</span><span class="na">primary_key</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>If you have run a query already you can use the result object instead of
+supplying the table name:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$query</span>  <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s2">&quot;YOUR QUERY&quot;</span><span class="p">);</span>
+<span class="nv">$fields</span> <span class="o">=</span> <span class="nv">$query</span><span class="o">-&gt;</span><span class="na">fieldData</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>The following data is available from this function if supported by your
+database:</p>
+<ul class="simple">
+<li>name - column name</li>
+<li>max_length - maximum length of the column</li>
+<li>primary_key - 1 if the column is a primary key</li>
+<li>type - the type of the column</li>
+</ul>
+</div>
+<div class="section" id="list-the-indexes-in-a-table">
+<h3><a class="toc-backref" href="#id8">List the Indexes in a Table</a><a class="headerlink" href="#list-the-indexes-in-a-table" title="Permalink to this headline">¶</a></h3>
+<p><strong>$db-&gt;getIndexData()</strong></p>
+<p>please write this, someone...</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="call_function.html" class="btn btn-neutral float-right" title="Custom Function Calls" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="transactions.html" class="btn btn-neutral" title="Transactions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014-2018 British Columbia Institute of Technology.
+      Last updated on Sep 23, 2018.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'4.0.0-alpha.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  false,
+            SOURCELINK_SUFFIX: ''
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

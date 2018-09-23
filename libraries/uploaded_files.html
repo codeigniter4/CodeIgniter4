@@ -1,0 +1,521 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Working with Uploaded Files &mdash; CodeIgniter4 4.0.0-alpha.1 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/ci-icon.ico"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="CodeIgniter4 4.0.0-alpha.1 documentation" href="../index.html"/>
+        <link rel="up" title="Library Reference" href="index.html"/>
+        <link rel="next" title="Working with URIs" href="uri.html"/>
+        <link rel="prev" title="Typography" href="typography.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> CodeIgniter4
+          
+
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Welcome to CodeIgniter4</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Installation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">Tutorial</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/index.html">CodeIgniter4 Overview</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../general/index.html">General Topics</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Library Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="api_responses.html">API Response Trait</a></li>
+<li class="toctree-l2"><a class="reference internal" href="benchmark.html">Benchmarking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="caching.html">Caching Driver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cli.html">CLI Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="content_negotiation.html">Content Negotiation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="curlrequest.html">CURLRequest Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="email.html">Email Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="files.html">Working with Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="honeypot.html">Honeypot Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="images.html">Image Manipulation Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="incomingrequest.html">IncomingRequest Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="localization.html">Localization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="message.html">HTTP Messages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pagination.html">Pagination</a></li>
+<li class="toctree-l2"><a class="reference internal" href="request.html">Request Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="response.html">HTTP Responses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="security.html">Security Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sessions.html">Session Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="throttler.html">Throttler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="time.html">Dates and Times</a></li>
+<li class="toctree-l2"><a class="reference internal" href="typography.html">Typography</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Working with Uploaded Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uri.html">Working with URIs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user_agent.html">User Agent Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="validation.html">Validation</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../database/index.html">Database Reference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../helpers/index.html">Helpers</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../testing/index.html">Testing</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">The MIT License (MIT)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Change Log</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CodeIgniter4</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Library Reference</a> &raquo;</li>
+        
+      <li>Working with Uploaded Files</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="working-with-uploaded-files">
+<h1>Working with Uploaded Files<a class="headerlink" href="#working-with-uploaded-files" title="Permalink to this headline">¶</a></h1>
+<p>CodeIgniter makes working with files uploaded through a form much simpler and more secure than using PHP&#8217;s <code class="docutils literal"><span class="pre">$_FILES</span></code>
+array directly. This extends the <a class="reference internal" href="files.html"><span class="doc">File class</span></a> and thus gains all of the features of that class.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This is not the same as the File Uploading class in previous versions of CodeIgniter. This provides a raw
+interface to the uploaded files with a few small features.</p>
+</div>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#accessing-files" id="id1">Accessing Files</a><ul>
+<li><a class="reference internal" href="#all-files" id="id2">All Files</a></li>
+<li><a class="reference internal" href="#single-file" id="id3">Single File</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#working-with-the-file" id="id4">Working With the File</a><ul>
+<li><a class="reference internal" href="#verify-a-file" id="id5">Verify A File</a></li>
+<li><a class="reference internal" href="#file-names" id="id6">File Names</a></li>
+<li><a class="reference internal" href="#other-file-info" id="id7">Other File Info</a></li>
+<li><a class="reference internal" href="#moving-files" id="id8">Moving Files</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="accessing-files">
+<h2><a class="toc-backref" href="#id1">Accessing Files</a><a class="headerlink" href="#accessing-files" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="all-files">
+<h3><a class="toc-backref" href="#id2">All Files</a><a class="headerlink" href="#all-files" title="Permalink to this headline">¶</a></h3>
+<p>When you upload files they can be accessed natively in PHP through the <code class="docutils literal"><span class="pre">$_FILES</span></code> superglobal. This array has some
+major shortcomings when working with multiple files uploaded at once, and has potential security flaws many developers
+are not aware of. CodeIgniter helps with both of these situations by standardizing your usage of files behind a
+common interface.</p>
+<p>Files are accessed through the current <code class="docutils literal"><span class="pre">IncomingRequest</span></code> instance. To retrieve all files that were uploaded with this
+request, use <code class="docutils literal"><span class="pre">getFiles()</span></code>. This will return an array of files represented by instances of <code class="docutils literal"><span class="pre">CodeIgniter\HTTP\Files\UploadedFile</span></code>:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$files</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">getFiles</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>Of course, there are multiple ways to name the file input, and anything but the simplest can create strange results.
+The array returns in a manner that you would expect. With the simplest usage, a single file might be submitted like:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;file&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;avatar&quot;</span> <span class="o">/&gt;</span>
+</pre></div>
+</div>
+<p>Which would return a simple array like:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="p">[</span>
+        <span class="s1">&#39;avatar&#39;</span> <span class="o">=&gt;</span> <span class="c1">// UploadedFile instance</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>If you used an array notation for the name, the input would look something like:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;file&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;my-form[details][avatar]&quot;</span> <span class="o">/&gt;</span>
+</pre></div>
+</div>
+<p>The array returned by <code class="docutils literal"><span class="pre">getFiles()</span></code> would look more like this:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="p">[</span>
+        <span class="s1">&#39;my-form&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+                <span class="s1">&#39;details&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+                        <span class="s1">&#39;avatar&#39;</span> <span class="o">=&gt;</span> <span class="c1">// UploadedFile instance</span>
+                <span class="p">]</span>
+        <span class="p">]</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>In some cases, you may specify an array of files to upload:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">Upload</span> <span class="nx">an</span> <span class="nx">avatar</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;file&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;my-form[details][avatars][]&quot;</span> <span class="o">/&gt;</span>
+<span class="nx">Upload</span> <span class="nx">an</span> <span class="nx">avatar</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;file&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;my-form[details][avatars][]&quot;</span> <span class="o">/&gt;</span>
+</pre></div>
+</div>
+<p>In this case, the returned array of files would be more like:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="p">[</span>
+        <span class="s1">&#39;my-form&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+                <span class="s1">&#39;details&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+                        <span class="s1">&#39;avatar&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+                                <span class="mi">0</span> <span class="o">=&gt;</span> <span class="cm">/* UploadedFile instance */</span><span class="p">,</span>
+                                <span class="mi">1</span> <span class="o">=&gt;</span> <span class="cm">/* UploadedFile instance */</span>
+                <span class="p">]</span>
+        <span class="p">]</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="single-file">
+<h3><a class="toc-backref" href="#id3">Single File</a><a class="headerlink" href="#single-file" title="Permalink to this headline">¶</a></h3>
+<p>If you just need to access a single file, you can use <code class="docutils literal"><span class="pre">getFile()</span></code> to retrieve the file instance directly. This will return an instance of <code class="docutils literal"><span class="pre">CodeIgniter\HTTP\Files\UploadedFile</span></code>:</p>
+<div class="section" id="simplest-usage">
+<h4>Simplest usage<a class="headerlink" href="#simplest-usage" title="Permalink to this headline">¶</a></h4>
+<p>With the simplest usage, a single file might be submitted like:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;file&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;userfile&quot;</span> <span class="o">/&gt;</span>
+</pre></div>
+</div>
+<p>Which would return a simple file instance like:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$file</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">getFile</span><span class="p">(</span><span class="s1">&#39;userfile&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="array-notation">
+<h4>Array notation<a class="headerlink" href="#array-notation" title="Permalink to this headline">¶</a></h4>
+<p>If you used an array notation for the name, the input would look something like:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;file&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;my-form[details][avatar]&quot;</span> <span class="o">/&gt;</span>
+</pre></div>
+</div>
+<p>For get the file instance:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$file</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">getFile</span><span class="p">(</span><span class="s1">&#39;my-form.details.avatar&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="multiple-files">
+<h4>Multiple files<a class="headerlink" href="#multiple-files" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;file&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;images[]&quot;</span> <span class="nx">multiple</span> <span class="o">/&gt;</span>
+</pre></div>
+</div>
+<p>In controller:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">if</span><span class="p">(</span><span class="nv">$imagefile</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">getFiles</span><span class="p">())</span>
+<span class="p">{</span>
+   <span class="k">foreach</span><span class="p">(</span><span class="nv">$imagefile</span><span class="p">[</span><span class="s1">&#39;images&#39;</span><span class="p">]</span> <span class="k">as</span> <span class="nv">$img</span><span class="p">)</span>
+   <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nv">$img</span><span class="o">-&gt;</span><span class="na">isValid</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="o">!</span> <span class="nv">$img</span><span class="o">-&gt;</span><span class="na">hasMoved</span><span class="p">())</span>
+      <span class="p">{</span>
+           <span class="nv">$newName</span> <span class="o">=</span> <span class="nv">$img</span><span class="o">-&gt;</span><span class="na">getRandomName</span><span class="p">();</span>
+           <span class="nv">$img</span><span class="o">-&gt;</span><span class="na">move</span><span class="p">(</span><span class="nx">WRITEPATH</span><span class="o">.</span><span class="s1">&#39;uploads&#39;</span><span class="p">,</span> <span class="nv">$newName</span><span class="p">);</span>
+      <span class="p">}</span>
+   <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>where the <strong>images</strong> is loop is from the form field name</p>
+<p>If there are multiple files with the same name you can use <code class="docutils literal"><span class="pre">getFile()</span></code> ro retrieve every file individually::
+In controller:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$file1</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">getFile</span><span class="p">(</span><span class="s1">&#39;images.0&#39;</span><span class="p">);</span>
+<span class="nv">$file2</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">getFile</span><span class="p">(</span><span class="s1">&#39;images.1&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Another example:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">Upload</span> <span class="nx">an</span> <span class="nx">avatar</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;file&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;my-form[details][avatars][]&quot;</span> <span class="o">/&gt;</span>
+<span class="nx">Upload</span> <span class="nx">an</span> <span class="nx">avatar</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;file&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;my-form[details][avatars][]&quot;</span> <span class="o">/&gt;</span>
+</pre></div>
+</div>
+<p>In controller:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$file1</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">getFile</span><span class="p">(</span><span class="s1">&#39;my-form.details.avatars.0&#39;</span><span class="p">);</span>
+<span class="nv">$file2</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">getFile</span><span class="p">(</span><span class="s1">&#39;my-form.details.avatars.1&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">using <code class="docutils literal"><span class="pre">getFiles()</span></code> is more appropriate</p>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="working-with-the-file">
+<h2><a class="toc-backref" href="#id4">Working With the File</a><a class="headerlink" href="#working-with-the-file" title="Permalink to this headline">¶</a></h2>
+<p>Once you&#8217;ve retrieved the UploadedFile instance, you can retrieve information about the file in safe ways, as well as
+move the file to a new location.</p>
+<div class="section" id="verify-a-file">
+<h3><a class="toc-backref" href="#id5">Verify A File</a><a class="headerlink" href="#verify-a-file" title="Permalink to this headline">¶</a></h3>
+<p>You can check that a file was actually uploaded via HTTP with no errors by calling the <code class="docutils literal"><span class="pre">isValid()</span></code> method:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">isValid</span><span class="p">())</span>
+<span class="p">{</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="nx">RuntimeException</span><span class="p">(</span><span class="nv">$file</span><span class="o">-&gt;</span><span class="na">getErrorString</span><span class="p">()</span><span class="o">.</span><span class="s1">&#39;(&#39;</span><span class="o">.</span><span class="nv">$file</span><span class="o">-&gt;</span><span class="na">getError</span><span class="p">()</span><span class="o">.</span><span class="s1">&#39;)&#39;</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>As seen in this example, if a file had an upload error, you can retrieve the error code (an integer) and the error
+message with the <code class="docutils literal"><span class="pre">getError()</span></code> and <code class="docutils literal"><span class="pre">getErrorString()</span></code> methods. The following errors can be discovered through
+this method:</p>
+<ul class="simple">
+<li>The file exceeds your upload_max_filesize ini directive.</li>
+<li>The file exceeds the upload limit defined in your form.</li>
+<li>The file was only partially uploaded.</li>
+<li>No file was uploaded.</li>
+<li>The file could not be written on disk.</li>
+<li>File could not be uploaded: missing temporary directory.</li>
+<li>File upload was stopped by a PHP extension.</li>
+</ul>
+</div>
+<div class="section" id="file-names">
+<h3><a class="toc-backref" href="#id6">File Names</a><a class="headerlink" href="#file-names" title="Permalink to this headline">¶</a></h3>
+<p><strong>getName()</strong></p>
+<p>You can retrieve the original filename provided by the client with the <code class="docutils literal"><span class="pre">getName()</span></code> method. This will typically be the
+filename sent by the client, and should not be trusted. If the file has been moved, this will return the final name of
+the moved file:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$name</span> <span class="o">=</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">getName</span><span class="p">();</span>
+</pre></div>
+</div>
+<p><strong>getClientName()</strong></p>
+<p>Always returns the original name of the uploaded file as sent by the client, even if the file has been moved:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$originalName</span> <span class="o">=</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">getClientName</span><span class="p">();</span>
+</pre></div>
+</div>
+<p><strong>getTempName()</strong></p>
+<p>To get the full path of the temp file that was created during the upload, you can use the <code class="docutils literal"><span class="pre">getTempName()</span></code> method:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$tempfile</span> <span class="o">=</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">getTempName</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="other-file-info">
+<h3><a class="toc-backref" href="#id7">Other File Info</a><a class="headerlink" href="#other-file-info" title="Permalink to this headline">¶</a></h3>
+<p><strong>getClientExtension()</strong></p>
+<p>Returns the original file extension, based on the file name that was uploaded. This is NOT a trusted source. For a
+trusted version, use <code class="docutils literal"><span class="pre">getExtension()</span></code> instead:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$ext</span> <span class="o">=</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">getClientExtension</span><span class="p">();</span>
+</pre></div>
+</div>
+<p><strong>getClientType()</strong></p>
+<p>Returns the mime type (mime type) of the file as provided by the client. This is NOT a trusted value. For a trusted
+version, use <code class="docutils literal"><span class="pre">getType()</span></code> instead:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$type</span> <span class="o">=</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">getClientType</span><span class="p">();</span>
+
+<span class="k">echo</span> <span class="nv">$type</span><span class="p">;</span> <span class="c1">// image/png</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="moving-files">
+<h3><a class="toc-backref" href="#id8">Moving Files</a><a class="headerlink" href="#moving-files" title="Permalink to this headline">¶</a></h3>
+<p>Each file can be moved to its new location with the aptly named <code class="docutils literal"><span class="pre">move()</span></code> method. This takes the directory to move
+the file to as the first parameter:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$file</span><span class="o">-&gt;</span><span class="na">move</span><span class="p">(</span><span class="nx">WRITEPATH</span><span class="o">.</span><span class="s1">&#39;uploads&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>By default, the original filename was used. You can specify a new filename by passing it as the second parameter:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$newName</span> <span class="o">=</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">getRandomName</span><span class="p">();</span>
+<span class="nv">$file</span><span class="o">-&gt;</span><span class="na">move</span><span class="p">(</span><span class="nx">WRITEPATH</span><span class="o">.</span><span class="s1">&#39;uploads&#39;</span><span class="p">,</span> <span class="nv">$newName</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Once the file has been removed the temporary file is deleted. You can check if a file has been moved already with
+the <code class="docutils literal"><span class="pre">hasMoved()</span></code> method, which returns a boolean:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nv">$file</span><span class="o">-&gt;</span><span class="na">isValid</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="o">!</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">hasMoved</span><span class="p">())</span>
+<span class="p">{</span>
+    <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">move</span><span class="p">(</span><span class="nv">$path</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Moving an uploaded file can fail, with an HTTPException, under several circumstances:</p>
+<ul class="simple">
+<li>the file has already been moved</li>
+<li>the file did not upload successfully</li>
+<li>the file move operation fails (eg. improper permissions)</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="uri.html" class="btn btn-neutral float-right" title="Working with URIs" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="typography.html" class="btn btn-neutral" title="Typography" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014-2018 British Columbia Institute of Technology.
+      Last updated on Sep 23, 2018.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'4.0.0-alpha.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  false,
+            SOURCELINK_SUFFIX: ''
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

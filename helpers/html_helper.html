@@ -1,0 +1,1001 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>HTML Helper &mdash; CodeIgniter4 4.0.0-alpha.1 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/ci-icon.ico"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="CodeIgniter4 4.0.0-alpha.1 documentation" href="../index.html"/>
+        <link rel="up" title="Helpers" href="index.html"/>
+        <link rel="next" title="Inflector Helper" href="inflector_helper.html"/>
+        <link rel="prev" title="Form Helper" href="form_helper.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> CodeIgniter4
+          
+
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Welcome to CodeIgniter4</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Installation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">Tutorial</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/index.html">CodeIgniter4 Overview</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../general/index.html">General Topics</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../libraries/index.html">Library Reference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../database/index.html">Database Reference</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Helpers</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="array_helper.html">Array Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cookie_helper.html">Cookie Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="date_helper.html">Date Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="filesystem_helper.html">Filesystem Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="form_helper.html">Form Helper</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">HTML Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="inflector_helper.html">Inflector Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="number_helper.html">Number Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="security_helper.html">Security Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="text_helper.html">Text Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="url_helper.html">URL Helper</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../testing/index.html">Testing</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">The MIT License (MIT)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Change Log</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CodeIgniter4</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Helpers</a> &raquo;</li>
+        
+      <li>HTML Helper</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="html-helper">
+<h1>HTML Helper<a class="headerlink" href="#html-helper" title="Permalink to this headline">¶</a></h1>
+<p>The HTML Helper file contains functions that assist in working with
+HTML.</p>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#loading-this-helper" id="id1">Loading this Helper</a></li>
+<li><a class="reference internal" href="#available-functions" id="id2">Available Functions</a></li>
+</ul>
+</div>
+<div class="custom-index container"></div><div class="section" id="loading-this-helper">
+<h2><a class="toc-backref" href="#id1">Loading this Helper</a><a class="headerlink" href="#loading-this-helper" title="Permalink to this headline">¶</a></h2>
+<p>This helper is loaded using the following code:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">helper</span><span class="p">(</span><span class="s1">&#39;html&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="available-functions">
+<h2><a class="toc-backref" href="#id2">Available Functions</a><a class="headerlink" href="#available-functions" title="Permalink to this headline">¶</a></h2>
+<p>The following functions are available:</p>
+<dl class="function">
+<dt id="img">
+<code class="descname">img</code><span class="sig-paren">(</span><span class="optional">[</span><em>$src = ''</em><span class="optional">[</span>, <em>$indexPage = false</em><span class="optional">[</span>, <em>$attributes = ''</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#img" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$src</strong> (<em>mixed</em>) &#8211; Image source data</li>
+<li><strong>$indexPage</strong> (<em>bool</em>) &#8211; Whether to treat $src as a routed URI string</li>
+<li><strong>$attributes</strong> (<em>mixed</em>) &#8211; HTML attributes</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">HTML image tag</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Lets you create HTML &lt;img /&gt; tags. The first parameter contains the
+image source. Example:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">img</span><span class="p">(</span><span class="s1">&#39;images/picture.jpg&#39;</span><span class="p">);</span>
+<span class="c1">// &lt;img src=&quot;http://site.com/images/picture.jpg&quot; /&gt;</span>
+</pre></div>
+</div>
+<p>There is an optional second parameter that is a true/false value that
+specifics if the <em>src</em> should have the page specified by
+<code class="docutils literal"><span class="pre">$config['indexPage']</span></code> added to the address it creates.
+Presumably, this would be if you were using a media controller:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">img</span><span class="p">(</span><span class="s1">&#39;images/picture.jpg&#39;</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
+<span class="c1">// &lt;img src=&quot;http://site.com/index.php/images/picture.jpg&quot; alt=&quot;&quot; /&gt;</span>
+</pre></div>
+</div>
+<p>Additionally, an associative array can be passed as the first parameter,
+for complete control over all attributes and values. If an <em>alt</em> attribute
+is not provided, CodeIgniter will generate an empty string.</p>
+<p>Example:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$imageProperties</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;src&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;images/picture.jpg&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;alt&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;Me, demonstrating how to eat 4 slices of pizza at one time&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;class&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;post_images&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;width&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;200&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;height&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;200&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;title&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;That was quite a night&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;rel&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;lightbox&#39;</span>
+<span class="p">);</span>
+
+<span class="nx">img</span><span class="p">(</span><span class="nv">$imageProperties</span><span class="p">);</span>
+<span class="c1">// &lt;img src=&quot;http://site.com/index.php/images/picture.jpg&quot; alt=&quot;Me, demonstrating how to eat 4 slices of pizza at one time&quot; class=&quot;post_images&quot; width=&quot;200&quot; height=&quot;200&quot; title=&quot;That was quite a night&quot; rel=&quot;lightbox&quot; /&gt;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="link_tag">
+<code class="descname">link_tag</code><span class="sig-paren">(</span><span class="optional">[</span><em>$href = ''</em><span class="optional">[</span>, <em>$rel = 'stylesheet'</em><span class="optional">[</span>, <em>$type = 'text/css'</em><span class="optional">[</span>, <em>$title = ''</em><span class="optional">[</span>, <em>$media = ''</em><span class="optional">[</span>, <em>$indexPage = false</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#link_tag" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$href</strong> (<em>string</em>) &#8211; The source of the link file</li>
+<li><strong>$rel</strong> (<em>string</em>) &#8211; Relation type</li>
+<li><strong>$type</strong> (<em>string</em>) &#8211; Type of the related document</li>
+<li><strong>$title</strong> (<em>string</em>) &#8211; Link title</li>
+<li><strong>$media</strong> (<em>string</em>) &#8211; Media type</li>
+<li><strong>$indexPage</strong> (<em>bool</em>) &#8211; Whether to treat $src as a routed URI string</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">HTML link tag</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Lets you create HTML &lt;link /&gt; tags. This is useful for stylesheet links,
+as well as other links. The parameters are <em>href</em>, with optional <em>rel</em>,
+<em>type</em>, <em>title</em>, <em>media</em> and <em>indexPage</em>.</p>
+<p><em>indexPage</em> is a boolean value that specifies if the <em>href</em> should have
+the page specified by <code class="docutils literal"><span class="pre">$config['indexPage']</span></code> added to the address it creates.</p>
+<p>Example:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">link_tag</span><span class="p">(</span><span class="s1">&#39;css/mystyles.css&#39;</span><span class="p">);</span>
+<span class="c1">// &lt;link href=&quot;http://site.com/css/mystyles.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot; /&gt;</span>
+</pre></div>
+</div>
+<p>Further examples:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">link_tag</span><span class="p">(</span><span class="s1">&#39;favicon.ico&#39;</span><span class="p">,</span> <span class="s1">&#39;shortcut icon&#39;</span><span class="p">,</span> <span class="s1">&#39;image/ico&#39;</span><span class="p">);</span>
+<span class="c1">// &lt;link href=&quot;http://site.com/favicon.ico&quot; rel=&quot;shortcut icon&quot; type=&quot;image/ico&quot; /&gt;</span>
+
+<span class="k">echo</span> <span class="nx">link_tag</span><span class="p">(</span><span class="s1">&#39;feed&#39;</span><span class="p">,</span> <span class="s1">&#39;alternate&#39;</span><span class="p">,</span> <span class="s1">&#39;application/rss+xml&#39;</span><span class="p">,</span> <span class="s1">&#39;My RSS Feed&#39;</span><span class="p">);</span>
+<span class="c1">// &lt;link href=&quot;http://site.com/feed&quot; rel=&quot;alternate&quot; type=&quot;application/rss+xml&quot; title=&quot;My RSS Feed&quot; /&gt;</span>
+</pre></div>
+</div>
+<p>Alternately, an associative array can be passed to the <code class="docutils literal"><span class="pre">link_tag()</span></code> function
+for complete control over all attributes and values:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$link</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;href&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;css/printer.css&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;rel&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;stylesheet&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;type&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;text/css&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;media&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;print&#39;</span>
+<span class="p">);</span>
+
+<span class="k">echo</span> <span class="nx">link_tag</span><span class="p">(</span><span class="nv">$link</span><span class="p">);</span>
+<span class="c1">// &lt;link href=&quot;http://site.com/css/printer.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot; media=&quot;print&quot; /&gt;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="script_tag">
+<code class="descname">script_tag</code><span class="sig-paren">(</span><span class="optional">[</span><em>$src = ''</em><span class="optional">[</span>, <em>$indexPage = false</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#script_tag" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$src</strong> (<em>mixed</em>) &#8211; The source name of a JavaScript file</li>
+<li><strong>$indexPage</strong> (<em>bool</em>) &#8211; Whether to treat $src as a routed URI string</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">HTML script tag</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Lets you create HTML &lt;script&gt;&lt;/script&gt; tags. The parameters is <em>src</em>, with optional <em>indexPage</em>.</p>
+<p><em>indexPage</em> is a boolean value that specifies if the <em>src</em> should have
+the page specified by <code class="docutils literal"><span class="pre">$config['indexPage']</span></code> added to the address it creates.</p>
+<p>Example:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">script_tag</span><span class="p">(</span><span class="s1">&#39;js/mystyles.js&#39;</span><span class="p">);</span>
+<span class="c1">// &lt;script src=&quot;http://site.com/js/mystyles.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;</span>
+</pre></div>
+</div>
+<p>Alternately, an associative array can be passed to the <code class="docutils literal"><span class="pre">script_tag()</span></code> function
+for complete control over all attributes and values:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$script</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;src&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;js/printer.js&#39;</span><span class="p">);</span>
+
+<span class="k">echo</span> <span class="nx">script_tag</span><span class="p">(</span><span class="nv">$script</span><span class="p">);</span>
+<span class="c1">// &lt;script src=&quot;http://site.com/js/printer.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="ul">
+<code class="descname">ul</code><span class="sig-paren">(</span><em>$list</em><span class="optional">[</span>, <em>$attributes = ''</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#ul" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$list</strong> (<em>array</em>) &#8211; List entries</li>
+<li><strong>$attributes</strong> (<em>array</em>) &#8211; HTML attributes</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">HTML-formatted unordered list</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Permits you to generate unordered HTML lists from simple or
+multi-dimensional arrays. Example:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$list</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;red&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;blue&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;green&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;yellow&#39;</span>
+<span class="p">);</span>
+
+<span class="nv">$attributes</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;class&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;boldlist&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;id&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;mylist&#39;</span>
+<span class="p">);</span>
+
+<span class="k">echo</span> <span class="nx">ul</span><span class="p">(</span><span class="nv">$list</span><span class="p">,</span> <span class="nv">$attributes</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The above code will produce this:</p>
+<div class="highlight-html"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">ul</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;boldlist&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;mylist&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>red<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>blue<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>green<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>yellow<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>Here is a more complex example, using a multi-dimensional array:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$attributes</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;class&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;boldlist&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;id&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;mylist&#39;</span>
+<span class="p">);</span>
+
+<span class="nv">$list</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;colors&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+        <span class="s1">&#39;red&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;blue&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;green&#39;</span>
+    <span class="p">),</span>
+    <span class="s1">&#39;shapes&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+        <span class="s1">&#39;round&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;square&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;circles&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+            <span class="s1">&#39;ellipse&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;oval&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;sphere&#39;</span>
+        <span class="p">)</span>
+    <span class="p">),</span>
+    <span class="s1">&#39;moods&#39;</span>  <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+        <span class="s1">&#39;happy&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;upset&#39;</span>   <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+            <span class="s1">&#39;defeated&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+                <span class="s1">&#39;dejected&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;disheartened&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;depressed&#39;</span>
+            <span class="p">),</span>
+            <span class="s1">&#39;annoyed&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;cross&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;angry&#39;</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+<span class="p">);</span>
+
+<span class="k">echo</span> <span class="nx">ul</span><span class="p">(</span><span class="nv">$list</span><span class="p">,</span> <span class="nv">$attributes</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The above code will produce this:</p>
+<div class="highlight-html"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">ul</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;boldlist&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;mylist&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>colors
+        <span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>red<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>blue<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>green<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>shapes
+        <span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>round<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>suare<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>circles
+                <span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>
+                    <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>elipse<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+                    <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>oval<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+                    <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>sphere<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+                <span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
+            <span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>moods
+        <span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>happy<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>upset
+                <span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>
+                    <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>defeated
+                        <span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>
+                            <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>dejected<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+                            <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>disheartened<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+                            <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>depressed<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+                        <span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
+                    <span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+                    <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>annoyed<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+                    <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>cross<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+                    <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>angry<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+                <span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
+            <span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="ol">
+<code class="descname">ol</code><span class="sig-paren">(</span><em>$list</em>, <em>$attributes = ''</em><span class="sig-paren">)</span><a class="headerlink" href="#ol" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$list</strong> (<em>array</em>) &#8211; List entries</li>
+<li><strong>$attributes</strong> (<em>array</em>) &#8211; HTML attributes</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">HTML-formatted ordered list</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Identical to <a class="reference internal" href="#ul" title="ul"><code class="xref php php-func docutils literal"><span class="pre">ul()</span></code></a>, only it produces the &lt;ol&gt; tag for
+ordered lists instead of &lt;ul&gt;.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="video">
+<code class="descname">video</code><span class="sig-paren">(</span><em>$src</em><span class="optional">[</span>, <em>$unsupportedMessage = ''</em><span class="optional">[</span>, <em>$attributes = ''</em><span class="optional">[</span>, <em>$tracks = []</em><span class="optional">[</span>, <em>$indexPage = false</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#video" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$src</strong> (<em>mixed</em>) &#8211; Either a source string or an array of sources. See <a class="reference internal" href="#source" title="source"><code class="xref php php-func docutils literal"><span class="pre">source()</span></code></a> function</li>
+<li><strong>$unsupportedMessage</strong> (<em>string</em>) &#8211; The message to display if the media tag is not supported by the browser</li>
+<li><strong>$attributes</strong> (<em>string</em>) &#8211; HTML attributes</li>
+<li><strong>$tracks</strong> (<em>array</em>) &#8211; Use the track function inside an array. See <a class="reference internal" href="#track" title="track"><code class="xref php php-func docutils literal"><span class="pre">track()</span></code></a> function</li>
+<li><strong>$indexPage</strong> (<em>bool</em>) &#8211; </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">HTML-formatted video element</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Permits you to generate HTML video element from simple or
+source arrays. Example:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$tracks</span> <span class="o">=</span>
+<span class="p">[</span>
+    <span class="nx">track</span><span class="p">(</span><span class="s1">&#39;subtitles_no.vtt&#39;</span><span class="p">,</span> <span class="s1">&#39;subtitles&#39;</span><span class="p">,</span> <span class="s1">&#39;no&#39;</span><span class="p">,</span> <span class="s1">&#39;Norwegian No&#39;</span><span class="p">),</span>
+    <span class="nx">track</span><span class="p">(</span><span class="s1">&#39;subtitles_yes.vtt&#39;</span><span class="p">,</span> <span class="s1">&#39;subtitles&#39;</span><span class="p">,</span> <span class="s1">&#39;yes&#39;</span><span class="p">,</span> <span class="s1">&#39;Norwegian Yes&#39;</span><span class="p">)</span>
+<span class="p">];</span>
+
+<span class="k">echo</span> <span class="nx">video</span><span class="p">(</span><span class="s1">&#39;test.mp4&#39;</span><span class="p">,</span> <span class="s1">&#39;Your browser does not support the video tag.&#39;</span><span class="p">,</span> <span class="s1">&#39;controls&#39;</span><span class="p">);</span>
+
+<span class="k">echo</span> <span class="nx">video</span>
+<span class="p">(</span>
+    <span class="s1">&#39;http://www.codeigniter.com/test.mp4&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Your browser does not support the video tag.&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;controls&#39;</span><span class="p">,</span>
+    <span class="nv">$tracks</span>
+<span class="p">);</span>
+
+<span class="k">echo</span> <span class="nx">video</span>
+<span class="p">(</span>
+    <span class="p">[</span>
+      <span class="nx">source</span><span class="p">(</span><span class="s1">&#39;movie.mp4&#39;</span><span class="p">,</span> <span class="s1">&#39;video/mp4&#39;</span><span class="p">,</span> <span class="s1">&#39;class=&quot;test&quot;&#39;</span><span class="p">),</span>
+      <span class="nx">source</span><span class="p">(</span><span class="s1">&#39;movie.ogg&#39;</span><span class="p">,</span> <span class="s1">&#39;video/ogg&#39;</span><span class="p">),</span>
+      <span class="nx">source</span><span class="p">(</span><span class="s1">&#39;movie.mov&#39;</span><span class="p">,</span> <span class="s1">&#39;video/quicktime&#39;</span><span class="p">),</span>
+      <span class="nx">source</span><span class="p">(</span><span class="s1">&#39;movie.ogv&#39;</span><span class="p">,</span> <span class="s1">&#39;video/ogv; codecs=dirac, speex&#39;</span><span class="p">)</span>
+    <span class="p">],</span>
+    <span class="s1">&#39;Your browser does not support the video tag.&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;class=&quot;test&quot; controls&#39;</span><span class="p">,</span>
+    <span class="nv">$tracks</span>
+ <span class="p">);</span>
+</pre></div>
+</div>
+<p>The above code will produce this:</p>
+<div class="highlight-html"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">video</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;test.mp4&quot;</span> <span class="na">controls</span><span class="p">&gt;</span>
+  Your browser does not support the video tag.
+<span class="p">&lt;/</span><span class="nt">video</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">video</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;http://www.codeigniter.com/test.mp4&quot;</span> <span class="na">controls</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">track</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;subtitles_no.vtt&quot;</span> <span class="na">kind</span><span class="o">=</span><span class="s">&quot;subtitles&quot;</span> <span class="na">srclang</span><span class="o">=</span><span class="s">&quot;no&quot;</span> <span class="na">label</span><span class="o">=</span><span class="s">&quot;Norwegian No&quot;</span> <span class="p">/&gt;</span>
+  <span class="p">&lt;</span><span class="nt">track</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;subtitles_yes.vtt&quot;</span> <span class="na">kind</span><span class="o">=</span><span class="s">&quot;subtitles&quot;</span> <span class="na">srclang</span><span class="o">=</span><span class="s">&quot;yes&quot;</span> <span class="na">label</span><span class="o">=</span><span class="s">&quot;Norwegian Yes&quot;</span> <span class="p">/&gt;</span>
+  Your browser does not support the video tag.
+<span class="p">&lt;/</span><span class="nt">video</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">video</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;test&quot;</span> <span class="na">controls</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">source</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;movie.mp4&quot;</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;video/mp4&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;test&quot;</span> <span class="p">/&gt;</span>
+  <span class="p">&lt;</span><span class="nt">source</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;movie.ogg&quot;</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;video/ogg&quot;</span> <span class="p">/&gt;</span>
+  <span class="p">&lt;</span><span class="nt">source</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;movie.mov&quot;</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;video/quicktime&quot;</span> <span class="p">/&gt;</span>
+  <span class="p">&lt;</span><span class="nt">source</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;movie.ogv&quot;</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;video/ogv; codecs=dirac, speex&quot;</span> <span class="p">/&gt;</span>
+  <span class="p">&lt;</span><span class="nt">track</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;subtitles_no.vtt&quot;</span> <span class="na">kind</span><span class="o">=</span><span class="s">&quot;subtitles&quot;</span> <span class="na">srclang</span><span class="o">=</span><span class="s">&quot;no&quot;</span> <span class="na">label</span><span class="o">=</span><span class="s">&quot;Norwegian No&quot;</span> <span class="p">/&gt;</span>
+  <span class="p">&lt;</span><span class="nt">track</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;subtitles_yes.vtt&quot;</span> <span class="na">kind</span><span class="o">=</span><span class="s">&quot;subtitles&quot;</span> <span class="na">srclang</span><span class="o">=</span><span class="s">&quot;yes&quot;</span> <span class="na">label</span><span class="o">=</span><span class="s">&quot;Norwegian Yes&quot;</span> <span class="p">/&gt;</span>
+  Your browser does not support the video tag.
+<span class="p">&lt;/</span><span class="nt">video</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="audio">
+<code class="descname">audio</code><span class="sig-paren">(</span><em>$src</em><span class="optional">[</span>, <em>$unsupportedMessage = ''</em><span class="optional">[</span>, <em>$attributes = ''</em><span class="optional">[</span>, <em>$tracks = []</em><span class="optional">[</span>, <em>$indexPage = false</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#audio" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$src</strong> (<em>mixed</em>) &#8211; Either a source string or an array of sources. See <a class="reference internal" href="#source" title="source"><code class="xref php php-func docutils literal"><span class="pre">source()</span></code></a> function</li>
+<li><strong>$unsupportedMessage</strong> (<em>string</em>) &#8211; The message to display if the media tag is not supported by the browser</li>
+<li><strong>$attributes</strong> (<em>string</em>) &#8211; </li>
+<li><strong>$tracks</strong> (<em>array</em>) &#8211; Use the track function inside an array. See <a class="reference internal" href="#track" title="track"><code class="xref php php-func docutils literal"><span class="pre">track()</span></code></a> function</li>
+<li><strong>$indexPage</strong> (<em>bool</em>) &#8211; </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">HTML-formatted audio element</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Identical to <a class="reference internal" href="#video" title="video"><code class="xref php php-func docutils literal"><span class="pre">video()</span></code></a>, only it produces the &lt;audio&gt; tag instead of &lt;video&gt;.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="source">
+<code class="descname">source</code><span class="sig-paren">(</span><em>$src = ''</em><span class="optional">[</span>, <em>$type = false</em><span class="optional">[</span>, <em>$attributes = ''</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#source" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$src</strong> (<em>string</em>) &#8211; The path of the media resource</li>
+<li><strong>$type</strong> (<em>bool</em>) &#8211; The MIME-type of the resource with optional codecs parameters</li>
+<li><strong>$attributes</strong> (<em>array</em>) &#8211; HTML attributes</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">HTML source tag</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Lets you create HTML &lt;source /&gt; tags. The first parameter contains the
+source source. Example:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">source</span><span class="p">(</span><span class="s1">&#39;movie.mp4&#39;</span><span class="p">,</span> <span class="s1">&#39;video/mp4&#39;</span><span class="p">,</span> <span class="s1">&#39;class=&quot;test&quot;&#39;</span><span class="p">);</span>
+<span class="c1">// &lt;source src=&quot;movie.mp4&quot; type=&quot;video/mp4&quot; class=&quot;test&quot; /&gt;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="embed">
+<code class="descname">embed</code><span class="sig-paren">(</span><em>$src = ''</em><span class="optional">[</span>, <em>$type = false</em><span class="optional">[</span>, <em>$attributes = ''</em><span class="optional">[</span>, <em>$indexPage = false</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#embed" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$src</strong> (<em>string</em>) &#8211; The path of the resource to embed</li>
+<li><strong>$type</strong> (<em>bool</em>) &#8211; MIME-type</li>
+<li><strong>$attributes</strong> (<em>array</em>) &#8211; HTML attributes</li>
+<li><strong>$indexPage</strong> (<em>bool</em>) &#8211; </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">HTML embed tag</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Lets you create HTML &lt;embed /&gt; tags. The first parameter contains the
+embed source. Example:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">embed</span><span class="p">(</span><span class="s1">&#39;movie.mov&#39;</span><span class="p">,</span> <span class="s1">&#39;video/quicktime&#39;</span><span class="p">,</span> <span class="s1">&#39;class=&quot;test&quot;&#39;</span><span class="p">);</span>
+<span class="c1">// &lt;embed src=&quot;movie.mov&quot; type=&quot;video/quicktime&quot; class=&quot;test&quot;/&gt;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="object">
+<code class="descname">object</code><span class="sig-paren">(</span><em>$data = ''</em><span class="optional">[</span>, <em>$type = false</em><span class="optional">[</span>, <em>$attributes = ''</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#object" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$data</strong> (<em>string</em>) &#8211; A resource URL</li>
+<li><strong>$type</strong> (<em>bool</em>) &#8211; Content-type of the resource</li>
+<li><strong>$attributes</strong> (<em>array</em>) &#8211; HTML attributes</li>
+<li><strong>$params</strong> (<em>array</em>) &#8211; Use the param function inside an array. See <a class="reference internal" href="#param" title="param"><code class="xref php php-func docutils literal"><span class="pre">param()</span></code></a> function</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">HTML object tag</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Lets you create HTML &lt;object /&gt; tags. The first parameter contains the
+object data. Example:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">object</span><span class="p">(</span><span class="s1">&#39;movie.swf&#39;</span><span class="p">,</span> <span class="s1">&#39;application/x-shockwave-flash&#39;</span><span class="p">,</span> <span class="s1">&#39;class=&quot;test&quot;&#39;</span><span class="p">);</span>
+
+<span class="k">echo</span> <span class="nx">object</span>
+<span class="p">(</span>
+    <span class="s1">&#39;movie.swf&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;application/x-shockwave-flash&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;class=&quot;test&quot;&#39;</span><span class="p">,</span>
+    <span class="p">[</span>
+        <span class="nx">param</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="s1">&#39;bar&#39;</span><span class="p">,</span> <span class="s1">&#39;ref&#39;</span><span class="p">,</span> <span class="s1">&#39;class=&quot;test&quot;&#39;</span><span class="p">),</span>
+        <span class="nx">param</span><span class="p">(</span><span class="s1">&#39;hello&#39;</span><span class="p">,</span> <span class="s1">&#39;world&#39;</span><span class="p">,</span> <span class="s1">&#39;ref&#39;</span><span class="p">,</span> <span class="s1">&#39;class=&quot;test&quot;&#39;</span><span class="p">)</span>
+    <span class="p">]</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+<p>The above code will produce this:</p>
+<div class="highlight-html"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">object</span> <span class="na">data</span><span class="o">=</span><span class="s">&quot;movie.swf&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;test&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">object</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">object</span> <span class="na">data</span><span class="o">=</span><span class="s">&quot;movie.swf&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;test&quot;</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">param</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;foo&quot;</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;ref&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;bar&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;test&quot;</span> <span class="p">/&gt;</span>
+  <span class="p">&lt;</span><span class="nt">param</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;hello&quot;</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;ref&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;world&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;test&quot;</span> <span class="p">/&gt;</span>
+<span class="p">&lt;/</span><span class="nt">object</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="param">
+<code class="descname">param</code><span class="sig-paren">(</span><em>$name = ''</em><span class="optional">[</span>, <em>$type = false</em><span class="optional">[</span>, <em>$attributes = ''</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#param" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$name</strong> (<em>string</em>) &#8211; The name of the parameter</li>
+<li><strong>$value</strong> (<em>string</em>) &#8211; The value of the parameter</li>
+<li><strong>$attributes</strong> (<em>array</em>) &#8211; HTML attributes</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">HTML param tag</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Lets you create HTML &lt;param /&gt; tags. The first parameter contains the
+param source. Example:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">param</span><span class="p">(</span><span class="s1">&#39;movie.mov&#39;</span><span class="p">,</span> <span class="s1">&#39;video/quicktime&#39;</span><span class="p">,</span> <span class="s1">&#39;class=&quot;test&quot;&#39;</span><span class="p">);</span>
+<span class="c1">// &lt;param src=&quot;movie.mov&quot; type=&quot;video/quicktime&quot; class=&quot;test&quot;/&gt;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="track">
+<code class="descname">track</code><span class="sig-paren">(</span><em>$name = ''</em><span class="optional">[</span>, <em>$type = false</em><span class="optional">[</span>, <em>$attributes = ''</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#track" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$name</strong> (<em>string</em>) &#8211; The name of the parameter</li>
+<li><strong>$value</strong> (<em>string</em>) &#8211; The value of the parameter</li>
+<li><strong>$attributes</strong> (<em>array</em>) &#8211; HTML attributes</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">HTML track tag</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Generates a track element to specify timed tracks. The tracks are
+formatted in WebVTT format. Example:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">track</span><span class="p">(</span><span class="s1">&#39;subtitles_no.vtt&#39;</span><span class="p">,</span> <span class="s1">&#39;subtitles&#39;</span><span class="p">,</span> <span class="s1">&#39;no&#39;</span><span class="p">,</span> <span class="s1">&#39;Norwegian No&#39;</span><span class="p">);</span>
+<span class="c1">// &lt;track src=&quot;subtitles_no.vtt&quot; kind=&quot;subtitles&quot; srclang=&quot;no&quot; label=&quot;Norwegian No&quot; /&gt;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="doctype">
+<code class="descname">doctype</code><span class="sig-paren">(</span><span class="optional">[</span><em>$type = 'html5'</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#doctype" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$type</strong> (<em>string</em>) &#8211; Doctype name</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">HTML DocType tag</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Helps you generate document type declarations, or DTD&#8217;s. HTML 5
+is used by default, but many doctypes are available.</p>
+<p>Example:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">doctype</span><span class="p">();</span>
+<span class="c1">// &lt;!DOCTYPE html&gt;</span>
+
+<span class="k">echo</span> <span class="nx">doctype</span><span class="p">(</span><span class="s1">&#39;html4-trans&#39;</span><span class="p">);</span>
+<span class="c1">// &lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.01//EN&quot; &quot;http://www.w3.org/TR/html4/strict.dtd&quot;&gt;</span>
+</pre></div>
+</div>
+<p>The following is a list of the pre-defined doctype choices. These are configurable,
+pulled from <cite>application/Config/DocTypes.php</cite>, or they could be over-ridden in your <cite>.env</cite> configuration.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="16%" />
+<col width="10%" />
+<col width="74%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Document type</th>
+<th class="head">Option</th>
+<th class="head">Result</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>XHTML 1.1</td>
+<td>xhtml11</td>
+<td>&lt;!DOCTYPE html PUBLIC &#8220;-//W3C//DTD XHTML 1.1//EN&#8221; &#8220;<a class="reference external" href="http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd</a>&#8220;&gt;</td>
+</tr>
+<tr class="row-odd"><td>XHTML 1.0 Strict</td>
+<td>xhtml1-strict</td>
+<td>&lt;!DOCTYPE html PUBLIC &#8220;-//W3C//DTD XHTML 1.0 Strict//EN&#8221; &#8220;<a class="reference external" href="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd</a>&#8220;&gt;</td>
+</tr>
+<tr class="row-even"><td>XHTML 1.0 Transitional</td>
+<td>xhtml1-trans</td>
+<td>&lt;!DOCTYPE html PUBLIC &#8220;-//W3C//DTD XHTML 1.0 Transitional//EN&#8221; &#8220;<a class="reference external" href="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd</a>&#8220;&gt;</td>
+</tr>
+<tr class="row-odd"><td>XHTML 1.0 Frameset</td>
+<td>xhtml1-frame</td>
+<td>&lt;!DOCTYPE html PUBLIC &#8220;-//W3C//DTD XHTML 1.0 Frameset//EN&#8221; &#8220;<a class="reference external" href="http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd</a>&#8220;&gt;</td>
+</tr>
+<tr class="row-even"><td>XHTML Basic 1.1</td>
+<td>xhtml-basic11</td>
+<td>&lt;!DOCTYPE html PUBLIC &#8220;-//W3C//DTD XHTML Basic 1.1//EN&#8221; &#8220;<a class="reference external" href="http://www.w3.org/TR/xhtml-basic/xhtml-basic11.dtd">http://www.w3.org/TR/xhtml-basic/xhtml-basic11.dtd</a>&#8220;&gt;</td>
+</tr>
+<tr class="row-odd"><td>HTML 5</td>
+<td>html5</td>
+<td>&lt;!DOCTYPE html&gt;</td>
+</tr>
+<tr class="row-even"><td>HTML 4 Strict</td>
+<td>html4-strict</td>
+<td>&lt;!DOCTYPE HTML PUBLIC &#8220;-//W3C//DTD HTML 4.01//EN&#8221; &#8220;<a class="reference external" href="http://www.w3.org/TR/html4/strict.dtd">http://www.w3.org/TR/html4/strict.dtd</a>&#8220;&gt;</td>
+</tr>
+<tr class="row-odd"><td>HTML 4 Transitional</td>
+<td>html4-trans</td>
+<td>&lt;!DOCTYPE HTML PUBLIC &#8220;-//W3C//DTD HTML 4.01 Transitional//EN&#8221; &#8220;<a class="reference external" href="http://www.w3.org/TR/html4/loose.dtd">http://www.w3.org/TR/html4/loose.dtd</a>&#8220;&gt;</td>
+</tr>
+<tr class="row-even"><td>HTML 4 Frameset</td>
+<td>html4-frame</td>
+<td>&lt;!DOCTYPE HTML PUBLIC &#8220;-//W3C//DTD HTML 4.01 Frameset//EN&#8221; &#8220;<a class="reference external" href="http://www.w3.org/TR/html4/frameset.dtd">http://www.w3.org/TR/html4/frameset.dtd</a>&#8220;&gt;</td>
+</tr>
+<tr class="row-odd"><td>MathML 1.01</td>
+<td>mathml1</td>
+<td>&lt;!DOCTYPE math SYSTEM &#8220;<a class="reference external" href="http://www.w3.org/Math/DTD/mathml1/mathml.dtd">http://www.w3.org/Math/DTD/mathml1/mathml.dtd</a>&#8220;&gt;</td>
+</tr>
+<tr class="row-even"><td>MathML 2.0</td>
+<td>mathml2</td>
+<td>&lt;!DOCTYPE math PUBLIC &#8220;-//W3C//DTD MathML 2.0//EN&#8221; &#8220;<a class="reference external" href="http://www.w3.org/Math/DTD/mathml2/mathml2.dtd">http://www.w3.org/Math/DTD/mathml2/mathml2.dtd</a>&#8220;&gt;</td>
+</tr>
+<tr class="row-odd"><td>SVG 1.0</td>
+<td>svg10</td>
+<td>&lt;!DOCTYPE svg PUBLIC &#8220;-//W3C//DTD SVG 1.0//EN&#8221; &#8220;<a class="reference external" href="http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd</a>&#8220;&gt;</td>
+</tr>
+<tr class="row-even"><td>SVG 1.1 Full</td>
+<td>svg11</td>
+<td>&lt;!DOCTYPE svg PUBLIC &#8220;-//W3C//DTD SVG 1.1//EN&#8221; &#8220;<a class="reference external" href="http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd</a>&#8220;&gt;</td>
+</tr>
+<tr class="row-odd"><td>SVG 1.1 Basic</td>
+<td>svg11-basic</td>
+<td>&lt;!DOCTYPE svg PUBLIC &#8220;-//W3C//DTD SVG 1.1 Basic//EN&#8221; &#8220;<a class="reference external" href="http://www.w3.org/Graphics/SVG/1.1/DTD/svg11-basic.dtd">http://www.w3.org/Graphics/SVG/1.1/DTD/svg11-basic.dtd</a>&#8220;&gt;</td>
+</tr>
+<tr class="row-even"><td>SVG 1.1 Tiny</td>
+<td>svg11-tiny</td>
+<td>&lt;!DOCTYPE svg PUBLIC &#8220;-//W3C//DTD SVG 1.1 Tiny//EN&#8221; &#8220;<a class="reference external" href="http://www.w3.org/Graphics/SVG/1.1/DTD/svg11-tiny.dtd">http://www.w3.org/Graphics/SVG/1.1/DTD/svg11-tiny.dtd</a>&#8220;&gt;</td>
+</tr>
+<tr class="row-odd"><td>XHTML+MathML+SVG (XHTML host)</td>
+<td>xhtml-math-svg-xh</td>
+<td>&lt;!DOCTYPE html PUBLIC &#8220;-//W3C//DTD XHTML 1.1 plus MathML 2.0 plus SVG 1.1//EN&#8221; &#8220;<a class="reference external" href="http://www.w3.org/2002/04/xhtml-math-svg/xhtml-math-svg.dtd">http://www.w3.org/2002/04/xhtml-math-svg/xhtml-math-svg.dtd</a>&#8220;&gt;</td>
+</tr>
+<tr class="row-even"><td>XHTML+MathML+SVG (SVG host)</td>
+<td>xhtml-math-svg-sh</td>
+<td>&lt;!DOCTYPE svg:svg PUBLIC &#8220;-//W3C//DTD XHTML 1.1 plus MathML 2.0 plus SVG 1.1//EN&#8221; &#8220;http://www.w3.org/2002/04/xhtml-math-svg/xhtml-math-svg.dtd&#8221;&gt;</td>
+</tr>
+<tr class="row-odd"><td>XHTML+RDFa 1.0</td>
+<td>xhtml-rdfa-1</td>
+<td>&lt;!DOCTYPE html PUBLIC &#8220;-//W3C//DTD XHTML+RDFa 1.0//EN&#8221; &#8220;<a class="reference external" href="http://www.w3.org/MarkUp/DTD/xhtml-rdfa-1.dtd">http://www.w3.org/MarkUp/DTD/xhtml-rdfa-1.dtd</a>&#8220;&gt;</td>
+</tr>
+<tr class="row-even"><td>XHTML+RDFa 1.1</td>
+<td>xhtml-rdfa-2</td>
+<td>&lt;!DOCTYPE html PUBLIC &#8220;-//W3C//DTD XHTML+RDFa 1.1//EN&#8221; &#8220;<a class="reference external" href="http://www.w3.org/MarkUp/DTD/xhtml-rdfa-2.dtd">http://www.w3.org/MarkUp/DTD/xhtml-rdfa-2.dtd</a>&#8220;&gt;</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="inflector_helper.html" class="btn btn-neutral float-right" title="Inflector Helper" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="form_helper.html" class="btn btn-neutral" title="Form Helper" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014-2018 British Columbia Institute of Technology.
+      Last updated on Sep 23, 2018.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'4.0.0-alpha.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  false,
+            SOURCELINK_SUFFIX: ''
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

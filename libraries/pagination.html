@@ -1,0 +1,509 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Pagination &mdash; CodeIgniter4 4.0.0-alpha.1 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/ci-icon.ico"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="CodeIgniter4 4.0.0-alpha.1 documentation" href="../index.html"/>
+        <link rel="up" title="Library Reference" href="index.html"/>
+        <link rel="next" title="Request Class" href="request.html"/>
+        <link rel="prev" title="HTTP Messages" href="message.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> CodeIgniter4
+          
+
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Welcome to CodeIgniter4</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Installation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">Tutorial</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/index.html">CodeIgniter4 Overview</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../general/index.html">General Topics</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Library Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="api_responses.html">API Response Trait</a></li>
+<li class="toctree-l2"><a class="reference internal" href="benchmark.html">Benchmarking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="caching.html">Caching Driver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cli.html">CLI Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="content_negotiation.html">Content Negotiation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="curlrequest.html">CURLRequest Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="email.html">Email Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="files.html">Working with Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="honeypot.html">Honeypot Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="images.html">Image Manipulation Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="incomingrequest.html">IncomingRequest Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="localization.html">Localization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="message.html">HTTP Messages</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Pagination</a></li>
+<li class="toctree-l2"><a class="reference internal" href="request.html">Request Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="response.html">HTTP Responses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="security.html">Security Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sessions.html">Session Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="throttler.html">Throttler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="time.html">Dates and Times</a></li>
+<li class="toctree-l2"><a class="reference internal" href="typography.html">Typography</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uploaded_files.html">Working with Uploaded Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uri.html">Working with URIs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user_agent.html">User Agent Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="validation.html">Validation</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../database/index.html">Database Reference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../helpers/index.html">Helpers</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../testing/index.html">Testing</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">The MIT License (MIT)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Change Log</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CodeIgniter4</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Library Reference</a> &raquo;</li>
+        
+      <li>Pagination</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="pagination">
+<h1>Pagination<a class="headerlink" href="#pagination" title="Permalink to this headline">¶</a></h1>
+<p>CodeIgniter provides a very simple, but flexible pagination library that is simple to theme, works with the model,
+and capable of supporting multiple paginators on a single page.</p>
+<div class="section" id="loading-the-library">
+<h2>Loading the Library<a class="headerlink" href="#loading-the-library" title="Permalink to this headline">¶</a></h2>
+<p>Like all services in CodeIgniter, it can be loaded via <code class="docutils literal"><span class="pre">Config\Services</span></code>, though you usually will not need
+to load it manually:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$pager</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">pager</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="paginating-database-results">
+<h2>Paginating Database Results<a class="headerlink" href="#paginating-database-results" title="Permalink to this headline">¶</a></h2>
+<p>In most cases, you will be using the Pager library in order to paginate results that you retrieve from the database.
+When using the <a class="reference internal" href="../database/model.html"><span class="doc">Model</span></a> class, you can use its built-in <code class="docutils literal"><span class="pre">paginate()</span></code> method to automatically
+retrieve the current batch of results, as well as setup the Pager library so it&#8217;s ready to use in your controllers.
+It even reads the current page it should display from the current URL via a <code class="docutils literal"><span class="pre">page=X</span></code> query variable.</p>
+<p>To provide a paginated list of users in your application, your controller&#8217;s method would look something like:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">UserController</span> <span class="k">extends</span> <span class="nx">Controller</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">index</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="nv">$model</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\App\Models\UserModel</span><span class="p">();</span>
+
+        <span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="s1">&#39;users&#39;</span> <span class="o">=&gt;</span> <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">paginate</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span>
+            <span class="s1">&#39;pager&#39;</span> <span class="o">=&gt;</span> <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">pager</span>
+        <span class="p">];</span>
+
+        <span class="k">echo</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;users/index&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>In this example, we first create a new instance of our UserModel. Then we populate the data to sent to the view.
+The first element is the results from the database, <strong>users</strong>, which is retrieved for the correct page, returning
+10 users per page. The second item that must be sent to the view is the Pager instance itself. As a convenience,
+the Model will hold on to the instance it used and store it in the public class variable, <strong>$pager</strong>. So, we grab
+that and assign it to the $pager variable in the view.</p>
+<p>Within the view, we then need to tell it where to display the resulting links:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;?=</span> <span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">links</span><span class="p">()</span> <span class="cp">?&gt;</span>
+</pre></div>
+</div>
+<p>And that&#8217;s all it takes. The Pager class will render a series of links that are compatible with the Bootstrap CSS
+framework by default. It will have First and Last page links, as well as Next and Previous links for any pages more
+than two pages on either side of the current page.</p>
+<p>If you prefer a simpler output, you can use the <code class="docutils literal"><span class="pre">simpleLinks()</span></code> method, which only uses &#8220;Older&#8221; and &#8220;Newer&#8221; links,
+instead of the details pagination links:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;?=</span> <span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">simpleLinks</span><span class="p">()</span> <span class="cp">?&gt;</span>
+</pre></div>
+</div>
+<p>Behind the scenes, the library loads a view file that determines how the links are formatted, making it simple to
+modify to your needs. See below for details on how to completely customize the output.</p>
+<div class="section" id="paginating-multiple-results">
+<h3>Paginating Multiple Results<a class="headerlink" href="#paginating-multiple-results" title="Permalink to this headline">¶</a></h3>
+<p>If you need to provide links from two different result sets, you can pass group names to most of the pagination
+methods to keep the data separate:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="c1">// In the Controller</span>
+<span class="k">public</span> <span class="k">function</span> <span class="nf">index</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="nv">$userModel</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\App\Models\UserModel</span><span class="p">();</span>
+    <span class="nv">$pageModel</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\App\Models\PageModel</span><span class="p">();</span>
+
+    <span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s1">&#39;users&#39;</span> <span class="o">=&gt;</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">paginate</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="s1">&#39;group1&#39;</span><span class="p">),</span>
+        <span class="s1">&#39;pages&#39;</span> <span class="o">=&gt;</span> <span class="nv">$pageModel</span><span class="o">-&gt;</span><span class="na">paginate</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="s1">&#39;group2&#39;</span><span class="p">),</span>
+        <span class="s1">&#39;pager&#39;</span> <span class="o">=&gt;</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">pager</span>
+    <span class="p">];</span>
+
+    <span class="k">echo</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;users/index&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">// In the views:</span>
+<span class="o">&lt;?=</span> <span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">links</span><span class="p">(</span><span class="s1">&#39;group1&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span>
+<span class="cp">&lt;?</span><span class="o">=</span> <span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">simpleLinks</span><span class="p">(</span><span class="s1">&#39;group2&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="manual-pagination">
+<h3>Manual Pagination<a class="headerlink" href="#manual-pagination" title="Permalink to this headline">¶</a></h3>
+<p>You may find times where you just need to create pagination based on known data. You can create links manually
+with the <code class="docutils literal"><span class="pre">makeLinks()</span></code> method, which takes the current page, the amount of results per page, and
+the total number of items as the first, second, and third parameters, respectively:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;?=</span> <span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">makeLinks</span><span class="p">(</span><span class="nv">$page</span><span class="p">,</span> <span class="nv">$perPage</span><span class="p">,</span> <span class="nv">$total</span><span class="p">)</span> <span class="cp">?&gt;</span>
+</pre></div>
+</div>
+<p>This will, by default, display the links in the normal manner, as a series of links, but you can change the display
+template used by passing in the name of the template as the fourth parameter. More details can be found in the following
+sections.</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;?=</span> <span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">makeLinks</span><span class="p">(</span><span class="nv">$page</span><span class="p">,</span> <span class="nv">$perPage</span><span class="p">,</span> <span class="nv">$total</span><span class="p">,</span> <span class="s1">&#39;template_name&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="paginating-with-only-expected-queries">
+<h3>Paginating with Only Expected Queries<a class="headerlink" href="#paginating-with-only-expected-queries" title="Permalink to this headline">¶</a></h3>
+<p>By default all GET queries are shown in the pagination links.</p>
+<p>For example, when accessing the URL <em>http://domain.tld?search=foo&amp;order=asc&amp;hello=i+am+here&amp;page=2</em>, the page 3 link can be generated, along with the other links, as follows:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">links</span><span class="p">();</span>
+<span class="c1">// Page 3 link: http://domain.tld?search=foo&amp;order=asc&amp;hello=i+am+here&amp;page=3</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal"><span class="pre">only()</span></code> method allows you to limit this just to queries already expected:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">only</span><span class="p">([</span><span class="s1">&#39;search&#39;</span><span class="p">,</span> <span class="s1">&#39;order&#39;</span><span class="p">])</span><span class="o">-&gt;</span><span class="na">links</span><span class="p">();</span>
+<span class="c1">// Page 3 link: http://domain.tld?search=foo&amp;order=asc&amp;page=3</span>
+</pre></div>
+</div>
+<p>The <em>page</em> query is enabled by default. And <code class="docutils literal"><span class="pre">only()</span></code> acts in all pagination links.</p>
+</div>
+</div>
+<div class="section" id="customizing-the-links">
+<h2>Customizing the Links<a class="headerlink" href="#customizing-the-links" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="view-configuration">
+<h3>View Configuration<a class="headerlink" href="#view-configuration" title="Permalink to this headline">¶</a></h3>
+<p>When the links are rendered out to the page, they use a view file to describe the HTML. You can easily change the view
+that is used by editing <strong>application/Config/Pager.php</strong>:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$templates</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;default_full&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;CodeIgniter\Pager\Views\default_full&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;default_simple&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;CodeIgniter\Pager\Views\default_simple&#39;</span>
+<span class="p">];</span>
+</pre></div>
+</div>
+<p>This setting stores the alias and <a class="reference internal" href="../general/views.html"><span class="doc">namespaced view paths</span></a> for the view that
+should be used. The <em>default_full</em> and <em>default_simple</em> views are used for the <code class="docutils literal"><span class="pre">links()</span></code> and <code class="docutils literal"><span class="pre">simpleLinks()</span></code>
+methods, respectively. To change the way those are displayed application-wide, you could assign a new view here.</p>
+<p>For example, say you create a new view file that works with the Foundation CSS framework, instead of Bootstrap, and
+you place that file at <strong>application/Views/Pagers/foundation_full.php</strong>. Since the <strong>application</strong> directory is
+namespaced as <code class="docutils literal"><span class="pre">App</span></code>, and all directories underneath it map directly to segments of the namespace, you can locate
+the view file through it&#8217;s namespace:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="s1">&#39;default_full&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;App\Views\Pagers\foundation_full&#39;</span><span class="p">,</span>
+</pre></div>
+</div>
+<p>Since it is under the standard <strong>application/Views</strong> directory, though, you do not need to namespace it since the
+<code class="docutils literal"><span class="pre">view()</span></code> method can locate it by filename. In that case, you can simple give the sub-directory and file name:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="s1">&#39;default_full&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;Pagers/foundation_full&#39;</span><span class="p">,</span>
+</pre></div>
+</div>
+<p>Once you have created the view and set it in the configuration, it will automatically be used. You don&#8217;t have to
+replace the existing templates. You can create as many additional templates as you need in the configuration
+file. A common situation would be needing different styles for the frontend and the backend of your application.</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$templates</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;default_full&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;CodeIgniter\Pager\Views\default_full&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;default_simple&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;CodeIgniter\Pager\Views\default_simple&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;front_full&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;App\Views\Pagers\foundation_full&#39;</span><span class="p">,</span>
+<span class="p">];</span>
+</pre></div>
+</div>
+<p>Once configured, you can specify it as a the last parameter in the <code class="docutils literal"><span class="pre">links()</span></code>, <code class="docutils literal"><span class="pre">simpleLinks()</span></code>, and <code class="docutils literal"><span class="pre">makeLinks()</span></code>
+methods:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;?=</span> <span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">links</span><span class="p">(</span><span class="s1">&#39;group1&#39;</span><span class="p">,</span> <span class="s1">&#39;front_full&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span>
+<span class="cp">&lt;?</span><span class="o">=</span> <span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">simpleLinks</span><span class="p">(</span><span class="s1">&#39;group2&#39;</span><span class="p">,</span> <span class="s1">&#39;front_full&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span>
+<span class="cp">&lt;?</span><span class="o">=</span> <span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">makeLinks</span><span class="p">(</span><span class="nv">$page</span><span class="p">,</span> <span class="nv">$perPage</span><span class="p">,</span> <span class="nv">$total</span><span class="p">,</span> <span class="s1">&#39;front_full&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="creating-the-view">
+<h3>Creating the View<a class="headerlink" href="#creating-the-view" title="Permalink to this headline">¶</a></h3>
+<p>When you create a new view, you only need to create the code that is needed for creating the pagination links themselves.
+You should not create unnecessary wrapping divs since it might be used in multiple places and you only limit their
+usefulness. It is easiest to demonstrate creating a new view by showing you the existing default_full template:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">setSurroundCount</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="cp">?&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">nav</span> <span class="na">aria-label</span><span class="o">=</span><span class="s">&quot;Page navigation&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">ul</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;pagination&quot;</span><span class="p">&gt;</span>
+    <span class="cp">&lt;?php</span> <span class="k">if</span> <span class="p">(</span><span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">hasPrevious</span><span class="p">())</span> <span class="o">:</span> <span class="cp">?&gt;</span>
+        <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">getFirst</span><span class="p">()</span> <span class="cp">?&gt;</span><span class="s">&quot;</span> <span class="na">aria-label</span><span class="o">=</span><span class="s">&quot;First&quot;</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">span</span> <span class="na">aria-hidden</span><span class="o">=</span><span class="s">&quot;true&quot;</span><span class="p">&gt;</span>First<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+            <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">getPrevious</span><span class="p">()</span> <span class="cp">?&gt;</span><span class="s">&quot;</span> <span class="na">aria-label</span><span class="o">=</span><span class="s">&quot;Previous&quot;</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">span</span> <span class="na">aria-hidden</span><span class="o">=</span><span class="s">&quot;true&quot;</span><span class="p">&gt;</span><span class="ni">&amp;laquo;</span><span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+            <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+    <span class="cp">&lt;?php</span> <span class="k">endif</span> <span class="cp">?&gt;</span>
+
+    <span class="cp">&lt;?php</span> <span class="k">foreach</span> <span class="p">(</span><span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">links</span><span class="p">()</span> <span class="k">as</span> <span class="nv">$link</span><span class="p">)</span> <span class="o">:</span> <span class="cp">?&gt;</span>
+        <span class="p">&lt;</span><span class="nt">li</span> <span class="cp">&lt;?</span><span class="o">=</span> <span class="nv">$link</span><span class="p">[</span><span class="s1">&#39;active&#39;</span><span class="p">]</span> <span class="o">?</span> <span class="s1">&#39;class=&quot;active&quot;&#39;</span> <span class="o">:</span> <span class="s1">&#39;&#39;</span> <span class="cp">?&gt;</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nv">$link</span><span class="p">[</span><span class="s1">&#39;uri&#39;</span><span class="p">]</span> <span class="cp">?&gt;</span><span class="s">&quot;</span><span class="p">&gt;</span>
+                <span class="cp">&lt;?</span><span class="o">=</span> <span class="nv">$link</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">]</span> <span class="cp">?&gt;</span>
+            <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+    <span class="cp">&lt;?php</span> <span class="k">endforeach</span> <span class="cp">?&gt;</span>
+
+    <span class="cp">&lt;?php</span> <span class="k">if</span> <span class="p">(</span><span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">hasNext</span><span class="p">())</span> <span class="o">:</span> <span class="cp">?&gt;</span>
+        <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">getNext</span><span class="p">()</span> <span class="cp">?&gt;</span><span class="s">&quot;</span> <span class="na">aria-label</span><span class="o">=</span><span class="s">&quot;Previous&quot;</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">span</span> <span class="na">aria-hidden</span><span class="o">=</span><span class="s">&quot;true&quot;</span><span class="p">&gt;</span><span class="ni">&amp;raquo;</span><span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+            <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nv">$pager</span><span class="o">-&gt;</span><span class="na">getLast</span><span class="p">()</span> <span class="cp">?&gt;</span><span class="s">&quot;</span> <span class="na">aria-label</span><span class="o">=</span><span class="s">&quot;Last&quot;</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">span</span> <span class="na">aria-hidden</span><span class="o">=</span><span class="s">&quot;true&quot;</span><span class="p">&gt;</span>Last<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+            <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+    <span class="cp">&lt;?php</span> <span class="k">endif</span> <span class="cp">?&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">nav</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p><strong>setSurroundCount()</strong></p>
+<p>In the first line, the <code class="docutils literal"><span class="pre">setSurroundCount()</span></code> method specifies that we want to show two links to either side of
+the current page link. The only parameter that it accepts is the number of links to show.</p>
+<p><strong>hasPrevious()</strong> &amp; <strong>hasNext()</strong></p>
+<p>These methods return a boolean true if there are more links than can be displayed on either side of the current page,
+based on the value passed to <code class="docutils literal"><span class="pre">setSurroundCount</span></code>. For example, let&#8217;s say we have 20 pages of data. The current
+page is page 3. If the surround count is 2, then the following links would show up in the list: 1, 2, 3, 4, and 5.
+Since the first link displayed is page one, <code class="docutils literal"><span class="pre">hasPrevious()</span></code> would return <strong>false</strong> since there is no page zero. However,
+<code class="docutils literal"><span class="pre">hasNext()</span></code> would return <strong>true</strong> since there are 15 additional pages of results after page five.</p>
+<p><strong>getPrevious()</strong> &amp; <strong>getNext()</strong></p>
+<p>These methods return the URL for the previous or next pages of results on either side of the numbered links. See the
+previous paragraph for a full explanation.</p>
+<p><strong>getFirst()</strong> &amp; <strong>getLast()</strong></p>
+<p>Much like <code class="docutils literal"><span class="pre">getPrevious()</span></code> and <code class="docutils literal"><span class="pre">getNext()</span></code>, these methods return links to the first and last pages in the
+result set.</p>
+<p><strong>links()</strong></p>
+<p>Returns an array of data about all of the numbered links. Each link&#8217;s array contains the uri for the link, the
+title, which is just the number, and a boolean that tells whether the link is the current/active link or not:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$link</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s1">&#39;active&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
+        <span class="s1">&#39;uri&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;http://example.com/foo?page=2&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;title&#39;</span>  <span class="o">=&gt;</span> <span class="mi">1</span>
+<span class="p">];</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="request.html" class="btn btn-neutral float-right" title="Request Class" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="message.html" class="btn btn-neutral" title="HTTP Messages" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014-2018 British Columbia Institute of Technology.
+      Last updated on Sep 23, 2018.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'4.0.0-alpha.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  false,
+            SOURCELINK_SUFFIX: ''
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

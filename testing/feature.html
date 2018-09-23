@@ -1,0 +1,573 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>HTTP Feature Testing &mdash; CodeIgniter4 4.0.0-alpha.1 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/ci-icon.ico"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="CodeIgniter4 4.0.0-alpha.1 documentation" href="../index.html"/>
+        <link rel="up" title="Testing" href="index.html"/>
+        <link rel="next" title="The MIT License (MIT)" href="../license.html"/>
+        <link rel="prev" title="Testing Controllers" href="controllers.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> CodeIgniter4
+          
+
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Welcome to CodeIgniter4</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Installation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">Tutorial</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/index.html">CodeIgniter4 Overview</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../general/index.html">General Topics</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../libraries/index.html">Library Reference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../database/index.html">Database Reference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../helpers/index.html">Helpers</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Testing</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="overview.html">    Getting Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="database.html">Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="controllers.html">Controller Testing</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">HTTP Testing</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">The MIT License (MIT)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Change Log</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CodeIgniter4</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Testing</a> &raquo;</li>
+        
+      <li>HTTP Feature Testing</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="http-feature-testing">
+<h1>HTTP Feature Testing<a class="headerlink" href="#http-feature-testing" title="Permalink to this headline">¶</a></h1>
+<p>Feature testing allows you to view the results of a single call to your application. This might be returning the
+results of a single web form, hitting an API endpoint, and more. This is handy because it allows you to test the entire
+life-cycle of a single request, ensuring that the routing works, the response is the correct format, analyze the results,
+and more.</p>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#the-test-class" id="id1">The Test Class</a></li>
+<li><a class="reference internal" href="#requesting-a-page" id="id2">Requesting A Page</a><ul>
+<li><a class="reference internal" href="#setting-different-routes" id="id3">Setting Different Routes</a></li>
+<li><a class="reference internal" href="#setting-session-values" id="id4">Setting Session Values</a></li>
+<li><a class="reference internal" href="#bypassing-events" id="id5">Bypassing Events</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#testing-the-response" id="id6">Testing the Response</a><ul>
+<li><a class="reference internal" href="#checking-response-status" id="id7">Checking Response Status</a></li>
+<li><a class="reference internal" href="#session-assertions" id="id8">Session Assertions</a></li>
+<li><a class="reference internal" href="#header-assertions" id="id9">Header Assertions</a></li>
+<li><a class="reference internal" href="#cookie-assertions" id="id10">Cookie Assertions</a></li>
+<li><a class="reference internal" href="#dom-assertions" id="id11">DOM Assertions</a></li>
+<li><a class="reference internal" href="#working-with-json" id="id12">Working With JSON</a></li>
+<li><a class="reference internal" href="#working-with-xml" id="id13">Working With XML</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="the-test-class">
+<h2><a class="toc-backref" href="#id1">The Test Class</a><a class="headerlink" href="#the-test-class" title="Permalink to this headline">¶</a></h2>
+<p>Feature testing requires that all of your test classes extend the <code class="docutils literal"><span class="pre">CodeIgniter\Test\FeatureTestCase</span></code> class. Since this
+extends <a class="reference external" href="/testing/database">CIDatabaseTestCase</a> you must always ensure that <code class="docutils literal"><span class="pre">parent::setUp()</span></code> and <code class="docutils literal"><span class="pre">parent::tearDown()</span></code>
+are called before you take your actions.</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\Test\FeatureTestCase</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">TestFoo</span> <span class="k">extends</span> <span class="nx">FeatureTestCase</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">setUp</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">parent</span><span class="o">::</span><span class="na">setUp</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">tearDown</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">parent</span><span class="o">::</span><span class="na">tearDown</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="requesting-a-page">
+<h2><a class="toc-backref" href="#id2">Requesting A Page</a><a class="headerlink" href="#requesting-a-page" title="Permalink to this headline">¶</a></h2>
+<p>Essentially, the FeatureTestCase simply allows you to call an endpoint on your application and get the results back.
+to do this, you use the <code class="docutils literal"><span class="pre">call()</span></code> method. The first parameter is the HTTP method to use (most frequently either GET or POST).
+The second parameter is the path on your site to test. The third parameter accepts an array that is used to populate the
+the superglobal variables for the HTTP verb you are using. So, a method of <strong>GET</strong> would have the <strong>$_GET</strong> variable
+populated, while a <strong>post</strong> request would have the <strong>$_POST</strong> array populated.</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="c1">// Get a simple page</span>
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">call</span><span class="p">(</span><span class="s1">&#39;get&#39;</span><span class="p">,</span> <span class="nx">site_url</span><span class="p">());</span>
+
+<span class="c1">// Submit a form</span>
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">call</span><span class="p">(</span><span class="s1">&#39;post&#39;</span><span class="p">,</span> <span class="nx">site_url</span><span class="p">(</span><span class="s1">&#39;contact&#39;</span><span class="p">),</span> <span class="p">[</span>
+    <span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Fred Flintstone&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;email&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;flintyfred@example.com&#39;</span>
+<span class="p">]);</span>
+</pre></div>
+</div>
+<p>Shorthand methods for each of the HTTP verbs exist to ease typing and make things clearer:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="nv">$path</span><span class="p">,</span> <span class="nv">$params</span><span class="p">);</span>
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">post</span><span class="p">(</span><span class="nv">$path</span><span class="p">,</span> <span class="nv">$params</span><span class="p">);</span>
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">put</span><span class="p">(</span><span class="nv">$path</span><span class="p">,</span> <span class="nv">$params</span><span class="p">);</span>
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">patch</span><span class="p">(</span><span class="nv">$path</span><span class="p">,</span> <span class="nv">$params</span><span class="p">);</span>
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">delete</span><span class="p">(</span><span class="nv">$path</span><span class="p">,</span> <span class="nv">$params</span><span class="p">);</span>
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">options</span><span class="p">(</span><span class="nv">$path</span><span class="p">,</span> <span class="nv">$params</span><span class="p">);</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The $params array does not make sense for every HTTP verb, but is included for consistency.</p>
+</div>
+<div class="section" id="setting-different-routes">
+<h3><a class="toc-backref" href="#id3">Setting Different Routes</a><a class="headerlink" href="#setting-different-routes" title="Permalink to this headline">¶</a></h3>
+<p>You can use a custom collection of routes by passing an array of routes into the <code class="docutils literal"><span class="pre">withRoutes()</span></code> method. This will
+override any existing routes in the system:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$routes</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;users&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;UserController::list&#39;</span>
+<span class="p">];</span>
+
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">withRoutes</span><span class="p">(</span><span class="nv">$routes</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="setting-session-values">
+<h3><a class="toc-backref" href="#id4">Setting Session Values</a><a class="headerlink" href="#setting-session-values" title="Permalink to this headline">¶</a></h3>
+<p>You can set custom session values to use during a single test with the <code class="docutils literal"><span class="pre">withSession()</span></code> method. This takes an array
+of key/value pairs that should exist within the $_SESSION variable when this request is made. This is handy for testing
+authentication and more.</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$values</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;logged_in&#39;</span> <span class="o">=&gt;</span> <span class="mi">123</span>
+<span class="p">];</span>
+
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">withSession</span><span class="p">(</span><span class="nv">$values</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;admin&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="bypassing-events">
+<h3><a class="toc-backref" href="#id5">Bypassing Events</a><a class="headerlink" href="#bypassing-events" title="Permalink to this headline">¶</a></h3>
+<p>Events are handy to use in your application, but can be problematic during testing. Especially events that are used
+to send out emails. You can tell the system to skip any event handling with the <code class="docutils literal"><span class="pre">skipEvents()</span></code> method:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$result</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">skipEvents</span><span class="p">()</span>
+    <span class="o">-&gt;</span><span class="na">post</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">,</span> <span class="nv">$userInfo</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="testing-the-response">
+<h2><a class="toc-backref" href="#id6">Testing the Response</a><a class="headerlink" href="#testing-the-response" title="Permalink to this headline">¶</a></h2>
+<p>Once you&#8217;ve performed a <code class="docutils literal"><span class="pre">call()</span></code> and have results, there are a number of new assertions that you can use in your
+tests.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The Response object is publicly available at <code class="docutils literal"><span class="pre">$result-&gt;response</span></code>. You can use that instance to perform
+other assertions against, if needed.</p>
+</div>
+<div class="section" id="checking-response-status">
+<h3><a class="toc-backref" href="#id7">Checking Response Status</a><a class="headerlink" href="#checking-response-status" title="Permalink to this headline">¶</a></h3>
+<p><strong>isOK()</strong></p>
+<p>Returns a boolean true/false based on whether the response is percieved to be &#8220;ok&#8221;. This is primarily determined by
+a response status code in the 200 or 300&#8217;s.</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nv">$result</span><span class="o">-&gt;</span><span class="na">isOK</span><span class="p">())</span>
+<span class="p">{</span>
+    <span class="o">...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>assertOK()</strong></p>
+<p>This assertion simply uses the <strong>isOK()</strong> method to test a response.</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertOK</span><span class="p">();</span>
+</pre></div>
+</div>
+<p><strong>isRedirect()</strong></p>
+<p>Returns a boolean true/false based on whether the response is a redirected response.</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nv">$result</span><span class="o">-&gt;</span><span class="na">isRedirect</span><span class="p">())</span>
+<span class="p">{</span>
+    <span class="o">...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>assertRedirect()</strong></p>
+<p>Asserts that the Response is an instance of RedirectResponse.</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertRedirect</span><span class="p">();</span>
+</pre></div>
+</div>
+<p><strong>assertStatus(int $code)</strong></p>
+<p>Asserts that the HTTP status code returned matches $code.</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertStatus</span><span class="p">(</span><span class="mi">403</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="session-assertions">
+<h3><a class="toc-backref" href="#id8">Session Assertions</a><a class="headerlink" href="#session-assertions" title="Permalink to this headline">¶</a></h3>
+<p><strong>assertSessionHas(string $key, $value = null)</strong></p>
+<p>Asserts that a value exists in the resulting session. If $value is passed, will also assert that the variable&#8217;s value
+matches what was specified.</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertSessionHas</span><span class="p">(</span><span class="s1">&#39;logged_in&#39;</span><span class="p">,</span> <span class="mi">123</span><span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>assertSessionMissing(string $key)</strong></p>
+<p>Asserts that the resulting session does not include the specified $key.</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertSessionMissin</span><span class="p">(</span><span class="s1">&#39;logged_in&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="header-assertions">
+<h3><a class="toc-backref" href="#id9">Header Assertions</a><a class="headerlink" href="#header-assertions" title="Permalink to this headline">¶</a></h3>
+<p><strong>assertHeader(string $key, $value = null)</strong></p>
+<p>Asserts that a header named <strong>$key</strong> exists in the response. If <strong>$value</strong> is not empty, will also assert that
+the values match.</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertHeader</span><span class="p">(</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">,</span> <span class="s1">&#39;text/html&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>assertHeaderMissing(string $key)</strong></p>
+<p>Asserts that a header name <strong>$key</strong> does not exist in the response.</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertHeader</span><span class="p">(</span><span class="s1">&#39;Accepts&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="cookie-assertions">
+<h3><a class="toc-backref" href="#id10">Cookie Assertions</a><a class="headerlink" href="#cookie-assertions" title="Permalink to this headline">¶</a></h3>
+<p><strong>assertCookie(string $key, $value = null, string $prefix = &#8216;&#8217;)</strong></p>
+<p>Asserts that a cookie named <strong>$key</strong> exists in the response. If <strong>$value</strong> is not empty, will also assert that
+the values match. You can set the cookie prefix, if needed, by passing it in as the third parameter.</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertCookie</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="s1">&#39;bar&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>assertCookieMissing(string $key)</strong></p>
+<p>Asserts that a cookie named <strong>$key</strong> does not exist in the response.</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertCookieMissing</span><span class="p">(</span><span class="s1">&#39;ci_session&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>assertCookieExpired(string $key, string $prefix = &#8216;&#8217;)</strong></p>
+<p>Asserts that a cookie named <strong>$key</strong> exists, but has expired. You can set the cookie prefix, if needed, by passing it
+in as the second parameter.</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertCookieExpired</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="dom-assertions">
+<h3><a class="toc-backref" href="#id11">DOM Assertions</a><a class="headerlink" href="#dom-assertions" title="Permalink to this headline">¶</a></h3>
+<p>You can perform tests to see if specific elements/text/etc exist with the body of the response with the following
+assertions.</p>
+<p><strong>assertSee(string $search = null, string $element = null)</strong></p>
+<p>Asserts that text/HTML is on the page, either by itself or - more specifically - within
+a tag, as specified by type, class, or id:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="c1">// Check that &quot;Hello World&quot; is on the page</span>
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertSee</span><span class="p">(</span><span class="s1">&#39;Hello World&#39;</span><span class="p">);</span>
+<span class="c1">// Check that &quot;Hello World&quot; is within an h1 tag</span>
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertS</span><span class="p">(</span><span class="s1">&#39;Hello World&#39;</span><span class="p">,</span> <span class="s1">&#39;h1&#39;</span><span class="p">);</span>
+<span class="c1">// Check that &quot;Hello World&quot; is within an element with the &quot;notice&quot; class</span>
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertS</span><span class="p">(</span><span class="s1">&#39;Hello World&#39;</span><span class="p">,</span> <span class="s1">&#39;.notice&#39;</span><span class="p">);</span>
+<span class="c1">// Check that &quot;Hello World&quot; is within an element with id of &quot;title&quot;</span>
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertS</span><span class="p">(</span><span class="s1">&#39;Hellow World&#39;</span><span class="p">,</span> <span class="s1">&#39;#title&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>assertDontSee(string $search = null, string $element = null)</strong></p>
+<p>Asserts the exact opposite of the <strong>assertSee()</strong> method:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="c1">// Checks that &quot;Hello World&quot; does NOT exist on the page</span>
+<span class="nv">$results</span><span class="o">-&gt;</span><span class="na">dontSee</span><span class="p">(</span><span class="s1">&#39;Hello World&#39;</span><span class="p">);</span>
+<span class="c1">// Checks that &quot;Hellow World&quot; does NOT exist within any h1 tag</span>
+<span class="nv">$results</span><span class="o">-&gt;</span><span class="na">dontSee</span><span class="p">(</span><span class="s1">&#39;Hello World&#39;</span><span class="p">,</span> <span class="s1">&#39;h1&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>assertSeeElement(string $search)</strong></p>
+<p>Similar to <strong>assertSee()</strong>, however this only checks for an existing element. It does not check for specific text:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="c1">// Check that an element with class &#39;notice&#39; exists</span>
+<span class="nv">$results</span><span class="o">-&gt;</span><span class="na">seeElement</span><span class="p">(</span><span class="s1">&#39;.notice&#39;</span><span class="p">);</span>
+<span class="c1">// Check that an element with id &#39;title&#39; exists</span>
+<span class="nv">$results</span><span class="o">-&gt;</span><span class="na">seeElement</span><span class="p">(</span><span class="s1">&#39;#title&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>assertDontSeeElement(string $search)</strong></p>
+<p>Similar to <strong>assertSee()</strong>, however this only checks for an existing element that is missing. It does not check for
+specific text:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="c1">// Verify that an element with id &#39;title&#39; does NOT exist</span>
+<span class="nv">$results</span><span class="o">-&gt;</span><span class="na">dontSeeElement</span><span class="p">(</span><span class="s1">&#39;#title&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>assertSeeLink(string $text, string $details=null)</strong></p>
+<p>Asserts that an anchor tag is found with matching <strong>$text</strong> as the body of the tag:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="c1">// Check that a link exists with &#39;Upgrade Account&#39; as the text::</span>
+<span class="nv">$results</span><span class="o">-&gt;</span><span class="na">seeLink</span><span class="p">(</span><span class="s1">&#39;Upgrade Account&#39;</span><span class="p">);</span>
+<span class="c1">// Check that a link exists with &#39;Upgrade Account&#39; as the text, AND a class of &#39;upsell&#39;</span>
+<span class="nv">$results</span><span class="o">-&gt;</span><span class="na">seeLink</span><span class="p">(</span><span class="s1">&#39;Upgrade Account&#39;</span><span class="p">,</span> <span class="s1">&#39;.upsell&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>assertSeeInField(string $field, string $value=null)</strong></p>
+<p>Asserts that an input tag exists with the name and value:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="c1">// Check that an input exists named &#39;user&#39; with the value &#39;John Snow&#39;</span>
+<span class="nv">$results</span><span class="o">-&gt;</span><span class="na">seeInField</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="s1">&#39;John Snow&#39;</span><span class="p">);</span>
+<span class="c1">// Check a multi-dimensional input</span>
+<span class="nv">$results</span><span class="o">-&gt;</span><span class="na">seeInField</span><span class="p">(</span><span class="s1">&#39;user[name]&#39;</span><span class="p">,</span> <span class="s1">&#39;John Snow&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="working-with-json">
+<h3><a class="toc-backref" href="#id12">Working With JSON</a><a class="headerlink" href="#working-with-json" title="Permalink to this headline">¶</a></h3>
+<p>Responses will frequently contain JSON responses, especially when working with API methods. The following methods
+can help to test the responses.</p>
+<p><strong>getJSON()</strong></p>
+<p>This method will return the body of the response as a JSON string:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="c1">// Response body is this:</span>
+<span class="p">[</span><span class="s1">&#39;foo&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;bar&#39;</span><span class="p">]</span>
+
+<span class="nv">$json</span> <span class="o">=</span> <span class="nv">$result</span><span class="o">-&gt;</span><span class="na">getJSON</span><span class="p">();</span>
+
+<span class="c1">// $json is this:</span>
+<span class="p">{</span>
+    <span class="s2">&quot;foo&quot;</span><span class="o">:</span> <span class="s2">&quot;bar&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Be aware that the JSON string will be pretty-printed in the result.</p>
+</div>
+<p><strong>assertJSONFragment(array $fragment)</strong></p>
+<p>Asserts that $fragment is found within the JSON response. It does not need to match the entire JSON value.</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="c1">// Response body is this:</span>
+<span class="p">[</span>
+    <span class="s1">&#39;config&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;key-a&#39;</span><span class="p">,</span> <span class="s1">&#39;key-b&#39;</span><span class="p">]</span>
+<span class="p">]</span>
+
+<span class="c1">// Is true</span>
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertJSONFragment</span><span class="p">([</span><span class="s1">&#39;config&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;key-a&#39;</span><span class="p">]);</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This simply uses phpUnit&#8217;s own <a class="reference external" href="https://phpunit.readthedocs.io/en/7.1/assertions.html#assertarraysubset">assertArraySubset()</a>
+method to do the comparison.</p>
+</div>
+<p><strong>assertJSONExact($test)</strong></p>
+<p>Similar to <strong>assertJSONFragment()</strong>, but checks the entire JSON response to ensure exact matches.</p>
+</div>
+<div class="section" id="working-with-xml">
+<h3><a class="toc-backref" href="#id13">Working With XML</a><a class="headerlink" href="#working-with-xml" title="Permalink to this headline">¶</a></h3>
+<p><strong>getXML()</strong></p>
+<p>If your application returns XML, you can retrieve it through this method.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../license.html" class="btn btn-neutral float-right" title="The MIT License (MIT)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="controllers.html" class="btn btn-neutral" title="Testing Controllers" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014-2018 British Columbia Institute of Technology.
+      Last updated on Sep 23, 2018.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'4.0.0-alpha.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  false,
+            SOURCELINK_SUFFIX: ''
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

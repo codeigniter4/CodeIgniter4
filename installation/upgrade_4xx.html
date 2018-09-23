@@ -1,0 +1,365 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Upgrading from 3.x to 4.x &mdash; CodeIgniter4 4.0.0-alpha.1 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/ci-icon.ico"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="CodeIgniter4 4.0.0-alpha.1 documentation" href="../index.html"/>
+        <link rel="up" title="Upgrading From a Previous Version" href="upgrading.html"/>
+        <link rel="next" title="Troubleshooting" href="troubleshooting.html"/>
+        <link rel="prev" title="Upgrading From a Previous Version" href="upgrading.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> CodeIgniter4
+          
+
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Welcome to CodeIgniter4</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Installation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="downloads.html">Downloading CodeIgniter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html">Installation</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="upgrading.html">Upgrading From a Previous Version</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Upgrading from 3.x to 4.x</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="local_server.html">Local Development Server</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">Tutorial</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/index.html">CodeIgniter4 Overview</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../general/index.html">General Topics</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../libraries/index.html">Library Reference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../database/index.html">Database Reference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../helpers/index.html">Helpers</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../testing/index.html">Testing</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">The MIT License (MIT)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Change Log</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CodeIgniter4</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Installation</a> &raquo;</li>
+        
+          <li><a href="upgrading.html">Upgrading From a Previous Version</a> &raquo;</li>
+        
+      <li>Upgrading from 3.x to 4.x</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <p>TODO: rewrite for CodeIgniter4</p>
+<div class="section" id="upgrading-from-3-x-to-4-x">
+<h1>Upgrading from 3.x to 4.x<a class="headerlink" href="#upgrading-from-3-x-to-4-x" title="Permalink to this headline">¶</a></h1>
+<p>Before performing an update you should take your site offline by
+replacing the index.php file with a static one.</p>
+<div class="section" id="step-1-update-your-codeigniter-files">
+<h2>Step 1: Update your CodeIgniter files<a class="headerlink" href="#step-1-update-your-codeigniter-files" title="Permalink to this headline">¶</a></h2>
+<p>Replace all files and directories in your <em>system/</em> directory.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you have any custom developed files in these directories,
+please make copies of them first.</p>
+</div>
+</div>
+<div class="section" id="step-2-change-database-connection-handling">
+<h2>Step 2: Change database connection handling<a class="headerlink" href="#step-2-change-database-connection-handling" title="Permalink to this headline">¶</a></h2>
+<p>&#8220;Loading&#8221; a database, whether by using the <em>config/autoload.php</em> settings
+or manually via calling <code class="docutils literal"><span class="pre">$this-&gt;load-&gt;database()</span></code> or the less-known
+<code class="docutils literal"><span class="pre">DB()</span></code> function, will now throw a <code class="docutils literal"><span class="pre">RuntimeException</span></code> in case of a
+failure.</p>
+<p>In addition, being unable to set the configured character set is now also
+considered a connection failure.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This has been the case for most database drivers in the in the
+past as well (i.e. all but the &#8216;mysql&#8217;, &#8216;mysqli&#8217; and &#8216;postgre&#8217;
+drivers).</p>
+</div>
+<p>What this means is that if you&#8217;re unable to connect to a database, or
+have an erroneous character set configured, CodeIgniter will no longer
+fail silently, but will throw an exception instead.</p>
+<p>You may choose to explicitly catch it (and for that purpose you can&#8217;t use
+<em>config/autoload.php</em> to load the <a class="reference internal" href="../database/index.html"><span class="doc">Database Class</span></a>)</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">try</span>
+<span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">load</span><span class="o">-&gt;</span><span class="na">database</span><span class="p">();</span>
+<span class="p">}</span>
+<span class="k">catch</span> <span class="p">(</span><span class="nx">RuntimeException</span> <span class="nv">$e</span><span class="p">)</span>
+<span class="p">{</span>
+        <span class="c1">// Handle the failure</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Or you may leave it to CodeIgniter&#8217;s default exception handler, which would
+log the error message and display an error screen if you&#8217;re running in
+development mode.</p>
+<div class="section" id="remove-db-set-charset-calls">
+<h3>Remove db_set_charset() calls<a class="headerlink" href="#remove-db-set-charset-calls" title="Permalink to this headline">¶</a></h3>
+<p>With the above-mentioned changes, the purpose of the <code class="docutils literal"><span class="pre">db_set_charset()</span></code>
+method would now only be to change the connection character set at runtime.
+That doesn&#8217;t make sense and that&#8217;s the reason why most database drivers
+don&#8217;t support it at all.
+Thus, <code class="docutils literal"><span class="pre">db_set_charset()</span></code> is no longer necessary and is removed.</p>
+</div>
+</div>
+<div class="section" id="step-3-check-logic-related-to-uri-parsing-of-cli-requests">
+<h2>Step 3: Check logic related to URI parsing of CLI requests<a class="headerlink" href="#step-3-check-logic-related-to-uri-parsing-of-cli-requests" title="Permalink to this headline">¶</a></h2>
+<p>When running a CodeIgniter application from the CLI, the
+<a class="reference internal" href="../libraries/uri.html"><span class="doc">URI Library</span></a> will now ignore the
+<code class="docutils literal"><span class="pre">$config['url_suffix']</span></code> and <code class="docutils literal"><span class="pre">$config['permitted_uri_chars']</span></code>
+configuration settings.</p>
+<p>These two options don&#8217;t make sense under the command line (which is why
+this change was made) and therefore you shouldn&#8217;t be affected by this, but
+if you&#8217;ve relied on them for some reason, you&#8217;d probably have to make some
+changes to your code.</p>
+</div>
+<div class="section" id="step-4-check-cache-library-configurations-for-redis-memcache-d">
+<h2>Step 4: Check Cache Library configurations for Redis, Memcache(d)<a class="headerlink" href="#step-4-check-cache-library-configurations-for-redis-memcache-d" title="Permalink to this headline">¶</a></h2>
+<p>The new improvements for the &#8216;redis&#8217; and &#8216;memcached&#8217; drivers of the
+<a class="reference internal" href="../libraries/caching.html"><span class="doc">Cache Library</span></a> may require some small
+adjustments to your configuration values ...</p>
+<div class="section" id="redis">
+<h3>Redis<a class="headerlink" href="#redis" title="Permalink to this headline">¶</a></h3>
+<p>If you&#8217;re using the &#8216;redis&#8217; driver with a UNIX socket connection, you&#8217;ll
+have to move the socket path from <code class="docutils literal"><span class="pre">$config['socket']</span></code> to
+<code class="docutils literal"><span class="pre">$config['host']</span></code> instead.</p>
+<p>The <code class="docutils literal"><span class="pre">$config['socket_type']</span></code> option is also removed, although that won&#8217;t
+affect your application - it will be ignored and the connection type will
+be determined by the format used for <code class="docutils literal"><span class="pre">$config['host']</span></code> instead.</p>
+</div>
+<div class="section" id="memcache-d">
+<h3>Memcache(d)<a class="headerlink" href="#memcache-d" title="Permalink to this headline">¶</a></h3>
+<p>The &#8216;memcached&#8217; will now ignore configurations that don&#8217;t specify a <code class="docutils literal"><span class="pre">host</span></code>
+value (previously, it just set the host to the default &#8216;127.0.0.1&#8217;).</p>
+<p>Therefore, if you&#8217;ve added a configuration that only sets e.g. a <code class="docutils literal"><span class="pre">port</span></code>,
+you will now have to explicitly set the <code class="docutils literal"><span class="pre">host</span></code> to &#8216;127.0.0.1&#8217; as well.</p>
+</div>
+</div>
+<div class="section" id="step-5-check-usage-of-doctype-html-helper">
+<h2>Step 5: Check usage of doctype() HTML helper<a class="headerlink" href="#step-5-check-usage-of-doctype-html-helper" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference internal" href="../helpers/html_helper.html"><span class="doc">HTML Helper</span></a> function
+<a class="reference internal" href="../helpers/html_helper.html#doctype" title="doctype"><code class="xref php php-func docutils literal"><span class="pre">doctype()</span></code></a> used to default to &#8216;xhtml1-strict&#8217; (XHTML 1.0 Strict)
+when no document type was specified. That default value is now changed to
+&#8216;html5&#8217;, which obviously stands for the modern HTML 5 standard.</p>
+<p>Nothing should be really broken by this change, but if your application
+relies on the default value, you should double-check it and either
+explicitly set the desired format, or adapt your front-end to use proper
+HTML 5 formatting.</p>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="troubleshooting.html" class="btn btn-neutral float-right" title="Troubleshooting" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="upgrading.html" class="btn btn-neutral" title="Upgrading From a Previous Version" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014-2018 British Columbia Institute of Technology.
+      Last updated on Sep 23, 2018.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'4.0.0-alpha.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  false,
+            SOURCELINK_SUFFIX: ''
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

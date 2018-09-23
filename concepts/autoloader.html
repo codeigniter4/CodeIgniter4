@@ -1,0 +1,338 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Autoloading Files &mdash; CodeIgniter4 4.0.0-alpha.1 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/ci-icon.ico"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="CodeIgniter4 4.0.0-alpha.1 documentation" href="../index.html"/>
+        <link rel="up" title="CodeIgniter4 Overview" href="index.html"/>
+        <link rel="next" title="Services" href="services.html"/>
+        <link rel="prev" title="Models, Views, and Controllers" href="mvc.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> CodeIgniter4
+          
+
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Welcome to CodeIgniter4</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Installation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">Tutorial</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">CodeIgniter4 Overview</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="structure.html">Application Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvc.html">Models, Views, and Controllers</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Autoloading Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="services.html">Services</a></li>
+<li class="toctree-l2"><a class="reference internal" href="http.html">Working With HTTP Requests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="security.html">Security Guidelines</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../general/index.html">General Topics</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../libraries/index.html">Library Reference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../database/index.html">Database Reference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../helpers/index.html">Helpers</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../testing/index.html">Testing</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">The MIT License (MIT)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Change Log</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CodeIgniter4</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">CodeIgniter4 Overview</a> &raquo;</li>
+        
+      <li>Autoloading Files</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="autoloading-files">
+<h1>Autoloading Files<a class="headerlink" href="#autoloading-files" title="Permalink to this headline">¶</a></h1>
+<p>Every application consists of a large number of classes in many different locations.
+The framework provides classes for core functionality. Your application will have a
+number of libraries, models, and other entities to make it work. You might have third-party
+classes that your project is using. Keeping track of where every single file is, and
+hard-coding that location into your files in a series of <code class="docutils literal"><span class="pre">requires()</span></code> is a massive
+headache and very error-prone. That&#8217;s where autoloaders come in.</p>
+<p>CodeIgniter provides a very flexible autoloader that can be used with very little configuration.
+It can locate individual non-namespaced classes, namespaced classes that adhere to
+<a class="reference external" href="http://www.php-fig.org/psr/psr-4/">PSR4</a> autoloading
+directory structures, and will even attempt to locate classes in common directories (like Controllers,
+Models, etc).</p>
+<p>For performance improvement, the core CodeIgniter components have been added to the classmap.</p>
+<p>The autoloader works great by itself, but can also work with other autoloaders, like
+<a class="reference external" href="https://getcomposer.org">Composer</a>, or even your own custom autoloaders, if needed.
+Because they&#8217;re all registered through
+<a class="reference external" href="http://php.net/manual/en/function.spl-autoload-register.php">spl_autoload_register</a>,
+they work in sequence and don&#8217;t get in each other&#8217;s way.</p>
+<p>The autoloader is always active, being registered with <code class="docutils literal"><span class="pre">spl_autoload_register()</span></code> at the
+beginning of the framework&#8217;s execution.</p>
+<div class="section" id="configuration">
+<h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h2>
+<p>Initial configuration is done in <strong>/application/Config/Autoload.php</strong>. This file contains two primary
+arrays: one for the classmap, and one for PSR4-compatible namespaces.</p>
+</div>
+<div class="section" id="namespaces">
+<h2>Namespaces<a class="headerlink" href="#namespaces" title="Permalink to this headline">¶</a></h2>
+<p>The recommended method for organizing your classes is to create one or more namespaces for your
+application&#8217;s files. This is most important for any business-logic related classes, entity classes,
+etc. The <code class="docutils literal"><span class="pre">psr4</span></code> array in the configuration file allows you to map the namespace to the directory
+those classes can be found in:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$psr4</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s1">&#39;App&#39;</span>         <span class="o">=&gt;</span> <span class="nx">APPPATH</span><span class="p">,</span>
+        <span class="s1">&#39;CodeIgniter&#39;</span> <span class="o">=&gt;</span> <span class="nx">BASEPATH</span><span class="p">,</span>
+<span class="p">];</span>
+</pre></div>
+</div>
+<p>The key of each row is the namespace itself. This does not need a trailing slash. If you use double-quotes
+to define the array, be sure to escape the backwards slash. That means that it would be <code class="docutils literal"><span class="pre">My\\App</span></code>,
+not <code class="docutils literal"><span class="pre">My\App</span></code>. The value is the location to the directory the classes can be found in. They should
+have a trailing slash.</p>
+<p>By default, the application folder is namespace to the <code class="docutils literal"><span class="pre">App</span></code> namespace. While you are not forced to namespace the controllers,
+libraries, or models in the application directory, if you do, they will be found under the <code class="docutils literal"><span class="pre">App</span></code> namespace.
+You may change this namespace by editing the <strong>/application/Config/Constants.php</strong> file and setting the
+new namespace value under the <code class="docutils literal"><span class="pre">APP_NAMESPACE</span></code> setting:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nb">define</span><span class="p">(</span><span class="s1">&#39;APP_NAMESPACE&#39;</span><span class="p">,</span> <span class="s1">&#39;App&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>You will need to modify any existing files that are referencing the current namespace.</p>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">Config files are namespaced in the <code class="docutils literal"><span class="pre">Config</span></code> namespace, not in <code class="docutils literal"><span class="pre">App\Config</span></code> as you might
+expect. This allows the core system files to always be able to locate them, even when the application
+namespace has changed.</p>
+</div>
+</div>
+<div class="section" id="classmap">
+<h2>Classmap<a class="headerlink" href="#classmap" title="Permalink to this headline">¶</a></h2>
+<p>The classmap is used extensively by CodeIgniter to eke the last ounces of performance out of the system
+by not hitting the file-system with extra <code class="docutils literal"><span class="pre">file_exists()</span></code> calls. You can use the classmap to link to
+third-party libraries that are not namespaced:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$classmap</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s1">&#39;Markdown&#39;</span> <span class="o">=&gt;</span> <span class="nx">APPPATH</span> <span class="o">.</span><span class="s1">&#39;third_party/markdown.php&#39;</span>
+<span class="p">];</span>
+</pre></div>
+</div>
+<p>The key of each row is the name of the class that you want to locate. The value is the path to locate it at.</p>
+</div>
+<div class="section" id="legacy-support">
+<h2>Legacy Support<a class="headerlink" href="#legacy-support" title="Permalink to this headline">¶</a></h2>
+<p>If neither of the above methods find the class, and the class is not namespaced, the autoloader will look in the
+<strong>/application/Libraries</strong> and <strong>/application/Models</strong> directories to attempt to locate the files. This provides
+a measure to help ease the transition from previous versions.</p>
+<p>There are no configuration options for legacy support.</p>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="services.html" class="btn btn-neutral float-right" title="Services" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="mvc.html" class="btn btn-neutral" title="Models, Views, and Controllers" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014-2018 British Columbia Institute of Technology.
+      Last updated on Sep 23, 2018.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'4.0.0-alpha.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  false,
+            SOURCELINK_SUFFIX: ''
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

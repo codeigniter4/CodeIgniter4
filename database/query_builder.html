@@ -1,0 +1,2336 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Query Builder Class &mdash; CodeIgniter4 4.0.0-alpha.1 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/ci-icon.ico"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="CodeIgniter4 4.0.0-alpha.1 documentation" href="../index.html"/>
+        <link rel="up" title="Database Reference" href="index.html"/>
+        <link rel="next" title="Transactions" href="transactions.html"/>
+        <link rel="prev" title="Query Helper Methods" href="helpers.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> CodeIgniter4
+          
+
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Welcome to CodeIgniter4</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Installation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">Tutorial</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/index.html">CodeIgniter4 Overview</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../general/index.html">General Topics</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../libraries/index.html">Library Reference</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Database Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="examples.html">Quick Start: Usage Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html">Database Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="connecting.html">Connecting to a Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="queries.html">Running Queries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="results.html">Generating Query Results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="helpers.html">Query Helper Functions</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Query Builder Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transactions.html">Transactions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metadata.html">Getting MetaData</a></li>
+<li class="toctree-l2"><a class="reference internal" href="call_function.html">Custom Function Calls</a></li>
+<li class="toctree-l2"><a class="reference internal" href="model.html">Using CodeIgniter&#8217;s Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="entities.html">Using Entity Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="forge.html">Database Manipulation with Database Forge</a></li>
+<li class="toctree-l2"><a class="reference internal" href="migration.html">Database Migrations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="seeds.html">Database Seeding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="events.html">Database Events</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../helpers/index.html">Helpers</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../testing/index.html">Testing</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">The MIT License (MIT)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Change Log</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CodeIgniter4</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Database Reference</a> &raquo;</li>
+        
+      <li>Query Builder Class</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="query-builder-class">
+<h1>Query Builder Class<a class="headerlink" href="#query-builder-class" title="Permalink to this headline">¶</a></h1>
+<p>CodeIgniter gives you access to a Query Builder class. This pattern
+allows information to be retrieved, inserted, and updated in your
+database with minimal scripting. In some cases only one or two lines
+of code are necessary to perform a database action.
+CodeIgniter does not require that each database table be its own class
+file. It instead provides a more simplified interface.</p>
+<p>Beyond simplicity, a major benefit to using the Query Builder features
+is that it allows you to create database independent applications, since
+the query syntax is generated by each database adapter. It also allows
+for safer queries, since the values are escaped automatically by the
+system.</p>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#loading-the-query-builder" id="id1">Loading the Query Builder</a></li>
+<li><a class="reference internal" href="#selecting-data" id="id2">Selecting Data</a></li>
+<li><a class="reference internal" href="#looking-for-specific-data" id="id3">Looking for Specific Data</a></li>
+<li><a class="reference internal" href="#looking-for-similar-data" id="id4">Looking for Similar Data</a></li>
+<li><a class="reference internal" href="#ordering-results" id="id5">Ordering results</a></li>
+<li><a class="reference internal" href="#limiting-or-counting-results" id="id6">Limiting or Counting Results</a></li>
+<li><a class="reference internal" href="#query-grouping" id="id7">Query grouping</a></li>
+<li><a class="reference internal" href="#inserting-data" id="id8">Inserting Data</a></li>
+<li><a class="reference internal" href="#updating-data" id="id9">Updating Data</a></li>
+<li><a class="reference internal" href="#deleting-data" id="id10">Deleting Data</a></li>
+<li><a class="reference internal" href="#method-chaining" id="id11">Method Chaining</a></li>
+<li><a class="reference internal" href="#resetting-query-builder" id="id12">Resetting Query Builder</a></li>
+<li><a class="reference internal" href="#class-reference" id="id13">Class Reference</a></li>
+</ul>
+</div>
+<div class="section" id="loading-the-query-builder">
+<h2><a class="toc-backref" href="#id1">Loading the Query Builder</a><a class="headerlink" href="#loading-the-query-builder" title="Permalink to this headline">¶</a></h2>
+<p>The Query Builder is loaded through the <code class="docutils literal"><span class="pre">table()</span></code> method on the
+database connection. This sets the <code class="docutils literal"><span class="pre">FROM</span></code> portion of the query for you
+and returns a new instance of the Query Builder class:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$db</span>      <span class="o">=</span> <span class="nx">\Config\Database</span><span class="o">::</span><span class="na">connect</span><span class="p">();</span>
+<span class="nv">$builder</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">table</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The Query Builder is only loaded into memory when you specifically request
+the class, so no resources are used by default.</p>
+</div>
+<div class="section" id="selecting-data">
+<h2><a class="toc-backref" href="#id2">Selecting Data</a><a class="headerlink" href="#selecting-data" title="Permalink to this headline">¶</a></h2>
+<p>The following functions allow you to build SQL <strong>SELECT</strong> statements.</p>
+<p><strong>$builder-&gt;get()</strong></p>
+<p>Runs the selection query and returns the result. Can be used by itself
+to retrieve all records from a table:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$builder</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">table</span><span class="p">(</span><span class="s1">&#39;mytable&#39;</span><span class="p">);</span>
+<span class="nv">$query</span>   <span class="o">=</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">();</span>  <span class="c1">// Produces: SELECT * FROM mytable</span>
+</pre></div>
+</div>
+<p>The first and second parameters enable you to set a limit and offset
+clause:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$query</span> <span class="o">=</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">);</span>
+
+<span class="c1">// Executes: SELECT * FROM mytable LIMIT 20, 10</span>
+<span class="c1">// (in MySQL. Other databases have slightly different syntax)</span>
+</pre></div>
+</div>
+<p>You&#8217;ll notice that the above function is assigned to a variable named
+$query, which can be used to show the results:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$query</span> <span class="o">=</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">();</span>
+
+<span class="k">foreach</span> <span class="p">(</span><span class="nv">$query</span><span class="o">-&gt;</span><span class="na">getResult</span><span class="p">()</span> <span class="k">as</span> <span class="nv">$row</span><span class="p">)</span>
+<span class="p">{</span>
+        <span class="k">echo</span> <span class="nv">$row</span><span class="o">-&gt;</span><span class="na">title</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Please visit the <a class="reference internal" href="results.html"><span class="doc">result functions</span></a> page for a full
+discussion regarding result generation.</p>
+<p><strong>$builder-&gt;getCompiledSelect()</strong></p>
+<p>Compiles the selection query just like <strong>$builder-&gt;get()</strong> but does not <em>run</em>
+the query. This method simply returns the SQL query as a string.</p>
+<p>Example:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$sql</span> <span class="o">=</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">getCompiledSelect</span><span class="p">();</span>
+<span class="k">echo</span> <span class="nv">$sql</span><span class="p">;</span>
+
+<span class="c1">// Prints string: SELECT * FROM mytable</span>
+</pre></div>
+</div>
+<p>The first parameter enables you to set whether or not the query builder query
+will be reset (by default it will be reset, just like when using <cite>$builder-&gt;get()</cite>):</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">limit</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">20</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getCompiledSelect</span><span class="p">(</span><span class="k">false</span><span class="p">);</span>
+
+<span class="c1">// Prints string: SELECT * FROM mytable LIMIT 20, 10</span>
+<span class="c1">// (in MySQL. Other databases have slightly different syntax)</span>
+
+<span class="k">echo</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;title, content, date&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getCompiledSelect</span><span class="p">();</span>
+
+<span class="c1">// Prints string: SELECT title, content, date FROM mytable LIMIT 20, 10</span>
+</pre></div>
+</div>
+<p>The key thing to notice in the above example is that the second query did not
+utilize <strong>$builder-&gt;from()</strong> and did not pass a table name into the first
+parameter. The reason for this outcome is because the query has not been
+executed using <strong>$builder-&gt;get()</strong> which resets values or reset directly
+using <strong>$builder-&gt;resetQuery()</strong>.</p>
+<p><strong>$builder-&gt;getWhere()</strong></p>
+<p>Identical to the <code class="docutils literal"><span class="pre">get()</span></code> function except that it permits you to add a
+&#8220;where&#8221; clause in the first parameter, instead of using the db-&gt;where()
+function:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$query</span> <span class="o">=</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">getWhere</span><span class="p">([</span><span class="s1">&#39;id&#39;</span> <span class="o">=&gt;</span> <span class="nv">$id</span><span class="p">],</span> <span class="nv">$limit</span><span class="p">,</span> <span class="nv">$offset</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Please read the about the where function below for more information.</p>
+<p><strong>$builder-&gt;select()</strong></p>
+<p>Permits you to write the SELECT portion of your query:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;title, content, date&#39;</span><span class="p">);</span>
+<span class="nv">$query</span> <span class="o">=</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">();</span>
+
+<span class="c1">// Executes: SELECT title, content, date FROM mytable</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you are selecting all (*) from a table you do not need to
+use this function. When omitted, CodeIgniter assumes that you wish
+to select all fields and automatically adds &#8216;SELECT *&#8217;.</p>
+</div>
+<p><code class="docutils literal"><span class="pre">$builder-&gt;select()</span></code> accepts an optional second parameter. If you set it
+to FALSE, CodeIgniter will not try to protect your field or table names.
+This is useful if you need a compound select statement where automatic
+escaping of fields may break them.</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;(SELECT SUM(payments.amount) FROM payments WHERE payments.invoice_id=4) AS amount_paid&#39;</span><span class="p">,</span> <span class="k">FALSE</span><span class="p">);</span>
+<span class="nv">$query</span> <span class="o">=</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">();</span>
+</pre></div>
+</div>
+<p><strong>$builder-&gt;selectMax()</strong></p>
+<p>Writes a <code class="docutils literal"><span class="pre">SELECT</span> <span class="pre">MAX(field)</span></code> portion for your query. You can optionally
+include a second parameter to rename the resulting field.</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">selectMax</span><span class="p">(</span><span class="s1">&#39;age&#39;</span><span class="p">);</span>
+<span class="nv">$query</span> <span class="o">=</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">();</span>  <span class="c1">// Produces: SELECT MAX(age) as age FROM mytable</span>
+
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">selectMax</span><span class="p">(</span><span class="s1">&#39;age&#39;</span><span class="p">,</span> <span class="s1">&#39;member_age&#39;</span><span class="p">);</span>
+<span class="nv">$query</span> <span class="o">=</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">();</span> <span class="c1">// Produces: SELECT MAX(age) as member_age FROM mytable</span>
+</pre></div>
+</div>
+<p><strong>$builder-&gt;selectMin()</strong></p>
+<p>Writes a &#8220;SELECT MIN(field)&#8221; portion for your query. As with
+selectMax(), You can optionally include a second parameter to rename
+the resulting field.</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">selectMin</span><span class="p">(</span><span class="s1">&#39;age&#39;</span><span class="p">);</span>
+<span class="nv">$query</span> <span class="o">=</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">();</span> <span class="c1">// Produces: SELECT MIN(age) as age FROM mytable</span>
+</pre></div>
+</div>
+<p><strong>$builder-&gt;selectAvg()</strong></p>
+<p>Writes a &#8220;SELECT AVG(field)&#8221; portion for your query. As with
+selectMax(), You can optionally include a second parameter to rename
+the resulting field.</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">selectAvg</span><span class="p">(</span><span class="s1">&#39;age&#39;</span><span class="p">);</span>
+<span class="nv">$query</span> <span class="o">=</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">();</span> <span class="c1">// Produces: SELECT AVG(age) as age FROM mytable</span>
+</pre></div>
+</div>
+<p><strong>$builder-&gt;selectSum()</strong></p>
+<p>Writes a &#8220;SELECT SUM(field)&#8221; portion for your query. As with
+selectMax(), You can optionally include a second parameter to rename
+the resulting field.</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">selectSum</span><span class="p">(</span><span class="s1">&#39;age&#39;</span><span class="p">);</span>
+<span class="nv">$query</span> <span class="o">=</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">();</span> <span class="c1">// Produces: SELECT SUM(age) as age FROM mytable</span>
+</pre></div>
+</div>
+<p><strong>$builder-&gt;from()</strong></p>
+<p>Permits you to write the FROM portion of your query:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;title, content, date&#39;</span><span class="p">);</span>
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">from</span><span class="p">(</span><span class="s1">&#39;mytable&#39;</span><span class="p">);</span>
+<span class="nv">$query</span> <span class="o">=</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">();</span>  <span class="c1">// Produces: SELECT title, content, date FROM mytable</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">As shown earlier, the FROM portion of your query can is specified
+in the $db-&gt;table() function. Additional calls to from() will add more tables
+to the FROM portion of your query.</p>
+</div>
+<p><strong>$builder-&gt;join()</strong></p>
+<p>Permits you to write the JOIN portion of your query:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">table</span><span class="p">(</span><span class="s1">&#39;blog&#39;</span><span class="p">);</span>
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;*&#39;</span><span class="p">);</span>
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">join</span><span class="p">(</span><span class="s1">&#39;comments&#39;</span><span class="p">,</span> <span class="s1">&#39;comments.id = blogs.id&#39;</span><span class="p">);</span>
+<span class="nv">$query</span> <span class="o">=</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">();</span>
+
+<span class="c1">// Produces:</span>
+<span class="c1">// SELECT * FROM blogs JOIN comments ON comments.id = blogs.id</span>
+</pre></div>
+</div>
+<p>Multiple function calls can be made if you need several joins in one
+query.</p>
+<p>If you need a specific type of JOIN you can specify it via the third
+parameter of the function. Options are: left, right, outer, inner, left
+outer, and right outer.</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">join</span><span class="p">(</span><span class="s1">&#39;comments&#39;</span><span class="p">,</span> <span class="s1">&#39;comments.id = blogs.id&#39;</span><span class="p">,</span> <span class="s1">&#39;left&#39;</span><span class="p">);</span>
+<span class="c1">// Produces: LEFT JOIN comments ON comments.id = blogs.id</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="looking-for-specific-data">
+<h2><a class="toc-backref" href="#id3">Looking for Specific Data</a><a class="headerlink" href="#looking-for-specific-data" title="Permalink to this headline">¶</a></h2>
+<p><strong>$builder-&gt;where()</strong></p>
+<p>This function enables you to set <strong>WHERE</strong> clauses using one of four
+methods:</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">All values passed to this function are escaped automatically,
+producing safer queries.</p>
+</div>
+<ol class="arabic">
+<li><p class="first"><strong>Simple key/value method:</strong></p>
+<blockquote>
+<div><div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="nv">$name</span><span class="p">);</span> <span class="c1">// Produces: WHERE name = &#39;Joe&#39;</span>
+</pre></div>
+</div>
+<p>Notice that the equal sign is added for you.</p>
+<p>If you use multiple function calls they will be chained together with
+AND between them:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="nv">$name</span><span class="p">);</span>
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="nv">$title</span><span class="p">);</span>
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;status&#39;</span><span class="p">,</span> <span class="nv">$status</span><span class="p">);</span>
+<span class="c1">// WHERE name = &#39;Joe&#39; AND title = &#39;boss&#39; AND status = &#39;active&#39;</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first"><strong>Custom key/value method:</strong></p>
+<blockquote>
+<div><p>You can include an operator in the first parameter in order to
+control the comparison:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;name !=&#39;</span><span class="p">,</span> <span class="nv">$name</span><span class="p">);</span>
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;id &lt;&#39;</span><span class="p">,</span> <span class="nv">$id</span><span class="p">);</span> <span class="c1">// Produces: WHERE name != &#39;Joe&#39; AND id &lt; 45</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first"><strong>Associative array method:</strong></p>
+<blockquote>
+<div><div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$array</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="nv">$name</span><span class="p">,</span> <span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="nv">$title</span><span class="p">,</span> <span class="s1">&#39;status&#39;</span> <span class="o">=&gt;</span> <span class="nv">$status</span><span class="p">];</span>
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="nv">$array</span><span class="p">);</span>
+<span class="c1">// Produces: WHERE name = &#39;Joe&#39; AND title = &#39;boss&#39; AND status = &#39;active&#39;</span>
+</pre></div>
+</div>
+<p>You can include your own operators using this method as well:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$array</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;name !=&#39;</span> <span class="o">=&gt;</span> <span class="nv">$name</span><span class="p">,</span> <span class="s1">&#39;id &lt;&#39;</span> <span class="o">=&gt;</span> <span class="nv">$id</span><span class="p">,</span> <span class="s1">&#39;date &gt;&#39;</span> <span class="o">=&gt;</span> <span class="nv">$date</span><span class="p">];</span>
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="nv">$array</span><span class="p">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><dl class="first docutils">
+<dt><strong>Custom string:</strong></dt>
+<dd><p class="first">You can write your own clauses manually:</p>
+<div class="last highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$where</span> <span class="o">=</span> <span class="s2">&quot;name=&#39;Joe&#39; AND status=&#39;boss&#39; OR status=&#39;active&#39;&quot;</span><span class="p">;</span>
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="nv">$where</span><span class="p">);</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</li>
+</ol>
+<p><code class="docutils literal"><span class="pre">$builder-&gt;where()</span></code> accepts an optional third parameter. If you set it to
+FALSE, CodeIgniter will not try to protect your field or table names.</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;MATCH (field) AGAINST (&quot;value&quot;)&#39;</span><span class="p">,</span> <span class="k">NULL</span><span class="p">,</span> <span class="k">FALSE</span><span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>$builder-&gt;orWhere()</strong></p>
+<p>This function is identical to the one above, except that multiple
+instances are joined by OR:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;name !=&#39;</span><span class="p">,</span> <span class="nv">$name</span><span class="p">);</span>
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">orWhere</span><span class="p">(</span><span class="s1">&#39;id &gt;&#39;</span><span class="p">,</span> <span class="nv">$id</span><span class="p">);</span>  <span class="c1">// Produces: WHERE name != &#39;Joe&#39; OR id &gt; 50</span>
+</pre></div>
+</div>
+<p><strong>$builder-&gt;whereIn()</strong></p>
+<p>Generates a WHERE field IN (&#8216;item&#8217;, &#8216;item&#8217;) SQL query joined with AND if
+appropriate</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$names</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;Frank&#39;</span><span class="p">,</span> <span class="s1">&#39;Todd&#39;</span><span class="p">,</span> <span class="s1">&#39;James&#39;</span><span class="p">);</span>
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">whereIn</span><span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="nv">$names</span><span class="p">);</span>
+<span class="c1">// Produces: WHERE username IN (&#39;Frank&#39;, &#39;Todd&#39;, &#39;James&#39;)</span>
+</pre></div>
+</div>
+<p><strong>$builder-&gt;orWhereIn()</strong></p>
+<p>Generates a WHERE field IN (&#8216;item&#8217;, &#8216;item&#8217;) SQL query joined with OR if
+appropriate</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$names</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;Frank&#39;</span><span class="p">,</span> <span class="s1">&#39;Todd&#39;</span><span class="p">,</span> <span class="s1">&#39;James&#39;</span><span class="p">);</span>
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">orWhereIn</span><span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="nv">$names</span><span class="p">);</span>
+<span class="c1">// Produces: OR username IN (&#39;Frank&#39;, &#39;Todd&#39;, &#39;James&#39;)</span>
+</pre></div>
+</div>
+<p><strong>$builder-&gt;whereNotIn()</strong></p>
+<p>Generates a WHERE field NOT IN (&#8216;item&#8217;, &#8216;item&#8217;) SQL query joined with
+AND if appropriate</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$names</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;Frank&#39;</span><span class="p">,</span> <span class="s1">&#39;Todd&#39;</span><span class="p">,</span> <span class="s1">&#39;James&#39;</span><span class="p">);</span>
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">whereNotIn</span><span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="nv">$names</span><span class="p">);</span>
+<span class="c1">// Produces: WHERE username NOT IN (&#39;Frank&#39;, &#39;Todd&#39;, &#39;James&#39;)</span>
+</pre></div>
+</div>
+<p><strong>$builder-&gt;orWhereNotIn()</strong></p>
+<p>Generates a WHERE field NOT IN (&#8216;item&#8217;, &#8216;item&#8217;) SQL query joined with OR
+if appropriate</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$names</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;Frank&#39;</span><span class="p">,</span> <span class="s1">&#39;Todd&#39;</span><span class="p">,</span> <span class="s1">&#39;James&#39;</span><span class="p">);</span>
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">orWhereNotIn</span><span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="nv">$names</span><span class="p">);</span>
+<span class="c1">// Produces: OR username NOT IN (&#39;Frank&#39;, &#39;Todd&#39;, &#39;James&#39;)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="looking-for-similar-data">
+<h2><a class="toc-backref" href="#id4">Looking for Similar Data</a><a class="headerlink" href="#looking-for-similar-data" title="Permalink to this headline">¶</a></h2>
+<p><strong>$builder-&gt;like()</strong></p>
+<p>This method enables you to generate <strong>LIKE</strong> clauses, useful for doing
+searches.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">All values passed to this method are escaped automatically.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">All <code class="docutils literal"><span class="pre">like*</span></code> method variations can be forced to be perform case-insensitive searches by passing
+a fifth parameter of <code class="docutils literal"><span class="pre">true</span></code> to the method. This will use platform-specific features where available
+otherwise, will force the values to be lowercase, i.e. <code class="docutils literal"><span class="pre">WHERE</span> <span class="pre">LOWER(column)</span> <span class="pre">LIKE</span> <span class="pre">'%search%'</span></code>. This
+may require indexes to be made for <code class="docutils literal"><span class="pre">LOWER(column)</span></code> instead of <code class="docutils literal"><span class="pre">column</span></code> to be effective.</p>
+</div>
+<ol class="arabic">
+<li><p class="first"><strong>Simple key/value method:</strong></p>
+<blockquote>
+<div><div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">like</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;match&#39;</span><span class="p">);</span>
+<span class="c1">// Produces: WHERE `title` LIKE &#39;%match%&#39; ESCAPE &#39;!&#39;</span>
+</pre></div>
+</div>
+<p>If you use multiple method calls they will be chained together with
+AND between them:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">like</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;match&#39;</span><span class="p">);</span>
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">like</span><span class="p">(</span><span class="s1">&#39;body&#39;</span><span class="p">,</span> <span class="s1">&#39;match&#39;</span><span class="p">);</span>
+<span class="c1">// WHERE `title` LIKE &#39;%match%&#39; ESCAPE &#39;!&#39; AND  `body` LIKE &#39;%match% ESCAPE &#39;!&#39;</span>
+</pre></div>
+</div>
+<p>If you want to control where the wildcard (%) is placed, you can use
+an optional third argument. Your options are &#8216;before&#8217;, &#8216;after&#8217; and
+&#8216;both&#8217; (which is the default).</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">like</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;match&#39;</span><span class="p">,</span> <span class="s1">&#39;before&#39;</span><span class="p">);</span>     <span class="c1">// Produces: WHERE `title` LIKE &#39;%match&#39; ESCAPE &#39;!&#39;</span>
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">like</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;match&#39;</span><span class="p">,</span> <span class="s1">&#39;after&#39;</span><span class="p">);</span>      <span class="c1">// Produces: WHERE `title` LIKE &#39;match%&#39; ESCAPE &#39;!&#39;</span>
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">like</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;match&#39;</span><span class="p">,</span> <span class="s1">&#39;both&#39;</span><span class="p">);</span>       <span class="c1">// Produces: WHERE `title` LIKE &#39;%match%&#39; ESCAPE &#39;!&#39;</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first"><strong>Associative array method:</strong></p>
+<blockquote>
+<div><div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$array</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="nv">$match</span><span class="p">,</span> <span class="s1">&#39;page1&#39;</span> <span class="o">=&gt;</span> <span class="nv">$match</span><span class="p">,</span> <span class="s1">&#39;page2&#39;</span> <span class="o">=&gt;</span> <span class="nv">$match</span><span class="p">];</span>
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">like</span><span class="p">(</span><span class="nv">$array</span><span class="p">);</span>
+<span class="c1">// WHERE `title` LIKE &#39;%match%&#39; ESCAPE &#39;!&#39; AND  `page1` LIKE &#39;%match%&#39; ESCAPE &#39;!&#39; AND  `page2` LIKE &#39;%match%&#39; ESCAPE &#39;!&#39;</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+</ol>
+<p><strong>$builder-&gt;orLike()</strong></p>
+<p>This method is identical to the one above, except that multiple
+instances are joined by OR:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">like</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;match&#39;</span><span class="p">);</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">orLike</span><span class="p">(</span><span class="s1">&#39;body&#39;</span><span class="p">,</span> <span class="nv">$match</span><span class="p">);</span>
+<span class="c1">// WHERE `title` LIKE &#39;%match%&#39; ESCAPE &#39;!&#39; OR  `body` LIKE &#39;%match%&#39; ESCAPE &#39;!&#39;</span>
+</pre></div>
+</div>
+<p><strong>$builder-&gt;notLike()</strong></p>
+<p>This method is identical to <code class="docutils literal"><span class="pre">like()</span></code>, except that it generates
+NOT LIKE statements:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">notLike</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;match&#39;</span><span class="p">);</span>    <span class="c1">// WHERE `title` NOT LIKE &#39;%match% ESCAPE &#39;!&#39;</span>
+</pre></div>
+</div>
+<p><strong>$builder-&gt;orNotLike()</strong></p>
+<p>This method is identical to <code class="docutils literal"><span class="pre">notLike()</span></code>, except that multiple
+instances are joined by OR:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">like</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;match&#39;</span><span class="p">);</span>
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">orNotLike</span><span class="p">(</span><span class="s1">&#39;body&#39;</span><span class="p">,</span> <span class="s1">&#39;match&#39;</span><span class="p">);</span>
+<span class="c1">// WHERE `title` LIKE &#39;%match% OR  `body` NOT LIKE &#39;%match%&#39; ESCAPE &#39;!&#39;</span>
+</pre></div>
+</div>
+<p><strong>$builder-&gt;groupBy()</strong></p>
+<p>Permits you to write the GROUP BY portion of your query:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">groupBy</span><span class="p">(</span><span class="s2">&quot;title&quot;</span><span class="p">);</span> <span class="c1">// Produces: GROUP BY title</span>
+</pre></div>
+</div>
+<p>You can also pass an array of multiple values as well:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">groupBy</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s2">&quot;title&quot;</span><span class="p">,</span> <span class="s2">&quot;date&quot;</span><span class="p">));</span>  <span class="c1">// Produces: GROUP BY title, date</span>
+</pre></div>
+</div>
+<p><strong>$builder-&gt;distinct()</strong></p>
+<p>Adds the &#8220;DISTINCT&#8221; keyword to a query</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">distinct</span><span class="p">();</span>
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">();</span> <span class="c1">// Produces: SELECT DISTINCT * FROM mytable</span>
+</pre></div>
+</div>
+<p><strong>$builder-&gt;having()</strong></p>
+<p>Permits you to write the HAVING portion of your query. There are 2
+possible syntaxes, 1 argument or 2:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">having</span><span class="p">(</span><span class="s1">&#39;user_id = 45&#39;</span><span class="p">);</span>  <span class="c1">// Produces: HAVING user_id = 45</span>
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">having</span><span class="p">(</span><span class="s1">&#39;user_id&#39;</span><span class="p">,</span>  <span class="mi">45</span><span class="p">);</span>  <span class="c1">// Produces: HAVING user_id = 45</span>
+</pre></div>
+</div>
+<p>You can also pass an array of multiple values as well:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">having</span><span class="p">([</span><span class="s1">&#39;title =&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;My Title&#39;</span><span class="p">,</span> <span class="s1">&#39;id &lt;&#39;</span> <span class="o">=&gt;</span> <span class="nv">$id</span><span class="p">]);</span>
+<span class="c1">// Produces: HAVING title = &#39;My Title&#39;, id &lt; 45</span>
+</pre></div>
+</div>
+<p>If you are using a database that CodeIgniter escapes queries for, you
+can prevent escaping content by passing an optional third argument, and
+setting it to FALSE.</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">having</span><span class="p">(</span><span class="s1">&#39;user_id&#39;</span><span class="p">,</span>  <span class="mi">45</span><span class="p">);</span>  <span class="c1">// Produces: HAVING `user_id` = 45 in some databases such as MySQL</span>
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">having</span><span class="p">(</span><span class="s1">&#39;user_id&#39;</span><span class="p">,</span>  <span class="mi">45</span><span class="p">,</span> <span class="k">FALSE</span><span class="p">);</span>  <span class="c1">// Produces: HAVING user_id = 45</span>
+</pre></div>
+</div>
+<p><strong>$builder-&gt;orHaving()</strong></p>
+<p>Identical to having(), only separates multiple clauses with &#8220;OR&#8221;.</p>
+</div>
+<div class="section" id="ordering-results">
+<h2><a class="toc-backref" href="#id5">Ordering results</a><a class="headerlink" href="#ordering-results" title="Permalink to this headline">¶</a></h2>
+<p><strong>$builder-&gt;orderBy()</strong></p>
+<p>Lets you set an ORDER BY clause.</p>
+<p>The first parameter contains the name of the column you would like to order by.</p>
+<p>The second parameter lets you set the direction of the result.
+Options are <strong>ASC</strong>, <strong>DESC</strong> AND <strong>RANDOM</strong>.</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">orderBy</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;DESC&#39;</span><span class="p">);</span>
+<span class="c1">// Produces: ORDER BY `title` DESC</span>
+</pre></div>
+</div>
+<p>You can also pass your own string in the first parameter:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">orderBy</span><span class="p">(</span><span class="s1">&#39;title DESC, name ASC&#39;</span><span class="p">);</span>
+<span class="c1">// Produces: ORDER BY `title` DESC, `name` ASC</span>
+</pre></div>
+</div>
+<p>Or multiple function calls can be made if you need multiple fields.</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">orderBy</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;DESC&#39;</span><span class="p">);</span>
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">orderBy</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;ASC&#39;</span><span class="p">);</span>
+<span class="c1">// Produces: ORDER BY `title` DESC, `name` ASC</span>
+</pre></div>
+</div>
+<p>If you choose the <strong>RANDOM</strong> direction option, then the first parameters will
+be ignored, unless you specify a numeric seed value.</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">orderBy</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;RANDOM&#39;</span><span class="p">);</span>
+<span class="c1">// Produces: ORDER BY RAND()</span>
+
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">orderBy</span><span class="p">(</span><span class="mi">42</span><span class="p">,</span> <span class="s1">&#39;RANDOM&#39;</span><span class="p">);</span>
+<span class="c1">// Produces: ORDER BY RAND(42)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Random ordering is not currently supported in Oracle and
+will default to ASC instead.</p>
+</div>
+</div>
+<div class="section" id="limiting-or-counting-results">
+<h2><a class="toc-backref" href="#id6">Limiting or Counting Results</a><a class="headerlink" href="#limiting-or-counting-results" title="Permalink to this headline">¶</a></h2>
+<p><strong>$builder-&gt;limit()</strong></p>
+<p>Lets you limit the number of rows you would like returned by the query:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">limit</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>  <span class="c1">// Produces: LIMIT 10</span>
+</pre></div>
+</div>
+<p>The second parameter lets you set a result offset.</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">limit</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">);</span>  <span class="c1">// Produces: LIMIT 20, 10 (in MySQL.  Other databases have slightly different syntax)</span>
+</pre></div>
+</div>
+<p><strong>$builder-&gt;countAllResults()</strong></p>
+<p>Permits you to determine the number of rows in a particular Query
+Builder query. Queries will accept Query Builder restrictors such as
+<code class="docutils literal"><span class="pre">where()</span></code>, <code class="docutils literal"><span class="pre">orWhere()</span></code>, <code class="docutils literal"><span class="pre">like()</span></code>, <code class="docutils literal"><span class="pre">orLike()</span></code>, etc. Example:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">countAllResults</span><span class="p">(</span><span class="s1">&#39;my_table&#39;</span><span class="p">);</span>  <span class="c1">// Produces an integer, like 25</span>
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">like</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;match&#39;</span><span class="p">);</span>
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">from</span><span class="p">(</span><span class="s1">&#39;my_table&#39;</span><span class="p">);</span>
+<span class="k">echo</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">countAllResults</span><span class="p">();</span> <span class="c1">// Produces an integer, like 17</span>
+</pre></div>
+</div>
+<p>However, this method also resets any field values that you may have passed
+to <code class="docutils literal"><span class="pre">select()</span></code>. If you need to keep them, you can pass <code class="docutils literal"><span class="pre">FALSE</span></code> as the
+second parameter:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">countAllResults</span><span class="p">(</span><span class="s1">&#39;my_table&#39;</span><span class="p">,</span> <span class="k">FALSE</span><span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>$builder-&gt;countAll()</strong></p>
+<p>Permits you to determine the number of rows in a particular table.
+Submit the table name in the first parameter. Example:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">countAll</span><span class="p">(</span><span class="s1">&#39;my_table&#39;</span><span class="p">);</span>  <span class="c1">// Produces an integer, like 25</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="query-grouping">
+<h2><a class="toc-backref" href="#id7">Query grouping</a><a class="headerlink" href="#query-grouping" title="Permalink to this headline">¶</a></h2>
+<p>Query grouping allows you to create groups of WHERE clauses by enclosing them in parentheses. This will allow
+you to create queries with complex WHERE clauses. Nested groups are supported. Example:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;*&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">from</span><span class="p">(</span><span class="s1">&#39;my_table&#39;</span><span class="p">)</span>
+        <span class="o">-&gt;</span><span class="na">groupStart</span><span class="p">()</span>
+                <span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">)</span>
+                <span class="o">-&gt;</span><span class="na">orGroupStart</span><span class="p">()</span>
+                        <span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">)</span>
+                        <span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">)</span>
+                <span class="o">-&gt;</span><span class="na">groupEnd</span><span class="p">()</span>
+        <span class="o">-&gt;</span><span class="na">groupEnd</span><span class="p">()</span>
+        <span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">)</span>
+<span class="o">-&gt;</span><span class="na">get</span><span class="p">();</span>
+
+<span class="c1">// Generates:</span>
+<span class="c1">// SELECT * FROM (`my_table`) WHERE ( `a` = &#39;a&#39; OR ( `b` = &#39;b&#39; AND `c` = &#39;c&#39; ) ) AND `d` = &#39;d&#39;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">groups need to be balanced, make sure every groupStart() is matched by a groupEnd().</p>
+</div>
+<p><strong>$builder-&gt;groupStart()</strong></p>
+<p>Starts a new group by adding an opening parenthesis to the WHERE clause of the query.</p>
+<p><strong>$builder-&gt;orGroupStart()</strong></p>
+<p>Starts a new group by adding an opening parenthesis to the WHERE clause of the query, prefixing it with &#8216;OR&#8217;.</p>
+<p><strong>$builder-&gt;notGroupStart()</strong></p>
+<p>Starts a new group by adding an opening parenthesis to the WHERE clause of the query, prefixing it with &#8216;NOT&#8217;.</p>
+<p><strong>$builder-&gt;orNotGroupStart()</strong></p>
+<p>Starts a new group by adding an opening parenthesis to the WHERE clause of the query, prefixing it with &#8216;OR NOT&#8217;.</p>
+<p><strong>$builder-&gt;groupEnd()</strong></p>
+<p>Ends the current group by adding an closing parenthesis to the WHERE clause of the query.</p>
+</div>
+<div class="section" id="inserting-data">
+<h2><a class="toc-backref" href="#id8">Inserting Data</a><a class="headerlink" href="#inserting-data" title="Permalink to this headline">¶</a></h2>
+<p><strong>$builder-&gt;insert()</strong></p>
+<p>Generates an insert string based on the data you supply, and runs the
+query. You can either pass an <strong>array</strong> or an <strong>object</strong> to the
+function. Here is an example using an array:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+        <span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;My title&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;name&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;My Name&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;date&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;My date&#39;</span>
+<span class="p">);</span>
+
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">insert</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
+<span class="c1">// Produces: INSERT INTO mytable (title, name, date) VALUES (&#39;My title&#39;, &#39;My name&#39;, &#39;My date&#39;)</span>
+</pre></div>
+</div>
+<p>The first parameter is an associative array of values.</p>
+<p>Here is an example using an object:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="cm">/*</span>
+<span class="cm">class Myclass {</span>
+<span class="cm">        public $title   = &#39;My Title&#39;;</span>
+<span class="cm">        public $content = &#39;My Content&#39;;</span>
+<span class="cm">        public $date    = &#39;My Date&#39;;</span>
+<span class="cm">}</span>
+<span class="cm">*/</span>
+
+<span class="nv">$object</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Myclass</span><span class="p">;</span>
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">insert</span><span class="p">(</span><span class="nv">$object</span><span class="p">);</span>
+<span class="c1">// Produces: INSERT INTO mytable (title, content, date) VALUES (&#39;My Title&#39;, &#39;My Content&#39;, &#39;My Date&#39;)</span>
+</pre></div>
+</div>
+<p>The first parameter is an object.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">All values are escaped automatically producing safer queries.</p>
+</div>
+<p><strong>$builder-&gt;getCompiledInsert()</strong></p>
+<p>Compiles the insertion query just like $builder-&gt;insert() but does not
+<em>run</em> the query. This method simply returns the SQL query as a string.</p>
+<p>Example:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+        <span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;My title&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;name&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;My Name&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;date&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;My date&#39;</span>
+<span class="p">);</span>
+
+<span class="nv">$sql</span> <span class="o">=</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">set</span><span class="p">(</span><span class="nv">$data</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getCompiledInsert</span><span class="p">(</span><span class="s1">&#39;mytable&#39;</span><span class="p">);</span>
+<span class="k">echo</span> <span class="nv">$sql</span><span class="p">;</span>
+
+<span class="c1">// Produces string: INSERT INTO mytable (`title`, `name`, `date`) VALUES (&#39;My title&#39;, &#39;My name&#39;, &#39;My date&#39;)</span>
+</pre></div>
+</div>
+<p>The second parameter enables you to set whether or not the query builder query
+will be reset (by default it will be&#8211;just like $builder-&gt;insert()):</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">set</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;My Title&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getCompiledInsert</span><span class="p">(</span><span class="s1">&#39;mytable&#39;</span><span class="p">,</span> <span class="k">FALSE</span><span class="p">);</span>
+
+<span class="c1">// Produces string: INSERT INTO mytable (`title`) VALUES (&#39;My Title&#39;)</span>
+
+<span class="k">echo</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">set</span><span class="p">(</span><span class="s1">&#39;content&#39;</span><span class="p">,</span> <span class="s1">&#39;My Content&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getCompiledInsert</span><span class="p">();</span>
+
+<span class="c1">// Produces string: INSERT INTO mytable (`title`, `content`) VALUES (&#39;My Title&#39;, &#39;My Content&#39;)</span>
+</pre></div>
+</div>
+<p>The key thing to notice in the above example is that the second query did not
+utilize <cite>$builder-&gt;from()</cite> nor did it pass a table name into the first
+parameter. The reason this worked is because the query has not been executed
+using <cite>$builder-&gt;insert()</cite> which resets values or reset directly using
+<cite>$builder-&gt;resetQuery()</cite>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This method doesn&#8217;t work for batched inserts.</p>
+</div>
+<p><strong>$builder-&gt;insertBatch()</strong></p>
+<p>Generates an insert string based on the data you supply, and runs the
+query. You can either pass an <strong>array</strong> or an <strong>object</strong> to the
+function. Here is an example using an array:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+        <span class="k">array</span><span class="p">(</span>
+                <span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;My title&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;name&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;My Name&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;date&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;My date&#39;</span>
+        <span class="p">),</span>
+        <span class="k">array</span><span class="p">(</span>
+                <span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Another title&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;name&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;Another Name&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;date&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;Another date&#39;</span>
+        <span class="p">)</span>
+<span class="p">);</span>
+
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">insertBatch</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
+<span class="c1">// Produces: INSERT INTO mytable (title, name, date) VALUES (&#39;My title&#39;, &#39;My name&#39;, &#39;My date&#39;),  (&#39;Another title&#39;, &#39;Another name&#39;, &#39;Another date&#39;)</span>
+</pre></div>
+</div>
+<p>The first parameter is an associative array of values.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">All values are escaped automatically producing safer queries.</p>
+</div>
+</div>
+<div class="section" id="updating-data">
+<h2><a class="toc-backref" href="#id9">Updating Data</a><a class="headerlink" href="#updating-data" title="Permalink to this headline">¶</a></h2>
+<p><strong>$builder-&gt;replace()</strong></p>
+<p>This method executes a REPLACE statement, which is basically the SQL
+standard for (optional) DELETE + INSERT, using <em>PRIMARY</em> and <em>UNIQUE</em>
+keys as the determining factor.
+In our case, it will save you from the need to implement complex
+logics with different combinations of  <code class="docutils literal"><span class="pre">select()</span></code>, <code class="docutils literal"><span class="pre">update()</span></code>,
+<code class="docutils literal"><span class="pre">delete()</span></code> and <code class="docutils literal"><span class="pre">insert()</span></code> calls.</p>
+<p>Example:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+        <span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;My title&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;name&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;My Name&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;date&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;My date&#39;</span>
+<span class="p">);</span>
+
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">replace</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
+
+<span class="c1">// Executes: REPLACE INTO mytable (title, name, date) VALUES (&#39;My title&#39;, &#39;My name&#39;, &#39;My date&#39;)</span>
+</pre></div>
+</div>
+<p>In the above example, if we assume that the <em>title</em> field is our primary
+key, then if a row containing &#8216;My title&#8217; as the <em>title</em> value, that row
+will be deleted with our new row data replacing it.</p>
+<p>Usage of the <code class="docutils literal"><span class="pre">set()</span></code> method is also allowed and all fields are
+automatically escaped, just like with <code class="docutils literal"><span class="pre">insert()</span></code>.</p>
+<p><strong>$builder-&gt;set()</strong></p>
+<p>This function enables you to set values for inserts or updates.</p>
+<p><strong>It can be used instead of passing a data array directly to the insert
+or update functions:</strong></p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">set</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="nv">$name</span><span class="p">);</span>
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">insert</span><span class="p">();</span>  <span class="c1">// Produces: INSERT INTO mytable (`name`) VALUES (&#39;{$name}&#39;)</span>
+</pre></div>
+</div>
+<p>If you use multiple function called they will be assembled properly
+based on whether you are doing an insert or an update:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">set</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="nv">$name</span><span class="p">);</span>
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">set</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="nv">$title</span><span class="p">);</span>
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">set</span><span class="p">(</span><span class="s1">&#39;status&#39;</span><span class="p">,</span> <span class="nv">$status</span><span class="p">);</span>
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">insert</span><span class="p">();</span>
+</pre></div>
+</div>
+<p><strong>set()</strong> will also accept an optional third parameter (<code class="docutils literal"><span class="pre">$escape</span></code>), that
+will prevent data from being escaped if set to FALSE. To illustrate the
+difference, here is <code class="docutils literal"><span class="pre">set()</span></code> used both with and without the escape
+parameter.</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">set</span><span class="p">(</span><span class="s1">&#39;field&#39;</span><span class="p">,</span> <span class="s1">&#39;field+1&#39;</span><span class="p">,</span> <span class="k">FALSE</span><span class="p">);</span>
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">update</span><span class="p">();</span> <span class="c1">// gives UPDATE mytable SET field = field+1 WHERE `id` = 2</span>
+
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">set</span><span class="p">(</span><span class="s1">&#39;field&#39;</span><span class="p">,</span> <span class="s1">&#39;field+1&#39;</span><span class="p">);</span>
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">update</span><span class="p">();</span> <span class="c1">// gives UPDATE `mytable` SET `field` = &#39;field+1&#39; WHERE `id` = 2</span>
+</pre></div>
+</div>
+<p>You can also pass an associative array to this function:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$array</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+        <span class="s1">&#39;name&#39;</span>   <span class="o">=&gt;</span> <span class="nv">$name</span><span class="p">,</span>
+        <span class="s1">&#39;title&#39;</span>  <span class="o">=&gt;</span> <span class="nv">$title</span><span class="p">,</span>
+        <span class="s1">&#39;status&#39;</span> <span class="o">=&gt;</span> <span class="nv">$status</span>
+<span class="p">);</span>
+
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">set</span><span class="p">(</span><span class="nv">$array</span><span class="p">);</span>
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">insert</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>Or an object:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="cm">/*</span>
+<span class="cm">class Myclass {</span>
+<span class="cm">        public $title   = &#39;My Title&#39;;</span>
+<span class="cm">        public $content = &#39;My Content&#39;;</span>
+<span class="cm">        public $date    = &#39;My Date&#39;;</span>
+<span class="cm">}</span>
+<span class="cm">*/</span>
+
+<span class="nv">$object</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Myclass</span><span class="p">;</span>
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">set</span><span class="p">(</span><span class="nv">$object</span><span class="p">);</span>
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">insert</span><span class="p">();</span>
+</pre></div>
+</div>
+<p><strong>$builder-&gt;update()</strong></p>
+<p>Generates an update string and runs the query based on the data you
+supply. You can pass an <strong>array</strong> or an <strong>object</strong> to the function. Here
+is an example using an array:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+        <span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="nv">$title</span><span class="p">,</span>
+        <span class="s1">&#39;name&#39;</span>  <span class="o">=&gt;</span> <span class="nv">$name</span><span class="p">,</span>
+        <span class="s1">&#39;date&#39;</span>  <span class="o">=&gt;</span> <span class="nv">$date</span>
+<span class="p">);</span>
+
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="nv">$id</span><span class="p">);</span>
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">update</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
+<span class="c1">// Produces:</span>
+<span class="c1">//</span>
+<span class="c1">//      UPDATE mytable</span>
+<span class="c1">//      SET title = &#39;{$title}&#39;, name = &#39;{$name}&#39;, date = &#39;{$date}&#39;</span>
+<span class="c1">//      WHERE id = $id</span>
+</pre></div>
+</div>
+<p>Or you can supply an object:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="cm">/*</span>
+<span class="cm">class Myclass {</span>
+<span class="cm">        public $title   = &#39;My Title&#39;;</span>
+<span class="cm">        public $content = &#39;My Content&#39;;</span>
+<span class="cm">        public $date    = &#39;My Date&#39;;</span>
+<span class="cm">}</span>
+<span class="cm">*/</span>
+
+<span class="nv">$object</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Myclass</span><span class="p">;</span>
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="nv">$id</span><span class="p">);</span>
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">update</span><span class="p">(</span><span class="nv">$object</span><span class="p">);</span>
+<span class="c1">// Produces:</span>
+<span class="c1">//</span>
+<span class="c1">// UPDATE `mytable`</span>
+<span class="c1">// SET `title` = &#39;{$title}&#39;, `name` = &#39;{$name}&#39;, `date` = &#39;{$date}&#39;</span>
+<span class="c1">// WHERE id = `$id`</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">All values are escaped automatically producing safer queries.</p>
+</div>
+<p>You&#8217;ll notice the use of the $builder-&gt;where() function, enabling you
+to set the WHERE clause. You can optionally pass this information
+directly into the update function as a string:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">update</span><span class="p">(</span><span class="nv">$data</span><span class="p">,</span> <span class="s2">&quot;id = 4&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Or as an array:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">update</span><span class="p">(</span><span class="nv">$data</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;id&#39;</span> <span class="o">=&gt;</span> <span class="nv">$id</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>You may also use the $builder-&gt;set() function described above when
+performing updates.</p>
+<p><strong>$builder-&gt;updateBatch()</strong></p>
+<p>Generates an update string based on the data you supply, and runs the query.
+You can either pass an <strong>array</strong> or an <strong>object</strong> to the function.
+Here is an example using an array:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+   <span class="k">array</span><span class="p">(</span>
+      <span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;My title&#39;</span> <span class="p">,</span>
+      <span class="s1">&#39;name&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;My Name 2&#39;</span> <span class="p">,</span>
+      <span class="s1">&#39;date&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;My date 2&#39;</span>
+   <span class="p">),</span>
+   <span class="k">array</span><span class="p">(</span>
+      <span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Another title&#39;</span> <span class="p">,</span>
+      <span class="s1">&#39;name&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;Another Name 2&#39;</span> <span class="p">,</span>
+      <span class="s1">&#39;date&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;Another date 2&#39;</span>
+   <span class="p">)</span>
+<span class="p">);</span>
+
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">updateBatch</span><span class="p">(</span><span class="nv">$data</span><span class="p">,</span> <span class="s1">&#39;title&#39;</span><span class="p">);</span>
+
+<span class="c1">// Produces:</span>
+<span class="c1">// UPDATE `mytable` SET `name` = CASE</span>
+<span class="c1">// WHEN `title` = &#39;My title&#39; THEN &#39;My Name 2&#39;</span>
+<span class="c1">// WHEN `title` = &#39;Another title&#39; THEN &#39;Another Name 2&#39;</span>
+<span class="c1">// ELSE `name` END,</span>
+<span class="c1">// `date` = CASE</span>
+<span class="c1">// WHEN `title` = &#39;My title&#39; THEN &#39;My date 2&#39;</span>
+<span class="c1">// WHEN `title` = &#39;Another title&#39; THEN &#39;Another date 2&#39;</span>
+<span class="c1">// ELSE `date` END</span>
+<span class="c1">// WHERE `title` IN (&#39;My title&#39;,&#39;Another title&#39;)</span>
+</pre></div>
+</div>
+<p>The first parameter is an associative array of values, the second parameter is the where key.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">All values are escaped automatically producing safer queries.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last"><code class="docutils literal"><span class="pre">affectedRows()</span></code> won&#8217;t give you proper results with this method,
+due to the very nature of how it works. Instead, <code class="docutils literal"><span class="pre">updateBatch()</span></code>
+returns the number of rows affected.</p>
+</div>
+<p><strong>$builder-&gt;getCompiledUpdate()</strong></p>
+<p>This works exactly the same way as <code class="docutils literal"><span class="pre">$builder-&gt;getCompiledInsert()</span></code> except
+that it produces an UPDATE SQL string instead of an INSERT SQL string.</p>
+<p>For more information view documentation for <cite>$builder-&gt;getCompiledInsert()</cite>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This method doesn&#8217;t work for batched updates.</p>
+</div>
+</div>
+<div class="section" id="deleting-data">
+<h2><a class="toc-backref" href="#id10">Deleting Data</a><a class="headerlink" href="#deleting-data" title="Permalink to this headline">¶</a></h2>
+<p><strong>$builder-&gt;delete()</strong></p>
+<p>Generates a delete SQL string and runs the query.</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">delete</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">&#39;id&#39;</span> <span class="o">=&gt;</span> <span class="nv">$id</span><span class="p">));</span>  <span class="c1">// Produces: // DELETE FROM mytable  // WHERE id = $id</span>
+</pre></div>
+</div>
+<p>The first parameter is the where clause.
+You can also use the where() or or_where() functions instead of passing
+the data to the first parameter of the function:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="nv">$id</span><span class="p">);</span>
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">delete</span><span class="p">();</span>
+
+<span class="c1">// Produces:</span>
+<span class="c1">// DELETE FROM mytable</span>
+<span class="c1">// WHERE id = $id</span>
+</pre></div>
+</div>
+<p>If you want to delete all data from a table, you can use the truncate()
+function, or empty_table().</p>
+<p><strong>$builder-&gt;emptyTable()</strong></p>
+<p>Generates a delete SQL string and runs the
+query:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">emptyTable</span><span class="p">(</span><span class="s1">&#39;mytable&#39;</span><span class="p">);</span> <span class="c1">// Produces: DELETE FROM mytable</span>
+</pre></div>
+</div>
+<p><strong>$builder-&gt;truncate()</strong></p>
+<p>Generates a truncate SQL string and runs the query.</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">truncate</span><span class="p">();</span>
+
+<span class="c1">// Produce:</span>
+<span class="c1">// TRUNCATE mytable</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If the TRUNCATE command isn&#8217;t available, truncate() will
+execute as &#8220;DELETE FROM table&#8221;.</p>
+</div>
+<p><strong>$builder-&gt;getCompiledDelete()</strong></p>
+<p>This works exactly the same way as <code class="docutils literal"><span class="pre">$builder-&gt;getCompiledInsert()</span></code> except
+that it produces a DELETE SQL string instead of an INSERT SQL string.</p>
+<p>For more information view documentation for $builder-&gt;getCompiledInsert().</p>
+</div>
+<div class="section" id="method-chaining">
+<h2><a class="toc-backref" href="#id11">Method Chaining</a><a class="headerlink" href="#method-chaining" title="Permalink to this headline">¶</a></h2>
+<p>Method chaining allows you to simplify your syntax by connecting
+multiple functions. Consider this example:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$query</span> <span class="o">=</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">)</span>
+                 <span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="nv">$id</span><span class="p">)</span>
+                 <span class="o">-&gt;</span><span class="na">limit</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+                 <span class="o">-&gt;</span><span class="na">get</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="resetting-query-builder">
+<span id="ar-caching"></span><h2><a class="toc-backref" href="#id12">Resetting Query Builder</a><a class="headerlink" href="#resetting-query-builder" title="Permalink to this headline">¶</a></h2>
+<p><strong>$builder-&gt;resetQuery()</strong></p>
+<p>Resetting Query Builder allows you to start fresh with your query without
+executing it first using a method like $builder-&gt;get() or $builder-&gt;insert().</p>
+<p>This is useful in situations where you are using Query Builder to generate SQL
+(ex. <code class="docutils literal"><span class="pre">$builder-&gt;getCompiledSelect()</span></code>) but then choose to, for instance,
+run the query:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="c1">// Note that the second parameter of the get_compiled_select method is FALSE</span>
+<span class="nv">$sql</span> <span class="o">=</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">&#39;field1&#39;</span><span class="p">,</span><span class="s1">&#39;field2&#39;</span><span class="p">))</span>
+               <span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;field3&#39;</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+               <span class="o">-&gt;</span><span class="na">getCompiledSelect</span><span class="p">(</span><span class="k">false</span><span class="p">);</span>
+
+<span class="c1">// ...</span>
+<span class="c1">// Do something crazy with the SQL code... like add it to a cron script for</span>
+<span class="c1">// later execution or something...</span>
+<span class="c1">// ...</span>
+
+<span class="nv">$data</span> <span class="o">=</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">getResultArray</span><span class="p">();</span>
+
+<span class="c1">// Would execute and return an array of results of the following query:</span>
+<span class="c1">// SELECT field1, field1 from mytable where field3 = 5;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="class-reference">
+<h2><a class="toc-backref" href="#id13">Class Reference</a><a class="headerlink" href="#class-reference" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="CodeIgniterDatabaseBaseBuilder">
+<em class="property">class </em><code class="descname">CodeIgniterDatabaseBaseBuilder</code><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><dl class="method">
+<dt id="CodeIgniterDatabaseBaseBuilder::resetQuery">
+<code class="descname">resetQuery</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::resetQuery" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">BaseBuilder instance (method chaining)</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">BaseBuilder</td>
+</tr>
+</tbody>
+</table>
+<p>Resets the current Query Builder state.  Useful when you want
+to build a query that can be canceled under certain conditions.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="CodeIgniterDatabaseBaseBuilder::countAllResults">
+<code class="descname">countAllResults</code><span class="sig-paren">(</span><span class="optional">[</span><em>$reset = TRUE</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::countAllResults" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$reset</strong> (<em>bool</em>) &#8211; Whether to reset values for SELECTs</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Number of rows in the query result</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">int</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Generates a platform-specific query string that counts
+all records returned by an Query Builder query.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="CodeIgniterDatabaseBaseBuilder::get">
+<code class="descname">get</code><span class="sig-paren">(</span><span class="optional">[</span><em>$limit = NULL</em><span class="optional">[</span>, <em>$offset = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::get" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$limit</strong> (<em>int</em>) &#8211; The LIMIT clause</li>
+<li><strong>$offset</strong> (<em>int</em>) &#8211; The OFFSET clause</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">CodeIgniterDatabaseResultInterface instance (method chaining)</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">CodeIgniterDatabaseResultInterface</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Compiles and runs SELECT statement based on the already
+called Query Builder methods.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="CodeIgniterDatabaseBaseBuilder::getWhere">
+<code class="descname">getWhere</code><span class="sig-paren">(</span><span class="optional">[</span><em>$where = NULL</em><span class="optional">[</span>, <em>$limit = NULL</em><span class="optional">[</span>, <em>$offset = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::getWhere" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$where</strong> (<em>string</em>) &#8211; The WHERE clause</li>
+<li><strong>$limit</strong> (<em>int</em>) &#8211; The LIMIT clause</li>
+<li><strong>$offset</strong> (<em>int</em>) &#8211; The OFFSET clause</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">CodeIgniterDatabaseResultInterface instance (method chaining)</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">CodeIgniterDatabaseResultInterface</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Same as <code class="docutils literal"><span class="pre">get()</span></code>, but also allows the WHERE to be added directly.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="CodeIgniterDatabaseBaseBuilder::select">
+<code class="descname">select</code><span class="sig-paren">(</span><span class="optional">[</span><em>$select = '*'</em><span class="optional">[</span>, <em>$escape = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::select" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$select</strong> (<em>string</em>) &#8211; The SELECT portion of a query</li>
+<li><strong>$escape</strong> (<em>bool</em>) &#8211; Whether to escape values and identifiers</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">BaseBuilder instance (method chaining)</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">BaseBuilder</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Adds a SELECT clause to a query.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="CodeIgniterDatabaseBaseBuilder::selectAvg">
+<code class="descname">selectAvg</code><span class="sig-paren">(</span><span class="optional">[</span><em>$select = ''</em><span class="optional">[</span>, <em>$alias = ''</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::selectAvg" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$select</strong> (<em>string</em>) &#8211; Field to compute the average of</li>
+<li><strong>$alias</strong> (<em>string</em>) &#8211; Alias for the resulting value name</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">BaseBuilder instance (method chaining)</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">BaseBuilder</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Adds a SELECT AVG(field) clause to a query.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="CodeIgniterDatabaseBaseBuilder::selectMax">
+<code class="descname">selectMax</code><span class="sig-paren">(</span><span class="optional">[</span><em>$select = ''</em><span class="optional">[</span>, <em>$alias = ''</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::selectMax" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$select</strong> (<em>string</em>) &#8211; Field to compute the maximum of</li>
+<li><strong>$alias</strong> (<em>string</em>) &#8211; Alias for the resulting value name</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">BaseBuilder instance (method chaining)</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">BaseBuilder</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Adds a SELECT MAX(field) clause to a query.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="CodeIgniterDatabaseBaseBuilder::selectMin">
+<code class="descname">selectMin</code><span class="sig-paren">(</span><span class="optional">[</span><em>$select = ''</em><span class="optional">[</span>, <em>$alias = ''</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::selectMin" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$select</strong> (<em>string</em>) &#8211; Field to compute the minimum of</li>
+<li><strong>$alias</strong> (<em>string</em>) &#8211; Alias for the resulting value name</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">BaseBuilder instance (method chaining)</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">BaseBuilder</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Adds a SELECT MIN(field) clause to a query.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="CodeIgniterDatabaseBaseBuilder::selectSum">
+<code class="descname">selectSum</code><span class="sig-paren">(</span><span class="optional">[</span><em>$select = ''</em><span class="optional">[</span>, <em>$alias = ''</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::selectSum" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$select</strong> (<em>string</em>) &#8211; Field to compute the sum of</li>
+<li><strong>$alias</strong> (<em>string</em>) &#8211; Alias for the resulting value name</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">BaseBuilder instance (method chaining)</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">BaseBuilder</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Adds a SELECT SUM(field) clause to a query.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="CodeIgniterDatabaseBaseBuilder::distinct">
+<code class="descname">distinct</code><span class="sig-paren">(</span><span class="optional">[</span><em>$val = TRUE</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::distinct" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$val</strong> (<em>bool</em>) &#8211; Desired value of the &#8220;distinct&#8221; flag</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">BaseBuilder instance (method chaining)</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">BaseBuilder</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Sets a flag which tells the query builder to add
+a DISTINCT clause to the SELECT portion of the query.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="CodeIgniterDatabaseBaseBuilder::from">
+<code class="descname">from</code><span class="sig-paren">(</span><em>$from</em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::from" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$from</strong> (<em>mixed</em>) &#8211; Table name(s); string or array</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">BaseBuilder instance (method chaining)</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">BaseBuilder</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Specifies the FROM clause of a query.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="CodeIgniterDatabaseBaseBuilder::join">
+<code class="descname">join</code><span class="sig-paren">(</span><em>$table</em>, <em>$cond</em><span class="optional">[</span>, <em>$type = ''</em><span class="optional">[</span>, <em>$escape = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::join" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$table</strong> (<em>string</em>) &#8211; Table name to join</li>
+<li><strong>$cond</strong> (<em>string</em>) &#8211; The JOIN ON condition</li>
+<li><strong>$type</strong> (<em>string</em>) &#8211; The JOIN type</li>
+<li><strong>$escape</strong> (<em>bool</em>) &#8211; Whether to escape values and identifiers</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">BaseBuilder instance (method chaining)</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">BaseBuilder</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Adds a JOIN clause to a query.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="CodeIgniterDatabaseBaseBuilder::where">
+<code class="descname">where</code><span class="sig-paren">(</span><em>$key</em><span class="optional">[</span>, <em>$value = NULL</em><span class="optional">[</span>, <em>$escape = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::where" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$key</strong> (<em>mixed</em>) &#8211; Name of field to compare, or associative array</li>
+<li><strong>$value</strong> (<em>mixed</em>) &#8211; If a single key, compared to this value</li>
+<li><strong>$escape</strong> (<em>bool</em>) &#8211; Whether to escape values and identifiers</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">BaseBuilder instance</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">object</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Generates the WHERE portion of the query.
+Separates multiple calls with &#8216;AND&#8217;.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="CodeIgniterDatabaseBaseBuilder::orWhere">
+<code class="descname">orWhere</code><span class="sig-paren">(</span><em>$key</em><span class="optional">[</span>, <em>$value = NULL</em><span class="optional">[</span>, <em>$escape = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::orWhere" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$key</strong> (<em>mixed</em>) &#8211; Name of field to compare, or associative array</li>
+<li><strong>$value</strong> (<em>mixed</em>) &#8211; If a single key, compared to this value</li>
+<li><strong>$escape</strong> (<em>bool</em>) &#8211; Whether to escape values and identifiers</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">BaseBuilder instance</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">object</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Generates the WHERE portion of the query.
+Separates multiple calls with &#8216;OR&#8217;.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="CodeIgniterDatabaseBaseBuilder::orWhereIn">
+<code class="descname">orWhereIn</code><span class="sig-paren">(</span><span class="optional">[</span><em>$key = NULL</em><span class="optional">[</span>, <em>$values = NULL</em><span class="optional">[</span>, <em>$escape = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::orWhereIn" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$key</strong> (<em>string</em>) &#8211; The field to search</li>
+<li><strong>$values</strong> (<em>array</em>) &#8211; The values searched on</li>
+<li><strong>$escape</strong> (<em>bool</em>) &#8211; Whether to escape values and identifiers</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">BaseBuilder instance</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">object</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Generates a WHERE field IN(&#8216;item&#8217;, &#8216;item&#8217;) SQL query,
+joined with &#8216;OR&#8217; if appropriate.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="CodeIgniterDatabaseBaseBuilder::orWhereNotIn">
+<code class="descname">orWhereNotIn</code><span class="sig-paren">(</span><span class="optional">[</span><em>$key = NULL</em><span class="optional">[</span>, <em>$values = NULL</em><span class="optional">[</span>, <em>$escape = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::orWhereNotIn" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$key</strong> (<em>string</em>) &#8211; The field to search</li>
+<li><strong>$values</strong> (<em>array</em>) &#8211; The values searched on</li>
+<li><strong>$escape</strong> (<em>bool</em>) &#8211; Whether to escape values and identifiers</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">BaseBuilder instance</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">object</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Generates a WHERE field NOT IN(&#8216;item&#8217;, &#8216;item&#8217;) SQL query,
+joined with &#8216;OR&#8217; if appropriate.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="CodeIgniterDatabaseBaseBuilder::whereIn">
+<code class="descname">whereIn</code><span class="sig-paren">(</span><span class="optional">[</span><em>$key = NULL</em><span class="optional">[</span>, <em>$values = NULL</em><span class="optional">[</span>, <em>$escape = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::whereIn" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$key</strong> (<em>string</em>) &#8211; Name of field to examine</li>
+<li><strong>$values</strong> (<em>array</em>) &#8211; Array of target values</li>
+<li><strong>$escape</strong> (<em>bool</em>) &#8211; Whether to escape values and identifiers</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">BaseBuilder instance</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">object</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Generates a WHERE field IN(&#8216;item&#8217;, &#8216;item&#8217;) SQL query,
+joined with &#8216;AND&#8217; if appropriate.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="CodeIgniterDatabaseBaseBuilder::whereNotIn">
+<code class="descname">whereNotIn</code><span class="sig-paren">(</span><span class="optional">[</span><em>$key = NULL</em><span class="optional">[</span>, <em>$values = NULL</em><span class="optional">[</span>, <em>$escape = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::whereNotIn" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$key</strong> (<em>string</em>) &#8211; Name of field to examine</li>
+<li><strong>$values</strong> (<em>array</em>) &#8211; Array of target values</li>
+<li><strong>$escape</strong> (<em>bool</em>) &#8211; Whether to escape values and identifiers</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">BaseBuilder instance</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">object</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Generates a WHERE field NOT IN(&#8216;item&#8217;, &#8216;item&#8217;) SQL query,
+joined with &#8216;AND&#8217; if appropriate.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="CodeIgniterDatabaseBaseBuilder::groupStart">
+<code class="descname">groupStart</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::groupStart" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">BaseBuilder instance (method chaining)</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">BaseBuilder</td>
+</tr>
+</tbody>
+</table>
+<p>Starts a group expression, using ANDs for the conditions inside it.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="CodeIgniterDatabaseBaseBuilder::orGroupStart">
+<code class="descname">orGroupStart</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::orGroupStart" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">BaseBuilder instance (method chaining)</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">BaseBuilder</td>
+</tr>
+</tbody>
+</table>
+<p>Starts a group expression, using ORs for the conditions inside it.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="CodeIgniterDatabaseBaseBuilder::notGroupStart">
+<code class="descname">notGroupStart</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::notGroupStart" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">BaseBuilder instance (method chaining)</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">BaseBuilder</td>
+</tr>
+</tbody>
+</table>
+<p>Starts a group expression, using AND NOTs for the conditions inside it.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="CodeIgniterDatabaseBaseBuilder::orNotGroupStart">
+<code class="descname">orNotGroupStart</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::orNotGroupStart" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">BaseBuilder instance (method chaining)</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">BaseBuilder</td>
+</tr>
+</tbody>
+</table>
+<p>Starts a group expression, using OR NOTs for the conditions inside it.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="CodeIgniterDatabaseBaseBuilder::groupEnd">
+<code class="descname">groupEnd</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::groupEnd" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">BaseBuilder instance</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">object</td>
+</tr>
+</tbody>
+</table>
+<p>Ends a group expression.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="CodeIgniterDatabaseBaseBuilder::like">
+<code class="descname">like</code><span class="sig-paren">(</span><em>$field</em><span class="optional">[</span>, <em>$match = ''</em><span class="optional">[</span>, <em>$side = 'both'</em><span class="optional">[</span>, <em>$escape = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::like" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$field</strong> (<em>string</em>) &#8211; Field name</li>
+<li><strong>$match</strong> (<em>string</em>) &#8211; Text portion to match</li>
+<li><strong>$side</strong> (<em>string</em>) &#8211; Which side of the expression to put the &#8216;%&#8217; wildcard on</li>
+<li><strong>$escape</strong> (<em>bool</em>) &#8211; Whether to escape values and identifiers</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">BaseBuilder instance (method chaining)</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">BaseBuilder</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Adds a LIKE clause to a query, separating multiple calls with AND.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="CodeIgniterDatabaseBaseBuilder::orLike">
+<code class="descname">orLike</code><span class="sig-paren">(</span><em>$field</em><span class="optional">[</span>, <em>$match = ''</em><span class="optional">[</span>, <em>$side = 'both'</em><span class="optional">[</span>, <em>$escape = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::orLike" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$field</strong> (<em>string</em>) &#8211; Field name</li>
+<li><strong>$match</strong> (<em>string</em>) &#8211; Text portion to match</li>
+<li><strong>$side</strong> (<em>string</em>) &#8211; Which side of the expression to put the &#8216;%&#8217; wildcard on</li>
+<li><strong>$escape</strong> (<em>bool</em>) &#8211; Whether to escape values and identifiers</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">BaseBuilder instance (method chaining)</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">BaseBuilder</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Adds a LIKE clause to a query, separating multiple class with OR.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="CodeIgniterDatabaseBaseBuilder::notLike">
+<code class="descname">notLike</code><span class="sig-paren">(</span><em>$field</em><span class="optional">[</span>, <em>$match = ''</em><span class="optional">[</span>, <em>$side = 'both'</em><span class="optional">[</span>, <em>$escape = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::notLike" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$field</strong> (<em>string</em>) &#8211; Field name</li>
+<li><strong>$match</strong> (<em>string</em>) &#8211; Text portion to match</li>
+<li><strong>$side</strong> (<em>string</em>) &#8211; Which side of the expression to put the &#8216;%&#8217; wildcard on</li>
+<li><strong>$escape</strong> (<em>bool</em>) &#8211; Whether to escape values and identifiers</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">BaseBuilder instance (method chaining)</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">BaseBuilder</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Adds a NOT LIKE clause to a query, separating multiple calls with AND.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="CodeIgniterDatabaseBaseBuilder::orNotLike">
+<code class="descname">orNotLike</code><span class="sig-paren">(</span><em>$field</em><span class="optional">[</span>, <em>$match = ''</em><span class="optional">[</span>, <em>$side = 'both'</em><span class="optional">[</span>, <em>$escape = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::orNotLike" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$field</strong> (<em>string</em>) &#8211; Field name</li>
+<li><strong>$match</strong> (<em>string</em>) &#8211; Text portion to match</li>
+<li><strong>$side</strong> (<em>string</em>) &#8211; Which side of the expression to put the &#8216;%&#8217; wildcard on</li>
+<li><strong>$escape</strong> (<em>bool</em>) &#8211; Whether to escape values and identifiers</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">BaseBuilder instance (method chaining)</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">BaseBuilder</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Adds a NOT LIKE clause to a query, separating multiple calls with OR.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="CodeIgniterDatabaseBaseBuilder::having">
+<code class="descname">having</code><span class="sig-paren">(</span><em>$key</em><span class="optional">[</span>, <em>$value = NULL</em><span class="optional">[</span>, <em>$escape = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::having" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$key</strong> (<em>mixed</em>) &#8211; Identifier (string) or associative array of field/value pairs</li>
+<li><strong>$value</strong> (<em>string</em>) &#8211; Value sought if $key is an identifier</li>
+<li><strong>$escape</strong> (<em>string</em>) &#8211; Whether to escape values and identifiers</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">BaseBuilder instance (method chaining)</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">BaseBuilder</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Adds a HAVING clause to a query, separating multiple calls with AND.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="CodeIgniterDatabaseBaseBuilder::orHaving">
+<code class="descname">orHaving</code><span class="sig-paren">(</span><em>$key</em><span class="optional">[</span>, <em>$value = NULL</em><span class="optional">[</span>, <em>$escape = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::orHaving" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$key</strong> (<em>mixed</em>) &#8211; Identifier (string) or associative array of field/value pairs</li>
+<li><strong>$value</strong> (<em>string</em>) &#8211; Value sought if $key is an identifier</li>
+<li><strong>$escape</strong> (<em>string</em>) &#8211; Whether to escape values and identifiers</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">BaseBuilder instance (method chaining)</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">BaseBuilder</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Adds a HAVING clause to a query, separating multiple calls with OR.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="CodeIgniterDatabaseBaseBuilder::groupBy">
+<code class="descname">groupBy</code><span class="sig-paren">(</span><em>$by</em><span class="optional">[</span>, <em>$escape = NULL</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::groupBy" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$by</strong> (<em>mixed</em>) &#8211; Field(s) to group by; string or array</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">BaseBuilder instance (method chaining)</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">BaseBuilder</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Adds a GROUP BY clause to a query.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="CodeIgniterDatabaseBaseBuilder::orderBy">
+<code class="descname">orderBy</code><span class="sig-paren">(</span><em>$orderby</em><span class="optional">[</span>, <em>$direction = ''</em><span class="optional">[</span>, <em>$escape = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::orderBy" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$orderby</strong> (<em>string</em>) &#8211; Field to order by</li>
+<li><strong>$direction</strong> (<em>string</em>) &#8211; The order requested - ASC, DESC or random</li>
+<li><strong>$escape</strong> (<em>bool</em>) &#8211; Whether to escape values and identifiers</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">BaseBuilder instance (method chaining)</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">BaseBuilder</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Adds an ORDER BY clause to a query.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="CodeIgniterDatabaseBaseBuilder::limit">
+<code class="descname">limit</code><span class="sig-paren">(</span><em>$value</em><span class="optional">[</span>, <em>$offset = 0</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::limit" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$value</strong> (<em>int</em>) &#8211; Number of rows to limit the results to</li>
+<li><strong>$offset</strong> (<em>int</em>) &#8211; Number of rows to skip</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">BaseBuilder instance (method chaining)</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">BaseBuilder</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Adds LIMIT and OFFSET clauses to a query.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="CodeIgniterDatabaseBaseBuilder::offset">
+<code class="descname">offset</code><span class="sig-paren">(</span><em>$offset</em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::offset" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$offset</strong> (<em>int</em>) &#8211; Number of rows to skip</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">BaseBuilder instance (method chaining)</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">BaseBuilder</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Adds an OFFSET clause to a query.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="CodeIgniterDatabaseBaseBuilder::set">
+<code class="descname">set</code><span class="sig-paren">(</span><em>$key</em><span class="optional">[</span>, <em>$value = ''</em><span class="optional">[</span>, <em>$escape = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::set" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$key</strong> (<em>mixed</em>) &#8211; Field name, or an array of field/value pairs</li>
+<li><strong>$value</strong> (<em>string</em>) &#8211; Field value, if $key is a single field</li>
+<li><strong>$escape</strong> (<em>bool</em>) &#8211; Whether to escape values and identifiers</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">BaseBuilder instance (method chaining)</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">BaseBuilder</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Adds field/value pairs to be passed later to <code class="docutils literal"><span class="pre">insert()</span></code>,
+<code class="docutils literal"><span class="pre">update()</span></code> or <code class="docutils literal"><span class="pre">replace()</span></code>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="CodeIgniterDatabaseBaseBuilder::insert">
+<code class="descname">insert</code><span class="sig-paren">(</span><span class="optional">[</span><em>$set = NULL</em><span class="optional">[</span>, <em>$escape = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::insert" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$set</strong> (<em>array</em>) &#8211; An associative array of field/value pairs</li>
+<li><strong>$escape</strong> (<em>bool</em>) &#8211; Whether to escape values and identifiers</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">TRUE on success, FALSE on failure</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Compiles and executes an INSERT statement.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="CodeIgniterDatabaseBaseBuilder::insertBatch">
+<code class="descname">insertBatch</code><span class="sig-paren">(</span><span class="optional">[</span><em>$set = NULL</em><span class="optional">[</span>, <em>$escape = NULL</em><span class="optional">[</span>, <em>$batch_size = 100</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::insertBatch" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$set</strong> (<em>array</em>) &#8211; Data to insert</li>
+<li><strong>$escape</strong> (<em>bool</em>) &#8211; Whether to escape values and identifiers</li>
+<li><strong>$batch_size</strong> (<em>int</em>) &#8211; Count of rows to insert at once</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Number of rows inserted or FALSE on failure</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">mixed</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Compiles and executes batch <code class="docutils literal"><span class="pre">INSERT</span></code> statements.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">When more than <code class="docutils literal"><span class="pre">$batch_size</span></code> rows are provided, multiple
+<code class="docutils literal"><span class="pre">INSERT</span></code> queries will be executed, each trying to insert
+up to <code class="docutils literal"><span class="pre">$batch_size</span></code> rows.</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="CodeIgniterDatabaseBaseBuilder::setInsertBatch">
+<code class="descname">setInsertBatch</code><span class="sig-paren">(</span><em>$key</em><span class="optional">[</span>, <em>$value = ''</em><span class="optional">[</span>, <em>$escape = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::setInsertBatch" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$key</strong> (<em>mixed</em>) &#8211; Field name or an array of field/value pairs</li>
+<li><strong>$value</strong> (<em>string</em>) &#8211; Field value, if $key is a single field</li>
+<li><strong>$escape</strong> (<em>bool</em>) &#8211; Whether to escape values and identifiers</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">BaseBuilder instance (method chaining)</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">BaseBuilder</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Adds field/value pairs to be inserted in a table later via <code class="docutils literal"><span class="pre">insertBatch()</span></code>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="CodeIgniterDatabaseBaseBuilder::update">
+<code class="descname">update</code><span class="sig-paren">(</span><span class="optional">[</span><em>$set = NULL</em><span class="optional">[</span>, <em>$where = NULL</em><span class="optional">[</span>, <em>$limit = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::update" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$set</strong> (<em>array</em>) &#8211; An associative array of field/value pairs</li>
+<li><strong>$where</strong> (<em>string</em>) &#8211; The WHERE clause</li>
+<li><strong>$limit</strong> (<em>int</em>) &#8211; The LIMIT clause</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">TRUE on success, FALSE on failure</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Compiles and executes an UPDATE statement.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="CodeIgniterDatabaseBaseBuilder::updateBatch">
+<code class="descname">updateBatch</code><span class="sig-paren">(</span><span class="optional">[</span><em>$set = NULL</em><span class="optional">[</span>, <em>$value = NULL</em><span class="optional">[</span>, <em>$batch_size = 100</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::updateBatch" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$set</strong> (<em>array</em>) &#8211; Field name, or an associative array of field/value pairs</li>
+<li><strong>$value</strong> (<em>string</em>) &#8211; Field value, if $set is a single field</li>
+<li><strong>$batch_size</strong> (<em>int</em>) &#8211; Count of conditions to group in a single query</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Number of rows updated or FALSE on failure</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">mixed</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Compiles and executes batch <code class="docutils literal"><span class="pre">UPDATE</span></code> statements.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">When more than <code class="docutils literal"><span class="pre">$batch_size</span></code> field/value pairs are provided,
+multiple queries will be executed, each handling up to
+<code class="docutils literal"><span class="pre">$batch_size</span></code> field/value pairs.</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="CodeIgniterDatabaseBaseBuilder::setUpdateBatch">
+<code class="descname">setUpdateBatch</code><span class="sig-paren">(</span><em>$key</em><span class="optional">[</span>, <em>$value = ''</em><span class="optional">[</span>, <em>$escape = NULL</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::setUpdateBatch" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$key</strong> (<em>mixed</em>) &#8211; Field name or an array of field/value pairs</li>
+<li><strong>$value</strong> (<em>string</em>) &#8211; Field value, if $key is a single field</li>
+<li><strong>$escape</strong> (<em>bool</em>) &#8211; Whether to escape values and identifiers</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">BaseBuilder instance (method chaining)</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">BaseBuilder</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Adds field/value pairs to be updated in a table later via <code class="docutils literal"><span class="pre">updateBatch()</span></code>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="CodeIgniterDatabaseBaseBuilder::replace">
+<code class="descname">replace</code><span class="sig-paren">(</span><span class="optional">[</span><em>$set = NULL</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::replace" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$set</strong> (<em>array</em>) &#8211; An associative array of field/value pairs</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">TRUE on success, FALSE on failure</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Compiles and executes a REPLACE statement.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="CodeIgniterDatabaseBaseBuilder::delete">
+<code class="descname">delete</code><span class="sig-paren">(</span><span class="optional">[</span><em>$where = ''</em><span class="optional">[</span>, <em>$limit = NULL</em><span class="optional">[</span>, <em>$reset_data = TRUE</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::delete" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$where</strong> (<em>string</em>) &#8211; The WHERE clause</li>
+<li><strong>$limit</strong> (<em>int</em>) &#8211; The LIMIT clause</li>
+<li><strong>$reset_data</strong> (<em>bool</em>) &#8211; TRUE to reset the query &#8220;write&#8221; clause</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">BaseBuilder instance (method chaining) or FALSE on failure</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">mixed</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Compiles and executes a DELETE query.</p>
+</dd></dl>
+
+</div></blockquote>
+<dl class="method">
+<dt id="CodeIgniterDatabaseBaseBuilder::increment">
+<code class="descname">increment</code><span class="sig-paren">(</span><em>$column</em><span class="optional">[</span>, <em>$value = 1</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::increment" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>$column</strong> (<em>string</em>) &#8211; The name of the column to increment</li>
+<li><strong>$value</strong> (<em>int</em>) &#8211; The amount to increment the column by</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Increments the value of a field by the specified amount. If the field
+is not a numeric field, like a VARCHAR, it will likely be replaced
+with $value.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="CodeIgniterDatabaseBaseBuilder::decrement">
+<code class="descname">decrement</code><span class="sig-paren">(</span><em>$column</em><span class="optional">[</span>, <em>$value = 1</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::decrement" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>$column</strong> (<em>string</em>) &#8211; The name of the column to decrement</li>
+<li><strong>$value</strong> (<em>int</em>) &#8211; The amount to decrement the column by</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Decrements the value of a field by the specified amount. If the field
+is not a numeric field, like a VARCHAR, it will likely be replaced
+with $value.</p>
+<dl class="method">
+<dt id="CodeIgniterDatabaseBaseBuilder::truncate">
+<code class="descname">truncate</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::truncate" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">TRUE on success, FALSE on failure</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">bool</td>
+</tr>
+</tbody>
+</table>
+<p>Executes a TRUNCATE statement on a table.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If the database platform in use doesn&#8217;t support TRUNCATE,
+a DELETE statement will be used instead.</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="CodeIgniterDatabaseBaseBuilder::emptyTable">
+<code class="descname">emptyTable</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::emptyTable" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">TRUE on success, FALSE on failure</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">bool</td>
+</tr>
+</tbody>
+</table>
+<p>Deletes all records from a table via a DELETE statement.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="CodeIgniterDatabaseBaseBuilder::getCompiledSelect">
+<code class="descname">getCompiledSelect</code><span class="sig-paren">(</span><span class="optional">[</span><em>$reset = TRUE</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::getCompiledSelect" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$reset</strong> (<em>bool</em>) &#8211; Whether to reset the current QB values or not</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The compiled SQL statement as a string</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Compiles a SELECT statement and returns it as a string.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="CodeIgniterDatabaseBaseBuilder::getCompiledInsert">
+<code class="descname">getCompiledInsert</code><span class="sig-paren">(</span><span class="optional">[</span><em>$reset = TRUE</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::getCompiledInsert" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$reset</strong> (<em>bool</em>) &#8211; Whether to reset the current QB values or not</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The compiled SQL statement as a string</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Compiles an INSERT statement and returns it as a string.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="CodeIgniterDatabaseBaseBuilder::getCompiledUpdate">
+<code class="descname">getCompiledUpdate</code><span class="sig-paren">(</span><span class="optional">[</span><em>$reset = TRUE</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::getCompiledUpdate" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$reset</strong> (<em>bool</em>) &#8211; Whether to reset the current QB values or not</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The compiled SQL statement as a string</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Compiles an UPDATE statement and returns it as a string.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="CodeIgniterDatabaseBaseBuilder::getCompiledDelete">
+<code class="descname">getCompiledDelete</code><span class="sig-paren">(</span><span class="optional">[</span><em>$reset = TRUE</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniterDatabaseBaseBuilder::getCompiledDelete" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$reset</strong> (<em>bool</em>) &#8211; Whether to reset the current QB values or not</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The compiled SQL statement as a string</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Compiles a DELETE statement and returns it as a string.</p>
+</dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="transactions.html" class="btn btn-neutral float-right" title="Transactions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="helpers.html" class="btn btn-neutral" title="Query Helper Methods" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014-2018 British Columbia Institute of Technology.
+      Last updated on Sep 23, 2018.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'4.0.0-alpha.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  false,
+            SOURCELINK_SUFFIX: ''
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

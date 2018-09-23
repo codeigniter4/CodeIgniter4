@@ -1,0 +1,1004 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Email Class &mdash; CodeIgniter4 4.0.0-alpha.1 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/ci-icon.ico"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="CodeIgniter4 4.0.0-alpha.1 documentation" href="../index.html"/>
+        <link rel="up" title="Library Reference" href="index.html"/>
+        <link rel="next" title="Working with Files" href="files.html"/>
+        <link rel="prev" title="CURLRequest Class" href="curlrequest.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> CodeIgniter4
+          
+
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Welcome to CodeIgniter4</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Installation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">Tutorial</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/index.html">CodeIgniter4 Overview</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../general/index.html">General Topics</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Library Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="api_responses.html">API Response Trait</a></li>
+<li class="toctree-l2"><a class="reference internal" href="benchmark.html">Benchmarking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="caching.html">Caching Driver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cli.html">CLI Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="content_negotiation.html">Content Negotiation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="curlrequest.html">CURLRequest Class</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Email Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="files.html">Working with Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="honeypot.html">Honeypot Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="images.html">Image Manipulation Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="incomingrequest.html">IncomingRequest Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="localization.html">Localization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="message.html">HTTP Messages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pagination.html">Pagination</a></li>
+<li class="toctree-l2"><a class="reference internal" href="request.html">Request Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="response.html">HTTP Responses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="security.html">Security Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sessions.html">Session Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="throttler.html">Throttler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="time.html">Dates and Times</a></li>
+<li class="toctree-l2"><a class="reference internal" href="typography.html">Typography</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uploaded_files.html">Working with Uploaded Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uri.html">Working with URIs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user_agent.html">User Agent Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="validation.html">Validation</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../database/index.html">Database Reference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../helpers/index.html">Helpers</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../testing/index.html">Testing</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">The MIT License (MIT)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Change Log</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CodeIgniter4</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Library Reference</a> &raquo;</li>
+        
+      <li>Email Class</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="email-class">
+<h1>Email Class<a class="headerlink" href="#email-class" title="Permalink to this headline">¶</a></h1>
+<p>CodeIgniter&#8217;s robust Email Class supports the following features:</p>
+<ul class="simple">
+<li>Multiple Protocols: Mail, Sendmail, and SMTP</li>
+<li>TLS and SSL Encryption for SMTP</li>
+<li>Multiple recipients</li>
+<li>CC and BCCs</li>
+<li>HTML or Plaintext email</li>
+<li>Attachments</li>
+<li>Word wrapping</li>
+<li>Priorities</li>
+<li>BCC Batch Mode, enabling large email lists to be broken into small
+BCC batches.</li>
+<li>Email Debugging tools</li>
+</ul>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#using-the-email-library" id="id1">Using the Email Library</a><ul>
+<li><a class="reference internal" href="#sending-email" id="id2">Sending Email</a></li>
+<li><a class="reference internal" href="#setting-email-preferences" id="id3">Setting Email Preferences</a></li>
+<li><a class="reference internal" href="#email-preferences" id="id4">Email Preferences</a></li>
+<li><a class="reference internal" href="#overriding-word-wrapping" id="id5">Overriding Word Wrapping</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#class-reference" id="id6">Class Reference</a></li>
+</ul>
+</div>
+<div class="custom-index container"></div><div class="section" id="using-the-email-library">
+<h2><a class="toc-backref" href="#id1">Using the Email Library</a><a class="headerlink" href="#using-the-email-library" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="sending-email">
+<h3><a class="toc-backref" href="#id2">Sending Email</a><a class="headerlink" href="#sending-email" title="Permalink to this headline">¶</a></h3>
+<p>Sending email is not only simple, but you can configure it on the fly or
+set your preferences in the <strong>application/Config/Email.php</strong> file.</p>
+<p>Here is a basic example demonstrating how you might send email:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$email</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">email</span><span class="p">();</span>
+
+<span class="nv">$email</span><span class="o">-&gt;</span><span class="na">setFrom</span><span class="p">(</span><span class="s1">&#39;your@example.com&#39;</span><span class="p">,</span> <span class="s1">&#39;Your Name&#39;</span><span class="p">);</span>
+<span class="nv">$email</span><span class="o">-&gt;</span><span class="na">setTo</span><span class="p">(</span><span class="s1">&#39;someone@example.com&#39;</span><span class="p">);</span>
+<span class="nv">$email</span><span class="o">-&gt;</span><span class="na">setCC</span><span class="p">(</span><span class="s1">&#39;another@another-example.com&#39;</span><span class="p">);</span>
+<span class="nv">$email</span><span class="o">-&gt;</span><span class="na">setBCC</span><span class="p">(</span><span class="s1">&#39;them@their-example.com&#39;</span><span class="p">);</span>
+
+<span class="nv">$email</span><span class="o">-&gt;</span><span class="na">setSubject</span><span class="p">(</span><span class="s1">&#39;Email Test&#39;</span><span class="p">);</span>
+<span class="nv">$email</span><span class="o">-&gt;</span><span class="na">setMessage</span><span class="p">(</span><span class="s1">&#39;Testing the email class.&#39;</span><span class="p">);</span>
+
+<span class="nv">$email</span><span class="o">-&gt;</span><span class="na">send</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="setting-email-preferences">
+<h3><a class="toc-backref" href="#id3">Setting Email Preferences</a><a class="headerlink" href="#setting-email-preferences" title="Permalink to this headline">¶</a></h3>
+<p>There are 21 different preferences available to tailor how your email
+messages are sent. You can either set them manually as described here,
+or automatically via preferences stored in your config file, described
+below:</p>
+<p>Preferences are set by passing an array of preference values to the
+email initialize method. Here is an example of how you might set some
+preferences:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$config</span><span class="p">[</span><span class="s1">&#39;protocol&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;sendmail&#39;</span><span class="p">;</span>
+<span class="nv">$config</span><span class="p">[</span><span class="s1">&#39;mailPath&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;/usr/sbin/sendmail&#39;</span><span class="p">;</span>
+<span class="nv">$config</span><span class="p">[</span><span class="s1">&#39;charset&#39;</span><span class="p">]</span>  <span class="o">=</span> <span class="s1">&#39;iso-8859-1&#39;</span><span class="p">;</span>
+<span class="nv">$config</span><span class="p">[</span><span class="s1">&#39;wordWrap&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
+
+<span class="nv">$email</span><span class="o">-&gt;</span><span class="na">initialize</span><span class="p">(</span><span class="nv">$config</span><span class="p">);</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Most of the preferences have default values that will be used
+if you do not set them.</p>
+</div>
+<div class="section" id="setting-email-preferences-in-a-config-file">
+<h4>Setting Email Preferences in a Config File<a class="headerlink" href="#setting-email-preferences-in-a-config-file" title="Permalink to this headline">¶</a></h4>
+<p>If you prefer not to set preferences using the above method, you can
+instead put them into the config file. Simply open the
+<strong>application/Config/Email.php</strong> file, and set your configs in the
+Email properties. Then save the file and it will be used automatically.
+You will NOT need to use the <code class="docutils literal"><span class="pre">$email-&gt;initialize()</span></code> method if
+you set your preferences in the config file.</p>
+</div>
+</div>
+<div class="section" id="email-preferences">
+<h3><a class="toc-backref" href="#id4">Email Preferences</a><a class="headerlink" href="#email-preferences" title="Permalink to this headline">¶</a></h3>
+<p>The following is a list of all the preferences that can be set when
+sending email.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="14%" />
+<col width="16%" />
+<col width="20%" />
+<col width="51%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Preference</th>
+<th class="head">Default Value</th>
+<th class="head">Options</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><strong>userAgent</strong></td>
+<td>CodeIgniter</td>
+<td>None</td>
+<td>The &#8220;user agent&#8221;.</td>
+</tr>
+<tr class="row-odd"><td><strong>protocol</strong></td>
+<td>mail</td>
+<td>mail, sendmail, or smtp</td>
+<td>The mail sending protocol.</td>
+</tr>
+<tr class="row-even"><td><strong>mailpath</strong></td>
+<td>/usr/sbin/sendmail</td>
+<td>None</td>
+<td>The server path to Sendmail.</td>
+</tr>
+<tr class="row-odd"><td><strong>SMTPHost</strong></td>
+<td>No Default</td>
+<td>None</td>
+<td>SMTP Server Address.</td>
+</tr>
+<tr class="row-even"><td><strong>SMTPUser</strong></td>
+<td>No Default</td>
+<td>None</td>
+<td>SMTP Username.</td>
+</tr>
+<tr class="row-odd"><td><strong>SMTPPass</strong></td>
+<td>No Default</td>
+<td>None</td>
+<td>SMTP Password.</td>
+</tr>
+<tr class="row-even"><td><strong>SMTPPort</strong></td>
+<td>25</td>
+<td>None</td>
+<td>SMTP Port.</td>
+</tr>
+<tr class="row-odd"><td><strong>SMTPTimeout</strong></td>
+<td>5</td>
+<td>None</td>
+<td>SMTP Timeout (in seconds).</td>
+</tr>
+<tr class="row-even"><td><strong>SMTPKeepAlive</strong></td>
+<td>FALSE</td>
+<td>TRUE or FALSE (boolean)</td>
+<td>Enable persistent SMTP connections.</td>
+</tr>
+<tr class="row-odd"><td><strong>SMTPCrypto</strong></td>
+<td>No Default</td>
+<td>tls or ssl</td>
+<td>SMTP Encryption</td>
+</tr>
+<tr class="row-even"><td><strong>wordWrap</strong></td>
+<td>TRUE</td>
+<td>TRUE or FALSE (boolean)</td>
+<td>Enable word-wrap.</td>
+</tr>
+<tr class="row-odd"><td><strong>wrapChars</strong></td>
+<td>76</td>
+<td>&nbsp;</td>
+<td>Character count to wrap at.</td>
+</tr>
+<tr class="row-even"><td><strong>mailType</strong></td>
+<td>text</td>
+<td>text or html</td>
+<td>Type of mail. If you send HTML email you must send it as a complete web
+page. Make sure you don&#8217;t have any relative links or relative image
+paths otherwise they will not work.</td>
+</tr>
+<tr class="row-odd"><td><strong>charset</strong></td>
+<td>utf-8</td>
+<td>&nbsp;</td>
+<td>Character set (utf-8, iso-8859-1, etc.).</td>
+</tr>
+<tr class="row-even"><td><strong>validate</strong></td>
+<td>TRUE</td>
+<td>TRUE or FALSE (boolean)</td>
+<td>Whether to validate the email address.</td>
+</tr>
+<tr class="row-odd"><td><strong>priority</strong></td>
+<td>3</td>
+<td>1, 2, 3, 4, 5</td>
+<td>Email Priority. 1 = highest. 5 = lowest. 3 = normal.</td>
+</tr>
+<tr class="row-even"><td><strong>CRLF</strong></td>
+<td>\n</td>
+<td>&#8220;\r\n&#8221; or &#8220;\n&#8221; or &#8220;\r&#8221;</td>
+<td>Newline character. (Use &#8220;\r\n&#8221; to comply with RFC 822).</td>
+</tr>
+<tr class="row-odd"><td><strong>newline</strong></td>
+<td>\n</td>
+<td>&#8220;\r\n&#8221; or &#8220;\n&#8221; or &#8220;\r&#8221;</td>
+<td>Newline character. (Use &#8220;\r\n&#8221; to comply with RFC 822).</td>
+</tr>
+<tr class="row-even"><td><strong>BCCBatchMode</strong></td>
+<td>FALSE</td>
+<td>TRUE or FALSE (boolean)</td>
+<td>Enable BCC Batch Mode.</td>
+</tr>
+<tr class="row-odd"><td><strong>BCCBatchSize</strong></td>
+<td>200</td>
+<td>None</td>
+<td>Number of emails in each BCC batch.</td>
+</tr>
+<tr class="row-even"><td><strong>DSN</strong></td>
+<td>FALSE</td>
+<td>TRUE or FALSE (boolean)</td>
+<td>Enable notify message from server</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="overriding-word-wrapping">
+<h3><a class="toc-backref" href="#id5">Overriding Word Wrapping</a><a class="headerlink" href="#overriding-word-wrapping" title="Permalink to this headline">¶</a></h3>
+<p>If you have word wrapping enabled (recommended to comply with RFC 822)
+and you have a very long link in your email it can get wrapped too,
+causing it to become un-clickable by the person receiving it.
+CodeIgniter lets you manually override word wrapping within part of your
+message like this:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nx">The</span> <span class="nx">text</span> <span class="nx">of</span> <span class="nx">your</span> <span class="nx">email</span> <span class="nx">that</span>
+<span class="nx">gets</span> <span class="nx">wrapped</span> <span class="nx">normally</span><span class="o">.</span>
+
+<span class="p">{</span><span class="nx">unwrap</span><span class="p">}</span><span class="nx">http</span><span class="o">://</span><span class="nx">example</span><span class="o">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">a_long_link_that_should_not_be_wrapped</span><span class="o">.</span><span class="nx">html</span><span class="p">{</span><span class="o">/</span><span class="nx">unwrap</span><span class="p">}</span>
+
+<span class="nx">More</span> <span class="nx">text</span> <span class="nx">that</span> <span class="nx">will</span> <span class="nx">be</span>
+<span class="nx">wrapped</span> <span class="nx">normally</span><span class="o">.</span>
+</pre></div>
+</div>
+<p>Place the item you do not want word-wrapped between: {unwrap} {/unwrap}</p>
+</div>
+</div>
+<div class="section" id="class-reference">
+<h2><a class="toc-backref" href="#id6">Class Reference</a><a class="headerlink" href="#class-reference" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt>
+<code class="descname">CodeIgniter\Email\Email</code></dt>
+<dd><dl class="method">
+<dt id="setFrom">
+<code class="descname">setFrom</code><span class="sig-paren">(</span><em>$from</em><span class="optional">[</span>, <em>$name = ''</em><span class="optional">[</span>, <em>$returnPath = null</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#setFrom" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$from</strong> (<em>string</em>) &#8211; &#8220;From&#8221; e-mail address</li>
+<li><strong>$name</strong> (<em>string</em>) &#8211; &#8220;From&#8221; display name</li>
+<li><strong>$returnPath</strong> (<em>string</em>) &#8211; Optional email address to redirect undelivered e-mail to</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">CodeIgniter\Email\Email instance (method chaining)</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">CodeIgniter\Email\Email</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Sets the email address and name of the person sending the email:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$email</span><span class="o">-&gt;</span><span class="na">setFrom</span><span class="p">(</span><span class="s1">&#39;you@example.com&#39;</span><span class="p">,</span> <span class="s1">&#39;Your Name&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>You can also set a Return-Path, to help redirect undelivered mail:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$email</span><span class="o">-&gt;</span><span class="na">setFrom</span><span class="p">(</span><span class="s1">&#39;you@example.com&#39;</span><span class="p">,</span> <span class="s1">&#39;Your Name&#39;</span><span class="p">,</span> <span class="s1">&#39;returned_emails@example.com&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Return-Path can&#8217;t be used if you&#8217;ve configured &#8216;smtp&#8217; as
+your protocol.</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="setReplyTo">
+<code class="descname">setReplyTo</code><span class="sig-paren">(</span><em>$replyto</em><span class="optional">[</span>, <em>$name = ''</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#setReplyTo" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$replyto</strong> (<em>string</em>) &#8211; E-mail address for replies</li>
+<li><strong>$name</strong> (<em>string</em>) &#8211; Display name for the reply-to e-mail address</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">CodeIgniter\Email\Email instance (method chaining)</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">CodeIgniter\Email\Email</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Sets the reply-to address. If the information is not provided the
+information in the <a class="reference external" href="#setFrom">setFrom</a> method is used. Example:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$email</span><span class="o">-&gt;</span><span class="na">setReplyTo</span><span class="p">(</span><span class="s1">&#39;you@example.com&#39;</span><span class="p">,</span> <span class="s1">&#39;Your Name&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="setTo">
+<code class="descname">setTo</code><span class="sig-paren">(</span><em>$to</em><span class="sig-paren">)</span><a class="headerlink" href="#setTo" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$to</strong> (<em>mixed</em>) &#8211; Comma-delimited string or an array of e-mail addresses</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">CodeIgniter\Email\Email instance (method chaining)</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">CodeIgniter\Email\Email</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Sets the email address(s) of the recipient(s). Can be a single e-mail,
+a comma-delimited list or an array:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$email</span><span class="o">-&gt;</span><span class="na">setTo</span><span class="p">(</span><span class="s1">&#39;someone@example.com&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$email</span><span class="o">-&gt;</span><span class="na">setTo</span><span class="p">(</span><span class="s1">&#39;one@example.com, two@example.com, three@example.com&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$email</span><span class="o">-&gt;</span><span class="na">setTo</span><span class="p">([</span><span class="s1">&#39;one@example.com&#39;</span><span class="p">,</span> <span class="s1">&#39;two@example.com&#39;</span><span class="p">,</span> <span class="s1">&#39;three@example.com&#39;</span><span class="p">]);</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="setCC">
+<code class="descname">setCC</code><span class="sig-paren">(</span><em>$cc</em><span class="sig-paren">)</span><a class="headerlink" href="#setCC" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$cc</strong> (<em>mixed</em>) &#8211; Comma-delimited string or an array of e-mail addresses</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">CodeIgniter\Email\Email instance (method chaining)</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">CodeIgniter\Email\Email</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Sets the CC email address(s). Just like the &#8220;to&#8221;, can be a single e-mail,
+a comma-delimited list or an array.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="setBCC">
+<code class="descname">setBCC</code><span class="sig-paren">(</span><em>$bcc</em><span class="optional">[</span>, <em>$limit = ''</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#setBCC" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$bcc</strong> (<em>mixed</em>) &#8211; Comma-delimited string or an array of e-mail addresses</li>
+<li><strong>$limit</strong> (<em>int</em>) &#8211; Maximum number of e-mails to send per batch</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">CodeIgniter\Email\Email instance (method chaining)</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">CodeIgniter\Email\Email</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Sets the BCC email address(s). Just like the <code class="docutils literal"><span class="pre">setTo()</span></code> method, can be a single
+e-mail, a comma-delimited list or an array.</p>
+<p>If <code class="docutils literal"><span class="pre">$limit</span></code> is set, &#8220;batch mode&#8221; will be enabled, which will send
+the emails to batches, with each batch not exceeding the specified
+<code class="docutils literal"><span class="pre">$limit</span></code>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="setSubject">
+<code class="descname">setSubject</code><span class="sig-paren">(</span><em>$subject</em><span class="sig-paren">)</span><a class="headerlink" href="#setSubject" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$subject</strong> (<em>string</em>) &#8211; E-mail subject line</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">CodeIgniter\Email\Email instance (method chaining)</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">CodeIgniter\Email\Email</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Sets the email subject:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$email</span><span class="o">-&gt;</span><span class="na">setSubject</span><span class="p">(</span><span class="s1">&#39;This is my subject&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="setMessage">
+<code class="descname">setMessage</code><span class="sig-paren">(</span><em>$body</em><span class="sig-paren">)</span><a class="headerlink" href="#setMessage" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$body</strong> (<em>string</em>) &#8211; E-mail message body</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">CodeIgniter\Email\Email instance (method chaining)</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">CodeIgniter\Email\Email</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Sets the e-mail message body:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$email</span><span class="o">-&gt;</span><span class="na">setMessage</span><span class="p">(</span><span class="s1">&#39;This is my message&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="setAltMessage">
+<code class="descname">setAltMessage</code><span class="sig-paren">(</span><em>$str</em><span class="sig-paren">)</span><a class="headerlink" href="#setAltMessage" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$str</strong> (<em>string</em>) &#8211; Alternative e-mail message body</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">CodeIgniter\Email\Email instance (method chaining)</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">CodeIgniter\Email\Email</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Sets the alternative e-mail message body:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$email</span><span class="o">-&gt;</span><span class="na">setAltMessage</span><span class="p">(</span><span class="s1">&#39;This is the alternative message&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>This is an optional message string which can be used if you send
+HTML formatted email. It lets you specify an alternative message
+with no HTML formatting which is added to the header string for
+people who do not accept HTML email. If you do not set your own
+message CodeIgniter will extract the message from your HTML email
+and strip the tags.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="setHeader">
+<code class="descname">setHeader</code><span class="sig-paren">(</span><em>$header</em>, <em>$value</em><span class="sig-paren">)</span><a class="headerlink" href="#setHeader" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$header</strong> (<em>string</em>) &#8211; Header name</li>
+<li><strong>$value</strong> (<em>string</em>) &#8211; Header value</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">CodeIgniter\Email\Email instance (method chaining)</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">CodeIgniter\Email\Email</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Appends additional headers to the e-mail:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$email</span><span class="o">-&gt;</span><span class="na">setHeader</span><span class="p">(</span><span class="s1">&#39;Header1&#39;</span><span class="p">,</span> <span class="s1">&#39;Value1&#39;</span><span class="p">);</span>
+<span class="nv">$email</span><span class="o">-&gt;</span><span class="na">setHeader</span><span class="p">(</span><span class="s1">&#39;Header2&#39;</span><span class="p">,</span> <span class="s1">&#39;Value2&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="clear">
+<code class="descname">clear</code><span class="sig-paren">(</span><em>$clearAttachments = false</em><span class="sig-paren">)</span><a class="headerlink" href="#clear" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$clearAttachments</strong> (<em>bool</em>) &#8211; Whether or not to clear attachments</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">CodeIgniter\Email\Email instance (method chaining)</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">CodeIgniter\Email\Email</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Initializes all the email variables to an empty state. This method
+is intended for use if you run the email sending method in a loop,
+permitting the data to be reset between cycles.</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">foreach</span> <span class="p">(</span><span class="nv">$list</span> <span class="k">as</span> <span class="nv">$name</span> <span class="o">=&gt;</span> <span class="nv">$address</span><span class="p">)</span>
+<span class="p">{</span>
+        <span class="nv">$email</span><span class="o">-&gt;</span><span class="na">clear</span><span class="p">();</span>
+
+        <span class="nv">$email</span><span class="o">-&gt;</span><span class="na">setTo</span><span class="p">(</span><span class="nv">$address</span><span class="p">);</span>
+        <span class="nv">$email</span><span class="o">-&gt;</span><span class="na">setFrom</span><span class="p">(</span><span class="s1">&#39;your@example.com&#39;</span><span class="p">);</span>
+        <span class="nv">$email</span><span class="o">-&gt;</span><span class="na">setSubject</span><span class="p">(</span><span class="s1">&#39;Here is your info &#39;</span><span class="o">.</span><span class="nv">$name</span><span class="p">);</span>
+        <span class="nv">$email</span><span class="o">-&gt;</span><span class="na">setMessage</span><span class="p">(</span><span class="s1">&#39;Hi &#39;</span> <span class="o">.</span> <span class="nv">$name</span> <span class="o">.</span> <span class="s1">&#39; Here is the info you requested.&#39;</span><span class="p">);</span>
+        <span class="nv">$email</span><span class="o">-&gt;</span><span class="na">send</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>If you set the parameter to TRUE any attachments will be cleared as
+well:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$email</span><span class="o">-&gt;</span><span class="na">clear</span><span class="p">(</span><span class="k">true</span><span class="p">);</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="send">
+<code class="descname">send</code><span class="sig-paren">(</span><em>$autoClear = true</em><span class="sig-paren">)</span><a class="headerlink" href="#send" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$autoClear</strong> (<em>bool</em>) &#8211; Whether to clear message data automatically</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">TRUE on success, FALSE on failure</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>The e-mail sending method. Returns boolean TRUE or FALSE based on
+success or failure, enabling it to be used conditionally:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$email</span><span class="o">-&gt;</span><span class="na">send</span><span class="p">())</span>
+<span class="p">{</span>
+        <span class="c1">// Generate error</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This method will automatically clear all parameters if the request was
+successful. To stop this behaviour pass FALSE:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nv">$email</span><span class="o">-&gt;</span><span class="na">send</span><span class="p">(</span><span class="k">false</span><span class="p">))</span>
+<span class="p">{</span>
+        <span class="c1">// Parameters won&#39;t be cleared</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">In order to use the <code class="docutils literal"><span class="pre">printDebugger()</span></code> method, you need
+to avoid clearing the email parameters.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If <code class="docutils literal"><span class="pre">BCCBatchMode</span></code> is enabled, and there are more than
+<code class="docutils literal"><span class="pre">BCCBatchSize</span></code> recipients, this method will always return
+boolean <code class="docutils literal"><span class="pre">TRUE</span></code>.</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="attach">
+<code class="descname">attach</code><span class="sig-paren">(</span><em>$filename</em><span class="optional">[</span>, <em>$disposition = ''</em><span class="optional">[</span>, <em>$newname = null</em><span class="optional">[</span>, <em>$mime = ''</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#attach" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$filename</strong> (<em>string</em>) &#8211; File name</li>
+<li><strong>$disposition</strong> (<em>string</em>) &#8211; &#8216;disposition&#8217; of the attachment. Most
+email clients make their own decision regardless of the MIME
+specification used here. <a class="reference external" href="https://www.iana.org/assignments/cont-disp/cont-disp.xhtml">https://www.iana.org/assignments/cont-disp/cont-disp.xhtml</a></li>
+<li><strong>$newname</strong> (<em>string</em>) &#8211; Custom file name to use in the e-mail</li>
+<li><strong>$mime</strong> (<em>string</em>) &#8211; MIME type to use (useful for buffered data)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">CodeIgniter\Email\Email instance (method chaining)</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">CodeIgniter\Email\Email</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Enables you to send an attachment. Put the file path/name in the first
+parameter. For multiple attachments use the method multiple times.
+For example:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$email</span><span class="o">-&gt;</span><span class="na">attach</span><span class="p">(</span><span class="s1">&#39;/path/to/photo1.jpg&#39;</span><span class="p">);</span>
+<span class="nv">$email</span><span class="o">-&gt;</span><span class="na">attach</span><span class="p">(</span><span class="s1">&#39;/path/to/photo2.jpg&#39;</span><span class="p">);</span>
+<span class="nv">$email</span><span class="o">-&gt;</span><span class="na">attach</span><span class="p">(</span><span class="s1">&#39;/path/to/photo3.jpg&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>To use the default disposition (attachment), leave the second parameter blank,
+otherwise use a custom disposition:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$email</span><span class="o">-&gt;</span><span class="na">attach</span><span class="p">(</span><span class="s1">&#39;image.jpg&#39;</span><span class="p">,</span> <span class="s1">&#39;inline&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>You can also use a URL:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$email</span><span class="o">-&gt;</span><span class="na">attach</span><span class="p">(</span><span class="s1">&#39;http://example.com/filename.pdf&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>If you&#8217;d like to use a custom file name, you can use the third parameter:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$email</span><span class="o">-&gt;</span><span class="na">attach</span><span class="p">(</span><span class="s1">&#39;filename.pdf&#39;</span><span class="p">,</span> <span class="s1">&#39;attachment&#39;</span><span class="p">,</span> <span class="s1">&#39;report.pdf&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>If you need to use a buffer string instead of a real - physical - file you can
+use the first parameter as buffer, the third parameter as file name and the fourth
+parameter as mime-type:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$email</span><span class="o">-&gt;</span><span class="na">attach</span><span class="p">(</span><span class="nv">$buffer</span><span class="p">,</span> <span class="s1">&#39;attachment&#39;</span><span class="p">,</span> <span class="s1">&#39;report.pdf&#39;</span><span class="p">,</span> <span class="s1">&#39;application/pdf&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="setAttachmentCID">
+<code class="descname">setAttachmentCID</code><span class="sig-paren">(</span><em>$filename</em><span class="sig-paren">)</span><a class="headerlink" href="#setAttachmentCID" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$filename</strong> (<em>string</em>) &#8211; Existing attachment filename</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Attachment Content-ID or FALSE if not found</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Sets and returns an attachment&#8217;s Content-ID, which enables your to embed an inline
+(picture) attachment into HTML. First parameter must be the already attached file name.</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$filename</span> <span class="o">=</span> <span class="s1">&#39;/img/photo1.jpg&#39;</span><span class="p">;</span>
+<span class="nv">$email</span><span class="o">-&gt;</span><span class="na">attach</span><span class="p">(</span><span class="nv">$filename</span><span class="p">);</span>
+<span class="k">foreach</span> <span class="p">(</span><span class="nv">$list</span> <span class="k">as</span> <span class="nv">$address</span><span class="p">)</span>
+<span class="p">{</span>
+        <span class="nv">$email</span><span class="o">-&gt;</span><span class="na">setTo</span><span class="p">(</span><span class="nv">$address</span><span class="p">);</span>
+        <span class="nv">$cid</span> <span class="o">=</span> <span class="nv">$email</span><span class="o">-&gt;</span><span class="na">setAttachmentCID</span><span class="p">(</span><span class="nv">$filename</span><span class="p">);</span>
+        <span class="nv">$email</span><span class="o">-&gt;</span><span class="na">setMessage</span><span class="p">(</span><span class="s1">&#39;&lt;img src=&quot;cid:&#39;</span><span class="o">.</span> <span class="nv">$cid</span> <span class="o">.</span><span class="s1">&#39;&quot; alt=&quot;photo1&quot; /&gt;&#39;</span><span class="p">);</span>
+        <span class="nv">$email</span><span class="o">-&gt;</span><span class="na">send</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Content-ID for each e-mail must be re-created for it to be unique.</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="printDebugger">
+<code class="descname">printDebugger</code><span class="sig-paren">(</span><em>$include = array('headers'</em>, <em>'subject'</em>, <em>'body')</em><span class="sig-paren">)</span><a class="headerlink" href="#printDebugger" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$include</strong> (<em>array</em>) &#8211; Which parts of the message to print out</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Formatted debug data</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Returns a string containing any server messages, the email headers, and
+the email message. Useful for debugging.</p>
+<p>You can optionally specify which parts of the message should be printed.
+Valid options are: <strong>headers</strong>, <strong>subject</strong>, <strong>body</strong>.</p>
+<p>Example:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="c1">// You need to pass FALSE while sending in order for the email data</span>
+<span class="c1">// to not be cleared - if that happens, printDebugger() would have</span>
+<span class="c1">// nothing to output.</span>
+<span class="nv">$email</span><span class="o">-&gt;</span><span class="na">send</span><span class="p">(</span><span class="k">false</span><span class="p">);</span>
+
+<span class="c1">// Will only print the email headers, excluding the message subject and body</span>
+<span class="nv">$email</span><span class="o">-&gt;</span><span class="na">printDebugger</span><span class="p">([</span><span class="s1">&#39;headers&#39;</span><span class="p">]);</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">By default, all of the raw data will be printed.</p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="files.html" class="btn btn-neutral float-right" title="Working with Files" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="curlrequest.html" class="btn btn-neutral" title="CURLRequest Class" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014-2018 British Columbia Institute of Technology.
+      Last updated on Sep 23, 2018.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'4.0.0-alpha.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  false,
+            SOURCELINK_SUFFIX: ''
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
