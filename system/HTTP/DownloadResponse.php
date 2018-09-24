@@ -134,6 +134,31 @@ class DownloadResponse extends Message implements ResponseInterface
 	}
 
 	/**
+	 * get mimetype
+	 *
+	 * @return string
+	 */
+	private function setContentTypeByMimeType() : string
+	{
+		// Set the default MIME type to send
+		$mime = 'application/octet-stream';
+		$charset = '';
+
+		if ($this->setMime === true)
+		{
+			if (($last_dot_position = strrpos($this->filename, '.')) === false) {
+				$mime = Mimes::guessTypeFromExtension(substr($this->filename, $last_dot_position - 1));
+				$charset = $this->charset;
+			} elseif ($this->file instanceof File) {
+				$mime = $this->file->getMimeType();
+				$charset = $this->charset;
+			}
+		}
+
+		$this->setContentType($mime, $charset);
+	}
+
+	/**
 	 * {@inheritDoc}
 	 */
 	public function getStatusCode(): int
