@@ -1,6 +1,6 @@
 <?php namespace CodeIgniter\HTTP;
 
-use InvalidArgumentException;
+use CodeIgniter\HTTP\Exceptions\HTTPException;
 use DateTime;
 use DateTimeZone;
 
@@ -22,13 +22,11 @@ class DownloadResponseTest extends \CIUnitTestCase
 		$this->assertSame('Not the mama', $response->getReason());
 	}
 
-	/**
-	 * @expectedException InvalidArgumentException
-	 */
 	public function testCantSet200OtherThanStatusCode()
 	{
 		$response = new DownloadResponse('unit-test.txt', true);
 
+		$this->expectException(HTTPException::class);
 		$response->setStatusCode(999);
 	}
 

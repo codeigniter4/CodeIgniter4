@@ -35,7 +35,7 @@
  * @since        Version 4.0.0
  * @filesource
  */
-use InvalidArgumentException;
+use CodeIgniter\HTTP\Exceptions\HTTPException;
 
 class DownloadResponse extends Message implements ResponseInterface
 {
@@ -96,7 +96,7 @@ class DownloadResponse extends Message implements ResponseInterface
 	public function setStatusCode(int $code, string $reason = '')
 	{
 		if ($code !== 200) {
-			throw new InvalidArgumentException('statusCode can not be set except for 200.');
+			throw HTTPException::forInvalidStatusCode($code);
 		}
 
 		if (!empty($reason) && $this->reason !== $reason) {
