@@ -405,6 +405,10 @@ class DownloadResponse extends Message implements ResponseInterface
 	 */
 	public function send()
 	{
+		$this->buildHeaders();
+		$this->sendHeaders();
+		$this->sendBody();
+
 		return $this;
 	}
 
@@ -422,6 +426,39 @@ class DownloadResponse extends Message implements ResponseInterface
 		$this->setHeader('Content-Transfer-Encoding', 'binary');
 		$this->setHeader('Content-Length', (string)$this->getContentLength());
 		$this->noCache();
+	}
+
+	/**
+	 * Sends the headers of this HTTP request to the browser.
+	 *
+	 * @return Response
+	 */
+	public function sendHeaders()
+	{
+		// Have the headers already been sent?
+		if ($this->pretend || headers_sent())
+		{
+			return $this;
+		}
+
+		// Per spec, MUST be sent with each request, if possible.
+		// http://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html
+		if (isset($this->headers['Date']))
+		{
+			$this->setDate(\DateTime::createFromFormat('U', time()));
+		}
+
+		// HTTP Status
+		header(sprintf('HTTP/%s %s %s', $this->protocolVersion, $this->getStatusCode(), $this->reason), true,
+				$this->getStatusCode());
+
+		// Send all of our headers
+		foreach ($this->getHeaders() as $name => $values)
+		{
+			header($name.': '.$this->getHeaderLine($name), false, $this->getStatusCode());
+		}
+
+		return $this;
 	}
 
 	/**
