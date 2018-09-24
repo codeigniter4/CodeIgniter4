@@ -38,6 +38,7 @@
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use BadMethodCallException;
 use CodeIgniter\Files\File;
+use Config\Mimes;
 
 class DownloadResponse extends Message implements ResponseInterface
 {
@@ -412,8 +413,24 @@ class DownloadResponse extends Message implements ResponseInterface
 		$this->setHeader('Content-Disposition', $this->getContentDisponsition());
 		$this->setHeader('Expires-Disposition', '0');
 		$this->setHeader('Content-Transfer-Encoding', 'binary');
-		$this->setHeader('Content-Length', $this->getContentLength());
+		$this->setHeader('Content-Length', (string)$this->getContentLength());
 		$this->noCache();
+	}
+
+	/**
+	 * output donload file text.
+	 *
+	 * @return DownloadResponse
+	 */
+	public function sendBody()
+	{
+		if ($this->binary !== null) {
+			return $this->sendBodyByBinary();
+		} elseif ($this->file !== null) {
+			return $this->sendBodyByFilePath();
+		}
+
+		throw new RuntimeException();
 	}
 
 	/**
