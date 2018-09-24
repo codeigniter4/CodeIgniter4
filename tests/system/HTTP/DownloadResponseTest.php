@@ -128,4 +128,22 @@ class DownloadResponseTest extends \CIUnitTestCase
 		$this->expectException(FileNotFoundException::class);
 		$response->setFilePath('unit test');
 	}
+
+	public function testCanGetContentLength()
+	{
+		$response = new DownloadResponse('unit-test.txt', true);
+
+		$this->assertSame(0, $response->getContentLength());
+
+		$response = new DownloadResponse('unit-test.txt', true);
+
+		$response->setBinary('1');
+		$this->assertSame(1, $response->getContentLength());
+
+		$response = new DownloadResponse('unit-test.txt', true);
+
+		$size = filesize(BASEPATH . 'Common.php');
+		$response->setFilePath(BASEPATH . 'Common.php');
+		$this->assertSame($size, $response->getContentLength());
+	}
 }

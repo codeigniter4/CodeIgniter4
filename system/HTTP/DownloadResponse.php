@@ -118,6 +118,22 @@ class DownloadResponse extends Message implements ResponseInterface
 	}
 
 	/**
+	 * get content length.
+	 *
+	 * @return int
+	 */
+	public function getContentLength() : int
+	{
+		if (is_string($this->binary)) {
+			return strlen($this->binary);
+		} elseif ($this->file instanceof File) {
+			return $this->file->getSize();
+		}
+
+		return 0;
+	}
+
+	/**
 	 * {@inheritDoc}
 	 */
 	public function getStatusCode(): int
