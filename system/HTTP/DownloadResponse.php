@@ -111,4 +111,72 @@ class DownloadResponse extends Message implements ResponseInterface
 	{
 		return $this->reason;
 	}
+
+	//--------------------------------------------------------------------
+	//--------------------------------------------------------------------
+	// Convenience Methods
+	//--------------------------------------------------------------------
+
+	/**
+	 * Sets the date header
+	 *
+	 * @param \DateTime $date
+	 *
+	 * @return Response
+	 */
+	public function setDate(\DateTime $date)
+	{
+		$date->setTimezone(new \DateTimeZone('UTC'));
+
+		$this->setHeader('Date', $date->format('D, d M Y H:i:s').' GMT');
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Sets the Last-Modified date header.
+	 *
+	 * $date can be either a string representation of the date or,
+	 * preferably, an instance of DateTime.
+	 *
+	 * @param string|\DateTime $date
+	 */
+	public function setLastModified($date)
+	{
+		if ($date instanceof \DateTime)
+		{
+			$date->setTimezone(new \DateTimeZone('UTC'));
+			$this->setHeader('Last-Modified', $date->format('D, d M Y H:i:s').' GMT');
+		}
+		elseif (is_string($date))
+		{
+			$this->setHeader('Last-Modified', $date);
+		}
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+	//--------------------------------------------------------------------
+	// Output Methods
+	//--------------------------------------------------------------------
+
+	public function pretend(bool $pretend = true)
+	{
+		$this->pretend = $pretend;
+
+		return $this;
+	}
+
+	/**
+	 * Sends the output to the browser.
+	 *
+	 * @return Response
+	 */
+	public function send()
+	{
+		return $this;
+	}
 }
