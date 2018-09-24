@@ -66,4 +66,22 @@ class DownloadResponseTest extends \CIUnitTestCase
 
 		$this->assertInstanceOf(DownloadResponse::class, $response);
 	}
+
+	public function testSetContentType()
+	{
+		$response = new DownloadResponse('unit-test.txt', true);
+
+		$response->setContentType('text/json');
+
+		$this->assertEquals('text/json; charset=UTF-8', $response->getHeaderLine('Content-Type'));
+	}
+
+	public function testSetContentTypeNoCharSet()
+	{
+		$response = new DownloadResponse('unit-test.txt', true);
+
+		$response->setContentType('application/octet-stream', '');
+
+		$this->assertEquals('application/octet-stream', $response->getHeaderLine('Content-Type'));
+	}
 }

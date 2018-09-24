@@ -53,6 +53,13 @@ class DownloadResponse extends Message implements ResponseInterface
 	 */
 	private $setMime;
 
+	/**
+	 * Download charset
+	 *
+	 * @var string
+	 */
+	private $charset = 'UTF-8';
+
 	public function __construct(string $filename, bool $setMime)
 	{
 		$this->filename = $filename;
@@ -134,6 +141,30 @@ class DownloadResponse extends Message implements ResponseInterface
 	}
 
 	//--------------------------------------------------------------------
+
+	/**
+	 * Sets the Content Type header for this response with the mime type
+	 * and, optionally, the charset.
+	 *
+	 * @param string $mime
+	 * @param string $charset
+	 *
+	 * @return Response
+	 */
+	public function setContentType(string $mime, string $charset = 'UTF-8')
+	{
+		// add charset attribute if not already there and provided as parm
+		if ((strpos($mime, 'charset=') < 1) && ! empty($charset))
+		{
+			$mime .= '; charset='.$charset;
+		}
+
+		$this->removeHeader('Content-Type'); // replace existing content type
+		$this->setHeader('Content-Type', $mime);
+		$this->charset = $charset;
+
+		return $this;
+	}
 
 	/**
 	 * Sets the Last-Modified date header.
