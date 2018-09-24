@@ -177,6 +177,7 @@ class DownloadResponse extends Message implements ResponseInterface
 	{
 		$filename = $this->filename;
 		$x = explode('.', $this->filename);
+		$extension = end($x);
 
 		/* It was reported that browsers on Android 2.1 (and possibly older as well)
 		 * need to have the filename extension upper-cased in order to be able to

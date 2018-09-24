@@ -9,6 +9,14 @@ use InvalidArgumentException;
 
 class DownloadResponseTest extends \CIUnitTestCase
 {
+	public function tearDown()
+	{
+		if (isset($_SERVER['HTTP_USER_AGENT']))
+		{
+			unset($_SERVER['HTTP_USER_AGENT']);
+		}
+	}
+
 	public function testCanGetStatusCode()
 	{
 		$response = new DownloadResponse('unit-test.txt', true);
@@ -173,6 +181,17 @@ class DownloadResponseTest extends \CIUnitTestCase
 		$this->assertEquals('0', $response->getHeaderLine('Expires-Disposition'));
 		$this->assertEquals('binary', $response->getHeaderLine('Content-Transfer-Encoding'));
 		$this->assertEquals(filesize(__FILE__), $response->getHeaderLine('Content-Length'));
+	}
+
+	public function testFileExtensionIsUpperCaseWhenAndroidOSIs2()
+	{
+		$_SERVER['HTTP_USER_AGENT'] = 'Mozilla/5.0 (Linux; U; Android 2.0.3; ja-jp; SC-02C Build/IML74K) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30';
+		$response = new DownloadResponse('unit-test.php', false);
+
+		$response->setFilePath(__FILE__);
+		$response->buildHeaders();
+
+		$this->assertEquals('attachment; filename="unit-test.PHP"', $response->getHeaderLine('Content-Disposition'));
 	}
 
 	public function testIsSetContentTypeFromFilename()
