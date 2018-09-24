@@ -37,6 +37,7 @@
  */
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use BadMethodCallException;
+use LogicException;
 use CodeIgniter\Files\File;
 use Config\Mimes;
 
@@ -488,7 +489,7 @@ class DownloadResponse extends Message implements ResponseInterface
 			return $this->sendBodyByFilePath();
 		}
 
-		throw new RuntimeException();
+		throw new LogicException('Not found download body source.');
 	}
 
 	/**

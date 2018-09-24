@@ -6,6 +6,7 @@ use DateTime;
 use DateTimeZone;
 use BadMethodCallException;
 use InvalidArgumentException;
+use LogicException;
 
 class DownloadResponseTest extends \CIUnitTestCase
 {
@@ -241,5 +242,13 @@ class DownloadResponseTest extends \CIUnitTestCase
 		ob_end_clean();
 
 		$this->assertSame(file_get_contents(__FILE__), $actual);
+	}
+
+	public function testThrowExceptionWhenNoSetDownloadSource()
+	{
+		$response = new DownloadResponse('unit-test.php', false);
+
+		$this->expectException(LogicException::class);
+		$response->sendBody();
 	}
 }
