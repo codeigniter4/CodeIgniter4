@@ -417,6 +417,24 @@ class DownloadResponse extends Message implements ResponseInterface
 	}
 
 	/**
+	 * output download text by file.
+	 *
+	 * @return string
+	 */
+	private function sendBodyByFilePath()
+	{
+		$spl_file_object = $this->file->openFile('rb');
+
+		// Flush 1MB chunks of data
+		while (! $spl_file_object->eof() && ($data = $spl_file_object->fread(1048576)) !== false)
+		{
+			echo $data;
+		}
+
+		return $this;
+	}
+
+	/**
 	 * output download text by binary
 	 *
 	 * @return string
