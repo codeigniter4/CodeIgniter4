@@ -147,7 +147,7 @@ class DownloadResponseTest extends \CIUnitTestCase
 		$this->assertSame($size, $response->getContentLength());
 	}
 
-	public function testWhenSetBinarySettingDownloadableHeadlers()
+	public function testIsSetDownloadableHeadlersFromBinary()
 	{
 		$response = new DownloadResponse('unit-test.txt', false);
 
@@ -161,7 +161,7 @@ class DownloadResponseTest extends \CIUnitTestCase
 		$this->assertEquals('4', $response->getHeaderLine('Content-Length'));
 	}
 
-	public function testWhenSetFileSettingDownloadableHeadlers()
+	public function testIsSetDownloadableHeadlersFromFile()
 	{
 		$response = new DownloadResponse('unit-test.php', false);
 
@@ -175,7 +175,7 @@ class DownloadResponseTest extends \CIUnitTestCase
 		$this->assertEquals(filesize(__FILE__), $response->getHeaderLine('Content-Length'));
 	}
 
-	public function testContentTypeIsSetFromFilename()
+	public function testIsSetContentTypeFromFilename()
 	{
 		$response = new DownloadResponse('unit-test.txt', true);
 
