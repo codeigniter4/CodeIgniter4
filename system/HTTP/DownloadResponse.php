@@ -397,4 +397,20 @@ class DownloadResponse extends Message implements ResponseInterface
 	{
 		return $this;
 	}
+
+	/**
+	 * set header for file download.
+	 */
+	public function buildHeaders()
+	{
+		if (!$this->hasHeader('Content-Type')) {
+			$this->setContentTypeByMimeType();
+		}
+
+		$this->setHeader('Content-Disposition', $this->getContentDisponsition());
+		$this->setHeader('Expires-Disposition', '0');
+		$this->setHeader('Content-Transfer-Encoding', 'binary');
+		$this->setHeader('Content-Length', $this->getContentLength());
+		$this->noCache();
+	}
 }

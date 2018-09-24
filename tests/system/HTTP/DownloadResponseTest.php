@@ -146,4 +146,42 @@ class DownloadResponseTest extends \CIUnitTestCase
 		$response->setFilePath(BASEPATH . 'Common.php');
 		$this->assertSame($size, $response->getContentLength());
 	}
+
+	public function testWhenSetBinarySettingDownloadableHeadlers()
+	{
+		$response = new DownloadResponse('unit-test.txt', false);
+
+		$response->setBinary('test');
+		$response->buildHeaders();
+
+		$this->assertEquals('application/octet-stream', $response->getHeaderLine('Content-Type'));
+		$this->assertEquals('attachment; filename="unit-test.txt"', $response->getHeaderLine('Content-Disposition'));
+		$this->assertEquals('0', $response->getHeaderLine('Expires-Disposition'));
+		$this->assertEquals('binary', $response->getHeaderLine('Content-Transfer-Encoding'));
+		$this->assertEquals('4', $response->getHeaderLine('Content-Length'));
+	}
+
+	public function testWhenSetFileSettingDownloadableHeadlers()
+	{
+		$response = new DownloadResponse('unit-test.php', false);
+
+		$response->setFilePath(__FILE__);
+		$response->buildHeaders();
+
+		$this->assertEquals('application/octet-stream', $response->getHeaderLine('Content-Type'));
+		$this->assertEquals('attachment; filename="unit-test.php"', $response->getHeaderLine('Content-Disposition'));
+		$this->assertEquals('0', $response->getHeaderLine('Expires-Disposition'));
+		$this->assertEquals('binary', $response->getHeaderLine('Content-Transfer-Encoding'));
+		$this->assertEquals(filesize(__FILE__), $response->getHeaderLine('Content-Length'));
+	}
+
+	public function testContentTypeIsSetFromFilename()
+	{
+		$response = new DownloadResponse('unit-test.txt', true);
+
+		$response->setBinary('test');
+		$response->buildHeaders();
+
+		$this->assertEquals('text/plain; charset=UTF-8', $response->getHeaderLine('Content-Type'));
+	}
 }
