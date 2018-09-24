@@ -69,6 +69,17 @@ class DownloadResponseTest extends \CIUnitTestCase
 		$this->assertEquals($date->format('D, d M Y H:i:s').' GMT', $header);
 	}
 
+	public function testSetLastModifiedWithString()
+	{
+		$response = new DownloadResponse('unit-test.txt', true);
+
+		$response->setLastModified('2000-03-10 10:23:45');
+
+		$header = $response->getHeaderLine('Last-Modified');
+
+		$this->assertEquals('2000-03-10 10:23:45', $header);
+	}
+
 	public function testsentMethodSouldReturnRedirectResponse()
 	{
 		$response = new DownloadResponse('unit-test.txt', true);
