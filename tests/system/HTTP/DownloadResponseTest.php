@@ -3,6 +3,7 @@
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use DateTime;
 use DateTimeZone;
+use BadMethodCallException;
 
 class DownloadResponseTest extends \CIUnitTestCase
 {
@@ -81,5 +82,22 @@ class DownloadResponseTest extends \CIUnitTestCase
 		$response->setContentType('application/octet-stream', '');
 
 		$this->assertEquals('application/octet-stream', $response->getHeaderLine('Content-Type'));
+	}
+
+	public function testNoCache()
+	{
+		$response = new DownloadResponse('unit-test.txt', true);
+
+		$response->noCache();
+
+		$this->assertSame('private, no-transform, no-store, must-revalidate', $response->getHeaderLine('Cache-control'));
+	}
+
+	public function testCantSetCache()
+	{
+		$response = new DownloadResponse('unit-test.txt', true);
+
+		$this->expectException(BadMethodCallException::class);
+		$response->setCache();
 	}
 }

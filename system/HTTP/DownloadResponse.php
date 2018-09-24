@@ -36,6 +36,7 @@
  * @filesource
  */
 use CodeIgniter\HTTP\Exceptions\HTTPException;
+use BadMethodCallException;
 
 class DownloadResponse extends Message implements ResponseInterface
 {
@@ -165,6 +166,64 @@ class DownloadResponse extends Message implements ResponseInterface
 
 		return $this;
 	}
+
+	//--------------------------------------------------------------------
+	//--------------------------------------------------------------------
+	// Cache Control Methods
+	//
+	// http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.9
+	//--------------------------------------------------------------------
+
+	/**
+	 * Sets the appropriate headers to ensure this response
+	 * is not cached by the browsers.
+	 */
+	public function noCache(): self
+	{
+		$this->removeHeader('Cache-control');
+
+		$this->setHeader('Cache-control', ['private', 'no-transform', 'no-store', 'must-revalidate']);
+
+		return $this;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * A shortcut method that allows the developer to set all of the
+	 * cache-control headers in one method call.
+	 *
+	 * The options array is used to provide the cache-control directives
+	 * for the header. It might look something like:
+	 *
+	 *      $options = [
+	 *          'max-age'  => 300,
+	 *          's-maxage' => 900
+	 *          'etag'     => 'abcde',
+	 *      ];
+	 *
+	 * Typical options are:
+	 *  - etag
+	 *  - last-modified
+	 *  - max-age
+	 *  - s-maxage
+	 *  - private
+	 *  - public
+	 *  - must-revalidate
+	 *  - proxy-revalidate
+	 *  - no-transform
+	 *
+	 * @param array $options
+	 *
+	 * @return Response
+	 */
+	public function setCache(array $options = [])
+	{
+		// @todo: Should I make exceptions?
+		throw new BadMethodCallException('It does not supported caching for downloading.');
+	}
+
+	//--------------------------------------------------------------------
 
 	/**
 	 * Sets the Last-Modified date header.
