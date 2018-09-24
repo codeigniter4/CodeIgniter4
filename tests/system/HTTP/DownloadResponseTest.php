@@ -1,6 +1,7 @@
 <?php namespace CodeIgniter\HTTP;
 
 use CodeIgniter\HTTP\Exceptions\HTTPException;
+use CodeIgniter\Files\Exceptions\FileNotFoundException;
 use DateTime;
 use DateTimeZone;
 use BadMethodCallException;
@@ -124,7 +125,7 @@ class DownloadResponseTest extends \CIUnitTestCase
 	{
 		$response = new DownloadResponse('unit-test.txt', true);
 
-		$this->expectException(InvalidArgumentException::class);
+		$this->expectException(FileNotFoundException::class);
 		$response->setFilePath('unit test');
 	}
 }

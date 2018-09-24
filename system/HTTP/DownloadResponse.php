@@ -37,7 +37,7 @@
  */
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use BadMethodCallException;
-use InvalidArgumentException;
+use CodeIgniter\Files\File;
 
 class DownloadResponse extends Message implements ResponseInterface
 {
@@ -49,11 +49,11 @@ class DownloadResponse extends Message implements ResponseInterface
 	private $filename;
 
 	/**
-	 * Download for filepath
+	 * Download for file
 	 *
-	 * @var string?
+	 * @var File?
 	 */
-	private $filepath;
+	private $file;
 
 	/**
 	 * mime set flag
@@ -96,7 +96,7 @@ class DownloadResponse extends Message implements ResponseInterface
 	 */
 	public function setBinary(string $binary)
 	{
-		if ($this->filepath !== null) {
+		if ($this->file !== null) {
 			throw new BadMethodCallException('When setting filepath can not set binary.');
 		}
 
@@ -104,7 +104,7 @@ class DownloadResponse extends Message implements ResponseInterface
 	}
 
 	/**
-	 * set download for filepath.
+	 * set download for file.
 	 *
 	 * @param string $filepath
 	 */
@@ -112,11 +112,9 @@ class DownloadResponse extends Message implements ResponseInterface
 	{
 		if ($this->binary !== null) {
 			throw new BadMethodCallException('When setting binary can not set filepath.');
-		} elseif (!is_file($filepath)) {
-			throw new InvalidArgumentException('filepath not found.');
 		}
 
-		$this->filepath = $filepath;
+		$this->file = new File($filepath, true);
 	}
 
 	/**
