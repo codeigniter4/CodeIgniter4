@@ -55,6 +55,13 @@ class DownloadResponse extends Message implements ResponseInterface
 	private $setMime;
 
 	/**
+	 * Download reason
+	 *
+	 * @var string
+	 */
+	private $reason = 'OK';
+
+	/**
 	 * Download charset
 	 *
 	 * @var string
