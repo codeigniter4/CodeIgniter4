@@ -84,6 +84,13 @@ class DownloadResponse extends Message implements ResponseInterface
 	 */
 	private $charset = 'UTF-8';
 
+	/**
+	 * pretend
+	 *
+	 * @var boolean
+	 */
+	private $pretend = false;
+
 	public function __construct(string $filename, bool $setMime)
 	{
 		$this->filename = $filename;

@@ -184,4 +184,32 @@ class DownloadResponseTest extends \CIUnitTestCase
 
 		$this->assertEquals('text/plain; charset=UTF-8', $response->getHeaderLine('Content-Type'));
 	}
+
+	public function testCanOutputFileBodyFromBinary()
+	{
+		$response = new DownloadResponse('unit-test.txt', false);
+
+		$response->setBinary('test');
+
+		ob_start();
+		$response->sendBody();
+		$actual = ob_get_contents();
+		ob_end_clean();
+
+		$this->assertSame('test', $actual);
+	}
+
+	public function testCanOutputFileBodyFromFile()
+	{
+		$response = new DownloadResponse('unit-test.php', false);
+
+		$response->setFilePath(__FILE__);
+
+		ob_start();
+		$response->sendBody();
+		$actual = ob_get_contents();
+		ob_end_clean();
+
+		$this->assertSame(file_get_contents(__FILE__), $actual);
+	}
 }
