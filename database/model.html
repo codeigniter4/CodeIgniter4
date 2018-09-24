@@ -756,7 +756,7 @@ must return the original $data array so other callbacks have the full informatio
         <span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nb">isset</span><span class="p">(</span><span class="nv">$data</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="s1">&#39;password&#39;</span><span class="p">])</span> <span class="k">return</span> <span class="nv">$data</span><span class="p">;</span>
 
         <span class="nv">$data</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="s1">&#39;password_hash&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">password_hash</span><span class="p">(</span><span class="nv">$data</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="s1">&#39;password&#39;</span><span class="p">],</span> <span class="nx">PASSWORD_DEFAULT</span><span class="p">);</span>
-        <span class="nx">unse</span><span class="p">(</span><span class="nv">$data</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="s1">&#39;password&#39;</span><span class="p">];</span>
+        <span class="nb">unset</span><span class="p">(</span><span class="nv">$data</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="s1">&#39;password&#39;</span><span class="p">];</span>
 
         <span class="k">return</span> <span class="nv">$data</span><span class="p">;</span>
 <span class="p">}</span>
