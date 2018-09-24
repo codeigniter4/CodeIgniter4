@@ -415,4 +415,16 @@ class DownloadResponse extends Message implements ResponseInterface
 		$this->setHeader('Content-Length', $this->getContentLength());
 		$this->noCache();
 	}
+
+	/**
+	 * output download text by binary
+	 *
+	 * @return string
+	 */
+	private function sendBodyByBinary()
+	{
+		echo $this->binary;
+
+		return $this;
+	}
 }
