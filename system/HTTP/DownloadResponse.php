@@ -38,6 +38,26 @@
 class DownloadResponse extends Message implements ResponseInterface
 {
 	/**
+	 * Download file name
+	 *
+	 * @var string
+	 */
+	private $filename;
+
+	/**
+	 * mime set flag
+	 *
+	 * @var boolean
+	 */
+	private $setMime;
+
+	public function __construct(string $filename, bool $setMime)
+	{
+		$this->filename = $filename;
+		$this->setMime = $setMime;
+	}
+
+	/**
 	 * {@inheritDoc}
 	 */
 	public function getStatusCode(): int

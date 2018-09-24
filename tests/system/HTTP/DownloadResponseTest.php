@@ -4,7 +4,7 @@ class DownloadResponseTest extends \CIUnitTestCase
 {
 	public function testCanGetStatusCode()
 	{
-		$response = new DownloadResponse();
+		$response = new DownloadResponse('unit-test.txt', true);
 
 		$this->assertSame(200, $response->getStatusCode());
 	}
