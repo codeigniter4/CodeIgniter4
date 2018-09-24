@@ -4,6 +4,7 @@ use CodeIgniter\HTTP\Exceptions\HTTPException;
 use DateTime;
 use DateTimeZone;
 use BadMethodCallException;
+use InvalidArgumentException;
 
 class DownloadResponseTest extends \CIUnitTestCase
 {
@@ -99,5 +100,31 @@ class DownloadResponseTest extends \CIUnitTestCase
 
 		$this->expectException(BadMethodCallException::class);
 		$response->setCache();
+	}
+
+	public function testWhenFilepathIsSetBinaryCanNotBeSet()
+	{
+		$response = new DownloadResponse('unit-test.txt', true);
+
+		$this->expectException(BadMethodCallException::class);
+		$response->setFilePath(__FILE__);
+		$response->setBinary('test');
+	}
+
+	public function testWhenBinaryIsSetFilepathCanNotBeSet()
+	{
+		$response = new DownloadResponse('unit-test.txt', true);
+
+		$this->expectException(BadMethodCallException::class);
+		$response->setBinary('test');
+		$response->setFilePath(__FILE__);
+	}
+
+	public function testCanNotSetNoFilepath()
+	{
+		$response = new DownloadResponse('unit-test.txt', true);
+
+		$this->expectException(InvalidArgumentException::class);
+		$response->setFilePath('unit test');
 	}
 }
