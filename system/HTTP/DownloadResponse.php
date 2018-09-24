@@ -104,7 +104,8 @@ class DownloadResponse extends Message implements ResponseInterface
 	 */
 	public function setBinary(string $binary)
 	{
-		if ($this->file !== null) {
+		if ($this->file !== null)
+		{
 			throw new BadMethodCallException('When setting filepath can not set binary.');
 		}
 
@@ -118,7 +119,8 @@ class DownloadResponse extends Message implements ResponseInterface
 	 */
 	public function setFilePath(string $filepath)
 	{
-		if ($this->binary !== null) {
+		if ($this->binary !== null)
+		{
 			throw new BadMethodCallException('When setting binary can not set filepath.');
 		}
 
@@ -132,9 +134,12 @@ class DownloadResponse extends Message implements ResponseInterface
 	 */
 	public function getContentLength() : int
 	{
-		if (is_string($this->binary)) {
+		if (is_string($this->binary))
+		{
 			return strlen($this->binary);
-		} elseif ($this->file instanceof File) {
+		}
+		elseif ($this->file instanceof File)
+		{
 			return $this->file->getSize();
 		}
 
@@ -153,13 +158,15 @@ class DownloadResponse extends Message implements ResponseInterface
 
 		if ($this->setMime === true)
 		{
-			if (($last_dot_position = strrpos($this->filename, '.')) !== false) {
+			if (($last_dot_position = strrpos($this->filename, '.')) !== false)
+			{
 				$mime = Mimes::guessTypeFromExtension(substr($this->filename, $last_dot_position + 1));
 				$charset = $this->charset;
 			}
 		}
 
-		if (!is_string($mime)) {
+		if ( ! is_string($mime))
+		{
 			// Set the default MIME type to send
 			$mime = 'application/octet-stream';
 			$charset = '';
@@ -235,11 +242,13 @@ class DownloadResponse extends Message implements ResponseInterface
 	 */
 	public function setStatusCode(int $code, string $reason = '')
 	{
-		if ($code !== 200) {
+		if ($code !== 200)
+		{
 			throw HTTPException::forInvalidStatusCode($code);
 		}
 
-		if (!empty($reason) && $this->reason !== $reason) {
+		if ( ! empty($reason) && $this->reason !== $reason)
+		{
 			$this->reason = $reason;
 		}
 	}
@@ -418,7 +427,8 @@ class DownloadResponse extends Message implements ResponseInterface
 	 */
 	public function buildHeaders()
 	{
-		if (!$this->hasHeader('Content-Type')) {
+		if ( ! $this->hasHeader('Content-Type'))
+		{
 			$this->setContentTypeByMimeType();
 		}
 
@@ -469,9 +479,12 @@ class DownloadResponse extends Message implements ResponseInterface
 	 */
 	public function sendBody()
 	{
-		if ($this->binary !== null) {
+		if ($this->binary !== null)
+		{
 			return $this->sendBodyByBinary();
-		} elseif ($this->file !== null) {
+		}
+		elseif ($this->file !== null)
+		{
 			return $this->sendBodyByFilePath();
 		}
 
@@ -488,7 +501,7 @@ class DownloadResponse extends Message implements ResponseInterface
 		$spl_file_object = $this->file->openFile('rb');
 
 		// Flush 1MB chunks of data
-		while (! $spl_file_object->eof() && ($data = $spl_file_object->fread(1048576)) !== false)
+		while ( ! $spl_file_object->eof() && ($data = $spl_file_object->fread(1048576)) !== false)
 		{
 			echo $data;
 		}

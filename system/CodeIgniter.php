@@ -320,7 +320,9 @@ class CodeIgniter
 			}
 
 			$this->callExit(EXIT_SUCCESS);
-		} elseif ($returned instanceof DownloadResponse) {
+		}
+		elseif ($returned instanceof DownloadResponse)
+		{
 			$returned->pretend($this->useSafeOutput)->send();
 
 			if ($returnResponse)

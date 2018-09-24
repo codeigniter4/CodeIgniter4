@@ -989,9 +989,12 @@ class Response extends Message implements ResponseInterface
 
 		$response = new DownloadResponse($filename, $setMime);
 
-		if ($filepath !== '') {
+		if ($filepath !== '')
+		{
 			$response->setFilePath($filepath);
-		} elseif ($data !== null) {
+		}
+		elseif ($data !== null)
+		{
 			$response->setBinary($data);
 		}
 
