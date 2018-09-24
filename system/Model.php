@@ -286,6 +286,11 @@ class Model
 			$validation = \Config\Services::validation(null, false);
 		}
 
+		if ($this->table == null)
+		{
+			$this->table = strtolower((new \ReflectionClass($this))->getShortName()); 
+		}
+		
 		$this->validation = $validation;
 	}
 
