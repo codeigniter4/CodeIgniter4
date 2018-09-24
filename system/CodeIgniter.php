@@ -35,6 +35,7 @@
  * @since	Version 3.0.0
  * @filesource
  */
+use CodeIgniter\HTTP\DownloadResponse;
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\Request;
 use CodeIgniter\HTTP\ResponseInterface;
@@ -313,6 +314,15 @@ class CodeIgniter
 		// Handle any redirects
 		if ($returned instanceof RedirectResponse)
 		{
+			if ($returnResponse)
+			{
+				return $returned;
+			}
+
+			$this->callExit(EXIT_SUCCESS);
+		} elseif ($returned instanceof DownloadResponse) {
+			$returned->pretend($this->useSafeOutput)->send();
+
 			if ($returnResponse)
 			{
 				return $returned;
