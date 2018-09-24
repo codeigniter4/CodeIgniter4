@@ -35,6 +35,8 @@
  * @since        Version 4.0.0
  * @filesource
  */
+use InvalidArgumentException;
+
 class DownloadResponse extends Message implements ResponseInterface
 {
 	/**
@@ -63,5 +65,50 @@ class DownloadResponse extends Message implements ResponseInterface
 	public function getStatusCode(): int
 	{
 		return 200;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Return an instance with the specified status code and, optionally, reason phrase.
+	 *
+	 * If no reason phrase is specified, will default recommended reason phrase for
+	 * the response's status code.
+	 *
+	 * @see http://tools.ietf.org/html/rfc7231#section-6
+	 * @see http://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
+	 *
+	 * @param int    $code         The 3-digit integer result code to set.
+	 * @param string $reason       The reason phrase to use with the
+	 *                             provided status code; if none is provided, will
+	 *                             default to the IANA name.
+	 *
+	 * @return self
+	 * @throws \InvalidArgumentException For invalid status code arguments.
+	 */
+	public function setStatusCode(int $code, string $reason = '')
+	{
+		if ($code !== 200) {
+			throw new InvalidArgumentException('statusCode can not be set except for 200.');
+		}
+
+		if (!empty($reason) && $this->reason !== $reason) {
+			$this->reason = $reason;
+		}
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Gets the response response phrase associated with the status code.
+	 *
+	 * @see http://tools.ietf.org/html/rfc7231#section-6
+	 * @see http://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
+	 *
+	 * @return string
+	 */
+	public function getReason(): string
+	{
+		return $this->reason;
 	}
 }
