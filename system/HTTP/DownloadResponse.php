@@ -186,6 +186,16 @@ class DownloadResponse extends Message implements ResponseInterface
 	}
 
 	/**
+	 * get Content-Disponsition Header string.
+	 *
+	 * @return string
+	 */
+	private function getContentDisponsition() : string
+	{
+		return sprintf('attachment; filename="%s"', $this->getDownloadFileName());
+	}
+
+	/**
 	 * {@inheritDoc}
 	 */
 	public function getStatusCode(): int
