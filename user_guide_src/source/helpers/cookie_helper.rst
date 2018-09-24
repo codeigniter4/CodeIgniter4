@@ -37,7 +37,7 @@ The following functions are available:
 	:rtype:	void
 
 	This helper function gives you friendlier syntax to set browser
-	cookies. Refer to the :doc:`Response Library <../libraries/response>` for
+	cookies. Refer to the :doc:`Response Library </incoming/response>` for
 	a description of its use, as this function is an alias for
 	``Response::setCookie()``.
 
@@ -49,7 +49,7 @@ The following functions are available:
 	:rtype:	mixed
 
 	This helper function gives you friendlier syntax to get browser
-	cookies. Refer to the :doc:`IncomingRequest Library <../libraries/incomingrequest>` for
+	cookies. Refer to the :doc:`IncomingRequest Library </incoming/incomingrequest>` for
 	detailed description of its use, as this function acts very
 	similarly to ``IncomingRequest::getCookie()``, except it will also prepend
 	the ``$cookiePrefix`` that you might've set in your

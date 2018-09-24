@@ -64,7 +64,7 @@ constant CI_DEBUG is defined and it's value is positive. This is defined in the 
 application/Config/Boot/development.php) and can be modified there to determine what environments it shows
 itself in.
 
-The toolbar itself is displayed as an :doc:`After Filter </general/filters>`. You can stop it from ever
+The toolbar itself is displayed as an :doc:`After Filter </incoming/filters>`. You can stop it from ever
 running by removing it from the ``$globals`` property of **application/Config/Filters.php**.
 
 Choosing What to Show

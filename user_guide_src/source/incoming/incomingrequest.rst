@@ -3,7 +3,7 @@ IncomingRequest Class
 =====================
 
 The IncomingRequest class provides an object-oriented representation of an HTTP request from a client, like a browser.
-It extends from, and has access to all the methods of the :doc:`Request </libraries/request>` and :doc:`Message </libraries/message>`
+It extends from, and has access to all the methods of the :doc:`Request </incoming/request>` and :doc:`Message </incoming/message>`
 classes, in addition to the methods listed below.
 
 .. contents::
@@ -204,7 +204,7 @@ If you need the entire header, with the name and values in a single string, simp
 The Request URL
 ===============
 
-You can retrieve a :doc:`URI <uri>` object that represents the current URI for this request through the
+You can retrieve a :doc:`URI </libraries/uri>` object that represents the current URI for this request through the
 ``$request->uri`` property. You can cast this object as a string to get a full URL for the current request::
 
 	$uri = (string)$request->uri;
@@ -265,13 +265,13 @@ You can easily negotiate content types with the request through the ``negotiate(
 	$contentType = $request->negotiate('media', ['text/html', 'text/xml']);
 	$encoding    = $request->negotiate('encoding', ['gzip', 'compress']);
 
-See the :doc:`Content Negotiation </libraries/content_negotiation>` page for more details.
+See the :doc:`Content Negotiation </incoming/content_negotiation>` page for more details.
 
 Class Reference
 ---------------
 
 .. note:: In addition to the methods listed here, this class inherits the methods from the
-	:doc:`Request Class </libraries/request>` and the :doc:`Message Class </libraries/message>`.
+	:doc:`Request Class </incoming/request>` and the :doc:`Message Class </incoming/message>`.
 
 The methods provided by the parent classes that are available are:
 

@@ -135,7 +135,7 @@ that is used by editing **application/Config/Pager.php**::
         'default_simple' => 'CodeIgniter\Pager\Views\default_simple'
     ];
 
-This setting stores the alias and :doc:`namespaced view paths </general/views>` for the view that
+This setting stores the alias and :doc:`namespaced view paths </outgoing/views>` for the view that
 should be used. The *default_full* and *default_simple* views are used for the ``links()`` and ``simpleLinks()``
 methods, respectively. To change the way those are displayed application-wide, you could assign a new view here.
 

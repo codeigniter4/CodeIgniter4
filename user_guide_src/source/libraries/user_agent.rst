@@ -16,7 +16,7 @@ Using the User Agent Class
 Initializing the Class
 ======================
 
-The User Agent class is always available directly from the current :doc:`IncomingRequest </libraries/incomingrequest>` instance.
+The User Agent class is always available directly from the current :doc:`IncomingRequest </incoming/incomingrequest>` instance.
 By default, you will have a request instance in your controller that you can retrieve the
 User Agent class from::
 

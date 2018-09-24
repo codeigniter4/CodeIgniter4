@@ -52,10 +52,10 @@ Validation.
 
 In order to implement form validation you'll need three things:
 
-#. A :doc:`View <../general/views>` file containing a form.
+#. A :doc:`View </outgoing/views>` file containing a form.
 #. A View file containing a "success" message to be displayed upon
    successful submission.
-#. A :doc:`controller <../general/controllers>` method to receive and
+#. A :doc:`controller </incoming/controllers>` method to receive and
    process the submitted data.
 
 Let's create those three things, using a member sign-up form as the
@@ -195,7 +195,7 @@ The library is loaded as a service named **validation**::
 This automatically loads the ``Config\Validation`` file which contains settings
 for including multiple Rule sets, and collections of rules that can be easily reused.
 
-.. note:: You may never need to use this method, as both the :doc:`Controller </general/controllers>` and
+.. note:: You may never need to use this method, as both the :doc:`Controller </incoming/controllers>` and
     the :doc:`Model </database/model>` provide methods to make validation even easier.
 
 Setting Validation Rules

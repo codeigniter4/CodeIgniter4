@@ -2,7 +2,7 @@
 Running via the Command Line
 ############################
 
-As well as calling an applications :doc:`Controllers <./controllers>`
+As well as calling an applications :doc:`Controllers </incoming/controllers>`
 via the URL in a browser they can also be loaded via the command-line
 interface (CLI).
 
@@ -93,7 +93,7 @@ works exactly like a normal route definition::
 
     $routes->cli('tools/message/(:segment)', 'Tools::message/$1');
 
-For more information, see the :doc:`Routes </general/routing>` page.
+For more information, see the :doc:`Routes </incoming/routing>` page.
 
 The CLI Library
 ---------------

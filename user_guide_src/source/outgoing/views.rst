@@ -12,7 +12,7 @@ this type of hierarchy.
 
 Views are never called directly, they must be loaded by a controller. Remember that in an MVC framework,
 the Controller acts as the traffic cop, so it is responsible for fetching a particular view. If you have
-not read the :doc:`Controllers <controllers>` page, you should do so before continuing.
+not read the :doc:`Controllers </incoming/controllers>` page, you should do so before continuing.
 
 Using the example controller you created in the controller page, let’s add a view to it.
 

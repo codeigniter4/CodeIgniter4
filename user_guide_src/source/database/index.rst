@@ -1,6 +1,6 @@
-##################
-Database Reference
-##################
+#############
+Managing Data
+#############
 
 CodeIgniter comes with a full-featured and very fast abstracted database
 class that supports both traditional structures and Query Builder

@@ -163,7 +163,7 @@ match, and calls the appropriate controller and method, possibly with
 arguments.
 
 More information about routing can be found in the URI Routing
-:doc:`documentation <../general/routing>`.
+:doc:`documentation </incoming/routing>`.
 
 Here, the second rule in the ``$routes`` array matches **any** request
 using the wildcard string ``(:any)``. and passes the parameter to the

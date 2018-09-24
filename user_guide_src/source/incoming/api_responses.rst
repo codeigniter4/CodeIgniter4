@@ -81,7 +81,7 @@ format both XML and JSON responses::
             'application/xml'
         ];
 
-This is the array that is used during :doc:`Content Negotiation </libraries/content_negotiation>` to determine which
+This is the array that is used during :doc:`Content Negotiation </incoming/content_negotiation>` to determine which
 type of response to return. If no matches are found between what the client requested and what you support, the first
 format in this array is what will be returned.
 
@@ -110,7 +110,7 @@ Class Reference
     This is the method used by all other methods in this trait to return a response to the client.
 
     The ``$data`` element can be either a string or an array. By default, a string will be returned as HTML,
-    while an array will be run through json_encode and returned as JSON, unless :doc:`Content Negotiation </libraries/content_negotiation>`
+    while an array will be run through json_encode and returned as JSON, unless :doc:`Content Negotiation </incoming/content_negotiation>`
     determines it should be returned in a different format.
 
     If a ``$message`` string is passed, it will be used in place of the standard IANA reason codes for the

@@ -163,7 +163,7 @@ Service Accessors
 
 		echo view('user_profile', $data);
 
-	For more details, see the :doc:`Views <views>` page.
+	For more details, see the :doc:`Views </outgoing/views>` page.
 
 Miscellaneous Functions
 =======================
@@ -267,7 +267,7 @@ Miscellaneous Functions
 	Generates a relative URI for you based on either a named route alias, or a controller::method
 	combination. Will take parameters into effect, if provided.
 
-	For full details, see the :doc:`routing` page.
+	For full details, see the :doc:`/incoming/routing` page.
 
 .. php:function:: service ( $name [, ...$params] )
 

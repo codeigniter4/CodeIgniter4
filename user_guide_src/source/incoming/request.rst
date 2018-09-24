@@ -8,7 +8,7 @@ like would be used to send a request from the application to a third-party appli
 provides the common functionality they both need, but both cases have custom classes that extend
 from the Request class to add specific functionality.
 
-See the documentation for the :doc:`IncomingRequest Class </libraries/incomingrequest>` and
+See the documentation for the :doc:`IncomingRequest Class </incoming/incomingrequest>` and
 :doc:`CURLRequest Class </libraries/curlrequest>` for more usage details.
 
 ===============
@@ -82,7 +82,7 @@ Class Reference
 		:rtype:	mixed
 
 		This method is identical to the ``post()``, ``get()`` and ``cookie()`` methods from the
-		:doc:`IncomingRequest Class </libraries/incomingrequest>`, only it fetches getServer data (``$_SERVER``)::
+		:doc:`IncomingRequest Class </incoming/incomingrequest>`, only it fetches getServer data (``$_SERVER``)::
 
 			$request->getServer('some_data');
 

@@ -245,12 +245,12 @@ This class provides several features that are available to all of your controlle
 
 **Request Object**
 
-The application's main :doc:`Request Instance <../libraries/request>` is always available
+The application's main :doc:`Request Instance </incoming/request>` is always available
 as a class property, ``$this->request``.
 
 **Response Object**
 
-The application's main :doc:`Response Instance <../libraries/response>` is always available
+The application's main :doc:`Response Instance </incoming/response>` is always available
 as a class property, ``$this->response``.
 
 **Logger Object**

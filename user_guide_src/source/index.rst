@@ -2,14 +2,6 @@
 CodeIgniter4 User Guide
 #######################
 
-.. contents::
-   :local:
-   :depth: 2
-
-*******
-Welcome
-*******
-
 .. toctree::
 	:includehidden:
         :titlesonly:
@@ -37,53 +29,55 @@ Tutorial
 
     	tutorial/index
 
-*********************
-CodeIgniter4 Overview
-*********************
+*************************
+Overview & General Topics
+*************************
 .. toctree::
 	:titlesonly:
 
 	concepts/index
-
-**************
-General Topics
-**************
 
 .. toctree::
 	:titlesonly:
 
 	general/index
 
-*****************
-Library Reference
-*****************
+***************************
+Controllers, Models & Views
+***************************
 
 .. toctree::
 	:titlesonly:
 
-	libraries/index
-
-******************
-Database Reference
-******************
+	incoming/index
 
 .. toctree::
 	:titlesonly:
 
 	database/index
 
-****************
-Helper Reference
-****************
+.. toctree::
+	:titlesonly:
+
+	outgoing/index
+
+*******************
+Libraries & Helpers
+*******************
+
+.. toctree::
+	:titlesonly:
+
+	libraries/index
 
 .. toctree::
 	:titlesonly:
 
 	helpers/index
 
-*******
-Testing
-*******
+*******************
+Testing & Debugging
+*******************
 
 .. toctree::
 	:titlesonly:

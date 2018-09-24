@@ -4,7 +4,7 @@ Database Events
 
 The Database classes contain a few :doc:`Events </general/events>` that you can tap into in
 order to learn more about what is happening during the database execution. These events can
-be used to collect data for analysis and reporting. The :doc:`Debug Toolbar </general/debugging>`
+be used to collect data for analysis and reporting. The :doc:`Debug Toolbar </testing/debugging>`
 uses this to collect the queries to display in the Toolbar.
 
 ==========
