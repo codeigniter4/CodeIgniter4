@@ -12,4 +12,5 @@ The following sections should get you quickly testing your applications.
     Database <database>
     Controller Testing <controllers>
     HTTP Testing <feature>
+    benchmark
     debugging

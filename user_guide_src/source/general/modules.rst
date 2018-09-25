@@ -69,7 +69,7 @@ Many times, you will need to specify the full namespace to files you want to inc
 configured to make integrating modules into your applications simpler by automatically discovering many different
 file types, including:
 
-- :doc:`Events </general/events>`
+- :doc:`Events </extending/events>`
 - :doc:`Registrars </general/configuration>`
 - :doc:`Route files </incoming/routing>`
 - :doc:`Services </concepts/services>`

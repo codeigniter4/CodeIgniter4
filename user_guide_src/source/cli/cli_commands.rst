@@ -120,7 +120,7 @@ Then **foo** is the command name, and the ``$params`` array would be::
 
     $params = ['bar', 'baz'];
 
-This can also be accessed through the :doc:`CLI </libraries/cli>` library, but this already has your command removed
+This can also be accessed through the :doc:`CLI </cli/cli_library>` library, but this already has your command removed
 from the string. These parameters can be used to customize how your scripts behave.
 
 Our demo command might have a ``run`` method something like::

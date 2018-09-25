@@ -370,7 +370,7 @@ model's ``save()`` method to inspect the class, grab any public and private prop
 	// Save the changes
 	$model->save($job);
 
-.. note:: If you find yourself working with Entities a lot, CodeIgniter provides a built-in :doc:`Entity class </database/entities>`
+.. note:: If you find yourself working with Entities a lot, CodeIgniter provides a built-in :doc:`Entity class </models/entities>`
 	that provides several handy features that make developing Entities simpler.
 
 Deleting Data

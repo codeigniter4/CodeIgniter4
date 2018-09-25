@@ -106,7 +106,7 @@ Setting Benchmark Points
 
 In order for the Profiler to compile and display your benchmark data you must name your mark points using specific syntax.
 
-Please read the information on setting Benchmark points in the :doc:`Benchmark Library </libraries/benchmark>` page.
+Please read the information on setting Benchmark points in the :doc:`Benchmark Library </testing/benchmark>` page.
 
 Creating Custom Collectors
 ==========================

@@ -38,8 +38,8 @@ library. This will make the database class available through the
 Before querying the database, a database schema has to be created.
 Connect to your database and run the SQL command below (MySQL).
 Also add some seed records. For now, we'll just show you the query needed
-to create the table, but you should read about :doc:`Migrations <../database/migration>`
-and :doc:`Seeds <../database/seeds>` to create more useful database setups.
+to create the table, but you should read about :doc:`Migrations <../dbmgmt/migration>`
+and :doc:`Seeds <../dbmgmt/seeds>` to create more useful database setups.
 
 ::
 

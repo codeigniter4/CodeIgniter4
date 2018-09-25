@@ -5,15 +5,12 @@ Library Reference
 .. toctree::
     :titlesonly:
 
-    benchmark
     caching
-    cli
     curlrequest
     email
     files
     honeypot
     images
-    localization
     pagination
     security
     sessions

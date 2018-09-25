@@ -63,7 +63,7 @@ miss updating an area.
 
 Models are typically stored in **/application/Models**, though they can use a namespace to be grouped however you need.
 
-:doc:`Find out more about models </database/model>`
+:doc:`Find out more about models </models/model>`
 
 Controllers
 ===========

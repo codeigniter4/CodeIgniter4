@@ -102,4 +102,4 @@ The CLI library makes working with the CLI interface simple.
 It provides easy ways to output text in multiple colors to the terminal window. It also
 allows you to prompt a user for information, making it easy to build flexible, smart tools.
 
-See the :doc:`CLI Library </libraries/cli>` page for detailed information.
+See the :doc:`CLI Library </cli/cli_library>` page for detailed information.

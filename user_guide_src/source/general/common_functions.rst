@@ -78,7 +78,7 @@ Service Accessors
 
 	Retrieves a locale-specific file based on an alias string.
 
-	For more information, see the :doc:`Localization </libraries/localization>` page.
+	For more information, see the :doc:`Localization </outgoing/localization>` page.
 
 .. php:function:: old( $key[, $default = null, [, $escape = 'html' ]] )
 

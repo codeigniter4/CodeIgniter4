@@ -196,7 +196,7 @@ This automatically loads the ``Config\Validation`` file which contains settings
 for including multiple Rule sets, and collections of rules that can be easily reused.
 
 .. note:: You may never need to use this method, as both the :doc:`Controller </incoming/controllers>` and
-    the :doc:`Model </database/model>` provide methods to make validation even easier.
+    the :doc:`Model </models/model>` provide methods to make validation even easier.
 
 Setting Validation Rules
 ========================
