@@ -31,6 +31,16 @@ class CodeIgniterTest extends \CIUnitTestCase
 		$this->codeigniter = new MockCodeIgniter($config);
 	}
 
+	public function tearDown()
+	{
+		parent::tearDown();
+
+		if( count( ob_list_handlers() ) > 1 )
+		{
+			ob_end_clean();
+		}
+	}
+
 	//--------------------------------------------------------------------
 
 	public function testRunDefaultRoute()

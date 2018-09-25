@@ -25,6 +25,9 @@ class FeatureTestCaseTest extends FeatureTestCase
 		]);
 		$response = $this->get('home');
 
+		// close open buffer
+		ob_end_clean();
+
 		$response->assertSee('Hello World');
 		$response->assertDontSee('Again');
 	}
