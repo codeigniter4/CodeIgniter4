@@ -7,10 +7,6 @@ you haven't written any information to the database yet. In this section
 you'll expand your news controller and model created earlier to include
 this functionality.
 
-.. note:: This section of the tutorial cannot be completed as certain
-    portions of the framework, like the form helper and the validation
-    library have not been completed yet.
-
 Create a form
 -------------
 
