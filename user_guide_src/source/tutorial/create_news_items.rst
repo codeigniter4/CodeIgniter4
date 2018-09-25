@@ -7,10 +7,6 @@ you haven't written any information to the database yet. In this section
 you'll expand your news controller and model created earlier to include
 this functionality.
 
-.. note:: This section of the tutorial cannot be completed as certain
-    portions of the framework, like the form helper and the validation
-    library have not been completed yet.
-
 Create a form
 -------------
 
@@ -24,7 +20,7 @@ the slug from our title in the model. Create the new view at
 
     <h2><?= esc($title); ?></h2>
 
-    <?= validation_errors(); ?>
+    <?= \Config\Services::validation()->listErrors(); ?>
 
     <?= form_open('news/create'); ?>
 
@@ -39,7 +35,7 @@ the slug from our title in the model. Create the new view at
     </form>
 
 There are only two things here that probably look unfamiliar to you: the
-``form_open()`` function and the ``validation_errors()`` function.
+``form_open()`` function and the ``\Config\Services::validation()->listErrors()`` function.
 
 The first function is provided by the :doc:`form
 helper <../helpers/form_helper>` and renders the form element and
