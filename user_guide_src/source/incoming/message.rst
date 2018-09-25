@@ -6,8 +6,8 @@ The Message class provides an interface to the portions of an HTTP message that 
 requests and responses, including the message body, protocol version, utilities for working with
 the headers, and methods for handling content negotiation.
 
-This class is the parent class that both the :doc:`Request Class </libraries/request>` and the
-:doc:`Response Class </libraries/response>` extend from. As such, some methods, such as the content
+This class is the parent class that both the :doc:`Request Class </incoming/request>` and the
+:doc:`Response Class </incoming/response>` extend from. As such, some methods, such as the content
 negotiation methods, may apply only to a request or response, and not the other one, but they have
 been included here to keep the header methods together.
 
@@ -58,7 +58,7 @@ Class Reference
 		:returns: void
 
 		Scans and parses the headers found in the SERVER data and stores it for later access.
-		This is used by the :doc:`IncomingRequest Class </libraries/incomingrequest>` to make
+		This is used by the :doc:`IncomingRequest Class </incoming/incomingrequest>` to make
 		the current request's headers available.
 
                 The headers are any SERVER data that starts with ``HTTP_``, like ``HTTP_HOST``. Each message

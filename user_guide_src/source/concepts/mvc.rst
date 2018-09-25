@@ -46,7 +46,7 @@ You might store the view file for this method in **/application/Views/User/Profi
 That type of organization works great as a base habit to get into. At times you might need to organize it differently.
 That's not a problem. As long as CodeIgniter can find the file, it can display it.
 
-:doc:`Find out more about views </general/views>`
+:doc:`Find out more about views </outgoing/views>`
 
 Models
 ======
@@ -63,7 +63,7 @@ miss updating an area.
 
 Models are typically stored in **/application/Models**, though they can use a namespace to be grouped however you need.
 
-:doc:`Find out more about models </database/model>`
+:doc:`Find out more about models </models/model>`
 
 Controllers
 ===========
@@ -80,4 +80,4 @@ be there, and they get the data they need in a format they can use.
 Controllers are typically stored in **/application/Controllers**, though they can use a namespace to be grouped however
 you need.
 
-:doc:`Find out more about controllers </general/controllers>`
+:doc:`Find out more about controllers </incoming/controllers>`

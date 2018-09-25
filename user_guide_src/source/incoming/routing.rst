@@ -65,10 +65,10 @@ The following placeholders are available for you to use in your routes:
 * **(:num)** will match any integer.
 * **(:alpha)** will match any string of alphabetic characters
 * **(:alphanum)** will match any string of alphabetic characters or integers, or any combination of the two.
-* **(:hash)** is the same as **:segment**, but can be used to easily see which routes use hashed ids (see the :doc:`Model </database/model>` docs).
+* **(:hash)** is the same as **:segment**, but can be used to easily see which routes use hashed ids (see the :doc:`Model </models/model>` docs).
 
 .. note:: **{locale}** cannot be used as a placeholder or other part of the route, as it is reserved for use
-    in :doc:`localization </libraries/localization>`.
+    in :doc:`localization </outgoing/localization>`.
 
 Examples
 ========

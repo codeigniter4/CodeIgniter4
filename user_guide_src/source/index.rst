@@ -2,23 +2,15 @@
 CodeIgniter4 User Guide
 #######################
 
-.. contents::
-   :local:
-   :depth: 2
-
-*******
-Welcome
-*******
-
 .. toctree::
 	:includehidden:
         :titlesonly:
 
         intro/index
 
-************
-Installation
-************
+***************
+Getting Started
+***************
 
 .. toctree::
 	:includehidden:
@@ -27,44 +19,42 @@ Installation
 
 	installation/index
 
-********
-Tutorial
-********
-
 .. toctree::
 	:includehidden:
 	:titlesonly:
 
     	tutorial/index
 
-*********************
-CodeIgniter4 Overview
-*********************
+*************************
+Overview & General Topics
+*************************
+
 .. toctree::
 	:titlesonly:
 
 	concepts/index
-
-**************
-General Topics
-**************
 
 .. toctree::
 	:titlesonly:
 
 	general/index
 
-*****************
-Library Reference
-*****************
+****************
+Request Handling
+****************
 
 .. toctree::
 	:titlesonly:
 
-	libraries/index
+	incoming/index
+
+.. toctree::
+	:titlesonly:
+
+	outgoing/index
 
 ******************
-Database Reference
+Handling Databases
 ******************
 
 .. toctree::
@@ -72,23 +62,49 @@ Database Reference
 
 	database/index
 
-****************
-Helper Reference
-****************
+.. toctree::
+	:titlesonly:
+
+	models/index
+
+.. toctree::
+	:titlesonly:
+
+	dbmgmt/index
+
+
+*******************
+Libraries & Helpers
+*******************
+
+.. toctree::
+	:titlesonly:
+
+	libraries/index
 
 .. toctree::
 	:titlesonly:
 
 	helpers/index
 
-*******
-Testing
-*******
+***************
+Advanced Topics
+***************
 
 .. toctree::
 	:titlesonly:
 
 	testing/index
+
+.. toctree::
+	:titlesonly:
+
+	cli/index
+
+.. toctree::
+	:titlesonly:
+
+	extending/index
 
 .. toctree::
         :hidden:

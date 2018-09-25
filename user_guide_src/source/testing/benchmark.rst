@@ -66,7 +66,7 @@ the only parameter. The default value is 4 numbers behind the decimal point::
 
 	$timers = $benchmark->getTimers(6);
 
-The timers are automatically displayed in the :doc:`Debub Toolbar </general/debugging>`.
+The timers are automatically displayed in the :doc:`Debub Toolbar </testing/debugging>`.
 
 Displaying Execution Time
 =========================

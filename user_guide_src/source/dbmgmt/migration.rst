@@ -176,7 +176,7 @@ to update the schema::
 *******************
 Commnand-Line Tools
 *******************
-CodeIgniter ships with several :doc:`commands </general/cli_commands>` that are available from the command line to help
+CodeIgniter ships with several :doc:`commands </cli/cli_commands>` that are available from the command line to help
 you work with migrations. These tools are not required to use migrations but might make things easier for those of you
 that wish to use them. The tools primarily provide access to the same methods that are available within the MigrationRunner class.
 

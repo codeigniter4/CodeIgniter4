@@ -2,7 +2,7 @@
 Running via the Command Line
 ############################
 
-As well as calling an applications :doc:`Controllers <./controllers>`
+As well as calling an applications :doc:`Controllers </incoming/controllers>`
 via the URL in a browser they can also be loaded via the command-line
 interface (CLI).
 
@@ -93,7 +93,7 @@ works exactly like a normal route definition::
 
     $routes->cli('tools/message/(:segment)', 'Tools::message/$1');
 
-For more information, see the :doc:`Routes </general/routing>` page.
+For more information, see the :doc:`Routes </incoming/routing>` page.
 
 The CLI Library
 ---------------
@@ -102,4 +102,4 @@ The CLI library makes working with the CLI interface simple.
 It provides easy ways to output text in multiple colors to the terminal window. It also
 allows you to prompt a user for information, making it easy to build flexible, smart tools.
 
-See the :doc:`CLI Library </libraries/cli>` page for detailed information.
+See the :doc:`CLI Library </cli/cli_library>` page for detailed information.

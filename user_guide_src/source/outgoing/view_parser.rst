@@ -33,7 +33,7 @@ representations that allow you to eliminate PHP from your templates
 
 .. note:: CodeIgniter does **not** require you to use this class since
 	using pure PHP in your view pages (for instance using the
-	:doc:`View renderer </general/view_renderer>` )
+	:doc:`View renderer </outgoing/view_renderer>` )
 	lets them run a little faster.
 	However, some developers prefer to use some form of template engine if
 	they work with designers who they feel would find some
@@ -99,7 +99,7 @@ View parameters are passed to ``setData()`` as an associative
 array of data to be replaced in the template. In the above example, the
 template would contain two variables: {blog_title} and {blog_heading}
 The first parameter to ``render()`` contains the name of the :doc:`view
-file <../general/views>` (in this example the file would be called blog_template.php),
+file </outgoing/views>` (in this example the file would be called blog_template.php),
 
 Parser Configuration Options
 ============================

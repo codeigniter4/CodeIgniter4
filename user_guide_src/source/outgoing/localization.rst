@@ -48,7 +48,7 @@ Locale Detection
 ================
 
 There are two methods supported to detect the correct locale during the request. The first is a "set and forget"
-method that will automatically perform :doc:`content negotiation </libraries/content_negotiation>` for you to
+method that will automatically perform :doc:`content negotiation </incoming/content_negotiation>` for you to
 determine the correct locale to use. The second method allows you to specify a segment in your routes that
 will be used to set the locale.
 

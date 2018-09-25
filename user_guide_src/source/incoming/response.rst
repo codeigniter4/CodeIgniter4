@@ -2,7 +2,7 @@
 HTTP Responses
 ==============
 
-The Response class extends the :doc:`HTTP Message Class </libraries/message>` with methods only appropriate for
+The Response class extends the :doc:`HTTP Message Class </incoming/message>` with methods only appropriate for
 a server responding to the client that called it.
 
 .. contents::
@@ -216,7 +216,7 @@ Class Reference
 ***************
 
 .. note:: In addition to the methods listed here, this class inherits the methods from the
-	:doc:`Message Class </libraries/message>`.
+	:doc:`Message Class </incoming/message>`.
 
 The methods provided by the parent class that are available are:
 
