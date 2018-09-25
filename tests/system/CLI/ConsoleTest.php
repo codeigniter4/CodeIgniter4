@@ -57,6 +57,9 @@ class ConsoleTest extends \CIUnitTestCase
 		$console->run(true);
 		$result = CITestStreamFilter::$buffer;
 
+		// close open buffer
+		ob_end_clean();
+
 		// make sure the result looks like a command list
 		$this->assertContains('Lists the available commands.', $result);
 		$this->assertContains('Displays basic usage information.', $result);
