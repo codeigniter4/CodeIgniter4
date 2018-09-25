@@ -36,8 +36,8 @@
   
     <link rel="top" title="CodeIgniter4 4.0.0-alpha.1 documentation" href="../index.html"/>
         <link rel="up" title="Library Reference" href="index.html"/>
-        <link rel="next" title="Request Class" href="request.html"/>
-        <link rel="prev" title="HTTP Messages" href="message.html"/> 
+        <link rel="next" title="Security Class" href="security.html"/>
+        <link rel="prev" title="Image Manipulation Class" href="images.html"/> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -98,24 +98,30 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../general/index.html">General Topics</a></li>
 </ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../incoming/index.html">Controllers and Routing</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../outgoing/index.html">Building Responses</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../database/index.html">Working With Databases</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../models/index.html">Modeling Data</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../dbmgmt/index.html">Managing Databases</a></li>
+</ul>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Library Reference</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="api_responses.html">API Response Trait</a></li>
-<li class="toctree-l2"><a class="reference internal" href="benchmark.html">Benchmarking</a></li>
 <li class="toctree-l2"><a class="reference internal" href="caching.html">Caching Driver</a></li>
-<li class="toctree-l2"><a class="reference internal" href="cli.html">CLI Library</a></li>
-<li class="toctree-l2"><a class="reference internal" href="content_negotiation.html">Content Negotiation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="curlrequest.html">CURLRequest Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="email.html">Email Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="files.html">Working with Files</a></li>
 <li class="toctree-l2"><a class="reference internal" href="honeypot.html">Honeypot Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="images.html">Image Manipulation Class</a></li>
-<li class="toctree-l2"><a class="reference internal" href="incomingrequest.html">IncomingRequest Class</a></li>
-<li class="toctree-l2"><a class="reference internal" href="localization.html">Localization</a></li>
-<li class="toctree-l2"><a class="reference internal" href="message.html">HTTP Messages</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Pagination</a></li>
-<li class="toctree-l2"><a class="reference internal" href="request.html">Request Class</a></li>
-<li class="toctree-l2"><a class="reference internal" href="response.html">HTTP Responses</a></li>
 <li class="toctree-l2"><a class="reference internal" href="security.html">Security Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="sessions.html">Session Library</a></li>
 <li class="toctree-l2"><a class="reference internal" href="throttler.html">Throttler</a></li>
@@ -129,13 +135,16 @@
 </li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../database/index.html">Database Reference</a></li>
-</ul>
-<ul>
 <li class="toctree-l1"><a class="reference internal" href="../helpers/index.html">Helpers</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../testing/index.html">Testing</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cli/index.html">Command Line Usage</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../extending/index.html">Extending CodeIgniter</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../license.html">The MIT License (MIT)</a></li>
@@ -218,7 +227,7 @@ to load it manually:</p>
 <div class="section" id="paginating-database-results">
 <h2>Paginating Database Results<a class="headerlink" href="#paginating-database-results" title="Permalink to this headline">¶</a></h2>
 <p>In most cases, you will be using the Pager library in order to paginate results that you retrieve from the database.
-When using the <a class="reference internal" href="../database/model.html"><span class="doc">Model</span></a> class, you can use its built-in <code class="docutils literal"><span class="pre">paginate()</span></code> method to automatically
+When using the <a class="reference internal" href="../models/model.html"><span class="doc">Model</span></a> class, you can use its built-in <code class="docutils literal"><span class="pre">paginate()</span></code> method to automatically
 retrieve the current batch of results, as well as setup the Pager library so it&#8217;s ready to use in your controllers.
 It even reads the current page it should display from the current URL via a <code class="docutils literal"><span class="pre">page=X</span></code> query variable.</p>
 <p>To provide a paginated list of users in your application, your controller&#8217;s method would look something like:</p>
@@ -325,7 +334,7 @@ that is used by editing <strong>application/Config/Pager.php</strong>:</p>
 <span class="p">];</span>
 </pre></div>
 </div>
-<p>This setting stores the alias and <a class="reference internal" href="../general/views.html"><span class="doc">namespaced view paths</span></a> for the view that
+<p>This setting stores the alias and <a class="reference internal" href="../outgoing/views.html"><span class="doc">namespaced view paths</span></a> for the view that
 should be used. The <em>default_full</em> and <em>default_simple</em> views are used for the <code class="docutils literal"><span class="pre">links()</span></code> and <code class="docutils literal"><span class="pre">simpleLinks()</span></code>
 methods, respectively. To change the way those are displayed application-wide, you could assign a new view here.</p>
 <p>For example, say you create a new view file that works with the Foundation CSS framework, instead of Bootstrap, and
@@ -443,10 +452,10 @@ title, which is just the number, and a boolean that tells whether the link is th
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="request.html" class="btn btn-neutral float-right" title="Request Class" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="security.html" class="btn btn-neutral float-right" title="Security Class" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="message.html" class="btn btn-neutral" title="HTTP Messages" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="images.html" class="btn btn-neutral" title="Image Manipulation Class" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -456,7 +465,7 @@ title, which is just the number, and a boolean that tells whether the link is th
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2018 British Columbia Institute of Technology.
-      Last updated on Sep 23, 2018.
+      Last updated on Sep 25, 2018.
 
     </p>
   </div>

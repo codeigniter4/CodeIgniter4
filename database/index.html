@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Database Reference &mdash; CodeIgniter4 4.0.0-alpha.1 documentation</title>
+  <title>Working With Databases &mdash; CodeIgniter4 4.0.0-alpha.1 documentation</title>
   
 
   
@@ -36,7 +36,7 @@
   
     <link rel="top" title="CodeIgniter4 4.0.0-alpha.1 documentation" href="../index.html"/>
         <link rel="next" title="Database Quick Start: Example Code" href="examples.html"/>
-        <link rel="prev" title="Validation" href="../libraries/validation.html"/> 
+        <link rel="prev" title="Alternate PHP Syntax for View Files" href="../outgoing/alternative_php.html"/> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -98,10 +98,13 @@
 <li class="toctree-l1"><a class="reference internal" href="../general/index.html">General Topics</a></li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../libraries/index.html">Library Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../incoming/index.html">Controllers and Routing</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../outgoing/index.html">Building Responses</a></li>
 </ul>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Database Reference</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Working With Databases</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="examples.html">Quick Start: Usage Examples</a></li>
 <li class="toctree-l2"><a class="reference internal" href="configuration.html">Database Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="connecting.html">Connecting to a Database</a></li>
@@ -112,20 +115,30 @@
 <li class="toctree-l2"><a class="reference internal" href="transactions.html">Transactions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="metadata.html">Getting MetaData</a></li>
 <li class="toctree-l2"><a class="reference internal" href="call_function.html">Custom Function Calls</a></li>
-<li class="toctree-l2"><a class="reference internal" href="model.html">Using CodeIgniter&#8217;s Model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="entities.html">Using Entity Classes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="forge.html">Database Manipulation with Database Forge</a></li>
-<li class="toctree-l2"><a class="reference internal" href="migration.html">Database Migrations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="seeds.html">Database Seeding</a></li>
 <li class="toctree-l2"><a class="reference internal" href="events.html">Database Events</a></li>
 </ul>
 </li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../models/index.html">Modeling Data</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../dbmgmt/index.html">Managing Databases</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../libraries/index.html">Library Reference</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../helpers/index.html">Helpers</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../testing/index.html">Testing</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cli/index.html">Command Line Usage</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../extending/index.html">Extending CodeIgniter</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../license.html">The MIT License (MIT)</a></li>
@@ -174,7 +187,7 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-      <li>Database Reference</li>
+      <li>Working With Databases</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -191,8 +204,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="database-reference">
-<h1>Database Reference<a class="headerlink" href="#database-reference" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="working-with-databases">
+<h1>Working With Databases<a class="headerlink" href="#working-with-databases" title="Permalink to this headline">¶</a></h1>
 <p>CodeIgniter comes with a full-featured and very fast abstracted database
 class that supports both traditional structures and Query Builder
 patterns. The database functions offer clear, simple syntax.</p>
@@ -208,11 +221,6 @@ patterns. The database functions offer clear, simple syntax.</p>
 <li class="toctree-l1"><a class="reference internal" href="transactions.html">Transactions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="metadata.html">Getting MetaData</a></li>
 <li class="toctree-l1"><a class="reference internal" href="call_function.html">Custom Function Calls</a></li>
-<li class="toctree-l1"><a class="reference internal" href="model.html">Using CodeIgniter&#8217;s Model</a></li>
-<li class="toctree-l1"><a class="reference internal" href="entities.html">Using Entity Classes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="forge.html">Database Manipulation with Database Forge</a></li>
-<li class="toctree-l1"><a class="reference internal" href="migration.html">Database Migrations</a></li>
-<li class="toctree-l1"><a class="reference internal" href="seeds.html">Database Seeding</a></li>
 <li class="toctree-l1"><a class="reference internal" href="events.html">Database Events</a></li>
 </ul>
 </div>
@@ -231,7 +239,7 @@ patterns. The database functions offer clear, simple syntax.</p>
         <a href="examples.html" class="btn btn-neutral float-right" title="Database Quick Start: Example Code" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../libraries/validation.html" class="btn btn-neutral" title="Validation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../outgoing/alternative_php.html" class="btn btn-neutral" title="Alternate PHP Syntax for View Files" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -241,7 +249,7 @@ patterns. The database functions offer clear, simple syntax.</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2018 British Columbia Institute of Technology.
-      Last updated on Sep 23, 2018.
+      Last updated on Sep 25, 2018.
 
     </p>
   </div>

@@ -36,7 +36,7 @@
   
     <link rel="top" title="CodeIgniter4 4.0.0-alpha.1 documentation" href="../index.html"/>
         <link rel="up" title="Library Reference" href="index.html"/>
-        <link rel="next" title="Database Reference" href="../database/index.html"/>
+        <link rel="next" title="Helpers" href="../helpers/index.html"/>
         <link rel="prev" title="User Agent Class" href="user_agent.html"/> 
 
   
@@ -98,24 +98,30 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../general/index.html">General Topics</a></li>
 </ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../incoming/index.html">Controllers and Routing</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../outgoing/index.html">Building Responses</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../database/index.html">Working With Databases</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../models/index.html">Modeling Data</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../dbmgmt/index.html">Managing Databases</a></li>
+</ul>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Library Reference</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="api_responses.html">API Response Trait</a></li>
-<li class="toctree-l2"><a class="reference internal" href="benchmark.html">Benchmarking</a></li>
 <li class="toctree-l2"><a class="reference internal" href="caching.html">Caching Driver</a></li>
-<li class="toctree-l2"><a class="reference internal" href="cli.html">CLI Library</a></li>
-<li class="toctree-l2"><a class="reference internal" href="content_negotiation.html">Content Negotiation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="curlrequest.html">CURLRequest Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="email.html">Email Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="files.html">Working with Files</a></li>
 <li class="toctree-l2"><a class="reference internal" href="honeypot.html">Honeypot Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="images.html">Image Manipulation Class</a></li>
-<li class="toctree-l2"><a class="reference internal" href="incomingrequest.html">IncomingRequest Class</a></li>
-<li class="toctree-l2"><a class="reference internal" href="localization.html">Localization</a></li>
-<li class="toctree-l2"><a class="reference internal" href="message.html">HTTP Messages</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pagination.html">Pagination</a></li>
-<li class="toctree-l2"><a class="reference internal" href="request.html">Request Class</a></li>
-<li class="toctree-l2"><a class="reference internal" href="response.html">HTTP Responses</a></li>
 <li class="toctree-l2"><a class="reference internal" href="security.html">Security Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="sessions.html">Session Library</a></li>
 <li class="toctree-l2"><a class="reference internal" href="throttler.html">Throttler</a></li>
@@ -129,13 +135,16 @@
 </li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../database/index.html">Database Reference</a></li>
-</ul>
-<ul>
 <li class="toctree-l1"><a class="reference internal" href="../helpers/index.html">Helpers</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../testing/index.html">Testing</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cli/index.html">Command Line Usage</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../extending/index.html">Extending CodeIgniter</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../license.html">The MIT License (MIT)</a></li>
@@ -288,10 +297,10 @@ and tedious to implement.</p>
 Validation.</p>
 <p>In order to implement form validation you&#8217;ll need three things:</p>
 <ol class="arabic simple">
-<li>A <a class="reference internal" href="../general/views.html"><span class="doc">View</span></a> file containing a form.</li>
+<li>A <a class="reference internal" href="../outgoing/views.html"><span class="doc">View</span></a> file containing a form.</li>
 <li>A View file containing a &#8220;success&#8221; message to be displayed upon
 successful submission.</li>
-<li>A <a class="reference internal" href="../general/controllers.html"><span class="doc">controller</span></a> method to receive and
+<li>A <a class="reference internal" href="../incoming/controllers.html"><span class="doc">controller</span></a> method to receive and
 process the submitted data.</li>
 </ol>
 <p>Let&#8217;s create those three things, using a member sign-up form as the
@@ -427,8 +436,8 @@ form or the success page.</p>
 for including multiple Rule sets, and collections of rules that can be easily reused.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">You may never need to use this method, as both the <a class="reference internal" href="../general/controllers.html"><span class="doc">Controller</span></a> and
-the <a class="reference internal" href="../database/model.html"><span class="doc">Model</span></a> provide methods to make validation even easier.</p>
+<p class="last">You may never need to use this method, as both the <a class="reference internal" href="../incoming/controllers.html"><span class="doc">Controller</span></a> and
+the <a class="reference internal" href="../models/model.html"><span class="doc">Model</span></a> provide methods to make validation even easier.</p>
 </div>
 </div>
 <div class="section" id="setting-validation-rules">
@@ -1140,7 +1149,7 @@ the field data).</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../database/index.html" class="btn btn-neutral float-right" title="Database Reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../helpers/index.html" class="btn btn-neutral float-right" title="Helpers" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="user_agent.html" class="btn btn-neutral" title="User Agent Class" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
@@ -1153,7 +1162,7 @@ the field data).</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2018 British Columbia Institute of Technology.
-      Last updated on Sep 23, 2018.
+      Last updated on Sep 25, 2018.
 
     </p>
   </div>

@@ -37,7 +37,7 @@
     <link rel="top" title="CodeIgniter4 4.0.0-alpha.1 documentation" href="../index.html"/>
         <link rel="up" title="General Topics" href="index.html"/>
         <link rel="next" title="Managing your Applications" href="managing_apps.html"/>
-        <link rel="prev" title="Custom CLI Commands" href="cli_commands.html"/> 
+        <link rel="prev" title="Web Page Caching" href="caching.html"/> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -99,41 +99,46 @@
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">General Topics</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="configuration.html">Working With Configuration Files</a></li>
 <li class="toctree-l2"><a class="reference internal" href="urls.html">CodeIgniter URLs</a></li>
-<li class="toctree-l2"><a class="reference internal" href="controllers.html">Controllers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="views.html">Views</a></li>
-<li class="toctree-l2"><a class="reference internal" href="view_cells.html">View Cells</a></li>
-<li class="toctree-l2"><a class="reference internal" href="view_renderer.html">View Renderer</a></li>
-<li class="toctree-l2"><a class="reference internal" href="view_parser.html">View Parser</a></li>
 <li class="toctree-l2"><a class="reference internal" href="helpers.html">Helper Functions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="core_classes.html">Creating Core System Classes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="events.html">Events - Extending the Framework Core</a></li>
 <li class="toctree-l2"><a class="reference internal" href="common_functions.html">Global Functions and Constants</a></li>
-<li class="toctree-l2"><a class="reference internal" href="routing.html">URI Routing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="filters.html">Controller Filters</a></li>
 <li class="toctree-l2"><a class="reference internal" href="logging.html">Logging Information</a></li>
 <li class="toctree-l2"><a class="reference internal" href="errors.html">Error Handling</a></li>
-<li class="toctree-l2"><a class="reference internal" href="debugging.html">Debugging Your Application</a></li>
 <li class="toctree-l2"><a class="reference internal" href="caching.html">Web Page Caching</a></li>
-<li class="toctree-l2"><a class="reference internal" href="cli.html">Running via the Command Line</a></li>
-<li class="toctree-l2"><a class="reference internal" href="cli_commands.html">Custom CLI Commands</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Code Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="managing_apps.html">Managing your Applications</a></li>
 <li class="toctree-l2"><a class="reference internal" href="environments.html">Handling Multiple Environments</a></li>
-<li class="toctree-l2"><a class="reference internal" href="alternative_php.html">Alternate PHP Syntax for View Files</a></li>
 </ul>
 </li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../libraries/index.html">Library Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../incoming/index.html">Controllers and Routing</a></li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../database/index.html">Database Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../outgoing/index.html">Building Responses</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../database/index.html">Working With Databases</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../models/index.html">Modeling Data</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../dbmgmt/index.html">Managing Databases</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../libraries/index.html">Library Reference</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../helpers/index.html">Helpers</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../testing/index.html">Testing</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cli/index.html">Command Line Usage</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../extending/index.html">Extending CodeIgniter</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../license.html">The MIT License (MIT)</a></li>
@@ -282,9 +287,9 @@ or Repositories, etc.</p>
 configured to make integrating modules into your applications simpler by automatically discovering many different
 file types, including:</p>
 <ul class="simple">
-<li><a class="reference internal" href="events.html"><span class="doc">Events</span></a></li>
+<li><a class="reference internal" href="../extending/events.html"><span class="doc">Events</span></a></li>
 <li><a class="reference internal" href="configuration.html"><span class="doc">Registrars</span></a></li>
-<li><a class="reference internal" href="routing.html"><span class="doc">Route files</span></a></li>
+<li><a class="reference internal" href="../incoming/routing.html"><span class="doc">Route files</span></a></li>
 <li><a class="reference internal" href="../concepts/services.html"><span class="doc">Services</span></a></li>
 </ul>
 <p>This is configured in the file <strong>application/Config/Modules.php</strong>.</p>
@@ -312,7 +317,7 @@ be used within the module. Some of this information is described in more detail 
 guide, but is being reproduced here so that it&#8217;s easier to grasp how all of the pieces fit together.</p>
 <div class="section" id="routes">
 <h3><a class="toc-backref" href="#id6">Routes</a><a class="headerlink" href="#routes" title="Permalink to this headline">¶</a></h3>
-<p>By default, <a class="reference internal" href="routing.html"><span class="doc">routes</span></a> are automatically scanned for within modules. If can be turned off in
+<p>By default, <a class="reference internal" href="../incoming/routing.html"><span class="doc">routes</span></a> are automatically scanned for within modules. If can be turned off in
 the <strong>Modules</strong> config file, described above.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -387,7 +392,7 @@ file follows the same directory structures as the main application directory.</p
 </div>
 <div class="section" id="views">
 <h3><a class="toc-backref" href="#id15">Views</a><a class="headerlink" href="#views" title="Permalink to this headline">¶</a></h3>
-<p>Views can be loaded using the class namespace as described in the <a class="reference internal" href="views.html"><span class="doc">views</span></a> documentation:</p>
+<p>Views can be loaded using the class namespace as described in the <a class="reference internal" href="../outgoing/views.html"><span class="doc">views</span></a> documentation:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;Acme\Blog\Views\index&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -408,7 +413,7 @@ file follows the same directory structures as the main application directory.</p
         <a href="managing_apps.html" class="btn btn-neutral float-right" title="Managing your Applications" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="cli_commands.html" class="btn btn-neutral" title="Custom CLI Commands" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="caching.html" class="btn btn-neutral" title="Web Page Caching" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -418,7 +423,7 @@ file follows the same directory structures as the main application directory.</p
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2018 British Columbia Institute of Technology.
-      Last updated on Sep 23, 2018.
+      Last updated on Sep 25, 2018.
 
     </p>
   </div>

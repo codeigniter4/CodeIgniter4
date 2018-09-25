@@ -1,0 +1,714 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>API Response Trait &mdash; CodeIgniter4 4.0.0-alpha.1 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/ci-icon.ico"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="CodeIgniter4 4.0.0-alpha.1 documentation" href="../index.html"/>
+        <link rel="up" title="Controllers and Routing" href="index.html"/>
+        <link rel="next" title="Content Negotiation" href="content_negotiation.html"/>
+        <link rel="prev" title="HTTP Responses" href="response.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> CodeIgniter4
+          
+
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Welcome to CodeIgniter4</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Installation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">Tutorial</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/index.html">CodeIgniter4 Overview</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../general/index.html">General Topics</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Controllers and Routing</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="controllers.html">Controllers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="routing.html">URI Routing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="filters.html">Controller Filters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="message.html">HTTP Messages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="request.html">Request Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="incomingrequest.html">IncomingRequest Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="response.html">HTTP Responses</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">API Response Trait</a></li>
+<li class="toctree-l2"><a class="reference internal" href="content_negotiation.html">Content Negotiation</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../outgoing/index.html">Building Responses</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../database/index.html">Working With Databases</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../models/index.html">Modeling Data</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../dbmgmt/index.html">Managing Databases</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../libraries/index.html">Library Reference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../helpers/index.html">Helpers</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../testing/index.html">Testing</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cli/index.html">Command Line Usage</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../extending/index.html">Extending CodeIgniter</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">The MIT License (MIT)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Change Log</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CodeIgniter4</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Controllers and Routing</a> &raquo;</li>
+        
+      <li>API Response Trait</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="api-response-trait">
+<h1>API Response Trait<a class="headerlink" href="#api-response-trait" title="Permalink to this headline">¶</a></h1>
+<p>Much of modern PHP development requires building API&#8217;s, whether simply to provide data for a javascript-heavy
+single page application, or as a standalone product. CodeIgniter provides an API Response trait that can be
+used with any controller to make common response types simple, with no need to remember which HTTP status code
+should be returned for which response types.</p>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#example-usage" id="id1">Example Usage</a></li>
+<li><a class="reference internal" href="#handling-response-types" id="id2">Handling Response Types</a><ul>
+<li><a class="reference internal" href="#class-reference" id="id3">Class Reference</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="example-usage">
+<h2><a class="toc-backref" href="#id1">Example Usage</a><a class="headerlink" href="#example-usage" title="Permalink to this headline">¶</a></h2>
+<p>The following example shows a common usage pattern within your controllers.</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">namespace</span> <span class="nx">App\Controllers</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">Users</span> <span class="k">extends</span> <span class="nx">\CodeIgniter\Controller</span>
+<span class="p">{</span>
+    <span class="k">use</span> <span class="nx">\CodeIgniter\API\ResponseTrait</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">createUser</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="nv">$model</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">UserModel</span><span class="p">();</span>
+        <span class="nv">$user</span>  <span class="o">=</span> <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">getPost</span><span class="p">());</span>
+
+        <span class="c1">// Respond with 201 status code</span>
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">respondCreated</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>In this example, an HTTP status code of 201 is returned, with the generic status message, &#8216;Created&#8217;. Methods
+exist for the most common use cases:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="c1">// Generic response method</span>
+<span class="nx">respond</span><span class="p">(</span><span class="nv">$data</span><span class="p">,</span> <span class="mi">200</span><span class="p">);</span>
+<span class="c1">// Generic failure response</span>
+<span class="nx">fail</span><span class="p">(</span><span class="nv">$errors</span><span class="p">,</span> <span class="mi">400</span><span class="p">);</span>
+<span class="c1">// Item created response</span>
+<span class="nx">respondCreated</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
+<span class="c1">// Item successfully deleted</span>
+<span class="nx">respondDeleted</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
+<span class="c1">// Client isn&#39;t authorized</span>
+<span class="nx">failUnauthorized</span><span class="p">(</span><span class="nv">$description</span><span class="p">);</span>
+<span class="c1">// Forbidden action</span>
+<span class="nx">failForbidden</span><span class="p">(</span><span class="nv">$description</span><span class="p">);</span>
+<span class="c1">// Resource Not Found</span>
+<span class="nx">failNotFound</span><span class="p">(</span><span class="nv">$description</span><span class="p">);</span>
+<span class="c1">// Data did not validate</span>
+<span class="nx">failValidationError</span><span class="p">(</span><span class="nv">$description</span><span class="p">);</span>
+<span class="c1">// Resource already exists</span>
+<span class="nx">failResourceExists</span><span class="p">(</span><span class="nv">$description</span><span class="p">);</span>
+<span class="c1">// Resource previously deleted</span>
+<span class="nx">failResourceGone</span><span class="p">(</span><span class="nv">$description</span><span class="p">);</span>
+<span class="c1">// Client made too many requests</span>
+<span class="nx">failTooManyRequests</span><span class="p">(</span><span class="nv">$description</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="handling-response-types">
+<h2><a class="toc-backref" href="#id2">Handling Response Types</a><a class="headerlink" href="#handling-response-types" title="Permalink to this headline">¶</a></h2>
+<p>When you pass your data in any of these methods, they will determine the data type to format the results as based on
+the following criteria:</p>
+<ul class="simple">
+<li>If $data is a string, it will be treated as HTML to send back to the client.</li>
+<li><dl class="first docutils">
+<dt>If $data is an array, it will try to negotiate the content type with what the client asked for, defaulting to JSON</dt>
+<dd>if nothing else has been specified within ConfigAPI.php, the <code class="docutils literal"><span class="pre">$supportedResponseFormats</span></code> property.</dd>
+</dl>
+</li>
+</ul>
+<p>To define the formatter that is used, edit <strong>Config/Format.php</strong>. The <code class="docutils literal"><span class="pre">$supportedResponseFormats</span></code> contains a list of
+mime types that your application can automatically format the response for. By default, the system knows how to
+format both XML and JSON responses:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$supportedResponseFormats</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;application/json&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;application/xml&#39;</span>
+<span class="p">];</span>
+</pre></div>
+</div>
+<p>This is the array that is used during <a class="reference internal" href="content_negotiation.html"><span class="doc">Content Negotiation</span></a> to determine which
+type of response to return. If no matches are found between what the client requested and what you support, the first
+format in this array is what will be returned.</p>
+<p>Next, you need to define the class that is used to format the array of data. This must be a fully qualified class
+name, and the class must implement <strong>CodeIgniter\Format\FormatterInterface</strong>. Formatters come out of the box that
+support both JSON and XML:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$formatters</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;application/json&#39;</span> <span class="o">=&gt;</span> <span class="nx">\CodeIgniter\Format\JSONFormatter</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
+    <span class="s1">&#39;application/xml&#39;</span>  <span class="o">=&gt;</span> <span class="nx">\CodeIgniter\Format\XMLFormatter</span><span class="o">::</span><span class="na">class</span>
+<span class="p">];</span>
+</pre></div>
+</div>
+<p>So, if your request asks for JSON formatted data in an <strong>Accept</strong> header, the data array you pass any of the
+<code class="docutils literal"><span class="pre">respond*</span></code> or <code class="docutils literal"><span class="pre">fail*</span></code> methods will be formatted by the <strong>CodeIgniter\API\JSONFormatter</strong> class. The resulting
+JSON data will be sent back to the client.</p>
+<div class="section" id="class-reference">
+<h3><a class="toc-backref" href="#id3">Class Reference</a><a class="headerlink" href="#class-reference" title="Permalink to this headline">¶</a></h3>
+<dl class="method">
+<dt id="respond">
+<code class="descname">respond</code><span class="sig-paren">(</span><em>$data</em><span class="optional">[</span>, <em>$statusCode=200</em><span class="optional">[</span>, <em>$message=''</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#respond" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>$data</strong> (<em>mixed</em>) &#8211; The data to return to the client. Either string or array.</li>
+<li><strong>$statusCode</strong> (<em>int</em>) &#8211; The HTTP status code to return. Defaults to 200</li>
+<li><strong>$message</strong> (<em>string</em>) &#8211; A custom &#8220;reason&#8221; message to return.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>This is the method used by all other methods in this trait to return a response to the client.</p>
+<p>The <code class="docutils literal"><span class="pre">$data</span></code> element can be either a string or an array. By default, a string will be returned as HTML,
+while an array will be run through json_encode and returned as JSON, unless <a class="reference internal" href="content_negotiation.html"><span class="doc">Content Negotiation</span></a>
+determines it should be returned in a different format.</p>
+<p>If a <code class="docutils literal"><span class="pre">$message</span></code> string is passed, it will be used in place of the standard IANA reason codes for the
+response status. Not every client will respect the custom codes, though, and will use the IANA standards
+that match the status code.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Since it sets the status code and body on the active Response instance, this should always
+be the final method in the script execution.</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="fail">
+<code class="descname">fail</code><span class="sig-paren">(</span><em>$messages</em><span class="optional">[</span>, <em>int $status=400</em><span class="optional">[</span>, <em>string $code=null</em><span class="optional">[</span>, <em>string $message=''</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#fail" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$messages</strong> (<em>mixed</em>) &#8211; A string or array of strings that contain error messages encountered.</li>
+<li><strong>$status</strong> (<em>int</em>) &#8211; The HTTP status code to return. Defaults to 400.</li>
+<li><strong>$code</strong> (<em>string</em>) &#8211; A custom, API-specific, error code.</li>
+<li><strong>$message</strong> (<em>string</em>) &#8211; A custom &#8220;reason&#8221; message to return.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A multi-part response in the client&#8217;s preferred format.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>The is the generic method used to represent a failed response, and is used by all of the other &#8220;fail&#8221; methods.</p>
+<p>The <code class="docutils literal"><span class="pre">$messages</span></code> element can be either a string or an array of strings.</p>
+<p>The <code class="docutils literal"><span class="pre">$status</span></code> parameter is the HTTP status code that should be returned.</p>
+<p>Since many APIs are better served using custom error codes, a custom error code can be passed in the third
+parameter. If no value is present, it will be the same as <code class="docutils literal"><span class="pre">$status</span></code>.</p>
+<p>If a <code class="docutils literal"><span class="pre">$message</span></code> string is passed, it will be used in place of the standard IANA reason codes for the
+response status. Not every client will respect the custom codes, though, and will use the IANA standards
+that match the status code.</p>
+<p>The response is an array with two elements: <code class="docutils literal"><span class="pre">error</span></code> and <code class="docutils literal"><span class="pre">messages</span></code>. The <code class="docutils literal"><span class="pre">error</span></code> element contains the status
+code of the error. The <code class="docutils literal"><span class="pre">messages</span></code> element contains an array of error messages. It would look something like:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$response</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;status&#39;</span>   <span class="o">=&gt;</span> <span class="mi">400</span><span class="p">,</span>
+    <span class="s1">&#39;code&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;321a&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;messages&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="s1">&#39;Error message 1&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Error message 2&#39;</span>
+    <span class="p">]</span>
+<span class="p">];</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="respondCreated">
+<code class="descname">respondCreated</code><span class="sig-paren">(</span><em>$data = null</em><span class="optional">[</span>, <em>string $message = ''</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#respondCreated" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$data</strong> (<em>mixed</em>) &#8211; The data to return to the client. Either string or array.</li>
+<li><strong>$message</strong> (<em>string</em>) &#8211; A custom &#8220;reason&#8221; message to return.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The value of the Response object&#8217;s send() method.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Sets the appropriate status code to use when a new resource was created, typically 201.:</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$user</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">insert</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
+<span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">respondCreated</span><span class="p">(</span><span class="nv">$user</span><span class="p">);</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="respondDeleted">
+<code class="descname">respondDeleted</code><span class="sig-paren">(</span><em>$data = null</em><span class="optional">[</span>, <em>string $message = ''</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#respondDeleted" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$data</strong> (<em>mixed</em>) &#8211; The data to return to the client. Either string or array.</li>
+<li><strong>$message</strong> (<em>string</em>) &#8211; A custom &#8220;reason&#8221; message to return.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The value of the Response object&#8217;s send() method.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Sets the appropriate status code to use when a new resource was deleted as the result of this API call, typically 200.</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="nv">$user</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">delete</span><span class="p">(</span><span class="nv">$id</span><span class="p">);</span>
+<span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">respondDeleted</span><span class="p">([</span><span class="s1">&#39;id&#39;</span> <span class="o">=&gt;</span> <span class="nv">$id</span><span class="p">]);</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="failUnauthorized">
+<code class="descname">failUnauthorized</code><span class="sig-paren">(</span><em>string $description = 'Unauthorized'</em><span class="optional">[</span>, <em>string $code=null</em><span class="optional">[</span>, <em>string $message = ''</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#failUnauthorized" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$description</strong> (<em>mixed</em>) &#8211; The error message to show the user.</li>
+<li><strong>$code</strong> (<em>string</em>) &#8211; A custom, API-specific, error code.</li>
+<li><strong>$message</strong> (<em>string</em>) &#8211; A custom &#8220;reason&#8221; message to return.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The value of the Response object&#8217;s send() method.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Sets the appropriate status code to use when the user either has not been authorized,
+or has incorrect authorization. Status code is 401.</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">failUnauthorized</span><span class="p">(</span><span class="s1">&#39;Invalid Auth token&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="failForbidden">
+<code class="descname">failForbidden</code><span class="sig-paren">(</span><em>string $description = 'Forbidden'</em><span class="optional">[</span>, <em>string $code=null</em><span class="optional">[</span>, <em>string $message = ''</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#failForbidden" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$description</strong> (<em>mixed</em>) &#8211; The error message to show the user.</li>
+<li><strong>$code</strong> (<em>string</em>) &#8211; A custom, API-specific, error code.</li>
+<li><strong>$message</strong> (<em>string</em>) &#8211; A custom &#8220;reason&#8221; message to return.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The value of the Response object&#8217;s send() method.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Unlike <code class="docutils literal"><span class="pre">failUnauthorized</span></code>, this method should be used when the requested API endpoint is never allowed.
+Unauthorized implies the client is encouraged to try again with different credentials. Forbidden means
+the client should not try again because it won&#8217;t help. Status code is 403.</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">failForbidden</span><span class="p">(</span><span class="s1">&#39;Invalid API endpoint.&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="failNotFound">
+<code class="descname">failNotFound</code><span class="sig-paren">(</span><em>string $description = 'Not Found'</em><span class="optional">[</span>, <em>string $code=null</em><span class="optional">[</span>, <em>string $message = ''</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#failNotFound" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$description</strong> (<em>mixed</em>) &#8211; The error message to show the user.</li>
+<li><strong>$code</strong> (<em>string</em>) &#8211; A custom, API-specific, error code.</li>
+<li><strong>$message</strong> (<em>string</em>) &#8211; A custom &#8220;reason&#8221; message to return.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The value of the Response object&#8217;s send() method.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Sets the appropriate status code to use when the requested resource cannot be found. Status code is 404.</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">failNotFound</span><span class="p">(</span><span class="s1">&#39;User 13 cannot be found.&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="failValidationError">
+<code class="descname">failValidationError</code><span class="sig-paren">(</span><em>string $description = 'Bad Request'</em><span class="optional">[</span>, <em>string $code=null</em><span class="optional">[</span>, <em>string $message = ''</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#failValidationError" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$description</strong> (<em>mixed</em>) &#8211; The error message to show the user.</li>
+<li><strong>$code</strong> (<em>string</em>) &#8211; A custom, API-specific, error code.</li>
+<li><strong>$message</strong> (<em>string</em>) &#8211; A custom &#8220;reason&#8221; message to return.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The value of the Response object&#8217;s send() method.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Sets the appropriate status code to use when data the client sent did not pass validation rules.
+Status code is typically 400.</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">failValidationError</span><span class="p">(</span><span class="nv">$validation</span><span class="o">-&gt;</span><span class="na">getErrors</span><span class="p">());</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="failResourceExists">
+<code class="descname">failResourceExists</code><span class="sig-paren">(</span><em>string $description = 'Conflict'</em><span class="optional">[</span>, <em>string $code=null</em><span class="optional">[</span>, <em>string $message = ''</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#failResourceExists" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$description</strong> (<em>mixed</em>) &#8211; The error message to show the user.</li>
+<li><strong>$code</strong> (<em>string</em>) &#8211; A custom, API-specific, error code.</li>
+<li><strong>$message</strong> (<em>string</em>) &#8211; A custom &#8220;reason&#8221; message to return.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The value of the Response object&#8217;s send() method.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Sets the appropriate status code to use when the resource the client is trying to create already exists.
+Status code is typically 409.</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">failResourceExists</span><span class="p">(</span><span class="s1">&#39;A user already exists with that email.&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="failResourceGone">
+<code class="descname">failResourceGone</code><span class="sig-paren">(</span><em>string $description = 'Gone'</em><span class="optional">[</span>, <em>string $code=null</em><span class="optional">[</span>, <em>string $message = ''</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#failResourceGone" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$description</strong> (<em>mixed</em>) &#8211; The error message to show the user.</li>
+<li><strong>$code</strong> (<em>string</em>) &#8211; A custom, API-specific, error code.</li>
+<li><strong>$message</strong> (<em>string</em>) &#8211; A custom &#8220;reason&#8221; message to return.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The value of the Response object&#8217;s send() method.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Sets the appropriate status code to use when the requested resource was previously deleted and
+is no longer available. Status code is typically 410.</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">failResourceGone</span><span class="p">(</span><span class="s1">&#39;That user has been previously deleted.&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="failTooManyRequests">
+<code class="descname">failTooManyRequests</code><span class="sig-paren">(</span><em>string $description = 'Too Many Requests'</em><span class="optional">[</span>, <em>string $code=null</em><span class="optional">[</span>, <em>string $message = ''</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#failTooManyRequests" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$description</strong> (<em>mixed</em>) &#8211; The error message to show the user.</li>
+<li><strong>$code</strong> (<em>string</em>) &#8211; A custom, API-specific, error code.</li>
+<li><strong>$message</strong> (<em>string</em>) &#8211; A custom &#8220;reason&#8221; message to return.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The value of the Response object&#8217;s send() method.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Sets the appropriate status code to use when the client has called an API endpoint too many times.
+This might be due to some form of throttling or rate limiting. Status code is typically 400.</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">failTooManyRequests</span><span class="p">(</span><span class="s1">&#39;You must wait 15 seconds before making another request.&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="failServerError">
+<code class="descname">failServerError</code><span class="sig-paren">(</span><em>string $description = 'Internal Server Error'</em><span class="optional">[</span>, <em>string $code = null</em><span class="optional">[</span>, <em>string $message = ''</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#failServerError" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$description</strong> (<em>string</em>) &#8211; The error message to show the user.</li>
+<li><strong>$code</strong> (<em>string</em>) &#8211; A custom, API-specific, error code.</li>
+<li><strong>$message</strong> (<em>string</em>) &#8211; A custom &#8220;reason&#8221; message to return.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The value of the Response object&#8217;s send() method.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Sets the appropriate status code to use when there is a server error.</p>
+<div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">failServerError</span><span class="p">(</span><span class="s1">&#39;Server error.&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="content_negotiation.html" class="btn btn-neutral float-right" title="Content Negotiation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="response.html" class="btn btn-neutral" title="HTTP Responses" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014-2018 British Columbia Institute of Technology.
+      Last updated on Sep 25, 2018.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'4.0.0-alpha.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  false,
+            SOURCELINK_SUFFIX: ''
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

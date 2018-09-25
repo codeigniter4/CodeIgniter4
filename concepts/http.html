@@ -107,16 +107,34 @@
 <li class="toctree-l1"><a class="reference internal" href="../general/index.html">General Topics</a></li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../libraries/index.html">Library Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../incoming/index.html">Controllers and Routing</a></li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../database/index.html">Database Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../outgoing/index.html">Building Responses</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../database/index.html">Working With Databases</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../models/index.html">Modeling Data</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../dbmgmt/index.html">Managing Databases</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../libraries/index.html">Library Reference</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../helpers/index.html">Helpers</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../testing/index.html">Testing</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cli/index.html">Command Line Usage</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../extending/index.html">Extending CodeIgniter</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../license.html">The MIT License (MIT)</a></li>
@@ -240,7 +258,7 @@ wasn&#8217;t found (404). Head over to IANA for a <a class="reference external" 
 <div class="section" id="working-with-requests-and-responses">
 <h3>Working with Requests and Responses<a class="headerlink" href="#working-with-requests-and-responses" title="Permalink to this headline">¶</a></h3>
 <p>While PHP provides ways to interact with the request and response headers, CodeIgniter, like most frameworks,
-abstracts them so that you have a consistent, simple interface to them. The <a class="reference internal" href="../libraries/incomingrequest.html"><span class="doc">IncomingRequest class</span></a>
+abstracts them so that you have a consistent, simple interface to them. The <a class="reference internal" href="../incoming/incomingrequest.html"><span class="doc">IncomingRequest class</span></a>
 is an object-oriented representation of the HTTP request. It provides everything you need:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\HTTP\IncomingRequest</span><span class="p">;</span>
 
@@ -269,7 +287,7 @@ is an object-oriented representation of the HTTP request. It provides everything
 </div>
 <p>The request class does a lot of work in the background for you, that you never need to worry about.
 The <code class="docutils literal"><span class="pre">isAJAX()</span></code> and <code class="docutils literal"><span class="pre">isSecure()</span></code> methods check several different methods to determine the correct answer.</p>
-<p>CodeIgniter also provides a <a class="reference internal" href="../libraries/response.html"><span class="doc">Response class</span></a> that is an object-oriented representation
+<p>CodeIgniter also provides a <a class="reference internal" href="../incoming/response.html"><span class="doc">Response class</span></a> that is an object-oriented representation
 of the HTTP response. This gives you an easy and powerful way to construct your response to the client:</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\HTTP\Response</span><span class="p">;</span>
 
@@ -312,7 +330,7 @@ of the HTTP response. This gives you an easy and powerful way to construct your 
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2018 British Columbia Institute of Technology.
-      Last updated on Sep 23, 2018.
+      Last updated on Sep 25, 2018.
 
     </p>
   </div>
