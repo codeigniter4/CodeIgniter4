@@ -54,7 +54,7 @@ Working with the Library
 ************************
 
 Working with CURL requests is simply a matter of creating the Request and getting a
-:doc:`Response object </incoming/response>` back. It is meant to handle the communications. After that
+:doc:`Response object </outgoing/response>` back. It is meant to handle the communications. After that
 you have complete control over how the information is handled.
 
 Making Requests
