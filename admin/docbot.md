@@ -30,4 +30,4 @@ If "deploy" is not added, the script execution is considered
 a trial run, and nothing is pushed to the repo.
 
 Whether or not deployed, the results are left inside
-user_guide_src/build
+user_guide_src/build (which is git ignored).
