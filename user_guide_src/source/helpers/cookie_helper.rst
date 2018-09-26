@@ -37,7 +37,7 @@ The following functions are available:
 	:rtype:	void
 
 	This helper function gives you friendlier syntax to set browser
-	cookies. Refer to the :doc:`Response Library </incoming/response>` for
+	cookies. Refer to the :doc:`Response Library </outgoing/response>` for
 	a description of its use, as this function is an alias for
 	``Response::setCookie()``.
 

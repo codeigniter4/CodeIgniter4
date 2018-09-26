@@ -97,7 +97,7 @@ is an object-oriented representation of the HTTP request. It provides everything
 The request class does a lot of work in the background for you, that you never need to worry about.
 The ``isAJAX()`` and ``isSecure()`` methods check several different methods to determine the correct answer.
 
-CodeIgniter also provides a :doc:`Response class </incoming/response>` that is an object-oriented representation
+CodeIgniter also provides a :doc:`Response class </outgoing/response>` that is an object-oriented representation
 of the HTTP response. This gives you an easy and powerful way to construct your response to the client::
 
   use CodeIgniter\HTTP\Response;

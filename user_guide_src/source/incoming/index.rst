@@ -13,6 +13,4 @@ Controllers handle incoming requests.
     message
     request
     incomingrequest
-    response
-    api_responses
     content_negotiation

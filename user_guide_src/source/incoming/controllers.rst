@@ -250,7 +250,7 @@ as a class property, ``$this->request``.
 
 **Response Object**
 
-The application's main :doc:`Response Instance </incoming/response>` is always available
+The application's main :doc:`Response Instance </outgoing/response>` is always available
 as a class property, ``$this->response``.
 
 **Logger Object**
