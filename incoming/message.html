@@ -106,8 +106,6 @@
 <li class="toctree-l2 current"><a class="current reference internal" href="#">HTTP Messages</a></li>
 <li class="toctree-l2"><a class="reference internal" href="request.html">Request Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="incomingrequest.html">IncomingRequest Class</a></li>
-<li class="toctree-l2"><a class="reference internal" href="response.html">HTTP Responses</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api_responses.html">API Response Trait</a></li>
 <li class="toctree-l2"><a class="reference internal" href="content_negotiation.html">Content Negotiation</a></li>
 </ul>
 </li>
@@ -211,7 +209,7 @@
 requests and responses, including the message body, protocol version, utilities for working with
 the headers, and methods for handling content negotiation.</p>
 <p>This class is the parent class that both the <a class="reference internal" href="request.html"><span class="doc">Request Class</span></a> and the
-<a class="reference internal" href="response.html"><span class="doc">Response Class</span></a> extend from. As such, some methods, such as the content
+<a class="reference internal" href="../outgoing/response.html"><span class="doc">Response Class</span></a> extend from. As such, some methods, such as the content
 negotiation methods, may apply only to a request or response, and not the other one, but they have
 been included here to keep the header methods together.</p>
 <div class="section" id="what-is-content-negotiation">
@@ -688,7 +686,7 @@ If no match is found, will return the first element of the <code class="docutils
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014-2018 British Columbia Institute of Technology.
-      Last updated on Sep 25, 2018.
+      Last updated on Sep 26, 2018.
 
     </p>
   </div>
