@@ -206,12 +206,6 @@
 you haven&#8217;t written any information to the database yet. In this section
 you&#8217;ll expand your news controller and model created earlier to include
 this functionality.</p>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">This section of the tutorial cannot be completed as certain
-portions of the framework, like the form helper and the validation
-library have not been completed yet.</p>
-</div>
 <div class="section" id="create-a-form">
 <h2>Create a form<a class="headerlink" href="#create-a-form" title="Permalink to this headline">¶</a></h2>
 <p>To input data into the database you need to create a form where you can
@@ -221,7 +215,7 @@ the slug from our title in the model. Create the new view at
 <em>application/Views/news/create.php</em>.</p>
 <div class="highlight-ci"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">h2</span><span class="o">&gt;&lt;?=</span> <span class="nx">esc</span><span class="p">(</span><span class="nv">$title</span><span class="p">);</span> <span class="cp">?&gt;</span><span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
 
-<span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">validation_errors</span><span class="p">();</span> <span class="cp">?&gt;</span>
+<span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">validation</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">listErrors</span><span class="p">();</span> <span class="cp">?&gt;</span>
 
 <span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">form_open</span><span class="p">(</span><span class="s1">&#39;news/create&#39;</span><span class="p">);</span> <span class="cp">?&gt;</span>
 
@@ -237,7 +231,7 @@ the slug from our title in the model. Create the new view at
 </pre></div>
 </div>
 <p>There are only two things here that probably look unfamiliar to you: the
-<code class="docutils literal"><span class="pre">form_open()</span></code> function and the <code class="docutils literal"><span class="pre">validation_errors()</span></code> function.</p>
+<code class="docutils literal"><span class="pre">form_open()</span></code> function and the <code class="docutils literal"><span class="pre">\Config\Services::validation()-&gt;listErrors()</span></code> function.</p>
 <p>The first function is provided by the <a class="reference internal" href="../helpers/form_helper.html"><span class="doc">form
 helper</span></a> and renders the form element and
 adds extra functionality, like adding a hidden <a class="reference internal" href="../libraries/security.html"><span class="doc">CSRF prevention
