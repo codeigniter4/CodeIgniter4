@@ -85,6 +85,7 @@ cd user_guide_src
 make html
 rm -Rf ../docs
 mv build/html ../docs
+touch ../docs/.nojekyll
 
 # make the epub, but leave it inside the gitignored user_guide_src to deal with separately
 make epub
