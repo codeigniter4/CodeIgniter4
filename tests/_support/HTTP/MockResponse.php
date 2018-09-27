@@ -45,7 +45,7 @@ class MockResponse extends Response
         $_COOKIE[$prefix . $name] = $value;
 
         /*
-            TODO: Find a way to use setcookie()
+            @todo: Find a way to use setcookie()
             without it throwing header issues.
             setcookie
             (
