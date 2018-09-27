@@ -54,6 +54,9 @@ By default, the application will run using the "production" environment. To
 take advantage of the debugging tools provided, you should set the environment
 to "develop".
 
+.. caution:: Using PHP's built-in web server is likely to cause problems,
+	as it does not process the `.htaccess` file used to properly handle requests.
+
 That's it!
 
 If you're new to CodeIgniter, please read the :doc:`Getting

@@ -33,6 +33,11 @@ through the following pages:
 -  :doc:`Conclusion <conclusion>`, which will give you some pointers on
    further reading and other resources.
 
+.. caution:: Using PHP's built-in web server is likely to cause problems,
+	as it does not process the `.htaccess` file used to properly handle requests.
+        Use your favorite web server instead.
+
+
 Enjoy your exploration of the CodeIgniter framework.
 
 .. toctree::
