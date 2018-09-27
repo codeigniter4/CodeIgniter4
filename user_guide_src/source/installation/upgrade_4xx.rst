@@ -35,7 +35,7 @@ interpretation as before
 root for your app
 - There is also a `writable` folder, to hold cache data, logs, and session data
 - The `application` folder looks very similar to that for CI3, with some
-name changes (eg Filters instead of hooks) and capitalization, and some subfolders
+name changes, and some subfolders
 moved to the `writable` folder
 - There is no longer a nested `application/core` folder, as we have
 a different mechanism for extending framework components (see below)
@@ -55,8 +55,8 @@ you are most comfortable with, including the "HMVC" style
 
 **Controllers**
 - Controllers extend \CodeIgniter\Controller instead of CI_Controller
-- They don't use a constructor any more (to invoke CI "magic"); they
-instead call `initController`
+- They don't use a constructor any more (to invoke CI "magic") unless
+that is part of a bvase controller you make
 - CI provides `Request` and `Response` objects for you to work with -
 more powerful than the CI3-way
 - If you want a base controller (MY_Controller in CI3), make it
@@ -76,7 +76,7 @@ of your component
 
 **Views**
 - Your views look much like before, but they are invoked differently ...
-instead of CI3's `$this->load->view(x);` you can use `view(x);`
+instead of CI3's `$this->load->view(x);` you can use `echo view(x);`
 - CI4 supports view "cells", to build your response in pieces
 - The template parser is still there, but substantially
 enhanced
@@ -89,8 +89,7 @@ don't have to
 component
 
 **Helpers**
-- Helpers are pretty much the same as before, except that instead
-of `$this->load->helper(x);` you would now use `helper(x);`
+- Helpers are pretty much the same as before, though some have been simplified
 
 **Extending the framework**
 - You don't need a `core` folder to hold `MY_...` framework
