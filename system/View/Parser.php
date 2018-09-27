@@ -43,11 +43,6 @@ use CodeIgniter\View\Exceptions\ViewException;
  *
  *  ClassFormerlyKnownAsTemplateParser
  *
- * @todo Views\Parser_Test
- * @todo Common::parse
- * @todo user guide
- * @todo options -> delimiters
- *
  * @package CodeIgniter\View
  */
 class Parser extends View
