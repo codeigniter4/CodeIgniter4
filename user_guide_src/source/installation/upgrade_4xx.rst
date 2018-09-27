@@ -1,114 +1,102 @@
-TODO: rewrite for CodeIgniter4
-
 #############################
 Upgrading from 3.x to 4.x
 #############################
 
-Before performing an update you should take your site offline by
-replacing the index.php file with a static one.
+CodeIgniter 4 is a rewrite of the framework, and is not backwards compatible.
+It is more appropriate to think of converting your app, rather than upgrading it.
+Once you have done that, upgrading from one version of CodeIgniter 4 to the next
+will be straightforward.
 
-Step 1: Update your CodeIgniter files
-=====================================
+The "lean, mean and simple" philosophy has been retained, but the 
+implementation has a lot of differences, compared to CodeIgniter 3.
 
-Replace all files and directories in your *system/* directory.
+There is no 12-step checklist for upgrading. Instead, start with a copy
+of CodeIgniter 4 in a new project folder, `however you wish to install and 
+use it </installation>`_, 
+and then convert and integrate your app components.
+We'll try to point out the most important considerations here.
 
-.. note:: If you have any custom developed files in these directories,
-	please make copies of them first.
+Not all of the CI3 libraries have been ported or rewritten for CI4!
+See the threads in the `CodeIgniter 4 Roadmap <https://forum.codeigniter.com/forum-33.html>`_
+subforum for an uptodate list!
 
-Step 2: Change database connection handling
-===========================================
+**Downloads**
+- CI4 is still available as a ready-to-run zip or tarball, which
+includes the user guide (though in the `docs` subfolder
+- It can also be installed using Composer
 
-"Loading" a database, whether by using the *config/autoload.php* settings
-or manually via calling ``$this->load->database()`` or the less-known
-``DB()`` function, will now throw a ``RuntimeException`` in case of a
-failure.
+**Namespaces**
+- CI4 is built for PHP7.1+, and everything in the framework is namespaced, even the helpers
 
-In addition, being unable to set the configured character set is now also
-considered a connection failure.
+**Application Structure**
+- The framework still has `application` and `system` folders, with the same 
+interpretation as before
+- The framework now provides for a `public` folder, intended as the document
+root for your app
+- There is also a `writable` folder, to hold cache data, logs, and session data
+- The `application` folder looks very similar to that for CI3, with some
+name changes (eg Filters instead of hooks) and capitalization, and some subfolders
+moved to the `writable` folder
+- There is no longer a nested `application/core` folder, as we have
+a different mechanism for extending framework components (see below)
 
-.. note:: This has been the case for most database drivers in the in the
-	past as well (i.e. all but the 'mysql', 'mysqli' and 'postgre'
-	drivers).
+**Class loading**
+- There is no longer a CodeIgniter superobject, with framework component
+references magically as properties of your controller
+- Classes are instantiated where needed, and components are managed
+by `Services`
+- The class loader automatically handles PSR4 style class locating,
+within the `App` (application) and `CodeIgniter` (i.e. system) top level
+namespaces; with composer autoloading support, and even using educated
+guessing to find your models and libraries if they are in the right
+folder even though not namespaced
+- You can configure the class loading to support whatever application structure
+you are most comfortable with, including the "HMVC" style
 
-What this means is that if you're unable to connect to a database, or
-have an erroneous character set configured, CodeIgniter will no longer
-fail silently, but will throw an exception instead.
+**Controllers**
+- Controllers extend \CodeIgniter\Controller instead of CI_Controller
+- They don't use a constructor any more (to invoke CI "magic"); they
+instead call `initController`
+- CI provides `Request` and `Response` objects for you to work with -
+more powerful than the CI3-way
+- If you want a base controller (MY_Controller in CI3), make it
+where you like, e.g. BaseController extends Controller, and then
+have your controllers extend it
 
-You may choose to explicitly catch it (and for that purpose you can't use
-*config/autoload.php* to load the :doc:`Database Class <../database/index>`)
-::
+**Models**
+- Models extend \CodeIgniter\Model instead of CI_Model
+- The CI4 model has much more functionality, including automatic
+database connection, basic CRUD, in-model validation, and
+automatic pagination
+- CI4 also has the `Entity` class you can build on, for
+richer data mapping to your database tables
+- Instead of CI3's `$this->load->model(x);`, you would now use
+`$this->x = new X();`, providing the fully-qualified path
+of your component
 
-	try
-	{
-		$this->load->database();
-	}
-	catch (RuntimeException $e)
-	{
-		// Handle the failure
-	}
+**Views**
+- Your views look much like before, but they are invoked differently ...
+instead of CI3's `$this->load->view(x);` you can use `view(x);`
+- CI4 supports view "cells", to build your response in pieces
+- The template parser is still there, but substantially
+enhanced
 
-Or you may leave it to CodeIgniter's default exception handler, which would
-log the error message and display an error screen if you're running in
-development mode.
+**Libraries**
+- Your app classes can still go inside `application\Libraries`, but they
+don't have to
+- Instead of CI3's `$this->load->library(x);` you can now use
+`$this->x = new X();`, providing the fully-qualified path of your
+component
 
-Remove db_set_charset() calls
------------------------------
+**Helpers**
+- Helpers are pretty much the same as before, except that instead
+of `$this->load->helper(x);` you would now use `helper(x);`
 
-With the above-mentioned changes, the purpose of the ``db_set_charset()``
-method would now only be to change the connection character set at runtime.
-That doesn't make sense and that's the reason why most database drivers
-don't support it at all.
-Thus, ``db_set_charset()`` is no longer necessary and is removed.
-
-Step 3: Check logic related to URI parsing of CLI requests
-==========================================================
-
-When running a CodeIgniter application from the CLI, the
-:doc:`URI Library <../libraries/uri>` will now ignore the
-``$config['url_suffix']`` and ``$config['permitted_uri_chars']``
-configuration settings.
-
-These two options don't make sense under the command line (which is why
-this change was made) and therefore you shouldn't be affected by this, but
-if you've relied on them for some reason, you'd probably have to make some
-changes to your code.
-
-Step 4: Check Cache Library configurations for Redis, Memcache(d)
-=================================================================
-
-The new improvements for the 'redis' and 'memcached' drivers of the
-:doc:`Cache Library <../libraries/caching>` may require some small
-adjustments to your configuration values ...
-
-Redis
------
-
-If you're using the 'redis' driver with a UNIX socket connection, you'll
-have to move the socket path from ``$config['socket']`` to
-``$config['host']`` instead.
-
-The ``$config['socket_type']`` option is also removed, although that won't
-affect your application - it will be ignored and the connection type will
-be determined by the format used for ``$config['host']`` instead.
-
-Memcache(d)
------------
-
-The 'memcached' will now ignore configurations that don't specify a ``host``
-value (previously, it just set the host to the default '127.0.0.1').
-
-Therefore, if you've added a configuration that only sets e.g. a ``port``,
-you will now have to explicitly set the ``host`` to '127.0.0.1' as well.
-
-Step 5: Check usage of doctype() HTML helper
-============================================
-
-The :doc:`HTML Helper <../helpers/html_helper>` function
-:php:func:`doctype()` used to default to 'xhtml1-strict' (XHTML 1.0 Strict)
-when no document type was specified. That default value is now changed to
-'html5', which obviously stands for the modern HTML 5 standard.
-
-Nothing should be really broken by this change, but if your application
-relies on the default value, you should double-check it and either
-explicitly set the desired format, or adapt your front-end to use proper
-HTML 5 formatting.
+**Extending the framework**
+- You don't need a `core` folder to hold `MY_...` framework
+component extensions or replacements
+- You don't need `MY_x` classes inside your libraries folder
+to extend or replace CI4 pieces
+- Make any such classes where you like, and add appropriate
+service methods in `application/Config/Services.php` to load
+your components instead of the default ones

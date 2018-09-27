@@ -44,7 +44,7 @@ use CodeIgniter\View\Exceptions\ViewException;
  *  ClassFormerlyKnownAsTemplateParser
  *
  * @todo Views\Parser_Test
- * @tofo Common::parse
+ * @todo Common::parse
  * @todo user guide
  * @todo options -> delimiters
  *

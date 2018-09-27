@@ -9,6 +9,11 @@ Release Date: Not Released
 
 **Rewrite of the CodeIgniter framework**
 
+Non-code changes:
+    - User Guide adapted or rewritten
+    - [System message translations repository](https://github.com/bcit-ci/CodeIgniter4-translations)
+    - [Roadmap subforum](https://forum.codeigniter.com/forum-33.html) for more transparent planning
+
 New core classes:
     - CodeIgniter (bootstrap)
     - Common (shared functions)
@@ -101,5 +106,3 @@ New packages:
         - \\ CreditCardRules, FileRules, FormatRules, Rules, Validation, ValidationInterface
     - View
         -   \\ Cell, Filters, Parser, Plugins, RendererInterface, View
-
-User Guide adapted or rewritten.

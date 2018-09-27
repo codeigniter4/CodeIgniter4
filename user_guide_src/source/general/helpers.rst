@@ -100,7 +100,7 @@ URI to the controller/method you wish to link to.
 "Extending" Helpers
 ===================
 
-TODO: Determine how these can be extended... namespaces, etc?
+@todo: Determine how these can be extended... namespaces, etc?
 
 To "extend" Helpers, create a file in your **application/helpers/** folder
 with an identical name to the existing Helper, but prefixed with **MY\_**

@@ -398,7 +398,7 @@ custom error messages, and retrieve one or more errors to display.
 By default, error messages are derived from language strings in ``system/Language/en/Validation.php``, where
 each rule has an entry.
 
-**TODO: Determine how to easily add custom rule messages.**
+@todo: Determine how to easily add custom rule messages.**
 
 .. _validation-custom-errors:
 

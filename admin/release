@@ -47,6 +47,7 @@ echo -e "${BOLD}Creating $which $branch to $action ${NORMAL}"
 git checkout develop
 git branch -d $branch     # remove the branch if there
 git checkout -b $branch
+composer update
 
 #---------------------------------------------------
 # Update version dependencies
