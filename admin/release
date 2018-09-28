@@ -11,7 +11,8 @@ version=4
 qualifier=
 
 branch=release-
-devonly='admin/ build/ contributing/ user_guide_src/ CODE_OF_CONDUCT.md DCO.txt PULL_REQUEST_TEMPLATE.md'
+releasable='application docs public system writable README.md composer.json contributing.md env license.txt spark'
+release_empty='tests tests/_support'
 which=release
 
 BOLD='\033[1m'
@@ -77,38 +78,58 @@ sed -i "/|release|/s/|.*|/${version}${qualifier}/" user_guide_src/source/changel
 sed -i "/Release Date/s/Not Released/$(date +'%B %d, %Y')/" user_guide_src/source/changelog.rst
 
 #---------------------------------------------------
+# Setup the distribution folders
+
+if [ -d dist ]; then
+    rm -rf dist/
+fi
+mkdir dist
+
+if [ -d build ]; then
+    rm -rf build/
+fi
+mkdir build
+
+#---------------------------------------------------
 # Generate the user guide
 echo -e "${BOLD}Generate the user guide${NORMAL}"
-
-if [ -d docs ]; then
-    rm -rf docs/
-fi
 
 cd user_guide_src
 
 # make the UG & embed it in the project root
 rm -rf build/*
 make html
-mv build/html ../docs
-touch ../docs/.nojekyll
-
-# make the epub, but leave it inside the gitignored user_guide_src to deal with separately
-make epub
 
 cd ..
-
-#---------------------------------------------------
-# Hide stuff from the release bundle
-echo -e "${BOLD}Hide stuff from the release bundle${NORMAL}"
-
-for f in $devonly; do
-    echo $f >> .gitignore
-done
 
 #---------------------------------------------------
 # And finally, get ready for merging
 git add .
 git commit -m "Release ${version}${qualifier}"
+
+#---------------------------------------------------
+# Hide stuff from the release bundle
+echo -e "${BOLD}Build the distributables${NORMAL}"
+
+for f in $releasable; do
+    cp -r $f build/
+done
+for f in $release_empty; do
+    mkdir build/$f
+done
+
+zip -r v${version}${qualifier}.zip dist/
+tar -zcvf v${version}${qualifier}.tar.gz dist/
+rm -rf dist/*
+mv *.zip dist/
+mv *.tar.gz dist/
+
+# Can't forget the epub
+cd user_guide_src
+make epub
+cd ..
+mv user_guide_src/build/epub/CodeIgniter4.epub dist/CodeIgniter-${version}${qualifier}.epub
+mv user_guide_src/build/html /dist/docs
 
 #---------------------------------------------------
 # Done for now
